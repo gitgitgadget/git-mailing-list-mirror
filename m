@@ -2,175 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D51B1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 10:25:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87BCF1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 10:31:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387436AbfKGKZP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 05:25:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55584 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfKGKZP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:25:15 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABA0531CCE;
-        Thu,  7 Nov 2019 05:25:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Ek88+V6NWyXJqehVPaL2PsxlFo0=; b=R5dZPD
-        vM18qR9hzK81Sk+iAT4DPii2VIjNp4NNzOHAh4sDMTnk6RNZEmYhvCFwtJwnhG1P
-        nOgGVArNexeL1pHTM4s9KEUgoe/r0ftWuvxudR73JFp0r1ElZ4skVk6a4onGMH0h
-        xqAKsVW2Lv8eF99GxKFMK+YIad0jfG4Do4w9U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Rf7vjVXSTkbBw7ctM9bv9tQLgcbyzNPH
-        9F0QbR1ooEFeNZ7vO4SkQ7quBX8OihtVUaIyPB1foTVsR3Kprk2p/DJpqVwT0hxX
-        i7WO447O3Dg1vtVGbdqS2MAR8TqH/oiWjIeL0sYFKckPSAxzqXTQR7zAX7+szKEu
-        XwjVkgVurkw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6993931CCC;
-        Thu,  7 Nov 2019 05:25:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B009731CCB;
-        Thu,  7 Nov 2019 05:25:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "george espinoza via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>
-Subject: Re: [PATCH 2/6] [Outreachy] check-ref-format: parse-options
-References: <pull.449.git.1573114201.gitgitgadget@gmail.com>
-        <e8bca0910e7ba7582a50115eeeb66406d965a52a.1573114201.git.gitgitgadget@gmail.com>
-Date:   Thu, 07 Nov 2019 19:25:05 +0900
-In-Reply-To: <e8bca0910e7ba7582a50115eeeb66406d965a52a.1573114201.git.gitgitgadget@gmail.com>
-        (george espinoza via GitGitGadget's message of "Thu, 07 Nov 2019
-        08:09:56 +0000")
-Message-ID: <xmqqmud8ouf2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2388327AbfKGKbr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 05:31:47 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44101 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388099AbfKGKbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 05:31:46 -0500
+Received: by mail-pl1-f196.google.com with SMTP id az9so266985plb.11
+        for <git@vger.kernel.org>; Thu, 07 Nov 2019 02:31:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XeLqHEGBslDd3L5gKF5BW2aqNzqqZjb2MEUxYSvofW0=;
+        b=oELPfTyumeGHr2Ga+uuMCdF9vvlCW4gKb0mqjg9t/ln7GLoLsmYM146hbfT6kyxayu
+         FvVbncz6SGuxL52QIwWYFh7qgcBLeYxaeHr9oHabO1eYGB+XblP5pEFDWUXNP08wSkFa
+         LFiDuXEDeiHz1l8R7Vdl+4fXMEy1PhBe4a9ixX/yJv3syAQ5XPgym5Ep8Ruc2sXIqgBT
+         WX22uAWfY4sZON46ZXWutvCxz9FiI1N0hVIvLJfV3ZtvlhF/PAlv5wWOVgLtcfMb39St
+         hiDZn6McaZyjwC53ZNjD/tgFGl9tmvWZf/pHmsbPPaLQ64wRSPQuZi6Brw2e45B4yXGj
+         j6Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XeLqHEGBslDd3L5gKF5BW2aqNzqqZjb2MEUxYSvofW0=;
+        b=M0PzE8AG+j2SFQStmPZWmhanFEEFp3T4Ecn1pkxvO5i6EoNhKI7DWfPuMzGk5YNQXA
+         1uOmyxZtLZv417fgH9l0gJzzcMwn0rSO6QObYFuqkX+bF6fF4s61I4gX2aPL9+W+fhYa
+         91zilGUFfnL9YFf3NFh3N1OxWKxu5TInAxP6vpZKU/ZC6CMEMKsGFX1+jdQbIehdV/jj
+         khAWhQ2A8oGMckUgloqp0O1C5Xh9XGKMbxvR6siExjuQ7h8tjp9S3FY7b74q+BWLXvE2
+         UHZ242pCLnDqsVTkIxdiY5YVY1V5sIC77iFk8kX6wfnumsGdcKrm4dfagVmbvNXJJATO
+         cGPQ==
+X-Gm-Message-State: APjAAAXI5+EO14X6/UK8lqlYCM3In025lgnGxJ4cSqpemXqZTwD0vamd
+        nrjvbj/bmOJKH1dgq5jIY1M=
+X-Google-Smtp-Source: APXvYqxRWNrW8iT2oM3ZzSdsfIkGS8cJ5a9GSoSsKGUdWRi6qNxF4HyQ11i26CTu02/jYWCltbxbWA==
+X-Received: by 2002:a17:902:d70b:: with SMTP id w11mr3035040ply.128.1573122705826;
+        Thu, 07 Nov 2019 02:31:45 -0800 (PST)
+Received: from helium ([125.252.103.164])
+        by smtp.gmail.com with ESMTPSA id q199sm1868373pfq.147.2019.11.07.02.31.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2019 02:31:44 -0800 (PST)
+Date:   Thu, 7 Nov 2019 18:31:41 +0800
+From:   "Eric N. Vander Weele" <ericvw@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] status: teach "status --short" to respect "--show-stash"
+Message-ID: <20191107103141.GA87008@helium>
+References: <20191104100334.60537-1-ericvw@gmail.com>
+ <xmqq36f1wx6h.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DE55017C-0148-11EA-BB5D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36f1wx6h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"george espinoza via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Nov 06, 2019 at 11:33:42AM +0900, Junio C Hamano wrote:
+> "Eric N. Vander Weele" <ericvw@gmail.com> writes:
+> 
+> > Enable printing the entries currently stashed away in the short format.
+> > This prints the stash information after the path status to be symmetric
+> > with "status --long --show-stash".
+> >
+> > Signed-off-by: Eric N. Vander Weele <ericvw@gmail.com>
+> > ---
+> >  Documentation/git-status.txt |  4 ++++
+> >  wt-status.c                  | 17 +++++++++++++++++
+> >  2 files changed, 21 insertions(+)
+> >
+> > diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+> > index 7731b45f07..c1afc3282c 100644
+> > --- a/Documentation/git-status.txt
+> > +++ b/Documentation/git-status.txt
+> > @@ -244,6 +244,10 @@ If -b is used the short-format status is preceded by a line
+> >  
+> >      ## branchname tracking info
+> >  
+> > +If --show-stash is used the short-format status is followed by a line
+> > +
+> > +    ## stash: <n> (entry|entries)
+> > +
+> 
+> Hmmmm.  Would readers misinterpret we are talking about a branch
+> whose name is stash something?  I am not suggesting to change ##
+> introducer to some random letters, which would break scripts even
+> worse.
 
-> From: george espinoza <gespinoz2019@gmail.com>
->
-> This command currently handles its own argv so by teaching it to
-> use parse-options instead we can standardize the way commands
-> handle user input across the project.
->
-> As a consequence of using OPT_BOOL data structure on --normalize &
-> --refspec-pattern, --no-normalize & --no-refspec-pattern has been
-> can now be used.
->
-> NO_PARSEOPT flag was also removed to update git.c with the
-> conversion of the structure in this command.
->
-> This is a rough draft and I need some advice if I'm doing this
-> correctly since its being built but it is failing tests.
->
-> Helped by: emily shaffer <emilyshaffer@google.com>
-> Helped by: johannes schindelin <johannes.schindelin@gmx.de>
+I could see where readers may misinterpret this as a branch name.  I
+struggled coming up with something short while not being confusing and
+thought the presence ':' followed by a space would be clear enough.
 
-I do not think they spell their name like the above.  In general,
-most of us do not spell our names in all lowercase around here. I
-appreciate people with originality, but I'd rather see them to be
-original not in how they spell their names but in more productive
-ways ;-)
+> Doesn't the Porcelain Format v1 call the same codepath as
+> shortstatus?  We promise that its output never changes to support
+> existing scripts, but now they will start seeing "## stash:" that
+> they do not understand and barf?
 
-> Signed-off-by: george espinoza <gespinoz2019@gmail.com>
-> ---
->  builtin/check-ref-format.c | 49 +++++++++++++++++++-------------------
->  git.c                      |  2 +-
->  2 files changed, 26 insertions(+), 25 deletions(-)
->
-> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
-> index bc67d3f0a8..3fe0b5410a 100644
-> --- a/builtin/check-ref-format.c
-> +++ b/builtin/check-ref-format.c
-> @@ -6,10 +6,13 @@
->  #include "refs.h"
->  #include "builtin.h"
->  #include "strbuf.h"
-> +#include "parse-options.h"
->  
-> -static const char builtin_check_ref_format_usage[] =
-> -"git check-ref-format [--normalize] [<options>] <refname>\n"
-> -"   or: git check-ref-format --branch <branchname-shorthand>";
-> +static const char * const builtin_check_ref_format_usage[] = {
-> +	N_("git check-ref-format [--normalize] [<options>] <refname>\n"),
-> +	N_("   or: git check-ref-format --branch <branchname-shorthand>"),
-> +	NULL,
-> +};
+I wasn't aware of the Porcelain formats in detail when originally
+creating the patch - oops!  Naively I was following the same behavior as
+'--branch' in the shortstatus code path.
 
-OK.  This is the bog-standard prep for calling usage_with_options().
+Diving into this further, the Porcelain Format v1 does call the same
+code path as shortstatus.  I see there is some handling in
+builtin/commit.c for tweaking the behavior of the branch being showed.
 
-> @@ -53,31 +56,29 @@ static int check_ref_format_branch(const char *arg)
->  
->  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
->  {
-> -	int i;
-> -	int normalize = 0;
-> +	enum {
-> +		CHECK_REF_FORMAT_BRANCH,
-> +	};
-> +
-> +	int i = 0;
-> +	int verbose;
-> +	int normalize;
-> +	int allow_onelevel;
-> +	int refspec_pattern;
->  	int flags = 0;
->  	const char *refname;
+The documentation indicates that the behavior never changes between Git
+versions or based on user configuration.  'git status --porcelain=1'
+will react to '--branch' but not when 'status.branch' is set to 'true',
+which is congruent with the documentation.
 
-Discard the blank line before "int i = 0" line, and keep the blank
-line you have here between the last declaration and the first
-statement.
+> Isn't this information available to scripts that want to read from
+> porcelain v2 output format (which is meant to be extensible by
+> allowing easy-to-parse optional headers, which this stash thing
+> exactly is).
 
-> -	if (argc == 2 && !strcmp(argv[1], "-h"))
-> -		usage(builtin_check_ref_format_usage);
-> -
-> -	if (argc == 3 && !strcmp(argv[1], "--branch"))
-> -		return check_ref_format_branch(argv[2]);
-> +	struct option options[] = {
-> +		OPT__VERBOSE(&verbose, N_("be verbose")),
-> +		OPT_GROUP(""),
-> +		OPT_CMDMODE( 0 , "branch", &check_ref_format_branch, N_("branch"), CHECK_REF_FORMAT_BRANCH),
+It is not available in Porcelain Format v2... yet :).
 
-This is an iffy/tricky way to use CMDMODE.  The way CMDMODE is
-designed to be used is to have multiple ones that sets the same
-target variable so that parse_options() can notice conflicting
-command line request that gives more than one from the same set.
 
-The command has two modes (i.e. the "--branch" mode and the unnamed
-mode), so it is understandable that there is only one CMDMODE in the
-options[] array, but I am not sure how well it would work for a
-command like this.  For example, "check-ref-format --branch
---normalize --allow-onelevel $v" should error out because --branch
-is not compatible with any other options.  I do not think a single
-parse_options() call with a single options[] array can express that
-kind of constraints.
-
-Besides, shouldn't the third parameter of OPT_CMDMODE supposed to be
-the address of the variable that would receive the value in its fifth
-parameter?  I do not see a decl for check_ref_format_branch variable
-(isn't that the name of the function???).
-
-Ahh, you said it builds but does not pass test.  Of course, that is
-because this part is completely bogus.
-
-It appears that to your series the only thing that matters is the
-shape of the tree after applying all of the patches, and individual
-steps are not ready to be reviewd, so I'd stop here.
-
+I'm happy making '--show-stash' congruent with '--branch' in v1', which
+is would be in line with documented behavior, displaying something in
+v2 only, or both.  Let me know how you would like to proceed and I'll
+rework the patch accordingly.
