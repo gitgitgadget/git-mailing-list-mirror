@@ -2,149 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9661F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 20:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A7471F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 21:22:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725912AbfKGUfF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 15:35:05 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:29628 "EHLO bsmtp2.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725497AbfKGUfF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 15:35:05 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp2.bon.at (Postfix) with ESMTPSA id 478FWq0vn9z5tl9;
-        Thu,  7 Nov 2019 21:35:02 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 21C2D2204;
-        Thu,  7 Nov 2019 21:35:01 +0100 (CET)
-Subject: Re: [PATCH v3] userdiff: add Elixir to supported userdiff languages
-To:     =?UTF-8?Q?=c5=81ukasz_Niemier?= <lukasz@niemier.pl>
-References: <20191106234941.48926-1-lukasz@niemier.pl>
-Cc:     git@vger.kernel.org
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <f85a5c31-52ff-85be-b1e0-f3982fd2a7f2@kdbg.org>
-Date:   Thu, 7 Nov 2019 21:35:01 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.1.1
+        id S1725912AbfKGVWh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 16:22:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:42450 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725770AbfKGVWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 16:22:37 -0500
+Received: (qmail 7635 invoked by uid 109); 7 Nov 2019 21:22:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 07 Nov 2019 21:22:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5881 invoked by uid 111); 7 Nov 2019 21:25:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Nov 2019 16:25:58 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 7 Nov 2019 16:22:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ryenus@gmail.com, stolee@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/2] progress: create GIT_PROGRESS_DELAY
+Message-ID: <20191107212235.GB29042@sigill.intra.peff.net>
+References: <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
+ <pull.450.v3.git.1573148818.gitgitgadget@gmail.com>
+ <656dba5afb818d0caa7616d0e58c9728803f8d04.1573148818.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20191106234941.48926-1-lukasz@niemier.pl>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <656dba5afb818d0caa7616d0e58c9728803f8d04.1573148818.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please keep the Cc list when you send new patch versions. Also, it is
-customary to send them as replies to the earlier iterations, so that
-they all end up in the same thread.
+On Thu, Nov 07, 2019 at 05:46:57PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-Am 07.11.19 um 00:49 schrieb Łukasz Niemier:
-> Adds support for xfuncref in Elixir[1] language which is Ruby-like
-> language that runs on Erlang[3] Virtual Machine (BEAM).
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> [1]: https://elixir-lang.org
-> [2]: https://www.erlang.org
-
-Thanks! Much appreciated.
-
+> The start_delayed_progress() method is a preferred way to show
+> optional progress to users as it ignores steps that take less
+> than two seconds. However, this makes testing unreliable as tests
+> expect to be very fast.
 > 
-> Signed-off-by: Łukasz Niemier <lukasz@niemier.pl>
-> ---
-
-> diff --git a/t/t4018/elixir-do-not-pick-end b/t/t4018/elixir-do-not-pick-end
-> new file mode 100644
-> index 0000000000..fae08ba7e8
-> --- /dev/null
-> +++ b/t/t4018/elixir-do-not-pick-end
-> @@ -0,0 +1,5 @@
-> +defmodule RIGHT do
-> +end
-> +#
-> +#
-> +# ChangeMe; do not pick up 'end' line
-
-OK.
-
-> diff --git a/t/t4018/elixir-ex-unit-test b/t/t4018/elixir-ex-unit-test
-> new file mode 100644
-> index 0000000000..0560a2b697
-> --- /dev/null
-> +++ b/t/t4018/elixir-ex-unit-test
-> @@ -0,0 +1,6 @@
-> +defmodule Test do
-> +  test "RIGHT" do
-> +    assert true == true
-> +    assert ChangeMe
-> +  end
-> +end
-
-A test, and also indented. Good.
-
-> diff --git a/t/t4018/elixir-module-func b/t/t4018/elixir-module-func
-> new file mode 100644
-> index 0000000000..c9910d0675
-> --- /dev/null
-> +++ b/t/t4018/elixir-module-func
-> @@ -0,0 +1,8 @@
-> +defmodule Foo do
-> +  def fun(RIGHT) do
-> +     # Code
-> +     # Code
-> +     # Code
-> +     ChangeMe
-> +  end
-> +end
-
-An indented function. Good.
-
-These other tests (which I stripped away) ensure that the hunk header
-pattern does not become too restrictive. They all look good.
-
-> diff --git a/userdiff.c b/userdiff.c
-> index e187d356f6..577053c10a 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -32,6 +32,18 @@ PATTERNS("dts",
->  	 /* Property names and math operators */
->  	 "[a-zA-Z0-9,._+?#-]+"
->  	 "|[-+*/%&^|!~]|>>|<<|&&|\\|\\|"),
-> +PATTERNS("elixir",
-> +	 "^[ \t]*((def(macro|module|impl|protocol|p)?|test)[ \t].*)$",
-> +	 /* Atoms, names, and module attributes */
-> +	 "|[@:]?[a-zA-Z0-9@_?!]+"
-
-There are no single- and double-quote anymore. An oversight? Or an error
-in the earlier iteration?
-
-> +	 /* Numbers with specific base */
-> +	 "|[-+]?0[xob][0-9a-fA-F]+"
-> +	 /* Numbers */
-> +	 "|[-+]?[0-9][0-9_.]*([eE][-+]?[0-9_]+)?"
-
-The leading optional sign may be problematic. When a patch changes "i+1"
-to "i+2", it would be highlighted as "i{-+1-}{++2+}" instead of as
-"i+{-1-}{+2+}". You could remove the leading optional sign and let it be
-processed as an operator. But we also have an optional sign in the cpp
-pattern as well, and haven't noticed it until now, so...
-
-> +	 /* Operators and atoms that represent them */
-> +	 "|:?(\\+\\+|--|\\.\\.|~~~|<>|\\^\\^\\^|<?\\|>|<<<?|>?>>|<<?~|~>?>|<~>|<=|>=|===?|!==?|=~|&&&?|\\|\\|\\|?|=>|<-|\\\\\\\\|->)"
-> +	 /* Not real operators, but should be grouped */
-> +	 "|:?%[A-Za-z0-9_.]\\{\\}?"),
->  IPATTERN("fortran",
->  	 "!^([C*]|[ \t]*!)\n"
->  	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
+> In addition, users may want to decrease or increase this time
+> interval depending on their preferences for terminal noise.
 > 
+> Create the GIT_PROGRESS_DELAY environment variable to control
+> the delay set during start_delayed_progress(). Set the value
+> in some tests to guarantee their output remains consistent.
 
-In summary, this version looks good!
+Thanks for wrapping this up. I obviously think this is a good direction
+to go. :) A few thoughts:
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 9b82564d1a..1c420da208 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -544,6 +544,10 @@ other
+>  	a pager.  See also the `core.pager` option in
+>  	linkgit:git-config[1].
+>  
+> +`GIT_PROGRESS_DELAY`::
+> +	A number controlling how many seconds to delay before showing
+> +	optional progress indicators. Defaults to 2.
 
--- Hannes
+Not all progress meters use delay. I wonder if that might confuse some
+users, who would try:
+
+  GIT_PROGRESS_DELAY=10 git repack -ad
+
+or something, but still see "Enumerating objects".
+
+I guess the key word in your documentation is "optional", but maybe it
+needs to be spelled out more clearly. I dunno.
+
+> @@ -269,7 +270,12 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
+>  
+>  struct progress *start_delayed_progress(const char *title, uint64_t total)
+>  {
+> -	return start_progress_delay(title, total, 2, 0);
+> +	static int delay_in_secs = -1;
+> +
+> +	if (delay_in_secs < 0)
+> +		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
+> +
+> +	return start_progress_delay(title, total, delay_in_secs, 0);
+>  }
+
+You asked earlier if it was worth memo-izing the git_env_ulong() call
+like this. I suspect it doesn't matter much either way, since progress
+only starts and stops a few times in a given program. But I'm certainly
+happy with it this way, as it matches most other environment lookups.
+
+-Peff
