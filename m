@@ -8,55 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D34491F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 02:56:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B3CB1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 02:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732926AbfKGC4f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 21:56:35 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:43378 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727924AbfKGC4e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 21:56:34 -0500
-Received: by mail-pl1-f195.google.com with SMTP id a18so405051plm.10
-        for <git@vger.kernel.org>; Wed, 06 Nov 2019 18:56:34 -0800 (PST)
+        id S1732943AbfKGC4h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 21:56:37 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:40947 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727924AbfKGC4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 21:56:36 -0500
+Received: by mail-pf1-f194.google.com with SMTP id r4so1209314pfl.7
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 18:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pk4FgXUamrCFDH4re1KEbklwualxn2EpHl2M0t+aNd8=;
-        b=vh12rtVNZJj/91pe3hQumkkzu8bq7DDltVz10yVxgnfr4fOwRNSGeDM2poggVLA09K
-         ExjKFwfSaR1JIF5J38Fa/AC/O8K4MNQroRJxfUDBBk+daSeti2eyOcXojqIus0RoXC2S
-         +nE+rehSrRz1r59MxA5dNUu8FxLB4LtR2af2JBkKh0QVxp/sfrYUqrzM/0sjs10AI2/V
-         +WiSGrd5rr1EHm5I/EZrdgseyi1CFLYc+af5I8qLHD293+O4y1l4Mm8S+uRIdtHs4A+Z
-         GBMUPhBlorEmEMe2mOFyDAJF2sK2Vu7cOFla8tbRB2zso6uS9N5gj5zzjWi6vmQsAgxq
-         cbvg==
+        bh=98CNLgTJPR42C/x1Fu2/fLJBVzg5As+3DoSB4z+MF9E=;
+        b=bcg9m8uxhS8UWLUwO37LU7iXTrj0y4SxR4gYZjFEaXZtgP12hjJvoWWe72975h3wry
+         YjKowP0vbuQATwvlKu4+UeFmGuC3cAzudmVf7LgxT4zThmx0FFqp4gtSQyGhshU/mCoa
+         NGEihre5j/exMh2HcCLaAVfeK1o2MQIa4q9SddvkPSeMVqMbDtENo/831fdlbyxF1dxh
+         owRPVsBXiTnsGvroY+Fq+Zy4cHdP6acICRBosbTFMELmHJfnmC7Fzx04B2+Ou2/BIfQz
+         zkHF3qsTGjbIDNrWs6Kf0IzjQUy3hUEbeHbEt6e6I++my4VPAegGdfW+AT3RmqloA/HF
+         Q4ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pk4FgXUamrCFDH4re1KEbklwualxn2EpHl2M0t+aNd8=;
-        b=XSBWkBpWXkZEjZLUBeZwT/RamJgeCEJsY7nluhAVDcNx+hLz7nRbGaEzPxcrOXVcCc
-         JXrwku/y30NefSgqPqgNQ+zhBOI/anmfQWJLhF4QbhPa+ZaO1DzWDyWgzQ2W8O64rrwk
-         8e59XTmzSaJGj5sbbetWJXbYg6+gjeVGP0jvU5pLaTDZNdxPsbfKH+oXYSnhGoALUr+Q
-         /SCAbzvUOf3OyXfI4K43W3aUIjfAPpQ7M/fZ0RPVVnBpwS0JrZBUKeSCMvOfj1GWy8Sn
-         mRda24uOPZicUGxWEkD1tHRow5k17RxWL5laW00U8wlvafepDP3cot5hLXuinzxLIfWQ
-         AH0A==
-X-Gm-Message-State: APjAAAW9EKWQPeEQnGHYxx10dMs1iyEd1k7h6aUaUtpjyqwR7ZlO/LCl
-        3dd9g7/YzUA5TRHIfkW5ylu5WaTtemc=
-X-Google-Smtp-Source: APXvYqy2xdgsoveOE/GB8XiLZ8/3DdI3zMPZVAP8u7A5SD8yF5GuSMEeDzUquFNhlzAOgCETlemrGA==
-X-Received: by 2002:a17:902:a717:: with SMTP id w23mr1114606plq.177.1573095393670;
-        Wed, 06 Nov 2019 18:56:33 -0800 (PST)
+        bh=98CNLgTJPR42C/x1Fu2/fLJBVzg5As+3DoSB4z+MF9E=;
+        b=ha3KxO6OkvIccnTuP2BX867DpmyeW2j2GmH5F9AwJFf9ePdT0h1yrnRtHzHmzG8u4R
+         asbmbfw85ZHkPju6UHm9J10ucY1nyISiItOVwW54B/DNtQTQ+NzYj0oFLZJV4W4zI3yL
+         3J4GINuyKrPNOiBkf4CZl3E6sE2h0D118Nt0jRKYwKpg/cNmCJ7E5LfmkC7yBuiP30xv
+         g37/DLUHZXF1KuxRoTK5/rm2pjlJ8HSl+hcVDtBZZydCS7FTe7CfqxND1JIDzMIVIHSC
+         nUNHzokQHI6Coe/LhDSP2EKjmdifBddcO+ZRaaQZfOZsU1g6TAcU56xfqG6e25V9uTXr
+         WvLg==
+X-Gm-Message-State: APjAAAXZ4D+PCv16nRHFMpNizlUIumR/Z+W44G/SwNTMk+9EZNasPdk8
+        AswfHEya7mLu2wS3mI/xKo7z2Lzd
+X-Google-Smtp-Source: APXvYqxbHa2wYpKF/WyxES+2DftEo/mGgZy23xeMyxtxyzvwbqNQLOn9FJvjubMbDo9B97kZ0A2N/g==
+X-Received: by 2002:a65:664e:: with SMTP id z14mr1492572pgv.201.1573095395585;
+        Wed, 06 Nov 2019 18:56:35 -0800 (PST)
 Received: from localhost.localdomain ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id n15sm393767pfq.146.2019.11.06.18.56.32
+        by smtp.gmail.com with ESMTPSA id n15sm393767pfq.146.2019.11.06.18.56.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 06 Nov 2019 18:56:33 -0800 (PST)
+        Wed, 06 Nov 2019 18:56:34 -0800 (PST)
 From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: [PATCH v4 3/8] t3900: demonstrate git-rebase problem with multi encoding
-Date:   Thu,  7 Nov 2019 09:56:14 +0700
-Message-Id: <ca869cef57bcf620a7b5d0519d362dcd9a27eae6.1573094789.git.congdanhqx@gmail.com>
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Subject: [PATCH v4 4/8] sequencer: reencode to utf-8 before arrange rebase's todo list
+Date:   Thu,  7 Nov 2019 09:56:15 +0700
+Message-Id: <15c33fc245401791fd2530d9d4dbde8e0e451939.1573094789.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.24.0.8.g36796e2b67
 In-Reply-To: <cover.1573094789.git.congdanhqx@gmail.com>
 References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1573094789.git.congdanhqx@gmail.com>
@@ -67,59 +66,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We're using fixup!/squash! <subject> to mark if current commit will be
-used to be fixed up or squashed to a previous commit.
+On musl libc, ISO-2022-JP encoder is too eager to switch back to
+1 byte encoding, musl's iconv always switch back after every combining
+character. Comparing glibc and musl's output for this command
+$ sed q t/t3900/ISO-2022-JP.txt| iconv -f ISO-2022-JP -t utf-8 |
+	iconv -f utf-8 -t ISO-2022-JP | xxd
 
-However, if we're changing i18n.commitencoding after making the
-original commit but before making the fixing up, we couldn't find the
-original commit to do the fixup/squash.
+glibc:
+00000000: 1b24 4224 4f24 6c24 5224 5b24 551b 2842  .$B$O$l$R$[$U.(B
+00000010: 0a                                       .
 
-Add a test to demonstrate that problem.
+musl:
+00000000: 1b24 4224 4f1b 2842 1b24 4224 6c1b 2842  .$B$O.(B.$B$l.(B
+00000010: 1b24 4224 521b 2842 1b24 4224 5b1b 2842  .$B$R.(B.$B$[.(B
+00000020: 1b24 4224 551b 2842 0a                   .$B$U.(B.
 
-Helped-by: Jeff King <peff@peff.net>
+Although musl iconv's output isn't optimal, it's still correct.
+
+From commit 7d509878b8, ("pretty.c: format string with truncate respects
+logOutputEncoding", 2014-05-21), we're encoding the message to utf-8
+first, then format it and convert the message to the actual output
+encoding on git commit --squash.
+
+Thus, t3900::test_commit_autosquash_flags is failing on musl libc.
+
+Reencode to utf-8 before arranging rebase's todo list.
+By doing this, we also remove a breakage introduced in the previous
+commit.
+
 Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
 ---
- t/t3900-i18n-commit.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ sequencer.c            | 2 +-
+ t/t3900-i18n-commit.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index 9d5964fd81..69430fe23f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -5169,7 +5169,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
+ 		*commit_todo_item_at(&commit_todo, item->commit) = item;
+ 
+ 		parse_commit(item->commit);
+-		commit_buffer = get_commit_buffer(item->commit, NULL);
++		commit_buffer = logmsg_reencode(item->commit, NULL, "UTF-8");
+ 		find_commit_subject(commit_buffer, &subject);
+ 		format_subject(&buf, subject, " ");
+ 		subject = subjects[i] = strbuf_detach(&buf, &subject_len);
 diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index b92ff95977..0f978bfde1 100755
+index 0f978bfde1..e8ce5323ee 100755
 --- a/t/t3900-i18n-commit.sh
 +++ b/t/t3900-i18n-commit.sh
-@@ -204,4 +204,33 @@ test_commit_autosquash_flags eucJP fixup
- 
- test_commit_autosquash_flags ISO-2022-JP squash
- 
-+test_commit_autosquash_multi_encoding () {
-+	flag=$1
-+	old=$2
-+	new=$3
-+	msg=$4
-+	test_expect_failure "commit --$flag into $old from $new" '
-+		git checkout -b '$flag-$old-$new' C0 &&
-+		git config i18n.commitencoding '$old' &&
-+		echo '$old' >>F &&
-+		git commit -a -F "$TEST_DIRECTORY/t3900/'$msg'" &&
-+		test_tick &&
-+		echo intermediate stuff >>G &&
-+		git add G &&
-+		git commit -a -m "intermediate commit" &&
-+		test_tick &&
-+		git config i18n.commitencoding '$new' &&
-+		echo '$new-$flag' >>F &&
-+		git commit -a --'$flag' HEAD^ &&
-+		git rebase --autosquash -i HEAD^^^ &&
-+		git rev-list HEAD >actual &&
-+		test_line_count = 3 actual
-+	'
-+}
-+
-+test_commit_autosquash_multi_encoding fixup UTF-8 ISO-8859-1 1-UTF-8.txt
-+test_commit_autosquash_multi_encoding squash ISO-8859-1 UTF-8 ISO8859-1.txt
-+test_commit_autosquash_multi_encoding squash eucJP ISO-2022-JP eucJP.txt
-+test_commit_autosquash_multi_encoding fixup ISO-2022-JP UTF-8 ISO-2022-JP.txt
-+
- test_done
+@@ -209,7 +209,7 @@ test_commit_autosquash_multi_encoding () {
+ 	old=$2
+ 	new=$3
+ 	msg=$4
+-	test_expect_failure "commit --$flag into $old from $new" '
++	test_expect_success "commit --$flag into $old from $new" '
+ 		git checkout -b '$flag-$old-$new' C0 &&
+ 		git config i18n.commitencoding '$old' &&
+ 		echo '$old' >>F &&
 -- 
 2.24.0.8.g36796e2b67
 
