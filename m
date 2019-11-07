@@ -2,103 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9159E1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 04:37:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58BDF1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 04:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733038AbfKGEh4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 6 Nov 2019 23:37:56 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58853 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726582AbfKGEh4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 6 Nov 2019 23:37:56 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 45E982FA66;
-        Wed,  6 Nov 2019 23:37:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+VA8SSGdyvzud1SCNeJitiLeLFo=; b=PZwg6e
-        kJqAAZGghe023Iktvt6bkpftb4hSxPprijaaU3PydN53/sb+/sLdo3a1AOZ+xO3K
-        eFhwmG4R8vMHOC2rID+23CR4FWzXdX6wMltXyeQQfz/Xnpwe16ozIuZWtYDMqki0
-        2LIQwB4Bd90G3hyTxMtjAxY7HMkjxrqFLvqVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AT6tn0Ha+JaL7XRqWqm3xzpK58y7EnBX
-        tAf8M5oc4JHTfBMPXTc32oeImrG83AYID9paSKzVS4kBCk4Fb5PlJk3sF5zg9Che
-        kRoJ44udMzh09QF+0zZDxae4C28xG9GvcSTmlUrrC8zvdkGH+d/jElzAh7CROPcW
-        0WsrvEx7mTw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3D9BC2FA65;
-        Wed,  6 Nov 2019 23:37:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9E60A2FA63;
-        Wed,  6 Nov 2019 23:37:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, rynus@gmail.com, stolee@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/1] commit-graph: use start_delayed_progress()
-References: <pull.450.git.1572969955.gitgitgadget@gmail.com>
-        <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
-        <78bd6bc2c02f1daf13938a738d8eae56b5f6b74c.1572984842.git.gitgitgadget@gmail.com>
-        <20191106040955.GD4307@sigill.intra.peff.net>
-Date:   Thu, 07 Nov 2019 13:37:52 +0900
-In-Reply-To: <20191106040955.GD4307@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 5 Nov 2019 23:09:55 -0500")
-Message-ID: <xmqqpni4s3mn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1733066AbfKGEqV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 6 Nov 2019 23:46:21 -0500
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:40592 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726935AbfKGEqV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 6 Nov 2019 23:46:21 -0500
+Received: by mail-ot1-f48.google.com with SMTP id m15so889898otq.7
+        for <git@vger.kernel.org>; Wed, 06 Nov 2019 20:46:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=S/LwhqaxFGUeaR/bofu0CPd1cfuF5axISOICXGSZHg4=;
+        b=tPzBgQff5H5jKOJa9CN9nvxB+53Kd5BZEvdg/MKD9KsoeSsaDXs6ZANBPbZMl9ulnX
+         hdQFshb9TMipkK29PsK7Iww7UGsOGeTBylxNIWJQRMl0rW6U+K1Rbx3ZDGPXYw+/z7L8
+         f8K7XmkjNouwSWhtci/LYI7waAXQj20Yo8Y7HurzwRUKz/4n53MG8kgCtTJ9ikCl6S3S
+         Xnm94jGDSoZg7YKp4CsMFagT7zvI7R5eFdq2vJVMxqRY0gTZ81QvzZXoLRUNV8kPEjGw
+         xM2/Gvq69O+/QRwAH9LrNnvlcgeMePlz2ZSfR8fTs1Z9jIP5kajpFO8YuoKZS/Dur5bx
+         /7ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=S/LwhqaxFGUeaR/bofu0CPd1cfuF5axISOICXGSZHg4=;
+        b=DyPTJFp/xcogHNeo0/zCG3cza4ayNcmFOfTRhsdIRK7wsNaOM+qZmBbzhwINyBIuUu
+         89E0QqZuMDexUqC8dM4iMSY3uyD0fK+CW2YplW6ngEcgUNSZn0XbnrX3HrS8xCWYyfid
+         7iqp83/8KENZLJxWhuwgyEQMX65aN6BfLFv3n9QwhQwEMyiix70ipaGa4T1vcryj74Ue
+         PuZw4tKWrTgjMpaPbzYuFsBcdsnBhP+07YLq5jHVsn7+48bjWO+1ymFzm5vrkRgEJPMc
+         CTUtHenOFjrL9GCQalwTqCAfOxAQ4FO23nRRbZVuIWK+E0yjrulGKZCa83za0lg09QhI
+         mRag==
+X-Gm-Message-State: APjAAAWXrBRqgCK3zKIF9KOz9ANdj1hkHiYbJh4Ekol1Mby9NDLdqBJ4
+        cKZ7b8uu9/NQVtjDVFmOIsx+zQ+5Zy2bTGY+ifN76g6S5L4=
+X-Google-Smtp-Source: APXvYqyDqe55Qi8Bhd9Xthk3JfZZ0RjjE+WU7ssGl8P5tSMEzKZqTD24RTCr6FD0KzLOxu4qLb+jMqYyfWe4PGHgeAU=
+X-Received: by 2002:a9d:6285:: with SMTP id x5mr1181116otk.267.1573101979964;
+ Wed, 06 Nov 2019 20:46:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5CD71D9A-0118-11EA-89FE-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <alpine.LSU.2.21.1911041704520.3956@fossies.org>
+ <20191105171107.27379-1-newren@gmail.com> <alpine.LSU.2.21.1911061026130.15790@fossies.org>
+In-Reply-To: <alpine.LSU.2.21.1911061026130.15790@fossies.org>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 6 Nov 2019 20:46:09 -0800
+Message-ID: <CABPp-BH=XxwJod8XpXYzpmXuo2-8LBozQGH4eEps_r4C798+ag@mail.gmail.com>
+Subject: Re: Some misspelling errors in the git release 2.24.0
+To:     Fossies Administrator <Jens.Schleusener@fossies.org>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Wed, Nov 6, 2019 at 3:08 AM Fossies Administrator
+<Jens.Schleusener@fossies.org> wrote:
+>
+> Hi Elijah,
+>
+> > On Mon, Nov 4, 2019 at 8:14 AM Fossies Administrator <Jens.Schleusener@fossies.org> wrote:
+> >>
+> >> Hi Elijah,
+> >>
+> >>> On Mon, Nov 4, 2019 at 7:07 AM Fossies Administrator
+> >>> <Jens.Schleusener@fossies.org> wrote:
 
-> I think this is OK for now, though it does make me wonder if
-> "--progress" ought to perhaps override "delayed" in some instances,
-> since it's a positive signal from the caller that they're interested in
-> seeing progress.
+> > So, I used your codespell program
+>
+> That seems to be a misunderstanding: I'm not the author of the codespell
+> program but I only use that program to detect spelling errors and point to
+> their existence while offering the option to inspect the context of the
+> probably misspelled words in a fast and comfortable way via a Web page.
 
-I did have the same reaction after seeing the change to 5318 where
-the expected output from "git commit-graph write --progress" has
-become unreliable.
+Oops, sorry for the misunderstanding; thanks for clearing it up.
 
-I think there are possibly three kinds of folks:
+[...]
+> Some of the according FPs are excluded by Fossies generally, some other
+> obvious FPs are excluded by Fossies specifically for each FOSS project
+> (see always the bold item "Codespell configuration" with a link to
+> "Project-specific additions" or to "(no project-specific adaptions yet
+> done)" that shows all the excluded words and directories/files).
+[...]
+> As one can see on the page
+>
+>   https://fossies.org/linux/misc/git-2.24.0.tar.xz/codespell_conf_info.html
+>
+> there are already done some according attempts.
 
- - I do not want the output smudged with any progress (e.g. I am a
-   script);
+Ah, thanks for the pointer.  Could you add t/t9150/svk-merge.dump and
+t/t9151/svn-mergeinfo.dump the the list of files to exclude?  Both
+have the 'hapenning' typo, but both are a dump of some repository and
+editing it means recomputing sha1sums and whatnot for tests that just
+isn't worth it.  I thought maybe I could get away with correcting
+those spelling errors but backed out once I saw further knock-on
+effects.
 
- - I want to see progress if it takes very long, but do not waste
-   vertical screen real estate if it does not make me wait (e.g. I
-   am an interactive user who occasionally wants a cue to leave the
-   keyboard to grab coffee); and
+Thanks for the report and the background and corrections!
 
- - I want to see all progress (... now who am I?  Taking a
-   screenshot to write a tutorial or something???).
-
-In the ideal world, the three choices above should probably be
-"--progress=(no|auto|always)" where not having any defaults to one
-of them (probably "auto", as the code can use isatty() to further
-turn it to "no").
-
-Making "--progress" to mean "--progress=always" is OK, but it leaves
-no way to override an earlier --[no-]progress on the command line,
-which feels somewhat satisfying.
-
-Thanks.
-
-
-
+Elijah
