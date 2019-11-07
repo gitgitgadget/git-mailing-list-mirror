@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C04DE1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 10:23:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D51B1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 10:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733271AbfKGKXe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 05:23:34 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61975 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfKGKXe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 05:23:34 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4638D8EB47;
-        Thu,  7 Nov 2019 05:23:33 -0500 (EST)
+        id S2387436AbfKGKZP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 05:25:15 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55584 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726866AbfKGKZP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 05:25:15 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABA0531CCE;
+        Thu,  7 Nov 2019 05:25:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ALGj1HQj7RyXLbiPxZKCVZ4JUgQ=; b=LyrYyK
-        A4SamnSJhg6Lq1uDnzpNtL31eIp/v7486sQ65+BIEBIfnyRtiuDEgiZJCJxWAME2
-        rPSwg7VvIxvoa1oA1WVo0fP4Q3uQgsNDpwE6DzKA25549ReAVbSksGu7bmkIVgjv
-        YkJgMeWwLaRpo39hnKVi8FAI8bqQGRplfjVHU=
+        :content-type; s=sasl; bh=Ek88+V6NWyXJqehVPaL2PsxlFo0=; b=R5dZPD
+        vM18qR9hzK81Sk+iAT4DPii2VIjNp4NNzOHAh4sDMTnk6RNZEmYhvCFwtJwnhG1P
+        nOgGVArNexeL1pHTM4s9KEUgoe/r0ftWuvxudR73JFp0r1ElZ4skVk6a4onGMH0h
+        xqAKsVW2Lv8eF99GxKFMK+YIad0jfG4Do4w9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A1wzlm17DLSMIP8h4cWVPqS1RcfPB9LA
-        wX5STkVRx/HY2BRJypk09ZKsprUO3UfznMR8JLcu+6P6J5XMWQ3jgPzuTcm+CgYD
-        yuj1U97FyzuK5iFEX+mVt0xzEAANzkOqw3KaD1aIda6C3dJgHMTZQ/dCDgR1zPIE
-        p1X3GbjqGi4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E8078EB46;
-        Thu,  7 Nov 2019 05:23:33 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Rf7vjVXSTkbBw7ctM9bv9tQLgcbyzNPH
+        9F0QbR1ooEFeNZ7vO4SkQ7quBX8OihtVUaIyPB1foTVsR3Kprk2p/DJpqVwT0hxX
+        i7WO447O3Dg1vtVGbdqS2MAR8TqH/oiWjIeL0sYFKckPSAxzqXTQR7zAX7+szKEu
+        XwjVkgVurkw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6993931CCC;
+        Thu,  7 Nov 2019 05:25:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 1A8078EB43;
-        Thu,  7 Nov 2019 05:23:28 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B009731CCB;
+        Thu,  7 Nov 2019 05:25:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "george espinoza via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, George Espinoza <gespinoz2019@gmail.com>
-Subject: Re: [PATCH 3/6] This file wasn't supposed to change during my git push for check-ref-format :(
+Subject: Re: [PATCH 2/6] [Outreachy] check-ref-format: parse-options
 References: <pull.449.git.1573114201.gitgitgadget@gmail.com>
-        <078a19e86af6fcf1348d8988dc10cfac2e689ba4.1573114201.git.gitgitgadget@gmail.com>
-Date:   Thu, 07 Nov 2019 19:23:26 +0900
-In-Reply-To: <078a19e86af6fcf1348d8988dc10cfac2e689ba4.1573114201.git.gitgitgadget@gmail.com>
+        <e8bca0910e7ba7582a50115eeeb66406d965a52a.1573114201.git.gitgitgadget@gmail.com>
+Date:   Thu, 07 Nov 2019 19:25:05 +0900
+In-Reply-To: <e8bca0910e7ba7582a50115eeeb66406d965a52a.1573114201.git.gitgitgadget@gmail.com>
         (george espinoza via GitGitGadget's message of "Thu, 07 Nov 2019
-        08:09:57 +0000")
-Message-ID: <xmqqo8xoouht.fsf@gitster-ct.c.googlers.com>
+        08:09:56 +0000")
+Message-ID: <xmqqmud8ouf2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A4237768-0148-11EA-AD6C-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: DE55017C-0148-11EA-BB5D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,40 +66,111 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: george espinoza <gespinoz2019@gmail.com>
 >
+> This command currently handles its own argv so by teaching it to
+> use parse-options instead we can standardize the way commands
+> handle user input across the project.
+>
+> As a consequence of using OPT_BOOL data structure on --normalize &
+> --refspec-pattern, --no-normalize & --no-refspec-pattern has been
+> can now be used.
+>
+> NO_PARSEOPT flag was also removed to update git.c with the
+> conversion of the structure in this command.
+>
+> This is a rough draft and I need some advice if I'm doing this
+> correctly since its being built but it is failing tests.
+>
+> Helped by: emily shaffer <emilyshaffer@google.com>
+> Helped by: johannes schindelin <johannes.schindelin@gmx.de>
+
+I do not think they spell their name like the above.  In general,
+most of us do not spell our names in all lowercase around here. I
+appreciate people with originality, but I'd rather see them to be
+original not in how they spell their names but in more productive
+ways ;-)
+
 > Signed-off-by: george espinoza <gespinoz2019@gmail.com>
 > ---
-
-While developing your first patch, it is expected that you make
-mistake in an earlier step (e.g. 2/6) and then later realize it and
-want to fix, like this one.  Instead of going back to the earlier
-mistake and fixing it right there before building more on top,
-tentatively fixing with "oops that was wrong" like this one and
-building further (i.e. 4 and later steps) is an expedient way.
-
-But once you are done, you need to get your act together before
-presenting the resulting series to the general public.
-
-Please learn to use "rebase -i" to clean up the series before
-asking GGG to publish it to the list.
-
-Thanks.
-
->  builtin/merge-ours.c | 5 -----
->  1 file changed, 5 deletions(-)
+>  builtin/check-ref-format.c | 49 +++++++++++++++++++-------------------
+>  git.c                      |  2 +-
+>  2 files changed, 26 insertions(+), 25 deletions(-)
 >
-> diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-> index 3980f4899a..4594507420 100644
-> --- a/builtin/merge-ours.c
-> +++ b/builtin/merge-ours.c
-> @@ -11,11 +11,6 @@
->  #include "git-compat-util.h"
+> diff --git a/builtin/check-ref-format.c b/builtin/check-ref-format.c
+> index bc67d3f0a8..3fe0b5410a 100644
+> --- a/builtin/check-ref-format.c
+> +++ b/builtin/check-ref-format.c
+> @@ -6,10 +6,13 @@
+>  #include "refs.h"
 >  #include "builtin.h"
->  #include "diff.h"
-> -#include "parse-options.h"
-> -
-> -/* parse-options.h added to initiate replacement of manual option parsing
-> - * with parse-options. 
-> - */
+>  #include "strbuf.h"
+> +#include "parse-options.h"
 >  
->  static const char builtin_merge_ours_usage[] =
->  	"git merge-ours <base>... -- HEAD <remote>...";
+> -static const char builtin_check_ref_format_usage[] =
+> -"git check-ref-format [--normalize] [<options>] <refname>\n"
+> -"   or: git check-ref-format --branch <branchname-shorthand>";
+> +static const char * const builtin_check_ref_format_usage[] = {
+> +	N_("git check-ref-format [--normalize] [<options>] <refname>\n"),
+> +	N_("   or: git check-ref-format --branch <branchname-shorthand>"),
+> +	NULL,
+> +};
+
+OK.  This is the bog-standard prep for calling usage_with_options().
+
+> @@ -53,31 +56,29 @@ static int check_ref_format_branch(const char *arg)
+>  
+>  int cmd_check_ref_format(int argc, const char **argv, const char *prefix)
+>  {
+> -	int i;
+> -	int normalize = 0;
+> +	enum {
+> +		CHECK_REF_FORMAT_BRANCH,
+> +	};
+> +
+> +	int i = 0;
+> +	int verbose;
+> +	int normalize;
+> +	int allow_onelevel;
+> +	int refspec_pattern;
+>  	int flags = 0;
+>  	const char *refname;
+
+Discard the blank line before "int i = 0" line, and keep the blank
+line you have here between the last declaration and the first
+statement.
+
+> -	if (argc == 2 && !strcmp(argv[1], "-h"))
+> -		usage(builtin_check_ref_format_usage);
+> -
+> -	if (argc == 3 && !strcmp(argv[1], "--branch"))
+> -		return check_ref_format_branch(argv[2]);
+> +	struct option options[] = {
+> +		OPT__VERBOSE(&verbose, N_("be verbose")),
+> +		OPT_GROUP(""),
+> +		OPT_CMDMODE( 0 , "branch", &check_ref_format_branch, N_("branch"), CHECK_REF_FORMAT_BRANCH),
+
+This is an iffy/tricky way to use CMDMODE.  The way CMDMODE is
+designed to be used is to have multiple ones that sets the same
+target variable so that parse_options() can notice conflicting
+command line request that gives more than one from the same set.
+
+The command has two modes (i.e. the "--branch" mode and the unnamed
+mode), so it is understandable that there is only one CMDMODE in the
+options[] array, but I am not sure how well it would work for a
+command like this.  For example, "check-ref-format --branch
+--normalize --allow-onelevel $v" should error out because --branch
+is not compatible with any other options.  I do not think a single
+parse_options() call with a single options[] array can express that
+kind of constraints.
+
+Besides, shouldn't the third parameter of OPT_CMDMODE supposed to be
+the address of the variable that would receive the value in its fifth
+parameter?  I do not see a decl for check_ref_format_branch variable
+(isn't that the name of the function???).
+
+Ahh, you said it builds but does not pass test.  Of course, that is
+because this part is completely bogus.
+
+It appears that to your series the only thing that matters is the
+shape of the tree after applying all of the patches, and individual
+steps are not ready to be reviewd, so I'd stop here.
+
