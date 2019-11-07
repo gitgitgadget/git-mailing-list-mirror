@@ -2,106 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F9BE1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 18:51:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 398261F4C0
+	for <e@80x24.org>; Thu,  7 Nov 2019 18:56:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728383AbfKGSvz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 13:51:55 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42600 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728253AbfKGSvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 13:51:55 -0500
-Received: by mail-pg1-f196.google.com with SMTP id q17so2575370pgt.9
-        for <git@vger.kernel.org>; Thu, 07 Nov 2019 10:51:55 -0800 (PST)
+        id S1727249AbfKGS4f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 13:56:35 -0500
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:53320 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbfKGS4f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 13:56:35 -0500
+Received: by mail-pg1-f201.google.com with SMTP id u11so2524579pgm.20
+        for <git@vger.kernel.org>; Thu, 07 Nov 2019 10:56:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2BLCzK76FFm+HLc9AK4IO5s/ZrE3apkIVY4M0J3ZR20=;
-        b=Ch7edLASZALuDOh92OVkTLNbBvqgGxC+PUA4GyBKUowT/TYSkNoXYxtRJjN2/zC/Q6
-         voqhGk1n6AddAxJELXY1cOkdJttX7KlHKFNgcGHpcsb9DQtqHRaZJUV7N0RGHHWAAOkY
-         Ye8Iczc1TlHipVxtJzMhRklxw+d8bambLCCDn/KLjtwGXtC3zrMKEm3WWAEnUFKM3SFy
-         ekFnbSiZ2R4+5AWB9ldBHWlEhpuXiSiXPynnnOPP/8V4AnsxfUWNR7fXQJQTldiIrhlL
-         M78bpxLAnnUnVH7YBQ9wCJkepu/6IQ1KwLjmr8Qu68zJSOtPsxveQPnz2dgCFli/BGJB
-         cHdg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=OPAC+BNouLyr3u6pXKuFPXN4CdGYa+0ukWTqcm53bTk=;
+        b=lxUcRAGuSvCqbrWC6Trsa/Pl15V4Zut3DURA9R1hFHi/sS3VPBJrJ5NP/aiHExSpj/
+         7VqwHF3N+U5NnvfDz7XJ8DPJXfvikQ9yD1slo8BNoVrxKiCDiva5lKRipyth+w5bBUm3
+         Mwr45wEtKxbycmG+fjwzvj70vXlY8KFoGesAkwBrWAh9PUWtLTvTmhzntCb7nGHffITh
+         iBJpYWPeaDOjtVw9K42gsduiux4xhgvV6Bieg9SV6hFKgrevPME6c/vHTdmIPSWVZVKJ
+         ZnsUSS9MplIPWgieW3RWQxuEQxvSEc73CPXmh9vwsLHNeIj7e6Pe5r+ic6VJVnI63Qc9
+         ZZ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2BLCzK76FFm+HLc9AK4IO5s/ZrE3apkIVY4M0J3ZR20=;
-        b=brNnzeFqtwelsUtYYVX6cPJesX+wcq9ieGU45za3HTSKdD0TBUS1tPUTxH+ewHUxf7
-         wW6Xdh4Z54mW0c2TECztsX+4ba4mNi6oQ/Hdd9Rh4xO9M8Pji9RvpAQhCikctQR9+bRs
-         TwoRyFq4IbRhUDfae6Ge3hjivNhOktgWs8BkakraxfL1SoR5uN5CszJmQs88x1Z2xjNR
-         E6qYIRvV2bNkvnTp1KDkP27gwMgtFNtDKr7DcmtUo6My7IYxsOka5TTzDErvfu4vPHPU
-         FRs5SRKSn7H6BEESkg/N2yzpUvG/Va2YpVhnvSriSo02jpJ5sVbeHqhb5cqcG7a0NCGs
-         X7EQ==
-X-Gm-Message-State: APjAAAXul3EOphfPfP0Ctmxr54lQOGVM6977RiJU2meNpf1rjmMqu4La
-        ji9FdiZRyf7HW8AvDqPaS79nLbJN
-X-Google-Smtp-Source: APXvYqzLrP0rh+55h477KxhGMu5F5WT46rsjQf9CPvY5CzqUm/XFgOP5J1NrxVyr4TGGHHeUijvo9A==
-X-Received: by 2002:a62:545:: with SMTP id 66mr5843600pff.1.1573152714482;
-        Thu, 07 Nov 2019 10:51:54 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id y144sm3840747pfb.188.2019.11.07.10.51.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Nov 2019 10:51:53 -0800 (PST)
-Date:   Thu, 7 Nov 2019 10:51:52 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 14/14] t5520: replace `! git` with `test_must_fail git`
-Message-ID: <70698bd9020ee896def07c36981767e331d2047a.1573152599.git.liu.denton@gmail.com>
-References: <cover.1571739459.git.liu.denton@gmail.com>
- <cover.1573152598.git.liu.denton@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1573152598.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=OPAC+BNouLyr3u6pXKuFPXN4CdGYa+0ukWTqcm53bTk=;
+        b=myr4utNZWOY1jOSIROGNgPcVpMaK1a1nQeeGM9dgx75aPPVgpA3x4+yIZN4OaQxFX1
+         jFOcNCtrt/OClqDKSvga08W+N5d+4WVeHbhc1A0gcCcyeM1VGKvioqfLPRYEfONsRCGB
+         wfmTOw+HK2RLLSfuXQeLuEGt39VJWUyg5SgZAFXRvhG26KGbmj8ubgGHs8ai1FXZ3h+J
+         nuj7XuDtCCn3MVBuPquDxS4E30eADqMwneu5JEoqu6GFwpl6hOh8GboHbLIWpMvUqr7Q
+         PPHlz7eKfJQYj0Js7jUF3Cft9zu3Ry+j6EUyHNK1vjyOwPXFc/srauLBLjoY0xy/yv04
+         lHMQ==
+X-Gm-Message-State: APjAAAXhGTzNMHUjqYQI33uO++VRq23IOkx8Gm8TbuZoc+decJL1NP6u
+        5IJwfKkC2TGMhFhJ3pZrI3/BxJrjsSBsCot6brpH
+X-Google-Smtp-Source: APXvYqw3FnW92a4CwXNmkYCHX0t0HN5cUj17A4DShxvO1cwqBkHmvMDwtWDMtMfhtzIPfMPQQ3LS8kEKoc7cBLxczWMG
+X-Received: by 2002:a63:fe15:: with SMTP id p21mr6238617pgh.26.1573152993865;
+ Thu, 07 Nov 2019 10:56:33 -0800 (PST)
+Date:   Thu,  7 Nov 2019 10:56:30 -0800
+In-Reply-To: <CAPNHn3qj7v=xu1ogG4q9NrHvp1zfZFvUWQKJqf0DJcavxgsz6Q@mail.gmail.com>
+Message-Id: <20191107185630.253388-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CAPNHn3qj7v=xu1ogG4q9NrHvp1zfZFvUWQKJqf0DJcavxgsz6Q@mail.gmail.com>
+X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
+Subject: Re: [PATCH v7 1/1] Implement rev-list --bisect* --first-parent
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     workingjubilee@gmail.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org,
+        christian.couder@gmail.com, johannes.schindelin@gmx.de,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, if a Git command fails in an unexpected way, such as a
-segfault, it will be masked and ignored. Replace the ! with
-test_must_fail so that only expected failures pass.
+> > > @@ -964,7 +981,12 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+> > >
+> > >       bisect_common(&revs);
+> > >
+> > > -     find_bisection(&revs.commits, &reaches, &all, !!skipped_revs.nr);
+> > > +     if (skipped_revs.nr)
+> > > +             bisect_flags |= BISECT_FIND_ALL;
+> > > +     if (revs.first_parent_only)
+> > > +             bisect_flags |= BISECT_FIRST_PARENT;
+> > > +
+> > > +     find_bisection(&revs.commits, &reaches, &all, bisect_flags);
+> > >       revs.commits = managed_skipped(revs.commits, &tried);
+> > >
+> > >       if (!revs.commits) {
+> >
+> > I don't see how revs.first_parent_only is ever set in this function. If
+> > it's never set, undo this change, since this code is never executed.
+> 
+> In this function, 
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t5520-pull.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+(1)
+> we call bisect_rev_setup() using the revs struct we
+> made,
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index ef3dbc201a..602d996a33 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -537,7 +537,7 @@ test_expect_success 'pull --rebase=i' '
- test_expect_success 'pull.rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase invalid &&
--	! git pull . copy
-+	test_must_fail git pull . copy
- '
- 
- test_expect_success '--rebase=false create a new merge commit' '
-@@ -572,7 +572,7 @@ test_expect_success REBASE_P \
- 
- test_expect_success '--rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
--	! git pull --rebase=invalid . copy
-+	test_must_fail git pull --rebase=invalid . copy
- '
- 
- test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-merge' '
--- 
-2.24.0.rc2.262.g2d07a97ef5
+(2)
+> which then calls setup_revisions() on the revs,
 
+(3)
+> which appears to
+> call handle_revision_opt() with that struct again,
+
+(4)
+> which finally is
+> allowed to set revs->first_parent_only = 1; in revision.c.
+> 
+> So unless I am horribly misreading something, we do set it.
+
+Thanks for performing this analysis. Working backwards:
+
+(4) handle_revision_opt() in revision.c sets revs->first_parent_only
+only if argv[0] is "--first-parent".
+
+(3) setup_revisions() calls handle_revision_opt() in a loop over its
+argv parameter.
+
+(2) bisect_rev_setup() initializes rev_argv (with ARGV_ARRAY_INIT, a
+blank array). Then, it pushes "bisect_rev_setup", an OID in
+"bad_format", some OIDs in "good_format", and possibly some paths. Then
+it calls setup_revisions() with rev_argv as the argv parameter. Notice
+that there is no "--first-parent" sent at all.
+
+> > > +test_expect_success '--bisect-all --first-parent returns correct order' '
+> > > +     git rev-list --bisect-all --first-parent E ^F >actual &&
+> > > +
+> > > +     # Make sure the entries are sorted in the dist order
+> > > +     sed -e "s/.*dist=\([0-9]\).*/\1/" actual >actual.dists &&
+> > > +     sort -r -n actual.dists >actual.dists.sorted &&
+> > > +     test_cmp actual.dists.sorted actual.dists
+> > > +'
+> > > +
+> > > +# NEEDSWORK: this test could afford being hardened against other
+> > > +# changes in the same file.
+> > > +test_expect_success '--bisect-all --first-parent compares correctly' '
+> > > +     cat >expect <<-EOF &&
+> > > +     $(git rev-parse tags/e5) (tag: e5, dist=4)
+> > > +     $(git rev-parse tags/e4) (tag: e4, dist=4)
+> > > +     $(git rev-parse tags/e6) (tag: e6, dist=3)
+> > > +     $(git rev-parse tags/e3) (tag: e3, dist=3)
+> > > +     $(git rev-parse tags/e7) (tag: e7, dist=2)
+> > > +     $(git rev-parse tags/e2) (tag: e2, dist=2)
+> > > +     $(git rev-parse tags/e8) (tag: e8, dist=1)
+> > > +     $(git rev-parse tags/e1) (tag: e1, dist=1)
+> > > +     $(git rev-parse tags/E) (tag: E, dist=0)
+> > > +EOF
+> > > +
+> > > +git rev-list --bisect-all --first-parent E ^F >actual &&
+> > > +     sort actual >actual.sorted &&
+> > > +     sort expect >expect.sorted &&
+> > > +     test_cmp expect.sorted actual.sorted
+> > > +'
+> >
+> > I think these 2 tests can be combined, since the latter also checks the
+> > dists. Also, correct the indentation of the latter test.
+> 
+> I understand they are similar tests, but... Is there a tangible
+> reason for combining them? Especially when their logic can
+> live and breathe completely separately, compacting tests
+> reduces the resolution of the information we can extract from failure.
+> 
+> I would rather simply drop one and preserve 1 test = 1 data point.
+
+In general, I agree that 1 test should represent 1 data point, and the
+reason for that being (as you said) the resolution of the information we
+can extract from failure. But here, the resolution is diminished if we
+don't combine the tests. Here, if either test fails, because of the
+postprocessing we've had to do on the output, we lose signal. But if we
+had the combined test, we wouldn't.
