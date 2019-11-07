@@ -7,124 +7,101 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CDEF1F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 19:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8FCD1F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 19:08:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729904AbfKGTEY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 14:04:24 -0500
-Received: from smtp1.lauterbach.com ([62.154.241.196]:48895 "EHLO
+        id S1730813AbfKGTIG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 14:08:06 -0500
+Received: from smtp1.lauterbach.com ([62.154.241.196]:51803 "EHLO
         smtp1.lauterbach.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfKGTEY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 14:04:24 -0500
-Received: (qmail 1827 invoked by uid 484); 7 Nov 2019 19:04:22 -0000
+        with ESMTP id S1726917AbfKGTIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 14:08:05 -0500
+Received: (qmail 2045 invoked by uid 484); 7 Nov 2019 19:08:04 -0000
 X-Qmail-Scanner-Diagnostics: from 10.2.10.40 by smtp1.lauterbach.com (envelope-from <ingo.rohloff@lauterbach.com>, uid 484) with qmail-scanner-2.11 
  (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
  Clear:RC:1(10.2.10.40):. 
- Processed in 0.085416 secs); 07 Nov 2019 19:04:22 -0000
+ Processed in 0.085952 secs); 07 Nov 2019 19:08:04 -0000
 Received: from unknown (HELO ingpc3.intern.lauterbach.com) (Authenticated_SSL:irohloff@[10.2.10.40])
           (envelope-sender <ingo.rohloff@lauterbach.com>)
           by smtp1.lauterbach.com (qmail-ldap-1.03) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
-          for <Johannes.Schindelin@gmx.de>; 7 Nov 2019 19:04:22 -0000
-Date:   Thu, 7 Nov 2019 20:04:21 +0100
+          for <git@vger.kernel.org>; 7 Nov 2019 19:08:03 -0000
 From:   Ingo Rohloff <ingo.rohloff@lauterbach.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] branch: Forbid to create local branches with confusing
- names
-Message-ID: <20191107200421.6214b2e1@ingpc3.intern.lauterbach.com>
-In-Reply-To: <nycvar.QRO.7.76.6.1911062101580.46@tvgsbejvaqbjf.bet>
+To:     git@vger.kernel.org
+Cc:     Ingo Rohloff <ingo.rohloff@lauterbach.com>
+Subject: [PATCH v2 0/4] Do not create new refnames "refs" or "refs/*"
+Date:   Thu,  7 Nov 2019 20:07:46 +0100
+Message-Id: <20191107190750.26674-1-ingo.rohloff@lauterbach.com>
+X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
 References: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
-        <nycvar.QRO.7.76.6.1911062101580.46@tvgsbejvaqbjf.bet>
-Organization: Lauterbach GmbH
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 7BIT
+X-Qmail-Scanner-2.11: added fake Content-Type header
+Content-Type:   text/plain; charset=US-ASCII
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Johannes,
+After the previous round of input:
+The intention of this patch series is to make sure, that you always
+might use "refs/<something>" to unambiguously refer to a specific 
+reference.
 
-On Wed, 6 Nov 2019 23:15:44 +0100 (CET)
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Or put in another way: With this patch series, refnames for "git log", 
+starting with "refs/" should never result in a
+  warning: refname '...' is ambiguous.
+Exceptions: 
+You already have strangely named references in your repository.
+You pull such strangely named references from a remote repository.
 
-> Hi Ingo,
-> 
-> On Wed, 6 Nov 2019, Ingo Rohloff wrote:
-> 
-> > Without this patch, git allows to do something like this:  
-> 
-> Maybe start the patch with a description of the problem it tries to
-> solve? In other words, I would have appreciated a first paragraph that
-> starts with "Many Git users ...".
+This patch series does not prevent you from creating various other
+forms of ambiguous refnames. Example:
 
-That's actually one of the problems: 
-It's not clear what exactly the problem is :-).
+    git branch origin/master
 
-After thinking about it more: The minimal goal I can think of is to make sure 
-that if you use
-   git log refs/<something>
+This will very likely result in an ambiguity, because now the
+references
 
-you will never get a 
-   warning: refname '...' is ambiguous
+   refs/heads/origin/master
+   refs/remotes/origin/master
 
-Rationale behind that: If even "refs/<something>" gives you this warning, 
-then you might be in a lot of trouble. It means even giving a "full" refname 
-is not enough to resolve ambiguities.
-I think this is bad, because it means it might be hard to get out of this 
-situation, because you might get the "ambiguous" warnings when you try to 
-get rid of the offending refnames.
+will very likely both exist. "origin/master" matches both refnames.
 
+This patch series forbids to create new reference names, which start
+with "refs" or "refs/*" with the commands
 
-> 
-> A lot of this text should probably go into the commit message itself,
-> possibly with accompanying Message-IDs or even public-inbox URLs right
-> away.
+  git branch <name>
+  git checkout -b <name>
+  git tag <name>
+  git remote add <name>
 
-I did read "Documentation/SubmittingPatches". There it says:
+Note: This patch does NOT prevent you from working with references
+which already exist.  It just prevents you from creating new ones
+with the commands listed above.
 
-    Try to make sure your explanation can be understood
-    without external resources. Instead of giving a URL to a 
-    mailing list archive, summarize the relevant points of 
-    the discussion.
+That's also the reason why the '--force' option is not evaluated here.
+I cannot think of a good reason, why you ever should want to create
+refnames matching any of the following patterns:
+   refs/heads/refs/*
+   refs/tags/refs/*
+   refs/remotes/refs/*
+  
 
-so that's what I tried to do.
+Ingo Rohloff (4):
+  refs: new function newname_has_bad_prefix
+  branch: Prevent creation of local branches named "refs" or "refs/*"
+  remote: Prevent users from creating remotes named "refs" or "refs/*"
+  tag: Prevent users from creating tags named "refs" or "refs/*"
 
-> 
-> A more common problem for me, personally, is when I manage to fool
-> myself by creating a local branch like `origin/master`. Clearly, I want
-> to refer to the remote-tracking branch, but by mistake I create a local
-> branch that now conflicts with the (short) name of the remote-tracking
-> branch.
-> 
-> To remedy this, you would not only have to ensure that `create_branch()`
-> verifies that the branch name does not have a `<remote-name>/` prefix
-> where `<remote-name>` refers to a valid remote, but you would also need
-> a corresponding patch that teaches `git add remote <nick> <url>` to
-> verify that no local branch starts with `<nick>/`.
-> 
-> What do you think?
-> 
+ builtin/branch.c   |  6 ++++++
+ builtin/checkout.c |  3 +++
+ builtin/remote.c   |  3 +++
+ builtin/tag.c      |  3 +++
+ refs.c             | 30 ++++++++++++++++++++++++++++++
+ refs.h             |  2 ++
+ 6 files changed, 47 insertions(+)
 
-I agree: When I first started to use git, I was quite surprised that this
-"double naming" is allowed.
-
-But I also think, this is for another patch series; you probably need to 
-honor "--force", or even add a git configuration option to allow this
-anyway.
-
-I am able to imagine that people intentionally set up a local branch
-called "refs/heads/repoX/master" which tracks "refs/remotes/repoX/master".
-
-For me this sounds like an unnecessary complication (because now you always
-have to use the "long" refname), but if you put some software on top of git, 
-I can imagine that this might make a lot of sense...
-
-I am not enough of a git wizard to fully grasp the implications here.
-
-so long
-  Ingo
-
+-- 
+2.24.0
 
