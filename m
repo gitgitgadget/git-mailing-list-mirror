@@ -2,127 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8971F454
-	for <e@80x24.org>; Thu,  7 Nov 2019 17:47:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B95481F454
+	for <e@80x24.org>; Thu,  7 Nov 2019 18:49:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389425AbfKGRrE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 12:47:04 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36327 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730868AbfKGRrD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 12:47:03 -0500
-Received: by mail-wr1-f68.google.com with SMTP id r10so4074084wrx.3
-        for <git@vger.kernel.org>; Thu, 07 Nov 2019 09:47:01 -0800 (PST)
+        id S1727220AbfKGStR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 13:49:17 -0500
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:56237 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbfKGStR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 13:49:17 -0500
+Received: by mail-wm1-f43.google.com with SMTP id b11so3608715wmb.5
+        for <git@vger.kernel.org>; Thu, 07 Nov 2019 10:49:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/QyY279sZLZB4OrbtVh4TZ7H0m5WH572NfxLyQ1N6Zw=;
-        b=GRXy0jKfVrrIXNJQ7Buh1c5TXh5mRifhKhZPiJnglNmFVcf110oXcDqC4P6oaqyFsN
-         pmGpQEkJdWag+aX8grnsOaaYRjXGf+3YHTbTUDsy+gQWUpWkLzCi9PCTZqOLaLq7n18r
-         1JMW1jFusYMB8Uvryx2hQc6/HD+8VUw31VtnzjWA1K02MIKP50l3ueLI48I9gzK81r0z
-         Rvuk7W6jNGazOdpatsagFERMmFpk+i7C69Vy3kFN89uG7ds522IMSwl+n+ScJh5MsQTU
-         4ng8/DvjTd/2oyWfEV+xPjhBQR68BXVw+I3lo+EImDBAQahrqvZ3Fw5afbgBC8PHZW35
-         JUow==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VgnW4Atwsr+RTGAb+4Dj6sx+yxFXlE46WhOYOw40NPU=;
+        b=qKmAibiSwVfw0ZMnlno2zN6OVMNtYD6Bh1WdA51YYH20DCVFXB4h3f4KyqZjV6E5U+
+         VjYZSudO0V3SkHo7sEZ4lvO3VYpLA3edZl+XV3JUTTW/H9xi5WMIWKu7onzgiiFHJ0MK
+         NgD+JSWn279/xO8I360GEj977ezq7pSisSN0oQ0VyJ9kZfHX8rraYM57YdVgupv2SLbJ
+         f5CZfiHjW4i3rjeFnxcN5/nrl2weISiFb05K3oPqlcYdFl17SaNOh7d1hdfw03Kbbl/N
+         rZAyr6lXK9VNWq5YjaaphO+pbtTne6653My5WhPOtHzr/fVpDEPZFdKEKjsxIobsrkPa
+         kDfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/QyY279sZLZB4OrbtVh4TZ7H0m5WH572NfxLyQ1N6Zw=;
-        b=P20sK77ia4YoSlLkirm/QCGKCSMPJFJ3Zmpwcc1+EkR9iEiM+bEC8lO5tCUbKgGzlE
-         k2mUCJFussO6MuYA1D5s1v0HmkSJ6N2jobzL7QVmp93kdrCsLzjNaq1JdFE8rXdh66wD
-         U17YiMU9nW6FPzI+HuhKduy5uZlW44Svktgro7ipVqMt8zPr9LiAjbz0W2zszBJzo1oJ
-         J7kjtazzqhSKsSeoJ+x9linW4/Kz4A+gfbpYr5iovhb6usF+HEqaD2ThhrqD5/TyxACq
-         4an37avnGF7oAIcisnf8F/8n6MR828NrkqOimyAhn+AdCK5bHInZpw7PzNynyjQzZLqe
-         gMIw==
-X-Gm-Message-State: APjAAAX+5mw+bKLvPv8j3faaKm3Mu+YyhSOMKwBUneA00GojLxlBcOX3
-        vplgaFdStZkKCgmwaxQJSe7mil79
-X-Google-Smtp-Source: APXvYqz4mIrp55bEKrFvd7Dq7vpOTRq6M9Zv8jYrW35rAzGk/FrdbAYHl4q+DB6neNyyObTltxxKNQ==
-X-Received: by 2002:adf:8088:: with SMTP id 8mr4023741wrl.230.1573148821205;
-        Thu, 07 Nov 2019 09:47:01 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u16sm2946122wrr.65.2019.11.07.09.47.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 07 Nov 2019 09:47:00 -0800 (PST)
-Message-Id: <3c0c9675e125f9357aeadd76f290413aaa09e4cf.1573148818.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.450.v3.git.1573148818.gitgitgadget@gmail.com>
-References: <pull.450.v2.git.1572984842.gitgitgadget@gmail.com>
-        <pull.450.v3.git.1573148818.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 07 Nov 2019 17:46:58 +0000
-Subject: [PATCH v3 2/2] commit-graph: use start_delayed_progress()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VgnW4Atwsr+RTGAb+4Dj6sx+yxFXlE46WhOYOw40NPU=;
+        b=LIhP352ckypy6+Yg5u/kCtbcq5sYS+zx10tw9iEwm12X/6YwscMwZimp9z3gMmeA0z
+         rZDuDocmSNMoudoEQv/rd51Wtx1p2UoX4dKvtuSO5TvKIakxYAivF8RiPdzxKPNIaSx6
+         5jF2EtGaS9cyoE01UOvWvCEpvU1XJuUEbZoXrf7RzojOX78zohQQBT4a7NSc73bjaQFD
+         PBqIUQc+EN2CByS6syNcXLgy64AWH7ZQrsiUMAgp2++RkyySj5W4PzIdCEcAK0HRRS/5
+         75HoKd1lnKzCVZzpgDqporZ8dw8DsfAiZrWiexttoPqWLt36K3QC9HFC8/y7x0snSlLx
+         YHTA==
+X-Gm-Message-State: APjAAAWW1Hew0M34jg8lAlfncPs6nNfBDQO7q3yWSWW4FRJ3dhabKemE
+        w6MsA9CjPVwJb0P4gLv/R5k=
+X-Google-Smtp-Source: APXvYqzuqkcWF+4l60n7I4AUP5gMqrbo/Vw+jTxYHReaSIRCg0NQIp3akTHYEbDhMKDvCs7A8OLhIA==
+X-Received: by 2002:a05:600c:2911:: with SMTP id i17mr485455wmd.83.1573152554839;
+        Thu, 07 Nov 2019 10:49:14 -0800 (PST)
+Received: from localhost ([95.149.189.152])
+        by smtp.gmail.com with ESMTPSA id d11sm4161336wrf.80.2019.11.07.10.49.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Nov 2019 10:49:13 -0800 (PST)
+Date:   Thu, 7 Nov 2019 18:49:12 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Grzegorz Rajchman <rayman17@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [BUG] git stash pop --quiet deletes files in git 2.24.0
+Message-ID: <20191107184912.GA3115@cat>
+References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     ryenus@gmail.com, stolee@gmail.com, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+On 11/07, Grzegorz Rajchman wrote:
+> Hi, this is the first time I report an issue in git so I hope I'm
+> doing it right.
 
-When writing a commit-graph, we show progress along several commit
-walks. When we use start_delayed_progress(), the progress line will
-only appear if that step takes a decent amount of time.
+Thanks for the report.  You are indeed doing this right, and the
+included reproduction is very helpful.
 
-However, one place was missed: computing generation numbers. This is
-normally a very fast operation as all commits have been parsed in a
-previous step. But, this is showing up for all users no matter how few
-commits are being added.
+I broke this in 34933d0eff ("stash: make sure to write refreshed
+cache", 2019-09-11), which wasn't caught by the tests, nor by me as I
+don't use the --quiet flag normally.
 
-The tests that check for the progress output have already been updated
-to use GIT_PROGRESS_DELAY=0 to force the expected output. However, there
-is one test in t6500-gc.sh that uses the test_terminal method. This
-mechanism does not preserve the GIT_PROGRESS_DELAY environment variable,
-so we need to modify check on the output. We still watch for the
-"Enumerating objects" progress but no longer look for "Computing
-commit graph generation numbers".
+Below is a fix for this, but I want to understand the problem a bit
+better and write some tests before sending a patch.
 
-Reported-by: ryenus <ryenus@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c | 2 +-
- t/t6500-gc.sh  | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 0aea7b2ae5..071e1c6e9b 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1103,7 +1103,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
- 	struct commit_list *list = NULL;
+index ab30d1e920..2dd9c9bbcd 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -473,22 +473,20 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
  
- 	if (ctx->report_progress)
--		ctx->progress = start_progress(
-+		ctx->progress = start_delayed_progress(
- 					_("Computing commit graph generation numbers"),
- 					ctx->commits.nr);
- 	for (i = 0; i < ctx->commits.nr; i++) {
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index 7f79eedd1c..c68177510b 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -111,8 +111,7 @@ test_expect_success 'gc --no-quiet' '
- test_expect_success TTY 'with TTY: gc --no-quiet' '
- 	test_terminal git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
- 	test_must_be_empty stdout &&
--	test_i18ngrep "Enumerating objects" stderr &&
--	test_i18ngrep "Computing commit graph generation numbers" stderr
-+	test_i18ngrep "Enumerating objects" stderr
- '
+                if (reset_tree(&c_tree, 0, 1)) {
+                        strbuf_release(&out);
+                        return -1;
+                }
  
- test_expect_success 'gc --quiet' '
--- 
-gitgitgadget
+                ret = update_index(&out);
+                strbuf_release(&out);
+                if (ret)
+                        return -1;
+-
+-               discard_cache();
+        }
+ 
+        if (quiet) {
+                if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+                        warning("could not refresh index");
+        } else {
+                struct child_process cp = CHILD_PROCESS_INIT;
+ 
+                /*
+                 * Status is quite simple and could be replaced with calls to
+
+
+> I have experienced some unexpected behaviour with git stash pop
+> --quiet in git 2.24.0. I use stash in a pre-commit hook script. In it,
+> I stash non-staged changes to keep the working directory clean while
+> running some linters, then I restore the stash by running pop, but
+> after the recent git update I noticed that it stages all previously
+> checked files as deleted.
+> 
+> Steps to reproduce:
+> 
+>   mkdir test-git-stash
+>   cd test-git-stash/
+>   git init
+>   echo foo > foo.txt
+>   git add . && git commit -m 'init'
+>   echo bar > foo.txt
+>   git stash save --quiet --include-untracked --keep-index
+>   git stash pop --quiet
+>   git status
+> 
+> This will unexpectedly output:
+> 
+>   On branch master
+>   Changes to be committed:
+>     (use "git restore --staged <file>..." to unstage)
+>       deleted:    foo.txt
+> 
+>   Untracked files:
+>     (use "git add <file>..." to include in what will be committed)
+>       foo.txt
+> 
+> Notice that foo.txt was staged as deleted whilst still being present
+> on the disk.
+> 
+> However, if I remove --quiet flag from stash pop:
+> 
+>   git restore --staged foo.txt
+>   git stash save --quiet --include-untracked --keep-index
+>   git stash pop
+>   git status
+> 
+> Then it works as expected. It used to work as expected in git prior to 2.24.0
+> 
+> My OS is Ubuntu 19.04.
