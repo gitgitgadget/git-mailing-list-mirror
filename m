@@ -2,87 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE8941F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 03:04:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F1191F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 03:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729328AbfKHDET (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 22:04:19 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56908 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfKHDES (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 7 Nov 2019 22:04:18 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 438FF19BE5;
-        Thu,  7 Nov 2019 22:04:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+pOOqLNebzHHI1ye4B/aTnrLTSU=; b=WYt28i
-        w2g+zwsu4Po1pJtSgt/Z3PULhIVSx1rYwWoB9wvHwuSn10KTaMF/d9ljocPXPmwh
-        rUugNEDv7uxdBhuTpaxeiRbw4LqkTQYryZ2f4Y82BtMUIprMhgeM4c3Du4mRfF4/
-        CS9JZ2dMpUvchj0XYK0Fc9bV3WLedD0cmsbDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ug3+xdTpHbvq/xkwHPM5yfEzY7WzSxoW
-        1TMwoVyLvrj9eb2d0VDVDtAqDXNcR7bCjSNqbrFpCGhwpzZIJPN/H7R5aMxOdKsM
-        PgwZ0x5fn35JNU8pGSPSH0mxsVA+N6ld7MyhVDs0Uq5+vWSDlmXOH0RH3ruoUIGJ
-        45sQnvvssKw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3A44119BE3;
-        Thu,  7 Nov 2019 22:04:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 982C519BE2;
-        Thu,  7 Nov 2019 22:04:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Cc:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] doc: reset: unify <pathspec> description
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
-        <1740ac7a291cfc81418c2d437201c3373487fa26.1572895605.git.gitgitgadget@gmail.com>
-        <xmqqh83hveiz.fsf@gitster-ct.c.googlers.com>
-        <b7acd8d1-d17a-29bd-44d3-59d425842c10@syntevo.com>
-        <xmqqo8xoqlvf.fsf@gitster-ct.c.googlers.com>
-        <5121d118-6a4c-80c1-ccd5-60c3c6b5f6ee@syntevo.com>
-Date:   Fri, 08 Nov 2019 12:04:16 +0900
-In-Reply-To: <5121d118-6a4c-80c1-ccd5-60c3c6b5f6ee@syntevo.com> (Alexandr
-        Miloslavskiy's message of "Thu, 7 Nov 2019 12:05:10 +0100")
-Message-ID: <xmqqtv7fnk5r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728417AbfKHDYG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 22:24:06 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44679 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725930AbfKHDYG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 22:24:06 -0500
+Received: by mail-pf1-f194.google.com with SMTP id q26so3720783pfn.11
+        for <git@vger.kernel.org>; Thu, 07 Nov 2019 19:24:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rJLK+CT3Jd6zGbrXm5AS/T23uu/hTXmBws3lbSFQcZc=;
+        b=DQJ7mi/pxa9mwJGkteVtAkiuqhCqu14ssEbEjpiNHS2FcJYmFTTqKfx+cfviIF1Sam
+         PT3vyXc9/L5xNFEQIw1O/Zv83kLCBQkQk5JIgZ7DU9f0zKX3gU8qD+O9NlF8RtWMT1nX
+         F1t0wrWsszK2e7K3UW86p46UTQPErg++G0YNFgNTh/QD9VGS3uNgNuh42FifWMc9nQA8
+         eRvkhF8oaEBotKqCKWpsPrHWckwFMN9am3LbbGtyydGuEmzxGRzcfCVSurbN3BUfqSkI
+         5tQUlPZTIDIpAP731ArwklAPqegLVj1CwxL1qiPr1PzSMZhKYXKhwdQ5aouOyJk1Rzsa
+         3Vzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rJLK+CT3Jd6zGbrXm5AS/T23uu/hTXmBws3lbSFQcZc=;
+        b=iGsmPhmmTr3KoUif7tz+IZiKShGHHKB4W0YTMVXmRwbYcux6kUSplTQsTBYCPZYNwy
+         pscI8fSq8MGy3LHrs06l/Yh+Y7JhsBYjlaGP3jo1cHPW2pnPHcoOYl6StbKgw4FuhyXu
+         +g5RFH/6Sh44MFvh7SnRi9qqDKe0b1uX7jQwzwrf32cPQBcOyvA4L4IzuP2F2olQe6cW
+         ndpgVLMsUC/Fq6e7qIme41dqx72Qp6kmDhc+NNUsisnpsPdqnFZD2mWuFxuR+bhf45PO
+         /kLDiPMeTwyrcsD8hZQDFT0lUyRyCV2Xed79scDRyhNRrUsgjOlD3rCskhCzzRVRavKf
+         1upA==
+X-Gm-Message-State: APjAAAVedxJZampUV6vxMcLiXhvjGkEhSqJjU39OKVTszY6bENJCWASL
+        3I6AsHI+WyWoNua+Q3a+Uhk=
+X-Google-Smtp-Source: APXvYqw/uqNCHS/02VicJ3fw4TYIH8lbmqp98CI977BJmoJMLl4aOYc7r63BqGgVeCJyWpqql8axvg==
+X-Received: by 2002:a63:fa0e:: with SMTP id y14mr8770158pgh.174.1573183445058;
+        Thu, 07 Nov 2019 19:24:05 -0800 (PST)
+Received: from helium ([125.252.103.164])
+        by smtp.gmail.com with ESMTPSA id c21sm3861035pgh.25.2019.11.07.19.24.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Nov 2019 19:24:04 -0800 (PST)
+Date:   Fri, 8 Nov 2019 11:24:01 +0800
+From:   "Eric N. Vander Weele" <ericvw@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] status: teach "status --short" to respect "--show-stash"
+Message-ID: <20191108032401.GA1465@helium>
+References: <20191104100334.60537-1-ericvw@gmail.com>
+ <xmqq36f1wx6h.fsf@gitster-ct.c.googlers.com>
+ <20191107103141.GA87008@helium>
+ <xmqqimnwoscx.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 73D72A5A-01D4-11EA-AE0D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqimnwoscx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
-
-> On 07.11.2019 6:46, Junio C Hamano wrote:
->> I do not know if removal of the only-half-correct "This is the
->> opposite of add" should be part of this change, or it should be a
->> separate fix.  The half-wrong sentene was not introduced by this
->> patch, so leaving it as-is is OK.  It just leaves another thing for
->> us to think about later.
+On Thu, Nov 07, 2019 at 08:09:34PM +0900, Junio C Hamano wrote:
+> "Eric N. Vander Weele" <ericvw@gmail.com> writes:
 >
-> My feeling is that this problem is separate from the topic I'm working
-> on. I only touched docs to synchronize <pathspec>, so that I can
-> copy&paste new option description in next commit without tailoring it
-> to local speech. Also, I must admit that upon reading your
-> explanation, I felt that I lack the experience to update the writing
-> properly.
+> >> Isn't this information available to scripts that want to read from
+> >> porcelain v2 output format (which is meant to be extensible by
+> >> allowing easy-to-parse optional headers, which this stash thing
+> >> exactly is).
+> >
+> > It is not available in Porcelain Format v2... yet :).
+> >
+> >
+> > I'm happy making '--show-stash' congruent with '--branch' in v1',
+> > which is would be in line with documented behavior, displaying
+> > something in v2 only, or both.  Let me know how you would like to
+> > proceed and I'll rework the patch accordingly.
+>
+> Quite honestly, you do not want to ask _me_.  If you left it to
+> me, I may say that, among the possible next step you listed, the
+> best one is to do nothing, as I do not want to see the stash info in
+> the "status --short" output ;-)
+>
+> It probably is the safest to make it available first only in v2
+> format.  I do not know if that makes its utility too limited for the
+> purpose of the application you have in mind.
 
-Yeah, I do think it is cleaner to leave it as a separate issue.
+The application I had in mind was to remind me of potentially stray
+stashes I may have forgotten about when working on a project.  I was
+hoping to add "--show-stash" to my alias for "status --short --branch".
 
-Thanks.
-
+The v2 format is a bit too verbose for what I need and having color
+output is a nice bonus when using "--short".  I don't feel strongly for
+pushing this through, but I am happy with what I have learned through
+the process of trying :).
