@@ -2,90 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C68541F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 15:01:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 958751F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 15:42:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbfKHPBF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 10:01:05 -0500
-Received: from mail-il1-f181.google.com ([209.85.166.181]:35301 "EHLO
-        mail-il1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726039AbfKHPBF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 10:01:05 -0500
-Received: by mail-il1-f181.google.com with SMTP id z12so5399335ilp.2
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 07:01:04 -0800 (PST)
+        id S1726726AbfKHPmG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 10:42:06 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:39709 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726438AbfKHPmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 10:42:06 -0500
+Received: by mail-wm1-f51.google.com with SMTP id t26so6672156wmi.4
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 07:42:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OvPGjhdZR2TPsVRfh7qctJ8/uur903ww3hY5Ffbw520=;
-        b=auypJtnon0ss5/RDob93FDsxC8I705JvLbg/B+Vn2Aodsql44hgEUponFK1hJHoQlf
-         eNKYCIW0WTpBuNfeACUQ9XbxYW2hDXTyLidi/lGEzSqpEVwxtIlXqEsOZWwVmF+hXGsQ
-         4VOaTigYo+3NmJUrqmEVTDV4qQ2pKU9Z0zh0xfjwuPZOU+2AMnPvY8QcfZCBqCIF1XQt
-         h6kENXraLOBmsqileXCcHIEytmNDzqrvjyKHZT4IDOUV0VUJyi7GVpGyWQd/5IaLb0t8
-         w/KKAS7cbJi/ZnA9RtCGCIx4PxBcpHUA4l1Ve0y7Rh67nAgSCsQtxl92tTVD5kJXkhwR
-         ukxA==
+        d=niemier-pl.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GvOI4HJEedNOd8Rj6/g8BaOoaVaQAIC1ZcW2VtFYiE0=;
+        b=n7G/Y0JPClDW4JZEIUTLM5awNxQmsGZfJ2fBE0ngr5QnAsSAcwzy2TkmA0QGd9YnJt
+         sQWl6z80I0QOwjJV2F4bixC6VdBaGyM0isgIq2L1+rk2lIP6ADrk+uR1PvSZVu6YQqL1
+         ELMs2o+o0eHrldkV5FjLsZnF7wsB/4rMtWMDM4pMYvGmzLG8PciSlbsGRwMekex/TjBv
+         eSLw3grPeGmV6vshtCg3vssRRu3xXsZLYRW2Uri7gXtITxc6MhXKpZEFu5xU8N+HqSs6
+         fPceNss2l4dbm9V5uvC9nqQaWHkEp4JsuQgoWbPcFUfdLAuKPX2WQR4BDdyiGInAkqLw
+         AazA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OvPGjhdZR2TPsVRfh7qctJ8/uur903ww3hY5Ffbw520=;
-        b=ctI+6UtyagfxDxwzF0I1R3Ss/y03yZb3LrJiY73IqccIaPCU7hfppeC234cK1h9Of6
-         pTT0C/J2rvldXjwiWott2BVepfLUXVASOPmSBqilGJ1t1UQlUxPogdKDR1L+EqMZSmFa
-         jdGDMcixKUPiZniZFmvAZOvAxD01c0fFNw9oZ3ZhtbGE2IQHvh9jr59mt7MXBSBOz4AW
-         +Pokmpm4jItcsWOC968Hkxip0w/dvLAUueGDD4K6byCapBtkQcVOgJEkeu4/xKZDn2+d
-         brPt/PIHHXBTX2VkHkJ98wsEQCoRkSiB+HvwHNTFrSZRbE0VVvMwQsoE97TC4GrOiNUT
-         bqEA==
-X-Gm-Message-State: APjAAAVsSKxaHkChondozmL8RJO2C2jArxMu/tk85EyFb9oll6zQN/J6
-        InjV5aIZ+x43F12GHg8v7OMvVaP2Z4bH4g33iiU67g==
-X-Google-Smtp-Source: APXvYqzRod5e1xwkwUJYujb1eMGPFNXXIaG36E99xKfvc8ZI7W0Vm2tbQYME/IVKiyAQkCnjmNkx1WpmmHOBglcsOPU=
-X-Received: by 2002:a92:4899:: with SMTP id j25mr12524730ilg.127.1573225263965;
- Fri, 08 Nov 2019 07:01:03 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqqeeyin4kx.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqeeyin4kx.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Fri, 8 Nov 2019 12:00:52 -0300
-Message-ID: <CAHd-oW6vBm6JnN8aSeryC716+7xzV-LBZujeRgZgF6RbP0LLHg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2019, #02; Fri, 8)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=GvOI4HJEedNOd8Rj6/g8BaOoaVaQAIC1ZcW2VtFYiE0=;
+        b=D5ahbzo/qP//bQlihLe6RMd0TPSqtBjGpXcMiF4F2krodjlzDUkdJ7vV1Yz3FWMCuf
+         Oy0l8JY8B9LaNge/UIZQI4sJn/VCd1Nk1CpSxRuwTZR7HHRbBzUE4RyIJeoJPBt1lk6v
+         vYeHqiYhruCTN3XBeRV5xKpuzonvmAKPpTOwrkqke5pVfl8zT9mMeiIIyL3zr3L2X2Q+
+         K8CFR7IdxhCth+HzhzOX3aSIj3BWd4M1rUN26+7NVXqBX7HpjT1CEeIMg/EDcpNvB4BM
+         8/aQvxXp3nBd/aoMvIhMAvY5pRcC/aYvjQDjGHuilQc9ySDNybeSQMankDRZ+KLN0xJj
+         QyNA==
+X-Gm-Message-State: APjAAAX5RqVcHxcn8tC200P68NCBUeTUMpDkMO5El0uZhPeZ4yKk6vpA
+        RijHi8/3udA/1BNe3SWmslaWQo+AQOfJVg==
+X-Google-Smtp-Source: APXvYqxWsn5QGNKKq7hPSJstH9AmVInRWoKjaSXy5iNNU3rDp0E4LohgRbWSS6/r7qh9s8g6DItnwA==
+X-Received: by 2002:a1c:a556:: with SMTP id o83mr8521731wme.165.1573227722567;
+        Fri, 08 Nov 2019 07:42:02 -0800 (PST)
+Received: from [192.168.188.32] (83.25.107.61.ipv4.supernova.orange.pl. [83.25.107.61])
+        by smtp.gmail.com with ESMTPSA id x9sm6015997wru.32.2019.11.08.07.42.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Nov 2019 07:42:01 -0800 (PST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.4 \(3445.104.11\))
+Subject: Re: [PATCH v3] userdiff: add Elixir to supported userdiff languages
+From:   =?utf-8?Q?=C5=81ukasz_Niemier?= <lukasz@niemier.pl>
+In-Reply-To: <f85a5c31-52ff-85be-b1e0-f3982fd2a7f2@kdbg.org>
+Date:   Fri, 8 Nov 2019 16:42:00 +0100
+Cc:     git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <86417D50-2C28-477A-BC49-9097A24A3BF3@niemier.pl>
+References: <20191106234941.48926-1-lukasz@niemier.pl>
+ <f85a5c31-52ff-85be-b1e0-f3982fd2a7f2@kdbg.org>
+To:     Johannes Sixt <j6t@kdbg.org>
+X-Mailer: Apple Mail (2.3445.104.11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, Junio
+> Please keep the Cc list when you send new patch versions. Also, it is
+> customary to send them as replies to the earlier iterations, so that
+> they all end up in the same thread.
 
-On Fri, Nov 8, 2019 at 5:41 AM Junio C Hamano <gitster@pobox.com> wrote:
-[...]
->
-> * mt/threaded-grep-in-object-store (2019-10-02) 11 commits
->  - grep: move driver pre-load out of critical section
->  - grep: re-enable threads in non-worktree case
->  - grep: protect packed_git [re-]initialization
->  - grep: allow submodule functions to run in parallel
->  - submodule-config: add skip_if_read option to repo_read_gitmodules()
->  - grep: replace grep_read_mutex by internal obj read lock
->  - object-store: allow threaded access to object reading
->  - replace-object: make replace operations thread-safe
->  - grep: fix racy calls in grep_objects()
->  - grep: fix race conditions at grep_submodule()
->  - grep: fix race conditions on userdiff calls
->
->  Traditionally, we avoided threaded grep while searching in objects
->  (as opposed to files in the working tree) as accesses to the object
->  layer is not thread-safe.  This limitation is getting lifted.
->
->  What's the current status of this one?
+Sorry, I am still learning how to use git send-email and I thought it =
+would be handled automatically.
+I need to find how to operate it properly and how to configure it to =
+reply in thread instead of
+creating new one.
 
-This was the last round of improvements I had in mind for this topic.
-So for my part, I think this is ready.
+> There are no single- and double-quote anymore. An oversight? Or an =
+error
+> in the earlier iteration?
 
-Thanks,
-Matheus
+No, I intentionally left them out, as :=E2=80=99foo bar=E2=80=99 is =
+allowed atom, and I didn=E2=80=99t want to complicate
+everything word regex. Instead I assumed that these are so rare, that it =
+should not be a problem.
+
+> The leading optional sign may be problematic. When a patch changes =
+"i+1"
+> to "i+2", it would be highlighted as "i{-+1-}{++2+}" instead of as
+> "i+{-1-}{+2+}". You could remove the leading optional sign and let it =
+be
+> processed as an operator. But we also have an optional sign in the cpp
+> pattern as well, and haven't noticed it until now, so=E2=80=A6
+
+I copied this pattern from other languages, so I assumed that this is =
+what is expected.
+It could be fixed, but I think it should be handled in separate patch.
+
+--
+
+=C5=81ukasz Niemier
+lukasz@niemier.pl
+
+
+
+
+
