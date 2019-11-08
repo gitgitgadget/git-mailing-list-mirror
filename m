@@ -2,84 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F2291F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 21:58:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 742071F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 22:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727700AbfKHV6x (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 16:58:53 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36128 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726640AbfKHV6x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 16:58:53 -0500
-Received: by mail-wr1-f67.google.com with SMTP id r10so8687666wrx.3
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 13:58:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MjD2GTzExAHwY/IRvwkA03TJAwDdwsXVeQGVMnWXAg8=;
-        b=d03bn7snAxpmmd5AF1pG0d00X0O3C0Do3Jd5WPXAypV8jcMwehTllyzLX8tLlkTdpN
-         fpxnJnwgI1ZXqXaMxusg60bGHe80O8Sqa/TNXBbaPaMvZgWnDY1YaauyRJHY2sIk5/A1
-         Fh4JEpxX7HeL/QWsOAp2XFvinBWIp6KiTqXr8c2CYqwyaZTBc6Cxbc7LqhWXINUtoO7T
-         IMsF3EkgfzHUR6DgA1kx1Kf8mGazs9s58HGETwxTV1X8HUd1blJOTusOW7F3Lq7MyUZz
-         1UueFdt6fxvYxpRWjUbBlE9OTTJvWY4Bnp4aQkH6+v9Q1XyL0hwTu176GN42rgJLz0jc
-         izzA==
-X-Gm-Message-State: APjAAAWqDFfNmWCJ2KEqrJ2cc7jOOCm6oPO8gIKvrDJGTYm/8GfG4k4n
-        7ok+zlpIE+jJrH5ANV8P3+VgcCAat2wr9AJbLzU=
-X-Google-Smtp-Source: APXvYqzG76zTnH14cJa3YLiufVeCfTQC3gsoAkHs6mimsU8yzM23sIHKT7AySZpNQdb2GKszBDjZHAy1lOIo0m2VNa8=
-X-Received: by 2002:adf:d18b:: with SMTP id v11mr11078307wrc.308.1573250331124;
- Fri, 08 Nov 2019 13:58:51 -0800 (PST)
-MIME-Version: 1.0
-References: <cover.1572897736.git.liu.denton@gmail.com> <cover.1573241590.git.liu.denton@gmail.com>
- <b5950823ce90dd2476f002ed0370b7e0099a4d85.1573241590.git.liu.denton@gmail.com>
- <CAPig+cQDMSwP5-D-=LgjBPH2kJK16Fv4c619Pg6OTU95CQ9sgw@mail.gmail.com> <20191108214711.GA27310@generichostname>
-In-Reply-To: <20191108214711.GA27310@generichostname>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Nov 2019 16:58:40 -0500
-Message-ID: <CAPig+cQ3FrxUGiFXooaiZ+po0qK6tBOda5apCs4=H0mdWxAKOg@mail.gmail.com>
-Subject: Re: [PATCH v2 07/10] t4205: cover `git log --reflog -z` blindspot
-To:     Denton Liu <liu.denton@gmail.com>
+        id S1727700AbfKHWTu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 17:19:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43332 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726095AbfKHWTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 17:19:50 -0500
+Received: (qmail 23286 invoked by uid 109); 8 Nov 2019 22:19:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 08 Nov 2019 22:19:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15575 invoked by uid 111); 8 Nov 2019 22:23:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 08 Nov 2019 17:23:14 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 8 Nov 2019 17:19:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] convert: use skip_iprefix() in validate_encoding()
+Message-ID: <20191108221949.GA18519@sigill.intra.peff.net>
+References: <a61b60e4-77f4-10a9-65ff-f78348d4c4b7@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a61b60e4-77f4-10a9-65ff-f78348d4c4b7@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 8, 2019 at 4:47 PM Denton Liu <liu.denton@gmail.com> wrote:
-> On Fri, Nov 08, 2019 at 03:36:25PM -0500, Eric Sunshine wrote:
-> > For completeness, the above example also drops the unnecessary 'revs'
-> > variable, uses double quotes rather than single when interpolating $p,
-> > and makes the loop early-exit a bit more idiomatic.
->
-> The reason why I pulled out `revs` was because putting the rev-list
-> within the for-loop would cause its exit code to be lost if it ever
-> failed. Since I've been cleaning up test scripts to not lose exit codes
-> from git commands, I figured it'd be a bad idea to introduce an instance
-> here ;)
+On Fri, Nov 08, 2019 at 09:27:34PM +0100, René Scharfe wrote:
 
-Make sense. Ignore that suggestion of mine.
+> @@ -285,15 +289,10 @@ static int validate_encoding(const char *path, const char *enc,
+>  			 */
+>  			const char *advise_msg = _(
+>  				"The file '%s' contains a byte order "
+> -				"mark (BOM). Please use UTF-%s as "
+> +				"mark (BOM). Please use UTF-%.*s as "
+>  				"working-tree-encoding.");
+> -			const char *stripped = NULL;
+> -			char *upper = xstrdup_toupper(enc);
+> -			upper[strlen(upper)-2] = '\0';
+> -			if (skip_prefix(upper, "UTF", &stripped))
+> -				skip_prefix(stripped, "-", &stripped);
+> -			advise(advise_msg, path, stripped);
+> -			free(upper);
+> +			int stripped_len = strlen(stripped) - strlen("BE");
+> +			advise(advise_msg, path, stripped_len, stripped);
 
-> > > +       git log -z --pretty=oneline --reflog >actual &&
-> > > +       # no trailing NUL
-> >
-> > To what is this comment referring?
->
-> I wanted to point out how in the oneline case, the trailing NUL is
-> already included, unlike in the multiple cases, so we don't need to
-> output another one.
->
-> I'll rewrite this as
->
->         # the trailing NUL is already produced so we don't need to
->         # output another one
+I think we could drop xstrdup_toupper() after this.
 
-That will be clearer. It might be even clearer if that comment comes
-before the "git log -z" invocation rather than after (though that's
-subjective). Thanks.
+Of course it _could_ come in handy in another spot, but in most cases
+you can use xstrdup_tolower() interchangeably (e.g., that would have
+worked here). And even the tolower() variant is seldom used.
+
+-Peff
