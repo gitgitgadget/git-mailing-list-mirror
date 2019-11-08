@@ -2,133 +2,163 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6A91F4C0
-	for <e@80x24.org>; Fri,  8 Nov 2019 09:44:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C32E1F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 10:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731845AbfKHJoQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 04:44:16 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:46903 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730308AbfKHJoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 04:44:16 -0500
-Received: by mail-pl1-f194.google.com with SMTP id l4so3749913plt.13
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 01:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=R2cv6W7pwwevfjzqI2cdatUqk/ZCUseSEgHm6Y1tDlk=;
-        b=eTVlNpTV1YnlNQVdFVDblQPFUYlc3+5uqAcZ8BZoNFnDR9LMXt/tKdKGLYFpaJjJ5s
-         aZ5+GE+eT0s7OpYFKILBQ9Ia4YqhjrR84uPS4i8JpJlTx/tHrWDHQW0Ci8OrcEQwS/zH
-         rQinrfZyWvftyz0FdjIDPmJtFeF6G0kz/NJ7ZSYWHkTHh++fZ/6OhTSjr4zUZ04lbzbw
-         CGLWDz/WJIOe042ah8hx9bsH+4+vGxiV692KEmhOT36QaKU8aUP6z1U/0uXzUZc41MHI
-         Crgd6Hzbk7no8F8drH8HkR7LXBHejrUj/SmRRxS+zQIrwDzD+jAUQoGwwHVs/hAQD+Wm
-         retQ==
+        id S1730622AbfKHKOu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 05:14:50 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53488 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729873AbfKHKOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 05:14:50 -0500
+Received: by mail-wm1-f68.google.com with SMTP id x4so5546437wmi.3
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 02:14:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=R2cv6W7pwwevfjzqI2cdatUqk/ZCUseSEgHm6Y1tDlk=;
-        b=TsY0Rakg1EjZo3ospUGgsOjCi4PVj5EY34XD7r26SbflLMFsOa1xQHUSWeDY7BzAuS
-         pP9w2Uu9Ap7oVnRP0QWONNhcbSEuB3b4jD80bo4oWjQ+6xGFCxG8fSw2elO1UBhEKP6s
-         LVQWICv5tOraxEabIbvlnFlEbIvx0ggwgZW6PV1HFhZDHvD3E22S3qUpsBmiFfIKw8Ns
-         r8yDbyZ+B+Gb7g3j33HlYLYO0ZC15Msiujm+c9hl3iKyKPbUXJn35lWJkWTZVkJMVJwR
-         Op2DK8eN0A2l6f9j+SDd9X6Kld41TRRZGSav2XkDcE7ZEX8n6Kw9wudypr1jkOuZ/863
-         O7aw==
-X-Gm-Message-State: APjAAAWFF2D3Cm3jCqT7HMq03mhTJmK9HnQ9mscH7Ac+MOC1h5LTqnQU
-        PO0pN3gw64UHL4gm/0m8EJLLd1y/
-X-Google-Smtp-Source: APXvYqzUm1ub9VrlNvOsvR8RRxPLJQE6Tl3H910MRobDkpJigJkkDn6mEMTuiPOHFw2svY8cTt1ufg==
-X-Received: by 2002:a17:90a:d352:: with SMTP id i18mr12480072pjx.42.1573206254763;
-        Fri, 08 Nov 2019 01:44:14 -0800 (PST)
-Received: from localhost.localdomain ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id e198sm6995821pfh.83.2019.11.08.01.44.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Nov 2019 01:44:14 -0800 (PST)
-From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v5 9/9] sequencer: fallback to sane label in making rebase todo list
-Date:   Fri,  8 Nov 2019 16:43:51 +0700
-Message-Id: <860dee65f49ea7eacf5a0c7c8ffe59095a51b1ce.1573205699.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.24.0.8.g2e95ca57d2.dirty
-In-Reply-To: <cover.1573205699.git.congdanhqx@gmail.com>
-References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1573205699.git.congdanhqx@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=++EwRw/7pFWBOySxsCclNMivUebof7iZ5RlUBFChxgw=;
+        b=amlrozauSkvnGesfOjyFwNCbyFBwu+a3+XM4dlZQFnJ/HFvd9CDWUiak7Oh/sSWw+S
+         dGi9fsYcuZ7U8EUz8kDxfIVyX4S8Y3lnaQryyUr8fwDSpuw53Ce5Vi/RM/WIe8yEk7Ao
+         uZoQHrKyDg/AxkITW2uolhx+MpzVrgQwX6OPsIaaS5oin0CPEy2cvfFG39Wedhklw4se
+         8FFuF/e7lPJE/PcIwizRmw19KvzH/t4MWKib0OeoxWaTrCZFsGUKx8dlxs7bt6OAhx1g
+         ZnRHbKyOt3clbg6NJtC+tYF0cDNhrL3dSmdUAmQfFs8yv72QxvVPg160slLfILIkv0SJ
+         zrlg==
+X-Gm-Message-State: APjAAAU8tNE0/OKICgQQS9ggD2d0/5kIB74RPxKeNdKJRxTaExCTsYMw
+        P+eP3XmwDeWY8lHnAqerENxlxtlJ668eMULbIL0hxXqG
+X-Google-Smtp-Source: APXvYqze2mn3zjJRd93nGI/FBDOYkDSEACC8jh9JaMJ/Eo4iRMtjKVASWPxLqKE1pebDLma/XtSfk+slxCh+7+HA0qU=
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr7051913wma.129.1573208069397;
+ Fri, 08 Nov 2019 02:14:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191017162826.1064257-1-pjones@redhat.com> <20191017162826.1064257-2-pjones@redhat.com>
+ <CAPig+cS6SzLdgmzffNkg72YSiDQ9eQRqTK12NsraKpGbkJFY_w@mail.gmail.com> <20191018194317.wvqphshpkfskvkyh@redhat.com>
+In-Reply-To: <20191018194317.wvqphshpkfskvkyh@redhat.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 8 Nov 2019 05:14:18 -0500
+Message-ID: <CAPig+cTExu1+XyhUaq=yY09CAK6NN_BQViQETU8_fbGxu3jWzg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Make "git branch -d" prune missing worktrees automatically.
+To:     Peter Jones <pjones@redhat.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In later stage of rebasing, we will make a ref in
-refs/rewritten/<label>, this label is extracted from the subject of
-current merge commit.
+[cc:+duy]
 
-If that subject has forbidden character for refname, git couldn't create
-the rewritten ref. One such case is the merge commit subject has
-a multibyte character encoded in ISO-2022-JP.
+On Fri, Oct 18, 2019 at 3:43 PM Peter Jones <pjones@redhat.com> wrote:
+> On Thu, Oct 17, 2019 at 01:28:09PM -0400, Eric Sunshine wrote:
+> > Echoing SEZDER's comment on patch 1/2, this behavior is an intentional
+> > design choice and safety feature of the worktree implementation since
+> > worktrees may exist on removable media or remote filesystems which
+> > might not always be mounted; hence, the presence of commands "git
+> > worktree prune" and "git worktree remove".
+>
+> Okay, I see that use case now - I hadn't realized there was an
+> intentional design decision here, and honestly that's anything but clear
+> from the *code*.
 
-Provide a sane fallback in order to help git-rebase works in such case
+It can indeed sometimes be difficult to get a high-level functional
+overview by examining code in isolation. In this case, at least,
+git-worktree documentation tries to be clear about the "why" and "how"
+of the pruning behavior (which is not to say that the documentation --
+or the code -- can't be improved to communicate this better).
 
-Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
----
+> It's surprising, for example, that my patches didn't break a single
+> test case.
 
-I don't know if this is the _right_ way to do.
-We may discard this patch and fix the test instead.
+Tests suites are never perfect, and an attempt to prune a dangling
+worktree by deleting a branch likely never occurred to the
+git-worktree implementer(s).
 
- sequencer.c            | 11 +++++++++--
- t/t3433-rebase-i18n.sh |  2 +-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+> > These minor implementation comments aside, before considering this
+> > patch series, it would be nice to see a compelling argument as to why
+> > this change of behavior, which undercuts a deliberate design decision,
+> > is really desirable.
+>
+> Okay, so just for clarity, when you say there's a deliberate design
+> decision, which behavior here are you talking about? If you mean making
+> "lock" work, I don't have any issue with that. If you mean not cleaning
+> up when we do other commands, then I don't see why that's a concern -
+> after all, that's exactly what "lock" is for.
 
-diff --git a/sequencer.c b/sequencer.c
-index 4d12ad3cc6..5a00941205 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4562,6 +4562,7 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 	while ((commit = get_revision(revs))) {
- 		struct commit_list *to_merge;
- 		const char *p1, *p2;
-+		const char *hex_oid;
- 		struct object_id *oid;
- 		int is_empty;
- 
-@@ -4609,9 +4610,15 @@ static int make_script_with_merges(struct pretty_print_context *pp,
- 			if (isspace(*p1))
- 				*(char *)p1 = '-';
- 
-+		hex_oid = oid_to_hex(&commit->object.oid);
-+
-+		if (check_refname_format(label.buf, REFNAME_ALLOW_ONELEVEL) < 0) {
-+			strbuf_reset(&label);
-+			strbuf_addf(&label, "label-%s", hex_oid);
-+		}
-+
- 		strbuf_reset(&buf);
--		strbuf_addf(&buf, "%s -C %s",
--			    cmd_merge, oid_to_hex(&commit->object.oid));
-+		strbuf_addf(&buf, "%s -C %s", cmd_merge, hex_oid);
- 
- 		/* label the tips of merged branches */
- 		for (; to_merge; to_merge = to_merge->next) {
-diff --git a/t/t3433-rebase-i18n.sh b/t/t3433-rebase-i18n.sh
-index 537d18c330..93e5402849 100755
---- a/t/t3433-rebase-i18n.sh
-+++ b/t/t3433-rebase-i18n.sh
-@@ -45,7 +45,7 @@ test_expect_success 'rebase --rebase-merges update encoding eucJP to UTF-8' '
- 	compare_msg eucJP.txt eucJP UTF-8
- '
- 
--test_expect_failure 'rebase --rebase-merges update encoding eucJP to ISO-2022-JP' '
-+test_expect_success 'rebase --rebase-merges update encoding eucJP to ISO-2022-JP' '
- 	git switch -c merge-eucJP-ISO-2022-JP first &&
- 	git config i18n.commitencoding eucJP &&
- 	git merge -F "$TEST_DIRECTORY/t3433/eucJP.txt" second &&
--- 
-2.24.0.8.g2e95ca57d2.dirty
+To clarify, I'm talking about Duy's deliberate design decision to
+model git-worktree auto-pruning after Git's own garbage-collection
+behavior. That model includes, not only explicit locking, but a grace
+period before dangling worktree administrative files can be pruned
+automatically (see the gc.worktreePruneExpire configuration).
 
+The point of git-worktree's grace period (just like git-gc's grace
+period) is to avoid deleting potentially precious information
+permanently. For instance, the worktree-local "index" file might have
+some changes staged but not yet committed. Under the existing model,
+those staged changes are immune from being accidentally deleted
+permanently until after the grace period expires or until they are
+thrown away deliberately (say, via "git worktree prune --expire=now").
+
+> Assuming it is the "lock" behavior we're talking about, I don't think I
+> actually have any intention of breaking this design decision, just
+> making my workflow (without "lock") nag at me less for what seem like
+> pretty trivial issues.
+
+The ability to lock a worktree is an extra safety measure built atop
+the grace period mechanism to provide a way to completely override
+auto-pruning; it is not meant as an alternate or replacement safety
+mechanism to the grace period, but instead augments it. So, a behavior
+change which respects only one of those safety mechanisms but not the
+other is likely flawed.
+
+And, importantly, people may already be relying upon this behavior of
+having an automatic grace period -- without having to place a worktree
+lock manually -- so changing behavior arbitrarily could break existing
+workflows and result in data loss.
+
+> I can easily accommodate "git worktree lock". What bugs me though, is
+> that using worktrees basically means I have to replace fairly regular
+> filesystem activities with worktree commands, and it doesn't seem to be
+> *necessary* in any way. And I'm going to forget. A lot.
+>
+> To me, there doesn't seem to be any reason these need to behave any different:
+>
+> $ git worktree add foo foo
+> $ rm -rf foo
+> vs
+> $ git worktree add foo foo
+> $ git worktree remove foo
+>
+> And in fact the only difference right now, aside from some very
+> minuscule storage requirements that haven't gotten cleaned up, is the
+> first one leaves an artifact that tells it to give me errors later until
+> I run "git worktree prune" myself.
+
+I understand the pain point, but I also understand Duy's motivation
+for being very careful about pruning worktree administrative files
+automatically (so as to avoid data loss, such as changes already
+staged to a worktree-local "index" file). While the proposed change
+may address the pain point, it nevertheless creates the possibility of
+accidental loss which Duy was careful to avoid when designing worktree
+mechanics. Although annoying, the current behavior gives you the
+opportunity to avoid that accidental loss by forcing you to take
+deliberate action to remove the worktree administrative files.
+
+Perhaps there is some way to address the pain point without breaking
+the fundamental promise made by git-worktree about being careful with
+worktree metadata[*], but the changes proposed by this patch series
+seem insufficient (even if the patch is reworked to respect worktree
+locking). I've cc:'d Duy in case he wants to chime in.
+
+[*] For instance, perhaps before auto-pruning, it could check whether
+the index is recording staged changes or conflict information, and
+only allow auto-pruning if the index is clean. *But* there may be
+other ways for information to be lost permanently (beyond a dirty
+"index") which don't occur to me at present, so this has to be
+considered carefully.
