@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 202D11F4C0
-	for <e@80x24.org>; Fri,  8 Nov 2019 09:44:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B28F31F4C0
+	for <e@80x24.org>; Fri,  8 Nov 2019 09:44:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731669AbfKHJoL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 04:44:11 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:37591 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730308AbfKHJoL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 04:44:11 -0500
-Received: by mail-pg1-f196.google.com with SMTP id z24so3629594pgu.4
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 01:44:10 -0800 (PST)
+        id S1731835AbfKHJoN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 04:44:13 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36731 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730308AbfKHJoM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 04:44:12 -0500
+Received: by mail-pf1-f195.google.com with SMTP id v19so4231856pfm.3
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 01:44:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=w/EPyeP704tKZka9pJBgLXi0JJ9dfgrr7Zt7ihMK4AA=;
-        b=lHg3dWpu2PX3p6il6fViP3fmcz7Hhzf+INuN5kkOgBn1WcSy7Ilr3t4xGrvaH2zAML
-         /y6Yhq9JR6HLAl6rJ19bMDqjauEI4cemcfsgUGfiDu6JigLytGMvuBBffV36GFLD/DyS
-         xhn9MsU37AmWV/2IDAUmFg/yz4GIrmXCtOzp+T626HZjMmurHwhRzOzLeYiedNWl/XvE
-         phruch1vJkjAej4cGUbl5YJPn1d051nP2aRYhNSyACx8ID+fhrAa0D5i0/C+U5ziaZiV
-         ftDE8AnGKLyKEYY61VhaEyWIygbnyoNk7ZWYARWTPAY7DBvpJuXCXI3N2umKz/25D8on
-         UpSA==
+        bh=LLzDtpst56qSBMMluFonWzNqrGxP4CrCsTzz0xGk6Yk=;
+        b=AY9TW298+RoxconG3OafUzp3ogEyLOdI4jbI5puTesZyS0LgV5z/jvmtcsVxDeER3B
+         O2IwjIlRoPj4fPvVak9jzUy9nQNg9ZTqfR2Nrtvlrfwu+M11wAVBxZTNcZBGK+W/HnI0
+         Zkya3QQwFy0bKCp4co7t1gYxHwyhr9OuXL9U1lpfdQDUvKVGZNXt3CBLqULSrl9eQPii
+         u6LE5igZt9DLpBMldHQCXXYymLmk5XBytMXohX3YsbNvGisQDrNfyfXfnOZmZGjHTxyj
+         iyLcFTkpPbAQ44CWytJE9s4iRSkd68BQzLnwNrTolckS3VhuomPQl3/XjBxPnQx+mW2E
+         /sEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=w/EPyeP704tKZka9pJBgLXi0JJ9dfgrr7Zt7ihMK4AA=;
-        b=lpmDaSM2yS/bK/X5eo+MeIyl9o7VgxP4ppad0ZjzL9n7V0XTz1nB6XNNPURgXp1DZD
-         b48RE6BHxAmAMHJy3XU2VRc2kkRgiIbOeZukolgHm5xv9cKsXW9/xmP4afwxKvFsytJ5
-         rg/OF+kSFtjlSdla1+dS/iq1V7dXbhwfKHpnNLXjkdgfleq/ezk86IDb21ave56IMCS5
-         DwVTp6AwUfGajhSPJ2VxSVHza8Efm8RpAXTdxybbuybxw1YHu3d8nnldXaxUFDzYC4Dl
-         ShfdhqmsO4OT7jdjLyQuTlzMerhC2JoTDKyqmUMBicIBMt1IwvmvIAhGhk843nFFGNWX
-         IMaA==
-X-Gm-Message-State: APjAAAWlhCN5svJLEfOr0LXT808yMULgVSLjGqV3Y7G9oMOKSlT/i1nj
-        BwFn0ZNKo1G3VMJKBOdJH3iP+y9o
-X-Google-Smtp-Source: APXvYqwk14mhILbzRc4HGBHFcfHSHQu6SBRca+1HBOyJzY9b93qcnDLEW5a+JUtUBohmqeoqyB8MAw==
-X-Received: by 2002:a62:ce4b:: with SMTP id y72mr918173pfg.9.1573206250037;
-        Fri, 08 Nov 2019 01:44:10 -0800 (PST)
+        bh=LLzDtpst56qSBMMluFonWzNqrGxP4CrCsTzz0xGk6Yk=;
+        b=X37XrVuF+F4qGV2uML8OQHGaYw0qW0mHwGK+TqAieO5R3L4LaH6trQ5yPrFWCYwrW0
+         lHvMMH+RAQdB/gaK84AA89KrXhB3DPB+IGzndYePypwWTGiMFFMWp37TtNDXEhZydl3S
+         zY/AKIQbR1enczTH4lx7moAJFrCVcWTZjG+C9vk9Bzem+YwA91Th9Rn5RmFIHdrJq6F/
+         n+nQE/mznxsZWEX5LjWmYnYIHnvxKTm9XQgu59nTodbo86xQkw6TugKCywOMWcT2PZiS
+         tI9LkhOsknMYpZ3FIM0UbMa8NUzRKc6NXbXMk8tAbpxGIkp+Tpzn1wtXwZyEuqt90xf5
+         AVjw==
+X-Gm-Message-State: APjAAAXfRrPQnkBPwp84LOGCeONCh+hfPv36HWI7G6nclpV+VNj2t9X/
+        SZ7y5V1+vdqKG2mnr2Jfb+TgKSKv
+X-Google-Smtp-Source: APXvYqyh842mFwxWHjASR7XA560WEJQHDducj3dat/vez9NbdJuMcNZvtv9BabkY4qFs769YsHq04Q==
+X-Received: by 2002:a63:535a:: with SMTP id t26mr10943028pgl.215.1573206251569;
+        Fri, 08 Nov 2019 01:44:11 -0800 (PST)
 Received: from localhost.localdomain ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id e198sm6995821pfh.83.2019.11.08.01.44.08
+        by smtp.gmail.com with ESMTPSA id e198sm6995821pfh.83.2019.11.08.01.44.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 08 Nov 2019 01:44:09 -0800 (PST)
+        Fri, 08 Nov 2019 01:44:11 -0800 (PST)
 From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v5 6/9] sequencer: reencode squashing commit's message
-Date:   Fri,  8 Nov 2019 16:43:48 +0700
-Message-Id: <ed6cfab5d2d304fa248fd024b0f4ce67a59d297d.1573205699.git.congdanhqx@gmail.com>
+Subject: [PATCH v5 7/9] sequencer: reencode old merge-commit message
+Date:   Fri,  8 Nov 2019 16:43:49 +0700
+Message-Id: <def9adf97ecb946a2cbde94b3eed742c17eb46c2.1573205699.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.24.0.8.g2e95ca57d2.dirty
 In-Reply-To: <cover.1573205699.git.congdanhqx@gmail.com>
 References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1573205699.git.congdanhqx@gmail.com>
@@ -66,78 +66,117 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On fixup/squash-ing rebase, git will create new commit in
-i18n.commitencoding, reencode the commit message to that said encode.
+During rebasing, old merge's message (encoded in old encoding)
+will be used as message for new merge commit (created by rebase).
+
+In case of the value of i18n.commitencoding has been changed after the
+old merge time. We will receive an unusable message for this new merge.
+
+Correct it.
+
+This change also notice a breakage with git-rebase label system.
 
 Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
 ---
- sequencer.c            |  8 +++++---
- t/t3900-i18n-commit.sh | 10 +++++++++-
- 2 files changed, 14 insertions(+), 4 deletions(-)
+
+Notes:
+	eucJP.txt is copied from t3900
+
+ sequencer.c            |   3 ++-
+ t/t3433-rebase-i18n.sh |  57 +++++++++++++++++++++++++++++++++++++++++
+ t/t3433/eucJP.txt      | Bin 0 -> 68 bytes
+ 3 files changed, 59 insertions(+), 1 deletion(-)
+ create mode 100755 t/t3433-rebase-i18n.sh
+ create mode 100644 t/t3433/eucJP.txt
 
 diff --git a/sequencer.c b/sequencer.c
-index a19954f2bf..833a928929 100644
+index 833a928929..d735d09f98 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1576,6 +1576,7 @@ static int update_squash_messages(struct repository *r,
- 	struct strbuf buf = STRBUF_INIT;
- 	int res;
- 	const char *message, *body;
-+	const char *encoding = get_commit_output_encoding();
- 
- 	if (opts->current_fixup_count > 0) {
- 		struct strbuf header = STRBUF_INIT;
-@@ -1602,7 +1603,7 @@ static int update_squash_messages(struct repository *r,
- 			return error(_("need a HEAD to fixup"));
- 		if (!(head_commit = lookup_commit_reference(r, &head)))
- 			return error(_("could not read HEAD"));
--		if (!(head_message = get_commit_buffer(head_commit, NULL)))
-+		if (!(head_message = logmsg_reencode(head_commit, NULL, encoding)))
- 			return error(_("could not read HEAD's commit message"));
- 
- 		find_commit_subject(head_message, &body);
-@@ -1623,7 +1624,7 @@ static int update_squash_messages(struct repository *r,
- 		unuse_commit_buffer(head_commit, head_message);
+@@ -3374,7 +3374,8 @@ static int do_merge(struct repository *r,
  	}
  
--	if (!(message = get_commit_buffer(commit, NULL)))
-+	if (!(message = logmsg_reencode(commit, NULL, encoding)))
- 		return error(_("could not read commit message of %s"),
- 			     oid_to_hex(&commit->object.oid));
- 	find_commit_subject(message, &body);
-@@ -4154,9 +4155,10 @@ static int commit_staged_changes(struct repository *r,
- 				 */
- 				struct commit *commit;
- 				const char *path = rebase_path_squash_msg();
-+				const char *encoding = get_commit_output_encoding();
+ 	if (commit) {
+-		const char *message = get_commit_buffer(commit, NULL);
++		const char *encoding = get_commit_output_encoding();
++		const char *message = logmsg_reencode(commit, NULL, encoding);
+ 		const char *body;
+ 		int len;
  
- 				if (parse_head(r, &commit) ||
--				    !(p = get_commit_buffer(commit, NULL)) ||
-+				    !(p = logmsg_reencode(commit, NULL, encoding)) ||
- 				    write_message(p, strlen(p), path, 0)) {
- 					unuse_commit_buffer(commit, p);
- 					return error(_("could not write file: "
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index a518281b04..d277a9f4b7 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -224,7 +224,15 @@ test_commit_autosquash_multi_encoding () {
- 		git commit -a --$flag HEAD^ &&
- 		git rebase --autosquash -i HEAD^^^ &&
- 		git rev-list HEAD >actual &&
--		test_line_count = 3 actual
-+		test_line_count = 3 actual &&
-+		iconv -f $old -t UTF-8 "$TEST_DIRECTORY"/t3900/$msg >expect &&
-+		if test $flag = squash; then
-+			subject="$(head -1 expect)" &&
-+			printf "\nsquash! %s\n" "$subject" >>expect
-+		fi &&
-+		git cat-file commit HEAD^ >raw &&
-+		(sed "1,/^$/d" raw | iconv -f $new -t utf-8) >actual &&
-+		test_cmp expect actual
- 	'
- }
- 
+diff --git a/t/t3433-rebase-i18n.sh b/t/t3433-rebase-i18n.sh
+new file mode 100755
+index 0000000000..bff5a68d25
+--- /dev/null
++++ b/t/t3433-rebase-i18n.sh
+@@ -0,0 +1,57 @@
++#!/bin/sh
++#
++# Copyright (c) 2019 Doan Tran Cong Danh
++#
++
++test_description='rebase with changing encoding
++
++Initial setup:
++
++1 - 2              master
++ \
++  3 - 4            first
++   \
++    5 - 6          second
++'
++
++. ./test-lib.sh
++
++compare_msg () {
++	iconv -f "$2" -t "$3" "$TEST_DIRECTORY/t3433/$1" >expect &&
++	git cat-file commit HEAD >raw &&
++	sed "1,/^$/d" raw >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success setup '
++	test_commit one &&
++	git branch first &&
++	test_commit two &&
++	git switch first &&
++	test_commit three &&
++	git branch second &&
++	test_commit four &&
++	git switch second &&
++	test_commit five &&
++	test_commit six
++'
++
++test_expect_success 'rebase --rebase-merges update encoding eucJP to UTF-8' '
++	git switch -c merge-eucJP-UTF-8 first &&
++	git config i18n.commitencoding eucJP &&
++	git merge -F "$TEST_DIRECTORY/t3433/eucJP.txt" second &&
++	git config i18n.commitencoding UTF-8 &&
++	git rebase --rebase-merges master &&
++	compare_msg eucJP.txt eucJP UTF-8
++'
++
++test_expect_failure 'rebase --rebase-merges update encoding eucJP to ISO-2022-JP' '
++	git switch -c merge-eucJP-ISO-2022-JP first &&
++	git config i18n.commitencoding eucJP &&
++	git merge -F "$TEST_DIRECTORY/t3433/eucJP.txt" second &&
++	git config i18n.commitencoding ISO-2022-JP &&
++	git rebase --rebase-merges master &&
++	compare_msg eucJP.txt eucJP ISO-2022-JP
++'
++
++test_done
+diff --git a/t/t3433/eucJP.txt b/t/t3433/eucJP.txt
+new file mode 100644
+index 0000000000000000000000000000000000000000..546f2aac01b67e39d19de601f5586097b34a8325
+GIT binary patch
+literal 68
+zcmZ2-e#x69mzLaKa+Ql~$@V43mMmHFddayZYZfkovW_oY%ys|3$+JKuZ<btN@@mOl
+SAboGi<s}<{?6*s90HpysEiSzP
+
+literal 0
+HcmV?d00001
+
 -- 
 2.24.0.8.g2e95ca57d2.dirty
 
