@@ -2,93 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A193C1F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 20:46:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51F081F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 20:54:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728149AbfKHUqU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 15:46:20 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40900 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbfKHUqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 15:46:20 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f3so7529213wmc.5
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 12:46:19 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L0BvtsQVkTehw5MOeocW6Li2vOEZEkbBviMSpzRBYKk=;
-        b=oHoP7LXkXh4AfR3juwyK20aaIV0gNp9TRL0/PIrCrxVsw0vVeBsVKIeuPB4c0ZWvA/
-         r41c33kQbubS9XFQcpcKEAfLwBj0DwNJp/JzIphmCmoFAS9KYhLSFhOF1brAr4M3m1d7
-         T4gWvpK23pWTUcqsp5OrSWE4L1qjLqkl3fllZGwNS2e4mzaCnWhRYxtf/4IZelsPBeyR
-         YMn/jCWfK43mzMccC928PAaM+/hzCHvZMn+9+TdPgK1ThVwIQlQ1cYATdhGmhbWiWVZM
-         +yUVQAS7LK3660RgCwiuBmB67LL3kOlo4nnfpiX12xAb2wNYyZCRtJcbVtUgvhjk/ndQ
-         ogBQ==
-X-Gm-Message-State: APjAAAVhe8MdVlBCxc7VHUtbEGX5hubME4Dk5FhlorYp8GJ2DBiBNym6
-        c1G177QWLLK8gG8dtnH0f0dQG4YyMdDvunFKP9s=
-X-Google-Smtp-Source: APXvYqwbaWvG/mCOSzvcQFoYde12Lun2uWcO3wNjXvQSC7TAA7bPSTZK02tQm2tN8m15TcXe8MmQ2Plj8tXrBhLLoak=
-X-Received: by 2002:a1c:3cc4:: with SMTP id j187mr10183477wma.95.1573245978409;
- Fri, 08 Nov 2019 12:46:18 -0800 (PST)
+        id S1730018AbfKHUyb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 15:54:31 -0500
+Received: from mout.gmx.com ([74.208.4.200]:39111 "EHLO mout.gmx.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726804AbfKHUyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 15:54:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.com;
+        s=dbd5af2cbaf7; t=1573246467;
+        bh=/WmfxZllKBmUfj2R/nGPvVySZ2io45lA7I1iirLJPlI=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=sfnK9cGWh7RmrlMMdtg083RXH8NoGUUY8Qubv/eRpeHvfwrFODiirpkZIpBYOCzOh
+         raxwC3KlVm/ukam+h7uKXsZ95V5XY7mjTMoBYmM5LfaTJy6HHMaHn/YlbZidzGGUyK
+         OHOWPMSnSOo5l6bX/4WHA7VtuhjAAQe5fADYG7a4=
+X-UI-Sender-Class: 214d933f-fd2f-45c7-a636-f5d79ae31a79
+Received: from [192.168.43.24] ([92.69.35.197]) by mail.gmx.com (mrgmxus001
+ [74.208.5.15]) with ESMTPSA (Nemesis) id 0McmWd-1iBEkR1ROD-00Huvj; Fri, 08
+ Nov 2019 21:54:27 +0100
+Subject: Re: [BUG/FEATURE] Git pushing and fetching many more objects than
+ strictly required
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+References: <bc43c70e-861d-425d-d7c4-73a3e25b7383@cheerful.com>
+ <20191108184723.246596-1-jonathantanmy@google.com>
+From:   Paul van Loon <nospam@cheerful.com>
+Message-ID: <e537d298-6431-c36a-2fc3-e41baa10d0a3@cheerful.com>
+Date:   Fri, 8 Nov 2019 21:54:02 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <cover.1572897736.git.liu.denton@gmail.com> <cover.1573241590.git.liu.denton@gmail.com>
- <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
-In-Reply-To: <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Nov 2019 15:46:07 -0500
-Message-ID: <CAPig+cSQ5PYZYrbqZYoBWLzohw419iSTsEfysjRf_JyxNENRkw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] pretty: implement 'summary' format
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191108184723.246596-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:OzLbSLusKzxbb94I+haahjsA5YRatxXASV4n/CbdMLT2JlC9TPP
+ KksbRerXp6RrFyy6rFs4IMzRkBbpuZANq2ZlOxV7LFFfN6nL9+JaBtx0mktJ+uY8rod8UfJ
+ 5dKPQR+GggfBos19oTyPXgLxeCS+eM/tJgqLtT0DpZOBg2AtcuOJ4iC65LxqGJFVE3dPbdQ
+ TUKeBIY9cC3IYtfB7VbEA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JApvkT3cJmk=:9MMl1lcj3NlQB5IaDwEAL4
+ 9+MS/GT/hk4qypDRUDWbPpd9zWkTe1Caew3gmv2TRP2e3+uddq3KCW5HRCoyoaxakjdiwqQnM
+ V11vP2c5ax9ap1OvwE8GxTqJPlzgpE+f29hN5dy4D0gmo4pALOFrtQoxD0G5uduvVSKkyXK3X
+ ytHAaRljy+dLTpitNYAmPg5fmjBjmskfu3HnJnSeDuYXgxJDkwhJK8q+VDQSRh8vSnqkIDGLT
+ eWVoMrfKsjm8aeoXmJ/EUt5ykZIyiLNiRVlA9A/hAtHQgP+d7CHhVefwC3mxFIRY9GoIxmkBs
+ +V1ScrUvo7Qxbhryio1m8n31v1KvfioKptIGm1qvRYV567+Hm4KU08lYGklGsfLA76/e3hfOn
+ jR3M/mZy/rM0gXE9T4zx+TuZpNG+EnzqoaOs6231JT/8otCToLcLo51FCM3YrIL4y7VnFPKhN
+ KDQ8Ls6hGxmCoLmBrfOYcvqHyjlazBqP/H3QDWnd4J9lt9Ih68S21zp0PICMjNw0i546WkNqZ
+ BI9+47As19K/FRSaHgx5CZ9+KcuCYGvv6oRW/VIes/oer5OeusxtXQIP1HYUAPSUcRWiaBjGe
+ MgaO92toshyTHx7rSA/1dAU4KhCgx+Kf5rBaCb570EDyCIPMs3i5T4MVfK8aoquo+NaxGlzcH
+ 5ZLyir+G+EUSJHWs3faSeToYEIVS7EHM9UjRf8LWE43uXlsvzOXAcID026SvXezYcSSHkgTM9
+ daOx7TXfHN9JMHQUyIT6et3wCj/zSQguQITGdfpUeyy2E9/XUxSIZA7G2nVZ03sXK82gXztXH
+ bJQAU+FJMa6YLmgHC1jdNe/xGpjBf5HYkHhNh5DF5U5ldHJCgVWAjs8OjJKVNGrlMgvpIlHV0
+ MkUP/O/5sY5YQSBJK5xot838oGpjMKb7Ye0Q68urwKX5LxiEWeA6I06F5h4zCYJXOCSIYK38L
+ U2wQ7iDkysVuCg2u26sX3CnegTvnHTwv2Nw2R94W2D6C818hkKJt0JsbQutkR9P4JvG/e0d2o
+ S+sasXQIh3sDEXp3Z9OR44zhA0skQ7Awr+EWXrd0wSwpDT0NflKZ4b5p3di0HvELicfaoK/mz
+ HHZb4AGNbWCs0KmJp8ebFzSNxSap9tZFdUk5mfNrBAGi428jNdm953qTuXSJKWEEzJG7rNtxV
+ 6OG5iOt5sTacf0/PHnWU0JWRfylbhXONEWjephFgZ9sqeA7pYgWbj1aEBsRSupUqT+VSA9tes
+ lNCm7N2ucLptRsJ2gYr9LE5kcBCQptgYL4Ug3fhV3lA2MGblersu1C2LhcaE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 8, 2019 at 3:08 PM Denton Liu <liu.denton@gmail.com> wrote:
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> @@ -154,20 +154,23 @@ do
-> -test_expect_success 'NUL termination with --reflog --pretty=oneline' '
-> -       >expect &&
-> -       revs="$(git rev-list --reflog)" &&
-> -       [...]
-> -       test_cmp expect actual
-> -'
-> +for p in oneline summary
-> +do
-> +       test_expect_success "NUL termination with --reflog --pretty=$p" '
-> +               >expect &&
-> +               revs="$(git rev-list --reflog)" &&
-> +               [...]
-> +               test_cmp expect actual
-> +       '
-> +done
+On 2019-11-08 19:47, Jonathan Tan wrote:
+>> $ git fetch --all
+>> Fetching origin
+>> remote: Enumerating objects: 29507, done.
+>> remote: Counting objects: 100% (29507/29507), done.
+>> remote: Compressing objects: 100% (33/33), done.
+>> remote: Total 53914 (delta 29478), reused 29500 (delta 29471), pack-reu=
+sed 24407
+>> Receiving objects: 100% (53914/53914), 31.90 MiB | 111.00 KiB/s, done.
+>> Resolving deltas: 100% (42462/42462), completed with 7382 local objects=
+.
+>> --
+>>
+>> $ git push -v origin 'refs/replace/*:refs/replace/*'
+>> Pushing to XXXX
+>> Enumerating objects: 2681, done.
+>> Counting objects: 100% (2681/2681), done.
+>> Delta compression using up to 8 threads
+>> Compressing objects: 100% (1965/1965), done.
+>> Writing objects: 100% (2582/2582), 1.96 MiB | 1024 bytes/s, done.
+>> Total 2582 (delta 95), reused 1446 (delta 58)
+>> remote: Resolving deltas: 100% (95/95), completed with 33 local objects=
+.
+>> To XXXX
+>>  * [new branch]            refs/replace/XXXX -> refs/replace/XXXX
+>
+> Could you verify that refs/replace/XXXX (or one of its close ancestors)
+> was fetched by the "git fetch --all" command? "--all" fetches all
+> remotes, not all refs.
 
-This patch would be less noisy (by eliminating the indentation change)
-if you wrapped this test in a for-loop back in 7/10 where it was
-introduced, with the intention of adding more items to the 'for' list.
-So, in 7/10, you'd have this:
+No, it was not fetched. HOWEVER, the ONLY thing the replace commit (1 sing=
+le object) does is point to an existing parent object. No other new object=
+s are referenced.
+Those 'ancestor' objects were all fetched.
 
-    for p in online
-    do
-        test_expect_success "NUL termination with --reflog --pretty=$p" '
-            ...
-        '
-    done
+Paul
 
-and this patch, 9/10, would just make the minor change:
-
-    -for p in oneline
-    +for p in oneline summary
-
-Having a for-loop with only a single item is a minor-ugly which pays
-off with less noise in subsequent patch(es), thus easing review
-burden.
