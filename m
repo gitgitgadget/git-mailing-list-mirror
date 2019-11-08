@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D17991F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 20:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A193C1F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 20:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732136AbfKHUgj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 15:36:39 -0500
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:40702 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732137AbfKHUgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 15:36:38 -0500
-Received: by mail-wm1-f52.google.com with SMTP id f3so7509474wmc.5
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 12:36:37 -0800 (PST)
+        id S1728149AbfKHUqU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 15:46:20 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:40900 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbfKHUqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 15:46:20 -0500
+Received: by mail-wm1-f65.google.com with SMTP id f3so7529213wmc.5
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 12:46:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4W2gfGJy9mJKdpd7s21pQy8VGaytE6xK7iiGzSKvVx0=;
-        b=dYZHplTMnpJuNKBUAj1GtXYgfcY3VpnUbsm/xCI8tgGX1SZ6wd6jotI6OM9EkKIoOM
-         b9CqEBLGOPj6iW2vDlZDhueh7hxOzUgmxzjJ1HncokRRLvB1HSrKRlqFLHdKxDN4P4ez
-         UaEjeuXjo7BcsOfmUm/yx+wN4sqK776KMHV1B0kemHssP5CUm2hRgjZxcH5JkD40jEuE
-         Ns5Hx97fCFEirGHAmTI4z+Ed5hOaUC6eNgwUlEvHyAw1Ga64l5BFAOBKYMJviDZJyuu2
-         Z1NMaN3RUazpHRt6yNswYOhtYYZZy19S0D79NbriaDQjyKAnPPTUoPLThvLSkvrmg1E9
-         Ff7g==
-X-Gm-Message-State: APjAAAWVWHEyZkP0IKZmNyIk4qbsLzLyugaGaani1qEDspXX6MFDygZJ
-        zUQC+bC/qlumf6YoYtO8e+C276Lh5LJeFT97Dik=
-X-Google-Smtp-Source: APXvYqzFe2t0XplS7d9hr5WR+q4dzuJxmIi8Cx4XNwd/anWD54bNbbRbunz8ZlsLbkXSO6TLyhGXvF1zOpZN6FUe0Hg=
-X-Received: by 2002:a1c:3843:: with SMTP id f64mr9417884wma.129.1573245396144;
- Fri, 08 Nov 2019 12:36:36 -0800 (PST)
+        bh=L0BvtsQVkTehw5MOeocW6Li2vOEZEkbBviMSpzRBYKk=;
+        b=oHoP7LXkXh4AfR3juwyK20aaIV0gNp9TRL0/PIrCrxVsw0vVeBsVKIeuPB4c0ZWvA/
+         r41c33kQbubS9XFQcpcKEAfLwBj0DwNJp/JzIphmCmoFAS9KYhLSFhOF1brAr4M3m1d7
+         T4gWvpK23pWTUcqsp5OrSWE4L1qjLqkl3fllZGwNS2e4mzaCnWhRYxtf/4IZelsPBeyR
+         YMn/jCWfK43mzMccC928PAaM+/hzCHvZMn+9+TdPgK1ThVwIQlQ1cYATdhGmhbWiWVZM
+         +yUVQAS7LK3660RgCwiuBmB67LL3kOlo4nnfpiX12xAb2wNYyZCRtJcbVtUgvhjk/ndQ
+         ogBQ==
+X-Gm-Message-State: APjAAAVhe8MdVlBCxc7VHUtbEGX5hubME4Dk5FhlorYp8GJ2DBiBNym6
+        c1G177QWLLK8gG8dtnH0f0dQG4YyMdDvunFKP9s=
+X-Google-Smtp-Source: APXvYqwbaWvG/mCOSzvcQFoYde12Lun2uWcO3wNjXvQSC7TAA7bPSTZK02tQm2tN8m15TcXe8MmQ2Plj8tXrBhLLoak=
+X-Received: by 2002:a1c:3cc4:: with SMTP id j187mr10183477wma.95.1573245978409;
+ Fri, 08 Nov 2019 12:46:18 -0800 (PST)
 MIME-Version: 1.0
 References: <cover.1572897736.git.liu.denton@gmail.com> <cover.1573241590.git.liu.denton@gmail.com>
- <b5950823ce90dd2476f002ed0370b7e0099a4d85.1573241590.git.liu.denton@gmail.com>
-In-Reply-To: <b5950823ce90dd2476f002ed0370b7e0099a4d85.1573241590.git.liu.denton@gmail.com>
+ <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
+In-Reply-To: <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Nov 2019 15:36:25 -0500
-Message-ID: <CAPig+cQDMSwP5-D-=LgjBPH2kJK16Fv4c619Pg6OTU95CQ9sgw@mail.gmail.com>
-Subject: Re: [PATCH v2 07/10] t4205: cover `git log --reflog -z` blindspot
+Date:   Fri, 8 Nov 2019 15:46:07 -0500
+Message-ID: <CAPig+cSQ5PYZYrbqZYoBWLzohw419iSTsEfysjRf_JyxNENRkw@mail.gmail.com>
+Subject: Re: [PATCH v2 09/10] pretty: implement 'summary' format
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
@@ -52,96 +52,43 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Nov 8, 2019 at 3:08 PM Denton Liu <liu.denton@gmail.com> wrote:
-> The test suite does not include any tests where `--reflog` and `-z` are
-> used together in `git log`. Cover this blindspot. Note that the
-> `--pretty=oneline` case is written separately because it follows a
-> slightly different codepath.
->
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
 > diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> @@ -134,6 +134,41 @@ test_expect_failure C_LOCALE_OUTPUT 'NUL termination with --stat' '
-> +emit_nul () {
-> +       echo | tr '\n' '\000'
-> +}
-
-A simple:
-
-    printf "\0"
-
-would be simpler, and I don't think you even need to introduce a shell
-function to encapsulate it, as it's quite clear at a glance what it
-does.
-
-> +for p in short medium full fuller email raw
+> @@ -154,20 +154,23 @@ do
+> -test_expect_success 'NUL termination with --reflog --pretty=oneline' '
+> -       >expect &&
+> -       revs="$(git rev-list --reflog)" &&
+> -       [...]
+> -       test_cmp expect actual
+> -'
+> +for p in oneline summary
 > +do
 > +       test_expect_success "NUL termination with --reflog --pretty=$p" '
 > +               >expect &&
-
-You can drop this line...
-
 > +               revs="$(git rev-list --reflog)" &&
-> +               for r in $revs
-> +               do
-> +                       git show -s "$r" --pretty='$p' >>expect || return 1
-> +                       emit_nul >>expect
-
-...and simplify all this capturing into 'expect'...
-
-> +               done &&
-
-... by just redirecting the output of the for-loop itself:
-
-    for r in $(git rev-list --reflog)
-    do
-        git show -s --pretty="$p" "$r" &&
-        printf "\0" || return 1
-    done >expect &&
-
-For completeness, the above example also drops the unnecessary 'revs'
-variable, uses double quotes rather than single when interpolating $p,
-and makes the loop early-exit a bit more idiomatic.
-
-> +               git log -z --reflog --pretty='$p' >actual &&
-> +               emit_nul >>actual &&
-
-Likewise, you can capture 'actual' in its entirety:
-
-    {
-        git log -z --reflog --pretty="$p" &&
-        printf "\0"
-    } >actual &&
-
+> +               [...]
 > +               test_cmp expect actual
 > +       '
 > +done
-> +
-> +test_expect_success 'NUL termination with --reflog --pretty=oneline' '
-> +       >expect &&
-> +       revs="$(git rev-list --reflog)" &&
-> +       for r in $revs
-> +       do
-> +               # trim trailing newline
-> +               output="$(git show -s --pretty=oneline "$r")" || return 1
-> +               printf "%s" "$output" >>expect
-> +               emit_nul >>expect
-> +       done &&
 
-Replacing the newline with NUL could be done more simply and
-idiomatically (with regard to other test scripts) by passing the
-output of "git show" through the lf_to_nul() function from
-test-lib-functions.sh. Something like this should do it:
+This patch would be less noisy (by eliminating the indentation change)
+if you wrapped this test in a for-loop back in 7/10 where it was
+introduced, with the intention of adding more items to the 'for' list.
+So, in 7/10, you'd have this:
 
-    for r in $(git rev-list --reflog)
+    for p in online
     do
-        git show -s --pretty=oneline "$r" >raw &&
-        cat raw | lf_to_nul || return 1
-    done >expect &&
+        test_expect_success "NUL termination with --reflog --pretty=$p" '
+            ...
+        '
+    done
 
-> +       git log -z --pretty=oneline --reflog >actual &&
-> +       # no trailing NUL
+and this patch, 9/10, would just make the minor change:
 
-To what is this comment referring?
+    -for p in oneline
+    +for p in oneline summary
 
-> +       test_cmp expect actual
-> +'
+Having a for-loop with only a single item is a minor-ugly which pays
+off with less noise in subsequent patch(es), thus easing review
+burden.
