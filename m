@@ -2,112 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C64201F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 14:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27B8A1F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 14:47:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727798AbfKHOLW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 09:11:22 -0500
-Received: from mout.gmx.com ([74.208.4.201]:47227 "EHLO mout.gmx.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726373AbfKHOLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 09:11:21 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Nov 2019 09:11:21 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.com;
-        s=dbd5af2cbaf7; t=1573222281;
-        bh=mILFV9fa/r3/R+g2E5+EgS2tmkrePr5yaVPydBKaStQ=;
-        h=X-UI-Sender-Class:To:From:Subject:Date;
-        b=BDqCkordAQtV0jaQVmbsDacPy5isolDLMQbckP62a5bjHk31Ex+aqMmvAy+S7sVbU
-         Nw9tq26IQdAtE/KvNqxSTpUH15AGmxuaJz/YTtKZk3n2dRzCmXaOliIb6HfT/xuuNn
-         RD5YZjr+M1NehG6AtGkQ5ki1eGDiuP4pHX0osT9Y=
-X-UI-Sender-Class: 214d933f-fd2f-45c7-a636-f5d79ae31a79
-Received: from [192.168.43.24] ([31.161.137.84]) by mail.gmx.com (mrgmxus001
- [74.208.5.15]) with ESMTPSA (Nemesis) id 0LoE8d-1i0Kqw2KQD-00gKeg; Fri, 08
- Nov 2019 15:06:20 +0100
-To:     git@vger.kernel.org
-From:   Paul van Loon <nospam@cheerful.com>
-Subject: [BUG/FEATURE] Git pushing and fetching many more objects than
- strictly required
-Message-ID: <bc43c70e-861d-425d-d7c4-73a3e25b7383@cheerful.com>
-Date:   Fri, 8 Nov 2019 15:06:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727049AbfKHOrP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 09:47:15 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:43977 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726887AbfKHOrO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 09:47:14 -0500
+Received: by mail-lf1-f67.google.com with SMTP id f24so1653249lfh.10
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 06:47:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=1KxugK3eG4ilIUG9zZ4jq7mg1XJb7jMXOE/9ug79C7g=;
+        b=rS4v9sl806N8FYTf9+9tIHvNpubctPF4z7pAvqipucPy/nOC9ZYQpGqLSh6zQQ/kSh
+         uSljYzHT3vbahblmmHbvsI4CKmWCaP1b8LLS0cqbzfE5/xijkbepWPRm0apQi6isxiOk
+         YwxjqYqLvIOeNOEIpD4ugeaX9R6A5Um+1FgcwO1U8ygisV/yi0v8hg//o7/FgRXE/qlr
+         GfACM8MOyGVN22ODqULg2swYk5QVHMxQUjI16DeMSiu3TiONChNDJp7HiqfO1mULA7HD
+         fcZAJ1a0ui2GHZMRLS70/9jLGPjEqPohd5fcypSYNIer2JU1OAd2m9BR9AyiDmkyMXyn
+         5iJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=1KxugK3eG4ilIUG9zZ4jq7mg1XJb7jMXOE/9ug79C7g=;
+        b=Uomh8jTtBDuCWGtWdCyWJEcUkx4qAmc1s8DWY2G7wY0fGzXWKuSaOKhSG7b/aR4gcp
+         hLy0tTu0TRhwTwJSHjPgH9F1LipAec0266K5Vn3z6xAWO7ZodyCRPXA0kG2ahwTCfUbN
+         7z//t+wgbiZNSGxeogeu+gNvXGiAZ+ai3WG5g2c2U4PdramYcdiSJQ81F1p3fwIic0im
+         2DLyRxznNCna6NKD//UDOeIBric0rnbe4lysj8oP2KIARwj4k3JX8/mt5gVYIn5X5s4S
+         5diZP2FLDlmiHRZEQcuRZ0dfVtYknAvXbt+vhZdD/0JchJJxYyooFjn0k8Jl4W+mnLlf
+         QL6w==
+X-Gm-Message-State: APjAAAUKzEyZ9AxJhuq5gaKrPomB/npIMv4YAXcYJPfqceNjCRSP9I8K
+        5GfvqjG85UhgVb2h20cYGciMYnF/A/vsXlzQh7/xL/1u
+X-Google-Smtp-Source: APXvYqxSDvIWR5GqRFFnQgpi1QnydNeUEOeIDcHZ1ybFFev3lPEeHvk5yUGoAd8CU8Ofd/Wswpcyq39f2sVsq2jvowE=
+X-Received: by 2002:ac2:4302:: with SMTP id l2mr2078156lfh.116.1573224432601;
+ Fri, 08 Nov 2019 06:47:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:ZApa3AT5pWfeJlhf9aiSfP5WQqOCHi99eBoN3Beoiw0bCLuqOq9
- Iue4kJMfqd48m+5LuxAYw7j11Gbau08ueDTIsoY51KiO+WG20QV3pSgk8NABBJ39ydtw61C
- n2oF7QDrYI9Hy0jsdVq4wuDyVWm4GKrFnEJuTAQPgvIeZgY2x9mdcsamLgIZBgdz8Vg4ujt
- v69iLmWdpRx7o7krUIa1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YoB2O+fVFhQ=:y+/Ap3Ge6SWan1AKF/w/7x
- pGA2OGb69OIFALTHF0JvnACCWyz62Zjr4sklNsE8m6/cuLIqRlmSjx7SrlkGxZ3VzeGr6FGrG
- l+VhQUJ1TNnTofPKKd3npM6Acd/NAlz9ZhZPOTAGlOKUlrqKS0/MPDg7rmi/d/85mR9fs9lxW
- VRivE0fKfXoPOKHWUlbeGq3zBLs3xDVu06+yNvgrTsrBCK8o49uvgL4ho1VysskmlDnd7qVKl
- WQ7QSuj7/1E0Htuv/29ma8WZ5rfqA93HApAoJOYyqDBya8R6ZyGJ8zHeNJZdCpdGUxrLmE75X
- fytIcI5M26GrclApzgLs5vGJbFq65IeQ+2g1uagId7Kq7NbstMhJ/mmvfriZZCMizPQ+I70Xs
- ZphZKNS18ZrHgfr83lNgLbkfat1kgnhbNw8x1KwtqtCyKoU/tpyqV0xDyMnEG/rRJhLjtVcwp
- ZwsZNY1fCbbDCzHUeCYFNakxfuzHFMFcHSeL0Vi5OWUisWbQMmqykJ1GkLjL7eDux1qaFyB8Y
- ZIkd2FI9vGQkPskAAaKfhIznzOLE4kIlq2FistK42ZIwrmVXzxYi0zeqf6h384H9Ald+1oafW
- +IiCscrfw06A+x/t8fsOBNkPARb2A8BLxpTBGWhKMhLehJMein4YuOkz4rFjT9ohDIpeW5B6q
- u7+XMgYUYrAFJHaNlsCESmwn96NonT7L/M0gm3zFnQv01Yi7elEAVRmF2YWiFUVAcSbnlOp2U
- 13w78EivMq68v/irsHldEnIOnfu/NPMLTNAtYSDfkMLTipxuKqTy7xOD+Hw5xe4RdAnATNuOn
- EgjfNPGgY35yJ/UkW06LMw/DkBIPb0LGy0msv6nL5pMXlKMeH2EJyH+PGxITos5XWDbK0k1xJ
- msjx9cMsA+gYUwdAokEuowJJwHq2lzlPRFs8X+NKH4F2AHvbpQ0ufYDu7YZV/M+ghVWybK46R
- WyCtMrJraw9eR+SpXmHv3x7wQjdkPrVSZ3Fm73r+8i1isdR0DcbhEZIsbMm35BzjELUzoBy56
- CNISB0Xij3Hja2RI0HWAel/afAr6zCaTcIs61GUcypj9eGBaIFIFou1O4hh/7M5CqyaglWel1
- SB8D0ZC19041PeE/HimZMZGJG4z9HxSPQJS8r3XuUDp9y+oO0QyYn7dr3806u+AIK97cMS3q4
- CUmirbdeitnvg+1c6uZfQW+rpYleI+okzxEFuWt5R9lWjk/9VIgNTmr7INooSf9VeHDQlRMqG
- ZXtCQyjeDFA8mr35BYMbUqtcieOKXr2yiXxN1lAV5KcxkTgHFWcAQdjEF1GY=
+From:   =?UTF-8?Q?Dominic_J=C3=A4ger?= <dominic.jaeger@gmail.com>
+Date:   Fri, 8 Nov 2019 15:47:01 +0100
+Message-ID: <CAFOfB_LMQBOFK5PzhezcMGshmETY0agVK_iRW7vEayR9=Oyaow@mail.gmail.com>
+Subject: [PATCH] merge-strategies: Fix typo "reflected to"
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-$ git --version
-git version 2.21.0
+reflected to" does not exist (according to
+https://dictionary.cambridge.org/dictionary/english/reflect?q=3Dreflected a=
+nd
+https://www.merriam-webster.com/dictionary/reflected)
 
-When fetching/pushing to a forked repo on Github, I've noticed several times that much more objects were being fetched or pushed than were strictly necessary.
-I'm not sure if it's a bug, or just a opportunity for performance improvement.
+Signed-off-by: Dominic J=C3=A4ger <dominic.jaeger@gmail.com>
+---
+I only took a quick glance at the submitting patch guidelines.
+Feel free to quickly push this yourself if you want.
+Also, I'm not native, so I hope I looked this up correctly.
 
-I got these traces:
+ Documentation/merge-strategies.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-$ git fetch --all
-Fetching origin
-remote: Enumerating objects: 29507, done.
-remote: Counting objects: 100% (29507/29507), done.
-remote: Compressing objects: 100% (33/33), done.
-remote: Total 53914 (delta 29478), reused 29500 (delta 29471), pack-reused 24407
-Receiving objects: 100% (53914/53914), 31.90 MiB | 111.00 KiB/s, done.
-Resolving deltas: 100% (42462/42462), completed with 7382 local objects.
+diff --git a/Documentation/merge-strategies.txt
+b/Documentation/merge-strategies.txt
+index aa66cbe41e..2912de706b 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -32,7 +32,7 @@ The 'recursive' strategy can take the following options:
+ ours;;
+        This option forces conflicting hunks to be auto-resolved cleanly by
+        favoring 'our' version.  Changes from the other tree that do not
+-       conflict with our side are reflected to the merge result.
++       conflict with our side are reflected in the merge result.
+        For a binary file, the entire contents are taken from our side.
+ +
+ This should not be confused with the 'ours' merge strategy, which does not
 --
-
-$ git push -v origin 'refs/replace/*:refs/replace/*'
-Pushing to XXXX
-Enumerating objects: 2681, done.
-Counting objects: 100% (2681/2681), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (1965/1965), done.
-Writing objects: 100% (2582/2582), 1.96 MiB | 1024 bytes/s, done.
-Total 2582 (delta 95), reused 1446 (delta 58)
-remote: Resolving deltas: 100% (95/95), completed with 33 local objects.
-To XXXX
- * [new branch]            refs/replace/XXXX -> refs/replace/XXXX
---
-
-Especially the pushing of a single replace commit involved 2582 objects to be written. This was after first a fetch was done.
-
-This especially hurts on flaky and slow connections, especially the more objects need to be written/read, the bigger the chance of the connection failing.
-In combination with the inability to restart fetches/pushes without down/uploading ALL objects again, this can become quite a frustrating experience.
-
-Any thoughts?
-
-Regards,
-Paul
-
-
+2.17.1
