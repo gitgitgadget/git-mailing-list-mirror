@@ -2,131 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF9AE1F4C0
-	for <e@80x24.org>; Fri,  8 Nov 2019 01:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B38C61F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 02:32:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728485AbfKHBpZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 7 Nov 2019 20:45:25 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:35100 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727024AbfKHBpZ (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 7 Nov 2019 20:45:25 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728415AbfKHCc6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 7 Nov 2019 21:32:58 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59003 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726281AbfKHCc5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 7 Nov 2019 21:32:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5821496763;
+        Thu,  7 Nov 2019 21:32:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=80JGSo3es5TFqvrjuPhoEEErER4=; b=EKjCc0
+        eXQ5E4gBT1yE2o9n6EfEsKkieWdUl2jMNQNnnoJhq3p37ntXSBs12kJlV6XHYeEp
+        +dT2RzSqpCGiGBK4vE7j9Snb4yrl67dvyDzizQwTP8r9ULEA4D/b/OK957JEK5OO
+        p6UpGGI/gaccDjX79GSLmJFly2cOlPyCIMd+o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=P6WbmfW9sPLJyNDmR1QKl4PZ3PMjHWkm
+        byudRn639e+B7O62inRn0SLiyYWsQAn6YLvfMOe5pRAqnXT8zowEnye0/U+5kbrv
+        iEF52vNtQtHdapu7lBC7/CFlP/eTpOjzpi9xCvx3a39iGhN7b3ID2okqJ3cRbGsN
+        bxBD3dFXojM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50BA196762;
+        Thu,  7 Nov 2019 21:32:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A08A46046C;
-        Fri,  8 Nov 2019 01:45:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1573177523;
-        bh=CGNOU9lfHZZ6VtDAiBLjEUGgLx9JeVA6yojcZf4bSdo=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YV2iw+Lw9F5QGMXZVB2GC0R9827e41Qq9vJJPG0zSIXNOx6qX19p9kArjezxLbmLT
-         5krUhtiSN3p/BogqKq4ftL4bVJQJLE72XTytMb0zfuI5P/zs9xZf/2E0LR31/s+l6U
-         pux7McufV96/7u+Wv0uUaJ28BJczmWE+x8Mgc+XPOvd3YVRsj7PUopHS/31KEmPgvb
-         3p2iexdJ2Q8LPLqK0g+WKmlaKyWs4xDryFwq2RzGN24gvJJ2/NNI6UcbKkHiWMT+Xp
-         7rIiWGPv0mH/8dH9NhthT2ZQ3IjfpZQZcl+uYuLJIOBM8gPS1/qiXOjjiHCTgIzfv3
-         Jff5NdMeIkQkQT2DJq6BbmV7ZmmNk40I9LdpxKkBrMwaH4SXu4vwoPnkuYT5jrf394
-         X/FKQlNKtin/jOEylbEpiEtxpZMSsOnFdQ3n6QCp8IurJnFITgZ+Dt6YJVKLAwJNI4
-         fwS41LGZ2zXZmnw5e6BIxYgsQLvPXugIVAchthjBRu1077+s+rK
-Date:   Fri, 8 Nov 2019 01:45:18 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Benedek =?utf-8?B?UsOhY3o=?= <betontalpfa@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Improvement] Separate protocol and path in gitmodules
-Message-ID: <20191108014518.GH32531@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Benedek =?utf-8?B?UsOhY3o=?= <betontalpfa@gmail.com>,
-        git@vger.kernel.org
-References: <CAAMvNNQyzMwAhizT-vBpbwfzAAHS6Ycx2tCLZ_eND3SK8WdTGg@mail.gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7B2B39675B;
+        Thu,  7 Nov 2019 21:32:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Grzegorz Rajchman <rayman17@gmail.com>, git@vger.kernel.org
+Subject: Re: [BUG] git stash pop --quiet deletes files in git 2.24.0
+References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
+        <20191107184912.GA3115@cat>
+Date:   Fri, 08 Nov 2019 11:32:50 +0900
+In-Reply-To: <20191107184912.GA3115@cat> (Thomas Gummerer's message of "Thu, 7
+        Nov 2019 18:49:12 +0000")
+Message-ID: <xmqq7e4bp06l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="cW+P/jduATWpL925"
-Content-Disposition: inline
-In-Reply-To: <CAAMvNNQyzMwAhizT-vBpbwfzAAHS6Ycx2tCLZ_eND3SK8WdTGg@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-1-amd64)
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 10393140-01D0-11EA-A344-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
---cW+P/jduATWpL925
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 11/07, Grzegorz Rajchman wrote:
+>> Hi, this is the first time I report an issue in git so I hope I'm
+>> doing it right.
+>
+> Thanks for the report.  You are indeed doing this right, and the
+> included reproduction is very helpful.
+>
+> I broke this in 34933d0eff ("stash: make sure to write refreshed
+> cache", 2019-09-11), which wasn't caught by the tests, nor by me as I
+> don't use the --quiet flag normally.
+>
+> Below is a fix for this, but I want to understand the problem a bit
+> better and write some tests before sending a patch.
 
-On 2019-11-07 at 13:52:28, Benedek R=C3=A1cz wrote:
-> Hi All,
->=20
-> **The issue**
-> My problem is based on this post: https://stackoverflow.com/q/40841882/25=
-06522
->=20
-> **Use-case:**
-> Git can be used with SSH or with HTTP. The usage of SSH is easier, due
-> to automatic authentication (ssh-key). But I have to use git from a
-> public PC, where I mustn't store my ssh-keys. On that PC I want to use
-> https's user/password authentication.
+OK, thanks for quickly looking into this.
 
-You can use the url.<base>.insteadOf feature to rewrite URLs, which will
-do what you want in this case.
+The commit added two places where refresh_and_write_cache() gets
+called.
 
-For example, I could set
-url.https://git.crustytoothpaste.net/git/.insteadOf to
-"ssh://bmc@git.crustytoothpaste.net/srv/scm/git/".  That would rewrite
-the SSH URLs for my Git server to an appropriate HTTPS URL.
+The first one at the very beginning of do_apply_stash() used to be
+refresh_cache() that immediately follows read_cache_preload().  We
+are writing back exactly what we read from the filesystem [*], so
+this should be a no-op from the correctness POV, with benefit of
+having a refreshed cache on disk.
 
-It's designed for situations like this, when you know the rewriting
-rules better than an external system.
+	Side note.  This argument assumes that no caller has called
+	read_cache() before calling us and did its own in-core index
+	operation.  In such a case, the in-core index is already out
+	of sync with the on-disk one due to our own operation, and
+	read_cache() will not overwrite already initilized in-core
+	index, so we will write out what the original code did not
+	want to, which would be a bug.
 
-> **Suggestion**
-> The root-cause of this issue is that the protocol (SSH or HTTP) and
-> the path of the remote repository is stored together (in the
-> .gitmodules file). If they were stored separately I would choose the
-> protocol easily.
+The second one happens after we do all the 3-way merges to replay
+the change between the base commit and the working tree state
+recorded in the stash, and then adjust the index to the desired
+state:
 
-The problem is that we don't know that a repository is accessible by
-both of those methods, or even if it is, what the correspondence between
-them is.
+ - If we are propagating the change to the index recorded in the
+   stash to the current index, reset_tree() reads the index_tree
+   that has been computed earlier in the function to update the
+   in-core index and the on-disk index.
 
-For example, my personal repositories are under
-https://git.crustytoothpaste.net/git/bmc/ and
-ssh://bmc@git.crustytoothpaste.net/srv/scm/git/bmc/.  Those paths are
-completely different.  There's no way to intrinsically map from one to
-the other without external knowledge.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+ - Otherwise, we compute paths added between the base commit and the
+   working tree state recorded in the stash (i.e. those that were
+   created but not yet commited when the stash was made), go back to
+   the in-core index state we had upon entry to this function
+   (i.e. c_tree), and then add these new paths from the working tree
+   directly to the on-disk index without updating the in-core
+   index.  Notice that this leaves the in-core index stale wrt the
+   on-disk index---but the stale in-core index gets discarded.
 
---cW+P/jduATWpL925
-Content-Type: application/pgp-signature; name="signature.asc"
+Then the code goes on to do:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+ - under --quiet, refresh_cache() used to be called to silently
+   refresh the in-core index.  34933d0eff made it to also write the
+   in-core index to on-disk index.  OOPS.  The in-core index has
+   been discarded at this point.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl3EyK4ACgkQv1NdgR9S
-9ouwBg//WStJAHuG8PzlND+feJqrHqFMQyRvZVdjy6kbmortBbvGUchri7J0/i2E
-2JoN3WEOEFqWlBETlXvviq9wLYD1fHGU2/qZazQjUzD9mcQ0GxvUpfJSAy8mA7QL
-Ny7T0uGXcR4qvgf+MeuCDmayFBvlbS88fK4mWE+JCpRj6qf8w0Xtn+Uz+x8TuvEU
-ICHtKaznG8kGj6rJkSBXXHRtfqFLqdeJu2XjPdNEYr8adhMrBLazqNgfYVw99rou
-TZH7RVPlTQVtwqFdLwRYqf9Qo7qnXvmX4oIW+Nuj7XEUMsdQottOqRU7Q6D18wzE
-TUOY3I/2NqYvooFuHuoOVdS/K7cUXlIakeKGKvvhKJT+j2+8bayrpsdR92LWzK5a
-BJcGCMaphpv2N0Pq28xzi18JRtEjP2RmdJRw4L7/D97AFx8vymr48ch8gDv/j3M0
-4Lafl6Kzet+zj7Y53uXjYoMsU+w4eAj3Rrfd+Gmv3oP+7QqFaG18SxZ9W8FmTZdE
-ky6wfK8p5gpQtonS/iqXoI7t1tFKi3PJBa2rxbh7UcXxs6ANIo+zKNMyZuBawCRI
-LCTcBISRJQ29BqTeFnPxFKqJK1dJHj9L6AMnlTOGqoK5hR7LDW+tD2cQ8N495h9y
-3meqVGOl5XZhTHlYo06qCe5tb9kgwEuGV/+WBPFyuaJbt72zs88=
-=ZU1f
------END PGP SIGNATURE-----
+ - otherwise, "git status" is spawned and directly acted on the
+   on-disk index (this also has a side effect of writing a refreshed
+   on-disk index).
 
---cW+P/jduATWpL925--
+So, I do not think removing that discard_cache() alone solves the
+breakage exposed by 34933d0eff.  Discarding and re-reading the
+on-disk index there would restore correctness, but then you would
+want to make sure that we are not wasting the overall cost for the
+I/O and refreshing.
+
+I think the safer immediate short-term fix is to revert the change
+to the quiet codepath and let it only refresh the in-core index.
+
+> index ab30d1e920..2dd9c9bbcd 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -473,22 +473,20 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>  
+>                 if (reset_tree(&c_tree, 0, 1)) {
+>                         strbuf_release(&out);
+>                         return -1;
+>                 }
+>  
+>                 ret = update_index(&out);
+>                 strbuf_release(&out);
+>                 if (ret)
+>                         return -1;
+> -
+> -               discard_cache();
+>         }
+>  
+>         if (quiet) {
+>                 if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+>                         warning("could not refresh index");
+>         } else {
+>                 struct child_process cp = CHILD_PROCESS_INIT;
