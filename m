@@ -2,205 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D17C41F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 12:45:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE1B41F4C0
+	for <e@80x24.org>; Fri,  8 Nov 2019 12:49:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726457AbfKHMpk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 07:45:40 -0500
-Received: from smtp1.lauterbach.com ([62.154.241.196]:49575 "EHLO
-        smtp1.lauterbach.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbfKHMpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 07:45:40 -0500
-Received: (qmail 10516 invoked by uid 484); 8 Nov 2019 12:45:37 -0000
-X-Qmail-Scanner-Diagnostics: from 10.2.10.40 by smtp1.lauterbach.com (envelope-from <ingo.rohloff@lauterbach.com>, uid 484) with qmail-scanner-2.11 
- (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
- Clear:RC:1(10.2.10.40):. 
- Processed in 0.084829 secs); 08 Nov 2019 12:45:37 -0000
-Received: from unknown (HELO ingpc3.intern.lauterbach.com) (Authenticated_SSL:irohloff@[10.2.10.40])
-          (envelope-sender <ingo.rohloff@lauterbach.com>)
-          by smtp1.lauterbach.com (qmail-ldap-1.03) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
-          for <gitster@pobox.com>; 8 Nov 2019 12:45:37 -0000
-Date:   Fri, 8 Nov 2019 13:45:36 +0100
-From:   Ingo Rohloff <ingo.rohloff@lauterbach.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] branch: Forbid to create local branches with confusing
- names
-Message-ID: <20191108134536.43d6e476@ingpc3.intern.lauterbach.com>
-In-Reply-To: <xmqq36ezoz6i.fsf@gitster-ct.c.googlers.com>
-References: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
-        <xmqqftj0qkzm.fsf@gitster-ct.c.googlers.com>
-        <20191107135409.13fa0336@ingpc3.intern.lauterbach.com>
-        <xmqq36ezoz6i.fsf@gitster-ct.c.googlers.com>
-Organization: Lauterbach GmbH
-X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1726608AbfKHMtM (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 07:49:12 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63732 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726299AbfKHMtM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 07:49:12 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 70ED69EC1E;
+        Fri,  8 Nov 2019 07:49:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=st4PYdLahRYyP5dM90i3LXyLfjU=; b=mBLB6g
+        6ppyXz6YzPValEo2qtV9SanX/tHTDfsax1IwGHj298Lfu7TGj8SoicHsdDpY9w63
+        3UdAWXGogwlDznpbUqq44innGUR0Pe+JpBNC+hbgXnAdYyeHoqnkrCBHmeDMKwMn
+        rNHlWKNayUDP7TiObvKEJ82DW9WGwQylm83Zk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=tYbVg7khKSQzHiMN4MBqq+Vd4RuGfTlt
+        muMSSStlLIBRNtqZCJ4Almw6JXjnc/c5JrhDWDV4Dm1oTqvD7PFBBiYHGJ2HJFP3
+        yAhH48oNAbWAxIqpngNYOkU3bvoPCJRNsqkWX0Uj66ImFMmNwGGviOFKBIkoZnd+
+        3bcjNKUNEqs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5D3A49EC1D;
+        Fri,  8 Nov 2019 07:49:07 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7A4D59EC1C;
+        Fri,  8 Nov 2019 07:49:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 01/14] t: teach test_cmp_rev to accept ! for not-equals
+References: <cover.1571739459.git.liu.denton@gmail.com>
+        <cover.1573152598.git.liu.denton@gmail.com>
+        <0d0696f310a6f8e13ed480b1a1e91cdc2debaa20.1573152599.git.liu.denton@gmail.com>
+        <xmqqpni3nj8j.fsf@gitster-ct.c.googlers.com>
+        <20191108082310.GA2497@generichostname>
+Date:   Fri, 08 Nov 2019 21:49:02 +0900
+In-Reply-To: <20191108082310.GA2497@generichostname> (Denton Liu's message of
+        "Fri, 8 Nov 2019 00:23:10 -0800")
+Message-ID: <xmqqa796mt35.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 253FA5FA-0226-11EA-95E7-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Junio,
+Denton Liu <liu.denton@gmail.com> writes:
 
-> > I think I did not explain the intention that well.
-> > What I basically want to avoid is a situation in which there is
-> > no way at all to refer unambiguously to a particular reference.  
-> 
-> Hmph, I thought this was a solved problem, but maybe I am still
-> misunderstanding you.
+>> >  		local r1 r2
+>> >  		r1=$(git rev-parse --verify "$1") &&
+>> >  		r2=$(git rev-parse --verify "$2") &&
+>> 
+>> If either of the calls fail, the assignment itself would fail, and
+>> the &&-cascade would stop without executing the if statment below.
+>> 
+>> I see the "!" feature, but where is the promised "fix" for
+>> segfaulting rev-parse?
+>> 
+>> Puzzled.
+>
+> I suppose your puzzlement comes from my badly worded commit message
+> above. I meant to say that in the _hypothetical_ case that 
+> `git rev-parse` segfaults, it wouldn't be caught because we're
+> blanket-ignoring failures if we do `! test_cmp_rev`.
+>
+> But I suppose I focused too much on segfaults. I guess I didn't realise
+> that the problem is more general than that; any failure of 
+> `git rev-parse` should be reported.
 
-You are right, this is partly solved: 
-Deleting such a reference to a local branch is always possible.
-But these kind of problems are not solved fully.
+But if that is the case, shouldn't the part that runs two rev-parse
+read more like this?
 
-To explain my issue more concisely:
-I start in any "regular" git repository.
-   Regular ==  Repository was cloned from somewhere so a remote
-   named "origin" and a remote-tracking branch named "origin/master"
-   do exist. 
+	r1=$(git rev-parse --verify "$1") ||
+		error "'$1' does not name a valid object"
+	r2=$(git rev-parse --verify "$2") ||
+		error "'$2' does not name a valid object"
+	if ! test "$r1" $op "$r2"
+	then
+		... they do not compare the same ...
+	fi
 
-I fire off the following four commands
-(Yes: This is malicious and stupid ;-))
+Offhand I do not know if the current callers depend on being able to
+pass a string that is not an object name in either $1 or $2 and a
+valid object name in the other one, and relying on the helper
+function to say "$1 and $2 are different!"  If such callers exist, a
+defensive change like the above that requires the caller to always
+pass valid object names would need to be accompanied with changes to
+these callers, too.  Overall, I think that would give us a better
+end result, but it might be a bit more work.
 
-   git checkout master
-   git branch origin/master
-   git branch remotes/origin/master
-   git branch refs/remotes/origin/master
-
-git does not complain at all here.
-
-Then I try the following three commands.
-
-   git branch somework origin/master
-      warning: refname 'origin/master' is ambiguous.
-      fatal: Ambiguous object name: 'origin/master'.
-
-   git branch somework remotes/origin/master
-      warning: refname 'remotes/origin/master' is ambiguous.
-      fatal: Ambiguous object name: 'remotes/origin/master'.
-
-   git branch somework refs/remotes/origin/master
-      warning: refname 'refs/remotes/origin/master' is ambiguous.
-      fatal: Ambiguous object name: 'refs/remotes/origin/master'.
-
-
-QUESTION: 
-I think I am lost now. That's where I might have overlooked something ?
-
-
-
-I might continue with (this is the solved case):
-
-   git branch -d refs/remotes/origin/master
-      Deleted branch refs/remotes/origin/master (was 3454f30).
-
-Sounds rather scary (because this sounds like you deleted a 
-remote-tracking branch), but actually does the right thing I guess.
-(The command deletes refs/heads/refs/remotes/origin/master)
-
-
-After which this succeeds:
-
-   git branch somework refs/remotes/origin/master
-      Branch 'somework' set up to track remote branch 'master' from 'origin'.
-
-
-
-
-PATCH:
-Make this fail:
-
-   git branch refs/remotes/origin/master
-      fatal: Invalid new branch name: 'refs/remotes/origin/master'
-
-This avoids the failure for 
-
-   git branch somework refs/remotes/origin/master
-
-
-and to avoid very similar issues make these fail too:
-
-   git tag -m "a tag" refs/remotes/origin/master
-      fatal: Invalid new tag name: 'refs/remotes/origin/master'
-
-   git remote add refs/heads ssh://ds1/home/irohloff/git/gcc_build.git
-      fatal: Invalid new remote name: 'refs/heads'
-
-
-All of these examples use really pathological names for tags/remotes/branches.
-I cannot believe that anyone wants to do this intentionally.
-
-QUESTION:
-Are there more user created, command line specified refnames 
-in addition to tags/remotes/branches ?
-
-
-
-
-If you have time:
-
-Some more background.
-The whole idea behind the patch: 
-Make sure "refs/" is a "unique" prefix, which only
-appears as ".git/refs/".
-This should ensure that "refs/" only matches
-to the very first entry from:
-	static const char *ref_rev_parse_rules[] = {
-		"%.*s",
-		"refs/%.*s",
-		"refs/tags/%.*s",
-		"refs/heads/%.*s",
-		"refs/remotes/%.*s",
-		"refs/remotes/%.*s/HEAD",
-		NULL
-	};  
-
-So goal: Make sure
-  refs/refs/*          does not exist
-  refs/tags/refs/*     does not exist
-  refs/heads/refs/*    does not exist
-  refs/remotes/refs/*  does not exist
-
-To avoid the existence of refs/remotes/refs/* it is necessary to 
-also prohibit a standalone "refs" as remote name (not just "refs/*");
-and to handle that more easily I also prohibit a standalone "refs"
-for tags and branches.
-
-Of course you might still create all these nasty subdirs with plumbing.
-I try to avoid that this is done with porcelain.
-(At least that's as far as I understand git terminology.)
-Of course future git extensions might try to create something like
-  .git/refs/refs/*
-but since these extensions are reviewed, I guess it is easy to nudge
-authors of extensions (like git-svn, git-bisect, ...) to NOT do this.
-
-so long
-  Ingo
-
-
-PS: 
-I really think per default more prefixes than just "refs/" should
-be forbidden when creating tags/remotes/branches.
-But I also agree with you that this is much less straight forward
-(Which prefixes to forbid ? Config option ? How much does this break ? ...).
-As far as I can tell tags/remotes/branches, which 
-are called "refs/*" or "refs" are completely pathological; 
-I think unconditionally forbidding to create these kind of 
-refnames for tags/remotes/branches with porcelain is OK.
-
-BTW: This is also quite confusing 
-(but does not really hurt and is consistent with what you described)
-
-   git branch -r -d refs/remotes/origin/master
-      error: remote-tracking branch 'refs/remotes/origin/master' not found.
-
-What is meant here is I think
-
-   remote-tracking branch 'refs/remotes/refs/remotes/origin/master' not found.
+Thanks.
