@@ -2,89 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661CE1F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 18:47:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6C751F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 19:26:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730009AbfKHSr2 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 13:47:28 -0500
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:52654 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726394AbfKHSr2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 13:47:28 -0500
-Received: by mail-pf1-f202.google.com with SMTP id f20so1994820pfn.19
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 10:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=nGP43EtXMq+HdBw2jYu0gEgDLqP/sw7S/yM3l/4DgRs=;
-        b=irPc5qz4mOv6oeA9hGcyC1/tUPKPWD7g6iVCQlAdJKbN8aF1WxRW1FMxPMRRhzQrUT
-         /0+CnH6fFmWOqxKDnIOPckyeTpKNdTQty4aQjjCbqHqskIE3PTxgfZoqI+WAKsTyCnHA
-         KvDSQmnTlqsyXEtOASlcIPmRoPNgdNdTaBuPu6kKdqqMnFFGyR+lY/8pvJT3WM00SfJq
-         U5SYA4ZhvXctyKqxhj847QRibSxrhqt+KrywgowSslrKY5P69iD8XrdV7UUS2E5Jb7Lg
-         oGU2S7FX3VHUThYaQl17JzRyVvb3tnSHu5uXbeH45oTZqQUPaowgdDu+q6xihGMyf7Fa
-         Iq4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=nGP43EtXMq+HdBw2jYu0gEgDLqP/sw7S/yM3l/4DgRs=;
-        b=uBuGcv2g4zLxMNWJkUcdPCWrfkK+EAt3pby1a7gmWR/G/p8GYFevVrj4f+JV42Z9sh
-         ZeprfYwraVnp9jQllMovhUVUzqSTmfuleE/ZDRzVfmg7j+DZHzbGBuiZC8DRXxD+A8nS
-         oJ2BWYfZAWZf2hYIWXxjzsXxNsB4sVH96q2h8TYWO3HlfWmS66H5eorgbX/uHr6MMb2Z
-         rquV70qXhdkA4xR0RXsQebjAdJnDFPoKHrmv8TmXdKirTz5lon8q1CxfaU/Z93iTC1Ah
-         mcQ8FSfHbWVbMfIcv0DUdkwWsPdjxaDbUVeATmXR4rxCungXJF1Yb1M4YFOtYIOOVtz4
-         1IDw==
-X-Gm-Message-State: APjAAAU1f+6I3MFHihXkf6udYTEdmmcXICX33FT6r89cNcVKUU0Tewo3
-        Qc3vahrqmWZmYY8JEvugJ//RCWZJA9M7sc9pJAga
-X-Google-Smtp-Source: APXvYqzONKfz145u2PKv2HHIXm0h5N2rlU1Qyin9EHSa4EEhWCZ574MOXQKPvAlk/3ZQgLxe2PvBBRrczZQx19Qc1Y8Y
-X-Received: by 2002:a63:4553:: with SMTP id u19mr13502291pgk.436.1573238846936;
- Fri, 08 Nov 2019 10:47:26 -0800 (PST)
-Date:   Fri,  8 Nov 2019 10:47:23 -0800
-In-Reply-To: <bc43c70e-861d-425d-d7c4-73a3e25b7383@cheerful.com>
-Message-Id: <20191108184723.246596-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <bc43c70e-861d-425d-d7c4-73a3e25b7383@cheerful.com>
-X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
-Subject: Re: [BUG/FEATURE] Git pushing and fetching many more objects than
- strictly required
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     nospam@cheerful.com
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730989AbfKHT0c (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 14:26:32 -0500
+Received: from relay10.mail.gandi.net ([217.70.178.230]:53235 "EHLO
+        relay10.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726394AbfKHT0c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 14:26:32 -0500
+Received: from localhost.localdomain (unknown [1.186.12.17])
+        (Authenticated sender: me@yadavpratyush.com)
+        by relay10.mail.gandi.net (Postfix) with ESMTPSA id 3C150240006;
+        Fri,  8 Nov 2019 19:26:29 +0000 (UTC)
+From:   Pratyush Yadav <me@yadavpratyush.com>
+To:     <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] git-shortlog.txt: include commit limiting options
+Date:   Sat,  9 Nov 2019 00:56:27 +0530
+Message-Id: <20191108192627.19408-1-me@yadavpratyush.com>
+X-Mailer: git-send-email 2.21.0
+In-Reply-To: <20191030203603.27497-1-me@yadavpratyush.com>
+References: <20191030203603.27497-1-me@yadavpratyush.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> $ git fetch --all
-> Fetching origin
-> remote: Enumerating objects: 29507, done.
-> remote: Counting objects: 100% (29507/29507), done.
-> remote: Compressing objects: 100% (33/33), done.
-> remote: Total 53914 (delta 29478), reused 29500 (delta 29471), pack-reused 24407
-> Receiving objects: 100% (53914/53914), 31.90 MiB | 111.00 KiB/s, done.
-> Resolving deltas: 100% (42462/42462), completed with 7382 local objects.
-> --
-> 
-> $ git push -v origin 'refs/replace/*:refs/replace/*'
-> Pushing to XXXX
-> Enumerating objects: 2681, done.
-> Counting objects: 100% (2681/2681), done.
-> Delta compression using up to 8 threads
-> Compressing objects: 100% (1965/1965), done.
-> Writing objects: 100% (2582/2582), 1.96 MiB | 1024 bytes/s, done.
-> Total 2582 (delta 95), reused 1446 (delta 58)
-> remote: Resolving deltas: 100% (95/95), completed with 33 local objects.
-> To XXXX
->  * [new branch]            refs/replace/XXXX -> refs/replace/XXXX
+git-shortlog, like git-log, supports options to filter what commits are
+used to generate the log. These options come from git-rev-list, and are
+documented in Documentation/rev-list-options.txt. Include those options
+in shortlog's documentation.
 
-Could you verify that refs/replace/XXXX (or one of its close ancestors)
-was fetched by the "git fetch --all" command? "--all" fetches all
-remotes, not all refs.
+But since rev-list-options.txt contains some other options that don't
+really apply in the context of shortlog (like diff formatting, commit
+ordering, etc), add a switch in rev-list-options.txt that excludes those
+sections from the shortlog documentation. To be more specific, include
+only the "Commit Limiting" and "History Simplification" sections.
+
+Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+---
+Changes in v3:
+- Include the "History Simplification" section too.
+
+- Wrap each section in an ifdef individually to make it easier to move
+  them around later.
+
+ Documentation/git-shortlog.txt     |  3 +++
+ Documentation/rev-list-options.txt | 11 ++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-shortlog.txt b/Documentation/git-shortlog.txt
+index bc80905a8a..a72ea7f7ba 100644
+--- a/Documentation/git-shortlog.txt
++++ b/Documentation/git-shortlog.txt
+@@ -76,6 +76,9 @@ them.
+ Paths may need to be prefixed with `--` to separate them from
+ options or the revision range, when confusion arises.
+
++:git-shortlog: 1
++include::rev-list-options.txt[]
++
+ MAPPING AUTHORS
+ ---------------
+
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 90ff9e2bea..e37df921b5 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -579,6 +579,7 @@ above) if (1) they are referenced by tags, or (2) they change the
+ contents of the paths given on the command line.  All other
+ commits are marked as TREESAME (subject to be simplified away).
+
++ifndef::git-shortlog[]
+ ifdef::git-rev-list[]
+ Bisection Helpers
+ ~~~~~~~~~~~~~~~~~
+@@ -634,8 +635,9 @@ This option can be used along with `--bisect-vars`, in this case,
+ after all the sorted commit objects, there will be the same text as if
+ `--bisect-vars` had been used alone.
+ endif::git-rev-list[]
++endif::git-shortlog[]
+
+-
++ifndef::git-shortlog[]
+ Commit Ordering
+ ~~~~~~~~~~~~~~~
+
+@@ -677,7 +679,9 @@ together.
+ 	Output the commits chosen to be shown (see Commit Limiting
+ 	section above) in reverse order. Cannot be combined with
+ 	`--walk-reflogs`.
++endif::git-shortlog[]
+
++ifndef::git-shortlog[]
+ Object Traversal
+ ~~~~~~~~~~~~~~~~
+
+@@ -817,7 +821,9 @@ endif::git-rev-list[]
+
+ --do-walk::
+ 	Overrides a previous `--no-walk`.
++endif::git-shortlog[]
+
++ifndef::git-shortlog[]
+ Commit Formatting
+ ~~~~~~~~~~~~~~~~~
+
+@@ -973,7 +979,9 @@ ifdef::git-rev-list[]
+ 	counts and print the count for equivalent commits separated
+ 	by a tab.
+ endif::git-rev-list[]
++endif::git-shortlog[]
+
++ifndef::git-shortlog[]
+ ifndef::git-rev-list[]
+ Diff Formatting
+ ~~~~~~~~~~~~~~~
+@@ -1016,3 +1024,4 @@ options may be given. See linkgit:git-diff-files[1] for more options.
+ -t::
+ 	Show the tree objects in the diff output. This implies `-r`.
+ endif::git-rev-list[]
++endif::git-shortlog[]
+--
+2.21.0
+
