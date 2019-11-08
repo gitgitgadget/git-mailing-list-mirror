@@ -2,163 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C32E1F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 10:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17C41F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 12:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730622AbfKHKOu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 05:14:50 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53488 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729873AbfKHKOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 05:14:50 -0500
-Received: by mail-wm1-f68.google.com with SMTP id x4so5546437wmi.3
-        for <git@vger.kernel.org>; Fri, 08 Nov 2019 02:14:48 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=++EwRw/7pFWBOySxsCclNMivUebof7iZ5RlUBFChxgw=;
-        b=amlrozauSkvnGesfOjyFwNCbyFBwu+a3+XM4dlZQFnJ/HFvd9CDWUiak7Oh/sSWw+S
-         dGi9fsYcuZ7U8EUz8kDxfIVyX4S8Y3lnaQryyUr8fwDSpuw53Ce5Vi/RM/WIe8yEk7Ao
-         uZoQHrKyDg/AxkITW2uolhx+MpzVrgQwX6OPsIaaS5oin0CPEy2cvfFG39Wedhklw4se
-         8FFuF/e7lPJE/PcIwizRmw19KvzH/t4MWKib0OeoxWaTrCZFsGUKx8dlxs7bt6OAhx1g
-         ZnRHbKyOt3clbg6NJtC+tYF0cDNhrL3dSmdUAmQfFs8yv72QxvVPg160slLfILIkv0SJ
-         zrlg==
-X-Gm-Message-State: APjAAAU8tNE0/OKICgQQS9ggD2d0/5kIB74RPxKeNdKJRxTaExCTsYMw
-        P+eP3XmwDeWY8lHnAqerENxlxtlJ668eMULbIL0hxXqG
-X-Google-Smtp-Source: APXvYqze2mn3zjJRd93nGI/FBDOYkDSEACC8jh9JaMJ/Eo4iRMtjKVASWPxLqKE1pebDLma/XtSfk+slxCh+7+HA0qU=
-X-Received: by 2002:a1c:3843:: with SMTP id f64mr7051913wma.129.1573208069397;
- Fri, 08 Nov 2019 02:14:29 -0800 (PST)
+        id S1726457AbfKHMpk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 07:45:40 -0500
+Received: from smtp1.lauterbach.com ([62.154.241.196]:49575 "EHLO
+        smtp1.lauterbach.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726281AbfKHMpk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 07:45:40 -0500
+Received: (qmail 10516 invoked by uid 484); 8 Nov 2019 12:45:37 -0000
+X-Qmail-Scanner-Diagnostics: from 10.2.10.40 by smtp1.lauterbach.com (envelope-from <ingo.rohloff@lauterbach.com>, uid 484) with qmail-scanner-2.11 
+ (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
+ Clear:RC:1(10.2.10.40):. 
+ Processed in 0.084829 secs); 08 Nov 2019 12:45:37 -0000
+Received: from unknown (HELO ingpc3.intern.lauterbach.com) (Authenticated_SSL:irohloff@[10.2.10.40])
+          (envelope-sender <ingo.rohloff@lauterbach.com>)
+          by smtp1.lauterbach.com (qmail-ldap-1.03) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <gitster@pobox.com>; 8 Nov 2019 12:45:37 -0000
+Date:   Fri, 8 Nov 2019 13:45:36 +0100
+From:   Ingo Rohloff <ingo.rohloff@lauterbach.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] branch: Forbid to create local branches with confusing
+ names
+Message-ID: <20191108134536.43d6e476@ingpc3.intern.lauterbach.com>
+In-Reply-To: <xmqq36ezoz6i.fsf@gitster-ct.c.googlers.com>
+References: <20191106165628.28563-1-ingo.rohloff@lauterbach.com>
+        <xmqqftj0qkzm.fsf@gitster-ct.c.googlers.com>
+        <20191107135409.13fa0336@ingpc3.intern.lauterbach.com>
+        <xmqq36ezoz6i.fsf@gitster-ct.c.googlers.com>
+Organization: Lauterbach GmbH
+X-Mailer: Claws Mail 3.14.1 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20191017162826.1064257-1-pjones@redhat.com> <20191017162826.1064257-2-pjones@redhat.com>
- <CAPig+cS6SzLdgmzffNkg72YSiDQ9eQRqTK12NsraKpGbkJFY_w@mail.gmail.com> <20191018194317.wvqphshpkfskvkyh@redhat.com>
-In-Reply-To: <20191018194317.wvqphshpkfskvkyh@redhat.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 8 Nov 2019 05:14:18 -0500
-Message-ID: <CAPig+cTExu1+XyhUaq=yY09CAK6NN_BQViQETU8_fbGxu3jWzg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Make "git branch -d" prune missing worktrees automatically.
-To:     Peter Jones <pjones@redhat.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[cc:+duy]
+Hello Junio,
 
-On Fri, Oct 18, 2019 at 3:43 PM Peter Jones <pjones@redhat.com> wrote:
-> On Thu, Oct 17, 2019 at 01:28:09PM -0400, Eric Sunshine wrote:
-> > Echoing SEZDER's comment on patch 1/2, this behavior is an intentional
-> > design choice and safety feature of the worktree implementation since
-> > worktrees may exist on removable media or remote filesystems which
-> > might not always be mounted; hence, the presence of commands "git
-> > worktree prune" and "git worktree remove".
->
-> Okay, I see that use case now - I hadn't realized there was an
-> intentional design decision here, and honestly that's anything but clear
-> from the *code*.
+> > I think I did not explain the intention that well.
+> > What I basically want to avoid is a situation in which there is
+> > no way at all to refer unambiguously to a particular reference.  
+> 
+> Hmph, I thought this was a solved problem, but maybe I am still
+> misunderstanding you.
 
-It can indeed sometimes be difficult to get a high-level functional
-overview by examining code in isolation. In this case, at least,
-git-worktree documentation tries to be clear about the "why" and "how"
-of the pruning behavior (which is not to say that the documentation --
-or the code -- can't be improved to communicate this better).
+You are right, this is partly solved: 
+Deleting such a reference to a local branch is always possible.
+But these kind of problems are not solved fully.
 
-> It's surprising, for example, that my patches didn't break a single
-> test case.
+To explain my issue more concisely:
+I start in any "regular" git repository.
+   Regular ==  Repository was cloned from somewhere so a remote
+   named "origin" and a remote-tracking branch named "origin/master"
+   do exist. 
 
-Tests suites are never perfect, and an attempt to prune a dangling
-worktree by deleting a branch likely never occurred to the
-git-worktree implementer(s).
+I fire off the following four commands
+(Yes: This is malicious and stupid ;-))
 
-> > These minor implementation comments aside, before considering this
-> > patch series, it would be nice to see a compelling argument as to why
-> > this change of behavior, which undercuts a deliberate design decision,
-> > is really desirable.
->
-> Okay, so just for clarity, when you say there's a deliberate design
-> decision, which behavior here are you talking about? If you mean making
-> "lock" work, I don't have any issue with that. If you mean not cleaning
-> up when we do other commands, then I don't see why that's a concern -
-> after all, that's exactly what "lock" is for.
+   git checkout master
+   git branch origin/master
+   git branch remotes/origin/master
+   git branch refs/remotes/origin/master
 
-To clarify, I'm talking about Duy's deliberate design decision to
-model git-worktree auto-pruning after Git's own garbage-collection
-behavior. That model includes, not only explicit locking, but a grace
-period before dangling worktree administrative files can be pruned
-automatically (see the gc.worktreePruneExpire configuration).
+git does not complain at all here.
 
-The point of git-worktree's grace period (just like git-gc's grace
-period) is to avoid deleting potentially precious information
-permanently. For instance, the worktree-local "index" file might have
-some changes staged but not yet committed. Under the existing model,
-those staged changes are immune from being accidentally deleted
-permanently until after the grace period expires or until they are
-thrown away deliberately (say, via "git worktree prune --expire=now").
+Then I try the following three commands.
 
-> Assuming it is the "lock" behavior we're talking about, I don't think I
-> actually have any intention of breaking this design decision, just
-> making my workflow (without "lock") nag at me less for what seem like
-> pretty trivial issues.
+   git branch somework origin/master
+      warning: refname 'origin/master' is ambiguous.
+      fatal: Ambiguous object name: 'origin/master'.
 
-The ability to lock a worktree is an extra safety measure built atop
-the grace period mechanism to provide a way to completely override
-auto-pruning; it is not meant as an alternate or replacement safety
-mechanism to the grace period, but instead augments it. So, a behavior
-change which respects only one of those safety mechanisms but not the
-other is likely flawed.
+   git branch somework remotes/origin/master
+      warning: refname 'remotes/origin/master' is ambiguous.
+      fatal: Ambiguous object name: 'remotes/origin/master'.
 
-And, importantly, people may already be relying upon this behavior of
-having an automatic grace period -- without having to place a worktree
-lock manually -- so changing behavior arbitrarily could break existing
-workflows and result in data loss.
+   git branch somework refs/remotes/origin/master
+      warning: refname 'refs/remotes/origin/master' is ambiguous.
+      fatal: Ambiguous object name: 'refs/remotes/origin/master'.
 
-> I can easily accommodate "git worktree lock". What bugs me though, is
-> that using worktrees basically means I have to replace fairly regular
-> filesystem activities with worktree commands, and it doesn't seem to be
-> *necessary* in any way. And I'm going to forget. A lot.
->
-> To me, there doesn't seem to be any reason these need to behave any different:
->
-> $ git worktree add foo foo
-> $ rm -rf foo
-> vs
-> $ git worktree add foo foo
-> $ git worktree remove foo
->
-> And in fact the only difference right now, aside from some very
-> minuscule storage requirements that haven't gotten cleaned up, is the
-> first one leaves an artifact that tells it to give me errors later until
-> I run "git worktree prune" myself.
 
-I understand the pain point, but I also understand Duy's motivation
-for being very careful about pruning worktree administrative files
-automatically (so as to avoid data loss, such as changes already
-staged to a worktree-local "index" file). While the proposed change
-may address the pain point, it nevertheless creates the possibility of
-accidental loss which Duy was careful to avoid when designing worktree
-mechanics. Although annoying, the current behavior gives you the
-opportunity to avoid that accidental loss by forcing you to take
-deliberate action to remove the worktree administrative files.
+QUESTION: 
+I think I am lost now. That's where I might have overlooked something ?
 
-Perhaps there is some way to address the pain point without breaking
-the fundamental promise made by git-worktree about being careful with
-worktree metadata[*], but the changes proposed by this patch series
-seem insufficient (even if the patch is reworked to respect worktree
-locking). I've cc:'d Duy in case he wants to chime in.
 
-[*] For instance, perhaps before auto-pruning, it could check whether
-the index is recording staged changes or conflict information, and
-only allow auto-pruning if the index is clean. *But* there may be
-other ways for information to be lost permanently (beyond a dirty
-"index") which don't occur to me at present, so this has to be
-considered carefully.
+
+I might continue with (this is the solved case):
+
+   git branch -d refs/remotes/origin/master
+      Deleted branch refs/remotes/origin/master (was 3454f30).
+
+Sounds rather scary (because this sounds like you deleted a 
+remote-tracking branch), but actually does the right thing I guess.
+(The command deletes refs/heads/refs/remotes/origin/master)
+
+
+After which this succeeds:
+
+   git branch somework refs/remotes/origin/master
+      Branch 'somework' set up to track remote branch 'master' from 'origin'.
+
+
+
+
+PATCH:
+Make this fail:
+
+   git branch refs/remotes/origin/master
+      fatal: Invalid new branch name: 'refs/remotes/origin/master'
+
+This avoids the failure for 
+
+   git branch somework refs/remotes/origin/master
+
+
+and to avoid very similar issues make these fail too:
+
+   git tag -m "a tag" refs/remotes/origin/master
+      fatal: Invalid new tag name: 'refs/remotes/origin/master'
+
+   git remote add refs/heads ssh://ds1/home/irohloff/git/gcc_build.git
+      fatal: Invalid new remote name: 'refs/heads'
+
+
+All of these examples use really pathological names for tags/remotes/branches.
+I cannot believe that anyone wants to do this intentionally.
+
+QUESTION:
+Are there more user created, command line specified refnames 
+in addition to tags/remotes/branches ?
+
+
+
+
+If you have time:
+
+Some more background.
+The whole idea behind the patch: 
+Make sure "refs/" is a "unique" prefix, which only
+appears as ".git/refs/".
+This should ensure that "refs/" only matches
+to the very first entry from:
+	static const char *ref_rev_parse_rules[] = {
+		"%.*s",
+		"refs/%.*s",
+		"refs/tags/%.*s",
+		"refs/heads/%.*s",
+		"refs/remotes/%.*s",
+		"refs/remotes/%.*s/HEAD",
+		NULL
+	};  
+
+So goal: Make sure
+  refs/refs/*          does not exist
+  refs/tags/refs/*     does not exist
+  refs/heads/refs/*    does not exist
+  refs/remotes/refs/*  does not exist
+
+To avoid the existence of refs/remotes/refs/* it is necessary to 
+also prohibit a standalone "refs" as remote name (not just "refs/*");
+and to handle that more easily I also prohibit a standalone "refs"
+for tags and branches.
+
+Of course you might still create all these nasty subdirs with plumbing.
+I try to avoid that this is done with porcelain.
+(At least that's as far as I understand git terminology.)
+Of course future git extensions might try to create something like
+  .git/refs/refs/*
+but since these extensions are reviewed, I guess it is easy to nudge
+authors of extensions (like git-svn, git-bisect, ...) to NOT do this.
+
+so long
+  Ingo
+
+
+PS: 
+I really think per default more prefixes than just "refs/" should
+be forbidden when creating tags/remotes/branches.
+But I also agree with you that this is much less straight forward
+(Which prefixes to forbid ? Config option ? How much does this break ? ...).
+As far as I can tell tags/remotes/branches, which 
+are called "refs/*" or "refs" are completely pathological; 
+I think unconditionally forbidding to create these kind of 
+refnames for tags/remotes/branches with porcelain is OK.
+
+BTW: This is also quite confusing 
+(but does not really hurt and is consistent with what you described)
+
+   git branch -r -d refs/remotes/origin/master
+      error: remote-tracking branch 'refs/remotes/origin/master' not found.
+
+What is meant here is I think
+
+   remote-tracking branch 'refs/remotes/refs/remotes/origin/master' not found.
