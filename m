@@ -7,117 +7,93 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D301D1F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 05:17:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E550F1F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 05:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbfKHFRw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 00:17:52 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61163 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726072AbfKHFRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 00:17:52 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13AB721CC5;
-        Fri,  8 Nov 2019 00:17:47 -0500 (EST)
+        id S1725794AbfKHF2z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 00:28:55 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61743 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725372AbfKHF2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 00:28:55 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 74AD59C062;
+        Fri,  8 Nov 2019 00:28:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hyPkPQXOvB7i1jw4zQRxYGzgGzY=; b=Wf3XK/
-        uP60rPTpvvYnGAy8NnPSC7J+Dl+sJ6HVIbSlxDsTSGbH270fuBsewZnJGfP5uywj
-        ZsxQKXkRmWHby85C/a7Rz+EqyjRB160Mg9pgmdeSRjM4KsF5GUjYgvE23qXo4559
-        /dlTts1rdqRQOe9Dbw5H+aRO/V7PU2p9yoiVY=
+        :content-type; s=sasl; bh=iiyYJLAw6iS52bgVqQHk21z9N00=; b=FYAzDo
+        bEs49mErey4ejM++PLEt9RfaVZAAZmW3yqVx/zSY1CEaLDxrresr9+dsLi2+PJLy
+        0FT8jdl7VQdmq8F9qUOrzoWd1R6u0BJGl//Sv3pWp+vBjdLZp6cRvrkDGOtJMUVR
+        ALgLCRQGxEGLOVhAVDFapDZC7DbYPd/PePumc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=NNzbku5oaTdT918vDlJP5KuD2fvCih4r
-        UJExLBjwOPOyDbpvTjBPYtU3h9YhiDL0llwZ5kl1y74kcnoBhOQXUlscNygNXj4R
-        UivM9f9r9EfBe1XcLKXfWmwJ1CDtz2vHiw0z2Pqs02d3knKqz7GqQhb4ZcPjgD7p
-        xJqYsO0qGAM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AA5221CC4;
-        Fri,  8 Nov 2019 00:17:47 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Y5jyOrt4LOu2uVqa7tY40nIAD2sA0q6q
+        y0tzJZ5PbV6lsfcs4Zsg+BY9Z3MO3hIWlbnN/y1059q+lvBmaSoQu9getQ72u9bb
+        KKGlUillnsyxx0t/fK3HDGHVMFna6n0rqYzhc89BWSSPcEtXdInlwiJ9E3LP1/BW
+        vyZIL2ZhAGI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6CD879C061;
+        Fri,  8 Nov 2019 00:28:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6C07121CC3;
-        Fri,  8 Nov 2019 00:17:46 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9D9CA9C05D;
+        Fri,  8 Nov 2019 00:28:50 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 5/9] built-in add -i: implement the main loop
-References: <pull.170.v4.git.gitgitgadget@gmail.com>
-        <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
-        <25590fbbbee7efc34477bfea233684e93ee7fe60.1572869730.git.gitgitgadget@gmail.com>
-Date:   Fri, 08 Nov 2019 14:17:45 +0900
-In-Reply-To: <25590fbbbee7efc34477bfea233684e93ee7fe60.1572869730.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 04 Nov 2019
-        12:15:25 +0000")
-Message-ID: <xmqq1rujndza.fsf@gitster-ct.c.googlers.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
+Subject: Re: [PATCH 3/3] commit: give correct advice for empty commit during a rebase
+References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
+        <0d168b4a75c65e786f4b14f5da723957c32fa390.1571787022.git.gitgitgadget@gmail.com>
+        <9d550cd9-08a2-eee5-7d7f-63678285accc@gmail.com>
+        <nycvar.QRO.7.76.6.1910251341550.46@tvgsbejvaqbjf.bet>
+        <df0e77e9-b764-690e-c814-5d90fb141def@gmail.com>
+Date:   Fri, 08 Nov 2019 14:28:48 +0900
+In-Reply-To: <df0e77e9-b764-690e-c814-5d90fb141def@gmail.com> (Phillip Wood's
+        message of "Fri, 25 Oct 2019 15:01:19 +0100")
+Message-ID: <xmqqwocblywf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 19784522-01E7-11EA-91A7-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: A55D4276-01E8-11EA-8E5E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> I don't this patch can distinguish between an empty cherry-pick
+>>> performed by the user while a rebase is in progress and an empty pick
+>>> performed by rebase as both create CHERRY_PICK_HEAD while
+>>> .git/rebase-merge exists. It seems to assume that CHERRY_PICK_HEAD was
+>>> created by rebase and prints advise based on that which may or may not
+>>> be the correct. I think we could distinguish the two by checking if
+>>> CHERRY_PICK_HEAD matches .git/rebase-merge/stopped-sha or REBASE_HEAD.
+>>
+>> I guess we could, but then, I would rather worry about that in the next
+>> cycle. In this cycle, I would rather fix the common case, which is that
+>> a `git rebase -i` fails and tells me to `git cherry-pick --skip` instead
+>> of `git rebase --skip`.
+>>
+>> And even if I performed a `git cherry-pick` during a `git rebase` and
+>> the result would be an empty commit, I'd rather be told to `git rebase
+>> --skip` to continue...
+>>
+>> But if you feel strongly that this should be fixed differently, I'll
+>> gladly leave it to you ;-)
 >
-> The reason why we did not start with the main loop to begin with is that
-> it is the first user of `list_and_choose()`, which uses the `list()`
-> function that we conveniently introduced for use by the `status`
-> command.
->
-> Apart from the "and choose" part, there are more differences between the
-> way the `status` command calls the `list_and_choose()` function in the
-> Perl version of `git add -i` compared to the other callers of said
-> function. The most important ones:
->
-> - The list is not only shown, but the user is also asked to make a
->   choice, possibly selecting multiple entries.
+> I'm happy to wait until the next cycle once we've decided what to do
+> about CHERRY_PICK_HEAD during rebases.
 
-The list_and_choose() we have here shows and lets users choose and
-returns the choice, but the above makes it sound as if it only shows
-and the caller is responsible for asking the end-user input.  Is
-this description outdated or something?
+So, is that agreed between the two?  
 
-Perl allows us to return multiple choices, where it is a bit hard to
-express it in C (perhaps because we are passing in an array of
-structs to be shown as choices, list_and_choose could set a bit in
-these structs to signal "this one, that one and that other one was
-chosen", returning how many are chosen in total, to extend the
-version here to bring it to feature-parity?).  So at this step, it
-only lets the user one choice (or abort or ask for help).  Isn't the
-lack of multiple choice the only difference this bullet item wants
-to highlight?
-
-> The Perl script `git-add--interactive.perl` mixed the purposes of the
-> "list" and the "and choose" part into the same function. In the C
-> version, we will keep them separate instead, calling the `list()`
-> function from the `list_and_choose()` function.
-
-That makes sense.
-
-> +static ssize_t list_and_choose(struct add_i_state *s, struct string_list *items,
-> +			       struct list_and_choose_options *opts)
-> +{
-> +	struct strbuf input = STRBUF_INIT;
-> +	ssize_t res = LIST_AND_CHOOSE_ERROR;
-> +
-> +	for (;;) {
-> +		char *p, *endp;
-
-The scope of endp looks way too wide in this function, isn't it?
-Even in the final state of the series, it only gets used to parse
-an integer input using strtoul, inside a block of three lines.
-
-Other than that, the code at this step was a pleasant read overall.
+Should I eject js/advise-rebase-skip topic out of my tree and wait
+for the decision wrt CHERRY_PICK_HEAD?
 
 Thanks.
