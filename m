@@ -2,121 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B6291F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 14:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C64201F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 14:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726768AbfKHOKI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 09:10:08 -0500
-Received: from mout.gmx.net ([212.227.17.20]:36003 "EHLO mout.gmx.net"
+        id S1727798AbfKHOLW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 09:11:22 -0500
+Received: from mout.gmx.com ([74.208.4.201]:47227 "EHLO mout.gmx.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726373AbfKHOKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 09:10:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573222197;
-        bh=MVOZvgf+E3BK45xk1DVmc/hDhnjvs5ujBWJOqqikNgA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Un8YDyCkUHGSeX5OLUbjuNdQKA5PZttYbvqyfyANlm602ouAOMf85hp03GQYn4W6h
-         w+0m72EuXVXr9aqjIqD3jXGGmmoKAc2BpzIRoLtBswnhHjVn6F0DORRdecrsP0MbY2
-         Uw77u1acFI3TcHp40TFqQ2Fp1IRrScM5tUE1JK70=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.166]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfYLQ-1i0btd0V4a-00g3CJ; Fri, 08
- Nov 2019 15:09:57 +0100
-Date:   Fri, 8 Nov 2019 15:09:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Rohit Ashiwal <rohit.ashiwal265@gmail.com>
-Subject: Re: [PATCH 3/3] commit: give correct advice for empty commit during
- a rebase
-In-Reply-To: <xmqqwocblywf.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911081508560.46@tvgsbejvaqbjf.bet>
-References: <pull.417.git.1571787022.gitgitgadget@gmail.com> <0d168b4a75c65e786f4b14f5da723957c32fa390.1571787022.git.gitgitgadget@gmail.com> <9d550cd9-08a2-eee5-7d7f-63678285accc@gmail.com> <nycvar.QRO.7.76.6.1910251341550.46@tvgsbejvaqbjf.bet>
- <df0e77e9-b764-690e-c814-5d90fb141def@gmail.com> <xmqqwocblywf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726373AbfKHOLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 09:11:21 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 08 Nov 2019 09:11:21 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mail.com;
+        s=dbd5af2cbaf7; t=1573222281;
+        bh=mILFV9fa/r3/R+g2E5+EgS2tmkrePr5yaVPydBKaStQ=;
+        h=X-UI-Sender-Class:To:From:Subject:Date;
+        b=BDqCkordAQtV0jaQVmbsDacPy5isolDLMQbckP62a5bjHk31Ex+aqMmvAy+S7sVbU
+         Nw9tq26IQdAtE/KvNqxSTpUH15AGmxuaJz/YTtKZk3n2dRzCmXaOliIb6HfT/xuuNn
+         RD5YZjr+M1NehG6AtGkQ5ki1eGDiuP4pHX0osT9Y=
+X-UI-Sender-Class: 214d933f-fd2f-45c7-a636-f5d79ae31a79
+Received: from [192.168.43.24] ([31.161.137.84]) by mail.gmx.com (mrgmxus001
+ [74.208.5.15]) with ESMTPSA (Nemesis) id 0LoE8d-1i0Kqw2KQD-00gKeg; Fri, 08
+ Nov 2019 15:06:20 +0100
+To:     git@vger.kernel.org
+From:   Paul van Loon <nospam@cheerful.com>
+Subject: [BUG/FEATURE] Git pushing and fetching many more objects than
+ strictly required
+Message-ID: <bc43c70e-861d-425d-d7c4-73a3e25b7383@cheerful.com>
+Date:   Fri, 8 Nov 2019 15:06:00 +0100
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aVTwgUjcrZyaevAuljSLkoKdWlMXmk0c5wkd0Az6M0x78oXtWWX
- gbE3qBnWxaI5kyKaXfq48BmQArLzZgVSmCFR0Uwv02fCAFmkgxrxbQ0BMyu37InIeZvFyji
- Ow6ZEvtcM3XV+RR1ZxheuECUtrOgi8oXDIJEULAcUCmN8CTEjh5fc6azzPJbES+9wFI2DbK
- Gv3faZwcYAIiOXhC8cPIw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:T0VRta4MEP0=:41AaSCmBpKbCs91QGIqr0F
- hqqk2CsVVQQNnqHboaXRHYjmH/+4nE8l31qWUuO52A141usDNDFF824WmDL0Bey6aX/aPG7b8
- dblpEZeKZnFywwefZykac5BvrZZB12uwsndILLJHNhVaTN3QeMv9RgHSaReV1SnP1GS8pwB6o
- qN20uB0ezGRlt+T2cDqJSrgkTckP+qykRruN5GAQfvi/D9esa25iYQNzk/WFARvKYHnanehyU
- OSTlycKpawPJmCJ9jiVth8RAWjJE5enSRHLqmxEr6R9ElLYIKmcEY5JNtIu9/6h+mwI18aXa9
- jadB2pYFPgT8jr+w20RINvnsdIiGaKUyYAD6NpJ8Ep+PG4dikglYYn16HqEGd+RZ84FM6lI4l
- 6e7OjHXhW9KTlpdWCh6wAW4CLMjilArXqJCvacOYEOw/yIyGK/zXqNwaqGKZzwazuF6Z7RHwY
- 3cUdWa+RrjIxVb8sQQEx78qEY9xuQYPWz0ktlaP9HRfrkMjsQ7ENEN32tF81BSAdOMlNXK6KH
- v3wbJdo6d+YqCNVF8kz/vBAZHmNjDrcZ3RhtRLAJcwXc4523Z6yB9XlN4fvlVeCAi8zaTgU2Y
- 2Ws4l79wDN/fsU4q5jmnX45jfbGrdxuQ5haAzd2uWHP2D3unB0VJFdlKM8eqxkWOW36Cj9dzy
- razM1ltvNBv3CS+czL8dXj3xCGq2MHY8KNh2pluteUnGdS4mlViQbb+LBJ3+/kspM3xT9+4mT
- fkn82lKyf3WnO5PjDVJfmmm5cj/gjdJMQ2lsgUkWBXeJD+yb2HuxmApkTAIkfQYAUb/XIcnUT
- eJHW6tcgxKIOhh/aise58/zuFnxs9aVll/Hfc04gk2ZFGdOFsQG4qzcXbEWDgE9RVyz/eO56O
- Ry3ldDR5n7DQWOWtrETQm/hVzqlOYyYgJ64SOC2Ml2qfZty1hiaXG1jdrITv17fRywcl/W3Eq
- 5P8sniEhPUTcIeCIyKO9fajKjOFBTeEEItO0j4eJdrSMiUpXOmodANVehOoWPSrVqkkSkFUZV
- CDFwR1trgMFmlReH1j7MNYYiZ7ajfsYnwhhT8jVKVCdgvmeoB+Y/LE8xnZRMV+BaFf9Qo7OKh
- zotLheuy5CedzWNSCDJtBpMYkzGWMx+lEmxv0cGEHBcKW8JJbfn1fThaOkveumj9PyLmHn0Pa
- wECSWgt6wYVhND6nb1VcZCCI36adYcWJBnByHh9k0boLz6Kx76hk3KZmyvmyJWvup2SY3/N3v
- TiamsY/a0Lf/yKX2uQ3802X5iWOIYs4wXp24seWfB8itc9w62crgrpXlnRgY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:ZApa3AT5pWfeJlhf9aiSfP5WQqOCHi99eBoN3Beoiw0bCLuqOq9
+ Iue4kJMfqd48m+5LuxAYw7j11Gbau08ueDTIsoY51KiO+WG20QV3pSgk8NABBJ39ydtw61C
+ n2oF7QDrYI9Hy0jsdVq4wuDyVWm4GKrFnEJuTAQPgvIeZgY2x9mdcsamLgIZBgdz8Vg4ujt
+ v69iLmWdpRx7o7krUIa1Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:YoB2O+fVFhQ=:y+/Ap3Ge6SWan1AKF/w/7x
+ pGA2OGb69OIFALTHF0JvnACCWyz62Zjr4sklNsE8m6/cuLIqRlmSjx7SrlkGxZ3VzeGr6FGrG
+ l+VhQUJ1TNnTofPKKd3npM6Acd/NAlz9ZhZPOTAGlOKUlrqKS0/MPDg7rmi/d/85mR9fs9lxW
+ VRivE0fKfXoPOKHWUlbeGq3zBLs3xDVu06+yNvgrTsrBCK8o49uvgL4ho1VysskmlDnd7qVKl
+ WQ7QSuj7/1E0Htuv/29ma8WZ5rfqA93HApAoJOYyqDBya8R6ZyGJ8zHeNJZdCpdGUxrLmE75X
+ fytIcI5M26GrclApzgLs5vGJbFq65IeQ+2g1uagId7Kq7NbstMhJ/mmvfriZZCMizPQ+I70Xs
+ ZphZKNS18ZrHgfr83lNgLbkfat1kgnhbNw8x1KwtqtCyKoU/tpyqV0xDyMnEG/rRJhLjtVcwp
+ ZwsZNY1fCbbDCzHUeCYFNakxfuzHFMFcHSeL0Vi5OWUisWbQMmqykJ1GkLjL7eDux1qaFyB8Y
+ ZIkd2FI9vGQkPskAAaKfhIznzOLE4kIlq2FistK42ZIwrmVXzxYi0zeqf6h384H9Ald+1oafW
+ +IiCscrfw06A+x/t8fsOBNkPARb2A8BLxpTBGWhKMhLehJMein4YuOkz4rFjT9ohDIpeW5B6q
+ u7+XMgYUYrAFJHaNlsCESmwn96NonT7L/M0gm3zFnQv01Yi7elEAVRmF2YWiFUVAcSbnlOp2U
+ 13w78EivMq68v/irsHldEnIOnfu/NPMLTNAtYSDfkMLTipxuKqTy7xOD+Hw5xe4RdAnATNuOn
+ EgjfNPGgY35yJ/UkW06LMw/DkBIPb0LGy0msv6nL5pMXlKMeH2EJyH+PGxITos5XWDbK0k1xJ
+ msjx9cMsA+gYUwdAokEuowJJwHq2lzlPRFs8X+NKH4F2AHvbpQ0ufYDu7YZV/M+ghVWybK46R
+ WyCtMrJraw9eR+SpXmHv3x7wQjdkPrVSZ3Fm73r+8i1isdR0DcbhEZIsbMm35BzjELUzoBy56
+ CNISB0Xij3Hja2RI0HWAel/afAr6zCaTcIs61GUcypj9eGBaIFIFou1O4hh/7M5CqyaglWel1
+ SB8D0ZC19041PeE/HimZMZGJG4z9HxSPQJS8r3XuUDp9y+oO0QyYn7dr3806u+AIK97cMS3q4
+ CUmirbdeitnvg+1c6uZfQW+rpYleI+okzxEFuWt5R9lWjk/9VIgNTmr7INooSf9VeHDQlRMqG
+ ZXtCQyjeDFA8mr35BYMbUqtcieOKXr2yiXxN1lAV5KcxkTgHFWcAQdjEF1GY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+$ git --version
+git version 2.21.0
 
-On Fri, 8 Nov 2019, Junio C Hamano wrote:
+When fetching/pushing to a forked repo on Github, I've noticed several times that much more objects were being fetched or pushed than were strictly necessary.
+I'm not sure if it's a bug, or just a opportunity for performance improvement.
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
-> >>> I don't this patch can distinguish between an empty cherry-pick
-> >>> performed by the user while a rebase is in progress and an empty pic=
-k
-> >>> performed by rebase as both create CHERRY_PICK_HEAD while
-> >>> .git/rebase-merge exists. It seems to assume that CHERRY_PICK_HEAD w=
-as
-> >>> created by rebase and prints advise based on that which may or may n=
-ot
-> >>> be the correct. I think we could distinguish the two by checking if
-> >>> CHERRY_PICK_HEAD matches .git/rebase-merge/stopped-sha or REBASE_HEA=
-D.
-> >>
-> >> I guess we could, but then, I would rather worry about that in the ne=
-xt
-> >> cycle. In this cycle, I would rather fix the common case, which is th=
-at
-> >> a `git rebase -i` fails and tells me to `git cherry-pick --skip` inst=
-ead
-> >> of `git rebase --skip`.
-> >>
-> >> And even if I performed a `git cherry-pick` during a `git rebase` and
-> >> the result would be an empty commit, I'd rather be told to `git rebas=
-e
-> >> --skip` to continue...
-> >>
-> >> But if you feel strongly that this should be fixed differently, I'll
-> >> gladly leave it to you ;-)
-> >
-> > I'm happy to wait until the next cycle once we've decided what to do
-> > about CHERRY_PICK_HEAD during rebases.
->
-> So, is that agreed between the two?
->
-> Should I eject js/advise-rebase-skip topic out of my tree and wait
-> for the decision wrt CHERRY_PICK_HEAD?
+I got these traces:
 
-Phillip, if you have some time to spend on that, I'd be very grateful, I
-am a bit under the weather and in dear need for an offline weekend.
+$ git fetch --all
+Fetching origin
+remote: Enumerating objects: 29507, done.
+remote: Counting objects: 100% (29507/29507), done.
+remote: Compressing objects: 100% (33/33), done.
+remote: Total 53914 (delta 29478), reused 29500 (delta 29471), pack-reused 24407
+Receiving objects: 100% (53914/53914), 31.90 MiB | 111.00 KiB/s, done.
+Resolving deltas: 100% (42462/42462), completed with 7382 local objects.
+--
 
-Thanks,
-Dscho
+$ git push -v origin 'refs/replace/*:refs/replace/*'
+Pushing to XXXX
+Enumerating objects: 2681, done.
+Counting objects: 100% (2681/2681), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (1965/1965), done.
+Writing objects: 100% (2582/2582), 1.96 MiB | 1024 bytes/s, done.
+Total 2582 (delta 95), reused 1446 (delta 58)
+remote: Resolving deltas: 100% (95/95), completed with 33 local objects.
+To XXXX
+ * [new branch]            refs/replace/XXXX -> refs/replace/XXXX
+--
+
+Especially the pushing of a single replace commit involved 2582 objects to be written. This was after first a fetch was done.
+
+This especially hurts on flaky and slow connections, especially the more objects need to be written/read, the bigger the chance of the connection failing.
+In combination with the inability to restart fetches/pushes without down/uploading ALL objects again, this can become quite a frustrating experience.
+
+Any thoughts?
+
+Regards,
+Paul
+
+
