@@ -2,135 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ED8B1F454
-	for <e@80x24.org>; Fri,  8 Nov 2019 20:27:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D17991F454
+	for <e@80x24.org>; Fri,  8 Nov 2019 20:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730110AbfKHU1i (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 15:27:38 -0500
-Received: from mout.web.de ([212.227.15.4]:58113 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726227AbfKHU1i (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 15:27:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573244855;
-        bh=Z9WBAi6mMD2jHMjdjDmlhdhErk1QVDRGl7XzafyUE6Q=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=ni0/2XiND0DHjQolVJuZ+HObCVVABbOivOTFkLPppLC7/Ntc5UesN0Sqcg5qPUdqM
-         YtsLB1qSCGT56A/UnGGo2hZ7zzxpY4Eg9NnOV4ypFJKImZy8u2JG82LE4Y9h73irCK
-         PoPm64zSAbA1/YPIyWsIFAfFAqK7nMY66bXA1N1s=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MfqSa-1iEorK4AU8-00N9aO; Fri, 08
- Nov 2019 21:27:35 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] convert: use skip_iprefix() in validate_encoding()
-Message-ID: <a61b60e4-77f4-10a9-65ff-f78348d4c4b7@web.de>
-Date:   Fri, 8 Nov 2019 21:27:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1732136AbfKHUgj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 8 Nov 2019 15:36:39 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:40702 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732137AbfKHUgi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 8 Nov 2019 15:36:38 -0500
+Received: by mail-wm1-f52.google.com with SMTP id f3so7509474wmc.5
+        for <git@vger.kernel.org>; Fri, 08 Nov 2019 12:36:37 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4W2gfGJy9mJKdpd7s21pQy8VGaytE6xK7iiGzSKvVx0=;
+        b=dYZHplTMnpJuNKBUAj1GtXYgfcY3VpnUbsm/xCI8tgGX1SZ6wd6jotI6OM9EkKIoOM
+         b9CqEBLGOPj6iW2vDlZDhueh7hxOzUgmxzjJ1HncokRRLvB1HSrKRlqFLHdKxDN4P4ez
+         UaEjeuXjo7BcsOfmUm/yx+wN4sqK776KMHV1B0kemHssP5CUm2hRgjZxcH5JkD40jEuE
+         Ns5Hx97fCFEirGHAmTI4z+Ed5hOaUC6eNgwUlEvHyAw1Ga64l5BFAOBKYMJviDZJyuu2
+         Z1NMaN3RUazpHRt6yNswYOhtYYZZy19S0D79NbriaDQjyKAnPPTUoPLThvLSkvrmg1E9
+         Ff7g==
+X-Gm-Message-State: APjAAAWVWHEyZkP0IKZmNyIk4qbsLzLyugaGaani1qEDspXX6MFDygZJ
+        zUQC+bC/qlumf6YoYtO8e+C276Lh5LJeFT97Dik=
+X-Google-Smtp-Source: APXvYqzFe2t0XplS7d9hr5WR+q4dzuJxmIi8Cx4XNwd/anWD54bNbbRbunz8ZlsLbkXSO6TLyhGXvF1zOpZN6FUe0Hg=
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr9417884wma.129.1573245396144;
+ Fri, 08 Nov 2019 12:36:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4CuD7IMsIPSHEqN5omJFTvse7uO4Ctkok3uaJe1CBDaMRQ7JmIQ
- REirbomiACInGMr9LtmfnpgA6Oz1ni/gkHB3Voa+3QYx1+emKcukgN87+kT7NNvHZvG6YiO
- 22jrQh16J2ESw4q5GP5YyMs7SAtxoyv5QvXUJMFMQoDjfiZXsja3mc1NgeHF4DOGFdJwseB
- Vi5eTTOD3LYqY7iIWOFtw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:3Ckks3r+Nq4=:PwWtyaqIc/etCMrRsFvS+z
- IQyy8GOOqWy1nExsaFFklqty67h26nD+b8kC4ljWrPOugK1961N8EBr7SOTrmCdrDe9IRUII3
- vg4O6oF6lxJSWZVwocd5gl0ydoIT0IdBbNGx64AISozdnq0u3n6GWOqEb+xuLvvYAU63eExVI
- RA8MTsg/IvdnmFipA1+1REy+iry7qxMAvhza66d1IHEIdzR+qBN3ZbuYkldPjbVHbY+icJMDZ
- vGE3rWriiNuCQ0ZnFI8DyJzZUgEM4fvRxLa/3Dp6QU9WiQG/9E08iImrmsHL7W8yqRDgMGd53
- 8LhnZ+Xe9+2FSbnEvh6I9cF/wSuIjMcFn6Lku47Q8KpwLGWAFBSgHgcn9UHWNjwVbzfFJbmLl
- VEBdnKqQRvGL1wjsJkekNkkcCi8N3CmTbKP9E1iY+YzRbxuzalj0TKgyYBeXw2dD7JUmgMv8A
- AWfCtte3QbJae1J4vu2ZBy6k8tBMynA/EqRJ2X4PYifZ77EhDl8Df9xCFlJWr2rC4OQNPe8Fx
- 3fWhW/2ZJznRfylF5e22TfD4I6r1DzDvlRfXOg9u9D6RydjPF472NQBxgiZfhZ70Zitf/9kDW
- wG/7Ne1x/9P7MaAKqlqe5STFIO+nI5dzpRTynw1kTq0WCqD3A0XxwIGYb1PEHG/fH4ZM6f/aZ
- QvF9gNDwqGhc2Omb48GmTEuk0UrDh4jtAI1IhfbzSK9GYQSwL+TXbCb1I1qTw0ies2I65hJxq
- wQuEZ+z6neq8UKTY+33VTbmJTZesWkxNqX/1hOpllNuAnWInXiFcmOn1vkhocInJUwwuvl6z3
- snHU7opOjZ/tCOGspI+2x8z1UnGE+A6TcrH1F7BBAx1y8xN4z6AL2hCFD53kuTWeWYwUkEDEe
- JsCpgf206pAlR6HUOF2z4MDbM/7tGpBbV6zCSHbHFcM32Oe2hPKVJPEdVMp9AQYxcCWBhh3YG
- ig5oJEC2V1RgnSZjeu2PVuVanbJcZpIyN3ng/t6cJRAieZtWNBISoRVzugHDU3jsNeQ4LomIq
- H3RYv41RMCWvk8rG3S5mu4+pMdsjX9giXHU9N70VvQkfT3vGnX+RWe01firbhrGtXEEjgR3e2
- TwPOGh93gKFFPgfWNBRyVZtnGv0YPqlF/rSqoHgQEwQOw+KnxXwNvcGoen0C4kO76Zx1vsOu4
- 3erqAhrFEpi3Po4TyMJpFSXT9XLPZQmYjRMr29rUW4Oy5k1a3a8dB6Tv4BRmhzFLj68jV64Bf
- pDKkxEBvFa8K7egl0cvMywWk6rpwYSxwYmhZtpA==
+References: <cover.1572897736.git.liu.denton@gmail.com> <cover.1573241590.git.liu.denton@gmail.com>
+ <b5950823ce90dd2476f002ed0370b7e0099a4d85.1573241590.git.liu.denton@gmail.com>
+In-Reply-To: <b5950823ce90dd2476f002ed0370b7e0099a4d85.1573241590.git.liu.denton@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 8 Nov 2019 15:36:25 -0500
+Message-ID: <CAPig+cQDMSwP5-D-=LgjBPH2kJK16Fv4c619Pg6OTU95CQ9sgw@mail.gmail.com>
+Subject: Re: [PATCH v2 07/10] t4205: cover `git log --reflog -z` blindspot
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use skip_iprefix() to parse "UTF" case-insensitively instead of checking
-with istarts_with(), building an upper-case version and then using
-skip_prefix() on it.  This gets rid of duplicate code and of a small
-allocation.
+On Fri, Nov 8, 2019 at 3:08 PM Denton Liu <liu.denton@gmail.com> wrote:
+> The test suite does not include any tests where `--reflog` and `-z` are
+> used together in `git log`. Cover this blindspot. Note that the
+> `--pretty=oneline` case is written separately because it follows a
+> slightly different codepath.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> @@ -134,6 +134,41 @@ test_expect_failure C_LOCALE_OUTPUT 'NUL termination with --stat' '
+> +emit_nul () {
+> +       echo | tr '\n' '\000'
+> +}
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- convert.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+A simple:
 
-diff --git a/convert.c b/convert.c
-index 25ac525d5f..99f684bf3e 100644
-=2D-- a/convert.c
-+++ b/convert.c
-@@ -270,8 +270,12 @@ static int will_convert_lf_to_crlf(struct text_stat *=
-stats,
- static int validate_encoding(const char *path, const char *enc,
- 		      const char *data, size_t len, int die_on_error)
- {
-+	const char *stripped;
-+
- 	/* We only check for UTF here as UTF?? can be an alias for UTF-?? */
--	if (istarts_with(enc, "UTF")) {
-+	if (skip_iprefix(enc, "UTF", &stripped)) {
-+		skip_prefix(stripped, "-", &stripped);
-+
- 		/*
- 		 * Check for detectable errors in UTF encodings
- 		 */
-@@ -285,15 +289,10 @@ static int validate_encoding(const char *path, const=
- char *enc,
- 			 */
- 			const char *advise_msg =3D _(
- 				"The file '%s' contains a byte order "
--				"mark (BOM). Please use UTF-%s as "
-+				"mark (BOM). Please use UTF-%.*s as "
- 				"working-tree-encoding.");
--			const char *stripped =3D NULL;
--			char *upper =3D xstrdup_toupper(enc);
--			upper[strlen(upper)-2] =3D '\0';
--			if (skip_prefix(upper, "UTF", &stripped))
--				skip_prefix(stripped, "-", &stripped);
--			advise(advise_msg, path, stripped);
--			free(upper);
-+			int stripped_len =3D strlen(stripped) - strlen("BE");
-+			advise(advise_msg, path, stripped_len, stripped);
- 			if (die_on_error)
- 				die(error_msg, path, enc);
- 			else {
-@@ -308,12 +307,7 @@ static int validate_encoding(const char *path, const =
-char *enc,
- 				"mark (BOM). Please use UTF-%sBE or UTF-%sLE "
- 				"(depending on the byte order) as "
- 				"working-tree-encoding.");
--			const char *stripped =3D NULL;
--			char *upper =3D xstrdup_toupper(enc);
--			if (skip_prefix(upper, "UTF", &stripped))
--				skip_prefix(stripped, "-", &stripped);
- 			advise(advise_msg, path, stripped, stripped);
--			free(upper);
- 			if (die_on_error)
- 				die(error_msg, path, enc);
- 			else {
-=2D-
-2.24.0
+    printf "\0"
+
+would be simpler, and I don't think you even need to introduce a shell
+function to encapsulate it, as it's quite clear at a glance what it
+does.
+
+> +for p in short medium full fuller email raw
+> +do
+> +       test_expect_success "NUL termination with --reflog --pretty=$p" '
+> +               >expect &&
+
+You can drop this line...
+
+> +               revs="$(git rev-list --reflog)" &&
+> +               for r in $revs
+> +               do
+> +                       git show -s "$r" --pretty='$p' >>expect || return 1
+> +                       emit_nul >>expect
+
+...and simplify all this capturing into 'expect'...
+
+> +               done &&
+
+... by just redirecting the output of the for-loop itself:
+
+    for r in $(git rev-list --reflog)
+    do
+        git show -s --pretty="$p" "$r" &&
+        printf "\0" || return 1
+    done >expect &&
+
+For completeness, the above example also drops the unnecessary 'revs'
+variable, uses double quotes rather than single when interpolating $p,
+and makes the loop early-exit a bit more idiomatic.
+
+> +               git log -z --reflog --pretty='$p' >actual &&
+> +               emit_nul >>actual &&
+
+Likewise, you can capture 'actual' in its entirety:
+
+    {
+        git log -z --reflog --pretty="$p" &&
+        printf "\0"
+    } >actual &&
+
+> +               test_cmp expect actual
+> +       '
+> +done
+> +
+> +test_expect_success 'NUL termination with --reflog --pretty=oneline' '
+> +       >expect &&
+> +       revs="$(git rev-list --reflog)" &&
+> +       for r in $revs
+> +       do
+> +               # trim trailing newline
+> +               output="$(git show -s --pretty=oneline "$r")" || return 1
+> +               printf "%s" "$output" >>expect
+> +               emit_nul >>expect
+> +       done &&
+
+Replacing the newline with NUL could be done more simply and
+idiomatically (with regard to other test scripts) by passing the
+output of "git show" through the lf_to_nul() function from
+test-lib-functions.sh. Something like this should do it:
+
+    for r in $(git rev-list --reflog)
+    do
+        git show -s --pretty=oneline "$r" >raw &&
+        cat raw | lf_to_nul || return 1
+    done >expect &&
+
+> +       git log -z --pretty=oneline --reflog >actual &&
+> +       # no trailing NUL
+
+To what is this comment referring?
+
+> +       test_cmp expect actual
+> +'
