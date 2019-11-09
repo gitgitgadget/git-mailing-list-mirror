@@ -2,136 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11EA21F454
-	for <e@80x24.org>; Sat,  9 Nov 2019 04:55:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3744E1F454
+	for <e@80x24.org>; Sat,  9 Nov 2019 06:38:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726133AbfKIEzg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 8 Nov 2019 23:55:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57287 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726092AbfKIEzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 8 Nov 2019 23:55:36 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13EEB25041;
-        Fri,  8 Nov 2019 23:55:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=M4MQ4i+nensSuV7VfuRTBcwtfzA=; b=lbwTFr
-        2j+OP86v6a4RxEnVUipvT70uzCjyB82YkPeo7S7xOORWvBrlJ1qLAIzkaSVDg8ir
-        JdeDeJj6Zo0JA9+e517p8Mk1BxBY36rFEPHbsibBI+mRhMah7yLh/r6CdqbwLKfs
-        mjtzlPdC6sv28hfytEfwpC38+0aby1J4qyGGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=riMS97TKzgRUK+3ebd0irxBt6BGQaOE1
-        Nl3BgrJFZ7WbcRtrZQoRcoI9bUUnsF6f3IX4uNaaK7R4qguHD7TkWs154Kt2kfBk
-        tyM4p7vjHxmOZp2RhLoEHyjyqkjY6HwulXW5RIv66HUAGgOqgh6gqyr5iZyvwMWw
-        MVNMH4Cy620=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C5BE25040;
-        Fri,  8 Nov 2019 23:55:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 76F702503F;
-        Fri,  8 Nov 2019 23:55:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: Should we auto-close PRs on git/git?
-References: <20191109020037.GB60198@google.com>
-Date:   Sat, 09 Nov 2019 13:55:32 +0900
-In-Reply-To: <20191109020037.GB60198@google.com> (Emily Shaffer's message of
-        "Fri, 8 Nov 2019 18:00:37 -0800")
-Message-ID: <xmqqtv7dlkcb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726372AbfKIGi2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Nov 2019 01:38:28 -0500
+Received: from mout.web.de ([217.72.192.78]:32919 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725861AbfKIGi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Nov 2019 01:38:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1573281501;
+        bh=W8gyuUiAAoTfIqGZ8tUenbMEFzedibQ1E5/AtDcLnJs=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=TuAw3xV3yKY+w44zucpd6queGBZJl5sQx1v+Qde5L9bUGADon2n8aBIAGrUoYJkaC
+         0oaF1fbVWO/yxnk6mO+gnAfuo/CJGjCN7n3GNYkMx5N2U5LGefEZQs9gQSrGLUVfav
+         PWSGSkQUvubZQmjMQY8CFdGtX+T24jEauSIbA3sg=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mgwhg-1iG2gu3oVU-00M1uD; Sat, 09
+ Nov 2019 07:38:20 +0100
+Subject: Re: [PATCH v2 09/10] pretty: implement 'summary' format
+To:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <cover.1572897736.git.liu.denton@gmail.com>
+ <cover.1573241590.git.liu.denton@gmail.com>
+ <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <08afdbcd-5972-05f9-ec8c-b12bd29d9030@web.de>
+Date:   Sat, 9 Nov 2019 07:38:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 29613C66-02AD-11EA-8046-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+In-Reply-To: <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ijwJ9Xc6j9bbSSLtO/iF0ZbaaCTUsm2iRhihIdGq78u3UkUn5NB
+ nRmq7Hu+9MEWll5R2OB7ro4GCWSCskgbHLbob9Y8YzQmHiiCg4oYu65cKqSsNJIa2tcjFSc
+ DPuDE4NN4BrvtVPzFiZKauCxcXoM3seRgp6s+M2cthxucYBjhgVfEZEBs7Y2xtMAS78rpJD
+ rbEluBgtbKlMJZSxIgmyQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pKHhnjc0P68=:DdJUI4GmX+sWLoFFwdiL9c
+ blIviD+IBE3lha2G+T2zhKFC2ZnT0CsuB7fAL3WSVTexy+4Q+u5liTRiYkbXWoZfVJ5R6mzbp
+ mRF7ZuQmXDZ3miWkX9dqelDKBlobDfB5myRhAYFlYNd1RiP+WtK8YDl8ZiteVguPloSqsZ3sl
+ xTPPEpL8VN52bscKzos5B3b5GfEuXpmsb4mp4E3p6IBDbfx5+Ky14RF6MhsJ0mhKvIXbLk7a6
+ 2YpvcMTv2na350F14uk8sW4H8Hww0IiFkcScn47+s4/CtWUZ+Q38s1SccTYkYZ1L0Ora5nqzR
+ StV6dmKHdDTcrfysYEJc2ehPo8kjHltH6Gk5Vda0Z6D+p6Ls3uzIU3pPYiqrkAHFOO5GxYbPe
+ 1xkHpsbR0+YCSSd5Y5Ve1Nnux1wfFG75FAmVeeu7l3rcE0FSVyYf8rMnTH2r90g0Q9CgeRFTI
+ 7Eu6diTYQ+4AZVHoNTavml9s1tzsOpi8LGY1sYJ+Edu91Oe/ogH2ziemBIEBeiT+jrMzgtlP1
+ 9CgnJMtBN0WtyLcxI1EQ12r7IUnzg97Giq2kzpjIdsWVWG11oOsNbfRzkur9Fu1/yZb9nYeiD
+ saY0pBwdK2wQtTF0r5YH2dgil/9OhzuXx4M8h7HsA0P5ULePljrQdI7zjttPf8LGc/S6Wux9c
+ r8mpPjep931BrmBbW50J8chqKo236mn2hXbiJOctN+cvNag5ct73HqStYNcqIGG8uCWIRmxpS
+ cQM0o7huyqGjoTj8ln7oZTQFDnstQJKHAwuxXm8hNZZh9ZIseOOJo1hlvdagVzR9DF+/bPB9N
+ rID05j9r7QE4Agw/k/gJYC7q8p9q9mGLipulRoKf9wSs/2xey/O4MBHH11wbTUYmhuSXjCAgC
+ D9+mSHULbEWHa/BoRn0yf5EYhDZSehgleXmiV5e325gcOjaafM/b2de3Vq6E2bdSG43rlnaMN
+ mOftE6aUTu3A2JNn1S1pbxfQtkfYA36FNo2rk1J11nIf5HItDui3AA4x/aLLKYUXLwRKF/VoK
+ 0eoysDKHfCtjoFEoofhin8MskCXgo/cCyKN8pnb4uLnClnuDh6tl+fsBFXAgfxrEDPOKYqnx7
+ 98Eu+xtxSjMzfpDtG14uJM5gL+DHf+yV7ac/0ZJtBEwOxzdJgQ9xstdc0puPqqRYUeKmVe0Ho
+ 6shSLcFMKsiBg7VtajJU8is+YmNgVTGvPAt3rRyutVkp7wNPwN6D3yXltltKQpc0R7I9NFf6/
+ KyUe65idRnxhuFJs7D7SDN/bAGiGnvnm9ToaUyw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
-
-> It seems to me that the friendly template text we prefill when someone
-> opens a pull request in github.com/git/git isn't being fully appreciated
-> by many interested contributors. For some time now, Johannes has been
-> slogging through the list to try to narrow it down to folks who are
-> still interested in contributing, and yesterday on #git-devel said he
-> was pretty happy with the progress so far.
+Am 08.11.19 um 21:08 schrieb Denton Liu:
+> The standard format for referencing other commits within some projects
+> (such as git.git) is the summary format. This is described in
+> Documentation/SubmittingPatches as
 >
-> But to me, this seems like a sort of Sisyphean task ...
-
-Yeah, I would not stop Dscho if he likes doing so, but it does sound
-like a waste of talent.
-
-> ... want to make contributions and not read the template text, and we will
-> have more PRs being ignored forever, especially if Johannes decides he
-> doesn't want to shepherd those changes anymore (I would have decided
-> that long ago, in his shoes).
+> 	If you want to reference a previous commit in the history of a stable
+> 	branch, use the format "abbreviated hash (subject, date)",
+> 	with the subject enclosed in a pair of double-quotes, like this:
 >
-> To that end, I wonder if we should add an Action to automatically close
-> PRs on that repo.
-> It looks like https://github.com/dessant/repo-lockdown
-> would do the trick.
+> 	....
+> 		Commit f86a374 ("pack-bitmap.c: fix a memleak", 2015-03-30)
+> 		noticed that ...
+> 	....
+>
+> Since this format is so commonly used, standardize it as a pretty
+> format.
+>
+> This format is implemented as a separate flow that skips most of
+> pretty_print_commit() and instead calls format_commit_summary(). The
+> reason why this is done is because the other pretty formats expect
+> output to be generated in a specific order. Specifically, the header,
+> including the date, is always printed before the commit message,
+> including the subject. Reversing the order would be possible but would
+> involve butchering pretty_print_commit() so it is implemented as a
+> separate flow.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  Documentation/pretty-formats.txt   |  9 ++++
+>  Documentation/pretty-options.txt   |  2 +-
+>  Documentation/rev-list-options.txt |  2 +-
+>  builtin/log.c                      | 30 +++++++++--
+>  log-tree.c                         | 11 ++--
+>  pretty.c                           | 31 ++++++++++-
+>  pretty.h                           |  1 +
+>  t/t4205-log-pretty-formats.sh      | 83 +++++++++++++++++++++++++-----
+>  8 files changed, 144 insertions(+), 25 deletions(-)
 
-Personally, I think that it would not help, it would be a waste of
-our time to set up, and it would be a waste of our attention having
-to worry about giving yet another external read/write access to PRs
-to a third-party tool.
+Hmm, that's quite a lot of code to add to the formatting code with its
+repeated special-case checks.  Why not implement it as a built-in user
+format, like making it an alias for something like this?
 
-I've looked at those PRs, and noticed that the issues that the ones
-with unedited prefilled template try to address are mostly those
-that would cost more to give help polishing the patch into an
-acceptable shape than some of us redo them outselves (more
-clarifications below).
+   git log --format=3D'%C(auto)%h ("%s", %as)'
 
-Quite honestly, "drive-by contribution" is overrated.  Surely it is
-nice if those little typoes and forgotten free()s and off-by-ones
-got fixed by somebody without taking too much of our attention, and
-it would be nicer if we can help those who started from "drive-by"
-status eventually grow to full fledged contributors.
+We don't have %as, yet, but making --date=3Dshort available as a
+placeholder would be a good idea anyway (patch below).
 
-But step back and think about these two a bit.
 
-Those tiny typoes, missing calls to free(), etc. that are low
-hanging fruits tend to be "bugs" that have only one obvious way to
-"fix", without leaving much room to express the patch in any other
-way.  It's not like that they now own the bug and the right to make
-a patch to fix it because they found and sent a PR first.  If
-somebody else makes the same fix with patch text that happens to be
-identical, that is perfectly fine.  The _only_ real contribution to
-us made by such a PR is to let us know where such a trivial problem
-resides; once that is identified, anybody would fix it the same way.
+=2D- >8 --
+Subject: [PATCH] pretty: provide short date format
 
-It would be far more effective use of the time of the community to
-make the same fix by any member who already knows how such a patch
-should look like, while giving a proper credit for discovering the
-issue.
+Add the placeholders %as and %cs to format author date and committer
+date, respectively, without the time part, like --date=3Dshort does, i.e.
+like YYYY-MM-DD.
 
-I can already hear people saying that by investing to educate the
-original drive-by contributors (instead of "stealing" their patch
-and doing it outselves) would yield a larger value in the longer
-term, as it could help grow the drive-by contributors into our
-community.  I would agree with that argument in principle, but
-I do not think that would apply to the drive-by stuff with unedited
-prefilled template still intact.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ Documentation/pretty-formats.txt | 2 ++
+ pretty.c                         | 3 +++
+ t/t4205-log-pretty-formats.sh    | 6 ++++++
+ 3 files changed, 11 insertions(+)
 
-The thing is, I do not think we can expect those who do not even
-bother to read the prefilled template to grow to full fledged
-contributors.  Certainly before they start paying attention to what
-are told to them.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-forma=
+ts.txt
+index b87e2e83e6..f80eaab439 100644
+=2D-- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -169,6 +169,7 @@ The placeholders are:
+ '%at':: author date, UNIX timestamp
+ '%ai':: author date, ISO 8601-like format
+ '%aI':: author date, strict ISO 8601 format
++'%as':: author date, short format (`YYYY-MM-DD`)
+ '%cn':: committer name
+ '%cN':: committer name (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+@@ -181,6 +182,7 @@ The placeholders are:
+ '%ct':: committer date, UNIX timestamp
+ '%ci':: committer date, ISO 8601-like format
+ '%cI':: committer date, strict ISO 8601 format
++'%cs':: committer date, short format (`YYYY-MM-DD`)
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+ '%S':: ref name given on the command line by which the commit was reached
+diff --git a/pretty.c b/pretty.c
+index b32f036953..76920c91dd 100644
+=2D-- a/pretty.c
++++ b/pretty.c
+@@ -731,6 +731,9 @@ static size_t format_person_part(struct strbuf *sb, ch=
+ar part,
+ 	case 'I':	/* date, ISO 8601 strict */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
+ 		return placeholder_len;
++	case 's':
++		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
++		return placeholder_len;
+ 	}
 
-So, I would certainly not veto auto-closing, but I do not think it
-would help.
+ skip:
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index f42a69faa2..4980ed4c6f 100755
+=2D-- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -503,6 +503,12 @@ test_expect_success 'ISO and ISO-strict date formats =
+display the same values' '
+ 	test_cmp expected actual
+ '
 
-Thanks.
++test_expect_success 'short date' '
++	git log --format=3D%ad%n%cd --date=3Dshort >expected &&
++	git log --format=3D%as%n%cs >actual &&
++	test_cmp expected actual
++'
++
+ # get new digests (with no abbreviations)
+ test_expect_success 'set up log decoration tests' '
+ 	head1=3D$(git rev-parse --verify HEAD~0) &&
+=2D-
+2.24.0
