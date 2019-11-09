@@ -2,184 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E46D61F454
-	for <e@80x24.org>; Sat,  9 Nov 2019 11:21:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0821F454
+	for <e@80x24.org>; Sat,  9 Nov 2019 11:31:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfKILVt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Nov 2019 06:21:49 -0500
-Received: from mout.gmx.net ([212.227.17.22]:55687 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726149AbfKILVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Nov 2019 06:21:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573298494;
-        bh=5jX44gs74Yn0kOu/GfU/sLJY5juS/SbrwikUnWqAwMg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aS8CpN2ywuXrd7v0PBVaCL2pEiPVD6NQ8V5M8le9H5U9rTgIlq0XmXu8y94bxJN1m
-         kaVJAhh/5J5U84MZrGXtxGCjGVTw2GL3f8GPQNHquUKKV7/iSHFJshlpEOOPRRs55z
-         8XRyFeKlG3u+PubkdczHcOrJBC+jfw1nb8STM4zw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from MININT-QA14EDB ([46.183.103.8]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M2wGi-1iUVne0kou-003R6e; Sat, 09
- Nov 2019 12:21:34 +0100
-Date:   Sat, 9 Nov 2019 12:21:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 5/9] built-in add -i: implement the main loop
-In-Reply-To: <xmqq1rujndza.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911091211560.46@tvgsbejvaqbjf.bet>
-References: <pull.170.v4.git.gitgitgadget@gmail.com>        <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>        <25590fbbbee7efc34477bfea233684e93ee7fe60.1572869730.git.gitgitgadget@gmail.com> <xmqq1rujndza.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726219AbfKILbq (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Nov 2019 06:31:46 -0500
+Received: from mail-wm1-f47.google.com ([209.85.128.47]:36147 "EHLO
+        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726145AbfKILbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Nov 2019 06:31:46 -0500
+Received: by mail-wm1-f47.google.com with SMTP id c22so8778269wmd.1
+        for <git@vger.kernel.org>; Sat, 09 Nov 2019 03:31:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=ESP+Ni37+f4rnsZviSabHbAwQWNRavuIcrz4c7zoZCk=;
+        b=WQsIwJSTSnXyPBnktGFqvVi59+nOR/2X4dvNeXNi4jKgDh7pIlZl0E1W2k2IGUY5fm
+         igXKv37tLbwwDpSoXK3ovunEmeCZJOASKNgUM/RHuUC7q42xcdfh7gd+tis8RhafuLNB
+         hjOWtm4dQnTk6yNrpva+OumJ2D+N5XRpgYZIZiiPE6DQC1VzPyB7KCPtKdWWVN2kRDO1
+         ROjX2vjttoKUARvuPr2dULsQjnK2O69Sz/d+y6lLh7j7A2ztaggVM6LLC+GBz0X0z/U5
+         M8iHJhkoPlyyccl6qXPILvvJPSsDg/CyQxmM+uJlG3pmoEpbNPobVih8kNcF7ff0kpGq
+         HRww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=ESP+Ni37+f4rnsZviSabHbAwQWNRavuIcrz4c7zoZCk=;
+        b=pkv/rg3auEmVoGb9jkeUF+1aVBFiRDFwWl8veCqLN6rie+z7bb21X6rjTO6QFBV0/a
+         WDwsBsBE/9hlHvqQKflaQZKkDBRWQUjJjWwFKedkfhP63iYowSR1OpPBHfJnOB46p6WT
+         l3PTlCPM1IQYw1sHYE0A7nujNCYL2tHpI6lTfEXBd8S7c20CJWbbtxyq2EG4MvuWxwP2
+         Xr4NJiDz9NurdHpIMhjIffv71MIae2lq0qmKyxRjmt8ilTZBmK4b4Yl/26pqXg/8n012
+         WYAwT6onO9xMXCccdcvW0ugR6SMfQUVRXfu6JhsCibgSpcWhysCwnqkyjeAXlrvgYSSH
+         zPAw==
+X-Gm-Message-State: APjAAAVFKbzbOkNlRwnIPhnFF0XuS3CXc/RlSFf8VoKz+v7l5zyAMUac
+        yIPfkQ5LeCEn4AJJFRX5iCW+GfHsI8ZpJ5bkSZSe5A6g
+X-Google-Smtp-Source: APXvYqye+1EWHLxGXR3i63eCobPO4GRAuX295DokJfWJrctghesA82aa2jXM+x2Az67DqNjZ/hqCqUFizUNMxU2vZmo=
+X-Received: by 2002:a7b:c743:: with SMTP id w3mr9962164wmk.165.1573299102993;
+ Sat, 09 Nov 2019 03:31:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6RWnOV4XUtoOpq0uokEgMYODFZGWFY/zf4ySaWYOdJ/ftnzEgNH
- ShX60/cgDQY2nnuatvbOqL6XQ+faeuASxD+eOVu2R/fXpe8BRao9IzBb5aLl67YmOxMSeMs
- O/EtUHllOZEVyzF2uk/WyASWQF32iiyP63jThbNKKs+rLg0aI3X03hS1J0eZudxZm0ZsjZh
- fMYjzkGE2H5KPsn1Nei5w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Sa2twkchMlc=:TQTeZ8bziOpaFQobo/p5gp
- i+ipN/0GfFiP9WPI0ldlkEM6ppsTty3slcZUDsM99cuySwrS6yrKJd0iRn0JQqa1wOLbuFpyx
- XlSS6otwnW2UyeuizfmuQsgFzBsZp8GtBbxkDKczryJkY/s6A35XW8de0LApngLKGf2kk2vc5
- EttdE6Kyia7dtJX7LYTCAIlJBSyDb2AplvuaB3LeGr4f4AI1gh27l11y8I4T5YPNEuJTiK1g3
- CdvN8GjcexXdIUyaQOrYV8nChYYorUXuthMzHX5GbR5h7Ug93aXi8j0uDUUt/suWAR+tUEVDS
- xh1/p6DHCksbViRumvXAkMXnp8VXGNFfntQtDq5qnquFDMeOnbwN+LFa4g0/BKolD24ssNLZh
- LP8Kz4XIHNsuYFVbqveZcE+GTwm7o98ve2MbfR+io5Csq7Ei/rNzltg2B3qm2WvtZDGgYtG9s
- 1xLg9k8myScBU3NC00c1L6i3YQvwV3DtxwOvenkCHNxmld0iun4UheP2Rrhl6j8fqYejz0H+7
- SMWZ2F5dqjkC+qKeORgvy00pkMKbrAiygKUmQxPROWEmx2Irv2JeTOL69D+ORFu9eSk/CF163
- CF7ND0RCMlHhgJvALrpENkQd9C+xEUbP3xc6sbUtLOrVGZoKloB7aWOY1j0gacUJw2CAwmt0y
- 2CFMH+GQfA4Wzxa8nJtW0xqSEA8puwraLsC4gdq5bJJ9SEVQ8ZJrRg4O3zP8zQeOj6Bf66pvM
- oSrK2bC2TIvI9cBU5ZVyOUg1x8Jzzw2wSK2zp0rNR05DWuR+nOsAJ1JW5LwR6C0kJfxeEW2MR
- LXONGWYAgpW8oiC4M6jSd+I9bDf673wlozMAaJyXcvLDQdTPaRG/blHIxOmvEDEvxn/OQpuoT
- BUL2fKRLW/8HLsQtA+1uO75zuRCfkBI1YbPHsj+QJX//PZzGsmyPGJ7H2GFCR/mTbUlu7P3Nt
- 3/KLsrU6kRzanrvk+wXBveY8w/K/9veRI9HVBJQkU0Ay+QTqco7QkASjRmkQGbntLADlAb4yg
- +Wv8Mg1hi2VA660fnqm0KCh0+1aR4WNm8wVIgRgxwMncj+ZjAPdXP8SeIinnh/fIjYbv89H2z
- UBjooeJR99lD62AfZ9BC2rHFD44eNh+WyGIcyxXBLxxxvxPw4BvB1ZFI/jQBaUPZwbP6eW0jU
- r77obBBPhfsQoDlwJpZu+HlrbwPXtHSNBikt4HKQxfOZbN1sjjS8rKIM4hK79Joj8i8Iu5tJo
- in7DSljNMZLb1bZWYtFDYbcz5RKTxyG3Ry2Fix77u2wPJg3nT7z+G9Z+4OGo=
-Content-Transfer-Encoding: quoted-printable
+From:   Sebastiaan Dammann <triadsebas@gmail.com>
+Date:   Sat, 9 Nov 2019 12:31:31 +0100
+Message-ID: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
+Subject: git name-rev looks at refs/notes, refs/svn/map: stack overflow
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hello git users,
 
-On Fri, 8 Nov 2019, Junio C Hamano wrote:
+I'm running into git crashing with an stack overflow and hope to hear
+your views on this.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > The reason why we did not start with the main loop to begin with is th=
-at
-> > it is the first user of `list_and_choose()`, which uses the `list()`
-> > function that we conveniently introduced for use by the `status`
-> > command.
-> >
-> > Apart from the "and choose" part, there are more differences between t=
-he
-> > way the `status` command calls the `list_and_choose()` function in the
-> > Perl version of `git add -i` compared to the other callers of said
-> > function. The most important ones:
-> >
-> > - The list is not only shown, but the user is also asked to make a
-> >   choice, possibly selecting multiple entries.
->
-> The list_and_choose() we have here shows and lets users choose and
-> returns the choice, but the above makes it sound as if it only shows
-> and the caller is responsible for asking the end-user input.  Is
-> this description outdated or something?
->
-> Perl allows us to return multiple choices, where it is a bit hard to
-> express it in C (perhaps because we are passing in an array of
-> structs to be shown as choices, list_and_choose could set a bit in
-> these structs to signal "this one, that one and that other one was
-> chosen", returning how many are chosen in total, to extend the
-> version here to bring it to feature-parity?).  So at this step, it
-> only lets the user one choice (or abort or ask for help).  Isn't the
-> lack of multiple choice the only difference this bullet item wants
-> to highlight?
+I have a from SVN converted repository (using Subgit). If I execute
+"git name-rev 92f054ba5c71b8e689aed529ff31370984089b64" on this bare
+repository, git crashes with a stack overflow.
 
-I changed the commit message to:
+One property of the git conversion process is that at every commit a
+note is attached which lists the SVN version number. This repository
+has over 50000 commits.
+In addition, refs exist at refs/svn/map which also contains many
+entries. It appears the name-rev looks at the notes and other refs as
+well.
 
-    built-in add -i: implement the main loop
+The backtrace of the stack overflow is this:
 
-    The reason why we did not start with the main loop to begin with is th=
-at
-    it is the first user of `list_and_choose()`, which uses the `list()`
-    function that we conveniently introduced for use by the `status`
-    command.
+[repeats many times]
+#12976 0x000000000046d178 in name_rev (commit=0x37241b0,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=3,
+    distance=3, from_tag=0, deref=0) at builtin/name-rev.c:139
+#12977 0x000000000046d178 in name_rev (commit=0x3724160,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=2,
+    distance=2, from_tag=0, deref=0) at builtin/name-rev.c:139
+#12978 0x000000000046d178 in name_rev (commit=0x3724110,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=1,
+    distance=1, from_tag=0, deref=0) at builtin/name-rev.c:139
+#12979 0x000000000046d178 in name_rev (commit=0x37240c0,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=0,
+    distance=0, from_tag=0, deref=0) at builtin/name-rev.c:139
+#12980 0x000000000046d69d in name_ref (path=0x37232e5 "notes/commits",
+    oid=0x37c6030, flags=66, cb_data=0x155ef20) at builtin/name-rev.c:277
+#12981 0x00000000005c6645 in do_for_each_ref_helper (r=0x7acee0 <the_repo>,
+    refname=0x37232e0 "refs/notes/commits", oid=0x37c6030, flags=66,
+    cb_data=0x155ede0) at refs.c:1552
+#12982 0x00000000005cfcd1 in do_for_each_repo_ref_iterator (
+    r=0x7acee0 <the_repo>, iter=0x37c6190,
+    fn=0x5c65ff <do_for_each_ref_helper>, cb_data=0x155ede0)
+    at refs/iterator.c:418
+#12983 0x00000000005c66de in do_for_each_ref (refs=0x3716aa8,
+    prefix=0x71d34f <__ac_HASH_UPPER+271> "", fn=0x46d3ff <name_ref>, trim=0,
+    flags=0, cb_data=0x155ef20) at refs.c:1566
+#12984 0x00000000005c673f in refs_for_each_ref (refs=0x3716aa8,
+    fn=0x46d3ff <name_ref>, cb_data=0x155ef20) at refs.c:1572
+#12985 0x00000000005c677a in for_each_ref (fn=0x46d3ff <name_ref>,
+   cb_data=0x155ef20) at refs.c:1577
+#12986 0x000000000046e2c1 in cmd_name_rev (argc=0, argv=0x37106b8, prefix=0x0)
+    at builtin/name-rev.c:495
+#12987 0x000000000040305c in run_builtin (p=0x6b56e8 <commands+1704>, argc=2,
+    argv=0x37106b0) at git.c:444
+#12988 0x0000000000403446 in handle_builtin (argc=2, argv=0x37106b0)
+    at git.c:673
+#12989 0x00000000004036fc in run_argv (argcp=0x155fdb0, argv=0x155fd58)
+    at git.c:740
+#12990 0x0000000000403b62 in cmd_main (argc=2, argv=0x37106b0) at git.c:871
+#12991 0x00000000004c8647 in main (argc=3, argv=0x37106a8) at common-main.c:52
 
-    In contrast to the Perl version, in the built-in interactive `add`, we
-    will keep the `list()` function (which only displays items) and the
-    `list_and_choose()` function (which uses `list()` to display the items=
-,
-    and only takes care of the "and choose" part) separate.
+If I trace it back to the source we get this:
+(gdb)
+#16 0x000000000046d178 in name_rev (commit=0x3b948d30,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12963, distance=12963, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139                             name_rev(parents->item, tip_name, taggerdate,
+(gdb)
+#17 0x000000000046d178 in name_rev (commit=0x3b948ce0,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12962, distance=12962, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139                             name_rev(parents->item, tip_name, taggerdate,
+(gdb)
+#18 0x000000000046d178 in name_rev (commit=0x3b948c90,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12961, distance=12961, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139                             name_rev(parents->item, tip_name, taggerdate,
+(gdb)
+#19 0x000000000046d178 in name_rev (commit=0x3b948c40,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12960, distance=12960, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139                             name_rev(parents->item, tip_name, taggerdate,
+(gdb)
+#20 0x000000000046d178 in name_rev (commit=0x3b948bf0,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12959, distance=12959, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139                             name_rev(parents->item, tip_name, taggerdate,
+(gdb)
+#21 0x000000000046d178 in name_rev (commit=0x3b948ba0,
+    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
+    generation=12958, distance=12958, from_tag=0, deref=0)
+    at builtin/name-rev.c:139
+139
 
-    The `list_and_choose()` function, as implemented in
-    `git-add--interactive.perl` knows a few more tricks than the function =
-we
-    introduce in this patch:
+Essentially too much, but not endless recursion, causing a stack overflow.
 
-    - There is a flag to let the user select multiple items.
+The destructive workaround at the moment is to delete the refs, then
+run an aggressive gc:
+git update-ref -d refs/notes/commits
+git update-ref -d refs/svn/map
+git gc --prune=all --aggressive
 
-    - In multi-select mode, the list of items is prefixed with a marker
-      indicating what items have been selected.
+I was redirected here by the git-for-windows team (issue link if
+you're interested:
+https://github.com/git-for-windows/git/issues/2393), so I'm going to
+repeat what was said there:
 
-    - Initially, for each item a unique prefix is determined (if there
-      exists any within the given parameters), and shown in the list, and
-      accepted as a shortcut for the selection.
+> But yes, the problem seems to be the many, many notes. Which points to a deeper issue: name_rev should not even look at anything byt refs/heads/*, refs/remotes/* and refs/tags/. Certainly it should exclude refs/notes/*...
+> This, however, is not Windows-specific. Maybe I can ask you to report this issue to the Git mailing list (git@vger.kernel.org, please suppress all HTML lest the mail will be bounced)?
 
-    These features will be implemented in the C version later.
+I hope to hear your view on this. Is this an (confirmed) issue with
+git? Are there beside the workaround I mentioned, any other
+workarounds?
 
-    This patch does not add any new main loop command, of course, the
-    built-in `git add -i` still only supports the `status` command. The
-    remaining commands to follow over the course of the next commits.
-
-    To accommodate for listing the commands in columns, preparing for the
-    commands that will be implemented over the course of the next
-    patches/patch series, we teach the `list()` function to do precisely
-    that.
-
-    Note that we only have a prompt ending in a single ">" at this stage;
-    later commits will add commands that display a double ">>" to indicate
-    that the user is in a different loop than the main one.
-
-> > The Perl script `git-add--interactive.perl` mixed the purposes of the
-> > "list" and the "and choose" part into the same function. In the C
-> > version, we will keep them separate instead, calling the `list()`
-> > function from the `list_and_choose()` function.
->
-> That makes sense.
->
-> > +static ssize_t list_and_choose(struct add_i_state *s, struct string_l=
-ist *items,
-> > +			       struct list_and_choose_options *opts)
-> > +{
-> > +	struct strbuf input =3D STRBUF_INIT;
-> > +	ssize_t res =3D LIST_AND_CHOOSE_ERROR;
-> > +
-> > +	for (;;) {
-> > +		char *p, *endp;
->
-> The scope of endp looks way too wide in this function, isn't it?
-> Even in the final state of the series, it only gets used to parse
-> an integer input using strtoul, inside a block of three lines.
-
-True. I moved the declaration of `endp` into that three-line (now
-four-line) scope.
-
-> Other than that, the code at this step was a pleasant read overall.
-
-Thank you for your review!
-Dscho
+Groeten, Kind regards,
+Sebastiaan Dammann
