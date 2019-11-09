@@ -2,175 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B0821F454
-	for <e@80x24.org>; Sat,  9 Nov 2019 11:31:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 433AA1F454
+	for <e@80x24.org>; Sat,  9 Nov 2019 11:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbfKILbq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Nov 2019 06:31:46 -0500
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:36147 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726145AbfKILbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Nov 2019 06:31:46 -0500
-Received: by mail-wm1-f47.google.com with SMTP id c22so8778269wmd.1
-        for <git@vger.kernel.org>; Sat, 09 Nov 2019 03:31:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=ESP+Ni37+f4rnsZviSabHbAwQWNRavuIcrz4c7zoZCk=;
-        b=WQsIwJSTSnXyPBnktGFqvVi59+nOR/2X4dvNeXNi4jKgDh7pIlZl0E1W2k2IGUY5fm
-         igXKv37tLbwwDpSoXK3ovunEmeCZJOASKNgUM/RHuUC7q42xcdfh7gd+tis8RhafuLNB
-         hjOWtm4dQnTk6yNrpva+OumJ2D+N5XRpgYZIZiiPE6DQC1VzPyB7KCPtKdWWVN2kRDO1
-         ROjX2vjttoKUARvuPr2dULsQjnK2O69Sz/d+y6lLh7j7A2ztaggVM6LLC+GBz0X0z/U5
-         M8iHJhkoPlyyccl6qXPILvvJPSsDg/CyQxmM+uJlG3pmoEpbNPobVih8kNcF7ff0kpGq
-         HRww==
+        id S1726320AbfKILfH (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Nov 2019 06:35:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36037 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbfKILfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Nov 2019 06:35:07 -0500
+Received: by mail-wm1-f65.google.com with SMTP id c22so8783581wmd.1
+        for <git@vger.kernel.org>; Sat, 09 Nov 2019 03:35:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ESP+Ni37+f4rnsZviSabHbAwQWNRavuIcrz4c7zoZCk=;
-        b=pkv/rg3auEmVoGb9jkeUF+1aVBFiRDFwWl8veCqLN6rie+z7bb21X6rjTO6QFBV0/a
-         WDwsBsBE/9hlHvqQKflaQZKkDBRWQUjJjWwFKedkfhP63iYowSR1OpPBHfJnOB46p6WT
-         l3PTlCPM1IQYw1sHYE0A7nujNCYL2tHpI6lTfEXBd8S7c20CJWbbtxyq2EG4MvuWxwP2
-         Xr4NJiDz9NurdHpIMhjIffv71MIae2lq0qmKyxRjmt8ilTZBmK4b4Yl/26pqXg/8n012
-         WYAwT6onO9xMXCccdcvW0ugR6SMfQUVRXfu6JhsCibgSpcWhysCwnqkyjeAXlrvgYSSH
-         zPAw==
-X-Gm-Message-State: APjAAAVFKbzbOkNlRwnIPhnFF0XuS3CXc/RlSFf8VoKz+v7l5zyAMUac
-        yIPfkQ5LeCEn4AJJFRX5iCW+GfHsI8ZpJ5bkSZSe5A6g
-X-Google-Smtp-Source: APXvYqye+1EWHLxGXR3i63eCobPO4GRAuX295DokJfWJrctghesA82aa2jXM+x2Az67DqNjZ/hqCqUFizUNMxU2vZmo=
-X-Received: by 2002:a7b:c743:: with SMTP id w3mr9962164wmk.165.1573299102993;
- Sat, 09 Nov 2019 03:31:42 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=QFwmDZmeqYXccppoSKnzuwVLfywsV2XX4Ny2AbBS0SU=;
+        b=IIaw2DWlMNEcFMeeTAWzdJiduvsoDdyDJmpl+yN7+TQUsJkeXWG2LOOz8X3AG53K/r
+         JO6aRN1QPNz3KTbZTYD/DxBiDzWgl7DALY4snicDEgbz9rKn4C5dfNOszEuYVfButpFC
+         IJiHQCOQCoqvJUteibVP55t8EGjQHGQHN/XvsgRAUTPIfHtQkAxbu/9zdYPkOCXMDvra
+         RMUcjzaLgxuo+rJxIg2T1wlnu3/d1b1u8+AwHy03HkOkJaT0OTp3uCgrhWkINCwGmWgE
+         AKZXg1hsBw8/cK4ijVXIbiuK5FCy/G9rZDJClgSSh/JwAlLWbMWEREIbgrndRyWYC0+N
+         w5YA==
+X-Gm-Message-State: APjAAAVW1Qh+XKehIKTFJqxd6Llxe41nXPBRNoS8KV8x+pgB21Tq7cqy
+        /nwiStPI7V4jkOZcYIF0cV+uSYhP67vs1hpgNKHgBJtU
+X-Google-Smtp-Source: APXvYqytiIagBh07xUEyOzT+ODdFVz4Ch1S0jvphYHi3zeNx5qnvCpIL/G9nXylO//LQdXyGcOm3/Gw2O7hNgsRHfqM=
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr11776578wma.129.1573299305284;
+ Sat, 09 Nov 2019 03:35:05 -0800 (PST)
 MIME-Version: 1.0
-From:   Sebastiaan Dammann <triadsebas@gmail.com>
-Date:   Sat, 9 Nov 2019 12:31:31 +0100
-Message-ID: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
-Subject: git name-rev looks at refs/notes, refs/svn/map: stack overflow
-To:     git@vger.kernel.org
+References: <20191017162826.1064257-1-pjones@redhat.com> <20191017162826.1064257-2-pjones@redhat.com>
+ <CAPig+cS6SzLdgmzffNkg72YSiDQ9eQRqTK12NsraKpGbkJFY_w@mail.gmail.com>
+ <20191018194317.wvqphshpkfskvkyh@redhat.com> <CAPig+cTExu1+XyhUaq=yY09CAK6NN_BQViQETU8_fbGxu3jWzg@mail.gmail.com>
+ <8c583f0c-c359-0fbe-2ffa-304db82b0a86@gmail.com>
+In-Reply-To: <8c583f0c-c359-0fbe-2ffa-304db82b0a86@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sat, 9 Nov 2019 06:34:53 -0500
+Message-ID: <CAPig+cS9KXAH2+gUTV+q9p95Dc20TOt5naN5uH1_TjSaeL53rw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Make "git branch -d" prune missing worktrees automatically.
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Peter Jones <pjones@redhat.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello git users,
+On Fri, Nov 8, 2019 at 9:56 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> On 08/11/2019 10:14, Eric Sunshine wrote:
+> > Perhaps there is some way to address the pain point without breaking
+> > the fundamental promise made by git-worktree about being careful with
+> > worktree metadata[*], but the changes proposed by this patch series
+> > seem insufficient (even if the patch is reworked to respect worktree
+> > locking). I've cc:'d Duy in case he wants to chime in.
+>
+> I agree that we want to preserve the safe guards in the worktree design.
+> I wonder if detaching the HEAD of the missing worktree would solve the
+> problem without losing data. In the case where something wants to
+> checkout the same branch as the missing worktree then I think that is a
+> good solution. I think it should be OK for branch deletion as well.
 
-I'm running into git crashing with an stack overflow and hope to hear
-your views on this.
+I would feel very uncomfortable making "automatic HEAD detachment"
+(decapitation?) the default behavior. Although doing so may (in some
+fashion) safeguard precious information in .git/worktrees/<id>, it
+potentially brings its own difficulties. For instance, if someone
+takes an action which automatically detaches HEAD of a missing
+worktree which had some branch checked out (and possibly some changes
+staged in the worktree-specific "index"), and then builds more commits
+on that branch, then that worktree gets into a state akin to rebased
+upstream (for which git-rebase documentation devotes an entire
+section[1], "Recovering From Upstream Rebase"). While a power-user may
+be able to recover from such a state, allowing the general Git user to
+get into such a situation by default seems contraindicated.
 
-I have a from SVN converted repository (using Subgit). If I execute
-"git name-rev 92f054ba5c71b8e689aed529ff31370984089b64" on this bare
-repository, git crashes with a stack overflow.
+I'm not even convinced that hiding the suggested "auto-detach"
+behavior behind a configuration variable so power-users can enable it
+is entirely a good idea either since, while it may eliminate some
+pain, it also potentially allows abandoned worktree entries to
+accumulate.
 
-One property of the git conversion process is that at every commit a
-note is attached which lists the SVN version number. This repository
-has over 50000 commits.
-In addition, refs exist at refs/svn/map which also contains many
-entries. It appears the name-rev looks at the notes and other refs as
-well.
-
-The backtrace of the stack overflow is this:
-
-[repeats many times]
-#12976 0x000000000046d178 in name_rev (commit=0x37241b0,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=3,
-    distance=3, from_tag=0, deref=0) at builtin/name-rev.c:139
-#12977 0x000000000046d178 in name_rev (commit=0x3724160,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=2,
-    distance=2, from_tag=0, deref=0) at builtin/name-rev.c:139
-#12978 0x000000000046d178 in name_rev (commit=0x3724110,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=1,
-    distance=1, from_tag=0, deref=0) at builtin/name-rev.c:139
-#12979 0x000000000046d178 in name_rev (commit=0x37240c0,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101, generation=0,
-    distance=0, from_tag=0, deref=0) at builtin/name-rev.c:139
-#12980 0x000000000046d69d in name_ref (path=0x37232e5 "notes/commits",
-    oid=0x37c6030, flags=66, cb_data=0x155ef20) at builtin/name-rev.c:277
-#12981 0x00000000005c6645 in do_for_each_ref_helper (r=0x7acee0 <the_repo>,
-    refname=0x37232e0 "refs/notes/commits", oid=0x37c6030, flags=66,
-    cb_data=0x155ede0) at refs.c:1552
-#12982 0x00000000005cfcd1 in do_for_each_repo_ref_iterator (
-    r=0x7acee0 <the_repo>, iter=0x37c6190,
-    fn=0x5c65ff <do_for_each_ref_helper>, cb_data=0x155ede0)
-    at refs/iterator.c:418
-#12983 0x00000000005c66de in do_for_each_ref (refs=0x3716aa8,
-    prefix=0x71d34f <__ac_HASH_UPPER+271> "", fn=0x46d3ff <name_ref>, trim=0,
-    flags=0, cb_data=0x155ef20) at refs.c:1566
-#12984 0x00000000005c673f in refs_for_each_ref (refs=0x3716aa8,
-    fn=0x46d3ff <name_ref>, cb_data=0x155ef20) at refs.c:1572
-#12985 0x00000000005c677a in for_each_ref (fn=0x46d3ff <name_ref>,
-   cb_data=0x155ef20) at refs.c:1577
-#12986 0x000000000046e2c1 in cmd_name_rev (argc=0, argv=0x37106b8, prefix=0x0)
-    at builtin/name-rev.c:495
-#12987 0x000000000040305c in run_builtin (p=0x6b56e8 <commands+1704>, argc=2,
-    argv=0x37106b0) at git.c:444
-#12988 0x0000000000403446 in handle_builtin (argc=2, argv=0x37106b0)
-    at git.c:673
-#12989 0x00000000004036fc in run_argv (argcp=0x155fdb0, argv=0x155fd58)
-    at git.c:740
-#12990 0x0000000000403b62 in cmd_main (argc=2, argv=0x37106b0) at git.c:871
-#12991 0x00000000004c8647 in main (argc=3, argv=0x37106a8) at common-main.c:52
-
-If I trace it back to the source we get this:
-(gdb)
-#16 0x000000000046d178 in name_rev (commit=0x3b948d30,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12963, distance=12963, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139                             name_rev(parents->item, tip_name, taggerdate,
-(gdb)
-#17 0x000000000046d178 in name_rev (commit=0x3b948ce0,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12962, distance=12962, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139                             name_rev(parents->item, tip_name, taggerdate,
-(gdb)
-#18 0x000000000046d178 in name_rev (commit=0x3b948c90,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12961, distance=12961, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139                             name_rev(parents->item, tip_name, taggerdate,
-(gdb)
-#19 0x000000000046d178 in name_rev (commit=0x3b948c40,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12960, distance=12960, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139                             name_rev(parents->item, tip_name, taggerdate,
-(gdb)
-#20 0x000000000046d178 in name_rev (commit=0x3b948bf0,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12959, distance=12959, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139                             name_rev(parents->item, tip_name, taggerdate,
-(gdb)
-#21 0x000000000046d178 in name_rev (commit=0x3b948ba0,
-    tip_name=0x37ccb70 "notes/commits", taggerdate=1572995101,
-    generation=12958, distance=12958, from_tag=0, deref=0)
-    at builtin/name-rev.c:139
-139
-
-Essentially too much, but not endless recursion, causing a stack overflow.
-
-The destructive workaround at the moment is to delete the refs, then
-run an aggressive gc:
-git update-ref -d refs/notes/commits
-git update-ref -d refs/svn/map
-git gc --prune=all --aggressive
-
-I was redirected here by the git-for-windows team (issue link if
-you're interested:
-https://github.com/git-for-windows/git/issues/2393), so I'm going to
-repeat what was said there:
-
-> But yes, the problem seems to be the many, many notes. Which points to a deeper issue: name_rev should not even look at anything byt refs/heads/*, refs/remotes/* and refs/tags/. Certainly it should exclude refs/notes/*...
-> This, however, is not Windows-specific. Maybe I can ask you to report this issue to the Git mailing list (git@vger.kernel.org, please suppress all HTML lest the mail will be bounced)?
-
-I hope to hear your view on this. Is this an (confirmed) issue with
-git? Are there beside the workaround I mentioned, any other
-workarounds?
-
-Groeten, Kind regards,
-Sebastiaan Dammann
+[1]: https://git-scm.com/docs/git-rebase#_recovering_from_upstream_rebase
