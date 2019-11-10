@@ -2,104 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AC991F454
-	for <e@80x24.org>; Sun, 10 Nov 2019 06:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C0361F454
+	for <e@80x24.org>; Sun, 10 Nov 2019 06:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726612AbfKJGon (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 01:44:43 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:42959 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726594AbfKJGon (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 01:44:43 -0500
-Received: by mail-lj1-f195.google.com with SMTP id n5so10389005ljc.9
-        for <git@vger.kernel.org>; Sat, 09 Nov 2019 22:44:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=BfCqDRVDM3q5gK71HPq3lvkaSqxwHZ6/JMuWNWNmqv0=;
-        b=iaDSHY/BpNg8TOCEJvRnnb5vTbTIoeL6IM89Rg0N4B1JfgxJYcgDO7oWJMitAkUJgv
-         BsJjno4043h93H9xwcXAi4eCsDR6fMfJMy5zhmIbMkfu8wvMQEDKZss4hrKV0VtVxipW
-         gpEiW5IfX8kyTgfg6nkd2I+RtMq5BznQ/eIbWcozhbMkTEcytX0brigvV5BOPJ73zuCU
-         S1jyv7j7bPvsd0zlbYkV/PNRgof+PfXzjoNo1VzCWIYY5VoJgkyWOXYEzf0jUFgYKA8M
-         qqWioiq65CVKrjXpG/gUL63uztwVBmuFhw5kp203tRqMKgVi8eqZ3oypmh+1qAwSBD8h
-         mxTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=BfCqDRVDM3q5gK71HPq3lvkaSqxwHZ6/JMuWNWNmqv0=;
-        b=Oa8T+H7Z38o1jDIBs95XYM5czVm6uSK4fc/A70GfTkF22iYg8RXf6eckJrP2Qgbc4l
-         DPKaDK1ocTjj85fet0g8QZPHsy5E2XyX0sLxxln1Qh1FdT7QuUS041vscmyCPUz7QNXY
-         eyyMMU4if3A0tW1mexrGM34ufVECKX03+O7iJS0Ds+6SMfyvyO3IiNLO2Wah5gO4q/yI
-         efJTyWyc6DWKTgTk2zgjtatvP0zwl7YfkE9HDgLRX/n0oSKIC3iT5je0e7ikZlAtBPcP
-         nGcySfxj4i1XQ05lPgCM0i1jQI+6n831dbLYaXrLKCpUN6fnZb+12+OGoWG0wJvaud9V
-         numw==
-X-Gm-Message-State: APjAAAWEmK7LBnpLXsVGbv76BvMkghw4vslooEflKBHQ1jhN2ayUR1Uu
-        70hDDrKmbIp98t6OyGolWbyQ6ttrsak1EGBfZNUIk4wCqZM=
-X-Google-Smtp-Source: APXvYqyFyrBBmafos+6q/Alu1LVlykxPz+glmeEXdYCf1qdvzAPj3N+oWnpnR67dFoLmtMTPjjnSaf8ETWBlZ92BOXE=
-X-Received: by 2002:a2e:9c94:: with SMTP id x20mr11994820lji.64.1573368280960;
- Sat, 09 Nov 2019 22:44:40 -0800 (PST)
+        id S1726610AbfKJG7D (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 01:59:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65501 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbfKJG7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 01:59:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A564EAB065;
+        Sun, 10 Nov 2019 01:58:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+a5rvN1HSyaHx1q3ydpZHr/NHWs=; b=rkjN4G
+        q0H1eGekOR5lESpAyF8Kj0xQddXBG0z/BJbVDY+4o7LtY26BeJQeRiwFnalfoy+O
+        LqS/3JiJO2+/0AbcD9ZKSiYAOBzjYp/t54Q5lDhMUiN1ow7zWjQJaPGY14dvWKQY
+        qSf7diXZ4PS7iPperO7abkNoVe5CcyGpKEs/U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eZ4aP0Bsay6A10ninfHaQ7JojTVoHX30
+        PJAhIi/+OCX0OGcuIE9v7slf0KFbfRb6cGIA/6EjaKhYGe/K9o2kkqQB2jmMzwzk
+        +fkmzYnrSpqsZK+52LFGq7r96NuK9MUrnk9zKjRpHsEXflStwoIlCsA90QJmlQHA
+        50GCqIcuP0s=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 925C0AB064;
+        Sun, 10 Nov 2019 01:58:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B5C21AB063;
+        Sun, 10 Nov 2019 01:58:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4 01/14] t: teach test_cmp_rev to accept ! for not-equals
+References: <cover.1571739459.git.liu.denton@gmail.com>
+        <cover.1573152598.git.liu.denton@gmail.com>
+        <0d0696f310a6f8e13ed480b1a1e91cdc2debaa20.1573152599.git.liu.denton@gmail.com>
+        <xmqqpni3nj8j.fsf@gitster-ct.c.googlers.com>
+        <20191108082310.GA2497@generichostname>
+        <xmqqa796mt35.fsf@gitster-ct.c.googlers.com>
+        <20191108211909.GA80210@generichostname>
+Date:   Sun, 10 Nov 2019 15:58:52 +0900
+In-Reply-To: <20191108211909.GA80210@generichostname> (Denton Liu's message of
+        "Fri, 8 Nov 2019 13:19:09 -0800")
+Message-ID: <xmqq8sookyj7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Avery Pennarun <apenwarr@gmail.com>
-Date:   Sun, 10 Nov 2019 01:44:30 -0500
-Message-ID: <CAHqTa-15fKjH-3Z-vHhgNpfx6c1OQXbDXwKJHT9JX6G+7tjGBA@mail.gmail.com>
-Subject: Announcement: git-subtrac (a sequel to git-subtree)
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F4834FA-0387-11EA-B557-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+Denton Liu <liu.denton@gmail.com> writes:
 
-Ten years ago (yikes!), I wrote git-subtree to work around some of
-the usability problems with git submodules. I don't have much more
-luck with submodules now than I did back then, but I've also never
-been very happy with git-subtree's limitations. Luckily I've learned
-a lot since then, so I've made another try at it.
+> Hi Junio,
+>
+> On Fri, Nov 08, 2019 at 09:49:02PM +0900, Junio C Hamano wrote:
+>> Denton Liu <liu.denton@gmail.com> writes:
+>>
+>> >> >  		local r1 r2
+>> >> >  		r1=$(git rev-parse --verify "$1") &&
+>> >> >  		r2=$(git rev-parse --verify "$2") &&
+>> >>
+>> >> If either of the calls fail, the assignment itself would fail, and
+>> >> the &&-cascade would stop without executing the if statment below.
+>> >>
+>> 	r1=$(git rev-parse --verify "$1") ||
+>> 		error "'$1' does not name a valid object"
+>> 	r2=$(git rev-parse --verify "$2") ||
+>> 		error "'$2' does not name a valid object"
+>> 	if ! test "$r1" $op "$r2"
+>> 	then
+>> 		... they do not compare the same ...
+>> 	fi
+>
+> With your suggestion, we actually introduce subtle undesired behaviour.
+> The `error` calls don't actually exit the function early. To make it
+> work, we need to add && to the end of the `error` calls.
 
-Here's my new attempt, git-subtrac:
-   https://github.com/apenwarr/git-subtrac
+Not &&-at-the-end, but yes, we'd need some early return after
+noticing a bad input from the caller.
 
-Unlike git-subtree, it encourages you to use an almost-pure git
-submodule workflow. But like git-subtree, it makes it easy to include
-the entire history (actually the "history of histories" since
-submodules can go backwards, forwards, and sideways over time) of
-the submodules in your superproject's repo.
+You said earlier that one of the issues that motivated you to update
+the helper was that this obvious typo
 
-As a result, it's easy to push, pull, fork, merge, and rebase your
-entire project no matter how many submodules you like to use. When
-someone does a 'fetch' of your superproject repo, they get all the
-submodule repos as well.
+	r1=... r2= ... &&
+	! test_rev_cmp "$r1" "$rr2"
 
-The trick is pretty straightforward. Like git-subtree, we generate a
-shadow history of commits, converting subtree links from inside trees into
-additional parent commits. This causes them to be pushed/pulled as
-part of a single ref. The shadow history is stable (anyone generating a
-shadow tree from commit X will always get the same shadow tree X+)
-and can be forked or merged just like the original tree. The idea is
-that you'd have a branch called 'master.trac' that is the companion
-to the 'master' branch, holding the submodule history needed to
-checkout any commit in that branch.
+would not be noticed.  For such a fix, I do not think it is
+sufficient to tweak the return value from the test_rev_cmp
+helper function if we allow callers to expect failure like so.
 
-Then you simply set "url = ." for every entry in .gitmodules, and off
-it goes.
+And for that reason, your "allow 'test_rev_cmp ! R1 R2' syntax" part
+of the change makes quite a lot of sense.  That again allows the
+callers to rely on failure return from test_rev_cmp as an error.
 
-You could also use this as a tool for managing patch queues: create a
-superproject with just one submodule that you want to patch. Every
-time you rebase your patch queue, make a new commit in the
-superproject, then tie it into a nice package with subtrac.
+> I'm wondering why we want to do this, though. rev-parse should already
+> output an error message on stderr in the case where the rev-parse fails.
+>
+> I guess the error message of "fatal: Needed a single revision" could
+> probably be improved but that feels like an improvement that should be
+> targeted to rev-parse.
 
-Anyway, comments welcome. This one is written in go using the go-git
-library, which is very nice indeed, although it would presumably
-prevent this from ever being merged into git itself.
+Not really.  The callers of rev-parse plumbing should expect that
+exact string, if they want to differenciate different errors from
+the program.
 
-Have fun,
 
-Avery
+	r1=$(git rev-parse --verify "$1") &&
+	r2=$(git rev-parse --verify "$2") || return 1
+
+before we start the comparison between $r1 and $r2 may be a good way
+to clarify the intent of the code.  Using "&&" instead of "|| return"
+and letting the whole function fail would not be incorrect, though.
+
+Thanks.
+
+
