@@ -7,36 +7,35 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCFE1F454
-	for <e@80x24.org>; Sun, 10 Nov 2019 20:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5A11F454
+	for <e@80x24.org>; Sun, 10 Nov 2019 20:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727089AbfKJUlv (ORCPT <rfc822;e@80x24.org>);
+        id S1727108AbfKJUlv (ORCPT <rfc822;e@80x24.org>);
         Sun, 10 Nov 2019 15:41:51 -0500
-Received: from smtp.gentoo.org ([140.211.166.183]:55986 "EHLO smtp.gentoo.org"
+Received: from smtp.gentoo.org ([140.211.166.183]:55988 "EHLO smtp.gentoo.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727030AbfKJUlv (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726882AbfKJUlv (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 10 Nov 2019 15:41:51 -0500
 Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
         (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id 89E2A34CB4F
+        by smtp.gentoo.org (Postfix) with ESMTPS id 8FEDA34CB50
         for <git@vger.kernel.org>; Sun, 10 Nov 2019 20:41:49 +0000 (UTC)
-Received: (qmail 13444 invoked by uid 129); 10 Nov 2019 20:41:42 -0000
+Received: (qmail 13442 invoked by uid 129); 10 Nov 2019 20:41:42 -0000
 X-HELO: thorne.orbis-terrarum.net
 Authentication-Results: orbis-terrarum.net; auth=pass (cram-md5) smtp.auth=robbat2-thorne@orbis-terrarum.net; iprev=pass
 Received: from d173-181-74-218.bchsia.telus.net (HELO thorne.orbis-terrarum.net) (173.181.74.218)
  by orbis-terrarum.net (qpsmtpd/0.95) with ESMTPSA (ECDHE-RSA-AES256-GCM-SHA384 encrypted); Sun, 10 Nov 2019 20:41:41 +0000
 Received: by thorne.orbis-terrarum.net (Postfix, from userid 10000)
-        id 5379B198B01; Sun, 10 Nov 2019 20:41:26 +0000 (UTC)
+        id 517A8198B0D; Sun, 10 Nov 2019 20:41:26 +0000 (UTC)
 From:   "Robin H. Johnson" <robbat2@gentoo.org>
 To:     git@vger.kernel.org
-Subject: [PATCH v3 2/3] bundle-create: progress output control
-Date:   Sun, 10 Nov 2019 12:41:25 -0800
-Message-Id: <20191110204126.30553-2-robbat2@gentoo.org>
+Subject: [PATCH v3 1/3] bundle: framework for options before bundle file
+Date:   Sun, 10 Nov 2019 12:41:24 -0800
+Message-Id: <20191110204126.30553-1-robbat2@gentoo.org>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20191110204126.30553-1-robbat2@gentoo.org>
+In-Reply-To: <1f7f0aa1e8fae54bf967ae83a160be2b30db634f.1573248640.git.gitgitgadget@gmail.com>
 References: <1f7f0aa1e8fae54bf967ae83a160be2b30db634f.1573248640.git.gitgitgadget@gmail.com>
- <20191110204126.30553-1-robbat2@gentoo.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Checked: Checked by ClamAV on orbis-terrarum.net
@@ -45,211 +44,241 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Support the progress output options from pack-objects in git-bundle's
-create subcommand. Most notably, this provides --quiet as requested on
-the git mailing list per [1]
+Make it possible for any of the git-bundle subcommands to include
+options:
+- before the sub-command
+- after the sub-command, before the bundle filename
 
-Reference: https://www.mail-archive.com/git@vger.kernel.org/msg182844.html <robbat2-20190806T191156-796782357Z@orbis-terrarum.net>
+There is an immediate gain in support for help with all of the
+sub-commands, where 'git bundle list-heads -h' previously returned an
+error.
+
+Downside here is an increase in code duplication that cannot be
+trivially avoided short of shared global static options.
+
 Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
 ---
- Documentation/git-bundle.txt | 33 +++++++++++++++++++++++++++++++--
- builtin/bundle.c             | 30 +++++++++++++++++++++++++++---
- bundle.c                     |  9 +++++----
- bundle.h                     |  3 ++-
- 4 files changed, 65 insertions(+), 10 deletions(-)
+ builtin/bundle.c | 190 ++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 145 insertions(+), 45 deletions(-)
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 7d6c9dcd17..96bb94df7b 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -9,7 +9,7 @@ git-bundle - Move objects and refs by archive
- SYNOPSIS
- --------
- [verse]
--'git bundle' create <file> <git-rev-list-args>
-+'git bundle' create [-q | --quiet | --progress | --all-progress] [--all-progress-implied] <file> <git-rev-list-args>
- 'git bundle' verify <file>
- 'git bundle' list-heads <file> [<refname>...]
- 'git bundle' unbundle <file> [<refname>...]
-@@ -33,9 +33,11 @@ destination repository.
- OPTIONS
- -------
- 
--create <file>::
-+create [options] <file> <git-rev-list-args>::
- 	Used to create a bundle named 'file'.  This requires the
- 	'git-rev-list-args' arguments to define the bundle contents.
-+	'options' contains the options specific to the 'git bundle create'
-+	subcommand.
- 
- verify <file>::
- 	Used to check that a bundle file is valid and will apply
-@@ -75,6 +77,33 @@ unbundle <file>::
- 	necessarily everything in the pack (in this case, 'git bundle' acts
- 	like 'git fetch-pack').
- 
-+--progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal, unless -q
-+	is specified. This flag forces progress status even if
-+	the standard error stream is not directed to a terminal.
-+
-+--all-progress::
-+	When --stdout is specified then progress report is
-+	displayed during the object count and compression phases
-+	but inhibited during the write-out phase. The reason is
-+	that in some cases the output stream is directly linked
-+	to another command which may wish to display progress
-+	status of its own as it processes incoming pack data.
-+	This flag is like --progress except that it forces progress
-+	report for the write-out phase as well even if --stdout is
-+	used.
-+
-+--all-progress-implied::
-+	This is used to imply --all-progress whenever progress display
-+	is activated.  Unlike --all-progress this flag doesn't actually
-+	force any progress display by itself.
-+
-+-q::
-+--quiet::
-+	This flag makes the command not to report its progress
-+	on the standard error stream.
-+
- SPECIFYING REFERENCES
- ---------------------
- 
+I tried doing this via GitGitGadget initially as a test of that process,
+as well as the CI integration side; however as noted in #git-devel and
+elsewhere on the list, vger seems to swallow the mail to /dev/null
+
 diff --git a/builtin/bundle.c b/builtin/bundle.c
-index 09b989cfc0..39b3e88d40 100644
+index 1ea4bfdfc1..09b989cfc0 100644
 --- a/builtin/bundle.c
 +++ b/builtin/bundle.c
 @@ -1,4 +1,5 @@
  #include "builtin.h"
-+#include "argv-array.h"
- #include "parse-options.h"
++#include "parse-options.h"
  #include "cache.h"
  #include "bundle.h"
-@@ -11,7 +12,7 @@
+ 
+@@ -9,59 +10,158 @@
+  * bundle supporting "fetch", "pull", and "ls-remote".
   */
  
- static const char * const builtin_bundle_usage[] = {
--  N_("git bundle create <file> <git-rev-list args>"),
-+  N_("git bundle create [<options>] <file> <git-rev-list args>"),
-   N_("git bundle verify <file>"),
-   N_("git bundle list-heads <file> [<refname>...]"),
-   N_("git bundle unbundle <file> [<refname>...]"),
-@@ -19,7 +20,7 @@ static const char * const builtin_bundle_usage[] = {
- };
+-static const char builtin_bundle_usage[] =
+-  "git bundle create <file> <git-rev-list args>\n"
+-  "   or: git bundle verify <file>\n"
+-  "   or: git bundle list-heads <file> [<refname>...]\n"
+-  "   or: git bundle unbundle <file> [<refname>...]";
++static const char * const builtin_bundle_usage[] = {
++  N_("git bundle create <file> <git-rev-list args>"),
++  N_("git bundle verify <file>"),
++  N_("git bundle list-heads <file> [<refname>...]"),
++  N_("git bundle unbundle <file> [<refname>...]"),
++  NULL
++};
  
- static const char * const builtin_bundle_create_usage[] = {
--  N_("git bundle create <file> <git-rev-list args>"),
-+  N_("git bundle create [<options>] <file> <git-rev-list args>"),
-   NULL
- };
- 
-@@ -56,7 +57,20 @@ static int parse_options_cmd_bundle(int argc,
- }
- 
- static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
-+	int all_progress_implied = 0;
-+	int progress = isatty(STDERR_FILENO);
-+	struct argv_array pack_opts;
+-int cmd_bundle(int argc, const char **argv, const char *prefix)
+-{
++static const char * const builtin_bundle_create_usage[] = {
++  N_("git bundle create <file> <git-rev-list args>"),
++  NULL
++};
 +
- 	struct option options[] = {
-+		OPT_SET_INT('q', "quiet", &progress,
-+			    N_("do not show progress meter"), 0),
-+		OPT_SET_INT(0, "progress", &progress,
-+			    N_("show progress meter"), 1),
-+		OPT_SET_INT(0, "all-progress", &progress,
-+			    N_("show progress meter during object writing phase"), 2),
-+		OPT_BOOL(0, "all-progress-implied",
-+			 &all_progress_implied,
-+			 N_("similar to --all-progress when progress meter is shown")),
- 		OPT_END()
- 	};
- 	const char* bundle_file;
-@@ -65,9 +79,19 @@ static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
- 			builtin_bundle_create_usage, options, &bundle_file);
- 	/* bundle internals use argv[1] as further parameters */
- 
-+	argv_array_init(&pack_opts);
-+	if (progress == 0)
-+		argv_array_push(&pack_opts, "--quiet");
-+	else if (progress == 1)
-+		argv_array_push(&pack_opts, "--progress");
-+	else if (progress == 2)
-+		argv_array_push(&pack_opts, "--all-progress");
-+	if (progress && all_progress_implied)
-+		argv_array_push(&pack_opts, "--all-progress-implied");
++static const char * const builtin_bundle_verify_usage[] = {
++  N_("git bundle verify <file>"),
++  NULL
++};
 +
- 	if (!startup_info->have_repository)
- 		die(_("Need a repository to create a bundle."));
--	return !!create_bundle(the_repository, bundle_file, argc, argv);
-+	return !!create_bundle(the_repository, bundle_file, argc, argv, &pack_opts);
- }
- 
- static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
-diff --git a/bundle.c b/bundle.c
-index a85ed3f7bc..99439e07a1 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -249,15 +249,16 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
- 
- 
- /* Write the pack data to bundle_fd */
--static int write_pack_data(int bundle_fd, struct rev_info *revs)
-+static int write_pack_data(int bundle_fd, struct rev_info *revs, struct argv_array *pack_options)
- {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	int i;
- 
- 	argv_array_pushl(&pack_objects.args,
--			 "pack-objects", "--all-progress-implied",
-+			 "pack-objects",
- 			 "--stdout", "--thin", "--delta-base-offset",
- 			 NULL);
-+	argv_array_pushv(&pack_objects.args, pack_options->argv);
- 	pack_objects.in = -1;
- 	pack_objects.out = bundle_fd;
- 	pack_objects.git_cmd = 1;
-@@ -428,7 +429,7 @@ static int write_bundle_refs(int bundle_fd, struct rev_info *revs)
- }
- 
- int create_bundle(struct repository *r, const char *path,
--		  int argc, const char **argv)
-+		  int argc, const char **argv, struct argv_array *pack_options)
- {
- 	struct lock_file lock = LOCK_INIT;
++static const char * const builtin_bundle_list_heads_usage[] = {
++  N_("git bundle list-heads <file> [<refname>...]"),
++  NULL
++};
++
++static const char * const builtin_bundle_unbundle_usage[] = {
++  N_("git bundle unbundle <file> [<refname>...]"),
++  NULL
++};
++
++static int verbose;
++
++static int parse_options_cmd_bundle(int argc,
++		const char **argv,
++		const char* prefix,
++		const char * const usagestr[],
++		const struct option options[],
++		const char **bundle_file) {
++	int newargc;
++	newargc = parse_options(argc, argv, NULL, options, usagestr,
++			     PARSE_OPT_STOP_AT_NON_OPTION);
++	if (argc < 1)
++		usage_with_options(usagestr, options);
++	*bundle_file = prefix_filename(prefix, argv[0]);
++	return newargc;
++}
++
++static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
++	struct option options[] = {
++		OPT_END()
++	};
++	const char* bundle_file;
++
++	argc = parse_options_cmd_bundle(argc, argv, prefix,
++			builtin_bundle_create_usage, options, &bundle_file);
++	/* bundle internals use argv[1] as further parameters */
++
++	if (!startup_info->have_repository)
++		die(_("Need a repository to create a bundle."));
++	return !!create_bundle(the_repository, bundle_file, argc, argv);
++}
++
++static int cmd_bundle_verify(int argc, const char **argv, const char *prefix) {
+ 	struct bundle_header header;
+-	const char *cmd, *bundle_file;
  	int bundle_fd = -1;
-@@ -470,7 +471,7 @@ int create_bundle(struct repository *r, const char *path,
- 		goto err;
  
- 	/* write pack */
--	if (write_pack_data(bundle_fd, &revs))
-+	if (write_pack_data(bundle_fd, &revs, pack_options))
- 		goto err;
+-	if (argc < 3)
+-		usage(builtin_bundle_usage);
++	struct option options[] = {
++		OPT_END()
++	};
++	const char* bundle_file;
  
- 	if (!bundle_to_stdout) {
-diff --git a/bundle.h b/bundle.h
-index 37c37d7f65..ceab0c7475 100644
---- a/bundle.h
-+++ b/bundle.h
-@@ -1,6 +1,7 @@
- #ifndef BUNDLE_H
- #define BUNDLE_H
+-	cmd = argv[1];
+-	bundle_file = prefix_filename(prefix, argv[2]);
+-	argc -= 2;
+-	argv += 2;
++	argc = parse_options_cmd_bundle(argc, argv, prefix,
++			builtin_bundle_verify_usage, options, &bundle_file);
++	/* bundle internals use argv[1] as further parameters */
  
-+#include "argv-array.h"
- #include "cache.h"
+ 	memset(&header, 0, sizeof(header));
+-	if (strcmp(cmd, "create") && (bundle_fd =
+-				read_bundle_header(bundle_file, &header)) < 0)
++	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
+ 		return 1;
++	close(bundle_fd);
++	if (verify_bundle(the_repository, &header, 1))
++		return 1;
++	fprintf(stderr, _("%s is okay\n"), bundle_file);
++	return 0;
++}
  
- struct ref_list {
-@@ -19,7 +20,7 @@ struct bundle_header {
- int is_bundle(const char *path, int quiet);
- int read_bundle_header(const char *path, struct bundle_header *header);
- int create_bundle(struct repository *r, const char *path,
--		  int argc, const char **argv);
-+		  int argc, const char **argv, struct argv_array *pack_options);
- int verify_bundle(struct repository *r, struct bundle_header *header, int verbose);
- #define BUNDLE_VERBOSE 1
- int unbundle(struct repository *r, struct bundle_header *header,
+-	if (!strcmp(cmd, "verify")) {
+-		close(bundle_fd);
+-		if (argc != 1) {
+-			usage(builtin_bundle_usage);
+-			return 1;
+-		}
+-		if (verify_bundle(the_repository, &header, 1))
+-			return 1;
+-		fprintf(stderr, _("%s is okay\n"), bundle_file);
+-		return 0;
+-	}
+-	if (!strcmp(cmd, "list-heads")) {
+-		close(bundle_fd);
+-		return !!list_bundle_refs(&header, argc, argv);
++static int cmd_bundle_list_heads(int argc, const char **argv, const char *prefix) {
++	struct bundle_header header;
++	int bundle_fd = -1;
++
++	struct option options[] = {
++		OPT_END()
++	};
++	const char* bundle_file;
++
++	argc = parse_options_cmd_bundle(argc, argv, prefix,
++			builtin_bundle_list_heads_usage, options, &bundle_file);
++	/* bundle internals use argv[1] as further parameters */
++
++	memset(&header, 0, sizeof(header));
++	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
++		return 1;
++	close(bundle_fd);
++	return !!list_bundle_refs(&header, argc, argv);
++}
++
++static int cmd_bundle_unbundle(int argc, const char **argv, const char *prefix) {
++	struct bundle_header header;
++	int bundle_fd = -1;
++
++	struct option options[] = {
++		OPT_END()
++	};
++	const char* bundle_file;
++
++	argc = parse_options_cmd_bundle(argc, argv, prefix,
++			builtin_bundle_unbundle_usage, options, &bundle_file);
++	/* bundle internals use argv[1] as further parameters */
++
++	memset(&header, 0, sizeof(header));
++	if ((bundle_fd = read_bundle_header(bundle_file, &header)) < 0)
++		return 1;
++	if (!startup_info->have_repository)
++		die(_("Need a repository to unbundle."));
++	return !!unbundle(the_repository, &header, bundle_fd, 0) ||
++		list_bundle_refs(&header, argc, argv);
++}
++
++int cmd_bundle(int argc, const char **argv, const char *prefix)
++{
++	struct option options[] = {
++		OPT__VERBOSE(&verbose, N_("be verbose; must be placed before a subcommand")),
++		OPT_END()
++	};
++	int result;
++
++	argc = parse_options(argc, argv, prefix, options, builtin_bundle_usage,
++		PARSE_OPT_STOP_AT_NON_OPTION);
++
++	packet_trace_identity("bundle");
++
++	if (argc < 2)
++		usage_with_options(builtin_bundle_usage, options);
++
++	else if (!strcmp(argv[0], "create"))
++		result = cmd_bundle_create(argc, argv, prefix);
++	else if (!strcmp(argv[0], "verify"))
++		result = cmd_bundle_verify(argc, argv, prefix);
++	else if (!strcmp(argv[0], "list-heads"))
++		result = cmd_bundle_list_heads(argc, argv, prefix);
++	else if (!strcmp(argv[0], "unbundle"))
++		result = cmd_bundle_unbundle(argc, argv, prefix);
++	else {
++		error(_("Unknown subcommand: %s"), argv[0]);
++		usage_with_options(builtin_bundle_usage, options);
+ 	}
+-	if (!strcmp(cmd, "create")) {
+-		if (argc < 2) {
+-			usage(builtin_bundle_usage);
+-			return 1;
+-		}
+-		if (!startup_info->have_repository)
+-			die(_("Need a repository to create a bundle."));
+-		return !!create_bundle(the_repository, bundle_file, argc, argv);
+-	} else if (!strcmp(cmd, "unbundle")) {
+-		if (!startup_info->have_repository)
+-			die(_("Need a repository to unbundle."));
+-		return !!unbundle(the_repository, &header, bundle_fd, 0) ||
+-			list_bundle_refs(&header, argc, argv);
+-	} else
+-		usage(builtin_bundle_usage);
++	return result ? 1 : 0;
+ }
 -- 
 2.23.0
 
