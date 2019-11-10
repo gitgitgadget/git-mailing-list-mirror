@@ -8,78 +8,114 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C9241F454
-	for <e@80x24.org>; Sun, 10 Nov 2019 01:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53BE91F454
+	for <e@80x24.org>; Sun, 10 Nov 2019 01:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726561AbfKJBGx (ORCPT <rfc822;e@80x24.org>);
-        Sat, 9 Nov 2019 20:06:53 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37721 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726537AbfKJBGx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 9 Nov 2019 20:06:53 -0500
-Received: by mail-ed1-f68.google.com with SMTP id k14so9148933eds.4
-        for <git@vger.kernel.org>; Sat, 09 Nov 2019 17:06:51 -0800 (PST)
+        id S1726561AbfKJBkw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 9 Nov 2019 20:40:52 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41054 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbfKJBkw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 9 Nov 2019 20:40:52 -0500
+Received: by mail-ed1-f66.google.com with SMTP id a21so9176208edj.8
+        for <git@vger.kernel.org>; Sat, 09 Nov 2019 17:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=xv4fugQ6UqzpPPGDLFFvg3st+07z1W1FNAr6+olyZlY=;
-        b=PUOr7yjywybyomvXT2o+poxh0/6Zklm9hacFL0QMd2XpuPinfYuyfagj5sBMbe9zmF
-         f3DNMJukOam8/GM/GLUK/qjlmS0layrvWOe9B+Q6aE7qftGuwJ6/18myK2p8wGITwzVI
-         2fSacuEMSRir/kMPftu3xfx4PziKB/8+BFlTZ/Amr5R3rucc+2We8wlOaWtzBCzSe7W9
-         rFLi1FhO+yL4MpBj4jxl1jezEO0+dQfyAkq0FJ5T1k0VOf7Qh2b+R0F38zJAJZmvVUKw
-         2Z7kHZC/uwPa50oLzOYyQDBBEx8Q/VC6nR7l4V5yA3AfxagT5XdZke83JA6ss4K9L8A3
-         IBnQ==
+        bh=xsT5tywz/yioUPHXgYRWseFY6GBJYBiO1ys1NOJlrQE=;
+        b=gYtugZXG7q2RY8+Vd54wulrwEf3AE4Q5w0mg8mziwU3yYf+ctccvyHZe6QmQxoqQVR
+         nNmz9aW1bQUexGWqE+DAS0sBNd/JXm5jLSdbxfM0oKlfzzG48p+i0Enf5E1k6/9IYlhw
+         y10dM3Mc7Fmdx52Eln9uMbURD/miNMWsVAAm/aD/pcPM7LcnXTgkL8dU/9Z2rl0fMhXi
+         slN7p1FfOiE7JBV9Nhr4W1gHMXhb/w0DRWki8da/jR5N5qPcWutgenlc20IqAVF+mYaT
+         YxI9J/KAJ5dQQQ5BN+s8APuZgLro5DTfAmlaQlK9nmmAO/XPhdO678J/YgAWjToCd5cT
+         5uXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=xv4fugQ6UqzpPPGDLFFvg3st+07z1W1FNAr6+olyZlY=;
-        b=E7sL9h5AdrnmjdzAocQICzS5q8YguSGftu1V7AI+pJ9aC45fFxey8DpZ+zIFKwR6gb
-         M44eOFxCRaEGxEK7bSAJeesJm/5cYuAokLZig1/7BcmTIcRrQN4LA6CyazYFns9KS2U2
-         fFHJ99gGPO/NGykwy7CLjmI9t43qbiLppYypZQfblfDc66hGCDnXQtYnyIsmVK06vDRI
-         /Fk2RiSM6hgWwmwgUo8eK31geqEzyYN7u8dML2xeDEyYKz8djpGkFmMvuo0O/itWZpxF
-         0RhOpwY97n5ASgQoTwga+/WoKGZDNU41dt8ZyzdFwMwdB4OhaiTieNQue8N805chl9PW
-         rlFg==
-X-Gm-Message-State: APjAAAXvBFDAHG262FQJ0fMa+j0ImuJ58Zl6GjM9ToDMoTtnqHYbodTz
-        4PQqiMXy22ocxPGjQsF3IdyZ+wNNZ0Wn2Oy0VsbdVpVT
-X-Google-Smtp-Source: APXvYqxjiupoA9ReIh63Ixt884g0xLMf7LuUBZp4pnm6pVpLjt3EJ38LUP54RHSsqkReG3qfogCAUvGRzmJHy4/Pie8=
-X-Received: by 2002:a50:9254:: with SMTP id j20mr19594990eda.0.1573348010538;
- Sat, 09 Nov 2019 17:06:50 -0800 (PST)
+        bh=xsT5tywz/yioUPHXgYRWseFY6GBJYBiO1ys1NOJlrQE=;
+        b=NspxcwyEiLpyEeSLO6uJ/fBpZu7977B+I/Ue33yUK9BJVN25UVayqXzzOviD98RSoA
+         WuM0hrtQb1y8ziCh+Q3typn71XDYYmaTUVlSruruyYspniKlgRuwHNa9L/tm/+gdPFhz
+         plxmHzsJWa9bV644eXAD0DJPWzInkmjehqygbKnw6E1vs+eAC7XkOLU3Xe5JDormEW64
+         RcdxEDFWQF+XgJMJKZIJfdD94b147+JEQC3KEINK0QVQJCeZDypTNy9WUkhvmV8qpCfu
+         n591ZQvxFug6hw8VMDDOFBiV5BmwP371pfruHmZVeuzfsstvMBkAmomTvyUIlGnke246
+         qf3A==
+X-Gm-Message-State: APjAAAWDgtdtPfiowxlJIHK1tBGDGb5hsjl4lhqOPw0HEntLdTm6qEtC
+        0q5G9pAeWv+1R624q2wN2R/wAoW+fEWjo9o3/6M=
+X-Google-Smtp-Source: APXvYqwb7aNYH1gw65SDMq+hQbSGzUz5FnE8pOEV9cSerHrHaw2FtyPgfesECBmsuoHB+fticaQgX50tA5wQYegI1Ks=
+X-Received: by 2002:a17:906:5e05:: with SMTP id n5mr15928060eju.116.1573350050859;
+ Sat, 09 Nov 2019 17:40:50 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.456.git.1573044509.gitgitgadget@gmail.com> <xmqq7e4cqk9y.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7e4cqk9y.fsf@gitster-ct.c.googlers.com>
+References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
+ <pull.434.v2.git.1573034387.gitgitgadget@gmail.com> <dcb78b6708937c3c6af5a86c276918c19e46acd4.1573034387.git.gitgitgadget@gmail.com>
+ <20191107012633.GG229589@google.com>
+In-Reply-To: <20191107012633.GG229589@google.com>
 From:   Heba Waly <heba.waly@gmail.com>
-Date:   Sun, 10 Nov 2019 14:06:39 +1300
-Message-ID: <CACg5j25S8eJN5Sc9cm_DEu50bmaR5fQBT7dAid2z-Be2y_rpmg@mail.gmail.com>
-Subject: Re: [PATCH 0/1] [Outreachy] doc: remove api-index
-To:     Junio C Hamano <gitster@pobox.com>
+Date:   Sun, 10 Nov 2019 14:40:39 +1300
+Message-ID: <CACg5j25iBo4djYVrUBRiTK3sL82ax=33PDw6bWPNkFfL59GBag@mail.gmail.com>
+Subject: Re: [PATCH v2 10/20] pathspec: move doc to pathspec.h
+To:     Emily Shaffer <emilyshaffer@google.com>
 Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 7, 2019 at 7:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Nov 7, 2019 at 2:26 PM Emily Shaffer <emilyshaffer@google.com> wrote:
 >
-> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > Remove both api-index.txt and api-index-skel.txt as the API documentation is
-> > being moved to the header files, so the index is not needed anymore because
-> > the doc files (Documentation/technical/api-*.txt) will be gone.
+> On Wed, Nov 06, 2019 at 09:59:37AM +0000, Heba Waly via GitGitGadget wrote:
+> > From: Heba Waly <heba.waly@gmail.com>
 > >
-> > Make changes to Documentation/Makefile accordingly.
+> > Move the documentation from Documentation/technical/api-setup.txt
+> > to pathspec.h as it's easier for the developers to find the usage
+> > information beside the code instead of looking for it in another doc file.
+> >
+> > Also documentation/technical/api-setup.txt is removed because the
+> > information it has is now redundant and it'll be hard to keep it up to
+> > date and synchronized with the documentation in the header file.
+> >
+> > Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> > ---
+> >  Documentation/technical/api-setup.txt | 47 ---------------------------
+> >  pathspec.h                            | 34 ++++++++++++++++++-
+> >  2 files changed, 33 insertions(+), 48 deletions(-)
+> >  delete mode 100644 Documentation/technical/api-setup.txt
+> >
+> > diff --git a/Documentation/technical/api-setup.txt b/Documentation/technical/api-setup.txt
+> > deleted file mode 100644
+> > index eb1fa9853e..0000000000
+> > --- a/Documentation/technical/api-setup.txt
+> > +++ /dev/null
+> > @@ -1,47 +0,0 @@
+> > -setup API
+> > -=========
+> > -
+> > -Talk about
+> > -
+> > -* setup_git_directory()
+> > -* setup_git_directory_gently()
+> > -* is_inside_git_dir()
+> > -* is_inside_work_tree()
+> > -* setup_work_tree()
+> > -
+> > -(Dscho)
+> > -
+> > -Pathspec
+> > ---------
+> > -
+> > -See glossary-context.txt for the syntax of pathspec. In memory, a
+> I kind of miss this pointer after the change. But, maybe other folks in
+> the project prefer to let someone grep for this themselves.
+
+You're Emily, I'll add it.
+
 >
-> Why is this not part of the other series?  Without any of them this
-> step does not make sense, no?
+> Otherwise it looks fine to me. Thanks.
+>
+>  - Emily
 
-Moving it to the other series makes more sense, although I won't
-consider it dependent on removing the rest of the files, as we're
-changing the location of the documentation anyway, and readers will
-need to refer to the code for more info. But I agree with you and will
-move it there.
-
-Thanks,
-Heba
+Thanks a lot
