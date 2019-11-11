@@ -2,126 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 991B91F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 01:02:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 625601F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 01:04:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726780AbfKKBB7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 20:01:59 -0500
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:34151 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726275AbfKKBB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 20:01:59 -0500
-Received: by mail-wm1-f42.google.com with SMTP id j18so2005201wmk.1
-        for <git@vger.kernel.org>; Sun, 10 Nov 2019 17:01:58 -0800 (PST)
+        id S1726768AbfKKBEW (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 20:04:22 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46864 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726275AbfKKBEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 20:04:22 -0500
+Received: by mail-ed1-f68.google.com with SMTP id x11so10582644eds.13
+        for <git@vger.kernel.org>; Sun, 10 Nov 2019 17:04:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Jd+QezGXbQrwhlVIMwWvb2dXo3MHTv5AXF+x27PwpJQ=;
-        b=QzR8bHlQ6JVJ/qduE6HooK0gXZKnpXxT7RX5c5PdmcIMqNmQoZOMMar9nxtbyX3EAD
-         MuM634paL02Y0fAZAtk3D4eOKGMmhUXc81HhEFXonRkjCa22EGczVrKkyvyvHtVlOlkx
-         2cAV/ycWA4SM1I2ACP4b591MKrJERtc2XqnhWVMlrQhvA4/bHeaD5Z1bQxSjxViIeL2t
-         V9Q+bCNV4KESp5e0uva7W7wGAip/ohsm3lsuvqkYRWyVIBiDRAd+gsnSjlYh/0aiQOTn
-         pKlGGkBwM1Lr5j2IU2+CLAAYg4Sh/KuKrIUKIbsnCOTbGOgA04YM32wjKim5ZRmNTR3f
-         1i2A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=f9UVimI3iVB1uaRHYhKMUhAF5mr7VnSgEjNr53T3zfU=;
+        b=ZuEve+bmB15kAqkVQVnHIxP6KuMD5Cug1G2TD2QSFjnw6SxWDNAdp/1Sks3AjHoPzN
+         g5EVQJPNBpcKAPEB+RlGKvhk5rftRfiddBXCWu4UcFmtXY8qsu9DcSwbSNJo9FwoCJMj
+         4s1ZQcvSQZM0HyBYQ6LwQvV5YmfcRNJMEM1zmjleE/k9Vp1f8SOUnKwFQVK8d2xeTxwW
+         wAn/biuLC5IUvw4cGlB4Ozag8mx8NScKBMMf1rvOG+yR8kzuprBzGynn8t9bBHIFVK0X
+         vbz5ppRzg4kh3FO9OA3OuclZGW1VBgW7Yq8Komq+HGHaKMJZ6irrfy3evs1Ld96GB0JC
+         QYTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Jd+QezGXbQrwhlVIMwWvb2dXo3MHTv5AXF+x27PwpJQ=;
-        b=VufLdW4ZUodSKhjgdmd6NMp+ZfmIe09+rJsBjRs73/e1d6ELGlCvuiR14FfxQCaTpV
-         K0VQC6JVm82d/E+bedjqvjIA0hJgklY5UfTNsRL4+XgBiikoRmrF5a5vwCQf2LjKK9fG
-         dHy7ujV7SdoroemXHb1dkyqBuRwIG0V01qLNKUpULCRgDxQeiVcrSodJ/l7C0IUtg0ju
-         zN0oVHjQIvETGTO5u+iRbBE3XGWh+oQzTgYfI4kkP+a/xZ8q4PkjXPFCU8j0Q+o26ec+
-         +ik2zSLVlmJ0v4e8grXvKuOxi74xAVV020YB3nUiifnsV2xwErLqoDRKgc7045EM+8Dj
-         B60A==
-X-Gm-Message-State: APjAAAXov/VHSBbaLg4niav/BUhxqesaH0D1l0NrGDsRIVT9B0Tc+dsX
-        enUjZpM/aLaQfeMForYK0F7UmLssQa4=
-X-Google-Smtp-Source: APXvYqyGlhCQv9VbOzyBmU6S8DAdZo29AM+gJ5alWhKaeGcgfneJRjg3oz2EEL803Im0XLTonid0Zg==
-X-Received: by 2002:a1c:46:: with SMTP id 67mr19307544wma.51.1573434116667;
-        Sun, 10 Nov 2019 17:01:56 -0800 (PST)
-Received: from localhost (nas193-236.york.ac.uk. [144.32.193.236])
-        by smtp.gmail.com with ESMTPSA id t14sm2137664wrw.87.2019.11.10.17.01.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 10 Nov 2019 17:01:56 -0800 (PST)
-From:   Josh Holland <anowlcalledjosh@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Josh Holland <anowlcalledjosh@gmail.com>
-Subject: [PATCH] userdiff: support Python async functions
-Date:   Mon, 11 Nov 2019 01:01:48 +0000
-Message-Id: <20191111010148.2812-1-anowlcalledjosh@gmail.com>
-X-Mailer: git-send-email 2.24.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=f9UVimI3iVB1uaRHYhKMUhAF5mr7VnSgEjNr53T3zfU=;
+        b=esBMDo/sg7tbRBUcVkEkSZ5tw6tIMrDo4LT8+qH1FHKLO4siqySRV/NgnT5ShH9ydz
+         IrX65N1ESRfN69R3AZvCa3i6jG8AUMm4w6Zk3R7l3Ep2rYsMwgYcoRqiCxzbEn2MpSRl
+         hASD7f86A3VOpjFTOorCz1zhdTGYd+AX8YWZyl8GJledw6TrgWkdhltQau2UVGCjxaEq
+         iaPyNBBHjpI6x65mWRQCJgjjNpAmqXuEoSDUbbEp6knRo5S8kNyMqyKjw0PduAgLFaCn
+         d0qfqxi0yubq4jX5VMF8OXdM4JyGqx9KPedduyKkosDnxDHZlZwjfe1YHjTSN+Hx+BRb
+         6bEw==
+X-Gm-Message-State: APjAAAXOL6hwle0dXAfB238uhWM2hCJQPVEpIxtKIXtniEUC2Q4/oreo
+        Olq/slf2bc7+Plzv7Til59/X11jhU1hzuZBJKk4=
+X-Google-Smtp-Source: APXvYqySs7Vl/Ti/UaRn5qQi1XwN2nbhN3ABjVBsD04jYzyKrfnZq+ad59TRl4nOszfvcfhL+iGiZhQ1XIMdWaA4arg=
+X-Received: by 2002:a17:906:245b:: with SMTP id a27mr20623460ejb.192.1573434259870;
+ Sun, 10 Nov 2019 17:04:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
+ <pull.434.v2.git.1573034387.gitgitgadget@gmail.com> <3499b99538425f9605fead842c10bc63238f94b9.1573034387.git.gitgitgadget@gmail.com>
+ <20191106220324.GD229589@google.com>
+In-Reply-To: <20191106220324.GD229589@google.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Mon, 11 Nov 2019 14:04:08 +1300
+Message-ID: <CACg5j26J_MpmfF+-5g=V0yZAXTLN7KXm62EbV=fxG010-75Mgg@mail.gmail.com>
+Subject: Re: [PATCH v2 11/20] sigchain: move doc to sigchain.h
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Python's async functions (declared with "async def" rather than "def")
-were not being displayed in hunk headers. This commit teaches git about
-the async function syntax, and adds tests for the Python userdiff regex.
+On Thu, Nov 7, 2019 at 11:03 AM Emily Shaffer <emilyshaffer@google.com> wrote:
+>
+> On Wed, Nov 06, 2019 at 09:59:38AM +0000, Heba Waly via GitGitGadget wrote:
+> > From: Heba Waly <heba.waly@gmail.com>
+> >
+> > Move the documentation from Documentation/technical/api-sigchain.txt
+> > to sigchain.h as it's easier for the developers to find the usage
+> > information beside the code instead of looking for it in another doc file.
+> >
+> > Also documentation/technical/api-sigchain.txt is removed because the
+> > information it has is now redundant and it'll be hard to keep it up to
+> > date and synchronized with the documentation in the header file.
+> >
+> > Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> > ---
+> >  Documentation/technical/api-sigchain.txt | 41 -----------------------
+> >  sigchain.h                               | 42 ++++++++++++++++++++++++
+> >  2 files changed, 42 insertions(+), 41 deletions(-)
+> >  delete mode 100644 Documentation/technical/api-sigchain.txt
+> >
+> > diff --git a/Documentation/technical/api-sigchain.txt b/Documentation/technical/api-sigchain.txt
+> > deleted file mode 100644
+> > index 9e1189ef01..0000000000
+> > --- a/Documentation/technical/api-sigchain.txt
+> > +++ /dev/null
+> > @@ -1,41 +0,0 @@
+> > -sigchain API
+> > -============
+> > -
+> > -Code often wants to set a signal handler to clean up temporary files or
+> > -other work-in-progress when we die unexpectedly. For multiple pieces of
+> > -code to do this without conflicting, each piece of code must remember
+> > -the old value of the handler and restore it either when:
+> > -
+> > -  1. The work-in-progress is finished, and the handler is no longer
+> > -     necessary. The handler should revert to the original behavior
+> > -     (either another handler, SIG_DFL, or SIG_IGN).
+> > -
+> > -  2. The signal is received. We should then do our cleanup, then chain
+> > -     to the next handler (or die if it is SIG_DFL).
+> > -
+> > -Sigchain is a tiny library for keeping a stack of handlers. Your handler
+> > -and installation code should look something like:
+> > -
+> > -------------------------------------------
+> > -  void clean_foo_on_signal(int sig)
+> > -  {
+> > -       clean_foo();
+> > -       sigchain_pop(sig);
+> > -       raise(sig);
+> > -  }
+> > -
+> > -  void other_func()
+> > -  {
+> > -       sigchain_push_common(clean_foo_on_signal);
+> > -       mess_up_foo();
+> > -       clean_foo();
+> > -  }
+> > -------------------------------------------
+> > -
+> > -Handlers are given the typedef of sigchain_fun. This is the same type
+> > -that is given to signal() or sigaction(). It is perfectly reasonable to
+> > -push SIG_DFL or SIG_IGN onto the stack.
+> > -
+> > -You can sigchain_push and sigchain_pop individual signals. For
+> > -convenience, sigchain_push_common will push the handler onto the stack
+> > -for many common signals.
+> > diff --git a/sigchain.h b/sigchain.h
+> > index 138b20f54b..a990f18cf6 100644
+> > --- a/sigchain.h
+> > +++ b/sigchain.h
+> > @@ -1,12 +1,54 @@
+> >  #ifndef SIGCHAIN_H
+> >  #define SIGCHAIN_H
+> >
+> > +/**
+> > + * Code often wants to set a signal handler to clean up temporary files or
+> > + * other work-in-progress when we die unexpectedly. For multiple pieces of
+> > + * code to do this without conflicting, each piece of code must remember
+> > + * the old value of the handler and restore it either when:
+> > + *
+> > + *   1. The work-in-progress is finished, and the handler is no longer
+> > + *      necessary. The handler should revert to the original behavior
+> > + *      (either another handler, SIG_DFL, or SIG_IGN).
+> > + *
+> > + *   2. The signal is received. We should then do our cleanup, then chain
+> > + *      to the next handler (or die if it is SIG_DFL).
+> > + *
+> > + * Sigchain is a tiny library for keeping a stack of handlers. Your handler
+> > + * and installation code should look something like:
+> > + *
+> > + * ------------------------------------------
+> > + *   void clean_foo_on_signal(int sig)
+> > + *   {
+> > + *     clean_foo();
+> > + *     sigchain_pop(sig);
+> > + *     raise(sig);
+> > + *   }
+> > + *
+> > + *   void other_func()
+> > + *   {
+> > + *     sigchain_push_common(clean_foo_on_signal);
+> > + *     mess_up_foo();
+> > + *     clean_foo();
+> > + *   }
+> > + * ------------------------------------------
+> > + *
+> > + */
+> > +
+> > +/**
+> > + * Handlers are given the typedef of sigchain_fun. This is the same type
+> > + * that is given to signal() or sigaction(). It is perfectly reasonable to
+> > + * push SIG_DFL or SIG_IGN onto the stack.
+> > + */
+> >  typedef void (*sigchain_fun)(int);
+> >
+> > +/* You can sigchain_push and sigchain_pop individual signals. */
+> >  int sigchain_push(int sig, sigchain_fun f);
+> >  int sigchain_pop(int sig);
+> >
+> > +/* push the handler onto the stack for many common signals. */
+> It was lacking in the original doc too, but I want to know which common
+> signals it pushes for. Is it too much work for you to peek in the
+> implementation and let us know?
 
-Signed-off-by: Josh Holland <anowlcalledjosh@gmail.com>
----
- t/t4018/python-async-def | 4 ++++
- t/t4018/python-class     | 4 ++++
- t/t4018/python-def       | 4 ++++
- userdiff.c               | 2 +-
- 4 files changed, 13 insertions(+), 1 deletion(-)
- create mode 100644 t/t4018/python-async-def
- create mode 100644 t/t4018/python-class
- create mode 100644 t/t4018/python-def
+Sure, no problem, I'll add the signals to the comment.
 
-diff --git a/t/t4018/python-async-def b/t/t4018/python-async-def
-new file mode 100644
-index 000000000..87640e03d
---- /dev/null
-+++ b/t/t4018/python-async-def
-@@ -0,0 +1,4 @@
-+async def RIGHT(pi: int = 3.14):
-+    while True:
-+        break
-+    return ChangeMe()
-diff --git a/t/t4018/python-class b/t/t4018/python-class
-new file mode 100644
-index 000000000..ba9e74143
---- /dev/null
-+++ b/t/t4018/python-class
-@@ -0,0 +1,4 @@
-+class RIGHT(int, str):
-+    # comment
-+    # another comment
-+    # ChangeMe
-diff --git a/t/t4018/python-def b/t/t4018/python-def
-new file mode 100644
-index 000000000..e50b31b0a
---- /dev/null
-+++ b/t/t4018/python-def
-@@ -0,0 +1,4 @@
-+def RIGHT(pi: int = 3.14):
-+    while True:
-+        break
-+    return ChangeMe()
-diff --git a/userdiff.c b/userdiff.c
-index e74a6d402..057fdcc55 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -124,7 +124,7 @@ PATTERNS("php",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
- 	 "|[-+*/<>%&^|=!.]=|--|\\+\\+|<<=?|>>=?|===|&&|\\|\\||::|->"),
--PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
-+PATTERNS("python", "^[ \t]*((class|(async[ \t]+)?def)[ \t].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
--- 
-2.24.0
-
+> >  void sigchain_push_common(sigchain_fun f);
+> > +
+> >  void sigchain_pop_common(void);
+> >
+> >  #endif /* SIGCHAIN_H */
+> > --
+> > gitgitgadget
+> >
+>
+> Otherwise this one looks fine for me.
+>
+>  - Emily
