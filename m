@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D8F11F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1501F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727366AbfKKV2Z (ORCPT <rfc822;e@80x24.org>);
+        id S1727380AbfKKV2Z (ORCPT <rfc822;e@80x24.org>);
         Mon, 11 Nov 2019 16:28:25 -0500
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:37827 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727153AbfKKV2P (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:37527 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727229AbfKKV2P (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 11 Nov 2019 16:28:15 -0500
-Received: by mail-wm1-f52.google.com with SMTP id b17so803813wmj.2
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:15 -0800 (PST)
+Received: by mail-wr1-f52.google.com with SMTP id t1so16267405wrv.4
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ByXG9NUEQXnOejxLNbqwymYZvqZVDNF4tVNaLMHYBnI=;
-        b=AZ4/MIOh9+mPYdK/j9i7cvykNNVkOaUhuuicd18apykbHy0MEPS44FeRiPmHZPw1/D
-         R+d2mJgo7v7vbYbPRaBzBWO/qhoU4uN9Q5rkGxYgnAkagDm2UidNvfQMaTkLFb6wXIUM
-         7SZsFnhx4DEvP8ogJGIiX8UuxWbUrlQCpvyxM4nS/RN2t/lN69I2PRe23N7nZ+UhxfmS
-         YbVYv6TwMRT53NUb/B73Ese/kAMGuEm78USZvIUfIE6O/2CVfQLePNywAfnCPjR/BI74
-         r6ZC+yuZVsf8+RHvRMWQf/S39FVdxnFNZFh75MsOyCH+7fwD3ip/TdXO3CMp0Kjs0/12
-         WvPw==
+        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
+        b=g/BjSFOcCi64aPaNlRfZwFU1rLLpTkzGRnJtQesBoj9RAaeEld3p+ILFqIgLFt97Pl
+         P4rHIvuxVJlMlfpZ+TfmcM6fE/UgTA5xg/6geJbyPX4lQnu1MMVsuwxXtRXKbwtlyxqA
+         2rjpVmofmKoFmGapFFZtnj4mXxT7/9KpzLxolATqr8BiEpYRSMVOqwWB81ktz2oxibsF
+         PIUOboXH5wVM3F5UH1A7FzplOJeCV/woEzqnocbtglwL0Ih261l6YOHB407Q6QRpUbwG
+         EbqnK3iqsgixoaO0RA99dfNyQy1cBhEVXvP7xWl9+Ggon+yotVbfKy3r0oKuDQY/8A2h
+         aYZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ByXG9NUEQXnOejxLNbqwymYZvqZVDNF4tVNaLMHYBnI=;
-        b=alSFuiSQN9BqIv/fpeqrijU5CsWpnfiSXLkunOJ+alV1kDAinBqLsHdLKilQ8HDY4S
-         Vx8toMCHtV3xLH9SLZaC9AqenF+P7ujbKptnfcQy0kFAMruYCZOchRnkoghItIc+n5gC
-         F6XTY8Dp7+601l5YYgDwKe4AVKmN6+VJG5gYLcFO9N+5doywm7FtV2Y0M2FH8H7rpIZu
-         iO9KHHWx15+aFuZfu0QmMVEVZ/Q1LKP0iiU3NmXOMUADi86WtJbKSliYBHNNkqELdmaS
-         R3MmNMzucYS2AkDqV/kPhO+lTGMjRAGtFBQbjOWmbmePdkkRX2OFr0LSE123xNe60TGe
-         rYPA==
-X-Gm-Message-State: APjAAAWhG8FZmOZ7l8NUyDF5WRf+4GRAzlg8jgtXzYTvmBORls9pG/3e
-        ZLhGLLbNFIP3BKZZFXFGIINKArij
-X-Google-Smtp-Source: APXvYqzG+gH7I6xSQ9F5GP9p/lbzZ8SUD6URh3eBpverFm4I8mz6GaOWS/hv8LrNcIBqxJGPy86+Ww==
-X-Received: by 2002:a1c:7709:: with SMTP id t9mr897334wmi.80.1573507694278;
-        Mon, 11 Nov 2019 13:28:14 -0800 (PST)
+        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
+        b=DaAO+or/YKWNumMvZkDEJM/QGgjHXp0Bm09Cr/t1WzUfsKh21HMqmidyhDYuaQG3EQ
+         apYT5jtlr17y2tAphrF+DEKlvAp/OnUm8NMFSLzRq8fNyP8k7pYB/JqZrSWbFUA2GSha
+         42KcrFYepGm6iMPxYBy9wfwzoYE9w8CEOv4pyCq5CtWu2UepnUgFhEWVs//WQSJkqcjp
+         32m03UQsDQ2rs1D/NFRtBRYLA+tlyf2XTl0BIxuT4kKRfQMF5ap4iNCzSYc9Td4mqtCk
+         LEfHcmOX2xf4IvhDq7NZfBoNLifonzESya4AYSahj6fyKYK1EAYQYFaQAFfcpctaG40g
+         Vb+w==
+X-Gm-Message-State: APjAAAV8miviVZOXn8teF2bSvCbj9tRQjluz0PRfPhC6TXZLdQeLZgbV
+        GOyhtMrEOc9IMuuFW1zCEb1++Jrd
+X-Google-Smtp-Source: APXvYqzMXtqooobDu5gwJYOEUZqgRC8Yudhn7kCBDueCF/yXYyzVY/1lzl5h89ISAnAP+9Ki0oiasg==
+X-Received: by 2002:a05:6000:1612:: with SMTP id u18mr23190836wrb.306.1573507693517;
+        Mon, 11 Nov 2019 13:28:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j22sm29069207wrd.41.2019.11.11.13.28.13
+        by smtp.gmail.com with ESMTPSA id a5sm17839811wrv.56.2019.11.11.13.28.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 11 Nov 2019 13:28:13 -0800 (PST)
-Message-Id: <fa450e27a8d762af3d9da32ffa4723442c9795c5.1573507684.git.gitgitgadget@gmail.com>
+Message-Id: <6463c7565b2dcd90944d0f0008609df64eaaed0e.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:53 +0000
-Subject: [PATCH v3 10/21] pathspec: move doc to pathspec.h
+Date:   Mon, 11 Nov 2019 21:27:52 +0000
+Subject: [PATCH v3 09/21] revision: move doc to revision.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,138 +72,214 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-setup.txt
-to pathspec.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-revision-walking.txt
+to revision.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-setup.txt is removed because the
+Also documentation/technical/api-revision-walking.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-setup.txt | 47 ---------------------------
- pathspec.h                            | 35 +++++++++++++++++++-
- 2 files changed, 34 insertions(+), 48 deletions(-)
- delete mode 100644 Documentation/technical/api-setup.txt
+ Documentation/MyFirstObjectWalk.txt           |  2 +-
+ .../technical/api-revision-walking.txt        | 72 -------------------
+ revision.h                                    | 59 +++++++++++++++
+ 3 files changed, 60 insertions(+), 73 deletions(-)
+ delete mode 100644 Documentation/technical/api-revision-walking.txt
 
-diff --git a/Documentation/technical/api-setup.txt b/Documentation/technical/api-setup.txt
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index 4d24daeb9f..321c0ba6a4 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -17,7 +17,7 @@ revision walk is used for operations like `git log`.
+ 
+ - `Documentation/user-manual.txt` under "Hacking Git" contains some coverage of
+   the revision walker in its various incarnations.
+-- `Documentation/technical/api-revision-walking.txt`
++- `revision.h`
+ - https://eagain.net/articles/git-for-computer-scientists/[Git for Computer Scientists]
+   gives a good overview of the types of objects in Git and what your object
+   walk is really describing.
+diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
 deleted file mode 100644
-index eb1fa9853e..0000000000
---- a/Documentation/technical/api-setup.txt
+index 03f9ea6ac4..0000000000
+--- a/Documentation/technical/api-revision-walking.txt
 +++ /dev/null
-@@ -1,47 +0,0 @@
--setup API
--=========
+@@ -1,72 +0,0 @@
+-revision walking API
+-====================
 -
--Talk about
+-The revision walking API offers functions to build a list of revisions
+-and then iterate over that list.
 -
--* setup_git_directory()
--* setup_git_directory_gently()
--* is_inside_git_dir()
--* is_inside_work_tree()
--* setup_work_tree()
+-Calling sequence
+-----------------
 -
--(Dscho)
+-The walking API has a given calling sequence: first you need to
+-initialize a rev_info structure, then add revisions to control what kind
+-of revision list do you want to get, finally you can iterate over the
+-revision list.
 -
--Pathspec
----------
+-Functions
+----------
 -
--See glossary-context.txt for the syntax of pathspec. In memory, a
--pathspec set is represented by "struct pathspec" and is prepared by
--parse_pathspec(). This function takes several arguments:
+-`repo_init_revisions`::
 -
--- magic_mask specifies what features that are NOT supported by the
--  following code. If a user attempts to use such a feature,
--  parse_pathspec() can reject it early.
+-	Initialize a rev_info structure with default values. The third
+-	parameter may be NULL or can be prefix path, and then the `.prefix`
+-	variable will be set to it. This is typically the first function you
+-	want to call when you want to deal with a revision list. After calling
+-	this function, you are free to customize options, like set
+-	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
+-	`revision.h` for a complete list of available options.
 -
--- flags specifies other things that the caller wants parse_pathspec to
--  perform.
+-`add_pending_object`::
 -
--- prefix and args come from cmd_* functions
+-	This function can be used if you want to add commit objects as revision
+-	information. You can use the `UNINTERESTING` object flag to indicate if
+-	you want to include or exclude the given commit (and commits reachable
+-	from the given commit) from the revision list.
+-+
+-NOTE: If you have the commits as a string list then you probably want to
+-use setup_revisions(), instead of parsing each string and using this
+-function.
 -
--parse_pathspec() helps catch unsupported features and reject them
--politely. At a lower level, different pathspec-related functions may
--not support the same set of features. Such pathspec-sensitive
--functions are guarded with GUARD_PATHSPEC(), which will die in an
--unfriendly way when an unsupported feature is requested.
+-`setup_revisions`::
 -
--The command designers are supposed to make sure that GUARD_PATHSPEC()
--never dies. They have to make sure all unsupported features are caught
--by parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC()
--should give the designers all pathspec-sensitive codepaths and what
--features they support.
+-	Parse revision information, filling in the `rev_info` structure, and
+-	removing the used arguments from the argument list. Returns the number
+-	of arguments left that weren't recognized, which are also moved to the
+-	head of the argument list. The last parameter is used in case no
+-	parameter given by the first two arguments.
 -
--A similar process is applied when a new pathspec magic is added. The
--designer lifts the GUARD_PATHSPEC restriction in the functions that
--support the new magic. At the same time (s)he has to make sure this
--new feature will be caught at parse_pathspec() in commands that cannot
--handle the new magic in some cases. grepping parse_pathspec() should
--help.
-diff --git a/pathspec.h b/pathspec.h
-index 1c18a2c90c..f3ee8d9871 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -22,6 +22,11 @@ struct index_state;
- 
- #define PATHSPEC_ONESTAR 1	/* the pathspec pattern satisfies GFNM_ONESTAR */
+-`prepare_revision_walk`::
+-
+-	Prepares the rev_info structure for a walk. You should check if it
+-	returns any error (non-zero return code) and if it does not, you can
+-	start using get_revision() to do the iteration.
+-
+-`get_revision`::
+-
+-	Takes a pointer to a `rev_info` structure and iterates over it,
+-	returning a `struct commit *` each time you call it. The end of the
+-	revision list is indicated by returning a NULL pointer.
+-
+-`reset_revision_walk`::
+-
+-	Reset the flags used by the revision walking api. You can use
+-	this to do multiple sequential revision walks.
+-
+-Data structures
+----------------
+-
+-Talk about <revision.h>, things like:
+-
+-* two diff_options, one for path limiting, another for output;
+-* remaining functions;
+-
+-(Linus, JC, Dscho)
+diff --git a/revision.h b/revision.h
+index 4134dc6029..983ffc0f12 100644
+--- a/revision.h
++++ b/revision.h
+@@ -9,6 +9,19 @@
+ #include "diff.h"
+ #include "commit-slab-decl.h"
  
 +/**
-+ * See glossary-context.txt for the syntax of pathspec.
-+ * In memory, a pathspec set is represented by "struct pathspec" and is
-+ * prepared by parse_pathspec().
++ * The revision walking API offers functions to build a list of revisions
++ * and then iterate over that list.
++ *
++ * Calling sequence
++ * ----------------
++ *
++ * The walking API has a given calling sequence: first you need to initialize
++ * a rev_info structure, then add revisions to control what kind of revision
++ * list do you want to get, finally you can iterate over the revision list.
++ *
 + */
- struct pathspec {
- 	int nr;
- 	unsigned int has_wildcard:1;
-@@ -73,18 +78,46 @@ struct pathspec {
-  */
- #define PATHSPEC_LITERAL_PATH (1<<6)
- 
--/*
-+/**
-  * Given command line arguments and a prefix, convert the input to
-  * pathspec. die() if any magic in magic_mask is used.
-  *
-  * Any arguments used are copied. It is safe for the caller to modify
-  * or free 'prefix' and 'args' after calling this function.
-+ *
-+ * - magic_mask specifies what features that are NOT supported by the following
-+ * code. If a user attempts to use such a feature, parse_pathspec() can reject
-+ * it early.
-+ *
-+ * - flags specifies other things that the caller wants parse_pathspec to
-+ * perform.
-+ *
-+ * - prefix and args come from cmd_* functions
-+ *
-+ * parse_pathspec() helps catch unsupported features and reject them politely.
-+ * At a lower level, different pathspec-related functions may not support the
-+ * same set of features. Such pathspec-sensitive functions are guarded with
-+ * GUARD_PATHSPEC(), which will die in an unfriendly way when an unsupported
-+ * feature is requested.
-+ *
-+ * The command designers are supposed to make sure that GUARD_PATHSPEC() never
-+ * dies. They have to make sure all unsupported features are caught by
-+ * parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC() should
-+ * give the designers all pathspec-sensitive codepaths and what features they
-+ * support.
-+ *
-+ * A similar process is applied when a new pathspec magic is added. The designer
-+ * lifts the GUARD_PATHSPEC restriction in the functions that support the new
-+ * magic. At the same time (s)he has to make sure this new feature will be
-+ * caught at parse_pathspec() in commands that cannot handle the new magic in
-+ * some cases. grepping parse_pathspec() should help.
-  */
- void parse_pathspec(struct pathspec *pathspec,
- 		    unsigned magic_mask,
- 		    unsigned flags,
- 		    const char *prefix,
- 		    const char **args);
 +
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
- void clear_pathspec(struct pathspec *);
+ /* Remember to update object flag allocation in object.h */
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+@@ -306,11 +319,29 @@ struct setup_revision_opt {
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ #define init_revisions(revs, prefix) repo_init_revisions(the_repository, revs, prefix)
+ #endif
++
++/**
++ * Initialize a rev_info structure with default values. The third parameter may
++ * be NULL or can be prefix path, and then the `.prefix` variable will be set
++ * to it. This is typically the first function you want to call when you want
++ * to deal with a revision list. After calling this function, you are free to
++ * customize options, like set `.ignore_merges` to 0 if you don't want to
++ * ignore merges, and so on.
++ */
+ void repo_init_revisions(struct repository *r,
+ 			 struct rev_info *revs,
+ 			 const char *prefix);
++
++/**
++ * Parse revision information, filling in the `rev_info` structure, and
++ * removing the used arguments from the argument list. Returns the number
++ * of arguments left that weren't recognized, which are also moved to the
++ * head of the argument list. The last parameter is used in case no
++ * parameter given by the first two arguments.
++ */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ 		    struct setup_revision_opt *);
++
+ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const struct option *options,
+ 			const char * const usagestr[]);
+@@ -319,9 +350,26 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ int handle_revision_arg(const char *arg, struct rev_info *revs,
+ 			int flags, unsigned revarg_opt);
  
++/**
++ * Reset the flags used by the revision walking api. You can use this to do
++ * multiple sequential revision walks.
++ */
+ void reset_revision_walk(void);
++
++/**
++ * Prepares the rev_info structure for a walk. You should check if it returns
++ * any error (non-zero return code) and if it does not, you can start using
++ * get_revision() to do the iteration.
++ */
+ int prepare_revision_walk(struct rev_info *revs);
++
++/**
++ * Takes a pointer to a `rev_info` structure and iterates over it, returning a
++ * `struct commit *` each time you call it. The end of the revision list is
++ * indicated by returning a NULL pointer.
++ */
+ struct commit *get_revision(struct rev_info *revs);
++
+ char *get_revision_mark(const struct rev_info *revs,
+ 			const struct commit *commit);
+ void put_revision_mark(const struct rev_info *revs,
+@@ -333,8 +381,19 @@ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees)
+ 
+ void show_object_with_name(FILE *, struct object *, const char *);
+ 
++/**
++ * This function can be used if you want to add commit objects as revision
++ * information. You can use the `UNINTERESTING` object flag to indicate if
++ * you want to include or exclude the given commit (and commits reachable
++ * from the given commit) from the revision list.
++ *
++ * NOTE: If you have the commits as a string list then you probably want to
++ * use setup_revisions(), instead of parsing each string and using this
++ * function.
++ */
+ void add_pending_object(struct rev_info *revs,
+ 			struct object *obj, const char *name);
++
+ void add_pending_oid(struct rev_info *revs,
+ 		     const char *name, const struct object_id *oid,
+ 		     unsigned int flags);
 -- 
 gitgitgadget
 
