@@ -2,118 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B63D1F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 08:49:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A4441F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 09:00:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbfKKIto (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 03:49:44 -0500
-Received: from mout.gmx.net ([212.227.17.21]:37771 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726811AbfKKIto (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 03:49:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573462180;
-        bh=xjP6I0pmaTwGysutNsoE1piCRcxTzDG+T9hD2bewtNM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=aRkKa1QrQnKjSLOrlj9cUsvjvz8uCDJf5BTMuj4JSjovvpvRtZ8hnkztftO4WkrwN
-         dkFVH8IK86WMKJvR0F6k+AQxLcmyX9Lsz81Ol4u4NiJx9syRdEkc+r5MofaGsKEenM
-         YAKRCttXmFqB+KrisTxxzbECOHjVFwq6YVSPKDGY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MbivG-1huUSQ0MTm-00dI1u; Mon, 11
- Nov 2019 09:49:40 +0100
-Date:   Mon, 11 Nov 2019 09:49:24 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Naveen Nathan <naveen@lastninja.net>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc: improve readability of --rebase-merges in
- git-rebase
-In-Reply-To: <20191110095942.GB6071@a.local>
-Message-ID: <nycvar.QRO.7.76.6.1911110948270.46@tvgsbejvaqbjf.bet>
-References: <20191110095942.GB6071@a.local>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726853AbfKKJAj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 04:00:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:65085 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726768AbfKKJAj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 04:00:39 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0134E3949E;
+        Mon, 11 Nov 2019 04:00:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0KZtiv5LSnrTD74cJtCoxAEMAos=; b=x0ZFme
+        9mkXsEwPg7fRopx9AlrG0WXe2tZ3Vrrl1pX8hzOmEHgC/UZXAKlTN4i5zU58rsl1
+        wlUby4AW9t4r7iTspEFXZ9ft6Fu4OWskdO6FU/ousdP2hfSRD+qdDd0Ra7fWANo0
+        mgEbUAn3EQAfN7y0GpMSF7bKAK1VYjxQ/UASM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZD2OS/F++Kryn5n2v3MNTZWx3wVC8LGR
+        GTiMDbTjyscKGYds9qOO1fP6MX8OnFcKLkihP9La07fypcwi/66VUDQm2Vdqt7KB
+        wOW1i4BazPtrbYD3IN1hi2UU2k9hvcjytwk0+Qqh6mL2hlpF2aUEH3lAYpHyAAd0
+        /Sv/HRBqriI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE08A3949D;
+        Mon, 11 Nov 2019 04:00:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 616513949B;
+        Mon, 11 Nov 2019 04:00:35 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "Robin H. Johnson" <robbat2@gentoo.org>, git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] bundle: framework for options before bundle file
+References: <1f7f0aa1e8fae54bf967ae83a160be2b30db634f.1573248640.git.gitgitgadget@gmail.com>
+        <20191110204126.30553-1-robbat2@gentoo.org>
+        <nycvar.QRO.7.76.6.1911110943240.46@tvgsbejvaqbjf.bet>
+Date:   Mon, 11 Nov 2019 18:00:34 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1911110943240.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 11 Nov 2019 09:46:58 +0100 (CET)")
+Message-ID: <xmqqzhh2hjnx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:EnnfhF98U5/5jMkZufA92+GW661tBoV9ENXxh/UUyw2iihADfxM
- ixAQgT+5692k7cwzau00b0cbizWnMhqk5hKc6pY3l7wXHzgVE67+NUWmO4l5l6qGZForGZg
- mvfwZ0ZpTDhSWJd44N1D/NKpDxs4m0fMFFcUMMLuaC3qMbUbJw2dWFB5YV0RGc5NeqrL9QU
- +hXkKtgDF4n/7OAVdTOMg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:onD4hchlByE=:4uvRsOtoeKndgpz3kl5oZM
- zpgJkMwFB0ZrQIme+ANFvfme0KxzXc1+0QKSUiX1f0oWfqtBQxJshRNhc7iv8PbtCPAI/DfcQ
- xpMsx93yx+EaaCdKq4T5bGmhfYbmrBEOYCO5LAJiBJqZbil/eBmJNAmwXwTYfZjdJND3QStMe
- UjaAISxOh4is9rU3UFJJmv2O68Z/dhws7ySfRdNNOunKlqlNeQ/S9AT1792Lj5C4JPYlnayZt
- EBO0lZvHJKvo4c6j2P2xIBZXgdFvuUqg69NY2x8mIKX1FOpMII8r4+dATrP5qgJ0exD+6PaE+
- t1ZJdvKQ11Hq5iSmpMfSrnHJQNsUET1nqkgklqJinMXIRaiKIq8sU+Y/IPN9Z1Ftx9ZSPDz+f
- mg+uc4MLBuian1KKq82OGvQUwSNWitwKeoHgzf2HXNQCidkJ+fHaPrxBs1jXgBdUtNA2BDUSc
- SwquAaLr9MzHVpX7gQVErWeIMmCuMhS6VMY666DaS5ItcdX2vepcpz1SbwJGwDtVzmMEr1+RJ
- TIt8nbBuZD7XxzH9xg+WfsW7Sc+TAuzZwQBv91X0DuS/XsqZ9+i50Z99KS3k/zNuov6/TPawn
- JhYna7XzE2XrRMVMYOqRBetjxWeuO8s0XVMzWRbCCPsCLkRZ4rHqrzrbFDUfFZnmXcVuBDLeI
- xejoSOkSipYB6VwREhF/YbyjjgOu5N5en2byxrIvC9DcYfyFrVy0GLQ3iSyHLVT54rwF++g8W
- kEPHz/ko3Q0ZgLluFMdN2rmvMv5mGRqDLIaHLg8NeXA7tTAZQyAGtERokm3+bDpn7xHSADT8n
- ZQvwwtk2wEXRs3ioGncZt4S52Icarqyoq57g6OSODZNV/LEgiFhwogqWTrcJJCZeaQL56Whvl
- yk7T1mIyMk5W/5PL7L9sxy47L+zGXDfMJS/NcO55LdcgMYFxyae37jL7zkFe0UJ9BTJTZXENt
- J2FR1BNwWZmSwgDyihU1LacJPxnfteQmzRPiCARjJeuuIagMTJWKhzArDvx6DoY5olCYw9WLq
- E8GDgvzaL+Tdmj0+676F2m9GEZj8rHqxU9UmTuSgZBlFW5kAJSkQABgbqUNzKTaPSq9tXQgFz
- erUx4tevwk1joczr8IBwZHo01CElz/xiEYX5gOx/9D9hbbkW5N6Kj4bZVCUWDg+gES46nQ+qH
- 2kw4oUGxtPuuBQKwr5U8Gx5nyJtWl201lWlC0bkF6P34liEgQwq3mCll3wJEm+ASgZWduqlIS
- qlnO44vxBIGlRjb2mmd/kIWkL8s2WUhPIJN1uMPkep7n+PkJ1i/S9mZjVJCw=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: B93A3968-0461-11EA-8D62-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Naveen,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Sun, 10 Nov 2019, Naveen Nathan wrote:
+> The mail was sent correctly by GMail, at least it reports that, and the
+> mbox of the cover letter reads like this (maybe anybody else has a clue
+> why vger thinks it okay to just drop the mail without further notice?):
 
-> When --rebase-merges was introduced in 427c3bd28a the sentence
-> describing the difference between --rebase-merges and --preserve-merges
-> is a little unclear and difficult to parse. This patch improves readabil=
-ity
-> while retaining original meaning.
->
-> Signed-off-by: Naveen Nathan <naveen@lastninja.net>
-> ---
->  Documentation/git-rebase.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 639a4179d1..6a826b47bd 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -442,9 +442,9 @@ i.e. commits that would be excluded by linkgit:git-l=
-og[1]'s
->  the `rebase-cousins` mode is turned on, such commits are instead rebase=
-d
->  onto `<upstream>` (or `<onto>`, if specified).
->  +
-> -The `--rebase-merges` mode is similar in spirit to the deprecated
-> -`--preserve-merges`, but in contrast to that option works well in inter=
-active
-> -rebases: commits can be reordered, inserted and dropped at will.
-> +The `--rebase-merges` mode is similar in spirit to `--preserve-merges`
-> +(deprecated) but actually works with interactive rebases, where commits
-> +can be reordered, inserted and dropped at will.
+> From: ""Robin H. Johnson" via GitGitGadget" <gitgitgadget@gmail.com>
 
-I like it!
-
-ACK,
-Dscho
-
->  +
->  It is currently only possible to recreate the merge commits using the
->  `recursive` merge strategy; Different merge strategies can be used only=
- via
-> --
-> 2.21.0
->
->
->
+How does that doubled double quote work?
