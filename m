@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E94D1F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD1011F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726952AbfKKV21 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 16:28:27 -0500
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:37978 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbfKKV2O (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 16:28:14 -0500
-Received: by mail-wm1-f52.google.com with SMTP id z19so791557wmk.3
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:12 -0800 (PST)
+        id S1727386AbfKKV2a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 16:28:30 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54943 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727254AbfKKV2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 16:28:23 -0500
+Received: by mail-wm1-f66.google.com with SMTP id z26so853161wmi.4
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=NfCxx9CLYPCBC5v5MU/PCIxjtNio3spBBgme1xWsizA2yEBiNH8q3P03DC0AaSF/Aw
-         PyCD5dcxw8ATjhYOUNj3i5vQegmrNpebZSZDgNMBO3zlhBvhhjd2qc857R/GNzPSy1Ai
-         Re02dIPuVW/m9RiAJMaLmflrWcTy6K0TKwfJuXZ6G9eNCW5MnKmH2lDRPWH27ghpNH21
-         LwssDN3RFLkRzDtBvSg/9ioxmLfTuSCbtWA+XN19qzxLOyjx6zM8StfQ9P3xLawELAO9
-         wwPPKBW1YKNVtL9NrFc6krgQS4RvsoFGsJP1nosZ3u6eKCdr0NAqYkglQHBY4FCavAvi
-         OI6Q==
+        bh=6p+RDsXs7xCRlpZG6AO3gcVN02EJA9I1/+CYJJM9jLI=;
+        b=XO23OL2gIju4kY6ZClVRUv4SF+Gdk6H2COXuSbE42Cle657ZYF4jYHyPvIYEOjY+yU
+         DFBkpzcvsDKlzjkxeL6SLCHeChilvHZlvOHvh3KgYnWAqNfyWXocpw0k89w8097b6xGI
+         5IV0edOYLWmNyktcrb6mrdtSl6Daxaz3EKeQgfhjEfMiK4rDMRxZli6Oec3T/y6dqvNB
+         4HnKAlrt+UIxgWBb+ALu2X9r42sV9WNtD0hovLifeATpaXV76jfjad1GY54zYPa1Jwn7
+         g72JIp6yPkUrGnv2qgoq4UIgeEgV0fhH+2+BrF4I4X8TBZVEUR4zX6FhyRu+68t9W2gg
+         5yPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
-        b=OZ6qpfxALRn1zJgtKYYGrBBQpgaeRG7xag8xa5Cbo312AI0u22lw2H9Wr7s5uIVnYq
-         F6fUg2x6icBo62D3agKpFJ20jCKloZHnqKr1wnLHo7u2ldIvfmTj3uNUmvGWXzzzrtqf
-         rCFwwi19u432gbTQgfGI7vfhSpWVDjcw/ge1LQaw72t9kRIxziwh63H2SH8ffKf+DbKf
-         eCbkENf27zSR/3eAol8ZHhhmmuT/9ECd1OQ/vnW63zadVgJWeg4AfBZPeCxvsWdgr4Fl
-         o7nRWyDSAUmsBzCeh23bEN26i5IeYLNXWf9sOPqAvsD5njcS68Xl/lMXG2ns9Tp0jHrO
-         E3xQ==
-X-Gm-Message-State: APjAAAWT1Ivl3mHp8XK8rOFOoybwKdvDyyxcqnNDfME6d+jg1L4yauES
-        RDWyOLbK/eTGKllSphC5xJDhwEu4
-X-Google-Smtp-Source: APXvYqzmewL+jDDlkvPAeWVDM+ptIsHoOGySAAoVVRnOGQ98l/V0mwf4i7E68tQLYwu0lfDi+z2UkQ==
-X-Received: by 2002:a1c:790b:: with SMTP id l11mr905988wme.127.1573507692090;
-        Mon, 11 Nov 2019 13:28:12 -0800 (PST)
+        bh=6p+RDsXs7xCRlpZG6AO3gcVN02EJA9I1/+CYJJM9jLI=;
+        b=doVmozixzqGyot8RrmQqiRHBnstr3c28SSOQuVkXvHgrOr5t2FC4ZHSRIKWJ9Od1fA
+         brJDa/7RHMT4VnVBzO+uT+QY1TqXoY3YrF3GCGvLXBakFhBYFisKEvWg7xOJsfxR3FgX
+         ZTTMzCHCC1x0wh3ILEV522sdS17Qi1vy51NMrDJE9vO/suUNkq3nptL+3bfXYIvpnTfG
+         WczaofZOxqlR7YInmUYLRE8OJaOOPtmF5KUxzvCI3bmogNegkGpMUek4tLlHeaAgvR/O
+         nJKvaaRQl4WJj/8Nr8TIIN1OPTzmOTiux+lAlanw99OkTw6zocI323cKJ3XK65txBzS+
+         ERog==
+X-Gm-Message-State: APjAAAWHySR2jbnnEf0VhhqBc+ST4yT+osiM4t7KMyy8Tm3FvXN3ussH
+        9U5gtCmoMmuoO/n2f8RDGDmpoFpE
+X-Google-Smtp-Source: APXvYqxTr0EhMTrbrNKMy1y8awF5PEfYS9sfbL37U4aCaaQ3tHMQudVRVGDKwsGuVgcEe7l+PpqFxQ==
+X-Received: by 2002:a7b:c24b:: with SMTP id b11mr891682wmj.125.1573507700234;
+        Mon, 11 Nov 2019 13:28:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 36sm22797817wrj.42.2019.11.11.13.28.11
+        by smtp.gmail.com with ESMTPSA id z6sm21263547wro.18.2019.11.11.13.28.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2019 13:28:11 -0800 (PST)
-Message-Id: <6a9a0f77b30ad3b63c1c473f079cd92302621604.1573507684.git.gitgitgadget@gmail.com>
+        Mon, 11 Nov 2019 13:28:19 -0800 (PST)
+Message-Id: <ee9b74018bddf5b22edc1deb5a3ad43076d13dba.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:50 +0000
-Subject: [PATCH v3 07/21] refs: move doc to refs.h
+Date:   Mon, 11 Nov 2019 21:28:01 +0000
+Subject: [PATCH v3 18/21] tree-walk: move doc to tree-walk.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,187 +72,380 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-ref-iteration.txt
-to refs.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-tree-walking.txt
+to tree-walk.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-ref-iteration.txt is removed because the
+Documentation/technical/api-tree-walking.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-ref-iteration.txt | 78 -------------------
- refs.h                                        | 51 ++++++++++++
- 2 files changed, 51 insertions(+), 78 deletions(-)
- delete mode 100644 Documentation/technical/api-ref-iteration.txt
+ Documentation/technical/api-tree-walking.txt | 149 -------------------
+ tree-walk.h                                  | 122 ++++++++++++++-
+ 2 files changed, 120 insertions(+), 151 deletions(-)
+ delete mode 100644 Documentation/technical/api-tree-walking.txt
 
-diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentation/technical/api-ref-iteration.txt
+diff --git a/Documentation/technical/api-tree-walking.txt b/Documentation/technical/api-tree-walking.txt
 deleted file mode 100644
-index ad9d019ff9..0000000000
---- a/Documentation/technical/api-ref-iteration.txt
+index 7962e32854..0000000000
+--- a/Documentation/technical/api-tree-walking.txt
 +++ /dev/null
-@@ -1,78 +0,0 @@
--ref iteration API
--=================
+@@ -1,149 +0,0 @@
+-tree walking API
+-================
 -
+-The tree walking API is used to traverse and inspect trees.
 -
--Iteration of refs is done by using an iterate function which will call a
--callback function for every ref. The callback function has this
--signature:
+-Data Structures
+----------------
 -
--	int handle_one_ref(const char *refname, const struct object_id *oid,
--			   int flags, void *cb_data);
+-`struct name_entry`::
 -
--There are different kinds of iterate functions which all take a
--callback of this type. The callback is then called for each found ref
--until the callback returns nonzero. The returned value is then also
--returned by the iterate function.
+-	An entry in a tree. Each entry has a sha1 identifier, pathname, and
+-	mode.
 -
--Iteration functions
---------------------
+-`struct tree_desc`::
 -
--* `head_ref()` just iterates the head ref.
+-	A semi-opaque data structure used to maintain the current state of the
+-	walk.
+-+
+-* `buffer` is a pointer into the memory representation of the tree. It always
+-points at the current entry being visited.
 -
--* `for_each_ref()` iterates all refs.
+-* `size` counts the number of bytes left in the `buffer`.
 -
--* `for_each_ref_in()` iterates all refs which have a defined prefix and
--  strips that prefix from the passed variable refname.
+-* `entry` points to the current entry being visited.
 -
--* `for_each_tag_ref()`, `for_each_branch_ref()`, `for_each_remote_ref()`,
--  `for_each_replace_ref()` iterate refs from the respective area.
+-`struct traverse_info`::
 -
--* `for_each_glob_ref()` iterates all refs that match the specified glob
--  pattern.
+-	A structure used to maintain the state of a traversal.
+-+
+-* `prev` points to the traverse_info which was used to descend into the
+-current tree. If this is the top-level tree `prev` will point to
+-a dummy traverse_info.
 -
--* `for_each_glob_ref_in()` the previous and `for_each_ref_in()` combined.
+-* `name` is the entry for the current tree (if the tree is a subtree).
 -
--* Use `refs_` API for accessing submodules. The submodule ref store could
--  be obtained with `get_submodule_ref_store()`.
+-* `pathlen` is the length of the full path for the current tree.
 -
--* `for_each_rawref()` can be used to learn about broken ref and symref.
+-* `conflicts` can be used by callbacks to maintain directory-file conflicts.
 -
--* `for_each_reflog()` iterates each reflog file.
+-* `fn` is a callback called for each entry in the tree. See Traversing for more
+-information.
 -
--Submodules
+-* `data` can be anything the `fn` callback would want to use.
+-
+-* `show_all_errors` tells whether to stop at the first error or not.
+-
+-Initializing
+-------------
+-
+-`init_tree_desc`::
+-
+-	Initialize a `tree_desc` and decode its first entry. The buffer and
+-	size parameters are assumed to be the same as the buffer and size
+-	members of `struct tree`.
+-
+-`fill_tree_descriptor`::
+-
+-	Initialize a `tree_desc` and decode its first entry given the
+-	object ID of a tree. Returns the `buffer` member if the latter
+-	is a valid tree identifier and NULL otherwise.
+-
+-`setup_traverse_info`::
+-
+-	Initialize a `traverse_info` given the pathname of the tree to start
+-	traversing from.
+-
+-Walking
+--------
+-
+-`tree_entry`::
+-
+-	Visit the next entry in a tree. Returns 1 when there are more entries
+-	left to visit and 0 when all entries have been visited. This is
+-	commonly used in the test of a while loop.
+-
+-`tree_entry_len`::
+-
+-	Calculate the length of a tree entry's pathname. This utilizes the
+-	memory structure of a tree entry to avoid the overhead of using a
+-	generic strlen().
+-
+-`update_tree_entry`::
+-
+-	Walk to the next entry in a tree. This is commonly used in conjunction
+-	with `tree_entry_extract` to inspect the current entry.
+-
+-`tree_entry_extract`::
+-
+-	Decode the entry currently being visited (the one pointed to by
+-	`tree_desc's` `entry` member) and return the sha1 of the entry. The
+-	`pathp` and `modep` arguments are set to the entry's pathname and mode
+-	respectively.
+-
+-`get_tree_entry`::
+-
+-	Find an entry in a tree given a pathname and the sha1 of a tree to
+-	search. Returns 0 if the entry is found and -1 otherwise. The third
+-	and fourth parameters are set to the entry's sha1 and mode
+-	respectively.
+-
+-Traversing
 -----------
 -
--If you want to iterate the refs of a submodule you first need to add the
--submodules object database. You can do this by a code-snippet like
--this:
+-`traverse_trees`::
 -
--	const char *path = "path/to/submodule"
--	if (add_submodule_odb(path))
--		die("Error submodule '%s' not populated.", path);
+-	Traverse `n` number of trees in parallel. The `fn` callback member of
+-	`traverse_info` is called once for each tree entry.
 -
--`add_submodule_odb()` will return zero on success. If you
--do not do this you will get an error for each ref that it does not point
--to a valid object.
+-`traverse_callback_t`::
+-	The arguments passed to the traverse callback are as follows:
+-+
+-* `n` counts the number of trees being traversed.
 -
--Note: As a side-effect of this you cannot safely assume that all
--objects you lookup are available in superproject. All submodule objects
--will be available the same way as the superprojects objects.
+-* `mask` has its nth bit set if something exists in the nth entry.
 -
--Example:
----------
+-* `dirmask` has its nth bit set if the nth tree's entry is a directory.
 -
------
--static int handle_remote_ref(const char *refname,
--		const unsigned char *sha1, int flags, void *cb_data)
--{
--	struct strbuf *output = cb_data;
--	strbuf_addf(output, "%s\n", refname);
--	return 0;
--}
+-* `entry` is an array of size `n` where the nth entry is from the nth tree.
 -
--...
+-* `info` maintains the state of the traversal.
 -
--	struct strbuf output = STRBUF_INIT;
--	for_each_remote_ref(handle_remote_ref, &output);
--	printf("%s", output.buf);
------
-diff --git a/refs.h b/refs.h
-index 730d05ad91..545029c6d8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -310,19 +310,35 @@ int refs_for_each_branch_ref(struct ref_store *refs,
- int refs_for_each_remote_ref(struct ref_store *refs,
- 			     each_ref_fn fn, void *cb_data);
+-+
+-Returning a negative value will terminate the traversal. Otherwise the
+-return value is treated as an update mask. If the nth bit is set the nth tree
+-will be updated and if the bit is not set the nth tree entry will be the
+-same in the next callback invocation.
+-
+-`make_traverse_path`::
+-
+-	Generate the full pathname of a tree entry based from the root of the
+-	traversal. For example, if the traversal has recursed into another
+-	tree named "bar" the pathname of an entry "baz" in the "bar"
+-	tree would be "bar/baz".
+-
+-`traverse_path_len`::
+-
+-	Calculate the length of a pathname returned by `make_traverse_path`.
+-	This utilizes the memory structure of a tree entry to avoid the
+-	overhead of using a generic strlen().
+-
+-`strbuf_make_traverse_path`::
+-
+-	Convenience wrapper to `make_traverse_path` into a strbuf.
+-
+-Authors
+--------
+-
+-Written by Junio C Hamano <gitster@pobox.com> and Linus Torvalds
+-<torvalds@linux-foundation.org>
+diff --git a/tree-walk.h b/tree-walk.h
+index abe2caf4e0..826396c8ed 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -3,6 +3,13 @@
  
-+/* just iterates the head ref. */
- int head_ref(each_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs. */
- int for_each_ref(each_ref_fn fn, void *cb_data);
-+
-+/**
-+ * iterates all refs which have a defined prefix and strips that prefix from
-+ * the passed variable refname.
-+ */
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
-+
- int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
- 			     each_ref_fn fn, void *cb_data,
- 			     unsigned int broken);
- int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
- 			unsigned int broken);
-+
-+/**
-+ * iterate refs from the respective area.
-+ */
- int for_each_tag_ref(each_ref_fn fn, void *cb_data);
- int for_each_branch_ref(each_ref_fn fn, void *cb_data);
- int for_each_remote_ref(each_ref_fn fn, void *cb_data);
- int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
-+
-+/* iterates all refs that match the specified glob pattern. */
- int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
-+
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
- 			 const char *prefix, void *cb_data);
+ #include "cache.h"
  
-@@ -791,6 +807,41 @@ int reflog_expire(const char *refname, const struct object_id *oid,
- int ref_storage_backend_exists(const char *name);
- 
- struct ref_store *get_main_ref_store(struct repository *r);
-+
 +/**
-+ * Submodules
-+ * ----------
-+ *
-+ * If you want to iterate the refs of a submodule you first need to add the
-+ * submodules object database. You can do this by a code-snippet like
-+ * this:
-+ *
-+ * 	const char *path = "path/to/submodule"
-+ * 	if (add_submodule_odb(path))
-+ * 		die("Error submodule '%s' not populated.", path);
-+ *
-+ * `add_submodule_odb()` will return zero on success. If you
-+ * do not do this you will get an error for each ref that it does not point
-+ * to a valid object.
-+ *
-+ * Note: As a side-effect of this you cannot safely assume that all
-+ * objects you lookup are available in superproject. All submodule objects
-+ * will be available the same way as the superprojects objects.
-+ *
-+ * Example:
-+ * --------
-+ *
-+ * ----
-+ * static int handle_remote_ref(const char *refname,
-+ * 		const unsigned char *sha1, int flags, void *cb_data)
-+ * {
-+ * 	struct strbuf *output = cb_data;
-+ * 	strbuf_addf(output, "%s\n", refname);
-+ * 	return 0;
-+ * }
-+ *
++ * The tree walking API is used to traverse and inspect trees.
 + */
 +
++/**
++ * An entry in a tree. Each entry has a sha1 identifier, pathname, and mode.
++ */
+ struct name_entry {
+ 	struct object_id oid;
+ 	const char *path;
+@@ -10,12 +17,29 @@ struct name_entry {
+ 	unsigned int mode;
+ };
+ 
++/**
++ * A semi-opaque data structure used to maintain the current state of the walk.
++ */
+ struct tree_desc {
++	/*
++	 * pointer into the memory representation of the tree. It always
++	 * points at the current entry being visited.
++	 */
+ 	const void *buffer;
++
++	/* points to the current entry being visited. */
+ 	struct name_entry entry;
++
++	/* counts the number of bytes left in the `buffer`. */
+ 	unsigned int size;
+ };
+ 
++/**
++ * Decode the entry currently being visited (the one pointed to by
++ * `tree_desc's` `entry` member) and return the sha1 of the entry. The
++ * `pathp` and `modep` arguments are set to the entry's pathname and mode
++ * respectively.
++ */
+ static inline const struct object_id *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned short *modep)
+ {
+ 	*pathp = desc->entry.path;
+@@ -23,6 +47,11 @@ static inline const struct object_id *tree_entry_extract(struct tree_desc *desc,
+ 	return &desc->entry.oid;
+ }
+ 
++/**
++ * Calculate the length of a tree entry's pathname. This utilizes the
++ * memory structure of a tree entry to avoid the overhead of using a
++ * generic strlen().
++ */
+ static inline int tree_entry_len(const struct name_entry *ne)
+ {
+ 	return ne->pathlen;
+@@ -33,52 +62,141 @@ static inline int tree_entry_len(const struct name_entry *ne)
+  * corrupt tree entry rather than dying,
+  */
+ 
++/**
++ * Walk to the next entry in a tree. This is commonly used in conjunction
++ * with `tree_entry_extract` to inspect the current entry.
++ */
+ void update_tree_entry(struct tree_desc *);
++
+ int update_tree_entry_gently(struct tree_desc *);
++
++/**
++ * Initialize a `tree_desc` and decode its first entry. The buffer and
++ * size parameters are assumed to be the same as the buffer and size
++ * members of `struct tree`.
++ */
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
++
+ int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
+ 
  /*
-  * Return the ref_store instance for the specified submodule. For the
-  * main repository, use submodule==NULL; such a call cannot fail. For
+- * Helper function that does both tree_entry_extract() and update_tree_entry()
+- * and returns true for success
++ * Visit the next entry in a tree. Returns 1 when there are more entries
++ * left to visit and 0 when all entries have been visited. This is
++ * commonly used in the test of a while loop.
+  */
+ int tree_entry(struct tree_desc *, struct name_entry *);
++
+ int tree_entry_gently(struct tree_desc *, struct name_entry *);
+ 
++/**
++ * Initialize a `tree_desc` and decode its first entry given the
++ * object ID of a tree. Returns the `buffer` member if the latter
++ * is a valid tree identifier and NULL otherwise.
++ */
+ void *fill_tree_descriptor(struct repository *r,
+ 			   struct tree_desc *desc,
+ 			   const struct object_id *oid);
+ 
+ struct traverse_info;
+ typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
++
++/**
++ * Traverse `n` number of trees in parallel. The `fn` callback member of
++ * `traverse_info` is called once for each tree entry.
++ */
+ int traverse_trees(struct index_state *istate, int n, struct tree_desc *t, struct traverse_info *info);
+ 
+ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r, struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned short *mode);
+ 
++/**
++ * A structure used to maintain the state of a traversal.
++ */
+ struct traverse_info {
+ 	const char *traverse_path;
++
++	/*
++	 * points to the traverse_info which was used to descend into the
++	 * current tree. If this is the top-level tree `prev` will point to
++	 * a dummy traverse_info.
++	 */
+ 	struct traverse_info *prev;
++
++	/* is the entry for the current tree (if the tree is a subtree). */
+ 	const char *name;
++
+ 	size_t namelen;
+ 	unsigned mode;
+ 
++	/* is the length of the full path for the current tree. */
+ 	size_t pathlen;
++
+ 	struct pathspec *pathspec;
+ 
++	/* can be used by callbacks to maintain directory-file conflicts. */
+ 	unsigned long df_conflicts;
++
++	/* a callback called for each entry in the tree.
++	 *
++	 * The arguments passed to the traverse callback are as follows:
++	 *
++	 * - `n` counts the number of trees being traversed.
++	 *
++	 * - `mask` has its nth bit set if something exists in the nth entry.
++	 *
++	 * - `dirmask` has its nth bit set if the nth tree's entry is a directory.
++	 *
++	 * - `entry` is an array of size `n` where the nth entry is from the nth tree.
++	 *
++	 * - `info` maintains the state of the traversal.
++	 *
++	 * Returning a negative value will terminate the traversal. Otherwise the
++	 * return value is treated as an update mask. If the nth bit is set the nth tree
++	 * will be updated and if the bit is not set the nth tree entry will be the
++	 * same in the next callback invocation.
++	 */
+ 	traverse_callback_t fn;
++
++	/* can be anything the `fn` callback would want to use. */
+ 	void *data;
++
++	/* tells whether to stop at the first error or not. */
+ 	int show_all_errors;
+ };
+ 
++/**
++ * Find an entry in a tree given a pathname and the sha1 of a tree to
++ * search. Returns 0 if the entry is found and -1 otherwise. The third
++ * and fourth parameters are set to the entry's sha1 and mode respectively.
++ */
+ int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
++
++/**
++ * Generate the full pathname of a tree entry based from the root of the
++ * traversal. For example, if the traversal has recursed into another
++ * tree named "bar" the pathname of an entry "baz" in the "bar"
++ * tree would be "bar/baz".
++ */
+ char *make_traverse_path(char *path, size_t pathlen, const struct traverse_info *info,
+ 			 const char *name, size_t namelen);
++
++/**
++ * Convenience wrapper to `make_traverse_path` into a strbuf.
++ */
+ void strbuf_make_traverse_path(struct strbuf *out,
+ 			       const struct traverse_info *info,
+ 			       const char *name, size_t namelen);
++
++/**
++ * Initialize a `traverse_info` given the pathname of the tree to start
++ * traversing from.
++ */
+ void setup_traverse_info(struct traverse_info *info, const char *base);
+ 
++/**
++ * Calculate the length of a pathname returned by `make_traverse_path`.
++ * This utilizes the memory structure of a tree entry to avoid the
++ * overhead of using a generic strlen().
++ */
+ static inline size_t traverse_path_len(const struct traverse_info *info,
+ 				       size_t namelen)
+ {
 -- 
 gitgitgadget
 
