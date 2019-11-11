@@ -8,93 +8,101 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74EF71F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 14:10:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F9621F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 14:18:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbfKKOKB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 09:10:01 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:33055 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726832AbfKKOKB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 09:10:01 -0500
-Received: by mail-wr1-f46.google.com with SMTP id w9so7992788wrr.0
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 06:09:59 -0800 (PST)
+        id S1726965AbfKKOSK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 09:18:10 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41795 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727031AbfKKOSK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 09:18:10 -0500
+Received: by mail-wr1-f67.google.com with SMTP id p4so14807384wrm.8
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 06:18:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ptQDOGGEWwCl50eTFwRV4dGRbS+VsGGYfk1z4leA7wI=;
-        b=Fum+FwXSZYGe75QPxq9f9rTwrehq9ybCOcXfhyNsobSyb20izReEJKJmzdogE9iicx
-         pyEQmAnq9iAt2FUVJDcOM9qktywhsVTBcYrkYKUsM5sOL16AizrLc0bWuIC63zZ6T8JG
-         2SnPRhcyz2J+sTmJESOs9cEBP1cVEEtYr1PNgiIiBXnv7Gw5lTpj1osQ/SRunkwEXoSD
-         Crhe4bFJCFuyPiDDIufdlsmsJEM4P8h8VVjj1Q7i/F2R6blUibqhb8W5N8UqADsu2emH
-         EW4JSbpIPn0EDR2xzZD5GA2VXfDAozhIm6xqxSoxatW5awW4TMfbPtB4JgbaxEl2AVTy
-         W01A==
+        bh=jc1KwkZ+9x9az1LH7Y6T4ttLM+uriOS1xRcBQvT0Hf0=;
+        b=qjfLBbIPrUuhLORJbd2+tLbCsRHw8u8cJ1ezA02PlTenmiyWuNgJ5txj4tXwJ3MUU4
+         yBRCR8jo3sBj1zH7Dqw08NC8gx59WjyCFUEt59EOcJ60SwnO4J1sj415NHtMeXd6JEwO
+         4RFBprT83+np005J08HvPh1ekYcxbFJVzJzb6Ym0XewlY1CYj5K3XsvOxjjh18FOgtly
+         lhn8eoaf4Rv0PzvkoEu7NwrhLtz+V0rPyYUy8z0cgBwL6ovoCrGzIMoymQPABZC47NgN
+         qkNb4jGoYmnNxYmIu9lgXGoS3ef5O6WkDha0zfE+5S/ZIF35DzsuAu/c/6w1yUIZPh90
+         tFpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ptQDOGGEWwCl50eTFwRV4dGRbS+VsGGYfk1z4leA7wI=;
-        b=Z2uXqiNKYrAqp1PRmm+5otIrPH9p1Obqu1CfPGmJ143vMcyxv5NJTSphCWTugkKmB+
-         GJKBV2OI7LMS3VyMSNRxobKCkttSJy+W9FY7igwH3DqkZJyWfQS10+M5fWn8VeChxFbO
-         A/iNZpBz6OBBH0OCa69XputJG6DoevDt/lE2uzeS6dssZFIZzu/PN4fIihUYZ0jCc/lK
-         r6wJ2MAs7pCZti+IAwd9wqk8x4/xuIGVdFzWbF08CrwghYwcfkeSgcuwUYuUjDqAoqGJ
-         nqjfjanWESbF1y02/4ePm1wvLG6IqkOcg1mHoFlLq2qbeVclfHGPoFN+iW2AC7RU9vYi
-         wPLQ==
-X-Gm-Message-State: APjAAAWfO9fCIYiuB1r0801NuhlMSY/ZhVKqouwi1B2iRhPbaH2CB2Vm
-        Z5g9+T8Z4Jzevwmqxn8RqYjlozOc
-X-Google-Smtp-Source: APXvYqzN678ppWdJAz2v4v7Fke1fXFTYlDFAdlPQAVhLo2ShTRNMBb3axzLM8Rj4LDK07zxIs/zgaw==
-X-Received: by 2002:a5d:5444:: with SMTP id w4mr20441754wrv.164.1573481399315;
-        Mon, 11 Nov 2019 06:09:59 -0800 (PST)
+        bh=jc1KwkZ+9x9az1LH7Y6T4ttLM+uriOS1xRcBQvT0Hf0=;
+        b=pnNZ9bN7l/c/VF6xbzK8D2oieADYgYd/w2ZwLQKRE67Ys1PpsnmcX9M0DEuOlwcksz
+         K/biRSQ6dTdrokgK35C7SVGlyQw/HKptegQoDdyPCih3H3kmpE5UwghElWp+q1EuSie5
+         gILTv1+z3aqUI9pzc4V87Bk/wc7VDTW9y/Gz6Lyo4bY3RGM4Ilq6LpzP/6LdH7C/QB65
+         BT+haV+d0yYFs9DSy2znwjQUjHfDn+TPobUI3JAaDBO7SotOZcIe3qILhGsBAiRy4E4r
+         Y3nF26fJALWJ+Mhbq5aJ54xAVASLSREsLP85mJMI6AZFi3fcdd7F7s3s1AxMWo6oXgq8
+         Cahg==
+X-Gm-Message-State: APjAAAUi1yFFsY1gam5efS879MaJJ9HqIiJszYXMjd3E8HRbJj7Bs1iD
+        VMVV3ixBZk5Ap48JvQukzIY=
+X-Google-Smtp-Source: APXvYqxQjYc2xf/k5KDqnC8oPPwxhPv77sDwXsiqK/NESJv+WOeYTE2nuXr2MCPR/wiB+0X2PVGsyQ==
+X-Received: by 2002:adf:fe89:: with SMTP id l9mr6141225wrr.368.1573481887817;
+        Mon, 11 Nov 2019 06:18:07 -0800 (PST)
 Received: from szeder.dev (x4db606e5.dyn.telefonica.de. [77.182.6.229])
-        by smtp.gmail.com with ESMTPSA id g184sm23929137wma.8.2019.11.11.06.09.57
+        by smtp.gmail.com with ESMTPSA id 200sm27792715wme.32.2019.11.11.06.18.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2019 06:09:58 -0800 (PST)
-Date:   Mon, 11 Nov 2019 15:09:56 +0100
+        Mon, 11 Nov 2019 06:18:06 -0800 (PST)
+Date:   Mon, 11 Nov 2019 15:18:05 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Sebastiaan Dammann <triadsebas@gmail.com>, git@vger.kernel.org
-Subject: Re: git name-rev looks at refs/notes, refs/svn/map: stack overflow
-Message-ID: <20191111140956.GJ4348@szeder.dev>
-References: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
- <20191111042149.GE6379@sigill.intra.peff.net>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 2/2] hex: drop sha1_to_hex()
+Message-ID: <20191111141805.GK4348@szeder.dev>
+References: <20191111090332.GA2275@sigill.intra.peff.net>
+ <20191111090418.GB12545@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191111042149.GE6379@sigill.intra.peff.net>
+In-Reply-To: <20191111090418.GB12545@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 10, 2019 at 11:21:49PM -0500, Jeff King wrote:
-> On Sat, Nov 09, 2019 at 12:31:31PM +0100, Sebastiaan Dammann wrote:
+On Mon, Nov 11, 2019 at 04:04:18AM -0500, Jeff King wrote:
+> There's only a single caller left of sha1_to_hex(), since everybody now
+> uses oid_to_hex() instead. This case is in the sha1dc wrapper, where we
+> print a hex sha1 when we find a collision. This one will always be sha1,
+> regardless of the current hash algorithm, so we can't use oid_to_hex()
 
-> All of that's obviously a workaround, though. The real issue is the
-> stack exhaustion.
-> 
-> > I hope to hear your view on this. Is this an (confirmed) issue with
-> > git? Are there beside the workaround I mentioned, any other
-> > workarounds?
-> 
-> Yes, this is well known. It's covered in the test suite (unfortunately
-> still failing, of course) since 31625b34c0 (t6120: test describe and
-> name-rev with deep repos, 2017-09-07).
-> 
-> There was a proposed fix recently in:
-> 
->   https://public-inbox.org/git/20190919214712.7348-1-szeder.dev@gmail.com/
-> 
-> but it doesn't seem to have been picked up. I'm not sure what the
-> current status is.
+Nit: s/oid_to_hex/hash_to_hex/
 
-It's getting along, being polished, clarified and fine-tuned ever so
-slowly.
+We can't use oid_to_hex() because we don't have a 'struct object_id'
+in the first place, as sha1dc only ever deals with 20 unsigned chars.
 
-E.g. it turned out that the performance penalty from eliminating the
-recursion is basically entirely caused by using a 'commit-list' to
-store interesting parents (the overhead of a malloc() on each insert
-and a free() on each pop).  Switching to a LIFO 'prio-queue' doesn't
-cause any measurable slowdown.
+> here. In practice we'd probably not be running sha1 at all if it isn't
+> the current algorithm, but it's possible we might still occasionally
+> need to compute a sha1 in a post-sha256 world.
+> 
+> Since sha1_to_hex() is just a wrapper for hash_to_hex_algop(), let's
+> call that ourselves. There's value in getting rid of the sha1-specific
+> wrapper to de-clutter the global namespace, and to make sure nobody uses
+> it (and as with sha1_to_hex_r() in the previous patch, we'll drop the
+> coccinelle transformations, too).
 
+
+> diff --git a/sha1dc_git.c b/sha1dc_git.c
+> index e0cc9d988c..5c300e812e 100644
+> --- a/sha1dc_git.c
+> +++ b/sha1dc_git.c
+> @@ -19,7 +19,7 @@ void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
+>  	if (!SHA1DCFinal(hash, ctx))
+>  		return;
+>  	die("SHA-1 appears to be part of a collision attack: %s",
+> -	    sha1_to_hex(hash));
+> +	    hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
+>  }
+>  
+>  /*
+> -- 
+> 2.24.0.739.gb5632e4929
