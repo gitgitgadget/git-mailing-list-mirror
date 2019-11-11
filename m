@@ -7,92 +7,79 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8D621F4C0
-	for <e@80x24.org>; Mon, 11 Nov 2019 02:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F01191F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 02:29:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbfKKCXE (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 21:23:04 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55718 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726734AbfKKCXE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 21:23:04 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B4753DA48;
-        Sun, 10 Nov 2019 21:23:02 -0500 (EST)
+        id S1726754AbfKKC3C (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 21:29:02 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63242 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726742AbfKKC3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 21:29:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F2CB8F536;
+        Sun, 10 Nov 2019 21:29:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=t2ha5B3+O0Gc
-        2dKvgtY1yrzg2vc=; b=RXR7Ct6EegiUqA56+5eUJcrn0P54vE0qabYa2z9S6yc4
-        FJmZKAEH2hdBtM4pAdP/zvhedl8pKEZJ41vXcSl6d2FXsGhxzKOOYzL8bcnqHULb
-        Cdpy1F63w2MH1+Krxes6bq3EXeTZtHP7LDFWmNcjNEFfY4Z5Ylb4CnjBe9ylk9c=
+        :content-type; s=sasl; bh=AH20arijAE1cj01RAJnzoOdr+5k=; b=A0Hcv2
+        6E0H16/tP7FIoyCk/raNHTnYMcmB+duQTNXoy9bffk9o5HdqWA15eOkG3cnZj0bt
+        5j9+hH04SAGcjT8bYN0o2ctLLgiAt1qAXN3GXmJfa/PXkX2CDNZ3aVdZJEKilgMH
+        lNaCf3xvGsV5ed+vZAh+1mkobqwEX7CzMvnT0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=feUTIw
-        rodLgcovlFbUcw/aChvqZ0Dno4wJbf+SWVWQ3rJMNEkYSyc365GshOdDPq+LL/cG
-        dDaDmQAYgF0WtLlqggHz9ZZw8BzlsymFPOTnhlZzdizitEx75Zz2sAd9E8uQnKDz
-        BxsI5VDVZ3pZnrftYSuxY9O/Kuq4Y59n8uPTU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 740B83DA47;
-        Sun, 10 Nov 2019 21:23:02 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=bJ1ixTeF5QjXnbGour3mg0vCfbxvF1HO
+        N031ETKQwY3rVIxw6y2x6F6TEszGIW0s3629zl5FHJ1u7IkGTIlZI4EY2n4Jwoyh
+        eEbDXz9xi/QybjelJECtYvELL8pGZBMzGl6ygtpbmAzYjgHCZUfPPmUzxZKlTTr+
+        Y0QBtASi688=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 37C188F535;
+        Sun, 10 Nov 2019 21:29:00 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7AB93DA46;
-        Sun, 10 Nov 2019 21:23:01 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6472F8F534;
+        Sun, 10 Nov 2019 21:28:57 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?R=C3=A9da?= Housni Alaoui <reda.housnialaoui@gmail.com>
+To:     Josh Holland <anowlcalledjosh@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Sometimes unable to lock the index during pre-commit hook
-References: <CAE0unxyojHVWP4aM3C+DdMYORmcoCuq-0wwLGjE8ok6dLj_E8w@mail.gmail.com>
-        <xmqqpni0jioq.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 11 Nov 2019 11:23:00 +0900
-In-Reply-To: <xmqqpni0jioq.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sun, 10 Nov 2019 16:26:29 +0900")
-Message-ID: <xmqqtv7bi22j.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH] userdiff: support Python async functions
+References: <20191111010148.2812-1-anowlcalledjosh@gmail.com>
+Date:   Mon, 11 Nov 2019 11:28:55 +0900
+In-Reply-To: <20191111010148.2812-1-anowlcalledjosh@gmail.com> (Josh Holland's
+        message of "Mon, 11 Nov 2019 01:01:48 +0000")
+Message-ID: <xmqqpnhzi1so.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2F6C9D02-042A-11EA-B518-C28CBED8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 035591A0-042B-11EA-B9C0-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Josh Holland <anowlcalledjosh@gmail.com> writes:
 
-> R=C3=A9da Housni Alaoui <reda.housnialaoui@gmail.com> writes:
+> Python's async functions (declared with "async def" rather than "def")
+> were not being displayed in hunk headers. This commit teaches git about
+> the async function syntax, and adds tests for the Python userdiff regex.
 >
->> Are pre-commit hooks expected to be able to manipulate the index?
->
-> Hooks are described in githooks(5) manual pages; we may want to
-> clarify what is not allowed, but back when most of the entries were
-> written, the stance was that anything that is not explicitly allowed
-> there is forbidden.
->
-> In general, a pre-<something> hook is a way to inspect (i.e. look
-> but not touch) what is proposed to be done and veto it by exiting
-> with non-zero.  It is not expected to change the state of the
-> repository in any way.
->
-> The code does not necessarily enforce it, because it is costly to
-> take a snapshot of everything (including the index, the working tree
-> files, the files that are untracked, the objects in the object
-> database, etc.) before calling a hook and ensure that the hook did
-> not touch anything.
+> Signed-off-by: Josh Holland <anowlcalledjosh@gmail.com>
+> ---
+>  t/t4018/python-async-def | 4 ++++
+>  t/t4018/python-class     | 4 ++++
+>  t/t4018/python-def       | 4 ++++
+>  userdiff.c               | 2 +-
+>  4 files changed, 13 insertions(+), 1 deletion(-)
+>  create mode 100644 t/t4018/python-async-def
+>  create mode 100644 t/t4018/python-class
+>  create mode 100644 t/t4018/python-def
 
-Actually, we do accomodate for the possibility that pre-commit hook
-may muck with the on-disk index there days, even though the original
-design intention was not to allow random changes there (see ll 960-
-in the same file).
+It seems that there were no test patterns for Python ;-) The change
+to userdiff.c part (i.e. "where we used to expect 'def', we now
+allow it to be prefixed with an optional 'async' plus whitespace")
+makes sense.
 
-So it seems that if we hold the lock necessary to refresh the index
-for too long, it may be an option to move the code that unlocks to
-somewhere earlier in the callchain.  prepare_index() however returns
-different on-disk index file (the real thing when making an as-is
-commit, and a temporary one otherwise), and the unlocking rule may
-be different, so some restructuring of the code might become
-necessary before that can be done.  I dunno.
+Thanks, will queue.
