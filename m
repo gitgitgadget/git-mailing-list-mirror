@@ -8,65 +8,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A35671F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 01:07:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9741F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 01:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbfKKBHg (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 20:07:36 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:47054 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726275AbfKKBHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 20:07:36 -0500
-Received: by mail-qk1-f193.google.com with SMTP id h15so9842402qka.13
-        for <git@vger.kernel.org>; Sun, 10 Nov 2019 17:07:35 -0800 (PST)
+        id S1726765AbfKKBTY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 20:19:24 -0500
+Received: from mail-qt1-f179.google.com ([209.85.160.179]:46063 "EHLO
+        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726275AbfKKBTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 20:19:24 -0500
+Received: by mail-qt1-f179.google.com with SMTP id 30so13937400qtz.12
+        for <git@vger.kernel.org>; Sun, 10 Nov 2019 17:19:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DD/SwzrVFd7ioQg2fqQjQfcGA7EoWdkl70XtQ+MPf+w=;
-        b=hT6H0IyNgUshDqRpZiqfoRbaAexpex/YbfWxM4gWqF6fj1+LKXguhjpkyoz31w32+/
-         7PJOQvPA6qrqxhaeSc3S0yyg7joSq4M5ZT1talsRiAUTjC6/U8XeHKMGwSHM7z9fZSoH
-         O76N6RAVl6IagrOSwLP84UXvhRdb6zIGNOQwB5iok1qfIMKoACj3mqGbCZ2fLeQD4vYY
-         Qnl93rUqdk5807RYQeGBzeBSDl56q5ka2EmnokgV2TnVRy8iWJdkSYgubdgDSd6ZAB3f
-         CN0RTQtTWEBWIPIMrQczjtZW0kDK00odWSD9GKd8XKZxGI549yzd+AhD9T+9qUKo9ZpR
-         86HA==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=kV9mftSrwuisBaLmGTQDJ9+XNOuCPmzLevSr1eSQov8=;
+        b=Ug1RzMOuuaS48/rGW2Rq3YlYu1ouXGEVxZxIkkcankLdBVMVM+Nxh/0jkp8Eo1lyQ1
+         HLhvRMf5cO+Ix2UIDKvHfhPm8/Bj/OiouIwWGr+40pQfR8/lxAUrpnHXv/F25SotBIjH
+         j1XiOpzYpgb3zvMqg4szg+BERX4cAyUgdbGmfSMFzuHQd6R8JpITKp5kBceDagJ2HJ1M
+         whIWBb5HK40cTqpJDX5XlIJAxtir1BEeMFhjU1WpKnuP2qlZvnAarPKzb73+ndk/llyz
+         NHuDcisrKWgcxfstTPxEQqG9PXObx03vWJPGmsc725vQM11MYt6yx7Lr6TRTf1tICNga
+         tN2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=DD/SwzrVFd7ioQg2fqQjQfcGA7EoWdkl70XtQ+MPf+w=;
-        b=lhygSzepqm6FhfuO8sB9N+4zuXTiK5Y81/jyovtlLRBDH3HlBTjMy18rd3jCD3YJ8z
-         6o/qotrM73cQmh6Nma2z/FWaMYlBVQJxEMApahvc/yqZQldBCKyju7dILGVwvJ39rRB+
-         TjYeKFYvb6wRv3BdWrz4jaYjjVgi/KS2DjoVQOlgp9HyY2bwyK7MVYtWnD/C7bRPFjCa
-         +wZOxHq2MLP4YwPachchN7G8YxDqj2z5xeE9AxKM81rucPx9GjBtaCYPWGYGyDrgibqv
-         EcBznmsfw9ru6VzieoGmjgv349SBtx2Lx3lCi02NHIXN+J82NdSCExIgdX5U8uGEjsI8
-         j9aQ==
-X-Gm-Message-State: APjAAAUVkmVd/NLKYvJwCtJOVjhfBktOd+CBTThGHoI6kqGSA3MUscmK
-        LApSe0uxiHKuSuLk2F+Iroo=
-X-Google-Smtp-Source: APXvYqyndGWe3tWdsPO/8bT/hkUSMNB80h9qEcRN6xAl3ak8OEILEbUFOSVeVvrT8Yc1k90b+p+zrA==
-X-Received: by 2002:a05:620a:12f0:: with SMTP id f16mr3633677qkl.167.1573434455128;
-        Sun, 10 Nov 2019 17:07:35 -0800 (PST)
+        bh=kV9mftSrwuisBaLmGTQDJ9+XNOuCPmzLevSr1eSQov8=;
+        b=k9Zzz1bbTO6a7KY9gJIViJSY8Rnmk/dbvwXrjWobpzhWpp2/fBsP8bWxkkjnFmL4S2
+         ZwVeHKlO/h/oVgbAfeuBfBjjwGXo2pRXxxN9eCspQkKCfuPpBREoCzzmzD8o0PH9Z8a2
+         49l30Ih7R2Z8uyVXDG2Yrtjb41TGZEBj5p7bKS9ce3wmr/a7d3394TMW7rxZ80uuFAI+
+         GplOtQuAFEui9LpKTV66Oj22a8AQAxi811hiKUht8LLXepBO67KwiJ7vqa2TEgJxKOy9
+         n3aL5+9ANBn7QJUjLuN/ZoWmN+HFEmcAGgHwhsqSNg3Z1FexOk8lU8tqFCPIkesB+uAL
+         oktw==
+X-Gm-Message-State: APjAAAUWMDcp6Y/SvNVqPi2neKyjllg6MtPXRT9RY3JyHV8E/BnwAW7J
+        3ALQu6O/rYXfa1y2fuixS+0=
+X-Google-Smtp-Source: APXvYqxRfvtNcXA5/pjiDzlh0Fvc70kpiNf55zbN6HZLzIlhcFMXmmKAS1iYgXpY32DDPtVukGCJXg==
+X-Received: by 2002:ac8:80f:: with SMTP id u15mr23879554qth.193.1573435163234;
+        Sun, 10 Nov 2019 17:19:23 -0800 (PST)
 Received: from [10.0.1.19] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id n62sm6770720qkn.47.2019.11.10.17.07.34
+        by smtp.gmail.com with ESMTPSA id w5sm2736632qkf.43.2019.11.10.17.19.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2019 17:07:34 -0800 (PST)
-Subject: Re: [PATCH v5 6/7] revision.c: generation-based topo-order algorithm
-To:     Mike Hommey <mh@glandium.org>
-Cc:     git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com,
-        szeder.dev@gmail.com, peff@peff.net, jnareb@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.25.v4.git.gitgitgadget@gmail.com>
- <20181101134623.84055-1-dstolee@microsoft.com>
- <20181101134623.84055-7-dstolee@microsoft.com>
- <20191108025007.bphr7ynvskeoe6tb@glandium.org>
+        Sun, 10 Nov 2019 17:19:22 -0800 (PST)
+Subject: Re: Split commit graphs and commit-graph read
+To:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>
+References: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ea07fd13-7d0a-4636-1aa4-453f6b837735@gmail.com>
-Date:   Sun, 10 Nov 2019 20:07:31 -0500
+Message-ID: <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
+Date:   Sun, 10 Nov 2019 20:19:20 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
  Thunderbird/71.0
 MIME-Version: 1.0
-In-Reply-To: <20191108025007.bphr7ynvskeoe6tb@glandium.org>
+In-Reply-To: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -75,46 +72,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/7/2019 9:50 PM, Mike Hommey wrote:
-> Replying to this old thread because I have questions regarding the
-> patch, in the context of problems I had downstream, in git-cinnabar.
-> 
-> On Thu, Nov 01, 2018 at 01:46:22PM +0000, Derrick Stolee wrote:
->>  static void init_topo_walk(struct rev_info *revs)
->>  {
->>  	struct topo_walk_info *info;
->> +	struct commit_list *list;
->>  	revs->topo_walk_info = xmalloc(sizeof(struct topo_walk_info));
-> 
-> Not directly from this patch, but there's nothing that frees this memory
-> AFAICS, but then, that's also true for most of the things in struct
-> rev_info.
+On 11/8/2019 6:41 PM, Bryan Turner wrote:
 
-This is true, the 'struct rev_info' doesn't get cleaned up at the end.
-It is probably a lot of work to find all the consumers and get them to
-clean everything up, and the value is rather low. I believe the expectation
-is that each process will only run a revision walk at most once.
+Hi Bryan,
 
->> diff --git a/revision.h b/revision.h
->> index fd4154ff75..b0b3bb8025 100644
->> --- a/revision.h
->> +++ b/revision.h
->> @@ -24,6 +24,8 @@
->>  #define USER_GIVEN	(1u<<25) /* given directly by the user */
->>  #define TRACK_LINEAR	(1u<<26)
->>  #define ALL_REV_FLAGS	(((1u<<11)-1) | USER_GIVEN | TRACK_LINEAR)
->> +#define TOPO_WALK_EXPLORED	(1u<<27)
->> +#define TOPO_WALK_INDEGREE	(1u<<28)
+> Just a quick question about a behavior I've noticed with the commit
+> graph. (Amazing feature, by the way!)
+ 
+> If the _very first_ write done is split:
+> git commit-graph write --reachable --split
 > 
-> Should these two flags be included in ALL_REV_FLAGS?
-> Should they be reset by reset_revision_walk?
+> You end up with something like this:
+> .../objects$ ls -R info
+> info:
+> commit-graphs  packs
 > 
-> At least for the latter, I'd say yes, otherwise you can end up with
-> missing revs in a subsequent topo-order revwalk.
+> info/commit-graphs:
+> commit-graph-chain  graph-6612fcc8fd04d3af2cc268a6bd9161ae40f5fcbf.graph
+> 
+> info/commit-graph doesn't exist, but I have a 1-graph "chain" in
+> place. (And subsequent write --split calls write additional ones; I've
+> got a few now in this repository, but still no info/commit-graph.)
+> 
+> git commit-graph verify seems happy:
+> .../objects$ git commit-graph verify
+> Verifying commits in commit graph: 100% (98768/98768), done.
 
-This is probably true. Sounds like a quick contribution could
-be in order?
+This workflow seems expected.
+
+> But git commit-graph read isn't:
+> .../objects$ git commit-graph read
+> fatal: Could not open commit-graph
+> '/path/to/repository/objects/info/commit-graph': No such file or
+> directory
+> 
+> Running some tests with commands like git for-each-ref and git
+> rev-list shows that the "split" commit graph is being used (setting
+> core.commitGraph=false makes commands noticeably slower), so
+> functionally all seems well. But should git commit-graph read be
+> handling this better?
+
+Unfortunately, you're running into an issue because I designed the
+"read" subcommand poorly (and also forgot to update it for
+incremental commit-graph files). The biggest issue is that "read"
+is not really meant for end-users. It really should have been built
+as a test-tool. This point was corrected when I got around to writing
+the multi-pack-index since it uses "test-tool read-midx" instead of
+add.
+
+To fix this issue, I would probably go about it by removing the "read"
+subcommand and creating a "test-tool read-commit-graph" for the tests
+that need that output.
+
+If others on-list think that the better thing to do is to update the
+"read" subcommand to provide the same output, but iterate over each
+layer of an incremental commit-graph, then I can do that work instead.
 
 Thanks,
 -Stolee
-
