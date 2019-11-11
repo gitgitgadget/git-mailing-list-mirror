@@ -2,102 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
+	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F8521F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 19:35:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04A451F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 19:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727134AbfKKTfv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 14:35:51 -0500
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:34375 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727050AbfKKTfv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 14:35:51 -0500
-X-Originating-IP: 1.186.12.28
-Received: from localhost (unknown [1.186.12.28])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id D140D60008;
-        Mon, 11 Nov 2019 19:35:48 +0000 (UTC)
-Date:   Tue, 12 Nov 2019 01:05:46 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>
-Subject: Re: [PATCH v2 0/2] git-gui: revert untracked files by deleting them
-Message-ID: <20191111193546.lsx24e3w6fo336hu@yadavpratyush.com>
-References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
- <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
+        id S1727080AbfKKTvW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 14:51:22 -0500
+Received: from mail-lf1-f45.google.com ([209.85.167.45]:34163 "EHLO
+        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726912AbfKKTvV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 14:51:21 -0500
+Received: by mail-lf1-f45.google.com with SMTP id y186so5029237lfa.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 11:51:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=myitcv.io; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=WYbarlJeJA6gRjMNRIQlF8rvO4/MDDlNIvvI8CMmI/U=;
+        b=fTjSByNeLqNaj/jd4HUFSrpDiysOn77T2xw4AtAvbz0Xxg+0GyIRSgSg4qZmUMMkCf
+         jygsqTtdY0Vc1YBQhuEOHd4SwlDo6p/DiD7u0eXFckXP/71x40DhkaHsrQ0idlUhd56a
+         J4vuqIdwNGTt84NjwLiQNinvtw0yDaioBmj6wrda9X2Udc/AOpASPJoKU+DkBvAaWhAg
+         2oc3d4rOqEXKhsoFQOj9nWcpvqwzaKuy1ffoEA0ELxluUeQqzzs/EQTLLbyfJk0svi9/
+         TKqIDZTReMCPDRq12lg109Lb4pHr4QyOvXCFEw/15DnA3z3yySFlTiUR4WndWPxQ7Nou
+         I4tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=WYbarlJeJA6gRjMNRIQlF8rvO4/MDDlNIvvI8CMmI/U=;
+        b=uTiPwqmClG791UkumNX1kSEjFoJM/5YbzTmznPY1vQVghfdGyFQdvH6Q3HlLXSQJQQ
+         5GgDzZ1wBu4u4784a4dzD6SUPS2NgXtrGj0RRbCiVx6IlxGe2wafedGRAs4ty51Bg1h/
+         K6RDPKjLKH+tXjQd7mGObhhnjz3lZ/YSMpy+kYoVX1DL6s4dsSe9cnLsMwefrz2uvO9z
+         NTIdGqPxV5c1A/JYdGJm5vRBLYXsAo1dg9GzTpySjE2KqupsgBMbOoBmKpofTs433bYW
+         STNE16coRa4xcO2B+wq5ILN6Y6lzyXB7o0zkVk66Q7SA31crqa7z2buhZOInFj1s9Wa8
+         p04A==
+X-Gm-Message-State: APjAAAWe0MIxUMhcfZefjMyXdycgH0dNOafGonUV2hc+hzaEA5iErEDo
+        kmW0qix1iFiK3q0PRwroXf7PoOfisjysYPlnZasJuJl7IS9LaQ==
+X-Google-Smtp-Source: APXvYqz78tSh2eoY1m0MtYlb3Iaw5zLrj2oUfTzdfPQjp1xksk7wpw7+G+gAErKsaSEKkWjpRiEoGjplxh1Vcgfs1D4=
+X-Received: by 2002:a19:848a:: with SMTP id g132mr8499870lfd.62.1573501879364;
+ Mon, 11 Nov 2019 11:51:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
+From:   Paul Jolly <paul@myitcv.io>
+Date:   Mon, 11 Nov 2019 19:51:08 +0000
+Message-ID: <CACoUkn6D0cUmN1RbcpfERcOJsbGLdwj6oDeF2oRADV+rX2artQ@mail.gmail.com>
+Subject: Bug in bash completion for git rebase --onto
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/11/19 07:05AM, Jonathan Gilbert via GitGitGadget wrote:
-> My development environment sometimes makes automatic changes that I don't
-> want to keep. In some cases, this involves new files being added that I
-> don't want to commit or keep (but I also don't want to outright .gitignore 
-> forever). I have typically had to explicitly delete those files externally
-> to Git Gui, which is a context switch to a manual operation, and I want to
-> be able to just select those newly-created untracked files in the UI and
-> "revert" them into oblivion.
-> 
-> This change updates the revert_helper proc to check for untracked files as
-> well as changes, and then changes to be reverted and untracked files are
-> handled by independent blocks of code. The user is prompted independently
-> for untracked files, since the underlying action is fundamentally different
-> (rm -f). If after deleting untracked files, the directory containing them
-> becomes empty, then the directory is removed as well. A new proc 
-> delete_files takes care of actually deleting the files, using the Tcler's
-> Wiki recommended approach for keeping the UI responsive.
-> 
-> Since the checkout_index and delete_files calls are both asynchronous and
-> could potentially complete in any order, a "chord" is used to coordinate
-> unlocking the index and returning the UI to a usable state only after both
-> operations are complete.
-> 
-> This is the third revision of this change, which differs from the second
-> version in the following ways:
-> 
->  * A new construct called a "chord" is used to coordinate the completion of
->    multiple asynchronous operations that can be kicked off by revert_helper.
->    A chord is, conceptually, a procedure with multiple entrypoints whose
->    body only executes once all entrypoints have been activated. The 
->    chord.tcl file includes comprehensive documentation of how to use the
->    chord classes.
->    
->    
->  * Since we might not yet be ready to unlock the index when checkout_index 
->    returns, the _close_updateindex proc where it was ultimately unlocking
->    the index has been modified so that unlocking the index is the
->    responsibility of the caller. Since the $after functionality ran after 
->    unlock_index, that is also hoisted out. Nothing in _close_updateindex 
->    appears to be asynchronous, so the caller can simply make the calls
->    itself upon its return.
+Hi,
 
-The cover letter is so much more descriptive than the commit message. It 
-would be nice to have all this context and commentary in the commit 
-message. Of course, you'd remove the "personal workflow" bit and some 
-other stuff, but most of this can be copied verbatim.
+The bash completion for git rebase --onto seems to have been broken by
+commit 2b9bd488ae09dc89f02be7d73f3710ee2ea7325c
 
-Also, like I mentioned in the review of your second patch, 
-`_close_updateindex` _does_ have an asynchronous component 
-unfortunately.
-    
->    
->  * lexists has been renamed to path_exists.
->    
->    
->  * Up to 10 deletion errors are now shown simultaneously. I also confirmed
->    that Tcl's file delete code will always return a nicely-formatted error
->    including the filename, and changed the message so that it isn't also 
->    injecting the filename.
+Previously (v2.23.0), hitting tab after
 
--- 
-Regards,
-Pratyush Yadav
+    git rebase --on
+
+gives:
+
+    git rebase --onto
+
+(note trailing space) hitting tab again offers a list of potential
+refs onto which to rebase.
+
+As of 2b9bd488ae09dc89f02be7d73f3710ee2ea7325c, hitting tab after:
+
+    git rebase --on
+
+gives:
+
+    git rebase --onto=
+
+but then hitting tab again offers the current directory contents as
+candidates, i.e. not git ref candidates as they should be.
+
+Note the adding of a trailing '=' is, I think, more correct/robust
+than the trailing space so I don't disagree with that change. It's
+just the failure to offer git ref candidates that is the problem.
+
+Thanks,
+
+
+Paul
