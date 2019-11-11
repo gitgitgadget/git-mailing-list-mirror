@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A59C1F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 601C11F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727233AbfKKV2O (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 16:28:14 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:32866 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727153AbfKKV2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 16:28:13 -0500
-Received: by mail-wm1-f45.google.com with SMTP id a17so815493wmb.0
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:11 -0800 (PST)
+        id S1727260AbfKKV2R (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 16:28:17 -0500
+Received: from mail-wm1-f48.google.com ([209.85.128.48]:53925 "EHLO
+        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727152AbfKKV2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 16:28:12 -0500
+Received: by mail-wm1-f48.google.com with SMTP id u18so856737wmc.3
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iRvzqtmL1dYexd8wCBWkeRx0V9T+hV0iCcpE5uXRCAA=;
-        b=jMlVCVYJ9ABpiLZ7TOBBLdUfgvfkv7qnK4bEXxemUXp8kBK389+O2+TP2xTuZpw/4l
-         TmCcXVKvbyNTd21vMIeSO/5x/6nHs9SFcioACgFDgSyPkN2Y6iRG62boTRkzF21C7bma
-         g2bGIaacYQchiEnIijB/LvPcPRtxvrCuWa6Z9gPMG2rK1++3jqder2M2oONKuXY5MkC2
-         yYh6+z7Qa6up9mQFFOANMfM/zJUZ3l5ZW3MTcZcWJNR5d5xrLhrqiT/DomTjYdhbKIo2
-         4YXxxfXVWCabbiLguq4ltY932vh4SBCsOIWLfrw9hP5KmG80ygcDVdvwhCFlX58xpYe4
-         SjjA==
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=FB0B7L6mr6ToIlyZ4biIptUYVmpq2n83xLJs606hUIsk9B/HR5duZbfqHlEE3gC06J
+         YjOh5iiOCYTJl4JcWstH8erc9k4Zgf44pJR755zmzZHtPKdz9cr9kRw5aBFxpoDxdupt
+         X0H4hjqd+tPmHy5tlL8Ehdr4iuOVVFUyTFO9G8UFNFZ0bXMGsztf4+PMuozGX+qYubyR
+         cq5dNlKkrhLPNarLMR2pXaeLzKUaaeeiMp4stpK3ikCjV6WKSvj4ltUw5aLDLPLAgoum
+         NPA5TkZelRYGQi3EZjoukKXPhlw6Sx4B5CACwKoLUMoXmLcrpVpBNFHi3cobCC5cIzrp
+         1vng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iRvzqtmL1dYexd8wCBWkeRx0V9T+hV0iCcpE5uXRCAA=;
-        b=FKE7OJ1cYow4XXYonfu8IB8Y8yL6c7D1nWbb+zq3GeNJsvJq0K5lkkaNA6cdy2egMF
-         dYcX1gFRRS65Z2YHh3XmNMUP+iz7pBlWYtBQ1tWEFoBm96KzDL2vH+rhi8H0OV1O5gIt
-         EAewExhAlAc1L47m06vNpj8ppYClqwpIfNuQ3JVZf3IWOkb5kPqJgQyqNBmiFkEwQ/hc
-         ZQbKoirAhJFL63+xwQQ3JUeakw7VJ16Oqvl1TiDUBlVWDEeAwsgfYF2ou3K+jupKZ0Vv
-         3Bvo15e5HsGTX94cQfuCThD3uIa+8pYj7wbzgM2HyXoTE39ZJjLgpwfmlAP1hqhrTGrh
-         RjoA==
-X-Gm-Message-State: APjAAAVZA4gWiclra+jv9Gpr9jTJSMfkZh4WYwrAdXsEegiowdm4c6YD
-        B8QDJP7JAKHqXunesl1F+kyHfRpI
-X-Google-Smtp-Source: APXvYqzO2fIwnjdzVnkk1s1OofcS4MM3TCol++0i2ocK4/VfkJe1euXe4XWQOvPoPhEuS5PFJFW0Sg==
-X-Received: by 2002:a7b:c762:: with SMTP id x2mr884884wmk.128.1573507690397;
-        Mon, 11 Nov 2019 13:28:10 -0800 (PST)
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=G4FOQuINAv8ArZn5+/u5WRhlg8Lr4afOlehrzhjEM7XIjJzHsLleFBB29wCvcpu/No
+         e3+H38CIRbHMOZ2sBMpLnIQ5s03838E4Dy2JLNYKgKRhZGOYJNOY9zMl6PsvZDp/EwUq
+         Kc2drZ2S78r5IbfNJ1tBtnV+NXuT0lAk53GtOStXOe9ZDD5U2R9ZZndL8rRipLiMnfOv
+         cpxfW5M/QxrrkEZtN6lzGbHHGS53BN83lqyUVxSgSMb3ABplFADAaOgxxNeg92bXfMYO
+         11el/ynlRTO51Q87FPmXOEw6rOlyWbaYsg0oq7iiV7mVXcONGmzBCunBSFmsMP0KbnL+
+         E3IQ==
+X-Gm-Message-State: APjAAAXc799OKkXSyCxLQPrpZLwqoimx7yVE+GE8pOOnS2l1nuFSHKNw
+        Z5F8T+4t6tpgcGJjdykLI3A3/qId
+X-Google-Smtp-Source: APXvYqxVVBHEE1336thtSOEDnQyWq+o62K08toa+22JbfUuZ5XBz1yup2tx0UuBVkiXuMtUh1FqHtg==
+X-Received: by 2002:a1c:f20c:: with SMTP id s12mr803355wmc.37.1573507689635;
+        Mon, 11 Nov 2019 13:28:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g133sm613513wme.42.2019.11.11.13.28.09
+        by smtp.gmail.com with ESMTPSA id h16sm5631518wrs.48.2019.11.11.13.28.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 11 Nov 2019 13:28:09 -0800 (PST)
-Message-Id: <3a8f93de3d84661bf6d077e95b6a66dd3f923fa1.1573507684.git.gitgitgadget@gmail.com>
+Message-Id: <39f25de85f94871e660de152b4d43dbfb97b7caf.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:48 +0000
-Subject: [PATCH v3 05/21] sha1-array: move doc to sha1-array.h
+Date:   Mon, 11 Nov 2019 21:27:47 +0000
+Subject: [PATCH v3 04/21] merge: move doc to ll-merge.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,241 +72,198 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-oid-array.txt to
-sha1-array.h as it's easier for the developers to find the usage
+Move the related documentation from Documentation/technical/api-merge.txt
+to ll-merge.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-oid-array.txt is removed because the
-information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header file.
+Only the ll-merge related doc is removed from
+documentation/technical/api-merge.txt because this information will be
+redundant and it'll be hard to keep it up to date and synchronized with
+the documentation in ll-merge.h.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-oid-array.txt | 90 -----------------------
- sha1-array.c                              |  2 +-
- sha1-array.h                              | 80 ++++++++++++++++++++
- 3 files changed, 81 insertions(+), 91 deletions(-)
- delete mode 100644 Documentation/technical/api-oid-array.txt
+ Documentation/technical/api-merge.txt | 72 +-------------------------
+ ll-merge.h                            | 73 ++++++++++++++++++++++++++-
+ 2 files changed, 74 insertions(+), 71 deletions(-)
 
-diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
-deleted file mode 100644
-index c97428c2c3..0000000000
---- a/Documentation/technical/api-oid-array.txt
-+++ /dev/null
-@@ -1,90 +0,0 @@
--oid-array API
--==============
+diff --git a/Documentation/technical/api-merge.txt b/Documentation/technical/api-merge.txt
+index 9dc1bed768..487d4d83ff 100644
+--- a/Documentation/technical/api-merge.txt
++++ b/Documentation/technical/api-merge.txt
+@@ -28,77 +28,9 @@ and `diff.c` for examples.
+ 
+ * `struct ll_merge_options`
+ 
+-This describes the set of options the calling program wants to affect
+-the operation of a low-level (single file) merge.  Some options:
 -
--The oid-array API provides storage and manipulation of sets of object
--identifiers. The emphasis is on storage and processing efficiency,
--making them suitable for large lists. Note that the ordering of items is
--not preserved over some operations.
+-`virtual_ancestor`::
+-	Behave as though this were part of a merge between common
+-	ancestors in a recursive merge.
+-	If a helper program is specified by the
+-	`[merge "<driver>"] recursive` configuration, it will
+-	be used (see linkgit:gitattributes[5]).
 -
--Data Structures
+-`variant`::
+-	Resolve local conflicts automatically in favor
+-	of one side or the other (as in 'git merge-file'
+-	`--ours`/`--theirs`/`--union`).  Can be `0`,
+-	`XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`, or
+-	`XDL_MERGE_FAVOR_UNION`.
+-
+-`renormalize`::
+-	Resmudge and clean the "base", "theirs" and "ours" files
+-	before merging.  Use this when the merge is likely to have
+-	overlapped with a change in smudge/clean or end-of-line
+-	normalization rules.
++Check ll-merge.h for details.
+ 
+ Low-level (single file) merge
+ -----------------------------
+ 
+-`ll_merge`::
+-
+-	Perform a three-way single-file merge in core.  This is
+-	a thin wrapper around `xdl_merge` that takes the path and
+-	any merge backend specified in `.gitattributes` or
+-	`.git/info/attributes` into account.  Returns 0 for a
+-	clean merge.
+-
+-Calling sequence:
+-
+-* Prepare a `struct ll_merge_options` to record options.
+-  If you have no special requests, skip this and pass `NULL`
+-  as the `opts` parameter to use the default options.
+-
+-* Allocate an mmbuffer_t variable for the result.
+-
+-* Allocate and fill variables with the file's original content
+-  and two modified versions (using `read_mmfile`, for example).
+-
+-* Call `ll_merge()`.
+-
+-* Read the merged content from `result_buf.ptr` and `result_buf.size`.
+-
+-* Release buffers when finished.  A simple
+-  `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
+-  free(result_buf.ptr);` will do.
+-
+-If the modifications do not merge cleanly, `ll_merge` will return a
+-nonzero value and `result_buf` will generally include a description of
+-the conflict bracketed by markers such as the traditional `<<<<<<<`
+-and `>>>>>>>`.
+-
+-The `ancestor_label`, `our_label`, and `their_label` parameters are
+-used to label the different sides of a conflict if the merge driver
+-supports this.
+-
+-Everything else
 ----------------
 -
--`struct oid_array`::
+-Talk about <merge-recursive.h> and merge_file():
 -
--	A single array of object IDs. This should be initialized by
--	assignment from `OID_ARRAY_INIT`.  The `oid` member contains
--	the actual data. The `nr` member contains the number of items in
--	the set.  The `alloc` and `sorted` members are used internally,
--	and should not be needed by API callers.
+- - merge_trees() to merge with rename detection
+- - merge_recursive() for ancestor consolidation
+- - try_merge_command() for other strategies
+- - conflict format
+- - merge options
 -
--Functions
-----------
--
--`oid_array_append`::
--	Add an item to the set. The object ID will be placed at the end of
--	the array (but note that some operations below may lose this
--	ordering).
--
--`oid_array_lookup`::
--	Perform a binary search of the array for a specific object ID.
--	If found, returns the offset (in number of elements) of the
--	object ID. If not found, returns a negative integer. If the array
--	is not sorted, this function has the side effect of sorting it.
--
--`oid_array_clear`::
--	Free all memory associated with the array and return it to the
--	initial, empty state.
--
--`oid_array_for_each`::
--	Iterate over each element of the list, executing the callback
--	function for each one. Does not sort the list, so any custom
--	hash order is retained. If the callback returns a non-zero
--	value, the iteration ends immediately and the callback's
--	return is propagated; otherwise, 0 is returned.
--
--`oid_array_for_each_unique`::
--	Iterate over each unique element of the list in sorted order,
--	but otherwise behave like `oid_array_for_each`. If the array
--	is not sorted, this function has the side effect of sorting
--	it.
--
--`oid_array_filter`::
--	Apply the callback function `want` to each entry in the array,
--	retaining only the entries for which the function returns true.
--	Preserve the order of the entries that are retained.
--
--Examples
----------
--
-------------------------------------------
--int print_callback(const struct object_id *oid,
--		    void *data)
--{
--	printf("%s\n", oid_to_hex(oid));
--	return 0; /* always continue */
--}
--
--void some_func(void)
--{
--	struct sha1_array hashes = OID_ARRAY_INIT;
--	struct object_id oid;
--
--	/* Read objects into our set */
--	while (read_object_from_stdin(oid.hash))
--		oid_array_append(&hashes, &oid);
--
--	/* Check if some objects are in our set */
--	while (read_object_from_stdin(oid.hash)) {
--		if (oid_array_lookup(&hashes, &oid) >= 0)
--			printf("it's in there!\n");
--
--	/*
--	 * Print the unique set of objects. We could also have
--	 * avoided adding duplicate objects in the first place,
--	 * but we would end up re-sorting the array repeatedly.
--	 * Instead, this will sort once and then skip duplicates
--	 * in linear time.
--	 */
--	oid_array_for_each_unique(&hashes, print_callback, NULL);
--}
-------------------------------------------
-diff --git a/sha1-array.c b/sha1-array.c
-index d922e94e3f..3eeadfede9 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -48,7 +48,7 @@ int oid_array_for_each(struct oid_array *array,
- {
- 	int i;
+-(Daniel, Miklos, Stephan, JC)
++Check ll-merge.h for details.
+diff --git a/ll-merge.h b/ll-merge.h
+index e78973dd55..aceb1b2413 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -7,16 +7,87 @@
  
--	/* No oid_array_sort() here! See the api-oid-array.txt docs! */
-+	/* No oid_array_sort() here! See sha1-array.h */
- 
- 	for (i = 0; i < array->nr; i++) {
- 		int ret = fn(array->oid + i, data);
-diff --git a/sha1-array.h b/sha1-array.h
-index 55d016c4bf..dc1bca9c9a 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -1,6 +1,52 @@
- #ifndef SHA1_ARRAY_H
- #define SHA1_ARRAY_H
+ #include "xdiff/xdiff.h"
  
 +/**
-+ * The API provides storage and manipulation of sets of object identifiers.
-+ * The emphasis is on storage and processing efficiency, making them suitable
-+ * for large lists. Note that the ordering of items is not preserved over some
-+ * operations.
 + *
-+ * Examples
-+ * --------
-+ * -----------------------------------------
-+ * int print_callback(const struct object_id *oid,
-+ * 		    void *data)
-+ * {
-+ * 	printf("%s\n", oid_to_hex(oid));
-+ * 	return 0; // always continue
-+ * }
++ * Calling sequence:
++ * ----------------
 + *
-+ * void some_func(void)
-+ * {
-+ *     struct sha1_array hashes = OID_ARRAY_INIT;
-+ *     struct object_id oid;
++ * - Prepare a `struct ll_merge_options` to record options.
++ *   If you have no special requests, skip this and pass `NULL`
++ *   as the `opts` parameter to use the default options.
 + *
-+ *     // Read objects into our set
-+ *     while (read_object_from_stdin(oid.hash))
-+ *         oid_array_append(&hashes, &oid);
++ * - Allocate an mmbuffer_t variable for the result.
 + *
-+ *     // Check if some objects are in our set
-+ *     while (read_object_from_stdin(oid.hash)) {
-+ *         if (oid_array_lookup(&hashes, &oid) >= 0)
-+ *             printf("it's in there!\n");
++ * - Allocate and fill variables with the file's original content
++ *   and two modified versions (using `read_mmfile`, for example).
 + *
-+ *          // Print the unique set of objects. We could also have
-+ *          // avoided adding duplicate objects in the first place,
-+ *          // but we would end up re-sorting the array repeatedly.
-+ *          // Instead, this will sort once and then skip duplicates
-+ *          // in linear time.
++ * - Call `ll_merge()`.
 + *
-+ *         oid_array_for_each_unique(&hashes, print_callback, NULL);
-+ *     }
++ * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
++ *
++ * - Release buffers when finished.  A simple
++ *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
++ *   free(result_buf.ptr);` will do.
++ *
++ * If the modifications do not merge cleanly, `ll_merge` will return a
++ * nonzero value and `result_buf` will generally include a description of
++ * the conflict bracketed by markers such as the traditional `<<<<<<<`
++ * and `>>>>>>>`.
++ *
++ * The `ancestor_label`, `our_label`, and `their_label` parameters are
++ * used to label the different sides of a conflict if the merge driver
++ * supports this.
 + */
 +
-+/**
-+ * A single array of object IDs. This should be initialized by assignment from
-+ * `OID_ARRAY_INIT`. The `oid` member contains the actual data. The `nr` member
-+ * contains the number of items in the set. The `alloc` and `sorted` members
-+ * are used internally, and should not be needed by API callers.
-+ */
- struct oid_array {
- 	struct object_id *oid;
- 	int nr;
-@@ -10,18 +56,52 @@ struct oid_array {
- 
- #define OID_ARRAY_INIT { NULL, 0, 0, 0 }
++
+ struct index_state;
  
 +/**
-+ * Add an item to the set. The object ID will be placed at the end of the array
-+ * (but note that some operations below may lose this ordering).
++ * This describes the set of options the calling program wants to affect
++ * the operation of a low-level (single file) merge.
 + */
- void oid_array_append(struct oid_array *array, const struct object_id *oid);
+ struct ll_merge_options {
 +
-+/**
-+ * Perform a binary search of the array for a specific object ID. If found,
-+ * returns the offset (in number of elements) of the object ID. If not found,
-+ * returns a negative integer. If the array is not sorted, this function has
-+ * the side effect of sorting it.
-+ */
- int oid_array_lookup(struct oid_array *array, const struct object_id *oid);
++	/**
++	 * Behave as though this were part of a merge between common ancestors in
++	 * a recursive merge (merges of binary files may need to be handled
++	 * differently in such cases, for example). If a helper program is
++	 * specified by the `[merge "<driver>"] recursive` configuration, it will
++	 * be used.
++	 */
+ 	unsigned virtual_ancestor : 1;
+-	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
 +
-+/**
-+ * Free all memory associated with the array and return it to the initial,
-+ * empty state.
-+ */
- void oid_array_clear(struct oid_array *array);
++	/**
++	 * Resolve local conflicts automatically in favor of one side or the other
++	 * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
++	 * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
++	 * or `XDL_MERGE_FAVOR_UNION`.
++	 */
++	unsigned variant : 2;
++
++	/**
++	 * Resmudge and clean the "base", "theirs" and "ours" files before merging.
++	 * Use this when the merge is likely to have overlapped with a change in
++	 * smudge/clean or end-of-line normalization rules.
++	 */
+ 	unsigned renormalize : 1;
++
++	/**
++	 * Increase the length of conflict markers so that nested conflicts
++	 * can be differentiated.
++	 */
+ 	unsigned extra_marker_size;
++
++	/* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
+ 	long xdl_opts;
+ };
  
- typedef int (*for_each_oid_fn)(const struct object_id *oid,
- 			       void *data);
 +/**
-+ * Iterate over each element of the list, executing the callback function for
-+ * each one. Does not sort the list, so any custom hash order is retained.
-+ * If the callback returns a non-zero value, the iteration ends immediately
-+ * and the callback's return is propagated; otherwise, 0 is returned.
++ * Perform a three-way single-file merge in core.  This is a thin wrapper
++ * around `xdl_merge` that takes the path and any merge backend specified in
++ * `.gitattributes` or `.git/info/attributes` into account.
++ * Returns 0 for a clean merge.
 + */
- int oid_array_for_each(struct oid_array *array,
- 		       for_each_oid_fn fn,
- 		       void *data);
-+
-+/**
-+ * Iterate over each unique element of the list in sorted order, but otherwise
-+ * behave like `oid_array_for_each`. If the array is not sorted, this function
-+ * has the side effect of sorting it.
-+ */
- int oid_array_for_each_unique(struct oid_array *array,
- 			      for_each_oid_fn fn,
- 			      void *data);
-+
-+/**
-+ * Apply the callback function `want` to each entry in the array, retaining
-+ * only the entries for which the function returns true. Preserve the order
-+ * of the entries that are retained.
-+ */
- void oid_array_filter(struct oid_array *array,
- 		      for_each_oid_fn want,
- 		      void *cbdata);
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
 -- 
 gitgitgadget
 
