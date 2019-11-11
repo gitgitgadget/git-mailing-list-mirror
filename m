@@ -7,75 +7,88 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABF251F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 08:22:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D52C1F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 08:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbfKKIWk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 03:22:40 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44288 "HELO cloud.peff.net"
+        id S1726879AbfKKIjl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 03:39:41 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44294 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726785AbfKKIWk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 03:22:40 -0500
-Received: (qmail 17782 invoked by uid 109); 11 Nov 2019 08:22:40 -0000
+        id S1726770AbfKKIjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 03:39:41 -0500
+Received: (qmail 17970 invoked by uid 109); 11 Nov 2019 08:39:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Nov 2019 08:22:40 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Nov 2019 08:39:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3876 invoked by uid 111); 11 Nov 2019 08:26:08 -0000
+Received: (qmail 3970 invoked by uid 111); 11 Nov 2019 08:43:09 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2019 03:26:08 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2019 03:43:09 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 11 Nov 2019 03:22:39 -0500
+Date:   Mon, 11 Nov 2019 03:39:40 -0500
 From:   Jeff King <peff@peff.net>
-To:     Danh Doan <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 3/8] t3900: demonstrate git-rebase problem with multi
- encoding
-Message-ID: <20191111082239.GB17984@sigill.intra.peff.net>
+To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v6 9/9] sequencer: fallback to sane label in making
+ rebase todo list
+Message-ID: <20191111083940.GC17984@sigill.intra.peff.net>
 References: <20191031092618.29073-1-congdanhqx@gmail.com>
- <cover.1573094789.git.congdanhqx@gmail.com>
- <ca869cef57bcf620a7b5d0519d362dcd9a27eae6.1573094789.git.congdanhqx@gmail.com>
- <20191107060233.GB6431@sigill.intra.peff.net>
- <20191107064854.GB8096@danh.dev>
- <20191107080218.GA11245@sigill.intra.peff.net>
- <20191107105109.GD8096@danh.dev>
+ <cover.1573452046.git.congdanhqx@gmail.com>
+ <78daf050de8c0cdc81fed4adc8fef92d1768c63a.1573452046.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191107105109.GD8096@danh.dev>
+In-Reply-To: <78daf050de8c0cdc81fed4adc8fef92d1768c63a.1573452046.git.congdanhqx@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 07, 2019 at 05:51:09PM +0700, Danh Doan wrote:
+On Mon, Nov 11, 2019 at 01:03:42PM +0700, Doan Tran Cong Danh wrote:
 
-> On 2019-11-07 03:02:18 -0500, Jeff King wrote:
-> > >                 git config i18n.commitencoding ISO-2022-JP &&
-> > >                 echo ISO-2022-JP >>F &&
-> > >                 git commit -a -F "$TEST_DIRECTORY/t3900/ISO-2022-JP.txt" &&
-> > 
-> > ...you still can't just run this manually because of other lines like
-> > this one.
+> In later stage of rebasing, we will make a ref in
+> refs/rewritten/<label>, this label is extracted from the subject of
+> current merge commit.
 > 
-> Except we can with a little effort:
+> If that subject has forbidden character for refname, git couldn't create
+> the rewritten ref. One such case is the merge commit subject has
+> a multibyte character encoded in ISO-2022-JP.
 > 
->     export TEST_DIRECTORY=..
+> Provide a sane fallback in order to help git-rebase works in such case
 
-Sure, but if you allow setting variables, you could do the same for
-"$msg", etc. :)
+Good find. Not having worked much with this part of the sequencer code,
+I don't have a strong opinion on the fallback label. But it seems better
+than the current behavior would be.
 
-> > It's also weirdly unlike all of the other tests, which creates confusion
-> > for people reading the code. IMHO the tradeoff isn't worth it.
-> 
-> Hm, I think it's the test_commit_autosquash_flag is the one that is weird
-> in this file. Most of other sets of tests (line 89-176) use the same quote.
+I suspect there may be other subtle problems, too, for filesystems that
+can't represent some part of the subject (e.g., I wonder if some of your
+ISO-2022-JP tests might already have trouble on HFS+, which excepts all
+paths to be UTF-8).
 
-Yeah, you're right. I did look at the other tests to see if it was an
-existing style, but of course that was the exact one I looked at. ;)
+> @@ -4607,9 +4608,15 @@ static int make_script_with_merges(struct pretty_print_context *pp,
+>  			if (isspace(*p1))
+>  				*(char *)p1 = '-';
+>  
+> +		hex_oid = oid_to_hex(&commit->object.oid);
+> +
+> +		if (check_refname_format(label.buf, REFNAME_ALLOW_ONELEVEL) < 0) {
+> +			strbuf_reset(&label);
+> +			strbuf_addf(&label, "label-%s", hex_oid);
+> +		}
+> +
+>  		strbuf_reset(&buf);
+> -		strbuf_addf(&buf, "%s -C %s",
+> -			    cmd_merge, oid_to_hex(&commit->object.oid));
+> +		strbuf_addf(&buf, "%s -C %s", cmd_merge, hex_oid);
 
-IMHO it's still a bad style (and is unlike most of the rest of our
-tests), but as it's following the existing style in the file, I can live
-with it (and we can think about changing it all as a separate step
-later).
+A minor nit, but I think it's better here to just call oid_to_hex()
+twice, rather than assigning to the hex_oid variable. It's returning a
+pointer to a static buffer, so holding onto the pointers for too long is
+dangerous. What you have here is definitely OK, because nothing
+interesting happens in between, but seeing any assignment of the result
+of "oid_to_hex" makes auditing harder.
+
+And it's not like it's that expensive, or that this is
+performance-critical code (and if it were, we'd do better to use
+oid_to_hex_r() directly into the strbuf anyway).
 
 -Peff
