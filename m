@@ -2,168 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0B61F4C0
-	for <e@80x24.org>; Mon, 11 Nov 2019 13:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74EF71F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 14:10:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727046AbfKKNsg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 08:48:36 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58279 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726912AbfKKNsf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 08:48:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573480112;
-        bh=irFwpe4KrvqW1JjFC66Pa3ERBDkrFx2BUyrUeZMaD64=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=fZEyCTBhYSub8L2cIAOxYOI5H1S4xNmTBvswmYMdLNOUnDJRlw++jLGSIqiOhlJKL
-         JxfZVsr2WUfUiWAoT5pAeK1fSx1ru6nsS5TKLYxBLhGajPiQrgdj5dYipP/G2US1H6
-         JiKNzbyFkSV3bMyswYoTu3EiQjzfBDmKnUVcXrts=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1iUi1K11CU-000fs4; Mon, 11
- Nov 2019 14:48:32 +0100
-Date:   Mon, 11 Nov 2019 14:48:13 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v3 3/9] bugreport: add version and system information
-In-Reply-To: <20191108214757.GB22855@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1911111439510.46@tvgsbejvaqbjf.bet>
-References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-4-emilyshaffer@google.com> <nycvar.QRO.7.76.6.1910281432180.46@tvgsbejvaqbjf.bet> <20191108214757.GB22855@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726887AbfKKOKB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 09:10:01 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:33055 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726832AbfKKOKB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 09:10:01 -0500
+Received: by mail-wr1-f46.google.com with SMTP id w9so7992788wrr.0
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 06:09:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ptQDOGGEWwCl50eTFwRV4dGRbS+VsGGYfk1z4leA7wI=;
+        b=Fum+FwXSZYGe75QPxq9f9rTwrehq9ybCOcXfhyNsobSyb20izReEJKJmzdogE9iicx
+         pyEQmAnq9iAt2FUVJDcOM9qktywhsVTBcYrkYKUsM5sOL16AizrLc0bWuIC63zZ6T8JG
+         2SnPRhcyz2J+sTmJESOs9cEBP1cVEEtYr1PNgiIiBXnv7Gw5lTpj1osQ/SRunkwEXoSD
+         Crhe4bFJCFuyPiDDIufdlsmsJEM4P8h8VVjj1Q7i/F2R6blUibqhb8W5N8UqADsu2emH
+         EW4JSbpIPn0EDR2xzZD5GA2VXfDAozhIm6xqxSoxatW5awW4TMfbPtB4JgbaxEl2AVTy
+         W01A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ptQDOGGEWwCl50eTFwRV4dGRbS+VsGGYfk1z4leA7wI=;
+        b=Z2uXqiNKYrAqp1PRmm+5otIrPH9p1Obqu1CfPGmJ143vMcyxv5NJTSphCWTugkKmB+
+         GJKBV2OI7LMS3VyMSNRxobKCkttSJy+W9FY7igwH3DqkZJyWfQS10+M5fWn8VeChxFbO
+         A/iNZpBz6OBBH0OCa69XputJG6DoevDt/lE2uzeS6dssZFIZzu/PN4fIihUYZ0jCc/lK
+         r6wJ2MAs7pCZti+IAwd9wqk8x4/xuIGVdFzWbF08CrwghYwcfkeSgcuwUYuUjDqAoqGJ
+         nqjfjanWESbF1y02/4ePm1wvLG6IqkOcg1mHoFlLq2qbeVclfHGPoFN+iW2AC7RU9vYi
+         wPLQ==
+X-Gm-Message-State: APjAAAWfO9fCIYiuB1r0801NuhlMSY/ZhVKqouwi1B2iRhPbaH2CB2Vm
+        Z5g9+T8Z4Jzevwmqxn8RqYjlozOc
+X-Google-Smtp-Source: APXvYqzN678ppWdJAz2v4v7Fke1fXFTYlDFAdlPQAVhLo2ShTRNMBb3axzLM8Rj4LDK07zxIs/zgaw==
+X-Received: by 2002:a5d:5444:: with SMTP id w4mr20441754wrv.164.1573481399315;
+        Mon, 11 Nov 2019 06:09:59 -0800 (PST)
+Received: from szeder.dev (x4db606e5.dyn.telefonica.de. [77.182.6.229])
+        by smtp.gmail.com with ESMTPSA id g184sm23929137wma.8.2019.11.11.06.09.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 11 Nov 2019 06:09:58 -0800 (PST)
+Date:   Mon, 11 Nov 2019 15:09:56 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Sebastiaan Dammann <triadsebas@gmail.com>, git@vger.kernel.org
+Subject: Re: git name-rev looks at refs/notes, refs/svn/map: stack overflow
+Message-ID: <20191111140956.GJ4348@szeder.dev>
+References: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
+ <20191111042149.GE6379@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Pd+AzYq/QV5WEzqCYscHnLkbxJlEgupsxLBAf6a0NPzP3zctlnp
- dv7ItZP7r8Nkp1QIcdsXALi5zytUtcxWhtcjIyWMkcW/bMEArNg/Uu4q+ZdX/HECRtnUz+/
- f44byaUvhhQZl49QeKZwXh/TSltlqYimezA6Axqtv9PrK//bJlevNrps6WcXm0xlNSl6Ufn
- OKCVG7srXJpRiBfBXc1Zg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CLEnz10iK9g=:8JjDl+O4KHjzeFkbJYVJNw
- 8KNTf6N6cdh1hPbf4bBhuCLT0jr3n0dVkcitSq+e38rThKPaA/2hts6OTKalFAnuhSs0y0zQe
- rfqvNRQdKsZeySPI750krwKs598lpA6bb7GlTwHdwjFZcyPiWkLfUO7fn9i3XE3DuzWMiwXzM
- 3rC91ljZYF+fAXLgvKmU+udKZKEE6ImroAVs7G9D5eU3k6A5/R3oFUcmLW8yf9oRqKN2DJDeY
- JA/yRblbkXM23eGkE/hi9KBkikDwq4fvpYO8IhtdMwOmSdHF9FQWL8vxwPzKok34nDpFYGx5m
- UGPy1O7eVqrJ6aTzke/2YBRRenQV8BBvPSMqvJKwpcmG1IbvwS2afNqVfh/x+niNqEVB3t9XY
- C9XSRn49gfVRXEJ2Db8mnZZDKe+wNt4PO0jgM//xQ8cnH/Oi2o7CN/e7mQHBf+di9ReU/hgJi
- bzCoICjP7QfWYaxrLtcmWE71EA13o1S/q5kBOQH6FvFM4b8XSTj/5mqVBnopqcS37bstIGEte
- 0z+y1ZRxqbLZkWfHbrsfEE1pjEhxe3EZz8zamenyiqJ39zt7pwicNDzV4eihgOyqqDVLGFqf+
- jteVEM0HHmQfntCGSDfUIdYLKiciDpi7x5Qjs3OEsAI4IDL61UMwnRvpcnVDzvZoa2traLAxO
- z1EpF/+U/CgAaQ4RF0BWLf+uMD4qT2+5VoZexEJIpH7kyygfk8IVLqG3MGcRBISZj+Trp4tdI
- a0/v2ugIQdTlfNkna0USEHaLEym0vMdRoLTfFJZIG902zeHIDh1YsM0K8xib51v1z90EoEJF/
- QgkraAGX0uL0XKTmPYdrKjSOZ/Yg/bcuk2rCwLGE9HNlEv+GkZFpRmE6fVEaEetxYLTYxRU9t
- 7YDMWJgbRJaNVGMMFPVq1AE/kr1pZoK95x42+DC+mJtY81HhNpOOALr7PFh/kkvgYtCvQOkAs
- NSF7gYSatthmHfwNJ8qnxpP0FSMZRd4hoS+ibgXzQj7+CX9VJ3fYk22mzEqmKx+L33vl7iNdT
- 7Vlk3mcP5dRqNJRg0fJrbQbi/FoT28g5ASuDsPR+4ypPb8HfKYFhq9HftELLUnmQqQ15+pn7K
- +1ZcFdADnU8yarVVvFY5A3s9lY0oq2RfRfbUiVARUoSS8Wkz6glhIwVzCLyp4t5aAaQxeZ2TU
- V7UeWy9jizYgAaT8q0yPkJl3FX9l2BcJDfkxzf7MXaIRLmOAolq2Sq2YJKKJI0DkSI3/NUj5R
- sp7r0Hqb/Rkl+MGja9unfIq4aqpPH0AVpLNnNbb1uQTOpGkFdOS59eGl6jzc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191111042149.GE6379@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+On Sun, Nov 10, 2019 at 11:21:49PM -0500, Jeff King wrote:
+> On Sat, Nov 09, 2019 at 12:31:31PM +0100, Sebastiaan Dammann wrote:
 
-On Fri, 8 Nov 2019, Emily Shaffer wrote:
+> All of that's obviously a workaround, though. The real issue is the
+> stack exhaustion.
+> 
+> > I hope to hear your view on this. Is this an (confirmed) issue with
+> > git? Are there beside the workaround I mentioned, any other
+> > workarounds?
+> 
+> Yes, this is well known. It's covered in the test suite (unfortunately
+> still failing, of course) since 31625b34c0 (t6120: test describe and
+> name-rev with deep repos, 2017-09-07).
+> 
+> There was a proposed fix recently in:
+> 
+>   https://public-inbox.org/git/20190919214712.7348-1-szeder.dev@gmail.com/
+> 
+> but it doesn't seem to have been picked up. I'm not sure what the
+> current status is.
 
-> On Mon, Oct 28, 2019 at 02:49:29PM +0100, Johannes Schindelin wrote:
->
-> > On Thu, 24 Oct 2019, Emily Shaffer wrote:
-> >
-> > > diff --git a/bugreport.c b/bugreport.c
-> > > new file mode 100644
-> > > index 0000000000..ada54fe583
-> > > --- /dev/null
-> > > +++ b/bugreport.c
-> > > [...]
-> > > +	strbuf_addstr(sys_info, "curl-config --version: ");
-> > > +	strbuf_addbuf(sys_info, &std_out);
-> > > +	strbuf_complete_line(sys_info);
-> > > +
-> > > +	argv_array_clear(&cp.args);
-> > > +	strbuf_reset(&std_out);
-> > > +
-> > > +
-> > > +	argv_array_push(&cp.args, "ldd");
-> > > +	argv_array_push(&cp.args, "--version");
-> > > +	capture_command(&cp, &std_out, 0);
-> >
-> > Again, this command will only be present in few setups. I am not
-> > actually sure that the output of this is interesting to begin with.
->
-> It was a suggestion, I believe, from Jonathan Nieder.
+It's getting along, being polished, clarified and fine-tuned ever so
+slowly.
 
-Yes, I guess Jonathan builds their Git locally, too.
+E.g. it turned out that the performance penalty from eliminating the
+recursion is basically entirely caused by using a 'commit-list' to
+store interesting parents (the overhead of a malloc() on each insert
+and a free() on each pop).  Switching to a LIFO 'prio-queue' doesn't
+cause any measurable slowdown.
 
-It _is_ easy to forget that most users find this too involved to even
-try.
-
-Nothing like reading through a bug tracker quite frequently to learn
-about the actual troubles actual users have :-)
-
-> > What I _do_ think is that a much more interesting piece of information
-> > would be the exact GLIBC version, the OS name and the OS version.
->
-> The glibc version is easy; I've done that. It certainly looks nicer than
-> the ldd call.
->
-> I guess I may be missing something, because as I start to look into how
-> to the OS info, I fall down a hole of many, many preprocessor defines to
-> check. If that's the approach you want me to take, just say the word,
-> but it will be ugly :) I suppose I had hoped the uname info would give u=
-s
-> a close enough idea that full OS info isn't necessary.
-
-We could go down the pre-processor route, but that would give us the OS
-name and version at build time, not at run time. I think we will be
-mostly interested in the latter, though.
-
-We might need to enhance our `uname()` emulation in `compat/mingw.c`,
-but I think we already have enough information there.
-
-When it comes to glibc, I think `gnu_get_libc_version()` would get us
-what we want. A trickier thing might be to determine whether we're
-actually linking against glibc; I do not want to break musl builds
-again, I already did that inadvertently when requiring `REG_STARTEND`
-back in the days.
-
-> > > diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-> > > index 2ef16440a0..7232d31be7 100644
-> > > --- a/builtin/bugreport.c
-> > > +++ b/builtin/bugreport.c
-> > > @@ -1,4 +1,5 @@
-> > >  #include "builtin.h"
-> > > +#include "bugreport.h"
-> > >  #include "stdio.h"
-> > >  #include "strbuf.h"
-> > >  #include "time.h"
-> > > @@ -27,6 +28,13 @@ int get_bug_template(struct strbuf *template)
-> > >  	return 0;
-> > >  }
-> > >
-> > > +void add_header(FILE *report, const char *title)
-> > > +{
-> > > +	struct strbuf buffer =3D STRBUF_INIT;
-> > > +	strbuf_addf(&buffer, "\n\n[%s]\n", title);
-> > > +	strbuf_write(&buffer, report);
-> >
-> > This leaks `buffer`. Why not write into `report` via `fprintf()`
-> > directly?
->
-> Rather, to match the style of the rest of the builtin, modified
-> get_header to add the header to a passed-in strbuf instead of
-> modifying the file directly.
-
-Hmm. It makes the code less elegant in my opinion. I would rather either
-render the entire bug report into a single `strbuf` and then write it
-via `write_in_full()`, or use `fprintf()` directly.
-
-Ciao,
-Dscho
