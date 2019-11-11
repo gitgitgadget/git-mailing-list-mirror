@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 208601F454
+	by dcvr.yhbt.net (Postfix) with ESMTP id 718CC1F454
 	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727170AbfKKV2L (ORCPT <rfc822;e@80x24.org>);
+        id S1727181AbfKKV2L (ORCPT <rfc822;e@80x24.org>);
         Mon, 11 Nov 2019 16:28:11 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37494 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfKKV2L (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:39627 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727080AbfKKV2L (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 11 Nov 2019 16:28:11 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b17so803515wmj.2
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:08 -0800 (PST)
+Received: by mail-wr1-f43.google.com with SMTP id l7so4671712wrp.6
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=S8Z/8yxLc9Kkg/jhnZF/IUOVACZvTKYxQFBFBBTdFSo=;
-        b=tFyirU9NhP4gGRaJAd7rwNZmgRlsVN0cwj+1bo7iJoKV4PZjP5yn4B3pwhigTR34Si
-         o008y00NKAAcKETBUJOqM9zhbxOGZswbckyBnvzX84NSRMvru4etj8hrKyAupPemc8XJ
-         rsVXhdhxyzj4jsXW0peiJ5rtC37KP0uSMCUKKNYfrSFbhSApoQFKe26y1CfESE1xRcVK
-         NGu3WJPLhf3s34cibasvvQzU4r08FV7d9gINFq5AsyGyHFkbGfJjwuItyHvCQcRLn6Pv
-         1DxSRy1vBeogsNw72j48gZyyJLNwdf82Zt9ds7UWggRGjyFTjA8C2XuRv8XkBJgqjzbW
-         BHGQ==
+        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
+        b=qraFayClzvsmqYvHUZLU7TIadKjVoJAc0xE4jBlkp5V1LarfUmN198n8fUr31teXcR
+         e2Gjy1S6clhAoIE/JnD1nynahdq04LOJa8HmYZYM8uhghBTOQxnLsxBLBJrEoQDYrYcr
+         /p6ydg+Jz+xgtJrQ9tHFgvgo/8E0mdDkFrfmnsp/h1BGyqqXyJaBO51VI3GcnpxmXTNx
+         n5cXnQ81xV1PHj6g3rh2/+QiQRLhGt9fhvoF6MHTKusUnhx2YzXsGkWr/HYS9meIdMJO
+         AaSuwRS8UbtZfNFhHa802WKCDQd1Som+Wajkv99LlAe6Tq/sOpY3My64O9+vhfrtMXDv
+         cbpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=S8Z/8yxLc9Kkg/jhnZF/IUOVACZvTKYxQFBFBBTdFSo=;
-        b=EvmE9apcSO1pHsGZR/LYAVC0iRvG2dcEppvI4fV2CatcS6/xpc+No6RhXr0/79ah5+
-         9wXLV43qgtXZvu2lMxPk1f4iRxyGfGr1boRik0T1beZMzoaWpMWSbWQxpNV5h3d1JjF7
-         9XFq4IeAOu7oC0pooppKV0ma1sAKge0Tg1LbsMhm9R/o31ShigZGj9+8lcOYz0O360QA
-         sU35Uz2tEas54leULIF8R/yQadl0ehVg8DlaSF+xu+kVAp742cVui6lFhrOCmJ+Ep9+L
-         LPY6AvA1dUyOVxr4tahG06tjORd4dvyF7Bcq5K1AtX1IzCIKlR2M6Mjz3NrM72h9SVSS
-         anAA==
-X-Gm-Message-State: APjAAAUIjOj+iJ5j1nPm1eOmMP3UnSPq4QbLlzrYLzEiWu2VyDoVs9N2
-        LExjUpa726OVlgY+5q9RLQg4vAVA
-X-Google-Smtp-Source: APXvYqzRYInRAK/naInkNw5XwAmQYSbwVAp74TDm7LwGzMx0OggdbLRtZY/32aSjYHz+35xiCD8BJg==
-X-Received: by 2002:a7b:ce12:: with SMTP id m18mr963514wmc.130.1573507686992;
-        Mon, 11 Nov 2019 13:28:06 -0800 (PST)
+        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
+        b=Tg1j2Er5Lvu5mQFEbnEo1ukzMpBdqPvQ1Ec843vlIs/xGWWoOvD+hpbJSLlq+Ysajl
+         P36v/9jjBWlhtrvtwddzIVwdoqRJkVH/mMG3LYKYQ5tBpFaLkKr2s+yesLlexQ8HQutO
+         g8MxxFTyhQaAjnCc0YNAXLhXixIiwPtvuBX1PnbCQN4Tj6uR349QsBHVDbGBfjgBoHUP
+         UQNpJvxggzyPopCsI1HRB19pTjvuMAt+lhjxcZHnYpXOyF9SdOwTqfBZ0DKtpswNF5oA
+         2ibUuU/0hOEdFrU6BkxEP6WTeJo8OSvPYSi1iuYbXpM9kRjD3FCD7tJqkLqD0KzO1a2C
+         3foA==
+X-Gm-Message-State: APjAAAWXR7Uk43UOwxCPsVyJ9zyw4GJKK7ETYoSQ14Dzp/bswJicyP8k
+        RocHe8X9KG0UYdwCJ0fYgbESAp9q
+X-Google-Smtp-Source: APXvYqzkqd9Zbnecic8CPujk4nsCg506ZhQ9K7YUImY6ghifHC28Myx7iI+z+n06sXHCzNkqjzbWQQ==
+X-Received: by 2002:adf:a553:: with SMTP id j19mr18503932wrb.184.1573507688068;
+        Mon, 11 Nov 2019 13:28:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z17sm17202408wrh.57.2019.11.11.13.28.06
+        by smtp.gmail.com with ESMTPSA id l4sm507623wml.33.2019.11.11.13.28.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2019 13:28:06 -0800 (PST)
-Message-Id: <60e80b545f0f74e6fb58b5b6a64ecf3c1bd02d47.1573507684.git.gitgitgadget@gmail.com>
+        Mon, 11 Nov 2019 13:28:07 -0800 (PST)
+Message-Id: <7539f11bcefb94e363a535ea5c66556945e7d022.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:44 +0000
-Subject: [PATCH v3 01/21] diff: move doc to diff.h and diffcore.h
+Date:   Mon, 11 Nov 2019 21:27:45 +0000
+Subject: [PATCH v3 02/21] dir: move doc to dir.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,494 +72,327 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-diff.txt to both
-diff.h and diffcore.h as it's easier for the developers to find the usage
-information beside the code instead of looking for it in another doc file.
+Move the documentation from Documentation/technical/api-directory-listing.txt
+to dir.h as it's easier for the developers to find the usage information
+beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-diff.txt is removed because the information
-it has is now redundant and it'll be hard to keep it up to date and
-synchronized with the documentation in the header files.
-
-There are three members documented in the doc file that weren't found in
-the header files, assuming the doc wasn't up to date and the members
-no longer exist:
-touched_flags, COLOR_DIFF_WORDS and QUIET.
+Also documentation/technical/api-directory-listing.txt is removed because
+the information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header files.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-diff.txt | 174 ---------------------------
- diff.h                               | 127 +++++++++++++++++++
- diffcore.h                           |  32 +++++
- 3 files changed, 159 insertions(+), 174 deletions(-)
- delete mode 100644 Documentation/technical/api-diff.txt
+ .../technical/api-directory-listing.txt       | 130 ------------------
+ dir.c                                         |   2 -
+ dir.h                                         | 119 +++++++++++++++-
+ 3 files changed, 114 insertions(+), 137 deletions(-)
+ delete mode 100644 Documentation/technical/api-directory-listing.txt
 
-diff --git a/Documentation/technical/api-diff.txt b/Documentation/technical/api-diff.txt
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
 deleted file mode 100644
-index 30fc0e9c93..0000000000
---- a/Documentation/technical/api-diff.txt
+index 76b6e4f71b..0000000000
+--- a/Documentation/technical/api-directory-listing.txt
 +++ /dev/null
-@@ -1,174 +0,0 @@
--diff API
--========
+@@ -1,130 +0,0 @@
+-directory listing API
+-=====================
 -
--The diff API is for programs that compare two sets of files (e.g. two
--trees, one tree and the index) and present the found difference in
--various ways.  The calling program is responsible for feeding the API
--pairs of files, one from the "old" set and the corresponding one from
--"new" set, that are different.  The library called through this API is
--called diffcore, and is responsible for two things.
+-The directory listing API is used to enumerate paths in the work tree,
+-optionally taking `.git/info/exclude` and `.gitignore` files per
+-directory into account.
 -
--* finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
--  changes that touch a string (`-S`), as specified by the caller.
+-Data structure
+---------------
 -
--* outputting the differences in various formats, as specified by the
--  caller.
+-`struct dir_struct` structure is used to pass directory traversal
+-options to the library and to record the paths discovered.  A single
+-`struct dir_struct` is used regardless of whether or not the traversal
+-recursively descends into subdirectories.
+-
+-The notable options are:
+-
+-`exclude_per_dir`::
+-
+-	The name of the file to be read in each directory for excluded
+-	files (typically `.gitignore`).
+-
+-`flags`::
+-
+-	A bit-field of options:
+-
+-`DIR_SHOW_IGNORED`:::
+-
+-	Return just ignored files in `entries[]`, not untracked
+-	files. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED_TOO`.
+-
+-`DIR_SHOW_IGNORED_TOO`:::
+-
+-	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
+-	`ignored[]` in addition to untracked files in
+-	`entries[]`. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED`.
+-
+-`DIR_KEEP_UNTRACKED_CONTENTS`:::
+-
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
+-	untracked contents of untracked directories are also returned in
+-	`entries[]`.
+-
+-`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
+-
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
+-	this is set, returns ignored files and directories that match
+-	an exclude pattern. If a directory matches an exclude pattern,
+-	then the directory is returned and the contained paths are
+-	not. A directory that does not match an exclude pattern will
+-	not be returned even if all of its contents are ignored. In
+-	this case, the contents are returned as individual entries.
+-+
+-If this is set, files and directories that explicitly match an ignore
+-pattern are reported. Implicitly ignored directories (directories that
+-do not match an ignore pattern, but whose contents are all ignored)
+-are not reported, instead all of the contents are reported.
+-
+-`DIR_COLLECT_IGNORED`:::
+-
+-	Special mode for git-add. Return ignored files in `ignored[]` and
+-	untracked files in `entries[]`. Only returns ignored files that match
+-	pathspec exactly (no wildcards). Does not recurse into ignored
+-	directories.
+-
+-`DIR_SHOW_OTHER_DIRECTORIES`:::
+-
+-	Include a directory that is not tracked.
+-
+-`DIR_HIDE_EMPTY_DIRECTORIES`:::
+-
+-	Do not include a directory that is not tracked and is empty.
+-
+-`DIR_NO_GITLINKS`:::
+-
+-	If set, recurse into a directory that looks like a Git
+-	directory.  Otherwise it is shown as a directory.
+-
+-The result of the enumeration is left in these fields:
+-
+-`entries[]`::
+-
+-	An array of `struct dir_entry`, each element of which describes
+-	a path.
+-
+-`nr`::
+-
+-	The number of members in `entries[]` array.
+-
+-`alloc`::
+-
+-	Internal use; keeps track of allocation of `entries[]` array.
+-
+-`ignored[]`::
+-
+-	An array of `struct dir_entry`, used for ignored paths with the
+-	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
+-
+-`ignored_nr`::
+-
+-	The number of members in `ignored[]` array.
 -
 -Calling sequence
 -----------------
 -
--* Prepare `struct diff_options` to record the set of diff options, and
--  then call `repo_diff_setup()` to initialize this structure.  This
--  sets up the vanilla default.
+-Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
+-marked. If you to exclude files, make sure you have loaded index first.
 -
--* Fill in the options structure to specify desired output format, rename
--  detection, etc.  `diff_opt_parse()` can be used to parse options given
--  from the command line in a way consistent with existing git-diff
--  family of programs.
+-* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
+-  sizeof(dir))`.
 -
--* Call `diff_setup_done()`; this inspects the options set up so far for
--  internal consistency and make necessary tweaking to it (e.g. if
--  textual patch output was asked, recursive behaviour is turned on);
--  the callback set_default in diff_options can be used to tweak this more.
+-* To add single exclude pattern, call `add_pattern_list()` and then
+-  `add_pattern()`.
 -
--* As you find different pairs of files, call `diff_change()` to feed
--  modified files, `diff_addremove()` to feed created or deleted files,
--  or `diff_unmerge()` to feed a file whose state is 'unmerged' to the
--  API.  These are thin wrappers to a lower-level `diff_queue()` function
--  that is flexible enough to record any of these kinds of changes.
+-* To add patterns from a file (e.g. `.git/info/exclude`), call
+-  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
+-  short-hand function `setup_standard_excludes()` can be used to set
+-  up the standard set of exclude settings.
 -
--* Once you finish feeding the pairs of files, call `diffcore_std()`.
--  This will tell the diffcore library to go ahead and do its work.
+-* Set options described in the Data Structure section above.
 -
--* Calling `diff_flush()` will produce the output.
+-* Call `read_directory()`.
 -
+-* Use `dir.entries[]`.
 -
--Data structures
-----------------
--
--* `struct diff_filespec`
--
--This is the internal representation for a single file (blob).  It
--records the blob object name (if known -- for a work tree file it
--typically is a NUL SHA-1), filemode and pathname.  This is what the
--`diff_addremove()`, `diff_change()` and `diff_unmerge()` synthesize and
--feed `diff_queue()` function with.
--
--* `struct diff_filepair`
--
--This records a pair of `struct diff_filespec`; the filespec for a file
--in the "old" set (i.e. preimage) is called `one`, and the filespec for a
--file in the "new" set (i.e. postimage) is called `two`.  A change that
--represents file creation has NULL in `one`, and file deletion has NULL
--in `two`.
--
--A `filepair` starts pointing at `one` and `two` that are from the same
--filename, but `diffcore_std()` can break pairs and match component
--filespecs with other filespecs from a different filepair to form new
--filepair.  This is called 'rename detection'.
--
--* `struct diff_queue`
--
--This is a collection of filepairs.  Notable members are:
--
--`queue`::
--
--	An array of pointers to `struct diff_filepair`.  This
--	dynamically grows as you add filepairs;
--
--`alloc`::
--
--	The allocated size of the `queue` array;
--
--`nr`::
--
--	The number of elements in the `queue` array.
--
--
--* `struct diff_options`
--
--This describes the set of options the calling program wants to affect
--the operation of diffcore library with.
--
--Notable members are:
--
--`output_format`::
--	The output format used when `diff_flush()` is run.
--
--`context`::
--	Number of context lines to generate in patch output.
--
--`break_opt`, `detect_rename`, `rename-score`, `rename_limit`::
--	Affects the way detection logic for complete rewrites, renames
--	and copies.
--
--`abbrev`::
--	Number of hexdigits to abbreviate raw format output to.
--
--`pickaxe`::
--	A constant string (can and typically does contain newlines to
--	look for a block of text, not just a single line) to filter out
--	the filepairs that do not change the number of strings contained
--	in its preimage and postimage of the diff_queue.
--
--`flags`::
--	This is mostly a collection of boolean options that affects the
--	operation, but some do not have anything to do with the diffcore
--	library.
--
--`touched_flags`::
--	Records whether a flag has been changed due to user request
--	(rather than just set/unset by default).
--
--`set_default`::
--	Callback which allows tweaking the options in diff_setup_done().
--
--BINARY, TEXT;;
--	Affects the way how a file that is seemingly binary is treated.
--
--FULL_INDEX;;
--	Tells the patch output format not to use abbreviated object
--	names on the "index" lines.
--
--FIND_COPIES_HARDER;;
--	Tells the diffcore library that the caller is feeding unchanged
--	filepairs to allow copies from unmodified files be detected.
--
--COLOR_DIFF;;
--	Output should be colored.
--
--COLOR_DIFF_WORDS;;
--	Output is a colored word-diff.
--
--NO_INDEX;;
--	Tells diff-files that the input is not tracked files but files
--	in random locations on the filesystem.
--
--ALLOW_EXTERNAL;;
--	Tells output routine that it is Ok to call user specified patch
--	output routine.  Plumbing disables this to ensure stable output.
--
--QUIET;;
--	Do not show any output.
--
--REVERSE_DIFF;;
--	Tells the library that the calling program is feeding the
--	filepairs reversed; `one` is two, and `two` is one.
--
--EXIT_WITH_STATUS;;
--	For communication between the calling program and the options
--	parser; tell the calling program to signal the presence of
--	difference using program exit code.
--
--HAS_CHANGES;;
--	Internal; used for optimization to see if there is any change.
--
--SILENT_ON_REMOVE;;
--	Affects if diff-files shows removed files.
--
--RECURSIVE, TREE_IN_RECURSIVE;;
--	Tells if tree traversal done by tree-diff should recursively
--	descend into a tree object pair that are different in preimage
--	and postimage set.
+-* Call `clear_directory()` when none of the contained elements are no longer in use.
 -
 -(JC)
-diff --git a/diff.h b/diff.h
-index 7f8f024feb..d013060ace 100644
---- a/diff.h
-+++ b/diff.h
-@@ -9,6 +9,49 @@
- #include "object.h"
- #include "oidset.h"
+diff --git a/dir.c b/dir.c
+index 61f559f980..12d454b89d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2,8 +2,6 @@
+  * This handles recursive filename detection with exclude
+  * files, index knowledge etc..
+  *
+- * See Documentation/technical/api-directory-listing.txt
+- *
+  * Copyright (C) Linus Torvalds, 2005-2006
+  *		 Junio Hamano, 2005-2006
+  */
+diff --git a/dir.h b/dir.h
+index 2fbdef014f..c575f941dc 100644
+--- a/dir.h
++++ b/dir.h
+@@ -1,11 +1,44 @@
+ #ifndef DIR_H
+ #define DIR_H
+ 
+-/* See Documentation/technical/api-directory-listing.txt */
+-
+ #include "cache.h"
+ #include "strbuf.h"
  
 +/**
-+ * The diff API is for programs that compare two sets of files (e.g. two trees,
-+ * one tree and the index) and present the found difference in various ways.
-+ * The calling program is responsible for feeding the API pairs of files, one
-+ * from the "old" set and the corresponding one from "new" set, that are
-+ * different.
-+ * The library called through this API is called diffcore, and is responsible
-+ * for two things.
-+ *
-+ * - finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
-+ * changes that touch a string (`-S`), as specified by the caller.
-+ *
-+ * - outputting the differences in various formats, as specified by the caller.
-+ *
++ * The directory listing API is used to enumerate paths in the work tree,
++ * optionally taking `.git/info/exclude` and `.gitignore` files per directory
++ * into account.
++ */
++
++/**
 + * Calling sequence
 + * ----------------
 + *
-+ * - Prepare `struct diff_options` to record the set of diff options, and then
-+ * call `repo_diff_setup()` to initialize this structure.  This sets up the
-+ * vanilla default.
++ * Note: The index may be checked for .gitignore files that are
++ * CE_SKIP_WORKTREE marked. If you want to exclude files, make sure you have
++ * loaded the index first.
 + *
-+ * - Fill in the options structure to specify desired output format, rename
-+ * detection, etc.  `diff_opt_parse()` can be used to parse options given
-+ * from the command line in a way consistent with existing git-diff family
-+ * of programs.
++ * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
++ * sizeof(dir))`.
 + *
-+ * - Call `diff_setup_done()`; this inspects the options set up so far for
-+ * internal consistency and make necessary tweaking to it (e.g. if textual
-+ * patch output was asked, recursive behaviour is turned on); the callback
-+ * set_default in diff_options can be used to tweak this more.
++ * - To add single exclude pattern, call `add_pattern_list()` and then
++ *   `add_pattern()`.
 + *
-+ * - As you find different pairs of files, call `diff_change()` to feed
-+ * modified files, `diff_addremove()` to feed created or deleted files, or
-+ * `diff_unmerge()` to feed a file whose state is 'unmerged' to the API.
-+ * These are thin wrappers to a lower-level `diff_queue()` function that is
-+ * flexible enough to record any of these kinds of changes.
++ * - To add patterns from a file (e.g. `.git/info/exclude`), call
++ *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
++ *   short-hand function `setup_standard_excludes()` can be used to set
++ *   up the standard set of exclude settings.
 + *
-+ * - Once you finish feeding the pairs of files, call `diffcore_std()`.
-+ * This will tell the diffcore library to go ahead and do its work.
++ * - Set options described in the Data Structure section above.
 + *
-+ * - Calling `diff_flush()` will produce the output.
++ * - Call `read_directory()`.
++ *
++ * - Use `dir.entries[]`.
++ *
++ * - Call `clear_directory()` when none of the contained elements are no longer in use.
++ *
 + */
 +
- struct combine_diff_path;
- struct commit;
- struct diff_filespec;
-@@ -65,21 +108,66 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- 
- #define DIFF_FLAGS_INIT { 0 }
- struct diff_flags {
-+
-+	/**
-+	 * Tells if tree traversal done by tree-diff should recursively descend
-+	 * into a tree object pair that are different in preimage and postimage set.
-+	 */
- 	unsigned recursive;
- 	unsigned tree_in_recursive;
-+
-+	/* Affects the way how a file that is seemingly binary is treated. */
- 	unsigned binary;
- 	unsigned text;
-+
-+	/**
-+	 * Tells the patch output format not to use abbreviated object names on the
-+	 * "index" lines.
-+	 */
- 	unsigned full_index;
-+
-+	/* Affects if diff-files shows removed files. */
- 	unsigned silent_on_remove;
-+
-+	/**
-+	 * Tells the diffcore library that the caller is feeding unchanged
-+	 * filepairs to allow copies from unmodified files be detected.
-+	 */
- 	unsigned find_copies_harder;
-+
- 	unsigned follow_renames;
- 	unsigned rename_empty;
-+
-+	/* Internal; used for optimization to see if there is any change. */
- 	unsigned has_changes;
-+
- 	unsigned quick;
-+
-+	/**
-+	 * Tells diff-files that the input is not tracked files but files in random
-+	 * locations on the filesystem.
-+	 */
- 	unsigned no_index;
-+
-+	/**
-+	 * Tells output routine that it is Ok to call user specified patch output
-+	 * routine.  Plumbing disables this to ensure stable output.
-+	 */
- 	unsigned allow_external;
-+
-+	/**
-+	 * For communication between the calling program and the options parser;
-+	 * tell the calling program to signal the presence of difference using
-+	 * program exit code.
-+	 */
- 	unsigned exit_with_status;
-+
-+	/**
-+	 * Tells the library that the calling program is feeding the filepairs
-+	 * reversed; `one` is two, and `two` is one.
-+	 */
- 	unsigned reverse_diff;
-+
- 	unsigned check_failed;
- 	unsigned relative_name;
- 	unsigned ignore_submodules;
-@@ -131,36 +219,72 @@ enum diff_submodule_format {
- 	DIFF_SUBMODULE_INLINE_DIFF
+ struct dir_entry {
+ 	unsigned int len;
+ 	char name[FLEX_ARRAY]; /* more */
+@@ -144,25 +177,101 @@ struct untracked_cache {
+ 	unsigned int use_fsmonitor : 1;
  };
  
 +/**
-+ * the set of options the calling program wants to affect the operation of
-+ * diffcore library with.
++ * structure is used to pass directory traversal options to the library and to
++ * record the paths discovered. A single `struct dir_struct` is used regardless
++ * of whether or not the traversal recursively descends into subdirectories.
 + */
- struct diff_options {
- 	const char *orderfile;
+ struct dir_struct {
+-	int nr, alloc;
+-	int ignored_nr, ignored_alloc;
++
++	/* The number of members in `entries[]` array. */
++	int nr;
++
++	/* Internal use; keeps track of allocation of `entries[]` array.*/
++	int alloc;
++
++	/* The number of members in `ignored[]` array. */
++	int ignored_nr;
++
++	int ignored_alloc;
++
++	/* bit-field of options */
+ 	enum {
++
++		/**
++		 * Return just ignored files in `entries[]`, not untracked files.
++		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
++		 */
+ 		DIR_SHOW_IGNORED = 1<<0,
++
++		/* Include a directory that is not tracked. */
+ 		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
++
++		/* Do not include a directory that is not tracked and is empty. */
+ 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
++
++		/**
++		 * If set, recurse into a directory that looks like a Git directory.
++		 * Otherwise it is shown as a directory.
++		 */
+ 		DIR_NO_GITLINKS = 1<<3,
++
++		/**
++		 * Special mode for git-add. Return ignored files in `ignored[]` and
++		 * untracked files in `entries[]`. Only returns ignored files that match
++		 * pathspec exactly (no wildcards). Does not recurse into ignored
++		 * directories.
++		 */
+ 		DIR_COLLECT_IGNORED = 1<<4,
++
++		/**
++		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
++		 * `ignored[]` in addition to untracked files in `entries[]`.
++		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
++		 */
+ 		DIR_SHOW_IGNORED_TOO = 1<<5,
++
+ 		DIR_COLLECT_KILLED_ONLY = 1<<6,
++
++		/**
++		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++		 * set, the untracked contents of untracked directories are also
++		 * returned in `entries[]`.
++		 */
+ 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
++
++		/**
++		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++		 * set, returns ignored files and directories that match an exclude
++		 * pattern. If a directory matches an exclude pattern, then the
++		 * directory is returned and the contained paths are not. A directory
++		 * that does not match an exclude pattern will not be returned even if
++		 * all of its contents are ignored. In this case, the contents are
++		 * returned as individual entries.
++		 *
++		 * If this is set, files and directories that explicitly match an ignore
++		 * pattern are reported. Implicitly ignored directories (directories that
++		 * do not match an ignore pattern, but whose contents are all ignored)
++		 * are not reported, instead all of the contents are reported.
++		 */
+ 		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
++
+ 		DIR_SKIP_NESTED_GIT = 1<<9
+ 	} flags;
++
++	/* An array of `struct dir_entry`, each element of which describes a path. */
+ 	struct dir_entry **entries;
 +
 +	/**
-+	 * A constant string (can and typically does contain newlines to look for
-+	 * a block of text, not just a single line) to filter out the filepairs
-+	 * that do not change the number of strings contained in its preimage and
-+	 * postimage of the diff_queue.
++	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
++	 * `DIR_COLLECT_IGNORED` flags.
 +	 */
- 	const char *pickaxe;
-+
- 	const char *single_follow;
- 	const char *a_prefix, *b_prefix;
- 	const char *line_prefix;
- 	size_t line_prefix_length;
-+
+ 	struct dir_entry **ignored;
+ 
+-	/* Exclude info */
 +	/**
-+	 * collection of boolean options that affects the operation, but some do
-+	 * not have anything to do with the diffcore library.
++	 * The name of the file to be read in each directory for excluded files
++	 * (typically `.gitignore`).
 +	 */
- 	struct diff_flags flags;
+ 	const char *exclude_per_dir;
  
- 	/* diff-filter bits */
- 	unsigned int filter;
- 
- 	int use_color;
-+
-+	/* Number of context lines to generate in patch output. */
- 	int context;
-+
- 	int interhunkcontext;
-+
-+	/* Affects the way detection logic for complete rewrites, renames and
-+	 * copies.
-+	 */
- 	int break_opt;
- 	int detect_rename;
-+
- 	int irreversible_delete;
- 	int skip_stat_unmatch;
- 	int line_termination;
-+
-+	/* The output format used when `diff_flush()` is run. */
- 	int output_format;
-+
- 	unsigned pickaxe_opts;
-+
-+	/* Affects the way detection logic for complete rewrites, renames and
-+	 * copies.
-+	 */
- 	int rename_score;
- 	int rename_limit;
-+
- 	int needed_rename_limit;
- 	int degraded_cc_to_c;
- 	int show_rename_progress;
- 	int dirstat_permille;
- 	int setup;
-+
-+	/* Number of hexdigits to abbreviate raw format output to. */
- 	int abbrev;
-+
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
- #define WSEH_NEW (1<<12)
-@@ -192,6 +316,7 @@ struct diff_options {
- 	/* to support internal diff recursion by --follow hack*/
- 	int found_follow;
- 
-+	/* Callback which allows tweaking the options in diff_setup_done(). */
- 	void (*set_default)(struct diff_options *);
- 
- 	FILE *file;
-@@ -245,6 +370,7 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
- void diff_emit_submodule_pipethrough(struct diff_options *o,
- 				     const char *line, int len);
- 
-+/* Output should be colored. */
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-@@ -270,6 +396,7 @@ enum color_diff {
- 	DIFF_FILE_OLD_BOLD = 21,
- 	DIFF_FILE_NEW_BOLD = 22,
- };
-+
- const char *diff_get_color(int diff_use_color, enum color_diff ix);
- #define diff_get_color_opt(o, ix) \
- 	diff_get_color((o)->use_color, ix)
-diff --git a/diffcore.h b/diffcore.h
-index b651061c0e..7c07347e42 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -28,6 +28,12 @@ struct userdiff_driver;
- 
- #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
- 
-+/**
-+ * the internal representation for a single file (blob).  It records the blob
-+ * object name (if known -- for a work tree file it typically is a NUL SHA-1),
-+ * filemode and pathname.  This is what the `diff_addremove()`, `diff_change()`
-+ * and `diff_unmerge()` synthesize and feed `diff_queue()` function with.
-+ */
- struct diff_filespec {
- 	struct object_id oid;
- 	char *path;
-@@ -66,6 +72,17 @@ void diff_free_filespec_data(struct diff_filespec *);
- void diff_free_filespec_blob(struct diff_filespec *);
- int diff_filespec_is_binary(struct repository *, struct diff_filespec *);
- 
-+/**
-+ * This records a pair of `struct diff_filespec`; the filespec for a file in
-+ * the "old" set (i.e. preimage) is called `one`, and the filespec for a file
-+ * in the "new" set (i.e. postimage) is called `two`.  A change that represents
-+ * file creation has NULL in `one`, and file deletion has NULL in `two`.
-+ *
-+ * A `filepair` starts pointing at `one` and `two` that are from the same
-+ * filename, but `diffcore_std()` can break pairs and match component filespecs
-+ * with other filespecs from a different filepair to form new filepair. This is
-+ * called 'rename detection'.
-+ */
- struct diff_filepair {
- 	struct diff_filespec *one;
- 	struct diff_filespec *two;
-@@ -77,6 +94,7 @@ struct diff_filepair {
- 	unsigned done_skip_stat_unmatch : 1;
- 	unsigned skip_stat_unmatch_result : 1;
- };
-+
- #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
- 
- #define DIFF_PAIR_RENAME(p) ((p)->renamed_pair)
-@@ -94,11 +112,25 @@ void diff_free_filepair(struct diff_filepair *);
- 
- int diff_unmodified_pair(struct diff_filepair *);
- 
-+/**
-+ * This is a collection of filepairs.  Notable members are:
-+ *
-+ * - `queue`:
-+ * An array of pointers to `struct diff_filepair`. This dynamically grows as
-+ * you add filepairs;
-+ *
-+ * - `alloc`:
-+ * The allocated size of the `queue` array;
-+ *
-+ * - `nr`:
-+ * The number of elements in the `queue` array.
-+ */
- struct diff_queue_struct {
- 	struct diff_filepair **queue;
- 	int alloc;
- 	int nr;
- };
-+
- #define DIFF_QUEUE_CLEAR(q) \
- 	do { \
- 		(q)->queue = NULL; \
+ 	/*
 -- 
 gitgitgadget
 
