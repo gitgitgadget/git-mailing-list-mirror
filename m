@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4BA11F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F15D1F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727458AbfKKV2g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 16:28:36 -0500
-Received: from mail-wr1-f42.google.com ([209.85.221.42]:45725 "EHLO
-        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727323AbfKKV2W (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727451AbfKKV2f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 16:28:35 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:34622 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727325AbfKKV2W (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 11 Nov 2019 16:28:22 -0500
-Received: by mail-wr1-f42.google.com with SMTP id z10so10945954wrs.12
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:19 -0800 (PST)
+Received: by mail-wm1-f53.google.com with SMTP id j18so810004wmk.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QBZ/+RgZXz1vcOqcHbVhWx+TyI3mhUOApwCrSkjBZZI=;
-        b=W11lg3FQU6UGEv9VFKby+A5kkXbwdlEDmi5VU/nLXWOfr83oftBJ9FybUu6a5xCJRK
-         o9iBP8KpkJl90Gwhp86AfJbOlOevHZCweyAeWl0Rks/Cz5EpJ2VWKZ0iOzeLR7HzZshX
-         86RNl9SmV1/i02oB95g2tl/Atmb7SLMIIHR9x9od4BJtCOXd+ueW5kMdh3QBj6tH4erH
-         aZ6nbzo/gPYWvpN0SnDfvTNh9jHGMc1vEjsazHsbMv0IG/Ub/EXW/ZS3FtxkOAv3NRzr
-         flV+ikft9i4TCWKF5ERTKUcmfMJypXU4Q4fFF4Or4CiPTa61v0oi2Vi81ElCPmE/b8i4
-         PCkA==
+        bh=Yj6dU6eAFClAyLjY8JX8pFhWVOm+gb6VPcSQ1NX0okY=;
+        b=o+ANiO604cQggN8tD/bQYc4AK5Quj4avl8pvr1Z60X5AGoralVItNAJ/+PZeVua7i8
+         +KOUEsaRShdDaiF8QZrr0tgSE52geKsm8WiYgIip6xvzy7AQ/K2V2YOMuFdAwXbamFfZ
+         gUWaUNTs3MtvrCQ30CZ1stfIDMROjVCt1sqtw2a9bJKuS5VWu35qq0pp8tHWYwjb0Yht
+         mrsB8BhhcK08v3x6yNISxuzqPfcicuOzstz5sR67EgQ9l15RxAuR/hXw+oOHZA+MxY0k
+         sQaCVxMPBnnrSLx7aOje5mNze3RCL28jGSZUQRinapnkIKHGcmO3lOPE77AiRrZX9dNY
+         izDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QBZ/+RgZXz1vcOqcHbVhWx+TyI3mhUOApwCrSkjBZZI=;
-        b=bUM7IwQr5lafqMez4c9B9Z3+GhpE66j9n1cKZBrf5RvHk3dmbUuvjcoKupByueC1A8
-         PO1ZnCNiScQUO/nW/0SvGjbzMzBv795Yb/aqCT/Uja1H2U9jNRK/NgIsDhW1GCXPt94j
-         H58ePq8iYWmNP7RvsP3mmUyEM2Zms4vrqIEpReNjdvY2WnPlTbn9z+QAOCeytE12A+Zb
-         6QSaBxUq9xm59CcTU4JNMbO3gLjwuwHXpF5bQJ4MOjFoL0Sld7LnSRqHPeffofFItnZe
-         zY/Z91w4T0YEz1gnpbhUGffmEYc+drincNQPjxZdl8EpIh9VgP5BesNAbnMNuSocBsOP
-         0o1A==
-X-Gm-Message-State: APjAAAUMfA+kPUvNsEJc+UhiyIBhiFqEqziHaFx7veigKPzBUPDbNmnK
-        XkaoOeyf+Rsg23yTxAAEr+Fks9Hz
-X-Google-Smtp-Source: APXvYqzALxP73aNn3F70890ms12bo92+CWg26wwWo565PRGe6rxu86C6CDTf6CmoNvVx2Ou6Y9axZQ==
-X-Received: by 2002:adf:fd84:: with SMTP id d4mr22166760wrr.152.1573507698636;
-        Mon, 11 Nov 2019 13:28:18 -0800 (PST)
+        bh=Yj6dU6eAFClAyLjY8JX8pFhWVOm+gb6VPcSQ1NX0okY=;
+        b=jSGT2mQaZ8uRkVr2w0H3ecAa7mHj1cEVd9gUGXCU337r3qP9eojwRG/8ER7UvuC37Y
+         4HasW2u+3FtlFEw9dvFLdjt2nSV93yq0Xe8xesJ7ovDjIl9x4jOYJvqzOKRfZmvnvSY7
+         ZG4p2QEXhpcvPdmclwcJi4oa84zW41Bt5ICzxauhtGznfpPYoS/OZPoNfGLBmyBrMA/F
+         IGU+L1+EwfShi+V1Pfd09h0rP8E1GvaWXxVlD9Pmt3LovRc/VigZpMRcfVm0FSJl2xsu
+         9ZVupt9brMfPOlKncmSEGWr8rrYsxKLjy9LUFW3z4EzTi6YEaI3VUD6NMouAEG3z+cxh
+         KRNw==
+X-Gm-Message-State: APjAAAWyDP1aayd/DS3onFa/AkKtqLIfbV9ZXrh2fuaQu72vLG27ZzGn
+        aljNbRAhlCUKA33mWLKwkl6gYIn0
+X-Google-Smtp-Source: APXvYqxc7iB8X2wEED32lWKyyQDuQoSyxdeWOordIqBiCx0XaoKupqR8/fpaBZApX7M4y61eILtrNw==
+X-Received: by 2002:a1c:b404:: with SMTP id d4mr937558wmf.9.1573507699565;
+        Mon, 11 Nov 2019 13:28:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4sm1190740wmd.33.2019.11.11.13.28.18
+        by smtp.gmail.com with ESMTPSA id b15sm9285773wrx.77.2019.11.11.13.28.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 11 Nov 2019 13:28:18 -0800 (PST)
-Message-Id: <1a9a6ca42de07d0ab7b68764620a25ee79e22b28.1573507684.git.gitgitgadget@gmail.com>
+Message-Id: <f4df8e16ed2a93b7ffe8cd33c53118aef3fcbf8b.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:59 +0000
-Subject: [PATCH v3 16/21] run-command: move doc to run-command.h
+Date:   Mon, 11 Nov 2019 21:28:00 +0000
+Subject: [PATCH v3 17/21] trace: move doc to trace.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,625 +72,341 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-run-command.txt
-to run-command.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-trace.txt
+to trace.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Documentation/technical/api-run-command.txt is removed because the
+Documentation/technical/api-trace.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-run-command.txt | 264 --------------------
- run-command.h                               | 252 ++++++++++++++++++-
- 2 files changed, 245 insertions(+), 271 deletions(-)
- delete mode 100644 Documentation/technical/api-run-command.txt
+ Documentation/technical/api-trace.txt | 140 --------------------------
+ trace.h                               | 133 +++++++++++++++++++++++-
+ 2 files changed, 131 insertions(+), 142 deletions(-)
+ delete mode 100644 Documentation/technical/api-trace.txt
 
-diff --git a/Documentation/technical/api-run-command.txt b/Documentation/technical/api-run-command.txt
+diff --git a/Documentation/technical/api-trace.txt b/Documentation/technical/api-trace.txt
 deleted file mode 100644
-index 8bf3e37f53..0000000000
---- a/Documentation/technical/api-run-command.txt
+index fadb5979c4..0000000000
+--- a/Documentation/technical/api-trace.txt
 +++ /dev/null
-@@ -1,264 +0,0 @@
--run-command API
--===============
+@@ -1,140 +0,0 @@
+-trace API
+-=========
 -
--The run-command API offers a versatile tool to run sub-processes with
--redirected input and output as well as with a modified environment
--and an alternate current directory.
+-The trace API can be used to print debug messages to stderr or a file. Trace
+-code is inactive unless explicitly enabled by setting `GIT_TRACE*` environment
+-variables.
 -
--A similar API offers the capability to run a function asynchronously,
--which is primarily used to capture the output that the function
--produces in the caller in order to process it.
+-The trace implementation automatically adds `timestamp file:line ... \n` to
+-all trace messages. E.g.:
 -
+-------------
+-23:59:59.123456 git.c:312               trace: built-in: git 'foo'
+-00:00:00.000001 builtin/foo.c:99        foo: some message
+-------------
+-
+-Data Structures
+----------------
+-
+-`struct trace_key`::
+-
+-	Defines a trace key (or category). The default (for API functions that
+-	don't take a key) is `GIT_TRACE`.
+-+
+-E.g. to define a trace key controlled by environment variable `GIT_TRACE_FOO`:
+-+
+-------------
+-static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
+-
+-static void trace_print_foo(const char *message)
+-{
+-	trace_printf_key(&trace_foo, "%s", message);
+-}
+-------------
+-+
+-Note: don't use `const` as the trace implementation stores internal state in
+-the `trace_key` structure.
 -
 -Functions
 ----------
 -
--`child_process_init`::
--
--	Initialize a struct child_process variable.
--
--`start_command`::
--
--	Start a sub-process. Takes a pointer to a `struct child_process`
--	that specifies the details and returns pipe FDs (if requested).
--	See below for details.
--
--`finish_command`::
--
--	Wait for the completion of a sub-process that was started with
--	start_command().
--
--`run_command`::
--
--	A convenience function that encapsulates a sequence of
--	start_command() followed by finish_command(). Takes a pointer
--	to a `struct child_process` that specifies the details.
--
--`run_command_v_opt`, `run_command_v_opt_cd_env`::
--
--	Convenience functions that encapsulate a sequence of
--	start_command() followed by finish_command(). The argument argv
--	specifies the program and its arguments. The argument opt is zero
--	or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
--	`RUN_COMMAND_STDOUT_TO_STDERR`, or `RUN_SILENT_EXEC_FAILURE`
--	that correspond to the members .no_stdin, .git_cmd,
--	.stdout_to_stderr, .silent_exec_failure of `struct child_process`.
--	The argument dir corresponds the member .dir. The argument env
--	corresponds to the member .env.
--
--`child_process_clear`::
--
--	Release the memory associated with the struct child_process.
--	Most users of the run-command API don't need to call this
--	function explicitly because `start_command` invokes it on
--	failure and `finish_command` calls it automatically already.
--
--The functions above do the following:
--
--. If a system call failed, errno is set and -1 is returned. A diagnostic
--  is printed.
--
--. If the program was not found, then -1 is returned and errno is set to
--  ENOENT; a diagnostic is printed only if .silent_exec_failure is 0.
--
--. Otherwise, the program is run. If it terminates regularly, its exit
--  code is returned. No diagnostic is printed, even if the exit code is
--  non-zero.
--
--. If the program terminated due to a signal, then the return value is the
--  signal number + 128, ie. the same value that a POSIX shell's $? would
--  report.  A diagnostic is printed.
--
--
--`start_async`::
--
--	Run a function asynchronously. Takes a pointer to a `struct
--	async` that specifies the details and returns a set of pipe FDs
--	for communication with the function. See below for details.
--
--`finish_async`::
--
--	Wait for the completion of an asynchronous function that was
--	started with start_async().
--
--`run_hook`::
--
--	Run a hook.
--	The first argument is a pathname to an index file, or NULL
--	if the hook uses the default index file or no index is needed.
--	The second argument is the name of the hook.
--	The further arguments correspond to the hook arguments.
--	The last argument has to be NULL to terminate the arguments list.
--	If the hook does not exist or is not executable, the return
--	value will be zero.
--	If it is executable, the hook will be executed and the exit
--	status of the hook is returned.
--	On execution, .stdout_to_stderr and .no_stdin will be set.
--	(See below.)
--
--
--Data structures
-----------------
--
--* `struct child_process`
--
--This describes the arguments, redirections, and environment of a
--command to run in a sub-process.
--
--The caller:
--
--1. allocates and clears (using child_process_init() or
--   CHILD_PROCESS_INIT) a struct child_process variable;
--2. initializes the members;
--3. calls start_command();
--4. processes the data;
--5. closes file descriptors (if necessary; see below);
--6. calls finish_command().
--
--The .argv member is set up as an array of string pointers (NULL
--terminated), of which .argv[0] is the program name to run (usually
--without a path). If the command to run is a git command, set argv[0] to
--the command name without the 'git-' prefix and set .git_cmd = 1.
--
--Note that the ownership of the memory pointed to by .argv stays with the
--caller, but it should survive until `finish_command` completes. If the
--.argv member is NULL, `start_command` will point it at the .args
--`argv_array` (so you may use one or the other, but you must use exactly
--one). The memory in .args will be cleaned up automatically during
--`finish_command` (or during `start_command` when it is unsuccessful).
--
--The members .in, .out, .err are used to redirect stdin, stdout,
--stderr as follows:
--
--. Specify 0 to request no special redirection. No new file descriptor
--  is allocated. The child process simply inherits the channel from the
--  parent.
--
--. Specify -1 to have a pipe allocated; start_command() replaces -1
--  by the pipe FD in the following way:
--
--	.in: Returns the writable pipe end into which the caller writes;
--		the readable end of the pipe becomes the child's stdin.
--
--	.out, .err: Returns the readable pipe end from which the caller
--		reads; the writable end of the pipe end becomes child's
--		stdout/stderr.
--
--  The caller of start_command() must close the so returned FDs
--  after it has completed reading from/writing to it!
--
--. Specify a file descriptor > 0 to be used by the child:
--
--	.in: The FD must be readable; it becomes child's stdin.
--	.out: The FD must be writable; it becomes child's stdout.
--	.err: The FD must be writable; it becomes child's stderr.
--
--  The specified FD is closed by start_command(), even if it fails to
--  run the sub-process!
--
--. Special forms of redirection are available by setting these members
--  to 1:
--
--	.no_stdin, .no_stdout, .no_stderr: The respective channel is
--		redirected to /dev/null.
--
--	.stdout_to_stderr: stdout of the child is redirected to its
--		stderr. This happens after stderr is itself redirected.
--		So stdout will follow stderr to wherever it is
--		redirected.
--
--To modify the environment of the sub-process, specify an array of
--string pointers (NULL terminated) in .env:
--
--. If the string is of the form "VAR=value", i.e. it contains '='
--  the variable is added to the child process's environment.
--
--. If the string does not contain '=', it names an environment
--  variable that will be removed from the child process's environment.
--
--If the .env member is NULL, `start_command` will point it at the
--.env_array `argv_array` (so you may use one or the other, but not both).
--The memory in .env_array will be cleaned up automatically during
--`finish_command` (or during `start_command` when it is unsuccessful).
--
--To specify a new initial working directory for the sub-process,
--specify it in the .dir member.
--
--If the program cannot be found, the functions return -1 and set
--errno to ENOENT. Normally, an error message is printed, but if
--.silent_exec_failure is set to 1, no message is printed for this
--special error condition.
--
--
--* `struct async`
--
--This describes a function to run asynchronously, whose purpose is
--to produce output that the caller reads.
--
--The caller:
--
--1. allocates and clears (memset(&asy, 0, sizeof(asy));) a
--   struct async variable;
--2. initializes .proc and .data;
--3. calls start_async();
--4. processes communicates with proc through .in and .out;
--5. closes .in and .out;
--6. calls finish_async().
--
--The members .in, .out are used to provide a set of fd's for
--communication between the caller and the callee as follows:
--
--. Specify 0 to have no file descriptor passed.  The callee will
--  receive -1 in the corresponding argument.
--
--. Specify < 0 to have a pipe allocated; start_async() replaces
--  with the pipe FD in the following way:
--
--	.in: Returns the writable pipe end into which the caller
--	writes; the readable end of the pipe becomes the function's
--	in argument.
--
--	.out: Returns the readable pipe end from which the caller
--	reads; the writable end of the pipe becomes the function's
--	out argument.
--
--  The caller of start_async() must close the returned FDs after it
--  has completed reading from/writing from them.
--
--. Specify a file descriptor > 0 to be used by the function:
--
--	.in: The FD must be readable; it becomes the function's in.
--	.out: The FD must be writable; it becomes the function's out.
--
--  The specified FD is closed by start_async(), even if it fails to
--  run the function.
--
--The function pointer in .proc has the following signature:
--
--	int proc(int in, int out, void *data);
--
--. in, out specifies a set of file descriptors to which the function
--  must read/write the data that it needs/produces.  The function
--  *must* close these descriptors before it returns.  A descriptor
--  may be -1 if the caller did not configure a descriptor for that
--  direction.
--
--. data is the value that the caller has specified in the .data member
--  of struct async.
--
--. The return value of the function is 0 on success and non-zero
--  on failure. If the function indicates failure, finish_async() will
--  report failure as well.
--
--
--There are serious restrictions on what the asynchronous function can do
--because this facility is implemented by a thread in the same address
--space on most platforms (when pthreads is available), but by a pipe to
--a forked process otherwise:
--
--. It cannot change the program's state (global variables, environment,
--  etc.) in a way that the caller notices; in other words, .in and .out
--  are the only communication channels to the caller.
--
--. It must not change the program's state that the caller of the
--  facility also uses.
-diff --git a/run-command.h b/run-command.h
-index f769e03f01..592d9dc035 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -5,8 +5,60 @@
- 
- #include "argv-array.h"
+-`int trace_want(struct trace_key *key)`::
+-
+-	Checks whether the trace key is enabled. Used to prevent expensive
+-	string formatting before calling one of the printing APIs.
+-
+-`void trace_disable(struct trace_key *key)`::
+-
+-	Disables tracing for the specified key, even if the environment
+-	variable was set.
+-
+-`void trace_printf(const char *format, ...)`::
+-`void trace_printf_key(struct trace_key *key, const char *format, ...)`::
+-
+-	Prints a formatted message, similar to printf.
+-
+-`void trace_argv_printf(const char **argv, const char *format, ...)``::
+-
+-	Prints a formatted message, followed by a quoted list of arguments.
+-
+-`void trace_strbuf(struct trace_key *key, const struct strbuf *data)`::
+-
+-	Prints the strbuf, without additional formatting (i.e. doesn't
+-	choke on `%` or even `\0`).
+-
+-`uint64_t getnanotime(void)`::
+-
+-	Returns nanoseconds since the epoch (01/01/1970), typically used
+-	for performance measurements.
+-+
+-Currently there are high precision timer implementations for Linux (using
+-`clock_gettime(CLOCK_MONOTONIC)`) and Windows (`QueryPerformanceCounter`).
+-Other platforms use `gettimeofday` as time source.
+-
+-`void trace_performance(uint64_t nanos, const char *format, ...)`::
+-`void trace_performance_since(uint64_t start, const char *format, ...)`::
+-
+-	Prints the elapsed time (in nanoseconds), or elapsed time since
+-	`start`, followed by a formatted message. Enabled via environment
+-	variable `GIT_TRACE_PERFORMANCE`. Used for manual profiling, e.g.:
+-+
+-------------
+-uint64_t start = getnanotime();
+-/* code section to measure */
+-trace_performance_since(start, "foobar");
+-------------
+-+
+-------------
+-uint64_t t = 0;
+-for (;;) {
+-	/* ignore */
+-	t -= getnanotime();
+-	/* code section to measure */
+-	t += getnanotime();
+-	/* ignore */
+-}
+-trace_performance(t, "frotz");
+-------------
+-
+-Bugs & Caveats
+---------------
+-
+-GIT_TRACE_* environment variables can be used to tell Git to show
+-trace output to its standard error stream. Git can often spawn a pager
+-internally to run its subcommand and send its standard output and
+-standard error to it.
+-
+-Because GIT_TRACE_PERFORMANCE trace is generated only at the very end
+-of the program with atexit(), which happens after the pager exits, it
+-would not work well if you send its log to the standard error output
+-and let Git spawn the pager at the same time.
+-
+-As a work around, you can for example use '--no-pager', or set
+-GIT_TRACE_PERFORMANCE to another file descriptor which is redirected
+-to stderr, or set GIT_TRACE_PERFORMANCE to a file specified by its
+-absolute path.
+-
+-For example instead of the following command which by default may not
+-print any performance information:
+-
+-------------
+-GIT_TRACE_PERFORMANCE=2 git log -1
+-------------
+-
+-you may want to use:
+-
+-------------
+-GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
+-------------
+-
+-or:
+-
+-------------
+-GIT_TRACE_PERFORMANCE=3 3>&2 git log -1
+-------------
+-
+-or:
+-
+-------------
+-GIT_TRACE_PERFORMANCE=/path/to/log/file git log -1
+-------------
+diff --git a/trace.h b/trace.h
+index 9fa3e7a594..9826618b33 100644
+--- a/trace.h
++++ b/trace.h
+@@ -4,6 +4,82 @@
+ #include "git-compat-util.h"
+ #include "strbuf.h"
  
 +/**
-+ * The run-command API offers a versatile tool to run sub-processes with
-+ * redirected input and output as well as with a modified environment
-+ * and an alternate current directory.
++ * The trace API can be used to print debug messages to stderr or a file. Trace
++ * code is inactive unless explicitly enabled by setting `GIT_TRACE*` environment
++ * variables.
 + *
-+ * A similar API offers the capability to run a function asynchronously,
-+ * which is primarily used to capture the output that the function
-+ * produces in the caller in order to process it.
++ * The trace implementation automatically adds `timestamp file:line ... \n` to
++ * all trace messages. E.g.:
++ *
++ * ------------
++ * 23:59:59.123456 git.c:312               trace: built-in: git 'foo'
++ * 00:00:00.000001 builtin/foo.c:99        foo: some message
++ * ------------
++ *
++ * Bugs & Caveats
++ * --------------
++ *
++ * GIT_TRACE_* environment variables can be used to tell Git to show
++ * trace output to its standard error stream. Git can often spawn a pager
++ * internally to run its subcommand and send its standard output and
++ * standard error to it.
++ *
++ * Because GIT_TRACE_PERFORMANCE trace is generated only at the very end
++ * of the program with atexit(), which happens after the pager exits, it
++ * would not work well if you send its log to the standard error output
++ * and let Git spawn the pager at the same time.
++ *
++ * As a work around, you can for example use '--no-pager', or set
++ * GIT_TRACE_PERFORMANCE to another file descriptor which is redirected
++ * to stderr, or set GIT_TRACE_PERFORMANCE to a file specified by its
++ * absolute path.
++ *
++ * For example instead of the following command which by default may not
++ * print any performance information:
++ *
++ * ------------
++ * GIT_TRACE_PERFORMANCE=2 git log -1
++ * ------------
++ *
++ * you may want to use:
++ *
++ * ------------
++ * GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
++ * ------------
++ *
++ * or:
++ *
++ * ------------
++ * GIT_TRACE_PERFORMANCE=3 3>&2 git log -1
++ * ------------
++ *
++ * or:
++ *
++ * ------------
++ * GIT_TRACE_PERFORMANCE=/path/to/log/file git log -1
++ * ------------
++ *
 + */
-+
 +
 +/**
-+ * This describes the arguments, redirections, and environment of a
-+ * command to run in a sub-process.
++ * Defines a trace key (or category). The default (for API functions that
++ * don't take a key) is `GIT_TRACE`.
 + *
-+ * The caller:
++ * E.g. to define a trace key controlled by environment variable `GIT_TRACE_FOO`:
 + *
-+ * 1. allocates and clears (using child_process_init() or
-+ *    CHILD_PROCESS_INIT) a struct child_process variable;
-+ * 2. initializes the members;
-+ * 3. calls start_command();
-+ * 4. processes the data;
-+ * 5. closes file descriptors (if necessary; see below);
-+ * 6. calls finish_command().
++ * ------------
++ * static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
 + *
-+ * Special forms of redirection are available by setting these members
-+ * to 1:
++ * static void trace_print_foo(const char *message)
++ * {
++ * 	trace_printf_key(&trace_foo, "%s", message);
++ * }
++ * ------------
 + *
-+ *  .no_stdin, .no_stdout, .no_stderr: The respective channel is
-+ *		redirected to /dev/null.
-+ *
-+ *	.stdout_to_stderr: stdout of the child is redirected to its
-+ *		stderr. This happens after stderr is itself redirected.
-+ *		So stdout will follow stderr to wherever it is
-+ *		redirected.
++ * Note: don't use `const` as the trace implementation stores internal state in
++ * the `trace_key` structure.
 + */
- struct child_process {
-+
-+	/**
-+	 * The .argv member is set up as an array of string pointers (NULL
-+	 * terminated), of which .argv[0] is the program name to run (usually
-+	 * without a path). If the command to run is a git command, set argv[0] to
-+	 * the command name without the 'git-' prefix and set .git_cmd = 1.
-+	 *
-+	 * Note that the ownership of the memory pointed to by .argv stays with the
-+	 * caller, but it should survive until `finish_command` completes. If the
-+	 * .argv member is NULL, `start_command` will point it at the .args
-+	 * `argv_array` (so you may use one or the other, but you must use exactly
-+	 * one). The memory in .args will be cleaned up automatically during
-+	 * `finish_command` (or during `start_command` when it is unsuccessful).
-+	 *
-+	 */
- 	const char **argv;
-+
- 	struct argv_array args;
- 	struct argv_array env_array;
- 	pid_t pid;
-@@ -18,8 +70,8 @@ struct child_process {
+ struct trace_key {
+ 	const char * const key;
+ 	int fd;
+@@ -18,31 +94,84 @@ extern struct trace_key trace_perf_key;
+ extern struct trace_key trace_setup_key;
  
- 	/*
- 	 * Using .in, .out, .err:
--	 * - Specify 0 for no redirections (child inherits stdin, stdout,
--	 *   stderr from parent).
-+	 * - Specify 0 for no redirections. No new file descriptor is allocated.
-+	 * (child inherits stdin, stdout, stderr from parent).
- 	 * - Specify -1 to have a pipe allocated as follows:
- 	 *     .in: returns the writable pipe end; parent writes to it,
- 	 *          the readable pipe end becomes child's stdin
-@@ -37,13 +89,43 @@ struct child_process {
- 	int in;
- 	int out;
- 	int err;
+ void trace_repo_setup(const char *prefix);
 +
-+	/**
-+	 * To specify a new initial working directory for the sub-process,
-+	 * specify it in the .dir member.
-+	 */
- 	const char *dir;
++/**
++ * Checks whether the trace key is enabled. Used to prevent expensive
++ * string formatting before calling one of the printing APIs.
++ */
+ int trace_want(struct trace_key *key);
 +
-+	/**
-+	 * To modify the environment of the sub-process, specify an array of
-+	 * string pointers (NULL terminated) in .env:
-+	 *
-+	 * - If the string is of the form "VAR=value", i.e. it contains '='
-+	 *   the variable is added to the child process's environment.
-+	 *
-+	 * - If the string does not contain '=', it names an environment
-+	 *   variable that will be removed from the child process's environment.
-+	 *
-+	 * If the .env member is NULL, `start_command` will point it at the
-+	 * .env_array `argv_array` (so you may use one or the other, but not both).
-+	 * The memory in .env_array will be cleaned up automatically during
-+	 * `finish_command` (or during `start_command` when it is unsuccessful).
-+	 */
- 	const char *const *env;
++/**
++ * Disables tracing for the specified key, even if the environment variable
++ * was set.
++ */
+ void trace_disable(struct trace_key *key);
 +
- 	unsigned no_stdin:1;
- 	unsigned no_stdout:1;
- 	unsigned no_stderr:1;
--	unsigned git_cmd:1; /* if this is to be git sub-command */
-+    unsigned git_cmd:1; /* if this is to be git sub-command */
++/**
++ * Returns nanoseconds since the epoch (01/01/1970), typically used
++ * for performance measurements.
++ * Currently there are high precision timer implementations for Linux (using
++ * `clock_gettime(CLOCK_MONOTONIC)`) and Windows (`QueryPerformanceCounter`).
++ * Other platforms use `gettimeofday` as time source.
++ */
+ uint64_t getnanotime(void);
 +
-+	/**
-+	 * If the program cannot be found, the functions return -1 and set
-+	 * errno to ENOENT. Normally, an error message is printed, but if
-+	 * .silent_exec_failure is set to 1, no message is printed for this
-+	 * special error condition.
-+	 */
- 	unsigned silent_exec_failure:1;
-+
- 	unsigned stdout_to_stderr:1;
- 	unsigned use_shell:1;
- 	unsigned clean_on_exit:1;
-@@ -53,13 +135,63 @@ struct child_process {
- };
+ void trace_command_performance(const char **argv);
+ void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
+ uint64_t trace_performance_enter(void);
  
- #define CHILD_PROCESS_INIT { NULL, ARGV_ARRAY_INIT, ARGV_ARRAY_INIT }
-+
-+/**
-+ * The functions: child_process_init, start_command, finish_command,
-+ * run_command, run_command_v_opt, run_command_v_opt_cd_env, child_process_clear
-+ * do the following:
-+ *
-+ * - If a system call failed, errno is set and -1 is returned. A diagnostic
-+ *   is printed.
-+ *
-+ * - If the program was not found, then -1 is returned and errno is set to
-+ *   ENOENT; a diagnostic is printed only if .silent_exec_failure is 0.
-+ *
-+ * - Otherwise, the program is run. If it terminates regularly, its exit
-+ *   code is returned. No diagnostic is printed, even if the exit code is
-+ *   non-zero.
-+ *
-+ * - If the program terminated due to a signal, then the return value is the
-+ *   signal number + 128, ie. the same value that a POSIX shell's $? would
-+ *   report.  A diagnostic is printed.
-+ *
-+ */
-+
-+/**
-+ * Initialize a struct child_process variable.
-+ */
- void child_process_init(struct child_process *);
-+
-+/**
-+ * Release the memory associated with the struct child_process.
-+ * Most users of the run-command API don't need to call this
-+ * function explicitly because `start_command` invokes it on
-+ * failure and `finish_command` calls it automatically already.
-+ */
- void child_process_clear(struct child_process *);
-+
- int is_executable(const char *name);
+ #ifndef HAVE_VARIADIC_MACROS
  
 +/**
-+ * Start a sub-process. Takes a pointer to a `struct child_process`
-+ * that specifies the details and returns pipe FDs (if requested).
-+ * See below for details.
++ * Prints a formatted message, similar to printf.
 + */
- int start_command(struct child_process *);
-+
-+/**
-+ * Wait for the completion of a sub-process that was started with
-+ * start_command().
-+ */
- int finish_command(struct child_process *);
-+
- int finish_command_in_signal(struct child_process *);
-+
-+/**
-+ * A convenience function that encapsulates a sequence of
-+ * start_command() followed by finish_command(). Takes a pointer
-+ * to a `struct child_process` that specifies the details.
-+ */
- int run_command(struct child_process *);
+ __attribute__((format (printf, 1, 2)))
+ void trace_printf(const char *format, ...);
  
- /*
-@@ -68,6 +200,20 @@ int run_command(struct child_process *);
-  * overwritten by further calls to find_hook and run_hook_*.
-  */
- const char *find_hook(const char *name);
-+
-+/**
-+ * Run a hook.
-+ * The first argument is a pathname to an index file, or NULL
-+ * if the hook uses the default index file or no index is needed.
-+ * The second argument is the name of the hook.
-+ * The further arguments correspond to the hook arguments.
-+ * The last argument has to be NULL to terminate the arguments list.
-+ * If the hook does not exist or is not executable, the return
-+ * value will be zero.
-+ * If it is executable, the hook will be executed and the exit
-+ * status of the hook is returned.
-+ * On execution, .stdout_to_stderr and .no_stdin will be set.
-+ */
- LAST_ARG_MUST_BE_NULL
- int run_hook_le(const char *const *env, const char *name, ...);
- int run_hook_ve(const char *const *env, const char *name, va_list args);
-@@ -78,6 +224,18 @@ int run_hook_ve(const char *const *env, const char *name, va_list args);
- #define RUN_SILENT_EXEC_FAILURE 8
- #define RUN_USING_SHELL 16
- #define RUN_CLEAN_ON_EXIT 32
-+
-+/**
-+ * Convenience functions that encapsulate a sequence of
-+ * start_command() followed by finish_command(). The argument argv
-+ * specifies the program and its arguments. The argument opt is zero
-+ * or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
-+ * `RUN_COMMAND_STDOUT_TO_STDERR`, or `RUN_SILENT_EXEC_FAILURE`
-+ * that correspond to the members .no_stdin, .git_cmd,
-+ * .stdout_to_stderr, .silent_exec_failure of `struct child_process`.
-+ * The argument dir corresponds the member .dir. The argument env
-+ * corresponds to the member .env.
-+ */
- int run_command_v_opt(const char **argv, int opt);
- int run_command_v_opt_tr2(const char **argv, int opt, const char *tr2_class);
- /*
-@@ -125,15 +283,84 @@ static inline int capture_command(struct child_process *cmd,
-  * It is expected that no synchronization and mutual exclusion between
-  * the caller and the feed function is necessary so that the function
-  * can run in a thread without interfering with the caller.
-+ *
-+ * The caller:
-+ *
-+ * 1. allocates and clears (memset(&asy, 0, sizeof(asy));) a
-+ *    struct async variable;
-+ * 2. initializes .proc and .data;
-+ * 3. calls start_async();
-+ * 4. processes communicates with proc through .in and .out;
-+ * 5. closes .in and .out;
-+ * 6. calls finish_async().
-+ *
-+ * There are serious restrictions on what the asynchronous function can do
-+ * because this facility is implemented by a thread in the same address
-+ * space on most platforms (when pthreads is available), but by a pipe to
-+ * a forked process otherwise:
-+ *
-+ * - It cannot change the program's state (global variables, environment,
-+ *   etc.) in a way that the caller notices; in other words, .in and .out
-+ *   are the only communication channels to the caller.
-+ *
-+ * - It must not change the program's state that the caller of the
-+ *   facility also uses.
-+ *
-  */
- struct async {
--	/*
--	 * proc reads from in; closes it before return
--	 * proc writes to out; closes it before return
--	 * returns 0 on success, non-zero on failure
-+
-+	/**
-+	 * The function pointer in .proc has the following signature:
-+	 *
-+	 *	int proc(int in, int out, void *data);
-+	 *
-+	 * - in, out specifies a set of file descriptors to which the function
-+	 *  must read/write the data that it needs/produces.  The function
-+	 *  *must* close these descriptors before it returns.  A descriptor
-+	 *  may be -1 if the caller did not configure a descriptor for that
-+	 *  direction.
-+	 *
-+	 * - data is the value that the caller has specified in the .data member
-+	 *  of struct async.
-+	 *
-+	 * - The return value of the function is 0 on success and non-zero
-+	 *  on failure. If the function indicates failure, finish_async() will
-+	 *  report failure as well.
-+	 *
- 	 */
- 	int (*proc)(int in, int out, void *data);
-+
- 	void *data;
-+
-+	/**
-+	 * The members .in, .out are used to provide a set of fd's for
-+	 * communication between the caller and the callee as follows:
-+	 *
-+	 * - Specify 0 to have no file descriptor passed.  The callee will
-+	 *   receive -1 in the corresponding argument.
-+	 *
-+	 * - Specify < 0 to have a pipe allocated; start_async() replaces
-+	 *   with the pipe FD in the following way:
-+	 *
-+	 * 	.in: Returns the writable pipe end into which the caller
-+	 * 	writes; the readable end of the pipe becomes the function's
-+	 * 	in argument.
-+	 *
-+	 * 	.out: Returns the readable pipe end from which the caller
-+	 * 	reads; the writable end of the pipe becomes the function's
-+	 * 	out argument.
-+	 *
-+	 *   The caller of start_async() must close the returned FDs after it
-+	 *   has completed reading from/writing from them.
-+	 *
-+	 * - Specify a file descriptor > 0 to be used by the function:
-+	 *
-+	 * 	.in: The FD must be readable; it becomes the function's in.
-+	 * 	.out: The FD must be writable; it becomes the function's out.
-+	 *
-+	 *   The specified FD is closed by start_async(), even if it fails to
-+	 *   run the function.
-+	 */
- 	int in;		/* caller writes here and closes it */
- 	int out;	/* caller reads from here and closes it */
- #ifdef NO_PTHREADS
-@@ -146,8 +373,19 @@ struct async {
- 	int isolate_sigpipe;
- };
+ __attribute__((format (printf, 2, 3)))
+ void trace_printf_key(struct trace_key *key, const char *format, ...);
  
 +/**
-+ * Run a function asynchronously. Takes a pointer to a `struct
-+ * async` that specifies the details and returns a set of pipe FDs
-+ * for communication with the function. See below for details.
++ * Prints a formatted message, followed by a quoted list of arguments.
 + */
- int start_async(struct async *async);
-+
+ __attribute__((format (printf, 2, 3)))
+ void trace_argv_printf(const char **argv, const char *format, ...);
+ 
 +/**
-+ * Wait for the completion of an asynchronous function that was
-+ * started with start_async().
++ * Prints the strbuf, without additional formatting (i.e. doesn't
++ * choke on `%` or even `\0`).
 + */
- int finish_async(struct async *async);
-+
- int in_async(void);
- int async_with_fork(void);
- void check_pipe(int err);
+ void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+-/* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
++/**
++ * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
++ *
++ * Example:
++ * ------------
++ * uint64_t t = 0;
++ * for (;;) {
++ * 	// ignore
++ * t -= getnanotime();
++ * // code section to measure
++ * t += getnanotime();
++ * // ignore
++ * }
++ * trace_performance(t, "frotz");
++ * ------------
++ */
+ __attribute__((format (printf, 2, 3)))
+ void trace_performance(uint64_t nanos, const char *format, ...);
+ 
+-/* Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled. */
++/**
++ * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
++ *
++ * Example:
++ * ------------
++ * uint64_t start = getnanotime();
++ * // code section to measure
++ * trace_performance_since(start, "foobar");
++ * ------------
++ */
+ __attribute__((format (printf, 2, 3)))
+ void trace_performance_since(uint64_t start, const char *format, ...);
+ 
 -- 
 gitgitgadget
 
