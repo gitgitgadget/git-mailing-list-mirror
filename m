@@ -7,72 +7,68 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3381F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 04:15:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B0001F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 04:21:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbfKKEPw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 23:15:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44136 "HELO cloud.peff.net"
+        id S1726857AbfKKEVv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 23:21:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44144 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726754AbfKKEPw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 23:15:52 -0500
-Received: (qmail 14957 invoked by uid 109); 11 Nov 2019 04:15:52 -0000
+        id S1726754AbfKKEVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 23:21:51 -0500
+Received: (qmail 15007 invoked by uid 109); 11 Nov 2019 04:21:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Nov 2019 04:15:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Nov 2019 04:21:51 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1593 invoked by uid 111); 11 Nov 2019 04:19:20 -0000
+Received: (qmail 1648 invoked by uid 111); 11 Nov 2019 04:25:19 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 10 Nov 2019 23:19:20 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 10 Nov 2019 23:25:19 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 10 Nov 2019 23:15:51 -0500
+Date:   Sun, 10 Nov 2019 23:21:49 -0500
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Git Developer Pages cleanup
-Message-ID: <20191111041551.GD6379@sigill.intra.peff.net>
-References: <CAP8UFD3sVR+Z3ktYUhSCtfCr9fY0btX2UEve+o0y=iuooVTVEQ@mail.gmail.com>
+To:     Sebastiaan Dammann <triadsebas@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: git name-rev looks at refs/notes, refs/svn/map: stack overflow
+Message-ID: <20191111042149.GE6379@sigill.intra.peff.net>
+References: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD3sVR+Z3ktYUhSCtfCr9fY0btX2UEve+o0y=iuooVTVEQ@mail.gmail.com>
+In-Reply-To: <CAE7Eq9jJzftkP9JWFpstS96SiCd+jO_adSQ-HruyYYNi3gWe7w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 10, 2019 at 07:15:35PM +0100, Christian Couder wrote:
+On Sat, Nov 09, 2019 at 12:31:31PM +0100, Sebastiaan Dammann wrote:
 
-> Hi everyone,
-> 
-> For sometime I have been thinking about cleaning up the Git Developer
-> Pages web site (https://git.github.io/), and making some of the
-> documentation there more generic and possibly more useful for all kind
-> of newcomers.
+> The destructive workaround at the moment is to delete the refs, then
+> run an aggressive gc:
+> git update-ref -d refs/notes/commits
+> git update-ref -d refs/svn/map
+> git gc --prune=all --aggressive
 
-Thanks for taking care of this. I agree these pages have been in need of
-some cleanup for ages.
+If the issue is just traversing from those refs, you shouldn't need to
+do a "gc". In fact, you should be able to use the "--refs" option to
+name-rev to avoid them without deleting them.
 
-> So I pushed the following commits:
-> 
-> * 17b7b3e SoC: remove 2017 SoC material from the navbar
-> * 4e01d0a SoC: remove 2018 SoC material from the navbar
-> * 7c13096 Outreachy: fix titles
-> 
-> Old GSoC and Outreachy material can now only be accessed through the
-> Historical Summer of Code Materials
-> (https://git.github.io/SoC-Historical/) link.
+All of that's obviously a workaround, though. The real issue is the
+stack exhaustion.
 
-I almost wonder if they could be dropped entirely, as they'd still be
-accessible via the Git repository. But maybe somebody finds it useful to
-be able to see them from the built web page.
+> I hope to hear your view on this. Is this an (confirmed) issue with
+> git? Are there beside the workaround I mentioned, any other
+> workarounds?
 
-> * 717ec3c Add General-Microproject-Information.md
-> 
-> Extract information from https://git.github.io/SoC-2019-Microprojects/
-> to make it independent of GSoC or Outreachy. I think it's really
-> better to have a separate document and just link to it, instead of
-> copy pasting it each time.
+Yes, this is well known. It's covered in the test suite (unfortunately
+still failing, of course) since 31625b34c0 (t6120: test describe and
+name-rev with deep repos, 2017-09-07).
 
-Yeah, this is much better.
+There was a proposed fix recently in:
+
+  https://public-inbox.org/git/20190919214712.7348-1-szeder.dev@gmail.com/
+
+but it doesn't seem to have been picked up. I'm not sure what the
+current status is.
 
 -Peff
