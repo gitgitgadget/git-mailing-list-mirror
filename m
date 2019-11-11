@@ -2,143 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 579D21F4C0
-	for <e@80x24.org>; Mon, 11 Nov 2019 09:04:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 052C71F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 09:08:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727166AbfKKJET (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 04:04:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44354 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726829AbfKKJET (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 04:04:19 -0500
-Received: (qmail 18255 invoked by uid 109); 11 Nov 2019 09:04:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 11 Nov 2019 09:04:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4215 invoked by uid 111); 11 Nov 2019 09:07:47 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 11 Nov 2019 04:07:47 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 11 Nov 2019 04:04:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 2/2] hex: drop sha1_to_hex()
-Message-ID: <20191111090418.GB12545@sigill.intra.peff.net>
-References: <20191111090332.GA2275@sigill.intra.peff.net>
+        id S1726834AbfKKJII (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 04:08:08 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61064 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726768AbfKKJIH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 04:08:07 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2E1B39507;
+        Mon, 11 Nov 2019 04:08:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Y87P2QXCdh11mfeXc4X0RZnfR/8=; b=dFh+O7
+        7tiSeBwtA3xyJjxnpVDqaJxQfFleIGWaq1RChvlcnB4UUkhSIoqBrNrDAwKe623o
+        cVmtl9py0g+VxjVyKme7/gRchAkvRQYPALcRGmFP7kC461QQvwAyh8DW/MDuOBUk
+        xPsr0rznWo+Hm3M57HyDVY4e97mvbwRJnj454=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=s+3uXp3wa1V+omircFayQi1vqurB7aU9
+        OxCGGKKIfkAuRq6MgeMKFXaO7G0VGXM4DQ6+7uRXRVi/cxntTGLNRNqaxitPkUs+
+        NpgrMAGIZDATY5v/2jv1ZOuCCo8u9BiZl9N8SrNagCbf/gKkA9fMJfZADHu9yMmn
+        wTCJK8G3vxs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AD8139506;
+        Mon, 11 Nov 2019 04:08:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DC27339505;
+        Mon, 11 Nov 2019 04:08:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Naveen Nathan <naveen@lastninja.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: improve readability of --rebase-merges in git-rebase
+References: <20191110095942.GB6071@a.local>
+Date:   Mon, 11 Nov 2019 18:08:03 +0900
+In-Reply-To: <20191110095942.GB6071@a.local> (Naveen Nathan's message of "Sun,
+        10 Nov 2019 20:59:42 +1100")
+Message-ID: <xmqqr22ehjbg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191111090332.GA2275@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C526F120-0462-11EA-9F3D-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's only a single caller left of sha1_to_hex(), since everybody now
-uses oid_to_hex() instead. This case is in the sha1dc wrapper, where we
-print a hex sha1 when we find a collision. This one will always be sha1,
-regardless of the current hash algorithm, so we can't use oid_to_hex()
-here. In practice we'd probably not be running sha1 at all if it isn't
-the current algorithm, but it's possible we might still occasionally
-need to compute a sha1 in a post-sha256 world.
+Naveen Nathan <naveen@lastninja.net> writes:
 
-Since sha1_to_hex() is just a wrapper for hash_to_hex_algop(), let's
-call that ourselves. There's value in getting rid of the sha1-specific
-wrapper to de-clutter the global namespace, and to make sure nobody uses
-it (and as with sha1_to_hex_r() in the previous patch, we'll drop the
-coccinelle transformations, too).
+> When --rebase-merges was introduced in 427c3bd28a the sentence
+> describing the difference between --rebase-merges and --preserve-merges
+> is a little unclear and difficult to parse. This patch improves readability
+> while retaining original meaning.
+>
+> ...
+> -The `--rebase-merges` mode is similar in spirit to the deprecated
+> -`--preserve-merges`, but in contrast to that option works well in interactive
+> -rebases: commits can be reordered, inserted and dropped at will.
+> +The `--rebase-merges` mode is similar in spirit to `--preserve-merges`
+> +(deprecated) but actually works with interactive rebases, where commits
+> +can be reordered, inserted and dropped at will.
 
-The sha1_to_hex() function is mentioned in a comment; we can easily swap
-that out for oid_to_hex() to give a better example. It's also mentioned
-in some test vectors in t4100, but that's not runnable code, so there's
-no point in trying to clean it up.
+I think the original "to the deprecated `--preserve-merges`" is
+mildly easier to follow than "to `--preserve-merges` (deprecated)".
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- cache.h                            |  3 +--
- contrib/coccinelle/object_id.cocci | 15 ---------------
- hex.c                              |  5 -----
- sha1dc_git.c                       |  2 +-
- 4 files changed, 2 insertions(+), 23 deletions(-)
+The later part of the sentence with this patch does read smoother
+and is a definite improvement.
 
-diff --git a/cache.h b/cache.h
-index 6a4eb221b3..a2ab10503f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1459,12 +1459,11 @@ int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
-  * The non-`_r` variant returns a static buffer, but uses a ring of 4
-  * buffers, making it safe to make multiple calls for a single statement, like:
-  *
-- *   printf("%s -> %s", sha1_to_hex(one), sha1_to_hex(two));
-+ *   printf("%s -> %s", oid_to_hex(one), oid_to_hex(two));
-  */
- char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const struct git_hash_algo *);
- char *oid_to_hex_r(char *out, const struct object_id *oid);
- char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *);	/* static buffer result! */
--char *sha1_to_hex(const unsigned char *sha1);						/* same static buffer */
- char *hash_to_hex(const unsigned char *hash);						/* same static buffer */
- char *oid_to_hex(const struct object_id *oid);						/* same static buffer */
- 
-diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/object_id.cocci
-index 6c0d21d8e2..ddf4f22bd7 100644
---- a/contrib/coccinelle/object_id.cocci
-+++ b/contrib/coccinelle/object_id.cocci
-@@ -10,21 +10,6 @@ struct object_id *OIDPTR;
- - is_null_sha1(OIDPTR->hash)
- + is_null_oid(OIDPTR)
- 
--@@
--struct object_id OID;
--@@
--- sha1_to_hex(OID.hash)
--+ oid_to_hex(&OID)
--
--@@
--identifier f != oid_to_hex;
--struct object_id *OIDPTR;
--@@
--  f(...) {<...
--- sha1_to_hex(OIDPTR->hash)
--+ oid_to_hex(OIDPTR)
--  ...>}
--
- @@
- struct object_id OID;
- @@
-diff --git a/hex.c b/hex.c
-index 8c3f06a192..fd7f00c43f 100644
---- a/hex.c
-+++ b/hex.c
-@@ -103,11 +103,6 @@ char *hash_to_hex_algop(const unsigned char *hash, const struct git_hash_algo *a
- 	return hash_to_hex_algop_r(hexbuffer[bufno], hash, algop);
- }
- 
--char *sha1_to_hex(const unsigned char *sha1)
--{
--	return hash_to_hex_algop(sha1, &hash_algos[GIT_HASH_SHA1]);
--}
--
- char *hash_to_hex(const unsigned char *hash)
- {
- 	return hash_to_hex_algop(hash, the_hash_algo);
-diff --git a/sha1dc_git.c b/sha1dc_git.c
-index e0cc9d988c..5c300e812e 100644
---- a/sha1dc_git.c
-+++ b/sha1dc_git.c
-@@ -19,7 +19,7 @@ void git_SHA1DCFinal(unsigned char hash[20], SHA1_CTX *ctx)
- 	if (!SHA1DCFinal(hash, ctx))
- 		return;
- 	die("SHA-1 appears to be part of a collision attack: %s",
--	    sha1_to_hex(hash));
-+	    hash_to_hex_algop(hash, &hash_algos[GIT_HASH_SHA1]));
- }
- 
- /*
--- 
-2.24.0.739.gb5632e4929
+Thanks.
+
