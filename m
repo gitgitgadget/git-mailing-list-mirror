@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 601C11F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFB8F1F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727260AbfKKV2R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 16:28:17 -0500
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:53925 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727152AbfKKV2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 16:28:12 -0500
-Received: by mail-wm1-f48.google.com with SMTP id u18so856737wmc.3
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:10 -0800 (PST)
+        id S1727281AbfKKV2S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 16:28:18 -0500
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:42501 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727237AbfKKV2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 16:28:18 -0500
+Received: by mail-wr1-f49.google.com with SMTP id a15so16220224wrf.9
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
-        b=FB0B7L6mr6ToIlyZ4biIptUYVmpq2n83xLJs606hUIsk9B/HR5duZbfqHlEE3gC06J
-         YjOh5iiOCYTJl4JcWstH8erc9k4Zgf44pJR755zmzZHtPKdz9cr9kRw5aBFxpoDxdupt
-         X0H4hjqd+tPmHy5tlL8Ehdr4iuOVVFUyTFO9G8UFNFZ0bXMGsztf4+PMuozGX+qYubyR
-         cq5dNlKkrhLPNarLMR2pXaeLzKUaaeeiMp4stpK3ikCjV6WKSvj4ltUw5aLDLPLAgoum
-         NPA5TkZelRYGQi3EZjoukKXPhlw6Sx4B5CACwKoLUMoXmLcrpVpBNFHi3cobCC5cIzrp
-         1vng==
+        bh=kAlgZI/rqjNeIybAIDl1BOSUvsJpzxiqkQ2PkT7FQps=;
+        b=uf0hT6WAeLQiDzi1Jn8As8UJfy2JRbGzmlQUl2Uwu6wt4qJg5IHKkQiOv6ZxjPvIQA
+         E/xmJDW+G//HALUl1EGqDPTANDhKk8VkqnAlIvq3aK6vJlh7a20u15gMyrReYdRHDQD1
+         j4GTQGtMg0oOM4USla17AZ6vUhfw1ViiZANy54vDr25mydCCDQGAxQ7VVaV9cdqxmFdt
+         0nYX9xlPSEGlfdxME18+E1pQ7kMOZ1JPOo7u7a93bOjLAtNgyRddbYipYenNyi0bmbWU
+         04VTko7ZUjY1dcsTgakI1S85uny+SUwvszhXJMQ4+G3er/L7DezZu6+J38yb94nTQYEO
+         i2Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
-        b=G4FOQuINAv8ArZn5+/u5WRhlg8Lr4afOlehrzhjEM7XIjJzHsLleFBB29wCvcpu/No
-         e3+H38CIRbHMOZ2sBMpLnIQ5s03838E4Dy2JLNYKgKRhZGOYJNOY9zMl6PsvZDp/EwUq
-         Kc2drZ2S78r5IbfNJ1tBtnV+NXuT0lAk53GtOStXOe9ZDD5U2R9ZZndL8rRipLiMnfOv
-         cpxfW5M/QxrrkEZtN6lzGbHHGS53BN83lqyUVxSgSMb3ABplFADAaOgxxNeg92bXfMYO
-         11el/ynlRTO51Q87FPmXOEw6rOlyWbaYsg0oq7iiV7mVXcONGmzBCunBSFmsMP0KbnL+
-         E3IQ==
-X-Gm-Message-State: APjAAAXc799OKkXSyCxLQPrpZLwqoimx7yVE+GE8pOOnS2l1nuFSHKNw
-        Z5F8T+4t6tpgcGJjdykLI3A3/qId
-X-Google-Smtp-Source: APXvYqxVVBHEE1336thtSOEDnQyWq+o62K08toa+22JbfUuZ5XBz1yup2tx0UuBVkiXuMtUh1FqHtg==
-X-Received: by 2002:a1c:f20c:: with SMTP id s12mr803355wmc.37.1573507689635;
-        Mon, 11 Nov 2019 13:28:09 -0800 (PST)
+        bh=kAlgZI/rqjNeIybAIDl1BOSUvsJpzxiqkQ2PkT7FQps=;
+        b=VxzQ9F3AxysCjqXC3QQsop3+3HNLa3iIYsxYjNZmbPvhExYHOXP8Popwy3W22yJanT
+         xR8ZZF+slMr/ntIwCW+EihremnnMXEZzTnGqrHUtADTw46JRlJ9idpbUQBsuLth6ckRO
+         Rh2lIvXtLvE/mMx10zqcxU4OdbTp10QQnecgmp/gTRQx6/pLgnkOySpOomKSBGfHPWMA
+         NVb3WIcboIF9aI/k0lj+wpQOzU4bg4zAmv8SlrJUfrTbN6WoblugXcIuT3QJYGoG4S71
+         9O8h/rH+zJNeAtnshiKnloYycYhbrcY3puV7LPHBVo/FcZkwNXjhRjf9GhK6KyCOcSe0
+         +ffQ==
+X-Gm-Message-State: APjAAAVHMjPhfCH5JIpwOLrt5RDfVV0suQn6twy5tZRbNL+441e8Plj8
+        W6ptp+9DDUlaNZSGpsZB1ZMGf1BS
+X-Google-Smtp-Source: APXvYqz3q7UaNO6v3f3pRGmGUlLTquhQCG1jh9GFSoVCCmrM/9+6ti528rIE8PDlOGJ62rXOpcZZng==
+X-Received: by 2002:a05:6000:1181:: with SMTP id g1mr23619151wrx.131.1573507695936;
+        Mon, 11 Nov 2019 13:28:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h16sm5631518wrs.48.2019.11.11.13.28.09
+        by smtp.gmail.com with ESMTPSA id h8sm35965018wrc.73.2019.11.11.13.28.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2019 13:28:09 -0800 (PST)
-Message-Id: <39f25de85f94871e660de152b4d43dbfb97b7caf.1573507684.git.gitgitgadget@gmail.com>
+        Mon, 11 Nov 2019 13:28:15 -0800 (PST)
+Message-Id: <1eca7099efeb6f57be646351d19baaf636a31b2b.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:47 +0000
-Subject: [PATCH v3 04/21] merge: move doc to ll-merge.h
+Date:   Mon, 11 Nov 2019 21:27:55 +0000
+Subject: [PATCH v3 12/21] cache: move doc to cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,198 +72,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the related documentation from Documentation/technical/api-merge.txt
-to ll-merge.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-allocation-growing.txt
+to cache.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Only the ll-merge related doc is removed from
-documentation/technical/api-merge.txt because this information will be
-redundant and it'll be hard to keep it up to date and synchronized with
-the documentation in ll-merge.h.
+Also documentation/technical/api-allocation-growing.txt is removed because the
+information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-merge.txt | 72 +-------------------------
- ll-merge.h                            | 73 ++++++++++++++++++++++++++-
- 2 files changed, 74 insertions(+), 71 deletions(-)
+ Documentation/MyFirstObjectWalk.txt           |  5 +--
+ .../technical/api-allocation-growing.txt      | 39 ------------------
+ cache.h                                       | 41 +++++++++++++++++--
+ 3 files changed, 39 insertions(+), 46 deletions(-)
+ delete mode 100644 Documentation/technical/api-allocation-growing.txt
 
-diff --git a/Documentation/technical/api-merge.txt b/Documentation/technical/api-merge.txt
-index 9dc1bed768..487d4d83ff 100644
---- a/Documentation/technical/api-merge.txt
-+++ b/Documentation/technical/api-merge.txt
-@@ -28,77 +28,9 @@ and `diff.c` for examples.
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index 321c0ba6a4..6629122703 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -119,9 +119,8 @@ parameters provided by the user over the CLI.
  
- * `struct ll_merge_options`
+ `nr` represents the number of `rev_cmdline_entry` present in the array.
  
--This describes the set of options the calling program wants to affect
--the operation of a low-level (single file) merge.  Some options:
--
--`virtual_ancestor`::
--	Behave as though this were part of a merge between common
--	ancestors in a recursive merge.
--	If a helper program is specified by the
--	`[merge "<driver>"] recursive` configuration, it will
--	be used (see linkgit:gitattributes[5]).
--
--`variant`::
--	Resolve local conflicts automatically in favor
--	of one side or the other (as in 'git merge-file'
--	`--ours`/`--theirs`/`--union`).  Can be `0`,
--	`XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`, or
--	`XDL_MERGE_FAVOR_UNION`.
--
--`renormalize`::
--	Resmudge and clean the "base", "theirs" and "ours" files
--	before merging.  Use this when the merge is likely to have
--	overlapped with a change in smudge/clean or end-of-line
--	normalization rules.
-+Check ll-merge.h for details.
+-`alloc` is used by the `ALLOC_GROW` macro. Check
+-`Documentation/technical/api-allocation-growing.txt` - this variable is used to
+-track the allocated size of the list.
++`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is 
++used to track the allocated size of the list.
  
- Low-level (single file) merge
- -----------------------------
+ Per entry, we find:
  
--`ll_merge`::
+diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
+deleted file mode 100644
+index 5a59b54844..0000000000
+--- a/Documentation/technical/api-allocation-growing.txt
++++ /dev/null
+@@ -1,39 +0,0 @@
+-allocation growing API
+-======================
 -
--	Perform a three-way single-file merge in core.  This is
--	a thin wrapper around `xdl_merge` that takes the path and
--	any merge backend specified in `.gitattributes` or
--	`.git/info/attributes` into account.  Returns 0 for a
--	clean merge.
+-Dynamically growing an array using realloc() is error prone and boring.
 -
--Calling sequence:
+-Define your array with:
 -
--* Prepare a `struct ll_merge_options` to record options.
--  If you have no special requests, skip this and pass `NULL`
--  as the `opts` parameter to use the default options.
+-* a pointer (`item`) that points at the array, initialized to `NULL`
+-  (although please name the variable based on its contents, not on its
+-  type);
 -
--* Allocate an mmbuffer_t variable for the result.
+-* an integer variable (`alloc`) that keeps track of how big the current
+-  allocation is, initialized to `0`;
 -
--* Allocate and fill variables with the file's original content
--  and two modified versions (using `read_mmfile`, for example).
+-* another integer variable (`nr`) to keep track of how many elements the
+-  array currently has, initialized to `0`.
 -
--* Call `ll_merge()`.
+-Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
+-alloc)`.  This ensures that the array can hold at least `n` elements by
+-calling `realloc(3)` and adjusting `alloc` variable.
 -
--* Read the merged content from `result_buf.ptr` and `result_buf.size`.
+-------------
+-sometype *item;
+-size_t nr;
+-size_t alloc
 -
--* Release buffers when finished.  A simple
--  `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
--  free(result_buf.ptr);` will do.
+-for (i = 0; i < nr; i++)
+-	if (we like item[i] already)
+-		return;
 -
--If the modifications do not merge cleanly, `ll_merge` will return a
--nonzero value and `result_buf` will generally include a description of
--the conflict bracketed by markers such as the traditional `<<<<<<<`
--and `>>>>>>>`.
+-/* we did not like any existing one, so add one */
+-ALLOC_GROW(item, nr + 1, alloc);
+-item[nr++] = value you like;
+-------------
 -
--The `ancestor_label`, `our_label`, and `their_label` parameters are
--used to label the different sides of a conflict if the merge driver
--supports this.
+-You are responsible for updating the `nr` variable.
 -
--Everything else
-----------------
--
--Talk about <merge-recursive.h> and merge_file():
--
-- - merge_trees() to merge with rename detection
-- - merge_recursive() for ancestor consolidation
-- - try_merge_command() for other strategies
-- - conflict format
-- - merge options
--
--(Daniel, Miklos, Stephan, JC)
-+Check ll-merge.h for details.
-diff --git a/ll-merge.h b/ll-merge.h
-index e78973dd55..aceb1b2413 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -7,16 +7,87 @@
+-If you need to specify the number of elements to allocate explicitly
+-then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
+diff --git a/cache.h b/cache.h
+index 04cabaac11..8fbbdf971a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -632,10 +632,43 @@ int daemonize(void);
  
- #include "xdiff/xdiff.h"
+ #define alloc_nr(x) (((x)+16)*3/2)
  
+-/*
+- * Realloc the buffer pointed at by variable 'x' so that it can hold
+- * at least 'nr' entries; the number of entries currently allocated
+- * is 'alloc', using the standard growing factor alloc_nr() macro.
 +/**
++ * Dynamically growing an array using realloc() is error prone and boring.
 + *
-+ * Calling sequence:
-+ * ----------------
++ * Define your array with:
 + *
-+ * - Prepare a `struct ll_merge_options` to record options.
-+ *   If you have no special requests, skip this and pass `NULL`
-+ *   as the `opts` parameter to use the default options.
++ * - a pointer (`item`) that points at the array, initialized to `NULL`
++ *   (although please name the variable based on its contents, not on its
++ *   type);
 + *
-+ * - Allocate an mmbuffer_t variable for the result.
++ * - an integer variable (`alloc`) that keeps track of how big the current
++ *   allocation is, initialized to `0`;
 + *
-+ * - Allocate and fill variables with the file's original content
-+ *   and two modified versions (using `read_mmfile`, for example).
++ * - another integer variable (`nr`) to keep track of how many elements the
++ *   array currently has, initialized to `0`.
 + *
-+ * - Call `ll_merge()`.
++ * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
++ * alloc)`.  This ensures that the array can hold at least `n` elements by
++ * calling `realloc(3)` and adjusting `alloc` variable.
 + *
-+ * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
++ * ------------
++ * sometype *item;
++ * size_t nr;
++ * size_t alloc
 + *
-+ * - Release buffers when finished.  A simple
-+ *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
-+ *   free(result_buf.ptr);` will do.
++ * for (i = 0; i < nr; i++)
++ * 	if (we like item[i] already)
++ * 		return;
 + *
-+ * If the modifications do not merge cleanly, `ll_merge` will return a
-+ * nonzero value and `result_buf` will generally include a description of
-+ * the conflict bracketed by markers such as the traditional `<<<<<<<`
-+ * and `>>>>>>>`.
++ * // we did not like any existing one, so add one
++ * ALLOC_GROW(item, nr + 1, alloc);
++ * item[nr++] = value you like;
++ * ------------
 + *
-+ * The `ancestor_label`, `our_label`, and `their_label` parameters are
-+ * used to label the different sides of a conflict if the merge driver
-+ * supports this.
-+ */
-+
-+
- struct index_state;
- 
-+/**
-+ * This describes the set of options the calling program wants to affect
-+ * the operation of a low-level (single file) merge.
-+ */
- struct ll_merge_options {
-+
-+	/**
-+	 * Behave as though this were part of a merge between common ancestors in
-+	 * a recursive merge (merges of binary files may need to be handled
-+	 * differently in such cases, for example). If a helper program is
-+	 * specified by the `[merge "<driver>"] recursive` configuration, it will
-+	 * be used.
-+	 */
- 	unsigned virtual_ancestor : 1;
--	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
-+
-+	/**
-+	 * Resolve local conflicts automatically in favor of one side or the other
-+	 * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
-+	 * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
-+	 * or `XDL_MERGE_FAVOR_UNION`.
-+	 */
-+	unsigned variant : 2;
-+
-+	/**
-+	 * Resmudge and clean the "base", "theirs" and "ours" files before merging.
-+	 * Use this when the merge is likely to have overlapped with a change in
-+	 * smudge/clean or end-of-line normalization rules.
-+	 */
- 	unsigned renormalize : 1;
-+
-+	/**
-+	 * Increase the length of conflict markers so that nested conflicts
-+	 * can be differentiated.
-+	 */
- 	unsigned extra_marker_size;
-+
-+	/* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
- 	long xdl_opts;
- };
- 
-+/**
-+ * Perform a three-way single-file merge in core.  This is a thin wrapper
-+ * around `xdl_merge` that takes the path and any merge backend specified in
-+ * `.gitattributes` or `.git/info/attributes` into account.
-+ * Returns 0 for a clean merge.
-+ */
- int ll_merge(mmbuffer_t *result_buf,
- 	     const char *path,
- 	     mmfile_t *ancestor, const char *ancestor_label,
++ * You are responsible for updating the `nr` variable.
++ *
++ * If you need to specify the number of elements to allocate explicitly
++ * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
+  *
+  * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
+  * added niceties.
 -- 
 gitgitgadget
 
