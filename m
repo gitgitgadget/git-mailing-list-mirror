@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,URIBL_SBL,URIBL_SBL_A shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A1501F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E94D1F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 21:28:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbfKKV2Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 16:28:25 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:37527 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727229AbfKKV2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 16:28:15 -0500
-Received: by mail-wr1-f52.google.com with SMTP id t1so16267405wrv.4
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:14 -0800 (PST)
+        id S1726952AbfKKV21 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 16:28:27 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:37978 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfKKV2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 16:28:14 -0500
+Received: by mail-wm1-f52.google.com with SMTP id z19so791557wmk.3
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 13:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
-        b=g/BjSFOcCi64aPaNlRfZwFU1rLLpTkzGRnJtQesBoj9RAaeEld3p+ILFqIgLFt97Pl
-         P4rHIvuxVJlMlfpZ+TfmcM6fE/UgTA5xg/6geJbyPX4lQnu1MMVsuwxXtRXKbwtlyxqA
-         2rjpVmofmKoFmGapFFZtnj4mXxT7/9KpzLxolATqr8BiEpYRSMVOqwWB81ktz2oxibsF
-         PIUOboXH5wVM3F5UH1A7FzplOJeCV/woEzqnocbtglwL0Ih261l6YOHB407Q6QRpUbwG
-         EbqnK3iqsgixoaO0RA99dfNyQy1cBhEVXvP7xWl9+Ggon+yotVbfKy3r0oKuDQY/8A2h
-         aYZw==
+        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
+        b=NfCxx9CLYPCBC5v5MU/PCIxjtNio3spBBgme1xWsizA2yEBiNH8q3P03DC0AaSF/Aw
+         PyCD5dcxw8ATjhYOUNj3i5vQegmrNpebZSZDgNMBO3zlhBvhhjd2qc857R/GNzPSy1Ai
+         Re02dIPuVW/m9RiAJMaLmflrWcTy6K0TKwfJuXZ6G9eNCW5MnKmH2lDRPWH27ghpNH21
+         LwssDN3RFLkRzDtBvSg/9ioxmLfTuSCbtWA+XN19qzxLOyjx6zM8StfQ9P3xLawELAO9
+         wwPPKBW1YKNVtL9NrFc6krgQS4RvsoFGsJP1nosZ3u6eKCdr0NAqYkglQHBY4FCavAvi
+         OI6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
-        b=DaAO+or/YKWNumMvZkDEJM/QGgjHXp0Bm09Cr/t1WzUfsKh21HMqmidyhDYuaQG3EQ
-         apYT5jtlr17y2tAphrF+DEKlvAp/OnUm8NMFSLzRq8fNyP8k7pYB/JqZrSWbFUA2GSha
-         42KcrFYepGm6iMPxYBy9wfwzoYE9w8CEOv4pyCq5CtWu2UepnUgFhEWVs//WQSJkqcjp
-         32m03UQsDQ2rs1D/NFRtBRYLA+tlyf2XTl0BIxuT4kKRfQMF5ap4iNCzSYc9Td4mqtCk
-         LEfHcmOX2xf4IvhDq7NZfBoNLifonzESya4AYSahj6fyKYK1EAYQYFaQAFfcpctaG40g
-         Vb+w==
-X-Gm-Message-State: APjAAAV8miviVZOXn8teF2bSvCbj9tRQjluz0PRfPhC6TXZLdQeLZgbV
-        GOyhtMrEOc9IMuuFW1zCEb1++Jrd
-X-Google-Smtp-Source: APXvYqzMXtqooobDu5gwJYOEUZqgRC8Yudhn7kCBDueCF/yXYyzVY/1lzl5h89ISAnAP+9Ki0oiasg==
-X-Received: by 2002:a05:6000:1612:: with SMTP id u18mr23190836wrb.306.1573507693517;
-        Mon, 11 Nov 2019 13:28:13 -0800 (PST)
+        bh=bIQFN7Giyzj0Cp3ZhrwOhNDIUw+bJ062AZKqqcec2l0=;
+        b=OZ6qpfxALRn1zJgtKYYGrBBQpgaeRG7xag8xa5Cbo312AI0u22lw2H9Wr7s5uIVnYq
+         F6fUg2x6icBo62D3agKpFJ20jCKloZHnqKr1wnLHo7u2ldIvfmTj3uNUmvGWXzzzrtqf
+         rCFwwi19u432gbTQgfGI7vfhSpWVDjcw/ge1LQaw72t9kRIxziwh63H2SH8ffKf+DbKf
+         eCbkENf27zSR/3eAol8ZHhhmmuT/9ECd1OQ/vnW63zadVgJWeg4AfBZPeCxvsWdgr4Fl
+         o7nRWyDSAUmsBzCeh23bEN26i5IeYLNXWf9sOPqAvsD5njcS68Xl/lMXG2ns9Tp0jHrO
+         E3xQ==
+X-Gm-Message-State: APjAAAWT1Ivl3mHp8XK8rOFOoybwKdvDyyxcqnNDfME6d+jg1L4yauES
+        RDWyOLbK/eTGKllSphC5xJDhwEu4
+X-Google-Smtp-Source: APXvYqzmewL+jDDlkvPAeWVDM+ptIsHoOGySAAoVVRnOGQ98l/V0mwf4i7E68tQLYwu0lfDi+z2UkQ==
+X-Received: by 2002:a1c:790b:: with SMTP id l11mr905988wme.127.1573507692090;
+        Mon, 11 Nov 2019 13:28:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a5sm17839811wrv.56.2019.11.11.13.28.13
+        by smtp.gmail.com with ESMTPSA id 36sm22797817wrj.42.2019.11.11.13.28.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 11 Nov 2019 13:28:13 -0800 (PST)
-Message-Id: <6463c7565b2dcd90944d0f0008609df64eaaed0e.1573507684.git.gitgitgadget@gmail.com>
+        Mon, 11 Nov 2019 13:28:11 -0800 (PST)
+Message-Id: <6a9a0f77b30ad3b63c1c473f079cd92302621604.1573507684.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
         <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 11 Nov 2019 21:27:52 +0000
-Subject: [PATCH v3 09/21] revision: move doc to revision.h
+Date:   Mon, 11 Nov 2019 21:27:50 +0000
+Subject: [PATCH v3 07/21] refs: move doc to refs.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,214 +72,187 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-revision-walking.txt
-to revision.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-ref-iteration.txt
+to refs.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-revision-walking.txt is removed because the
+Also documentation/technical/api-ref-iteration.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/MyFirstObjectWalk.txt           |  2 +-
- .../technical/api-revision-walking.txt        | 72 -------------------
- revision.h                                    | 59 +++++++++++++++
- 3 files changed, 60 insertions(+), 73 deletions(-)
- delete mode 100644 Documentation/technical/api-revision-walking.txt
+ Documentation/technical/api-ref-iteration.txt | 78 -------------------
+ refs.h                                        | 51 ++++++++++++
+ 2 files changed, 51 insertions(+), 78 deletions(-)
+ delete mode 100644 Documentation/technical/api-ref-iteration.txt
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index 4d24daeb9f..321c0ba6a4 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -17,7 +17,7 @@ revision walk is used for operations like `git log`.
- 
- - `Documentation/user-manual.txt` under "Hacking Git" contains some coverage of
-   the revision walker in its various incarnations.
--- `Documentation/technical/api-revision-walking.txt`
-+- `revision.h`
- - https://eagain.net/articles/git-for-computer-scientists/[Git for Computer Scientists]
-   gives a good overview of the types of objects in Git and what your object
-   walk is really describing.
-diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
+diff --git a/Documentation/technical/api-ref-iteration.txt b/Documentation/technical/api-ref-iteration.txt
 deleted file mode 100644
-index 03f9ea6ac4..0000000000
---- a/Documentation/technical/api-revision-walking.txt
+index ad9d019ff9..0000000000
+--- a/Documentation/technical/api-ref-iteration.txt
 +++ /dev/null
-@@ -1,72 +0,0 @@
--revision walking API
--====================
+@@ -1,78 +0,0 @@
+-ref iteration API
+-=================
 -
--The revision walking API offers functions to build a list of revisions
--and then iterate over that list.
 -
--Calling sequence
------------------
+-Iteration of refs is done by using an iterate function which will call a
+-callback function for every ref. The callback function has this
+-signature:
 -
--The walking API has a given calling sequence: first you need to
--initialize a rev_info structure, then add revisions to control what kind
--of revision list do you want to get, finally you can iterate over the
--revision list.
+-	int handle_one_ref(const char *refname, const struct object_id *oid,
+-			   int flags, void *cb_data);
 -
--Functions
-----------
+-There are different kinds of iterate functions which all take a
+-callback of this type. The callback is then called for each found ref
+-until the callback returns nonzero. The returned value is then also
+-returned by the iterate function.
 -
--`repo_init_revisions`::
+-Iteration functions
+--------------------
 -
--	Initialize a rev_info structure with default values. The third
--	parameter may be NULL or can be prefix path, and then the `.prefix`
--	variable will be set to it. This is typically the first function you
--	want to call when you want to deal with a revision list. After calling
--	this function, you are free to customize options, like set
--	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
--	`revision.h` for a complete list of available options.
+-* `head_ref()` just iterates the head ref.
 -
--`add_pending_object`::
+-* `for_each_ref()` iterates all refs.
 -
--	This function can be used if you want to add commit objects as revision
--	information. You can use the `UNINTERESTING` object flag to indicate if
--	you want to include or exclude the given commit (and commits reachable
--	from the given commit) from the revision list.
--+
--NOTE: If you have the commits as a string list then you probably want to
--use setup_revisions(), instead of parsing each string and using this
--function.
+-* `for_each_ref_in()` iterates all refs which have a defined prefix and
+-  strips that prefix from the passed variable refname.
 -
--`setup_revisions`::
+-* `for_each_tag_ref()`, `for_each_branch_ref()`, `for_each_remote_ref()`,
+-  `for_each_replace_ref()` iterate refs from the respective area.
 -
--	Parse revision information, filling in the `rev_info` structure, and
--	removing the used arguments from the argument list. Returns the number
--	of arguments left that weren't recognized, which are also moved to the
--	head of the argument list. The last parameter is used in case no
--	parameter given by the first two arguments.
+-* `for_each_glob_ref()` iterates all refs that match the specified glob
+-  pattern.
 -
--`prepare_revision_walk`::
+-* `for_each_glob_ref_in()` the previous and `for_each_ref_in()` combined.
 -
--	Prepares the rev_info structure for a walk. You should check if it
--	returns any error (non-zero return code) and if it does not, you can
--	start using get_revision() to do the iteration.
+-* Use `refs_` API for accessing submodules. The submodule ref store could
+-  be obtained with `get_submodule_ref_store()`.
 -
--`get_revision`::
+-* `for_each_rawref()` can be used to learn about broken ref and symref.
 -
--	Takes a pointer to a `rev_info` structure and iterates over it,
--	returning a `struct commit *` each time you call it. The end of the
--	revision list is indicated by returning a NULL pointer.
+-* `for_each_reflog()` iterates each reflog file.
 -
--`reset_revision_walk`::
+-Submodules
+-----------
 -
--	Reset the flags used by the revision walking api. You can use
--	this to do multiple sequential revision walks.
+-If you want to iterate the refs of a submodule you first need to add the
+-submodules object database. You can do this by a code-snippet like
+-this:
 -
--Data structures
-----------------
+-	const char *path = "path/to/submodule"
+-	if (add_submodule_odb(path))
+-		die("Error submodule '%s' not populated.", path);
 -
--Talk about <revision.h>, things like:
+-`add_submodule_odb()` will return zero on success. If you
+-do not do this you will get an error for each ref that it does not point
+-to a valid object.
 -
--* two diff_options, one for path limiting, another for output;
--* remaining functions;
+-Note: As a side-effect of this you cannot safely assume that all
+-objects you lookup are available in superproject. All submodule objects
+-will be available the same way as the superprojects objects.
 -
--(Linus, JC, Dscho)
-diff --git a/revision.h b/revision.h
-index 4134dc6029..983ffc0f12 100644
---- a/revision.h
-+++ b/revision.h
-@@ -9,6 +9,19 @@
- #include "diff.h"
- #include "commit-slab-decl.h"
+-Example:
+---------
+-
+-----
+-static int handle_remote_ref(const char *refname,
+-		const unsigned char *sha1, int flags, void *cb_data)
+-{
+-	struct strbuf *output = cb_data;
+-	strbuf_addf(output, "%s\n", refname);
+-	return 0;
+-}
+-
+-...
+-
+-	struct strbuf output = STRBUF_INIT;
+-	for_each_remote_ref(handle_remote_ref, &output);
+-	printf("%s", output.buf);
+-----
+diff --git a/refs.h b/refs.h
+index 730d05ad91..545029c6d8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -310,19 +310,35 @@ int refs_for_each_branch_ref(struct ref_store *refs,
+ int refs_for_each_remote_ref(struct ref_store *refs,
+ 			     each_ref_fn fn, void *cb_data);
  
-+/**
-+ * The revision walking API offers functions to build a list of revisions
-+ * and then iterate over that list.
-+ *
-+ * Calling sequence
-+ * ----------------
-+ *
-+ * The walking API has a given calling sequence: first you need to initialize
-+ * a rev_info structure, then add revisions to control what kind of revision
-+ * list do you want to get, finally you can iterate over the revision list.
-+ *
-+ */
++/* just iterates the head ref. */
+ int head_ref(each_ref_fn fn, void *cb_data);
 +
- /* Remember to update object flag allocation in object.h */
- #define SEEN		(1u<<0)
- #define UNINTERESTING   (1u<<1)
-@@ -306,11 +319,29 @@ struct setup_revision_opt {
- #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
- #define init_revisions(revs, prefix) repo_init_revisions(the_repository, revs, prefix)
- #endif
++/* iterates all refs. */
+ int for_each_ref(each_ref_fn fn, void *cb_data);
 +
 +/**
-+ * Initialize a rev_info structure with default values. The third parameter may
-+ * be NULL or can be prefix path, and then the `.prefix` variable will be set
-+ * to it. This is typically the first function you want to call when you want
-+ * to deal with a revision list. After calling this function, you are free to
-+ * customize options, like set `.ignore_merges` to 0 if you don't want to
-+ * ignore merges, and so on.
++ * iterates all refs which have a defined prefix and strips that prefix from
++ * the passed variable refname.
 + */
- void repo_init_revisions(struct repository *r,
- 			 struct rev_info *revs,
- 			 const char *prefix);
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data);
++
+ int refs_for_each_fullref_in(struct ref_store *refs, const char *prefix,
+ 			     each_ref_fn fn, void *cb_data,
+ 			     unsigned int broken);
+ int for_each_fullref_in(const char *prefix, each_ref_fn fn, void *cb_data,
+ 			unsigned int broken);
 +
 +/**
-+ * Parse revision information, filling in the `rev_info` structure, and
-+ * removing the used arguments from the argument list. Returns the number
-+ * of arguments left that weren't recognized, which are also moved to the
-+ * head of the argument list. The last parameter is used in case no
-+ * parameter given by the first two arguments.
++ * iterate refs from the respective area.
 + */
- int setup_revisions(int argc, const char **argv, struct rev_info *revs,
- 		    struct setup_revision_opt *);
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data);
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data);
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data);
+ int for_each_replace_ref(struct repository *r, each_repo_ref_fn fn, void *cb_data);
 +
- void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 			const struct option *options,
- 			const char * const usagestr[]);
-@@ -319,9 +350,26 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- int handle_revision_arg(const char *arg, struct rev_info *revs,
- 			int flags, unsigned revarg_opt);
++/* iterates all refs that match the specified glob pattern. */
+ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data);
++
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+ 			 const char *prefix, void *cb_data);
  
-+/**
-+ * Reset the flags used by the revision walking api. You can use this to do
-+ * multiple sequential revision walks.
-+ */
- void reset_revision_walk(void);
-+
-+/**
-+ * Prepares the rev_info structure for a walk. You should check if it returns
-+ * any error (non-zero return code) and if it does not, you can start using
-+ * get_revision() to do the iteration.
-+ */
- int prepare_revision_walk(struct rev_info *revs);
-+
-+/**
-+ * Takes a pointer to a `rev_info` structure and iterates over it, returning a
-+ * `struct commit *` each time you call it. The end of the revision list is
-+ * indicated by returning a NULL pointer.
-+ */
- struct commit *get_revision(struct rev_info *revs);
-+
- char *get_revision_mark(const struct rev_info *revs,
- 			const struct commit *commit);
- void put_revision_mark(const struct rev_info *revs,
-@@ -333,8 +381,19 @@ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees)
+@@ -791,6 +807,41 @@ int reflog_expire(const char *refname, const struct object_id *oid,
+ int ref_storage_backend_exists(const char *name);
  
- void show_object_with_name(FILE *, struct object *, const char *);
- 
+ struct ref_store *get_main_ref_store(struct repository *r);
++
 +/**
-+ * This function can be used if you want to add commit objects as revision
-+ * information. You can use the `UNINTERESTING` object flag to indicate if
-+ * you want to include or exclude the given commit (and commits reachable
-+ * from the given commit) from the revision list.
++ * Submodules
++ * ----------
 + *
-+ * NOTE: If you have the commits as a string list then you probably want to
-+ * use setup_revisions(), instead of parsing each string and using this
-+ * function.
++ * If you want to iterate the refs of a submodule you first need to add the
++ * submodules object database. You can do this by a code-snippet like
++ * this:
++ *
++ * 	const char *path = "path/to/submodule"
++ * 	if (add_submodule_odb(path))
++ * 		die("Error submodule '%s' not populated.", path);
++ *
++ * `add_submodule_odb()` will return zero on success. If you
++ * do not do this you will get an error for each ref that it does not point
++ * to a valid object.
++ *
++ * Note: As a side-effect of this you cannot safely assume that all
++ * objects you lookup are available in superproject. All submodule objects
++ * will be available the same way as the superprojects objects.
++ *
++ * Example:
++ * --------
++ *
++ * ----
++ * static int handle_remote_ref(const char *refname,
++ * 		const unsigned char *sha1, int flags, void *cb_data)
++ * {
++ * 	struct strbuf *output = cb_data;
++ * 	strbuf_addf(output, "%s\n", refname);
++ * 	return 0;
++ * }
++ *
 + */
- void add_pending_object(struct rev_info *revs,
- 			struct object *obj, const char *name);
 +
- void add_pending_oid(struct rev_info *revs,
- 		     const char *name, const struct object_id *oid,
- 		     unsigned int flags);
+ /*
+  * Return the ref_store instance for the specified submodule. For the
+  * main repository, use submodule==NULL; such a call cannot fail. For
 -- 
 gitgitgadget
 
