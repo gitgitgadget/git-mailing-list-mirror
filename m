@@ -2,249 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 597F51F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 13:42:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D0B61F4C0
+	for <e@80x24.org>; Mon, 11 Nov 2019 13:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbfKKNmw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 08:42:52 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:36503 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726877AbfKKNmv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 08:42:51 -0500
-Received: by mail-qk1-f194.google.com with SMTP id d13so11167923qko.3
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 05:42:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/WpilanZsS88nbWFy/JmL4We0kxwh7d7EjarrTNNX2M=;
-        b=pDyg/i+4sdiOzZeyOSN7tSgYp7fp0VyJSGcLJMCOMQ9GQGs1FUp9CWcRm1ARjQ6DwN
-         rdGc+Z/FY+64NHxx3J9aJJlCS365V8tys0Y3XdUy7SVbML7qowinBsDB+pbN4JIN2qix
-         Za8bjPNYpq/p/PzdBVD/viVFJKi4dg0wwsoydwn9QFJEQbIEr8afdoxPaFr4GAKFNOhP
-         lsaO8ydDaRobDan85kwpNaN7FxZE2ieC7ONQ/3A/5K/fCF/jKty66Wmom3fwfP1Mdemz
-         ngZlp2rvookPFQVSNBS8/Z7IazNn6WvMtwsCxgd3iQwILK/3hcUE0zdLw79cKWZeW9MM
-         WwJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/WpilanZsS88nbWFy/JmL4We0kxwh7d7EjarrTNNX2M=;
-        b=DnbJzzKy6utG+Q9v4Uhy0FRfAbzqRA6FD3pc7rFlDgr79YEn+hYTGAZ5R5Mmbeks9k
-         Qruu3Sy3kihzaWu4ENfZOoBrKd6NxGwtzttDHlwQT0YLj8YbNBQKSEIeet9GeLJwCubN
-         GJmOMNJ9KKo7RODRjgfZPblBU0vAo6IMThljB9Y2/Wm2xuF5kCIIJo3KS5HuH/kRTuLh
-         GBLmHGRq3LpeiM6auzYG1yBdS4hZqj7hjJ9ufQkIJtn4muYolnoZCn3W24v6kBOI/uqx
-         jHHfW4jKuzjfV/PXwaiXkyceltn2dgy+XrPuiv6ZhOX1hh0SZSiEdu31CqIzAVyF1v/S
-         +YMg==
-X-Gm-Message-State: APjAAAW31SxOJYPbwCDZa53U+fm2DWu4IilPy+EadpyK/YuVOTQAWt9B
-        C+jEQfDyKf5/e+tbczK7Bs0=
-X-Google-Smtp-Source: APXvYqxZ2w+uMSl+Q+duIHnnD6TpYRfx1w9ay4fQQ3U3E7dPUjfiLLSfav1WrK26XVAjrXQXU5iXOw==
-X-Received: by 2002:a37:ba44:: with SMTP id k65mr10674494qkf.169.1573479770132;
-        Mon, 11 Nov 2019 05:42:50 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:b46a:8c72:ec90:8e0a? ([2001:4898:a800:1010:65a0:8c72:ec90:8e0a])
-        by smtp.gmail.com with ESMTPSA id g11sm3584203qkm.82.2019.11.11.05.42.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Nov 2019 05:42:49 -0800 (PST)
-Subject: Re: [PATCH] pack-objects: avoid pointless oe_map_new_pack() calls
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <20191111111249.GA31169@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <01605e2d-5ea7-037d-b25f-3774b88d059d@gmail.com>
-Date:   Mon, 11 Nov 2019 08:42:47 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
- Thunderbird/71.0
+        id S1727046AbfKKNsg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 08:48:36 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58279 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726912AbfKKNsf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 08:48:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573480112;
+        bh=irFwpe4KrvqW1JjFC66Pa3ERBDkrFx2BUyrUeZMaD64=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fZEyCTBhYSub8L2cIAOxYOI5H1S4xNmTBvswmYMdLNOUnDJRlw++jLGSIqiOhlJKL
+         JxfZVsr2WUfUiWAoT5pAeK1fSx1ru6nsS5TKLYxBLhGajPiQrgdj5dYipP/G2US1H6
+         JiKNzbyFkSV3bMyswYoTu3EiQjzfBDmKnUVcXrts=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1iUi1K11CU-000fs4; Mon, 11
+ Nov 2019 14:48:32 +0100
+Date:   Mon, 11 Nov 2019 14:48:13 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 3/9] bugreport: add version and system information
+In-Reply-To: <20191108214757.GB22855@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1911111439510.46@tvgsbejvaqbjf.bet>
+References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-4-emilyshaffer@google.com> <nycvar.QRO.7.76.6.1910281432180.46@tvgsbejvaqbjf.bet> <20191108214757.GB22855@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20191111111249.GA31169@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Pd+AzYq/QV5WEzqCYscHnLkbxJlEgupsxLBAf6a0NPzP3zctlnp
+ dv7ItZP7r8Nkp1QIcdsXALi5zytUtcxWhtcjIyWMkcW/bMEArNg/Uu4q+ZdX/HECRtnUz+/
+ f44byaUvhhQZl49QeKZwXh/TSltlqYimezA6Axqtv9PrK//bJlevNrps6WcXm0xlNSl6Ufn
+ OKCVG7srXJpRiBfBXc1Zg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:CLEnz10iK9g=:8JjDl+O4KHjzeFkbJYVJNw
+ 8KNTf6N6cdh1hPbf4bBhuCLT0jr3n0dVkcitSq+e38rThKPaA/2hts6OTKalFAnuhSs0y0zQe
+ rfqvNRQdKsZeySPI750krwKs598lpA6bb7GlTwHdwjFZcyPiWkLfUO7fn9i3XE3DuzWMiwXzM
+ 3rC91ljZYF+fAXLgvKmU+udKZKEE6ImroAVs7G9D5eU3k6A5/R3oFUcmLW8yf9oRqKN2DJDeY
+ JA/yRblbkXM23eGkE/hi9KBkikDwq4fvpYO8IhtdMwOmSdHF9FQWL8vxwPzKok34nDpFYGx5m
+ UGPy1O7eVqrJ6aTzke/2YBRRenQV8BBvPSMqvJKwpcmG1IbvwS2afNqVfh/x+niNqEVB3t9XY
+ C9XSRn49gfVRXEJ2Db8mnZZDKe+wNt4PO0jgM//xQ8cnH/Oi2o7CN/e7mQHBf+di9ReU/hgJi
+ bzCoICjP7QfWYaxrLtcmWE71EA13o1S/q5kBOQH6FvFM4b8XSTj/5mqVBnopqcS37bstIGEte
+ 0z+y1ZRxqbLZkWfHbrsfEE1pjEhxe3EZz8zamenyiqJ39zt7pwicNDzV4eihgOyqqDVLGFqf+
+ jteVEM0HHmQfntCGSDfUIdYLKiciDpi7x5Qjs3OEsAI4IDL61UMwnRvpcnVDzvZoa2traLAxO
+ z1EpF/+U/CgAaQ4RF0BWLf+uMD4qT2+5VoZexEJIpH7kyygfk8IVLqG3MGcRBISZj+Trp4tdI
+ a0/v2ugIQdTlfNkna0USEHaLEym0vMdRoLTfFJZIG902zeHIDh1YsM0K8xib51v1z90EoEJF/
+ QgkraAGX0uL0XKTmPYdrKjSOZ/Yg/bcuk2rCwLGE9HNlEv+GkZFpRmE6fVEaEetxYLTYxRU9t
+ 7YDMWJgbRJaNVGMMFPVq1AE/kr1pZoK95x42+DC+mJtY81HhNpOOALr7PFh/kkvgYtCvQOkAs
+ NSF7gYSatthmHfwNJ8qnxpP0FSMZRd4hoS+ibgXzQj7+CX9VJ3fYk22mzEqmKx+L33vl7iNdT
+ 7Vlk3mcP5dRqNJRg0fJrbQbi/FoT28g5ASuDsPR+4ypPb8HfKYFhq9HftELLUnmQqQ15+pn7K
+ +1ZcFdADnU8yarVVvFY5A3s9lY0oq2RfRfbUiVARUoSS8Wkz6glhIwVzCLyp4t5aAaQxeZ2TU
+ V7UeWy9jizYgAaT8q0yPkJl3FX9l2BcJDfkxzf7MXaIRLmOAolq2Sq2YJKKJI0DkSI3/NUj5R
+ sp7r0Hqb/Rkl+MGja9unfIq4aqpPH0AVpLNnNbb1uQTOpGkFdOS59eGl6jzc=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/11/2019 6:12 AM, Jeff King wrote:
-> This patch fixes an extreme slowdown in pack-objects when you have more
-> than 1023 packs. See below for numbers.
-> 
-> Since 43fa44fa3b (pack-objects: move in_pack out of struct object_entry,
-> 2018-04-14), we use a complicated system to save some per-object memory.
-> 
-> Each object_entry structs gets a 10-bit field to store the index of the
-> pack it's in. We map those indices into pointers using
-> packing_data->in_pack_by_idx, which we initialize at the start of the
-> program. If we have 2^10 or more packs, then we instead create an array
-> of pack pointers, one per object. This is packing_data->in_pack.
-> 
-> So far so good. But there's one other tricky case: if a new pack arrives
-> after we've initialized in_pack_by_idx, it won't have an index yet. We
-> solve that by calling oe_map_new_pack(), which just switches on the fly
-> to the less-optimal in_pack mechanism, allocating the array and
-> back-filling it for already-seen objects.
-> 
-> But that logic kicks in even when we've switched to it already (whether
-> because we really did see a new pack, or because we had too many packs
-> in the first place). The result doesn't produce a wrong outcome, but
-> it's very slow. What happens is this:
-> 
->   - imagine you have a repo with 500k objects and 2000 packs that you
->     want to repack.
-> 
->   - before looking at any objects, we call prepare_in_pack_by_idx(). It
->     starts allocating an index for each pack. On the 1024th pack, it
->     sees there are too many, so it bails, leaving in_pack_by_idx as
->     NULL.
-> 
->   - while actually adding objects to the packing list, we call
->     oe_set_in_pack(), which checks whether the pack already has an
->     index. If it's one of the packs after the first 1023, then it
->     doesn't have one, and we'll call oe_map_new_pack().
-> 
->     But there's no useful work for that function to do. We're already
->     using in_pack, so it just uselessly walks over the complete list of
->     objects, trying to backfill in_pack.
-> 
->     And we end up doing this for almost 1000 packs (each of which may be
->     triggered by more than one object). And each time it triggers, we
->     may iterate over up to 500k objects. So in the absolute worst case,
->     this is quadratic in the number of objects.
+Hi Emily,
 
-Quadratic is bad!
+On Fri, 8 Nov 2019, Emily Shaffer wrote:
 
-> The solution is simple: we don't need to bother checking whether the
-> pack has an index if we've already converted to using in_pack, since by
-> definition we're not going to use it. So we can just push the "does the
-> pack have a valid index" check down into that half of the conditional,
-> where we know we're going to use it.
-> 
-> The current test in p5303 sadly doesn't notice this problem, since it
-> maxes out at 1000 packs. If we add a new test to it at 2000 packs, it
-> does show the improvement:
-> 
->   Test                      HEAD^               HEAD
->   ----------------------------------------------------------------------
->   5303.12: repack (2000)    26.72(39.68+0.67)   15.70(28.70+0.66) -41.2%
+> On Mon, Oct 28, 2019 at 02:49:29PM +0100, Johannes Schindelin wrote:
+>
+> > On Thu, 24 Oct 2019, Emily Shaffer wrote:
+> >
+> > > diff --git a/bugreport.c b/bugreport.c
+> > > new file mode 100644
+> > > index 0000000000..ada54fe583
+> > > --- /dev/null
+> > > +++ b/bugreport.c
+> > > [...]
+> > > +	strbuf_addstr(sys_info, "curl-config --version: ");
+> > > +	strbuf_addbuf(sys_info, &std_out);
+> > > +	strbuf_complete_line(sys_info);
+> > > +
+> > > +	argv_array_clear(&cp.args);
+> > > +	strbuf_reset(&std_out);
+> > > +
+> > > +
+> > > +	argv_array_push(&cp.args, "ldd");
+> > > +	argv_array_push(&cp.args, "--version");
+> > > +	capture_command(&cp, &std_out, 0);
+> >
+> > Again, this command will only be present in few setups. I am not
+> > actually sure that the output of this is interesting to begin with.
+>
+> It was a suggestion, I believe, from Jonathan Nieder.
 
-And these numbers don't really show a quadratic improvement, probably due
-to the test itself needing to do the work to create 2000 packs.
+Yes, I guess Jonathan builds their Git locally, too.
 
-> However, these many-pack test cases are rather expensive to run, so
-> adding larger and larger numbers isn't appealing. Instead, we can show
-> it off more easily by using GIT_TEST_FULL_IN_PACK_ARRAY, which forces us
-> into the absolute worst case: no pack has an index, so we'll trigger
-> oe_map_new_pack() pointlessly for every single object, making it truly
-> quadratic.
-> 
-> Here are the numbers (on git.git) with the included change to p5303:
-> 
->   Test                      HEAD^               HEAD
->   ----------------------------------------------------------------------
->   5303.3: rev-list (1)      2.05(1.98+0.06)     2.06(1.99+0.06) +0.5%
->   5303.4: repack (1)        33.45(33.46+0.19)   2.75(2.73+0.22) -91.8%
->   5303.6: rev-list (50)     2.07(2.01+0.06)     2.06(2.01+0.05) -0.5%
->   5303.7: repack (50)       34.21(35.18+0.16)   3.49(4.50+0.12) -89.8%
->   5303.9: rev-list (1000)   2.87(2.78+0.08)     2.88(2.80+0.07) +0.3%
->   5303.10: repack (1000)    41.26(51.30+0.47)   10.75(20.75+0.44) -73.9%
+It _is_ easy to forget that most users find this too involved to even
+try.
 
-But these tests do!
+Nothing like reading through a bug tracker quite frequently to learn
+about the actual troubles actual users have :-)
 
-> Again, those improvements aren't realistic for the 1-pack case (because
-> in the real world, the full-array solution doesn't kick in), but it's
-> more useful to be testing the more-complicated code path.
+> > What I _do_ think is that a much more interesting piece of information
+> > would be the exact GLIBC version, the OS name and the OS version.
+>
+> The glibc version is easy; I've done that. It certainly looks nicer than
+> the ldd call.
+>
+> I guess I may be missing something, because as I start to look into how
+> to the OS info, I fall down a hole of many, many preprocessor defines to
+> check. If that's the approach you want me to take, just say the word,
+> but it will be ugly :) I suppose I had hoped the uname info would give u=
+s
+> a close enough idea that full OS info isn't necessary.
 
-I think this is a reasonable adjustment to demonstrate the specific problem
-at hand right now.
+We could go down the pre-processor route, but that would give us the OS
+name and version at build time, not at run time. I think we will be
+mostly interested in the latter, though.
 
-> While we're looking at this issue, we'll tweak one more thing: in
-> oe_map_new_pack(), we call REALLOC_ARRAY(pack->in_pack). But we'd never
-> expect to get here unless we're back-filling it for the first time, in
-> which case it would be NULL. So let's switch that to ALLOC_ARRAY() for
-> clarity, and add a BUG() to document the expectation. Unfortunately this
-> code isn't well-covered in the test suite because it's inherently racy
-> (it only kicks in if somebody else adds a new pack while we're in the
-> middle of repacking).
+We might need to enhance our `uname()` emulation in `compat/mingw.c`,
+but I think we already have enough information there.
 
-Makes sense. We can't test everything.
+When it comes to glibc, I think `gnu_get_libc_version()` would get us
+what we want. A trickier thing might be to determine whether we're
+actually linking against glibc; I do not want to break musl builds
+again, I already did that inadvertently when requiring `REG_STARTEND`
+back in the days.
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  pack-objects.c             |  5 ++++-
->  pack-objects.h             | 19 ++++++++++++++-----
->  t/perf/p5303-many-packs.sh |  1 +
->  3 files changed, 19 insertions(+), 6 deletions(-)
-> 
-> diff --git a/pack-objects.c b/pack-objects.c
-> index c6250d77f4..5e5a3c62d9 100644
-> --- a/pack-objects.c
-> +++ b/pack-objects.c
-> @@ -119,7 +119,10 @@ void oe_map_new_pack(struct packing_data *pack)
->  {
->  	uint32_t i;
->  
-> -	REALLOC_ARRAY(pack->in_pack, pack->nr_alloc);
-> +	if (pack->in_pack)
-> +		BUG("packing_data has already been converted to pack array");
-> +
-> +	ALLOC_ARRAY(pack->in_pack, pack->nr_alloc);
->  
->  	for (i = 0; i < pack->nr_objects; i++)
->  		pack->in_pack[i] = oe_in_pack(pack, pack->objects + i);
-> diff --git a/pack-objects.h b/pack-objects.h
-> index 6fe6ae5ee8..d3975e079b 100644
-> --- a/pack-objects.h
-> +++ b/pack-objects.h
-> @@ -251,12 +251,21 @@ static inline void oe_set_in_pack(struct packing_data *pack,
->  				  struct object_entry *e,
->  				  struct packed_git *p)
->  {
-> -	if (!p->index)
-> +	if (pack->in_pack_by_idx) {
-> +		if (p->index) {
-> +			e->in_pack_idx = p->index;
-> +			return;
-> +		}
-> +		/*
-> +		 * We're accessing packs by index, but this pack doesn't have
-> +		 * an index (e.g., because it was added since we created the
-> +		 * in_pack_by_idx array). Bail to oe_map_new_pack(), which
-> +		 * will convert us to using the full in_pack array, and then
-> +		 * fall through to our in_pack handling.
-> +		 */
->  		oe_map_new_pack(pack);
-> -	if (pack->in_pack_by_idx)
-> -		e->in_pack_idx = p->index;
-> -	else
-> -		pack->in_pack[e - pack->objects] = p;
-> +	}
-> +	pack->in_pack[e - pack->objects] = p;
->  }
+> > > diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> > > index 2ef16440a0..7232d31be7 100644
+> > > --- a/builtin/bugreport.c
+> > > +++ b/builtin/bugreport.c
+> > > @@ -1,4 +1,5 @@
+> > >  #include "builtin.h"
+> > > +#include "bugreport.h"
+> > >  #include "stdio.h"
+> > >  #include "strbuf.h"
+> > >  #include "time.h"
+> > > @@ -27,6 +28,13 @@ int get_bug_template(struct strbuf *template)
+> > >  	return 0;
+> > >  }
+> > >
+> > > +void add_header(FILE *report, const char *title)
+> > > +{
+> > > +	struct strbuf buffer =3D STRBUF_INIT;
+> > > +	strbuf_addf(&buffer, "\n\n[%s]\n", title);
+> > > +	strbuf_write(&buffer, report);
+> >
+> > This leaks `buffer`. Why not write into `report` via `fprintf()`
+> > directly?
+>
+> Rather, to match the style of the rest of the builtin, modified
+> get_header to add the header to a passed-in strbuf instead of
+> modifying the file directly.
 
-This change looks good, and matches the explanation. There is no way one
-could look only at this method body and realize it would cause the performance
-problem this change is solving.
+Hmm. It makes the code less elegant in my opinion. I would rather either
+render the entire bug report into a single `strbuf` and then write it
+via `write_in_full()`, or use `fprintf()` directly.
 
->  
->  static inline struct object_entry *oe_delta(
-> diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
-> index 3779851941..a369152c47 100755
-> --- a/t/perf/p5303-many-packs.sh
-> +++ b/t/perf/p5303-many-packs.sh
-> @@ -77,6 +77,7 @@ do
->  	# actual pack generation, without smudging the on-disk setup
->  	# between trials.
->  	test_perf "repack ($nr_packs)" '
-> +		GIT_TEST_FULL_IN_PACK_ARRAY=1 \
->  		git pack-objects --keep-true-parents \
->  		  --honor-pack-keep --non-empty --all \
->  		  --reflog --indexed-objects --delta-base-offset \
-> 
-
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+Ciao,
+Dscho
