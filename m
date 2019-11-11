@@ -2,131 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9741F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 01:19:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61E161F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 01:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726765AbfKKBTY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 10 Nov 2019 20:19:24 -0500
-Received: from mail-qt1-f179.google.com ([209.85.160.179]:46063 "EHLO
-        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726275AbfKKBTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 10 Nov 2019 20:19:24 -0500
-Received: by mail-qt1-f179.google.com with SMTP id 30so13937400qtz.12
-        for <git@vger.kernel.org>; Sun, 10 Nov 2019 17:19:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=kV9mftSrwuisBaLmGTQDJ9+XNOuCPmzLevSr1eSQov8=;
-        b=Ug1RzMOuuaS48/rGW2Rq3YlYu1ouXGEVxZxIkkcankLdBVMVM+Nxh/0jkp8Eo1lyQ1
-         HLhvRMf5cO+Ix2UIDKvHfhPm8/Bj/OiouIwWGr+40pQfR8/lxAUrpnHXv/F25SotBIjH
-         j1XiOpzYpgb3zvMqg4szg+BERX4cAyUgdbGmfSMFzuHQd6R8JpITKp5kBceDagJ2HJ1M
-         whIWBb5HK40cTqpJDX5XlIJAxtir1BEeMFhjU1WpKnuP2qlZvnAarPKzb73+ndk/llyz
-         NHuDcisrKWgcxfstTPxEQqG9PXObx03vWJPGmsc725vQM11MYt6yx7Lr6TRTf1tICNga
-         tN2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kV9mftSrwuisBaLmGTQDJ9+XNOuCPmzLevSr1eSQov8=;
-        b=k9Zzz1bbTO6a7KY9gJIViJSY8Rnmk/dbvwXrjWobpzhWpp2/fBsP8bWxkkjnFmL4S2
-         ZwVeHKlO/h/oVgbAfeuBfBjjwGXo2pRXxxN9eCspQkKCfuPpBREoCzzmzD8o0PH9Z8a2
-         49l30Ih7R2Z8uyVXDG2Yrtjb41TGZEBj5p7bKS9ce3wmr/a7d3394TMW7rxZ80uuFAI+
-         GplOtQuAFEui9LpKTV66Oj22a8AQAxi811hiKUht8LLXepBO67KwiJ7vqa2TEgJxKOy9
-         n3aL5+9ANBn7QJUjLuN/ZoWmN+HFEmcAGgHwhsqSNg3Z1FexOk8lU8tqFCPIkesB+uAL
-         oktw==
-X-Gm-Message-State: APjAAAUWMDcp6Y/SvNVqPi2neKyjllg6MtPXRT9RY3JyHV8E/BnwAW7J
-        3ALQu6O/rYXfa1y2fuixS+0=
-X-Google-Smtp-Source: APXvYqxRfvtNcXA5/pjiDzlh0Fvc70kpiNf55zbN6HZLzIlhcFMXmmKAS1iYgXpY32DDPtVukGCJXg==
-X-Received: by 2002:ac8:80f:: with SMTP id u15mr23879554qth.193.1573435163234;
-        Sun, 10 Nov 2019 17:19:23 -0800 (PST)
-Received: from [10.0.1.19] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id w5sm2736632qkf.43.2019.11.10.17.19.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 10 Nov 2019 17:19:22 -0800 (PST)
-Subject: Re: Split commit graphs and commit-graph read
-To:     Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>
-References: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
-Date:   Sun, 10 Nov 2019 20:19:20 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
- Thunderbird/71.0
+        id S1726742AbfKKBXD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 10 Nov 2019 20:23:03 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52377 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726275AbfKKBXC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 10 Nov 2019 20:23:02 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C7FB53D43A;
+        Sun, 10 Nov 2019 20:22:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6TBtZAVXowkWJ5qrQIITrrTp1Hs=; b=WQpLYd
+        Pg3jQzuAa9KykBcy9DCietZLhrN8YfEvFGjWcepQI3vAOSOGJi66xs7HOcH7B5vR
+        ZWsrxcYgBoakhSm7t90aEPXntBRi/d0Sk/DTSxcJC1/sc1pcISyET5YbNhhUhQUF
+        +z+6a/QTVyTRUJ0ojJfGj1H5meLvIxQ+Y2w98=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=JQkFmkfSiS8T3kT1s7hSN8hYSqd8oc6P
+        2KgiLDm46X7sfuMGwOVS2lraY9nEtGF7+Muh456FPLMzh6Yxb44HgcPC8skj6Obr
+        bcJo6C6jvRTYyL91EO13d7/u5w/j50XdvEeoU9ww0pFiLhmsfE0GAjuHqe8wtyVx
+        0JT/i4Fqc2s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BF6423D439;
+        Sun, 10 Nov 2019 20:22:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 326BB3D437;
+        Sun, 10 Nov 2019 20:22:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Doan Tran Cong Danh <congdanhqx@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v5 0/9] Improve odd encoding integration
+References: <20191031092618.29073-1-congdanhqx@gmail.com>
+        <cover.1573205699.git.congdanhqx@gmail.com>
+Date:   Mon, 11 Nov 2019 10:22:55 +0900
+In-Reply-To: <cover.1573205699.git.congdanhqx@gmail.com> (Doan Tran Cong
+        Danh's message of "Fri, 8 Nov 2019 16:43:42 +0700")
+Message-ID: <xmqqlfsnjjf4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: CA45EBCA-0421-11EA-9BF7-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/8/2019 6:41 PM, Bryan Turner wrote:
+Doan Tran Cong Danh <congdanhqx@gmail.com> writes:
 
-Hi Bryan,
+> The series is shifting from fixing test that failed on musl based Linux to
+> correct the internal working encoding and output encoding of git-am
+> git-cherry-pick git-rebase and git-revert.
+>
+> Change from v4:
+> - Update commit message per review
+> - Add test for last 2 patches
+> - Notice a breakage with git rebase --rebase-merges (see patch 7)
+>
 
-> Just a quick question about a behavior I've noticed with the commit
-> graph. (Amazing feature, by the way!)
- 
-> If the _very first_ write done is split:
-> git commit-graph write --reachable --split
-> 
-> You end up with something like this:
-> .../objects$ ls -R info
-> info:
-> commit-graphs  packs
-> 
-> info/commit-graphs:
-> commit-graph-chain  graph-6612fcc8fd04d3af2cc268a6bd9161ae40f5fcbf.graph
-> 
-> info/commit-graph doesn't exist, but I have a 1-graph "chain" in
-> place. (And subsequent write --split calls write additional ones; I've
-> got a few now in this repository, but still no info/commit-graph.)
-> 
-> git commit-graph verify seems happy:
-> .../objects$ git commit-graph verify
-> Verifying commits in commit graph: 100% (98768/98768), done.
+Re: Patch 3, it indeed is a bit sad that out test framework does not
+let us "show" what exactly is being executed in the debug/verbose
+mode when we use parameterized test helpers. We designed the test
+helpers like test_expect_success and test_eval_ so that the eval'ed
+block can access the outer variables safely, i.e. "$flag-$old-$new"
+can and should be written inside dq for safety, but the variable
+names would be all we see in the verbose log because of that.  But
+that's not the end of the world ;-)
 
-This workflow seems expected.
+I do not have a strong opinion on Patch 9 (I agree we need to fall
+back on something sensible and without any change, the system is
+quite broken---I do not have a strong opinion on what the fallback
+should be); I'd love to hear what sequencer folks think.
 
-> But git commit-graph read isn't:
-> .../objects$ git commit-graph read
-> fatal: Could not open commit-graph
-> '/path/to/repository/objects/info/commit-graph': No such file or
-> directory
-> 
-> Running some tests with commands like git for-each-ref and git
-> rev-list shows that the "split" commit graph is being used (setting
-> core.commitGraph=false makes commands noticeably slower), so
-> functionally all seems well. But should git commit-graph read be
-> handling this better?
+Overall this round looks quite good.
 
-Unfortunately, you're running into an issue because I designed the
-"read" subcommand poorly (and also forgot to update it for
-incremental commit-graph files). The biggest issue is that "read"
-is not really meant for end-users. It really should have been built
-as a test-tool. This point was corrected when I got around to writing
-the multi-pack-index since it uses "test-tool read-midx" instead of
-add.
+Thanks, will queue.
 
-To fix this issue, I would probably go about it by removing the "read"
-subcommand and creating a "test-tool read-commit-graph" for the tests
-that need that output.
 
-If others on-list think that the better thing to do is to update the
-"read" subcommand to provide the same output, but iterate over each
-layer of an incremental commit-graph, then I can do that work instead.
 
-Thanks,
--Stolee
+
+>
+> Doan Tran Cong Danh (9):
+>   t0028: eliminate non-standard usage of printf
+>   configure.ac: define ICONV_OMITS_BOM if necessary
+>   t3900: demonstrate git-rebase problem with multi encoding
+>   sequencer: reencode to utf-8 before arrange rebase's todo list
+>   sequencer: reencode revert/cherry-pick's todo list
+>   sequencer: reencode squashing commit's message
+>   sequencer: reencode old merge-commit message
+>   sequencer: reencode commit message for am/rebase --show-current-patch
+>   sequencer: fallback to sane label in making rebase todo list
+>
+>  configure.ac                     |  49 ++++++++++++++++++
+>  sequencer.c                      |  32 ++++++++----
+>  t/t0028-working-tree-encoding.sh |   4 +-
+>  t/t3433-rebase-i18n.sh           |  84 +++++++++++++++++++++++++++++++
+>  t/t3433/ISO8859-1.txt            | Bin 0 -> 15 bytes
+>  t/t3433/eucJP.txt                | Bin 0 -> 68 bytes
+>  t/t3900-i18n-commit.sh           |  37 ++++++++++++++
+>  7 files changed, 195 insertions(+), 11 deletions(-)
+>  create mode 100755 t/t3433-rebase-i18n.sh
+>  create mode 100644 t/t3433/ISO8859-1.txt
+>  create mode 100644 t/t3433/eucJP.txt
+>
+> Range-diff against v4:
+>  1:  daa0c27d28 =  1:  b3d6c4e720 t0028: eliminate non-standard usage of printf
+>  2:  c50964f413 !  2:  fe63a6bc44 configure.ac: define ICONV_OMITS_BOM if necessary
+>     @@ Commit message
+>      
+>              make ICONV_OMITS_BOM=Yes
+>      
+>     -    However, typing the flag all the time is cumbersome and error-prone.
+>     +    However, configure script wasn't taught to detect those systems.
+>      
+>     -    Add a check into configure script to detect this flag automatically.
+>     +    Teach configure to do so.
+>      
+>          Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+>      
+>  3:  47888f236c !  3:  30f15075c4 t3900: demonstrate git-rebase problem with multi encoding
+>     @@ t/t3900-i18n-commit.sh: test_commit_autosquash_flags eucJP fixup
+>      +	new=$3
+>      +	msg=$4
+>      +	test_expect_failure "commit --$flag into $old from $new" '
+>     -+		git checkout -b '$flag-$old-$new' C0 &&
+>     -+		git config i18n.commitencoding '$old' &&
+>     -+		echo '$old' >>F &&
+>     -+		git commit -a -F "$TEST_DIRECTORY/t3900/'$msg'" &&
+>     ++		git checkout -b $flag-$old-$new C0 &&
+>     ++		git config i18n.commitencoding $old &&
+>     ++		echo $old >>F &&
+>     ++		git commit -a -F "$TEST_DIRECTORY"/t3900/$msg &&
+>      +		test_tick &&
+>      +		echo intermediate stuff >>G &&
+>      +		git add G &&
+>      +		git commit -a -m "intermediate commit" &&
+>      +		test_tick &&
+>     -+		git config i18n.commitencoding '$new' &&
+>     -+		echo '$new-$flag' >>F &&
+>     -+		git commit -a --'$flag' HEAD^ &&
+>     ++		git config i18n.commitencoding $new &&
+>     ++		echo $new-$flag >>F &&
+>     ++		git commit -a --$flag HEAD^ &&
+>      +		git rebase --autosquash -i HEAD^^^ &&
+>      +		git rev-list HEAD >actual &&
+>      +		test_line_count = 3 actual
+>  4:  42115f1e33 !  4:  17165b81e5 sequencer: reencode to utf-8 before arrange rebase's todo list
+>     @@ Commit message
+>          Thus, t3900::test_commit_autosquash_flags is failing on musl libc.
+>      
+>          Reencode to utf-8 before arranging rebase's todo list.
+>     -    By doing this, we also remove a breakage introduced in the previous
+>     -    commit.
+>     +
+>     +    By doing this, we also remove a breakage noticed by a test added in the
+>     +    previous commit.
+>      
+>          Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+>      
+>     @@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+>       	msg=$4
+>      -	test_expect_failure "commit --$flag into $old from $new" '
+>      +	test_expect_success "commit --$flag into $old from $new" '
+>     - 		git checkout -b '$flag-$old-$new' C0 &&
+>     - 		git config i18n.commitencoding '$old' &&
+>     - 		echo '$old' >>F &&
+>     + 		git checkout -b $flag-$old-$new C0 &&
+>     + 		git config i18n.commitencoding $old &&
+>     + 		echo $old >>F &&
+>  5:  5a871d7226 =  5:  40fa759492 sequencer: reencode revert/cherry-pick's todo list
+>  6:  1c6194a598 !  6:  ed6cfab5d2 sequencer: reencode squashing commit's message
+>     @@ sequencer.c: static int commit_staged_changes(struct repository *r,
+>      
+>       ## t/t3900-i18n-commit.sh ##
+>      @@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+>     - 	old=$2
+>     - 	new=$3
+>     - 	msg=$4
+>     -+	squash_msg=
+>     -+	if test $flag = squash; then
+>     -+		squash_msg='
+>     -+		subject="squash! $(head -1 expect)" &&
+>     -+		printf "\n%s\n" "$subject" >> expect &&
+>     -+		'
+>     -+	fi
+>     - 	test_expect_success "commit --$flag into $old from $new" '
+>     - 		git checkout -b '$flag-$old-$new' C0 &&
+>     - 		git config i18n.commitencoding '$old' &&
+>     -@@ t/t3900-i18n-commit.sh: test_commit_autosquash_multi_encoding () {
+>     - 		git commit -a --'$flag' HEAD^ &&
+>     + 		git commit -a --$flag HEAD^ &&
+>       		git rebase --autosquash -i HEAD^^^ &&
+>       		git rev-list HEAD >actual &&
+>      -		test_line_count = 3 actual
+>      +		test_line_count = 3 actual &&
+>     -+		iconv -f '$old' -t utf-8 "$TEST_DIRECTORY/t3900/'$msg'" >expect &&
+>     -+		'"$squash_msg"'
+>     ++		iconv -f $old -t UTF-8 "$TEST_DIRECTORY"/t3900/$msg >expect &&
+>     ++		if test $flag = squash; then
+>     ++			subject="$(head -1 expect)" &&
+>     ++			printf "\nsquash! %s\n" "$subject" >>expect
+>     ++		fi &&
+>      +		git cat-file commit HEAD^ >raw &&
+>     -+		(sed "1,/^$/d" raw | iconv -f '$new' -t utf-8) >actual &&
+>     ++		(sed "1,/^$/d" raw | iconv -f $new -t utf-8) >actual &&
+>      +		test_cmp expect actual
+>       	'
+>       }
+>  7:  95df3cdadf <  -:  ---------- sequencer: reencode old merge-commit message
+>  8:  0606b2408d <  -:  ---------- sequencer: reencode commit message for am/rebase --show-current-patch
+>  -:  ---------- >  7:  def9adf97e sequencer: reencode old merge-commit message
+>  -:  ---------- >  8:  2e95ca57d2 sequencer: reencode commit message for am/rebase --show-current-patch
+>  -:  ---------- >  9:  860dee65f4 sequencer: fallback to sane label in making rebase todo list
