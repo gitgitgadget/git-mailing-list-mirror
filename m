@@ -8,110 +8,146 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 030EF1F454
-	for <e@80x24.org>; Mon, 11 Nov 2019 06:04:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12CB71F454
+	for <e@80x24.org>; Mon, 11 Nov 2019 06:04:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726845AbfKKGEM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 01:04:12 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36398 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725796AbfKKGEM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 01:04:12 -0500
-Received: by mail-pg1-f195.google.com with SMTP id k13so8778739pgh.3
-        for <git@vger.kernel.org>; Sun, 10 Nov 2019 22:04:12 -0800 (PST)
+        id S1726889AbfKKGEP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 01:04:15 -0500
+Received: from mail-pl1-f170.google.com ([209.85.214.170]:40125 "EHLO
+        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725796AbfKKGEO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 01:04:14 -0500
+Received: by mail-pl1-f170.google.com with SMTP id e3so7348268plt.7
+        for <git@vger.kernel.org>; Sun, 10 Nov 2019 22:04:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=GrnC/l8JqfirPjhzPW8k5EqXK/pQ85RigBt1iiHmpcg=;
-        b=ZFDqX7sw7yIHTj2wvIRir2LtOEJkk93ALU1piLmabe2dER0hThHOUesiaNykC1L0GD
-         FsnMcP9eN6HpT0JqGKhpyCYnpp63NPU8J15/8ESDGeXdgjnCvWOM2nIQZDlHXZQY1FbK
-         i8g70f0YRqeYDv+VUzZ08hLcnDASeicGmQU6VNWAqPsS2TRaCHfgbGaxZ9yCHCKwKxk4
-         AFOK+2v/Il2pcxZpSWNJT+43MykxwOToOjdYoHCg3CDi7lyirXRR6FuxuZHCw/QjhAmf
-         uCmTAcKqrof0axrA4Lw/tWnnAAE7yBOLK1VtfiyNc+Ri4DCrvootwQL2W4sjcNar6m8p
-         iJxg==
+        bh=x/9CxKPMkhl6lFlEZLC/5qUhyhb5TD1zXDD3Y9+mam0=;
+        b=iR4ZmyloPtf5GtBE1p5MiKwHW15inaQxWekktVmJiwX1/7udA0y0DYd+pVXlMcVwub
+         9QJljuMzy1XM+io/XL5JwfZK4EPb/gD4+ZyMXKriGNyjfZ8vop5X7+tKsYRfY5H0uyue
+         IdiHbqu8/3ua614QuQ5ZntozFp22NlrTB9ZuAKnuUjIfkaJCvZT9yOYK4gUMVSt8INSZ
+         yd3mbGtgp0ATF0zoI5aS/EsGLIt0+I9hJX9qNE+f5SHYB1a2TYtDNWOFzDc0i+fbiAUZ
+         SQerj4FxGe5GhgXKrX/D/Ysd1jmh8WL7V11OxtigpPSS7+/+0zMPyy3X4UcGgjdijxBs
+         wLuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=GrnC/l8JqfirPjhzPW8k5EqXK/pQ85RigBt1iiHmpcg=;
-        b=QgyMOS03XGAubnlJ23MkItc4DwmwBkss0VSzV5bqvSvrmYGLNh3Qcnaxsp/SFaI66H
-         O6fyEVJDmfJiiV+l/SILXrDsx3fFNKwlD1jedwWvNFqFcm7Geyu9Hj+4t40srARRlVLd
-         6EoKCxITeIEMPmg/AAU4KDjFVFIN6EyXyxKKFSWgOrw9NCPcAU2cZ9GfcCY+nL4aE+DH
-         20IIvpIUP+EJjKPlyKmARFDlhZ3stRwCQb38cEH/iri5zSZRzRDXe70fhUQrXpYgY5T+
-         A6NLoR55LffKGFYedvmWZ5KSlS3NCsAeyxZfsvXN082MdUa/X/Ml9mqPZNIGwIucKhYU
-         tx6A==
-X-Gm-Message-State: APjAAAUH9G4GM3v9OVDKOZ+ovMYkB9pPeeLIQkStDJon0DudXRv8L6j9
-        hj9tXhq/qPmusgzzDLZZdI606t45
-X-Google-Smtp-Source: APXvYqy8dyAWBsmrWQpMamONVBCsW4NGmz7jsMZWA2t4Z8LXxqDrQVxT7oHp8ujZsGWYaUnDLRT12g==
-X-Received: by 2002:a63:c48:: with SMTP id 8mr12997473pgm.184.1573452251742;
-        Sun, 10 Nov 2019 22:04:11 -0800 (PST)
+        bh=x/9CxKPMkhl6lFlEZLC/5qUhyhb5TD1zXDD3Y9+mam0=;
+        b=KrorUcF7b58wkOrG8QBHvuYrMa323ns3PmZDwQ3fYFl5EPwzBs8Be/4qKzqAsh3VGt
+         Wn8STSijiW42IER1POXIyxv5DecH+biykYAupUzIcjTWuDQ4YhRqntXiAXdtqZYCf5L/
+         SnVtYoEOGQTpfELaditC/GmZBH7LtjLDtOP1io7TdqtOkAkmU7nUBCuBOtJDopcPw+TP
+         P09tCe4Dvt4MM1YA3IPj9Qch4AyeIjh56svAY7cGQGgMpTqIDePZfVxsbIVWHcNW9sh+
+         7kB2tYHm33E1zTI9U61IRRceLUA+qit3Fp6/q8L8vdirpy9zHZ8XNtXoDUIZ+3E8i7ic
+         SfFA==
+X-Gm-Message-State: APjAAAVUoch9awDPNeH1l9UAf/xA1Sxr/BQqtedwoV73Svf7yZEZi5rQ
+        nMweLfvUvN5HbzsF++K0bieuqqVa
+X-Google-Smtp-Source: APXvYqxaStJvGSGXqy+8JNF9pa0Zcjqq+tuWC7VhVZ7kFQ1AbR2O2jojjLFyKNbc/V8fSRSXKWNe+A==
+X-Received: by 2002:a17:902:b218:: with SMTP id t24mr24357649plr.267.1573452253724;
+        Sun, 10 Nov 2019 22:04:13 -0800 (PST)
 Received: from localhost.localdomain ([2402:800:6375:16b7:502d:9b82:436:143a])
-        by smtp.gmail.com with ESMTPSA id v16sm15112315pje.1.2019.11.10.22.04.09
+        by smtp.gmail.com with ESMTPSA id v16sm15112315pje.1.2019.11.10.22.04.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 10 Nov 2019 22:04:11 -0800 (PST)
+        Sun, 10 Nov 2019 22:04:13 -0800 (PST)
 From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, gitster@pobox.com,
         Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH v6 1/9] t0028: eliminate non-standard usage of printf
-Date:   Mon, 11 Nov 2019 13:03:34 +0700
-Message-Id: <9f83d4533b574f66dd9a4f6a6d01f87f1373a0f4.1573452046.git.congdanhqx@gmail.com>
+Subject: [PATCH v6 2/9] configure.ac: define ICONV_OMITS_BOM if necessary
+Date:   Mon, 11 Nov 2019 13:03:35 +0700
+Message-Id: <a9adb3d061e9c28c08d7fbcea765dcfd44028efd.1573452046.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.24.0.164.g78daf050de.dirty
 In-Reply-To: <cover.1573452046.git.congdanhqx@gmail.com>
 References: <20191031092618.29073-1-congdanhqx@gmail.com> <cover.1573452046.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-man 1p printf:
-   In addition to the escape sequences shown in the Base Definitions
-   volume of POSIX.1‐2008, Chapter 5, File Format Notation ('\\',
-   '\a', '\b', '\f', '\n', '\r', '\t', '\v'), "\ddd", where ddd is a
-   one, two, or three-digit octal number, shall be written as a byte
-   with the numeric value specified by the octal number.
+From commit 79444c9294, ("utf8: handle systems that don't write BOM for
+UTF-16", 2019-02-12), we're supporting those systems with iconv that
+omits BOM with:
 
-printf '\xfe\xff' is an extension of some shell.
-Dash, a popular yet simple shell, do not implement this extension.
+    make ICONV_OMITS_BOM=Yes
 
-This wasn't caught by most people running the tests, even though
-common shells like dash don't handle hex escapes, because their
-systems don't trigger the NO_UTF16_BOM prereq. But systems with musl
-libc do; when combined with dash, the test fails.
+However, configure script wasn't taught to detect those systems.
 
-Correct it.
+Teach configure to do so.
 
 Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
 ---
- t/t0028-working-tree-encoding.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ configure.ac | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
-index 7aa0945d8d..bfc4fb9af5 100755
---- a/t/t0028-working-tree-encoding.sh
-+++ b/t/t0028-working-tree-encoding.sh
-@@ -17,7 +17,7 @@ test_lazy_prereq NO_UTF32_BOM '
- write_utf16 () {
- 	if test_have_prereq NO_UTF16_BOM
- 	then
--		printf '\xfe\xff'
-+		printf '\376\377'
- 	fi &&
- 	iconv -f UTF-8 -t UTF-16
- }
-@@ -25,7 +25,7 @@ write_utf16 () {
- write_utf32 () {
- 	if test_have_prereq NO_UTF32_BOM
- 	then
--		printf '\x00\x00\xfe\xff'
-+		printf '\0\0\376\377'
- 	fi &&
- 	iconv -f UTF-8 -t UTF-32
- }
+diff --git a/configure.ac b/configure.ac
+index a43b476402..ecba7e6e51 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -844,12 +844,61 @@ AC_MSG_CHECKING([for old iconv()])
+ AC_COMPILE_IFELSE([OLDICONVTEST_SRC],
+ 	[AC_MSG_RESULT([no])],
+ 	[AC_MSG_RESULT([yes])
++	AC_DEFINE(HAVE_OLD_ICONV, 1)
+ 	OLD_ICONV=UnfortunatelyYes])
+ 
+ GIT_UNSTASH_FLAGS($ICONVDIR)
+ 
+ GIT_CONF_SUBST([OLD_ICONV])
+ 
++#
++# Define ICONV_OMITS_BOM if you are on a system which
++# iconv omits bom for utf-{16,32}
++if test -z "$NO_ICONV"; then
++AC_CACHE_CHECK([whether iconv omits bom for utf-16 and utf-32],
++ [ac_cv_iconv_omits_bom],
++[
++old_LIBS="$LIBS"
++if test -n "$NEEDS_LIBICONV"; then
++	LIBS="$LIBS -liconv"
++fi
++
++AC_RUN_IFELSE(
++	[AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT
++	#include <iconv.h>
++	#ifdef HAVE_OLD_ICONV
++	typedef const char *iconv_ibp;
++	#else
++	typedef char *iconv_ibp;
++	#endif
++	],
++	[[
++	int v;
++	iconv_t conv;
++	char in[] = "a"; iconv_ibp pin = in;
++	char out[20] = ""; char *pout = out;
++	size_t isz = sizeof in;
++	size_t osz = sizeof out;
++
++	conv = iconv_open("UTF-16", "UTF-8");
++	iconv(conv, &pin, &isz, &pout, &osz);
++	iconv_close(conv);
++	v = (unsigned char)(out[0]) + (unsigned char)(out[1]);
++	return v != 0xfe + 0xff;
++	]])],
++	[ac_cv_iconv_omits_bom=no],
++	[ac_cv_iconv_omits_bom=yes])
++
++LIBS="$old_LIBS"
++])
++if test "x$ac_cv_iconv_omits_bom" = xyes; then
++	ICONV_OMITS_BOM=Yes
++else
++	ICONV_OMITS_BOM=
++fi
++GIT_CONF_SUBST([ICONV_OMITS_BOM])
++fi
++
+ ## Checks for typedefs, structures, and compiler characteristics.
+ AC_MSG_NOTICE([CHECKS for typedefs, structures, and compiler characteristics])
+ #
 -- 
 2.24.0.164.g78daf050de.dirty
 
