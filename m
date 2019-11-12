@@ -7,281 +7,211 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 881B51F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 05:17:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9BF61F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 05:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725887AbfKLFRk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 00:17:40 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50667 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725283AbfKLFRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 00:17:40 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5EA7C8F890;
-        Tue, 12 Nov 2019 00:17:38 -0500 (EST)
+        id S1725821AbfKLFVL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 00:21:11 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56608 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725795AbfKLFVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 00:21:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA2CB214E2;
+        Tue, 12 Nov 2019 00:21:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8XkEWzxCkQlvsquVKdmie+aa2OI=; b=S8cYPr
-        G92kjddWVJMHLJBFYDD77RfjQ1Du47TvgRJLlm18KKI+SPKULOblt51BpE4PZTkj
-        DXLF/O1DyzimiLN/OGWutWgmN+pGt0bHV0aw6ahOk0B9meGrpirYHrlzOuJ5ZN0x
-        5TkTxOpIExMJ/fJf2bS9HxUdwMhA4ZG4OBsVo=
+        :content-type; s=sasl; bh=JiIkH58rr7aVMaVBMcObZusXsVY=; b=fUp8XI
+        J/sYrwSd1WWIbZITKkse38ttkCVa4H6yMsKkUGTO7vRJjDZp4Jhmpi7Mb/Q8vIV2
+        ZHqDA2yd9pEb+Q8yaZfD/eP36QaHrfdjYcjLa5HZaO3SnYkbvK35xgi+K0cJ+SDu
+        tsEaKAhTA5sFlrhS03WZYEtbuqGvZYCav+SBc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sZyQxjERegEBr1wSr1uONQ4wjrEd/NJH
-        ZrEnMautjseLUMMdRG62OiUt8zz1/TqE24PZwz6Rg2fT85AqOJ3eWPipyT6edrlr
-        pbA8IS+F92ZDyGosj/zPf1dvbvrZdTpWOtx6dnHDH3X+fNdL1kFXTzDk878Ae9wT
-        Dq8FoJqY6BU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 543AE8F88F;
-        Tue, 12 Nov 2019 00:17:38 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=d0RJ848w1ZYDwoqW0a5zQ0NGi7jhn4ce
+        Wz9QfdUzxf9yigouWCWfxByZFwmHxNUenPSUTvZitpH9hv28DyTxIkX2GfTtiZUR
+        X71+kFJcwYTJ9anBqVwP7equm4l2VcqLMO2y28aIUhOSruVH7A1jKjfpvmsEILHm
+        94Ao/ytZrXk=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B1F9D214E1;
+        Tue, 12 Nov 2019 00:21:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7F59A8F88D;
-        Tue, 12 Nov 2019 00:17:35 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1C2CB214DF;
+        Tue, 12 Nov 2019 00:21:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v5 10/14] t5520: test single-line files by git with test_cmp
-References: <cover.1573152598.git.liu.denton@gmail.com>
-        <cover.1573517561.git.liu.denton@gmail.com>
-        <2f9052fd94ebb6fe93ea6fe2e7cd3c717635c822.1573517561.git.liu.denton@gmail.com>
-Date:   Tue, 12 Nov 2019 14:17:33 +0900
-In-Reply-To: <2f9052fd94ebb6fe93ea6fe2e7cd3c717635c822.1573517561.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Mon, 11 Nov 2019 16:14:02 -0800")
-Message-ID: <xmqqh839fzbm.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Grzegorz Rajchman <rayman17@gmail.com>, git@vger.kernel.org
+Subject: Re: [BUG] git stash pop --quiet deletes files in git 2.24.0
+References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
+        <20191107184912.GA3115@cat>
+        <xmqq7e4bp06l.fsf@gitster-ct.c.googlers.com>
+        <20191108165929.GB3115@cat>
+        <xmqqk188l0pn.fsf@gitster-ct.c.googlers.com>
+        <20191111195641.GC3115@cat>
+Date:   Tue, 12 Nov 2019 14:21:01 +0900
+In-Reply-To: <20191111195641.GC3115@cat> (Thomas Gummerer's message of "Mon,
+        11 Nov 2019 19:56:41 +0000")
+Message-ID: <xmqqftitfz5u.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BC9CBB44-050B-11EA-92D0-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 37C08260-050C-11EA-8687-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> In case an invocation of a Git command fails within the subshell, the
-> failure will be masked. Replace the subshell with a file-redirection and
-> a call to test_cmp.
-
-I.e.
-
-    test "$(git cmd args)" = "expected-string"
-
-=>
-
-    git cmd args >actual && echo "expected-string" >expect &&
-    test_cmp expect actual
-
-which makes sense.  It may break if expected-string begins with a
-dash or something silly like that, but a quick eyeballing over the
-patch tells me that we are safe there.
-
-Technically, "$(git cmd args)" used as a command line option of
-another command is called "command substitution", not "subshell".
-The proposed log message may need to be updated.
-
-> This change was done with the following GNU sed expressions:
+>> > From what you are saying above, and from my testing I think this
+>> > refresh is actually unnecessary, and we could just remove it outright.
+>> 
+>> Perhaps.  But later it will bite us when somebody wants to rewrite
+>> the "status at the end" part in C.
 >
-> 	s/\(\s*\)test \([^ ]*\) = "$(\(git [^)]*\))"/\1echo \2 >expect \&\&\n\1\3 >actual \&\&\n\1test_cmp expect actual/
-> 	s/\(\s*\)test "$(\(git [^)]*\))" = \([^ ]*\)/\1echo \3 >expect \&\&\n\1\2 >actual \&\&\n\1test_cmp expect actual/
+> Hmm, wouldn't the not re-reading the index part bite us there, rather
+> than the not refreshing the index?
+
+Yes.  Just removing the refresh-and-write that caused us to write
+out incorrect data would "fix" the bug, while leaving the bug of not
+re-reading to bite us later.
+
+> Below is the patch that I believe has the least chances of biting us
+> in the future, with the appropriate updated tests.  I had considered
+> leaving the 'refresh_and_write_cache()' call there, but as I was
+> writing the commit message I had a harder and harder time justifying
+> that, so it's gone now, which I think is the right thing to do.
+> Leaving it there would be okay as well, however I don't think it would
+> have any benefit.
 >
-> A future patch will clean up situations where we have multiple duplicate
-> statements within a test case. This is done to keep this patch purely
-> mechanical.
+> --- >8 ---
+> Subject: [PATCH] stash: make sure we have a valid index before writing it
+>
+> In 'do_apply_stash()' we refresh the index in the end.  Since
+> 34933d0eff ("stash: make sure to write refreshed cache", 2019-09-11),
+> we also write that refreshed index when --quiet is given to 'git stash
+> apply'.
+>
+> However if '--index' is not given to 'git stash apply', we also
+> discard the index in the else clause just before.  This leads to
+> writing the discarded index, which means we essentially write an empty
+> index file.  This is obviously not correct, or the behaviour the user
+> wanted.  We should not modify the users index without being asked to
+> do so.
+>
+> Make sure to re-read the index after discarding the current in-core
+> index, to avoid dealing with outdated information.
 
-OK.  One thing that worries me is if the existing tests are not
-expecting (no pun intended) to see 'expect' or 'actual' (e.g. if
-they somehow rely on output of "ls-files -u", we are now adding two
-untracked files in the working tree).  Another is if the git command
-is expected to produce nothing, possibly after failing, and the test
-is expecting to see an empty string---in such a case, the hiding of
-the exit status would have been intentional ;-)  We'd want to be sure
-that we aren't breaking the tests like that by reading through the
-result of applying this patch.
+Yup.  The "!has_index" codepath calls update_index() that turns the
+on-disk index into the desired shape (would it help explaining that
+in the previous paragraph, by the way?) so all we need to do is to
+read it back into core.  Makes sense.
 
-Since this is just a single file, I trust you have already done such
-sanity checking ;-)
+> We can drop the 'refresh_and_write_cache' completely in the quiet
+> case.  Previously in legacy stash we relied on 'git status' to refresh
+> the index after calling 'git read-tree' when '--index' was passed to
+> 'git apply'.  However the 'reset_tree()' call that replaced 'git
+> read-tree' always passes options that are equivalent to '-m', making
+> the refresh of the index unnecessary.
 
-The mechanical conversion procedure itself looks OK.
+OK.
+
+> We could also drop the 'discard_cache()' + 'read_cache()', however
+> that would make it easy to fall into the same trap as 34933d0eff did,
+> so it's better to avoid that.
+
+This is the discarded alternative of the main fix we saw earlier.
+Perhaps it may make the flow of thought easier to follow if we moved
+it up before talking about "refresh-and-write can be thrown away"?
+
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  builtin/stash.c  | 6 ++----
+>  t/t3903-stash.sh | 5 ++++-
+>  2 files changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index ab30d1e920..d00567285f 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -482,12 +482,10 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>  			return -1;
+>  
+>  		discard_cache();
+> +		read_cache();
+
+A comment
+
+    /* read back the result of update_index() back from the disk */
+
+before discard_cache() may be warranted?
+
+>  	}
+>  
+> -	if (quiet) {
+> -		if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+> -			warning("could not refresh index");
+> -	} else {
+
+OK.
+
+> +	if (!quiet) {
+>  		struct child_process cp = CHILD_PROCESS_INIT;
+>  
+>  		/*
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 392954d6dd..b1c973e3d9 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -232,8 +232,9 @@ test_expect_success 'save -q is quiet' '
+>  	test_must_be_empty output.out
+>  '
+>  
+> -test_expect_success 'pop -q is quiet' '
+> +test_expect_success 'pop -q works and is quiet' '
+>  	git stash pop -q >output.out 2>&1 &&
+> +	test bar = "$(git show :file)" &&
+
+Ah, this is to ensure that we didn't lose the "file" from the index?
+
+Denton is on the quest of removing "$(git command substitution)"
+used in a way that might hide the error from git invocation in a
+separate thread [*1*].  This may want to become
+
+	git rev-parse --verify :file &&
+
+or
+
+	git show :file >actual && echo bar >expect &&
+	test_cmp expect actual &&
+
+perhaps?
+
+>  	test_must_be_empty output.out
+>  '
+>  
+> @@ -242,6 +243,8 @@ test_expect_success 'pop -q --index works and is quiet' '
+>  	git add file &&
+>  	git stash save --quiet &&
+>  	git stash pop -q --index >output.out 2>&1 &&
+> +	git diff-files file2 >file2.diff &&
+> +	test_must_be_empty file2.diff &&
+>  	test foo = "$(git show :file)" &&
+>  	test_must_be_empty output.out
+>  '
+
+Dittto.
 
 Thanks.
 
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  t/t5520-pull.sh | 64 ++++++++++++++++++++++++++++++++++++-------------
->  1 file changed, 48 insertions(+), 16 deletions(-)
->
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 1af6ea06ee..8b7e7ae55d 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -255,7 +255,9 @@ test_expect_success '--rebase' '
->  	git tag before-rebase &&
->  	git pull --rebase . copy &&
->  	test_cmp_rev HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)"
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success '--rebase fast forward' '
-> @@ -330,7 +332,9 @@ test_expect_success '--rebase fails with multiple branches' '
->  	test_must_fail git pull --rebase . copy master 2>err &&
->  	test_cmp_rev HEAD before-rebase &&
->  	test_i18ngrep "Cannot rebase onto multiple branches" err &&
-> -	test modified = "$(git show HEAD:file)"
-> +	echo modified >expect &&
-> +	git show HEAD:file >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
-> @@ -381,7 +385,9 @@ test_expect_success 'pull.rebase' '
->  	test_config pull.rebase true &&
->  	git pull . copy &&
->  	test_cmp_rev HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)"
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'pull --autostash & pull.rebase=true' '
-> @@ -399,7 +405,9 @@ test_expect_success 'branch.to-rebase.rebase' '
->  	test_config branch.to-rebase.rebase true &&
->  	git pull . copy &&
->  	test_cmp_rev HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)"
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
-> @@ -408,14 +416,18 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
->  	test_config branch.to-rebase.rebase false &&
->  	git pull . copy &&
->  	test_cmp_rev ! HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)"
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'pull --rebase warns on --verify-signatures' '
->  	git reset --hard before-rebase &&
->  	git pull --rebase --verify-signatures . copy 2>err &&
->  	test_cmp_rev HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)" &&
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual &&
->  	test_i18ngrep "ignoring --verify-signatures for rebase" err
->  '
->  
-> @@ -423,7 +435,9 @@ test_expect_success 'pull --rebase does not warn on --no-verify-signatures' '
->  	git reset --hard before-rebase &&
->  	git pull --rebase --no-verify-signatures . copy 2>err &&
->  	test_cmp_rev HEAD^ copy &&
-> -	test new = "$(git show HEAD:file2)" &&
-> +	echo new >expect &&
-> +	git show HEAD:file2 >actual &&
-> +	test_cmp expect actual &&
->  	test_i18ngrep ! "verify-signatures" err
->  '
->  
-> @@ -445,7 +459,9 @@ test_expect_success 'pull.rebase=false create a new merge commit' '
->  	git pull . copy &&
->  	test_cmp_rev HEAD^1 before-preserve-rebase &&
->  	test_cmp_rev HEAD^2 copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'pull.rebase=true flattens keep-merge' '
-> @@ -453,7 +469,9 @@ test_expect_success 'pull.rebase=true flattens keep-merge' '
->  	test_config pull.rebase true &&
->  	git pull . copy &&
->  	test_cmp_rev HEAD^^ copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
-> @@ -461,7 +479,9 @@ test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
->  	test_config pull.rebase 1 &&
->  	git pull . copy &&
->  	test_cmp_rev HEAD^^ copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success REBASE_P \
-> @@ -507,7 +527,9 @@ test_expect_success '--rebase=false create a new merge commit' '
->  	git pull --rebase=false . copy &&
->  	test_cmp_rev HEAD^1 before-preserve-rebase &&
->  	test_cmp_rev HEAD^2 copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success '--rebase=true rebases and flattens keep-merge' '
-> @@ -515,7 +537,9 @@ test_expect_success '--rebase=true rebases and flattens keep-merge' '
->  	test_config pull.rebase preserve &&
->  	git pull --rebase=true . copy &&
->  	test_cmp_rev HEAD^^ copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success REBASE_P \
-> @@ -537,7 +561,9 @@ test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-m
->  	test_config pull.rebase preserve &&
->  	git pull --rebase . copy &&
->  	test_cmp_rev HEAD^^ copy &&
-> -	test file3 = "$(git show HEAD:file3.t)"
-> +	echo file3 >expect &&
-> +	git show HEAD:file3.t >actual &&
-> +	test_cmp expect actual
->  '
->  
->  test_expect_success '--rebase with rebased upstream' '
-> @@ -622,10 +648,16 @@ test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
->  		cd empty_repo2 &&
->  		echo staged-file >staged-file &&
->  		git add staged-file &&
-> -		test "$(git ls-files)" = staged-file &&
-> +		echo staged-file >expect &&
-> +		git ls-files >actual &&
-> +		test_cmp expect actual &&
->  		test_must_fail git pull --rebase .. master 2>err &&
-> -		test "$(git ls-files)" = staged-file &&
-> -		test "$(git show :staged-file)" = staged-file &&
-> +		echo staged-file >expect &&
-> +		git ls-files >actual &&
-> +		test_cmp expect actual &&
-> +		echo staged-file >expect &&
-> +		git show :staged-file >actual &&
-> +		test_cmp expect actual &&
->  		test_i18ngrep "unborn branch with changes added to the index" err
->  	)
->  '
+
+[Reference]
+
+*1* <2f9052fd94ebb6fe93ea6fe2e7cd3c717635c822.1573517561.git.liu.denton@gmail.com>
+
+Note that "var=$(git subcmd)" is special and will signal us a failure
+of the git invocation.
