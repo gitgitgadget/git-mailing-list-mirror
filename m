@@ -2,91 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4ABCE1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 07:20:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A35661F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 10:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727041AbfKLHU5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 02:20:57 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58633 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbfKLHU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 02:20:57 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D1919BB45;
-        Tue, 12 Nov 2019 02:20:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=noJoHGgPdrgsBep5J2gDryqh3Ak=; b=E+5/dU
-        xOte4aHMvZxKPNIyKkX/cs4yYpIuTWUpMcm1aMyj1rM2PPG7nfFa5qTO9cx/oaCj
-        IrW8JhCQyTLmfQfgHhEGUEKefK7U8Q70xoR18XxiHuip6eloO1zTbbhHrnc4hmY6
-        hZeZhPprZnKNGdBxI7kFiiIzF30bWQ0l9Jmys=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ednWZgUxxVdpmyRHqKsDokYC05lru1y6
-        9QhXNZSm/9B8BPUhzhvzWfuBTl6plDBh9AiXQ+Qsq9nWrDeflL8uEOFbtceUK9+j
-        /9mF5xbX5/dvcnEZrPHPFtWNg7ESQH9vuBeKZ1ytA+3Vav1B0P8k2WktBCA5bp7t
-        ZKf1Ko16V20=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 048939BB44;
-        Tue, 12 Nov 2019 02:20:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3353C9BB43;
-        Tue, 12 Nov 2019 02:20:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v3 01/21] diff: move doc to diff.h and diffcore.h
-References: <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
-        <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
-        <60e80b545f0f74e6fb58b5b6a64ecf3c1bd02d47.1573507684.git.gitgitgadget@gmail.com>
-Date:   Tue, 12 Nov 2019 16:20:50 +0900
-In-Reply-To: <60e80b545f0f74e6fb58b5b6a64ecf3c1bd02d47.1573507684.git.gitgitgadget@gmail.com>
-        (Heba Waly via GitGitGadget's message of "Mon, 11 Nov 2019 21:27:44
-        +0000")
-Message-ID: <xmqqmud1ef1p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726484AbfKLKid (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 05:38:33 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38269 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbfKLKic (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 05:38:32 -0500
+Received: by mail-wm1-f68.google.com with SMTP id z19so2367547wmk.3
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 02:38:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=VH1R/IfHdgKEIPpomWN06FnlIkXtVZrD8Hf/gCipgYk=;
+        b=f6tYHRatsibsX2/3NyDZLmFcclbOK8Hkt2W662ewkumS+o3SQHLkCzrlGIvQ1BmdWz
+         7rc8suTzMhoFqL4kNznih+BTdjIuyhPQoRKggK/fclkN57BRDx0TChR7I39mvRVqQSgA
+         51PmIX+dy6A9Qtrumc7+DrD2ml+W8kenITSQj3cOpqTTe801cqwy+inI/bvkkm1LDTCw
+         qqMFkXWp87gsiEpQQjWh/BxzpQVyBwgvJQCCW4GVcqBO1RBCykwmuVyBJR8ePEeGiLPq
+         hC5UVK2cCwQkxsWakEOlbTJjVtQovIyHvXONa/v3KDmxDC9Iqc9YqPKOTL7RPphLpRNf
+         wiqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=VH1R/IfHdgKEIPpomWN06FnlIkXtVZrD8Hf/gCipgYk=;
+        b=q9y0qIW/0NOwFMfJ9wPk9ODl70hSoiYGQNE44bsXRGxnB4CQU0PkUEgAAHKTjqA9LG
+         d7dxvStLkG87+RfJWEwSLwL4ZGIR9gdZ51pP2pNqpNgvSvHKxtoz6gQ1fIN5+sl9p1wo
+         sk4zA32dX+JO7sLrMstNKQ/aVmLX53XmVq3SlN9/m8GeH4ysCgpDTQvHXnCt1ltQaIPL
+         3XH4R919PM6gX+AHA1ZtbpAie7ZSSrxVECj2U9GqnnwyKmsU3HE9Da1qCUEzj0YlUetq
+         4nO9TDh+UXretNXuf9yh1Ux9cxyGe0MSpHkBY6ThFRFABXXR1ks6do6hFYcz8I30yr72
+         J5NA==
+X-Gm-Message-State: APjAAAV5fq+VS/gUCFm+83IE0lGgEhE4k3laPJ+TvYlMIbLxl+GSmyOl
+        TQ6+iuqtVO/BvoXrXJTwuMAWmjWN
+X-Google-Smtp-Source: APXvYqxIBJ8i4TJeBULS0L09PjwZ4RASS0n+bWM14FtKvR31MZpVkCbCLBPgRvNGhQwoKG9fhiyzLA==
+X-Received: by 2002:a7b:c307:: with SMTP id k7mr3013850wmj.134.1573555111252;
+        Tue, 12 Nov 2019 02:38:31 -0800 (PST)
+Received: from localhost.localdomain (x4d0c65ae.dyn.telefonica.de. [77.12.101.174])
+        by smtp.gmail.com with ESMTPSA id f24sm2313759wmb.37.2019.11.12.02.38.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 12 Nov 2019 02:38:30 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2 01/13] t6120-describe: correct test repo history graph in comment
+Date:   Tue, 12 Nov 2019 11:38:09 +0100
+Message-Id: <20191112103821.30265-2-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.24.0.388.gde53c094ea
+In-Reply-To: <20191112103821.30265-1-szeder.dev@gmail.com>
+References: <20190919214712.7348-1-szeder.dev@gmail.com>
+ <20191112103821.30265-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: F561AFB4-051C-11EA-A5FA-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
+At the top of 't6120-describe.sh' an ASCII graph illustrates the
+repository's history used in this test script.  This graph is a bit
+misleading, because it swapped the second merge commit's first and
+second parents.
 
-> From: Heba Waly <heba.waly@gmail.com>
->
-> Move the documentation from Documentation/technical/api-diff.txt to both
-> diff.h and diffcore.h as it's easier for the developers to find the usage
-> information beside the code instead of looking for it in another doc file.
->
-> Also documentation/technical/api-diff.txt is removed because the information
-> it has is now redundant and it'll be hard to keep it up to date and
-> synchronized with the documentation in the header files.
+When describing/naming a commit it does make a difference which parent
+is the first and which is the second/Nth, so update this graph to
+accurately represent that second merge.
 
-> @@ -245,6 +370,7 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
->  void diff_emit_submodule_pipethrough(struct diff_options *o,
->  				     const char *line, int len);
->  
-> +/* Output should be colored. */
+While at it, move this history graph from the 'test_description'
+variable to a regular comment.
 
-I am not sure the comment belongs here.  Especially if this was
-lifted from the description for COLOR_DIFF.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t6120-describe.sh | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-Those preprocessor constants have long been migrated to 1-bit
-bitfields in the diff_flags structure and the documentation was left
-stale---description on COLOR_DIFF and friends this patch removes from
-the doc should be reused to explain these fields, I would think.
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index 45047d0a72..9b184179d1 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -1,15 +1,16 @@
+ #!/bin/sh
+ 
+-test_description='test describe
++test_description='test describe'
++
++#  o---o-----o----o----o-------o----x
++#       \   D,R   e           /
++#        \---o-------------o-'
++#         \  B            /
++#          `-o----o----o-'
++#                 A    c
++#
++# First parent of a merge commit is on the same line, second parent below.
+ 
+-                       B
+-        .--------------o----o----o----x
+-       /                   /    /
+- o----o----o----o----o----.    /
+-       \        A    c        /
+-        .------------o---o---o
+-                   D,R   e
+-'
+ . ./test-lib.sh
+ 
+ check_describe () {
+-- 
+2.24.0.388.gde53c094ea
 
-Thanks.
