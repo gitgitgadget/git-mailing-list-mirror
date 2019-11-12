@@ -8,136 +8,83 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69A1E1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 17:59:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7369A1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 18:05:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727166AbfKLR7a (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 12:59:30 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:42605 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725997AbfKLR73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 12:59:29 -0500
-Received: by mail-pl1-f194.google.com with SMTP id j12so9695618plt.9
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 09:59:29 -0800 (PST)
+        id S1726978AbfKLSFG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 13:05:06 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38615 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726738AbfKLSFG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 13:05:06 -0500
+Received: by mail-pf1-f195.google.com with SMTP id c13so13902753pfp.5
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 10:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=yAo/m1Cv/cCFnYG2rUFKRW4mvcFaeBrJxxKTiusodRs=;
-        b=Ks3NnUK3LHcHpaOC78DqQWbiVOs5b5Q7dAuEse+6OvRRpjdOEjP3sRUWaB8N/B6RhN
-         syLk1FN+c+WR4l8/XzMyppu/YBqgVAu770VKkUqcSyQ1QRfMNzXdDZ0AU32QhLRklBE0
-         msOreYjZzWO7P4xtuQu/xMb8ctzomsZ8vAeesJjtnoXTqzabi6VZj44GPGfFzlG/PPYK
-         3Y0m8dEEIRoWfFTb3RInNTvvRU43oT2GHRxYbDIn708P8SVWqN8lakcqXp7/S3xJLCIr
-         21n1BwoGQY4mkvv+lq/3Pfk1Hqn6vxKySQCvBMmCSDo0H+tV54gHR7jj3f9fnxEYTNHT
-         Om7g==
+        bh=P7BUpx+pFWIOt8j8+GOVN9oGRZolgz+KmSzUIj9CZTQ=;
+        b=gjseoXVxyhq9zffvj2/O2HMZoZiormK96GoLrQ6OZ1tTMQFGb+pWTtr+NOkEk2erd2
+         EQxUVIgMMnya3oPoqW18K+Y+oTzF3UjHxEllWvV1d+B2MScqemg+c0dWEKVSSlxEYhUA
+         0nbtNC4JYSAILY2/CSZspTQiu3svcezQLyi57C7yfDxRTip6zHbtqFCghBWbM6RORXbU
+         H/Edp0zreR8MTDLc8slRK92XfmcgBKOQdPx5bOuMD+t1r/DAPNa3oYpaO7/Ys6gnBiHt
+         FLxgyAXZ7nZ8h+OIkP7Z+xea5BrZudOx99gCX9Mp/6KOTjF6vjxgGLodJCQMgM822JB3
+         ukoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yAo/m1Cv/cCFnYG2rUFKRW4mvcFaeBrJxxKTiusodRs=;
-        b=cFnSPr+0LxqfU9fOAdK+6bvSeRsqhaa3ZJkS7GIvOGoL6KNMSQvnYGtic/UyfSR7cW
-         yqymH0Ca9gNyyalbF004MzhamoWRA2YOAQtNJdkoLiW0eH3vqB3/O9xSIKHB4n/mtSzT
-         zoxy8CGE4dsl5iEXVE4Q99sw9A8iLlDgR5ob9047zPlkgGIyCnI6lnYHsZGiIbSak6RX
-         Fl1RzZnx0aVtLM0MQH+2rGZAPHsLijI2lqSacuuwgF3Vf7eDjOZ/2j4N1O14JygZPDVN
-         +3fGPGoD5vD26P3sRdiH9f5+J3ZfXc5qKlyUdIVhrHmi6q1Zaltv0bc3r2l9Thbrbdc4
-         H7Ag==
-X-Gm-Message-State: APjAAAW1Jbz5NrWKIjsF0yOctekrGNJ9n0eCooFrdFX+Q+yxSc+Aausz
-        ERzyzdXAGsLnNDmuX9EJVjI=
-X-Google-Smtp-Source: APXvYqxrzqvva8GwA6JyDTF45LKIeDhIkQkisSNpuz86BY9VGgi21dD1gnthNrYLzCluOLRAL6hthQ==
-X-Received: by 2002:a17:902:a60b:: with SMTP id u11mr16400523plq.180.1573581568950;
-        Tue, 12 Nov 2019 09:59:28 -0800 (PST)
+        bh=P7BUpx+pFWIOt8j8+GOVN9oGRZolgz+KmSzUIj9CZTQ=;
+        b=EjYfTBNKcdohFo6gvrbxgkVx7b53iV1FcnlfcVR3f+u6EbKN/eD6sag0+heF0NBnUO
+         Km9Didp58YTp50i1oU/ch8JY0kie/lal2fBHV1Jcu/vKHEfRgbmoKodBDlpbUk+Xpf/5
+         y0/IhV+LSSGEZtvac41yzUTS7YXNt8gTQ92durqbC35C98FsX9lDhnVusF0RwS5yA7rT
+         R7aFUIIDTvI+j2CpHiWfisRuLa8OUX/t0orp7C6nUIrPLYKWvRFofyIFsrzQOgCYz8C0
+         ipBpWRr6bqF85YP2LnO6K8QiflQRryHPc2WnD4XSFi5P3nJAhz0/kklKdHRUH0LaOdIx
+         jG3w==
+X-Gm-Message-State: APjAAAWxG9UnFA+kAe0Jxr4bdh4AfbWS2TAlkNllNn/AsAVqhh4WBpeO
+        rOBOqlMO2WdLCp2FLvOMg5U=
+X-Google-Smtp-Source: APXvYqyHtdXqWygKRSAn0alDJQTaCPevFzA/xy16wu3rfO0FS6nIrgzc75q8kf2OrO1DFBWJlOp2Tw==
+X-Received: by 2002:a62:5e04:: with SMTP id s4mr2608149pfb.63.1573581905639;
+        Tue, 12 Nov 2019 10:05:05 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id t27sm19598186pfq.169.2019.11.12.09.59.27
+        by smtp.gmail.com with ESMTPSA id f19sm14517293pfk.109.2019.11.12.10.05.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 09:59:27 -0800 (PST)
-Date:   Tue, 12 Nov 2019 09:59:26 -0800
+        Tue, 12 Nov 2019 10:05:04 -0800 (PST)
+Date:   Tue, 12 Nov 2019 10:05:03 -0800
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Markus Elfring <Markus.Elfring@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] coccinelle: merge two rules from flex_alloc.cocci
-Message-ID: <20191112175926.GA41101@generichostname>
-References: <f867512c-e5b2-6bca-2a37-2976f4c182bd@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Paul Jolly <paul@myitcv.io>
+Subject: Re: [PATCH] completion: learn to complete `git rebase --onto=`
+Message-ID: <20191112180503.GB41101@generichostname>
+References: <CACoUkn6D0cUmN1RbcpfERcOJsbGLdwj6oDeF2oRADV+rX2artQ@mail.gmail.com>
+ <22e92546ee49d4502fd5a441741a380d62c834c7.1573507362.git.liu.denton@gmail.com>
+ <xmqqpnhxg0ra.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f867512c-e5b2-6bca-2a37-2976f4c182bd@web.de>
+In-Reply-To: <xmqqpnhxg0ra.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Markus,
+Hi Junio,
 
-Thanks for the contribution.
-
-I see that you've sent many Coccinelle patches to the mailing list. It
-might be better to send them all together as a single threaded patchset
-so that reviewers will have an easier time finding all of them.
-
-On Tue, Nov 12, 2019 at 04:34:34PM +0100, Markus Elfring wrote:
-> From: Markus Elfring <elfring@users.sourceforge.net>
-> Date: Tue, 12 Nov 2019 16:30:14 +0100
+On Tue, Nov 12, 2019 at 01:46:33PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
 > 
-> This script contained two transformation rules for the semantic patch language
-> which used duplicate code.
-> Thus combine these rules by using a SmPL disjunction for the replacement
-> of two identifiers.
+> > Before, when there was a space, we'd start a new word and, as a result,
+> > fallback to __git_complete_refs() and `--onto` would be completed this
+> > way. However, now we match the `--*` case which does not know how to
+> > offer completions for refs.
 > 
-> Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-> ---
->  contrib/coccinelle/flex_alloc.cocci | 25 +++++++++++++------------
->  1 file changed, 13 insertions(+), 12 deletions(-)
-> 
-> diff --git a/contrib/coccinelle/flex_alloc.cocci b/contrib/coccinelle/flex_alloc.cocci
-> index e9f7f6d861..1b4fa8f801 100644
-> --- a/contrib/coccinelle/flex_alloc.cocci
-> +++ b/contrib/coccinelle/flex_alloc.cocci
-> @@ -1,13 +1,14 @@
-> -@@
-> +@adjustment@
+> Very well explained.  Thanks, will queue.
 
-None of our other cocci scripts have rulenames so I would drop the
-rulename here. It also doesn't really help since its name is so generic.
-
-I would also echo this for the other patches you've sent.
-
->  expression str;
-> -identifier x, flexname;
-> -@@
-> -- FLEX_ALLOC_MEM(x, flexname, str, strlen(str));
-> -+ FLEX_ALLOC_STR(x, flexname, str);
-> -
-> -@@
-> -expression str;
-> -identifier x, ptrname;
-> -@@
-> -- FLEXPTR_ALLOC_MEM(x, ptrname, str, strlen(str));
-> -+ FLEXPTR_ALLOC_STR(x, ptrname, str);
-> +identifier x, name;
-> +@@
-> +(
-> +-FLEX_ALLOC_MEM
-> ++FLEX_ALLOC_STR
-> +|
-> +-FLEXPTR_ALLOC_MEM
-> ++FLEXPTR_ALLOC_STR
-> +)
-> +               (x, name, str
-> +-                           , strlen(str)
-> +               );
-
-Small nitpick but to be inline with how the rest of our cocci scripts
-are written, I'd write this as
-
-	  (x, name, str
-	- , strlen(str)
-	  );
+Could you please queue this on the tip of
+'dl/complete-rebase-and-archive' since it fixes a regression introduced
+in that branch?
 
 Thanks,
 
 Denton
-
-> --
-> 2.24.0
-> 
