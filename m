@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 161FB1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 00:14:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 913D91F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 00:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbfKLAOH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 19:14:07 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:36149 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727166AbfKLAOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 19:14:06 -0500
-Received: by mail-pl1-f193.google.com with SMTP id d7so6668718pls.3
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:14:05 -0800 (PST)
+        id S1727363AbfKLAOI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 19:14:08 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:33818 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbfKLAOI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 19:14:08 -0500
+Received: by mail-pl1-f196.google.com with SMTP id h13so3185849plr.1
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=+JYslc6fO95vEUvNAIz76PzHLS96Gdx/zoweijC3wzY=;
-        b=dOgviclAJv0tF4o+nOTcCIw5bU5fODXi2T7Y2/fFCBE8PY3m6z7gkHvJ+xj+YmABmG
-         rO4tsY5lYEQFuM7JHIHEStVtAvDTxZKJ2EHtlejXby02WLEP8Fqw612rNGi+UMKEwkEk
-         F6Aiv2yryLaUTdGrxsrhBdiCCitI1gGCUC/Dd4Zs5XpYz9ZXA/qHCU/O7tTo79XJxKKD
-         Je799dZvsRRqM768oY3XFihCuYLk4CtSJRpAzgUw5H+hb4qsaSIPh4ArTVS4be0X2Iru
-         QipumR2WYE6RNJHWKZffDhw/9TjazEbcI6mlBT/fMaH4Mv1c16NGJck0QWAdcXqF9lg1
-         rUvQ==
+        bh=B4LobExkO6qdJNNfri25obgW5ZiuJa76RQy5+L4ZPY8=;
+        b=OBzZccaO+F96R2rRWL0gZ5/2uojZ56Yzl1WwqgON8sYAzF/AYzN8SjdRaJOL7WqYu/
+         RA7ozFG9GmDRMkDuy616cGcM3EA4vL5a894C9KRX7eRWi0j0GKXNeE14CvZ8nvwad1cv
+         9NpG8a2LewtKBjg/Kn9OuicLK19ZlVfguLy/YZAC4cEznS/VCG82bQH8r2oZaJ1LIS3L
+         w0KjJY0fomQxgaNMQHSIPAwkPMEUNitsA4Agj2lOrn2qu1NCx4O/ZVtky0Fd/iYgKgwu
+         zBvZydI3XQpemliQ9I1T9Z32g6cwsG9pHTsM9r41cfyWTaW0kP5FHEMBzwfA02NSJ670
+         FDiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+JYslc6fO95vEUvNAIz76PzHLS96Gdx/zoweijC3wzY=;
-        b=H4Zk5pHHD7cHbUo2U4hkop0cAaCnmN9Oh2MVBhB9J6no3dzJ+jNcceXq2ce9nWKZpM
-         IiL9ltR4jUVpcDxsxKnsAmzn0rsNSe1N+Ecqegzvh88m2oHE8CgND8DHYn4VkoMdIAN2
-         edkLwdgMciJ87OH4KAWhEHDpS/+aK0KayiQb/kleKjYdmISQjnROuUQXHpoYWszVgUZ3
-         OpPYAiRC6FG0ARZ1bjKTZ0C3ycrz6uuz7mXiMp3MBiwipLfVWtjbHXKoXGXQEHirsnHw
-         UWHBhNbdZPW2rd6ZfBjyfQO92L5z91FpVwQ8AKBpnOgdeMleLuWKO+GiDr2uPcjHwTWr
-         tI0Q==
-X-Gm-Message-State: APjAAAVDQXHRqTa5s2Mw+E8uLPHpD+go3kOHtQ+ciRhsHwceqxJFAkwd
-        5PUfp9ukOL6+FklLgAPGfaJQhE3s
-X-Google-Smtp-Source: APXvYqwX8LU1G7hpJalFI8LIDHXr3pVZdlhT45zHc+r0hTDcMAPvzSoTOI2wcLi71NI4LMStmDX15A==
-X-Received: by 2002:a17:902:9a03:: with SMTP id v3mr28794075plp.61.1573517644828;
-        Mon, 11 Nov 2019 16:14:04 -0800 (PST)
+        bh=B4LobExkO6qdJNNfri25obgW5ZiuJa76RQy5+L4ZPY8=;
+        b=ivB4+d6H2iq7kaven+1Yk55mcVKuLXxuKERsgXlR3Xtvfg9UqGV70ddtdeonyfxpYG
+         ZPPdTTyZLxnoM5RVu3oA9uj/NgMiKZY+25J+1gi8eL+CJuEfAmigDLiqJ5q870w8dGiq
+         CG7zzgnMh/TrAb9tzgr+rAp+Ce8ciQp+VRUv8J8eM8SJoKvxki1AkDV9RsPho9xLnLni
+         36OKtL2mEcouawk4XNkaBzz9FaU6mfxYPO09+8P3LS2vCWTn64vgWKCSR5jTjZPlplL3
+         QsCVEIFgc8GJsMeN77s7tDVEB23yum8igcltRZxzi2y2lw/l7vez2reU9aYLm6zWYbh9
+         oVuw==
+X-Gm-Message-State: APjAAAV8F3kcpgc6Hwbn+H1MTuJbySOzll/bC0xBPpY0pSbqG8MsaeRd
+        9KhAvgwb4LiqzeBn2iw1CZdLuJ4s
+X-Google-Smtp-Source: APXvYqzXA48vJTv//7TbH4ohG6riDoNZWdXvCqrlK/72QKSCYv84H/PMzuz4ndqywJ9Z76Xk5hnKZQ==
+X-Received: by 2002:a17:902:44d:: with SMTP id 71mr27423115ple.274.1573517647104;
+        Mon, 11 Nov 2019 16:14:07 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id 70sm18948729pfw.160.2019.11.11.16.14.04
+        by smtp.gmail.com with ESMTPSA id d139sm21950952pfd.162.2019.11.11.16.14.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2019 16:14:04 -0800 (PST)
-Date:   Mon, 11 Nov 2019 16:14:02 -0800
+        Mon, 11 Nov 2019 16:14:06 -0800 (PST)
+Date:   Mon, 11 Nov 2019 16:14:05 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 10/14] t5520: test single-line files by git with test_cmp
-Message-ID: <2f9052fd94ebb6fe93ea6fe2e7cd3c717635c822.1573517561.git.liu.denton@gmail.com>
+Subject: [PATCH v5 11/14] t5520: don't put git in upstream of pipe
+Message-ID: <3fd10a58c64a7e472c0a972f3477a879b1d14f64.1573517561.git.liu.denton@gmail.com>
 References: <cover.1573152598.git.liu.denton@gmail.com>
  <cover.1573517561.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,190 +71,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In case an invocation of a Git command fails within the subshell, the
-failure will be masked. Replace the subshell with a file-redirection and
-a call to test_cmp.
-
-This change was done with the following GNU sed expressions:
-
-	s/\(\s*\)test \([^ ]*\) = "$(\(git [^)]*\))"/\1echo \2 >expect \&\&\n\1\3 >actual \&\&\n\1test_cmp expect actual/
-	s/\(\s*\)test "$(\(git [^)]*\))" = \([^ ]*\)/\1echo \3 >expect \&\&\n\1\2 >actual \&\&\n\1test_cmp expect actual/
-
-A future patch will clean up situations where we have multiple duplicate
-statements within a test case. This is done to keep this patch purely
-mechanical.
+Before, if the invocation of git failed, it would be masked by the pipe
+since only the return code of the last element of a pipe is used.
+Rewrite the test to put the Git command on its own line so its return
+code is not masked.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 64 ++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 48 insertions(+), 16 deletions(-)
+ t/t5520-pull.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 1af6ea06ee..8b7e7ae55d 100755
+index 8b7e7ae55d..8ddf89e550 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -255,7 +255,9 @@ test_expect_success '--rebase' '
- 	git tag before-rebase &&
- 	git pull --rebase . copy &&
- 	test_cmp_rev HEAD^ copy &&
--	test new = "$(git show HEAD:file2)"
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '--rebase fast forward' '
-@@ -330,7 +332,9 @@ test_expect_success '--rebase fails with multiple branches' '
- 	test_must_fail git pull --rebase . copy master 2>err &&
- 	test_cmp_rev HEAD before-rebase &&
- 	test_i18ngrep "Cannot rebase onto multiple branches" err &&
--	test modified = "$(git show HEAD:file)"
-+	echo modified >expect &&
-+	git show HEAD:file >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
-@@ -381,7 +385,9 @@ test_expect_success 'pull.rebase' '
- 	test_config pull.rebase true &&
- 	git pull . copy &&
- 	test_cmp_rev HEAD^ copy &&
--	test new = "$(git show HEAD:file2)"
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'pull --autostash & pull.rebase=true' '
-@@ -399,7 +405,9 @@ test_expect_success 'branch.to-rebase.rebase' '
- 	test_config branch.to-rebase.rebase true &&
- 	git pull . copy &&
- 	test_cmp_rev HEAD^ copy &&
--	test new = "$(git show HEAD:file2)"
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
-@@ -408,14 +416,18 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
- 	test_config branch.to-rebase.rebase false &&
- 	git pull . copy &&
- 	test_cmp_rev ! HEAD^ copy &&
--	test new = "$(git show HEAD:file2)"
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'pull --rebase warns on --verify-signatures' '
- 	git reset --hard before-rebase &&
- 	git pull --rebase --verify-signatures . copy 2>err &&
- 	test_cmp_rev HEAD^ copy &&
--	test new = "$(git show HEAD:file2)" &&
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual &&
- 	test_i18ngrep "ignoring --verify-signatures for rebase" err
- '
- 
-@@ -423,7 +435,9 @@ test_expect_success 'pull --rebase does not warn on --no-verify-signatures' '
- 	git reset --hard before-rebase &&
- 	git pull --rebase --no-verify-signatures . copy 2>err &&
- 	test_cmp_rev HEAD^ copy &&
--	test new = "$(git show HEAD:file2)" &&
-+	echo new >expect &&
-+	git show HEAD:file2 >actual &&
-+	test_cmp expect actual &&
- 	test_i18ngrep ! "verify-signatures" err
- '
- 
-@@ -445,7 +459,9 @@ test_expect_success 'pull.rebase=false create a new merge commit' '
- 	git pull . copy &&
- 	test_cmp_rev HEAD^1 before-preserve-rebase &&
- 	test_cmp_rev HEAD^2 copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'pull.rebase=true flattens keep-merge' '
-@@ -453,7 +469,9 @@ test_expect_success 'pull.rebase=true flattens keep-merge' '
- 	test_config pull.rebase true &&
- 	git pull . copy &&
- 	test_cmp_rev HEAD^^ copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
-@@ -461,7 +479,9 @@ test_expect_success 'pull.rebase=1 is treated as true and flattens keep-merge' '
- 	test_config pull.rebase 1 &&
- 	git pull . copy &&
- 	test_cmp_rev HEAD^^ copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success REBASE_P \
-@@ -507,7 +527,9 @@ test_expect_success '--rebase=false create a new merge commit' '
- 	git pull --rebase=false . copy &&
- 	test_cmp_rev HEAD^1 before-preserve-rebase &&
- 	test_cmp_rev HEAD^2 copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '--rebase=true rebases and flattens keep-merge' '
-@@ -515,7 +537,9 @@ test_expect_success '--rebase=true rebases and flattens keep-merge' '
- 	test_config pull.rebase preserve &&
- 	git pull --rebase=true . copy &&
- 	test_cmp_rev HEAD^^ copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success REBASE_P \
-@@ -537,7 +561,9 @@ test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-m
- 	test_config pull.rebase preserve &&
- 	git pull --rebase . copy &&
- 	test_cmp_rev HEAD^^ copy &&
--	test file3 = "$(git show HEAD:file3.t)"
-+	echo file3 >expect &&
-+	git show HEAD:file3.t >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '--rebase with rebased upstream' '
-@@ -622,10 +648,16 @@ test_expect_success 'pull --rebase fails on unborn branch with staged changes' '
- 		cd empty_repo2 &&
- 		echo staged-file >staged-file &&
- 		git add staged-file &&
--		test "$(git ls-files)" = staged-file &&
-+		echo staged-file >expect &&
-+		git ls-files >actual &&
-+		test_cmp expect actual &&
- 		test_must_fail git pull --rebase .. master 2>err &&
--		test "$(git ls-files)" = staged-file &&
--		test "$(git show :staged-file)" = staged-file &&
-+		echo staged-file >expect &&
-+		git ls-files >actual &&
-+		test_cmp expect actual &&
-+		echo staged-file >expect &&
-+		git show :staged-file >actual &&
-+		test_cmp expect actual &&
- 		test_i18ngrep "unborn branch with changes added to the index" err
+@@ -668,7 +668,8 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
+ 	(
+ 		cd corrupt &&
+ 		test_commit one &&
+-		obj=$(git rev-parse --verify HEAD | sed "s#^..#&/#") &&
++		git rev-parse --verify HEAD >head &&
++		obj=$(sed "s#^..#&/#" head) &&
+ 		rm -f .git/objects/$obj &&
+ 		test_must_fail git pull --rebase
  	)
- '
 -- 
 2.24.0.300.g722ba42680
 
