@@ -8,66 +8,62 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD5DD1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 20:01:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BC871F5A1
+	for <e@80x24.org>; Tue, 12 Nov 2019 20:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726977AbfKLUBy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 15:01:54 -0500
-Received: from mout.gmx.net ([212.227.17.20]:51177 "EHLO mout.gmx.net"
+        id S1726910AbfKLUQw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 15:16:52 -0500
+Received: from mout.gmx.net ([212.227.15.19]:47819 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726008AbfKLUBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 15:01:53 -0500
+        id S1726645AbfKLUQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 15:16:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573588897;
-        bh=LdfA8rzqsgivL3cb0B/EWQ915A7vjIHUr26ztWXddxU=;
+        s=badeba3b8450; t=1573589805;
+        bh=W8lQ40sq8dqFN/Aic6qw3nRzzd5Xj6B7KshidqqSaOQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Pr/Rfip1oXAC9cRCqW5+DnPN8UGdWmkpIuSfjIHTupytS1M7gobNxjt/Hfomyd4mw
-         6AGPwzRsLCCUNrzKeUOyF75p8izX0sAvXcrc3vA/6kmMc+qFDBvf3ABz7XqkXa2Z2k
-         bNpNILabcti6AXYyPJouuG8LGeB0VTkoq7/FI7Vk=
+        b=hVW57+uLV/viksgv1a+mTA5teJg8tbtCV+KArZyFl5DX8rgPPI/7krd043+Zmkypb
+         Wq4DmOapVy/l2jmb4xE1COjex3MMSX7xN5In4fWYegOVzQdVlt+BjYeeQx7bmlu14p
+         G7AO3dCW8wRXZMliSdoS6scmCauJJrKmpyEjrKEw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYvY8-1iQL2n23lI-00UnpX; Tue, 12
- Nov 2019 21:01:37 +0100
-Date:   Tue, 12 Nov 2019 21:01:23 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXp5a-1iPDkX0vRE-00Y9Jk; Tue, 12
+ Nov 2019 21:16:45 +0100
+Date:   Tue, 12 Nov 2019 21:16:31 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
-Subject: Re: [DISCUSSION] Growing the Git community
-In-Reply-To: <20191112184547.GA38770@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1911122100220.46@tvgsbejvaqbjf.bet>
-References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com> <CABPp-BFXs4qes20S+9AZd++p3epW4eJ7Vu7zU_PdDysZ_D-yrg@mail.gmail.com> <20191112184547.GA38770@google.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Change behavior of git add --patch on newly added file?
+In-Reply-To: <20191112184720.GB38770@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1911122114380.46@tvgsbejvaqbjf.bet>
+References: <20191108225035.GA60198@google.com> <xmqq5zjtn07v.fsf@gitster-ct.c.googlers.com> <20191112184720.GB38770@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wru/i1A56klMIR79Wb6aD5yzKubLlX3RTJK4/hIhORyJUwo0UFO
- GjONsXFuFyeEN2UcYnCXf3v/AcffUHKOr7WgxldHwuqfquC0/NuHurIIqpB0WWLtlff55E3
- lrON3yYiPsvnLXR+Ku+gPtbRzTrA4GwPcwnN2DZqDqck+1PDHcLGCEY1pNXyO/Sx7GyHihy
- +hU6VVDYSUiZDhTIeB54g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:B2tU1iIYxdA=:ylGZqbCj1xb4WZFK9ivDkj
- OnavXmsuZwtghBqYurOkpljfCYdw5Uj/oIhX3L7b2lelH84RUNIC/CfLx1nPC1e+ZdspjXioB
- uq5Wnkeo33EGBARp+fYAq0I3GDOeP/BRdudp/B8VlDrW6FFbY231yRZI4VMr77ADokGplklcZ
- 19vE/Uc87j7CqYn471mrE1qwDqIDsWXe4v3W60T8Lt0pZ5bvf++Kwwf+jBVB4WLQtZFKSFHO2
- 9+sJrQDQTF+nS2R9l52fZshjHnM1YM0IGxMK0A6humJ6r1QSV0yEbFKpODYhsuHbOtsi4l1vc
- QqPoDzHh/RgkzkClMynhpOmRl3qs5Hdx4ShnDD9FAxteofSIUa96RVav0WFDAisQF8mPjXJC/
- SNuFukhJFd0r+U0TI+blXSxpOoDrHCo6nR+kFPCjBbXp6KpA1faXBXWDxPTK3jukBQ3MgY1g4
- Hpw1kkZ27mHcx0s1iX34OKPuECo1mChWQGHZOP3AHnPRDBhpi2/j40q0VSYqHBQ75xdwVsAKU
- 3kEE3gr6xifFsRKqg9MYBw7XpU8HGzFWk3pec36hJuYATYZhpJeSZpzkhkdJ/QADuGFIJVq5i
- YNCwfWyhmMyeoEqKiJ1ae9DXD3sYNXyFFXWxBXbeZJQbhPZbgGY6jTc9PljNxew/i9+JYUJsJ
- /N+qNaeQE5kL4tMgJ280Uk4AQb/FVCYjZRugJPTpleaZPEm6aw+nDyHqR4XFBE/XeH/wgN9hp
- J5YdvCOH3LIFb9LcOh3AMdizWtT09XM6wB1QqkCdlLBD88d6b39idfEbwvtyXvVt8Ky3eRzwg
- lVcKB830X6Ux1RGva4NNx16PUkIYzZxPFiilu8FkSCB4z0Xni4SeasX/+QOp4oEO11eTWR3se
- 8Gamji0pMJ0eWqGLaa5HQzArhMe+HWVPayxBhz25e1KrdpRJ3/xLNSxeKJ2WCAqoR4fhoBO1C
- 8BQMU9of8kxt28iTlDdvJRUsDOglxbnQdA7VJd1fmphvU1gX6RKEKaizfUEQyZiigE6NO6ZU+
- VA/f7QGeDiEZdLQIyjhY6hhp1Y2bTypjxthp55mOsx9J11D6TUCUJ55PSUTZ/5ZymNkr+Yvgu
- itfZohCgkwLHOucc9E6o0qeIOCv3VZUKP1BddS6Ad1E8JRD3d2S4eWm6CmwaP6557CGqa4HUb
- YniU8kzGXOdKDVPXvq+TE5tLoxj5mloVdNVlGMrV4stl0ua6iT1KdlIGssAfWPIsL3Usofgdx
- hEWn2lRDE/0PXeSa1e+S9jEiRZhc0XEXZWGnhUVxkdeVMg29K5J5sOuYBqyg=
+X-Provags-ID: V03:K1:Quxd3t/9SCTnh+Z1SVHcxyNbH+d1vsIltLw2tdaiY/xx61LrQ4T
+ 3ldbxeTzuVuIYAqdDTY4Z65r6ae9R2vuX4JMs2a5hjlXfHsT688rauYyykSCJQawg12NaQE
+ ZpNsO6mluoj7hRBSc7sWZM1LhWRccDINygb6ASn1lw77aK27DohuecSdnEqkKaKofZ0CHB3
+ tfdLdg5nThEQzZDh6wYGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:VvmG9dk6Ucs=:+ijhsSQPyNhBl0PBQ64XIb
+ An5E4/vl9tTP0Ofx9i/wDc1M2me7b/kqImCfn54pB7Q/7kgpUPgRJdNkSArLQ9DKfWGEabvHX
+ ZVz4BNLVQvCJj4ANnxnzp2exvSORh33nrcBJ5op2z19fv7M0VHqN/gi1NNafRGYUJLDckGAml
+ DGvLiOIIbeq4AbSXCEC59SUHn2UfJZ+VzhXj76jENpdqhYZeFm7OHeYctOZT9TqT7hGIuQQMO
+ FjbK+osnXZitGtMdLyADyMGApLJx2X3HjgBKlDU/losxVvI4p/iXNtWLDM9Z77ooolrWBajLK
+ 068XxXM4O0lUs2sEVP/KCOR9vLTifAH7Td9fUZnowKaGq+rLF8Z6gWHDzZEZeGT6LSrceBXNz
+ ytz5eCQ6qCC0g29VMX5XagXqc5V1l1RxSofK1YThsI+Cecx+/aMBZyb598/A+sgqVZZctJhkT
+ 0ksAV6fLAWhjY0wfaTHzefML06GlIpwam6NRba5X/z54vMIbdxHHvpeJyojG1gbGVCU/7OU+O
+ bai2X21m65mfaDqj2gNvETJSQoz6f8txwqB1M5afD6Jf6DcrsSTHI7607JtD+q+RlbBUTtEmr
+ +fmjILossBUW+SNks9KznHIqkq4QtyLzst2k5TcCRBpKQK/D/Vcv4vaWFNOWRjU/8gE+f4wjs
+ +VmH5I659JwU/6p2HM4C0Q9jies5X+ZVQu5LbdoLCdQ/rWipswddZRaj4sfnafmsT8+zEj/h5
+ zE78hGSVSRx8OUKufr9na2E6vgd0vZpOp+6qhHWqYGwLpH0UeaywrYX7oJ15ZVzffXaPdV1PQ
+ lUfEmQL7JXhgrh/Y40ZjhxMj+kIEXaoN0a38/eUHEdiU/mT33T30QEmzPn8cozVAxu9eHH6mB
+ wOoK5d2PcKYnA/D6ww9ramehCHtxLsgNAdSs9Mv8Gm0MXW0bt+em5sRot+4PBvazYDtVvgeFY
+ Owf6DBsWkZjqL9UELvCgfX4ICAYqC7ZJEsBYwpjJ0NYiYJphqEWBjnsTRTSKBR3qEVy9Y8NbJ
+ VMF3THz6QN8fr1PPjdRFgML5B6wePSO5wEbKbzPAP+VpVEe+XWsXQURCQvYiWVk6Wz7ObeyGX
+ jWYBE05u/2QR+/Xup6kv4hoXVbhBJI3sm5QjZmxW2AEY3Myi/lg/F2rRoqFyMTc9Xy0jFUfuU
+ X5+RS5Wux8YI/SngrsfsK2fZiZYd4Revc1H0MZrgMXa/sJy8QzKucAfegTRAe2tT0IQRXM9VP
+ hDbJkDnXG1oH+r2vjdKKiq5Z+yFsAvU2uuh+HYS4oh6kYQ0M90nMQBk7qWMs=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,10 +73,46 @@ Hi Emily,
 
 On Tue, 12 Nov 2019, Emily Shaffer wrote:
 
-> I'm still really interested in participating on a mentors list like
-> this; can we set one up?
+> On Sat, Nov 09, 2019 at 01:27:16PM +0900, Junio C Hamano wrote:
+> > Emily Shaffer <emilyshaffer@google.com> writes:
+> >
+> > > Should 'git add -p <newly-added-file>' do the same thing as 'git add=
+ -N
+> > > <newly-added-file && git add -p <newly-added-file>'?
+> >
+> > Probably.
+> >
+> > I originally wrote "git add -i" with the intention that the
+> > interactive mode is _the_ primary interface to the machinery, so the
+> > expected way to work with a new file was "git add -i", tell the
+> > command to add that <newly-added-file>, and do the "patch" thing
+> > using the interactive subcommand to do so within the "git add -i"
+> > session.
+> >
+> > Later people liked (only) the patch part, and "git add -p" (and
+> > various "--patch" options that invoke "add -p" internally from other
+> > commands like "checkout", "reset" were added) was born.  I think
+> > nobody thought things through when they did so.
+> >
+> > If I were designing "git add -p" from scratch and explicitly asked
+> > not to do the other parts of the "--interactive" feature, I would
+> > imagine "add -N && add -p" combination is what I would make it
+> > mimic.
+> >
+> > Patches welcome, but you may want to check with Dscho as there is an
+> > effort going on to reimplement the entire "add -i" machinery in C.
+>
+> Ah, this is a compelling point. I imagine the landscape will be fairly
+> different when that effort is finished.
+>
+>
+> From the replies, it sounds like it's a favorable change, but it makes
+> sense to wait on it considering the refactor to use C. Thanks, all.
 
-I would subscribe immediately to a Git mentors' mailing list.
+The patch series can already be viewed at PRs #170-175 on
+https://github.com/gitgitgadget/git; maybe you want to have a look at
+implementing this feature on top of
+https://github.com/dscho/git/tree/add-p-in-c-config-settings?
 
-Thanks for bumping this,
+Ciao,
 Dscho
