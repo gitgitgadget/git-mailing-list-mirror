@@ -3,105 +3,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7381B1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 00:14:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58B0F1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 00:28:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727372AbfKLAOP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 19:14:15 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:41853 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727364AbfKLAOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 19:14:15 -0500
-Received: by mail-pf1-f195.google.com with SMTP id p26so11943303pfq.8
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:14:14 -0800 (PST)
+        id S1726906AbfKLA2f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 19:28:35 -0500
+Received: from mail-il1-f174.google.com ([209.85.166.174]:35184 "EHLO
+        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726887AbfKLA2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 19:28:35 -0500
+Received: by mail-il1-f174.google.com with SMTP id z12so13899043ilp.2
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:28:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=E1n2yjYXr9cj/AnXYn8LhEJNJ7AQBPgjUdDsBO1cy7Y=;
-        b=nXA8UcftCd6//ZUTJmvscSvdCfvtrohE1Cwh7YXuMxRdtlgRiRXz2GHtX40PHmAO0V
-         xx9Wqsup71fEv+MKRWrdnUBrjEQGbDUu0pnvXpz1hsyd9ZiARoU1+aPDDdTKKNriQVrL
-         H8Uay+klB3nNlL3vRE9BqNqLnpVyp8kEiMRVdlkDtPczQMwzWEeXSB975S2998XDBvzb
-         LcI4WBFcB/uF9AW9w4fTYPGgzf3m8uOXD6nW0m7tPzOIfZPvlpQgE6FNP3mGK8D8LGSF
-         +AjTAZ/RdPdxxRC0/petWapSKQ3bENLrK3YaA3Vra5aGZJjktK6Vq5KhovEdmk/BodGT
-         SMdw==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2J2p39vYWIjK2PHPaVp/kAuU//ZgnpdqvGdxFfLRGuo=;
+        b=ys4Y8gm++7DmxdwWXnCLkXYd5KIW1BcQ0j/2ksKlR2zPb9kfMHKPHlApI7oss79TrB
+         gw+41Ek2hVA7F+/io+NgUz/l8oVV0bBXBbSY2OVceTcQzlafPjKi56Zpq/bOiaruqg91
+         KXCvuK+6JuqIF6Z8xtZgEMVOHB4SOklRRnzgzsevN9DWxY4tBMg6RG8MYqN8hPsIg/BU
+         eWnwst5WlsATJAbOvl+sb70wvf5QX5/tm5l2OmN4QWWYEU3DRsDvmQAiCq9VR66fqJTi
+         IJ0ymwuzYQojwEqAEFB7fCGTEKMh24TUvWRkLeispZdnwJu8j4RRgPW2g2xjH0KTr9kB
+         PqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=E1n2yjYXr9cj/AnXYn8LhEJNJ7AQBPgjUdDsBO1cy7Y=;
-        b=gmsEv1e8AU/bKIhNBgfFN4OpPMc/ZfUpouAXLpiRz4Pil5kViKR98qJ9NkfEHAyclm
-         epAlS0tH7jUF+i+uuBBTB9l4S/taxHP6LuGqzovowOgPz4UqIC96BxJC3x5PLkYiExpw
-         1zOdCtjvds6ABzgqNwYfp12aDJVSCq+fUh2meQaR13VC8sy2hYg5RbQAZeoxxXm/aT4l
-         Zfn/5TKgLUo/Md6il5prgcgEe4Safx2S56WhuRWlWXE+D5sy6QFIYItEkvC0CAn/EQzQ
-         5nc+johsK8G9OnbugnLYYR0gGj0S5nOQVtCbNuSCUJuxi0UveyARbDhNuj/MsjAlGtnZ
-         A0Ug==
-X-Gm-Message-State: APjAAAVN7DP0Dh1p2nu9c2BcazX2s0ZbZlyvbXLxkYCk95LcFKnJ6axx
-        VAW6LjCiwOrsKJKyzCaq6db2lJ6g
-X-Google-Smtp-Source: APXvYqxUrluzls1Jq5LcLmEjKDvN4k+zCYrUaiMWHA9YKVBa7HGuDjeWvpsSjoMjVsYVcM0qWx/3EA==
-X-Received: by 2002:a17:90a:9741:: with SMTP id i1mr2392458pjw.41.1573517654012;
-        Mon, 11 Nov 2019 16:14:14 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id b21sm16532494pfd.74.2019.11.11.16.14.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2019 16:14:13 -0800 (PST)
-Date:   Mon, 11 Nov 2019 16:14:11 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 14/14] t5520: replace `! git` with `test_must_fail git`
-Message-ID: <1bc7ad364f2e787147f0ac7205f207f9b232a3f7.1573517561.git.liu.denton@gmail.com>
-References: <cover.1573152598.git.liu.denton@gmail.com>
- <cover.1573517561.git.liu.denton@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2J2p39vYWIjK2PHPaVp/kAuU//ZgnpdqvGdxFfLRGuo=;
+        b=C0H9uUBY5ZAfVdwbO5xv011E7WeLBScYsBLA0tXVDKRTkKCkiqcM9n715UA9z0ag4t
+         PaXJsbdZIJGeL6lLNaAJPbyAne2I6yXzr9QNOujn1T7rWaFT1pK4iZONDNJf3Sq75n6G
+         dZTAhb8Gm/KpB6VNzfe0kOn8DpyNa8YsoLexvFbcGZHXxh9liyhM9uEWj+K7TtWmqxdh
+         S/0HWzHGS76Q7/m7agLUu3S70AIHMgPh9qYNFEz/090WmOONHq+xxiivaxct1NDuszmh
+         jQPvYVA8TGRqTjFj+df/R6LoVsfSQQG+O87hGB8Yyov1p8vl/uyBoelvC4aEHQigE4v0
+         +OrQ==
+X-Gm-Message-State: APjAAAWS2FsjUnHX3T3ckyCxYjXHgC9he8H+ZLugxzi27azGKLt6823R
+        Vub9P6SZLv8Ihj1L82VAafYT3Tp6kn0OPrqoSsEJ6g==
+X-Google-Smtp-Source: APXvYqyKn8GnUo8H+BwykiwRsIgS60PP2QhBMHuxu7vPCrWDW2eAFSghqUuAVt3qyOR+YGMu0ypFGGA4Mqe+1SVEBG8=
+X-Received: by 2002:a92:db03:: with SMTP id b3mr24286801iln.109.1573518514143;
+ Mon, 11 Nov 2019 16:28:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1573517561.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
+ <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
+In-Reply-To: <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Mon, 11 Nov 2019 16:28:23 -0800
+Message-ID: <CAGyf7-EqQdvg4fQcZJv6BpqZ9hPDx72KBiLp1Xe3Ur7NrSMBeA@mail.gmail.com>
+Subject: Re: Split commit graphs and commit-graph read
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>, "peff@peff.net" <peff@peff.net>,
+        "gitster@pobox.com" <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, if a Git command fails in an unexpected way, such as a
-segfault, it will be masked and ignored. Replace the ! with
-test_must_fail so that only expected failures pass.
+On Sun, Nov 10, 2019 at 5:19 PM Derrick Stolee <stolee@gmail.com> wrote:
+>
+> > But git commit-graph read isn't:
+> > .../objects$ git commit-graph read
+> > fatal: Could not open commit-graph
+> > '/path/to/repository/objects/info/commit-graph': No such file or
+> > directory
+> >
+> > Running some tests with commands like git for-each-ref and git
+> > rev-list shows that the "split" commit graph is being used (setting
+> > core.commitGraph=false makes commands noticeably slower), so
+> > functionally all seems well. But should git commit-graph read be
+> > handling this better?
+>
+> Unfortunately, you're running into an issue because I designed the
+> "read" subcommand poorly (and also forgot to update it for
+> incremental commit-graph files). The biggest issue is that "read"
+> is not really meant for end-users. It really should have been built
+> as a test-tool. This point was corrected when I got around to writing
+> the multi-pack-index since it uses "test-tool read-midx" instead of
+> add.
+>
+> To fix this issue, I would probably go about it by removing the "read"
+> subcommand and creating a "test-tool read-commit-graph" for the tests
+> that need that output.
+>
+> If others on-list think that the better thing to do is to update the
+> "read" subcommand to provide the same output, but iterate over each
+> layer of an incremental commit-graph, then I can do that work instead.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t5520-pull.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I was only running "git commit-graph read" as another way of verifying
+that everything looked good (to Git, that is). I'd already run "git
+commit-graph verify" and just found the discrepancy in their behavior
+surprising/interesting. For what it's worth, I personally don't see
+anything amiss with removing the "read" subcommand if that's simpler
+than updating it to handle incremental graphs. (Put differently, it's
+not a command I'd ever have Bitbucket Server run, or that I'm likely
+to try and run going forward. In this case I just completed some
+commit graph-related changes to Bitbucket Server and was looking for
+every possible avenue I could pursue to try and ensure what I did was
+producing the "correct" output after my changes got deployed to our
+internal dogfooding server.)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index ef3dbc201a..602d996a33 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -537,7 +537,7 @@ test_expect_success 'pull --rebase=i' '
- test_expect_success 'pull.rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase invalid &&
--	! git pull . copy
-+	test_must_fail git pull . copy
- '
- 
- test_expect_success '--rebase=false create a new merge commit' '
-@@ -572,7 +572,7 @@ test_expect_success REBASE_P \
- 
- test_expect_success '--rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
--	! git pull --rebase=invalid . copy
-+	test_must_fail git pull --rebase=invalid . copy
- '
- 
- test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-merge' '
--- 
-2.24.0.300.g722ba42680
+Thanks for taking the time to look into it and clarify the behavior! I
+really appreciate it.
 
+Best regards,
+Bryan Turner
+
+>
+> Thanks,
+> -Stolee
