@@ -2,64 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B43901F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 10:45:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB93F1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 10:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726008AbfKLKp5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 05:45:57 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:16080 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725954AbfKLKp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 05:45:57 -0500
-Received: from [92.30.121.54] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iUTgJ-0004xF-Br; Tue, 12 Nov 2019 10:45:56 +0000
-Subject: Re: [PATCH v2 2/2] git-gui: revert untracked files by deleting them
-To:     Jonathan Gilbert <logic@deltaq.org>
-Cc:     "Pratyush Yadav me-at-yadavpratyush.com |GitHub Public/Example Allow|" 
-        <172q77k4bxwj0zt@sneakemail.com>,
-        Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1725944AbfKLKyF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 05:54:05 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54183 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725899AbfKLKyF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 05:54:05 -0500
+Received: by mail-wm1-f65.google.com with SMTP id u18so2588423wmc.3
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 02:54:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=x48zE/BqdG5pODqf823UdmABIk6Yap/KUg3Qji5c4mw=;
+        b=j71rrQkxgCJigWELCGHuwPWbSYij6Oqe6PKkhMF1P1LtftqgsfWfGDVLLB0MYXUJZa
+         UN5x+07O17L7795ffNQ9TeWro7ifg6QEUWN/z2+epHzNczqso2FXOUKiHFqHzoN7gC+g
+         XqClrjGj0w6rROUr/IasLYCEBdP5U+s+yKAB1VkDOYLiV20i/sZePpbZMxK0TOmRe0CX
+         rayB8s7UgHp9pPlWZXU/a4kR59U4Q+Hau1i1+R++1VxoX5WXse2615NyF2xJKOUC5XmT
+         3DR5mzliOtYgZZG6u/hX3PVvgUcp+g7GVafZ4T4TKYCDu7EGWDj3Y3vsO71ZkN2z2Kvz
+         4YQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=x48zE/BqdG5pODqf823UdmABIk6Yap/KUg3Qji5c4mw=;
+        b=cH1MuIH8JG0UdFgbbISLhi4hCw8hYSLSBSmlkuIy8OdI0/1kcWMGk3CLm7KWSjwCaC
+         DRcAkvU43yno51C4nB6wvKHN4gchHEEtlmRGMYggfML2HqIXMZckHJzUvFsxExLfLk7W
+         XB99KUvSB/RYMpQm7ltso5E7/KsNtOvGsYxV2htzKhv3mjHH1C4FGfB3abqkbIhusIZW
+         6iuUESRCgVNbcLVAZETvEp3diSMOydHNFnbWCC/5inHFAiTmhR2F6mwSX1pgLGdvd+v4
+         c9FTVTLNZuNL0cujeaREbxRT57qVh8bSMPkuRaNd7pxUPYmuOjFWXVyGGAfEk61S5jKE
+         Bg8w==
+X-Gm-Message-State: APjAAAU/OdvWmIAAzfN+vIhjFHHuvS8WCNj+KFLm+kCPw+kZBFIQJsUt
+        KjM1xbvPKCLt4U8s4x2WM94=
+X-Google-Smtp-Source: APXvYqwHpeSarnedS3Oa3TIJIjLelhau1EWY3E3Qx7HYllO3vTCHTnCzuTaYWU9UJgRFBrnwU+aTmw==
+X-Received: by 2002:a1c:2155:: with SMTP id h82mr3220948wmh.94.1573556043428;
+        Tue, 12 Nov 2019 02:54:03 -0800 (PST)
+Received: from szeder.dev (x4d0c65ae.dyn.telefonica.de. [77.12.101.174])
+        by smtp.gmail.com with ESMTPSA id u18sm11556592wrp.14.2019.11.12.02.54.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Nov 2019 02:54:02 -0800 (PST)
+Date:   Tue, 12 Nov 2019 11:54:00 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
-        Jonathan Gilbert <JonathanG@iqmetrix.com>
-References: <pull.436.git.1572418123.gitgitgadget@gmail.com>
- <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
- <9469beb59937f87647190cf7f56544b8c27e20b6.1573110335.git.gitgitgadget@gmail.com>
- <20191111192526.crllpe3phitneu3p@yadavpratyush.com>
- <CAPSOpYv0NNihiWF2LL=czoP7N2CGNSkB8SBNTZ65iOZVOBPqbA@mail.gmail.com>
- <a1dd45d5-8dac-e86f-c964-957ff0b8dfb8@iee.email>
- <CAPSOpYsbBX3d_oWJHtKHD7b0cXcELF=t-zYNEVpU3sf8qzD4Ew@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <11812626-07f7-5610-cd13-ce4bdda4f674@iee.email>
-Date:   Tue, 12 Nov 2019 10:45:55 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        James Coglan <jcoglan@gmail.com>
+Subject: Re: [PATCH] t4215: don't put git commands upstream of pipe
+Message-ID: <20191112105400.GM4348@szeder.dev>
+References: <20191018152121.GE29845@szeder.dev>
+ <8e950ddfba3fa0f6d0551a153228548da6af6117.1573520653.git.liu.denton@gmail.com>
+ <xmqqzhh1eg57.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <CAPSOpYsbBX3d_oWJHtKHD7b0cXcELF=t-zYNEVpU3sf8qzD4Ew@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqzhh1eg57.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/11/2019 04:49, Jonathan Gilbert wrote:
-> On Mon, Nov 11, 2019 at 4:59 PM Philip Oakley <philipoakley@iee.email> wrote:
->> sounds like "Currying" a function but with the parameters taken in any
->> order, though, in a sense, perhaps not generating intermediate functions...
-> It's like currying if you could pass g(x) = f(x, y) to one block of
-> code and h(y) = f(x, y) to another block of code, so that each of g
-> and h are each like curried versions of f that "bake in" one of the
-> arguments, without having to know which one will get called first. :-)
->
-> Jonathan Gilbert
-So that would be called "Chording"...
-(Is there a 'proper' technical term for that approach?)
-P.
+On Tue, Nov 12, 2019 at 03:57:08PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > A little late to the party but since this cleanup hasn't been done yet,
+> > let's do it now. We can apply this patch to the tip of
+> > 'jc/log-graph-simplify'.
+> > ...
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> 
+> Obviously good but I wonder if
+> 
+> 	show_graph () {
+> 		git log --graph --pretty=tformat:%s >actual.raw &&
+> 		sed "s/ *$//" actual.raw &&
+> 		rm actual.raw
+> 	}
+> 
+> would help to make it even more readable without too much repetition.
+
+I think it would indeed, but then let's go one step further, and add
+that 'test_cmp expect actual' to the function, too, and call it
+'check_graph'.
+
+> Will queue; thanks.
+> 
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -68,7 +69,8 @@ test_expect_success 'log --graph with left-skewed merge' '
+> >  	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
+> >  	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
+> >  
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -99,7 +101,8 @@ test_expect_success 'log --graph with nested left-skewed merge' '
+> >  	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
+> >  	git checkout @^^ && git merge --no-ff 1_p -m 1_H &&
+> >  
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -139,7 +142,8 @@ test_expect_success 'log --graph with nested left-skewed merge following normal
+> >  	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
+> >  	git checkout 2_p && git merge --no-ff 2_s -m 2_K &&
+> >  
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -175,7 +179,8 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
+> >  	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
+> >  	git checkout @^^ && git merge --no-ff 3_p -m 3_J &&
+> >  
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -210,7 +215,8 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
+> >  	git merge --no-ff 4_p -m 4_G &&
+> >  	git checkout @^^ && git merge --no-ff 4_s -m 4_H &&
+> >  
+> > -	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --date-order --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
+> >  
+> > @@ -250,7 +256,8 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
+> >  	git checkout 5_r &&
+> >  	git merge --no-ff 5_s -m 5_H &&
+> >  
+> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
+> > +	git log --graph --pretty=tformat:%s >actual.raw &&
+> > +	sed "s/ *$//" actual.raw >actual &&
+> >  	test_cmp expect actual
+> >  '
