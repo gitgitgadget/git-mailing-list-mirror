@@ -8,30 +8,29 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 712611F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 14:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34B2F1F5A2
+	for <e@80x24.org>; Tue, 12 Nov 2019 14:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbfKLOPI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 09:15:08 -0500
-Received: from mout.web.de ([212.227.17.11]:50169 "EHLO mout.web.de"
+        id S1726912AbfKLOkO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 09:40:14 -0500
+Received: from mout.web.de ([217.72.192.78]:40929 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726645AbfKLOPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 09:15:08 -0500
+        id S1726008AbfKLOkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 09:40:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573568106;
-        bh=NX821vtlFHAJWCpxcHggN04GvS52+URc3VPbZr6OtLc=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=iLIKZeOQij9kdcHwQReEqKgBlEPGtPxDlEJ+zQ9g4LnBGCK4a3tTaonCo+59xMkGp
-         0V7bTpexok6pygYRbAzp1UmJgW8Y5qKHW02ZTB1HnYIkf+bQoP6w58+riNvR0Zj8/y
-         2YwoSwczKpLcBsStjwnAXflQjnNB/g2qgnn/3jF8=
+        s=dbaedf251592; t=1573569607;
+        bh=jY41blWHh1RKxgjBzOEM3f4+THflhjT2Go1sJyx2vgE=;
+        h=X-UI-Sender-Class:To:From:Subject:Cc:Date;
+        b=YnSB9rDZ+PpzuZJKMZ6XIKV9fB8hpW+Kb7weKgsFK5BBbepkH5oL5fZoajiQqG8io
+         54wed6RsvzBvxlwVsZApvvYq6eJ/rzUNxVZO7DMG0UU8+zxw/RkjGHCrJskaNk2NaE
+         7+q0pDOVGGag07eiY8FdLgOkBFPbvgm/+1PxyBto=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpZD-1iQy1V1qFD-00WpJb; Tue, 12
- Nov 2019 15:15:06 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M6V1T-1hfUK42MAd-00yRKT; Tue, 12
+ Nov 2019 15:40:07 +0100
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 From:   Markus Elfring <Markus.Elfring@web.de>
-Subject: [PATCH] coccinelle: merge two rules from free.cocci
+Subject: coccinelle: simplify hashmap.cocci?
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
  +v43YoGpDNyhgA0w9CEhuwfZrE91GocMtjLO67TAc2i2nxMc/FJRDI0OemO4VJ9RwID6ltwt
@@ -75,76 +74,67 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <17c6e9d5-5a06-8150-fa82-e20e7b850fe4@web.de>
-Date:   Tue, 12 Nov 2019 15:15:05 +0100
+Cc:     Eric Wong <e@80x24.org>, Derrick Stolee <stolee@gmail.com>
+Message-ID: <4790d483-bcb8-57f0-5c69-912a814ddade@web.de>
+Date:   Tue, 12 Nov 2019 15:40:06 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:nlTkvQK2NCrzHtjlTTU+GrxuyOM/VLVmxAGO/NSVHANNnXoBUAI
- XRfoSJwjREvv+JbpOd17zJzdk96RquoRe5/GcCnbNPUW+7CdKVZ6sP50GjF5DFkhkHw/8yb
- lSuw8v7KoRJzSl36AFeX7ClZwhXyDarWWiSGUptfo3gTsU34nm5WFc6FJzXmAJ1EqDGMQ79
- 7OYR/asoHAvSUg94MtCuw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vpgJhiv6woU=:kXVI/x1bC2UZH5tACvIzjR
- 4O2I9K/8wHq57dPvow2+4gSWCnV3qgKFOo2DDwj88h0xWolEoTSVF85o5BKIszakSSs6nBZHf
- dElH4SGQgJfR1QLZ1lD7ZfZk4jgevhZOAus1Lcj6ZtLTtzb8DUpDJqSnyv84zfxM4s3zT3xxH
- b+u0xfA50r0k7X/UYDg2fqAkgBjtuABimNZNrncAZgYKaanrD5tcLZo5DzWTtrMjz0fZTkYiw
- h33vd6YzC6aYzE9Lzr0i7q6x7sZB28yiDDfR3+PrCq2RIzmjqdP31FJ2YoVSc/2XhyGxElSOy
- DVkiTXXGh6MnlQdwIzY9bAW/euV+5+HTntTasnQYRXJt3F1dZvYo6OL52f1uYv5hd2H1/dYJZ
- cuB0PiDrILr9xVWkLv8gn6sqnKNJBE/4ZqY7g1kuy917l3mYp5+qJCEpwRnGwrCEfsxGXANfu
- /44EgLn2h/a7BNFvAPCPalfHYOePpNvlxT9Pr+s0r7f1z6Gov0lt3XsEMhd51Upq6QUYhaWVA
- sKTPL9O+AeU+S5RQ616xIQYY7432R3kxY0ij4M9EXEqzk0Ykk105Rz2egIw0rCS7ynvXUX8+5
- aVtDS+5wx/F6Cmnd195zSl+C6rsRdUwmHbg2VvHD6M4bvNxMy6+S4g1lO42rzQzrtsqr+wW3u
- BJXdIFs+GT2D+mj5umJDsaNgTzGtg56KcsZoO4Iawsyyfj5h7cd1y3rj2bBfzIZ5XfQ/8f/ul
- LPCPOSijANkcCMbBGJFf94gsP1MQZbiut+cZgMOJgPOSFAhHaCdaV+E4qSzfKjYxZcCz9XGT3
- 45DUMGEPwK8gFxFJrZVN+E3IAI9UEBaduh622pp7gLyEZ/OuiTmrUNYjRg69uYsPMArNKaqJX
- ABIc4VohSenhjFCqDK+a2mF+0ybbQngFANwMw6E98GVGbR9OwXlrCd/Z6yhbJ1Fp15dX57BbD
- Hx2S6OwlK40qgw2ZMFC0425XPtf/0KpM+NIUNEfncRBPBbPmnTOGup4Cm696LAua9TmNVWk5e
- 31m2zOfXKSCg3rjw/jrfv7B3ZsrGYFygABQ69jydcSedMAylVobxlrmb9IdYEq1CsEU7jyBsu
- T0NCnlrNRYemm0QUB7ZzAGpv+BfibhT8+RP6S1KMv7tre6H4FWi7U3Mz4zHXkW8lqgkDYHgJJ
- LT9u/ngiJaUvgMDYZYxiBt5kF3DljxQBLWwKtsg9Kl9MeepqLlB/BTPm0Lo0Yx+D4yOSi+4zt
- DNiJurEe18Q7aqyrpIQp9AV3/oz4UUJECbiuth1IWPGgXmOcUkwaTXUgjZfs=
+X-Provags-ID: V03:K1:loyCPxsfzWoqf+qeFk90w0Ww11wyTtaiFo+ZfOGHL7QKqfU4I6w
+ 07hso5u36Ry9eHbooG7WVtdaO1nRzamWqCPrkGPk/44a1rXXzT7oxY/X30E6+0LmsMls2VE
+ GLFUPA+Cx9XLnXMgleZmMznrAFTgatL3xMtnHf8RUsiI4Eyve/dQJ4c1fNmfMNslmMsVbUP
+ a8TuYRdQ/LePDcOZr0d0Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MJdDjYabPdk=:yYCkwhxQcDGRLNgxOHKwcZ
+ NR4AwHt7/2QBRSQBrp8AGEzbkDrKacqRYqqp7ImM7Hs41a/QnGwahKhF+EFW4uFIgjbQfYAPJ
+ jJHHas/omGtRSWmUFa9a4qhPWxCcoO1ujxaa6sr8UpbDUUeM2sMPhLz7Wc7cTJWwGzsEZiX5D
+ ULvlZdjLBVc2jaqgSzNVyN4btgyECWnG0VkjmjVlYkkxVcDdx7MO94ySGaB1hvJ4zmBmwZQwo
+ u2ryr64/G/YUMudbcEqdgWLbiklc4OxLXk0WOyaEF9u1ikxRIZlnRnZZfoGd3hnbLsYNm5kBx
+ 5CxC/nQjtlDKLawaoSD80XiMGJGWBJStDOqIDablmvKoH9T8h5IAMvdBGoc+EYDyh5YOXJeMH
+ RruC6LpreDEWf9fx25W0q2IWk+DXwTkyBScIRWLBSnrNqHWWAgdpSO8tivJE6SSIjrKn1ESem
+ r0wZ1KKOaCDVY5XJJTsLQfB0iyzv/kaoCNcTnc1P1tPIb6qebpp+HplxwfFaJQFBrcJToZy2E
+ nPszPlmxKDwCupXOWFQhFtzs+5hsvByP6W6loG6Kj97KYeOJ7hGyFu1pWkdos7Mb15LoGemx1
+ hB1UIcIJVq9XSBNribd3gzXADrOzeihbN1G6ii9zcnpjx538Vs58XzGt2R7QiESve+IPbsflP
+ SUP+AuBV+6cRAn/e/8IEmfQ9s9chRaYkSbJFndBbWMDpN0dCulCrUxh7KxNRBhdUVwB6fhpkz
+ xomONu8Y49AtjNlkM9rIr7wHbNvrQIc7RGdKgM6GPAZn/4KkpxUmr/QirpWJMeLukLKlVdqkq
+ uIOEbjEWajRePy+fVTKE1chaWVmKIkKfr1vmdLQimTnQUyZmrYlkOo9ae7cUP7o1D7fIYfgEI
+ 7hfKzrW0p2r8g8LthwiMwBDfY1ynUwbXpSf80Ts0ONEMa7yGeNpdm+QE0dnJ8eaWB4Y1D9x86
+ W25DWgaxafS5j90/2pebra1R3SDRLaL4cCzH642wn6Dp30kevq+P+Yn7w8dmUZH6zLx9f1HCG
+ BT/JJ55wuEuYiAqU/fNLQp/5KCnRJ89aawuvormSFFUgDx9YvaxTuxoVl0RWIf+QnuEjPRcQR
+ vE/2Wl5cKCu7UlXNNzCWlC87ZywTP/BDiSege+I2ZN/y3htaAKVYshJf4FiLjc1LlYL807vqV
+ kKKkl3XvOgZjJopwZlzFPP63CRGorTS0Isu8OPRKkGMXcmWh5KXnMW/p3jWZT2015I15BPn10
+ 9/v7cLfq4//5OOfF48TuUpZX1q5BKBzM4jwa8IZzkPb3XEWxDez72LGbAivM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Tue, 12 Nov 2019 15:00:29 +0100
+Hello,
 
-This script contained two transformation rules for the semantic patch lang=
-uage
-where a condition check should be removed before free() calls.
-It should not matter if a corresponding expression begins with a not opera=
-tor
-(or not). Thus combine these rules by using a SmPL disjunction.
+I would like to comment implementation details from
+the commit 12878c83516e3b82f31a20f1b5431b7ff607a8db ("coccicheck: detect h=
+ashmap_entry.hash assignment").
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-=2D--
- contrib/coccinelle/free.cocci | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
-index 4490069df9..63e442d3ef 100644
-=2D-- a/contrib/coccinelle/free.cocci
-+++ b/contrib/coccinelle/free.cocci
-@@ -1,13 +1,7 @@
- @@
- expression E;
- @@
-=2D- if (E)
--  free(E);
--
--@@
--expression E;
--@@
-=2D- if (!E)
-+- if ( \( E \| !E \) )
-   free(E);
+1. Would you occasionally like to try a change specification out
+   like the following?
 
- @@
-=2D-
-2.24.0
+-HME.hash =3D
++hashmap_entry_init(&HME,
+ E
++)
+ ;
 
+
+2. How do you think about to use a code variant (for the semantic patch la=
+nguage)
+   which can work without a regular expression for the exclusion of a sing=
+le item?
+
+identifier f !=3D hashmap_entry_init;
+
+
+Regards,
+Markus
