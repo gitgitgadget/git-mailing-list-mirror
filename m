@@ -2,20 +2,20 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=unavailable
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21D5A1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 20:41:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 132CD1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 20:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726994AbfKLUk7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 15:40:59 -0500
-Received: from mout.web.de ([212.227.17.12]:46689 "EHLO mout.web.de"
+        id S1726979AbfKLUk6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 15:40:58 -0500
+Received: from mout.web.de ([212.227.17.11]:54021 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726912AbfKLUk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726923AbfKLUk6 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 12 Nov 2019 15:40:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
         s=dbaedf251592; t=1573591255;
@@ -25,8 +25,8 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
          Ss4KSrYgjeF+zhxzCb7EXYOmWFlSMHTxdLm6EY+93EoNvpjfstPBlr9vREehPB6wr+
          2ydujr633mEc+p8tAIDR7mKK4hwEgpZmypWFxFr0=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfRvZ-1i6IiE1oCH-00p8JR; Tue, 12
+Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LhNjo-1i8mcJ1jKi-00mZDv; Tue, 12
  Nov 2019 21:40:55 +0100
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <stefanbeller@gmail.com>
@@ -76,7 +76,7 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <1b2b8e8f-9736-5551-65f9-ad5857bce73d@web.de>
+Message-ID: <22b15b44-2679-6e10-c2f1-458e09a707f3@web.de>
 Date:   Tue, 12 Nov 2019 21:40:54 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
@@ -84,29 +84,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:34OybrJIu+3OV7DbVmCwZHDbo1sXu5bgoFn67RGLTM70XHZEDIr
- Se5fiOpMjaSncMiDYwbQMyHg5uv7FC5GrFAMCEeLDTAKKvL7I685c6bUU2mi+p5vyNgT9UQ
- MBeoFFK9tPYvCxxu68HFQidlu525u2LDFd550kiyGqvXZn6+RJ2m2QBWPyhgcjtlnK1P1t0
- LlinVTDPs59gNMZiu+swg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4WhAMRaNrNs=:PlNr5mETmjWG/6h8uQMfP/
- lqVebAi4oFlzYTpw7vilwmF/D1xNIuudmSFZCm6Z2bpWY05svSNfANT77BwfNk72fZyAGYGEb
- ZdyHglT+BKfSd/rVij9RJ33GyLqKiz9addge4D0Y8K6YGEWzqmhEwWuf3l0CtN/W7VjEIPma5
- brv9k+mijbD8XysK17rIs7NGJuDaHVcTt3V4q2OvS5Yytxiahlpoe1IPr6rYFu4c15I+BRsU7
- uYqmjkMLS0KXHaHbqgNrbE1wYxTERTSvVwz6Pfuc0gM528cEG3mZ12MrYGYceKLSSRwtRJWQr
- ODFb6fhSDLcuCnmQKi+mviiCJpsBHYbUmbylpL41YPP4BQ3NQ8PBMF4zCQwoEYR+ACOnnLTiK
- Kdr6JZLXP0CKsbmQ94suVC19VvZNkh5CDSTzA6v5WDe5MreKtodptkM1vCzaBe7kEbyZX50zz
- 4sj2DG/FrOA9rLJpEFpwtfIufoLamqb77DanyeLtg/oteKbQOVqzaXWelwWu+bAbuLEsH48Z0
- U04FKI+Pkgunl6KH2sGFCyUb9sMugXQEJ9vbyKJNXt3cv2zuKAGwX7ZR7MUiX9Z0h1smszjGd
- k/rgnwLwTydrS6PaBaBMPIN9aORq3FIZqf6Xjx+eDOIOQ3djuD8Amz2Vk6MnHDfJMVhRD2sI5
- HO7zuQmGaHMO4+Ectv7A/fyQ/sAkWO4ijnv773Mufj/mOx0t2ySLH0sKBMNEYzI6bkyn6mwhn
- y5T8uQY6dZFjPxA9Pcxi7otxkZW9jQ6rvNfoK0AXwBJHm/7Kc0seg0KFKn44qOewJ4c5G9edT
- FSLisQRf1udLbIRxYhYEiUUom33LlA4DrkcH1cdb7cAHWhptaazINXKeCTdrHb3bNYoFyat/8
- qJAiakIdpmM122CPFRtz5oDhg5boQaGOOJQILjtF3rWMGMDM+nwLnd0JsTSZHc1M9SJGCok0T
- /86OwUWGFmpWGBJ0mwPuJWTreSJy8tw1QmVOli+OLtIeDb/s4LINjSxnmsZb5OIBC7Ek3zNcQ
- eYrPcV3O10C2HFUrxLu7SqiohhWCxSWotHEF+rO3BkBBDjN6V0HKnRYAOBNXxxqk6AOAMVMg0
- 3Ffr6GRyE1L4ywpSw9VZpL5ncBs/FdL/rKJ822budE2nZqbLc+1HaWspS7dXlPJ/4gOk0QXPE
- ATs1LaOmyAiwkmR+7r9mIZxLVsjYf0+3Bqb/bYSvig+nL3R4nXgRQfb+dq3kreqldGT9vhBu8
- hRE1HhG73Y28+E6G1dV26GzWI4kfV7rkyvQKvsVZUh16Cjy3AuOd4w6GfS7w=
+X-Provags-ID: V03:K1:FtNP+PSosu4jD0ZREgjiXZErk3/RMgWAktWr2ndMs93at79iauV
+ kmCXkENoyJ36Rf7R6T6744L1vtEu+niW/0W7T9aqHZKtOFwKGmrSD5yP2jZr9fLgiwFM0h4
+ 4e+37HTrKv/0yRguNy6mLH9FbsQknvl4UGu7e1HqEjweSfP9PUYxg5wOebSuPswxeWPOG0b
+ RlIQs2cUXNPJhgI4onzfQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZnVGWoJWIS0=:NkwfHvTB+coNRi9i61vdE+
+ mmsRy/c1n++UB/VPeGXOkEupx4+EBEKkQl41MI2gB6qUgS0fdqk+X+FV2eLhQAbMCTD8CsftN
+ zU4ocuTOpnZkvDdRcMR28tPox3gExu6YfVDmQNYg2SFCKvQUU9XPcu7ma0IsHL+xZtl9FiliA
+ 7sRNd2Z88r8f/VbdSYO0NWl/zA7QXVou1pB2Xqn/2i26xTF0YgDsplI+1R43IpecQRmgSC9v4
+ 1euRKS+gbp+qbMHkn503Pol8fGkIspcHmu2Yjf18XZQScxgDxKHacahr7S/k4LHyks/aL6s8Z
+ vxWEAzTdo1Zj5LPmeO3A+9QRvamNgPLbuJD0zW8wnQtu8BwSxiOaHyKKDMSWTX5siV54avrD7
+ fcHxMdq2lqNJTzdcEClPpJktteenHqRHsTY0CjEOJMwb18UAY9zRjpLZH3fBrTP4mwXULxUn0
+ oh1TTpcEPIVwslavWhZIEM9gMhgpd1ApOBDiZTvWzOSS+ENFG9OVFr5eb8swRVjk3eCVDdRAm
+ 1cebp9vmSht6zoyZ1F7EuNtamkaMSWJGSP2X5DbVXMoiofCtv4+85GKIuUdN/YkK/aUug6062
+ kxQolzUk1n0KHSK0oc/j3pPnAo/uATXubunRUX/BHocEjgC0DbO7fuyHxQYKlwixQbT73n0CG
+ QtD0LvJ0jyBpw1mo2fJu4AX44FzT7oOxk1ZfowwF6nH/9OVMl+3XBHaHy/Ftj+kPs8zw5gs/m
+ CoZKjfzlLOn0oDvcAGgM4SChb3nwvDH1/DFQ44cw6zgwSbAysQh39Ceu0VTDuCutpnm0UVvpc
+ wXmiwAxScI8xT33vx/t7zXrV2d1+lTQ92M9Q1sKX/Ts6xu3fl5kcMQIWSFRoKGdtisKkumvgA
+ sSdJOooV3wbyju2Nx6qAQnMilBhoysruYVc9/K2qY/mf/EQ9KLwbxiX8pE376H+FyQPhe61Py
+ qOFYXb/QAuPdQ23J00Aj9NTOSLBd2iE3Kk39FDxyiJ6tclRWYH0EvCw/5nHMkBkyKRAC4yU3d
+ x/Oaf9TjWJ3ofvmXd1WB7YKeroRfk/9p+BAb2y1BBNoN0lUMi4cRs+KgbyAcvlHOY+j3MAbli
+ 0zTV6pqAQsNu3x5Vp85wxbUdb+cREMtzgRumdYyLtEdCg+0k8HgdBWRsrrg4sc1yeAohCa2hv
+ plcBnsUCZ/vNyBi14kqArkti9HnKtdyZDwe/vyFH4WayhoR2O0UEkAp03p+G4o7HN850fP2tW
+ XpuU207VD60Pqt4fgBP7IkmNiKz7AbBBuachJfq+B9V2sl6FmM4Z91CJeS8A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
