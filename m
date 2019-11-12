@@ -2,161 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB93F1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 10:54:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36BE1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 10:58:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725944AbfKLKyF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 05:54:05 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54183 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfKLKyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 05:54:05 -0500
-Received: by mail-wm1-f65.google.com with SMTP id u18so2588423wmc.3
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 02:54:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=x48zE/BqdG5pODqf823UdmABIk6Yap/KUg3Qji5c4mw=;
-        b=j71rrQkxgCJigWELCGHuwPWbSYij6Oqe6PKkhMF1P1LtftqgsfWfGDVLLB0MYXUJZa
-         UN5x+07O17L7795ffNQ9TeWro7ifg6QEUWN/z2+epHzNczqso2FXOUKiHFqHzoN7gC+g
-         XqClrjGj0w6rROUr/IasLYCEBdP5U+s+yKAB1VkDOYLiV20i/sZePpbZMxK0TOmRe0CX
-         rayB8s7UgHp9pPlWZXU/a4kR59U4Q+Hau1i1+R++1VxoX5WXse2615NyF2xJKOUC5XmT
-         3DR5mzliOtYgZZG6u/hX3PVvgUcp+g7GVafZ4T4TKYCDu7EGWDj3Y3vsO71ZkN2z2Kvz
-         4YQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=x48zE/BqdG5pODqf823UdmABIk6Yap/KUg3Qji5c4mw=;
-        b=cH1MuIH8JG0UdFgbbISLhi4hCw8hYSLSBSmlkuIy8OdI0/1kcWMGk3CLm7KWSjwCaC
-         DRcAkvU43yno51C4nB6wvKHN4gchHEEtlmRGMYggfML2HqIXMZckHJzUvFsxExLfLk7W
-         XB99KUvSB/RYMpQm7ltso5E7/KsNtOvGsYxV2htzKhv3mjHH1C4FGfB3abqkbIhusIZW
-         6iuUESRCgVNbcLVAZETvEp3diSMOydHNFnbWCC/5inHFAiTmhR2F6mwSX1pgLGdvd+v4
-         c9FTVTLNZuNL0cujeaREbxRT57qVh8bSMPkuRaNd7pxUPYmuOjFWXVyGGAfEk61S5jKE
-         Bg8w==
-X-Gm-Message-State: APjAAAU/OdvWmIAAzfN+vIhjFHHuvS8WCNj+KFLm+kCPw+kZBFIQJsUt
-        KjM1xbvPKCLt4U8s4x2WM94=
-X-Google-Smtp-Source: APXvYqwHpeSarnedS3Oa3TIJIjLelhau1EWY3E3Qx7HYllO3vTCHTnCzuTaYWU9UJgRFBrnwU+aTmw==
-X-Received: by 2002:a1c:2155:: with SMTP id h82mr3220948wmh.94.1573556043428;
-        Tue, 12 Nov 2019 02:54:03 -0800 (PST)
-Received: from szeder.dev (x4d0c65ae.dyn.telefonica.de. [77.12.101.174])
-        by smtp.gmail.com with ESMTPSA id u18sm11556592wrp.14.2019.11.12.02.54.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 12 Nov 2019 02:54:02 -0800 (PST)
-Date:   Tue, 12 Nov 2019 11:54:00 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S1725947AbfKLK6A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 05:58:00 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45176 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725887AbfKLK6A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 05:58:00 -0500
+Received: (qmail 31287 invoked by uid 109); 12 Nov 2019 10:58:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 12 Nov 2019 10:58:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13596 invoked by uid 111); 12 Nov 2019 11:01:30 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 12 Nov 2019 06:01:30 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 12 Nov 2019 05:57:59 -0500
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        James Coglan <jcoglan@gmail.com>
-Subject: Re: [PATCH] t4215: don't put git commands upstream of pipe
-Message-ID: <20191112105400.GM4348@szeder.dev>
-References: <20191018152121.GE29845@szeder.dev>
- <8e950ddfba3fa0f6d0551a153228548da6af6117.1573520653.git.liu.denton@gmail.com>
- <xmqqzhh1eg57.fsf@gitster-ct.c.googlers.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 2/2] hex: drop sha1_to_hex()
+Message-ID: <20191112105759.GA9714@sigill.intra.peff.net>
+References: <20191111090332.GA2275@sigill.intra.peff.net>
+ <20191111090418.GB12545@sigill.intra.peff.net>
+ <20191111141805.GK4348@szeder.dev>
+ <20191111142904.GB1934@sigill.intra.peff.net>
+ <xmqqa791hgu1.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzhh1eg57.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <xmqqa791hgu1.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 03:57:08PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > A little late to the party but since this cleanup hasn't been done yet,
-> > let's do it now. We can apply this patch to the tip of
-> > 'jc/log-graph-simplify'.
-> > ...
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> 
-> Obviously good but I wonder if
-> 
-> 	show_graph () {
-> 		git log --graph --pretty=tformat:%s >actual.raw &&
-> 		sed "s/ *$//" actual.raw &&
-> 		rm actual.raw
-> 	}
-> 
-> would help to make it even more readable without too much repetition.
+On Tue, Nov 12, 2019 at 01:13:58PM +0900, Junio C Hamano wrote:
 
-I think it would indeed, but then let's go one step further, and add
-that 'test_cmp expect actual' to the function, too, and call it
-'check_graph'.
-
-> Will queue; thanks.
+> >> We can't use oid_to_hex() because we don't have a 'struct object_id'
+> >> in the first place, as sha1dc only ever deals with 20 unsigned chars.
+> >
+> > Ah, you're right. I admit I am still getting up to speed on all of the
+> > new hash-agnostic versions of the various functions.
 > 
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -68,7 +69,8 @@ test_expect_success 'log --graph with left-skewed merge' '
-> >  	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
-> >  	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
-> >  
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -99,7 +101,8 @@ test_expect_success 'log --graph with nested left-skewed merge' '
-> >  	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
-> >  	git checkout @^^ && git merge --no-ff 1_p -m 1_H &&
-> >  
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -139,7 +142,8 @@ test_expect_success 'log --graph with nested left-skewed merge following normal
-> >  	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
-> >  	git checkout 2_p && git merge --no-ff 2_s -m 2_K &&
-> >  
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -175,7 +179,8 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
-> >  	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
-> >  	git checkout @^^ && git merge --no-ff 3_p -m 3_J &&
-> >  
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -210,7 +215,8 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
-> >  	git merge --no-ff 4_p -m 4_G &&
-> >  	git checkout @^^ && git merge --no-ff 4_s -m 4_H &&
-> >  
-> > -	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --date-order --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > @@ -250,7 +256,8 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
-> >  	git checkout 5_r &&
-> >  	git merge --no-ff 5_s -m 5_H &&
-> >  
-> > -	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
-> > +	git log --graph --pretty=tformat:%s >actual.raw &&
-> > +	sed "s/ *$//" actual.raw >actual &&
-> >  	test_cmp expect actual
-> >  '
+> Thanks.  I've amended this one and the range diff since the pushout
+> yesterday looks like this.
+
+Thanks. This first hunk is what I would have done:
+
+> 1:  8a030f1796 ! 1:  02d21d4117 hex: drop sha1_to_hex()
+>     @@ Commit message
+>          hex: drop sha1_to_hex()
+>      
+>          There's only a single caller left of sha1_to_hex(), since everybody now
+>     -    uses oid_to_hex() instead. This case is in the sha1dc wrapper, where we
+>     +    uses hash_to_hex() instead. This case is in the sha1dc wrapper, where we
+>          print a hex sha1 when we find a collision. This one will always be sha1,
+>     -    regardless of the current hash algorithm, so we can't use oid_to_hex()
+>     +    regardless of the current hash algorithm, so we can't use hash_to_hex()
+>          here. In practice we'd probably not be running sha1 at all if it isn't
+>          the current algorithm, but it's possible we might still occasionally
+>          need to compute a sha1 in a post-sha256 world.
+
+This second one is OK, but not entirely necessary:
+
+>     @@ cache.h: int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
+>        * buffers, making it safe to make multiple calls for a single statement, like:
+>        *
+>      - *   printf("%s -> %s", sha1_to_hex(one), sha1_to_hex(two));
+>     -+ *   printf("%s -> %s", oid_to_hex(one), oid_to_hex(two));
+>     ++ *   printf("%s -> %s", hash_to_hex(one), hash_to_hex(two));
+>        */
+>       char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash, const struct git_hash_algo *);
+>       char *oid_to_hex_r(char *out, const struct object_id *oid);
+
+This one-liner leaves the types of "one" and "two" unspecified. :) So
+it's not wrong to use hash_to_hex(), but maybe it's better to be pushing
+people towards oid_to_hex() as their first choice? It probably doesn't
+matter too much either way.
+
+-Peff
