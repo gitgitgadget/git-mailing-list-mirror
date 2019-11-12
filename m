@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82EAF1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 23:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED1EC1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 23:07:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727140AbfKLXHu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 18:07:50 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44545 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727049AbfKLXHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 18:07:50 -0500
-Received: by mail-pl1-f195.google.com with SMTP id az9so159674plb.11
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 15:07:48 -0800 (PST)
+        id S1727148AbfKLXHx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 18:07:53 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:44414 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727049AbfKLXHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 18:07:51 -0500
+Received: by mail-pf1-f196.google.com with SMTP id q26so151300pfn.11
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 15:07:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=+RhjpUw7YtWyRSKhSHpG73LE/lkAeI106BhHT7QxyN8=;
-        b=VKOdG7EOmfdkHQpRTtLDbQYsBz//yj0cuNJMi0Cala9o3fOTnD1sLCQqxa5OJGNapN
-         /70m2HdneLO6OCFP+MaGERqBOi3DTHdXU7C15yXvHlxbmUCFiHY7vIlDsMP7/PoYDmGH
-         YNqVd7JXwgeM+amjI0wN6GKrHMcbep+bp89z7i6TmWCUg200Qs/9Ix8bpJ3D86erUXyZ
-         V0Evs+I9HksWlaDYILTj3IUx/u4F2v79ZcIxfgW1AGqUl1bjzAlUcJvzg8ycrarlsnEC
-         8mjjlDGeGhXnt9/DFSd2IUxt+DrXlEM1FYC6ASAURGY7W2gYN73OuE9hFGk80YCiKixN
-         IW1A==
+        bh=uCJDZfL0o4fiYRT9cIjyvvZpPBDXEPSkUHe1nBg2vTU=;
+        b=uI5WLFoI0bNHu3rOACPBVbxj2NHFAKLM+enR6AIW2FsmoQlRC0T78vkLGlTP317JQ7
+         CiIYkbQ8xZ/GHXKDKATydKmzPLzYdSR64Q+MSV5YNx4KVP0CMsq7WCebUSWMbWNlftgp
+         WOZQoZluhYT5bzlPBTA0xxPdJA/JSAKMIfPV8n3sz+u8A6fGt+ho9B6jJjg5j8+xaYf0
+         D2m10L9mC5ZpYDzwCTf3ZyNMtGPatp1yFFTE+N7jxe0ghMP0iDyCb075L7bvoU0cMbqU
+         RXZVTklbwSm0val9j55lHqhZ3h37q1QBZhRbKm2Plqgag6VpZF0OhmmFj6yVRNVGAnlp
+         Gevg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+RhjpUw7YtWyRSKhSHpG73LE/lkAeI106BhHT7QxyN8=;
-        b=ITP6BsmTaubYoQFwjz7XJq5YdzYSYidYDV+SaRBdkm3cmQAsS//gpBlzaQz/NvPW5V
-         1GGXe5clTk19HamSUQKnunB+/i/b6zxyMR0tRlfXaHTnpJwnoit2VelYUNMHny7gwR1n
-         PRT5mHtBaUEjwEqELEoTtvmXcWqk44A+wJvIbfD5tnzRBdLfvJC2GwI9hfk8yf8bFkoT
-         r/neQbaHvt9q5Xg0wfRyubO7zEqNWcz8TljWSxP/uAcaPtwKLE56jHvUDJj9vkiuAFgL
-         O8lnpwA0V0MzUMi9Z1kPMGHY+KOutDr+ereUje5kQpiSpfC30t9quxwOiG3OmWc3fMpZ
-         uuqg==
-X-Gm-Message-State: APjAAAVRrsKZwz3wfl/LRAHlrSIfgulPDirWBkuoCGWPcAlmrwrHO3TL
-        d0pfQ+oKwv8duFqi8ztex8sZw0aZ
-X-Google-Smtp-Source: APXvYqwNeh4veYXmKgnVKkXjPGBE2PT5ThOkNrLDsvFiEE8Oo3/W0+uySUnSmYtwB8MTwSuQqJpJQQ==
-X-Received: by 2002:a17:902:9343:: with SMTP id g3mr340855plp.278.1573600067737;
-        Tue, 12 Nov 2019 15:07:47 -0800 (PST)
+        bh=uCJDZfL0o4fiYRT9cIjyvvZpPBDXEPSkUHe1nBg2vTU=;
+        b=JPBUG0abZZR5QvtqEkVL8Vl1ysl6M+scd+kmrqNdnKns73qTfzQGk3AoCRUOrM00or
+         2I09DjnyXEloFR96IPWcjtO8E600kEzUaft9zc89hA6dmBhnnLVdrgGoIiIGv7m++TNq
+         IOL5I5QlrqLgmfuIgtBAxcv26J39frTiQxxFEdWW3AQs7wzLWpM1ed0Jjn7LKgwTQR5Z
+         RF71AHW3Cjf+041zbdWQ7ldV6o6PaLLlN/1tFA/qoOwYUIhvuPZgRVzAZarqjUKLG3ix
+         A2nxcd8S+vP8WF3hSsHkGRKZQNMvTbANKvvvbmu+Q31W8ZQ/F7pqdtanSfN8VYcoHW0v
+         mQTQ==
+X-Gm-Message-State: APjAAAW+XlVC2wJDXhfBF9UBI1jw9Irn87v9Eazlx5Sdg7KiVyOLdPa5
+        wHrCbqz1mufisn9hGI1CYP8/qzPQ
+X-Google-Smtp-Source: APXvYqwcKh+QwLBmRGU5ZJirrna+CFaoakHcMlUaYD5kstKeajSUM1PWiAxt4FIHcOntwjEnvwlkcg==
+X-Received: by 2002:a17:90a:22a6:: with SMTP id s35mr395792pjc.3.1573600070120;
+        Tue, 12 Nov 2019 15:07:50 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id j11sm69377pgk.3.2019.11.12.15.07.46
+        by smtp.gmail.com with ESMTPSA id r5sm16240pfh.179.2019.11.12.15.07.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 15:07:47 -0800 (PST)
-Date:   Tue, 12 Nov 2019 15:07:45 -0800
+        Tue, 12 Nov 2019 15:07:49 -0800 (PST)
+Date:   Tue, 12 Nov 2019 15:07:48 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 01/14] t: teach test_cmp_rev to accept ! for not-equals
-Message-ID: <0532847787dfd48fbe4b41a4a7d2783748f3bd7f.1573595985.git.liu.denton@gmail.com>
+Subject: [PATCH v6 02/14] t5520: improve test style
+Message-ID: <aa3f2e33958be1ab684b3a185e5c5467d2f978f0.1573595985.git.liu.denton@gmail.com>
 References: <cover.1573517561.git.liu.denton@gmail.com>
  <cover.1573595985.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,195 +71,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the case where we are using test_cmp_rev() to report not-equals, we
-write `! test_cmp_rev`. However, since test_cmp_rev() contains
-
-	r1=$(git rev-parse --verify "$1") &&
-	r2=$(git rev-parse --verify "$2") &&
-
-`! test_cmp_rev` will succeed if any of the rev-parses fail. This
-behavior is not desired. We want the rev-parses to _always_ be
-successful.
-
-Rewrite test_cmp_rev() to optionally accept "!" as the first argument to
-do a not-equals comparison. Rewrite `! test_cmp_rev` to `test_cmp_rev !`
-in all tests to take advantage of this new functionality.
-
-Also, rewrite the rev-parse logic to end with a `|| return 1` instead of
-&&-chaining into the rev-comparison logic. This makes it obvious to
-future readers that we explicitly intend on returning early if either of
-the rev-parses fail.
+Improve the test style by removing leading and trailing empty lines
+within test cases. Also, reformat multi-line subshells to conform to the
+existing style.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t2400-worktree-add.sh             |  4 ++--
- t/t3400-rebase.sh                   |  2 +-
- t/t3421-rebase-topology-linear.sh   |  6 +++---
- t/t3430-rebase-merges.sh            |  2 +-
- t/t3432-rebase-fast-forward.sh      |  2 +-
- t/t3501-revert-cherry-pick.sh       |  2 +-
- t/t3508-cherry-pick-many-commits.sh |  2 +-
- t/test-lib-functions.sh             | 20 ++++++++++++++++----
- 8 files changed, 26 insertions(+), 14 deletions(-)
+ t/t5520-pull.sh | 88 +++++++++++++++++++++++++------------------------
+ 1 file changed, 45 insertions(+), 43 deletions(-)
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index e819ba741e..52d476979b 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -438,7 +438,7 @@ test_expect_success 'git worktree add does not match remote' '
- 		cd foo &&
- 		test_must_fail git config "branch.foo.remote" &&
- 		test_must_fail git config "branch.foo.merge" &&
--		! test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
-+		test_cmp_rev ! refs/remotes/repo_a/foo refs/heads/foo
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index cf4cc32fd0..51d6ce8aec 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -538,7 +538,6 @@ test_expect_success '--rebase overrides pull.rebase=preserve and flattens keep-m
+ '
+ 
+ test_expect_success '--rebase with rebased upstream' '
+-
+ 	git remote add -f me . &&
+ 	git checkout copy &&
+ 	git tag copy-orig &&
+@@ -552,7 +551,6 @@ test_expect_success '--rebase with rebased upstream' '
+ 	git pull --rebase me copy &&
+ 	test "conflicting modification" = "$(cat file)" &&
+ 	test file = "$(cat file2)"
+-
+ '
+ 
+ test_expect_success '--rebase -f with rebased upstream' '
+@@ -564,14 +562,12 @@ test_expect_success '--rebase -f with rebased upstream' '
+ '
+ 
+ test_expect_success '--rebase with rebased default upstream' '
+-
+ 	git update-ref refs/remotes/me/copy copy-orig &&
+ 	git checkout --track -b to-rebase2 me/copy &&
+ 	git reset --hard to-rebase-orig &&
+ 	git pull --rebase &&
+ 	test "conflicting modification" = "$(cat file)" &&
+ 	test file = "$(cat file2)"
+-
+ '
+ 
+ test_expect_success 'rebased upstream + fetch + pull --rebase' '
+@@ -588,7 +584,6 @@ test_expect_success 'rebased upstream + fetch + pull --rebase' '
+ '
+ 
+ test_expect_success 'pull --rebase dies early with dirty working directory' '
+-
+ 	git checkout to-rebase &&
+ 	git update-ref refs/remotes/me/copy copy^ &&
+ 	COPY="$(git rev-parse --verify me/copy)" &&
+@@ -603,16 +598,16 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
+ 	git checkout HEAD -- file &&
+ 	git pull &&
+ 	test "$COPY" != "$(git rev-parse --verify me/copy)"
+-
+ '
+ 
+ test_expect_success 'pull --rebase works on branch yet to be born' '
+ 	git rev-parse master >expect &&
+ 	mkdir empty_repo &&
+-	(cd empty_repo &&
+-	 git init &&
+-	 git pull --rebase .. master &&
+-	 git rev-parse HEAD >../actual
++	(
++		cd empty_repo &&
++		git init &&
++		git pull --rebase .. master &&
++		git rev-parse HEAD >../actual
+ 	) &&
+ 	test_cmp expect actual
+ '
+@@ -646,58 +641,65 @@ test_expect_success 'pull --rebase fails on corrupt HEAD' '
+ 
+ test_expect_success 'setup for detecting upstreamed changes' '
+ 	mkdir src &&
+-	(cd src &&
+-	 git init &&
+-	 printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
+-	 git add stuff &&
+-	 git commit -m "Initial revision"
++	(
++		cd src &&
++		git init &&
++		printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
++		git add stuff &&
++		git commit -m "Initial revision"
+ 	) &&
+ 	git clone src dst &&
+-	(cd src &&
+-	 modify s/5/43/ stuff &&
+-	 git commit -a -m "5->43" &&
+-	 modify s/6/42/ stuff &&
+-	 git commit -a -m "Make it bigger"
++	(
++		cd src &&
++		modify s/5/43/ stuff &&
++		git commit -a -m "5->43" &&
++		modify s/6/42/ stuff &&
++		git commit -a -m "Make it bigger"
+ 	) &&
+-	(cd dst &&
+-	 modify s/5/43/ stuff &&
+-	 git commit -a -m "Independent discovery of 5->43"
++	(
++		cd dst &&
++		modify s/5/43/ stuff &&
++		git commit -a -m "Independent discovery of 5->43"
  	)
  '
  
-@@ -483,7 +483,7 @@ test_expect_success 'git worktree --no-guess-remote option overrides config' '
- 		cd foo &&
- 		test_must_fail git config "branch.foo.remote" &&
- 		test_must_fail git config "branch.foo.merge" &&
--		! test_cmp_rev refs/remotes/repo_a/foo refs/heads/foo
-+		test_cmp_rev ! refs/remotes/repo_a/foo refs/heads/foo
+ test_expect_success 'git pull --rebase detects upstreamed changes' '
+-	(cd dst &&
+-	 git pull --rebase &&
+-	 test -z "$(git ls-files -u)"
++	(
++		cd dst &&
++		git pull --rebase &&
++		test -z "$(git ls-files -u)"
  	)
  '
  
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index ab18ac5f28..f267f6cd54 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -64,7 +64,7 @@ test_expect_success 'rebase sets ORIG_HEAD to pre-rebase state' '
- 	pre="$(git rev-parse --verify HEAD)" &&
- 	git rebase master &&
- 	test_cmp_rev "$pre" ORIG_HEAD &&
--	! test_cmp_rev "$pre" HEAD
-+	test_cmp_rev ! "$pre" HEAD
- '
- 
- test_expect_success 'rebase, with <onto> and <upstream> specified as :/quuxery' '
-diff --git a/t/t3421-rebase-topology-linear.sh b/t/t3421-rebase-topology-linear.sh
-index b847064f91..325072b0a3 100755
---- a/t/t3421-rebase-topology-linear.sh
-+++ b/t/t3421-rebase-topology-linear.sh
-@@ -61,7 +61,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f rewrites even if upstream is an ancestor" "
- 		reset_rebase &&
- 		git rebase $* -f b e &&
--		! test_cmp_rev e HEAD &&
-+		test_cmp_rev ! e HEAD &&
- 		test_cmp_rev b HEAD~2 &&
- 		test_linear_range 'd e' b..
- 	"
-@@ -78,7 +78,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f rewrites even if remote upstream is an ancestor" "
- 		reset_rebase &&
- 		git rebase $* -f branch-b branch-e &&
--		! test_cmp_rev branch-e origin/branch-e &&
-+		test_cmp_rev ! branch-e origin/branch-e &&
- 		test_cmp_rev branch-b HEAD~2 &&
- 		test_linear_range 'd e' branch-b..
- 	"
-@@ -368,7 +368,7 @@ test_run_rebase () {
- 	test_expect_$result "rebase $* -f --root on linear history causes re-write" "
- 		reset_rebase &&
- 		git rebase $* -f --root c &&
--		! test_cmp_rev a HEAD~2 &&
-+		test_cmp_rev ! a HEAD~2 &&
- 		test_linear_range 'a b c' HEAD
- 	"
- }
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 9efcf4808a..abbdc26b1b 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -346,7 +346,7 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
- 	git merge --allow-unrelated-histories khnum &&
- 	test_tick &&
- 	git rebase -f -r HEAD^ &&
--	! test_cmp_rev HEAD^2 khnum &&
-+	test_cmp_rev ! HEAD^2 khnum &&
- 	test_cmp_graph HEAD^.. <<-\EOF &&
- 	*   Merge branch '\''khnum'\'' into asherah
- 	|\
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 034ffc7e76..92f95b57da 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -64,7 +64,7 @@ test_rebase_same_head_ () {
- 			test_cmp_rev \$oldhead \$newhead
- 		elif test $cmp = diff
- 		then
--			! test_cmp_rev \$oldhead \$newhead
-+			test_cmp_rev ! \$oldhead \$newhead
- 		fi
- 	"
- }
-diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
-index d1c68af8c5..1c51a9131d 100755
---- a/t/t3501-revert-cherry-pick.sh
-+++ b/t/t3501-revert-cherry-pick.sh
-@@ -106,7 +106,7 @@ test_expect_success 'cherry-pick on unborn branch' '
- 	rm -rf * &&
- 	git cherry-pick initial &&
- 	git diff --quiet initial &&
--	! test_cmp_rev initial HEAD
-+	test_cmp_rev ! initial HEAD
- '
- 
- test_expect_success 'cherry-pick "-" to pick from previous branch' '
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index b457333e18..23070a7b73 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -5,7 +5,7 @@ test_description='test cherry-picking many commits'
- . ./test-lib.sh
- 
- check_head_differs_from() {
--	! test_cmp_rev HEAD "$1"
-+	test_cmp_rev ! HEAD "$1"
- }
- 
- check_head_equals() {
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b299ecc326..15f4c96777 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1012,19 +1012,31 @@ test_must_be_empty () {
- 	fi
- }
- 
--# Tests that its two parameters refer to the same revision
-+# Tests that its two parameters refer to the same revision, or if '!' is
-+# provided first, that its other two parameters refer to different
-+# revisions.
- test_cmp_rev () {
-+	local op wrong_result
-+	op='='
-+	wrong_result='different'
-+	if test $# -ge 1 && test "x$1" = 'x!'
-+	then
-+	    op='!='
-+	    wrong_result='the same'
-+	    shift
-+	fi
- 	if test $# != 2
- 	then
- 		error "bug in the test script: test_cmp_rev requires two revisions, but got $#"
- 	else
- 		local r1 r2
- 		r1=$(git rev-parse --verify "$1") &&
--		r2=$(git rev-parse --verify "$2") &&
--		if test "$r1" != "$r2"
-+		r2=$(git rev-parse --verify "$2") || return 1
+ test_expect_success 'setup for avoiding reapplying old patches' '
+-	(cd dst &&
+-	 test_might_fail git rebase --abort &&
+-	 git reset --hard origin/master
++	(
++		cd dst &&
++		test_might_fail git rebase --abort &&
++		git reset --hard origin/master
+ 	) &&
+ 	git clone --bare src src-replace.git &&
+ 	rm -rf src &&
+ 	mv src-replace.git src &&
+-	(cd dst &&
+-	 modify s/2/22/ stuff &&
+-	 git commit -a -m "Change 2" &&
+-	 modify s/3/33/ stuff &&
+-	 git commit -a -m "Change 3" &&
+-	 modify s/4/44/ stuff &&
+-	 git commit -a -m "Change 4" &&
+-	 git push &&
+-
+-	 modify s/44/55/ stuff &&
+-	 git commit --amend -a -m "Modified Change 4"
++	(
++		cd dst &&
++		modify s/2/22/ stuff &&
++		git commit -a -m "Change 2" &&
++		modify s/3/33/ stuff &&
++		git commit -a -m "Change 3" &&
++		modify s/4/44/ stuff &&
++		git commit -a -m "Change 4" &&
++		git push &&
 +
-+		if ! test "$r1" "$op" "$r2"
- 		then
- 			cat >&4 <<-EOF
--			error: two revisions point to different objects:
-+			error: two revisions point to $wrong_result objects:
- 			  '$1': $r1
- 			  '$2': $r2
- 			EOF
++		modify s/44/55/ stuff &&
++		git commit --amend -a -m "Modified Change 4"
+ 	)
+ '
+ 
+ test_expect_success 'git pull --rebase does not reapply old patches' '
+-	(cd dst &&
+-	 test_must_fail git pull --rebase &&
+-	 test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
++	(
++		cd dst &&
++		test_must_fail git pull --rebase &&
++		test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
+ 	)
+ '
+ 
 -- 
 2.24.0.346.gee0de6d492
 
