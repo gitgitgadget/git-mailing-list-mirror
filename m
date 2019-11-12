@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADEDC1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 00:13:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC3901F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 00:13:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727302AbfKLAN4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 19:13:56 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:40863 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbfKLAN4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 19:13:56 -0500
-Received: by mail-pl1-f194.google.com with SMTP id e3so8549385plt.7
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:13:56 -0800 (PST)
+        id S1727323AbfKLAN6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 19:13:58 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:43642 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727166AbfKLAN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 19:13:58 -0500
+Received: by mail-pg1-f196.google.com with SMTP id l24so10557411pgh.10
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=nF5MIJ365DDnh3GvMFaijHuwLUwniWWPVG/Jw9Zx1kQ=;
-        b=A59DMy2Xa+y89KojpaYdJQ4ICfBzxGe2SNcP1yzfJHFvE6aqLir2cvKBhiVgYQUQSY
-         k+v5s+RjDazyKr9eSjFQU2WcDLSJLQtXGttACC6uxypAiay/p6vudq2fb9Q6DyOVeh08
-         mqT+3rtS6BkvK/OTvKF2hNh9uP510+6VHjrijakeuC0XUb+J9lMabW5QBSIMyVnzh0zq
-         ZNDu7DWpUbkZDM63y1qkrPByUiE1DzR9+SJrWTUCVaFkZ1t0q0+YpmAQQ0NlGKAGhLXP
-         PolXp2MSgkUx30vHrTkzspY4vq42Exrvo2dWdNl6KhvcoG77Jr9Om0Hhrxn6l5joGcR+
-         9A7Q==
+        bh=NjpsV5sTCNMPstPli3/7OraoZmrWr/kJKIsP/I7pvug=;
+        b=BGO/UZ5gVKNgxmhcjQgSG3L1IO278YAIW51c0cagpcQtJ0kOYs1Y1BDUN77PawtXC5
+         jQwF01ViBPZEEc+6jYHPqgVRKPa9q8zWrbGKYl4IFkq+DfpAfGT5qXg+WfemXrNI+cVr
+         Rv/sIy/PgS4qVYDLO4vLjre/9PCcM78Dlxl0SEkl1UiDFvBy8V+i+1/5DklIZ4UiiJgY
+         X/FyL5hyypYMSHG3N0ITCTSa88sMCFwZu3XLFcBPunB2IS+jetsGo+Ywy5n/2n/P5noL
+         yE1LHwpO6NT6tWc4hAOmn0LndlmIqyeWnmSTaUM2Qa9m7z1GGzyzI/xTP6EW1nNtTwQH
+         Gw6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nF5MIJ365DDnh3GvMFaijHuwLUwniWWPVG/Jw9Zx1kQ=;
-        b=HiMqjNWvV+57KYb725938yd2IX8OKYTytYFx3Qf4pw6lBcK/zLhJdrl3PXhWDWcDCH
-         X3Q5btAia3Sbju8noY+MIJv7Db+GTUYbxH6g2fWKN9Tb6svD8ABCevYuixutHOTL0V1S
-         o6vV22HK7ahWlf/xPDiQJnLdOfFiZQkFLc3rE+sO0PmX1VWyGJmkNdnTLmWIro6q/Dhd
-         kOA3YUDtpf492z9D0CD91EVMrMCc9uTIPygG50hyz0dQjPTEK2R6f3LjRZS39qwFs2dj
-         q1ECmHC1hntjl0srjx3rFlIkjiv4/VjgcA+HFqkXhXhBq71nkiK2wDwMt9+x+a2PKW+R
-         eVxA==
-X-Gm-Message-State: APjAAAWCWisq24Q2RkdnTWREQjG0yG89vkyQLRrBxmXP7ELfu21Rujl2
-        4sCesC60qaRvznAzo2IU9ZY/9Grf
-X-Google-Smtp-Source: APXvYqxdkPc4Hs+hnHcQdpOzLtKJ9f6/ahyuKnIoxU9atmT1J/frl50qAD6priZhLPffYarQ4cgbrw==
-X-Received: by 2002:a17:902:d215:: with SMTP id t21mr29169665ply.125.1573517635256;
-        Mon, 11 Nov 2019 16:13:55 -0800 (PST)
+        bh=NjpsV5sTCNMPstPli3/7OraoZmrWr/kJKIsP/I7pvug=;
+        b=XqpzH8pSgSqTpA7gd1F8I5RLe8C3JmKPPRZmRbolxGd5jJi677oxkYY/9pymDNFuJ0
+         vFJNllgtsgeCTVHPbXRKgDbgpM2b6K5SJboHQVN0BLPbh/8tHM0ukUHVYpYXymkHfqxV
+         mGtmXZJyvVGjWHd9KNrmi55owzkPYQlZyfeA6CuIBLKQunm4vvJMrWC09qa48ODH39bM
+         S20zijOhz6NKKbjcbJs7bk/LANN2XfKIG43PhluSZIPDe/cw34oPcaI0VY6rew6w/SoP
+         VfipDVNxXcB3fQaWdhs705Cdi8RJdzisn9gv7LdfFOF/KnRbUUIw7NEpItrxihY6YM2m
+         EmzA==
+X-Gm-Message-State: APjAAAWTlrAOJ1cgVyuxR7sFBa+7TkltDq3RtsgzyLWWmzlmfwo/Q39Z
+        QvOx1wD1Dlm9SI/QDaECTT4Ydg4t
+X-Google-Smtp-Source: APXvYqxpp9ic9aXkkgCmmvbxVwp2De6jnkwRjLlfGtP4qtLfq8wLbw8nXzZvgQ2GkjI7yu6a3Ln9QQ==
+X-Received: by 2002:aa7:961d:: with SMTP id q29mr31826937pfg.89.1573517637582;
+        Mon, 11 Nov 2019 16:13:57 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id 16sm17067455pfc.21.2019.11.11.16.13.54
+        by smtp.gmail.com with ESMTPSA id a66sm16585718pfb.166.2019.11.11.16.13.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2019 16:13:54 -0800 (PST)
-Date:   Mon, 11 Nov 2019 16:13:53 -0800
+        Mon, 11 Nov 2019 16:13:57 -0800 (PST)
+Date:   Mon, 11 Nov 2019 16:13:55 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 06/14] t5520: remove spaces after redirect operator
-Message-ID: <f1141f244f7d543a35bda374ef13ea3826bddbf0.1573517561.git.liu.denton@gmail.com>
+Subject: [PATCH v5 07/14] t5520: use test_line_count where possible
+Message-ID: <5106004e95b6fedd0bf04922276744d48c1b2dae.1573517561.git.liu.denton@gmail.com>
 References: <cover.1573152598.git.liu.denton@gmail.com>
  <cover.1573517561.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,53 +71,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The style for tests in Git is to have the redirect operator attached to
-the filename with no spaces. Fix test cases where this is not the case.
+Instead of rolling our own functionality to test the number of lines a
+command outputs, use test_line_count() which provides better debugging
+information in the case of a failure.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t5520-pull.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 004d5884cd..7bb9031140 100755
+index 7bb9031140..0ca4867e96 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -243,10 +243,10 @@ test_expect_success 'fast-forward fails with conflicting work tree' '
+@@ -699,7 +699,8 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
+ 	(
+ 		cd dst &&
+ 		test_must_fail git pull --rebase &&
+-		test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
++		find .git/rebase-apply -name "000*" >patches &&
++		test_line_count = 1 patches
+ 	)
+ '
  
- test_expect_success '--rebase' '
- 	git branch to-rebase &&
--	echo modified again > file &&
-+	echo modified again >file &&
- 	git commit -m file file &&
- 	git checkout to-rebase &&
--	echo new > file2 &&
-+	echo new >file2 &&
- 	git add file2 &&
- 	git commit -m "new file" &&
- 	git tag before-rebase &&
-@@ -542,10 +542,10 @@ test_expect_success '--rebase with rebased upstream' '
- 	git checkout copy &&
- 	git tag copy-orig &&
- 	git reset --hard HEAD^ &&
--	echo conflicting modification > file &&
-+	echo conflicting modification >file &&
- 	git commit -m conflict file &&
- 	git checkout to-rebase &&
--	echo file > file2 &&
-+	echo file >file2 &&
- 	git commit -m to-rebase file2 &&
- 	git tag to-rebase-orig &&
- 	git pull --rebase me copy &&
-@@ -591,7 +591,7 @@ test_expect_success 'pull --rebase dies early with dirty working directory' '
- 	test_config branch.to-rebase.remote me &&
- 	test_config branch.to-rebase.merge refs/heads/copy &&
- 	test_config branch.to-rebase.rebase true &&
--	echo dirty >> file &&
-+	echo dirty >>file &&
- 	git add file &&
- 	test_must_fail git pull &&
- 	test "$COPY" = "$(git rev-parse --verify me/copy)" &&
 -- 
 2.24.0.300.g722ba42680
 
