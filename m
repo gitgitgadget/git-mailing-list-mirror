@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D2BAF1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 00:13:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB871F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 00:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727238AbfKLANt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 19:13:49 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:41809 "EHLO
+        id S1727260AbfKLANw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 19:13:52 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44910 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbfKLANt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 19:13:49 -0500
-Received: by mail-pf1-f194.google.com with SMTP id p26so11942299pfq.8
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:13:48 -0800 (PST)
+        with ESMTP id S1726902AbfKLANv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 19:13:51 -0500
+Received: by mail-pf1-f194.google.com with SMTP id q26so11927692pfn.11
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:13:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=eFSKVgEmAKukDvWGZUss3bBJoER8Qp3Fd1savgjuB3E=;
-        b=DsaYDHlK8hMm8lHaNok9KlFWg2Rb2/c2TbMKBXmdqOlqK56z8Ip2mrK09sI8zF5+7a
-         k4VAS9Sq7BqR5gAfkH8KOk8S0inE1s+ZUJ+Yrip/uZ6pjVOMhS0vARc8QYgrmzvg/1g4
-         VpBc0Nj/usZoaCTI93sfVov4vMc140hinuBslMcTtir2cFu2nhnfkCVt9OJAY+NkG5pQ
-         Nb2sPAlGR7e9D7ZFkSi/S3+9nFCJBzSpf5hQljgrxlgTb6Kczlkn4ZVVCq7dULEGgxRs
-         DFdJyZNAY3bFpwDLSIHI27g41NsHtdiPFUtiCL8LZ/OprLY+yEXiHE16S9HUs6Ta/b4B
-         Ar6g==
+        bh=nfAMB1glDUrQIgKd9m5b8vTRJ6+ViA1X+vKhax9Hgrk=;
+        b=HXV2SvmeZKTcvS1cf4Ho5jx0+2BkKhEjyanOq1qMHmtFuR1C8KmHqF8gmfpNK92cyF
+         xC04H+FgkxMKtXkXV4y9XqZTAZG+Q4XP3FP3CBIs/3yhwde2l8vQsXSEcCQXl0n6hIFZ
+         ybLWMmo11u8Xo70ugGY0sgIqRTfEiHtAkF8JAFc5goGaDfLBT3Occn1oM3fMbJqSciE9
+         rlV9CV70T6vVspJMk+/yOLPGnH0jTVCtRidetN4Npl/HiqZnwsNenTPmsTWfr72Qny2E
+         kKkGNHl8xULWd4w4/p6U7FaUbR5P0JAJmzeyt2Uv6cuyZ1oUdegA3b3q5m7pXE84uxeg
+         +RHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=eFSKVgEmAKukDvWGZUss3bBJoER8Qp3Fd1savgjuB3E=;
-        b=CFS0muKgIfFhQ/BXTgZlcM+5/qIqb0B0EuHi8zCM0daIgfqqac33HJjIoaX/JMwIdF
-         w8hMIekZXP1qD9RYcMnxNaYE/Euk36mu2z80tJ52GGYv+JPTN8Uq46u/hGWKvZAVvCyO
-         /39Tin+dW9Wb/rnIUkoznRM6rHzHcY7Dk8g9L+AhJutikKvEQl2AzYQtkK+PZ4nPojwT
-         vWMT4Ow1FNixNJut2i+I8hYIqwRDgCpkSg9ns2Ryxvfu6wN3Xb5tHhcpRYE+bJ4eIhvO
-         FC4OLI9t202WinjD8s9BIgEuLd3T5+Gp27UFL0pDYE3E9Ymkbe3iIDW3v7KhZ2h+1F+u
-         IK7g==
-X-Gm-Message-State: APjAAAUZrz+vuZwytctaTiXt/fK0zHxQP5dW5L+naFOeBXTJIRbaWsfN
-        sZsMkx8QAicwi2fyhsLR2ATVLHXL
-X-Google-Smtp-Source: APXvYqyK+IXwVwlkVkbLSYOsL5XbpiVyyQ3aTeSxcKw1RtOPhp8eA/Dpo6d0FRNtMyAa1uvu5gZ8gQ==
-X-Received: by 2002:aa7:868c:: with SMTP id d12mr14831135pfo.189.1573517628262;
-        Mon, 11 Nov 2019 16:13:48 -0800 (PST)
+        bh=nfAMB1glDUrQIgKd9m5b8vTRJ6+ViA1X+vKhax9Hgrk=;
+        b=khT5mH8/ptKIBAi3PoQF38RInPdcLA/gH8uIsrsvg6XsMaJVebjaMdE2J8nS9X8DnF
+         GY//hGLwgguYPhGW8hcPP7iAWT5xHgre8XyYdOyhYeqZorWEZVS1hbgUuEjo51upuodS
+         nrqZ24H8DIfVmQbb3rOGgJe7bpqDlwjeRr8z5ZCZbPXqI5ssetyXRmAsnTWh2xCAvQr6
+         K7AgK0KqDsf2lOxJJv180GsIrjgZrfnRVxekYwFD5DzDpkaCEc4lHvDQd/h6TQT+qC06
+         L5RBZv+f8M59AnRdZUulogZ5KT6fcVwZ+rH8SP1QejM0xArbOqwmcbHDhSqdQcXJGoXR
+         ThFw==
+X-Gm-Message-State: APjAAAXWY9vp0ORyvMHpmaVDl/HZWIA/xkTPqlvAPIrKTrqowmWqOvr/
+        AJxvE2T4wzPLZMai1bseOD+TpFcg
+X-Google-Smtp-Source: APXvYqyUoAONozz+hoPgYFp0wZnJQXRc8WzhQf8ByJ5PrMbEf7qfOdhJXdaUUwPc6JfNkcZPCMhllw==
+X-Received: by 2002:a63:6581:: with SMTP id z123mr31918390pgb.367.1573517630516;
+        Mon, 11 Nov 2019 16:13:50 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id c6sm17273448pfj.59.2019.11.11.16.13.47
+        by smtp.gmail.com with ESMTPSA id u24sm1646517pfh.48.2019.11.11.16.13.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Nov 2019 16:13:47 -0800 (PST)
-Date:   Mon, 11 Nov 2019 16:13:46 -0800
+        Mon, 11 Nov 2019 16:13:50 -0800 (PST)
+Date:   Mon, 11 Nov 2019 16:13:48 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 03/14] t5520: use sq for test case names
-Message-ID: <1bb65a59dac978bfb698e87a8cde90f4fb9e4278.1573517561.git.liu.denton@gmail.com>
+Subject: [PATCH v5 04/14] t5520: let sed open its own input
+Message-ID: <d2fbae6ade04c6e30071cfc207f712ef5e5c7f67.1573517561.git.liu.denton@gmail.com>
 References: <cover.1573152598.git.liu.denton@gmail.com>
  <cover.1573517561.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -71,37 +71,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The usual convention is for test case names to be written between
-single-quotes. Change all double-quoted test case names to single-quotes
-except for two test case names that use variables within.
+We were using a redirection operator to feed input into sed. However,
+since sed is capable of opening its own files, make sed open its own
+files instead of redirecting input into it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5520-pull.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 51d6ce8aec..a3de2e19b6 100755
+index a3de2e19b6..55560ce3cd 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -408,7 +408,7 @@ test_expect_success 'branch.to-rebase.rebase should override pull.rebase' '
- 	test new = "$(git show HEAD:file2)"
- '
+@@ -5,7 +5,7 @@ test_description='pulling into void'
+ . ./test-lib.sh
  
--test_expect_success "pull --rebase warns on --verify-signatures" '
-+test_expect_success 'pull --rebase warns on --verify-signatures' '
- 	git reset --hard before-rebase &&
- 	git pull --rebase --verify-signatures . copy 2>err &&
- 	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
-@@ -416,7 +416,7 @@ test_expect_success "pull --rebase warns on --verify-signatures" '
- 	test_i18ngrep "ignoring --verify-signatures for rebase" err
- '
+ modify () {
+-	sed -e "$1" <"$2" >"$2.x" &&
++	sed -e "$1" "$2" >"$2.x" &&
+ 	mv "$2.x" "$2"
+ }
  
--test_expect_success "pull --rebase does not warn on --no-verify-signatures" '
-+test_expect_success 'pull --rebase does not warn on --no-verify-signatures' '
- 	git reset --hard before-rebase &&
- 	git pull --rebase --no-verify-signatures . copy 2>err &&
- 	test "$(git rev-parse HEAD^)" = "$(git rev-parse copy)" &&
 -- 
 2.24.0.300.g722ba42680
 
