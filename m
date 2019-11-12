@@ -2,157 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C8691F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 19:23:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF0B81F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 19:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727093AbfKLTX4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 14:23:56 -0500
-Received: from mout.web.de ([212.227.17.12]:36301 "EHLO mout.web.de"
+        id S1726995AbfKLT3U (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 14:29:20 -0500
+Received: from mout.gmx.net ([212.227.15.18]:33551 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725997AbfKLTXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 14:23:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573586634;
-        bh=vEFW1EkTUWR0QvOFlbeP4h/QKYr03kkzKIJ7zU2sXCo=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=nz33gT6oeuS4uiVH9zmZw6qHEhX+jgxjK43Coc0JYLM/4IDrHafd207Rng/33iNx5
-         naT0EyaxnoXdIUejMA90VNdfC1vteUIjHXz1092bJny6q0HU0j2xzzRWcKj7Dasfis
-         YHsZsahXxfnbxEUkwW9TfRuFRwIEQpf+CrQHTtYs=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgO8g-1iI2Qx37Di-00NiUF; Tue, 12
- Nov 2019 20:23:53 +0100
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-From:   Markus Elfring <Markus.Elfring@web.de>
-Subject: [PATCH] coccinelle: combine two rules from qsort.cocci
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <c19a6e52-3c13-1ff1-a313-d0d951328e29@web.de>
-Date:   Tue, 12 Nov 2019 20:23:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1726970AbfKLT3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 14:29:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573586950;
+        bh=WW6OCEPCJebLllwdDqngGs5AR7QEQODf+lr1jMdgjmY=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=klilJBQQY338bmtdBdQFX8min64x10MOb+lMw8vKPrz7eMOaCxHQN4D8QpYaYJ08z
+         JrWP+AKD5UP4nFev1UVLqORQVG98VjmsKagc6EFK35FEQBLMeEyKXBDgGN/6KGRtza
+         C1pTdEWOOE18tJ3JR6B3Kr/bkOzhVBGCwfm78VNE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrhQ6-1i9uAE2c0i-00nlLX; Tue, 12
+ Nov 2019 20:29:10 +0100
+Date:   Tue, 12 Nov 2019 20:28:56 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: don't check prereqs of test cases that won't
+ be run anyway
+In-Reply-To: <20191112122438.17057-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1911122028270.46@tvgsbejvaqbjf.bet>
+References: <20191112122438.17057-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oWrT+94c5oVSZkwyyz5niuOf4WDdH7Vd1/ASXWFxeAQWH4YibfZ
- Y67hG7Od1nSSG9X5wB29KrhCVpFqcvVBmfDfxybdXs9tK2QSmVg46FAaYmCOolx1woCA78j
- J/IuV7JxBjaqvHdNgBeH8uHkjiWQo2wzU0rlQUCkCjumyKhFyzyMSnzVfBwsVmNI4FQ2sNI
- Pb+Nouw7UVMQM+ZngfoVw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jKqJbRRFs/c=:te87yWyi9O0Ymhuspil1uf
- ngVLYeeq8fHuff/A6yod7mpit0+t5e+3EJnYQvOoZYR4Z/iaoU7GAAmJwnQlFz94u187QcwoJ
- aYKdYXRbXK/qQPVg8NT7OyU4QrV7+uKXE2qQaRcl4cucQyOrc3rNzFa2deC99pJ+sS1W2AKYc
- JzD4MMoUcuqU2P5xCuAYoNfObUyU/+y5HUqP+GtbEiyghKPRSprYSLAx2cIzY8SZDm0wRqw1G
- 9qh6Z6rn8Ih0zDKfxruvB4zi5H70AJllNKapNv2kOAVEHVTpShggUNWVRYgZykb8h1rXX8aj0
- zLp7LjWN7I+UNTt9bF5yPBGLrN9Hd/uIaeseTeSyEGRzLI1PR5D6FkbvWUpMQureLeo/8QX2F
- rK5bhGYnAzPJlCdF5NK0I+yZ3bSRaAZj0qUBbiPDPhQqfdFSk9ssYf8RSdqD92VjOih9wief7
- CtJj9QD+b9z15Im/A5TtfKiRZUQd1ZPecRHErzFf9QLNEevF9j1c+mpZrtiIUEdfaaGL+xGUh
- DtUrwKE4NdYl0jCyg5/ePFwgmuLeTcVOZ7WPSmJkQebVGFlA75g5SAyedKX3qmbP/8cVZT3/z
- 7O4X+e66s7KFM2YSmI2PD7MXcZ9HgoSskORuZsJEa+Ll0+rQMf5lZZKIhAEObSLQ7jwfNwvyQ
- WRjISJ/BMGOpBJrfHyZzVP2WiXs1CIwBuBuhZkjmQoZWY7jAMUErst+PxxNE2Y6Cu8Q35138w
- IGI49ndcVxGa/Xd0aIgUViMDLaRyrX0zBCjL64Pg5UsE8KyZv9E+Gk/MzjITC5KGE2KcWzERs
- MS6qLslbUaD4uHpge+Ry87BIx3amQRamknR4dLkq+CNLOS54zB5tTx/0xmg33oJksmAThxiXJ
- wl4Ou7Xv7X92gVGd1C2+l6BSMfsK0e2Mo7TPJIW07n92fF+qo1T4BYTxbhfvz4V4E5YNyPjOX
- +J9F8e1Ve9QXrDNc0IQXOo6wFS1sjaM5ZP9JJcamebXdGMPQ12A5J9tjUbgqJL7JsL2aQm3wE
- F6LJYIhUWjyeoXrS/KTnOEp6KWTXri7RkQaQjqmUvcA79LTP5Un22fiE/Vi6TlojJ/XSKB1Oo
- kGpxqkxG0VQRwKmnMP4H4nkJM9PAwfwYwPBdZqCIeVuCQAR1Y9tcbNy0559rqEk3fal62kZpF
- 9TaPYSTyaB6+ngarJMKnwpW39+ZQ4tXj68C8JOWl3/M0IWFzlcwKnBIZCqtNeXN16ftS4Cvyl
- sg+C+J1jMT/Jr1OkfIuMe7Zfk2qtzJ1IoQSyI2wb4MlLxDlYn3oM5YE8NO3A=
+Content-Type: multipart/mixed; boundary="8323328-1687372005-1573586952=:46"
+X-Provags-ID: V03:K1:HkcY+bQF1UXiglOZ6Clsvq7dbX7gH3Pwpk4qr3fhVCBdU6oRtlh
+ Odr5kmHiKJWjmzkP4Bb6PnzKM7oSm8H+4z8/66V77qCQnm8ZP/VbhwJuc+IG+EbvhPLEim+
+ 5FcchJeFf9vHhtTDW5tbxnDO7N94Z+cy77Q6EBiBqfnktom9O3RBSZ8U6JeLHl4C9++9GnD
+ KXJEphZGiDaQus0MqIpSA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5HQB1uofhJs=:Z5gAgiSPTl5XBRyDxN4APd
+ JKSwQ+iM6CHiqCWT/Nv3HPL8AWaG7GG8PrgwHPs7etY28cSxzXiIkM48SrTO6nrXo5whNqvUh
+ JuPfdqMfQVXq/aou8COXr2O4idWZStDb4AbYScyGcX4AUSh4NQALtaITHGUIVCJMr7Jd3Ws+5
+ da9NhYTnklTygGuixpchFAuIeyfaTcoqo81gSpvsr7g1WldWR57A3FuhmyDB1IzdS+1dxKtJw
+ KrWC6N/TIAB5H+TrKIhLfVSZ1YG+cvZmGaOS/JOMwbw1c5ZYJ7m6dhm2f/13u7ZcGf00GqXQg
+ uiDrPV+ZujHigAE/031OQFUQZ7oBaKDEDVhWgMAuLLMZ5DW8k4guhwi0d0yAqX6nXw9vXzKou
+ QYouhWetSN68axoeDU0AXIXRXtAiFAUQJ6nCnuQO3XiZZLVhlmTVHnW7ABZu8jdvi6eaDa0dS
+ mhqPMrmQCH+zCulbCvDAKtwdTVjSctEFcbnZ2c//g1uWpxxjrrp4qxiIVUn9hZWTgCx44z1lv
+ kUaQH4PbAZYXfS/6wZ372J8xryPrB9V7E3Ejbi6YZOVZ+SDjuf0/YzxwnEebdoQMcFi9cxY4a
+ j9qOF8BTc4MSbjRYZMFe4KG0O/DlLBIQgqZu5Dyji0U/o7K40dBvKjKduukdQkULzDVHRkwRE
+ sckz5WSQaIWX0lmmEsXa4Kg2sxleXKSFauDacc+0MdQqyNbc71DUvRHM7aMDMIhgMG9UP2dwa
+ OFurTKsbdnPsC30/nKD3+h46xg7ew5OZIF1p6ZqiRqjTDgfc9d5x5+ODknWq5SLE56oXJFsy1
+ xbn1eBpzRFZjEyU+ZLHYcD65OIo9IgXZXBfuq8H6Ylw23w50IjDhUpYnMd9QWAUxPpsmOOMSd
+ pscFyMTd6s7exMX/eqIGgnuxSWXwfeOp7cvGSp7011BHeSIRuRo2ZCQkqwrIuJLBc/9EP++vy
+ Cr2kgWQrEmSR/wja+t5wzr5bjn90a5ERgiuzzELTj2cI7M0uAnaHHS7ezVy7hHNVRETbTnRq0
+ cSNmBq755RB8cwUlE5siZ/CHaMysuQ5jX4mCPMAcwpRWqEG+xtn0gtDJYNo2PLBw7AgTvdZVO
+ brumaXrHlclkonuGg4iBvXBtHCQeEecZF8oP4VVo7tn2y3/bgDkLJrRM+ddJRccSYl/tpwgHf
+ lYtvP3JrkLN5bDUY8cOqVBoz5fChRpoOl6GW2W+eMsDaLj0BY8Jfr4L6RGe1RjAHZt+FF77RJ
+ +8jyR7XRydH0c+B9FLkDZ2OdEgHQd5zdneFJdsHve0xNJY2lhfbAxStNXewU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Tue, 12 Nov 2019 20:20:13 +0100
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This script contained two transformation rules for the semantic patch lang=
-uage
-which used duplicate code.
+--8323328-1687372005-1573586952=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-* Reduce duplication by merging common code from these rules.
+Hi G=C3=A1bor,
 
-* Use a SmPL disjunction for the pointer determination according to
-  a sizeof operator.
+On Tue, 12 Nov 2019, SZEDER G=C3=A1bor wrote:
 
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-=2D--
- contrib/coccinelle/qsort.cocci | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+> With './t1234-foo.sh -r 5,6' we can run only specific test cases in a
+> test script, but our test framwork still evaluates all lazy prereqs
+> that the excluded test cases might depend on.  This is unnecessary and
+> produces verbose and trace output that can be distracting.  This has
+> been an issue ever since the '-r|--run=3D' options were introduced in
+> 0445e6f0a1 (test-lib: '--run' to run only specific tests, 2014-04-30),
+> because that commit added the check of the list of test cases
+> specified with '-r' after evaluating the prereqs.
+>
+> Avoid this unnecessary prereq evaluation by checking the list of test
+> cases specified with '-r' before looking at the prereqs.
+>
+> Note that GIT_SKIP_TESTS has always been checked before the prereqs,
+> so prereqs necessary for tests skipped that way were not evaluated.
+>
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
 
-diff --git a/contrib/coccinelle/qsort.cocci b/contrib/coccinelle/qsort.coc=
-ci
-index 22b93a9966..1c9a12c7c0 100644
-=2D-- a/contrib/coccinelle/qsort.cocci
-+++ b/contrib/coccinelle/qsort.cocci
-@@ -1,14 +1,11 @@
- @@
- expression base, nmemb, compar;
- @@
-=2D- qsort(base, nmemb, sizeof(*base), compar);
--+ QSORT(base, nmemb, compar);
--
--@@
--expression base, nmemb, compar;
--@@
-=2D- qsort(base, nmemb, sizeof(base[0]), compar);
--+ QSORT(base, nmemb, compar);
-+-qsort
-++QSORT
-+      (base, nmemb,
-+-      sizeof( \( *base \| base[0] \) ),
-+       compar);
+Thank you for this patch!
+Dscho
 
- @@
- type T;
-=2D-
-2.24.0
+>
+> Following up on:
+>
+>   https://public-inbox.org/git/20190923165828.GA27068@szeder.dev/
+>
+>  t/test-lib.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index e06fa02a0e..24b541f494 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1000,6 +1000,12 @@ test_skip () {
+>  		to_skip=3Dt
+>  		skipped_reason=3D"GIT_SKIP_TESTS"
+>  	fi
+> +	if test -z "$to_skip" && test -n "$run_list" &&
+> +	   ! match_test_selector_list '--run' $test_count "$run_list"
+> +	then
+> +		to_skip=3Dt
+> +		skipped_reason=3D"--run"
+> +	fi
+>  	if test -z "$to_skip" && test -n "$test_prereq" &&
+>  	   ! test_have_prereq "$test_prereq"
+>  	then
+> @@ -1012,12 +1018,6 @@ test_skip () {
+>  		fi
+>  		skipped_reason=3D"missing $missing_prereq${of_prereq}"
+>  	fi
+> -	if test -z "$to_skip" && test -n "$run_list" &&
+> -		! match_test_selector_list '--run' $test_count "$run_list"
+> -	then
+> -		to_skip=3Dt
+> -		skipped_reason=3D"--run"
+> -	fi
+>
+>  	case "$to_skip" in
+>  	t)
+> --
+> 2.24.0.388.gde53c094ea
+>
+>
 
+--8323328-1687372005-1573586952=:46--
