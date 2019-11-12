@@ -2,90 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,URIBL_SBL,
-	URIBL_SBL_A shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74F991F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 04:43:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5F1E1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 04:46:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726939AbfKLEnP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 23:43:15 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59480 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726924AbfKLEnP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 23:43:15 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BEFD719922;
-        Mon, 11 Nov 2019 23:43:12 -0500 (EST)
+        id S1726927AbfKLEql (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 23:46:41 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52870 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726910AbfKLEqk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 23:46:40 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9DB8C8F4D3;
+        Mon, 11 Nov 2019 23:46:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=erz8vU1PWc/knpUWwPJZWMSwN+Y=; b=WBlWeA
-        J7SlYYkbcESmLASakjZij2SiKM9XZyhOMkRRUM6VeF2mFJkqeQwS70kFu8VAS+Gn
-        VgOqeum8uxbkJ6pl+AspETDa3/qlLKVcxAk+x2njEY2vPmVGW3u63CZXxAqm5OXp
-        phjXRN+VHRBY+8OUrd1swaNwyehUhrOJCSxEU=
+        :content-type; s=sasl; bh=JEaWw9How0KbNbzUmnVOfzdeKDI=; b=p0Yfv+
+        ExGSNRigEohjJnRGEYiWD8g6rThUaU3jxFNNgUfC+uvByfaTUBSCcoM1CXkg+ViS
+        8Yzx/nFIeWlVMB9zod1q1LN9o6flmy5a25Gfe8q1myKoCYwc/4uKWU40ZogiC70o
+        G0pRwSDqW1TBXuNqqZic39WXrtx6gwwu5cUN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wjgZoJgzNmElq6Lb7Zs1rNimDV0kgyUD
-        TjylxrnAJ2oGjtpA1gF98g3OPPLaGErjF9EFRsnbwGassuGG56sb4QmbWSNFfhTv
-        Yj2fuBksToncv3WXbmAfZBjNinSbBCJQ7xone/z3P7BKJoY7FGXe2UZ/Le3h6/+H
-        3XQB5qw9eMk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B524919921;
-        Mon, 11 Nov 2019 23:43:12 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=jA4rrFyg62HfevsFaJy8iUUqrBll8rrz
+        grhZygFuo4amthRVVyAb3QSHuoB/Ujs4X1NpIkC/4R+ZhvQpfT7jg8nqnxIim88o
+        yg+aWryiCYrXyhkQhYkCzaraGpM+hrHCARQJfSqJ7PkvJqdep6zvFOKq3oGdFIlo
+        YRyzTrAnQrA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 97E2D8F4D2;
+        Mon, 11 Nov 2019 23:46:38 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1BD5619920;
-        Mon, 11 Nov 2019 23:43:12 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C76528F4CE;
+        Mon, 11 Nov 2019 23:46:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Josh Holland <anowlcalledjosh@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] userdiff: support Python async functions
-References: <20191111010148.2812-1-anowlcalledjosh@gmail.com>
-        <f8a729c6-7b27-cac8-815e-b5c02a5c7b44@kdbg.org>
-Date:   Tue, 12 Nov 2019 13:43:10 +0900
-In-Reply-To: <f8a729c6-7b27-cac8-815e-b5c02a5c7b44@kdbg.org> (Johannes Sixt's
-        message of "Mon, 11 Nov 2019 18:27:24 +0100")
-Message-ID: <xmqqtv79g0wx.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Paul Jolly <paul@myitcv.io>
+Subject: Re: [PATCH] completion: learn to complete `git rebase --onto=`
+References: <CACoUkn6D0cUmN1RbcpfERcOJsbGLdwj6oDeF2oRADV+rX2artQ@mail.gmail.com>
+        <22e92546ee49d4502fd5a441741a380d62c834c7.1573507362.git.liu.denton@gmail.com>
+Date:   Tue, 12 Nov 2019 13:46:33 +0900
+In-Reply-To: <22e92546ee49d4502fd5a441741a380d62c834c7.1573507362.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 11 Nov 2019 13:25:20 -0800")
+Message-ID: <xmqqpnhxg0ra.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: EEB9CF5E-0506-11EA-9D07-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 6823F450-0507-11EA-A0CC-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
->> ...
->> @@ -0,0 +1,4 @@
->> +def RIGHT(pi: int = 3.14):
->> +    while True:
->> +        break
->> +    return ChangeMe()
->
-> Thank you for providing test cases for Python.
->
-> I have one gripe with this set of test, though: They do not demonstrate
-> that the Python-specific pattern is better than the default pattern. In
-> fact, if you remove the Python patterns from userdiff.c, you will
-> observe that these tests still pass.
->
-> The one thing that the language specific pattern would do better than
-> the default is that it picks up indented text. Could we have a test case
-> or two that show that it indeed does?
+> Before, when there was a space, we'd start a new word and, as a result,
+> fallback to __git_complete_refs() and `--onto` would be completed this
+> way. However, now we match the `--*` case which does not know how to
+> offer completions for refs.
 
-Good point.  A method "def" inside a "class" would be one level
-indented; I am not sure if it is a kosher style to have "if" at the
-unindented top-level, whose body conditionally defines a "class",
-but such a class definition would also be indented, I guess.
-
-Thanks.
-
+Very well explained.  Thanks, will queue.
