@@ -2,118 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B765C1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 19:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD5DD1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 20:01:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727166AbfKLTiT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 14:38:19 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40641 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbfKLTiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 14:38:19 -0500
-Received: by mail-pf1-f194.google.com with SMTP id r4so14057331pfl.7
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 11:38:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KTokw0f2v3aCJD3kpF/qNgPBsBBolhRhupy/R2PebvU=;
-        b=Ohm7Fkb56lyfdvxzNhhBzV/v119MQAq28ObucKbsucoQRPBirbxR6MP+NApFU80JZA
-         1qYxOHrOdmkxns+IF5FOpTmBGJRB9d1WSUc3HDRLxprbMpJxSZMMiePjtpXLm1x2ihqT
-         J01IH+2kbrEJhN995XnA+fqJg+WCnmKIk6car2VpXvQSuQwTwq7sTUylQCj6pnJv3ZmQ
-         QDJ6Mb51xiQDtQ/pi1vD96ORrr6fChKfNIFajnZY7w8oKEdCOYTEiAm6yKeP2lVZMPWW
-         a6U/nWOlhikbkQX6ulUIC08L67Atun0rfTCCRroBpfwgiur6r7NVCyp/aWwdDHBEtCSw
-         LVQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KTokw0f2v3aCJD3kpF/qNgPBsBBolhRhupy/R2PebvU=;
-        b=QLR4MuoULML2oiGC0pyUs7J37MGCictGCq+fqJzKW47txIYBg9BUoaqIVEmpKn2mOW
-         jf2CDDSQ9Ck2L58a22opBQM2+d/o+r5OLLaxChr/QXYU6moi4+bS0/M+yQqx0+zOdflv
-         lYcjA4IdTW4bfVgb7bXw2BrRH/UejEkOIgaAZP+xdKxLDfob7ZMLDb8FT4Y7TG44KAnB
-         fLevTCYfJ8dQuWGZg7qcvn8qce5VRTCj5TSGiT1KbDMMJzFYsl/+4Zh69UNQTyDSW8bE
-         fZnKqICj4Q+0dqACb54GjXA6vkSBBWD1pchq/HRwgJH9ErIos+sfswEdlfooEjE2uvCy
-         wI2Q==
-X-Gm-Message-State: APjAAAWqUtQJxpP9xTVfPB+MNJjLShOZKhVVh7+X8v0DeDoMHo7lgyKU
-        IVh5kyW2ZKs4wrtynkspd7791R/j
-X-Google-Smtp-Source: APXvYqwH9bZJ1eTr54LvJtz+BayqJs1Xv1vqJSG1Jzzkd1cYYtiZuGnPoi3fDf7E4E6tMyMzECsOlQ==
-X-Received: by 2002:a63:715d:: with SMTP id b29mr152734pgn.369.1573587496764;
-        Tue, 12 Nov 2019 11:38:16 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id h5sm3058072pjc.9.2019.11.12.11.38.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Nov 2019 11:38:15 -0800 (PST)
-Date:   Tue, 12 Nov 2019 11:38:13 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] fixup! t: teach test_cmp_rev to accept ! for not-equals
-Message-ID: <018d2035e0c830d0e184ff209f3f75dd291aa30f.1573587373.git.liu.denton@gmail.com>
-References: <xmqq5zjpfux2.fsf@gitster-ct.c.googlers.com>
+        id S1726977AbfKLUBy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 15:01:54 -0500
+Received: from mout.gmx.net ([212.227.17.20]:51177 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726008AbfKLUBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 15:01:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573588897;
+        bh=LdfA8rzqsgivL3cb0B/EWQ915A7vjIHUr26ztWXddxU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Pr/Rfip1oXAC9cRCqW5+DnPN8UGdWmkpIuSfjIHTupytS1M7gobNxjt/Hfomyd4mw
+         6AGPwzRsLCCUNrzKeUOyF75p8izX0sAvXcrc3vA/6kmMc+qFDBvf3ABz7XqkXa2Z2k
+         bNpNILabcti6AXYyPJouuG8LGeB0VTkoq7/FI7Vk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYvY8-1iQL2n23lI-00UnpX; Tue, 12
+ Nov 2019 21:01:37 +0100
+Date:   Tue, 12 Nov 2019 21:01:23 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>, garimasigit@gmail.com
+Subject: Re: [DISCUSSION] Growing the Git community
+In-Reply-To: <20191112184547.GA38770@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1911122100220.46@tvgsbejvaqbjf.bet>
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com> <CABPp-BFXs4qes20S+9AZd++p3epW4eJ7Vu7zU_PdDysZ_D-yrg@mail.gmail.com> <20191112184547.GA38770@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5zjpfux2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wru/i1A56klMIR79Wb6aD5yzKubLlX3RTJK4/hIhORyJUwo0UFO
+ GjONsXFuFyeEN2UcYnCXf3v/AcffUHKOr7WgxldHwuqfquC0/NuHurIIqpB0WWLtlff55E3
+ lrON3yYiPsvnLXR+Ku+gPtbRzTrA4GwPcwnN2DZqDqck+1PDHcLGCEY1pNXyO/Sx7GyHihy
+ +hU6VVDYSUiZDhTIeB54g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:B2tU1iIYxdA=:ylGZqbCj1xb4WZFK9ivDkj
+ OnavXmsuZwtghBqYurOkpljfCYdw5Uj/oIhX3L7b2lelH84RUNIC/CfLx1nPC1e+ZdspjXioB
+ uq5Wnkeo33EGBARp+fYAq0I3GDOeP/BRdudp/B8VlDrW6FFbY231yRZI4VMr77ADokGplklcZ
+ 19vE/Uc87j7CqYn471mrE1qwDqIDsWXe4v3W60T8Lt0pZ5bvf++Kwwf+jBVB4WLQtZFKSFHO2
+ 9+sJrQDQTF+nS2R9l52fZshjHnM1YM0IGxMK0A6humJ6r1QSV0yEbFKpODYhsuHbOtsi4l1vc
+ QqPoDzHh/RgkzkClMynhpOmRl3qs5Hdx4ShnDD9FAxteofSIUa96RVav0WFDAisQF8mPjXJC/
+ SNuFukhJFd0r+U0TI+blXSxpOoDrHCo6nR+kFPCjBbXp6KpA1faXBXWDxPTK3jukBQ3MgY1g4
+ Hpw1kkZ27mHcx0s1iX34OKPuECo1mChWQGHZOP3AHnPRDBhpi2/j40q0VSYqHBQ75xdwVsAKU
+ 3kEE3gr6xifFsRKqg9MYBw7XpU8HGzFWk3pec36hJuYATYZhpJeSZpzkhkdJ/QADuGFIJVq5i
+ YNCwfWyhmMyeoEqKiJ1ae9DXD3sYNXyFFXWxBXbeZJQbhPZbgGY6jTc9PljNxew/i9+JYUJsJ
+ /N+qNaeQE5kL4tMgJ280Uk4AQb/FVCYjZRugJPTpleaZPEm6aw+nDyHqR4XFBE/XeH/wgN9hp
+ J5YdvCOH3LIFb9LcOh3AMdizWtT09XM6wB1QqkCdlLBD88d6b39idfEbwvtyXvVt8Ky3eRzwg
+ lVcKB830X6Ux1RGva4NNx16PUkIYzZxPFiilu8FkSCB4z0Xni4SeasX/+QOp4oEO11eTWR3se
+ 8Gamji0pMJ0eWqGLaa5HQzArhMe+HWVPayxBhz25e1KrdpRJ3/xLNSxeKJ2WCAqoR4fhoBO1C
+ 8BQMU9of8kxt28iTlDdvJRUsDOglxbnQdA7VJd1fmphvU1gX6RKEKaizfUEQyZiigE6NO6ZU+
+ VA/f7QGeDiEZdLQIyjhY6hhp1Y2bTypjxthp55mOsx9J11D6TUCUJ55PSUTZ/5ZymNkr+Yvgu
+ itfZohCgkwLHOucc9E6o0qeIOCv3VZUKP1BddS6Ad1E8JRD3d2S4eWm6CmwaP6557CGqa4HUb
+ YniU8kzGXOdKDVPXvq+TE5tLoxj5mloVdNVlGMrV4stl0ua6iT1KdlIGssAfWPIsL3Usofgdx
+ hEWn2lRDE/0PXeSa1e+S9jEiRZhc0XEXZWGnhUVxkdeVMg29K5J5sOuYBqyg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-Thanks for the suggestion, Junio. Since it's just a minor cleanup,
-here's the fixup patch for it.
+Hi Emily,
 
- t/test-lib-functions.sh | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+On Tue, 12 Nov 2019, Emily Shaffer wrote:
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 01cdbb0478..15f4c96777 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1016,11 +1016,13 @@ test_must_be_empty () {
- # provided first, that its other two parameters refer to different
- # revisions.
- test_cmp_rev () {
--	local op
-+	local op wrong_result
- 	op='='
-+	wrong_result='different'
- 	if test $# -ge 1 && test "x$1" = 'x!'
- 	then
- 	    op='!='
-+	    wrong_result='the same'
- 	    shift
- 	fi
- 	if test $# != 2
-@@ -1033,15 +1035,8 @@ test_cmp_rev () {
- 
- 		if ! test "$r1" "$op" "$r2"
- 		then
--			local comp_out
--			if "x$op" = 'x='
--			then
--				comp_out='different'
--			else
--				comp_out='the same'
--			fi
- 			cat >&4 <<-EOF
--			error: two revisions point to $comp_out objects:
-+			error: two revisions point to $wrong_result objects:
- 			  '$1': $r1
- 			  '$2': $r2
- 			EOF
--- 
-2.24.0.300.g722ba42680
+> I'm still really interested in participating on a mentors list like
+> this; can we set one up?
 
+I would subscribe immediately to a Git mentors' mailing list.
+
+Thanks for bumping this,
+Dscho
