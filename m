@@ -5,33 +5,33 @@ X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=unavailable
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 132CD1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 20:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D07E41F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 21:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726979AbfKLUk6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 15:40:58 -0500
-Received: from mout.web.de ([212.227.17.11]:54021 "EHLO mout.web.de"
+        id S1726983AbfKLVA3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 16:00:29 -0500
+Received: from mout.web.de ([212.227.17.12]:35661 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726923AbfKLUk6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 15:40:58 -0500
+        id S1726697AbfKLVA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 16:00:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573591255;
-        bh=nfcCsQd/Ni6fEzRReD9NF5UesGjaPDq4oy+gf7RHCM8=;
+        s=dbaedf251592; t=1573592425;
+        bh=aU+S0k5zaJpqs5tAKSOaLLjgjXGpJDZs9UE4zvOs1mA=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=m8wWRTXLIT6r7Hrir3ZYGD1SkeHJHfCmaqFX15V5i3Tu+lQei5Sv4IJeH3gX5oAY/
-         Ss4KSrYgjeF+zhxzCb7EXYOmWFlSMHTxdLm6EY+93EoNvpjfstPBlr9vREehPB6wr+
-         2ydujr633mEc+p8tAIDR7mKK4hwEgpZmypWFxFr0=
+        b=GAE3DR7Enu23sYsxMVrDOUi2dNnORY+/ZMIKYc2HcP21YkmSxUNR97K0gHfbkj3L3
+         TOTuRdMy8fgEM2HxfL2xNupRYQcZZAb+VL/8rKHotwVDmB+LxlIn/jHeEZW+bwYC4V
+         YQ1NgW5Vekc0Fg5oH4ryqAVxUmE5jDnPRMyI/BfY=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LhNjo-1i8mcJ1jKi-00mZDv; Tue, 12
- Nov 2019 21:40:55 +0100
+Received: from [192.168.1.3] ([78.49.102.255]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LaTaN-1i2TBO2krn-00mMdD; Tue, 12
+ Nov 2019 22:00:25 +0100
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <stefanbeller@gmail.com>
 From:   Markus Elfring <Markus.Elfring@web.de>
-Subject: [PATCH] coccinelle: delete an unused variable in two rules from
+Subject: [PATCH] coccinelle: simplify variable declaractions in rules from
  the_repository.pending.cocci
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
@@ -76,76 +76,181 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <22b15b44-2679-6e10-c2f1-458e09a707f3@web.de>
-Date:   Tue, 12 Nov 2019 21:40:54 +0100
+Message-ID: <c260ef87-21d6-8fbc-8060-d7d1c6330601@web.de>
+Date:   Tue, 12 Nov 2019 22:00:24 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FtNP+PSosu4jD0ZREgjiXZErk3/RMgWAktWr2ndMs93at79iauV
- kmCXkENoyJ36Rf7R6T6744L1vtEu+niW/0W7T9aqHZKtOFwKGmrSD5yP2jZr9fLgiwFM0h4
- 4e+37HTrKv/0yRguNy6mLH9FbsQknvl4UGu7e1HqEjweSfP9PUYxg5wOebSuPswxeWPOG0b
- RlIQs2cUXNPJhgI4onzfQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ZnVGWoJWIS0=:NkwfHvTB+coNRi9i61vdE+
- mmsRy/c1n++UB/VPeGXOkEupx4+EBEKkQl41MI2gB6qUgS0fdqk+X+FV2eLhQAbMCTD8CsftN
- zU4ocuTOpnZkvDdRcMR28tPox3gExu6YfVDmQNYg2SFCKvQUU9XPcu7ma0IsHL+xZtl9FiliA
- 7sRNd2Z88r8f/VbdSYO0NWl/zA7QXVou1pB2Xqn/2i26xTF0YgDsplI+1R43IpecQRmgSC9v4
- 1euRKS+gbp+qbMHkn503Pol8fGkIspcHmu2Yjf18XZQScxgDxKHacahr7S/k4LHyks/aL6s8Z
- vxWEAzTdo1Zj5LPmeO3A+9QRvamNgPLbuJD0zW8wnQtu8BwSxiOaHyKKDMSWTX5siV54avrD7
- fcHxMdq2lqNJTzdcEClPpJktteenHqRHsTY0CjEOJMwb18UAY9zRjpLZH3fBrTP4mwXULxUn0
- oh1TTpcEPIVwslavWhZIEM9gMhgpd1ApOBDiZTvWzOSS+ENFG9OVFr5eb8swRVjk3eCVDdRAm
- 1cebp9vmSht6zoyZ1F7EuNtamkaMSWJGSP2X5DbVXMoiofCtv4+85GKIuUdN/YkK/aUug6062
- kxQolzUk1n0KHSK0oc/j3pPnAo/uATXubunRUX/BHocEjgC0DbO7fuyHxQYKlwixQbT73n0CG
- QtD0LvJ0jyBpw1mo2fJu4AX44FzT7oOxk1ZfowwF6nH/9OVMl+3XBHaHy/Ftj+kPs8zw5gs/m
- CoZKjfzlLOn0oDvcAGgM4SChb3nwvDH1/DFQ44cw6zgwSbAysQh39Ceu0VTDuCutpnm0UVvpc
- wXmiwAxScI8xT33vx/t7zXrV2d1+lTQ92M9Q1sKX/Ts6xu3fl5kcMQIWSFRoKGdtisKkumvgA
- sSdJOooV3wbyju2Nx6qAQnMilBhoysruYVc9/K2qY/mf/EQ9KLwbxiX8pE376H+FyQPhe61Py
- qOFYXb/QAuPdQ23J00Aj9NTOSLBd2iE3Kk39FDxyiJ6tclRWYH0EvCw/5nHMkBkyKRAC4yU3d
- x/Oaf9TjWJ3ofvmXd1WB7YKeroRfk/9p+BAb2y1BBNoN0lUMi4cRs+KgbyAcvlHOY+j3MAbli
- 0zTV6pqAQsNu3x5Vp85wxbUdb+cREMtzgRumdYyLtEdCg+0k8HgdBWRsrrg4sc1yeAohCa2hv
- plcBnsUCZ/vNyBi14kqArkti9HnKtdyZDwe/vyFH4WayhoR2O0UEkAp03p+G4o7HN850fP2tW
- XpuU207VD60Pqt4fgBP7IkmNiKz7AbBBuachJfq+B9V2sl6FmM4Z91CJeS8A=
+X-Provags-ID: V03:K1:a+5VU0cVFHVv0UN2RJYVGmqy9tzMwkVl51NhHI74E9O7nRgaX50
+ rIgLW7mKKWrzIE528ogerBXVDR4o0JgmnrXoWgIK5T0wJofkecv5or2dn36XM8l5tvqK0hr
+ +DO4xAQimyR/QzsLivecEqijpJh3GhXaamFESv/EYakT4DQj64WoMyBy8NLmrCfRehjJQ2e
+ q6C4KHH5Pi+FYqeRDUOyA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bH844eesT6M=:JkJTPHxwynddX/hcqXVJ+3
+ hWvaA9B3WmpFdEM39/3My8FSDp9SjZnBIh71huMVzeiqaGImI1/tJsJsH/mga9PY2urUeQ4LS
+ Fhq/0tyXdBdns6qe6if1eqfQsVrJDgVn9dgcpLZX7t436lCJ/2lysdHRfQ0pNJC9IXqd0GQFB
+ mP9PoJmreGcYrsmp5brzNewpkGR8nN9Lyop7Q4lzjJP4PtRiUCl6VA/wcDiwW6fmtjoRUJwWP
+ cVHfYJvtIhNTGJsrRguPb4NmrKI4d0Uc/2yzd9ELrxF5RVqJnM5tbelXWsToQYRHXcmabhzM3
+ 0TatgAO5IWp4yPwkfWIhGHYgfNN6dIk8l8iH0dkJvwDpcTzgCYSzOE1N9rLaJB+j/qmM5SFx6
+ Xfq0gckhKCAdCJ3gjwVDne29jgOpUQ24FjKOg4RMIvJdV+CBoWDXdeJRf2z3Rkwu6F8RMy7Vj
+ MuGLPeo98uHUVyBCEpT03jiVCftSzTHtMoLJe+x0MM2XN86nIJm3smN3hX57YICswLuSTcbXY
+ Jg0hF25fZnU5wXkrPqTzlXree1Y5FIg7qW7ojVyVSeRJFqHKqQiJapes1rZFMl2KZL4JDJM22
+ ao4Uj0xM+efsXeWMUM0U/1xVXvGdodMXLJmfM/xKVrZiFaU5OS0uvqHlJfFj/sy1sHn5mKSHS
+ H4ePm0/9OeXGhiQF4x1rzSsr3QDlLnocVTvjPY4Jopxk9SwO0ZRT5XgEOg+v707Po6NxVAN7h
+ 7zuCDMkVV3NjINlHDHg9dClbxKdQZPtwKHcYKWDnAvY1SNqftJmmhw8I8GNhCbyjuzSmr7Zej
+ MNyPS7CMRRaMHdHvbYrc3yYHeX5XUDuCXaQwtWYMxsqGNFX8b9yabGueClXso8knZWyZGie8v
+ nslXBYbTqk9Ms1MbhHGTyaXfJ2H+62bEoRAGNX3IY1ZCZvS4sHk7BvCVg6UL7McBbEeOWb1wh
+ YuxZ9v76DyemXyg0Z/gBLQB4+abLDYokB7aHB8DGnz4IS6ICM5pAjoaURuKdfcN+2wGyTf8Yc
+ fquhcEqdntWelOOm9xnWFq1clDqqrd+HhMxS6NrkaTb6nh85Ru/JBaIuJUxIeouTSeE5Tgcp4
+ jVE+pmOJeFjPgYklCsvxZ3LNduko0PNaQVG1NjDCkhIqpCr5n2nAII8nAioDcNffgjkEBibuX
+ j5mbGuKuTdqo96xsenkDRD2CBv+48EhRMaHXwCvqW4K585QVCbfEYl1B9r45DknyceRkRC5v+
+ 2Ne1vaGhp61AqWR2/XBfkhMoLmT7s9MyoFHnCEB33QZZYip7Hgud/CnX/cWQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 From: Markus Elfring <elfring@users.sourceforge.net>
-Date: Tue, 12 Nov 2019 21:35:36 +0100
+Date: Tue, 12 Nov 2019 21:55:18 +0100
 
-This script contained two transformation rules for the semantic patch lang=
-uage
-where a metavariable was declared but not used then.
-Thus remove this superfluous variable =E2=80=9CF=E2=80=9D.
+This script contained some transformation rules for the semantic patch lan=
+guage
+where a few metavariables were declared with the same type =E2=80=9Cexpres=
+sion=E2=80=9D.
+Reduce duplicate SmPL code just by listing the desired variable names
+directly behind the type specification.
 
 Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
 =2D--
- contrib/coccinelle/the_repository.pending.cocci | 2 --
- 1 file changed, 2 deletions(-)
+ .../coccinelle/the_repository.pending.cocci   | 44 +++++--------------
+ 1 file changed, 12 insertions(+), 32 deletions(-)
 
 diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coc=
 cinelle/the_repository.pending.cocci
-index 2ee702ecf7..ff6a6a575a 100644
+index 2ee702ecf7..697e8fc77b 100644
 =2D-- a/contrib/coccinelle/the_repository.pending.cocci
 +++ b/contrib/coccinelle/the_repository.pending.cocci
-@@ -20,7 +20,6 @@ expression E;
+@@ -3,9 +3,7 @@
+ // our code base.
 
  @@
- expression E;
+-expression E;
 -expression F;
+-expression G;
++expression E, F, G;
  @@
- - has_sha1_file_with_flags(
- + repo_has_sha1_file_with_flags(the_repository,
-@@ -35,7 +34,6 @@ expression E;
+ - read_object_file(
+ + repo_read_object_file(the_repository,
+@@ -42,17 +40,14 @@ expression F;
+   E)
 
  @@
- expression E;
+-expression E;
 -expression F;
+-expression G;
++expression E, F, G;
  @@
- - has_object_file_with_flags(
- + repo_has_object_file_with_flags(the_repository,
+ - parse_commit_internal(
+ + repo_parse_commit_internal(the_repository,
+   E, F, G)
+
+ @@
+-expression E;
+-expression F;
++expression E, F;
+ @@
+ - parse_commit_gently(
+ + repo_parse_commit_gently(the_repository,
+@@ -66,78 +61,63 @@ expression E;
+   E)
+
+ @@
+-expression E;
+-expression F;
++expression E, F;
+ @@
+ - get_merge_bases(
+ + repo_get_merge_bases(the_repository,
+   E, F);
+
+ @@
+-expression E;
+-expression F;
+-expression G;
++expression E, F, G;
+ @@
+ - get_merge_bases_many(
+ + repo_get_merge_bases_many(the_repository,
+   E, F, G);
+
+ @@
+-expression E;
+-expression F;
+-expression G;
++expression E, F, G;
+ @@
+ - get_merge_bases_many_dirty(
+ + repo_get_merge_bases_many_dirty(the_repository,
+   E, F, G);
+
+ @@
+-expression E;
+-expression F;
++expression E, F;
+ @@
+ - in_merge_bases(
+ + repo_in_merge_bases(the_repository,
+   E, F);
+
+ @@
+-expression E;
+-expression F;
+-expression G;
++expression E, F, G;
+ @@
+ - in_merge_bases_many(
+ + repo_in_merge_bases_many(the_repository,
+   E, F, G);
+
+ @@
+-expression E;
+-expression F;
++expression E, F;
+ @@
+ - get_commit_buffer(
+ + repo_get_commit_buffer(the_repository,
+   E, F);
+
+ @@
+-expression E;
+-expression F;
++expression E, F;
+ @@
+ - unuse_commit_buffer(
+ + repo_unuse_commit_buffer(the_repository,
+   E, F);
+
+ @@
+-expression E;
+-expression F;
+-expression G;
++expression E, F, G;
+ @@
+ - logmsg_reencode(
+ + repo_logmsg_reencode(the_repository,
+   E, F, G);
+
+ @@
+-expression E;
+-expression F;
+-expression G;
+-expression H;
++expression E, F, G, H;
+ @@
+ - format_commit_message(
+ + repo_format_commit_message(the_repository,
 =2D-
 2.24.0
 
