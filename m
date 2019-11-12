@@ -3,114 +3,170 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58B0F1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 00:28:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 936041F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 01:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726906AbfKLA2f (ORCPT <rfc822;e@80x24.org>);
-        Mon, 11 Nov 2019 19:28:35 -0500
-Received: from mail-il1-f174.google.com ([209.85.166.174]:35184 "EHLO
-        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726887AbfKLA2f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 11 Nov 2019 19:28:35 -0500
-Received: by mail-il1-f174.google.com with SMTP id z12so13899043ilp.2
-        for <git@vger.kernel.org>; Mon, 11 Nov 2019 16:28:34 -0800 (PST)
+        id S1726958AbfKLBIf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 11 Nov 2019 20:08:35 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:47095 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726903AbfKLBIf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 11 Nov 2019 20:08:35 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 193so12024129pfc.13
+        for <git@vger.kernel.org>; Mon, 11 Nov 2019 17:08:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2J2p39vYWIjK2PHPaVp/kAuU//ZgnpdqvGdxFfLRGuo=;
-        b=ys4Y8gm++7DmxdwWXnCLkXYd5KIW1BcQ0j/2ksKlR2zPb9kfMHKPHlApI7oss79TrB
-         gw+41Ek2hVA7F+/io+NgUz/l8oVV0bBXBbSY2OVceTcQzlafPjKi56Zpq/bOiaruqg91
-         KXCvuK+6JuqIF6Z8xtZgEMVOHB4SOklRRnzgzsevN9DWxY4tBMg6RG8MYqN8hPsIg/BU
-         eWnwst5WlsATJAbOvl+sb70wvf5QX5/tm5l2OmN4QWWYEU3DRsDvmQAiCq9VR66fqJTi
-         IJ0ymwuzYQojwEqAEFB7fCGTEKMh24TUvWRkLeispZdnwJu8j4RRgPW2g2xjH0KTr9kB
-         PqCg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=PnAPQWQsUEt4wwWHImoVnvv+5EITS4xBtB+T58NzyJ0=;
+        b=cAULtbIZyeHnysOMEgkM+Lzwo0W2JWesfcamNhhGL1rUg1nRP3cPNVEJjZinlkT7KY
+         2aDD+x9gBsqboUOYJrlzT7imk2vbn8Df0bBomk00HNyfL3jH41IbxifFtIhrIctGqczB
+         1vVTIcPgUdpdI+rtho5xqnWGGlWy21CVqUZ5LMXlHN7EWmEjVOExDWJhcIigBUUUFD1y
+         vrcNx0UNi5QiwV/4rM68QqupsaFSkkmcuqmuSv1fQTyGlJ3QHsXlYN5SXrGLSR73D5Nm
+         zfk+Bj/iKdbvAcDp8ez8dyiXex2RiZ2KipKT0oQJgnb/QF+f6w8NzS+2kA3blZe6NguP
+         19bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2J2p39vYWIjK2PHPaVp/kAuU//ZgnpdqvGdxFfLRGuo=;
-        b=C0H9uUBY5ZAfVdwbO5xv011E7WeLBScYsBLA0tXVDKRTkKCkiqcM9n715UA9z0ag4t
-         PaXJsbdZIJGeL6lLNaAJPbyAne2I6yXzr9QNOujn1T7rWaFT1pK4iZONDNJf3Sq75n6G
-         dZTAhb8Gm/KpB6VNzfe0kOn8DpyNa8YsoLexvFbcGZHXxh9liyhM9uEWj+K7TtWmqxdh
-         S/0HWzHGS76Q7/m7agLUu3S70AIHMgPh9qYNFEz/090WmOONHq+xxiivaxct1NDuszmh
-         jQPvYVA8TGRqTjFj+df/R6LoVsfSQQG+O87hGB8Yyov1p8vl/uyBoelvC4aEHQigE4v0
-         +OrQ==
-X-Gm-Message-State: APjAAAWS2FsjUnHX3T3ckyCxYjXHgC9he8H+ZLugxzi27azGKLt6823R
-        Vub9P6SZLv8Ihj1L82VAafYT3Tp6kn0OPrqoSsEJ6g==
-X-Google-Smtp-Source: APXvYqyKn8GnUo8H+BwykiwRsIgS60PP2QhBMHuxu7vPCrWDW2eAFSghqUuAVt3qyOR+YGMu0ypFGGA4Mqe+1SVEBG8=
-X-Received: by 2002:a92:db03:: with SMTP id b3mr24286801iln.109.1573518514143;
- Mon, 11 Nov 2019 16:28:34 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=PnAPQWQsUEt4wwWHImoVnvv+5EITS4xBtB+T58NzyJ0=;
+        b=piAaE6tCpXxKDPS5HcTeY2lJrtLdFmszC+VimAJwAXGZH4OzOz07R0MvykFgaFbYk/
+         Lm8ltxkNtfKbVQJZ5b7Qe2zZTCBWJzrSjmlWVWWcVAAxYIOo8XS5YEYt/O48ML/o7EU3
+         /ipvGTThumOGGE+ofDoB6UIxxcwOYDk7ZI8Wu1CBmHzx5EBuIfso3TTUqqIb1463uDO/
+         wkHieAjhbT5YAHP2ma5deiglXlL7ErSC9571yamcNqor/y6vGkdCQ2uwTCkBMm6ox8LI
+         gyd2uJnnr6WvVWcVpm4IKe/QlEvqTMKXzWcRhLWFmSpsWldUuyIWGPFZJJ7sOauxryj2
+         aR0g==
+X-Gm-Message-State: APjAAAVHVMlVOROhiyAiEtXKuvh+PnO1sGOlyPvZwbU4edV6Tf+/PcMW
+        QXsAO5HYbkK8DbeKOJeLLLu5UeTF
+X-Google-Smtp-Source: APXvYqzyRSJX8eNbNqkjFwrSKBQ999y+TaQ0qhK9QGBDzvcN2DkXguPAAjkv/V7uq4dVLj+6RLZT4Q==
+X-Received: by 2002:a63:225f:: with SMTP id t31mr19000333pgm.358.1573520913333;
+        Mon, 11 Nov 2019 17:08:33 -0800 (PST)
+Received: from generichostname ([204.14.239.83])
+        by smtp.gmail.com with ESMTPSA id a6sm2967665pgc.4.2019.11.11.17.08.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Nov 2019 17:08:32 -0800 (PST)
+Date:   Mon, 11 Nov 2019 17:08:29 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     James Coglan <jcoglan@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: [PATCH] t4215: don't put git commands upstream of pipe
+Message-ID: <8e950ddfba3fa0f6d0551a153228548da6af6117.1573520653.git.liu.denton@gmail.com>
+References: <20191018152121.GE29845@szeder.dev>
 MIME-Version: 1.0
-References: <CAGyf7-G3NDp--2nUbri_0EqvSLF21M0gsFCOKDCWMY+e68Htog@mail.gmail.com>
- <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
-In-Reply-To: <87f16645-6af4-9703-1d0d-eb64728d2849@gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 11 Nov 2019 16:28:23 -0800
-Message-ID: <CAGyf7-EqQdvg4fQcZJv6BpqZ9hPDx72KBiLp1Xe3Ur7NrSMBeA@mail.gmail.com>
-Subject: Re: Split commit graphs and commit-graph read
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>, "peff@peff.net" <peff@peff.net>,
-        "gitster@pobox.com" <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191018152121.GE29845@szeder.dev>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 10, 2019 at 5:19 PM Derrick Stolee <stolee@gmail.com> wrote:
->
-> > But git commit-graph read isn't:
-> > .../objects$ git commit-graph read
-> > fatal: Could not open commit-graph
-> > '/path/to/repository/objects/info/commit-graph': No such file or
-> > directory
-> >
-> > Running some tests with commands like git for-each-ref and git
-> > rev-list shows that the "split" commit graph is being used (setting
-> > core.commitGraph=false makes commands noticeably slower), so
-> > functionally all seems well. But should git commit-graph read be
-> > handling this better?
->
-> Unfortunately, you're running into an issue because I designed the
-> "read" subcommand poorly (and also forgot to update it for
-> incremental commit-graph files). The biggest issue is that "read"
-> is not really meant for end-users. It really should have been built
-> as a test-tool. This point was corrected when I got around to writing
-> the multi-pack-index since it uses "test-tool read-midx" instead of
-> add.
->
-> To fix this issue, I would probably go about it by removing the "read"
-> subcommand and creating a "test-tool read-commit-graph" for the tests
-> that need that output.
->
-> If others on-list think that the better thing to do is to update the
-> "read" subcommand to provide the same output, but iterate over each
-> layer of an incremental commit-graph, then I can do that work instead.
+When git commands are placed in the upstream of a pipe, their return
+codes are lost. In this particular case, it is especially bad since we
+are testing the intricacies of `git log --graph` behavior and if we hit
+an unexpected failure or segfault, we want to know this.
 
-I was only running "git commit-graph read" as another way of verifying
-that everything looked good (to Git, that is). I'd already run "git
-commit-graph verify" and just found the discrepancy in their behavior
-surprising/interesting. For what it's worth, I personally don't see
-anything amiss with removing the "read" subcommand if that's simpler
-than updating it to handle incremental graphs. (Put differently, it's
-not a command I'd ever have Bitbucket Server run, or that I'm likely
-to try and run going forward. In this case I just completed some
-commit graph-related changes to Bitbucket Server and was looking for
-every possible avenue I could pursue to try and ensure what I did was
-producing the "correct" output after my changes got deployed to our
-internal dogfooding server.)
+Redirect the output of git commands upstream of pipe into a file and
+have sed read from that file so that git failures are detected.
 
-Thanks for taking the time to look into it and clarify the behavior! I
-really appreciate it.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+Thanks for the suggestion, Gábor. (Is that how I should refer to you? I
+recently learned that some poeple write their names in ALL CAPS as a
+convention.)
 
-Best regards,
-Bryan Turner
+A little late to the party but since this cleanup hasn't been done yet,
+let's do it now. We can apply this patch to the tip of
+'jc/log-graph-simplify'.
 
->
-> Thanks,
-> -Stolee
+ t/t4215-log-skewed-merges.sh | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index d33c6438d8..0a2555fb28 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -31,7 +31,8 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
+ 	git checkout _p && git merge --no-ff _r -m G &&
+ 	git checkout @^^ && git merge --no-ff _p -m H &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -68,7 +69,8 @@ test_expect_success 'log --graph with left-skewed merge' '
+ 	git checkout 0_p && git merge --no-ff 0_s -m 0_G &&
+ 	git checkout @^ && git merge --no-ff 0_q 0_r 0_t 0_p -m 0_H &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -99,7 +101,8 @@ test_expect_success 'log --graph with nested left-skewed merge' '
+ 	git checkout 1_p && git merge --no-ff 1_r -m 1_G &&
+ 	git checkout @^^ && git merge --no-ff 1_p -m 1_H &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -139,7 +142,8 @@ test_expect_success 'log --graph with nested left-skewed merge following normal
+ 	git checkout -b 2_s @^^ && git merge --no-ff 2_q -m 2_J &&
+ 	git checkout 2_p && git merge --no-ff 2_s -m 2_K &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -175,7 +179,8 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
+ 	git checkout 3_p && git merge --no-ff 3_r -m 3_H &&
+ 	git checkout @^^ && git merge --no-ff 3_p -m 3_J &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -210,7 +215,8 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
+ 	git merge --no-ff 4_p -m 4_G &&
+ 	git checkout @^^ && git merge --no-ff 4_s -m 4_H &&
+ 
+-	git log --graph --date-order --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --date-order --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -250,7 +256,8 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
+ 	git checkout 5_r &&
+ 	git merge --no-ff 5_s -m 5_H &&
+ 
+-	git log --graph --pretty=tformat:%s | sed "s/ *$//" >actual &&
++	git log --graph --pretty=tformat:%s >actual.raw &&
++	sed "s/ *$//" actual.raw >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.24.0.300.g722ba42680
+
