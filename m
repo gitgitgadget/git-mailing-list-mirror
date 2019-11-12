@@ -8,97 +8,126 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 911221F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 21:41:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7715C1F4B5
+	for <e@80x24.org>; Tue, 12 Nov 2019 21:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726923AbfKLVlV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 16:41:21 -0500
-Received: from mout.web.de ([212.227.17.11]:43607 "EHLO mout.web.de"
+        id S1726932AbfKLVlk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 16:41:40 -0500
+Received: from mout.web.de ([212.227.17.12]:55571 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726799AbfKLVlV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 16:41:21 -0500
+        id S1726799AbfKLVlk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 16:41:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573594875;
-        bh=QsRjCce8/tJHxQtWWDhQLGOHcM55mmQ0GvkvV07Upms=;
+        s=dbaedf251592; t=1573594895;
+        bh=ZLWl640KDSPyCRAi2GhMEZrlsOgu2deFWvr9DBLrd6o=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=Jq0+MOvwIMZ4idgw2gMFYDUq0s1OH5+PxkQlqmRrKR7rpgB2iI3epC/zSQBiWLH//
-         Vomc16MCdY32BSyKE6Ddmx5QJ3TUq3BSJNSGyu1JLNZK1GbT1ndP8I38CVUQyc8twL
-         9WYy7y9pQse6hyZV6D56y8fXJN7yDGGiCvP8byd0=
+        b=O2LEgUE6oNTUXcGa5V9BdsdBKGKH+naLZaY1UaVph4nLtg9zR+T6y261nxHaJEuIn
+         3GDxmFdeTfWebP7aMiTzITD4KvggYUfMuM1unJ7RH3eboNUeIIZCOSh63W2gG/YylK
+         GrZ/c3Du2IWDMD4Rpd1ASdDeAVPbtWaOyRqb6aWE=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LfzxX-1i5kKu2iL5-00pbg1; Tue, 12
- Nov 2019 22:41:15 +0100
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKrU4-1iUdup0G7E-000558; Tue, 12
+ Nov 2019 22:41:35 +0100
 X-Mozilla-News-Host: news://nntp.public-inbox.org:119
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Sixt <j6t@kdbg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: mingw: use COPY_ARRAY for copying array
-Message-ID: <35123410-245b-0e3f-7227-94c293b57182@web.de>
-Date:   Tue, 12 Nov 2019 22:41:14 +0100
+Subject: parse-options: avoid arithmetic on pointer that's potentially NULL
+Message-ID: <39a0b622-f725-9284-ea50-19cf4078209d@web.de>
+Date:   Tue, 12 Nov 2019 22:41:34 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7VWwBwZ2gElQCHNKHQGtKuTiXSdcJEe5xitazCytwbettfQNM0m
- Z2WjtAGURQgxAAn64QhTkB6gBnsrXrb455U4JmlP5NIBDpxFVOJImXV08bMSlQjAEU7IxrD
- 629r8Ni3+kbXhpJ8MjhJ7MFKUWknxeeO3F806o/flvuoLA7FU1bVl7Kymss0YXXbQbwKDkY
- EXN/i7G73Ho+cZAS0ZKsg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rNBpOduHYx8=:ToUemNP/x11Z98tLqs194n
- FoX/+fN5G9AJqrhrauOWE389DowmErwRl3mk7OHa2rfsjDVLSkqNwT3z8YDupgZ99QRa43k1o
- Bxsb3iBk6a3rrGFyZVXsOl8Far8BLGIVdX8qeMNVl6COXHnSB1qc9NjuIuZSre8X4/2s9PMCA
- Ls7ZiFGGJGS9GJrN0oXD7IQn+m6Tkwg+idHzAFaPlNSLAfY60S7jjX28BUrOuqvuLufT9ztXY
- QGwwpe7tqUR9ZURzCZySauPn/BigC9WLKyEzirwwepljPWph1EcKBEbJ2zplPFnU20/rbPDvw
- XsC4HK4DEEHnoRU5gMYu17+wNV2yLVmBvECP5jrt0u8Q7WpUm2iF5dkUT6UtP+f6QFnjHy5MY
- jiKn0l3xpP9ZTiLpAVZ42PFvqfny+qIUjE12CcdKa632mIgjSeXLZtf32SPBh7T/K2LGMZNRx
- 90VNfCZ0pWgNhrCILbpNECabIzUVp3ZrLDfBEqswvpat3mlnqNy4YCCgpS9KdoA6rErRSCcgL
- 2n+yxfhyZxH+l1zLg7x0qLJzKVzifDBK0B1CpL3TDRA17blHmaK55n64YFXKHxYnuy8rwN0hD
- aIY+KEnmjKfeoWt3MgT+RejpaVQW7IeHEtEborU644qANsgy8aLOgSiSXjIVp8Z665WmoE1AI
- 1KE3MjOW+22G+//5olZVVwPvfUl1s4rJyAqGkoYCN34XkEmhj4MLXFv2dQ7fbSMdAsxKD9YDz
- djr7UanijVTXR+7tYoPRa1d8fuemBLJaFs1fFCz8TcF0Fr+pMem8LSKsnr0LY4F4icrLj8A5s
- Fyrhgpbn7sLkRCf4iGnLv3cGDfWorPaT+gWDMpSKpwxFc7ubqQkeMIqXDiUnxjnBKeBl5w1Jq
- ceTMfSaeKVPA1N8wd2ExJGEDvknArWo+qeFgTASwaCmswqlig8LLd5QpZQ8n8zhbAT37OJeik
- E6rszTYfTjzJOaVES3VHIWO+XmocQDJJLeMXqieSWae6QBzLdQDyneWWniB5lKoE+31g0IJDm
- cObOhB15UBuMZXi7WvXLaj9v1f09kIJAvXYKt1/j8IJPn19jSQQtSb+iahEjYahv8YSd6+pep
- GA61tkHH9zTyemOuf3OtJOcJIaKgSx6SkeRX7S7b30mUfGyLEfPidjt5jaqKepiyfaNrfCW9V
- 95L9ZRanXudl9siD51F8B3DM3y/+wf9iimBG8ZlHNKsr1Gc8ZyO/BqqbLMUHHx6AjqYnuBKXa
- vHmoh8GLWQoipPZQddZNBcisXTF2bduDArfbT9w==
+X-Provags-ID: V03:K1:Q3m5Ce68SX3Tedgf436CaPqnlZKOu6+755lJEMFMHpnQf8wkpJY
+ ydua8DuirRuuUHAMOn+4WedssW2LWs96N4VRPisbuU5YrAeWBgbEJPM4g3cyhX8voDRRtfz
+ EIXgrjTmBvJuMJXhXDtLrsfYQ8jx0WdecCM4FXMWsAUXTxewevQRgOPq/kgR6kumxvDKO1M
+ RY92QF3ekeXpGZ58O0IYA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:IteZuPLwW3o=:HaQeTdunRl/3dfaBbJDqT5
+ qfllj7giFoWQEw4UxSnkS2oW/J+fgxqgwGPH5Ep4pn4zQktWa+XoEyfY7Se4GfzYzKBYWzRaW
+ iHkqhsFXbvQZaKL6S751+bmhqeKHET01ZASuQzjKTi2E8+IRiJ21EH9C2wSDYkVPSwec5oD30
+ V0PJyFV6mk2k1IsRHLKp6n4Zzahn4BC1GGs3WzX21TyuCoOWnyxFT/fcO5pcU0Y9fgZUVF28e
+ N6QKuPwwcooF4UjxJ5c+wsF1td3GONXCotW75Liar6UpsfLx9M0JVwK9q2iyRaJqqYTBBbcsG
+ Xv3qnxcrIvKFzjf5jfu0Dtv0hKYbMO+kC7Az5v1usYIOZIX+GM3vAuWPpsCtcjPxt1+5by5M7
+ L3Vl+ESzMgnJLqhrUKFH5cQ0O//YVYTC5X6QIGNMzu4BvclT1zWHwpLGS0H5W7cI1rojFZMkO
+ ycygQjvE/0BNm01+8/26VVpcpX8cv43gCiYaPCsE0e59ZlDFvPRVThATlOtRXo90WpaMI41if
+ 9qXvH9io//RWjElLjzeyw3hyvo3/Dd8OP2y6+AiTnyh2Gd6ucAKyA+1INPNNTxs45SL35+nM/
+ fSduvqbvF/x9BYoePZhXvpyhWFsH7pSjKJJGJJ0eOW0CIkU95XCMhQmRRWkXec68Bt6Gzf/xu
+ A6N4F2s6G6S+Kak5RD/7eB9Tvqi8PlDXIAUtR4wetCTQtDP2j8yIZyw0nq2P38J4y6TBfGLOW
+ rmKh5fJ2hx05brEBHc7a8cq8DNwqxX0/sns7nvtzC2P4cbm3MYfQF5/MgY5/MIwdaiUY4DFm1
+ xfZMkqwLz5F5KEwCCeqZZbF4LLtNQGX2gpRzjmbipnef/95O570DXn2pkNo06cyxCflGWW5oP
+ MzD+1F+hulkGXKNipvFqiZTwyO7meoMignVh8kUkMWKEV0TDqbhVlPtdKRVum7iuruccVPsoZ
+ 6v99BsuUtMi43WyA4HvR1UWU4d+C+oM4IopUXA1etAPQpS6ht6Sh/5vhNmY6HF8UaY7NIRSPm
+ V4PyeSbe1KP1MgeewoRVe1MZLVn62FTVyxEkK3bm3kJeMy4VmyCeHOwwS9bxfbLDVsJ3/Elih
+ agzQEwil2iijIawczHJLaB/8OiA74IUrgSw/p9VV8MQ9etY0ituezQxWHf3VdBdzvIGBJIrKb
+ r/uwmTU+dtbHFPEu61APDlh8+ftJL/XPCGhVY8QbVXT1CKaxyTQs/3GxXpzMcPA86mVr1wGgi
+ O0F8ek1J4yz7QhGQqesCqXzWoODYfRIK4jGC6gA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use the macro COPY_ARRAY to copy array elements.  The result is shorter
-and safer, as it infers the element type automatically and does a (very)
-basic type compatibility check for its first two arguments.
+parse_options_dup() counts the number of elements in the given array
+without the end marker, allocates enough memory to hold all of them plus
+an end marker, then copies them and terminates the new array.  The
+counting part is done by advancing a pointer through the array, and the
+original pointer is reconstructed using pointer subtraction before the
+copy operation.
 
-Coccinelle and contrib/coccinelle/array.cocci did not generate this
-conversion due to the offset of 1 at both source and destination and
-because the source is a const pointer; the semantic patch cautiously
-handles only pure pointers and array references of the same type.
+The function is also prepared to handle a NULL pointer passed to it.
+None of its callers do that currently, but this feature was used by
+46e91b663b ("checkout: split part of it to new command 'restore'",
+2019-04-25); it seems worth keeping.
+
+It ends up doing arithmetic on that NULL pointer, though, which is
+undefined in standard C, when it tries to calculate "NULL - 0".  Better
+avoid doing that by remembering the originally given pointer value.
+
+There is another issue, though.  memcpy(3) does not support NULL
+pointers, even for empty arrays.  Use COPY_ARRAY instead, which does
+support such empty arrays.  Its call is also shorter and safer by
+inferring the element type automatically.
+
+Coccinelle and contrib/coccinelle/array.cocci did not propose to use
+COPY_ARRAY because of the pointer subtraction and because the source is
+const -- the semantic patch cautiously only considers pointers and array
+references of the same type.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- compat/mingw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Patch formatted with --function-context for easier review.
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index fe609239dd..2f4654c968 100644
-=2D-- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1566,7 +1566,7 @@ static int try_shell_exec(const char *cmd, char *con=
-st *argv)
- 		while (argv[argc]) argc++;
- 		ALLOC_ARRAY(argv2, argc + 1);
- 		argv2[0] =3D (char *)cmd;	/* full path to the script file */
--		memcpy(&argv2[1], &argv[1], sizeof(*argv) * argc);
-+		COPY_ARRAY(&argv2[1], &argv[1], argc);
- 		exec_id =3D trace2_exec(prog, argv2);
- 		pid =3D mingw_spawnv(prog, argv2, 1);
- 		if (pid >=3D 0) {
+ parse-options-cb.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 1240a8514e..c2062ae742 100644
+=2D-- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -161,17 +161,18 @@ int parse_opt_tertiary(const struct option *opt, con=
+st char *arg, int unset)
+
+ struct option *parse_options_dup(const struct option *o)
+ {
++	const struct option *orig =3D o;
+ 	struct option *opts;
+ 	int nr =3D 0;
+
+ 	while (o && o->type !=3D OPTION_END) {
+ 		nr++;
+ 		o++;
+ 	}
+
+ 	ALLOC_ARRAY(opts, nr + 1);
+-	memcpy(opts, o - nr, sizeof(*o) * nr);
++	COPY_ARRAY(opts, orig, nr);
+ 	memset(opts + nr, 0, sizeof(*opts));
+ 	opts[nr].type =3D OPTION_END;
+ 	return opts;
+ }
 =2D-
 2.24.0
-
