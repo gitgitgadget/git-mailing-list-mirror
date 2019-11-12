@@ -8,126 +8,133 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7715C1F4B5
-	for <e@80x24.org>; Tue, 12 Nov 2019 21:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36921F5A1
+	for <e@80x24.org>; Tue, 12 Nov 2019 23:06:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbfKLVlk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 16:41:40 -0500
-Received: from mout.web.de ([212.227.17.12]:55571 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726799AbfKLVlk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 16:41:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573594895;
-        bh=ZLWl640KDSPyCRAi2GhMEZrlsOgu2deFWvr9DBLrd6o=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=O2LEgUE6oNTUXcGa5V9BdsdBKGKH+naLZaY1UaVph4nLtg9zR+T6y261nxHaJEuIn
-         3GDxmFdeTfWebP7aMiTzITD4KvggYUfMuM1unJ7RH3eboNUeIIZCOSh63W2gG/YylK
-         GrZ/c3Du2IWDMD4Rpd1ASdDeAVPbtWaOyRqb6aWE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MKrU4-1iUdup0G7E-000558; Tue, 12
- Nov 2019 22:41:35 +0100
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: parse-options: avoid arithmetic on pointer that's potentially NULL
-Message-ID: <39a0b622-f725-9284-ea50-19cf4078209d@web.de>
-Date:   Tue, 12 Nov 2019 22:41:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726959AbfKLXGl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 18:06:41 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:38607 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726932AbfKLXGl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 18:06:41 -0500
+Received: by mail-pg1-f194.google.com with SMTP id 15so3361pgh.5
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 15:06:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=NJodqdxpkw5l2aSpq2AuW1sJevKDn4GpCSuWrgGGl5E=;
+        b=l8kdZu+3qWWdriiUqShC4AO1Wd1+vtYpnfI+0kjCaca/41+L1xuGuceof8M5VgVZo9
+         TyQSpCQS6U/q3FVX0vPE2l2s2IKOzcOI5mMJ9z14SJf7w1mBEJScwL6YIyBstV8n7RTz
+         vptLh+ozn+f8qXi5ee+uBx6atoQBu9f9o3qphB85pQCm2AGAgWt8RG6lfZgn7VxeVW9G
+         FEMmkwFw0HLNQ4hfTa1HPknubU5lTR4JBcmR9ksvobKsjlu7jfSOhGMp6Solz6rhC3KU
+         JXbWg47y6638FCbt7T8DVA3JYqE+sH0QOu1lipucsVbHlQxJGvmZz+fRPjO5Hcu6PIP5
+         oEpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=NJodqdxpkw5l2aSpq2AuW1sJevKDn4GpCSuWrgGGl5E=;
+        b=fNFsmD6c292nvkNlY6MLRSm/SRdsxICddZ5EfqIAwlpmWmcZWIMc8wIaRFKpN3doIA
+         9Q/+EjAYYvEU5GCcvWnBjNc8KJk4iWJn9FPWnT7Zl90GkPrjVHZqhF4XHPsCODZjYQV4
+         WcmfOAr+3QKhKjtwCjz0PUBq5G7g9wtbO5+oUSFKnePZGUh9EZvIVGbHeDl02X8+LzKh
+         jy+YlZNwWqqcnCoId7DmR8Znr4WCxPmXzthLjnW4JPGei22YhX0cPT96lttydS4c9LQ8
+         6ed3x1QKAlrP463RzGJoMtJ1mmptnlH+h4bRgYaxpvIqQrVW4XfG9NZyk9LmzvRcrE6j
+         tvEA==
+X-Gm-Message-State: APjAAAXijC7WaojGeYNOmXaEL4JCJpzab7nLeTifjq2gLQ2dAYSArqWa
+        arT3b7jLmxUZ4ig+ljmY6PKJIp6P
+X-Google-Smtp-Source: APXvYqyRNlmYxAikd9RGFlOcaPH1FiKuAGBzLmceJpss3G1gJBfJX6NugSJqCiNRSSnxQCbYMObEuA==
+X-Received: by 2002:a62:7a85:: with SMTP id v127mr488459pfc.141.1573600000179;
+        Tue, 12 Nov 2019 15:06:40 -0800 (PST)
+Received: from generichostname ([204.14.239.83])
+        by smtp.gmail.com with ESMTPSA id d8sm32674pfo.47.2019.11.12.15.06.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Nov 2019 15:06:39 -0800 (PST)
+Date:   Tue, 12 Nov 2019 15:06:37 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v5 10/14] t5520: test single-line files by git with
+ test_cmp
+Message-ID: <20191112230637.GA61654@generichostname>
+References: <cover.1573152598.git.liu.denton@gmail.com>
+ <cover.1573517561.git.liu.denton@gmail.com>
+ <2f9052fd94ebb6fe93ea6fe2e7cd3c717635c822.1573517561.git.liu.denton@gmail.com>
+ <xmqqh839fzbm.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Q3m5Ce68SX3Tedgf436CaPqnlZKOu6+755lJEMFMHpnQf8wkpJY
- ydua8DuirRuuUHAMOn+4WedssW2LWs96N4VRPisbuU5YrAeWBgbEJPM4g3cyhX8voDRRtfz
- EIXgrjTmBvJuMJXhXDtLrsfYQ8jx0WdecCM4FXMWsAUXTxewevQRgOPq/kgR6kumxvDKO1M
- RY92QF3ekeXpGZ58O0IYA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:IteZuPLwW3o=:HaQeTdunRl/3dfaBbJDqT5
- qfllj7giFoWQEw4UxSnkS2oW/J+fgxqgwGPH5Ep4pn4zQktWa+XoEyfY7Se4GfzYzKBYWzRaW
- iHkqhsFXbvQZaKL6S751+bmhqeKHET01ZASuQzjKTi2E8+IRiJ21EH9C2wSDYkVPSwec5oD30
- V0PJyFV6mk2k1IsRHLKp6n4Zzahn4BC1GGs3WzX21TyuCoOWnyxFT/fcO5pcU0Y9fgZUVF28e
- N6QKuPwwcooF4UjxJ5c+wsF1td3GONXCotW75Liar6UpsfLx9M0JVwK9q2iyRaJqqYTBBbcsG
- Xv3qnxcrIvKFzjf5jfu0Dtv0hKYbMO+kC7Az5v1usYIOZIX+GM3vAuWPpsCtcjPxt1+5by5M7
- L3Vl+ESzMgnJLqhrUKFH5cQ0O//YVYTC5X6QIGNMzu4BvclT1zWHwpLGS0H5W7cI1rojFZMkO
- ycygQjvE/0BNm01+8/26VVpcpX8cv43gCiYaPCsE0e59ZlDFvPRVThATlOtRXo90WpaMI41if
- 9qXvH9io//RWjElLjzeyw3hyvo3/Dd8OP2y6+AiTnyh2Gd6ucAKyA+1INPNNTxs45SL35+nM/
- fSduvqbvF/x9BYoePZhXvpyhWFsH7pSjKJJGJJ0eOW0CIkU95XCMhQmRRWkXec68Bt6Gzf/xu
- A6N4F2s6G6S+Kak5RD/7eB9Tvqi8PlDXIAUtR4wetCTQtDP2j8yIZyw0nq2P38J4y6TBfGLOW
- rmKh5fJ2hx05brEBHc7a8cq8DNwqxX0/sns7nvtzC2P4cbm3MYfQF5/MgY5/MIwdaiUY4DFm1
- xfZMkqwLz5F5KEwCCeqZZbF4LLtNQGX2gpRzjmbipnef/95O570DXn2pkNo06cyxCflGWW5oP
- MzD+1F+hulkGXKNipvFqiZTwyO7meoMignVh8kUkMWKEV0TDqbhVlPtdKRVum7iuruccVPsoZ
- 6v99BsuUtMi43WyA4HvR1UWU4d+C+oM4IopUXA1etAPQpS6ht6Sh/5vhNmY6HF8UaY7NIRSPm
- V4PyeSbe1KP1MgeewoRVe1MZLVn62FTVyxEkK3bm3kJeMy4VmyCeHOwwS9bxfbLDVsJ3/Elih
- agzQEwil2iijIawczHJLaB/8OiA74IUrgSw/p9VV8MQ9etY0ituezQxWHf3VdBdzvIGBJIrKb
- r/uwmTU+dtbHFPEu61APDlh8+ftJL/XPCGhVY8QbVXT1CKaxyTQs/3GxXpzMcPA86mVr1wGgi
- O0F8ek1J4yz7QhGQqesCqXzWoODYfRIK4jGC6gA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh839fzbm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-parse_options_dup() counts the number of elements in the given array
-without the end marker, allocates enough memory to hold all of them plus
-an end marker, then copies them and terminates the new array.  The
-counting part is done by advancing a pointer through the array, and the
-original pointer is reconstructed using pointer subtraction before the
-copy operation.
+Hi Junio,
 
-The function is also prepared to handle a NULL pointer passed to it.
-None of its callers do that currently, but this feature was used by
-46e91b663b ("checkout: split part of it to new command 'restore'",
-2019-04-25); it seems worth keeping.
+On Tue, Nov 12, 2019 at 02:17:33PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > In case an invocation of a Git command fails within the subshell, the
+> > failure will be masked. Replace the subshell with a file-redirection and
+> > a call to test_cmp.
+> 
+> I.e.
+> 
+>     test "$(git cmd args)" = "expected-string"
+> 
+> =>
+> 
+>     git cmd args >actual && echo "expected-string" >expect &&
+>     test_cmp expect actual
+> 
+> which makes sense.  It may break if expected-string begins with a
+> dash or something silly like that, but a quick eyeballing over the
+> patch tells me that we are safe there.
+> 
+> Technically, "$(git cmd args)" used as a command line option of
+> another command is called "command substitution", not "subshell".
+> The proposed log message may need to be updated.
 
-It ends up doing arithmetic on that NULL pointer, though, which is
-undefined in standard C, when it tries to calculate "NULL - 0".  Better
-avoid doing that by remembering the originally given pointer value.
+Okay, I'll send out a new reroll with some log message cleanup.
 
-There is another issue, though.  memcpy(3) does not support NULL
-pointers, even for empty arrays.  Use COPY_ARRAY instead, which does
-support such empty arrays.  Its call is also shorter and safer by
-inferring the element type automatically.
+> 
+> > This change was done with the following GNU sed expressions:
+> >
+> > 	s/\(\s*\)test \([^ ]*\) = "$(\(git [^)]*\))"/\1echo \2 >expect \&\&\n\1\3 >actual \&\&\n\1test_cmp expect actual/
+> > 	s/\(\s*\)test "$(\(git [^)]*\))" = \([^ ]*\)/\1echo \3 >expect \&\&\n\1\2 >actual \&\&\n\1test_cmp expect actual/
+> >
+> > A future patch will clean up situations where we have multiple duplicate
+> > statements within a test case. This is done to keep this patch purely
+> > mechanical.
+> 
+> OK.  One thing that worries me is if the existing tests are not
+> expecting (no pun intended) to see 'expect' or 'actual' (e.g. if
+> they somehow rely on output of "ls-files -u", we are now adding two
+> untracked files in the working tree).
 
-Coccinelle and contrib/coccinelle/array.cocci did not propose to use
-COPY_ARRAY because of the pointer subtraction and because the source is
-const -- the semantic patch cautiously only considers pointers and array
-references of the same type.
+Do you mean `ls-files -o`? I think `-u` means "unmerged" while `-o`
+means "others" (or "untracked"). This test doesn't have any instances of
+`-o` being used.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Patch formatted with --function-context for easier review.
+> Another is if the git command
+> is expected to produce nothing, possibly after failing, and the test
+> is expecting to see an empty string---in such a case, the hiding of
+> the exit status would have been intentional ;-)  We'd want to be sure
+> that we aren't breaking the tests like that by reading through the
+> result of applying this patch.
+> 
+> Since this is just a single file, I trust you have already done such
+> sanity checking ;-)
 
- parse-options-cb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Thanks for double-checking on me. I have, indeed, manually verified the
+changes.
 
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 1240a8514e..c2062ae742 100644
-=2D-- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -161,17 +161,18 @@ int parse_opt_tertiary(const struct option *opt, con=
-st char *arg, int unset)
-
- struct option *parse_options_dup(const struct option *o)
- {
-+	const struct option *orig =3D o;
- 	struct option *opts;
- 	int nr =3D 0;
-
- 	while (o && o->type !=3D OPTION_END) {
- 		nr++;
- 		o++;
- 	}
-
- 	ALLOC_ARRAY(opts, nr + 1);
--	memcpy(opts, o - nr, sizeof(*o) * nr);
-+	COPY_ARRAY(opts, orig, nr);
- 	memset(opts + nr, 0, sizeof(*opts));
- 	opts[nr].type =3D OPTION_END;
- 	return opts;
- }
-=2D-
-2.24.0
+> 
+> The mechanical conversion procedure itself looks OK.
+> 
+> Thanks.
