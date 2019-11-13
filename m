@@ -2,90 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 98C771F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 06:45:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3C561F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 07:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbfKMGpu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 01:45:50 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39909 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbfKMGpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 01:45:50 -0500
-Received: by mail-ed1-f66.google.com with SMTP id l25so887260edt.6
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 22:45:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=If60Hk1jJvzUapikmoEqyDuUOLQQwwqo4EMBQz1hEWk=;
-        b=QoIe1isfo2GXJD53Ju1rl6Sck4L2JGnfFMvzf6vgpSYdOn6jUU6OFvOJ5IXU/LcHQm
-         Dap6Vul47YpA3wynvxdrcQQvhIi//JYEnaAgL1eI9fvwKuVDOkS9CZUrnlIjROOOzYgp
-         RhdgS/eXDVMICyjxiE5ZaZaxWuhd14Qo4Zm2GAMs3a82vadJOoQ7kF+qHbVFP7xy3krT
-         1YBk99BpHbooOSb4Tp25oOZzdtchm0ayiBor2SUFShTkWq6Hk7lSt69l8NWQ9//DnWqS
-         uJDKupejenuQjr0PuDdqJj/j6+aGX6B4DV8u41oJhahhnUspEhRz9/dMixRCGA/zp1Uo
-         mIOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=If60Hk1jJvzUapikmoEqyDuUOLQQwwqo4EMBQz1hEWk=;
-        b=B119QhmGhFKXVxQjIGr7WOzkwuec/dS3RLHEFKo5PrFaREGGh/edFG5YpVcuceU1Yf
-         Dlnl7YsM9xHIaGipTBimPXDPYsJcXlOi00lQFlJfSpPp6qLvFKKLVCXhFtuqKlmvn8Sw
-         zgWBiKDD+lwFUjr8NYLCL2qOs5c9IWLHGr7flcOGQvivf/tzfxr2T6clC/9oWm/WBSv3
-         01Nm+ysWGPcXd9AH/KflocaeUu8CyGIuLGwaNgwPHHaPMr2BDi8QMc4KALAtkoBA2Zk4
-         qVrHFxuh6AWUcRIZpdAf8trvJS0EEy6hesxhssiaRG5KYDgIWDSNZvozAx4HhLQXKV0o
-         WN7g==
-X-Gm-Message-State: APjAAAVw5lKNgsE1dnfJ5H85O375Om7qvTnXbMAeSCZ1dZ+W8Dhcfbcn
-        F20Q547w8Sy792vZP1a6RgxRvRvAEvZAdvlyh2M=
-X-Google-Smtp-Source: APXvYqy7R2mvVqBprKqm5d74LirCUK0X63hu0gCtFxSSU7AcesR4DmrUvp9kCFs9QaVpGrHRLlrKuOdfY7UanhOA0Y0=
-X-Received: by 2002:a17:906:1e02:: with SMTP id g2mr1261862ejj.6.1573627546964;
- Tue, 12 Nov 2019 22:45:46 -0800 (PST)
+        id S1726160AbfKMHMj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 02:12:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55735 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbfKMHMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 02:12:39 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 60B5AA5DC1;
+        Wed, 13 Nov 2019 02:12:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=xK4K2BOLNVIQH72mRl3Q6xAK+/A=; b=Nm+9k9
+        p3jeVQm/+KYCBxsD/3/78VN94fGugXvJi3k89Sgi3H2TBccuX32BxCt/kBuLvzqz
+        wf12d0G/Q24O4N3gNZwQPyp5Q7KLsM3S+2SnQVTkHS4CmN+1XDLUUYQayGh3yWBx
+        UULRdfU62ybUgM+xhGFSexZLaH8XOQg0sG5C8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=onf6iAeAfPD4+V6TmwF46Nbx5DmsrSTe
+        xSJMbL0Q1zhkZilAEjW/uE1P0yDoX5c3G9TIh93kUgAHfg8TkSFzI6k7eeACo8Hv
+        jPL3P8GkDUKCQ1PI+y0nGnOeoADQ9eMHesKBnt6FfhtkdazuPBakMV0b3+udEaTf
+        po4/tDCz8dk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5940BA5DC0;
+        Wed, 13 Nov 2019 02:12:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 87361A5DBE;
+        Wed, 13 Nov 2019 02:12:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Mateusz Loskot <mateusz@loskot.net>, git@vger.kernel.org
+Subject: Re: Merge commit says refs/heads/<branchname> instead of <branchname>
+References: <CABUeae82_qQrR5s_QYsDzkVX6CeVM-B7pT5DZt_BjpL=KJdtBg@mail.gmail.com>
+        <20191113051530.GA3547@sigill.intra.peff.net>
+Date:   Wed, 13 Nov 2019 16:12:32 +0900
+In-Reply-To: <20191113051530.GA3547@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 13 Nov 2019 00:15:30 -0500")
+Message-ID: <xmqq8sokb673.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
- <CABPp-BFXs4qes20S+9AZd++p3epW4eJ7Vu7zU_PdDysZ_D-yrg@mail.gmail.com>
- <20191112184547.GA38770@google.com> <nycvar.QRO.7.76.6.1911122100220.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1911122100220.46@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 13 Nov 2019 07:45:34 +0100
-Message-ID: <CAP8UFD2qjUa=y81YPVSMcuEcDkrkrV=j912qySmG83pig=dFDg@mail.gmail.com>
-Subject: Re: [DISCUSSION] Growing the Git community
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "peff@peff.net" <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        Garima Singh <garimasigit@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: F72AEC02-05E4-11EA-B1D1-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 9:04 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> On Tue, 12 Nov 2019, Emily Shaffer wrote:
->
-> > I'm still really interested in participating on a mentors list like
-> > this; can we set one up?
->
-> I would subscribe immediately to a Git mentors' mailing list.
->
-> Thanks for bumping this,
+Jeff King <peff@peff.net> writes:
 
-I would also subscribe, and yeah I think it might be worth trying.
+> If I do:
+>
+>   git reset --hard tip && git merge --no-edit refs/heads/side
+>   git log -1 --oneline
+>
+> then I get:
+>
+>   Merge branch 'refs/heads/side'
+>
+> And the behavior seems the same going back to older versions of Git. Are
+> you sure your workflow hasn't changed somehow?
+>
+> Can you show an example that triggers the behavior for you?
 
-There is already a private git-security mailing list
-(https://groups.google.com/forum/#!forum/git-security) on Google
-Groups so perhaps it makes sense to have git-mentors there too.
+Yes, I am curious, too.
 
-Thanks!
+>> I'm failing to find in the docs what drives that change, what
+>> configuration option controls such (default?) message.
+>> 
+>> What may be the reason of that change?
+>
+> I think any change there would probably be unintentional (but it's hard
+> to say for sure without tracking it down).
+
+If older versions of git produced "Merge branch 'side'" when told to
+merge 'refs/heads/side', I could sort-of believe it.  And if we no
+longer do so and instead record "Merge branch 'refs/heads/side'",
+then I actually think that is a desirable change.
+
+By the way, pulling from self follows slightly different rule, i.e.
+
+	$ git pull . refs/heads/side
+
+would likely give you "Merge branch 'side'".
+
+
+
