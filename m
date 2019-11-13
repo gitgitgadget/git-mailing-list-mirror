@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CF251F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 18:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCB441F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 18:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728115AbfKMSz4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 13:55:56 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:38462 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728073AbfKMSz4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 13:55:56 -0500
-Received: by mail-lj1-f196.google.com with SMTP id v8so3788777ljh.5
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 10:55:54 -0800 (PST)
+        id S1728135AbfKMS4C (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 13:56:02 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:46904 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728073AbfKMS4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 13:56:01 -0500
+Received: by mail-lj1-f194.google.com with SMTP id e9so3758604ljp.13
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 10:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=pSD2VDvr82/IoSXeKYKK22kLzHcNEqKtYhNihOJgIKA=;
-        b=tSYHQHOPOxdBaONMz7QawOTT3QRJsNi0TsKf2dzlih+rxiZ4IKQ6hMlvWM2U0zmoQs
-         gbuBEJ5JKIBKHA5DWiM8faGwdiEnuirMClYx1fZc7G81YEnZ21VvZjBIxqE+h7rV5ZvM
-         tHDCNrXjMyXdJR4f5WKSl12Y2hpUUwu9wRawGL1+I6MnwDDoJo/96XPH1s7562jgBcTW
-         AnU3ghT6dD1GUQc5LPZxmpgWL3/XtZm/Bc36kOfieT7RCe5Mwkmz722ZbiIv7MS4bD6G
-         eNYnYOxbAgdypn/d7UZUflxgxGKMHRY8/NAcMEQtEO/HS/HWno0EiRcujWaJ+sto8qwX
-         ImYg==
+        bh=VY4OGchn4ttzxkTbz7bR4pwBhl0Mc2MoXTOBIK/hNjk=;
+        b=bhqF1TG3fR3f1gJ0gzQ5iJebplbI9HOSiu9r1K3L4bHgA+YgdOP3VIpLv8jh0PqlXJ
+         jaHcEvhWUDsUPWz5YTHNXN4qfe1V42bMtLG5uDZQcJgQFU08Tn2KUPBcqGc5v7ilPOmK
+         Aq4LM7u5zJidCw6vNNkCgLdqGK+TaRBEj4l8R20C3wmDtGiOsKQPbgvLNq7DNMxBbPul
+         0rnL5hSJnJjXYfIOM+aa40dybJQYDSGD/O74k0OXYJ+OtQn11kSRg413LTyzjeMqVx2U
+         Eyh/2s+82hxmBGCKmhVFuezEnt7EcLkc1cgxJtOGYW8BGQM0QFscIHA2hzEgiYQjq+RA
+         qL5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=pSD2VDvr82/IoSXeKYKK22kLzHcNEqKtYhNihOJgIKA=;
-        b=ncDn0E574A7L1Z+26+lLr5w7xGmQJqQ+eKx0XjQSN+1rtoXyL0J48veBnbTlaFsuCv
-         BQ5SeNU3paZ13fJfLgin6eGWqfsVUr675mO4Y7EubL4uQLAog0hVWY3mxL7XK5pzp5jD
-         g0XwRaeeB8rM7t47QTWIAx7oU2mC+wd0S7VubDjAwiYm2Ur8JqTE0ITwGbNy9o17L3+w
-         5L2PMKUvPKsmET7aQ9bhMcVrjUMQ78KpfNJLqLlewv6vgtNvCQMuzmxbGgL3B9W0Duc/
-         2EkODeFi7qiaMTRzxknhsG5BQ2Lfwk549SUnIplMDSFH3DGzs/iUIKVZp4gO3QnAcsSw
-         zz5g==
-X-Gm-Message-State: APjAAAXp6BqhumbOZnN1iTPuWSw4NJmXEnd+9Ii4CUULr1Nx2IKXhN1O
-        eq2lgJ9SFkhF/in9HSA2Ky4ynkWY
-X-Google-Smtp-Source: APXvYqwGiyMy8eMn/sTii/KylpOf62hiAgXfncl5aJmxVdCNifVyYj0cQeQn46s/pEa6BRe4wDHoxA==
-X-Received: by 2002:a2e:b4ba:: with SMTP id q26mr3646894ljm.60.1573671353671;
-        Wed, 13 Nov 2019 10:55:53 -0800 (PST)
+        bh=VY4OGchn4ttzxkTbz7bR4pwBhl0Mc2MoXTOBIK/hNjk=;
+        b=jPinVADL9rqu5YrztwBLrVHxPfzr4IWBK0egs3xT/mI8TItfM7SchjJRwCjgCkjqbD
+         XCdOHfmSXiC78UrszjjxKYD9U2UC6QjdqjqJkSSAyKkfabblxgvP88yhQv8AhO6LE2nQ
+         uIfdSowVF1ZNYxMng4Zaybt2UtV5tVlD+aClje8khqBBKdNYr6Fuc3oXkwF2XccpPC2t
+         rTW27bUSxavj9BMQMHpcDKzvjbLrLPa7WlOlz5ACCbZ2OxGHsHeCOsOyjTNsmtnMXM6R
+         3cfNke4zQT9LqQTZNA2VHXBgOPPSoHwfojaW5wpU0VbagpNnFs+Ww7MCV1M2D1TIGbLr
+         e1Jw==
+X-Gm-Message-State: APjAAAW4ONmSPPPOZlqhDDX4WaNGqbcpPK6/hPGTeMBf4Ipx+j0GPhTu
+        R7P/gznHUDSrrs71Zi/sBtYSOQle
+X-Google-Smtp-Source: APXvYqzM+1gbaLtoy5QVKh7UuvGwWB/gNqMYlbxMUH5R8xyt8n2AaDMXnkqSz4XvlQVXvCC5AsaAsQ==
+X-Received: by 2002:a2e:9f4c:: with SMTP id v12mr3272790ljk.167.1573671359316;
+        Wed, 13 Nov 2019 10:55:59 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id c24sm1422765lfm.20.2019.11.13.10.55.52
+        by smtp.gmail.com with ESMTPSA id c24sm1422765lfm.20.2019.11.13.10.55.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2019 10:55:52 -0800 (PST)
+        Wed, 13 Nov 2019 10:55:58 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/8] builtin/config: warn if "value_regex" doesn't canonicalize as boolean
-Date:   Wed, 13 Nov 2019 19:55:06 +0100
-Message-Id: <0f48ab4fc344b3cc226d0a45d13530022208ff3e.1573670565.git.martin.agren@gmail.com>
+Subject: [PATCH 8/8] builtin/config: die if "value_regex" doesn't canonicalize as boolean
+Date:   Wed, 13 Nov 2019 19:55:07 +0100
+Message-Id: <309960f7d4bd790a11c31b727475134368eb6a10.1573670565.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <cover.1573670565.git.martin.agren@gmail.com>
 References: <cover.1573670565.git.martin.agren@gmail.com>
@@ -67,72 +67,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With `--type=bool`, we try to canonicalize the "value_regex". If it
-doesn't canonicalize, we continue and handle the "value_regex" as an
-ordinary regex. This is deliberate -- we do not want to cause existing
-scripts to fail.
-
-This does mean that users might be at risk of missing out on config
-values depending on which representation they use in their config file:
-
-	$ git config foo.bar on
-	$ git config foo.baz true
-	$ git config --type=bool --get-regex "foo\.*" tru
-	foo.baz true
-	$ # oops! missing foo.bar
-
-Let's start warning when the "value_regex" doesn't look like a boolean.
-Document our intention of eventually requiring the canonicalization to
-pass.
+This completes the transition from handling a "value_regexp" with
+`--type=bool` as a regex, to handling it on the assumption that it
+canonicalizes to a boolean value.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-config.txt | 2 ++
- builtin/config.c             | 2 ++
- t/t1300-config.sh            | 3 ++-
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ Documentation/git-config.txt | 5 ++---
+ builtin/config.c             | 4 ++--
+ t/t1300-config.sh            | 5 +----
+ 3 files changed, 5 insertions(+), 9 deletions(-)
 
 diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 864375b1ec..43310ca3c0 100644
+index 43310ca3c0..598915eac6 100644
 --- a/Documentation/git-config.txt
 +++ b/Documentation/git-config.txt
-@@ -46,6 +46,8 @@ unset an existing `--type` specifier with `--no-type`.
- With `--type=bool` or `--type=bool-or-int`, if `value_regex` is given
+@@ -43,11 +43,10 @@ outgoing values are canonicalize-able under the given <type>.  If no
+ `--type=<type>` is given, no canonicalization will be performed. Callers may
+ unset an existing `--type` specifier with `--no-type`.
+ 
+-With `--type=bool` or `--type=bool-or-int`, if `value_regex` is given
++With `--type=bool-or-int`, if `value_regex` is given
  and canonicalizes to a boolean value, it matches all entries
  that canonicalize to the same boolean value.
-+The support for non-canonicalizing values of `value_regex` with
-+`--type=bool` is deprecated.
+-The support for non-canonicalizing values of `value_regex` with
+-`--type=bool` is deprecated.
++With `--type=bool`, `value_regex` (if given) must canonicalize.
  
  When reading, the values are read from the system, global and
  repository local configuration files by default, and options
 diff --git a/builtin/config.c b/builtin/config.c
-index 4e274d4867..2af62b95f8 100644
+index 2af62b95f8..837766cfb3 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -303,6 +303,8 @@ static int handle_value_regex(const char *regex_)
+@@ -303,8 +303,8 @@ static int handle_value_regex(const char *regex_)
  			cmd_line_value.boolean = boolval;
  			return 0;
  		}
-+		warning(_("value_regex '%s' cannot be canonicalized "
-+			  "to a boolean value"), regex_);
+-		warning(_("value_regex '%s' cannot be canonicalized "
+-			  "to a boolean value"), regex_);
++		die(_("value_regex '%s' cannot be canonicalized "
++		      "to a boolean value"), regex_);
  	}
  
  	if (type == TYPE_BOOL_OR_INT) {
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index f0e9a21dc4..3e067c211d 100755
+index 3e067c211d..9eccc255db 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -466,8 +466,9 @@ test_expect_success '--get canonicalizes integer value_regex with --type=bool' '
+@@ -465,11 +465,8 @@ test_expect_success '--get canonicalizes integer value_regex with --type=bool' '
+ '
  
  test_expect_success '--type=bool with "non-bool" value_regex' '
- 	echo true >expect &&
--	git config --type=bool --get foo.y4 "t.*" >output &&
-+	git config --type=bool --get foo.y4 "t.*" >output 2>err &&
- 	test_cmp expect output &&
-+	test_i18ngrep "cannot be canonicalized" err &&
- 	test_must_fail git config --type=bool --get foo.y4 "T.*" >output &&
+-	echo true >expect &&
+-	git config --type=bool --get foo.y4 "t.*" >output 2>err &&
+-	test_cmp expect output &&
++	test_must_fail git config --type=bool --get foo.y4 t >output 2>err &&
+ 	test_i18ngrep "cannot be canonicalized" err &&
+-	test_must_fail git config --type=bool --get foo.y4 "T.*" >output &&
  	test_must_be_empty output
  '
+ 
 -- 
 2.24.0
 
