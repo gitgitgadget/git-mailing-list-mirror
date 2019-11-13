@@ -7,89 +7,85 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA6F81F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 05:15:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BFE01F5A2
+	for <e@80x24.org>; Wed, 13 Nov 2019 05:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726086AbfKMFPb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 00:15:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:46186 "HELO cloud.peff.net"
+        id S1726162AbfKMFUp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 00:20:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46196 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726010AbfKMFPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 00:15:31 -0500
-Received: (qmail 12733 invoked by uid 109); 13 Nov 2019 05:15:31 -0000
+        id S1726086AbfKMFUp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 00:20:45 -0500
+Received: (qmail 12779 invoked by uid 109); 13 Nov 2019 05:20:45 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Nov 2019 05:15:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 13 Nov 2019 05:20:45 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22588 invoked by uid 111); 13 Nov 2019 05:19:03 -0000
+Received: (qmail 22616 invoked by uid 111); 13 Nov 2019 05:24:17 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Nov 2019 00:19:03 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 13 Nov 2019 00:24:17 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 13 Nov 2019 00:15:30 -0500
+Date:   Wed, 13 Nov 2019 00:20:44 -0500
 From:   Jeff King <peff@peff.net>
-To:     Mateusz Loskot <mateusz@loskot.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Merge commit says refs/heads/<branchname> instead of <branchname>
-Message-ID: <20191113051530.GA3547@sigill.intra.peff.net>
-References: <CABUeae82_qQrR5s_QYsDzkVX6CeVM-B7pT5DZt_BjpL=KJdtBg@mail.gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     matheus.bernardino@usp.br, git@vger.kernel.org,
+        christian.couder@gmail.com, olyatelezhnaya@gmail.com,
+        pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
+        stefanbeller@gmail.com
+Subject: Re: [PATCH v2 05/11] object-store: allow threaded access to object
+ reading
+Message-ID: <20191113052044.GB3547@sigill.intra.peff.net>
+References: <4c5652ab34f0989856aba919ca84b2b091dcad98.1569808052.git.matheus.bernardino@usp.br>
+ <20191112025418.254880-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABUeae82_qQrR5s_QYsDzkVX6CeVM-B7pT5DZt_BjpL=KJdtBg@mail.gmail.com>
+In-Reply-To: <20191112025418.254880-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 13, 2019 at 12:48:53AM +0100, Mateusz Loskot wrote:
+On Mon, Nov 11, 2019 at 06:54:18PM -0800, Jonathan Tan wrote:
 
-> After setting up a new machine with latest Git and
-> I noticed commit messages for true merge changed from
+> > @@ -1580,7 +1585,9 @@ static void *unpack_compressed_entry(struct packed_git *p,
+> >  	do {
+> >  		in = use_pack(p, w_curs, curpos, &stream.avail_in);
+> >  		stream.next_in = in;
+> > +		obj_read_unlock();
+> >  		st = git_inflate(&stream, Z_FINISH);
+> > +		obj_read_lock();
+> >  		if (!stream.avail_out)
+> >  			break; /* the payload is larger than it should be */
+> >  		curpos += stream.next_in - in;
 > 
->    Merge branch '<branchname>'
-> to
->    Merge branch 'refs/heads/<branchname>'
+> As I see it, the main purpose of this patch set is to move the mutex
+> guarding object reading from builtin/grep.c (grep_read_mutex) to
+> object-store.h (obj_read_mutex), so that we can add "holes" (non-mutex
+> sections) such as the one quoted above, in order that zlib inflation can
+> happen outside the mutex.
 > 
-> Nothing changed in the merge workflow or git configuration
+> My concern is that the presence of these "holes" make object reading
+> non-thread-safe, defeating the purpose of obj_read_mutex. In particular,
+> the section quoted above assumes that the window section returned by
+> use_pack() is still valid throughout the inflation, but that window
+> could have been invalidated by things like an excess of windows open,
+> reprepare_packed_git(), etc.
 
-I can't reproduce the problem here. If I set up a repository like this:
+Yeah, I don't think the code above is safe. The map window can be
+modified by other threads.
 
-  git init repo && cd repo
-  >base && git add base && git commit -m base
-  >master && git add master && git commit -m master
-  git checkout -b side HEAD^
-  >side && git add side && git commit -m side
-  git checkout master
-  git tag tip
+> I thought of this for a while but couldn't think of a good solution. If
+> we introduced a reference counting mechanism into Git, that would allow
+> us to hold the window open outside the mutex, but things like
+> reprepare_packed_git() would still be difficult.
 
-and then run:
+I think you could put a reader-writer lock into each window. The code
+here would take the reader lock, and multiple readers could use it at
+the same time. Any time the window needs to be shifted, resized, or
+discarded, that code would take the writer lock, waiting for (and then
+blocking out) any readers.
 
-  git reset --hard tip && git merge --no-edit side
-  git log -1 --oneline
-
-I get:
-
-  Merge branch 'side'
-
-If I do:
-
-  git reset --hard tip && git merge --no-edit refs/heads/side
-  git log -1 --oneline
-
-then I get:
-
-  Merge branch 'refs/heads/side'
-
-And the behavior seems the same going back to older versions of Git. Are
-you sure your workflow hasn't changed somehow?
-
-Can you show an example that triggers the behavior for you?
-
-> I'm failing to find in the docs what drives that change, what
-> configuration option controls such (default?) message.
-> 
-> What may be the reason of that change?
-
-I think any change there would probably be unintentional (but it's hard
-to say for sure without tracking it down).
+A pthread_rwlock would work, but it would be the first use in Git. I
+think we'd need to find an equivalent for compat/win32/pthread.h.
 
 -Peff
