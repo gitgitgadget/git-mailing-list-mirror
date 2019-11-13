@@ -2,167 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EBC91F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 12:30:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2ED61F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 12:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726263AbfKMMag (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 07:30:36 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60747 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725976AbfKMMaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 07:30:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573648222;
-        bh=Cd4DllHoiYQLHGdU6wpppo2w2yjG3UvnFgzJy+9T7JQ=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=B8Rk8MLP4EtFKFLLn6XZu97emlrUmMeK2kFKMvzpC7tbr7yBU/T7MRfqGdUCKdSjK
-         QOSWll947nwye+TlPvQyB9VhtAS9w+O3nyhPZg+8YhwN+5Xwuc4ioH0iTM+CW38d7I
-         fI5kCPmuMZ3sTKJZih0s8cNzCmu0s6Pygsi0zGXg=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGhuK-1ihSiC2lhS-00DslO; Wed, 13
- Nov 2019 13:30:22 +0100
-Date:   Wed, 13 Nov 2019 13:30:05 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 1/9] Start to implement a built-in version of `git
- add --interactive`
-In-Reply-To: <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet>
-References: <pull.170.v4.git.gitgitgadget@gmail.com> <pull.170.v5.git.1572869729.gitgitgadget@gmail.com> <ff59d2d0b3b8b591a806ef71b4bcfd350000b06e.1572869729.git.gitgitgadget@gmail.com> <xmqqh83fnfah.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1911091154550.46@tvgsbejvaqbjf.bet> <xmqqtv7cjj2n.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911110949590.46@tvgsbejvaqbjf.bet> <xmqqeeyehawj.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911121459270.46@tvgsbejvaqbjf.bet>
- <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726418AbfKMMlL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 07:41:11 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40628 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726339AbfKMMlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 07:41:11 -0500
+Received: by mail-wm1-f67.google.com with SMTP id f3so1831893wmc.5
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 04:41:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=rFMaUJqcvtNZv6SXcUG484Xgjg/pJ3HxwuEagPqFxzA=;
+        b=E/dJpzc/aUZsALGyjR2eILib6vojZkzZ2E4zQFuVb/0eGVHSpaxGz7zVdwHFbyO1oK
+         xkqKLT54xRACdOInfvKQYc8MBYHO4tTFXXEW9nKdwEW9ObWZV4qDcHih89YqCSyIMBqa
+         vfUZloUzC5I3lugmFaO/brL+I3lRBJdgtiXODKZFSbMIkxSr5pu8Vukcl1EWm7Q61QPg
+         ljQankGIAj6iyS0Qwjb5TbIj5fSjEtvhth1QMlOuUqP/BkZql+ctD0PvynMyPjD3+fvS
+         LSBASzneNSLeLFQegRmu9pG/OrjIODoQJzcxJHbz6huAytJ5hEAnaJF0mPkz0wutODNJ
+         II5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=rFMaUJqcvtNZv6SXcUG484Xgjg/pJ3HxwuEagPqFxzA=;
+        b=nfW/02S55O1H5lCWxqfqc5lwGuo63u9oAOLDKoZbtB8ND74NkhAmUU/OFUtUwOk6+V
+         xA01beftT0xV5xD6MBow+aO2PY6Kgk5bxrarVff7JQ7Jj1+kS7T2RO5aLtWsDU8oOxp1
+         lfeNVFRaI8yinGXQaU//IRS7CvUb8HWjUBq6NOksqwOlIhWUzi/FATbyGD1D1eQ4c/3K
+         mkyv8O0ebc9GGnXuTdk0QrL0RFojfADWh/kcJ0ooVrex0O9Wq2zJgTcfCzYuevsyvEUr
+         aN3+buF7EPeeSg5PLVKaHMs3wQ3Bcrw8kMju2mPlwpmWQyGtiOin7H26Vxs+pm78j+6E
+         zTuA==
+X-Gm-Message-State: APjAAAWG1zEFthoNj0HU5XMmt4w9NbyWIZwZ7kBKtD3q3znhwf2xF6yA
+        t/Fwh96lR9wZt2OAWtEJoesPk5in
+X-Google-Smtp-Source: APXvYqxCcijYzT6mlXamT1dW9K3wAVjD037zKp2mHjeP4Ce+Jl9XGpomCz679hHAhkJlNDFITHwmEA==
+X-Received: by 2002:a1c:7d94:: with SMTP id y142mr2815453wmc.168.1573648869349;
+        Wed, 13 Nov 2019 04:41:09 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h16sm2489316wrs.48.2019.11.13.04.41.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Nov 2019 04:41:08 -0800 (PST)
+Message-Id: <f42d7b13107743fc1aa9cc42ee188fdeb10c702b.1573648866.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
+References: <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
+        <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
+From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 13 Nov 2019 12:40:58 +0000
+Subject: [PATCH v6 2/9] diff: export diffstat interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QHVClYqQwAtnauAffWpTMPXeoKs+eqIXgYgl7cWOkROGCDUZLtK
- cakcuwZOEGm9FDehmCSajCf1sKWj1k48hwsq/gDgJHT5nBwSD3i8pW7WKUz5A3tKigHZRoT
- y9GUQzsYn/BkiTGuzi01BHijr3CLviPC9duoL5fGZ/qP445TOHklUlCDGyFmzSA2eMpqBVN
- RwyoDsGcxJfXnOdkIz+Yw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uZCvXtTguPQ=:QMqkoJclC6JMpQ0UnL3mxd
- umSi4Me1tVskC1ne2IoLO9DjIGoSM60w2L3j6M7Y0nCL+JRjab2X0Itpg3ftVKjd5H20dmUUR
- 4NSg3EsDL/Arez1B6+edf184PTrzul2eKzWiDlmfOGGWx8UzdzT7DrwgWlGN+tSurXhvo86fS
- liFUH8Yl09IZ4l0e3mNrHE/KmPTCpu1z4z2iovF/6bM4JGI4OFiMWbwP8FB4x9q0qvQjmgavu
- PHl+NaX+ztOyZ9esRzCbewmPErM9DQEqSsr1pjeZkpWbPE/80cCEgzPaLyenVXmTPoiaDla2u
- 28rE/ksoBHkhD5GQjyFUwSnEVBW1EtvJ9fR5OgPDLp1ovVoJUkxtUmNAynl1/rlISPpq/G7uv
- tSpAy7uYKF57iMH6t2TfAw57jH/VTOwPcnipPUuF2kIcEZXKyhVUUIWZW9+vb8bjIhmMSPFK9
- 21tfUZTcO5gsdA7JtywTA47z9yuhePwtTWLDQ+Zn+/i3PXS+XZGsJJ6eXC1MWx6zr49sGmCKJ
- 4th4nKeyI+C3PHzwV3wD0IBjOTB3BRZpMNkQGanqCySMEw0MMI0CFS+vYbA0d6onHPt/EKVfH
- +sKXSH5v5nIRtcCZq6AkK/xX0VzvdA4uRrrSsYtEek0CWJRbA5lEDTgBNC/qa4/vyMo6LF85A
- jqUDAZEsjxIoiB2wPELNy90z2Avs0oZTeTGjmnk8bJ63MpjH6olQ7X2M9nKlRQ9LLBPA24RVE
- MI2QMm2+l4U/C5OjdBdFex8BoY/DGr9OLA3lJX9NSU4lGb0gm4rb7tQE6LnFyx7rMdMDOz2zh
- mHTi9TO6NkjV4zS7lo1q1mSZy5Gh6e3OYhI2wFnrzAzJNMFhH19fZalsOTJpDgLCDxtKjuS8x
- iJuwkr7bQeVrYhpNi0FCUdhI54Uz0kcoN71/e7xBCKAKoOXoLMrCsxqiVwuLm5dmGWxgdepGC
- uYhymyv3Rqi34pSfoOAQkaDxeQAVAbGHaslUELzhHVsw+5XbxTE2BCTHCtcsdrS/yQlerzmQJ
- liMATzXQ0ccynchEECXTAwdKfqGyTAuQxoswKpHK9smAi1FinYzL+FjNv1Gw4ykyMO8Q5r1Hz
- 5hDmq3ls9cJAIXHAHcKSnllhQN2L/QhXABHOVYqJ+izedSKAsOnfgzZ5c+kgUv4NfPNIFRafB
- IdYxC2c9Ynlu2+k8E6EVSNeqadDEUDmf5rXa1URlcN0XmXl3F2oujDxdFUgdS1xv58DIUFer+
- RG/fCS4SD5QpkQaFqLURfTAZjz2pF1pvaA6JBpaj9EE58LoJXM39gXBqdmks=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Daniel Ferreira <bnmvco@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: Daniel Ferreira <bnmvco@gmail.com>
 
-On Wed, 13 Nov 2019, Junio C Hamano wrote:
+Make the diffstat interface (namely, the diffstat_t struct and
+compute_diffstat) no longer be internal to diff.c and allow it to be used
+by other parts of git.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> >> Regardless of the language the scripted version was written in, I
-> >> think the '--helper' approach is always the poorer choice between
-> >> the two [*1*].  It limits the modular decomposition to what suits the
-> >> original language, the impedance mismatch between the original and
-> >> target language forces us to unnatural style of inter module
-> >> communication, and the unnatural interface layer, which we know has
-> >> to be discarded at the end, must be written [*2*].
-> >>
-> >> So, I'd prefer to see "because this is a better way in the longer
-> >> term" over "because the --helper approach would not work".
-> >
-> > Hmm. I feel distinctly unheard.
->
-> The feeling is mutual ;-)
+This is helpful for code that may want to easily extract information
+from files using the diff machinery, while flushing it differently from
+how the show_* functions used by diff_flush() do it. One example is the
+builtin implementation of git-add--interactive's status.
 
-Maybe I could take your comments more seriously if you acknowledged the
-fact that I am _very_ familiar with the vagaries of converting scripts
-to C. Like, very, very, very familiar.
+Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
+Signed-off-by: Slavica Đukić <slawica92@hotmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ diff.c | 39 ++++++++++++++++-----------------------
+ diff.h | 20 ++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 23 deletions(-)
 
-> > It may appear compelling, conceptually, to shun the `--helper` approac=
-h,
-> > but the more important reality is that it is the only one that makes a=
-n
-> > incremental conversion possible at all.
-> >
-> > It took an entire month of 60-hour weeks to complete the conversion of
-> > `git add -i`/`git add -p` to C, and only at the very end was I able to
-> > run the test suite with `GIT_TEST_ADD_I_USE_BUILTIN=3Dtrue` and see it
-> > pass.
->
-> Yeah, that is developer comfort, and of course it is nice to have
-> than not to have it.
+diff --git a/diff.c b/diff.c
+index afe4400a60..5703a9b78f 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2495,22 +2495,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
+ 	}
+ }
+ 
+-struct diffstat_t {
+-	int nr;
+-	int alloc;
+-	struct diffstat_file {
+-		char *from_name;
+-		char *name;
+-		char *print_name;
+-		const char *comments;
+-		unsigned is_unmerged:1;
+-		unsigned is_binary:1;
+-		unsigned is_renamed:1;
+-		unsigned is_interesting:1;
+-		uintmax_t added, deleted;
+-	} **files;
+-};
+-
+ static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
+ 					  const char *name_a,
+ 					  const char *name_b)
+@@ -3157,7 +3141,7 @@ static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *o
+ 	gather_dirstat(options, &dir, changed, "", 0);
+ }
+ 
+-static void free_diffstat_info(struct diffstat_t *diffstat)
++void free_diffstat_info(struct diffstat_t *diffstat)
+ {
+ 	int i;
+ 	for (i = 0; i < diffstat->nr; i++) {
+@@ -6283,12 +6267,7 @@ void diff_flush(struct diff_options *options)
+ 	    dirstat_by_line) {
+ 		struct diffstat_t diffstat;
+ 
+-		memset(&diffstat, 0, sizeof(struct diffstat_t));
+-		for (i = 0; i < q->nr; i++) {
+-			struct diff_filepair *p = q->queue[i];
+-			if (check_pair_status(p))
+-				diff_flush_stat(p, options, &diffstat);
+-		}
++		compute_diffstat(options, &diffstat, q);
+ 		if (output_format & DIFF_FORMAT_NUMSTAT)
+ 			show_numstat(&diffstat, options);
+ 		if (output_format & DIFF_FORMAT_DIFFSTAT)
+@@ -6621,6 +6600,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
+ 	return ignored;
+ }
+ 
++void compute_diffstat(struct diff_options *options,
++		      struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q)
++{
++	int i;
++
++	memset(diffstat, 0, sizeof(struct diffstat_t));
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		if (check_pair_status(p))
++			diff_flush_stat(p, options, diffstat);
++	}
++}
++
+ void diff_addremove(struct diff_options *options,
+ 		    int addremove, unsigned mode,
+ 		    const struct object_id *oid,
+diff --git a/diff.h b/diff.h
+index 7f8f024feb..d986ddc3b5 100644
+--- a/diff.h
++++ b/diff.h
+@@ -245,6 +245,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
+ void diff_emit_submodule_pipethrough(struct diff_options *o,
+ 				     const char *line, int len);
+ 
++struct diffstat_t {
++	int nr;
++	int alloc;
++	struct diffstat_file {
++		char *from_name;
++		char *name;
++		char *print_name;
++		const char *comments;
++		unsigned is_unmerged:1;
++		unsigned is_binary:1;
++		unsigned is_renamed:1;
++		unsigned is_interesting:1;
++		uintmax_t added, deleted;
++	} **files;
++};
++
+ enum color_diff {
+ 	DIFF_RESET = 0,
+ 	DIFF_CONTEXT = 1,
+@@ -334,6 +350,10 @@ void diff_change(struct diff_options *,
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
++void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
++		      struct diff_queue_struct *q);
++void free_diffstat_info(struct diffstat_t *diffstat);
++
+ #define DIFF_SETUP_REVERSE      	1
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
+-- 
+gitgitgadget
 
-Comfort has little to do with it. Driving out bugs has a lot more to do
-with it. Which is the point I am trying to get across the entire time.
-
-> But compared to the downside impact to the quality of end result
-> that is inherent to the '--helper' approach, I'd prioritize the
-> quality of the end result over developer comfort.
->
-> > It is indeed _in spite of_ the success of the `--helper` approach that
-> > we cannot use it here.
->
-> As I do not see those past '--helper' ones necessarily successes, we
-> must agree to disagree here.
-
-Right. But if I recall, you never even saw the need for the conversions
-in the first place. Maybe you still don't?
-
-> In any case, the log message needs to express why _you_ ended up
-> taking the non-helper approach.  Even though it is far less
-> relevant, compared to that, what other approach you instead wanted
-> to take, I do not veto you from having your own opinion.
-
-Okay. I will take that as an indication that I can go forward with the
-latest proposal. After all, I described pretty well, I think, why _I_
-ended up taking the non-helper approach.
-
-Thanks,
-Dscho
-
-> >> [Footnote]
-> >>
-> >> *1* In only one case I would recommend using "--helper" approach,
-> >>     though.  When you are not expecting the developer to be able to
-> >>     come up with a better split of the program into modules than how
-> >>     the scripted version is, and you want to ensure that the
-> >>     developer have something to show when they faild to complete the
-> >>     project after N weeks.  You are a more experienced developer
-> >>     than an average GSoC student, and there is no pencils-down time,
-> >>     so the exception would not apply.
-> >>
-> >> *2* In "git submodule" for example it was quite natural for the
-> >>     module that gives a list of submodules with its traits the
-> >>     program cares about to be written as a shell function that
-> >>     writes the data to its standard output.  And consuming modules
-> >>     sit at the downstream of a pipe, accepting its output.  When you
-> >>     are writing these modules both in C, you wouldn't connect them
-> >>     with pipe to carry the list of submodules, but a piecemeal
-> >>     conversion using the "--helper" approach meant that there always
-> >>     remained _some_ consumer that wants to read from the pipe, so
-> >>     long after the module lister was rewritten in C, it still needed
-> >>     to support a mode where it sends its output to the pipe, instead
-> >>     of just passing an array of structures.
-> >>
->
