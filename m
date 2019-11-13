@@ -8,192 +8,91 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B2441F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 15:01:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 410471F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 15:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727716AbfKMPBm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 10:01:42 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35319 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727452AbfKMPBm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 10:01:42 -0500
-Received: by mail-wm1-f67.google.com with SMTP id 8so2376552wmo.0
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 07:01:39 -0800 (PST)
+        id S1727874AbfKMPG2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 10:06:28 -0500
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:46605 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726812AbfKMPG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 10:06:28 -0500
+Received: by mail-wr1-f43.google.com with SMTP id b3so2726297wrs.13
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 07:06:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=LPuPrOxEBUuCc34N0O5elleGHPPwTT//T8LsTGF/7iU=;
-        b=f3D1VhyB31OiG162A9y0VbEsGM8u6TCC2ALSMptrwkPIJbg+ucGh9nl2RCXrmH8H9K
-         Bk4y0r0dm2gdV5tnw1m/Ev6Hhj4KITg5qrXWoy8rsK5QKAgox+J5kUR6VPRHrRSq9blC
-         vEhZqCkEcNAIFC7kwl/pA/A1rYWwxj0AFfRRzWR5vMOCLQ1tg3ozobC6qlnkbiJY2ZIX
-         8eCQHeQpqenF7AZXVcoBD5rsdXPLeo3KIhGay+VYpDOsQQ/5FAK32LeSWkL8ysM9ovtX
-         cYN6paZRH/NGY/13MEoRbmsxlQTHEOR62iDjctbu60RX44fm5oL8aWnEh6v/h4DqUgEM
-         eYQw==
+        bh=w+9CvHzA8TZ/a1v8U5yYf3CrRGz9CemYr6NzX5WGcio=;
+        b=VlVwx7pz5DyU5FdT7ndDPNUls6tj8r/J72zWz9Ih8qqQ2GMWNSwhsDn6bHKAiDpbXA
+         iHU/CTKYfiaOr0Up+TSPq/2ZhbKHkg/t/mY3PjaknBCdlSTsbHUCCiph5FCEmTBr6f/D
+         ZbtNM9Oe1j8oHNxSc+Mq7ssiqkuz/5QwTRofPtg/hUT7PPbREieVXvHWsqyUqIM8kKz6
+         Hv+Ed++9K2QUEcjdJtPBgc3gnZRKVzpvT3Tah1fW7CY5ftGP1iIpPxyIu4w7PGbrlL4g
+         8j074gozsgmVVvUI4UFjNLPQBOgaabypf1agxMRYTHZ4aYvWt8BQbYEtWEv2a9NwtSo4
+         daEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=LPuPrOxEBUuCc34N0O5elleGHPPwTT//T8LsTGF/7iU=;
-        b=tAfx66+zr65i/h1VyOeB20p4q1Ve65UrakrQZ17tTPPgeMqI5od52KxesBDnaY6+5l
-         A3Eyz2WPBu0Mgz1r3VDmr1iZum7uqwDD8SQjfp2oT/gDeePBK5JVnqRCJqBDNIDHLavj
-         m5zvS9U1juPiYyqeIdjdiKiILFj4dDgeRmTd4DNXXKCqvr98475+12cOfrv3GofOo/3w
-         GayGpChDD25jr8uQaOvsN/mEwCGxlr7VFuPbJMiEyTk0D444cmXWQBq8cNn/VN7GA4xO
-         ySH4uDoY202oTpjUCQAJW7nw/pDWvjnu5Hg0qm77ZSxF5LHQhANoiQXIu+m7nUnC7iQx
-         ME4w==
-X-Gm-Message-State: APjAAAXQLRQojMoA5eHumjp5kROV6ExlXCfgWJBfAaYVrUVBMMDj9WwL
-        zNllpc5yLTqWAlFPaSpAvUk=
-X-Google-Smtp-Source: APXvYqzB/mug+7w3i8PDU3TM5Ym/8FMJ5iQqE3eRs8WE31YyQCneCEbG5Y1bNUtt5+/r0BHn1+1QNw==
-X-Received: by 2002:a7b:c408:: with SMTP id k8mr3370204wmi.67.1573657298987;
-        Wed, 13 Nov 2019 07:01:38 -0800 (PST)
+        bh=w+9CvHzA8TZ/a1v8U5yYf3CrRGz9CemYr6NzX5WGcio=;
+        b=OU8I4g1VJp6FFS4niXVAh0phyuettvmdRoiiEpkG5F5c59MDekYAXSPdz9ZRlchiaQ
+         JPz1PXQGURsGFn5sgjnKSU2xgD6nTZhG2opV6M3nbgBUIZPJXF9Kxbe1AbGUk2MzKp6R
+         166hXazi9ITp8Kx3zBoHXCDcMDXaqY9vPxoDEaL6Y4u2Vx0EAG+Vmdmj+GFYYlu5AMkW
+         ydOqX3W3XOiHwTi4obWUSccwig17T5wbq9MGAN1hcsALxNnbKvkRF+GNMtBllcAt2jz9
+         4mH5mh+oKFYmHf5MDT/yH+bylQzL8/VDF4nwKe3vFsdRYUQ1MsSi5Z6OgnEg9430o6zD
+         hw1Q==
+X-Gm-Message-State: APjAAAUOyL2GzyBzkJtCl8FcLRPSYuubybOkfKHnMcsodiqlc/RuwQmX
+        21FPnyuehnv/t2Pgh8H2Vl0=
+X-Google-Smtp-Source: APXvYqzthaoeBHEXEHYAJPSdlnDH9NbitKcwHL1aVuPaNS0ijBxr7QZu6IndhC9pHyWBVG+YPY7DDA==
+X-Received: by 2002:a05:6000:34f:: with SMTP id e15mr3584376wre.232.1573657585937;
+        Wed, 13 Nov 2019 07:06:25 -0800 (PST)
 Received: from localhost ([62.253.227.125])
-        by smtp.gmail.com with ESMTPSA id g133sm2612385wme.42.2019.11.13.07.01.36
+        by smtp.gmail.com with ESMTPSA id q15sm2677306wmq.0.2019.11.13.07.06.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Nov 2019 07:01:37 -0800 (PST)
-Date:   Wed, 13 Nov 2019 15:01:36 +0000
+        Wed, 13 Nov 2019 07:06:24 -0800 (PST)
+Date:   Wed, 13 Nov 2019 15:06:24 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Grzegorz Rajchman <rayman17@gmail.com>, git@vger.kernel.org
-Subject: [PATCH v3] stash: make sure we have a valid index before writing it
-Message-ID: <20191113150136.GB3047@cat>
-References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
- <20191107184912.GA3115@cat>
- <xmqq7e4bp06l.fsf@gitster-ct.c.googlers.com>
- <20191108165929.GB3115@cat>
- <xmqqk188l0pn.fsf@gitster-ct.c.googlers.com>
- <20191111195641.GC3115@cat>
- <xmqqftitfz5u.fsf@gitster-ct.c.googlers.com>
- <20191113111539.GA3047@cat>
- <xmqq4kz7c37i.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "peff@peff.net" <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        Garima Singh <garimasigit@gmail.com>
+Subject: Re: [DISCUSSION] Growing the Git community
+Message-ID: <20191113150624.GC3047@cat>
+References: <71fba9e7-6314-6ef9-9959-6ae06843d17a@gmail.com>
+ <CABPp-BFXs4qes20S+9AZd++p3epW4eJ7Vu7zU_PdDysZ_D-yrg@mail.gmail.com>
+ <20191112184547.GA38770@google.com>
+ <nycvar.QRO.7.76.6.1911122100220.46@tvgsbejvaqbjf.bet>
+ <CAP8UFD2qjUa=y81YPVSMcuEcDkrkrV=j912qySmG83pig=dFDg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq4kz7c37i.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CAP8UFD2qjUa=y81YPVSMcuEcDkrkrV=j912qySmG83pig=dFDg@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/13, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> >> ...  This may want to become
-> >> 
-> >> 	git rev-parse --verify :file &&
-> >> 
-> >> or
-> >> 
-> >> 	git show :file >actual && echo bar >expect &&
-> >> 	test_cmp expect actual &&
-> >> 
-> >> perhaps?
+On 11/13, Christian Couder wrote:
+> On Tue, Nov 12, 2019 at 9:04 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
 > >
-> > Hmm I just copy-pasted this from somewhere else in this test file.
-> > I'll add a preparatory patch getting rid of "$(git command substitution)"
-> > as I don't believe Denton got to t3903 yet.
+> > On Tue, 12 Nov 2019, Emily Shaffer wrote:
 > >
-> > There's some more opportunities for modernization of this test file,
-> > but I refrained from doing that to not blow up this bug fix series too
-> > much.
+> > > I'm still really interested in participating on a mentors list like
+> > > this; can we set one up?
+> >
+> > I would subscribe immediately to a Git mentors' mailing list.
+> >
+> > Thanks for bumping this,
 > 
-> It is very much appreciated that you aimed to keep the topic focused
-> on the fixing.  What I meant was merely to avoid making things worse
-> by adding more of $(git command substitution), not cleaning up the
-> existing ones.
+> I would also subscribe, and yeah I think it might be worth trying.
 
-I misunderstood then because the other case you had pointed out wasn't
-introduced in my patch, but was just in the context. I have already
-sent the series with the preparatory cleanup.  I'm happy to just go
-without the cleanup though.  Since I'm already sending this email,
-I'll just add the patch doing just that below.
-
---- >8 ---
-Subject: [PATCH v3] stash: make sure we have a valid index before writing it
-
-In 'do_apply_stash()' we refresh the index in the end.  Since
-34933d0eff ("stash: make sure to write refreshed cache", 2019-09-11),
-we also write that refreshed index when --quiet is given to 'git stash
-apply'.
-
-However if '--index' is not given to 'git stash apply', we also
-discard the index in the else clause just before.  We need to do so
-because we use an external 'git update-index --add --stdin', which
-leads to an out of date in-core index.
-
-Later we call 'refresh_and_write_cache', which now leads to writing
-the discarded index, which means we essentially write an empty index
-file.  This is obviously not correct, or the behaviour the user
-wanted.  We should not modify the users index without being asked to
-do so.
-
-Make sure to re-read the index after discarding the current in-core
-index, to avoid dealing with outdated information.  Instead we could
-also drop the 'discard_cache()' + 'read_cache()', however that would
-make it easy to fall into the same trap as 34933d0eff did, so it's
-better to avoid that.
-
-We can also drop the 'refresh_and_write_cache' completely in the quiet
-case.  Previously in legacy stash we relied on 'git status' to refresh
-the index after calling 'git read-tree' when '--index' was passed to
-'git apply'.  However the 'reset_tree()' call that replaced 'git
-read-tree' always passes options that are equivalent to '-m', making
-the refresh of the index unnecessary.
-
-Reported-by: Grzegorz Rajchman <rayman17@gmail.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/stash.c  | 7 +++----
- t/t3903-stash.sh | 7 ++++++-
- 2 files changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index ab30d1e920..372fbdb7ac 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -481,13 +481,12 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		if (ret)
- 			return -1;
- 
-+		/* read back the result of update_index() back from the disk */
- 		discard_cache();
-+		read_cache();
- 	}
- 
--	if (quiet) {
--		if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
--			warning("could not refresh index");
--	} else {
-+	if (!quiet) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 
- 		/*
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 392954d6dd..9de1c3616a 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -232,8 +232,11 @@ test_expect_success 'save -q is quiet' '
- 	test_must_be_empty output.out
- '
- 
--test_expect_success 'pop -q is quiet' '
-+test_expect_success 'pop -q works and is quiet' '
- 	git stash pop -q >output.out 2>&1 &&
-+	echo bar >expect &&
-+	git show :file >actual &&
-+	test_cmp expect actual &&
- 	test_must_be_empty output.out
- '
- 
-@@ -242,6 +245,8 @@ test_expect_success 'pop -q --index works and is quiet' '
- 	git add file &&
- 	git stash save --quiet &&
- 	git stash pop -q --index >output.out 2>&1 &&
-+	git diff-files file2 >file2.diff &&
-+	test_must_be_empty file2.diff &&
- 	test foo = "$(git show :file)" &&
- 	test_must_be_empty output.out
- '
--- 
-2.24.0.155.gd9f6f3b619
-
++1.  As mentioned in #git-devel during the last standup, I'd like to
+be on that list as well.
