@@ -2,131 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCD341F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 21:09:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8E2E1F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 21:11:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbfKMVJi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 16:09:38 -0500
-Received: from mail-pl1-f178.google.com ([209.85.214.178]:38307 "EHLO
-        mail-pl1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726189AbfKMVJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 16:09:37 -0500
-Received: by mail-pl1-f178.google.com with SMTP id w8so1585123plq.5
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 13:09:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ykvC9RTnSj+2GQVUCT+h53Yy+AyUOVxYSHEWTWevOBE=;
-        b=NQ9E3ePNtj1H87RAz7U0b6+NSQczQaMXGLz5brXAY0NNti+S5KfDFzconluT77d5Ti
-         5nR//zuItkbnEMuAF0HL1mbEHAvGpumdLrUP8XhqwR+qRDUM5Hm0mVj7L5hVD7e7oGLK
-         wfSCEAh/JO8U913izkTz3dl6pIdnzSRRhrJQJ0DG3aC0iw+aAzQksU2UQ/kseVlHPAed
-         STnHoRBCAFq8moKp/azy+8GysB7QxWRQcXCocUQorh5sMo8Qgo0LqkXt5cLkzUkk4b0k
-         4xXxEFPt0Je74XBs8cJUtH5zNJX/qEB9l5I+V/tO3uahusF7TJq6hkh6yR7ZrR6aBoxp
-         QwaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ykvC9RTnSj+2GQVUCT+h53Yy+AyUOVxYSHEWTWevOBE=;
-        b=A0ZZwxu7vhCo1tUPfdBkbRq+PfeRt+kuUdajQVj2Gm5nl89w/IF8gFj1nSKcvrkVW5
-         wL2x+nl5X4xdtUWK5I0yqUa160p98JCfxCDkcrcoYBsv49gUM3cs6sk7sQITsoVJV5rc
-         wlXPyLa3/UrUfblNaAHTUYz8SmGAGQTlgaNIztBKpwdtOb4e8zaQK+0AYFhCFMDMNqGf
-         q23XZpvreuZw35A745lbaTDirR+ORzSx2gjiUbOU0TZkPBKnFJAMez99dSprM1LBAHzm
-         a2WX/iCWLmaTxSIPE8PHOMLUwnAlTLJud+Inmc3fMYErzLrsOb25nBrwYHJxPTSOaNxp
-         n8rw==
-X-Gm-Message-State: APjAAAU9grau7f2BhXFQRMAa5jIOSVmtCK4LnIqOtF8eYhEMdCbzCaJC
-        6xT6FB0EbcIywakJZnMSl1iHf9jSUHg=
-X-Google-Smtp-Source: APXvYqxMaLUq+BBtrFG2WzTFJG/kYtKPq2OdZhEbWHnzknzhOv1GVHfoSW5llzxx1k7rbIr+4+hY1g==
-X-Received: by 2002:a17:902:6807:: with SMTP id h7mr5651502plk.230.1573679375045;
-        Wed, 13 Nov 2019 13:09:35 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id a3sm3659124pfo.71.2019.11.13.13.09.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Nov 2019 13:09:34 -0800 (PST)
-Date:   Wed, 13 Nov 2019 13:09:29 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: Should we auto-close PRs on git/git?
-Message-ID: <20191113210929.GC60198@google.com>
-References: <20191109020037.GB60198@google.com>
- <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet>
+        id S1726251AbfKMVK7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 16:10:59 -0500
+Received: from mout.web.de ([212.227.17.12]:37667 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726162AbfKMVK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 16:10:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1573679457;
+        bh=69Tohf/cnogxDTHWOtisIM6fYeDtuS7gC2Nkyq61pnw=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=sqQt5EToSgHNOqQ9/u5rSO6+W2KfYcleK+k+GRTIkvevQib1Ijnnr88wm0t+Yf5dw
+         WCcO+8vX/0SaM6OgJ6NHPBB9Y7igdtoks5ckuDC/PdQEYpHv7uPAVZrzf/F2ZYtNpq
+         TNVfyFqlk9X6fgZvNekVyy/SFTpz397H5iJo2Ijw=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.3] ([93.131.127.42]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LilNJ-1hsvPR3DA5-00cwCC; Wed, 13
+ Nov 2019 22:10:56 +0100
+Subject: Re: coccinelle: merge two rules from flex_alloc.cocci
+To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+References: <f867512c-e5b2-6bca-2a37-2976f4c182bd@web.de>
+ <20191112175926.GA41101@generichostname>
+ <CAN0heSodNonkDK8AT9iJqmWLLCdO0OoHho0ijZOAmri5ren2dw@mail.gmail.com>
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Message-ID: <ff240bc1-ae2a-17e5-d149-2d08c5367e96@web.de>
+Date:   Wed, 13 Nov 2019 22:10:48 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAN0heSodNonkDK8AT9iJqmWLLCdO0OoHho0ijZOAmri5ren2dw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:qYqzbEfCKex0HpEsnaX7JWGkEOJnxfOJ9lpg2qwdetA2059bSju
+ o8XME+YnHgmZXQkK9SaSbKwIinu8rOLJmPJcws97i7L4L1fDZuMDUJ3sJhXfJlUA8QaZbP+
+ knzmYpVxGrrRiukjBC9IzAFKWFn8mpDrajhjnCPQJUkswyC6lDtry5e8si9IR996NT4/Kv5
+ ZlGpdn6QNVhuwE0YxAcOQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zOQXGU0MCwQ=:ChxFi8CMR0zJG5WO2RxUpU
+ REXqfR3xVajsxXCm0JNwZgROYIKkIofbS+PNqVAAaXqK32cEnE6rzoL58ykwyUXOBHBxc7v9k
+ CtuJFqb/m2mcP9T3GHvIpMIX4ghH+Nvj1G3ST2p+V2gJhO3VMGkX0BV4AcX6Y0kZglpuKtjPb
+ jtA2ncy7aP6XdImWoLxM1qWdn9XojxsNF022W/c5CgcJLgFbY+oiyINiC5pKAj1X6ILp9zN0d
+ 2E9DIHhGKn+BdUeI/MndklW0hHNhd7hnjNceNnH+M6P8bidTi+S0hnmqloZOAKWsjKA5e7mHU
+ SpjY0yu8lyPcXPuLD2v7CYO1ODRIFybyE7tmgYbhpnW99wTIstionk1Di9czcptbyAtPgeaaE
+ z66Xw7+5jp3l0lgikh1F+eUcO1bzQbez+Uil+ggN7Ngwmr6NbkYf9fr04nycG0NnOblmQqRMI
+ i6BjTnbAyEuh6qdDL8xO7zGY2iKrL31K32XzPEDoqh/V3wFi/5Ou04rFYA/1CcgRSzH6tg+FP
+ xhCVUWFVRyKpIMpbS11+1ZQW6YQbobkb3Hff8hqBkeaDmYrTt/gUgOMwPlMOT1WHzs60xuPzt
+ 8bjII506dxiZ2e+8W6YrkhPh+8oTEbXOKhKGFpIG4ub8Dq3MoSfmRL9ta4FXRGO2IoBkSJEud
+ lhwGl4/+Led8LrNkWmgMIFW7pGrEyJUzjQgM3hBLP698xo/f88jG/LTpW6xILSoPFM/Xwi1FV
+ lw7gpvizHWZgKYB8GX+9nMtDmpNRCEg7PK2hgIV/4Zz1Nm3YI8pBiwM3B3LVtYuRaIrbHH08b
+ /0BLkliZ3nFl1vx/6y3sxHegiBvbQjbKKIKIgUJEiqaRgxLNoUc8E6BWDkRT3epjzqSKKuEvl
+ bFmqyjKNfjr8w8uxyGQ6u5pasNc45EK6aaGQairxCN6N1LrbahLSbYVqhPCjjJjFq2dHt+eOz
+ /q7K/MU5xpkxVQEpySVSwbv+4WmzQdEYJ1TFs3IFqtWaYQWNFy2MOcQlsigju6aP8LoRcquna
+ ObuCTEPh0EsoDU+up7TZWpa2t8oE61Lts2d/5djTh6Y6NTWIgXgrtizCiqLErilCSXa4mcQ0p
+ lCN/T8cqS68XKnL54/v4GsPc1P3tcTz1TXqvXLUV7I+af24xYgMFmm62tuuy9JIaCwU3WLAII
+ hgxj+iNuHzE/q2gIKLl8QdDeHx5kp0Boe/iGPHmKQj9BJ7R5kItQUccOa2KBGPMBXzRWskbsb
+ e0PiCw4mji5HmI6HG3+WcV/5kxLu/gX2PUV1EiI5jBQeZAAd7arF4f2FpklE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 12, 2019 at 08:11:06PM +0100, Johannes Schindelin wrote:
-> Hi Emily,
-> 
-> On Fri, 8 Nov 2019, Emily Shaffer wrote:
-> 
-> > It seems to me that the friendly template text we prefill when someone
-> > opens a pull request in github.com/git/git isn't being fully appreciated
-> > by many interested contributors.
-> 
-> That is probably due to our confusing use of the template as a stop sign
-> ;-)
-> 
-> > For some time now, Johannes has been slogging through the list to try
-> > to narrow it down to folks who are still interested in contributing,
-> > and yesterday on #git-devel said he was pretty happy with the progress
-> > so far.
-> 
-> I don't mind it, and quite honestly, it does not take a lot of time,
-> most of the time.
-> 
-> > But to me, this seems like a sort of Sisyphean task - more folks will
-> > want to make contributions and not read the template text, and we will
-> > have more PRs being ignored forever, especially if Johannes decides he
-> > doesn't want to shepherd those changes anymore (I would have decided
-> > that long ago, in his shoes).
-> 
-> The PRs are not bad. What is bad is all those comments on commits coming
-> in as of recent, some developers thinking that they do not need to
-> research the best way to reach the Git contributor community and instead
-> just assuming that adding comments via GitHub's UI is a valid way.
-> 
-> I should probably refrain from trying to help those developers because
-> it makes me very cranky, but I just don't want Git to be an unfriendly
-> project.
+>>> This script contained two transformation rules for the semantic patch =
+language
+>>> which used duplicate code.
+>>> Thus combine these rules by using a SmPL disjunction for the replaceme=
+nt
+>>> of two identifiers.
+>
+> My knowledge of coccinelle and cocci rules is basically zero,
 
-I guess my concern is this: when I reply to some code review, email,
-whatever, when I am cranky, it makes me seem unfriendly; when I do so
-while wearing a maintainership hat (I maintain another project
-elsewhere) it makes my project seem unfriendly :) Besides, I don't think
-that anybody wants a contributor to be regularly doing work that makes
-them cranky.
+Would you like to change this situation eventually?
 
-> > PS: Today we have 17 PRs open against git/git, and I think all of them
-> > have been nudged by dscho in comments to open against GGG instead. Many
-> > are in a state where dscho is sending a ping every few weeks to see if
-> > the committer is interested in following through.
-> >
-> > https://github.com/git/git/pulls
 
-> They all have been nudged, sometimes to clean up the patch first, or to
-> suggest that maybe the goal of the PR might not be all that desirable.
-> 
-> Some of the PRs probably can be closed, but as I said, I would like to
-> think of Git as a friendly project, a helpful one, so I want to err in
-> favor of talking to the contributors rather than shutting the door in
-> their face, so to say.
+> but my impression from this list is that running "make coccicheck"
+> can be expensive, both in terms of time and memory.
 
-I do agree that meeting a patient human instead of silence is a good
-contributor experience, and I appreciate all the work you're putting in
-that direction.
+The desired source code analysis to detect possible software transformatio=
+ns
+needs additional data processing resources.
+It is usually hoped that corresponding efforts will help with development
+approaches at other places.
 
- - Emily
+
+> Do these patches help there in any way?
+
+I hope so to some degree.
+
+How much do you care to avoid code duplication?
+
+
+> Or could they hurt?
+
+I assume that you ask according to the presented change possibilities
+for Git's SmPL scripts (and not only for =E2=80=9Cflex_alloc.cocci=E2=80=
+=9D).
+
+Some changes usually contain the risk for undesirable effects.
+Would you like to clarify each of them in more detail?
+
+Regards,
+Markus
