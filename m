@@ -2,91 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9FB1F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 14:01:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B2441F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 15:01:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727629AbfKMOBe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 09:01:34 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56932 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727620AbfKMOBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 09:01:33 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id C778488915;
-        Wed, 13 Nov 2019 09:01:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=svzJfbjN7X05pMQyiaMcTgO06c8=; b=wyyCPh
-        SY9hYx9L5bM/KYty94yyImbkPEYUKVM2Lvei+W53/BkXKxN406aNEw7hxos1QpCr
-        NaSQh0AYHvbjMbvp8Pqaa+Jqz6RP70YdFysiQ7kKhstQEAyh8xOkVU/4sMHdvCAL
-        i/1zhkPzfjOen7JmacWF/MTsg2Hl6p4Hf5Iok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KETR4kQuJAK2ntvY4zGpjalWzsh6lAVQ
-        PhS+THE5zB4DIsE4cN3KUnIumHBTwyQlF2iZJXVO+DmtF1+24nLIqI75+XG6pWJ8
-        P9wxez9a0KVAf0wDe0EN/yyRkLZJ+0EWn3WBcU/KosHmDZ6P68q9cpdA6ATdyqfV
-        4oHAqkZKxrQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A71AC88913;
-        Wed, 13 Nov 2019 09:01:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C25668890F;
-        Wed, 13 Nov 2019 09:01:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 1/9] Start to implement a built-in version of `git add --interactive`
-References: <pull.170.v4.git.gitgitgadget@gmail.com>
-        <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
-        <ff59d2d0b3b8b591a806ef71b4bcfd350000b06e.1572869729.git.gitgitgadget@gmail.com>
-        <xmqqh83fnfah.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1911091154550.46@tvgsbejvaqbjf.bet>
-        <xmqqtv7cjj2n.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1911110949590.46@tvgsbejvaqbjf.bet>
-        <xmqqeeyehawj.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1911121459270.46@tvgsbejvaqbjf.bet>
-        <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 13 Nov 2019 23:01:26 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 13 Nov 2019 13:30:05 +0100 (CET)")
-Message-ID: <xmqqzhgzan9l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727716AbfKMPBm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 10:01:42 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35319 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727452AbfKMPBm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 10:01:42 -0500
+Received: by mail-wm1-f67.google.com with SMTP id 8so2376552wmo.0
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 07:01:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=LPuPrOxEBUuCc34N0O5elleGHPPwTT//T8LsTGF/7iU=;
+        b=f3D1VhyB31OiG162A9y0VbEsGM8u6TCC2ALSMptrwkPIJbg+ucGh9nl2RCXrmH8H9K
+         Bk4y0r0dm2gdV5tnw1m/Ev6Hhj4KITg5qrXWoy8rsK5QKAgox+J5kUR6VPRHrRSq9blC
+         vEhZqCkEcNAIFC7kwl/pA/A1rYWwxj0AFfRRzWR5vMOCLQ1tg3ozobC6qlnkbiJY2ZIX
+         8eCQHeQpqenF7AZXVcoBD5rsdXPLeo3KIhGay+VYpDOsQQ/5FAK32LeSWkL8ysM9ovtX
+         cYN6paZRH/NGY/13MEoRbmsxlQTHEOR62iDjctbu60RX44fm5oL8aWnEh6v/h4DqUgEM
+         eYQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=LPuPrOxEBUuCc34N0O5elleGHPPwTT//T8LsTGF/7iU=;
+        b=tAfx66+zr65i/h1VyOeB20p4q1Ve65UrakrQZ17tTPPgeMqI5od52KxesBDnaY6+5l
+         A3Eyz2WPBu0Mgz1r3VDmr1iZum7uqwDD8SQjfp2oT/gDeePBK5JVnqRCJqBDNIDHLavj
+         m5zvS9U1juPiYyqeIdjdiKiILFj4dDgeRmTd4DNXXKCqvr98475+12cOfrv3GofOo/3w
+         GayGpChDD25jr8uQaOvsN/mEwCGxlr7VFuPbJMiEyTk0D444cmXWQBq8cNn/VN7GA4xO
+         ySH4uDoY202oTpjUCQAJW7nw/pDWvjnu5Hg0qm77ZSxF5LHQhANoiQXIu+m7nUnC7iQx
+         ME4w==
+X-Gm-Message-State: APjAAAXQLRQojMoA5eHumjp5kROV6ExlXCfgWJBfAaYVrUVBMMDj9WwL
+        zNllpc5yLTqWAlFPaSpAvUk=
+X-Google-Smtp-Source: APXvYqzB/mug+7w3i8PDU3TM5Ym/8FMJ5iQqE3eRs8WE31YyQCneCEbG5Y1bNUtt5+/r0BHn1+1QNw==
+X-Received: by 2002:a7b:c408:: with SMTP id k8mr3370204wmi.67.1573657298987;
+        Wed, 13 Nov 2019 07:01:38 -0800 (PST)
+Received: from localhost ([62.253.227.125])
+        by smtp.gmail.com with ESMTPSA id g133sm2612385wme.42.2019.11.13.07.01.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 13 Nov 2019 07:01:37 -0800 (PST)
+Date:   Wed, 13 Nov 2019 15:01:36 +0000
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Grzegorz Rajchman <rayman17@gmail.com>, git@vger.kernel.org
+Subject: [PATCH v3] stash: make sure we have a valid index before writing it
+Message-ID: <20191113150136.GB3047@cat>
+References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
+ <20191107184912.GA3115@cat>
+ <xmqq7e4bp06l.fsf@gitster-ct.c.googlers.com>
+ <20191108165929.GB3115@cat>
+ <xmqqk188l0pn.fsf@gitster-ct.c.googlers.com>
+ <20191111195641.GC3115@cat>
+ <xmqqftitfz5u.fsf@gitster-ct.c.googlers.com>
+ <20191113111539.GA3047@cat>
+ <xmqq4kz7c37i.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 16B74578-061E-11EA-9377-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4kz7c37i.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 11/13, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
+> 
+> >> ...  This may want to become
+> >> 
+> >> 	git rev-parse --verify :file &&
+> >> 
+> >> or
+> >> 
+> >> 	git show :file >actual && echo bar >expect &&
+> >> 	test_cmp expect actual &&
+> >> 
+> >> perhaps?
+> >
+> > Hmm I just copy-pasted this from somewhere else in this test file.
+> > I'll add a preparatory patch getting rid of "$(git command substitution)"
+> > as I don't believe Denton got to t3903 yet.
+> >
+> > There's some more opportunities for modernization of this test file,
+> > but I refrained from doing that to not blow up this bug fix series too
+> > much.
+> 
+> It is very much appreciated that you aimed to keep the topic focused
+> on the fixing.  What I meant was merely to avoid making things worse
+> by adding more of $(git command substitution), not cleaning up the
+> existing ones.
 
->> As I do not see those past '--helper' ones necessarily successes, we
->> must agree to disagree here.
->
-> Right. But if I recall, you never even saw the need for the conversions
-> in the first place. Maybe you still don't?
+I misunderstood then because the other case you had pointed out wasn't
+introduced in my patch, but was just in the context. I have already
+sent the series with the preparatory cleanup.  I'm happy to just go
+without the cleanup though.  Since I'm already sending this email,
+I'll just add the patch doing just that below.
 
-You probably are forgetting the fact that I was very supportive for
-the rewrite of checkout, commit and format-patch (the last one being
-my favorite) in C from scripted Porcelain.  
+--- >8 ---
+Subject: [PATCH v3] stash: make sure we have a valid index before writing it
 
-None of these were '--helper' style conversion and I would consider
-them much more successful than the recent ones, some of which still
-suffer from impedance mismatch bugs (e.g. some parts of the C
-implementation work on the in-core index, while other parts working
-on the on the on-disk index, letting them become out of sync and
-introducing bugs).
+In 'do_apply_stash()' we refresh the index in the end.  Since
+34933d0eff ("stash: make sure to write refreshed cache", 2019-09-11),
+we also write that refreshed index when --quiet is given to 'git stash
+apply'.
+
+However if '--index' is not given to 'git stash apply', we also
+discard the index in the else clause just before.  We need to do so
+because we use an external 'git update-index --add --stdin', which
+leads to an out of date in-core index.
+
+Later we call 'refresh_and_write_cache', which now leads to writing
+the discarded index, which means we essentially write an empty index
+file.  This is obviously not correct, or the behaviour the user
+wanted.  We should not modify the users index without being asked to
+do so.
+
+Make sure to re-read the index after discarding the current in-core
+index, to avoid dealing with outdated information.  Instead we could
+also drop the 'discard_cache()' + 'read_cache()', however that would
+make it easy to fall into the same trap as 34933d0eff did, so it's
+better to avoid that.
+
+We can also drop the 'refresh_and_write_cache' completely in the quiet
+case.  Previously in legacy stash we relied on 'git status' to refresh
+the index after calling 'git read-tree' when '--index' was passed to
+'git apply'.  However the 'reset_tree()' call that replaced 'git
+read-tree' always passes options that are equivalent to '-m', making
+the refresh of the index unnecessary.
+
+Reported-by: Grzegorz Rajchman <rayman17@gmail.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
+ builtin/stash.c  | 7 +++----
+ t/t3903-stash.sh | 7 ++++++-
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/stash.c b/builtin/stash.c
+index ab30d1e920..372fbdb7ac 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -481,13 +481,12 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 		if (ret)
+ 			return -1;
+ 
++		/* read back the result of update_index() back from the disk */
+ 		discard_cache();
++		read_cache();
+ 	}
+ 
+-	if (quiet) {
+-		if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
+-			warning("could not refresh index");
+-	} else {
++	if (!quiet) {
+ 		struct child_process cp = CHILD_PROCESS_INIT;
+ 
+ 		/*
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 392954d6dd..9de1c3616a 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -232,8 +232,11 @@ test_expect_success 'save -q is quiet' '
+ 	test_must_be_empty output.out
+ '
+ 
+-test_expect_success 'pop -q is quiet' '
++test_expect_success 'pop -q works and is quiet' '
+ 	git stash pop -q >output.out 2>&1 &&
++	echo bar >expect &&
++	git show :file >actual &&
++	test_cmp expect actual &&
+ 	test_must_be_empty output.out
+ '
+ 
+@@ -242,6 +245,8 @@ test_expect_success 'pop -q --index works and is quiet' '
+ 	git add file &&
+ 	git stash save --quiet &&
+ 	git stash pop -q --index >output.out 2>&1 &&
++	git diff-files file2 >file2.diff &&
++	test_must_be_empty file2.diff &&
+ 	test foo = "$(git show :file)" &&
+ 	test_must_be_empty output.out
+ '
+-- 
+2.24.0.155.gd9f6f3b619
+
