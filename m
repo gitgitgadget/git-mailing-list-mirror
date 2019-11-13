@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3A511F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 00:34:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8F581F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 00:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727021AbfKMAe3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 19:34:29 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:55837 "EHLO
+        id S1727059AbfKMAec (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 19:34:32 -0500
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:41675 "EHLO
         mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726910AbfKMAe2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 19:34:28 -0500
-Received: by mail-pl1-f202.google.com with SMTP id q1so204107pll.22
-        for <git@vger.kernel.org>; Tue, 12 Nov 2019 16:34:27 -0800 (PST)
+        with ESMTP id S1727031AbfKMAeb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 19:34:31 -0500
+Received: by mail-pl1-f202.google.com with SMTP id b3so225660plz.8
+        for <git@vger.kernel.org>; Tue, 12 Nov 2019 16:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lrJ98Nde3vueeK3LlK8TBlFEVgVJyLjWTnfTa2tND2Q=;
-        b=IsLrucgg/EaEtPek5d9Tv2dZWV0pbIT3mgPm2lIaHtBddTnPXwXjyt+rzV10DN4V4c
-         R0B2oRSHW7AZFxgkXv+P5AhfV8lrqQELuNHJxAWyZ4Iiq9SWPPhyb2WSNT555Y1+4CjO
-         c1WFGDMsi2uFdkVQsrLRq1kMJ1tjB5H5ZPe8pcAcClRAB3gJp4U0bCOZOJrOFTKQs1Fb
-         w855WA4eS7VIls5cZsRjVjkrmFdtNodWchokSHXIboS+lIUeeKuqwQ3GKuO/XB2Lljvn
-         AwNNEJrTuZ041/MeDLE+N/gB9gLA4RAWpxCLllnfN1e0bX7ufzKd7gWo1XY/hgBMtP4L
-         +N9g==
+        bh=5rf5E2DnPHhZa5mjjbksJwDEfHPiRx7BYttEV69jymc=;
+        b=DsTEAyOtg9rhHVdRsUM0NqqQlktNH0Ixyw+0tT4vw57RfP8rVWkhQxc1GKrkxnKYtz
+         B16/guB8vMsSyOWSWS4WDZqg9zsQ6Tx7nA9bF9zDZl8bgk05tVNoUcUvUEQ0eRPdtS2p
+         i1kB7o+CrcB9yiW2TYfyNqiOUz2HSS3ZvDvmhdifWgbxks1K1WwoE6Gn/SjMkethL7Ry
+         GotHJWQ7m6YLlsEspGh7E7xSWjkzhRK73T9Kd9lJY1seWJR4iO5kS/Zy6IC0mlaNwcP1
+         q7SVYuFjOSK78fJPKar2Cq+MJyDES+sYbN8mFRXkD2mwFTZe0KxpQ+JnhC4D89ayUAbn
+         eIHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lrJ98Nde3vueeK3LlK8TBlFEVgVJyLjWTnfTa2tND2Q=;
-        b=dQgjTotmHedjg7EHOJb8ShCOFiev5NLcbgXAW8trn8LIlvcBR/Y8GDzt/HLRh4X1PV
-         Uswn5Ryo+CB5xbLaB70IRCNBlqP1sn3CDbD4WXVEkLfEzhnJDPmibUAZwgRf2Vt9gKCz
-         awKL0ewPcaRl9qU//08FQqbdXNJLpsZC8sKjdMhJ570DwrYJy1CRdx+WG0J4cBxyyMVr
-         5U2VT5IDGMMYcyCYIC747PTfXZ2LmpbKNtWLTuHmKstfIZEkU2wWvXJsG8dCC6vmpZQy
-         BVDmT41KJNzxpcGEt0dmdUKVIdJjOFKDe46edN+ecfz1jWYA3H/D0vmuVX/HpD+qAyPb
-         1L8g==
-X-Gm-Message-State: APjAAAW/dL+XeyDOMWJK6yhwscYxUkltiyCAKu/teoHg9l5IyntqcZCx
-        ZTzM5N05tF8h5kuj7ZCctwPCWH72REngQHtns4D3+aLqLqupz2afz25rRqUddfzV7QmwGG40UcE
-        EIGa2pONglQNo9Gif3l8mrDjKDM3aPXQTR4RE1Jq2BMxkvQvadUqH4tPf8FJ4YmJ3yfx4UuzrUd
-        PI
-X-Google-Smtp-Source: APXvYqzzEtd9AWM+lVBcOG0of0pA3njIKCN6lHt6PZPhB4cUi3GdW3PidF75WzHlXWWaombZQ3laZsHi3Hkug0sSafbG
-X-Received: by 2002:a63:6782:: with SMTP id b124mr421230pgc.220.1573605266372;
- Tue, 12 Nov 2019 16:34:26 -0800 (PST)
-Date:   Tue, 12 Nov 2019 16:34:19 -0800
+        bh=5rf5E2DnPHhZa5mjjbksJwDEfHPiRx7BYttEV69jymc=;
+        b=KCMQyw7L3Nb0rW+ouaDjOuz0VtvRZX9hUmXOQiBtPP2wfOIcjbBsRRP9oWXy6Y7Yxd
+         giancm+mrGnFwF4M6+42bfpoPoGzpHRv8skmeUdo63uprilHc2EsQas3izH2Ihzg3EQc
+         lFewDVzETiRqdqfIl0hDOt2TQyW+KVjZcicAdBEqVdKfMYJWGlpLC5bytVvTTS/uFuQ9
+         uv22UfNxqEd4o7hPB4hsMwkyvPgSqR4YRFdH4UaTcXcKmTTRifrm88lRiV3t0kJu6mIS
+         ot/LZ+HTAg20628jyuIh779ro5nZFKEehyFcojN5zJg2OQttJss/fT9SiZ745FfhwRqH
+         kTwQ==
+X-Gm-Message-State: APjAAAVNFeUAkob//ezlj0QHOFsSKJ1bdqEXCIPgLD0Eh97AA0UnRmXZ
+        M6jn7e/Gf1P1d0Rj/wBXMRFFO6KC0w215YDq9CNvais1ylmiOiia1lM28DbUEPmtc4k+TQcrt8N
+        DpMhvEWX9LNTn9vzy8zznVH0dawJ/txOsfnGJ8Yv1B5egBL5+znxa7O+1iot19RW7JFXgD9Lqed
+        76
+X-Google-Smtp-Source: APXvYqyfmMDWR2c6D93coA3O9V1sa6DtPpsWh7f8kghK+MlfxTLqDVgiRnj+z/IlXsNhWKcpeUGoznCv6YTobUzWv9B2
+X-Received: by 2002:a63:cb50:: with SMTP id m16mr345238pgi.425.1573605268698;
+ Tue, 12 Nov 2019 16:34:28 -0800 (PST)
+Date:   Tue, 12 Nov 2019 16:34:20 -0800
 In-Reply-To: <cover.1573604516.git.jonathantanmy@google.com>
-Message-Id: <84d8cee52e7c1dc030826c8caa0e107f80783b9c.1573604516.git.jonathantanmy@google.com>
+Message-Id: <82daff8665c0a9b5df1dacbc2cff16d98dcc8175.1573604516.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1573604516.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.24.0.rc1.363.gb1bccd3e3d-goog
-Subject: [PATCH 1/2] clone: remove fetch_if_missing=0
+Subject: [PATCH 2/2] promisor-remote: remove fetch_if_missing=0
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -67,57 +67,174 @@ X-Mailing-List: git@vger.kernel.org
 Commit 6462d5eb9a ("fetch: remove fetch_if_missing=0", 2019-11-08)
 strove to remove the need for fetch_if_missing=0 from the fetching
 mechanism, so it is plausible to attempt removing fetch_if_missing=0
-from clone as well. But doing so reveals a bug - when the server does
-not send an object directly pointed to by a ref, this should be an
-error, not a trigger for a lazy fetch. (This case in the fetching
-mechanism was covered by a test using "git clone", not "git fetch",
-which is why the aforementioned commit didn't uncover the bug.)
+from the lazy-fetching mechanism in promisor-remote as well.
 
-The bug can be fixed by suppressing lazy-fetching during the
-connectivity check. Fix this bug, and remove fetch_if_missing from
-clone.
+But doing so reveals a bug - when the server does not send an object
+pointed to by a tag object, an infinite loop occurs: Git attempts to
+fetch the missing object, which causes a deferencing of all refs (for
+negotiation), which causes a lazy fetch of that missing object, and so
+on. This bug is because of unnecessary use of the fetch negotiator
+during lazy fetching - it is not used after initialization, but it is
+still initialized (which causes the dereferencing of all refs).
+
+Thus, when the negotiator is not used during fetching, refrain from
+initializing it. Then, remove fetch_if_missing from promisor-remote.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/clone.c | 3 ---
- connected.c     | 3 ++-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ fetch-pack.c      | 46 ++++++++++++++++++++++++++++++++--------------
+ promisor-remote.c |  3 ---
+ 2 files changed, 32 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index c46ee29f0a..8bf12ce5e3 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -927,8 +927,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 37178e2d34..490b111822 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -896,8 +896,15 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	struct object_id oid;
+ 	const char *agent_feature;
+ 	int agent_len;
+-	struct fetch_negotiator negotiator;
+-	fetch_negotiator_init(r, &negotiator);
++	struct fetch_negotiator negotiator_alloc;
++	struct fetch_negotiator *negotiator;
++
++	if (args->no_dependents) {
++		negotiator = NULL;
++	} else {
++		negotiator = &negotiator_alloc;
++		fetch_negotiator_init(r, negotiator);
++	}
  
- 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
+ 	sort_ref_list(&ref, ref_compare_name);
+ 	QSORT(sought, nr_sought, cmp_ref_by_name);
+@@ -984,7 +991,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		die(_("Server does not support --deepen"));
  
--	fetch_if_missing = 0;
--
- 	packet_trace_identity("clone");
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
- 			     builtin_clone_usage, 0);
-@@ -1265,7 +1263,6 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	if (!args->no_dependents) {
+-		mark_complete_and_common_ref(&negotiator, args, &ref);
++		mark_complete_and_common_ref(negotiator, args, &ref);
+ 		filter_refs(args, &ref, sought, nr_sought);
+ 		if (everything_local(args, &ref)) {
+ 			packet_flush(fd[1]);
+@@ -993,7 +1000,7 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 	} else {
+ 		filter_refs(args, &ref, sought, nr_sought);
+ 	}
+-	if (find_common(&negotiator, args, fd, &oid, ref) < 0)
++	if (find_common(negotiator, args, fd, &oid, ref) < 0)
+ 		if (!args->keep_pack)
+ 			/* When cloning, it is not unusual to have
+ 			 * no common commit.
+@@ -1013,7 +1020,8 @@ static struct ref *do_fetch_pack(struct fetch_pack_args *args,
+ 		die(_("git fetch-pack: fetch failed."));
+ 
+  all_done:
+-	negotiator.release(&negotiator);
++	if (negotiator)
++		negotiator->release(negotiator);
+ 	return ref;
+ }
+ 
+@@ -1231,7 +1239,8 @@ static int process_acks(struct fetch_negotiator *negotiator,
+ 				struct commit *commit;
+ 				oidset_insert(common, &oid);
+ 				commit = lookup_commit(the_repository, &oid);
+-				negotiator->ack(negotiator, commit);
++				if (negotiator)
++					negotiator->ack(negotiator, commit);
+ 			}
+ 			continue;
+ 		}
+@@ -1383,8 +1392,16 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 	struct packet_reader reader;
+ 	int in_vain = 0, negotiation_started = 0;
+ 	int haves_to_send = INITIAL_FLUSH;
+-	struct fetch_negotiator negotiator;
+-	fetch_negotiator_init(r, &negotiator);
++	struct fetch_negotiator negotiator_alloc;
++	struct fetch_negotiator *negotiator;
++
++	if (args->no_dependents) {
++		negotiator = NULL;
++	} else {
++		negotiator = &negotiator_alloc;
++		fetch_negotiator_init(r, negotiator);
++	}
++
+ 	packet_reader_init(&reader, fd[0], NULL, 0,
+ 			   PACKET_READ_CHOMP_NEWLINE |
+ 			   PACKET_READ_DIE_ON_ERR_PACKET);
+@@ -1408,15 +1425,15 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 
+ 			/* Filter 'ref' by 'sought' and those that aren't local */
+ 			if (!args->no_dependents) {
+-				mark_complete_and_common_ref(&negotiator, args, &ref);
++				mark_complete_and_common_ref(negotiator, args, &ref);
+ 				filter_refs(args, &ref, sought, nr_sought);
+ 				if (everything_local(args, &ref))
+ 					state = FETCH_DONE;
+ 				else
+ 					state = FETCH_SEND_REQUEST;
+ 
+-				mark_tips(&negotiator, args->negotiation_tips);
+-				for_each_cached_alternate(&negotiator,
++				mark_tips(negotiator, args->negotiation_tips);
++				for_each_cached_alternate(negotiator,
+ 							  insert_one_alternate_object);
+ 			} else {
+ 				filter_refs(args, &ref, sought, nr_sought);
+@@ -1430,7 +1447,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 						    "negotiation_v2",
+ 						    the_repository);
+ 			}
+-			if (send_fetch_request(&negotiator, fd[1], args, ref,
++			if (send_fetch_request(negotiator, fd[1], args, ref,
+ 					       &common,
+ 					       &haves_to_send, &in_vain,
+ 					       reader.use_sideband))
+@@ -1440,7 +1457,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 			break;
+ 		case FETCH_PROCESS_ACKS:
+ 			/* Process ACKs/NAKs */
+-			switch (process_acks(&negotiator, &reader, &common)) {
++			switch (process_acks(negotiator, &reader, &common)) {
+ 			case 2:
+ 				state = FETCH_GET_PACK;
+ 				break;
+@@ -1475,7 +1492,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		}
  	}
  
- 	junk_mode = JUNK_LEAVE_REPO;
--	fetch_if_missing = 1;
- 	err = checkout(submodule_progress);
+-	negotiator.release(&negotiator);
++	if (negotiator)
++		negotiator->release(negotiator);
+ 	oidset_clear(&common);
+ 	return ref;
+ }
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 9bd5b79d59..9f338c945f 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -16,10 +16,8 @@ static int fetch_refs(const char *remote_name, struct ref *ref)
+ {
+ 	struct remote *remote;
+ 	struct transport *transport;
+-	int original_fetch_if_missing = fetch_if_missing;
+ 	int res;
  
- 	strbuf_release(&reflog_msg);
-diff --git a/connected.c b/connected.c
-index 36c4e5dedb..c337f5f7f4 100644
---- a/connected.c
-+++ b/connected.c
-@@ -62,7 +62,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		 * received the objects pointed to by each wanted ref.
- 		 */
- 		do {
--			if (!repo_has_object_file(the_repository, &oid))
-+			if (!repo_has_object_file_with_flags(the_repository, &oid,
-+							     OBJECT_INFO_SKIP_FETCH_OBJECT))
- 				return 1;
- 		} while (!fn(cb_data, &oid));
- 		return 0;
+-	fetch_if_missing = 0;
+ 	remote = remote_get(remote_name);
+ 	if (!remote->url[0])
+ 		die(_("Remote with no URL"));
+@@ -28,7 +26,6 @@ static int fetch_refs(const char *remote_name, struct ref *ref)
+ 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
+ 	res = transport_fetch_refs(transport, ref);
+-	fetch_if_missing = original_fetch_if_missing;
+ 
+ 	return res;
+ }
 -- 
 2.24.0.rc1.363.gb1bccd3e3d-goog
 
