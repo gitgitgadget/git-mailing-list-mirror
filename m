@@ -8,198 +8,161 @@ X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 849FA1F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 12:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EBC91F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 12:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726330AbfKMMFC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 07:05:02 -0500
-Received: from mout.gmx.net ([212.227.15.18]:47129 "EHLO mout.gmx.net"
+        id S1726263AbfKMMag (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 07:30:36 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60747 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726318AbfKMMFC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 07:05:02 -0500
+        id S1725976AbfKMMaf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 07:30:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573646691;
-        bh=M8fjV76k/znv9dsg/iNuu5un1EgSWwXm7PpVJNIIQl0=;
+        s=badeba3b8450; t=1573648222;
+        bh=Cd4DllHoiYQLHGdU6wpppo2w2yjG3UvnFgzJy+9T7JQ=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QCofWNzZCYn4Neoed2jfsILb8vdHirwb90VSTZsu04VZfEpU/htFWsJIDtYMCnB69
-         F7GsvmFenHVffAM8BD93pk6t3aLjxFbZkfLJdOjOYHvy01Z1t8L3/93t3k1Ndghekw
-         pobkCwMejKUNrTFmwIpDpoYN4dE3eA1G7Soza5cY=
+        b=B8Rk8MLP4EtFKFLLn6XZu97emlrUmMeK2kFKMvzpC7tbr7yBU/T7MRfqGdUCKdSjK
+         QOSWll947nwye+TlPvQyB9VhtAS9w+O3nyhPZg+8YhwN+5Xwuc4ioH0iTM+CW38d7I
+         fI5kCPmuMZ3sTKJZih0s8cNzCmu0s6Pygsi0zGXg=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJE6L-1iAB2m1mEl-00Kcvw; Wed, 13
- Nov 2019 13:04:51 +0100
-Date:   Wed, 13 Nov 2019 13:04:35 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGhuK-1ihSiC2lhS-00DslO; Wed, 13
+ Nov 2019 13:30:22 +0100
+Date:   Wed, 13 Nov 2019 13:30:05 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: Should we auto-close PRs on git/git?
-In-Reply-To: <20191113011020.GB20431@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet>
-References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 1/9] Start to implement a built-in version of `git
+ add --interactive`
+In-Reply-To: <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet>
+References: <pull.170.v4.git.gitgitgadget@gmail.com> <pull.170.v5.git.1572869729.gitgitgadget@gmail.com> <ff59d2d0b3b8b591a806ef71b4bcfd350000b06e.1572869729.git.gitgitgadget@gmail.com> <xmqqh83fnfah.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1911091154550.46@tvgsbejvaqbjf.bet> <xmqqtv7cjj2n.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911110949590.46@tvgsbejvaqbjf.bet> <xmqqeeyehawj.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1911121459270.46@tvgsbejvaqbjf.bet>
+ <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:MZoLH6PSJd27lLHNq2DR9Zy10KI3/jOb8w6MWrMOjt8bWmI16TT
- t1JZ7Ee5Zf6drQ8RvMXZUcGhiI2sHyEzz2cU3xAkcCgD3rUJt3cYDhmWPpFmqiAOq7/kpyO
- FAhTfq+hsc33+OtW6R8a/jBBs/vIaFKyy4pEAsHEAFfzcYSg5Goq9/MXVPx4kh6FXjfl3p9
- A1gCF9UsqRtqIrh13TTbQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yByu/rTwA9w=:tPJPaSxHzUosysPGK3OxR7
- 1qJZtkVXd1Th9nEWi0u672x5w+EypuSzcR74UVgqkZH+wzpp3Z7OPnh1Wgp2qCieX5rWl/dpk
- 3X3cSs2+Q1WCs7/TFSlaWnzgcjhWg5BkoCh80RFKgLtO6wxYIPTWo3wQvLzO3Wvazlj6PS+mt
- GDT6clI2CRMWuPErXBGdMKB/YGJvysfWwBqztnJ6H++rt26gAjISwN+6M72ocn2nEUerHpyNX
- ZF1+9d/QiasAnNLNsrIXlIcGSp3Zy96Xf4oXXhytbAlbOjTF5uH6Gkfi3HZTpgaOG9F5eLf7V
- I3JGznvr6qmrrtYyHA3CO+YVF/cfUZ77WuzJvwcfG8WppP4cB1OcFbTJPL4Y4xZiDLZCr8VCn
- 7yQl3nGJs/tzIfMVkYRqbbQ4D6idNe2pezG1FiCRqdmpw35DCWhfA68/dOSY6b6zMbiXwyBOH
- nTOh7uSmIkPYvRaofNMF+XbAre0ftjdOBY7/N49IGLWiiupn4eFm7Bx3PxoF7VR9jGhCh9evB
- eLuUXdPnlBOdaJEbe51AsrJr4twBrd2Gif0/sG9RqKJ9Z4WPG53fDL+4xbCACsAvUL/0wQl9y
- +PJpN5gCh7x94yUH2tYzjmbf+cBW7W8srHWCzIOHS4DtGoYjGgf3sZp5NGRcq2GR6YitLZk4w
- +XTBJ5AFknNgYUCO69uwLCNRRF2OOhsXY5fcOTMyymsSm/ndclYI1ipKyjqS8RGBJJ+D1RwQ6
- rEl3rTqXokfQoDPeMiRXGcSeksObH8XW+VNq649NyGiOINv9kZjqnghTZhm7d5eH6OguktdE8
- pqGkUrB22228kt/h2+jVtK3Xq5ETMWlfXZPESy0WcWSyUniuBWx50Z1ZW90ExiAcYqwXo9GBS
- C0gOgK3zPOmGsyxPczgIBFRg66yNAjIx84UG+kD7TS4iSq2ldmK4zhTGvU+UreBf//gomThqW
- D4pVLzEyA66viG8S6F0NLQc11svBJKFqzNkBV+TKeq1a0LIYTAWObFDuSCztQ8YQ9T9xR9r+f
- KQSc5b+jYfup0XScTKtAOGqaMOs86S8FJLewpXIg+JCZsYjAqr84lxxaN3oYb0nuwbqoyPKGW
- lfGvwLnFrOEZcJ23wVRb6QdM2XC1u9YWEEp+otH5WUUdGcoeaDpY7rqZstvzEMx5dGsceyUHq
- d+hwjCjjyH9c3LeBoU1+fynSj4fUUoszLZpRjGNYvQoSZJ+RszssNzYIoXAod/3yy7xTaCt+I
- dDNjC2uhwfA0LxuAbaiRG3xBWz2PbV6dlt3TXvNajMIQx1tK4URG7YzdkryA=
+X-Provags-ID: V03:K1:QHVClYqQwAtnauAffWpTMPXeoKs+eqIXgYgl7cWOkROGCDUZLtK
+ cakcuwZOEGm9FDehmCSajCf1sKWj1k48hwsq/gDgJHT5nBwSD3i8pW7WKUz5A3tKigHZRoT
+ y9GUQzsYn/BkiTGuzi01BHijr3CLviPC9duoL5fGZ/qP445TOHklUlCDGyFmzSA2eMpqBVN
+ RwyoDsGcxJfXnOdkIz+Yw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uZCvXtTguPQ=:QMqkoJclC6JMpQ0UnL3mxd
+ umSi4Me1tVskC1ne2IoLO9DjIGoSM60w2L3j6M7Y0nCL+JRjab2X0Itpg3ftVKjd5H20dmUUR
+ 4NSg3EsDL/Arez1B6+edf184PTrzul2eKzWiDlmfOGGWx8UzdzT7DrwgWlGN+tSurXhvo86fS
+ liFUH8Yl09IZ4l0e3mNrHE/KmPTCpu1z4z2iovF/6bM4JGI4OFiMWbwP8FB4x9q0qvQjmgavu
+ PHl+NaX+ztOyZ9esRzCbewmPErM9DQEqSsr1pjeZkpWbPE/80cCEgzPaLyenVXmTPoiaDla2u
+ 28rE/ksoBHkhD5GQjyFUwSnEVBW1EtvJ9fR5OgPDLp1ovVoJUkxtUmNAynl1/rlISPpq/G7uv
+ tSpAy7uYKF57iMH6t2TfAw57jH/VTOwPcnipPUuF2kIcEZXKyhVUUIWZW9+vb8bjIhmMSPFK9
+ 21tfUZTcO5gsdA7JtywTA47z9yuhePwtTWLDQ+Zn+/i3PXS+XZGsJJ6eXC1MWx6zr49sGmCKJ
+ 4th4nKeyI+C3PHzwV3wD0IBjOTB3BRZpMNkQGanqCySMEw0MMI0CFS+vYbA0d6onHPt/EKVfH
+ +sKXSH5v5nIRtcCZq6AkK/xX0VzvdA4uRrrSsYtEek0CWJRbA5lEDTgBNC/qa4/vyMo6LF85A
+ jqUDAZEsjxIoiB2wPELNy90z2Avs0oZTeTGjmnk8bJ63MpjH6olQ7X2M9nKlRQ9LLBPA24RVE
+ MI2QMm2+l4U/C5OjdBdFex8BoY/DGr9OLA3lJX9NSU4lGb0gm4rb7tQE6LnFyx7rMdMDOz2zh
+ mHTi9TO6NkjV4zS7lo1q1mSZy5Gh6e3OYhI2wFnrzAzJNMFhH19fZalsOTJpDgLCDxtKjuS8x
+ iJuwkr7bQeVrYhpNi0FCUdhI54Uz0kcoN71/e7xBCKAKoOXoLMrCsxqiVwuLm5dmGWxgdepGC
+ uYhymyv3Rqi34pSfoOAQkaDxeQAVAbGHaslUELzhHVsw+5XbxTE2BCTHCtcsdrS/yQlerzmQJ
+ liMATzXQ0ccynchEECXTAwdKfqGyTAuQxoswKpHK9smAi1FinYzL+FjNv1Gw4ykyMO8Q5r1Hz
+ 5hDmq3ls9cJAIXHAHcKSnllhQN2L/QhXABHOVYqJ+izedSKAsOnfgzZ5c+kgUv4NfPNIFRafB
+ IdYxC2c9Ynlu2+k8E6EVSNeqadDEUDmf5rXa1URlcN0XmXl3F2oujDxdFUgdS1xv58DIUFer+
+ RG/fCS4SD5QpkQaFqLURfTAZjz2pF1pvaA6JBpaj9EE58LoJXM39gXBqdmks=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio,
 
-On Tue, 12 Nov 2019, Jeff King wrote:
+On Wed, 13 Nov 2019, Junio C Hamano wrote:
 
-> On Tue, Nov 12, 2019 at 08:11:06PM +0100, Johannes Schindelin wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> > > To that end, I wonder if we should add an Action to automatically
-> > > close PRs on that repo. It looks like
-> > > https://github.com/dessant/repo-lockdown would do the trick. We coul=
-d
-> > > close incoming PRs automatically with a kind, maybe more succinct or
-> > > prescriptive version of the prefill text encouraging folks to open t=
-he
-> > > exact same PR against gitgitgadget/git instead.
+> >> Regardless of the language the scripted version was written in, I
+> >> think the '--helper' approach is always the poorer choice between
+> >> the two [*1*].  It limits the modular decomposition to what suits the
+> >> original language, the impedance mismatch between the original and
+> >> target language forces us to unnatural style of inter module
+> >> communication, and the unnatural interface layer, which we know has
+> >> to be discarded at the end, must be written [*2*].
+> >>
+> >> So, I'd prefer to see "because this is a better way in the longer
+> >> term" over "because the --helper approach would not work".
 > >
-> > I am rather certain that that would not be a good thing to do.
+> > Hmm. I feel distinctly unheard.
+>
+> The feeling is mutual ;-)
+
+Maybe I could take your comments more seriously if you acknowledged the
+fact that I am _very_ familiar with the vagaries of converting scripts
+to C. Like, very, very, very familiar.
+
+> > It may appear compelling, conceptually, to shun the `--helper` approac=
+h,
+> > but the more important reality is that it is the only one that makes a=
+n
+> > incremental conversion possible at all.
 > >
-> > There are some people who open git/git PRs solely for the PR builds,
-> > others to facilitate code review, and yet others just because it is th=
-e
-> > intuitively obvious way to contribute to Git.
+> > It took an entire month of 60-hour weeks to complete the conversion of
+> > `git add -i`/`git add -p` to C, and only at the very end was I able to
+> > run the test suite with `GIT_TEST_ADD_I_USE_BUILTIN=3Dtrue` and see it
+> > pass.
 >
-> We talked a while ago about having GitGitGadget operate on git/git,
-> rather than on a separate mirror. That would automatically help at least
-> one class of PR-opener: people who want their patches to reach the list
-> but didn't realize they should be using gitgitgadget/git.
+> Yeah, that is developer comfort, and of course it is nice to have
+> than not to have it.
+
+Comfort has little to do with it. Driving out bugs has a lot more to do
+with it. Which is the point I am trying to get across the entire time.
+
+> But compared to the downside impact to the quality of end result
+> that is inherent to the '--helper' approach, I'd prioritize the
+> quality of the end result over developer comfort.
 >
-> I don't remember what the technical blockers are for getting that set
-> up, but it seems like a strictly nicer outcome than auto-closing their
-> PR.
+> > It is indeed _in spite of_ the success of the `--helper` approach that
+> > we cannot use it here.
+>
+> As I do not see those past '--helper' ones necessarily successes, we
+> must agree to disagree here.
 
-Okay, here are a couple of technical challenges, off the top of my head:
+Right. But if I recall, you never even saw the need for the conversions
+in the first place. Maybe you still don't?
 
-# The permission problem
+> In any case, the log message needs to express why _you_ ended up
+> taking the non-helper approach.  Even though it is far less
+> relevant, compared to that, what other approach you instead wanted
+> to take, I do not veto you from having your own opinion.
 
-GitGitGadget needs code write permission on
-https://github.com/gitgitgadget/git so that it can push those tags that
-correspond to delivered patch series iterations. It also needs
-permission to write to Pull Requests (so that it can comment and add
-labels).
+Okay. I will take that as an indication that I can go forward with the
+latest proposal. After all, I described pretty well, I think, why _I_
+ended up taking the non-helper approach.
 
-But on https://github.com/git/git, Junio offered a strong preference
-for restricting access so that GitGitGadget cannot just push code. I
-do agree with this, but there is the complication that we cannot ask
-for a different permission sets depending on which repository we
-install the GitHub App.
-
-I just verified that I cannot add a PR comment on git/git using the
-existing App (which is installed only on gitgitgadget/git).
-
-Possible workaround: I could register a second GitGitGadget app
-(e.g. gitgitgadget2) and install that on git/git, then use that set of
-permissions to interact with PRs on git/git.
-
-This, however, will require a change in GitGitGadget's code,
-as it now potentially needs to use either the GitGitGadget App's token
-or the GitGitGadget2's. And for pushing the tags it always needs to use
-the GitGitGadget's token.
-
-BTW I do not like the name `gitgitgadget2` very much (it suggests an
-upgraded version to me), if you have any ideas, I'm all ears.
-
-# Disentangling the tagging part from the rest
-
-As I said, GitGitGadget pushes tags to gitgitgadget/git that correspond
-to each sent iteration. This is not only to allow for fetching directly
-(rather than trying to find an appropriate base commit and then applying
-the patches manually, which I find very tedious) but also for the
-range-diff for v2 and later.
-
-I would like to keep doing this even when letting GitGitGadget handle
-git/git's PRs.
-
-To avoid clashes, I would suggest to invent a new tag format. The
-current one is `pr-<number>/<author>/<branch-name>-v<iteration>`.
-Instead of the prefix `pr-`, we could easily use `git-` and be fine.
-
-However, that requires changes in GitGitGadget: so far, the URL prefix
-`https://github.com/gitgitgadget/git/` is pretty hard-coded. In theory,
-it would matter only when fetching the commits that need to be
-`/submit`ed, of course, but that will take some careful analysis right
-there.
-
-# The Checks
-
-To have the same nice integration with the GitHub Checks, where you can
-easily see when GitGitGadget is running, and get to the logs, we will
-need to install a separate CI/PR pipeline.
-
-For technical reasons, this will have to live in
-https://dev.azure.com/gitgitgadget/git/_build, as I want to have only
-one available agent for these runs: GitGitGadget is not _really_ able to
-run concurrently. Neither does it have to. It's not like contributors
-try to send multiple patch series in parallel. This saves me a lot of
-headache about locking.
-
-# The commit mappings
-
-One of the things that irks me the most with the mailing list driven
-development is that it is super hard to go from mail to commit, or for
-that matter, from commit to commit: _my_ commit in _my_ PR will have a
-completely different hash than Junio's commit in gitster/git. To help
-with that, GitGitGadget adds "Checks" to the commits in the PR that
-link to the corresponding ones in gitster/git.
-
-This should still be possible even in git/git, I think, provided that
-the second App would be equipped with permissions to write those checks.
-
-# The PR labels
-
-Whenever `pu` is updated, GitGitGadget tries to figure out what has been
-merged where, and add labels `pu`, `next`, `master` or `maint` to the
-PRs, closing the ones that made it to `master`.
-
-This should be equally possible on git/git, again contingent on the
-appropriate permission.
-
-# Reacting to `/submit`, `/preview`, etc
-
-We can probably reuse the same Azure Function that we have right now,
-provided that GitHub Apps can share the same webhook URL with other
-Apps.
-
-That's just the stuff off the top of my head.
-
-To start with this project, if I had the time, I would probably register
-that second app, install it on my fork and then pretend that my fork is
-git/git, and start testing what goes wrong (trying to re-route the mails
-away from the Git mailing list, of course).
-
-Not an easy, nor a small project, I am afraid.
-
-Ciao,
+Thanks,
 Dscho
+
+> >> [Footnote]
+> >>
+> >> *1* In only one case I would recommend using "--helper" approach,
+> >>     though.  When you are not expecting the developer to be able to
+> >>     come up with a better split of the program into modules than how
+> >>     the scripted version is, and you want to ensure that the
+> >>     developer have something to show when they faild to complete the
+> >>     project after N weeks.  You are a more experienced developer
+> >>     than an average GSoC student, and there is no pencils-down time,
+> >>     so the exception would not apply.
+> >>
+> >> *2* In "git submodule" for example it was quite natural for the
+> >>     module that gives a list of submodules with its traits the
+> >>     program cares about to be written as a shell function that
+> >>     writes the data to its standard output.  And consuming modules
+> >>     sit at the downstream of a pipe, accepting its output.  When you
+> >>     are writing these modules both in C, you wouldn't connect them
+> >>     with pipe to carry the list of submodules, but a piecemeal
+> >>     conversion using the "--helper" approach meant that there always
+> >>     remained _some_ consumer that wants to read from the pipe, so
+> >>     long after the module lister was rewritten in C, it still needed
+> >>     to support a mode where it sends its output to the pipe, instead
+> >>     of just passing an array of structures.
+> >>
+>
