@@ -7,90 +7,86 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8C9A1F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 13:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9FB1F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 14:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727206AbfKMNbt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 08:31:49 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59855 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726978AbfKMNbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 08:31:49 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 58D5C27DF5;
-        Wed, 13 Nov 2019 08:31:47 -0500 (EST)
+        id S1727629AbfKMOBe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 09:01:34 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56932 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727620AbfKMOBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 09:01:33 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C778488915;
+        Wed, 13 Nov 2019 09:01:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AdOOrV0dauvsVd3mLoNS/vvrtf4=; b=psrk9o
-        R0tyjGKR3AJNilb1XnYbWBrk4LYfXZgEftKMv1OPjG1m74Bd9Zj3uPONrHAFlPlj
-        MpQFUIGVHLHq23a4DQJHhQ6K2nGwap6S7BQK1o2keCXk8YahHEeAA6IJctC8RN68
-        sHK+z+3uY4L43djxF8O4eh7+J0pnWiR84HVAU=
+        :content-type; s=sasl; bh=svzJfbjN7X05pMQyiaMcTgO06c8=; b=wyyCPh
+        SY9hYx9L5bM/KYty94yyImbkPEYUKVM2Lvei+W53/BkXKxN406aNEw7hxos1QpCr
+        NaSQh0AYHvbjMbvp8Pqaa+Jqz6RP70YdFysiQ7kKhstQEAyh8xOkVU/4sMHdvCAL
+        i/1zhkPzfjOen7JmacWF/MTsg2Hl6p4Hf5Iok=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hMmIgPm+0mn3SMK//qxyR4EpSIe5UWuz
-        uQnyUM8zYykCIFualOYd5/MqXSSDi1PH/Ua/JGSiNHNj010r2QMk1GEZ62j+EeYc
-        eldNMPtyI51yJ6XD5sPB32SmmOG8VKrBIiT3pOx/1IKE1kRMGIYzOHlemqwB7DDX
-        LJsc2zzKG2A=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E4FA27DF4;
-        Wed, 13 Nov 2019 08:31:47 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=KETR4kQuJAK2ntvY4zGpjalWzsh6lAVQ
+        PhS+THE5zB4DIsE4cN3KUnIumHBTwyQlF2iZJXVO+DmtF1+24nLIqI75+XG6pWJ8
+        P9wxez9a0KVAf0wDe0EN/yyRkLZJ+0EWn3WBcU/KosHmDZ6P68q9cpdA6ATdyqfV
+        4oHAqkZKxrQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A71AC88913;
+        Wed, 13 Nov 2019 09:01:31 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AEEFF27DF3;
-        Wed, 13 Nov 2019 08:31:46 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C25668890F;
+        Wed, 13 Nov 2019 09:01:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Grzegorz Rajchman <rayman17@gmail.com>, git@vger.kernel.org
-Subject: Re: [BUG] git stash pop --quiet deletes files in git 2.24.0
-References: <CAMcnqp22tEFva4vYHYLzY83JqDHGzDbDGoUod21Dhtnvv=h_Pg@mail.gmail.com>
-        <20191107184912.GA3115@cat>
-        <xmqq7e4bp06l.fsf@gitster-ct.c.googlers.com>
-        <20191108165929.GB3115@cat>
-        <xmqqk188l0pn.fsf@gitster-ct.c.googlers.com>
-        <20191111195641.GC3115@cat>
-        <xmqqftitfz5u.fsf@gitster-ct.c.googlers.com>
-        <20191113111539.GA3047@cat>
-Date:   Wed, 13 Nov 2019 22:31:45 +0900
-In-Reply-To: <20191113111539.GA3047@cat> (Thomas Gummerer's message of "Wed,
-        13 Nov 2019 11:15:39 +0000")
-Message-ID: <xmqq4kz7c37i.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 1/9] Start to implement a built-in version of `git add --interactive`
+References: <pull.170.v4.git.gitgitgadget@gmail.com>
+        <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
+        <ff59d2d0b3b8b591a806ef71b4bcfd350000b06e.1572869729.git.gitgitgadget@gmail.com>
+        <xmqqh83fnfah.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1911091154550.46@tvgsbejvaqbjf.bet>
+        <xmqqtv7cjj2n.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1911110949590.46@tvgsbejvaqbjf.bet>
+        <xmqqeeyehawj.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1911121459270.46@tvgsbejvaqbjf.bet>
+        <xmqqd0dwbfd6.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 13 Nov 2019 23:01:26 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1911131326300.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 13 Nov 2019 13:30:05 +0100 (CET)")
+Message-ID: <xmqqzhgzan9l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F083ACEC-0619-11EA-BE7A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 16B74578-061E-11EA-9377-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> ...  This may want to become
->> 
->> 	git rev-parse --verify :file &&
->> 
->> or
->> 
->> 	git show :file >actual && echo bar >expect &&
->> 	test_cmp expect actual &&
->> 
->> perhaps?
+>> As I do not see those past '--helper' ones necessarily successes, we
+>> must agree to disagree here.
 >
-> Hmm I just copy-pasted this from somewhere else in this test file.
-> I'll add a preparatory patch getting rid of "$(git command substitution)"
-> as I don't believe Denton got to t3903 yet.
->
-> There's some more opportunities for modernization of this test file,
-> but I refrained from doing that to not blow up this bug fix series too
-> much.
+> Right. But if I recall, you never even saw the need for the conversions
+> in the first place. Maybe you still don't?
 
-It is very much appreciated that you aimed to keep the topic focused
-on the fixing.  What I meant was merely to avoid making things worse
-by adding more of $(git command substitution), not cleaning up the
-existing ones.
+You probably are forgetting the fact that I was very supportive for
+the rewrite of checkout, commit and format-patch (the last one being
+my favorite) in C from scripted Porcelain.  
 
-Thanks.
+None of these were '--helper' style conversion and I would consider
+them much more successful than the recent ones, some of which still
+suffer from impedance mismatch bugs (e.g. some parts of the C
+implementation work on the in-core index, while other parts working
+on the on the on-disk index, letting them become out of sync and
+introducing bugs).
