@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87EF21F4B5
+	by dcvr.yhbt.net (Postfix) with ESMTP id B126F1F4B5
 	for <e@80x24.org>; Wed, 13 Nov 2019 09:56:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727638AbfKMJ4g (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 04:56:36 -0500
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:55877 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727626AbfKMJ4f (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727631AbfKMJ4f (ORCPT <rfc822;e@80x24.org>);
         Wed, 13 Nov 2019 04:56:35 -0500
-Received: by mail-wm1-f43.google.com with SMTP id b11so1276264wmb.5
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 01:56:32 -0800 (PST)
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:34113 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727361AbfKMJ4d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 04:56:33 -0500
+Received: by mail-wm1-f51.google.com with SMTP id j18so4448584wmk.1
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 01:56:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eBPacqnXip5SUmNfvOOwSQpyfCmx5GEkwCtYsWV/PwA=;
-        b=afeize2OBgf66/BzH/kzlm9vDlO5n/DTpz7hTDYk0WbkicURK5yznNoVeVSJGNtcPI
-         BQ5o9MSS0i6Es9h2DdK8EVo3s7yUKtSqkf2k4lOSfW27oIlE/Ehs6GTsIzpU+BCZ5nBU
-         +ce8EOS/9IVEcu5eukLLOZ6B5P9mlOrRuPou9XwuMLp/q3POMa5L/FneBmVdodmq6y9x
-         GUhBsxURLVxJ9+dxKZycFbRqiya2l0BXyqullNOXcCYlVbNU8AsDCJoGapR9NLR3H5/M
-         gKl4uIRA+v0dNyhpN4bj6+sfO/DcA0iB8xiwYUBgl6DNY/htVXq+uSW72LMo6W1CricA
-         TWaw==
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=Dvi1T352mdy49RNMu39Kp3tpnQgploSMRL47E/ib3zyHQfj06RmLTqOOrHAPylM1bz
+         CxbUnM9znmRqSjYQLOnpIDwMbf8ZLu4Gx6Wt4Lm3LpsbCzvd2417kP2qKiogTrbRARcq
+         brNbetPwYRp0mh2DZG7utTKXMCgSc27d7Fz/Xk80z6MeDb+5bF9RPutPJf2z1UQAi4Bl
+         UMDq0TQSCLwz9km+BE4sxoGolch8+j9E5d5hVlaVPApMVIns8K0AqU+nvdH2Rf233VPR
+         539Awe65gV7kH00tyVY33JDcaJSBwDKFFHHogtd/38g3AvdCGQc8Yqf5M5RVpFRoZ9Vh
+         pZ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eBPacqnXip5SUmNfvOOwSQpyfCmx5GEkwCtYsWV/PwA=;
-        b=PKd67nSG4tSbfB7ulKAdsh72GWWN5RT757AZXQXUxq2BAt+7NKmLIaoeo0TwAW3tu3
-         5c1LMzvIk5B4pmRz3wu2bbVPCXIAksrtZkGiUxCqLjmGWmMiytG7YPNxUgl+BgbQEvkQ
-         EvPXCGCntsPW4129CUEDDF+bhMkgjeHsxjEqE2XoFvb7sHR6ZdFxGQqbWX0KdVhHVbJY
-         CfOXBrbXceKaHa/ven6ybGP5dxsgs+nwR5+FmuTthpJq0USmkDbb4TcRtEW8X5cLP53Q
-         gbEq40D9W3kdt1pzoffK+vZz0zVJbgaGhMy+kwUh2z+xPPXHVkIrBtkGoR60ELEAnG//
-         c8jQ==
-X-Gm-Message-State: APjAAAUPqJpSiNMw9xL9Hug9NLM3RYx2Kj2Rp4s4oBMDkB9Zt0y5Ueyz
-        4zmVcpKzpQwITKrDcxUknS/sqzJE
-X-Google-Smtp-Source: APXvYqzti1w3Nw3MehXDN4HvVUC7L4SxvF3ZsLyY8nmkVt7w+f63xZWYFRPHBpufKNOOmo8TyAKRxg==
-X-Received: by 2002:a1c:480a:: with SMTP id v10mr1980797wma.138.1573638991170;
-        Wed, 13 Nov 2019 01:56:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j7sm2424076wro.54.2019.11.13.01.56.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=a10WYvDSls22c/wPqZzRKUVEdjR50SrJHzY7GJj9LlgLbautaZ1GY3RZczVsvHMQ3E
+         1sOPOtTtAiVN2HIKJ+gLsE/jpcRXGDFfLOqHZwtqYG5wUXVP2vIeq8PuBY63BUnxNxg5
+         VROs6z96jypFn+3bMoOqrIyOGhI2eAs2qHUF3ZxGlonyLuBzkJeLiX063PWrIIun6/N6
+         2S/Vss6SoD9K8FIh4SPvTxTAOLD4cQWvn4BZfkwF3gnvHJZH+GJ89U1OGRTLlIjKykDy
+         eE691hWhBdK+VzKavheRr/Amyh1EVL01oa6ERghoMMBnDFYTGznUP55RP9MkVprbTtk+
+         YBJQ==
+X-Gm-Message-State: APjAAAURz8JSKF+wcAyXetJLBz2WK6ZWK3UhqUbZhVutyATQyi6n4xs1
+        Q3rNeXHiaA615h9obj1ajpUkXxX4
+X-Google-Smtp-Source: APXvYqy8mISrZs/ZifXKzFBUENdRo8tBvJgu3lbGgUun+pZsCVVNXMWOPx2Nf/c0QsgzFveaNYQN+g==
+X-Received: by 2002:a1c:2e0f:: with SMTP id u15mr1922682wmu.47.1573638990385;
         Wed, 13 Nov 2019 01:56:30 -0800 (PST)
-Message-Id: <dc12c1668dce875c99a45fb49ad5854a13ef4f35.1573638988.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b3sm1600718wmj.44.2019.11.13.01.56.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 13 Nov 2019 01:56:29 -0800 (PST)
+Message-Id: <da1704c56e0bd3f1ac53af96b702e3777bb3eb37.1573638988.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.436.v3.git.1573638988.gitgitgadget@gmail.com>
 References: <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
         <pull.436.v3.git.1573638988.gitgitgadget@gmail.com>
 From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 13 Nov 2019 09:56:27 +0000
-Subject: [PATCH v3 2/2] git-gui: revert untracked files by deleting them
+Date:   Wed, 13 Nov 2019 09:56:26 +0000
+Subject: [PATCH v3 1/2] git-gui: consolidate naming conventions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,714 +72,302 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-Update the revert_helper proc to check for untracked files as well as
-changes, and then handle changes to be reverted and untracked files with
-independent blocks of code. Prompt the user independently for untracked
-files, since the underlying action is fundamentally different (rm -f).
-If after deleting untracked files, the directory containing them becomes
-empty, then remove the directory as well. Migrate unlocking of the index
-out of _close_updateindex to a responsibility of the caller, to permit
-paths that don't directly unlock the index, and refactor the error
-handling added in d4e890e5 so that callers can make flow control
-decisions in the event of errors.
-
-A new proc delete_files takes care of actually deleting the files in
-batches, using the Tcler's Wiki recommended approach for keeping the UI
-responsive.
-
-Since the checkout_index and delete_files calls are both asynchronous
-and could potentially complete in any order, a "chord" is used to
-coordinate unlocking the index and returning the UI to a usable state
-only after both operations are complete. The `SimpleChord` class,
-based on TclOO (Tcl/Tk 8.6), is added in this commit.
+A few variables in this file use camelCase, while the overall standard
+is snake_case. A consistent naming scheme will improve readability of
+future changes. To avoid mixing naming changes with semantic changes,
+this commit contains only naming changes.
 
 Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
 ---
- git-gui.sh    |   4 +-
- lib/chord.tcl | 160 +++++++++++++++++++
- lib/index.tcl | 416 ++++++++++++++++++++++++++++++++++++++++----------
- 3 files changed, 496 insertions(+), 84 deletions(-)
- create mode 100644 lib/chord.tcl
+ lib/index.tcl | 92 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 0d21f5688b..dd6f3a3592 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -30,8 +30,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.}]
- ##
- ## Tcl/Tk sanity check
- 
--if {[catch {package require Tcl 8.4} err]
-- || [catch {package require Tk  8.4} err]
-+if {[catch {package require Tcl 8.6} err]
-+ || [catch {package require Tk  8.6} err]
- } {
- 	catch {wm withdraw .}
- 	tk_messageBox \
-diff --git a/lib/chord.tcl b/lib/chord.tcl
-new file mode 100644
-index 0000000000..275a6cd4a1
---- /dev/null
-+++ b/lib/chord.tcl
-@@ -0,0 +1,160 @@
-+# Simple Chord for Tcl
-+#
-+# A "chord" is a method with more than one entrypoint and only one body, such
-+# that the body runs only once all the entrypoints have been called by
-+# different asynchronous tasks. In this implementation, the chord is defined
-+# dynamically for each invocation. A SimpleChord object is created, supplying
-+# body script to be run when the chord is completed, and then one or more notes
-+# are added to the chord. Each note can be called like a proc, and returns
-+# immediately if the chord isn't yet complete. When the last remaining note is
-+# called, the body runs before the note returns.
-+#
-+# The SimpleChord class has a constructor that takes the body script, and a
-+# method add_note that returns a note object. Since the body script does not
-+# run in the context of the procedure that defined it, a mechanism is provided
-+# for injecting variables into the chord for use by the body script. The
-+# activation of a note is idempotent; multiple calls have the same effect as
-+# a simple call.
-+#
-+# If you are invoking asynchronous operations with chord notes as completion
-+# callbacks, and there is a possibility that earlier operations could complete
-+# before later ones are started, it is a good practice to create a "common"
-+# note on the chord that prevents it from being complete until you're certain
-+# you've added all the notes you need.
-+#
-+# Example:
-+#
-+#   # Turn off the UI while running a couple of async operations.
-+#   lock_ui
-+#
-+#   set chord [SimpleChord new {
-+#     unlock_ui
-+#     # Note: $notice here is not referenced in the calling scope
-+#     if {$notice} { info_popup $notice }
-+#   }
-+#
-+#   # Configure a note to keep the chord from completing until
-+#   # all operations have been initiated.
-+#   set common_note [$chord add_note]
-+#
-+#   # Pass notes as 'after' callbacks to other operations
-+#   async_operation $args [$chord add_note]
-+#   other_async_operation $args [$chord add_note]
-+#
-+#   # Communicate with the chord body
-+#   if {$condition} {
-+#     # This sets $notice in the same context that the chord body runs in.
-+#     $chord eval { set notice "Something interesting" }
-+#   }
-+#
-+#   # Activate the common note, making the chord eligible to complete
-+#   $common_note
-+#
-+# At this point, the chord will complete at some unknown point in the future.
-+# The common note might have been the first note activated, or the async
-+# operations might have completed synchronously and the common note is the
-+# last one, completing the chord before this code finishes, or anything in
-+# between. The purpose of the chord is to not have to worry about the order.
-+
-+# SimpleChord class:
-+#   Represents a procedure that conceptually has multiple entrypoints that must
-+#   all be called before the procedure executes. Each entrypoint is called a
-+#   "note". The chord is only "completed" when all the notes are "activated".
-+oo::class create SimpleChord {
-+	variable notes body is_completed
-+
-+	# Constructor:
-+	#   set chord [SimpleChord new {body}]
-+	#     Creates a new chord object with the specified body script. The
-+	#     body script is evaluated at most once, when a note is activated
-+	#     and the chord has no other non-activated notes.
-+	constructor {body} {
-+		set notes [list]
-+		my eval [list set body $body]
-+		set is_completed 0
-+	}
-+
-+	# Method:
-+	#   $chord eval {script}
-+	#     Runs the specified script in the same context (namespace) in which
-+	#     the chord body will be evaluated. This can be used to set variable
-+	#     values for the chord body to use.
-+	method eval {script} {
-+		namespace eval [self] $script
-+	}
-+
-+	# Method:
-+	#   set note [$chord add_note]
-+	#     Adds a new note to the chord, an instance of ChordNote. Raises an
-+	#     error if the chord is already completed, otherwise the chord is
-+	#     updated so that the new note must also be activated before the
-+	#     body is evaluated.
-+	method add_note {} {
-+		if {$is_completed} { error "Cannot add a note to a completed chord" }
-+
-+		set note [ChordNote new [self]]
-+
-+		lappend notes $note
-+
-+		return $note
-+	}
-+
-+	# This method is for internal use only and is intentionally undocumented.
-+	method notify_note_activation {} {
-+		if {!$is_completed} {
-+			foreach note $notes {
-+				if {![$note is_activated]} { return }
-+			}
-+
-+			set is_completed 1
-+
-+			namespace eval [self] $body
-+			namespace delete [self]
-+		}
-+	}
-+}
-+
-+# ChordNote class:
-+#   Represents a note within a chord, providing a way to activate it. When the
-+#   final note of the chord is activated (this can be any note in the chord,
-+#   with all other notes already previously activated in any order), the chord's
-+#   body is evaluated.
-+oo::class create ChordNote {
-+	variable chord is_activated
-+
-+	# Constructor:
-+	#   Instances of ChordNote are created internally by calling add_note on
-+	#   SimpleChord objects.
-+	constructor {chord} {
-+		my eval set chord $chord
-+		set is_activated 0
-+	}
-+
-+	# Method:
-+	#   [$note is_activated]
-+	#     Returns true if this note has already been activated.
-+	method is_activated {} {
-+		return $is_activated
-+	}
-+
-+	# Method:
-+	#   $note
-+	#     Activates the note, if it has not already been activated, and
-+	#     completes the chord if there are no other notes awaiting
-+	#     activation. Subsequent calls will have no further effect.
-+	#
-+	# NB: In TclOO, if an object is invoked like a method without supplying
-+	#     any method name, then this internal method `unknown` is what
-+	#     actually runs (with no parameters). It is used in the ChordNote
-+	#     class for the purpose of allowing the note object to be called as
-+	#     a function (see example above). (The `unknown` method can also be
-+	#     used to support dynamic dispatch, but must take parameters to
-+	#     identify the "unknown" method to be invoked. In this form, this
-+	#     proc serves only to make instances behave directly like methods.)
-+	method unknown {} {
-+		if {!$is_activated} {
-+			set is_activated 1
-+			$chord notify_note_activation
-+		}
-+	}
-+}
 diff --git a/lib/index.tcl b/lib/index.tcl
-index 28d4d2a54e..3ac08281c2 100644
+index e07b7a3762..28d4d2a54e 100644
 --- a/lib/index.tcl
 +++ b/lib/index.tcl
-@@ -7,53 +7,62 @@ proc _delete_indexlock {} {
- 	}
+@@ -56,15 +56,15 @@ proc _close_updateindex {fd after} {
+ 	uplevel #0 $after
  }
  
--proc _close_updateindex {fd after} {
--	global use_ttk NS
-+# Returns true if the operation succeeded, false if a rescan has been initiated.
-+proc _close_updateindex_rescan_on_error {fd} {
-+	if {![catch {_close_updateindex $fd} err]} {
-+		return true
-+	} else {
-+		rescan_on_error $err
-+		return false
-+	}
-+}
-+
-+proc _close_updateindex {fd} {
- 	fconfigure $fd -blocking 1
--	if {[catch {close $fd} err]} {
--		set w .indexfried
--		Dialog $w
--		wm withdraw $w
--		wm title $w [strcat "[appname] ([reponame]): " [mc "Index Error"]]
--		wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
--		set s [mc "Updating the Git index failed.  A rescan will be automatically started to resynchronize git-gui."]
--		text $w.msg -yscrollcommand [list $w.vs set] \
--			-width [string length $s] -relief flat \
--			-borderwidth 0 -highlightthickness 0 \
--			-background [get_bg_color $w]
--		$w.msg tag configure bold -font font_uibold -justify center
--		${NS}::scrollbar $w.vs -command [list $w.msg yview]
--		$w.msg insert end $s bold \n\n$err {}
--		$w.msg configure -state disabled
--
--		${NS}::button $w.continue \
--			-text [mc "Continue"] \
--			-command [list destroy $w]
--		${NS}::button $w.unlock \
--			-text [mc "Unlock Index"] \
--			-command "destroy $w; _delete_indexlock"
--		grid $w.msg - $w.vs -sticky news
--		grid $w.unlock $w.continue - -sticky se -padx 2 -pady 2
--		grid columnconfigure $w 0 -weight 1
--		grid rowconfigure $w 0 -weight 1
--
--		wm protocol $w WM_DELETE_WINDOW update
--		bind $w.continue <Visibility> "
--			grab $w
--			focus %W
--		"
--		wm deiconify $w
--		tkwait window $w
-+	close $fd
-+	$::main_status stop
-+}
- 
--		$::main_status stop
--		unlock_index
--		rescan $after 0
--		return
--	}
-+proc rescan_on_error {err} {
-+	global use_ttk NS
-+
-+	set w .indexfried
-+	Dialog $w
-+	wm withdraw $w
-+	wm title $w [strcat "[appname] ([reponame]): " [mc "Index Error"]]
-+	wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
-+	set s [mc "Updating the Git index failed.  A rescan will be automatically started to resynchronize git-gui."]
-+	text $w.msg -yscrollcommand [list $w.vs set] \
-+		-width [string length $s] -relief flat \
-+		-borderwidth 0 -highlightthickness 0 \
-+		-background [get_bg_color $w]
-+	$w.msg tag configure bold -font font_uibold -justify center
-+	${NS}::scrollbar $w.vs -command [list $w.msg yview]
-+	$w.msg insert end $s bold \n\n$err {}
-+	$w.msg configure -state disabled
-+
-+	${NS}::button $w.continue \
-+		-text [mc "Continue"] \
-+		-command [list destroy $w]
-+	${NS}::button $w.unlock \
-+		-text [mc "Unlock Index"] \
-+		-command "destroy $w; _delete_indexlock"
-+	grid $w.msg - $w.vs -sticky news
-+	grid $w.unlock $w.continue - -sticky se -padx 2 -pady 2
-+	grid columnconfigure $w 0 -weight 1
-+	grid rowconfigure $w 0 -weight 1
-+
-+	wm protocol $w WM_DELETE_WINDOW update
-+	bind $w.continue <Visibility> "
-+		grab $w
-+		focus %W
-+	"
-+	wm deiconify $w
-+	tkwait window $w
- 
- 	$::main_status stop
- 	unlock_index
--	uplevel #0 $after
-+	rescan ui_ready 0
- }
- 
- proc update_indexinfo {msg path_list after} {
-@@ -90,7 +99,11 @@ proc write_update_indexinfo {fd path_list total_cnt batch after} {
- 	global file_states current_diff_path
- 
- 	if {$update_index_cp >= $total_cnt} {
--		_close_updateindex $fd $after
-+		if {[_close_updateindex_rescan_on_error $fd]} {
-+			unlock_index
-+		}
-+
-+		uplevel #0 $after
- 		return
- 	}
- 
-@@ -156,7 +169,11 @@ proc write_update_index {fd path_list total_cnt batch after} {
- 	global file_states current_diff_path
- 
- 	if {$update_index_cp >= $total_cnt} {
--		_close_updateindex $fd $after
-+		if {[_close_updateindex_rescan_on_error $fd]} {
-+			unlock_index
-+		}
-+
-+		uplevel #0 $after
- 		return
- 	}
- 
-@@ -193,7 +210,7 @@ proc write_update_index {fd path_list total_cnt batch after} {
- 	$::main_status update $update_index_cp $total_cnt
- }
- 
--proc checkout_index {msg path_list after} {
-+proc checkout_index {msg path_list after capture_error} {
+-proc update_indexinfo {msg pathList after} {
++proc update_indexinfo {msg path_list after} {
  	global update_index_cp
  
  	if {![lock_index update]} return
-@@ -225,15 +242,21 @@ proc checkout_index {msg path_list after} {
- 		$total_cnt \
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -78,26 +78,26 @@ proc update_indexinfo {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_indexinfo \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
  		$batch \
  		$after \
-+		$capture_error \
  		]
  }
  
--proc write_checkout_index {fd path_list total_cnt batch after} {
-+proc write_checkout_index {fd path_list total_cnt batch after capture_error} {
+-proc write_update_indexinfo {fd pathList totalCnt batch after} {
++proc write_update_indexinfo {fd path_list total_cnt batch after} {
  	global update_index_cp
  	global file_states current_diff_path
  
- 	if {$update_index_cp >= $total_cnt} {
--		_close_updateindex $fd $after
-+		if {[catch {_close_updateindex $fd} err]} {
-+			uplevel #0 $capture_error [list $err]
-+		}
-+
-+		uplevel #0 $after
-+
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
  		return
  	}
  
-@@ -388,66 +411,295 @@ proc do_add_all {} {
- 	add_helper [mc "Adding all changed files"] $paths
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		set s $file_states($path)
+@@ -119,18 +119,18 @@ proc write_update_indexinfo {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
  }
  
-+# Copied from TclLib package "lambda".
-+proc lambda {arguments body args} {
-+	return [list ::apply [list $arguments $body] {*}$args]
-+}
-+
- proc revert_helper {txt paths} {
+-proc update_index {msg pathList after} {
++proc update_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -144,26 +144,26 @@ proc update_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_index {fd pathList totalCnt batch after} {
++proc write_update_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
  	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -190,18 +190,18 @@ proc write_update_index {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc checkout_index {msg pathList after} {
++proc checkout_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -221,26 +221,26 @@ proc checkout_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_checkout_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_checkout_index {fd pathList totalCnt batch after} {
++proc write_checkout_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
+@@ -253,7 +253,7 @@ proc write_checkout_index {fd pathList totalCnt batch after} {
+ 		}
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+ proc unstage_helper {txt paths} {
+@@ -261,7 +261,7 @@ proc unstage_helper {txt paths} {
  
  	if {![lock_index begin-update]} return
  
-+	# Common "after" functionality that waits until multiple asynchronous
-+	# operations are complete (by waiting for them to activate their notes
-+	# on the chord).
-+	#
-+	# The asynchronous operations are each indicated below by a comment
-+	# before the code block that starts the async operation.
-+	set after_chord [SimpleChord new {
-+		unlock_index
-+		if {[string trim $err] != ""} {
-+			rescan_on_error $err
-+		} else {
-+			if {$should_reshow_diff} { reshow_diff }
-+			ui_ready
-+		}
-+	}]
-+
-+	$after_chord eval { set should_reshow_diff 0 }
-+
-+	# This function captures an error for processing when after_chord is
-+	# completed. (The chord is curried into the lambda function.)
-+	set capture_error [lambda \
-+		{chord error} \
-+		{ $chord eval [list set err $error] } \
-+		$after_chord]
-+
-+	# We don't know how many notes we're going to create (it's dynamic based
-+	# on conditional paths below), so create a common note that will delay
-+	# the chord's completion until we activate it, and then activate it
-+	# after all the other notes have been created.
-+	set after_common_note [$after_chord add_note]
-+
- 	set path_list [list]
--	set after {}
-+	set untracked_list [list]
-+
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
  	foreach path $paths {
  		switch -glob -- [lindex $file_states($path) 0] {
- 		U? {continue}
-+		?O {
-+			lappend untracked_list $path
-+		}
- 		?M -
- 		?T -
- 		?D {
- 			lappend path_list $path
+@@ -269,19 +269,19 @@ proc unstage_helper {txt paths} {
+ 		M? -
+ 		T? -
+ 		D? {
+-			lappend pathList $path
++			lappend path_list $path
  			if {$path eq $current_diff_path} {
--				set after {reshow_diff;}
-+				$after_chord eval { set should_reshow_diff 1 }
+ 				set after {reshow_diff;}
  			}
  		}
  		}
  	}
- 
-+	set path_cnt [llength $path_list]
-+	set untracked_cnt [llength $untracked_list]
-+
-+	# Asynchronous operation: revert changes by checking them out afresh
-+	# from the index.
-+	if {$path_cnt > 0} {
-+		# Split question between singular and plural cases, because
-+		# such distinction is needed in some languages. Previously, the
-+		# code used "Revert changes in" for both, but that can't work
-+		# in languages where 'in' must be combined with word from
-+		# rest of string (in different way for both cases of course).
-+		#
-+		# FIXME: Unfortunately, even that isn't enough in some languages
-+		# as they have quite complex plural-form rules. Unfortunately,
-+		# msgcat doesn't seem to support that kind of string
-+		# translation.
-+		#
-+		if {$path_cnt == 1} {
-+			set query [mc \
-+				"Revert changes in file %s?" \
-+				[short_path [lindex $path_list]] \
-+				]
-+		} else {
-+			set query [mc \
-+				"Revert changes in these %i files?" \
-+				$path_cnt]
-+		}
-+
-+		set reply [tk_dialog \
-+			.confirm_revert \
-+			"[appname] ([reponame])" \
-+			"$query
- 
--	# Split question between singular and plural cases, because
--	# such distinction is needed in some languages. Previously, the
--	# code used "Revert changes in" for both, but that can't work
--	# in languages where 'in' must be combined with word from
--	# rest of string (in different way for both cases of course).
--	#
--	# FIXME: Unfortunately, even that isn't enough in some languages
--	# as they have quite complex plural-form rules. Unfortunately,
--	# msgcat doesn't seem to support that kind of string translation.
--	#
--	set n [llength $path_list]
--	if {$n == 0} {
--		unlock_index
--		return
--	} elseif {$n == 1} {
--		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
--	} else {
--		set query [mc "Revert changes in these %i files?" $n]
-+[mc "Any unstaged changes will be permanently lost by the revert."]" \
-+			question \
-+			1 \
-+			[mc "Do Nothing"] \
-+			[mc "Revert Changes"] \
-+			]
-+
-+		if {$reply == 1} {
-+			checkout_index \
-+				$txt \
-+				$path_list \
-+				[$after_chord add_note] \
-+				$capture_error
-+		}
- 	}
- 
--	set reply [tk_dialog \
--		.confirm_revert \
--		"[appname] ([reponame])" \
--		"$query
-+	# Asynchronous operation: Deletion of untracked files.
-+	if {$untracked_cnt > 0} {
-+		# Split question between singular and plural cases, because
-+		# such distinction is needed in some languages.
-+		#
-+		# FIXME: Unfortunately, even that isn't enough in some languages
-+		# as they have quite complex plural-form rules. Unfortunately,
-+		# msgcat doesn't seem to support that kind of string
-+		# translation.
-+		#
-+		if {$untracked_cnt == 1} {
-+			set query [mc \
-+				"Delete untracked file %s?" \
-+				[short_path [lindex $untracked_list]] \
-+				]
-+		} else {
-+			set query [mc \
-+				"Delete these %i untracked files?" \
-+				$untracked_cnt \
-+				]
-+		}
- 
--[mc "Any unstaged changes will be permanently lost by the revert."]" \
--		question \
--		1 \
--		[mc "Do Nothing"] \
--		[mc "Revert Changes"] \
--		]
--	if {$reply == 1} {
--		checkout_index \
--			$txt \
-+		set reply [tk_dialog \
-+			.confirm_revert \
-+			"[appname] ([reponame])" \
-+			"$query
-+
-+[mc "Files will be permanently deleted."]" \
-+			question \
-+			1 \
-+			[mc "Do Nothing"] \
-+			[mc "Delete Files"] \
-+			]
-+
-+		if {$reply == 1} {
-+			$after_chord eval { set should_reshow_diff 1 }
-+
-+			delete_files $untracked_list [$after_chord add_note]
-+		}
-+	}
-+
-+	# Activate the common note. If no other notes were created, this
-+	# completes the chord. If other notes were created, then this common
-+	# note prevents a race condition where the chord might complete early.
-+	$after_common_note
-+}
-+
-+# Delete all of the specified files, performing deletion in batches to allow the
-+# UI to remain responsive and updated.
-+proc delete_files {path_list after} {
-+	# Enable progress bar status updates
-+	$::main_status start [mc "Deleting"] [mc "files"]
-+
-+	set path_index 0
-+	set deletion_errors [list]
-+	set batch_size 50
-+
-+	delete_helper \
-+		$path_list \
-+		$path_index \
-+		$deletion_errors \
-+		$batch_size \
-+		$after
-+}
-+
-+# Helper function to delete a list of files in batches. Each call deletes one
-+# batch of files, and then schedules a call for the next batch after any UI
-+# messages have been processed.
-+proc delete_helper {path_list path_index deletion_errors batch_size after} {
-+	global file_states
-+
-+	set path_cnt [llength $path_list]
-+
-+	set batch_remaining $batch_size
-+
-+	while {$batch_remaining > 0} {
-+		if {$path_index >= $path_cnt} { break }
-+
-+		set path [lindex $path_list $path_index]
-+
-+		set deletion_failed [catch {file delete -- $path} deletion_error]
-+
-+		if {$deletion_failed} {
-+			lappend deletion_errors [list "$deletion_error"]
-+		} else {
-+			remove_empty_directories [file dirname $path]
-+
-+			# Don't assume the deletion worked. Remove the file from
-+			# the UI, but only if it no longer exists.
-+			if {![path_exists $path]} {
-+				unset file_states($path)
-+				display_file $path __
-+			}
-+		}
-+
-+		incr path_index 1
-+		incr batch_remaining -1
-+	}
-+
-+	# Update the progress bar to indicate that this batch has been
-+	# completed. The update will be visible when this procedure returns
-+	# and allows the UI thread to process messages.
-+	$::main_status update $path_index $path_cnt
-+
-+	if {$path_index < $path_cnt} {
-+		# The Tcler's Wiki lists this as the best practice for keeping
-+		# a UI active and processing messages during a long-running
-+		# operation.
-+
-+		after idle [list after 0 [list \
-+			delete_helper \
- 			$path_list \
--			[concat $after [list ui_ready]]
-+			$path_index \
-+			$deletion_errors \
-+			$batch_size \
-+			$after
-+			]]
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
  	} else {
--		unlock_index
-+		# Finish the status bar operation.
-+		$::main_status stop
-+
-+		# Report error, if any, based on how many deletions failed.
-+		set deletion_error_cnt [llength $deletion_errors]
-+
-+		if {($deletion_error_cnt > 0)
-+		 && ($deletion_error_cnt <= [MAX_VERBOSE_FILES_IN_DELETION_ERROR])} {
-+			set error_text [mc "Encountered errors deleting files:\n"]
-+
-+			foreach deletion_error $deletion_errors {
-+				append error_text "* [lindex $deletion_error 0]\n"
-+			}
-+
-+			error_popup $error_text
-+		} elseif {$deletion_error_cnt == $path_cnt} {
-+			error_popup [mc \
-+				"None of the %d selected files could be deleted." \
-+				$path_cnt \
-+				]
-+		} elseif {$deletion_error_cnt > 1} {
-+			error_popup [mc \
-+				"%d of the %d selected files could not be deleted." \
-+				$deletion_error_cnt \
-+				$path_cnt \
-+				]
-+		}
-+
-+		uplevel #0 $after
-+	}
-+}
-+
-+proc MAX_VERBOSE_FILES_IN_DELETION_ERROR {} { return 10; }
-+
-+# This function is from the TCL documentation:
-+#
-+#   https://wiki.tcl-lang.org/page/file+exists
-+#
-+# [file exists] returns false if the path does exist but is a symlink to a path
-+# that doesn't exist. This proc returns true if the path exists, regardless of
-+# whether it is a symlink and whether it is broken.
-+proc path_exists {name} {
-+	expr {![catch {file lstat $name finfo}]}
-+}
-+
-+# Remove as many empty directories as we can starting at the specified path,
-+# walking up the directory tree. If we encounter a directory that is not
-+# empty, or if a directory deletion fails, then we stop the operation and
-+# return to the caller. Even if this procedure fails to delete any
-+# directories at all, it does not report failure.
-+proc remove_empty_directories {directory_path} {
-+	set parent_path [file dirname $directory_path]
-+
-+	while {$parent_path != $directory_path} {
-+		set contents [glob -nocomplain -dir $directory_path *]
-+
-+		if {[llength $contents] > 0} { break }
-+		if {[catch {file delete -- $directory_path}]} { break }
-+
-+		set directory_path $parent_path
-+		set parent_path [file dirname $directory_path]
+ 		update_indexinfo \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
  	}
  }
+@@ -305,7 +305,7 @@ proc add_helper {txt paths} {
  
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -321,19 +321,19 @@ proc add_helper {txt paths} {
+ 		?M -
+ 		?D -
+ 		?T {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after {ui_status [mc "Ready to commit."]}]
+ 	}
+ }
+@@ -393,7 +393,7 @@ proc revert_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -401,7 +401,7 @@ proc revert_helper {txt paths} {
+ 		?M -
+ 		?T -
+ 		?D {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+@@ -420,12 +420,12 @@ proc revert_helper {txt paths} {
+ 	# as they have quite complex plural-form rules. Unfortunately,
+ 	# msgcat doesn't seem to support that kind of string translation.
+ 	#
+-	set n [llength $pathList]
++	set n [llength $path_list]
+ 	if {$n == 0} {
+ 		unlock_index
+ 		return
+ 	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $pathList]]]
++		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+ 	} else {
+ 		set query [mc "Revert changes in these %i files?" $n]
+ 	}
+@@ -444,7 +444,7 @@ proc revert_helper {txt paths} {
+ 	if {$reply == 1} {
+ 		checkout_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	} else {
+ 		unlock_index
 -- 
 gitgitgadget
+
