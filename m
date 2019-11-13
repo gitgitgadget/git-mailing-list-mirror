@@ -7,81 +7,66 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56DB51F5A1
-	for <e@80x24.org>; Wed, 13 Nov 2019 02:50:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 381CC1F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 03:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbfKMCuy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 12 Nov 2019 21:50:54 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59880 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727145AbfKMCuy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 12 Nov 2019 21:50:54 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5ABC49908F;
-        Tue, 12 Nov 2019 21:50:52 -0500 (EST)
+        id S1727319AbfKMDmf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 12 Nov 2019 22:42:35 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53561 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726994AbfKMDmf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 12 Nov 2019 22:42:35 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 46B09A49B1;
+        Tue, 12 Nov 2019 22:42:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IZ/H3/hlk1HcZtRZx5WqXXC3Wu8=; b=Ggw1gq
-        1KHbNVHtEu+pepBRIgAwbaiKt7QY18QDpd7bO2QyiuemJlUVSuuYOXA8gCtyqhNT
-        3Kj+v5yWRFIIIpxKhkI6RW2kdmUC7BND4EbNENbHCFx2+f0Cx1MhPDb+nqixjQzN
-        X8o2bLGjPPef7Kj+/ITqy4IhxUahs/hAkcruc=
+        :content-type; s=sasl; bh=nEbtuJShNNLuvX9YQQeTTLkE7B0=; b=vl72DG
+        7KqaHhtb29NGS7jGaUGNScJs6LWK8MrIxppQaLQRwK1J1z0EUNY8rMSEYATpMXpU
+        pw4LKAuSJvH9kmrzQ5Z585NMmbMtJlH4WkAH962Xf3UWWZi6Z4XFEu1R+0W88fnV
+        /05oHnxioEKZ5CDYVvm8u0hK7CQQ2fLCL81ag=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Z4fnXBgHOwaJ1rkjHeoXtpOnWw75O6Fk
-        pqYmUih4xEE55SIcJ6GZkd20vk+4W1QmLxJeZIHbmBfSfG2COeN8A9F7f53iOCru
-        kX++doF31sjf2XuAWS3jBQGI/PCB5B4WOscGkJHC+IHWiA39j6YcAjcSpyBkq+BB
-        wHELP2a+B2c=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 54B7C9908E;
-        Tue, 12 Nov 2019 21:50:52 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=HwnZnfVkZf8kd1wqePwr3U98FfJ2pmPX
+        wWneFOm+1FLm9JpyDscsKkkRaZjmgy2517hLBOlzx4fdLJTHRzRfAZnnAtlr4CjD
+        mBv6SPwvQheRd5wEYH0VqfCQiTgCim2Fuz5YxKaLu7boifOgoG2GNvRAloAORMGF
+        IL+bJGbT8KY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3F095A49B0;
+        Tue, 12 Nov 2019 22:42:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 842AC9908D;
-        Tue, 12 Nov 2019 21:50:49 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6CD02A49A7;
+        Tue, 12 Nov 2019 22:42:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] clone: remove fetch_if_missing=0
-References: <cover.1573604516.git.jonathantanmy@google.com>
-        <84d8cee52e7c1dc030826c8caa0e107f80783b9c.1573604516.git.jonathantanmy@google.com>
-Date:   Wed, 13 Nov 2019 11:50:47 +0900
-In-Reply-To: <84d8cee52e7c1dc030826c8caa0e107f80783b9c.1573604516.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 12 Nov 2019 16:34:19 -0800")
-Message-ID: <xmqqtv78bibc.fsf@gitster-ct.c.googlers.com>
+To:     "Force.Charlie" <force@forcemz.net>
+Cc:     "git" <git@vger.kernel.org>
+Subject: Re: Protocol v2: The wrong --shallow-since time format causes git to wait indefinitely
+References: <tencent_AB1A7466D1F2EF9A84B437705F06A7652709@qq.com>
+Date:   Wed, 13 Nov 2019 12:42:28 +0900
+In-Reply-To: <tencent_AB1A7466D1F2EF9A84B437705F06A7652709@qq.com> (Force
+        Charlie's message of "Wed, 13 Nov 2019 09:00:52 +0800")
+Message-ID: <xmqqpnhwbfx7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 664010BA-05C0-11EA-885B-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 9E886F4C-05C7-11EA-84D2-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+"Force.Charlie" <force@forcemz.net> writes:
 
-> diff --git a/connected.c b/connected.c
-> index 36c4e5dedb..c337f5f7f4 100644
-> --- a/connected.c
-> +++ b/connected.c
-> @@ -62,7 +62,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->  		 * received the objects pointed to by each wanted ref.
->  		 */
->  		do {
-> -			if (!repo_has_object_file(the_repository, &oid))
-> +			if (!repo_has_object_file_with_flags(the_repository, &oid,
-> +							     OBJECT_INFO_SKIP_FETCH_OBJECT))
+> # time format wrong
+> git -c protocol.version=2 clone https://github.com/git/git.git --shallow-since=20151012
 
-Wow, good find.  Really good find.  I guess the exercise to see if
-we can get rid of (or at least use less of) the big knob was a good
-idea.
-
-Thanks, will queue.
+That's the valid/right way to specify the timestamp that is
+20,151,012 seconds after the epoch (i.e. 1970-01-01), isn't it?
 
 
->  				return 1;
->  		} while (!fn(cb_data, &oid));
->  		return 0;
+
