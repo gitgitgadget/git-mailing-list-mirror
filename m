@@ -2,156 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 680F91F4B5
-	for <e@80x24.org>; Wed, 13 Nov 2019 11:17:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849FA1F4B5
+	for <e@80x24.org>; Wed, 13 Nov 2019 12:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727896AbfKMLRZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 06:17:25 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42389 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727815AbfKMLRY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 06:17:24 -0500
-Received: by mail-wr1-f65.google.com with SMTP id a15so1878441wrf.9
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 03:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zcqpLyNxv3/vZdvB7akp9UewCUxp/WrtSwBtcElP3AY=;
-        b=RSuc+JRAW8Kkb7YPhUFhJuQAmUeKikdn1D/6hfZzOn5jHLXMKUsxARoYwVZ/yEEXKm
-         JmYwBU3V+vHlPETntPxhl3hFvFRbktDbCiMGbZQsZxkK7Zmtk7epbuxpWSmgfIbl8SMq
-         BqPmAXpHvyDLVzxpQUDvOCpiPCfrrthHIVY+iEvB7tfEmnS2+b4OIi48lGEGdguxhGjv
-         tPsX/Ihhw/UZT928HXHGLfxdL34l51Q6S/sGjaZM09B3rCg7NqM7LQi3bQvQZBCaIBBx
-         85NYL1nVX45zm4NNloEXfKf4Tf8Bh+q7QddxDICuMbA9/hRQ3bpWJYRTvwogONFfj7k4
-         r/KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zcqpLyNxv3/vZdvB7akp9UewCUxp/WrtSwBtcElP3AY=;
-        b=OjkPm5gCGdtrjieRXiCYLdJhfdMeJgVrzzxgqr7C80PA7MEv23C7jOaggHE2WMlZ2E
-         +ZRy+X8tMRSvn9iF0Z47wJO/VL9EEXWY89412A368W91KEDWsH9QQRv1dwgHolwX01DM
-         P2gmyDDlZydI0mCiloHExFgeshTFL0xV+6+ztQvwO/kjhxV67eiR3ZhDai7b7Cvbj746
-         ohISKkBaQM3ujzfwq2wcfrHwZRqAcj0tqViKFoNdKVhdrHtxUgsDZeBxDBl+29xZtPeK
-         dLMy5BaLR7bnG8ru23/I//Qj003QcJguP4aqbbIwK2H9ml7hDWVYrRBQDBkUiwPv3pxA
-         GFHA==
-X-Gm-Message-State: APjAAAXnoyCTgrSFtCZKS8ZNFbYireo69RHeDQau0DjRYr3xv8NqweAr
-        n+jtdvScEtXnM3VNChrd66rAaKkbukE=
-X-Google-Smtp-Source: APXvYqx85C5MastGfKKcmo3vqTf05FE0zyct2QpexjvS84U7bKS7hsqHg9QewASmPKRBS78MC5Hfww==
-X-Received: by 2002:a5d:6350:: with SMTP id b16mr2387567wrw.357.1573643841773;
-        Wed, 13 Nov 2019 03:17:21 -0800 (PST)
-Received: from localhost ([62.253.227.125])
-        by smtp.gmail.com with ESMTPSA id t133sm7288883wmb.1.2019.11.13.03.17.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 13 Nov 2019 03:17:21 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Grzegorz Rajchman <rayman17@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/2] stash: make sure we have a valid index before writing it
-Date:   Wed, 13 Nov 2019 11:17:18 +0000
-Message-Id: <20191113111718.21412-2-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.24.0.155.gd9f6f3b619
-In-Reply-To: <20191113111718.21412-1-t.gummerer@gmail.com>
-References: <20191111195641.GC3115@cat>
- <20191113111718.21412-1-t.gummerer@gmail.com>
+        id S1726330AbfKMMFC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 07:05:02 -0500
+Received: from mout.gmx.net ([212.227.15.18]:47129 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726318AbfKMMFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 07:05:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573646691;
+        bh=M8fjV76k/znv9dsg/iNuu5un1EgSWwXm7PpVJNIIQl0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QCofWNzZCYn4Neoed2jfsILb8vdHirwb90VSTZsu04VZfEpU/htFWsJIDtYMCnB69
+         F7GsvmFenHVffAM8BD93pk6t3aLjxFbZkfLJdOjOYHvy01Z1t8L3/93t3k1Ndghekw
+         pobkCwMejKUNrTFmwIpDpoYN4dE3eA1G7Soza5cY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJE6L-1iAB2m1mEl-00Kcvw; Wed, 13
+ Nov 2019 13:04:51 +0100
+Date:   Wed, 13 Nov 2019 13:04:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: Should we auto-close PRs on git/git?
+In-Reply-To: <20191113011020.GB20431@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet>
+References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:MZoLH6PSJd27lLHNq2DR9Zy10KI3/jOb8w6MWrMOjt8bWmI16TT
+ t1JZ7Ee5Zf6drQ8RvMXZUcGhiI2sHyEzz2cU3xAkcCgD3rUJt3cYDhmWPpFmqiAOq7/kpyO
+ FAhTfq+hsc33+OtW6R8a/jBBs/vIaFKyy4pEAsHEAFfzcYSg5Goq9/MXVPx4kh6FXjfl3p9
+ A1gCF9UsqRtqIrh13TTbQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yByu/rTwA9w=:tPJPaSxHzUosysPGK3OxR7
+ 1qJZtkVXd1Th9nEWi0u672x5w+EypuSzcR74UVgqkZH+wzpp3Z7OPnh1Wgp2qCieX5rWl/dpk
+ 3X3cSs2+Q1WCs7/TFSlaWnzgcjhWg5BkoCh80RFKgLtO6wxYIPTWo3wQvLzO3Wvazlj6PS+mt
+ GDT6clI2CRMWuPErXBGdMKB/YGJvysfWwBqztnJ6H++rt26gAjISwN+6M72ocn2nEUerHpyNX
+ ZF1+9d/QiasAnNLNsrIXlIcGSp3Zy96Xf4oXXhytbAlbOjTF5uH6Gkfi3HZTpgaOG9F5eLf7V
+ I3JGznvr6qmrrtYyHA3CO+YVF/cfUZ77WuzJvwcfG8WppP4cB1OcFbTJPL4Y4xZiDLZCr8VCn
+ 7yQl3nGJs/tzIfMVkYRqbbQ4D6idNe2pezG1FiCRqdmpw35DCWhfA68/dOSY6b6zMbiXwyBOH
+ nTOh7uSmIkPYvRaofNMF+XbAre0ftjdOBY7/N49IGLWiiupn4eFm7Bx3PxoF7VR9jGhCh9evB
+ eLuUXdPnlBOdaJEbe51AsrJr4twBrd2Gif0/sG9RqKJ9Z4WPG53fDL+4xbCACsAvUL/0wQl9y
+ +PJpN5gCh7x94yUH2tYzjmbf+cBW7W8srHWCzIOHS4DtGoYjGgf3sZp5NGRcq2GR6YitLZk4w
+ +XTBJ5AFknNgYUCO69uwLCNRRF2OOhsXY5fcOTMyymsSm/ndclYI1ipKyjqS8RGBJJ+D1RwQ6
+ rEl3rTqXokfQoDPeMiRXGcSeksObH8XW+VNq649NyGiOINv9kZjqnghTZhm7d5eH6OguktdE8
+ pqGkUrB22228kt/h2+jVtK3Xq5ETMWlfXZPESy0WcWSyUniuBWx50Z1ZW90ExiAcYqwXo9GBS
+ C0gOgK3zPOmGsyxPczgIBFRg66yNAjIx84UG+kD7TS4iSq2ldmK4zhTGvU+UreBf//gomThqW
+ D4pVLzEyA66viG8S6F0NLQc11svBJKFqzNkBV+TKeq1a0LIYTAWObFDuSCztQ8YQ9T9xR9r+f
+ KQSc5b+jYfup0XScTKtAOGqaMOs86S8FJLewpXIg+JCZsYjAqr84lxxaN3oYb0nuwbqoyPKGW
+ lfGvwLnFrOEZcJ23wVRb6QdM2XC1u9YWEEp+otH5WUUdGcoeaDpY7rqZstvzEMx5dGsceyUHq
+ d+hwjCjjyH9c3LeBoU1+fynSj4fUUoszLZpRjGNYvQoSZJ+RszssNzYIoXAod/3yy7xTaCt+I
+ dDNjC2uhwfA0LxuAbaiRG3xBWz2PbV6dlt3TXvNajMIQx1tK4URG7YzdkryA=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 'do_apply_stash()' we refresh the index in the end.  Since
-34933d0eff ("stash: make sure to write refreshed cache", 2019-09-11),
-we also write that refreshed index when --quiet is given to 'git stash
-apply'.
+Hi Peff,
 
-However if '--index' is not given to 'git stash apply', we also
-discard the index in the else clause just before.  We need to do so
-because we use an external 'git update-index --add --stdin', which
-leads to an out of date in-core index.
+On Tue, 12 Nov 2019, Jeff King wrote:
 
-Later we call 'refresh_and_write_cache', which now leads to writing
-the discarded index, which means we essentially write an empty index
-file.  This is obviously not correct, or the behaviour the user
-wanted.  We should not modify the users index without being asked to
-do so.
+> On Tue, Nov 12, 2019 at 08:11:06PM +0100, Johannes Schindelin wrote:
+>
+> > > To that end, I wonder if we should add an Action to automatically
+> > > close PRs on that repo. It looks like
+> > > https://github.com/dessant/repo-lockdown would do the trick. We coul=
+d
+> > > close incoming PRs automatically with a kind, maybe more succinct or
+> > > prescriptive version of the prefill text encouraging folks to open t=
+he
+> > > exact same PR against gitgitgadget/git instead.
+> >
+> > I am rather certain that that would not be a good thing to do.
+> >
+> > There are some people who open git/git PRs solely for the PR builds,
+> > others to facilitate code review, and yet others just because it is th=
+e
+> > intuitively obvious way to contribute to Git.
+>
+> We talked a while ago about having GitGitGadget operate on git/git,
+> rather than on a separate mirror. That would automatically help at least
+> one class of PR-opener: people who want their patches to reach the list
+> but didn't realize they should be using gitgitgadget/git.
+>
+> I don't remember what the technical blockers are for getting that set
+> up, but it seems like a strictly nicer outcome than auto-closing their
+> PR.
 
-Make sure to re-read the index after discarding the current in-core
-index, to avoid dealing with outdated information.  Instead we could
-also drop the 'discard_cache()' + 'read_cache()', however that would
-make it easy to fall into the same trap as 34933d0eff did, so it's
-better to avoid that.
+Okay, here are a couple of technical challenges, off the top of my head:
 
-We can also drop the 'refresh_and_write_cache' completely in the quiet
-case.  Previously in legacy stash we relied on 'git status' to refresh
-the index after calling 'git read-tree' when '--index' was passed to
-'git apply'.  However the 'reset_tree()' call that replaced 'git
-read-tree' always passes options that are equivalent to '-m', making
-the refresh of the index unnecessary.
+# The permission problem
 
-Reported-by: Grzegorz Rajchman <rayman17@gmail.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- builtin/stash.c  | 7 +++----
- t/t3903-stash.sh | 7 ++++++-
- 2 files changed, 9 insertions(+), 5 deletions(-)
+GitGitGadget needs code write permission on
+https://github.com/gitgitgadget/git so that it can push those tags that
+correspond to delivered patch series iterations. It also needs
+permission to write to Pull Requests (so that it can comment and add
+labels).
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index ab30d1e920..372fbdb7ac 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -481,13 +481,12 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 		if (ret)
- 			return -1;
- 
-+		/* read back the result of update_index() back from the disk */
- 		discard_cache();
-+		read_cache();
- 	}
- 
--	if (quiet) {
--		if (refresh_and_write_cache(REFRESH_QUIET, 0, 0))
--			warning("could not refresh index");
--	} else {
-+	if (!quiet) {
- 		struct child_process cp = CHILD_PROCESS_INIT;
- 
- 		/*
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index db7cc6e664..0157771e24 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -263,8 +263,11 @@ test_expect_success 'save -q is quiet' '
- 	test_must_be_empty output.out
- '
- 
--test_expect_success 'pop -q is quiet' '
-+test_expect_success 'pop -q works and is quiet' '
- 	git stash pop -q >output.out 2>&1 &&
-+	echo bar >expect &&
-+	git show :file >actual &&
-+	test_cmp expect actual &&
- 	test_must_be_empty output.out
- '
- 
-@@ -273,6 +276,8 @@ test_expect_success 'pop -q --index works and is quiet' '
- 	git add file &&
- 	git stash save --quiet &&
- 	git stash pop -q --index >output.out 2>&1 &&
-+	git diff-files file2 >file2.diff &&
-+	test_must_be_empty file2.diff &&
- 	echo foo >expect &&
- 	git show :file >actual &&
- 	test_cmp expect actual &&
--- 
-2.24.0.155.gd9f6f3b619
+But on https://github.com/git/git, Junio offered a strong preference
+for restricting access so that GitGitGadget cannot just push code. I
+do agree with this, but there is the complication that we cannot ask
+for a different permission sets depending on which repository we
+install the GitHub App.
 
+I just verified that I cannot add a PR comment on git/git using the
+existing App (which is installed only on gitgitgadget/git).
+
+Possible workaround: I could register a second GitGitGadget app
+(e.g. gitgitgadget2) and install that on git/git, then use that set of
+permissions to interact with PRs on git/git.
+
+This, however, will require a change in GitGitGadget's code,
+as it now potentially needs to use either the GitGitGadget App's token
+or the GitGitGadget2's. And for pushing the tags it always needs to use
+the GitGitGadget's token.
+
+BTW I do not like the name `gitgitgadget2` very much (it suggests an
+upgraded version to me), if you have any ideas, I'm all ears.
+
+# Disentangling the tagging part from the rest
+
+As I said, GitGitGadget pushes tags to gitgitgadget/git that correspond
+to each sent iteration. This is not only to allow for fetching directly
+(rather than trying to find an appropriate base commit and then applying
+the patches manually, which I find very tedious) but also for the
+range-diff for v2 and later.
+
+I would like to keep doing this even when letting GitGitGadget handle
+git/git's PRs.
+
+To avoid clashes, I would suggest to invent a new tag format. The
+current one is `pr-<number>/<author>/<branch-name>-v<iteration>`.
+Instead of the prefix `pr-`, we could easily use `git-` and be fine.
+
+However, that requires changes in GitGitGadget: so far, the URL prefix
+`https://github.com/gitgitgadget/git/` is pretty hard-coded. In theory,
+it would matter only when fetching the commits that need to be
+`/submit`ed, of course, but that will take some careful analysis right
+there.
+
+# The Checks
+
+To have the same nice integration with the GitHub Checks, where you can
+easily see when GitGitGadget is running, and get to the logs, we will
+need to install a separate CI/PR pipeline.
+
+For technical reasons, this will have to live in
+https://dev.azure.com/gitgitgadget/git/_build, as I want to have only
+one available agent for these runs: GitGitGadget is not _really_ able to
+run concurrently. Neither does it have to. It's not like contributors
+try to send multiple patch series in parallel. This saves me a lot of
+headache about locking.
+
+# The commit mappings
+
+One of the things that irks me the most with the mailing list driven
+development is that it is super hard to go from mail to commit, or for
+that matter, from commit to commit: _my_ commit in _my_ PR will have a
+completely different hash than Junio's commit in gitster/git. To help
+with that, GitGitGadget adds "Checks" to the commits in the PR that
+link to the corresponding ones in gitster/git.
+
+This should still be possible even in git/git, I think, provided that
+the second App would be equipped with permissions to write those checks.
+
+# The PR labels
+
+Whenever `pu` is updated, GitGitGadget tries to figure out what has been
+merged where, and add labels `pu`, `next`, `master` or `maint` to the
+PRs, closing the ones that made it to `master`.
+
+This should be equally possible on git/git, again contingent on the
+appropriate permission.
+
+# Reacting to `/submit`, `/preview`, etc
+
+We can probably reuse the same Azure Function that we have right now,
+provided that GitHub Apps can share the same webhook URL with other
+Apps.
+
+That's just the stuff off the top of my head.
+
+To start with this project, if I had the time, I would probably register
+that second app, install it on my fork and then pretend that my fork is
+git/git, and start testing what goes wrong (trying to re-route the mails
+away from the Git mailing list, of course).
+
+Not an easy, nor a small project, I am afraid.
+
+Ciao,
+Dscho
