@@ -8,36 +8,37 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B49F1F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 17:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE7341F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 17:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726957AbfKNRPI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 12:15:08 -0500
-Received: from mout.web.de ([212.227.15.4]:60151 "EHLO mout.web.de"
+        id S1726997AbfKNRa2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 12:30:28 -0500
+Received: from mout.web.de ([212.227.15.14]:51387 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726491AbfKNRPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 12:15:08 -0500
+        id S1726214AbfKNRa1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 12:30:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573751698;
-        bh=GilLRBqT65hvN+CeMZcfFYcPuR7TsOt2BG9TLekLmqE=;
+        s=dbaedf251592; t=1573752625;
+        bh=/5UuygtXsNRBpw99DCx5rnmPjlndpWtJmn6pnk6fVoA=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=GVcY18OFnLKgtXfIPf6+gWkJnwWkopn6nULkhbzwN240T8HfmZxTlq3JwuWahynZY
-         v6I5m5VloUJZB42b+MzVspJrGjIBLexS9etBZY2ak3IVrFiwjcvPuMGLmrFWfowrBj
-         kfW4zccKxywDgM1Td8yjCFlk9354irSyqCRS8e2o=
+        b=LStnIcftUGFHIr5fqPD5xFNBThv/yIqor1oMlLoKIZXp859Ss3ZVKtMleQGCx6ROy
+         EJOZRHBE6i2hHxMgaRIrAkUDVWmLaGb1CsG91+a2U8uWqE3Phf/shHnZ8NQxmFPv/R
+         ll4dOHjSPp3vmo+z2LAX0SnXIdITPihRjmJmMLCo=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.131.120.12]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MDPYb-1ieyI3024z-00Gs8B; Thu, 14
- Nov 2019 18:14:58 +0100
-Subject: Re: coccinelle: adjustments for array.cocci?
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
- <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com>
- <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de>
- <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
- <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de>
- <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
+Received: from [192.168.1.3] ([93.131.120.12]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmLac-1hwWA70U0A-00a0AJ; Thu, 14
+ Nov 2019 18:30:25 +0100
+Subject: Re: coccinelle: merge two rules from flex_alloc.cocci
+To:     =?UTF-8?Q?G=c3=a1bor_Szeder?= <szeder.dev@gmail.com>
+Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+References: <f867512c-e5b2-6bca-2a37-2976f4c182bd@web.de>
+ <20191112175926.GA41101@generichostname>
+ <CAN0heSodNonkDK8AT9iJqmWLLCdO0OoHho0ijZOAmri5ren2dw@mail.gmail.com>
+ <ff240bc1-ae2a-17e5-d149-2d08c5367e96@web.de>
+ <CAN0heSqyGwkeGKv0m_gLDooaUp=gN2_tD7kJYNxeL7LALiPRhQ@mail.gmail.com>
+ <1d08b49e-1f41-4290-a64b-dad9fd2288de@web.de>
+ <20191114163527.GT4348@szeder.dev>
 From:   Markus Elfring <Markus.Elfring@web.de>
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
@@ -82,62 +83,73 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de>
-Date:   Thu, 14 Nov 2019 18:14:56 +0100
+Message-ID: <751e4cc2-e6d0-edfb-b206-4204443a5c62@web.de>
+Date:   Thu, 14 Nov 2019 18:30:24 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
+In-Reply-To: <20191114163527.GT4348@szeder.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7hhmx4Z7qD94hqpYvbrOgbiavX/muCNIggPdyQawSZPTZM975/4
- nIiCX6qMulXyeO1ikyxIWl6YAUUOJjDdYadw6FVcl8R5eileGjbs+2XKPQnm6VHG1GkgkVB
- i7bWsdEC4PxfQdz+SvEnLZ2tFcJ+2KrJlQ+B4mQ+id60Te7PnOOBovhLAWvdlRoBce65xZg
- 9v8eKS0qCZGFF3/hx9jWA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:k6VEVrzv8FE=:xkJGSu4fz66pCgQ0wEMbiT
- K7HFaCtOAUrMGSHqoCwoHZ0DI0hXP72alKWcUUzAAY3g2htjg4+FrEliRKEq8a9tDd5s85+Et
- CGVjObzOFZeQe8bKH8IqSGsBZtHH6gH2G2NpT02/yhnMZ2rseBdq2jOOcAtEi1Q6Deia6yvil
- cHXmWnYiwIxZzP5Y2+vXfKGoS6Hpdu1x1krZ6M/77TdJhUAcI0jOE+dqw8MH0+UhwFsh3I1ri
- yzaiVGrzdU/Nr6/GMfSvDBadMmel4kmeAxB18TyLXcrmxANeDq6GMWUt66Ullvlzo7UGkaVBn
- sb6BgrURp9fR0tUAYDiBQsqbbZG0C+83liL1ZnxxXO05NK7U/dPvlSuU66U+Ynay513s6fl8O
- E/8dHlQ5nG7cR6YlDr747YaRMFsWc2RBBy7yC22c1dt051O9lmgOeB8UuAp+2/yaALmt0Muh5
- 5/F1OJkpSlm69S70YCti3apRTQywtKyzWuKLu4pq5DjCeq/JYG2l/1/GASpHhkTMEoObsykuO
- DCatsNCjsnOK6lLR0VSFUVEleCYz95f/+svqK2VZM1niKiHDAjf8hPuLTCEur9JfGbytEukCh
- Q+p/mboNdeBvBcxZ8o7dDmznvjSfgThg10UI1em5g55h5AYTx0V6JeKj4jsxsF2Qb/5WjqIp1
- b5dOQryc4gMdNs1Nf/fsE7THbA7xxcstt4uWQOS6dIldapnVm82jfTk1u3JxUqX0xNKO24l41
- 0kV9pnODQY6ek7EN5Lc3PlFpSOLHVyJusISyfdhJ9O5M2/1D9Xvv6q7x90RvoFNYzaamUY5g3
- Gz5acDO7b5ymbGW17zLtIHcedtc8M4iUQ7IcwRyx68Lezc4p7mamNiFLst/4K8DQx0dwu/zIn
- +0mcsnf+z0ckYuaZSBmEpkSQMztJ+rTW+MbjPNd+udRa/lgyJySbdjsQqxdr9ShX6/7tRMUOX
- 6ctephIc61tTGnLmvnKTi71ISefnehqcCnjaHEl1fslCatKnAShoImJxGcOaFtWCxqMLHHUId
- ekw3IYWkCDj5WZTvNTvHfjutk8stMP2e3b6nGUNLAdlEvz1DRDXOcfw9X1aKo2M/Y/vEBUfBW
- LQnFOMRCv4NM0NF0aiJAMi2PaqsDUXfMvB124X9LiNxQmKE2I+EE6KBL42HX/WwCzEJvGOrC+
- hIf64TBFDdm4R+0usg5QToMdmvsnI4yfv/BhDLOYg4KtrISakRV1ZYadRgMQFIjfLkFQkpzBK
- GDUFZJApg2Fh5t62zEOED16ho+EgIP1oQst8xEilBr3mHxRLcfFCbgnXAQLs=
+X-Provags-ID: V03:K1:Hl+41IJl3179Hue6Cjj2B8CvtKAhAs23H9HkMV1gYS9Op7exETz
+ cgE2RXi2YdeXxm0GLQq+yUan/bDjZlBf/M90C4DbhXruALPWRh8/GxIqEvUmEybuTWj+lOu
+ 7ehTbN3ooo/Vjf+HJPV5uaaq5zs1FOqWAVZkjnbsIxvUBjB2fpEEdJk8vjg298qh1hvep+7
+ cImKcCcxFJA962f2GH/jw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:G/xQAU4R/aM=:QmvcOp/gOPeVLRdhXlgMCt
+ jo9ycOcbmH4srligAxMFUDljjtUgp9/KbLlSuXSkR8k8QPw5Xlw5w3SVWsw9WCheTPdYqgxFm
+ hL05isenay6ZHWBAu1aHUwH+mP3+MGT+BhYiNd97Th1WQJzb0+eI/zmiQRFnhf2OEFFuUgtrl
+ QOXMFOrXcRe7Veqnss5Pj81xHMSxIkr9RlabrvavjRzG9ef5X7Lzy3GwYn1UyJQcOCq3hWi9a
+ itQV6oQQDtdQXE3T6O4+BNFsNC7XMMlz6kc/uBHLDpIPODlFSIq3YhQKu6FgJ1Ce9aKzy/0qf
+ F/S0F6XS5HpJ86Sm8igpQ+Oa/2D5nGJ0UpMIuP9bObres6sTYXZj9YUePC6ClGoWspfQX9EBy
+ ZJrTwzhNDWO4nmBvBlX/4/gWFmuzg+LNh5uPKnM0vbAM7HIstHJ3W7YbPc2UyWGMt9uxHc6Po
+ vPWtusPuoGWjStxswVewirw1e4JdetP6BDWZKOui4NYGCkiyB8m9lAj8NvXUvfDzBjQBHBc01
+ ZVjna21YIeJeJKeaFEC7hcYvYkPNwWpbLRx+4VxMOJzEPN2P6ZOvoGj4RU1WlDxc0ZdmKBoSG
+ Efo5sEYjXeApnxMSFE4HysPmTUPAyDUT3oEKM4wNfS7N/abqccatzeuDn0hSWMGv88dergDi1
+ mqqrK/CrmMuh96Pq5rpGlRlZnHwgXtA3ZZeSlPMPIFiWAAuXwgKSpEZqkABK8YKlx+dYILjjl
+ 3XhkgothHJi9Jw4LI8j6L/A6IRrqas4RMBOvJOH0WD1OTOnhh04B5JOl+ryx5c10WLJi2ZJOI
+ viGyTptr0ra7aVo+Ti+KRyihj+ChjlXYuRiHxkK50OBJskdHjH/1wcEJB3mwaBMIpLB1EhAfN
+ uOFBj5n6ue+4lYimNLgNGu4cYLIiR4RDn51En72zJKY2hueTE4u0Bba6ll6XEKuKv8RjAA/p4
+ MgwZyM+43J6nLhL5HF/bOQdD9ZLW+b4Vw+69G+D57jOGQcsgAg4Ka0mPPAuyR49IR6RpNT4l2
+ hv3a8HATmCBnArqQxNcz8e0XhvwNWxWinTuPWx0WsYgD0nIlu5qbA2cF310FCYcf2cGdcSUfd
+ wS2a+0g4oh5LfdG5IB1zic7rTqKzOUJ+L4QKVmiCtGqEaf0r0SfDpx98DFkNCpwFkk929rIMB
+ yzd4320nmcrChLkX4ryhxIaV2hgxsqsTHbcW/s4Vg+Ve7Xav0xCOmhdDpSn4VBfx5Fg19C7g8
+ LC8Z69r52IBEYUiQiVgKQNeX1tXKSrjobi9W7dDe1M/782bpdIrK5igvg6xQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> If the new version of array.cocci is equivalent to the current one then
-> that last step should show no difference.
-
-I hoped it.
-
-
->  contrib/coccinelle/array.cocci | 30 ++++++++++++++----------------
->  fast-import.c                  |  2 +-
->  packfile.c                     |  4 ++--
->  pretty.c                       |  4 ++--
->  4 files changed, 19 insertions(+), 21 deletions(-)
+>> Does any test infrastructure (or benchmarks) exist which you would trus=
+t for
+>> corresponding comparisons of software run time characteristics?
 >
-> The changes in array.cocci are expected of course, but the others
-> indicate that the new version missed transformations that the current
-> version generated.
+> Yes, just run:
+>
+>   make cocciclean
+>   time make contrib/coccinelle/flex_alloc.cocci.patch
 
-Would we like to submit a bug report for the Coccinelle software?
+Thanks for this suggestion.
 
-Which version did you try out for the comparison of generated patches?
+
+> before and after your changes, and include the timing results in the
+> commit message if there is a notable difference.
+
+The measurements from my test system might not be representative enough.
+
+
+> FWIW, I did just that with your "coccinelle: merge twelve rules from
+> object_id.cocci" patch [1], and the runtime went down from 2m48.610 to
+> 2m34.395, a bit over 8% speedup. (with Ubuntu 16.04's Coccinelle
+> 1.0.4)
+>
+>
+> [1] https://public-inbox.org/git/6c9962c0-67c1-e700-c145-793ce6498099@we=
+b.de/
+
+These numbers seem to be nice.
+Would a direct reply have been more helpful for the referenced patch
+than the current subject?
 
 Regards,
 Markus
