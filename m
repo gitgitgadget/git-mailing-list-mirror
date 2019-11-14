@@ -2,239 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF57C1F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 20:47:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F5A51F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 21:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726977AbfKNUrb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 15:47:31 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38104 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726828AbfKNUra (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 15:47:30 -0500
-Received: by mail-pg1-f195.google.com with SMTP id 15so4542472pgh.5
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 12:47:28 -0800 (PST)
+        id S1726786AbfKNVmi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 16:42:38 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43630 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbfKNVmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 16:42:38 -0500
+Received: by mail-pl1-f193.google.com with SMTP id a18so3240934plm.10
+        for <git@vger.kernel.org>; Thu, 14 Nov 2019 13:42:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=DGMiS89F+iGDea0/JbKHHBJ7jWkQ1JIeJJoL4ddT5wQ=;
-        b=dKKSlO3UKkGWkpEijtrAgDruNPllaPYrDxFaMzCu6MNLYtbZL60ed2NylQxymjGAc/
-         QcaM+bVTXk9C7Da/ERfI648EpSdlLMDwxAQVTOsKpch4LzS+CiB86PBJe6vRmGhpYcYz
-         J2Uvy1IWmKffx5m5yZGbMwxMFVWhi/9Z+OEssNTEbVk2YBC2Ux6IXGr4KZyWgzCm5C8J
-         yjmif1M5OF3WbnvcHoWv2vA5rQ+3udPd5oRzCzxm10T37bkxKXBmibRxRR28CVDwlZte
-         QLGDhbGtRz26J9XHRZKbg56ZO/oslT/2xkHe8lVf+vimiUIyn6JLbq8v2cgugLVxY5JD
-         jeiw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=Q4mVvWDZ1zrijX+A+GKGaYDcQmaWZOvPL84wpx5PCx0=;
+        b=ZmvQdLSOzuCrTyx4p3iDdyo+VcMuFAqGWRJ/Te7CrnwQGSU8BfaD7VidVQDNtgEGa2
+         barlQkldnCFBuE5JNYuuj7L5oATxAHpVwSXTwi1Xq2x4gQMtNnswqvN8FQhKLoXRrJvz
+         sDoZ/sHS91KHzXl1WKPk/u9WjdKCQOeDuaCZ+sww0OTsO6pvK013x72cH3FARvq3SFcg
+         VtDXZcpCojtVE+VPcefhvUMn5AxT+bw4rPr5D2NzkSCcPgaLADcUAJVFD/XcUtP+2huQ
+         G+pZQY0+cAnbRviDFq73TUvjPP0sCt85gbodRsLrBpnPFEgtHTVqKN0WXIlCJv4rvy8b
+         xZ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=DGMiS89F+iGDea0/JbKHHBJ7jWkQ1JIeJJoL4ddT5wQ=;
-        b=KLgrO7y+3AmbCxi4V2dyXW/qe9ia8uX/P/Rydr79FvWlCWU5hrq4fhpaqyUozi7Jab
-         1O7s5A4j7CzTciWfz52xshAYtRHuD82b9tyIpJ7c+2WLqbM+zgdUX48Y2yJdD+WT18Gg
-         1mOx5fG9+VfZojkpdglTLJw0bRXzW/Pl8QdluTWIcfNJUJL96l1bQIWQOTpVDP5H1z9e
-         grKhqLYZC1PKGOAVj67GmZNxvH9ZPJn1D62trBmNdNPuwWAcePYMt5xRhxMlZhLIffn6
-         oMJ6FfbQ5/sWigaM9YC7sjEEsXiAxDx5eueiSEChSADLAHU0zvpgdpW3kM1K9wzbjXd8
-         CPJA==
-X-Gm-Message-State: APjAAAXqDN6Cr5/1l+YboOM8fPUjA4idGrFpQv2pbUh3/GlLXKUE0BON
-        uolUoNoTFv0c0kWYCSiMps5vkIhn
-X-Google-Smtp-Source: APXvYqzmLlnYOl/Bedgpi1dcHoHNCjw3Ynif52/4UmdWi2dNgXSWYpfiugRlWvoEoZtHf8hmRoGu8w==
-X-Received: by 2002:a63:7c10:: with SMTP id x16mr12143071pgc.176.1573764447952;
-        Thu, 14 Nov 2019 12:47:27 -0800 (PST)
-Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id s18sm8064205pfm.27.2019.11.14.12.47.27
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Q4mVvWDZ1zrijX+A+GKGaYDcQmaWZOvPL84wpx5PCx0=;
+        b=OBiw+oTsP7rlrBn3h/8gmnakxO7IPAcAByN061o0DylGF08U33NspvVPAH77SscJ3y
+         9EFLN2DWiqZDpTkyvGq4FNROV1hAewinHaEAF3iAOPlPmIVVuIByL6uk7KTvMUGVa5Wo
+         kzpXRxqr41FSp1Sio8/ZKlUQyrFpiyPvQKJmMCjQVJ1pQXC9yDnZ2WpxysRwlVhqPbgt
+         cFHVhLQ5iP7YQQ0E8XxkjcmAKni1iV5Q/vm0EsT0vkg1prAFWGolHHN0zUbEoKUfi6I8
+         tce1lXUs89JwIAkaf0f+zb5zWhHxHAhVjiRC1F7PtXsDKHWMFk9fd33x0qtPLQGyb6RX
+         dmdw==
+X-Gm-Message-State: APjAAAXyp7VLclWN+KQU5qkbaU/qP/FAxfWf3Jpk7hOFz2CNlTet1Q0M
+        sKunpyFZuo1tmpVCmy+5TfcUYw==
+X-Google-Smtp-Source: APXvYqzm+RxJf2Bfc9omC8B/B19mbPM9K20hLOmqcAUpYIVrz+SqKJFNGYdGuq4huzrpYY/kTaP2cQ==
+X-Received: by 2002:a17:902:9b83:: with SMTP id y3mr11536686plp.111.1573767756135;
+        Thu, 14 Nov 2019 13:42:36 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id v3sm9658145pfi.26.2019.11.14.13.42.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 12:47:27 -0800 (PST)
-Date:   Thu, 14 Nov 2019 12:47:26 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 09/10] pretty: implement 'reference' format
-Message-ID: <470a2b0f4fd450af1d9c9d27ec0f0c91ea59117f.1573764280.git.liu.denton@gmail.com>
-References: <cover.1573241590.git.liu.denton@gmail.com>
- <cover.1573764280.git.liu.denton@gmail.com>
+        Thu, 14 Nov 2019 13:42:34 -0800 (PST)
+Date:   Thu, 14 Nov 2019 13:42:30 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 3/9] bugreport: add version and system information
+Message-ID: <20191114214230.GA36377@google.com>
+References: <20191025025129.250049-1-emilyshaffer@google.com>
+ <20191025025129.250049-4-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.1910281432180.46@tvgsbejvaqbjf.bet>
+ <20191108214757.GB22855@google.com>
+ <nycvar.QRO.7.76.6.1911111439510.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1573764280.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <nycvar.QRO.7.76.6.1911111439510.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The standard format for referencing other commits within some projects
-(such as git.git) is the reference format. This is described in
-Documentation/SubmittingPatches as
+On Mon, Nov 11, 2019 at 02:48:13PM +0100, Johannes Schindelin wrote:
+> > > > diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> > > > index 2ef16440a0..7232d31be7 100644
+> > > > --- a/builtin/bugreport.c
+> > > > +++ b/builtin/bugreport.c
+> > > > @@ -1,4 +1,5 @@
+> > > >  #include "builtin.h"
+> > > > +#include "bugreport.h"
+> > > >  #include "stdio.h"
+> > > >  #include "strbuf.h"
+> > > >  #include "time.h"
+> > > > @@ -27,6 +28,13 @@ int get_bug_template(struct strbuf *template)
+> > > >  	return 0;
+> > > >  }
+> > > >
+> > > > +void add_header(FILE *report, const char *title)
+> > > > +{
+> > > > +	struct strbuf buffer = STRBUF_INIT;
+> > > > +	strbuf_addf(&buffer, "\n\n[%s]\n", title);
+> > > > +	strbuf_write(&buffer, report);
+> > >
+> > > This leaks `buffer`. Why not write into `report` via `fprintf()`
+> > > directly?
+> >
+> > Rather, to match the style of the rest of the builtin, modified
+> > get_header to add the header to a passed-in strbuf instead of
+> > modifying the file directly.
+> 
+> Hmm. It makes the code less elegant in my opinion. I would rather either
+> render the entire bug report into a single `strbuf` and then write it
+> via `write_in_full()`, or use `fprintf()` directly.
 
-	If you want to reference a previous commit in the history of a stable
-	branch, use the format "abbreviated hash (subject, date)", like this:
-
-	....
-		Commit f86a374 (pack-bitmap.c: fix a memleak, 2015-03-30)
-		noticed that ...
-	....
-
-Since this format is so commonly used, standardize it as a pretty
-format.
-
-The tests that are implemented essentially show that the format-string
-does not change in response to various log options. This is useful
-because, for future developers, it shows that we've considered the
-limitations of the "canned format-string" approach and we are fine with
-them.
-
-Based-on-a-patch-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/pretty-formats.txt       | 10 +++++++
- Documentation/pretty-options.txt       |  2 +-
- Documentation/rev-list-options.txt     |  4 ++-
- contrib/completion/git-completion.bash |  2 +-
- pretty.c                               |  4 ++-
- t/t4205-log-pretty-formats.sh          | 36 ++++++++++++++++++++++++++
- 6 files changed, 54 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 11979301ff..ee1a945bae 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -63,6 +63,16 @@ This is designed to be as compact as possible.
- 
- 	       <full commit message>
- 
-+* 'reference'
-+
-+	  <abbrev hash> (<title line>, <short author date>)
-++
-+This format is useful for referring to other commits when writing a new
-+commit message. It uses the following canned user format:
-+`%C(auto)%h (%s, %as)`. This means it will not respect options that
-+change the output format such as `--date` `--no-abbrev-commit`, and
-+`--walk-reflogs`.
-+
- * 'email'
- 
- 	  From <hash> <date>
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index e44fc8f738..a59426eefd 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -3,7 +3,7 @@
- 
- 	Pretty-print the contents of the commit logs in a given format,
- 	where '<format>' can be one of 'oneline', 'short', 'medium',
--	'full', 'fuller', 'email', 'raw', 'format:<string>'
-+	'full', 'fuller', 'reference', 'email', 'raw', 'format:<string>'
- 	and 'tformat:<string>'.  When '<format>' is none of the above,
- 	and has '%placeholder' in it, it acts as if
- 	'--pretty=tformat:<format>' were given.
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 90ff9e2bea..91edeaf6d5 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -269,7 +269,7 @@ list.
- 	exclude (that is, '{caret}commit', 'commit1..commit2',
- 	and 'commit1\...commit2' notations cannot be used).
- +
--With `--pretty` format other than `oneline` (for obvious reasons),
-+With `--pretty` format other than `oneline` and `reference` (for obvious reasons),
- this causes the output to have two extra lines of information
- taken from the reflog.  The reflog designator in the output may be shown
- as `ref@{Nth}` (where `Nth` is the reverse-chronological index in the
-@@ -293,6 +293,8 @@ Under `--pretty=oneline`, the commit message is
- prefixed with this information on the same line.
- This option cannot be combined with `--reverse`.
- See also linkgit:git-reflog[1].
-++
-+Under `--pretty=summary`, this information will not be shown at all.
- 
- --merge::
- 	After a failed merge, show refs that touch files having a
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 557d0373c3..007e6a06d6 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1749,7 +1749,7 @@ __git_log_shortlog_options="
- 	--all-match --invert-grep
- "
- 
--__git_log_pretty_formats="oneline short medium full fuller email raw format: tformat: mboxrd"
-+__git_log_pretty_formats="oneline short medium full fuller reference email raw format: tformat: mboxrd"
- __git_log_date_formats="relative iso8601 iso8601-strict rfc2822 short local default raw unix format:"
- 
- _git_log ()
-diff --git a/pretty.c b/pretty.c
-index 4d7f5e9aab..88a3bc621d 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -97,7 +97,9 @@ static void setup_commit_formats(void)
- 		{ "mboxrd",	CMIT_FMT_MBOXRD,	0,	0 },
- 		{ "fuller",	CMIT_FMT_FULLER,	0,	8 },
- 		{ "full",	CMIT_FMT_FULL,		0,	8 },
--		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 }
-+		{ "oneline",	CMIT_FMT_ONELINE,	1,	0 },
-+		{ "reference",	CMIT_FMT_USERFORMAT,	1,	0,
-+			0, "%C(auto)%h (%s, %as)" },
- 		/*
- 		 * Please update $__git_log_pretty_formats in
- 		 * git-completion.bash when you add new formats.
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index da9cacffea..9a9a18f104 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -824,4 +824,40 @@ test_expect_success '%S in git log --format works with other placeholders (part
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --pretty=reference' '
-+	git log --pretty="tformat:%h (%s, %as)" >expect &&
-+	git log --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --pretty=reference always uses short date' '
-+	git log --pretty="tformat:%h (%s, %as)" >expect &&
-+	git log --date=rfc --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --pretty=reference is never unabbreviated' '
-+	git log --pretty="tformat:%h (%s, %as)" >expect &&
-+	git log --no-abbrev-commit --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --pretty=reference is never decorated' '
-+	git log --pretty="tformat:%h (%s, %as)" >expect &&
-+	git log --decorate=short --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --pretty=reference does not output reflog info' '
-+	git log --walk-reflogs --pretty="tformat:%h (%s, %as)" >expect &&
-+	git log --walk-reflogs --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --pretty=reference is colored appropriately' '
-+	git log --color=always --pretty="tformat:%C(auto)%h (%s, %as)" >expect &&
-+	git log --color=always --pretty=reference >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.24.0.346.gee0de6d492
-
+Yeah, that sounds good. I will do that. :)
