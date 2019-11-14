@@ -8,62 +8,65 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53C661F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 20:47:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 021F71F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 20:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbfKNUr0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 15:47:26 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34813 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        id S1726960AbfKNUr1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 15:47:27 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:40864 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
         with ESMTP id S1726828AbfKNUr0 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 14 Nov 2019 15:47:26 -0500
-Received: by mail-pf1-f194.google.com with SMTP id n13so5112431pff.1
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 12:47:24 -0800 (PST)
+Received: by mail-pg1-f195.google.com with SMTP id 15so4536484pgt.7
+        for <git@vger.kernel.org>; Thu, 14 Nov 2019 12:47:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Ljf4bGTw76tYJUfi4edoMEYTPp9YsX580sIC97TcjUk=;
-        b=TKrXELkz5xCJ3pdF2m71rKUjsk/pMgg2r/sYF+oVAUnDhsqFKhEFdX1lgsun3ok0sF
-         4CG9EGO/bvVeGOF+hhuyEZvoDv6llyjc2QrLgbaPAbysN2XwZ3KvCvldxKbAg2gzZKra
-         x9Jq5h/L+9yJvu19uxPpdqauFTkbg9exIsKxX+QymhQk4vMmxrOQbPoUs94oAxSE/Y02
-         G5ZZXQ60DDEpOqDy6vKqisHfFI/UxAm3CH1iJs+Ybg49KWkYxmvUK/nomk/8d4D1uUw0
-         GOd7CW2ePt8gJ3fsYjpWdK7hv4sA0ex49Jq3+3FUauMUWxW3z+JkQ374oecB3Z3EMWYU
-         TGHA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=0xO0lyTJrWByytXScHwPBPvY8wmak2TTIeuNrAkareg=;
+        b=WdsOw3jsBQBUIb6+B/+R1+JO9AMUM1d0QddJ5H5HSwueHElpsqJhwj/hl893zlShEk
+         BVftDidUX84McxyN2AoRqnu6KqJdu2+M7vLc402MUxIMrWaMF7ylYPaxlTeQiirJOLzE
+         ffxjDY93dTZR0mGgXaXYcWrg9wghK6fNr3qA4oIRhZmzFFryD6bAHvJIOrkwXWBK82Wb
+         Dg9QR84phAcz9Y7u0Ff483PyBKg9gzFgFgwE8ZMjGL/3Y3UgXD5QaNvvtQorBiKBihiX
+         WwBOa6xIyUt+xXsl6SdONrc9+xemHXqVZ5N4NLyRJ0mguvUsOeX5iPa/WkbczAfUPKRD
+         8mpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Ljf4bGTw76tYJUfi4edoMEYTPp9YsX580sIC97TcjUk=;
-        b=iQtuHxD4MywrOAF7goq17co06plj/d6ShPpWu22hoKulJ0TILa7R6flc7nrSffktpw
-         g4TEGhQVfw5g++huaVVf0VsCXirJTl86l5A8R0e8IpycYDx6xKITFJDSS+Ez0KXbo/tD
-         UZNdSBCjBygGmG3J9SaxzDq8+8OBK5xQEJxbxw4X6PWkCcEjudCLUQIVU8LcCSQ6eLBu
-         sh+Ri3kZykvA3QK4RgwaAz79Jtv6WVVL7mbZU2Odh9vNeh4518LS53a8/KJYy8xskyGc
-         N/AZ3SWow1P+okkoIDltzpjlrnjZJ3h5mWQ3Fm4uA3lLz6nQcmvy/pFThcVhW0UHqgsc
-         wWqw==
-X-Gm-Message-State: APjAAAWzXejqJc42/O9sL5Li4xdwc1/MrBYCwWkdgO2IbbKoKiYSleI4
-        5Kh1sLQrCVlfVVd85N++fZ5WWcVH
-X-Google-Smtp-Source: APXvYqxwUUCEMZKjfohxczyHk7tyEWAcrnP6WHL0eijhGZz3wTWxmjm0eZpeYAcNKszN1H0BsLqKrg==
-X-Received: by 2002:a63:f716:: with SMTP id x22mr4253762pgh.351.1573764443578;
-        Thu, 14 Nov 2019 12:47:23 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=0xO0lyTJrWByytXScHwPBPvY8wmak2TTIeuNrAkareg=;
+        b=WxIbXnM8sBU/6nd70AIfjeECUsmlHANG+42tJf32Zm+uFM2NYM8hC713dxDpHOIkGZ
+         /BPQWnHzPKfSPwRO1X0ofgLBdUKd3wWc43aNyhUWzqafDWqieVlO1SVn98DPuoFFqLCr
+         xFJnV+advrLKbCUAZ7enuWlZk3tJEF8OWrkoUL2KOb65WrHej5PqVFjdV6eC0DE4Z5K8
+         Y7NWGUnYiKnMjsnhJfJGXxU+DkcbCYtaH168EFGV1r1f6qjQBmLPeqQBuUQ7Go4IKroh
+         61Ou2G5WJ7Pwu0da6E9rUIlajlhmv+K2uRVSXkpzbRYX6LJu1JpCbbRnab+Z8vBwkzLg
+         gsrw==
+X-Gm-Message-State: APjAAAVCYWvsu8xyY1gILnbpxXeTvanu+JYovao/2L9sBH81lKUmh5gj
+        JLvsCuKvDm6UEX2FIjOAMGGfEwTh
+X-Google-Smtp-Source: APXvYqzPX9+8ZRGwcNRHiazAk9jhQHbKIUeCfXT0Y4rMgcS9aa1O9z6X3lxu3vXaDqk8dhVKDLu4yQ==
+X-Received: by 2002:a17:90a:634a:: with SMTP id v10mr14961533pjs.4.1573764445796;
+        Thu, 14 Nov 2019 12:47:25 -0800 (PST)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id j7sm6504552pgl.38.2019.11.14.12.47.22
+        by smtp.gmail.com with ESMTPSA id w2sm8074933pgm.18.2019.11.14.12.47.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 12:47:23 -0800 (PST)
-Date:   Thu, 14 Nov 2019 12:47:21 -0800
+        Thu, 14 Nov 2019 12:47:25 -0800 (PST)
+Date:   Thu, 14 Nov 2019 12:47:23 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 07/10] t4205: cover `git log --reflog -z` blindspot
-Message-ID: <b1256c52bae1f6658ddaec90150abfdcc87ce9c3.1573764280.git.liu.denton@gmail.com>
+Subject: [PATCH v3 08/10] pretty: provide short date format
+Message-ID: <fe5cb165ae9550673bcc61057672381c4f524e46.1573764280.git.liu.denton@gmail.com>
 References: <cover.1573241590.git.liu.denton@gmail.com>
  <cover.1573764280.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1573764280.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
@@ -71,57 +74,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test suite does not include any tests where `--reflog` and `-z` are
-used together in `git log`. Cover this blindspot. Note that the
-`--pretty=oneline` case is written separately because it follows a
-slightly different codepath.
+From: René Scharfe <l.s.r@web.de>
 
+Add the placeholders %as and %cs to format author date and committer
+date, respectively, without the time part, like --date=short does, i.e.
+like YYYY-MM-DD.
+
+Signed-off-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4205-log-pretty-formats.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ Documentation/pretty-formats.txt | 2 ++
+ pretty.c                         | 3 +++
+ t/t4205-log-pretty-formats.sh    | 6 ++++++
+ 3 files changed, 11 insertions(+)
 
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 4cefa64eeb..11979301ff 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -172,6 +172,7 @@ The placeholders are:
+ '%at':: author date, UNIX timestamp
+ '%ai':: author date, ISO 8601-like format
+ '%aI':: author date, strict ISO 8601 format
++'%as':: author date, short format (`YYYY-MM-DD`)
+ '%cn':: committer name
+ '%cN':: committer name (respecting .mailmap, see
+ 	linkgit:git-shortlog[1] or linkgit:git-blame[1])
+@@ -187,6 +188,7 @@ The placeholders are:
+ '%ct':: committer date, UNIX timestamp
+ '%ci':: committer date, ISO 8601-like format
+ '%cI':: committer date, strict ISO 8601 format
++'%cs':: committer date, short format (`YYYY-MM-DD`)
+ '%d':: ref names, like the --decorate option of linkgit:git-log[1]
+ '%D':: ref names without the " (", ")" wrapping.
+ '%S':: ref name given on the command line by which the commit was reached
+diff --git a/pretty.c b/pretty.c
+index 4d633f14fa..4d7f5e9aab 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -738,6 +738,9 @@ static size_t format_person_part(struct strbuf *sb, char part,
+ 	case 'I':	/* date, ISO 8601 strict */
+ 		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(ISO8601_STRICT)));
+ 		return placeholder_len;
++	case 's':
++		strbuf_addstr(sb, show_ident_date(&s, DATE_MODE(SHORT)));
++		return placeholder_len;
+ 	}
+ 
+ skip:
 diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index f42a69faa2..0335b428b1 100755
+index 0335b428b1..da9cacffea 100755
 --- a/t/t4205-log-pretty-formats.sh
 +++ b/t/t4205-log-pretty-formats.sh
-@@ -134,6 +134,36 @@ test_expect_failure C_LOCALE_OUTPUT 'NUL termination with --stat' '
+@@ -533,6 +533,12 @@ test_expect_success 'ISO and ISO-strict date formats display the same values' '
  	test_cmp expected actual
  '
  
-+for p in short medium full fuller email raw
-+do
-+	test_expect_success "NUL termination with --reflog --pretty=$p" '
-+		revs="$(git rev-list --reflog)" &&
-+		for r in $revs
-+		do
-+			git show -s "$r" --pretty="$p" &&
-+			printf "\0" || return 1
-+		done >expect &&
-+		{
-+			git log -z --reflog --pretty="$p" &&
-+			printf "\0"
-+		} >actual &&
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success 'NUL termination with --reflog --pretty=oneline' '
-+	revs="$(git rev-list --reflog)" &&
-+	for r in $revs
-+	do
-+		git show -s --pretty=oneline "$r" >raw &&
-+		cat raw | lf_to_nul || exit 1
-+	done >expect &&
-+	# the trailing NUL is already produced so we do not need to
-+	# output another one
-+	git log -z --pretty=oneline --reflog >actual &&
-+	test_cmp expect actual
++test_expect_success 'short date' '
++	git log --format=%ad%n%cd --date=short >expected &&
++	git log --format=%as%n%cs >actual &&
++	test_cmp expected actual
 +'
 +
- test_expect_success 'setup more commits' '
- 	test_commit "message one" one one message-one &&
- 	test_commit "message two" two two message-two &&
+ # get new digests (with no abbreviations)
+ test_expect_success 'set up log decoration tests' '
+ 	head1=$(git rev-parse --verify HEAD~0) &&
 -- 
 2.24.0.346.gee0de6d492
 
