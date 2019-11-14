@@ -2,96 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 076D31F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 06:35:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2E361F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 06:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726142AbfKNGfh (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 01:35:37 -0500
-Received: from mail-io1-f50.google.com ([209.85.166.50]:44185 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726002AbfKNGfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 01:35:36 -0500
-Received: by mail-io1-f50.google.com with SMTP id j20so5522255ioo.11
-        for <git@vger.kernel.org>; Wed, 13 Nov 2019 22:35:36 -0800 (PST)
+        id S1726098AbfKNGhd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 01:37:33 -0500
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:40447 "EHLO
+        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725965AbfKNGhd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 01:37:33 -0500
+Received: by mail-pl1-f174.google.com with SMTP id e3so2168456plt.7
+        for <git@vger.kernel.org>; Wed, 13 Nov 2019 22:37:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3I1L7prSbyiOa/r2BD1LXtLb55TrWOvrQla9jCoD8C4=;
-        b=XZTegFC4m67tHzrli9A7yV3dnEMzJ9No3pw39Q7e3YoWl4RSId85GP2/tKzdnDBTgm
-         Kd9gxmGAL+vuzOQllwsmANrs5HbXoICVkR6PgXAFBl5Vec9ORyJXv0j5Fb8xEC4TdFEP
-         uOHvGjKuOr9Vvq2jl4q8i/H/nSmMS9Qo+nSGlD1cZAgsVfXFbzqFFt+okIE+wu8Z/VQp
-         n+HPX/v110gdf82W3D5s+hjaguYri9xtHCMADwG0oqnvq+HnaQRyeMtZfGOFsCUzkCr2
-         yTOBNnqOtSeeiugj44RY0eD/q05CNBmCagQErzlaj0PNQe/Mi5Sk4EkqwLItvg/zb47Q
-         udqQ==
+         :cc:content-transfer-encoding;
+        bh=3rPC/3V4hAlqK9iSmJxB7kaUkNBDMvO1bXiYcqOoJkY=;
+        b=n6VS/L2FllBtlBHoS0dPHnLw2QAyRto7tzNzD70roT1n3b5AKcF/3HygaxgNPz1Dbz
+         VOOPs5HME4VPIPD7rUpTuPuZdMvrLsMYZIiz1S3vm7JMspK2J+bcdK1AqqNZEyMsyjX2
+         wCSt8dX9/z/3l5ACieacHK17ds1KWZNMFgrEjyZ0CNTX9TnwYtusTb9o1nYV8p64ykU5
+         b7vv2zqHKGEDxcFlbtVy+Rt8F0hQ30i8a7ohjkyRa9jDUxT5VDh3F5r4+mgbHaTSpezu
+         gzgiZ29/+W+vTfky6d2coGNA7Zr26CIe8JdUc95AZpz6SiYAD2T46tROyxuMH2HB7GgM
+         g4cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3I1L7prSbyiOa/r2BD1LXtLb55TrWOvrQla9jCoD8C4=;
-        b=gCHPgLdiyHhE7th8JP7/NAAVJH29lnlfwYgZIgaIf8cshPRbC68nUc1pbmb+Z+FVa2
-         PAhoxvNUvO1+Lc+A1Oz+vn4XwmQAL8Mow2J+6v64ZUguXkN9MvrAa+p0TDdPZDphujPh
-         M8ZQFLgIYwMFdscBgF7PmA0lKQ8MT4ce212KemjQUWZECHWrN4tSig1AD7MDXhC12yTl
-         GINep++9adxoooaS4QpqhsWFS08+al8XJYjyGzMlTHA1HW4ky9QJYRSinU8Oy3CDZX6+
-         01rRkFqCO3eOB8uiJFoDKqvxhISpvEF2K5KMq+dn8xOZdyMyr5gsDGCgIJBeI/Ea0myj
-         49VQ==
-X-Gm-Message-State: APjAAAXz8FOvBNaToEbN2yxMpiXvD840IVm6iEDfVeIUsar9BRek/RMk
-        Ats69B5XsK01BR7mPq+yi1J+9abjuZSajCvDWc92qA==
-X-Google-Smtp-Source: APXvYqxV/cXJb/1Z1bkcG0FKbxUCCl/6srKSMGQVsSYeULMmkpNP1PXwXIHEY6n1GLKIpXSy11f1cBT8sHTyi+6e/rM=
-X-Received: by 2002:a6b:8f13:: with SMTP id r19mr5387818iod.19.1573713335827;
- Wed, 13 Nov 2019 22:35:35 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3rPC/3V4hAlqK9iSmJxB7kaUkNBDMvO1bXiYcqOoJkY=;
+        b=RxV+B/dZs/YpDD8pkOi0nsITK3LV6yGQIh/1LP9ms3rxFrMbK2G0umM4Uev4x3Lzzf
+         yYzdKshG07ROu8A1F3EE+Lnw9JtXf61Hv2g0C88GA5JV/PdAvhNQLN1cu3uDM6AQBbFx
+         oXxBBzHA0jr++AojTd615J9R0FU88rkYAfcOhwx7+U/DvcSmeSJMrkfdYvZTzjBzCtdN
+         E0N3GE5/IHXUA5A9efAS4chtuuupxs8o9lND6oxTb9OaRcz0PLpFXwvsMhUY8/QPwZG6
+         QCqpUqWTxz27Wh8/Zkp6cTj0EmXAldmrCwIP98cYg0IrG/yzx+maCM8aoUllIo6iy8kQ
+         bJ+A==
+X-Gm-Message-State: APjAAAUKH/xvlmDhOMd5xassHeeqSxwJDf0zOfPjeurSiFS2BkMTzaDR
+        ZoOLr/20/FO4cGv9Arkd1jUBZ6uEqrcc2qK3uQo=
+X-Google-Smtp-Source: APXvYqz//Eojd8RFLNJR/snFSAuD77O0K8joxtiq0n/AY5jREZwNbGo2Oi2BLVFJtmiVPSkZnI0JSqJZAJDk5UP3t2w=
+X-Received: by 2002:a17:902:8508:: with SMTP id bj8mr5180889plb.178.1573713452179;
+ Wed, 13 Nov 2019 22:37:32 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqeeyin4kx.fsf@gitster-ct.c.googlers.com> <CAHd-oW6vBm6JnN8aSeryC716+7xzV-LBZujeRgZgF6RbP0LLHg@mail.gmail.com>
-In-Reply-To: <CAHd-oW6vBm6JnN8aSeryC716+7xzV-LBZujeRgZgF6RbP0LLHg@mail.gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Thu, 14 Nov 2019 03:35:24 -0300
-Message-ID: <CAHd-oW7UPSSExyLtfLMCObWogKrBOctYabrFrOdf9-4Q2PZmMg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2019, #02; Fri, 8)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
+References: <f867512c-e5b2-6bca-2a37-2976f4c182bd@web.de> <20191112175926.GA41101@generichostname>
+ <CAN0heSodNonkDK8AT9iJqmWLLCdO0OoHho0ijZOAmri5ren2dw@mail.gmail.com> <ff240bc1-ae2a-17e5-d149-2d08c5367e96@web.de>
+In-Reply-To: <ff240bc1-ae2a-17e5-d149-2d08c5367e96@web.de>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 14 Nov 2019 07:37:20 +0100
+Message-ID: <CAN0heSqyGwkeGKv0m_gLDooaUp=gN2_tD7kJYNxeL7LALiPRhQ@mail.gmail.com>
+Subject: Re: coccinelle: merge two rules from flex_alloc.cocci
+To:     Markus Elfring <Markus.Elfring@web.de>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 8, 2019 at 12:00 PM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
+On Wed, 13 Nov 2019 at 22:10, Markus Elfring <Markus.Elfring@web.de> wrote:
 >
-> Hi, Junio
+> >>> This script contained two transformation rules for the semantic patch=
+ language
+> >>> which used duplicate code.
+> >>> Thus combine these rules by using a SmPL disjunction for the replacem=
+ent
+> >>> of two identifiers.
+> >
+> > My knowledge of coccinelle and cocci rules is basically zero,
 >
-> On Fri, Nov 8, 2019 at 5:41 AM Junio C Hamano <gitster@pobox.com> wrote:
-> [...]
-> >
-> > * mt/threaded-grep-in-object-store (2019-10-02) 11 commits
-> >  - grep: move driver pre-load out of critical section
-> >  - grep: re-enable threads in non-worktree case
-> >  - grep: protect packed_git [re-]initialization
-> >  - grep: allow submodule functions to run in parallel
-> >  - submodule-config: add skip_if_read option to repo_read_gitmodules()
-> >  - grep: replace grep_read_mutex by internal obj read lock
-> >  - object-store: allow threaded access to object reading
-> >  - replace-object: make replace operations thread-safe
-> >  - grep: fix racy calls in grep_objects()
-> >  - grep: fix race conditions at grep_submodule()
-> >  - grep: fix race conditions on userdiff calls
-> >
-> >  Traditionally, we avoided threaded grep while searching in objects
-> >  (as opposed to files in the working tree) as accesses to the object
-> >  layer is not thread-safe.  This limitation is getting lifted.
-> >
-> >  What's the current status of this one?
->
-> This was the last round of improvements I had in mind for this topic.
-> So for my part, I think this is ready.
+> Would you like to change this situation eventually?
 
-In fact, Jonathan Tan recently pointed out an issue[1] in this topic,
-regarding the possibility of a race condition with the reading
-windows. So I'll work on a new version.
+Possibly, yeah, but I think the key word there is "eventually". ;-)
+But maybe I'll learn something from this exchange.
 
-[1]: https://public-inbox.org/git/20191112025418.254880-1-jonathantanmy@google.com/
+> > but my impression from this list is that running "make coccicheck"
+> > can be expensive, both in terms of time and memory.
+>
+> The desired source code analysis to detect possible software transformati=
+ons
+> needs additional data processing resources.
+> It is usually hoped that corresponding efforts will help with development
+> approaches at other places.
+
+Right. So by that logic, if this patch doubles the memory usage and/or time
+consumption of "make coccicheck", wouldn't this patch be affecting those
+other activities at other places of the code negatively? ;-)
+
+I'm not saying that this patch DOES affect the time/memory usage
+negatively, and I'm not saying this patch IS a net negative. Definitely
+not. It's just that considering, e.g., 960154b9c1 ("coccicheck:
+optionally batch spatch invocations", 2019-05-06), time/memory
+consumption -- and the balancing of the two -- seems to be an actual
+real-world issue here, worth thinking about.
+
+(That commit message mentions that processing all source files in one go
+requires close to 2GB of memory. We've since started processing more
+files.)
+
+> > Do these patches help there in any way?
+>
+> I hope so to some degree.
+
+If you could have some before/after numbers, that would be cool. If you
+collect your patches into one series, you could at least do measurements
+before/after the series.
+
+Or if you could make some other sort of claim around "this shouldn't
+affect this-or-that because so-and-so".
+
+> How much do you care to avoid code duplication?
+
+I tend to like it, everything else equal.
+
+> > Or could they hurt?
+>
+> I assume that you ask according to the presented change possibilities
+> for Git's SmPL scripts (and not only for =E2=80=9Cflex_alloc.cocci=E2=80=
+=9D).
+>
+> Some changes usually contain the risk for undesirable effects.
+> Would you like to clarify each of them in more detail?
+
+Do you mean whether I would like to clarify the risks I see, or do you
+mean whether I would like you to clarify which you see? I've tried to
+clarify the one I see -- based on passively observing cocci-related
+patches floating around this list. If you see other potential risks,
+feel free to mention them.
+
+You seem to know lots more than I do about these things. I wouldn't be
+surprised if you know more on this than most or all other participants
+on this list, so feel free to share some of that in the commit messages
+so that others can understand how you've reasoned.
+
+Martin
