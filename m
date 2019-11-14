@@ -7,93 +7,100 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3961A1F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 02:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 697F81F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 02:44:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726557AbfKNCgi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 13 Nov 2019 21:36:38 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62648 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726120AbfKNCgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 13 Nov 2019 21:36:38 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id DFA6C2E28B;
-        Wed, 13 Nov 2019 21:36:37 -0500 (EST)
+        id S1726491AbfKNCoQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 13 Nov 2019 21:44:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62480 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726393AbfKNCoQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 13 Nov 2019 21:44:16 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F2FE35B41;
+        Wed, 13 Nov 2019 21:44:14 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YNlgraXYD4pPNtM3Ia+rnMQ5CMc=; b=HFG+Cg
-        WdbbOUb8a3BLXjwk0fCKqlsrxkRJtLbgi0bpxtfx67aRz9J6MZLxx6rtWkICs5W4
-        XG90AuKQIpIbVsjjqWs/9aud4XghvooRXWJKxk71d8bD5lQgXvTO9b9OL4dQJ/OV
-        KJqLkBoDDOBTe+c69K9dx5kQn05Bm6bfBzkvU=
+        :content-type:content-transfer-encoding; s=sasl; bh=B5DCnI1Iugbv
+        crq7ToxrTU4pnWo=; b=r7jBiYCGOFLW1LNwlA1xIbpto/UdhWT3chaQBEBHviJZ
+        LfLNY3kvMZecjVQYPC7JRJZ46MH+2anuVtBDZlDLUV6wMvltT3Uf1yF6ZdpC8khv
+        dA1ed97PJqHnDJYmllnWkF1kZdUMhkAOpFw1nCFojxBL2oAbD/TRd9keO773u5w=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fr/eRgkcbeJQqak/vpGqtNZef1LaJpwI
-        NLMdl5bnsBXvQnqzDsnttErmfZM3idzStEcqkzqPwYXIc1PDtZRq/xH+Bn6D86jA
-        8yuZR51RlGrQiMfqC+TZQlWdNQRojEhVYOikEiNEoB7oIJzVAIv41EQufGHsm4B4
-        1/wI157rHY4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D6AAF2E28A;
-        Wed, 13 Nov 2019 21:36:37 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=q51UTq
+        yz/ZZnugVQs8exp50T7Rov6a5b1MGDCxuC0aiJ7q/j7BKvHm8m+EHeZS06Vm/HRd
+        f4gZFP4LA6XGmY81e20RxAlMcdyDXDo1ecd9s1WyuGhvGR9vOxlXQRgiGjMRxSYc
+        mtz3IWI8Pb1mqZ5WHwSCChfPfGy7bY0cS5aGQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 552A035B3F;
+        Wed, 13 Nov 2019 21:44:14 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4B5A42E289;
-        Wed, 13 Nov 2019 21:36:37 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 83EFE35B3E;
+        Wed, 13 Nov 2019 21:44:13 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>,
-        "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/2] Feature: New Variable git-p4.binary
-References: <pull.465.git.1573679665.gitgitgadget@gmail.com>
-Date:   Thu, 14 Nov 2019 11:36:36 +0900
-In-Reply-To: <pull.465.git.1573679665.gitgitgadget@gmail.com> (Ben Keene via
-        GitGitGadget's message of "Wed, 13 Nov 2019 21:14:23 +0000")
-Message-ID: <xmqq5zjn9oaz.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, g@generichostname.pobox.com,
+        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 09/10] pretty: implement 'summary' format
+References: <cover.1572897736.git.liu.denton@gmail.com>
+        <cover.1573241590.git.liu.denton@gmail.com>
+        <e74eab6d21f655698ef8b6e1286b44ea070a7af7.1573241590.git.liu.denton@gmail.com>
+        <08afdbcd-5972-05f9-ec8c-b12bd29d9030@web.de>
+        <xmqqftiwl02i.fsf@gitster-ct.c.googlers.com>
+        <20191111234710.GA23111@generichostname>
+        <20191114003757.GR4348@szeder.dev>
+Date:   Thu, 14 Nov 2019 11:44:12 +0900
+In-Reply-To: <20191114003757.GR4348@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Thu, 14 Nov 2019 01:37:57 +0100")
+Message-ID: <xmqqy2wj89dv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 94B1DC5E-0687-11EA-8769-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: A4A11ACA-0688-11EA-AFBB-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-> Issue: Using git-p4.py on Windows does not resolve properly to the p4.exe
-> binary in all instances.
+> Yeah, it's as simple as adding:
 >
-> Two new code features are added to resolve the p4 executable location:
+>   { "reference",  CMIT_FMT_USERFORMAT,    1,      0, 0, "%C(auto)%h (%s=
+, %as)" }
 >
->  1. A new variable, git-p4.binary, has been added that takes precedence over
->     the default p4 executable name. If this git option is set and the
->     path.exists() passes for this file it will be used as executable for the 
->     system.popen calls.
->     
->     
->  2. If the new variable git-p4.binary is not set, the program checks if the
->     operating system is Windows. If it is, the executable is changed to
->     'p4.exe'. All other operating systems
->     (those that do not report 'Windows' in the platform.system() call)
->     continue to use the current executable of 'p4'.
+> Works like a charm, I've been using it for a few years now:
+>
+>   https://github.com/szeder/git/commit/3604d0c28e7e2da5415986468994ef71=
+a972e4ed
 
-I do not use Windows nor git-p4, but the above two changes make
-sense to me at the design level.  One thing that needs to be updated
-is the configuration variable, though.  It is more in line with the
-other parts of the system to name this "git-p4.program", because
-binary-ness does not matter much to you, as long as the named thing
-works correctly as "p4" program replacement.
+The word "reference" does sound more to the point for the feature
+than "summary", and it is nice to see that the required change is
+essentially a single liner ;-)
 
-Seeing "gpg.program" is used in a similar way, it also is tempting
-to call it "p4.program", but no other parts of Git other than
-"git-p4" uses P4, and the "git-p4." prefix is to collect variables
-related to "git-p4" together, so calling it "p4.program" may not be
-a good idea---it would hurt discoverability.  "git-p4.p4program"
-may be OK, if we anticipate that git-p4 may need to use (and its
-users need to specify paths to) external programs other than "p4",
-but it probably is overkill.
+> but never seriously considered for submission, because I didn't want
+> to argue about removing the double-quotes around the subject, and
+
+I personally do not care whether the title is naked or inside a
+dq-pair, as that part is purely for human consumption.  Being for
+human consumption, I guess we can argue that the shorter the better,
+so we may want to standardise the recommendation we give in our
+tutorials and such.
+
+> couldn't be bothered to check the corner cases (e.g. what if a user
+> sets a pretty format alias with the same name in the configuration?).
+
+It would be already possible to collide with built-in names, like
+"short", with or without your addition, wouldn't it?  Then that is
+not an issue you would need to be worried about, right?
 
 Thanks.
