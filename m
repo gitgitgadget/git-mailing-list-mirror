@@ -8,57 +8,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 982601F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 20:47:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB2431F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 20:47:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbfKNUrL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 15:47:11 -0500
-Received: from mail-pl1-f176.google.com ([209.85.214.176]:43989 "EHLO
-        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726533AbfKNUrL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 15:47:11 -0500
-Received: by mail-pl1-f176.google.com with SMTP id a18so3173926plm.10
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 12:47:10 -0800 (PST)
+        id S1726796AbfKNUrN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 15:47:13 -0500
+Received: from mail-pg1-f180.google.com ([209.85.215.180]:46589 "EHLO
+        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbfKNUrN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 15:47:13 -0500
+Received: by mail-pg1-f180.google.com with SMTP id r18so4512400pgu.13
+        for <git@vger.kernel.org>; Thu, 14 Nov 2019 12:47:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=9FWuuvu5G70lNsWR4KS5kh3YBAhvkQtXVLZ0Vk8CNzI=;
-        b=SJnuo7KkK1WKsKIu7uRalAYB4SAiCCPuBgl14meA7Ev2SGorfuf7B8ftotrwMjUQT6
-         hl17wY9yofNChSpDIo4fkQ+MjcSJxTeGgxSWyeJIqu8fX/XUM38viByswaMzF+5uhZ7H
-         6cTxGE0Fqx268rr6iX6Qx98A+jlOFOkGQzimCAIK5lHgY2OztE2MCLpYX41+ZWwzHnue
-         HaWKPRkNrxnYTjc20AwmzmEuaNesEgaYeqPGrO1yPGZ1CD0N2Q8qrcjvzGxDJ/e9dPZD
-         5/IdDgcRNnbBJx4cGcGSF55r1sgCvDB0phP/XL3obgAOtWPQLluAIjdU/ZkHL0cicAGW
-         KHMw==
+        bh=zpOYn5mSIQBBTIVObG1RgMlnl0Xx7hwE0GdlRzlKgFw=;
+        b=aq9s/98WIx/pAA0QqzqWjiKUWf0B2Ob5vZHWj6yVDVGx83/srSi2p9UhDkWM87idKQ
+         4lqmCA4IHccu94Z1wOJw3dFsmT16JhKi1Q/XdtMvDdaUG0UzkDb07/AZaofyDxZ/EtyV
+         J6KocKJ/S32ysGFdgIR1pDvfrGUdIicAzuop7d/Yr7dy03MJWMMowA/TR8F5rKLJptWZ
+         acq+4MH7tnwd79FbwqpAIiZe8mlkMF9p3gOD8egiJy6IJ4D3YssE6MZvhs8mxv58NmTC
+         Jk2n3iXokwShiKGxfdFpxwTqgRMhKf92xl8p9ZBLcBVSU7Y9rzSWB0EXvBnnjy9K2Ipg
+         LaYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9FWuuvu5G70lNsWR4KS5kh3YBAhvkQtXVLZ0Vk8CNzI=;
-        b=IkMg7nh4InfDnzmCO7ODTT/974nDGYxSvlFPVllrRGLTSakw9SF8FSGutnEZgj52zP
-         +G6KqjQ1QM0Dzf3MGLTaoKwtqUHD7r0+JQpKoxJ2kbzIMcyI2iy1ebTfLg5akRe9kM3t
-         1a/gU1xtFrsLmyjtXSNysB9v8+4Jx+JpBICIqo5hKFjgKU6JQHS7aQ9tSmRjPHWJvAyt
-         L4K7rOXpNGaGRwKdNdjLsgkyxks2Z1V6tUqTb/Vq09Xn+n0bm7g+UUEMcvZ2VgadRLK6
-         2OqJPlAFuD1mKrQda6bPeSlR3aRzWwm4oKVW680Cl+frpdFNM3RFD4tk9MIKl65SUrBl
-         amvQ==
-X-Gm-Message-State: APjAAAXnK9SLPFOs4gPq01OJ1nDgguXK6MBbJBSfUuwFGu3gN10Kbmf0
-        fu5bzyrPXd+i/cjAyYCLX+CfbdMD
-X-Google-Smtp-Source: APXvYqwNKtJHCj0Non9N+hht/cjrgRuqtOecWnCAkxwKxF7HBY/dJMreoxOTqB99Pw6MLDxmUCyXxQ==
-X-Received: by 2002:a17:902:244:: with SMTP id 62mr11894082plc.14.1573764429867;
-        Thu, 14 Nov 2019 12:47:09 -0800 (PST)
+        bh=zpOYn5mSIQBBTIVObG1RgMlnl0Xx7hwE0GdlRzlKgFw=;
+        b=Ub7wZ71wbKbUzulR9NpHli+bqlfzqldnb0w77cHXAJbkIO97qHwWhS1C3DXoOTEPLu
+         IJ1jwlC/AvgMXSZy2xg6fxY2AhS+leJLj1FR68b4iBqM36FKQP9r0VvGN4G8CzsUaePY
+         IVyaByLBUbS4purvmxi7BI7+xI4VzH5yGO1eVL0OW9NqQH88jcAobZcQqJS+JqcGK5JA
+         DoEcMgKE82hOYaCyhqVvSJ/lVqmX1Q3/daF93GwmnSRN1ZQVLqqLEe0NaDZ7rbjUw1ia
+         UDLHjqI/8KTz2Ju7oaNdoR5MBi3ZIfTuRZSKvkYxGHW6JbGKXCPCXxmFqaJBSjymqGrT
+         DY2g==
+X-Gm-Message-State: APjAAAUbWJNGBnCTnjnrMQXEzAm3yPAOZAFfdbVjnsRQS7YZkDo7I/42
+        UwZXxoz3NEOifIT6jtXbWfg/RT95
+X-Google-Smtp-Source: APXvYqw+l2+/xmc99xPUp9cppR2n/d1tLEJ8MiJjkL4YWV75ib0/iZgkr/RJ+Kd+6OsmVKhRpWmoww==
+X-Received: by 2002:a17:90a:1:: with SMTP id 1mr15305935pja.42.1573764432421;
+        Thu, 14 Nov 2019 12:47:12 -0800 (PST)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id i22sm5975923pjx.1.2019.11.14.12.47.09
+        by smtp.gmail.com with ESMTPSA id v3sm9584239pfi.26.2019.11.14.12.47.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 12:47:09 -0800 (PST)
-Date:   Thu, 14 Nov 2019 12:47:07 -0800
+        Thu, 14 Nov 2019 12:47:11 -0800 (PST)
+Date:   Thu, 14 Nov 2019 12:47:10 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 01/10] SubmittingPatches: use generic terms for hash
-Message-ID: <5a9e19b37ea77660a2f3900f98fe24c2569af76d.1573764280.git.liu.denton@gmail.com>
+Subject: [PATCH v3 02/10] pretty-formats.txt: use generic terms for hash
+Message-ID: <4f2a9bef3238a4fe58b5f1e0cb96809669f27882.1573764280.git.liu.denton@gmail.com>
 References: <cover.1573241590.git.liu.denton@gmail.com>
  <cover.1573764280.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -76,22 +76,82 @@ replace specific references to SHA-1 with more generic terminology.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/SubmittingPatches | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/pretty-formats.txt | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 1a60cc1329..bb7e33ce15 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -142,7 +142,7 @@ archive, summarize the relevant points of the discussion.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 31c6e8d2b8..4cefa64eeb 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -4,7 +4,7 @@ PRETTY FORMATS
+ If the commit is a merge, and if the pretty-format
+ is not 'oneline', 'email' or 'raw', an additional line is
+ inserted before the 'Author:' line.  This line begins with
+-"Merge: " and the sha1s of ancestral commits are printed,
++"Merge: " and the hashes of ancestral commits are printed,
+ separated by spaces.  Note that the listed commits may not
+ necessarily be the list of the *direct* parent commits if you
+ have limited your view of history: for example, if you are
+@@ -20,20 +20,20 @@ built-in formats:
  
- [[commit-reference]]
- If you want to reference a previous commit in the history of a stable
--branch, use the format "abbreviated sha1 (subject, date)",
-+branch, use the format "abbreviated hash (subject, date)",
- with the subject enclosed in a pair of double-quotes, like this:
+ * 'oneline'
  
- ....
+-	  <sha1> <title line>
++	  <hash> <title line>
+ +
+ This is designed to be as compact as possible.
+ 
+ * 'short'
+ 
+-	  commit <sha1>
++	  commit <hash>
+ 	  Author: <author>
+ 
+ 	      <title line>
+ 
+ * 'medium'
+ 
+-	  commit <sha1>
++	  commit <hash>
+ 	  Author: <author>
+ 	  Date:   <author date>
+ 
+@@ -43,7 +43,7 @@ This is designed to be as compact as possible.
+ 
+ * 'full'
+ 
+-	  commit <sha1>
++	  commit <hash>
+ 	  Author: <author>
+ 	  Commit: <committer>
+ 
+@@ -53,7 +53,7 @@ This is designed to be as compact as possible.
+ 
+ * 'fuller'
+ 
+-	  commit <sha1>
++	  commit <hash>
+ 	  Author:     <author>
+ 	  AuthorDate: <author date>
+ 	  Commit:     <committer>
+@@ -65,7 +65,7 @@ This is designed to be as compact as possible.
+ 
+ * 'email'
+ 
+-	  From <sha1> <date>
++	  From <hash> <date>
+ 	  From: <author>
+ 	  Date: <author date>
+ 	  Subject: [PATCH] <title line>
+@@ -75,7 +75,7 @@ This is designed to be as compact as possible.
+ * 'raw'
+ +
+ The 'raw' format shows the entire commit exactly as
+-stored in the commit object.  Notably, the SHA-1s are
++stored in the commit object.  Notably, the hashes are
+ displayed in full, regardless of whether --abbrev or
+ --no-abbrev are used, and 'parents' information show the
+ true parent commits, without taking grafts or history
 -- 
 2.24.0.346.gee0de6d492
 
