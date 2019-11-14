@@ -2,95 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E77A11F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 17:33:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5E51F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 17:46:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726444AbfKNRdV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 12:33:21 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54849 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbfKNRdU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 12:33:20 -0500
-Received: by mail-wm1-f65.google.com with SMTP id z26so6535965wmi.4
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 09:33:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hnpCyF/ZKovEwi8Zu2fc1TEHyc1tfWa0HbOZx4ecdeo=;
-        b=byu6duxbhgVkN/shWgJy3rqF7Z7aCGPfeMJqW++6g/tNXA16+0MlTwNTMRWq/eWlGa
-         uFvVcjli1qgvR9BYdKPMOUQXn27mDY9zBkOaxgXbbIQzGs+TbOF5fDEnu+lMJGtnC/1J
-         e7tS/5VUfmbvz1cxVsfrA5bGTr76UmNCnGqp07pK2XvladQqyQPcfv6ROLGu/avdf9lR
-         /YEl248lZJi/prb/AL8+8QSKd6xZh14WUORaGFT4abKO4rKijzdlFrK5tBvGvBUUExE9
-         PmwdUNFZys3oiiOfa5tBJcMT6Pd3lyMpkENZDM3NebH9Lkj0I12IO6pRJn2lMOPLdlLh
-         FwoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hnpCyF/ZKovEwi8Zu2fc1TEHyc1tfWa0HbOZx4ecdeo=;
-        b=pA/eY1vseqozTt73bwLTA2kLfcIxcKZdYfZJT8lBWCUAlbiaCpfrdA0ouerDF3c04n
-         KQ6nU9tYuqpYV41Ib0aqnWzZZ26Nqp43OircwJR2Zh78QuMvTUkt6xiHpjy6lYLq56dQ
-         P2/7l1UJa3LS9YVM/v44ompLAmlXCw9PEy6+SbE1jktVlxaiyyMSce4ZvolzBEmmxfUg
-         +uj+d7km4khLyF7GODGspy8YiOq+AYNiKkp1pg4e4u+516omZFgO2/t2GQEmXXCd7XN7
-         FLgWAHCgy0f43uGXS9T6q/zrj0+XOQaNgBryhceXpjE6dGQXW58e3m+vFMf2eCpumGmG
-         onDg==
-X-Gm-Message-State: APjAAAVKc+RNp9kTwGjb/qH5+Ga/XCan4KL2jbLhwmYES97pYYta2auE
-        FKgm9J26MFTBylMj3OQdkqRM0w2seSUYfg==
-X-Google-Smtp-Source: APXvYqwNNJsiFolQh4vHDe99c2DE8vEfzH5GGSv7fheautfQAetq6trUYOToZnQphXOFCbwoPW2AIg==
-X-Received: by 2002:a7b:ce86:: with SMTP id q6mr8717634wmj.20.1573752798433;
-        Thu, 14 Nov 2019 09:33:18 -0800 (PST)
-Received: from rybak.office.devexperts.com ([185.79.217.61])
-        by smtp.googlemail.com with ESMTPSA id v128sm8082607wmb.14.2019.11.14.09.33.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 14 Nov 2019 09:33:17 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] INSTALL: use existing shell scripts as example
-Date:   Thu, 14 Nov 2019 18:33:16 +0100
-Message-Id: <20191114173316.9190-1-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.24.0.windows.2
+        id S1726786AbfKNRqU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 12:46:20 -0500
+Received: from mout.web.de ([212.227.17.12]:54625 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725976AbfKNRqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 12:46:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1573753573;
+        bh=XbiKO/NJdY+28kf52AWoTay/cQ0LnH92fbeyKx0noCc=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=UoqzDIctawUQh93Sc+dfqSjaxvsuck7gvvgfRLsmNUL41RkcJmZhOiUZl/HJRl4fU
+         h72h4L2BvQ4+kyrb6mQe4gNE7UI6UW0/sLtOW1kBJg+yItq9QmeImIzj4N+8vSSs3O
+         BtSEIctUAn9Jchj7rTtEdmAoR7lBj87d+2qp4KK0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lhvpu-1i9jkc3cg6-00nDcD; Thu, 14
+ Nov 2019 18:46:12 +0100
+Subject: Re: coccinelle: adjustments for array.cocci?
+To:     Markus Elfring <Markus.Elfring@web.de>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
+ <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
+ <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com>
+ <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de>
+ <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
+ <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de>
+ <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
+ <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <aed296a6-bae0-6fcc-515e-ef96fed24ca6@web.de>
+Date:   Thu, 14 Nov 2019 18:46:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:LxhasRPG2Fg3SSfmYHPrtDvuZc/FUKXImpVw3++vPaqMNLg5iTK
+ QWoPISMUy5I7oJ7K8dC8J3t2UDH4P4n/M9XLjRZ1jBEdeuuWZ8TrphP4Rviv9jIWXBGEip4
+ CQVc1VW+OXfXcXX51LwbgT+CHeGvKxRbg99KsIItfZ3hWaVbbZ2G1GSFWloCbuqikJQUfjo
+ 4n683l0xl+8JTytlCEkYQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EqQ7KRwvwNg=:3MmPkKrPuY4C0GTdZuCNw7
+ 6TvfB3/uWIMD+egn3cbtSJBzAB05a+vWw/S3GACnZRVzDCzDge803bdqUnBU7k/nWZL+dLpcZ
+ wXCwtPABATLGps8zVwshl2G0lV/0xBm07xbWHbkD4FNfXYihSDHfmpjh8+e74Y2QByZyXz95B
+ i6NBml77Rc5F3FIz1CWT63xj4w7dVPw08DQjbYyIizVUCmeMi0rdX1y9EArX+bro86uRcstiZ
+ I3Al1asdqbHmR2hWgqNgsrrn0MNA5WRmdRMrqaHrcW0rag3+82QKBvikWes2PX7WYCQk24jqh
+ Oo3yisKqUroZf15ZU3Vg6Le0ywGAnyLL0GHOMGniH76vCTgU4iwfIX4OO6oIdmJ+ZbS7pweMr
+ mm+iSaxbYNNB6jOT9K525Anxpp4BGFoeKIEams5OhD+EawD0+0qYi/03FpFUVNWhzBsk03OK/
+ R9P6hWNHSZByygPVEbpEcA3P5n2UAZwulAcetypawzLMfQz9dDwurwvm10E+B9MZqdP8h7BTA
+ VAmDAayBYq7dvYkmTqH90FVqGIOWNlmHJplorfOGXsdgTbBzH2VmjI4zOrKBpM4CNhR+dKCEF
+ Zm0apBy12TSpJB+9rLeFMtBx3bBFd+vedOVLyAlC3aexdq9ISq6jXt2QMB8ZyQuqwNbaPIELb
+ XK/QHtgm+Vu7uu9jrIOIXPZ6DHYOU0b3O46aLZZ9EpZ66s6MUF8l0ygvMcYSsf9lMjxUBAYbv
+ zpUTTYyBWP3ThOgEB7cZvV0Px3hBKIzSyEwmRPyl/ecWKr134gjjyFQF8rVhYYPAcOOzw5QWr
+ ailolf8MScYpYOT5lCVc+JvDsUe/amVzZ89lw7LGvaA2NyNgEidTxUTqCYwtovqSub4UzfEhk
+ fggYU2EhJfdSjU/e0t5ORoK6FVJnDG2iezsjZF1m8TspsJoJIrl4ZD+cGbWpJxNcayNeWIT+F
+ EFa7xq0qW40NEwnMTM84eDnf0q4o9J95VlHDB4tfCcrVASUvvxXT+IJn5xNJ2NVfHznmFKM5k
+ BoAO9MJrdim3StLOe1fJqu8F5qKlPtcs1iSnlQLvOVs4iWaI794yS3boHeMdalDUmihwlbjB6
+ t36JVeNavWmZKXUL1XhWMn7wlsnP9VERCqdyaa4pdPs45GpzrRAwSNFYgnHJCVVAJk8hOTMwM
+ GxVN52Ws6a5lwIkTNNCuO7NYqgcKx0nL7OOULMaMGsla0DOFBCHVqOp9XI2/zODJZFOIE9DHt
+ IP9b7XQzMZiLHym0EN8mMKJ4AC6GqAwM7zYTZgQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Script git-pull.sh has been removed in commit [1].  Use command
-"request-pull" as an example of a shell script instead.  Recently, many
-of shell script commands have been re-written in C, so tweak the wording
-of the sentence, while we're here.
+Am 14.11.19 um 18:14 schrieb Markus Elfring:
+>> If the new version of array.cocci is equivalent to the current one then
+>> that last step should show no difference.
+>
+> I hoped it.
+>
+>
+>>  contrib/coccinelle/array.cocci | 30 ++++++++++++++----------------
+>>  fast-import.c                  |  2 +-
+>>  packfile.c                     |  4 ++--
+>>  pretty.c                       |  4 ++--
+>>  4 files changed, 19 insertions(+), 21 deletions(-)
+>>
+>> The changes in array.cocci are expected of course, but the others
+>> indicate that the new version missed transformations that the current
+>> version generated.
+>
+> Would we like to submit a bug report for the Coccinelle software?
 
-[1]: b1456605c2 (pull: remove redirection to git-pull.sh, 2015-06-18)
+Not really, because...
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- INSTALL | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Which version did you try out for the comparison of generated patches?
 
-diff --git a/INSTALL b/INSTALL
-index c39006e8e7..e3170b3cee 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -116,8 +116,8 @@ Issues of note:
- 
- 	- "ssh" is used to push and pull over the net.
- 
--	- A POSIX-compliant shell is required to run many scripts needed
--	  for everyday use (e.g. "bisect", "pull").
-+	- A POSIX-compliant shell is required to run some scripts needed
-+	  for everyday use (e.g. "bisect", "request-pull").
- 
- 	- "Perl" version 5.8 or later is needed to use some of the
- 	  features (e.g. preparing a partial commit using "git add -i/-p",
--- 
-2.24.0.windows.2
+... I use the last version of the Debian testing package, 1.0.4.deb-4.
+https://tracker.debian.org/pkg/coccinelle says it was removed from
+testing recently.  I was actually waiting for a more recent version
+like 1.0.8 to be packaged; not sure what's going on there.
 
+Anyway, someone who can reproduce the issue using the latest release
+of Coccinelle would be in a better position to file a bug report.
+
+Ren=C3=A9
