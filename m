@@ -2,142 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6015A1F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 16:41:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B49F1F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 17:15:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbfKNQl2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 11:41:28 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40379 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbfKNQl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 11:41:27 -0500
-Received: by mail-pf1-f193.google.com with SMTP id r4so4602250pfl.7
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 08:41:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cz1A/cxvjeE8C+5q5pp5IeeatS9qzqoPo4yiTYytw/0=;
-        b=Z2Fk0fxzT+gqbYz3f4sgfaFu5578FM2baw45Wz1e8if9yu46vH6OZfcgB0VH+8mtbB
-         sZgbH9DNZ7YcieW0TTaRAT9gKoQDV+El4WMhzKXknZBAgWbv24ch4KZfNjv9rtUNpaF4
-         FFZHdm9fG/GbeguaDTNkeKuaeiiaUzUFh8ODN1Iw0IHKaU+mukT9owsmz6Sd6EkWp1FU
-         hgbTSAWklYL4QormymnS36pnDoTPYS9IVNmLTcEx/98f71PtXxd1Du3FO6W6lKYIfmxy
-         DiB2kKB1Y9JBGgMDO6ma9b8XzswA8TPMjU0vJ5xAkxZQ2yzhLwxpn9R65DzirRkwGx0s
-         jY6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cz1A/cxvjeE8C+5q5pp5IeeatS9qzqoPo4yiTYytw/0=;
-        b=aSJ5Dgyt3+8JBFOXRD8fQZ6YM1rbnANw+GwA8PqhdYM8QPGr9O16/jNZR17B2YjUfv
-         Qy5pKbhQ4TCHKXSBLfwUUcqVWZWyqRVgsA/j+K09rpN33xVPrQraCiBnaPn0PbfIjMmL
-         +DV8L+G1lucwEkVuTn5xAIwZlVzDXta0Az9Ias1+b6BPHauWktZMpQWBMRNWgD+nqNtW
-         TM1WSLxdXsVHET3oa5LO0kux3HqkdD2i2/XXdZICArMvulg68LSwoVRxRf+/7QVnpBDK
-         JgpRfI3kgYG8stkpByQ14Clw4fBV5UUWMlEfPZd1CVPuPimZnhE/+kDm3novY58/uG82
-         pbxA==
-X-Gm-Message-State: APjAAAUzvefWLeeVyt8V/PUgo3kW/lvPuigaH56FHun07C54vV7rftkH
-        5CEZ98/tS9EEY08GMK9oV7s=
-X-Google-Smtp-Source: APXvYqyRNqWFT51qftTReJ01UkCs/SCwULFBarw30y1i8lks/3PuBXoe9WllnZIygKjSZB+m1SlzYw==
-X-Received: by 2002:a62:75d7:: with SMTP id q206mr11546793pfc.232.1573749687133;
-        Thu, 14 Nov 2019 08:41:27 -0800 (PST)
-Received: from GVFSs-MBP.guest.corp.microsoft.com ([2001:4898:80e8:f:cd34:756c:854:94de])
-        by smtp.gmail.com with ESMTPSA id u207sm8635860pfc.127.2019.11.14.08.41.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Nov 2019 08:41:26 -0800 (PST)
-Subject: Re: [PATCH 0/1] fsmonitor: skip sanity check if the index is split
-To:     Junio C Hamano <gitster@pobox.com>,
-        Kevin Willford <Kevin.Willford@microsoft.com>
-Cc:     Utsav Shah via GitGitGadget <gitgitgadget@gmail.com>,
-        William Baker <William.Baker@microsoft.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Utsav Shah <ukshah2@illinois.edu>
-References: <pull.458.git.1573196960.gitgitgadget@gmail.com>
- <xmqqh83bjig6.fsf@gitster-ct.c.googlers.com>
- <xmqqa793jhne.fsf@gitster-ct.c.googlers.com>
- <BN6PR21MB07869E8D1DCAF189C4E472A891740@BN6PR21MB0786.namprd21.prod.outlook.com>
- <xmqqzhh0d0ma.fsf@gitster-ct.c.googlers.com>
-From:   William Baker <williamtbakeremail@gmail.com>
-Message-ID: <beb5a2b4-f07c-c3fd-9e68-dbee85fba2ee@gmail.com>
-Date:   Thu, 14 Nov 2019 08:41:25 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.2.0
+        id S1726957AbfKNRPI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 12:15:08 -0500
+Received: from mout.web.de ([212.227.15.4]:60151 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726491AbfKNRPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 12:15:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1573751698;
+        bh=GilLRBqT65hvN+CeMZcfFYcPuR7TsOt2BG9TLekLmqE=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GVcY18OFnLKgtXfIPf6+gWkJnwWkopn6nULkhbzwN240T8HfmZxTlq3JwuWahynZY
+         v6I5m5VloUJZB42b+MzVspJrGjIBLexS9etBZY2ak3IVrFiwjcvPuMGLmrFWfowrBj
+         kfW4zccKxywDgM1Td8yjCFlk9354irSyqCRS8e2o=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.1.3] ([93.131.120.12]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MDPYb-1ieyI3024z-00Gs8B; Thu, 14
+ Nov 2019 18:14:58 +0100
+Subject: Re: coccinelle: adjustments for array.cocci?
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
+ <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
+ <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com>
+ <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de>
+ <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
+ <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de>
+ <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ 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 FEE=
+Message-ID: <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de>
+Date:   Thu, 14 Nov 2019 18:14:56 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhh0d0ma.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7hhmx4Z7qD94hqpYvbrOgbiavX/muCNIggPdyQawSZPTZM975/4
+ nIiCX6qMulXyeO1ikyxIWl6YAUUOJjDdYadw6FVcl8R5eileGjbs+2XKPQnm6VHG1GkgkVB
+ i7bWsdEC4PxfQdz+SvEnLZ2tFcJ+2KrJlQ+B4mQ+id60Te7PnOOBovhLAWvdlRoBce65xZg
+ 9v8eKS0qCZGFF3/hx9jWA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k6VEVrzv8FE=:xkJGSu4fz66pCgQ0wEMbiT
+ K7HFaCtOAUrMGSHqoCwoHZ0DI0hXP72alKWcUUzAAY3g2htjg4+FrEliRKEq8a9tDd5s85+Et
+ CGVjObzOFZeQe8bKH8IqSGsBZtHH6gH2G2NpT02/yhnMZ2rseBdq2jOOcAtEi1Q6Deia6yvil
+ cHXmWnYiwIxZzP5Y2+vXfKGoS6Hpdu1x1krZ6M/77TdJhUAcI0jOE+dqw8MH0+UhwFsh3I1ri
+ yzaiVGrzdU/Nr6/GMfSvDBadMmel4kmeAxB18TyLXcrmxANeDq6GMWUt66Ullvlzo7UGkaVBn
+ sb6BgrURp9fR0tUAYDiBQsqbbZG0C+83liL1ZnxxXO05NK7U/dPvlSuU66U+Ynay513s6fl8O
+ E/8dHlQ5nG7cR6YlDr747YaRMFsWc2RBBy7yC22c1dt051O9lmgOeB8UuAp+2/yaALmt0Muh5
+ 5/F1OJkpSlm69S70YCti3apRTQywtKyzWuKLu4pq5DjCeq/JYG2l/1/GASpHhkTMEoObsykuO
+ DCatsNCjsnOK6lLR0VSFUVEleCYz95f/+svqK2VZM1niKiHDAjf8hPuLTCEur9JfGbytEukCh
+ Q+p/mboNdeBvBcxZ8o7dDmznvjSfgThg10UI1em5g55h5AYTx0V6JeKj4jsxsF2Qb/5WjqIp1
+ b5dOQryc4gMdNs1Nf/fsE7THbA7xxcstt4uWQOS6dIldapnVm82jfTk1u3JxUqX0xNKO24l41
+ 0kV9pnODQY6ek7EN5Lc3PlFpSOLHVyJusISyfdhJ9O5M2/1D9Xvv6q7x90RvoFNYzaamUY5g3
+ Gz5acDO7b5ymbGW17zLtIHcedtc8M4iUQ7IcwRyx68Lezc4p7mamNiFLst/4K8DQx0dwu/zIn
+ +0mcsnf+z0ckYuaZSBmEpkSQMztJ+rTW+MbjPNd+udRa/lgyJySbdjsQqxdr9ShX6/7tRMUOX
+ 6ctephIc61tTGnLmvnKTi71ISefnehqcCnjaHEl1fslCatKnAShoImJxGcOaFtWCxqMLHHUId
+ ekw3IYWkCDj5WZTvNTvHfjutk8stMP2e3b6nGUNLAdlEvz1DRDXOcfw9X1aKo2M/Y/vEBUfBW
+ LQnFOMRCv4NM0NF0aiJAMi2PaqsDUXfMvB124X9LiNxQmKE2I+EE6KBL42HX/WwCzEJvGOrC+
+ hIf64TBFDdm4R+0usg5QToMdmvsnI4yfv/BhDLOYg4KtrISakRV1ZYadRgMQFIjfLkFQkpzBK
+ GDUFZJApg2Fh5t62zEOED16ho+EgIP1oQst8xEilBr3mHxRLcfFCbgnXAQLs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> If the new version of array.cocci is equivalent to the current one then
+> that last step should show no difference.
 
-On 11/12/19 5:30 PM, Junio C Hamano wrote:
-> Thanks.  Here is what I came up with to tie the loose ends of this
-> thread.
-> 
-> -- >8 --
-> From: Junio C Hamano <gitster@pobox.com>
-> Subject: [PATCH] fsmonitor: do not compare bitmap size with size of split index
-> 
-> 3444ec2e ("fsmonitor: don't fill bitmap with entries to be removed",
-> 2019-10-11) added a handful of sanity checks that make sure that a
-> bit position in fsmonitor bitmap does not go beyond the end of the
-> index.  As each bit in the bitmap corresponds to a path in the
-> index, this is the right check most of the time.
-> 
-> Except for the case when we are in the split-index mode and looking
-> at a delta index that is to be overlayed on the base index but
-> before the base index has actually been merged in, namely in read_
-> and write_fsmonitor_extension().  In these codepaths, the entries in
-> the split/delta index is typically a small subset of the entire set
-> of paths (otherwise why would we be using split-index?), so the
-> bitmap used by the fsmonitor is almost always larger than the number
-> of entries in the partial index, and the incorrect comparison would
-> trigger the BUG().
-> 
-> Reported-by: Utsav Shah <ukshah2@illinois.edu>
-> Helped-by: Kevin Willford <Kevin.Willford@microsoft.com>
-> Helped-by: William Baker <William.Baker@microsoft.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  fsmonitor.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index 1f4aa1b150..0477500b39 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -55,7 +55,8 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
->  	}
->  	istate->fsmonitor_dirty = fsmonitor_dirty;
->  
-> -	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-> +	if (!istate->split_index &&
-> +	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
->  		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
->  		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
->  
-> @@ -83,7 +84,8 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
->  	uint32_t ewah_size = 0;
->  	int fixup = 0;
->  
-> -	if (istate->fsmonitor_dirty->bit_size > istate->cache_nr)
-> +	if (!istate->split_index &&
-> +	    istate->fsmonitor_dirty->bit_size > istate->cache_nr)
->  		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
->  		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
->  
-> 
+I hoped it.
 
-This looks good to me.
 
-Thanks,
-William
+>  contrib/coccinelle/array.cocci | 30 ++++++++++++++----------------
+>  fast-import.c                  |  2 +-
+>  packfile.c                     |  4 ++--
+>  pretty.c                       |  4 ++--
+>  4 files changed, 19 insertions(+), 21 deletions(-)
+>
+> The changes in array.cocci are expected of course, but the others
+> indicate that the new version missed transformations that the current
+> version generated.
+
+Would we like to submit a bug report for the Coccinelle software?
+
+Which version did you try out for the comparison of generated patches?
+
+Regards,
+Markus
