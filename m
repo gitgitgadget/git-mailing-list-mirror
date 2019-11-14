@@ -2,155 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBA181F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 13:15:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 163DF1F4B5
+	for <e@80x24.org>; Thu, 14 Nov 2019 15:07:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726949AbfKNNPp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 08:15:45 -0500
-Received: from mout.web.de ([212.227.15.14]:53877 "EHLO mout.web.de"
+        id S1726567AbfKNPH5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 10:07:57 -0500
+Received: from mout.gmx.net ([212.227.17.20]:34089 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726190AbfKNNPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 08:15:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573737335;
-        bh=QRd5yXLb2Y1oQmJdiESaatqrNlBF4fdnno+BgneeKCo=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=lk+w2EUa52Ioks9g6/UIWKRqg6wl+xfTp3LdGoHYglu2nq0qrVFpTAhaDHdCZ2BnC
-         J/4+aKUZO3bKQjvwANR0EEOS18LRbqvuZotFIE68PN4P+DiblNx78uIGgdsgtK1iyA
-         ojguYtUth4LLwrz0HnZWtvRv1GZx/guxlS5As66E=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.131.120.12]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LtCm3-1hlQXU1Z9v-012mAC; Thu, 14
- Nov 2019 14:15:35 +0100
-Subject: Re: coccinelle: adjustments for array.cocci?
+        id S1726179AbfKNPH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 10:07:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1573744066;
+        bh=XgQXO/jfHJHnxya7/8Gh6OaOGdwtUECIFj3NDE6uMbA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=ObN7qA4yeQXMVeX2Ph/3wsV7rUGenOXWHcJfqqnoVPbypRumDG42B1GxkO3oa1ur/
+         aUV7TO7QBrecHvWzB0QkLWaiiuJ5ss8f8fUs0mhqz7nzO6bA2uH1syx0BfJvjUhUit
+         abH1L1masui6UO2U7hjrUeVO8ypkyNVPy4gYr4Wo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWici-1iOZgY0Bom-00X0o0; Thu, 14
+ Nov 2019 16:07:46 +0100
+Date:   Thu, 14 Nov 2019 16:07:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
-References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
- <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com>
- <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de>
- <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
-From:   Markus Elfring <Markus.Elfring@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de>
-Date:   Thu, 14 Nov 2019 14:15:27 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 1/9] Start to implement a built-in version of `git
+ add --interactive`
+In-Reply-To: <xmqqimnn9p9p.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1911141602350.46@tvgsbejvaqbjf.bet>
+References: <pull.170.v5.git.1572869729.gitgitgadget@gmail.com> <pull.170.v6.git.1573648866.gitgitgadget@gmail.com> <5d9962d4344fa182b37cd8d969da01bc603414be.1573648866.git.gitgitgadget@gmail.com> <xmqqimnn9p9p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:n5kRUiV4qSr+lxzBuazxJs4QUbACNUa6fEFi8ExqAXpJUp9r6+a
- GZFARXmrv/u4KEAiO/zhk/JnmHdhiSHvWeXbNpOJggdpnTS2MTOy7IaRBmwDrmfxZwuuJ5Q
- gSWMaewOaIWSVEnrojG9nSaicCHBiYS2rib2IB2/7G6xRf8VM9t0cDqkYj3pJ47skIw6G6n
- r/StOMeXUPVlWgEppww5g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VU5uELcku3c=:Kycmh3NajdEQzTrWvGPIWi
- 3Tx2Dk0MhOEmd9H+nUezMod2b0LnaEKQuBO781jN2FWtHm2FJHb+JYZTUj6bTeXV7BcuSbJtq
- C9P5ixOQk4ZKfxiyvGbcNjDCNKO0vLDgoWZBGNH/kw3hg1NoiP5JV72B3ej2ZEljKJoYYlywL
- JI9o0NUPlpunEHc9MvmOeABiuYzfPhlTlH79Ue9x8wdjqs3L+WPDJ6tDQhajOxlSG+8q2zihQ
- 4s4HSF1qpVSZGPqZ3F0JQ0bqcUWy0E3lpESt3Gsx/Zvf8pRf26/RPPEnd2IeSXpvwbGDQBQNz
- 6I8BQBLaQ9zrVlrvSIARnCO1Sraa+ZQU1GHMaBSwQUTNIxqJhxjssgBmevKzDdmQMUnpgUZA8
- rIRU408VWHKQtcxC8Hvml6ofcpiYuzW9uV2IcnC0ygkMNdOESXaZ4ZH/JWnlPE0SpRW2jIDtB
- cu5RUqDXB5VrdT15ExcHqZFeXItvgbci0M1H+zQ9ODsrsM5oIxErRWevLUBPjbu9IyATrj8Oz
- mCnQLadyc1oFL99FEK8GhtPIb3qabMUR9vm8RvRm116AprDzv3Y7Km5DDej4UqLeqgwSqUA6j
- BgB4cWh7LCS6wf+rlDFJjk4zQqYW9hrzu9UXNGrPsP5cxC4O3wL5aFmaU/wN343QGbWdNaBx5
- /F8fSzZcX2L+4hfNnOuhSXVgF624xMJS70Vnz7KtPvCchw/VfFbSA8blyBqo/Ua13rACxGaoj
- 87mqzXathHDQdZz3RyO3p7UKy/nqLTCgL2fvcKCfWaxKu+4FWIVW7+rJEh+MFN7/GR0hDLXJt
- Jt4zk3YbYQJnk6XFeVRstIojya2+CrRwALAPNz+KR7MEsDTSdmCIn0jGpyrzQbTDdZujGaGEq
- 9dVAx73zuPtLovQGH/FymNgf62i8d41sbC8YBiS5+FWVP/uGGcTsje8Z9A8v74nHc/wG+cREU
- PAJCkzLMWGrWyxB9GMw1c88EGJWGFAHnKRjpDAqFR/r2RY+jMPayRb/lxmPRmZupxWNP9OrOJ
- V7JWQoBM+T8RlGCcfT1diEvVG3wHGVTTOeY6/9Zh+4L+iK7s8ywu2+upTx35XgUGhdn55rsx+
- 7mZtIr0P/y220Cc9VjBcYaBgsg9p5NZGdBIBArv0cn4IGHSamUFUZk3WDRooLSYZluceWldKA
- B5d4YyDYG6fl/rA/iHGoufIg70qbiB1GHJEjyWp8E5R6LDdbNdk/Ul8EcfiyK1r5XKcGEJWsP
- UCsyYIBsAR2dKuK6ECrT7L6xYLRyd1BCTpcfJWw3f28sXsnj+66I+o9lY3rw=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:udHWiMREmOyQHYreJ9d3H57tshBEvWOfdQepkXuYDWWCdnlqRmJ
+ zg7Sekt7YBVDTI+2+mhTj89cpXk0rt8o6Bduk7f9HxKqgrRl9aZUcn0+Fuag4DooPdsmDFF
+ HVtaj9ZAElw/coKqPwHXxgMPnA5tJW3wZjT+JmIr6pn5PsgGu4l4sXbcRMQz776lGuY7zjv
+ Ku2Z8v6LXY+fVSpdJoTKA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nQG1fzkT5Vc=:2IRgxusjrqul/oeuBgvv2f
+ lbRmaIzfhicGqB1Ah7heEI7GxoU/NxqWB7vptBJ9a9etC0TTcJERo9OYOI7xgsKeRqad1Nnew
+ RbjdQDs/MOtCM866L8dqKWI4CEop/8mX/n62kjblO1ClweNNj/5K2SN1HSPIu+QDFZ8Zy0ivY
+ awc6JoVI2m2KfLPnioHjWHqOAkUICa50JGuIAWShSo4CmGMmrbV8xPPIMkPK8e+oZlQfU4/sX
+ I1flzux7WcWF8BJUTBUf4hJMjbgNiu0VogNuihD0roia4w7O+gUPk8vL2gTNczG1yvUZZdsPk
+ WMBvNwiPcjBLvyQ3lGCTueJOjPL+9YVgS2/kupea14xQxHNLSWm7dvG35F64VlgzzWPhCkNM0
+ yLv+bBCd988HyyOC7b5snQRyVI510+l3dbl4uvdNuLZCZRa2RxU6cTQMEk9/KO0LDQejJyuGj
+ YY/JN2xHHrcrDX/5s2244JnvvhJghkPOtDaRNFS0CjPYvsoENjuNCJU+JJYUIokEaE/GUTsG4
+ LvVRNW+hRdVkAH0+D9ShBR93x2e2k64njD/8SCKwMwiXersQb0hPjACDJrTtDX+/ra3rUgUEY
+ nwuUD9eUNGT3HMR5MGfkGd4LrXcMoVES+NrK2MMhQ1EuA7W0OvtMbYBHoDHkvCIPe/yuJghxn
+ +74scQ2OIDTSj8NuWuTN+zmsrg+pFLWhtOpNqm991+56VVfghcfouaihLBHCwcpP1ahCuHO3n
+ H47wFrMzqazMQvn0UjoZZ55IQutRW8YmMWobXEjAjaNYWX0JesaigcpPPEVZlOR5K/OukofrE
+ vxWzclMUYRncLKjEHt1VN7hMzWwzfmOnbfJXYNmzphm5vKcW+PCrHTgC3zltsHK3/ECv2ocpr
+ YsF4v+2Z5WFSLIleY2vwzariQr1iz5+GCJD23TZ6VJklJoppB5iuI68zCkE/tghkD6xM0aMaF
+ VdiwDcHuwaUML0a8GV4uYk8c3DLiwxalAOSxxwAOKNbpqJoAyJTu3gmGlLlJwFvGYVlnSzLfq
+ YHI+mePHNnpqHzdcv2OAgABKaYcgXEEBLZZsSMqx1bLQyOpNoDYoaLtSDeNv9k09GDW8JiX2V
+ sWo2VpAeIBLl9hVMewJXGFIFLsFwjt6XAInyTfoMqlrM4qfXGrSGAQoMNS8TcA9gowMLyklZC
+ kGLFuONU9ycakIKeoZk6ToHFQ3ZsVHnw9yGfxJ74s3f7gSdXo4bxOXhYP5lF/NeQy0fUXE68x
+ V9cI057m4mlerr2w1OndvuxsZaqIWVU3X+fCWoGo9z6I0qe+vVYLFrVseFWs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->>> I too recall that seemingly redundant entries were noticed during
->>> the review and at least back then removing the seemingly redundant
->>> ones caused failures in rewriting.
->>
->> I am curious if the redundancy can be reconsidered once more.
->>
->> Do you refer to open issues around source code reformatting
->> and pretty-printing together with the Coccinelle software here?
->
-> Sorry, I do not follow.
->
-> If you are asking if I am interested in following bleeding edge
-> Coccinelle development and use this project as a guinea pig to do so,
+Hi Junio,
 
-I did not ask this.
+On Thu, 14 Nov 2019, Junio C Hamano wrote:
 
-You mentioned =E2=80=9Cfailures=E2=80=9D. - I became curious then if corre=
-sponding software
-development challenges can be clarified a bit more.
+> any case, I think I've seen the patches in this part of the metaseries
+> enough and I think they are quickly stabilizing.  Let's see if others
+> can find and raise issues and otherwise start cooking in 'next'
+> sometime next week.
 
+While reviewing the next patch series in this arc, I *just* noticed a
+buffer overrun: in the main loop, `path + sep` might point to the
+trailing `NUL`, but we assign `p += sep + 1;` at the end (which is only
+correct when `path + sep` points at whitespace).
 
-> then the answer is no.
+The fix is already pushed up into gitgitgadget/git#170, and the relevant
+part of the range-diff reads like this:
 
-Such feedback is reasonable.
+    @@ add-interactive.c: static void list(struct add_i_state *s, struct string_list *l
+     +					index = -1;
+     +			}
+     +
+    -+			p[sep] = '\0';
+    ++			if (p[sep])
+    ++				p[sep++] = '\0';
+     +			if (index < 0 || index >= items->nr)
+     +				printf(_("Huh (%s)?\n"), p);
+     +			else {
+    @@ add-interactive.c: static void list(struct add_i_state *s, struct string_list *l
+     +				break;
+     +			}
+     +
+    -+			p += sep + 1;
+    ++			p += sep;
+     +		}
+     +
+     +		if (res != LIST_AND_CHOOSE_ERROR)
 
+I plan on waiting for the PR build to finish, and maybe wait until
+tomorrow just in case any further suggestion rolls in, then submit the
+hopefully final iteration.
 
-> I'd rather see us instead staying on the trailing edge ;-)
-> to make sure that we use common denominator features that are known
-> to be available in all widely deployed and perhaps a bit dated versions
-> that come with popular distros.
+And yes, I think it is a good time to start cooking this in `next`, I,
+for one, am prone to overlook anything crucial in those patches because
+I have stared at them so often.
 
-I find that I am proposing script adjustments within the basic feature set
-for the semantic patch language here.
-Further fine-tuning will become possible, won't it?
-
-Regards,
-Markus
+Ciao,
+Dscho
