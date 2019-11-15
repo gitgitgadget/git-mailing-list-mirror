@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E80841F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F086E1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727529AbfKOJyE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:04 -0500
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:52196 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727220AbfKOJx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727402AbfKOJx6 (ORCPT <rfc822;e@80x24.org>);
         Fri, 15 Nov 2019 04:53:58 -0500
-Received: by mail-wm1-f43.google.com with SMTP id q70so9001651wme.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:54 -0800 (PST)
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:38460 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727122AbfKOJxz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:53:55 -0500
+Received: by mail-wr1-f47.google.com with SMTP id i12so10251200wro.5
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=r6Mh1Be2zNVsUjhOd1OYeSKrqpkEVebtDayD8sp2b+I=;
-        b=i87hKWEK2BPOKB1HltIw7HtQe6j4mR6UP4pJde8f96R7Jz0X0khyl9ExijWKOl7dDD
-         hBamRAl6TGHEkY9xLYETHOQZPbxAfC8EUmevrMPd385xEwhD53WlxMAmHd8Jl7zh0Wwv
-         hoarVTXvJ9MALcMctDbRW7AEcwzvaj6oWbMntBPVLe5lHfNf6DKrfRdRlhFNJzvfQ0s3
-         RZ7uJqFJoeSJiklilrxHJnhO1QhSEtOQWDNLpz3a32UyrMXkeOiHaJuXR8yVoXauWVc7
-         jYytfP2468WOeNV9s2QhY1olctMrGEV4pYTUBgp2OHQsufUds2KwvfOKjeH8z4HQvE5D
-         Q3Tg==
+        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
+        b=gkHaJEjmmkUyiHtZ2nzyARX17JbGJKPKYIvKT7L89vWUk5uDn2eIBgHY168sxGM66A
+         IMgl4bXBhjvj5QKlweXk+bRc+jJVa4I2Ua0QHmMwJOqEdXfmNCIAZafM2rm0iVrdvqcF
+         jrxqfLcC5ESZdUO9IbevIC2L9cfKfZYNVF+nrdQDfDWxXVVXHd3dlUlqlXtUYMx1carV
+         f7qgya9ZoKSxkOmJYPZ2DNSyNqpJ+OzCBmMYqPLpT87+r3rDM5fOz6r/7iqWxCzZq3O+
+         rUV3sE2FyzSjps3okix61+tKBtYXhRaLh5Eu/KRdex7Pa3pGCVDNiXFeaqskFncoJVsF
+         rrGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=r6Mh1Be2zNVsUjhOd1OYeSKrqpkEVebtDayD8sp2b+I=;
-        b=dN7QNGofN37/nPuBevcFJ9Ebxm2bJyAQVsN2+UyDa7V7fStEIkUwh9yzLwPLtDlnZ+
-         Eyuu4kG3CnYupiRuvkbUk1StWkO2760I7OqfOeB/l6fftvpNudqoYxC1DmxIH9XbpG49
-         95ML1knuyOolqDK054YX379FYOmBP9ef+rYwAXQDLORNJ6RwSvP8Op9PizYaYgDvrMxm
-         XLkq5UZTXO4OE3PoHonNJAl+DDdjuA9GcnL6Z9/MoHhamXDmsl8YHS4glAakpQTqJuhw
-         BA3lfruBaP39gxz+0m9jkmWmIvQdoCrcVzOdqBqhpufeWPFPhGbgGLF4VOqm1jrrogFU
-         2+9w==
-X-Gm-Message-State: APjAAAX//n2rgo0isBUEwUAa/woTi9lQUK/V3+iTZfi7Tgl10cWvIqDr
-        fE4e7njnlNT+PfxlHiEFql+A73L9
-X-Google-Smtp-Source: APXvYqzARt3rwOIGK+jUxe67g+f1eFMl9B/P3lHSFKciQyS2s1vRfWyj1k0epk7ViwljdyX0OAFMog==
-X-Received: by 2002:a7b:c1d0:: with SMTP id a16mr14398112wmj.127.1573811633288;
-        Fri, 15 Nov 2019 01:53:53 -0800 (PST)
+        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
+        b=UihAF4LEsc8IKIeY7aiefDHEXaIezNsn7ZvYl2N1Np9VLQb+xsliOwUnMNuQArf6AK
+         ZsOfh1zPYyXbq4Ac3HV3ySFuWF2hxQEOjAfoEv/PnsIDHklBAl4Fy54p+x6Qc+xnki/e
+         gMJewkK16tUAUctGQIBqNaQtxiC6HIfatlwzBAM5xP2KhGbohGm48XgF9ZtC/ItPb5xg
+         TV3MFIFJ6+wsns8ne3lHye9+uU6dMr3eMfFQ8j8Stlj+fE8ZHskzysAfFaNl611+l04N
+         syJIxBNRQhg1mWyZ5EcIUIfWZRmFYY2RxrJr+oXliQw8aLmIo8gv3gQrBcNEApF6BW2j
+         ba0g==
+X-Gm-Message-State: APjAAAWmBhRLW5iIR5gpW/N4aIWwhWQZmBp64FETAwT/jrEgTDLaZn+2
+        Y5Z1Z8qwb+9oQ6OeUkwf6YQO6n4E
+X-Google-Smtp-Source: APXvYqzAbaJIb7rGnw+hunkxOQ5vQhHE+qWKgCAmYaMeSxKezXnN/aIJbRmIOlMkNLgk3C0cjel6OA==
+X-Received: by 2002:a05:6000:1206:: with SMTP id e6mr14125228wrx.113.1573811630333;
+        Fri, 15 Nov 2019 01:53:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f19sm12560736wrf.23.2019.11.15.01.53.52
+        by smtp.gmail.com with ESMTPSA id a8sm8984970wme.11.2019.11.15.01.53.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:52 -0800 (PST)
-Message-Id: <5719b8141c1d9323ce2f63c1a290d69d68cfa27f.1573811626.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:49 -0800 (PST)
+Message-Id: <f87ca0228e16cff133e063d24f19fd96622b74b1.1573811626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:31 +0000
-Subject: [PATCH v4 06/21] remote: move doc to remote.h and refspec.h
+Date:   Fri, 15 Nov 2019 09:53:27 +0000
+Subject: [PATCH v4 02/21] dir: move doc to dir.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,326 +72,327 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-remote.txt to
-remote.h and refspec.h as it's easier for the developers to find the usage
-information beside the code instead of looking for it in another doc file.
+Move the documentation from Documentation/technical/api-directory-listing.txt
+to dir.h as it's easier for the developers to find the usage information
+beside the code instead of looking for it in another doc file.
 
-N.B. The doc for both push and fetch members of the remote struct aren't
-moved because they are out of date, as the members were changed from arrays
-of rspecs to struct refspec 2 years ago.
-
-Also documentation/technical/api-remote.txt is removed because the
-information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header file.
+Also documentation/technical/api-directory-listing.txt is removed because
+the information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header files.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-remote.txt | 127 -------------------------
- refspec.h                              |  16 ++++
- remote.h                               |  57 ++++++++++-
- 3 files changed, 70 insertions(+), 130 deletions(-)
- delete mode 100644 Documentation/technical/api-remote.txt
+ .../technical/api-directory-listing.txt       | 130 ------------------
+ dir.c                                         |   2 -
+ dir.h                                         | 119 +++++++++++++++-
+ 3 files changed, 114 insertions(+), 137 deletions(-)
+ delete mode 100644 Documentation/technical/api-directory-listing.txt
 
-diff --git a/Documentation/technical/api-remote.txt b/Documentation/technical/api-remote.txt
+diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
 deleted file mode 100644
-index f10941b2e8..0000000000
---- a/Documentation/technical/api-remote.txt
+index 76b6e4f71b..0000000000
+--- a/Documentation/technical/api-directory-listing.txt
 +++ /dev/null
-@@ -1,127 +0,0 @@
--Remotes configuration API
--=========================
+@@ -1,130 +0,0 @@
+-directory listing API
+-=====================
 -
--The API in remote.h gives access to the configuration related to
--remotes. It handles all three configuration mechanisms historically
--and currently used by Git, and presents the information in a uniform
--fashion. Note that the code also handles plain URLs without any
--configuration, giving them just the default information.
+-The directory listing API is used to enumerate paths in the work tree,
+-optionally taking `.git/info/exclude` and `.gitignore` files per
+-directory into account.
 -
--struct remote
---------------
--
--`name`::
--
--	The user's nickname for the remote
--
--`url`::
--
--	An array of all of the url_nr URLs configured for the remote
--
--`pushurl`::
--
--	An array of all of the pushurl_nr push URLs configured for the remote
--
--`push`::
--
--	 An array of refspecs configured for pushing, with
--	 push_refspec being the literal strings, and push_refspec_nr
--	 being the quantity.
--
--`fetch`::
--
--	An array of refspecs configured for fetching, with
--	fetch_refspec being the literal strings, and fetch_refspec_nr
--	being the quantity.
--
--`fetch_tags`::
--
--	The setting for whether to fetch tags (as a separate rule from
--	the configured refspecs); -1 means never to fetch tags, 0
--	means to auto-follow tags based on the default heuristic, 1
--	means to always auto-follow tags, and 2 means to fetch all
--	tags.
--
--`receivepack`, `uploadpack`::
--
--	The configured helper programs to run on the remote side, for
--	Git-native protocols.
--
--`http_proxy`::
--
--	The proxy to use for curl (http, https, ftp, etc.) URLs.
--
--`http_proxy_authmethod`::
--
--	The method used for authenticating against `http_proxy`.
--
--struct remotes can be found by name with remote_get(), and iterated
--through with for_each_remote(). remote_get(NULL) will return the
--default remote, given the current branch and configuration.
--
--struct refspec
+-Data structure
 ---------------
 -
--A struct refspec holds the parsed interpretation of a refspec.  If it
--will force updates (starts with a '+'), force is true.  If it is a
--pattern (sides end with '*') pattern is true.  src and dest are the
--two sides (including '*' characters if present); if there is only one
--side, it is src, and dst is NULL; if sides exist but are empty (i.e.,
--the refspec either starts or ends with ':'), the corresponding side is
--"".
+-`struct dir_struct` structure is used to pass directory traversal
+-options to the library and to record the paths discovered.  A single
+-`struct dir_struct` is used regardless of whether or not the traversal
+-recursively descends into subdirectories.
 -
--An array of strings can be parsed into an array of struct refspecs
--using parse_fetch_refspec() or parse_push_refspec().
+-The notable options are:
 -
--remote_find_tracking(), given a remote and a struct refspec with
--either src or dst filled out, will fill out the other such that the
--result is in the "fetch" specification for the remote (note that this
--evaluates patterns and returns a single result).
+-`exclude_per_dir`::
 -
--struct branch
---------------
+-	The name of the file to be read in each directory for excluded
+-	files (typically `.gitignore`).
 -
--Note that this may end up moving to branch.h
+-`flags`::
 -
--struct branch holds the configuration for a branch. It can be looked
--up with branch_get(name) for "refs/heads/{name}", or with
--branch_get(NULL) for HEAD.
+-	A bit-field of options:
 -
--It contains:
+-`DIR_SHOW_IGNORED`:::
 -
--`name`::
+-	Return just ignored files in `entries[]`, not untracked
+-	files. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED_TOO`.
 -
--	The short name of the branch.
+-`DIR_SHOW_IGNORED_TOO`:::
 -
--`refname`::
+-	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
+-	`ignored[]` in addition to untracked files in
+-	`entries[]`. This flag is mutually exclusive with
+-	`DIR_SHOW_IGNORED`.
 -
--	The full path for the branch ref.
+-`DIR_KEEP_UNTRACKED_CONTENTS`:::
 -
--`remote_name`::
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
+-	untracked contents of untracked directories are also returned in
+-	`entries[]`.
 -
--	The name of the remote listed in the configuration.
+-`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
 -
--`merge_name`::
+-	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
+-	this is set, returns ignored files and directories that match
+-	an exclude pattern. If a directory matches an exclude pattern,
+-	then the directory is returned and the contained paths are
+-	not. A directory that does not match an exclude pattern will
+-	not be returned even if all of its contents are ignored. In
+-	this case, the contents are returned as individual entries.
+-+
+-If this is set, files and directories that explicitly match an ignore
+-pattern are reported. Implicitly ignored directories (directories that
+-do not match an ignore pattern, but whose contents are all ignored)
+-are not reported, instead all of the contents are reported.
 -
--	An array of the "merge" lines in the configuration.
+-`DIR_COLLECT_IGNORED`:::
 -
--`merge`::
+-	Special mode for git-add. Return ignored files in `ignored[]` and
+-	untracked files in `entries[]`. Only returns ignored files that match
+-	pathspec exactly (no wildcards). Does not recurse into ignored
+-	directories.
 -
--	An array of the struct refspecs used for the merge lines. That
--	is, merge[i]->dst is a local tracking ref which should be
--	merged into this branch by default.
+-`DIR_SHOW_OTHER_DIRECTORIES`:::
 -
--`merge_nr`::
+-	Include a directory that is not tracked.
 -
--	The number of merge configurations
+-`DIR_HIDE_EMPTY_DIRECTORIES`:::
 -
--branch_has_merge_config() returns true if the given branch has merge
--configuration given.
+-	Do not include a directory that is not tracked and is empty.
 -
--Other stuff
-------------
+-`DIR_NO_GITLINKS`:::
 -
--There is other stuff in remote.h that is related, in general, to the
--process of interacting with remotes.
+-	If set, recurse into a directory that looks like a Git
+-	directory.  Otherwise it is shown as a directory.
 -
--(Daniel Barkalow)
-diff --git a/refspec.h b/refspec.h
-index 9b6e64a824..3f2bd4aaa5 100644
---- a/refspec.h
-+++ b/refspec.h
-@@ -20,6 +20,22 @@ struct refspec_item {
- #define REFSPEC_INIT_FETCH { .fetch = REFSPEC_FETCH }
- #define REFSPEC_INIT_PUSH { .fetch = REFSPEC_PUSH }
+-The result of the enumeration is left in these fields:
+-
+-`entries[]`::
+-
+-	An array of `struct dir_entry`, each element of which describes
+-	a path.
+-
+-`nr`::
+-
+-	The number of members in `entries[]` array.
+-
+-`alloc`::
+-
+-	Internal use; keeps track of allocation of `entries[]` array.
+-
+-`ignored[]`::
+-
+-	An array of `struct dir_entry`, used for ignored paths with the
+-	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
+-
+-`ignored_nr`::
+-
+-	The number of members in `ignored[]` array.
+-
+-Calling sequence
+-----------------
+-
+-Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
+-marked. If you to exclude files, make sure you have loaded index first.
+-
+-* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
+-  sizeof(dir))`.
+-
+-* To add single exclude pattern, call `add_pattern_list()` and then
+-  `add_pattern()`.
+-
+-* To add patterns from a file (e.g. `.git/info/exclude`), call
+-  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
+-  short-hand function `setup_standard_excludes()` can be used to set
+-  up the standard set of exclude settings.
+-
+-* Set options described in the Data Structure section above.
+-
+-* Call `read_directory()`.
+-
+-* Use `dir.entries[]`.
+-
+-* Call `clear_directory()` when none of the contained elements are no longer in use.
+-
+-(JC)
+diff --git a/dir.c b/dir.c
+index 61f559f980..12d454b89d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2,8 +2,6 @@
+  * This handles recursive filename detection with exclude
+  * files, index knowledge etc..
+  *
+- * See Documentation/technical/api-directory-listing.txt
+- *
+  * Copyright (C) Linus Torvalds, 2005-2006
+  *		 Junio Hamano, 2005-2006
+  */
+diff --git a/dir.h b/dir.h
+index 2fbdef014f..c575f941dc 100644
+--- a/dir.h
++++ b/dir.h
+@@ -1,11 +1,44 @@
+ #ifndef DIR_H
+ #define DIR_H
+ 
+-/* See Documentation/technical/api-directory-listing.txt */
+-
+ #include "cache.h"
+ #include "strbuf.h"
  
 +/**
-+ * A struct refspec holds the parsed interpretation of a refspec.  If it will
-+ * force updates (starts with a '+'), force is true.  If it is a pattern
-+ * (sides end with '*') pattern is true.  src and dest are the two sides
-+ * (including '*' characters if present); if there is only one side, it is src,
-+ * and dst is NULL; if sides exist but are empty (i.e., the refspec either
-+ * starts or ends with ':'), the corresponding side is "".
-+ *
-+ * An array of strings can be parsed into an array of struct refspecs using
-+ * parse_fetch_refspec() or parse_push_refspec().
-+ *
-+ * remote_find_tracking(), given a remote and a struct refspec with either src
-+ * or dst filled out, will fill out the other such that the result is in the
-+ * "fetch" specification for the remote (note that this evaluates patterns and
-+ * returns a single result).
++ * The directory listing API is used to enumerate paths in the work tree,
++ * optionally taking `.git/info/exclude` and `.gitignore` files per directory
++ * into account.
 + */
- struct refspec {
- 	struct refspec_item *items;
- 	int alloc;
-diff --git a/remote.h b/remote.h
-index 0e1d2b245b..b134cc21be 100644
---- a/remote.h
-+++ b/remote.h
-@@ -6,6 +6,14 @@
- #include "hashmap.h"
- #include "refspec.h"
- 
++
 +/**
-+ * The API gives access to the configuration related to remotes. It handles
-+ * all three configuration mechanisms historically and currently used by Git,
-+ * and presents the information in a uniform fashion. Note that the code also
-+ * handles plain URLs without any configuration, giving them just the default
-+ * information.
++ * Calling sequence
++ * ----------------
++ *
++ * Note: The index may be checked for .gitignore files that are
++ * CE_SKIP_WORKTREE marked. If you want to exclude files, make sure you have
++ * loaded the index first.
++ *
++ * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
++ * sizeof(dir))`.
++ *
++ * - To add single exclude pattern, call `add_pattern_list()` and then
++ *   `add_pattern()`.
++ *
++ * - To add patterns from a file (e.g. `.git/info/exclude`), call
++ *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
++ *   short-hand function `setup_standard_excludes()` can be used to set
++ *   up the standard set of exclude settings.
++ *
++ * - Set options described in the Data Structure section above.
++ *
++ * - Call `read_directory()`.
++ *
++ * - Use `dir.entries[]`.
++ *
++ * - Call `clear_directory()` when none of the contained elements are no longer in use.
++ *
 + */
 +
- enum {
- 	REMOTE_UNCONFIGURED = 0,
- 	REMOTE_CONFIG,
-@@ -16,16 +24,22 @@ enum {
- struct remote {
- 	struct hashmap_entry ent;
- 
-+	/* The user's nickname for the remote */
- 	const char *name;
-+
- 	int origin, configured_in_repo;
- 
- 	const char *foreign_vcs;
- 
-+	/* An array of all of the url_nr URLs configured for the remote */
- 	const char **url;
-+
- 	int url_nr;
- 	int url_alloc;
- 
-+	/* An array of all of the pushurl_nr push URLs configured for the remote */
- 	const char **pushurl;
-+
- 	int pushurl_nr;
- 	int pushurl_alloc;
- 
-@@ -34,32 +48,47 @@ struct remote {
- 	struct refspec fetch;
- 
- 	/*
-+	 * The setting for whether to fetch tags (as a separate rule from the
-+	 * configured refspecs);
- 	 * -1 to never fetch tags
- 	 * 0 to auto-follow tags on heuristic (default)
- 	 * 1 to always auto-follow tags
- 	 * 2 to always fetch tags
- 	 */
- 	int fetch_tags;
-+
- 	int skip_default_update;
- 	int mirror;
- 	int prune;
- 	int prune_tags;
- 
-+	/**
-+	 * The configured helper programs to run on the remote side, for
-+	 * Git-native protocols.
-+	 */
- 	const char *receivepack;
- 	const char *uploadpack;
- 
--	/*
--	 * for curl remotes only
--	 */
-+	/* The proxy to use for curl (http, https, ftp, etc.) URLs. */
- 	char *http_proxy;
-+
-+	/* The method used for authenticating against `http_proxy`. */
- 	char *http_proxy_authmethod;
+ struct dir_entry {
+ 	unsigned int len;
+ 	char name[FLEX_ARRAY]; /* more */
+@@ -144,25 +177,101 @@ struct untracked_cache {
+ 	unsigned int use_fsmonitor : 1;
  };
  
 +/**
-+ * struct remotes can be found by name with remote_get().
-+ * remote_get(NULL) will return the default remote, given the current branch
-+ * and configuration.
++ * structure is used to pass directory traversal options to the library and to
++ * record the paths discovered. A single `struct dir_struct` is used regardless
++ * of whether or not the traversal recursively descends into subdirectories.
 + */
- struct remote *remote_get(const char *name);
+ struct dir_struct {
+-	int nr, alloc;
+-	int ignored_nr, ignored_alloc;
 +
- struct remote *pushremote_get(const char *name);
- int remote_is_configured(struct remote *remote, int in_repo);
- 
- typedef int each_remote_fn(struct remote *remote, void *priv);
++	/* The number of members in `entries[]` array. */
++	int nr;
 +
-+/* iterate through struct remotes */
- int for_each_remote(each_remote_fn fn, void *priv);
- 
- int remote_has_url(struct remote *remote, const char *url);
-@@ -194,16 +223,36 @@ struct ref *get_remote_ref(const struct ref *remote_refs, const char *name);
-  */
- int remote_find_tracking(struct remote *remote, struct refspec_item *refspec);
- 
-+/**
-+ * struct branch holds the configuration for a branch. It can be looked up with
-+ * branch_get(name) for "refs/heads/{name}", or with branch_get(NULL) for HEAD.
-+ */
- struct branch {
++	/* Internal use; keeps track of allocation of `entries[]` array.*/
++	int alloc;
 +
-+	/* The short name of the branch. */
- 	const char *name;
++	/* The number of members in `ignored[]` array. */
++	int ignored_nr;
 +
-+	/* The full path for the branch ref. */
- 	const char *refname;
- 
-+	/* The name of the remote listed in the configuration. */
- 	const char *remote_name;
++	int ignored_alloc;
 +
- 	const char *pushremote_name;
- 
-+	/* An array of the "merge" lines in the configuration. */
- 	const char **merge_name;
++	/* bit-field of options */
+ 	enum {
++
++		/**
++		 * Return just ignored files in `entries[]`, not untracked files.
++		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
++		 */
+ 		DIR_SHOW_IGNORED = 1<<0,
++
++		/* Include a directory that is not tracked. */
+ 		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
++
++		/* Do not include a directory that is not tracked and is empty. */
+ 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
++
++		/**
++		 * If set, recurse into a directory that looks like a Git directory.
++		 * Otherwise it is shown as a directory.
++		 */
+ 		DIR_NO_GITLINKS = 1<<3,
++
++		/**
++		 * Special mode for git-add. Return ignored files in `ignored[]` and
++		 * untracked files in `entries[]`. Only returns ignored files that match
++		 * pathspec exactly (no wildcards). Does not recurse into ignored
++		 * directories.
++		 */
+ 		DIR_COLLECT_IGNORED = 1<<4,
++
++		/**
++		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
++		 * `ignored[]` in addition to untracked files in `entries[]`.
++		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
++		 */
+ 		DIR_SHOW_IGNORED_TOO = 1<<5,
++
+ 		DIR_COLLECT_KILLED_ONLY = 1<<6,
++
++		/**
++		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++		 * set, the untracked contents of untracked directories are also
++		 * returned in `entries[]`.
++		 */
+ 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
++
++		/**
++		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
++		 * set, returns ignored files and directories that match an exclude
++		 * pattern. If a directory matches an exclude pattern, then the
++		 * directory is returned and the contained paths are not. A directory
++		 * that does not match an exclude pattern will not be returned even if
++		 * all of its contents are ignored. In this case, the contents are
++		 * returned as individual entries.
++		 *
++		 * If this is set, files and directories that explicitly match an ignore
++		 * pattern are reported. Implicitly ignored directories (directories that
++		 * do not match an ignore pattern, but whose contents are all ignored)
++		 * are not reported, instead all of the contents are reported.
++		 */
+ 		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
++
+ 		DIR_SKIP_NESTED_GIT = 1<<9
+ 	} flags;
++
++	/* An array of `struct dir_entry`, each element of which describes a path. */
+ 	struct dir_entry **entries;
 +
 +	/**
-+	 * An array of the struct refspecs used for the merge lines. That is,
-+	 * merge[i]->dst is a local tracking ref which should be merged into this
-+	 * branch by default.
++	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
++	 * `DIR_COLLECT_IGNORED` flags.
 +	 */
- 	struct refspec_item **merge;
-+
-+	/* The number of merge configurations */
- 	int merge_nr;
-+
- 	int merge_alloc;
+ 	struct dir_entry **ignored;
  
- 	const char *push_tracking_ref;
-@@ -215,7 +264,9 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
- const char *remote_ref_for_branch(struct branch *branch, int for_push,
- 				  int *explicit);
+-	/* Exclude info */
++	/**
++	 * The name of the file to be read in each directory for excluded files
++	 * (typically `.gitignore`).
++	 */
+ 	const char *exclude_per_dir;
  
-+/* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-+
- int branch_merge_matches(struct branch *, int n, const char *);
- 
- /**
+ 	/*
 -- 
 gitgitgadget
 
