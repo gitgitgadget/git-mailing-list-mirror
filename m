@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 064C71F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 01:01:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D968F1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 01:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727415AbfKOBBV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 20:01:21 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:38458 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727403AbfKOBBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 20:01:20 -0500
-Received: by mail-pl1-f195.google.com with SMTP id w8so3487458plq.5
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 17:01:20 -0800 (PST)
+        id S1727419AbfKOBBX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 20:01:23 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:44519 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727403AbfKOBBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 20:01:22 -0500
+Received: by mail-pg1-f194.google.com with SMTP id f19so4876763pgk.11
+        for <git@vger.kernel.org>; Thu, 14 Nov 2019 17:01:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=XDaEV66oyC8M3jsTFMc8uV+NTrs+JXbrreg96Pzbs2Q=;
-        b=MYtTFlcEk7M/YpyAV/UhT9D4K58fqBTfpKXRHwQHt2TZcLqTdg1rPtnUlOMvnnoQl9
-         Asa83wJMwlviGUoDcD8lg4TKpXfrBEr2reqiVF3CWuwsOrOHyFj3I0tsVaRzB8cmf2Wk
-         hTEBy7tknJ9u+FaXyfk2K0Jk2oK+akZZ+44siR2IYa3YjPU0FS6IUTJaqCL8h5dg5c/b
-         TW4ZiRoyrxcdZc1MWwtnbYztZ4FMGe79J9hwNDri6gsO3jU+pXUuCRiVL7n7UnfFmEKI
-         /Dtl8hBG5Z+ZlGcZOo2erscBFiRvD/RNY6nVuthD3+YRuFBY13Hr7TMEr6EjMmq5XCjx
-         LmyA==
+        bh=csO+CsC/WW6HjQhBgusXd9iivYBxHPC1TaV716GdHAg=;
+        b=bEpeUWIQObfgSEiAvWQblRGbrE0pfhGSObfJpLswjfzBa+pr9ooEFVh5aWrMwYe97N
+         D1S2v3y+TyXRx4Pslunub2FpSh4ZYSUKQfTIXQhozgUhwFvL1Oz9GfoungVnfE1wluDb
+         EAWHASSx5QuYqXW7KwJz5WIjEdSkHOgDTtvEugrx5xm48XTAJKRb63vnJWai7BpUDrdX
+         1Dc7ir6WIoXOIMMF1FIvjuelyd0zo2ETSpTBpjp2g92BsX6VYlUbRep/dqlytcVGBogM
+         SAToSizDDbNu01W/UGdL4aSuIokb01ojYfQzuEN952z0fVGMSMN2VYWeoJ10edlVgA9g
+         ZGQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XDaEV66oyC8M3jsTFMc8uV+NTrs+JXbrreg96Pzbs2Q=;
-        b=O2/sjwd4ccFf5M9yZRJTbJpVgotCc9pW12/RXLwU5hI2YHD/tA3jHA5O8xRFZDsYAd
-         VG+Lmop85S/E+dN6DPYpegYHnVcqw8kWaLa3TKFQnnuSrBmyH/X13Fr1yfI+jQlgWhdb
-         +ud9LhipqHGHVwgD2tU+twbqiUK7DSnj2nbdSBYDl/pq9irNFn0kdRmwa6WSaPa58obb
-         CvucPnkfxofl47EP0TNT7w9YCgaiCI+Ghd/L74eDa5vZ5fys+hlMDaHDyCEaUVgal7sR
-         SRwwvnlL/X2HOamt3y0n/TTNmghIP535NlN+VRN/g2/YQ/XSpuCPe/7yX5U09z68m8jK
-         +PVQ==
-X-Gm-Message-State: APjAAAXbN+tlrbgoLPSnSOhkXMuvN7glNucQMWWhAM1F9WLjeFfljoed
-        dabPIY7CcJmrIAfaIpEWl+Bt3TXg
-X-Google-Smtp-Source: APXvYqzNBGItC3Fe3yLq7PTxb+naoswJQC8d3ykuhp0X9CSaA+UdBsnbZCfjgUbmDbXY2Avmih7USg==
-X-Received: by 2002:a17:90a:9b87:: with SMTP id g7mr16057315pjp.64.1573779679529;
-        Thu, 14 Nov 2019 17:01:19 -0800 (PST)
+        bh=csO+CsC/WW6HjQhBgusXd9iivYBxHPC1TaV716GdHAg=;
+        b=M2SUEWXuefs2NNKVkvRaJm7E5EdmZP61p+Qp1kMmkIuEKzR2+kGfepVojQ/w/2I5G/
+         rw6fHLRFfxfcbX6P6VrQhuOTy7UiMLG86CsTo8uCP8z12z6CJhZXFV29pLAkoFtQGomq
+         GD3wI/0gGE0Eec1oGgH660FhwCSJZ82hSuijLniJJokdWcFU0srmcy1bfKZm55ikOn47
+         O9ZAWbbMuw+GTogL5ug+Az1q6dd/m5PR7Sxg7uXOsPVVd5pd5spLDva0ao5/Eu19HgAr
+         EIuQjGgtABSYOKhIbhfF6U5QeAPO7M3QbMAudSYvPexz+3swsZPZHgVbhRuQKdidLXE1
+         XbxA==
+X-Gm-Message-State: APjAAAXbFNoUoMyTHz4RvRIOS0KQgWoPAxBgLQQRAbwsr8CLCwCIv05B
+        xMXZr5zguc0S2h1g7b29VTksnGD7
+X-Google-Smtp-Source: APXvYqyOHLXYNx2Xd4aSvFVUzIZhPMYs7RwYpbIc5AC19va5W/HLKAjLyIoiSGMtGX4wKPNBHvWvNA==
+X-Received: by 2002:a63:7c18:: with SMTP id x24mr1952422pgc.390.1573779681661;
+        Thu, 14 Nov 2019 17:01:21 -0800 (PST)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id 125sm7955717pfu.136.2019.11.14.17.01.18
+        by smtp.gmail.com with ESMTPSA id v14sm7546114pfe.94.2019.11.14.17.01.21
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 17:01:19 -0800 (PST)
-Date:   Thu, 14 Nov 2019 17:01:17 -0800
+        Thu, 14 Nov 2019 17:01:21 -0800 (PST)
+Date:   Thu, 14 Nov 2019 17:01:19 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 20/27] t7700: stop losing return codes of git commands
-Message-ID: <d9dcb23662bd09bb1325f20478475a8263e4a21b.1573779465.git.liu.denton@gmail.com>
+Subject: [PATCH 21/27] t: define test_grep_return_success()
+Message-ID: <3f79d23b40c0586d0351f4d721097be4f7ba26b8.1573779465.git.liu.denton@gmail.com>
 References: <cover.1573779465.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,171 +67,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a pipe, only the return code of the last command is used. Thus, all
-other commands will have their return codes masked. Rewrite pipes so
-that there are no git commands upstream so that we will know if a
-command fails.
+In a future patch, we plan on running tests with `set -o pipefail`.
+However, since grep can return failure in the case that no lines are
+matched, this can trigger a failure in a pipe in the case where grep is
+being used as a filter.
+
+Define the test_grep_return_success() function which acts as a wrapper
+around grep but always returns 0 so that it can be used in the situation
+described above.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t7700-repack.sh | 64 ++++++++++++++++++++++++++++-------------------
- 1 file changed, 38 insertions(+), 26 deletions(-)
+ t/test-lib-functions.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 1d14ddcbdb..ff50722e26 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -18,14 +18,13 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
- 	git commit -m initial_commit &&
- 	# Create two packs
- 	# The first pack will contain all of the objects except one
--	git rev-list --objects --all | grep -v file2 |
--		git pack-objects pack &&
-+	git rev-list --objects --all >objs &&
-+	grep -v file2 objs | git pack-objects pack &&
- 	# The second pack will contain the excluded object
--	packsha1=$(git rev-list --objects --all | grep file2 |
--		git pack-objects pack) &&
-+	packsha1=$(grep file2 objs | git pack-objects pack) &&
- 	>pack-$packsha1.keep &&
--	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
--		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
-+	git verify-pack -v pack-$packsha1.idx >packlist &&
-+	objsha1=$(head -n 1 packlist | sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
- 	mv pack-* .git/objects/pack/ &&
- 	git repack -A -d -l &&
- 	git prune-packed &&
-@@ -33,7 +32,8 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
- 	do
- 		idx=$(basename $p)
- 		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
-+		git verify-pack -v $p >packlist || return $?
-+		if egrep "^$objsha1" packlist
- 		then
- 			found_duplicate_object=1
- 			echo "DUPLICATE OBJECT FOUND"
-@@ -51,7 +51,8 @@ test_expect_success 'writing bitmaps via command-line can duplicate .keep object
- 	do
- 		idx=$(basename $p)
- 		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
-+		git verify-pack -v $p >packlist || return $?
-+		if egrep "^$objsha1" packlist
- 		then
- 			found_duplicate_object=1
- 			echo "DUPLICATE OBJECT FOUND"
-@@ -69,7 +70,8 @@ test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
- 	do
- 		idx=$(basename $p)
- 		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
-+		git verify-pack -v $p >packlist || return $?
-+		if egrep "^$objsha1" packlist
- 		then
- 			found_duplicate_object=1
- 			echo "DUPLICATE OBJECT FOUND"
-@@ -91,7 +93,8 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
- 	git prune-packed &&
- 	for p in .git/objects/pack/*.idx
- 	do
--		if git verify-pack -v $p | egrep "^$objsha1"
-+		git verify-pack -v $p >packlist || return $?
-+		if egrep "^$objsha1" packlist
- 		then
- 			found_duplicate_object=1
- 			echo "DUPLICATE OBJECT FOUND"
-@@ -109,15 +112,18 @@ test_expect_success 'packed obs in alt ODB are repacked even when local repo is
- 	test_path_is_file "$myidx" &&
- 	for p in alt_objects/pack/*.idx
- 	do
--		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
--	done | while read sha1 rest
-+		git verify-pack -v $p >packlist || return $?
-+		sed -n -e "/^[0-9a-f]\{40\}/p"
-+	done >packs &&
-+	git verify-pack -v $myidx >mypacklist &&
-+	while read sha1 rest
- 	do
--		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
-+		if ! grep "^$sha1" mypacklist
- 		then
- 			echo "Missing object in local pack: $sha1"
- 			return 1
- 		fi
--	done
-+	done <packs
- '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index b299ecc326..dddc4cc3b1 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -990,6 +990,11 @@ test_i18ngrep () {
+ 	return 1
+ }
  
- test_expect_success 'packed obs in alt ODB are repacked when local repo has packs' '
-@@ -132,15 +138,18 @@ test_expect_success 'packed obs in alt ODB are repacked when local repo has pack
- 	test_path_is_file "$myidx" &&
- 	for p in alt_objects/pack/*.idx
- 	do
--		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
--	done | while read sha1 rest
-+		git verify-pack -v $p >packlist || return $?
-+		sed -n -e "/^[0-9a-f]\{40\}/p" packlist
-+	done >packs &&
-+	git verify-pack -v $myidx >mypacklist &&
-+	while read sha1 rest
- 	do
--		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
-+		if ! grep "^$sha1" mypacklist
- 		then
- 			echo "Missing object in local pack: $sha1"
- 			return 1
- 		fi
--	done
-+	done <packs
- '
- 
- test_expect_success 'packed obs in alternate ODB kept pack are repacked' '
-@@ -160,15 +169,18 @@ test_expect_success 'packed obs in alternate ODB kept pack are repacked' '
- 	test_path_is_file "$myidx" &&
- 	for p in alt_objects/pack/*.idx
- 	do
--		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
--	done | while read sha1 rest
-+		git verify-pack -v $p >packlist || return $?
-+		sed -n -e "/^[0-9a-f]\{40\}/p" packlist
-+	done >packs &&
-+	git verify-pack -v $myidx >mypacklist &&
-+	while read sha1 rest
- 	do
--		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
-+		if ! grep "^$sha1" mypacklist
- 		then
- 			echo "Missing object in local pack: $sha1"
- 			return 1
- 		fi
--	done
-+	done <packs
- '
- 
- test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
-@@ -184,8 +196,8 @@ test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
- 	    --unpack-unreachable </dev/null pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
--	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		egrep "^$csha1 " | sort | uniq | wc -l) &&
-+	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
-+	! egrep "^$csha1 " packlist &&
- 	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $csha1
- '
-@@ -201,8 +213,8 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
- 	    --unpack-unreachable </dev/null pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
--	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		egrep "^$csha1 " | sort | uniq | wc -l) &&
-+	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
-+	! egrep "^$csha1 " &&
- 	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $csha1
- '
++# Calls grep but returns zero even if no matching lines are found.
++test_grep_return_success () {
++	grep "$@" || :
++}
++
+ # Call any command "$@" but be more verbose about its
+ # failure. This is handy for commands like "test" which do
+ # not output anything when they fail.
 -- 
 2.24.0.399.gf8350c9437
 
