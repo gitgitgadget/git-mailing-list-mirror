@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9D911F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 12:36:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 997301F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 12:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727641AbfKOMga (ORCPT <rfc822;e@80x24.org>);
+        id S1727643AbfKOMgc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 07:36:32 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50775 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727621AbfKOMga (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 15 Nov 2019 07:36:30 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33804 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727272AbfKOMg3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 07:36:29 -0500
-Received: by mail-wr1-f67.google.com with SMTP id e6so10845015wrw.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 04:36:27 -0800 (PST)
+Received: by mail-wm1-f68.google.com with SMTP id l17so9497253wmh.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 04:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=WYyMXuw7hO4USLhsFbwckPai4JubVXMA6ECZykRTltk=;
-        b=CIOUd/8GikrRznFeB3crGBnUbePP/Pc1NmiieMLz0kpCKM5O/U6J1Q5GybnX8U6aBk
-         2RKyK3oruPo45WOb3+/SB9SDT2sQg6Q+VSKk06jfJxq1JldRX9Cx+6xMaECmieBwlCcI
-         ViLIM1qV+BJQCFprlntY7TKN11Ex7fEfN7TAilMnRlE4BCA5zVZIQidYBV8PDNXoO/56
-         iFMaWq9uEvjArYCQekpcTLr7zqbJqJ2zXdiXNOKVWv50WSagxHWSQ1TlgC1w2m5EmIAi
-         A4+ihAHkurt5Uwe/eInV3XfLQ/wOH9J/g8QsYI/lOFyf1i/m9XAyBhK1a2DHNAKeJbIT
-         Yhgg==
+        bh=eVaQ1Y6X4IxTHV6yN1mrAR/Srf8HR3WZcCUPhD+bVSY=;
+        b=eq4u0ygjGn0mmjOyrvQJp1+Hhc8k2vqduXo5FCgsrVhvsEi7rV/eHU/JhzwtK510yB
+         B6k7VEgL7MM0ZM1awImtnTrx+XZXRILufZVqf+U24cwvo9bDppYQMYN60rv9RzPxd3p+
+         iUNXUHKJNyyOm+EILFNvbMXF9TOOrfiA/k67d9JdEq27S115ilfW5GJoMSvhA3AcGmSa
+         JGaS+IeMd5Z7jy0UwTef9tRvRXKcsPhB/SvXEkjVlCH0xIIoya+Xqg2DkxlbKyjTjdnP
+         S6S5cfeDYjdsMkCVU9hNieKBi8RUwUeE0qdoKRO2wtNcRNt4U/ma4yIy09MxlQPXhwVJ
+         XAAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=WYyMXuw7hO4USLhsFbwckPai4JubVXMA6ECZykRTltk=;
-        b=Ggv+I0rM39GbrVPgYmsqUIUiG9o/29KaWOCjnZSBDghUtH5B8bjK7At6TnY4RKjaq8
-         sSgaFDibmFxlHzD7QwBoAdlLE7P8f151UeMhGXyxokLLl4xyQuGvei+SfXbpihQGV7qo
-         l+GqG2RwCY68+GpzlVqiBNo/vZc02dOPEffdqwlFj20CVbowMa0ppsDp7ABigmJ2rRc0
-         fXj62CwvASy8BFvdRcrp0JBNYqEs18mTqII14JxswCZhSKbN19mq3M8o8UbCEsMu1DTG
-         PdUAEcKbFPHpfdatQJPfDPLndVY8itWzrk/I/VNWaF02sN9GA8/Or6U7C0lovHnpRiRi
-         HdKA==
-X-Gm-Message-State: APjAAAXQ3KHmIr03E/aQ+wGoj4Goeqz5i8cXSFFP1f+SEXuwHwv0rmId
-        ljBKRaqICVZ7fvFhqy/FlHghICCE
-X-Google-Smtp-Source: APXvYqxyvnzk0FCdg0gOxz/n40Qlb+8+hAzJHauZdQpEU+BoFRgGPxcW9N0nxlRW0OhbzPWg9VWD5Q==
-X-Received: by 2002:a05:6000:1605:: with SMTP id u5mr14300293wrb.252.1573821386226;
-        Fri, 15 Nov 2019 04:36:26 -0800 (PST)
+        bh=eVaQ1Y6X4IxTHV6yN1mrAR/Srf8HR3WZcCUPhD+bVSY=;
+        b=cPKZtyKqhPKTZogj0pUoCn1PpF402yoxiEAg2hvRla/W7akst43myuG0Qlf2ob1EmB
+         4wPqkh56tBRKhvr85hjVrQgisjWyQHSGp9sz+wP3ltMFQnXwe7lu7j+w53TYBRN++4tk
+         bCKMBMgUrUUmKh3b6GIrkACrD800TJl1ZXi3SoKtZGAM6ZwExy3Aj0jYnOLZmemvjFiN
+         Zp/L3vb+OLYxtfcnN+qjNAYJz6cafP79qii8vjjoD2krjSdbMIeKycxxdonf6UNPSrUH
+         70j8zq8nMEPtHdQd0Otu/Bpazx++9rM/WzqjyRJK37EnyS0HO04CmSyRAjsNPd9GekTq
+         0NBg==
+X-Gm-Message-State: APjAAAXIzDyMRW8+lgsCeM9Oq0FUL42UDpj4I/fPh/Lj+BIMk4PZfJxF
+        41esuzNCWT72jcjCMONhxMy17rfV
+X-Google-Smtp-Source: APXvYqyqtNO8zhXja4g89fjlA5gIpsgq4pZAEahEKThAKjMtZ5mXFJTJ/dyH2PUEgF2V6R0H9KFiHQ==
+X-Received: by 2002:a05:600c:214c:: with SMTP id v12mr14111169wml.124.1573821387804;
+        Fri, 15 Nov 2019 04:36:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i13sm10829932wrp.12.2019.11.15.04.36.25
+        by smtp.gmail.com with ESMTPSA id x9sm10891366wru.32.2019.11.15.04.36.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 04:36:25 -0800 (PST)
-Message-Id: <5c31bbd24ab937f5906f967f007d5bcd305779e2.1573821382.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 04:36:27 -0800 (PST)
+Message-Id: <0c8a71e2e861f2ef657a363cc3da198f9062bf95.1573821382.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.171.git.1573821382.gitgitgadget@gmail.com>
 References: <pull.171.git.1573821382.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 12:36:18 +0000
-Subject: [PATCH 4/8] built-in add -i: re-implement `revert` in C
+Date:   Fri, 15 Nov 2019 12:36:20 +0000
+Subject: [PATCH 6/8] built-in add -i: implement the `patch` command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,144 +71,199 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is a relatively straight-forward port from the Perl version, with
-the notable exception that we imitate `git reset -- <paths>` in the C
-version rather than the convoluted `git ls-tree HEAD -- <paths> | git
-update-index --index-info` followed by `git update-index --force-remove
--- <paths>` for the missed ones.
+Well, it is not a full implementation yet. In the interest of making
+this easy to review (and easy to keep bugs out), we still hand off to
+the Perl script to do the actual work.
 
-While at it, we fix the pretty obvious bug where the `revert` command
-offers to unstage files that do not have staged changes.
+The `patch` functionality actually makes up for more than half of the
+1,800+ lines of `git-add--interactive.perl`. It will be ported from Perl
+to C incrementally, later.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 109 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ add-interactive.c | 91 +++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 84 insertions(+), 7 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index b0bda0cd2d..191a10b97d 100644
+index 9ed4455a86..fb8124fc57 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -653,6 +653,114 @@ static int run_update(struct add_i_state *s, const struct pathspec *ps,
+@@ -8,6 +8,7 @@
+ #include "string-list.h"
+ #include "lockfile.h"
+ #include "dir.h"
++#include "run-command.h"
+ 
+ struct add_i_state {
+ 	struct repository *r;
+@@ -374,7 +375,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 
+ struct adddel {
+ 	uintmax_t add, del;
+-	unsigned seen:1, binary:1;
++	unsigned seen:1, unmerged:1, binary:1;
+ };
+ 
+ struct file_item {
+@@ -414,6 +415,7 @@ struct collection_status {
+ 	const char *reference;
+ 
+ 	unsigned skip_unseen:1;
++	size_t unmerged_count, binary_count;
+ 	struct string_list *files;
+ 	struct hashmap file_map;
+ };
+@@ -436,7 +438,7 @@ static void collect_changes_cb(struct diff_queue_struct *q,
+ 		int hash = strhash(name);
+ 		struct pathname_entry *entry;
+ 		struct file_item *file_item;
+-		struct adddel *adddel;
++		struct adddel *adddel, *other_adddel;
+ 
+ 		entry = hashmap_get_entry_from_hash(&s->file_map, hash, name,
+ 						    struct pathname_entry, ent);
+@@ -456,11 +458,21 @@ static void collect_changes_cb(struct diff_queue_struct *q,
+ 		file_item = entry->item;
+ 		adddel = s->phase == FROM_INDEX ?
+ 			&file_item->index : &file_item->worktree;
++		other_adddel = s->phase == FROM_INDEX ?
++			&file_item->worktree : &file_item->index;
+ 		adddel->seen = 1;
+ 		adddel->add = stat.files[i]->added;
+ 		adddel->del = stat.files[i]->deleted;
+-		if (stat.files[i]->is_binary)
++		if (stat.files[i]->is_binary) {
++			if (!other_adddel->binary)
++				s->binary_count++;
+ 			adddel->binary = 1;
++		}
++		if (stat.files[i]->is_unmerged) {
++			if (!other_adddel->unmerged)
++				s->unmerged_count++;
++			adddel->unmerged = 1;
++		}
+ 	}
+ 	free_diffstat_info(&stat);
+ }
+@@ -474,7 +486,9 @@ enum modified_files_filter {
+ static int get_modified_files(struct repository *r,
+ 			      enum modified_files_filter filter,
+ 			      struct prefix_item_list *files,
+-			      const struct pathspec *ps)
++			      const struct pathspec *ps,
++			      size_t *unmerged_count,
++			      size_t *binary_count)
+ {
+ 	struct object_id head_oid;
+ 	int is_initial = !resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+@@ -521,6 +535,10 @@ static int get_modified_files(struct repository *r,
+ 		}
+ 	}
+ 	hashmap_free_entries(&s.file_map, struct pathname_entry, ent);
++	if (unmerged_count)
++		*unmerged_count = s.unmerged_count;
++	if (binary_count)
++		*binary_count = s.binary_count;
+ 
+ 	/* While the diffs are ordered already, we ran *two* diffs... */
+ 	string_list_sort(&files->items);
+@@ -603,7 +621,7 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 		      struct prefix_item_list *files,
+ 		      struct list_and_choose_options *opts)
+ {
+-	if (get_modified_files(s->r, NO_FILTER, files, ps) < 0)
++	if (get_modified_files(s->r, NO_FILTER, files, ps, NULL, NULL) < 0)
+ 		return -1;
+ 
+ 	list(s, &files->items, NULL, &opts->list_opts);
+@@ -620,7 +638,7 @@ static int run_update(struct add_i_state *s, const struct pathspec *ps,
+ 	size_t count, i;
+ 	struct lock_file index_lock;
+ 
+-	if (get_modified_files(s->r, WORKTREE_ONLY, files, ps) < 0)
++	if (get_modified_files(s->r, WORKTREE_ONLY, files, ps, NULL, NULL) < 0)
+ 		return -1;
+ 
+ 	if (!files->items.nr) {
+@@ -699,7 +717,7 @@ static int run_revert(struct add_i_state *s, const struct pathspec *ps,
+ 	struct tree *tree;
+ 	struct diff_options diffopt = { NULL };
+ 
+-	if (get_modified_files(s->r, INDEX_ONLY, files, ps) < 0)
++	if (get_modified_files(s->r, INDEX_ONLY, files, ps, NULL, NULL) < 0)
+ 		return -1;
+ 
+ 	if (!files->items.nr) {
+@@ -851,6 +869,64 @@ static int run_add_untracked(struct add_i_state *s, const struct pathspec *ps,
  	return res;
  }
  
-+static void revert_from_diff(struct diff_queue_struct *q,
-+			     struct diff_options *opt, void *data)
++static int run_patch(struct add_i_state *s, const struct pathspec *ps,
++		     struct prefix_item_list *files,
++		     struct list_and_choose_options *opts)
 +{
-+	int i, add_flags = ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE;
++	int res = 0;
++	ssize_t count, i, j;
++	size_t unmerged_count = 0, binary_count = 0;
 +
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filespec *one = q->queue[i]->one;
-+		struct cache_entry *ce;
-+
-+		if (!(one->mode && !is_null_oid(&one->oid))) {
-+			remove_file_from_index(opt->repo->index, one->path);
-+			printf(_("note: %s is untracked now.\n"), one->path);
-+		} else {
-+			ce = make_cache_entry(opt->repo->index, one->mode,
-+					      &one->oid, one->path, 0, 0);
-+			if (!ce)
-+				die(_("make_cache_entry failed for path '%s'"),
-+				    one->path);
-+			add_index_entry(opt->repo->index, ce, add_flags);
-+		}
-+	}
-+}
-+
-+static int run_revert(struct add_i_state *s, const struct pathspec *ps,
-+		      struct prefix_item_list *files,
-+		      struct list_and_choose_options *opts)
-+{
-+	int res = 0, fd;
-+	size_t count, i, j;
-+
-+	struct object_id oid;
-+	int is_initial = !resolve_ref_unsafe("HEAD", RESOLVE_REF_READING, &oid,
-+					     NULL);
-+	struct lock_file index_lock;
-+	const char **paths;
-+	struct tree *tree;
-+	struct diff_options diffopt = { NULL };
-+
-+	if (get_modified_files(s->r, INDEX_ONLY, files, ps) < 0)
++	if (get_modified_files(s->r, WORKTREE_ONLY, files, ps,
++			       &unmerged_count, &binary_count) < 0)
 +		return -1;
 +
++	if (unmerged_count || binary_count) {
++		for (i = j = 0; i < files->items.nr; i++) {
++			struct file_item *item = files->items.items[i].util;
++
++			if (item->index.binary || item->worktree.binary) {
++				free(item);
++				free(files->items.items[i].string);
++			} else if (item->index.unmerged ||
++				 item->worktree.unmerged) {
++				color_fprintf_ln(stderr, s->error_color,
++						 _("ignoring unmerged: %s"),
++						 files->items.items[i].string);
++				free(item);
++				free(files->items.items[i].string);
++			} else
++				files->items.items[j++] = files->items.items[i];
++		}
++		files->items.nr = j;
++	}
++
 +	if (!files->items.nr) {
-+		putchar('\n');
++		if (binary_count)
++			fprintf(stderr, _("Only binary files changed.\n"));
++		else
++			fprintf(stderr, _("No changes.\n"));
 +		return 0;
 +	}
 +
-+	opts->prompt = N_("Revert");
++	opts->prompt = N_("Patch update");
 +	count = list_and_choose(s, files, opts);
-+	if (count <= 0)
-+		goto finish_revert;
++	if (count >= 0) {
++		struct argv_array args = ARGV_ARRAY_INIT;
 +
-+	fd = repo_hold_locked_index(s->r, &index_lock, LOCK_REPORT_ON_ERROR);
-+	if (fd < 0) {
-+		res = -1;
-+		goto finish_revert;
++		argv_array_pushl(&args, "git", "add--interactive", "--patch",
++				 "--", NULL);
++		for (i = 0; i < files->items.nr; i++)
++			if (files->selected[i])
++				argv_array_push(&args,
++						files->items.items[i].string);
++		res = run_command_v_opt(args.argv, 0);
++		argv_array_clear(&args);
 +	}
 +
-+	if (is_initial)
-+		oidcpy(&oid, s->r->hash_algo->empty_tree);
-+	else {
-+		tree = parse_tree_indirect(&oid);
-+		if (!tree) {
-+			res = error(_("Could not parse HEAD^{tree}"));
-+			goto finish_revert;
-+		}
-+		oidcpy(&oid, &tree->object.oid);
-+	}
-+
-+	ALLOC_ARRAY(paths, count + 1);
-+	for (i = j = 0; i < files->items.nr; i++)
-+		if (files->selected[i])
-+			paths[j++] = files->items.items[i].string;
-+	paths[j] = NULL;
-+
-+	parse_pathspec(&diffopt.pathspec, 0,
-+		       PATHSPEC_PREFER_FULL | PATHSPEC_LITERAL_PATH,
-+		       NULL, paths);
-+
-+	diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	diffopt.format_callback = revert_from_diff;
-+	diffopt.flags.override_submodule_config = 1;
-+	diffopt.repo = s->r;
-+
-+	if (do_diff_cache(&oid, &diffopt))
-+		res = -1;
-+	else {
-+		diffcore_std(&diffopt);
-+		diff_flush(&diffopt);
-+	}
-+	free(paths);
-+	clear_pathspec(&diffopt.pathspec);
-+
-+	if (!res && write_locked_index(s->r->index, &index_lock,
-+				       COMMIT_LOCK) < 0)
-+		res = -1;
-+	else
-+		res = repo_refresh_and_write_index(s->r, REFRESH_QUIET, 0, 1,
-+						   NULL, NULL, NULL);
-+
-+	if (!res)
-+		printf(Q_("reverted %d path\n",
-+			  "reverted %d paths\n", count), (int)count);
-+
-+finish_revert:
-+	putchar('\n');
 +	return res;
 +}
 +
  static int run_help(struct add_i_state *s, const struct pathspec *unused_ps,
  		    struct prefix_item_list *unused_files,
  		    struct list_and_choose_options *unused_opts)
-@@ -748,6 +856,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	} command_list[] = {
- 		{ "status", run_status },
+@@ -948,6 +1024,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
  		{ "update", run_update },
-+		{ "revert", run_revert },
+ 		{ "revert", run_revert },
+ 		{ "add untracked", run_add_untracked },
++		{ "patch", run_patch },
  		{ "help", run_help },
  	};
  	struct prefix_item_list commands = PREFIX_ITEM_LIST_INIT;
