@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC1D01F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94EDD1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727578AbfKOJyO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:14 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:38489 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727496AbfKOJyF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:54:05 -0500
-Received: by mail-wr1-f51.google.com with SMTP id i12so10251823wro.5
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:54:02 -0800 (PST)
+        id S1727577AbfKOJyL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:11 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38833 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727508AbfKOJyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:54:06 -0500
+Received: by mail-wm1-f67.google.com with SMTP id z19so9680089wmk.3
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:54:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Yj6dU6eAFClAyLjY8JX8pFhWVOm+gb6VPcSQ1NX0okY=;
-        b=XmMl8mmpTCHqVP1fpQl/gvdv++eBTvY1FNkdyT9LwTsqS7N8hd1U39qhB2AGupwJ4Q
-         e0e34UbRlxL3wBnU1dqJ5CGMpeO+ejPMU5LKazahnzRYwRsdjv8ravswODxUIysS0vNE
-         G18TFaR7G/4UmgEShOUTG8udXql+X9b7+ER5TobJzZhYXpCSkHUp26Adm+nKpdbrz+dI
-         ASdfiHoNCke3Y4uhibCXOVRXF7J0HXQhhU0x2jx34hwOn+kQpVYFbNaudDUm+tuGS70V
-         BxL1jFbBZV3w3k23Znz8GwF6FlZ8QahOhebq/KOI3V0YVVCrdYkR2MuLeyOsNMckLL7U
-         nbFw==
+        bh=6p+RDsXs7xCRlpZG6AO3gcVN02EJA9I1/+CYJJM9jLI=;
+        b=UwSu1HcMxZMREpG6jjLgao5pFKvirLKYM640KpHr+/QFlHWMtsbC7CewA+JkjLTEIo
+         GZE1NP9TYuqHyn/z2RAOa9x3JExV7m6vhMFPfzhiIVjCSI11AarGCyfC4nqwKplTvIhJ
+         9059acxw3yKpzVgHGF8BaWT3k23izCOJWUrc79IXcI2m1cpGX9cIErYvoJxCBZFIpAl9
+         K0CofNva7KsSXVg+5twxvNw1zaAGWZnKEwZEywecMq+vOkC7xDWfOIq1FfqOHWTL3Wvc
+         nPE/+oIXrskuOAW8O35zvC4hk0n8a1cZT+CP0loMCa9D16c/X0o5xENoYMhIak2K+spJ
+         ak3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Yj6dU6eAFClAyLjY8JX8pFhWVOm+gb6VPcSQ1NX0okY=;
-        b=NY2jjw6c354PY3Jtc1L/U7uOWXCSEVwBU6DnZ0/yf6sxYvQq1Pv46ZMubhkV3nN6i3
-         ifT9LTLPWFD0r5vtElLtxxWoifOUsMcqyaZcXAldSBPOAfO/F08wsHRaefCySMcCXcHl
-         Iqpj8JZztBuJn2DFhYPeIFvNtFoU2cwEJYID66pU3ZSqaiFWoJTiIvzjss42P6m3FIm9
-         o7XHdlHmmYzw3rEQhb8JEw+jVLk36++bzKA/jJD/2HOoUhRp1237JFa7B49FlwxzSfBu
-         vk/DAbPBhaSlV3uZlGhKAirjPBsMGa/8NMw13Iwo4wKYPo6bBge0oCCBi18h52jeemjC
-         c9tA==
-X-Gm-Message-State: APjAAAWxb7tdaFUd3DCM6MhhtmY1J4QMBWpFxvjxi/p1JTZ5AO9B6bzw
-        hZ5v2AEOfTJyP+Y/ybRkyJmxZOo5
-X-Google-Smtp-Source: APXvYqx58UWCo94GTZM8PVZyzmtJkKliTiIcqJSktdL5aWofK112eqwR0MGEgsnXkNbVKcBEhtTYQQ==
-X-Received: by 2002:a5d:49c4:: with SMTP id t4mr14556837wrs.226.1573811641552;
-        Fri, 15 Nov 2019 01:54:01 -0800 (PST)
+        bh=6p+RDsXs7xCRlpZG6AO3gcVN02EJA9I1/+CYJJM9jLI=;
+        b=s3E+B6Tk5Q7+3JMSMLiR7rodr4BOm5fGxgbRCisAtkesfIchR3GHXgx9DNQc05zwMJ
+         LN1vLeKEAtR0Wl1YFGsoAs9oJocnecLlXOpj9LsaZkUz2RGtxtUjBScDA+zEkDXROCpt
+         Iu0u9CB/wnagBknSn0HUoIEhXJzSRsAxwKyXcG5vQhKX+MCnfdyr5gqUcYmuprdy/pvG
+         m/3ySiaZceacaVbZ1ZWs1Wz+ifMtXnIMiMbCGKV++BZJRstvXoteKSYqn19h3xeBqLPM
+         Crt8yaSnJ7Z2/nLM/kWtWhdOt2korxd3BqbVqyDIhzGO+AXBodMIL7nAQUZ7Yk39b1vS
+         Uhew==
+X-Gm-Message-State: APjAAAVVPdExog+tJhRMEhs9T2YwayXlfXQr8AlpqyFu8UJwjDOaUu/p
+        98nIwVYBArv4yvhcifueGnXopPQO
+X-Google-Smtp-Source: APXvYqzYiUUikq4bggTCg0ARulpk5swQbTweLgVY2om0l/ygfh/s3TujiudZPkdamZlImU/APanTqg==
+X-Received: by 2002:a1c:7d47:: with SMTP id y68mr13473797wmc.157.1573811642404;
+        Fri, 15 Nov 2019 01:54:02 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u18sm10866026wrp.14.2019.11.15.01.54.01
+        by smtp.gmail.com with ESMTPSA id t12sm10212576wrx.93.2019.11.15.01.54.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 15 Nov 2019 01:54:01 -0800 (PST)
-Message-Id: <44a47075dc7b82c795f5e7082f011462820307ec.1573811627.git.gitgitgadget@gmail.com>
+Message-Id: <5b20c2794bbc73d78e5cf6f7de5256dfbc12cd64.1573811627.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:42 +0000
-Subject: [PATCH v4 17/21] trace: move doc to trace.h
+Date:   Fri, 15 Nov 2019 09:53:43 +0000
+Subject: [PATCH v4 18/21] tree-walk: move doc to tree-walk.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,341 +72,380 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-trace.txt
-to trace.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-tree-walking.txt
+to tree-walk.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Documentation/technical/api-trace.txt is removed because the
+Documentation/technical/api-tree-walking.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-trace.txt | 140 --------------------------
- trace.h                               | 133 +++++++++++++++++++++++-
- 2 files changed, 131 insertions(+), 142 deletions(-)
- delete mode 100644 Documentation/technical/api-trace.txt
+ Documentation/technical/api-tree-walking.txt | 149 -------------------
+ tree-walk.h                                  | 122 ++++++++++++++-
+ 2 files changed, 120 insertions(+), 151 deletions(-)
+ delete mode 100644 Documentation/technical/api-tree-walking.txt
 
-diff --git a/Documentation/technical/api-trace.txt b/Documentation/technical/api-trace.txt
+diff --git a/Documentation/technical/api-tree-walking.txt b/Documentation/technical/api-tree-walking.txt
 deleted file mode 100644
-index fadb5979c4..0000000000
---- a/Documentation/technical/api-trace.txt
+index 7962e32854..0000000000
+--- a/Documentation/technical/api-tree-walking.txt
 +++ /dev/null
-@@ -1,140 +0,0 @@
--trace API
--=========
+@@ -1,149 +0,0 @@
+-tree walking API
+-================
 -
--The trace API can be used to print debug messages to stderr or a file. Trace
--code is inactive unless explicitly enabled by setting `GIT_TRACE*` environment
--variables.
--
--The trace implementation automatically adds `timestamp file:line ... \n` to
--all trace messages. E.g.:
--
--------------
--23:59:59.123456 git.c:312               trace: built-in: git 'foo'
--00:00:00.000001 builtin/foo.c:99        foo: some message
--------------
+-The tree walking API is used to traverse and inspect trees.
 -
 -Data Structures
 ----------------
 -
--`struct trace_key`::
+-`struct name_entry`::
 -
--	Defines a trace key (or category). The default (for API functions that
--	don't take a key) is `GIT_TRACE`.
+-	An entry in a tree. Each entry has a sha1 identifier, pathname, and
+-	mode.
+-
+-`struct tree_desc`::
+-
+-	A semi-opaque data structure used to maintain the current state of the
+-	walk.
 -+
--E.g. to define a trace key controlled by environment variable `GIT_TRACE_FOO`:
+-* `buffer` is a pointer into the memory representation of the tree. It always
+-points at the current entry being visited.
+-
+-* `size` counts the number of bytes left in the `buffer`.
+-
+-* `entry` points to the current entry being visited.
+-
+-`struct traverse_info`::
+-
+-	A structure used to maintain the state of a traversal.
 -+
--------------
--static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
+-* `prev` points to the traverse_info which was used to descend into the
+-current tree. If this is the top-level tree `prev` will point to
+-a dummy traverse_info.
 -
--static void trace_print_foo(const char *message)
--{
--	trace_printf_key(&trace_foo, "%s", message);
--}
+-* `name` is the entry for the current tree (if the tree is a subtree).
+-
+-* `pathlen` is the length of the full path for the current tree.
+-
+-* `conflicts` can be used by callbacks to maintain directory-file conflicts.
+-
+-* `fn` is a callback called for each entry in the tree. See Traversing for more
+-information.
+-
+-* `data` can be anything the `fn` callback would want to use.
+-
+-* `show_all_errors` tells whether to stop at the first error or not.
+-
+-Initializing
 -------------
+-
+-`init_tree_desc`::
+-
+-	Initialize a `tree_desc` and decode its first entry. The buffer and
+-	size parameters are assumed to be the same as the buffer and size
+-	members of `struct tree`.
+-
+-`fill_tree_descriptor`::
+-
+-	Initialize a `tree_desc` and decode its first entry given the
+-	object ID of a tree. Returns the `buffer` member if the latter
+-	is a valid tree identifier and NULL otherwise.
+-
+-`setup_traverse_info`::
+-
+-	Initialize a `traverse_info` given the pathname of the tree to start
+-	traversing from.
+-
+-Walking
+--------
+-
+-`tree_entry`::
+-
+-	Visit the next entry in a tree. Returns 1 when there are more entries
+-	left to visit and 0 when all entries have been visited. This is
+-	commonly used in the test of a while loop.
+-
+-`tree_entry_len`::
+-
+-	Calculate the length of a tree entry's pathname. This utilizes the
+-	memory structure of a tree entry to avoid the overhead of using a
+-	generic strlen().
+-
+-`update_tree_entry`::
+-
+-	Walk to the next entry in a tree. This is commonly used in conjunction
+-	with `tree_entry_extract` to inspect the current entry.
+-
+-`tree_entry_extract`::
+-
+-	Decode the entry currently being visited (the one pointed to by
+-	`tree_desc's` `entry` member) and return the sha1 of the entry. The
+-	`pathp` and `modep` arguments are set to the entry's pathname and mode
+-	respectively.
+-
+-`get_tree_entry`::
+-
+-	Find an entry in a tree given a pathname and the sha1 of a tree to
+-	search. Returns 0 if the entry is found and -1 otherwise. The third
+-	and fourth parameters are set to the entry's sha1 and mode
+-	respectively.
+-
+-Traversing
+-----------
+-
+-`traverse_trees`::
+-
+-	Traverse `n` number of trees in parallel. The `fn` callback member of
+-	`traverse_info` is called once for each tree entry.
+-
+-`traverse_callback_t`::
+-	The arguments passed to the traverse callback are as follows:
 -+
--Note: don't use `const` as the trace implementation stores internal state in
--the `trace_key` structure.
+-* `n` counts the number of trees being traversed.
 -
--Functions
-----------
+-* `mask` has its nth bit set if something exists in the nth entry.
 -
--`int trace_want(struct trace_key *key)`::
+-* `dirmask` has its nth bit set if the nth tree's entry is a directory.
 -
--	Checks whether the trace key is enabled. Used to prevent expensive
--	string formatting before calling one of the printing APIs.
+-* `entry` is an array of size `n` where the nth entry is from the nth tree.
 -
--`void trace_disable(struct trace_key *key)`::
+-* `info` maintains the state of the traversal.
 -
--	Disables tracing for the specified key, even if the environment
--	variable was set.
--
--`void trace_printf(const char *format, ...)`::
--`void trace_printf_key(struct trace_key *key, const char *format, ...)`::
--
--	Prints a formatted message, similar to printf.
--
--`void trace_argv_printf(const char **argv, const char *format, ...)``::
--
--	Prints a formatted message, followed by a quoted list of arguments.
--
--`void trace_strbuf(struct trace_key *key, const struct strbuf *data)`::
--
--	Prints the strbuf, without additional formatting (i.e. doesn't
--	choke on `%` or even `\0`).
--
--`uint64_t getnanotime(void)`::
--
--	Returns nanoseconds since the epoch (01/01/1970), typically used
--	for performance measurements.
 -+
--Currently there are high precision timer implementations for Linux (using
--`clock_gettime(CLOCK_MONOTONIC)`) and Windows (`QueryPerformanceCounter`).
--Other platforms use `gettimeofday` as time source.
+-Returning a negative value will terminate the traversal. Otherwise the
+-return value is treated as an update mask. If the nth bit is set the nth tree
+-will be updated and if the bit is not set the nth tree entry will be the
+-same in the next callback invocation.
 -
--`void trace_performance(uint64_t nanos, const char *format, ...)`::
--`void trace_performance_since(uint64_t start, const char *format, ...)`::
+-`make_traverse_path`::
 -
--	Prints the elapsed time (in nanoseconds), or elapsed time since
--	`start`, followed by a formatted message. Enabled via environment
--	variable `GIT_TRACE_PERFORMANCE`. Used for manual profiling, e.g.:
--+
--------------
--uint64_t start = getnanotime();
--/* code section to measure */
--trace_performance_since(start, "foobar");
--------------
--+
--------------
--uint64_t t = 0;
--for (;;) {
--	/* ignore */
--	t -= getnanotime();
--	/* code section to measure */
--	t += getnanotime();
--	/* ignore */
--}
--trace_performance(t, "frotz");
--------------
+-	Generate the full pathname of a tree entry based from the root of the
+-	traversal. For example, if the traversal has recursed into another
+-	tree named "bar" the pathname of an entry "baz" in the "bar"
+-	tree would be "bar/baz".
 -
--Bugs & Caveats
----------------
+-`traverse_path_len`::
 -
--GIT_TRACE_* environment variables can be used to tell Git to show
--trace output to its standard error stream. Git can often spawn a pager
--internally to run its subcommand and send its standard output and
--standard error to it.
+-	Calculate the length of a pathname returned by `make_traverse_path`.
+-	This utilizes the memory structure of a tree entry to avoid the
+-	overhead of using a generic strlen().
 -
--Because GIT_TRACE_PERFORMANCE trace is generated only at the very end
--of the program with atexit(), which happens after the pager exits, it
--would not work well if you send its log to the standard error output
--and let Git spawn the pager at the same time.
+-`strbuf_make_traverse_path`::
 -
--As a work around, you can for example use '--no-pager', or set
--GIT_TRACE_PERFORMANCE to another file descriptor which is redirected
--to stderr, or set GIT_TRACE_PERFORMANCE to a file specified by its
--absolute path.
+-	Convenience wrapper to `make_traverse_path` into a strbuf.
 -
--For example instead of the following command which by default may not
--print any performance information:
+-Authors
+--------
 -
--------------
--GIT_TRACE_PERFORMANCE=2 git log -1
--------------
--
--you may want to use:
--
--------------
--GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
--------------
--
--or:
--
--------------
--GIT_TRACE_PERFORMANCE=3 3>&2 git log -1
--------------
--
--or:
--
--------------
--GIT_TRACE_PERFORMANCE=/path/to/log/file git log -1
--------------
-diff --git a/trace.h b/trace.h
-index 9fa3e7a594..9826618b33 100644
---- a/trace.h
-+++ b/trace.h
-@@ -4,6 +4,82 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
+-Written by Junio C Hamano <gitster@pobox.com> and Linus Torvalds
+-<torvalds@linux-foundation.org>
+diff --git a/tree-walk.h b/tree-walk.h
+index abe2caf4e0..826396c8ed 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -3,6 +3,13 @@
+ 
+ #include "cache.h"
  
 +/**
-+ * The trace API can be used to print debug messages to stderr or a file. Trace
-+ * code is inactive unless explicitly enabled by setting `GIT_TRACE*` environment
-+ * variables.
-+ *
-+ * The trace implementation automatically adds `timestamp file:line ... \n` to
-+ * all trace messages. E.g.:
-+ *
-+ * ------------
-+ * 23:59:59.123456 git.c:312               trace: built-in: git 'foo'
-+ * 00:00:00.000001 builtin/foo.c:99        foo: some message
-+ * ------------
-+ *
-+ * Bugs & Caveats
-+ * --------------
-+ *
-+ * GIT_TRACE_* environment variables can be used to tell Git to show
-+ * trace output to its standard error stream. Git can often spawn a pager
-+ * internally to run its subcommand and send its standard output and
-+ * standard error to it.
-+ *
-+ * Because GIT_TRACE_PERFORMANCE trace is generated only at the very end
-+ * of the program with atexit(), which happens after the pager exits, it
-+ * would not work well if you send its log to the standard error output
-+ * and let Git spawn the pager at the same time.
-+ *
-+ * As a work around, you can for example use '--no-pager', or set
-+ * GIT_TRACE_PERFORMANCE to another file descriptor which is redirected
-+ * to stderr, or set GIT_TRACE_PERFORMANCE to a file specified by its
-+ * absolute path.
-+ *
-+ * For example instead of the following command which by default may not
-+ * print any performance information:
-+ *
-+ * ------------
-+ * GIT_TRACE_PERFORMANCE=2 git log -1
-+ * ------------
-+ *
-+ * you may want to use:
-+ *
-+ * ------------
-+ * GIT_TRACE_PERFORMANCE=2 git --no-pager log -1
-+ * ------------
-+ *
-+ * or:
-+ *
-+ * ------------
-+ * GIT_TRACE_PERFORMANCE=3 3>&2 git log -1
-+ * ------------
-+ *
-+ * or:
-+ *
-+ * ------------
-+ * GIT_TRACE_PERFORMANCE=/path/to/log/file git log -1
-+ * ------------
-+ *
++ * The tree walking API is used to traverse and inspect trees.
 + */
 +
 +/**
-+ * Defines a trace key (or category). The default (for API functions that
-+ * don't take a key) is `GIT_TRACE`.
-+ *
-+ * E.g. to define a trace key controlled by environment variable `GIT_TRACE_FOO`:
-+ *
-+ * ------------
-+ * static struct trace_key trace_foo = TRACE_KEY_INIT(FOO);
-+ *
-+ * static void trace_print_foo(const char *message)
-+ * {
-+ * 	trace_printf_key(&trace_foo, "%s", message);
-+ * }
-+ * ------------
-+ *
-+ * Note: don't use `const` as the trace implementation stores internal state in
-+ * the `trace_key` structure.
++ * An entry in a tree. Each entry has a sha1 identifier, pathname, and mode.
 + */
- struct trace_key {
- 	const char * const key;
- 	int fd;
-@@ -18,31 +94,84 @@ extern struct trace_key trace_perf_key;
- extern struct trace_key trace_setup_key;
+ struct name_entry {
+ 	struct object_id oid;
+ 	const char *path;
+@@ -10,12 +17,29 @@ struct name_entry {
+ 	unsigned int mode;
+ };
  
- void trace_repo_setup(const char *prefix);
++/**
++ * A semi-opaque data structure used to maintain the current state of the walk.
++ */
+ struct tree_desc {
++	/*
++	 * pointer into the memory representation of the tree. It always
++	 * points at the current entry being visited.
++	 */
+ 	const void *buffer;
++
++	/* points to the current entry being visited. */
+ 	struct name_entry entry;
++
++	/* counts the number of bytes left in the `buffer`. */
+ 	unsigned int size;
+ };
+ 
++/**
++ * Decode the entry currently being visited (the one pointed to by
++ * `tree_desc's` `entry` member) and return the sha1 of the entry. The
++ * `pathp` and `modep` arguments are set to the entry's pathname and mode
++ * respectively.
++ */
+ static inline const struct object_id *tree_entry_extract(struct tree_desc *desc, const char **pathp, unsigned short *modep)
+ {
+ 	*pathp = desc->entry.path;
+@@ -23,6 +47,11 @@ static inline const struct object_id *tree_entry_extract(struct tree_desc *desc,
+ 	return &desc->entry.oid;
+ }
+ 
++/**
++ * Calculate the length of a tree entry's pathname. This utilizes the
++ * memory structure of a tree entry to avoid the overhead of using a
++ * generic strlen().
++ */
+ static inline int tree_entry_len(const struct name_entry *ne)
+ {
+ 	return ne->pathlen;
+@@ -33,52 +62,141 @@ static inline int tree_entry_len(const struct name_entry *ne)
+  * corrupt tree entry rather than dying,
+  */
+ 
++/**
++ * Walk to the next entry in a tree. This is commonly used in conjunction
++ * with `tree_entry_extract` to inspect the current entry.
++ */
+ void update_tree_entry(struct tree_desc *);
++
+ int update_tree_entry_gently(struct tree_desc *);
 +
 +/**
-+ * Checks whether the trace key is enabled. Used to prevent expensive
-+ * string formatting before calling one of the printing APIs.
++ * Initialize a `tree_desc` and decode its first entry. The buffer and
++ * size parameters are assumed to be the same as the buffer and size
++ * members of `struct tree`.
 + */
- int trace_want(struct trace_key *key);
+ void init_tree_desc(struct tree_desc *desc, const void *buf, unsigned long size);
++
+ int init_tree_desc_gently(struct tree_desc *desc, const void *buf, unsigned long size);
+ 
+ /*
+- * Helper function that does both tree_entry_extract() and update_tree_entry()
+- * and returns true for success
++ * Visit the next entry in a tree. Returns 1 when there are more entries
++ * left to visit and 0 when all entries have been visited. This is
++ * commonly used in the test of a while loop.
+  */
+ int tree_entry(struct tree_desc *, struct name_entry *);
++
+ int tree_entry_gently(struct tree_desc *, struct name_entry *);
+ 
++/**
++ * Initialize a `tree_desc` and decode its first entry given the
++ * object ID of a tree. Returns the `buffer` member if the latter
++ * is a valid tree identifier and NULL otherwise.
++ */
+ void *fill_tree_descriptor(struct repository *r,
+ 			   struct tree_desc *desc,
+ 			   const struct object_id *oid);
+ 
+ struct traverse_info;
+ typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
 +
 +/**
-+ * Disables tracing for the specified key, even if the environment variable
-+ * was set.
++ * Traverse `n` number of trees in parallel. The `fn` callback member of
++ * `traverse_info` is called once for each tree entry.
 + */
- void trace_disable(struct trace_key *key);
+ int traverse_trees(struct index_state *istate, int n, struct tree_desc *t, struct traverse_info *info);
+ 
+ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r, struct object_id *tree_oid, const char *name, struct object_id *result, struct strbuf *result_path, unsigned short *mode);
+ 
++/**
++ * A structure used to maintain the state of a traversal.
++ */
+ struct traverse_info {
+ 	const char *traverse_path;
++
++	/*
++	 * points to the traverse_info which was used to descend into the
++	 * current tree. If this is the top-level tree `prev` will point to
++	 * a dummy traverse_info.
++	 */
+ 	struct traverse_info *prev;
++
++	/* is the entry for the current tree (if the tree is a subtree). */
+ 	const char *name;
++
+ 	size_t namelen;
+ 	unsigned mode;
+ 
++	/* is the length of the full path for the current tree. */
+ 	size_t pathlen;
++
+ 	struct pathspec *pathspec;
+ 
++	/* can be used by callbacks to maintain directory-file conflicts. */
+ 	unsigned long df_conflicts;
++
++	/* a callback called for each entry in the tree.
++	 *
++	 * The arguments passed to the traverse callback are as follows:
++	 *
++	 * - `n` counts the number of trees being traversed.
++	 *
++	 * - `mask` has its nth bit set if something exists in the nth entry.
++	 *
++	 * - `dirmask` has its nth bit set if the nth tree's entry is a directory.
++	 *
++	 * - `entry` is an array of size `n` where the nth entry is from the nth tree.
++	 *
++	 * - `info` maintains the state of the traversal.
++	 *
++	 * Returning a negative value will terminate the traversal. Otherwise the
++	 * return value is treated as an update mask. If the nth bit is set the nth tree
++	 * will be updated and if the bit is not set the nth tree entry will be the
++	 * same in the next callback invocation.
++	 */
+ 	traverse_callback_t fn;
++
++	/* can be anything the `fn` callback would want to use. */
+ 	void *data;
++
++	/* tells whether to stop at the first error or not. */
+ 	int show_all_errors;
+ };
+ 
++/**
++ * Find an entry in a tree given a pathname and the sha1 of a tree to
++ * search. Returns 0 if the entry is found and -1 otherwise. The third
++ * and fourth parameters are set to the entry's sha1 and mode respectively.
++ */
+ int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
 +
 +/**
-+ * Returns nanoseconds since the epoch (01/01/1970), typically used
-+ * for performance measurements.
-+ * Currently there are high precision timer implementations for Linux (using
-+ * `clock_gettime(CLOCK_MONOTONIC)`) and Windows (`QueryPerformanceCounter`).
-+ * Other platforms use `gettimeofday` as time source.
++ * Generate the full pathname of a tree entry based from the root of the
++ * traversal. For example, if the traversal has recursed into another
++ * tree named "bar" the pathname of an entry "baz" in the "bar"
++ * tree would be "bar/baz".
 + */
- uint64_t getnanotime(void);
+ char *make_traverse_path(char *path, size_t pathlen, const struct traverse_info *info,
+ 			 const char *name, size_t namelen);
 +
- void trace_command_performance(const char **argv);
- void trace_verbatim(struct trace_key *key, const void *buf, unsigned len);
- uint64_t trace_performance_enter(void);
- 
- #ifndef HAVE_VARIADIC_MACROS
++/**
++ * Convenience wrapper to `make_traverse_path` into a strbuf.
++ */
+ void strbuf_make_traverse_path(struct strbuf *out,
+ 			       const struct traverse_info *info,
+ 			       const char *name, size_t namelen);
++
++/**
++ * Initialize a `traverse_info` given the pathname of the tree to start
++ * traversing from.
++ */
+ void setup_traverse_info(struct traverse_info *info, const char *base);
  
 +/**
-+ * Prints a formatted message, similar to printf.
++ * Calculate the length of a pathname returned by `make_traverse_path`.
++ * This utilizes the memory structure of a tree entry to avoid the
++ * overhead of using a generic strlen().
 + */
- __attribute__((format (printf, 1, 2)))
- void trace_printf(const char *format, ...);
- 
- __attribute__((format (printf, 2, 3)))
- void trace_printf_key(struct trace_key *key, const char *format, ...);
- 
-+/**
-+ * Prints a formatted message, followed by a quoted list of arguments.
-+ */
- __attribute__((format (printf, 2, 3)))
- void trace_argv_printf(const char **argv, const char *format, ...);
- 
-+/**
-+ * Prints the strbuf, without additional formatting (i.e. doesn't
-+ * choke on `%` or even `\0`).
-+ */
- void trace_strbuf(struct trace_key *key, const struct strbuf *data);
- 
--/* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
-+/**
-+ * Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t t = 0;
-+ * for (;;) {
-+ * 	// ignore
-+ * t -= getnanotime();
-+ * // code section to measure
-+ * t += getnanotime();
-+ * // ignore
-+ * }
-+ * trace_performance(t, "frotz");
-+ * ------------
-+ */
- __attribute__((format (printf, 2, 3)))
- void trace_performance(uint64_t nanos, const char *format, ...);
- 
--/* Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled. */
-+/**
-+ * Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-+ *
-+ * Example:
-+ * ------------
-+ * uint64_t start = getnanotime();
-+ * // code section to measure
-+ * trace_performance_since(start, "foobar");
-+ * ------------
-+ */
- __attribute__((format (printf, 2, 3)))
- void trace_performance_since(uint64_t start, const char *format, ...);
- 
+ static inline size_t traverse_path_len(const struct traverse_info *info,
+ 				       size_t namelen)
+ {
 -- 
 gitgitgadget
 
