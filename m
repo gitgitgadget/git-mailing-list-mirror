@@ -2,54 +2,54 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5B41F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 14:16:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A13E01F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 14:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727461AbfKOOQD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 09:16:03 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42091 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727380AbfKOOQD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 09:16:03 -0500
-Received: by mail-wr1-f66.google.com with SMTP id a15so11136245wrf.9
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:16:02 -0800 (PST)
+        id S1727514AbfKOOQG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 09:16:06 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:50608 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727380AbfKOOQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 09:16:06 -0500
+Received: by mail-wm1-f52.google.com with SMTP id l17so9805416wmh.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:16:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9jtPV+sCn/emRq7GWYLrHWbMxGrAYFh/6kTAYGDHCUY=;
-        b=cSrtY0YiqCWLqhu/DeOgtNHn87diN7tfHlTt4MZTXWltxZj8Nm8S4dmMaLJdrHf4a4
-         O624yijItPwmRstuUin/phJuyX3mHRjcwf+/3uJiXG7cdbAiJpLcZThJsTjTZLBqo0jw
-         P9qAP5ixZjq/ea/BF1gY/+29eBSyk2h0efbA00URV2D/UJOZcWiHIR3IPeKbhO/MbTPk
-         XMtsHxbP6QvUaMuKdxe/BmNE6b/cMq4diLAGFZvFKRp/FD1FakemwQpJKANDCpb/hy17
-         fM/FZvctdb7kHlm2O2YwdOkdE5pCrCdlaoBWm6/gYRLNhYJu+8FlP/cCWd/iCe5LC7Gh
-         zGVw==
+        bh=SS7bRlq7DG8hvTPjGjIa+Gy8rxR6kTmDlHR4pTD7k/I=;
+        b=MZE6FJ0fW7PHuD/EyZZwzYAvYwkqxbBR47LzwgMw7VG3qNoGfSJW3Ts8228Oop0Q9t
+         U85bSz1QL2mCV3TSzkIPaEp3Zl9ygBaWm21IsSZs94UZUBa+NPLFP8WGzscBRR1xZ3vE
+         nSXnGNupIs7z07cM6oFcELlu3hidApJbQBf+IR0fkhs5zlHMLOC8yRk5eFAeHIVL8T9s
+         gkOJkBB0DgppYS7Gzj6sw7aTNVPWyBwNnsrf6/kbplwRA7I1N6tW3ehCq5p2GkXfXJhe
+         SxhLmY4IbAR++rrkCX66/RtAg8fsWGitryFdfKO7J+AklMTi8zZOiRiJPQ6pI77yTK2m
+         p6Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9jtPV+sCn/emRq7GWYLrHWbMxGrAYFh/6kTAYGDHCUY=;
-        b=Tcv8PxmuTZWceZGj06UQKFrsC1ZgVzPDWyfVNOCMKkExzbl9BxkpryDgbyjLCmBX9b
-         oW9vmv9krY4YEGU3ZueBa+NEv0jJKAxn0LOVBeitpkVNQJp1X+OMCoWeu9MoP0u6c3MB
-         NEO+DSNzgQKPGtIGtEwZmqkFVGVNJkW8ef/lkJkQ+ry2YJXqcHh8RUigPyA+RW3f7DTH
-         WT3tBDGYL2VCVJbHx2Ni0Op4Veg2Q28iN0MAt2itiyL3ZNCGMsS1elAHVwMrqANU7rnm
-         h9pkk8MiZSdavV6oZf3qONFtCm3q3daIga5Zjc7PKSC0L7Xgz1VCrCkBhIe3Hqchwn9r
-         l5tw==
-X-Gm-Message-State: APjAAAU+8fUyHuIjafkgs3iAV/HXjZlrfiZr6o1GTahcyyWLHmCfV/va
-        ehUuGkLFzkfQtQE/uCoJ8bR7dn9C
-X-Google-Smtp-Source: APXvYqzUVUUODiba7wozoG8o/Ww3tUxixv5tYjXamAhJro0XA8W4Cy5ec+LlQLtOvHm6+N/ZMbN9kA==
-X-Received: by 2002:a05:6000:18e:: with SMTP id p14mr15441667wrx.98.1573827360962;
-        Fri, 15 Nov 2019 06:16:00 -0800 (PST)
+        bh=SS7bRlq7DG8hvTPjGjIa+Gy8rxR6kTmDlHR4pTD7k/I=;
+        b=mZwzzjbrsmW+15SymP0lOaMOWKx2HzwL5KhHDTIgwcWvf+jp5zUdO6L9gqeRialCOU
+         HMGd7ABHTjrdgqQiQZN9VNwlHMPrWMES2G7H+Ft8A3ty+mrLKfxZeKPASa2lcvwwNMVQ
+         zsHjEP8+OCBgr8cttOgS4Hct6yJ6hN8z37CA9dyMjAX+jApGyV8Wm6g7hjf4Hw3+6CFv
+         3eP83/tWPtb4EIgsnRNtERz9IsghRbZdk0EUuZMbnHji8peZ2qVMU7zTWaVuebTRjPAK
+         VsCUpaEsrWHPKNsdLHgE1zpDZrCyaL0aZVmYW2LAjds6L/VugsOvYVxnSTlamw6HxH+l
+         FTdw==
+X-Gm-Message-State: APjAAAXDM1GdnlSvFrxi0eCAdSGNnM+GSLxf8vPoZtEf8fbC7qU0ig+m
+        H0BkJ1dhv6y08kyrdUQwbwgzTtCJ
+X-Google-Smtp-Source: APXvYqwrYTo+s7wj14I9vGjVx57tfJf2Rxvos1Tr9BXv4MbBHTwcQdI+Y9QnW0lYVLJKqidN/wVYDA==
+X-Received: by 2002:a1c:6a0d:: with SMTP id f13mr15485161wmc.164.1573827362169;
+        Fri, 15 Nov 2019 06:16:02 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:1050:ac52:b4cd:f6a2:ba59:f1d4])
-        by smtp.gmail.com with ESMTPSA id a2sm7907874wrt.79.2019.11.15.06.15.59
+        by smtp.gmail.com with ESMTPSA id a2sm7907874wrt.79.2019.11.15.06.16.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 06:16:00 -0800 (PST)
+        Fri, 15 Nov 2019 06:16:01 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v3 2/9] packfile: expose get_delta_base()
-Date:   Fri, 15 Nov 2019 15:15:34 +0100
-Message-Id: <20191115141541.11149-3-chriscool@tuxfamily.org>
+Subject: [PATCH v3 3/9] ewah/bitmap: introduce bitmap_word_alloc()
+Date:   Fri, 15 Nov 2019 15:15:35 +0100
+Message-Id: <20191115141541.11149-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.0-rc1
 In-Reply-To: <20191115141541.11149-1-chriscool@tuxfamily.org>
 References: <20191115141541.11149-1-chriscool@tuxfamily.org>
@@ -72,52 +72,65 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-In a following commit get_delta_base() will be used outside
-packfile.c, so let's make it non static and declare it in
-packfile.h.
+In a following commit we will need to allocate a variable
+number of bitmap words, instead of always 32, so let's add
+bitmap_word_alloc() for this purpose.
 
+Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- packfile.c | 10 +++++-----
- packfile.h |  3 +++
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ ewah/bitmap.c | 13 +++++++++----
+ ewah/ewok.h   |  1 +
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 355066de17..81e66847bf 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1173,11 +1173,11 @@ const struct packed_git *has_packed_and_bad(struct repository *r,
- 	return NULL;
+diff --git a/ewah/bitmap.c b/ewah/bitmap.c
+index 52f1178db4..b5fed9621f 100644
+--- a/ewah/bitmap.c
++++ b/ewah/bitmap.c
+@@ -22,21 +22,26 @@
+ #define EWAH_MASK(x) ((eword_t)1 << (x % BITS_IN_EWORD))
+ #define EWAH_BLOCK(x) (x / BITS_IN_EWORD)
+ 
+-struct bitmap *bitmap_new(void)
++struct bitmap *bitmap_word_alloc(size_t word_alloc)
+ {
+ 	struct bitmap *bitmap = xmalloc(sizeof(struct bitmap));
+-	bitmap->words = xcalloc(32, sizeof(eword_t));
+-	bitmap->word_alloc = 32;
++	bitmap->words = xcalloc(word_alloc, sizeof(eword_t));
++	bitmap->word_alloc = word_alloc;
+ 	return bitmap;
  }
  
--static off_t get_delta_base(struct packed_git *p,
--				    struct pack_window **w_curs,
--				    off_t *curpos,
--				    enum object_type type,
--				    off_t delta_obj_offset)
-+off_t get_delta_base(struct packed_git *p,
-+		     struct pack_window **w_curs,
-+		     off_t *curpos,
-+		     enum object_type type,
-+		     off_t delta_obj_offset)
++struct bitmap *bitmap_new(void)
++{
++	return bitmap_word_alloc(32);
++}
++
+ void bitmap_set(struct bitmap *self, size_t pos)
  {
- 	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
- 	off_t base_offset;
-diff --git a/packfile.h b/packfile.h
-index fc7904ec81..ec536a4ae5 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -151,6 +151,9 @@ void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object
- unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-+off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
-+		     off_t *curpos, enum object_type type,
-+		     off_t delta_obj_offset);
+ 	size_t block = EWAH_BLOCK(pos);
  
- void release_pack_memory(size_t);
+ 	if (block >= self->word_alloc) {
+ 		size_t old_size = self->word_alloc;
+-		self->word_alloc = block * 2;
++		self->word_alloc = block ? block * 2 : 1;
+ 		REALLOC_ARRAY(self->words, self->word_alloc);
+ 		memset(self->words + old_size, 0x0,
+ 			(self->word_alloc - old_size) * sizeof(eword_t));
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 84b2a29faa..1b98b57c8b 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -172,6 +172,7 @@ struct bitmap {
+ };
  
+ struct bitmap *bitmap_new(void);
++struct bitmap *bitmap_word_alloc(size_t word_alloc);
+ void bitmap_set(struct bitmap *self, size_t pos);
+ int bitmap_get(struct bitmap *self, size_t pos);
+ void bitmap_reset(struct bitmap *self);
 -- 
 2.24.0-rc1
 
