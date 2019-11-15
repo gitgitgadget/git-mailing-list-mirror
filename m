@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1201F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A6761F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727423AbfKOJx6 (ORCPT <rfc822;e@80x24.org>);
+        id S1727532AbfKOJyF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:05 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:55067 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727359AbfKOJx6 (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 15 Nov 2019 04:53:58 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:54012 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbfKOJxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:53:54 -0500
-Received: by mail-wm1-f51.google.com with SMTP id u18so9019781wmc.3
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:52 -0800 (PST)
+Received: by mail-wm1-f45.google.com with SMTP id z26so8986384wmi.4
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
-        b=GiAwln76bLcBeOj9Ha3mym5z+V90Esf3oiFgLSzoSFghfRZ88T5DcY5pzRqgw0y7o+
-         qSa+F/uo58d/GjQpsWWxfKQE1bl5m6yJYQYQRegAFXjBAcCp6wOfD2lekQ2zOT9krQ/W
-         T8rZoYjjj52z4PGw9Dmqa9ZfKgyJS1ndJ9VZ8FaqCebO48Etv1kVlhx4lx7bgERUmuf3
-         TQf2b24AUmUVgRoC2KeJDY9Gt96PrMe09+WsuiLDEyCdlOOv7ABdHmv+ledPiV4NWde5
-         phVxKtaINruFpvHgbYJ3HyuQnPB3NNPkBYuTeLoTHBa2LBqNmznVyzyXUlfMegDJUOQm
-         iZmw==
+        bh=npKX9YJr95qmFzdU+8yYr9bvbE6ALUINPgiTomi20Qk=;
+        b=XbBhR0kFrCyJ/IN0dGyE0ApBwsDuhHgpLLowRYwi/aUlIbT9VUlXUC4HcMh0dl2F8/
+         t0gd1XB2tIhb3VVqOVO+9yHQA6OOnlJxC/SplVxuTQr6TvN5zS7sk6iH9x3wPjLMIl4T
+         uXl4HhKRIcsJtC9N6OL5ZxkEjwr4VFh3Ku2M2weNTl0SAKYSsQ77K0I6ooY7arhfyazf
+         yfKnI7JM5FCi2OOPvZOyiamQf34EBKLR0ql2iJk1JmVpSHJHKDpviQ1hUori8qmhvmqT
+         OQ/JvsUiS0f7ekxAiTSCvhiMd233vbUFPhgL4I1hJzfkdagjUJnoHxdhBRJY45ounEZk
+         tZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
-        b=SKpllP0IwzXaZHKuZlEQIePENvjrxWoRo1dHdj3GJLZdeBZHJaqDFbhiXszHRdLfrt
-         F75KkU7sOGgcewLqgQOYiVLhE1txRB/qsdLavN0if6Y0OKE0312GMPmdvze5tUPg1o30
-         OM0PpxJtYk3DCvLYNTboC0O6TBal2Z/zrFt+ccuEZKAjrZJ11SPQZNvik/sygJJcODFu
-         ybKYZnFnTP0E0KQJdAs3JJ4Tz2FNBiI6o4bFnyPcGYzg4AkDLKECFcs8+FVVK5WxlNxb
-         TV+qCiQGJtK3HUgaAWsZ/7c6H7gJkTLQI16fs+L/96g2GU2avDsPFL0hwxhAlAu1utat
-         WrwA==
-X-Gm-Message-State: APjAAAUG2/rF8T1MdSDvL7mxQSkl+7BefZ/91REBUaRXbiisNO3vSjY0
-        FWvn5Q+F4ySpujrafuyM1v4yi3Ei
-X-Google-Smtp-Source: APXvYqxF6+UfxK+fQx8kPfIb2wT4vBaNKqfgNvCqkiLsGZ2gG2Vi9CJHPoMIJrZXVSmYFenHxMcm+Q==
-X-Received: by 2002:a7b:cc13:: with SMTP id f19mr14060855wmh.81.1573811631753;
-        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
+        bh=npKX9YJr95qmFzdU+8yYr9bvbE6ALUINPgiTomi20Qk=;
+        b=PClNQ6YZYfaEP1qyIh8drgnw9JyVDlp0CEOxj5JSiXgMj3e5PlqBN46R53yvPEAR21
+         Xq2ivWQEUxd6Bk7MzRZufstIHs1vJZuqDwnzMcjnG36MVEoBOepiUEwSoVFzMNMnMXNn
+         OVkoKZhSv5lBgtsKSkAql6KL9beECyyvlMld6zft784bLnhiK+M2tPk/1TBDk8wBsSDK
+         JAYp3hr/g8+gm8xlT3w7jYxJPoKzlSn17rttEHmi2tmBgVREnpyQEQBjrSQl1aRaqS4D
+         btb5CTQrZCpEf9ouGfWFJWV8NYOW9Uni3h7dygmmZp1fAhXkYoNTfbhSDrL0Buw8qh60
+         aw3g==
+X-Gm-Message-State: APjAAAVenbEKtZ5eAHbQosl1dlEDwy6EyA/Ndkh9ZHz9YXDHNTVusTDk
+        3EJ6x2zZEHxGhrUoXt31NjtYOKZI
+X-Google-Smtp-Source: APXvYqxh/ps5INX5SM8kGdwqPqtbpOM+h4pRhN1t1dDx5KrXdikRduoPFw6O5Ovo1ud5y8HHCXzGyA==
+X-Received: by 2002:a1c:1d10:: with SMTP id d16mr14249442wmd.14.1573811634818;
+        Fri, 15 Nov 2019 01:53:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f140sm10018034wme.21.2019.11.15.01.53.51
+        by smtp.gmail.com with ESMTPSA id z4sm9990035wmf.36.2019.11.15.01.53.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
-Message-Id: <90baf409ecaa2d26f72e6d2e79e1708bebbce06c.1573811626.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:54 -0800 (PST)
+Message-Id: <a007b50b9bb64343d7a694865f0168b1453c421d.1573811626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:29 +0000
-Subject: [PATCH v4 04/21] merge: move doc to ll-merge.h
+Date:   Fri, 15 Nov 2019 09:53:33 +0000
+Subject: [PATCH v4 08/21] attr: move doc to attr.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,198 +72,365 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the related documentation from Documentation/technical/api-merge.txt
-to ll-merge.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-gitattributes.txt
+to attr.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Only the ll-merge related doc is removed from
-documentation/technical/api-merge.txt because this information will be
-redundant and it'll be hard to keep it up to date and synchronized with
-the documentation in ll-merge.h.
+Also documentation/technical/api-gitattributes.txt is removed because the
+information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-merge.txt | 72 +-------------------------
- ll-merge.h                            | 73 ++++++++++++++++++++++++++-
- 2 files changed, 74 insertions(+), 71 deletions(-)
+ Documentation/technical/api-gitattributes.txt | 154 ------------------
+ attr.c                                        |   3 +-
+ attr.h                                        | 141 +++++++++++++++-
+ 3 files changed, 135 insertions(+), 163 deletions(-)
+ delete mode 100644 Documentation/technical/api-gitattributes.txt
 
-diff --git a/Documentation/technical/api-merge.txt b/Documentation/technical/api-merge.txt
-index 9dc1bed768..487d4d83ff 100644
---- a/Documentation/technical/api-merge.txt
-+++ b/Documentation/technical/api-merge.txt
-@@ -28,77 +28,9 @@ and `diff.c` for examples.
- 
- * `struct ll_merge_options`
- 
--This describes the set of options the calling program wants to affect
--the operation of a low-level (single file) merge.  Some options:
+diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+deleted file mode 100644
+index 45f0df600f..0000000000
+--- a/Documentation/technical/api-gitattributes.txt
++++ /dev/null
+@@ -1,154 +0,0 @@
+-gitattributes API
+-=================
 -
--`virtual_ancestor`::
--	Behave as though this were part of a merge between common
--	ancestors in a recursive merge.
--	If a helper program is specified by the
--	`[merge "<driver>"] recursive` configuration, it will
--	be used (see linkgit:gitattributes[5]).
+-gitattributes mechanism gives a uniform way to associate various
+-attributes to set of paths.
 -
--`variant`::
--	Resolve local conflicts automatically in favor
--	of one side or the other (as in 'git merge-file'
--	`--ours`/`--theirs`/`--union`).  Can be `0`,
--	`XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`, or
--	`XDL_MERGE_FAVOR_UNION`.
 -
--`renormalize`::
--	Resmudge and clean the "base", "theirs" and "ours" files
--	before merging.  Use this when the merge is likely to have
--	overlapped with a change in smudge/clean or end-of-line
--	normalization rules.
-+Check ll-merge.h for details.
- 
- Low-level (single file) merge
- -----------------------------
- 
--`ll_merge`::
+-Data Structure
+---------------
 -
--	Perform a three-way single-file merge in core.  This is
--	a thin wrapper around `xdl_merge` that takes the path and
--	any merge backend specified in `.gitattributes` or
--	`.git/info/attributes` into account.  Returns 0 for a
--	clean merge.
+-`struct git_attr`::
 -
--Calling sequence:
+-	An attribute is an opaque object that is identified by its name.
+-	Pass the name to `git_attr()` function to obtain the object of
+-	this type.  The internal representation of this structure is
+-	of no interest to the calling programs.  The name of the
+-	attribute can be retrieved by calling `git_attr_name()`.
 -
--* Prepare a `struct ll_merge_options` to record options.
--  If you have no special requests, skip this and pass `NULL`
--  as the `opts` parameter to use the default options.
+-`struct attr_check_item`::
 -
--* Allocate an mmbuffer_t variable for the result.
+-	This structure represents one attribute and its value.
 -
--* Allocate and fill variables with the file's original content
--  and two modified versions (using `read_mmfile`, for example).
+-`struct attr_check`::
 -
--* Call `ll_merge()`.
+-	This structure represents a collection of `attr_check_item`.
+-	It is passed to `git_check_attr()` function, specifying the
+-	attributes to check, and receives their values.
 -
--* Read the merged content from `result_buf.ptr` and `result_buf.size`.
 -
--* Release buffers when finished.  A simple
--  `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
--  free(result_buf.ptr);` will do.
+-Attribute Values
+-----------------
 -
--If the modifications do not merge cleanly, `ll_merge` will return a
--nonzero value and `result_buf` will generally include a description of
--the conflict bracketed by markers such as the traditional `<<<<<<<`
--and `>>>>>>>`.
+-An attribute for a path can be in one of four states: Set, Unset,
+-Unspecified or set to a string, and `.value` member of `struct
+-attr_check_item` records it.  There are three macros to check these:
 -
--The `ancestor_label`, `our_label`, and `their_label` parameters are
--used to label the different sides of a conflict if the merge driver
--supports this.
+-`ATTR_TRUE()`::
 -
--Everything else
-----------------
+-	Returns true if the attribute is Set for the path.
 -
--Talk about <merge-recursive.h> and merge_file():
+-`ATTR_FALSE()`::
 -
-- - merge_trees() to merge with rename detection
-- - merge_recursive() for ancestor consolidation
-- - try_merge_command() for other strategies
-- - conflict format
-- - merge options
+-	Returns true if the attribute is Unset for the path.
 -
--(Daniel, Miklos, Stephan, JC)
-+Check ll-merge.h for details.
-diff --git a/ll-merge.h b/ll-merge.h
-index e78973dd55..aceb1b2413 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -7,16 +7,87 @@
- 
- #include "xdiff/xdiff.h"
+-`ATTR_UNSET()`::
+-
+-	Returns true if the attribute is Unspecified for the path.
+-
+-If none of the above returns true, `.value` member points at a string
+-value of the attribute for the path.
+-
+-
+-Querying Specific Attributes
+-----------------------------
+-
+-* Prepare `struct attr_check` using attr_check_initl()
+-  function, enumerating the names of attributes whose values you are
+-  interested in, terminated with a NULL pointer.  Alternatively, an
+-  empty `struct attr_check` can be prepared by calling
+-  `attr_check_alloc()` function and then attributes you want to
+-  ask about can be added to it with `attr_check_append()`
+-  function.
+-
+-* Call `git_check_attr()` to check the attributes for the path.
+-
+-* Inspect `attr_check` structure to see how each of the
+-  attribute in the array is defined for the path.
+-
+-
+-Example
+--------
+-
+-To see how attributes "crlf" and "ident" are set for different paths.
+-
+-. Prepare a `struct attr_check` with two elements (because
+-  we are checking two attributes):
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(void)
+-{
+-	if (check)
+-		return; /* already done */
+-	check = attr_check_initl("crlf", "ident", NULL);
+-}
+-------------
+-
+-. Call `git_check_attr()` with the prepared `struct attr_check`:
+-
+-------------
+-	const char *path;
+-
+-	setup_check();
+-	git_check_attr(path, check);
+-------------
+-
+-. Act on `.value` member of the result, left in `check->items[]`:
+-
+-------------
+-	const char *value = check->items[0].value;
+-
+-	if (ATTR_TRUE(value)) {
+-		The attribute is Set, by listing only the name of the
+-		attribute in the gitattributes file for the path.
+-	} else if (ATTR_FALSE(value)) {
+-		The attribute is Unset, by listing the name of the
+-		attribute prefixed with a dash - for the path.
+-	} else if (ATTR_UNSET(value)) {
+-		The attribute is neither set nor unset for the path.
+-	} else if (!strcmp(value, "input")) {
+-		If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
+-		true, the value is a string set in the gitattributes
+-		file for the path by saying "attr=value".
+-	} else if (... other check using value as string ...) {
+-		...
+-	}
+-------------
+-
+-To see how attributes in argv[] are set for different paths, only
+-the first step in the above would be different.
+-
+-------------
+-static struct attr_check *check;
+-static void setup_check(const char **argv)
+-{
+-	check = attr_check_alloc();
+-	while (*argv) {
+-		struct git_attr *attr = git_attr(*argv);
+-		attr_check_append(check, attr);
+-		argv++;
+-	}
+-}
+-------------
+-
+-
+-Querying All Attributes
+------------------------
+-
+-To get the values of all attributes associated with a file:
+-
+-* Prepare an empty `attr_check` structure by calling
+-  `attr_check_alloc()`.
+-
+-* Call `git_all_attrs()`, which populates the `attr_check`
+-  with the attributes attached to the path.
+-
+-* Iterate over the `attr_check.items[]` array to examine
+-  the attribute names and values.  The name of the attribute
+-  described by an `attr_check.items[]` object can be retrieved via
+-  `git_attr_name(check->items[i].attr)`.  (Please note that no items
+-  will be returned for unset attributes, so `ATTR_UNSET()` will return
+-  false for all returned `attr_check.items[]` objects.)
+-
+-* Free the `attr_check` struct by calling `attr_check_free()`.
+diff --git a/attr.c b/attr.c
+index 11f19b541c..a826b2ef1f 100644
+--- a/attr.c
++++ b/attr.c
+@@ -1,7 +1,6 @@
+ /*
+  * Handle git attributes.  See gitattributes(5) for a description of
+- * the file syntax, and Documentation/technical/api-gitattributes.txt
+- * for a description of the API.
++ * the file syntax, and attr.h for a description of the API.
+  *
+  * One basic design decision here is that we are not going to support
+  * an insanely large number of attributes.
+diff --git a/attr.h b/attr.h
+index b0378bfe5f..404548f028 100644
+--- a/attr.h
++++ b/attr.h
+@@ -1,9 +1,121 @@
+ #ifndef ATTR_H
+ #define ATTR_H
  
 +/**
++ * gitattributes mechanism gives a uniform way to associate various attributes
++ * to set of paths.
 + *
-+ * Calling sequence:
-+ * ----------------
 + *
-+ * - Prepare a `struct ll_merge_options` to record options.
-+ *   If you have no special requests, skip this and pass `NULL`
-+ *   as the `opts` parameter to use the default options.
++ * Querying Specific Attributes
++ * ----------------------------
 + *
-+ * - Allocate an mmbuffer_t variable for the result.
++ * - Prepare `struct attr_check` using attr_check_initl() function, enumerating
++ *   the names of attributes whose values you are interested in, terminated with
++ *   a NULL pointer.  Alternatively, an empty `struct attr_check` can be
++ *   prepared by calling `attr_check_alloc()` function and then attributes you
++ *   want to ask about can be added to it with `attr_check_append()` function.
 + *
-+ * - Allocate and fill variables with the file's original content
-+ *   and two modified versions (using `read_mmfile`, for example).
++ * - Call `git_check_attr()` to check the attributes for the path.
 + *
-+ * - Call `ll_merge()`.
++ * - Inspect `attr_check` structure to see how each of the attribute in the
++ *   array is defined for the path.
 + *
-+ * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
 + *
-+ * - Release buffers when finished.  A simple
-+ *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
-+ *   free(result_buf.ptr);` will do.
++ * Example
++ * -------
 + *
-+ * If the modifications do not merge cleanly, `ll_merge` will return a
-+ * nonzero value and `result_buf` will generally include a description of
-+ * the conflict bracketed by markers such as the traditional `<<<<<<<`
-+ * and `>>>>>>>`.
++ * To see how attributes "crlf" and "ident" are set for different paths.
 + *
-+ * The `ancestor_label`, `our_label`, and `their_label` parameters are
-+ * used to label the different sides of a conflict if the merge driver
-+ * supports this.
++ * - Prepare a `struct attr_check` with two elements (because we are checking
++ *   two attributes):
++ *
++ * ------------
++ * static struct attr_check *check;
++ * static void setup_check(void)
++ * {
++ * 	if (check)
++ * 		return; // already done
++ * check = attr_check_initl("crlf", "ident", NULL);
++ * }
++ * ------------
++ *
++ * - Call `git_check_attr()` with the prepared `struct attr_check`:
++ *
++ * ------------
++ * const char *path;
++ *
++ * setup_check();
++ * git_check_attr(path, check);
++ * ------------
++ *
++ * - Act on `.value` member of the result, left in `check->items[]`:
++ *
++ * ------------
++ * const char *value = check->items[0].value;
++ *
++ * if (ATTR_TRUE(value)) {
++ * The attribute is Set, by listing only the name of the
++ * attribute in the gitattributes file for the path.
++ * } else if (ATTR_FALSE(value)) {
++ * The attribute is Unset, by listing the name of the
++ *         attribute prefixed with a dash - for the path.
++ * } else if (ATTR_UNSET(value)) {
++ * The attribute is neither set nor unset for the path.
++ * } else if (!strcmp(value, "input")) {
++ * If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
++ *         true, the value is a string set in the gitattributes
++ * file for the path by saying "attr=value".
++ * } else if (... other check using value as string ...) {
++ * ...
++ * }
++ * ------------
++ *
++ * To see how attributes in argv[] are set for different paths, only
++ * the first step in the above would be different.
++ *
++ * ------------
++ * static struct attr_check *check;
++ * static void setup_check(const char **argv)
++ * {
++ *     check = attr_check_alloc();
++ *     while (*argv) {
++ *         struct git_attr *attr = git_attr(*argv);
++ *         attr_check_append(check, attr);
++ *         argv++;
++ *     }
++ * }
++ * ------------
++ *
++ *
++ * Querying All Attributes
++ * -----------------------
++ *
++ * To get the values of all attributes associated with a file:
++ *
++ * - Prepare an empty `attr_check` structure by calling `attr_check_alloc()`.
++ *
++ * - Call `git_all_attrs()`, which populates the `attr_check` with the
++ * attributes attached to the path.
++ *
++ * - Iterate over the `attr_check.items[]` array to examine the attribute
++ * names and values. The name of the attribute described by an
++ * `attr_check.items[]` object can be retrieved via
++ * `git_attr_name(check->items[i].attr)`. (Please note that no items will be
++ * returned for unset attributes, so `ATTR_UNSET()` will return false for all
++ * returned `attr_check.items[]` objects.)
++ *
++ * - Free the `attr_check` struct by calling `attr_check_free()`.
 + */
-+
 +
  struct index_state;
  
+-/* An attribute is a pointer to this opaque structure */
 +/**
-+ * This describes the set of options the calling program wants to affect
-+ * the operation of a low-level (single file) merge.
++ * An attribute is an opaque object that is identified by its name. Pass the
++ * name to `git_attr()` function to obtain the object of this type.
++ * The internal representation of this structure is of no interest to the
++ * calling programs. The name of the attribute can be retrieved by calling
++ * `git_attr_name()`.
 + */
- struct ll_merge_options {
+ struct git_attr;
+ 
+ /* opaque structures used internally for attribute collection */
+@@ -21,21 +133,36 @@ const struct git_attr *git_attr(const char *);
+ extern const char git_attr__true[];
+ extern const char git_attr__false[];
+ 
+-/* For public to check git_attr_check results */
++/**
++ * Attribute Values
++ * ----------------
++ *
++ * An attribute for a path can be in one of four states: Set, Unset, Unspecified
++ * or set to a string, and `.value` member of `struct attr_check_item` records
++ * it. The three macros check these, if none of them returns true, `.value`
++ * member points at a string value of the attribute for the path.
++ */
 +
-+	/**
-+	 * Behave as though this were part of a merge between common ancestors in
-+	 * a recursive merge (merges of binary files may need to be handled
-+	 * differently in such cases, for example). If a helper program is
-+	 * specified by the `[merge "<driver>"] recursive` configuration, it will
-+	 * be used.
-+	 */
- 	unsigned virtual_ancestor : 1;
--	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
++/* Returns true if the attribute is Set for the path. */
+ #define ATTR_TRUE(v) ((v) == git_attr__true)
 +
-+	/**
-+	 * Resolve local conflicts automatically in favor of one side or the other
-+	 * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
-+	 * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
-+	 * or `XDL_MERGE_FAVOR_UNION`.
-+	 */
-+	unsigned variant : 2;
++/* Returns true if the attribute is Unset for the path. */
+ #define ATTR_FALSE(v) ((v) == git_attr__false)
 +
-+	/**
-+	 * Resmudge and clean the "base", "theirs" and "ours" files before merging.
-+	 * Use this when the merge is likely to have overlapped with a change in
-+	 * smudge/clean or end-of-line normalization rules.
-+	 */
- 	unsigned renormalize : 1;
-+
-+	/**
-+	 * Increase the length of conflict markers so that nested conflicts
-+	 * can be differentiated.
-+	 */
- 	unsigned extra_marker_size;
-+
-+	/* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
- 	long xdl_opts;
++/* Returns true if the attribute is Unspecified for the path. */
+ #define ATTR_UNSET(v) ((v) == NULL)
+ 
+-/*
+- * Send one or more git_attr_check to git_check_attrs(), and
+- * each 'value' member tells what its value is.
+- * Unset one is returned as NULL.
+- */
++/* This structure represents one attribute and its value. */
+ struct attr_check_item {
+ 	const struct git_attr *attr;
+ 	const char *value;
  };
  
 +/**
-+ * Perform a three-way single-file merge in core.  This is a thin wrapper
-+ * around `xdl_merge` that takes the path and any merge backend specified in
-+ * `.gitattributes` or `.git/info/attributes` into account.
-+ * Returns 0 for a clean merge.
++ * This structure represents a collection of `attr_check_item`. It is passed to
++ * `git_check_attr()` function, specifying the attributes to check, and
++ * receives their values.
 + */
- int ll_merge(mmbuffer_t *result_buf,
- 	     const char *path,
- 	     mmfile_t *ancestor, const char *ancestor_label,
+ struct attr_check {
+ 	int nr;
+ 	int alloc;
 -- 
 gitgitgadget
 
