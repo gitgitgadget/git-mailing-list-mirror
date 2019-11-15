@@ -2,260 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B40E1F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 11:11:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 709CC1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 11:11:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbfKOLLV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 06:11:21 -0500
-Received: from mout.web.de ([212.227.15.3]:50969 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727142AbfKOLLV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 06:11:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573816272;
-        bh=rIVAt5NjqgnjpMg0W6FbKpwXu03opeByzuVXjlt/xYk=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=kMpCx0MFGNeqFmp7Yg+P5+/7JNwOLNWSKDky2g4J/4nVIAvB7pFaxrFb41quVVzuL
-         XXHdw6HB6HJjK9f240MIMn2ohPIlTUyQjYWeqCKFmsSuIJGAcOpgAHO7/d/CMnExp3
-         HJ2br5fDFoBroogrwgse7M9LtPZlZUQAYP3iXAPo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.132.93.34]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lc8rF-1i4Euj1QcH-00jdkZ; Fri, 15
- Nov 2019 12:11:12 +0100
-Subject: Re: git-coccinelle: adjustments for array.cocci?
-To:     Coccinelle <cocci@systeme.lip6.fr>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
- <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com>
- <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de>
- <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
- <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de>
- <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de>
- <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de>
- <aed296a6-bae0-6fcc-515e-ef96fed24ca6@web.de>
-From:   Markus Elfring <Markus.Elfring@web.de>
-Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
- 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 FEE=
-Message-ID: <6fffd13a-738b-e750-9f5a-f0bfb252855b@web.de>
-Date:   Fri, 15 Nov 2019 12:11:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1727122AbfKOLL0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 06:11:26 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:35016 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727142AbfKOLL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 06:11:26 -0500
+Received: by mail-wm1-f65.google.com with SMTP id 8so9960391wmo.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 03:11:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=u4xhHpMt7Wy2U1g1Q9DVtKrQQ8XntFr/yGlpj5Tcd4w=;
+        b=a/QMkhErPJ9J8sAqh8amPBWOQeDDbQGVojPRdvAppibtnADdc0n6Z1bjGzh7D2+IBR
+         URfNuPsHaM+Qbl8zVuA41yT5Nsm0DDziSoDeRms+e1dfUkResv9ONIaXCG158Buica9K
+         ek/yAJqDzI2esdB4zB2hatfYLhvPDbZ7vnpSMWMaO8eCprlozqCMMsKEw/k7R9rmp8xN
+         tw5KMR/ZzypgxLltW0oaAS7alkHfrTqwdB1eGNvyG/UPt+YdcFujLqlXe/ikhx/wrNrI
+         hNrGQ/luEDfweqAEQEzyfPsDKb2fLYfVZy0pmszjhL9BoVPE+Mf/qxO7ZrU1gSttqrhn
+         /4gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=u4xhHpMt7Wy2U1g1Q9DVtKrQQ8XntFr/yGlpj5Tcd4w=;
+        b=pmOWhLR6w16/s5OT7BJcpt6woYhpklCA1QbRDPwMuTPuYAoPcTmU+WUDz4OeyxFutN
+         L3zyFwHSI7nycH6uNR9y/AVT3Cb1hV8S1iumTIlTxv7gyMUQLD6rgSm8kA4pL6Ml/V4P
+         hmo2CQgXAq8LnKZaDQ8CIEmSozzyinMazld1TarfC4QVGVIMgjqmpqaKSdDNzjlmM8OQ
+         w+9roQrq3JA9QbjVh3VLAdA+fFnK+jNlGxU/AwFi5s2nbKxyj8xVM5WdDx/3vZLt3nks
+         EA0ZABdiS+YekKgKDjfDNpuAYjecPeN/ZxZ4bL3IpUkBTCGwrTlTv+FHE3opykxU/6yO
+         CdpQ==
+X-Gm-Message-State: APjAAAUMFpj/sF77BBHVFDLmMgQEHzy0FWH99UUT56V4JSuXepVzNAFk
+        U/4OhTHhWMwCA8pDzHOVmisK6L4I
+X-Google-Smtp-Source: APXvYqyCtaTIwlwib5Qkomhpcq8gVvHWaC++pHIkvdoKNYOX9UlHrd9TFCed7KGFPyc/e5f9+UYEnA==
+X-Received: by 2002:a7b:ce86:: with SMTP id q6mr13526353wmj.20.1573816282832;
+        Fri, 15 Nov 2019 03:11:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a5sm10499367wrv.56.2019.11.15.03.11.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Nov 2019 03:11:22 -0800 (PST)
+Message-Id: <5d9962d4344fa182b37cd8d969da01bc603414be.1573816280.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
+References: <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
+        <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 15 Nov 2019 11:11:12 +0000
+Subject: [PATCH v7 1/9] Start to implement a built-in version of `git add
+ --interactive`
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <aed296a6-bae0-6fcc-515e-ef96fed24ca6@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3JLiDdjFnIuaXWVj3YavJ2Ip3X07n3DMfUXqMGH2uQbDQTsZQby
- WBLQnDn//mBgrooUXJydl3vkHd3LR4NTXh43P+hIH2LFQ0WWs/zQRcjdlLLpWbOOsIyhVOc
- PRvVsH1tuQcZglM/TxsCmVZCyGO8MC2M0W427kGHNjIRF3OT+NSHm4Qz1je4VIv7i7b9Rne
- pc5nGRLzeufQle1sJn32A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dsz2rt24rOc=:iDonXNDM+FivrzBIdami0U
- 74zHMaOPGb6F2YG8fwTb1W6tzOV3vULMmQ2v/nmkdmr8KAxJuMemB5tozKTxuE8AIfG0gnSiK
- a3y5IWgI3XClN6nVxmMukqxDHeYwSpK3PrYEzX/lLoAcf7lVOoizn6gDqT9Qahx02hOYa6FKC
- VkecWm9onmPJVb1+RQFTEtJa0eE1iIuwUxSbS2kCmsWGoCFnCfSjgRobjEZfa80sJfJP2xnjh
- 9HNgJUus9mAs01Aj2CDhdnfN5n/xEObn8DhgkUcjus5ni7ASJZRUhhHNRWNtoaOELWpRSggkG
- clchrldo4g7JzSEW/hYnOUwUDZrxQj7yEVF6zaWursPbEi9Vc4Yaa2rNtlEBODd5tQ60QWTsX
- zua5DJV56NC+Nx0DLDLhsIsitVGAKUUSvT8EheCEZh7rgNcaheDKPuS5xtxKjxPHZ5i4wmWfG
- v3OmiZvnilR+YjVntSGml/FSc4fT49Yx8TC3pDHZ82Dqr6LSs3Q/ZoTIvpVRk+NA6qt0jH+k8
- CpTwyRN9//sG/tFAARdBbJTyWxIFunhG86BYQ7bz1STA//wYqNaUYsWC8/k5i1fAHzCb7YRw5
- 5KOy2SHaC4rOkYx7HRq0jZwSusgIT7Sec2mVlyVoFENBGy4i6oX4qx1TdHvAFeJ5EK7mf/TM3
- nIU4orzn4qPvUeYK4nbqf/LA6nW3rtmgbzC4Ob6odA7S8bS1K0yYZgG6jmtRALidSd6AJ3klR
- +lsbBFuYE8rctWlHt97ot1suQDRyCHByOiSXK+ri2KLfORNMgyTd0Lz1EfmWbJ4iKYLHAbIKW
- hX76Sq6AyowatitNJMf2UmEtutrUxFVkPM9TVpl7AfFKJx11R/n6Xwb0w7e2AO1mKba2Nm8ab
- gHIE2Zz3F0p/mNW9s8RddCIjQ2mWl8GpcNE/LFoL2uQSiod8VORy4y+RdshXpZsnt3T9ar4xh
- blVDqWZmJbzOV3awP1kZu8aBOHzw9JGFkrb22/3USu7/mgWjunE5wSgo3UoQkfty35QHSxZwq
- c5SBe4u4n3NpZsFoRjNWFvTO3miL0Prk1WJ3jFgpLNtV0d80Ng4jG1KoNK2HlDuXDz6Qv4eax
- qgRzNJVW9Gd3CT+nrbUUhO1sDFnR0KFnhTQIBbIC+Qzmb+bSW273/8MPBgq2Eqb7uQZi6BrKt
- yBXdtqxlNzB7024K19JIEwXvd7giU7lZn4+Y5Vw19NRGadOcCcQTSyNbqP+4X7jgLmIXPoT3p
- CkObWukdSScOpYTvoifMzFxuo3JSH3l/tkcXYHnKUHZxCXkFB6gHLLATvGk4=
+To:     git@vger.kernel.org
+Cc:     "Jeff Hostetler <git@jeffhostetler.com>, Jeff King" <peff@peff.net>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Anyway, someone who can reproduce the issue using the latest release
-> of Coccinelle would be in a better position to file a bug report.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Hello,
+Unlike previous conversions to C, where we started with a built-in
+helper, we start this conversion by adding an interception in the
+`run_add_interactive()` function when the new opt-in
+`add.interactive.useBuiltin` config knob is turned on (or the
+corresponding environment variable `GIT_TEST_ADD_I_USE_BUILTIN`), and
+calling the new internal API function `run_add_i()` that is implemented
+directly in libgit.a.
 
-I repeated the discussed source code transformation approach together
-with the software combination =E2=80=9CCoccinelle 1.0.8-00004-g842075f7=E2=
-=80=9D (OCaml 4.09).
-https://github.com/coccinelle/coccinelle/commits/master
+At this point, the built-in version of `git add -i` only states that it
+cannot do anything yet. In subsequent patches/patch series, the
+`run_add_i()` function will gain more and more functionality, until it
+is feature complete. The whole arc of the conversion can be found in the
+PRs #170-175 at https://github.com/gitgitgadget/git.
 
-1. Yesterday I checked the source files out for the software =E2=80=9CGit=
-=E2=80=9D
-   according to the commit =E2=80=9CThe first batch post 2.24 cycle=E2=80=
-=9D.
-   https://github.com/git/git/commit/d9f6f3b6195a0ca35642561e530798ad1469b=
-d41
+The "--helper approach" can unfortunately not be used here: on Windows
+we face the very specific problem that a `system()` call in
+Perl seems to close `stdin` in the parent process when the spawned
+process consumes even one character from `stdin`. Which prevents us from
+implementing the main loop in C and still trying to hand off to the Perl
+script.
 
-2. I restored a previous development status by the following command.
+The very real downside of the approach we have to take here is that the
+test suite won't pass with `GIT_TEST_ADD_I_USE_BUILTIN=true` until the
+conversion is complete (the `--helper` approach would have let it pass,
+even at each of the incremental conversion steps).
 
-   git show 921d49be86 | patch -p1 -R
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/config/add.txt |  5 +++++
+ Makefile                     |  1 +
+ add-interactive.c            |  7 +++++++
+ add-interactive.h            |  8 ++++++++
+ builtin/add.c                | 12 ++++++++++++
+ t/README                     |  4 ++++
+ 6 files changed, 37 insertions(+)
+ create mode 100644 add-interactive.c
+ create mode 100644 add-interactive.h
 
-   See also:
-   https://public-inbox.org/git/53346d52-e096-c651-f70a-ce6ca4d82ff9@web.d=
-e/
+diff --git a/Documentation/config/add.txt b/Documentation/config/add.txt
+index 4d753f006e..c9f748f81c 100644
+--- a/Documentation/config/add.txt
++++ b/Documentation/config/add.txt
+@@ -5,3 +5,8 @@ add.ignore-errors (deprecated)::
+ 	option of linkgit:git-add[1].  `add.ignore-errors` is deprecated,
+ 	as it does not follow the usual naming convention for configuration
+ 	variables.
++
++add.interactive.useBuiltin::
++	[EXPERIMENTAL] Set to `true` to use the experimental built-in
++	implementation of the interactive version of linkgit:git-add[1]
++	instead of the Perl script version. Is `false` by default.
+diff --git a/Makefile b/Makefile
+index 58b92af54b..6c4a1e0ee5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -823,6 +823,7 @@ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentat
+ 	-name '*.h' -print)))
+ 
+ LIB_OBJS += abspath.o
++LIB_OBJS += add-interactive.o
+ LIB_OBJS += advice.o
+ LIB_OBJS += alias.o
+ LIB_OBJS += alloc.o
+diff --git a/add-interactive.c b/add-interactive.c
+new file mode 100644
+index 0000000000..482e458dc6
+--- /dev/null
++++ b/add-interactive.c
+@@ -0,0 +1,7 @@
++#include "cache.h"
++#include "add-interactive.h"
++
++int run_add_i(struct repository *r, const struct pathspec *ps)
++{
++	die(_("No commands are available in the built-in `git add -i` yet!"));
++}
+diff --git a/add-interactive.h b/add-interactive.h
+new file mode 100644
+index 0000000000..7043b8741d
+--- /dev/null
++++ b/add-interactive.h
+@@ -0,0 +1,8 @@
++#ifndef ADD_INTERACTIVE_H
++#define ADD_INTERACTIVE_H
++
++struct repository;
++struct pathspec;
++int run_add_i(struct repository *r, const struct pathspec *ps);
++
++#endif
+diff --git a/builtin/add.c b/builtin/add.c
+index dd18e5c9b6..d4686d5218 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -20,6 +20,7 @@
+ #include "bulk-checkin.h"
+ #include "argv-array.h"
+ #include "submodule.h"
++#include "add-interactive.h"
+ 
+ static const char * const builtin_add_usage[] = {
+ 	N_("git add [<options>] [--] <pathspec>..."),
+@@ -185,6 +186,16 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+ {
+ 	int status, i;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
++	int use_builtin_add_i =
++		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
++
++	if (!patch_mode) {
++		if (use_builtin_add_i < 0)
++			git_config_get_bool("add.interactive.usebuiltin",
++					    &use_builtin_add_i);
++		if (use_builtin_add_i == 1)
++			return !!run_add_i(the_repository, pathspec);
++	}
+ 
+ 	argv_array_push(&argv, "add--interactive");
+ 	if (patch_mode)
+@@ -319,6 +330,7 @@ static int add_config(const char *var, const char *value, void *cb)
+ 		ignore_add_errors = git_config_bool(var, value);
+ 		return 0;
+ 	}
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+diff --git a/t/README b/t/README
+index 60d5b77bcc..5132ec83f8 100644
+--- a/t/README
++++ b/t/README
+@@ -397,6 +397,10 @@ GIT_TEST_STASH_USE_BUILTIN=<boolean>, when false, disables the
+ built-in version of git-stash. See 'stash.useBuiltin' in
+ git-config(1).
+ 
++GIT_TEST_ADD_I_USE_BUILTIN=<boolean>, when true, enables the
++built-in version of git add -i. See 'add.interactive.useBuiltin' in
++git-config(1).
++
+ GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
+ of the index for the whole test suite by bypassing the default number of
+ cache entries and thread minimums. Setting this to 1 will make the
+-- 
+gitgitgadget
 
-3. I stored a generated patch based on the currently released SmPL script.
-   https://github.com/git/git/blob/177fbab747da4f58cb2a8ce010b3515c86dd67c=
-9/contrib/coccinelle/array.cocci
-
-4. I applied the following patch then.
-
-diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.coc=
-ci
-index 46b8d2ee11..89df184bbd 100644
-=2D-- a/contrib/coccinelle/array.cocci
-+++ b/contrib/coccinelle/array.cocci
-@@ -12,27 +12,21 @@ T *ptr;
- T[] arr;
- expression E, n;
- @@
--(
--  memcpy(ptr, E,
-=2D- n * sizeof(*(ptr))
--+ n * sizeof(T)
--  )
--|
--  memcpy(arr, E,
-=2D- n * sizeof(*(arr))
--+ n * sizeof(T)
--  )
--|
--  memcpy(E, ptr,
-=2D- n * sizeof(*(ptr))
--+ n * sizeof(T)
--  )
--|
--  memcpy(E, arr,
-=2D- n * sizeof(*(arr))
--+ n * sizeof(T)
--  )
-+ memcpy(
-+(       ptr, E, n *
-+-       sizeof(*(ptr))
-++       sizeof(T)
-+|       arr, E, n *
-+-       sizeof(*(arr))
-++       sizeof(T)
-+|       E, ptr, n *
-+-       sizeof(*(ptr))
-++       sizeof(T)
-+|       E, arr, n *
-+-       sizeof(*(arr))
-++       sizeof(T)
- )
-+       )
-
- @@
- type T;
-
-   I suggested in this way to move a bit of SmPL code.
-
-5. I stored another generated patch based on the adjusted SmPL script.
-
-6. I performed a corresponding file comparison.
-
-=2D-- array-released.diff	2019-11-14 21:29:11.020576916 +0100
-+++ array-reduced1.diff	2019-11-14 21:45:58.931956527 +0100
-@@ -6,24 +6,10 @@
-  	r->entry_count =3D t->entry_count;
-  	r->delta_depth =3D t->delta_depth;
- -	memcpy(r->entries,t->entries,t->entry_count*sizeof(t->entries[0]));
--+	COPY_ARRAY(r->entries, t->entries, t->entry_count);
-++	memcpy(r->entries,t->entries,t->entry_count*sizeof(*(t->entries)));
-  	release_tree_content(t);
-  	return r;
-  }
--diff -u -p a/pretty.c b/pretty.c
-=2D--- a/pretty.c
--+++ b/pretty.c
--@@ -106,8 +106,8 @@ static void setup_commit_formats(void)
-- 	commit_formats_len =3D ARRAY_SIZE(builtin_formats);
-- 	builtin_formats_len =3D commit_formats_len;
-- 	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
-=2D-	memcpy(commit_formats, builtin_formats,
-=2D-	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
--+	COPY_ARRAY(commit_formats, builtin_formats,
--+		   ARRAY_SIZE(builtin_formats));
--
-- 	git_config(git_pretty_formats_config, NULL);
-- }
- diff -u -p a/packfile.c b/packfile.c
- --- a/packfile.c
- +++ b/packfile.c
-@@ -36,17 +22,6 @@
-  		} else {
-  			ALLOC_GROW(poi_stack, poi_stack_nr+1, poi_stack_alloc);
-  		}
--@@ -1698,8 +1698,8 @@ void *unpack_entry(struct repository *r,
-- 		    && delta_stack =3D=3D small_delta_stack) {
-- 			delta_stack_alloc =3D alloc_nr(delta_stack_nr);
-- 			ALLOC_ARRAY(delta_stack, delta_stack_alloc);
-=2D-			memcpy(delta_stack, small_delta_stack,
-=2D-			       sizeof(*delta_stack)*delta_stack_nr);
--+			COPY_ARRAY(delta_stack, small_delta_stack,
--+				   delta_stack_nr);
-- 		} else {
-- 			ALLOC_GROW(delta_stack, delta_stack_nr+1, delta_stack_alloc);
-- 		}
- diff -u -p a/compat/regex/regexec.c b/compat/regex/regexec.c
- --- a/compat/regex/regexec.c
- +++ b/compat/regex/regexec.c
-
-
-How do you think about the differences from this test result?
-
-Regards,
-Markus
