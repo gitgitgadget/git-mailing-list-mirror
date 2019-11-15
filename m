@@ -2,127 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7861F4B5
-	for <e@80x24.org>; Thu, 14 Nov 2019 23:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2130E1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 00:13:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbfKNXD7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 18:03:59 -0500
-Received: from mout.gmx.net ([212.227.15.19]:42941 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726996AbfKNXD7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 18:03:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1573772627;
-        bh=glc9K3RDn5hvi329KbFSSwip3OSBACamhWqr92BdRmE=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ifb0FzrpOlSlZxtHI+Y8jokq2UQChP3ot90rkpT4fY92V1IgporZMiup/6Kh2+Ezk
-         YjEGaIYYVRYezXWhDFx3FyN9q7RnhwmgXySS2/4MxBnLjDNHQlwzIRF2cAapt30wcL
-         ldIdceFy3SN13MJ2XkHpV9gLns7AWm2j7i+mQS6c=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M42jK-1iVO9S3SZk-0005B0; Fri, 15
- Nov 2019 00:03:46 +0100
-Date:   Fri, 15 Nov 2019 00:03:30 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: Should we auto-close PRs on git/git?
-In-Reply-To: <20191114074117.GB17186@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
-References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet> <20191114074117.GB17186@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726986AbfKOANa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 19:13:30 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37052 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726852AbfKOANa (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 14 Nov 2019 19:13:30 -0500
+Received: from [80.153.18.91] (helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1iVPEs-00051d-1r; Fri, 15 Nov 2019 01:13:26 +0100
+Subject: Re: rev-list and "ambiguous" IDs
+To:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+References: <CAGyf7-EXOUWYUZXmww2+NyD1OuWEG18n221MPojVSCCu=19JNA@mail.gmail.com>
+ <20191114055906.GA10643@sigill.intra.peff.net>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
+Date:   Fri, 15 Nov 2019 01:12:47 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fGzlZQa390c12FH6V4sB6IK1PENM1ml8+9DhgNax5F+q7RuALWj
- TovQoFUfIMwOimKqjC26TjXic1Vs4m7r+o9Shf6VntbqFfbhl6iWqoYQGC+F3U89ZYRtiD/
- 0GxSl2Gkp6onjDe0gg7hccjsU9fmSRVitfHZekGqysB03InmHB7h+kZ/yCh5zKO9d52YChc
- N3YUbuHJF2WgxsLtf8ycA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uHBU0ZlZN+g=:v4V4COImdS/pqMiup58YHy
- XVBW2/PqGlAgXkdnJ2gTT2KTVYded+mLG/zH4cn5Sios0Jryk87oP45fTXzvf4HH07IWpi7N5
- 5znbSaryPvIEDfjEuvrc9HooHTE+kNgDeyUpsspmuW8opFIVX+daJXmIKUL3VsKUKsFfmYd9p
- q/CvVgy6HqV5SWU6YO3ATo664jcj5Lr/Niz8okCV/Nl68aLRjKWJTItnbxx2WFYv9zkpHq0Ns
- zLKppxTEGTzv0dNvuqQbcFUp1+6Bl2LJQUWZ5fq+tMQI2M95NP8JHkSxh7hNURqhV+fhShG5H
- 96CKnt+Ka6J0C/iwgEnJagU0wvce72rup/SisPJqeYSmh+Star1ha5Q36dg3th0U/uMYfzCCx
- 8Y8u9kTCaAFeVe9RL673nK20kLZnqlWJb7w9v43NBCA+VXVTwOJxHtQxszj34KX9P7W2Md6iV
- kt/szCwHgjRqYXCbcV0ATZNUbIDmIn1Ns5uiGFdUlR4hzOM+5VHSH29ISODPDMA5l7rlNS+E0
- mBkoNNAs0OYU57L5rvaqFRJ06Kb8LlN04QntOG4sx2MJR0WvWT1EVixosGIvAaNxdWsmiyaXN
- FJnRIJCSIDQp8VRKnFYddR3fZxcmKfKzD7dszutqTyUoauQQmVLzTx/3kFzVkKXPyDNtGXuFL
- 2znonQW7CsI8i5RdSP0c04HTfYLSKxAr7ulyi7WOwSyKizFzBfrN1tXWAvwBnGe5rZvZ8Uy6j
- bAxphqh+mzyQ9gr9Ka5v0nov6MR1J0qnGidwuykrAENiwGqxKSWCpH5B7LNXs92wO3o/DNseY
- sHDmB5rJ1UNTrrpdrOo1ymtIO7/WY4KMZ/xGOXMUzbidGtxlNDKwPJtoqJ4hXCGoRs7oKe0dC
- Tuqgi5SWXlglUN4Me/C9jDejWcD6XiFfnek/2tl6cuRdrE/MoTh5K098QQK9cWh0VFLbX9hoZ
- P8VkJ0f5EDZDr6JDmSnliJzpfSVdRLiPaPzp9HGH1St4hflxo8KP2CWdMTEBdKsYQBDvE2W3I
- bOz0uTE+9oUOso7pT2kGdI+a1Q4Y/DOqzoAZYxFv3n1kyUlvjUtB72CBgiY6JoGuP7qcR2uFo
- ge7Xn9oSyy90UHDDJD5fu4eJuPrYthvIujdCqAu2pOtrpLAQOW5vIebDkVS3GjeYzTq91ZaQl
- j8FQdrZjbI0M7QL5586AF+6BFWU7CCXBor+KrdpvaLsPcDVehgPHQf52W1Ck87zWRN8eaKJnj
- FcSkOigmu7QRVhJBwrC4BRy7qnf+Q0YxzQ4wioadYvi+iv6Huc78TAlUsFiQ=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20191114055906.GA10643@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1573776809;60c1c848;
+X-HE-SMSGID: 1iVPEs-00051d-1r
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Am 14.11.2019 um 06:59 schrieb Jeff King:
 
-On Thu, 14 Nov 2019, Jeff King wrote:
+[...]
 
-> On Wed, Nov 13, 2019 at 01:04:35PM +0100, Johannes Schindelin wrote:
->
-> > > We talked a while ago about having GitGitGadget operate on git/git,
-> > > rather than on a separate mirror. That would automatically help at l=
-east
-> > > one class of PR-opener: people who want their patches to reach the l=
-ist
-> > > but didn't realize they should be using gitgitgadget/git.
-> > >
-> > > I don't remember what the technical blockers are for getting that se=
-t
-> > > up, but it seems like a strictly nicer outcome than auto-closing the=
-ir
-> > > PR.
-> >
-> > Okay, here are a couple of technical challenges, off the top of my hea=
-d:
-> > [...]
-> > Not an easy, nor a small project, I am afraid.
->
-> Yow. That's a lot more involved than I was hoping for.
->
-> Thanks for writing it up. Some of the points raised were interesting. I
-> do think we'd want git/git (the repository) to remain read-only if
-> possible.
+> You can also set core.disambiguate to "committish" (or even "commit").
+> At the time we added that option (and started reporting the list of
+> candidates), we pondered whether it might make sense to make that the
+> default.
 
-I guess you're right.
+I did not know this setting. Thanks!
 
-We should probably try to restrict the permissions as much as possible,
-not only deny write access to the repository.
+> That would probably help in a lot of cases, but the argument
+> against it is that when it goes wrong, it may be quite confusing (so
+> we're better off with the current message, which punts back to the
+> user).
 
-For example, one thing GitGitGadget does is to add these "Checks" to the
-commits of the PRs which contain links to the corresponding commits in
-gitster/git (if any). Those can actually not be removed, there is not
-even any API for that. So it would probably make sense to avoid that in
-git/git.
+Just out of curiosity: Is there a use case for inspecting non-commit
+objects with git log?
 
-This would mean that the git/git part of GitGitGadget does not install
-those commit mappings. I guess that's okay, they _are_ kinda hard to
-use.
+If I do (in the git repo)
 
-> If GitHub's permissions model is a limiting factor here, let me know
-> and I can try to bring it to the attention of the right people.
+$ git log 1231
 
-I actually don't think that my use case fits any sane permission model
-;-) After all, I want the GitHub App to _span_ repositories (even orgs),
-and that's not really the idea of Apps.
+I get
 
-After sleeping over it, I don't actually think that it is such a bad
-idea to add a second GitHub App with a more limited permission set.
+error: short SHA1 1231 is ambiguous
+hint: The candidates are:
+hint:   123139fc89 tree
+hint:   12316a1673 tree
+hint:   123144fe8a blob
+fatal: ambiguous argument '1231': unknown revision or path not in the
+working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
 
-Ciao,
-Dscho
+with
+$ git --version
+git version 2.24.0.windows.2
+
+and all of these candidates are no commits.
+
+> I think it also comes up fairly rarely these days, as short sha1s we
+> print have some headroom built in (as you can see above; the one you've
+> input is really quite short compared to anything Git would have printed
+> in that repo).
+> 
+>> Also, while considering this, I noticed that `git rev-list
+>> dc41e11ee18` (the blob from the output above) doesn't fail. It
+>> silently exits, nothing written to stdout or stderr, with 0 status. A
+>> little surprising; I would have expected rev-list to complain that
+>> dc41e11ee18 isn't a valid commit-ish value.
+> 
+> Yeah, this is a separate issue. If the revision machinery has pending
+> trees or blobs but isn't asked to show them via "--objects", then it
+> just ignores them.
+> 
+> I've been running with the patch below for several years; it just adds a
+> warning when we ignore such an object. I've been tempted to send it for
+> inclusion, but it has some rough edges:
+> 
+>   - there are some fast-export calls in the test scripts that trigger
+>     this. I don't remember the details, and what the fix would look
+>     like.
+> 
+>   - it makes wildcards like "rev-list --all" complain, because they may
+>     add a tag-of-blob, for example (in git.git, junio-gpg-pub triggers
+>     this). Things like "--all" would probably need to get smarter, and
+>     avoid adding non-commits in the first place (when --objects is not
+>     in use, of course)
+> 
+> ---
+>  revision.c | 18 ++++++++++++++++--
+>  1 file changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/revision.c b/revision.c
+> index 0e39b2b8a5..7dc2d9a822 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -393,6 +393,16 @@ void add_pending_oid(struct rev_info *revs, const char *name,
+>  	add_pending_object(revs, object, name);
+>  }
+>  
+> +static void warn_ignored_object(struct object *object, const char *name)
+> +{
+> +	if (object->flags & UNINTERESTING)
+> +		return;
+> +
+> +	warning(_("ignoring %s object in traversal: %s"),
+> +		type_name(object->type),
+> +		(name && *name) ? name : oid_to_hex(&object->oid));
+> +}
+> +
+>  static struct commit *handle_commit(struct rev_info *revs,
+>  				    struct object_array_entry *entry)
+>  {
+> @@ -458,8 +468,10 @@ static struct commit *handle_commit(struct rev_info *revs,
+>  	 */
+>  	if (object->type == OBJ_TREE) {
+>  		struct tree *tree = (struct tree *)object;
+> -		if (!revs->tree_objects)
+> +		if (!revs->tree_objects) {
+> +			warn_ignored_object(object, name);
+>  			return NULL;
+> +		}
+>  		if (flags & UNINTERESTING) {
+>  			mark_tree_contents_uninteresting(revs->repo, tree);
+>  			return NULL;
+> @@ -472,8 +484,10 @@ static struct commit *handle_commit(struct rev_info *revs,
+>  	 * Blob object? You know the drill by now..
+>  	 */
+>  	if (object->type == OBJ_BLOB) {
+> -		if (!revs->blob_objects)
+> +		if (!revs->blob_objects) {
+> +			warn_ignored_object(object, name);
+>  			return NULL;
+> +		}
+>  		if (flags & UNINTERESTING)
+>  			return NULL;
+>  		add_pending_object_with_path(revs, object, name, mode, path);
+> 
+
