@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 779B21F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23B7C1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbfKOJx7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:53:59 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:36242 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727385AbfKOJx7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:53:59 -0500
-Received: by mail-wr1-f45.google.com with SMTP id r10so10265682wrx.3
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:57 -0800 (PST)
+        id S1727492AbfKOJyC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:02 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:37871 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727403AbfKOJyA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:54:00 -0500
+Received: by mail-wm1-f45.google.com with SMTP id b17so9656332wmj.2
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ByXG9NUEQXnOejxLNbqwymYZvqZVDNF4tVNaLMHYBnI=;
-        b=QZRmLeqAlcb5QaBwmrumv7NhTl3UZ2uEJLAyVBw09tJ+oIb0TaAomL3VKbZhGahYjK
-         2RPk/fELnLjXQnnS7HrS7Uc+A7leSRj3/cYugyNWQZOw8iYV8nGP71TafaV92OunetJu
-         vJWNMOeCDLSadZkMzHzNObFs8MrFsl7uk25HME/a6YOlTqGlKDgckJd5GJynPbl5Wyp2
-         iTIfDWn9I09dN2KqkScBWD+Sp6owg9DUJfDP2q3FZbVG++Hvwo428+gwGRDTZwnEH8Yj
-         bmDrc2+GR1KMMVTFUkYaYuqRrja5Cwy1L7PlHVlGOSduBNkClEXzLgXk8bgW7PprPA/V
-         10wA==
+        bh=VWNl6wK9EB6mZDC5GVSJ8qEMjlos9LR3gykaHGpGsuM=;
+        b=JQrF4lVubicqR/FgorAHQfd3MsAd5uvoM1c3l+5duMQ9SRio8aC6TZov9nFXsYS16O
+         rwINi3J4rfCdyaDqz9foEXVzTOv+nKRBRjsrJrfW4lSJzyxpq5+0qeAXnBeRwxaV5IME
+         k15EBQV+tv2wV1i6yq+BNg+0T6yC5OnPNukrv6S5RrP0OhGBwqEIRKb7Ul+13c4cqJBC
+         /H3+bsqAfG22+zj/89Az4OGgUz2x7JB4dERsOniOwE/XbC9965g8H6TK9eoDJWS0zFky
+         ulH4/JuZOHOyqDl4ZHhC7rROCXAqP9qILgve4W+vkb/9xplmuXGLwaDrokRBnaP9DC55
+         3FZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ByXG9NUEQXnOejxLNbqwymYZvqZVDNF4tVNaLMHYBnI=;
-        b=sXNQ6cdlxVg49Ho67WYJDv61wcRuUOtISOgEzGRJCQd2E8x2imhGm+2Z+hFjcgvyUv
-         GbCzWCnkcjVN0rDy9T+BGYFRIFbxlwATVliQtjikExzj1zwoFveAHncEPHmUCShtgaie
-         u+ekDfs4+CwMM1H6Qj1QeG0vwOF69xFf2GHTC8bZDqr7afzrzFhE51MLykQ7R7KzQ3EB
-         3lhXANvU/uLn6JP9Owjrx2SLA7YmtPA+uIpMNFXqs7VgqqQBf3iX0lNGQ8EepkkPJJEU
-         vaX45gQmTjfKA65SHl/reI5MCpgd0KIt92wGNYEr0k5Rm0w7l91hoSlD/j2symLnoon7
-         81jw==
-X-Gm-Message-State: APjAAAXg2uSOXPvIBzUzJ2GSaguBas5Wf4q2ibkMc4iLWLU3EaCLgQ1T
-        Li3UFuvUSQOsSS+2iydC9QO8wFxr
-X-Google-Smtp-Source: APXvYqyyop9xrmJcWtjvH5OmwueCMWnjmFh2HM6abhD+McHcONPZweF2tjOE5LCobwHCuF+iqgwU5A==
-X-Received: by 2002:a5d:5092:: with SMTP id a18mr3925321wrt.297.1573811636169;
-        Fri, 15 Nov 2019 01:53:56 -0800 (PST)
+        bh=VWNl6wK9EB6mZDC5GVSJ8qEMjlos9LR3gykaHGpGsuM=;
+        b=ehur5zwe3fN/y8Az0He8Fc/qlbKfHNAQb2M+Ab3cO3JW3H/AwHUKQr0HLlhHO2mJdL
+         zvtUd2nLVbsp3N3/uExqOhPGDdJU4izoQk/90MprKuLiKbNtPTzg/r8JUmUQNFrklmQY
+         WYkpcT414nHLTW7FNH7HZUxEpSTHs+r1e+Xd4p4oPuDsRJSTyxavsxn39r0nYasiARQN
+         5GSbHw24+1mi27mAHWHt/Ru1Hm2mtK6VpjJ6zBunuQe0imCiV0BMntTNdqoxK22g9UND
+         BoM18nNpoAI+guUFrt8cswhmGG9vUeirLjIhrNKFymq8rJ+EtYVwxwmQfZ6z5ctbz554
+         F/DA==
+X-Gm-Message-State: APjAAAXr+XcTlQTdUIIdKpelZLfPO3REnRYoLuBnHEpAiMq7732+J+Ez
+        Yoi8Tph2kW26ayrhD6LyAsC3SgAT
+X-Google-Smtp-Source: APXvYqymgwmZquNmPCmhjbUo0YIQPnTMhFKm2mNAgwCOG8DeezTFCWWXk73bw7b7lfjGtj1zCLDW8w==
+X-Received: by 2002:a7b:ce90:: with SMTP id q16mr13345735wmj.172.1573811637883;
+        Fri, 15 Nov 2019 01:53:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t13sm10289742wrr.88.2019.11.15.01.53.55
+        by smtp.gmail.com with ESMTPSA id b8sm10467231wrt.39.2019.11.15.01.53.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:55 -0800 (PST)
-Message-Id: <0042d10223d011de6d318a271388ac932004672c.1573811626.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:57 -0800 (PST)
+Message-Id: <3e0d3f24158baa42464cef24ef7ea6ab0328801a.1573811627.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:35 +0000
-Subject: [PATCH v4 10/21] pathspec: move doc to pathspec.h
+Date:   Fri, 15 Nov 2019 09:53:37 +0000
+Subject: [PATCH v4 12/21] cache: move doc to cache.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,138 +72,135 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-setup.txt
-to pathspec.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-allocation-growing.txt
+to cache.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-setup.txt is removed because the
+Also documentation/technical/api-allocation-growing.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-setup.txt | 47 ---------------------------
- pathspec.h                            | 35 +++++++++++++++++++-
- 2 files changed, 34 insertions(+), 48 deletions(-)
- delete mode 100644 Documentation/technical/api-setup.txt
+ Documentation/MyFirstObjectWalk.txt           |  5 +--
+ .../technical/api-allocation-growing.txt      | 39 ------------------
+ cache.h                                       | 41 +++++++++++++++++--
+ 3 files changed, 39 insertions(+), 46 deletions(-)
+ delete mode 100644 Documentation/technical/api-allocation-growing.txt
 
-diff --git a/Documentation/technical/api-setup.txt b/Documentation/technical/api-setup.txt
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index 321c0ba6a4..aa828dfdc4 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -119,9 +119,8 @@ parameters provided by the user over the CLI.
+ 
+ `nr` represents the number of `rev_cmdline_entry` present in the array.
+ 
+-`alloc` is used by the `ALLOC_GROW` macro. Check
+-`Documentation/technical/api-allocation-growing.txt` - this variable is used to
+-track the allocated size of the list.
++`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is
++used to track the allocated size of the list.
+ 
+ Per entry, we find:
+ 
+diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
 deleted file mode 100644
-index eb1fa9853e..0000000000
---- a/Documentation/technical/api-setup.txt
+index 5a59b54844..0000000000
+--- a/Documentation/technical/api-allocation-growing.txt
 +++ /dev/null
-@@ -1,47 +0,0 @@
--setup API
--=========
+@@ -1,39 +0,0 @@
+-allocation growing API
+-======================
 -
--Talk about
+-Dynamically growing an array using realloc() is error prone and boring.
 -
--* setup_git_directory()
--* setup_git_directory_gently()
--* is_inside_git_dir()
--* is_inside_work_tree()
--* setup_work_tree()
+-Define your array with:
 -
--(Dscho)
+-* a pointer (`item`) that points at the array, initialized to `NULL`
+-  (although please name the variable based on its contents, not on its
+-  type);
 -
--Pathspec
----------
+-* an integer variable (`alloc`) that keeps track of how big the current
+-  allocation is, initialized to `0`;
 -
--See glossary-context.txt for the syntax of pathspec. In memory, a
--pathspec set is represented by "struct pathspec" and is prepared by
--parse_pathspec(). This function takes several arguments:
+-* another integer variable (`nr`) to keep track of how many elements the
+-  array currently has, initialized to `0`.
 -
--- magic_mask specifies what features that are NOT supported by the
--  following code. If a user attempts to use such a feature,
--  parse_pathspec() can reject it early.
+-Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
+-alloc)`.  This ensures that the array can hold at least `n` elements by
+-calling `realloc(3)` and adjusting `alloc` variable.
 -
--- flags specifies other things that the caller wants parse_pathspec to
--  perform.
+-------------
+-sometype *item;
+-size_t nr;
+-size_t alloc
 -
--- prefix and args come from cmd_* functions
+-for (i = 0; i < nr; i++)
+-	if (we like item[i] already)
+-		return;
 -
--parse_pathspec() helps catch unsupported features and reject them
--politely. At a lower level, different pathspec-related functions may
--not support the same set of features. Such pathspec-sensitive
--functions are guarded with GUARD_PATHSPEC(), which will die in an
--unfriendly way when an unsupported feature is requested.
+-/* we did not like any existing one, so add one */
+-ALLOC_GROW(item, nr + 1, alloc);
+-item[nr++] = value you like;
+-------------
 -
--The command designers are supposed to make sure that GUARD_PATHSPEC()
--never dies. They have to make sure all unsupported features are caught
--by parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC()
--should give the designers all pathspec-sensitive codepaths and what
--features they support.
+-You are responsible for updating the `nr` variable.
 -
--A similar process is applied when a new pathspec magic is added. The
--designer lifts the GUARD_PATHSPEC restriction in the functions that
--support the new magic. At the same time (s)he has to make sure this
--new feature will be caught at parse_pathspec() in commands that cannot
--handle the new magic in some cases. grepping parse_pathspec() should
--help.
-diff --git a/pathspec.h b/pathspec.h
-index 1c18a2c90c..f3ee8d9871 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -22,6 +22,11 @@ struct index_state;
+-If you need to specify the number of elements to allocate explicitly
+-then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
+diff --git a/cache.h b/cache.h
+index 04cabaac11..8fbbdf971a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -632,10 +632,43 @@ int daemonize(void);
  
- #define PATHSPEC_ONESTAR 1	/* the pathspec pattern satisfies GFNM_ONESTAR */
- 
-+/**
-+ * See glossary-context.txt for the syntax of pathspec.
-+ * In memory, a pathspec set is represented by "struct pathspec" and is
-+ * prepared by parse_pathspec().
-+ */
- struct pathspec {
- 	int nr;
- 	unsigned int has_wildcard:1;
-@@ -73,18 +78,46 @@ struct pathspec {
-  */
- #define PATHSPEC_LITERAL_PATH (1<<6)
+ #define alloc_nr(x) (((x)+16)*3/2)
  
 -/*
+- * Realloc the buffer pointed at by variable 'x' so that it can hold
+- * at least 'nr' entries; the number of entries currently allocated
+- * is 'alloc', using the standard growing factor alloc_nr() macro.
 +/**
-  * Given command line arguments and a prefix, convert the input to
-  * pathspec. die() if any magic in magic_mask is used.
++ * Dynamically growing an array using realloc() is error prone and boring.
++ *
++ * Define your array with:
++ *
++ * - a pointer (`item`) that points at the array, initialized to `NULL`
++ *   (although please name the variable based on its contents, not on its
++ *   type);
++ *
++ * - an integer variable (`alloc`) that keeps track of how big the current
++ *   allocation is, initialized to `0`;
++ *
++ * - another integer variable (`nr`) to keep track of how many elements the
++ *   array currently has, initialized to `0`.
++ *
++ * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
++ * alloc)`.  This ensures that the array can hold at least `n` elements by
++ * calling `realloc(3)` and adjusting `alloc` variable.
++ *
++ * ------------
++ * sometype *item;
++ * size_t nr;
++ * size_t alloc
++ *
++ * for (i = 0; i < nr; i++)
++ * 	if (we like item[i] already)
++ * 		return;
++ *
++ * // we did not like any existing one, so add one
++ * ALLOC_GROW(item, nr + 1, alloc);
++ * item[nr++] = value you like;
++ * ------------
++ *
++ * You are responsible for updating the `nr` variable.
++ *
++ * If you need to specify the number of elements to allocate explicitly
++ * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
   *
-  * Any arguments used are copied. It is safe for the caller to modify
-  * or free 'prefix' and 'args' after calling this function.
-+ *
-+ * - magic_mask specifies what features that are NOT supported by the following
-+ * code. If a user attempts to use such a feature, parse_pathspec() can reject
-+ * it early.
-+ *
-+ * - flags specifies other things that the caller wants parse_pathspec to
-+ * perform.
-+ *
-+ * - prefix and args come from cmd_* functions
-+ *
-+ * parse_pathspec() helps catch unsupported features and reject them politely.
-+ * At a lower level, different pathspec-related functions may not support the
-+ * same set of features. Such pathspec-sensitive functions are guarded with
-+ * GUARD_PATHSPEC(), which will die in an unfriendly way when an unsupported
-+ * feature is requested.
-+ *
-+ * The command designers are supposed to make sure that GUARD_PATHSPEC() never
-+ * dies. They have to make sure all unsupported features are caught by
-+ * parse_pathspec(), not by GUARD_PATHSPEC. grepping GUARD_PATHSPEC() should
-+ * give the designers all pathspec-sensitive codepaths and what features they
-+ * support.
-+ *
-+ * A similar process is applied when a new pathspec magic is added. The designer
-+ * lifts the GUARD_PATHSPEC restriction in the functions that support the new
-+ * magic. At the same time (s)he has to make sure this new feature will be
-+ * caught at parse_pathspec() in commands that cannot handle the new magic in
-+ * some cases. grepping parse_pathspec() should help.
-  */
- void parse_pathspec(struct pathspec *pathspec,
- 		    unsigned magic_mask,
- 		    unsigned flags,
- 		    const char *prefix,
- 		    const char **args);
-+
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
- void clear_pathspec(struct pathspec *);
- 
+  * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
+  * added niceties.
 -- 
 gitgitgadget
 
