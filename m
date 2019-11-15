@@ -8,55 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFD3E1F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 11:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9441F5A2
+	for <e@80x24.org>; Fri, 15 Nov 2019 11:11:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727348AbfKOLL1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 06:11:27 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42711 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727314AbfKOLL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 06:11:26 -0500
-Received: by mail-wr1-f65.google.com with SMTP id a15so10516440wrf.9
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 03:11:24 -0800 (PST)
+        id S1727418AbfKOLLh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 06:11:37 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35029 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727405AbfKOLLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 06:11:32 -0500
+Received: by mail-wm1-f67.google.com with SMTP id 8so9960678wmo.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 03:11:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=rFMaUJqcvtNZv6SXcUG484Xgjg/pJ3HxwuEagPqFxzA=;
-        b=riifydFD28Ncxdjz2gYimWPhIVhVsT4xV8O7bD57tZ+CP7YJeAThSPnvlJuNd8aGnw
-         FMiwmquZbv3H2aijcz5hOaXqsIqgaATqrPIHlBB63S/TFA5gQV7Ws22rEPynxEcOkg6S
-         dxOqfsl4MgogPyybWh3B5v2epuNTbg9FWRb5EPauoRmf+noH/ktpDIwiaoX05bVCPCIh
-         dAe/uY/xtQQP4spL77rncfQSQ6lxwB7d9V52dpXbkJeyFK4ESUyQXxUlDWHhNqbxBUIZ
-         5EjqRqvLYcB7wUK3R8h5q5NiRTJv6MrZ1IgftfiTSA9PMTua7lH7brJDgjZnnxA+aej5
-         kvXg==
+        bh=ZzD7HLCe9ogUhhI8uAm1ka3xBsd9+mk/T6bC4qKaApk=;
+        b=s0JagqcdxzjUUpBY30NzbvIa8bx6EyaWrHDQgrvtx9QBwyPo0iQ/2gC2DnqkrNQkkS
+         lSJFXgLkTf8O4X3rYv5xDBW3HUbflq8gvIUD3C5pawfw7mqVJKs1v0DWm4mPhJmBHSC3
+         Eebp/BKpfq+e60YQUe8UUUaYwYDVkzEHzj+FJO40ZrzuhXh9ZfmOBLOG7PtmqMEPl4Iq
+         hSzzzp2RBnCWMvj55yEyh+CxODUBpfpdsSvql6KdYz1Ac4YCskoLEqfwfDpUV57h82hn
+         dPw4ehyuRTAc1Sm+0YOw5o+3WZmzYY/eLZdY6eCZtoe6jeBgz5HznNF13W8p9hXD7cRi
+         reZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=rFMaUJqcvtNZv6SXcUG484Xgjg/pJ3HxwuEagPqFxzA=;
-        b=aOmLqvEMKUn6VAHOlcXdgcfVHL86hevK3zBrKPOcazda0Dn+KmTjVSy/B3q/6go7TP
-         99yeU47l/EX9aUG42dmPz+IzypIi2YR8sAbvQ8M2ttXPMnLLWJu5ru6599tFiYn+dMIq
-         K5mGoG/UKw+vHBepqnBfUS7S4yU1UCqEdAoK2Hmj4gf2ittuN/OV1bkrDCnMn9o4PsoO
-         +cAwZmKJ5GrpBhaSWriL/gk5FxDCnWAv6e3XD0UaAL7/bTEzueK9jftBtkiWLWWZIkv1
-         fjO+x+UMP6yTF+AiNKgioXWAWGLAPDaUE6kJyM7P5mfPEiiEu7PHIcYTMEkJ8asGcjsL
-         pKUA==
-X-Gm-Message-State: APjAAAX+FlGk5WEOP190ZtLamy/hrKiehdLi7Ckqy5W0axP5jTGEuNJs
-        q20bPH6ntCKPyhJkI4T6u1tKBRVC
-X-Google-Smtp-Source: APXvYqwlcMXCAq8BAj5SW2ny5oTTrWt/XgtUpphElyIAwbTLRJ5R43V+AjAR3whFv/ZmTRj5dCaFVg==
-X-Received: by 2002:adf:e911:: with SMTP id f17mr11509265wrm.300.1573816283553;
-        Fri, 15 Nov 2019 03:11:23 -0800 (PST)
+        bh=ZzD7HLCe9ogUhhI8uAm1ka3xBsd9+mk/T6bC4qKaApk=;
+        b=OwfJDq5062kypqJNnyXuJOBEEZKkgJcCJhBlvBpdCTBsKIy25PGt8+oo9HDu29KtOA
+         WVWD5NSKbayjmOq32lbB4VU13DisXxSbOtnCknDrEuRr2e4rXGgyj+J3nQHLQgPrQzrv
+         GfjXXRGPpcx0SMOQPqrUtamjvZxTHYd2s5sqhg+vwWERnX6joP2kre+wJr45HVuZbPe1
+         z4HSZP/FQLhwIFi6A98GzKJa6gdGUQogB/1OwKHQX42ZDbQ+ZI3pQ6nKaW21Vo+wLvYM
+         l4vGXtgankeQeTfBSNdeqY7AvVxINkYCHQpRwzPUVIgFowRm9RRnJqJnqjpgkJhcH7k9
+         MKXA==
+X-Gm-Message-State: APjAAAVKJanSHjOG5rVbb37xkRAVYoPc6fTXbbqBbFQ24fk+E2cqc7Wu
+        ptc0Z0JoKidvStJJvJ7Cj50xPR1Y
+X-Google-Smtp-Source: APXvYqzFZGdr3uIF/vHqE6xHoT2zx0K9R9cVPORCyF2Ql+2S8/LMWHUOdDxKZE0wqNOZX0rcsvMAhQ==
+X-Received: by 2002:a05:600c:299:: with SMTP id 25mr14692902wmk.50.1573816288128;
+        Fri, 15 Nov 2019 03:11:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m16sm9500432wml.47.2019.11.15.03.11.23
+        by smtp.gmail.com with ESMTPSA id a11sm9818384wmh.40.2019.11.15.03.11.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 03:11:23 -0800 (PST)
-Message-Id: <f42d7b13107743fc1aa9cc42ee188fdeb10c702b.1573816280.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 03:11:27 -0800 (PST)
+Message-Id: <bcf4aa7c5e2e64f1c6a57d4a5860474818de7b79.1573816280.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
 References: <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
         <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
-From:   "Daniel Ferreira via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 11:11:13 +0000
-Subject: [PATCH v7 2/9] diff: export diffstat interface
+From:   "=?UTF-8?q?Slavica=20=C4=90uki=C4=87?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Fri, 15 Nov 2019 11:11:19 +0000
+Subject: [PATCH v7 8/9] built-in add -i: use color in the main loop
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,140 +66,121 @@ To:     git@vger.kernel.org
 Cc:     "Jeff Hostetler <git@jeffhostetler.com>, Jeff King" <peff@peff.net>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Daniel Ferreira <bnmvco@gmail.com>
+        =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Daniel Ferreira <bnmvco@gmail.com>
+From: =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
 
-Make the diffstat interface (namely, the diffstat_t struct and
-compute_diffstat) no longer be internal to diff.c and allow it to be used
-by other parts of git.
+The error messages as well as the unique prefixes are colored in `git
+add -i` by default; We need to do the same in the built-in version.
 
-This is helpful for code that may want to easily extract information
-from files using the diff machinery, while flushing it differently from
-how the show_* functions used by diff_flush() do it. One example is the
-builtin implementation of git-add--interactive's status.
-
-Signed-off-by: Daniel Ferreira <bnmvco@gmail.com>
 Signed-off-by: Slavica Đukić <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- diff.c | 39 ++++++++++++++++-----------------------
- diff.h | 20 ++++++++++++++++++++
- 2 files changed, 36 insertions(+), 23 deletions(-)
+ add-interactive.c | 35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index afe4400a60..5703a9b78f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2495,22 +2495,6 @@ static void pprint_rename(struct strbuf *name, const char *a, const char *b)
- 	}
+diff --git a/add-interactive.c b/add-interactive.c
+index 0a03b9017d..170a5800e3 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -12,6 +12,9 @@ struct add_i_state {
+ 	int use_color;
+ 	char header_color[COLOR_MAXLEN];
+ 	char help_color[COLOR_MAXLEN];
++	char prompt_color[COLOR_MAXLEN];
++	char error_color[COLOR_MAXLEN];
++	char reset_color[COLOR_MAXLEN];
+ };
+ 
+ static void init_color(struct repository *r, struct add_i_state *s,
+@@ -45,6 +48,9 @@ static void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 
+ 	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
+ 	init_color(r, s, "help", s->help_color, GIT_COLOR_BOLD_RED);
++	init_color(r, s, "prompt", s->prompt_color, GIT_COLOR_BOLD_BLUE);
++	init_color(r, s, "error", s->error_color, GIT_COLOR_BOLD_RED);
++	init_color(r, s, "reset", s->reset_color, GIT_COLOR_RESET);
  }
  
--struct diffstat_t {
--	int nr;
--	int alloc;
--	struct diffstat_file {
--		char *from_name;
--		char *name;
--		char *print_name;
--		const char *comments;
--		unsigned is_unmerged:1;
--		unsigned is_binary:1;
--		unsigned is_renamed:1;
--		unsigned is_interesting:1;
--		uintmax_t added, deleted;
--	} **files;
--};
--
- static struct diffstat_file *diffstat_add(struct diffstat_t *diffstat,
- 					  const char *name_a,
- 					  const char *name_b)
-@@ -3157,7 +3141,7 @@ static void show_dirstat_by_line(struct diffstat_t *data, struct diff_options *o
- 	gather_dirstat(options, &dir, changed, "", 0);
- }
+ /*
+@@ -240,7 +246,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
  
--static void free_diffstat_info(struct diffstat_t *diffstat)
-+void free_diffstat_info(struct diffstat_t *diffstat)
- {
- 	int i;
- 	for (i = 0; i < diffstat->nr; i++) {
-@@ -6283,12 +6267,7 @@ void diff_flush(struct diff_options *options)
- 	    dirstat_by_line) {
- 		struct diffstat_t diffstat;
+ 		list(s, &items->items, &opts->list_opts);
  
--		memset(&diffstat, 0, sizeof(struct diffstat_t));
--		for (i = 0; i < q->nr; i++) {
--			struct diff_filepair *p = q->queue[i];
--			if (check_pair_status(p))
--				diff_flush_stat(p, options, &diffstat);
--		}
-+		compute_diffstat(options, &diffstat, q);
- 		if (output_format & DIFF_FORMAT_NUMSTAT)
- 			show_numstat(&diffstat, options);
- 		if (output_format & DIFF_FORMAT_DIFFSTAT)
-@@ -6621,6 +6600,20 @@ static int is_submodule_ignored(const char *path, struct diff_options *options)
- 	return ignored;
- }
+-		printf("%s%s", opts->prompt, "> ");
++		color_fprintf(stdout, s->prompt_color, "%s", opts->prompt);
++		fputs("> ", stdout);
+ 		fflush(stdout);
  
-+void compute_diffstat(struct diff_options *options,
-+		      struct diffstat_t *diffstat,
-+		      struct diff_queue_struct *q)
-+{
-+	int i;
-+
-+	memset(diffstat, 0, sizeof(struct diffstat_t));
-+	for (i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		if (check_pair_status(p))
-+			diff_flush_stat(p, options, diffstat);
-+	}
-+}
-+
- void diff_addremove(struct diff_options *options,
- 		    int addremove, unsigned mode,
- 		    const struct object_id *oid,
-diff --git a/diff.h b/diff.h
-index 7f8f024feb..d986ddc3b5 100644
---- a/diff.h
-+++ b/diff.h
-@@ -245,6 +245,22 @@ void diff_emit_submodule_error(struct diff_options *o, const char *err);
- void diff_emit_submodule_pipethrough(struct diff_options *o,
- 				     const char *line, int len);
+ 		if (strbuf_getline(&input, stdin) == EOF) {
+@@ -283,7 +290,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 				index = find_unique(p, items);
  
-+struct diffstat_t {
-+	int nr;
-+	int alloc;
-+	struct diffstat_file {
-+		char *from_name;
-+		char *name;
-+		char *print_name;
-+		const char *comments;
-+		unsigned is_unmerged:1;
-+		unsigned is_binary:1;
-+		unsigned is_renamed:1;
-+		unsigned is_interesting:1;
-+		uintmax_t added, deleted;
-+	} **files;
+ 			if (index < 0 || index >= items->items.nr)
+-				printf(_("Huh (%s)?\n"), p);
++				color_fprintf_ln(stdout, s->error_color,
++						 _("Huh (%s)?"), p);
+ 			else {
+ 				res = index;
+ 				break;
+@@ -509,18 +517,23 @@ struct command_item {
+ 	command_t command;
+ };
+ 
++struct print_command_item_data {
++	const char *color, *reset;
 +};
 +
- enum color_diff {
- 	DIFF_RESET = 0,
- 	DIFF_CONTEXT = 1,
-@@ -334,6 +350,10 @@ void diff_change(struct diff_options *,
+ static void print_command_item(int i, struct string_list_item *item,
+ 			       void *print_command_item_data)
+ {
++	struct print_command_item_data *d = print_command_item_data;
+ 	struct command_item *util = item->util;
  
- struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 	if (!util->prefix_length ||
+ 	    !is_valid_prefix(item->string, util->prefix_length))
+ 		printf(" %2d: %s", i + 1, item->string);
+ 	else
+-		printf(" %2d: [%.*s]%s", i + 1,
+-		       (int)util->prefix_length, item->string,
+-		       item->string + util->prefix_length);
++		printf(" %2d: %s%.*s%s%s", i + 1,
++		       d->color, (int)util->prefix_length, item->string,
++		       d->reset, item->string + util->prefix_length);
+ }
  
-+void compute_diffstat(struct diff_options *options, struct diffstat_t *diffstat,
-+		      struct diff_queue_struct *q);
-+void free_diffstat_info(struct diffstat_t *diffstat);
+ static void command_prompt_help(struct add_i_state *s)
+@@ -538,8 +551,9 @@ static void command_prompt_help(struct add_i_state *s)
+ int run_add_i(struct repository *r, const struct pathspec *ps)
+ {
+ 	struct add_i_state s = { NULL };
++	struct print_command_item_data data = { "[", "]" };
+ 	struct list_and_choose_options main_loop_opts = {
+-		{ 4, N_("*** Commands ***"), print_command_item, NULL },
++		{ 4, N_("*** Commands ***"), print_command_item, &data },
+ 		N_("What now"), command_prompt_help
+ 	};
+ 	struct {
+@@ -570,6 +584,15 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 
+ 	init_add_i_state(&s, r);
+ 
++	/*
++	 * When color was asked for, use the prompt color for
++	 * highlighting, otherwise use square brackets.
++	 */
++	if (s.use_color) {
++		data.color = s.prompt_color;
++		data.reset = s.reset_color;
++	}
 +
- #define DIFF_SETUP_REVERSE      	1
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
+ 	strbuf_addstr(&header, "      ");
+ 	strbuf_addf(&header, print_file_item_data.modified_fmt,
+ 		    _("staged"), _("unstaged"), _("path"));
 -- 
 gitgitgadget
 
