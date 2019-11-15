@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80B541F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 365D21F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727567AbfKOJyI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:08 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:34288 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727514AbfKOJyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:54:06 -0500
-Received: by mail-wr1-f45.google.com with SMTP id e6so10283774wrw.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:54:04 -0800 (PST)
+        id S1727510AbfKOJyD (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:03 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:39184 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727468AbfKOJyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:54:02 -0500
+Received: by mail-wm1-f52.google.com with SMTP id t26so9668567wmi.4
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mPeoWAcBb00eGe8EIY/HsjteDgVd3vEwluZm6lyqWhE=;
-        b=eZzkvX/DZb0eEWoq4/fPuBEb6FmVkc9e2ibZLqrY0Kfb2u6QmAXhY+D9DlnU/cb6oH
-         38KdJ4/ddox/gssexjsZerED16xF7EZ5CF6z2JwWQx4DgZGalko1ZW3iHPNzQAurbsKu
-         9F81u8typmRZYnszYElHflF3ErwXpynLyZGNKyQtbbeB2cR4v9i/YgYnjjUXXgq6zlLm
-         dd0asAioZzff/NepCxZoM/QxVRsvrx9WOlH4CdJGz3UeiA1bJVBs5b6D2pg4zr4/SGgE
-         WyZJUtYKfYty3Ptj3P4liEMCPcMbnDdbS/d+32y/277X+VfXZyo03LmW1FGyqLn9f/qF
-         xajw==
+        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
+        b=lETkoQhRuGwjV7lMHK9X7CbAooAXzqe9qM+9tembHIMKWR0VzSOUJXCY4te2XMsjGg
+         sgpyHdQmp4w/lzZRTQR20/pxgURqmvLc8ynrInEaB7RJNEM0MLVQLp9Nx7oU4TrJ1HXZ
+         2Px+IOjKyPmJ6sm1h6NB2NouSR/o1VTbOfY08vC+8NDVZVhZ7R1I1evX+QaksuO3cUdu
+         Na0y7Q3pTDZ0FY3a4SN1trXIgx3mrQkhosr2oYq6T6fDU4ngC3dEuoDVYMmV5FsHy5vD
+         XLKrfDDtP2er7Vo6EN20zapgSPLljecgB6bX5LnKPj9KLINLENY22VQ0hMOUI6qZNIdE
+         7ztw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mPeoWAcBb00eGe8EIY/HsjteDgVd3vEwluZm6lyqWhE=;
-        b=R+EvjO1rp2zHLO9EPVtdgfUQ4IQNEmWxpzu/hHu2YAIWK0SQwZRQS4VpiTBo7/bNB7
-         4XZeFeB2BQV+F8L3Xsof2gLbhLYgBIL7Hx7K+XIq8wQwxVqrzRnXqIXQ0qo6vrIym68L
-         miMxjeId/GDspuLChreAB16jsI4pJVvc51tB4Dt48SRFg4MPY7VyFtloGMoLDMikWIsM
-         p1Vze/bSI+St4Sef+QLwzJOe2MCdugP4mBMqZAinx5l7B0uL+b1otS4Aw5aTVL0fTLDs
-         odzUNuXzeGQeiNA6SI/9zeEmiCWTQsTf4HQeh/7AZe8H5yLIouoLn8lhMB7oxyPuaAqC
-         /kGw==
-X-Gm-Message-State: APjAAAUusFmLjqe6K7HraEySwIQkbzVj0MsGMhsyqI/tTjWrFpQZsdGE
-        OGX/VcEwadO27a2jP5o3JIUkSA+X
-X-Google-Smtp-Source: APXvYqy3sJrSpEAfczG+Zd5EEb4l8nIQvtW13teJOU6BWAh8Ury3al2+1vnpg6VgNwjshvt/YJpdhg==
-X-Received: by 2002:adf:a51c:: with SMTP id i28mr14390698wrb.147.1573811643137;
-        Fri, 15 Nov 2019 01:54:03 -0800 (PST)
+        bh=giO2GU2kHEWuMdLCQf18nZDaZn/nf7zmDq7PVNroH0w=;
+        b=OBOV3O1P7J9bV/TvElXeGeAfRcNKWI35wXtM4QjuvKnUa3O87NhZQioOfdKXorlVjH
+         whvOj4m3iOh/sqLLifNPq9LtcsY2gEy9NIo5x1xTq4n92z9bzdYMaTP1p2hysLgC0N0G
+         xjTqtZFM7QV5NZQPxqR2rVdqlI0DI4JNAPF2WAyKXtaeVQJEp6acvKTIlw5KlZW3HcOP
+         JdeI9934cLQkbgdFd9DIhK7GlYzNlIQzvRUXuNpYQFgqiuXVNsGuzkqZpCyq7hohxlbC
+         4CqGIsYJwk73wT5v3YL7s/qga0DJ5+8mVtSTQa8RaoFnCXSVs+NgnmDD8vCjlTHSNaFC
+         FMaw==
+X-Gm-Message-State: APjAAAVuAao7jNwitzNXMC+JI38OuUTG3UrVlxuy854q8inhbcjHPDNe
+        c9f6BVy6lIu5WXCh+bWleaGJWjwC
+X-Google-Smtp-Source: APXvYqzVa/GU6zkmKtf+FVtv4hdS/134M84EWXw6TT2dV9QFidJag6dZk+amikB00u2m4yN8bj41RA==
+X-Received: by 2002:a1c:650b:: with SMTP id z11mr13408906wmb.149.1573811638653;
+        Fri, 15 Nov 2019 01:53:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w18sm10913124wrp.31.2019.11.15.01.54.02
+        by smtp.gmail.com with ESMTPSA id 19sm12829685wrc.47.2019.11.15.01.53.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:54:02 -0800 (PST)
-Message-Id: <251a08c1d88fe8ddb8bb6f4784aba3ef2839fbc8.1573811627.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:58 -0800 (PST)
+Message-Id: <4f805c873759b5d95b546e95bad15aa818927b33.1573811627.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:44 +0000
-Subject: [PATCH v4 19/21] submodule-config: move doc to submodule-config.h
+Date:   Fri, 15 Nov 2019 09:53:38 +0000
+Subject: [PATCH v4 13/21] argv-array: move doc to argv-array.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,161 +72,185 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-submodule-config.txt
-to submodule-config.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-argv-array.txt
+to argv-array.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Documentation/technical/api-submodule-config.txt is removed because the
+Also documentation/technical/api-argv-array.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
-The documentation of parse_submodule_config_option() is discarded as the
-function was removed 2 years ago.
-
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- .../technical/api-submodule-config.txt        | 66 -------------------
- submodule-config.h                            | 38 ++++++++++-
- 2 files changed, 37 insertions(+), 67 deletions(-)
- delete mode 100644 Documentation/technical/api-submodule-config.txt
+ Documentation/technical/api-argv-array.txt | 65 ----------------------
+ argv-array.h                               | 62 +++++++++++++++++++++
+ 2 files changed, 62 insertions(+), 65 deletions(-)
+ delete mode 100644 Documentation/technical/api-argv-array.txt
 
-diff --git a/Documentation/technical/api-submodule-config.txt b/Documentation/technical/api-submodule-config.txt
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
 deleted file mode 100644
-index fb06089393..0000000000
---- a/Documentation/technical/api-submodule-config.txt
+index 870c8edbfb..0000000000
+--- a/Documentation/technical/api-argv-array.txt
 +++ /dev/null
-@@ -1,66 +0,0 @@
--submodule config cache API
--==========================
+@@ -1,65 +0,0 @@
+-argv-array API
+-==============
 -
--The submodule config cache API allows to read submodule
--configurations/information from specified revisions. Internally
--information is lazily read into a cache that is used to avoid
--unnecessary parsing of the same .gitmodules files. Lookups can be done by
--submodule path or name.
+-The argv-array API allows one to dynamically build and store
+-NULL-terminated lists.  An argv-array maintains the invariant that the
+-`argv` member always points to a non-NULL array, and that the array is
+-always NULL-terminated at the element pointed to by `argv[argc]`. This
+-makes the result suitable for passing to functions expecting to receive
+-argv from main(), or the link:api-run-command.html[run-command API].
 -
--Usage
-------
+-The string-list API (documented in string-list.h) is similar, but cannot be
+-used for these purposes; instead of storing a straight string pointer,
+-it contains an item structure with a `util` field that is not compatible
+-with the traditional argv interface.
 -
--To initialize the cache with configurations from the worktree the caller
--typically first calls `gitmodules_config()` to read values from the
--worktree .gitmodules and then to overlay the local git config values
--`parse_submodule_config_option()` from the config parsing
--infrastructure.
--
--The caller can look up information about submodules by using the
--`submodule_from_path()` or `submodule_from_name()` functions. They return
--a `struct submodule` which contains the values. The API automatically
--initializes and allocates the needed infrastructure on-demand. If the
--caller does only want to lookup values from revisions the initialization
--can be skipped.
--
--If the internal cache might grow too big or when the caller is done with
--the API, all internally cached values can be freed with submodule_free().
+-Each `argv_array` manages its own memory. Any strings pushed into the
+-array are duplicated, and all memory is freed by argv_array_clear().
 -
 -Data Structures
 ----------------
 -
--`struct submodule`::
+-`struct argv_array`::
 -
--	This structure is used to return the information about one
--	submodule for a certain revision. It is returned by the lookup
--	functions.
+-	A single array. This should be initialized by assignment from
+-	`ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
+-	member contains the actual array; the `argc` member contains the
+-	number of elements in the array, not including the terminating
+-	NULL.
 -
 -Functions
 ----------
 -
--`void submodule_free(struct repository *r)`::
+-`argv_array_init`::
+-	Initialize an array. This is no different than assigning from
+-	`ARGV_ARRAY_INIT`.
 -
--	Use these to free the internally cached values.
+-`argv_array_push`::
+-	Push a copy of a string onto the end of the array.
 -
--`int parse_submodule_config_option(const char *var, const char *value)`::
+-`argv_array_pushl`::
+-	Push a list of strings onto the end of the array. The arguments
+-	should be a list of `const char *` strings, terminated by a NULL
+-	argument.
 -
--	Can be passed to the config parsing infrastructure to parse
--	local (worktree) submodule configurations.
+-`argv_array_pushf`::
+-	Format a string and push it onto the end of the array. This is a
+-	convenience wrapper combining `strbuf_addf` and `argv_array_push`.
 -
--`const struct submodule *submodule_from_path(const unsigned char *treeish_name, const char *path)`::
+-`argv_array_pushv`::
+-	Push a null-terminated array of strings onto the end of the array.
 -
--	Given a tree-ish in the superproject and a path, return the
--	submodule that is bound at the path in the named tree.
+-`argv_array_pop`::
+-	Remove the final element from the array. If there are no
+-	elements in the array, do nothing.
 -
--`const struct submodule *submodule_from_name(const unsigned char *treeish_name, const char *name)`::
+-`argv_array_clear`::
+-	Free all memory associated with the array and return it to the
+-	initial, empty state.
 -
--	The same as above but lookup by name.
--
--Whenever a submodule configuration is parsed in `parse_submodule_config_option`
--via e.g. `gitmodules_config()`, it will overwrite the null_sha1 entry.
--So in the normal case, when HEAD:.gitmodules is parsed first and then overlayed
--with the repository configuration, the null_sha1 entry contains the local
--configuration of a submodule (e.g. consolidated values from local git
--configuration and the .gitmodules file in the worktree).
--
--For an example usage see test-submodule-config.c.
-diff --git a/submodule-config.h b/submodule-config.h
-index 1b4e2da658..42918b55e8 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -7,9 +7,31 @@
- #include "submodule.h"
- #include "strbuf.h"
+-`argv_array_detach`::
+-	Disconnect the `argv` member from the `argv_array` struct and
+-	return it. The caller is responsible for freeing the memory used
+-	by the array, and by the strings it references. After detaching,
+-	the `argv_array` is in a reinitialized state and can be pushed
+-	into again.
+diff --git a/argv-array.h b/argv-array.h
+index a39ba43f57..a7d3b10707 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -1,8 +1,32 @@
+ #ifndef ARGV_ARRAY_H
+ #define ARGV_ARRAY_H
  
 +/**
-+ * The submodule config cache API allows to read submodule
-+ * configurations/information from specified revisions. Internally
-+ * information is lazily read into a cache that is used to avoid
-+ * unnecessary parsing of the same .gitmodules files. Lookups can be done by
-+ * submodule path or name.
++ * The argv-array API allows one to dynamically build and store
++ * NULL-terminated lists.  An argv-array maintains the invariant that the
++ * `argv` member always points to a non-NULL array, and that the array is
++ * always NULL-terminated at the element pointed to by `argv[argc]`. This
++ * makes the result suitable for passing to functions expecting to receive
++ * argv from main().
 + *
-+ * Usage
-+ * -----
++ * The string-list API (documented in string-list.h) is similar, but cannot be
++ * used for these purposes; instead of storing a straight string pointer,
++ * it contains an item structure with a `util` field that is not compatible
++ * with the traditional argv interface.
 + *
-+ * The caller can look up information about submodules by using the
-+ * `submodule_from_path()` or `submodule_from_name()` functions. They return
-+ * a `struct submodule` which contains the values. The API automatically
-+ * initializes and allocates the needed infrastructure on-demand. If the
-+ * caller does only want to lookup values from revisions the initialization
-+ * can be skipped.
-+ *
-+ * If the internal cache might grow too big or when the caller is done with
-+ * the API, all internally cached values can be freed with submodule_free().
-+ *
++ * Each `argv_array` manages its own memory. Any strings pushed into the
++ * array are duplicated, and all memory is freed by argv_array_clear().
 + */
 +
- /*
-  * Submodule entry containing the information about a certain submodule
-- * in a certain revision.
-+ * in a certain revision. It is returned by the lookup functions.
-  */
- struct submodule {
- 	const char *path;
-@@ -41,13 +63,27 @@ int parse_update_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_push_recurse_submodules_arg(const char *opt, const char *arg);
- void repo_read_gitmodules(struct repository *repo);
- void gitmodules_config_oid(const struct object_id *commit_oid);
-+
-+/**
-+ * Same as submodule_from_path but lookup by name.
-+ */
- const struct submodule *submodule_from_name(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *name);
-+
-+/**
-+ * Given a tree-ish in the superproject and a path, return the submodule that
-+ * is bound at the path in the named tree.
-+ */
- const struct submodule *submodule_from_path(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *path);
-+
-+/**
-+ * Use these to free the internally cached values.
-+ */
- void submodule_free(struct repository *r);
-+
- int print_config_from_gitmodules(struct repository *repo, const char *key);
- int config_set_in_gitmodules_file_gently(const char *key, const char *value);
+ extern const char *empty_argv[];
  
++/**
++ * A single array. This should be initialized by assignment from
++ * `ARGV_ARRAY_INIT`, or by calling `argv_array_init`. The `argv`
++ * member contains the actual array; the `argc` member contains the
++ * number of elements in the array, not including the terminating
++ * NULL.
++ */
+ struct argv_array {
+ 	const char **argv;
+ 	int argc;
+@@ -11,17 +35,55 @@ struct argv_array {
+ 
+ #define ARGV_ARRAY_INIT { empty_argv, 0, 0 }
+ 
++/**
++ * Initialize an array. This is no different than assigning from
++ * `ARGV_ARRAY_INIT`.
++ */
+ void argv_array_init(struct argv_array *);
++
++/* Push a copy of a string onto the end of the array. */
+ const char *argv_array_push(struct argv_array *, const char *);
++
++/**
++ * Format a string and push it onto the end of the array. This is a
++ * convenience wrapper combining `strbuf_addf` and `argv_array_push`.
++ */
+ __attribute__((format (printf,2,3)))
+ const char *argv_array_pushf(struct argv_array *, const char *fmt, ...);
++
++/**
++ * Push a list of strings onto the end of the array. The arguments
++ * should be a list of `const char *` strings, terminated by a NULL
++ * argument.
++ */
+ LAST_ARG_MUST_BE_NULL
+ void argv_array_pushl(struct argv_array *, ...);
++
++/* Push a null-terminated array of strings onto the end of the array. */
+ void argv_array_pushv(struct argv_array *, const char **);
++
++/**
++ * Remove the final element from the array. If there are no
++ * elements in the array, do nothing.
++ */
+ void argv_array_pop(struct argv_array *);
++
+ /* Splits by whitespace; does not handle quoted arguments! */
+ void argv_array_split(struct argv_array *, const char *);
++
++/**
++ * Free all memory associated with the array and return it to the
++ * initial, empty state.
++ */
+ void argv_array_clear(struct argv_array *);
++
++/**
++ * Disconnect the `argv` member from the `argv_array` struct and
++ * return it. The caller is responsible for freeing the memory used
++ * by the array, and by the strings it references. After detaching,
++ * the `argv_array` is in a reinitialized state and can be pushed
++ * into again.
++ */
+ const char **argv_array_detach(struct argv_array *);
+ 
+ #endif /* ARGV_ARRAY_H */
 -- 
 gitgitgadget
 
