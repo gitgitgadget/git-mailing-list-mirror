@@ -2,93 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D74181F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 23:03:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E68081F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 23:06:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727054AbfKOXDx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 18:03:53 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45706 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbfKOXDw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 18:03:52 -0500
-Received: by mail-pf1-f195.google.com with SMTP id z4so7340302pfn.12
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 15:03:52 -0800 (PST)
+        id S1727168AbfKOXGn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 18:06:43 -0500
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:55821 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727021AbfKOXGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 18:06:43 -0500
+Received: by mail-pg1-f202.google.com with SMTP id a12so8348148pgl.22
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 15:06:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=IIIDSg3K7A24Mi1tblduiO24vLhCuf+OHTefGovyQHU=;
-        b=ORRMkvjUzjIFr4kyDStQuohZP6Dbe1BPH2teS1pxqTtQ7YvzthcgOYBdrohh9khK39
-         io+EQ+zvnauTH0h03MujD2MkyqLH/SfnGE1Jxkba5L+CCiOkJjr2EGmTrBm4bfAhvI5I
-         0Tc0dG13puzoQyriT0W0tlIBsW3PRsrh/yPX63SZyd/RPSxwdTU3Goc5TmshTWgceIpH
-         HZah+i78WgG8P0wAbw7NKhbEYnxkiXH4x8nF5do9uRDJ+49z6I8hLG6m6qymqA45isDM
-         gxlFRYD0wGDArTqCx47DQ6ot+52PuzavY8MF2kMVXhWwLL+6vgkwzbDR2TL/2v2K3wLy
-         Fm8A==
+        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
+        bh=OaUi/9Ozv94H3tPHM7WvaIyJ5Ykoh6+We2kHITEnpds=;
+        b=bErXA+V/RgaxSH2hXvDFJ+1IvGoZRtSH1bEM2MgXOXg3tknrCcQwPaMORw3JnyYIIJ
+         Lv3gv8fRz4m0WR8zi/iSQTiMFEG5xzDOsh3ypKTj1v1+CQ/fvk91bJz97dvj1cQBR+nj
+         7ISwBkrR03gC+0Nx8zZyQbXejWJKxLzHiXAr/0dn5ooBszt/cIw4+TE1o6rYNB7yrXr2
+         QGRFk6lqxFMO/lVf1xzGuVNvyivZlzb6bT0KNaiglWkXulW4/esGqgFD30sAw/WNMyeX
+         40/LzhinzSYetkn5HiyEGXLCauYzhGtpsOY09RwFs+woqhhyJcQRuNXorxogomFBj7ty
+         Rllg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=IIIDSg3K7A24Mi1tblduiO24vLhCuf+OHTefGovyQHU=;
-        b=sy0ww3TVmifU7nMZRDR8TUtY1M3bSyLapjOLnd4Qo+N2gq2QKJWB7pusuRZythHVW8
-         jbj6ZfWsggdL2nEECCYMSbHx5cBJus42XQlxInWx1CSifOxYtZ+NanPGtJUleDgxW4wb
-         UUkEoyLii/MVkNWtA+sQiotTeitsqy+pdXg2MgKfXlNJz66ytguNj//ha/dElofWfJ9c
-         uC8+aRnJL51Yx862Kcwq/AENEbAc/SOTU9Hvtp9HZBYC2rgEtq4emU88nd14Zi2fwdbq
-         1xK9J/QwI6strCLAKzVPB4XiE7/na0ehnINrVMYpxfqo3/SHh0Nb+s4Qq+irkfJd0DV5
-         dIZg==
-X-Gm-Message-State: APjAAAVPGd0/cgmqGOW6YlRqybEdh4WUBq87PyUBxXS6BycYJDQf3XJO
-        zZxVn4NF9OhJ/2LoHetG8lQBsA==
-X-Google-Smtp-Source: APXvYqwGqU7meORqihr5oHCQbV3xr/K843jU/EUXA58fVoRzipovAdkGUH2u2/WzTTuRY5R7/qxiIw==
-X-Received: by 2002:a62:2a4c:: with SMTP id q73mr19982686pfq.94.1573859031587;
-        Fri, 15 Nov 2019 15:03:51 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id s69sm10795436pgs.65.2019.11.15.15.03.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 15:03:50 -0800 (PST)
-Date:   Fri, 15 Nov 2019 15:03:46 -0800
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
+         :from:to:cc;
+        bh=OaUi/9Ozv94H3tPHM7WvaIyJ5Ykoh6+We2kHITEnpds=;
+        b=YoJIZTYQEVCAgZDmLY5ST1xVikIgoilSel8ncgwzV3zEnDU+hYAP8fo+aO8eNrpDNb
+         uWTlbvGpP5CdynbeLNfdluQlzb3spdxABu+gqh45UscfwJ7bZMwskbh1nQCmU4XQKla7
+         0eEibdracuRnkL5YBvnx0gjLpCofR/OUw7BnKdBebK55DLyN8iTMD+TegZvSwy72zTkn
+         2dWcs6A60N+sd0awyj74cZBUs/vblOpxyzjONF92x5fxXu4Cqj4yKoR7SoDdcvb1ImDX
+         TJ2plXzpNSXHixYFkgvJFcuU/oF5iW6I7aTeXAK/gPq7DA/tsEhHbEadQHodMebrSRoF
+         21ZQ==
+X-Gm-Message-State: APjAAAV9IJB359Ej7sCX6wnLyG2NqjK+ku9oGcA0+CGnPQGKZk7Ckit2
+        rF4+3Q6sARvsKN9lWaTgybb3rlgp8jeD1JLH3qYpAyS696JLQhVqRKLiEi/LUT9RElDBtSaoTc1
+        PQRlmbNi1MQTXxAoHEWAnei9AqHTqFTyVQL4fuMEl1wiewtnEe8Dxo1lXTJVEox14AFi7AqGGKw
+        ==
+X-Google-Smtp-Source: APXvYqy8wS3zFQiR/qnlVcVbj51mumqttITboUSfrnhiJADpq2Mv4yEq3TfpQaVKmpbny/mwBewxNULsCuYdson3IBc=
+X-Received: by 2002:a63:dd51:: with SMTP id g17mr18699656pgj.388.1573859200990;
+ Fri, 15 Nov 2019 15:06:40 -0800 (PST)
+Date:   Fri, 15 Nov 2019 15:06:37 -0800
+In-Reply-To: <20191115215342.37408-1-emilyshaffer@google.com>
+Message-Id: <20191115230637.76877-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
+Subject: [PATCH v2] MyFirstContribution: add avenues for getting help
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Denton Liu <liu.denton@gmail.com>, t@google.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] MyFirstContribution: add avenues for getting help
-Message-ID: <20191115230346.GE22855@google.com>
-References: <20191115215342.37408-1-emilyshaffer@google.com>
- <20191115220528.GA80935@generichostname>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191115220528.GA80935@generichostname>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>,
+        Denton Liu <liu.denton@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 15, 2019 at 02:05:28PM -0800, Denton Liu wrote:
-> Hi Emily,
-> 
-> On Fri, Nov 15, 2019 at 01:53:42PM -0800, Emily Shaffer wrote:
-> > +==== https://public-inbox.org/git[git@vger.kernel.org]
-> > +
-> > +This is the main Git project mailing list where code reviews, version
-> > +announcements, design discussions, and more take place. If you fail to receive
-> > +help via the channels above, you can ask your question here. You can join by
-> > +sending an email to majordomo@vger.kernel.org with "subscribe git" in the body.
-> > +The Git list requires plain-text-only emails and prefers inline and
-> > +bottom-posting when replying to mail.
-> 
-> Perhaps we could explicitly mention that subscribing to the list is
-> optional and not required to post (especially since we CC everyone
-> here)? New contributors may be intimidated by the volume of mail going
-> through here so knowing that they don't have to subscribe might be
-> helpful.
+With https://public-inbox.org/git/20191114194708.GD60198@google.com/ we
+now have a mentoring mailing list, to which we should direct new
+contributors who have questions.
 
-Yeah, good idea. I'll move the plaintext/posting order rules sentence in
-front of the majordomo sentence, and add "optionally" to the beginning
-of the majordomo sentence. Thanks.
+Since #git-devel's traffic is fairly low, it should be OK to direct some
+questions there too. Mention some of the conventions in case folks are
+unfamiliar with IRC.
 
- - Emily
+Because the mentoring list and #git-devel are both a subset of Git
+contributors, it's possible that no response is found on either forum,
+so list the main mailing list as a fallback and mention some of the
+conventions.
+
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+
+Reworded the Git mailing list blurb per Denton's recommendation.
+
+ Documentation/MyFirstContribution.txt | 33 +++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index 5e9b808f5f..90f45b387a 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -23,6 +23,39 @@ useful additional context:
+ - `Documentation/SubmittingPatches`
+ - `Documentation/howto/new-command.txt`
+ 
++[[getting-help]]
++=== Getting Help
++
++If you get stuck, you can seek help in the following places.
++
++==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
++
++This mailing list is targeted to new contributors and is a great place to post
++questions and receive kind, detailed answers from volunteers on the Git
++project. You must join the group to view messages or post.
++
++==== https://webchat.freenode.net/#git-devel[#git-devel] on Freenode
++
++This IRC channel is for conversations between Git contributors. If someone is
++currently online and knows the answer to your question, you can receive help
++in real time. Otherwise, you can read the
++https://colabti.org/irclogger//irclogger_logs/git-devel[scrollback] to see
++whether someone answered you. IRC does not allow offline private messaging, so
++if you try to private message someone and then log out of IRC, they cannot
++respond to you. It's better to ask your questions in the channel so that you
++can be answered if you disconnect and so that others can learn from the
++conversation.
++
++==== https://public-inbox.org/git[git@vger.kernel.org]
++
++This is the main Git project mailing list where code reviews, version
++announcements, design discussions, and more take place. If you fail to receive
++help via the channels above, you can ask your question here. The Git list
++requires plain-text-only emails and prefers inline and bottom-posting when
++replying to mail; you will be CC'd in all replies to you. Optionally, you can
++subscribe to the list by sending an email to majordomo@vger.kernel.org with
++"subscribe git" in the body.
++
+ [[getting-started]]
+ == Getting Started
+ 
+-- 
+2.24.0.432.g9d3f5f5b63-goog
+
