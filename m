@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A9441F5A2
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40FE91F4B5
 	for <e@80x24.org>; Fri, 15 Nov 2019 11:11:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727418AbfKOLLh (ORCPT <rfc822;e@80x24.org>);
+        id S1727423AbfKOLLh (ORCPT <rfc822;e@80x24.org>);
         Fri, 15 Nov 2019 06:11:37 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35029 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727405AbfKOLLc (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35032 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbfKOLLc (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 15 Nov 2019 06:11:32 -0500
-Received: by mail-wm1-f67.google.com with SMTP id 8so9960678wmo.0
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 03:11:28 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id 8so9960726wmo.0
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 03:11:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:mime-version
          :content-transfer-encoding:fcc:to:cc;
-        bh=ZzD7HLCe9ogUhhI8uAm1ka3xBsd9+mk/T6bC4qKaApk=;
-        b=s0JagqcdxzjUUpBY30NzbvIa8bx6EyaWrHDQgrvtx9QBwyPo0iQ/2gC2DnqkrNQkkS
-         lSJFXgLkTf8O4X3rYv5xDBW3HUbflq8gvIUD3C5pawfw7mqVJKs1v0DWm4mPhJmBHSC3
-         Eebp/BKpfq+e60YQUe8UUUaYwYDVkzEHzj+FJO40ZrzuhXh9ZfmOBLOG7PtmqMEPl4Iq
-         hSzzzp2RBnCWMvj55yEyh+CxODUBpfpdsSvql6KdYz1Ac4YCskoLEqfwfDpUV57h82hn
-         dPw4ehyuRTAc1Sm+0YOw5o+3WZmzYY/eLZdY6eCZtoe6jeBgz5HznNF13W8p9hXD7cRi
-         reZA==
+        bh=J/ThBdvJZK/nfVxzRu1Ff9lOYtwZG13DRAmbmWz3qtE=;
+        b=vdRhko+M/Ff6UPl+vj4QZFopU8PbhdQ6XR7Sm1/fPUNDkOeONjFgC0lXUG+4JopQfy
+         e71XoS/RebJ03ztbNgPQWRLWgfMUgnSOlhvkcxm0NujrZk2OgK3ELx1Zc/oFCRxsBdOf
+         lV2+6B/AgBCCN7QqD9NjZlGQIiSelxfWImwCH6t5s2JvPYNc/efBRmOtyQ9ZKw2Go71W
+         SMfv2prBSpHf2k+Q93syws8FxMpr8xMfrgy/ctLo/p3hJTuwcWplBrQyi8isxzDWONJk
+         +nP++vsNrtGh9FDbXY6TDrehsneaBpBuLkF7b0fmiIz16oS4/i3Z2rYU/pPJg6nkVyxV
+         X2IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=ZzD7HLCe9ogUhhI8uAm1ka3xBsd9+mk/T6bC4qKaApk=;
-        b=OwfJDq5062kypqJNnyXuJOBEEZKkgJcCJhBlvBpdCTBsKIy25PGt8+oo9HDu29KtOA
-         WVWD5NSKbayjmOq32lbB4VU13DisXxSbOtnCknDrEuRr2e4rXGgyj+J3nQHLQgPrQzrv
-         GfjXXRGPpcx0SMOQPqrUtamjvZxTHYd2s5sqhg+vwWERnX6joP2kre+wJr45HVuZbPe1
-         z4HSZP/FQLhwIFi6A98GzKJa6gdGUQogB/1OwKHQX42ZDbQ+ZI3pQ6nKaW21Vo+wLvYM
-         l4vGXtgankeQeTfBSNdeqY7AvVxINkYCHQpRwzPUVIgFowRm9RRnJqJnqjpgkJhcH7k9
-         MKXA==
-X-Gm-Message-State: APjAAAVKJanSHjOG5rVbb37xkRAVYoPc6fTXbbqBbFQ24fk+E2cqc7Wu
-        ptc0Z0JoKidvStJJvJ7Cj50xPR1Y
-X-Google-Smtp-Source: APXvYqzFZGdr3uIF/vHqE6xHoT2zx0K9R9cVPORCyF2Ql+2S8/LMWHUOdDxKZE0wqNOZX0rcsvMAhQ==
-X-Received: by 2002:a05:600c:299:: with SMTP id 25mr14692902wmk.50.1573816288128;
+        bh=J/ThBdvJZK/nfVxzRu1Ff9lOYtwZG13DRAmbmWz3qtE=;
+        b=mArdfSjddp8dh8xTAGHl/nE3Xs4reSDycyUtmbq3Wb4OZSEVz5NsWV8skyX1EoFXxL
+         ug3zqb7pjIgemNRAL7xx4EDlyC5LUx8dagEZs4mV17x32NH9Ful0ELtmL4XgMO22bfuD
+         BPTMLQ4zoo1LFJrL3wCuWkOW5JIgpCB2ubqk3W5XDE7GAMkgDVWFsVo3EOTOyO+WxS7G
+         X5HV87U4+hANRLvnnLXC/DAhiwrqhjNU0JIKjGPKEeHDSuNeaG2uPrSyaZ7hRtpuePF0
+         MHYCCt6SOtJfMafBqkVINka5YCOD40UrNt3rgT+HAOdRxQ2HJteccF93oBX9tNIN0n7P
+         KDPQ==
+X-Gm-Message-State: APjAAAVHHGRzjBej6VW1IPJu2s+LZQYTZxo4oGT4aUqZTevlhT8Hmw2D
+        fCChEKgjgSFrvMqiRYRNxLwHgP2R
+X-Google-Smtp-Source: APXvYqyM6oXWJDcGpA34VGiHJIQIdW0Zkm3uTbOk7qK2UV6mwGih0sKNjta6zDlWjHmS/hA3BX1zjg==
+X-Received: by 2002:a05:600c:cf:: with SMTP id u15mr10534775wmm.60.1573816288835;
         Fri, 15 Nov 2019 03:11:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm9818384wmh.40.2019.11.15.03.11.27
+        by smtp.gmail.com with ESMTPSA id d13sm10354301wrq.51.2019.11.15.03.11.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 03:11:27 -0800 (PST)
-Message-Id: <bcf4aa7c5e2e64f1c6a57d4a5860474818de7b79.1573816280.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 03:11:28 -0800 (PST)
+Message-Id: <ccc6fb45580e1c07b143d1a55d9518c13ac3c032.1573816280.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
 References: <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
         <pull.170.v7.git.1573816280.gitgitgadget@gmail.com>
 From:   "=?UTF-8?q?Slavica=20=C4=90uki=C4=87?= via GitGitGadget" 
         <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 11:11:19 +0000
-Subject: [PATCH v7 8/9] built-in add -i: use color in the main loop
+Date:   Fri, 15 Nov 2019 11:11:20 +0000
+Subject: [PATCH v7 9/9] built-in add -i: implement the `help` command
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,113 +74,91 @@ X-Mailing-List: git@vger.kernel.org
 
 From: =?UTF-8?q?Slavica=20=C4=90uki=C4=87?= <slawica92@hotmail.com>
 
-The error messages as well as the unique prefixes are colored in `git
-add -i` by default; We need to do the same in the built-in version.
+This imitates the code to show the help text from the Perl script
+`git-add--interactive.perl` in the built-in version.
+
+To make sure that it renders exactly like the Perl version of `git add
+-i`, we also add a test case for that to `t3701-add-interactive.sh`.
 
 Signed-off-by: Slavica Đukić <slawica92@hotmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 35 +++++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ add-interactive.c          | 21 +++++++++++++++++++++
+ t/t3701-add-interactive.sh | 25 +++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index 0a03b9017d..170a5800e3 100644
+index 170a5800e3..d6cb98cd40 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -12,6 +12,9 @@ struct add_i_state {
- 	int use_color;
- 	char header_color[COLOR_MAXLEN];
- 	char help_color[COLOR_MAXLEN];
-+	char prompt_color[COLOR_MAXLEN];
-+	char error_color[COLOR_MAXLEN];
-+	char reset_color[COLOR_MAXLEN];
- };
- 
- static void init_color(struct repository *r, struct add_i_state *s,
-@@ -45,6 +48,9 @@ static void init_add_i_state(struct add_i_state *s, struct repository *r)
- 
- 	init_color(r, s, "header", s->header_color, GIT_COLOR_BOLD);
- 	init_color(r, s, "help", s->help_color, GIT_COLOR_BOLD_RED);
-+	init_color(r, s, "prompt", s->prompt_color, GIT_COLOR_BOLD_BLUE);
-+	init_color(r, s, "error", s->error_color, GIT_COLOR_BOLD_RED);
-+	init_color(r, s, "reset", s->reset_color, GIT_COLOR_RESET);
+@@ -508,6 +508,26 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 	return 0;
  }
  
- /*
-@@ -240,7 +246,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
- 
- 		list(s, &items->items, &opts->list_opts);
- 
--		printf("%s%s", opts->prompt, "> ");
-+		color_fprintf(stdout, s->prompt_color, "%s", opts->prompt);
-+		fputs("> ", stdout);
- 		fflush(stdout);
- 
- 		if (strbuf_getline(&input, stdin) == EOF) {
-@@ -283,7 +290,8 @@ static ssize_t list_and_choose(struct add_i_state *s,
- 				index = find_unique(p, items);
- 
- 			if (index < 0 || index >= items->items.nr)
--				printf(_("Huh (%s)?\n"), p);
-+				color_fprintf_ln(stdout, s->error_color,
-+						 _("Huh (%s)?"), p);
- 			else {
- 				res = index;
- 				break;
-@@ -509,18 +517,23 @@ struct command_item {
- 	command_t command;
- };
- 
-+struct print_command_item_data {
-+	const char *color, *reset;
-+};
++static int run_help(struct add_i_state *s, const struct pathspec *unused_ps,
++		    struct string_list *unused_files,
++		    struct list_options *unused_opts)
++{
++	color_fprintf_ln(stdout, s->help_color, "status        - %s",
++			 _("show paths with changes"));
++	color_fprintf_ln(stdout, s->help_color, "update        - %s",
++			 _("add working tree state to the staged set of changes"));
++	color_fprintf_ln(stdout, s->help_color, "revert        - %s",
++			 _("revert staged set of changes back to the HEAD version"));
++	color_fprintf_ln(stdout, s->help_color, "patch         - %s",
++			 _("pick hunks and update selectively"));
++	color_fprintf_ln(stdout, s->help_color, "diff          - %s",
++			 _("view diff between HEAD and index"));
++	color_fprintf_ln(stdout, s->help_color, "add untracked - %s",
++			 _("add contents of untracked files to the staged set of changes"));
 +
- static void print_command_item(int i, struct string_list_item *item,
- 			       void *print_command_item_data)
- {
-+	struct print_command_item_data *d = print_command_item_data;
- 	struct command_item *util = item->util;
- 
- 	if (!util->prefix_length ||
- 	    !is_valid_prefix(item->string, util->prefix_length))
- 		printf(" %2d: %s", i + 1, item->string);
- 	else
--		printf(" %2d: [%.*s]%s", i + 1,
--		       (int)util->prefix_length, item->string,
--		       item->string + util->prefix_length);
-+		printf(" %2d: %s%.*s%s%s", i + 1,
-+		       d->color, (int)util->prefix_length, item->string,
-+		       d->reset, item->string + util->prefix_length);
- }
- 
- static void command_prompt_help(struct add_i_state *s)
-@@ -538,8 +551,9 @@ static void command_prompt_help(struct add_i_state *s)
- int run_add_i(struct repository *r, const struct pathspec *ps)
- {
- 	struct add_i_state s = { NULL };
-+	struct print_command_item_data data = { "[", "]" };
- 	struct list_and_choose_options main_loop_opts = {
--		{ 4, N_("*** Commands ***"), print_command_item, NULL },
-+		{ 4, N_("*** Commands ***"), print_command_item, &data },
- 		N_("What now"), command_prompt_help
++	return 0;
++}
++
+ typedef int (*command_t)(struct add_i_state *s, const struct pathspec *ps,
+ 			 struct string_list *files,
+ 			 struct list_options *opts);
+@@ -561,6 +581,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 		command_t command;
+ 	} command_list[] = {
+ 		{ "status", run_status },
++		{ "help", run_help },
  	};
- 	struct {
-@@ -570,6 +584,15 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 	struct prefix_item_list commands = PREFIX_ITEM_LIST_INIT;
  
- 	init_add_i_state(&s, r);
- 
-+	/*
-+	 * When color was asked for, use the prompt color for
-+	 * highlighting, otherwise use square brackets.
-+	 */
-+	if (s.use_color) {
-+		data.color = s.prompt_color;
-+		data.reset = s.reset_color;
-+	}
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index d50e165ca8..d4f9386621 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -647,4 +647,29 @@ test_expect_success 'checkout -p works with pathological context lines' '
+ 	test_write_lines a b a b a a b a b a >expect &&
+ 	test_cmp expect a
+ '
 +
- 	strbuf_addstr(&header, "      ");
- 	strbuf_addf(&header, print_file_item_data.modified_fmt,
- 		    _("staged"), _("unstaged"), _("path"));
++test_expect_success 'show help from add--helper' '
++	git reset --hard &&
++	cat >expect <<-EOF &&
++
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
++	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
++	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
++	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
++	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
++	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
++	<BOLD>*** Commands ***<RESET>
++	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
++	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
++	<BOLD;BLUE>What now<RESET>>$SP
++	Bye.
++	EOF
++	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
++	test_decode_color <actual.colored >actual &&
++	test_i18ncmp expect actual
++'
++
+ test_done
 -- 
 gitgitgadget
-
