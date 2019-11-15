@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E25851F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0801F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727574AbfKOJyK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:10 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55979 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727527AbfKOJyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:54:06 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so9009783wmb.5
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:54:05 -0800 (PST)
+        id S1727429AbfKOJyT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:19 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54539 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727004AbfKOJxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:53:54 -0500
+Received: by mail-wm1-f65.google.com with SMTP id z26so8986151wmi.4
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=gnKUVJ1lm2HEd10kicC0YvBZsIDgxI2dYQImyP93oT8=;
-        b=WTFSpFR5wB7Q2LmFsHiwq/aA0RiICxoh+mvc+KC63LVf87b+5d8kCYZvhBcdOKwN5j
-         142ZnHxPOs8wUoKiyr2OCdIWl+zu5o0H7EensohuPPsytfFKrEDP8dEFQtQMqTJCKNjQ
-         2j8KS3VcNIpvYPalwCUbgxE7Sr8ZMNRNGrZMzGUps7vmBWJ5R+qorhgsegHvyTGu/uLJ
-         iWIJwFDJJqQ73hCj2aG2DLylFzaYmuCGF4e/v+g34oGmI8PBgNVZxR0fNp8BUMIXwuef
-         2+00pXz9ewbu7dSwx60YYxvKjGKAG/UyJoj7F2sA0io6F3kXV2SCoIoh5fmP3BoEOAA4
-         aoGQ==
+        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
+        b=ToSQN+FmDh1PXIPFhkqZmRqj/qjpeR7Em3ILzODfiQssvLR4lK3J9HOAGk9Ieht/gN
+         j3FOEVrt7ceXahsog52AoonQIGfeiCyRCrClohXLj7rJQOW/cCVnB2qUSSeG7bmwMxk8
+         Hpa3xkGSFUGGz2Wu7r39iKxuWf4ZBisdKE0vlI1TAslW9/rz+ND2IfMARsl3PyN3RJA4
+         au6K1hr2i9EyKA/o3ukaNveFuJp47uXqks7w4eMGdapvVdERxhIUgAhTMdBMndtp2RGx
+         2jrc2D8uUAgtFAQeup8RA48f/a6NxnCJxVlB4QTTHGmr3EQfszminO7NBhwhylepODN9
+         9GgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=gnKUVJ1lm2HEd10kicC0YvBZsIDgxI2dYQImyP93oT8=;
-        b=oWWppTt2ymGm/RORoEEkgQu/oyBQUwlc/QCrr51vijmj5x48JAAh3S9Jm1jmWjYov+
-         Jw/eUrE48omuNRU85OZpfx2E1GgP8oLggCf0PoqF8DB36k1RMboALDejF/Q+GxhPDD5q
-         2VuRoXFUk3jL+kI2WSTk4XlLkbsdpSO5dDxyC372X2KlYfemHyr3/kp7Zc4J798TIkSR
-         UBybTX/5m+wTgLxHMQtCrtf2LzkkWccRmRtDtHH4vgHFMjm6XUWO1OESiPZ2dEPi6QI8
-         hc56yP6Vu9Wwvhp9VCT4h5bVFDz4VjdblMG5tOrLvdYQ4mdtQjVdD95XrdV5ljCalY3g
-         maEw==
-X-Gm-Message-State: APjAAAV+EgAcorgAQTg5VMHu7pgwjNX+Tvt0UtkeEQl2ycUPh0CVd9lE
-        Tlc+Wq/rhytc8CiR/1dR8YkJfVix
-X-Google-Smtp-Source: APXvYqzV4NCMUQDxCVB/sBfAxMwebFHQsZ01kZL6dWcih07oAJuNjRpYW5K94eLPBcErhMR9e/bwrA==
-X-Received: by 2002:a1c:3843:: with SMTP id f64mr12791822wma.129.1573811644698;
-        Fri, 15 Nov 2019 01:54:04 -0800 (PST)
+        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
+        b=FAqjJdQSH572EWGi6VEDpYpMU+EJgI7pvPpiNqKkWzp4zwKiQFqPlTPUzlteridOEd
+         UoUJmryyO+iyNOLO4QHg6dcvXGF15oajkAa9t0k37mau/eNT7/aPI7V1y6N5M5n3tC+v
+         S461SdgYG+tFbBfbRxvPgls1ldWfni5hEcw7n3rDzFPIuNGMNqrH6yGsa+pjhPyjvPcJ
+         bTRJrFfxfjiqgc9LpUXzvUhrAmJQDd1YWFYabLd2VMWSmHplNF9y+TeQJw3QbivfcmSk
+         D2ImJb/G+JA+mRHwIiTcSG5+XHQQ9ySOKtJyJh0FnOhuAoU/KThSdo9OFi4g6DxKb+br
+         Fk1w==
+X-Gm-Message-State: APjAAAWdyj6mN9JpGfURxXydF09cELi7ff9mm6cavMvGQP5zZlBM7Y8y
+        si+WlzavSx1Pb4mn9o4LMnf+sKln
+X-Google-Smtp-Source: APXvYqwJP4w6zGDLh4PHWd1orO68b4Bne3KyiPqnuyauHeb8++0Ie68LYPVgGsWkHBOWQI7nGzZa/w==
+X-Received: by 2002:a05:600c:a:: with SMTP id g10mr13965777wmc.69.1573811631014;
+        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o81sm9774165wmb.38.2019.11.15.01.54.04
+        by smtp.gmail.com with ESMTPSA id y15sm10585240wrh.94.2019.11.15.01.53.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:54:04 -0800 (PST)
-Message-Id: <5f214173931afd39d595a51d796876b11f060f06.1573811627.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:50 -0800 (PST)
+Message-Id: <495fe333bd8bc140358bc1c5f518822b92924f07.1573811626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:46 +0000
-Subject: [PATCH v4 21/21] api-index: remove api doc index files
+Date:   Fri, 15 Nov 2019 09:53:28 +0000
+Subject: [PATCH v4 03/21] graph: move doc to graph.h and graph.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,141 +72,376 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Remove both api-index.txt and api-index-skel.txt as the API documentation
-is being moved to the header files, so the index is not needed anymore
-because the doc files (Documentation/technical/api-*.txt) will be gone.
+Move the documentation from Documentation/technical/api-history-graph.txt to
+graph.h and graph.c as it's easier for the developers to find the usage
+information beside the code instead of looking for it in another doc file.
 
-Make changes to Documentation/Makefile accordingly.
+The graph library was already well documented, so few comments were added to
+both graph.h and graph.c
+
+Also documentation/technical/api-history-graph.txt is removed because
+the information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/Makefile                     | 11 +++------
- Documentation/git.txt                      |  3 ---
- Documentation/technical/.gitignore         |  1 -
- Documentation/technical/api-index-skel.txt | 13 ----------
- Documentation/technical/api-index.sh       | 28 ----------------------
- 5 files changed, 3 insertions(+), 53 deletions(-)
- delete mode 100644 Documentation/technical/.gitignore
- delete mode 100644 Documentation/technical/api-index-skel.txt
- delete mode 100755 Documentation/technical/api-index.sh
+ Documentation/technical/api-history-graph.txt | 173 ------------------
+ graph.c                                       |   1 +
+ graph.h                                       | 121 ++++++++++++
+ 3 files changed, 122 insertions(+), 173 deletions(-)
+ delete mode 100644 Documentation/technical/api-history-graph.txt
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 8fe829cc1b..28d8f68c9d 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -73,7 +73,7 @@ SP_ARTICLES += howto/rebuild-from-update-hook
- SP_ARTICLES += howto/rebase-from-internal-branch
- SP_ARTICLES += howto/keep-canonical-history-correct
- SP_ARTICLES += howto/maintain-git
--API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
-+API_DOCS = $(patsubst %.txt,%,$(wildcard technical/api-*.txt))
- SP_ARTICLES += $(API_DOCS)
- 
- TECH_DOCS += MyFirstContribution
-@@ -97,7 +97,6 @@ TECH_DOCS += technical/shallow
- TECH_DOCS += technical/signature-format
- TECH_DOCS += technical/trivial-merge
- SP_ARTICLES += $(TECH_DOCS)
--SP_ARTICLES += technical/api-index
- 
- ARTICLES_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
- HTML_FILTER ?= $(ARTICLES_HTML) $(OBSOLETE_HTML)
-@@ -353,7 +352,7 @@ clean:
- 	$(RM) *.texi *.texi+ *.texi++ git.info gitman.info
- 	$(RM) *.pdf
- 	$(RM) howto-index.txt howto/*.html doc.dep
--	$(RM) technical/*.html technical/api-index.txt
-+	$(RM) technical/*.html
- 	$(RM) SubmittingPatches.txt
- 	$(RM) $(cmds_txt) $(mergetools_txt) *.made
- 	$(RM) manpage-base-url.xsl
-@@ -386,12 +385,8 @@ user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-
- 	$(TXT_TO_XML) -d book -o $@+ $< && \
- 	mv $@+ $@
- 
--technical/api-index.txt: technical/api-index-skel.txt \
--	technical/api-index.sh $(patsubst %,%.txt,$(API_DOCS))
--	$(QUIET_GEN)cd technical && '$(SHELL_PATH_SQ)' ./api-index.sh
--
- technical/%.html: ASCIIDOC_EXTRA += -a git-relative-html-prefix=../
--$(patsubst %,%.html,$(API_DOCS) technical/api-index $(TECH_DOCS)): %.html : %.txt \
-+$(patsubst %,%.html,$(API_DOCS) $(TECH_DOCS)): %.html : %.txt \
- 	asciidoc.conf GIT-ASCIIDOCFLAGS
- 	$(QUIET_ASCIIDOC)$(TXT_TO_HTML) $*.txt
- 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9b82564d1a..0fdd93ac95 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -904,9 +904,6 @@ See linkgit:gitworkflows[7] for an overview of recommended workflows.
- See also the link:howto-index.html[howto] documents for some useful
- examples.
- 
--The internals are documented in the
--link:technical/api-index.html[Git API documentation].
--
- Users migrating from CVS may also want to
- read linkgit:gitcvs-migration[7].
- 
-diff --git a/Documentation/technical/.gitignore b/Documentation/technical/.gitignore
+diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
 deleted file mode 100644
-index 8aa891daee..0000000000
---- a/Documentation/technical/.gitignore
+index d0d1707c8c..0000000000
+--- a/Documentation/technical/api-history-graph.txt
 +++ /dev/null
-@@ -1 +0,0 @@
--api-index.txt
-diff --git a/Documentation/technical/api-index-skel.txt b/Documentation/technical/api-index-skel.txt
-deleted file mode 100644
-index eda8c195c1..0000000000
---- a/Documentation/technical/api-index-skel.txt
-+++ /dev/null
-@@ -1,13 +0,0 @@
--Git API Documents
+@@ -1,173 +0,0 @@
+-history graph API
 -=================
 -
--Git has grown a set of internal API over time.  This collection
--documents them.
+-The graph API is used to draw a text-based representation of the commit
+-history.  The API generates the graph in a line-by-line fashion.
 -
--////////////////////////////////////////////////////////////////
--// table of contents begin
--////////////////////////////////////////////////////////////////
+-Functions
+----------
 -
--////////////////////////////////////////////////////////////////
--// table of contents end
--////////////////////////////////////////////////////////////////
-diff --git a/Documentation/technical/api-index.sh b/Documentation/technical/api-index.sh
-deleted file mode 100755
-index 9c3f4131b8..0000000000
---- a/Documentation/technical/api-index.sh
-+++ /dev/null
-@@ -1,28 +0,0 @@
--#!/bin/sh
+-Core functions:
 -
--(
--	c=////////////////////////////////////////////////////////////////
--	skel=api-index-skel.txt
--	sed -e '/^\/\/ table of contents begin/q' "$skel"
--	echo "$c"
+-* `graph_init()` creates a new `struct git_graph`
 -
--	ls api-*.txt |
--	while read filename
--	do
--		case "$filename" in
--		api-index-skel.txt | api-index.txt) continue ;;
--		esac
--		title=$(sed -e 1q "$filename")
--		html=${filename%.txt}.html
--		echo "* link:$html[$title]"
--	done
--	echo "$c"
--	sed -n -e '/^\/\/ table of contents end/,$p' "$skel"
--) >api-index.txt+
+-* `graph_update()` moves the graph to a new commit.
 -
--if test -f api-index.txt && cmp api-index.txt api-index.txt+ >/dev/null
--then
--	rm -f api-index.txt+
--else
--	mv api-index.txt+ api-index.txt
--fi
+-* `graph_next_line()` outputs the next line of the graph into a strbuf.  It
+-  does not add a terminating newline.
+-
+-* `graph_padding_line()` outputs a line of vertical padding in the graph.  It
+-  is similar to `graph_next_line()`, but is guaranteed to never print the line
+-  containing the current commit.  Where `graph_next_line()` would print the
+-  commit line next, `graph_padding_line()` prints a line that simply extends
+-  all branch lines downwards one row, leaving their positions unchanged.
+-
+-* `graph_is_commit_finished()` determines if the graph has output all lines
+-  necessary for the current commit.  If `graph_update()` is called before all
+-  lines for the current commit have been printed, the next call to
+-  `graph_next_line()` will output an ellipsis, to indicate that a portion of
+-  the graph was omitted.
+-
+-The following utility functions are wrappers around `graph_next_line()` and
+-`graph_is_commit_finished()`.  They always print the output to stdout.
+-They can all be called with a NULL graph argument, in which case no graph
+-output will be printed.
+-
+-* `graph_show_commit()` calls `graph_next_line()` and
+-  `graph_is_commit_finished()` until one of them return non-zero.  This prints
+-  all graph lines up to, and including, the line containing this commit.
+-  Output is printed to stdout.  The last line printed does not contain a
+-  terminating newline.
+-
+-* `graph_show_oneline()` calls `graph_next_line()` and prints the result to
+-  stdout.  The line printed does not contain a terminating newline.
+-
+-* `graph_show_padding()` calls `graph_padding_line()` and prints the result to
+-  stdout.  The line printed does not contain a terminating newline.
+-
+-* `graph_show_remainder()` calls `graph_next_line()` until
+-  `graph_is_commit_finished()` returns non-zero.  Output is printed to stdout.
+-  The last line printed does not contain a terminating newline.  Returns 1 if
+-  output was printed, and 0 if no output was necessary.
+-
+-* `graph_show_strbuf()` prints the specified strbuf to stdout, prefixing all
+-  lines but the first with a graph line.  The caller is responsible for
+-  ensuring graph output for the first line has already been printed to stdout.
+-  (This can be done with `graph_show_commit()` or `graph_show_oneline()`.)  If
+-  a NULL graph is supplied, the strbuf is printed as-is.
+-
+-* `graph_show_commit_msg()` is similar to `graph_show_strbuf()`, but it also
+-  prints the remainder of the graph, if more lines are needed after the strbuf
+-  ends.  It is better than directly calling `graph_show_strbuf()` followed by
+-  `graph_show_remainder()` since it properly handles buffers that do not end in
+-  a terminating newline.  The output printed by `graph_show_commit_msg()` will
+-  end in a newline if and only if the strbuf ends in a newline.
+-
+-Data structure
+---------------
+-`struct git_graph` is an opaque data type used to store the current graph
+-state.
+-
+-Calling sequence
+-----------------
+-
+-* Create a `struct git_graph` by calling `graph_init()`.  When using the
+-  revision walking API, this is done automatically by `setup_revisions()` if
+-  the '--graph' option is supplied.
+-
+-* Use the revision walking API to walk through a group of contiguous commits.
+-  The `get_revision()` function automatically calls `graph_update()` each time
+-  it is invoked.
+-
+-* For each commit, call `graph_next_line()` repeatedly, until
+-  `graph_is_commit_finished()` returns non-zero.  Each call to
+-  `graph_next_line()` will output a single line of the graph.  The resulting
+-  lines will not contain any newlines.  `graph_next_line()` returns 1 if the
+-  resulting line contains the current commit, or 0 if this is merely a line
+-  needed to adjust the graph before or after the current commit.  This return
+-  value can be used to determine where to print the commit summary information
+-  alongside the graph output.
+-
+-Limitations
+------------
+-
+-* `graph_update()` must be called with commits in topological order.  It should
+-  not be called on a commit if it has already been invoked with an ancestor of
+-  that commit, or the graph output will be incorrect.
+-
+-* `graph_update()` must be called on a contiguous group of commits.  If
+-  `graph_update()` is called on a particular commit, it should later be called
+-  on all parents of that commit.  Parents must not be skipped, or the graph
+-  output will appear incorrect.
+-+
+-`graph_update()` may be used on a pruned set of commits only if the parent list
+-has been rewritten so as to include only ancestors from the pruned set.
+-
+-* The graph API does not currently support reverse commit ordering.  In
+-  order to implement reverse ordering, the graphing API needs an
+-  (efficient) mechanism to find the children of a commit.
+-
+-Sample usage
+-------------
+-
+-------------
+-struct commit *commit;
+-struct git_graph *graph = graph_init(opts);
+-
+-while ((commit = get_revision(opts)) != NULL) {
+-	while (!graph_is_commit_finished(graph))
+-	{
+-		struct strbuf sb;
+-		int is_commit_line;
+-
+-		strbuf_init(&sb, 0);
+-		is_commit_line = graph_next_line(graph, &sb);
+-		fputs(sb.buf, stdout);
+-
+-		if (is_commit_line)
+-			log_tree_commit(opts, commit);
+-		else
+-			putchar(opts->diffopt.line_termination);
+-	}
+-}
+-------------
+-
+-Sample output
+--------------
+-
+-The following is an example of the output from the graph API.  This output does
+-not include any commit summary information--callers are responsible for
+-outputting that information, if desired.
+-
+-------------
+-*
+-*
+-*
+-|\
+-* |
+-| | *
+-| \ \
+-|  \ \
+-*-. \ \
+-|\ \ \ \
+-| | * | |
+-| | | | | *
+-| | | | | *
+-| | | | | *
+-| | | | | |\
+-| | | | | | *
+-| * | | | | |
+-| | | | | *  \
+-| | | | | |\  |
+-| | | | * | | |
+-| | | | * | | |
+-* | | | | | | |
+-| |/ / / / / /
+-|/| / / / / /
+-* | | | | | |
+-|/ / / / / /
+-* | | | | |
+-| | | | | *
+-| | | | |/
+-| | | | *
+-------------
+diff --git a/graph.c b/graph.c
+index f53135485f..eab3af1dc7 100644
+--- a/graph.c
++++ b/graph.c
+@@ -34,6 +34,7 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+  * handle directly. It is assumed that this is the same file handle as the
+  * file specified by the graph diff options. This is necessary so that
+  * graph_show_strbuf can be called even with a NULL graph.
++ * If a NULL graph is supplied, the strbuf is printed as-is.
+  */
+ static void graph_show_strbuf(struct git_graph *graph,
+ 			      FILE *file,
+diff --git a/graph.h b/graph.h
+index af623390b6..8313e293c7 100644
+--- a/graph.h
++++ b/graph.h
+@@ -2,6 +2,103 @@
+ #define GRAPH_H
+ #include "diff.h"
+ 
++/**
++ * The graph API is used to draw a text-based representation of the commit
++ * history. The API generates the graph in a line-by-line fashion.
++ *
++ * Calling sequence
++ * ----------------
++ *
++ * - Create a `struct git_graph` by calling `graph_init()`.  When using the
++ *   revision walking API, this is done automatically by `setup_revisions()` if
++ *   the '--graph' option is supplied.
++ *
++ * - Use the revision walking API to walk through a group of contiguous commits.
++ *   The `get_revision()` function automatically calls `graph_update()` each time
++ *   it is invoked.
++ *
++ * - For each commit, call `graph_next_line()` repeatedly, until
++ *   `graph_is_commit_finished()` returns non-zero.  Each call to
++ *   `graph_next_line()` will output a single line of the graph.  The resulting
++ *   lines will not contain any newlines.  `graph_next_line()` returns 1 if the
++ *   resulting line contains the current commit, or 0 if this is merely a line
++ *   needed to adjust the graph before or after the current commit.  This return
++ *   value can be used to determine where to print the commit summary information
++ *   alongside the graph output.
++ *
++ * Limitations
++ * -----------
++ * - Check the graph_update() function for its limitations.
++ *
++ * - The graph API does not currently support reverse commit ordering.  In
++ *   order to implement reverse ordering, the graphing API needs an
++ *   (efficient) mechanism to find the children of a commit.
++ *
++ * Sample usage
++ * ------------
++ *
++ * ------------
++ * struct commit *commit;
++ * struct git_graph *graph = graph_init(opts);
++ *
++ * while ((commit = get_revision(opts)) != NULL) {
++ * 	while (!graph_is_commit_finished(graph))
++ * 	{
++ * 		struct strbuf sb;
++ * 		int is_commit_line;
++ *
++ * 		strbuf_init(&sb, 0);
++ * 		is_commit_line = graph_next_line(graph, &sb);
++ * 		fputs(sb.buf, stdout);
++ *
++ * 		if (is_commit_line)
++ * 			log_tree_commit(opts, commit);
++ * 		else
++ * 			putchar(opts->diffopt.line_termination);
++ * 	}
++ * }
++ * ------------
++ * Sample output
++ * -------------
++ *
++ * The following is an example of the output from the graph API.  This output does
++ * not include any commit summary information--callers are responsible for
++ * outputting that information, if desired.
++ * ------------
++ * *
++ * *
++ * *
++ * |\
++ * * |
++ * | | *
++ * | \ \
++ * |  \ \
++ * *-. \ \
++ * |\ \ \ \
++ * | | * | |
++ * | | | | | *
++ * | | | | | *
++ * | | | | | *
++ * | | | | | |\
++ * | | | | | | *
++ * | * | | | | |
++ * | | | | | *  \
++ * | | | | | |\  |
++ * | | | | * | | |
++ * | | | | * | | |
++ * * | | | | | | |
++ * | |/ / / / / /
++ * |/| / / / / /
++ * * | | | | | |
++ * |/ / / / / /
++ * * | | | | |
++ * | | | | | *
++ * | | | | |/
++ * | | | | *
++ * ------------
++ *
++ */
++
+ /* A graph is a pointer to this opaque structure */
+ struct git_graph;
+ 
+@@ -50,6 +147,21 @@ struct git_graph *graph_init(struct rev_info *opt);
+  * If graph_update() is called before graph_is_commit_finished() returns 1,
+  * the next call to graph_next_line() will output an ellipsis ("...")
+  * to indicate that a portion of the graph is missing.
++ *
++ * Limitations:
++ * -----------
++ *
++ * - `graph_update()` must be called with commits in topological order.  It should
++ *   not be called on a commit if it has already been invoked with an ancestor of
++ *   that commit, or the graph output will be incorrect.
++ *
++ * - `graph_update()` must be called on a contiguous group of commits.  If
++ *   `graph_update()` is called on a particular commit, it should later be called
++ *   on all parents of that commit.  Parents must not be skipped, or the graph
++ *   output will appear incorrect.
++ *
++ * - `graph_update()` may be used on a pruned set of commits only if the parent list
++ *   has been rewritten so as to include only ancestors from the pruned set.
+  */
+ void graph_update(struct git_graph *graph, struct commit *commit);
+ 
+@@ -62,6 +174,10 @@ void graph_update(struct git_graph *graph, struct commit *commit);
+  * for this commit.  If 0 is returned, graph_next_line() may still be
+  * called without calling graph_update(), and it will merely output
+  * appropriate "vertical padding" in the graph.
++ *
++ * If `graph_update()` is called before all lines for the current commit have
++ * been printed, the next call to `graph_next_line()` will output an ellipsis,
++ * to indicate that a portion of the graph was omitted.
+  */
+ int graph_is_commit_finished(struct git_graph const *graph);
+ 
+@@ -112,6 +228,7 @@ void graph_show_padding(struct git_graph *graph);
+ /*
+  * If the graph is non-NULL, print the rest of the history graph for this
+  * commit to stdout.  Does not print a terminating newline on the last line.
++ * Returns 1 if output was printed, and 0 if no output was necessary.
+  */
+ int graph_show_remainder(struct git_graph *graph);
+ 
+@@ -121,6 +238,10 @@ int graph_show_remainder(struct git_graph *graph);
+  * This is similar to graph_show_strbuf(), but it always prints the
+  * remainder of the graph.
+  *
++ * It is better than directly calling `graph_show_strbuf()` followed by
++ * `graph_show_remainder()` since it properly handles buffers that do not end in
++ * a terminating newline.
++ *
+  * If the strbuf ends with a newline, the output printed by
+  * graph_show_commit_msg() will end with a newline.  If the strbuf is
+  * missing a terminating newline (including if it is empty), the output
 -- 
 gitgitgadget
+
