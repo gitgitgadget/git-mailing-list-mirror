@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23B7C1F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 516011F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727492AbfKOJyC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:02 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:37871 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727403AbfKOJyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:54:00 -0500
-Received: by mail-wm1-f45.google.com with SMTP id b17so9656332wmj.2
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:58 -0800 (PST)
+        id S1727519AbfKOJyE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:04 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:42517 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727386AbfKOJx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:53:58 -0500
+Received: by mail-wr1-f46.google.com with SMTP id a15so10236960wrf.9
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=VWNl6wK9EB6mZDC5GVSJ8qEMjlos9LR3gykaHGpGsuM=;
-        b=JQrF4lVubicqR/FgorAHQfd3MsAd5uvoM1c3l+5duMQ9SRio8aC6TZov9nFXsYS16O
-         rwINi3J4rfCdyaDqz9foEXVzTOv+nKRBRjsrJrfW4lSJzyxpq5+0qeAXnBeRwxaV5IME
-         k15EBQV+tv2wV1i6yq+BNg+0T6yC5OnPNukrv6S5RrP0OhGBwqEIRKb7Ul+13c4cqJBC
-         /H3+bsqAfG22+zj/89Az4OGgUz2x7JB4dERsOniOwE/XbC9965g8H6TK9eoDJWS0zFky
-         ulH4/JuZOHOyqDl4ZHhC7rROCXAqP9qILgve4W+vkb/9xplmuXGLwaDrokRBnaP9DC55
-         3FZQ==
+        bh=QvlSZrg2iZwXCDbIoVz7SYXz/1QPUitavJOghXfdqbg=;
+        b=pvlm0GD0PH+IbK8CGZkC6R2izVOTe7Vt2LCsz/e4CDrfL09R+Ffbl8TFREKwPTbau5
+         5wwagsu3W+zmpfKy9+OIu7RTx1aD1OBV8wRlwyn4IhQqxLS+JxE7jlIJ2omwsNsqcvMO
+         OKWImv0EGusEeU00L86PigI35HimMXpg5/1l6FIH23m+iZJqF+k6lFkqaYP9UeD6ftIa
+         LrzA8TIdjdAoBTP+NBoVlhtqEJw1M5e80jgPCJgIpyh3z0m4A4Ka87PTSFYuMkCB0L8G
+         3u2bL3Q3HFT6u/Us1FNgzOoXgkr5DQbExRPV9TQm4m5oYb/SG5DCMs/5uNhXF4qUk3xg
+         Wllg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VWNl6wK9EB6mZDC5GVSJ8qEMjlos9LR3gykaHGpGsuM=;
-        b=ehur5zwe3fN/y8Az0He8Fc/qlbKfHNAQb2M+Ab3cO3JW3H/AwHUKQr0HLlhHO2mJdL
-         zvtUd2nLVbsp3N3/uExqOhPGDdJU4izoQk/90MprKuLiKbNtPTzg/r8JUmUQNFrklmQY
-         WYkpcT414nHLTW7FNH7HZUxEpSTHs+r1e+Xd4p4oPuDsRJSTyxavsxn39r0nYasiARQN
-         5GSbHw24+1mi27mAHWHt/Ru1Hm2mtK6VpjJ6zBunuQe0imCiV0BMntTNdqoxK22g9UND
-         BoM18nNpoAI+guUFrt8cswhmGG9vUeirLjIhrNKFymq8rJ+EtYVwxwmQfZ6z5ctbz554
-         F/DA==
-X-Gm-Message-State: APjAAAXr+XcTlQTdUIIdKpelZLfPO3REnRYoLuBnHEpAiMq7732+J+Ez
-        Yoi8Tph2kW26ayrhD6LyAsC3SgAT
-X-Google-Smtp-Source: APXvYqymgwmZquNmPCmhjbUo0YIQPnTMhFKm2mNAgwCOG8DeezTFCWWXk73bw7b7lfjGtj1zCLDW8w==
-X-Received: by 2002:a7b:ce90:: with SMTP id q16mr13345735wmj.172.1573811637883;
-        Fri, 15 Nov 2019 01:53:57 -0800 (PST)
+        bh=QvlSZrg2iZwXCDbIoVz7SYXz/1QPUitavJOghXfdqbg=;
+        b=VRCyeXo6lHXERAZGHVudA9DOnO0/mQ1tamlgYqyVFRNKzfTPoMJfVt/UlxOS9pbWTb
+         zUSsRnIxum0uwFvyaAKRHb/gWFuvLW4+Q5cQf7lQu0WIl8zHu6blfoO315TsvBAAYFJa
+         V7UKok3QKbnbQQqXU2B6LIS2Lrz4gsqpg2R2VEa/pf3h4tN1LiwhcovyxTm3YwT/dut1
+         /OhkltiDChWb9+PqWYbRgTic4FuTvZeyVgN76pfgjGe80zY2UrX+kHAwx+lIHArp9yom
+         8aZQImFtSn9h73+udkQShWHrW0+kd0eiz+mScTixxZX3iyITRiWPbqqs83SKQ8KuVkFB
+         UNQw==
+X-Gm-Message-State: APjAAAWOpPKmA2GKmd0fvuOQs84IAm+GU3MhBmnJJJJpY7Vpqg3ahOXV
+        pjqqCQiznp5ZTc8BZLYAFF+nf62e
+X-Google-Smtp-Source: APXvYqwBNNDMvkpelXGYX7+TH8J0zOTuAGG4fkfrdTGaFPVrOGdfzFiov9Nm/vcLJ660NLpf3WXInA==
+X-Received: by 2002:adf:e883:: with SMTP id d3mr13632410wrm.197.1573811636990;
+        Fri, 15 Nov 2019 01:53:56 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b8sm10467231wrt.39.2019.11.15.01.53.57
+        by smtp.gmail.com with ESMTPSA id w13sm10307033wrm.8.2019.11.15.01.53.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:57 -0800 (PST)
-Message-Id: <3e0d3f24158baa42464cef24ef7ea6ab0328801a.1573811627.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:56 -0800 (PST)
+Message-Id: <240a4bcb3227224529945c9576b6e49891545841.1573811627.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:37 +0000
-Subject: [PATCH v4 12/21] cache: move doc to cache.h
+Date:   Fri, 15 Nov 2019 09:53:36 +0000
+Subject: [PATCH v4 11/21] sigchain: move doc to sigchain.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,135 +72,130 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-allocation-growing.txt
-to cache.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-sigchain.txt
+to sigchain.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-allocation-growing.txt is removed because the
+Also documentation/technical/api-sigchain.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/MyFirstObjectWalk.txt           |  5 +--
- .../technical/api-allocation-growing.txt      | 39 ------------------
- cache.h                                       | 41 +++++++++++++++++--
- 3 files changed, 39 insertions(+), 46 deletions(-)
- delete mode 100644 Documentation/technical/api-allocation-growing.txt
+ Documentation/technical/api-sigchain.txt | 41 ---------------------
+ sigchain.h                               | 45 ++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 41 deletions(-)
+ delete mode 100644 Documentation/technical/api-sigchain.txt
 
-diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
-index 321c0ba6a4..aa828dfdc4 100644
---- a/Documentation/MyFirstObjectWalk.txt
-+++ b/Documentation/MyFirstObjectWalk.txt
-@@ -119,9 +119,8 @@ parameters provided by the user over the CLI.
- 
- `nr` represents the number of `rev_cmdline_entry` present in the array.
- 
--`alloc` is used by the `ALLOC_GROW` macro. Check
--`Documentation/technical/api-allocation-growing.txt` - this variable is used to
--track the allocated size of the list.
-+`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is
-+used to track the allocated size of the list.
- 
- Per entry, we find:
- 
-diff --git a/Documentation/technical/api-allocation-growing.txt b/Documentation/technical/api-allocation-growing.txt
+diff --git a/Documentation/technical/api-sigchain.txt b/Documentation/technical/api-sigchain.txt
 deleted file mode 100644
-index 5a59b54844..0000000000
---- a/Documentation/technical/api-allocation-growing.txt
+index 9e1189ef01..0000000000
+--- a/Documentation/technical/api-sigchain.txt
 +++ /dev/null
-@@ -1,39 +0,0 @@
--allocation growing API
--======================
+@@ -1,41 +0,0 @@
+-sigchain API
+-============
 -
--Dynamically growing an array using realloc() is error prone and boring.
+-Code often wants to set a signal handler to clean up temporary files or
+-other work-in-progress when we die unexpectedly. For multiple pieces of
+-code to do this without conflicting, each piece of code must remember
+-the old value of the handler and restore it either when:
 -
--Define your array with:
+-  1. The work-in-progress is finished, and the handler is no longer
+-     necessary. The handler should revert to the original behavior
+-     (either another handler, SIG_DFL, or SIG_IGN).
 -
--* a pointer (`item`) that points at the array, initialized to `NULL`
--  (although please name the variable based on its contents, not on its
--  type);
+-  2. The signal is received. We should then do our cleanup, then chain
+-     to the next handler (or die if it is SIG_DFL).
 -
--* an integer variable (`alloc`) that keeps track of how big the current
--  allocation is, initialized to `0`;
+-Sigchain is a tiny library for keeping a stack of handlers. Your handler
+-and installation code should look something like:
 -
--* another integer variable (`nr`) to keep track of how many elements the
--  array currently has, initialized to `0`.
+-------------------------------------------
+-  void clean_foo_on_signal(int sig)
+-  {
+-	  clean_foo();
+-	  sigchain_pop(sig);
+-	  raise(sig);
+-  }
 -
--Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
--alloc)`.  This ensures that the array can hold at least `n` elements by
--calling `realloc(3)` and adjusting `alloc` variable.
+-  void other_func()
+-  {
+-	  sigchain_push_common(clean_foo_on_signal);
+-	  mess_up_foo();
+-	  clean_foo();
+-  }
+-------------------------------------------
 -
--------------
--sometype *item;
--size_t nr;
--size_t alloc
+-Handlers are given the typedef of sigchain_fun. This is the same type
+-that is given to signal() or sigaction(). It is perfectly reasonable to
+-push SIG_DFL or SIG_IGN onto the stack.
 -
--for (i = 0; i < nr; i++)
--	if (we like item[i] already)
--		return;
--
--/* we did not like any existing one, so add one */
--ALLOC_GROW(item, nr + 1, alloc);
--item[nr++] = value you like;
--------------
--
--You are responsible for updating the `nr` variable.
--
--If you need to specify the number of elements to allocate explicitly
--then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
-diff --git a/cache.h b/cache.h
-index 04cabaac11..8fbbdf971a 100644
---- a/cache.h
-+++ b/cache.h
-@@ -632,10 +632,43 @@ int daemonize(void);
+-You can sigchain_push and sigchain_pop individual signals. For
+-convenience, sigchain_push_common will push the handler onto the stack
+-for many common signals.
+diff --git a/sigchain.h b/sigchain.h
+index 138b20f54b..8e6bada892 100644
+--- a/sigchain.h
++++ b/sigchain.h
+@@ -1,12 +1,57 @@
+ #ifndef SIGCHAIN_H
+ #define SIGCHAIN_H
  
- #define alloc_nr(x) (((x)+16)*3/2)
- 
--/*
-- * Realloc the buffer pointed at by variable 'x' so that it can hold
-- * at least 'nr' entries; the number of entries currently allocated
-- * is 'alloc', using the standard growing factor alloc_nr() macro.
 +/**
-+ * Dynamically growing an array using realloc() is error prone and boring.
++ * Code often wants to set a signal handler to clean up temporary files or
++ * other work-in-progress when we die unexpectedly. For multiple pieces of
++ * code to do this without conflicting, each piece of code must remember
++ * the old value of the handler and restore it either when:
 + *
-+ * Define your array with:
++ *   1. The work-in-progress is finished, and the handler is no longer
++ *      necessary. The handler should revert to the original behavior
++ *      (either another handler, SIG_DFL, or SIG_IGN).
 + *
-+ * - a pointer (`item`) that points at the array, initialized to `NULL`
-+ *   (although please name the variable based on its contents, not on its
-+ *   type);
++ *   2. The signal is received. We should then do our cleanup, then chain
++ *      to the next handler (or die if it is SIG_DFL).
 + *
-+ * - an integer variable (`alloc`) that keeps track of how big the current
-+ *   allocation is, initialized to `0`;
++ * Sigchain is a tiny library for keeping a stack of handlers. Your handler
++ * and installation code should look something like:
 + *
-+ * - another integer variable (`nr`) to keep track of how many elements the
-+ *   array currently has, initialized to `0`.
++ * ------------------------------------------
++ *   void clean_foo_on_signal(int sig)
++ *   {
++ * 	  clean_foo();
++ * 	  sigchain_pop(sig);
++ * 	  raise(sig);
++ *   }
 + *
-+ * Then before adding `n`th element to the item, call `ALLOC_GROW(item, n,
-+ * alloc)`.  This ensures that the array can hold at least `n` elements by
-+ * calling `realloc(3)` and adjusting `alloc` variable.
++ *   void other_func()
++ *   {
++ * 	  sigchain_push_common(clean_foo_on_signal);
++ * 	  mess_up_foo();
++ * 	  clean_foo();
++ *   }
++ * ------------------------------------------
 + *
-+ * ------------
-+ * sometype *item;
-+ * size_t nr;
-+ * size_t alloc
-+ *
-+ * for (i = 0; i < nr; i++)
-+ * 	if (we like item[i] already)
-+ * 		return;
-+ *
-+ * // we did not like any existing one, so add one
-+ * ALLOC_GROW(item, nr + 1, alloc);
-+ * item[nr++] = value you like;
-+ * ------------
-+ *
-+ * You are responsible for updating the `nr` variable.
-+ *
-+ * If you need to specify the number of elements to allocate explicitly
-+ * then use the macro `REALLOC_ARRAY(item, alloc)` instead of `ALLOC_GROW`.
-  *
-  * Consider using ALLOC_GROW_BY instead of ALLOC_GROW as it has some
-  * added niceties.
++ */
++
++/**
++ * Handlers are given the typedef of sigchain_fun. This is the same type
++ * that is given to signal() or sigaction(). It is perfectly reasonable to
++ * push SIG_DFL or SIG_IGN onto the stack.
++ */
+ typedef void (*sigchain_fun)(int);
+ 
++/* You can sigchain_push and sigchain_pop individual signals. */
+ int sigchain_push(int sig, sigchain_fun f);
+ int sigchain_pop(int sig);
+ 
++/**
++ * push the handler onto the stack for the common signals:
++ * SIGINT, SIGHUP, SIGTERM, SIGQUIT and SIGPIPE.
++ */
+ void sigchain_push_common(sigchain_fun f);
++
+ void sigchain_pop_common(void);
+ 
+ #endif /* SIGCHAIN_H */
 -- 
 gitgitgadget
 
