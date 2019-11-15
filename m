@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A36051F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 01:01:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F176B1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 01:01:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727403AbfKOBBe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 20:01:34 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:38476 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727437AbfKOBBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 20:01:33 -0500
-Received: by mail-pl1-f195.google.com with SMTP id w8so3487720plq.5
-        for <git@vger.kernel.org>; Thu, 14 Nov 2019 17:01:33 -0800 (PST)
+        id S1727443AbfKOBBg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 20:01:36 -0500
+Received: from mail-pl1-f182.google.com ([209.85.214.182]:36179 "EHLO
+        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727437AbfKOBBf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 20:01:35 -0500
+Received: by mail-pl1-f182.google.com with SMTP id d7so3492802pls.3
+        for <git@vger.kernel.org>; Thu, 14 Nov 2019 17:01:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=VjJogdhR5BS13cyYeMoZljc4gDWzfmfdKUgXYp6WRsk=;
-        b=BE/epLgdlUlqvHmqRJl/sx91f4f43RlNXz+I3av/RPJanjtT4FjfKMwffjqu3qhsBX
-         tcH3fpy8NUpfTjYvhTtRAXzJ2IXWaqx3Zy8VdLGJCIBuwXLTza224adrvv0roEMMkOtB
-         VPeEysTE4a2LWYqtTdAE+mrHt9c5fpYbZdIeURiQI6+WV8HrdnReaCcAffD7q6vuOTcp
-         rBHfNIIEaQxoFNTgiacr5ETrHiUXePFQCof9UHI/Oj4WCJLp4s8oQCYKwXRfXCKiwaSi
-         63e2khnpXECTpgzZuLubQk5OJHJLFFibX0KeKs4H9nbsOhOJNobUddYnbnnmxWkjEU4u
-         9tJA==
+        bh=qKGS2OrEcED1RzyPy3C6YamwGH2Inz95+8BYXXiBZVM=;
+        b=thfDisuupJPFtkcbClcf18dA7c3TtKNgvaXdYSTwS7n/AbtCoYmryZ9pCwRPAGg5MX
+         FQwNT56xC2neBK1Z3tukGqhg31+sPxEpX+ny4mF5bXzcXo/Tda/sKCnk3MYVCQFXSfzJ
+         A/2wyN3BetgBqyBa1UJRK9KeVU2VKn2vCCJ/nrNg5ZJ9LuEf66InIHLx42Y1evh/kLSh
+         89rIp/ww4BQr4EUk3TujJuXKoh37EozzYRwbiFyeYYayh39hKRlMnycDsXoucktJjjQn
+         zZWIsuBhGQTGNQ/hE3gQslH9ovrO54YcZxDWoxO9jVJYJWbDxUppm6Lfglacaza6VG6o
+         qSnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VjJogdhR5BS13cyYeMoZljc4gDWzfmfdKUgXYp6WRsk=;
-        b=KQypCHRbWxzT4TrcT8jD8tEn7FKsUPZSaAvjTHsZn6nKepDKGhe/pKuP+Nfcsg+Ka6
-         ID7sAICY6wzUTr3UCUvRpVK2vDULQmC5cDhcPju0fCAxOrQKBvkYw49PEB8oBBG5uDzA
-         04KBajZjdnkWXFi+LnT59t8GV4z/j4XAwDR+ZDVfvffrSgVd6cTOzeWf/br5gWen/WDW
-         wguWhoxX8Baa1VmiSh+du953wg8jgRPomaPlu3zWOpUU4jKATXF84dK3d2hSyE/5nywA
-         oV9zw+MsC0awOXJYzBP6N0XLAj9x5EKCqSV4fjdBlFAyZFcwVuoD8d2LCY+bwQYcNqXa
-         sDeA==
-X-Gm-Message-State: APjAAAUL0e6QmGnlU2EE+oa0a9bm5xUJJMEBwP58my3X0+QIHGk8iSbe
-        +seG5BLrHWeovTbYx1TidxjD4s7u
-X-Google-Smtp-Source: APXvYqyP4JoWC4I0ddGEhuKbcWXTQV+rcc9oAHz8fjGDjNb49FiieHv0MIQGB8CC+3zHJLvCucfojw==
-X-Received: by 2002:a17:902:ac98:: with SMTP id h24mr12122560plr.227.1573779692385;
-        Thu, 14 Nov 2019 17:01:32 -0800 (PST)
+        bh=qKGS2OrEcED1RzyPy3C6YamwGH2Inz95+8BYXXiBZVM=;
+        b=HlIug6JHdN6P3Pcmj6IF1q/2Z5uUN7+NFmOXGTgMRGTZlmV/YDvKCUNtNaGc+YvxZ4
+         MujsN/YoC/BX8exjItVNwmAu4EWaLIM2FAEtUM+UKgSap9JN+nIxMDRb5/gHk1ihJwLD
+         Ph7G+w6ZEgk828ymC+Z2oxASKmSTCMGiAOOr2fTfMT15mO/GuqrWKnyZmz/Q+1gscEVA
+         zocBtvaE/dc+jkAHNBuVHfM94ZMp24T/LTn9iZW+BUcORSSRN1cpb6JBw+bPWdLBFobN
+         S9Cit7wDBYEjdNshjYxMiuoV1zQ3wo/yxwT/P46B/YVd5HHuSz9ffM3SN8IhsFMiVUOp
+         /cFw==
+X-Gm-Message-State: APjAAAXDC1twmL5F8EqYAw4gvgSo7Rm8/igifM6VzxSWN7K4LVW2GsjN
+        DlaUNUWSum8xWT8CVBlqwQK8w5oS
+X-Google-Smtp-Source: APXvYqw8/SA0gvqBzmqboASf6rMFt3j3hVhX3ZAkZ3RuQgvgj1fj4Rsw775DYO7t4qUg5qXYgVjhdg==
+X-Received: by 2002:a17:90a:dd42:: with SMTP id u2mr14454156pjv.57.1573779694605;
+        Thu, 14 Nov 2019 17:01:34 -0800 (PST)
 Received: from generichostname ([204.14.239.54])
-        by smtp.gmail.com with ESMTPSA id 71sm8688760pfx.107.2019.11.14.17.01.31
+        by smtp.gmail.com with ESMTPSA id 12sm8529447pfv.92.2019.11.14.17.01.34
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Nov 2019 17:01:31 -0800 (PST)
-Date:   Thu, 14 Nov 2019 17:01:30 -0800
+        Thu, 14 Nov 2019 17:01:34 -0800 (PST)
+Date:   Thu, 14 Nov 2019 17:01:32 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 26/27] t9902: disable pipefail
-Message-ID: <95806f55e7e0ad1ac187ea162a74d5883fa86e67.1573779466.git.liu.denton@gmail.com>
+Subject: [PATCH 27/27] t: run tests with `set -o pipefail` on Bash
+Message-ID: <bc3f226edf284d96dc7fff15c188ecfbc32162d6.1573779466.git.liu.denton@gmail.com>
 References: <cover.1573779465.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -67,38 +67,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a future patch, we plan on running tests with `set -o pipefail`.
-However, these tests cannot run with pipefail. Since git-completion.bash
-is not a testing script, it does not follow the same return code
-conventions and it's expected that commands can fail within a pipeline.
+The current convention is to ensure that git commands are not placed in
+the upstream of a pipe. If they are, they could fail in an undetectable
+manner since a pipe's return code is the last command in the pipe.
+However, many old tests are still written with git commands in the
+upstream of a pipe.
 
-Run `set +o pipefail` to disable pipefail in this script.
+In the spirit of catching these failures, run tests with
+`set -o pipefail` if the underlying shell is Bash. This way, we can
+catch failures of Git commands that may occur even in the middle of a
+pipeline.
 
-Note that this is being unconditionally run because this test will be
-skipped if its not running on Bash.
+In the future, more shells that support `set -o pipefail` may have it
+enabled but let's start small for now.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t9902-completion.sh | 6 ++++++
- 1 file changed, 6 insertions(+)
+ t/README      |  4 ++++
+ t/test-lib.sh | 12 ++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index e90ac565e1..75a512669e 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -7,6 +7,12 @@ test_description='test bash completion'
+diff --git a/t/README b/t/README
+index 60d5b77bcc..ba96b6d113 100644
+--- a/t/README
++++ b/t/README
+@@ -415,6 +415,10 @@ GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=<boolean>, when true (which is
+ the default when running tests), errors out when an abbreviated option
+ is used.
  
- . ./lib-bash.sh
- 
-+# These tests cannot run with pipefail. Since git-completion.bash is not
-+# a testing script, it does not follow the same return code conventions
-+# and it's expected that commands can fail within a pipeline. Ignore
-+# these failures.
-+set +o pipefail
++GIT_TEST_PIPEFAIL=<boolean>, when true, run 'set -o pipefail' to catch
++failures in commands that aren't the last in a pipe. Defaults to true on
++Bash and false otherwise.
 +
- complete ()
- {
- 	# do nothing
+ Naming Tests
+ ------------
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 46c4440843..c0c43dfce9 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -64,6 +64,18 @@ then
+ 	export GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS
+ fi
+ 
++# Use set -o pipefail on platforms that support it
++GIT_TEST_PIPEFAIL_DEFAULT=false
++# TODO: detect more platforms that support `set -o pipefail`
++if test -n "$BASH_VERSION"
++then
++	GIT_TEST_PIPEFAIL_DEFAULT=true
++fi
++if git env--helper --type=bool --default="$GIT_TEST_PIPEFAIL_DEFAULT" --exit-code GIT_TEST_PIPEFAIL
++then
++	set -o pipefail
++fi
++
+ ################################################################
+ # It appears that people try to run tests without building...
+ "${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
 -- 
 2.24.0.399.gf8350c9437
 
