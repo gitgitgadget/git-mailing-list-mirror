@@ -8,440 +8,422 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F0801F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7171F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727429AbfKOJyT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:19 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54539 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727004AbfKOJxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:53:54 -0500
-Received: by mail-wm1-f65.google.com with SMTP id z26so8986151wmi.4
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:52 -0800 (PST)
+        id S1727306AbfKOJxx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:53:53 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39795 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbfKOJxx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:53:53 -0500
+Received: by mail-wr1-f66.google.com with SMTP id l7so10253375wrp.6
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
-        b=ToSQN+FmDh1PXIPFhkqZmRqj/qjpeR7Em3ILzODfiQssvLR4lK3J9HOAGk9Ieht/gN
-         j3FOEVrt7ceXahsog52AoonQIGfeiCyRCrClohXLj7rJQOW/cCVnB2qUSSeG7bmwMxk8
-         Hpa3xkGSFUGGz2Wu7r39iKxuWf4ZBisdKE0vlI1TAslW9/rz+ND2IfMARsl3PyN3RJA4
-         au6K1hr2i9EyKA/o3ukaNveFuJp47uXqks7w4eMGdapvVdERxhIUgAhTMdBMndtp2RGx
-         2jrc2D8uUAgtFAQeup8RA48f/a6NxnCJxVlB4QTTHGmr3EQfszminO7NBhwhylepODN9
-         9GgA==
+        bh=N+uolg5r0XDGuOmgPUa1kHx41h4qRZi4BmBjtiraTf8=;
+        b=TFotuWWJoY2HpFj7OHlGjcy1d99z13Lh+uYe/sOxYdaFQgvQ6a9tLYDXvLoj14p4C1
+         H8ZJplTLckkp07ZKGIxYYZmMSgyn+vTVnIa+dTy5pdbi/HFy7DjNodpy4aBQhi/Yw44u
+         nMQR5frn01gG4idA7+vHZpdLaWnkIscVGu+zJsexoq9Z0rD9QGXJ5Pwu8zU5dZdPJolI
+         QazGPREfWS9I4OtRfjLmON2kT+8GEmJ9IB4Y91HTDqWeSFJ9qTTdTgCXTBu5W/qTSTHq
+         0ctPfcT7ywCMnY6lFZPwppRiJpneYEcZszi8yqxBfKv9nzSk3ZyX+j5LySIlzDm+2Dcq
+         rJzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
-        b=FAqjJdQSH572EWGi6VEDpYpMU+EJgI7pvPpiNqKkWzp4zwKiQFqPlTPUzlteridOEd
-         UoUJmryyO+iyNOLO4QHg6dcvXGF15oajkAa9t0k37mau/eNT7/aPI7V1y6N5M5n3tC+v
-         S461SdgYG+tFbBfbRxvPgls1ldWfni5hEcw7n3rDzFPIuNGMNqrH6yGsa+pjhPyjvPcJ
-         bTRJrFfxfjiqgc9LpUXzvUhrAmJQDd1YWFYabLd2VMWSmHplNF9y+TeQJw3QbivfcmSk
-         D2ImJb/G+JA+mRHwIiTcSG5+XHQQ9ySOKtJyJh0FnOhuAoU/KThSdo9OFi4g6DxKb+br
-         Fk1w==
-X-Gm-Message-State: APjAAAWdyj6mN9JpGfURxXydF09cELi7ff9mm6cavMvGQP5zZlBM7Y8y
-        si+WlzavSx1Pb4mn9o4LMnf+sKln
-X-Google-Smtp-Source: APXvYqwJP4w6zGDLh4PHWd1orO68b4Bne3KyiPqnuyauHeb8++0Ie68LYPVgGsWkHBOWQI7nGzZa/w==
-X-Received: by 2002:a05:600c:a:: with SMTP id g10mr13965777wmc.69.1573811631014;
-        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
+        bh=N+uolg5r0XDGuOmgPUa1kHx41h4qRZi4BmBjtiraTf8=;
+        b=rJqE0ZXgpIuJUXnS2YGJ0KnIt45MzhwHVjc1aYUeSyqR0vNUjwsSyZjc/aP+QAmzwB
+         y3gERo0IAQBv0jHx264Q0mzLvQ7Ff2Dty0oO/IYTLOLAlYJ//NrhBJZEhMnH4HIsoHHN
+         DasdlPpxAvghlNkZD1Erh/ZBE1vMZqygXcoDoOfwTtPvsvnPZ3sB8JNme9g4ert1UtwS
+         pGX/gl3/QrGWpB8bdQK+bLlFgudKYq+N8ARWHJ72yA9A/VMYpY21qz1DtaOgICsuHR4+
+         xKlaYv/QL0L9a9RQXmaOGCoEnEyQBkpQEpz9wmr+4tAUANSc6ibLIUZ+PyyeP5WvKtij
+         bDuA==
+X-Gm-Message-State: APjAAAWrixz6LzhrWXOodt2bhnCAhKbveqaGvTXqAdTpIAOmr46QWctb
+        wh8cDoS4MrriLMhbLZz/7FKXMFkF
+X-Google-Smtp-Source: APXvYqxKLn+htEfi7uF6LezwsUcwInBT3SFQWya3X+xhruz0wZ1uBLUEF/mDQ2XZheTnl6GC6GskTg==
+X-Received: by 2002:a5d:4a85:: with SMTP id o5mr14780448wrq.109.1573811628873;
+        Fri, 15 Nov 2019 01:53:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y15sm10585240wrh.94.2019.11.15.01.53.50
+        by smtp.gmail.com with ESMTPSA id w18sm10617437wrl.2.2019.11.15.01.53.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:50 -0800 (PST)
-Message-Id: <495fe333bd8bc140358bc1c5f518822b92924f07.1573811626.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:48 -0800 (PST)
+Message-Id: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
+In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
-        <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:28 +0000
-Subject: [PATCH v4 03/21] graph: move doc to graph.h and graph.c
+Date:   Fri, 15 Nov 2019 09:53:25 +0000
+Subject: [PATCH v4 00/21] [Outreachy] Move doc to header files
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Heba Waly <heba.waly@gmail.com>
+Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Heba Waly <heba.waly@gmail.com>
+Move the documentation from Documentation/technical/api-*.txt to the
+corresponding header file, as it's easier for the developers to find the
+usage information beside the code instead of looking for it in another doc
+file.
 
-Move the documentation from Documentation/technical/api-history-graph.txt to
-graph.h and graph.c as it's easier for the developers to find the usage
-information beside the code instead of looking for it in another doc file.
+Also documentation/technical/api-*.txt is removed because the information it
+has is will be redundant and it'll be hard to keep it up to date and
+synchronized with the documentation in the header files.
 
-The graph library was already well documented, so few comments were added to
-both graph.h and graph.c
+api-trace2.txt is not removed because it has lots of valuable information
+that seems more appropriate to be in a separate doc file not in the trace2.h
+although the functions documentation is moved to the trace2.h
 
-Also documentation/technical/api-history-graph.txt is removed because
-the information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header file.
+api-error-handling.txt is not removed as well because no other file seemed
+to be more suitable for the doc it contains. I'm open to suggestions though.
 
-Signed-off-by: Heba Waly <heba.waly@gmail.com>
----
- Documentation/technical/api-history-graph.txt | 173 ------------------
+The ll-merge related doc was removed from api-merge.txt to ll-merge.h, while
+the rest of the file is left as is.
+
+Signed-off-by: Heba Waly heba.waly@gmail.com
+
+Heba Waly (21):
+  diff: move doc to diff.h and diffcore.h
+  dir: move doc to dir.h
+  graph: move doc to graph.h and graph.c
+  merge: move doc to ll-merge.h
+  sha1-array: move doc to sha1-array.h
+  remote: move doc to remote.h and refspec.h
+  refs: move doc to refs.h
+  attr: move doc to attr.h
+  revision: move doc to revision.h
+  pathspec: move doc to pathspec.h
+  sigchain: move doc to sigchain.h
+  cache: move doc to cache.h
+  argv-array: move doc to argv-array.h
+  credential: move doc to credential.h
+  parse-options: move doc to parse-options.h
+  run-command: move doc to run-command.h
+  trace: move doc to trace.h
+  tree-walk: move doc to tree-walk.h
+  submodule-config: move doc to submodule-config.h
+  trace2: move doc to trace2.h
+  api-index: remove api doc index files
+
+ Documentation/Makefile                        |  11 +-
+ Documentation/MyFirstContribution.txt         |   2 +-
+ Documentation/MyFirstObjectWalk.txt           |   7 +-
+ Documentation/git-credential.txt              |   3 +-
+ Documentation/git.txt                         |   3 -
+ Documentation/gitcredentials.txt              |   3 +-
+ Documentation/technical/.gitignore            |   1 -
+ .../technical/api-allocation-growing.txt      |  39 ---
+ Documentation/technical/api-argv-array.txt    |  65 ----
+ Documentation/technical/api-credentials.txt   | 271 ---------------
+ Documentation/technical/api-diff.txt          | 174 ----------
+ .../technical/api-directory-listing.txt       | 130 -------
+ Documentation/technical/api-gitattributes.txt | 154 --------
+ Documentation/technical/api-history-graph.txt | 173 ---------
+ Documentation/technical/api-index-skel.txt    |  13 -
+ Documentation/technical/api-index.sh          |  28 --
+ Documentation/technical/api-merge.txt         |  72 +---
+ Documentation/technical/api-oid-array.txt     |  90 -----
+ Documentation/technical/api-parse-options.txt | 313 -----------------
+ Documentation/technical/api-ref-iteration.txt |  78 -----
+ Documentation/technical/api-remote.txt        | 127 -------
+ .../technical/api-revision-walking.txt        |  72 ----
+ Documentation/technical/api-run-command.txt   | 264 --------------
+ Documentation/technical/api-setup.txt         |  47 ---
+ Documentation/technical/api-sigchain.txt      |  41 ---
+ .../technical/api-submodule-config.txt        |  66 ----
+ Documentation/technical/api-trace.txt         | 140 --------
+ Documentation/technical/api-trace2.txt        | 243 +------------
+ Documentation/technical/api-tree-walking.txt  | 149 --------
+ argv-array.h                                  |  62 ++++
+ attr.c                                        |   3 +-
+ attr.h                                        | 141 +++++++-
+ cache.h                                       |  41 ++-
+ credential.h                                  | 236 +++++++++++++
+ diff.h                                        | 126 +++++++
+ diffcore.h                                    |  32 ++
+ dir.c                                         |   2 -
+ dir.h                                         | 119 ++++++-
  graph.c                                       |   1 +
- graph.h                                       | 121 ++++++++++++
- 3 files changed, 122 insertions(+), 173 deletions(-)
+ graph.h                                       | 121 +++++++
+ ll-merge.h                                    |  73 +++-
+ parse-options.h                               | 328 ++++++++++++++++++
+ pathspec.h                                    |  35 +-
+ refs.h                                        |  51 +++
+ refspec.h                                     |  16 +
+ remote.h                                      |  57 ++-
+ revision.h                                    |  59 ++++
+ run-command.h                                 | 252 +++++++++++++-
+ sha1-array.c                                  |   2 +-
+ sha1-array.h                                  |  80 +++++
+ sigchain.h                                    |  45 +++
+ submodule-config.h                            |  38 +-
+ trace.h                                       | 133 ++++++-
+ trace2.h                                      | 124 +++++--
+ tree-walk.h                                   | 122 ++++++-
+ 55 files changed, 2259 insertions(+), 2819 deletions(-)
+ delete mode 100644 Documentation/technical/.gitignore
+ delete mode 100644 Documentation/technical/api-allocation-growing.txt
+ delete mode 100644 Documentation/technical/api-argv-array.txt
+ delete mode 100644 Documentation/technical/api-credentials.txt
+ delete mode 100644 Documentation/technical/api-diff.txt
+ delete mode 100644 Documentation/technical/api-directory-listing.txt
+ delete mode 100644 Documentation/technical/api-gitattributes.txt
  delete mode 100644 Documentation/technical/api-history-graph.txt
+ delete mode 100644 Documentation/technical/api-index-skel.txt
+ delete mode 100755 Documentation/technical/api-index.sh
+ delete mode 100644 Documentation/technical/api-oid-array.txt
+ delete mode 100644 Documentation/technical/api-parse-options.txt
+ delete mode 100644 Documentation/technical/api-ref-iteration.txt
+ delete mode 100644 Documentation/technical/api-remote.txt
+ delete mode 100644 Documentation/technical/api-revision-walking.txt
+ delete mode 100644 Documentation/technical/api-run-command.txt
+ delete mode 100644 Documentation/technical/api-setup.txt
+ delete mode 100644 Documentation/technical/api-sigchain.txt
+ delete mode 100644 Documentation/technical/api-submodule-config.txt
+ delete mode 100644 Documentation/technical/api-trace.txt
+ delete mode 100644 Documentation/technical/api-tree-walking.txt
 
-diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
-deleted file mode 100644
-index d0d1707c8c..0000000000
---- a/Documentation/technical/api-history-graph.txt
-+++ /dev/null
-@@ -1,173 +0,0 @@
--history graph API
--=================
--
--The graph API is used to draw a text-based representation of the commit
--history.  The API generates the graph in a line-by-line fashion.
--
--Functions
-----------
--
--Core functions:
--
--* `graph_init()` creates a new `struct git_graph`
--
--* `graph_update()` moves the graph to a new commit.
--
--* `graph_next_line()` outputs the next line of the graph into a strbuf.  It
--  does not add a terminating newline.
--
--* `graph_padding_line()` outputs a line of vertical padding in the graph.  It
--  is similar to `graph_next_line()`, but is guaranteed to never print the line
--  containing the current commit.  Where `graph_next_line()` would print the
--  commit line next, `graph_padding_line()` prints a line that simply extends
--  all branch lines downwards one row, leaving their positions unchanged.
--
--* `graph_is_commit_finished()` determines if the graph has output all lines
--  necessary for the current commit.  If `graph_update()` is called before all
--  lines for the current commit have been printed, the next call to
--  `graph_next_line()` will output an ellipsis, to indicate that a portion of
--  the graph was omitted.
--
--The following utility functions are wrappers around `graph_next_line()` and
--`graph_is_commit_finished()`.  They always print the output to stdout.
--They can all be called with a NULL graph argument, in which case no graph
--output will be printed.
--
--* `graph_show_commit()` calls `graph_next_line()` and
--  `graph_is_commit_finished()` until one of them return non-zero.  This prints
--  all graph lines up to, and including, the line containing this commit.
--  Output is printed to stdout.  The last line printed does not contain a
--  terminating newline.
--
--* `graph_show_oneline()` calls `graph_next_line()` and prints the result to
--  stdout.  The line printed does not contain a terminating newline.
--
--* `graph_show_padding()` calls `graph_padding_line()` and prints the result to
--  stdout.  The line printed does not contain a terminating newline.
--
--* `graph_show_remainder()` calls `graph_next_line()` until
--  `graph_is_commit_finished()` returns non-zero.  Output is printed to stdout.
--  The last line printed does not contain a terminating newline.  Returns 1 if
--  output was printed, and 0 if no output was necessary.
--
--* `graph_show_strbuf()` prints the specified strbuf to stdout, prefixing all
--  lines but the first with a graph line.  The caller is responsible for
--  ensuring graph output for the first line has already been printed to stdout.
--  (This can be done with `graph_show_commit()` or `graph_show_oneline()`.)  If
--  a NULL graph is supplied, the strbuf is printed as-is.
--
--* `graph_show_commit_msg()` is similar to `graph_show_strbuf()`, but it also
--  prints the remainder of the graph, if more lines are needed after the strbuf
--  ends.  It is better than directly calling `graph_show_strbuf()` followed by
--  `graph_show_remainder()` since it properly handles buffers that do not end in
--  a terminating newline.  The output printed by `graph_show_commit_msg()` will
--  end in a newline if and only if the strbuf ends in a newline.
--
--Data structure
----------------
--`struct git_graph` is an opaque data type used to store the current graph
--state.
--
--Calling sequence
------------------
--
--* Create a `struct git_graph` by calling `graph_init()`.  When using the
--  revision walking API, this is done automatically by `setup_revisions()` if
--  the '--graph' option is supplied.
--
--* Use the revision walking API to walk through a group of contiguous commits.
--  The `get_revision()` function automatically calls `graph_update()` each time
--  it is invoked.
--
--* For each commit, call `graph_next_line()` repeatedly, until
--  `graph_is_commit_finished()` returns non-zero.  Each call to
--  `graph_next_line()` will output a single line of the graph.  The resulting
--  lines will not contain any newlines.  `graph_next_line()` returns 1 if the
--  resulting line contains the current commit, or 0 if this is merely a line
--  needed to adjust the graph before or after the current commit.  This return
--  value can be used to determine where to print the commit summary information
--  alongside the graph output.
--
--Limitations
-------------
--
--* `graph_update()` must be called with commits in topological order.  It should
--  not be called on a commit if it has already been invoked with an ancestor of
--  that commit, or the graph output will be incorrect.
--
--* `graph_update()` must be called on a contiguous group of commits.  If
--  `graph_update()` is called on a particular commit, it should later be called
--  on all parents of that commit.  Parents must not be skipped, or the graph
--  output will appear incorrect.
--+
--`graph_update()` may be used on a pruned set of commits only if the parent list
--has been rewritten so as to include only ancestors from the pruned set.
--
--* The graph API does not currently support reverse commit ordering.  In
--  order to implement reverse ordering, the graphing API needs an
--  (efficient) mechanism to find the children of a commit.
--
--Sample usage
--------------
--
--------------
--struct commit *commit;
--struct git_graph *graph = graph_init(opts);
--
--while ((commit = get_revision(opts)) != NULL) {
--	while (!graph_is_commit_finished(graph))
--	{
--		struct strbuf sb;
--		int is_commit_line;
--
--		strbuf_init(&sb, 0);
--		is_commit_line = graph_next_line(graph, &sb);
--		fputs(sb.buf, stdout);
--
--		if (is_commit_line)
--			log_tree_commit(opts, commit);
--		else
--			putchar(opts->diffopt.line_termination);
--	}
--}
--------------
--
--Sample output
---------------
--
--The following is an example of the output from the graph API.  This output does
--not include any commit summary information--callers are responsible for
--outputting that information, if desired.
--
--------------
--*
--*
--*
--|\
--* |
--| | *
--| \ \
--|  \ \
--*-. \ \
--|\ \ \ \
--| | * | |
--| | | | | *
--| | | | | *
--| | | | | *
--| | | | | |\
--| | | | | | *
--| * | | | | |
--| | | | | *  \
--| | | | | |\  |
--| | | | * | | |
--| | | | * | | |
--* | | | | | | |
--| |/ / / / / /
--|/| / / / / /
--* | | | | | |
--|/ / / / / /
--* | | | | |
--| | | | | *
--| | | | |/
--| | | | *
--------------
-diff --git a/graph.c b/graph.c
-index f53135485f..eab3af1dc7 100644
---- a/graph.c
-+++ b/graph.c
-@@ -34,6 +34,7 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
-  * handle directly. It is assumed that this is the same file handle as the
-  * file specified by the graph diff options. This is necessary so that
-  * graph_show_strbuf can be called even with a NULL graph.
-+ * If a NULL graph is supplied, the strbuf is printed as-is.
-  */
- static void graph_show_strbuf(struct git_graph *graph,
- 			      FILE *file,
-diff --git a/graph.h b/graph.h
-index af623390b6..8313e293c7 100644
---- a/graph.h
-+++ b/graph.h
-@@ -2,6 +2,103 @@
- #define GRAPH_H
- #include "diff.h"
- 
-+/**
-+ * The graph API is used to draw a text-based representation of the commit
-+ * history. The API generates the graph in a line-by-line fashion.
-+ *
-+ * Calling sequence
-+ * ----------------
-+ *
-+ * - Create a `struct git_graph` by calling `graph_init()`.  When using the
-+ *   revision walking API, this is done automatically by `setup_revisions()` if
-+ *   the '--graph' option is supplied.
-+ *
-+ * - Use the revision walking API to walk through a group of contiguous commits.
-+ *   The `get_revision()` function automatically calls `graph_update()` each time
-+ *   it is invoked.
-+ *
-+ * - For each commit, call `graph_next_line()` repeatedly, until
-+ *   `graph_is_commit_finished()` returns non-zero.  Each call to
-+ *   `graph_next_line()` will output a single line of the graph.  The resulting
-+ *   lines will not contain any newlines.  `graph_next_line()` returns 1 if the
-+ *   resulting line contains the current commit, or 0 if this is merely a line
-+ *   needed to adjust the graph before or after the current commit.  This return
-+ *   value can be used to determine where to print the commit summary information
-+ *   alongside the graph output.
-+ *
-+ * Limitations
-+ * -----------
-+ * - Check the graph_update() function for its limitations.
-+ *
-+ * - The graph API does not currently support reverse commit ordering.  In
-+ *   order to implement reverse ordering, the graphing API needs an
-+ *   (efficient) mechanism to find the children of a commit.
-+ *
-+ * Sample usage
-+ * ------------
-+ *
-+ * ------------
-+ * struct commit *commit;
-+ * struct git_graph *graph = graph_init(opts);
-+ *
-+ * while ((commit = get_revision(opts)) != NULL) {
-+ * 	while (!graph_is_commit_finished(graph))
-+ * 	{
-+ * 		struct strbuf sb;
-+ * 		int is_commit_line;
-+ *
-+ * 		strbuf_init(&sb, 0);
-+ * 		is_commit_line = graph_next_line(graph, &sb);
-+ * 		fputs(sb.buf, stdout);
-+ *
-+ * 		if (is_commit_line)
-+ * 			log_tree_commit(opts, commit);
-+ * 		else
-+ * 			putchar(opts->diffopt.line_termination);
-+ * 	}
-+ * }
-+ * ------------
-+ * Sample output
-+ * -------------
-+ *
-+ * The following is an example of the output from the graph API.  This output does
-+ * not include any commit summary information--callers are responsible for
-+ * outputting that information, if desired.
-+ * ------------
-+ * *
-+ * *
-+ * *
-+ * |\
-+ * * |
-+ * | | *
-+ * | \ \
-+ * |  \ \
-+ * *-. \ \
-+ * |\ \ \ \
-+ * | | * | |
-+ * | | | | | *
-+ * | | | | | *
-+ * | | | | | *
-+ * | | | | | |\
-+ * | | | | | | *
-+ * | * | | | | |
-+ * | | | | | *  \
-+ * | | | | | |\  |
-+ * | | | | * | | |
-+ * | | | | * | | |
-+ * * | | | | | | |
-+ * | |/ / / / / /
-+ * |/| / / / / /
-+ * * | | | | | |
-+ * |/ / / / / /
-+ * * | | | | |
-+ * | | | | | *
-+ * | | | | |/
-+ * | | | | *
-+ * ------------
-+ *
-+ */
-+
- /* A graph is a pointer to this opaque structure */
- struct git_graph;
- 
-@@ -50,6 +147,21 @@ struct git_graph *graph_init(struct rev_info *opt);
-  * If graph_update() is called before graph_is_commit_finished() returns 1,
-  * the next call to graph_next_line() will output an ellipsis ("...")
-  * to indicate that a portion of the graph is missing.
-+ *
-+ * Limitations:
-+ * -----------
-+ *
-+ * - `graph_update()` must be called with commits in topological order.  It should
-+ *   not be called on a commit if it has already been invoked with an ancestor of
-+ *   that commit, or the graph output will be incorrect.
-+ *
-+ * - `graph_update()` must be called on a contiguous group of commits.  If
-+ *   `graph_update()` is called on a particular commit, it should later be called
-+ *   on all parents of that commit.  Parents must not be skipped, or the graph
-+ *   output will appear incorrect.
-+ *
-+ * - `graph_update()` may be used on a pruned set of commits only if the parent list
-+ *   has been rewritten so as to include only ancestors from the pruned set.
-  */
- void graph_update(struct git_graph *graph, struct commit *commit);
- 
-@@ -62,6 +174,10 @@ void graph_update(struct git_graph *graph, struct commit *commit);
-  * for this commit.  If 0 is returned, graph_next_line() may still be
-  * called without calling graph_update(), and it will merely output
-  * appropriate "vertical padding" in the graph.
-+ *
-+ * If `graph_update()` is called before all lines for the current commit have
-+ * been printed, the next call to `graph_next_line()` will output an ellipsis,
-+ * to indicate that a portion of the graph was omitted.
-  */
- int graph_is_commit_finished(struct git_graph const *graph);
- 
-@@ -112,6 +228,7 @@ void graph_show_padding(struct git_graph *graph);
- /*
-  * If the graph is non-NULL, print the rest of the history graph for this
-  * commit to stdout.  Does not print a terminating newline on the last line.
-+ * Returns 1 if output was printed, and 0 if no output was necessary.
-  */
- int graph_show_remainder(struct git_graph *graph);
- 
-@@ -121,6 +238,10 @@ int graph_show_remainder(struct git_graph *graph);
-  * This is similar to graph_show_strbuf(), but it always prints the
-  * remainder of the graph.
-  *
-+ * It is better than directly calling `graph_show_strbuf()` followed by
-+ * `graph_show_remainder()` since it properly handles buffers that do not end in
-+ * a terminating newline.
-+ *
-  * If the strbuf ends with a newline, the output printed by
-  * graph_show_commit_msg() will end with a newline.  If the strbuf is
-  * missing a terminating newline (including if it is empty), the output
+
+base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-434%2FHebaWaly%2Fmove-doc-to-header-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-434/HebaWaly/move-doc-to-header-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/434
+
+Range-diff vs v3:
+
+  1:  60e80b545f !  1:  7f2f4c45a6 diff: move doc to diff.h and diffcore.h
+     @@ -398,14 +398,6 @@
+       	void (*set_default)(struct diff_options *);
+       
+       	FILE *file;
+     -@@
+     - void diff_emit_submodule_pipethrough(struct diff_options *o,
+     - 				     const char *line, int len);
+     - 
+     -+/* Output should be colored. */
+     - enum color_diff {
+     - 	DIFF_RESET = 0,
+     - 	DIFF_CONTEXT = 1,
+      @@
+       	DIFF_FILE_OLD_BOLD = 21,
+       	DIFF_FILE_NEW_BOLD = 22,
+  2:  7539f11bce =  2:  f87ca0228e dir: move doc to dir.h
+  3:  370f42114e =  3:  495fe333bd graph: move doc to graph.h and graph.c
+  4:  39f25de85f =  4:  90baf409ec merge: move doc to ll-merge.h
+  5:  3a8f93de3d =  5:  a76a2e2244 sha1-array: move doc to sha1-array.h
+  6:  52ba427514 =  6:  5719b8141c remote: move doc to remote.h and refspec.h
+  7:  6a9a0f77b3 =  7:  f84c1338fa refs: move doc to refs.h
+  8:  b1aedd025e =  8:  a007b50b9b attr: move doc to attr.h
+  9:  6463c7565b =  9:  88553030f5 revision: move doc to revision.h
+ 10:  fa450e27a8 = 10:  0042d10223 pathspec: move doc to pathspec.h
+ 11:  0e1663c039 = 11:  240a4bcb32 sigchain: move doc to sigchain.h
+ 12:  1eca7099ef ! 12:  3e0d3f2415 cache: move doc to cache.h
+     @@ -22,7 +22,7 @@
+      -`alloc` is used by the `ALLOC_GROW` macro. Check
+      -`Documentation/technical/api-allocation-growing.txt` - this variable is used to
+      -track the allocated size of the list.
+     -+`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is 
+     ++`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is
+      +used to track the allocated size of the list.
+       
+       Per entry, we find:
+ 13:  debc035d40 = 13:  4f805c8737 argv-array: move doc to argv-array.h
+ 14:  2e79afe7b8 = 14:  ea78cb4ae5 credential: move doc to credential.h
+ 15:  1dca77cd27 ! 15:  7097de91c3 parse-options: move doc to parse-options.h
+     @@ -412,13 +412,10 @@
+      + *   `static const char * const builtin_foo_usage[]` array
+      + *   containing alternative usage strings
+      + *
+     -+ * - define `builtin_foo_options` array as described below
+     -+ *   in section 'Data Structure'.
+     ++ * - define `builtin_foo_options` array.
+      + *
+     -+ * - in `cmd_foo(int argc, const char **argv, const char *prefix)`
+     -+ *   call
+     -+ *
+     -+ * 	argc = parse_options(argc, argv, prefix, builtin_foo_options, builtin_foo_usage, flags);
+     ++ * - in `cmd_foo(int argc, const char **argv, const char *prefix)` call
+     ++ *   argc = parse_options(argc, argv, prefix, builtin_foo_options, builtin_foo_usage, flags);
+      + *
+      + * `parse_options()` will filter out the processed options of `argv[]` and leave the
+      + * non-option arguments in `argv[]`.
+     @@ -430,6 +427,8 @@
+      + * a limited parser for only a subset of the options that needs to be run
+      + * before the full parser, which in turn shows the full help message.
+      + *
+     ++ * Flags are the bitwise-or of the members of parse_opt_flags.
+     ++ *
+      + * Sophisticated option parsing
+      + * ----------------------------
+      + *
+ 16:  1a9a6ca42d = 16:  03aa723fb7 run-command: move doc to run-command.h
+ 17:  f4df8e16ed = 17:  44a47075dc trace: move doc to trace.h
+ 18:  ee9b74018b = 18:  5b20c2794b tree-walk: move doc to tree-walk.h
+ 19:  9f34f3177d = 19:  251a08c1d8 submodule-config: move doc to submodule-config.h
+ 20:  a337f88a55 ! 20:  1f08493281 trace2: move doc to trace2.h
+     @@ -20,15 +20,9 @@
+       --- a/Documentation/technical/api-trace2.txt
+       +++ b/Documentation/technical/api-trace2.txt
+      @@
+     - Trace2 Targets.  This section describes the set of available
+     - messages.
+     + === Basic Command Messages
+       
+     --It helps to divide these functions into groups for discussion
+     --purposes.
+     --
+     --=== Basic Command Messages
+     --
+     --These are concerned with the lifetime of the overall git process.
+     + These are concerned with the lifetime of the overall git process.
+      -
+      -`void trace2_initialize_clock()`::
+      -
+     @@ -73,11 +67,13 @@
+      -
+      -	Emits a "cmd_path" message with the full pathname of the
+      -	current process.
+     --
+     --=== Command Detail Messages
+     --
+     --These are concerned with describing the specific Git command
+     --after the command line, config, and environment are inspected.
+     ++e.g: `void trace2_initialize_clock()`, `void trace2_initialize()`,
+     ++`int trace2_is_enabled()`, `void trace2_cmd_start(int argc, const char **argv)`.
+     + 
+     + === Command Detail Messages
+     + 
+     + These are concerned with describing the specific Git command
+     + after the command line, config, and environment are inspected.
+      -
+      -`void trace2_cmd_name(const char *name)`::
+      -
+     @@ -142,12 +138,14 @@
+      -+
+      -The repo-id field is in anticipation of future in-proc submodule
+      -repositories.
+     --
+     --=== Child Process Messages
+     --
+     --These are concerned with the various spawned child processes,
+     --including shell scripts, git commands, editors, pagers, and hooks.
+     --
+     ++e.g: `void trace2_cmd_name(const char *name)`,
+     ++`void trace2_cmd_mode(const char *mode)`.
+     + 
+     + === Child Process Messages
+     + 
+     + These are concerned with the various spawned child processes,
+     + including shell scripts, git commands, editors, pagers, and hooks.
+     + 
+      -`void trace2_child_start(struct child_process *cmd)`::
+      -
+      -	Emits a "child_start" message containing the "child-id",
+     @@ -192,11 +190,12 @@
+      -On Unix-based systems, `exec()` does not return if successful.
+      -This message is used to indicate that the `exec()` failed and
+      -that the current program is continuing.
+     --
+     --=== Git Thread Messages
+     --
+     --These messages are concerned with Git thread usage.
+     --
+     ++e.g: `void trace2_child_start(struct child_process *cmd)`.
+     + 
+     + === Git Thread Messages
+     + 
+     + These messages are concerned with Git thread usage.
+     + 
+      -`void trace2_thread_start(const char *thread_name)`::
+      -
+      -	Emits a "thread_start" message.
+     @@ -220,10 +219,11 @@
+      -This function must be called by the thread-proc before it returns
+      -(so that the coorect TLS data is used and cleaned up.  It should
+      -not be called by the caller of `pthread_join()`.
+     --
+     --=== Region and Data Messages
+     --
+     --These are concerned with recording performance data
+     ++e.g: `void trace2_thread_start(const char *thread_name)`.
+     + 
+     + === Region and Data Messages
+     + 
+     + These are concerned with recording performance data
+      -over regions or spans of code.
+      -
+      -`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`::
+     @@ -282,9 +282,11 @@
+      -`void trace2_printf(const char *fmt, ...)`::
+      -
+      -`void trace2_printf_va(const char *fmt, va_list ap)`::
+     --
+     ++over regions or spans of code. e.g:
+     ++`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`.
+     + 
+      -	Emits a region- and thread-relative "printf" message.
+     -+Refer to trace2.h for details about trace2 functions.
+     ++Refer to trace2.h for details about all trace2 functions.
+       
+       == Trace2 Target Formats
+       
+     @@ -391,14 +393,6 @@
+      -/*
+      - * Emit a 'child_start' event prior to spawning a child process.
+      +/**
+     -+ * Child Process Messages
+     -+ * ----------------------
+     -+ *
+     -+ * These are concerned with the various spawned child processes,
+     -+ * including shell scripts, git commands, editors, pagers, and hooks.
+     -+ */
+     -+
+     -+/**
+      + * Emits a "child_start" message containing the "child-id",
+      + * "child-argv", and "child-classification".
+        *
+     @@ -457,20 +451,6 @@
+        * Emit an 'exec_result' when possible.  On Unix-derived systems,
+        * this should be called after exec() returns (which only happens
+        * when there is an error starting the new process).  On Windows,
+     -@@
+     - #define trace2_exec_result(id, code) \
+     - 	trace2_exec_result_fl(__FILE__, __LINE__, (id), (code))
+     - 
+     -+
+     -+/**
+     -+ * Git Thread Messages
+     -+ * -------------------
+     -+ * These messages are concerned with Git thread usage.
+     -+ */
+     -+
+     - /*
+     -  * Emit a 'thread_start' event.  This must be called from inside the
+     -  * thread-proc to set up the trace2 TLS data for the thread.
+      @@
+       #define trace2_thread_exit() trace2_thread_exit_fl(__FILE__, __LINE__)
+       
+     @@ -505,13 +485,6 @@
+       #define trace2_def_repo(repo) trace2_def_repo_fl(__FILE__, __LINE__, repo)
+       
+      -/*
+     -+/**
+     -+ * Region and Data Messages
+     -+ * ------------------------
+     -+ * These are concerned with recording performance data over regions or spans
+     -+ * of code.
+     -+ */
+     -+
+      +/**
+        * Emit a 'region_enter' event for <category>.<label> with optional
+        * repo-id and printf message.
+ 21:  e187c61371 = 21:  5f21417393 api-index: remove api doc index files
+
 -- 
 gitgitgadget
-
