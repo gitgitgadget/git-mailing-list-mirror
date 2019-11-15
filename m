@@ -2,91 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 839C71F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 03:33:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07EB91F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 03:49:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727053AbfKODdd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 22:33:33 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60236 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726491AbfKODdd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 22:33:33 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68CB79A7CC;
-        Thu, 14 Nov 2019 22:33:31 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=Cm70tVMx1uCDOkVyZFzSu7DQ8z8=; b=xzi5WdC
-        RHSaj7FH1pynmkIv6xvD/n5RGfeH3BO9O3xDqYQTn71LUISBnx9m3Siv0tD2yKgJ
-        Cu1lsA5DBh9RqEih6TDgyxGHIUPW3+1ANA1KdwEGr5ihKRiYMbqPcvfEkRUhTSx6
-        9TUhmtgm8zH9NTNbwehlRnu11bMpEOu+wJHg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=pmbYlQb298OsXxXy69slIqGvZ8tz6mE20
-        9k+m7V7EcG3fJFisf3V4xqfVamL10XtplpLWmeWDB8g3s8R5pi8jxqTbrAU6vP/Y
-        fSVg2IRsBLGbh2IhNTiCIeti/aEdJGgFkxinSuH69bKERb4b0RP81jVRThsZyiEH
-        RY2VfwlAT8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 610089A7CB;
-        Thu, 14 Nov 2019 22:33:31 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [173.67.141.44])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E6459A7CA;
-        Thu, 14 Nov 2019 22:33:27 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Thu, 14 Nov 2019 22:33:25 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 09/10] pretty: implement 'reference' format
-Message-ID: <20191115033325.GC3898@pobox.com>
-References: <cover.1573241590.git.liu.denton@gmail.com>
- <cover.1573764280.git.liu.denton@gmail.com>
- <470a2b0f4fd450af1d9c9d27ec0f0c91ea59117f.1573764280.git.liu.denton@gmail.com>
+        id S1726755AbfKODtm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 22:49:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47998 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726549AbfKODtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 22:49:42 -0500
+Received: (qmail 25363 invoked by uid 109); 15 Nov 2019 03:49:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Nov 2019 03:49:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9916 invoked by uid 111); 15 Nov 2019 03:53:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Nov 2019 22:53:18 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 14 Nov 2019 22:49:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: rev-list and "ambiguous" IDs
+Message-ID: <20191115034941.GB20863@sigill.intra.peff.net>
+References: <CAGyf7-EXOUWYUZXmww2+NyD1OuWEG18n221MPojVSCCu=19JNA@mail.gmail.com>
+ <20191114055906.GA10643@sigill.intra.peff.net>
+ <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <470a2b0f4fd450af1d9c9d27ec0f0c91ea59117f.1573764280.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
-X-Pobox-Relay-ID: B04FAEBA-0758-11EA-AB03-B0405B776F7B-09356542!pb-smtp20.pobox.com
+In-Reply-To: <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu wrote:
-> index 90ff9e2bea..91edeaf6d5 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -269,7 +269,7 @@ list.
->  	exclude (that is, '{caret}commit', 'commit1..commit2',
->  	and 'commit1\...commit2' notations cannot be used).
->  +
-> -With `--pretty` format other than `oneline` (for obvious reasons),
-> +With `--pretty` format other than `oneline` and `reference` (for obvious reasons),
->  this causes the output to have two extra lines of information
->  taken from the reflog.  The reflog designator in the output may be shown
->  as `ref@{Nth}` (where `Nth` is the reverse-chronological index in the
-> @@ -293,6 +293,8 @@ Under `--pretty=oneline`, the commit message is
->  prefixed with this information on the same line.
->  This option cannot be combined with `--reverse`.
->  See also linkgit:git-reflog[1].
-> ++
-> +Under `--pretty=summary`, this information will not be shown at all.
+On Fri, Nov 15, 2019 at 01:12:47AM +0100, Thomas Braun wrote:
 
-I think the line above wants s/summary/reference.
+> > That would probably help in a lot of cases, but the argument
+> > against it is that when it goes wrong, it may be quite confusing (so
+> > we're better off with the current message, which punts back to the
+> > user).
+> 
+> Just out of curiosity: Is there a use case for inspecting non-commit
+> objects with git log?
 
--- 
-Todd
+Not that I can think of. You can't even say "--objects" there.
+
+And indeed, "git log" already prefers commits for disambiguation, since
+d5f6b1d756 (revision.c: the "log" family, except for "show", takes
+committish, 2012-07-02).
+
+But...
+
+> If I do (in the git repo)
+> 
+> $ git log 1231
+> 
+> I get
+> 
+> error: short SHA1 1231 is ambiguous
+> hint: The candidates are:
+> hint:   123139fc89 tree
+> hint:   12316a1673 tree
+> hint:   123144fe8a blob
+> fatal: ambiguous argument '1231': unknown revision or path not in the
+> working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> 
+> with
+> $ git --version
+> git version 2.24.0.windows.2
+> 
+> and all of these candidates are no commits.
+
+...remember that the disambiguation code is just about preferring one
+object to the other. If the rule in effect doesn't have a preference,
+it's still ambiguous. On my system, "1231" actually _does_ have a
+commit:
+
+  $ git show 1231
+  error: short SHA1 1231 is ambiguous
+  hint: The candidates are:
+  hint:   12319e3bf2 commit 2017-03-25 - Merge 'git-gui-add-2nd-line' into HEAD
+  hint:   123139fc89 tree
+  hint:   12315b58b8 tree
+  hint:   12316a1673 tree
+  hint:   12317ab2d9 tree
+  hint:   123193f802 tree
+  hint:   123144fe8a blob
+  fatal: ambiguous argument '1231': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions, like this:
+  'git <command> [<revision>...] -- [<file>...]'
+
+That's ambiguous because git-show can handle trees and blobs, too. But
+if I feed that sha1 to git-log:
+
+  $ git log --oneline -1 1231
+  12319e3bf2 Merge 'git-gui-add-2nd-line' into HEAD
+
+it's perfectly fine, because git-log knows to disambiguate the commit.
+But if I choose another prefix that has no commits at all, it's
+ambiguous under either, because the "committish" rule has no way to
+decide:
+
+  $ git show abcd2
+  error: short SHA1 abcd2 is ambiguous
+  hint: The candidates are:
+  hint:   abcd22f55e tree
+  hint:   abcd238df0 tree
+  hint:   abcd2b1cc8 blob
+  
+  $ git log abcd2
+  error: short SHA1 abcd2 is ambiguous
+  hint: The candidates are:
+  hint:   abcd22f55e tree
+  hint:   abcd238df0 tree
+  hint:   abcd2b1cc8 blob
+
+-Peff
