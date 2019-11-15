@@ -2,160 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C345D1F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 23:28:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A31831F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 23:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbfKOX2O (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 18:28:14 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:44517 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727056AbfKOX2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 18:28:13 -0500
-Received: by mail-pf1-f196.google.com with SMTP id q26so7360613pfn.11
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 15:28:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3WWihGE0RbB9T/ZryiwuQlCP8xaXri4cgk4sPxJJMic=;
-        b=OKivnVNS0h0+VB7Oml24wI6/2A/ksv8/0Ht40Yotxq0/7XwoGBCAi8zqORypPVk05N
-         D0PiZ5tjCQVSU5Q6sTIxWUGGvfSEGYxifzuoSCHl8guxklhNVOl9tR7kI2qzVuHwqpTS
-         OCkbSiZw6V7ZhWu0W0DC5oBYANEfaJbDFmvIBze8dRg2pLnBh7IXMsEvr79PLGipsOSs
-         hd74Od61N8w9cS44eNcwYSq7ztUOwKi5eqKaNSZCCBck3SrKftuCvKIWCQ5bmKHmP++T
-         Ef2ERJFvtzcQkTiLR87Sy3pFlGfKX39zOeMFMeBFUp+tv6B9UX/4+AQdrIpQ21j5zk6r
-         9Ytg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3WWihGE0RbB9T/ZryiwuQlCP8xaXri4cgk4sPxJJMic=;
-        b=ERVW9+2COg8Ntci0ONKEk8oidrhtiJrdr7TAR8j080a/YM4pNybKvRGPFezsTtU5vq
-         70akD7Le+jf5FZumxnu58wlbwNuUl6JCo3roq03EUAf6mSLiOQWJpcfeuuWSSSRluvtt
-         btiMgEFrqxY5f7GrskgRNwDCgIjovtng+1Ba5GRnoci4bV0DTsCTNK3qTFfPk6TS970C
-         eN2IHVjF30ZuqbBIStt+w++VRVx+FWnoD9rGMslP+0lwYl9M8oT+187nlW5kke9ROEHw
-         TWe71lx+ugsVJr6e7zsF+rSXoAqHu31WnfyfvIFuIBdMx3fxuQvcj3OBsI4rZsB+BqGM
-         FMew==
-X-Gm-Message-State: APjAAAW0qGQYB3bWEg8zwn8rizb4MTbsYOIJdP4yW0cTWDFwN+XsETGL
-        ijsOjFg6Yy7/ThBtdObgzwOcOkgpkJg=
-X-Google-Smtp-Source: APXvYqy5sbKa8/pHvgUkQGoJL/+nMPneTxSH8L3DdkaC5ya9MjhU4D/7HSr4nYrmM1Lm36hJqfSP4A==
-X-Received: by 2002:a62:545:: with SMTP id 66mr20047082pff.1.1573860490759;
-        Fri, 15 Nov 2019 15:28:10 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id z7sm13438974pfr.165.2019.11.15.15.28.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 15:28:10 -0800 (PST)
-Date:   Fri, 15 Nov 2019 15:28:05 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly <heba.waly@gmail.com>,
-        Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 15/20] parse-options: move doc to parse-options.h
-Message-ID: <20191115232805.GF22855@google.com>
-References: <pull.434.git.1572343246.gitgitgadget@gmail.com>
- <pull.434.v2.git.1573034387.gitgitgadget@gmail.com>
- <3d1e7e72efca06d18606b6f9dd8c3b6771dfde06.1573034387.git.gitgitgadget@gmail.com>
- <xmqqh83bi10h.fsf@gitster-ct.c.googlers.com>
- <CACg5j27=t_tC4AqNz6tSdsgbDKECq1p+OwS=ydak7d94q2PHZg@mail.gmail.com>
- <xmqqblthfxho.fsf@gitster-ct.c.googlers.com>
- <CACg5j25ZO3+=EHYm5-Yp_LKEQA00EH=FAhOeP_TqHw8anCUDEg@mail.gmail.com>
- <xmqqv9rl5q0w.fsf@gitster-ct.c.googlers.com>
+        id S1727341AbfKOXiq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 18:38:46 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:53204 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727056AbfKOXiq (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 Nov 2019 18:38:46 -0500
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1iVlAo-0001jA-SE; Sat, 16 Nov 2019 00:38:42 +0100
+Subject: Re: rev-list and "ambiguous" IDs
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+References: <CAGyf7-EXOUWYUZXmww2+NyD1OuWEG18n221MPojVSCCu=19JNA@mail.gmail.com>
+ <20191114055906.GA10643@sigill.intra.peff.net>
+ <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
+ <20191115034941.GB20863@sigill.intra.peff.net>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <917e2664-6059-c190-30fd-02f3cf7aa5dc@virtuell-zuhause.de>
+Date:   Sat, 16 Nov 2019 00:38:27 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv9rl5q0w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20191115034941.GB20863@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1573861125;0bfe3d07;
+X-HE-SMSGID: 1iVlAo-0001jA-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 15, 2019 at 08:37:35PM +0900, Junio C Hamano wrote:
-> Heba Waly <heba.waly@gmail.com> writes:
+Am 15.11.2019 um 04:49 schrieb Jeff King:
+> On Fri, Nov 15, 2019 at 01:12:47AM +0100, Thomas Braun wrote:
 > 
-> >> Note that the quality of the latter is quite uneven.  The one I
-> >> noticed perhaps is exceptionally well-structured (even if some of
-> >> the details of its contents may have gotten stale) ...
-> > ...
-> > Back to the main issue you raised in the beginning: lets look at two
-> > different scenarios before and after moving the docs, the first
-> > scenario is the one you've been through trying to look for
-> > PARSE_OPT_STOP_AT_NON_OPTION, luckily you found it in
-> > Documentation/technical/api-parse-options.txt and the doc was pretty
-> > useful for you. But if you were looking for PARSE_OPT_ONE_SHOT
-> > instead, which is not documented in the doc file, you'd have ended up
-> > in parse-options.h with no documentation, even searching for the enum
-> > parse_opt_flags itself won't lead to anything useful I assume.
+>>> That would probably help in a lot of cases, but the argument
+>>> against it is that when it goes wrong, it may be quite confusing (so
+>>> we're better off with the current message, which punts back to the
+>>> user).
+>>
+>> Just out of curiosity: Is there a use case for inspecting non-commit
+>> objects with git log?
 > 
-> That is a longwinded way to say that the Doc version is outdated.  I
-> am *not* advocating to keep it up-to-date just like the header (I've
-> given up on that), but if it were kept fresh, then those who looked
-> for ONE_SHOT would have the same ease to learn where in the larger
-> picture it fits, like I did with STOP_AT_NON_OPTION.
+> Not that I can think of. You can't even say "--objects" there.
 > 
-> It is not like "In the header file, it is likely that we can keep
-> these up to date more easily.  A dedicated file in Documentation/
-> hiearchy may be able to offer you a much better structure, but may
-> not describe the option at all.  Which one do you want?"  At least,
-> it should not have to be.  That is what I meant when I responded to
-> your earlier
+> And indeed, "git log" already prefers commits for disambiguation, since
+> d5f6b1d756 (revision.c: the "log" family, except for "show", takes
+> committish, 2012-07-02).
 > 
-> > So my proposal for this matter is to investigate the possibility of
-> > using a doc generators that'd extract the documentations from the code
-> > to a single doc file per library.
+> But...
 > 
-> Extracting is just the necessary first step.  It would probably need
-> to let us leave notes (in the header file used as the source of the
-> documentation) to reorder things for ease of reading through.
-
-I think doc generation from headers is a reasonable goal, although a
-much larger one than "get rid of the worst offenders in
-Documentation/technical".
-
+>> If I do (in the git repo)
+>>
+>> $ git log 1231
+>>
+>> I get
+>>
+>> error: short SHA1 1231 is ambiguous
+>> hint: The candidates are:
+>> hint:   123139fc89 tree
+>> hint:   12316a1673 tree
+>> hint:   123144fe8a blob
+>> fatal: ambiguous argument '1231': unknown revision or path not in the
+>> working tree.
+>> Use '--' to separate paths from revisions, like this:
+>> 'git <command> [<revision>...] -- [<file>...]'
+>>
+>> with
+>> $ git --version
+>> git version 2.24.0.windows.2
+>>
+>> and all of these candidates are no commits.
 > 
-> > last version of this patch, if we're trying to look for either
-> > PARSE_OPT_STOP_AT_NON_OPTION or PARSE_OPT_ONE_SHOT, we'll find that
-> > it's a member of parse_opt_flags, searching for the enum will lead us
-> > to ....
+> ...remember that the disambiguation code is just about preferring one
+> object to the other. If the rule in effect doesn't have a preference,
+> it's still ambiguous. On my system, "1231" actually _does_ have a
+> commit:
 > 
-> ... which is what I found to be a frustrating experience of being
-> forced to jump around to hunt for the necessary pieces of info
-> sprinkled in the header file to form the overall picture, that a
-> simple flat-file text document would have much easily given me
-> (i.e. go back to my original post).
+>   $ git show 1231
+>   error: short SHA1 1231 is ambiguous
+>   hint: The candidates are:
+>   hint:   12319e3bf2 commit 2017-03-25 - Merge 'git-gui-add-2nd-line' into HEAD
+>   hint:   123139fc89 tree
+>   hint:   12315b58b8 tree
+>   hint:   12316a1673 tree
+>   hint:   12317ab2d9 tree
+>   hint:   123193f802 tree
+>   hint:   123144fe8a blob
+>   fatal: ambiguous argument '1231': unknown revision or path not in the working tree.
+>   Use '--' to separate paths from revisions, like this:
+>   'git <command> [<revision>...] -- [<file>...]'
+> 
+> That's ambiguous because git-show can handle trees and blobs, too. But
+> if I feed that sha1 to git-log:
+> 
+>   $ git log --oneline -1 1231
+>   12319e3bf2 Merge 'git-gui-add-2nd-line' into HEAD
+> 
+> it's perfectly fine, because git-log knows to disambiguate the commit.
+> But if I choose another prefix that has no commits at all, it's
+> ambiguous under either, because the "committish" rule has no way to
+> decide:
+> 
+>   $ git show abcd2
+>   error: short SHA1 abcd2 is ambiguous
+>   hint: The candidates are:
+>   hint:   abcd22f55e tree
+>   hint:   abcd238df0 tree
+>   hint:   abcd2b1cc8 blob
+>   
+>   $ git log abcd2
+>   error: short SHA1 abcd2 is ambiguous
+>   hint: The candidates are:
+>   hint:   abcd22f55e tree
+>   hint:   abcd238df0 tree
+>   hint:   abcd2b1cc8 blob
 
-For what it's worth, I tend to agree that api-parse-options.txt is a
-particularly well-structured documentation page. I like that one and
-refer to it often.
+I would have expected that git log did just tell me that it could not
+find something commitish, instead it told me that there are multiple
+candidates, all of them being no commit.
 
-Having read this back and forth, my own take is something like this:
-
- - Like Junio said, the quality of the the contents of
-   Documentation/technical/ ranges from useless to excellent.
- - It's true that moving documentation into a header denies us some of
-   the nice organization of a freeform doc.
- - The nice thing about headers is that we can reorganize declarations
-   however we want, and if doing so makes the code more readable, then
-   I think we should.
- - But, if we won't get up to the same level of readability as the old
-   doc, then I don't see a reason to "throw the baby out with the
-   bathwater," so to speak. It seems like api-parse-options.txt is good
-   enough to stay.
-
-By the way, this does make me start to wonder about the feasibility of
-linking in documentation generated from code comments, or other sorts of
-trickery to get the best of both worlds. But again, that's a very
-different task from "get rid of misleading or useless docs". :)
-
-For now, maybe it's enough to add a link to api-parse-options.txt at the
-top of parse-options.h. Part of me wants to say maybe we should
-duplicate the per-function briefs into the header too, but then we have
-two sources, and a single one is easier to keep fresh.
-
- - Emily
