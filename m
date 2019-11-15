@@ -2,78 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 499BB1F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 04:12:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE951F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 04:35:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726958AbfKOEMQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 14 Nov 2019 23:12:16 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48040 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726533AbfKOEMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 14 Nov 2019 23:12:16 -0500
-Received: (qmail 25428 invoked by uid 109); 15 Nov 2019 04:12:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 15 Nov 2019 04:12:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10105 invoked by uid 111); 15 Nov 2019 04:15:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 14 Nov 2019 23:15:51 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 14 Nov 2019 23:12:15 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     matheus.bernardino@usp.br, git@vger.kernel.org,
-        christian.couder@gmail.com, olyatelezhnaya@gmail.com,
-        pclouds@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
-        stefanbeller@gmail.com
-Subject: Re: [PATCH v2 05/11] object-store: allow threaded access to object
- reading
-Message-ID: <20191115041215.GB21654@sigill.intra.peff.net>
-References: <20191114060134.GB10643@sigill.intra.peff.net>
- <20191114181552.137071-1-jonathantanmy@google.com>
+        id S1726985AbfKOEfz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 14 Nov 2019 23:35:55 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60995 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726549AbfKOEfz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 14 Nov 2019 23:35:55 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6EFED8F1F5;
+        Thu, 14 Nov 2019 23:35:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=uXC7VDDkff7+wVzvP0fHg2/Ai0o=; b=rVwfvx
+        mnVXEOCcMB0cWBSeSMNVizdjhCEe4+WoBs6XHXqwSJAB49qimW4HZCCPrIWhep1j
+        LywOYio1+A5BZ2lm9JYYe/1lfZZDJmpHGgzxqd1cBZbdGIuaZtrMRnZCFOvaV0cc
+        LnjW3g1mTExhqk/YtTNsrgw8DHUkZnIkw+2eo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=luUBvNNV3L3u+QfijUkFAc0M1BQ7iW41
+        t/v4vbDCF98WyaWUnApxLSstPoIS5+uxKnQ2DewzxaZvjH6GBwjY+MyXfgmvGVRe
+        ArILQV/PvPL5XRe8EFWFQ9WE+jwZEhyU8vebzzuTQJ5+jmmpYwITkeSk3y3hkgfn
+        bVIl8PpluoE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5A4578F1F4;
+        Thu, 14 Nov 2019 23:35:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 786E38F1F3;
+        Thu, 14 Nov 2019 23:35:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v6 1/9] Start to implement a built-in version of `git add --interactive`
+References: <pull.170.v5.git.1572869729.gitgitgadget@gmail.com>
+        <pull.170.v6.git.1573648866.gitgitgadget@gmail.com>
+        <5d9962d4344fa182b37cd8d969da01bc603414be.1573648866.git.gitgitgadget@gmail.com>
+        <xmqqimnn9p9p.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1911141602350.46@tvgsbejvaqbjf.bet>
+Date:   Fri, 15 Nov 2019 13:35:48 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1911141602350.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 14 Nov 2019 16:07:28 +0100 (CET)")
+Message-ID: <xmqqpnht92or.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191114181552.137071-1-jonathantanmy@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 66BC72AC-0761-11EA-91C3-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 14, 2019 at 10:15:52AM -0800, Jonathan Tan wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> > > > A pthread_rwlock would work, but it would be the first use in Git. I
-> > > > think we'd need to find an equivalent for compat/win32/pthread.h.
-> > > 
-> > > These[1][2] seems to be the equivalent options on Windows. I'll have
-> > > to read these docs more carefully, but [2] seems to be more
-> > > interesting in terms of speed. Also, the extra features of [1] are not
-> > > really needed for our use case here.
-> > > 
-> > > [1]: https://docs.microsoft.com/en-us/windows-hardware/drivers/kernel/reader-writer-spin-locks
-> > > [2]: https://docs.microsoft.com/en-us/windows/win32/sync/slim-reader-writer--srw--locks
-> > 
-> > Yeah, looks like it, but I don't have any expertise there (nor a Windows
-> > system to test on).
-> 
-> One thing to note is that that if we do this, we'll be having one rwlock
-> per pack window. I couldn't find out what the Windows limits were, but
-> it seems that pthreads does not mandate having no limit [1]:
+> I plan on waiting for the PR build to finish, and maybe wait until
+> tomorrow just in case any further suggestion rolls in, then submit the
+> hopefully final iteration.
 
-Yeah, interesting point. We shouldn't _usually_ have too many windows at
-once, but I think this would be the first place where we allocate a
-non-constant number of thread mechanisms. And there are degenerate cases
-where you might have tens of thousands of packs.
-
-I suspect it's a non-issue in practice, though. Any limits there are
-likely related to kernel resources like descriptors. And those
-degenerate cases already run into issues there (did you know that Linux
-systems limit the number of mmaps a single process can have? I didn't
-until I tried repacking a repo with 35,000 packs).
-
--Peff
+Thanks.
