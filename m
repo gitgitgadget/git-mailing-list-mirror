@@ -8,112 +8,111 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E0211F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 14:39:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26C2C1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 14:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727585AbfKOOjW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 09:39:22 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55473 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727492AbfKOOjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 09:39:22 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b11so9889214wmb.5
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:39:20 -0800 (PST)
+        id S1727612AbfKOOnC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 09:43:02 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39815 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727427AbfKOOnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 09:43:01 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l7so11248912wrp.6
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=310vHg8KP4NEE3Lf1+Rg54zhmzvuXE6DILo8niwSDUw=;
-        b=bv+8Z5WMOmSnaQJCeMlPBl6mt/CMBTJuRRUDucQ3VXTESlKI6yTN95PD+yGM20UEZJ
-         RvsAX9oZ8eDBgU5x6Nfr916e+B+y60dkP25kJ7bPv+a9twTnLSgCWdLnOMsU3ZQ3vHEs
-         SbT0HKu9+0HKWeIQfH/LWlE7fPle3B0iAUSpGVIxsxNYN6JnDcxdy9sE5XSzmqyCCoG0
-         WWvV1UYT98s++UrCGTPBqkdB4srmPB+xo7t209UQnOMl++bgckn6/o1mP3WpqqqjbOK7
-         fXZFOxYb4QseuO+DMWYscytorxyTVyS2heAABYiq/v/YYuEOiwVlfIUCw40dUSdsbLkk
-         6lcQ==
+        bh=uRf08cgrA8p5upeUaZbVz+PizPDqFqlhzfv7g9D0C2s=;
+        b=Tf816d5ZF3XyRmCY9T82OC4dSAGGl+fW98oKgB+fZ/4lA3eQdldtEXWZe69ip7obl3
+         7oirTS+bmu/JE1FMGfcYSSwqXAcdL1i5ptxaA7d7dZhICm6/psrtA3WSHEc3V4vjBL4O
+         yamSQ6LBNe+Wq0isCSdhRvmXS4nrfqLi99brPKaj2WADiNpCMBlCFIroWZP20dDvsQUO
+         bkswCbqI39PZNljRLQZcnu7nq4QwraCDGR+jhn+BNcTP/jXqpJf8wTVKz2UR3TLc30IV
+         mqBA/BYjdX3VHwCOSemvr5xIRUUzhn2GPZeXxhx4WGbierpsxucKJ4RAxA6ZgSIIVj/N
+         X9ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=310vHg8KP4NEE3Lf1+Rg54zhmzvuXE6DILo8niwSDUw=;
-        b=npl5ZG+enikJbB8ymbh0JVscgy9bbpE4Tbk8KlBPi6HnnCKXj/9uIxrkKbPuso4aPr
-         FEF1p1dJVVXlKsbHeg9HBcbFrO0FJCEIGVQTfrmbLEzL90WDK9kir5guLK/6E2dlav1k
-         VGxMi6q+h4i+XfqSUy4LKursgPhQy5mMys+05mZHpXjAWpCAAJGveAA7joT0BVUfxUlV
-         4nRl8R5/f13+eOzhWKny8nzNMrgjqlnyqOryQpAfFBHsRe9tL2fM6dLnfaKKjWwP0a7v
-         J1QcHeXRzNaH3VeF+A5dkGHc3m2wgSqHfGqCSOdExcrHs1X5LCvq+Xn0yRs+gIx5yEC+
-         eLwQ==
-X-Gm-Message-State: APjAAAV3qB5pj+i1dyxEnd6wZOA+9icU8Z5xPu+iyX6oQ91BOItn0OSd
-        8TnQ6TDROaWIDPzvoWDaUE3Qv1HE
-X-Google-Smtp-Source: APXvYqyFXm/Ii5skSxsbbjB9DDuiGhPD6KPchlY/Ps8EJkprYU4Umlt80OzTz6XW3QSzT54zmP+wGA==
-X-Received: by 2002:a7b:c84b:: with SMTP id c11mr13902393wml.158.1573828760026;
-        Fri, 15 Nov 2019 06:39:20 -0800 (PST)
+        bh=uRf08cgrA8p5upeUaZbVz+PizPDqFqlhzfv7g9D0C2s=;
+        b=CYvHmX/kiI/AMJT3ptXIpoJRuV8zSJMk8x9GRosE0sTZXIjfqJSTSd3S6tHnyZDa6C
+         JvCEQe1wVUsxk+pEPqObU/8rX3ElSck461SDdcdsT8eCJiOPj3HUng4mq3Pw/CSLTwP2
+         V3RgdImHOM0zIEAwHNA8V3eN/jz7VHMfZ5X7sKc9hGePhKzhhRA4xkN52k70ysJbuEGQ
+         v8JqE0Y0uuiEuaZZW6qJSjL80vXHhuM4pWqBFiLR7hb7DPvb1BvIYp49DfwtM8ywyY3v
+         AmN2fBmOmydEgsUA+3VV/8iwub5NNC1qLQf60tV3ZMSIyd/skFDNq89qPERqvfZyY7ls
+         hTIw==
+X-Gm-Message-State: APjAAAUAzeDsQk4ILpSQY/IYnRaWyvabW01psHg32bvqBB1n3ufvQtyD
+        9OeltYB+E4XS6hjgwvSexoUg3GnB
+X-Google-Smtp-Source: APXvYqyOJPfgmbP3pzC8XspbrSTfLuT1zK+djmdavoCcBdnX6D0GxIkqrcZYNbnzgyD5ntHGjXeTsA==
+X-Received: by 2002:a5d:448f:: with SMTP id j15mr8357966wrq.70.1573828979210;
+        Fri, 15 Nov 2019 06:42:59 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n1sm11921709wrr.24.2019.11.15.06.39.19
+        by smtp.gmail.com with ESMTPSA id y6sm11668991wrn.21.2019.11.15.06.42.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 06:39:19 -0800 (PST)
-Message-Id: <2288690b94d82a629a3a94e25fa75d24a1c24000.1573828756.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.463.v2.git.1573828756.gitgitgadget@gmail.com>
-References: <pull.463.git.1573679258.gitgitgadget@gmail.com>
-        <pull.463.v2.git.1573828756.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 06:42:58 -0800 (PST)
+Message-Id: <pull.465.v2.git.1573828978.gitgitgadget@gmail.com>
+In-Reply-To: <pull.465.git.1573679665.gitgitgadget@gmail.com>
+References: <pull.465.git.1573679665.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 14:39:16 +0000
-Subject: [PATCH v2 3/3] FIX: wrap return for read_pipe_lines in ustring() and
- wrap GitLFS read of the pointer file in ustring()
+Date:   Fri, 15 Nov 2019 14:42:55 +0000
+Subject: [PATCH v2 0/3] Feature: New Variable git-p4.p4program
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Ben Keene <seraphire@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Keene <seraphire@gmail.com>
+Cc:     Ben Keene <seraphire@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Keene <seraphire@gmail.com>
+Issue: Using git-p4.py on Windows does not resolve properly to the p4.exe
+binary in all instances.
 
-Signed-off-by: Ben Keene <seraphire@gmail.com>
----
- git-p4.py | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+Changes since v1: Commit: (dc6817e) 2019-11-14
 
-diff --git a/git-p4.py b/git-p4.py
-index b088095b15..83f59ddca5 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -180,6 +180,11 @@ def die(msg):
-         sys.exit(1)
- 
- def write_pipe(c, stdin):
-+    """Writes stdin to the command's stdin
-+    Returns the number of bytes written.
-+
-+    Be aware - the byte count may change between 
-+    Python2 and Python3"""
-     if verbose:
-         sys.stderr.write('Writing pipe: %s\n' % str(c))
- 
-@@ -249,6 +254,11 @@ def read_pipe_lines(c):
-     val = pipe.readlines()
-     if pipe.close() or p.wait():
-         die('Command failed: %s' % str(c))
-+    # Unicode conversion from str
-+    # Iterate and fix in-place to avoid a second list in memory.
-+    if isunicode:
-+        for i in range(len(val)):
-+            val[i] = ustring(val[i])
- 
-     return val
- 
-@@ -1268,7 +1278,7 @@ def generatePointer(self, contentFile):
-             ['git', 'lfs', 'pointer', '--file=' + contentFile],
-             stdout=subprocess.PIPE
-         )
--        pointerFile = pointerProcess.stdout.read()
-+        pointerFile = ustring(pointerProcess.stdout.read())
-         if pointerProcess.wait():
-             os.remove(contentFile)
-             die('git-lfs pointer command failed. Did you install the extension?')
+Renamed the variable "git-p4.binary" to "git-p4.p4program" per the thread
+discussion.
+
+v1:
+
+Two new code features are added to resolve the p4 executable location:
+
+ 1. A new variable, git-p4.binary, has been added that takes precedence over
+    the default p4 executable name. If this git option is set and the
+    path.exists() passes for this file it will be used as executable for the 
+    system.popen calls.
+    
+    
+ 2. If the new variable git-p4.binary is not set, the program checks if the
+    operating system is Windows. If it is, the executable is changed to
+    'p4.exe'. All other operating systems
+    (those that do not report 'Windows' in the platform.system() call)
+    continue to use the current executable of 'p4'.
+
+Ben Keene (3):
+  Cast byte strings to unicode strings in python3
+  Added general variable git-p4.binary and added a default for windows
+    of 'P4.EXE'
+  Changed the name of the parameter from git-p4.binary to
+    git-p4.p4program
+
+ Documentation/git-p4.txt |  5 +++++
+ git-p4.py                | 40 +++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 42 insertions(+), 3 deletions(-)
+
+
+base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-465%2Fseraphire%2Fseraphire%2Fp4-binary-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-465/seraphire/seraphire/p4-binary-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/465
+
+Range-diff vs v1:
+
+ 1:  0bca930ff8 = 1:  0bca930ff8 Cast byte strings to unicode strings in python3
+ 2:  98bae92fda = 2:  98bae92fda Added general variable git-p4.binary and added a default for windows of 'P4.EXE'
+ -:  ---------- > 3:  dc6817eea3 Changed the name of the parameter from git-p4.binary to git-p4.p4program
+
 -- 
 gitgitgadget
