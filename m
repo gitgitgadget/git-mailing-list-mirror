@@ -8,422 +8,614 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7171F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57B4E1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727306AbfKOJxx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:53:53 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39795 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726983AbfKOJxx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 04:53:53 -0500
-Received: by mail-wr1-f66.google.com with SMTP id l7so10253375wrp.6
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:50 -0800 (PST)
+        id S1727386AbfKOJyN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 04:54:13 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39830 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727359AbfKOJyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:54:07 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l7so10254152wrp.6
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:54:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=N+uolg5r0XDGuOmgPUa1kHx41h4qRZi4BmBjtiraTf8=;
-        b=TFotuWWJoY2HpFj7OHlGjcy1d99z13Lh+uYe/sOxYdaFQgvQ6a9tLYDXvLoj14p4C1
-         H8ZJplTLckkp07ZKGIxYYZmMSgyn+vTVnIa+dTy5pdbi/HFy7DjNodpy4aBQhi/Yw44u
-         nMQR5frn01gG4idA7+vHZpdLaWnkIscVGu+zJsexoq9Z0rD9QGXJ5Pwu8zU5dZdPJolI
-         QazGPREfWS9I4OtRfjLmON2kT+8GEmJ9IB4Y91HTDqWeSFJ9qTTdTgCXTBu5W/qTSTHq
-         0ctPfcT7ywCMnY6lFZPwppRiJpneYEcZszi8yqxBfKv9nzSk3ZyX+j5LySIlzDm+2Dcq
-         rJzQ==
+        bh=CfHNXFWw1Svzx+gN1b1XYrLzg+8yOHUYq4ZIqgZKEDY=;
+        b=rq1tNj4QbHg8paV7ll/Zjz3VTmEuxoiLUsTJ0fx0cz2ary7U4wv7sbbzzoQCmy+gZ8
+         xvnNoLR4JC1z0oYHyjnvJUVudVVNiPuYtP2q1nxUDXHxxG9xjsmZ4uYAG01abzFHTXXN
+         0MBGXvE0ifcKUr0E2qzbLbIhC8oQLmQ3Sa7YQaHETTY29md3YIqKspO4/28g0/YLTf3A
+         KjTqTMHW5R7oKCRdaSb/J1Dk60UaWZjJzgRbUmm26QEDDHqbhhcoEFHe4EZHfVkF0XhN
+         tDxCEJaEQmFSFvjPKVj7TjQ9FCIb366aymT+6Z6DlfYzgmsslmuHSHSsRU8BubywctO/
+         9kzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=N+uolg5r0XDGuOmgPUa1kHx41h4qRZi4BmBjtiraTf8=;
-        b=rJqE0ZXgpIuJUXnS2YGJ0KnIt45MzhwHVjc1aYUeSyqR0vNUjwsSyZjc/aP+QAmzwB
-         y3gERo0IAQBv0jHx264Q0mzLvQ7Ff2Dty0oO/IYTLOLAlYJ//NrhBJZEhMnH4HIsoHHN
-         DasdlPpxAvghlNkZD1Erh/ZBE1vMZqygXcoDoOfwTtPvsvnPZ3sB8JNme9g4ert1UtwS
-         pGX/gl3/QrGWpB8bdQK+bLlFgudKYq+N8ARWHJ72yA9A/VMYpY21qz1DtaOgICsuHR4+
-         xKlaYv/QL0L9a9RQXmaOGCoEnEyQBkpQEpz9wmr+4tAUANSc6ibLIUZ+PyyeP5WvKtij
-         bDuA==
-X-Gm-Message-State: APjAAAWrixz6LzhrWXOodt2bhnCAhKbveqaGvTXqAdTpIAOmr46QWctb
-        wh8cDoS4MrriLMhbLZz/7FKXMFkF
-X-Google-Smtp-Source: APXvYqxKLn+htEfi7uF6LezwsUcwInBT3SFQWya3X+xhruz0wZ1uBLUEF/mDQ2XZheTnl6GC6GskTg==
-X-Received: by 2002:a5d:4a85:: with SMTP id o5mr14780448wrq.109.1573811628873;
-        Fri, 15 Nov 2019 01:53:48 -0800 (PST)
+        bh=CfHNXFWw1Svzx+gN1b1XYrLzg+8yOHUYq4ZIqgZKEDY=;
+        b=pIpJw4bMn3Rn/v/OLcJ/9XD5z0j0u6GDJZ/vaJ/jjPQmcdsMcJG9eF7HgnxL2cQU8R
+         wR6MgH7Tiyk925uGbjUcnW/xOfLaRZ9QpcJ7zSG4/n9OJlJdH/24RUG/MYp5qJBchmz4
+         TJu26vjrjIk6uIxa3jhRwJjGsNyS8GsdI0ZzfvjSN/En5Zv3VXKYPbx1O2mRtiTm+fhK
+         nVQIkANu7rvKO7oxVVDpAGf4y/iGZIuykuruUOsFfI9kqQnReGicEtx0AVO1xU/CfHNG
+         yBzDf4DP6q1eNr8NuhZn+/IDvCzyxkY+9TJVsk+4OuIl5s5mhC6J6yo/qESNNXNKzg7v
+         mG+A==
+X-Gm-Message-State: APjAAAVAfYRnnz0q+q8uqRD3Ct3RYGFVOuYgwMux4QwpJqUq4WQZplJY
+        PHxTicl79mTC7gB8YRVvv5azJIUH
+X-Google-Smtp-Source: APXvYqw6diXujfi6CA0Frn+4IkRD1HFvhBm3knYEQfs+Byo8gzuBS7gBnCuWqFJzZH8jNboad5FL7g==
+X-Received: by 2002:a5d:4986:: with SMTP id r6mr14122481wrq.307.1573811643907;
+        Fri, 15 Nov 2019 01:54:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w18sm10617437wrl.2.2019.11.15.01.53.48
+        by smtp.gmail.com with ESMTPSA id g11sm9445332wmh.27.2019.11.15.01.54.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:48 -0800 (PST)
-Message-Id: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
-In-Reply-To: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:54:03 -0800 (PST)
+Message-Id: <1f08493281c7fb776693a373e88146d909e748aa.1573811627.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
+        <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:25 +0000
-Subject: [PATCH v4 00/21] [Outreachy] Move doc to header files
+Date:   Fri, 15 Nov 2019 09:53:45 +0000
+Subject: [PATCH v4 20/21] trace2: move doc to trace2.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Heba Waly <heba.waly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the documentation from Documentation/technical/api-*.txt to the
-corresponding header file, as it's easier for the developers to find the
-usage information beside the code instead of looking for it in another doc
-file.
+From: Heba Waly <heba.waly@gmail.com>
 
-Also documentation/technical/api-*.txt is removed because the information it
-has is will be redundant and it'll be hard to keep it up to date and
-synchronized with the documentation in the header files.
+Move the functions documentation from
+Documentation/technical/api-trace2.txt to trace2.h as it's easier for the
+developers to find the usage information beside the code instead of looking
+for it in another doc file.
 
-api-trace2.txt is not removed because it has lots of valuable information
-that seems more appropriate to be in a separate doc file not in the trace2.h
-although the functions documentation is moved to the trace2.h
+Only the functions documentation section is removed from
+Documentation/technical/api-trace2.txt as the file is full of
+details that seemed more appropriate to be in a separate doc file
+as it is, with a link to the doc file added in the trace2.h.
+Also the functions doc is removed to avoid having redundandt info which
+will be hard to keep syncronized with the documentation in the header file.
 
-api-error-handling.txt is not removed as well because no other file seemed
-to be more suitable for the doc it contains. I'm open to suggestions though.
+Signed-off-by: Heba Waly <heba.waly@gmail.com>
+---
+ Documentation/technical/api-trace2.txt | 243 +------------------------
+ trace2.h                               | 124 ++++++++++---
+ 2 files changed, 111 insertions(+), 256 deletions(-)
 
-The ll-merge related doc was removed from api-merge.txt to ll-merge.h, while
-the rest of the file is left as is.
-
-Signed-off-by: Heba Waly heba.waly@gmail.com
-
-Heba Waly (21):
-  diff: move doc to diff.h and diffcore.h
-  dir: move doc to dir.h
-  graph: move doc to graph.h and graph.c
-  merge: move doc to ll-merge.h
-  sha1-array: move doc to sha1-array.h
-  remote: move doc to remote.h and refspec.h
-  refs: move doc to refs.h
-  attr: move doc to attr.h
-  revision: move doc to revision.h
-  pathspec: move doc to pathspec.h
-  sigchain: move doc to sigchain.h
-  cache: move doc to cache.h
-  argv-array: move doc to argv-array.h
-  credential: move doc to credential.h
-  parse-options: move doc to parse-options.h
-  run-command: move doc to run-command.h
-  trace: move doc to trace.h
-  tree-walk: move doc to tree-walk.h
-  submodule-config: move doc to submodule-config.h
-  trace2: move doc to trace2.h
-  api-index: remove api doc index files
-
- Documentation/Makefile                        |  11 +-
- Documentation/MyFirstContribution.txt         |   2 +-
- Documentation/MyFirstObjectWalk.txt           |   7 +-
- Documentation/git-credential.txt              |   3 +-
- Documentation/git.txt                         |   3 -
- Documentation/gitcredentials.txt              |   3 +-
- Documentation/technical/.gitignore            |   1 -
- .../technical/api-allocation-growing.txt      |  39 ---
- Documentation/technical/api-argv-array.txt    |  65 ----
- Documentation/technical/api-credentials.txt   | 271 ---------------
- Documentation/technical/api-diff.txt          | 174 ----------
- .../technical/api-directory-listing.txt       | 130 -------
- Documentation/technical/api-gitattributes.txt | 154 --------
- Documentation/technical/api-history-graph.txt | 173 ---------
- Documentation/technical/api-index-skel.txt    |  13 -
- Documentation/technical/api-index.sh          |  28 --
- Documentation/technical/api-merge.txt         |  72 +---
- Documentation/technical/api-oid-array.txt     |  90 -----
- Documentation/technical/api-parse-options.txt | 313 -----------------
- Documentation/technical/api-ref-iteration.txt |  78 -----
- Documentation/technical/api-remote.txt        | 127 -------
- .../technical/api-revision-walking.txt        |  72 ----
- Documentation/technical/api-run-command.txt   | 264 --------------
- Documentation/technical/api-setup.txt         |  47 ---
- Documentation/technical/api-sigchain.txt      |  41 ---
- .../technical/api-submodule-config.txt        |  66 ----
- Documentation/technical/api-trace.txt         | 140 --------
- Documentation/technical/api-trace2.txt        | 243 +------------
- Documentation/technical/api-tree-walking.txt  | 149 --------
- argv-array.h                                  |  62 ++++
- attr.c                                        |   3 +-
- attr.h                                        | 141 +++++++-
- cache.h                                       |  41 ++-
- credential.h                                  | 236 +++++++++++++
- diff.h                                        | 126 +++++++
- diffcore.h                                    |  32 ++
- dir.c                                         |   2 -
- dir.h                                         | 119 ++++++-
- graph.c                                       |   1 +
- graph.h                                       | 121 +++++++
- ll-merge.h                                    |  73 +++-
- parse-options.h                               | 328 ++++++++++++++++++
- pathspec.h                                    |  35 +-
- refs.h                                        |  51 +++
- refspec.h                                     |  16 +
- remote.h                                      |  57 ++-
- revision.h                                    |  59 ++++
- run-command.h                                 | 252 +++++++++++++-
- sha1-array.c                                  |   2 +-
- sha1-array.h                                  |  80 +++++
- sigchain.h                                    |  45 +++
- submodule-config.h                            |  38 +-
- trace.h                                       | 133 ++++++-
- trace2.h                                      | 124 +++++--
- tree-walk.h                                   | 122 ++++++-
- 55 files changed, 2259 insertions(+), 2819 deletions(-)
- delete mode 100644 Documentation/technical/.gitignore
- delete mode 100644 Documentation/technical/api-allocation-growing.txt
- delete mode 100644 Documentation/technical/api-argv-array.txt
- delete mode 100644 Documentation/technical/api-credentials.txt
- delete mode 100644 Documentation/technical/api-diff.txt
- delete mode 100644 Documentation/technical/api-directory-listing.txt
- delete mode 100644 Documentation/technical/api-gitattributes.txt
- delete mode 100644 Documentation/technical/api-history-graph.txt
- delete mode 100644 Documentation/technical/api-index-skel.txt
- delete mode 100755 Documentation/technical/api-index.sh
- delete mode 100644 Documentation/technical/api-oid-array.txt
- delete mode 100644 Documentation/technical/api-parse-options.txt
- delete mode 100644 Documentation/technical/api-ref-iteration.txt
- delete mode 100644 Documentation/technical/api-remote.txt
- delete mode 100644 Documentation/technical/api-revision-walking.txt
- delete mode 100644 Documentation/technical/api-run-command.txt
- delete mode 100644 Documentation/technical/api-setup.txt
- delete mode 100644 Documentation/technical/api-sigchain.txt
- delete mode 100644 Documentation/technical/api-submodule-config.txt
- delete mode 100644 Documentation/technical/api-trace.txt
- delete mode 100644 Documentation/technical/api-tree-walking.txt
-
-
-base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-434%2FHebaWaly%2Fmove-doc-to-header-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-434/HebaWaly/move-doc-to-header-v4
-Pull-Request: https://github.com/gitgitgadget/git/pull/434
-
-Range-diff vs v3:
-
-  1:  60e80b545f !  1:  7f2f4c45a6 diff: move doc to diff.h and diffcore.h
-     @@ -398,14 +398,6 @@
-       	void (*set_default)(struct diff_options *);
-       
-       	FILE *file;
-     -@@
-     - void diff_emit_submodule_pipethrough(struct diff_options *o,
-     - 				     const char *line, int len);
-     - 
-     -+/* Output should be colored. */
-     - enum color_diff {
-     - 	DIFF_RESET = 0,
-     - 	DIFF_CONTEXT = 1,
-      @@
-       	DIFF_FILE_OLD_BOLD = 21,
-       	DIFF_FILE_NEW_BOLD = 22,
-  2:  7539f11bce =  2:  f87ca0228e dir: move doc to dir.h
-  3:  370f42114e =  3:  495fe333bd graph: move doc to graph.h and graph.c
-  4:  39f25de85f =  4:  90baf409ec merge: move doc to ll-merge.h
-  5:  3a8f93de3d =  5:  a76a2e2244 sha1-array: move doc to sha1-array.h
-  6:  52ba427514 =  6:  5719b8141c remote: move doc to remote.h and refspec.h
-  7:  6a9a0f77b3 =  7:  f84c1338fa refs: move doc to refs.h
-  8:  b1aedd025e =  8:  a007b50b9b attr: move doc to attr.h
-  9:  6463c7565b =  9:  88553030f5 revision: move doc to revision.h
- 10:  fa450e27a8 = 10:  0042d10223 pathspec: move doc to pathspec.h
- 11:  0e1663c039 = 11:  240a4bcb32 sigchain: move doc to sigchain.h
- 12:  1eca7099ef ! 12:  3e0d3f2415 cache: move doc to cache.h
-     @@ -22,7 +22,7 @@
-      -`alloc` is used by the `ALLOC_GROW` macro. Check
-      -`Documentation/technical/api-allocation-growing.txt` - this variable is used to
-      -track the allocated size of the list.
-     -+`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is 
-     ++`alloc` is used by the `ALLOC_GROW` macro. Check `cache.h` - this variable is
-      +used to track the allocated size of the list.
-       
-       Per entry, we find:
- 13:  debc035d40 = 13:  4f805c8737 argv-array: move doc to argv-array.h
- 14:  2e79afe7b8 = 14:  ea78cb4ae5 credential: move doc to credential.h
- 15:  1dca77cd27 ! 15:  7097de91c3 parse-options: move doc to parse-options.h
-     @@ -412,13 +412,10 @@
-      + *   `static const char * const builtin_foo_usage[]` array
-      + *   containing alternative usage strings
-      + *
-     -+ * - define `builtin_foo_options` array as described below
-     -+ *   in section 'Data Structure'.
-     ++ * - define `builtin_foo_options` array.
-      + *
-     -+ * - in `cmd_foo(int argc, const char **argv, const char *prefix)`
-     -+ *   call
-     -+ *
-     -+ * 	argc = parse_options(argc, argv, prefix, builtin_foo_options, builtin_foo_usage, flags);
-     ++ * - in `cmd_foo(int argc, const char **argv, const char *prefix)` call
-     ++ *   argc = parse_options(argc, argv, prefix, builtin_foo_options, builtin_foo_usage, flags);
-      + *
-      + * `parse_options()` will filter out the processed options of `argv[]` and leave the
-      + * non-option arguments in `argv[]`.
-     @@ -430,6 +427,8 @@
-      + * a limited parser for only a subset of the options that needs to be run
-      + * before the full parser, which in turn shows the full help message.
-      + *
-     ++ * Flags are the bitwise-or of the members of parse_opt_flags.
-     ++ *
-      + * Sophisticated option parsing
-      + * ----------------------------
-      + *
- 16:  1a9a6ca42d = 16:  03aa723fb7 run-command: move doc to run-command.h
- 17:  f4df8e16ed = 17:  44a47075dc trace: move doc to trace.h
- 18:  ee9b74018b = 18:  5b20c2794b tree-walk: move doc to tree-walk.h
- 19:  9f34f3177d = 19:  251a08c1d8 submodule-config: move doc to submodule-config.h
- 20:  a337f88a55 ! 20:  1f08493281 trace2: move doc to trace2.h
-     @@ -20,15 +20,9 @@
-       --- a/Documentation/technical/api-trace2.txt
-       +++ b/Documentation/technical/api-trace2.txt
-      @@
-     - Trace2 Targets.  This section describes the set of available
-     - messages.
-     + === Basic Command Messages
-       
-     --It helps to divide these functions into groups for discussion
-     --purposes.
-     --
-     --=== Basic Command Messages
-     --
-     --These are concerned with the lifetime of the overall git process.
-     + These are concerned with the lifetime of the overall git process.
-      -
-      -`void trace2_initialize_clock()`::
-      -
-     @@ -73,11 +67,13 @@
-      -
-      -	Emits a "cmd_path" message with the full pathname of the
-      -	current process.
-     --
-     --=== Command Detail Messages
-     --
-     --These are concerned with describing the specific Git command
-     --after the command line, config, and environment are inspected.
-     ++e.g: `void trace2_initialize_clock()`, `void trace2_initialize()`,
-     ++`int trace2_is_enabled()`, `void trace2_cmd_start(int argc, const char **argv)`.
-     + 
-     + === Command Detail Messages
-     + 
-     + These are concerned with describing the specific Git command
-     + after the command line, config, and environment are inspected.
-      -
-      -`void trace2_cmd_name(const char *name)`::
-      -
-     @@ -142,12 +138,14 @@
-      -+
-      -The repo-id field is in anticipation of future in-proc submodule
-      -repositories.
-     --
-     --=== Child Process Messages
-     --
-     --These are concerned with the various spawned child processes,
-     --including shell scripts, git commands, editors, pagers, and hooks.
-     --
-     ++e.g: `void trace2_cmd_name(const char *name)`,
-     ++`void trace2_cmd_mode(const char *mode)`.
-     + 
-     + === Child Process Messages
-     + 
-     + These are concerned with the various spawned child processes,
-     + including shell scripts, git commands, editors, pagers, and hooks.
-     + 
-      -`void trace2_child_start(struct child_process *cmd)`::
-      -
-      -	Emits a "child_start" message containing the "child-id",
-     @@ -192,11 +190,12 @@
-      -On Unix-based systems, `exec()` does not return if successful.
-      -This message is used to indicate that the `exec()` failed and
-      -that the current program is continuing.
-     --
-     --=== Git Thread Messages
-     --
-     --These messages are concerned with Git thread usage.
-     --
-     ++e.g: `void trace2_child_start(struct child_process *cmd)`.
-     + 
-     + === Git Thread Messages
-     + 
-     + These messages are concerned with Git thread usage.
-     + 
-      -`void trace2_thread_start(const char *thread_name)`::
-      -
-      -	Emits a "thread_start" message.
-     @@ -220,10 +219,11 @@
-      -This function must be called by the thread-proc before it returns
-      -(so that the coorect TLS data is used and cleaned up.  It should
-      -not be called by the caller of `pthread_join()`.
-     --
-     --=== Region and Data Messages
-     --
-     --These are concerned with recording performance data
-     ++e.g: `void trace2_thread_start(const char *thread_name)`.
-     + 
-     + === Region and Data Messages
-     + 
-     + These are concerned with recording performance data
-      -over regions or spans of code.
-      -
-      -`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`::
-     @@ -282,9 +282,11 @@
-      -`void trace2_printf(const char *fmt, ...)`::
-      -
-      -`void trace2_printf_va(const char *fmt, va_list ap)`::
-     --
-     ++over regions or spans of code. e.g:
-     ++`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`.
-     + 
-      -	Emits a region- and thread-relative "printf" message.
-     -+Refer to trace2.h for details about trace2 functions.
-     ++Refer to trace2.h for details about all trace2 functions.
-       
-       == Trace2 Target Formats
-       
-     @@ -391,14 +393,6 @@
-      -/*
-      - * Emit a 'child_start' event prior to spawning a child process.
-      +/**
-     -+ * Child Process Messages
-     -+ * ----------------------
-     -+ *
-     -+ * These are concerned with the various spawned child processes,
-     -+ * including shell scripts, git commands, editors, pagers, and hooks.
-     -+ */
-     -+
-     -+/**
-      + * Emits a "child_start" message containing the "child-id",
-      + * "child-argv", and "child-classification".
-        *
-     @@ -457,20 +451,6 @@
-        * Emit an 'exec_result' when possible.  On Unix-derived systems,
-        * this should be called after exec() returns (which only happens
-        * when there is an error starting the new process).  On Windows,
-     -@@
-     - #define trace2_exec_result(id, code) \
-     - 	trace2_exec_result_fl(__FILE__, __LINE__, (id), (code))
-     - 
-     -+
-     -+/**
-     -+ * Git Thread Messages
-     -+ * -------------------
-     -+ * These messages are concerned with Git thread usage.
-     -+ */
-     -+
-     - /*
-     -  * Emit a 'thread_start' event.  This must be called from inside the
-     -  * thread-proc to set up the trace2 TLS data for the thread.
-      @@
-       #define trace2_thread_exit() trace2_thread_exit_fl(__FILE__, __LINE__)
-       
-     @@ -505,13 +485,6 @@
-       #define trace2_def_repo(repo) trace2_def_repo_fl(__FILE__, __LINE__, repo)
-       
-      -/*
-     -+/**
-     -+ * Region and Data Messages
-     -+ * ------------------------
-     -+ * These are concerned with recording performance data over regions or spans
-     -+ * of code.
-     -+ */
-     -+
-      +/**
-        * Emit a 'region_enter' event for <category>.<label> with optional
-        * repo-id and printf message.
- 21:  e187c61371 = 21:  5f21417393 api-index: remove api doc index files
-
+diff --git a/Documentation/technical/api-trace2.txt b/Documentation/technical/api-trace2.txt
+index a045dbe422..9907244d64 100644
+--- a/Documentation/technical/api-trace2.txt
++++ b/Documentation/technical/api-trace2.txt
+@@ -188,261 +188,36 @@ purposes.
+ === Basic Command Messages
+ 
+ These are concerned with the lifetime of the overall git process.
+-
+-`void trace2_initialize_clock()`::
+-
+-	Initialize the Trace2 start clock and nothing else.  This should
+-	be called at the very top of main() to capture the process start
+-	time and reduce startup order dependencies.
+-
+-`void trace2_initialize()`::
+-
+-	Determines if any Trace2 Targets should be enabled and
+-	initializes the Trace2 facility.  This includes setting up the
+-	Trace2 thread local storage (TLS).
+-+
+-This function emits a "version" message containing the version of git
+-and the Trace2 protocol.
+-+
+-This function should be called from `main()` as early as possible in
+-the life of the process after essential process initialization.
+-
+-`int trace2_is_enabled()`::
+-
+-	Returns 1 if Trace2 is enabled (at least one target is
+-	active).
+-
+-`void trace2_cmd_start(int argc, const char **argv)`::
+-
+-	Emits a "start" message containing the process command line
+-	arguments.
+-
+-`int trace2_cmd_exit(int exit_code)`::
+-
+-	Emits an "exit" message containing the process exit-code and
+-	elapsed time.
+-+
+-Returns the exit-code.
+-
+-`void trace2_cmd_error(const char *fmt, va_list ap)`::
+-
+-	Emits an "error" message containing a formatted error message.
+-
+-`void trace2_cmd_path(const char *pathname)`::
+-
+-	Emits a "cmd_path" message with the full pathname of the
+-	current process.
++e.g: `void trace2_initialize_clock()`, `void trace2_initialize()`,
++`int trace2_is_enabled()`, `void trace2_cmd_start(int argc, const char **argv)`.
+ 
+ === Command Detail Messages
+ 
+ These are concerned with describing the specific Git command
+ after the command line, config, and environment are inspected.
+-
+-`void trace2_cmd_name(const char *name)`::
+-
+-	Emits a "cmd_name" message with the canonical name of the
+-	command, for example "status" or "checkout".
+-
+-`void trace2_cmd_mode(const char *mode)`::
+-
+-	Emits a "cmd_mode" message with a qualifier name to further
+-	describe the current git command.
+-+
+-This message is intended to be used with git commands having multiple
+-major modes.  For example, a "checkout" command can checkout a new
+-branch or it can checkout a single file, so the checkout code could
+-emit a cmd_mode message of "branch" or "file".
+-
+-`void trace2_cmd_alias(const char *alias, const char **argv_expansion)`::
+-
+-	Emits an "alias" message containing the alias used and the
+-	argument expansion.
+-
+-`void trace2_def_param(const char *parameter, const char *value)`::
+-
+-	Emits a "def_param" message containing a key/value pair.
+-+
+-This message is intended to report some global aspect of the current
+-command, such as a configuration setting or command line switch that
+-significantly affects program performance or behavior, such as
+-`core.abbrev`, `status.showUntrackedFiles`, or `--no-ahead-behind`.
+-
+-`void trace2_cmd_list_config()`::
+-
+-	Emits a "def_param" messages for "important" configuration
+-	settings.
+-+
+-The environment variable `GIT_TRACE2_CONFIG_PARAMS` or the `trace2.configParams`
+-config value can be set to a
+-list of patterns of important configuration settings, for example:
+-`core.*,remote.*.url`.  This function will iterate over all config
+-settings and emit a "def_param" message for each match.
+-
+-`void trace2_cmd_set_config(const char *key, const char *value)`::
+-
+-	Emits a "def_param" message for a new or updated key/value
+-	pair IF `key` is considered important.
+-+
+-This is used to hook into `git_config_set()` and catch any
+-configuration changes and update a value previously reported by
+-`trace2_cmd_list_config()`.
+-
+-`void trace2_def_repo(struct repository *repo)`::
+-
+-	Registers a repository with the Trace2 layer.  Assigns a
+-	unique "repo-id" to `repo->trace2_repo_id`.
+-+
+-Emits a "worktree" messages containing the repo-id and the worktree
+-pathname.
+-+
+-Region and data messages (described later) may refer to this repo-id.
+-+
+-The main/top-level repository will have repo-id value 1 (aka "r1").
+-+
+-The repo-id field is in anticipation of future in-proc submodule
+-repositories.
++e.g: `void trace2_cmd_name(const char *name)`,
++`void trace2_cmd_mode(const char *mode)`.
+ 
+ === Child Process Messages
+ 
+ These are concerned with the various spawned child processes,
+ including shell scripts, git commands, editors, pagers, and hooks.
+ 
+-`void trace2_child_start(struct child_process *cmd)`::
+-
+-	Emits a "child_start" message containing the "child-id",
+-	"child-argv", and "child-classification".
+-+
+-Before calling this, set `cmd->trace2_child_class` to a name
+-describing the type of child process, for example "editor".
+-+
+-This function assigns a unique "child-id" to `cmd->trace2_child_id`.
+-This field is used later during the "child_exit" message to associate
+-it with the "child_start" message.
+-+
+-This function should be called before spawning the child process.
+-
+-`void trace2_child_exit(struct child_proess *cmd, int child_exit_code)`::
+-
+-	Emits a "child_exit" message containing the "child-id",
+-	the child's elapsed time and exit-code.
+-+
+-The reported elapsed time includes the process creation overhead and
+-time spend waiting for it to exit, so it may be slightly longer than
+-the time reported by the child itself.
+-+
+-This function should be called after reaping the child process.
+-
+-`int trace2_exec(const char *exe, const char **argv)`::
+-
+-	Emits a "exec" message containing the "exec-id" and the
+-	argv of the new process.
+-+
+-This function should be called before calling one of the `exec()`
+-variants, such as `execvp()`.
+-+
+-This function returns a unique "exec-id".  This value is used later
+-if the exec() fails and a "exec-result" message is necessary.
+-
+-`void trace2_exec_result(int exec_id, int error_code)`::
+-
+-	Emits a "exec_result" message containing the "exec-id"
+-	and the error code.
+-+
+-On Unix-based systems, `exec()` does not return if successful.
+-This message is used to indicate that the `exec()` failed and
+-that the current program is continuing.
++e.g: `void trace2_child_start(struct child_process *cmd)`.
+ 
+ === Git Thread Messages
+ 
+ These messages are concerned with Git thread usage.
+ 
+-`void trace2_thread_start(const char *thread_name)`::
+-
+-	Emits a "thread_start" message.
+-+
+-The `thread_name` field should be a descriptive name, such as the
+-unique name of the thread-proc.  A unique "thread-id" will be added
+-to the name to uniquely identify thread instances.
+-+
+-Region and data messages (described later) may refer to this thread
+-name.
+-+
+-This function must be called by the thread-proc of the new thread
+-(so that TLS data is properly initialized) and not by the caller
+-of `pthread_create()`.
+-
+-`void trace2_thread_exit()`::
+-
+-	Emits a "thread_exit" message containing the thread name
+-	and the thread elapsed time.
+-+
+-This function must be called by the thread-proc before it returns
+-(so that the coorect TLS data is used and cleaned up.  It should
+-not be called by the caller of `pthread_join()`.
++e.g: `void trace2_thread_start(const char *thread_name)`.
+ 
+ === Region and Data Messages
+ 
+ These are concerned with recording performance data
+-over regions or spans of code.
+-
+-`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`::
+-
+-`void trace2_region_enter_printf(const char *category, const char *label, const struct repository *repo, const char *fmt, ...)`::
+-
+-`void trace2_region_enter_printf_va(const char *category, const char *label, const struct repository *repo, const char *fmt, va_list ap)`::
+-
+-	Emits a thread-relative "region_enter" message with optional
+-	printf string.
+-+
+-This function pushes a new region nesting stack level on the current
+-thread and starts a clock for the new stack frame.
+-+
+-The `category` field is an arbitrary category name used to classify
+-regions by feature area, such as "status" or "index".  At this time
+-it is only just printed along with the rest of the message.  It may
+-be used in the future to filter messages.
+-+
+-The `label` field is an arbitrary label used to describe the activity
+-being started, such as "read_recursive" or "do_read_index".
+-+
+-The `repo` field, if set, will be used to get the "repo-id", so that
+-recursive oerations can be attributed to the correct repository.
+-
+-`void trace2_region_leave(const char *category, const char *label, const struct repository *repo)`::
+-
+-`void trace2_region_leave_printf(const char *category, const char *label, const struct repository *repo, const char *fmt, ...)`::
+-
+-`void trace2_region_leave_printf_va(const char *category, const char *label, const struct repository *repo, const char *fmt, va_list ap)`::
+-
+-	Emits a thread-relative "region_leave" message with optional
+-	printf string.
+-+
+-This function pops the region nesting stack on the current thread
+-and reports the elapsed time of the stack frame.
+-+
+-The `category`, `label`, and `repo` fields are the same as above.
+-The `category` and `label` do not need to match the correpsonding
+-"region_enter" message, but it makes the data stream easier to
+-understand.
+-
+-`void trace2_data_string(const char *category, const struct repository *repo, const char *key, const char * value)`::
+-
+-`void trace2_data_intmax(const char *category, const struct repository *repo, const char *key, intmax value)`::
+-
+-`void trace2_data_json(const char *category, const struct repository *repo, const char *key, const struct json_writer *jw)`::
+-
+-	Emits a region- and thread-relative "data" or "data_json" message.
+-+
+-This is a key/value pair message containing information about the
+-current thread, region stack, and repository.  This could be used
+-to print the number of files in a directory during a multi-threaded
+-recursive tree walk.
+-
+-`void trace2_printf(const char *fmt, ...)`::
+-
+-`void trace2_printf_va(const char *fmt, va_list ap)`::
++over regions or spans of code. e.g:
++`void trace2_region_enter(const char *category, const char *label, const struct repository *repo)`.
+ 
+-	Emits a region- and thread-relative "printf" message.
++Refer to trace2.h for details about all trace2 functions.
+ 
+ == Trace2 Target Formats
+ 
+diff --git a/trace2.h b/trace2.h
+index 050bf3c8c1..e5e81c0533 100644
+--- a/trace2.h
++++ b/trace2.h
+@@ -1,6 +1,40 @@
+ #ifndef TRACE2_H
+ #define TRACE2_H
+ 
++/**
++ * The Trace2 API can be used to print debug, performance, and telemetry
++ * information to stderr or a file.  The Trace2 feature is inactive unless
++ * explicitly enabled by enabling one or more Trace2 Targets.
++ *
++ * The Trace2 API is intended to replace the existing (Trace1)
++ * printf-style tracing provided by the existing `GIT_TRACE` and
++ * `GIT_TRACE_PERFORMANCE` facilities.  During initial implementation,
++ * Trace2 and Trace1 may operate in parallel.
++ *
++ * The Trace2 API defines a set of high-level messages with known fields,
++ * such as (`start`: `argv`) and (`exit`: {`exit-code`, `elapsed-time`}).
++ *
++ * Trace2 instrumentation throughout the Git code base sends Trace2
++ * messages to the enabled Trace2 Targets.  Targets transform these
++ * messages content into purpose-specific formats and write events to
++ * their data streams.  In this manner, the Trace2 API can drive
++ * many different types of analysis.
++ *
++ * Targets are defined using a VTable allowing easy extension to other
++ * formats in the future.  This might be used to define a binary format,
++ * for example.
++ *
++ * Trace2 is controlled using `trace2.*` config values in the system and
++ * global config files and `GIT_TRACE2*` environment variables.  Trace2 does
++ * not read from repo local or worktree config files or respect `-c`
++ * command line config settings.
++ *
++ * For more info about: trace2 targets, conventions for public functions and
++ * macros, trace2 target formats and examples on trace2 API usage refer to
++ * Documentation/technical/api-trace2.txt
++ *
++ */
++
+ struct child_process;
+ struct repository;
+ struct json_writer;
+@@ -39,7 +73,12 @@ void trace2_initialize_clock(void);
+ /*
+  * Initialize TRACE2 tracing facility if any of the builtin TRACE2
+  * targets are enabled in the system config or the environment.
+- * Emits a 'version' event.
++ * This includes setting up the Trace2 thread local storage (TLS).
++ * Emits a 'version' message containing the version of git
++ * and the Trace2 protocol.
++ *
++ * This function should be called from `main()` as early as possible in
++ * the life of the process after essential process initialization.
+  *
+  * Cleanup/Termination is handled automatically by a registered
+  * atexit() routine.
+@@ -49,7 +88,7 @@ void trace2_initialize_fl(const char *file, int line);
+ #define trace2_initialize() trace2_initialize_fl(__FILE__, __LINE__)
+ 
+ /*
+- * Return true if trace2 is enabled.
++ * Return 1 if trace2 is enabled (at least one target is active).
+  */
+ int trace2_is_enabled(void);
+ 
+@@ -114,7 +153,8 @@ void trace2_cmd_mode_fl(const char *file, int line, const char *mode);
+ #define trace2_cmd_mode(sv) trace2_cmd_mode_fl(__FILE__, __LINE__, (sv))
+ 
+ /*
+- * Emit an 'alias' expansion event.
++ * Emits an "alias" message containing the alias used and the argument
++ * expansion.
+  */
+ void trace2_cmd_alias_fl(const char *file, int line, const char *alias,
+ 			 const char **argv);
+@@ -123,7 +163,7 @@ void trace2_cmd_alias_fl(const char *file, int line, const char *alias,
+ 	trace2_cmd_alias_fl(__FILE__, __LINE__, (alias), (argv))
+ 
+ /*
+- * Emit one or more 'def_param' events for "interesting" configuration
++ * Emit one or more 'def_param' events for "important" configuration
+  * settings.
+  *
+  * Use the TR2_SYSENV_CFG_PARAM setting to register a comma-separated
+@@ -144,7 +184,7 @@ void trace2_cmd_list_config_fl(const char *file, int line);
+ 
+ /*
+  * Emit a "def_param" event for the given config key/value pair IF
+- * we consider the key to be "interesting".
++ * we consider the key to be "important".
+  *
+  * Use this for new/updated config settings created/updated after
+  * trace2_cmd_list_config() is called.
+@@ -155,20 +195,34 @@ void trace2_cmd_set_config_fl(const char *file, int line, const char *key,
+ #define trace2_cmd_set_config(k, v) \
+ 	trace2_cmd_set_config_fl(__FILE__, __LINE__, (k), (v))
+ 
+-/*
+- * Emit a 'child_start' event prior to spawning a child process.
++/**
++ * Emits a "child_start" message containing the "child-id",
++ * "child-argv", and "child-classification".
+  *
+  * Before calling optionally set "cmd->trace2_child_class" to a string
+  * describing the type of the child process.  For example, "editor" or
+  * "pager".
++ *
++ * This function assigns a unique "child-id" to `cmd->trace2_child_id`.
++ * This field is used later during the "child_exit" message to associate
++ * it with the "child_start" message.
++ *
++ * This function should be called before spawning the child process.
+  */
+ void trace2_child_start_fl(const char *file, int line,
+ 			   struct child_process *cmd);
+ 
+ #define trace2_child_start(cmd) trace2_child_start_fl(__FILE__, __LINE__, (cmd))
+ 
+-/*
+- * Emit a 'child_exit' event after the child process completes.
++/**
++ * Emits a "child_exit" message containing the "child-id",
++ * the child's elapsed time and exit-code.
++ *
++ * The reported elapsed time includes the process creation overhead and
++ * time spend waiting for it to exit, so it may be slightly longer than
++ * the time reported by the child itself.
++ *
++ * This function should be called after reaping the child process.
+  */
+ void trace2_child_exit_fl(const char *file, int line, struct child_process *cmd,
+ 			  int child_exit_code);
+@@ -176,21 +230,22 @@ void trace2_child_exit_fl(const char *file, int line, struct child_process *cmd,
+ #define trace2_child_exit(cmd, code) \
+ 	trace2_child_exit_fl(__FILE__, __LINE__, (cmd), (code))
+ 
+-/*
++/**
+  * Emit an 'exec' event prior to calling one of exec(), execv(),
+  * execvp(), and etc.  On Unix-derived systems, this will be the
+  * last event emitted for the current process, unless the exec
+  * fails.  On Windows, exec() behaves like 'child_start' and a
+  * waitpid(), so additional events may be emitted.
+  *
+- * Returns the "exec_id".
++ * Returns a unique "exec-id".  This value is used later
++ * if the exec() fails and a "exec-result" message is necessary.
+  */
+ int trace2_exec_fl(const char *file, int line, const char *exe,
+ 		   const char **argv);
+ 
+ #define trace2_exec(exe, argv) trace2_exec_fl(__FILE__, __LINE__, (exe), (argv))
+ 
+-/*
++/**
+  * Emit an 'exec_result' when possible.  On Unix-derived systems,
+  * this should be called after exec() returns (which only happens
+  * when there is an error starting the new process).  On Windows,
+@@ -226,11 +281,12 @@ void trace2_thread_exit_fl(const char *file, int line);
+ #define trace2_thread_exit() trace2_thread_exit_fl(__FILE__, __LINE__)
+ 
+ /*
+- * Emit a 'param' event.
++ * Emits a "def_param" message containing a key/value pair.
+  *
+- * Write a "<param> = <value>" pair describing some aspect of the
+- * run such as an important configuration setting or command line
+- * option that significantly changes command behavior.
++ * This message is intended to report some global aspect of the current
++ * command, such as a configuration setting or command line switch that
++ * significantly affects program performance or behavior, such as
++ * `core.abbrev`, `status.showUntrackedFiles`, or `--no-ahead-behind`.
+  */
+ void trace2_def_param_fl(const char *file, int line, const char *param,
+ 			 const char *value);
+@@ -243,18 +299,35 @@ void trace2_def_param_fl(const char *file, int line, const char *param,
+  * a trace2-repo-id to be used in subsequent activity events.
+  *
+  * Emits a 'worktree' event for this repo instance.
++ *
++ * Region and data messages may refer to this repo-id.
++ *
++ * The main/top-level repository will have repo-id value 1 (aka "r1").
++ *
++ * The repo-id field is in anticipation of future in-proc submodule
++ * repositories.
+  */
+ void trace2_def_repo_fl(const char *file, int line, struct repository *repo);
+ 
+ #define trace2_def_repo(repo) trace2_def_repo_fl(__FILE__, __LINE__, repo)
+ 
+-/*
++/**
+  * Emit a 'region_enter' event for <category>.<label> with optional
+  * repo-id and printf message.
+  *
+- * Enter a new nesting level on the current thread and remember the
+- * current time.  This controls the indenting of all subsequent events
+- * on this thread.
++ * This function pushes a new region nesting stack level on the current
++ * thread and starts a clock for the new stack frame.
++ *
++ * The `category` field is an arbitrary category name used to classify
++ * regions by feature area, such as "status" or "index".  At this time
++ * it is only just printed along with the rest of the message.  It may
++ * be used in the future to filter messages.
++ *
++ * The `label` field is an arbitrary label used to describe the activity
++ * being started, such as "read_recursive" or "do_read_index".
++ *
++ * The `repo` field, if set, will be used to get the "repo-id", so that
++ * recursive oerations can be attributed to the correct repository.
+  */
+ void trace2_region_enter_fl(const char *file, int line, const char *category,
+ 			    const char *label, const struct repository *repo, ...);
+@@ -289,12 +362,17 @@ void trace2_region_enter_printf(const char *category, const char *label,
+ /* clang-format on */
+ #endif
+ 
+-/*
++/**
+  * Emit a 'region_leave' event for <category>.<label> with optional
+  * repo-id and printf message.
+  *
+  * Leave current nesting level and report the elapsed time spent
+  * in this nesting level.
++ *
++ * The `category`, `label`, and `repo` fields are the same as
++ * trace2_region_enter_fl. The `category` and `label` do not
++ * need to match the corresponding "region_enter" message,
++ * but it makes the data stream easier to understand.
+  */
+ void trace2_region_leave_fl(const char *file, int line, const char *category,
+ 			    const char *label, const struct repository *repo, ...);
+@@ -329,10 +407,12 @@ void trace2_region_leave_printf(const char *category, const char *label,
+ /* clang-format on */
+ #endif
+ 
+-/*
++/**
+  * Emit a key-value pair 'data' event of the form <category>.<key> = <value>.
+  * This event implicitly contains information about thread, nesting region,
+  * and optional repo-id.
++ * This could be used to print the number of files in a directory during
++ * a multi-threaded recursive tree walk.
+  *
+  * On event-based TRACE2 targets, this generates a 'data' event suitable
+  * for post-processing.  On printf-based TRACE2 targets, this is converted
 -- 
 gitgitgadget
+
