@@ -8,48 +8,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA741F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 14:16:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F09D1F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 14:16:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727528AbfKOOQH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 09:16:07 -0500
-Received: from mail-wm1-f50.google.com ([209.85.128.50]:38548 "EHLO
-        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727420AbfKOOQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 09:16:06 -0500
-Received: by mail-wm1-f50.google.com with SMTP id z19so10594816wmk.3
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:16:05 -0800 (PST)
+        id S1727539AbfKOOQJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 09:16:09 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35969 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727380AbfKOOQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 09:16:08 -0500
+Received: by mail-wr1-f65.google.com with SMTP id r10so11168931wrx.3
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 06:16:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Or9CZRa468VpWlF4CBSYitgmMNVyelgxDsvskSvosXQ=;
-        b=ouGxWSvVBnI74siKjSzS5VCxO0EgZ4lTjxGQ9TFgml8j/ZfwqpDmlqWxx0EHeBC+O2
-         TaVrSS1aPQRHjq6amacJ9BWTxZy1HSGRjN2/DndUgWb/Hf7X5PdEoQmRrJ45yGc470Qy
-         vf1OM1W8Ttns6QU3KM35l/pu3TswnNMoZYxaOPLsaNGae6P92oh3bKyT1CP32ecnViMq
-         Hz4NWuDv4PwofjWicluxTIuJZqdy5xCLqV1ysuuMdrc+Xt2r9IwvlWOYio+fmEsz9Ohr
-         rUMHd7qmYM8ka/U+002hRveIaTf0BEKTp4comJZKnqLsi+ASo6DJTnWIHGUWpuqK4sRA
-         07bw==
+        bh=mRcPan6gwhuTjJc3zOP220A6CuVm8SCWShmN02+zsxc=;
+        b=fJH07NsjnAFc0wvYT0Qumq0cA8shdOItBz0yk0fBotX2Y8Se/8v2Xt8eM9j5ob4Rr/
+         8yz6FqUhpn9d6SNAMSZXm4sy6w5wETkn9XsabuqwJI3VztswooVKAhPIo5thzd/PzPBo
+         /09HkQbotxlfPMxk3YfcT3xQgZjwHYlWyI3EmCYk8yKUciDk98LNAhZCsPjMC/YDGa3g
+         WNMgD2QU/yDjp+uznQ5feD0Bz+D9BNXoumTonkmwNADrnboCOa3V8OUy5rByWeb3WR8Y
+         siTALE9ND/JSWc+Og7WNOGHIZtnZntDdEIhczb9QW4nDr5iaO5usjbzAnn/RVSp7c1iK
+         FAPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Or9CZRa468VpWlF4CBSYitgmMNVyelgxDsvskSvosXQ=;
-        b=FD+cKo9Kr9yk0hMDVjYEuDY4FddlkNwL0MhAhZykTZn/vDnf7jIMlIYZ8w3rjQo4jh
-         9ZpzlluZwX6YWiPpHqItEJr+7TBTHPWOQq/j+obw5Zwdyu/0+b8vF75p9x8CGdFJ4rDa
-         xPDPmDdGUD/H7NG0+ey4QB1qZdH40Bpi9wKLG9Ynqe/ZaplULFoBZnsc5UoVXyTaInnS
-         6hDehJV56kGcs+v5Nz5zISiBw7CT7rqACrig0YT4s5BjnnvrCEEN61jIW4DZWh2vtk6O
-         rs2T+1m34HRgRPMOEEGCzWyzU6VSAEOpBEwhDwjo3kApOWIHE0U0mFXGu6r3+cjLOudR
-         5sHw==
-X-Gm-Message-State: APjAAAV++bBHHK2NqDmI8231y/Fcu5dMF+7zjPX9AmvAPKft5CsKTqsV
-        gSykr8cVh3dM7KGHUPAVIQgd4tnR
-X-Google-Smtp-Source: APXvYqzw3HD5sD/zkioKt/v49+Kf9zaJBt2tvFYF8VEuxNccngTHqsApbUtk476bPGpnxzwYDZ5rRw==
-X-Received: by 2002:a1c:39c1:: with SMTP id g184mr14825536wma.75.1573827364642;
-        Fri, 15 Nov 2019 06:16:04 -0800 (PST)
+        bh=mRcPan6gwhuTjJc3zOP220A6CuVm8SCWShmN02+zsxc=;
+        b=nPeTcz+GQw4ubG5T6LYUlwnRUz8YBeZwesx9+7LRqhCchH8E12SCt+qCEgOpEwjfDe
+         Xe8GdaOn5RBjMdRY0mkQEsgbbqDVWnER0ecnSNigtphSHrjHiQwoCBzQ0uX8k7RuEa3A
+         SfqiqjYVW/82Dqvv7cQDXN/DpqikJqSOiosW0dqMaEaOSx3eZJtP+3Dyg9vLyyFnvxD/
+         nQqfTm/vC5WxUWWhSigA0Gq50nVESjCmUbUyYaxe/A18QU/zx8zRKDRw3PCb+bYRQSy8
+         bSCleFNnLGC+x8WDN4pUxgbCiE2PHcYRMYNK4HxZYs3V3T5gOo2xWmNHS/MbJ9bMf1/+
+         XorQ==
+X-Gm-Message-State: APjAAAXqHtBOQr8rv8PsLRImtn7UecDZsc9a2j0sz9U3qi8n1eAegHsX
+        Ff9m123yh0wDYFRwxdHbzI9TI3y/
+X-Google-Smtp-Source: APXvYqwm5RhjrI324GVO6jOEY48yz0kHE151ROuK51APEMM9/mWGODoEBENKP0F17ytnQ7/H7jNMZQ==
+X-Received: by 2002:adf:fd45:: with SMTP id h5mr16942336wrs.388.1573827365853;
+        Fri, 15 Nov 2019 06:16:05 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:1050:ac52:b4cd:f6a2:ba59:f1d4])
-        by smtp.gmail.com with ESMTPSA id a2sm7907874wrt.79.2019.11.15.06.16.03
+        by smtp.gmail.com with ESMTPSA id a2sm7907874wrt.79.2019.11.15.06.16.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 06:16:04 -0800 (PST)
+        Fri, 15 Nov 2019 06:16:05 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v3 5/9] pack-bitmap: introduce bitmap_walk_contains()
-Date:   Fri, 15 Nov 2019 15:15:37 +0100
-Message-Id: <20191115141541.11149-6-chriscool@tuxfamily.org>
+Subject: [PATCH v3 6/9] csum-file: introduce hashfile_total()
+Date:   Fri, 15 Nov 2019 15:15:38 +0100
+Message-Id: <20191115141541.11149-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.0-rc1
 In-Reply-To: <20191115141541.11149-1-chriscool@tuxfamily.org>
 References: <20191115141541.11149-1-chriscool@tuxfamily.org>
@@ -72,60 +72,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We will use this helper function in a following commit to
-tell us if an object is packed.
+We will need this helper function in a following commit
+to give us total number of bytes fed to the hashfile so far.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- pack-bitmap.c | 12 ++++++++++++
- pack-bitmap.h |  3 +++
- 2 files changed, 15 insertions(+)
+ csum-file.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 016d0319fc..8a51302a1a 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -826,6 +826,18 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	return 0;
- }
+diff --git a/csum-file.h b/csum-file.h
+index a98b1eee53..f9cbd317fb 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -42,6 +42,15 @@ void hashflush(struct hashfile *f);
+ void crc32_begin(struct hashfile *);
+ uint32_t crc32_end(struct hashfile *);
  
-+int bitmap_walk_contains(struct bitmap_index *bitmap_git,
-+			 struct bitmap *bitmap, const struct object_id *oid)
++/*
++ * Returns the total number of bytes fed to the hashfile so far (including ones
++ * that have not been written out to the descriptor yet).
++ */
++static inline off_t hashfile_total(struct hashfile *f)
 +{
-+	int idx;
-+
-+	if (!bitmap)
-+		return 0;
-+
-+	idx = bitmap_position(bitmap_git, oid);
-+	return idx >= 0 && bitmap_get(bitmap, idx);
++	return f->total + f->offset;
 +}
 +
- void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
- 				 show_reachable_fn show_reachable)
+ static inline void hashwrite_u8(struct hashfile *f, uint8_t data)
  {
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 466c5afa09..6ab6033dbe 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -3,6 +3,7 @@
- 
- #include "ewah/ewok.h"
- #include "khash.h"
-+#include "pack.h"
- #include "pack-objects.h"
- 
- struct commit;
-@@ -53,6 +54,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
- int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
- 			     kh_oid_map_t *reused_bitmaps, int show_progress);
- void free_bitmap_index(struct bitmap_index *);
-+int bitmap_walk_contains(struct bitmap_index *,
-+			 struct bitmap *bitmap, const struct object_id *oid);
- 
- /*
-  * After a traversal has been performed by prepare_bitmap_walk(), this can be
+ 	hashwrite(f, &data, sizeof(data));
 -- 
 2.24.0-rc1
 
