@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 516011F4B5
-	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1201F4B5
+	for <e@80x24.org>; Fri, 15 Nov 2019 09:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727519AbfKOJyE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 04:54:04 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:42517 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727386AbfKOJx6 (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727423AbfKOJx6 (ORCPT <rfc822;e@80x24.org>);
         Fri, 15 Nov 2019 04:53:58 -0500
-Received: by mail-wr1-f46.google.com with SMTP id a15so10236960wrf.9
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:57 -0800 (PST)
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:54012 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727081AbfKOJxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 15 Nov 2019 04:53:54 -0500
+Received: by mail-wm1-f51.google.com with SMTP id u18so9019781wmc.3
+        for <git@vger.kernel.org>; Fri, 15 Nov 2019 01:53:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QvlSZrg2iZwXCDbIoVz7SYXz/1QPUitavJOghXfdqbg=;
-        b=pvlm0GD0PH+IbK8CGZkC6R2izVOTe7Vt2LCsz/e4CDrfL09R+Ffbl8TFREKwPTbau5
-         5wwagsu3W+zmpfKy9+OIu7RTx1aD1OBV8wRlwyn4IhQqxLS+JxE7jlIJ2omwsNsqcvMO
-         OKWImv0EGusEeU00L86PigI35HimMXpg5/1l6FIH23m+iZJqF+k6lFkqaYP9UeD6ftIa
-         LrzA8TIdjdAoBTP+NBoVlhtqEJw1M5e80jgPCJgIpyh3z0m4A4Ka87PTSFYuMkCB0L8G
-         3u2bL3Q3HFT6u/Us1FNgzOoXgkr5DQbExRPV9TQm4m5oYb/SG5DCMs/5uNhXF4qUk3xg
-         Wllg==
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=GiAwln76bLcBeOj9Ha3mym5z+V90Esf3oiFgLSzoSFghfRZ88T5DcY5pzRqgw0y7o+
+         qSa+F/uo58d/GjQpsWWxfKQE1bl5m6yJYQYQRegAFXjBAcCp6wOfD2lekQ2zOT9krQ/W
+         T8rZoYjjj52z4PGw9Dmqa9ZfKgyJS1ndJ9VZ8FaqCebO48Etv1kVlhx4lx7bgERUmuf3
+         TQf2b24AUmUVgRoC2KeJDY9Gt96PrMe09+WsuiLDEyCdlOOv7ABdHmv+ledPiV4NWde5
+         phVxKtaINruFpvHgbYJ3HyuQnPB3NNPkBYuTeLoTHBa2LBqNmznVyzyXUlfMegDJUOQm
+         iZmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QvlSZrg2iZwXCDbIoVz7SYXz/1QPUitavJOghXfdqbg=;
-        b=VRCyeXo6lHXERAZGHVudA9DOnO0/mQ1tamlgYqyVFRNKzfTPoMJfVt/UlxOS9pbWTb
-         zUSsRnIxum0uwFvyaAKRHb/gWFuvLW4+Q5cQf7lQu0WIl8zHu6blfoO315TsvBAAYFJa
-         V7UKok3QKbnbQQqXU2B6LIS2Lrz4gsqpg2R2VEa/pf3h4tN1LiwhcovyxTm3YwT/dut1
-         /OhkltiDChWb9+PqWYbRgTic4FuTvZeyVgN76pfgjGe80zY2UrX+kHAwx+lIHArp9yom
-         8aZQImFtSn9h73+udkQShWHrW0+kd0eiz+mScTixxZX3iyITRiWPbqqs83SKQ8KuVkFB
-         UNQw==
-X-Gm-Message-State: APjAAAWOpPKmA2GKmd0fvuOQs84IAm+GU3MhBmnJJJJpY7Vpqg3ahOXV
-        pjqqCQiznp5ZTc8BZLYAFF+nf62e
-X-Google-Smtp-Source: APXvYqwBNNDMvkpelXGYX7+TH8J0zOTuAGG4fkfrdTGaFPVrOGdfzFiov9Nm/vcLJ660NLpf3WXInA==
-X-Received: by 2002:adf:e883:: with SMTP id d3mr13632410wrm.197.1573811636990;
-        Fri, 15 Nov 2019 01:53:56 -0800 (PST)
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=SKpllP0IwzXaZHKuZlEQIePENvjrxWoRo1dHdj3GJLZdeBZHJaqDFbhiXszHRdLfrt
+         F75KkU7sOGgcewLqgQOYiVLhE1txRB/qsdLavN0if6Y0OKE0312GMPmdvze5tUPg1o30
+         OM0PpxJtYk3DCvLYNTboC0O6TBal2Z/zrFt+ccuEZKAjrZJ11SPQZNvik/sygJJcODFu
+         ybKYZnFnTP0E0KQJdAs3JJ4Tz2FNBiI6o4bFnyPcGYzg4AkDLKECFcs8+FVVK5WxlNxb
+         TV+qCiQGJtK3HUgaAWsZ/7c6H7gJkTLQI16fs+L/96g2GU2avDsPFL0hwxhAlAu1utat
+         WrwA==
+X-Gm-Message-State: APjAAAUG2/rF8T1MdSDvL7mxQSkl+7BefZ/91REBUaRXbiisNO3vSjY0
+        FWvn5Q+F4ySpujrafuyM1v4yi3Ei
+X-Google-Smtp-Source: APXvYqxF6+UfxK+fQx8kPfIb2wT4vBaNKqfgNvCqkiLsGZ2gG2Vi9CJHPoMIJrZXVSmYFenHxMcm+Q==
+X-Received: by 2002:a7b:cc13:: with SMTP id f19mr14060855wmh.81.1573811631753;
+        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w13sm10307033wrm.8.2019.11.15.01.53.56
+        by smtp.gmail.com with ESMTPSA id f140sm10018034wme.21.2019.11.15.01.53.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Nov 2019 01:53:56 -0800 (PST)
-Message-Id: <240a4bcb3227224529945c9576b6e49891545841.1573811627.git.gitgitgadget@gmail.com>
+        Fri, 15 Nov 2019 01:53:51 -0800 (PST)
+Message-Id: <90baf409ecaa2d26f72e6d2e79e1708bebbce06c.1573811626.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 References: <pull.434.v3.git.1573507684.gitgitgadget@gmail.com>
         <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 15 Nov 2019 09:53:36 +0000
-Subject: [PATCH v4 11/21] sigchain: move doc to sigchain.h
+Date:   Fri, 15 Nov 2019 09:53:29 +0000
+Subject: [PATCH v4 04/21] merge: move doc to ll-merge.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,130 +72,198 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-sigchain.txt
-to sigchain.h as it's easier for the developers to find the usage
+Move the related documentation from Documentation/technical/api-merge.txt
+to ll-merge.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-sigchain.txt is removed because the
-information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header file.
+Only the ll-merge related doc is removed from
+documentation/technical/api-merge.txt because this information will be
+redundant and it'll be hard to keep it up to date and synchronized with
+the documentation in ll-merge.h.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-sigchain.txt | 41 ---------------------
- sigchain.h                               | 45 ++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 41 deletions(-)
- delete mode 100644 Documentation/technical/api-sigchain.txt
+ Documentation/technical/api-merge.txt | 72 +-------------------------
+ ll-merge.h                            | 73 ++++++++++++++++++++++++++-
+ 2 files changed, 74 insertions(+), 71 deletions(-)
 
-diff --git a/Documentation/technical/api-sigchain.txt b/Documentation/technical/api-sigchain.txt
-deleted file mode 100644
-index 9e1189ef01..0000000000
---- a/Documentation/technical/api-sigchain.txt
-+++ /dev/null
-@@ -1,41 +0,0 @@
--sigchain API
--============
+diff --git a/Documentation/technical/api-merge.txt b/Documentation/technical/api-merge.txt
+index 9dc1bed768..487d4d83ff 100644
+--- a/Documentation/technical/api-merge.txt
++++ b/Documentation/technical/api-merge.txt
+@@ -28,77 +28,9 @@ and `diff.c` for examples.
+ 
+ * `struct ll_merge_options`
+ 
+-This describes the set of options the calling program wants to affect
+-the operation of a low-level (single file) merge.  Some options:
 -
--Code often wants to set a signal handler to clean up temporary files or
--other work-in-progress when we die unexpectedly. For multiple pieces of
--code to do this without conflicting, each piece of code must remember
--the old value of the handler and restore it either when:
+-`virtual_ancestor`::
+-	Behave as though this were part of a merge between common
+-	ancestors in a recursive merge.
+-	If a helper program is specified by the
+-	`[merge "<driver>"] recursive` configuration, it will
+-	be used (see linkgit:gitattributes[5]).
 -
--  1. The work-in-progress is finished, and the handler is no longer
--     necessary. The handler should revert to the original behavior
--     (either another handler, SIG_DFL, or SIG_IGN).
+-`variant`::
+-	Resolve local conflicts automatically in favor
+-	of one side or the other (as in 'git merge-file'
+-	`--ours`/`--theirs`/`--union`).  Can be `0`,
+-	`XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`, or
+-	`XDL_MERGE_FAVOR_UNION`.
 -
--  2. The signal is received. We should then do our cleanup, then chain
--     to the next handler (or die if it is SIG_DFL).
+-`renormalize`::
+-	Resmudge and clean the "base", "theirs" and "ours" files
+-	before merging.  Use this when the merge is likely to have
+-	overlapped with a change in smudge/clean or end-of-line
+-	normalization rules.
++Check ll-merge.h for details.
+ 
+ Low-level (single file) merge
+ -----------------------------
+ 
+-`ll_merge`::
 -
--Sigchain is a tiny library for keeping a stack of handlers. Your handler
--and installation code should look something like:
+-	Perform a three-way single-file merge in core.  This is
+-	a thin wrapper around `xdl_merge` that takes the path and
+-	any merge backend specified in `.gitattributes` or
+-	`.git/info/attributes` into account.  Returns 0 for a
+-	clean merge.
 -
--------------------------------------------
--  void clean_foo_on_signal(int sig)
--  {
--	  clean_foo();
--	  sigchain_pop(sig);
--	  raise(sig);
--  }
+-Calling sequence:
 -
--  void other_func()
--  {
--	  sigchain_push_common(clean_foo_on_signal);
--	  mess_up_foo();
--	  clean_foo();
--  }
--------------------------------------------
+-* Prepare a `struct ll_merge_options` to record options.
+-  If you have no special requests, skip this and pass `NULL`
+-  as the `opts` parameter to use the default options.
 -
--Handlers are given the typedef of sigchain_fun. This is the same type
--that is given to signal() or sigaction(). It is perfectly reasonable to
--push SIG_DFL or SIG_IGN onto the stack.
+-* Allocate an mmbuffer_t variable for the result.
 -
--You can sigchain_push and sigchain_pop individual signals. For
--convenience, sigchain_push_common will push the handler onto the stack
--for many common signals.
-diff --git a/sigchain.h b/sigchain.h
-index 138b20f54b..8e6bada892 100644
---- a/sigchain.h
-+++ b/sigchain.h
-@@ -1,12 +1,57 @@
- #ifndef SIGCHAIN_H
- #define SIGCHAIN_H
+-* Allocate and fill variables with the file's original content
+-  and two modified versions (using `read_mmfile`, for example).
+-
+-* Call `ll_merge()`.
+-
+-* Read the merged content from `result_buf.ptr` and `result_buf.size`.
+-
+-* Release buffers when finished.  A simple
+-  `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
+-  free(result_buf.ptr);` will do.
+-
+-If the modifications do not merge cleanly, `ll_merge` will return a
+-nonzero value and `result_buf` will generally include a description of
+-the conflict bracketed by markers such as the traditional `<<<<<<<`
+-and `>>>>>>>`.
+-
+-The `ancestor_label`, `our_label`, and `their_label` parameters are
+-used to label the different sides of a conflict if the merge driver
+-supports this.
+-
+-Everything else
+----------------
+-
+-Talk about <merge-recursive.h> and merge_file():
+-
+- - merge_trees() to merge with rename detection
+- - merge_recursive() for ancestor consolidation
+- - try_merge_command() for other strategies
+- - conflict format
+- - merge options
+-
+-(Daniel, Miklos, Stephan, JC)
++Check ll-merge.h for details.
+diff --git a/ll-merge.h b/ll-merge.h
+index e78973dd55..aceb1b2413 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -7,16 +7,87 @@
+ 
+ #include "xdiff/xdiff.h"
  
 +/**
-+ * Code often wants to set a signal handler to clean up temporary files or
-+ * other work-in-progress when we die unexpectedly. For multiple pieces of
-+ * code to do this without conflicting, each piece of code must remember
-+ * the old value of the handler and restore it either when:
 + *
-+ *   1. The work-in-progress is finished, and the handler is no longer
-+ *      necessary. The handler should revert to the original behavior
-+ *      (either another handler, SIG_DFL, or SIG_IGN).
++ * Calling sequence:
++ * ----------------
 + *
-+ *   2. The signal is received. We should then do our cleanup, then chain
-+ *      to the next handler (or die if it is SIG_DFL).
++ * - Prepare a `struct ll_merge_options` to record options.
++ *   If you have no special requests, skip this and pass `NULL`
++ *   as the `opts` parameter to use the default options.
 + *
-+ * Sigchain is a tiny library for keeping a stack of handlers. Your handler
-+ * and installation code should look something like:
++ * - Allocate an mmbuffer_t variable for the result.
 + *
-+ * ------------------------------------------
-+ *   void clean_foo_on_signal(int sig)
-+ *   {
-+ * 	  clean_foo();
-+ * 	  sigchain_pop(sig);
-+ * 	  raise(sig);
-+ *   }
++ * - Allocate and fill variables with the file's original content
++ *   and two modified versions (using `read_mmfile`, for example).
 + *
-+ *   void other_func()
-+ *   {
-+ * 	  sigchain_push_common(clean_foo_on_signal);
-+ * 	  mess_up_foo();
-+ * 	  clean_foo();
-+ *   }
-+ * ------------------------------------------
++ * - Call `ll_merge()`.
 + *
++ * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
++ *
++ * - Release buffers when finished.  A simple
++ *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
++ *   free(result_buf.ptr);` will do.
++ *
++ * If the modifications do not merge cleanly, `ll_merge` will return a
++ * nonzero value and `result_buf` will generally include a description of
++ * the conflict bracketed by markers such as the traditional `<<<<<<<`
++ * and `>>>>>>>`.
++ *
++ * The `ancestor_label`, `our_label`, and `their_label` parameters are
++ * used to label the different sides of a conflict if the merge driver
++ * supports this.
 + */
 +
-+/**
-+ * Handlers are given the typedef of sigchain_fun. This is the same type
-+ * that is given to signal() or sigaction(). It is perfectly reasonable to
-+ * push SIG_DFL or SIG_IGN onto the stack.
-+ */
- typedef void (*sigchain_fun)(int);
- 
-+/* You can sigchain_push and sigchain_pop individual signals. */
- int sigchain_push(int sig, sigchain_fun f);
- int sigchain_pop(int sig);
- 
-+/**
-+ * push the handler onto the stack for the common signals:
-+ * SIGINT, SIGHUP, SIGTERM, SIGQUIT and SIGPIPE.
-+ */
- void sigchain_push_common(sigchain_fun f);
 +
- void sigchain_pop_common(void);
+ struct index_state;
  
- #endif /* SIGCHAIN_H */
++/**
++ * This describes the set of options the calling program wants to affect
++ * the operation of a low-level (single file) merge.
++ */
+ struct ll_merge_options {
++
++	/**
++	 * Behave as though this were part of a merge between common ancestors in
++	 * a recursive merge (merges of binary files may need to be handled
++	 * differently in such cases, for example). If a helper program is
++	 * specified by the `[merge "<driver>"] recursive` configuration, it will
++	 * be used.
++	 */
+ 	unsigned virtual_ancestor : 1;
+-	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
++
++	/**
++	 * Resolve local conflicts automatically in favor of one side or the other
++	 * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
++	 * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
++	 * or `XDL_MERGE_FAVOR_UNION`.
++	 */
++	unsigned variant : 2;
++
++	/**
++	 * Resmudge and clean the "base", "theirs" and "ours" files before merging.
++	 * Use this when the merge is likely to have overlapped with a change in
++	 * smudge/clean or end-of-line normalization rules.
++	 */
+ 	unsigned renormalize : 1;
++
++	/**
++	 * Increase the length of conflict markers so that nested conflicts
++	 * can be differentiated.
++	 */
+ 	unsigned extra_marker_size;
++
++	/* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
+ 	long xdl_opts;
+ };
+ 
++/**
++ * Perform a three-way single-file merge in core.  This is a thin wrapper
++ * around `xdl_merge` that takes the path and any merge backend specified in
++ * `.gitattributes` or `.git/info/attributes` into account.
++ * Returns 0 for a clean merge.
++ */
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
 -- 
 gitgitgadget
 
