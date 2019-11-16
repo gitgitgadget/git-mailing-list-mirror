@@ -2,119 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4361F4B5
-	for <e@80x24.org>; Sat, 16 Nov 2019 00:09:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C3C61F4B5
+	for <e@80x24.org>; Sat, 16 Nov 2019 01:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727352AbfKPAJw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 15 Nov 2019 19:09:52 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:34461 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbfKPAJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 15 Nov 2019 19:09:51 -0500
-Received: by mail-pl1-f194.google.com with SMTP id h13so5779250plr.1
-        for <git@vger.kernel.org>; Fri, 15 Nov 2019 16:09:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Fqu18kjxb/Ay+eW/qLIA0Iw5aaFip8EUd9mRzjDAt7U=;
-        b=syid+48Erf841W48wn6VVHZszZXZPPMatD4al2ik2D9zNe6HmQu9mNIP9a6KBSsi5u
-         LvrJfJZpp3bMaDdAzVz9B6mRNzSJ8grC+SEBfGZeEItX7gzDq5LBL9O8tMceP5wLiA0E
-         yeM66hbUcyOcep1U0m+ndiPzK9HqvcvP5faWwuwBf27Dy5fb4SLrWKrKKqAMxQTDXmJu
-         UBwz5nxRBxnDYkuICV+isDVH5V12GQ1Z31G+DxoNEFjPX0VaBndQ/4uxAQEmNQ4nnk2E
-         Y32is1hSO9OHh+9iFeE7vzJ6a19I5COjR32vhRew1siKGipjPposO5K73MWSxLWvS4Gs
-         DVcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Fqu18kjxb/Ay+eW/qLIA0Iw5aaFip8EUd9mRzjDAt7U=;
-        b=aswqHWS2f9k09d+X9U1tBrQbk5YsmLE7TjN3WGO7WjoR7gCsTyyLaWJTA1ObXl/aPd
-         5hqWe5GnNojOYQ66aU2cifNlNsmkZPJBysVTyJbelgXnxmVtokWwiP6praSbVuzuhMGQ
-         SgjFQFSRWR97VK8aCEyOhN9kuM0InPqDwYaLBL+QQsISc5V4wLzXa113/PAnqHGbFF8X
-         JoOvvG6GiSVd8OTmqzYZtUrGGADZqVVDt7Befds2CiaavGBFK6Q6pq/5jJroDShmODVx
-         Bb40/WPTnqZhndcuFj1c/9wgBQOovdHzLhPiueSkrMullXtN1A+x5otXqT6hjmMJLbkk
-         l6Pw==
-X-Gm-Message-State: APjAAAXWoMOVYNhmkP98YmcrfcTvbJlRLdnKCFJXHQJxOJbzXJIxbOAn
-        SD6niGREd20q1F7RY2HBehA=
-X-Google-Smtp-Source: APXvYqzWgH9LhOkPXx78HKXdT2LzAqCvD3kMtQzWzo2DDKjn6mf4zbiBmJ11zTqyOUIaWRxyq4rvVA==
-X-Received: by 2002:a17:902:59c9:: with SMTP id d9mr17230443plj.229.1573862990738;
-        Fri, 15 Nov 2019 16:09:50 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id y123sm11436330pfg.64.2019.11.15.16.09.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 15 Nov 2019 16:09:49 -0800 (PST)
-Date:   Fri, 15 Nov 2019 16:09:47 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
-Subject: Re: [PATCH v2] MyFirstContribution: add avenues for getting help
-Message-ID: <20191116000947.GA30187@google.com>
-References: <20191115215342.37408-1-emilyshaffer@google.com>
- <20191115230637.76877-1-emilyshaffer@google.com>
+        id S1727202AbfKPBBF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 15 Nov 2019 20:01:05 -0500
+Received: from mail2-relais-roc.national.inria.fr ([192.134.164.83]:36596 "EHLO
+        mail2-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727128AbfKPBBF (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 15 Nov 2019 20:01:05 -0500
+X-IronPort-AV: E=Sophos;i="5.68,310,1569276000"; 
+   d="scan'208";a="412064964"
+Received: from ip65-46-187-134.z187-46-65.customer.algx.net (HELO hadrien) ([65.46.187.134])
+  by mail2-relais-roc.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 16 Nov 2019 02:00:31 +0100
+Date:   Fri, 15 Nov 2019 20:00:29 -0500 (EST)
+From:   Julia Lawall <julia.lawall@lip6.fr>
+X-X-Sender: julia@hadrien
+To:     Markus Elfring <Markus.Elfring@web.de>
+cc:     Coccinelle <cocci@systeme.lip6.fr>, git@vger.kernel.org,
+        =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Cocci] git-coccinelle: adjustments for array.cocci?
+In-Reply-To: <94301b9c-a397-ae04-c617-92679f4bb018@web.de>
+Message-ID: <alpine.DEB.2.21.1911152000170.8961@hadrien>
+References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de> <5189f847-1af1-f050-6c72-576a977f6f12@web.de> <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com> <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de> <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
+ <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de> <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de> <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de> <aed296a6-bae0-6fcc-515e-ef96fed24ca6@web.de> <6fffd13a-738b-e750-9f5a-f0bfb252855b@web.de>
+ <94301b9c-a397-ae04-c617-92679f4bb018@web.de>
+User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191115230637.76877-1-emilyshaffer@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: multipart/mixed; boundary="8323329-1173424402-1573866031=:8961"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -23,6 +23,39 @@ useful additional context:
->  - `Documentation/SubmittingPatches`
->  - `Documentation/howto/new-command.txt`
->  
-> +[[getting-help]]
-> +=== Getting Help
-> +
-> +If you get stuck, you can seek help in the following places.
-> +
-> +==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
-> +
-> +This mailing list is targeted to new contributors and is a great place to post
-> +questions and receive kind, detailed answers from volunteers on the Git
-> +project. You must join the group to view messages or post.
-> +
-> +==== https://webchat.freenode.net/#git-devel[#git-devel] on Freenode
-> +
-> +This IRC channel is for conversations between Git contributors. If someone is
-> +currently online and knows the answer to your question, you can receive help
-> +in real time. Otherwise, you can read the
-> +https://colabti.org/irclogger//irclogger_logs/git-devel[scrollback] to see
+--8323329-1173424402-1573866031=:8961
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-optional: https://j.mp/gitdevlog also works and is briefer.
 
-> +whether someone answered you. IRC does not allow offline private messaging, so
-> +if you try to private message someone and then log out of IRC, they cannot
-> +respond to you. It's better to ask your questions in the channel so that you
-> +can be answered if you disconnect and so that others can learn from the
-> +conversation.
-> +
-> +==== https://public-inbox.org/git[git@vger.kernel.org]
-> +
-> +This is the main Git project mailing list where code reviews, version
-> +announcements, design discussions, and more take place. If you fail to receive
-> +help via the channels above, you can ask your question here. The Git list
-> +requires plain-text-only emails and prefers inline and bottom-posting when
-> +replying to mail; you will be CC'd in all replies to you. Optionally, you can
-> +subscribe to the list by sending an email to majordomo@vger.kernel.org with
-> +"subscribe git" in the body.
-> +
 
-Very nice.
+On Fri, 15 Nov 2019, Markus Elfring wrote:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> > --- array-released.diff	2019-11-14 21:29:11.020576916 +0100
+> > +++ array-reduced1.diff	2019-11-14 21:45:58.931956527 +0100
+> > @@ -6,24 +6,10 @@
+> >   	r->entry_count = t->entry_count;
+> >   	r->delta_depth = t->delta_depth;
+> >  -	memcpy(r->entries,t->entries,t->entry_count*sizeof(t->entries[0]));
+> > -+	COPY_ARRAY(r->entries, t->entries, t->entry_count);
+> > ++	memcpy(r->entries,t->entries,t->entry_count*sizeof(*(t->entries)));
+> >   	release_tree_content(t);
+> >   	return r;
+> >   }
+>
+> It took a while to become more aware of software development challenges
+> for the safe data processing with the semantic patch language also
+> at such a source code place.
+> https://github.com/git/git/blob/3edfcc65fdfc708c1c8f1d314885eecf9beb9b67/fast-import.c#L640
+>
+> I got the impression that the Coccinelle software is occasionally able
+> to determine from the search specification “sizeof(T)” the corresponding
+> data type for code like “*(t->entries)”.
 
-Thanks.
+It can determine the type of t->entries if it has access to the definition
+of the type of t.  This type may be in a header file.  If you want
+Coccinelle to be able to find this information you can use the option
+--all-includes or --recursive-includes.  It will be more efficient with
+the option --include-headers-for-types.
+
+julia
+
+> But it seems that there are circumstances to consider where the desired
+> data type was not automatically determined.
+> Thus the data processing  can become safer by explicitly expressing
+> the case distinction for the handling of expressions.
+>
+> Adjusted transformation rule:
+> @@
+> type T;
+> T* dst_ptr, src_ptr;
+> T[] dst_arr, src_arr;
+> expression n, x;
+> @@
+> -memcpy
+> +COPY_ARRAY
+>        (
+> (       dst_ptr
+> |       dst_arr
+> )
+>        ,
+> (       src_ptr
+> |       src_arr
+> )
+>        ,
+> -       (n) * \( sizeof(T) \| sizeof(*(x)) \)
+> +       n
+>        )
+>
+>
+> Regards,
+> Markus
+> _______________________________________________
+> Cocci mailing list
+> Cocci@systeme.lip6.fr
+> https://systeme.lip6.fr/mailman/listinfo/cocci
+>
+--8323329-1173424402-1573866031=:8961--
