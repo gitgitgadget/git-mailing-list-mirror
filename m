@@ -2,201 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793701F4B5
-	for <e@80x24.org>; Sat, 16 Nov 2019 17:57:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B0E51F4B5
+	for <e@80x24.org>; Sat, 16 Nov 2019 18:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727614AbfKPR5m (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Nov 2019 12:57:42 -0500
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:40403
-        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727437AbfKPR5m (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 16 Nov 2019 12:57:42 -0500
-X-IronPort-AV: E=Sophos;i="5.68,313,1569276000"; 
-   d="scan'208";a="326964230"
-Received: from abo-228-123-68.mrs.modulonet.fr (HELO hadrien) ([85.68.123.228])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 16 Nov 2019 18:57:39 +0100
-Date:   Sat, 16 Nov 2019 18:57:38 +0100 (CET)
-From:   Julia Lawall <julia.lawall@lip6.fr>
-X-X-Sender: jll@hadrien
-To:     Markus Elfring <Markus.Elfring@web.de>
-cc:     Coccinelle <cocci@systeme.lip6.fr>,
-        =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [Cocci] git-coccinelle: adjustments for array.cocci?
-In-Reply-To: <6fffd13a-738b-e750-9f5a-f0bfb252855b@web.de>
-Message-ID: <alpine.DEB.2.21.1911161855400.3558@hadrien>
-References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de> <5189f847-1af1-f050-6c72-576a977f6f12@web.de> <xmqqa790cyp1.fsf@gitster-ct.c.googlers.com> <fe9b8c08-6fd4-d378-f3ff-8170381b10e0@web.de> <xmqqr22b9ptk.fsf@gitster-ct.c.googlers.com>
- <ba5d609a-16ea-d7e9-66e6-19aab94b2acd@web.de> <53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de> <6c4ef61f-5fef-ffc8-82d6-ee42006756b4@web.de> <aed296a6-bae0-6fcc-515e-ef96fed24ca6@web.de> <6fffd13a-738b-e750-9f5a-f0bfb252855b@web.de>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+        id S1727561AbfKPSHC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Nov 2019 13:07:02 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46837 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726913AbfKPSHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Nov 2019 13:07:02 -0500
+Received: by mail-pf1-f193.google.com with SMTP id 193so8193052pfc.13
+        for <git@vger.kernel.org>; Sat, 16 Nov 2019 10:07:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/SLvtCuW2Q8aHplKMfZHG5kmEQwHW/OGBKEWIVgMGyc=;
+        b=wac0GH0VsX0ey3HMTUALwdrkoD6vyeHODrcfq7vHeE7Cv90dUNgnjAokg7Pi7x2dnb
+         hnuCnNBfmoe33kBx3QyCaiebG/TdrIcaMHyf4eCNkdlJcCxMMWj17x9meYSTjDFHsGMw
+         96s824gub+llGOIlyI9oBJIFEc2OfhzgbaxjcT4W/Ii4UIosmmD5qei0Ok1SRr6hpgLi
+         rBg8hy9XtaZhrGUCokmfcHzWFLrDRRk44ZSd1OrHr0PArDUgJ72OfnPJ2KidrirZLfTp
+         nF2jIcojrg9n30Kieq+MFZb0g28lX4Zi5hNlIhCL2nNPsOFIn/pP1i3bzYoDAIobUBpU
+         UkzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/SLvtCuW2Q8aHplKMfZHG5kmEQwHW/OGBKEWIVgMGyc=;
+        b=LVh2FPVHUain+5rPMY7oqB+WVi2LvwR9w2VrtLCFC1l2P5iy00UFvexNd1sZTLEzDh
+         h7VSqfhzYQm9kew2in4Q2/blHNB2FzIFcoC8FcnxZoSYbEmac2ElG4+l9taAsEVcjptW
+         NMaYn/MQbplv6XFSfug+K4KHyJrDS6AhxZ2IJ/GamVG0Bb0uabT4tBOSKuwti22KqZsr
+         XNvvsDo91TN/xEx1JsFJTLDolIyWDK2AARie8d7rm9oUm664EH6CeVwRNQmzfB3fEsig
+         sMyeE6XI12hLiQaiVVGlU7sE4rS36qOXpelXdJcjZdRqT0e4k/xQd119HGv+aMJI3/q4
+         WfBw==
+X-Gm-Message-State: APjAAAXSEi1FHuonpmVOirH0OFeHWjxsmqKbEa0FIgikckCIuMRMjorn
+        QDqxnRyfV8eke0LGSAjDWLAf5iU/mbg=
+X-Google-Smtp-Source: APXvYqw65KjeO72sea8ARQjHqYlDsibL685/wqcASuXYBjAb00ejwVCieOyB3fyKgGanwo7v7YXAVw==
+X-Received: by 2002:a63:8f5e:: with SMTP id r30mr6102059pgn.146.1573927619770;
+        Sat, 16 Nov 2019 10:06:59 -0800 (PST)
+Received: from localhost ([49.230.7.85])
+        by smtp.gmail.com with ESMTPSA id e17sm15286294pfh.121.2019.11.16.10.06.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 16 Nov 2019 10:06:59 -0800 (PST)
+From:   Hans Jerry Illikainen <hji@dyntopia.com>
+To:     git@vger.kernel.org
+Cc:     Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: [PATCH 0/1] Limit search for primary key fingerprint
+Date:   Sat, 16 Nov 2019 18:06:54 +0000
+Message-Id: <20191116180655.10988-1-hji@dyntopia.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323329-2018444975-1573927059=:3558"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+As part of implementing signature verification for git clone, I decided
+to refactor/unify the code for commit and merge verification to make it
+reusable during clones.
 
---8323329-2018444975-1573927059=:3558
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+This lead me to discover that git requires merge signatures to be
+trusted (as opposed to TRUST_UNKNOWN or TRUST_NEVER).  This is unlike
+the behavior of verify-tag and verify-commit.
 
+So, I figured that I'd make the minimum trust level configurable to make
+the behavior of merge/commit/tag consistent.  And while doing so, I
+noticed that parse_gpg_output() in gpg-interface.c assumes that the
+VALIDSIG status line has a field with a fingerprint for the primary key;
+but that is only the case for OpenPGP signatures [1].
 
+The consequence of that assumption is that the subsequent status line is
+interpreted as the primary fingerprint for X509 signatures.  I'm not
+sure if the order is hardcoded in GnuPG, but in my testing the TRUST_
+status line always came after VALIDSIG -- and that breaks the config
+option to set a minimum trust level (not part of this patch):
 
-On Fri, 15 Nov 2019, Markus Elfring wrote:
+,----
+| $ git log -n1 --format="primary key: %GP" signed-x509
+| gpgsm: Signature made 2019-11-16 14:13:09 using certificate ID 0xFA23FD65
+| gpgsm: Good signature from "/CN=C O Mitter/O=Example/SN=C O/GN=Mitter"
+| gpgsm:                 aka "committer@example.com"
+| primary key: TRUST_FULLY 0 shell
+`----
 
-> > Anyway, someone who can reproduce the issue using the latest release
-> > of Coccinelle would be in a better position to file a bug report.
->
-> Hello,
->
-> I repeated the discussed source code transformation approach together
-> with the software combination “Coccinelle 1.0.8-00004-g842075f7” (OCaml 4.09).
-> https://github.com/coccinelle/coccinelle/commits/master
->
-> 1. Yesterday I checked the source files out for the software “Git”
->    according to the commit “The first batch post 2.24 cycle”.
->    https://github.com/git/git/commit/d9f6f3b6195a0ca35642561e530798ad1469bd41
->
-> 2. I restored a previous development status by the following command.
->
->    git show 921d49be86 | patch -p1 -R
->
->    See also:
->    https://public-inbox.org/git/53346d52-e096-c651-f70a-ce6ca4d82ff9@web.de/
->
-> 3. I stored a generated patch based on the currently released SmPL script.
->    https://github.com/git/git/blob/177fbab747da4f58cb2a8ce010b3515c86dd67c9/contrib/coccinelle/array.cocci
->
-> 4. I applied the following patch then.
->
-> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.cocci
-> index 46b8d2ee11..89df184bbd 100644
-> --- a/contrib/coccinelle/array.cocci
-> +++ b/contrib/coccinelle/array.cocci
-> @@ -12,27 +12,21 @@ T *ptr;
->  T[] arr;
->  expression E, n;
->  @@
-> -(
-> -  memcpy(ptr, E,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(arr, E,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, ptr,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, arr,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> + memcpy(
-> +(       ptr, E, n *
-> +-       sizeof(*(ptr))
-> ++       sizeof(T)
-> +|       arr, E, n *
-> +-       sizeof(*(arr))
-> ++       sizeof(T)
-> +|       E, ptr, n *
-> +-       sizeof(*(ptr))
-> ++       sizeof(T)
-> +|       E, arr, n *
-> +-       sizeof(*(arr))
-> ++       sizeof(T)
->  )
-> +       )
-
-This seems quite unreadable, in contrast to the original code.
-
->
->  @@
->  type T;
->
->    I suggested in this way to move a bit of SmPL code.
->
-> 5. I stored another generated patch based on the adjusted SmPL script.
-
-No idea what it means to store a patch.
-
-> 6. I performed a corresponding file comparison.
->
-> --- array-released.diff	2019-11-14 21:29:11.020576916 +0100
-> +++ array-reduced1.diff	2019-11-14 21:45:58.931956527 +0100
-> @@ -6,24 +6,10 @@
->   	r->entry_count = t->entry_count;
->   	r->delta_depth = t->delta_depth;
->  -	memcpy(r->entries,t->entries,t->entry_count*sizeof(t->entries[0]));
-> -+	COPY_ARRAY(r->entries, t->entries, t->entry_count);
-> ++	memcpy(r->entries,t->entries,t->entry_count*sizeof(*(t->entries)));
->   	release_tree_content(t);
->   	return r;
->   }
-
-I have no idea what is being compared here. The COPY_ARRAY thing looks
-nice, but doesn't seem to have anything to do with your semantic patch.
-
-julia
+[1]: https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/DETAILS
 
 
+Hans Jerry Illikainen (1):
+  gpg-interface: limit search for primary key fingerprint
 
-> -diff -u -p a/pretty.c b/pretty.c
-> ---- a/pretty.c
-> -+++ b/pretty.c
-> -@@ -106,8 +106,8 @@ static void setup_commit_formats(void)
-> - 	commit_formats_len = ARRAY_SIZE(builtin_formats);
-> - 	builtin_formats_len = commit_formats_len;
-> - 	ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_alloc);
-> --	memcpy(commit_formats, builtin_formats,
-> --	       sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
-> -+	COPY_ARRAY(commit_formats, builtin_formats,
-> -+		   ARRAY_SIZE(builtin_formats));
-> -
-> - 	git_config(git_pretty_formats_config, NULL);
-> - }
->  diff -u -p a/packfile.c b/packfile.c
->  --- a/packfile.c
->  +++ b/packfile.c
-> @@ -36,17 +22,6 @@
->   		} else {
->   			ALLOC_GROW(poi_stack, poi_stack_nr+1, poi_stack_alloc);
->   		}
-> -@@ -1698,8 +1698,8 @@ void *unpack_entry(struct repository *r,
-> - 		    && delta_stack == small_delta_stack) {
-> - 			delta_stack_alloc = alloc_nr(delta_stack_nr);
-> - 			ALLOC_ARRAY(delta_stack, delta_stack_alloc);
-> --			memcpy(delta_stack, small_delta_stack,
-> --			       sizeof(*delta_stack)*delta_stack_nr);
-> -+			COPY_ARRAY(delta_stack, small_delta_stack,
-> -+				   delta_stack_nr);
-> - 		} else {
-> - 			ALLOC_GROW(delta_stack, delta_stack_nr+1, delta_stack_alloc);
-> - 		}
->  diff -u -p a/compat/regex/regexec.c b/compat/regex/regexec.c
->  --- a/compat/regex/regexec.c
->  +++ b/compat/regex/regexec.c
->
->
-> How do you think about the differences from this test result?
->
-> Regards,
-> Markus
-> _______________________________________________
-> Cocci mailing list
-> Cocci@systeme.lip6.fr
-> https://systeme.lip6.fr/mailman/listinfo/cocci
->
---8323329-2018444975-1573927059=:3558--
+ gpg-interface.c | 20 +++++++++++++++-----
+ t/t4202-log.sh  |  6 ++++++
+ 2 files changed, 21 insertions(+), 5 deletions(-)
+
+--
+2.24.0.156.g69483321b9.dirty
