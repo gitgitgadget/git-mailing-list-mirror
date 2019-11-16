@@ -2,149 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1D2A1F4B5
-	for <e@80x24.org>; Sat, 16 Nov 2019 21:38:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D7A11F4B5
+	for <e@80x24.org>; Sat, 16 Nov 2019 21:42:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727626AbfKPViR (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Nov 2019 16:38:17 -0500
-Received: from mout.web.de ([212.227.15.3]:49641 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727273AbfKPViR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Nov 2019 16:38:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573940295;
-        bh=5aGEW+QUxZtjOUG1uLJQ5Vd6RAxgZcqfx4bM8HF2EFc=;
-        h=X-UI-Sender-Class:Subject:To:References:Cc:From:Date:In-Reply-To;
-        b=Uioe2U5UTaGPY6VVK50nxrR1s9vJuFm8XVdVOJhrtD5Omw0ymn7e8+B7Rhk+bIO7n
-         QzCtDii8UCrEYGC9xl8F8M42Ztu++P72U/Bk3TDDA+m8kW4Gj6g8IdZo19KX3kb469
-         5m3/J6VqcbjV/bYQiiLs/47ENa+aZXLrUrpkeq7w=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MFcDF-1ibqXi17Cv-00EfaZ; Sat, 16
- Nov 2019 22:38:15 +0100
-Subject: Re: coccinelle: adjustments for array.cocci?
-To:     Markus Elfring <Markus.Elfring@web.de>
-References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
- <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <05ab1110-2115-7886-f890-9983caabc52c@web.de>
-Cc:     git@vger.kernel.org
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
-Date:   Sat, 16 Nov 2019 22:38:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727672AbfKPVmn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Nov 2019 16:42:43 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:42364 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727273AbfKPVmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Nov 2019 16:42:43 -0500
+Received: by mail-lf1-f66.google.com with SMTP id z12so10722237lfj.9
+        for <git@vger.kernel.org>; Sat, 16 Nov 2019 13:42:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=deltaq.org; s=deltaq;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8alBkk6bjf5GoQb8KDlsh5uzS2iyV5gdPMwBvXhZsh0=;
+        b=DCFHZhJ2IYGisOiM9MJpkB9ZDfbzvjET0cY4zUcavs1NAPEsCUIe+D8SwQepy9p6hO
+         HagzmkUEmCEqbESN3hmWE5gagk9ZwXHHFfVQ/gOQeo6rMg7wWiEQxxU8zqyvtQ3kZ+cC
+         5MDf9XvCI9XZ3sfl5GI45bOtlk5eK1cdmaBRA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8alBkk6bjf5GoQb8KDlsh5uzS2iyV5gdPMwBvXhZsh0=;
+        b=mPpPToTX0Jorep4Fzo3qWT1wm56eZ7/yivOfoJRei5I9bADhsTyK9e5eje2q3iz5wZ
+         iEZlYEBiKR/coKSFrEqWX4PYOtf6+Oau1SgAY5JHNj7gFz8ettYSCIRHAik6dj3EfbgI
+         oENkMlAG1xHe81Eet1bIg+uQaqdeQgj+kY3oZLkG3RMp1mgFl8ySZDNk74tUvTwLzGCi
+         jlqzhmMxM5iyVCcdfio9LmQa1T61jKjETdbWfY/x6peHsehq+y6x3M11DDN1pEf9Mlte
+         shJAfTiZjGBvyMcijmTy2YHjlnZ7FPxv0OxpqBryWFyuapgIL/5aOKgode9nmK42u3E+
+         JESg==
+X-Gm-Message-State: APjAAAVKBP+DmcMWw1xmmRdopIwvXJtPH2VLP8xsagIxqo611d26HQEl
+        IDB0SccVdHyPqf5Z8FroebZFK8dnRuL/03Yc1llD2Q==
+X-Google-Smtp-Source: APXvYqyBUM7I5gmoFTyLE3trDep5EOpeGJE2Qkc6yzYv3ZYZSGtl+CyY0U0x3RFEensijiu79I6arvtzK7SS3Tpxh2g=
+X-Received: by 2002:a19:3845:: with SMTP id d5mr15086303lfj.162.1573940560221;
+ Sat, 16 Nov 2019 13:42:40 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <05ab1110-2115-7886-f890-9983caabc52c@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:k9AXr8Xi1BZYWU0ZJS4FJM4/SALhd6GuCcMPmFIUAxng7NEbPha
- CxZDPZGSyIY7njSOxfYDjLRHwEC0Hr8tnHmmNAnNUsIMrmw32dhd7gP7V7zz5ChatACfPAY
- VVGtv2z8s98Vs/I8qX5lUWS2yAIH5uylUJMVoMU1ONWBbdxj2RtZ+fJ7plTFAdR7OU9KFQb
- /8ZnO4IsX1GO3HEbKWDCw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Wmmp3vL3VLk=:Neq5ZJyrqS2XQc6+72mASv
- MA+o0nosvQg9bJWCFb41bzXQQFOgZEs44p5fkqM7kehhNED2pnri/qHybvh4kKwnXiUjDM4hu
- /ptKM1I9XkA2MrfJyLdn/Yc7RVMVrZNQwK2GX2/TLL6lxe4ZlwFxApMJCGt9K2WMPgWFaDtAp
- daT/dmbqckJcP6G0QzOsjlV4BmA3adUrLVzRyrJVdRp2vrMxzHNwbRlNWnQuV+8RO6+TU4Y0b
- 04bXd9Cd6Q7d26yqwk4g1oHe/m/26VOheTK4ih08CP4k9z+yLg2GwMphgDaCrKLNPkOB0aVGL
- /veSS3o+DloxTQPEoaFbAwif5R2GlLCrPBGYU91EoNgPur8IqTpW8gQHSkufzZ7TEBR4ih8Y6
- ZOFbMTUfaQ0fd6LAMCYBx4vyFR7f5y9F8sMFC60ezuDu8n7Gj8TlUc24yMLUkFpFDGI4uo8LW
- Re9ztOoj+Y0IsI1EG6t1bvMlBhsAmGNqE147JbN8lFjlvu6SK9zRVJPmnpQtuNu6Omfsau77y
- GLzwGtWxu8P+WRs6jVcJHf7TQ3FgzitvXQ9+ebLaOtJva3tSYB/WcF4QPFRZGZ+NmJzoDIoFt
- dX3KluStp6TqJYzT/3T74cTc99Sw7sYGyic9myhvsZh3ZTaV+FOXr7ncfQwPJwGQCWQpJc1OO
- RsjIf50ZgHJaW0qpQJQsPWKvCD7peNBEB5BTE8y1lasXBCsiXAWHGpMStJh/e0zjMX8RkYqj9
- PD4Imdj9IQn9CYPcQwqDp4qBZGq1p/Ruk6BLHLWpgOCxDnNa5nfvXnwyYr/99e1sTVUwI8EnZ
- 6pQ2VLsKhlRHqijSpcyU1kkfEhFD3Lg83PloFimzixw6gD1Zah2zCw1y4ZVvKmT+kNRyLdMn4
- CXBoO/+M/uOjFng8+pLcKz9GDvaJdxsjr5k9SrHNvrN4c+ybgO1YMiycb1bW7ZjaqqMjIDC+a
- CKTdLRNnkOnazc0I8odjjbed4nxs5k/f86sftoDf19cu8KeEcaIULNpyQWzpmAZNGdQmfxN2n
- 1VB7UtP63dWoediTcnIY+fjzwgMVy1FqZDeZ+nX0kqHLQBh52PT5j43wuKi+z9cndXVjf40ew
- bRAIOeBsHkCeSIfhcJgYgo31JPCg6/H526u5KO705qBPh/g1eUpuuoCINDA5yKqT8p4htljXk
- AOpcOSyy8u2OiLhshXmCs35PHkhGEnlgN7EDmT0gpqanGnLeIwGG++DRL/4NApH84XN22b4Ky
- BkbD0YMu0sfpI1Qy9TxJasqtsQVBn2wncqx3kXg==
+References: <pull.436.v2.git.1573110335.gitgitgadget@gmail.com>
+ <pull.436.v3.git.1573638988.gitgitgadget@gmail.com> <dc12c1668dce875c99a45fb49ad5854a13ef4f35.1573638988.git.gitgitgadget@gmail.com>
+ <20191116151113.mwbaendh6lgykfw3@yadavpratyush.com>
+In-Reply-To: <20191116151113.mwbaendh6lgykfw3@yadavpratyush.com>
+From:   Jonathan Gilbert <logic@deltaq.org>
+Date:   Sat, 16 Nov 2019 15:42:28 -0600
+Message-ID: <CAPSOpYuv1d_yAgBnVBDXMwaA3B3QpmbVKtiSpexpJDwC6Bz33w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] git-gui: revert untracked files by deleting them
+To:     "Pratyush Yadav me-at-yadavpratyush.com |GitHub Public/Example Allow|" 
+        <172q77k4bxwj0zt@sneakemail.com>
+Cc:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Jonathan Gilbert <JonathanG@iqmetrix.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.11.19 um 17:33 schrieb Markus Elfring:
->> This reduces duplication in the semantic patch, which is nice.  I think
->> I tried something like that at the time, but found that it failed to
->> produce some of the cases in 921d49be86 ("use COPY_ARRAY for copying
->> arrays", 2019-06-15) for some reason.
+On Sat, Nov 16, 2019 at 9:11 AM Pratyush Yadav me-at-yadavpratyush.com
+|GitHub Public/Example Allow| <172q77k4bxwj0zt@sneakemail.com> wrote:
+> > -             grid $w.msg - $w.vs -sticky news
+> > -             grid $w.unlock $w.continue - -sticky se -padx 2 -pady 2
+> > -             grid columnconfigure $w 0 -weight 1
+> > -             grid rowconfigure $w 0 -weight 1
+> > -
+> > -             wm protocol $w WM_DELETE_WINDOW update
+> > -             bind $w.continue <Visibility> "
+> > -                     grab $w
+> > -                     focus %W
+> > -             "
+> > -             wm deiconify $w
+> > -             tkwait window $w
+> > +     close $fd
+> > +     $::main_status stop
 >
-> I propose to integrate an other solution variant.
+> I didn't spot this earlier. Will this call to 'stop' interfere with the
+> 'start' in 'delete_files'?
+
+Hmm, I think this actually highlights a larger issue. Both
+`write_checkout_index` and `delete_helper` display their progress in
+the status bar, so if the user elects to do a check-out, and then
+while it is still in progress asynchronously, elects to delete files,
+they'll fight over who gets to set the status. If I'm understanding
+correctly, this won't actually interfere with correct operation, but
+of course it won't look very nice.
+
+If they overlap in this manner, _then_ multiple calls to `stop` could
+be made, though it does appear that `stop` is idempotent. The Tk
+documentation states that `destroy` doesn't return any error if you
+point it at a window that doesn't exist.
+
+`start` is explicitly idempotent, only creating a new canvas if it
+doesn't already have one.
+
+I'll see what I can come up with for letting operations more cleanly
+share the status bar.
+
+> >       if {$update_index_cp >= $total_cnt} {
+> > -             _close_updateindex $fd $after
+> > +             if {[_close_updateindex_rescan_on_error $fd]} {
+> > +                     unlock_index
+> > +             }
+> > +
+> > +             uplevel #0 $after
 >
-> * How do you think about to delete questionable transformation rules
->   together with increasing the usage of nested disjunctions in this scri=
-pt
->   for the semantic patch language?
-
-Which transformation rules are questionable and why?  Removing broken
-or ineffective rules would be very welcome.
-
-Specifying disjunctions inline can make rules shorter, but harder to
-understand due to mixing languages.  Perhaps this is a matter of
-getting used to it, and syntax highlighting might help a bit.
-
-> * Can a single transformation rule become sufficient for the discussed
->   change pattern?
+> This changes when $after is called. If you pass it to 'rescan', it runs
+> _after_ the rescan is finished. Now it runs "in parallel" with it. Are
+> you sure that is the intended behaviour? Should we just stick to passing
+> $after to rescan on failure?
 >
+> [..]
 >
-> @@
-> type T;
-> T* dst_ptr, src_ptr, ptr;
-> T[] dst_arr, src_arr;
-> expression n, x;
-> @@
-> (
-> -memcpy
-> +COPY_ARRAY
->        (
-> (       dst_ptr
-> |       dst_arr
-> )
->        ,
-> (       src_ptr
-> |       src_arr
-> )
-> -      , (n) * \( sizeof(T) \| sizeof( \( *(x) \| x[...] \) ) \)
-> +      , n
->        )
-> |
-> -memmove
-> +MOVE_ARRAY
->         (dst_ptr,
->          src_ptr
-> -               , (n) * \( sizeof(* \( dst_ptr \| src_ptr \) ) \| sizeof=
-(T) \)
-> +               , n
->         )
-> |
-> -ptr =3D xmalloc((n) * \( sizeof(*ptr) \| sizeof(T) \))
-> +ALLOC_ARRAY(ptr, n)
-> )
+> While we're here, how about just moving this entire thing to
+> '_close_updateindex_rescan_on_error', since the only two consumers of
+> the function do the _exact_ same thing?
+>
+> This would also allow us to pass $after to 'rescan'. It would also
+> hopefully make the code a bit easier to follow because you can clearly
+> see that we only unlock the index when there is no error.
+>
+> Even better, unlock the index unconditionally in
+> '_close_updateindex_rescan_on_error', and remove the 'unlock_index' call
+> from 'rescan_on_error'. I generally prefer to keep locking/unlocking
+> paths as simple as possible.
 
-memmove/MOVE_ARRAY take the same kind of parameters as
-memcpy/COPY_ARRAY, so handling them in the same rule makes sense.
-The former could take advantage of the transformations for arrays
-that the latter has.
+Hmm, yeah, this makes sense. Pass it `$after`, and then if it calls
+`rescan`, it can hand it off, and `rescan` also (I'm assuming?)
+implicitly unlocks the index. If it doesn't need to call `rescan`,
+then `_close_updateindex_rescan_on_error` itself unlocks the index
+_and_ invokes `$after`.
 
-Mixing in the unrelated xmalloc/ALLOC_ARRAY transformation does
-not make sense to me, though.
+> >       if {$update_index_cp >= $total_cnt} {
+> > -             _close_updateindex $fd $after
+> > +             if {[catch {_close_updateindex $fd} err]} {
+> > +                     uplevel #0 $capture_error [list $err]
+> > +             }
+> > +
+> > +             uplevel #0 $after
+> > +
+>
+> Nitpick: Please explicitly mention why we _don't_ want to unlock the
+> index here.
+>
+> There are two function very similar to this one: 'write_update_index'
+> and 'write_update_indexinfo'. This subtle but important difference is
+> very easy to gloss over.
 
-Matching sizeof of anything (with the x) can produce inaccurate
-transformations, as mentioned in the other reply I just sent.
+Hmm, so, this suggests a rename of
+`_close_updateindex_rescan_on_error`, because (with the previous
+proposal) it implicitly includes unlocking the index, whereas
+`_close_updateindex` does not.
 
-> Would you like to clarify remaining challenges for pretty-printing
-> in such use cases?
+Thanks,
 
-Not sure what you mean here.  Did my other reply answer it?  If it
-didn't then please state what's unclear to you.
-
-Ren=C3=A9
+Jonathan Gilbert
