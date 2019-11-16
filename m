@@ -8,26 +8,26 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF99D1F4B5
-	for <e@80x24.org>; Sat, 16 Nov 2019 06:57:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B5411F4B5
+	for <e@80x24.org>; Sat, 16 Nov 2019 08:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726511AbfKPG5p (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Nov 2019 01:57:45 -0500
-Received: from mout.web.de ([212.227.17.11]:47545 "EHLO mout.web.de"
+        id S1726366AbfKPIaF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Nov 2019 03:30:05 -0500
+Received: from mout.web.de ([217.72.192.78]:50393 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725971AbfKPG5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Nov 2019 01:57:44 -0500
+        id S1726166AbfKPIaF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Nov 2019 03:30:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573887454;
-        bh=KV2y7lQmczegNmolR7TPvBQzIHlCgNwTe7wlClRI8iw=;
+        s=dbaedf251592; t=1573892996;
+        bh=qYjTsqm/jZgnkR5Swi+zPm8c4+lS5Hzr7rnDd+DmsfA=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=JCsrTu0lJ5JUC0pVfz8GGob4Ab+aY3Qs+0xHmExp9XmoCap+Bd5+mFDrnZgGl4DCa
-         SsSfD6G9+GVpgydPSjR382ficj+T+voB+oUnmgGnYPvoKBpDfcC/mfCTTjuLejp8B6
-         LHX8Uxr/Z5nSMA1vL4uF3JhjuF+zSOegkKc7LboY=
+        b=C9DeRTi5Wg6VjReU8sFgbTYQ5cPh8zMvMIMmxmdWIYyWchcZZGLsahK3cH5lVAnvt
+         l8Sn4vC8e1Q0uIMW0+dMOOfUfske4+LcdEXwWQIgNfwRyP2qJRligBQOz7JMOxQ5Gi
+         MUa4wed8Z9fmzlLDzU+x4fLCV7HW9bXYOUtFJuZ4=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.1.3] ([2.243.152.34]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MXpZD-1iPd0r2WX9-00WpNt; Sat, 16
- Nov 2019 07:57:34 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LetUp-1i5ag703mJ-00qhT1; Sat, 16
+ Nov 2019 09:29:56 +0100
 Subject: Re: [Cocci] git-coccinelle: adjustments for array.cocci?
 To:     Julia Lawall <julia.lawall@lip6.fr>
 Cc:     Coccinelle <cocci@systeme.lip6.fr>, git@vger.kernel.org,
@@ -89,8 +89,8 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <4ee4604e-0eb1-d4a6-24bb-52abe0db3f53@web.de>
-Date:   Sat, 16 Nov 2019 07:57:25 +0100
+Message-ID: <22a03cac-160b-51be-b015-54ac600d3e92@web.de>
+Date:   Sat, 16 Nov 2019 09:29:54 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
@@ -98,69 +98,87 @@ In-Reply-To: <alpine.DEB.2.21.1911152000170.8961@hadrien>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:r7KU41s1og7jBKHqcTTJ+wWqbzKphPCpPMpdogNT3BIbclyk6KS
- +On3kC3vwo2sxxtZl3e9TFeNJzSmCCSBDltAwjvI50TmQerh0PTgen8sQYaGRLoaZpPDJSS
- fdh8wCSuSuvOJAcAGm5YmUz+1yBROY7V4g3cOStbQlj/wZu+8iK1WRDtWzdKnVX3bjXvmVc
- 1Z4RmqobpYv0g1/VQo6+g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xn/xx9/PIJ0=:xvgayptfIPYY5rZ6AaaMgY
- O0w+X+tFDX/dIq9051QMezguUKIClFglCZmtHQsXMDnJw4BjQBlr3Ial9C2E40iB44FlP/BvA
- Vfet84PRNw0JjFgWvcBN//cSJA18NXWn/dZ80xdqQbzfjNa1aEAS22IudiN0CNwQTp3FLkkD6
- In0vvGdzkGDS0T7dAvxHMJNOBBTmWJHk2Dl6o3Wyq5CDDSQa2GSy448rRreL0JSaiGnNSckIS
- S0ANWoqN8eaFfW+xi1p1dOSEDOPe7tz9uYcOfHN1nUaPjSUH8usC358fraZ5l6EyZVKEcvK6S
- DM/VPse3MwuLck0LhNs0EMCYJhNf4ucBPkXVqnb7xyDrZpUThAxv80wSWTevsB4SMz7QUxZh4
- iBpOXjIOqkrLJ7sSOE/2QtLEhV4ngsVa1Veilq2Uj9aVS8Y+F0jIoHZvtc6nOjMLqnb+Cz79x
- 79TCaKOGB/TsIID9b3Dq9vStU4E6HwepzDOqrqFeK1tIISJxzXrmBalFZUBS0v4I2SNrzJ/s+
- d4QfoE2GDB/u5Ozhmovectjk/WsoBYcBBvW+Nl3g0oTBDpsdFLEeuq5SFaJuZpX1kXP89Xb/Z
- 5S8nBg81B7k2koVpWNS26MYd75CAYbyye+k32fyWHckISBqUuuw/yc7iH1EW683ZyJCwLiYSn
- rM6UIUxCFTMEGchqvABkx9e3QRCRa2aQUXbO3XgYTZIauWt3NoEKoV2+ikt9Aq6JMj9MYHvD0
- foiRT2JF+b8/FniWYApAehpFDrc2a/S6g/8xtyhr0xqYIvBjYD66Qb/fgu8NRkEJ65WWOX5BS
- Xxfmb7zkCDOOThonlu/zM5gsdd6WV28V0nOqoDC3RZqm15yPY+wVRivIiGZhFoyMj8lRK2LLg
- yRw1RDwglcdxTT5JtYkW8YYNi5qDd+jMwdHu1H++9sqDALi+3lrLvE15bccfpWs0y5zJxJrJy
- hGjX4LN4mJ0IZEsG5eTEnT61NnOBU8yntQu+FQiGqIexzAOeSIwChTKKmnYvPjf9JtuSiB0hv
- d8g+OiZ6m+XxctQeP6EO7lneSI3++zoP99S7ezq96ovFvhQO365jIQLb/ULLlRdf31HkXlfR4
- wOZitpX9qKBS0xWQPS77egSnWIVUy/Imp11WaLYIoEoesugWDrRPINNbkLrpjwFQ8hq5gYY8a
- uwUHiZmuEOM7dNhjg3BfmmVf+3K6Lqy6szjDYOQjFKSu6oCFjmTdPAViNPOpY0O82AqtmsOtQ
- na5DSvs6lGIoH1jszJq2+hhzUO05di0yfbY8hzz5cfNyQJZanhuBuCcikTEQ=
+X-Provags-ID: V03:K1:csgwpmRM3I/du8yLGJZ6gKQfXvaDQ+9wwnHDEeOyuUvOGUd6NuF
+ N/my9nNqlKN4oG8uAGtSklWS0XdMhI/pDK2tYauS9L41sx/XYcfq9/rM/nYcjPZDddytgiF
+ zn4ZUkQd9+eb4O4IUkVBmEirgYEWuPcQv1dOOeabtYswGCtUM6grJpsfVUNevTeE45O+GIW
+ 3At2A+nX3tuh9yz+HjhGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/lCmsZuzCTA=:6+kaiS6vuC0pJc//+pomj1
+ TXfBfXNlMa1Qs2rPIt4xMpZofc44cPUzKSzACEw5ypoL2bLkyQctqfsQ8RhTF4FlHuo6Pbop7
+ 4vh3P90s6FdShsUZ1jV67WttBHeQcCw6WsAAbB6dGhKLTcrh2YOlSXGLCNqOsQlqTJAH1NyVX
+ RDOYYmU1i1C6j7tgDL4aw1DehEJxu3m+HCL2AXRCf7MDr15IEAq4JbGeo1/L08jf2kNvJS84G
+ uJ9bqKZ0atD3PAKLEO0J1pZV3fPQxfiz7NBC2LWiA2I5QD64lFw1hjY1YGJjiie+umILkM1zB
+ 6aTOH1+B3jjsdooz9WTW8BHZtUgoNleSuGB0ZYe/CgYIXUbPq/k4SMqIDqdGTrNwnNmaJ/fDb
+ X4aybele5utaztaHKRU7t/Gs9wtx+DeSQspKr2DHcYGWl2y+ETvI2UX6qc4q5zmiGp7SyeiDs
+ Vbw4mtrsmL9T9U66BMS0C+1/qSFnDgC9B11/vCyasujuuvGyM16cZYRp2LDiEJCh24xwPmZeB
+ rL8ICN/m28UQT7fg4uzYtt6CGqgIHkqKwnLINRqFnQfuGXAQl2k+XxAL8BGLRkR4jzes13ZIA
+ x+g+j9BqwY6vHs+unllkwhBJ6RmvU/+3vFZBwOcGhAJsFeIE7ErAsKyT6hDgUQ9ZPeK5OgjaI
+ n7+4teXmUIEqshltz1lTSovajdUwkuC5TnAwGwOyhDbAqQA0qR/+Ds+7P3v4f0Zhuh8hvNJ+D
+ z7sr+XpzWY1irsEC7CK2eJ5Vf5QdzVjLx/0J83JUA5TxuudNmcsURtPDVrqXhdRTLU8jHNLk8
+ grbwQKCGXhd5okWaUTzQE8mddz2skkudpSSnojUXv4RYvVAohYSUTTH4ZBVyeZUyaNANMDgxU
+ v02Wq+b/SP3BCLUfL9zH9pChVJ34cPLDwiEPnNqYl1Kj0MzULOG2umJjwDFZDS/xMaADVVljv
+ RV0PV35jQD0NF1OpYJ5tyMt3Qi9yL9b8iyw+eqZ5YruoHduzLcGKWdvN4HOdof3IBEn0AwpF9
+ HhiwXiMMxdjk806C7ZSyC1A3xM7sxumYCw8kyhgyfCu8NZ3a3VuHoQfW+pK6S/lg1Ft7NN7rm
+ AuDfmlrIrR3sk6iMcvJ6L5pDQO4kHcSyPeOfzPWCDgLaUyaSqy0lQRYpScuXfikleZB+m4roL
+ eXdygpume8YlaO3JfViVPulk4HmXRmZ4S1DR5jIGRkTXVjCsNPsSuh9YQZtcKZQViJ2DA0Psu
+ IFE71QRgDA3cu94j1SGc9JnV7T57nCbRTj7PUf5YtywOd73+Bs+xUFlfYIW0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> https://github.com/git/git/blob/3edfcc65fdfc708c1c8f1d314885eecf9beb9b6=
-7/fast-import.c#L640
->>
->> I got the impression that the Coccinelle software is occasionally able
->> to determine from the search specification =E2=80=9Csizeof(T)=E2=80=9D =
-the corresponding
->> data type for code like =E2=80=9C*(t->entries)=E2=80=9D.
->
 > It can determine the type of t->entries if it has access to the definiti=
 on
 > of the type of t.
 
-Should this type determination always work here because the data structure
-=E2=80=9Ctree_content=E2=80=9D for the parameter =E2=80=9Ct=E2=80=9D of th=
-e function =E2=80=9Cgrow_tree_content=E2=80=9D
-is defined in the same source file?
-https://github.com/git/git/blob/3edfcc65fdfc708c1c8f1d314885eecf9beb9b67/f=
-ast-import.c#L85
+I would like to point another implementation detail out.
+
+Another known function was also an update candidate.
+https://github.com/git/git/blob/9a1180fc304ad9831641e5788e9c8d3dfc10ccdd/p=
+retty.c#L90
+
+elfring@Sonne:~/Projekte/git/lokal> spatch contrib/coccinelle/array.cocci =
+pretty.c
+=E2=80=A6
+@@ -106,8 +106,8 @@ static void setup_commit_formats(void)
+        commit_formats_len =3D ARRAY_SIZE(builtin_formats);
+        builtin_formats_len =3D commit_formats_len;
+        ALLOC_GROW(commit_formats, commit_formats_len, commit_formats_allo=
+c);
+-       memcpy(commit_formats, builtin_formats,
+-              sizeof(*builtin_formats)*ARRAY_SIZE(builtin_formats));
++       COPY_ARRAY(commit_formats, builtin_formats,
++                  ARRAY_SIZE(builtin_formats));
+
+        git_config(git_pretty_formats_config, NULL);
+ }
 
 
->                    This type may be in a header file.  If you want
-> Coccinelle to be able to find this information you can use the option
-> --all-includes or --recursive-includes.  It will be more efficient with
-> the option --include-headers-for-types.
+This patch generation can work based on the following SmPL code combinatio=
+n.
 
-Such information can be more helpful in other situations than the mentione=
-d
-test case.
+=E2=80=9C=E2=80=A6
+expression n, x;
+=E2=80=A6
+-      , (n) * \( sizeof(T) \| sizeof(*(x)) \)
+=E2=80=A6=E2=80=9D
 
+The asterisk should refer to a pointer expression within a sizeof operator=
+.
+I got informed that the semantic patch language would support such a restr=
+iction.
 
->> But it seems that there are circumstances to consider where the desired
->> data type was not automatically determined.
+Thus I have tried out to specify the corresponding metavariables in this w=
+ay.
 
-Would you like to take the presented differences from the discussed
-before/after comparison better into account?
+=E2=80=9C=E2=80=A6
+expression n;
+expression* x;
+=E2=80=A6=E2=80=9D
+
+But the shown diff hunk is not regenerated by this SmPL script variant.
+How should an array like =E2=80=9Cbuiltin_formats=E2=80=9D (which is even =
+defined in the same function)
+be treated by the Coccinelle software in such use cases?
 
 Regards,
 Markus
