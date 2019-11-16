@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E3A51F4B5
-	for <e@80x24.org>; Sat, 16 Nov 2019 09:00:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61E271F4B5
+	for <e@80x24.org>; Sat, 16 Nov 2019 09:27:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbfKPJA4 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 16 Nov 2019 04:00:56 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46873 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726160AbfKPJAz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 16 Nov 2019 04:00:55 -0500
-Received: by mail-wr1-f66.google.com with SMTP id b3so13476506wrs.13
-        for <git@vger.kernel.org>; Sat, 16 Nov 2019 01:00:47 -0800 (PST)
+        id S1726918AbfKPJ1V (ORCPT <rfc822;e@80x24.org>);
+        Sat, 16 Nov 2019 04:27:21 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:33928 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727000AbfKPJ1V (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 16 Nov 2019 04:27:21 -0500
+Received: by mail-wm1-f66.google.com with SMTP id j18so11832432wmk.1
+        for <git@vger.kernel.org>; Sat, 16 Nov 2019 01:27:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=X+B9O0VGnbiEA2SiFFk5CUooRiug22pDxZ4uuOdTHf0=;
-        b=lYWEcG4hhGjG50SLeZhNEb0CRyJ2SvVSIjNTr/CQuhuQdF1PK+Ukz9uRTX/aGEzlsV
-         OC8lX87M/vjCePc2ZncNNeMY9lRrPIJ2YOB3Kz781YOZ9HQE90a5C6hRsU1grLIuAUsB
-         XlxYlQg1kzglS59XgSkvduWmjWyeksQMYPslvXRBRAoX/g78d+KHJDE3qshMmFytXmN/
-         7cO1I3xhGmRuvVzfW86tz1VDn+YCSofflrO0EGpTb0OQEXnzF+tQcXEhV5CVEVaO3EOb
-         Azk7l0dUbrPj0f4U7VN9l6FrTp6Juv1osQguQtdTSisOa/4fRpFdFOZU+UksQc6R9fDY
-         38GQ==
-X-Gm-Message-State: APjAAAXwSOvOZ9DxT4tTsLZK4E8wenZIBZD/jzY/g3PGIaKqSYfEQt/r
-        i6RVL/9gsQNRFC7qe30k1/Y6zCDX7ipPoEPVOtSZGhKj
-X-Google-Smtp-Source: APXvYqwWplk5daNi0U6ZugwOzAimsP+8HbljUpseaZaX6GuaCwkMXT7p1y7eqcaG4FAYg48a50wPVav6pby1wtA3/l8=
-X-Received: by 2002:a5d:6410:: with SMTP id z16mr1229407wru.78.1573894846349;
- Sat, 16 Nov 2019 01:00:46 -0800 (PST)
+        bh=wWfXNAUSAdObgP3QXbBu5UimZkWUkxqDnvag2TC65og=;
+        b=p7G7WJPqfzuIVh7VySOEhsFZ1Bha1Qc8OZp6NG/Pw6G/OENGMo1VXGxoODXw43vAo0
+         M6ElD2pczzC0vp9bXzEu4HBYfwPkU6Yt7/brg3NZdlV0p1E7d+k3uHfTem7rtCR2U/0s
+         Rn/FQboAkH0oP/dYwMPuHsYhWtVVRGVeydi4Adr6Gm5dDBogFH6zn/7ttN7LYoC360/k
+         EevMFsIX3DjJejdXAuQ12qhfWaDAVAvEWNMCmMaUTHZBhZPJvxKDiRT/gdUHNsq6PHqq
+         HTBg3TcWEkTd4sumjJZip2rZIjoYW2CcsIinx2ALS3pW2tUY3J5Hk4pvBziKHvOZOBY9
+         ksbQ==
+X-Gm-Message-State: APjAAAVY9RxrG33v3tRyVCPAhoRf7gUJ8v5T+vE0uli00IgktacdE5uV
+        Cr2n591IjPXoVXAAb1UfXudBksQ243vIePrBctA=
+X-Google-Smtp-Source: APXvYqzjI1uoKMSqpiSmtyamgVCRBX7sNSMGptCJGV3EI+rIkWDmzlZ+AokDslJqgUK+k9C58URWpVzmce/XPnmiHpw=
+X-Received: by 2002:a1c:3843:: with SMTP id f64mr18255841wma.129.1573896439452;
+ Sat, 16 Nov 2019 01:27:19 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1573779465.git.liu.denton@gmail.com> <d617cbaaf1232e45b077786afaa9d3465a9bbd35.1573779465.git.liu.denton@gmail.com>
-In-Reply-To: <d617cbaaf1232e45b077786afaa9d3465a9bbd35.1573779465.git.liu.denton@gmail.com>
+References: <cover.1573779465.git.liu.denton@gmail.com> <52836aa59a84bf61781cd3501679011a36ac41e7.1573779465.git.liu.denton@gmail.com>
+In-Reply-To: <52836aa59a84bf61781cd3501679011a36ac41e7.1573779465.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 16 Nov 2019 04:00:35 -0500
-Message-ID: <CAPig+cSFoksyqTGeL7tNh7sjXWVPi9HYS6+6qui6C-VE0LqedA@mail.gmail.com>
-Subject: Re: [PATCH 10/27] t4138: stop losing return codes of git commands
+Date:   Sat, 16 Nov 2019 04:27:08 -0500
+Message-ID: <CAPig+cT_co53B66P8hKzFai=0HbXHLfNO5-Dbx_qZZa7Vj-4WA@mail.gmail.com>
+Subject: Re: [PATCH 12/27] t5317: use ! grep to check for no matching lines
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -50,26 +50,42 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Nov 14, 2019 at 8:01 PM Denton Liu <liu.denton@gmail.com> wrote:
-> In a pipe, only the return code of the last command is used. Thus, all
-> other commands will have their return codes masked. Rewrite pipes so
-> that there are no git commands upstream so that we will know if a
-> command fails.
+> Several times in t5317, we would use `wc -l` to ensure that a grep
+> result is empty. However, grep already has a way to do that... Its
+> return code! Use ! grep in the cases where we are ensuring that there
+> are no matching lines.
 >
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
-> diff --git a/t/t4138-apply-ws-expansion.sh b/t/t4138-apply-ws-expansion.sh
-> @@ -17,8 +17,8 @@ test_expect_success setup '
-> -       git diff --no-index before after |
-> -               sed -e "s/before/test-1/" -e "s/after/test-1/" >patch1.patch &&
-> +       test_must_fail git diff --no-index before after >patch1.patch.raw &&
-> +       sed -e "s/before/test-1/" -e "s/after/test-1/" patch1.patch.raw >patch1.patch &&
+> diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+> @@ -45,12 +45,7 @@ test_expect_success 'verify blob:none packfile has no blobs' '
+>         git -C r1 verify-pack -v ../filter.pack >verify_result &&
+> -       grep blob verify_result |
+> -       awk -f print_1.awk |
+> -       sort >observed &&
+> -
+> -       nr=$(wc -l <observed) &&
+> -       test 0 -eq $nr
+> +       ! grep blob verify_result
 
-I think this is a semantically incorrect use of test_must_fail(). What
-you're interested here is that git-diff found differences (as opposed
-to not finding any), so you want to test its exit code which reflects
-whether or not the files were different. Hence, the following would be
-more appropriate:
+It's curious that this and other tests were doing so much unnecessary
+extra work ('awk' and 'sort'). While it's clear that it's safe to drop
+the 'awk' and 'sed' invocations, nevertheless, as a reviewer, I had to
+spend extra time digging into it in order to understand why it was
+like this in the first place, since I wanted to convince myself that
+some earlier change hadn't broken the test in some unnoticed way.
 
-    test_expect_code 1 git diff --no-index before after >patch1.patch.raw &&
+It turns out that these tests were simply born this way[1], doing all
+this unnecessary work for no reason, probably due to copy/paste
+programming, and it seems no reviewer caught it. Likewise, the
+unnecessary work wasn't noticed even when the code was later touched
+for various cleanups[2,3].
 
-Same comment applies to remaining changes in this patch.
+To save future reviewers (and future readers of the commit history)
+the effort of having to convince themselves of the safety of this
+change, it might be a good idea to say something in the commit message
+about the code's history.
+
+[1]: 9535ce7337 (pack-objects: add list-objects filtering, 2017-11-21)
+[2]: bdbc17e86a (tests: standardize pipe placement, 2018-10-05)
+[3]: 61de0ff695 (tests: don't swallow Git errors upstream of pipes, 2018-10-05)
