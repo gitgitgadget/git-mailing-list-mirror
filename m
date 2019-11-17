@@ -8,214 +8,550 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22FD31F4B5
-	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 811221F4B5
+	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726206AbfKQVFG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 16:05:06 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41455 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726128AbfKQVFG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 16:05:06 -0500
-Received: by mail-wr1-f68.google.com with SMTP id b18so15659459wrj.8
-        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:03 -0800 (PST)
+        id S1726273AbfKQVFH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 16:05:07 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36818 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726134AbfKQVFH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 16:05:07 -0500
+Received: by mail-wm1-f66.google.com with SMTP id c22so16551674wmd.1
+        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iPP2L+QLMwVwdGWwkh9hsFgKDoFcPnodHgLy7oJcjDw=;
-        b=GrRrKmDypZN80s/FzKeefRxZQKKGtpYD9M9HB4TLPZYFiyAILZKZRXBllyra6cZqcO
-         s5ZtK4vbNIVnItXQ3ETjC4/rgYGBqNK4i+Gcc+BXBh54wEEaDh8baiHfW9gG59afjtve
-         WJ1A5yj+7I66fIrZz8oS8TrQF23vIXlLS3YU+fHHiSmZKAJ0zbA9VqMrD9mFkyVnpgQN
-         QpYuTS/1kmqjPKTktDkwNFOjxqulMLSGBFpYEeloM76PEeEqgUSI7UzuYu/DfyeSqqL7
-         nD8oYEY/caT/64ct9Np0If6roFLNDoGXtp75ddWNipbUjB73UqqyrC43R5Vu9Xq6ooRH
-         vvpw==
+        bh=SoPm1cFRuVNOXgTvUq1oqThbMzIouvxn57iJ55LWUvI=;
+        b=KAieWXragrwljAwVkF5TbSuBX/DaDZuYbeTKs51HN0uc1F6t77I0keeWtDpYJKkM1C
+         HR0lWkoSpaaKgBKJBd84isDQc384uYnYFfM/ihaNIdPG2jRz7WXZQo5fwWt1mB63xFq8
+         zArCXqs8fRSc1Big9IFDd57e5LYGQ5l6ysBNOxIqK+owSQra1PmG4yzOK2MGMMa3rA+Z
+         iSM4yRdfL0lI+qoD5S6lbfujq4aBAYepjpGHvi5J7Sv27XHtwX4MhW2VjozBroEtEt7f
+         d5IisYGIYgo4af1SAVkiFoljMLz+EV5cZUzj9o4WSpMQ+nt1Cc1nUb/1WuzzKQQ2GcPS
+         K6EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iPP2L+QLMwVwdGWwkh9hsFgKDoFcPnodHgLy7oJcjDw=;
-        b=WctxNUJP1Flz0GYN5X8hKsyNY4o2uepcxN1y9kpDMDOWcOPlrFop8rxjZ0UO9miWRP
-         AYqDE4Sh9bgcRgRmUMl3pkv+8IIElnTM+twP15M+MXwPWOD+f4e/v9HQbsELXUgOj4Pv
-         Lzlb6dTOfa4hQPEVgBNpNxBfrQERxJfQ7OU0I8HflvtMInytUI2acyuf6QNnmMTBtO8d
-         P6q9w/l8HaeluQxh5X8AaeKFZ8pYfYufJapTkvplK5SVGgustCk1P9G4eWhVWDXg/bv3
-         u3MMzkXttpIALmo7zi4Jhyufm105J28LyWeAj1jnyKHX9gbcJEBu8sVt+uVQPbrJ675T
-         d1fg==
-X-Gm-Message-State: APjAAAXGF8T6v2HVndnQS0y59IRaZMQp19q5kMyemrgpuBoAZigsRfZc
-        NOnnwtDQrYHIp2MJ/fuGcZQnnMiQ
-X-Google-Smtp-Source: APXvYqyraAGgo2sAn3uCYavMo8/6xySofMOKiURbPRZyjLbO4UnsDrLS8Xaw3LuIT7HBAy4ZyxT85w==
-X-Received: by 2002:a5d:660b:: with SMTP id n11mr27747131wru.146.1574024702775;
-        Sun, 17 Nov 2019 13:05:02 -0800 (PST)
+        bh=SoPm1cFRuVNOXgTvUq1oqThbMzIouvxn57iJ55LWUvI=;
+        b=encVnho63lYJKFHaXoySiyv02JiGM5gM9LKNEbtdBagLauyzFVFTVkAgkU0RakxfTn
+         ialj9D9P6mvL4ONZyEmAvTFxUqk47lF/7lGyrGdYee5C1WO5uFG+JwaZhs/nwmoburmR
+         PpjNdS/vuMtqXZJq5aIBIRPvVIBWxEHrty5tRwaKrpk6zSPwhm165cgdR652yIvp+7hZ
+         ZjsPNA79ngbcIgxPT2QrgjUmQv97pRaNm5juY22WyehFFmd+tu8xYEofgFpAhHyNKOEW
+         ki5pOhIHxzneer+OQW16qFMbz1os82Rw+5KECsLLRf43B9p2MsNCtrYxLJbTDCvhbyvi
+         gjBw==
+X-Gm-Message-State: APjAAAWjrq011ENbCTrchwt+bYGIXDiCUZjqISw8n+x9W2kH8p1Zi3Mr
+        QoiM3DAmO0STl9j8fvfdwHxmCIXN
+X-Google-Smtp-Source: APXvYqxC+2fUWBTtr16S0Pjgmux8Q3PXwe2j6c77404IQrfdAiF85ziMVS4dT2tNqJJFmPVXxq4eRQ==
+X-Received: by 2002:a1c:ed0e:: with SMTP id l14mr23611412wmh.74.1574024703550;
+        Sun, 17 Nov 2019 13:05:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y8sm4186856wru.59.2019.11.17.13.05.02
+        by smtp.gmail.com with ESMTPSA id b1sm19129809wrs.74.2019.11.17.13.05.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Nov 2019 13:05:02 -0800 (PST)
-Message-Id: <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
-In-Reply-To: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
+        Sun, 17 Nov 2019 13:05:03 -0800 (PST)
+Message-Id: <7f2f4c45a6141a9c9f3fd7aaff54fc3a7b7173ec.1574024700.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 References: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
+        <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 17 Nov 2019 21:04:39 +0000
-Subject: [PATCH v5 00/21] [Outreachy] Move doc to header files
+Date:   Sun, 17 Nov 2019 21:04:40 +0000
+Subject: [PATCH v5 01/21] diff: move doc to diff.h and diffcore.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly <heba.waly@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Heba Waly <heba.waly@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the documentation from Documentation/technical/api-*.txt to the
-corresponding header file, as it's easier for the developers to find the
-usage information beside the code instead of looking for it in another doc
-file.
+From: Heba Waly <heba.waly@gmail.com>
 
-Also documentation/technical/api-*.txt is removed because the information it
-has is will be redundant and it'll be hard to keep it up to date and
+Move the documentation from Documentation/technical/api-diff.txt to both
+diff.h and diffcore.h as it's easier for the developers to find the usage
+information beside the code instead of looking for it in another doc file.
+
+Also documentation/technical/api-diff.txt is removed because the information
+it has is now redundant and it'll be hard to keep it up to date and
 synchronized with the documentation in the header files.
 
-api-trace2.txt is not removed because it has lots of valuable information
-that seems more appropriate to be in a separate doc file not in the trace2.h
-although the functions documentation is moved to the trace2.h
+There are three members documented in the doc file that weren't found in
+the header files, assuming the doc wasn't up to date and the members
+no longer exist:
+touched_flags, COLOR_DIFF_WORDS and QUIET.
 
-api-error-handling.txt is not removed as well because no other file seemed
-to be more suitable for the doc it contains. I'm open to suggestions though.
-
-The ll-merge related doc was removed from api-merge.txt to ll-merge.h, while
-the rest of the file is left as is.
-
-Signed-off-by: Heba Waly heba.waly@gmail.com
-
-Heba Waly (21):
-  diff: move doc to diff.h and diffcore.h
-  dir: move doc to dir.h
-  graph: move doc to graph.h and graph.c
-  merge: move doc to ll-merge.h
-  sha1-array: move doc to sha1-array.h
-  remote: move doc to remote.h and refspec.h
-  refs: move doc to refs.h
-  attr: move doc to attr.h
-  revision: move doc to revision.h
-  pathspec: move doc to pathspec.h
-  sigchain: move doc to sigchain.h
-  cache: move doc to cache.h
-  argv-array: move doc to argv-array.h
-  credential: move doc to credential.h
-  parse-options: add link to doc file in parse-options.h
-  run-command: move doc to run-command.h
-  trace: move doc to trace.h
-  tree-walk: move doc to tree-walk.h
-  submodule-config: move doc to submodule-config.h
-  trace2: move doc to trace2.h
-  api-index: remove api doc index files
-
- Documentation/Makefile                        |  11 +-
- Documentation/MyFirstObjectWalk.txt           |   7 +-
- Documentation/git-credential.txt              |   3 +-
- Documentation/git.txt                         |   3 -
- Documentation/gitcredentials.txt              |   3 +-
- Documentation/technical/.gitignore            |   1 -
- .../technical/api-allocation-growing.txt      |  39 ---
- Documentation/technical/api-argv-array.txt    |  65 -----
- Documentation/technical/api-credentials.txt   | 271 ------------------
- Documentation/technical/api-diff.txt          | 174 -----------
- .../technical/api-directory-listing.txt       | 130 ---------
- Documentation/technical/api-gitattributes.txt | 154 ----------
- Documentation/technical/api-history-graph.txt | 173 -----------
- Documentation/technical/api-index-skel.txt    |  13 -
- Documentation/technical/api-index.sh          |  28 --
- Documentation/technical/api-merge.txt         |  72 +----
- Documentation/technical/api-oid-array.txt     |  90 ------
- Documentation/technical/api-ref-iteration.txt |  78 -----
- Documentation/technical/api-remote.txt        | 127 --------
- .../technical/api-revision-walking.txt        |  72 -----
- Documentation/technical/api-run-command.txt   | 264 -----------------
- Documentation/technical/api-setup.txt         |  47 ---
- Documentation/technical/api-sigchain.txt      |  41 ---
- .../technical/api-submodule-config.txt        |  66 -----
- Documentation/technical/api-trace.txt         | 140 ---------
- Documentation/technical/api-trace2.txt        | 243 +---------------
- Documentation/technical/api-tree-walking.txt  | 149 ----------
- argv-array.h                                  |  62 ++++
- attr.c                                        |   3 +-
- attr.h                                        | 141 ++++++++-
- cache.h                                       |  41 ++-
- credential.h                                  | 236 +++++++++++++++
- diff.h                                        | 126 ++++++++
- diffcore.h                                    |  32 +++
- dir.c                                         |   2 -
- dir.h                                         | 119 +++++++-
- graph.c                                       |   1 +
- graph.h                                       | 121 ++++++++
- ll-merge.h                                    |  73 ++++-
- parse-options.h                               |   4 +
- pathspec.h                                    |  35 ++-
- refs.h                                        |  51 ++++
- refspec.h                                     |  16 ++
- remote.h                                      |  57 +++-
- revision.h                                    |  59 ++++
- run-command.h                                 | 252 +++++++++++++++-
- sha1-array.c                                  |   2 +-
- sha1-array.h                                  |  80 ++++++
- sigchain.h                                    |  45 +++
- submodule-config.h                            |  38 ++-
- trace.h                                       | 133 ++++++++-
- trace2.h                                      | 124 ++++++--
- tree-walk.h                                   | 122 +++++++-
- 53 files changed, 1934 insertions(+), 2505 deletions(-)
- delete mode 100644 Documentation/technical/.gitignore
- delete mode 100644 Documentation/technical/api-allocation-growing.txt
- delete mode 100644 Documentation/technical/api-argv-array.txt
- delete mode 100644 Documentation/technical/api-credentials.txt
+Signed-off-by: Heba Waly <heba.waly@gmail.com>
+---
+ Documentation/technical/api-diff.txt | 174 ---------------------------
+ diff.h                               | 126 +++++++++++++++++++
+ diffcore.h                           |  32 +++++
+ 3 files changed, 158 insertions(+), 174 deletions(-)
  delete mode 100644 Documentation/technical/api-diff.txt
- delete mode 100644 Documentation/technical/api-directory-listing.txt
- delete mode 100644 Documentation/technical/api-gitattributes.txt
- delete mode 100644 Documentation/technical/api-history-graph.txt
- delete mode 100644 Documentation/technical/api-index-skel.txt
- delete mode 100755 Documentation/technical/api-index.sh
- delete mode 100644 Documentation/technical/api-oid-array.txt
- delete mode 100644 Documentation/technical/api-ref-iteration.txt
- delete mode 100644 Documentation/technical/api-remote.txt
- delete mode 100644 Documentation/technical/api-revision-walking.txt
- delete mode 100644 Documentation/technical/api-run-command.txt
- delete mode 100644 Documentation/technical/api-setup.txt
- delete mode 100644 Documentation/technical/api-sigchain.txt
- delete mode 100644 Documentation/technical/api-submodule-config.txt
- delete mode 100644 Documentation/technical/api-trace.txt
- delete mode 100644 Documentation/technical/api-tree-walking.txt
 
-
-base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-434%2FHebaWaly%2Fmove-doc-to-header-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-434/HebaWaly/move-doc-to-header-v5
-Pull-Request: https://github.com/gitgitgadget/git/pull/434
-
-Range-diff vs v4:
-
-  1:  7f2f4c45a6 =  1:  7f2f4c45a6 diff: move doc to diff.h and diffcore.h
-  2:  f87ca0228e =  2:  f87ca0228e dir: move doc to dir.h
-  3:  495fe333bd =  3:  495fe333bd graph: move doc to graph.h and graph.c
-  4:  90baf409ec =  4:  90baf409ec merge: move doc to ll-merge.h
-  5:  a76a2e2244 =  5:  a76a2e2244 sha1-array: move doc to sha1-array.h
-  6:  5719b8141c =  6:  5719b8141c remote: move doc to remote.h and refspec.h
-  7:  f84c1338fa =  7:  f84c1338fa refs: move doc to refs.h
-  8:  a007b50b9b =  8:  a007b50b9b attr: move doc to attr.h
-  9:  88553030f5 =  9:  88553030f5 revision: move doc to revision.h
- 10:  0042d10223 = 10:  0042d10223 pathspec: move doc to pathspec.h
- 11:  240a4bcb32 = 11:  240a4bcb32 sigchain: move doc to sigchain.h
- 12:  3e0d3f2415 = 12:  3e0d3f2415 cache: move doc to cache.h
- 13:  4f805c8737 = 13:  4f805c8737 argv-array: move doc to argv-array.h
- 14:  ea78cb4ae5 = 14:  ea78cb4ae5 credential: move doc to credential.h
- 15:  7097de91c3 <  -:  ---------- parse-options: move doc to parse-options.h
-  -:  ---------- > 15:  0e9e89fd83 parse-options: add link to doc file in parse-options.h
- 16:  03aa723fb7 = 16:  474911ff77 run-command: move doc to run-command.h
- 17:  44a47075dc = 17:  f313d74e1e trace: move doc to trace.h
- 18:  5b20c2794b = 18:  9063c2fad2 tree-walk: move doc to tree-walk.h
- 19:  251a08c1d8 = 19:  039598b04c submodule-config: move doc to submodule-config.h
- 20:  1f08493281 = 20:  cf3e3dd0c2 trace2: move doc to trace2.h
- 21:  5f21417393 = 21:  3771f7e2cb api-index: remove api doc index files
-
+diff --git a/Documentation/technical/api-diff.txt b/Documentation/technical/api-diff.txt
+deleted file mode 100644
+index 30fc0e9c93..0000000000
+--- a/Documentation/technical/api-diff.txt
++++ /dev/null
+@@ -1,174 +0,0 @@
+-diff API
+-========
+-
+-The diff API is for programs that compare two sets of files (e.g. two
+-trees, one tree and the index) and present the found difference in
+-various ways.  The calling program is responsible for feeding the API
+-pairs of files, one from the "old" set and the corresponding one from
+-"new" set, that are different.  The library called through this API is
+-called diffcore, and is responsible for two things.
+-
+-* finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
+-  changes that touch a string (`-S`), as specified by the caller.
+-
+-* outputting the differences in various formats, as specified by the
+-  caller.
+-
+-Calling sequence
+-----------------
+-
+-* Prepare `struct diff_options` to record the set of diff options, and
+-  then call `repo_diff_setup()` to initialize this structure.  This
+-  sets up the vanilla default.
+-
+-* Fill in the options structure to specify desired output format, rename
+-  detection, etc.  `diff_opt_parse()` can be used to parse options given
+-  from the command line in a way consistent with existing git-diff
+-  family of programs.
+-
+-* Call `diff_setup_done()`; this inspects the options set up so far for
+-  internal consistency and make necessary tweaking to it (e.g. if
+-  textual patch output was asked, recursive behaviour is turned on);
+-  the callback set_default in diff_options can be used to tweak this more.
+-
+-* As you find different pairs of files, call `diff_change()` to feed
+-  modified files, `diff_addremove()` to feed created or deleted files,
+-  or `diff_unmerge()` to feed a file whose state is 'unmerged' to the
+-  API.  These are thin wrappers to a lower-level `diff_queue()` function
+-  that is flexible enough to record any of these kinds of changes.
+-
+-* Once you finish feeding the pairs of files, call `diffcore_std()`.
+-  This will tell the diffcore library to go ahead and do its work.
+-
+-* Calling `diff_flush()` will produce the output.
+-
+-
+-Data structures
+----------------
+-
+-* `struct diff_filespec`
+-
+-This is the internal representation for a single file (blob).  It
+-records the blob object name (if known -- for a work tree file it
+-typically is a NUL SHA-1), filemode and pathname.  This is what the
+-`diff_addremove()`, `diff_change()` and `diff_unmerge()` synthesize and
+-feed `diff_queue()` function with.
+-
+-* `struct diff_filepair`
+-
+-This records a pair of `struct diff_filespec`; the filespec for a file
+-in the "old" set (i.e. preimage) is called `one`, and the filespec for a
+-file in the "new" set (i.e. postimage) is called `two`.  A change that
+-represents file creation has NULL in `one`, and file deletion has NULL
+-in `two`.
+-
+-A `filepair` starts pointing at `one` and `two` that are from the same
+-filename, but `diffcore_std()` can break pairs and match component
+-filespecs with other filespecs from a different filepair to form new
+-filepair.  This is called 'rename detection'.
+-
+-* `struct diff_queue`
+-
+-This is a collection of filepairs.  Notable members are:
+-
+-`queue`::
+-
+-	An array of pointers to `struct diff_filepair`.  This
+-	dynamically grows as you add filepairs;
+-
+-`alloc`::
+-
+-	The allocated size of the `queue` array;
+-
+-`nr`::
+-
+-	The number of elements in the `queue` array.
+-
+-
+-* `struct diff_options`
+-
+-This describes the set of options the calling program wants to affect
+-the operation of diffcore library with.
+-
+-Notable members are:
+-
+-`output_format`::
+-	The output format used when `diff_flush()` is run.
+-
+-`context`::
+-	Number of context lines to generate in patch output.
+-
+-`break_opt`, `detect_rename`, `rename-score`, `rename_limit`::
+-	Affects the way detection logic for complete rewrites, renames
+-	and copies.
+-
+-`abbrev`::
+-	Number of hexdigits to abbreviate raw format output to.
+-
+-`pickaxe`::
+-	A constant string (can and typically does contain newlines to
+-	look for a block of text, not just a single line) to filter out
+-	the filepairs that do not change the number of strings contained
+-	in its preimage and postimage of the diff_queue.
+-
+-`flags`::
+-	This is mostly a collection of boolean options that affects the
+-	operation, but some do not have anything to do with the diffcore
+-	library.
+-
+-`touched_flags`::
+-	Records whether a flag has been changed due to user request
+-	(rather than just set/unset by default).
+-
+-`set_default`::
+-	Callback which allows tweaking the options in diff_setup_done().
+-
+-BINARY, TEXT;;
+-	Affects the way how a file that is seemingly binary is treated.
+-
+-FULL_INDEX;;
+-	Tells the patch output format not to use abbreviated object
+-	names on the "index" lines.
+-
+-FIND_COPIES_HARDER;;
+-	Tells the diffcore library that the caller is feeding unchanged
+-	filepairs to allow copies from unmodified files be detected.
+-
+-COLOR_DIFF;;
+-	Output should be colored.
+-
+-COLOR_DIFF_WORDS;;
+-	Output is a colored word-diff.
+-
+-NO_INDEX;;
+-	Tells diff-files that the input is not tracked files but files
+-	in random locations on the filesystem.
+-
+-ALLOW_EXTERNAL;;
+-	Tells output routine that it is Ok to call user specified patch
+-	output routine.  Plumbing disables this to ensure stable output.
+-
+-QUIET;;
+-	Do not show any output.
+-
+-REVERSE_DIFF;;
+-	Tells the library that the calling program is feeding the
+-	filepairs reversed; `one` is two, and `two` is one.
+-
+-EXIT_WITH_STATUS;;
+-	For communication between the calling program and the options
+-	parser; tell the calling program to signal the presence of
+-	difference using program exit code.
+-
+-HAS_CHANGES;;
+-	Internal; used for optimization to see if there is any change.
+-
+-SILENT_ON_REMOVE;;
+-	Affects if diff-files shows removed files.
+-
+-RECURSIVE, TREE_IN_RECURSIVE;;
+-	Tells if tree traversal done by tree-diff should recursively
+-	descend into a tree object pair that are different in preimage
+-	and postimage set.
+-
+-(JC)
+diff --git a/diff.h b/diff.h
+index 7f8f024feb..1be4ca4e4a 100644
+--- a/diff.h
++++ b/diff.h
+@@ -9,6 +9,49 @@
+ #include "object.h"
+ #include "oidset.h"
+ 
++/**
++ * The diff API is for programs that compare two sets of files (e.g. two trees,
++ * one tree and the index) and present the found difference in various ways.
++ * The calling program is responsible for feeding the API pairs of files, one
++ * from the "old" set and the corresponding one from "new" set, that are
++ * different.
++ * The library called through this API is called diffcore, and is responsible
++ * for two things.
++ *
++ * - finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
++ * changes that touch a string (`-S`), as specified by the caller.
++ *
++ * - outputting the differences in various formats, as specified by the caller.
++ *
++ * Calling sequence
++ * ----------------
++ *
++ * - Prepare `struct diff_options` to record the set of diff options, and then
++ * call `repo_diff_setup()` to initialize this structure.  This sets up the
++ * vanilla default.
++ *
++ * - Fill in the options structure to specify desired output format, rename
++ * detection, etc.  `diff_opt_parse()` can be used to parse options given
++ * from the command line in a way consistent with existing git-diff family
++ * of programs.
++ *
++ * - Call `diff_setup_done()`; this inspects the options set up so far for
++ * internal consistency and make necessary tweaking to it (e.g. if textual
++ * patch output was asked, recursive behaviour is turned on); the callback
++ * set_default in diff_options can be used to tweak this more.
++ *
++ * - As you find different pairs of files, call `diff_change()` to feed
++ * modified files, `diff_addremove()` to feed created or deleted files, or
++ * `diff_unmerge()` to feed a file whose state is 'unmerged' to the API.
++ * These are thin wrappers to a lower-level `diff_queue()` function that is
++ * flexible enough to record any of these kinds of changes.
++ *
++ * - Once you finish feeding the pairs of files, call `diffcore_std()`.
++ * This will tell the diffcore library to go ahead and do its work.
++ *
++ * - Calling `diff_flush()` will produce the output.
++ */
++
+ struct combine_diff_path;
+ struct commit;
+ struct diff_filespec;
+@@ -65,21 +108,66 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ 
+ #define DIFF_FLAGS_INIT { 0 }
+ struct diff_flags {
++
++	/**
++	 * Tells if tree traversal done by tree-diff should recursively descend
++	 * into a tree object pair that are different in preimage and postimage set.
++	 */
+ 	unsigned recursive;
+ 	unsigned tree_in_recursive;
++
++	/* Affects the way how a file that is seemingly binary is treated. */
+ 	unsigned binary;
+ 	unsigned text;
++
++	/**
++	 * Tells the patch output format not to use abbreviated object names on the
++	 * "index" lines.
++	 */
+ 	unsigned full_index;
++
++	/* Affects if diff-files shows removed files. */
+ 	unsigned silent_on_remove;
++
++	/**
++	 * Tells the diffcore library that the caller is feeding unchanged
++	 * filepairs to allow copies from unmodified files be detected.
++	 */
+ 	unsigned find_copies_harder;
++
+ 	unsigned follow_renames;
+ 	unsigned rename_empty;
++
++	/* Internal; used for optimization to see if there is any change. */
+ 	unsigned has_changes;
++
+ 	unsigned quick;
++
++	/**
++	 * Tells diff-files that the input is not tracked files but files in random
++	 * locations on the filesystem.
++	 */
+ 	unsigned no_index;
++
++	/**
++	 * Tells output routine that it is Ok to call user specified patch output
++	 * routine.  Plumbing disables this to ensure stable output.
++	 */
+ 	unsigned allow_external;
++
++	/**
++	 * For communication between the calling program and the options parser;
++	 * tell the calling program to signal the presence of difference using
++	 * program exit code.
++	 */
+ 	unsigned exit_with_status;
++
++	/**
++	 * Tells the library that the calling program is feeding the filepairs
++	 * reversed; `one` is two, and `two` is one.
++	 */
+ 	unsigned reverse_diff;
++
+ 	unsigned check_failed;
+ 	unsigned relative_name;
+ 	unsigned ignore_submodules;
+@@ -131,36 +219,72 @@ enum diff_submodule_format {
+ 	DIFF_SUBMODULE_INLINE_DIFF
+ };
+ 
++/**
++ * the set of options the calling program wants to affect the operation of
++ * diffcore library with.
++ */
+ struct diff_options {
+ 	const char *orderfile;
++
++	/**
++	 * A constant string (can and typically does contain newlines to look for
++	 * a block of text, not just a single line) to filter out the filepairs
++	 * that do not change the number of strings contained in its preimage and
++	 * postimage of the diff_queue.
++	 */
+ 	const char *pickaxe;
++
+ 	const char *single_follow;
+ 	const char *a_prefix, *b_prefix;
+ 	const char *line_prefix;
+ 	size_t line_prefix_length;
++
++	/**
++	 * collection of boolean options that affects the operation, but some do
++	 * not have anything to do with the diffcore library.
++	 */
+ 	struct diff_flags flags;
+ 
+ 	/* diff-filter bits */
+ 	unsigned int filter;
+ 
+ 	int use_color;
++
++	/* Number of context lines to generate in patch output. */
+ 	int context;
++
+ 	int interhunkcontext;
++
++	/* Affects the way detection logic for complete rewrites, renames and
++	 * copies.
++	 */
+ 	int break_opt;
+ 	int detect_rename;
++
+ 	int irreversible_delete;
+ 	int skip_stat_unmatch;
+ 	int line_termination;
++
++	/* The output format used when `diff_flush()` is run. */
+ 	int output_format;
++
+ 	unsigned pickaxe_opts;
++
++	/* Affects the way detection logic for complete rewrites, renames and
++	 * copies.
++	 */
+ 	int rename_score;
+ 	int rename_limit;
++
+ 	int needed_rename_limit;
+ 	int degraded_cc_to_c;
+ 	int show_rename_progress;
+ 	int dirstat_permille;
+ 	int setup;
++
++	/* Number of hexdigits to abbreviate raw format output to. */
+ 	int abbrev;
++
+ 	int ita_invisible_in_index;
+ /* white-space error highlighting */
+ #define WSEH_NEW (1<<12)
+@@ -192,6 +316,7 @@ struct diff_options {
+ 	/* to support internal diff recursion by --follow hack*/
+ 	int found_follow;
+ 
++	/* Callback which allows tweaking the options in diff_setup_done(). */
+ 	void (*set_default)(struct diff_options *);
+ 
+ 	FILE *file;
+@@ -270,6 +395,7 @@ enum color_diff {
+ 	DIFF_FILE_OLD_BOLD = 21,
+ 	DIFF_FILE_NEW_BOLD = 22,
+ };
++
+ const char *diff_get_color(int diff_use_color, enum color_diff ix);
+ #define diff_get_color_opt(o, ix) \
+ 	diff_get_color((o)->use_color, ix)
+diff --git a/diffcore.h b/diffcore.h
+index b651061c0e..7c07347e42 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -28,6 +28,12 @@ struct userdiff_driver;
+ 
+ #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
+ 
++/**
++ * the internal representation for a single file (blob).  It records the blob
++ * object name (if known -- for a work tree file it typically is a NUL SHA-1),
++ * filemode and pathname.  This is what the `diff_addremove()`, `diff_change()`
++ * and `diff_unmerge()` synthesize and feed `diff_queue()` function with.
++ */
+ struct diff_filespec {
+ 	struct object_id oid;
+ 	char *path;
+@@ -66,6 +72,17 @@ void diff_free_filespec_data(struct diff_filespec *);
+ void diff_free_filespec_blob(struct diff_filespec *);
+ int diff_filespec_is_binary(struct repository *, struct diff_filespec *);
+ 
++/**
++ * This records a pair of `struct diff_filespec`; the filespec for a file in
++ * the "old" set (i.e. preimage) is called `one`, and the filespec for a file
++ * in the "new" set (i.e. postimage) is called `two`.  A change that represents
++ * file creation has NULL in `one`, and file deletion has NULL in `two`.
++ *
++ * A `filepair` starts pointing at `one` and `two` that are from the same
++ * filename, but `diffcore_std()` can break pairs and match component filespecs
++ * with other filespecs from a different filepair to form new filepair. This is
++ * called 'rename detection'.
++ */
+ struct diff_filepair {
+ 	struct diff_filespec *one;
+ 	struct diff_filespec *two;
+@@ -77,6 +94,7 @@ struct diff_filepair {
+ 	unsigned done_skip_stat_unmatch : 1;
+ 	unsigned skip_stat_unmatch_result : 1;
+ };
++
+ #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
+ 
+ #define DIFF_PAIR_RENAME(p) ((p)->renamed_pair)
+@@ -94,11 +112,25 @@ void diff_free_filepair(struct diff_filepair *);
+ 
+ int diff_unmodified_pair(struct diff_filepair *);
+ 
++/**
++ * This is a collection of filepairs.  Notable members are:
++ *
++ * - `queue`:
++ * An array of pointers to `struct diff_filepair`. This dynamically grows as
++ * you add filepairs;
++ *
++ * - `alloc`:
++ * The allocated size of the `queue` array;
++ *
++ * - `nr`:
++ * The number of elements in the `queue` array.
++ */
+ struct diff_queue_struct {
+ 	struct diff_filepair **queue;
+ 	int alloc;
+ 	int nr;
+ };
++
+ #define DIFF_QUEUE_CLEAR(q) \
+ 	do { \
+ 		(q)->queue = NULL; \
 -- 
 gitgitgadget
+
