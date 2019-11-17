@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73E571F4B5
-	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 443091F4B5
+	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726397AbfKQVFM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 16:05:12 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:35011 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfKQVFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 16:05:11 -0500
-Received: by mail-wm1-f53.google.com with SMTP id 8so16585015wmo.0
-        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:09 -0800 (PST)
+        id S1726442AbfKQVFO (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 16:05:14 -0500
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:43156 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbfKQVFN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 16:05:13 -0500
+Received: by mail-wr1-f53.google.com with SMTP id n1so17072737wra.10
+        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=npKX9YJr95qmFzdU+8yYr9bvbE6ALUINPgiTomi20Qk=;
-        b=RbC2s4Wex3KBfru9UZjrHrzGfuFqXg9I18qCnyheNGtE5DhALfXBG4yfGjQjsx6TKv
-         Q4X11F2o111+xBOHKzrNZmU7f8BDns3Xr7xIVpll+r8mDY16+Ty9CL1+AOh0FGYi8fhh
-         +OQHUbu9QgaQT8f178EFUNPQkwmymZ8b6WVDmM9jHtPX7cyRBYrPc7MRQ5WBzJw72dj9
-         fkLhDohJkGxY92nsawG0E8gQj9uRrNXHviyEC9fHOwHvjJqMN5ww0g2kkcqcL72ha45I
-         YTZhsi1diEV5paBqVvU6isy/N7fP4TZMLMj9aT2Fw0FzGhXd5peve0NeM1I/K3Tyi2Vl
-         1ZQA==
+        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
+        b=V9nfPK9nu7lSry2Dn9kgQvT/2YcjYVJaxNfbrqCPF3lXOuqbGsSc8mSuAyi2P2GW3q
+         zuserBJ5Cro54bI5IUhn0XT51FjiysT8xgMQBR7IrW5VsmilXOlEuAwjWxERIrd5rwpn
+         3brMhpG5YVA23cKtr3AQA2Tbd6XuAcEGIQLcwv2btbd4nBbKUn+Lw4oyvo77DrxfClsf
+         6cef03hX/PbPkMNfYrMU/Cw2R/KoBCb0b6Pzjblm3DVfAhhhSz5yWZN9SkHHyAZCq+u2
+         gMqOB7R+uOaDFdYpkZoX/VHBqL5+/ofduzGQqZ7bgwBcFC8SDJDpdch1lSrO16xLN0bq
+         ATkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=npKX9YJr95qmFzdU+8yYr9bvbE6ALUINPgiTomi20Qk=;
-        b=qvask2F4tv8QRaAcJFbAsL6fjuLGNQivZHFKrEdbfgYZtMVy2ucM2hlb18S3iZ46Zy
-         RZf+dXAB14o+l7miS1GxJLHzE0ddFN9XGB9gg+9RzjoG2OHhxAzKrWA9HcZO5VNWqk6s
-         25BtAS4m0byz1fxNqmMiESPsaFheHGRRyoUUfMkMQ+fG6UGvboHn9ggvqbLNxdDREFFI
-         10HHmVLXnEfb++t0+qLs/xwBQi90keuMy3RoGWeUzJU9LJBZ9QlVEgSWKuwv1ZApK74N
-         mwOBqdR3c+8r9W/P3lRKGK/lQQwCQxvq9FQxrxQlVG+QLfFFRNND40MLSUVQJNl9JjJ5
-         66Vw==
-X-Gm-Message-State: APjAAAXo6YMib6clLrkwP9c2sj0uJ1/cwbhuliDWqQGnKcdAbi06wF9h
-        M0U1VsKV7t/IRhLxwisD6xNEhP4G
-X-Google-Smtp-Source: APXvYqx6Boy2s485tjOcVPQF+vH0F13Lp0keSVih6EKdFVmtEB+YJguLvnJXNHs0g3zKzQOHxXfMeQ==
-X-Received: by 2002:a05:600c:299:: with SMTP id 25mr27203573wmk.50.1574024708501;
-        Sun, 17 Nov 2019 13:05:08 -0800 (PST)
+        bh=eaxNcLZkc1xRmA03IP/qM005OiNcCoEXuCQFwEvdCY8=;
+        b=InbDryishHWyeTHvIwgEFrNao1f7Cwcg96t3A6MDFpFZLOZ+EFzm8xAZQbyWDwIa1u
+         1ClbA1H3k5ciXiLRLxM3OuFLA/IvCkj8F7cvbq1jd0fSn0FkcAU6WsFyJI/J4lO8Lbw5
+         AZ2tSN3s3A1XDjLZxRqhSxzJzRGFo06f7p/Qy9UEdbEsTAGVFRjyLadE3JUeHJw8nuT0
+         21dC75igDsgectnaPdL8frTwv8HQyyJKma7HnijpFgGJNNRG2HQmqrDFRUgs0KsWnXhB
+         uqCWZWAarzgJ6mcmG5iGiN9MA6+T3rO06S+f5KNTFsZ+BAw8LuFID0qH6oC8W+9QETSR
+         L6eA==
+X-Gm-Message-State: APjAAAVIPtJ1Df0XkU6yT1sjdIV4bi6S7aLHLDc5Yv+s6Bvla0ZaN20B
+        U17vNolqRMgeUNH8B3TJXMdaB4WV
+X-Google-Smtp-Source: APXvYqzV5LIpKnI6aRUtom3YlgLnNeOYWs5xxgTe4yFQ4/l5aQZF6peDOGpnP03fg2NgUM0d7tgwAw==
+X-Received: by 2002:a5d:694d:: with SMTP id r13mr25215192wrw.395.1574024709118;
+        Sun, 17 Nov 2019 13:05:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm18279619wmh.40.2019.11.17.13.05.07
+        by smtp.gmail.com with ESMTPSA id g184sm18619415wma.8.2019.11.17.13.05.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Sun, 17 Nov 2019 13:05:08 -0800 (PST)
-Message-Id: <a007b50b9bb64343d7a694865f0168b1453c421d.1574024701.git.gitgitgadget@gmail.com>
+Message-Id: <88553030f5f55a4c7c9ab06aac82ca4ed1a7392b.1574024701.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 References: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
         <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 17 Nov 2019 21:04:47 +0000
-Subject: [PATCH v5 08/21] attr: move doc to attr.h
+Date:   Sun, 17 Nov 2019 21:04:48 +0000
+Subject: [PATCH v5 09/21] revision: move doc to revision.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,365 +72,214 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-gitattributes.txt
-to attr.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-revision-walking.txt
+to revision.h as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-gitattributes.txt is removed because the
+Also documentation/technical/api-revision-walking.txt is removed because the
 information it has is now redundant and it'll be hard to keep it up to
 date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-gitattributes.txt | 154 ------------------
- attr.c                                        |   3 +-
- attr.h                                        | 141 +++++++++++++++-
- 3 files changed, 135 insertions(+), 163 deletions(-)
- delete mode 100644 Documentation/technical/api-gitattributes.txt
+ Documentation/MyFirstObjectWalk.txt           |  2 +-
+ .../technical/api-revision-walking.txt        | 72 -------------------
+ revision.h                                    | 59 +++++++++++++++
+ 3 files changed, 60 insertions(+), 73 deletions(-)
+ delete mode 100644 Documentation/technical/api-revision-walking.txt
 
-diff --git a/Documentation/technical/api-gitattributes.txt b/Documentation/technical/api-gitattributes.txt
+diff --git a/Documentation/MyFirstObjectWalk.txt b/Documentation/MyFirstObjectWalk.txt
+index 4d24daeb9f..321c0ba6a4 100644
+--- a/Documentation/MyFirstObjectWalk.txt
++++ b/Documentation/MyFirstObjectWalk.txt
+@@ -17,7 +17,7 @@ revision walk is used for operations like `git log`.
+ 
+ - `Documentation/user-manual.txt` under "Hacking Git" contains some coverage of
+   the revision walker in its various incarnations.
+-- `Documentation/technical/api-revision-walking.txt`
++- `revision.h`
+ - https://eagain.net/articles/git-for-computer-scientists/[Git for Computer Scientists]
+   gives a good overview of the types of objects in Git and what your object
+   walk is really describing.
+diff --git a/Documentation/technical/api-revision-walking.txt b/Documentation/technical/api-revision-walking.txt
 deleted file mode 100644
-index 45f0df600f..0000000000
---- a/Documentation/technical/api-gitattributes.txt
+index 03f9ea6ac4..0000000000
+--- a/Documentation/technical/api-revision-walking.txt
 +++ /dev/null
-@@ -1,154 +0,0 @@
--gitattributes API
--=================
+@@ -1,72 +0,0 @@
+-revision walking API
+-====================
 -
--gitattributes mechanism gives a uniform way to associate various
--attributes to set of paths.
+-The revision walking API offers functions to build a list of revisions
+-and then iterate over that list.
 -
--
--Data Structure
----------------
--
--`struct git_attr`::
--
--	An attribute is an opaque object that is identified by its name.
--	Pass the name to `git_attr()` function to obtain the object of
--	this type.  The internal representation of this structure is
--	of no interest to the calling programs.  The name of the
--	attribute can be retrieved by calling `git_attr_name()`.
--
--`struct attr_check_item`::
--
--	This structure represents one attribute and its value.
--
--`struct attr_check`::
--
--	This structure represents a collection of `attr_check_item`.
--	It is passed to `git_check_attr()` function, specifying the
--	attributes to check, and receives their values.
--
--
--Attribute Values
+-Calling sequence
 -----------------
 -
--An attribute for a path can be in one of four states: Set, Unset,
--Unspecified or set to a string, and `.value` member of `struct
--attr_check_item` records it.  There are three macros to check these:
+-The walking API has a given calling sequence: first you need to
+-initialize a rev_info structure, then add revisions to control what kind
+-of revision list do you want to get, finally you can iterate over the
+-revision list.
 -
--`ATTR_TRUE()`::
+-Functions
+----------
 -
--	Returns true if the attribute is Set for the path.
+-`repo_init_revisions`::
 -
--`ATTR_FALSE()`::
+-	Initialize a rev_info structure with default values. The third
+-	parameter may be NULL or can be prefix path, and then the `.prefix`
+-	variable will be set to it. This is typically the first function you
+-	want to call when you want to deal with a revision list. After calling
+-	this function, you are free to customize options, like set
+-	`.ignore_merges` to 0 if you don't want to ignore merges, and so on. See
+-	`revision.h` for a complete list of available options.
 -
--	Returns true if the attribute is Unset for the path.
+-`add_pending_object`::
 -
--`ATTR_UNSET()`::
+-	This function can be used if you want to add commit objects as revision
+-	information. You can use the `UNINTERESTING` object flag to indicate if
+-	you want to include or exclude the given commit (and commits reachable
+-	from the given commit) from the revision list.
+-+
+-NOTE: If you have the commits as a string list then you probably want to
+-use setup_revisions(), instead of parsing each string and using this
+-function.
 -
--	Returns true if the attribute is Unspecified for the path.
+-`setup_revisions`::
 -
--If none of the above returns true, `.value` member points at a string
--value of the attribute for the path.
+-	Parse revision information, filling in the `rev_info` structure, and
+-	removing the used arguments from the argument list. Returns the number
+-	of arguments left that weren't recognized, which are also moved to the
+-	head of the argument list. The last parameter is used in case no
+-	parameter given by the first two arguments.
 -
+-`prepare_revision_walk`::
 -
--Querying Specific Attributes
------------------------------
+-	Prepares the rev_info structure for a walk. You should check if it
+-	returns any error (non-zero return code) and if it does not, you can
+-	start using get_revision() to do the iteration.
 -
--* Prepare `struct attr_check` using attr_check_initl()
--  function, enumerating the names of attributes whose values you are
--  interested in, terminated with a NULL pointer.  Alternatively, an
--  empty `struct attr_check` can be prepared by calling
--  `attr_check_alloc()` function and then attributes you want to
--  ask about can be added to it with `attr_check_append()`
--  function.
+-`get_revision`::
 -
--* Call `git_check_attr()` to check the attributes for the path.
+-	Takes a pointer to a `rev_info` structure and iterates over it,
+-	returning a `struct commit *` each time you call it. The end of the
+-	revision list is indicated by returning a NULL pointer.
 -
--* Inspect `attr_check` structure to see how each of the
--  attribute in the array is defined for the path.
+-`reset_revision_walk`::
 -
+-	Reset the flags used by the revision walking api. You can use
+-	this to do multiple sequential revision walks.
 -
--Example
---------
+-Data structures
+----------------
 -
--To see how attributes "crlf" and "ident" are set for different paths.
+-Talk about <revision.h>, things like:
 -
--. Prepare a `struct attr_check` with two elements (because
--  we are checking two attributes):
+-* two diff_options, one for path limiting, another for output;
+-* remaining functions;
 -
--------------
--static struct attr_check *check;
--static void setup_check(void)
--{
--	if (check)
--		return; /* already done */
--	check = attr_check_initl("crlf", "ident", NULL);
--}
--------------
--
--. Call `git_check_attr()` with the prepared `struct attr_check`:
--
--------------
--	const char *path;
--
--	setup_check();
--	git_check_attr(path, check);
--------------
--
--. Act on `.value` member of the result, left in `check->items[]`:
--
--------------
--	const char *value = check->items[0].value;
--
--	if (ATTR_TRUE(value)) {
--		The attribute is Set, by listing only the name of the
--		attribute in the gitattributes file for the path.
--	} else if (ATTR_FALSE(value)) {
--		The attribute is Unset, by listing the name of the
--		attribute prefixed with a dash - for the path.
--	} else if (ATTR_UNSET(value)) {
--		The attribute is neither set nor unset for the path.
--	} else if (!strcmp(value, "input")) {
--		If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
--		true, the value is a string set in the gitattributes
--		file for the path by saying "attr=value".
--	} else if (... other check using value as string ...) {
--		...
--	}
--------------
--
--To see how attributes in argv[] are set for different paths, only
--the first step in the above would be different.
--
--------------
--static struct attr_check *check;
--static void setup_check(const char **argv)
--{
--	check = attr_check_alloc();
--	while (*argv) {
--		struct git_attr *attr = git_attr(*argv);
--		attr_check_append(check, attr);
--		argv++;
--	}
--}
--------------
--
--
--Querying All Attributes
-------------------------
--
--To get the values of all attributes associated with a file:
--
--* Prepare an empty `attr_check` structure by calling
--  `attr_check_alloc()`.
--
--* Call `git_all_attrs()`, which populates the `attr_check`
--  with the attributes attached to the path.
--
--* Iterate over the `attr_check.items[]` array to examine
--  the attribute names and values.  The name of the attribute
--  described by an `attr_check.items[]` object can be retrieved via
--  `git_attr_name(check->items[i].attr)`.  (Please note that no items
--  will be returned for unset attributes, so `ATTR_UNSET()` will return
--  false for all returned `attr_check.items[]` objects.)
--
--* Free the `attr_check` struct by calling `attr_check_free()`.
-diff --git a/attr.c b/attr.c
-index 11f19b541c..a826b2ef1f 100644
---- a/attr.c
-+++ b/attr.c
-@@ -1,7 +1,6 @@
- /*
-  * Handle git attributes.  See gitattributes(5) for a description of
-- * the file syntax, and Documentation/technical/api-gitattributes.txt
-- * for a description of the API.
-+ * the file syntax, and attr.h for a description of the API.
-  *
-  * One basic design decision here is that we are not going to support
-  * an insanely large number of attributes.
-diff --git a/attr.h b/attr.h
-index b0378bfe5f..404548f028 100644
---- a/attr.h
-+++ b/attr.h
-@@ -1,9 +1,121 @@
- #ifndef ATTR_H
- #define ATTR_H
+-(Linus, JC, Dscho)
+diff --git a/revision.h b/revision.h
+index 4134dc6029..983ffc0f12 100644
+--- a/revision.h
++++ b/revision.h
+@@ -9,6 +9,19 @@
+ #include "diff.h"
+ #include "commit-slab-decl.h"
  
 +/**
-+ * gitattributes mechanism gives a uniform way to associate various attributes
-+ * to set of paths.
++ * The revision walking API offers functions to build a list of revisions
++ * and then iterate over that list.
 + *
-+ *
-+ * Querying Specific Attributes
-+ * ----------------------------
-+ *
-+ * - Prepare `struct attr_check` using attr_check_initl() function, enumerating
-+ *   the names of attributes whose values you are interested in, terminated with
-+ *   a NULL pointer.  Alternatively, an empty `struct attr_check` can be
-+ *   prepared by calling `attr_check_alloc()` function and then attributes you
-+ *   want to ask about can be added to it with `attr_check_append()` function.
-+ *
-+ * - Call `git_check_attr()` to check the attributes for the path.
-+ *
-+ * - Inspect `attr_check` structure to see how each of the attribute in the
-+ *   array is defined for the path.
-+ *
-+ *
-+ * Example
-+ * -------
-+ *
-+ * To see how attributes "crlf" and "ident" are set for different paths.
-+ *
-+ * - Prepare a `struct attr_check` with two elements (because we are checking
-+ *   two attributes):
-+ *
-+ * ------------
-+ * static struct attr_check *check;
-+ * static void setup_check(void)
-+ * {
-+ * 	if (check)
-+ * 		return; // already done
-+ * check = attr_check_initl("crlf", "ident", NULL);
-+ * }
-+ * ------------
-+ *
-+ * - Call `git_check_attr()` with the prepared `struct attr_check`:
-+ *
-+ * ------------
-+ * const char *path;
-+ *
-+ * setup_check();
-+ * git_check_attr(path, check);
-+ * ------------
-+ *
-+ * - Act on `.value` member of the result, left in `check->items[]`:
-+ *
-+ * ------------
-+ * const char *value = check->items[0].value;
-+ *
-+ * if (ATTR_TRUE(value)) {
-+ * The attribute is Set, by listing only the name of the
-+ * attribute in the gitattributes file for the path.
-+ * } else if (ATTR_FALSE(value)) {
-+ * The attribute is Unset, by listing the name of the
-+ *         attribute prefixed with a dash - for the path.
-+ * } else if (ATTR_UNSET(value)) {
-+ * The attribute is neither set nor unset for the path.
-+ * } else if (!strcmp(value, "input")) {
-+ * If none of ATTR_TRUE(), ATTR_FALSE(), or ATTR_UNSET() is
-+ *         true, the value is a string set in the gitattributes
-+ * file for the path by saying "attr=value".
-+ * } else if (... other check using value as string ...) {
-+ * ...
-+ * }
-+ * ------------
-+ *
-+ * To see how attributes in argv[] are set for different paths, only
-+ * the first step in the above would be different.
-+ *
-+ * ------------
-+ * static struct attr_check *check;
-+ * static void setup_check(const char **argv)
-+ * {
-+ *     check = attr_check_alloc();
-+ *     while (*argv) {
-+ *         struct git_attr *attr = git_attr(*argv);
-+ *         attr_check_append(check, attr);
-+ *         argv++;
-+ *     }
-+ * }
-+ * ------------
-+ *
-+ *
-+ * Querying All Attributes
-+ * -----------------------
-+ *
-+ * To get the values of all attributes associated with a file:
-+ *
-+ * - Prepare an empty `attr_check` structure by calling `attr_check_alloc()`.
-+ *
-+ * - Call `git_all_attrs()`, which populates the `attr_check` with the
-+ * attributes attached to the path.
-+ *
-+ * - Iterate over the `attr_check.items[]` array to examine the attribute
-+ * names and values. The name of the attribute described by an
-+ * `attr_check.items[]` object can be retrieved via
-+ * `git_attr_name(check->items[i].attr)`. (Please note that no items will be
-+ * returned for unset attributes, so `ATTR_UNSET()` will return false for all
-+ * returned `attr_check.items[]` objects.)
-+ *
-+ * - Free the `attr_check` struct by calling `attr_check_free()`.
-+ */
-+
- struct index_state;
- 
--/* An attribute is a pointer to this opaque structure */
-+/**
-+ * An attribute is an opaque object that is identified by its name. Pass the
-+ * name to `git_attr()` function to obtain the object of this type.
-+ * The internal representation of this structure is of no interest to the
-+ * calling programs. The name of the attribute can be retrieved by calling
-+ * `git_attr_name()`.
-+ */
- struct git_attr;
- 
- /* opaque structures used internally for attribute collection */
-@@ -21,21 +133,36 @@ const struct git_attr *git_attr(const char *);
- extern const char git_attr__true[];
- extern const char git_attr__false[];
- 
--/* For public to check git_attr_check results */
-+/**
-+ * Attribute Values
++ * Calling sequence
 + * ----------------
 + *
-+ * An attribute for a path can be in one of four states: Set, Unset, Unspecified
-+ * or set to a string, and `.value` member of `struct attr_check_item` records
-+ * it. The three macros check these, if none of them returns true, `.value`
-+ * member points at a string value of the attribute for the path.
++ * The walking API has a given calling sequence: first you need to initialize
++ * a rev_info structure, then add revisions to control what kind of revision
++ * list do you want to get, finally you can iterate over the revision list.
++ *
 + */
 +
-+/* Returns true if the attribute is Set for the path. */
- #define ATTR_TRUE(v) ((v) == git_attr__true)
+ /* Remember to update object flag allocation in object.h */
+ #define SEEN		(1u<<0)
+ #define UNINTERESTING   (1u<<1)
+@@ -306,11 +319,29 @@ struct setup_revision_opt {
+ #ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
+ #define init_revisions(revs, prefix) repo_init_revisions(the_repository, revs, prefix)
+ #endif
 +
-+/* Returns true if the attribute is Unset for the path. */
- #define ATTR_FALSE(v) ((v) == git_attr__false)
++/**
++ * Initialize a rev_info structure with default values. The third parameter may
++ * be NULL or can be prefix path, and then the `.prefix` variable will be set
++ * to it. This is typically the first function you want to call when you want
++ * to deal with a revision list. After calling this function, you are free to
++ * customize options, like set `.ignore_merges` to 0 if you don't want to
++ * ignore merges, and so on.
++ */
+ void repo_init_revisions(struct repository *r,
+ 			 struct rev_info *revs,
+ 			 const char *prefix);
 +
-+/* Returns true if the attribute is Unspecified for the path. */
- #define ATTR_UNSET(v) ((v) == NULL)
- 
--/*
-- * Send one or more git_attr_check to git_check_attrs(), and
-- * each 'value' member tells what its value is.
-- * Unset one is returned as NULL.
-- */
-+/* This structure represents one attribute and its value. */
- struct attr_check_item {
- 	const struct git_attr *attr;
- 	const char *value;
- };
++/**
++ * Parse revision information, filling in the `rev_info` structure, and
++ * removing the used arguments from the argument list. Returns the number
++ * of arguments left that weren't recognized, which are also moved to the
++ * head of the argument list. The last parameter is used in case no
++ * parameter given by the first two arguments.
++ */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs,
+ 		    struct setup_revision_opt *);
++
+ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const struct option *options,
+ 			const char * const usagestr[]);
+@@ -319,9 +350,26 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ int handle_revision_arg(const char *arg, struct rev_info *revs,
+ 			int flags, unsigned revarg_opt);
  
 +/**
-+ * This structure represents a collection of `attr_check_item`. It is passed to
-+ * `git_check_attr()` function, specifying the attributes to check, and
-+ * receives their values.
++ * Reset the flags used by the revision walking api. You can use this to do
++ * multiple sequential revision walks.
 + */
- struct attr_check {
- 	int nr;
- 	int alloc;
+ void reset_revision_walk(void);
++
++/**
++ * Prepares the rev_info structure for a walk. You should check if it returns
++ * any error (non-zero return code) and if it does not, you can start using
++ * get_revision() to do the iteration.
++ */
+ int prepare_revision_walk(struct rev_info *revs);
++
++/**
++ * Takes a pointer to a `rev_info` structure and iterates over it, returning a
++ * `struct commit *` each time you call it. The end of the revision list is
++ * indicated by returning a NULL pointer.
++ */
+ struct commit *get_revision(struct rev_info *revs);
++
+ char *get_revision_mark(const struct rev_info *revs,
+ 			const struct commit *commit);
+ void put_revision_mark(const struct rev_info *revs,
+@@ -333,8 +381,19 @@ void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *trees)
+ 
+ void show_object_with_name(FILE *, struct object *, const char *);
+ 
++/**
++ * This function can be used if you want to add commit objects as revision
++ * information. You can use the `UNINTERESTING` object flag to indicate if
++ * you want to include or exclude the given commit (and commits reachable
++ * from the given commit) from the revision list.
++ *
++ * NOTE: If you have the commits as a string list then you probably want to
++ * use setup_revisions(), instead of parsing each string and using this
++ * function.
++ */
+ void add_pending_object(struct rev_info *revs,
+ 			struct object *obj, const char *name);
++
+ void add_pending_oid(struct rev_info *revs,
+ 		     const char *name, const struct object_id *oid,
+ 		     unsigned int flags);
 -- 
 gitgitgadget
 
