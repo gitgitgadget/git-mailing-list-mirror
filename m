@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 811221F4B5
+	by dcvr.yhbt.net (Postfix) with ESMTP id A51431F4B5
 	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726273AbfKQVFH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 16:05:07 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36818 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726134AbfKQVFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 16:05:07 -0500
-Received: by mail-wm1-f66.google.com with SMTP id c22so16551674wmd.1
-        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:04 -0800 (PST)
+        id S1726304AbfKQVFI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 16:05:08 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46561 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfKQVFI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 16:05:08 -0500
+Received: by mail-wr1-f67.google.com with SMTP id b3so17096780wrs.13
+        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SoPm1cFRuVNOXgTvUq1oqThbMzIouvxn57iJ55LWUvI=;
-        b=KAieWXragrwljAwVkF5TbSuBX/DaDZuYbeTKs51HN0uc1F6t77I0keeWtDpYJKkM1C
-         HR0lWkoSpaaKgBKJBd84isDQc384uYnYFfM/ihaNIdPG2jRz7WXZQo5fwWt1mB63xFq8
-         zArCXqs8fRSc1Big9IFDd57e5LYGQ5l6ysBNOxIqK+owSQra1PmG4yzOK2MGMMa3rA+Z
-         iSM4yRdfL0lI+qoD5S6lbfujq4aBAYepjpGHvi5J7Sv27XHtwX4MhW2VjozBroEtEt7f
-         d5IisYGIYgo4af1SAVkiFoljMLz+EV5cZUzj9o4WSpMQ+nt1Cc1nUb/1WuzzKQQ2GcPS
-         K6EA==
+        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
+        b=CL4DtSKwgBLghpfm6ikr/F1c0BdZ5hziFNNoIdLF2fdNN4M7dz9pRHRIlV7M3RahYZ
+         vR4xWVH7ucK9DVthzVbRoooIjpYiucIY4OvQi95VN1ffWSGJ80AoBJbAhAxXajkFtmKQ
+         CKEyQik/e6px4OyZoJlkenMKHAlP1KUq7Smd+ZRSExk+bhiQ1W9oSWfauihSFdL/OiPu
+         nmdYWxpGeXqoQWFzcqJP31q1ZZJPeJbNGp9BoWutal4+/M7+6lJa+HaypWvjgj9bCGe3
+         7K0NRdD20hvMpSCP7uSAaZEZ4eWDnDJO1zsrHhr30QMojKqm7iYvjNBYJGIN5ce0bJQm
+         XNGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SoPm1cFRuVNOXgTvUq1oqThbMzIouvxn57iJ55LWUvI=;
-        b=encVnho63lYJKFHaXoySiyv02JiGM5gM9LKNEbtdBagLauyzFVFTVkAgkU0RakxfTn
-         ialj9D9P6mvL4ONZyEmAvTFxUqk47lF/7lGyrGdYee5C1WO5uFG+JwaZhs/nwmoburmR
-         PpjNdS/vuMtqXZJq5aIBIRPvVIBWxEHrty5tRwaKrpk6zSPwhm165cgdR652yIvp+7hZ
-         ZjsPNA79ngbcIgxPT2QrgjUmQv97pRaNm5juY22WyehFFmd+tu8xYEofgFpAhHyNKOEW
-         ki5pOhIHxzneer+OQW16qFMbz1os82Rw+5KECsLLRf43B9p2MsNCtrYxLJbTDCvhbyvi
-         gjBw==
-X-Gm-Message-State: APjAAAWjrq011ENbCTrchwt+bYGIXDiCUZjqISw8n+x9W2kH8p1Zi3Mr
-        QoiM3DAmO0STl9j8fvfdwHxmCIXN
-X-Google-Smtp-Source: APXvYqxC+2fUWBTtr16S0Pjgmux8Q3PXwe2j6c77404IQrfdAiF85ziMVS4dT2tNqJJFmPVXxq4eRQ==
-X-Received: by 2002:a1c:ed0e:: with SMTP id l14mr23611412wmh.74.1574024703550;
-        Sun, 17 Nov 2019 13:05:03 -0800 (PST)
+        bh=maRAJuup5abJ1hJXrBJ5YMG/weYvOZoneGLFTTC2A8E=;
+        b=YnO0T7H9o05FUrw3Zo+Rj+tbOfeygyKlLozUvs+uBVGwYaw394+HXYVZa3ACr0EFni
+         7xlq2HDG5daD8p4nfJDvcK56WJMYp61RW35/gRMfN9Jd32TB/u1B6wlkrB+grxuhJoCV
+         bULsvz5AMPUsglSjctsN3r923/DdWhneyM+i8OszRVnkm6xvjqvWNfHNdSo05fKeGmsv
+         sq3cnDKCwyca0EuJLn4KoDBcmQk+xiAnAH65FBzC9cGYdjkQCULd+GCKJUV5QhxP/C3v
+         Wq0hk1C2Vut7hNymUBZRmYVxRLlvuAtpDHh2bcAy+Fp9fdW7s8mPTOqzUYhezT9Sm5Fx
+         va5Q==
+X-Gm-Message-State: APjAAAUi8fl3Zv+yXpZDpxE01MeFO+OLm6zScPC0MH9mk8NurtNbU8ht
+        1zgLCogUg+4/qLKCTd/B1zH4TcfS
+X-Google-Smtp-Source: APXvYqyHSKCce+P6ioV+SiT+/WRRyqmCZXzRqmDan+8Lu7ty0O9NbjkXtq6sffkCeU8GFbDp4o7irg==
+X-Received: by 2002:a05:6000:1181:: with SMTP id g1mr24877926wrx.131.1574024705038;
+        Sun, 17 Nov 2019 13:05:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b1sm19129809wrs.74.2019.11.17.13.05.02
+        by smtp.gmail.com with ESMTPSA id t12sm19602508wrx.93.2019.11.17.13.05.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Nov 2019 13:05:03 -0800 (PST)
-Message-Id: <7f2f4c45a6141a9c9f3fd7aaff54fc3a7b7173ec.1574024700.git.gitgitgadget@gmail.com>
+        Sun, 17 Nov 2019 13:05:04 -0800 (PST)
+Message-Id: <495fe333bd8bc140358bc1c5f518822b92924f07.1574024700.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 References: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
         <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 17 Nov 2019 21:04:40 +0000
-Subject: [PATCH v5 01/21] diff: move doc to diff.h and diffcore.h
+Date:   Sun, 17 Nov 2019 21:04:42 +0000
+Subject: [PATCH v5 03/21] graph: move doc to graph.h and graph.c
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,486 +72,376 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-diff.txt to both
-diff.h and diffcore.h as it's easier for the developers to find the usage
+Move the documentation from Documentation/technical/api-history-graph.txt to
+graph.h and graph.c as it's easier for the developers to find the usage
 information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-diff.txt is removed because the information
-it has is now redundant and it'll be hard to keep it up to date and
-synchronized with the documentation in the header files.
+The graph library was already well documented, so few comments were added to
+both graph.h and graph.c
 
-There are three members documented in the doc file that weren't found in
-the header files, assuming the doc wasn't up to date and the members
-no longer exist:
-touched_flags, COLOR_DIFF_WORDS and QUIET.
+Also documentation/technical/api-history-graph.txt is removed because
+the information it has is now redundant and it'll be hard to keep it up to
+date and synchronized with the documentation in the header file.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- Documentation/technical/api-diff.txt | 174 ---------------------------
- diff.h                               | 126 +++++++++++++++++++
- diffcore.h                           |  32 +++++
- 3 files changed, 158 insertions(+), 174 deletions(-)
- delete mode 100644 Documentation/technical/api-diff.txt
+ Documentation/technical/api-history-graph.txt | 173 ------------------
+ graph.c                                       |   1 +
+ graph.h                                       | 121 ++++++++++++
+ 3 files changed, 122 insertions(+), 173 deletions(-)
+ delete mode 100644 Documentation/technical/api-history-graph.txt
 
-diff --git a/Documentation/technical/api-diff.txt b/Documentation/technical/api-diff.txt
+diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
 deleted file mode 100644
-index 30fc0e9c93..0000000000
---- a/Documentation/technical/api-diff.txt
+index d0d1707c8c..0000000000
+--- a/Documentation/technical/api-history-graph.txt
 +++ /dev/null
-@@ -1,174 +0,0 @@
--diff API
--========
+@@ -1,173 +0,0 @@
+-history graph API
+-=================
 -
--The diff API is for programs that compare two sets of files (e.g. two
--trees, one tree and the index) and present the found difference in
--various ways.  The calling program is responsible for feeding the API
--pairs of files, one from the "old" set and the corresponding one from
--"new" set, that are different.  The library called through this API is
--called diffcore, and is responsible for two things.
+-The graph API is used to draw a text-based representation of the commit
+-history.  The API generates the graph in a line-by-line fashion.
 -
--* finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
--  changes that touch a string (`-S`), as specified by the caller.
+-Functions
+----------
 -
--* outputting the differences in various formats, as specified by the
--  caller.
+-Core functions:
+-
+-* `graph_init()` creates a new `struct git_graph`
+-
+-* `graph_update()` moves the graph to a new commit.
+-
+-* `graph_next_line()` outputs the next line of the graph into a strbuf.  It
+-  does not add a terminating newline.
+-
+-* `graph_padding_line()` outputs a line of vertical padding in the graph.  It
+-  is similar to `graph_next_line()`, but is guaranteed to never print the line
+-  containing the current commit.  Where `graph_next_line()` would print the
+-  commit line next, `graph_padding_line()` prints a line that simply extends
+-  all branch lines downwards one row, leaving their positions unchanged.
+-
+-* `graph_is_commit_finished()` determines if the graph has output all lines
+-  necessary for the current commit.  If `graph_update()` is called before all
+-  lines for the current commit have been printed, the next call to
+-  `graph_next_line()` will output an ellipsis, to indicate that a portion of
+-  the graph was omitted.
+-
+-The following utility functions are wrappers around `graph_next_line()` and
+-`graph_is_commit_finished()`.  They always print the output to stdout.
+-They can all be called with a NULL graph argument, in which case no graph
+-output will be printed.
+-
+-* `graph_show_commit()` calls `graph_next_line()` and
+-  `graph_is_commit_finished()` until one of them return non-zero.  This prints
+-  all graph lines up to, and including, the line containing this commit.
+-  Output is printed to stdout.  The last line printed does not contain a
+-  terminating newline.
+-
+-* `graph_show_oneline()` calls `graph_next_line()` and prints the result to
+-  stdout.  The line printed does not contain a terminating newline.
+-
+-* `graph_show_padding()` calls `graph_padding_line()` and prints the result to
+-  stdout.  The line printed does not contain a terminating newline.
+-
+-* `graph_show_remainder()` calls `graph_next_line()` until
+-  `graph_is_commit_finished()` returns non-zero.  Output is printed to stdout.
+-  The last line printed does not contain a terminating newline.  Returns 1 if
+-  output was printed, and 0 if no output was necessary.
+-
+-* `graph_show_strbuf()` prints the specified strbuf to stdout, prefixing all
+-  lines but the first with a graph line.  The caller is responsible for
+-  ensuring graph output for the first line has already been printed to stdout.
+-  (This can be done with `graph_show_commit()` or `graph_show_oneline()`.)  If
+-  a NULL graph is supplied, the strbuf is printed as-is.
+-
+-* `graph_show_commit_msg()` is similar to `graph_show_strbuf()`, but it also
+-  prints the remainder of the graph, if more lines are needed after the strbuf
+-  ends.  It is better than directly calling `graph_show_strbuf()` followed by
+-  `graph_show_remainder()` since it properly handles buffers that do not end in
+-  a terminating newline.  The output printed by `graph_show_commit_msg()` will
+-  end in a newline if and only if the strbuf ends in a newline.
+-
+-Data structure
+---------------
+-`struct git_graph` is an opaque data type used to store the current graph
+-state.
 -
 -Calling sequence
 -----------------
 -
--* Prepare `struct diff_options` to record the set of diff options, and
--  then call `repo_diff_setup()` to initialize this structure.  This
--  sets up the vanilla default.
+-* Create a `struct git_graph` by calling `graph_init()`.  When using the
+-  revision walking API, this is done automatically by `setup_revisions()` if
+-  the '--graph' option is supplied.
 -
--* Fill in the options structure to specify desired output format, rename
--  detection, etc.  `diff_opt_parse()` can be used to parse options given
--  from the command line in a way consistent with existing git-diff
--  family of programs.
+-* Use the revision walking API to walk through a group of contiguous commits.
+-  The `get_revision()` function automatically calls `graph_update()` each time
+-  it is invoked.
 -
--* Call `diff_setup_done()`; this inspects the options set up so far for
--  internal consistency and make necessary tweaking to it (e.g. if
--  textual patch output was asked, recursive behaviour is turned on);
--  the callback set_default in diff_options can be used to tweak this more.
+-* For each commit, call `graph_next_line()` repeatedly, until
+-  `graph_is_commit_finished()` returns non-zero.  Each call to
+-  `graph_next_line()` will output a single line of the graph.  The resulting
+-  lines will not contain any newlines.  `graph_next_line()` returns 1 if the
+-  resulting line contains the current commit, or 0 if this is merely a line
+-  needed to adjust the graph before or after the current commit.  This return
+-  value can be used to determine where to print the commit summary information
+-  alongside the graph output.
 -
--* As you find different pairs of files, call `diff_change()` to feed
--  modified files, `diff_addremove()` to feed created or deleted files,
--  or `diff_unmerge()` to feed a file whose state is 'unmerged' to the
--  API.  These are thin wrappers to a lower-level `diff_queue()` function
--  that is flexible enough to record any of these kinds of changes.
+-Limitations
+------------
 -
--* Once you finish feeding the pairs of files, call `diffcore_std()`.
--  This will tell the diffcore library to go ahead and do its work.
+-* `graph_update()` must be called with commits in topological order.  It should
+-  not be called on a commit if it has already been invoked with an ancestor of
+-  that commit, or the graph output will be incorrect.
 -
--* Calling `diff_flush()` will produce the output.
+-* `graph_update()` must be called on a contiguous group of commits.  If
+-  `graph_update()` is called on a particular commit, it should later be called
+-  on all parents of that commit.  Parents must not be skipped, or the graph
+-  output will appear incorrect.
+-+
+-`graph_update()` may be used on a pruned set of commits only if the parent list
+-has been rewritten so as to include only ancestors from the pruned set.
 -
+-* The graph API does not currently support reverse commit ordering.  In
+-  order to implement reverse ordering, the graphing API needs an
+-  (efficient) mechanism to find the children of a commit.
 -
--Data structures
-----------------
+-Sample usage
+-------------
 -
--* `struct diff_filespec`
+-------------
+-struct commit *commit;
+-struct git_graph *graph = graph_init(opts);
 -
--This is the internal representation for a single file (blob).  It
--records the blob object name (if known -- for a work tree file it
--typically is a NUL SHA-1), filemode and pathname.  This is what the
--`diff_addremove()`, `diff_change()` and `diff_unmerge()` synthesize and
--feed `diff_queue()` function with.
+-while ((commit = get_revision(opts)) != NULL) {
+-	while (!graph_is_commit_finished(graph))
+-	{
+-		struct strbuf sb;
+-		int is_commit_line;
 -
--* `struct diff_filepair`
+-		strbuf_init(&sb, 0);
+-		is_commit_line = graph_next_line(graph, &sb);
+-		fputs(sb.buf, stdout);
 -
--This records a pair of `struct diff_filespec`; the filespec for a file
--in the "old" set (i.e. preimage) is called `one`, and the filespec for a
--file in the "new" set (i.e. postimage) is called `two`.  A change that
--represents file creation has NULL in `one`, and file deletion has NULL
--in `two`.
+-		if (is_commit_line)
+-			log_tree_commit(opts, commit);
+-		else
+-			putchar(opts->diffopt.line_termination);
+-	}
+-}
+-------------
 -
--A `filepair` starts pointing at `one` and `two` that are from the same
--filename, but `diffcore_std()` can break pairs and match component
--filespecs with other filespecs from a different filepair to form new
--filepair.  This is called 'rename detection'.
+-Sample output
+--------------
 -
--* `struct diff_queue`
+-The following is an example of the output from the graph API.  This output does
+-not include any commit summary information--callers are responsible for
+-outputting that information, if desired.
 -
--This is a collection of filepairs.  Notable members are:
--
--`queue`::
--
--	An array of pointers to `struct diff_filepair`.  This
--	dynamically grows as you add filepairs;
--
--`alloc`::
--
--	The allocated size of the `queue` array;
--
--`nr`::
--
--	The number of elements in the `queue` array.
--
--
--* `struct diff_options`
--
--This describes the set of options the calling program wants to affect
--the operation of diffcore library with.
--
--Notable members are:
--
--`output_format`::
--	The output format used when `diff_flush()` is run.
--
--`context`::
--	Number of context lines to generate in patch output.
--
--`break_opt`, `detect_rename`, `rename-score`, `rename_limit`::
--	Affects the way detection logic for complete rewrites, renames
--	and copies.
--
--`abbrev`::
--	Number of hexdigits to abbreviate raw format output to.
--
--`pickaxe`::
--	A constant string (can and typically does contain newlines to
--	look for a block of text, not just a single line) to filter out
--	the filepairs that do not change the number of strings contained
--	in its preimage and postimage of the diff_queue.
--
--`flags`::
--	This is mostly a collection of boolean options that affects the
--	operation, but some do not have anything to do with the diffcore
--	library.
--
--`touched_flags`::
--	Records whether a flag has been changed due to user request
--	(rather than just set/unset by default).
--
--`set_default`::
--	Callback which allows tweaking the options in diff_setup_done().
--
--BINARY, TEXT;;
--	Affects the way how a file that is seemingly binary is treated.
--
--FULL_INDEX;;
--	Tells the patch output format not to use abbreviated object
--	names on the "index" lines.
--
--FIND_COPIES_HARDER;;
--	Tells the diffcore library that the caller is feeding unchanged
--	filepairs to allow copies from unmodified files be detected.
--
--COLOR_DIFF;;
--	Output should be colored.
--
--COLOR_DIFF_WORDS;;
--	Output is a colored word-diff.
--
--NO_INDEX;;
--	Tells diff-files that the input is not tracked files but files
--	in random locations on the filesystem.
--
--ALLOW_EXTERNAL;;
--	Tells output routine that it is Ok to call user specified patch
--	output routine.  Plumbing disables this to ensure stable output.
--
--QUIET;;
--	Do not show any output.
--
--REVERSE_DIFF;;
--	Tells the library that the calling program is feeding the
--	filepairs reversed; `one` is two, and `two` is one.
--
--EXIT_WITH_STATUS;;
--	For communication between the calling program and the options
--	parser; tell the calling program to signal the presence of
--	difference using program exit code.
--
--HAS_CHANGES;;
--	Internal; used for optimization to see if there is any change.
--
--SILENT_ON_REMOVE;;
--	Affects if diff-files shows removed files.
--
--RECURSIVE, TREE_IN_RECURSIVE;;
--	Tells if tree traversal done by tree-diff should recursively
--	descend into a tree object pair that are different in preimage
--	and postimage set.
--
--(JC)
-diff --git a/diff.h b/diff.h
-index 7f8f024feb..1be4ca4e4a 100644
---- a/diff.h
-+++ b/diff.h
-@@ -9,6 +9,49 @@
- #include "object.h"
- #include "oidset.h"
+-------------
+-*
+-*
+-*
+-|\
+-* |
+-| | *
+-| \ \
+-|  \ \
+-*-. \ \
+-|\ \ \ \
+-| | * | |
+-| | | | | *
+-| | | | | *
+-| | | | | *
+-| | | | | |\
+-| | | | | | *
+-| * | | | | |
+-| | | | | *  \
+-| | | | | |\  |
+-| | | | * | | |
+-| | | | * | | |
+-* | | | | | | |
+-| |/ / / / / /
+-|/| / / / / /
+-* | | | | | |
+-|/ / / / / /
+-* | | | | |
+-| | | | | *
+-| | | | |/
+-| | | | *
+-------------
+diff --git a/graph.c b/graph.c
+index f53135485f..eab3af1dc7 100644
+--- a/graph.c
++++ b/graph.c
+@@ -34,6 +34,7 @@ static void graph_padding_line(struct git_graph *graph, struct strbuf *sb);
+  * handle directly. It is assumed that this is the same file handle as the
+  * file specified by the graph diff options. This is necessary so that
+  * graph_show_strbuf can be called even with a NULL graph.
++ * If a NULL graph is supplied, the strbuf is printed as-is.
+  */
+ static void graph_show_strbuf(struct git_graph *graph,
+ 			      FILE *file,
+diff --git a/graph.h b/graph.h
+index af623390b6..8313e293c7 100644
+--- a/graph.h
++++ b/graph.h
+@@ -2,6 +2,103 @@
+ #define GRAPH_H
+ #include "diff.h"
  
 +/**
-+ * The diff API is for programs that compare two sets of files (e.g. two trees,
-+ * one tree and the index) and present the found difference in various ways.
-+ * The calling program is responsible for feeding the API pairs of files, one
-+ * from the "old" set and the corresponding one from "new" set, that are
-+ * different.
-+ * The library called through this API is called diffcore, and is responsible
-+ * for two things.
-+ *
-+ * - finding total rewrites (`-B`), renames (`-M`) and copies (`-C`), and
-+ * changes that touch a string (`-S`), as specified by the caller.
-+ *
-+ * - outputting the differences in various formats, as specified by the caller.
++ * The graph API is used to draw a text-based representation of the commit
++ * history. The API generates the graph in a line-by-line fashion.
 + *
 + * Calling sequence
 + * ----------------
 + *
-+ * - Prepare `struct diff_options` to record the set of diff options, and then
-+ * call `repo_diff_setup()` to initialize this structure.  This sets up the
-+ * vanilla default.
++ * - Create a `struct git_graph` by calling `graph_init()`.  When using the
++ *   revision walking API, this is done automatically by `setup_revisions()` if
++ *   the '--graph' option is supplied.
 + *
-+ * - Fill in the options structure to specify desired output format, rename
-+ * detection, etc.  `diff_opt_parse()` can be used to parse options given
-+ * from the command line in a way consistent with existing git-diff family
-+ * of programs.
++ * - Use the revision walking API to walk through a group of contiguous commits.
++ *   The `get_revision()` function automatically calls `graph_update()` each time
++ *   it is invoked.
 + *
-+ * - Call `diff_setup_done()`; this inspects the options set up so far for
-+ * internal consistency and make necessary tweaking to it (e.g. if textual
-+ * patch output was asked, recursive behaviour is turned on); the callback
-+ * set_default in diff_options can be used to tweak this more.
++ * - For each commit, call `graph_next_line()` repeatedly, until
++ *   `graph_is_commit_finished()` returns non-zero.  Each call to
++ *   `graph_next_line()` will output a single line of the graph.  The resulting
++ *   lines will not contain any newlines.  `graph_next_line()` returns 1 if the
++ *   resulting line contains the current commit, or 0 if this is merely a line
++ *   needed to adjust the graph before or after the current commit.  This return
++ *   value can be used to determine where to print the commit summary information
++ *   alongside the graph output.
 + *
-+ * - As you find different pairs of files, call `diff_change()` to feed
-+ * modified files, `diff_addremove()` to feed created or deleted files, or
-+ * `diff_unmerge()` to feed a file whose state is 'unmerged' to the API.
-+ * These are thin wrappers to a lower-level `diff_queue()` function that is
-+ * flexible enough to record any of these kinds of changes.
++ * Limitations
++ * -----------
++ * - Check the graph_update() function for its limitations.
 + *
-+ * - Once you finish feeding the pairs of files, call `diffcore_std()`.
-+ * This will tell the diffcore library to go ahead and do its work.
++ * - The graph API does not currently support reverse commit ordering.  In
++ *   order to implement reverse ordering, the graphing API needs an
++ *   (efficient) mechanism to find the children of a commit.
 + *
-+ * - Calling `diff_flush()` will produce the output.
++ * Sample usage
++ * ------------
++ *
++ * ------------
++ * struct commit *commit;
++ * struct git_graph *graph = graph_init(opts);
++ *
++ * while ((commit = get_revision(opts)) != NULL) {
++ * 	while (!graph_is_commit_finished(graph))
++ * 	{
++ * 		struct strbuf sb;
++ * 		int is_commit_line;
++ *
++ * 		strbuf_init(&sb, 0);
++ * 		is_commit_line = graph_next_line(graph, &sb);
++ * 		fputs(sb.buf, stdout);
++ *
++ * 		if (is_commit_line)
++ * 			log_tree_commit(opts, commit);
++ * 		else
++ * 			putchar(opts->diffopt.line_termination);
++ * 	}
++ * }
++ * ------------
++ * Sample output
++ * -------------
++ *
++ * The following is an example of the output from the graph API.  This output does
++ * not include any commit summary information--callers are responsible for
++ * outputting that information, if desired.
++ * ------------
++ * *
++ * *
++ * *
++ * |\
++ * * |
++ * | | *
++ * | \ \
++ * |  \ \
++ * *-. \ \
++ * |\ \ \ \
++ * | | * | |
++ * | | | | | *
++ * | | | | | *
++ * | | | | | *
++ * | | | | | |\
++ * | | | | | | *
++ * | * | | | | |
++ * | | | | | *  \
++ * | | | | | |\  |
++ * | | | | * | | |
++ * | | | | * | | |
++ * * | | | | | | |
++ * | |/ / / / / /
++ * |/| / / / / /
++ * * | | | | | |
++ * |/ / / / / /
++ * * | | | | |
++ * | | | | | *
++ * | | | | |/
++ * | | | | *
++ * ------------
++ *
 + */
 +
- struct combine_diff_path;
- struct commit;
- struct diff_filespec;
-@@ -65,21 +108,66 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+ /* A graph is a pointer to this opaque structure */
+ struct git_graph;
  
- #define DIFF_FLAGS_INIT { 0 }
- struct diff_flags {
-+
-+	/**
-+	 * Tells if tree traversal done by tree-diff should recursively descend
-+	 * into a tree object pair that are different in preimage and postimage set.
-+	 */
- 	unsigned recursive;
- 	unsigned tree_in_recursive;
-+
-+	/* Affects the way how a file that is seemingly binary is treated. */
- 	unsigned binary;
- 	unsigned text;
-+
-+	/**
-+	 * Tells the patch output format not to use abbreviated object names on the
-+	 * "index" lines.
-+	 */
- 	unsigned full_index;
-+
-+	/* Affects if diff-files shows removed files. */
- 	unsigned silent_on_remove;
-+
-+	/**
-+	 * Tells the diffcore library that the caller is feeding unchanged
-+	 * filepairs to allow copies from unmodified files be detected.
-+	 */
- 	unsigned find_copies_harder;
-+
- 	unsigned follow_renames;
- 	unsigned rename_empty;
-+
-+	/* Internal; used for optimization to see if there is any change. */
- 	unsigned has_changes;
-+
- 	unsigned quick;
-+
-+	/**
-+	 * Tells diff-files that the input is not tracked files but files in random
-+	 * locations on the filesystem.
-+	 */
- 	unsigned no_index;
-+
-+	/**
-+	 * Tells output routine that it is Ok to call user specified patch output
-+	 * routine.  Plumbing disables this to ensure stable output.
-+	 */
- 	unsigned allow_external;
-+
-+	/**
-+	 * For communication between the calling program and the options parser;
-+	 * tell the calling program to signal the presence of difference using
-+	 * program exit code.
-+	 */
- 	unsigned exit_with_status;
-+
-+	/**
-+	 * Tells the library that the calling program is feeding the filepairs
-+	 * reversed; `one` is two, and `two` is one.
-+	 */
- 	unsigned reverse_diff;
-+
- 	unsigned check_failed;
- 	unsigned relative_name;
- 	unsigned ignore_submodules;
-@@ -131,36 +219,72 @@ enum diff_submodule_format {
- 	DIFF_SUBMODULE_INLINE_DIFF
- };
- 
-+/**
-+ * the set of options the calling program wants to affect the operation of
-+ * diffcore library with.
-+ */
- struct diff_options {
- 	const char *orderfile;
-+
-+	/**
-+	 * A constant string (can and typically does contain newlines to look for
-+	 * a block of text, not just a single line) to filter out the filepairs
-+	 * that do not change the number of strings contained in its preimage and
-+	 * postimage of the diff_queue.
-+	 */
- 	const char *pickaxe;
-+
- 	const char *single_follow;
- 	const char *a_prefix, *b_prefix;
- 	const char *line_prefix;
- 	size_t line_prefix_length;
-+
-+	/**
-+	 * collection of boolean options that affects the operation, but some do
-+	 * not have anything to do with the diffcore library.
-+	 */
- 	struct diff_flags flags;
- 
- 	/* diff-filter bits */
- 	unsigned int filter;
- 
- 	int use_color;
-+
-+	/* Number of context lines to generate in patch output. */
- 	int context;
-+
- 	int interhunkcontext;
-+
-+	/* Affects the way detection logic for complete rewrites, renames and
-+	 * copies.
-+	 */
- 	int break_opt;
- 	int detect_rename;
-+
- 	int irreversible_delete;
- 	int skip_stat_unmatch;
- 	int line_termination;
-+
-+	/* The output format used when `diff_flush()` is run. */
- 	int output_format;
-+
- 	unsigned pickaxe_opts;
-+
-+	/* Affects the way detection logic for complete rewrites, renames and
-+	 * copies.
-+	 */
- 	int rename_score;
- 	int rename_limit;
-+
- 	int needed_rename_limit;
- 	int degraded_cc_to_c;
- 	int show_rename_progress;
- 	int dirstat_permille;
- 	int setup;
-+
-+	/* Number of hexdigits to abbreviate raw format output to. */
- 	int abbrev;
-+
- 	int ita_invisible_in_index;
- /* white-space error highlighting */
- #define WSEH_NEW (1<<12)
-@@ -192,6 +316,7 @@ struct diff_options {
- 	/* to support internal diff recursion by --follow hack*/
- 	int found_follow;
- 
-+	/* Callback which allows tweaking the options in diff_setup_done(). */
- 	void (*set_default)(struct diff_options *);
- 
- 	FILE *file;
-@@ -270,6 +395,7 @@ enum color_diff {
- 	DIFF_FILE_OLD_BOLD = 21,
- 	DIFF_FILE_NEW_BOLD = 22,
- };
-+
- const char *diff_get_color(int diff_use_color, enum color_diff ix);
- #define diff_get_color_opt(o, ix) \
- 	diff_get_color((o)->use_color, ix)
-diff --git a/diffcore.h b/diffcore.h
-index b651061c0e..7c07347e42 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -28,6 +28,12 @@ struct userdiff_driver;
- 
- #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
- 
-+/**
-+ * the internal representation for a single file (blob).  It records the blob
-+ * object name (if known -- for a work tree file it typically is a NUL SHA-1),
-+ * filemode and pathname.  This is what the `diff_addremove()`, `diff_change()`
-+ * and `diff_unmerge()` synthesize and feed `diff_queue()` function with.
-+ */
- struct diff_filespec {
- 	struct object_id oid;
- 	char *path;
-@@ -66,6 +72,17 @@ void diff_free_filespec_data(struct diff_filespec *);
- void diff_free_filespec_blob(struct diff_filespec *);
- int diff_filespec_is_binary(struct repository *, struct diff_filespec *);
- 
-+/**
-+ * This records a pair of `struct diff_filespec`; the filespec for a file in
-+ * the "old" set (i.e. preimage) is called `one`, and the filespec for a file
-+ * in the "new" set (i.e. postimage) is called `two`.  A change that represents
-+ * file creation has NULL in `one`, and file deletion has NULL in `two`.
+@@ -50,6 +147,21 @@ struct git_graph *graph_init(struct rev_info *opt);
+  * If graph_update() is called before graph_is_commit_finished() returns 1,
+  * the next call to graph_next_line() will output an ellipsis ("...")
+  * to indicate that a portion of the graph is missing.
 + *
-+ * A `filepair` starts pointing at `one` and `two` that are from the same
-+ * filename, but `diffcore_std()` can break pairs and match component filespecs
-+ * with other filespecs from a different filepair to form new filepair. This is
-+ * called 'rename detection'.
-+ */
- struct diff_filepair {
- 	struct diff_filespec *one;
- 	struct diff_filespec *two;
-@@ -77,6 +94,7 @@ struct diff_filepair {
- 	unsigned done_skip_stat_unmatch : 1;
- 	unsigned skip_stat_unmatch_result : 1;
- };
-+
- #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
- 
- #define DIFF_PAIR_RENAME(p) ((p)->renamed_pair)
-@@ -94,11 +112,25 @@ void diff_free_filepair(struct diff_filepair *);
- 
- int diff_unmodified_pair(struct diff_filepair *);
- 
-+/**
-+ * This is a collection of filepairs.  Notable members are:
++ * Limitations:
++ * -----------
 + *
-+ * - `queue`:
-+ * An array of pointers to `struct diff_filepair`. This dynamically grows as
-+ * you add filepairs;
++ * - `graph_update()` must be called with commits in topological order.  It should
++ *   not be called on a commit if it has already been invoked with an ancestor of
++ *   that commit, or the graph output will be incorrect.
 + *
-+ * - `alloc`:
-+ * The allocated size of the `queue` array;
++ * - `graph_update()` must be called on a contiguous group of commits.  If
++ *   `graph_update()` is called on a particular commit, it should later be called
++ *   on all parents of that commit.  Parents must not be skipped, or the graph
++ *   output will appear incorrect.
 + *
-+ * - `nr`:
-+ * The number of elements in the `queue` array.
-+ */
- struct diff_queue_struct {
- 	struct diff_filepair **queue;
- 	int alloc;
- 	int nr;
- };
-+
- #define DIFF_QUEUE_CLEAR(q) \
- 	do { \
- 		(q)->queue = NULL; \
++ * - `graph_update()` may be used on a pruned set of commits only if the parent list
++ *   has been rewritten so as to include only ancestors from the pruned set.
+  */
+ void graph_update(struct git_graph *graph, struct commit *commit);
+ 
+@@ -62,6 +174,10 @@ void graph_update(struct git_graph *graph, struct commit *commit);
+  * for this commit.  If 0 is returned, graph_next_line() may still be
+  * called without calling graph_update(), and it will merely output
+  * appropriate "vertical padding" in the graph.
++ *
++ * If `graph_update()` is called before all lines for the current commit have
++ * been printed, the next call to `graph_next_line()` will output an ellipsis,
++ * to indicate that a portion of the graph was omitted.
+  */
+ int graph_is_commit_finished(struct git_graph const *graph);
+ 
+@@ -112,6 +228,7 @@ void graph_show_padding(struct git_graph *graph);
+ /*
+  * If the graph is non-NULL, print the rest of the history graph for this
+  * commit to stdout.  Does not print a terminating newline on the last line.
++ * Returns 1 if output was printed, and 0 if no output was necessary.
+  */
+ int graph_show_remainder(struct git_graph *graph);
+ 
+@@ -121,6 +238,10 @@ int graph_show_remainder(struct git_graph *graph);
+  * This is similar to graph_show_strbuf(), but it always prints the
+  * remainder of the graph.
+  *
++ * It is better than directly calling `graph_show_strbuf()` followed by
++ * `graph_show_remainder()` since it properly handles buffers that do not end in
++ * a terminating newline.
++ *
+  * If the strbuf ends with a newline, the output printed by
+  * graph_show_commit_msg() will end with a newline.  If the strbuf is
+  * missing a terminating newline (including if it is empty), the output
 -- 
 gitgitgadget
 
