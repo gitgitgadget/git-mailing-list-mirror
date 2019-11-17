@@ -8,35 +8,35 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82CE11F4B5
-	for <e@80x24.org>; Sun, 17 Nov 2019 18:19:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC5FF1F4B5
+	for <e@80x24.org>; Sun, 17 Nov 2019 18:36:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726069AbfKQSTo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 13:19:44 -0500
-Received: from mout.web.de ([217.72.192.78]:42223 "EHLO mout.web.de"
+        id S1726128AbfKQSgb (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 13:36:31 -0500
+Received: from mout.web.de ([212.227.17.11]:32979 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726047AbfKQSTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 13:19:43 -0500
+        id S1726047AbfKQSgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 13:36:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574014781;
-        bh=mt6xHDV5EM3fKorsqCKcKqJ0dskbEVwwktn9KP7p/WU=;
+        s=dbaedf251592; t=1574015789;
+        bh=TTPMyL9TD3LE37mDm9jFEie1gtWEoCi/yX1O6rHqcZE=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=RlmVumj+YRs7tj2PvbRHsLXGlqPENEULr0PNbaHOLpWF3OcvEnB4tWk/0WtUZ+5rs
-         NTdsRq4smZIdas54W+twb5vgrrubCngW1j6hMELNuHjzdXUdBm8AIr4Ab2o+qitwVN
-         AS8SnZ+oIUMZu65EaQ2pO4hCWEZRvwBIxsMDuZA0=
+        b=Im1AfveLqE1Tlh04WCwpgRjK4HJ6ZTSgwJSThJenhqTeSgfqHW9024IfGX/kxHeal
+         9JT/laMrdVtHGSFgfCepXeNk6lDdLfxBNrwFX1FjFYc6IqDEIyMUvowfOBbDp5Du6G
+         hCd6XUb4RJyBf1BCRhrstw6cAm3Ewphmpb+Dn0NM=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.131.59.42]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MNLS1-1iTwAO2n1d-006sFE; Sun, 17
- Nov 2019 19:19:41 +0100
+Received: from [192.168.1.3] ([93.131.59.42]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgfJz-1iBq1a1rhX-00O3SK; Sun, 17
+ Nov 2019 19:36:29 +0100
 Subject: Re: coccinelle: adjustments for array.cocci?
 To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 Cc:     git@vger.kernel.org
 References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
  <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <75b9417b-14a7-c9c6-25eb-f6e05f340376@web.de>
- <fc56b970-4ca1-7734-c4bb-f57cae7a273f@web.de>
- <57b5d1c9-72c1-6fff-a242-90f5f24f0972@web.de>
- <37c84512-ba83-51ce-4253-ea0f7bd41de0@web.de>
+ <05ab1110-2115-7886-f890-9983caabc52c@web.de>
+ <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
+ <50b265f0-bcab-d0ec-a714-07e94ceaa508@web.de>
+ <f28f5fb8-2814-9df5-faf2-7146ed1a1f4d@web.de>
 From:   Markus Elfring <Markus.Elfring@web.de>
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
@@ -81,208 +81,68 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <eff19da9-3f9f-0cf0-1e88-64d2acdbabcd@web.de>
-Date:   Sun, 17 Nov 2019 19:19:40 +0100
+Message-ID: <ac67f805-fbff-68e9-214e-3f353a1c038f@web.de>
+Date:   Sun, 17 Nov 2019 19:36:28 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <37c84512-ba83-51ce-4253-ea0f7bd41de0@web.de>
+In-Reply-To: <f28f5fb8-2814-9df5-faf2-7146ed1a1f4d@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zUi306fAk55q7InCGwPncKQGzanpcDHzX7NXiCVGug8wOBWNyQr
- qFw8t85ydLQvqOxo47VYNZMZaB1ADjr+IcB5ojac4Ceoiwyw88wgALDAr5PVmJVDAXTvV8i
- sx6qhyYoVh2sCA1UZjRrUqEwpf2RjjSKaXF0jtSLNJ+I6CIcb57BNQ4JaEDhHyO6i+a7mta
- LiX0F0CRtpMvmQc9877xg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TGZ7opnhIwA=:+IfHjKoW/O5/PjbBVPClEV
- vn/F8SKcAdQhYM1VuVXEoFVakeFBJPH1gof/HPmU9GH0yjOlYGcA2vuP0VDybQDwOId6pcJpG
- JHL33SnSmgaSKouNEc/XVMsIB0K1iVIYTxZlLWnAVjuhzKZjSqRZADgUPA+nHRVrYGyi+nWFt
- 3m2AB4Kcf5MW6q7PGRg6eYtl8OsegAOCWxzuWC8jO9N5O0myr228qJ9Lb8abyKui6713DuLkf
- 3J6Q32N5/B43fKC1iVTIcv8sCs38jOSOnw81q1XPBJb7BiK9soH1wpKaMTYi9d3FSFLOv3w0X
- NZm7WE3EFHawzeVrvs89Pq3PDhzKuyYxA7ugWiozCMqenV8Emas3YR+0SMxU0Q4opDnqky1rs
- c51gyarmjpvhLvVK7rRiTBFvu2IcQGrdKFTqQt9NFl4ekc9gAH9Y40y9vDiTxlrZY8uYKJaWG
- +ulHzLdx8SbH1fP0R9ercUe0xWT+ZICnT70f5Avzu8nrtqgpYakmhKrzwzbxmMbkWc+0iQmPA
- 9QeMfcp6En/285HndUTGlXsXK5cAN+W3V4zh5p22rW1NXWaioVzTvWOkBityumBQ0u3F1lqLm
- 0aSmnYEGquj6twj79ZnZbJtjIRpWEFbGWSUHXkrrTpuI41jHroNY+Sa0fR/NoBuxt5o7fZiAa
- VLb/CsEPGUUSph18VB6CigKP1jrx3ZWCNvclXje4t5BzEcEwEKGbXIohGUpV5f88UcIZ4PWcj
- U/+LI7h7FRI0ipRuo1a1Uu/A/otYafe6qJTylHNUfPkD51InaNBRtGAVjfykIS7IsJpYTwPAF
- k30zgqLHuOxQ/uw1hyqtXQTyaZej2/0qn3Me6Oez2byGtXzR8LSTVv5kTwXZ26qSje6FYjip9
- O+nbx+9UChrMExQNNWuMVUPkItNSVSaup//gk009Maf+pzFI6diHcH8LyYLUYNT+LHBcqlcQH
- BfnGc8I8Yz35QVlrPHiyNveFOW0mnN3qWRzxNfa1fsBHEGYFSoUmobeqK7r4JQmWgAYb4y/Nk
- qJU3iqOEcUGxTt7plgnS7xgOjcm7AJiZL9O363TlV82nQUpbTtM00oVgtih+cEOYmBLtF2KNc
- 5CWtgSRCEBmuXezBa/pcnP3ZwNIh5N4nRd8zdFJ+CAxsYbPWHixnU61KTUd1T5pNUQTh6JpRb
- kMk7yfQ+iBUeiMqmL+0ICEfNQON12IQQHCQ51GsKdXLuujXfBDSB9HoDtIjj45X3LI90RLv5m
- sw3NgD+lhdNzN8XyNg99BtYirkoEYFJ/x6b6Wed//CI4DYyg/txZLa1GYwXM=
+X-Provags-ID: V03:K1:CsVAZOPwlnBhp51xFb8MXuJGnkd8om9+XriDX/kBENasB/L+oUf
+ KZOI5vzfPUOx1N9S+Sv7gxd8jvJAtLg+4sWCWO+NUz/j3YA+NzxeWRvTH2AZco8VTeUcMo4
+ 2PhsO8JRl2zve/bcHkVV5vpQNTvoZyeq1ueBYtOmeM9Cy5miTjXtexx8m854esgil4UjgwF
+ 2fLOfhk2IeVuwA9DuYixA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fBeO1nUZSOM=:d0XWJglsKDL5KFK5lbC7P6
+ GJ1cDEawxYKJ1zYlYmBFV32mfEblXPV55DrswyW3r/JjIeNizytZ0fN9u0tlpPGXg5H/o/gus
+ NLPXHOF1i5v4MQFHqVILtn/hYacfqC5ZmYwWwfT6NSbJfoTfuFt7iP5+UpCeZ3APw1316U7bz
+ ROh177VDEouRYejfMXFc3zFahqdPT1ghBzAhhbRkox4BJBKBw+O2fph+eme9sKOBNolJ7bNuQ
+ JHLj0CV4V2bmY+IcGrZaEL1B48MhhlSGyfVbmMaHFBKLRuFuSbsZjFYgiO180dCmy5eBB01BS
+ Yc7n5KRuVJKKaqlKELp56qeOkSskSIOUU5eBBObKSL3BMm6j8z9M3uzeqmLehV71LoQI8qbdn
+ WW37uREKymTdSCyplte5ievnDZ+77h4uB7Urc8gW2v03fWgFcM8fwh3HEqN8Gqlrh5CGPU6VE
+ XoVUqaPMWAGM/zfxnnQf11iwqENLeYmg4IfRcPutaWd0qBS856kHtY1SPijVznq+8/xzS9WM6
+ T3g2f2EU+QJ9N2vuEA2VAsGg8puQRp5LiZDrYqhQw4+ebmqKhMIes/MEvsE1FuoU6XJp/VR+I
+ uJDAcrrLDKO0qFHuRlb8RIIjq4Ya0FZna6l2CL2nKoxklFknrbf06Z809nSkfur4foYKzQyE6
+ mlB11h9tTu9miqIlab6EqG0F89/SkrOsCf/O0uXtUpaFvqQI0yKzXjqI/XkKxKrUtTjHs4xtx
+ s3O8n5kCjoABBaf4MlgSFSi+gy1l/hvsuDTRZI9FZdRISvEeiwhBKW5C9mxLkrs9zaMDdfVzm
+ XACIH1DCa6WhkZahfO5GPnRG9vswb9jAEaKQL57ZfTPm7rM3zV9Lq/12atWnw8rQdgV+sUR6z
+ 3liBIyUZPpHaS7n4U2SJUfrjskwSzp+WaUCPZf63v4tGCZU3vFNluOa9hQVbx+skETpmieTce
+ yHcjX1CICMSXzav9HpUfvj0LcwYA3njLsPRSZaaDwKp3WyMs71bOZ4zE2HVa3Wh0enGpICJLu
+ R7AQUAUEqCSWlLxjTUSNRpAJr0QCN541uIb4nkGIKtt9zOBJCMu+DRV/l91q6zLRlT7MWyGU8
+ hsIm/PapAqnR9fFcvh7G9mYJ0aiQhbVk3Ou9rIR90vIkwe1GygAbYFKxJhXdi2mTDUbRyqj6i
+ ErMni+hhWnCYw2LwwW8tZNCGuZEGF2bBiYm9qbtyT8563Uco7CVWwgARDyfHwa4MTl2az57Dl
+ aFrxchBPdKvrwsjeLfOFRP2zAw92yO3MnVxQvpknX4fslD/zAJp91Cd7LS3U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Whitespace is not what makes the above example more complicated than the
-> equivalent rule below;
-
-A different code layout might help in a better understanding for such
-change specifications.
-
-
-> separating the pieces of simple expressions does.
-
-Will there occasionally be a need to change only the required source code =
-parts?
-
-
->>> than what we currently have:
->>>   @@
->>>   expression dst, src, n, E;
->>>   @@
->>>     memcpy(dst, src, n * sizeof(
->>>   - E[...]
->>>   + *(E)
->>>     ))
-
-Are any circumstances to consider where only the essential implementation =
-details
-should be touched by an automatic software transformation?
-
-
->>>> @@
->>>> type T;
->>>> T *ptr;
->>>> T[] arr;
->>>> expression E, n;
->>>> @@
->>>>  memcpy(
->>>> (       ptr, E, sizeof(
->>>> -                      *(ptr)
->>>> +                      T
->>>>                       ) * n
->>>> |       arr, E, sizeof(
->>>> -                      *(arr)
->>>> +                      T
->>>>                       ) * n
->>>> |       E, ptr, sizeof(
->>>> -                      *(ptr)
->>>> +                      T
->>>>                       ) * n
->>>> |       E, arr, sizeof(
->>>> -                      *(arr)
->>>> +                      T
->>>>                       ) * n
->>>> )
->>>>        )
->>>
->>> This still fails to regenerate two of the changes from 921d49be86
->>> (use COPY_ARRAY for copying arrays, 2019-06-15), at least with for me
->>> (and Coccinelle 1.0.4).
->>
->> Would you become keen to find the reasons out for unexpected data proce=
-ssing
->> results (also by the software combination =E2=80=9CCoccinelle 1.0.8-000=
-04-g842075f7=E2=80=9D)
->> at this place?
+>> It was chosen to transform source code fragments (pointer expressions)
+>> by two SmPL rules so that the search pattern =E2=80=9Csizeof(T)=E2=80=
+=9D would work
+>> in the third rule.
 >
-> It looks like a bug in Coccinelle to me
+> Ah, right, it would be nice to get rid of those normalization rules,
+> especially the second one.
 
-We might stumble also on just another (temporary) software limitation.
-
-
-> and I'd like to see it fixed
-
-Would you like to support corresponding development anyhow?
+Thanks for such positive feedback.
 
 
-> if that's confirmed, of course.
+> I don't see how,
 
-I am curious if further feedback will evolve for affected software areas.
-
-
-> And I'd like to see Debian pick up a newer version, preferably containin=
-g that fix.
-
-I assume that you can wait a long time for progress in the software
-distribution direction.
+Where is your view too limited at the moment?
 
 
-> But at least until then our semantic patches need to work around it.
+> though, without either causing a combinatorial explosion
 
-Would another concrete fix for the currently discussed SmPL script
-be better than a =E2=80=9Cworkaround=E2=80=9D?
-
-
->> But this transformation rule can probably be omitted if the usage
->> of SmPL disjunctions will be increased in a subsequent rule, can't it?
->
-> Perhaps, but I don't see how.  Do you?
-
-Obviously, yes (in principle according to my proposal from yesterday).
-https://public-inbox.org/git/05ab1110-2115-7886-f890-9983caabc52c@web.de/
+Growing combinations can become more interesting, can't they?
 
 
->> Would you like to use the SmPL code =E2=80=9C*( \( src_ptr \| src_arr \=
-) )=E2=80=9D instead?
->
-> That leaves out dst_ptr and dst_arr.
+> or loosening up the matching too much.
 
-How many items should finally be filtered in the discussed SmPL disjunctio=
-n?
-
-
-> And what would it mean to match e.g. this ?
->
-> 	memcpy(dst_ptr, src_ptr, n * sizeof(*src_arr))
-
-The Coccinelle software takes care for commutativity by isomorphisms.
-https://github.com/coccinelle/coccinelle/blob/19ee1697bf152d37a78a20cefe14=
-8775bf4b0e0d/standard.iso#L241
-
-
-> At least the element size would be the same, but I'd rather shy away fro=
-m
-> transforming weird cases like this automatically.
-
-Do you mean to specify additional restrictions by SmPL code?
-
-
->   void *memmove(void *dest, const void *src, size_t n);
->   void *memcpy(void *dest, const void *src, size_t n);
->
->   COPY_ARRAY(dst, src, n)
->   MOVE_ARRAY(dst, src, n)
-
-Can the replacement of these functions by macro calls be combined further
-by improved SmPL code?
-
-
->> Possible nicer run time characteristics by the Coccinelle software.
->
-> How much faster is it exactly?
-
-The answer will depend on efforts which you would like to invest
-in corresponding (representative) measurements.
-
-
-> Speedups are good, but I think readability of rules is more important
-> than coccicheck duration.
-
-I hope that a more pleasing balance can be found for the involved
-usability factors.
-
-
->> But how does the software situation look like if the original source co=
-de
->> would contain coding style issues?
->
-> The same: Generated code should not add coding style issues.
-
-Such an expectation is generally nice. - But target conflicts can occur th=
-ere.
-
-
-> We can still use results that need to be polished, but that's a manual s=
-tep
-> which reduces the benefits of automation.
-
-I am curious how the software development practice will evolve further.
+I hope that we can achieve another reasonably safe transformation
+approach together.
 
 Regards,
 Markus
