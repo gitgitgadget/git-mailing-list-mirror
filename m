@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5766A1F4B5
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ACF91F5A2
 	for <e@80x24.org>; Sun, 17 Nov 2019 21:05:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726290AbfKQVFI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 16:05:08 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:40015 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726151AbfKQVFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 16:05:08 -0500
-Received: by mail-wr1-f52.google.com with SMTP id q15so4298512wrw.7
-        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:05 -0800 (PST)
+        id S1726316AbfKQVFJ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 16:05:09 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:53381 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726128AbfKQVFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 16:05:09 -0500
+Received: by mail-wm1-f49.google.com with SMTP id u18so15310833wmc.3
+        for <git@vger.kernel.org>; Sun, 17 Nov 2019 13:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
-        b=rdBQicZtY0C7AqVWFRFpL4yZCLJ1HiAD3SU3NvXXhmcDKmseg85SfMB4mgRU3T4eKn
-         UMeOhrid7N+4wNt1mHlo4Dq6NZ0cPhzWTUXD7LS7CWDj6ilysT8AbAVoWZZnLJGKJ3I7
-         jj52MCYOfcCk+tZe0fcfo1sVAZ8zi5GkhS353QKto8mEhboYalA6IqPznbHrSq3t3VwY
-         wioyeVzomW2wKUeSIXIQL4LGGMmIFCGx2LaWufUtAQs6G+Og6VHMVBnh8Cg/bajRgWvQ
-         KKUF9LydlH1V2doMbQSi0WNswPmYfxT1EwKMyHYHE4QStb3ZOzA2EjddpGiv04KbTNT9
-         zS1w==
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=VhwPNvGYqYdD8/Jn22i+OAfNcNN8lmxeecG5k+o3f+L0VFMuHYQfXfOflAPz2J8C0G
+         EINtUmpGhqFdhSgBrMKtq66/2wMF6TrVS4PJ5oj8d+tmvLyQLAW2dHlP5X8cTfGsRk6g
+         tzgS3R6oC9bdilMr6orJv1vsYBNWSkATUYkQPcghnDNdnM93pU1C7YQbno7ZwEBqSPCT
+         NWZsNA5DgPFpmgggNqpJ6DprsBoZpLARh8/H+lFiM/zXjnzLrD2Z1nbwiaCjk6EkKxC5
+         eDrbpCPmowe2L+VtKRCK8K9b7dAAWnQ09yzDnuv+6iMd7eoDo3oebx2e9QyXXAQvyUcM
+         1xgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Bt16nrzcP9zwZOeYqqF1fvI/jDdS02cTNIlVAPiGPq4=;
-        b=nL1ns6dpqe7Qtj1ZwFMUkgjb5qvh3zc3OF2IzRCKdkxRTXz7aeFAmiNVjtnSELiQsA
-         GMLTH+tYVJEQVIYU/vuOqrCnMgu8FARX9hBPyvuHz/7ROJCqJ1RQ+FQX/r0Dr4cOiIj2
-         z9CJVHSryMAJYIUfkdEjeO1y6Bjk+jMJ0pHJjZ8cpVA+2JWEplkKRDEs5wesXdNoDHUA
-         9WxwWPpox9Vx9jF+rZWNd8xrce+frlneaOi/1kdg7Gk+AXh0NYFp45T7w9Jc0bN9sn5/
-         pS+W3k4omKnK1LduTeyNJ2/EQKKpT8I+GuFxgRR5XFYDOqH/WjXH+GKCJ7lYytNx0W+e
-         2nYw==
-X-Gm-Message-State: APjAAAVa5QdgegdrU0AzY7sPj19eIgDKNwzXEr3vQB5RyavDjbDEWISc
-        IxbX61RJyamjrs0OA4bdzfduxvMj
-X-Google-Smtp-Source: APXvYqwxXVfs4ZaqBui18BmwOOsHgtS4AJ6PuKoyZ0SjNhawn9Qk50LMMqBInFYn0n9VZ07glHJrPA==
-X-Received: by 2002:adf:f445:: with SMTP id f5mr27593677wrp.193.1574024704339;
-        Sun, 17 Nov 2019 13:05:04 -0800 (PST)
+        bh=a5qdORUuBoi+ThJumqy61+gTvzn+Egf3+Ckn+v1c3Ug=;
+        b=UHt/53i/etdRyiC4qA2haOOuBABJKPmU9HwluVvk3RIvCTfv4GeY60q5EhLkD+44uR
+         t7sxFAMiKyOTuYnEKHgzgmyQkwK+zH0q7S4j0SG81DYypLPkiZ9ggVX2HmLWuUKrxgAj
+         nG++4lmN3gst19uzIajrQ3kCGlPr5Yz6bB1QF1BfaXvYAJKgyxBBM96mtWJ7qHdk1pU5
+         fPPIWNcq3W5UiltcvoMxNdXqhoEAwwdtDkovmqKFrq2SDFlInaz3sDdpm13mBFdAOtlC
+         hsq2AYu3EaBAE51T/OBLZtuWKCqy0UHTXPVnkPTwWgnnRVACDhe80UlRljOsF8MXrpXS
+         FuHw==
+X-Gm-Message-State: APjAAAUj/5qXMNXiLs++TEDd4r0suADbIyn7HXstm7luUvla0olymhOE
+        oLeoDiKIOmBRGzTeavhmRf/w9s6n
+X-Google-Smtp-Source: APXvYqygJeYffloEHTIZiSHdpivznM8Lm1r/mPZk2Q9f/YKqz/qImrGCBlTW5yU5Hox0iRxJR5nSXw==
+X-Received: by 2002:a1c:dc44:: with SMTP id t65mr26702926wmg.169.1574024705675;
+        Sun, 17 Nov 2019 13:05:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v81sm18620287wmg.4.2019.11.17.13.05.03
+        by smtp.gmail.com with ESMTPSA id w4sm17059985wmi.39.2019.11.17.13.05.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 17 Nov 2019 13:05:03 -0800 (PST)
-Message-Id: <f87ca0228e16cff133e063d24f19fd96622b74b1.1574024700.git.gitgitgadget@gmail.com>
+        Sun, 17 Nov 2019 13:05:05 -0800 (PST)
+Message-Id: <90baf409ecaa2d26f72e6d2e79e1708bebbce06c.1574024700.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 References: <pull.434.v4.git.1573811626.gitgitgadget@gmail.com>
         <pull.434.v5.git.1574024700.gitgitgadget@gmail.com>
 From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 17 Nov 2019 21:04:41 +0000
-Subject: [PATCH v5 02/21] dir: move doc to dir.h
+Date:   Sun, 17 Nov 2019 21:04:43 +0000
+Subject: [PATCH v5 04/21] merge: move doc to ll-merge.h
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,327 +72,198 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Heba Waly <heba.waly@gmail.com>
 
-Move the documentation from Documentation/technical/api-directory-listing.txt
-to dir.h as it's easier for the developers to find the usage information
-beside the code instead of looking for it in another doc file.
+Move the related documentation from Documentation/technical/api-merge.txt
+to ll-merge.h as it's easier for the developers to find the usage
+information beside the code instead of looking for it in another doc file.
 
-Also documentation/technical/api-directory-listing.txt is removed because
-the information it has is now redundant and it'll be hard to keep it up to
-date and synchronized with the documentation in the header files.
+Only the ll-merge related doc is removed from
+documentation/technical/api-merge.txt because this information will be
+redundant and it'll be hard to keep it up to date and synchronized with
+the documentation in ll-merge.h.
 
 Signed-off-by: Heba Waly <heba.waly@gmail.com>
 ---
- .../technical/api-directory-listing.txt       | 130 ------------------
- dir.c                                         |   2 -
- dir.h                                         | 119 +++++++++++++++-
- 3 files changed, 114 insertions(+), 137 deletions(-)
- delete mode 100644 Documentation/technical/api-directory-listing.txt
+ Documentation/technical/api-merge.txt | 72 +-------------------------
+ ll-merge.h                            | 73 ++++++++++++++++++++++++++-
+ 2 files changed, 74 insertions(+), 71 deletions(-)
 
-diff --git a/Documentation/technical/api-directory-listing.txt b/Documentation/technical/api-directory-listing.txt
-deleted file mode 100644
-index 76b6e4f71b..0000000000
---- a/Documentation/technical/api-directory-listing.txt
-+++ /dev/null
-@@ -1,130 +0,0 @@
--directory listing API
--=====================
--
--The directory listing API is used to enumerate paths in the work tree,
--optionally taking `.git/info/exclude` and `.gitignore` files per
--directory into account.
--
--Data structure
----------------
--
--`struct dir_struct` structure is used to pass directory traversal
--options to the library and to record the paths discovered.  A single
--`struct dir_struct` is used regardless of whether or not the traversal
--recursively descends into subdirectories.
--
--The notable options are:
--
--`exclude_per_dir`::
--
--	The name of the file to be read in each directory for excluded
--	files (typically `.gitignore`).
--
--`flags`::
--
--	A bit-field of options:
--
--`DIR_SHOW_IGNORED`:::
--
--	Return just ignored files in `entries[]`, not untracked
--	files. This flag is mutually exclusive with
--	`DIR_SHOW_IGNORED_TOO`.
--
--`DIR_SHOW_IGNORED_TOO`:::
--
--	Similar to `DIR_SHOW_IGNORED`, but return ignored files in
--	`ignored[]` in addition to untracked files in
--	`entries[]`. This flag is mutually exclusive with
--	`DIR_SHOW_IGNORED`.
--
--`DIR_KEEP_UNTRACKED_CONTENTS`:::
--
--	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is set, the
--	untracked contents of untracked directories are also returned in
--	`entries[]`.
--
--`DIR_SHOW_IGNORED_TOO_MODE_MATCHING`:::
--
--	Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if
--	this is set, returns ignored files and directories that match
--	an exclude pattern. If a directory matches an exclude pattern,
--	then the directory is returned and the contained paths are
--	not. A directory that does not match an exclude pattern will
--	not be returned even if all of its contents are ignored. In
--	this case, the contents are returned as individual entries.
--+
--If this is set, files and directories that explicitly match an ignore
--pattern are reported. Implicitly ignored directories (directories that
--do not match an ignore pattern, but whose contents are all ignored)
--are not reported, instead all of the contents are reported.
--
--`DIR_COLLECT_IGNORED`:::
--
--	Special mode for git-add. Return ignored files in `ignored[]` and
--	untracked files in `entries[]`. Only returns ignored files that match
--	pathspec exactly (no wildcards). Does not recurse into ignored
--	directories.
--
--`DIR_SHOW_OTHER_DIRECTORIES`:::
--
--	Include a directory that is not tracked.
--
--`DIR_HIDE_EMPTY_DIRECTORIES`:::
--
--	Do not include a directory that is not tracked and is empty.
--
--`DIR_NO_GITLINKS`:::
--
--	If set, recurse into a directory that looks like a Git
--	directory.  Otherwise it is shown as a directory.
--
--The result of the enumeration is left in these fields:
--
--`entries[]`::
--
--	An array of `struct dir_entry`, each element of which describes
--	a path.
--
--`nr`::
--
--	The number of members in `entries[]` array.
--
--`alloc`::
--
--	Internal use; keeps track of allocation of `entries[]` array.
--
--`ignored[]`::
--
--	An array of `struct dir_entry`, used for ignored paths with the
--	`DIR_SHOW_IGNORED_TOO` and `DIR_COLLECT_IGNORED` flags.
--
--`ignored_nr`::
--
--	The number of members in `ignored[]` array.
--
--Calling sequence
------------------
--
--Note: index may be looked at for .gitignore files that are CE_SKIP_WORKTREE
--marked. If you to exclude files, make sure you have loaded index first.
--
--* Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
--  sizeof(dir))`.
--
--* To add single exclude pattern, call `add_pattern_list()` and then
--  `add_pattern()`.
--
--* To add patterns from a file (e.g. `.git/info/exclude`), call
--  `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
--  short-hand function `setup_standard_excludes()` can be used to set
--  up the standard set of exclude settings.
--
--* Set options described in the Data Structure section above.
--
--* Call `read_directory()`.
--
--* Use `dir.entries[]`.
--
--* Call `clear_directory()` when none of the contained elements are no longer in use.
--
--(JC)
-diff --git a/dir.c b/dir.c
-index 61f559f980..12d454b89d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2,8 +2,6 @@
-  * This handles recursive filename detection with exclude
-  * files, index knowledge etc..
-  *
-- * See Documentation/technical/api-directory-listing.txt
-- *
-  * Copyright (C) Linus Torvalds, 2005-2006
-  *		 Junio Hamano, 2005-2006
-  */
-diff --git a/dir.h b/dir.h
-index 2fbdef014f..c575f941dc 100644
---- a/dir.h
-+++ b/dir.h
-@@ -1,11 +1,44 @@
- #ifndef DIR_H
- #define DIR_H
+diff --git a/Documentation/technical/api-merge.txt b/Documentation/technical/api-merge.txt
+index 9dc1bed768..487d4d83ff 100644
+--- a/Documentation/technical/api-merge.txt
++++ b/Documentation/technical/api-merge.txt
+@@ -28,77 +28,9 @@ and `diff.c` for examples.
  
--/* See Documentation/technical/api-directory-listing.txt */
+ * `struct ll_merge_options`
+ 
+-This describes the set of options the calling program wants to affect
+-the operation of a low-level (single file) merge.  Some options:
 -
- #include "cache.h"
- #include "strbuf.h"
+-`virtual_ancestor`::
+-	Behave as though this were part of a merge between common
+-	ancestors in a recursive merge.
+-	If a helper program is specified by the
+-	`[merge "<driver>"] recursive` configuration, it will
+-	be used (see linkgit:gitattributes[5]).
+-
+-`variant`::
+-	Resolve local conflicts automatically in favor
+-	of one side or the other (as in 'git merge-file'
+-	`--ours`/`--theirs`/`--union`).  Can be `0`,
+-	`XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`, or
+-	`XDL_MERGE_FAVOR_UNION`.
+-
+-`renormalize`::
+-	Resmudge and clean the "base", "theirs" and "ours" files
+-	before merging.  Use this when the merge is likely to have
+-	overlapped with a change in smudge/clean or end-of-line
+-	normalization rules.
++Check ll-merge.h for details.
+ 
+ Low-level (single file) merge
+ -----------------------------
+ 
+-`ll_merge`::
+-
+-	Perform a three-way single-file merge in core.  This is
+-	a thin wrapper around `xdl_merge` that takes the path and
+-	any merge backend specified in `.gitattributes` or
+-	`.git/info/attributes` into account.  Returns 0 for a
+-	clean merge.
+-
+-Calling sequence:
+-
+-* Prepare a `struct ll_merge_options` to record options.
+-  If you have no special requests, skip this and pass `NULL`
+-  as the `opts` parameter to use the default options.
+-
+-* Allocate an mmbuffer_t variable for the result.
+-
+-* Allocate and fill variables with the file's original content
+-  and two modified versions (using `read_mmfile`, for example).
+-
+-* Call `ll_merge()`.
+-
+-* Read the merged content from `result_buf.ptr` and `result_buf.size`.
+-
+-* Release buffers when finished.  A simple
+-  `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
+-  free(result_buf.ptr);` will do.
+-
+-If the modifications do not merge cleanly, `ll_merge` will return a
+-nonzero value and `result_buf` will generally include a description of
+-the conflict bracketed by markers such as the traditional `<<<<<<<`
+-and `>>>>>>>`.
+-
+-The `ancestor_label`, `our_label`, and `their_label` parameters are
+-used to label the different sides of a conflict if the merge driver
+-supports this.
+-
+-Everything else
+----------------
+-
+-Talk about <merge-recursive.h> and merge_file():
+-
+- - merge_trees() to merge with rename detection
+- - merge_recursive() for ancestor consolidation
+- - try_merge_command() for other strategies
+- - conflict format
+- - merge options
+-
+-(Daniel, Miklos, Stephan, JC)
++Check ll-merge.h for details.
+diff --git a/ll-merge.h b/ll-merge.h
+index e78973dd55..aceb1b2413 100644
+--- a/ll-merge.h
++++ b/ll-merge.h
+@@ -7,16 +7,87 @@
+ 
+ #include "xdiff/xdiff.h"
  
 +/**
-+ * The directory listing API is used to enumerate paths in the work tree,
-+ * optionally taking `.git/info/exclude` and `.gitignore` files per directory
-+ * into account.
-+ */
-+
-+/**
-+ * Calling sequence
++ *
++ * Calling sequence:
 + * ----------------
 + *
-+ * Note: The index may be checked for .gitignore files that are
-+ * CE_SKIP_WORKTREE marked. If you want to exclude files, make sure you have
-+ * loaded the index first.
++ * - Prepare a `struct ll_merge_options` to record options.
++ *   If you have no special requests, skip this and pass `NULL`
++ *   as the `opts` parameter to use the default options.
 + *
-+ * - Prepare `struct dir_struct dir` and clear it with `memset(&dir, 0,
-+ * sizeof(dir))`.
++ * - Allocate an mmbuffer_t variable for the result.
 + *
-+ * - To add single exclude pattern, call `add_pattern_list()` and then
-+ *   `add_pattern()`.
++ * - Allocate and fill variables with the file's original content
++ *   and two modified versions (using `read_mmfile`, for example).
 + *
-+ * - To add patterns from a file (e.g. `.git/info/exclude`), call
-+ *   `add_patterns_from_file()` , and/or set `dir.exclude_per_dir`.  A
-+ *   short-hand function `setup_standard_excludes()` can be used to set
-+ *   up the standard set of exclude settings.
++ * - Call `ll_merge()`.
 + *
-+ * - Set options described in the Data Structure section above.
++ * - Read the merged content from `result_buf.ptr` and `result_buf.size`.
 + *
-+ * - Call `read_directory()`.
++ * - Release buffers when finished.  A simple
++ *   `free(ancestor.ptr); free(ours.ptr); free(theirs.ptr);
++ *   free(result_buf.ptr);` will do.
 + *
-+ * - Use `dir.entries[]`.
++ * If the modifications do not merge cleanly, `ll_merge` will return a
++ * nonzero value and `result_buf` will generally include a description of
++ * the conflict bracketed by markers such as the traditional `<<<<<<<`
++ * and `>>>>>>>`.
 + *
-+ * - Call `clear_directory()` when none of the contained elements are no longer in use.
-+ *
++ * The `ancestor_label`, `our_label`, and `their_label` parameters are
++ * used to label the different sides of a conflict if the merge driver
++ * supports this.
 + */
 +
- struct dir_entry {
- 	unsigned int len;
- 	char name[FLEX_ARRAY]; /* more */
-@@ -144,25 +177,101 @@ struct untracked_cache {
- 	unsigned int use_fsmonitor : 1;
++
+ struct index_state;
+ 
++/**
++ * This describes the set of options the calling program wants to affect
++ * the operation of a low-level (single file) merge.
++ */
+ struct ll_merge_options {
++
++	/**
++	 * Behave as though this were part of a merge between common ancestors in
++	 * a recursive merge (merges of binary files may need to be handled
++	 * differently in such cases, for example). If a helper program is
++	 * specified by the `[merge "<driver>"] recursive` configuration, it will
++	 * be used.
++	 */
+ 	unsigned virtual_ancestor : 1;
+-	unsigned variant : 2;	/* favor ours, favor theirs, or union merge */
++
++	/**
++	 * Resolve local conflicts automatically in favor of one side or the other
++	 * (as in 'git merge-file' `--ours`/`--theirs`/`--union`).  Can be `0`,
++	 * `XDL_MERGE_FAVOR_OURS`, `XDL_MERGE_FAVOR_THEIRS`,
++	 * or `XDL_MERGE_FAVOR_UNION`.
++	 */
++	unsigned variant : 2;
++
++	/**
++	 * Resmudge and clean the "base", "theirs" and "ours" files before merging.
++	 * Use this when the merge is likely to have overlapped with a change in
++	 * smudge/clean or end-of-line normalization rules.
++	 */
+ 	unsigned renormalize : 1;
++
++	/**
++	 * Increase the length of conflict markers so that nested conflicts
++	 * can be differentiated.
++	 */
+ 	unsigned extra_marker_size;
++
++	/* Extra xpparam_t flags as defined in xdiff/xdiff.h. */
+ 	long xdl_opts;
  };
  
 +/**
-+ * structure is used to pass directory traversal options to the library and to
-+ * record the paths discovered. A single `struct dir_struct` is used regardless
-+ * of whether or not the traversal recursively descends into subdirectories.
++ * Perform a three-way single-file merge in core.  This is a thin wrapper
++ * around `xdl_merge` that takes the path and any merge backend specified in
++ * `.gitattributes` or `.git/info/attributes` into account.
++ * Returns 0 for a clean merge.
 + */
- struct dir_struct {
--	int nr, alloc;
--	int ignored_nr, ignored_alloc;
-+
-+	/* The number of members in `entries[]` array. */
-+	int nr;
-+
-+	/* Internal use; keeps track of allocation of `entries[]` array.*/
-+	int alloc;
-+
-+	/* The number of members in `ignored[]` array. */
-+	int ignored_nr;
-+
-+	int ignored_alloc;
-+
-+	/* bit-field of options */
- 	enum {
-+
-+		/**
-+		 * Return just ignored files in `entries[]`, not untracked files.
-+		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED_TOO`.
-+		 */
- 		DIR_SHOW_IGNORED = 1<<0,
-+
-+		/* Include a directory that is not tracked. */
- 		DIR_SHOW_OTHER_DIRECTORIES = 1<<1,
-+
-+		/* Do not include a directory that is not tracked and is empty. */
- 		DIR_HIDE_EMPTY_DIRECTORIES = 1<<2,
-+
-+		/**
-+		 * If set, recurse into a directory that looks like a Git directory.
-+		 * Otherwise it is shown as a directory.
-+		 */
- 		DIR_NO_GITLINKS = 1<<3,
-+
-+		/**
-+		 * Special mode for git-add. Return ignored files in `ignored[]` and
-+		 * untracked files in `entries[]`. Only returns ignored files that match
-+		 * pathspec exactly (no wildcards). Does not recurse into ignored
-+		 * directories.
-+		 */
- 		DIR_COLLECT_IGNORED = 1<<4,
-+
-+		/**
-+		 * Similar to `DIR_SHOW_IGNORED`, but return ignored files in
-+		 * `ignored[]` in addition to untracked files in `entries[]`.
-+		 * This flag is mutually exclusive with `DIR_SHOW_IGNORED`.
-+		 */
- 		DIR_SHOW_IGNORED_TOO = 1<<5,
-+
- 		DIR_COLLECT_KILLED_ONLY = 1<<6,
-+
-+		/**
-+		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
-+		 * set, the untracked contents of untracked directories are also
-+		 * returned in `entries[]`.
-+		 */
- 		DIR_KEEP_UNTRACKED_CONTENTS = 1<<7,
-+
-+		/**
-+		 * Only has meaning if `DIR_SHOW_IGNORED_TOO` is also set; if this is
-+		 * set, returns ignored files and directories that match an exclude
-+		 * pattern. If a directory matches an exclude pattern, then the
-+		 * directory is returned and the contained paths are not. A directory
-+		 * that does not match an exclude pattern will not be returned even if
-+		 * all of its contents are ignored. In this case, the contents are
-+		 * returned as individual entries.
-+		 *
-+		 * If this is set, files and directories that explicitly match an ignore
-+		 * pattern are reported. Implicitly ignored directories (directories that
-+		 * do not match an ignore pattern, but whose contents are all ignored)
-+		 * are not reported, instead all of the contents are reported.
-+		 */
- 		DIR_SHOW_IGNORED_TOO_MODE_MATCHING = 1<<8,
-+
- 		DIR_SKIP_NESTED_GIT = 1<<9
- 	} flags;
-+
-+	/* An array of `struct dir_entry`, each element of which describes a path. */
- 	struct dir_entry **entries;
-+
-+	/**
-+	 * used for ignored paths with the `DIR_SHOW_IGNORED_TOO` and
-+	 * `DIR_COLLECT_IGNORED` flags.
-+	 */
- 	struct dir_entry **ignored;
- 
--	/* Exclude info */
-+	/**
-+	 * The name of the file to be read in each directory for excluded files
-+	 * (typically `.gitignore`).
-+	 */
- 	const char *exclude_per_dir;
- 
- 	/*
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
 -- 
 gitgitgadget
 
