@@ -8,33 +8,33 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4ED1F4B5
-	for <e@80x24.org>; Sun, 17 Nov 2019 07:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCBFE1F4B5
+	for <e@80x24.org>; Sun, 17 Nov 2019 08:19:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725926AbfKQH4W (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 02:56:22 -0500
-Received: from mout.web.de ([217.72.192.78]:53883 "EHLO mout.web.de"
+        id S1725963AbfKQITi (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 03:19:38 -0500
+Received: from mout.web.de ([212.227.17.12]:43531 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725880AbfKQH4V (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 02:56:21 -0500
+        id S1725283AbfKQITh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 03:19:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1573977378;
-        bh=pjdX1/J/PgKErQ477fzsksPc/c/THDNXmDRf2+cKdJI=;
+        s=dbaedf251592; t=1573978775;
+        bh=Egme1oPR09WK1mMaX9SSr1ORJA4miGWEDnst+wUeZds=;
         h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=gzvsQPK32Mbc1+bJ0IQgoROVQgT/lF6kJUPeXWMOeEVEpplRJ5c4As9qV0fjDH/os
-         kuBzjmwNLXzofEinDI7OiMO1bO+J2PH/hz1ocxlmyYqgy0sKDqtQU3NI/vMnwClvAV
-         OkI9Gd987raojIutXRfMt8isLe0kWDYyX6v9t4Ao=
+        b=CoFHIVdqExvQL4Rpa+3YK7BhzPBzhgO6cjLmDDE0oqx6gk2KB43wbMiyYO5YsrexE
+         PQDaL5KKCwO+s7KnKdwXeiVNksK6Z44aq9vti4UVpusYsbRr5w034x9A2dUNYbEgrT
+         23p5HNmiySUNAOOH+g/yn6p32Q+CIJwtDgXk1DZA=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.1.3] ([93.131.59.42]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lk8ko-1hzeky23y6-00cA1m; Sun, 17
- Nov 2019 08:56:18 +0100
+Received: from [192.168.1.3] ([93.131.59.42]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LshKH-1hqQoA21GL-012HeY; Sun, 17
+ Nov 2019 09:19:35 +0100
 Subject: Re: coccinelle: adjustments for array.cocci?
 To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 Cc:     git@vger.kernel.org
 References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
  <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <75b9417b-14a7-c9c6-25eb-f6e05f340376@web.de>
- <fc56b970-4ca1-7734-c4bb-f57cae7a273f@web.de>
+ <05ab1110-2115-7886-f890-9983caabc52c@web.de>
+ <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
 From:   Markus Elfring <Markus.Elfring@web.de>
 Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
@@ -79,218 +79,74 @@ Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
  Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
  x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
  pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
-Message-ID: <57b5d1c9-72c1-6fff-a242-90f5f24f0972@web.de>
-Date:   Sun, 17 Nov 2019 08:56:10 +0100
+Message-ID: <50b265f0-bcab-d0ec-a714-07e94ceaa508@web.de>
+Date:   Sun, 17 Nov 2019 09:19:34 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <fc56b970-4ca1-7734-c4bb-f57cae7a273f@web.de>
+In-Reply-To: <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XHClz8uYd06qTNVBtgGdE0fKkIucvbpd/kUCRakvyMEKxxAgjDG
- phpKFtQUT/ZXRrGAxUs5iIhQSyHPaok7TpRaX8E6HM0ZmY0j4xa5Fodj5Baejyuo8jr+dL/
- QufZCcJLDYXIB1yRXbjUOcMzjT5TNvbGhLVLy81Mc9h8zpqwzmng/E8QVtG1UcPyFshoXu8
- eS07z3o2ZA7uR/1oTNlFA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jRCJtkzOCyg=:qE002SZ5eSg0Ka6GZSxe5x
- hevQ5QTP1BEJ7VHb3wGAD1K/3rs2nWeoSoUOkxJ9NsrXui4ZZEJmmdUyJFFUVvqx2xH2hlLym
- yK4unHbZoRf2GXxeSgwr5r+yH9PTXHlpdysalZASn5gXS1wHxipQpuLyOizABTo04fmpVMDgi
- X6sxnTyGZ9tRkhmfLmvPE7VVzuePEbJFLuRqdXcCzlzUyGmLVos8Vw84KMouCDSaQKmAYjZAZ
- ZNVR926wf82dDqnUi1ZPXQNGY4xM0oqDcyxEzI5GLz0oGPev4C+vfROHUwt3sqTAUe7mtqStY
- z6XaVKPo/QJGVXlIbyWkQ0pET+2e48IjItTiAB9t0dH9+JdGOw1OWw8r3GcJONPRsgkdQpMqH
- 0TqhhVqFF/PmQ4cSVGOn/3WTfjXLyvuugqczrJRRJYcCZvz21NpJtxIc3j3FPty/hnjuPJj87
- edXGqDwH36YOFDuNaiN4T6x0XdQY9gnLMmKvJIwFrcA6cjMDdvYBqj4bHTXQ4oVMt/eUdhNQq
- 0ha9cNtDMf0/QSN6GjPyd39Qri1G174i4sVh7L0348ol25eKKIzPQMSn4hvWExcqzKF+/zpZj
- z96tqm0GgMLBzhvQFsZobFK2yFpDUaNtEM502VIBPrE8ImLmwkynwuyviDhzRjvnP4m+MFutq
- e+3pwCCFKU5S8Nf80vQQGk5aR5Kj2JTfRXv1tp5o/HmJ0w/wnT9slTInkRS+OJMJ9s8r5awcN
- Z4rHRXcmI8ca/hYKGSgaejyVI/9DVlHUqGnkmdC9FW4+g2iPxPQyxmrsyhdaOodGpiipXC5cq
- 4YGsZHHXBuR9J4MKIBmXIxiArbdhQhQLPTDUFg5vuz7TZkLuyRw7ZzgpPu5/dw3ZMUZBu8n02
- LGkz4c5J/lRDsqYwky6BaY5qw0K56Q4zvIpYR3ZzN1RyRE2nIAxrdgWTzT0pLMBToYbBGEHXx
- T6ZWcG35v4iMCmYA9o5/XSG9IMMCzZZj3Lm0dHhrEE1wGVQno4HduaT2VeolWpaMd2JBNfSJy
- ovS7HFGOitwWCRqOYQqachHnkWJfuQtR8Itx1JDasI/h1lPVQtYvC9gt9dmuY/EFy0sbHeWN/
- pSDhYPnsgMlJEppws9lnlYrIaJvIl7tw+RIRZJMqGQNwxtXxg47Btq9uyGjaw3CUWa5tpTiq8
- 1gQE89wZp5Hw5vAY/adkL9YqgMYinJ8qR0VQDysAGoLzZ4a2l8LcyXyQt6H2/9XoTiCQsEuUI
- 1uNx7UW7L8jPEUdVnyhW1ak8FyLPKzT+6GQ8/gIIndw5xc+lo5s3hbLZbD4M=
+X-Provags-ID: V03:K1:3UvtICzUMf7HGEBgS261y7KzghcH3ZBdY2GfovZyYswRJ+XY/nA
+ W07jKvx2aXtNwSiKgL+fJMQIOLE9/IRFATVb3XfsCTbb0MEFac5x7GXjDt2mpQos0wmjZ1v
+ QzBk+tpK4oEW82kmbZzx+SX150wwtQgO/pczS6BgWnydRVq4G+641ETF89Q1samDYBKa23B
+ TeuxmOsNSSHf6+7FQ0Yxg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zN58jBHY/qU=:SgmceoNxlNQ/cKDqf73wit
+ C2978Q6811VzwFurqxQHfEeaGJdRWRKBdjCX/4Oom3uqb5StWoHSaQADEkBJizxLiafq5EewP
+ nxC9hVZRXdY5Cc0BuJSCYOKAzSpPJtDlQg8dX31LQ5+ErrOwfveEazqF0dpkcG92Iefilt8vt
+ LleLVF6UhwCSTKMz3nXwHghliJWI8HYu25nP2zuY0DC9mhiNNhzw6tR8WHvYNvs2tkXVtWjwg
+ lfXAcI0G6CF1j6U4fSe7D3d0KtbbGCy/s74kafNiYM5BJboKh9sZRPA7wgj9LDpg0O/vRn+Vc
+ gqvtapDH9XIeLdxXNsoik5E14c0Zd5ZLFwKDH+7ZVmIBvzBzK3YsCHM0j+3tSC2OdRiZ73aJr
+ +0fRUUZd8vCtkyzRY8M/BoarJYJezCYOJ/9BO56qZFHlmEBPFcZK9FRXMmkgo324OYjr1n/6j
+ x5hs+ky3RLKxSOPp1NuQz/H5jQvHFVM7OZ2WaBOOqPLvyJ9nTzEwmlZW1GsaJL5i8zEAGJg3v
+ jkAMEr9kguV8EVRLpCwkWr703gGkanf2qIWTTB78QTB7DMDgFdHUaR09LWQBk9K4irwh72zli
+ p7XFWiHi+WAHJgxLaeDIRuVJNNYhcK0Q2i8g0w5zOJw6CCFsbcyNcjsXaII7dS0uIIg7lCoUZ
+ SH9d5zExqWPBZ4qoVbP4qy1ir8/ruiKCZORl8y8xiFfHdbsLYFPQx0ym+79eYhojQ4EQJJGJK
+ wTzYPQBFrn+jMSRzWBDuuBwoV4w54Vy1u79H3IrEbMmBdwl5j1d2O2hDWkt5WXCH7zlQ6WiUT
+ 13EhxLTll2NyLJLP6LWCTsnqXng9YMGWpijU21Kh8yG0NNObRbJDQuqskztkOsOOcbOapcelO
+ 0wjeTePO85qf/hFbJgFfVkPNRMDfKXO6sfWxXPDsde4zxhaKiF6/QL7AT94zGDRnHY1xy/bHw
+ sBj0+Ctc9qu3VaqSdKH/fykZ38p6urqpGW4zUb14On8jfR+ZkJ9lwCmmKQBEvHveKf7daFJE3
+ 6uDLE/xtcELkDMYT0vwfZk5wUtuiedGWewZ/PgyLpEZgPJq0WaSp+FGlq1N1MtLF9Drub0hU7
+ iF8tQaDeVxmN3PL9Y+9YNzOhMrIcrxDa7lHQ9cZfx0EFFkfX5hcDBAEo4aP6UlhpmpC3ztMv/
+ lohlR6L7MvfZtqGtY2dVcCZ0XpQZ++EY4eAJPuvQCKEmCGJ9QNhomICX2c19a5KoZemiC4zAL
+ W3uIdF3kCUydtw8HZmOEQ04/uPBH9CxpdYi1/LcXy/qbOlKgvLr6OKntOXGM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->> @@
->> expression dst, src, n, E;
->> @@
->>  memcpy(dst, src, sizeof(
->> +                        *(
->>                            E
->> -                           [...]
->> +                         )
->>                          ) * n
->>        )
->
-> That's longer and looks more complicated to me
+> Which transformation rules are questionable and why?
 
-I point another possibility out to express a change specification
-by the means of the semantic patch language.
-How would you think about such SmPL code if the indentation
-will be reduced?
+It was chosen to transform source code fragments (pointer expressions)
+by two SmPL rules so that the search pattern =E2=80=9Csizeof(T)=E2=80=9D w=
+ould work
+in the third rule.
 
 
-> than what we currently have:
->   @@
->   expression dst, src, n, E;
->   @@
->     memcpy(dst, src, n * sizeof(
->   - E[...]
->   + *(E)
->     ))
->
-> Avoiding to duplicate E doesn't seem to be worth it.
+> Removing broken or ineffective rules would be very welcome.
 
-I show other development preferences occasionally.
+I suggest to reconsider programming opportunities also by the means of
+the semantic patch language.
 
 
-> I can see that indenting the sizeof parameter and parentheses could
-> improve readability, though.
+> Specifying disjunctions inline can make rules shorter, but harder to
+> understand due to mixing languages.  Perhaps this is a matter of
+> getting used to it, and syntax highlighting might help a bit.
 
-Thanks that you can follow such coding style aspects.
-
-
->> @@
->> type T;
->> T *ptr;
->> T[] arr;
->> expression E, n;
->> @@
->>  memcpy(
->> (       ptr, E, sizeof(
->> -                      *(ptr)
->> +                      T
->>                       ) * n
->> |       arr, E, sizeof(
->> -                      *(arr)
->> +                      T
->>                       ) * n
->> |       E, ptr, sizeof(
->> -                      *(ptr)
->> +                      T
->>                       ) * n
->> |       E, arr, sizeof(
->> -                      *(arr)
->> +                      T
->>                       ) * n
->> )
->>        )
->
-> This still fails to regenerate two of the changes from 921d49be86
-> (use COPY_ARRAY for copying arrays, 2019-06-15), at least with for me
-> (and Coccinelle 1.0.4).
-
-Would you become keen to find the reasons out for unexpected data processi=
-ng
-results (also by the software combination =E2=80=9CCoccinelle 1.0.8-00004-=
-g842075f7=E2=80=9D)
-at this place?
-
-But this transformation rule can probably be omitted if the usage
-of SmPL disjunctions will be increased in a subsequent rule, can't it?
+I agree to this view.
 
 
->> @@
->> type T;
->> T* dst_ptr, src_ptr;
->> T[] dst_arr, src_arr;
->> expression n, x;
->> @@
->> -memcpy
->> +COPY_ARRAY
->>        (
->> (       dst_ptr
->> |       dst_arr
->> )
->>        ,
->> (       src_ptr
->> |       src_arr
->> )
->> -      , (n) * \( sizeof(T) \| sizeof(*(x)) \)
->> +      , n
->>        )
->
-> That x could be anything -- it's not tied to the element size of source
-> or destination.  Such a transformation might change the meaning of the
-> code, as COPY_ARRAY will use the element size of the destination behind
-> the scenes.  So that doesn't look safe to me.
+> Mixing in the unrelated xmalloc/ALLOC_ARRAY transformation does
+> not make sense to me, though.
 
-Would you like to use the SmPL code =E2=80=9C*( \( src_ptr \| src_arr \) )=
-=E2=80=9D instead?
+I propose to increase the sharing (or reuse) of involved metavariables.
 
 
->> @@
->> type T;
->> T* dst, src, ptr;
->> expression n;
->> @@
->> (
->> -memmove
->> +MOVE_ARRAY
->>         (dst, src
->> -                , (n) * \( sizeof(* \( dst \| src \) ) \| sizeof(T) \)
->> +                , n
->>         )
->> |
->> -ptr =3D xmalloc((n) * \( sizeof(*ptr) \| sizeof(T) \))
->> +ALLOC_ARRAY(ptr, n)
->> );
->
-> memmove/MOVE_ARRAY and xmalloc/ALLOC_ARRAY are quite different;
+> Matching sizeof of anything (with the x) can produce inaccurate
+> transformations, as mentioned in the other reply I just sent.
 
-These functions provide another programming interface.
-
-
-> why would we want to jam transformations for them into the same rule
-> like this?
-
-Possible nicer run time characteristics by the Coccinelle software.
-
-
-> The only overlap seems to be n.
-
-These case distinctions can share also the metavariable =E2=80=9CT=E2=80=
-=9D for the
-desired source code deletion.
-
-
-> Handling memmove/MOVE_ARRAY and memcpy/COPY_ARRAY together would make
-> more sense, as they take the same kinds of parameters.
-
-Would you like to adjust the SmPL code in such a design direction?
-
-
-> I didn't know that disjunctions can be specified inline using \(, \|
-> and \), though.  Rules can be much more compact that way.
-
-I hope that more corresponding software improvements can be achieved.
-
-
-> Mixing languages like that can also be quite confusing.
-
-I agree to this development concern.
-
-
->> Now I observe that the placement of space characters can be a coding st=
-yle
->> concern at four places for adjusted lines by the generated patch.
->> Would you like to clarify remaining issues for pretty-printing
->> in such use cases?
->
-> Ideally, generated code should adhere to Documentation/CodingGuidelines,
-> so that it can be accepted without requiring hand-editing.
-
-But how does the software situation look like if the original source code
-would contain coding style issues?
-
-It seems to be possible to specify SmPL code in a way so that even questio=
-nable
-code layout would be preserved by an automatic transformation.
+Would you like to apply any further SmPL code fine-tuning?
 
 Regards,
 Markus
