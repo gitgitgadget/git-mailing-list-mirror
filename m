@@ -2,133 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7451F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 11:59:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76AA71F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 12:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726635AbfKRL75 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 06:59:57 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45899 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfKRL74 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 06:59:56 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z10so19098233wrs.12
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 03:59:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=3OahKr3WoU+Qqzumxs7zu+folIEI+KL3bbwivRcS4+4=;
-        b=UzGp45OAMPDZS0CjUb9deP1qpWykqIvFyVXvpYuiBA3qAcurcLSMdrtw/Vogza5nxd
-         2OLDCtIdGzZQuRPOwiCn8w4ZZQpmS8iDMq6ape0Y/bXMoqsGK5mPClZodnxu2Uvou+MU
-         EoKiuaVzJEf6tdNHYEIqHczJT1XdiJZo1LpVBsXr0avwDEMy0QhF4WEsQNtoQEQADKwU
-         11KrN6NtbxHwlBfsAhoe4JgoO7nmNqg+vSWzW15oZod+2BelaS1vpQTQKc49MKsTeuXL
-         KS+s60EErANWuQo4YZ3z8vnmm2SJ10SlUFFW+zkLsYHLiPHPYS2f0OQBmn+flXQ/cFfB
-         JcSQ==
-X-Gm-Message-State: APjAAAW4h3GqJbxRIpU81hpGH1jLR7vxToWSUzdERbc8HR0ShJbkryD2
-        mQh1OikKAfgKA5BuQKvvPms=
-X-Google-Smtp-Source: APXvYqyluRRzfGm/FDDwae2ED0ca/LzoRhXdYcJvkpRN4sTbc7FKQ/kNFGFL6wjo5xqAye3cgN1aaw==
-X-Received: by 2002:adf:fd85:: with SMTP id d5mr30143334wrr.101.1574078394465;
-        Mon, 18 Nov 2019 03:59:54 -0800 (PST)
-Received: from ?IPv6:2a0b:e7c0:0:107::49? ([2a0b:e7c0:0:107::49])
-        by smtp.gmail.com with ESMTPSA id w4sm18802033wmk.29.2019.11.18.03.59.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 18 Nov 2019 03:59:53 -0800 (PST)
-Subject: Re: Multiple empty "remote:" lines during remote update
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <c6b51eaf-79b1-6fb9-6085-2d1a45b739a6@suse.cz>
- <20191118114449.GA12766@sigill.intra.peff.net>
-From:   Jiri Slaby <jslaby@suse.cz>
-Autocrypt: addr=jslaby@suse.cz; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <90c545c3-4d7c-6d98-a516-e76fe180026e@suse.cz>
-Date:   Mon, 18 Nov 2019 12:59:52 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+        id S1726705AbfKRMDQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 07:03:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:49992 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726490AbfKRMDQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 07:03:16 -0500
+Received: (qmail 15726 invoked by uid 109); 18 Nov 2019 12:03:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 18 Nov 2019 12:03:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13432 invoked by uid 111); 18 Nov 2019 12:06:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Nov 2019 07:06:58 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 Nov 2019 07:03:15 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: rev-list and "ambiguous" IDs
+Message-ID: <20191118120315.GB12766@sigill.intra.peff.net>
+References: <CAGyf7-EXOUWYUZXmww2+NyD1OuWEG18n221MPojVSCCu=19JNA@mail.gmail.com>
+ <20191114055906.GA10643@sigill.intra.peff.net>
+ <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
+ <20191115034941.GB20863@sigill.intra.peff.net>
+ <917e2664-6059-c190-30fd-02f3cf7aa5dc@virtuell-zuhause.de>
+ <xmqqmucw4h4n.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20191118114449.GA12766@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <xmqqmucw4h4n.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18. 11. 19, 12:44, Jeff King wrote:
-> On Mon, Nov 18, 2019 at 09:34:46AM +0100, Jiri Slaby wrote:
+On Sat, Nov 16, 2019 at 12:47:20PM +0900, Junio C Hamano wrote:
+
+> > I would have expected that git log did just tell me that it could not
+> > find something commitish, instead it told me that there are multiple
+> > candidates, all of them being no commit.
 > 
->> since some time (weeks or months), I am seeing this:
->> $ git --version
->> git version 2.24.0
->> $ git remote update
->> Fetching origin
->> remote:
->>         remote:
+> With this, I 100% agree with.   The latter should instead say
 > 
-> This was a bug in v2.22.1, which has been fixed in v2.24.0. However, the
-> bug is on the remote side, so whether you see it depends on which
-> version of Git the server has installed.
+>     $ git log abcd2 [--]
+>     error: bad revision 'abcd2'
+> 
+> just like the case where no object has abcd2 as prefix.
+> 
+> When we ask for commit-ish or any specific type in general, there
+> are a few possible cases.
+> 
+>  - There is only one such object that has the prefix and is
+>    compatible with the type.  We handle this correctly---yield that
+>    object and do not complain about ambiguity.
+> 
+>  - There are two or more such objects, or there is no such object.
+>    We show all objects that share the prefix, regardless of the
+>    type, which is way suboptimal.
+> 
+> An improvement can be localized to sha1-name.c::get_short_oid(), I
+> would think.  We know what type we want (e.g. GET_OID_COMMITTISH)
+> in the function, so we should be able to teach collect_ambiguous() 
+> to discard an object with the given prefix but of a wrong type.
 
-OK, thanks.
+I think that changes the meaning of GET_OID_COMMITTISH, though. Right
+now it means "if disambiguating, prefer a committish", but not "I can
+only accept a commit". So we would still happily return an unambiguous
+object that does not match that type. And that is why "git -c
+core.disambiguate=committish show $short_blob" works, for example.
 
-$ git remote -v
-origin
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-(fetch)
-origin
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git (push)
+If you adjust your first case above to "only one such object...and the
+type does not matter" then I think it is OK. I.e., the logic in
+get_short_oid() becomes:
 
-CCing Konstantin, in case he does not know yet...
+  - if there is only one, return it
 
-thanks,
--- 
-js
-suse labs
+  - if there is more than one, and only one matches the disambiguator,
+    return it
+
+  - otherwise, _do not_ print the ambiguous list, and return an error
+    (and no object at all), letting the caller complain
+
+where the third part is the new behavior. I think that helps in some
+ways (you do not get a list of non-commits for a context that only takes
+commits). But it might also hurt, because it gives the user less
+information. E.g., imagine the user feeds a short sha1 that they know to
+be a blob to a command expecting a committish and is told "no, that
+short sha1 does not exist", even though the actual problem is that there
+are two such blobs.
+
+I think it's a bit simpler for a command which doesn't expect
+non-commits at all, like "git log". But it would need to communicate
+that to get_short_oid() with more than just GET_OID_COMMITTISH, so that
+the latter can tell it apart from contexts which merely prefer a
+committish.
+
+I'm also not entirely sure that even that case doesn't suffer from
+telling the user less information. If I say "git log 1234" knowing that
+"1234" is a blob, that's a mistake. But Git may guide me in correcting
+that mistake by saying "yes, we know about 1234, but it's ambiguous"
+rather than "1234 is not something we know about".
+
+Perhaps a simple fix would just be for get_short_oid()'s error message
+to mention the disambiguation rule. E.g., something like:
+
+   $ git show abcd2
+   error: short SHA1 abcd2 is ambiguous
+   hint: We would have preferred a commit or tag pointing to a commit,
+   hint: but none were found. The candidates are:
+   hint:   abcd22f55e tree
+   hint:   abcd238df0 tree
+   hint:   abcd2b1cc8 blob
+
+or
+
+  $ git show abcd2
+  error: short SHA1 abcd2 is ambiguous
+  hint: We preferred a commit or tag pointing to a commit to other
+  hint: object types, but two candidates were found:
+  hint:   abcd22f55e commit
+  hint:   abcd238df0 commit
+  hint:   abcd2b1cc8 blob
+
+(optionally the second one could even not mention the blob, though I
+think with the lead-in sentence it's OK).
+
+The verbiage there isn't great (I was trying to avoid the jargon
+"committish"), but hopefully you get the point.
+
+-Peff
