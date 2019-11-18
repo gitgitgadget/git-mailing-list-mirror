@@ -2,104 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9EA61F5A2
-	for <e@80x24.org>; Mon, 18 Nov 2019 22:18:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1CBA1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 22:27:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726814AbfKRWSO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 17:18:14 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37193 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726706AbfKRWSO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 17:18:14 -0500
-Received: by mail-wm1-f65.google.com with SMTP id b17so1135644wmj.2
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 14:18:11 -0800 (PST)
+        id S1726761AbfKRW1G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 17:27:06 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:54323 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726272AbfKRW1G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 17:27:06 -0500
+Received: by mail-wm1-f53.google.com with SMTP id z26so996097wmi.4
+        for <git@vger.kernel.org>; Mon, 18 Nov 2019 14:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xXa+1tljvTjmUHG8hHmvpcVcceHnRXudTvTa1lRf4Tw=;
-        b=uAQJ2dYBImPNPqbO7gUFTN5dB4fUjYv5AGishRAUbNvA1NPUvYRHZxIY6mrPZQhbaK
-         mc4iTIUfaAZBivF+UQKqNWxXKvLac9Fwgcx1Ng0I0UdmplVsva/fPDlu/UpR92xmWPxE
-         oUXXSVZTNeyRx5zMeDs8K+UKwefD5A2mI7PwWS4XxTcwk7VWgpsvp7PMEFZ5iyUI6gw1
-         dQOzjp/pJ741d0oATsnLUfqKz7Qcv6oVuIA0u0P/bbUXKgx2sWxFHdH7DFHBFrq8CA2J
-         R1TQho82SgZ83Pz0cuDA41WaPCLuS5NVR8g9ANdglJ658tVYSs0jCzaCzLLeG3tMlAtp
-         i8kw==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=hJ/+RKHhTlJRNHtH4Jxpy6AeplD2NtfuLPCfAL3GXD0=;
+        b=B23r5MFX6LHNQ2uBhReYaGpOBR2DB6mUNsm3lbFPD1Fc4lJsXTdeHcJML05Th2zTeT
+         Yp6wDsgY1Dukfq8sjekBMgOZM3FEQeSr23lozfDYNvqvLhACGFPoJbTU2EsVd1XsJQAs
+         fO2jOJfKLVpbgregP6nfZfh5En/kdyG1pKdZno1mrdVZymj7YepfjMfQyRYh60AZl5GJ
+         31NaEWyLStqCOIi607DnbSqzpSHGQZT9SM72n8qHSmpKdZgOzUgrjzloeiPc0QHOexG4
+         WcA11miXNY6Qkwlaf/JIstzyp3kfGAh8zcl7CUohfNspdhHRDnvPoe6bRIgNEAKE6tzB
+         YDug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xXa+1tljvTjmUHG8hHmvpcVcceHnRXudTvTa1lRf4Tw=;
-        b=uSqzXYp/u7gplleXUJexcelDlGAh2CfuFnNuoRfIfZfANhi6LvxtY+oYfZp7jEpzpe
-         x8WwvYFWSNu0UTh+ZXpqytzeeYGBRPdJ5QIoW/Vb07SmNBVOubYmjN6snF0rdt8tWgQa
-         aM+YqK0sEAtvi4jUuAK5ltVDhH+0+lSIUwZ7YpUpVjnHfxPBNJpRrZYE/YACl7Ieq19B
-         gMUHeDP1CWcXLA53a0aNpdGGR7r1nCWWkCcQuND8kbHGowcyJBCACExWNhRPHKo4VR/E
-         Bm5g09w1EA7USQ5fzgoO6i/glc2/OhnU2+QGqUEXxSBwB/QXOmnqRu7Flwqzjq+sy7/o
-         /l2Q==
-X-Gm-Message-State: APjAAAXLsEK8DlR0buqymu4ZNAJthMj0zdK/YxhvlJltm45BMzGaUnxG
-        5g9tUdt+bIAvAF6gYLHpBEo=
-X-Google-Smtp-Source: APXvYqzp1ohDPYyi3dUX4+3r60MVr9Gm0/xPF/A8g8zuAhKV5KUaDLbQZdqZj2WCFZ+BlKffNCwtRw==
-X-Received: by 2002:a05:600c:218e:: with SMTP id e14mr1706056wme.22.1574115490944;
-        Mon, 18 Nov 2019 14:18:10 -0800 (PST)
-Received: from szeder.dev (x4d0c3ed7.dyn.telefonica.de. [77.12.62.215])
-        by smtp.gmail.com with ESMTPSA id g184sm919886wma.8.2019.11.18.14.18.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Nov 2019 14:18:10 -0800 (PST)
-Date:   Mon, 18 Nov 2019 23:18:04 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/1] ci(osx): use new location of the `perforce` cask
-Message-ID: <20191118221804.GA23183@szeder.dev>
-References: <pull.400.v2.git.1571316454.gitgitgadget@gmail.com>
- <pull.400.v3.git.1571789978.gitgitgadget@gmail.com>
- <9d80e845bf923c4543c49f9947aacb10c59ff6ce.1571789978.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=hJ/+RKHhTlJRNHtH4Jxpy6AeplD2NtfuLPCfAL3GXD0=;
+        b=lj8ExqvTUEJyJZvndVIk9qx+PP7uy1R13GqALce+KK81O5RzgsGbqwrklvtepZdCs1
+         ZyEovLa5eSyyGQYWvFehfjhHsplk7gzzwU3WUyzjts3ZQ7Afz+9MR4agzB5Ap7rEx2n7
+         lxv7lKfh7RATpF6QSBBkmczk+95oW0x6S0zvUaHb4jhixJ9puKhysOKXk8GU8yCvbvGG
+         BLikTtVMecBLnGbGPw6HfPikTHEfuTpmZwwi/2YKiJGaSjjKOi3Yl6OVF6BvXK48OCJV
+         LUSSAxy2BNiofJE5ecsUi0Zi3rvCCAVrjE22h37/s25vjLieAWZEShsrGQUCa1oGDzel
+         5RsA==
+X-Gm-Message-State: APjAAAW4IfFOBkxm+BNMo/dt7Atv0SH5p90OT6dxV0A8svBerzjoyx+V
+        juGD4g12zDY/LLtVOglLKp8/ef6VOuQta/GTiJa6kCoC
+X-Google-Smtp-Source: APXvYqyQZtFOp8yijZGeu0oJbuJzK/40WrFWuxRqowQ9rBGlbCLDt0XQxch7KzLOf0I8/FijhBJE+J3M/H90oOxVh+U=
+X-Received: by 2002:a1c:6a0d:: with SMTP id f13mr1906203wmc.164.1574116024604;
+ Mon, 18 Nov 2019 14:27:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9d80e845bf923c4543c49f9947aacb10c59ff6ce.1571789978.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Mon, 18 Nov 2019 14:26:53 -0800
+Message-ID: <CA+dzEBmrMavFJeyPSQr2wA9kFZwz_Kfr6PFBLRfLJ-EuCVXJnA@mail.gmail.com>
+Subject: git rev-parse --show-toplevel inside `.git` returns 0 and prints nothing
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 23, 2019 at 12:19:38AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> CI servers are typically fresh virtual machines, but not always. To
-> accommodate for that, let's try harder if `brew cask install perforce`
-> fails, by specifically pulling the latest `master` of the
-> `homebrew-cask` repository.
+I would expect it to either:
+- exit nonzero
+- produce the full path to the root of the repository
 
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index 85a9d6b15c..ce149ed39c 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -40,6 +40,11 @@ osx-clang|osx-gcc)
->  	test -z "$BREW_INSTALL_PACKAGES" ||
->  	brew install $BREW_INSTALL_PACKAGES
->  	brew link --force gettext
-> +	brew cask install perforce || {
-> +		# Update the definitions and try again
-> +		git -C "$(brew --repository)"/Library/Taps/homebrew/homebrew-cask pull &&
+would a patch be accepted which changes it to do one of those two
+things? I'd be happy to contribute such a patch
 
-In the build of v2.24.0 this 'git pull' printed just short of 600
-lines worth of diffstat.  Two weeks went by since then, and in today's
-'pu' build that diffstat is already over 1000 lines long.
-
-Perhaps we could use --quiet here, though that would suppress the
-transfer progress as well.
-
-> +		brew cask install perforce
-> +	} ||
->  	brew install caskroom/cask/perforce
->  	case "$jobname" in
->  	osx-gcc)
-> -- 
-> gitgitgadget
+Anthony
