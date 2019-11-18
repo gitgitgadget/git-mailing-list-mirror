@@ -7,87 +7,81 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF2681F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 01:44:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2ED1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 01:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbfKRBoo (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 20:44:44 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57981 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfKRBon (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 20:44:43 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F9DF2C93E;
-        Sun, 17 Nov 2019 20:44:41 -0500 (EST)
+        id S1726597AbfKRBpv (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 20:45:51 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62146 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725905AbfKRBpu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 20:45:50 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8541F33F5C;
+        Sun, 17 Nov 2019 20:45:48 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=NW/HSk0ESIDt
-        w1FbQ4XabX0BaAI=; b=fGlnar1baRBErhAKSgIawz10ycEuw6r+WsgA2ckT8x1B
-        Qe+V03bt09gMhvpYeg31d0UR23C8+P1lrGW/jXDmCoPxRT6paX5s3iTmoSE06j4X
-        1znEqMIDeuZv8UCE0rDvU6NTUAG8V1YR7eFgAvn+GFFuBn1P3WedzcoRAUf+bqA=
+        :content-type; s=sasl; bh=KpTrZgMGnJH0qCOgjiM8d1zGwb4=; b=toWj9C
+        0Ffv4MKQtXIJhihvcc2OtdKq1jIU1ZpEdWoEDcJe1wuSuC7UMHTl2SUwc1dLNnSx
+        4EVasBTdhIZygM8i3j8ImRKXzdXVjJIG4k41m2G3PJEppNz0kULllhvhJFEk6ixp
+        RK6gv/El39cxqfYZi2XUDmXcDjChcrrBHww/o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Rib+cQ
-        1pb9NLhVgctJmf4indk5anAN9Gn5L7RAxYWmpYTpjgkpyWPUweNOOSzcIIues8sm
-        4tasdBTBvXzmqC7pbY8/samAk17qEVvKbEYvZh0ktpGt1I5SvtPsUcSm1KGIrtiB
-        8PR7pWUuFW0MkWPE3+ZjXsMvG4YUojchBTVq0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96A6D2C93D;
-        Sun, 17 Nov 2019 20:44:41 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=jE0BvmpJpKMamiHM65V5R6slAtuY227b
+        wlPNIz6EOQEOX4aTgzKDs1hkXkt6i6jqiPV6JPBA83m0uELI4zFKOEVpHBaH511r
+        4fqZVCHfY1UoI2739Rc/vWvgGUTedAge8zh3QUAg0nSX7E2jMRjnM8/qt7e30fL9
+        VN21v4QQ22k=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B5BC33F5B;
+        Sun, 17 Nov 2019 20:45:48 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F20632C936;
-        Sun, 17 Nov 2019 20:44:40 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E26A533F5A;
+        Sun, 17 Nov 2019 20:45:47 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v3 09/10] pretty: implement 'reference' format
-References: <cover.1573241590.git.liu.denton@gmail.com>
-        <cover.1573764280.git.liu.denton@gmail.com>
-        <470a2b0f4fd450af1d9c9d27ec0f0c91ea59117f.1573764280.git.liu.denton@gmail.com>
-        <xmqqbltd7juo.fsf@gitster-ct.c.googlers.com>
-        <20191115131803.GU4348@szeder.dev>
-        <xmqqr228619w.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 18 Nov 2019 10:44:39 +0900
-In-Reply-To: <xmqqr228619w.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 16 Nov 2019 10:46:51 +0900")
-Message-ID: <xmqq5zji3qm0.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, NAKAYAMA DAISUKE <nakyamad@icloud.com>
+Subject: Re: [PATCH 0/4] gitweb: quote base url more consistently
+References: <20191115090545.GA30971@sigill.intra.peff.net>
+Date:   Mon, 18 Nov 2019 10:45:46 +0900
+In-Reply-To: <20191115090545.GA30971@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 15 Nov 2019 04:05:45 -0500")
+Message-ID: <xmqq1ru63qk5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: FCE0B4A6-09A4-11EA-989A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 24C62D70-09A5-11EA-BB07-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+> This series fixes an XSS issue reported to the git-security list where
+> gitweb doesn't always quote its base url, meaning a specially-crafted
+> URL can inject HTML into the finished page. Given the relatively low
+> severity of the problem and my lack of familiarity with gitweb, it makes
+> sense to me to just discuss this one in the open.
 >
->> On Fri, Nov 15, 2019 at 03:07:59PM +0900, Junio C Hamano wrote:
->>> Denton Liu <liu.denton@gmail.com> writes:
->>>=20
->>> > +* 'reference'
->>> > +
->>> > +	  <abbrev hash> (<title line>, <short author date>)
->>>=20
->>> s/title line/title/ as you definitely do *not* want a line with a
->>> title on it (and nothing else) in this context.
->>
->> Well, we just followed suit of the descriptions of other pretty
->> formats, and they all say "<title line>".
+> Credit for the finding the problem (and some patient explanations) goes
+> to NAKAYAMA DAISUKE <nakyamad@icloud.com>.
+>
+>   [1/4]: t9502: pass along all arguments in xss helper
+>   [2/4]: t/gitweb-lib.sh: drop confusing quotes
+>   [3/4]: t/gitweb-lib.sh: set $REQUEST_URI
+>   [4/4]: gitweb: escape URLs generated by href()
+>
+>  gitweb/gitweb.perl                        | 31 +++++++++++++----------
+>  t/gitweb-lib.sh                           |  7 ++---
+>  t/t9502-gitweb-standalone-parse-output.sh |  7 ++---
+>  3 files changed, 25 insertions(+), 20 deletions(-)
+>
+> -Peff
 
-Sorry I failed to respond to this point.  I think it is OK to leave
-it <title line> in this series, then.  Updating them need to be done
-for all at once together with other formats.
 
-Thanks.
+Thanks, will queue.
