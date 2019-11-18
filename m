@@ -2,112 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B4A71F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 20:52:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C5791F5A2
+	for <e@80x24.org>; Mon, 18 Nov 2019 21:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726833AbfKRUwR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 15:52:17 -0500
-Received: from mout.gmx.net ([212.227.15.19]:33557 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726237AbfKRUwR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 15:52:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574110332;
-        bh=1lFpGRFlo9zI8Ndqgcxb+U8lgOC8OWswWSbo64+fm2I=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gKcHX9hDcreiUD77dqXBxhU+j5MqSyRA2TX2j3vyg7ghqNbCr/wVUyZ2Q/RZ6eq/n
-         MVvQmN6IbFEw/n0mZEtdrPdjzXtAmZjpBFNPgtgusIIJqzijWm4NkKwhfUwwj/TQui
-         leslAK0lnBDE4LbGJr8cLkP2spYmh5Xa/FR8uyZI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCKFk-1if5jC290E-009ThD; Mon, 18
- Nov 2019 21:52:12 +0100
-Date:   Mon, 18 Nov 2019 21:52:00 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726775AbfKRVp0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 16:45:26 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:45523 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726716AbfKRVp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 16:45:26 -0500
+Received: by mail-pg1-f193.google.com with SMTP id k1so8944031pgg.12
+        for <git@vger.kernel.org>; Mon, 18 Nov 2019 13:45:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1Xv9JtGHufB5h1CigHiibUDn1EGTR8cDUxZeR5JevZA=;
+        b=mrFnxY46ycoAZZzrF4YHg2MKVZslmET1VzynXiUvHDOOLR9wcOsg1G0UDJHcnn0Gns
+         6o5MFwuqH1T6ulWGhFYDX9fQqaZmKT56d/i79Y/zExJ0w+sTpIgwWx8GstdqJqQH8htl
+         OPLMo/dyDwSWIoZnUmi3N+8HMK2Un44b6x1cLMpzxtl6jYRpN2oDFxYj+C9n0RZjkuIS
+         VMkvF7ACO8Bcake+Uw8fcrJuXS+2/0k2hbPUSmi6R0H0d/4fE+I3Gj9ahtBxEDsKawiu
+         f01j2Pngviah9X5hS4596/xoyheYmxZYuX2gRf2oQQUXjfHBxy0Tuyqd63dYNyXoQASt
+         /OHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1Xv9JtGHufB5h1CigHiibUDn1EGTR8cDUxZeR5JevZA=;
+        b=mEGgZ4G+7ftfJSPDGTXRLg64bQ7Wp8aB+PYIUuEa4YGXfOVIajLLY+TY2pRLLSwSti
+         FZFu/ZoBoXC+nFipHD5pdT1ihW77TB9RIdBGVDNWZkKpJLvnrdYItg6eTMcuRl7IVUkV
+         vRC7ErQjS59jPRl6Cv/JXIeFh+r7OPJOJYOWlrWX3wBsP5K+nOVHqPev5sdPSb8f4Nvm
+         lD9kUwwAPZ5TLhLGhNttcilmiEyPf06vCmakN1EFsPEKoGUvgM2fM7qvJewLWPafWZeP
+         NTTSqQZ4DEk5fwha8+PcImcrlamzYlu34HmDAyNA5lhjGibRrVMBduZz3MO04rMsaLCH
+         RDoQ==
+X-Gm-Message-State: APjAAAXpnlPuyOoHb5jRPfqRXujhp9Swl7k7uIKLaJ2ZTwo2bIZyr1y0
+        icwrX5ST5A12h9IumeQ4dEA6AiS5wug=
+X-Google-Smtp-Source: APXvYqwdEDJPtZnn1KAsLXnje8koKMC9qyjtojeOlUtcmjZ4PWTchYArq3I9oBsxCLQLjsmyEBHcHw==
+X-Received: by 2002:a62:b611:: with SMTP id j17mr1541746pff.201.1574113525250;
+        Mon, 18 Nov 2019 13:45:25 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id b21sm21243902pgs.35.2019.11.18.13.45.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 18 Nov 2019 13:45:24 -0800 (PST)
+Date:   Mon, 18 Nov 2019 13:45:19 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v2 0/2] Make git rebase -r's label generation more
- resilient
-In-Reply-To: <xmqq8sod3l5a.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911182151450.46@tvgsbejvaqbjf.bet>
-References: <pull.327.git.gitgitgadget@gmail.com> <pull.327.v2.git.1574032570.gitgitgadget@gmail.com> <xmqq8sod3l5a.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v2] MyFirstContribution: add avenues for getting help
+Message-ID: <20191118214519.GH22855@google.com>
+References: <20191115230637.76877-1-emilyshaffer@google.com>
+ <xmqqv9rk4j1y.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ZJRaNfFEEp2/H0WmT5LqdlHyQogGx+AEUSnbRkjXyLzZ0ZnwvMP
- dof8B8H7KsrOdY276x++GIksiS6y7MbLZLNQjJB1cgbjhORs+6H7X1W5cARFD/i4C4foZOs
- SoBHpmp6bOJr7fxuVHKvPma6y1CZfIsZIg589kA/hoSfSxWehEyOPrvNguC7ykAN6iucMNW
- xwdXYCEvbu4avQ20PfHCA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pJZaLFVq5Og=:aQNr7b8kzD3Op3KfBJ/EKc
- wjGQZEVlDjZNxQZXO7lkDxq4IFibU78bZqq0j6G1kWjUWtB3lYhTuQCf1UqCFZ3rU1cxdLgQ8
- eMXXQ3uYgTGGSv8OsYyQ7yv6M83diVS0Tm1BQu0BEveZutlyUow4XcNH/AOhUfG8Tg69WTCAf
- MTdZ1Eav53YL+aWU/eMoT66trmXQca3xgr9j38IHJKpbJPfTG/J7ahLzukxgrq5l/JvvaXllx
- dXXJGTOeP7a/XtbzLGxuQKXwIjsqhT5ks0VMkItHjuF/t1eSSk0bsfqc+2h510GYJMGiDz+6s
- ezWiTxpSTdy3ZqhYJ+uJAjkBIlIHnYlmXuF5yywGS4qrx0KIrCWGC9ZCSPslzumMY1H4NVXOX
- Fcyz1qsX01MVE2Ukh4pRbdW/bxgwHk52v3wu8b2y2D2XYqpzHAiTECXkmilsXBFdFX1bEbEpk
- D2EnSwEZEaKqaQ0nhKnSc6Q0EdmutgmH4CJN9/UOstfATA52v8vMD3Rky29t0ZKBIgIQrWhTB
- yKr2tpMFOmp75p4h0CFEmJC7s+ne/8TDN5scWi/eR6f3thFpekPo4tw/CsA7fSqS70ZNCEwKR
- qBgbEYVzmMNLv416LYizpPtmv0fsEBtUCxM49OrJQ0mlJ5SoekIOvoPxZudbKTO7tIy5UtKQU
- DFh1uaIAhN3VCGAUQ5zvqJoG8yUbkmpucxrMpIxsmGL2H0lHji6HGQSFqq2OMLUM5TLBUbO44
- dNIkYZEccwZkKjLmS/XSb/zdLv2KylG90tSjii/cwnjq9FF23H/tFloiTAwX5MBtLiKwekeKq
- 4OT/1MJ65Mv8qtdPPcej/VLixAO8/surbZtNL5fKzzlANa5lvuGu1uwHpKJmHIH3NPyTGEB2q
- kNcRxuJdI0We96WwDdaject6N7Wao0J3OE9Ighv3+mtHf6w1Vfb+6RfPbzYSdBuaG6PVXLe9R
- 2cD+aFusasNHlJHcb2nvSNFPhLXrsVQoX/6RKIPonaVzzuFn6EBg8wNoh0g4skcv6rfN4hFVT
- L+7JuCSgHmkDknY1BPjCwAVvRAQ3kwkIuxtPg0wmNpQWE2qiY4mbJb3e6uPuErEtTEp5phPt+
- nF2WIYSub90WKtlkn+m2A8LlHT8nuIFdk2FY7clxv6aK7vJfDM4Tbpde/ZxYcRcovozp/LLfo
- u7/gHnMWwhjoK9s09+ozKyDpkW+NgMeFM0iIUI/RlEny4KPCkXSbn7DklCFJVvpYdwYCBJIZA
- 1HfO62cEwX66jppd+Jm8uCy18KtaTYQGPKAWfku0Q7TsBeH5OV2U481HvwdE=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv9rk4j1y.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Sat, Nov 16, 2019 at 12:05:45PM +0900, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > +[[getting-help]]
+> > +=== Getting Help
+> > +
+> > +If you get stuck, you can seek help in the following places.
+> 
+> Is this list meant to be an exhaustive list of authoritative
+> sources?
 
-On Mon, 18 Nov 2019, Junio C Hamano wrote:
+To the best of my knowledge, as applicable, yeah.
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > Those labels must be valid ref names, and therefore valid file names. =
-The
-> > initial patch came in via Git for Windows.
-> >
-> > Change since v1:
-> >
-> >  * moved the entire sanitizing logic to label_oid(), as a preparatory =
-step.
-> >
-> > Johannes Schindelin (1):
-> >   rebase-merges: move labels' whitespace mangling into `label_oid()`
-> >
-> > Matthew Rogers (1):
-> >   rebase -r: let `label` generate safer labels
-> >
-> >  sequencer.c              | 72 +++++++++++++++++++++++++--------------=
--
-> >  t/t3430-rebase-merges.sh |  6 ++++
-> >  2 files changed, 51 insertions(+), 27 deletions(-)
->
-> I think Dscho meant to Cc you as these two patches are meant to be a
-> more complete solution to supersede your [*1*].
+> IOW, are we reasonably sure that some of us would be
+> around and give useful help, and that we do not mind readers to
+> consider these places "officially endorsed by the project"?
 
-Whoops, totally forgot. Thanks!
-Dscho
+Right. That's my hope. I worry that sending newbies to non-endorsed
+places for help will lead to them getting incorrect or conflicting help.
 
->
->
-> [Reference]
->
-> *1* <860dee65f49ea7eacf5a0c7c8ffe59095a51b1ce.1573205699.git.congdanhqx@=
-gmail.com>
->
+> 
+> Or is this meant to be a list of reasonably well-known places, but
+> may include places where the project does not want to be associated
+> with the quality of answers given there?  
+
+No.
+
+> I am (implicitly) assuming that it is the former, but I think it is
+> better to clarify what this "list of places" is meant to be.
+
+I'll try to fudge the language so that it implies these are official
+channels for getting help.
+
+> I notice that stack overflow is missing in this list.  Intended?
+> Not that I visit there at all nor I would recommend it, but I recall
+> seeing questions asked by more than a few people after getting bad
+> pieces of advice there.
+
+Hm. SO for getting help contributing to a specific project? That doesn't
+sound like a likely avenue or a good idea to me, since my understanding
+is that we don't consider it an "official presence" (some projects do, I
+guess).
+
+I suppose the kinds of questions I expect to see on StackOverflow
+include "How do I write a mutex lock in C" or "How do I generate patches
+with a cover letter", not "I'm stuck on this Git tutorial" or "Would the
+Git project welcome X change". To me, this doesn't seem like the place
+to bring it up one way or another.
+
+> 
+> > +==== https://public-inbox.org/git[git@vger.kernel.org]
+> > +
+> > +This is the main Git project mailing list where code reviews, version
+> > +announcements, design discussions, and more take place. If you fail to receive
+> > +help via the channels above, you can ask your question here. The Git list
+> > +requires plain-text-only emails and prefers inline and bottom-posting when
+> > +replying to mail; you will be CC'd in all replies to you. Optionally, you can
+> > +subscribe to the list by sending an email to majordomo@vger.kernel.org with
+> > +"subscribe git" in the body.
+> 
+> Sounds good; I agree with Denton, especially with the mention of
+> "you must join" on the other mailing list, that it is a good idea to
+> explicitly say that subscription is optional in this entry.
+> 
+> You can ask questions even if you haven't tried other avenues and
+> failed, but this entry makes it sound as if an earlier failure
+> elsewhere is a prerequisite for asking for help here.
+
+I envision an exchange sort of like this:
+
+Newbie to git@vger.kernel.org: "I'm having trouble compiling Git and I
+want to write a patch, I'm getting X error"
+
+Veteran to Newbie, cc git-mentoring, bcc git@vger.kernel.org:
+"Please build with blah flag and paste console output, plus let us know
+system information blah blah blah"
+
+I don't mind the idea of pushing folks to ask on the mentoring list
+first. It's pretty well attended already - just now I count 16 list
+members, a pretty significant majority of which are project veterans. I
+have no problem suggesting newbies ask their questions, which others
+probably had and solved before them, in a space separate from the main
+mailing list.
+
+Of course if you want to encourage newbies to ask in any of these three
+venues, weighted equally, I can change the language. But suggesting the
+main list as a last resort was intentional.
+
+ - Emily
