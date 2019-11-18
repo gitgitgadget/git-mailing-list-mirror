@@ -8,146 +8,199 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E2041F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 14:52:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 005361F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 15:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727237AbfKROwQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 09:52:16 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42190 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726748AbfKROwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 09:52:16 -0500
-Received: by mail-wr1-f65.google.com with SMTP id a15so19832320wrf.9
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 06:52:14 -0800 (PST)
+        id S1726970AbfKRPrA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 10:47:00 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:36419 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726739AbfKRPq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 10:46:59 -0500
+Received: by mail-qk1-f194.google.com with SMTP id d13so14807367qko.3
+        for <git@vger.kernel.org>; Mon, 18 Nov 2019 07:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ip7aGdiQSJlv8DMallyvFhZMl3mNcDRoxqLPBRE7Wxs=;
-        b=L3laqrPFWQbLChHpqcgGAt1yMr8x+o+7CLYOz/pm9OKERUklAbLNVPOPBdEHuJrUAh
-         lhtrHljddPI+2FluofCgWFgNpCwpu7QNgbjpHUTjysk2Gso7S4lMZioQBvf6wm3itCkw
-         64Omgcl/+2i69In3+eIumPuWsZywdTJDfGjdr45RlJSqzq9iQZCvbZRSqFAIxCgk2aOe
-         +KY0Y14WcnnKspc5tTlNyNJtTdI9yPBo0V3OTRxcV4CKItkLCrOo1GwnACPXScYp5Se+
-         6HOaNDGHlB1rxy2ny1rUs8ARNwztL4+EighrI7nKaHz0Is4o8pDBjAWWR4zkNSHKG65w
-         fvAA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=VsCDGcRgkLfZ8LnRVqk026qPYm2FP9v1fGG+zZ/KFSI=;
+        b=fP76RZKM85EbTzTJ2AVbkcs2XgEQnuvjKY9HLDsl6XoEFgzpcGulcYyZP5hpiGivoW
+         TCYJsg/gf/T1pnFR3T6osaM4ZVCKCjbshiGVPRM6mlMz/uEweMdzqP+p865P5ZlBZGEB
+         Kopxia91vpaRCbkPCInHUMmWCweCCY6HP+a+d81kK+Ymk42nEEBhe8URwa0ZFhpCsDfc
+         W3vpaTm1pSaAofOTw28h5AgYNxVngjem6Ki5pgqLm/CwwjEsOMqii6Vwn1r1n5/Ddt6c
+         yZBVKCMCTJ9SHG2D0tTPOcg4jUh5UHlTkSF7PR9gc2FqIwUnn03za9op+nT7jZpO5ew+
+         CpNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ip7aGdiQSJlv8DMallyvFhZMl3mNcDRoxqLPBRE7Wxs=;
-        b=itKpis2R/Di9ln6JGivExg/eSjwd/ECMZ4leakrdsUsTp6fwsxquXYKpFJnt/FZ/DV
-         v2IccIUyPBHC5RTp+SIIh5KgbElXGlTi7lsHwTSoLrrUcQhnrZ1ErODVjuw62mdb0pg6
-         ROGvpbhheLz3ZA6PuDJ5HjLP+cGf73iNUBgZeZdteEn19UlBqVMywYp2iRiDT33SLjuZ
-         yHKnzml6PNb3/7fEzhluSFZCid/1fMWAFYuDRrCEQH+tGp1rzL1QgAwoSIzt+3TPm5e4
-         OtT+73PHRaTxkM+VJt/z8wMbcXVfX2M2MaCC576IQiUj14VouUXwOa05zR6fErZK+8ec
-         P2GQ==
-X-Gm-Message-State: APjAAAV0z2gbKetk69DY5SirpG59hXGRsBZoGIXj6d6UQRqbVE6+Jt74
-        2DiLZLTE/lL8HmMCOQFsPNP9HLlRzxI=
-X-Google-Smtp-Source: APXvYqwUVBLhZjvhHVBd+naoZGQO8CE4cdDUj3hFKWtVsk9Enx1ZzLLIDKK4S/BToLcZmcAg6EERDw==
-X-Received: by 2002:adf:f987:: with SMTP id f7mr30443708wrr.284.1574088734171;
-        Mon, 18 Nov 2019 06:52:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o5sm23043288wrx.15.2019.11.18.06.52.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 18 Nov 2019 06:52:13 -0800 (PST)
-Message-Id: <508d07a3eb035697813af253eaad739a880124da.1574088732.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.451.v4.git.1574088732.gitgitgadget@gmail.com>
-References: <pull.451.v3.git.1573069152.gitgitgadget@gmail.com>
-        <pull.451.v4.git.1574088732.gitgitgadget@gmail.com>
-From:   "Erik Chen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 18 Nov 2019 14:52:12 +0000
-Subject: [PATCH v4 1/1] fetch: add trace2 instrumentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=VsCDGcRgkLfZ8LnRVqk026qPYm2FP9v1fGG+zZ/KFSI=;
+        b=H6IFzj3fVByhSC8E4ghhEFgSHKZBueKqDeI6tqtTa/FA3KjBmN26iVe3/HtZ+/tPU3
+         Z/YSzZ/3pHs0BLEwN1Cyb3LU7tOZW5/S47REcV4XgrTxCj2LqiBFC6fJein550rFHUYx
+         18H6ZFLoLdbMtA03gQfC1KuYXJIt4ELkIU0hphr4JxgESl5R/x33ou2gvrAPOufLdaSw
+         sCdrV7jAO/jiHPkTfv5Mjr0JOuiWW/X9ISPlOVFr1nV/YPPq6RqTogeE+M/BZ13S/Osn
+         nM0APO2dFCxu4rIbzfxuXYLGi0Fxya+dgBF/CNG4cyR+y79KPGRMRlmQnI7il716i0ix
+         8GMw==
+X-Gm-Message-State: APjAAAXzXXsZfMH7JddrL7CrrQDOT9+gTmWyiG2haTMuzq3z9ZBEEZFU
+        qWgh2pl42QatWhvEZgNjvkY=
+X-Google-Smtp-Source: APXvYqzclQ11HglSkrEIEfWGZ1Dzoh9nPz1qRxFoP005jWIei98UWczT53ii7CLiNMplb77LuD0ZOA==
+X-Received: by 2002:a37:41d2:: with SMTP id o201mr26229324qka.100.1574092018360;
+        Mon, 18 Nov 2019 07:46:58 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:9037:1fcc:32e4:493e? ([2001:4898:a800:1012:416b:1fcc:32e4:493e])
+        by smtp.gmail.com with ESMTPSA id y7sm8517338qto.84.2019.11.18.07.46.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 18 Nov 2019 07:46:57 -0800 (PST)
+Subject: Re: [PATCH v3 1/1] fetch: add trace2 instrumentation
+To:     Junio C Hamano <gitster@pobox.com>,
+        Erik Chen via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Erik Chen <erikchen@chromium.org>
+References: <pull.451.v2.git.1573066300.gitgitgadget@gmail.com>
+ <pull.451.v3.git.1573069152.gitgitgadget@gmail.com>
+ <364c526a5d674e3f137578b24143678256601d08.1573069152.git.gitgitgadget@gmail.com>
+ <xmqq5zjws12y.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <944c956e-dd9a-1a12-5cb1-0c263ee7d5bd@gmail.com>
+Date:   Mon, 18 Nov 2019 10:46:56 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Erik Chen <erikchen@chromium.org>
+In-Reply-To: <xmqq5zjws12y.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Erik Chen <erikchen@chromium.org>
+On 11/7/2019 12:32 AM, Junio C Hamano wrote:
+> "Erik Chen via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Erik Chen <erikchen@chromium.org>
+>>
+>> Add trace2 regions to fetch-pack.c to better track time spent in the various
+>> phases of a fetch:
+>>
+>>     * matching common remote and local refs
+>>     * marking local refs as complete (part of the matching process)
+>>
+>> Both of these stages can be slow for repositories with many refs.
+>>
+>> Signed-off-by: Erik Chen <erikchen@chromium.org>
+>> ---
+>>  fetch-pack.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+> 
+> OK.
+> 
+>> diff --git a/fetch-pack.c b/fetch-pack.c
+>> index 0130b44112..5e3eee0477 100644
+>> --- a/fetch-pack.c
+>> +++ b/fetch-pack.c
+>> @@ -669,6 +669,8 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+>>  
+>>  	save_commit_buffer = 0;
+>>  
+>> +	trace2_region_enter("fetch-pack", "mark_complete_and_common_ref", NULL);
+>> +
+>>  	for (ref = *refs; ref; ref = ref->next) {
+>>  		struct object *o;
+>>  
+>> @@ -690,6 +692,10 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+>>  		}
+>>  	}
+>>  
+>> +	/* This block marks all local refs as COMPLETE, and then recursively marks all
+>> +	 * parents of those refs as COMPLETE.
+>> +	 */
+> 
+>         /*
+>          * We write our multi-line comments like this, with the
+>          * slash-asterisk at the beginning and the asterisk-slash
+>          * at the end on its own line.  Learn such local conventions
+>          * from the existing surrounding code and imitate, which
+>          * would reduce stylistic errors.
+>          */
+> 
+> Will fix-up while queuing (no need to reroll only to fix this).
+> 
+>> +	trace2_region_enter("fetch-pack", "mark_complete_local_refs", NULL);
+>>  	if (!args->deepen) {
+>>  		for_each_ref(mark_complete_oid, NULL);
+>>  		for_each_cached_alternate(NULL, mark_alternate_complete);
+>> @@ -697,6 +703,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+>>  		if (cutoff)
+>>  			mark_recent_complete_commits(args, cutoff);
+>>  	}
+>> +	trace2_region_leave("fetch-pack", "mark_complete_local_refs", NULL);
+>>  
+>>  	/*
+>>  	 * Mark all complete remote refs as common refs.
+>> @@ -716,6 +723,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+>>  	}
+>>  
+>>  	save_commit_buffer = old_save_commit_buffer;
+>> +	trace2_region_leave("fetch-pack", "mark_complete_and_common_ref", NULL);
+> 
+> 
+> So this introduces a single region around the entire function body
+> of mark_complete_and_common_ref(), within which only one subpart is
+> also enclosed in a nested region.  Is that because the parts inside
+> the outer region before and after the inner region are known to
+> consume negligible time?  IOW I would understand
+> 
+>         F () {
+>                 <region 1 begin>
+>                     <region 1.1 begin>
+>                         code
+>                     <region 1.1 end>
+>                     <region 1.2 begin>
+>                         code
+>                     <region 1.2 end>
+>                     <region 1.3 begin>
+>                         code
+>                     <region 1.3 end>
+>                 <region 1 end>
+>         }
+> 
+> or
+> 
+>         F () {
+>                         trivial code
+>                 <region 1 begin>
+>                         heavy code
+>                 <region 1 end>
+>                         trivial code
+>         }
+> 
+> but this appears to do
+> 
+> 
+>         F () {
+>                 <region 1 begin>
+>                         code
+>                     <region 1.1 begin>
+>                         code
+>                     <region 1.1 end>
+>                         code
+>                 <region 1 end>
+>         }
+> 
+> which is somewhat puzzling.
 
-Add trace2 regions to fetch-pack.c to better track time spent in the various
-phases of a fetch:
+I notice that a v4 was sent that adds more sub-regions without actually
+responding to this request. (It is worth also pointing out that you
+ignored Junio's request you use the cover letter to explain your reasoning
+for changes between versions.)
 
-    * matching common remote and local refs
-    * parsing remote refs and finding a cutoff
-    * marking local refs as complete
-    * marking complete remote refs as common
+There is a real downside to nesting regions like this. Specifically, we
+frequently limit the depth that we report nested regions to avoid
+overwhelming the logs.
 
-Both of these stages can be slow for repositories with many refs.
+In general, these sub-regions should be avoided when possible and instead
+create regions around important sections, such as the second option Junio
+lists above.
 
-Signed-off-by: Erik Chen <erikchen@chromium.org>
----
- fetch-pack.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f80e2d1149..bca70e65c8 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -669,6 +669,9 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 
- 	save_commit_buffer = 0;
- 
-+	trace2_region_enter("fetch-pack", "mark_complete_and_common_ref", NULL);
-+
-+	trace2_region_enter("fetch-pack", "parse_remote_refs_and_find_cutoff", NULL);
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
- 
-@@ -679,7 +682,8 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		if (!o)
- 			continue;
- 
--		/* We already have it -- which may mean that we were
-+		/*
-+		 * We already have it -- which may mean that we were
- 		 * in sync with the other side at some time after
- 		 * that (it is OK if we guess wrong here).
- 		 */
-@@ -689,7 +693,13 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 				cutoff = commit->date;
- 		}
- 	}
-+	trace2_region_leave("fetch-pack", "parse_remote_refs_and_find_cutoff", NULL);
- 
-+	/*
-+	 * This block marks all local refs as COMPLETE, and then recursively marks all
-+	 * parents of those refs as COMPLETE.
-+	 */
-+	trace2_region_enter("fetch-pack", "mark_complete_local_refs", NULL);
- 	if (!args->deepen) {
- 		for_each_ref(mark_complete_oid, NULL);
- 		for_each_cached_alternate(NULL, mark_alternate_complete);
-@@ -697,11 +707,13 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		if (cutoff)
- 			mark_recent_complete_commits(args, cutoff);
- 	}
-+	trace2_region_leave("fetch-pack", "mark_complete_local_refs", NULL);
- 
- 	/*
- 	 * Mark all complete remote refs as common refs.
- 	 * Don't mark them common yet; the server has to be told so first.
- 	 */
-+	trace2_region_enter("fetch-pack", "mark_common_remote_refs", NULL);
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o = deref_tag(the_repository,
- 					     lookup_object(the_repository,
-@@ -714,8 +726,10 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		negotiator->known_common(negotiator,
- 					 (struct commit *)o);
- 	}
-+	trace2_region_leave("fetch-pack", "mark_common_remote_refs", NULL);
- 
- 	save_commit_buffer = old_save_commit_buffer;
-+	trace2_region_leave("fetch-pack", "mark_complete_and_common_ref", NULL);
- }
- 
- /*
--- 
-gitgitgadget
+Thanks,
+-Stolee
