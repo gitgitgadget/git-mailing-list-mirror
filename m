@@ -7,81 +7,76 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C2ED1F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 01:45:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0945D1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 02:17:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726597AbfKRBpv (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 20:45:51 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62146 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfKRBpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 20:45:50 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8541F33F5C;
-        Sun, 17 Nov 2019 20:45:48 -0500 (EST)
+        id S1726201AbfKRCRj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 21:17:39 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52712 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725905AbfKRCRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 21:17:38 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BF9DE8D730;
+        Sun, 17 Nov 2019 21:17:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=KpTrZgMGnJH0qCOgjiM8d1zGwb4=; b=toWj9C
-        0Ffv4MKQtXIJhihvcc2OtdKq1jIU1ZpEdWoEDcJe1wuSuC7UMHTl2SUwc1dLNnSx
-        4EVasBTdhIZygM8i3j8ImRKXzdXVjJIG4k41m2G3PJEppNz0kULllhvhJFEk6ixp
-        RK6gv/El39cxqfYZi2XUDmXcDjChcrrBHww/o=
+        :content-type; s=sasl; bh=nFYcn+NN5+jC4QGoMwzaN2EXxdM=; b=dlvsvq
+        5lDm07T6lTBmPw5M9QuIQZ/ogP9hY5tmfzQU33Qcjpseirbr2jUXErZqVDOVfgQL
+        wPL7OA+RlYNSHSn86mYsgCNeOVW1x1Nnmf9wXtmtB2y4rte/dEcah6RbeYbr9ySU
+        b9/q86JMzL/Zb57kqiGJSW/T0+k47l3mktdrg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jE0BvmpJpKMamiHM65V5R6slAtuY227b
-        wlPNIz6EOQEOX4aTgzKDs1hkXkt6i6jqiPV6JPBA83m0uELI4zFKOEVpHBaH511r
-        4fqZVCHfY1UoI2739Rc/vWvgGUTedAge8zh3QUAg0nSX7E2jMRjnM8/qt7e30fL9
-        VN21v4QQ22k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B5BC33F5B;
-        Sun, 17 Nov 2019 20:45:48 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=SFi+tamzStChoMknzoL0peg29YGs29g5
+        lLUw/RQ0aXsddmDD/TpG8HXHeBK93lwtYbSl7e0ZEh6gc+yYqSx7XBoDAh7TjjzU
+        lROljZuOq62nySXV3WovWv2BpRZFX965hm3+eWC2a3Dzs+SlCMg4Hc4Nb3kid4zk
+        bG3l5L4T5fs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AC1658D72F;
+        Sun, 17 Nov 2019 21:17:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E26A533F5A;
-        Sun, 17 Nov 2019 20:45:47 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C9A7B8D72C;
+        Sun, 17 Nov 2019 21:17:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, NAKAYAMA DAISUKE <nakyamad@icloud.com>
-Subject: Re: [PATCH 0/4] gitweb: quote base url more consistently
-References: <20191115090545.GA30971@sigill.intra.peff.net>
-Date:   Mon, 18 Nov 2019 10:45:46 +0900
-In-Reply-To: <20191115090545.GA30971@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 15 Nov 2019 04:05:45 -0500")
-Message-ID: <xmqq1ru63qk5.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/8] build-in add -i: implement all commands in the main loop
+References: <pull.171.git.1573821382.gitgitgadget@gmail.com>
+Date:   Mon, 18 Nov 2019 11:17:31 +0900
+In-Reply-To: <pull.171.git.1573821382.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Fri, 15 Nov 2019 12:36:14
+        +0000")
+Message-ID: <xmqqwoby2ais.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 24C62D70-09A5-11EA-BB07-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 94C75F5A-09A9-11EA-82D3-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> This series fixes an XSS issue reported to the git-security list where
-> gitweb doesn't always quote its base url, meaning a specially-crafted
-> URL can inject HTML into the finished page. Given the relatively low
-> severity of the problem and my lack of familiarity with gitweb, it makes
-> sense to me to just discuss this one in the open.
->
-> Credit for the finding the problem (and some patient explanations) goes
-> to NAKAYAMA DAISUKE <nakyamad@icloud.com>.
->
->   [1/4]: t9502: pass along all arguments in xss helper
->   [2/4]: t/gitweb-lib.sh: drop confusing quotes
->   [3/4]: t/gitweb-lib.sh: set $REQUEST_URI
->   [4/4]: gitweb: escape URLs generated by href()
->
->  gitweb/gitweb.perl                        | 31 +++++++++++++----------
->  t/gitweb-lib.sh                           |  7 ++---
->  t/t9502-gitweb-standalone-parse-output.sh |  7 ++---
->  3 files changed, 25 insertions(+), 20 deletions(-)
->
-> -Peff
+> Based on the js/builtin-add-i branch, this patch series implements the rest
+> of the commands in git add -i's main loop: update, revert, add_untracked, 
+> patch, diff, and quit. Apart from quit, these commands are all very similar
+> in that they first build a list of files, display it, let the user choose
+> which ones to act on, and then perform the action.
 
+So, this obviously depends on the previous "let's start the main
+loop" series, in which I recall you found at least one remaining bug
+after sending the latest round.
 
-Thanks, will queue.
+I'd prefer to queue this on top of the iteration of that series,
+which would hopefully become the final one, which would let me avoid
+one rebase of this series ;-)
+
+Thanks.
