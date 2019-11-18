@@ -7,60 +7,63 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29EF41F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 01:43:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2681F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 01:44:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726178AbfKRBnF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 17 Nov 2019 20:43:05 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59055 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725905AbfKRBnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 17 Nov 2019 20:43:05 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD15333F2C;
-        Sun, 17 Nov 2019 20:42:59 -0500 (EST)
+        id S1726347AbfKRBoo (ORCPT <rfc822;e@80x24.org>);
+        Sun, 17 Nov 2019 20:44:44 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57981 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725905AbfKRBon (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 17 Nov 2019 20:44:43 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9F9DF2C93E;
+        Sun, 17 Nov 2019 20:44:41 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yo74NHxjnaWhjfClzFuPfPn+Ggc=; b=RrHeqQ
-        Yd76cEimuqEMNMJwV/ABqxEp0xf1+Fu+wLldqhmXx3khA/eGl0u3bCi/IsvMcVtJ
-        zwPOINdItYRAZrqr+V+vRqQzAvvnJeeJsGXpUiBKTQTQog6oBLWSv4Ao67HOaiLn
-        S9CsMTzNa5PkKMsGm3oDiVTcSfILqiA0plqMM=
+        :content-type:content-transfer-encoding; s=sasl; bh=NW/HSk0ESIDt
+        w1FbQ4XabX0BaAI=; b=fGlnar1baRBErhAKSgIawz10ycEuw6r+WsgA2ckT8x1B
+        Qe+V03bt09gMhvpYeg31d0UR23C8+P1lrGW/jXDmCoPxRT6paX5s3iTmoSE06j4X
+        1znEqMIDeuZv8UCE0rDvU6NTUAG8V1YR7eFgAvn+GFFuBn1P3WedzcoRAUf+bqA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iRhyCK9dY9WsULIMyvqhToApXnhieQmF
-        EDpcs8xjAPvHZHwhAYJNDJkXAoQuTQXqpl9SL0a1QAch6C5S7Gq3CTElHaQh6Mgz
-        6wXpw/dfFj8nTdlFMLK9jXNCjYWd1HgXqHYG6wQ3MxfGs0/qH0gmXu733PvPMcI0
-        542P0bCfNzU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D434D33F2B;
-        Sun, 17 Nov 2019 20:42:59 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Rib+cQ
+        1pb9NLhVgctJmf4indk5anAN9Gn5L7RAxYWmpYTpjgkpyWPUweNOOSzcIIues8sm
+        4tasdBTBvXzmqC7pbY8/samAk17qEVvKbEYvZh0ktpGt1I5SvtPsUcSm1KGIrtiB
+        8PR7pWUuFW0MkWPE3+ZjXsMvG4YUojchBTVq0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 96A6D2C93D;
+        Sun, 17 Nov 2019 20:44:41 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4A51F33F2A;
-        Sun, 17 Nov 2019 20:42:59 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F20632C936;
+        Sun, 17 Nov 2019 20:44:40 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Subject: Re: [PATCH v3 09/10] pretty: implement 'reference' format
 References: <cover.1573241590.git.liu.denton@gmail.com>
         <cover.1573764280.git.liu.denton@gmail.com>
         <470a2b0f4fd450af1d9c9d27ec0f0c91ea59117f.1573764280.git.liu.denton@gmail.com>
         <xmqqbltd7juo.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 18 Nov 2019 10:42:58 +0900
-In-Reply-To: <xmqqbltd7juo.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 15 Nov 2019 15:07:59 +0900")
-Message-ID: <xmqqa78u3qot.fsf@gitster-ct.c.googlers.com>
+        <20191115131803.GU4348@szeder.dev>
+        <xmqqr228619w.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 18 Nov 2019 10:44:39 +0900
+In-Reply-To: <xmqqr228619w.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Sat, 16 Nov 2019 10:46:51 +0900")
+Message-ID: <xmqq5zji3qm0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C04412CC-09A4-11EA-BA04-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: FCE0B4A6-09A4-11EA-989A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -68,63 +71,23 @@ X-Mailing-List: git@vger.kernel.org
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Denton Liu <liu.denton@gmail.com> writes:
+> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 >
->> +* 'reference'
->> +
->> +	  <abbrev hash> (<title line>, <short author date>)
->
-> s/title line/title/ as you definitely do *not* want a line with a
-> title on it (and nothing else) in this context.
->
->> +This format is useful for referring to other commits when writing a new
->> +commit message. It uses the following canned user format:
->> +`%C(auto)%h (%s, %as)`. This means it will not respect options that
->> +change the output format such as `--date` `--no-abbrev-commit`, and
->> +`--walk-reflogs`.
->
-> Ignoring of the '--date' may want to be eventually fixed, but for an
-> initial cut, using %as in the canned format is a good approach for
-> expediency.
-> ...
-> ...  I do not think I understand what you wanted to do by
-> using `--walk-reflogs` with the format at all, either.
+>> On Fri, Nov 15, 2019 at 03:07:59PM +0900, Junio C Hamano wrote:
+>>> Denton Liu <liu.denton@gmail.com> writes:
+>>>=20
+>>> > +* 'reference'
+>>> > +
+>>> > +	  <abbrev hash> (<title line>, <short author date>)
+>>>=20
+>>> s/title line/title/ as you definitely do *not* want a line with a
+>>> title on it (and nothing else) in this context.
+>>
+>> Well, we just followed suit of the descriptions of other pretty
+>> formats, and they all say "<title line>".
 
-OK, I re-read the patch text and I understand what you wanted to
-say.  The mention of --walk-reflogs in the new description is
-grossly misleading.
-
-   $ git log --pretty=ref --walk-reflogs @{now}
-
-would work perfectly fine.  It is an instruction that tells "git
-log" not to follow the commit ancestry from the commit that sits at
-the current branch right now, but instead follow the history of what
-commits used to sit at the tip of the current branch.
-
-"--pretty=format:<anything>" overrides only the side effect of
-"--walk-reflogs" that modifies traditional built-in formats.  But
-the above makes it sound as if use of "--pretty=ref" somehow makes
-our commands to ignore the entire effect of any option that has side
-effect of changing the output format, which is not true.
-
-The `--date` and `--decorate` options would be a good example of
-options "that change the output format".  If you want to mention the
-effect of this option on the `--walk-reflogs` option correctly, the
-explanation must make sure that only the output aspect is affected.
-
-Perhaps like this
-
-	This format is used to refer another commit in a commit
-	message as "<short hash> (<title>, <author date>)" and is
-	the same as `--pretty=format:%C(auto)%h (%s, %as)`.  As with
-	any `format:` with format placeholders, its output is not
-	affected by other options like `--decorate` and
-	`--walk-reflogs`.
-
-I guess?
-
-We would want to fix it in such a way that it uses %ad instead of
-%as, but internally tweak the default date format to short unless
-the --date option is given.
+Sorry I failed to respond to this point.  I think it is OK to leave
+it <title line> in this series, then.  Updating them need to be done
+for all at once together with other formats.
 
 Thanks.
