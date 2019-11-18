@@ -2,207 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 230AD1F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 17:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A10C1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 18:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726695AbfKRR5g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 12:57:36 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46919 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726314AbfKRR5g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 12:57:36 -0500
-Received: by mail-pl1-f195.google.com with SMTP id l4so10186275plt.13
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 09:57:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RBZ1tvGVIQI0m4jcWcuWjT/2DPDizCKFdrHcDMcXTZk=;
-        b=UzgwXYNVr0X/SOhDbx8tLscxksoaFiPSSSOCRT4XXh88lxqzSPHBi3SolCTJcuznjt
-         1A5tC1YRDAyJTg4t+n13EJqCB9w38dKSUMEAagENp8I/JkHA56aonZyuxwESlTARgJmB
-         F9ikdiiuG7zkFqhBRRShj/rdVBq24U4kzmgDOKE7/ZBbyaSp61HmJHG70NAJnhtj0lYt
-         RvPwzprNxPuxjapRaxBEjp7hFTak5B4+sKaSStdkJJUm3UBOb1J/kOOyi3K77pdQ9Axv
-         jp29dxOvGIklSZpq1GGKaxk3+I9c29vczS79QlRnFQu8u8+i73uJWFRh2UCmJ/ocoiLD
-         vkKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RBZ1tvGVIQI0m4jcWcuWjT/2DPDizCKFdrHcDMcXTZk=;
-        b=CvovS5cgBcraUdJ7ReT63pFyaG63AoPzbeJgCYo522L84vyH0+k7OZICquvJFbxrWK
-         AUh1/xCqMXDnf89FIJqxKeM8SN7KmsB22t+SVcEH3htIWkVrCXRdv2dNZ0mEGJcDXBbr
-         w1pjlVrfIOxjo45GVWnPdwtTRIBcP462UjmzV7k0W2gSUpJDwdRj3fDkzLkIJqjzCCTk
-         R6kdclVpCjgHwDAS4Sc4KzVDxgPX1SDp2mxKCBQaXOLeHf95Lf4BhjX7b9Rs1H1Bjhz5
-         855/Xzk+8PIgxQ9+GbcSrKDjNSwfKaGmDZ6sSMawDdtPx2x+e6Latzbfkb35l9gFH/j8
-         0IyA==
-X-Gm-Message-State: APjAAAU8l2KrjidoOZQEi6k5z2gqRLxYQzcgFlQEe1XkdWPfwIDXshjW
-        ubhClL1jHDUYG1YERDf9MA0=
-X-Google-Smtp-Source: APXvYqzIe1k87MUAW7Sf3Y8VsoSA65fZCHIKUl8lsPh6dnwzlmTvCq3uZa2NfJrdyZD2eUk9HSFhNg==
-X-Received: by 2002:a17:90a:3746:: with SMTP id u64mr335266pjb.4.1574099854806;
-        Mon, 18 Nov 2019 09:57:34 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id d7sm24138044pfc.180.2019.11.18.09.57.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 09:57:33 -0800 (PST)
-Date:   Mon, 18 Nov 2019 09:57:32 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Martin Nicolay <m.nicolay@osm-ag.de>
-Cc:     git@vger.kernel.org, yuelinho777@gmail.com, gitster@pobox.com,
-        mhagger@alum.mit.edu, pclouds@gmail.com
-Subject: Re: [PATCH] enable a timeout for hold_lock_file_for_update
-Message-ID: <20191118175732.GA11649@generichostname>
-References: <20191118134750.1901ED756F@wsmn.osm-gmbh.de>
+        id S1726677AbfKRSi0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 13:38:26 -0500
+Received: from mout.gmx.net ([212.227.17.22]:47733 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726370AbfKRSi0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 13:38:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574102290;
+        bh=jSlHpJ/A8gyTbKTz+zpmUjJNulOtCA8Ycfr6uf9fYmw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=R/1XmuUvflGK63Ma8rrKhZ3rSP0XwoT/GAmE8V6u9h0cOnvNAlF3lKlE8SwOKpxzh
+         zFY7IerGqswJ7dN1XpzBPKiTFXuQE4oWguyZ6Z1iALh+n/1XY59gRXZdPQl2+998xT
+         QevRV6vVZmAPvf4hJPcLPF9b+fS/F0bHRilw8y34=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEV3C-1icoau1JCE-00G2Bm; Mon, 18
+ Nov 2019 19:38:10 +0100
+Date:   Mon, 18 Nov 2019 19:37:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: GitGitGadget on git/git, was Re: Should we auto-close PRs on
+ git/git?
+In-Reply-To: <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet>
+References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet> <20191114074117.GB17186@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191118134750.1901ED756F@wsmn.osm-gmbh.de>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dx4d4gnqIKzcgaXly8JrE66ZH6sssOEWF8cqgpfSN4Y+S5beyk2
+ Sh1gvFeP35k8qVG2h1kWkOVzs3BHjfHLIH9y0hTFimHcizwfOOmOjIwTZhyAZR9PXdt5SeV
+ LAFKXDO3DCILXT/F871fGGOA5ZuYZ2xDB2WAvcaGmprxU4U6dupkkW9QrLnnhqDNO80exNO
+ Mop+1fQ8LYJ1Ue3IBkQUQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:e+F3ywD1Twk=:Zl30dWxm2c8juAEv4d55mG
+ oHPqRYSa1VX5SQGRcgC0RlI5ceZCD0xC6i2GofXiyfON+auZJiRVr9C38MfIxGc0rm2wpGS3m
+ E54k9/pFuUptijeAt4tH1wHYLiQxTwMjieqj2/JeoAWrLWQW+J370cqyEtgG1hQX35yQ5iE7e
+ cXJFRI3Izz4KcimMbFPn+gXQPRMAPeRruTmYGwMJbl07WeXkHkAK8wOvi47MpSMIdR+6t0eFj
+ WSpwp12QgTHj62epLpypePnvCuQoU6wz9cR9VpwGNY+YHsQcALjr/haAVvZf9/Kwhs45nWFVH
+ +DzZnKa66PyypBOx4Tvijrld7uaaC66hWUWS/1t48qNHh4/D+lGBtqRG4fBD+FcDYSKf/Kvvb
+ lDBrEksQ64VKEKQUI1QjqrWDi9J0BVh5hpjaoAggzm1HxsP4yWaTe4lZKkdo7KG95S9XQxP3l
+ OryoFJgYstQjpYpgboMH0khcH5ns/nfj4Uf1poNTjTIlwdXSl6A0eWuTPDsue+Cj9Yjm27G/E
+ BoIc1j/tU63N/FcHdQuWmwnqqSzjWlpTU7TRQbFHaXMRThIW26jtrOL0OzP84SaIvMHlqVg9E
+ HCnbRomHAiw+7cI8bSUwxPfsdHUMoKuCsbnxpv6Zc8/STxzGnlT4yQFjn2Kzz6WI5JfxK6PM0
+ P2AFvk3zp1K69JTFonaSL5taWvrJdwwRSGUfOvUIsiCB+Nd00GhZswdzjiGMqGEEo4WNYTDKH
+ 2C1y3qCxODh1x5oMkSc/cvtJXi/LoQQx4ixSGfQwvgvU9Ihu67+dkY1GD6y6lDi7zLAWW522c
+ DyIWMheozVLLHy+OckrbtYlSIldm2w0t8PWoP0QFf35oaTP5G8kZU7mYZQm+sUUk1GO5n1hTg
+ Wp+phAafBpT6COb3zcw3J5/8rb5oUbZgkGQYaj+6+wu9mL0tsVd+rikgVRGp+lCIZWBpOpC9L
+ BSNmv99WJ6KJyFu5N0DxgTLbhddSbsc4XwLqf4+kMCdNEjU2WWOfkE5tugwROvwq8LA3DqTk0
+ nfukrjLuAwWKwItE+QbYDISCi1Wr8ElknroOO+IgaedrTmmGE/9bygT0BkqeXMTAu8TJIZkYG
+ /xxXjZ6bYHjqsyBE+stPKdJQdscRyLGGptYwTS27A0/fw2OYO+e6fEBhhzDfDwQvXgeugfc1R
+ R0ZU0o7anSOcy79SCLAXpqezn7vPmKODjga5K+Lk87BO5f3gGPDetStG3lhacR149XtChaGQW
+ DJHmV7GU1Q9jNqKkPLiZtfonZghw1UzdfttSofAoWnb5RlehtL8c23H31uiM=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+Hi Peff,
 
-Thanks for the patch. I'm not too familiar with the lockfile codebase of
-git but here are some general comments:
+On Fri, 15 Nov 2019, Johannes Schindelin wrote:
 
-> Subject: [PATCH] enable a timeout for hold_lock_file_for_update
+> On Thu, 14 Nov 2019, Jeff King wrote:
+>
+> > On Wed, Nov 13, 2019 at 01:04:35PM +0100, Johannes Schindelin wrote:
+> >
+> > > > We talked a while ago about having GitGitGadget operate on git/git=
+,
+> > > > rather than on a separate mirror. That would automatically help at=
+ least
+> > > > one class of PR-opener: people who want their patches to reach the=
+ list
+> > > > but didn't realize they should be using gitgitgadget/git.
+> > > >
+> > > > I don't remember what the technical blockers are for getting that =
+set
+> > > > up, but it seems like a strictly nicer outcome than auto-closing t=
+heir
+> > > > PR.
+> > >
+> > > Okay, here are a couple of technical challenges, off the top of my h=
+ead:
+> > > [...]
+> > > Not an easy, nor a small project, I am afraid.
+> >
+> > Yow. That's a lot more involved than I was hoping for.
 
-We prefer subjects in the format of "<area>: <brief subject>" so
-perhaps, we could rewrite this to:
+Yeah, it wasn't easy. But then, who does not like a little challenge,
+especially the challenge to test things outside of production? So here
+is a PR: https://github.com/gitgitgadget/gitgitgadget/pull/148
 
-	lockfile: learn core.filesLockTimeout configuration
+I trust everybody with even rudimentary Javascript skills to be able to
+provide useful feedback on that PR.
 
-On Mon, Nov 18, 2019 at 02:42:17PM +0100, Martin Nicolay wrote:
-> The new funktion get_files_lock_timeout_ms reads the config
+To build some confidence in my patches (as you probably know, I do not
+trust reviews as much as I trust real-life testing, although I do prefer
+to have both) I "kind of" activated it on my fork, limited to act only
+on comments _I_ made on PRs (and sending only to me instead of the
+list), and it seems to work all right, so far. I cannot say for sure
+whether it handles the PR labels correctly, but I guess time will tell,
+and I will fix bugs as quickly as I can.
 
-s/funktion/function/
+Question is: should I turn this thing on? I.e. install that
+GitGitGadget-Git App on https://github.com/git/git? This would allow
+GitHub users to `/submit` directly from PRs opened in that repository. I
+am sure that there are a few kinks to work out, but I do think that it
+should not take long to stabilize.
 
-> core.filesLockTimeout analog get_files_ref_lock_timeout_ms.
+> > Thanks for writing it up. Some of the points raised were interesting. =
+I
+> > do think we'd want git/git (the repository) to remain read-only if
+> > possible.
+>
+> I guess you're right.
+>
+> We should probably try to restrict the permissions as much as possible,
+> not only deny write access to the repository.
+>
+> For example, one thing GitGitGadget does is to add these "Checks" to the
+> commits of the PRs which contain links to the corresponding commits in
+> gitster/git (if any). Those can actually not be removed, there is not
+> even any API for that. So it would probably make sense to avoid that in
+> git/git.
+>
+> This would mean that the git/git part of GitGitGadget does not install
+> those commit mappings. I guess that's okay, they _are_ kinda hard to
+> use.
 
-Perhaps s/analog/similar to/ ?
+I made it so. The GitGitGadget-Git App only requires write permission to
+add PR comments and labels, which I think should be okay. It
+specifically has _no_ permission to push to git/git.
 
-> 
-> This value is used in hold_lock_file_for_update instead of the
-> fixed value 0.
-> ---
-> While working with complex scripts invoking git multiple times
-> my editor (emacs with standard version control) detects the
-> changes and apparently calls "git status". This leads to abort
-> in "git stash". With this patch and an appropriate value
-> core.fileslocktimeout this problem goes away.
-> 
-> While it may be possible to patch the elisp scripts of emacs (and
-> all other similar callers) to call "git status" with
-> --no-optional-locks it seems to me a better approarch to solve this
-> problem at its root: calling hold_lock_file_for_update_timeout with
-> a timeout of 0 ms.
-> 
-> The implementation with the function get_files_lock_timeout_ms is 
-> adopted from a similar usage of get_files_ref_lock_timeout_ms.
+> > If GitHub's permissions model is a limiting factor here, let me know
+> > and I can try to bring it to the attention of the right people.
+>
+> I actually don't think that my use case fits any sane permission model
+> ;-) After all, I want the GitHub App to _span_ repositories (even orgs),
+> and that's not really the idea of Apps.
+>
+> After sleeping over it, I don't actually think that it is such a bad
+> idea to add a second GitHub App with a more limited permission set.
 
-It might be good to include the above three paragraphs in your commit
-message. Not only do they describe the change but, more importantly,
-they describe _why_ the change is being made.
+The name _was_ bad, but I did settle for GitGitGadget-Git in the end.
+Not the most elegant name, but hey, it works so far.
 
-> 
-> BTW: is there a way to link this version of the patch to the previous
-> version to reduce the work for reviewers?
-
-When you generate your patches, run
-
-	git format-patch --in-reply-to=<r> -v<n>
-
-where <r> is the Message-ID of your last patch and where <n> is the
-version of the patch (in this case, it should've been 2 since you sent
-out one before).
-
-> 
->  Documentation/config/core.txt |  6 ++++++
->  lockfile.c                    | 16 ++++++++++++++++
->  lockfile.h                    |  4 +++-
->  3 files changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-> index 852d2ba37a..230ea02560 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -482,6 +482,12 @@ core.packedRefsTimeout::
->  	all; -1 means to try indefinitely. Default is 1000 (i.e.,
->  	retry for 1 second).
->  
-> +core.filesLockTimeout::
-> +	The length of time, in milliseconds, to retry when trying to
-> +	lock an individual file. Value 0 means not to retry at
-> +	all; -1 means to try indefinitely. Default is 0 (i.e., don't
-> +	retry at all).
-> +
->  core.pager::
->  	Text viewer for use by Git commands (e.g., 'less').  The value
->  	is meant to be interpreted by the shell.  The order of preference
-> diff --git a/lockfile.c b/lockfile.c
-> index 8e8ab4f29f..7301f393d6 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -145,6 +145,22 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
->  	}
->  }
->  
-> +/*
-> + * Get timeout for hold_lock_file_for_update.
-> + */
-> +long get_files_lock_timeout_ms(void)
-> +{
-> +	static int configured = 0;
-> +
-> +	static int timeout_ms = 0; /* default */
-> +	if (!configured) {
-> +		git_config_get_int("core.fileslocktimeout", &timeout_ms);
-> +		configured = 1;
-> +	}
-> +
-> +	return timeout_ms;
-> +}
-> +
->  void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
->  {
->  	if (err == EEXIST) {
-> diff --git a/lockfile.h b/lockfile.h
-> index 9843053ce8..a0520e6a7b 100644
-> --- a/lockfile.h
-> +++ b/lockfile.h
-> @@ -163,6 +163,8 @@ int hold_lock_file_for_update_timeout(
->  		struct lock_file *lk, const char *path,
->  		int flags, long timeout_ms);
->  
-> +long get_files_lock_timeout_ms(void);
-> +
->  /*
->   * Attempt to create a lockfile for the file at `path` and return a
->   * file descriptor for writing to it, or -1 on error. The flags
-> @@ -172,7 +174,7 @@ static inline int hold_lock_file_for_update(
->  		struct lock_file *lk, const char *path,
->  		int flags)
->  {
-> -	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
-> +	return hold_lock_file_for_update_timeout(lk, path, flags, get_files_lock_timeout_ms() );
-
-Style nit: remove the space after the function call.
-
-Thanks,
-
-Denton
-
->  }
->  
->  /*
-> -- 
-> 2.13.7
-> 
+Ciao,
+Dscho
