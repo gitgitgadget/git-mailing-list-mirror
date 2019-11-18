@@ -2,161 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
-	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A10C1F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 18:38:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2AEA1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 18:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbfKRSi0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 13:38:26 -0500
-Received: from mout.gmx.net ([212.227.17.22]:47733 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726370AbfKRSi0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 13:38:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574102290;
-        bh=jSlHpJ/A8gyTbKTz+zpmUjJNulOtCA8Ycfr6uf9fYmw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=R/1XmuUvflGK63Ma8rrKhZ3rSP0XwoT/GAmE8V6u9h0cOnvNAlF3lKlE8SwOKpxzh
-         zFY7IerGqswJ7dN1XpzBPKiTFXuQE4oWguyZ6Z1iALh+n/1XY59gRXZdPQl2+998xT
-         QevRV6vVZmAPvf4hJPcLPF9b+fS/F0bHRilw8y34=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEV3C-1icoau1JCE-00G2Bm; Mon, 18
- Nov 2019 19:38:10 +0100
-Date:   Mon, 18 Nov 2019 19:37:57 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: GitGitGadget on git/git, was Re: Should we auto-close PRs on
- git/git?
-In-Reply-To: <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet>
-References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet> <20191114074117.GB17186@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726795AbfKRSph (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 13:45:37 -0500
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:45482 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726423AbfKRSpg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 13:45:36 -0500
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id A8DF53C04C0;
+        Mon, 18 Nov 2019 19:45:32 +0100 (CET)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id BFnAtTLBFLmF; Mon, 18 Nov 2019 19:45:26 +0100 (CET)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 3FD0E3C0022;
+        Mon, 18 Nov 2019 19:45:26 +0100 (CET)
+Received: from vmlxhi-102.adit-jv.com (10.72.93.184) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.468.0; Mon, 18 Nov
+ 2019 19:45:25 +0100
+Date:   Mon, 18 Nov 2019 19:45:23 +0100
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     Greg KH <gregkh@linuxfoundation.org>
+CC:     Eugeniu Rosca <erosca@de.adit-jv.com>, <git@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Felipe Balbi <balbi@kernel.org>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Re: Signal conflict on merging metadata-differing patches
+Message-ID: <20191118184523.GA6894@vmlxhi-102.adit-jv.com>
+References: <20191118172917.GA6063@vmlxhi-102.adit-jv.com>
+ <20191118173517.GA599094@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dx4d4gnqIKzcgaXly8JrE66ZH6sssOEWF8cqgpfSN4Y+S5beyk2
- Sh1gvFeP35k8qVG2h1kWkOVzs3BHjfHLIH9y0hTFimHcizwfOOmOjIwTZhyAZR9PXdt5SeV
- LAFKXDO3DCILXT/F871fGGOA5ZuYZ2xDB2WAvcaGmprxU4U6dupkkW9QrLnnhqDNO80exNO
- Mop+1fQ8LYJ1Ue3IBkQUQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:e+F3ywD1Twk=:Zl30dWxm2c8juAEv4d55mG
- oHPqRYSa1VX5SQGRcgC0RlI5ceZCD0xC6i2GofXiyfON+auZJiRVr9C38MfIxGc0rm2wpGS3m
- E54k9/pFuUptijeAt4tH1wHYLiQxTwMjieqj2/JeoAWrLWQW+J370cqyEtgG1hQX35yQ5iE7e
- cXJFRI3Izz4KcimMbFPn+gXQPRMAPeRruTmYGwMJbl07WeXkHkAK8wOvi47MpSMIdR+6t0eFj
- WSpwp12QgTHj62epLpypePnvCuQoU6wz9cR9VpwGNY+YHsQcALjr/haAVvZf9/Kwhs45nWFVH
- +DzZnKa66PyypBOx4Tvijrld7uaaC66hWUWS/1t48qNHh4/D+lGBtqRG4fBD+FcDYSKf/Kvvb
- lDBrEksQ64VKEKQUI1QjqrWDi9J0BVh5hpjaoAggzm1HxsP4yWaTe4lZKkdo7KG95S9XQxP3l
- OryoFJgYstQjpYpgboMH0khcH5ns/nfj4Uf1poNTjTIlwdXSl6A0eWuTPDsue+Cj9Yjm27G/E
- BoIc1j/tU63N/FcHdQuWmwnqqSzjWlpTU7TRQbFHaXMRThIW26jtrOL0OzP84SaIvMHlqVg9E
- HCnbRomHAiw+7cI8bSUwxPfsdHUMoKuCsbnxpv6Zc8/STxzGnlT4yQFjn2Kzz6WI5JfxK6PM0
- P2AFvk3zp1K69JTFonaSL5taWvrJdwwRSGUfOvUIsiCB+Nd00GhZswdzjiGMqGEEo4WNYTDKH
- 2C1y3qCxODh1x5oMkSc/cvtJXi/LoQQx4ixSGfQwvgvU9Ihu67+dkY1GD6y6lDi7zLAWW522c
- DyIWMheozVLLHy+OckrbtYlSIldm2w0t8PWoP0QFf35oaTP5G8kZU7mYZQm+sUUk1GO5n1hTg
- Wp+phAafBpT6COb3zcw3J5/8rb5oUbZgkGQYaj+6+wu9mL0tsVd+rikgVRGp+lCIZWBpOpC9L
- BSNmv99WJ6KJyFu5N0DxgTLbhddSbsc4XwLqf4+kMCdNEjU2WWOfkE5tugwROvwq8LA3DqTk0
- nfukrjLuAwWKwItE+QbYDISCi1Wr8ElknroOO+IgaedrTmmGE/9bygT0BkqeXMTAu8TJIZkYG
- /xxXjZ6bYHjqsyBE+stPKdJQdscRyLGGptYwTS27A0/fw2OYO+e6fEBhhzDfDwQvXgeugfc1R
- R0ZU0o7anSOcy79SCLAXpqezn7vPmKODjga5K+Lk87BO5f3gGPDetStG3lhacR149XtChaGQW
- DJHmV7GU1Q9jNqKkPLiZtfonZghw1UzdfttSofAoWnb5RlehtL8c23H31uiM=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20191118173517.GA599094@kroah.com>
+User-Agent: Mutt/1.12.1+40 (7f8642d4ee82) (2019-06-28)
+X-Originating-IP: [10.72.93.184]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Mon, Nov 18, 2019 at 06:35:17PM +0100, Greg KH wrote:
+> On Mon, Nov 18, 2019 at 06:29:17PM +0100, Eugeniu Rosca wrote:
+> > Dear Git community,
+> > 
+> > Due to high inflow of patches which Linux maintainers carry on their
+> > shoulders and due to occasionally intricate relationships between
+> > consecutive revisions of the same series, it may [1] happen that two
+> > distinct revisions of the same patch (differing only/mostly in
+> > metadata, e.g. Author's time-stamp and commit description) may end up
+> > being merged on the same branch, without git to complain about that.
+> 
+> Why would git complain about that?
 
-On Fri, 15 Nov 2019, Johannes Schindelin wrote:
+This would help those performing the merge identify and (if needed)
+avoid having several slightly different patches on the same branch.
 
-> On Thu, 14 Nov 2019, Jeff King wrote:
->
-> > On Wed, Nov 13, 2019 at 01:04:35PM +0100, Johannes Schindelin wrote:
-> >
-> > > > We talked a while ago about having GitGitGadget operate on git/git=
-,
-> > > > rather than on a separate mirror. That would automatically help at=
- least
-> > > > one class of PR-opener: people who want their patches to reach the=
- list
-> > > > but didn't realize they should be using gitgitgadget/git.
-> > > >
-> > > > I don't remember what the technical blockers are for getting that =
-set
-> > > > up, but it seems like a strictly nicer outcome than auto-closing t=
-heir
-> > > > PR.
-> > >
-> > > Okay, here are a couple of technical challenges, off the top of my h=
-ead:
-> > > [...]
-> > > Not an easy, nor a small project, I am afraid.
-> >
-> > Yow. That's a lot more involved than I was hoping for.
+> 
+> > Is there any "git merge" flag available off-the-shelf which (if used)
+> > would signal such situations?
+> 
+> I don't understand what you are looking for here.  Two different
+> versions of the patch were merged to different branches and then merged
+> together, and git did the right thing with the resolution of the code.
 
-Yeah, it wasn't easy. But then, who does not like a little challenge,
-especially the challenge to test things outside of production? So here
-is a PR: https://github.com/gitgitgadget/gitgitgadget/pull/148
+I personally care about commit metadata (i.e. Author's/Committer's names
+and timestamps, as well as commit description) as much as (and sometimes
+more than) the code contents of the patch.
 
-I trust everybody with even rudimentary Javascript skills to be able to
-provide useful feedback on that PR.
+If I am given multiple patches which perform the same code changes, but
+provide different descriptions, this _already_ generates potential work
+on my plate, since I have to make sense of those differences when I
+stumble upon them. Which patch do I recommend to the customer (who,
+let's say, still lives on the older v4.14 LTS), if I am asked to?
 
-To build some confidence in my patches (as you probably know, I do not
-trust reviews as much as I trust real-life testing, although I do prefer
-to have both) I "kind of" activated it on my fork, limited to act only
-on comments _I_ made on PRs (and sending only to me instead of the
-list), and it seems to work all right, so far. I cannot say for sure
-whether it handles the PR labels correctly, but I guess time will tell,
-and I will fix bugs as quickly as I can.
+Why should I (or anybody else) spend time doing research at all, if this
+can be avoided by just passing an additional option to "git merge"?
 
-Question is: should I turn this thing on? I.e. install that
-GitGitGadget-Git App on https://github.com/git/git? This would allow
-GitHub users to `/submit` directly from PRs opened in that repository. I
-am sure that there are a few kinks to work out, but I do think that it
-should not take long to stabilize.
+It is the most basic requirement I can think of that the maintainers
+select the _latest_ version of a patch series, without intertwining it
+with a superseded version.
 
-> > Thanks for writing it up. Some of the points raised were interesting. =
-I
-> > do think we'd want git/git (the repository) to remain read-only if
-> > possible.
->
-> I guess you're right.
->
-> We should probably try to restrict the permissions as much as possible,
-> not only deny write access to the repository.
->
-> For example, one thing GitGitGadget does is to add these "Checks" to the
-> commits of the PRs which contain links to the corresponding commits in
-> gitster/git (if any). Those can actually not be removed, there is not
-> even any API for that. So it would probably make sense to avoid that in
-> git/git.
->
-> This would mean that the git/git part of GitGitGadget does not install
-> those commit mappings. I guess that's okay, they _are_ kinda hard to
-> use.
+> 
+> What more can it do here?
 
-I made it so. The GitGitGadget-Git App only requires write permission to
-add PR comments and labels, which I think should be okay. It
-specifically has _no_ permission to push to git/git.
+Currently Git says nothing in below merge scenarios (all of them are
+conflict-less successful merges):
+ - Merge two commits which perform identical code changes but have
+   different metadata
+ - Merge commit "A" and commits ("B", "C", "D"), the latter being
+   subsets of "A"
 
-> > If GitHub's permissions model is a limiting factor here, let me know
-> > and I can try to bring it to the attention of the right people.
->
-> I actually don't think that my use case fits any sane permission model
-> ;-) After all, I want the GitHub App to _span_ repositories (even orgs),
-> and that's not really the idea of Apps.
->
-> After sleeping over it, I don't actually think that it is such a bad
-> idea to add a second GitHub App with a more limited permission set.
+I don't advocate for "git merge" to fail in the above scenarios. No.
+I just say that Git could likely detect such scenarios and help people
+like you not pushing v2 and v5 of the same patch into the main tree.
 
-The name _was_ bad, but I did settle for GitGitGadget-Git in the end.
-Not the most elegant name, but hey, it works so far.
+> 
+> thanks,
+> 
+> greg k-h
 
-Ciao,
-Dscho
+-- 
+Best Regards,
+Eugeniu
