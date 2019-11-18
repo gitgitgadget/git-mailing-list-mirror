@@ -2,102 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BA9B1F4B5
-	for <e@80x24.org>; Mon, 18 Nov 2019 13:35:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7499B1F4B5
+	for <e@80x24.org>; Mon, 18 Nov 2019 13:47:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbfKRNfk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 08:35:40 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:41396 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726596AbfKRNfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 08:35:40 -0500
-Received: by mail-qt1-f196.google.com with SMTP id o3so20189013qtj.8
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 05:35:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=40PMK9ilXvdL7q79r5ltJuDMad2IpifpmsKztZcXomQ=;
-        b=UfWvU/LktfkgvzzfTK1n6D7wMoMgVWyR2w1/wahEHC+JB/7U1pvutZHE/AgaaNqznV
-         AZxSscdoihPnY0Wwz/EVKmg+CqqkBaOscCZeENZ+pxnnqYY6s7CPDyNRifhOJvZDa9KU
-         PY8zqfwIWW+rC5KBhBOLTF489vnVIE8/FXh4Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=40PMK9ilXvdL7q79r5ltJuDMad2IpifpmsKztZcXomQ=;
-        b=dnCjQA8nUJDdjOAgXnx1hZLYYEJTeMy6AW0yk+p7YSGAwnmTQbhbMBEbi8Xp1JGc28
-         1q0wH9tWj6iLyI1AeOy8SF1GysLv2SwtojQ7ikRNUk8Jn+kQzX1JrA4gN7sWUb+EDPZg
-         X1byb6w74U+gyOnIHAI/NU8BvSAiur/ZcQIutOSmtxBeRMzCkwBS1wN1RTTBpHI6IjoI
-         2ZGBWyLUq6XMKfCsx2ygo94X1VXo0sbeoVOW+/CxAgIH0yZDQce25yf4sa0jVZOLmeDv
-         w7hF1QNCD/+ZfVHGXjbU6UGpxdX6Vfi5iGyAGXwzXFUTcDHJnGT2NZc5dO+nl6VF+aW7
-         1g0Q==
-X-Gm-Message-State: APjAAAUH5ZdiunvtCSCfjYrVpdhyqo4msPic3ZrvzBy46AD4gu0/Pn+n
-        mt5qthxLSQFgHY0txjwXm+9D5g==
-X-Google-Smtp-Source: APXvYqzLGZYjjvdiZv4ECA2p7ZgSCRZznPyLvNBq8aN3O3dn2fIhcd2nN8csMMjXrbIF+dm+YWoMDg==
-X-Received: by 2002:ac8:51c5:: with SMTP id d5mr27278168qtn.41.1574084139190;
-        Mon, 18 Nov 2019 05:35:39 -0800 (PST)
-Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id g45sm10747597qtb.48.2019.11.18.05.35.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 05:35:38 -0800 (PST)
-Date:   Mon, 18 Nov 2019 08:35:36 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Jiri Slaby <jslaby@suse.cz>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, dev@ius.io
-Subject: Re: Multiple empty "remote:" lines during remote update
-Message-ID: <20191118133536.u3k7kkucw6mz7jlv@chatter.i7.local>
-Mail-Followup-To: Jiri Slaby <jslaby@suse.cz>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, dev@ius.io
-References: <c6b51eaf-79b1-6fb9-6085-2d1a45b739a6@suse.cz>
- <20191118114449.GA12766@sigill.intra.peff.net>
- <90c545c3-4d7c-6d98-a516-e76fe180026e@suse.cz>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <90c545c3-4d7c-6d98-a516-e76fe180026e@suse.cz>
+        id S1726668AbfKRNry (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 08:47:54 -0500
+Received: from gate3.osm-gmbh.de ([194.77.68.107]:51908 "EHLO
+        gate3.osm-gmbh.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726627AbfKRNry (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 08:47:54 -0500
+Received: from mail.osm-gmbh.de (vmmail.osm-gmbh.de [193.101.76.128])
+        (using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by gate3.osm-gmbh.de (Postfix) with ESMTPS id 228803C0DC;
+        Mon, 18 Nov 2019 14:47:50 +0100 (CET)
+Received: from wsmn.osm-gmbh.de (wsmn.osm-gmbh.de [193.101.76.193])
+        by mail.osm-gmbh.de (OSM Mailserver) with ESMTP id 2567D3DC01E;
+        Mon, 18 Nov 2019 14:47:50 +0100 (CET)
+Received: by wsmn.osm-gmbh.de (Postfix, from userid 1002)
+        id 1901ED756F; Mon, 18 Nov 2019 14:47:50 +0100 (CET)
+From:   Martin Nicolay <m.nicolay@osm-ag.de>
+To:     git@vger.kernel.org
+Cc:     yuelinho777@gmail.com, gitster@pobox.com, mhagger@alum.mit.edu,
+        pclouds@gmail.com
+Date:   Mon, 18 Nov 2019 14:42:17 +0100
+Subject: [PATCH] enable a timeout for hold_lock_file_for_update
+Message-Id: <20191118134750.1901ED756F@wsmn.osm-gmbh.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 18, 2019 at 12:59:52PM +0100, Jiri Slaby wrote:
-> On 18. 11. 19, 12:44, Jeff King wrote:
-> > On Mon, Nov 18, 2019 at 09:34:46AM +0100, Jiri Slaby wrote:
-> > 
-> >> since some time (weeks or months), I am seeing this:
-> >> $ git --version
-> >> git version 2.24.0
-> >> $ git remote update
-> >> Fetching origin
-> >> remote:
-> >>         remote:
-> > 
-> > This was a bug in v2.22.1, which has been fixed in v2.24.0. However, the
-> > bug is on the remote side, so whether you see it depends on which
-> > version of Git the server has installed.
-> 
-> OK, thanks.
-> 
-> $ git remote -v
-> origin
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-> (fetch)
-> origin
-> git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git (push)
-> 
-> CCing Konstantin, in case he does not know yet...
+The new funktion get_files_lock_timeout_ms reads the config
+core.filesLockTimeout analog get_files_ref_lock_timeout_ms.
 
-I'm aware of it, but I'm hoping IUS starts providing either a patched 
-git222 package, or a new git-224 package where this bug is fixed. Since 
-it's a purely cosmetic problem, I don't want to patch it locally.
+This value is used in hold_lock_file_for_update instead of the
+fixed value 0.
+---
+While working with complex scripts invoking git multiple times
+my editor (emacs with standard version control) detects the
+changes and apparently calls "git status". This leads to abort
+in "git stash". With this patch and an appropriate value
+core.fileslocktimeout this problem goes away.
 
-CCing devs at IUS for their info.
+While it may be possible to patch the elisp scripts of emacs (and
+all other similar callers) to call "git status" with
+--no-optional-locks it seems to me a better approarch to solve this
+problem at its root: calling hold_lock_file_for_update_timeout with
+a timeout of 0 ms.
 
--K
+The implementation with the function get_files_lock_timeout_ms is 
+adopted from a similar usage of get_files_ref_lock_timeout_ms.
+
+BTW: is there a way to link this version of the patch to the previous
+version to reduce the work for reviewers?
+
+ Documentation/config/core.txt |  6 ++++++
+ lockfile.c                    | 16 ++++++++++++++++
+ lockfile.h                    |  4 +++-
+ 3 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 852d2ba37a..230ea02560 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -482,6 +482,12 @@ core.packedRefsTimeout::
+ 	all; -1 means to try indefinitely. Default is 1000 (i.e.,
+ 	retry for 1 second).
+ 
++core.filesLockTimeout::
++	The length of time, in milliseconds, to retry when trying to
++	lock an individual file. Value 0 means not to retry at
++	all; -1 means to try indefinitely. Default is 0 (i.e., don't
++	retry at all).
++
+ core.pager::
+ 	Text viewer for use by Git commands (e.g., 'less').  The value
+ 	is meant to be interpreted by the shell.  The order of preference
+diff --git a/lockfile.c b/lockfile.c
+index 8e8ab4f29f..7301f393d6 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -145,6 +145,22 @@ static int lock_file_timeout(struct lock_file *lk, const char *path,
+ 	}
+ }
+ 
++/*
++ * Get timeout for hold_lock_file_for_update.
++ */
++long get_files_lock_timeout_ms(void)
++{
++	static int configured = 0;
++
++	static int timeout_ms = 0; /* default */
++	if (!configured) {
++		git_config_get_int("core.fileslocktimeout", &timeout_ms);
++		configured = 1;
++	}
++
++	return timeout_ms;
++}
++
+ void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ {
+ 	if (err == EEXIST) {
+diff --git a/lockfile.h b/lockfile.h
+index 9843053ce8..a0520e6a7b 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -163,6 +163,8 @@ int hold_lock_file_for_update_timeout(
+ 		struct lock_file *lk, const char *path,
+ 		int flags, long timeout_ms);
+ 
++long get_files_lock_timeout_ms(void);
++
+ /*
+  * Attempt to create a lockfile for the file at `path` and return a
+  * file descriptor for writing to it, or -1 on error. The flags
+@@ -172,7 +174,7 @@ static inline int hold_lock_file_for_update(
+ 		struct lock_file *lk, const char *path,
+ 		int flags)
+ {
+-	return hold_lock_file_for_update_timeout(lk, path, flags, 0);
++	return hold_lock_file_for_update_timeout(lk, path, flags, get_files_lock_timeout_ms() );
+ }
+ 
+ /*
+-- 
+2.13.7
+
