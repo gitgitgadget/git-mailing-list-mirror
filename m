@@ -2,118 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 501891F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 18:50:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8450B1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 19:15:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbfKSSu5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 13:50:57 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35926 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726892AbfKSSu4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 13:50:56 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c22so5040733wmd.1
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 10:50:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iDXSZfhs8Cx8BscAEkznv4QOOjpkWYht8Ki3c66CCcI=;
-        b=PQG3D7PzSGVlwxD81oXon1Bt4uDAMYYvc4ImRBdkiWibEtI5XXRqv8GTU29mjSm3IF
-         Aa03M/wp1VtYQ8pkTUNJfc+W2RP7kiL/ZA5UdekJdoHLhv302FFyJ1KFYBB55W6m73Oq
-         DkVpkeyYS2sdTt0XrubGfLaO8WhL94se2pFZ8Klw+yvwDzvEHN5lub4DzPcVTZuxfuKE
-         OxfMSupEfelGXCltWPhWt21YXpPd4ylqittbfqWkMWGRTJKDRwBCDjb60iSVuSKdbEtQ
-         L/m+nhheu+RrybUl/wEstLthHlyoGy3lPCn3UbQkX1d/CwU4akRjoJQ8o/TiIHyZvBTx
-         kQ2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=iDXSZfhs8Cx8BscAEkznv4QOOjpkWYht8Ki3c66CCcI=;
-        b=IgSilLjV/phH2k9Uqz5JP+QO02G7AwYbdifqrGf4I82Y4DpkA9OK2cioIoCYNr6rFO
-         XHD6jK6Bzw5KtjgHE5C0/KNuqFHkagb6ToZ5ks/12bTZd53q597g4xFHh6LQeUIXCjSO
-         UmF6rxXBeq+YBnCwztOLU98YfV60TRvYNMnVaEz4fzHv7BYemsil4LJTPwxuzz++CUfx
-         FKa+3U9EdPajzcGIU5kOdacpI9k+Nd7Kf/4yN4PAE82UvYgxTArxk5JsLRvS5cMa5Xc5
-         ElwD96LS5tOKU3CiNoksQLsc4jdQQPTlwmx0l1N/GrX+GDjYCbH3gc2n2nUscc25YxaL
-         CmaA==
-X-Gm-Message-State: APjAAAUDtXOLKjs1m6bK4MitsCJBCg44Fr7rcxIrJRN9tXKGabkUGUs4
-        xdG54JYO1NcR0DJIgu6WUJo4BJWs
-X-Google-Smtp-Source: APXvYqwfR6MNc093XXzHhEGLt4ytPZCoatAUWcfvOoYhYhsiXF1wyHQiWJG92av7rBBSvisz0Kg2NA==
-X-Received: by 2002:a1c:7911:: with SMTP id l17mr7242931wme.107.1574189454031;
-        Tue, 19 Nov 2019 10:50:54 -0800 (PST)
-Received: from localhost ([46.69.175.162])
-        by smtp.gmail.com with ESMTPSA id y8sm3862179wmi.9.2019.11.19.10.50.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 19 Nov 2019 10:50:53 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH] perf-lib: remove old result files before running tests
-Date:   Tue, 19 Nov 2019 18:50:47 +0000
-Message-Id: <20191119185047.8550-1-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.24.0.155.gd9f6f3b619
+        id S1726874AbfKSTPB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 14:15:01 -0500
+Received: from mout.web.de ([217.72.192.78]:56817 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726711AbfKSTPB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 14:15:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1574190899;
+        bh=+xO3CH9V9lx4L26omrY8X9V7xeP708gorzSYi5ncuOM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=N/J1ucED0nFGmEkV3GQa7z3DC88HAxs751orSoKR4kU0SnOKLYokyGwb9+TPhUUpq
+         OWFhpzLFsjm1okTAvvlWbEwtjkDP5pqDSCtO9wW7UPXuzuC+2KuOIuP7UxbZpUrJ+j
+         VoUXBCI4ZjnBjmcHC3O/BvUuE3qL6Pv4Z2THNuF0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LshWf-1hrmg602en-012LPp; Tue, 19
+ Nov 2019 20:14:59 +0100
+Subject: Re: coccinelle: adjustments for array.cocci?
+To:     Markus Elfring <Markus.Elfring@web.de>
+Cc:     git@vger.kernel.org
+References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
+ <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
+ <75b9417b-14a7-c9c6-25eb-f6e05f340376@web.de>
+ <fc56b970-4ca1-7734-c4bb-f57cae7a273f@web.de>
+ <57b5d1c9-72c1-6fff-a242-90f5f24f0972@web.de>
+ <37c84512-ba83-51ce-4253-ea0f7bd41de0@web.de>
+ <eff19da9-3f9f-0cf0-1e88-64d2acdbabcd@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <321802c9-e5ea-452f-a3fd-7e01ab84b1f9@web.de>
+Date:   Tue, 19 Nov 2019 20:14:54 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <eff19da9-3f9f-0cf0-1e88-64d2acdbabcd@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:00+5w6fCdJXrHIu4FDYYvZssNK9wmeRnyGAHqCuvvbTgh1fkJVp
+ Crsttw9HnoDFD10qKqF1anKl7QIULcCgG/bWDbzaQ6JB+QoeH8x3V1rAKjihVtXV2ntoD5w
+ R+d0BWoPkp3T3KwDeEQNdyRD4++N3h15PVh+5Q6MNX0Qw0nL4uaRoxokDCN1mHCvXQw5D2/
+ JhA/4OirQUW/FkWK17zGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:xyWMVum7zRc=:IKqAEBHCDwuoFjBuuZHUL0
+ YlUFExsRgTq3qdFn5qcZGM9IMnVudOqGmWK4tTP/7hCzIf31cmUflVIgix6RU4zinATNiFdsW
+ pgN/046ZU5oiNB4IV9jSWXscMBNnjJEb83joLg8g2XwCpPb+KR43eFL8N4X0nOuGUzuL75tTA
+ Vq28946+Q8aferplYbhrqWYLVJhuHlc+xtTGZ3SVGzS/s1o9HXTZYiwduvd6TNGa7B45LimLr
+ PrXFJz7jBtQOMm4jO7Om+wVOayTvW7RbpA0d07wms66rg7KIQkQ2iHT/vZg8H2QjoCuhf4FBa
+ 6qd0fDCklaUHrI5Uk7sOMRI5n8z0iUtbEDpuB9DgO6f2VXL2L4X7PDtHoClG5wHBIauPF/PdZ
+ R7AqG8VM4Ut/1fYiPz4Z+jdsJlCElbFSdswVbBMdSI4CHJCruYcOeQSslX/wlptwKjOtuaZMz
+ 66ozdmmCTCCPTHqce1CzeEH4EQs0GENSAFBE7hZxCNjInD8azDMG3WPJITJ7EQSwSjjHOpp1m
+ ESxNQNtuNwVwmarReDG7Mp/nxWcoWwc3K1yL40w+Z1u1WTlqd0pVJA+P/h0CPBAOWbVXhd4pz
+ I/XA9IFyFFny6KMrb2sTLJniYzkzxqyBwwPxHIXjUlspXb4gr5RYSVCi5nNuwpXlfcCclFpAE
+ 86Tot7NL0JUPDyqkf3DNobHGA5LbH8VEquC9/D+IhNWlHGpyJIaVffEvxk0nOydtW7PifdZ+0
+ U4uV0X8YMFSoHnAaKhjAbqJoqdrSiEoYS7RdJq7JirwUDP68/tFNxFSx3th756CC6wh1tCwVl
+ Vl6tFOzVfkdOE86fS4MUoBb0teoXCXxijxVMsZamwxP6eRWV4m1Z0FwPsrfJLj1vzCeZ4kBlH
+ NyMazNmzUYOAqG/CD0FSaUKkaYGC3rwTIrpAuLrKsGe1F+TZh53EHLWolxotuQVtMYthoIuc6
+ hhyHxVHv9xlvWm4mDV1zzo9IeGxnsEVkWYyxwbO/vYHcqFRYk4Ct9r8PKuYZ3z26YbpOrrGVK
+ gvMnqQW/PsDJwUUgWI1iaeKMKkgZqQ/0BbUaFQMBoIRbxPC+hrLVWLuHDLbtghI3thYr26nox
+ UVQ2h+/3XS1iXWvBxjsqESRYcKdNblIzLGEPfZhEBY43GcJs1h975sDFTr64DNLgqn4rXknLe
+ +Xhbo7QWONnri6aasVi0ZWOKT0UVhRuwpbCrF3/PPSrw7sZTcsRd9c27G+qqfozU0J1pbJySE
+ /qIExUmAcSEFdJ1zH1kTB/vqPS2UPEdb/8SVLNg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The perf tests write files recording the results of tests.  These
-results are later aggregated by 'aggregate.perl'.  If the tests are
-run multiple times, those results are overwritten by the new results.
-This works just fine as long as there are only perf tests measuring
-the times, whose results are stored in "$base".times files.
+Am 17.11.19 um 19:19 schrieb Markus Elfring:
+>> Whitespace is not what makes the above example more complicated than th=
+e
+>> equivalent rule below;
+>
+> A different code layout might help in a better understanding for such
+> change specifications.
+>
+>
+>> separating the pieces of simple expressions does.
+>
+> Will there occasionally be a need to change only the required source cod=
+e parts?
 
-However 22bec79d1a ("t/perf: add infrastructure for measuring sizes",
-2018-08-17) introduced a new type of test for measuring the size of
-something.  The results of this are written to "$base".size files.
+Changing parts that don't need to be changed does not make sense to me.
+Why do you ask and how does it relate to the example at hand?
 
-"$base" is essentially made up of the basename of the script plus the
-test number.  So if test numbers shift because a new test was
-introduced earlier in the script we might end up with both a ".times"
-and a ".size" file for the same test.  In the aggregation script the
-".times" file is preferred over the ".size" file, so some size tests
-might end with performance numbers from a previous run of the test.
+>>>> than what we currently have:
+>>>>   @@
+>>>>   expression dst, src, n, E;
+>>>>   @@
+>>>>     memcpy(dst, src, n * sizeof(
+>>>>   - E[...]
+>>>>   + *(E)
+>>>>     ))
+>
+> Are any circumstances to consider where only the essential implementatio=
+n details
+> should be touched by an automatic software transformation?
 
-This is mainly relevant when writing perf tests that check both
-performance and sizes, and can get quite confusing during
-developement.
+I don't understand this question.
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
+>> It looks like a bug in Coccinelle to me
+>
+> We might stumble also on just another (temporary) software limitation.
+>
+>
+>> and I'd like to see it fixed
+>
+> Would you like to support corresponding development anyhow?
 
-This came out of something different that I'm working on, but makes
-most sense as a standalone patch, rather than part of that series, so
-I'm sending this out separately.
+I don't see me learning OCaml in the near future.  Or are you looking
+for donations? :)
 
- t/perf/perf-lib.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+>> But at least until then our semantic patches need to work around it.
+>
+> Would another concrete fix for the currently discussed SmPL script
+> be better than a =E2=80=9Cworkaround=E2=80=9D?
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index b58a43ea43..7e80251889 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -178,10 +178,11 @@ test_wrapper_ () {
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
--		base=$(basename "$0" .sh)
--		echo "$test_count" >>"$perf_results_dir"/$base.subtests
--		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
- 		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
-+		rm -f "$base".*
-+		no_prefix_base="$perf_results_dir"/$(basename "$0" .sh)
-+		echo "$test_count" >>$no_prefix_base.subtests
-+		echo "$1" >$no_prefix_base.$test_count.descr
- 		"$test_wrapper_func_" "$@"
- 	fi
- 
--- 
-2.24.0.155.gd9f6f3b619
+These are different things.  Fixes (repairs) are always welcome.  But
+they should not rely on SmPL constructs that only work properly using
+unreleased versions of Coccinelle.
 
+>>> Would you like to use the SmPL code =E2=80=9C*( \( src_ptr \| src_arr =
+\) )=E2=80=9D instead?
+>>
+>> That leaves out dst_ptr and dst_arr.
+>
+> How many items should finally be filtered in the discussed SmPL disjunct=
+ion?
+
+Let's see: dst and src can be pointers or array references, which makes
+four combinations.  sizeof could either operate the shared type or on an
+element of dst or an element of src.  An element can be accessed either
+using dereference (*) or subscript ([]).  That makes five possible
+variations for the sizeof, right?  So twenty combinations in total.
+
+>> And what would it mean to match e.g. this ?
+>>
+>> 	memcpy(dst_ptr, src_ptr, n * sizeof(*src_arr))
+>
+> The Coccinelle software takes care for commutativity by isomorphisms.
+> https://github.com/coccinelle/coccinelle/blob/19ee1697bf152d37a78a20cefe=
+148775bf4b0e0d/standard.iso#L241
+
+OK, but I had a different concern (more below).
+
+>> At least the element size would be the same, but I'd rather shy away fr=
+om
+>> transforming weird cases like this automatically.
+>
+> Do you mean to specify additional restrictions by SmPL code?
+
+Let's take this silly C fragment as an example:
+
+	char *src =3D strdup("foo");
+	size_t src_len =3D strlen(src);
+	char *dst =3D malloc(src_len);
+	char unrelated[17];
+	memcpy(dst, src, src_len * sizeof(*unrelated));
+
+My point is that taking the size of something that is neither source nor
+destination is weird enough that it should be left alone by semantic
+patches.  Matching should be precise enough to avoid false
+transformations.
+
+>>   void *memmove(void *dest, const void *src, size_t n);
+>>   void *memcpy(void *dest, const void *src, size_t n);
+>>
+>>   COPY_ARRAY(dst, src, n)
+>>   MOVE_ARRAY(dst, src, n)
+>
+> Can the replacement of these functions by macro calls be combined furthe=
+r
+> by improved SmPL code?
+
+Very likely.
+
+>>> Possible nicer run time characteristics by the Coccinelle software.
+>>
+>> How much faster is it exactly?
+>
+> The answer will depend on efforts which you would like to invest
+> in corresponding (representative) measurements.
+
+Is that some kind of quantum effect? ;-)
+
+When I try to convince people to apply a patch that is intended to
+speed up something, I often use https://github.com/sharkdp/hyperfine
+these days.
+
+Ren=C3=A9
