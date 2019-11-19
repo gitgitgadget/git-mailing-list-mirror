@@ -2,307 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83D571F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 19:15:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A51B1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 20:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfKSTPI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 14:15:08 -0500
-Received: from mout.web.de ([212.227.17.12]:54039 "EHLO mout.web.de"
+        id S1726939AbfKSUVw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 15:21:52 -0500
+Received: from mout.web.de ([212.227.15.4]:34025 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726711AbfKSTPI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 14:15:08 -0500
+        id S1726722AbfKSUVw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 15:21:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574190906;
-        bh=u+7BCjC5OxhnhtdWKJyA0+ibZl7+P2X+9ZAYzsZgvmk=;
-        h=X-UI-Sender-Class:Subject:To:References:From:Date:In-Reply-To;
-        b=a2fakqmaea69UTDTUysZ6WSlgaZzK+BgPj2uu0teAmmrn11sFhySzhmAUgUNWHcL6
-         KF1TAUt6dq6HkAc8artStwb7AwxI/2U6qQzsHghGjIFMPFKRp14reADgW0+hJyfC98
-         iETDbNlfuX5ayZwUai7o3Zd+avmVFknzWf5mMl4M=
+        s=dbaedf251592; t=1574194910;
+        bh=2jS32S7aMVyyab/6do0pSZuonOljTN2PbvVMX6x+zpA=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GhU7sytBPf6faVPEF1hLTlOs09KeJbfdwxIbMaPH1O85Mdm/IhDYyz12UJbFU/bd5
+         Dzesi7/xFE6GyA4XibQ+6oTXJGwVB7qfqyS8pyacYed9POBZJCVOh8YzB/Az1Nc9q6
+         yo8wg08B80wiIAw6MiPJgjkyzre9eJavRpu2hu28=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LaTid-1i8l1x1075-00mGwl; Tue, 19
- Nov 2019 20:15:06 +0100
-Subject: Re: [PATCH] coccinelle: improve array.cocci
-To:     Markus Elfring <Markus.Elfring@web.de>, git@vger.kernel.org
+Received: from [192.168.1.3] ([2.243.93.164]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LtoGb-1hoRBb0Be9-011A8D; Tue, 19
+ Nov 2019 21:21:50 +0100
+Subject: Re: coccinelle: adjustments for array.cocci?
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     git@vger.kernel.org
 References: <50c77cdc-2b2d-16c8-b413-5eb6a2bae749@web.de>
  <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
- <05ab1110-2115-7886-f890-9983caabc52c@web.de>
- <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
- <50b265f0-bcab-d0ec-a714-07e94ceaa508@web.de>
- <f28f5fb8-2814-9df5-faf2-7146ed1a1f4d@web.de>
- <0d9cf772-268d-bd00-1cbb-0bbbec9dfc9a@web.de>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d291ec11-c0f3-2918-193d-49fcbd65a18e@web.de>
-Date:   Tue, 19 Nov 2019 20:15:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+ <75b9417b-14a7-c9c6-25eb-f6e05f340376@web.de>
+ <fc56b970-4ca1-7734-c4bb-f57cae7a273f@web.de>
+ <57b5d1c9-72c1-6fff-a242-90f5f24f0972@web.de>
+ <37c84512-ba83-51ce-4253-ea0f7bd41de0@web.de>
+ <eff19da9-3f9f-0cf0-1e88-64d2acdbabcd@web.de>
+ <321802c9-e5ea-452f-a3fd-7e01ab84b1f9@web.de>
+From:   Markus Elfring <Markus.Elfring@web.de>
+Autocrypt: addr=Markus.Elfring@web.de; prefer-encrypt=mutual; keydata=
+ mQINBFg2+xABEADBJW2hoUoFXVFWTeKbqqif8VjszdMkriilx90WB5c0ddWQX14h6w5bT/A8
+ +v43YoGpDNyhgA0w9CEhuwfZrE91GocMtjLO67TAc2i2nxMc/FJRDI0OemO4VJ9RwID6ltwt
+ mpVJgXGKkNJ1ey+QOXouzlErVvE2fRh+KXXN1Q7fSmTJlAW9XJYHS3BDHb0uRpymRSX3O+E2
+ lA87C7R8qAigPDZi6Z7UmwIA83ZMKXQ5stA0lhPyYgQcM7fh7V4ZYhnR0I5/qkUoxKpqaYLp
+ YHBczVP+Zx/zHOM0KQphOMbU7X3c1pmMruoe6ti9uZzqZSLsF+NKXFEPBS665tQr66HJvZvY
+ GMDlntZFAZ6xQvCC1r3MGoxEC1tuEa24vPCC9RZ9wk2sY5Csbva0WwYv3WKRZZBv8eIhGMxs
+ rcpeGShRFyZ/0BYO53wZAPV1pEhGLLxd8eLN/nEWjJE0ejakPC1H/mt5F+yQBJAzz9JzbToU
+ 5jKLu0SugNI18MspJut8AiA1M44CIWrNHXvWsQ+nnBKHDHHYZu7MoXlOmB32ndsfPthR3GSv
+ jN7YD4Ad724H8fhRijmC1+RpuSce7w2JLj5cYj4MlccmNb8YUxsE8brY2WkXQYS8Ivse39MX
+ BE66MQN0r5DQ6oqgoJ4gHIVBUv/ZwgcmUNS5gQkNCFA0dWXznQARAQABtCZNYXJrdXMgRWxm
+ cmluZyA8TWFya3VzLkVsZnJpbmdAd2ViLmRlPokCVAQTAQgAPhYhBHDP0hzibeXjwQ/ITuU9
+ Figxg9azBQJYNvsQAhsjBQkJZgGABQsJCAcCBhUICQoLAgQWAgMBAh4BAheAAAoJEOU9Figx
+ g9azcyMP/iVihZkZ4VyH3/wlV3nRiXvSreqg+pGPI3c8J6DjP9zvz7QHN35zWM++1yNek7Ar
+ OVXwuKBo18ASlYzZPTFJZwQQdkZSV+atwIzG3US50ZZ4p7VyUuDuQQVVqFlaf6qZOkwHSnk+
+ CeGxlDz1POSHY17VbJG2CzPuqMfgBtqIU1dODFLpFq4oIAwEOG6fxRa59qbsTLXxyw+PzRaR
+ LIjVOit28raM83Efk07JKow8URb4u1n7k9RGAcnsM5/WMLRbDYjWTx0lJ2WO9zYwPgRykhn2
+ sOyJVXk9xVESGTwEPbTtfHM+4x0n0gC6GzfTMvwvZ9G6xoM0S4/+lgbaaa9t5tT/PrsvJiob
+ kfqDrPbmSwr2G5mHnSM9M7B+w8odjmQFOwAjfcxoVIHxC4Cl/GAAKsX3KNKTspCHR0Yag78w
+ i8duH/eEd4tB8twcqCi3aCgWoIrhjNS0myusmuA89kAWFFW5z26qNCOefovCx8drdMXQfMYv
+ g5lRk821ZCNBosfRUvcMXoY6lTwHLIDrEfkJQtjxfdTlWQdwr0mM5ye7vd83AManSQwutgpI
+ q+wE8CNY2VN9xAlE7OhcmWXlnAw3MJLW863SXdGlnkA3N+U4BoKQSIToGuXARQ14IMNvfeKX
+ NphLPpUUnUNdfxAHu/S3tPTc/E/oePbHo794dnEm57LuuQINBFg2+xABEADZg/T+4o5qj4cw
+ nd0G5pFy7ACxk28mSrLuva9tyzqPgRZ2bdPiwNXJUvBg1es2u81urekeUvGvnERB/TKekp25
+ 4wU3I2lEhIXj5NVdLc6eU5czZQs4YEZbu1U5iqhhZmKhlLrhLlZv2whLOXRlLwi4jAzXIZAu
+ 76mT813jbczl2dwxFxcT8XRzk9+dwzNTdOg75683uinMgskiiul+dzd6sumdOhRZR7YBT+xC
+ wzfykOgBKnzfFscMwKR0iuHNB+VdEnZw80XGZi4N1ku81DHxmo2HG3icg7CwO1ih2jx8ik0r
+ riIyMhJrTXgR1hF6kQnX7p2mXe6K0s8tQFK0ZZmYpZuGYYsV05OvU8yqrRVL/GYvy4Xgplm3
+ DuMuC7/A9/BfmxZVEPAS1gW6QQ8vSO4zf60zREKoSNYeiv+tURM2KOEj8tCMZN3k3sNASfoG
+ fMvTvOjT0yzMbJsI1jwLwy5uA2JVdSLoWzBD8awZ2X/eCU9YDZeGuWmxzIHvkuMj8FfX8cK/
+ 2m437UA877eqmcgiEy/3B7XeHUipOL83gjfq4ETzVmxVswkVvZvR6j2blQVr+MhCZPq83Ota
+ xNB7QptPxJuNRZ49gtT6uQkyGI+2daXqkj/Mot5tKxNKtM1Vbr/3b+AEMA7qLz7QjhgGJcie
+ qp4b0gELjY1Oe9dBAXMiDwARAQABiQI8BBgBCAAmFiEEcM/SHOJt5ePBD8hO5T0WKDGD1rMF
+ Alg2+xACGwwFCQlmAYAACgkQ5T0WKDGD1rOYSw/+P6fYSZjTJDAl9XNfXRjRRyJSfaw6N1pA
+ Ahuu0MIa3djFRuFCrAHUaaFZf5V2iW5xhGnrhDwE1Ksf7tlstSne/G0a+Ef7vhUyeTn6U/0m
+ +/BrsCsBUXhqeNuraGUtaleatQijXfuemUwgB+mE3B0SobE601XLo6MYIhPh8MG32MKO5kOY
+ hB5jzyor7WoN3ETVNQoGgMzPVWIRElwpcXr+yGoTLAOpG7nkAUBBj9n9TPpSdt/npfok9ZfL
+ /Q+ranrxb2Cy4tvOPxeVfR58XveX85ICrW9VHPVq9sJf/a24bMm6+qEg1V/G7u/AM3fM8U2m
+ tdrTqOrfxklZ7beppGKzC1/WLrcr072vrdiN0icyOHQlfWmaPv0pUnW3AwtiMYngT96BevfA
+ qlwaymjPTvH+cTXScnbydfOQW8220JQwykUe+sHRZfAF5TS2YCkQvsyf7vIpSqo/ttDk4+xc
+ Z/wsLiWTgKlih2QYULvW61XU+mWsK8+ZlYUrRMpkauN4CJ5yTpvp+Orcz5KixHQmc5tbkLWf
+ x0n1QFc1xxJhbzN+r9djSGGN/5IBDfUqSANC8cWzHpWaHmSuU3JSAMB/N+yQjIad2ztTckZY
+ pwT6oxng29LzZspTYUEzMz3wK2jQHw+U66qBFk8whA7B2uAU1QdGyPgahLYSOa4XAEGb6wbI FEE=
+Message-ID: <a4a882eb-5e0d-dbcf-fd01-9d5831c4a8e6@web.de>
+Date:   Tue, 19 Nov 2019 21:21:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <0d9cf772-268d-bd00-1cbb-0bbbec9dfc9a@web.de>
+In-Reply-To: <321802c9-e5ea-452f-a3fd-7e01ab84b1f9@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:25VKRjYiFKNEjiScCRX7miqHfyDeMpZoH8QxXmTQaoopX5/hFNN
- sLJbtI25a7TfX3MmYmCgQItAOIYATeN/ThhLzeKOw+oITLc0moAlgIiSsLsOFMhPXt6vEhr
- 5L2GQmc2kBkVbtYfnzlPmWIL16I+uwR1wsb8C1dnXWbgXIbsuVumXL2c/x3v1cSdznWwcRV
- DTl36iNlFvNmAyJ6rzQjQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pDk7mNFsEnA=:OD3dwWfikHyPthjhqcs07T
- x7LCq48JckdLmt+fFD14MgCaA728Zrh2MFMaJ4PhTcHsLTE9V1xvD2qnOFCvaBwhGwzOXSTQb
- 0Vc9GNrF6OhFrztVlsoM1xNg8nWo5sgVvK1hAOb7AXiZvsVSjbiQ0DLN+grT49u9WILDlL8zR
- OeublxedP1fJkKfasRoojP37mk/EjL/NOf2aAd5Vh6BF44+AFMUOTbcNnPtH0v1ZnNcSyXD9z
- jVxkINt/lCSCgiSaaX5gBM1o+ivZsG2sJz6n/K2wNaPzSveVlNGne4AYgR51R4LSj+OhFOT9o
- UhJLRsUQAPsI+RdCT2hteIIBhiPY5tw7xY8yZaLuzvU2+rHTq76S9ql4QuLfvxNKoJf7kwGi3
- bawUPAFuKmAGWtTUKuNmzklBFauEtp/ByRX+ZItnbbeV+cxHp8fI8hOiIcF+b7olfQFjyIUX+
- +MKzRiH9uiKNUK7eYfTt7+sN3pm+MRbfGeff8s5CjW13okNx4nLiuv9sGHC/9dbhBUOTH7+DT
- daM4+0wy3wn23TmiA8tBLqWxQ7hBf+N2ACdZzJIp4VCbEAKHFbvxdl4SN4t+eW5eAhp/wR4pJ
- RJmYXMxC8m+2PJgEQkuNbOoNiQo9O1wpwb5lnwB8j0g9NhhVv67Q7/9NwXovejqdXmTZgjEy7
- ISsWZ7wt4oGMIitIM0cseRw9oyx/3vStJnBzaHt2yNdT6e4pXiqIFJRfpYGohrlxz/tZQ8HKl
- z8j5j9v1nA+WvoPyTGqB4SvDqX9h1sGoivu6BAMpXes9MR4jxpNogapJ6mKfSk7aCzgsdDLue
- CuGtV6+R1K/ps4rxXCZG9X6/I8DUVpLAXu991D0xwDwDi8xDSd32jP8vFDHeOlUtAgscOyg0d
- 2aIONEtWap0GhJA1uc4bGlrJcIPwnzJEFxmf1COOQzGNXoOMFuWrmMwtVZEtXVZ2rgTdLQvUK
- YXGNUGD/jjkbdH5EjACOTLCKZpJ1uii/UI1SP20agPaL6rMdIz8Die4Ja7rfpsbzTLM2lhnyJ
- Cf0lMAgTd57jkC7CWQL+7Nu4jNfN6MltIaq53n8bsvWzsiuyRjBuV/a15765BujUuOBf7hZRN
- xrRLh3ESm9r0nM9KBvlHfmt5vIryfyD97T+/EA3My/vCXawzsx4tYvr6DqRDb1IZd/X4Mx6ZB
- HyzOcC5Lzi3ZcpdyGzjNZR5/bTBSK0tFn9VbDVfdExslrYDYU7KiKbKy8IoqT+gVOoiuvybmB
- Eonzarz3dVa5wpwAq5HYrW8ewqReVLAqRSheqJg==
+X-Provags-ID: V03:K1:JczqUb65yCdbhiDG4PqwIokkIBT9Zgp2xpMjAQtzRQJQ5MxJzKd
+ v9H1fwR355Ssd8ST9beeSp/+l4bhGnYY9FDX0v+r47V8UmcmWUr7UZ9oOHeXMHmQsNxDmcC
+ 6Xp2TzLmK9a/GzoeK1ANmfDUM6JfMiuRuzwxJIXDg+pjtIhAjNnuuiw1dFVCPKghJDd1ZBA
+ 7xNxQn7hW61ZeRLRtdnEQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ag9kVN0k/nE=:yvyQBP7iOn/a6w1z0B1HHk
+ Rx0NnHd4+ns0wUmt7wifkIZ0hdUk2s45Wyn9/vPx99BVuVyt1C2pYsMa4pqdv/PPJ1UxT6j80
+ KfPdEC9CthnARVe+lz1EjBtIJY+LgUhaiNs6NAaHnKoR7mY2tFwdAXZEdN3/bIUeqlHjy8qw+
+ J6V8b9vtRroqC2BULTfBgDfI+8E0yLmSJu7lRngE+Qf/j5n86UoJzeZm63A+SoNhdUEwvHQjJ
+ NcDePqjr6JdzIAMG0cOWGnUFBbEhL39o/Uer3C2TWwHKE7nQkbwRwlIpTybpqavbF+FUOJ+H/
+ gJC4wgdJcVV1QR+d7y2dy37FAb2MPMlHiUc+P1UM/3QyDQVUs2gz0jOUeJQ309MfLRNYlaZn+
+ zk5cMKxpAVd6eAGb0jD1C/aI5A52OLaqkt6QiapsQKiVhISieGFpG456BGGq8fJ13XdHlz9Rh
+ /4Pf/nrpuhgUVXx5gF1gtCOdD2OTJo/Ei5NbXIHWgQoz/4i9kwuE7bqh5LivcuOSjhWF2H0ES
+ oBcjVg7Vqco697U5nLw151qBWdJOuhdyGmADDI5k6VNuSOxzcYP7bOaRazg7kqwqsZqq2HAc1
+ zatlF1OcsZAw/kyDXLOmppAe/wi3V4E1X5dTKo5Tj+jOljDYjy5ooq8JOAQRZoPifXEyTTfcx
+ 3U3eZnKtz7XgVsqC8RvluMBlJeunJykJOTQpu+YymBR918frLfhvq2CbCWi/1qz+7ET5rY4F/
+ pVCfAZJxS2rnI1jaUjDUjfrmVQFjVnXt7/epn/98z79uW503/c50VaebHgW/vvdL0SxwLifHi
+ v5bvHb979Fzds1PszSMrC3DeQzJQDSwuY4JtE6jKoG5vSukVcogg4nXgl+/2aXwHawmQufigq
+ OSusKrbU+aBIFDH/9dacSs4r1SUos29ZqNn6H0rdYrwHhRFOZe5UTlvJEsRf+qDsoElXcFlKF
+ rskWM9g1A8lQma9ifbvPfCnEbrOaT8bZ+vTdgtLSVl7t5k3MEfD0+tA9Xeg7gBLCFCWCW36xF
+ J9maNMOI1H3LAb6bfobimUwpUgOa35e7VOLywex+WT7svEqx7e7kIe3sp6pAuI6/1gmih7WDo
+ 5cXcKQaXpmZnDF3CCguIE0NZvbpZpxHzDnv592QOB13r6WeJkQkzPdBU/4Op/K704Djx9fPHC
+ dFyRoz0mmT5e2uUFCFbHm2+5j140OAPQ1By4YojBWS60F8FvIHH2978ms41o+aVdmGOflAYPd
+ EF01B6BzvWu+GP9P/7yrL8SdhkDvs1uQWlsWbPcyunC2n6MSiyB4KC3yG0Jg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-Am 18.11.19 um 17:10 schrieb Markus Elfring:
-> From: Markus Elfring <elfring@users.sourceforge.net>
-> Date: Mon, 18 Nov 2019 17:00:37 +0100
+>> Will there occasionally be a need to change only the required source co=
+de parts?
 >
-> This script contained transformation rules for the semantic patch langua=
-ge
-> which used similar code.
+> Changing parts that don't need to be changed does not make sense to me.
+> Why do you ask and how does it relate to the example at hand?
+
+How does such feedback fit to the discussed SmPL change specification?
+
+- E[...]
++ *(E)
+
+
+>> Would you like to support corresponding development anyhow?
 >
-> 1. Delete two SmPL rules which were used to transform source code fragme=
-nts
->    (pointer expressions) so that the search pattern =E2=80=9Csizeof(T)=
-=E2=80=9D would work
->    in the third rule.
->    See also the topic =E2=80=9Ccoccinelle: adjustments for array.cocci?=
-=E2=80=9D:
->    https://public-inbox.org/git/f28f5fb8-2814-9df5-faf2-7146ed1a1f4d@web=
-.de/
->
-> 2. Combine the remaining rules by using six SmPL disjunctions.
->
-> 3. Adjust case distinctions and corresponding metavariables so that
->    the desired search for update candidates can be more complete.
->
-> 4. Increase the precision for the specification of required changes.
->
-> Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-> ---
->  contrib/coccinelle/array.cocci | 100 ++++++---------------------------
->  1 file changed, 18 insertions(+), 82 deletions(-)
+> I don't see me learning OCaml in the near future.
 
-The diff is hard to read, so here's the resulting semantic patch:
+This can be fine.
 
-=2D- start --
-@@
-type T;
-T[] src_arr;
-expression n, dst_e, src_e;
-expression* dst_p_e, src_p_e;
-@@
-(
-(
--memcpy
-+COPY_ARRAY
-|
--memmove
-+MOVE_ARRAY
-)
-       (
-        dst_e,
-        src_e
--       , (n) * \( sizeof(T) \| sizeof( \( *(src_p_e) \| src_e[...] \| src=
-_arr \) ) \)
-+       , n
-       )
-|
-+ALLOC_ARRAY(
-             dst_p_e
--                    =3D xmalloc((n) * \( sizeof( \( *(src_p_e) \| src_e[.=
-..] \| src_arr \) ) \| sizeof(T) \))
-+            , n)
-)
-=2D- end --
 
-I like that COPY_ARRAY and MOVE_ARRAY are handled in the same rule,
-as they share the same parameters and do the same -- except that
-the latter handles overlaps, while the former may be a bit faster.
+> Or are you looking for donations?
 
-And I like that it's short.
+Other (software) projects can benefit also from additional resources,
+can't they?
 
-I don't like that ALLOC_ARRAY is handled in the same rule, as it is
-quite different from the other two macros.
-
-Coccinelle needs significantly longer to apply the new version.
-Here are times for master:
-
-Benchmark #1: make contrib/coccinelle/array.cocci.patch
-  Time (mean =C2=B1 =CF=83):     19.314 s =C2=B1  0.200 s    [User: 19.065=
- s, System: 0.224 s]
-  Range (min =E2=80=A6 max):   19.009 s =E2=80=A6 19.718 s    10 runs
-
-... and here with the patch applied:
-
-Benchmark #1: make contrib/coccinelle/array.cocci.patch
-  Time (mean =C2=B1 =CF=83):     43.420 s =C2=B1  0.490 s    [User: 43.087=
- s, System: 0.273 s]
-  Range (min =E2=80=A6 max):   42.636 s =E2=80=A6 44.359 s    10 runs
-
-The current version checks if source and destination are of the same type,
-and whether the sizeof operand is either said type or an element of source
-or destination.  The new one does not.  So I don't see claim 4 ("Increase
-the precision") fulfilled, quite the opposite rather.  It can produce e.g.
-a transformation like this:
-
- void f(int *dst, char *src, size_t n)
- {
--	memcpy(dst, src, n * sizeof(short));
-+	COPY_ARRAY(dst, src, n);
- }
-
-The COPY_ARRAY there effectively expands to:
-
-	memcpy(dst, src, n * sizeof(*dst));
-
-... which is quite different -- if short is 2 bytes wide and int 4 bytes
-then we copy twice as many bytes as before.
-
-I think an automatic transformation should only be generated if it is
-safe.  It's hard to spot a weird case in a generated patch amid ten
-well-behaving ones.
-
->
-> diff --git a/contrib/coccinelle/array.cocci b/contrib/coccinelle/array.c=
-occi
-> index 46b8d2ee11..bcd6ff4793 100644
-> --- a/contrib/coccinelle/array.cocci
-> +++ b/contrib/coccinelle/array.cocci
-> @@ -1,90 +1,26 @@
-> -@@
-> -expression dst, src, n, E;
-> -@@
-> -  memcpy(dst, src, n * sizeof(
-> -- E[...]
-> -+ *(E)
-> -  ))
-> -
->  @@
->  type T;
-> -T *ptr;
-> -T[] arr;
-> -expression E, n;
-> -@@
-> -(
-> -  memcpy(ptr, E,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(arr, E,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, ptr,
-> -- n * sizeof(*(ptr))
-> -+ n * sizeof(T)
-> -  )
-> -|
-> -  memcpy(E, arr,
-> -- n * sizeof(*(arr))
-> -+ n * sizeof(T)
-> -  )
-> -)
-> -
-> -@@
-> -type T;
-> -T *dst_ptr;
-> -T *src_ptr;
-> -T[] dst_arr;
->  T[] src_arr;
-> -expression n;
-> +expression n, dst_e, src_e;
-> +expression* dst_p_e, src_p_e;
->  @@
->  (
-> -- memcpy(dst_ptr, src_ptr, (n) * sizeof(T))
-> -+ COPY_ARRAY(dst_ptr, src_ptr, n)
-> -|
-> -- memcpy(dst_ptr, src_arr, (n) * sizeof(T))
-> -+ COPY_ARRAY(dst_ptr, src_arr, n)
-> -|
-> -- memcpy(dst_arr, src_ptr, (n) * sizeof(T))
-> -+ COPY_ARRAY(dst_arr, src_ptr, n)
-> -|
-> -- memcpy(dst_arr, src_arr, (n) * sizeof(T))
-> -+ COPY_ARRAY(dst_arr, src_arr, n)
-> -)
-> -
-> -@@
-> -type T;
-> -T *dst;
-> -T *src;
-> -expression n;
-> -@@
->  (
-> -- memmove(dst, src, (n) * sizeof(*dst));
-> -+ MOVE_ARRAY(dst, src, n);
-> -|
-> -- memmove(dst, src, (n) * sizeof(*src));
-> -+ MOVE_ARRAY(dst, src, n);
-> +-memcpy
-> ++COPY_ARRAY
->  |
-> -- memmove(dst, src, (n) * sizeof(T));
-> -+ MOVE_ARRAY(dst, src, n);
-> +-memmove
-> ++MOVE_ARRAY
-> +)
-> +       (
-> +        dst_e,
-> +        src_e
-> +-       , (n) * \( sizeof(T) \| sizeof( \( *(src_p_e) \| src_e[...] \| =
-src_arr \) ) \)
-> ++       , n
-> +       )
-> +|
-> ++ALLOC_ARRAY(
-> +             dst_p_e
-> +-                    =3D xmalloc((n) * \( sizeof( \( *(src_p_e) \| src_=
-e[...] \| src_arr \) ) \| sizeof(T) \))
-> ++            , n)
->  )
-> -
-> -@@
-> -type T;
-> -T *ptr;
-> -expression n;
-> -@@
-> -- ptr =3D xmalloc((n) * sizeof(*ptr));
-> -+ ALLOC_ARRAY(ptr, n);
-> -
-> -@@
-> -type T;
-> -T *ptr;
-> -expression n;
-> -@@
-> -- ptr =3D xmalloc((n) * sizeof(T));
-> -+ ALLOC_ARRAY(ptr, n);
-> --
-> 2.24.0
->
+Regards,
+Markus
