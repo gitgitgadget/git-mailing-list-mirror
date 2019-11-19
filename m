@@ -2,105 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 315C91F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 21:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66C8C1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 22:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727324AbfKSVvk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 16:51:40 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33175 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbfKSVvk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 16:51:40 -0500
-Received: by mail-pf1-f196.google.com with SMTP id c184so13021763pfb.0
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 13:51:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=d+VM+CQE4/8vxDJcoFs6tDjpyipEqRxW/mS7/Edh5ik=;
-        b=EMjZJXnnEd9fW1KaAYTnX4wgaXVdVjZNEEtup3XAVscx7HT8UAwCIBsvJwW3lOzo9b
-         OWwUzzvNPRiUsz+NKxojedyGMycc1lr6TZVjERMYCmDGY3GGLp1SuM/j2wOabynyjEHl
-         i9vFy5u0JwgnOrhVQJfvYDTR1b8487LP+zU44=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=d+VM+CQE4/8vxDJcoFs6tDjpyipEqRxW/mS7/Edh5ik=;
-        b=CU0Yq71Sr1OuGmIqGc2ng+yXWufOgf00Pi4DQ0/OT9tFmLuOLXNu6hpR0lSECsL17q
-         OMkfshNKyAtAYdeU7gJsvfJVtRtA5ST1w4xsxYMF0Kn8JaXPmEog+oga39IyUr5PtnFh
-         AyK7Bro5ESVMaE8YHZK6KtVaPASc8mvwJKKQ8av3JzHKPSCiS0f7VLa/Odxfc1sppeIc
-         5Uc6OOQW2wz1Todtnhy55TVwqgctDf2jwU64L2RLs+ygvJz/b4AEV54o64gNWnP1A2VA
-         Y85aa1yc33DlLZ6OtcK9U4KeSNhOhj9ckK8m4w7fs/oWXR13SGQGzE3UelAMdYpiTv3g
-         N22w==
-X-Gm-Message-State: APjAAAXDDkzVWzS97bLyM+tPRCCJEbyYNx0rmrkfODRQcVsXZQYLfi7a
-        56Fhb51FhiptGFa7eINclqeyjyBw6h4=
-X-Google-Smtp-Source: APXvYqy7+a3/Ukl8PrKvhFShZ5aSB1V5Hx1gGvYQeA6qdbWqqUy1GBljwmgdmCbVbYie7foEqVonlw==
-X-Received: by 2002:a62:174b:: with SMTP id 72mr648254pfx.179.1574200298772;
-        Tue, 19 Nov 2019 13:51:38 -0800 (PST)
-Received: from erikchen-macbookpro.roam.corp.google.com ([2620:0:1000:2104:407f:1cf7:d833:4184])
-        by smtp.gmail.com with ESMTPSA id i71sm25984426pfe.103.2019.11.19.13.51.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Nov 2019 13:51:38 -0800 (PST)
-Subject: Re: [PATCH v3 1/1] fetch: add trace2 instrumentation
-To:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Erik Chen via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.451.v2.git.1573066300.gitgitgadget@gmail.com>
- <pull.451.v3.git.1573069152.gitgitgadget@gmail.com>
- <364c526a5d674e3f137578b24143678256601d08.1573069152.git.gitgitgadget@gmail.com>
- <xmqq5zjws12y.fsf@gitster-ct.c.googlers.com>
- <944c956e-dd9a-1a12-5cb1-0c263ee7d5bd@gmail.com>
-From:   Erik Chen <erikchen@chromium.org>
-Message-ID: <c2cd57ed-8075-bdd3-67f0-21187580270a@chromium.org>
-Date:   Tue, 19 Nov 2019 13:51:37 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:68.0)
- Gecko/20100101 Thunderbird/68.2.2
+        id S1727194AbfKSWJ2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 17:09:28 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57455 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726948AbfKSWJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 17:09:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574201365;
+        bh=tG+s8ss7sHsaZJ4HwqqCCRFLjk7hfu/Co7dtuR9YTzM=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Ie6AAUuU/rPfgFdh9dQeyssDGA0awbinQJrtNCOLtUkMGa+Npc+Wm+8cUV4eQPyeF
+         VlWV2KiVe0bLUFO4wLRPtpH8+VTsFGSF85/U58kQtQx7Bjr2nTfhnjHwOPNKZXEUOT
+         IN5hDlQfbcQyvd83wY9MZjKr5TTOLaGgsmSZ92DU=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwZ4-1hhYXR3Aqa-00uFvL; Tue, 19
+ Nov 2019 23:09:25 +0100
+Date:   Tue, 19 Nov 2019 23:09:10 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Pratyush Yadav <me@yadavpratyush.com>
+cc:     Harish Karumuthil <harish2704@gmail.com>, git@vger.kernel.org,
+        David Aguilar <davvid@gmail.com>
+Subject: Making GitGitGadget's list -> PR comment mirroring bidirectional,
+ was Re: [PATCH] Feature: custom guitool commands can now have custom keyboard
+ shortcuts
+In-Reply-To: <20191006210647.wfjr7lhw5fxs4bin@yadavpratyush.com>
+Message-ID: <nycvar.QRO.7.76.6.1911192305410.15956@tvgsbejvaqbjf.bet>
+References: <CACV9s2MFiikZWq=s8kYQ+qwidQ=oO-SHyKWAs4MUkNcgDhJzeg@mail.gmail.com> <CACV9s2MQCP04QASgt0xhi3cSNPSKjwXTufxmZQXAUNvnWD9DSw@mail.gmail.com> <20191003214422.d4nocrxadxt47smg@yadavpratyush.com> <nycvar.QRO.7.76.6.1910041046000.46@tvgsbejvaqbjf.bet>
+ <20191004120107.kpskplwhflnsamwu@yadavpratyush.com> <149a83fd40b71896b134b16c2b499ff472c6234e.camel@gmail.com> <20191005210127.uinrgazj5ezyqftj@yadavpratyush.com> <nycvar.QRO.7.76.6.1910061054470.46@tvgsbejvaqbjf.bet> <20191006183948.5n23sdy2l4uwl6kb@yadavpratyush.com>
+ <nycvar.QRO.7.76.6.1910062208460.46@tvgsbejvaqbjf.bet> <20191006210647.wfjr7lhw5fxs4bin@yadavpratyush.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <944c956e-dd9a-1a12-5cb1-0c263ee7d5bd@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:DllsnwA4w7Y2FSbR7bKTk85zRP1npMfXC2NSSzZmmghha1VXaIt
+ p5l1qmtLHzCpwhhY2RzCaaMpmZDcsvzB43wgnO2REUbsUZzAleb6M5j2sYe9K/9G1ZnOPUG
+ GOrhF6isC+RpvH32Q1UvQFqePLAAlrNUeFLG1DjoOsADJG2tVOj3mhlNTpc5bdh++7tmBkZ
+ T9cDXHRwx1wd+AAEBr+ig==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:V/ZVu6vFL1w=:15rp/KIImDbSaSHoQCGi9n
+ jMadWbIJrtNwXJ9VKukdkwiUQKTfXUtonlkBw9wtP2Hi7pUY7DJt6yrRwkOwmOWIAuDUv5O0r
+ O8Ck8BZ/yq3ZQp7ZdKLVn3VXZms88k4ZWP44SRMghNRlz4WyelPtM4BCJpRT1gZxnLAhTSzp9
+ 2P7k7Ku5fl0aJTQFeN1dM+ADPB5Hk1EZoYOFeWIVFfcQIKhZs87yGhF89H1cEltzZ/Wu9vkU1
+ 79vJIVv5hMnzvazAcGP7Ns/dAUIU7yGCSgLaCoOq3L0oYuEHPoqGtvEQ/htKsd47yUCOB8Fqg
+ zADNsGg51Q2Xwwy90DxwqBGVVRFPEKyGgMoy8t35ZisoWFeFtRXEXXs/4IY2ZLj7Nls7Ef0/M
+ V/2t8Td84/SfjQBlirmk26RWEDT9gl6Nti5zv4Gm5Vo8j2TBa26eQv1SL6c8U/gGwSrcoxri9
+ E/uANr8cu7y26DGk9qZ+OqhLsA0ujCLFCIdRxzIWYruor4TS/U51sttPYdflb2N3INbphMxRO
+ QWHxCEl4S0WcDIV8NXzKFficEFUwyT9mPaXOwPFWE2+J0q6OvS/Of2Xkkm9Ecdg14TICJ9Df2
+ X0Z5G1mQGTwnbU8gvh/76e+EcNOfQ0i+FrQftzxb8PzBnBnAsbGeRCVz70VdubxloIONzIGQG
+ V4wU7iNu+iW0IsGN6unNcOman9llpFVtl8ZO2LmrtiKFjXwRoFcDuH1pFVyrcYwnwGWaSrcE6
+ LXF64YV6zGmXO0bcZQO2lOZtV7/P7BHLSXqt+1RoZnmQSCCxXkYi9aBD7xvQvwY/dvrDLA+4W
+ jfDePaXuqFttEygx5SDxhYkcmMKuxTEz9dv39CTsKIJHcmXA6K/4UDgTczqL0nEvc2fBWS1Cf
+ LO7fAc/DELJwdIQdYdwahqhd1esJNp1PNaXp8uTLWuRDg490+bEovEu85A6KcB2yP3jclZwJ5
+ i1rABdX1+FkWmvaxtJzwonREWiW79Stie4lVf/Wrf04qRM7xz6UXCferFpEv5U948XaZjRFM7
+ Tu62BhkQP9MrPtaIo8wGx/jfdC9PpR9GsUyCtFkLRibiFRJ3xvplvDQmd53n+zJCGhjhp6xyG
+ 5txqKdww57TPaedwcdyIk0cOv+Gezb+y3amFuTM2n814MD05t+kJZeCXHQ1/r1s8ounj3/O5l
+ 8aP44nIdc7NxzvWj9qgefFmKMYApOzIn7ajBwSdEqSQxfG8wRaFCWDzep8dRYOs8WR5B7Lpai
+ kAqpxru9jW16OsoTLbNQLrQL0ICy2RPg2Y52VK6mPazrgvQm56ndiJuc+MS0=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Importing response from 
+Hi Pratyush,
+
+On Mon, 7 Oct 2019, Pratyush Yadav wrote:
+
+> On 06/10/19 10:27PM, Johannes Schindelin wrote:
+> > Hi Pratyush,
+> >
+> > On Mon, 7 Oct 2019, Pratyush Yadav wrote:
+> >
+> > > Anyway, GitGitGadget solves a large part of the problem. It
+> > > eliminates the need for using git-send-email, and it even shows you
+> > > the replies received on the list. I honestly think it is a great
+> > > tool, and it gives people a very good alternative to using
+> > > git-send-email.
+> >
+> > GitGitGadget is just a workaround. Not even complete. Can't be
+> > complete, really. Because problems. It has much of the same problems
+> > of `git send-email`: it's a one-way conversation. Code is not
+> > discussed in the right context (which would be a worktree with the
+> > correct commit checked out). The transfer is lossy (email is designed
+> > for human-readable messages, not for transferring machine-readable
+> > serialized objects). Matching original commits and/or branches to the
+> > ones on the other side is tedious. Any interaction requires switching
+> > between many tools. Etc
+> >
+> > > One feature that would make it complete would be the ability to
+> > > reply to review comments.
+> >
+> > And how would that work, exactly? How to determine *which* email to
+> > respond to? *Which* person to reply to? *What* to quote?
+>
+> GGG already shows replies to the patches as a comment. On GitHub you can
+> "Quote reply" a comment, which quotes the entire comment just like your
+> MUA would. The option can be found by clicking the 3 dots on the top
+> right of a comment.
+>
+> Then you can write your reply there, and the last line would be
+> '/reply', which would make GGG send that email as a reply. You would
+> need to strip the first line from the reply because GGG starts the reply
+> with something like:
+>
+>   > [On the Git mailing list](https://public-inbox.org/git/xmqq7e5l9zb1.=
+fsf@gitster-ct.c.googlers.com), Junio C Hamano wrote ([reply to this](http=
+s://github.com/gitgitgadget/gitgitgadget/wiki/ReplyToThis)):
+>
+> GGG also adds 3 backticks before and after the reply content, so those
+> would need to be removed too.
+>
+> Does this sound like a sane solution?
+
+Here are two real life examples where an unsuspecting GitGitGadget user
+expected GitGitGadget to mirror replies _to_ the Git mailing list:
+
+https://github.com/gitgitgadget/git/pull/451#issuecomment-555044068 and
 https://github.com/gitgitgadget/git/pull/451#issuecomment-555077933
 
-> I notice that a v4 was sent that adds more sub-regions without actually
-> responding to this request. 
+Neither of them include the line with the link.
 
-Sorry, did I misunderstand the request? I was trying to implement the 
-suggestion:
-<Junio's first suggestion>
+Just to throw a bit of real life into the discussion...
 
- > (It is worth also pointing out that you
- > ignored Junio's request you use the cover letter to explain your 
-reasoning
- > for changes between versions.)
-Sorry, this was not intentional. I'm using GitGitGadget, and it wasn't 
-clear to me how to change this. See my comment here:
-<https://github.com/gitgitgadget/git/pull/451#issuecomment-555044068>
-
-
-> 
-> There is a real downside to nesting regions like this. Specifically, we
-> frequently limit the depth that we report nested regions to avoid
-> overwhelming the logs.
-> 
-> In general, these sub-regions should be avoided when possible and instead
-> create regions around important sections, such as the second option Junio
-> lists above.
-
-I thought it would be nice to have an encapsulating region for the full 
-function, but I can switch to Junio's second option if that's 
-preferable. It wasn't clear to me that that was preferred over the first 
-option?
+Ciao,
+Dscho
