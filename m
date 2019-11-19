@@ -2,111 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D34E41F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 17:07:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 700AD1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 17:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728339AbfKSRH5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 12:07:57 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42541 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726985AbfKSRH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 12:07:57 -0500
-Received: by mail-wr1-f67.google.com with SMTP id a15so24765266wrf.9
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:07:54 -0800 (PST)
+        id S1728287AbfKSRKG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 12:10:06 -0500
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:51691 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727212AbfKSRKG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 12:10:06 -0500
+Received: by mail-wm1-f44.google.com with SMTP id q70so4033653wme.1
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:10:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=w2ht3tvAJOgIu/jBXIKCQzR/BYoAAUAWtFAfzZR8nxQ=;
-        b=WBwbKerAd7qQqPM5n7ZQq46EM+EufWNIYEHqzp2FuoqnGsb+rGzwuZN/md4UsrtiuP
-         B9to7mG/hr1+Hlyq5GsiQpB4dRBcLh8jOnX1O51m6QVGE23xQi5udcJMnX/HcwzFmBVy
-         nZOwgNKzBvtRvv5SAz3RoSZNkQhZENnkdykuZeujzf7fsSoZAtypdtsfw5J46FM3BeJX
-         wtDuVCneQkLSoaOsMp87u4Cl7S9tt0NsXDbOyt8l0mC6U3noKAdGjPNv/GvNIWDSrd37
-         AANdCg6JW9Y/havY5VPngu78sGOHyk1gpzy2WaNGrepKo4vmW94JJxJQ/+ytYXh8L5Xu
-         SaVg==
+        h=to:from:autocrypt:subject:message-id:date:user-agent:mime-version;
+        bh=gnK9dWvo6E6oJLjabGEcoj2kDa81+bDU9qrIoJ//eQQ=;
+        b=BEfdFyiCHXXluAT1pcEoz4oyK6MTni4V6FFDi+6nL2wGi1mELtSsAkEt1GuRAafbNg
+         a843wWYQyCpx3igTX85FETIDbyWhWuWXp55kTozn5OSy2KepldnhheBKdQvtqdWhqxyw
+         F4rbXAKkGKdjJ+/LpQdIy8Fv1j4ZpgaCDAi9f0Pszw0JkhTPB2euWJpNgFDxuzxfDMmh
+         xtqC00QKUTduvjY1G+CnNtTtxdrSrce8cA6vehMPIsoM+TbBPSE34kO1Hc33BXWMGrHM
+         rLIlJ6Vx9x/6FYUELKldqAbIN1SK3As6TsJVcOeUwQ3juXZ3an4hPm2q04nTc70FwTrZ
+         QBTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=w2ht3tvAJOgIu/jBXIKCQzR/BYoAAUAWtFAfzZR8nxQ=;
-        b=iNblHJVM6x6OqgTS2N4Apmn+rRnXG1kWFnYSKpO5gagS8964Q9FYrSuLLQWYavOYo3
-         jKLisDdqwLu77Jz7H7xcKOs9Kkv7gZFcO6a0bftjGVnHhCz7E6czOoZ8CS2blP1jAEwO
-         mPR1RZ27g3ST8ndAQ04btfRP3ZSsF/IJN2297gKRGNoGVuKrfCsMng2ZAESKf6+Brlbk
-         I88CaqbZOmtf52fBzPml5U5GuY2MOgDpx3FZlPKqAwMdsAsS4njbdOT6EbgR8lmUwP0f
-         lieilmzynHO9hWi9anTIjjcwyLFbA/03bHcGLHtdCsJ5PqXxDczSMa9KXLzzS9COHLVW
-         rhig==
-X-Gm-Message-State: APjAAAVI6w8/I6xxpqGSEbUYc+3f3RM4+bsOUKlav2sWUIAzdo/bSfXP
-        j/L9Yv+msBHrgRqIQPSTju4=
-X-Google-Smtp-Source: APXvYqzKtbyYa19+1Ko/4Ye21wqbvK9AjdHhiw49pU7CkHzNjOG6/Uzuu47i3lBgdqsf8roGkRXwug==
-X-Received: by 2002:adf:fd4b:: with SMTP id h11mr8971562wrs.191.1574183273913;
-        Tue, 19 Nov 2019 09:07:53 -0800 (PST)
-Received: from szeder.dev (x4d0c2755.dyn.telefonica.de. [77.12.39.85])
-        by smtp.gmail.com with ESMTPSA id f140sm3848545wme.21.2019.11.19.09.07.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 09:07:53 -0800 (PST)
-Date:   Tue, 19 Nov 2019 18:07:51 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 15/17] sparse-checkout: update working directory
- in-process
-Message-ID: <20191119170751.GI23183@szeder.dev>
-References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
- <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
- <d7af75672ba20ed208d51a35243b96ce10202a54.1571666187.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:to:from:autocrypt:subject:message-id:date
+         :user-agent:mime-version;
+        bh=gnK9dWvo6E6oJLjabGEcoj2kDa81+bDU9qrIoJ//eQQ=;
+        b=uAZtUEADgWfY2N6ZHxKrQhmj5QVNxkzz3MqLbK6bsnhMT6IlZTrudlmZ7EEcSItlIw
+         sMNGMpGXk3Qn0ef/UTUpGPsxgS0dStr+D3roNbmchEsSTU812QFf80RsBiaC+f1n4so/
+         kf4897y93dvv5rlQxjTuOZk4/FjKfUocugNnXg5DAjMy6w7chLNxkRqtd4JHUwt0hCPe
+         MamDS6H7K6lRFCjazyGgyS/ShljXike5LrU4EGTjbvzUQZFHMgQ6TmHvj+5no1MJ7SzQ
+         CKk9i+7kt3ZDkkLUKd27cUjOSLFxcJ1G9A5RetkZjkIFtIG1v7hk/f+jw5NGWqTTNgHP
+         LoEQ==
+X-Gm-Message-State: APjAAAVfkBjT/cyU+OYuC1mXI98XFCNEYH16m+RAinA2/cArg0ugDFDO
+        unj7zjyKwTHyQsv6nkoEZ14OfxAP
+X-Google-Smtp-Source: APXvYqzrL9egp8KgjB8jQm+wFuUNILYSc5nCFuiikuO0BaCgvbaQ0jWhQHHnh0SIPeLXQzp6i43CvQ==
+X-Received: by 2002:a7b:cc86:: with SMTP id p6mr7288806wma.116.1574183403461;
+        Tue, 19 Nov 2019 09:10:03 -0800 (PST)
+Received: from [129.187.109.42] (tueilnt-mo-tk1.lnt.ei.tum.de. [129.187.109.42])
+        by smtp.gmail.com with ESMTPSA id 5sm3557409wmk.48.2019.11.19.09.10.02
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Nov 2019 09:10:02 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Tasnad Kernetzky <tasnadk@gmail.com>
+Autocrypt: addr=tasnadk@gmail.com; prefer-encrypt=mutual; keydata=
+ mQENBFblpqIBCAC4TkkXJbIXuaGVk8HmobciF+UUKyOigeJyVq9W+TXTFdT5dDb9B7G9o3M3
+ azuRLhZsWF0sB+XtIW+SuG6jRbiymFet+NYZ8M8zDU38CKg8tLRWbOhqIxEhDebVvJTL4yZ5
+ FqkeNP9gx01h0yTycATO19lC/NixQkS2MgaDVUEE5VS9XYBu68sHgJrQsSm758By4WckcimY
+ seyuw+a/+zElFdfFxhkmzE7YzP0io/qk6cLPiEdQqwbgyBu3zuU6O5ZLqbl4h5mhciyexwQc
+ O2jNk2ISCTXtNu65AFsAru96hxG0wVmCJ5U4BNUUTQwA7H/v3okI9Xg2a/oHD/2d647fABEB
+ AAG0JFRhc25hZCBLZXJuZXR6a3kgPHRhc25hZGtAZ21haWwuY29tPokBNwQTAQgAIQIbAwUL
+ CQgHAgYVCAkKCwIEFgIDAQIeAQIXgAUCVuWqKAAKCRANFbbGxqZtJkdhB/4l39UFmfZ1M9bW
+ hNcm4/mIT+4psqTezkzvxUUmdTsnSBiF4fDzDsfB/4OhEEMJQ01Rufcg4LIsemd+i80viTtp
+ NoLFI9kBc5GSlaCSdx/m99w/0gYhsWXx8jYBGyrLrxD66ZrZ7OBSjLTP5zVjASsEqG0pqGZr
+ VO1jdJGxLJDSUdh9pwrWKGJ1R9yn5XVSSA9K7Gjp6v0J6g2lnO8j4BBFLIjjQWekhMlrgdp1
+ mbZqoDYpTS/mLDKkcj+8xjKLm9jBrDwa/zZ/6rUDztyXnPY7WsXc1RsSQXpmGk6Wk+QP0jMH
+ dAFHLfvoX/ulLHOVZps8Jbd01v/PdEgemWj4pjLVuQENBFblpqIBCADO5fKPowDcuYcAcF6f
+ bmeUWE3MmywB7BasGk9JDCll9U9FcVskRwHwEauFUpHP07fyj7A55SF1wWbDIzvM5WHRUoci
+ +HuWvXbldAdI0/NYv6dKZVaPnnRJUfkzZ4+P/t/BL45RrFY+b5Vf8S/H42FHahDbm20hbJYa
+ 3qCyxkRr1Uxw4EzOKUqGb/z2E8NPapdwj68vemJSVaEE71OBBu56soQz8sQ1ru/XkKcp9SOg
+ oOlAtQlE+G+aNplirIG3QPGd8LJQlwreKx00dAF903f7dJ2/Xr5VeR/we7aVdryG58DX/A4+
+ nYS+RDPerWIPZGu1Hm/h6Y0lsXT1F20yy6yZABEBAAGJAR8EGAEIAAkCGwwFAlblrYIACgkQ
+ DRW2xsambSalVwf/XweibiJpqvuKyGJO9w8T5PW8WjDYe6dE2QJiMmVrurJJ2ndHDGF3g7c0
+ /89Ba/tyfWMvHzTEuPvFvs7Jg/862ATsyRemCb9VXRgsQHlEANTUhre3Cb3WAnRIT1cKZiHm
+ Zk3dPxl25WQfA8tlvodo1s3mehnUQavtwp7ijWnV5pml7ADJcNZ5YFK+3bIJBckulDk0lv1P
+ /s8Ak6jlaAZewUaFupp9tpLNTbhVOAXc+YM9pMXh5v6jlm1Xrlrauew2dpLNow8qj5Q/vtvp
+ Ktdi0mD5VctHHrliQ2Hc3KSogP6uagbTSvsVa/4UWTcuS98oP00pOJzKxsOhPkQZJIpd5g==
+Subject: [BUG] "git checkout BRANCH -- FILE" deletes staged commits
+Message-ID: <5cb30154-5753-f229-9fa2-6c82d2896abc@gmail.com>
+Date:   Tue, 19 Nov 2019 18:10:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d7af75672ba20ed208d51a35243b96ce10202a54.1571666187.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="kgOBKtASnq9D8OyIF1FXEZwNH4k3iYCKb"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 01:56:24PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> The sparse-checkout builtin used 'git read-tree -mu HEAD' to update the
-> skip-worktree bits in the index and to update the working directory.
-> This extra process is overly complex, and prone to failure. It also
-> requires that we write our changes to the sparse-checkout file before
-> trying to update the index.
-> 
-> Remove this extra process call by creating a direct call to
-> unpack_trees() in the same way 'git read-tree -mu HEAD' does. In
-> addition, provide an in-memory list of patterns so we can avoid
-> reading from the sparse-checkout file.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--kgOBKtASnq9D8OyIF1FXEZwNH4k3iYCKb
+Content-Type: multipart/mixed; boundary="NYbtXnLu3Pswd0K1ECSSIhSPTSFIzJXQF";
+ protected-headers="v1"
+From: Tasnad Kernetzky <tasnadk@gmail.com>
+To: git@vger.kernel.org
+Message-ID: <5cb30154-5753-f229-9fa2-6c82d2896abc@gmail.com>
+Subject: [BUG] "git checkout BRANCH -- FILE" deletes staged commits
 
-OK, the way I understand the above two paragraphs is that after this
-patch it won't be necessary to write the updated patterns to the
-'sparse-checkout' file before calling unpack_trees(), and to me it
-implies that it won't be necessary to write the "include everything"
-pattern to that file during disabling sparse checkout.
+--NYbtXnLu3Pswd0K1ECSSIhSPTSFIzJXQF
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US-large
 
-> @@ -378,7 +436,8 @@ static int sparse_checkout_disable(int argc, const char **argv)
->  	fprintf(fp, "/*\n");
->  	fclose(fp);
+Hi,
 
-However, as the patch context here shows we still write that "include
-everything" pattern to the 'sparse-checkout' file during disabling.
+I suppose I found a bug in git version 2.24.0. Please consider the small
+shell script to reproduce.
 
-FWIW, deleting those lines updating the 'sparse-checkout' file make
-the 'sparse-checkout disable' test fail.
+Best,
 
-Did I misunderstand what the commit message is trying to say?
+Tasnad
 
-> -	if (update_working_directory())
-> +	core_apply_sparse_checkout = 1;
-> +	if (update_working_directory(NULL))
->  		die(_("error while refreshing working directory"));
->  
->  	unlink(sparse_filename);
+
+#!/bin/bash
+# init repo, create master branch
+git init
+echo 'master' > tst
+git add tst
+git ci -m 'master'
+
+# create branch "B" where tst contains the line from master plus a line "=
+B"
+git checkout -b B
+echo 'B' >> tst
+git commit -am 'B'
+
+# back in master: stage a change
+git checkout master
+echo 'master_dirty' >> tst
+git add tst
+echo '*** tst should contain [master, master_dirty]: ***'
+cat tst
+echo '-------------'
+
+# checkout copies over contents from B -> I guess the bug is here,
+changes are not detected
+git checkout B -- tst
+git status
+echo '-> this seems to be wrong, change is not detected'
+
+# if we now go to B and back to master, we loose staged changes
+echo '*** tst should contain [master, B]: ***'
+cat tst
+echo '-------------'
+git checkout B
+echo '*** tst should contain [master, B]: ***'
+cat tst
+echo '-------------'
+git checkout master
+echo '*** tst should contain [master, B]: ***'
+cat tst
+echo '-------------'
+echo '-> wrong / staged changes lost!?'
+
+
+
+--NYbtXnLu3Pswd0K1ECSSIhSPTSFIzJXQF--
+
+--kgOBKtASnq9D8OyIF1FXEZwNH4k3iYCKb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEu6VccBfZfXwfvGDzDRW2xsambSYFAl3UIekACgkQDRW2xsam
+bSY3fwf+IadO729hCqtr9wlT6cY4co6XyPf+Tha4jOqRqRYeatUS+fgpPW6p9AlI
+ZRh5zAS+IXQ+XXk6f+dgeWOlqCNo1pr377YnA4jtPYrVQYBuMso5ks/lDDLUmDUB
+toNAleS0ILYYlSlR8udAHgc1POBI37/xBfSIzuwLEK/EEY0SRuD4RYrrDRSEUx88
+AOTvUlZ1xspAu/2hIGbeirCCGD+WgJfMWr2ccpMa+7EKQAMlAQ3wiihuR6F/jQJ3
+uPDAELeJVdvDiloeuJCV/mhAucR5pxJa5wODK4pJtupEp5H7zMLlHDRDhHj9MQeJ
+d0qCsq29QZUULcnrCYgQph/mrKehiQ==
+=0Tl6
+-----END PGP SIGNATURE-----
+
+--kgOBKtASnq9D8OyIF1FXEZwNH4k3iYCKb--
