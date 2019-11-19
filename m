@@ -2,74 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,DKIM_ADSP_NXDOMAIN,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC771F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 14:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52DD51F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 14:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfKSOBr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 09:01:47 -0500
-Received: from slonopotamus.org ([172.104.130.55]:42634 "EHLO slonopotamus.org"
+        id S1727509AbfKSOW4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 09:22:56 -0500
+Received: from feynman.df7cb.de ([195.49.152.168]:38236 "EHLO feynman.df7cb.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725280AbfKSOBq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 09:01:46 -0500
-Received: from marat by slonopotamus.org with local (Exim 4.92.3)
-        (envelope-from <marat@slonopotamus.org>)
-        id 1iX44V-0001wt-Gf
-        for git@vger.kernel.org; Tue, 19 Nov 2019 17:01:35 +0300
-Date:   Tue, 19 Nov 2019 17:01:35 +0300
-From:   marat@seldon.slonopotamus.org
+        id S1727255AbfKSOW4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 09:22:56 -0500
+X-Greylist: delayed 434 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Nov 2019 09:22:55 EST
+Received: from msg.df7cb.de (unknown [IPv6:2003:5b:203b:100:7627:eaff:fe52:8e03])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (Client did not present a certificate)
+        by feynman.df7cb.de (Postfix) with ESMTPSA id 47HSXV1y4hz3DyC
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 15:15:38 +0100 (CET)
+Date:   Tue, 19 Nov 2019 15:15:37 +0100
+From:   Christoph Berg <myon@debian.org>
 To:     git@vger.kernel.org
-Subject: git check-ignore returns 0 for negated masks
-Message-ID: <20191119140135.GA7389@seldon.slonopotamus.org>
+Subject: git clone git clone some://url
+Message-ID: <20191119141537.GD18924@msg.df7cb.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Way to reproduce:
+On some git hosting sites [*], if you copy the repository URL, you'll
+actually get "git clone some://url" in the cut buffer. When you then
+proceed to do "git clone <paste>" in the next terminal window, the
+command executed is actually this:
 
-$ git --version
-git version 2.24.0
-$ mkdir /tmp/checkignore
-$ cd /tmp/checkignore
-$ git init
-Initialized empty Git repository in /tmp/checkignore/.git/
-$ echo '!*.txt' > .gitignore
-$ git check-ignore 1.txt
-1.txt
-$ echo $?
-0
+$ git clone git clone some://url
+fatal: Too many arguments.
 
-I believe this is a bug because it contradicts check-ignore documentation:
+As silly as the idea might sound, could the clone command possibly
+ignore these very specific extra arguments, and just proceed? This has
+happened countless times to me, and when I mentioned the idea on
+#debian-devel, there were others who had the same problem.
 
-  0 - One or more of the provided paths is ignored.
-  1 - None of the provided paths are ignored.
+Thanks,
+Christoph
 
-This bug isn't hard to fix, however:
-
-1. That causes several tests to fail because they test for exit code that I concider to be wrong.
-2. I'm not sure how to handle negated masks when check-ignore prints matching patterns.
-   Printing what pattern caused file to be *not* ignored seems useful,
-   but others may think that there's "mask is printed iff the file is ignored" rule.
-
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index 5a4f92395f..d0711434e6 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -111,7 +111,7 @@ static int check_ignore(struct dir_struct *dir,
-                }
-                if (!quiet && (pattern || show_non_matching))
-                        output_pattern(pathspec.items[i].original, pattern);
--               if (pattern)
-+               if (pattern && !(pattern->flags & PATTERN_FLAG_NEGATIVE))
-                        num_ignored++;
-        }
-        free(seen);
+[*] hello sourceforge! example:
+    https://sourceforge.net/p/wsjt/wsjtx/ci/master/tree/
