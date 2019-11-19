@@ -8,55 +8,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BBC71F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 16:49:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AE0F1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 16:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728513AbfKSQtA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 11:49:00 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:56081 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728287AbfKSQtA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 11:49:00 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b11so3939243wmb.5
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 08:48:59 -0800 (PST)
+        id S1728419AbfKSQtD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 11:49:03 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36246 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728353AbfKSQtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 11:49:02 -0500
+Received: by mail-wm1-f66.google.com with SMTP id c22so4540627wmd.1
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 08:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HjSBzc0rGvd4vC7CgPBj9hyIis2u+fMfIGl4JldqIGg=;
-        b=eCqTx74FxLEy52x4JdfDmTP7Z/7vZlprN4oY9oyVDi6hL0jn5emUckaO4w10FieON5
-         uUfbIzkVED2i+Ay0fcISDjtIhtcdnOST0ykNWF9F3LBzhFtdJQOTcn1mSl2NgszCajPi
-         iEMJoM+JEF51CbIGgi6YzbeG8bxy6XbgErNSuR2wxZc0IQ20cONI5lZiz2ffe51Vlb4I
-         XdXp9CCAOr8SbXHRvIfEQ8MjBR8dESqM1BCBJY5uaKZ28IUWiL3pDdlvUAAUqdEQL7SJ
-         OAfto8WhqisF33ORMN9w++XzL7kskdVHtOwKdiKYwM1a91k6DiBgjMpbvzyTCZrvnkri
-         /S6g==
+        bh=jFwdsXIw10GWaJMKJTmYGPbaQki7xSpz/S6SI98raT0=;
+        b=eLDjodH7rQMbR9PNdeLYJwnxRNQyGPOjkST1omy6TTK49jKcwyPG2R4m/uy9ChbvvX
+         Ca1TCsT8zFeoAbakC0uw7oW80/u7KuwdKjp5Etmdo1Lp9vC7qhogAdDuXiv3Zjz2KfZb
+         Fz2xhO86Zw+J7St/9TWwQmYAgyM12mUVqDMU1mg8tu88V4tuu3nU1yQLGw0Ulnak/DUE
+         1jN0+neUKyMZvjAKQcaRXXigZXz+YO0P25lWUxh7wKM0JpPcHZ2Z31GHhHV5etlvobqI
+         7cFEh5QQK4L6JV5P6cuAbo0cwbxCcebakuOT6nMOBmVd96RrSlTNn/UyUjk0IrjP6Uri
+         HpAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HjSBzc0rGvd4vC7CgPBj9hyIis2u+fMfIGl4JldqIGg=;
-        b=HpQBxPWtF+CCoSD2cWrWM7T+jDPX6WHpoTWHvpDLGQWOMH7W6+ySFkTrd5QogUFWXh
-         RrHGCSMPWY/eQ0Q0LO3LQd5zpBxsUxSmNe1suCy1LpruNV+ALtJYROp6BJOdT2MCugpe
-         bdy1q9W7VcnpfF8R7agk6hfMPOU/adCPeOnK71xabplJ+37K8KpddiloBureZFUHE8PN
-         dJouDXZhmGiownSST+AGNZwuRoaMS7ErD+iqg9gSkeLpVgmhwqc/fc82VsAqYnCm35Bh
-         Jy+ooEFvIoO2LYJWLZhX0YKpvOWFDHH1G8b7m3U0S5+wC3+23w1cvHMac0bRkJVBUcZ0
-         6pdA==
-X-Gm-Message-State: APjAAAXrtB3hZwY9tR/DtuQHCE7aRbcLZuOSb6cGC+U9rEIlpcfoHP0r
-        KQxUXZV/7mpOi45K/vjvjbSJmu6pQiA=
-X-Google-Smtp-Source: APXvYqw84RwjglP1f2fJXOzs9iLOnG2ePqWmo60EODfgLqUQMQ+dkaCrJFsOKC2VL/w0oRwPkb66qg==
-X-Received: by 2002:a7b:c411:: with SMTP id k17mr6611816wmi.119.1574182138279;
-        Tue, 19 Nov 2019 08:48:58 -0800 (PST)
+        bh=jFwdsXIw10GWaJMKJTmYGPbaQki7xSpz/S6SI98raT0=;
+        b=CoDuQ18HWM3tx33hZPkayf9sxP7djcoW58i5CWaRnQ+ba0xvqGgunmbMDS5Bge8X88
+         s5+66zkVhQWSJYrpiE2Z+MCz73OZgR2PfL36qmiOMuV2pcvRR3HWogw0A00zl1iLdbXZ
+         mxx+5TyYAWZis9x+LN4jrbtMFR7Kj/Ke6gzoEPHwt/FSlBwEvcVeC0hrwh9tIItkIoYB
+         T08DYEfYveioyYse3QRGAjht17z6uNdaXuvFOLdPn0iuOLte9wv6QGTr/BKcK4GqIcBa
+         kWjwEFYyQkxzdUl/L273DILgG7h7i3Q9/Ei4gejb2lepc8D5HiIbZgIP+PMPRysTFG6G
+         6lWg==
+X-Gm-Message-State: APjAAAWuiaP0Ztovkamfnms7iawK2oZrLhtDsDoZzHqOxWMfG1B1a/YL
+        h2gCbgdNMEsaBx32HZWrfAiQgYLH/nQ=
+X-Google-Smtp-Source: APXvYqyswOz7iCJCybpHr2/0XxOoN4GhWkj4NkY48DX/059k/pNunrrnFEnnXMweFkRh6gJjY7S9SQ==
+X-Received: by 2002:a1c:2dd0:: with SMTP id t199mr6692705wmt.58.1574182140649;
+        Tue, 19 Nov 2019 08:49:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r25sm3671189wmh.6.2019.11.19.08.48.57
+        by smtp.gmail.com with ESMTPSA id j66sm3447075wma.19.2019.11.19.08.49.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 08:48:57 -0800 (PST)
-Message-Id: <55a7c6ec3cebd46b8650ad8116923676fa0e2b3a.1574182135.git.gitgitgadget@gmail.com>
+        Tue, 19 Nov 2019 08:49:00 -0800 (PST)
+Message-Id: <0b79797e772b25c6caa22bd9761837062e7265de.1574182135.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.v3.git.1574182135.gitgitgadget@gmail.com>
 References: <pull.445.v2.git.1573055478.gitgitgadget@gmail.com>
         <pull.445.v3.git.1574182135.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Nov 2019 16:48:51 +0000
-Subject: [PATCH v3 2/6] pathspec: add new function to parse file
+Date:   Tue, 19 Nov 2019 16:48:54 +0000
+Subject: [PATCH v3 5/6] doc: commit: synchronize <pathspec> description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,105 +72,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-This will be used to support the new option '--pathspec-from-file' in
-`git add`, `git-commit`, `git reset` etc.
+`git add` shows an example of good writing, follow it.
+This also better disambiguates <file>... header.
 
-Note also that we specifically handle CR/LF line endings to support
-Windows better.
-
-To simplify code, file is first parsed into `argv_array`. This allows
-to avoid refactoring `parse_pathspec()`.
-
-I considered adding `nul_term_line` to `flags` instead, but decided
-that it doesn't fit there.
-
-The new code is mostly taken from `cmd_update_index()` and
-`split_mail_conv()`.
-
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- pathspec.c | 38 ++++++++++++++++++++++++++++++++++++++
- pathspec.h | 10 ++++++++++
- 2 files changed, 48 insertions(+)
+ Documentation/git-commit.txt | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/pathspec.c b/pathspec.c
-index 12c2b322b3..128f27fcb7 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -3,6 +3,8 @@
- #include "dir.h"
- #include "pathspec.h"
- #include "attr.h"
-+#include "argv-array.h"
-+#include "quote.h"
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index afa7b75a23..a0c44978ee 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+ 	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+ 	   [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+-	   [-i | -o] [-S[<keyid>]] [--] [<file>...]
++	   [-i | -o] [-S[<keyid>]] [--] [<pathspec>...]
  
- /*
-  * Finds which of the given pathspecs match items in the index.
-@@ -613,6 +615,42 @@ void parse_pathspec(struct pathspec *pathspec,
- 	}
- }
+ DESCRIPTION
+ -----------
+@@ -345,12 +345,13 @@ changes to tracked files.
+ \--::
+ 	Do not interpret any more arguments as options.
  
-+void parse_pathspec_file(struct pathspec *pathspec, unsigned magic_mask,
-+			 unsigned flags, const char *prefix,
-+			 const char *file, int nul_term_line)
-+{
-+	struct argv_array parsed_file = ARGV_ARRAY_INIT;
-+	strbuf_getline_fn getline_fn = nul_term_line ? strbuf_getline_nul :
-+						       strbuf_getline;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf unquoted = STRBUF_INIT;
-+	FILE *in;
-+
-+	if (!strcmp(file, "-"))
-+		in = stdin;
-+	else
-+		in = xfopen(file, "r");
-+
-+	while (getline_fn(&buf, in) != EOF) {
-+		if (!nul_term_line && buf.buf[0] == '"') {
-+			strbuf_reset(&unquoted);
-+			if (unquote_c_style(&unquoted, buf.buf, NULL))
-+				die(_("line is badly quoted: %s"), buf.buf);
-+			strbuf_swap(&buf, &unquoted);
-+		}
-+		argv_array_push(&parsed_file, buf.buf);
-+		strbuf_reset(&buf);
-+	}
-+
-+	strbuf_release(&unquoted);
-+	strbuf_release(&buf);
-+	if (in != stdin)
-+		fclose(in);
-+
-+	parse_pathspec(pathspec, magic_mask, flags, prefix, parsed_file.argv);
-+	argv_array_clear(&parsed_file);
-+}
-+
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
- {
- 	int i, j;
-diff --git a/pathspec.h b/pathspec.h
-index 1c18a2c90c..a27dc81ba2 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -85,6 +85,16 @@ void parse_pathspec(struct pathspec *pathspec,
- 		    unsigned flags,
- 		    const char *prefix,
- 		    const char **args);
-+/*
-+ * Same as parse_pathspec() but uses file as input.
-+ * When 'file' is exactly "-" it uses 'stdin' instead.
-+ */
-+void parse_pathspec_file(struct pathspec *pathspec,
-+			 unsigned magic_mask,
-+			 unsigned flags,
-+			 const char *prefix,
-+			 const char *file,
-+			 int nul_term_line);
- void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
- void clear_pathspec(struct pathspec *);
+-<file>...::
+-	When files are given on the command line, the command
+-	commits the contents of the named files, without
+-	recording the changes already staged.  The contents of
+-	these files are also staged for the next commit on top
+-	of what have been staged before.
++<pathspec>...::
++	When pathspec is given on the command line, commit the contents of
++	the files that match the pathspec without recording the changes
++	already added to the index. The contents of these files are also
++	staged for the next commit on top of what have been staged before.
+++
++For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
  
+ :git-commit: 1
+ include::date-formats.txt[]
 -- 
 gitgitgadget
 
