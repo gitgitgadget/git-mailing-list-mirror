@@ -2,71 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93B7B1F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 17:02:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D34E41F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 17:07:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728692AbfKSRCd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 12:02:33 -0500
-Received: from smtprelay07.ispgateway.de ([134.119.228.100]:53535 "EHLO
-        smtprelay07.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727560AbfKSRCc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 12:02:32 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay07.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1iX6ta-0006dw-Hm; Tue, 19 Nov 2019 18:02:30 +0100
-Subject: Re: [PATCH v2 5/6] doc: commit: unify <pathspec> description
-To:     Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <pull.445.v2.git.1573055478.gitgitgadget@gmail.com>
- <20c4495fd31110c56cca84385bee6d1ab4a6f33e.1573055478.git.gitgitgadget@gmail.com>
- <xmqqk17wxuev.fsf@gitster-ct.c.googlers.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <1d3cb1f6-1537-0619-6484-9bbd187c67fe@syntevo.com>
-Date:   Tue, 19 Nov 2019 18:02:29 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1728339AbfKSRH5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 12:07:57 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42541 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726985AbfKSRH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 12:07:57 -0500
+Received: by mail-wr1-f67.google.com with SMTP id a15so24765266wrf.9
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:07:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=w2ht3tvAJOgIu/jBXIKCQzR/BYoAAUAWtFAfzZR8nxQ=;
+        b=WBwbKerAd7qQqPM5n7ZQq46EM+EufWNIYEHqzp2FuoqnGsb+rGzwuZN/md4UsrtiuP
+         B9to7mG/hr1+Hlyq5GsiQpB4dRBcLh8jOnX1O51m6QVGE23xQi5udcJMnX/HcwzFmBVy
+         nZOwgNKzBvtRvv5SAz3RoSZNkQhZENnkdykuZeujzf7fsSoZAtypdtsfw5J46FM3BeJX
+         wtDuVCneQkLSoaOsMp87u4Cl7S9tt0NsXDbOyt8l0mC6U3noKAdGjPNv/GvNIWDSrd37
+         AANdCg6JW9Y/havY5VPngu78sGOHyk1gpzy2WaNGrepKo4vmW94JJxJQ/+ytYXh8L5Xu
+         SaVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=w2ht3tvAJOgIu/jBXIKCQzR/BYoAAUAWtFAfzZR8nxQ=;
+        b=iNblHJVM6x6OqgTS2N4Apmn+rRnXG1kWFnYSKpO5gagS8964Q9FYrSuLLQWYavOYo3
+         jKLisDdqwLu77Jz7H7xcKOs9Kkv7gZFcO6a0bftjGVnHhCz7E6czOoZ8CS2blP1jAEwO
+         mPR1RZ27g3ST8ndAQ04btfRP3ZSsF/IJN2297gKRGNoGVuKrfCsMng2ZAESKf6+Brlbk
+         I88CaqbZOmtf52fBzPml5U5GuY2MOgDpx3FZlPKqAwMdsAsS4njbdOT6EbgR8lmUwP0f
+         lieilmzynHO9hWi9anTIjjcwyLFbA/03bHcGLHtdCsJ5PqXxDczSMa9KXLzzS9COHLVW
+         rhig==
+X-Gm-Message-State: APjAAAVI6w8/I6xxpqGSEbUYc+3f3RM4+bsOUKlav2sWUIAzdo/bSfXP
+        j/L9Yv+msBHrgRqIQPSTju4=
+X-Google-Smtp-Source: APXvYqzKtbyYa19+1Ko/4Ye21wqbvK9AjdHhiw49pU7CkHzNjOG6/Uzuu47i3lBgdqsf8roGkRXwug==
+X-Received: by 2002:adf:fd4b:: with SMTP id h11mr8971562wrs.191.1574183273913;
+        Tue, 19 Nov 2019 09:07:53 -0800 (PST)
+Received: from szeder.dev (x4d0c2755.dyn.telefonica.de. [77.12.39.85])
+        by smtp.gmail.com with ESMTPSA id f140sm3848545wme.21.2019.11.19.09.07.52
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 19 Nov 2019 09:07:53 -0800 (PST)
+Date:   Tue, 19 Nov 2019 18:07:51 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 15/17] sparse-checkout: update working directory
+ in-process
+Message-ID: <20191119170751.GI23183@szeder.dev>
+References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+ <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
+ <d7af75672ba20ed208d51a35243b96ce10202a54.1571666187.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqk17wxuev.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d7af75672ba20ed208d51a35243b96ce10202a54.1571666187.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19.11.2019 7:16, Junio C Hamano wrote:
-
->> +For more details about the <pathspec> syntax, see the 'pathspec' entry
->> +in linkgit:gitglossary[7].
+On Mon, Oct 21, 2019 at 01:56:24PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> What you added in [PATCH 3/6] (git reset doc) sends a slightly
-> different message, i.e.
+> The sparse-checkout builtin used 'git read-tree -mu HEAD' to update the
+> skip-worktree bits in the index and to update the working directory.
+> This extra process is overly complex, and prone to failure. It also
+> requires that we write our changes to the sparse-checkout file before
+> trying to update the index.
 > 
->      The <pathspec> is used to limit the paths affected by the operation
->      (see the entry for 'pathspec' in linkgit:gitglossary[7] for more details).
-> 
-> and I think that was more appropriate than what we see here.  You
-> are referring your readers to the glossary entry not just for the
-> syntax but also the entire concept of <pathspec>.
+> Remove this extra process call by creating a direct call to
+> unpack_trees() in the same way 'git read-tree -mu HEAD' does. In
+> addition, provide an in-memory list of patterns so we can avoid
+> reading from the sparse-checkout file.
 
-This has shown me that I didn't synchronize docs enough. I have studied 
-docs for other commands and found out that most of them list <pathspec> 
-in a separate paragraph under options.
+OK, the way I understand the above two paragraphs is that after this
+patch it won't be necessary to write the updated patterns to the
+'sparse-checkout' file before calling unpack_trees(), and to me it
+implies that it won't be necessary to write the "include everything"
+pattern to that file during disabling sparse checkout.
 
-I find it very reasonable, because that's where I would normally expect 
-it as a reader, together with other options.
+> @@ -378,7 +436,8 @@ static int sparse_checkout_disable(int argc, const char **argv)
+>  	fprintf(fp, "/*\n");
+>  	fclose(fp);
 
-So I adjusted 'git-reset' docs to also list <pathspec> under options.
+However, as the patch context here shows we still write that "include
+everything" pattern to the 'sparse-checkout' file during disabling.
 
+FWIW, deleting those lines updating the 'sparse-checkout' file make
+the 'sparse-checkout disable' test fail.
+
+Did I misunderstand what the commit message is trying to say?
+
+> -	if (update_working_directory())
+> +	core_apply_sparse_checkout = 1;
+> +	if (update_working_directory(NULL))
+>  		die(_("error while refreshing working directory"));
+>  
+>  	unlink(sparse_filename);
