@@ -2,119 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,
+	RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D1E31F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 20:41:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7673D1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 20:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727362AbfKSUlv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 15:41:51 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:36994 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726711AbfKSUlv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 15:41:51 -0500
-Received: by mail-pg1-f201.google.com with SMTP id u8so4272956pgl.4
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 12:41:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=H5SdLtX295MmicjQSfIlWZVd6xDLC+BANd8e5QgSzfQ=;
-        b=Gu9kI62YRIl+iD6ah6BP/RGaHSC2rj5F6a4Jb76YqS658OUUIzCJulqGO6XLRlyycP
-         2+is9cxAmkdbya5odDxSkFDQOjmeyQAAGH4DuzgX4EM13k73b5eSPEsEcW16yW9KTWY0
-         NDniBFQPIpKoCYCSFJ1+Kga7lgk+N1a+EtQ7U0VBPh6DeparkMPIcEDoP8UOdJPul7v/
-         TIh7owbOzkQtlkYPEFkHjjbpmBZ/ch+CkWCpi3Ku5X5HldDSJZF5zXjedKeDFDPBukVo
-         /4W4hgJh1MQYKzOtCVYK7n+lmrs2T2IftotUtduuqHEDiG0GYwlTVZjOo6chIUkMsw+W
-         jveQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=H5SdLtX295MmicjQSfIlWZVd6xDLC+BANd8e5QgSzfQ=;
-        b=KXV2LVmB//BthFnbsE5EPwDJNva/E19GawA6HuCRHYwZSTUK9tgCbL+ZOdFTYKHv8X
-         3UuIdC/HVdgzvoesNHoarAdxYE+0fyN3wiVi33s20C/y+OGrGS7kmWoe8tBWweDJ0ac2
-         OIKK3sqB/Cpg6JpPpTyT0to6izkDGtbtD0IsHC2T5qHPPG/wUxKpShSeed1qXYZGNx/r
-         +eagqIvaCzY9UrSAN/Tlx7JYjRdSmnK5LN53nGcYJoRP5uMiCs7yKpXmB3Z0S9G78KH/
-         ouyakEE8EPOeoDhjMxv07SU6ZIrOG0RqKh4R7FMlViGyfGzJT8l75jRduGOI5mVSSb8U
-         qdsg==
-X-Gm-Message-State: APjAAAVVKNEyMMu15vpE6LClczGiR4UQgqU2GN3qJIyyh5Jn9t91CmB3
-        XRuvahHk3UXCi4DaNqg07XbvCyWLynQTsap/k6wx
-X-Google-Smtp-Source: APXvYqxm0PWiIZu97cCh52ojkqDa+Aoz4EKKc95Syv/77HQaUbsM6e1L3fju4JUMOL8bfF+iF94gExj6jnufIl3t0op3
-X-Received: by 2002:a65:58cc:: with SMTP id e12mr7536083pgu.194.1574196110432;
- Tue, 19 Nov 2019 12:41:50 -0800 (PST)
-Date:   Tue, 19 Nov 2019 12:41:46 -0800
-In-Reply-To: <3e616116-2f6f-acff-91b3-4aefc7e62653@gmail.com>
-Message-Id: <20191119204146.168001-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <3e616116-2f6f-acff-91b3-4aefc7e62653@gmail.com>
-X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
-Subject: Re: ag/sequencer-todo-updates , was Re: What's cooking in git.git
- (Nov 2019, #03; Tue, 19)
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     alban.gruin@gmail.com
-Cc:     gitster@pobox.com, git@vger.kernel.org, phillip.wood123@gmail.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726948AbfKSU7q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 15:59:46 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58901 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726711AbfKSU7q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 15:59:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574197178;
+        bh=DqI91n6ci1hLWI/IqLwyb5GjcJLVRPxX4tyi5h6qTi0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=kgxN5x/4OYpnZbJqnpMvP8A9ucz8EL6BJ4DYqcdUKlkK8PHBujZ5b7hAw1bXSNjIm
+         xT7tELmzmNuRGoYjQihWXoE9rZqlS+5mePSh9RQ4HqUnvRYr1o4zaB75cHc96KgSud
+         UxrFFR8uSFe9efWZusNtV8eOYu5dEAZnRy/SiQUQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFbW0-1idErE08L8-00H9ii; Tue, 19
+ Nov 2019 21:59:38 +0100
+Date:   Tue, 19 Nov 2019 21:59:21 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/1] ci(osx): use new location of the `perforce`
+ cask
+In-Reply-To: <20191118221804.GA23183@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1911192155140.15956@tvgsbejvaqbjf.bet>
+References: <pull.400.v2.git.1571316454.gitgitgadget@gmail.com> <pull.400.v3.git.1571789978.gitgitgadget@gmail.com> <9d80e845bf923c4543c49f9947aacb10c59ff6ce.1571789978.git.gitgitgadget@gmail.com> <20191118221804.GA23183@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-377742872-1574197178=:15956"
+X-Provags-ID: V03:K1:y1rCGVVLjrUqit24+4kW8pDMXQG7Y0zi46XSVtnuWaRjLnxpUdY
+ +MTH+1Nh7ZkWCtWH7JHdm7L0z7QSZSADESePythNTLP5fqKIXyY2iWesXfYahcLKlJGtrbd
+ S+GfrtLLAJW1HBdcAdCiVR+WpWhJEqdX0gurmd8wHJwetU35VvXT1JGbri6I8p7w8GiLUXg
+ S26zOwXGmEDik49XENh1A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:J98vAtY9O0I=:E+sEqoYkKkkey+grOHfCoZ
+ yjGVHyYc4HjuHGkdx19FkZCc421+s/79UQlAlfApmuaVdq7LpxbEZW3gT98RPc7jEnEg6edCI
+ /HRJPaE+/eaV/W0H2hegbgI8jeJX5H4rFeQxyr50bOMDJN9a4iH/lFmAsQEFau37BpVq8Qqe7
+ YzKtDjZMYpjC0qW6up5XcNbeubbZDHyePuzyW3UTHYKPlqiz7Rf+1ZSRTBFH28crX7xVD5bM+
+ wXiThpUfhGMC6ZenrsYaAG6VZvM1192Kxsn3bHABEn87VoLC+ZgGbSUESFxeiAhg4uhIZXd7S
+ tKCehJpW0DzgFBaZg6Ck99hey7endF1Qunc4R9W5LOa5HVxzAFGQ2S1OFppyrtM86YQfCkvx7
+ 8F79QCTU7mCiKkk5JUc2bhum/LaPNwpJGMHig7gEHcd4mkT/Dce2w1vBye69d3KtXlxXoSj1o
+ KWEq02PBCtZ0NWDUYJeHyxExVGHXiDAg682WdK7xdUZzZE2jFkmo1765d76k8nX7/ZVt2qs3X
+ 8jyXQSgRQ94ElqsQcHyMN25tXu6cUQTt4wlWnEPPMre7bziPK8pjLs9OTXUn5EAnQByewM3tc
+ t7lUYp5//HI3eTHkraGZgjvnrpY2cJvrQ1kays82Ut58swwpMH1vcV+KjqtAbUHSJdb0zMKOj
+ E6J1cPIO9Gza7hoVByA3knAEKAXHFaPJhuwJsd1nU4cW/VSg421DfA89gzQokrGCMsDSs8SS8
+ RpNGJsGZgOgf0cWotbqxjb3VMnYZwpUPQDRuSt5giCdXUdf1jrrL5JxMnoeW2pOPnqX5gc6sT
+ QtynKa7JHf6m5tSdO9KZ63jvjigX154sIk5ZHa3pyJP8GShocGzfu9U41CLpaLFuxn+PfhKyL
+ 20HZ1p7vVCn6K+LdOe8cBbeIqJXHAaoIf0A6N1yWKKc87461HFn+Z7CsPIUanv3CpPoLVz9vR
+ Um0Z7vfAV5LeZ88sBwBzWSjgIo0ykUvKuQS8A4Rtm59t5c6jcVvC1qGQVDY/pJkD5YgJk4Rgm
+ li3I2GzRjASH3Q9zjk4vnY10xij6R3cHHm3BdmVJQImkyg79L2I05OtRRaFIvu1ch8iYEVrQ2
+ pKNoyNNSwL3BXU/880rdewRFn0Jd2YqcgfgLt/0Ig9l5n6qdbMEu0gadM4zQqQtp48SciS3gw
+ GURnqVN1gOFbzAoy99bqiMegmywsf5w6jZfOqRxGRKzAV7OJzWU6sQ/6VKLq+imBHM+Ro9D2n
+ rLU4pAMbIBZegpyFccS1Sc9sjZ/HmlOYiS03RgJAtK8Kd3v3CyU3XSDJJfaU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > * ag/sequencer-todo-updates (2019-10-28) 6 commits
-> >  - SQUASH??? tentative leakfix
-> >  - sequencer: directly call pick_commits() from complete_action()
-> >  - rebase: fill `squash_onto' in get_replay_opts()
-> >  - sequencer: move the code writing total_nr on the disk to a new function
-> >  - sequencer: update `done_nr' when skipping commands in a todo list
-> >  - sequencer: update `total_nr' when adding an item to a todo list
-> > 
-> >  Reduce unnecessary reading of state variables back from the disk
-> >  during sequener operation.
-> > 
-> >  Is the leakfix patch at the tip the only thing that needs to
-> >  prepare the topic ready for 'next'?
-> > 
-> 
-> Yes, it is.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I took a look at this. Some comments:
+--8323328-377742872-1574197178=:15956
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-- Commit message 1 refers to read_todo_list() which doesn't exist.
-  Should it be read_populate_todo()?
-- Commit 3's todo_list_write_total_nr() could just take an int instead
-  of the full "struct todo_list *".
+Hi G=C3=A1bor,
 
-And overall, I wish that there was more descriptions of the code paths
-involved, especially in commits 4 and 5. In commit 4, I can see that
-run_rebase_interactive() calls get_replay_opts() then
-sequencer_continue() (so sequencer_continue() receives whatever
-get_replay_opts() outputs - and this commit adds the initialization of
-"squash_onto" therein), which calls pick_commits() (which uses
-"squash_onto"). I would have liked the commit message to verify that in
-sequencer_continue(), before pick_commits(), "squash_onto" was never
-written to, so it is crucial for get_replay_opts() to fill
-"squash_onto".
+On Mon, 18 Nov 2019, SZEDER G=C3=A1bor wrote:
 
-And in commit 5, I noticed some analysis from Phillip Wood [1] but I
-would have liked more details. For example,
+> On Wed, Oct 23, 2019 at 12:19:38AM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > CI servers are typically fresh virtual machines, but not always. To
+> > accommodate for that, let's try harder if `brew cask install perforce`
+> > fails, by specifically pulling the latest `master` of the
+> > `homebrew-cask` repository.
+>
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index 85a9d6b15c..ce149ed39c 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -40,6 +40,11 @@ osx-clang|osx-gcc)
+> >  	test -z "$BREW_INSTALL_PACKAGES" ||
+> >  	brew install $BREW_INSTALL_PACKAGES
+> >  	brew link --force gettext
+> > +	brew cask install perforce || {
+> > +		# Update the definitions and try again
+> > +		git -C "$(brew --repository)"/Library/Taps/homebrew/homebrew-cask p=
+ull &&
+>
+> In the build of v2.24.0 this 'git pull' printed just short of 600
+> lines worth of diffstat.  Two weeks went by since then, and in today's
+> 'pu' build that diffstat is already over 1000 lines long.
+>
+> Perhaps we could use --quiet here, though that would suppress the
+> transfer progress as well.
 
->      - calls read_populate_opts() -- this is unnecessary as we're starting a
->        new rebase, so opts is fully populated
+Isn't there an option to suppress the diffstat specifically?
 
-So complete_action() (the function modified in this commit) is called
-only by do_interactive_rebase() (in builtin/rebase.c), which is only
-called by run_rebase_interactive() (in builtin/rebase.c) when command is
-ACTION_NONE, so indeed, we're starting a new rebase. But where the
-options fully populated? I see that in do_interactive_rebase(), it is
-initialized with get_replay_opts(), but that seems different from
-read_populate_opts().
+*clicketyclick*
 
-[1] https://public-inbox.org/git/212cdc0d-8cf3-9172-d405-39b3868e6ca4@gmail.com/
+Ah yes: we can just pass `-c merge.stat=3Dfalse` to that `pull` command.
 
-Having said all that, I'm not opposed to this being in "next" (except
-that the commit message 1 probably should be updated), since it seems to
-me that the analysis has already been done, and is merely unwritten.
+Feel free to submit a patch, as I won't really have time to take care of
+this any time soon.
+
+Ciao,
+Dscho
+
+> > +		brew cask install perforce
+> > +	} ||
+> >  	brew install caskroom/cask/perforce
+> >  	case "$jobname" in
+> >  	osx-gcc)
+> > --
+> > gitgitgadget
+>
+
+--8323328-377742872-1574197178=:15956--
