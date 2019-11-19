@@ -2,116 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70FB01F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 17:58:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B18881F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 18:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727050AbfKSR6y (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 12:58:54 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55753 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbfKSR6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 12:58:54 -0500
-Received: by mail-wm1-f65.google.com with SMTP id b11so4182858wmb.5
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:58:53 -0800 (PST)
+        id S1726836AbfKSSBb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 13:01:31 -0500
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:54408 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbfKSSBb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 13:01:31 -0500
+Received: by mail-wm1-f54.google.com with SMTP id z26so4196149wmi.4
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 10:01:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4lVV2eBGO9oiYMfKy8b27MxnsvH4AYboS9XZtKoe5AU=;
-        b=hfpZHjsbJi9CXe+8p9qalVnn/Tz5I9o1DWMXi9MSClqdJ5RPeRK85fu01fvi6mXuqm
-         oEdUxgrzIa/LSCNqcRzR0EZa2vdPorz+uozd5FL2KCZ4JfE47VVsPbv5ycA5XZQUTOyl
-         RLFccRo8rTpcbOsgoQuTCtpWeftHrwTXm4HyJtP16nVGtSDnVsZl0EsD4T0w48JGlQme
-         svwgpNNo4pQ2Xo5C0c14R1RsrVyQEth9kOa1m4rCSHLZRG5a187/Iq55cWiKtDP5RNEx
-         xh1fYSZ2RBqB17qovt4lq+7URR6e3K7OoARNMKGrTa+T5JrXzGoJBzv+RJQf1F0c1458
-         XvOA==
+        h=subject:to:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ylNa7TaHkfv+t9R4AMo694wQ9SYiNDn6+IGEGrX2Cz4=;
+        b=rV0nDc64mRbQb8xGDIUdmcX/EFmPtjnN4NTErzPhQP47DLN1tbcQejnAHYQdGjUcDm
+         nQAfU62bffJKi8fM017HjYE6IZfYOaScz3a8jnwom5E3cevuptpXap1qw+tLJCIv9DON
+         Tho3RBXexZ9it6LOFio+t565f6+AkiHmvparVQm7bFqwP8tiigYKUc3rOFAClyEFqckV
+         xUPHlkbmx06tBbeXMxgUfQOAyxrwvv0hGVWkA6noBLoSpoq3248QLQGhy9Cz7tgXik7X
+         l9Rn4gG3vkvUX9Bgf0KHL4pgLZDDPlXJaWa1Ku7Qwb9tK41qe7ykaZv/DTf5OIFLU/zy
+         62dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4lVV2eBGO9oiYMfKy8b27MxnsvH4AYboS9XZtKoe5AU=;
-        b=i6g8W379pWLIPNCS4d+8CKZY0lQmh7l8DMYDutUCzqKtP1e4Jf9NJz0i5c/GSorqG8
-         +Z+oon/xD/voggb0x/+ZRyA14Cw8EwDYcwioa09puD6e65rh6UjA+dCcDMyasXNM97Ij
-         Jp76DUEInkaMESWCmwSyqB7BJJ29bJ8HxvbtVMi9Ij5pC/m2+Fev2nRqgJMUpiAzgEgw
-         rZ0cz4EEe4WX9lAsOjkgvt8xuPth26zG4ZLDcgaDujOScZSqeUCsJjGz0y97Mud4lbyg
-         6HggyomEK9iMRF3Dy7r9X7ziQN6jqqCu49uEDleNIWRqU4S8k2GX0LrT3WZXneOKTHD8
-         pl6w==
-X-Gm-Message-State: APjAAAUGWdTp0cHycxHfx9r9fVGlwsrfneGAejp0HxFW0pEG3XdZvog3
-        EcmArCU6WOLWjqMXzdEXeAc=
-X-Google-Smtp-Source: APXvYqz9sGNfpK/nKlmdk1j7Tz+2PzUT32EnaqkilyCbUE+HRJSo0alUl02FCCpmx46aZiFAqG28gQ==
-X-Received: by 2002:a1c:560b:: with SMTP id k11mr7841714wmb.153.1574186332769;
-        Tue, 19 Nov 2019 09:58:52 -0800 (PST)
-Received: from szeder.dev (x4d0c2755.dyn.telefonica.de. [77.12.39.85])
-        by smtp.gmail.com with ESMTPSA id d11sm28050182wrn.28.2019.11.19.09.58.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 09:58:51 -0800 (PST)
-Date:   Tue, 19 Nov 2019 18:58:50 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2019, #03; Tue, 19)
-Message-ID: <20191119175850.GL23183@szeder.dev>
+        h=x-gm-message-state:subject:to:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ylNa7TaHkfv+t9R4AMo694wQ9SYiNDn6+IGEGrX2Cz4=;
+        b=EOqZJehTZckKEonrD0Bfq2HotCMBbV5mrdrYzmoOT+iL3/JSaFbeFDMKqHnFwfXcct
+         Fl92CfT/Pka+pNYLnBULNZO9Umq8hkZ/b9vK0pIKXCdib7Il+R6/7f8HwLAWfLtl4/P6
+         oJLsVciPArc7TSL8isu2108ZIttiH+v3GjQMkSJY5QNkK/7BHmwQc8zpMW7W/T2++0ay
+         x47oNxXd4F/mNJR1IRIZxoR3KA9+30CJOCdKV8yZjTrhSWTKbOtZ56RNBg1icZM0Fp7I
+         gxPew+08rIBtd11WikFxsewneHpFKUoEaKnYGhpGitZuogOE9lq4z8oo8L3OKX4EpSjn
+         KlbA==
+X-Gm-Message-State: APjAAAXvPSVCz4UgniEtYpTVYofOsElqM5nlJHmiSu94bpvrNmDYT/kJ
+        9tNcqgnjWWUO7YboJGoDK48j7z/x
+X-Google-Smtp-Source: APXvYqwO3nB5BDwanwLn4OKUmDs+oc2ktFfT+k/EdkYpcKhomXM11XnfdJIR5oNsI2mBzIH3827vFg==
+X-Received: by 2002:a1c:96d5:: with SMTP id y204mr7113927wmd.63.1574186484402;
+        Tue, 19 Nov 2019 10:01:24 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-658-1-6-103.w86-222.abo.wanadoo.fr. [86.222.149.103])
+        by smtp.gmail.com with ESMTPSA id r2sm3982060wma.44.2019.11.19.10.01.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Nov 2019 10:01:23 -0800 (PST)
+Subject: ag/sequencer-todo-updates , was Re: What's cooking in git.git (Nov
+ 2019, #03; Tue, 19)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 References: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <3e616116-2f6f-acff-91b3-4aefc7e62653@gmail.com>
+Date:   Tue, 19 Nov 2019 19:01:13 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 In-Reply-To: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 19, 2019 at 04:05:48PM +0900, Junio C Hamano wrote:
-> * ds/commit-graph-delay-gen-progress (2019-11-07) 1 commit
->   (merged to 'next' on 2019-11-19 at afa7c921be)
->  + commit-graph: use start_delayed_progress()
+Hi Junio,
 
-This commit is incomplete:
-
-  https://public-inbox.org/git/20191111142739.GL4348@szeder.dev/
-
->  One kind of progress messages were always given during commit-graph
->  generation, instead of following the "if it takes more than two
->  seconds, show progress" pattern, which has been corrected.
+Le 19/11/2019 à 08:05, Junio C Hamano a écrit :
+> * ag/sequencer-todo-updates (2019-10-28) 6 commits
+>  - SQUASH??? tentative leakfix
+>  - sequencer: directly call pick_commits() from complete_action()
+>  - rebase: fill `squash_onto' in get_replay_opts()
+>  - sequencer: move the code writing total_nr on the disk to a new function
+>  - sequencer: update `done_nr' when skipping commands in a todo list
+>  - sequencer: update `total_nr' when adding an item to a todo list
 > 
->  Will merge to 'master'.
-
-
-> * ds/sparse-cone (2019-10-23) 17 commits
->   (merged to 'next' on 2019-11-19 at 1eb4b3a012)
->  + sparse-checkout: cone mode should not interact with .gitignore
->  + sparse-checkout: write using lockfile
->  + sparse-checkout: update working directory in-process
->  + sparse-checkout: sanitize for nested folders
->  + read-tree: show progress by default
-
-This commit changed the default behaviour of a plumbing command, and
-the resulting discussion concluded that such a change is not
-desirable:
-
-  https://public-inbox.org/git/6c6b9838-af7b-7212-199f-a0a3f3f2ac77@gmail.com/
-
->  + unpack-trees: add progress to clear_ce_flags()
->  + unpack-trees: hash less in cone mode
->  + sparse-checkout: init and set in cone mode
->  + sparse-checkout: use hashmaps for cone patterns
->  + sparse-checkout: add 'cone' mode
->  + trace2: add region in clear_ce_flags
->  + sparse-checkout: create 'disable' subcommand
->  + sparse-checkout: add '--stdin' option to set subcommand
->  + sparse-checkout: 'set' subcommand
->  + clone: add --sparse mode
->  + sparse-checkout: create 'init' subcommand
->  + sparse-checkout: create builtin with 'list' subcommand
+>  Reduce unnecessary reading of state variables back from the disk
+>  during sequener operation.
 > 
->  Management of sparsely checked-out working tree has gained a
->  dedicated "sparse-checkout" command.
+>  Is the leakfix patch at the tip the only thing that needs to
+>  prepare the topic ready for 'next'?
 > 
->  Will merge to 'master'.
+
+Yes, it is.
+
+Cheers,
+Alban
+
