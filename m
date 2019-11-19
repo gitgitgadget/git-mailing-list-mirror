@@ -2,84 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 649751F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 03:10:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA38E1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 03:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727428AbfKSDKV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 22:10:21 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55804 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727014AbfKSDKV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 22:10:21 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CA8B1F3A7;
-        Mon, 18 Nov 2019 22:10:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=47Hqt52/wWofpRFrgUUFtQi6/L0=; b=p4+Tc+
-        K1SeqojXAVui4d3pIb6R045YSJ1e8vPTlJZZVCNK67w1F7EEvj+RWpJYJSg/Eimc
-        VKpWOdw5B3Zpidbcfi4BpSN/TnvvqNBvsZhH2jyL2090wefd70XyDb+9PxMtsF9+
-        pHujsRdgll1sDwIz9CUbnltnvJC08+ZwyGd1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mHyoRUTi+Fmid6Cd9WFlyFXwdUBWJ/Zx
-        lGfNApzAzXR6J0k8pqaJMSIQdfiUyXw4gEYw8OgnDgITwik/MZpZr5PNbjTTLDMN
-        dBAAb3pwB1IMC6GLWLGXOe4W3QBrDfFba7kOK7yu8oNdeyjo4VvL5dxD6tPA4X2g
-        +1BMZCl1lW8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71C5C1F3A5;
-        Mon, 18 Nov 2019 22:10:20 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C48521F3A4;
-        Mon, 18 Nov 2019 22:10:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH v4 11/11] squash! pretty: implement 'reference' format
-References: <cover.1573764280.git.liu.denton@gmail.com>
-        <cover.1574122784.git.liu.denton@gmail.com>
-        <580aa7c88c0b18d752f9aa951166a2c82dbcd031.1574122784.git.liu.denton@gmail.com>
-Date:   Tue, 19 Nov 2019 12:10:18 +0900
-In-Reply-To: <580aa7c88c0b18d752f9aa951166a2c82dbcd031.1574122784.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Mon, 18 Nov 2019 16:21:35 -0800")
-Message-ID: <xmqq7e3wzhlx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727316AbfKSDdM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 22:33:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50640 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727112AbfKSDdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 22:33:12 -0500
+Received: (qmail 4748 invoked by uid 109); 19 Nov 2019 03:33:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 19 Nov 2019 03:33:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19782 invoked by uid 111); 19 Nov 2019 03:36:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 18 Nov 2019 22:36:55 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 18 Nov 2019 22:33:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Anthony Sottile <asottile@umich.edu>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: git rev-parse --show-toplevel inside `.git` returns 0 and prints
+ nothing
+Message-ID: <20191119033311.GA18613@sigill.intra.peff.net>
+References: <CA+dzEBmrMavFJeyPSQr2wA9kFZwz_Kfr6PFBLRfLJ-EuCVXJnA@mail.gmail.com>
+ <xmqqk17wziex.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1E42F6E2-0A7A-11EA-94F8-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqk17wziex.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Tue, Nov 19, 2019 at 11:52:54AM +0900, Junio C Hamano wrote:
 
-> Note that we explicitly special-case `--pretty=reference` to use
-> `DATE_SHORT` by default in get_commit_format(). Although this isn't a
-> very elegant way of doing this, it has to be done this way because we
-> implement `--pretty=reference` as a user-format and, after this
-> function, it is treated as a normal user-format. This is the only part
-> of the pretty codepath where we can actually tell that we are dealing
-> with a "special" format so we have to do it here.
+> If I were designing the feature today, with today's rest-of-git in
+> mind, I would say
+> 
+>  - In a bare repository, exit with non-zero status after giving an
+>    error message "no working tree".
+> 
+>  - In a repository that has a single associated working tree, show
+>    the path to the top-level of that working tree and exit with zero
+>    status.
 
-I was hoping that by extending cmt_fmt_map horizontally, we can
-cause the date mode (and other things in the future) to optionally
-default to the format specific value, without hardcoding the string
-constant in the code.  After all, that (i.e. not having to hardcode
-per-format specific constants) is the original point of using
-table(s) to describe the customization.
+Do you mean to do this even in when the cwd is inside .git?
 
+I think that's confusing, because you don't actually have a working tree
+at all. E.g.:
+
+  $ git rev-parse --show-toplevel
+  /home/peff/tmp
+  $ git status -b --short
+  ## No commits yet on master
+
+  $ cd .git
+  $ git rev-parse --show-toplevel
+  $ git status -b --short
+  fatal: this operation must be run in a work tree
+
+So internal commands like status accept that we have no working tree in
+this situation. But "--show-toplevel" just prints nothing. I'd amend
+your second point to be "If we are in the working tree of a repository,
+show the path to the top-level of that working tree and exit with zero
+status".
+
+And then that leaves another case: we are not in the working tree of the
+repository. In which case I think it should be the same as the bare
+repository.
+
+And from that, your multi-working-tree case falls out naturally:
+
+> In a repository that has more than one working trees (which is one
+> of the things "todasy's rest-of-git" has that did not exist back
+> when --show-prefix/--show-toplevel etc. were invented), then what?
+> Would it make sense to show the primary working tree?  What if the
+> worktree(s) were made off of a bare repository, in which case nobody
+> is the primary?
+
+There may be multiple working trees, but we can only be in one of them
+at a time. So that's the one that we show.
+
+And the only real change here is that "--show-toplevel" prints an error
+and exits non-zero when we won't have a working tree. Something like:
+
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 3857fd1b8a..81161f2dfb 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -805,6 +805,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 				const char *work_tree = get_git_work_tree();
+ 				if (work_tree)
+ 					puts(work_tree);
++				else
++					die("this operation must be run in a work tree");
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--show-superproject-working-tree")) {
+
+
+I think the reason this hasn't come up until now is callers are expected
+to use require_work_tree() or "rev-parse --is-inside-work-tree" first.
+
+It would probably make sense for the rev-parse documentation to also
+clarify what "the top-level directory" is.
+
+-Peff
