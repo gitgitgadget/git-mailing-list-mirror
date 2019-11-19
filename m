@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 823AC1F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 02:56:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3B2A1F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 03:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727173AbfKSC4z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 21:56:55 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53219 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727014AbfKSC4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 21:56:55 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E76A9877B;
-        Mon, 18 Nov 2019 21:56:53 -0500 (EST)
+        id S1727289AbfKSDD0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 22:03:26 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58046 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727014AbfKSDD0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 22:03:26 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1B9E037CDA;
+        Mon, 18 Nov 2019 22:03:24 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6dFkiZ8zsJEr73jKqAJb0dgF/1Q=; b=bTSe1N
-        gCGYjUF07HK/pRapPsJ2rLwOd3SAdmLNDsD7qhHtBBdEUegbNE/GxxhAl6O9Y94B
-        7sxtrVkFnLKTcQX4L9umtpUL7c544Q9eHQ9+RJYcHxR25htEMf6jS2DFGgNJ4qQy
-        IoaL3XELYL+z/TOMuF903S8w3HMiQcGgu5IX4=
+        :content-type; s=sasl; bh=V5m/Fku3eW7G1vJKeRVWUhb34i8=; b=suGo8a
+        K6cyefBhhdo4rVGp/pu5iMQKHKRuP99/3Uzz47pPa6VLrA0hOvgs8r6LYWLnIl7C
+        bgOSrXJGMqe8Y0xwA7IzJB5aUymTlIAv5/TrQpeBnnMtggVK/j7ZpKYiYBZ31m8U
+        KWET6EGQEdJ8t2Qw1bLsULHyThA1amFxqwkOw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Xpk6UI8gq3xQAY+M5WcX6S4LfbYhR4yl
-        cPyzlPFGMcXnrnIL9nICnMciqCFfPLmV4r0bnXNw1QuUSMjSvM+EeT5Wpfck/ZC0
-        LnmKMV5I2/+EES5csb+YVzd68uQO4c4T08fzulmKcffsYPQ4p8xDZLrTu6SYvq7p
-        DpHeTcMjvcg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3609F9877A;
-        Mon, 18 Nov 2019 21:56:53 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=lnH0/dtrIVh3D1gXoXcJkVSWwgW0sJ36
+        eAGmLTykRo6GxrofTT5iop8JXdtNjdDqcZo+T4exopR0vNeyOB4iX8Te4PFCct/U
+        joNZnBHHo9MxBk+FIzd4YJyunhgTOru4yjaSuWCrVcPBKTnoM97QRsv0qUjxsy5k
+        QTyQQdQ4PQE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 13DB537CD9;
+        Mon, 18 Nov 2019 22:03:24 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 663FF98778;
-        Mon, 18 Nov 2019 21:56:50 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7CEC437CD8;
+        Mon, 18 Nov 2019 22:03:23 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH 0/3] range-diff: don't compare notes
+Subject: Re: [PATCH 2/3] t3206: demonstrate failure with notes
 References: <cover.1574125554.git.liu.denton@gmail.com>
-Date:   Tue, 19 Nov 2019 11:56:48 +0900
-In-Reply-To: <cover.1574125554.git.liu.denton@gmail.com> (Denton Liu's message
-        of "Mon, 18 Nov 2019 17:06:52 -0800")
-Message-ID: <xmqqftikzi8f.fsf@gitster-ct.c.googlers.com>
+        <00d6b47db0a68d0bc91b252675a2165985426f5e.1574125554.git.liu.denton@gmail.com>
+Date:   Tue, 19 Nov 2019 12:03:22 +0900
+In-Reply-To: <00d6b47db0a68d0bc91b252675a2165985426f5e.1574125554.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 18 Nov 2019 17:06:57 -0800")
+Message-ID: <xmqqblt8zhxh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3BD495D2-0A78-11EA-BE22-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 262164A8-0A79-11EA-9DDD-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,11 +65,26 @@ X-Mailing-List: git@vger.kernel.org
 
 Denton Liu <liu.denton@gmail.com> writes:
 
-> When I was using range-diff at $DAYJOB earlier, I realised that it
-> includes commit notes as part of the commit message comparison. This is
-> undesired behaviour so this patchset documents it and stops it from
-> happening.
+> When a commit being range-diff'd has a note attached to it, the note
+> will be compared as well. However, this shouldn't happen since the
+> purpose of range-diff is to compare the difference between two
+> commit-ranges and, since the note attached to a commit is mutable, they
+> shouldn't be included as part of the comparison.
 
-I actually wish it allowed me to compare them _with_ --notes=<ref>
-specified by the user.  If you are passing --no-notes through,
-perhaps you can also pass through such an option while at it.
+I do not agree with the reasoning.  Commits in the new iteration of
+the same series would have note attached to them that are different
+from the note attached to corresponding commits in the old iteration.
+
+Imagine that "git am" gets enhanced to store the per-iteration
+comments you write under the three-dash lines (e.g. "fixed typo in
+the log message pointed out by X") as notes attached to each of the
+resulting commits.  It does make sense to compare the commits _with_
+notes by default, if these notes are configured to be shown in "git
+show" output by default for the user.
+
+I do think that it may be a good idea to optionally allow comparison
+without notes, when "--no-notes" is given to range-diff on the
+command line, by passing the option through, though.
+
+Thanks.
+
