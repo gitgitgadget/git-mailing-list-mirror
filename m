@@ -8,150 +8,110 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8107B1F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 17:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70FB01F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 17:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727194AbfKSRuv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 12:50:51 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51832 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727117AbfKSRuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 12:50:51 -0500
-Received: by mail-wm1-f67.google.com with SMTP id q70so4174442wme.1
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:50:49 -0800 (PST)
+        id S1727050AbfKSR6y (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 12:58:54 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55753 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbfKSR6y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 12:58:54 -0500
+Received: by mail-wm1-f65.google.com with SMTP id b11so4182858wmb.5
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 09:58:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Q8HpMp7Hu6nSYHknTOO4KtRpPKhFL0td39GKKc4wCcY=;
-        b=UosPhaNo5Ii0zSI9aNkFEumYLs18er3j0H9dzgNUR3nb71ygFUTgWejW9BBgc3j5Q4
-         kaA9GzzZc5aEM653/1LVpo7ofANtVN2qi1K/UZrfejWV1E/smLTZqu4TsJBpCCx0AoEZ
-         TuzscYWI4NXrtBrBnQgBEXI9IMCev4m9uMPpWVi9vRzk7PddV8tesFMclU0tZq44z8zc
-         TZDSzYaPgbeH7/w5AS3xd8qkFVOdbc9pwlT6VNon7AtqOtDbPDpes3uI13jji4zhs2QA
-         6WHKusJ+Vi8atjv7WX105fYaNnhrQ1EJ63OGREkLY9hSOEE4HS7ShSOEu1yUeYXmL2ax
-         D/Rg==
+        bh=4lVV2eBGO9oiYMfKy8b27MxnsvH4AYboS9XZtKoe5AU=;
+        b=hfpZHjsbJi9CXe+8p9qalVnn/Tz5I9o1DWMXi9MSClqdJ5RPeRK85fu01fvi6mXuqm
+         oEdUxgrzIa/LSCNqcRzR0EZa2vdPorz+uozd5FL2KCZ4JfE47VVsPbv5ycA5XZQUTOyl
+         RLFccRo8rTpcbOsgoQuTCtpWeftHrwTXm4HyJtP16nVGtSDnVsZl0EsD4T0w48JGlQme
+         svwgpNNo4pQ2Xo5C0c14R1RsrVyQEth9kOa1m4rCSHLZRG5a187/Iq55cWiKtDP5RNEx
+         xh1fYSZ2RBqB17qovt4lq+7URR6e3K7OoARNMKGrTa+T5JrXzGoJBzv+RJQf1F0c1458
+         XvOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Q8HpMp7Hu6nSYHknTOO4KtRpPKhFL0td39GKKc4wCcY=;
-        b=Q6ZmsbJE2VAMnDFbw5VAt/f76JCoxfYvWSjRqDfgNT2aayDYn088Iqj8B+8n1+opgz
-         nfuHWNaEq9e4oAM+xJifRZzacRnDlneVKncugFdh6O5dMbjMPWEWxgXrxQPVa80OQYiU
-         byc/qk9EUsC9EHHa1+62/JJr3sAcqdVHKxdH1mRAq0vX8yFSuz1k/o9EcZqwV0mLmEtA
-         lDTnhqfZdqoxJZ7djlxVR6a7QQ9faGrR7F1IP4WN2XA5i18TTGt198ucC3xIJRqASzh+
-         l8sew1TpFufnUTZ2CrbEMYV+BF/rNlwysNATRrGnXWUzTH4OYRYKtX7AuckMHB8JmY/b
-         nRng==
-X-Gm-Message-State: APjAAAWvKWQ3y/jTvFCXLS0NZOVlZgfKa8kIMlEtPQpMB7Bt7usGLa0y
-        kwedOxduBuKxYRMMb9Yi0AM=
-X-Google-Smtp-Source: APXvYqxtc98fPtKE0QZuWZduh3IoJqpNWJyrtvVlXvGveDmW2g4GIdb0dseiDFX3rv/9Fwsck5LUUw==
-X-Received: by 2002:a05:600c:2102:: with SMTP id u2mr7246297wml.49.1574185849176;
-        Tue, 19 Nov 2019 09:50:49 -0800 (PST)
+        bh=4lVV2eBGO9oiYMfKy8b27MxnsvH4AYboS9XZtKoe5AU=;
+        b=i6g8W379pWLIPNCS4d+8CKZY0lQmh7l8DMYDutUCzqKtP1e4Jf9NJz0i5c/GSorqG8
+         +Z+oon/xD/voggb0x/+ZRyA14Cw8EwDYcwioa09puD6e65rh6UjA+dCcDMyasXNM97Ij
+         Jp76DUEInkaMESWCmwSyqB7BJJ29bJ8HxvbtVMi9Ij5pC/m2+Fev2nRqgJMUpiAzgEgw
+         rZ0cz4EEe4WX9lAsOjkgvt8xuPth26zG4ZLDcgaDujOScZSqeUCsJjGz0y97Mud4lbyg
+         6HggyomEK9iMRF3Dy7r9X7ziQN6jqqCu49uEDleNIWRqU4S8k2GX0LrT3WZXneOKTHD8
+         pl6w==
+X-Gm-Message-State: APjAAAUGWdTp0cHycxHfx9r9fVGlwsrfneGAejp0HxFW0pEG3XdZvog3
+        EcmArCU6WOLWjqMXzdEXeAc=
+X-Google-Smtp-Source: APXvYqz9sGNfpK/nKlmdk1j7Tz+2PzUT32EnaqkilyCbUE+HRJSo0alUl02FCCpmx46aZiFAqG28gQ==
+X-Received: by 2002:a1c:560b:: with SMTP id k11mr7841714wmb.153.1574186332769;
+        Tue, 19 Nov 2019 09:58:52 -0800 (PST)
 Received: from szeder.dev (x4d0c2755.dyn.telefonica.de. [77.12.39.85])
-        by smtp.gmail.com with ESMTPSA id v9sm27371266wrs.95.2019.11.19.09.50.47
+        by smtp.gmail.com with ESMTPSA id d11sm28050182wrn.28.2019.11.19.09.58.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 09:50:48 -0800 (PST)
-Date:   Tue, 19 Nov 2019 18:50:46 +0100
+        Tue, 19 Nov 2019 09:58:51 -0800 (PST)
+Date:   Tue, 19 Nov 2019 18:58:50 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 10/17] sparse-checkout: init and set in cone mode
-Message-ID: <20191119175046.GK23183@szeder.dev>
-References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
- <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
- <0258ee80265f5f27a7de9b81eaf166648b4511d4.1571666187.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2019, #03; Tue, 19)
+Message-ID: <20191119175850.GL23183@szeder.dev>
+References: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <0258ee80265f5f27a7de9b81eaf166648b4511d4.1571666187.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 01:56:19PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
+On Tue, Nov 19, 2019 at 04:05:48PM +0900, Junio C Hamano wrote:
+> * ds/commit-graph-delay-gen-progress (2019-11-07) 1 commit
+>   (merged to 'next' on 2019-11-19 at afa7c921be)
+>  + commit-graph: use start_delayed_progress()
+
+This commit is incomplete:
+
+  https://public-inbox.org/git/20191111142739.GL4348@szeder.dev/
+
+>  One kind of progress messages were always given during commit-graph
+>  generation, instead of following the "if it takes more than two
+>  seconds, show progress" pattern, which has been corrected.
 > 
-> To make the cone pattern set easy to use, update the behavior of
-> 'git sparse-checkout [init|set]'.
+>  Will merge to 'master'.
+
+
+> * ds/sparse-cone (2019-10-23) 17 commits
+>   (merged to 'next' on 2019-11-19 at 1eb4b3a012)
+>  + sparse-checkout: cone mode should not interact with .gitignore
+>  + sparse-checkout: write using lockfile
+>  + sparse-checkout: update working directory in-process
+>  + sparse-checkout: sanitize for nested folders
+>  + read-tree: show progress by default
+
+This commit changed the default behaviour of a plumbing command, and
+the resulting discussion concluded that such a change is not
+desirable:
+
+  https://public-inbox.org/git/6c6b9838-af7b-7212-199f-a0a3f3f2ac77@gmail.com/
+
+>  + unpack-trees: add progress to clear_ce_flags()
+>  + unpack-trees: hash less in cone mode
+>  + sparse-checkout: init and set in cone mode
+>  + sparse-checkout: use hashmaps for cone patterns
+>  + sparse-checkout: add 'cone' mode
+>  + trace2: add region in clear_ce_flags
+>  + sparse-checkout: create 'disable' subcommand
+>  + sparse-checkout: add '--stdin' option to set subcommand
+>  + sparse-checkout: 'set' subcommand
+>  + clone: add --sparse mode
+>  + sparse-checkout: create 'init' subcommand
+>  + sparse-checkout: create builtin with 'list' subcommand
 > 
-> Add '--cone' flag to 'git sparse-checkout init' to set the config
-> option 'core.sparseCheckoutCone=true'.
-
-It's not necessary to run 'git sparse-checkout init' before running
-'git sparse-checkout set'.  The description of the latter in the
-documentation is not explicit about it, but the commit message adding
-the 'set' subcommand is, and there are several test cases that run
-'set' without a preceeding 'init.
-
-Therefore, I think the 'set' subcommand should get a '--cone' option
-as well.
-
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> index 9907278fc1..ae99803d40 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -186,4 +186,55 @@ test_expect_success 'sparse-checkout disable' '
->  	test_cmp expect dir
->  '
->  
-> +test_expect_success 'cone mode: init and set' '
-> +	git -C repo sparse-checkout init --cone &&
-> +	git -C repo config --list >config &&
-> +	test_i18ngrep "core.sparsecheckoutcone=true" config &&
-> +	ls repo >dir  &&
-> +	echo a >expect &&
-> +	test_cmp expect dir &&
-> +	git -C repo sparse-checkout set deep/deeper1/deepest/ 2>err &&
-> +	test_line_count = 0 err &&
-
-'test_must_be_empty err' would be more idiomatic here as well.
-
-> +	ls repo >dir  &&
-> +	cat >expect <<-EOF &&
-> +		a
-> +		deep
-> +	EOF
-> +	test_cmp expect dir &&
-> +	ls repo/deep >dir  &&
-> +	cat >expect <<-EOF &&
-> +		a
-> +		deeper1
-> +	EOF
-> +	test_cmp expect dir &&
-> +	ls repo/deep/deeper1 >dir  &&
-> +	cat >expect <<-EOF &&
-> +		a
-> +		deepest
-> +	EOF
-> +	test_cmp expect dir &&
-> +	cat >expect <<-EOF &&
-> +		/*
-> +		!/*/
-> +		/deep/
-> +		!/deep/*/
-> +		/deep/deeper1/
-> +		!/deep/deeper1/*/
-> +		/deep/deeper1/deepest/
-> +	EOF
-> +	test_cmp expect repo/.git/info/sparse-checkout &&
-> +	git -C repo sparse-checkout set --stdin 2>err <<-EOF &&
-> +		folder1
-> +		folder2
-> +	EOF
-> +	test_line_count = 0 err &&
-> +	cat >expect <<-EOF &&
-> +		a
-> +		folder1
-> +		folder2
-> +	EOF
-> +	ls repo >dir &&
-> +	test_cmp expect dir
-> +'
-> +
->  test_done
-> -- 
-> gitgitgadget
+>  Management of sparsely checked-out working tree has gained a
+>  dedicated "sparse-checkout" command.
 > 
+>  Will merge to 'master'.
