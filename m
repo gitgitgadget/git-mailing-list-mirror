@@ -8,157 +8,131 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C3BE1F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 15:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34861F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 16:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728194AbfKSPqr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 19 Nov 2019 10:46:47 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52156 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728474AbfKSPqq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 10:46:46 -0500
-Received: by mail-wm1-f68.google.com with SMTP id q70so3716303wme.1
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 07:46:43 -0800 (PST)
+        id S1728495AbfKSQPv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 19 Nov 2019 11:15:51 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:51414 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728489AbfKSQPu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 11:15:50 -0500
+Received: by mail-wm1-f66.google.com with SMTP id q70so3830890wme.1
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 08:15:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=K3AQ+tD9TiaoLsQKbGQiz/wFblCijmoCwGwB21Gn6sg=;
-        b=e0R4DHtwLVaEhAOVfaHUeayv3AE0bT6+mT0k34sP2zu4c+43WJtPr+NV0ik4uEb1AV
-         4L+E5HyLanLKTT/xsBNmIZtva5MIW+lmdhFE7a2prcQhwwdryKvP4nYQvGFEbijlmEFO
-         N2XsaPbVueS7Rm3hF77r9wsXPdc4FhqKy8fxP5Bf6euABD7AF9oieLsWojjKaGmuurmZ
-         RcTv7FVt3KXadoMdGLK92jRNAercsEsev19iLJPs1DqnfEfN0Z6BGyTsEiB6s5TfSSIQ
-         iPuaUwLAJkA8YXGvLf7NHIyoZ8rTrHugCU6hIxFlBj/y88nieI9pORXpybH33gFuwO3c
-         8cWA==
+        bh=qP0GTIEzy73EIpr22I67TaLUa/pOuZxQxJNsK8mKKSM=;
+        b=Mp9upJuGHaODPNf49h9GCtNX5lz6jTJRaQdzmlqFS2b6m/+vSlso4FIJcxP4+6+jwh
+         Mj+KThbfJQeDNDCqsrMwkHLWp9w7T+I55zPmzZcHzTdja5kWG7LdL0lmiwDWdoIG5MWR
+         Rl8hjTVJIsseDdYmc8Mm26j8G2ACkdr0BAuJHE/h6Ozqgs5KEHbJKoAr0hA6yQqJi1c6
+         Gb2tJxbok2DsmupXwUK94iYWgdGB7Pk0Fl8DDTU1BJ903hTexdPVDCV1db0zey9ayMMK
+         01p2elBzSSYz4IEMmz29V/KCIPaAXsWAY/veJxJF6q53wjdjdDaSHRhC073zdfAcligT
+         vXTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=K3AQ+tD9TiaoLsQKbGQiz/wFblCijmoCwGwB21Gn6sg=;
-        b=DxIjGia+YNMzKlwG/nR8eQNaHt6tXkeKMomCYNPShMFcWGrP5J4HHz4B6BelMJgnsM
-         kcUfrVNOx3z7QUWUxub9Xfz0pjreMzSTcaWTrG/dWDOxrEFJ1xV6UyFS+HkFgVP7+5f2
-         +rncLjirks0Zvj8OvllT06JASULKZAbNMq78n5eh7wf6UqxCiG3NZTXeiuBH8FX+yH5R
-         Dqwm7HOQ5SZbLX9m6GVS0VdgnGRfzXiuUMA6nGGC4KvNEMF+xmBQE3I/4WNY6IC/XD8k
-         OAOmqABfG2M0jQ7mZysHXXaGDpJSQ5cZHC2feNJwlHrVqSnRHbX2Bpip0e1CSd6UB6li
-         k/qQ==
-X-Gm-Message-State: APjAAAWIZfkdo+aXSbpRj0dq26Se3y0Pulpjhi6Qf6awjKx23QekT8Op
-        3rbBUwgm5KjUNxYq7+f7AVc=
-X-Google-Smtp-Source: APXvYqyOrICkLi8ceOLMG27wxLaTeMbMiMu68nT5vchDReoxhVZqDMarc3wqLhyTPkXe3EBjmdsveg==
-X-Received: by 2002:a1c:7519:: with SMTP id o25mr6288699wmc.70.1574178403231;
-        Tue, 19 Nov 2019 07:46:43 -0800 (PST)
+        bh=qP0GTIEzy73EIpr22I67TaLUa/pOuZxQxJNsK8mKKSM=;
+        b=jZdt3jYm3wYaLMQlr2mr80CpT9hl4CMFf8Tm7FZ25AkrWfb0nL2Wj1As9PqZ3Cm0MQ
+         EY148Swqj6XyzNI4izNSfrAxfSS6NAP1vsDw+5vDShpbpUchmFz/yQUar4Nhq/Y4vkVQ
+         E5P6ZV6QIQ94cXGJZFWfNJf0Xa0RLWak3HjKoUfiX0gGwLxUSZCTj3nRKwFZc5MvCf56
+         hF50EZpx9z6nWapl/SIp9Tyra5h/L9jEkq3T3NuKVQW4XLb6PlmVFmlCP5pm/xJykKIs
+         qKbSKC84T8ACdS35q1xSjv/Zsy2J+XqNuxf9SHn45ccu9tCYvhb5xsKjgZN+Xwyt3Y7S
+         Rztw==
+X-Gm-Message-State: APjAAAWFjakBUKovj02jhB874B8ErxSY3JCXGRDMboBQa/LnZllzMaol
+        KmLow1mlgpjMn5z7JqeUlSo=
+X-Google-Smtp-Source: APXvYqz/kFtJ2m7t4+z3PmhBxOOcMb2Qx/wTYagZov8BWrvUjunKYAyVf1ahZAw5gUkWTmgzhvHBZg==
+X-Received: by 2002:a7b:c08f:: with SMTP id r15mr6505838wmh.45.1574180148264;
+        Tue, 19 Nov 2019 08:15:48 -0800 (PST)
 Received: from szeder.dev (x4d0c2755.dyn.telefonica.de. [77.12.39.85])
-        by smtp.gmail.com with ESMTPSA id o81sm3540598wmb.38.2019.11.19.07.46.42
+        by smtp.gmail.com with ESMTPSA id k14sm28802588wrw.46.2019.11.19.08.15.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 07:46:42 -0800 (PST)
-Date:   Tue, 19 Nov 2019 16:46:40 +0100
+        Tue, 19 Nov 2019 08:15:47 -0800 (PST)
+Date:   Tue, 19 Nov 2019 17:15:45 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
         Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 04/17] sparse-checkout: 'set' subcommand
-Message-ID: <20191119154640.GG23183@szeder.dev>
+Subject: Re: [PATCH v5 06/17] sparse-checkout: create 'disable' subcommand
+Message-ID: <20191119161545.GH23183@szeder.dev>
 References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
  <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
- <7d9d66a89f473244af3601e13caa713d929a202d.1571666186.git.gitgitgadget@gmail.com>
+ <c48535cd5c00310403ffccac7507f399fca5a8a4.1571666187.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7d9d66a89f473244af3601e13caa713d929a202d.1571666186.git.gitgitgadget@gmail.com>
+In-Reply-To: <c48535cd5c00310403ffccac7507f399fca5a8a4.1571666187.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 21, 2019 at 01:56:13PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Oct 21, 2019 at 01:56:15PM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
-> The 'git sparse-checkout set' subcommand takes a list of patterns
-> as arguments and writes them to the sparse-checkout file. Then, it
-> updates the working directory using 'git read-tree -mu HEAD'.
+> The instructions for disabling a sparse-checkout to a full
+> working directory are complicated and non-intuitive. Add a
+> subcommand, 'git sparse-checkout disable', to perform those
+> steps for the user.
 > 
-> The 'set' subcommand will replace the entire contents of the
-> sparse-checkout file. The write_patterns_and_update() method is
-> extracted from cmd_sparse_checkout() to make it easier to implement
-> 'add' and/or 'remove' subcommands in the future.
-
-Yeah, an 'add' subcommand would be great, because 'set' throwing away
-all the existing patterns can lead to some frustration:
-
-  # Let's clone with sparse checkout
-  $ git clone --sparse ...
-  $ cd clone
-  $ less README
-  $ git sparse-checkout '/some/dir/*'
-  # Erm, what was the next step?
-  $ less README
-  README: No such file or directory
-  # Uhoh.
-
-Having said that, being forced to use 'git sparse-checkout set' and
-specify all patterns at once does have its own benefits: I needed like
-6 subdirectories to build that subset of a big project that I was
-interested in, and now all the necessary patterns are saved in my Bash
-history, and I will be able to easily dig out the complete command in
-the future.  That wouldn't work with using the 'add' subcommand to add
-one pattern at a time.
-
-> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-> index cb74715ca6..bf2dc55bb1 100755
-> --- a/t/t1091-sparse-checkout-builtin.sh
-> +++ b/t/t1091-sparse-checkout-builtin.sh
-> @@ -96,4 +96,36 @@ test_expect_success 'clone --sparse' '
->  	test_cmp expect dir
->  '
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-sparse-checkout.txt | 27 ++++++++++++---------------
+>  builtin/sparse-checkout.c             | 26 +++++++++++++++++++++++++-
+>  t/t1091-sparse-checkout-builtin.sh    | 15 +++++++++++++++
+>  3 files changed, 52 insertions(+), 16 deletions(-)
+> 
+> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+> index b933043b3d..f794d4797a 100644
+> --- a/Documentation/git-sparse-checkout.txt
+> +++ b/Documentation/git-sparse-checkout.txt
+> @@ -48,6 +48,10 @@ To avoid interfering with other worktrees, it first enables the
+>  	working directory to match the new patterns. Enable the
+>  	core.sparseCheckout config setting if it is not already enabled.
 >  
-> +test_expect_success 'set enables config' '
-> +	git init empty-config &&
-> +	(
-> +		cd empty-config &&
-> +		test_commit test file &&
-> +		test_path_is_missing .git/config.worktree &&
-> +		test_must_fail git sparse-checkout set nothing &&
+> +'disable'::
+> +	Remove the sparse-checkout file, set `core.sparseCheckout` to
+> +	`false`, and restore the working directory to include all files.
 
-This command prints the same error message twice:
+I think it would make sense to leave the sparse-checkout file behind
+as-is, and only update the coonfiguration and the working tree.  That
+way users could quickly go back to their last sparse checkout setup by
+simply running 'git sparse-checkout init'.
 
-  + test_must_fail git sparse-checkout set nothing
-  error: Sparse checkout leaves no entry on working directory
-  error: Sparse checkout leaves no entry on working directory
-
-
-> +		test_i18ngrep "sparseCheckout = false" .git/config.worktree &&
-
-The contents of a configuration file surely can't ever be translated,
-can it?!
-
-Please use 'test_cmp_config'.
-
-> +		git sparse-checkout set "/*" &&
-> +		test_i18ngrep "sparseCheckout = true" .git/config.worktree
-> +	)
-> +'
+  
+> +static int sparse_checkout_disable(int argc, const char **argv)
+> +{
+> +	char *sparse_filename;
+> +	FILE *fp;
 > +
-> +test_expect_success 'set sparse-checkout using builtin' '
-> +	git -C repo sparse-checkout set "/*" "!/*/" "*folder*" &&
-> +	cat >expect <<-EOF &&
-> +		/*
-> +		!/*/
-> +		*folder*
-> +	EOF
-> +	git -C repo sparse-checkout list >actual &&
-> +	test_cmp expect actual &&
-> +	test_cmp expect repo/.git/info/sparse-checkout &&
-> +	ls repo >dir  &&
-> +	cat >expect <<-EOF &&
-> +		a
-> +		folder1
-> +		folder2
-> +	EOF
-> +	test_cmp expect dir
-> +'
+> +	if (sc_set_config(MODE_ALL_PATTERNS))
+> +		die(_("failed to change config"));
 > +
->  test_done
-> -- 
-> gitgitgadget
-> 
+> +	sparse_filename = get_sparse_checkout_filename();
+> +	fp = xfopen(sparse_filename, "w");
+> +	fprintf(fp, "/*\n");
+> +	fclose(fp);
+> +
+> +	if (update_working_directory())
+> +		die(_("error while refreshing working directory"));
+> +
+> +	unlink(sparse_filename);
+> +	free(sparse_filename);
+> +
+> +	return sc_set_config(MODE_NO_PATTERNS);
+
+Hrm.  So disabling the sparse-checkout calls the same helper function
+to write the configuration as initializing or setting, but with a
+different parameter.  However, the error message in that function is:
+
+  error(_("failed to enable core.sparseCheckout"));
+
+So if something goes wrong while disabling the sparse-checkout, the
+user might get an error saying "error: failed to enable
+core.sparseCheckout".  That doesn't look quite right, does it?
+
+> +}
