@@ -8,78 +8,88 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D9901F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 01:06:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF8581F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 01:06:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727118AbfKSBG4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 20:06:56 -0500
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:32845 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbfKSBG4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 20:06:56 -0500
-Received: by mail-pf1-f176.google.com with SMTP id c184so11263311pfb.0
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 17:06:55 -0800 (PST)
+        id S1727128AbfKSBG7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 20:06:59 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44253 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbfKSBG6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 20:06:58 -0500
+Received: by mail-pf1-f193.google.com with SMTP id q26so11225721pfn.11
+        for <git@vger.kernel.org>; Mon, 18 Nov 2019 17:06:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=RMyRBCeAVsT6WQHJNRpwsoPqyUmjlcNc9XpIOuXbIYs=;
-        b=JaQpL8ogBTtg/rslZeJceHvCIXW08Qawm0j+aiNyPjoqIfR15CJcvP3uDIvBf7uTeU
-         Tl8heXmohJ5CyU2GoKHoD4e+tDpcfHB4XDwOLsElb5Hc6sv0nS9X8Y3dTVHGtM/rrqMD
-         sws0VVS3zfzAot3vT92FpHwFhVtULocV8zQWuJqQydedu3UzdGtfT5+kUgHyrao4k5t3
-         nu23NySi1m+VFnvUXoJEdCHeXaksdGuglqIeXbb6L3jmkKdVE60nf/tNfRilUWQaWOQk
-         C1QWWUlfsRLxWh94rHqE9JaKqnMZ1Ejgm6cHDMxh9bPto/HDLjhonm9Ek92uDFQG9DR0
-         dVNQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hnwixFKlmn33rNHPEiOhaTj3B6JRS6BfgSY11clVH8c=;
+        b=WIZ6gFjTdvWFydcX6Vt0KVD3GpfzMUevsXrh1sT/fLiSRytcS4Tv7pouR1d9HjmgIc
+         /++wNVMNkGIEI76Gv/ZBS7vJ10sra68mvz2hTZfxiArr0WjthSyhOxD63AdH3UzCCMCs
+         5assrj2NHWya8CdyK5DPe3mJZBm2VhD1XMOI9++WRiMS2djE11/jVWz23AnmTwU6QJb/
+         /9uX5HKER4dmGxITFmvbFIX7Hjm3y1G8MgCbGFrcAaXoVEOj/71Rr6qx+oiUokoOOH42
+         Q9/ZGpvGkEGPsl5jYVzQ0PlJtgVczJs1VXpgBzHdYqTPxWpDJRPZ+BBjvAkTUuj0kiod
+         c7iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=RMyRBCeAVsT6WQHJNRpwsoPqyUmjlcNc9XpIOuXbIYs=;
-        b=mI/zZ4/GYylb7sqUiuH38YEHjtb6i8xPlEgjYDaHNRbuL8sXM6r6suB3QMNUUprHUR
-         /e0YsfK/ydJyKSnr9Y3yz54G1Ei92pMN11WU0vJZ0itk0upVBqRulM192m8PEHyizTk5
-         JTtL70HQhd0Z5S/98WMbR2cQPqim/S3wX3nyPkEXBtVrT4WODTPHbAD4AlJcdhfKv/22
-         O21+ABoBKIkfTNaCITk9vacgNJ3Ydan2tcoEOCQBoCidsgzPpdSFSQFvAPSNuZ6OQ5Ae
-         K/gIfkWQqpw4ddgW5bG7GGHJ4vA3jf4x37ktwp2ImMmJy+yEVURPXxs3Bn1CooXsyOZO
-         tOPw==
-X-Gm-Message-State: APjAAAUxVbZcv9MMvwKeIutmdnUL2P1RxBmY75Avgx1UZVTrrezkk5dF
-        3HBQasAJMq51ahwSrsnEddxgrAFl
-X-Google-Smtp-Source: APXvYqxGFNOm82BS2sVg+Tw03QW1fFy0njj2zp0Rb7Ew7WWtTQXuX80dUfGEthsjgtaUoZ9Z5ZpLDA==
-X-Received: by 2002:a62:76c6:: with SMTP id r189mr2596489pfc.48.1574125615154;
-        Mon, 18 Nov 2019 17:06:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hnwixFKlmn33rNHPEiOhaTj3B6JRS6BfgSY11clVH8c=;
+        b=FXcz1Gd1CWw66FbMPM9Kn3+GYGfErKUVQ9kf1qHxAQ3QiaNykcZZodkUHakeTnu0T9
+         8ih8iZtvbUEDIrQosCkExe/8Dk++CEy1ys56C3l4goqwhnGx8wph0hWB1liDa7fOyQ0C
+         1yoCD/dkZcY/Hvm5vAz9nX3DDpTodB5pFZeDC864Ffn4o0PoQbrMQGzU6AhNpk2WBDfK
+         9Dj2ZqqHYPzbHzN0sfv5OfHdIoRpZI+KdsU3wOJAphslfE/Pu7vBnaaFi3bQEG8G+30I
+         4X++IojmkNbz+6ACq0Mzm6uA8fuilMMhuy+Bi73Exi2K7PdSgpwtSZnPaZ519pZd2eOC
+         bF8w==
+X-Gm-Message-State: APjAAAXbDHXkMBPANF/3joC7xJqC3eC+bRw8tm+bL8O2LrGgXP1cXxRj
+        X5hOjTG6Sc1gj5LksLUVPMveNhb1
+X-Google-Smtp-Source: APXvYqy9DTdxfpoLUUqEEbQon89JDgahlm9QFC1gEeMRma1cuy68jqCuIw9RRVflqQRkVyfIsZMqbw==
+X-Received: by 2002:a62:7dd2:: with SMTP id y201mr2610312pfc.90.1574125617265;
+        Mon, 18 Nov 2019 17:06:57 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id 16sm23642445pfc.21.2019.11.18.17.06.53
+        by smtp.gmail.com with ESMTPSA id k84sm25262502pfd.157.2019.11.18.17.06.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 17:06:54 -0800 (PST)
-Date:   Mon, 18 Nov 2019 17:06:52 -0800
+        Mon, 18 Nov 2019 17:06:56 -0800 (PST)
+Date:   Mon, 18 Nov 2019 17:06:55 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 0/3] range-diff: don't compare notes
-Message-ID: <cover.1574125554.git.liu.denton@gmail.com>
+Subject: [PATCH 1/3] t3206: remove spaces after redirect operators
+Message-ID: <6966a30a5a510263f11758eaab53f2d58b68efe5.1574125554.git.liu.denton@gmail.com>
+References: <cover.1574125554.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <cover.1574125554.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When I was using range-diff at $DAYJOB earlier, I realised that it
-includes commit notes as part of the commit message comparison. This is
-undesired behaviour so this patchset documents it and stops it from
-happening.
+For shell scripts, the usual convention is for there to be no space
+after redirection operators, (e.g. `>file`, not `> file`). Remove the
+one instance of this.
 
-Denton Liu (3):
-  t3206: remove spaces after redirect operators
-  t3206: demonstrate failure with notes
-  range-diff: use --no-notes to generate patches
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/t3206-range-diff.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- range-diff.c          |  2 +-
- t/t3206-range-diff.sh | 17 ++++++++++++++++-
- 2 files changed, 17 insertions(+), 2 deletions(-)
-
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 0579cd9969..87c6c029db 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -8,7 +8,7 @@ test_description='range-diff tests'
+ # harm than good.  We need some real history.
+ 
+ test_expect_success 'setup' '
+-	git fast-import < "$TEST_DIRECTORY"/t3206/history.export &&
++	git fast-import <"$TEST_DIRECTORY"/t3206/history.export &&
+ 	test_oid_cache <<-EOF
+ 	# topic
+ 	t1 sha1:4de457d
 -- 
 2.24.0.420.g9ac4901264
 
