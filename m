@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 411DEC432C3
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 653F9C432C0
 	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:55:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1628F2240C
+	by mail.kernel.org (Postfix) with ESMTP id 3EBE322419
 	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:55:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q2KkivDj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VWYn3ywi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727324AbfKSXze (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Nov 2019 18:55:34 -0500
-Received: from mail-pf1-f172.google.com ([209.85.210.172]:40514 "EHLO
-        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726874AbfKSXze (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 18:55:34 -0500
-Received: by mail-pf1-f172.google.com with SMTP id r4so13222060pfl.7
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 15:55:32 -0800 (PST)
+        id S1727336AbfKSXzf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Nov 2019 18:55:35 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45320 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727329AbfKSXzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 18:55:35 -0500
+Received: by mail-pf1-f193.google.com with SMTP id z4so13206896pfn.12
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 15:55:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=+w/14371ojJSlzrJwFa5ys59seWwf5/OiHSdka8XtAE=;
-        b=q2KkivDjilylzCwJLHv7P5LDOOd7G5Q8aGYSnkFkFChExSqgAjbaZ7KoteQXkXUN7p
-         +NuaAlDV8eMF9mq4yf4VRbWCCd6tGQslNTxdCzPV+Gqf33N/+tdi1o1eqjVDlg0K56Q5
-         KNPV6H7bQnDqoBFJOsSPNUbcJH29WN9W4pw6w0LWZpaSESqa6YHQ0kqddhenyFm1wD1v
-         dGOyh7XBHk2xvDWs2XnZDmlJXK4F9q35IWrWwuRRxX2WIuDAp3UYlpRKqMY3PsJR+S+5
-         qzC9HQrKMqR0dJQZ2yg52hms3mTkcnVHtO3d+mSRzNyUiAFU8rVA7x7NI29alfoYOxsn
-         wbQA==
+        bh=uVjlPm4JBgDmcrAyXP7uuBo7N3qIr+ork05MojMW6Fk=;
+        b=VWYn3ywijEW5pt/Psl7kdDElnqd+3+19B14S2eOAtPjSoHsj/mywso0TK+l7+zNthT
+         6bSaSNZWeLUOPx9Okgca6qWh6anE8wzm4LjA5Kge2gf5rssbC5zfgyKWQeGZ+Tl3EIcE
+         BxBL52xmco5Hl0/mm7QSTtw+uEmARit9gDQsq5T9rDOz3ka3Bi3XJjk+2QmztkePutaf
+         v0IVOUBhirR7mnPb/sxLtIaWJnrAXo3rmYnAvK5RIUygJK979GLEmJgf0vaEzJFeUwun
+         DrzmRLQJDR7AiztGskw2+Zd3Xa9Zlv5QWKFaurXBKzHXzOlaHGqsJxGKLLcFmi5IsdF6
+         r52g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+w/14371ojJSlzrJwFa5ys59seWwf5/OiHSdka8XtAE=;
-        b=MXGCOEmsh7isjK9A11Hl4+40zz1IsFX08F7KG8EUp/wfhytksAoi+hiesIrMmQeWp2
-         5KGpVB0P4ITFFgAs+hlLDiSRIujOD8NVnXOwsuS29WjIUHJGSDxVaKMKz0lRUFZp2he1
-         +Je6UTFA6gi/6ubkRxpAVDEiMVmX5TMsnAsJ2gRhhHM2DCaB77V+SMWnvxe/N9sR0ZLD
-         IF5oXTBQFnLK4QEdbri7UMl584DEwmZ/tM9UjumxwPYj0AmWRyUwrpdNTMYjs9x75mmY
-         znjfGZreq2LUIkPLbCBXJ+ra6Ga7BCtdAhXqdmGNKXc9r2RafBphBedLL8vNKEMwA5Q9
-         SNFA==
-X-Gm-Message-State: APjAAAVr9KDTTVRRu5ssnCw9fPzw25Z8OHVF3B47FXCT7we0z4fAZxck
-        wjpHkfwxeEsLn6LrsyhIXmIdWKzu
-X-Google-Smtp-Source: APXvYqx6OXOXBbFNGLCKb9b+MjxcnCatn+avOs+WF4RMnykwreWFL4LE1qUFJXeLG+4mLIt5g/vsHg==
-X-Received: by 2002:a62:ed16:: with SMTP id u22mr393752pfh.28.1574207732126;
-        Tue, 19 Nov 2019 15:55:32 -0800 (PST)
+        bh=uVjlPm4JBgDmcrAyXP7uuBo7N3qIr+ork05MojMW6Fk=;
+        b=UXHiJ+AlZXY9b4kssQftLr096O1A+23ys8QC1wHiHuegsjRQ3JKjHiV4WX1Ofs7SvX
+         Dz7VCcW0Re0cU3BrmWcaJ9qhupJOkwf9oo9AOG021yR3Urv5Ee1ZXsxKrFBMBMWeDwvq
+         U4BrOnIZZ28otYfeMWHUvoikZfySt92WgnJROw6JeYJw6eual1Ju0UDWh4DENlKAdKEY
+         /p547DECedNlAOx7OgAHQd4Q9CCX64LtunTjmuO4qfnKGbNZw9MQTzDQys9ojanVs15O
+         8YTt6Nrkzl+AdEMdC1eTn0mhDNW3VrgS7vXur46eWlwFYbeTLeYIS/qd6/amNvAW7QRS
+         3/9w==
+X-Gm-Message-State: APjAAAWfE6s8u/Lek/5MSq4Cd7tJKmlOeIb0ei+MlJlX+XoulKTJ71z/
+        MqhGZq5hc15zF0B/2Zu4lsA2vuoE
+X-Google-Smtp-Source: APXvYqxzq++NBH4OctJOvG4w8T9rLtNvC9iNPYgpdYhCgEGd2OAEQz6CC+zO4089baMpihy/p8Uxiw==
+X-Received: by 2002:a63:e145:: with SMTP id h5mr8174106pgk.387.1574207734409;
+        Tue, 19 Nov 2019 15:55:34 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id l74sm4757076pje.29.2019.11.19.15.55.31
+        by smtp.gmail.com with ESMTPSA id z62sm29906949pfz.135.2019.11.19.15.55.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 15:55:31 -0800 (PST)
-Date:   Tue, 19 Nov 2019 15:55:29 -0800
+        Tue, 19 Nov 2019 15:55:33 -0800 (PST)
+Date:   Tue, 19 Nov 2019 15:55:32 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 1/8] argv-array: add space after `while`
-Message-ID: <fd78742570bbeaa4096eb0cce24fe33054aed176.1574207673.git.liu.denton@gmail.com>
+Subject: [PATCH v2 2/8] rev-list-options.txt: remove reference to --show-notes
+Message-ID: <e1b023a6fc2818f871e3033bd21f72a2de7b7a21.1574207673.git.liu.denton@gmail.com>
 References: <cover.1574125554.git.liu.denton@gmail.com>
  <cover.1574207673.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -75,24 +75,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In ab18b2c0df ("log/pretty-options: Document --[no-]notes and deprecate
+old notes options", 2011-03-30), the `--show-notes` option was
+deprecated. However, this reference to it still remains. Change it to
+reference the replacement option: `--notes`.
+
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- argv-array.c | 2 +-
+ Documentation/rev-list-options.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/argv-array.c b/argv-array.c
-index f352ea9357..61ef8c0dfd 100644
---- a/argv-array.c
-+++ b/argv-array.c
-@@ -46,7 +46,7 @@ void argv_array_pushl(struct argv_array *array, ...)
- 	const char *arg;
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 90ff9e2bea..311bc06a9b 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -58,7 +58,7 @@ endif::git-rev-list[]
+ 	`--all-match`).
+ ifndef::git-rev-list[]
+ +
+-When `--show-notes` is in effect, the message from the notes is
++When `--notes` is in effect, the message from the notes is
+ matched as if it were part of the log message.
+ endif::git-rev-list[]
  
- 	va_start(ap, array);
--	while((arg = va_arg(ap, const char *)))
-+	while ((arg = va_arg(ap, const char *)))
- 		argv_array_push(array, arg);
- 	va_end(ap);
- }
 -- 
 2.24.0.420.g9ac4901264
 
