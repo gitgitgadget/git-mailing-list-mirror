@@ -2,113 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	SPF_HELO_NONE,SPF_NONE shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_NONE
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B78B1F4B5
-	for <e@80x24.org>; Tue, 19 Nov 2019 01:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 694051F4B5
+	for <e@80x24.org>; Tue, 19 Nov 2019 01:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727148AbfKSBHD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 18 Nov 2019 20:07:03 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:33283 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbfKSBHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 18 Nov 2019 20:07:02 -0500
-Received: by mail-pf1-f196.google.com with SMTP id c184so11263425pfb.0
-        for <git@vger.kernel.org>; Mon, 18 Nov 2019 17:07:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=meH4f8LdpBqeKcUunz7UXpC09f0XInkG+sJvKU+0AWY=;
-        b=sM3txx/2ipcjiIrnWfgjnxghPHQVszCjVs3Vrcqmr/ozRZDxbpg2B+RmfAyaGYNRfc
-         jhe4lkA6KZqWNk6LAsN4QuVBNyTv89WMiJEq/twHCu8eFdfXBH3iBcQrAtxjD/ILgOSn
-         eyEKZpSEsCuvZiUi9fUrspEWwmLH8tVWvIZCyhtozABaGfzf61GAeHt5nAIHy6P9f0oM
-         TmezamHWUb2GcpjMFqjtB8qCBMI3JZ+Yo53HCU4hvEP/XQ086gfCB+ujqjKVMdnvOHnP
-         pRY13WSjI1KciL/jYxKm1JBEOLWIyhvUz8J/xarQNUINl9wQbHw+BA5FsxZ+yoxsTe2x
-         4U5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=meH4f8LdpBqeKcUunz7UXpC09f0XInkG+sJvKU+0AWY=;
-        b=nW6lgdFHmg3N7Oo58D5CRJlpHHNqg4DmQZF5EkG2EEw/Jg2FRqJ69Pb7j5sT5s5ffo
-         90FQU+5IWVYVNNteb34X2u65NNaJkjimNsXcCnMx1155mpe1fiAA8tvPLx90icTu9fXk
-         2rE9SRFAjR8EUoXauwph/CjaIBXybuyK6TKNCMxowzm8wzJXKdBj6tBbdyUixfxlKeNl
-         kfnpftcMHo4SBI6ArVZEvgDlubQVLdDtaVJENqmB2Pq0cgeky/Zs4HSot74vvRan+Nbb
-         YqgEblqPjCUvAYU4Aqd6bGNsn0pFyhUZpnn76DxtKOBQErEO/8g3ahXFj0I9/kUbs1oj
-         LoQA==
-X-Gm-Message-State: APjAAAWSURfN7wLMSYZuuvsFyQx23S0pkOXJeqE+rxifbctyPDp418Nf
-        GOOB6FdFGkTyx1Ds/t3Yu6IcTl0y
-X-Google-Smtp-Source: APXvYqxiYikL/5vQmPOTgm0TX4uLxkas3+5gMefF3EEoNzRoo07K6MikVmFfplrWjdE4ayAFFRYq0A==
-X-Received: by 2002:a63:3144:: with SMTP id x65mr2348200pgx.283.1574125621680;
-        Mon, 18 Nov 2019 17:07:01 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id 193sm25034913pfv.18.2019.11.18.17.07.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Nov 2019 17:07:01 -0800 (PST)
-Date:   Mon, 18 Nov 2019 17:06:59 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 3/3] range-diff: use --no-notes to generate patches
-Message-ID: <48e850df876eccd3c6cda49ee048565b2592e33b.1574125554.git.liu.denton@gmail.com>
-References: <cover.1574125554.git.liu.denton@gmail.com>
+        id S1727121AbfKSBYk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 18 Nov 2019 20:24:40 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63921 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726761AbfKSBYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 18 Nov 2019 20:24:40 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6AC211E6E6;
+        Mon, 18 Nov 2019 20:24:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wtPl9vKnlqcLxyWuVq5C6vwZdN8=; b=VvBs8C
+        b/Xvl7iykYmm6q4cjsqpaDHymPZazvHT82s9HTtgcDl3NOye2QXtIf/3F60xzBPt
+        Uhv0JEuZWgmRRx5JVfhidIAMcAXkK1H0oA7P9FTjtb2+TKwf37eQeXzFgszzwqT0
+        uaxjET5QPlR9PzZDdQyd3KxYD9S5STxV3q4qU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=oiIB+YZ7ODVrMdGJiUbqzQONgcgdANYO
+        4JA534v6WPL6kUrilGSGk7y+31TcDQICZ3MdJY6hoUPqEadtPK75yCutLzlNkqB9
+        B08qUWJkjzXbe8hZa6nWOGeYXF+GIWx0xCeVghk9uqX56VWaCrfup3USlXiC7ruy
+        FdJT4GNHeUo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63A0A1E6E5;
+        Mon, 18 Nov 2019 20:24:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A283D1E6E2;
+        Mon, 18 Nov 2019 20:24:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        Bryan Turner <bturner@atlassian.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: rev-list and "ambiguous" IDs
+References: <CAGyf7-EXOUWYUZXmww2+NyD1OuWEG18n221MPojVSCCu=19JNA@mail.gmail.com>
+        <20191114055906.GA10643@sigill.intra.peff.net>
+        <ab4dcc9c-4416-aef8-c8c4-38bb5ec97990@virtuell-zuhause.de>
+        <20191115034941.GB20863@sigill.intra.peff.net>
+        <917e2664-6059-c190-30fd-02f3cf7aa5dc@virtuell-zuhause.de>
+        <xmqqmucw4h4n.fsf@gitster-ct.c.googlers.com>
+        <20191118120315.GB12766@sigill.intra.peff.net>
+Date:   Tue, 19 Nov 2019 10:24:35 +0900
+In-Reply-To: <20191118120315.GB12766@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 18 Nov 2019 07:03:15 -0500")
+Message-ID: <xmqq7e3w1wvg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1574125554.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 597521AE-0A6B-11EA-BD8A-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a commit being range-diff'd has a note attached to it, the note
-will be compared as well. However, this shouldn't happen since the
-purpose of range-diff is to compare the difference between two
-commit-ranges and, since the note attached to a commit is mutable, they
-shouldn't be included as part of the comparison.
+Jeff King <peff@peff.net> writes:
 
-Add `--no-notes` to the `git log` call and mark the corresponding test
-as passing.
+> I think that changes the meaning of GET_OID_COMMITTISH, though. Right
+> now it means "if disambiguating, prefer a committish", but not "I can
+> only accept a commit". So we would still happily return an unambiguous
+> object that does not match that type.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- range-diff.c          | 2 +-
- t/t3206-range-diff.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Ah, OK, so I was stupid (not a news anymore ;-)
 
-diff --git a/range-diff.c b/range-diff.c
-index 7fed5a3b4b..725930ee92 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -52,7 +52,7 @@ static int read_patches(const char *range, struct string_list *list)
- 
- 	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
- 			"--reverse", "--date-order", "--decorate=no",
--			"--no-prefix",
-+			"--no-prefix", "--no-notes",
- 			/*
- 			 * Choose indicators that are not used anywhere
- 			 * else in diffs, but still look reasonable
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 29b9a6f854..671703f85b 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -505,7 +505,7 @@ test_expect_success 'range-diff overrides diff.noprefix internally' '
- 	git -c diff.noprefix=true range-diff HEAD^...
- '
- 
--test_expect_failure 'range-diff does not compare notes' '
-+test_expect_success 'range-diff does not compare notes' '
- 	git notes add -m "topic note" topic &&
- 	git notes add -m "unmodified note" unmodified &&
- 	test_when_finished git notes remove topic unmodified &&
--- 
-2.24.0.420.g9ac4901264
+> And that is why "git -c
+> core.disambiguate=committish show $short_blob" works, for example.
 
+Yes, and it should work that way.
+
+> Perhaps a simple fix would just be for get_short_oid()'s error message
+> to mention the disambiguation rule. E.g., something like:
+>
+>    $ git show abcd2
+>    error: short SHA1 abcd2 is ambiguous
+>    hint: We would have preferred a commit or tag pointing to a commit,
+>    hint: but none were found. The candidates are:
+>    hint:   abcd22f55e tree
+>    hint:   abcd238df0 tree
+>    hint:   abcd2b1cc8 blob
+>
+> or
+>
+>   $ git show abcd2
+>   error: short SHA1 abcd2 is ambiguous
+>   hint: We preferred a commit or tag pointing to a commit to other
+>   hint: object types, but two candidates were found:
+>   hint:   abcd22f55e commit
+>   hint:   abcd238df0 commit
+>   hint:   abcd2b1cc8 blob
+>
+> (optionally the second one could even not mention the blob, though I
+> think with the lead-in sentence it's OK).
+>
+> The verbiage there isn't great (I was trying to avoid the jargon
+> "committish"), but hopefully you get the point.
+
+Yup, if we were to do anything, this is a much more sensible thing
+to do than make GET_OID_<TYPE> reject objects that are not of <TYPE>,
+I think.
+
+Thanks for a dose of sanity.
