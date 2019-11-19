@@ -2,150 +2,120 @@ Return-Path: <SRS0=OLpm=ZL=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D28EC432C0
-	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36B63C432C0
+	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:25:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 74B632245B
-	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:02:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CE1E2245D
+	for <git@archiver.kernel.org>; Tue, 19 Nov 2019 23:25:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIXPQ0Ja"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WM4dPZyA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727378AbfKSXCO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Nov 2019 18:02:14 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33698 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726025AbfKSXCO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 18:02:14 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a17so3648713wmb.0
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 15:02:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=kwRpcRAuoIA3K0TxGagSHMdiNbjl+x6pKzuCEQLCkak=;
-        b=QIXPQ0JauqjWzyX2EZAPMSUarDdY1qFFiYxHEyTwa6Dl0fMdOL/jYWilV3XbDrkdI1
-         i2aifdteQMxZ2EfGkp0oZPPWX90B7FGKFVwf7wseoMAdmAtNRNWEGFYJT8pKBZWup0qr
-         YxOmbvXeMECrP0eHtkBiVx6MJS5cIdcjC2HVmw68WjfE1V1nwldIJFfPLSbGDogEPJP9
-         9jabznbQQgJpFnfBx+C4aIf5OFdmkm/Pi/OUBNdxqSpPsPdzjgAh15nf0DW9Q8/OHzai
-         fJaXPEEuz1qTY0AgrMlLGvOJ12e7eOzulab6nCCzdk4r30H071O5pZEFZKok6l1dKAyI
-         YS1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kwRpcRAuoIA3K0TxGagSHMdiNbjl+x6pKzuCEQLCkak=;
-        b=r3uZZ0lDSoh3DO8sMLMf0JGKxt6RAczNNHb5puWLt4CdEHyi3DivC+gL9Q0HbsNxxJ
-         HaYq/Yx6G0nJNOCXRruRkOBtWs0Hc1btC+VgH9kuybY8FLi9CHA8P9+9fPQQblr0Zv5e
-         vlJFghagypjPlO8VHq+f5Dz1afwIXHyO+TBE33Y63mztzRrCeUdpYcFrainlAJYWW/oV
-         IM7oeYffQ67LtEldHkPXsOL9zmCvo/z/QAtc6NwaVWgRtw27ytC1s06aZ73HKKGGsvqk
-         VEJDo70F/1xtWr4XX6p7LdjeptxZnpW4+HmTi1QIq875cHhhVOOiInlPi+bZJYokcO31
-         lPlg==
-X-Gm-Message-State: APjAAAVZ7AD5Ss7aguEf1R78efFmvo8pXRH25bHR0XdbOVZ6KxA2YGM1
-        ls60yFGOEgEHQ8HD8FEbaNmA2ASm
-X-Google-Smtp-Source: APXvYqz2jgSeyPT9UTARkvOfBuofhSXQWPF7qktfbJUY/w3PlGf0VnB5mwHuZIgTHsyZN+tAc/eoVw==
-X-Received: by 2002:a1c:7709:: with SMTP id t9mr311789wmi.80.1574204531450;
-        Tue, 19 Nov 2019 15:02:11 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a186sm4442520wmc.48.2019.11.19.15.02.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 19 Nov 2019 15:02:11 -0800 (PST)
-Message-Id: <d7bf1849ce8430beed3619fb9d87b58746424a54.1574204529.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.451.v5.git.1574204529.gitgitgadget@gmail.com>
-References: <pull.451.v4.git.1574088732.gitgitgadget@gmail.com>
-        <pull.451.v5.git.1574204529.gitgitgadget@gmail.com>
-From:   "Erik Chen via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 19 Nov 2019 23:02:09 +0000
-Subject: [PATCH v5 1/1] fetch: add trace2 instrumentation
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727226AbfKSXZJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Nov 2019 18:25:09 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53333 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726911AbfKSXZI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 18:25:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574205899;
+        bh=l34w0NVHztI7JYfdYfAj9+AuT4UAc+xIzJuXxR5DnA4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WM4dPZyATcK7/MoSq5ub0kbiHuwjosCMP2UQgVpmYJty8PW+ShD595ggIiAl67bOp
+         12hh6L6v8zIaQkmThuhV6YDK06bAGhizT8e8qb6twpS3bbgWMIT4Q7HvEXjSI1Vua0
+         qPU6Zdi73Zx+u1icVZbYVrr80NSSF++icI6SGsOo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MKbg4-1iGdNv2iuS-00L0Kl; Wed, 20
+ Nov 2019 00:24:59 +0100
+Date:   Wed, 20 Nov 2019 00:24:44 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 1/9] bugreport: add tool to generate debugging info
+In-Reply-To: <20191119202542.GB36377@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1911200018470.15956@tvgsbejvaqbjf.bet>
+References: <20191025025129.250049-1-emilyshaffer@google.com> <20191025025129.250049-2-emilyshaffer@google.com> <xmqqr2284is5.fsf@gitster-ct.c.googlers.com> <20191119202542.GB36377@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Erik Chen <erikchen@chromium.org>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UDiZwl0jst1PzieiMktdLVRvpcfVaTXsFeDxe+8Zkfjryd92xC1
+ OsqYVaRvFR32WAPvO6/IhJaXhdB86ahWxHVpBQDxYk0oHWSjk483bP9i+OtSvAgAa2befd9
+ kdGHJQp+itw9dWQ3eom/e057Ki3MvFr246727Fc0ZrndGq2pOM0mdjfmSge2/9numspVGE4
+ ZemrGEK7tl/hUXLs9kyqg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fxpIUwZKPt4=:JyIpJIkofHg7/56cSmW2++
+ mdakW7QQKYz7LuMyVwO5EBFmLy6GCQyfBKLcxSB/D6NDOoIje270G/kp9ZAnA/V+zW9Wp7FSA
+ Rh6Pr1OXaRsdR1ithfFCC/YMfuW75CW3eYi5MAFnrjHXZnlr8YP0popiPNsbD4qjSD+Mt/Xcw
+ Nr+bnfHainoX8V26BSJuwP341kjcPI0z4JjuywLYxzPEZf53NnR25ISoeqO05cDSYm3c1LyMx
+ k8kYvJCPApFgoqQ7B9FyZ2swLElNZirZ8F1K8skWF+PYxbeodnWiducwqjgl5N1Hl4TctIDSW
+ vkq+8RMff9x8IQ1kS9LeyYhtsG3iUmNP0Q5ZrdV0wV2BG1/0xG+Qccis1ujUzPsY02F/tIm9U
+ Y2ky+Sv9GuubLQcDNrSZ3XcDl76eOOMF+1oA79ZHc5Jk4fKbNGFee4ZEtt/XD23TlL3zX5XjG
+ pVkSiLVUUAcz+s+2F5dYaavbhe88YnUtBcry8iZ1gD/uXlYDjzvL7mkPN250YwPltjbTGxsCF
+ NKSb5uoAD7RL0MSlhs/rl2Pk5nTVdtATf5kiwz5952PqRL2zEegvFw+p3pOvNTBuOan0xfrJh
+ wplFJZgJrz9o3ujA8mwzrHJM2i75u7kHnP2pu1J8N5v5fIYrAlw6Xh6wTOfb1xtYDqFgAgR+X
+ AT6r2jRj4KFqz0Gt9Qy1XsYzHz9cTQiVhkvzgPoV+anJk/EI2ogX+dGMVdkpdCfnz1JXwh9/k
+ y+8zwDyJVR46jZA2R9VXVMEc+8gHx1lJRf0yZl+Fb9uYnDQ8BF9nZ+7+F8fk68h0dEzFPWrnW
+ EsthhNB5Ix11KbwqCtVZ6gzlApMufhMgBueT7Ce8jTy4BBqjOxiCppeEQpN7TEfWvePH89WWW
+ hgAYjSA+ElkBaVtMR4cbRoWJaJSkrI2pMYzaoX/WQdcLK8VDi7FjHNL1QUTauAbPduJCsMer8
+ 0kdvzjZ6Nt6SiwpMpzoGXNolUmdcWWtpQAcXrdd58r7HlSzRC8zhs4457w0qpoB54/d7AyZYA
+ LdUU4bKRg++f68jBse7I0aUFjpt9SGu85Wmrhb7nEbjRBEc05ndyjvuIdtbDCL8gLir6CYB28
+ H9uXX4m0+we4oUNPI7RBBPTwUlIRH2rVJ3fajNZEeODIPvYhUITNpzuJs/qWRoFgRo3XU4Af/
+ hoWHBjnIxEKFcsB4/5G4GppBFdFYHE3Ligh6RTL2fDUf6OzTXRJg/DvqqFZvJO39+TNGwVgAq
+ NWtnufBE4xXQRo/O2Ganv233DWncAuUCnohZ+/aADF/Z9LzxMN6EW5idtt9w=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Erik Chen <erikchen@chromium.org>
+Hi,
 
-Add trace2 regions to fetch-pack.c to better track time spent in the various
-phases of a fetch:
+On Tue, 19 Nov 2019, Emily Shaffer wrote:
 
-    * parsing remote refs and finding a cutoff
-    * marking local refs as complete
-    * marking complete remote refs as common
+> On Sat, Nov 16, 2019 at 12:11:38PM +0900, Junio C Hamano wrote:
+> > Emily Shaffer <emilyshaffer@google.com> writes:
+> >
+> > > Teach Git how to prompt the user for a good bug report: reproduction
+> > > steps, expected behavior, and actual behavior. Later, Git can learn =
+how
+> > > to collect some diagnostic information from the repository.
+> >
+> > It makes sense, but I do not think of any good reason why this
+> > should be implemented as a builtin.  I'd expect it would probably
+> > need to collect more info on the running environment than otherwise
+> > necessary for the regular Git operation, and perhaps you'd want to
+> > even link with libraries that are not needed for the regular Git
+> > operation to achieve that.
+> >
+> > Can you make it a standalone binary instead to avoid bloat of the
+> > main "git" binary?
+>
+> Sure. This would fix some other issues (needing to link against curl to
+> get the curl version, which is exactly what you implied). I wasn't
+> certain which circumstances a standalone binary was preferred, but I
+> agree with your reasoning here for sure.
 
-All stages could potentially be slow for repositories with many refs.
+FWIW I disagree with the idea that a tiny built-in command like
+`bugreport` would "bloat" the main `git` binary.
 
-Signed-off-by: Erik Chen <erikchen@chromium.org>
----
- fetch-pack.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+In contrast, I think that stand-alone commands _do_ bloat. Look here:
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index f80e2d1149..a4a5e6cf9c 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -669,6 +669,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 
- 	save_commit_buffer = 0;
- 
-+	trace2_region_enter("fetch-pack", "parse_remote_refs_and_find_cutoff", NULL);
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
- 
-@@ -679,7 +680,8 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		if (!o)
- 			continue;
- 
--		/* We already have it -- which may mean that we were
-+		/*
-+		 * We already have it -- which may mean that we were
- 		 * in sync with the other side at some time after
- 		 * that (it is OK if we guess wrong here).
- 		 */
-@@ -689,7 +691,13 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 				cutoff = commit->date;
- 		}
- 	}
-+	trace2_region_leave("fetch-pack", "parse_remote_refs_and_find_cutoff", NULL);
- 
-+	/*
-+	 * This block marks all local refs as COMPLETE, and then recursively marks all
-+	 * parents of those refs as COMPLETE.
-+	 */
-+	trace2_region_enter("fetch-pack", "mark_complete_local_refs", NULL);
- 	if (!args->deepen) {
- 		for_each_ref(mark_complete_oid, NULL);
- 		for_each_cached_alternate(NULL, mark_alternate_complete);
-@@ -697,11 +705,13 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		if (cutoff)
- 			mark_recent_complete_commits(args, cutoff);
- 	}
-+	trace2_region_leave("fetch-pack", "mark_complete_local_refs", NULL);
- 
- 	/*
- 	 * Mark all complete remote refs as common refs.
- 	 * Don't mark them common yet; the server has to be told so first.
- 	 */
-+	trace2_region_enter("fetch-pack", "mark_common_remote_refs", NULL);
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o = deref_tag(the_repository,
- 					     lookup_object(the_repository,
-@@ -714,6 +724,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		negotiator->known_common(negotiator,
- 					 (struct commit *)o);
- 	}
-+	trace2_region_leave("fetch-pack", "mark_common_remote_refs", NULL);
- 
- 	save_commit_buffer = old_save_commit_buffer;
- }
--- 
-gitgitgadget
+$ ls -lh git-daemon.exe git-credential-store.exe
+-rwxr-xr-x 1 me 4096 1.8M Nov  6 13:43 git-credential-store.exe*
+-rwxr-xr-x 1 me 4096 1.8M Nov  6 13:43 git-daemon.exe*
+
+In other words, even a super simple stand-alone like `credential-store`
+(the `credential-store.c` file has only 198 lines!) weighs in with almost
+two megabytes.
+
+So I fear that the claim that a stand-alone command would add less bloat
+than a built-in one, especially for a relatively small thing like
+`bugreport` has it exactly backwards.
+
+Ciao,
+Dscho
