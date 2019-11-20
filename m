@@ -8,54 +8,54 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0488C432C0
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 00:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF095C432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 00:51:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8822F2245F
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 00:51:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A1DD2245B
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 00:51:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KphaJ68g"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZQ+jjDK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727545AbfKTAvR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Nov 2019 19:51:17 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38567 "EHLO
+        id S1727566AbfKTAvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Nov 2019 19:51:19 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34651 "EHLO
         mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727226AbfKTAvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 19:51:17 -0500
-Received: by mail-pl1-f196.google.com with SMTP id q18so9231071pls.5
-        for <git@vger.kernel.org>; Tue, 19 Nov 2019 16:51:16 -0800 (PST)
+        with ESMTP id S1727226AbfKTAvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 19:51:19 -0500
+Received: by mail-pl1-f196.google.com with SMTP id h13so12951776plr.1
+        for <git@vger.kernel.org>; Tue, 19 Nov 2019 16:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=aNOEiwDlh6gywg3VEm4+SuBN5bCGcIPxs3rVKH+zSdI=;
-        b=KphaJ68gyTD0bZgrnzKMWHT9mIg/eDiBcCmiUUvBcSqWFzx7em5rGlCAxg/BFDAxJW
-         VRCd/x5dMHFGHpr/dp6Zci8o3esPFCyHtlg4Qr/DR7hRWh/2fYm2ISMDRNgtl8cDwfX6
-         ZY4wb1YLF4Zb0X/fOpRMY8MvQIwiKvQBHSUaqpKcKseXrVluSfJJeyC3BCq8Yu+kBwNd
-         X+HrFG4UZ/3X0VHRX6PnOMww4kbotj/98V7Ty9iNMIAQIFR0zc91PezepZCj1FrZhiX8
-         DOa+LIeHD4jQWe0IFY5GQpJQBlBOo76iTtefBCC9w1sROe7nIJWfHD0TYgSAskoGgzIw
-         vO5g==
+        bh=kU+Q6G8qopZi4s0dWF3JcdVw7ZV4xtAispcHmOihLU0=;
+        b=GZQ+jjDKPwGHj04dVjTUYCRc9OoWVAQh6GkPr/82V7rT/gqSlcwZ8MpU5dAV5meFXn
+         +noujpJbdgoOX5xRCan5vifkHxAtVLJVM2aiKRJsx+hnlx0d1tiHY1igLJTwOZp7W1NR
+         0ri4mXDOT/mgd4UpVDvnUMm99akS1mOYOCh0ECRi59KvcVeas6RL+CRHD57Dhyazcu3T
+         7aeB3bMBNGehq5kOV1gcdYb7gLvdgTHeFkLZEhu/oHFJn5BMS4eUR4kJsd7VeH8PDfWI
+         ipr8zLkJWQjFRFjh5bIU78cyzcU52IkNktvmKxo62qYHNF5ivw9IxgoSIww/OSvqSQt8
+         vehQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=aNOEiwDlh6gywg3VEm4+SuBN5bCGcIPxs3rVKH+zSdI=;
-        b=rT3H39q1fvmHmkgUQQsZBj8hvjCSIdWCSQvYabnFsuUz3CVf1EqqMT/IGVJGWotGHJ
-         e7PxXJJ1vXBVuCZbC4rNZBOtyryOIU04GT9I6q3Zp1hydyTjiMdWVT1n0CX0WzY7VSf2
-         Jfb1yeVseXiLfNGCKuKiaRgewnIqyEyAPNVUT9oeQJiv+moCaf8f6uOHcPB9H7tllQ0C
-         1YRhsgr6U0H992OXF0e8W9oxjY23UruNjJSt/6mORDr57a1akuK4JU4ZC2yQtfJRZ2EC
-         CYb3FwpiGBNnxLEnDdqF9Jp9e+8+NdGdsoVsT8peWmyeQ7krvhq7CkxZWFEOmFkPX8/6
-         mbVg==
-X-Gm-Message-State: APjAAAUvdCs0rlBI2pT7x4eqweI7IH0cGS8PHSZXcsNcUXygrraBEttE
-        snGMtkvkEgCVpdkD8Ju+cpflM1qb
-X-Google-Smtp-Source: APXvYqxZLjLuBEPyPK087ZOiHc7/NhTTQpHoxqCLDDfoKBZ47Y60fWwQ0DstkJSgKWj1TJ68tiF+oQ==
-X-Received: by 2002:a17:902:7290:: with SMTP id d16mr106438pll.340.1574211075919;
-        Tue, 19 Nov 2019 16:51:15 -0800 (PST)
+        bh=kU+Q6G8qopZi4s0dWF3JcdVw7ZV4xtAispcHmOihLU0=;
+        b=JJsE7cBQ2A2Q80+kQ4GDmyDPGXJbqpJVKOFOxxyYndWT7Q7jrM4w2xNdI08mUvf+sx
+         P2HiAKs8dHqHZhf4fRX5WUegZieu0OywWjAfhKpHAA0BUFjR5/p52vCn3tGfaqGCwFO0
+         fKpjfJzjm+GBX2Ajw1bzM4jv1+X1cgA48vYfrlg3F1YYzj7mn8QsihRMb0ShoEZ7NceS
+         ocQSeJkJXnsO1jwKA2LvHGBrwQts+5Mbl2QYAozd8sCrP8vGPKb3vGZDy3bCSOII3U/g
+         kYTWWqIXjT6dQBWSiAh0d0BwVRPlORs3+SCdEtoKkdyLqiIS6OD3LVqwo0R1E6e7e+jK
+         hGSg==
+X-Gm-Message-State: APjAAAVJWvorgcOKibreQHqrTzR0MWYLOg0FKLU7ksKR+qIi1ZrDHN21
+        VXRf0v/1FLkkp4cqdum/ZLut38YF
+X-Google-Smtp-Source: APXvYqyGtN+VkIKW/xV7z4hngMDO7+GE3fwLqos/wA0NrbgP3e/DH1v4O95IV+m2G7M9DF9AEyHjOQ==
+X-Received: by 2002:a17:90a:a4e:: with SMTP id o72mr532691pjo.66.1574211078481;
+        Tue, 19 Nov 2019 16:51:18 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id w10sm17604169pgi.47.2019.11.19.16.51.15
+        by smtp.gmail.com with ESMTPSA id a68sm26445248pfa.160.2019.11.19.16.51.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Nov 2019 16:51:15 -0800 (PST)
-Date:   Tue, 19 Nov 2019 16:51:13 -0800
+        Tue, 19 Nov 2019 16:51:17 -0800 (PST)
+Date:   Tue, 19 Nov 2019 16:51:16 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
@@ -63,9 +63,8 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
         Todd Zullinger <tmz@pobox.com>
-Subject: [PATCH v5 05/11] revision: make get_revision_mark() return const
- pointer
-Message-ID: <ac23c4ec4522dd2343b8147b95b2408eddba0678.1574211027.git.liu.denton@gmail.com>
+Subject: [PATCH v5 06/11] pretty.c: inline initalize format_context
+Message-ID: <fa375f8271fd30b0e4be5f10c4cb10deb45afee5.1574211027.git.liu.denton@gmail.com>
 References: <cover.1574122784.git.liu.denton@gmail.com>
  <cover.1574211027.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -78,55 +77,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-get_revision_mark() used to return a `char *`, even though all of the
-strings it was returning were string literals. Make get_revision_mark()
-return a `const char *` so that callers won't be tempted to modify the
-returned string.
+Instead of memsetting and then initializing the fields in the struct,
+move the initialization of `format_context` to its assignment.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- revision.c | 4 ++--
- revision.h | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ pretty.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 07412297f0..2eb9ff089b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -3934,7 +3934,7 @@ struct commit *get_revision(struct rev_info *revs)
- 	return c;
- }
- 
--char *get_revision_mark(const struct rev_info *revs, const struct commit *commit)
-+const char *get_revision_mark(const struct rev_info *revs, const struct commit *commit)
+diff --git a/pretty.c b/pretty.c
+index e4ed14effe..da154affd4 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1612,14 +1612,14 @@ void repo_format_commit_message(struct repository *r,
+ 				const char *format, struct strbuf *sb,
+ 				const struct pretty_print_context *pretty_ctx)
  {
- 	if (commit->object.flags & BOUNDARY)
- 		return "-";
-@@ -3956,7 +3956,7 @@ char *get_revision_mark(const struct rev_info *revs, const struct commit *commit
+-	struct format_commit_context context;
++	struct format_commit_context context = {
++		.commit = commit,
++		.pretty_ctx = pretty_ctx,
++		.wrap_start = sb->len
++	};
+ 	const char *output_enc = pretty_ctx->output_encoding;
+ 	const char *utf8 = "UTF-8";
  
- void put_revision_mark(const struct rev_info *revs, const struct commit *commit)
- {
--	char *mark = get_revision_mark(revs, commit);
-+	const char *mark = get_revision_mark(revs, commit);
- 	if (!strlen(mark))
- 		return;
- 	fputs(mark, stdout);
-diff --git a/revision.h b/revision.h
-index 4134dc6029..addd69410b 100644
---- a/revision.h
-+++ b/revision.h
-@@ -322,8 +322,8 @@ int handle_revision_arg(const char *arg, struct rev_info *revs,
- void reset_revision_walk(void);
- int prepare_revision_walk(struct rev_info *revs);
- struct commit *get_revision(struct rev_info *revs);
--char *get_revision_mark(const struct rev_info *revs,
--			const struct commit *commit);
-+const char *get_revision_mark(const struct rev_info *revs,
-+			      const struct commit *commit);
- void put_revision_mark(const struct rev_info *revs,
- 		       const struct commit *commit);
- 
+-	memset(&context, 0, sizeof(context));
+-	context.commit = commit;
+-	context.pretty_ctx = pretty_ctx;
+-	context.wrap_start = sb->len;
+ 	/*
+ 	 * convert a commit message to UTF-8 first
+ 	 * as far as 'format_commit_item' assumes it in UTF-8
 -- 
 2.24.0.420.g9ac4901264
 
