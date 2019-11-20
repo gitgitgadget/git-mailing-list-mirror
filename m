@@ -2,132 +2,107 @@ Return-Path: <SRS0=iiTG=ZM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6D40C432C0
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 04:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 807CDC432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 04:53:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A87942240D
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 04:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 495AC22463
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 04:53:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nU9U1dvE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nz0az/+l"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727512AbfKTE0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 19 Nov 2019 23:26:11 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50271 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727264AbfKTE0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 19 Nov 2019 23:26:11 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0C3102A6DB;
-        Tue, 19 Nov 2019 23:26:06 -0500 (EST)
+        id S1727530AbfKTExC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 19 Nov 2019 23:53:02 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58251 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727359AbfKTExC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 19 Nov 2019 23:53:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D59AEA3233;
+        Tue, 19 Nov 2019 23:53:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=td5G9Mf0b7N6yYqifrmq2mFuK0g=; b=nU9U1d
-        vETmyAM4u8aRWuraLAR4KaPbQ9beYvptc0ebz7zyhz1nnowryemuobTJmNIVqctE
-        KowI0vvET6S0wNABK1dRf1Up3n+R2/DXEoijxKv+PUKWQJwEFTEW/aDWr1iz3E5L
-        J+afnHFMZ6tRVTmR2VephwFgol4CoTgVk/508=
+        :content-type; s=sasl; bh=G7urcq3jECgO23kHpnnuO9mPCVU=; b=Nz0az/
+        +lqCnVAQoUwD6fei5HgMPItOjp79OYTIdH4zY90BW9wz7kpF5aVTrT6Bn6bTPOAo
+        yH7AMSeK2fMUif5216RaAhJAI3DuXNQdo1mYRj3NhVEj277sfcOE53RAh+k5Jl9g
+        K+3NvFoFOLB5PxjafgNBw0tf8G/aNIs23SIrI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jXhYIZlhrr6p8snD1AzFdlHSMxz2f/TN
-        dWpZPo6DQnYpfdADAHoTX2THpFtMGA0CIuHaN00cpKERS887jip6GyLYFn/ps2u5
-        meeC62c4bvWSoo8YwpFpHJ1TcrvIVvgnqOioLuUp/VUdnnVH1RfEzTpEGElAiN4t
-        Hlan6z4TcYY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F2DDD2A6DA;
-        Tue, 19 Nov 2019 23:26:05 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=DyWNmF0I9mLyXNmMVNs2tEm8FUnG0KUh
+        57jAgxa2FAfBzfGW0Bu11ODYI5zOnEVK1yolyjOaS8vuwHdyO34C4A8pE+LSsJ2L
+        GRFtQ/ZD26U9uarfpJVkvK6MId7eIPQfjas7BNrvUfDYogz2t4KM3Awi7J50BVo4
+        Uv4haVMCS2A=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CEF72A3232;
+        Tue, 19 Nov 2019 23:53:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4C62D2A6D8;
-        Tue, 19 Nov 2019 23:26:05 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F372BA322E;
+        Tue, 19 Nov 2019 23:52:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: [PATCH v2 7/8] range-diff: passthrough --[no-]notes to `git log`
-References: <cover.1574125554.git.liu.denton@gmail.com>
-        <cover.1574207673.git.liu.denton@gmail.com>
-        <0cb86b383b9c115c9c6077d47f0c124a96b30acf.1574207673.git.liu.denton@gmail.com>
-Date:   Wed, 20 Nov 2019 13:26:04 +0900
-In-Reply-To: <0cb86b383b9c115c9c6077d47f0c124a96b30acf.1574207673.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 19 Nov 2019 15:55:44 -0800")
-Message-ID: <xmqqwobvb2cj.fsf@gitster-ct.c.googlers.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: none
+References: <CAFQ2z_OMr4J-gF1HXXkSQFheiDkf+7WBbn-oLYeDydmuLSfN1w@mail.gmail.com>
+Date:   Wed, 20 Nov 2019 13:52:56 +0900
+In-Reply-To: <CAFQ2z_OMr4J-gF1HXXkSQFheiDkf+7WBbn-oLYeDydmuLSfN1w@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Tue, 19 Nov 2019 19:49:17 -0800")
+Message-ID: <xmqqsgmjb13r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: DE02AB02-0B4D-11EA-BB3D-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 9FD671DE-0B51-11EA-8CE7-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> When a commit being range-diff'd has a note attached to it, the note
-> will be compared as well. However, if a user has multiple notes refs or
-> if they want to suppress notes from being printed, there is currently no
-> way to do this.
+> I spent the last few weeks cobbling together an implementation of the
+> reftable format in C and in Go. I thought this would be cool to add to
+> git-core, but I doubt whether I will have enough time to see such an
+> effort through. Maybe some of you would want to try integrating it
+> into the Git-core code base?  Example code is here:
 >
-> Passthrough `---no--notes` to the `git log` call so that this option is
+>   https://github.com/google/reftable/blob/master/c/api.h#L153
+>
+> cheers!
 
-"`--[no-]notes`" or perhaps "`--[no-]notes` and `--notes=<ref>`"?
+My initial impression was that the API overuses typedef.  We tend to
+avoid doing
 
-I think the verb phrase is two words, "pass through", by the way.
+	struct _foo { ... };
+	typedef struct _foo foo;
 
-> +--[no-]notes[=<treeish>]::
-> +	This flag is passed to the `git log` program
-> +	(see linkgit:git-log[1]) that generates the patches.
+and instead write "struct foo" explicitly to make us well aware of
+what we are talking about.  That lets us see that we are passing or
+returning a structure by value (which we would like authors to think
+thrice before doing in C) like so quite easily:
 
-I can see this was taken from "git log --help", and it probably
-needs fixing for consistency as well, but I think --notes=<ref>
-would be easier to click users' minds with notes.displayRef
-configuration variable.
+	foo some_function(foo arg1, ...) { ... }
 
-> @@ -61,8 +62,11 @@ static int read_patches(const char *range, struct string_list *list)
->  			"--output-indicator-new=>",
->  			"--output-indicator-old=<",
->  			"--output-indicator-context=#",
-> -			"--no-abbrev-commit", range,
-> +			"--no-abbrev-commit",
->  			NULL);
-> +	if (other_arg)
-> +		argv_array_pushv(&cp.args, other_arg->argv);
-> +	argv_array_push(&cp.args, range);
+because it would be clear if it were written like so
 
-Makes sense.
+	struct foo some_function(struct foo arg1, ...) { ... }
 
-> diff --git a/range-diff.h b/range-diff.h
-> index 08a50b6e98..7d918ab9ed 100644
-> --- a/range-diff.h
-> +++ b/range-diff.h
-> @@ -2,6 +2,7 @@
->  #define RANGE_DIFF_H
->  
->  #include "diff.h"
-> +#include "argv-array.h"
->  
->  #define RANGE_DIFF_CREATION_FACTOR_DEFAULT 60
->  
-> @@ -12,6 +13,7 @@
->   */
->  int show_range_diff(const char *range1, const char *range2,
->  		    int creation_factor, int dual_color,
-> -		    struct diff_options *diffopt);
-> +		    struct diff_options *diffopt,
-> +		    struct argv_array *other_arg);
->  
->  #endif
+without hiding the structure behind a typedef (it also lets us avoid
+names with leading underscore, which is frowned upon by some people
+for different reasons).
 
-I thought a mere use of "pointer to a struct" did not have to bring
-the definition of the struct into the picture?  In other words,
-wouldn't it be fine to leave the other_arg a pointer to an opaque
-structure by not including "argv-array.h" in this file?
+But the set of operations defined in the header file seemed at the
+right granularity in order to interface with the refs.h & refs/* API
+we have.  It however was unclear to me how transactional ref updates
+would work with it.
 
 Thanks.
