@@ -2,92 +2,120 @@ Return-Path: <SRS0=iiTG=ZM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7852C432C0
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFE07C432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 13:58:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8C9BD22520
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:42:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C720A2246A
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 13:58:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVA7w6nV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hrHBHvsk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729888AbfKTMmr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Nov 2019 07:42:47 -0500
-Received: from mail-il1-f175.google.com ([209.85.166.175]:39303 "EHLO
-        mail-il1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729871AbfKTMmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Nov 2019 07:42:47 -0500
-Received: by mail-il1-f175.google.com with SMTP id a7so23269550ild.6
-        for <git@vger.kernel.org>; Wed, 20 Nov 2019 04:42:46 -0800 (PST)
+        id S1731326AbfKTN62 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Nov 2019 08:58:28 -0500
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:46510 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727988AbfKTN62 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Nov 2019 08:58:28 -0500
+Received: by mail-qt1-f180.google.com with SMTP id r20so28933104qtp.13
+        for <git@vger.kernel.org>; Wed, 20 Nov 2019 05:58:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=RgiVarp2NX5Ll5BYGEUD9M1gyWmpHzKb8Sue6vsmPWU=;
-        b=XVA7w6nVam98eeCLfJWjL/yu5xasheDA/E9/sGz/WUORoTqO13n1d2u/VNJHYvNNb8
-         V1xjUfXriIr48Jgg4RZ+yrhAPm+fv2poFXrrFsMWRF6p3oMiv5zm2x3uliZyFPYBl/Og
-         ztSX+CxVG0hWVgIYyTk+fii2Q4KdyHRHDly96uyaKJ1g4kHR7MODX4xlZo7rGKC+1lRQ
-         Z/vaUSw/aptgEf8LU4eqfkHRyuto5AbyAL52z0LyiH3Y/VABzlzEbTNMEfQEDaXEbJXL
-         l8mdB5Tb1gvTO7bT8/EcyVr9Yf1N5RXpQDO4o0F5DXJ6etU0F8GzQvl+pxXM67Wjq0no
-         N6qw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8b+LhLPrU5WApD0+va9xAo8iS/oG6WxN4O/RmFJS4Ik=;
+        b=hrHBHvskW7DW5hO2YqLyVxc4Ls5I6L2JL40Auuc0ti343XPbmd3mAF07dtScosOA6Y
+         PB5IgFwG0FATs3pYG23xPoUJRezL5K+7HYupzDMGk3vhr71UxEEmQTSVEdgT0NRZrYEr
+         lxjTo55TBsfIdJoepPCUElIvhdgjLs6is7bTBG8H17RhkRIr5WdYkqbZs3FDH0PwkkOT
+         O0zm6GHoVFLjCIFtHFSDPJ2/ZG9JTBzwxMduFsRdRg146WbBcgi2IR7GIMq/uByYlwEa
+         rbpObzZYnsAoStGrMpeJJ+qcepQ7Q5XPkNdw4/MyDkZGm+oD/5T6ynWh07FMXX9gjCkM
+         cwLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=RgiVarp2NX5Ll5BYGEUD9M1gyWmpHzKb8Sue6vsmPWU=;
-        b=aGUWkZ/b4yxsWGGciFZXq6nCQervZgHPVeapUCn9XRE72ut2gkFctECQrEcebzVdaD
-         ww/Tz0WABzDJlibkz7IN54tM9KS2YTT8BdIpPIXmviYwLX49xHVVmgrjaC5vbfBetVY7
-         CnEkmBdOkagPdJCZhbqFYTtWPonq2WDAFlSsU33h1WV9eSDXNwUH2gUWmKXb8/kdObly
-         JsbCP9dlmuB5vgwyAM9IW2idzPvKmHmUuEzXfxxO0ZaHvcFeZO1QFTwO6ZeGAxOH+vU1
-         Xqvct0IJSLHE9lgNW0RGhjTN9myIpjwdApB2hE57R6X+IK2iPiutIF3c1T9ldY2OyTFI
-         5aEQ==
-X-Gm-Message-State: APjAAAX2GtzFtb+wvrip9m2Das9rJfhL55CuQ2RhJFfGzxBQrOOKLcfv
-        0v2UrCBMvjQytSNIpTovH5t8a/wgNgUNO4WufcABZu93
-X-Google-Smtp-Source: APXvYqxQNnQwy4+ug9+fpFwHbFM3tcuu59lb1nLg2ZR7c1b7RvfMw8iqKO48t2ZdwlWorYfPLd9f2t2vSLo6xzsYkj0=
-X-Received: by 2002:a92:6a07:: with SMTP id f7mr3312569ilc.41.1574253766209;
- Wed, 20 Nov 2019 04:42:46 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8b+LhLPrU5WApD0+va9xAo8iS/oG6WxN4O/RmFJS4Ik=;
+        b=fGtCEhRKjxSZpiS57XbLJXi2m5rIPC3OE2TpqwK0ASj4fgMXzzuaIh58yqquNXDCnC
+         /5sMCzL8NUjUd3fQJMEdFFaif3x3MFds/73IGZuS1UzVbgnbu3ZfhiDEDqQs6/xb9CXq
+         u9rSTXwEJT1rmkGPpRS3Ws3X1MJlyTkkvJlNBt0fYVQ/0izPpcFfp4F614rbTMOETWKK
+         uqhyWne/wX03avAETKehnQw+IS7XsETWmhutkETNt8KG4BkqPwHDQWiiKWp2fBkeDvo1
+         gpTcCoI1jlqx57tCFXUW5xzrjl8UMmYnmLf9IJvgj5jOwxStFe3ddwRurqMyde7H3QNr
+         wvww==
+X-Gm-Message-State: APjAAAUDCjHDWFKwIyC3+7LxmnKhrHEr6l1yZg4BtKJxqDzCRQvjKsRU
+        Wt80wfhhRmdmDJw9Zz0yIkiHoQss8D8=
+X-Google-Smtp-Source: APXvYqwPGWWBhV0VFN7OFuei2Ktbgv2TKNqW+vU9lg8y5urPBibELKGh+DSR01zsjV7pu82eK3I5Bw==
+X-Received: by 2002:ac8:3f67:: with SMTP id w36mr2497123qtk.99.1574258307099;
+        Wed, 20 Nov 2019 05:58:27 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:18b5:9b8a:49ed:1bc1? ([2001:4898:a800:1010:c9ea:9b8a:49ed:1bc1])
+        by smtp.gmail.com with ESMTPSA id j71sm11903136qke.90.2019.11.20.05.58.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Nov 2019 05:58:26 -0800 (PST)
+Subject: Re: What's cooking in git.git (Nov 2019, #03; Tue, 19)
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+References: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
+ <20191119175850.GL23183@szeder.dev>
+ <xmqqzhgrcksn.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <039f7668-53e3-9c6d-d813-ca412c4d1ed2@gmail.com>
+Date:   Wed, 20 Nov 2019 08:58:25 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-Reply-To: noloader@gmail.com
-From:   Jeffrey Walton <noloader@gmail.com>
-Date:   Wed, 20 Nov 2019 07:41:23 -0500
-Message-ID: <CAH8yC8n+ta4BSAE4rEfhKxe3T9poVdc94HvSk=6PEA4YbmwVyA@mail.gmail.com>
-Subject: Commit signing and pinentry problems
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqzhgrcksn.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Everyone,
+On 11/19/2019 10:02 PM, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> 
+>> On Tue, Nov 19, 2019 at 04:05:48PM +0900, Junio C Hamano wrote:
+>>> * ds/commit-graph-delay-gen-progress (2019-11-07) 1 commit
+>>>   (merged to 'next' on 2019-11-19 at afa7c921be)
+>>>  + commit-graph: use start_delayed_progress()
+>>
+>> This commit is incomplete:
+> 
+> Ah, this is also just 2/2 of a two-patch pair; I guess I was extra
+> sloppy on that day.
+> 
+> It seems that 1/2 was also incomplete, so let me discard this and
+> expect both of them to resurface later.
+> 
+>>> * ds/sparse-cone (2019-10-23) 17 commits
+>>>   (merged to 'next' on 2019-11-19 at 1eb4b3a012)
+>>>  + sparse-checkout: cone mode should not interact with .gitignore
+>>>  + sparse-checkout: write using lockfile
+>>>  + sparse-checkout: update working directory in-process
+>>>  + sparse-checkout: sanitize for nested folders
+>>>  + read-tree: show progress by default
+>>
+>> This commit changed the default behaviour of a plumbing command, and
+>> the resulting discussion concluded that such a change is not
+>> desirable:
+> 
+> OK.  I had an impression that it was something relatively easily
+> patched to restore the plumbing behaviour without taking the
+> remainder of the series with a follow-on work.  If it is not the
+> case, perhaps I should revert the merge to 'next' and kick it back
+> to 'pu'.
+> 
+> Thanks for stopping me.
 
-I'm having an annoying problem that I can't figure out. I hope Git has
-a setting to fix it.
+That commit can be ejected from the series without affecting the
+correctness of any of the other commits. That will require reverting
+the merge at this point, though.
+Thanks,
+-Stolee
 
-I have a desktop workstation where I sit at the keyboard about 1/3 of
-the time. Git signing works as expected. About 2/3 of the time I SSH
-into the machine. Git signing does not work when SSH'd in.
-
-When Git signing fails over SSH an error looks like:
-
-   $ git commit -S log.h -m "Remove unneeded header"
-   error: gpg failed to sign the data
-   fatal: failed to write commit object
-
-I just noticed this today (but it makes sense)...
-
-    - Go to desktop workstation, log in
-    - Go to remote machine, log in
-    - Sign at remote machine over SSH
-      - Desktop workstation will open GUI password prompt
-      - Remote machine sign operation will hang until GUI prompt times-out
-
-The problem was reported to Ubuntu but no activity:
-https://bugs.launchpad.net/ubuntu/+source/pinentry/+bug/1852696 .
-
-Does anyone know how to use Git to work around pinentry brain-dead-ness?
-
-Thanks in advance.
