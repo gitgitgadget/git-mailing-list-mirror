@@ -2,172 +2,125 @@ Return-Path: <SRS0=iiTG=ZM=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6185BC432C0
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 17:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 853C9C432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 17:26:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 27F50208A3
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 17:13:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E3E32067D
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 17:26:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YH1Dy8aE"
+	dkim=pass (1024-bit key) header.d=plasticcircus.onmicrosoft.com header.i=@plasticcircus.onmicrosoft.com header.b="cZlBSEbP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728437AbfKTRNT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Nov 2019 12:13:19 -0500
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:41613 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727754AbfKTRNT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Nov 2019 12:13:19 -0500
-Received: by mail-ot1-f46.google.com with SMTP id 94so226893oty.8
-        for <git@vger.kernel.org>; Wed, 20 Nov 2019 09:13:18 -0800 (PST)
+        id S1726999AbfKTR0Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Nov 2019 12:26:16 -0500
+Received: from mail-eopbgr680093.outbound.protection.outlook.com ([40.107.68.93]:22406
+        "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1728404AbfKTR0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Nov 2019 12:26:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ba8WGKekVoeuO8+T62Owl5N6MMrs0uvnv1yHKDZxcwtffwsc0pjXBp6McJEJLL1dXyh3jqIssBCEUs8EiQQv4zrYTkK0E6LX6cLMY1DADjJx1Fxmc/EeybmQxuYZIJXc0Y1rW+s7NuDMgP9FaZqKJ6pTbQNWJZY06B9WeRd7ukeF2dyK4GKcS8hiVPP6hpfGK5tySkGQfihXsnQ3bsF/lwlswWJf/LdFvQpyUVY33AYop53hybuZzGO1jO3im8Qx+/kVHJh/ntn/2RR8dGanpM9BescwnoJk8d12oDT/b9Mg6vBNMORUAAlap7oRNv6g+WTHGU4D/oMDGSCXQahitQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/iZuEn/U1ngQuNRHIhhXhTpkF9iRGPeKbfyKEWoBDZk=;
+ b=Drf1Oasqv9SMkRTqrdIJJrirHGNI18W4+HKypqgT+hQHLxhRwAQBhmIaRx1VOtRtpCkBY/cet6xyHHFQrpVlRrG6EzAflPoYDVi18jtaWG2zu1knjpmqXSiEm1JIn8gVUoFSPs9Nu8zxbVlU4vOT04eSernb/Jay4PYIwwT6hgPEeN0/ELLUEAuLagXrZAfJ6shcJox3G2mx1FVm1F0lF3QAFbN/G2/1QOl/8vSpz4Izl3hW6YRVxZ9dA9yZaIQquYZrXOIpc2SfWBVKPyqjLal6sMk43+dZeeBDPXwUgouoSJcIAAuzZRugku9m+OsZW3RYIKoGj6kJc9o0pmhW0A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=plasticcircus.com; dmarc=pass action=none
+ header.from=plasticcircus.com; dkim=pass header.d=plasticcircus.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7z6p1g+I7L07ja4AfCOY+fUarug5d+IW3j6URjGcPcM=;
-        b=YH1Dy8aEo4YUVeduVaew83b695X4nT308/iyExGeXqoM9d2g3nTD5zEyKnW+Nyj7ql
-         7G8P5X9dKELGIeW0of1qbBIArQDAUQ2W/AZXG8mXLBDX3YINfhVN5FrGodJcDsWpW640
-         L/WFD9kQYd/4N66yYzj0YiQMJOGzSwBQfViId53P1Y7s+vIfPeRDL5aCrgfR+A6jqWfZ
-         RPnPD9kq0K6yxnRfh181SunlwzC6gou5okzP355wjJ+PhInLoP3HX5/xMgtMq+JW5/kX
-         77y8ssLGyu/paZPTr4XyYBGcCGb1fF8+jsYY6YmCIR4WQoesakVCDztMDWMr1gfF93IL
-         Kiug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7z6p1g+I7L07ja4AfCOY+fUarug5d+IW3j6URjGcPcM=;
-        b=p2UhxdaKBcO/S0Og7dHonWlnkzuIj2R9HPtv8qQFQzBeGoEDxN+cc9o3P3VJ+iQUcm
-         Liu4m1pLwxBUb4RC4ONyDinz8oL+jgouDOr9j3xgyVxwtdc+zxhysYOgMfZdTah/eFMY
-         o/2OsOnj0Po2OONdeEoRklGhwquZwOThNLSzPqT9yax6qos5jjlELZ2o6jJbhVvQm9fZ
-         bcM36kJ0EG2v0LYQnpUB9/hZKygmrqdeKaUAkc7fZU2L0KjVzBIi5Yvey1IzDPHDDFbZ
-         mvyZ+/vdbK8nCv+yyZ7CUS3HzqaEn08G4bGNJ/PrOo80ti1+iSkk78MDA3DybnCO0TNM
-         +etg==
-X-Gm-Message-State: APjAAAWfPMKjrAngBd6DSkTu1hTkk3dPBdlrUTMQliuA5ANbOhM2bSZz
-        kJdITd8OHK2fi0AKXID5k38sHqWJ696f0C+LFGM=
-X-Google-Smtp-Source: APXvYqz0XhZCHSXhdoRegqc6/XD/IHikSdYR9KkBsraMPtVnFk9stPg0RGE0yjBCpW+yhPVkfIl/2BptfAgXFlm0MK8=
-X-Received: by 2002:a9d:6285:: with SMTP id x5mr2906070otk.267.1574269996070;
- Wed, 20 Nov 2019 09:13:16 -0800 (PST)
+ d=plasticcircus.onmicrosoft.com; s=selector2-plasticcircus-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/iZuEn/U1ngQuNRHIhhXhTpkF9iRGPeKbfyKEWoBDZk=;
+ b=cZlBSEbP7TAE4GqT7MGkWOv6bE+kYaSd8KZqOB+QyfLEfrkk0u6Kt4zXW058NjtJ1r9xBapNna8Eh8UZosWK3WoONj7fShn/jwbd9+97wt4iER0tyS1Ctqpmpk7qWV4RN+Qwzirb/np1y/mJSoebSRXNLNIylO2j1OHdLSbgofs=
+Received: from CY4PR05MB3287.namprd05.prod.outlook.com (10.171.246.25) by
+ CY4PR05MB3301.namprd05.prod.outlook.com (10.171.246.147) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2474.13; Wed, 20 Nov 2019 17:26:12 +0000
+Received: from CY4PR05MB3287.namprd05.prod.outlook.com
+ ([fe80::c965:c5b0:7ca1:a2df]) by CY4PR05MB3287.namprd05.prod.outlook.com
+ ([fe80::c965:c5b0:7ca1:a2df%6]) with mapi id 15.20.2474.015; Wed, 20 Nov 2019
+ 17:26:12 +0000
+From:   John Sockwell <John@plasticcircus.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug report: git stash
+Thread-Topic: Bug report: git stash
+Thread-Index: AQHVmb7h/zXCehTS8Eq4Q0Urw84FCqeUW7cA
+Date:   Wed, 20 Nov 2019 17:26:12 +0000
+Message-ID: <B173575D-E845-498A-A3E4-5AF894215475@plasticcircus.com>
+References: <3F47D50C-4E1C-4BAC-AFB9-3E908B123278@plasticcircus.com>
+ <DB3F5927-76A4-43F1-8A09-EEB7D0B6F720@plasticcircus.com>
+In-Reply-To: <DB3F5927-76A4-43F1-8A09-EEB7D0B6F720@plasticcircus.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3601.0.10)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=John@plasticcircus.com; 
+x-originating-ip: [69.203.108.98]
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 904ab730-ddab-482f-6169-08d76ddebd93
+x-ms-traffictypediagnostic: CY4PR05MB3301:
+x-microsoft-antispam-prvs: <CY4PR05MB3301FB96D1B066AF303F10FCDB4F0@CY4PR05MB3301.namprd05.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:655;
+x-forefront-prvs: 02272225C5
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(39830400003)(366004)(136003)(346002)(396003)(199004)(189003)(2351001)(446003)(99286004)(6246003)(316002)(25786009)(81156014)(81166006)(91956017)(66066001)(256004)(14444005)(76116006)(1730700003)(8676002)(50226002)(8936002)(14454004)(6116002)(3846002)(71200400001)(66556008)(64756008)(66446008)(86362001)(66946007)(6506007)(53546011)(26005)(102836004)(186003)(305945005)(5660300002)(71190400001)(66476007)(76176011)(33656002)(7736002)(80792005)(229853002)(2906002)(486006)(6512007)(6916009)(5640700003)(2501003)(508600001)(476003)(11346002)(36756003)(6486002)(2616005)(6436002);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4PR05MB3301;H:CY4PR05MB3287.namprd05.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: plasticcircus.com does not
+ designate permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: tPBq99HsyJ4nJ33Rh2g9rd4s5a2j8/2qIvsH+o7e8hJJEpJFEn26JhMZcNysOwPPgH7RKme8KNruWV17MTW2ek2751/fld4jVgnAHt7xj4psITFOZHVWu2o55n8FWsf5moo/742jmyxUXEbKGuo/1w8MpuBZODgD4oaEBXOu1nVa0uIW/c/Mu8+LilBTtkgcMOoeGARKTbxdHZPi/frKiq35tkN5oE/l9tIZdu3XXb00enWG+FB2tvwUcivPczvDf6Xq3mvlCw8pAoAjVSFlg2gKIpRkhl2HkLf6++/7gPbxMt3HSxxaZw9thODJwcj4Xg0mtOyDSvbHEHljOC51bbc5IrsquuH6V8zhfPTNxtTFCbn+ttbnXSZyrbhq60GlH8JeJ1bcBUCYxctkvaWPcwQFmNf8EIWlZPhOqKJq7yXLIi1SEYq7trQ/Y9/MAuHd
+x-ms-exchange-transport-forked: True
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <03F0418E0869224ABB1E4E7DA2FE9B04@namprd05.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20191023201310.thzpxyoeb3ta55dc@yadavpratyush.com>
- <CABPp-BEHy8c3raHwf9aFXvXN0smf_WwCcNiYxQBwh7W6An60qQ@mail.gmail.com>
- <86k18rbbyz.fsf@gmail.com> <CABPp-BG2SkH0GrRYpHLfp2Wey91ThwQoTgf9UmPa9f5Szn+v3Q@mail.gmail.com>
- <CAGr--=LKBq17XSLpe=uJbEPSfCp5Fpi_uw4d87DgJ8-S4Md0kQ@mail.gmail.com>
-In-Reply-To: <CAGr--=LKBq17XSLpe=uJbEPSfCp5Fpi_uw4d87DgJ8-S4Md0kQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 20 Nov 2019 09:13:04 -0800
-Message-ID: <CABPp-BEcpasV4vBTm0uxQ4Vzm88MQAX-ArDG4e9QU8tEoNsZWw@mail.gmail.com>
-Subject: Re: RFC: Moving git-gui development to GitHub
-To:     Birger Skogeng Pedersen <birger.sp@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: plasticcircus.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 904ab730-ddab-482f-6169-08d76ddebd93
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Nov 2019 17:26:12.5974
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: eb9aa32b-af1d-4883-98a5-8a5a7790d7e0
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nBgMFsFofALo4KG++5qiPTg61co9XLsOLreMp2XRkXDbVnmlgRh7Lz6Oq47pP3vVGczXtB0xLo1sU/jB9pytug==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR05MB3301
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 20, 2019 at 4:20 AM Birger Skogeng Pedersen
-<birger.sp@gmail.com> wrote:
->
-> Hei Elijah,
->
-> On Wed, Oct 30, 2019 at 7:21 AM Elijah Newren <newren@gmail.com> wrote:
-> > Projects which switch to GitHub tend to have overall commit quality go
-> > down IMO, because the system (a) makes it nearly impossible to review
-> > commit messages, so people eventually degrade to writing really bad
-> > ones,
-> What do you mean here, exactly? In what way is it "nearly impossible"
-> to review commit messages in GH?
-
-My lengthy rant wasn't good enough for you?  ;-)  Well, I'll try even
-harder to bore everyone to death, then and extend my rant a bit...
-
-
-Reviewing is the process of providing feedback on proposed changes.
-Code review tools and mechanisms typically provide ways to (a) see
-proposed changes in isolation and (b) comment on individual lines and
-preserve context (with the goal of later merging a group of commits
-that implement something useful).
-
-git-format-patch and git-send-email combined with usage of email
-clients that know how to quote previous emails and let you respond
-inline are a natural way of achieving both (a) and (b).
-
-GUI tools can, of course, also achieve something similar by showing
-proposed changes and allowing commenting on individual lines in
-context.  GitHub fails pretty hard on both counts, particularly for
-commit messages.  It guides people to an overall diff rather than to
-the diffs inside individual commits and completely omits all commit
-messages when you do so.  It does provide a way to access individual
-commits and their diffs, though it makes it somewhat unnatural.  (It
-at least isn't as awful as it used to be in years past, when any
-comments on individual commits were completely lost and separated from
-the PR.)  And even if you do "go against the grain" to comment on
-individual commits, there is no provided mechanism for commenting on
-the commit message itself.  Instead it has to be given as a general
-comment on the overall set of changes, which then loses the context of
-what you are commenting on unless you re-include and quote it
-yourself.  That usually doesn't happen, so when you comment on four
-commit messages in a review, you have four separate global comments
-and someone attempting to respond to them doesn't get to see the
-commit messages next to them, resulting in confusion.  Even if you do
-re-include and quote the commit message bits you are commenting on,
-the resulting comment isn't in any way tied to the commit in question
-in the UI.
-
-So people who use GitHub for code review just don't bother.   They
-write non-isolated commits and far from rarely use awful commit
-messages.  Then they merge this abomination of history, or possibly
-even worse, they squash merge it all to make it impossible for any
-future readers to be able to dissect.
-
-Yeah, yeah, small features so that the review is smaller and easier.
-That is important, yes, but it still conflates two things and thus
-ruins reviews.  Each PR should implement something useful.  Commits
-should be designed both for current and future reviewers to see a
-clear path towards how that useful thing was implemented.  Sometimes
-one commit is enough, but conflating the two necessarily either means
-sometimes creating one-commit PRs that don't actually implement
-anything useful, or a cognitive overload for code reviewers.  GitHub
-simultaneously encourages bad behavior (bad commit messages since they
-are designed to not be reviewable, non-isolated commits, fixup commits
-that are never properly squashed, etc.) and penalizes good behavior
-(folks who try to clean up their sequence of commits are met with
-problems ranging from GitHub screwing up the topological ordering of a
-linear commit history, to poor ability to see incremental changes
-whenever rebasing happens, to reckless squash merging of all their
-careful work into a single commit as something close to an act of war
-against any future readers who want to dig into why certain changes
-were made).  Yes, GitHub has gotten much better at code reviews; it's
-merely abysmally awful these days as opposed to a complete joke as it
-was in years past.  But it's still so bad that I have seen people try
-to solve this by having a sequence of PRs per (small) feature they
-want to implement, even though GitHub provides no way to denote
-dependencies or ordering between PRs.
-
-You may think I've gone off on a bunch of tangents, but fundamentally
-I believe that almost all of these other problems predominantly arise
-as secondary and tertiary effects of not understanding that commit
-messages should be a first class citizen of code review.
-
-Sure, you can claim all you want that it is entirely possible to
-review commit messages within the GitHub UI and it's just extremely
-inconvenient, yadda, yadda, but the truth of the matter is that people
-everywhere struggle to even do code reviews at all, and when they do
-they all too often turn into rubberstamp exercises or don't delve
-deeply enough.  In that context, I believe my "nearly impossible"
-wording is entirely warranted.  Using a tool that simultaneously
-encourages bad behavior and penalizes good behavior will not so
-surprisingly yield bad behavior.  GitHub PRs are such a tool, IMO.
-
-(To be fair, I'll note that GitHub has awesome code browsing, really
-easy setup and administration of new repositories and organizations,
-simple and reasonable and thus pretty nice code search, etc., etc.
-I'm not saying GitHub is a bad tool, I actually think most of it is a
-very excellent tool; I am just claiming that the PR section of it is
-very bad.)
-
-
-Elijah
+DQoNCj4gT24gMjAxOS4xMS4yMCwgYXQgMTI6MjAsIEpvaG4gU29ja3dlbGwgPEpvaG5AcGxhc3Rp
+Y2NpcmN1cy5jb20+IHdyb3RlOg0KPiANCj4gDQo+IEhlbGxvLA0KPiANCj4gSeKAmXZlIGVuY291
+bnRlcmVkIHVuZXhwZWN0ZWQgYmVoYXZpb3IgdXNpbmcgdGhlIGBnaXQgc3Rhc2ggcG9wIOKAlHF1
+aWV0YCBhZnRlciB0aGUgcG9wIHRoZSBhbGwgdGhlIGZpbGVzIGluIHRoZSByZXBvIGFyZSB1bnRy
+YWNrZWQuDQo+IA0KPiBNeSBzb2Z0d2FyZSB2ZXJzaW9uczogDQo+PiBtYWNPUyBDYXRhbGluYSAx
+MC4xNS4xDQo+PiB6c2ggNS43LjENCj4+IGdpdCAyLjI0LjANCj4gDQo+IFN0ZXBzIHRvIHJlcHJv
+ZHVjZToNCj4+IENyZWF0ZSBhbiBlbXB0eSByZXBvOiBgbWtkaXIgL3RtcC9naXQ7IGNkIC90bXAv
+Z2l0OyBnaXQgaW5pdGANCj4+IENvbW1pdCBhbiBlbXB0eSBmaWxlOiBgdG91Y2ggc2FtcGxlLWZp
+bGU7IGdpdCBhZGQgc2FtcGxlLWZpbGU7IGdpdCBjb21taXQgLS1tZXNzYWdlICJJbml0aWFsIGNv
+bW1pdOKAnWANCj4+IE1vZGlmeSB0aGUgc2FtcGxlIGZpbGU6IGBlY2hvICJtb2RpZmljYXRpb24i
+ID4gc2FtcGxlLWZpbGVgDQo+PiBTdGFzaCB0aGUgZGlydHkgdHJlZTogYGdpdCBzdGFzaCBwdXNo
+YA0KPj4gUG9wIHRoZSBzdGFzaDogYGdpdCBzdGFzaCBwb3BgIOKAlCB3b3JraW5nIHRyZWUgcmV0
+dXJuZWQgdG8gZGlydHkgc3RhdGUgd2l0aCBtb2RpZmllZDogc2FtcGxlIGZpbGUNCj4+IFN0YXNo
+IHRoZSBkaXJ0eSB0cmVlIGFnYWluOiBgZ2l0IHN0YXNoIHB1c2hgDQo+PiBQb3AgdGhlIHN0YXNo
+IHVzaW5nIHRoZSDigJRxdWlldCBvcHRpb246IGBnaXQgc3Rhc2ggcG9wIOKAlHF1aWV0YA0KPiAN
+Cj4gRXhwZWN0ZWQgcmVzdWx0OiBTYW1lIGJlaGF2aW9yIGFzIHdpdGhvdXQgdGhlIOKAlHF1aWV0
+IG9wdGlvbi4gV29ya2luZyB0cmVlIHRvIGFnYWluIGJlIHJldHVybmVkIHRvIGRpcnR5IHN0YXRl
+IHdpdGggbW9kaWZpZWQ6IHNhbXBsZS1maWxlDQo+PiBgZ2l0IHN0YXR1c2ANCj4+IE9uIGJyYW5j
+aCBtYXN0ZXINCj4+IENoYW5nZXMgbm90IHN0YWdlZCBmb3IgY29tbWl0Og0KPj4gICAodXNlICJn
+aXQgYWRkIDxmaWxlPi4uLiIgdG8gdXBkYXRlIHdoYXQgd2lsbCBiZSBjb21taXR0ZWQpDQo+PiAg
+ICh1c2UgImdpdCByZXN0b3JlIDxmaWxlPi4uLiIgdG8gZGlzY2FyZCBjaGFuZ2VzIGluIHdvcmtp
+bmcgZGlyZWN0b3J5KQ0KPj4gCW1vZGlmaWVkOiAgIHNhbXBsZS1maWxlDQo+PiANCj4+IG5vIGNo
+YW5nZXMgYWRkZWQgdG8gY29tbWl0ICh1c2UgImdpdCBhZGQiIGFuZC9vciAiZ2l0IGNvbW1pdCAt
+YeKAnSkNCj4+IA0KPiBBY3R1YWwgcmVzdWx0OiB3b3JraW5nIHRyZWUgaXMgZGlydHkgd2l0aCBh
+IGRpZmZlcmVudCBzZXQgb2YgY2hhbmdlcyBkZWxldGVkOiBzYW1wbGUtZmlsZSwgdW50cmFja2Vk
+IGZpbGVzOiBzYW1wbGUtZmlsZQ0KPj4gYGdpdCBzdGF0dXNgDQo+PiBPbiBicmFuY2ggbWFzdGVy
+DQo+PiBDaGFuZ2VzIHRvIGJlIGNvbW1pdHRlZDoNCj4+ICAgKHVzZSAiZ2l0IHJlc3RvcmUgLS1z
+dGFnZWQgPGZpbGU+Li4uIiB0byB1bnN0YWdlKQ0KPj4gCWRlbGV0ZWQ6ICAgIHNhbXBsZS1maWxl
+DQo+PiANCj4+IFVudHJhY2tlZCBmaWxlczoNCj4+ICAgKHVzZSAiZ2l0IGFkZCA8ZmlsZT4uLi4i
+IHRvIGluY2x1ZGUgaW4gd2hhdCB3aWxsIGJlIGNvbW1pdHRlZCkNCj4+IAlzYW1wbGUtZmlsZQ0K
+PiANCj4gDQoNCg==
