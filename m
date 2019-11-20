@@ -7,95 +7,121 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DDEAC432C0
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 18:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96DAEC432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 19:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 30AF620878
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 18:07:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CEEF206DA
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 19:13:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFnkYgeQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MClNLewr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbfKTSHO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Nov 2019 13:07:14 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34693 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbfKTSHO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Nov 2019 13:07:14 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z188so123072pgb.1
-        for <git@vger.kernel.org>; Wed, 20 Nov 2019 10:07:13 -0800 (PST)
+        id S1726757AbfKTTNA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Nov 2019 14:13:00 -0500
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:38573 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726236AbfKTTNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Nov 2019 14:13:00 -0500
+Received: by mail-wr1-f51.google.com with SMTP id i12so1253965wro.5
+        for <git@vger.kernel.org>; Wed, 20 Nov 2019 11:12:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=h1SlSQWbcHLXMgveYncVhv0a7SokG7W+GmdcJYxfSvg=;
-        b=ZFnkYgeQuqPVT6dOaUA8aXNt/Qfb9L+GcC7vtj+Voyu1QMQUL4njkBG5oPMwQ+i3yL
-         DQ+VCEXhdEFuZgpbg3VlrePodd55f4eSC+QCss6sFKeDO8p/RW4x/M6zpN5tEPPjs2TK
-         AuHZN9P/b2dugjm+KclMEwtEtTCXMDtmOHI7gy8S0EIFtmJPsZxgt+O67PRcfg6OI6BB
-         OkqW3xRy76puHNGwYvbvNF8OWy3JsoCTZcSLKAbG3mKm0M4+lPUEU8lZMm385ccisvjx
-         voy87Cd6GwDpQD7BEUfV+Wk+jDdRYhsNC3585bTjEKPsWutqAnttkO1VCUJ5eZG7mkBl
-         OAtw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=b2rZ8rw2hmZIepRF8DjXFzXFGfecJFSKk8fe25P65yQ=;
+        b=MClNLewrhMhLwpoAdiDTpE6gT5lZyuS/OvWVypuVlkT3CTFgYYxP3XVbrb3CQSmNFX
+         /im2aIrzm7ZJzPcz8vU2zqf/Zhwk2sR7G97A41YPppkmcrXQ/zgmZPmZnC83ON3CDz7U
+         xO1Iv0C2wLLJDPy4+micf3FcOn7PAp9AKkMtvvdRPJqKvZeVaBlB0RioEr/gwjilYIu3
+         hxUn45deCrYCah0ouE1GNHjSYXiTJfcbni4H/bTXlHznE/CQdpzCCNsiwCwQmJm30qpF
+         5QP7MPfOGgBHpha+0QDHNM/zejLkAy3BpZPpM30c+SujVWiTWjU+AgihGJM9djcdgp12
+         bhsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=h1SlSQWbcHLXMgveYncVhv0a7SokG7W+GmdcJYxfSvg=;
-        b=FWzidIcYv5eki8hDUfdFIPqifN5ihQ7sRu1+acxyWoqk2FD3FQvcgoRqQk96q3sWeg
-         6z4aSKHjDpCsbxjtcvjWODYsL9FFsyFRWv7IWy7tMxetZWSufXxRfRLpquKzGIgE2Erz
-         +uAhxhEewL6l3HV7WNE8R5VBT2ZrZuJYphpkX5aAWn89ZD5um63EX6BFso4A4EDMKISY
-         lzaY6hnO9eDOdjh4c8VOsUSiZyIg72HNTCoBz+AZJwfnTsnfUUL6pcf0Sx0jyqhidonh
-         x+2tVVAC4VfKtVJxmRqmXfT/lMW3x9w2ut0FyYJh2+WX/yrzheJHii5V3PR1mmVIW7ik
-         jsow==
-X-Gm-Message-State: APjAAAUvjxzX1U79NZxd9dysBaVNB1MYqWZB3aEAMn8y+i2HtlPUbEuS
-        6rYzoSsamywwABgf0ME249V+LIjT
-X-Google-Smtp-Source: APXvYqySe991yOVnE/0RGew4sPJall1oU1M/3uvEe6TkL6ctXQAKQryN6rY0mGhpVVri8R5d9INByg==
-X-Received: by 2002:a63:2151:: with SMTP id s17mr4767690pgm.46.1574273233320;
-        Wed, 20 Nov 2019 10:07:13 -0800 (PST)
-Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id u65sm29628pfb.35.2019.11.20.10.07.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2019 10:07:12 -0800 (PST)
-Date:   Wed, 20 Nov 2019 10:07:09 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christoph Berg <myon@debian.org>, git@vger.kernel.org
-Subject: Re: git clone git clone some://url
-Message-ID: <20191120180709.GA63368@generichostname>
-References: <20191119141537.GD18924@msg.df7cb.de>
- <xmqqimnfcikf.fsf@gitster-ct.c.googlers.com>
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=b2rZ8rw2hmZIepRF8DjXFzXFGfecJFSKk8fe25P65yQ=;
+        b=kXjVf6HytFl57nZ7bZrn5T1f7phRiy86b8MAupm2uMM4qtXleqGohrifXh8s0fiQW/
+         Bjxx0dBJ6r6G9T7yxWNybsKIxOw4pkF669YaCtd2s4YUYK4JgkCssqpmWxzh3faHcs1c
+         8Wz77O/8UW5Z+vJl7fMbiqUdEJ1VBZ709iYMJeLipbsnsLHa7F60m7MX94Qa5ErJwMCg
+         THFKWCQZ7sT0Cnozxj6Hh39qA1lRKZq+qfurA6QeZDCd6gF/QSLR5GA/mp6oC+CQthTz
+         VT2mO/qp5qyPFMwFP7XljEiMI6749yRbNaAOIsNF53N+xf28rUvmMXryWyuqirWxf1Ir
+         kjnQ==
+X-Gm-Message-State: APjAAAVwIc/T3sFsx1K0zxH8hOcm0tiA5iZyRe8egbZay4mnxYQxdkLR
+        rBXb4VgwiGB4jcJDnUb9XPFEjwp4
+X-Google-Smtp-Source: APXvYqxtFws6PEM6IYC1mtf+NYpUUO425hUJPzIbcex14GoBfxDqg1+lluvCFBca4p4eTaofwhBrKg==
+X-Received: by 2002:adf:e80d:: with SMTP id o13mr5805056wrm.73.1574277178456;
+        Wed, 20 Nov 2019 11:12:58 -0800 (PST)
+Received: from szeder.dev (x4d0c5363.dyn.telefonica.de. [77.12.83.99])
+        by smtp.gmail.com with ESMTPSA id v128sm283040wmb.14.2019.11.20.11.12.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 20 Nov 2019 11:12:57 -0800 (PST)
+Date:   Wed, 20 Nov 2019 20:12:52 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     John Sockwell <John@plasticcircus.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug report: git stash
+Message-ID: <20191120191252.GA13575@szeder.dev>
+References: <3F47D50C-4E1C-4BAC-AFB9-3E908B123278@plasticcircus.com>
+ <DB3F5927-76A4-43F1-8A09-EEB7D0B6F720@plasticcircus.com>
+ <B173575D-E845-498A-A3E4-5AF894215475@plasticcircus.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqimnfcikf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <B173575D-E845-498A-A3E4-5AF894215475@plasticcircus.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 20, 2019 at 12:50:24PM +0900, Junio C Hamano wrote:
-> Christoph Berg <myon@debian.org> writes:
-> 
-> > On some git hosting sites [*], if you copy the repository URL, you'll
-> > actually get "git clone some://url" in the cut buffer. When you then
-> > proceed to do "git clone <paste>" in the next terminal window, the
-> > command executed is actually this:
-> >
-> > $ git clone git clone some://url
-> > fatal: Too many arguments.
-> 
-> Or
-> 
->     $ git git clone some://usr
->     $ git git git diff
+On Wed, Nov 20, 2019 at 05:26:12PM +0000, John Sockwell wrote:
+> > I’ve encountered unexpected behavior using the `git stash pop —quiet` after the pop the all the files in the repo are untracked.
+> > 
+> > My software versions: 
+> >> macOS Catalina 10.15.1
+> >> zsh 5.7.1
+> >> git 2.24.0
+> > 
+> > Steps to reproduce:
+> >> Create an empty repo: `mkdir /tmp/git; cd /tmp/git; git init`
+> >> Commit an empty file: `touch sample-file; git add sample-file; git commit --message "Initial commit”`
+> >> Modify the sample file: `echo "modification" > sample-file`
+> >> Stash the dirty tree: `git stash push`
+> >> Pop the stash: `git stash pop` — working tree returned to dirty state with modified: sample file
+> >> Stash the dirty tree again: `git stash push`
+> >> Pop the stash using the —quiet option: `git stash pop —quiet`
+> > 
+> > Expected result: Same behavior as without the —quiet option. Working tree to again be returned to dirty state with modified: sample-file
+> >> `git status`
+> >> On branch master
+> >> Changes not staged for commit:
+> >>   (use "git add <file>..." to update what will be committed)
+> >>   (use "git restore <file>..." to discard changes in working directory)
+> >> 	modified:   sample-file
+> >> 
+> >> no changes added to commit (use "git add" and/or "git commit -a”)
+> >> 
+> > Actual result: working tree is dirty with a different set of changes deleted: sample-file, untracked files: sample-file
+> >> `git status`
+> >> On branch master
+> >> Changes to be committed:
+> >>   (use "git restore --staged <file>..." to unstage)
+> >> 	deleted:    sample-file
+> >> 
+> >> Untracked files:
+> >>   (use "git add <file>..." to include in what will be committed)
+> >> 	sample-file
 
-That's why I have `git config alias.git !git` set. It's saved me seconds
-of my life from having to retype these lines. ;)
+Thanks for the bug report.  It's a known issue that was indeed
+introduced in v2.24.0, and we already have a fix for it in commit
+df53c80822 (stash: make sure we have a valid index before writing it,
+2019-11-13).
 
-Unfortunately, I don't think we can take a similar approach for the
-`git clone git clone ...` case.
+The previous bug report and related discussion can be found at:
 
-> ;-)
-> 
-> I seriously doubt "git" should do anything funky when fed such
-> command lines.
-> 
+  https://public-inbox.org/git/20191113150136.GB3047@cat/T/#u
+
+Perhaps the fix will make it to a v2.24.0.1 soon-ish.
+
