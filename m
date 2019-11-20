@@ -7,75 +7,87 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B6AC432C3
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B7852C432C0
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:42:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BBB012250F
-	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:20:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C9BD22520
+	for <git@archiver.kernel.org>; Wed, 20 Nov 2019 12:42:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BER/gqOK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVA7w6nV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729652AbfKTMUK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Nov 2019 07:20:10 -0500
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:44275 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728611AbfKTMUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Nov 2019 07:20:09 -0500
-Received: by mail-lf1-f53.google.com with SMTP id n186so7564875lfd.11
-        for <git@vger.kernel.org>; Wed, 20 Nov 2019 04:20:08 -0800 (PST)
+        id S1729888AbfKTMmr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Nov 2019 07:42:47 -0500
+Received: from mail-il1-f175.google.com ([209.85.166.175]:39303 "EHLO
+        mail-il1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729871AbfKTMmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Nov 2019 07:42:47 -0500
+Received: by mail-il1-f175.google.com with SMTP id a7so23269550ild.6
+        for <git@vger.kernel.org>; Wed, 20 Nov 2019 04:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Iz2+b9bsjcv3o31MBqlTWAyXM2cO6hf75pHJbOlmpWE=;
-        b=BER/gqOKqAoq87AIquARz40Q1J4WHbQ6l4YZGfzFjaB5Vsk2m5W6U8lFnq1sW0yj9t
-         a4xcGQW+BlIRx1RJNb3e7cqv36+Akw5/T1z3HLLW4N8kP60Ed1IZE25X2kE2n4AHdi9W
-         Vy0/eD1560Uyu6AfcAfiD2El5RDvOAsWxyPpr/lOjCI5I+s+Xe0dVfBrzrYr97FoN3eq
-         I/+ROyI1T/wxBvtGVLr2arp5eCbEE2/p2Hydfp+zXMT4JrZTpq0ygdkfPqbqrtuE+S5E
-         OKmDYW6qZAd1NQ2799DfMabT1NMcP/BB17xsH3QC7WCWrIzb7i0/+xflNohSSn1Gz8w6
-         Gy3A==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=RgiVarp2NX5Ll5BYGEUD9M1gyWmpHzKb8Sue6vsmPWU=;
+        b=XVA7w6nVam98eeCLfJWjL/yu5xasheDA/E9/sGz/WUORoTqO13n1d2u/VNJHYvNNb8
+         V1xjUfXriIr48Jgg4RZ+yrhAPm+fv2poFXrrFsMWRF6p3oMiv5zm2x3uliZyFPYBl/Og
+         ztSX+CxVG0hWVgIYyTk+fii2Q4KdyHRHDly96uyaKJ1g4kHR7MODX4xlZo7rGKC+1lRQ
+         Z/vaUSw/aptgEf8LU4eqfkHRyuto5AbyAL52z0LyiH3Y/VABzlzEbTNMEfQEDaXEbJXL
+         l8mdB5Tb1gvTO7bT8/EcyVr9Yf1N5RXpQDO4o0F5DXJ6etU0F8GzQvl+pxXM67Wjq0no
+         N6qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Iz2+b9bsjcv3o31MBqlTWAyXM2cO6hf75pHJbOlmpWE=;
-        b=tiGtKUU11Y/B0kiG3fPwB6r5GbX3bRxBJ9YezPxO2n+EUzXl1I52iw5+zfRRFB/JcY
-         pLkQmFbwCh8HHbtqLtIzYld/25w59nJbOSLWZ0391qfymje9rVtce1ZnoAMuEHKVw4mB
-         UwbZirjA72lUkE3Jy1eJw5qFWTeOZxEr8CLaGIe3z7z2LgBW3xO1QOr+0r2Fz0l+AfMU
-         ye6bfw2bAtxi/RbVh5nbkOotY+j6T1yfGCyAvTPYXaskqmrTlI+GR5TQKjpdaeKvRd3e
-         MfYgiSiBlgOgAO+otiORQ5qmaHfkfyu/tOnUAgoRaJRavQ4PB6nKrMLfnl8kdl31Trnf
-         Iw1g==
-X-Gm-Message-State: APjAAAUhIc7+A7mA+FkVGH3MFp2ayBwOOHLrs7TkbC5kWrzMCY8XtR/T
-        3WzA/fbWspk20cmA0lg0V0/8kqfEeGAr/kYqiPM/P/T5
-X-Google-Smtp-Source: APXvYqzrwNM+53K7fE6dmqrqCAjg7iAIb1uzBnC6SzEq9kXjJDR0p6whZvUKuFxkatHAasGVg0GAchhlISSWPJXKK/A=
-X-Received: by 2002:a05:6512:20e:: with SMTP id a14mr2459249lfo.63.1574252407736;
- Wed, 20 Nov 2019 04:20:07 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=RgiVarp2NX5Ll5BYGEUD9M1gyWmpHzKb8Sue6vsmPWU=;
+        b=aGUWkZ/b4yxsWGGciFZXq6nCQervZgHPVeapUCn9XRE72ut2gkFctECQrEcebzVdaD
+         ww/Tz0WABzDJlibkz7IN54tM9KS2YTT8BdIpPIXmviYwLX49xHVVmgrjaC5vbfBetVY7
+         CnEkmBdOkagPdJCZhbqFYTtWPonq2WDAFlSsU33h1WV9eSDXNwUH2gUWmKXb8/kdObly
+         JsbCP9dlmuB5vgwyAM9IW2idzPvKmHmUuEzXfxxO0ZaHvcFeZO1QFTwO6ZeGAxOH+vU1
+         Xqvct0IJSLHE9lgNW0RGhjTN9myIpjwdApB2hE57R6X+IK2iPiutIF3c1T9ldY2OyTFI
+         5aEQ==
+X-Gm-Message-State: APjAAAX2GtzFtb+wvrip9m2Das9rJfhL55CuQ2RhJFfGzxBQrOOKLcfv
+        0v2UrCBMvjQytSNIpTovH5t8a/wgNgUNO4WufcABZu93
+X-Google-Smtp-Source: APXvYqxQNnQwy4+ug9+fpFwHbFM3tcuu59lb1nLg2ZR7c1b7RvfMw8iqKO48t2ZdwlWorYfPLd9f2t2vSLo6xzsYkj0=
+X-Received: by 2002:a92:6a07:: with SMTP id f7mr3312569ilc.41.1574253766209;
+ Wed, 20 Nov 2019 04:42:46 -0800 (PST)
 MIME-Version: 1.0
-References: <20191023201310.thzpxyoeb3ta55dc@yadavpratyush.com>
- <CABPp-BEHy8c3raHwf9aFXvXN0smf_WwCcNiYxQBwh7W6An60qQ@mail.gmail.com>
- <86k18rbbyz.fsf@gmail.com> <CABPp-BG2SkH0GrRYpHLfp2Wey91ThwQoTgf9UmPa9f5Szn+v3Q@mail.gmail.com>
-In-Reply-To: <CABPp-BG2SkH0GrRYpHLfp2Wey91ThwQoTgf9UmPa9f5Szn+v3Q@mail.gmail.com>
-From:   Birger Skogeng Pedersen <birger.sp@gmail.com>
-Date:   Wed, 20 Nov 2019 13:19:22 +0100
-Message-ID: <CAGr--=LKBq17XSLpe=uJbEPSfCp5Fpi_uw4d87DgJ8-S4Md0kQ@mail.gmail.com>
-Subject: Re: RFC: Moving git-gui development to GitHub
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Wed, 20 Nov 2019 07:41:23 -0500
+Message-ID: <CAH8yC8n+ta4BSAE4rEfhKxe3T9poVdc94HvSk=6PEA4YbmwVyA@mail.gmail.com>
+Subject: Commit signing and pinentry problems
+To:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hei Elijah,
+Hi Everyone,
 
-On Wed, Oct 30, 2019 at 7:21 AM Elijah Newren <newren@gmail.com> wrote:
-> Projects which switch to GitHub tend to have overall commit quality go
-> down IMO, because the system (a) makes it nearly impossible to review
-> commit messages, so people eventually degrade to writing really bad
-> ones,
-What do you mean here, exactly? In what way is it "nearly impossible"
-to review commit messages in GH?
+I'm having an annoying problem that I can't figure out. I hope Git has
+a setting to fix it.
 
-br
-Birger
+I have a desktop workstation where I sit at the keyboard about 1/3 of
+the time. Git signing works as expected. About 2/3 of the time I SSH
+into the machine. Git signing does not work when SSH'd in.
+
+When Git signing fails over SSH an error looks like:
+
+   $ git commit -S log.h -m "Remove unneeded header"
+   error: gpg failed to sign the data
+   fatal: failed to write commit object
+
+I just noticed this today (but it makes sense)...
+
+    - Go to desktop workstation, log in
+    - Go to remote machine, log in
+    - Sign at remote machine over SSH
+      - Desktop workstation will open GUI password prompt
+      - Remote machine sign operation will hang until GUI prompt times-out
+
+The problem was reported to Ubuntu but no activity:
+https://bugs.launchpad.net/ubuntu/+source/pinentry/+bug/1852696 .
+
+Does anyone know how to use Git to work around pinentry brain-dead-ness?
+
+Thanks in advance.
