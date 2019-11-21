@@ -2,99 +2,103 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A6FC432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 10:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8237C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:11:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FC4920715
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 10:54:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7268620872
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:11:01 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ireXwaA/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726270AbfKUKyP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 05:54:15 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56890 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726014AbfKUKyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 05:54:15 -0500
-Received: (qmail 11976 invoked by uid 109); 21 Nov 2019 10:54:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Nov 2019 10:54:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10062 invoked by uid 111); 21 Nov 2019 10:58:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Nov 2019 05:58:03 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Nov 2019 05:54:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: GitGitGadget on git/git, was Re: Should we auto-close PRs on
- git/git?
-Message-ID: <20191121105414.GA16238@sigill.intra.peff.net>
-References: <20191109020037.GB60198@google.com>
- <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet>
- <20191113011020.GB20431@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet>
- <20191114074117.GB17186@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet>
- <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet>
+        id S1726614AbfKULLA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 06:11:00 -0500
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:37971 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726546AbfKULLA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 06:11:00 -0500
+Received: by mail-qk1-f176.google.com with SMTP id e2so2649328qkn.5
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 03:10:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yfun+WUVz2335ozRJvqPS5/2kijp1eXyZBtc9JLv9VQ=;
+        b=ireXwaA/1zdlMfwKn3GFXDRcVx2nF2y4NGC0Mgz7vF9aG35gFHb/S/5nMQxUsMv+nZ
+         gCa9N44ZZWKGGCFIDmq/aoysFE4K81dds/9tKT965EE/iHKNIx3zDxOPEh81SJtvd4c/
+         PIFI04kiaNHyMBwDqU9ZUm9tvxK0AsUR5j1fd/1EL7KenRtKIEqB9cQEBHZCI/8IJYWZ
+         KbTZhziGoLwFJ2OWOBoOzi4+vBBvBVEOd0HbE7oRa7pQWLYgEwHTJH8NVsbJ6QRa8DGU
+         3TjORgSdPokwEgHw9QJUHuZIISWD6DHzmJCPwcIQk1zAawV0kid176z/sHy/cOBpzBlv
+         Xbkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yfun+WUVz2335ozRJvqPS5/2kijp1eXyZBtc9JLv9VQ=;
+        b=BUSIoGyNbkSpoWtyL3JQgH+tbOS5Js7DwQI/HEe+WGgFoWtW+4qCHLWiK1fiuAvBQX
+         0M/R3mO5oxlwWYT/tDCWV1f7N1+wV6RSwvxANhHElHz30nQuZwFfPq7HI8g7N0MGAZD0
+         t17XRb7pyEHr5sT040OTZivuyAoriFuRPno4Vzni6ovTMhFYezHasS3FQUwCmA1jhvvn
+         RVAVHmDwgjmvXzKPiJMqlgCq/0CoIXo2IWqvSB+h4ozshZOyeFT3/zLkSm1KgwC1Qy2J
+         HxMrs3BHO8BIynjBIAyzJJaeLren21vX30OGYxGpPokVGXgCD24bp+G1AG3X6fRghFjh
+         oAng==
+X-Gm-Message-State: APjAAAXfrLDmoA4rISX9FMaK9HU5rPqedmzj7pNcKUgo7KgPFJ6aIUDL
+        9cP3p56jSXK+t6gf99W86EgfhFfvqzA=
+X-Google-Smtp-Source: APXvYqxcHNZ7hghukumWoW2YTOGzyncKXxP5S4sH4xXInNeX7ZyWfczUxalhBearBpm19cvNONP93Q==
+X-Received: by 2002:a05:620a:1a:: with SMTP id j26mr7154328qki.150.1574334658750;
+        Thu, 21 Nov 2019 03:10:58 -0800 (PST)
+Received: from [10.0.1.19] ([98.122.173.75])
+        by smtp.gmail.com with ESMTPSA id a28sm1149505qkn.126.2019.11.21.03.10.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 21 Nov 2019 03:10:58 -0800 (PST)
+Subject: Re: What's cooking in git.git (Nov 2019, #03; Tue, 19)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+References: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
+ <20191119175850.GL23183@szeder.dev>
+ <xmqqzhgrcksn.fsf@gitster-ct.c.googlers.com>
+ <039f7668-53e3-9c6d-d813-ca412c4d1ed2@gmail.com>
+ <xmqqy2wa9ibs.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <dc0bbc13-8204-c6b4-8d3b-db101027fe1c@gmail.com>
+Date:   Thu, 21 Nov 2019 06:10:55 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
+In-Reply-To: <xmqqy2wa9ibs.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 18, 2019 at 07:37:57PM +0100, Johannes Schindelin wrote:
-
-> Yeah, it wasn't easy. But then, who does not like a little challenge,
-> especially the challenge to test things outside of production? So here
-> is a PR: https://github.com/gitgitgadget/gitgitgadget/pull/148
+On 11/20/2019 7:36 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 > 
-> I trust everybody with even rudimentary Javascript skills to be able to
-> provide useful feedback on that PR.
+>>> OK.  I had an impression that it was something relatively easily
+>>> patched to restore the plumbing behaviour without taking the
+>>> remainder of the series with a follow-on work.  If it is not the
+>>> case, perhaps I should revert the merge to 'next' and kick it back
+>>> to 'pu'.
+>>>
+>>> Thanks for stopping me.
+>>
+>> That commit can be ejected from the series without affecting the
+>> correctness of any of the other commits. That will require reverting
+>> the merge at this point, though.
+> 
+> I've done the "reverting" part of everything, so that other patches
+> that need further work, if any, can be given a fresh start.
 
-Wow, thanks for working on this! I don't know that I'd call my
-javascript skills even rudimentary, but I did give it a look. The real
-challenge to me is not the individual lines of code, but understanding
-how the Azure Pipelines and GitHub App systems fit together. So I didn't
-see anything wrong, but I also know very little about those systems.
+I see that more feedback was given, so I'm working on a new version.
 
-Likewise, the explanations in your comments and commit messages all made
-sense to me. But that may also be a false sense of security. You nicely
-led me through reading the patches, but the likely bug would probably be
-one you did not even anticipate. ;)
+Thanks,
+-Stolee
 
-> To build some confidence in my patches (as you probably know, I do not
-> trust reviews as much as I trust real-life testing, although I do prefer
-> to have both) I "kind of" activated it on my fork, limited to act only
-> on comments _I_ made on PRs (and sending only to me instead of the
-> list), and it seems to work all right, so far. I cannot say for sure
-> whether it handles the PR labels correctly, but I guess time will tell,
-> and I will fix bugs as quickly as I can.
-
-Yeah, that makes sense to me. Going from one repo to three is not much
-worse than going to two, so it's good to have a testing area, too.
-
-Do you want any third-party testing there (e.g., a user who isn't you
-making a PR against dscho/git)?
-
-> Question is: should I turn this thing on? I.e. install that
-> GitGitGadget-Git App on https://github.com/git/git? This would allow
-> GitHub users to `/submit` directly from PRs opened in that repository. I
-> am sure that there are a few kinks to work out, but I do think that it
-> should not take long to stabilize.
-
-I'd say "yes". The status quo is probably worse than a system with a few
-bugs. The worst case if it's disastrously wasting submitter's time is
-that we turn it back off, but I have faith that you'd just fix the bugs
-before then anyway.
-
-Is the existing Pipelines integration enough for you to turn it on for
-git/git, or do I need to tweak any settings?
-
--Peff
