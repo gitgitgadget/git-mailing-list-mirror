@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B02C432C0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8841AC43141
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F10CD2068E
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5D5212068E
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uDm4oAor"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J7+TbP/H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbfKUWFX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 17:05:23 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40714 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726813AbfKUWFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726909AbfKUWFW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 17:05:22 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38535 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbfKUWFQ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Nov 2019 17:05:16 -0500
-Received: by mail-wm1-f68.google.com with SMTP id y5so5444025wmi.5
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:05:15 -0800 (PST)
+Received: by mail-wr1-f65.google.com with SMTP id i12so6313023wro.5
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:05:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=EX5YDmS2oMRkwwKDr9GF8nMuKZ8EWcHKff5rZlGTEzI=;
-        b=uDm4oAorcreqhBKRhMdEToobSfwHECmXEwwk74jI/2Tb/qChWGidoRsT3ElKrd+v3G
-         SFpVwa/uGX2DIyVS3j1MdTSqAxw29IEdBShJWxQaP4WvkFDzY2MhQd4g7aj7bX5HBEmR
-         YBgbsrOBlc1/3VMp3q6Iq1MMKNEl0M4/UlBie1Ax5xf7oWehac5Ntgy7aOEj9Qq0+Mqm
-         ksbCZgSRHsT4x73wqja36PrZnmDb0g35IRypraTV5Mv3pNQbawLHRewQ3qTKQfRmkwDy
-         kiW0FqF6kOqZihprSn3EYw8JO+xv+vb1YoFlikofkw2EDJVMN0S3bcI71JrsumRFn/jV
-         ZSow==
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=WrXdb3eI+X2vlTbxqFu8O3zgpIiouKGMmlNb0VYchmk=;
+        b=J7+TbP/H8XKhr6lr0Fcdorq87OsGMKunA0Zei0i0QHGx1C9v7uIWOywrCGYxW9AoiQ
+         lQs5HjNitaT9J6gHcOH3x0ys9+MKyT5LOpo06aCCa8ES0ZeWN7jJSoQZt3uyxUllRF2q
+         D1AEOlE6cy1/CPa7yQ8W8Id/UMGTdZx0FgjT3jUK2iXSX141iACyqiwxm+hYJ+p8YCkQ
+         pzxiweHQK3akJ3faZFhbDCIJHpFKlDNaLgx27hp+T7FiFqu1iX2gJPhz+1z8XLcxtS0c
+         3r86/hmYhmOwqtEXQos/ABDypXLXVGy74z44EYANVkpF9dGpR9WY1R8irXp0HAd4KNGQ
+         Kg/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=EX5YDmS2oMRkwwKDr9GF8nMuKZ8EWcHKff5rZlGTEzI=;
-        b=o8kIB9YezxZ7GqDeD/6UZe/QVr94h1Q7ePZ5PUZpjOxtoQwN3srpm0drf2TvrvClut
-         ABPu9RkWQf2jwk2Dm+dz4kqx8PGkMhzQEwsbTnDqK2UljIcc+tNR7DR2zEGBVNPCU7yC
-         kZ1pgR5u8jJ0XaFeJLYYTiL2RhPR2s51rSiZyXYmBcEfvpQHlUCChC464qOFbADRJt/Q
-         xpJE/K3N6iKpPT4JnyUshe4DDspKqwKK4bHkMLOVwDTrPxOXYXqEi5x5F2fj9SO5sIwK
-         jVLHgJG7qKGDRfOzf7DhWU1DF73Rykx98J6puQOFUaOXm5NdLI1D/JMvdApSAvd6YTl+
-         nNEA==
-X-Gm-Message-State: APjAAAXp/ly9gvfYGe4BgmDAbfHU+QTVQ2cqxueeZTTAk3rx+HZ2M7Us
-        6irtLx/qr1TS8cZ3l8so/cpd6bVJ
-X-Google-Smtp-Source: APXvYqwGW1CNs4JaVCn6uAO35nTuT1+MmBr+YND5IKUKFW6d2TCXwODI0Ho9UziTTXU3axoWbBLhfQ==
-X-Received: by 2002:a05:600c:21c9:: with SMTP id x9mr12746549wmj.54.1574373914537;
-        Thu, 21 Nov 2019 14:05:14 -0800 (PST)
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=WrXdb3eI+X2vlTbxqFu8O3zgpIiouKGMmlNb0VYchmk=;
+        b=NYpJQKajX6Kz2CO1esU4N4nWsMaYBsft1eI7DEHgVdTuEqt1GFyjXs4yne9f0Sfvkn
+         5ywanYS8vwGyJc7rcL6MXdzD6YpEDQ0ybg89nbb0y+kpfh9LCbGb9bM8BER2kx3kwXq2
+         LBI7HlG/st9IYoCb/EqQBTCIM+fgsd837dd0FOlbcPt2k++wjKZw0CTAKCrLwMDXobYB
+         BFhFPoXIvkXZOqzHg5onr9ZhmGCcUbZebYUNBTv7fxnS4Rf5z5Apj8cEEKNYf+oC2H49
+         Uu/D/KjA1uWbumO/8QlLR1nS7j6U6nD2EPTQts/mkgsb4BA6znXMbcC2rt6qI8tW/9o3
+         WDSg==
+X-Gm-Message-State: APjAAAVMD5aFgiD8WKXdkL67V0mpZlcY/zb94oyoZCLA+Zixea3Q8ztR
+        i+zIQV/Cfvl1O+diezy+wwYYoFZf
+X-Google-Smtp-Source: APXvYqyxMxAMw8ZJ109fmbIHEg/w7oMOhOy0pD82W0cYITsdbNbCwv5cgS+GIjGMdkmUOJ5+cOgHOg==
+X-Received: by 2002:a5d:6706:: with SMTP id o6mr13845545wru.54.1574373913817;
+        Thu, 21 Nov 2019 14:05:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t185sm1171896wmf.45.2019.11.21.14.05.13
+        by smtp.gmail.com with ESMTPSA id g8sm1056006wmk.23.2019.11.21.14.05.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 14:05:14 -0800 (PST)
-Message-Id: <a0dca0056a0a20b5cf50e1af90c4c124ac7c9560.1574373892.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2019 14:05:13 -0800 (PST)
+Message-Id: <cc6773e49b70681a9efbaa42d5a78011a0cafb38.1574373892.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v6.git.1574373891.gitgitgadget@gmail.com>
 References: <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
         <pull.316.v6.git.1574373891.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Nov 2019 22:04:48 +0000
-Subject: [PATCH v6 16/19] sparse-checkout: write using lockfile
-Fcc:    Sent
+Date:   Thu, 21 Nov 2019 22:04:47 +0000
+Subject: [PATCH v6 15/19] sparse-checkout: use in-process update for disable
+ subcommand
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     newren@gmail.com, jon@jonsimons.org, szeder.dev@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>,
@@ -78,78 +79,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If two 'git sparse-checkout set' subcommands are launched at the
-same time, the behavior can be unexpected as they compete to write
-the sparse-checkout file and update the working directory.
+The 'git sparse-checkout disable' subcommand returns a user to a
+full working directory. The old process for doing this required
+updating the sparse-checkout file with the "/*" pattern and then
+updating the working directory with core.sparseCheckout enabled.
+Finally, the sparse-checkout file could be removed and the config
+setting disabled.
 
-Take a lockfile around the writes to the sparse-checkout file. In
-addition, acquire this lock around the working directory update
-to avoid two commands updating the working directory in different
-ways.
+However, it is valuable to keep a user's sparse-checkout file
+intact so they can re-enable the sparse-checkout they previously
+used with 'git sparse-checkout init'. This is now possible with
+the in-process mechanism for updating the working directory.
 
+Reported-by: Szeder Gábor <szeder.dev@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 15 +++++++++++----
- t/t1091-sparse-checkout-builtin.sh |  7 +++++++
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ Documentation/git-sparse-checkout.txt |  6 ++++--
+ builtin/sparse-checkout.c             | 25 ++++++++++++-------------
+ t/t1091-sparse-checkout-builtin.sh    |  3 ++-
+ 3 files changed, 18 insertions(+), 16 deletions(-)
 
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 8535f0cf40..b975285673 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -52,8 +52,10 @@ When the `--stdin` option is provided, the patterns are read from
+ standard in as a newline-delimited list instead of from the arguments.
+ 
+ 'disable'::
+-	Remove the sparse-checkout file, set `core.sparseCheckout` to
+-	`false`, and restore the working directory to include all files.
++	Disable the `core.sparseCheckout` config setting, and restore the
++	working directory to include all files. Leaves the sparse-checkout
++	file intact so a later 'git sparse-checkout init' command may
++	return the working directory to the same state.
+ 
+ SPARSE CHECKOUT
+ ---------------
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index a11ea65599..9a620ff014 100644
+index a5d32e4702..a11ea65599 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -170,25 +170,32 @@ static int write_patterns_and_update(struct pattern_list *pl)
+@@ -412,24 +412,23 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ 
+ static int sparse_checkout_disable(int argc, const char **argv)
  {
- 	char *sparse_filename;
- 	FILE *fp;
-+	int fd;
-+	struct lock_file lk = LOCK_INIT;
- 	int result;
+-	char *sparse_filename;
+-	FILE *fp;
++	static const char *empty_base = "";
++	struct pattern_list pl;
++	struct strbuf match_all = STRBUF_INIT;
  
--	result = update_working_directory(pl);
-+	sparse_filename = get_sparse_checkout_filename();
-+	fd = hold_lock_file_for_update(&lk, sparse_filename,
-+				      LOCK_DIE_ON_ERROR);
- 
-+	result = update_working_directory(pl);
- 	if (result) {
-+		rollback_lock_file(&lk);
-+		free(sparse_filename);
- 		clear_pattern_list(pl);
- 		update_working_directory(NULL);
- 		return result;
- 	}
+-	if (set_config(MODE_ALL_PATTERNS))
+-		die(_("failed to change config"));
++	memset(&pl, 0, sizeof(pl));
++	hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
++	hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
++	pl.use_cone_patterns = 0;
++	core_apply_sparse_checkout = 1;
  
 -	sparse_filename = get_sparse_checkout_filename();
--	fp = fopen(sparse_filename, "w");
-+	fp = xfdopen(fd, "w");
- 
- 	if (core_sparse_checkout_cone)
- 		write_cone_to_file(fp, pl);
- 	else
- 		write_patterns_to_file(fp, pl);
- 
+-	fp = xfopen(sparse_filename, "w");
+-	fprintf(fp, "/*\n");
 -	fclose(fp);
-+	fflush(fp);
-+	commit_lock_file(&lk);
++	strbuf_addstr(&match_all, "/*");
++	add_pattern(strbuf_detach(&match_all, NULL), empty_base, 0, &pl, 0);
  
- 	free(sparse_filename);
- 	clear_pattern_list(pl);
+-	core_apply_sparse_checkout = 1;
+-	if (update_working_directory(NULL))
++	if (update_working_directory(&pl))
+ 		die(_("error while refreshing working directory"));
+ 
+-	unlink(sparse_filename);
+-	free(sparse_filename);
+-
++	clear_pattern_list(&pl);
+ 	return set_config(MODE_NO_PATTERNS);
+ }
+ 
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index b8f18e2a09..f074b7f3be 100755
+index 53aeb5980f..b8f18e2a09 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -277,4 +277,11 @@ test_expect_success 'revert to old sparse-checkout on empty update' '
- 	)
+@@ -172,8 +172,9 @@ test_expect_success 'cone mode: warn on bad pattern' '
  '
  
-+test_expect_success 'fail when lock is taken' '
-+	test_when_finished rm -rf repo/.git/info/sparse-checkout.lock &&
-+	touch repo/.git/info/sparse-checkout.lock &&
-+	test_must_fail git -C repo sparse-checkout set deep 2>err &&
-+	test_i18ngrep "File exists" err
-+'
-+
- test_done
+ test_expect_success 'sparse-checkout disable' '
++	test_when_finished rm -rf repo/.git/info/sparse-checkout &&
+ 	git -C repo sparse-checkout disable &&
+-	test_path_is_missing repo/.git/info/sparse-checkout &&
++	test_path_is_file repo/.git/info/sparse-checkout &&
+ 	git -C repo config --list >config &&
+ 	test_must_fail git config core.sparseCheckout &&
+ 	ls repo >dir &&
 -- 
 gitgitgadget
 
