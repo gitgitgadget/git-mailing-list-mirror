@@ -2,124 +2,98 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D230C432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 06:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D02EC432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 07:58:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A6F3820872
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 06:14:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UsNqtN6P"
+	by mail.kernel.org (Postfix) with ESMTP id 57F6B20898
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 07:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726354AbfKUGOj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 01:14:39 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60564 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725842AbfKUGOj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 01:14:39 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0477AD45C;
-        Thu, 21 Nov 2019 01:14:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=EZeWUKTOrXXqoSpvHy3aXsf8zM0=; b=UsNqtN
-        6PuJkZyr6W75NBpZPBS6Sq+ny/pi5utgTnUZ8ctvpjAfiIm4koKbt/ohZRrXPLhv
-        GkSG4oyqFvKU7ByMXjw4DZFkxa7iaAgS300nZ8w4BKS9HUHeTZfxnf+ckBSNSXfr
-        Q0XxO5ftdgCUiylC3WqjYNYm8cedxAPUc9NZU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oh+8KyN4wMzwCodDxWYHLEkwIH58QQnL
-        uWb5ZPzQwFR1963+wjm+LxmakkXfRf9v8IvyqhsOFiFKyNZ/HuBZbOaYE9Lx7dOS
-        8kEoCs7ORWDE0u/F5rCMYhLeQ06w9Kjb7SCldXFxH5s2I2FrWVUnf8FTX3yqWmRL
-        L3pKbmJ2H6k=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 897D8AD45B;
-        Thu, 21 Nov 2019 01:14:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8766DAD459;
-        Thu, 21 Nov 2019 01:14:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        martin.agren@gmail.com, newren@gmail.com,
-        phillip.wood123@gmail.com, t.gummerer@gmail.com
-Subject: Re: [PATCH v5 0/6] rebase -i: support more options
-References: <20190806173638.17510-1-rohit.ashiwal265@gmail.com>
-        <20191101140003.13960-1-rohit.ashiwal265@gmail.com>
-Date:   Thu, 21 Nov 2019 15:14:28 +0900
-In-Reply-To: <20191101140003.13960-1-rohit.ashiwal265@gmail.com> (Rohit
-        Ashiwal's message of "Fri, 1 Nov 2019 19:29:57 +0530")
-Message-ID: <xmqqimnd92nv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726408AbfKUH6i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 02:58:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56804 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725842AbfKUH6i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 02:58:38 -0500
+Received: (qmail 10331 invoked by uid 109); 21 Nov 2019 07:58:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Nov 2019 07:58:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9187 invoked by uid 111); 21 Nov 2019 08:02:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Nov 2019 03:02:26 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 Nov 2019 02:58:37 -0500
+From:   Jeff King <peff@peff.net>
+To:     M Lewis <picevio@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: GitAttributes feature export-ignore works, but -export-ignore
+ (with dash) should also work
+Message-ID: <20191121075837.GA30966@sigill.intra.peff.net>
+References: <01e0a4ab-d809-d968-5671-b731438c2bc4@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 2DD8D204-0C26-11EA-BA9E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <01e0a4ab-d809-d968-5671-b731438c2bc4@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As I hate to leave a mostly done topic hanging around forever, I am
-tempted to queue these fixups on top (instead of squash them in) to
-tie the loose ends after a few weeks' inactivity.
+On Wed, Nov 20, 2019 at 08:44:52AM -0800, M Lewis wrote:
 
-Thanks.
+> When running 'git archive', the .gitattributes file is used to determine
+> paths that should be ignored when building the archive by using
+> 'export-ignore'.
+> But it would be useful to include certain sub-paths in the ignored path.
 
--- >8 --
-Subject: rebase -i: finishes touches to --reset-author-date
+Yeah, that seems like a reasonable goal, and I think we can make it
+work, but the syntax is slightly different.
 
-Clarify the way the `--reset-author-date` option is described,
-and mark its usage string translatable.
+> The git-attribute document says a dash '-' prefix should unset the
+> attribute. It should work with 'export-ignore'
+> 
+> So if I want for example '/mostly_unuseful/needed_a' in my archive, I
+> should be able to specify that in my .gitattributes file like this:
+> 
+>     /mostly_unuseful              export-ignore # do not archive
+>     /mostly_unuseful/needed_a    -export-ignore # do add to archive
+>     /mostly_unuseful/needed_b    -export-ignore # do add to archive
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-rebase.txt | 6 ++++--
- builtin/rebase.c             | 6 +++---
- 2 files changed, 7 insertions(+), 5 deletions(-)
+It doesn't work because the attributes are not applied recursively[1];
+they are applied to the path you specified. By putting the attribute on
+"mostly_unuseful", that doesn't say anything about "needed_a" (from the
+perspective of the attributes system). So removing it from that path
+likewise does nothing; the attribute is still set on the directory.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index c8d54d221d..03809da835 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -392,8 +392,10 @@ See also INCOMPATIBLE OPTIONS below.
- 
- --ignore-date::
- --reset-author-date::
--	Instead of using the given author date, reset it to the
--	current time. This implies --force-rebase.
-+	By default, the author date of the original commit is used
-+	as the author date for the resulting commit.  This option
-+	tells Git to use the current timestamp instead and implies
-+	`--force-rebase`.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 44768082b8..d5c09f159c 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1437,9 +1437,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			 &options.committer_date_is_author_date,
- 			 N_("make committer date match author date")),
- 		OPT_BOOL(0, "reset-author-date", &options.ignore_date,
--			 "ignore author date and use current date"),
--		OPT_BOOL(0, "ignore-date", &options.ignore_date,
--			 "ignore author date and use current date"),
-+			 N_("ignore author date and use current date")),
-+		OPT_HIDDEN_BOOL(0, "ignore-date", &options.ignore_date,
-+				N_("synonym of --reset-autohr-date")),
- 		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
- 				  N_("passed to 'git apply'"), 0),
- 		OPT_BOOL(0, "ignore-whitespace", &options.ignore_whitespace,
+Instead, if you write it like this:
 
+  /mostly_unuseful/**        export-ignore
+  /mostly_unuseful/needed_a -export-ignore
+  /mostly_unuseful/needed_b -export-ignore
 
+Then the attributes are applied directly to the file paths in the first
+line, and the subsequent lines counteract them. This does mean that the
+subdirectory itself isn't marked as export-ignore, and will always be
+included (as an empty directory if need be, though of course in your
+example we do actually end up with some files in it).
+
+Now obviously there is recursion happening inside git-archive, as it
+walks the tree. And the current behavior is that it sees the ignored
+subtree and doesn't walk into it at all. So it _could_ make your
+original example work by actually searching within the tree for any
+paths marked -export-ignore, and including the directory if and only if
+it has unignored entries.
+
+I can't offhand think of anything that would break if we started doing
+that, but I haven't thought too hard. And given that there's already a
+solution using `**`, it might not be worth it.
+
+-Peff
+
+[1] If you're curious, there's some philosophical discussion about this exact issue in
+    https://public-inbox.org/git/7v1uasg8e0.fsf@alter.siamese.dyndns.org/
