@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AD395C43215
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DED74C432C3
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7A8AF206D8
+	by mail.kernel.org (Postfix) with ESMTP id AC2FF206CB
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hRP0RuBc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tCHbm3e1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726716AbfKUWUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726735AbfKUWUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 17:20:33 -0500
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:42829 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbfKUWUc (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Nov 2019 17:20:32 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:45706 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726380AbfKUWUc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 17:20:32 -0500
-Received: by mail-wr1-f52.google.com with SMTP id z10so6297341wrs.12
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:30 -0800 (PST)
+Received: by mail-wr1-f48.google.com with SMTP id a15so6322879wrf.9
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QhdTjpNyLlaQTnceyP3CQGFetOmTYh2FYhesHNIX4gQ=;
-        b=hRP0RuBcGyUmRvK/NxJuYeECO9/Tq13XBR8CERFSsYeOTi5h5FuTXUv25crI6zzpMw
-         AUrfkzxHv5KlY3bGEdgkufYLiM41RkZCjBwIirLkWqfi2QuUdNA6hKmVuBGRfBMIDuGb
-         Cot/hq+tGN2tDmu9zpSx0NGtojOwgUzLRX2riEXL78h1qPpdWmmVVSPN09NeAUp2qQno
-         WM6zJtWkFpMJBTt++X9ibrBJK+FCv7dcryuA6fz0cP+GBwlZ0L15rigSsA1yoqqv5Sly
-         rHjvkbv+xUKOb9uoNFAT2bsQ6WoXckZCbQaG/xyCB4tSGfNXWal4LZjOofnG1dI0cPA9
-         2KcA==
+        bh=I29Vp7df1EIlBApM6eCI7K/dFZdRBtrCCgS97gMiTcM=;
+        b=tCHbm3e1SZgOmkBtH6KsXX45XOsA4juNlhqgFDvX+zDGHW4g8rxUlSvCu9ixs5uPip
+         I1M9kEdKoz4AKlTeoZhJ8oJkoVwsQhhCSKSvcjteptR5M9E2FI3cDbz1uQTnNX0FGyut
+         IVwn4pc+ZEhdYl99R+3Lwh3H163aVzMgv4j0C6pL9mzBcSTe/A2RKgR4N2z7JB3TvyCi
+         kT4LR999jYCrQh77muidnFlfL6gjPLeRRP3gZBCCd6oin1mwrIHssfGEvvS4gcU28eJj
+         CDNL/94iFwRaSiM/7N/HCCTPEdmknZRdR4lDTvJ7yWYxik/YN8SvQMjv3ulMllJnRsSG
+         PDGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QhdTjpNyLlaQTnceyP3CQGFetOmTYh2FYhesHNIX4gQ=;
-        b=HMy8cX+EGpYgbpxmTxfuUwSDShYgj2IaL74YNZxHHc0f2TlS1NYjQfZyUAV2cZ1Med
-         9Tm/cGVvCuMxhNy0vaJZrcn2WfYzL6VDkUbbshwYiSHyBuBRA5pyBbSK3lf6N/8Y8MBl
-         Fm/BGVKm/Z4EmqZBCCtRpdmQOyFvomtsBeDBALFpLcJY2GXsWOTA1i3g1BcaOVubC8zE
-         gk930ABHj1NGoKOZbbtKhnXP7+NqBJvRH3+/1yCYGdtaKSOfqAUNHj4+9puraAza3T9M
-         4IhB6cLCi/uNR6Pt5CKEMFIkJGFg6BPfJ50LFHOOchAg9EVvL+S6UbWM5ioUXHEfK0fN
-         aPsg==
-X-Gm-Message-State: APjAAAXH9k1cW3i8EuhMMdieHxdYs25gGFGx2yjlUakvWI07GZg37CrD
-        /poF6MhMCXbVbRai03TZL76sQjMD
-X-Google-Smtp-Source: APXvYqyrx+8JZvpguqSCWaEuFoqRNcRWC9vIBFYus+z2Czkr+etyzpI/4aVuQEkFVtYS0T6h4nIlVg==
-X-Received: by 2002:a5d:4142:: with SMTP id c2mr14145008wrq.60.1574374830053;
+        bh=I29Vp7df1EIlBApM6eCI7K/dFZdRBtrCCgS97gMiTcM=;
+        b=fHALspgQMOKNW9zBw01sHAYXCcOfMye5kpsUsFd4LN6uE71PliA0JZKKq6/TOAsRKY
+         /DFmUkGkm1CRU1KbcOn+70KKg3yPIPpEH10C6EK75XqW2JNWCZSkY3hITJRYzKaCp8OP
+         drahMLpXLAaCAIJMESXYme34G4je/35DIO2IyRRevndEbfg8ac/xKdzUMfawV2vOcje8
+         n+60WaFKUyBjUt7MZ4S9W1m6iFr7PWGiv2bB07Osk0BK88x1aNpgk5HDiz+pdU6J8fG/
+         1I3JWbVXXzlW2I3vCdfg/dPokdGSfSiW3DfVyroW0HrAsdbIIsXeI+shR52pawUuMc4m
+         bwFg==
+X-Gm-Message-State: APjAAAVXEAetY06CNagep0Qjixgq7jDUPdEa/3RUST33eA2b6d+wgzQa
+        CEnI/Y9YVARYZ+ASMoBr8isJNfYp
+X-Google-Smtp-Source: APXvYqzYnPqn7aMJfRxP3Mo/PHotGcQ5Dr880Piu1hjKN8ViDigFCkgs7iFbE65jJ5NwyKcYiYaGtg==
+X-Received: by 2002:adf:e2c1:: with SMTP id d1mr3632858wrj.130.1574374830732;
         Thu, 21 Nov 2019 14:20:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d7sm5141191wrx.11.2019.11.21.14.20.29
+        by smtp.gmail.com with ESMTPSA id u18sm4976187wrp.14.2019.11.21.14.20.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 14:20:29 -0800 (PST)
-Message-Id: <91797769825438318d243b4dfddd6784b733fe4d.1574374826.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2019 14:20:30 -0800 (PST)
+Message-Id: <81c587651e31d157c37c813650788bd5b88a9433.1574374826.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Nov 2019 22:20:19 +0000
-Subject: [PATCH 04/11] t1510-repo-setup.sh: disable fsmonitor if no .git dir
+Date:   Thu, 21 Nov 2019 22:20:20 +0000
+Subject: [PATCH 05/11] fsmonitor: disable fsmonitor with worktrees
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,21 +78,21 @@ From: Derrick Stolee <dstolee@microsoft.com>
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1510-repo-setup.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/t2400-worktree-add.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 9974457f56..28dce0c26f 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -775,6 +775,7 @@ test_expect_success '#29: setup' '
- 	setup_repo 29 non-existent gitfile true &&
- 	mkdir -p 29/sub/sub 29/wt/sub &&
- 	(
-+		GIT_TEST_FSMONITOR="" &&
- 		cd 29 &&
- 		GIT_WORK_TREE="$here/29" &&
- 		export GIT_WORK_TREE &&
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index e819ba741e..d4d3cbae0f 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -1,5 +1,7 @@
+ #!/bin/sh
+ 
++GIT_TEST_FSMONITOR=""
++
+ test_description='test git worktree add'
+ 
+ . ./test-lib.sh
 -- 
 gitgitgadget
 
