@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEA75C43215
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27B02C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BCED8206D8
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F10CD2068E
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:05:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1AJzlLD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uDm4oAor"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbfKUWFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 17:05:21 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35826 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726792AbfKUWFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726912AbfKUWFX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 17:05:23 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40714 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726813AbfKUWFQ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 21 Nov 2019 17:05:16 -0500
-Received: by mail-wm1-f67.google.com with SMTP id 8so5496840wmo.0
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:05:13 -0800 (PST)
+Received: by mail-wm1-f68.google.com with SMTP id y5so5444025wmi.5
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qvP7nsMmPV7mOGwJ1al5h9COXtfc1yRa2KCmKVgUN6M=;
-        b=X1AJzlLDGL1gv5p2WbfI3EOXi+434MiGt0FjYF0GoLRevtLdOkhIBxojdmeq6LEEDN
-         60VMqFA9WtjWAOOhYRsgXCMQpQDcrI8izF13bdaGRupq8ggziJ2PMgyFyfDVtGF+5qyq
-         vllAroQnIk7djIroRvH7IXFa1eC8htdpXnEPksJAe6hUQd6DBNexKgayyjs35YU3A6pM
-         Or6gYtlbndEzTyKNsibkKzDdqTDO/HTPtYpCTCHgs1Qd0oViLI7luM7sn72b/PcfWcVR
-         5tDtDfbPnWaQhpILvPeVDkbQh8YTLHtcaFTmd6QMyvRdLZgQ2q3Qp10vwpdfYwfW1tjF
-         /PIA==
+        bh=EX5YDmS2oMRkwwKDr9GF8nMuKZ8EWcHKff5rZlGTEzI=;
+        b=uDm4oAorcreqhBKRhMdEToobSfwHECmXEwwk74jI/2Tb/qChWGidoRsT3ElKrd+v3G
+         SFpVwa/uGX2DIyVS3j1MdTSqAxw29IEdBShJWxQaP4WvkFDzY2MhQd4g7aj7bX5HBEmR
+         YBgbsrOBlc1/3VMp3q6Iq1MMKNEl0M4/UlBie1Ax5xf7oWehac5Ntgy7aOEj9Qq0+Mqm
+         ksbCZgSRHsT4x73wqja36PrZnmDb0g35IRypraTV5Mv3pNQbawLHRewQ3qTKQfRmkwDy
+         kiW0FqF6kOqZihprSn3EYw8JO+xv+vb1YoFlikofkw2EDJVMN0S3bcI71JrsumRFn/jV
+         ZSow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qvP7nsMmPV7mOGwJ1al5h9COXtfc1yRa2KCmKVgUN6M=;
-        b=A3VXUMh6aN4jWGAlvrE3qg4zZUO7XhwPw975AUy5jUz84lp632KbEFMQStxEB3bC1d
-         0xVgm6PTsEFh3nQrUnygf3F8xyO7rX1oscTWmJ+5Bxkn0LXna/YH0j7BMfqpNiTIGEJV
-         60Su/6E3h46d9e3x7XEhlkxCsaQ799R+Wl2PuOIZorn1Oz8q4lQn0lqA7WV2Ul+xocgI
-         eIB1hEbFmveW4Pws1BY6DMRCDcLN5MsYnpQya1WwmqFHYx2LW8+Le91uUEhH2iJGkjxq
-         lcj6+TcdEqmau1je/FfJL1BMwWrD7wJS01hgmjsUzzlIomEG8NcNqnGn4HemDI1CXA8B
-         A1RQ==
-X-Gm-Message-State: APjAAAVJ8sge6m0TYm2q5PHWh0a1gZGYIYmQ0RX0kaPfipb85FWY/X7l
-        aG/OB0y9Uusccpr7h7rhs7di0si1
-X-Google-Smtp-Source: APXvYqwRZu1Nq/ohX98bNvqutEPPfqzdK/A26E3RObWPbTI95BlOC/ciymKNb/3urm7gf2TxHI4R8w==
-X-Received: by 2002:a1c:e308:: with SMTP id a8mr12946844wmh.55.1574373913056;
-        Thu, 21 Nov 2019 14:05:13 -0800 (PST)
+        bh=EX5YDmS2oMRkwwKDr9GF8nMuKZ8EWcHKff5rZlGTEzI=;
+        b=o8kIB9YezxZ7GqDeD/6UZe/QVr94h1Q7ePZ5PUZpjOxtoQwN3srpm0drf2TvrvClut
+         ABPu9RkWQf2jwk2Dm+dz4kqx8PGkMhzQEwsbTnDqK2UljIcc+tNR7DR2zEGBVNPCU7yC
+         kZ1pgR5u8jJ0XaFeJLYYTiL2RhPR2s51rSiZyXYmBcEfvpQHlUCChC464qOFbADRJt/Q
+         xpJE/K3N6iKpPT4JnyUshe4DDspKqwKK4bHkMLOVwDTrPxOXYXqEi5x5F2fj9SO5sIwK
+         jVLHgJG7qKGDRfOzf7DhWU1DF73Rykx98J6puQOFUaOXm5NdLI1D/JMvdApSAvd6YTl+
+         nNEA==
+X-Gm-Message-State: APjAAAXp/ly9gvfYGe4BgmDAbfHU+QTVQ2cqxueeZTTAk3rx+HZ2M7Us
+        6irtLx/qr1TS8cZ3l8so/cpd6bVJ
+X-Google-Smtp-Source: APXvYqwGW1CNs4JaVCn6uAO35nTuT1+MmBr+YND5IKUKFW6d2TCXwODI0Ho9UziTTXU3axoWbBLhfQ==
+X-Received: by 2002:a05:600c:21c9:: with SMTP id x9mr12746549wmj.54.1574373914537;
+        Thu, 21 Nov 2019 14:05:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x9sm4706982wru.32.2019.11.21.14.05.12
+        by smtp.gmail.com with ESMTPSA id t185sm1171896wmf.45.2019.11.21.14.05.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 14:05:12 -0800 (PST)
-Message-Id: <63e01c202162689e5b8c9adff8ce140219a0bebe.1574373892.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2019 14:05:14 -0800 (PST)
+Message-Id: <a0dca0056a0a20b5cf50e1af90c4c124ac7c9560.1574373892.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.316.v6.git.1574373891.gitgitgadget@gmail.com>
 References: <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
         <pull.316.v6.git.1574373891.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Nov 2019 22:04:46 +0000
-Subject: [PATCH v6 14/19] sparse-checkout: update working directory in-process
+Date:   Thu, 21 Nov 2019 22:04:48 +0000
+Subject: [PATCH v6 16/19] sparse-checkout: write using lockfile
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,269 +78,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The sparse-checkout builtin used 'git read-tree -mu HEAD' to update the
-skip-worktree bits in the index and to update the working directory.
-This extra process is overly complex, and prone to failure. It also
-requires that we write our changes to the sparse-checkout file before
-trying to update the index.
+If two 'git sparse-checkout set' subcommands are launched at the
+same time, the behavior can be unexpected as they compete to write
+the sparse-checkout file and update the working directory.
 
-Remove this extra process call by creating a direct call to
-unpack_trees() in the same way 'git read-tree -mu HEAD' does. In
-addition, provide an in-memory list of patterns so we can avoid
-reading from the sparse-checkout file. This allows us to test a
-proposed change to the file before writing to it.
-
-An earlier version of this patch included a bug when the 'set' command
-failed due to the "Sparse checkout leaves no entry on working directory"
-error. It would not rollback the index.lock file, so the replay of the
-old sparse-checkout specification would fail. A test in t1091 now
-covers that scenario.
+Take a lockfile around the writes to the sparse-checkout file. In
+addition, acquire this lock around the working directory update
+to avoid two commands updating the working directory in different
+ways.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/read-tree.c                |  2 +-
- builtin/sparse-checkout.c          | 83 +++++++++++++++++++++++++-----
- t/t1091-sparse-checkout-builtin.sh | 28 ++++++++++
- unpack-trees.c                     |  5 +-
- unpack-trees.h                     |  3 +-
- 5 files changed, 105 insertions(+), 16 deletions(-)
+ builtin/sparse-checkout.c          | 15 +++++++++++----
+ t/t1091-sparse-checkout-builtin.sh |  7 +++++++
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index ca5e655d2f..af7424b94c 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -185,7 +185,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 
- 	if (opts.reset || opts.merge || opts.prefix) {
- 		if (read_cache_unmerged() && (opts.prefix || opts.merge))
--			die("You need to resolve your current index first");
-+			die(_("You need to resolve your current index first"));
- 		stage = opts.merge = 1;
- 	}
- 	resolve_undo_clear();
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 55b337ad8e..a5d32e4702 100644
+index a11ea65599..9a620ff014 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -7,6 +7,11 @@
- #include "run-command.h"
- #include "strbuf.h"
- #include "string-list.h"
-+#include "cache.h"
-+#include "cache-tree.h"
-+#include "lockfile.h"
-+#include "resolve-undo.h"
-+#include "unpack-trees.h"
- 
- static char const * const builtin_sparse_checkout_usage[] = {
- 	N_("git sparse-checkout (init|list|set|disable) <options>"),
-@@ -60,18 +65,54 @@ static int sparse_checkout_list(int argc, const char **argv)
- 	return 0;
- }
- 
--static int update_working_directory(void)
-+static int update_working_directory(struct pattern_list *pl)
- {
--	struct argv_array argv = ARGV_ARRAY_INIT;
- 	int result = 0;
--	argv_array_pushl(&argv, "read-tree", "-m", "-u", "HEAD", NULL);
-+	struct unpack_trees_options o;
-+	struct lock_file lock_file = LOCK_INIT;
-+	struct object_id oid;
-+	struct tree *tree;
-+	struct tree_desc t;
-+	struct repository *r = the_repository;
- 
--	if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
--		error(_("failed to update index with new sparse-checkout patterns"));
--		result = 1;
--	}
-+	if (repo_read_index_unmerged(r))
-+		die(_("you need to resolve your current index first"));
-+
-+	if (get_oid("HEAD", &oid))
-+		return 0;
-+
-+	tree = parse_tree_indirect(&oid);
-+	parse_tree(tree);
-+	init_tree_desc(&t, tree->buffer, tree->size);
-+
-+	memset(&o, 0, sizeof(o));
-+	o.verbose_update = isatty(2);
-+	o.merge = 1;
-+	o.update = 1;
-+	o.fn = oneway_merge;
-+	o.head_idx = -1;
-+	o.src_index = r->index;
-+	o.dst_index = r->index;
-+	o.skip_sparse_checkout = 0;
-+	o.pl = pl;
-+	o.keep_pattern_list = !!pl;
-+
-+	resolve_undo_clear_index(r->index);
-+	setup_work_tree();
-+
-+	cache_tree_free(&r->index->cache_tree);
-+
-+	repo_hold_locked_index(r, &lock_file, LOCK_DIE_ON_ERROR);
-+
-+	core_apply_sparse_checkout = 1;
-+	result = unpack_trees(1, &t, &o);
-+
-+	if (!result) {
-+		prime_cache_tree(r, r->index, tree);
-+		write_locked_index(r->index, &lock_file, COMMIT_LOCK);
-+	} else
-+		rollback_lock_file(&lock_file);
- 
--	argv_array_clear(&argv);
- 	return result;
- }
- 
-@@ -129,6 +170,15 @@ static int write_patterns_and_update(struct pattern_list *pl)
+@@ -170,25 +170,32 @@ static int write_patterns_and_update(struct pattern_list *pl)
  {
  	char *sparse_filename;
  	FILE *fp;
-+	int result;
-+
++	int fd;
++	struct lock_file lk = LOCK_INIT;
+ 	int result;
+ 
+-	result = update_working_directory(pl);
++	sparse_filename = get_sparse_checkout_filename();
++	fd = hold_lock_file_for_update(&lk, sparse_filename,
++				      LOCK_DIE_ON_ERROR);
+ 
 +	result = update_working_directory(pl);
-+
-+	if (result) {
-+		clear_pattern_list(pl);
-+		update_working_directory(NULL);
-+		return result;
-+	}
- 
- 	sparse_filename = get_sparse_checkout_filename();
- 	fp = fopen(sparse_filename, "w");
-@@ -139,9 +189,11 @@ static int write_patterns_and_update(struct pattern_list *pl)
- 		write_patterns_to_file(fp, pl);
- 
- 	fclose(fp);
-+
- 	free(sparse_filename);
-+	clear_pattern_list(pl);
- 
--	return update_working_directory();
-+	return 0;
- }
- 
- enum sparse_checkout_mode {
-@@ -199,7 +251,11 @@ static int sparse_checkout_init(int argc, const char **argv)
- 			     builtin_sparse_checkout_init_options,
- 			     builtin_sparse_checkout_init_usage, 0);
- 
--	mode = init_opts.cone_mode ? MODE_CONE_PATTERNS : MODE_ALL_PATTERNS;
-+	if (init_opts.cone_mode) {
-+		mode = MODE_CONE_PATTERNS;
-+		core_sparse_checkout_cone = 1;
-+	} else
-+		mode = MODE_ALL_PATTERNS;
- 
- 	if (set_config(mode))
- 		return 1;
-@@ -230,7 +286,8 @@ static int sparse_checkout_init(int argc, const char **argv)
+ 	if (result) {
++		rollback_lock_file(&lk);
++		free(sparse_filename);
+ 		clear_pattern_list(pl);
+ 		update_working_directory(NULL);
+ 		return result;
  	}
  
- reset_dir:
--	return update_working_directory();
-+	core_apply_sparse_checkout = 1;
-+	return update_working_directory(NULL);
- }
+-	sparse_filename = get_sparse_checkout_filename();
+-	fp = fopen(sparse_filename, "w");
++	fp = xfdopen(fd, "w");
  
- static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *path)
-@@ -311,6 +368,7 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+ 	if (core_sparse_checkout_cone)
+ 		write_cone_to_file(fp, pl);
+ 	else
+ 		write_patterns_to_file(fp, pl);
  
- 		hashmap_init(&pl.recursive_hashmap, pl_hashmap_cmp, NULL, 0);
- 		hashmap_init(&pl.parent_hashmap, pl_hashmap_cmp, NULL, 0);
-+		pl.use_cone_patterns = 1;
+-	fclose(fp);
++	fflush(fp);
++	commit_lock_file(&lk);
  
- 		if (set_opts.use_stdin) {
- 			while (!strbuf_getline(&line, stdin))
-@@ -365,7 +423,8 @@ static int sparse_checkout_disable(int argc, const char **argv)
- 	fprintf(fp, "/*\n");
- 	fclose(fp);
- 
--	if (update_working_directory())
-+	core_apply_sparse_checkout = 1;
-+	if (update_working_directory(NULL))
- 		die(_("error while refreshing working directory"));
- 
- 	unlink(sparse_filename);
+ 	free(sparse_filename);
+ 	clear_pattern_list(pl);
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index b88d08da98..53aeb5980f 100755
+index b8f18e2a09..f074b7f3be 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -248,4 +248,32 @@ test_expect_success 'cone mode: set with nested folders' '
- 	test_cmp repo/.git/info/sparse-checkout expect
+@@ -277,4 +277,11 @@ test_expect_success 'revert to old sparse-checkout on empty update' '
+ 	)
  '
  
-+test_expect_success 'revert to old sparse-checkout on bad update' '
-+	echo update >repo/deep/deeper2/a &&
-+	cp repo/.git/info/sparse-checkout expect &&
-+	test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
-+	test_i18ngrep "Cannot update sparse checkout" err &&
-+	test_cmp repo/.git/info/sparse-checkout expect &&
-+	ls repo/deep >dir &&
-+	cat >expect <<-EOF &&
-+		a
-+		deeper1
-+		deeper2
-+	EOF
-+	test_cmp dir expect
-+'
-+
-+test_expect_success 'revert to old sparse-checkout on empty update' '
-+	git init empty-test &&
-+	(
-+		echo >file &&
-+		git add file &&
-+		git commit -m "test" &&
-+		test_must_fail git sparse-checkout set nothing 2>err &&
-+		test_i18ngrep "Sparse checkout leaves no entry on working directory" err &&
-+		test_i18ngrep ! ".git/index.lock" err &&
-+		git sparse-checkout set file
-+	)
++test_expect_success 'fail when lock is taken' '
++	test_when_finished rm -rf repo/.git/info/sparse-checkout.lock &&
++	touch repo/.git/info/sparse-checkout.lock &&
++	test_must_fail git -C repo sparse-checkout set deep 2>err &&
++	test_i18ngrep "File exists" err
 +'
 +
  test_done
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8bb684ad62..3789a22cf0 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1511,7 +1511,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	memset(&pl, 0, sizeof(pl));
- 	if (!core_apply_sparse_checkout || !o->update)
- 		o->skip_sparse_checkout = 1;
--	if (!o->skip_sparse_checkout) {
-+	if (!o->skip_sparse_checkout && !o->pl) {
- 		char *sparse = git_pathdup("info/sparse-checkout");
- 		pl.use_cone_patterns = core_sparse_checkout_cone;
- 		if (add_patterns_from_file_to_list(sparse, "", 0, &pl, NULL) < 0)
-@@ -1684,7 +1684,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 
- done:
- 	trace_performance_leave("unpack_trees");
--	clear_pattern_list(&pl);
-+	if (!o->keep_pattern_list)
-+		clear_pattern_list(&pl);
- 	return ret;
- 
- return_failed:
-diff --git a/unpack-trees.h b/unpack-trees.h
-index f2eee0c7c5..ca94a421a5 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -59,7 +59,8 @@ struct unpack_trees_options {
- 		     quiet,
- 		     exiting_early,
- 		     show_all_errors,
--		     dry_run;
-+		     dry_run,
-+		     keep_pattern_list;
- 	const char *prefix;
- 	int cache_bottom;
- 	struct dir_struct *dir;
 -- 
 gitgitgadget
 
