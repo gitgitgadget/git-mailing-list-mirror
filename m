@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AC60C33CA1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5EE5C33CA4
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 41D24206DA
+	by mail.kernel.org (Postfix) with ESMTP id B9A57206D8
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMXJyAKL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsjV1q8R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726784AbfKUWUf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 17:20:35 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39700 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726510AbfKUWUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 17:20:34 -0500
-Received: by mail-wr1-f68.google.com with SMTP id y11so3240076wrt.6
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:33 -0800 (PST)
+        id S1726830AbfKUWUi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 17:20:38 -0500
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:44379 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726329AbfKUWUh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 17:20:37 -0500
+Received: by mail-wr1-f48.google.com with SMTP id i12so6292016wrn.11
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=oCa1UKZozp2r7iMnBdi8J69hzu+2k+Oplcwfdq+fCFs=;
-        b=aMXJyAKLmV1J5msB26LvX3k3px4SRc6bOlt5ycl+F6ovkG5A6A+mXb3QMUD41IwoqC
-         7J8Lq/UwwYyacFcv1UU5PdJqiFUlXDbXul1lvQkq10B4MkLZqgSXBjVNX4C5jdNePQi6
-         rE7qTl+nfzgAoFeZcEDW/NO7qIzEc1F2c22PMG3sXv4z1DC4n/ZZnTUjCUxT6ouHDka1
-         tX0GW11HRCl7AVKW9rwADZ9ORKrl+RBErFrptBNtm3MmJuLWsO7T83nZxV4DLbdqbg1G
-         3S/yWQBEgwY93aOQIgDDrhZgFEhSsZXDJqvNSC6MlqpsER/T/NOcHn1F/dnwlAXSlzW6
-         eJaA==
+        bh=FeMle/vvKHKWFJvUQ6wmKMyy52PVuexwsHeVnliddmo=;
+        b=dsjV1q8RsfhW5Fy9NsDf1x2y9gOsy/BfTlo+RJcRXkM2zrS4NVJjPsaYqwN4WySUnS
+         wsHEET3VQDu3ySLlDehglnPF+Spi/NNZH4zAD5hsss+kRrR0s5c0AzAa7DV94EnWhYkF
+         +nuPNQp1p5morov4+8HeByvUzjnUuqyOiDOEE/0jJFlsDUeVU368QXemO9nIfmqPk3oX
+         U+Ae0pXdkrLOKT0Rjw/XfujBFxojdCryQVi1FuNUn5c6lJWobweOBAIwJQtytg0GLnQg
+         DkMwdHD9+L76ttf7J5wsMwG2x1FgfeSz88TQxsrdD75oZBMPh6ThD9mbdXivwJYEud8m
+         vAqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=oCa1UKZozp2r7iMnBdi8J69hzu+2k+Oplcwfdq+fCFs=;
-        b=JxrM8jFOjD1wPnsQoMNlRaJbEVwEWmwpp3mc6e2p54ZfKos7S0OOskzNHrjERLOvsN
-         CPr0WW2Of5jW0h60Tqya8xpnTz1LNpOW4q4EOhuWm+mRMKOHQR1Sw2CZYlS6vkvqGc90
-         2RgljWeLTQY1VnaeJptOM19CQ8Rnl4WGuIHT7c+bOwZioaDzygESwoAIeN9il7qlhl1D
-         Izmx5F+afo2076RlM4cJWUoQc1OY9GoUSUm1DpC0tTmmAwAjVfFIAefS2rkIytjnKlpx
-         Cld+uHEr4vEWoWI18VjelvBdWBQcTk7AKJ0uuI7vMLnU0N1PtRb8H439poiqKhEAxZag
-         7MFw==
-X-Gm-Message-State: APjAAAXhxCGidtCFaQFsgvUzCPmxafWuCBaE2ehmzhmIwJVXTonZgFT1
-        UjpXpLl/hDvbrFNd6ucjZyMhSTCy
-X-Google-Smtp-Source: APXvYqy1aqAPklwQ7DLXWRWlh6yMejypT7g+XoQOgWYCwKWDVN8S9woFKIWrK1Jp7IH4prqd/aQIVg==
-X-Received: by 2002:a5d:574d:: with SMTP id q13mr14780541wrw.263.1574374832508;
-        Thu, 21 Nov 2019 14:20:32 -0800 (PST)
+        bh=FeMle/vvKHKWFJvUQ6wmKMyy52PVuexwsHeVnliddmo=;
+        b=FynF680gm1cRtbu6ZJ7R5g9k7zcc9xtDCNTMEU2h0Urdkuao9k3QZiYAFUZk1k0ocy
+         OFUxRPYs3cImG9dYf3j9wc+pRQ0XZBy81s7u+Nr0FPBJ5kFJuHPHxWMIJgu2GtA4IiOf
+         W4nru3ru8cwE9OkZ/yV72dpWomf5VAuxofc1MPuYXPxR3dM5O9uzVstdtGG+urlp5SYn
+         zBOsvA7GFrfY7l+P8b636a+7cgrVo28ICmh2EaxlFeYsJqVienHLei1KYInx4xMvwNoX
+         s8freFBhRgboPZPoLJF88ZHloUAOhv9nHapn1YE7p2BknopwsM8gtXd0bjp+KM6JG3Uh
+         IYbg==
+X-Gm-Message-State: APjAAAVbkn/hsiLyHsLeDilJ6+QU0yZtKdj/N0ALtL2eASrVRi1J7qVL
+        H+C/DVo19ZxmrvLdJk618zd28Mvk
+X-Google-Smtp-Source: APXvYqwwNdh+6Zj9+Vw3fViRDLut8rbZq34Qt1cy5L0+wzLT9MrIjbgvDIcS3Ma2E1dcsBxRplqYog==
+X-Received: by 2002:adf:ed4e:: with SMTP id u14mr14261796wro.132.1574374834512;
+        Thu, 21 Nov 2019 14:20:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u203sm1182830wme.34.2019.11.21.14.20.32
+        by smtp.gmail.com with ESMTPSA id v184sm1228955wme.31.2019.11.21.14.20.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 14:20:32 -0800 (PST)
-Message-Id: <36f845cb7ee21443e7f20517968982222e775a6a.1574374826.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2019 14:20:34 -0800 (PST)
+Message-Id: <47cecb4a83a3f726088ffba0b00679384c7349ae.1574374826.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Nov 2019 22:20:23 +0000
-Subject: [PATCH 08/11] tests: disable fsmonitor in submodule tests
+Date:   Thu, 21 Nov 2019 22:20:26 +0000
+Subject: [PATCH 11/11] test-lib: clear watchman watches at test completion
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,102 +76,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The fsmonitor feature struggles with submodules. Disable the
-GIT_TEST_FSMONITOR environment variable before running tests with
-a lot of submodule interactions.
-
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t4060-diff-submodule-option-diff-format.sh | 3 +++
- t/t5526-fetch-submodules.sh                  | 2 ++
- t/t7402-submodule-rebase.sh                  | 3 +++
- t/t7406-submodule-update.sh                  | 2 ++
- t/t7506-status-submodule.sh                  | 3 +++
- t/t7508-status.sh                            | 3 +++
- 6 files changed, 16 insertions(+)
+ t/test-lib-functions.sh | 15 +++++++++++++++
+ t/test-lib.sh           |  2 ++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index 9dcb69df5c..017417790e 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -15,6 +15,9 @@ This test tries to verify the sanity of --submodule=diff option of git diff.
- # Tested non-UTF-8 encoding
- test_encoding="ISO8859-1"
- 
-+# fsmonitor does not work well with submodules
-+GIT_TEST_FSMONITOR=""
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index e0b3f28d3a..03573caf42 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1475,3 +1475,18 @@ test_set_port () {
+ 	port=$(($port + ${GIT_TEST_STRESS_JOB_NR:-0}))
+ 	eval $var=$port
+ }
 +
- # String "added" in German (translated with Google Translate), encoded in UTF-8,
- # used in sample commit log messages in add_file() function below.
- added=$(printf "hinzugef\303\274gt")
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 63205dfdf9..fb346bff05 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- # Copyright (c) 2010, Jens Lehmann
- 
-+GIT_TEST_FSMONITOR=""
++test_clear_watchman () {
++	if test $GIT_TEST_FSMONITOR -ne ""
++	then
++		watchman watch-list |
++			grep "$TRASH_DIRECTORY" |
++			sed "s/\t\"//g" |
++			sed "s/\",//g" >repo-list
 +
- test_description='Recursive "git fetch" for submodules'
++		for repo in $(cat repo-list)
++		do
++			watchman watch-del "$repo"
++		done
++	fi
++}
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 30b07e310f..067a432ea5 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1072,6 +1072,8 @@ test_atexit_handler () {
+ 	# sure that the registered cleanup commands are run only once.
+ 	test : != "$test_atexit_cleanup" || return 0
  
- . ./test-lib.sh
-diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
-index 8e32f19007..c78e9009cf 100755
---- a/t/t7402-submodule-rebase.sh
-+++ b/t/t7402-submodule-rebase.sh
-@@ -7,6 +7,9 @@ test_description='Test rebasing, stashing, etc. with submodules'
- 
- . ./test-lib.sh
- 
-+# fsmonitor does not work well with submodules
-+GIT_TEST_FSMONITOR=""
++	test_clear_watchman
 +
- test_expect_success setup '
- 
- 	echo file > file &&
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index c973278300..8d93aaef5f 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -11,6 +11,8 @@ submodule and "git submodule update --rebase/--merge" does not detach the HEAD.
- 
- . ./test-lib.sh
- 
-+# fsmonitor does not work well with submodules
-+GIT_TEST_FSMONITOR=""
- 
- compare_head()
- {
-diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-index 08629a6e70..1a716f2c2a 100755
---- a/t/t7506-status-submodule.sh
-+++ b/t/t7506-status-submodule.sh
-@@ -4,6 +4,9 @@ test_description='git status for submodule'
- 
- . ./test-lib.sh
- 
-+# fsmonitor does not work well with submodules
-+GIT_TEST_FSMONITOR=""
-+
- test_create_repo_with_commit () {
- 	test_create_repo "$1" &&
- 	(
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index 4e676cdce8..bf0487632d 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -846,6 +846,9 @@ test_expect_success 'status refreshes the index' '
- 	test_cmp expect output
- '
- 
-+# fsmonitor does not work well with submodules
-+GIT_TEST_FSMONITOR=""
-+
- test_expect_success 'setup status submodule summary' '
- 	test_create_repo sm && (
- 		cd sm &&
+ 	setup_malloc_check
+ 	test_eval_ "$test_atexit_cleanup"
+ 	test_atexit_cleanup=:
 -- 
 gitgitgadget
-
