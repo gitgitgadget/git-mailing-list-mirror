@@ -2,98 +2,151 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D02EC432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 07:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AACD9C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 08:06:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 57F6B20898
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 07:58:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57A8220898
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 08:06:29 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nGFkGvlf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726408AbfKUH6i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 02:58:38 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56804 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725842AbfKUH6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 02:58:38 -0500
-Received: (qmail 10331 invoked by uid 109); 21 Nov 2019 07:58:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Nov 2019 07:58:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9187 invoked by uid 111); 21 Nov 2019 08:02:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Nov 2019 03:02:26 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 21 Nov 2019 02:58:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     M Lewis <picevio@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: GitAttributes feature export-ignore works, but -export-ignore
- (with dash) should also work
-Message-ID: <20191121075837.GA30966@sigill.intra.peff.net>
-References: <01e0a4ab-d809-d968-5671-b731438c2bc4@gmail.com>
+        id S1726739AbfKUIG2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 03:06:28 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59137 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726536AbfKUIG2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 03:06:28 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0709F2FB45;
+        Thu, 21 Nov 2019 03:06:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nMCWoKrsWqYvqvIMGNmR9+bg9kg=; b=nGFkGv
+        lfnMfXvO5CrM41UgQjrBI2xYbrzmPDmGY5vIPKgxCwdHgTzMdfNAFdXRVzn2xNNu
+        eFiIUe3DjSqkN0G5P7UFPfw7RSMhD9cbOdgog8sHrvz5Bu2IDqpBeZKg9UjfZFJX
+        OIeUpAvrhfIxNgC+0joSIgATZ3NrQ8QmcZf6k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=A1sVjuEjdQ+YImyzP7enL4FlpMXhF4jj
+        60fsWVVv/LWZaDsjcOdQBGiOJcqyW76UWD91jdPD0kMiHYa0C2ylQ/KAr+LnjP9u
+        NM1z5TZo/TT8cXeYGKa1EARXUoZx3tBui31oIoX0AGzf7hEO7Ittahs6iWk7SVNj
+        O+4ta48bQJs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F1D592FB44;
+        Thu, 21 Nov 2019 03:06:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5AF0C2FB43;
+        Thu, 21 Nov 2019 03:06:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/8] built-in add -i: allow filtering the modified files list
+References: <pull.171.git.1573821382.gitgitgadget@gmail.com>
+        <1844c4d55e21c40cbdbfdd73c82b4a1a074ff184.1573821382.git.gitgitgadget@gmail.com>
+Date:   Thu, 21 Nov 2019 17:06:25 +0900
+In-Reply-To: <1844c4d55e21c40cbdbfdd73c82b4a1a074ff184.1573821382.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 15 Nov 2019
+        12:36:15 +0000")
+Message-ID: <xmqqeey18xha.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <01e0a4ab-d809-d968-5671-b731438c2bc4@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: D0C93DB4-0C35-11EA-8279-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 20, 2019 at 08:44:52AM -0800, M Lewis wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> When running 'git archive', the .gitattributes file is used to determine
-> paths that should be ignored when building the archive by using
-> 'export-ignore'.
-> But it would be useful to include certain sub-paths in the ignored path.
+> +enum modified_files_filter {
+> +	NO_FILTER = 0,
+> +	WORKTREE_ONLY = 1,
+> +	INDEX_ONLY = 2,
+> +};
+> +
+> +static int get_modified_files(struct repository *r,
+> +			      enum modified_files_filter filter,
+> +			      struct string_list *files,
+>  			      const struct pathspec *ps)
+>  {
+>  	struct object_id head_oid;
+>  	int is_initial = !resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
+>  					     &head_oid, NULL);
+>  	struct collection_status s = { FROM_WORKTREE };
 
-Yeah, that seems like a reasonable goal, and I think we can make it
-work, but the syntax is slightly different.
+Will have a comment on this later.
 
-> The git-attribute document says a dash '-' prefix should unset the
-> attribute. It should work with 'export-ignore'
-> 
-> So if I want for example '/mostly_unuseful/needed_a' in my archive, I
-> should be able to specify that in my .gitattributes file like this:
-> 
->     /mostly_unuseful              export-ignore # do not archive
->     /mostly_unuseful/needed_a    -export-ignore # do add to archive
->     /mostly_unuseful/needed_b    -export-ignore # do add to archive
+> +	int i;
+>  
+>  	if (discard_index(r->index) < 0 ||
+>  	    repo_read_index_preload(r, ps, 0) < 0)
+> @@ -411,10 +424,16 @@ static int get_modified_files(struct repository *r, struct string_list *files,
+>  	s.files = files;
+>  	hashmap_init(&s.file_map, pathname_entry_cmp, NULL, 0);
+>  
+> -	for (s.phase = FROM_WORKTREE; s.phase <= FROM_INDEX; s.phase++) {
+> +	for (i = 0; i < 2; i++) {
+>  		struct rev_info rev;
+>  		struct setup_revision_opt opt = { 0 };
+>  
+> +		if (filter == INDEX_ONLY)
+> +			s.phase = i ? FROM_WORKTREE : FROM_INDEX;
+> +		else
+> +			s.phase = i ? FROM_INDEX : FROM_WORKTREE;
+> +		s.skip_unseen = filter && i;
 
-It doesn't work because the attributes are not applied recursively[1];
-they are applied to the path you specified. By putting the attribute on
-"mostly_unuseful", that doesn't say anything about "needed_a" (from the
-perspective of the attributes system). So removing it from that path
-likewise does nothing; the attribute is still set on the directory.
+;-)
 
-Instead, if you write it like this:
+Looks somewhat crazy but it works---when the caller wants to do
+'index-only' for example we are not interested in paths that did not
+appear in the INDEX side of the diff, so we run FROM_INDEX diff first
+and then the let next one (i.e. FROM_WORKTREE diff) be skipped for
+paths that are not in the result of the first one.  To me personally,
+I would find the tertially expession written like this
 
-  /mostly_unuseful/**        export-ignore
-  /mostly_unuseful/needed_a -export-ignore
-  /mostly_unuseful/needed_b -export-ignore
+	s.phase = (i == 0) ? FROM_INDEX : FROM_WORKTREE;
 
-Then the attributes are applied directly to the file paths in the first
-line, and the subsequent lines counteract them. This does mean that the
-subdirectory itself isn't marked as export-ignore, and will always be
-included (as an empty directory if need be, though of course in your
-example we do actually end up with some files in it).
+much easier to follow, as it matches the order which ones are done
+first.
 
-Now obviously there is recursion happening inside git-archive, as it
-walks the tree. And the current behavior is that it sees the ignored
-subtree and doesn't walk into it at all. So it _could_ make your
-original example work by actually searching within the tree for any
-paths marked -export-ignore, and including the directory if and only if
-it has unignored entries.
+Also I notice two things.
 
-I can't offhand think of anything that would break if we started doing
-that, but I haven't thought too hard. And given that there's already a
-solution using `**`, it might not be worth it.
+ - It used to make 100% sense to call this field .phase because we
+   always processed the first phase and then on to the second phase,
+   where the first one was called WORKTREE and the second one was
+   called INDEX.  In the new world order after this step, the name
+   .phase no longer makes any sense.  Sometimes we run diff-files in
+   phase 0 and diff-index in phase 1, but some other times we run
+   diff-index in phase 0 and diff-files in phase 0.  The variable
+   that has the closest meaning to the 'phase' is the newly
+   introduced 'i'.
 
--Peff
+ - The initialization of the local "struct collection_status s" at
+   the beginning of the function still uses .phase = FROM_WORKTREE
+   which might be somewhat misleading.  We cannot remove the whole
+   initialization, as the original used to nul initialize the other
+   fields in this structure and I suspect the code still relies on
+   it, but the initialization of .phase in particular no longer has
+   any effect; it always is assigned inside the loop before the
+   field gets used.
 
-[1] If you're curious, there's some philosophical discussion about this exact issue in
-    https://public-inbox.org/git/7v1uasg8e0.fsf@alter.siamese.dyndns.org/
+
+>  		opt.def = is_initial ?
+>  			empty_tree_oid_hex() : oid_to_hex(&head_oid);
+
+By the way, this is not a new issue introduced by this patch, but I
+notice copy_pathspec() is used twice on the same rev.prune_data in
+this functino.  Who is responsible for releasing the resource held
+in this struct?
