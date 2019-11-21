@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AB96CC432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 00:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C39A5C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 00:46:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 816C620855
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 00:46:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AC4420855
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 00:46:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IvcUGDXB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dK9oMJor"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbfKUAqL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 20 Nov 2019 19:46:11 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:37433 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726762AbfKUAqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 20 Nov 2019 19:46:11 -0500
-Received: by mail-pf1-f193.google.com with SMTP id p24so701806pfn.4
-        for <git@vger.kernel.org>; Wed, 20 Nov 2019 16:46:10 -0800 (PST)
+        id S1726813AbfKUAqN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 20 Nov 2019 19:46:13 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41647 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726762AbfKUAqN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 20 Nov 2019 19:46:13 -0500
+Received: by mail-pl1-f193.google.com with SMTP id t8so602687plr.8
+        for <git@vger.kernel.org>; Wed, 20 Nov 2019 16:46:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=KjfQ6ycQDyNyYAtKnfsUOUipajF2IsK+eNYd1+zSH9M=;
-        b=IvcUGDXBPZrwfHr7n3AdcVR+7diM5HQ3N9yhUnMfW6c1soCALyRHxLW1Lb8FBIfM8x
-         IvuKvediaPLhwiwY6DLsynA5HXH2HwPDbG1JXIQldl/nH7h7VHrN5+SKzlIqkG+BeDO7
-         124/QQAmC84JaLe12RQ25Wt/stHYsjdC78z3c9nh1wz6OzLq8p30IeKJVZld0hRs15UH
-         rxYigYZwtb31qH5SuEcvbR/O4GKziYMMO1lN4Y/u5jYcMdychGf8Ly/dXKeLd6c5dpTn
-         ecUM34yegX844ibRNhN4OVykgu3qomyVvFdjzJD8pShwlBoSK/1IVXnx52uN453gcbAX
-         E88w==
+        bh=/jF96UBCj1jwkog11fgqYrfIDZIeYYAz+Exl0oj/OOY=;
+        b=dK9oMJor1JB9tQRd/PW1ovFLtzXKuXN3OFzVb+lQtdqtROMNJpjsTEVcrlC9VFV48B
+         /QVqVA59+lhgMUzrBbqGD71eI9EekqEqmAaIzaz+TlX/id0auFh9+4boD/cxaWdjbLtF
+         B0L45MpSerDkxR3vyLlcVoWWuIbJfzZHlpnWNVwu00QaWRebkfMvyrBsdwhmOKeIFswE
+         PMRFCjt3Tw8hoWnuYtGkELmxbWuyPnd2wWmjsSxWQXFmVh+4HHNgm0/T6+RVaElSUAfV
+         9foYaVLSkuQ9OVzk1qQt6oHa/nyVwJrfQ+TPvuPlRomekpuWhZNfhZ0wX2XALoMCjv1M
+         bJVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KjfQ6ycQDyNyYAtKnfsUOUipajF2IsK+eNYd1+zSH9M=;
-        b=O73WhOAaiWsOCtFOQI2XLunJaGa25nG/JBnJirAeWxp4eWwdElHLDryZqf7v+q8od5
-         GEoaoVHgrxewQJ1eBM/34cIyF5GhDb+UY8KyNW0RuHULR8DQ/A5IqkIQSI9AVikjVbhY
-         HU+G9lZn3fmUs4mS1kDi6oKW/xcN7PvS4ATVnmK14PZwZEZh79zPT8Mfu73yiWpSQKyI
-         78FXG/M4g5labyh/fANtYcZE8TbuifTuW0FiCfZSOoRBAG4E92jENozcj7rWFjCmnw1p
-         H/h0g/NmniJP7f+locUP26ma/rHpTg4ndVLwaNd5KxNaPsLLQNTt9JU7MS0Xl61dEhKq
-         R4YA==
-X-Gm-Message-State: APjAAAXKzTYCoC+qXHWcO30tUObQ/5W9UFMh834ImIhyaEwa/GA1N002
-        HlWuXyp+/IAGXWmgjhNJION2BRuc
-X-Google-Smtp-Source: APXvYqxDG7G6utO8BNcbs7o7EYsSK5MAFGS+VWM1UVKUFY4d6OdWOYXzx6+EJCSVKGwapfzCrJ4Mmg==
-X-Received: by 2002:a62:b509:: with SMTP id y9mr7118232pfe.12.1574297170103;
-        Wed, 20 Nov 2019 16:46:10 -0800 (PST)
+        bh=/jF96UBCj1jwkog11fgqYrfIDZIeYYAz+Exl0oj/OOY=;
+        b=RBlEal46CEGw4YJa7rMhIN4olsbuuykbsWzHQH/6aWwFELIWa/lpbeV52GzkPQlH8a
+         5+cxt0BGB1Llnrz6cfb+OMnOmmM6AWTi08r+kC/r4hfITlbNNRwKji5w+VW+u/7irMzu
+         J1561reVo4s+EtyxskFlAGtYFTREiTlzoIfbZiixAf6MeEwAKW84IZhFQ74D9ibQTWas
+         ZQIS11nHaTSwafTomEegZGE6Uu1Hnv24xWzJ9DOWRe9PSC4zL0bVR68pPthXg3W9xf6k
+         rPgD3DtKcBmQUJy9G/MkZcPWCtfP7NmD+2zheiuXrXoSjke8TlMTWUBS/ZFJDj6xz5MF
+         ZKxQ==
+X-Gm-Message-State: APjAAAUTmVdQpiWNCU7SCvXxyVTiw2ec57KBDRK/3OMEdzmKIC6K2/tn
+        Cpfg2lHsPRXb18JMQbvhQCBTnSXo
+X-Google-Smtp-Source: APXvYqyZJWjwJShbwTW8w4c5N5GQCjcXSqgB6VaFfPg6m+/D6qFWB0q8Ggh33wITBM47up03PK2q5A==
+X-Received: by 2002:a17:90a:d78b:: with SMTP id z11mr7710122pju.36.1574297172350;
+        Wed, 20 Nov 2019 16:46:12 -0800 (PST)
 Received: from generichostname ([204.14.239.83])
-        by smtp.gmail.com with ESMTPSA id 23sm414880pgw.8.2019.11.20.16.46.09
+        by smtp.gmail.com with ESMTPSA id m65sm7825951pje.3.2019.11.20.16.46.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Nov 2019 16:46:09 -0800 (PST)
-Date:   Wed, 20 Nov 2019 16:46:07 -0800
+        Wed, 20 Nov 2019 16:46:11 -0800 (PST)
+Date:   Wed, 20 Nov 2019 16:46:10 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 09/21] t4015: use test_write_lines()
-Message-ID: <9fb33ea04eb291ea8de3968fef998435d2fd1cc9.1574296987.git.liu.denton@gmail.com>
+Subject: [PATCH v2 10/21] t4138: stop losing return codes of git commands
+Message-ID: <6c91594492e0be4b7ae7638e964f610534a170ca.1574296987.git.liu.denton@gmail.com>
 References: <cover.1573779465.git.liu.denton@gmail.com>
  <cover.1574296987.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,30 +74,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of rolling our own method to write out some lines into a file,
-use the existing test_write_lines().
+In a pipe, only the return code of the last command is used. Thus, all
+other commands will have their return codes masked. Rewrite pipes so
+that there are no git commands upstream so that we will know if a
+command fails.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4015-diff-whitespace.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t4138-apply-ws-expansion.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 7fb83c8eff..4c540b1d70 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -771,9 +771,9 @@ test_expect_success 'checkdiff detects new trailing blank lines (1)' '
- '
+diff --git a/t/t4138-apply-ws-expansion.sh b/t/t4138-apply-ws-expansion.sh
+index 3b636a63a3..b19faeb67a 100755
+--- a/t/t4138-apply-ws-expansion.sh
++++ b/t/t4138-apply-ws-expansion.sh
+@@ -17,8 +17,8 @@ test_expect_success setup '
+ 	printf "\t%s\n" 1 2 3 >after &&
+ 	printf "%64s\n" a b c >>after &&
+ 	printf "\t%s\n" 4 5 6 >>after &&
+-	git diff --no-index before after |
+-		sed -e "s/before/test-1/" -e "s/after/test-1/" >patch1.patch &&
++	test_expect_code 1 git diff --no-index before after >patch1.patch.raw &&
++	sed -e "s/before/test-1/" -e "s/after/test-1/" patch1.patch.raw >patch1.patch &&
+ 	printf "%64s\n" 1 2 3 4 5 6 >test-1 &&
+ 	printf "%64s\n" 1 2 3 a b c 4 5 6 >expect-1 &&
  
- test_expect_success 'checkdiff detects new trailing blank lines (2)' '
--	{ echo a; echo b; echo; echo; } >x &&
-+	test_write_lines a b "" "" >x &&
- 	git add x &&
--	{ echo a; echo; echo; echo; echo; } >x &&
-+	test_write_lines a "" "" "" "" >x &&
- 	test_must_fail git diff --check >check &&
- 	grep "new blank line" check
- '
+@@ -33,8 +33,8 @@ test_expect_success setup '
+ 		x=$(( $x + 1 ))
+ 	done &&
+ 	printf "\t%s\n" d e f >>after &&
+-	git diff --no-index before after |
+-		sed -e "s/before/test-2/" -e "s/after/test-2/" >patch2.patch &&
++	test_expect_code 1 git diff --no-index before after >patch2.patch.raw &&
++	sed -e "s/before/test-2/" -e "s/after/test-2/" patch2.patch.raw >patch2.patch &&
+ 	printf "%64s\n" a b c d e f >test-2 &&
+ 	printf "%64s\n" a b c >expect-2 &&
+ 	x=1 &&
+@@ -56,8 +56,8 @@ test_expect_success setup '
+ 		x=$(( $x + 1 ))
+ 	done &&
+ 	printf "\t%s\n" d e f >>after &&
+-	git diff --no-index before after |
+-	sed -e "s/before/test-3/" -e "s/after/test-3/" >patch3.patch &&
++	test_expect_code 1 git diff --no-index before after >patch3.patch.raw &&
++	sed -e "s/before/test-3/" -e "s/after/test-3/" patch3.patch.raw >patch3.patch &&
+ 	printf "%64s\n" a b c d e f >test-3 &&
+ 	printf "%64s\n" a b c >expect-3 &&
+ 	x=0 &&
+@@ -84,8 +84,8 @@ test_expect_success setup '
+ 		printf "\t%02d\n" $x >>after
+ 		x=$(( $x + 1 ))
+ 	done &&
+-	git diff --no-index before after |
+-	sed -e "s/before/test-4/" -e "s/after/test-4/" >patch4.patch &&
++	test_expect_code 1 git diff --no-index before after >patch4.patch.raw &&
++	sed -e "s/before/test-4/" -e "s/after/test-4/" patch4.patch.raw >patch4.patch &&
+ 	>test-4 &&
+ 	x=0 &&
+ 	while test $x -lt 50
 -- 
 2.24.0.450.g7a9a4598a9
 
