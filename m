@@ -2,158 +2,176 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 888B3C432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 08:54:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3C92C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 10:20:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5AFD42089D
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 08:54:18 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lamizhZS"
+	by mail.kernel.org (Postfix) with ESMTP id B907B206CB
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 10:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbfKUIyR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 03:54:17 -0500
-Received: from mout.gmx.net ([212.227.17.20]:37705 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726132AbfKUIyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 03:54:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574326455;
-        bh=BsVAhw0F5d2+OSAHrJrH6ilFC5AoP8UOpCVRFUmBnaA=;
-        h=X-UI-Sender-Class:Date:From:To:Subject;
-        b=lamizhZSCChuvdW+h6WAqCfjKlIg68ljhMkmwmIxfva9+qIpkBy/ZWgaqgS0/nORb
-         Hhjolbyu2vxPNrh+N0642awUnXRps2kw3fIgGFX2Gteu/CrBCYrBdv3Dz+i7oJ9JFu
-         Jmvo6sC2bIZo2C6THrQNxuhZEoR9Sg+Mnb1htITw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Md6Mt-1hyNbo2hj1-00aDzV for
- <git@vger.kernel.org>; Thu, 21 Nov 2019 09:54:15 +0100
-Date:   Thu, 21 Nov 2019 09:54:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     git@vger.kernel.org
-Subject: A helper for interactive rebases with conflicts
-Message-ID: <nycvar.QRO.7.76.6.1911210941570.31080@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726752AbfKUKUo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 05:20:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:56870 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726197AbfKUKUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 05:20:44 -0500
+Received: (qmail 11807 invoked by uid 109); 21 Nov 2019 10:20:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 21 Nov 2019 10:20:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9779 invoked by uid 111); 21 Nov 2019 10:24:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 21 Nov 2019 05:24:32 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 21 Nov 2019 05:20:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] perf-lib: remove old result files before running tests
+Message-ID: <20191121102042.GA2611@sigill.intra.peff.net>
+References: <20191119185047.8550-1-t.gummerer@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:aYOI5EpgpO7V6jVbT1ibj5aYT6Ynp4DBZFcBj5QtNKNbNRM4QHo
- bKGZt+eDHtLzBqkkeNSbM1lUe2k1CSiXNu3G7NVm1f9XoXxlUWbIb0Cs1HufOSLqcybAH2n
- 1ijzy7ej+9pTIflvDUNnuUugJAFbXG3vaKEAGBr90GbM/bcTY+a2uIVg2/WCDWmjZ4q9X/C
- YMgm4ODK2aqD+GnjJeDaQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:8Smot12mKJY=:pYW5IFfNhinxxUXagKR6qT
- 0Er8/LMldp2QqA+k6RRMhUO8Qs5BR+wQ99VB4ocDHk7EW6C1ccAqHW3Nm6MEbTFgPBofyX2Kz
- uVcsi7qBVTgfLGZ7qVtAEfMalri6xLrAykGQt33gPUkabE2cUpQF18zs6s5W2aD6y/SumxUO6
- J8N4Rtsy1fcCwIyikS9axX+ss2tikXWzLYhf99JEBrS8wRawCh221u+F3wLgJO2qsgfqCEolq
- 9THNCXRPTLvoNsNutBN00B32txaREYUGVAbnWmr5MuTAaJLuLRj88zikoNdufIU3i/uPvmq1v
- ikyc47lucbAsd+jP6yHhycraloy7oYtH2LUtua3eQx9ACMMBNCY3ocqWSltTc7v0oTI44yshQ
- po06Qb0vD/R/wdG6mYzl1UjGlLFsptoNdFF59UNTQCCCux26r/4I/M+R/PqcdNjtQ4KjxOLdK
- lpwJ9yJlS/F8szf2gxAk+JuMYRmUeMYDS/ZCjuC1XEpvOuNpafhWC7IIaKo+AcihMfduZeqxI
- gCb3ZnXk5RnaB8UiResR8DemlGIUqiNwzfmgbiAc7o8w/oVGdC100KvOZBxUAJViO+Lt3fTd3
- gQkrl/lAu1ZAhU90DT5DEgybKSuDhTfEIujblfuACMPoQdO0LfRt4WCBiNlo7JA7fDsCZWc+o
- 4iMoqA7ee+w8oS3/RSnAyTa4q61hgQr35PkIjceuf4nb9abEwmw1GZLfJFxkHqAiHrYMMWvGo
- S2dh+7754ahBpraOexgEcOOurhQygFK6mIa0xzcal+1Y4pOrLK9ml63KtpcAxv1S8QPo4C4pP
- 4hwPQfQo40BONHvhkNl+SAFZO0WsGg1JDVL3jEE7Oe8mPublkw2xsSE96i0azCrHgbkbU++PL
- 3gZMNr9xioJ1rDz6Y6eVdOPpToWtXjTCLddyKdrgplHKNz/74vO5B+XygGHt+GjbGexJHMe0t
- b6O0kqxDw+ZKac4u4qnjqs53bmWamPhwolX4cWeJL8+BnUKm3d+9l1y04tB2mTIwvCXJhv9uM
- m+P5QSoDSwguPlW6K0G05cq4i44SZy6UmAQq4y03JboyA2d0slBpO8jZz9KSL7vI+kMPwvdUU
- efCv2eUEKnFSQ/Lw/jpujXdYxeHnyQEw4vL6CR6UGb60ceK9IlNS2xRxzKZtPkkkVtB7wbHgP
- lm4nDv7Q5WxU38wQW4D/qXuKy9QJQzqKSL9MPwN7ushRmVgbawdNBohFTeA5fdSq7cdOzcQj5
- x8AF9nDWQH7T6YMf++J/dqM/Y5SU/HXylzgaB6kviAM+MZ5EE7odQb2A1kTY=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191119185047.8550-1-t.gummerer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Team,
+On Tue, Nov 19, 2019 at 06:50:47PM +0000, Thomas Gummerer wrote:
 
-I frequently find my interactive rebases being interrupted with conflicts
-due to already-upstreamed patches. Typically, these patches should be left
-out from the todo list (because it uses the `right_only` flag of the
-revision walker), but that logic can fail when passing an `--onto`
-parameter: the upstreamed patch might not be part of the symmetric range
-used to generate the todo list.
+> The perf tests write files recording the results of tests.  These
+> results are later aggregated by 'aggregate.perl'.  If the tests are
+> run multiple times, those results are overwritten by the new results.
+> This works just fine as long as there are only perf tests measuring
+> the times, whose results are stored in "$base".times files.
+> 
+> However 22bec79d1a ("t/perf: add infrastructure for measuring sizes",
+> 2018-08-17) introduced a new type of test for measuring the size of
+> something.  The results of this are written to "$base".size files.
+> 
+> "$base" is essentially made up of the basename of the script plus the
+> test number.  So if test numbers shift because a new test was
+> introduced earlier in the script we might end up with both a ".times"
+> and a ".size" file for the same test.  In the aggregation script the
+> ".times" file is preferred over the ".size" file, so some size tests
+> might end with performance numbers from a previous run of the test.
+> 
+> This is mainly relevant when writing perf tests that check both
+> performance and sizes, and can get quite confusing during
+> developement.
 
-For these cases, I wrote this little script, which looks at the oneline of
-the commit which could not be cherry-picked, tries to find it in the
-commits reachable from HEAD (but not from the cherry-picked commit), and
-once found, runs a range-diff:
+The problem description makes sense to me.
 
--- snip --
-#!/bin/sh
+> diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+> index b58a43ea43..7e80251889 100644
+> --- a/t/perf/perf-lib.sh
+> +++ b/t/perf/perf-lib.sh
+> @@ -178,10 +178,11 @@ test_wrapper_ () {
+>  	export test_prereq
+>  	if ! test_skip "$@"
+>  	then
+> -		base=$(basename "$0" .sh)
+> -		echo "$test_count" >>"$perf_results_dir"/$base.subtests
+> -		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
+>  		base="$perf_results_dir"/"$PERF_RESULTS_PREFIX$(basename "$0" .sh)"."$test_count"
+> +		rm -f "$base".*
+> +		no_prefix_base="$perf_results_dir"/$(basename "$0" .sh)
+> +		echo "$test_count" >>$no_prefix_base.subtests
+> +		echo "$1" >$no_prefix_base.$test_count.descr
+>  		"$test_wrapper_func_" "$@"
 
-string2regex () {
-	echo "$1" | sed 's/[]\\\/[*?]/\\&/g'
-}
+I had a little trouble following the patch because of a few things:
 
-compare_to_upstream_commit () { # [<tip-commit>] [<upstream-branch>] [<commit-count>]
-	tip=HEAD
-	upstream=upstream/master
-	count=1
+  - the reordering of earlier lines. We don't care about subtests at
+    all, and that line could stay the same. But we do have to reorder
+    the "descr" one because of the broad wildcard in the "rm". That
+    could be narrowed, but I guess you wanted to future-proof it against
+    new types.
 
-	test $# -gt 0 ||
-	test ! -f "$(git rev-parse --git-path rebase-merge/stopped-sha)" ||
-	set -- stopped-sha
+  - the $no_prefix_base variable differs from $base not just in lacking
+    the prefix, but also in lacking $test_count at the end.
 
-	case "$1" in
-	stopped|stopped-sha)
-		tip="$(cat "$(git rev-parse --git-path rebase-merge/stopped-sha)")" &&
-		git rev-parse -q --verify "$tip" ||
-		die "Could not get stopped-sha; Not in a rebase?\n"
-		upstream=HEAD
-		shift
-		;;
-	*[^0-9a-f]*) ;; # not a tip commit
-	?*) tip="$(git rev-parse --verify "$1"^0)" || die "Could not parse $1"; shift;;
-	esac
+So I think it's doing the right thing overall, though there is one bug:
+$no_prefix_base is not quoted, but could contain spaces due to
+$perf_results_dir. I think that would cause bash to complain if there's
+a space in your path.
 
-	case "$1" in
-	*[^0-9]*) upstream="$1"; shift;;
-	esac
+But I wonder if it would be simpler to just always use the same file for
+the test result, overwriting it each time, and let the reader figure out
+the type. The aggregate script's get_times() already uses a regex to
+distinguish the two. That's enough for the two types we have, and we
+could later add a header line if it becomes necessary.
 
-	case "$1" in
-	''|*[^0-9]*) ;; # not a count
-	*) count=$1; shift;;
-	esac
+Something like the patch below. That removes any confusion about cruft
+files being left behind, or which file should be preferred, etc.
 
-	test 0 = $# ||
-	die "Unhandled argument(s): $*"
+The diff would be even smaller if we just kept calling it "times", but
+that's probably unnecessarily confusing.
 
-	oneline="$(git show -s --format=%s $tip)" &&
-	regex="$(string2regex "$oneline")" &&
-	upstream_commit="$(git rev-list --no-merges -1 --grep="$regex" $tip.."$upstream")" &&
-	{ test -n "$upstream_commit" ||
-		upstream_commit="$(git rev-list --no-merges -1 -i --grep="$regex" $tip.."$upstream")"; } &&
-	{ test -n "$upstream_commit" ||
-		upstream_commit="$(git range-diff -s $tip^..$tip $tip.."$upstream" |
-			sed -n 's/^[^:]*:[^:]*=[^:]*: *\([^ ]*\).*/\1/p')"; } &&
-	{ test -n "$upstream_commit" ||
-		upstream_commit="$(git range-diff --creation-factor=95 -s $tip^..$tip $tip.."$upstream" |
-			sed -n 's/^[^:]*:[^:]*=[^:]*: *\([^ ]*\).*/\1/p')"; } &&
-	test -n "$upstream_commit" ||
-	die "Could not find upstream commit for '$oneline'"
+-Peff
 
-	git range-diff --creation-factor=95 "$tip~$count..$tip" "$upstream_commit~$count..$upstream_commit"
-}
-
-compare_to_upstream_commit "$@"
--- snap --
-
-As you can see, this script does more than just handle interrupted
-rebases: it also allows you to specify a tip commit, an upstream branch
-and a commit count to conveniently find the tip commit in the upstream
-branch and then do a range-diff of <commit-count> patches.
-
-Obviously, the described logic fails badly when the oneline has been
-changed, so the script falls back to running a full range-diff and seeing
-whether it can identify the upstream commit that way. If that fails, too,
-it runs the range-diff again with a looser net.
-
-Maybe this script will prove useful to somebody else than me, too?
-
-Ciao,
-Johannes
+---
+diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
+index 66554d2161..112fc23dbe 100755
+--- a/t/perf/aggregate.perl
++++ b/t/perf/aggregate.perl
+@@ -219,13 +219,7 @@ sub print_default_results {
+ 		for my $i (0..$#dirs) {
+ 			my $d = $dirs[$i];
+ 			my $base = "$resultsdir/$prefixes{$d}$t";
+-			$times{$prefixes{$d}.$t} = [];
+-			foreach my $type (qw(times size)) {
+-				if (-e "$base.$type") {
+-					$times{$prefixes{$d}.$t} = [get_times("$base.$type")];
+-					last;
+-				}
+-			}
++			$times{$prefixes{$d}.$t} = [get_times("$base.result")];
+ 			my ($r,$u,$s) = @{$times{$prefixes{$d}.$t}};
+ 			my $w = length format_times($r,$u,$s,$firstr);
+ 			$colwidth[$i] = $w if $w > $colwidth[$i];
+@@ -267,7 +261,7 @@ sub print_sorted_results {
+ 		my ($prevr, $prevu, $prevs, $prevrev);
+ 		for my $i (0..$#dirs) {
+ 			my $d = $dirs[$i];
+-			my ($r, $u, $s) = get_times("$resultsdir/$prefixes{$d}$t.times");
++			my ($r, $u, $s) = get_times("$resultsdir/$prefixes{$d}$t.result");
+ 			if ($i > 0 and defined $r and defined $prevr and $prevr > 0) {
+ 				my $percent = 100.0 * ($r - $prevr) / $prevr;
+ 				push @evolutions, { "percent"  => $percent,
+@@ -327,7 +321,7 @@ sub print_codespeed_results {
+ 			my $commitid = $prefixes{$d};
+ 			$commitid =~ s/^build_//;
+ 			$commitid =~ s/\.$//;
+-			my ($result_value, $u, $s) = get_times("$resultsdir/$prefixes{$d}$t.times");
++			my ($result_value, $u, $s) = get_times("$resultsdir/$prefixes{$d}$t.result");
+ 
+ 			my %vals = (
+ 				"commitid" => $commitid,
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index b58a43ea43..13e389367a 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -214,7 +214,7 @@ test_perf_ () {
+ 	else
+ 		test_ok_ "$1"
+ 	fi
+-	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
++	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".result
+ }
+ 
+ test_perf () {
+@@ -223,7 +223,7 @@ test_perf () {
+ 
+ test_size_ () {
+ 	say >&3 "running: $2"
+-	if test_eval_ "$2" 3>"$base".size; then
++	if test_eval_ "$2" 3>"$base".result; then
+ 		test_ok_ "$1"
+ 	else
+ 		test_failure_ "$@"
