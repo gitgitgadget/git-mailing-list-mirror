@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5EE5C33CA4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB49BC33CA2
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B9A57206D8
+	by mail.kernel.org (Postfix) with ESMTP id 9217B206F4
 	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 22:20:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsjV1q8R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="acBDAguT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbfKUWUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 17:20:38 -0500
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:44379 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726329AbfKUWUh (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726822AbfKUWUh (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 21 Nov 2019 17:20:37 -0500
-Received: by mail-wr1-f48.google.com with SMTP id i12so6292016wrn.11
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:35 -0800 (PST)
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40524 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbfKUWUf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 17:20:35 -0500
+Received: by mail-wr1-f66.google.com with SMTP id 4so3023584wro.7
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 14:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FeMle/vvKHKWFJvUQ6wmKMyy52PVuexwsHeVnliddmo=;
-        b=dsjV1q8RsfhW5Fy9NsDf1x2y9gOsy/BfTlo+RJcRXkM2zrS4NVJjPsaYqwN4WySUnS
-         wsHEET3VQDu3ySLlDehglnPF+Spi/NNZH4zAD5hsss+kRrR0s5c0AzAa7DV94EnWhYkF
-         +nuPNQp1p5morov4+8HeByvUzjnUuqyOiDOEE/0jJFlsDUeVU368QXemO9nIfmqPk3oX
-         U+Ae0pXdkrLOKT0Rjw/XfujBFxojdCryQVi1FuNUn5c6lJWobweOBAIwJQtytg0GLnQg
-         DkMwdHD9+L76ttf7J5wsMwG2x1FgfeSz88TQxsrdD75oZBMPh6ThD9mbdXivwJYEud8m
-         vAqg==
+        bh=Aw86E2JesYnBke1UD3Cn25oDyN4i0P0DvTe/Iw1CwQU=;
+        b=acBDAguT8htPZkEpF7JO8OKVmqlb5FIiFfIZsRJ7uNsl8xF3Yzij2fgTQjNoegxggd
+         ajvO9npDLVledwoLqrDHcew17xX2HEhPl31su4hjvoK5zli5vGpk5W3wex0RJiSs39ZD
+         O+qmbcsXTj9WLpsPLrr1Fk4t8yhv0s7ApM1/NGPUVcYqwSp6fJJzx+C5pHapV7FK7dDH
+         8VtQydBGcXd6FpvGt/+8VOQGQJj9PD5zSddTCRm+DyNLbLFXku7p/asKLGCFeF9iwq0x
+         RMmMuWvZeBc75T+ZE+KlL6dVdfRCTgfTqyWfBBaf/T6IQzarmlK/bNE0k+zZa3bKTveU
+         tk7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FeMle/vvKHKWFJvUQ6wmKMyy52PVuexwsHeVnliddmo=;
-        b=FynF680gm1cRtbu6ZJ7R5g9k7zcc9xtDCNTMEU2h0Urdkuao9k3QZiYAFUZk1k0ocy
-         OFUxRPYs3cImG9dYf3j9wc+pRQ0XZBy81s7u+Nr0FPBJ5kFJuHPHxWMIJgu2GtA4IiOf
-         W4nru3ru8cwE9OkZ/yV72dpWomf5VAuxofc1MPuYXPxR3dM5O9uzVstdtGG+urlp5SYn
-         zBOsvA7GFrfY7l+P8b636a+7cgrVo28ICmh2EaxlFeYsJqVienHLei1KYInx4xMvwNoX
-         s8freFBhRgboPZPoLJF88ZHloUAOhv9nHapn1YE7p2BknopwsM8gtXd0bjp+KM6JG3Uh
-         IYbg==
-X-Gm-Message-State: APjAAAVbkn/hsiLyHsLeDilJ6+QU0yZtKdj/N0ALtL2eASrVRi1J7qVL
-        H+C/DVo19ZxmrvLdJk618zd28Mvk
-X-Google-Smtp-Source: APXvYqwwNdh+6Zj9+Vw3fViRDLut8rbZq34Qt1cy5L0+wzLT9MrIjbgvDIcS3Ma2E1dcsBxRplqYog==
-X-Received: by 2002:adf:ed4e:: with SMTP id u14mr14261796wro.132.1574374834512;
-        Thu, 21 Nov 2019 14:20:34 -0800 (PST)
+        bh=Aw86E2JesYnBke1UD3Cn25oDyN4i0P0DvTe/Iw1CwQU=;
+        b=aWtxiQTMLuKyRh/CY9zKJ9tm88CfLX9fyp+aJ5jpbruHL9HuRvQmsAymB4ApGExWpo
+         lsX849vXT2iC6mDWT/7AEeitoBjGxEYUTup+GKGsbR8pUtY/3zUJxWp7UyZj9CFpLK67
+         HrkEg0462Yfnd824RYDwgu0Vvv1r8u8JsbMObnyxca+GLT0hP9i+tMqYfgXVmaWbKVGn
+         XzBE1cDMtEf/CwLbWhDys961qQPb2V9bofgxIA1rhsbcyiY3DWWsj8RlBAHeFT+e27Ok
+         nwvcZc3gOMlK24klLyAeJ2WUNRBS5eo5uMFRCjn7TxPhqek56g3ARQ3xJamSmMWLelgq
+         7E8w==
+X-Gm-Message-State: APjAAAVAXQ+8jtxIUWjkyNFuyifyeqJRmce5CCSjxzvuMlocR7GfAx7/
+        GhCa7/EUOD5lfCsmy4JU7HEWsklr
+X-Google-Smtp-Source: APXvYqyE7m5cvAKv1a7DjvstlBfJqD0ZuBInC9yt81g3OZRLkl0pwz5UmZRfA5BdHLyGlLPdpdnbqQ==
+X-Received: by 2002:adf:db4e:: with SMTP id f14mr13354997wrj.257.1574374833802;
+        Thu, 21 Nov 2019 14:20:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v184sm1228955wme.31.2019.11.21.14.20.33
+        by smtp.gmail.com with ESMTPSA id c15sm5430914wrx.78.2019.11.21.14.20.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 14:20:34 -0800 (PST)
-Message-Id: <47cecb4a83a3f726088ffba0b00679384c7349ae.1574374826.git.gitgitgadget@gmail.com>
+        Thu, 21 Nov 2019 14:20:33 -0800 (PST)
+Message-Id: <cd717ef5de44c965ae82607baccd1557fed02825.1574374826.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 21 Nov 2019 22:20:26 +0000
-Subject: [PATCH 11/11] test-lib: clear watchman watches at test completion
+Date:   Thu, 21 Nov 2019 22:20:25 +0000
+Subject: [PATCH 10/11] t7519: disable external GIT_TEST_FSMONITOR variable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,47 +76,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
+The GIT_TEST_FSMONITOR variable was created specifically so the
+t7519-status-fsmonitor.sh test script could tweak the expected
+behavior depending on its value. However, if we set it externally
+to use the Watchman integration, then it breaks the initial tests
+that demonstrate behavior _without_ the fsmonitor feature.
+
+Disable this variable at the start of the script.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/test-lib-functions.sh | 15 +++++++++++++++
- t/test-lib.sh           |  2 ++
- 2 files changed, 17 insertions(+)
+ t/t7519-status-fsmonitor.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index e0b3f28d3a..03573caf42 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1475,3 +1475,18 @@ test_set_port () {
- 	port=$(($port + ${GIT_TEST_STRESS_JOB_NR:-0}))
- 	eval $var=$port
- }
-+
-+test_clear_watchman () {
-+	if test $GIT_TEST_FSMONITOR -ne ""
-+	then
-+		watchman watch-list |
-+			grep "$TRASH_DIRECTORY" |
-+			sed "s/\t\"//g" |
-+			sed "s/\",//g" >repo-list
-+
-+		for repo in $(cat repo-list)
-+		do
-+			watchman watch-del "$repo"
-+		done
-+	fi
-+}
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 30b07e310f..067a432ea5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1072,6 +1072,8 @@ test_atexit_handler () {
- 	# sure that the registered cleanup commands are run only once.
- 	test : != "$test_atexit_cleanup" || return 0
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index 81a375fa0f..443d2e653b 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -8,6 +8,9 @@ test_description='git status with file system watcher'
+ # "git update-index --fsmonitor" can be used to get the extension written
+ # before testing the results.
  
-+	test_clear_watchman
++# Disable an external value, as we will set it directly as needed.
++GIT_TEST_FSMONITOR=""
 +
- 	setup_malloc_check
- 	test_eval_ "$test_atexit_cleanup"
- 	test_atexit_cleanup=:
+ clean_repo () {
+ 	git reset --hard HEAD &&
+ 	git clean -fd
 -- 
 gitgitgadget
+
