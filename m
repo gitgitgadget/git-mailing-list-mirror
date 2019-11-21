@@ -2,116 +2,272 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F8F8C432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3CD0C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:21:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5109020721
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:13:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BB062089F
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 11:21:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Bz/vGjez"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SNq/jQ1P"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726351AbfKULNA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 06:13:00 -0500
-Received: from mout.gmx.net ([212.227.17.20]:40101 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726014AbfKULNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 06:13:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574334771;
-        bh=R7E4UTM2HYvM6b+WnQcttMYEtZTbsEM5Q7JDIKhufEs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Bz/vGjezyZjRNVG4A3/4JWmFW55n05bFQMgAgNcouTydnehNKCGU4FGH5czSd7kuQ
-         XoOH/UTjhj+ZcqWxoBOIU5j+wXPDm7E0fmSvHD81hA3Og32AlrCD9WFgpzv7hFTWq8
-         i1yVei5e+M3gmWuq0TUx2vMEIm3W6w3upf+7FDog=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MV63q-1iNCY12T02-00S7wx; Thu, 21
- Nov 2019 12:12:51 +0100
-Date:   Thu, 21 Nov 2019 12:12:38 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 1/1] ci(osx): use new location of the `perforce`
- cask
-In-Reply-To: <20191120225439.GA18277@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1911211209190.31080@tvgsbejvaqbjf.bet>
-References: <pull.400.v2.git.1571316454.gitgitgadget@gmail.com> <pull.400.v3.git.1571789978.gitgitgadget@gmail.com> <9d80e845bf923c4543c49f9947aacb10c59ff6ce.1571789978.git.gitgitgadget@gmail.com> <20191118221804.GA23183@szeder.dev>
- <nycvar.QRO.7.76.6.1911192155140.15956@tvgsbejvaqbjf.bet> <xmqqk17ve45s.fsf@gitster-ct.c.googlers.com> <20191120225439.GA18277@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726362AbfKULVR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 06:21:17 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36620 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726165AbfKULVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 06:21:17 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z3so3923167wru.3
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 03:21:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yragzoGXmVzHgzWvgVcdNbMhCa42TrCLbEPIKwwMZSo=;
+        b=SNq/jQ1PJzalJevNXoSpC+USxXnmFiNq0JHXEAT2QmLw9c6p92UDsC0Xaoc6SWD1+o
+         ZtK2uinx2picoQUy2ucTMUv0qiw9GZ00IYz3SEW8kZU80isySPLkBwkjEzFWan4IJdJk
+         xxDWM2NYenQdtHot6YnCuaq/PDtnx0vUZbgyBhQn2COQzrK2prQozfObNsz1u4lSTWFe
+         CJdOvzkAgs+vJ7D3WgPueihpdz31WxgPsgKn4XcngWKmqg8384LMxR36gLB+UeYpFaWR
+         +CBlbUoCF725XdfG2y3fd9ZJBKQY8yvQ3DfOcR4LC8ulbIdfqSzWsYcIY538rlBlz8mk
+         L5Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yragzoGXmVzHgzWvgVcdNbMhCa42TrCLbEPIKwwMZSo=;
+        b=tvqGLg38cS6udQGS6ts74LJeydZ+xdzqG5k3E0Ung2gyGou5kyPfmNZVbMT5paV9Vz
+         1uuGRPWjKbEwcWZBf+YLb4nIeXOMq4jJJ9L5/JdWrpnWI9A0AjWhyfGDa7d5tj+Zhg2N
+         shSXvgJbw9fmlPKEyf4OFmLQz4chJgyW/BSny99lVg+vyUA5mrJC22ij3UDmzuc4n50P
+         haRANZJhMGlU3PxkOQ9M0Ln/A3qUsgb5RZAEdvYkhv4KnvK91MYei5JCPtlhSgA/ngKq
+         8ujkqfkq5r0PKi45+9/xti31YgEeJYRcoD54nd4XyhIxPX1CiVoOrYvuJiT5naK/yPw9
+         N3nA==
+X-Gm-Message-State: APjAAAVAkOpnf5dbeZcnaqFmJOSIRTbvZMBFOcH6zX8DAYiw3oZc8jH6
+        gtwX6XwpM4vx6H+cdvWLPuY=
+X-Google-Smtp-Source: APXvYqykkEzWdW5OZNKBb+P2T2bTogyjDNuvgj/AjkPFHhGdwewao7nfb5qs7qmuZgc55/itSNE2BA==
+X-Received: by 2002:adf:ea8d:: with SMTP id s13mr9893979wrm.366.1574335274405;
+        Thu, 21 Nov 2019 03:21:14 -0800 (PST)
+Received: from szeder.dev (x4db6680d.dyn.telefonica.de. [77.182.104.13])
+        by smtp.gmail.com with ESMTPSA id p9sm2865733wrs.55.2019.11.21.03.21.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 21 Nov 2019 03:21:13 -0800 (PST)
+Date:   Thu, 21 Nov 2019 12:21:11 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 05/17] sparse-checkout: add '--stdin' option to set
+ subcommand
+Message-ID: <20191121112111.GQ23183@szeder.dev>
+References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
+ <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
+ <0e08898dcb42bd38ca3692b49a7e9f5763150c80.1571666186.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-817254985-1574334774=:31080"
-X-Provags-ID: V03:K1:ENhHttsBkInLvSP26lWYrKb3JT0OmGaQB4D8g9UV95MFqCjF54v
- fn0ifG4iXXJE55aEw/rv0ItecfAKrjXjzIVd+u/aUgPtd27TldP8WswEJ1Tbds5PscUFP35
- S/w6Im8fbvxmehe7mLACALI4wJUGGWV3SbudRxtydQEWhNR/Hpt1mbz8H5IY2lp7mblms0K
- mcU9fZGfXEmGj4x015Mww==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:U8zjaa5QiSE=:fTP3upwdOaCdedcLmhBcYH
- M7fuVFdDEVVNz/EBfxF+byCGIiuyhzs7+wvOC6o/FXpIDzI+XzkwFyA5fZuHJfzOf76UUfZU0
- F3+QcaoZjoPb7OJRipE9XyJWXvKHZku/93K0bfEMhKeDZDaW1ULRTanZMTGExmLcXGsSTyiOx
- 0jqN6KWcpqUL9C/J2jfghO5LL2WWNOlSTApRzWjVlhl0bx48K46Y7P6PwBQWSL7vQJNv3K0b+
- 95i3KKkYmdGV+VNLDCB7p+Zv1DSJNirRgDvkeP8O1CRinNPthjyjdyD4Y9H5ETFxFZC61Jb9P
- hBCR5UiENCeUs5Ioip+OTVhqa0KbVpOdVldhJBo6n3w1m4uMIfSPxTbvPhdgzVJ+PopD2dthj
- xN0eN/114eNS9Sj+T0lqArLruGsd8Y5h4SdFcDeNSuOVz0zahDVFImvYYPD/A/tH9FZNUwy2N
- E0W/3RjsoAD+SS3LblFN+cc5tj+GpWjX0GAC1xNHf++zE8VEcOrIBkWZsZ5QnE/AxNuJg0MpP
- wHI1q1nXvRguATxQBRNQt63wkBuVmmnvIlj2Ylh4UPyVWq6XwViekc4xKcKxPWw9PW2eIzbBP
- GFdn7wAk6MdgUaNpcY9Qs9P1Bx9HItEk0WwDY8gqYfvIMFNRUpLm0nElNps3rSaLXVvgLtcgy
- M0Hn+KGQDZI2UCFr8UyrGmwN6pNc3FLAOIlKYa4VZ+Km2e90zyAhbE0lz8jnh8sC0ENI7DtRA
- xtUM8b7Cle0GDG81wgA5jHsG2C0rQSx6bO2WpMH8BWKORVvEkJpNwxdIP+cA8bML60tbbbkRu
- oCal20r9AKjurLq+YCNiEoCzj136NLdhmRXsRHh6sdypt8whTg/bnxPxgOZh+vw1+E7Cns7Xh
- Gmjdij4V/0T6U32GlByxIS83C2uGuT1Dy+NzlRP+vPP6pTS39cf4JjqRh4wHl4LptLe715J5C
- EHJqCIIg9bnkhE/yyidwRUZgL33S1VuyahNZaKvBLIhknRjN3JyN9BEP23gkxArcdIrcKbC9r
- S/wQVBTn2vvLj8V56DoaqFx53iN48WOkzZfCidu0Z6UMs52yCPGTzmb71TfdILC6R8VixDsSC
- 8XRKW4LmB/kPd25NqBM9B0GEFqLSWPyPIjLOtFWrCvxb6UpdolWdcCaDvly75fE0Uyqtm2wKI
- 0bmSfx7vq5yRVWfi2BhpMnFkm8rZlywjnJT8yZmZtuAidVAiitutvQ3EZDzcr/TyZ7c0dqpF1
- qGlIO5lqzURPmo3eeZ/8OlSYvRJJOvJ3u1McB6zV8FqMZgRyePlAmoxnUZcI=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <0e08898dcb42bd38ca3692b49a7e9f5763150c80.1571666186.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Oct 21, 2019 at 01:56:14PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> The 'git sparse-checkout set' subcommand takes a list of patterns
+> and places them in the sparse-checkout file. Then, it updates the
+> working directory to match those patterns. For a large list of
+> patterns, the command-line call can get very cumbersome.
+> 
+> Add a '--stdin' option to instead read patterns over standard in.
+> 
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  builtin/sparse-checkout.c          | 35 ++++++++++++++++++++++++++++--
+>  t/t1091-sparse-checkout-builtin.sh | 20 +++++++++++++++++
 
---8323328-817254985-1574334774=:31080
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+No documentation update.
 
-Hi,
+>  2 files changed, 53 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index 834ee421f0..f2e2bd772d 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -154,6 +154,15 @@ static int write_patterns_and_update(struct pattern_list *pl)
+>  	return update_working_directory();
+>  }
+>  
+> +static char const * const builtin_sparse_checkout_set_usage[] = {
+> +	N_("git sparse-checkout set [--stdin|<patterns>]"),
 
-On Wed, 20 Nov 2019, SZEDER G=C3=A1bor wrote:
+In the usage string [...] denotes optional command line parameters.
+However, they are not optional, but either '--stdin' or at least one
+pattern is required:
 
-> On Wed, Nov 20, 2019 at 10:18:39AM +0900, Junio C Hamano wrote:
-> > Subject: ci(osx): update homebrew-cask repository with less noise
-> >
-> > The OSX CI build procedure updates the homebrew-cask repository
-> > before attempting to install perforce again, after seeing an
-> > installation failure.  This involves a "git pull" that by default
-> > computes and outputs diffstat, which would only grow as the time
-> > goes by and the repository cast in stone in the CI build image
-> > becomes more and more stale relative to the upstream repository in
-> > the outside world.
->
-> Minor clarification: I, too, thought that the CI build images are cast
-> in stone, but the Travis CI build images are definitely not (don't
-> know about Azure Pipelines),
+  $ git sparse-checkout set
+  error: Sparse checkout leaves no entry on working directory
+  error: Sparse checkout leaves no entry on working directory
+  $ echo $?
+  255
 
-Judging from
-https://github.com/microsoft/azure-pipelines-image-generation/commits/mast=
-er/images/macos/macos-10.14-Readme.md
-it looks like they are updated weekly, although I have to admit that I do
-not know whether the Homebrew packages are updated as regularly (I would
-wager they are). The latest update to Homebrew itself came in 21 days ago:
-https://github.com/microsoft/azure-pipelines-image-generation/commit/866b3=
-68747a064f22ecfb7061e9034e3e21c63d4#diff-fb7f82d5a779a32aabccaad5bb9ab35c
+So this should be (--stdin | <patterns>).
 
-Ciao,
-Johannes
+> +	NULL
+> +};
+> +
+> +static struct sparse_checkout_set_opts {
+> +	int use_stdin;
+> +} set_opts;
+> +
+>  static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>  {
+>  	static const char *empty_base = "";
+> @@ -161,10 +170,32 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>  	struct pattern_list pl;
+>  	int result;
+>  	int set_config = 0;
+> +
+> +	static struct option builtin_sparse_checkout_set_options[] = {
+> +		OPT_BOOL(0, "stdin", &set_opts.use_stdin,
+> +			 N_("read patterns from standard in")),
+> +		OPT_END(),
+> +	};
+> +
+>  	memset(&pl, 0, sizeof(pl));
+>  
+> -	for (i = 1; i < argc; i++)
+> -		add_pattern(argv[i], empty_base, 0, &pl, 0);
+> +	argc = parse_options(argc, argv, prefix,
+> +			     builtin_sparse_checkout_set_options,
+> +			     builtin_sparse_checkout_set_usage,
+> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +
+> +	if (set_opts.use_stdin) {
+> +		struct strbuf line = STRBUF_INIT;
+> +
+> +		while (!strbuf_getline(&line, stdin)) {
 
---8323328-817254985-1574334774=:31080--
+This reads patterns separated by a newline character.
+
+What if someone is doomed with pathnames containing newline
+characters, should we provide a '-z' option for \0-separated patterns?
+
+  $ touch foo bar $'foo\nbar'
+  $ git add .
+  $ git commit -m 'filename with newline'
+  [master (root-commit) 5cd7369] filename with newline
+   3 files changed, 0 insertions(+), 0 deletions(-)
+   create mode 100644 bar
+   create mode 100644 foo
+   create mode 100644 "foo\nbar"
+  $ git sparse-checkout set foo
+  $ ls
+  foo
+  $ git sparse-checkout set 'foo*'
+  $ ls
+  foo  foo?bar
+  $ git sparse-checkout set $'foo\nbar'
+  $ ls
+  foo?bar
+  # Looks good so far, but...
+  $ cat .git/info/sparse-checkout 
+  foo
+  bar
+  $ git read-tree -um HEAD
+  $ ls
+  bar  foo
+  # Not so good after all.
+  # Let's try to hand-edit the sparse-checkout file.
+  $ echo $'"foo\\nbar"' >.git/info/sparse-checkout 
+  $ git read-tree -um HEAD
+  error: Sparse checkout leaves no entry on working directory
+  $ echo $'foo\\nbar'
+  >.git/info/sparse-checkout 
+  $ git read-tree -um HEAD
+  error: Sparse checkout leaves no entry on working directory
+  $ echo $'foo\\\nbar'
+  >.git/info/sparse-checkout 
+  $ git read-tree -um HEAD
+  $ ls
+  bar
+  # OK, I give up :)
+
+So, it seems that the sparse-checkout file format doesn't support
+paths/patterns containing a newline character (or if it does, I
+couldn't figure out how), and thus there is no use for a '-z' option.
+
+However, as shown above a newline in a pattern given as parameter
+eventually leads to undesired behavior, so I think 'git
+sparse-checkout set $'foo\nbar' should error out upfront.
+
+> +			size_t len;
+> +			char *buf = strbuf_detach(&line, &len);
+
+Nit: this 'len' variable is unnecessary, as it's only used as an out
+variable of this strbuf_detach() call, but strbuf_detach() accepts a
+NULL as its second parameter.
+
+> +			add_pattern(buf, empty_base, 0, &pl, 0);
+> +		}
+> +	} else {
+> +		for (i = 0; i < argc; i++)
+> +			add_pattern(argv[i], empty_base, 0, &pl, 0);
+> +	}
+
+According to the usage string this subcommand needs either '--stdin'
+or a set of patterns, but not both, which is in line with my
+interpretation of the commit message.  I think this makes sense, and
+it's consistent with the '--stdin' option of other git commands.
+However, the above option parsing and if-else conditions allow both
+'--stdin' and patterns, silently ignoring the patterns, without
+erroring out:
+
+  $ echo README | git sparse-checkout set --stdin Makefile
+  $ echo $?
+  0
+  $ find . -name README |wc -l
+  51
+  $ find . -name Makefile |wc -l
+  0
+
+>  	if (!core_apply_sparse_checkout) {
+>  		sc_set_config(MODE_ALL_PATTERNS);
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index bf2dc55bb1..a9ff5eb9ec 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -128,4 +128,24 @@ test_expect_success 'set sparse-checkout using builtin' '
+>  	test_cmp expect dir
+>  '
+>  
+> +test_expect_success 'set sparse-checkout using --stdin' '
+> +	cat >expect <<-EOF &&
+> +		/*
+> +		!/*/
+> +		/folder1/
+> +		/folder2/
+> +	EOF
+> +	git -C repo sparse-checkout set --stdin <expect &&
+> +	git -C repo sparse-checkout list >actual &&
+> +	test_cmp expect actual &&
+> +	test_cmp expect repo/.git/info/sparse-checkout &&
+> +	ls repo >dir  &&
+> +	cat >expect <<-EOF &&
+> +		a
+> +		folder1
+> +		folder2
+> +	EOF
+> +	test_cmp expect dir
+> +'
+> +
+>  test_done
+> -- 
+> gitgitgadget
+> 
