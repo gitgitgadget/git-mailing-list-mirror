@@ -2,110 +2,93 @@ Return-Path: <SRS0=oq1W=ZN=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8A6BC432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 12:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C434C432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 12:43:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8D02F20855
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 12:34:36 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y83dRCqB"
+	by mail.kernel.org (Postfix) with ESMTP id 1DE772089D
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 12:43:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbfKUMef (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 07:34:35 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42806 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726230AbfKUMef (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 07:34:35 -0500
-Received: by mail-wr1-f67.google.com with SMTP id a15so4177642wrf.9
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 04:34:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=N25bJ2FAAYNJwtYiwA/m+2YpZR89dhR1fBlXuzeFnMA=;
-        b=Y83dRCqBkcTiQUxoaq4vrnnpF24hUijMnohHdSe5hE805x8yelDjz7qeTRZ8UNAXaj
-         kbA+iSCLh0oQYZ9krrqEAODxHiJdu7Ghc4ExHJJXTKTPqqhkzerZ84UN60+i+WLFnzFo
-         yLNEbQwoneYR8O8MiWinTM4dQiDjjt3vMuMtXr2iGVqB6Luy+bk3TfXogQqe5wq58xs8
-         Eqx0oqs/fm6qQIqoBgQHg4+wDnPaD3DGsNUZuXFDHK72TM6IlfuhukLF7G/elseTkYAz
-         5R+thB5nne4ShYtrzUJXCOZl6akr9fH0ox1UQTm5VdhQBRbdiQnWir2uwSMr/XoC/HER
-         ycwQ==
+        id S1726343AbfKUMnc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 07:43:32 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33187 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbfKUMnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 07:43:31 -0500
+Received: by mail-wr1-f66.google.com with SMTP id w9so4288979wrr.0
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 04:43:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=N25bJ2FAAYNJwtYiwA/m+2YpZR89dhR1fBlXuzeFnMA=;
-        b=KcBhMDvAqoRG7aGqxs4BiRl8OJ5zpo3kxMM88LwTI2kDwaNVzMvTs4s+YJTHkKgKFL
-         9DsMdsr6mat5mzfre+b4WPFdojQA6irMUGnC1cYQHQo9mYlTUPPxv6ex0gSpSWeKYmbL
-         63KR31DEKng/Bf3lpzyVa2uwQjB3bCTZ4fm+seSaVavU/XaTrwMTNPjSoylH5Y0tPw3E
-         TKm6LR1M8w8KUScxFCucA7IP1bdMRczkDqWUgkHkBMdUePYnna1KQWLZc1nPmUDsDnGJ
-         GUz20EL9O/w3BP09vA8IVK4RIWZnBnvCaPyl7hIlqagaAy63/F0qQtSXGq0Rb4xIZj81
-         b2lg==
-X-Gm-Message-State: APjAAAXT8Md61Dj8sDhavcn98+LeU+de2CLvNyGiqQWY2ze+YD0ykIJ/
-        H0mz7SVjBv1kTZxW25PSAhc=
-X-Google-Smtp-Source: APXvYqwluRamsRwAvCUmxgoCakjUljlibtPKxVzgFW5l3OGCTX3NZNwMKzcVFJ8OfcL6N8XCYpryQw==
-X-Received: by 2002:adf:f5c6:: with SMTP id k6mr10073646wrp.245.1574339672921;
-        Thu, 21 Nov 2019 04:34:32 -0800 (PST)
-Received: from szeder.dev (x4db6680d.dyn.telefonica.de. [77.182.104.13])
-        by smtp.gmail.com with ESMTPSA id 65sm3307019wrs.9.2019.11.21.04.34.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 21 Nov 2019 04:34:32 -0800 (PST)
-Date:   Thu, 21 Nov 2019 13:34:29 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 02/17] sparse-checkout: create 'init' subcommand
-Message-ID: <20191121123429.GS23183@szeder.dev>
-References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
- <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
- <a161cee0dfec76e7a08253083f488e2e6d26299e.1571666186.git.gitgitgadget@gmail.com>
- <20191121114936.GR23183@szeder.dev>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=i0C+t3FL4siP4r2GPZ1FKzRfauAJnNhT6N9mvSO7Nb4=;
+        b=RGR6yLMDVa04hbheD4532zIv9eN554jHDgyV3xosdgwLFdR2AIen94SC0ocrPMgOAU
+         ZxRN+rzW2i5wjtjIAuK9jhtslPpxYtyZ0MgsCmIZTAS052s6l3ENrZRrk3V8BPrJMGs9
+         2HQakgRfh3YPAc9rgHQaiWpR+XjHDstjsGmFCxKPCO3k5J0JRcixaaHWg7Bv7qeftTwa
+         Nr1Hb0d++25+VsCwjFWztg2oTvtY93HMrOu7tBcto2UHB9ZdhE+HDhBPEx7sQGQyM2Ke
+         4jcE74X4WbHh5SAdQ7yhT8zM9Cex2nF4G/3tFNvLzmAuZL7z3A0mYGHlMfVWIsREW4Wx
+         9+Ow==
+X-Gm-Message-State: APjAAAV9UCdAU21CmmNj6yr/A7A24u9hnlPi42+1eEMUfvz49JctAybc
+        JjK2WW+G2AgsXJDEj4NIvlZQhaObfHUR/rrGyFXzGo23
+X-Google-Smtp-Source: APXvYqwqWEhzJk6DDlfKKS8B5IDAG3irdu6LmMtzatWSZ6yXF51qLI3cCsl+oQAMMqzkWtMktff623T+xEmYpZV5PSU=
+X-Received: by 2002:a5d:42d1:: with SMTP id t17mr10184852wrr.56.1574340209626;
+ Thu, 21 Nov 2019 04:43:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191121114936.GR23183@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <cover.1574125554.git.liu.denton@gmail.com> <cover.1574207673.git.liu.denton@gmail.com>
+ <0cb86b383b9c115c9c6077d47f0c124a96b30acf.1574207673.git.liu.denton@gmail.com>
+ <xmqqwobvb2cj.fsf@gitster-ct.c.googlers.com> <20191120191258.GA73969@generichostname>
+In-Reply-To: <20191120191258.GA73969@generichostname>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 21 Nov 2019 07:43:18 -0500
+Message-ID: <CAPig+cQ0xO2ya=3ok=GPV2Ji2HJSFvCtokiRpWJhBAR1skqKVQ@mail.gmail.com>
+Subject: Re: [PATCH v2 7/8] range-diff: passthrough --[no-]notes to `git log`
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 21, 2019 at 12:49:36PM +0100, SZEDER Gábor wrote:
-> On Mon, Oct 21, 2019 at 01:56:11PM +0000, Derrick Stolee via GitGitGadget wrote:
-> > Getting started with a sparse-checkout file can be daunting. Help
-> > users start their sparse enlistment using 'git sparse-checkout init'.
-> > This will set 'core.sparseCheckout=true' in their config, write
-> > an initial set of patterns to the sparse-checkout file, and update
-> > their working directory.
-> 
-> Enabling sparse-checkout can remove modified files:
-> 
->   $ mkdir dir
->   $ touch foo dir/bar
->   $ git add .
->   $ git commit -m Initial
->   [master (root-commit) ecc81bd] Initial
->    2 files changed, 0 insertions(+), 0 deletions(-)
->    create mode 100644 dir/bar
->    create mode 100644 foo
->   $ echo changes >dir/bar
->   $ ~/src/git/git sparse-checkout init
->   error: Entry 'dir/bar' not uptodate. Cannot update sparse checkout.
->   error: failed to update index with new sparse-checkout paths
+On Wed, Nov 20, 2019 at 2:13 PM Denton Liu <liu.denton@gmail.com> wrote:
+> On Wed, Nov 20, 2019 at 01:26:04PM +0900, Junio C Hamano wrote:
+> > Denton Liu <liu.denton@gmail.com> writes:
+> > > +#include "argv-array.h"
+> > >
+> > >  int show_range_diff(const char *range1, const char *range2,
+> > >                 int creation_factor, int dual_color,
+> > > -               struct diff_options *diffopt);
+> > > +               struct diff_options *diffopt,
+> > > +               struct argv_array *other_arg);
+> >
+> > I thought a mere use of "pointer to a struct" did not have to bring
+> > the definition of the struct into the picture?  In other words,
+> > wouldn't it be fine to leave the other_arg a pointer to an opaque
+> > structure by not including "argv-array.h" in this file?
+>
+> Without including "argv-array.h", we get the following hdr-check error:
+>
+>         $ make range-diff.hco
+>         In file included from range-diff.hcc:2:
+>         ./range-diff.h:16:14: error: declaration of 'struct argv_array' will not be visible outside of this function [-Werror,-Wvisibility]
+>                             struct argv_array *other_arg);
 
-And after this it leaves the 'sparse-checkout' file behind, which may
-or may not be desired:
+Did you forward-declare 'argv_array' in range-diff.h? That is, rather than:
 
-  $ cat .git/info/sparse-checkout 
-  /*
-  !/*/
+    #include "argv-array.h"
 
+instead say:
+
+    struct argv_array;
+
+which tells the compiler that the type exists, thus allowing you to
+deal with pointers to the struct, as long as you don't try to access
+any of the struct's members in code which has seen only the forward
+declaration. You would still need to #include "argv-array.h" in
+range-diff.c, though.
