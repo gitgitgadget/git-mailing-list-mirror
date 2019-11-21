@@ -8,56 +8,55 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73A9CC432C0
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 13:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD9AC432C0
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 13:17:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3F68D20731
-	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 13:15:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B72120731
+	for <git@archiver.kernel.org>; Thu, 21 Nov 2019 13:17:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gM444XUK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MVWw/F+Q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726664AbfKUNPx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 08:15:53 -0500
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:46989 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbfKUNPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 08:15:53 -0500
-Received: by mail-qv1-f67.google.com with SMTP id w11so1338107qvu.13
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 05:15:52 -0800 (PST)
+        id S1726454AbfKUNR5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 08:17:57 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:44309 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726358AbfKUNR5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 08:17:57 -0500
+Received: by mail-qt1-f195.google.com with SMTP id o11so3571439qtr.11
+        for <git@vger.kernel.org>; Thu, 21 Nov 2019 05:17:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=RUJkwez7vNpiRKzaYVWtODiKCPqWcr61ifo7HePBHyw=;
-        b=gM444XUKkM5/+PaKNjz3wSvYywGW7cXVlQwibFRL+fhAygKKccW4UBMDMNWsFHKYxr
-         QV7v4a+qy2tLdyXQvqrbV+w3eP7CVYjPngi94JXyr/Fhqu1Mo2MP9niHBwWS3EejQi00
-         IAvCH7Oy/sSmtuWyADnCAr7l8N6lXbd+UE79Ai4pPSKBrxL8SP0dD5ie5zATmvjhW76H
-         bSq6roVMDZi8qr8Z3SwieAIcy3aZqsYGHTckqt/aXq7Ko0gyk0YMl7DxKG5q9wcmcYs4
-         k8OOi+iZdxbK/id9Oi3ynJfXv+/KliybRVxzPpaOS65UsL4Q9hbBXlD7/TUmn3oQtmJo
-         6xtQ==
+        bh=YmNrzKtZkJqjyedEcLz7awIfSWAjGUIwoW+1ZBxshAA=;
+        b=MVWw/F+Q9qiiFsL3UHmLr/Pz4mBWkf5zdUZN3x7jxsWnD9npl4sOiMlkGcZpqgN82Y
+         9RJB1P17SZwLa/G1nnLKYAdAJDVPAcpdb6CdS82VZLMk2wOc1giKC+c7qWbjyIU6CDPL
+         ylbTQO2qnchA3xaqKmCSpd/qdQE9QrEYR0sm8/hyzNxMeoqaaIzWsVJx793LtEbYOuHA
+         6mjZuCqEIH2k3/QmKfoixnzOpcfdTDnIoHlT5gF5NIMiZWUbWv3ppSQHBb+ekBV3jTRl
+         ki6yGloEy12rkpLS6MxGhg7HLKRbOwzF3/Gr9jf8DNFC35IF92e3+2gEKHMnLyQfoKc5
+         XKgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=RUJkwez7vNpiRKzaYVWtODiKCPqWcr61ifo7HePBHyw=;
-        b=C39QxZBcVv12qXuAVLTXIhrmM0D59Ifdx7kyREii5iKxoOPHpfYMahCWOgzevwTxB3
-         Z7Q9UElZWanUkhEONTNPuoCcmR56DlOL9hXgs2bxyLNxCZXuD3hfEyohEa0pWbKy4NvQ
-         yYi9E2I05cQw4CJOKK1KP6UUDHNtZyL4TsYQbNfT5vMrAAtcVZjKLaOwRPVSpAAqAQaQ
-         4vcZ5LWFFVx+HPFZRd+nUqXBcjItbLe1cKMgvnN8ldw8MFJfktTnygZH1O7a6w2V6+Vn
-         UV0SY0dEciutrP9nSR4PpSwXMjPKuzx8wslKFCUUaVqRZsVzNLSgZsWq/vNpRQgLh0/M
-         vHqQ==
-X-Gm-Message-State: APjAAAUkN30l9ULLEJEoujdcG3ubyJNcYnEyiNQk4OBe0VZK40QeWtB4
-        NTHxFvBRg1dEsskQg3st+dxHEs47New=
-X-Google-Smtp-Source: APXvYqzHvBDfuDhS8Ow+OaovV3vZlIxv/axYKhS2rOfMQ2CShjvXT0iGu+zfskqq6oc2z45RqXNx9w==
-X-Received: by 2002:a05:6214:11f2:: with SMTP id e18mr1002769qvu.86.1574342151603;
-        Thu, 21 Nov 2019 05:15:51 -0800 (PST)
+        bh=YmNrzKtZkJqjyedEcLz7awIfSWAjGUIwoW+1ZBxshAA=;
+        b=gbaeneKLxtRH60YUdHy/gN9jUDsnn+MeGq8op3m6D+DI2db6Ncks6Q25J2jvY4bNw3
+         w3jaxCvj0dBuAIr7YpemWVLI+8msdqFBLEqH3uQ9jY5y/wl/1c+MwTnKoEWo68rg9KE9
+         kzjE30N8SwS28BApYjGqwj8RvYBYOowr4mdqZfiVUpgB08y9pD5nrjYDXxIkQZuDk5Mq
+         bPtoLSCiGO6iEkE+o8jzzwsa3//D2yfxcEhLFFs6z7i5zzEr26lhbIys7eBtWkEgYXEM
+         D665hfPgqM17q6gtu1zlpoSGpkCZf+pz3r6P2XcuRD/g8nlSg792M9+LwwAiIXSaa1bA
+         QMvw==
+X-Gm-Message-State: APjAAAW1KCHgf0Sex2GKPHzKhgKd1i7P1ZZM6TAypR5g4gPqI1HnQR3K
+        0UGtsBgfTza/f1g/0EK/Ti4=
+X-Google-Smtp-Source: APXvYqxEuwiUeOqnMM/c9fetL4H0Oknd3oQDn2RKqfIIF7ICCks+iM9QBIXKIkFqtcY47jYVNB/h/Q==
+X-Received: by 2002:ac8:465a:: with SMTP id f26mr8648510qto.241.1574342274550;
+        Thu, 21 Nov 2019 05:17:54 -0800 (PST)
 Received: from [10.0.1.19] ([98.122.173.75])
-        by smtp.gmail.com with ESMTPSA id d13sm1474269qta.67.2019.11.21.05.15.50
+        by smtp.gmail.com with ESMTPSA id c23sm1482908qte.66.2019.11.21.05.17.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Nov 2019 05:15:50 -0800 (PST)
-Subject: Re: [PATCH v5 05/17] sparse-checkout: add '--stdin' option to set
- subcommand
+        Thu, 21 Nov 2019 05:17:54 -0800 (PST)
+Subject: Re: [PATCH v5 06/17] sparse-checkout: create 'disable' subcommand
 To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
@@ -65,15 +64,15 @@ Cc:     git@vger.kernel.org, newren@gmail.com, jon@jonsimons.org,
         Junio C Hamano <gitster@pobox.com>
 References: <pull.316.v4.git.1571147764.gitgitgadget@gmail.com>
  <pull.316.v5.git.1571666186.gitgitgadget@gmail.com>
- <0e08898dcb42bd38ca3692b49a7e9f5763150c80.1571666186.git.gitgitgadget@gmail.com>
- <20191121112111.GQ23183@szeder.dev>
+ <c48535cd5c00310403ffccac7507f399fca5a8a4.1571666187.git.gitgitgadget@gmail.com>
+ <20191119161545.GH23183@szeder.dev>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7ad1d044-cb3f-9d9c-22de-a35c6e608c4e@gmail.com>
-Date:   Thu, 21 Nov 2019 08:15:48 -0500
+Message-ID: <bdad792f-4050-691d-cfc1-f57e83d2b240@gmail.com>
+Date:   Thu, 21 Nov 2019 08:17:51 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
  Thunderbird/71.0
 MIME-Version: 1.0
-In-Reply-To: <20191121112111.GQ23183@szeder.dev>
+In-Reply-To: <20191119161545.GH23183@szeder.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -82,177 +81,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/21/2019 6:21 AM, SZEDER Gábor wrote:
-> On Mon, Oct 21, 2019 at 01:56:14PM +0000, Derrick Stolee via GitGitGadget wrote:
+On 11/19/2019 11:15 AM, SZEDER Gábor wrote:
+> On Mon, Oct 21, 2019 at 01:56:15PM +0000, Derrick Stolee via GitGitGadget wrote:
 >> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->> The 'git sparse-checkout set' subcommand takes a list of patterns
->> and places them in the sparse-checkout file. Then, it updates the
->> working directory to match those patterns. For a large list of
->> patterns, the command-line call can get very cumbersome.
->>
->> Add a '--stdin' option to instead read patterns over standard in.
+>> The instructions for disabling a sparse-checkout to a full
+>> working directory are complicated and non-intuitive. Add a
+>> subcommand, 'git sparse-checkout disable', to perform those
+>> steps for the user.
 >>
 >> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 >> ---
->>  builtin/sparse-checkout.c          | 35 ++++++++++++++++++++++++++++--
->>  t/t1091-sparse-checkout-builtin.sh | 20 +++++++++++++++++
-> 
-> No documentation update.
-> 
->>  2 files changed, 53 insertions(+), 2 deletions(-)
+>>  Documentation/git-sparse-checkout.txt | 27 ++++++++++++---------------
+>>  builtin/sparse-checkout.c             | 26 +++++++++++++++++++++++++-
+>>  t/t1091-sparse-checkout-builtin.sh    | 15 +++++++++++++++
+>>  3 files changed, 52 insertions(+), 16 deletions(-)
 >>
->> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
->> index 834ee421f0..f2e2bd772d 100644
->> --- a/builtin/sparse-checkout.c
->> +++ b/builtin/sparse-checkout.c
->> @@ -154,6 +154,15 @@ static int write_patterns_and_update(struct pattern_list *pl)
->>  	return update_working_directory();
->>  }
+>> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+>> index b933043b3d..f794d4797a 100644
+>> --- a/Documentation/git-sparse-checkout.txt
+>> +++ b/Documentation/git-sparse-checkout.txt
+>> @@ -48,6 +48,10 @@ To avoid interfering with other worktrees, it first enables the
+>>  	working directory to match the new patterns. Enable the
+>>  	core.sparseCheckout config setting if it is not already enabled.
 >>  
->> +static char const * const builtin_sparse_checkout_set_usage[] = {
->> +	N_("git sparse-checkout set [--stdin|<patterns>]"),
+>> +'disable'::
+>> +	Remove the sparse-checkout file, set `core.sparseCheckout` to
+>> +	`false`, and restore the working directory to include all files.
 > 
-> In the usage string [...] denotes optional command line parameters.
-> However, they are not optional, but either '--stdin' or at least one
-> pattern is required:
+> I think it would make sense to leave the sparse-checkout file behind
+> as-is, and only update the coonfiguration and the working tree.  That
+> way users could quickly go back to their last sparse checkout setup by
+> simply running 'git sparse-checkout init'.
 > 
->   $ git sparse-checkout set
->   error: Sparse checkout leaves no entry on working directory
->   error: Sparse checkout leaves no entry on working directory
->   $ echo $?
->   255
-> 
-> So this should be (--stdin | <patterns>).
-> 
->> +	NULL
->> +};
+>   
+>> +static int sparse_checkout_disable(int argc, const char **argv)
+>> +{
+>> +	char *sparse_filename;
+>> +	FILE *fp;
 >> +
->> +static struct sparse_checkout_set_opts {
->> +	int use_stdin;
->> +} set_opts;
+>> +	if (sc_set_config(MODE_ALL_PATTERNS))
+>> +		die(_("failed to change config"));
 >> +
->>  static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
->>  {
->>  	static const char *empty_base = "";
->> @@ -161,10 +170,32 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
->>  	struct pattern_list pl;
->>  	int result;
->>  	int set_config = 0;
+>> +	sparse_filename = get_sparse_checkout_filename();
+>> +	fp = xfopen(sparse_filename, "w");
+>> +	fprintf(fp, "/*\n");
+>> +	fclose(fp);
 >> +
->> +	static struct option builtin_sparse_checkout_set_options[] = {
->> +		OPT_BOOL(0, "stdin", &set_opts.use_stdin,
->> +			 N_("read patterns from standard in")),
->> +		OPT_END(),
->> +	};
+>> +	if (update_working_directory())
+>> +		die(_("error while refreshing working directory"));
 >> +
->>  	memset(&pl, 0, sizeof(pl));
->>  
->> -	for (i = 1; i < argc; i++)
->> -		add_pattern(argv[i], empty_base, 0, &pl, 0);
->> +	argc = parse_options(argc, argv, prefix,
->> +			     builtin_sparse_checkout_set_options,
->> +			     builtin_sparse_checkout_set_usage,
->> +			     PARSE_OPT_KEEP_UNKNOWN);
+>> +	unlink(sparse_filename);
+>> +	free(sparse_filename);
 >> +
->> +	if (set_opts.use_stdin) {
->> +		struct strbuf line = STRBUF_INIT;
->> +
->> +		while (!strbuf_getline(&line, stdin)) {
+>> +	return sc_set_config(MODE_NO_PATTERNS);
 > 
-> This reads patterns separated by a newline character.
+> Hrm.  So disabling the sparse-checkout calls the same helper function
+> to write the configuration as initializing or setting, but with a
+> different parameter.  However, the error message in that function is:
 > 
-> What if someone is doomed with pathnames containing newline
-> characters, should we provide a '-z' option for \0-separated patterns?
+>   error(_("failed to enable core.sparseCheckout"));
 > 
->   $ touch foo bar $'foo\nbar'
->   $ git add .
->   $ git commit -m 'filename with newline'
->   [master (root-commit) 5cd7369] filename with newline
->    3 files changed, 0 insertions(+), 0 deletions(-)
->    create mode 100644 bar
->    create mode 100644 foo
->    create mode 100644 "foo\nbar"
->   $ git sparse-checkout set foo
->   $ ls
->   foo
->   $ git sparse-checkout set 'foo*'
->   $ ls
->   foo  foo?bar
->   $ git sparse-checkout set $'foo\nbar'
->   $ ls
->   foo?bar
->   # Looks good so far, but...
->   $ cat .git/info/sparse-checkout 
->   foo
->   bar
->   $ git read-tree -um HEAD
->   $ ls
->   bar  foo
->   # Not so good after all.
->   # Let's try to hand-edit the sparse-checkout file.
->   $ echo $'"foo\\nbar"' >.git/info/sparse-checkout 
->   $ git read-tree -um HEAD
->   error: Sparse checkout leaves no entry on working directory
->   $ echo $'foo\\nbar'
->   >.git/info/sparse-checkout 
->   $ git read-tree -um HEAD
->   error: Sparse checkout leaves no entry on working directory
->   $ echo $'foo\\\nbar'
->   >.git/info/sparse-checkout 
->   $ git read-tree -um HEAD
->   $ ls
->   bar
->   # OK, I give up :)
-> 
-> So, it seems that the sparse-checkout file format doesn't support
-> paths/patterns containing a newline character (or if it does, I
-> couldn't figure out how), and thus there is no use for a '-z' option.
-> 
-> However, as shown above a newline in a pattern given as parameter
-> eventually leads to undesired behavior, so I think 'git
-> sparse-checkout set $'foo\nbar' should error out upfront.
+> So if something goes wrong while disabling the sparse-checkout, the
+> user might get an error saying "error: failed to enable
+> core.sparseCheckout".  That doesn't look quite right, does it?
 
-I will add this to the list of things to do as a follow-up. There are
-lots of ways users can abuse the command-line right now, especially in
-cone mode.
+Both of your comments are valid, but will be easier to implement
+later in the series, after "sparse-checkout: update working directory
+in-process" which previously did not interact with the "disable"
+command. I'll add a new commit that adds that integration point
+and should resolve your concerns raised here.
 
-The goal right now is to get the typical usage figured out, then we can
-look for atypical cases (such as newlines in filenames, which...who even
-does that?).
-
->> +			size_t len;
->> +			char *buf = strbuf_detach(&line, &len);
-> 
-> Nit: this 'len' variable is unnecessary, as it's only used as an out
-> variable of this strbuf_detach() call, but strbuf_detach() accepts a
-> NULL as its second parameter.
-> 
->> +			add_pattern(buf, empty_base, 0, &pl, 0);
->> +		}
->> +	} else {
->> +		for (i = 0; i < argc; i++)
->> +			add_pattern(argv[i], empty_base, 0, &pl, 0);
->> +	}
-> 
-> According to the usage string this subcommand needs either '--stdin'
-> or a set of patterns, but not both, which is in line with my
-> interpretation of the commit message.  I think this makes sense, and
-> it's consistent with the '--stdin' option of other git commands.
-> However, the above option parsing and if-else conditions allow both
-> '--stdin' and patterns, silently ignoring the patterns, without
-> erroring out:
-> 
->   $ echo README | git sparse-checkout set --stdin Makefile
->   $ echo $?
->   0
->   $ find . -name README |wc -l
->   51
->   $ find . -name Makefile |wc -l
->   0
-
-I'll add this to the list, too.
-
-Thanks,
 -Stolee
-
