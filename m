@@ -2,288 +2,110 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD474C43215
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA63C432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:43:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8E63820715
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 73C8B20715
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:43:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uj1qfPPT"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gdsu1sDo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726895AbfKVOlO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 09:41:14 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44379 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726546AbfKVOlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 09:41:12 -0500
-Received: by mail-wr1-f68.google.com with SMTP id i12so8852785wrn.11
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 06:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Fd0RJytb8yE0ezMrwNyNzPh/LCYv/WmTwTPXUFSgMpE=;
-        b=Uj1qfPPTHsti0z0i0EErJWX4KGydsVGZQKq4rvm25shQB7a+RGnp1Xxwp7vOTZKjEd
-         8VLmCbwlBeBS86aahSXhsMs/zlpTbAJm9Nmje7ziCFfeWIozyTO/OThSSO4qb60+nvDk
-         Xx+GsUwm8nzmkj9J1spPa4JoCroIlAJp11Krhey7iH8buVENSWQMVZvwwk7MaEudE2SU
-         oz7H+xTrj5JxYXrwyuPtHMC7jbuGfseABbpVdx161JEDE0OxbK205gPTewC47mC9lCtx
-         7iS/sdCrqd8waEOX/s5kke+orbJEalXVZ+qKxPyemNzUM+hdK8Nd5oAwBrQPhAsoO7JX
-         fi7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Fd0RJytb8yE0ezMrwNyNzPh/LCYv/WmTwTPXUFSgMpE=;
-        b=lhncDZWo/+APMvXg7+LCNh+eLulAT+8pYWL7bSnWHTQZ/uuFHrcK552HAdRlFqcWvg
-         ifAsvYZ+1PqutXTnYjb5ZUB06dK2TFFyb/g6ZVnGTOcFbgtsZWtWLWOCxClol5LOGc7Z
-         JQr9Y/QNQIDbhMMmFtqSVdx6GFMMy0vIdcf5g7FDdfIl1xiMhhT8POTsxxYSmG81NITG
-         XmIUx3vKBqJ6bsn4YR6y3FC0imfMArWff6A1mXf0WH5+jBR1tbcRKWXE4T5kjubSZQ2w
-         kAHEL2VokG+8qGpoYcx/ndiXPWnAwJLAMVP4MHNyvJT9PuOXphpPkMjdO5NoTr/wyRD1
-         gzqg==
-X-Gm-Message-State: APjAAAVfiHGKQAly61hnFaPjuWdKMB+747+wlLesKKfIfgO9Yvq8t5NP
-        nWBcVscOw0w540BdfLRAEfJwjiIG
-X-Google-Smtp-Source: APXvYqxXJFoEc6FerHTjcW+q6D+g66PVt8nELSBhHmbvEcKmcHQv5o52HlGTmaO8OzzQuNU/4BLiyw==
-X-Received: by 2002:a5d:6585:: with SMTP id q5mr17565687wru.158.1574433669325;
-        Fri, 22 Nov 2019 06:41:09 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y8sm8201863wru.59.2019.11.22.06.41.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Nov 2019 06:41:08 -0800 (PST)
-Message-Id: <feb197792814701bf36cb15b73e1e73aae2baa4d.1574433665.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
-References: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Nov 2019 14:41:04 +0000
-Subject: [PATCH 3/4] mingw: spawned processes need to inherit only standard
- handles
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726633AbfKVOnw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 09:43:52 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54271 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726526AbfKVOnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 09:43:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574433826;
+        bh=pJ2e4ZXZmgIgoSTi5gVSjjy7WKsGLXRe4UlRdidoql0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gdsu1sDo/hId9e8MB0qxjDwHg1+7xABuHOb23nfjxDvRLbxgJKcOFLwlNaDN2qbkU
+         hLSSJjif5qMuu/HgW17TDFCZf6ojJZlyy6AUQL6juYqrQB1jioY9RhxhU1oK4g5has
+         ckBacBtG6O9+Ra2gmMnwDcGWLy8MosH+z1DWEXQM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2O2W-1iYiey2fpW-003xpP; Fri, 22
+ Nov 2019 15:43:46 +0100
+Date:   Fri, 22 Nov 2019 15:43:31 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
+Subject: Re: GitGitGadget on git/git, was Re: Should we auto-close PRs on
+ git/git?
+In-Reply-To: <nycvar.QRO.7.76.6.1911221430510.31080@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1911221542511.31080@tvgsbejvaqbjf.bet>
+References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet> <20191114074117.GB17186@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet> <20191121105414.GA16238@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911221430510.31080@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wBqbmtjgH7qXiKijCxWS50y1RkeQPMz0yLxUlrcyrK8ZT7cZIb1
+ L53OQsBalJv2ZUwi1j9CrVpOTfa5RMkBXfRAtAbNe3TfrqOp8VZ0qK8hvbzQej6hj2eO3bf
+ Kuqdehuep+SYr1s7flnaHVAE36L4SHOAowmOc1B46ECr5cnvbAzDPEUYnpuF6ozuU5UfYNM
+ GpuH3+DhA99uhyud/bUsA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:pCeu/Vlsme4=:wI+B6JeMiLflEw3NY9RRIz
+ 3Kr1JKPK18mx+d1L444JOLknVVl8s3m9wjby35Y/dxdWRDo4oqKe3wFo2T6CfuVaNAn3qciw2
+ 18hdHgvJjdxBVwAAeS8xYJvKZMqhwdykGrjINXM7eVLiymGN3kdBhzZPyNhbd0ce05twkRoSm
+ bDe7eD1nno7qp4iIebVSVrgOcsYs2ZgWYyxmtiXvvS/n97pHdn/Bq39DO49NuzQNdHxXQuomD
+ zKLs+TBtj+rYb8JeuzDNhZijVCLt+TcrYTUEXscTcLAymEjDNJitprgKRZA1UYMCu0F+36qe4
+ PHZQ+JBYXQmckQBnIcVWWP9L1HhQuT21K0KKKdUS1citaTwABE/ri9BImlM5NhdQ315UdvXqf
+ aQk12GvJ9+WCzXYBojRce7RO4VHYf9lQGsmdOYKcqeXEEHeUFIleWDikiu1pTAgoMq5eV4iOB
+ v4Taqw717jhfkQ9uE6gOCjV9SEs0+HuHUUYekiFPc7f1HcHsW1ZEaolWF4qOaCD/iusnZ9YdA
+ L4dM9wnjO6pw/zByxALxl9mPIVpxWt2gI8Jlip0j6YVyrughz8W3seeqN+Zwxzpxj67OAI9In
+ HzOZt/HMM6fr8SHSjyYeqXilijJbjBKfIpAbctlKu2a833B4nhgyWy9fuJtMwUgwhqBpVXJee
+ PhKn/Al5/LZA+Qm3mtmO8HgQuYUMke9WZJk7RYgLdissWUMWxkHsOYDpXP1xuR6HonGElF/e8
+ d0p7159+FHIwc1ZOktJIIUggGEUZglL87OTpqjT113h7DxANRYguIdnY96nXLFYYsHvWOWOJ4
+ nuy1AAtyIKoOrrI9pwvUrDLIDQJ72K4VtobagbcLhKPlAOBGuHGmBTW2MQccIb4EtbNYFZMeV
+ OI222nkqR9IvzY/+db9lAayBvsZJSGaYWuC0wWWF7qgKqV3VFSlAtE0r5iGZpQJYS9nE+YBBD
+ IeyMN/OysyfXoauutV00XAVKUwNsNWt8xxi1pGom1xV/YOnBr7usYV84r1fEJrbEc9FI6jSNp
+ 9Mptfsie280RUH6HerUeCG+BLvFDbXKf2JTzNttUh/aBecfvIdkwikub9fjcbCNtFwH7yvWPI
+ XPjyCUva2iB0oNk/9LAc3SZBN9A4vhlVz3X7o5oU84DRhoSMbpyq/4fC5w2ARUsCy7aPM/lUF
+ YMkYj+7OQvPr5vqUrZdMn+kZLySd/XbyaXOFreKyvDPWsW6Cgj//iKs0HyfrU0EinlmvaXx3Q
+ /FkaYh9YXgNUxbeu3zgyjH7m/NpcrNM0YA37XtoaOcJ1ZfxiXXJ5vVtB8tYc=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Peff,
 
-By default, CreateProcess() does not inherit any open file handles,
-unless the bInheritHandles parameter is set to TRUE. Which we do need to
-set because we need to pass in stdin/stdout/stderr to talk to the child
-processes. Sadly, this means that all file handles (unless marked via
-O_NOINHERIT) are inherited.
+On Fri, 22 Nov 2019, Johannes Schindelin wrote:
 
-This lead to problems in VFS for Git, where a long-running read-object
-hook is used to hydrate missing objects, and depending on the
-circumstances, might only be called *after* Git opened a file handle.
+> On Thu, 21 Nov 2019, Jeff King wrote:
+>
+> > On Mon, Nov 18, 2019 at 07:37:57PM +0100, Johannes Schindelin wrote:
+> >
+> > > To build some confidence in my patches (as you probably know, I do
+> > > not trust reviews as much as I trust real-life testing, although I
+> > > do prefer to have both) I "kind of" activated it on my fork, limited
+> > > to act only on comments _I_ made on PRs (and sending only to me
+> > > instead of the list), and it seems to work all right, so far. I
+> > > cannot say for sure whether it handles the PR labels correctly, but
+> > > I guess time will tell, and I will fix bugs as quickly as I can.
+> >
+> > Yeah, that makes sense to me. Going from one repo to three is not much
+> > worse than going to two, so it's good to have a testing area, too.
+> >
+> > Do you want any third-party testing there (e.g., a user who isn't you
+> > making a PR against dscho/git)?
+>
+> While that would be nice, my fork is a mess and not really set up to
+> provide any useful target branch...
+>
+> The real proof of the concept will come when the first git/git PR will
+> be submitted.
 
-Ideally, we would not open files without O_NOINHERIT unless *really*
-necessary (i.e. when we want to pass the opened file handle as standard
-handle into a child process), but apparently it is all-too-easy to
-introduce incorrect open() calls: this happened, and prevented updating
-a file after the read-object hook was started because the hook still
-held a handle on said file.
+Seems to have worked:
+https://public-inbox.org/git/pull.670.git.git.1574433665.gitgitgadget@gmai=
+l.com/
 
-Happily, there is a solution: as described in the "Old New Thing"
-https://blogs.msdn.microsoft.com/oldnewthing/20111216-00/?p=8873 there
-is a way, starting with Windows Vista, that lets us define precisely
-which handles should be inherited by the child process.
-
-And since we bumped the minimum Windows version for use with Git for
-Windows to Vista with v2.10.1 (i.e. a *long* time ago), we can use this
-method. So let's do exactly that.
-
-We need to make sure that the list of handles to inherit does not
-contain duplicates; Otherwise CreateProcessW() would fail with
-ERROR_INVALID_ARGUMENT.
-
-While at it, stop setting errno to ENOENT unless it really is the
-correct value.
-
-Also, fall back to not limiting handle inheritance under certain error
-conditions (e.g. on Windows 7, which is a lot stricter in what handles
-you can specify to limit to).
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c         | 120 +++++++++++++++++++++++++++++++++++++----
- t/t0061-run-command.sh |   2 +-
- 2 files changed, 110 insertions(+), 12 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index fe609239dd..cac18cc3da 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1398,8 +1398,13 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
- 			      const char *dir,
- 			      int prepend_cmd, int fhin, int fhout, int fherr)
- {
--	STARTUPINFOW si;
-+	static int restrict_handle_inheritance = 1;
-+	STARTUPINFOEXW si;
- 	PROCESS_INFORMATION pi;
-+	LPPROC_THREAD_ATTRIBUTE_LIST attr_list = NULL;
-+	HANDLE stdhandles[3];
-+	DWORD stdhandles_count = 0;
-+	SIZE_T size;
- 	struct strbuf args;
- 	wchar_t wcmd[MAX_PATH], wdir[MAX_PATH], *wargs, *wenvblk = NULL;
- 	unsigned flags = CREATE_UNICODE_ENVIRONMENT;
-@@ -1435,11 +1440,23 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
- 		CloseHandle(cons);
- 	}
- 	memset(&si, 0, sizeof(si));
--	si.cb = sizeof(si);
--	si.dwFlags = STARTF_USESTDHANDLES;
--	si.hStdInput = winansi_get_osfhandle(fhin);
--	si.hStdOutput = winansi_get_osfhandle(fhout);
--	si.hStdError = winansi_get_osfhandle(fherr);
-+	si.StartupInfo.cb = sizeof(si);
-+	si.StartupInfo.hStdInput = winansi_get_osfhandle(fhin);
-+	si.StartupInfo.hStdOutput = winansi_get_osfhandle(fhout);
-+	si.StartupInfo.hStdError = winansi_get_osfhandle(fherr);
-+
-+	/* The list of handles cannot contain duplicates */
-+	if (si.StartupInfo.hStdInput != INVALID_HANDLE_VALUE)
-+		stdhandles[stdhandles_count++] = si.StartupInfo.hStdInput;
-+	if (si.StartupInfo.hStdOutput != INVALID_HANDLE_VALUE &&
-+	    si.StartupInfo.hStdOutput != si.StartupInfo.hStdInput)
-+		stdhandles[stdhandles_count++] = si.StartupInfo.hStdOutput;
-+	if (si.StartupInfo.hStdError != INVALID_HANDLE_VALUE &&
-+	    si.StartupInfo.hStdError != si.StartupInfo.hStdInput &&
-+	    si.StartupInfo.hStdError != si.StartupInfo.hStdOutput)
-+		stdhandles[stdhandles_count++] = si.StartupInfo.hStdError;
-+	if (stdhandles_count)
-+		si.StartupInfo.dwFlags |= STARTF_USESTDHANDLES;
- 
- 	if (*argv && !strcmp(cmd, *argv))
- 		wcmd[0] = L'\0';
-@@ -1472,16 +1489,97 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
- 	wenvblk = make_environment_block(deltaenv);
- 
- 	memset(&pi, 0, sizeof(pi));
--	ret = CreateProcessW(*wcmd ? wcmd : NULL, wargs, NULL, NULL, TRUE,
--		flags, wenvblk, dir ? wdir : NULL, &si, &pi);
-+	if (restrict_handle_inheritance && stdhandles_count &&
-+	    (InitializeProcThreadAttributeList(NULL, 1, 0, &size) ||
-+	     GetLastError() == ERROR_INSUFFICIENT_BUFFER) &&
-+	    (attr_list = (LPPROC_THREAD_ATTRIBUTE_LIST)
-+			(HeapAlloc(GetProcessHeap(), 0, size))) &&
-+	    InitializeProcThreadAttributeList(attr_list, 1, 0, &size) &&
-+	    UpdateProcThreadAttribute(attr_list, 0,
-+				      PROC_THREAD_ATTRIBUTE_HANDLE_LIST,
-+				      stdhandles,
-+				      stdhandles_count * sizeof(HANDLE),
-+				      NULL, NULL)) {
-+		si.lpAttributeList = attr_list;
-+		flags |= EXTENDED_STARTUPINFO_PRESENT;
-+	}
-+
-+	ret = CreateProcessW(*wcmd ? wcmd : NULL, wargs, NULL, NULL,
-+			     stdhandles_count ? TRUE : FALSE,
-+			     flags, wenvblk, dir ? wdir : NULL,
-+			     &si.StartupInfo, &pi);
-+
-+	/*
-+	 * On Windows 2008 R2, it seems that specifying certain types of handles
-+	 * (such as FILE_TYPE_CHAR or FILE_TYPE_PIPE) will always produce an
-+	 * error. Rather than playing finicky and fragile games, let's just try
-+	 * to detect this situation and simply try again without restricting any
-+	 * handle inheritance. This is still better than failing to create
-+	 * processes.
-+	 */
-+	if (!ret && restrict_handle_inheritance && stdhandles_count) {
-+		DWORD err = GetLastError();
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		if (err != ERROR_NO_SYSTEM_RESOURCES &&
-+		    /*
-+		     * On Windows 7 and earlier, handles on pipes and character
-+		     * devices are inherited automatically, and cannot be
-+		     * specified in the thread handle list. Rather than trying
-+		     * to catch each and every corner case (and running the
-+		     * chance of *still* forgetting a few), let's just fall
-+		     * back to creating the process without trying to limit the
-+		     * handle inheritance.
-+		     */
-+		    !(err == ERROR_INVALID_PARAMETER &&
-+		      GetVersion() >> 16 < 9200) &&
-+		    !getenv("SUPPRESS_HANDLE_INHERITANCE_WARNING")) {
-+			DWORD fl = 0;
-+			int i;
-+
-+			setenv("SUPPRESS_HANDLE_INHERITANCE_WARNING", "1", 1);
-+
-+			for (i = 0; i < stdhandles_count; i++) {
-+				HANDLE h = stdhandles[i];
-+				strbuf_addf(&buf, "handle #%d: %p (type %lx, "
-+					    "handle info (%d) %lx\n", i, h,
-+					    GetFileType(h),
-+					    GetHandleInformation(h, &fl),
-+					    fl);
-+			}
-+			strbuf_addstr(&buf, "\nThis is a bug; please report it "
-+				      "at\nhttps://github.com/git-for-windows/"
-+				      "git/issues/new\n\n"
-+				      "To suppress this warning, please set "
-+				      "the environment variable\n\n"
-+				      "\tSUPPRESS_HANDLE_INHERITANCE_WARNING=1"
-+				      "\n");
-+		}
-+		restrict_handle_inheritance = 0;
-+		flags &= ~EXTENDED_STARTUPINFO_PRESENT;
-+		ret = CreateProcessW(*wcmd ? wcmd : NULL, wargs, NULL, NULL,
-+				     TRUE, flags, wenvblk, dir ? wdir : NULL,
-+				     &si.StartupInfo, &pi);
-+		if (ret && buf.len) {
-+			errno = err_win_to_posix(GetLastError());
-+			warning("failed to restrict file handles (%ld)\n\n%s",
-+				err, buf.buf);
-+		}
-+		strbuf_release(&buf);
-+	} else if (!ret)
-+		errno = err_win_to_posix(GetLastError());
-+
-+	if (si.lpAttributeList)
-+		DeleteProcThreadAttributeList(si.lpAttributeList);
-+	if (attr_list)
-+		HeapFree(GetProcessHeap(), 0, attr_list);
- 
- 	free(wenvblk);
- 	free(wargs);
- 
--	if (!ret) {
--		errno = ENOENT;
-+	if (!ret)
- 		return -1;
--	}
-+
- 	CloseHandle(pi.hThread);
- 
- 	/*
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 473a3405ef..7d599675e3 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -12,7 +12,7 @@ cat >hello-script <<-EOF
- 	cat hello-script
- EOF
- 
--test_expect_failure MINGW 'subprocess inherits only std handles' '
-+test_expect_success MINGW 'subprocess inherits only std handles' '
- 	test-tool run-command inherited-handle
- '
- 
--- 
-gitgitgadget
-
+Ciao,
+Dscho
