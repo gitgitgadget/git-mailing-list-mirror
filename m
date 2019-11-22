@@ -2,110 +2,165 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EA63C432C0
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DECFC432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 15:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73C8B20715
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:43:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 258F820715
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 15:29:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gdsu1sDo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1KEQKwR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726633AbfKVOnw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 09:43:52 -0500
-Received: from mout.gmx.net ([212.227.15.18]:54271 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726526AbfKVOnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 09:43:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574433826;
-        bh=pJ2e4ZXZmgIgoSTi5gVSjjy7WKsGLXRe4UlRdidoql0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gdsu1sDo/hId9e8MB0qxjDwHg1+7xABuHOb23nfjxDvRLbxgJKcOFLwlNaDN2qbkU
-         hLSSJjif5qMuu/HgW17TDFCZf6ojJZlyy6AUQL6juYqrQB1jioY9RhxhU1oK4g5has
-         ckBacBtG6O9+Ra2gmMnwDcGWLy8MosH+z1DWEXQM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2O2W-1iYiey2fpW-003xpP; Fri, 22
- Nov 2019 15:43:46 +0100
-Date:   Fri, 22 Nov 2019 15:43:31 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: GitGitGadget on git/git, was Re: Should we auto-close PRs on
- git/git?
-In-Reply-To: <nycvar.QRO.7.76.6.1911221430510.31080@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1911221542511.31080@tvgsbejvaqbjf.bet>
-References: <20191109020037.GB60198@google.com> <nycvar.QRO.7.76.6.1911121946480.46@tvgsbejvaqbjf.bet> <20191113011020.GB20431@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911131234380.46@tvgsbejvaqbjf.bet> <20191114074117.GB17186@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1911142354290.46@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1911181930290.46@tvgsbejvaqbjf.bet> <20191121105414.GA16238@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1911221430510.31080@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726729AbfKVP35 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 10:29:57 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37859 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726568AbfKVP34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 10:29:56 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t1so9118457wrv.4
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 07:29:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=EpTAVDJKr9uTYtAPzyHqF2OJBVshYqKvqd6tqq2H4l0=;
+        b=f1KEQKwRhwW2dvVI1dSW0FhjRtsqzOBhl6beptKMz0FIRvxivKjDTHLd9j3nN3J6PV
+         BuiiRuxWiA/bPZEcKRT+rmMkuTh2l0Ae23BciZ6lWZOFOjUR0YcRssh8I6H9PDjbU0Lg
+         JMyZast7CE5XQFzOTa1pNPQ/jqmCv3VY//0b2rEU4CinR7JjOKQTPfNCk1+5VPPNjAU/
+         PijKUh4em9Rw4rj9ribMOVWhRm88tKL8nEnmVv5G0UdFn0SdeDN++RzP9gJ0XzVtMel2
+         zp5gIrVHrTiE3ubnJSil0wBf2ERPN8MYCOQSvnyhGICl20MqWsJgATXr/HTnSoCZRUR3
+         5RNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=EpTAVDJKr9uTYtAPzyHqF2OJBVshYqKvqd6tqq2H4l0=;
+        b=ReOhUEqV+e8fNPYO9w+rxQjpQt3Z4/pEW+h26aTznWDTWLmFmcS+jSgXZGUmqJlRSd
+         MX8EyV9EZMH96Qw162VXUXaxRfPv0nWqyKiVdgL5bUPRKvetA+J1qzbD4zNXkQGcnRiA
+         Qw+WA/K8u0V9K9dWA+bIx8hPkwydFLDGAIIWf3wgD5bvl/yebui4spTL5seLvtAQqVmP
+         9GWzjx/wppmF3A/ZOKFVn6V60XZqwJa+IfEMwGo2urxUw4TztlH1so7HZTf+I2+ghwK2
+         jPS2UFTIcWYZwf0OoZJ6Iw2fELbjXEdE9L72hzqXHH6zwjFh5kEJOorwOyHDpHWPZWmJ
+         mMyA==
+X-Gm-Message-State: APjAAAXwXAAQjFw+iS0JjxO8O9fg6tM+QG8k1PU2bZ0iImliRABodFg+
+        yur18RcbGiBVedeZEHxi8E8=
+X-Google-Smtp-Source: APXvYqzZJS5UX1PBIIGcCnzjkoXJIUjwXNmoH2bk8pigrp+WMm/6beKACr2xCOTJm1gobxth37o0zA==
+X-Received: by 2002:a5d:56d1:: with SMTP id m17mr8261884wrw.222.1574436593754;
+        Fri, 22 Nov 2019 07:29:53 -0800 (PST)
+Received: from szeder.dev (x4db9604a.dyn.telefonica.de. [77.185.96.74])
+        by smtp.gmail.com with ESMTPSA id v128sm4241078wmb.14.2019.11.22.07.29.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Nov 2019 07:29:52 -0800 (PST)
+Date:   Fri, 22 Nov 2019 16:29:50 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Markus Elfring <Markus.Elfring@web.de>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: coccinelle: improve array.cocci
+Message-ID: <20191122152950.GZ23183@szeder.dev>
+References: <5189f847-1af1-f050-6c72-576a977f6f12@web.de>
+ <05ab1110-2115-7886-f890-9983caabc52c@web.de>
+ <fd15e721-de74-1a4f-be88-7700d583e2f9@web.de>
+ <50b265f0-bcab-d0ec-a714-07e94ceaa508@web.de>
+ <f28f5fb8-2814-9df5-faf2-7146ed1a1f4d@web.de>
+ <0d9cf772-268d-bd00-1cbb-0bbbec9dfc9a@web.de>
+ <d291ec11-c0f3-2918-193d-49fcbd65a18e@web.de>
+ <d053612d-107b-fdb2-b722-6455ef068239@web.de>
+ <4f55b06b-35f3-da06-ae86-8a4068f78027@web.de>
+ <06ff24b6-f154-9ec6-7b22-05b0ea664a36@web.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wBqbmtjgH7qXiKijCxWS50y1RkeQPMz0yLxUlrcyrK8ZT7cZIb1
- L53OQsBalJv2ZUwi1j9CrVpOTfa5RMkBXfRAtAbNe3TfrqOp8VZ0qK8hvbzQej6hj2eO3bf
- Kuqdehuep+SYr1s7flnaHVAE36L4SHOAowmOc1B46ECr5cnvbAzDPEUYnpuF6ozuU5UfYNM
- GpuH3+DhA99uhyud/bUsA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:pCeu/Vlsme4=:wI+B6JeMiLflEw3NY9RRIz
- 3Kr1JKPK18mx+d1L444JOLknVVl8s3m9wjby35Y/dxdWRDo4oqKe3wFo2T6CfuVaNAn3qciw2
- 18hdHgvJjdxBVwAAeS8xYJvKZMqhwdykGrjINXM7eVLiymGN3kdBhzZPyNhbd0ce05twkRoSm
- bDe7eD1nno7qp4iIebVSVrgOcsYs2ZgWYyxmtiXvvS/n97pHdn/Bq39DO49NuzQNdHxXQuomD
- zKLs+TBtj+rYb8JeuzDNhZijVCLt+TcrYTUEXscTcLAymEjDNJitprgKRZA1UYMCu0F+36qe4
- PHZQ+JBYXQmckQBnIcVWWP9L1HhQuT21K0KKKdUS1citaTwABE/ri9BImlM5NhdQ315UdvXqf
- aQk12GvJ9+WCzXYBojRce7RO4VHYf9lQGsmdOYKcqeXEEHeUFIleWDikiu1pTAgoMq5eV4iOB
- v4Taqw717jhfkQ9uE6gOCjV9SEs0+HuHUUYekiFPc7f1HcHsW1ZEaolWF4qOaCD/iusnZ9YdA
- L4dM9wnjO6pw/zByxALxl9mPIVpxWt2gI8Jlip0j6YVyrughz8W3seeqN+Zwxzpxj67OAI9In
- HzOZt/HMM6fr8SHSjyYeqXilijJbjBKfIpAbctlKu2a833B4nhgyWy9fuJtMwUgwhqBpVXJee
- PhKn/Al5/LZA+Qm3mtmO8HgQuYUMke9WZJk7RYgLdissWUMWxkHsOYDpXP1xuR6HonGElF/e8
- d0p7159+FHIwc1ZOktJIIUggGEUZglL87OTpqjT113h7DxANRYguIdnY96nXLFYYsHvWOWOJ4
- nuy1AAtyIKoOrrI9pwvUrDLIDQJ72K4VtobagbcLhKPlAOBGuHGmBTW2MQccIb4EtbNYFZMeV
- OI222nkqR9IvzY/+db9lAayBvsZJSGaYWuC0wWWF7qgKqV3VFSlAtE0r5iGZpQJYS9nE+YBBD
- IeyMN/OysyfXoauutV00XAVKUwNsNWt8xxi1pGom1xV/YOnBr7usYV84r1fEJrbEc9FI6jSNp
- 9Mptfsie280RUH6HerUeCG+BLvFDbXKf2JTzNttUh/aBecfvIdkwikub9fjcbCNtFwH7yvWPI
- XPjyCUva2iB0oNk/9LAc3SZBN9A4vhlVz3X7o5oU84DRhoSMbpyq/4fC5w2ARUsCy7aPM/lUF
- YMkYj+7OQvPr5vqUrZdMn+kZLySd/XbyaXOFreKyvDPWsW6Cgj//iKs0HyfrU0EinlmvaXx3Q
- /FkaYh9YXgNUxbeu3zgyjH7m/NpcrNM0YA37XtoaOcJ1ZfxiXXJ5vVtB8tYc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <06ff24b6-f154-9ec6-7b22-05b0ea664a36@web.de>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Thu, Nov 21, 2019 at 08:44:12PM +0100, Markus Elfring wrote:
+> The program “spatch” supports parallelisation also directly by the parameter “--jobs”.
+> Did you try it out occasionally?
 
-On Fri, 22 Nov 2019, Johannes Schindelin wrote:
+I did try --jobs on a couple of occasions, and the results always
+varied between broken, not working, or downright making things even
+slower.
 
-> On Thu, 21 Nov 2019, Jeff King wrote:
->
-> > On Mon, Nov 18, 2019 at 07:37:57PM +0100, Johannes Schindelin wrote:
-> >
-> > > To build some confidence in my patches (as you probably know, I do
-> > > not trust reviews as much as I trust real-life testing, although I
-> > > do prefer to have both) I "kind of" activated it on my fork, limited
-> > > to act only on comments _I_ made on PRs (and sending only to me
-> > > instead of the list), and it seems to work all right, so far. I
-> > > cannot say for sure whether it handles the PR labels correctly, but
-> > > I guess time will tell, and I will fix bugs as quickly as I can.
-> >
-> > Yeah, that makes sense to me. Going from one repo to three is not much
-> > worse than going to two, so it's good to have a testing area, too.
-> >
-> > Do you want any third-party testing there (e.g., a user who isn't you
-> > making a PR against dscho/git)?
->
-> While that would be nice, my fork is a mess and not really set up to
-> provide any useful target branch...
->
-> The real proof of the concept will come when the first git/git PR will
-> be submitted.
 
-Seems to have worked:
-https://public-inbox.org/git/pull.670.git.git.1574433665.gitgitgadget@gmai=
-l.com/
+  $ spatch --version
+  spatch version 1.0.4 with Python support and with PCRE support
+  $ spatch --sp-file contrib/coccinelle/array.cocci --all-includes --patch . --jobs 2 alias.c alloc.c
+  init_defs_builtins: /usr/lib/coccinelle/standard.h
+  HANDLING: alias.c alloc.c
+  Fatal error: exception Sys_error("array: No such file or directory")
 
-Ciao,
-Dscho
+This issue seems to be fixed in later versions, but this is the
+version what many distros still ship and what is used in our CI
+builds, so we do care about 1.0.4.
+
+
+  $ spatch --version
+  spatch version 1.0.8 compiled with OCaml version 4.05.0
+  Flags passed to the configure script: [none]
+  OCaml scripting support: yes
+  Python scripting support: yes
+  Syntax of regular expressions: PCRE
+  $ /usr/bin/time --format='%e | %M' make contrib/coccinelle/array.cocci.patch
+      SPATCH contrib/coccinelle/array.cocci
+  102.06 | 129084
+
+Our Makefile recipes run Coccinelle in a sequential loop, one 'spatch'
+invocation for each source file by default.  Therefore, merely passing
+in '--jobs <N>' doesn't bring any runtime benefits:
+
+  $ /usr/bin/time --format='%e | %M' make SPATCH_FLAGS='--all-includes --patch . --jobs 8' contrib/coccinelle/array.cocci.patch
+      SPATCH contrib/coccinelle/array.cocci
+  105.31 | 118512
+
+Some time ago we found that invoking 'spatch' with multiple files at
+once does bring notable speedup (with 1.0.4), although at the cost of
+drastically increased memory footprint, see commit 960154b9c1
+(coccicheck: optionally batch spatch invocations, 2019-05-06).  Alas,
+trying to use that in the hope that 'spatch' can do more in parallel
+if it has more files to process at once doesn't bring any runtime
+benefits, either:
+
+  $ /usr/bin/time --format='%e | %M' make SPATCH_FLAGS='--all-includes --patch . --jobs 8' SPATCH_BATCH_SIZE=8 contrib/coccinelle/array.cocci.patch
+      SPATCH contrib/coccinelle/array.cocci
+  116.27 | 349964
+
+And by further increasing the batch size it just gets notably slower;
+also note the order of magnitude higher max memory usage:
+
+  $ /usr/bin/time --format='%e | %M' make SPATCH_FLAGS='--all-includes --patch . --jobs 8' SPATCH_BATCH_SIZE=32 contrib/coccinelle/array.cocci.patch
+      SPATCH contrib/coccinelle/array.cocci
+  197.70 | 1205784
+
+It appears that batching 'spatch' invocations with 1.0.8 does not
+bring the same benefits as with 1.0.4, but brings slowdowns instead...
+
+Anyway, looking at 'ps u -L' output it appears that 'spatch' doesn't
+really do any parallel work, and there are only two 'spatch' processes
+and no threads despite '--jobs 8':
+
+  szeder    2561  0.4  0.5  36944 21520 pts/0    S+   15:31   0:00 spatch
+  szeder    2567 97.1 30.5 1228372 1205332 pts/0 R+   15:31   0:29 spatch
+
+
+Note that 1.0.8 above was run in a Docker container, while 1.0.4 on
+the host.  This may or may not have influenced the runtimes reported
+above.  FWIW, 'make -j4 coccicheck' parallelizes just fine even in the
+container and with 1.0.8.
+
+
+A different approach relying on 'make -j' to parallelize 'spatch'
+invocations was discussed here:
+
+  https://public-inbox.org/git/20180802115522.16107-1-szeder.dev@gmail.com/T/#u
+
