@@ -2,65 +2,66 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F2955C43215
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61B8DC432C3
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CB6F92071F
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3930B20715
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dREM6uWA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n9R8kM13"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbfKVOlL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 09:41:11 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:51279 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726634AbfKVOlK (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726760AbfKVOlK (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 22 Nov 2019 09:41:10 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g206so7445138wme.1
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 06:41:09 -0800 (PST)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38124 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbfKVOlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 09:41:10 -0500
+Received: by mail-wr1-f67.google.com with SMTP id i12so8906603wro.5
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 06:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=a5/4SnLiOBteb8N0+2klqseFF0BuFqll9XXKoppPzIg=;
-        b=dREM6uWAcDb9fqV6gjBeeKzrn4MYuZE0lwgZ3mmdmR+OIM3YuWpVV6HGg58QDnQAaR
-         HJ9ykw3g3/+5kmYVPB85Y+XG+f/RS6+w6JtATouSbkGmScNCDDhF0Wb/TSmUJbvM3DPV
-         rhGTuy14/IzlLpFDCkqdIRhzJ7zdSzzEwL15MjPnzhwZB5XxQ3jUuoG8MhfBmz6MckXR
-         AHaPCOigP4+DtS/JFJAfGBdTo5gHfxY4nQTgHOit3ztrUjJE6oXVUlEsYfTBbHZ4FKBc
-         f7fkkh515vlxCTfR5/4lS7FJMff6Q0T7/akw9lfMV86sn4Vbvp85EAw6l+2PozJpNHiI
-         BebQ==
+        bh=IxSqxarUv44dtRuXTg+T1t2Qk7SPpmGt/f4uvGizr6g=;
+        b=n9R8kM13dvt+nuLcn3L1BIhpSmbdO8FRwBtggGnhslUMvfsOXAnEdNasnUb5xQv5Uj
+         Enx9dBNAxI4MFg4X8Tlsfl98QS2uwiF+D8WSSttgM+RV8zPsaFbsdO+83OQOeU9KX0aW
+         RJGIw2DuGOyZw76cBPwy/4fOp0FuBFQe/qmRYEJ1EaM3QVte94YNFTQ8CPGYWI/rIx3N
+         U1xRqrM/vjX+A8573sY3rNwSi3Y+MAP+KUXtV7DRAFBemsP/AA2tEskaQzTHHnRHPQ3T
+         MbMGdnKR3gFuWFzAvz2rVJHxIz71IN5wQZb36fSnWDfPjjS7mpmI5rKPA2TVa1PUmeeq
+         KbOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=a5/4SnLiOBteb8N0+2klqseFF0BuFqll9XXKoppPzIg=;
-        b=X/EUSx+PJw+d/3+0nqMUaIfklhaISPw0gd74/LApNlaoxmWO9ufknAfNurbCEZ42X9
-         xACcodLVRWi5jBfjBltHss3KVHIf0LSPZxjy62Wx2rpuxX+2qbzE8wlp9toj9C0GVOyh
-         Ajm0u1ACgWkPRNlXHzkFCEg8kE4vbtvdFz/fYlczibnJBSR6M5+0tt34gdpOKp1nKgI3
-         XNNQBQhhX6yh1LnYVSgTBY4/QgHoS1f0eM/aGJ+gW9krR1ai83fP9pk+r3GlbzsSJcj2
-         Meer0WIPRrgpvGFbxuJxzuKB5NPjF5a7AmufEPpyGNYS4Xej6eK2UJI3zKQrm5BHhMRU
-         Nw2Q==
-X-Gm-Message-State: APjAAAVS4STHv7VOPWBDzjaS8bwbkBfe5819ZNRSifCPd8uX7gOxdHiQ
-        RURuoi+0PHQC2Iq9H30mG4Krg905
-X-Google-Smtp-Source: APXvYqyCYfLopIFM1wiSfONEn0NROB6Zq9f4Z/ZS1MTFV7JhcYXFrX9tUqydPJnsoeioInXSfGIWNw==
-X-Received: by 2002:a05:600c:230d:: with SMTP id 13mr10445718wmo.12.1574433668525;
-        Fri, 22 Nov 2019 06:41:08 -0800 (PST)
+        bh=IxSqxarUv44dtRuXTg+T1t2Qk7SPpmGt/f4uvGizr6g=;
+        b=NcWfvkGvPz3bYsXks3mLacNN61BP2L+wWuxEP34UCpVz0OQj018HZJ502ZeA/eB0Om
+         ZjwzD9S7zBSr0nN+sLp5Fy/h10ckQsKq9e/zPQsgxHs11RifnAt4qNGuWR8MpibVNZSv
+         U4H//Z5jRE0OQQrSMcD8F/0H+MhEi+pP8hDfBXl2IrdX+Go5EAUbXqfrZFm6YU+WaLdF
+         AvZQ32rz0uG0lvPs8ZHpAoGRdF7uZTMlt6TgbfsKSAU6ONmtnF1+2KgO1Sh44NrfIO2/
+         6QesfjP1yjpiclTvWQoPi3d/9DoU1ynL7HjbuZzqDJ/hDV29XpXn/MAWTffpbg2NU/tp
+         Yp8g==
+X-Gm-Message-State: APjAAAW7QrUzKuj1C5Yl8YhAkq3peKpF4K0bXh45HUd4iEyUZLjjOGq0
+        2gbgMeynhDgjrkwh4z+xcRHbcuH4
+X-Google-Smtp-Source: APXvYqw0pjVJloqBFe4LEwUX6qAdp1YhJxnKs3j4om3ZH6SNbHIEM8UVEBP3FFJEMeEtBlbnOJcRgw==
+X-Received: by 2002:a5d:678f:: with SMTP id v15mr17466991wru.242.1574433667677;
+        Fri, 22 Nov 2019 06:41:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d67sm3648694wmd.13.2019.11.22.06.41.07
+        by smtp.gmail.com with ESMTPSA id y78sm3756680wmd.32.2019.11.22.06.41.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Nov 2019 06:41:08 -0800 (PST)
-Message-Id: <f68b4094a2985217a0229fd6432cece9d91b25e5.1574433665.git.gitgitgadget@gmail.com>
+        Fri, 22 Nov 2019 06:41:07 -0800 (PST)
+Message-Id: <96608fd2e82b7337dea4ea9fb7a2f3f1f7e6c854.1574433665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
 References: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Nov 2019 14:41:03 +0000
-Subject: [PATCH 2/4] mingw: work around incorrect standard handles
+Date:   Fri, 22 Nov 2019 14:41:02 +0000
+Subject: [PATCH 1/4] mingw: demonstrate that all file handles are inherited by
+ child processes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,56 +77,95 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-For some reason, when being called via TortoiseGit the standard handles,
-or at least what is returned by _get_osfhandle(0) for standard input,
-can take on the value (HANDLE)-2 (which is not a legal value, according
-to the documentation).
+When spawning child processes, we really should be careful which file
+handles we let them inherit.
 
-Even if this value is not documented anywhere, CreateProcess() seems to
-work fine without complaints if hStdInput set to this value.
-
-In contrast, the upcoming code to restrict which file handles get
-inherited by spawned processes would result in `ERROR_INVALID_PARAMETER`
-when including such handle values in the list.
-
-To help this, special-case the value (HANDLE)-2 returned by
-_get_osfhandle() and replace it with INVALID_HANDLE_VALUE, which will
-hopefully let the handle inheritance restriction work even when called
-from TortoiseGit.
-
-This fixes https://github.com/git-for-windows/git/issues/1481
+This is doubly important on Windows, where we cannot rename, delete, or
+modify files if there is still a file handle open.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/winansi.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ t/helper/test-run-command.c | 44 +++++++++++++++++++++++++++++++++++++
+ t/t0061-run-command.sh      |  4 ++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/compat/winansi.c b/compat/winansi.c
-index 54fd701cbf..c27b20a79d 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -662,10 +662,20 @@ void winansi_init(void)
-  */
- HANDLE winansi_get_osfhandle(int fd)
- {
-+	HANDLE ret;
-+
- 	if (fd == 1 && (fd_is_interactive[1] & FD_SWAPPED))
- 		return hconsole1;
- 	if (fd == 2 && (fd_is_interactive[2] & FD_SWAPPED))
- 		return hconsole2;
- 
--	return (HANDLE)_get_osfhandle(fd);
-+	ret = (HANDLE)_get_osfhandle(fd);
-+
-+	/*
-+	 * There are obviously circumstances under which _get_osfhandle()
-+	 * returns (HANDLE)-2. This is not documented anywhere, but that is so
-+	 * clearly an invalid handle value that we can just work around this
-+	 * and return the correct value for invalid handles.
-+	 */
-+	return ret == (HANDLE)-2 ? INVALID_HANDLE_VALUE : ret;
+diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+index ead6dc611a..40ec4dbb6e 100644
+--- a/t/helper/test-run-command.c
++++ b/t/helper/test-run-command.c
+@@ -200,6 +200,46 @@ static int testsuite(int argc, const char **argv)
+ 	return !!ret;
  }
+ 
++static int inherit_handle(const char *argv0)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++	char path[PATH_MAX];
++	int tmp;
++
++	/* First, open an inheritable handle */
++	xsnprintf(path, sizeof(path), "out-XXXXXX");
++	tmp = xmkstemp(path);
++
++	argv_array_pushl(&cp.args,
++			 "test-tool", argv0, "inherited-handle-child", NULL);
++	cp.in = -1;
++	cp.no_stdout = cp.no_stderr = 1;
++	if (start_command(&cp) < 0)
++		die("Could not start child process");
++
++	/* Then close it, and try to delete it. */
++	close(tmp);
++	if (unlink(path))
++		die("Could not delete '%s'", path);
++
++	if (close(cp.in) < 0 || finish_command(&cp) < 0)
++		die("Child did not finish");
++
++	return 0;
++}
++
++static int inherit_handle_child(void)
++{
++	struct strbuf buf = STRBUF_INIT;
++
++	if (strbuf_read(&buf, 0, 0) < 0)
++		die("Could not read stdin");
++	printf("Received %s\n", buf.buf);
++	strbuf_release(&buf);
++
++	return 0;
++}
++
+ int cmd__run_command(int argc, const char **argv)
+ {
+ 	struct child_process proc = CHILD_PROCESS_INIT;
+@@ -207,6 +247,10 @@ int cmd__run_command(int argc, const char **argv)
+ 
+ 	if (argc > 1 && !strcmp(argv[1], "testsuite"))
+ 		exit(testsuite(argc - 1, argv + 1));
++	if (!strcmp(argv[1], "inherited-handle"))
++		exit(inherit_handle(argv[0]));
++	if (!strcmp(argv[1], "inherited-handle-child"))
++		exit(inherit_handle_child());
+ 
+ 	if (argc < 3)
+ 		return 1;
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 17c9c0f3bb..473a3405ef 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -12,6 +12,10 @@ cat >hello-script <<-EOF
+ 	cat hello-script
+ EOF
+ 
++test_expect_failure MINGW 'subprocess inherits only std handles' '
++	test-tool run-command inherited-handle
++'
++
+ test_expect_success 'start_command reports ENOENT (slash)' '
+ 	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
+ 	test_i18ngrep "\./does-not-exist" err
 -- 
 gitgitgadget
 
