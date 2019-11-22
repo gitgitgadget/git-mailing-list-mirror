@@ -2,191 +2,265 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AB8C432C0
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 03:14:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11338C432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 03:34:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 52629206B6
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 03:14:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0583206C2
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 03:34:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VUW15NNd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a3Kfw1H6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726510AbfKVDOO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 21 Nov 2019 22:14:14 -0500
-Received: from mail-qv1-f65.google.com ([209.85.219.65]:35310 "EHLO
-        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbfKVDOO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 21 Nov 2019 22:14:14 -0500
-Received: by mail-qv1-f65.google.com with SMTP id y18so2337492qve.2
-        for <git@vger.kernel.org>; Thu, 21 Nov 2019 19:14:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7lEOob1fFqQ3fDSUD2ge0Wi1sUiiDqpgCFs/QQ6MqNo=;
-        b=VUW15NNdddTO+qzFdQLp6macAnJemhfz1Lz3qLs2dvbggyOA08vdxXiKMmXbtNofUa
-         ii3v71X1GIqQkysPd4PgyrfWnW83IkaYj8Q3k74xIJIMquc+IKQ/mSoFrEhKW3o6w+WT
-         3rgfJ6I1G9RfN/vhvsJWPvCIu2J+DSDM1w87IL6+5dQ6gL5AdR7jynEEpNXo12y98ufx
-         xKZRzcAuw93pmJq2jPGwDJ80/BwZg2tUZvT+CBtEk8T6NSUU1wKEenbzTqoDTR5LDCXM
-         OcUBCtbQclN3gY8O7Gsu4ffXnC09pYMGsi9ifCECzLZSikAhhurEmkTS9ISJi3CxXpvB
-         MjLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=7lEOob1fFqQ3fDSUD2ge0Wi1sUiiDqpgCFs/QQ6MqNo=;
-        b=Vmqs9tzZ17R5k7cf6Y3HoO7ik3QvH7ji955ChnQsvIhg0PPUlCAIGD2K+yfHdVJCNK
-         36ggCuHo/TMJxApB3KQW/jCuhkUuMfTcWgixd75wKZJvQRZ2VSBwnCguWo43DtB0W/hK
-         d6fD6F14Jsu6ou2L4siPX0VhWGCG32CmtnC2af8i4nYDV8fVa9zO3E61mH5iqS1RjVdr
-         0QjfHRZhiUTzKxFWEj4KsD6vzggHpBaX7vBZojL2ssI4JB+rmXR/QlnUYbcnkNDyQ/9S
-         UZ78Cv6VjSkAc+StjhPwOMY1gkaMO06vreV2mLiFmskemJaM3ARZ5y6C3iOVKum1iiXq
-         zGiQ==
-X-Gm-Message-State: APjAAAVQ12yjU1Bo3nk9IzuGlFZGuAwQAgl5A8pYGsk5vqXFeaNpv7n8
-        AmpEkiMr68ifgTRsREJNopE=
-X-Google-Smtp-Source: APXvYqzn5rK/1DkQwQo7zQt6FRlcHS6w6LmFv2zvpjFQFJSNL4GCYfTIy85MvqsxH+zYu4JB5BRb8A==
-X-Received: by 2002:ad4:50a4:: with SMTP id d4mr11209905qvq.211.1574392452779;
-        Thu, 21 Nov 2019 19:14:12 -0800 (PST)
-Received: from localhost ([165.227.200.42])
-        by smtp.gmail.com with ESMTPSA id q17sm2851632qtq.58.2019.11.21.19.14.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 21 Nov 2019 19:14:11 -0800 (PST)
-Date:   Thu, 21 Nov 2019 22:14:11 -0500
-From:   Brandon McCaig <bamccaig@gmail.com>
-To:     Tasnad Kernetzky <tasnadk@gmail.com>
+        id S1726500AbfKVDeQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 21 Nov 2019 22:34:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50088 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726335AbfKVDeQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 21 Nov 2019 22:34:16 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6F9888C345;
+        Thu, 21 Nov 2019 22:34:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3l/Sl2GJfV8NDsboQPLNbgw5Dp0=; b=a3Kfw1
+        H6pvgySdE8J3hUjfnaiKnRk/IqlPMcraJrVoa9giHVwexkprZlbgWdg5/+XdURwI
+        Sgf1/gl/RzXm4a2ncKgqU2sx1rkjwwrqMhY6T+GWJrkikszVlwsOHakkCN/QvBOJ
+        kIVCAXZkfuS8ZZyds8yR2WSDfyPKwFg/Q51Dk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Uwp615nplgwXiZE6VqU4w4krG26msinJ
+        8aXa0Ic3Yr/4OYUClwJAY6wmN1D6FE93nItpzpj4hT8BIlPmYSBUIPuc7vn7UQV/
+        wmT25Yd1HpoCDefRAq1K2reHtSot+qKmVIANrzYpWwAxaHVnmWV3f97jHIXGisRH
+        Rn2j8yJb3SU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F3868C343;
+        Thu, 21 Nov 2019 22:34:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 88A9E8C342;
+        Thu, 21 Nov 2019 22:34:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [BUG] "git checkout BRANCH -- FILE" deletes staged commits
-Message-ID: <20191122031411.zrg5hv4dvk6dxxus@test-chamber-21.localdomain>
-Mail-Followup-To: Tasnad Kernetzky <tasnadk@gmail.com>, git@vger.kernel.org
-References: <5cb30154-5753-f229-9fa2-6c82d2896abc@gmail.com>
+Subject: Re: [PATCH v3 2/2] gpg-interface: limit search for primary key fingerprint
+References: <20191116215850.3919-1-hji@dyntopia.com>
+        <20191121234336.26300-1-hji@dyntopia.com>
+        <20191121234336.26300-3-hji@dyntopia.com>
+Date:   Fri, 22 Nov 2019 12:34:09 +0900
+In-Reply-To: <20191121234336.26300-3-hji@dyntopia.com> (Hans Jerry
+        Illikainen's message of "Thu, 21 Nov 2019 23:43:36 +0000")
+Message-ID: <xmqqimnc7ff2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="nrvub26wdpuze46c"
-Content-Disposition: inline
-In-Reply-To: <5cb30154-5753-f229-9fa2-6c82d2896abc@gmail.com>
-X-PGP-Key: https://castopulence.org/bamccaig/castopulence.asc
-User-Agent: NeoMutt/20170113 (1.7.2)
+Content-Type: text/plain
+X-Pobox-Relay-ID: F2E466F0-0CD8-11EA-BE94-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hans Jerry Illikainen <hji@dyntopia.com> writes:
 
---nrvub26wdpuze46c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The VALIDSIG status line from GnuPG with --status-fd is documented to
+> have 9 required and 1 optional fields [1].  The final, and optional,
+> field is used to specify the fingerprint of the primary key that made
+> the signature in case it was made by a subkey.  However, this field is
+> only available for OpenPGP signatures; not for CMS/X.509.
+>
+> The current code assumes that the VALIDSIG status line always has 10
+> fields.  Furthermore, the current code assumes that each field is
+> separated by a space (0x20) character.
 
-On Tue, Nov 19, 2019 at 06:10:01PM +0100, Tasnad Kernetzky wrote:
-> Hi,
+This make it sound as if the "assumption" of splitting at SP is a wrong
+one, so I went back to the source.  The DETAILS document curiously
+forgets to say that these are "usual space delimited arguments" for the
+VALIDSIG, unlike it does for a few other entries in the "General status
+codes" section.  But with the presense of "usual space delimited" in
+another seciton with the lack of explicit delimiter definition in this
+section, I would say it is safe to assume that the authors meant these
+fields to be separated by SPs. 
 
-Hello,
+In any case, I think this paragraph can safely disappear and would make
+the overall clarity of the problem analysis even better.  We already
+said that assuming 10th field is wrong in the earlier paragraph, and we
+say what happens when the is only 9 fields in the next paragraph.
 
-> I suppose I found a bug in git version 2.24.0. Please consider the small
-> shell script to reproduce.
-*snip*
-> # checkout copies over contents from B -> I guess the bug is here,
-> changes are not detected
-> git checkout B -- tst
-> git status
-> echo '-> this seems to be wrong, change is not detected'
->=20
-> # if we now go to B and back to master, we loose staged changes
-> echo '*** tst should contain [master, B]: ***'
-> cat tst
-> echo '-------------'
-> git checkout B
-> echo '*** tst should contain [master, B]: ***'
-> cat tst
-> echo '-------------'
-> git checkout master
-> echo '*** tst should contain [master, B]: ***'
-> cat tst
-> echo '-------------'
-> echo '-> wrong / staged changes lost!?'
+> If the VALIDSIG status line does not have the optional 10th field, the
+> current code will continue reading onto the next status line -- because
+> only 0x20 is considered a field separator, not 0xa.  And this is the
+> case for non-OpenPGP signatures [1].
 
-I don't think this is a bug at all.
+I actually think stresing on 0x20 vs 0x0a misleads readers in a wrong
+direction.  If the code were written in such a way that both can be used
+as a field separator, we would still continue reading into the next
+line.  IOW, treating only SP as field delimiter is correct; what is
+wrong is we do not limit the search to the current/single line.
 
-This form of checkout is basically a way to "revert" or "restore"
-a file to match whichever tree-ish you select:
+	... because the code does not pay attention to the end of the
+	current line when it looks for the end of the 10th (and
+	optional) field that it incorrectly assumes to exist.
 
-    git checkout ... -- file...
+> The consequence is that a subsequent status line may be considered as
+> the "primary key" for signatures that does not have an actual primary
+> key.
 
-It is not a merge. It is overwriting whatever version of the file
-you have, and staging those changes. There's no point warning you
-that your file is different because you're giving git strict
-instructions to overwrite the file. You shouldn't be doing that
-unless you already know what the file's state is and you know you
-don't want it. If in doubt stash, commit, or copy the file
-first.
+Overall, all of the description in the above paragraphs are nicely
+analysed and explained.  I wish all contributors' wrote their proposed
+log messages clearly like you.
 
-When you do `git checkout B -- tst` you are basically saying to
-checkout the file tst as it exists at the tip of branch B and
-stage it for commit.
+> The solution introduced by this commit is to add 0xa as a bound for the
+> search for a primary key.  The search for the 10th VALIDSIG field is
+> aborted as soon as it sees a newline character.  This keeps the parser
+> from interpreting subsequent lines as the primary key.
 
-When you switch back to branch B the state of the tst file is the
-same as it exists in the branch B. There is no conflict here so
-it succeeds, and once it does you no longer have any changes made
-to tst because the version in your index and working tree matches
-the version in the HEAD commit.
+Rather than "... to add 0xa as ... primary key.", I would probably write
+it as "... to limit the search for the primary key on the single line."
+The end of line being represented (internally as C string) with a byte
+whose value is 0x0a or a newline character is an implementation detail.
 
-git status at this point would report nothing (assuming no other
-files are modified).
+Also we tend to describe the change we make as if the author is ordering
+the codebase to "become like so" in imperative mood, so, perhaps
 
-When you switch back to master it happily overwrites tst to match
-the version committed to the head of master because the version
-you had on B is already committed (and is easily recovered from B
-if desired). There's no conflict there and no reason to fail or
-refuse.
+	Limit the search of these 9 or 10 fields to the single line
+	to avoid this problem.  If the 10th field is missing, report
+	that there is no primary key fingerprint.
 
-This is normal behavior. Check the documentation and if you think
-it's unclear you can make suggestions to improve it or better yet
-submit a patch that does just that for review.
-
-I haven't really been paying much attention to the development of
-git, but I recall efforts were being made to split the various
-behaviors of git-checkout into separate commands to help improve
-the interface because some people struggle with it. Sounds like
-these take the form of git-switch to change branches and
-git-restore to restore files to some other version. It sounds
-like git-restore will still work the same way in this regard
-though so I don't think that changes anything.
-
-Regards,
+would be sufficient, as the last sentence, i.e. "The consequence
+is...", has already hinted what needs to be fixed clearly and quite
+directly.
 
 
+> [1] https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/DETAILS#l483
 
---=20
-Brandon McCaig <bamccaig@gmail.com> <bambams@castopulence.org>
-Castopulence Software <https://www.castopulence.org/>
-Blog <http://www.bambams.ca/>
-perl -E '$_=3Dq{V zrna gur orfg jvgu jung V fnl. }.
-q{Vg qbrfa'\''g nyjnlf fbhaq gung jnl.};
-tr/A-Ma-mN-Zn-z/N-Zn-zA-Ma-m/;say'
+I actually wrote the URL with the exact revision in my earlier example
+because the URL written without is a moving target.  IOW, "Find the tip
+commit of whichever the default branch is, and then look at the path
+doc/DETAILS in it and hope that line 483 will stay forever what we want
+to refer to" was what I wanted to avoid.  Perhaps in addition to the
+above URL (which can go stale), leave a textual reference so that
+readers can notice that the link is stale and look for what you meant to
+point them at?  Like so:
 
+	[Reference]
 
---nrvub26wdpuze46c
-Content-Type: application/pgp-signature; name="signature.asc"
+        *1* The description for VALIDSIG in the "General status codes"
+	section of GnuPG document that is at
 
------BEGIN PGP SIGNATURE-----
+	https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/DETAILS#l483
 
-iQIzBAABCAAdFiEE6A+1JeuAGnMhPkN33afWAiLlk/IFAl3XUoAACgkQ3afWAiLl
-k/LA3RAA1rCund66Cyc8xEQoyWv0+yZ5Tq5CGsroCWwwtwdAohjx5laeh/BMxu8T
-yBgc+2J7romOhjDuQOWhJMdfRDmbpmtlAAP8xEndTyi4/2UpkE0sQE6czmm5Am4q
-eRwFJRDrohzFocSsp6+qB3xQ4hRO0uJ+QydBoVlR5B92BWjpku/4kGh9h0db3Vjw
-pT4hdnOt48GQv/jjtG4Jcpk8BHSbkS210hc6+88cSGzhg09n6NJxQDaBvGuJoKSo
-MGBIrqV5ALRi7/4thWbak5HsatAoSf8Qe0b4mTe6tsSn8J91ovkSfhpF+HEF5XTM
-gHJDS8qzUI2ENblbJcsV7bp2R502vqmkd/Fs5mUi2bB1W9AkgIZFG+PGu8LK+6rP
-aekwbV4WZ0moDAMgQf0J5mzHDp2DVGJSGBT7tf3KvLSzhjBkfFmu2fiQdx1ZaXL7
-PbgZYvR9uUkWKPEpvfCbL43D0H9KtOjdD25rTLCylsKLxKsSCcnQZKT/jvXtzZgO
-iCQZ0r+Wd55qPIXoxDHNqECAiNnpXyrLyMZx+9q+PDIZCwUzu3l7rEC/QgWrp9PQ
-bJk6szMnBv2FbBCZgm8+jSIBqowGMRLwJWMZnDAa8kl6A2HyecEYb+/qfoe8g7V5
-4smDFwfrgGgY0mRv8BOg3IX9tQIZNPhek5XYZLkY8jfVGfb/y2g=
-=NfBC
------END PGP SIGNATURE-----
+	says:
 
---nrvub26wdpuze46c--
+        VALIDSIG <args>
+
+        The args are:
+
+        - <fingerprint_in_hex>
+        - <sig_creation_date>
+        - <sig-timestamp>
+        - <expire-timestamp>
+        - <sig-version>
+        - <reserved>
+        - <pubkey-algo>
+        - <hash-algo>
+        - <sig-class>
+        - [ <primary-key-fpr> ]
+
+        This status indicates that the signature is cryptographically
+        valid. ... PRIMARY-KEY-FPR is the fingerprint of the primary key
+        or identical to the first argument.  This is useful to get back
+        to the primary key without running gpg again for this purpose.
+
+        The primary-key-fpr parameter is used for OpenPGP and not
+        available for CMS signatures. ...
+
+> @@ -160,18 +161,27 @@ static void parse_gpg_output(struct signature_check *sigc)
+>  					next = strchrnul(line, ' ');
+>  					replace_cstring(&sigc->fingerprint, line, next);
+>  
+> -					/* Skip interim fields */
+> +					/*
+> +					 * Skip interim fields.  The search is
+> +					 * limited to the same line since only
+> +					 * OpenPGP signatures has a field with
+> +					 * the primary fingerprint.
+> +					 */
+> +					limit = strchrnul(line, '\n');
+>  					for (j = 9; j > 0; j--) {
+> -						if (!*next)
+> +						if (!*next || limit <= next)
+>  							break;
+>  						line = next + 1;
+>  						next = strchrnul(line, ' ');
+>  					}
+
+Nice.  We try not to go beyond the end of the current line, and
+otherwise break out which leaves j non-zero.
+
+> -					next = strchrnul(line, '\n');
+> -					free(sigc->primary_key_fingerprint);
+> -					replace_cstring(&sigc->primary_key_fingerprint,
+> -							line, next);
+
+And doing the above unconditionally was wrong, but ...
+
+> +					field = &sigc->primary_key_fingerprint;
+> +					if (!j) {
+> +						next = strchrnul(line, '\n');
+> +						replace_cstring(field, line, next);
+> +					} else {
+> +						replace_cstring(field, NULL, NULL);
+> +					}
+
+... we correct it by doing the replacing only when we did find the
+10th field.
+
+Nicely done.
+
+By the way, now you have another new variable "field" together with
+"limit" both of whose uses are limited to this narrower scope, I no
+longer mind seeing declarations of them inside this scope, as opposed to
+make them function-wide.  That's a fairly minor point.
+
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index e803ba402e..17ec2401ec 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1570,6 +1570,14 @@ test_expect_success GPG 'setup signed branch' '
+>  	git commit -S -m signed_commit
+>  '
+>  
+> +test_expect_success GPG 'setup signed branch with subkey' '
+> +        test_when_finished "git reset --hard && git checkout master" &&
+> +        git checkout -b signed-subkey master &&
+> +        echo foo >foo &&
+> +        git add foo &&
+> +        git commit -SB7227189 -m signed_commit
+> +'
+> +
+
+The new tests (not only this one) are indented with 8 SPs---will fix
+to use HT while queuing (no need to resend only to fix these).
+
+> +test_expect_success GPGSM 'log x509 fingerprint' '
+> +        echo "F8BF62E0693D0694816377099909C779FA23FD65 | " >expect &&
+> +        git log -n1 --format="%GF | %GP" signed-x509 >actual &&
+> +        test_cmp expect actual
+> +'
+> +
+> +test_expect_success GPGSM 'log OpenPGP fingerprint' '
+> +        echo "D4BE22311AD3131E5EDA29A461092E85B7227189" > expect &&
+> +        git log -n1 --format="%GP" signed-subkey >actual &&
+> +        test_cmp expect actual
+> +'
+
+These two tests are really to the point.  Nice.
+
+Thanks.
