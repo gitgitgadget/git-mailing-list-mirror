@@ -2,118 +2,114 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78E29C432C0
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 615C5C432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:43:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4689220707
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:08:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29F4120658
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:43:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ko4FybWt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZmBkj7gH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbfKVTIj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 14:08:39 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36927 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbfKVTIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 14:08:38 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t1so9917643wrv.4
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 11:08:37 -0800 (PST)
+        id S1727146AbfKVTnH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 14:43:07 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39841 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbfKVTnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 14:43:07 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y11so6897450wrt.6
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 11:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=iRlPWgx7yX1LTJcFXCOA6riGR7WIyKr8I/Ksnkb8Go8=;
-        b=ko4FybWtvTq5YJFpCiVLVtVR6HID7whdbALUzUzlWIwJ7b1lCyzkm28K4zqX70VnDz
-         QLMArDqUG3IlyHaTPVtN2abuLmXw9uSq9MtjAWYm/ZkMee47XHXghV4L/8a1PLngi0NF
-         YNgEHKmXEQgnCztZyT6YHejcRW6DbI/AJT8aiWLY14MnxSZWUUd71fPvZGuIa2YA23ks
-         NEBB5oUEodHYh4s0uCVRC/PiQuqZJeNbu8I9GtxT7MjbyzpyL3HK9oWwBs42IPmtmHpk
-         5m5WBlTnzhyMPSDgvtpYrwm+E3EZefbCevycJcX8sAchz5dXeoTx8bSjNo8P7IA/5jqP
-         ryRw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=VkRpDdWVDg5oNeQLuBh1hylnIR95FotOTWC1L3tP45o=;
+        b=ZmBkj7gH9aeB4nMxOEtewoghjLe61PIxLHjlaGSIwNN5JiSCqhEHIqQG98TZ/4oXzp
+         RRuTqf3A/Q44b/MM2/Ci6/FAkwPW8srgnI6KajRLGKz+XFmy7wXAGpSd7QcmbNm9/xqB
+         0If8WfkwTyIP9Au6IoqD2GR67mWH+YZxPMfGWz9ZXTMIlb1FsSX/yposu0p82QRBJ5o/
+         14COPQ7DX1XiXpK/2Ob2y1dvxslAGFx/nFrjBenX/eN/3TvZe3qLtYkLZYn5r/26toGC
+         qpWby2qHaA+5H75HmSAdjHwem5kunHwK//7yFXmPXIAkwGXlZRrMI4Fw2ihZSU5lvvzV
+         nlLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=iRlPWgx7yX1LTJcFXCOA6riGR7WIyKr8I/Ksnkb8Go8=;
-        b=SfxJX13V8yI6lopcUldLVnUIxEg9wI8CmR/q/8UPb3+SZLmv4k0mq4qFHbCZU9d4Wc
-         oX+As/c5DX6nLvYQZfsqtYAQkrdkYnQ4RLOH8gMMet7p4ugV4ydbBQsjDXh0Os0QuY7C
-         51YCKZUzV0T8o1C9KkPHE1V+nzpYngO90ZU/2Upv0yu2TCy55/KsyxVrJaPeYLny91fe
-         8AzEeidFvhRGKVg2BWZs8uEef8h8RbREoSMnsfd2VwjZecyncZdcsHT2fHXlz/PB0YsY
-         FsVUlXDL8oWVChkCxvT+UYaP6YDV/6UjS93zD81NhGk5Hdvl7B6juDq9Rqtywfv7Y265
-         59uA==
-X-Gm-Message-State: APjAAAUOHNWOFdjJwiD92l1nROZG6/oHBA94Bz+KE0wRO/WRn9VFZoQA
-        4hMWJURgdxswHm2ilUWApBg=
-X-Google-Smtp-Source: APXvYqw/cM9xYsBTHYjl2v7DrdutCEXZcOhWaOHdDmNOLiYrbJv+bw/Fh2fXEyL0DrC9zMNz9JSbuQ==
-X-Received: by 2002:a5d:4a8c:: with SMTP id o12mr2739940wrq.43.1574449716529;
-        Fri, 22 Nov 2019 11:08:36 -0800 (PST)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id l4sm4326085wme.4.2019.11.22.11.08.35
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=VkRpDdWVDg5oNeQLuBh1hylnIR95FotOTWC1L3tP45o=;
+        b=l49so2uXT98lUXpi/8OkiASnY1X3+BaOhc+Y/5WPTMN+vQYsUgO+dOVdZv1WsyVAen
+         xbUUT7jJJTxWUGRc2Y50vIXm6AftmWFT9vEohgPOigVAfU5mi77RBBriLAekEcOUQ9I6
+         NytvgX2bV9IfVETTTSKciMX5QSdYKUVf05PJl47O17T7H8T4IOFqV5TL4lPOsy/r+x81
+         sz8up8qO5n4Zv1sVzzGk3g0J45Y187G9liNviXWM1y9jqSwl92356UoT9sFt8K2t9yT1
+         uTFdnbTZm9aibXLDlkRo42hmqz5gGR427qrlv5K1z/Wu/v3cQtiTgCc4L2ADT2q5E/z5
+         mqBg==
+X-Gm-Message-State: APjAAAVDA5c28R/B2tSu7CUNFELDWNdyBQHWOSgz4QIYxGTsA7g4yLSf
+        nuH7o4fMF1GGHt6ZE8lXxS60UUwO
+X-Google-Smtp-Source: APXvYqyHeR52JLDFQrN9YQSHEImWOUQiU1R6SyG2+tYQH3Eh8RHVfSiDltvJzcZsp4CkRlYQvAR/MQ==
+X-Received: by 2002:adf:ec89:: with SMTP id z9mr19293695wrn.153.1574451785120;
+        Fri, 22 Nov 2019 11:43:05 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m3sm8465761wrw.20.2019.11.22.11.43.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Nov 2019 11:08:35 -0800 (PST)
-Subject: Re: [RFC PATCH v2 2/4] rebase: prepare cmd before choosing action
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        phillip.wood@dunelm.org.uk, predatoramigo@gmail.com
-References: <20191114163549.7648-1-rybak.a.v@gmail.com>
- <20191120095238.4349-3-rybak.a.v@gmail.com>
- <xmqqimne9efm.fsf@gitster-ct.c.googlers.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <b6d8fe84-cba1-543e-b387-4842b61829f6@gmail.com>
-Date:   Fri, 22 Nov 2019 20:08:34 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqimne9efm.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
+        Fri, 22 Nov 2019 11:43:04 -0800 (PST)
+Message-Id: <pull.467.v2.git.1574451783.gitgitgadget@gmail.com>
+In-Reply-To: <pull.467.git.1574345181.gitgitgadget@gmail.com>
+References: <pull.467.git.1574345181.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 22 Nov 2019 19:43:02 +0000
+Subject: [PATCH v2 0/1] sequencer: fix empty commit check when amending
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-21 03:00, Junio C Hamano wrote:
-> Andrei Rybak <rybak.a.v@gmail.com> writes:
->> When git rebase is started with option --exec, its arguments are parsed
->> into string_list exec and then converted into options.cmd.
->>
->> In following commits, action --edit-todo will be taught to use arguments
->> passed with --exec option.  Prepare options.cmd before switch (action)
->> to make it available for the ACTION_EDIT_TODO branch of the switch.
-> Hmph.  With or without this change, when we hit the run_rebase label
-> in this function and call into run_rebase_interactive(), opts->cmd
-> does contain what came from the --exec option.  In that function, I
-> see ACTION_EDIT_TODO calls edit_todo_file() that edits the on-disk
-> file without paying attention to opts->cmd (the only thing in the
-> function that pays attention to this field is ACTION_ADD_EXEC).
->
-> So I am not sure what makes this step necessary.  I guess it is not
-> wrong per-se, but if the objetive of this series is to add what
-> came from the --exec option when the user interacts with the editor
-> in rebase-interactive.c::edit_todo_list(), wouldn't it be sufficient
-> to skip this step, pass opts to edit_todo_file() and let the helper
-> use opts->cmd while preparing the todo_list it passes to underlying
-> edit_todo_list() function?
->
-> I am not claiming that it would be a better way---I wouldn't be
-> surprised if it is an incorrect approach---but it is unclear why
-> this step is needed and why the tweak of the todo list must be done
-> in the "switch (action)" we see in the post context of the first
-> hunk in this patch.
+Thanks for the comments, I've updated the patch with the style change Junio
+suggested
 
-I would guess that it had something to do with passing this value to the helper
-binary rebase--interactive before libification.  I couldn't figure out this
-mechanism before commit 460bc3ce73 ("rebase -i: run without forking
-rebase--interactive", 2019-04-17), so that's just a guess.
+I noticed this while adding some tests for a re-roll of
+js/advise-rebase-skip
 
-I will look into possible simplification of this to avoid the chain of
-conversions string_list -> char * -> string_list.
+This patch is based on pw/post-commit-from-sequencer
 
-> Thanks for working on this.
+Phillip Wood (1):
+  sequencer: fix empty commit check when amending
 
-Thank you for review :-)
+ sequencer.c            | 26 +++++++++++++++++++++-----
+ t/t3403-rebase-skip.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 5 deletions(-)
+
+
+base-commit: 4627bc777e9ade5e3a85d6b8e8630fc4b6e2f8f6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-467%2Fphillipwood%2Fwip%2Frebase-fix-empty-commit-check-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-467/phillipwood/wip/rebase-fix-empty-commit-check-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/467
+
+Range-diff vs v1:
+
+ 1:  7d34c0ff80 ! 1:  037f2b2975 sequencer: fix empty commit check when amending
+     @@ -42,8 +42,10 @@
+      +				first_parent = NULL;
+      +			}
+      +		}
+     -+		if (oideq(first_parent ? get_commit_tree_oid(first_parent) :
+     -+					 the_hash_algo->empty_tree, &tree)) {
+     ++		if (oideq(first_parent
+     ++			  ? get_commit_tree_oid(first_parent)
+     ++			  : the_hash_algo->empty_tree,
+     ++			  &tree)) {
+      +			res = 1; /* run 'git commit' to display error message */
+      +			goto out;
+      +		}
+
+-- 
+gitgitgadget
