@@ -2,162 +2,91 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DA6DC432C0
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 23:10:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B9DCC432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 23:11:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5B7E820704
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 23:10:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E63D20714
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 23:11:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="CniM/dcb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdzIYZtn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726666AbfKVXKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 18:10:37 -0500
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:35976 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726089AbfKVXKh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 18:10:37 -0500
-Received: by mail-qk1-f180.google.com with SMTP id d13so7804610qko.3
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 15:10:35 -0800 (PST)
+        id S1726705AbfKVXL2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 18:11:28 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:40586 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726089AbfKVXL1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 18:11:27 -0500
+Received: by mail-wm1-f45.google.com with SMTP id y5so9456012wmi.5
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 15:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=EKl5OqkTn+WnP19wdgMwpa0yWfSCQtkH8K34bK5wLBs=;
-        b=CniM/dcbjFHjG0kkE0ZJ+L/rpeBB2P0D7YW2KG+Ke50NDdG9DqWJcfZANRWVVFtlr1
-         Zj0IrQ4TvkxkikPNJsjs9dMHxoaJ+QDgQa3nDHsKiZMtHYLYd1e2omTJ1wItzRNfQB/+
-         PLcFZ1MC0ALPkURc7NxNyRHhd79F0u2K7fbjw=
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=EOG1rGaowLQDcBeckX9ABpI/RANedv4O+J+nUPGMTak=;
+        b=LdzIYZtntDLVSphtVeHv/GtmzPGIn15PZLBcvRaQADw9Ieuz0to6hTL/3R9AxSE/Ct
+         nofh+NhAiu36pZ+pvjH5WnNtmjxVZZbZln5U0sSk35OT93cgMxVAnI0hN8CTCNpFju9+
+         rsimHd2XmwPwNC1/lcW0NwhIoQCkAnm/AZpy9op6pLB79Quhvyo3VVkcGYGnHPEhY39V
+         L54mTdqZvFCTkBdOVSMxNAaORjaflqmUoM+ss0lCUAWbJ2l26FSbbZP0Zs7e6LsUMZDA
+         cA9xUhmsV0aAZ442ynEUzqq8A6no1YMMFgnFfA0Bwi7WE1MYU+bMI+wmBSpd725O9fy6
+         FQgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EKl5OqkTn+WnP19wdgMwpa0yWfSCQtkH8K34bK5wLBs=;
-        b=E768aQubsnBoBrIJ5ahPfhjj09UCy237/5INfYMoVcO4EXBSgp5GS3V1vIfgbdG5lN
-         JHFqp50e5WBs6fO1B7l4j47wWY/97RHdarzhWa54kLZYy7l+Ot4NWOF3ok3D6OrChcXE
-         p94raIunSkf1eDjVhqikJBvplCRzLOZADgz34F4wkTEMDzQWhE3NScjct+3SPC62VeCx
-         JWsw/efNnMbxQZVyfrJ3+woEqPyCpqY9mnPGjkiHcKzAAlQpiw8B/e5LWKWknETJWh9A
-         +y2ykaaOOvKH0xi9gnnkKklowq050B3odI/3tasqqfajQc0ZMmXpCGj2VwwByITze/9z
-         o24w==
-X-Gm-Message-State: APjAAAWjOHpiHBC0qXn26M5nV0o/35B4WrwsC5IJOVmvReK/rnKVxKdO
-        cKps/sytHKj867tmqVJ58dUl+pla7u0=
-X-Google-Smtp-Source: APXvYqzBfBhrbX1vfN2G7+ANhJ4EDOddL24xbOQp/rUekwBsONHjxZQpBuyZalv/PmbBkfw8Y4OTuQ==
-X-Received: by 2002:a37:650c:: with SMTP id z12mr15843755qkb.130.1574464234576;
-        Fri, 22 Nov 2019 15:10:34 -0800 (PST)
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com. [209.85.222.179])
-        by smtp.gmail.com with ESMTPSA id 8sm3690529qkr.29.2019.11.22.15.10.32
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Nov 2019 15:10:33 -0800 (PST)
-Received: by mail-qk1-f179.google.com with SMTP id c124so3364897qkg.0
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 15:10:32 -0800 (PST)
-X-Received: by 2002:a05:620a:2043:: with SMTP id d3mr1370990qka.279.1574464231683;
- Fri, 22 Nov 2019 15:10:31 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EOG1rGaowLQDcBeckX9ABpI/RANedv4O+J+nUPGMTak=;
+        b=cLJ0/pQF/APofZ8zGuq1nJN1GNKK0ZHMpQTrp/GPII19soXduGhOFt/W6tmxBSdQcn
+         t4UbGV01GKlN4jZQkKut/xLFotbVrrK7RtGVo0Kqw7pqtvksiSfkBQpbGi/gyiW/Txbe
+         XN0Vu16Olfo6Rvg4nqOieer6OzHkANqIshCwWfFXX69C9+/npBdesq9fZcKkCRumvKwL
+         vvL76Hrf1Yf7JlJTxlCqPaBg+JTVdPoT79ytSVVR0e8jOt7BJWI76+y7A0QO2dfDppWT
+         ej0WeBAw6MPAMGF4pWsy+o+pXYVJ3QNdRQR2M0vHnqo+Y8i2CLGLzGu5tL3ALR/TYXmI
+         nD4g==
+X-Gm-Message-State: APjAAAXbOun6PcXqcteT2TMkWWHWntrtebvKKbdTSJTIwXQFkXOTB5X/
+        nLoyNmwEikomiqmnXUUio8BU7w2m
+X-Google-Smtp-Source: APXvYqxNqymcNY/KU5+MIlH5aG3xn7PiZ5e4eifsKnNMXbFKdjgx9PKBKShwQnawjMYdd9KkrIizmw==
+X-Received: by 2002:a7b:c18c:: with SMTP id y12mr19005001wmi.145.1574464286209;
+        Fri, 22 Nov 2019 15:11:26 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y19sm597799wmd.29.2019.11.22.15.11.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 22 Nov 2019 15:11:25 -0800 (PST)
+Message-Id: <pull.470.git.1574464285.gitgitgadget@gmail.com>
+From:   "Manish Goregaokar via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 22 Nov 2019 23:11:24 +0000
+Subject: [PATCH 0/1] doc: Correct man page for the SHAs reported by 'submodule status'
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   Brian Norris <briannorris@chromium.org>
-Date:   Fri, 22 Nov 2019 15:10:20 -0800
-X-Gmail-Original-Message-ID: <CA+ASDXNQ+9i-6uCNDwN46cnHJeciiqQSX5Z6EaqB9pbseQhVFw@mail.gmail.com>
-Message-ID: <CA+ASDXNQ+9i-6uCNDwN46cnHJeciiqQSX5Z6EaqB9pbseQhVFw@mail.gmail.com>
-Subject: git 2.24: git revert <commit1> <commit2> requires extra '--continue'?
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi! I'm using git 2.24 (or, a variant of that packaged my distro -- I
-can try to build my own if this is deemed not reproducible), and I
-feel like I've been seeing a regression here:
+The documentation is currently incorrect, it talks about the checked out
+SHAs when git submodule status actually reports the superproject's tracked
+SHAs.
 
-Previously, when reverting multiple commits (with the default --edit
-behavior), as soon as I'm done editing the first revert commit
-message, the second revert commit pops up an editor, and I'm on my
-way. Now, it seems to require an extra 'git revert --continue' prompt
-in between, yet it doesn't actually recommend that. This is highly
-confusing, and seemingly unnecessary.
+It's possible (but unlikely IMO) that we should change the behavior of the
+tool to match the documentation. A flag for this behavior may be useful.
 
-An annotated transcript provided below.
+Manish Goregaokar (1):
+  Documentation: Correct man page for the SHAs reported by 'submodule
+    status'
 
-Note that none of this happens with --no-edit; my reverts happen
-smoothly, with no extra need for --continue.
+ Documentation/git-submodule.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Regards,
-Brian
 
-$ mkdir tmp
-$ cd tmp
-/tmp$ git init
-Initialized empty Git repository in [...]/tmp/.git/
-/tmp$ touch foo
-/tmp$ git add foo
-/tmp$ echo bar >> foo
-/tmp$ git commit -am baz
-[master (root-commit) a388f78d9013] baz
- 1 file changed, 1 insertion(+)
- create mode 100644 foo
-/tmp$ echo pow >> foo
-/tmp$ git commit -am whizzbang
-[master 51753222dd9a] whizzbang
- 1 file changed, 1 insertion(+)
-/tmp$ echo pop >> foo
-/tmp$ git commit -am nothing
-[master 7153607b11e0] nothing
- 1 file changed, 1 insertion(+)
-/tmp$ git revert HEAD HEAD^
-## EDITOR pops up, as expected
-[master 586469974ec2] Revert "nothing"
- 1 file changed, 1 deletion(-)
-On branch master
-Revert currently in progress.
-
-nothing to commit, working tree clean
-## Unexpected, confusing pause? No prompt to '--continue'
-/tmp$ git log --oneline
-586469974ec2 (HEAD -> master) Revert "nothing"
-7153607b11e0 nothing
-51753222dd9a whizzbang
-a388f78d9013 baz
-/tmp$ git status
-On branch master
-Revert currently in progress.
-  (run "git revert --continue" to continue)
-  (use "git revert --skip" to skip this patch)
-  (use "git revert --abort" to cancel the revert operation)
-
-nothing to commit, working tree clean
-/tmp$ git revert --continue
-## EDITOR pops up, as expected
-[master b8dd23f61d07] Revert "whizzbang"
- 1 file changed, 1 deletion(-)
-On branch master
-Revert currently in progress.
-
-nothing to commit, working tree clean
-## Unexpected state; both reverts happened, but revert is still in progress?
-/tmp$ git log --oneline
-b8dd23f61d07 (HEAD -> master) Revert "whizzbang"
-586469974ec2 Revert "nothing"
-7153607b11e0 nothing
-51753222dd9a whizzbang
-a388f78d9013 baz
-/tmp$ git status
-On branch master
-Revert currently in progress.
-  (run "git revert --continue" to continue)
-  (use "git revert --skip" to skip this patch)
-  (use "git revert --abort" to cancel the revert operation)
-
-nothing to commit, working tree clean
-## OK...I'll run it one more time.
-/tmp$ git revert --continue
-/tmp$ git status
-On branch master
-nothing to commit, working tree clean
-## *Now* I'm done
-/tmp$ git log --oneline
-b8dd23f61d07 (HEAD -> master) Revert "whizzbang"
-586469974ec2 Revert "nothing"
-7153607b11e0 nothing
-51753222dd9a whizzbang
-a388f78d9013 baz
+base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-470%2FManishearth%2Fsubmodule-sha-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-470/Manishearth/submodule-sha-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/470
+-- 
+gitgitgadget
