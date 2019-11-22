@@ -2,66 +2,66 @@ Return-Path: <SRS0=/23Z=ZO=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61B8DC432C3
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22DE1C432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3930B20715
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC4A520715
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 14:41:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n9R8kM13"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QTfpaQkg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726760AbfKVOlK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 09:41:10 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38124 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726613AbfKVOlK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 09:41:10 -0500
-Received: by mail-wr1-f67.google.com with SMTP id i12so8906603wro.5
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 06:41:08 -0800 (PST)
+        id S1726852AbfKVOlO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 09:41:14 -0500
+Received: from mail-wr1-f51.google.com ([209.85.221.51]:44689 "EHLO
+        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbfKVOlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 09:41:12 -0500
+Received: by mail-wr1-f51.google.com with SMTP id i12so8852832wrn.11
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 06:41:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IxSqxarUv44dtRuXTg+T1t2Qk7SPpmGt/f4uvGizr6g=;
-        b=n9R8kM13dvt+nuLcn3L1BIhpSmbdO8FRwBtggGnhslUMvfsOXAnEdNasnUb5xQv5Uj
-         Enx9dBNAxI4MFg4X8Tlsfl98QS2uwiF+D8WSSttgM+RV8zPsaFbsdO+83OQOeU9KX0aW
-         RJGIw2DuGOyZw76cBPwy/4fOp0FuBFQe/qmRYEJ1EaM3QVte94YNFTQ8CPGYWI/rIx3N
-         U1xRqrM/vjX+A8573sY3rNwSi3Y+MAP+KUXtV7DRAFBemsP/AA2tEskaQzTHHnRHPQ3T
-         MbMGdnKR3gFuWFzAvz2rVJHxIz71IN5wQZb36fSnWDfPjjS7mpmI5rKPA2TVa1PUmeeq
-         KbOw==
+        bh=m/MnVEB2vVWXY7yuhnRkFNN58n/fRZWdgF5EQrDV7bk=;
+        b=QTfpaQkgTzAkI0/A1U6FuabB9PnVyssMQEcLsXGYuu3wcEbWX/OYrtMAs0tEmO3ie6
+         l9TGwITb1MDVB0OIIvYkwW3nRDMr/CPUGyrWiRjrrWvrU7XBi7sOUh4UGdPy7Bj8Yd/+
+         i4Pew0WQMlNoiFcrpVY8UbXXpjZYEMN3p1wdB8+JaLQm4ElW9FuemZaXBELXt5Ntdgw1
+         RrHBRfpqWR4IWXPySG+SGU3j9P6HQAQqy2U0jsXu/mbp3HBo3dnKgs2APQICINiN6V6M
+         XMAsxfPOofIMbs5N9k3nLqeI4hCPgASLbER1cbNPFQLjn1EdM4xjNB8Rp6yFp0ieJyQy
+         0TsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IxSqxarUv44dtRuXTg+T1t2Qk7SPpmGt/f4uvGizr6g=;
-        b=NcWfvkGvPz3bYsXks3mLacNN61BP2L+wWuxEP34UCpVz0OQj018HZJ502ZeA/eB0Om
-         ZjwzD9S7zBSr0nN+sLp5Fy/h10ckQsKq9e/zPQsgxHs11RifnAt4qNGuWR8MpibVNZSv
-         U4H//Z5jRE0OQQrSMcD8F/0H+MhEi+pP8hDfBXl2IrdX+Go5EAUbXqfrZFm6YU+WaLdF
-         AvZQ32rz0uG0lvPs8ZHpAoGRdF7uZTMlt6TgbfsKSAU6ONmtnF1+2KgO1Sh44NrfIO2/
-         6QesfjP1yjpiclTvWQoPi3d/9DoU1ynL7HjbuZzqDJ/hDV29XpXn/MAWTffpbg2NU/tp
-         Yp8g==
-X-Gm-Message-State: APjAAAW7QrUzKuj1C5Yl8YhAkq3peKpF4K0bXh45HUd4iEyUZLjjOGq0
-        2gbgMeynhDgjrkwh4z+xcRHbcuH4
-X-Google-Smtp-Source: APXvYqw0pjVJloqBFe4LEwUX6qAdp1YhJxnKs3j4om3ZH6SNbHIEM8UVEBP3FFJEMeEtBlbnOJcRgw==
-X-Received: by 2002:a5d:678f:: with SMTP id v15mr17466991wru.242.1574433667677;
-        Fri, 22 Nov 2019 06:41:07 -0800 (PST)
+        bh=m/MnVEB2vVWXY7yuhnRkFNN58n/fRZWdgF5EQrDV7bk=;
+        b=UmJLl/4kxuhAuKXBX1smAhFzMqdPhCRhosufNA49wg1Tl3LlB6CTQK1CYM9VPynxZs
+         D+4Oq7HMQkJsRnJHfE+QqF4EVMSUtuZCPR8gjERVHLTzVioA66nzRSAeHkZfOSrW2J06
+         LbRNFZNWjxhSc1ut4yl+XKS7zdrCUlkyhcmiRP4cx6Ht361rP8wI3qBenttayRtKC55Q
+         kQFK+6FayJ7xBV/XyHmve7I4Wi4PFeC7CC5MwxCZdT1dFxn5ypA5O2g1CdYK/s49DvKU
+         5wt4Fn9SQa+m39f/WGvQvwa7CuAMejuZ0rERtCDm8AWMrYP/wd9UeCDY8pC1gVmTVJA1
+         +iEg==
+X-Gm-Message-State: APjAAAWed2/sJslcWxkJ0ssVLEmolwE9Twt7tlGsEquCJs1Z2QXvWVlU
+        hFrflBIoQRiAqQotzdAJMu74G2o9
+X-Google-Smtp-Source: APXvYqyPwv4c/rd+D3mNTb/eVoVQ+gNsGkW623NNAhQCbnAw1CB6sCZH6GwafWGc9ebEa3JUrWXcIQ==
+X-Received: by 2002:a5d:678f:: with SMTP id v15mr17467179wru.242.1574433670123;
+        Fri, 22 Nov 2019 06:41:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y78sm3756680wmd.32.2019.11.22.06.41.07
+        by smtp.gmail.com with ESMTPSA id c1sm6430902wrs.24.2019.11.22.06.41.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 22 Nov 2019 06:41:07 -0800 (PST)
-Message-Id: <96608fd2e82b7337dea4ea9fb7a2f3f1f7e6c854.1574433665.git.gitgitgadget@gmail.com>
+        Fri, 22 Nov 2019 06:41:09 -0800 (PST)
+Message-Id: <85adb04e3d9a7a79e9b24ea50be71ac55dff6f65.1574433665.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
 References: <pull.670.git.git.1574433665.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 22 Nov 2019 14:41:02 +0000
-Subject: [PATCH 1/4] mingw: demonstrate that all file handles are inherited by
- child processes
+Date:   Fri, 22 Nov 2019 14:41:05 +0000
+Subject: [PATCH 4/4] mingw: restrict file handle inheritance only on Windows 7
+ and later
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,95 +77,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When spawning child processes, we really should be careful which file
-handles we let them inherit.
+Turns out that it don't work so well on Vista, see
+https://github.com/git-for-windows/git/issues/1742 for details.
 
-This is doubly important on Windows, where we cannot rename, delete, or
-modify files if there is still a file handle open.
+According to https://devblogs.microsoft.com/oldnewthing/?p=8873, it
+*should* work on Windows Vista and later.
+
+But apparently there are issues on Windows Vista when pipes are
+involved. Given that Windows Vista is past its end of life (official
+support ended on April 11th, 2017), let's not spend *too* much time on
+this issue and just disable the file handle inheritance restriction on
+any Windows version earlier than Windows 7.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/helper/test-run-command.c | 44 +++++++++++++++++++++++++++++++++++++
- t/t0061-run-command.sh      |  4 ++++
- 2 files changed, 48 insertions(+)
+ Documentation/config/core.txt |  6 ++++++
+ compat/mingw.c                | 22 +++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index ead6dc611a..40ec4dbb6e 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -200,6 +200,46 @@ static int testsuite(int argc, const char **argv)
- 	return !!ret;
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index 852d2ba37a..ad4fa4dccd 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -559,6 +559,12 @@ core.unsetenvvars::
+ 	Defaults to `PERL5LIB` to account for the fact that Git for
+ 	Windows insists on using its own Perl interpreter.
+ 
++core.restrictinheritedhandles::
++	Windows-only: override whether spawned processes inherit only standard
++	file handles (`stdin`, `stdout` and `stderr`) or all handles. Can be
++	`auto`, `true` or `false`. Defaults to `auto`, which means `true` on
++	Windows 7 and later, and `false` on older Windows versions.
++
+ core.createObject::
+ 	You can set this to 'link', in which case a hardlink followed by
+ 	a delete of the source are used to make sure that object creation
+diff --git a/compat/mingw.c b/compat/mingw.c
+index cac18cc3da..2b6eca2f56 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -212,6 +212,7 @@ enum hide_dotfiles_type {
+ 	HIDE_DOTFILES_DOTGITONLY
+ };
+ 
++static int core_restrict_inherited_handles = -1;
+ static enum hide_dotfiles_type hide_dotfiles = HIDE_DOTFILES_DOTGITONLY;
+ static char *unset_environment_variables;
+ 
+@@ -231,6 +232,15 @@ int mingw_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.restrictinheritedhandles")) {
++		if (value && !strcasecmp(value, "auto"))
++			core_restrict_inherited_handles = -1;
++		else
++			core_restrict_inherited_handles =
++				git_config_bool(var, value);
++		return 0;
++	}
++
+ 	return 0;
  }
  
-+static int inherit_handle(const char *argv0)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	char path[PATH_MAX];
-+	int tmp;
-+
-+	/* First, open an inheritable handle */
-+	xsnprintf(path, sizeof(path), "out-XXXXXX");
-+	tmp = xmkstemp(path);
-+
-+	argv_array_pushl(&cp.args,
-+			 "test-tool", argv0, "inherited-handle-child", NULL);
-+	cp.in = -1;
-+	cp.no_stdout = cp.no_stderr = 1;
-+	if (start_command(&cp) < 0)
-+		die("Could not start child process");
-+
-+	/* Then close it, and try to delete it. */
-+	close(tmp);
-+	if (unlink(path))
-+		die("Could not delete '%s'", path);
-+
-+	if (close(cp.in) < 0 || finish_command(&cp) < 0)
-+		die("Child did not finish");
-+
-+	return 0;
-+}
-+
-+static int inherit_handle_child(void)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	if (strbuf_read(&buf, 0, 0) < 0)
-+		die("Could not read stdin");
-+	printf("Received %s\n", buf.buf);
-+	strbuf_release(&buf);
-+
-+	return 0;
-+}
-+
- int cmd__run_command(int argc, const char **argv)
+@@ -1398,7 +1408,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
+ 			      const char *dir,
+ 			      int prepend_cmd, int fhin, int fhout, int fherr)
  {
- 	struct child_process proc = CHILD_PROCESS_INIT;
-@@ -207,6 +247,10 @@ int cmd__run_command(int argc, const char **argv)
+-	static int restrict_handle_inheritance = 1;
++	static int restrict_handle_inheritance = -1;
+ 	STARTUPINFOEXW si;
+ 	PROCESS_INFORMATION pi;
+ 	LPPROC_THREAD_ATTRIBUTE_LIST attr_list = NULL;
+@@ -1413,6 +1423,16 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
+ 	const char *(*quote_arg)(const char *arg) =
+ 		is_msys2_sh(*argv) ? quote_arg_msys2 : quote_arg_msvc;
  
- 	if (argc > 1 && !strcmp(argv[1], "testsuite"))
- 		exit(testsuite(argc - 1, argv + 1));
-+	if (!strcmp(argv[1], "inherited-handle"))
-+		exit(inherit_handle(argv[0]));
-+	if (!strcmp(argv[1], "inherited-handle-child"))
-+		exit(inherit_handle_child());
- 
- 	if (argc < 3)
- 		return 1;
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 17c9c0f3bb..473a3405ef 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -12,6 +12,10 @@ cat >hello-script <<-EOF
- 	cat hello-script
- EOF
- 
-+test_expect_failure MINGW 'subprocess inherits only std handles' '
-+	test-tool run-command inherited-handle
-+'
++	if (restrict_handle_inheritance < 0)
++		restrict_handle_inheritance = core_restrict_inherited_handles;
++	/*
++	 * The following code to restrict which handles are inherited seems
++	 * to work properly only on Windows 7 and later, so let's disable it
++	 * on Windows Vista and 2008.
++	 */
++	if (restrict_handle_inheritance < 0)
++		restrict_handle_inheritance = GetVersion() >> 16 >= 7601;
 +
- test_expect_success 'start_command reports ENOENT (slash)' '
- 	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
- 	test_i18ngrep "\./does-not-exist" err
+ 	do_unset_environment_variables();
+ 
+ 	/* Determine whether or not we are associated to a console */
 -- 
 gitgitgadget
-
