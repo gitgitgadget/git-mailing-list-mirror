@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C174C432C0
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CDBEC432C0
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:00:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 420812071B
-	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:00:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 442932071B
+	for <git@archiver.kernel.org>; Fri, 22 Nov 2019 19:00:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dryHJAUK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqz2JWq6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbfKVTAS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 14:00:18 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:43544 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727114AbfKVTAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 14:00:17 -0500
-Received: by mail-pg1-f194.google.com with SMTP id b1so3724309pgq.10
-        for <git@vger.kernel.org>; Fri, 22 Nov 2019 11:00:17 -0800 (PST)
+        id S1727125AbfKVTAU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 14:00:20 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:42351 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727114AbfKVTAU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 14:00:20 -0500
+Received: by mail-pj1-f68.google.com with SMTP id y21so3400076pjn.9
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 11:00:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ZX8i9H2wHYs5K6j7QxtMRQRcBYJDAdkn0cBzDzWbGKA=;
-        b=dryHJAUKeyWsOKG1RdZ0QrKi9IXRrORPyK9rPuBICPfml+FYncgR6FppjAiCfjlQ9V
-         2/Fw14GNIDG8izY6TXNsW/2T7HJTRSK1i/7tc153nfmiUPbqeFwBZ0Al9IGN0QKPkGBt
-         C1UII12Yy0FcXZfctnz5PU8btdkboyIolYcNpKLyvBe/ucjBigo+WPc69JwH5bdJjYF9
-         vZiwsgfkJflSa5yMBaGvBzh4pSXAvF6OcBT9KDN3nMLf323/EnFhul/3AjVW5uG8cuJ/
-         ZGPTgFGm+XUreQw3qIRZH0LVDhLbZFnRSBsPIf6yQGpsSn/meTr1SL2NR9Ne5IMuOyjR
-         29cA==
+        bh=E4n+fqHnj9Cv3lupVIQz8ESenxndxXEgSZ4wUo04KFA=;
+        b=fqz2JWq67jT97EI+27WXOsGqB9ibCRJDp6jB3VYPucd7kosVpXe6WSkSiaWRO9b9du
+         JhuM5t/n1zYakCj63IQvi0SAd3JehDr1igASjmlTbVtRqzUwXh2KLT7Qq7uQmsKEG8PG
+         8xhe/wYXdfvrgh8Xh9HYSfaunz9KwfNsBrjWKjK7E0u7PoZ8nWCLMf9Rgfjb0bKyj10X
+         aOqrzlBi29/00tS9BOPCjhJq1R3RELBma4ky7HtBLSNWcEWSQnSRWB45K0xlSaO6XOI3
+         64swdh7ormQak5MbcDw0rk1AtmkCMI23S83CLue7ms0wltq+xs1AwCi/4wAi91kyBycf
+         jDIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZX8i9H2wHYs5K6j7QxtMRQRcBYJDAdkn0cBzDzWbGKA=;
-        b=LY0VUGZcYdjv5LYb+HJOmZb/9YOKnGq+5OJmYulm6wfIDaRo4sgXS1xr6F96L3QGC4
-         92PjoJZ2h8Ulb1LeY4ertizzVBhUsrSfvfEkVHYdtXdJlOQeJibW+/p2A0KiFjtAImp9
-         g6l30ARXtJumswsH2SiJac6Lp8uiZa+Buo+JuBTiud/wx6ct2/uVC9vHQqkhBcE58xxB
-         bIotJ2pG38mzn0cVJ1PbHNmkI8gceXt1fpP4GVJF2Q7t0JWOJKC8cIHIq+ltiZPUvKJB
-         MfdqSZvISlO6/qo6zWpGXa3dtoPH/kuMwgw5lhkhcso+0DaxeA9OSS9aFrClGmvdyLwY
-         57pw==
-X-Gm-Message-State: APjAAAU1g4SW49MFH4vmMVS9VWWmPTEg8w5ty1kGjQXNL9lZV7qH4CDa
-        HyN5lsZSdfEnbZy5bXfEfx94PIaB
-X-Google-Smtp-Source: APXvYqwzWR1mjqGYXCrAvwBT+fBiqp5R5tN4mmjoKALIWOiYYaX2MJk2mZL51drPP85WL0Wmhr8/nQ==
-X-Received: by 2002:a63:551a:: with SMTP id j26mr9178966pgb.370.1574449216125;
-        Fri, 22 Nov 2019 11:00:16 -0800 (PST)
+        bh=E4n+fqHnj9Cv3lupVIQz8ESenxndxXEgSZ4wUo04KFA=;
+        b=SCJxhAoAhltIiYzWPdNuZdwWB44lDllDDyzzwuJk48pFod/MF8vFYl3v5FxaNuKkrC
+         cHllO5/o+ArqOoojy19SpaCg/3GDp+I3ToVazmx189CfM9QhjwoQXhKhaPkj/L446pxd
+         hB5Ssu/0rj4SR3wcM70entoGqZeneWMU2akTKWT8vvMXW4bo0xmBbYzbOXX4o+jkAV2o
+         i8kpLM3e8s3RwoI6ZZJ3mjKRn+TPS+M8Lt1brnsbXZYhCitDgV/8hirAbegxCqOXJ5nY
+         9TrKBZB1bWQ0mAOAe28aV5Ow298Z/UCydDJyZXX8K1KoteUcW87YmR9EAgfH5h+/qY/E
+         gxrw==
+X-Gm-Message-State: APjAAAVxKdhEPs+Sgkjigp4qKifghlBkZhn8g8h5r2GDcqM7wkgHlNki
+        0RGpVJkgbcBqLm8pLV8uFd12EK5b
+X-Google-Smtp-Source: APXvYqwnMbVNuBwI97aWtZhZmgYdIeY+wu8lGdBWvRVVHn76jIjpae5TyD4An6dsoCun2BLtXNmPIQ==
+X-Received: by 2002:a17:902:9a92:: with SMTP id w18mr15684404plp.91.1574449218686;
+        Fri, 22 Nov 2019 11:00:18 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id 76sm8274766pfw.128.2019.11.22.11.00.15
+        by smtp.gmail.com with ESMTPSA id i10sm7727982pgd.73.2019.11.22.11.00.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Nov 2019 11:00:15 -0800 (PST)
-Date:   Fri, 22 Nov 2019 11:00:13 -0800
+        Fri, 22 Nov 2019 11:00:18 -0800 (PST)
+Date:   Fri, 22 Nov 2019 11:00:16 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 13/22] t5317: use ! grep to check for no matching lines
-Message-ID: <85c2f8ca2704e54c2d0e6e65822a04d21e383f6a.1574449072.git.liu.denton@gmail.com>
+Subject: [PATCH v3 14/22] t5703: simplify one-time-sed generation logic
+Message-ID: <f7e8ae79fa4c0798e2419244756dc2465dcd0d28.1574449072.git.liu.denton@gmail.com>
 References: <cover.1574296987.git.liu.denton@gmail.com>
  <cover.1574449072.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,72 +74,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Several times in t5317, we would use `wc -l` to ensure that a grep
-result is empty. However, grep already has a way to do that... Its
-return code! Use `! grep` in the cases where we are ensuring that there
-are no matching lines.
+In inconsistency(), we had two `git rev-parse` invocations in the
+upstream of a pipe within a command substitution. In case this
+invocation ever failed, its exit code would be swallowed up and we would
+not know about it.
 
-While at it, drop unnecessary invocations of 'awk' and 'sort' in each
-affected test since those commands do not influence the outcome. It's
-not clear why that extra work was being done in the first place, and the
-code's history doesn't shed any light on the matter since these tests
-were simply born this way[1], doing all the unnecessary work for no
-reason, probably due to copy/paste programming...
+Pull the command substitutions out into variable assignments so that
+their return codes are not lost.
 
-[1]: 9535ce7337 (pack-objects: add list-objects filtering, 2017-11-21)
+Drop the pipe into `tr` because the $(...) substitution already takes
+care of stripping out newlines, so the `tr` invocations in the code are
+superfluous.
+
+Finally, given the way the tests actually employ "one-time-sed" via
+$(cat one-time-sed) in t/lib-httpd/apply-one-time-sed.sh, convert the
+`printf` into an `echo`. This makes it consistent with the final "server
+loses a ref - ref in want" test, which does use `echo` rather than
+`printf`.
 
 Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5317-pack-objects-filter-objects.sh | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ t/t5703-upload-pack-ref-in-want.sh | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index a8bbad74e2..dc0446574b 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -45,12 +45,7 @@ test_expect_success 'verify blob:none packfile has no blobs' '
- 	git -C r1 index-pack ../filter.pack &&
+diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
+index 3a2c143c6d..88338c4e09 100755
+--- a/t/t5703-upload-pack-ref-in-want.sh
++++ b/t/t5703-upload-pack-ref-in-want.sh
+@@ -312,10 +312,9 @@ inconsistency () {
+ 	# repository appears to change during negotiation, for example, when
+ 	# different servers in a load-balancing arrangement serve (stateless)
+ 	# RPCs during a single negotiation.
+-	printf "s/%s/%s/" \
+-	       $(git -C "$REPO" rev-parse $1 | tr -d "\n") \
+-	       $(git -C "$REPO" rev-parse $2 | tr -d "\n") \
+-	       >"$HTTPD_ROOT_PATH/one-time-sed"
++	oid1=$(git -C "$REPO" rev-parse $1) &&
++	oid2=$(git -C "$REPO" rev-parse $2) &&
++	echo "s/$oid1/$oid2/" >"$HTTPD_ROOT_PATH/one-time-sed"
+ }
  
- 	git -C r1 verify-pack -v ../filter.pack >verify_result &&
--	grep blob verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	nr=$(wc -l <observed) &&
--	test 0 -eq $nr
-+	! grep blob verify_result
- '
- 
- test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
-@@ -149,12 +144,7 @@ test_expect_success 'verify blob:limit=500 omits all blobs' '
- 	git -C r2 index-pack ../filter.pack &&
- 
- 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
--	grep blob verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	nr=$(wc -l <observed) &&
--	test 0 -eq $nr
-+	! grep blob verify_result
- '
- 
- test_expect_success 'verify blob:limit=1000' '
-@@ -164,12 +154,7 @@ test_expect_success 'verify blob:limit=1000' '
- 	git -C r2 index-pack ../filter.pack &&
- 
- 	git -C r2 verify-pack -v ../filter.pack >verify_result &&
--	grep blob verify_result |
--	awk -f print_1.awk |
--	sort >observed &&
--
--	nr=$(wc -l <observed) &&
--	test 0 -eq $nr
-+	! grep blob verify_result
- '
- 
- test_expect_success 'verify blob:limit=1001' '
+ test_expect_success 'server is initially ahead - no ref in want' '
 -- 
 2.24.0.497.g17aadd8971
 
