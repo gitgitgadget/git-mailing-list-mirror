@@ -5,56 +5,56 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D05C432C0
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E591C432C0
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:49:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B8AB920706
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E331B20719
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:49:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbfsfgJ0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qa1LXCo5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbfKWOrg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Nov 2019 09:47:36 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35612 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726704AbfKWOrf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Nov 2019 09:47:35 -0500
-Received: by mail-wm1-f66.google.com with SMTP id n5so797446wmc.0
-        for <git@vger.kernel.org>; Sat, 23 Nov 2019 06:47:33 -0800 (PST)
+        id S1726740AbfKWOtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Nov 2019 09:49:00 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:43847 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726704AbfKWOtA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Nov 2019 09:49:00 -0500
+Received: by mail-lf1-f67.google.com with SMTP id l14so7687163lfh.10
+        for <git@vger.kernel.org>; Sat, 23 Nov 2019 06:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=raobcgxZIeCMIufQzXkhKjVYw9ZZcAw8TdKexUZshJE=;
-        b=fbfsfgJ0XWeDlXiBp735/ettcBvWqMN4l3KLHQd80gYkc8JiKIzbnivxQwW7tC0xlz
-         a2ghT3fAWWWDBmZskH1E4Vtzf91kzK85j/5T0iQfydf8PTlGEc3wxgSZ992bJR8hoHi3
-         1yn1HDkAp+D1mJ+g1TT1Rdow4SarUZ8tud3ILicDbWaoPuwgdwCzoQ70L82ocyQuPTug
-         EUR8jwAMLWcI46IRj1gtBWtIAkctHkVr0NW5M/iGgzGY/ljf9AeWQmasEgPxWvhV9Ge9
-         lwUeXxVHwKTeSsG5aIOAJtt2AD+U5HvVeQ9DfQScOXeO6dyz9iu6oF2iSO7qPDZokpwg
-         qnpg==
+        bh=p3OtT2rirIH7XHYdJ8mtcDtYT9Y4YgaC5OpznLG+v7g=;
+        b=qa1LXCo5xF70E1r0xTjx4WJPsF3SZUoF+Ae8mV+pXpoB56zbdO10klvdwVYSTN93wb
+         CMRopbxSvcsX+rG/k/VF6a8OVFlxufMhL+zjRTzeEjzOdq/lf0h62IzvpBFFZkdHC/Hx
+         8CFnnTht7OSEp/5WCo2mSZbzMnJeY+CX11qGA7jFlKbsvHMond2NVjqNrUmANvAMZh1U
+         fv2KF3ubpHiYDnHdqqv9GM16h/4UzMeChPXnIodCIF0xdMPPioPIgwAJ6FFpgiNUziar
+         mpIm8T+AT2ye2s7iOfmy9eWFRxEgyegx3Cj+/OSXRoXk2ZvRziCVdZ7fwyItQsQfgTmS
+         pcVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=raobcgxZIeCMIufQzXkhKjVYw9ZZcAw8TdKexUZshJE=;
-        b=QLVf29ZJKyWdb9zrrvU86NuHGAIFwIxFWmQCdbilVEQ4oUKM5ag9ks1xwWerZNyOso
-         Q5OUBbMOyqRTsPU1/gSiCu3dyebojPpMbiJMrXwTBQk3BTok15KQohIi+ChtJeJXnRFD
-         U4aJRjuFn4p5NsBd1eWG2tdfSv5PhhxDRC8Xg4bV2/O/5Cbavrf+Hj3BQnl9s2HTDusZ
-         c0k8CTPAFdJXbHUXagfz/XUlHqXj1grbmkMwSpJ7sHZkDfwbTk6osAHTXjh5CtlHAR8q
-         hOFT3Tn36e9rZrrK3kxDqxlSMRr4H1rHI6szkV4r68CL/LBwpnFJ2BLQZVpiNOBairsz
-         lNTQ==
-X-Gm-Message-State: APjAAAX9SXYbVZQEAki98x/G9y693gew08qcznRAeIZoU9mWGWuhICC+
-        FQCrbm5W+Xkd7Gr90ZI0JdPD8v+U
-X-Google-Smtp-Source: APXvYqwhzml+BCUw1qRs6HEKqDJOeIy2/K9C46XLULsXhfa/tiUX+CLtK6mY5Fq8avEJsE1cdPdwDA==
-X-Received: by 2002:a05:600c:22c3:: with SMTP id 3mr20888311wmg.139.1574520041893;
-        Sat, 23 Nov 2019 06:40:41 -0800 (PST)
+        bh=p3OtT2rirIH7XHYdJ8mtcDtYT9Y4YgaC5OpznLG+v7g=;
+        b=RZPnHP4k9eVgBhU0oOMDtTLQ429sVlKjGV6Ebo7qvN8EWQ5mswoWd9eK2nJzhfVxIP
+         UfR0FfpPqWmCXnmnfIO0IQ/IKJjYKqoNlvg5dMgRyjnOV9f9SbVhNVO67+st3K7RIXuA
+         SgH3xqlJ0JqGG+qnnX6/Kh/TkjlIEHdyHhE1jSH2AR7kZv1aZrjekbjiAyN+QWM3auJi
+         +ESbjgjWdXtXs22kgsaOeJNwKI1MWxQIK0g4t5WmiEu5Fq8q33vzZw6bw4JdxutIpYUK
+         5sDSsQ3FTk7buV/e8loUcjWsAhlQPQ7BhKYtqZFzYa+7fiey686ndj0OG6YnEf+E97Ww
+         Nr1Q==
+X-Gm-Message-State: APjAAAUwRxV5AeS814NIaSCL07ldC5zjVmIMIega3zd2A17D2YTKh6/T
+        vUJnG6PLLD6y3rjs/BypAiIxXpt+
+X-Google-Smtp-Source: APXvYqw6RpPTw0FvBsa4aUTgwkMHPHMWZTQiiz95ta+bklq1FS7GdVQan37/1WcyTmYxwBV/My1OaQ==
+X-Received: by 2002:adf:ff90:: with SMTP id j16mr5031425wrr.361.1574520040883;
+        Sat, 23 Nov 2019 06:40:40 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-110-106.w86-199.abo.wanadoo.fr. [86.199.33.106])
-        by smtp.googlemail.com with ESMTPSA id b10sm2399298wrw.53.2019.11.23.06.40.40
+        by smtp.googlemail.com with ESMTPSA id b10sm2399298wrw.53.2019.11.23.06.40.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Nov 2019 06:40:41 -0800 (PST)
+        Sat, 23 Nov 2019 06:40:40 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -62,9 +62,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v3 3/5] sequencer: move the code writing total_nr on the disk to a new function
-Date:   Sat, 23 Nov 2019 15:37:03 +0100
-Message-Id: <20191123143705.17280-4-alban.gruin@gmail.com>
+Subject: [PATCH v3 2/5] sequencer: update `done_nr' when skipping commands in a todo list
+Date:   Sat, 23 Nov 2019 15:37:02 +0100
+Message-Id: <20191123143705.17280-3-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191123143705.17280-1-alban.gruin@gmail.com>
 References: <20191007092641.12661-1-alban.gruin@gmail.com>
@@ -76,60 +76,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The total amount of commands can be used to show the progression of the
-rebasing in a shell.  It is written to the disk by read_populate_todo()
-when the todo list is loaded from sequencer_continue() or
-pick_commits(), but not by complete_action().
+In a todo list, `done_nr' is the amount of commands that were executed
+or skipped, but skip_unnecessary_picks() did not update it.
 
-This moves the part writing total_nr to a new function so it can be
-called from complete_action().
+This variable is mostly used by command prompts (ie. git-prompt.sh and
+the like).  As in the previous commit, this inconsistent behaviour is
+not a problem yet, but it would start to matter at the end of this
+series the same reason.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- sequencer.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ sequencer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 42313f8de6..ec7ea8d9e5 100644
+index 575b852a5a..42313f8de6 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2342,6 +2342,16 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
- 	sequencer_remove_state(&opts);
- }
+@@ -5054,6 +5054,7 @@ static int skip_unnecessary_picks(struct repository *r,
+ 		MOVE_ARRAY(todo_list->items, todo_list->items + i, todo_list->nr - i);
+ 		todo_list->nr -= i;
+ 		todo_list->current = 0;
++		todo_list->done_nr += i;
  
-+static void todo_list_write_total_nr(struct todo_list *todo_list)
-+{
-+	FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
-+
-+	if (f) {
-+		fprintf(f, "%d\n", todo_list->total_nr);
-+		fclose(f);
-+	}
-+}
-+
- static int read_populate_todo(struct repository *r,
- 			      struct todo_list *todo_list,
- 			      struct replay_opts *opts)
-@@ -2387,7 +2397,6 @@ static int read_populate_todo(struct repository *r,
- 
- 	if (is_rebase_i(opts)) {
- 		struct todo_list done = TODO_LIST_INIT;
--		FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
- 
- 		if (strbuf_read_file(&done.buf, rebase_path_done(), 0) > 0 &&
- 		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done))
-@@ -2399,10 +2408,7 @@ static int read_populate_todo(struct repository *r,
- 			+ count_commands(todo_list);
- 		todo_list_release(&done);
- 
--		if (f) {
--			fprintf(f, "%d\n", todo_list->total_nr);
--			fclose(f);
--		}
-+		todo_list_write_total_nr(todo_list);
- 	}
- 
- 	return 0;
+ 		if (is_fixup(peek_command(todo_list, 0)))
+ 			record_in_rewritten(base_oid, peek_command(todo_list, 0));
 -- 
 2.24.0
 
