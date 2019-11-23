@@ -4,104 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74BF8C432C0
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 01:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4170C432C3
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 01:34:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 25E3F2070E
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 01:21:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E2472070E
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 01:34:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nPdtOEH7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IFrJe9UY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfKWBVu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 20:21:50 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:53363 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbfKWBVu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 22 Nov 2019 20:21:50 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8AAF5990BD;
-        Fri, 22 Nov 2019 20:21:49 -0500 (EST)
+        id S1726334AbfKWBcg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 22 Nov 2019 20:32:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50537 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbfKWBcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 22 Nov 2019 20:32:35 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E95D19AE9;
+        Fri, 22 Nov 2019 20:32:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=0XZrgjuDKvM2KU7+SGrs86L7E6A=; b=nPdtOE
-        H7VC9850Hbhd4APXHbae5Ews+Hzan2xv3K7gV0Zj0ZRM3cD82msapGJkPlJIhTNg
-        4h5B/AYyNB3i4kaXHG0cpWIbcxFEqZ7ZHU4b/eqMlVIbKdgQh4bub4rhV69n4Jz3
-        odBINt3RuUvLqsP0bLt0OP815xHSBLgPdCtNE=
+        :content-type; s=sasl; bh=aYHJ6c8Zjeq0mcwbcKX8CpfDB80=; b=IFrJe9
+        UYX7vVRdCCG4onXpfWCOFY6iXLY4IQAqDjapJco7vMw8cFv6jHY1uUFh5Yf20vWz
+        Y7+1AsPMK8mUVM5GfubtOlDY5oRbGUAI2bHCj0kE/4+1BO1ypQSuH8pwTLpJbz+O
+        W5c0Ww/u4MT0Csgqlag1So8TbpVnIZi1dE+XE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=unk3aU6TpbqWc+T0tSUYSMy1kCn78LfI
-        P77C56+3uGhpOWd3BQi9gaGQP03g/3DwZiQ8/I+aNDGamRnYlOstOozb81PFA8pK
-        htHYqKcizWV1xKHVg46hg7+T/XztmNemt1BuMZJL3SUHehhZ5TQZDtgStOsuKopV
-        P8VU288OMBI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 83AD9990BC;
-        Fri, 22 Nov 2019 20:21:49 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=cLjdJ5rhFRdAbk5Gu/fbvuTZ4YoZjqdR
+        KReTfdPucA1e0LOo/o9ZaKO7t+/YB4CsVFkW/0OmIyerN2W+UTNPleKQnOfcAdgr
+        qhefggEj9SvgiXuKgcOoYzNnZaFUBNA1BcLkNt8w3GsNUfnpubWM0kKDbU8Kh1Ma
+        h27sCojkptA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3673619AE8;
+        Fri, 22 Nov 2019 20:32:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A4428990B3;
-        Fri, 22 Nov 2019 20:21:46 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9800B19AE7;
+        Fri, 22 Nov 2019 20:32:32 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Manish Goregaokar via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Manish Goregaokar <manishsmail@gmail.com>
-Subject: Re: [PATCH 1/1] Documentation: Correct man page for the SHAs reported by 'submodule status'
-References: <pull.470.git.1574464285.gitgitgadget@gmail.com>
-        <0eabb27ba0c7a07bbf24f13f1766c0ff63995348.1574464285.git.gitgitgadget@gmail.com>
-Date:   Sat, 23 Nov 2019 10:21:44 +0900
-In-Reply-To: <0eabb27ba0c7a07bbf24f13f1766c0ff63995348.1574464285.git.gitgitgadget@gmail.com>
-        (Manish Goregaokar via GitGitGadget's message of "Fri, 22 Nov 2019
-        23:11:25 +0000")
-Message-ID: <xmqqo8x32xqv.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 02/22] apply-one-time-sed.sh: modernize style
+References: <cover.1574296987.git.liu.denton@gmail.com>
+        <cover.1574449072.git.liu.denton@gmail.com>
+        <1fddaab7011dae7cdd15dee83a94b021085f6703.1574449072.git.liu.denton@gmail.com>
+Date:   Sat, 23 Nov 2019 10:32:31 +0900
+In-Reply-To: <1fddaab7011dae7cdd15dee83a94b021085f6703.1574449072.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Fri, 22 Nov 2019 10:59:47 -0800")
+Message-ID: <xmqqk17r2x8w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9DC87FAA-0D8F-11EA-BF12-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 1ECC9DF6-0D91-11EA-AAD9-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Manish Goregaokar via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> From: Manish Goregaokar <manishsmail@gmail.com>
+> Convert `[ ... ]` to use `test`.
 >
-> 'git submodule status' reports the SHAs expected by the parent project,
-> not the SHAs that are actually checked out in the submodule. Checking
-> out a new SHA in a submodule will not change the output of 'git
-> submodule status' until you 'git add' the submodule.
+> Move the `then`s onto their own lines so that it conforms with the
+> general test style.
 >
-> Signed-off-by: Manish Goregaokar <manishsmail@gmail.com>
+> Instead of redirecting input into sed, allow it to open its own input.
+>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
->  Documentation/git-submodule.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-> index 0ed5c24dc1..31e089454a 100644
-> --- a/Documentation/git-submodule.txt
-> +++ b/Documentation/git-submodule.txt
-> @@ -72,8 +72,8 @@ git-submodule will correctly locate the submodule using the relative
->  URL in `.gitmodules`.
+>  t/lib-httpd/apply-one-time-sed.sh | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+
+This one is new in this round.  As a conversion to match the style
+guidelines, it looks OK, but the original feels a bit substandard in
+other ways, e.g. I would have said "if one-time-sed is a file",
+instead of "if one-time-sed exists as any kind of filesystem
+entity", and used "cmp -s out out_modified" instead of "diff", which
+is an overkill if you want to merely learn if two things are equal.
+
+Wait.  If we are to see if A and B are the same, and show A when
+they are the same and otherwise show B, wouldn't it be much simpler
+to do without comparison and always show B unconditionally instead?
+
+What am I missing?
+
+Ah, there is one extra command in the "else" clause that we cannot
+see in the post-context.  So, sorry for the noise---don't wait ;-)
+
+But all the other things before the "Wait" still stands.
+
+Thanks.
+
+> diff --git a/t/lib-httpd/apply-one-time-sed.sh b/t/lib-httpd/apply-one-time-sed.sh
+> index fcef728925..3e9a615311 100644
+> --- a/t/lib-httpd/apply-one-time-sed.sh
+> +++ b/t/lib-httpd/apply-one-time-sed.sh
+> @@ -7,11 +7,13 @@
+>  #
+>  # This can be used to simulate the effects of the repository changing in
+>  # between HTTP request-response pairs.
+> -if [ -e one-time-sed ]; then
+> +if test -e one-time-sed
+> +then
+>  	"$GIT_EXEC_PATH/git-http-backend" >out
+> -	sed "$(cat one-time-sed)" <out >out_modified
+> +	sed "$(cat one-time-sed)" out >out_modified
 >  
->  status [--cached] [--recursive] [--] [<path>...]::
-> -	Show the status of the submodules. This will print the SHA-1 of the
-> -	currently checked out commit for each submodule, along with the
-> +	Show the status of the submodules. This will print the SHA-1
-> +	recorded in the superproject for each submodule, along with the
->  	submodule path and the output of 'git describe' for the
-
-Am I mistaken to say that neither the old or the new description is
-correct, depending on the use (or non-use) of the --cached option?
-
-	... print the object name of the commit that is currently
-	checked out, or the commit that is recorded in the
-	superproject if `--cached` option is given, for each
-	submodule, ...
-
-perhaps?
+> -	if diff out out_modified >/dev/null; then
+> +	if diff out out_modified >/dev/null
+> +	then
+>  		cat out
+>  	else
+>  		cat out_modified
