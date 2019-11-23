@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 813EBC432C0
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0D05C432C0
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 52F7420706
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8AB920706
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 14:47:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tFQTzrPQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbfsfgJ0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726840AbfKWOrc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Nov 2019 09:47:32 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34610 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726704AbfKWOrc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Nov 2019 09:47:32 -0500
-Received: by mail-wm1-f67.google.com with SMTP id j18so12456061wmk.1
-        for <git@vger.kernel.org>; Sat, 23 Nov 2019 06:47:30 -0800 (PST)
+        id S1726855AbfKWOrg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Nov 2019 09:47:36 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35612 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726704AbfKWOrf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Nov 2019 09:47:35 -0500
+Received: by mail-wm1-f66.google.com with SMTP id n5so797446wmc.0
+        for <git@vger.kernel.org>; Sat, 23 Nov 2019 06:47:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FLBc34Uz8vmA0g3wPA6jInm6SI34pchu74/TCjp84yI=;
-        b=tFQTzrPQPY91Fr99W9oHePgVY2Pg/OLaOkbmwUOtwi25+G4rxCWyRAFLTOoWHI+u8E
-         R8TAqL7mnMXC0Wvf3y1VedIFh1ZZLO7Jv2ZKm3wRxtMkp8OfGibJAoNubHQznV/iN9z5
-         IssZxEyvpLn5X6C1bhFJCBIUJIkQDRlehG8fhg11rSChrYiBDyevBzd7kim09FTo83fQ
-         WRUSd2fZGoybXOw8yajKjXdDENcNCsFSaqiRqPh6z+tz+IOk7nVUASLYX9+hlWzYF6+Z
-         Ef0bynvnVK78ZH17PtV1mZK00vp+wGToUTyF7gs1PQzL7PthHlTUXfLOMBYPZuSYnxR7
-         uZcg==
+        bh=raobcgxZIeCMIufQzXkhKjVYw9ZZcAw8TdKexUZshJE=;
+        b=fbfsfgJ0XWeDlXiBp735/ettcBvWqMN4l3KLHQd80gYkc8JiKIzbnivxQwW7tC0xlz
+         a2ghT3fAWWWDBmZskH1E4Vtzf91kzK85j/5T0iQfydf8PTlGEc3wxgSZ992bJR8hoHi3
+         1yn1HDkAp+D1mJ+g1TT1Rdow4SarUZ8tud3ILicDbWaoPuwgdwCzoQ70L82ocyQuPTug
+         EUR8jwAMLWcI46IRj1gtBWtIAkctHkVr0NW5M/iGgzGY/ljf9AeWQmasEgPxWvhV9Ge9
+         lwUeXxVHwKTeSsG5aIOAJtt2AD+U5HvVeQ9DfQScOXeO6dyz9iu6oF2iSO7qPDZokpwg
+         qnpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FLBc34Uz8vmA0g3wPA6jInm6SI34pchu74/TCjp84yI=;
-        b=UMC9DTlvuDWRX+YBvHH2U1GCwoeee5iw0YoMdzSpaZ5HtWZkAVDYAocJd1qfHvaU4q
-         rVi9pzyX2igxJsXmpAGE/FzZwKp5lYz1lSaps/aLV4C+3dFZQkqU0nn/HaAoJtEheF2Y
-         xrMSdY3723SywbDPCqcy9ZW1oHngvFG5Wamw7xgPoUMDjCoIm/5Z1z7dcL7leSwAaViO
-         0/4uoH0r6JT1qyh+jK5AdB0QUm9GXVJTMhBcX9dLJdTY+gLtYPVzsTJQm3kyO9Z7fPSz
-         VVP35QWEwgvq9+XUzBpHrdcoQn+9+izDLPGT13s0NPeomDzIkXwJftf04FLgdbdaeb59
-         t9HQ==
-X-Gm-Message-State: APjAAAWDZZ9YV53tKTqSC20xashcmEbwcaDH/vdl1Kos31ZmaraFhxfl
-        zIcQu5K6bXcEPFmvv7wX5mwJDP8K
-X-Google-Smtp-Source: APXvYqyGINuQv1ZaSlWuqTk5eArnCD8nNlPPx+dt0eXKLyXN40LrT5m29SnGQ8eem6/dn+lLptuLQQ==
-X-Received: by 2002:a7b:c44c:: with SMTP id l12mr14860608wmi.71.1574520044043;
-        Sat, 23 Nov 2019 06:40:44 -0800 (PST)
+        bh=raobcgxZIeCMIufQzXkhKjVYw9ZZcAw8TdKexUZshJE=;
+        b=QLVf29ZJKyWdb9zrrvU86NuHGAIFwIxFWmQCdbilVEQ4oUKM5ag9ks1xwWerZNyOso
+         Q5OUBbMOyqRTsPU1/gSiCu3dyebojPpMbiJMrXwTBQk3BTok15KQohIi+ChtJeJXnRFD
+         U4aJRjuFn4p5NsBd1eWG2tdfSv5PhhxDRC8Xg4bV2/O/5Cbavrf+Hj3BQnl9s2HTDusZ
+         c0k8CTPAFdJXbHUXagfz/XUlHqXj1grbmkMwSpJ7sHZkDfwbTk6osAHTXjh5CtlHAR8q
+         hOFT3Tn36e9rZrrK3kxDqxlSMRr4H1rHI6szkV4r68CL/LBwpnFJ2BLQZVpiNOBairsz
+         lNTQ==
+X-Gm-Message-State: APjAAAX9SXYbVZQEAki98x/G9y693gew08qcznRAeIZoU9mWGWuhICC+
+        FQCrbm5W+Xkd7Gr90ZI0JdPD8v+U
+X-Google-Smtp-Source: APXvYqwhzml+BCUw1qRs6HEKqDJOeIy2/K9C46XLULsXhfa/tiUX+CLtK6mY5Fq8avEJsE1cdPdwDA==
+X-Received: by 2002:a05:600c:22c3:: with SMTP id 3mr20888311wmg.139.1574520041893;
+        Sat, 23 Nov 2019 06:40:41 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-110-106.w86-199.abo.wanadoo.fr. [86.199.33.106])
-        by smtp.googlemail.com with ESMTPSA id b10sm2399298wrw.53.2019.11.23.06.40.43
+        by smtp.googlemail.com with ESMTPSA id b10sm2399298wrw.53.2019.11.23.06.40.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 23 Nov 2019 06:40:43 -0800 (PST)
+        Sat, 23 Nov 2019 06:40:41 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -62,9 +62,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v3 5/5] sequencer: directly call pick_commits() from complete_action()
-Date:   Sat, 23 Nov 2019 15:37:05 +0100
-Message-Id: <20191123143705.17280-6-alban.gruin@gmail.com>
+Subject: [PATCH v3 3/5] sequencer: move the code writing total_nr on the disk to a new function
+Date:   Sat, 23 Nov 2019 15:37:03 +0100
+Message-Id: <20191123143705.17280-4-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.24.0
 In-Reply-To: <20191123143705.17280-1-alban.gruin@gmail.com>
 References: <20191007092641.12661-1-alban.gruin@gmail.com>
@@ -76,59 +76,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, complete_action(), used by builtin/rebase.c to start a new
-rebase, calls sequencer_continue() to do it.  Before the former calls
-pick_commits(), it
+The total amount of commands can be used to show the progression of the
+rebasing in a shell.  It is written to the disk by read_populate_todo()
+when the todo list is loaded from sequencer_continue() or
+pick_commits(), but not by complete_action().
 
- - calls read_and_refresh_cache() -- this is unnecessary here as we've
-   just called require_clean_work_tree() in complete_action()
- - calls read_populate_opts() -- this is unnecessary as we're starting a
-   new rebase, so `opts' is fully populated
- - loads the todo list -- this is unnecessary as we've just populated
-   the todo list in complete_action()
- - commits any staged changes -- this is unnecessary as we're starting a
-   new rebase, so there are no staged changes
- - calls record_in_rewritten() -- this is unnecessary as we're starting
-   a new rebase.
-
-This changes complete_action() to directly call pick_commits() to avoid
-these unnecessary steps.
+This moves the part writing total_nr to a new function so it can be
+called from complete_action().
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- sequencer.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sequencer.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index ec7ea8d9e5..ec0b793fc5 100644
+index 42313f8de6..ec7ea8d9e5 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -5140,15 +5140,21 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		return error_errno(_("could not write '%s'"), todo_file);
- 	}
- 
--	todo_list_release(&new_todo);
-+	res = -1;
- 
- 	if (checkout_onto(r, opts, onto_name, &oid, orig_head))
--		return -1;
-+		goto cleanup;
- 
- 	if (require_clean_work_tree(r, "rebase", "", 1, 1))
--		return -1;
-+		goto cleanup;
- 
--	return sequencer_continue(r, opts);
-+	todo_list_write_total_nr(&new_todo);
-+	res = pick_commits(r, &new_todo, opts);
-+
-+cleanup:
-+	todo_list_release(&new_todo);
-+
-+	return res;
+@@ -2342,6 +2342,16 @@ void sequencer_post_commit_cleanup(struct repository *r, int verbose)
+ 	sequencer_remove_state(&opts);
  }
  
- struct subject2item_entry {
++static void todo_list_write_total_nr(struct todo_list *todo_list)
++{
++	FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
++
++	if (f) {
++		fprintf(f, "%d\n", todo_list->total_nr);
++		fclose(f);
++	}
++}
++
+ static int read_populate_todo(struct repository *r,
+ 			      struct todo_list *todo_list,
+ 			      struct replay_opts *opts)
+@@ -2387,7 +2397,6 @@ static int read_populate_todo(struct repository *r,
+ 
+ 	if (is_rebase_i(opts)) {
+ 		struct todo_list done = TODO_LIST_INIT;
+-		FILE *f = fopen_or_warn(rebase_path_msgtotal(), "w");
+ 
+ 		if (strbuf_read_file(&done.buf, rebase_path_done(), 0) > 0 &&
+ 		    !todo_list_parse_insn_buffer(r, done.buf.buf, &done))
+@@ -2399,10 +2408,7 @@ static int read_populate_todo(struct repository *r,
+ 			+ count_commands(todo_list);
+ 		todo_list_release(&done);
+ 
+-		if (f) {
+-			fprintf(f, "%d\n", todo_list->total_nr);
+-			fclose(f);
+-		}
++		todo_list_write_total_nr(todo_list);
+ 	}
+ 
+ 	return 0;
 -- 
 2.24.0
 
