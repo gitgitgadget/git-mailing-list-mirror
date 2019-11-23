@@ -2,92 +2,134 @@ Return-Path: <SRS0=Rptp=ZP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 501F3C432C0
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 20:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB314C432C0
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 20:50:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0BEE12068D
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 20:35:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7E3E720672
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 20:50:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3WUv0v7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HyZ6hDmX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726705AbfKWUfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 23 Nov 2019 15:35:47 -0500
-Received: from mail-qk1-f171.google.com ([209.85.222.171]:42697 "EHLO
-        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbfKWUfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 23 Nov 2019 15:35:46 -0500
-Received: by mail-qk1-f171.google.com with SMTP id i3so9364970qkk.9
-        for <git@vger.kernel.org>; Sat, 23 Nov 2019 12:35:46 -0800 (PST)
+        id S1726751AbfKWUuq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Nov 2019 15:50:46 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33359 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbfKWUuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Nov 2019 15:50:46 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w9so12810466wrr.0
+        for <git@vger.kernel.org>; Sat, 23 Nov 2019 12:50:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=LH1LoCoLwKp9cvV+wZCaIUiwGjgdIMuJOheFx8lwG7Y=;
-        b=Z3WUv0v76+RUOhjuLK75hWfq6H0NgB1JimSC9jCLRihShXbbsVReSkPawB/Vtc2fbe
-         j1D3yoZEukJIrTKlN3v9aAX1OFsRDei551zE2OHlHfojeUFW0joPQtDFsoIMEwASVbby
-         aSC5ZT1wHa0nAlclfp0JXuAQBR9xCDyGKx11ATdKBM6X/HNjHMk6+wtJ+UOtMSMBozc/
-         TYh/+lo7PQ+6uYJHURdndA/xBJFHXAZfXWrDszyqtr4niMVqX28fcEixhViybbmVccTj
-         ExeNdgfXzp/cSSchAAln15eSz0w4dFyqlD1588wf7hc24SrH8g3MR1x95J6qhIzZYKeV
-         9j8g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=PegDbpOLNlkPxHrrXCFJJgFvSRb7RrczaU7hgzMEMyE=;
+        b=HyZ6hDmX0ySfshVxclI3G8R1OW3jUqALlB6IJHclnU9ENM1hP9BSpOdt9oq9aTDYNk
+         h39xbWyBJ/n+TkdowPUCzZGysR9l7RrtgWYzCHuP55Qen3AEIiCo/n884XHOrjsYNNb7
+         8mKAnu9tAoU4VbQlzOPrPXUzHJjd3nYADaH26+2x/+0q+Y+yxVr86GKM7oksvQGFWsR+
+         IUXPypSG8/mpdqu96TD8dkxCOlwy+jRGvCcSx1UWs70va5cBPuoZTXyImt25NtgJG3nU
+         nNYP6B2k0vxGDc1mknIz7stHyn1nLVnRfwJDAHu/3YqZeD/g7og54cZzGLC+v+u9PyUU
+         giMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=LH1LoCoLwKp9cvV+wZCaIUiwGjgdIMuJOheFx8lwG7Y=;
-        b=R9f0phDDiqoLMNK4Zwl6zlFKwMWDkIgfE830Otr7H32uYAS/evW4U6Bg++qEGEmWXM
-         9H6sAJGriSyrEVj5j5aXR001p9wc2q0nNHBCNZ6u4F8uHbkkR7JOsTaPXFisG1n1nM+f
-         3TlvOqUhLW6IqjQPcZk0CGrigPgp6yeoi7l1TnTjLlg4U2QF4PVJh9RraYffxk3B4qYv
-         1bw0VgwXjxlmsucVprFOViRIQT6zAIcHwqlyeW3A9jMd/53c6L3RB7XLY/kYXvyv1mXw
-         KTYx/DdXohWgedtBWvcN1IgL9+IbeUE8FFvmOZUdL+yh2vAnLzg7OIovykVMwK2Xzemx
-         ASUw==
-X-Gm-Message-State: APjAAAV4mN3B+9LqbEnj4GSbVAPEaBRNN/ENRKBElMG49KfGR1P+8GLa
-        OU8uWmUmF4tXTII5ywR2QQxZrHum
-X-Google-Smtp-Source: APXvYqz+B0FR0+wBm7g4QO1bV4joeK/gFEPo91ukdmx8Nz5AFVpmyslWY/yCnuUpWJDsk4N2hb3gTg==
-X-Received: by 2002:a37:6643:: with SMTP id a64mr20489847qkc.144.1574541345731;
-        Sat, 23 Nov 2019 12:35:45 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id g188sm861607qkf.105.2019.11.23.12.35.44
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 23 Nov 2019 12:35:45 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
-Subject: Re: What's cooking in git.git (Nov 2019, #03; Tue, 19)
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-In-Reply-To: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 23 Nov 2019 15:35:43 -0500
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <583211F0-7B22-4E39-8C2A-A5568EF91E37@gmail.com>
-References: <xmqqftikxs4z.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3124)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=PegDbpOLNlkPxHrrXCFJJgFvSRb7RrczaU7hgzMEMyE=;
+        b=UYKtVyIokp0vACZvqB0hJQrHFBMSbMkqYi+8/Xf2vKz3C0+XRlRGTM69NWaxMSZ8+W
+         P1B0u42Hgegwla1nughDciLxl7n3wznE8rvpZf5L5lJpMtGfkLQyP13OM56YzxVMMBcS
+         HxurNHmjV9VKlxKdZlnYbGEEjATIMLDOK0Axdw04pCR8K8mhVj43bxleE2Ccs98zE/tX
+         2/rqG8FInm6QKXyHhtZnD7yidTQUzo4ND352XnuFp+8WBUwpXZxQiS9ge1XFj72/E8LL
+         g/mlpKqTBietVGFFqin4Msuho+hXIrbsroa+MgTI6eaWh+Rusb/ORX60neSIn7IlGcuN
+         xIbA==
+X-Gm-Message-State: APjAAAWURNbJqo5H9mbjCIbVLOOL3UxgSh2+9FETXxJz8QVZnoKGgGxc
+        YgKLTMm5IFJNaodRAtLzQg2dNYfM
+X-Google-Smtp-Source: APXvYqwAdDr55IuACKxVSfQ83PJ+Bvxl/2Hm0qyuxat22Avp5CtHSYdjVcTM9Viq3LlB37CM/984UQ==
+X-Received: by 2002:a5d:5224:: with SMTP id i4mr23765944wra.303.1574542244273;
+        Sat, 23 Nov 2019 12:50:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j10sm3468101wrx.30.2019.11.23.12.50.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 23 Nov 2019 12:50:43 -0800 (PST)
+Message-Id: <pull.195.git.1574542242.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 23 Nov 2019 20:50:34 +0000
+Subject: [PATCH 0/8] Drop support for git rebase --preserve-merges
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+In 427c3bd28ab (rebase: deprecate --preserve-merges, 2019-03-11) (which was
+included in v2.22.0), we officially deprecated the --preserve-merges 
+backend. This patch series drops that deprecated backend. Maybe we want to
+make that happen around v2.26.0?
 
-I think the last sentence of the merge message should be "This has been =
-corrected." instead of "This has been correct.".
+Note: this patch series is based on js/git-svn-use-rebase-merges
 
-Philippe.=20
+Johannes Schindelin (8):
+  t5520: do not use `pull.rebase=preserve`
+  remote: warn about unhandled branch.<name>.rebase values
+  tests: stop testing `git rebase --preserve-merges`
+  pull: remove support for `--rebase=preserve`
+  rebase: drop support for `--preserve-merges`
+  git-svn: drop support for `--preserve-merges`
+  rebase: drop the internal `rebase--interactive` command
+  remote: no longer claim that branch.*.rebase=preserve is a thing
 
-> Le 19 nov. 2019 =C3=A0 02:05, Junio C Hamano <gitster@pobox.com> a =
-=C3=A9crit :
->=20
-> * pb/no-recursive-reset-hard-in-worktree-add (2019-10-30) 1 commit
->  (merged to 'next' on 2019-11-19 at cdfb0643e9)
-> + worktree: teach "add" to ignore submodule.recurse config
->=20
-> "git worktree add" internally calls "reset --hard" that should not
-> descend into submodules, even when submodule.recurse configuration
-> is set, but it was affected.  This has been correct.
->=20
-> Will merge to 'master'.
+ .gitignore                                |    1 -
+ Documentation/config/branch.txt           |    4 -
+ Documentation/config/pull.txt             |    4 -
+ Documentation/git-pull.txt                |    6 +-
+ Documentation/git-rebase.txt              |   47 -
+ Documentation/git-svn.txt                 |    1 -
+ Makefile                                  |    2 -
+ azure-pipelines.yml                       |    2 -
+ builtin/pull.c                            |   12 +-
+ builtin/rebase.c                          |  316 +-----
+ builtin/remote.c                          |    5 +-
+ contrib/completion/git-completion.bash    |    2 +-
+ git-rebase--preserve-merges.sh            | 1067 ---------------------
+ git-svn.perl                              |    1 -
+ git.c                                     |    1 -
+ t/t3404-rebase-interactive.sh             |   76 --
+ t/t3408-rebase-multi-line.sh              |   10 -
+ t/t3409-rebase-preserve-merges.sh         |  127 ---
+ t/t3410-rebase-preserve-dropped-merges.sh |   90 --
+ t/t3411-rebase-preserve-around-merges.sh  |   80 --
+ t/t3412-rebase-root.sh                    |   37 -
+ t/t3414-rebase-preserve-onto.sh           |   85 --
+ t/t3418-rebase-continue.sh                |   15 -
+ t/t3421-rebase-topology-linear.sh         |   19 -
+ t/t3422-rebase-incompatible-options.sh    |   11 -
+ t/t3425-rebase-topology-merges.sh         |  151 ---
+ t/t3427-rebase-subtree.sh                 |   19 -
+ t/t5520-pull.sh                           |   24 +-
+ t/t7505-prepare-commit-msg-hook.sh        |    1 -
+ t/t7517-per-repo-email.sh                 |   13 -
+ t/test-lib.sh                             |    4 -
+ 31 files changed, 17 insertions(+), 2216 deletions(-)
+ delete mode 100644 git-rebase--preserve-merges.sh
+ delete mode 100755 t/t3409-rebase-preserve-merges.sh
+ delete mode 100755 t/t3410-rebase-preserve-dropped-merges.sh
+ delete mode 100755 t/t3411-rebase-preserve-around-merges.sh
+ delete mode 100755 t/t3414-rebase-preserve-onto.sh
 
+
+base-commit: ea8b7be1476a2301e3658a8e626b69c9d7f540bd
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-195%2Fdscho%2Fdrop-rebase-p-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-195/dscho/drop-rebase-p-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/195
+-- 
+gitgitgadget
