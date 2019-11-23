@@ -2,112 +2,122 @@ Return-Path: <SRS0=Rptp=ZP=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 591FAC432C0
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 04:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4013C432C0
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 05:46:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0DAB72071B
-	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 04:16:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 71BF320719
+	for <git@archiver.kernel.org>; Sat, 23 Nov 2019 05:46:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QRSeD0Cg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pe24Ak60"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726401AbfKWEQY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 22 Nov 2019 23:16:24 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47208 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726085AbfKWEQX (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 22 Nov 2019 23:16:23 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ECF7560446;
-        Sat, 23 Nov 2019 04:16:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1574482582;
-        bh=BgE97FuWB7xoFYFZxtmKWKBGGjzEbZ/BLp61+i7MixI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QRSeD0Cg1UkSPeeZW+Z+S5eVQTw5NDnw5ScygyQ9p+8PFCe9wGy6u+tCwH+yndC9b
-         Z7Xqawh8OrSfgQXDi5GIvCOb54708PVdxvtodbVK8RKuVbHUM63sHWxrBjlF9zDGbC
-         Yjxm13+g7gCHXAQggAWig5XuBixXpEcIGZF+q37TjOy/Cya6Es3ZgO7/H102khXjOQ
-         +PeOXpwOoNhIRmVK7umq7TuqlxM7kGcRfoVeYNQmqkQFEWsF37t2Y9wgH65Gadotj9
-         gcO/+6AX3zHYXUUk/3S/CDloNgAP+hkKWMuxkuyXaCpRJL+uL2JiuEFD38W93oa13h
-         MoflYcnwIb02gw6cz0gZY3J4ZjeTwAQaY2nQveMG1CwkvyvOyLSNJH4YMmwsdADcMh
-         nZ9cYuNSHm/jZ4MkfynRO5ci4To31G5ljiPi2UGriCud73/oRda52F+S66E++aoIAi
-         rPbdeO+rGyLjtyk9sq6Dbrpz7DpZN6XsR2mzjlK4A8dFCkVgmoR
-Date:   Sat, 23 Nov 2019 04:16:16 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Report of use of "local" per t0000-basic.sh
-Message-ID: <20191123041616.GD6430@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>, git@vger.kernel.org
-References: <03ad01d5a167$a834e580$f89eb080$@nexbridge.com>
+        id S1726704AbfKWFqn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 23 Nov 2019 00:46:43 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:42505 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725800AbfKWFqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 23 Nov 2019 00:46:43 -0500
+Received: by mail-qk1-f193.google.com with SMTP id i3so8250487qkk.9
+        for <git@vger.kernel.org>; Fri, 22 Nov 2019 21:46:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=BTMmB4Hee9m/kctCOWxcF/ZccgNvMpKgkj9ZHJY40Ks=;
+        b=Pe24Ak60Yk25gVBisIA8u24sfPSi9LVP2eimJGPHBvhthepqtpcIAgKeG73Upl1cz8
+         6WyX+Ss0NCX4+a+54aPusb3jxcFbZCtVC8wgS/ipn7QkfFzN6b456oxNXjaVpDvHaKsN
+         MVHdBNi0UeYoCa9J0bB9JiOEeUmkhwdaHYgyVUv7haqf+D4KWr2QQt6XY0YLT7P/uX51
+         N35E2FA5PMTl7tkYtxu+6edpG4Ra3EdzYuqAy64ryQ93pCffB0Vkx2AHnO0ExwdG4E8H
+         DoFdp96yJTKpCmpQCg5RIfBVLhZL05YsyuryHIXRJB40MnTy3AnCG8ti4lLFVD9vrXLI
+         t12w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=BTMmB4Hee9m/kctCOWxcF/ZccgNvMpKgkj9ZHJY40Ks=;
+        b=hRONMm/43PNAuuL3cmtE3GwgQMPfv9dXdluw3d1j6cL38lPto7UK54oWcIFtcUWOMY
+         Ea7IzG2n2UVCMXia+x0ETn0P6OeyBtFjmoxXK7cktX4id8wfEe30y1cfTcszKGIS0iyd
+         mPkVM+5DyZyu3c+od1JTqdaqpwL7XPe7gtsdy+vOlK1uE8Ynu7kZxoflehfXpHdZdbhb
+         eyVOrTtgLWADFfKRlRGOuveCYfC0V1HvXNtEwvwZIcDwKp/FscPbINBiIxVckB747ZVZ
+         eW8o2b2BHldhvgS8syxyR9e7fI/g3QNM18zkXtE8ZMRu8b9Ln0tlCrp37MTfo/Oys2ZB
+         hCHw==
+X-Gm-Message-State: APjAAAVPr2QTS3u+iT2wSq3VzP7XOWCQMSYbc6KkdLEWxWcUiBtQr9+e
+        HQAm7ztjmeqp2zaBNCI+NnK/Gj5pv4ju11b/sSk=
+X-Google-Smtp-Source: APXvYqy6dSCb3KRfI+b6FTBgLt9RwvrDUb6ZRwK6m0zcuQs8m9I6urZ/OZkO7aSiVt8nrZG5BZPDyKYcS7liNFPvKD8=
+X-Received: by 2002:a37:67c5:: with SMTP id b188mr16401706qkc.199.1574488002198;
+ Fri, 22 Nov 2019 21:46:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Km1U/tdNT/EmXiR1"
-Content-Disposition: inline
-In-Reply-To: <03ad01d5a167$a834e580$f89eb080$@nexbridge.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-2-amd64)
-User-Agent: Mutt/1.12.2 (2019-09-21)
+References: <pull.470.git.1574464285.gitgitgadget@gmail.com>
+ <0eabb27ba0c7a07bbf24f13f1766c0ff63995348.1574464285.git.gitgitgadget@gmail.com>
+ <xmqqo8x32xqv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo8x32xqv.fsf@gitster-ct.c.googlers.com>
+From:   Manish Goregaokar <manishsmail@gmail.com>
+Date:   Fri, 22 Nov 2019 21:46:25 -0800
+Message-ID: <CACpkpxmtuunTXPc6=3bvPqGL=T7i4-LB0sKDmzLPxcNcv1ZH6A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Documentation: Correct man page for the SHAs reported
+ by 'submodule status'
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Manish Goregaokar via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Turns out that I've found a bug! I was getting this behavior because
+it wasn't detecting that submodules were modified. I'll submit a patch
+shortly, but first fix this one since the documentation should be
+fixed regardless.
 
---Km1U/tdNT/EmXiR1
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks,
+-Manish Goregaokar
 
-On 2019-11-22 at 19:04:19, Randall S. Becker wrote:
-> Hi All,
->=20
-> Based on the note in t0000-basic.sh below, I am just letting you know tha=
-t I
-> have encountered a lack of support for the "local" on the z/OS 2.3 USS
-> platform except within a function. I thought you might want to know.
+-Manish Goregaokar
 
-I think it's fine that we restrict the use of local to within a
-function.  In fact, dash (Debian and Ubuntu's default /bin/sh) exits
-unsuccessfully if you use local outside of a function.
 
-Is there some place in particular that you've found we're using it
-outside of a function?  I don't know about others, but I'm certainly
-interested in fixing these.  It looks like we do use it in a function in
-t0000 itself, though.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---Km1U/tdNT/EmXiR1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl3YspAACgkQv1NdgR9S
-9ot3tA//SKhaAIe7m4qX+3j6yGZgkMvjf7asgbCVk+XWUWYE3kaFoXhOPKbB6Rlk
-TNfreIoNU5EH6ic3Iokz8Lx+SAJ78Z1O+/OMYpUSBah0eEXU3PetvJ5HthDz7h6M
-eSYwz3cb+QJeQKJJTX0ZSoVRCUiwSzyzwBpcOnGhpCRgnRd0TsBMoWy1O5FAazSx
-vlvEtl3XxhNf8ZBZP5b8VP4EsyoW2HeWumDRxndrLa+THTe/hYXEjlXtDrK1nQjc
-gWw2y5feqd1AAIw7KwpYYutxjS0GY4iuBFoYn9oH/TUzSot1A64y8Y+Ce1ICQRDN
-eeYXEiYFt/nCqeqZx+lukSIMLvwlZZoClpd8bIyeSVwZFkU95GRp1ExY4TLRCCPs
-dzMRv37qNZ9/vuTvzhuoDfoYfqatd5wy56JefKNPKdoJyV3GseepEd6NWn/PDLgP
-/C/wcUsruU+LM1twBiQshiAHetSVsNw5z+fHm9MoaQ0KHUdMkGV9+S7sikJZb+T4
-27sEGpvmZGS34BnH1nnM6AY5VAZEan1psajeVjmU/lZaPtcDHg9YE0onaz/ZyVXF
-GKe5Kd/7SKRwLHDsx1kqBb7NKTpC8lMhABvaPzJOc1HUBNU+V4FrW9QkKsNpxcoO
-PkPzO1BqcPJ5VeFs15lHZ7lGLv0aM6BZon87GW/dZIQATFO2v+w=
-=GS7J
------END PGP SIGNATURE-----
-
---Km1U/tdNT/EmXiR1--
+On Fri, Nov 22, 2019 at 5:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Manish Goregaokar via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+> > From: Manish Goregaokar <manishsmail@gmail.com>
+> >
+> > 'git submodule status' reports the SHAs expected by the parent project,
+> > not the SHAs that are actually checked out in the submodule. Checking
+> > out a new SHA in a submodule will not change the output of 'git
+> > submodule status' until you 'git add' the submodule.
+> >
+> > Signed-off-by: Manish Goregaokar <manishsmail@gmail.com>
+> > ---
+> >  Documentation/git-submodule.txt | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+> > index 0ed5c24dc1..31e089454a 100644
+> > --- a/Documentation/git-submodule.txt
+> > +++ b/Documentation/git-submodule.txt
+> > @@ -72,8 +72,8 @@ git-submodule will correctly locate the submodule using the relative
+> >  URL in `.gitmodules`.
+> >
+> >  status [--cached] [--recursive] [--] [<path>...]::
+> > -     Show the status of the submodules. This will print the SHA-1 of the
+> > -     currently checked out commit for each submodule, along with the
+> > +     Show the status of the submodules. This will print the SHA-1
+> > +     recorded in the superproject for each submodule, along with the
+> >       submodule path and the output of 'git describe' for the
+>
+> Am I mistaken to say that neither the old or the new description is
+> correct, depending on the use (or non-use) of the --cached option?
+>
+>         ... print the object name of the commit that is currently
+>         checked out, or the commit that is recorded in the
+>         superproject if `--cached` option is given, for each
+>         submodule, ...
+>
+> perhaps?
