@@ -8,142 +8,371 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9CCAC43215
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 20:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36F09C432C0
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 20:38:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AAF602080D
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 20:25:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E451E207FD
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 20:38:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZK1cISdl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DI10lSkS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726910AbfKXUZy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Nov 2019 15:25:54 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:38445 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726875AbfKXUZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Nov 2019 15:25:53 -0500
-Received: by mail-wr1-f52.google.com with SMTP id i12so15030808wro.5
-        for <git@vger.kernel.org>; Sun, 24 Nov 2019 12:25:52 -0800 (PST)
+        id S1726842AbfKXUiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Nov 2019 15:38:01 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35514 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726840AbfKXUiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Nov 2019 15:38:00 -0500
+Received: by mail-wm1-f67.google.com with SMTP id n5so3255276wmc.0
+        for <git@vger.kernel.org>; Sun, 24 Nov 2019 12:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=psXjmZYn5YIaBsFauoGc8CUYWqATSfRzVkf80k1v5Zc=;
-        b=ZK1cISdlFx/vvxH/2it4GrwNz2kINnX4A9xPPbcbIOHsla6UwF3GBE6GnbqApilo8h
-         twTQV724aTCnXXzE4YnsMlGGWjQV6uy4ED90pWQa+O0rO77oSz5CYTVdyU6YIJlJF4UI
-         awlu1fgfI78vRp/8U9VlQ9z+G4w6rDQffNRhq/vB2Q3D97xwPiR0V6/5d1cqiogqiH1e
-         vilItL/GO9foaU/vm1sMRwJrjmlmifBum6mp8VYDK0DZDXkwXL3PqsmvMi35SgWovkwI
-         xplJXd1j8llUzVrNXlRlCu1DwKGYZxvtgZW+ooWJ3x53XJI/No4gaw1dSoesPVKF9CVW
-         slBw==
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=DI10lSkSTIn0aUIPgVTUC6DCCnCFq094U4AjRJg3osDeG1HdfXVHxY2CSamfzjKUt2
+         aLidyQWMOOc19gBIxUlOYFAgIPMH4o4XjNUWsm63OdTBNyTmNccPkmEzaiYumE+RnW2j
+         St+QfRqKfL8nDZ/2fXgUh59dKmoc05a1z2zvc9X8Ab2iDlfeCx1i488kc1H+Xs/0FR3u
+         eJCn/MXBJA8t4KGeOJCwtKtZWWz4vWQiFcL0DWtoVTsMicGjA4lAd91PnRAnZh+AAWaP
+         0NcyXMpg05P/TJdxWxxO/DtEbd/abQY7eMhOgACwetF460YmXB/qPhAU60hP5gkcc7oi
+         M74g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=psXjmZYn5YIaBsFauoGc8CUYWqATSfRzVkf80k1v5Zc=;
-        b=ZmrUDEvviAYz24QKfDTJQmkD6yAcEtkP2Alu6Zifnl6Nu9J08QFVQzGf24vrEPaLDS
-         srllfjUxTL3IWGcx4YBuchhxGj8kFnrw6CG2LU2Tnc9q7HKpLOLz34PuVvnOg+kQtOyP
-         lfGXryaBPsT5AkS8ww1U6BcdLndFXKKIvgl5oFx0U3S2wc1vdc9GXpRihOU/r+85sbGp
-         oGIBbyll0WuAGd6hwA0bQPgASX6Vni8aysG+QeoeUwEGnlf87uQP9sS8HZPqjTwZB8Zj
-         dz5nA2xLa01crVbcfR7A+x3ddMyJrPOH6gfTrrMsr1zK6UiDdhrhoj2qjZ2pjCowfKnp
-         42kg==
-X-Gm-Message-State: APjAAAXnV71rrYT/71dpvapc1SctmokPStoTmnOscTu9/p+uAyMfF/pZ
-        vdRqeC6Ka1MGMcLdXu3jL5Ql9DF6
-X-Google-Smtp-Source: APXvYqzbTFCOSLeqHo4TJ9z5rNQtpK4ZzOAMqAExOM66v89CCHXq6f5kPDT2pXpjfP88UQdczdaKbw==
-X-Received: by 2002:adf:cf0c:: with SMTP id o12mr27648598wrj.102.1574627151833;
-        Sun, 24 Nov 2019 12:25:51 -0800 (PST)
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=Dnp6B9BFmAS809+TFvj9ggoX3bQ2dKqHmgnoph3wDdsynR/eANpSmuGAVqfvkZrWhV
+         FJcXr8LyXsS2Jhn+QQjwGp8UVIjCFIU2k6cqWZyXQ15e+2GQPhx/TA/DBOSm0bGk/VMh
+         OW/YAKWic01U5NX7M9PNSg+PEWDStScAsqNxKn39TQOviVdlx8Q/y3kH/y1G84WWf5i9
+         ntGI8nqUT2J9WsWh93V1xDV4vWU8CFWXFH+7vHrFZS1OXAnJ3SiSpv1xS0tvGYDqK2+0
+         BxL5t4Z364fo3ZCMhJvFZDwYYDilqdVLYlEBp3kYyqjuYt8DW2R08s9/EOY4eN6SEDrs
+         Y/qA==
+X-Gm-Message-State: APjAAAUBj83YMKW4t5QVtHl76Sp/HLaDAtLceHC5qdSVq1wKpdl9WnO1
+        8ERW/kcwLnESEpyYAKaq8DrYsM4g
+X-Google-Smtp-Source: APXvYqyiCDZMeEc+zELlyk81baNZgtBQo7gq1kXiepwZGglsmXFfUUAX5uXM/reneouRufqtDGs7Uw==
+X-Received: by 2002:a7b:cb86:: with SMTP id m6mr27213784wmi.124.1574627878058;
+        Sun, 24 Nov 2019 12:37:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d202sm5971008wmd.47.2019.11.24.12.25.51
+        by smtp.gmail.com with ESMTPSA id o187sm6262593wmo.20.2019.11.24.12.37.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 24 Nov 2019 12:25:51 -0800 (PST)
-Message-Id: <a608dc8368c6fc738393dac46618f12e25d40eaf.1574627149.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.474.v2.git.1574627149.gitgitgadget@gmail.com>
-References: <pull.474.git.1574538937.gitgitgadget@gmail.com>
-        <pull.474.v2.git.1574627149.gitgitgadget@gmail.com>
-From:   "Nika Layzell via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 24 Nov 2019 20:25:49 +0000
-Subject: [PATCH v2 1/1] reset: parse rev as tree-ish in patch mode
+        Sun, 24 Nov 2019 12:37:57 -0800 (PST)
+Message-Id: <da1704c56e0bd3f1ac53af96b702e3777bb3eb37.1574627876.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.436.v5.git.1574627876.gitgitgadget@gmail.com>
+References: <pull.436.v4.git.1573973770.gitgitgadget@gmail.com>
+        <pull.436.v5.git.1574627876.gitgitgadget@gmail.com>
+From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 24 Nov 2019 20:37:53 +0000
+Subject: [PATCH v5 1/3] git-gui: consolidate naming conventions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Nika Layzell <nika@thelayzells.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Nika Layzell <nika@thelayzells.com>
+Cc:     Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Jonathan Gilbert <JonathanG@iQmetrix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nika Layzell <nika@thelayzells.com>
+From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-Since 2f328c3d ("reset $sha1 $pathspec: require $sha1 only to be
-treeish", 2013-01-14), we allowed "git reset $object -- $path" to reset
-individual paths that match the pathspec to take the blob from a tree
-object, not necessarily a commit, while the form to reset the tip of the
-current branch to some other commit still must be given a commit.
+A few variables in this file use camelCase, while the overall standard
+is snake_case. A consistent naming scheme will improve readability of
+future changes. To avoid mixing naming changes with semantic changes,
+this commit contains only naming changes.
 
-Like resetting with paths, "git reset --patch" does not update HEAD, and
-need not require a commit. The path-filtered form, "git reset --patch
-$object -- $pathspec", has accepted a tree-ish since 2f328c3d.
-
-"git reset --patch" is documented as accepting a <tree-ish> since
-bf44142f ("reset: update documentation to require only tree-ish with
-paths", 2013-01-16). Documentation changes are not required.
-
-Loosen the restriction that requires a commit for the unfiltered "git
-reset --patch $object".
-
-Signed-off-by: Nika Layzell <nika@thelayzells.com>
+Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
 ---
- builtin/reset.c        |  2 +-
- t/t7105-reset-patch.sh | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ lib/index.tcl | 92 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fdd572168b..5cbfb21ec4 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -320,7 +320,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
- 		oidcpy(&oid, the_hash_algo->empty_tree);
--	} else if (!pathspec.nr) {
-+	} else if (!pathspec.nr && !patch_mode) {
- 		struct commit *commit;
- 		if (get_oid_committish(rev, &oid))
- 			die(_("Failed to resolve '%s' as a valid revision."), rev);
-diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
-index bd10a96727..fc2a6cf5c7 100755
---- a/t/t7105-reset-patch.sh
-+++ b/t/t7105-reset-patch.sh
-@@ -38,6 +38,27 @@ test_expect_success PERL 'git reset -p HEAD^' '
- 	test_i18ngrep "Apply" output
- '
+diff --git a/lib/index.tcl b/lib/index.tcl
+index e07b7a3762..28d4d2a54e 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -56,15 +56,15 @@ proc _close_updateindex {fd after} {
+ 	uplevel #0 $after
+ }
  
-+test_expect_success PERL 'git reset -p HEAD^^{tree}' '
-+	test_write_lines n y | git reset -p HEAD^^{tree} >output &&
-+	verify_state dir/foo work parent &&
-+	verify_saved_state bar &&
-+	test_i18ngrep "Apply" output
-+'
-+
-+test_expect_success PERL 'git reset -p HEAD^:dir/foo (blob fails)' '
-+	set_and_save_state dir/foo work work &&
-+	test_must_fail git reset -p HEAD^:dir/foo &&
-+	verify_saved_state dir/foo &&
-+	verify_saved_state bar
-+'
-+
-+test_expect_success PERL 'git reset -p aaaaaaaa (unknown fails)' '
-+	set_and_save_state dir/foo work work &&
-+	test_must_fail git reset -p aaaaaaaa &&
-+	verify_saved_state dir/foo &&
-+	verify_saved_state bar
-+'
-+
- # The idea in the rest is that bar sorts first, so we always say 'y'
- # first and if the path limiter fails it'll apply to bar instead of
- # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
+-proc update_indexinfo {msg pathList after} {
++proc update_indexinfo {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -78,26 +78,26 @@ proc update_indexinfo {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_indexinfo \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_indexinfo {fd pathList totalCnt batch after} {
++proc write_update_indexinfo {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		set s $file_states($path)
+@@ -119,18 +119,18 @@ proc write_update_indexinfo {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc update_index {msg pathList after} {
++proc update_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -144,26 +144,26 @@ proc update_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_index {fd pathList totalCnt batch after} {
++proc write_update_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -190,18 +190,18 @@ proc write_update_index {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc checkout_index {msg pathList after} {
++proc checkout_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -221,26 +221,26 @@ proc checkout_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_checkout_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_checkout_index {fd pathList totalCnt batch after} {
++proc write_checkout_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
+@@ -253,7 +253,7 @@ proc write_checkout_index {fd pathList totalCnt batch after} {
+ 		}
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+ proc unstage_helper {txt paths} {
+@@ -261,7 +261,7 @@ proc unstage_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -269,19 +269,19 @@ proc unstage_helper {txt paths} {
+ 		M? -
+ 		T? -
+ 		D? {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_indexinfo \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	}
+ }
+@@ -305,7 +305,7 @@ proc add_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -321,19 +321,19 @@ proc add_helper {txt paths} {
+ 		?M -
+ 		?D -
+ 		?T {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after {ui_status [mc "Ready to commit."]}]
+ 	}
+ }
+@@ -393,7 +393,7 @@ proc revert_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -401,7 +401,7 @@ proc revert_helper {txt paths} {
+ 		?M -
+ 		?T -
+ 		?D {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+@@ -420,12 +420,12 @@ proc revert_helper {txt paths} {
+ 	# as they have quite complex plural-form rules. Unfortunately,
+ 	# msgcat doesn't seem to support that kind of string translation.
+ 	#
+-	set n [llength $pathList]
++	set n [llength $path_list]
+ 	if {$n == 0} {
+ 		unlock_index
+ 		return
+ 	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $pathList]]]
++		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+ 	} else {
+ 		set query [mc "Revert changes in these %i files?" $n]
+ 	}
+@@ -444,7 +444,7 @@ proc revert_helper {txt paths} {
+ 	if {$reply == 1} {
+ 		checkout_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	} else {
+ 		unlock_index
 -- 
 gitgitgadget
+
