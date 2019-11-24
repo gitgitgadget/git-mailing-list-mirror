@@ -8,70 +8,73 @@ X-Spam-Status: No, score=-5.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42C75C432C0
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 10:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CA80C432C0
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 10:52:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0155E2071A
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 10:44:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 36B7B20706
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 10:52:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msQZxhk5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGj4teNr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726781AbfKXKoR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Nov 2019 05:44:17 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40774 "EHLO
+        id S1726719AbfKXKwH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Nov 2019 05:52:07 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36724 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726767AbfKXKoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Nov 2019 05:44:16 -0500
-Received: by mail-wm1-f68.google.com with SMTP id y5so12515459wmi.5
-        for <git@vger.kernel.org>; Sun, 24 Nov 2019 02:44:14 -0800 (PST)
+        with ESMTP id S1725980AbfKXKwH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Nov 2019 05:52:07 -0500
+Received: by mail-wm1-f68.google.com with SMTP id n188so10610649wme.1
+        for <git@vger.kernel.org>; Sun, 24 Nov 2019 02:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=rUAWGm2vdqKm/K+9Syny/QXxdgIUAyShJs7Rh3jgrFo=;
-        b=msQZxhk5zIk9RBKKzN8IFy1nDltZzMvpXnSl6Xq4c0GSM7VfB1ssu/6y7W7qCWv4UJ
-         MmpVgi4jRE/PmEO8acWNaW0uYXrSzAiUlmrJOCBaRkH2wskOUhWirSLCDx0yYC1sjmjj
-         Rz9h1bMNxHYrGDSdXOthsGjz0Ls9/dk3KgdXNTcQeFrGSr0EPUrkruSg8WrBv8tvm9o9
-         m18nm1yMqabf838MCi7nSlOlzZiXcklU5zSQxh4py49FKj0zyvx2+iRzAEXsJNgl7aOv
-         YjVdId67CWVBX2rPFAYzOS1pF/TAnUrbqj1yfsiPWDl0Wdn5r683ssI0dYR8RoppQmHJ
-         KGPQ==
+        bh=TKHiNgqhGT3cmLqgLGurJpW6T0pSILxhNp/lmzexXVo=;
+        b=bGj4teNr/99D3sKnrOeI8WhLTO3Qod7tyc1OZ7x2SNNnanpiRV4dsZV1jaDfWZ+g0q
+         ZO5Su1O6TQ/gd0S23P4d2/2x1oEJpEMghYGOPFyaaDlD5b1uklX/Qd5NWzeCj7gSOSbZ
+         YuySIsKwYhCCDk1Y7QhRV0OsIEq+Uwm36pVyovp6c5oHXgAQ+Q0IPM8VsJcoPvnIuzrW
+         camV7Espju2wgUt3YaPaT+E9zWzX0InMbGiVV7loC7L3fquhmAYg53qhLWEeRwlwReds
+         6Ckiax9MokIWBZdjq8ochpeLeL/DvPetGvBvBZKCWVQYHQyWADMJUdJw2i3Ra3I+UGzC
+         kodw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+        h=x-gm-message-state:reply-to:subject:from:to:cc:references
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=rUAWGm2vdqKm/K+9Syny/QXxdgIUAyShJs7Rh3jgrFo=;
-        b=TjyymO0nqpFk3CAtC0eyqIu3tovtpL7JcJxW65hCh5lsMcVP8pIoDhXhT0wjAWQSh8
-         BP5ERTmt94LGgOXb6FU+ScHgZ7pLuaOf8w9F0BQ4r8a83hf1uIwVF1l849ELxtfp67wv
-         FJIW7gSK7jiC+WhtJuamPGwwt8/rkAABiD9GnA15Q3DShTV5JwT7U0bIoRFurbA1P3og
-         3JQ9mX+UjCxzLWV/NzNuVpNzkAc7eXoyvdjM6xJMVn3zE9UJu4QPQ3UHTEljsDHLix7Q
-         4R/PLYT/5KLt/7Nfk4BpW9/RZv2VwKZGwOst/UQEJcxY+w2T5jbat+/iTUi23xSPwGY4
-         L3vA==
-X-Gm-Message-State: APjAAAVmpU7rnfwZVBMTk/brhYU/ZVAv3SmhYsDyzrNJwykzCR1j52CR
-        5lVSJgSZHy901zqTdh0ZS90=
-X-Google-Smtp-Source: APXvYqzaEkq37Y3ZQ2v80s2llCByF+HfH5g6qWt3ehLWNew/6MF8B1MCmiVfxlm/NOvGdX4lmNNrwg==
-X-Received: by 2002:a05:600c:2143:: with SMTP id v3mr24011205wml.3.1574592253450;
-        Sun, 24 Nov 2019 02:44:13 -0800 (PST)
+        bh=TKHiNgqhGT3cmLqgLGurJpW6T0pSILxhNp/lmzexXVo=;
+        b=tpx/n8X1Qk1zd+GltbXgC3XGeyGwh1HEbC5HuEVr694r6w5RC5M/4cLpSBMT0ILLSg
+         wDYgG8nDvZqq2xEwG1t7p1pRLVRYTTmLHMddnXSTIJ2tDjjRbHY/wOCL6j9f2rIcuAT8
+         2xPXUSdkeU8yEb7fgR8Zg1izxyJmxMMUv3s/ACcKP4AUmyluOL6+BSTfw6PXlzX8QEM+
+         QVtcEaww/T9zMrI96aucZYv38w48VJDrI3xgAOblk5CpwCvgU0lGXvHnmcZbnhRbU2nM
+         ujPvw8oOvFO9Ued8uUe17dC4Ocz/Qmhm0yH6OgPwsMadm5C22DDlXCbEVV39e+Kvmbxk
+         cEyw==
+X-Gm-Message-State: APjAAAXQQcxsLmrHCR6G1ISD7l5AfTpSeqgJ5adpDiRwKFEsnj3sgimL
+        7bK57mFD36OPSYWUyg3XCihQWaZ6
+X-Google-Smtp-Source: APXvYqyek5yw4Hx6Z4GW5t7k26pHKDye+PgJH4fVXipjcCHoKoCOOTKViVYY15x7PMx/g/h94dwn2w==
+X-Received: by 2002:a1c:6885:: with SMTP id d127mr23666916wmc.64.1574592724631;
+        Sun, 24 Nov 2019 02:52:04 -0800 (PST)
 Received: from [192.168.2.240] (host-92-22-28-211.as13285.net. [92.22.28.211])
-        by smtp.gmail.com with ESMTPSA id b63sm4586573wmb.40.2019.11.24.02.44.12
+        by smtp.gmail.com with ESMTPSA id f24sm4726274wmb.37.2019.11.24.02.52.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 24 Nov 2019 02:44:12 -0800 (PST)
+        Sun, 24 Nov 2019 02:52:04 -0800 (PST)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] sequencer: don't re-read todo for revert and cherry-pick
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Brian Norris <briannorris@chromium.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <e7c01e0f-8466-c2c5-b53a-a93f941dfb1c@gmail.com>
- <20191123172046.16359-1-szeder.dev@gmail.com>
- <xmqqk17p280y.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 1/1] sequencer: fix empty commit check when amending
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <8c21662f-6548-a46e-9c87-eb364355cb78@gmail.com>
-Date:   Sun, 24 Nov 2019 10:44:10 +0000
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.467.git.1574345181.gitgitgadget@gmail.com>
+ <pull.467.v2.git.1574451783.gitgitgadget@gmail.com>
+ <037f2b2975e06847443aef46939e3c712053dedf.1574451783.git.gitgitgadget@gmail.com>
+ <xmqq5zjb2vsx.fsf@gitster-ct.c.googlers.com>
+ <340859a7-5cc4-f641-818d-fcedbf29a2a6@gmail.com>
+Message-ID: <94573071-556b-caae-b159-40c168a08f44@gmail.com>
+Date:   Sun, 24 Nov 2019 10:52:01 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqk17p280y.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <340859a7-5cc4-f641-818d-fcedbf29a2a6@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 8bit
@@ -80,222 +83,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 24/11/2019 04:49, Junio C Hamano wrote:
+Hi Junio
 
-Thanks for working on this Gábor
-
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
+On 23/11/2019 09:54, Phillip Wood wrote:
+> Hi Junio
 > 
->> When 'git revert' or 'git cherry-pick --edit' is invoked with multiple
->> commits, then after editing the first commit message is finished both
-> 
-> "commits, then after editing the first commit message, both of" I
-> would say.
-> 
->> these commands should continue with processing the second commit and
->> launch another editor for its commit message, assuming there are
->> no conflicts, of course.
+> On 23/11/2019 02:03, Junio C Hamano wrote:
+>> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >>
->> Alas, this inadvertently changed with commit a47ba3c777 (rebase -i:
->> check for updated todo after squash and reword, 2019-08-19): after
->> editing the first commit message is finished, both 'git revert' and
->> 'git cherry-pick --edit' exit with error, claiming that "nothing to
->> commit, working tree clean".
->> ...
->>    - When invoking 'git revert' or 'git cherry-pick --edit' with
->>      multiple commits they don't read a todo list file but assemble the
->>      todo list in memory, thus the associated stat data used to check
->>      whether the file has been updated is all zeroed out initially.
+>>> +    if (!(flags & ALLOW_EMPTY)) {
+>>> +        struct commit *first_parent = current_head;
+>>> +
+>>> +        if (flags & AMEND_MSG) {
+>>> +            if (current_head->parents) {
 >>
->>      Then the sequencer writes all instructions (including the very
->>      first) to the todo file, executes the first 'revert/pick'
->>      instruction, and after the user finished editing the commit
->>      message the changes of a47ba3c777 kick in, and it checks whether
->>      the todo file has been modified.  The initial all-zero stat data
->>      obviously differs from the todo file's current stat data, so the
->>      sequencer concludes that the file has been modified.  Technically
->>      it is not wrong, of course, because the file just has been written
->>      indeed by the sequencer itself, though the file's contents still
->>      match what the sequencer was invoked with in the beginning.
->>      Consequently, after re-reading the todo file the sequencer
->>      executes the same first instruction _again_, thus ending up in
->>      that "nothing to commit" situation.
-> 
-> Hmph, that makes it sound as if the right fix is to re-read after
-> writing the first version of the todo file out, so that the stat
-> data matches reality and tells us that it has never been modified?
+>> It is not apparent to me that somebody guarantees that this access
+>> is safe; would we need to do things differently when !current_head?
 
-I think we should update the stat data after we write the todo list. 
-ag/sequencer-todo-updates changes the rebase startup sequence to avoid 
-the initial read that populates the stat data. There's a subtle 
-difference in the todo list handling between rabese and 
-cherry-pick/revert. The list written by rebase does not include the 
-commit currently being picked but it does for cherry-pick/revert. This 
-means that rebase is not subject to this bug in 
-ag/sequencer-todo-updates as although it re-reads the todo list because 
-the stat data is zero the list does not contain the commit we've just 
-picked.
+We do actually check that there is a valid HEAD before we try to fixup a 
+commit. Though perhaps we should still change this patch as HEAD may be 
+changed by another process between that check and re-reading it here. If 
+you try to fixup a commit without a valid HEAD you get
 
-> 
->> The todo list was never meant to be edited during multi-commit 'git
->> revert' or 'cherry-pick' operations, so perform that "has the todo
->> file been modified" check only when the sequencer was invoked as part
->> of an interactive rebase.
-> 
-> OK.  That is a valid fix, I think, but the explanation given in the
-> second bullet point gives a wrong impression that it is merely a
-> workaround (iow, we are assuming that the user would behave, instead
-> of making sure we can detect when the user touches the list), when
-> it is *not*.
-> 
+error: need a HEAD to fixup
+hint: Could not execute the todo command
+hint:
+hint:     fixup faef1a5a7637ff91b3611aabd1b96541da5f5536 P
+hint:
+hint: It has been rescheduled; To edit the command before continuing, please
+hint: edit the todo list first:
+hint:
+hint:     git rebase --edit-todo
+hint:     git rebase --continue
+error: could not copy '.git/rebase-merge/message-squash' to 
+'.git/rebase-merge/message'
 
-I'd be happier not to set check_todo in the first place unless we're 
-rebasing (though one could argue that Gábor's version is more future-proof)
+The last error message is unfortunate but we do exit in an orderly 
+manner rather than segfaulting. It's a bit tricky to trigger this (there 
+isn't a test at the moment) but something like this does it
 
->> diff --git a/sequencer.c b/sequencer.c
->> index 2adcf5a639..3b05d0277d 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -3791,7 +3791,7 @@ static int pick_commits(struct repository *r,
->>   							item->commit,
->>   							arg, item->arg_len,
->>   							opts, res, 0);
->> -		} else if (check_todo && !res) {
->> +		} else if (is_rebase_i(opts) && check_todo && !res) {
-> 
-> It is a bit sad that setting of check_todo is not something a single
-> helper function can decide, so that this is_rebase_i(opts) can be
-> taken into account when that helper function (the logical place
-> would be do_pick_commit()) decides to set (or not set) check_todo.
-> 
-> Unfortunately, that is not sufficient, I suspect.  Why did a47ba3c7
-> ("rebase -i: check for updated todo after squash and reword",
-> 2019-08-19) decide to flip check_todo on when running TODO_EXEC?
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index d2f1d5bd23..4f55f0cd1c 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -67,6 +67,21 @@ test_expect_success 'setup' '
+  SHELL=
+  export SHELL
 
-I'm not sure what you mean by this
++test_expect_success 'fixup on orphan branch errors out' '
++
++       test_when_finished "git switch master" &&
++       write_script switch-branch.sh <<-\EOF &&
++       git symbolic-ref HEAD refs/heads/does-not-exist &&
++       git rm -rf .
++       EOF
++       (
++               set_fake_editor &&
++               FAKE_LINES="exec_./switch-branch.sh \
++                           fixup 1" git rebase -i HEAD^
++       ) &&
++       test_pause
++'
++
 
-This is what I had before I saw Gábor's patch (the tests are pretty 
-similar but I think we should check that the messages of all the picks 
-are actually edited with --edit - that does not seem to be checked by 
-the current tests) Note this does not include updating the stat data 
-after writing the todo list yet as I've only just thought about that.
-Gábor are you happy to take this forward?
+I think it would be useful to add something like this to the test suite 
+(changed to check the error message, with a better name for the script 
+and modified to expect failure) What do you think?
 
 Best Wishes
 
 Phillip
 
-
---- 8> ---
-
-diff --git a/sequencer.c b/sequencer.c
-index f2abe2a366..b363b45366 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1999,7 +1999,7 @@ static int do_pick_commit(struct repository *r,
-                         res = do_commit(r, msg_file, author, opts, flags);
-                 else
-                         res = error(_("unable to parse commit author"));
--               *check_todo = !!(flags & EDIT_MSG);
-+               *check_todo = is_rebase_i(opts) && !!(flags & EDIT_MSG);
-                 if (!res && reword) {
-  fast_forward_edit:
-                         res = run_git_commit(r, NULL, opts, EDIT_MSG |
-diff --git a/t/t3508-cherry-pick-many-commits.sh 
-b/t/t3508-cherry-pick-many-commits.sh
-index b457333e18..fd9d626779 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -40,6 +40,31 @@ test_expect_success 'cherry-pick first..fourth works' '
-         check_head_differs_from fourth
-  '
-
-+test_expect_success 'cherry-pick --edit first..fourth works' '
-+       git checkout -f master &&
-+       git reset --hard first &&
-+       test_tick &&
-+       GIT_EDITOR="echo edited >>" git cherry-pick --edit first..fourth &&
-+       git log --pretty=format:%B -3 >actual &&
-+       cat >expect <<-\EOF &&
-+       fourth
-+
-+       edited
-+
-+       third
-+
-+       edited
-+
-+       second
-+
-+       edited
-+       EOF
-+       test_cmp expect actual &&
-+       git diff --quiet other &&
-+       git diff --quiet HEAD other &&
-+       check_head_differs_from fourth
-+'
-+
-  test_expect_success 'cherry-pick three one two works' '
-         git checkout -f first &&
-         test_commit one &&
-@@ -153,6 +178,37 @@ test_expect_success 'revert first..fourth works' '
-         git diff --quiet HEAD first
-  '
-
-+test_expect_success 'revert --edit first..fourth works' '
-+       git checkout -f master &&
-+       git reset --hard fourth &&
-+       test_tick &&
-+       GIT_EDITOR="echo edited >>" git revert --edit first..fourth &&
-+       git log --pretty=format:%B -3 >actual &&
-+       cat >expect <<-EOF &&
-+       Revert "second"
-+
-+       This reverts commit $(git rev-parse second).
-+
-+       edited
-+
-+       Revert "third"
-+
-+       This reverts commit $(git rev-parse third).
-+
-+       edited
-'
-
-+test_expect_success 'revert --edit first..fourth works' '
-+       git checkout -f master &&
-+       git reset --hard fourth &&
-+       test_tick &&
-+       GIT_EDITOR="echo edited >>" git revert --edit first..fourth &&
-+       git log --pretty=format:%B -3 >actual &&
-+       cat >expect <<-EOF &&
-+       Revert "second"
-+
-+       This reverts commit $(git rev-parse second).
-+
-+       edited
-+
-+       Revert "third"
-+
-+       This reverts commit $(git rev-parse third).
-+
-+       edited
-+
-+       Revert "fourth"
-+
-+       This reverts commit $(git rev-parse fourth).
-+
-+       edited
-+       EOF
-+       test_cmp expect actual &&
-+       git diff --quiet first &&
-+       git diff --cached --quiet first &&
-+       git diff --quiet HEAD first
-+'
-+
-  test_expect_success 'revert ^first fourth works' '
-         git checkout -f master &&
-         git reset --hard fourth &&
-
-
-
+> That's a good point, I'll fix it, thanks for catching this
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>>
+>>> +                first_parent = current_head->parents->item;
+>>> +                if (repo_parse_commit(r, first_parent)) {
+>>> +                    res = error(_("could not parse HEAD commit"));
+>>> +                    goto out;
+>>> +                }
+>>> +            } else {
+>>> +                first_parent = NULL;
+>>> +            }
+>>> +        }
