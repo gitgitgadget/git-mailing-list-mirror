@@ -2,90 +2,143 @@ Return-Path: <SRS0=sf8h=ZQ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1D2C432C0
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 06:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADFA5C432C0
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 08:01:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 06B862071A
-	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 06:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 72B0E207FC
+	for <git@archiver.kernel.org>; Sun, 24 Nov 2019 08:01:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DNSsJHlU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p66K3WgU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726680AbfKXGFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Nov 2019 01:05:22 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50098 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbfKXGFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 24 Nov 2019 01:05:21 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8A1E12AF2A;
-        Sun, 24 Nov 2019 01:05:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=W7Fyj5IqLARddBR25gi0knOBi3I=; b=DNSsJH
-        lUDzAxgvOMO1D5ZMx8TV0rXdLFWvI1OpJBtH+ZJF3K3g6Vex7ZrrR+tlFg8R/YKr
-        huE22HGquiBl5U6d6haskjJSTtpnES/fbFHZekhFlKDLfZeO7CMkJQtG4O9G8833
-        XP0iygIc0v6DdlTemZV7TQG17KTL1dyrXrlIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HNkRAXlzMWHjtyE4oXJehNpdNsr3fVlp
-        7Su4XJDumUt09LDPlYeiY9VGl5QmQR1yAJQJl6sjlOZuD+x09rF4YbpGG+nY1TPi
-        8TYo12jRJbCxqZ+yE0yicMg0P9BFI34McRlaITnYV8O+L87dXMb5MBRvmGc8Yi8/
-        dWAMwaYL5iE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 816752AF28;
-        Sun, 24 Nov 2019 01:05:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E44AE2AF27;
-        Sun, 24 Nov 2019 01:05:18 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
-Subject: Re: [PATCH v2] doc: mention that 'git submodule update' fetches missing commits
-References: <0102016a2274c90f-3dbf792f-5b0a-4da4-ada0-9a163a14e68d-000000@eu-west-1.amazonses.com>
-        <1574560895-60251-1-git-send-email-levraiphilippeblain@gmail.com>
-Date:   Sun, 24 Nov 2019 15:05:17 +0900
-In-Reply-To: <1574560895-60251-1-git-send-email-levraiphilippeblain@gmail.com>
-        (Philippe Blain's message of "Sat, 23 Nov 2019 21:01:35 -0500")
-Message-ID: <xmqqsgmdzu5e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726090AbfKXIBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Nov 2019 03:01:18 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46253 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfKXIBS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Nov 2019 03:01:18 -0500
+Received: by mail-wr1-f68.google.com with SMTP id z7so10206368wrl.13
+        for <git@vger.kernel.org>; Sun, 24 Nov 2019 00:01:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MXIFS8SvygHAUfH8DMMADCIjXmkmYNgHZ++anABHsgg=;
+        b=p66K3WgUhGkrlU7tw/CZQvfpafCKLFRsCzuixLgdDIAeGciYPVJJz8yGTKWuzr59Vl
+         E6Yw933mpW/ItcvaryZvhD776xEleQ/Vmejx7hH/ScfN4qfcN6mhvvVAOEprUEiBkLFG
+         GB4gkn4XwPfYGMGsO8oqUDnWVi5V81D6FIMz32Vu/rN1oi/BBaT3Z7DFT1OgkVPTKme9
+         p5wbwYmLeneW/PHwnflfQ2XFB67HnoRF/SJxW9YLsKE2OFGKWm+96Cmh6+HsHnoHuMNw
+         SRuVxMV87f5a+fm5oV3I/fnDTDCockbACYGHEz/QCamOjFrqnPCRc3rV8yGAxGI42fua
+         fk/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MXIFS8SvygHAUfH8DMMADCIjXmkmYNgHZ++anABHsgg=;
+        b=soQjx2IbSXJjp1LUjdquNTkMcNkeY0A3TygBBeVGcixsRYxIWcWhPGqH5dvQ4zaVgj
+         7n8eVmhNiSnIPSB6YwlLWTcCAODC0EB2PTQ2yVy4zOqwrQ0DR90rM+ZjsS4Emr0kaaH2
+         Vbileo1SCUj/bqquvDHytr8h+slyz4h1czIHUJLF/tzb2IzNXM8Df+LsR/O7G4/YO82C
+         6gavSVEzPQbMKSfYGswV97PCn/aOz4pO/wzASCFVpdx1xPtSMYNWjk5bFYMtA3cjr0mN
+         6v3Q6+GkMTrnU1E2v1ViRliALiOtCZaMfsYTUU0yCPMEjGNuKqvX8aElOJBhyqMKz0L5
+         NZkA==
+X-Gm-Message-State: APjAAAW8fExtPDx77vhoxUSit4mVQtjkbEkUp7uO8RwUF8lQx2gQ9At9
+        5mVubiz7sRRHOxpZ4uQ7/cfVt4m8
+X-Google-Smtp-Source: APXvYqygm2cNGs2k+EY7J/O2iVaJpTApuKP15S3UnaoGplC9n/0pRBH3ZShKIrKeYrUThtIzpRAbUw==
+X-Received: by 2002:a5d:4445:: with SMTP id x5mr26605369wrr.341.1574582475914;
+        Sun, 24 Nov 2019 00:01:15 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w11sm5459161wra.83.2019.11.24.00.01.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Nov 2019 00:01:15 -0800 (PST)
+Message-Id: <e4c932bd0907daa53d1d721f9c9400bdad17fb62.1574582473.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.472.v2.git.1574582473.gitgitgadget@gmail.com>
+References: <pull.472.git.1574490521.gitgitgadget@gmail.com>
+        <pull.472.v2.git.1574582473.gitgitgadget@gmail.com>
+From:   "Manish Goregaokar via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 24 Nov 2019 08:01:13 +0000
+Subject: [PATCH v2 1/1] submodule: fix 'submodule status' when called from a
+ subdirectory
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 644B96B2-0E80-11EA-8D84-C28CBED8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Manish Goregaokar <manishsmail@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Manish Goregaokar <manishsmail@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philippe Blain <levraiphilippeblain@gmail.com> writes:
+From: Manish Goregaokar <manishsmail@gmail.com>
 
-> 'git submodule update' will fetch new commits from the submodule remote
-> if the SHA-1 recorded in the superproject is not found. This was not
-> mentioned in the documentation.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> Changes since v1 [4]:
-> - Added my signed-off, corrected my email address
->   and shortened the title of the commit message
->   (I had actually done that when I resent my patch in [1] using submitGit, 
->   but this dit not add the "v2" prefix)
-> - Added Junio's suggestion [2] (which was applied in [3] on top of the original 
->   submission [4] instead of the revised one [1]), and squashed
-> - Added Helped-by trailers
-> - Rebased on v2.23.0 (as was done for [3])
+When calling `git submodule status` while in a subdirectory, we are
+incorrectly not detecting modified submodules and
+thus reporting that all of the submodules are unchanged.
 
-Thanks, will replace.  This should be ready for 'next', I would
-think.
+This is because the submodule helper is calling `diff-index` with the
+submodule path assuming the path is relative to the current prefix
+directory, however the submodule path used is actually relative to the root.
+
+Always pass NULL as the `prefix` when running diff-files on the
+submodule, to make sure the submodule's path is interpreted as relative
+to the superproject's repository root.
+
+Signed-off-by: Manish Goregaokar <manishsmail@gmail.com>
+---
+ builtin/submodule--helper.c |  3 ++-
+ t/t7400-submodule-basic.sh  | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 909e77e802..eeea8dfa97 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -802,7 +802,8 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 			 path, NULL);
+ 
+ 	git_config(git_diff_basic_config, NULL);
+-	repo_init_revisions(the_repository, &rev, prefix);
++
++	repo_init_revisions(the_repository, &rev, NULL);
+ 	rev.abbrev = 0;
+ 	diff_files_args.argc = setup_revisions(diff_files_args.argc,
+ 					       diff_files_args.argv,
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index a208cb26e1..4545b47ca4 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -356,6 +356,25 @@ test_expect_success 'status should only print one line' '
+ 	test_line_count = 1 lines
+ '
+ 
++test_expect_success 'status from subdirectory should have the same SHA1' '
++	test_when_finished "rmdir addtest/subdir" &&
++	(
++		cd addtest &&
++		git status > /tmp/foo &&
++		git submodule status | awk "{print \$1}" >expected &&
++		mkdir subdir &&
++		cd subdir &&
++		git submodule status | awk "{print \$1}" >../actual &&
++		test_cmp ../expected ../actual &&
++		git -C ../submod checkout @^ &&
++		git submodule status | awk "{print \$1}" >../actual2 &&
++		cd .. &&
++		git submodule status | awk "{print \$1}" >expected2 &&
++		test_cmp actual2 expected2 &&
++		test_must_fail test_cmp actual actual2
++	)
++'
++
+ test_expect_success 'setup - fetch commit name from submodule' '
+ 	rev1=$(cd .subrepo && git rev-parse HEAD) &&
+ 	printf "rev1: %s\n" "$rev1" &&
+-- 
+gitgitgadget
