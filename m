@@ -2,122 +2,95 @@ Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E1DC432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3E83C432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 23:57:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DF3862075C
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:53:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83CD720740
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 23:57:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gYpQ7hJ4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kO47m++r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727232AbfKYWxM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 17:53:12 -0500
-Received: from mout.gmx.net ([212.227.17.20]:54245 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725946AbfKYWxL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 17:53:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574722381;
-        bh=Cip9HOF2Gvyg0E7/2WQ2OEKayuWn1RshqMZPgMv+Pkc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gYpQ7hJ4rLaJIpXfADck/1NfxecICwOue/C1ztl6q0cR6lIxAraRWcOMJMnZIS5t0
-         cJHGvAf7o5Cqwe1EI0lRRpYkw/9Q0AMgCTivdMZ/rzyzS9nDfWBktp4TWFXxiiRiii
-         BP8vUPjSwt8gwTjey+8E/e2JjZe6GXJe9z9H4JEE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRmfi-1iOsYp2EPq-00TDjn; Mon, 25
- Nov 2019 23:53:01 +0100
-Date:   Mon, 25 Nov 2019 23:52:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 1/1] sequencer: fix empty commit check when amending
-In-Reply-To: <CAPig+cRg1WchC=-4qc51KQLgYewiYtEsu+RTf=_jbw3sZznjew@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1911252343350.31080@tvgsbejvaqbjf.bet>
-References: <pull.467.git.1574345181.gitgitgadget@gmail.com> <pull.467.v2.git.1574451783.gitgitgadget@gmail.com> <037f2b2975e06847443aef46939e3c712053dedf.1574451783.git.gitgitgadget@gmail.com> <xmqq5zjb2vsx.fsf@gitster-ct.c.googlers.com>
- <340859a7-5cc4-f641-818d-fcedbf29a2a6@gmail.com> <94573071-556b-caae-b159-40c168a08f44@gmail.com> <xmqqr21wy80o.fsf@gitster-ct.c.googlers.com> <43bdadd2-9ea9-4e50-1f47-ec18e0db4794@gmail.com> <nycvar.QRO.7.76.6.1911251652510.31080@tvgsbejvaqbjf.bet>
- <CAPig+cRg1WchC=-4qc51KQLgYewiYtEsu+RTf=_jbw3sZznjew@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726016AbfKYX5H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 18:57:07 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:37511 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbfKYX5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 18:57:06 -0500
+Received: by mail-pj1-f68.google.com with SMTP id bb19so3821544pjb.4
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 15:57:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EO63Y2YVDoDUEc8hXStrWGQX+JE7slxM+JBjODMLltU=;
+        b=kO47m++rTAsRLzQXjvbwwqNuyIQOXwt3r9jBbU4KZozWs+iM2KdYAHwNrMjOA23afl
+         9+130a9QyCwMa6zck0CXbV5zc6M5tmAHYWPMuSf72DHV67s4tUs8SXAr/4VrHPwAxuk+
+         4QOzhaN0K4U4onLCTBqsqRpqoJWDYTp9f2gqwnCE3os4Aak3r1uzQJWTH/OmtrFDjxpA
+         IOqKOorsN2fNB07Wi+M9orCrRCpXusp70z1dX/+59O/pyIh4hWimkYm6KvYzMscbWO5E
+         mu/0hOmbAIOIdxyxsRA8Ipg1/RkqDjATyod59zhc//UQHLE3SFvdhIweVmZCLGKz1SxR
+         a8bA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EO63Y2YVDoDUEc8hXStrWGQX+JE7slxM+JBjODMLltU=;
+        b=a8kyFZLm02Jz5E8YWaD5pt3VCuIZ0xkNU3P1ITs+IbJI3sCMaYgk9jNR9UccC4jr3u
+         QHq/FFCRS/NFfxVb544U8UmHsuBLIlGNix7JkUXKKu8Oh/bzhZvdY/udaOe1681JVHuV
+         YCKy7XvCA15xqNupr+Plro+NS09NO1K/Hw8hwWqoa/ONZXi2tlh7oL0gOsGCOD/J0lNK
+         Un4IqNlouI0aUio+0iMMj6IQUIM4P13r6Pp1XN6u6UasFnEAElyBtV3+zEgpqJ3zB0eB
+         zwGkbr/m1aOHTKQbc79Ktryc8YpDAJNW6h9KlZo98S6sSVwxXh4Gf7ovNwWsE/QASpvk
+         knOg==
+X-Gm-Message-State: APjAAAXQKKV9gKP8TY/cvpVWGxljjIfu1OkAzsnNDEcjVkx1vwLLpijN
+        6lz1GmkfqDzy63e7Y4CtzOc=
+X-Google-Smtp-Source: APXvYqzlWDoeEdz7KR9vBkF8bD6zroNaPWk4RseR+Az2P6tILHGe/NHpU/hFdmawQLCmLYihvRZKZg==
+X-Received: by 2002:a17:902:6903:: with SMTP id j3mr29547282plk.231.1574726225679;
+        Mon, 25 Nov 2019 15:57:05 -0800 (PST)
+Received: from generichostname ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id t27sm9897142pfq.169.2019.11.25.15.57.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2019 15:57:04 -0800 (PST)
+Date:   Mon, 25 Nov 2019 15:57:02 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 22/22] t7700: stop losing return codes of git commands
+Message-ID: <20191125235702.GA6250@generichostname>
+References: <cover.1574296987.git.liu.denton@gmail.com>
+ <cover.1574449072.git.liu.denton@gmail.com>
+ <e9835b85427a3486e2dba136bbf34506e521d355.1574449072.git.liu.denton@gmail.com>
+ <xmqqftif2wg7.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:O7pTt71t0k9JvLW2HufiBS0p8QykmgkhNr7/Gl2cORtMaSFoxjs
- J8uPRMT0WghdLOU64E+h97A+OIzRSPtAIPe/KNaTprw17ZeF6KvnPZJX/z59gtHXomuVxvC
- 4YeVtq5AThxXA7bZGoUOjKZbsq8uCZNybe5+aexxex611A/oSr5L3AUlVyJanuZh5BT+LOf
- I6rv92Fa6Fi2bqyMhg7gg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:79HWZz+JukM=:k1mZfktpFajmZVTJwoWja4
- rYJLvmhDY3umnN94xvSxH3TQ6vHWbNIrr95TmzZLvYvZOkdibrWiNUzGa8KdT7QZ7iF7fUEcm
- QEd5IzbMm2IAiT51GRY/uh1UpzowImfCrCkbws+3V72jZQV9nrnoNzkjiUTKAescsTPikdFpJ
- LUqfEWUP0F/ur7p9yE9VZJ8XwAJnnWGELVEKleWq+mEYZV4ERVHehRiEp7sY+zkXu1qVmjQ4Y
- 0+kzfIQAD8UMXLClLn4OR65pwuK3UzqY6fGrJ1mVIlUzd8A0osoy7dLEAnAc+855k2xWzgDB+
- EHf9WUTq0N5CJeBC+PUQ8e+vCAPTDp1XLuJ9EB+KasH1o3rZrPWbuskfuL+0+vNNlYpYCRe61
- UI3vtjXVjnF9O2UwlnIDjYIf9KUfLSyllh8yCc33MW3EPy2OVpFuhxkhSta0oMhTwrVrAdS+L
- MUrBxrE/GGfJJiZO8goqpOn2XUsvJUYdMHCYU4Vm+WLhFyYW5ate/83mrjnPjoxvymV0kc96B
- ANS/wZM4y1zFzMX6BH3/9pqsOB33S/AdqS73OXRmoZZ3W0rWJIRlex6JtC/I7SnWd3/QmhMAH
- GePzdbSOJwWKraOLW37+e659lyFfBLNOy57PQHilMWpBiJOoH5f8Tb7PbhlSs6/R3sy1tEAZe
- y44GSTIq5Jxu0W49U7Pd5JkZ4XGa2ygAs03DcK1M3wjzOp4cMNPkVDVSYAb2hecfggWNbZsnm
- uRM3dkLTx83rqpH66JmtbFf3Y5TjCu+U/gfYzQW6LgSJUylGa8qYK67M+p9n4y1bljou8woFc
- Vtyfeuc0rqeJ2AGS1RVIXgYNDG9YhoF6HcnMahFpcDWvI+Wm9cQrvmTmKeHm4k0aZb11b3yrl
- y/K5bY9f+HsU9IeHcjIGCi36qhOTf1pU/i3eWtvfmeYBmLbgRFjmOgMZgONIiVyGopYSsJh8U
- tyEBLRLrWU4hBVBwnUgigXuvrzvkHUFf00M+8Cz8MYkYyWgJ21Atw+rScyQcwr1cCvo9b89s2
- kE93cMIakDszY8WTWEpltvpFaYbGVqVDc5Ft+C9fDHQzOQqe8Su+s1okC+jGhX6etRgNSmQnu
- 61w6IuVOEDQHXnFLzxcDWX/Ou4iWXfqBTgq5SFz5GFkmIimxGaktMBBOJRH0aO8BXzV7ghduv
- viZQzNFG964V/5a9jmA1jvQ0C9jwY26ZCmwgQ1qyz3julYLYZ2Lzvgh0wTeNBBhdt6+m/XjHz
- fcV18J3mgEY0p3vQ0I6OgmHuG4vKqk+bzH2ajPJglsfLNJKSs4KVBRwgYhRY=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqftif2wg7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Junio,
 
+On Sat, Nov 23, 2019 at 10:49:44AM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > -	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
+> > -		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
+> > +	git verify-pack -v pack-$packsha1.idx >packlist &&
+> > +	objsha1=$(head -n 1 packlist | sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
+> 
+> We probably should lose reference to SHA-1 and use $OID_REGEX; this
+> is obviously a #leftoverbits material that is outside the scope of
+> this series.
 
-On Mon, 25 Nov 2019, Eric Sunshine wrote:
-
-> On Mon, Nov 25, 2019 at 10:54 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Mon, 25 Nov 2019, Phillip Wood wrote:
-> > > On 25/11/2019 03:00, Junio C Hamano wrote:
-> > > > That "git rm -rf ." scares me, though.
-> > >
-> > > I know I'm not too keen on it my self but we need to empty the workt=
-ree and
-> > > index if we're going to switch to an unborn branch
-> >
-> > How about `git worktree --orphan does-not-exist unborn`?
->
-> git-worktree doesn't presently recognize --orphan, though it would be
-> nice if it did. In fact, I clearly was thinking of --orphan (along
-> with -b, -B, and --detach), when I wrote the implementation, as can be
-> seen from the commentary in one of the original patches[1]. That
-> --orphan never got added was either due to an oversight or it was one
-> of those "we'll add it when someone actually needs it" deals.
->
-> [1]: https://lore.kernel.org/git/1436573146-3893-11-git-send-email-sunsh=
-ine@sunshineco.com/
-
-You're absolutely correct, of course. I actually had looked at the output
-of `git checkout -h` instead of `git worktree -h`... And `checkout` does
-have that `--orphan` option.
-
-But from the documentation at
-https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orp=
-hanltnewbranchgt
-I see that the command I had in mind does not work as I expected it to:
-`git checkout --orphan new-branch $EMPTY_TREE` will fail with
-fatal: Cannot switch branch to a non-commit '4b825dc642cb6eb9a060e54bf8d69=
-288fbee4904'
-(and the documentation of the `--orphan` option also suggests to use `git
-rm -rf` for the use case under discussion, so there...)
-
-Sorry for the noise,
-Dscho
+Since the theme of this series is test cleanup, I believe that it's
+probably appropriate to roll these changes (and the ones below that I
+omitted) into the current series. Since it isn't too much work, I'll
+send them out in my next reroll.
