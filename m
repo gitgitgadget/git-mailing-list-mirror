@@ -2,213 +2,236 @@ Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04655C432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 03:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4CC9C432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 03:10:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A6DAA20815
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 03:05:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C2E620718
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 03:10:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vbApBX/h"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOFFh22S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbfKYDFB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 24 Nov 2019 22:05:01 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:48790 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726907AbfKYDFB (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 24 Nov 2019 22:05:01 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E4F5060427;
-        Mon, 25 Nov 2019 03:04:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1574651099;
-        bh=Uf2IHVB6cgJA/C8bg+ROhujSFhq8XVA+pmQHvymv5cA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=vbApBX/hIyj/IU4ef0W7tNq9VGPgAOFI9jHUQHXuTgSpHEZjHhkP5JLfggiMy/zo5
-         TI6i0e8lJBL+53Oz/SaoolOUAED8m2/bGTuTjsab9uLBIbnAMeGc+0Q+n36C8P7wAh
-         E3P0kw/57uUgSUZdrinonlpyb9xpIVrgr14A0IkcahDQFOninYfq5UTZCmGnC/a3J2
-         igs8kZpulwN+nw3F6/wogwz23AkIFVk4QSqhnyCfGIXl196tcnOhKIGb505gmc4Wex
-         Q4zzVg7HxArp4Ezbo3O3HBNG9BZr9o4SdtBzqm0Bo8J4LIBuYqMFNdErdDo8Vj+rp0
-         HzAx8tqm85qkA2EU3sIs6Q6SspnFR7s86Q7Y6MWiiff/vNRC1WrlNnt7bRkEk2n+E6
-         oYMZG1vXfIDR996k1FrCemKieIqtRK1hJPJHOEiQzut9jW7r1KUAlaOhAbd9Xp5acB
-         j+zd2mJ246xM0NjzRZ+SCRTduKcd62i97JlEWvx90J19GumLjsI
-Date:   Mon, 25 Nov 2019 03:04:45 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC] Hook management via 'git hooks' command
-Message-ID: <20191125030445.GB2404748@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-References: <20191116011125.GG22855@google.com>
- <20191116054501.GA6538@camp.crustytoothpaste.net>
- <20191118223819.GI22855@google.com>
- <20191119005136.GA6430@camp.crustytoothpaste.net>
- <20191123011924.GC101478@google.com>
+        id S1726931AbfKYDKL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 24 Nov 2019 22:10:11 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36415 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726907AbfKYDKL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 24 Nov 2019 22:10:11 -0500
+Received: by mail-wm1-f67.google.com with SMTP id n188so12194047wme.1
+        for <git@vger.kernel.org>; Sun, 24 Nov 2019 19:10:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=Z9N45rS78TlaUgRdR3NveUI7Qci+bagSZ8CyY/W0+b0=;
+        b=hOFFh22SmMTVuihXYHXIo2rUr2QQ3wzTbbVtOMFh6uzHDmJvxgTllYh5nbuJGQcuQ3
+         XEOZH9rV5zCbYGxuq30w6bZNGiiyDIPWBk2oybCqrgmcAhNvJFpGC/7o6pq40/p6fkhL
+         oQj7+sFRXvqc5j3uCAUHMp/yX8lY+8yqGpiwmjZMEE48nx6ond1D7geKdAk+fWK0eAQs
+         u8ZxLNlHuQYiQZILqP5mjdsDbhIjofGJNkV1o38NBkILnDEDoUtG8YcyKAD3l7YV9qKB
+         p39xhAB7UsxoVWNompr5PkiTNSOD+jx9Q++6LjMTAhSxO+u3N3gPdhkRuHub1Btn4DOS
+         SjFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=Z9N45rS78TlaUgRdR3NveUI7Qci+bagSZ8CyY/W0+b0=;
+        b=AcXn2s8DP/7DXZCgd6UzTuEW6MvEfmVreuFTDJZhbldOSE4mJM8qC/jMZfavjIvVVv
+         rc84D8VMv7xoRAVYBk2DhyhMpTNbLfuMY/kjDuq7LxxC2llpEhpzCMNpFG05Y71kdBkR
+         8sJLmZ3TxB9joYwKnbyaBnxo/dXNwKlepRyJtbuu6G+p1E/rZaH3sw+oLV0dChNf1dh9
+         yf7OId94nu+16p/QgXZ+4+y4+/10Z3necLfWRuOtTMeTO0eOR+7RfX73RsW4naprwFX1
+         Gm1EBBM74YwvJcKM+PmUnXYu119rHY95MXB8bh7tYrHun/RXJZz+N6xoQvWPc8LUkwQM
+         s+9Q==
+X-Gm-Message-State: APjAAAXgNkpsqSWHInSjOCJOqAdi972pTKIdTGKzDybznSa0A1dxy6yt
+        6glyt3eqfRwAu0hduC0/JyRd93G3IRY=
+X-Google-Smtp-Source: APXvYqw1LHRF0YymmmD3VS6ePuhqhWmKtDQL1JeMd3H5DmKyKZPOiHV+4aUU96S0uWARouQZvkxB3w==
+X-Received: by 2002:a7b:c959:: with SMTP id i25mr26511913wml.100.1574651407944;
+        Sun, 24 Nov 2019 19:10:07 -0800 (PST)
+Received: from szeder.dev (x4d0c37f4.dyn.telefonica.de. [77.12.55.244])
+        by smtp.gmail.com with ESMTPSA id m16sm6912845wml.47.2019.11.24.19.10.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 24 Nov 2019 19:10:07 -0800 (PST)
+Date:   Mon, 25 Nov 2019 04:10:05 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, phillip.wood@dunelm.org.uk,
+        Brian Norris <briannorris@chromium.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t3429: try to protect against a potential racy todo file
+ problem
+Message-ID: <20191125031005.GC23183@szeder.dev>
+References: <e7c01e0f-8466-c2c5-b53a-a93f941dfb1c@gmail.com>
+ <20191123172046.16359-1-szeder.dev@gmail.com>
+ <xmqqk17p280y.fsf@gitster-ct.c.googlers.com>
+ <8c21662f-6548-a46e-9c87-eb364355cb78@gmail.com>
+ <20191124211021.GB23183@szeder.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nVMJ2NtxeReIH9PS"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191123011924.GC101478@google.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-2-amd64)
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191124211021.GB23183@szeder.dev>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Nov 24, 2019 at 10:10:21PM +0100, SZEDER Gábor wrote:
+> To notice a changed todo file the sequencer stores the file's stat
+> data in its 'struct todo_list' instance, and compares it with the
+> file's current stat data after 'reword', 'squash' and 'exec'
+> instructions.  If the two stat data doesn't match, it re-reads the
+> todo file.
+> 
+> Sounds simple, but there are some subtleties going on here:
+> 
+>   - The 'struct todo_list' holds the stat data from the time when the
+>     todo file was last read.
+> 
+>   - This stat data in 'struct todo_list' is not updated when the
+>     sequencer itself writes the todo file.
+> 
+>   - Before executing each instruction during an interactive rebase,
+>     the sequencer always updates the todo file by removing the
+>     just-about-to-be-executed instruction.  This changes the file's
+>     size and inode [1].
+> 
+> Consequently, when the sequencer looks at the stat data after a
+> 'reword', 'squash' or 'exec' instruction, it most likely finds that
+> they differ, even when the user didn't modify the todo list at all!
+> This is not an issue in practice, it just wastes a few cycles on
+> re-reading the todo list that matches what the sequencer already has
+> in memory anyway.
+> 
+> However, an unsuspecting Git developer might try to "fix" it by simply
+> updating the stat data each time the sequencer writes the todo list
+> for an interactive rebase.  On first sight it looks quite sensible and
+> straightforward, but we have to be very careful when doing that,
+> because potential racy problems lie that way.
+> 
+> It is possible to overwrite the todo list file without modifying
+> either its inode or size, and if such an overwrite were to happen in
+> the same second when the file was last read (our stat data has one
+> second granularity by default), then the actual stat data on the file
+> system would match the stat data that the sequencer has in memory.
+> Consequently, such a modification to the todo list file would go
+> unnoticed.
 
---nVMJ2NtxeReIH9PS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> [1] The todo file is written using the lockfile API, i.e. first to the
+>     lockfile, which is then moved to place, so the new file can't
+>     possibly have the same inode as the file it replaces.  Note,
+>     however, that the file system might reuse inodes, so it is
+>     possible that the new todo file ends up with the same inode as is
+>     recorded in the 'struct todo_list' from the last time the file was
+>     read.
 
-On 2019-11-23 at 01:19:24, Emily Shaffer wrote:
-> Ah, I think I see what you mean.
->=20
-> hook.update =3D security-heuristic-runner
->=20
-> where "security-heuristic-runner" is some compiled binary your employer
-> purchased from some vendor and distributed directly to your `/bin/`.
->=20
-> No, I had imagined users would achieve that by writing:
->=20
-> hook.update =3D /bin/security-heuristic-runner
+Unfortunately, we already do have an issue here when the sequencer can
+overlook a modified todo list, but triggering it needs the lucky
+"alignment" of inodes as well.  I can trigger it fairly reliably with
+the test below, but forcing the inode match makes it kind of gross and
+Linux-only.
 
-Yeah, that's what I'm looking for.  The problem is that, for example,
-Debian does not guarantee where in PATH a file is.  Having a newer Git
-on RHEL or CentOS systems often involves hacking PATH and
-LD_LIBRARY_PATH.
+  https://travis-ci.org/szeder/git/jobs/616460522#L1470
 
-> Hm. Do you mean:
->=20
-> hook.update =3D git grep "something"
->=20
-> Or do you mean:
->=20
-> hook.update =3D ~/grephook.sh
->=20
-> grephook.sh:
->   #!/bin/bash
->=20
->   git grep "something" >output
->   ... do something with output ...
 
-I had intended to include the latter case, but also allow valid hooks
-with multiple argument support.  For example, you could invoke "git lfs
-pre-push" directly in your hook, and that is a fully functioning
-pre-push hook, and would require a suitable PATH lookup to find your Git
-binary.  It accepts the additional arguments that pre-push hooks accept;
-right now we basically do the following instead:
+  ---  >8  ---
 
-----
-#!/bin/sh
-
-exec git lfs pre-push "$@"
-----
-
-> I suppose I need to understand better how $PATH works with the latter
-> scenario, but my gut says "if you didn't worry about where to find the
-> Git binary from your script before, why are you going to start caring
-> now".
->=20
-> This led me to wonder: "Should we allow someone to pass arguments via
-> the hook config?" Or to put it another way, "Should we allow 'hook.update
-> =3D grep -Rin blahblah >audit.log'?" I think the answer is no - some hooks
-> do expect to be given arguments, for example
-> sequencer.c:run_prepare_commit_msg_hook().
-
-I think what we want to do in this case is just invoke things in the
-shell with extra arguments, like we do with editors.  This means we
-don't have to handle PATH or anything else; we just invoke the shell and
-let it handle it.  That lets people provide multi-call binaries (like
-git lfs) that include hooks inside them.
-
-I do, however, think we should require folks to have a suitable hook
-that accepts the right arguments.  So "git grep blahblah" isn't a valid
-hook in most cases, because it doesn't take the right arguments and read
-the right data from stdin if necessary.
-
-> > I suppose if we continue to keep the existing behavior of changing the
-> > directory and we pass the config options to the shell, then we could
-> > just write "$(git config core.hooksPath || echo
-> > .git/hooks)/pre-push.d/hook1" instead, which, while ugly, gets the job
-> > done.  Then we wouldn't need such a command.
->=20
-> Yeah, I am wondering about when you want to run a hook generically (i.e.
-> from a noninteractive script) but outside of the context of something in
-> the Git binary invoking a hook. Are you thinking of Git commands
-> implemented as scripts?
-
-I'm just thinking about existing hook wrappers that invoke multiple
-scripts at the moment, something like how
-https://gist.github.com/mjackson/7e602a7aa357cfe37dadcc016710931b works
-at the moment and how we'd replace that with a config-based model.
-
-I think using the shell avoids the entire proposal, because it then
-becomes trivial to script that in the command and port it over, since we
-can use my ugly hack above.  I think I like that better than "git hook
-execute" because it's a little more flexible.
-
-> > One of the benefits to using numbered files in a .d directory is that
-> > you can explicitly control ordering of operations.  For example, maybe I
-> > have a per-repo pre-push hook that performs some checks and rejects a
-> > push if something is off.  I also have a pre-push hook for Git LFS that
-> > pushes the Git LFS objects to the remote server if Git LFS is in use.
-> >=20
-> > In this case, I'd always want my sanity-check hook to run first, and so
-> > I'd number it first.  This is fine if both are per-repo, but if the LFS
-> > hook is global, then it's in the wrong order and my LFS objects are
-> > pushed even though my sanity check failed.
->=20
-> Yeah, this is really compelling, and also removes the somewhat wonky ^
-> proposed just below here. I like this idea quite a lot:
->=20
-> hook.pre-push =3D 001:/path/to/sanity-checker
-
-I think a colon is actually better than my proposal for a space in this
-regard, but I'm not picky: anything unambiguous is fine.
-
-> I'll have to ponder on the UX of a 'git hook'-facilitated interactive
-> edit of the hook numbering, though. UX is not my strong point :)
-
-I also find I'm not great at UX, so I can't be of much help.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---nVMJ2NtxeReIH9PS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl3bRM0ACgkQv1NdgR9S
-9osiWA/+NixJxHzckO9Nh+JN1e6ETS0nvzkFRSy7I6D07rYh2rxhTrnUIbmJ9iqT
-LkXSUinFLIgcCjvnjeIuLg47vY9weznkQqSrVCqZlX7rT9opIJ+IqWIKpoHx/6su
-GP/HhOX5JMKZxEsLRBDjt440vaskWVSabU09InjTruRbWXuP/4z9JKuqU/w32sYG
-1uLsAybm3T7c75lTdfYUNsRtlL63t2xqxCXoGZrKmgEuFXIj7NL92uPT9mV93/wI
-4TKyBqHAdtcZ/HDlAQyfp++SiXhasO0rL4mlLRVlUAyWXkakLvIsuHnnuTkzgqRa
-iYdKSw+auC0h05bW1t92qQ+LVBHb8GKxSM/RVcwoyqlVL4uJRjyWP8mv61qVcvaG
-4rtKulDyv7TbrNgOg5JGXfaoO/9UbFo2a656irPrHVISL4tu5yUtEVJgi7ttLaqp
-5MtyFzdRzGSQXQjEFeOXcrps0iI+oKW3CyUB4F82uOP5gsjRBVT5L7BEarRZ9J9s
-YqvbGw6U5R78hH0XQQLSsQCQ8a0u28ozgf4ziKFjnkABpVa8svkSrh98YkZESA0D
-wqwknIVRsiouIkswriuMLKWpeAI7VBk0MqZoPJug8W29jS37ZXKf57a5jn7W8HEQ
-36RpksWfwpQgFYeJYNK6vwCA/6SNHVzdZEClclpW+HIioEWLyw8=
-=i0fn
------END PGP SIGNATURE-----
-
---nVMJ2NtxeReIH9PS--
+diff --git a/t/t9999-rebase-racy-todo-reread.sh b/t/t9999-rebase-racy-todo-reread.sh
+new file mode 100755
+index 0000000000..437ebd55e0
+--- /dev/null
++++ b/t/t9999-rebase-racy-todo-reread.sh
+@@ -0,0 +1,87 @@
++#!/bin/sh
++
++test_description='racy edit todo reread problem'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit first_ &&
++	test_commit second &&
++	test_commit third_ &&
++	test_commit fourth &&
++	test_commit fifth_ &&
++	test_commit sixth_ &&
++
++	write_script sequence-editor <<-\EOS &&
++		todo=.git/rebase-merge/git-rebase-todo &&
++		cat >"$todo" <<-EOF
++			reword $(git rev-parse second^0) second
++			reword $(git rev-parse third_^0) third_
++			reword $(git rev-parse fourth^0) fourth
++		EOF
++	EOS
++
++	write_script commit-editor <<-\EOS &&
++		read first_line <"$1" &&
++		echo "$first_line - edited" >"$1" &&
++
++		todo=.git/rebase-merge/git-rebase-todo &&
++
++		if test "$first_line" = second
++		then
++			stat --format=%i "$todo" >expected-ino
++		elif test "$first_line" = third_
++		then
++			ino=$(cat expected-ino) &&
++			file=$(find . -inum $ino) &&
++			if test -n "$file"
++			then
++				echo &&
++				echo "Trying to free inode $ino by moving \"$file\" out of the way" &&
++				cp -av "$file" "$file".tmp &&
++				rm -fv "$file"
++			fi &&
++
++			cat >"$todo".tmp <<-EOF &&
++			reword $(git rev-parse fifth_^0) fifth_
++			reword $(git rev-parse sixth_^0) sixth_
++			EOF
++			mv -v "$todo".tmp "$todo" &&
++
++			if test "$ino" -eq $(stat --format=%i "$todo")
++			then
++				echo "Yay! The todo list did get inode $ino, just what the sequencer is expecting!"
++			fi &&
++
++			if test -n "$file"
++			then
++				mv -v "$file".tmp "$file"
++			fi
++		fi
++	EOS
++
++	cat >expect <<-\EOF
++	sixth_ - edited
++	fifth_ - edited
++	third_ - edited
++	second - edited
++	first_
++	EOF
++'
++
++for trial in 0 1 2 3 4
++do
++	test_expect_success "demonstrate racy todo re-read problem #$trial" '
++		git reset --hard fourth &&
++		>expected-ino && # placeholder
++
++		GIT_SEQUENCE_EDITOR=./sequence-editor \
++		GIT_EDITOR=./commit-editor \
++		git rebase -i HEAD^^^ &&
++
++		git log --format=%s >actual &&
++		test_cmp expect actual
++	'
++done
++
++test_done
