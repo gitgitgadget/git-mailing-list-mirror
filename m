@@ -1,136 +1,99 @@
 Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-6.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Level: **
+X-Spam-Status: No, score=2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_DNOT,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37FEBC432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 14:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FF3FC432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 14:26:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F33E420862
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 14:25:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66F2A20866
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 14:26:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cSd6r5nO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEKSSGeW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728022AbfKYOZN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 09:25:13 -0500
-Received: from mout.gmx.net ([212.227.15.19]:56287 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727655AbfKYOZM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 09:25:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574691905;
-        bh=nOLbeE0J5DoviHqRw2RYT4a48ORcE7LT16W/rCEXzIA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cSd6r5nOu0sxDSfcAoG5OGwI6XB6idg89Va/4lfNuYFT8djvD8eykIpUtq+u7XADy
-         DOXrmx2CWOgIu0OHf4pLTaz6W3I8M0BWurHi4QDSUI/pKZJ/eQedgEHRVXW/XvwsPG
-         ss/EnEsRA8PJHJN/GM5Pa2Coclf1AMRUg2t8T+D0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mw9Q6-1hjL4H2ySS-00s4OQ; Mon, 25
- Nov 2019 15:25:05 +0100
-Date:   Mon, 25 Nov 2019 15:24:50 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Nika Layzell via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Nika Layzell <nika@thelayzells.com>
-Subject: Re: [PATCH 0/1] add--interactive: skip index refresh in reset patch
- mode
-In-Reply-To: <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1911251523530.31080@tvgsbejvaqbjf.bet>
-References: <pull.475.git.1574539001.gitgitgadget@gmail.com> <xmqqwobpzubw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728112AbfKYO0z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 09:26:55 -0500
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:40074 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728016AbfKYO0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 09:26:55 -0500
+Received: by mail-ot1-f43.google.com with SMTP id m15so12719785otq.7
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 06:26:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1o33RBCJ+JYHyXPWUoeV0kI07kEloxCdFz2rD91T19c=;
+        b=OEKSSGeWOris7nWz9GayqNDdxIGh4rsV+SolVJXPA4tq+2xsv+O8YVOpjkSKqt4MHN
+         wUc0mVRHLN1SBC8mfqCeE7JVn5rrGP2PmizPEehqU0p0YlNpyRWF86Smz7GPE3iBp/jU
+         MP1Hwdnm2eB9p2OBrxr+3KQC2k6mFcfZFPxIlOHInbYvC3cd+XwqzTcEvY+kz9tReNJo
+         5jn6BRDFQPyVHIxks2H5Zmg2SfBnigDV8VKbrziPbmRa+UuaoIfgLJk+XrD7dGlmtYDs
+         mdBPm2736u+29TDo2AwhBlRNl0FIbvhWbeb4/gx6zFYBMPkjaifRlz1VaPrpAU56TwPn
+         b5Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1o33RBCJ+JYHyXPWUoeV0kI07kEloxCdFz2rD91T19c=;
+        b=rQXDSv5c5UU95Cc4BpwoWhxTYO+6VOmsjX4W8SVeqjty+cCUAW0YjixxcWTGNLho39
+         pMwOZEtZRtjeyVqiquFa3KGZwONDmffoBuub+fvGrMeymQ/ac2CFntYm+p8dYg0JP6cR
+         KebPMOzOAb3oXzpvr9GvzLPrkLO6IcxSws5jq8SpmnjVcNa8G6J9f+TkhO41mAE8v3v1
+         /BNDcpW8YSg80diGzt6VrBzvB82f9zfn+R5+9QQHO3wsUIqbDZYEY9rp+HHv6hM7Ta3t
+         OCPzBFxEGfBvET9faZwhbJHZ4tzAZAwI1LqpCcjhCZfNforbLdT1oAZ6h2AzvELu5OUv
+         m+rw==
+X-Gm-Message-State: APjAAAU2OBOtKSKfmWeUdI2YyrnRJTaK0U3W93dDxFeYES19Uzr3vBKN
+        f8/PNjWqOL0JWh/IbozWrSa6H1tu5nJ5/cBOc0o=
+X-Google-Smtp-Source: APXvYqzu8NW62kHmp34wd79yEaARxRybASw4v5oNpDBF9iMAtt/nIlMcc+7QF7jKV5X7lLPyp1IjH26CdVvfAMqOsGo=
+X-Received: by 2002:a9d:7384:: with SMTP id j4mr10436611otk.94.1574692013337;
+ Mon, 25 Nov 2019 06:26:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:oyT1la3/z5JN9l33zEuwOd6IoHoo52XVxOxTQl2roTAXJclVeab
- ZJL096NfHL1bTLd4jCC1e3EEHGlqFiBbzBQ/Pt1Q1bUnxRULodvZOAkPhOSFaoYYCLTvms5
- /pRRslRyi/aCBw9z3DZpu5Ak53XhufgfDBqwWJQzK0Pi616NWl6GdZ7sOUbhzEQJ88swSSE
- LVKVk8t5IEGSBNtsUMsmQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d6W+SYTvK78=:4kiozmpe464T81oelfzH8b
- Q7wC1/Cs2dA+8ogKqW3hTU+PGEKoCTjNvlSIq3uwJaEJ3a+ceLZZF++J1ZdorKElNedxQvNvo
- pwzTgeG0LJc9twk0NQjQ1/Umi6jjM0tdGlP7Ae0Pac3YHA/GJKUcRTiBzbtyPPoupepjFjEdZ
- 3Q0Tml8QIjO0Jw/e0EU1eSg4mtEmIGycxFZme8gXtAtGvZEIwJxo0+2dcXoyJhrLqiq+tsKMo
- 96dGlUjFkPKhDmgjY9ZJXGUPR0Ml/XE5lMOYqcW5J7On85NfCcTOfUSK/DMlVYdaO6pIN2q/V
- hm2UN6XnZbHRDj8/O6JFBJQaoKo5/vavsX5ivU1XDmN8K1KrD8uGgjWjtjO2LdYdV8t7P9rVu
- LU/YkxKJLaVfhJo1x0YDOgQbkaE42kcEsc2Mu5DzxF6v35jT+C50eus/VGo9qSJ7ZN6tXJ93P
- mDtb8a4IIKVz3u6Dv2S/3NWC6s1Ai0Gw6ghgGJCSJfxGORuuBsTMKcIbtxn/HDbBxq4O/fX+t
- /eoLU/U4RjUUOz4EfjctZjzwM9KghxxAXQixsUAmKrE3YBVStC/JmOrx0U0wKmH+EaJFPRfcv
- A7Bxc76ETRb+xokpjaOfiE6dP/xGIPdyklmMzDEJT4oHgFim8JdfDXnWMRwmkvcnhCWux7SH9
- pBLPMlrNjd9dC2XxNbpL3HzyV7vKEdru8CYE/nKGnG38Ydxpbmi+ItzEA1tY4L9VD5vapezOU
- MefhUPeSr79Gqz9YJXNcOHJqETvI5VLsSPmr3fpty3wjDafDKp4pu6lwQ8hWV8PSkLJhSNXrG
- DK1vg1X1PTYFLH58OrbXbukzkPAzQpxJHK88eb9yW4AX7L9eljgw6/ILPxrTq2wiHApEICWWw
- BZ9BEDsMAlS6gJORM5X7nsGgAOYTGa4/vxzeTpIN9qZhadSFtUjXTiUE36yDqMgRoPYKjitqc
- ym8v53s3N0Sq+wakRox2fk2fYOSPciZOgpbHMeww8LlXkVJbRrNSlpp8q0oCd1CtjG062jXvG
- EsyDr7X3B/VVV2ozDrhsa9/vbPRVOZOe8w2zAijEkpTtorZ8HdJXkc7xiLiblmAKYrVMBdBUr
- n84m0TSoKE11GH3na/NpWotj05Dy57+bNJW9KNCmZKblZqYq1Ao+SitP7j3J6D5Owq+YeauHQ
- b8LgfGvuk8WvLRUpJiXEW9ydCouyGanL6wc48Q684MSmSqQQkvRiWLMNVmqWmmB4mgeR69jjn
- m4G6wq26f347RTAV/EIF1ENILw4ThQeFv5B14Nmq2WdFCkCYawg9iNDTjJNc=
+References: <CAHMHMxWhYEMWCPgPp7qX9S_i0-CtS6OBj2TdCVXsyromnwVawQ@mail.gmail.com>
+ <5ddbd7b7.1c69fb81.dbdb8.eb94.GMR@mx.google.com> <CAHMHMxW2TN9OVeEZ0rKWEsyLo3kkuQOcYxMzd0Ybn0Bit1mk=g@mail.gmail.com>
+ <20191125140550.GA23860@danh.dev>
+In-Reply-To: <20191125140550.GA23860@danh.dev>
+From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Date:   Mon, 25 Nov 2019 16:26:17 +0200
+Message-ID: <CAHMHMxU45nWXGAmiSsSPGhuAA6euhqGVvKwCqY7_rKvhKC6MFA@mail.gmail.com>
+Subject: Re: rebase comment char (was: Delivery Status Notification (Failure))
+To:     Danh Doan <congdanhqx@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hello Danh,
 
-On Sun, 24 Nov 2019, Junio C Hamano wrote:
+Apologies for the confusion. I had tried the issue a couple of times
+with my main repository, before reporting the error.
+At first I thought it was a problem with my repository - but it turns
+out it probably was a misconfiguration issue on my part.
 
-> "Nika Layzell via GitGitGadget" <gitgitgadget@gmail.com> writes:
+You can ignore this report.
+
+=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
+=CE=BF=CF=82
+
+On Mon, 25 Nov 2019 at 16:06, Danh Doan <congdanhqx@gmail.com> wrote:
 >
-> > The refresh command is called from git-add--interactive to ensure that=
- git's
-> > view of the worktree is up-to-date. This is necessary for most command=
-s
-> > which use git-add--interactive, as they are interacting with the workt=
-ree,
-> > however it's not necessary for git-reset, which exclusively operates o=
-n the
-> > index. This patch skips the refresh call when performing a git-reset -=
-p,
-> > which can improve performance on large repositories which have out-of-=
-date,
-> > or no, caches of the current worktree state.
+> On 2019-11-25 15:36:13+0200, =CE=A3=CF=84=CE=B1=CF=8D=CF=81=CE=BF=CF=82 =
+=CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 <stdedos@gmail.com> wrote:
+> > If I do
+> > git config core.commentChar %
 > >
-> > I chose to use the existing FILTER property of the flavour to make thi=
-s
-> > decision. A separate REFRESH property could be added instead.
+> > then, during a rebase operation, squash/fixup comments do not honor
+> > the core.commentChar setting
 >
-> Hmph, I wonder why this was sent my way.  How does GGG determine
-> whom to send patches to?  I, like other reviewers, prefer not to see
-> earlier rounds of patches sent directly to me unless they are about
-> areas that I am mostly responsible for (other patches I'll see them
-> and review them on the copies sent to the mailing list anyway).
+> Can you give an example?
+> I couldn't reproduce with both git 2.24.0 and the current development ver=
+sion.
 >
-> CC'ing Dscho who has stakes in keeping the scripted "add -i" frozen,
-> while he is rewriting it in C.
-
-Thanks for pinging me!
-
-As it were, I was aware of this effort, and I am quite happy about it (and
-of course I will adjust my patch series accordingly).
-
-Thank you,
-Dscho
-
->
-> Thanks.
->
-> >
-> > Nika Layzell (1):
-> >   add--interactive: skip index refresh in reset patch mode
-> >
-> >  git-add--interactive.perl | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> >
-> > base-commit: 5fa0f5238b0cd46cfe7f6fa76c3f526ea98148d9
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-475%=
-2Fmystor%2Findex-only-refresh-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-475/mys=
-tor/index-only-refresh-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/475
->
+> --
+> Danh
