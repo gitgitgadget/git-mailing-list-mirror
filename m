@@ -7,192 +7,149 @@ X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD57C432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:40:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0121BC432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3436E2068E
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:40:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C9DF72068E
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:42:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AzH5fYHZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ju4CsuNK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728876AbfKYQkv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 11:40:51 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54790 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728683AbfKYQkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 11:40:51 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so6757498wmj.4
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 08:40:48 -0800 (PST)
+        id S1728877AbfKYQmL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 11:42:11 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42181 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728860AbfKYQmL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 11:42:11 -0500
+Received: by mail-wr1-f67.google.com with SMTP id a15so18952549wrf.9
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 08:42:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dFYV1FxbmyNdwVWyPO5vizs7o6DXWa7xkO8QWIbK9yA=;
-        b=AzH5fYHZ8fxYC+zYe8Y34Q/99UQ4jOQ7UgaP4HiAgBR6eKuDLBjVMZFpZGI17BHM+W
-         pNPKBowwmFqQIxYhHx9uvA21m8K3Epwwu+JjohlLF5RoU2EoSIcudBmfsJ78OKkHtlJo
-         ic35CUKvV7Vqox4ScdYiKw3secfxgUWtcn48DFxMEX0NC9WPfbjWCX6bKOaKoDSBtV45
-         4anZu1xe/Z0pwWebffkBDkiWVwrrXUz9M14D1cOcp0NqYAeq0UsOx75bfbAdH+RGhBYI
-         8nu/yZQ26HEH9PaSJga7qhSPIvw9SvcTwGb9XL4UPGh8p4BUHVQpP9doaD2l57qglOpI
-         Aofg==
+        bh=mogzNAQD2mmoOoW/VgfZfb7gARdm565YWxHYS6nRyAE=;
+        b=ju4CsuNKyAVmfhpownr9MFtUerDglgdOwOEJX9LebXo/oZTB8qilNnWQyTTx3HVpys
+         R54Aj65C8qgGGk3v84PWECFC9AjJxIz3J5n7NvGfb21AngWZEFUZXaCTV7FUIy0KcO9F
+         /cA6psd1MVACwELDPaJ66cpLXcKmz+iBQ2Ud7ocpmpcnqmxN/xFK4FM4Z6fihxPC8id4
+         NG2Q2S6NIDm7yi6rkEsgK7eVeaPrtJbRhpUBARlLPdMd31W/G0YLjGmf/+QhgEAnEUk0
+         wUAEKHXU5oIA92n8HWgWrEi3xG6/Ufglzk3akurDjS9nnNITnJWPiNsTOwPJcdv8uJ8t
+         WEuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:reply-to:subject:to:cc:references:from
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=dFYV1FxbmyNdwVWyPO5vizs7o6DXWa7xkO8QWIbK9yA=;
-        b=NNBw1Ef4jTVYLVdpHWYwK6+oUHsKfLDTudXcP1ldPaX5mnRpHthAvjWZcNJ3N4C23N
-         yeZfuahLPEA+fCxQGyQ/jhzPspcRAT8D/9V33HdsquiY1zHi5JfW+hn35WeNou/8j2XR
-         vfV8rp2GfhojsPIUwbb/wjf2TtCmJzFRHrm1i78y3k+snBC3NUqd9iZRaqO3kfw1Dt6n
-         xHebpWVnZqCpMaKmfZjfDSsTvmR4OaieIKSlpzOaJMTqHxPXl3gd0Rlvy3EkrKNbHJq0
-         Id5ouBBK5LPqWdjecVHD4/B7VSgTO341PGCvQ5NczVeZ6plUi48MnKpMF0Cd5eVTzBHQ
-         a8vg==
-X-Gm-Message-State: APjAAAVgoGfYE5E5HAuwk17+J1h+mQJsOkCzEs7LXyVc5rLZO0FALwUn
-        6CIY5qhb9vUrUAl/vxTxrKc=
-X-Google-Smtp-Source: APXvYqx8ZJGd4o2hFWvpfWWMp1+mxGDdv41HR6/blHqyfV8NeWDmQL3vb6FBzEB9Ym2d5s9kv9/c3Q==
-X-Received: by 2002:a05:600c:249:: with SMTP id 9mr9829663wmj.2.1574700048241;
-        Mon, 25 Nov 2019 08:40:48 -0800 (PST)
+        bh=mogzNAQD2mmoOoW/VgfZfb7gARdm565YWxHYS6nRyAE=;
+        b=QPYYH7mL1D1mdqPEnB8gKU7U+3zly5BIyFVY6z3tGWLOBp6mH5c3v3Kyl4ABIOQ6wa
+         AOe+BL4O8veeIMf/3IbpoEjo8joU5A+TYaolFjcHPidbAHudcaofB7Xfmq2jiFkJneRG
+         A+pOXpGBQh1xiUKbGCsn81CmSBsCfdf2OSaSbFwKfB/n7jTZfA7TqkeizBuyZ3IQ4L0T
+         rGdHrFhWGht6I45zmEW1eAieKxaqGeKp+7DODUsZ68+dVhv4iOVAZ/l5OBoNQmD5uVoc
+         gwJCUHmsBQOeap0MBQk+l9pfQeRDXj/eZG2RO/tgdEbR17zXzivM3QY+O/6EAGG5gL28
+         fmiA==
+X-Gm-Message-State: APjAAAUrx5wAUb+STeO5jhjZjYMbHCvQT5QSaVfm8ZeY9uNnZ2JZL0Es
+        6M/ay7jw3kPCDHzD4ohQ/f/ZvfB/
+X-Google-Smtp-Source: APXvYqyv0VUX3L4fnoapIM2fKYKnkGYOKFYLJFtm0VQS1wdLTG6oQE5vDCxe0xKxI2TV/YsnKYIQWg==
+X-Received: by 2002:adf:a119:: with SMTP id o25mr34620072wro.74.1574700128766;
+        Mon, 25 Nov 2019 08:42:08 -0800 (PST)
 Received: from [192.168.2.240] (host-92-22-28-211.as13285.net. [92.22.28.211])
-        by smtp.gmail.com with ESMTPSA id w11sm11939292wra.83.2019.11.25.08.40.47
+        by smtp.gmail.com with ESMTPSA id a6sm439079wmb.1.2019.11.25.08.42.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Nov 2019 08:40:47 -0800 (PST)
+        Mon, 25 Nov 2019 08:42:08 -0800 (PST)
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] t3429: try to protect against a potential racy todo file
- problem
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Brian Norris <briannorris@chromium.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <e7c01e0f-8466-c2c5-b53a-a93f941dfb1c@gmail.com>
- <20191123172046.16359-1-szeder.dev@gmail.com>
- <xmqqk17p280y.fsf@gitster-ct.c.googlers.com>
- <8c21662f-6548-a46e-9c87-eb364355cb78@gmail.com>
- <20191124211021.GB23183@szeder.dev> <20191125131833.GD23183@szeder.dev>
- <5a43a071-a3c2-770e-bca4-3e73aff96e48@gmail.com>
- <20191125151517.GE23183@szeder.dev>
+Subject: Re: [PATCH v2 1/1] sequencer: fix empty commit check when amending
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.467.git.1574345181.gitgitgadget@gmail.com>
+ <pull.467.v2.git.1574451783.gitgitgadget@gmail.com>
+ <037f2b2975e06847443aef46939e3c712053dedf.1574451783.git.gitgitgadget@gmail.com>
+ <xmqq5zjb2vsx.fsf@gitster-ct.c.googlers.com>
+ <340859a7-5cc4-f641-818d-fcedbf29a2a6@gmail.com>
+ <94573071-556b-caae-b159-40c168a08f44@gmail.com>
+ <xmqqr21wy80o.fsf@gitster-ct.c.googlers.com>
+ <43bdadd2-9ea9-4e50-1f47-ec18e0db4794@gmail.com>
+ <nycvar.QRO.7.76.6.1911251652510.31080@tvgsbejvaqbjf.bet>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <1d94202c-4ab9-8437-0d73-80820ecb6789@gmail.com>
-Date:   Mon, 25 Nov 2019 16:40:46 +0000
+Message-ID: <cb0748e9-5eb1-3ed5-a4bd-94eb540076bc@gmail.com>
+Date:   Mon, 25 Nov 2019 16:42:07 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.0
 MIME-Version: 1.0
-In-Reply-To: <20191125151517.GE23183@szeder.dev>
+In-Reply-To: <nycvar.QRO.7.76.6.1911251652510.31080@tvgsbejvaqbjf.bet>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/11/2019 15:15, SZEDER Gábor wrote:
-> On Mon, Nov 25, 2019 at 02:43:07PM +0000, Phillip Wood wrote:
->> On 25/11/2019 13:18, SZEDER Gábor wrote:
->>> On Sun, Nov 24, 2019 at 10:10:21PM +0100, SZEDER Gábor wrote:
->>>> To notice a changed todo file the sequencer stores the file's stat
->>>> data in its 'struct todo_list' instance, and compares it with the
->>>> file's current stat data after 'reword', 'squash' and 'exec'
->>>> instructions.  If the two stat data doesn't match, it re-reads the
->>>> todo file.
->>>>
->>>> Sounds simple, but there are some subtleties going on here:
->>>>
->>>>    - The 'struct todo_list' holds the stat data from the time when the
->>>>      todo file was last read.
->>>>
->>>>    - This stat data in 'struct todo_list' is not updated when the
->>>>      sequencer itself writes the todo file.
->>>>
->>>>    - Before executing each instruction during an interactive rebase,
->>>>      the sequencer always updates the todo file by removing the
->>>>      just-about-to-be-executed instruction.  This changes the file's
->>>>      size and inode [1].
->>>>
->>>> Consequently, when the sequencer looks at the stat data after a
->>>> 'reword', 'squash' or 'exec' instruction, it most likely finds that
->>>> they differ, even when the user didn't modify the todo list at all!
->>>> This is not an issue in practice, it just wastes a few cycles on
->>>> re-reading the todo list that matches what the sequencer already has
->>>> in memory anyway.
->>>
->>> It can be much more than just a few cycles, because the total number
->>> of parsed instructions from all the todo file re-reads can go
->>> quadratic with the number of rebased commits.
->>>
->>> The simple test below runs 'git rebase -i -x' on 1000 commits, which
->>> takes over 14seconds to run.  If it doesn't re-read the todo file at
->>> all (I simply deleted the whole condition block checking the stat data
->>> and re-reading) it runs for only ~2.5secs.
->>>
->>> Just another angle to consider...
->>
->> I know dscho was keen to avoid re-parsing the list all the time [1]
->> presumably because of the quadratic behavior. (He also assumed most people
->> were using ns stat times [2] but that appears not to be the case)
-> 
-> Nanosecond file timestamp comparisons are only enabled by the USE_NSEC
-> macro, which is only defined if the USE_NSEC Makefile knob is enabled,
-> but that is not enabled by default.
-> 
-> Then there is the related NO_NSEC Makefile knob:
-> 
->    # Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
->    # available.  This automatically turns USE_NSEC off.
-> 
-> As Dscho mentioned in [2], we do disable nanosecond file timestamp
-> comparisons in 'config.mak.uname' on a handful of platforms by setting
-> NO_NSEC.  This, however, does not mean that nanosec timestamps are
-> enabled on other platforms by default.
-> 
->> Could we
->> just compare the text of the todo list on disk to whats in todo->buf.buf
->> (with an appropriate offset)? That would avoid parsing the text and looking
->> up all the commits with get_oid()
-> 
-> Comparing the contents without parsing is still quadratic in the size
-> of the todo list, though I suppose with a much lower constant factor
-> than actually parsing it.
+Hi Dscho
 
-The patch below (assuming thunderbird doesn't mangle it) reduces the 
-time to run your bulk commit test from 30s to 7s, if I delete the 
-condition block which checks the stat data it takes 4.7s on my (somewhat 
-ancient) laptop. So there is a cost to the string comparison approach 
-but it's much less that the full todo list parsing.
+On 25/11/2019 15:53, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> On Mon, 25 Nov 2019, Phillip Wood wrote:
+> 
+>> On 25/11/2019 03:00, Junio C Hamano wrote:
+>>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>>
+>>>> We do actually check that there is a valid HEAD before we try to fixup
+>>>> a commit. Though perhaps we should still change this patch as HEAD may
+>>>> be changed by another process between that check and re-reading it
+>>>> here. If you try to fixup a commit without a valid HEAD you get
+>>>>
+>>>> error: need a HEAD to fixup
+>>>> hint: Could not execute the todo command
+>>>> hint:
+>>>> hint:     fixup faef1a5a7637ff91b3611aabd1b96541da5f5536 P
+>>>> hint:
+>>>> hint: It has been rescheduled; To edit the command before continuing,
+>>>> hint: please
+>>>> hint: edit the todo list first:
+>>>> hint:
+>>>> hint:     git rebase --edit-todo
+>>>> hint:     git rebase --continue
+>>>> error: could not copy '.git/rebase-merge/message-squash' to
+>>>> '.git/rebase-merge/message'
+>>>>
+>>>> The last error message is unfortunate but we do exit in an orderly
+>>>> manner rather than segfaulting.
+>>>
+>>> Thanks for thinking about the issue further.
+>>>
+>>>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>>>> index d2f1d5bd23..4f55f0cd1c 100755
+>>>> --- a/t/t3404-rebase-interactive.sh
+>>>> +++ b/t/t3404-rebase-interactive.sh
+>>>> @@ -67,6 +67,21 @@ test_expect_success 'setup' '
+>>>>    SHELL=
+>>>>    export SHELL
+>>>>
+>>>> +test_expect_success 'fixup on orphan branch errors out' '
+>>>> +
+>>>> +       test_when_finished "git switch master" &&
+>>>> +       write_script switch-branch.sh <<-\EOF &&
+>>>> +       git symbolic-ref HEAD refs/heads/does-not-exist &&
+>>>> +       git rm -rf .
+>>>
+>>> That "git rm -rf ." scares me, though.
+>>
+>> I know I'm not too keen on it my self but we need to empty the worktree and
+>> index if we're going to switch to an unborn branch
+> 
+> How about `git worktree --orphan does-not-exist unborn`?
+
+I'm trying to create the unborn branch in the current worktree as that 
+is where the rebase is happening
 
 Best Wishes
 
 Phillip
 
---- >8 ---
-diff --git a/sequencer.c b/sequencer.c
-index 8952cfa89b..a3efdae0a5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3909,12 +3909,17 @@ static int pick_commits(struct repository *r,
-                                                         arg, item->arg_len,
-                                                         opts, res, 0);
-                 } else if (check_todo && !res) {
--                       struct stat st;
--
--                       if (stat(get_todo_path(opts), &st)) {
--                               res = error_errno(_("could not stat '%s'"),
-+                       int offset;
-+                       struct strbuf buf = STRBUF_INIT;
-+                       if (strbuf_read_file(&buf, get_todo_path(opts), 
-8096) < 0)
-+                               res = error_errno(_("could not read '%s'"),
-                                                   get_todo_path(opts));
--                       } else if (match_stat_data(&todo_list->stat, &st)) {
-+
-+                       offset = get_item_line_offset(todo_list,
-+                                                     todo_list->current 
-+ 1);
-+                       if (buf.len != todo_list->buf.len  - offset ||
-+                           memcmp(buf.buf, todo_list->buf.buf + offset, 
-buf.len)) {
-+                               fputs("re-reading todo list\n", stderr);
-                                 /* Reread the todo file if it has 
-changed. */
-                                 todo_list_release(todo_list);
-                                 if (read_populate_todo(r, todo_list, opts))
-
+> 
+> Ciao,
+> Dscho
+> 
