@@ -2,91 +2,117 @@ Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A5F6C432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 10:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED0AC432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 12:42:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2AE742084D
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 10:47:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EA3F420862
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 12:42:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VNQ6FOKe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727521AbfKYKrk convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 25 Nov 2019 05:47:40 -0500
-Received: from mail1.bemta26.messagelabs.com ([85.158.142.6]:42754 "EHLO
-        mail1.bemta26.messagelabs.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727568AbfKYKrB (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 25 Nov 2019 05:47:01 -0500
-Received: from [85.158.142.100] (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits))
-        by server-6.bemta.az-a.eu-central-1.aws.symcld.net id C1/92-16685-321BBDD5; Mon, 25 Nov 2019 10:46:59 +0000
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRWlGSWpSXmKPExsWi+sWpUldp4+1
-  Yg92L9S26rnQzWTT0XmF2YPK4eEnZ4/MmuQCmKNbMvKT8igTWjN6/O1gLdvJVbOiaztjA+Iu7
-  i5GLQ0hgLaNE66eDrBDOQUaJ149uMncxcnKwCShKtM2Zxg5iiwioSUxsO8QCYjML6Et8+nOAC
-  cQWFvCRmNH5jK2LkQOoxlfixgE7iHIriR0/zoCNYRFQldj6rY0JpIRXwF3i9Fs/kLCQQKnExG
-  s/WUFsTgFLieWrX4DZjAKyEo9W/mKH2CQucevJfLBNEgICEkv2nGeGsEUlXj7+xwphG0hsXbq
-  PBcJWkHj6tZ8VoldHYsHuT2wQtrbEsoWvwXp5BQQlTs58wjKBUXQWkhWzkLTMQtIyC0nLAkaW
-  VYyWSUWZ6RkluYmZObqGBga6hobGuoa6RoYWeolVuol6qaW6yal5JUWJQFm9xPJiveLK3OScF
-  L281JJNjMD4SilkvLWDsfPrW71DjJIcTEqivAzet2KF+JLyUyozEosz4otKc1KLDzHKcHAoSf
-  BKr70dKyRYlJqeWpGWmQOMdZi0BAePkgjv6nVAad7igsTc4sx0iNQpRkuOCS/nLmLmOHh0HpB
-  893PxImYhlrz8vFQpcV7z9UANAiANGaV5cONg6egSo6yUMC8jAwODEE9BalFuZgmq/CtGcQ5G
-  JWHeOJApPJl5JXBbXwEdxAR0ENPMWyAHlSQipKQamLS+13NeYZormXjEqtiQacHltoywt8Xzj
-  tcs3nhR75fI/vsvhcw9zn9+uOboNsuFjdHfBKfJTT579ehszfm5n1llBaUmKe3eZ2g4S9963d
-  kVnabG/Pd7+cpn3boxLdJm26G1DPVrjr17dU8h4o2I0vGJM/YyrzSbOsNHuOqfwMWUjfkP8xN
-  vZF09pH/PcjPH7+JTn365vbgqlZioVsaY9+xytfayJR7i04+9YZMTqe+QXpoXEMHTyM119E+m
-  fvm8d0qX9B4pT3xtzrPPV/urdlHR4766Bj7v+ldTNh7qu9HYGrKOs2lip+GsNY7vRL9tc9zxd
-  lcxs+IKxzWPlt24qG61JMMz8IzLUzefaSksX8KUWIozEg21mIuKEwFNOMtMwgMAAA==
-X-Env-Sender: eda@waniasset.com
-X-Msg-Ref: server-28.tower-225.messagelabs.com!1574678818!1203312!1
-X-Originating-IP: [37.244.66.121]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.44.22; banners=waniasset.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 9216 invoked from network); 25 Nov 2019 10:46:58 -0000
-Received: from unknown (HELO smtp.waniasset.com) (37.244.66.121)
-  by server-28.tower-225.messagelabs.com with ECDHE-RSA-AES256-SHA384 encrypted SMTP; 25 Nov 2019 10:46:58 -0000
-Received: from WCL-EX13MBX-DR.wcl.local (10.45.7.24) by WCL-EX13MBX.wcl.local
- (10.45.7.22) with Microsoft SMTP Server (TLS) id 15.0.1263.5; Mon, 25 Nov
- 2019 10:46:57 +0000
-Received: from WCL-EX13MBX-DR.wcl.local ([fe80::fc09:9ae7:1670:cbe1]) by
- WCL-EX13MBX-DR.wcl.local ([fe80::fc09:9ae7:1670:cbe1%12]) with mapi id
- 15.00.1263.000; Mon, 25 Nov 2019 10:46:56 +0000
-From:   Ed Avis <eda@waniasset.com>
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: git-log diff formatting options: some turn on diffs, some don't
-Thread-Topic: git-log diff formatting options: some turn on diffs, some don't
-Thread-Index: AdWhKVNYf1VeeiWrRyWq/41zjcEDdQAermFIAHZOY8A=
-Date:   Mon, 25 Nov 2019 10:46:55 +0000
-Message-ID: <cbfdbe62ad394abe9222c6e4d7875651@WCL-EX13MBX-DR.wcl.local>
-References: <55ab4d09c51446c6b23abbb1c92441d6@WCL-EX13MBX-DR.wcl.local>
- <xmqq1rtz2v99.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq1rtz2v99.fsf@gitster-ct.c.googlers.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.45.11.140]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1727300AbfKYMmJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 07:42:09 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46528 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726926AbfKYMmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 07:42:08 -0500
+Received: by mail-pl1-f194.google.com with SMTP id k20so2000854pll.13
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 04:42:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version;
+        bh=dSStyl7XmO5TbnBt2j3t/O1je0+OOfXVVmhnh/BmNgc=;
+        b=VNQ6FOKe83hMM0Q7H0o06xxLu5tKbzUs6KAyAC2CIMAiP/OawdqGVMbm+OQPiUwuYw
+         e6WIyrxaLE3O2tNenVBS8vm9p+qCCO/0JBo8vkADYHhm0XZ601pZYDUdtIOSiO9jwrcg
+         A7/qAlkzgW9fL4JlIp3BIkUfMphGqq+bZvFFL3YbRSeQqQXmGG5Gm+JLQpV191w0yg19
+         fON7WUWO4rfb8uv4A50WSShuYr4iHtBN5774HlFEGjq5EjhLtaUxNL71VRY/2h9S/QOB
+         53yJxax5tSOh0vweveqRRPaHgk9FHOPXqOpBmM7lI04g3i27EKqrEKwIhdUozLERx3yy
+         QGYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version;
+        bh=dSStyl7XmO5TbnBt2j3t/O1je0+OOfXVVmhnh/BmNgc=;
+        b=RT3eiCZUcnk+mVuJz8j3k4ovsloW/YfXnUAKZFYaI4n1Slk4wTCDH85QS5G73zKqMy
+         AyF62+CQRyw4wXHkuecoJNQKqe9C9T2BlA+9YC5KEpbhDWtTPowjLH+X/ms9ExMHf9Pg
+         12UAcuYmKByGNavxlJGGb1QuTFBGXCvDJQXdCMcevhCe47TRGR1WHpLRgZX+fvol9Nuc
+         OxVqaFmTXAnjBa/J3XUbQke16enQgmjgG3jcg2C+iw+fGEHDwy6Zewf2LxfyDhl9wR+1
+         XSyKNIYJqmCN7gN4O7HOc8NWGkbx78bGc3c6r9+aY2BtDb4xdL5NYfkVu4eXVEcpnCqO
+         41GQ==
+X-Gm-Message-State: APjAAAVLl7CtHFI+wX9rN2MpickbxKAj2A1axu5kVH0JOXzXpMjPf6gH
+        XQFMDAwOeMwsjvTB6tlLSXqnBRCmpPk=
+X-Google-Smtp-Source: APXvYqzE5AU9+3W4MvdAjcOsOBrHc3V7TfnBhIGq8vxXRA9O23VQ5P+4rdLWsv7wfdJw3J53+dkP2g==
+X-Received: by 2002:a17:90a:3522:: with SMTP id q31mr38745648pjb.18.1574685726169;
+        Mon, 25 Nov 2019 04:42:06 -0800 (PST)
+Received: from sydneypc ([203.213.81.65])
+        by smtp.gmail.com with ESMTPSA id 186sm8846482pfb.99.2019.11.25.04.42.04
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Nov 2019 04:42:05 -0800 (PST)
+From:   Chen Bin <chenbin.sh@gmail.com>
+To:     git@vger.kernel.org
+Subject: A new idea to extend git-blame
+Date:   Mon, 25 Nov 2019 23:41:55 +1100
+Message-ID: <87o8x06sbw.fsf@sydneypc>
 MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for your reply.  If the -r flag has no effect on 'git log' then shouldn't it be omitted from the documentation?
-https://git-scm.com/docs/git-log has a section on 'Diff Formatting' but if I understand you rightly, a large part of that only applies to other commands.
+I already implemented the idea in Emacs Lisp. See,
 
-Further, I would suggest that if the -r flag does get passed to 'git log' then it should give a warning.
-(Ideally I would say an error, but there might be existing scripts that pass it.)
+http://blog.binchen.org/posts/effective-git-blame-in-emacs.html
 
+I tested at https://github.com/redguardtoo/test-git-blame
 
-To learn how we protect privacy, please use this link (https://www.qma.com/gdpr.html) to read our Privacy Notice.
+Looks it works.
 
-This email and any files transmitted with it are CONFIDENTIAL and are intended solely for the use of the individual(s) or entity to whom they are addressed. Any unauthorised copying, disclosure or distribution of the material within this email is strictly forbidden. Any views or opinions presented within this email are solely those of the author and do not necessarily represent those of QMA Wadhwani (QMAW) unless otherwise specifically stated. An electronic message is not binding on its sender. Any message referring to a binding agreement must be confirmed in writing and duly signed. If you have received this email in error, please notify the sender immediately and delete the original. Telephone, electronic and other communications and conversations with QMAW and/or its associated persons may be recorded and retained.
+The only issue is Lisp is slow in big code base.
 
-Please note that your personal information may be stored and processed in any country where we have facilities or in which we engage service providers. If you provide personal information to us by email or otherwise, you consent to the transfer of that information to countries outside of your country of residence and these countries may have different data protection rules than your country.
+So I'm thinking I could re-implement it in C instead.
 
+My question is, *who can I contact to understand git-blame?
+
+I'm experienced at C but need some expert's guide.
+
+The key algorithm is simple,
+
+The algorithm only works for one line blame and the user must
+select text inside the line first.
+
+Step 1, `git blame -L6,1 --porcelain -- hello.js` output,
+
+    4f87408612e0dacfd89a1cd2515944e21cf68561 6 6 1
+    skip...
+    filename hello.js
+     doit({bad: 'destroy world', good: 'hello world', ...});
+
+I got the commit id (1st column), the line number (2nd column),
+file name (hello.js) and the code line (last line).
+
+Step 2, if the code line does not contain the selected text, the
+  recursive search stops
+
+Step 3, or else use commit id, line number and file name to build
+  new git blame cli, like,
+
+`git blame -L line-num,1 --porcelain 4f8740^ file-name`
+
+Step 4, execute new git blame command and start from Step 1
+
+Here is my first commit (added some debug code),
+
+https://github.com/redguardtoo/git/commit/d01d26f2df
+
+-- 
+Best Regards,
+Chen Bin
+
+--
+Help me, help you
