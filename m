@@ -2,104 +2,122 @@ Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B28C0C432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19E1DC432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 802F8207FD
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:45:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF3862075C
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 22:53:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C2xHy5wm"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gYpQ7hJ4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727209AbfKYWpk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 17:45:40 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:38198 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbfKYWpk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 17:45:40 -0500
-Received: by mail-pl1-f175.google.com with SMTP id o8so2816072pls.5
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 14:45:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VJpN+p9oNlZXGO+b5epjnMfUj8YpCe5bVELA+GcTtXY=;
-        b=C2xHy5wmfWAHLQCTqBtTodT+6qtTlmGNAc/PDI0Qc6N/yuCQ2Cdv42+RJA+rdvXEYc
-         3g9I56UlYARLACMx6W/QO7qzN7pf5KH8oy3DyIDxI5p7fNmZ805bJAvK7tINegNcdoKe
-         TJp2nRx5MlLgorbZ89rbsF00uqHDZpndLmz3NYanvPvpzu1cfLPix+mEQgd6zWrbfq7J
-         JR0pmeLwRC7WBsJT43b/ctdsn5dJp4Zpjd4LawKqS8ewR/vjQS81+TMB1iUJUjq5qOzE
-         pehIRe9UHzu342FyN7FlZACD7crdt13VNckHxCNaoo6uaMa2DS3k8dACuiueYVaAwqco
-         RWTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VJpN+p9oNlZXGO+b5epjnMfUj8YpCe5bVELA+GcTtXY=;
-        b=ReJd8kv1nt0RqFWiWYFQxY/9iDxQ0MyN90KIvT32WaZs4GON0rVI0YBdHYyzqByz92
-         CuLyukzmw6IUPCCa+1Yu2Z2daEXQ6WKCEtpBXgL09+7xudwcynxu3FhRGHCNsb8rmLvU
-         xvRGKfeo31+Md6SOMPoGzngGT90OlxC1Qj0lPM616NLgtgra4aCsSYgpowcwTE5lzZZM
-         iFgwEyr7yU6Pt6LkmbUhJp7CMaqUBW4aUiQRe18qkQ/NFO7tAJDI3vuYJiL3bcl8tHl5
-         113gqP0383mDcVqnukUV15qxxFkJO+kW461/dBLcXUPnVDdyztQY+BoCVDWoUlYmUfaX
-         9njQ==
-X-Gm-Message-State: APjAAAW55m3Ou4KPtf/xZUZG5ydSKJ8p79itD6mLqD7hu58akRplEPEc
-        NohR3jWJBX02MQhvmqqnlkHR8Q==
-X-Google-Smtp-Source: APXvYqwQ/3CDXD7eQrUwPh0sXuTzfLADXiWOdJL3/qDVeEkb6IStjVnykiHaavvwg/M2L8vW3VJFyQ==
-X-Received: by 2002:a17:902:7205:: with SMTP id ba5mr30188860plb.95.1574721938408;
-        Mon, 25 Nov 2019 14:45:38 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id b26sm9482553pfo.158.2019.11.25.14.45.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2019 14:45:37 -0800 (PST)
-Date:   Mon, 25 Nov 2019 14:45:33 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC] Hook management via 'git hooks' command
-Message-ID: <20191125224533.GB83137@google.com>
-References: <20191116011125.GG22855@google.com>
- <20191116054501.GA6538@camp.crustytoothpaste.net>
- <20191118223819.GI22855@google.com>
- <20191119005136.GA6430@camp.crustytoothpaste.net>
- <20191123011924.GC101478@google.com>
- <20191125030445.GB2404748@camp.crustytoothpaste.net>
- <20191125222113.GA83137@google.com>
+        id S1727232AbfKYWxM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 17:53:12 -0500
+Received: from mout.gmx.net ([212.227.17.20]:54245 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725946AbfKYWxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 17:53:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574722381;
+        bh=Cip9HOF2Gvyg0E7/2WQ2OEKayuWn1RshqMZPgMv+Pkc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gYpQ7hJ4rLaJIpXfADck/1NfxecICwOue/C1ztl6q0cR6lIxAraRWcOMJMnZIS5t0
+         cJHGvAf7o5Cqwe1EI0lRRpYkw/9Q0AMgCTivdMZ/rzyzS9nDfWBktp4TWFXxiiRiii
+         BP8vUPjSwt8gwTjey+8E/e2JjZe6GXJe9z9H4JEE=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRmfi-1iOsYp2EPq-00TDjn; Mon, 25
+ Nov 2019 23:53:01 +0100
+Date:   Mon, 25 Nov 2019 23:52:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/1] sequencer: fix empty commit check when amending
+In-Reply-To: <CAPig+cRg1WchC=-4qc51KQLgYewiYtEsu+RTf=_jbw3sZznjew@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1911252343350.31080@tvgsbejvaqbjf.bet>
+References: <pull.467.git.1574345181.gitgitgadget@gmail.com> <pull.467.v2.git.1574451783.gitgitgadget@gmail.com> <037f2b2975e06847443aef46939e3c712053dedf.1574451783.git.gitgitgadget@gmail.com> <xmqq5zjb2vsx.fsf@gitster-ct.c.googlers.com>
+ <340859a7-5cc4-f641-818d-fcedbf29a2a6@gmail.com> <94573071-556b-caae-b159-40c168a08f44@gmail.com> <xmqqr21wy80o.fsf@gitster-ct.c.googlers.com> <43bdadd2-9ea9-4e50-1f47-ec18e0db4794@gmail.com> <nycvar.QRO.7.76.6.1911251652510.31080@tvgsbejvaqbjf.bet>
+ <CAPig+cRg1WchC=-4qc51KQLgYewiYtEsu+RTf=_jbw3sZznjew@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191125222113.GA83137@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:O7pTt71t0k9JvLW2HufiBS0p8QykmgkhNr7/Gl2cORtMaSFoxjs
+ J8uPRMT0WghdLOU64E+h97A+OIzRSPtAIPe/KNaTprw17ZeF6KvnPZJX/z59gtHXomuVxvC
+ 4YeVtq5AThxXA7bZGoUOjKZbsq8uCZNybe5+aexxex611A/oSr5L3AUlVyJanuZh5BT+LOf
+ I6rv92Fa6Fi2bqyMhg7gg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:79HWZz+JukM=:k1mZfktpFajmZVTJwoWja4
+ rYJLvmhDY3umnN94xvSxH3TQ6vHWbNIrr95TmzZLvYvZOkdibrWiNUzGa8KdT7QZ7iF7fUEcm
+ QEd5IzbMm2IAiT51GRY/uh1UpzowImfCrCkbws+3V72jZQV9nrnoNzkjiUTKAescsTPikdFpJ
+ LUqfEWUP0F/ur7p9yE9VZJ8XwAJnnWGELVEKleWq+mEYZV4ERVHehRiEp7sY+zkXu1qVmjQ4Y
+ 0+kzfIQAD8UMXLClLn4OR65pwuK3UzqY6fGrJ1mVIlUzd8A0osoy7dLEAnAc+855k2xWzgDB+
+ EHf9WUTq0N5CJeBC+PUQ8e+vCAPTDp1XLuJ9EB+KasH1o3rZrPWbuskfuL+0+vNNlYpYCRe61
+ UI3vtjXVjnF9O2UwlnIDjYIf9KUfLSyllh8yCc33MW3EPy2OVpFuhxkhSta0oMhTwrVrAdS+L
+ MUrBxrE/GGfJJiZO8goqpOn2XUsvJUYdMHCYU4Vm+WLhFyYW5ate/83mrjnPjoxvymV0kc96B
+ ANS/wZM4y1zFzMX6BH3/9pqsOB33S/AdqS73OXRmoZZ3W0rWJIRlex6JtC/I7SnWd3/QmhMAH
+ GePzdbSOJwWKraOLW37+e659lyFfBLNOy57PQHilMWpBiJOoH5f8Tb7PbhlSs6/R3sy1tEAZe
+ y44GSTIq5Jxu0W49U7Pd5JkZ4XGa2ygAs03DcK1M3wjzOp4cMNPkVDVSYAb2hecfggWNbZsnm
+ uRM3dkLTx83rqpH66JmtbFf3Y5TjCu+U/gfYzQW6LgSJUylGa8qYK67M+p9n4y1bljou8woFc
+ Vtyfeuc0rqeJ2AGS1RVIXgYNDG9YhoF6HcnMahFpcDWvI+Wm9cQrvmTmKeHm4k0aZb11b3yrl
+ y/K5bY9f+HsU9IeHcjIGCi36qhOTf1pU/i3eWtvfmeYBmLbgRFjmOgMZgONIiVyGopYSsJh8U
+ tyEBLRLrWU4hBVBwnUgigXuvrzvkHUFf00M+8Cz8MYkYyWgJ21Atw+rScyQcwr1cCvo9b89s2
+ kE93cMIakDszY8WTWEpltvpFaYbGVqVDc5Ft+C9fDHQzOQqe8Su+s1okC+jGhX6etRgNSmQnu
+ 61w6IuVOEDQHXnFLzxcDWX/Ou4iWXfqBTgq5SFz5GFkmIimxGaktMBBOJRH0aO8BXzV7ghduv
+ viZQzNFG964V/5a9jmA1jvQ0C9jwY26ZCmwgQ1qyz3julYLYZ2Lzvgh0wTeNBBhdt6+m/XjHz
+ fcV18J3mgEY0p3vQ0I6OgmHuG4vKqk+bzH2ajPJglsfLNJKSs4KVBRwgYhRY=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This sounds like we both are pretty close on the same page, so I think I
-> will get started in the coming weeks and see if we can get a mockup to
-> pick at with the implementation details in front of us.
+Hi Eric,
 
-Hm. To elaborate (and partially as a reminder to myself) I will try to
-get it done in the following order:
 
-1. Implement 'git hook list <hookname>' which reads all the configs.
-(User would need to manually add the configs at this stage)
+On Mon, 25 Nov 2019, Eric Sunshine wrote:
 
-2. (maybe) Implement 'git hook execute <hookname> <arg...>'. This may or
-may not be useful; I suppose it would be pretty equivalent to:
+> On Mon, Nov 25, 2019 at 10:54 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Mon, 25 Nov 2019, Phillip Wood wrote:
+> > > On 25/11/2019 03:00, Junio C Hamano wrote:
+> > > > That "git rm -rf ." scares me, though.
+> > >
+> > > I know I'm not too keen on it my self but we need to empty the workt=
+ree and
+> > > index if we're going to switch to an unborn branch
+> >
+> > How about `git worktree --orphan does-not-exist unborn`?
+>
+> git-worktree doesn't presently recognize --orphan, though it would be
+> nice if it did. In fact, I clearly was thinking of --orphan (along
+> with -b, -B, and --detach), when I wrote the implementation, as can be
+> seen from the commentary in one of the original patches[1]. That
+> --orphan never got added was either due to an oversight or it was one
+> of those "we'll add it when someone actually needs it" deals.
+>
+> [1]: https://lore.kernel.org/git/1436573146-3893-11-git-send-email-sunsh=
+ine@sunshineco.com/
 
- $ git hook list <hookname> | xargs -I% sh % <arg...>
+You're absolutely correct, of course. I actually had looked at the output
+of `git checkout -h` instead of `git worktree -h`... And `checkout` does
+have that `--orphan` option.
 
-3. Implement config modifiers like 'git hook add', 'git hook edit' etc.
+But from the documentation at
+https://git-scm.com/docs/git-checkout#Documentation/git-checkout.txt---orp=
+hanltnewbranchgt
+I see that the command I had in mind does not work as I expected it to:
+`git checkout --orphan new-branch $EMPTY_TREE` will fail with
+fatal: Cannot switch branch to a non-commit '4b825dc642cb6eb9a060e54bf8d69=
+288fbee4904'
+(and the documentation of the `--orphan` option also suggests to use `git
+rm -rf` for the use case under discussion, so there...)
 
-My thinking is that we will have a lot of time with 1. in front of us to
-nitpick how we want the config format to look, how the ordering should
-go, etc. and it will be a fairly simple implementation. It'll also be
-"usable" although not in a particularly friendly way in case someone
-wants to try it and see, in a way that the config modifiers by
-themselves wouldn't be.
-
- - Emily
+Sorry for the noise,
+Dscho
