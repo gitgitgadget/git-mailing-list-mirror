@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A8E0C432C0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39E62C43215
 	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 21:28:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D2AD22071A
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 21:28:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 086702082F
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 21:28:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U3xBySyf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGk1kAWe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbfKYV23 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726029AbfKYV23 (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 25 Nov 2019 16:28:29 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37890 "EHLO
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50525 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725916AbfKYV22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 16:28:28 -0500
-Received: by mail-wm1-f68.google.com with SMTP id z19so937237wmk.3
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 13:28:26 -0800 (PST)
+        with ESMTP id S1725924AbfKYV23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 16:28:29 -0500
+Received: by mail-wm1-f68.google.com with SMTP id l17so930354wmh.0
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 13:28:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=29kfKYIa+20ylMRQsVzEOYq9YF/ZAgL/Qbwdp5eTeoA=;
-        b=U3xBySyfY8hrERPQwrxPxLbRfxvjG2twWjEGpowr0cRL5AlaSWJS+Yc3W632YqC68q
-         gBLUCZEHjJtxtApkDUqB5BJ15fOSJm+W5FCmqKoRQKEOqgQcGRYUwYJAd1wrW2JMYu0r
-         gfHXsT9cnVo/dH2nk8TkUVW/Nik7+LZ8rmvIJv+gVtdwq1nUtLRX9h6y0mlz2qfhWvqp
-         kw6s99JtkOno9Jx1MhtULm7vDD/Vxc/xeHBZGPipBR3kRG+kHvdODRX2KVk12Bs1a3e9
-         PTiaHi3CRPDv2eTiJqQc/vgXK+Jl3yAUYxcfDcIQ/CDK3p3IcNpeJ0gTpM8XFhbhWQd0
-         m3RA==
+        bh=nVhI0We5j/ozMNOLMLjp4b1G0baNaF3hKGWhldXspAQ=;
+        b=CGk1kAWeXk0g7Enb+2kKA3KrewfTC/SRCqh/PYdaO69vGtd7ZVhd50zfKrplahc6Dt
+         1+B1OS21Y1vLzs3iZJST+m33Ti7p/+sAQ3XeycmyMbYqLqBSodvhOH36VPV2N45X8mn2
+         x2Pg3wfVc6JnZkvTONiJyJyv+ua4uUYorZ3UNRE/+rHmkTLvvVsozF4awSzmGo4BoDKp
+         dx4F7plaf+pp2Y1aU6kYTIJ3dsyuMXgDYQ/atv5JU95qMjaf/t3TZQedUZcpYdA/iOwn
+         95m8D+pvt4WbqVrl8ttsHb6ae0fq2Vw6D5Q5S7ba+7pS/TO5nSJkSMy3Fa9MV9glotJD
+         JtSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=29kfKYIa+20ylMRQsVzEOYq9YF/ZAgL/Qbwdp5eTeoA=;
-        b=ZDqE7Tqe/izNxfbbbZvehKkjOKPjWmSXdmBteTiA9lXIZ+xqn7SYLxQIdOJmPBkT/d
-         9IaBu0k1SsfwAFkP50naJhKRNw6MoV0fSwCEaiwqCY6K9by2++vcZ+cnXeMlSOySDBFW
-         qxmNqi1e5BZMB/XIqCmizkO2ndUv82oF3PRXokibwZ1trPegC80TBdp7B1s/tCZUhBhS
-         hMVqbSG58muiG3pOOnwoVpOF2P/0FG+O80f3KwPGc+/AyHcKmanL2bwzr7pd1JSmwy0A
-         ZwT30x9egCbj6ECF/BH/wYiar9k/LuzPvQixZL7s1Uj1EO0lGKezyQLw6k/VR9CC3I64
-         p6MQ==
-X-Gm-Message-State: APjAAAXgdO7PJVgc1fkNKHz2EvS7h9/iMrZ7b4d7gQJ9q2jrTZRmsR56
-        6q73X1tl/+rokch12sYfcThFoIPK
-X-Google-Smtp-Source: APXvYqwjBVHV8CvF/LGL/5TvUFvseX6rHkR1BVtszTY937fk2+GGNDavtaNcTYG5u5+TbI72R3X/bg==
-X-Received: by 2002:a05:600c:2911:: with SMTP id i17mr749701wmd.83.1574717305989;
-        Mon, 25 Nov 2019 13:28:25 -0800 (PST)
+        bh=nVhI0We5j/ozMNOLMLjp4b1G0baNaF3hKGWhldXspAQ=;
+        b=ssuej0bpUtVJUGW+MnxBKlD/EsnZEYhYN5ABoiI4jlpciOLH82ve163qfRaYjk4hC6
+         /u6uPUwROmkfDMvL+hgBU7AsLaK+AMc5Z/Ms8IphjmvirFJFjAQk04R+cLpoh0JsML10
+         fw30Tj/QO/bvGau059yeut6haltzgPVn9vpKOWvBPVWvPElLLqZkOPmuXg0O8Wbn8fqJ
+         V8OG479jGgc6jhzthdkfbXHIgXwTgYIxMsEyKgA4Iba3eeAbQPyIxeFvqJNXVmtwELVM
+         HfeeEIa8e3DwyDuohnMoZrW38XK3Eh2MJzfi91bGvtgKPOsWuXkLAFsbKxPxaGw82s4j
+         l7VA==
+X-Gm-Message-State: APjAAAVs05Tk2mbtnMwMABIJSQPN5DheFPKjsJtexx34rkRjfS+6z7i5
+        Nfq2KCRbSD9OdQ66nLDi4i6MOJts
+X-Google-Smtp-Source: APXvYqxAI9S8qxnNWha/wStrqyhgm4AKisAE0D943V8sg9H3BNbRPd0HWITVrpvo3/5U0mv53WsJJg==
+X-Received: by 2002:a05:600c:2144:: with SMTP id v4mr798684wml.29.1574717306721;
+        Mon, 25 Nov 2019 13:28:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e16sm12001370wrj.80.2019.11.25.13.28.25
+        by smtp.gmail.com with ESMTPSA id n17sm11309980wrp.40.2019.11.25.13.28.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 25 Nov 2019 13:28:25 -0800 (PST)
-Message-Id: <a7acdf9c8f8c85f9f39750315716f21e83ce67c6.1574717303.git.gitgitgadget@gmail.com>
+        Mon, 25 Nov 2019 13:28:26 -0800 (PST)
+Message-Id: <efe1419dc6cfd18f5a91061a4a61cc7228406f93.1574717303.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.450.v5.git.1574717303.gitgitgadget@gmail.com>
 References: <pull.450.v4.git.1574351516.gitgitgadget@gmail.com>
         <pull.450.v5.git.1574717303.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 25 Nov 2019 21:28:22 +0000
-Subject: [PATCH v5 1/2] progress: create GIT_PROGRESS_DELAY
+Date:   Mon, 25 Nov 2019 21:28:23 +0000
+Subject: [PATCH v5 2/2] commit-graph: use start_delayed_progress()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,121 +77,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The start_delayed_progress() method is a preferred way to show
-optional progress to users as it ignores steps that take less
-than two seconds. However, this makes testing unreliable as tests
-expect to be very fast.
+When writing a commit-graph, we show progress along several commit
+walks. When we use start_delayed_progress(), the progress line will
+only appear if that step takes a decent amount of time.
 
-In addition, users may want to decrease or increase this time
-interval depending on their preferences for terminal noise.
+However, one place was missed: computing generation numbers. This is
+normally a very fast operation as all commits have been parsed in a
+previous step. But, this is showing up for all users no matter how few
+commits are being added.
 
-Create the GIT_PROGRESS_DELAY environment variable to control
-the delay set during start_delayed_progress(). Set the value
-in some tests to guarantee their output remains consistent.
+The tests that check for the progress output have already been updated
+to use GIT_PROGRESS_DELAY=0 to force the expected output.
 
 Helped-by: Jeff King <peff@peff.net>
+Reported-by: ryenus <ryenus@gmail.com>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git.txt   |  4 ++++
- progress.c              | 15 +++++++++++++--
- t/t5318-commit-graph.sh |  4 ++--
- t/t6500-gc.sh           |  3 +--
- 4 files changed, 20 insertions(+), 6 deletions(-)
+ commit-graph.c | 2 +-
+ t/t6500-gc.sh  | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9b82564d1a..1c420da208 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -544,6 +544,10 @@ other
- 	a pager.  See also the `core.pager` option in
- 	linkgit:git-config[1].
+diff --git a/commit-graph.c b/commit-graph.c
+index 0aea7b2ae5..071e1c6e9b 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1103,7 +1103,7 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ 	struct commit_list *list = NULL;
  
-+`GIT_PROGRESS_DELAY`::
-+	A number controlling how many seconds to delay before showing
-+	optional progress indicators. Defaults to 2.
-+
- `GIT_EDITOR`::
- 	This environment variable overrides `$EDITOR` and `$VISUAL`.
- 	It is used by several Git commands when, on interactive mode,
-diff --git a/progress.c b/progress.c
-index 0063559aab..19805ac646 100644
---- a/progress.c
-+++ b/progress.c
-@@ -14,6 +14,7 @@
- #include "strbuf.h"
- #include "trace.h"
- #include "utf8.h"
-+#include "config.h"
- 
- #define TP_IDX_MAX      8
- 
-@@ -267,9 +268,19 @@ static struct progress *start_progress_delay(const char *title, uint64_t total,
- 	return progress;
- }
- 
-+static int get_default_delay(void)
-+{
-+	static int delay_in_secs = -1;
-+
-+	if (delay_in_secs < 0)
-+		delay_in_secs = git_env_ulong("GIT_PROGRESS_DELAY", 2);
-+
-+	return delay_in_secs;
-+}
-+
- struct progress *start_delayed_progress(const char *title, uint64_t total)
- {
--	return start_progress_delay(title, total, 2, 0);
-+	return start_progress_delay(title, total, get_default_delay(), 0);
- }
- 
- struct progress *start_progress(const char *title, uint64_t total)
-@@ -294,7 +305,7 @@ struct progress *start_sparse_progress(const char *title, uint64_t total)
- struct progress *start_delayed_sparse_progress(const char *title,
- 					       uint64_t total)
- {
--	return start_progress_delay(title, total, 2, 1);
-+	return start_progress_delay(title, total, get_default_delay(), 1);
- }
- 
- static void finish_if_sparse(struct progress *progress)
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index d42b3efe39..0824857e1f 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -132,7 +132,7 @@ test_expect_success 'commit-graph write progress off for redirected stderr' '
- 
- test_expect_success 'commit-graph write force progress on for stderr' '
- 	cd "$TRASH_DIRECTORY/full" &&
--	git commit-graph write --progress 2>err &&
-+	GIT_PROGRESS_DELAY=0 git commit-graph write --progress 2>err &&
- 	test_file_not_empty err
- '
- 
-@@ -150,7 +150,7 @@ test_expect_success 'commit-graph verify progress off for redirected stderr' '
- 
- test_expect_success 'commit-graph verify force progress on for stderr' '
- 	cd "$TRASH_DIRECTORY/full" &&
--	git commit-graph verify --progress 2>err &&
-+	GIT_PROGRESS_DELAY=0 git commit-graph verify --progress 2>err &&
- 	test_file_not_empty err
- '
- 
+ 	if (ctx->report_progress)
+-		ctx->progress = start_progress(
++		ctx->progress = start_delayed_progress(
+ 					_("Computing commit graph generation numbers"),
+ 					ctx->commits.nr);
+ 	for (i = 0; i < ctx->commits.nr; i++) {
 diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index c0f04dc6b0..7f79eedd1c 100755
+index 7f79eedd1c..0a69a67117 100755
 --- a/t/t6500-gc.sh
 +++ b/t/t6500-gc.sh
-@@ -103,9 +103,8 @@ test_expect_success 'auto gc with too many loose objects does not attempt to cre
+@@ -109,7 +109,8 @@ test_expect_success 'gc --no-quiet' '
  '
  
- test_expect_success 'gc --no-quiet' '
--	git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
-+	GIT_PROGRESS_DELAY=0 git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
+ test_expect_success TTY 'with TTY: gc --no-quiet' '
+-	test_terminal git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
++	test_terminal env GIT_PROGRESS_DELAY=0 \
++		git -c gc.writeCommitGraph=true gc --no-quiet >stdout 2>stderr &&
  	test_must_be_empty stdout &&
--	test_line_count = 1 stderr &&
+ 	test_i18ngrep "Enumerating objects" stderr &&
  	test_i18ngrep "Computing commit graph generation numbers" stderr
- '
- 
 -- 
 gitgitgadget
-
