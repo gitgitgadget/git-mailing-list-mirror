@@ -2,140 +2,197 @@ Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E199EC432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD57C432C0
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:40:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8CA7620740
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:30:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3436E2068E
+	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 16:40:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=cisco.com header.i=@cisco.com header.b="WjH5Pk9P";
-	dkim=pass (1024-bit key) header.d=cisco.onmicrosoft.com header.i=@cisco.onmicrosoft.com header.b="qDXd6JoO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AzH5fYHZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728889AbfKYQaT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 11:30:19 -0500
-Received: from rcdn-iport-4.cisco.com ([173.37.86.75]:18890 "EHLO
-        rcdn-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728871AbfKYQaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 11:30:19 -0500
-X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Nov 2019 11:30:18 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=257; q=dns/txt; s=iport;
-  t=1574699418; x=1575909018;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=W7WH/MbsbqFtNw8RD8w5kM1pZ8KrhOibifboJzgpj5w=;
-  b=WjH5Pk9PuBnIstvMN9YHqVxBtyPC3FbUyLKmyDWhyxlBf3crgk/U/FtL
-   8ryO+9C1zFYgRxdYfxVKPvdRTtyJBciYQ+e2w/0lUiFlmnhQIVBaW3hJE
-   Az9+zQAW4somKBCyM09DGrf0gDlres0fAuT71k/j+c9mT2lRBAuf6hJUg
-   c=;
-IronPort-PHdr: =?us-ascii?q?9a23=3A1rTX2RKfJG19ejehW9mcpTVXNCE6p7X5OBIU4Z?=
- =?us-ascii?q?M7irVIN76u5InmIFeBvKd2lFGcW4Ld5roEkOfQv636EU04qZea+DFnEtRXUg?=
- =?us-ascii?q?Mdz8AfngguGsmAXFXyKffway03NM9DT1RiuXq8NBsdFQ=3D=3D?=
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: =?us-ascii?q?A0CwDQCT/9td/5ldJa1lHgELHIFzC4F?=
- =?us-ascii?q?LUAWBRCAECyoKh2cDim9OghGYBIEugSQDVAkBAQEMAQEtAgEBhDgIAoIuJDU?=
- =?us-ascii?q?IDgIDDQEBBAEBAQIBBQRthTcBC4VTAQEBAgESLgEBOAQLAgEIRjIlAgQbGoV?=
- =?us-ascii?q?HAw4gAaYeAoE4iGCCJ4J+AQEFhRQYghcJgTaMFhqBQD+BWIIeLj6ESQKDQII?=
- =?us-ascii?q?slmSXUgqCK5Vvgi8Bl2yOSJoQAgQCBAUCDgEBBYFUATaBWHAVgydQERSGSIN?=
- =?us-ascii?q?zilN0gSiMFAGBDgEB?=
-X-IronPort-AV: E=Sophos;i="5.69,242,1571702400"; 
-   d="scan'208";a="671391547"
-Received: from rcdn-core-2.cisco.com ([173.37.93.153])
-  by rcdn-iport-4.cisco.com with ESMTP/TLS/DHE-RSA-SEED-SHA; 25 Nov 2019 16:22:51 +0000
-Received: from xch-rcd-011.cisco.com (xch-rcd-011.cisco.com [173.37.102.21])
-        by rcdn-core-2.cisco.com (8.15.2/8.15.2) with ESMTPS id xAPGMpYI032717
-        (version=TLSv1.2 cipher=AES256-SHA bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 16:22:51 GMT
-Received: from xhs-rcd-003.cisco.com (173.37.227.248) by XCH-RCD-011.cisco.com
- (173.37.102.21) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 25 Nov
- 2019 10:22:50 -0600
-Received: from xhs-rcd-003.cisco.com (173.37.227.248) by xhs-rcd-003.cisco.com
- (173.37.227.248) with Microsoft SMTP Server (TLS) id 15.0.1473.3; Mon, 25 Nov
- 2019 10:22:50 -0600
-Received: from NAM05-DM3-obe.outbound.protection.outlook.com (72.163.14.9) by
- xhs-rcd-003.cisco.com (173.37.227.248) with Microsoft SMTP Server (TLS) id
- 15.0.1473.3 via Frontend Transport; Mon, 25 Nov 2019 10:22:50 -0600
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DRZRIiDLqQDN0jkpmw7ereN/V5VLthxFxF4kuZQJxkx0ogFvobACz+2EPQKEbLbBzdATLIUMPPKDTWGm2kNzWCPSw65XbvKgZITI9Ku5xz0SRHcNYMGqVd+snyKH2dYgxrJ7686BDkgMl1293RbCl8aWK9bMk6nWHogd/PzHVhTSWKbHHE+F4EbArQIIZwtDSOe1nbzAWGVUz5ahLy95NP+4IefY1RmIOKOHR47Wq9d8Xre4FmN53sOuYwN0t3y1zkFAR0BoJUpMvgCo5phSe+0gvbIpdC8Cy9o1AFkkUP6RwArmzqt+7rV3f+6Xk99kXxwHEg980LYqFh32zfY7bQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W7WH/MbsbqFtNw8RD8w5kM1pZ8KrhOibifboJzgpj5w=;
- b=K2zRLJ21Eq7LdP6vwU/jqjv5LGUezx4+hPeGIHz+eLD7NK8TksEDIq/Ns1lnM6Onwk8Bz4oHTVKydVJ0ZC+9WkQLEnTA4JJP6nvbxpdiWEMnsm21R0A+Pttc1njh2zuR4VIANw51CMMbghPG73Thsh5zaom6e7CrAbY3h/l55NSgpJNxh1SyB2j6VUWmI2L5iIHfqfOr7PUd5MV233rQ/GmBOLapdmC1jg13PsQyGGZKsf+1qAupnm9hHbMyfxrIL+M2TRssHRvvcWZ72vsfb/C303xbkr9ZG22ez4bW32qc/x4yakeGKe4fIJMXyRjvNQVA54Gck3cCOovGNXri2Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
- dkim=pass header.d=cisco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cisco.onmicrosoft.com;
- s=selector2-cisco-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W7WH/MbsbqFtNw8RD8w5kM1pZ8KrhOibifboJzgpj5w=;
- b=qDXd6JoOo37IEul0Pn2G4u96b0DVqMsUmc47ry1TUm5DPEOXrYy9Hz9geItlU9B6t6S0ZPBrKV5qM7XLWyuLh+NWQCluLkzAqpaFX1wypf3hns9BwTuRrR70Bhq0gWyV6Vx5wOUPszIELMDO0n/qT82Jl/nFZTo712t5uBwOZVc=
-Received: from CH2PR11MB4294.namprd11.prod.outlook.com (10.141.118.210) by
- CH2PR11MB4279.namprd11.prod.outlook.com (10.141.127.225) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2474.19; Mon, 25 Nov 2019 16:22:48 +0000
-Received: from CH2PR11MB4294.namprd11.prod.outlook.com
- ([fe80::759a:b24d:909d:853]) by CH2PR11MB4294.namprd11.prod.outlook.com
- ([fe80::759a:b24d:909d:853%7]) with mapi id 15.20.2474.023; Mon, 25 Nov 2019
- 16:22:48 +0000
-From:   "Patrick Marlier (pamarlie)" <pamarlie@cisco.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Push a ref to a remote with many refs
-Thread-Topic: Push a ref to a remote with many refs
-Thread-Index: AQHVntgNsCy38IgfMk2h9wErEHyX6KecFYNc
-Date:   Mon, 25 Nov 2019 16:22:48 +0000
-Message-ID: <CH2PR11MB4294168406728D1510A92704CF4A0@CH2PR11MB4294.namprd11.prod.outlook.com>
-References: <CH2PR11MB429411CA1288526D21C7AF26CF4C0@CH2PR11MB4294.namprd11.prod.outlook.com>
-In-Reply-To: <CH2PR11MB429411CA1288526D21C7AF26CF4C0@CH2PR11MB4294.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=pamarlie@cisco.com; 
-x-originating-ip: [173.38.220.44]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 6b047cd2-bcd5-4a5b-8d49-08d771c3b652
-x-ms-traffictypediagnostic: CH2PR11MB4279:
-x-microsoft-antispam-prvs: <CH2PR11MB42793E3241F7AEA789697A2BCF4A0@CH2PR11MB4279.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:8882;
-x-forefront-prvs: 0232B30BBC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(4636009)(396003)(39860400002)(376002)(346002)(366004)(136003)(199004)(189003)(64756008)(66556008)(91956017)(66476007)(76116006)(66946007)(6436002)(6916009)(8936002)(2906002)(52536014)(5640700003)(25786009)(229853002)(55016002)(8676002)(9686003)(71200400001)(71190400001)(66066001)(81166006)(81156014)(33656002)(1730700003)(6116002)(3846002)(6246003)(102836004)(6506007)(558084003)(316002)(7736002)(7696005)(26005)(11346002)(2351001)(5660300002)(256004)(2501003)(74316002)(305945005)(14454004)(478600001)(66446008)(446003)(99286004)(76176011)(186003)(86362001);DIR:OUT;SFP:1101;SCL:1;SRVR:CH2PR11MB4279;H:CH2PR11MB4294.namprd11.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: cisco.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: BxbEL6pDxrohnzZfF02CsTx5V8HN6RL7tZ7a7jwo6RF74dQCaESEo5AWOw9R7BC4o9nbdolG+7HPEcgm+GBUHbKAreBBPwUQl6/SY6+BwLzhXVce4ALlUgdPhWD0wKfduZmbEFJDDv0ee4yQWHAKBDI9VetALVbXt9k+8jD97q8IRLmP0FPUfzStx26MWl0to+KMJm/MEl4nFrWa/pv6PT/Jj90i+ppys1KnCL+VGci7+2mhjfw+6ovd4uLoYO6LolJVynm/sY0O2LKF1GKXXa4miVjNG1Kdm67r5QJZHApayJdvqnnOqXjjJYkE679zyPLL7AbnIQXVFHR5lymx/7f8g+uoi+IH8pnfewIXlUVfgzSZN4Ojo7gKp5gOPaK3Eh+ifA7NNB8GmvmX/kv3Qiyydz/vQX+lKR+1VFr8AH6xIdXWhd7WdI2ci0qohqEp
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1728876AbfKYQkv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 11:40:51 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:54790 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728683AbfKYQkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 11:40:51 -0500
+Received: by mail-wm1-f66.google.com with SMTP id b11so6757498wmj.4
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 08:40:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dFYV1FxbmyNdwVWyPO5vizs7o6DXWa7xkO8QWIbK9yA=;
+        b=AzH5fYHZ8fxYC+zYe8Y34Q/99UQ4jOQ7UgaP4HiAgBR6eKuDLBjVMZFpZGI17BHM+W
+         pNPKBowwmFqQIxYhHx9uvA21m8K3Epwwu+JjohlLF5RoU2EoSIcudBmfsJ78OKkHtlJo
+         ic35CUKvV7Vqox4ScdYiKw3secfxgUWtcn48DFxMEX0NC9WPfbjWCX6bKOaKoDSBtV45
+         4anZu1xe/Z0pwWebffkBDkiWVwrrXUz9M14D1cOcp0NqYAeq0UsOx75bfbAdH+RGhBYI
+         8nu/yZQ26HEH9PaSJga7qhSPIvw9SvcTwGb9XL4UPGh8p4BUHVQpP9doaD2l57qglOpI
+         Aofg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=dFYV1FxbmyNdwVWyPO5vizs7o6DXWa7xkO8QWIbK9yA=;
+        b=NNBw1Ef4jTVYLVdpHWYwK6+oUHsKfLDTudXcP1ldPaX5mnRpHthAvjWZcNJ3N4C23N
+         yeZfuahLPEA+fCxQGyQ/jhzPspcRAT8D/9V33HdsquiY1zHi5JfW+hn35WeNou/8j2XR
+         vfV8rp2GfhojsPIUwbb/wjf2TtCmJzFRHrm1i78y3k+snBC3NUqd9iZRaqO3kfw1Dt6n
+         xHebpWVnZqCpMaKmfZjfDSsTvmR4OaieIKSlpzOaJMTqHxPXl3gd0Rlvy3EkrKNbHJq0
+         Id5ouBBK5LPqWdjecVHD4/B7VSgTO341PGCvQ5NczVeZ6plUi48MnKpMF0Cd5eVTzBHQ
+         a8vg==
+X-Gm-Message-State: APjAAAVgoGfYE5E5HAuwk17+J1h+mQJsOkCzEs7LXyVc5rLZO0FALwUn
+        6CIY5qhb9vUrUAl/vxTxrKc=
+X-Google-Smtp-Source: APXvYqx8ZJGd4o2hFWvpfWWMp1+mxGDdv41HR6/blHqyfV8NeWDmQL3vb6FBzEB9Ym2d5s9kv9/c3Q==
+X-Received: by 2002:a05:600c:249:: with SMTP id 9mr9829663wmj.2.1574700048241;
+        Mon, 25 Nov 2019 08:40:48 -0800 (PST)
+Received: from [192.168.2.240] (host-92-22-28-211.as13285.net. [92.22.28.211])
+        by smtp.gmail.com with ESMTPSA id w11sm11939292wra.83.2019.11.25.08.40.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Nov 2019 08:40:47 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] t3429: try to protect against a potential racy todo file
+ problem
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Brian Norris <briannorris@chromium.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <e7c01e0f-8466-c2c5-b53a-a93f941dfb1c@gmail.com>
+ <20191123172046.16359-1-szeder.dev@gmail.com>
+ <xmqqk17p280y.fsf@gitster-ct.c.googlers.com>
+ <8c21662f-6548-a46e-9c87-eb364355cb78@gmail.com>
+ <20191124211021.GB23183@szeder.dev> <20191125131833.GD23183@szeder.dev>
+ <5a43a071-a3c2-770e-bca4-3e73aff96e48@gmail.com>
+ <20191125151517.GE23183@szeder.dev>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <1d94202c-4ab9-8437-0d73-80820ecb6789@gmail.com>
+Date:   Mon, 25 Nov 2019 16:40:46 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6b047cd2-bcd5-4a5b-8d49-08d771c3b652
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2019 16:22:48.6230
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5ae1af62-9505-4097-a69a-c1553ef7840e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fH5NRXfLU2Z2Gh0tvd1SLQXZbb+qFHg7suJp1kXfUKDE/o8LwzxpkR7+0ZoX0NYFdUAMJcwMZePrGCNZyrL6BQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR11MB4279
-X-OriginatorOrg: cisco.com
-X-Outbound-SMTP-Client: 173.37.102.21, xch-rcd-011.cisco.com
-X-Outbound-Node: rcdn-core-2.cisco.com
+In-Reply-To: <20191125151517.GE23183@szeder.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> To workaround this issue, I ended up skipping the refs that are not part =
-of the push. See patch at the end of the message.=0A=
-> Is this safe to do? Is there a better way to do this?=0A=
-=0A=
-Some help on this?=0A=
-=0A=
-Thanks!=0A=
---=0A=
-Pat=
+On 25/11/2019 15:15, SZEDER Gábor wrote:
+> On Mon, Nov 25, 2019 at 02:43:07PM +0000, Phillip Wood wrote:
+>> On 25/11/2019 13:18, SZEDER Gábor wrote:
+>>> On Sun, Nov 24, 2019 at 10:10:21PM +0100, SZEDER Gábor wrote:
+>>>> To notice a changed todo file the sequencer stores the file's stat
+>>>> data in its 'struct todo_list' instance, and compares it with the
+>>>> file's current stat data after 'reword', 'squash' and 'exec'
+>>>> instructions.  If the two stat data doesn't match, it re-reads the
+>>>> todo file.
+>>>>
+>>>> Sounds simple, but there are some subtleties going on here:
+>>>>
+>>>>    - The 'struct todo_list' holds the stat data from the time when the
+>>>>      todo file was last read.
+>>>>
+>>>>    - This stat data in 'struct todo_list' is not updated when the
+>>>>      sequencer itself writes the todo file.
+>>>>
+>>>>    - Before executing each instruction during an interactive rebase,
+>>>>      the sequencer always updates the todo file by removing the
+>>>>      just-about-to-be-executed instruction.  This changes the file's
+>>>>      size and inode [1].
+>>>>
+>>>> Consequently, when the sequencer looks at the stat data after a
+>>>> 'reword', 'squash' or 'exec' instruction, it most likely finds that
+>>>> they differ, even when the user didn't modify the todo list at all!
+>>>> This is not an issue in practice, it just wastes a few cycles on
+>>>> re-reading the todo list that matches what the sequencer already has
+>>>> in memory anyway.
+>>>
+>>> It can be much more than just a few cycles, because the total number
+>>> of parsed instructions from all the todo file re-reads can go
+>>> quadratic with the number of rebased commits.
+>>>
+>>> The simple test below runs 'git rebase -i -x' on 1000 commits, which
+>>> takes over 14seconds to run.  If it doesn't re-read the todo file at
+>>> all (I simply deleted the whole condition block checking the stat data
+>>> and re-reading) it runs for only ~2.5secs.
+>>>
+>>> Just another angle to consider...
+>>
+>> I know dscho was keen to avoid re-parsing the list all the time [1]
+>> presumably because of the quadratic behavior. (He also assumed most people
+>> were using ns stat times [2] but that appears not to be the case)
+> 
+> Nanosecond file timestamp comparisons are only enabled by the USE_NSEC
+> macro, which is only defined if the USE_NSEC Makefile knob is enabled,
+> but that is not enabled by default.
+> 
+> Then there is the related NO_NSEC Makefile knob:
+> 
+>    # Define NO_NSEC if your "struct stat" does not have "st_ctim.tv_nsec"
+>    # available.  This automatically turns USE_NSEC off.
+> 
+> As Dscho mentioned in [2], we do disable nanosecond file timestamp
+> comparisons in 'config.mak.uname' on a handful of platforms by setting
+> NO_NSEC.  This, however, does not mean that nanosec timestamps are
+> enabled on other platforms by default.
+> 
+>> Could we
+>> just compare the text of the todo list on disk to whats in todo->buf.buf
+>> (with an appropriate offset)? That would avoid parsing the text and looking
+>> up all the commits with get_oid()
+> 
+> Comparing the contents without parsing is still quadratic in the size
+> of the todo list, though I suppose with a much lower constant factor
+> than actually parsing it.
+
+The patch below (assuming thunderbird doesn't mangle it) reduces the 
+time to run your bulk commit test from 30s to 7s, if I delete the 
+condition block which checks the stat data it takes 4.7s on my (somewhat 
+ancient) laptop. So there is a cost to the string comparison approach 
+but it's much less that the full todo list parsing.
+
+Best Wishes
+
+Phillip
+
+--- >8 ---
+diff --git a/sequencer.c b/sequencer.c
+index 8952cfa89b..a3efdae0a5 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3909,12 +3909,17 @@ static int pick_commits(struct repository *r,
+                                                         arg, item->arg_len,
+                                                         opts, res, 0);
+                 } else if (check_todo && !res) {
+-                       struct stat st;
+-
+-                       if (stat(get_todo_path(opts), &st)) {
+-                               res = error_errno(_("could not stat '%s'"),
++                       int offset;
++                       struct strbuf buf = STRBUF_INIT;
++                       if (strbuf_read_file(&buf, get_todo_path(opts), 
+8096) < 0)
++                               res = error_errno(_("could not read '%s'"),
+                                                   get_todo_path(opts));
+-                       } else if (match_stat_data(&todo_list->stat, &st)) {
++
++                       offset = get_item_line_offset(todo_list,
++                                                     todo_list->current 
++ 1);
++                       if (buf.len != todo_list->buf.len  - offset ||
++                           memcmp(buf.buf, todo_list->buf.buf + offset, 
+buf.len)) {
++                               fputs("re-reading todo list\n", stderr);
+                                 /* Reread the todo file if it has 
+changed. */
+                                 todo_list_release(todo_list);
+                                 if (read_populate_todo(r, todo_list, opts))
+
