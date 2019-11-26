@@ -8,130 +8,129 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C680C432C3
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:46:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7ECDC432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 20:02:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 397C02075C
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:46:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A85372075C
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 20:02:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="SlpZ5B2k"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ulK5JlVU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbfKZTqj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 14:46:39 -0500
-Received: from mout.web.de ([212.227.15.3]:52003 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725970AbfKZTqj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 14:46:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574797594;
-        bh=dZHebHZ50eAge4pPo0jcOzOHRgHsHuhEVtiZNyxDRCg=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=SlpZ5B2k/3yL3Z+1HmXy5trvvaNz2hGQDEw+7S8gcWVQh4nSxW8M3LebVxxk7u7bU
-         etKrDf8TBO2PQXByT6GtUe/Bnn+eOHLdzA0SAAgHp/wnk/1wvVU3jEFrQHmvj6Gip2
-         yEVp5of7WClePq5wQoXggeFzkGRc+KdiKr3QpxF0=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LuuC9-1hrNmN2iY5-0104Bo; Tue, 26
- Nov 2019 20:46:34 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] test: use test_must_be_empty F instead of test_cmp empty F
-Message-ID: <52479277-b753-c3c0-7f6c-5d013016964e@web.de>
-Date:   Tue, 26 Nov 2019 20:46:34 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727071AbfKZUCn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 15:02:43 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:36744 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfKZUCn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 15:02:43 -0500
+Received: by mail-pj1-f67.google.com with SMTP id cq11so8798042pjb.3
+        for <git@vger.kernel.org>; Tue, 26 Nov 2019 12:02:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=lvBgznInfRi6HA+a4xzo6Mno2nfOMogiqMlxuPkHyfw=;
+        b=ulK5JlVUxT+1VlPwWA0Tc6k6bU15TWhp9eXC7jY0YLWbG7PdAhqfP60XjQ1GtjEWyY
+         wL5l4wbVfo0WshPBOf4r6hqbWGEPgupLHsVkH3BppVrc5UsJjWcho/Ga0izIaVYkMadq
+         p35sZV3yQrS7SE906EI8cFHJ7/mIM6CGuPABGUTTKNQ4pbtOLGJr9yu6YfCnLJfRY095
+         NCcz/L5riBM+6kVcvF0JJNTT+7zSA3FZvqnEG3YESPTLm6ew1+eeQ+vufZYIfOaoTMe/
+         FbvJRG99piVwRNuU4Q2gIsheu5tZ815gkwE9rthiI5Z3rGC6tM09+oPmF/93siE1ZjLr
+         S8LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=lvBgznInfRi6HA+a4xzo6Mno2nfOMogiqMlxuPkHyfw=;
+        b=kZzHltCw+9UGmuOVdLflfI/XF7jdjj8sRbTdqjFQqkJIp8+UHlnSt3wwPiNajBPPPG
+         +TpPW1KxFm8A23SJh/gewCQUgqd9160QhiY4M/uC/44lXwpxiBr8IBPXeOptC1lWDlKW
+         egjfsHawqx6b7yBJZd1a25zMboyaEjjo9NVv53UwBuxPjKES10pz3IQVedFaaK1nUUHv
+         +TMLMegB+56zEMAbJkS4rH+wIILG/rIxWUYFFXzgZVz8djAyqVeFyg57tb/s5Va+/NX0
+         UAydqD16PnZ5Xr3H1aJGdetr7g8Rs20L18ilrogbs5pfFHxIYZHLnAnFopfMszaxhlTm
+         IHkA==
+X-Gm-Message-State: APjAAAWineAaBhzo71M911RsiDeuUWW8yy3nzG9cbq8bFonXn5rkJQUn
+        jfPdzxMb5wMi98noDE5AOEt30cU5
+X-Google-Smtp-Source: APXvYqzo53H6hLzc3AbFc21yBglUn088yGSHZZsX+QGzoqeXbSezEfAav2sxOrOdfGK6hOmEWcdedg==
+X-Received: by 2002:a17:90a:c01:: with SMTP id 1mr1111631pjs.37.1574798562520;
+        Tue, 26 Nov 2019 12:02:42 -0800 (PST)
+Received: from generichostname ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id k88sm2026202pjb.15.2019.11.26.12.02.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Nov 2019 12:02:41 -0800 (PST)
+Date:   Tue, 26 Nov 2019 12:02:39 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] test: use test_must_be_empty F instead of test_cmp empty
+ F
+Message-ID: <20191126200239.GA36748@generichostname>
+References: <52479277-b753-c3c0-7f6c-5d013016964e@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Be/zGLAdufkalAp0waExEie7nKJ67EhZhDznQrbg+pVXdFHYqQl
- PwTnsrg59kuyiMpp1b7EW9PDQlmJqYwf40nlCqHkpxalf2sHvdVZzOJbTwa57T7FKvwNgjy
- uIPsbQEeI3RhhwY3fKhlI0OMECsCYK3qoRyL7rPsqL7hYJMzIawy2lZk0hYq09SrXfTLCoE
- hjX0itAOf12CkFmmf63Lg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OIJ0st9IkGU=:RVbe32R5F9Ab1RA5vrqwWb
- 7yI1MgrjR2FmZme8ZSlVGsBnZyq9nAUAeJbjH+YH7lJ6jXdxvCBd+uixhXKXmxX+2kZVrXdoz
- B0xhxiWTjUcZ3E4N5JUI1d7U9grcJLkr0mdr/sRxHouS4uSaUXWcm8g6lJAoTm8JHQSfI//O3
- M04+VyRjKOlFQ/i5tSJtfpH0/pE+QfjLtnzM0M8KPmt1Wq2KTB+IFrMcTwk45DOFzchHPWFuv
- FeU0u3LUZIspWb5luqQWH3gtt5f+WayGRXN+gPsGjiXORB6rmc+xYJ3fGZXzPt5x9iN5UmZva
- mHqi4hhzHgeR5jP2MHUTFbpTnFKCope3gk+VtVVkCnxeEZUyNvoZehQYU0rblKsHs1T+14l97
- 3zNULU1eSllfxF54SLNSQ1BnJEjInO8VN3pqhGy8T5R1bi8ZFuFFyn2KTd9NV5PB4TGXRZs9G
- 1GlJmsvmKL9Te7YYRVzRHfnDrgmkAi64TVZMgfI7/sM2QYTojtAG2j9gwjPmVC6RbljmBkOMS
- ah7OHaNZBz3MbF43jKRJn5J00PTRmCxNeL/uRJiZ1QakBtRPw1YqW+721MkPQ4PZrRJ0FeDtX
- WNlg7VxJK1gWJmLJ2ERsEuEfb1rKB4q+91zHNrLMf30G/dDjsJNaqlxAxbUU38NcOkKpme4Hi
- foYrdvx2SNQQ7IlrqbFx9npE4MAzPYnvDsUOCWDH4xGIGpgA/znxmjWnCKyxh6lpWnVTMG7RR
- jFiSB1PUQiaFebFAqIEZud3jfUp3Jr0An5B9okx57l4xzMByoy28smy0BNlAAIa4X955fLVr7
- d9ZNWU9DbSPHHq0DbjXYjSUctVEqQQN86mqip3m1Hk3sjUk0UmJU+gSy2E2Iq+h/TlCxmDBYB
- jSJunsIwhXSplL6rchEbZzenkud9IgfYs7wkQGGcmSs8IaB8YmZ9tFnXi88kFqYskWZMSZwCT
- Ll5UKeaE7/WCVYCudXiJBk6MGWuo/IIacxY6eGTig4SXzPd6yGXiNKMS8j/QHm063WB8LJTCx
- yG/mLWtr5V2HBnevJijWuw8tm9wcyTyBDo6oLAK1ymtyBz84Yt3uz3VAwbXxrzkDtcNzW8Evc
- 0JbPy7piql3i7yJEVQzdJY24+AXmJmoEiZfv0WrVEYMB9uxAanRqUPWu6FIU7L1OwoloL+Gjp
- un0idp9IM+cKQWbOLXqVeu0Ur+A+qJEF7D1xlNKSRGRDFZagYHtD6MMpsaBIGfxx3QAWc1SPX
- J/d/IoxqfZA44bipRJ7a1SKKaWDzaONAw3p0jbA==
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <52479277-b753-c3c0-7f6c-5d013016964e@web.de>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use test_must_be_empty instead of comparing it to an empty file.  That's
-more efficient, as the function only needs built-in meta-data only check
-in the usual case, and provides nicer debug output otherwise.
+Hi René,
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/t1011-read-tree-sparse-checkout.sh | 3 +--
- t/t9010-svn-fe.sh                    | 6 ++----
- 2 files changed, 3 insertions(+), 6 deletions(-)
+On Tue, Nov 26, 2019 at 08:46:34PM +0100, René Scharfe wrote:
+> Use test_must_be_empty instead of comparing it to an empty file.  That's
+> more efficient, as the function only needs built-in meta-data only check
+> in the usual case, and provides nicer debug output otherwise.
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
 
-diff --git a/t/t1011-read-tree-sparse-checkout.sh b/t/t1011-read-tree-spar=
-se-checkout.sh
-index ba71b159ba..eb44bafb59 100755
-=2D-- a/t/t1011-read-tree-sparse-checkout.sh
-+++ b/t/t1011-read-tree-sparse-checkout.sh
-@@ -215,7 +215,6 @@ test_expect_success 'read-tree adds to worktree, dirty=
- case' '
- '
+Nice, I like test cleanup :)
 
- test_expect_success 'index removal and worktree narrowing at the same tim=
-e' '
--	>empty &&
- 	echo init.t >.git/info/sparse-checkout &&
- 	echo sub/added >>.git/info/sparse-checkout &&
- 	git checkout -f top &&
-@@ -223,7 +222,7 @@ test_expect_success 'index removal and worktree narrow=
-ing at the same time' '
- 	git checkout removed &&
- 	git ls-files sub/added >result &&
- 	test ! -f sub/added &&
--	test_cmp empty result
-+	test_must_be_empty result
- '
+> ---
 
- test_expect_success 'read-tree --reset removes outside worktree' '
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 0b20b07e68..3a3d8d3bd5 100755
-=2D-- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -53,9 +53,7 @@ text_no_props () {
- 	printf "%s\n" "$text"
- }
+[...]
 
-->empty
--
--test_expect_success 'empty dump' '
-+test_expect_success PIPE 'empty dump' '
- 	reinit_git &&
- 	echo "SVN-fs-dump-format-version: 2" >input &&
- 	try_dump input
-@@ -208,7 +206,7 @@ test_expect_failure 'timestamp and empty file' '
- 	test_cmp expect.date actual.date &&
- 	test_cmp expect.files actual.files &&
- 	git checkout HEAD empty-file &&
--	test_cmp empty file
-+	test_must_be_empty file
- '
+> diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
+> index 0b20b07e68..3a3d8d3bd5 100755
+> --- a/t/t9010-svn-fe.sh
+> +++ b/t/t9010-svn-fe.sh
+> @@ -53,9 +53,7 @@ text_no_props () {
+>  	printf "%s\n" "$text"
+>  }
+> 
+> ->empty
+> -
+> -test_expect_success 'empty dump' '
+> +test_expect_success PIPE 'empty dump' '
 
- test_expect_success 'directory with files' '
-=2D-
-2.24.0
+How come we need the PIPE prereq here? At the top of this file, we have
 
+	if test_have_prereq !PIPE
+	then
+		skip_all="svn dumpfile importer testing requires the PIPE prerequisite"
+		test_done
+	fi
+
+which should guarantee PIPE at this point already.
+
+Thanks,
+
+Denton
+
+>  	reinit_git &&
+>  	echo "SVN-fs-dump-format-version: 2" >input &&
+>  	try_dump input
+> @@ -208,7 +206,7 @@ test_expect_failure 'timestamp and empty file' '
+>  	test_cmp expect.date actual.date &&
+>  	test_cmp expect.files actual.files &&
+>  	git checkout HEAD empty-file &&
+> -	test_cmp empty file
+> +	test_must_be_empty file
+>  '
+> 
+>  test_expect_success 'directory with files' '
+> --
+> 2.24.0
+> 
