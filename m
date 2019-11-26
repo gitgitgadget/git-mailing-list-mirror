@@ -8,101 +8,95 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E786FC432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C18BC432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:23:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB2DA20722
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:18:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 022CF20656
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:23:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="LczsodEN"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ScjF7WkC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728441AbfKZPSe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 10:18:34 -0500
-Received: from mout.web.de ([212.227.15.14]:50239 "EHLO mout.web.de"
+        id S1728428AbfKZPXi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 10:23:38 -0500
+Received: from mout.web.de ([212.227.15.14]:60931 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727532AbfKZPSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 10:18:33 -0500
+        id S1727532AbfKZPXh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 10:23:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574781509;
-        bh=Msb4e1HuvqF/NLmp9cayvstzRbI4JvPBDgX/Naf4DH0=;
+        s=dbaedf251592; t=1574781811;
+        bh=oxA8sKU9R1Hd0XlY0hocnuYLehbgMFiJjTe+MWnxmLI=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=LczsodENCKekRQLFwHnNfNxRL4eW9mS1D2pvFj2r7xsXKRir4lCqMLSyJJxgGdUuW
-         QxDAGp4nmmLBewpeuujF8BVKO0StE049AccDd2DSYkq8Giz+WV+r8zIK6D8oisA9/V
-         i7+DU04LbSIvNBte8dcwMj5OsoHPw0j+hsBOu7O0=
+        b=ScjF7WkCoS8P0tz136xGp7smu1F3UcCZOPIZSKpl7dkQ5MVnYluXb4jSppcO/cs+L
+         qzSkqSS6mje8jW6JX24zlgtcq3QfYK5++y55oADcY9EwFzqasByZNbDSBZiTkcE464
+         v55f0SjjAQDvWsHMGQi+80ZT4B8IZLljf3eKNm5w=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
 Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lx2Wv-1hkseK2yL3-016cha; Tue, 26
- Nov 2019 16:18:29 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMqbf-1iSE1s2KvH-008dhF; Tue, 26
+ Nov 2019 16:23:31 +0100
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] push: use skip_prefix() instead of starts_with()
-Message-ID: <90f94e4b-6cf3-58cc-01dc-c3d731037217@web.de>
-Date:   Tue, 26 Nov 2019 16:18:28 +0100
+Subject: [PATCH] name-rev: use skip_prefix() instead of starts_with()
+Message-ID: <23925fba-9413-0596-b21a-f49aac922f88@web.de>
+Date:   Tue, 26 Nov 2019 16:23:31 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LekHn8Gm6MAY65Kxwkr0GT0pKmdMcJgzWM8OLj9dj1SW4xP9NIl
- cwPwPXBVjoglBRMswfzmX3FDhRyZZuX+Qng1Po7nLtG3s1hsHIvZLS7yktSzeW+LAMw3KYd
- Xzhm0dPvGLl1OBxnTdScXu0boy5sBCH9HIZX+1A82xJ4nKAgM/vGUl2dgR1IAhJ+mf5ybW3
- eCT0WAspD4NJHC+3UnWIg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:M9JIpZyTgrw=:m08gdDPVHJo4EZ6YdnkPvg
- 38id+rGZMMfudNwNROAFa/h36t3dHgd6FDeaLiy9g2Q6/8cqFxygTwYKQDJh2vmYIM9r5f9tL
- ODtnPYo1Uy2x+2M809Nf6F/k37bzDT5cxW5WxlT+ENvJbZGH1MF/bhb2NCKp+k/R/DlDu7SeB
- jp1lVeFetLCma7qp6Wpl9yUl900GQo0sr6HsoCfPewC4WLCmoggqxkoxINKtCl3yJdpiHqFkw
- 7ASL+WaLA0ntX4hYAqAjm0cCooC6NuE+Jw+X3OHhK9KXoVUAZj/opHPrY1odSW+LC7y3TZU6W
- 3fO1ClpPkIzf5VaIvvQD5y/qgG2XZ7ED2NPTkmgnnZqcr3PRkp/0buMl67ypHnXf2OVqQ4zi2
- NcckIjQek8jg3njwU5Yn3UgoYyym9+Ibvd/cQQnxGxgyAmfxNHBrf+TcHx1OHGDx6cUbHr8gX
- D0Xtp+UJnx7uqak7JO+qOX6tt3cBWTTprpuTYOgNpeX1nNU+sHmq5Qlt12qv0a073kbdOUUhz
- Hxh8blXaJv5wB8SHAfdYXgm84j2efWCp3bwIWYAXxh8vGDUgFKor6sYgZfqtrQdhqqef7lhjk
- Sn3EQ/N2qD0171728Zzg/CcOXJxbMkidEzJX/KJNKae5O5X2//b/KVHWLSKPJ7PDJ+zfHJE84
- SGM2TYNFXf9+vE3ujVFaT7UNoASGzYbZbTehz0wqN9muAKsxNab5Lt9HBj49507qGSNmczdwL
- cstnnRJQDUKYBjLL6ukC7YZjYY48mEn2bDzn/oYfc8UvSczBGrqZ5njzAtF+3HJN6DUeogD0n
- X13nfQVp5LKveUvXTljiRMJAho6LjkOCyOYACRBFu7teSiLWGda4thzY+iatAU58xyjBu8IQb
- 2GidADdbiedMD+N1sNNmkI+5wv+lgiHcf/t1ZLmg10KjBW3lkE25sd5OWMMgJHQh+3Bt9EHB9
- xH6Sb1JuaPqVfgPYD29/AoB+uV6CMGIx0CTOVNhbBvqneakshUbSS6Mfe570jvtJ548RinV1f
- 2qdQgzd0MOI25kU4l0pAg1UGjLM68TCkWztekLJ1Km/BW8dlA+OvGBCo4dwFBfdw7wElszSxz
- 239tsQ0bHE7mj51rCwt1L3Xa0ISYiIRkSb7m0/aaaKv1ATCuNUSF/ehzfrXGC9xy6pJ6AoOlD
- E6N2KGQyBBLaX06tz0jTJBlgdcIfn4u3lws3Cs4JZ5g7Vl0gymK9KkT/dYEX5rvsMFJmK8ByS
- vDieUTSoYgK3eLzn8iun1bLtKRxyi3FMlJ4EVIA==
+X-Provags-ID: V03:K1:aDzbvT89LBducjOB91U4ivqAYuXILjsyGEcfje0tbZG17oSzNih
+ PoRSI8+P0iTnjs6LPk/gWkNzghJPKa7eW6Q2soe90dUX7uos3HhBHzuJlWPt55g+i4q2ohf
+ ZX5IKXXAr1PHpuTB9V966aD3Jb4aYNFRyOJuj2H7QZrgz1UitoWRKoNHr2dLvHoSVbgUvX+
+ DRBxQFdreSyLeuwljS2hQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:FjiAXEm+hNQ=:8oRVl2ZwasVENqfczZDzUz
+ 0sPAJMCt2XoHXqmNp+FN1U/HyJucCEJe2QcstI5GJ0kux8xxGAZJIMfzjS6kOu8iLgZ/Ovsvr
+ z3Oeq0+EBc8vzyKB6bM4LjdysK14xZo++lNjs+zwuFRUhAHK2zuaCLTwRCaRqIyivQoV2HIgH
+ 7QbTZbTqIn3lN2B7IwyL7uiOqqN2dXvHI5SejOX2KwGS6esEhsIbG+lpK5tTzmTeVbkLkP0Z9
+ mxLkZqeVj0Hl18OdLm6ikoj9IPx4GymXOuGh3qoC06NEvLV9pHHcXN0tJ8lidU9PQWl+1KULz
+ /BK2A1sQtZMSijN6wc+HAxAYd79sZpFlpNxlanWbxWSTi8Y+0L3c/g/6UQfgVkAmnKtNaIE8P
+ lez2NZ9RHanTl5TP8FOJDLsxBOOAOthlCbrvwn0eK5wKjIfJN4n5b/VI/p+Wdum3+n0dvRbOr
+ An4EDH4D1e8cT2hS/Y7ZUtE+9r7BLKRffYYU5bA4YzK/VfeUeGnQdAStH2ZehrZrU7ISCdyG0
+ Jk+4AKs7nyS8yekraIV4NOWQMm77kKBOJ4AD1p0B5q+eJfjgqVTFjHsLFh55hnHLG+U2isT/S
+ TcozxFkw8ZkgxgvS4xOMx5xq1C4tmitu0N3l9OX93cDlIgE/4TnNpIdIcj5AfxPzwQbNZOvMj
+ hfgi6bphbFbPs6JX+IEYveUdh+01lyRG5Hh2j1XQu7+GAvPrheXQSsWz7K80FTWI29zeJoEbi
+ MoHPbcHeYy63iVczZw7OeEltUdszXOr7Wzm0voKSxzfpluv0gHvLPZne0sFtb7kvQElBZx+ix
+ hSO/hDW+ICB09idZmyM4dQREX5VnLX9EC59n5U8oU6NCdD741cdxq1GMvP1zg841WXDXHotr1
+ l+a44aznSuY5Jan49uHCZ8UmOCzLkVl4mXR9aDb6j6e1faAhsA8dUSR6rhGruKT/UU0F7l2F+
+ ATyRoVbAvcWwdOI+FrRme2WHag5gjxQxArDb9mNfvUk1lUmYjRyWTNRNc2/UCIaoAWPq7fijb
+ hEJY3pZpHm/2VrddHi+OYg3RKZZH6dv3tsMJ3lY7/oMjWk9FIThgRnoSiADZhDjuqYqkrev1+
+ euwx+D3AsiuvBBtFeejKo1PqAsyzw4+m7m2zmuxLOpdOjSmSID8qFD3OoO/MpBaKgP90vuwEo
+ chE/8WyO2+hQo7sWQszbRPI3lTECtAjL/m4qw3LSrQ1K7dxTWAFfBr/3PseoXigkPvbCg6WxJ
+ YmU1fW0N9u/a9JP08mAgrqdS8ptZAs43tO1uRpQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Get rid of a magic number by using skip_prefix().
+Let skip_prefix() advance refname to get rid of two magic numbers.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/push.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ builtin/name-rev.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/push.c b/builtin/push.c
-index 843f5b22a2..6dbf0f0bb7 100644
-=2D-- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -64,6 +64,7 @@ static struct string_list push_options_config =3D STRING=
-_LIST_INIT_DUP;
- static const char *map_refspec(const char *ref,
- 			       struct remote *remote, struct ref *local_refs)
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index b0f0776947..c261d661d7 100644
+=2D-- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -161,10 +161,8 @@ static const char *name_ref_abbrev(const char *refnam=
+e, int shorten_unambiguous)
  {
-+	const char *branch_name;
- 	struct ref *matched =3D NULL;
+ 	if (shorten_unambiguous)
+ 		refname =3D shorten_unambiguous_ref(refname, 0);
+-	else if (starts_with(refname, "refs/heads/"))
+-		refname =3D refname + 11;
+-	else if (starts_with(refname, "refs/"))
+-		refname =3D refname + 5;
++	else if (!skip_prefix(refname, "refs/heads/", &refname))
++		skip_prefix(refname, "refs/", &refname);
+ 	return refname;
+ }
 
- 	/* Does "ref" uniquely name our ref? */
-@@ -84,8 +85,8 @@ static const char *map_refspec(const char *ref,
- 	}
-
- 	if (push_default =3D=3D PUSH_DEFAULT_UPSTREAM &&
--	    starts_with(matched->name, "refs/heads/")) {
--		struct branch *branch =3D branch_get(matched->name + 11);
-+	    skip_prefix(matched->name, "refs/heads/", &branch_name)) {
-+		struct branch *branch =3D branch_get(branch_name);
- 		if (branch->merge_nr =3D=3D 1 && branch->merge[0]->src) {
- 			struct strbuf buf =3D STRBUF_INIT;
- 			strbuf_addf(&buf, "%s:%s",
 =2D-
 2.24.0
