@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5BA9C432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA7B3C432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE17F207FD
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8082F2068F
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRtV2PTC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNVcozAM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726980AbfKZBRw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 20:17:52 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43845 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbfKZBRw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 20:17:52 -0500
-Received: by mail-pl1-f194.google.com with SMTP id q16so3155338plr.10
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:17:51 -0800 (PST)
+        id S1727059AbfKZBRy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 20:17:54 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:41125 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbfKZBRy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 20:17:54 -0500
+Received: by mail-pj1-f66.google.com with SMTP id gc1so7454262pjb.8
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:17:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=zgQrv7WEr9BNerWgrMuku+xWg7Wefls9OMP9Y4CHDT8=;
-        b=YRtV2PTCfo9uWdYJaueHkH5yZHG58spkj0N09UsjFHhlmluCtN5XsiRUxi+wOz72xK
-         T5Bd/yT7JowYJwolDr3NOf5E8NA8fYlwhJlW492K//G3AfPTjkQ61Hz7siADlZwC8XWa
-         4cn/eD9ILpJeIdwh4anoX7lPqRlLl2xkDbqMglPE+WssMCHT+zZxJFqo7SXvmMG8SGQ+
-         OVu0cA2w7tKsWC4/N/aVXcwqG10pnZAMcSYYMkWYStXSjGm7q15cryEkL6Sz3ejPtYkk
-         Tq2d4eAGzn2LU7FIbss/2F1ddTNtK3ErG7PjMIr2HbiiScUlDY8D6orUnkRYB1kysaiD
-         QtDA==
+        bh=r8wt0iElzEdlUVR3u3fJA/vaW3ImQKr4auWa7LRPo7c=;
+        b=HNVcozAMUVF2LGDmoAqCH7HIFBCX5f++ayq5K44oA+gai9RdKSYsAp+KkRYMx8khID
+         pJdLzlkwE8rXRenerNEpUV3CA+JePIveczOR4FJDV91oHFmn65XQiAMwx24nzXwhOxlM
+         fmWfpiyrtYhUQY/pPjWalPaSrKklikaw4RkuL+XPDPt5D1papHnIfSIh0K5cI4FDXgD3
+         iQtuX/GA0PVrGW8mNRljyMkeeJV5WhlKWezxe4gKNSr3/3IAH+3ecP1sjUv5GjR7czSv
+         eOJ1O65md73Bn3Er0q9cMevaIvV2dPynoRa5Dtb93smpAtPB7gythiKymVK3yXFsg5dS
+         Q9og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zgQrv7WEr9BNerWgrMuku+xWg7Wefls9OMP9Y4CHDT8=;
-        b=VSNTq5fiFPkmjFV1U4qwVKQ2loGm8nejB8hybfcwnd/HzaocQA5wwDq5+WQx7lroD/
-         EQwcXe3pcW4KM7AF1SxZjboh8bTIkHjLl4c0sulh/YOn69ShplxchDlxy8L3fKsRB/Lh
-         Su9r8w8VljWN8Ywx0VBS/L7K8uOLD8jIF/9K6/pDf6cXonqG+xLgsEVK3qrwmn2lHdmt
-         jTRCpsF6ckvaIufq+WKsssNGFnisHI5s7GG65H5h+hut7TiIl+xEY3R1G5Rs/Fv/iFzG
-         sdw5nGJeawWTDSv7BmpUj6WVk/rs7oEtRIhWWXtwkN0RquDHMRRi0eGRds72UeIGVs+F
-         V8zw==
-X-Gm-Message-State: APjAAAUf3lNvjrGppEDgy+Q0L/HhgdKT82Nr/KhBf8lghlWL739N1X9V
-        ltKiBLu7Msnsy9IfeQo9DLRqiDyX
-X-Google-Smtp-Source: APXvYqxjVjhgBEiEECq14SU51fkcH7+sD+WTP9nNC53opONHwI2i8mYKh1/GKe9JtoFj2BPa6BgahA==
-X-Received: by 2002:a17:902:126:: with SMTP id 35mr32374732plb.105.1574731071013;
-        Mon, 25 Nov 2019 17:17:51 -0800 (PST)
+        bh=r8wt0iElzEdlUVR3u3fJA/vaW3ImQKr4auWa7LRPo7c=;
+        b=OCKjSm2EYvSZgnLwcU3KxawFBkHkjzAwKVhR/jFoXQDRhTQPjVndlDiLdK14eeWUoZ
+         Bl1kmD5SJzJ6R4SQA/ukYseYOgkopZp4WduCmUKELIrRESeByeclBR+eufDKdnBhTYtB
+         XZW/7GmRPa/DF66Otr9LQDnsX4CZUdl1P5yQkh0UyMmXpiRz5QQqAcAoPGL39MfQ+zRO
+         30dEIGNJr2mFCVNwLqaf6HMMWvEmyOJLo1BPgFagNTQZ9c3aKJh0iqHa+3+j+it3wUDr
+         Jrmiu01zdppIzXgq1gSOOdE/lr9cfp1ni7EXd/it4r9vhijE0Nn0l6nedZ0Tx8wbMPFZ
+         E3rw==
+X-Gm-Message-State: APjAAAUGXSdxMRoKcC52/3KJhxZphg8u4dxiLQLQQl7vqWir5qHC055A
+        vw7vISbfolwugHWfMIagIrPiAJVB
+X-Google-Smtp-Source: APXvYqyCEzMcbSzMdj/8NeDyTZFTCLZSiN0+Oz9VpkyX9bCUflTT7YOVbzKvKiMmSyZgri/5FO0ttA==
+X-Received: by 2002:a17:902:8ec6:: with SMTP id x6mr31443490plo.151.1574731073411;
+        Mon, 25 Nov 2019 17:17:53 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id hi2sm563629pjb.22.2019.11.25.17.17.50
+        by smtp.gmail.com with ESMTPSA id y24sm10377414pfr.116.2019.11.25.17.17.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2019 17:17:50 -0800 (PST)
-Date:   Mon, 25 Nov 2019 17:17:48 -0800
+        Mon, 25 Nov 2019 17:17:52 -0800 (PST)
+Date:   Mon, 25 Nov 2019 17:17:51 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 02/27] apply-one-time-sed.sh: modernize style
-Message-ID: <86f625c65e00b24d1de183c3a993e6acb7c8325e.1574731022.git.liu.denton@gmail.com>
+Subject: [PATCH v4 03/27] t0014: remove git command upstream of pipe
+Message-ID: <3844e00367de57ec09b1e3282280fd20dd807c0b.1574731022.git.liu.denton@gmail.com>
 References: <cover.1574449072.git.liu.denton@gmail.com>
  <cover.1574731022.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,43 +74,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert `[ ... ]` to use `test` and test for the existence of a regular
-file (`-f`) instead of any file (`-e`).
-
-Move the `then`s onto their own lines so that it conforms with the
-general test style.
-
-Instead of redirecting input into sed, allow it to open its own input.
-
-Use `cmp -s` instead of `diff` since we only care about whether the two
-files are equal and `diff` is overkill for this.
+Before, the `git frotz` command would fail but its return code was
+hidden since it was in the upstream of a pipe. Break the pipeline into
+two commands so that the return code is no longer lost. Also, mark
+`git frotz` with test_must_fail since it's supposed to fail.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/lib-httpd/apply-one-time-sed.sh | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ t/t0014-alias.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/lib-httpd/apply-one-time-sed.sh b/t/lib-httpd/apply-one-time-sed.sh
-index fcef728925..bf7689d020 100644
---- a/t/lib-httpd/apply-one-time-sed.sh
-+++ b/t/lib-httpd/apply-one-time-sed.sh
-@@ -7,11 +7,13 @@
- #
- # This can be used to simulate the effects of the repository changing in
- # between HTTP request-response pairs.
--if [ -e one-time-sed ]; then
-+if test -f one-time-sed
-+then
- 	"$GIT_EXEC_PATH/git-http-backend" >out
--	sed "$(cat one-time-sed)" <out >out_modified
-+	sed "$(cat one-time-sed)" out >out_modified
+diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+index 2694c81afd..8d3d9144c0 100755
+--- a/t/t0014-alias.sh
++++ b/t/t0014-alias.sh
+@@ -38,8 +38,8 @@ test_expect_success 'looping aliases - internal execution' '
+ #'
  
--	if diff out out_modified >/dev/null; then
-+	if cmp -s out out_modified
-+	then
- 		cat out
- 	else
- 		cat out_modified
+ test_expect_success 'run-command formats empty args properly' '
+-    GIT_TRACE=1 git frotz a "" b " " c 2>&1 |
+-    sed -ne "/run_command:/s/.*trace: run_command: //p" >actual &&
++    test_must_fail env GIT_TRACE=1 git frotz a "" b " " c 2>actual.raw &&
++    sed -ne "/run_command:/s/.*trace: run_command: //p" actual.raw >actual &&
+     echo "git-frotz a '\'''\'' b '\'' '\'' c" >expect &&
+     test_cmp expect actual
+ '
 -- 
 2.24.0.504.g3cd56eb17d
 
