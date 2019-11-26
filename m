@@ -2,99 +2,89 @@ Return-Path: <SRS0=BbQ7=ZS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 362E9C432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 21:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C97CC432C3
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 21:55:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 11F162071E
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 21:50:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C0EB2080F
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 21:55:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WPwQ1Md9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726987AbfKZVu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 16:50:57 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:49587 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbfKZVu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 16:50:57 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 47MyJY6Dczz1qqkp;
-        Tue, 26 Nov 2019 22:50:53 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 47MyJY3vSKz1qql2;
-        Tue, 26 Nov 2019 22:50:53 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id kbXd7FIQN-m0; Tue, 26 Nov 2019 22:50:52 +0100 (CET)
-X-Auth-Info: yrPTK5vu2MvYkqjREcNpl6qCWdgvcR7TEI5r0GsDEeEV3Na9BNie2rN+LFM2Qr+q
-Received: from igel.home (ppp-46-244-161-164.dynamic.mnet-online.de [46.244.161.164])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Tue, 26 Nov 2019 22:50:52 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-        id B0ECF2C01AC; Tue, 26 Nov 2019 22:50:51 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Beat Bolli <dev+git@drbeat.li>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] t7812: add missing redirects
-References: <20190724151415.3698-1-avarab@gmail.com>
-        <20190726150818.6373-7-avarab@gmail.com>
-X-Yow:  Wow!  Look!!  A stray meatball!!  Let's interview it!
-Date:   Tue, 26 Nov 2019 22:50:51 +0100
-In-Reply-To: <20190726150818.6373-7-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Fri, 26 Jul 2019 17:08:16 +0200")
-Message-ID: <87blsyl32c.fsf_-_@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726445AbfKZVz4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 16:55:56 -0500
+Received: from mout.gmx.net ([212.227.17.20]:39145 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726033AbfKZVz4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 16:55:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574805354;
+        bh=eu+edSBbnWMvHLKl5L+3Ngw2xNSFJHwfY8QHM8zj/y0=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WPwQ1Md9eMtxKS8dpBcfCW1zvD6ckLWJLaSarpAOicpNcO2WIj6mQQ1hn9I2t4sEZ
+         0C51DpMLztLqlmJxrBeS0xy+58zo5hyYJQdP3Vd5EIEwiwYWy0VPa6FWAiCW14ARg7
+         6utp2vsqcoSE978MQ+Sj6RK1CSKjonNJFvliCDrs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlf4c-1i9liC0LQ2-00iiJy; Tue, 26
+ Nov 2019 22:55:54 +0100
+Date:   Tue, 26 Nov 2019 22:55:38 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Robert Blenis <rblenis@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: git rebase with rebase-merges option creates bad ref names
+In-Reply-To: <CAPbTjvcPCZG---tkyQW8dCd5=LYhGmhpYg5MQSX5BPr+HEG2jw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1911262254420.31080@tvgsbejvaqbjf.bet>
+References: <CAPbTjvcPCZG---tkyQW8dCd5=LYhGmhpYg5MQSX5BPr+HEG2jw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:F7RubbbA7gG/goS3GkA+V7iF1MsNraAAuo9FNXm37SDdK2E4KQW
+ UKX9qXuUYBAYEQipAHlm8v6XcCFtaAsR+cEPCuh8Qned3tPuTwAHcQ/ER8j2U0rP6KgYJEq
+ l+pdhPLHrAbL0gvpAPdc/+SOG6CqPNAb+obNO7/A0O9/qAs/Jhhz20Gt35MJHT3qv8NjJ2/
+ 1Et7e7yCfNn91fQ5CfQGw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TK8uLvKrmO4=:K+p/+U6lM90eLMSmTTGwDF
+ V/3FOuFRq9nEu1rL79OPAkCjEBxDNdU/7UokUR8yiWplnxLQBwdCl2LWtPXXWuzHpmKGzD+2Y
+ nKOlAaV6kkDiqL1nobb1t8zW7ZEY5mLPffPINSE0Ghu9YoQLuUW+tZ6gY1jHXmQLhQRW51FX9
+ WHHyEe8cA5w/gL8TxIYdies5z5aQBBlgzOGBpf2WIUtUGtDWS/25fz0UXHXmqsFr/+5J/9/zE
+ BvkQ3i5r7aUymtFd4nHK0egruO5OBZ0Y63M6sioJyl5aZ/0mX0UpEW4g/2veT3XbTxaQcWGPp
+ 68KG2gej7S77/5Rdj2RLikfAlQgoTguaIFopkXk4Pm3QMWadvro6a2B/WSi6hBpp2Hf/hro6N
+ 6eXyVUcBVCPNAbJksz00UCQBzHzrRRzBijvJyixe6K+8GyCE7g/Ak4fDIwqoXnFGrNA2NnyV1
+ OrUBhjTBdhhCeB/L0wrySXjMVLiVZR2bpQAXyPEcq9PqjKqfQIYrTYjEhlqXw0B6bf1GVBZmh
+ YesmAIWiT0MF97n5ydLdMVaLIgpezeMoDzbozKclZ0rj0m/qCJqiZCLLB1+si9tVHwJErGKFs
+ H8DrfKdLhf/H34nAuu4SVaHlgPmW/nTm6AeFaCK2xVJYVvT6IkbgoEw9uVIg+zC7w02MWM8Av
+ XGt6JICe2v4axhfrVhw6KejCB1nqKTR5viRlF8hdyRRc5BhaFHpSDY6QA/YDAkfh3KGJhu4ZC
+ pFBHrJ40EF29nh+39me0YR76tcYOun4y3BfWa/kWCxb0/ithxkQbZrsUebFLHypNH/oNetbcU
+ qR4RjjbGRfs5j9ZsGJx2zU8DJm/CTS+cEe7nIdBmXoh4BuxaPDMYDbJuTDUl6aquBLrOqCAwb
+ Hd25L0eIl5FxVFaktHM3wTRKSF23F26JcZZPLzQTlsklWOUWFsrDIHOVALQB9cmlGIR3+xOMm
+ zr9CMfY1+w/bu8RTlazyEPQHhtJM8pjCwSMwXQxYfYZcgAei0z8fqtxLqB8JHD44HrM7ZHIWE
+ tgOHJuDPFk9ONcHNmI3QnetFaXnldZob/JmnFgUcqATxQz8sY/1QwGqROsjcwyxxvcFyn4Cea
+ 6Nx+6ELDGFJxBJ55zLYVthJwqab8on4nzXdaufeXDkExtPKeuJClJ1RZ4pmOPj55pdImdmwK4
+ q6jTht9QuFqDhkVwEyu4S9t1gd5Jnrpnv4OS/J2UKeJE14W5ethb0Tzfn97QYywfU9oGCXOxW
+ PbnSbfk1kAPozMQ2LsiUAl4S9SefoWhg36uIV5Xx2rLSaa8QWeQ8Ztmk74qM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Two tests in t7812 were missing redirects, failing to actually test the
-produced output.
+Hi Robert,
 
-Fixes: 8a5999838e ("grep: stess test PCRE v2 on invalid UTF-8 data")
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
----
- t/t7812-grep-icase-non-ascii.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+On Mon, 25 Nov 2019, Robert Blenis wrote:
 
-diff --git a/t/t7812-grep-icase-non-ascii.sh b/t/t7812-grep-icase-non-ascii.sh
-index 531eb59d57..c4528432e5 100755
---- a/t/t7812-grep-icase-non-ascii.sh
-+++ b/t/t7812-grep-icase-non-ascii.sh
-@@ -70,14 +70,14 @@ test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep ASCII from invalid UT
- test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data' '
- 	git grep -h "æ" invalid-0x80 >actual &&
- 	test_cmp expected actual &&
--	git grep -h "(*NO_JIT)æ" invalid-0x80 &&
-+	git grep -h "(*NO_JIT)æ" invalid-0x80 >actual &&
- 	test_cmp expected actual
- '
- 
- test_expect_success GETTEXT_LOCALE,LIBPCRE2 'PCRE v2: grep non-ASCII from invalid UTF-8 data with -i' '
- 	test_might_fail git grep -hi "Æ" invalid-0x80 >actual &&
- 	test_cmp expected actual &&
--	test_must_fail git grep -hi "(*NO_JIT)Æ" invalid-0x80 &&
-+	test_must_fail git grep -hi "(*NO_JIT)Æ" invalid-0x80 >actual &&
- 	test_cmp expected actual
- '
- 
--- 
-2.24.0
+> using command 'git rebase -i -r DEST' fails with "error: refusing to
+> update ref with bad name 'refs/rewritten/Release-170-1020-Rev-D.'"
+> git is taking the commit message and turning it into a reference name
+> that is not valid (because of the period in the message)! This
+> requires a bunch of manual editing of the todo list. git version
+> 2.24.0
 
+Could you verify that the patch under discussion at
+https://github.com/gitgitgadget/git/pull/327 fixes the issue for you?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+Ciao,
+Johannes
