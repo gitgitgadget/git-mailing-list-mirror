@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA7B3C432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91F19C432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8082F2068F
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D253207FD
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:17:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HNVcozAM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HijSmkLR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbfKZBRy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 20:17:54 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:41125 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbfKZBRy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 20:17:54 -0500
-Received: by mail-pj1-f66.google.com with SMTP id gc1so7454262pjb.8
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:17:54 -0800 (PST)
+        id S1727097AbfKZBR6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 20:17:58 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:34689 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbfKZBR6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 20:17:58 -0500
+Received: by mail-pl1-f195.google.com with SMTP id h13so7354429plr.1
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:17:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=r8wt0iElzEdlUVR3u3fJA/vaW3ImQKr4auWa7LRPo7c=;
-        b=HNVcozAMUVF2LGDmoAqCH7HIFBCX5f++ayq5K44oA+gai9RdKSYsAp+KkRYMx8khID
-         pJdLzlkwE8rXRenerNEpUV3CA+JePIveczOR4FJDV91oHFmn65XQiAMwx24nzXwhOxlM
-         fmWfpiyrtYhUQY/pPjWalPaSrKklikaw4RkuL+XPDPt5D1papHnIfSIh0K5cI4FDXgD3
-         iQtuX/GA0PVrGW8mNRljyMkeeJV5WhlKWezxe4gKNSr3/3IAH+3ecP1sjUv5GjR7czSv
-         eOJ1O65md73Bn3Er0q9cMevaIvV2dPynoRa5Dtb93smpAtPB7gythiKymVK3yXFsg5dS
-         Q9og==
+        bh=BJOtIL+cfbhl9dwPpTN/bZ6NZM7pqVzyL6qjSsZmjfU=;
+        b=HijSmkLRUrd3CmtfmJF5hsKRfAQPXz6RgBkXs1ABzDEq/A5vq5gWxnbG2NynAjlFIh
+         uWGwJ7uk8Ap40MWjYksYQH66yG4gdmDlt2ht0FUIJiadGctwGiuJ2BxLx/faZM0r6jS0
+         GhdADU9oq9kcEbcOUbxCLQngr+iO+vBg4B0tTJw+QhqE5ngI6/7gBe6PJV8CqDtkeYar
+         gy7yhOAtC0XYFTnG7J8HkLFhZ5epd+9X+1zzN+fU2FYWeXhATT3U9kDCR7PWAE6+nAGP
+         utGBUDie8lbzinZeR299lfiIbfwIGZV4blfxLQV9AXuDI6Qc+Pe54fofe+x3vNOFsfXB
+         ymeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=r8wt0iElzEdlUVR3u3fJA/vaW3ImQKr4auWa7LRPo7c=;
-        b=OCKjSm2EYvSZgnLwcU3KxawFBkHkjzAwKVhR/jFoXQDRhTQPjVndlDiLdK14eeWUoZ
-         Bl1kmD5SJzJ6R4SQA/ukYseYOgkopZp4WduCmUKELIrRESeByeclBR+eufDKdnBhTYtB
-         XZW/7GmRPa/DF66Otr9LQDnsX4CZUdl1P5yQkh0UyMmXpiRz5QQqAcAoPGL39MfQ+zRO
-         30dEIGNJr2mFCVNwLqaf6HMMWvEmyOJLo1BPgFagNTQZ9c3aKJh0iqHa+3+j+it3wUDr
-         Jrmiu01zdppIzXgq1gSOOdE/lr9cfp1ni7EXd/it4r9vhijE0Nn0l6nedZ0Tx8wbMPFZ
-         E3rw==
-X-Gm-Message-State: APjAAAUGXSdxMRoKcC52/3KJhxZphg8u4dxiLQLQQl7vqWir5qHC055A
-        vw7vISbfolwugHWfMIagIrPiAJVB
-X-Google-Smtp-Source: APXvYqyCEzMcbSzMdj/8NeDyTZFTCLZSiN0+Oz9VpkyX9bCUflTT7YOVbzKvKiMmSyZgri/5FO0ttA==
-X-Received: by 2002:a17:902:8ec6:: with SMTP id x6mr31443490plo.151.1574731073411;
-        Mon, 25 Nov 2019 17:17:53 -0800 (PST)
+        bh=BJOtIL+cfbhl9dwPpTN/bZ6NZM7pqVzyL6qjSsZmjfU=;
+        b=kc84uQQlhazSHtvMmmTr/XCDdQq07KTOZKSfN81FJbod8/woAuuv7TTM2b/228Cyem
+         hjr4GR1HDJycPeiH4nD28Y2RXsk5c4DPstdzXTym34soD3JAzCpSLW1WChW5nUjmD/x8
+         gILahwKQ4EEZRjzCzJajtevHrEOLC4Jhd77OTukNyCY9h6002UgHajuQNSjt0Z/0PtBS
+         Oa33u21Zdn6GDjqXUV5pwJ0dmoq6xLk7gXxi7HPgqOjJtKAHF43J+mNDL64DXqKAXfni
+         LSJrPFuwOJ6Fv8aOHG/rDiDsDXrGee7ro84R4qmR9KBDCws13ziFvXl46NftMevfnWHj
+         81Gw==
+X-Gm-Message-State: APjAAAWsmN/4qu/JBkkCCfNhTUPgn9QjeqUWeS+RBPEqd8qdg165UxUG
+        8Fa2oj+p+40cgtn26djQPQ1zS0Uh
+X-Google-Smtp-Source: APXvYqx1LTPvP0A3rsexfSQ9gcTRQbzMjfcsckvLHhe6dhw192OAI/t150r7KImUVNix+6x3j+1/BQ==
+X-Received: by 2002:a17:90a:6d64:: with SMTP id z91mr2861642pjj.44.1574731075720;
+        Mon, 25 Nov 2019 17:17:55 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id y24sm10377414pfr.116.2019.11.25.17.17.52
+        by smtp.gmail.com with ESMTPSA id x2sm9691396pfn.167.2019.11.25.17.17.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2019 17:17:52 -0800 (PST)
-Date:   Mon, 25 Nov 2019 17:17:51 -0800
+        Mon, 25 Nov 2019 17:17:55 -0800 (PST)
+Date:   Mon, 25 Nov 2019 17:17:53 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 03/27] t0014: remove git command upstream of pipe
-Message-ID: <3844e00367de57ec09b1e3282280fd20dd807c0b.1574731022.git.liu.denton@gmail.com>
+Subject: [PATCH v4 04/27] t0090: stop losing return codes of git commands
+Message-ID: <7d33586b214f8dfd8e027b3bc618ca908799b560.1574731022.git.liu.denton@gmail.com>
 References: <cover.1574449072.git.liu.denton@gmail.com>
  <cover.1574731022.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,31 +74,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, the `git frotz` command would fail but its return code was
-hidden since it was in the upstream of a pipe. Break the pipeline into
-two commands so that the return code is no longer lost. Also, mark
-`git frotz` with test_must_fail since it's supposed to fail.
+In generate_expected_cache_tree_rec(), there are currently two instances
+of `git ls-files` in the upstream of a pipe. In the case where the
+upstream git command fails, its return code will be lost. Extract the
+`git ls-files` into its own call so that if it ever fails, its return
+code is not lost.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0014-alias.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t0090-cache-tree.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
-index 2694c81afd..8d3d9144c0 100755
---- a/t/t0014-alias.sh
-+++ b/t/t0014-alias.sh
-@@ -38,8 +38,8 @@ test_expect_success 'looping aliases - internal execution' '
- #'
- 
- test_expect_success 'run-command formats empty args properly' '
--    GIT_TRACE=1 git frotz a "" b " " c 2>&1 |
--    sed -ne "/run_command:/s/.*trace: run_command: //p" >actual &&
-+    test_must_fail env GIT_TRACE=1 git frotz a "" b " " c 2>actual.raw &&
-+    sed -ne "/run_command:/s/.*trace: run_command: //p" actual.raw >actual &&
-     echo "git-frotz a '\'''\'' b '\'' '\'' c" >expect &&
-     test_cmp expect actual
- '
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index ce9a4a5f32..5a633690bf 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -21,9 +21,10 @@ generate_expected_cache_tree_rec () {
+ 	parent="$2" &&
+ 	# ls-files might have foo/bar, foo/bar/baz, and foo/bar/quux
+ 	# We want to count only foo because it's the only direct child
+-	subtrees=$(git ls-files|grep /|cut -d / -f 1|uniq) &&
++	git ls-files >files &&
++	subtrees=$(grep / files|cut -d / -f 1|uniq) &&
+ 	subtree_count=$(echo "$subtrees"|awk -v c=0 '$1 != "" {++c} END {print c}') &&
+-	entries=$(git ls-files|wc -l) &&
++	entries=$(wc -l <files) &&
+ 	printf "SHA $dir (%d entries, %d subtrees)\n" "$entries" "$subtree_count" &&
+ 	for subtree in $subtrees
+ 	do
 -- 
 2.24.0.504.g3cd56eb17d
 
