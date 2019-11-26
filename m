@@ -8,66 +8,66 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6446FC432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033EAC432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:46:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 21DC72075C
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:42:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C373B2075C
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 19:46:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="miEyBQap"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="slGOgR6R"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbfKZTmF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 14:42:05 -0500
-Received: from mout.web.de ([212.227.15.4]:41507 "EHLO mout.web.de"
+        id S1726072AbfKZTqO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 14:46:14 -0500
+Received: from mout.web.de ([212.227.15.3]:35069 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726050AbfKZTmF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 14:42:05 -0500
+        id S1725970AbfKZTqN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 14:46:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574797319;
-        bh=CvE/Iw9Zlcq82NeWptTiOwEGT0OBNjXihFb3AmCbZ38=;
+        s=dbaedf251592; t=1574797568;
+        bh=Ph4xgJwlE96jS6qPZBsjNNEiwVcWoe5Wzbt4ZsD1h4o=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=miEyBQapgW56BceI68cKBhDhfyF1QlOpsz80SL0G9ymuzzS+xr2BSjW5+x8cnN4al
-         G6Zl4C5j0oBv8+W+9zeM58bmTRSbDg3U0NcOc9XcdBPvEbu2A0To3PVkizJ9yfp0Rk
-         N8QZtQPGdZQ7ujCrrkH8vf1ZqrsynQpNYtxHkuNQ=
+        b=slGOgR6R2XCeBwVtlNrzbDSdpxaFCo+dCP2b6L/Nhpt/MJEk300DlZ0nBAexrV1hy
+         kx7gdMjWqi60vhHjRQJHf+SbC2zb8rgTbQG4qpWMrO7MAHn0reiTEmMz5t5Dpu0ETz
+         PekEx4E0tHnYhZcwqjBRBR3dj/+BOOFCUi6NLO7c=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MGAB5-1idK1x3UJz-00FA7Z; Tue, 26
- Nov 2019 20:41:58 +0100
+Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LkyXt-1hyz3S3qaL-00anXO; Tue, 26
+ Nov 2019 20:46:07 +0100
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Kyle Meyer <kyle@kyleam.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] t1400: use test_must_be_empty
-Message-ID: <ad30f426-4b9e-431c-b1f6-63ca2bb0fa3d@web.de>
-Date:   Tue, 26 Nov 2019 20:41:57 +0100
+Subject: [PATCH] test: use test_must_be_empty F instead of test -z $(cat F)
+Message-ID: <a374807f-0fcf-4ee5-f086-9d0ef6ca5865@web.de>
+Date:   Tue, 26 Nov 2019 20:46:07 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:rdwsLvm7E8NF5hHpiAPXLA/mDVrOG+TfUN/XCSLyJS3e6QWDn+P
- ITR8SfoW4Yzzuw5+U1nCRuofjdDo0bGvM9Z5FltiNx0EN6eBuC5JK66mez2VZusAF/S0iBp
- Q4RxeVxJd4l2ei01ARoqxYBYIk9qNfTFKnsZsDp9KwWMKlTUl+CGbsyLatz/2d23As5Mzwi
- LMVYHBBbpCVkewG3eWjhQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xwWjBAEKIeY=:2R3Y13FW5/BWIdlBEhH43w
- fDvWn3Cp+oqSmoeeFC5kzRWGlT/hsFBgO4clkPQKleUtDtrtjK3C2CPhpvuoldHkRKLyDvoqm
- 4YmS1DUP9wu4oamrSDcXVhORxDVW4SaKNTCPC2pN/x37fDU/5YDJBA1vM9b0ap9tWZW+OUQkL
- BJObeMko304QmmHncl6j7XTBcjujb/DvQqyXP1lS0UgL2uzaJLjHW2gx210bHckijBZvZksLR
- VubfJDORUrXgN7eDDupLSwrmjQkod20PFBgNPUUdnqYC3WWI0gPmTIAKB/z1EoXKFmsA+r9B0
- v6J2Hb5ywJuGBxcHn74eU4PnlBa8zkYd6MriNuEQ5+ehF6HUJebkuY0vaVa7kFfsSSA7VUhsA
- 9H1fYRl6YPNY0NGG144IvpqFJGAOnBzDH+JwVuO8RM0gaQTQ1ggaWFLKSSZ2Lbk/Jqm70we7S
- EYh7EPqwzoYaIEPhUUne1aBkqjm+wDHTdD52sEVdkCznpgZ2/V9cCJaqkEe2pVEc46ZL3FKwL
- qJYU4ZBDsM9VDfIrFfuUr2Gipi4bZKwf8VBhqhTYfYdWkltIqp5CYATKjRgtoaicvy9DdHE/P
- i1qxeWIBrQX5oNbl/1PZIOIiGl7tRAC10F2B9YkZCly2Z7Apmvit70lqogzngUXVNnaiclxUg
- ar3FE+E7HfuKlUwilNikJN4+fCMzVVCk8iWsu0bC+kEJ9ZBBsjbw1YucElkmH3sfOQSxcwR7C
- 0gKMwf80HXRYXrKolhiqiQRJJPtM3dGo6HhqarIvfIY1BkVF3xvXIJVlPEJbmU5ElAqaszVjp
- 3BvweZuKExZj/U2mxAo8dh8RJlq0f/4n5LJAN5Uyodz4o+MP21uZ2WQcfdOQWDKcALdH6qHvL
- cNjWZcoFacYf8CoBf6H9PFFZLDnPZCJ7t98t49CNZEvwfmHpdoN1sZ/f5jN4OxID1vIW/YBaI
- 07ZXnN62axpe1LCFEE8Ezbyv59ogBTpO+q3GVrsucVnsW/EghmLBAP+s/LrRhUUuNbsVFTd3j
- sY5j7drdSWfY1clm++lV8K2vFwYLmygx590FJBl0eNduRXWJ0Dnvgfkc0M/QXI9sBAu+alWk7
- b0mUFnLwn9ooUY/vJ61BxHE51UU4X7Xd16EpLXgIHdyz4TdxpQ6KWMEJUwYnSMujtuUpJTTgG
- 33XCiZcBcmHE9jmYn4SGBRgLtqUJsBrwrjVoVCBeiFE/ylgqnjSwKodtESSopWpg4hTM2TwxY
- FKmHCGOKyDVlwthxNEh6Q4paVLpuC0g44tx0AMg==
+X-Provags-ID: V03:K1:xlVsP/UvRyvLJ0HFH+v51Zczwmdvvs0omn1lXl+iGHAxBtePC3z
+ iPSoI2R8ax8dSAzJCH+jwwuMznn4+ZG4xsecjhMJhWWR5sLAyybwxBczkf8PAPIt0OwZidR
+ gneUlS7qmyR/+mDjK7atPCHOAKdPTQkoZSz+3LtSF2mcrnkMXigQbDBwcP8OUGPGB/svUVD
+ y3LSmgXQFEzVZl6nEjGmg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iPzCKMbN/8U=:W/bmd8qPNDoCLXRNGWEcOa
+ BbpqTPDJd0ujvu223QhomNCWcrfIzrMmR6QBff7patMOKNIrh56ae6XDjkXXPjDhSB23nI2Y5
+ T3/bMnFqse8rNlzKYK/tmzpCxSC5s+hGmDGPi4qorlLYFHILhtULYZNz5B64x6lADWmX1C722
+ Ic9BCpKt4d4xsuv8KYnvyzHi5jQlLoSidxjI4dE2wt6SnlkzfSicRj7vmDB6Xc6OmwZDmZ6uR
+ xPPP/USOriQKZ9Z591SUrPpRjUyZwd6wJWg5tVEg9VgdIxQ8gDwdkAzxe4JA6Y11gd63Cp9ZZ
+ 7mLGwEgs9ix/upO5erq5HDZUk2rA3zlIKgysn3YCmIhSkjvib56eX1yNS3v7ZBQBTXwkSNna0
+ mocwcisMbKZboDmMBAxUKpYn4oq/8B7HYtx11hozmLlxiMst4ii/PtW5L3LzqXs9W/f7ikteE
+ 8UN2xGHXGjIkls/Ne50pe4VCdXIUe5SPm/2O5kF1hq2PBp1kH2jXknFjg//1fZQxZurluBFF8
+ 4puXpW7RxjyZNSrEAJsnXbfU95on6R9c7988BC6Th6F53HxLBVQ9MZpGB1vrnWRIAKrqgNgFC
+ nnlr7pXQLHA65byNeHESVDT23DJ8w6ojHApJN14jah7OhzasoMhxqDymjEU8NXyAGQWD3y4xL
+ 4VYbBoD5whZ7ICsTvpY4ToSKS73sxYvlbm91FkaHbng/ffhVPeJ1sUc8Wma0VBY246MwyJbVT
+ tgp/XbeGanahBuV5hiG9ELEu1FVDiEQ89zNqPsccOznhHTYFtmYXJqN2Xz7BZN7w3IdvM1Voj
+ 0QGTgvxf4oXMN5iU0VUrhuPuCVdI5pWOG4dK87uRrclpHlhMZ/ctCHB00hXRxy/rV3vZ/+V8o
+ DtlcGzJCaQn4T/22KV6h+lDLBN5RnmBovzCUJ7tlo7X+UmisFZjWmP0I/vPcFzwtKbGzQK53C
+ fKvSByJPdobFQ9qqxM2/pN1NvZFTjnZDkfNIJxsBHztmwIyHcCUe+jmly4RLgfyp4762ELsDC
+ oNXqS03EBYnjIcRj7lfb6Q481x0RcoEgQ0akec2k3rcIbbQw0Y1FZ162F+YNWwI6IhCm/OBxz
+ Fr8yz/K/+/56LWUy/h/za+x2pjkzyQCoVLbVRtvotbnDgoVqp/YrrXQgItFsUMn1VTw0H2wjL
+ UfQpoSFHPIpOuiUCUoyZuHX3U4bYSpG4XlwyUtjgZhKiTygbbRUQNHoZsrfa9B+Ltt0bUbcbP
+ C/Ub+ZDpoFV53fdYxR7NDSJkQ9X0SLrm7bMcO7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -80,49 +80,81 @@ nicer debug output otherwise.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/t1400-update-ref.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t1309-early-config.sh           | 2 +-
+ t/t1506-rev-parse-diagnosis.sh    | 8 ++++----
+ t/t6019-rev-list-ancestry-path.sh | 4 ++--
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 1fbd940408..ae8e2fcf3b 100755
-=2D-- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -378,13 +378,13 @@ test_expect_success 'Query "master@{May 26 2005 23:3=
-2:00}" (exactly history star
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{May 26 2005 23:32:00}" >o 2>e &&
- 	test $C =3D $(cat o) &&
--	test "" =3D "$(cat e)"
-+	test_must_be_empty e
+diff --git a/t/t1309-early-config.sh b/t/t1309-early-config.sh
+index 3a0de0ddaa..ebb8e1aecb 100755
+=2D-- a/t/t1309-early-config.sh
++++ b/t/t1309-early-config.sh
+@@ -29,7 +29,7 @@ test_expect_success 'ceiling' '
+ 		cd sub &&
+ 		test-tool config read_early_config early.config
+ 	) >output &&
+-	test -z "$(cat output)"
++	test_must_be_empty output
  '
- test_expect_success 'Query "master@{May 26 2005 23:32:30}" (first non-cre=
-ation change)' '
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{May 26 2005 23:32:30}" >o 2>e &&
- 	test $A =3D $(cat o) &&
--	test "" =3D "$(cat e)"
-+	test_must_be_empty e
+
+ test_expect_success 'ceiling #2' '
+diff --git a/t/t1506-rev-parse-diagnosis.sh b/t/t1506-rev-parse-diagnosis.=
+sh
+index 624d0a588f..6d951ca015 100755
+=2D-- a/t/t1506-rev-parse-diagnosis.sh
++++ b/t/t1506-rev-parse-diagnosis.sh
+@@ -138,10 +138,10 @@ test_expect_success 'incorrect file in :path and :N:=
+path' '
+
+ test_expect_success 'invalid @{n} reference' '
+ 	test_must_fail git rev-parse master@{99999} >output 2>error &&
+-	test -z "$(cat output)" &&
++	test_must_be_empty output &&
+ 	grep "fatal: Log for [^ ]* only has [0-9][0-9]* entries." error  &&
+ 	test_must_fail git rev-parse --verify master@{99999} >output 2>error &&
+-	test -z "$(cat output)" &&
++	test_must_be_empty output &&
+ 	grep "fatal: Log for [^ ]* only has [0-9][0-9]* entries." error
  '
- test_expect_success 'Query "master@{2005-05-26 23:33:01}" (middle of hist=
-ory with gap)' '
- 	test_when_finished "rm -f o e" &&
-@@ -396,13 +396,13 @@ test_expect_success 'Query "master@{2005-05-26 23:38=
-:00}" (middle of history)' '
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{2005-05-26 23:38:00}" >o 2>e &&
- 	test $Z =3D $(cat o) &&
--	test "" =3D "$(cat e)"
-+	test_must_be_empty e
+
+@@ -155,13 +155,13 @@ test_expect_success 'relative path not found' '
+
+ test_expect_success 'relative path outside worktree' '
+ 	test_must_fail git rev-parse HEAD:../file.txt >output 2>error &&
+-	test -z "$(cat output)" &&
++	test_must_be_empty output &&
+ 	test_i18ngrep "outside repository" error
  '
- test_expect_success 'Query "master@{2005-05-26 23:43:00}" (exact end of h=
-istory)' '
- 	test_when_finished "rm -f o e" &&
- 	git rev-parse --verify "master@{2005-05-26 23:43:00}" >o 2>e &&
- 	test $E =3D $(cat o) &&
--	test "" =3D "$(cat e)"
-+	test_must_be_empty e
+
+ test_expect_success 'relative path when cwd is outside worktree' '
+ 	test_must_fail git --git-dir=3D.git --work-tree=3Dsubdir rev-parse HEAD:=
+./file.txt >output 2>error &&
+-	test -z "$(cat output)" &&
++	test_must_be_empty output &&
+ 	grep "relative path syntax can.t be used outside working tree." error
  '
- test_expect_success 'Query "master@{2005-05-28}" (past end of history)' '
- 	test_when_finished "rm -f o e" &&
+
+diff --git a/t/t6019-rev-list-ancestry-path.sh b/t/t6019-rev-list-ancestry=
+-path.sh
+index beadaf6cca..353f84313f 100755
+=2D-- a/t/t6019-rev-list-ancestry-path.sh
++++ b/t/t6019-rev-list-ancestry-path.sh
+@@ -143,14 +143,14 @@ test_expect_success 'setup criss-cross' '
+ test_expect_success 'criss-cross: rev-list --ancestry-path cb..bc' '
+ 	(cd criss-cross &&
+ 	 git rev-list --ancestry-path xcb..xbc > actual &&
+-	 test -z "$(cat actual)")
++	 test_must_be_empty actual)
+ '
+
+ # no commits in repository descend from cb
+ test_expect_success 'criss-cross: rev-list --ancestry-path --all ^cb' '
+ 	(cd criss-cross &&
+ 	 git rev-list --ancestry-path --all ^xcb > actual &&
+-	 test -z "$(cat actual)")
++	 test_must_be_empty actual)
+ '
+
+ test_done
 =2D-
 2.24.0
