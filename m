@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB0AC43215
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6243C432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:18:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9901B2068F
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:18:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9A6262075C
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 01:18:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZyAFGbTK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwUGTWHx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727130AbfKZBSC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 20:18:02 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38017 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbfKZBSB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 20:18:01 -0500
-Received: by mail-pf1-f196.google.com with SMTP id c13so8304980pfp.5
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:18:01 -0800 (PST)
+        id S1727156AbfKZBSE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 20:18:04 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40459 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbfKZBSE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 25 Nov 2019 20:18:04 -0500
+Received: by mail-pl1-f193.google.com with SMTP id f9so7346345plr.7
+        for <git@vger.kernel.org>; Mon, 25 Nov 2019 17:18:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Dxh2jaW1UxAziQYQjHScRCLmQiudoN4gja7P1jegEhY=;
-        b=ZyAFGbTKLYom51/mqkON7EbcGao7UPLmilGW3uG0nwQm5DU0+kX8kAX0eKVra74JqZ
-         5STzd7fajKqGxPmZY3wfduJVIM3XC+Ied56PRKzIxq+ND41ii+Z9aFBx7JpxhckwxiCI
-         ZNBM4ZNvsz3rZz7qlLjjfbHTppTnFFdyDgP1HBBpXzWa/CVkX291+TxjOo3AZ2ukXI+r
-         W6AcJdGF8EZoXcPgn3NroeCgr97gf2LqvLpahTuWgRjpoOfmTWzewyyPH51IfUUKH5Al
-         XGwF0qnteRHycwYVcg8n3l/JW3Af73WNEdrI5GBwtlPSROF+cT8cAVOsM8yCmbISLlnp
-         gO5Q==
+        bh=/2KT3kKWIIcN5EEEvD1lTeDl+prBaH3cSls3K6bAnXc=;
+        b=lwUGTWHxMYLfdq5Ap70vDbyvyx684Knfm2dl08UNYjAVhHFI0886wzHanISrW1W+1z
+         7bTvfmI8+Y6bkpGjPXZVYs2+2CaI7nfMb/EvztuTXTHp62XjIbm5SI2BFljgL9Aj2YFX
+         SsevAdk+Xg6T91DDXmLQwIa478ZJpI68iVf1xtN8oopLRKk0/xjHJexcE5IkBVLucRRc
+         zr6mzYSq8Je2IguRI4noHw7atVVvxS89oLzRlpko4lSQpTtO32kR6TTtj0TEALUz3baI
+         EtW50zPGE99787No42QJ4qf6+i6elfO6I1VeMHpOYFmhK0BxRYe5eANVNG7Y2XNCFEMC
+         zVlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Dxh2jaW1UxAziQYQjHScRCLmQiudoN4gja7P1jegEhY=;
-        b=ctGZpISSKdb5Ga4RhYxe2VB5YvknfQHlDJeIs/BxOFy9tRByYZ2xJdHnVnQsrkAvQD
-         9ThqA4lIcqyuUOXdYxil+hL9L5i1jO1dg8bu//AvIQWSxT/Gl3IVKLUM/tqnBQ+F+5Hi
-         td1R5cZteRtLt/3ZkDRi9EIkEmKrrSewuxl+hKpAmHoBsSQwUtT0kh5PJ4SLZ5jrQ/nP
-         AF7fHAtALgJfn5Jc2fo+UU8z6qpEoGv5SPw6mmCmzCLmIqbewAMdSV7IdO/zZkZYVDtZ
-         fOSpjOMAgOKRMkCcKlKlqEjZC12KB6JitrIHYWMBkT1/eLohVQvA2BhQaIHy5D15EH9V
-         wl+g==
-X-Gm-Message-State: APjAAAVt7/GVs45D1a9yL6g/EyKIM3HZEXS7AdygILmEH1R5i/AfVhdI
-        Kb0IJ4TYNHUW6/wYOSjgnKbTSwer
-X-Google-Smtp-Source: APXvYqy1dcMmLXHbNxbJx2yF2G62Wba1wAdl+/5mY+jDVm64fBmJXoMcxrNXmT68b9eWAfvhg2zI1w==
-X-Received: by 2002:a63:1b1b:: with SMTP id b27mr33010266pgb.402.1574731080727;
-        Mon, 25 Nov 2019 17:18:00 -0800 (PST)
+        bh=/2KT3kKWIIcN5EEEvD1lTeDl+prBaH3cSls3K6bAnXc=;
+        b=hRwx0saNWD5Rdjm+WCteMo5t3ck4rIiUpGTSR/an6z/HDBa/sMcsEp6KqvHDEg+Pow
+         +C0is2tWSbrBb1Z4gm9XTffZo3vt04UqLrvjNXV4TeRbkBGFGuSrL/Eyc9LCzbocpRuE
+         3yEawamZXxKNkfIzAK4BJG2SL8SQ7UCVs5PbjONTGH/LG1pJJvWxaal6nLmZp8b1iL2u
+         yEhUPoiB5bUxDRHQpUhKUGIEh/F4EKbIGPUmvFpy/9iyiH1fYw+G4uW7hfQk5iPaBJ7r
+         q5SMCBGgaCPucjNZywUliJGs2AOKL9i8KOgJe700nScn41L2mNvbNogqfEohcTCZ3zbf
+         hDxA==
+X-Gm-Message-State: APjAAAUFNrdSJtLJw/VhcVrLQpOa4QdgeCFdEAJxG0PJo6Cw07U/vhAW
+        I0l/7JfSiINsbku6WA1wAvwIalUf
+X-Google-Smtp-Source: APXvYqwxO+afe3nfs55lDLAhYZI3UODWGqQNwEdGYlDISDxEaBYcUZ/0eGpKJdnUJTYcS70rBUn7Aw==
+X-Received: by 2002:a17:902:6ac9:: with SMTP id i9mr31862894plt.218.1574731083208;
+        Mon, 25 Nov 2019 17:18:03 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id k13sm9845091pgl.69.2019.11.25.17.17.59
+        by smtp.gmail.com with ESMTPSA id x2sm9369828pge.76.2019.11.25.17.18.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2019 17:18:00 -0800 (PST)
-Date:   Mon, 25 Nov 2019 17:17:58 -0800
+        Mon, 25 Nov 2019 17:18:02 -0800 (PST)
+Date:   Mon, 25 Nov 2019 17:18:01 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 06/27] t3600: use test_line_count() where possible
-Message-ID: <d541a8d4d4b8fc224fe1967ce5717d70c0f2b55f.1574731022.git.liu.denton@gmail.com>
+Subject: [PATCH v4 07/27] t3600: stop losing return codes of git commands
+Message-ID: <a8aeca67956f503829ac1f16072782ae5a906dd8.1574731022.git.liu.denton@gmail.com>
 References: <cover.1574449072.git.liu.denton@gmail.com>
  <cover.1574731022.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,33 +74,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since we have a helper function that can test the number of lines in a
-file that gives better debugging information on failure, use
-test_line_count() to test the number of lines.
+When a command is in a non-assignment command substitution, the return
+code will be lost in favour of the surrounding command's. As a result,
+if a git command fails, we won't know about it. Rewrite instances of
+this so that git commands are either run in an assignment-only command
+substitution so that their return codes aren't lost.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3600-rm.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ t/t3600-rm.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 8c8cca5bfb..f6e659b7e9 100755
+index f6e659b7e9..0c3bf10edd 100755
 --- a/t/t3600-rm.sh
 +++ b/t/t3600-rm.sh
-@@ -113,9 +113,10 @@ test_expect_success '"rm" command printed' '
- 	echo frotz >test-file &&
- 	git add test-file &&
- 	git commit -m "add file for rm test" &&
--	git rm test-file >rm-output &&
--	test $(grep "^rm " rm-output | wc -l) = 1 &&
--	rm -f test-file rm-output &&
-+	git rm test-file >rm-output.raw &&
-+	grep "^rm " rm-output.raw >rm-output &&
-+	test_line_count = 1 rm-output &&
-+	rm -f test-file rm-output.raw rm-output &&
- 	git commit -m "remove file from rm test"
- '
+@@ -304,7 +304,8 @@ EOF
  
+ test_expect_success 'rm removes empty submodules from work tree' '
+ 	mkdir submod &&
+-	git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) submod &&
++	hash=$(git rev-parse HEAD) &&
++	git update-index --add --cacheinfo 160000 "$hash" submod &&
+ 	git config -f .gitmodules submodule.sub.url ./. &&
+ 	git config -f .gitmodules submodule.sub.path submod &&
+ 	git submodule init &&
+@@ -623,7 +624,8 @@ test_expect_success 'setup subsubmodule' '
+ 	git submodule update &&
+ 	(
+ 		cd submod &&
+-		git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) subsubmod &&
++		hash=$(git rev-parse HEAD) &&
++		git update-index --add --cacheinfo 160000 "$hash" subsubmod &&
+ 		git config -f .gitmodules submodule.sub.url ../. &&
+ 		git config -f .gitmodules submodule.sub.path subsubmod &&
+ 		git submodule init &&
 -- 
 2.24.0.504.g3cd56eb17d
 
