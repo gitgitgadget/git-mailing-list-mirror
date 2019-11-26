@@ -2,139 +2,98 @@ Return-Path: <SRS0=BbQ7=ZS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DFDC432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41838C432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:39:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C617020678
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:28:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F18C420727
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:39:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="magQ6rR0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728100AbfKZP22 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 10:28:28 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:55822 "EHLO smtp.hosts.co.uk"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727135AbfKZP21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 10:28:27 -0500
-Received: from [79.66.3.179] (helo=[192.168.1.22])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1iZclN-0006IO-BR; Tue, 26 Nov 2019 15:28:26 +0000
-Subject: Re: tying files to git repository
-To:     Jim Edwards <jedwards@ucar.edu>, git@vger.kernel.org
-References: <CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <07afaf21-9731-9068-962b-2e089ddd576c@iee.email>
-Date:   Tue, 26 Nov 2019 15:28:25 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        id S1728562AbfKZPjU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 10:39:20 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:46392 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725972AbfKZPjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 10:39:19 -0500
+Received: by mail-qt1-f194.google.com with SMTP id r20so21805886qtp.13
+        for <git@vger.kernel.org>; Tue, 26 Nov 2019 07:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Co5qL60VqtlL71ZSQJKqABpeamm2WBXW2jhCC7EjvG4=;
+        b=magQ6rR0q107ExPzMxSeTxMdhgkkjE161dM90cZok76JTFzqBFRCbFHmXZtnHy55Po
+         tSvN90gW9Lt9mrmejo+O9SYNCMN+QTwCse9bV/yAhyenxUnR2CdgpKYK3S7pusTPsQ0j
+         SkG1bVvWGitlZwf8JK4BsIVzE5cfMoetDOK23tP7/nJU2qkM1whmsu6C9wrQb7E72eYg
+         wyBLPDK1dKHJWl1fM9dr95EhVB2d+vEXhJzzu09Gra2/s/m82WU+jvIL3Fd6ikYqSwZf
+         CajU3JHMhawshHtINbRFXR2z1FGjeK50Iwo7b/e+8RLNAnTxCcbSiyK2pB/5kjEN96jU
+         erGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Co5qL60VqtlL71ZSQJKqABpeamm2WBXW2jhCC7EjvG4=;
+        b=lk85zU4oWJ1oBDr8yMSk/XyQh9e4pON18r6Od/QmKgQrra8ygaN6zjNVWyKWZn15KV
+         TiG9ysLjN55f4v5sTIzO+CRvLDUuyXI/eaI17qRkTwYseLKVVD8aaW3J09BXXpqkBofa
+         KlfteQA9V7B59jn7O2DffSDRzNkmNuroY0BgXyRhiKVFl7SroLkgA3jhuPMN9dpwTj6E
+         w1Y0uSlGQPEId4xpX4DhYkKE4z14C+Ia96LvM6teU36c70W3eJpXizPZkdAMxFrdJ20g
+         p12osqFgfdqJhXG4wRvVeY8XkiaHvyfemi0sACeIDdUKHuxFagcHFNB37os0If8WN2PN
+         lWLA==
+X-Gm-Message-State: APjAAAWzLQgCQKuRpKO9LctT/c2QVz6Gn4FCZw38PrHCFAielQooTxF1
+        KoYHJOLaz6za6Vaw4PAZEzo=
+X-Google-Smtp-Source: APXvYqzH9i9eNP2Ou+cag2TnBHY6vszT8cHJUwSjgumKiBi95+LdlMlmBbpyQumXiBR10umQjXArjA==
+X-Received: by 2002:ac8:2fba:: with SMTP id l55mr36281304qta.167.1574782758486;
+        Tue, 26 Nov 2019 07:39:18 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:2c81:2de5:cc0c:502? ([2001:4898:a800:1012:ddb4:2de5:cc0c:502])
+        by smtp.gmail.com with ESMTPSA id k196sm5253468qke.97.2019.11.26.07.39.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Nov 2019 07:39:14 -0800 (PST)
+Subject: Re: [PATCH v5 0/2] commit-graph: use start_delayed_progress()
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ryenus@gmail.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.450.v4.git.1574351516.gitgitgadget@gmail.com>
+ <pull.450.v5.git.1574717303.gitgitgadget@gmail.com>
+ <20191126122022.GB10290@sigill.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <fe7c0e41-8379-4933-4ff1-026d3f1f8472@gmail.com>
+Date:   Tue, 26 Nov 2019 10:39:14 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-In-Reply-To: <CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-GB
+In-Reply-To: <20191126122022.GB10290@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jim
+On 11/26/2019 7:20 AM, Jeff King wrote:
+> On Mon, Nov 25, 2019 at 09:28:21PM +0000, Derrick Stolee via GitGitGadget wrote:
+> 
+>> Update in V5:
+>>
+>> I took Peff's advice for using "env" to use this delay in the GC test.
+> 
+> Thanks. No further complaints from me. :)
+> 
+> There's an open issue to investigate unpack-trees sending progress to a
+> non-stderr tty (which you can see in the test suite by setting
+> GIT_PROGRESS_DELAY=0), but I think that should be handled separately.
+> My limited digging suggests that it goes back to 2007 or earlier.
 
-This 
-(https://public-inbox.org/git/CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com/) 
-has been lying around for a long while..
+This is on my personal to-do list. Thanks!
 
-On 11/11/2019 15:28, Jim Edwards wrote:
-> Hi,
->
-> I am a developer of scientific software, as science software we expect
-> and encourage users to modify source code in order to customize their
-> experiments.
-Sounds an ideal usage for git - giving back control to the users so they 
-can easily maintain their versions.
-> The mechanism which has been developed to do this
-> predates having source code in git and we are trying to figure out a
-> way to minimize changes to the scientists workflow, while leveraging
-> the power of git to improve the process.
-Good, though sounds like you will need some terminology mapping.. Is 
-there a public reference to the method?
-> In the workflow the
-> scientist creates a 'case' using script in the repository to create a
-> directory structure from which they will conduct their experiment.
-In what sense do you use "case"?
-  e.g. a [single] suitcase that holds a choice of clothes to wear / 
-experimental methods;
-Or, a long list of experimental setups, each with a name, selecting a 
-'case' statement (like a software 'case' statement);
-Or, a use-case that gives a half complete suggestion about how it may 
-work, but with some details still to be filled in due to lack of space 
-on the post-it note..?
+-Stolee
 
-Given that the scientists create a 'directory structure' (containing 
-files?) for each experiment, this sounds very much like creating a 
-'branch' (line of development) from the initial template of that 
-structure, and as they develop their experiment's directory structure, 
-they record their development in 'commits' on that branch (and sub 
-branches if they are looking at alternatives). Finally, when they have a 
-good structure ready, they can 'tag' that commit so it's easy to find.
-
-
-> Part of that directory structure is a SourceMods directory where the
-> user can drop modified source files that will be compiled in place of
-> a file of the same name in the source tree.
-This 'dropping' has a strong _conceptual_ similarity to the staging area 
-or 'index', where git users 'add' files that they feel are ready to an 
-area that is used (like an outbox awaiting collection) as a temporary 
-holding area waiting till all the bits are ready and waiting before they 
-commit the ensemble.
-
-So this "SourceMods" is very similar to the staging area, except that in 
-your case it sounds like it is a specific place, while in git it is more 
-conceptual as the user will 'git add <file>', and that change is 
-registered in "the index" (a local file in a hidden .git directory), 
-ready for the big commit.
-
-Behind the scenes, a copy of the file is saved (in the object store) and 
-hashed ready for inclusion in the commit hierarchy . Later the files 
-(objects) stored in the object store are 'packed' resulting in a very 
-compact storage, particularly for source files. The git repository can 
-be 'pushed' to other servers, and other repositories 'fetched' from 
-servers (and mixed together if they have common ancestry).
-
-
-> These files are sometimes
-> long lived and passed from case to case and even user to user and it
-> is not hard to have the files get out of sync with the source tree.
-In Git, because the current files stay 'in place', you can start a 
-branch (new experiment definition) from anywhere in any line of 
-development. You/they simply checkout that particular commit and, voila, 
-all the files are back as they were exactly.
-> We have discussed at length removing the SourceMods capability and
-> requiring scientists to create branches in git, but there is a lot of
-> resistance to this in the community.
-Most of that will be fear of the unknown and the unfamiliarity of the 
-git terminology. There can also be confusion about how Git has changed 
-the old ways of working. Because you get 100% verification and 
-validation you no longer need to worry about requiring a central golden 
-reference store (though usually the "organisation" will want to have a 
-_copy_ ;-)
-> What I would like to explore is
-> allowing scientists to keep the method that they are used to but at
-> the same time tying these modified files to their history in git.
-The key part will be in how you map what they already do and know to the 
-git commands and structure, and how you show them that it will remove a 
-lot of the pain points and bottle necks.
-> Is
-> there a way to get the git metadata associated with an individual file
-> so that we can treat that file as if it were in the repo?
->
-That [mental model view] way is a Sisyphean task, a never ending up-hill 
-struggle. With a few careful words (mapping out solutions to their pain 
-points) you should be able to get the scientists to pester you to 
-implement git sooner rather than later. Choose the lead experimenters of 
-git carefully.
-
--- 
-Philip
