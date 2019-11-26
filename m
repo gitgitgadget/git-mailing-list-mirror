@@ -2,146 +2,107 @@ Return-Path: <SRS0=BbQ7=ZS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.7 required=3.0 tests=DATE_IN_PAST_03_06,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 936FCC432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 16:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09ECEC432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 17:18:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5BD0A2084B
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 16:41:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="SS3Zvl1y"
+	by mail.kernel.org (Postfix) with ESMTP id DA44D2068E
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 17:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728100AbfKZQlQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 11:41:16 -0500
-Received: from mout.web.de ([212.227.15.4]:56717 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727820AbfKZQlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 11:41:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574786469;
-        bh=stz8zwa6hVWP4kaYaqbEYooHGUVJWdXMPHG3GuasHQ0=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=SS3Zvl1yWPXqnbx7AK6olQAdTKEh2nKPCADumBRS5Hcy2DxKnR4xzOD300rIi84Wt
-         Qezxkg1g2AnTtuNoPQe1OqikjwZWpI4eIRUj+f3q5fak+GbmC9k3Cx1Qyxq6wTSFrj
-         obP+ut1Zwhy5DfZsORDeyVLMtiewkIhxTxgVMRz8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmuMO-1hsrxx3TY4-00h6gP; Tue, 26
- Nov 2019 17:41:09 +0100
-Subject: Re: [PATCH] shell: use skip_prefix() instead of starts_with()
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <0a4dfbcc-9eb5-6b39-6b93-0014f5c475de@web.de>
- <20191126155647.GA25729@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <baf0aabe-f94e-852a-7c60-0c6e772fc437@web.de>
-Date:   Tue, 26 Nov 2019 17:41:09 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1728637AbfKZRSW convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 26 Nov 2019 12:18:22 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:39625 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727674AbfKZRSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 12:18:21 -0500
+Received: by mail-il1-f193.google.com with SMTP id a7so18311394ild.6
+        for <git@vger.kernel.org>; Tue, 26 Nov 2019 09:18:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=clmbmc4fTbPIT95RFie6cqIeeggkkKIVOcfwhLUW5nw=;
+        b=ddQBLgXOxaykJCPvb2JmhGtGuoZyDE5oYS/DXb9OCX8kPq2Xyta1UQdBX9lom8UEvE
+         RLFnon1Pay9wDzRbyN7qjqUN0qqYzrXCxudn9vEHQGBdc94TF407IEzMLPzD/YYB2S85
+         oYcfyDjI+cdm3GfSu/zIVsIQuG9dhPN2mxuRhv6J25Dox4M0dXRBIenUnc5xffcRJzod
+         h0VKyUeQpmWYzw4lrFGX35uG20GVMNJXoqwQB4H/DjTrslsvJHT3rVzNdLIIiqzx6wqu
+         Gsv9cDuz8RKiK+xMCQTgJkQBp1mWdBU6vhzPv/WdsGHRpLBVLKmgKn4Im3ETI4gqTWUg
+         cSCw==
+X-Gm-Message-State: APjAAAXv9HYuCn9dJOo9g9Gmt5WswKIrjSfLUfvgmEgal8IhA+PER0Lp
+        QO93jto6rTfDSfO/hdGec/xH3xn6YUyoZr7HepFSkm/KLe0=
+X-Google-Smtp-Source: APXvYqx/u147iOLDBmN+ojL+SPVl344beeB01ZlliKrFtE4irReHeI7hnvP1bUabFY3JwMfPZ/0h2jA8+EmE6CDJl7I=
+X-Received: by 2002:a92:2450:: with SMTP id k77mr38653972ilk.120.1574788700713;
+ Tue, 26 Nov 2019 09:18:20 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20191126155647.GA25729@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:7pVJMcfj9jAZAreS4h/gAfN9lV5B0shJ5DU0KYGe7WhHeheeRgu
- Kr0fmyYuoVof+YRvkc2EqmaDHhWU9YKPGABhso7dNEilzZotZ8S5aayMLMlAswHojRzgN3Y
- OPaB5Zk7Px/YYGy4wUyDoKrAFQ0DWfX4CDFvhy1pqiA6ZMFUWQ3ino6qY0j7aVE0Izax0uE
- WLLstg/8NpeKyCYwLIjVg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:P29oCOQTPoY=:MqB2mVTt1+WyxFMXmDYyn+
- 6jCFKPlaU76xtMuUqWIAKDtaBQlHBrsF5HowqbLkuZcHW31TceTM4KSAbl9obPC3pFo9extb1
- D985S+xUwJdv0ETyRsZl5917yqgN3JgUwosJy/AOxajrBt0DvX1NBwCCR+Rrl+avt26+Vz96U
- gKBN/pl2E46nFkbYnt2qcQdbmiz2ZPhCJndQHeNlppvy9IFlCjw2LLi2K6/u68W+e7gDBNzuK
- fS9ftJpjGGZoUQNITiLfeuKvwBnRIEf7g+/rcyc70lchRHW2btrwdtJjPP4WHY3MtNQX9lpoJ
- 5eCvpzQ5jBdomshs++tzmMlGE+wQBPm+lA3Hs9o61FN77fZWxcs2k/6A8v99DmcdFsdE/avSX
- 3h/Pa8mVwhg4nkM7B9FcqjhGqQge+RhYYLzuCQvPk4qY0VsbQVu1N+o7M1L7QswpzAWhESUhb
- 3bWewDvU/t26AQMWUJqZM3ZhgKa08zuA1M7FD8fT01yMNyRCkE+2VhDOH7XqexBekxsfArkIM
- RqfjXUtnf0Y6tjbBhHnFbTUuygJuWE9lnggGBMYyt9WUzrki46DuEWzqL51Dx59mySFEZqGwH
- 8bocNnk+++ya66OtmqusDAK8i/hq+hNH6K9bB+yvEAhfFZgevDE2zwn8rKNPlpU196PznhSu5
- cVrWXuYwaKRfP3KiZru4A3PDYrEZUgw4dICvgPRMtBdDOiyB3uysHMEzoQVoa9vAGA0hIF4zu
- tFtbihz4MRC17h9Tkmp4GqBQzuxfPPdltTFJDHBsIUAFm1YHYIqCHzloxZWaN+PMI8SADslU2
- OEA4E+bYxFUDQsUPxFgFV+uyoxdGB0N2QX50Npfd36ICJuLW8Ys4rmekf0w6IL118OqwDu7fG
- VHgF5Kx+zvJt56cx5xIkLauFzMtwhopvdK3aJZh7esjCa81hgTCE0BnPptZZj7iQw895DZwVU
- IioYIydjEAN6LuwIjOZ1P0zmMYjuJDu0QTaZ7xb7MoyeOU5xZbDPzJ6PAl3qMFO1xUYyQeGle
- 7YATtC/JFBpUvyCXj/DDl9RklKjTytnZLckpRc8JoYGlCxnI/YSflLrYGSUKfSNKihcu/xOJ0
- OzNX+8mD63TbyirwCPreBhi7A0KlnmdJKTlFFTcaYI+iLYQK84lf7sCBsqUDpR3kHcD8u7W5z
- bcu8dgHB2IQNLFCe0feZ4sC46cQ+d5bV6mA+XAMzsmxMGuC/ZMvJKKvJ86IssZpYffUh2uHhX
- HxG8n9tYM2NDo+KBGFzifSAtbqAnhyXoVoxOBIg==
+References: <20191125203740.72249-1-emaste@freefall.freebsd.org> <20191126004419.GE2404748@camp.crustytoothpaste.net>
+In-Reply-To: <20191126004419.GE2404748@camp.crustytoothpaste.net>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Tue, 26 Nov 2019 08:31:46 -0500
+Message-ID: <CAPyFy2A8x99fa3ti1E9Fqkcpw8RQBn5AJaL+u5g=e0qeMeyf2A@mail.gmail.com>
+Subject: Re: [PATCH] ci: add Cirrus-CI config for FreeBSD CI
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.11.19 um 16:56 schrieb Jeff King:
-> On Tue, Nov 26, 2019 at 04:00:43PM +0100, Ren=C3=A9 Scharfe wrote:
+On Mon, 25 Nov 2019 at 19:44, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
->> Get rid of a magic number by using skip_prefix() instead of
->> starts_with().
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  shell.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/shell.c b/shell.c
->> index 40084a3013..54cca7439d 100644
->> --- a/shell.c
->> +++ b/shell.c
->> @@ -16,10 +16,10 @@ static int do_generic_cmd(const char *me, char *arg=
-)
->>  	setup_path();
->>  	if (!arg || !(arg =3D sq_dequote(arg)) || *arg =3D=3D '-')
->>  		die("bad argument");
->> -	if (!starts_with(me, "git-"))
->> +	if (!skip_prefix(me, "git-", &me))
->>  		die("bad command");
->>
->> -	my_argv[0] =3D me + 4;
->> +	my_argv[0] =3D me;
->>  	my_argv[1] =3D arg;
->>  	my_argv[2] =3D NULL;
+> On 2019-11-25 at 20:37:40, Ed Maste wrote:
+> > From: Ed Maste <emaste@freebsd.org>
+> >
+> > Cirrus-CI is relatively unique among hosted CI providers in supporting
+> > FreeBSD (in addition to Linux, Windows, and macOS).  Add a Cirrus-CI
+> > config to facilitate building and testing on FreeBSD.
+> >
+> > Signed-off-by: Ed Maste <emaste@freebsd.org>
 >
-> The context makes this look obviously correct, but one thing to watch
-> out for in these skip_prefix() conversions is that the value of "me" is
-> now mutated.
+> I'm all for automated testing on FreeBSD, but we would need someone to
+> triage and address any failures reasonably quickly.  Is that something
+> you'd be okay with doing, or is there someone else who would be okay
+> with doing that?
 
-Ah, the one time I didn't use --function-context..  It would have looked
-like this:
+We're currently experimenting with a migration of the FreeBSD repo
+from Subversion to git, so long term there will be many with a vested
+interest in triaging and addressing failures. In the near term though
+I'd be able to take this on.
 
-=2D--
- shell.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> > 6 i18n tests are currently failing and need investigation.
+> > Example result: https://cirrus-ci.com/task/5394512637067264
+> > Test log: https://api.cirrus-ci.com/v1/task/5394512637067264/logs/test.log
+>
+> Could we fix these issues first so we don't have CI suddenly start
+> failing?
 
-diff --git a/shell.c b/shell.c
-index 40084a3013..54cca7439d 100644
-=2D-- a/shell.c
-+++ b/shell.c
-@@ -12,16 +12,16 @@
- static int do_generic_cmd(const char *me, char *arg)
- {
- 	const char *my_argv[4];
+Indeed, that makes sense. I think the failures may be an issue with
+the test though; here's the first failure:
 
- 	setup_path();
- 	if (!arg || !(arg =3D sq_dequote(arg)) || *arg =3D=3D '-')
- 		die("bad argument");
--	if (!starts_with(me, "git-"))
-+	if (!skip_prefix(me, "git-", &me))
- 		die("bad command");
+expecting success of 4210.6 '-c grep.patternType=fixed log --grep does not find
+non-reencoded values (latin1 + locale)':
+                cat >expect <<-\EOF &&
+                latin1
+                utf8
+                EOF
+                LC_ALL="is_IS.UTF-8" git -c grep.patternType=fixed log
+--encoding=ISO-8859-1 --format=%s --grep="_" >actual &&
+                test_cmp expect actual
 
--	my_argv[0] =3D me + 4;
-+	my_argv[0] =3D me;
- 	my_argv[1] =3D arg;
- 	my_argv[2] =3D NULL;
+fatal: command line, '_': illegal byte sequence
 
- 	return execv_git_cmd(my_argv);
- }
-=2D-
-2.24.0
+This was added in 4e2443b1813 with this note in the commit message:
 
+| It's possible that this
+| test breaks the "basic" and "extended" backends on some systems that
+| are more anal than glibc about the encoding of locale issues with
+| POSIX functions that I can remember, but PCRE is more careful about
+| the validation.
 
-
+I've CC'd Ævar Arnfjörð Bjarmason for advice on this.
