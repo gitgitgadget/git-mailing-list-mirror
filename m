@@ -2,101 +2,139 @@ Return-Path: <SRS0=BbQ7=ZS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C18BC432C0
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7DFDC432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:28:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 022CF20656
-	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:23:39 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="ScjF7WkC"
+	by mail.kernel.org (Postfix) with ESMTP id C617020678
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 15:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728428AbfKZPXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 10:23:38 -0500
-Received: from mout.web.de ([212.227.15.14]:60931 "EHLO mout.web.de"
+        id S1728100AbfKZP22 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 10:28:28 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:55822 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727532AbfKZPXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 10:23:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1574781811;
-        bh=oxA8sKU9R1Hd0XlY0hocnuYLehbgMFiJjTe+MWnxmLI=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=ScjF7WkCoS8P0tz136xGp7smu1F3UcCZOPIZSKpl7dkQ5MVnYluXb4jSppcO/cs+L
-         qzSkqSS6mje8jW6JX24zlgtcq3QfYK5++y55oADcY9EwFzqasByZNbDSBZiTkcE464
-         v55f0SjjAQDvWsHMGQi+80ZT4B8IZLljf3eKNm5w=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.146.29]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MMqbf-1iSE1s2KvH-008dhF; Tue, 26
- Nov 2019 16:23:31 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] name-rev: use skip_prefix() instead of starts_with()
-Message-ID: <23925fba-9413-0596-b21a-f49aac922f88@web.de>
-Date:   Tue, 26 Nov 2019 16:23:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727135AbfKZP21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 10:28:27 -0500
+Received: from [79.66.3.179] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1iZclN-0006IO-BR; Tue, 26 Nov 2019 15:28:26 +0000
+Subject: Re: tying files to git repository
+To:     Jim Edwards <jedwards@ucar.edu>, git@vger.kernel.org
+References: <CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <07afaf21-9731-9068-962b-2e089ddd576c@iee.email>
+Date:   Tue, 26 Nov 2019 15:28:25 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aDzbvT89LBducjOB91U4ivqAYuXILjsyGEcfje0tbZG17oSzNih
- PoRSI8+P0iTnjs6LPk/gWkNzghJPKa7eW6Q2soe90dUX7uos3HhBHzuJlWPt55g+i4q2ohf
- ZX5IKXXAr1PHpuTB9V966aD3Jb4aYNFRyOJuj2H7QZrgz1UitoWRKoNHr2dLvHoSVbgUvX+
- DRBxQFdreSyLeuwljS2hQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FjiAXEm+hNQ=:8oRVl2ZwasVENqfczZDzUz
- 0sPAJMCt2XoHXqmNp+FN1U/HyJucCEJe2QcstI5GJ0kux8xxGAZJIMfzjS6kOu8iLgZ/Ovsvr
- z3Oeq0+EBc8vzyKB6bM4LjdysK14xZo++lNjs+zwuFRUhAHK2zuaCLTwRCaRqIyivQoV2HIgH
- 7QbTZbTqIn3lN2B7IwyL7uiOqqN2dXvHI5SejOX2KwGS6esEhsIbG+lpK5tTzmTeVbkLkP0Z9
- mxLkZqeVj0Hl18OdLm6ikoj9IPx4GymXOuGh3qoC06NEvLV9pHHcXN0tJ8lidU9PQWl+1KULz
- /BK2A1sQtZMSijN6wc+HAxAYd79sZpFlpNxlanWbxWSTi8Y+0L3c/g/6UQfgVkAmnKtNaIE8P
- lez2NZ9RHanTl5TP8FOJDLsxBOOAOthlCbrvwn0eK5wKjIfJN4n5b/VI/p+Wdum3+n0dvRbOr
- An4EDH4D1e8cT2hS/Y7ZUtE+9r7BLKRffYYU5bA4YzK/VfeUeGnQdAStH2ZehrZrU7ISCdyG0
- Jk+4AKs7nyS8yekraIV4NOWQMm77kKBOJ4AD1p0B5q+eJfjgqVTFjHsLFh55hnHLG+U2isT/S
- TcozxFkw8ZkgxgvS4xOMx5xq1C4tmitu0N3l9OX93cDlIgE/4TnNpIdIcj5AfxPzwQbNZOvMj
- hfgi6bphbFbPs6JX+IEYveUdh+01lyRG5Hh2j1XQu7+GAvPrheXQSsWz7K80FTWI29zeJoEbi
- MoHPbcHeYy63iVczZw7OeEltUdszXOr7Wzm0voKSxzfpluv0gHvLPZne0sFtb7kvQElBZx+ix
- hSO/hDW+ICB09idZmyM4dQREX5VnLX9EC59n5U8oU6NCdD741cdxq1GMvP1zg841WXDXHotr1
- l+a44aznSuY5Jan49uHCZ8UmOCzLkVl4mXR9aDb6j6e1faAhsA8dUSR6rhGruKT/UU0F7l2F+
- ATyRoVbAvcWwdOI+FrRme2WHag5gjxQxArDb9mNfvUk1lUmYjRyWTNRNc2/UCIaoAWPq7fijb
- hEJY3pZpHm/2VrddHi+OYg3RKZZH6dv3tsMJ3lY7/oMjWk9FIThgRnoSiADZhDjuqYqkrev1+
- euwx+D3AsiuvBBtFeejKo1PqAsyzw4+m7m2zmuxLOpdOjSmSID8qFD3OoO/MpBaKgP90vuwEo
- chE/8WyO2+hQo7sWQszbRPI3lTECtAjL/m4qw3LSrQ1K7dxTWAFfBr/3PseoXigkPvbCg6WxJ
- YmU1fW0N9u/a9JP08mAgrqdS8ptZAs43tO1uRpQ==
+In-Reply-To: <CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let skip_prefix() advance refname to get rid of two magic numbers.
+Hi Jim
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/name-rev.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+This 
+(https://public-inbox.org/git/CAPuR+ZhwnHCp8j76PscuBqG2rCLkgG0+6Y3WwLgNRhaoj4OR9A@mail.gmail.com/) 
+has been lying around for a long while..
 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index b0f0776947..c261d661d7 100644
-=2D-- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -161,10 +161,8 @@ static const char *name_ref_abbrev(const char *refnam=
-e, int shorten_unambiguous)
- {
- 	if (shorten_unambiguous)
- 		refname =3D shorten_unambiguous_ref(refname, 0);
--	else if (starts_with(refname, "refs/heads/"))
--		refname =3D refname + 11;
--	else if (starts_with(refname, "refs/"))
--		refname =3D refname + 5;
-+	else if (!skip_prefix(refname, "refs/heads/", &refname))
-+		skip_prefix(refname, "refs/", &refname);
- 	return refname;
- }
+On 11/11/2019 15:28, Jim Edwards wrote:
+> Hi,
+>
+> I am a developer of scientific software, as science software we expect
+> and encourage users to modify source code in order to customize their
+> experiments.
+Sounds an ideal usage for git - giving back control to the users so they 
+can easily maintain their versions.
+> The mechanism which has been developed to do this
+> predates having source code in git and we are trying to figure out a
+> way to minimize changes to the scientists workflow, while leveraging
+> the power of git to improve the process.
+Good, though sounds like you will need some terminology mapping.. Is 
+there a public reference to the method?
+> In the workflow the
+> scientist creates a 'case' using script in the repository to create a
+> directory structure from which they will conduct their experiment.
+In what sense do you use "case"?
+  e.g. a [single] suitcase that holds a choice of clothes to wear / 
+experimental methods;
+Or, a long list of experimental setups, each with a name, selecting a 
+'case' statement (like a software 'case' statement);
+Or, a use-case that gives a half complete suggestion about how it may 
+work, but with some details still to be filled in due to lack of space 
+on the post-it note..?
 
-=2D-
-2.24.0
+Given that the scientists create a 'directory structure' (containing 
+files?) for each experiment, this sounds very much like creating a 
+'branch' (line of development) from the initial template of that 
+structure, and as they develop their experiment's directory structure, 
+they record their development in 'commits' on that branch (and sub 
+branches if they are looking at alternatives). Finally, when they have a 
+good structure ready, they can 'tag' that commit so it's easy to find.
+
+
+> Part of that directory structure is a SourceMods directory where the
+> user can drop modified source files that will be compiled in place of
+> a file of the same name in the source tree.
+This 'dropping' has a strong _conceptual_ similarity to the staging area 
+or 'index', where git users 'add' files that they feel are ready to an 
+area that is used (like an outbox awaiting collection) as a temporary 
+holding area waiting till all the bits are ready and waiting before they 
+commit the ensemble.
+
+So this "SourceMods" is very similar to the staging area, except that in 
+your case it sounds like it is a specific place, while in git it is more 
+conceptual as the user will 'git add <file>', and that change is 
+registered in "the index" (a local file in a hidden .git directory), 
+ready for the big commit.
+
+Behind the scenes, a copy of the file is saved (in the object store) and 
+hashed ready for inclusion in the commit hierarchy . Later the files 
+(objects) stored in the object store are 'packed' resulting in a very 
+compact storage, particularly for source files. The git repository can 
+be 'pushed' to other servers, and other repositories 'fetched' from 
+servers (and mixed together if they have common ancestry).
+
+
+> These files are sometimes
+> long lived and passed from case to case and even user to user and it
+> is not hard to have the files get out of sync with the source tree.
+In Git, because the current files stay 'in place', you can start a 
+branch (new experiment definition) from anywhere in any line of 
+development. You/they simply checkout that particular commit and, voila, 
+all the files are back as they were exactly.
+> We have discussed at length removing the SourceMods capability and
+> requiring scientists to create branches in git, but there is a lot of
+> resistance to this in the community.
+Most of that will be fear of the unknown and the unfamiliarity of the 
+git terminology. There can also be confusion about how Git has changed 
+the old ways of working. Because you get 100% verification and 
+validation you no longer need to worry about requiring a central golden 
+reference store (though usually the "organisation" will want to have a 
+_copy_ ;-)
+> What I would like to explore is
+> allowing scientists to keep the method that they are used to but at
+> the same time tying these modified files to their history in git.
+The key part will be in how you map what they already do and know to the 
+git commands and structure, and how you show them that it will remove a 
+lot of the pain points and bottle necks.
+> Is
+> there a way to get the git metadata associated with an individual file
+> so that we can treat that file as if it were in the repo?
+>
+That [mental model view] way is a Sisyphean task, a never ending up-hill 
+struggle. With a few careful words (mapping out solutions to their pain 
+points) you should be able to get the scientists to pester you to 
+implement git sooner rather than later. Choose the lead experimenters of 
+git carefully.
+
+-- 
+Philip
