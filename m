@@ -1,96 +1,94 @@
-Return-Path: <SRS0=39iz=ZR=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=BbQ7=ZS=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3E83C432C0
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 23:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D2B3C432C0
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 00:08:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83CD720740
-	for <git@archiver.kernel.org>; Mon, 25 Nov 2019 23:57:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kO47m++r"
+	by mail.kernel.org (Postfix) with ESMTP id 6F6F020409
+	for <git@archiver.kernel.org>; Tue, 26 Nov 2019 00:08:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726016AbfKYX5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 25 Nov 2019 18:57:07 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:37511 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbfKYX5G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 25 Nov 2019 18:57:06 -0500
-Received: by mail-pj1-f68.google.com with SMTP id bb19so3821544pjb.4
-        for <git@vger.kernel.org>; Mon, 25 Nov 2019 15:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EO63Y2YVDoDUEc8hXStrWGQX+JE7slxM+JBjODMLltU=;
-        b=kO47m++rTAsRLzQXjvbwwqNuyIQOXwt3r9jBbU4KZozWs+iM2KdYAHwNrMjOA23afl
-         9+130a9QyCwMa6zck0CXbV5zc6M5tmAHYWPMuSf72DHV67s4tUs8SXAr/4VrHPwAxuk+
-         4QOzhaN0K4U4onLCTBqsqRpqoJWDYTp9f2gqwnCE3os4Aak3r1uzQJWTH/OmtrFDjxpA
-         IOqKOorsN2fNB07Wi+M9orCrRCpXusp70z1dX/+59O/pyIh4hWimkYm6KvYzMscbWO5E
-         mu/0hOmbAIOIdxyxsRA8Ipg1/RkqDjATyod59zhc//UQHLE3SFvdhIweVmZCLGKz1SxR
-         a8bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EO63Y2YVDoDUEc8hXStrWGQX+JE7slxM+JBjODMLltU=;
-        b=a8kyFZLm02Jz5E8YWaD5pt3VCuIZ0xkNU3P1ITs+IbJI3sCMaYgk9jNR9UccC4jr3u
-         QHq/FFCRS/NFfxVb544U8UmHsuBLIlGNix7JkUXKKu8Oh/bzhZvdY/udaOe1681JVHuV
-         YCKy7XvCA15xqNupr+Plro+NS09NO1K/Hw8hwWqoa/ONZXi2tlh7oL0gOsGCOD/J0lNK
-         Un4IqNlouI0aUio+0iMMj6IQUIM4P13r6Pp1XN6u6UasFnEAElyBtV3+zEgpqJ3zB0eB
-         zwGkbr/m1aOHTKQbc79Ktryc8YpDAJNW6h9KlZo98S6sSVwxXh4Gf7ovNwWsE/QASpvk
-         knOg==
-X-Gm-Message-State: APjAAAXQKKV9gKP8TY/cvpVWGxljjIfu1OkAzsnNDEcjVkx1vwLLpijN
-        6lz1GmkfqDzy63e7Y4CtzOc=
-X-Google-Smtp-Source: APXvYqzlWDoeEdz7KR9vBkF8bD6zroNaPWk4RseR+Az2P6tILHGe/NHpU/hFdmawQLCmLYihvRZKZg==
-X-Received: by 2002:a17:902:6903:: with SMTP id j3mr29547282plk.231.1574726225679;
-        Mon, 25 Nov 2019 15:57:05 -0800 (PST)
-Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id t27sm9897142pfq.169.2019.11.25.15.57.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Nov 2019 15:57:04 -0800 (PST)
-Date:   Mon, 25 Nov 2019 15:57:02 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 22/22] t7700: stop losing return codes of git commands
-Message-ID: <20191125235702.GA6250@generichostname>
-References: <cover.1574296987.git.liu.denton@gmail.com>
- <cover.1574449072.git.liu.denton@gmail.com>
- <e9835b85427a3486e2dba136bbf34506e521d355.1574449072.git.liu.denton@gmail.com>
- <xmqqftif2wg7.fsf@gitster-ct.c.googlers.com>
+        id S1726947AbfKZAIk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 25 Nov 2019 19:08:40 -0500
+Received: from mailout08.hostingdiscounter.nl ([91.217.57.99]:35445 "EHLO
+        mailout08.hostingdiscounter.nl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726118AbfKZAIk (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 25 Nov 2019 19:08:40 -0500
+X-Greylist: delayed 346 seconds by postgrey-1.27 at vger.kernel.org; Mon, 25 Nov 2019 19:08:39 EST
+Received: from localhost (localhost [127.0.0.1])
+        by mailout08.hostingdiscounter.nl (Postfix) with ESMTP id 43940643;
+        Tue, 26 Nov 2019 01:02:32 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mailout08.hostingdiscounter.nl
+Received: from mailout08.hostingdiscounter.nl ([127.0.0.1])
+        by localhost (mailout08.hostingdiscounter.nl [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id w73kJP8jC+eW; Tue, 26 Nov 2019 01:02:26 +0100 (CET)
+Received: from mail41.hostingdiscounter.nl (mail41.hostingdiscounter.nl [IPv6:2a00:1478:200:0:f:1053:0:1])
+        by mailout08.hostingdiscounter.nl (Postfix) with ESMTPS;
+        Tue, 26 Nov 2019 01:02:26 +0100 (CET)
+Received: from [192.168.1.105] (130-208-201-31.ftth.glasoperator.nl [31.201.208.130])
+        by mail41.hostingdiscounter.nl (Postfix) with ESMTPSA id 95FE144118;
+        Tue, 26 Nov 2019 01:02:59 +0100 (CET)
+To:     git@vger.kernel.org
+Cc:     Paolo Bonzini <pbonzini@redhat.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+From:   Ruud van Asseldonk <dev@veniogames.com>
+Subject: [PATCH] t5150: skip request-pull test if Perl is disabled
+Message-ID: <4f11b5b3-a68e-642a-c5fb-7b5dae698669@veniogames.com>
+Date:   Tue, 26 Nov 2019 01:02:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqftif2wg7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+The git-request-pull.sh script invokes Perl, so it requires Perl to be
+available, but the associated test t5150 does not skip itself when Perl
+has been disabled, which then makes subtest 4 through 10 fail. Subtest 3
+still passes, but for the wrong reasons (it expects git-request-pull to
+fail, and it does fail when Perl is not available). The initial two
+subtests that do pass are only doing setup.
 
-On Sat, Nov 23, 2019 at 10:49:44AM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > -	objsha1=$(git verify-pack -v pack-$packsha1.idx | head -n 1 |
-> > -		sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
-> > +	git verify-pack -v pack-$packsha1.idx >packlist &&
-> > +	objsha1=$(head -n 1 packlist | sed -e "s/^\([0-9a-f]\{40\}\).*/\1/") &&
-> 
-> We probably should lose reference to SHA-1 and use $OID_REGEX; this
-> is obviously a #leftoverbits material that is outside the scope of
-> this series.
+To prevent t5150 from failing the build when NO_PERL=1, add a check that
+sets skip_all when "! test_have_prereq PERL", just like how for example
+t3701-add-interactive skips itself when Perl has been disabled.
 
-Since the theme of this series is test cleanup, I believe that it's
-probably appropriate to roll these changes (and the ones below that I
-omitted) into the current series. Since it isn't too much work, I'll
-send them out in my next reroll.
+Signed-off-by: Ruud van Asseldonk <dev@veniogames.com>
+---
+I discovered this issue in the Git package in Nixpkgs. The Nix package
+manager tries to make it hard to accidentally introduce undeclared
+dependencies, and it has a sandbox that hides things in /usr/bin. So
+when it builds with NO_PERL=1, it really makes no Perl available, so you
+cannot accidentally depend on the Perl in /usr/bin/perl. For the tests
+it does set PERL_PATH, but it does not point to a binary in /usr/bin.
+
+ t/t5150-request-pull.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 852dcd913f..1ad4ecc29a 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -4,6 +4,12 @@ test_description='Test workflows involving pull request.'
+ 
+ . ./test-lib.sh
+ 
++if ! test_have_prereq PERL
++then
++	skip_all='skipping request-pull tests, perl not available'
++	test_done
++fi
++
+ test_expect_success 'setup' '
+ 
+ 	git init --bare upstream.git &&
+-- 
+2.24.0
