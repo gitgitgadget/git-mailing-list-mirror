@@ -2,85 +2,62 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=0.3 required=3.0 tests=DATE_IN_PAST_03_06,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E322CC43215
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B8E5C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:04:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B491220715
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:01:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aII81M0+"
+	by mail.kernel.org (Postfix) with ESMTP id 0E60F20715
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727169AbfK0TBz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:01:55 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:50960 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727010AbfK0TBz (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 27 Nov 2019 14:01:55 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 585F461AAB
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 19:01:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1574881314;
-        bh=+ZHk6tbQNxH7o1ZNjSu8T62AaDHcWDTvMg4zY5r8vQo=;
-        h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
-         Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
-         References:Content-Type:Content-Disposition;
-        b=aII81M0+grRwiul4/Q+KjKqh42jKBSrQSY58IXVpNlwXl+rU9Qdc0jo8DLgjNZz+/
-         fFBDlxfG5uRFWD/dusku9VpshKB7fiFXRVlZ7xoYGYolLV9psslI4IMKpvqQUADyBA
-         Wfqozb0dQwHDqJ37l26rOqF5MTx7lCdwvA0osKpyAASKp/nTZGMxkjlKL4nYeOB+kJ
-         4V5JzGJ2qCXSDsi4n3AGFMscjJ/AfRx+/bLlge/mRaVmu5VzBRUErUmvSof15faJsl
-         qFVV5heUQ7BDAuqZB6d5uOpuC7KtAhIndsoUwc45UtJkgP+ADR1gT5bLSkdwOUHl59
-         UhpaIG86OBpVu/kNajzQ0FJC/cbK+HfCYnTydwHDCPrOby5/V3K4YK08x8G1y7yeu6
-         wD6YsGjaWVgWiBhODfOKaiQzu6IkOrBxj10O6vEqps3eRwVIoxGrl3MWb/8vd9DGlV
-         6ymxD0U55xsaO31Q/j15HwLnO3hr5oeEa14x87ZdtF3V0xL2OhG
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     <git@vger.kernel.org>
-Subject: [PATCH 1/1] t9001: avoid including non-trailing NUL bytes in variables
-Date:   Wed, 27 Nov 2019 19:01:42 +0000
-Message-Id: <20191127190142.64271-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.24.0.393.g34dc348eaf
-In-Reply-To: <20191127190142.64271-1-sandals@crustytoothpaste.net>
-References: <20191127190142.64271-1-sandals@crustytoothpaste.net>
+        id S1727166AbfK0TER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:04:17 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:35840 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726603AbfK0TER (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:04:17 -0500
+Received: by mail-io1-f68.google.com with SMTP id s3so26123777ioe.3
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:04:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=03sR69ooxMIEC2KVe1k+D0RLRWl4m3/NYpGf8nQ38XY=;
+        b=EZsfDueAzt6vM3yXzV1gQVJY1z0kuh59i06WT2OA+3Ktk20u16cEXU+3M3tXMlzXoZ
+         bHepUrMmr8alQ7Xip0vYa730uxZdA6YSVpzOYhJyrvuMTQAF9AnSySMEvALB+DqeAyz/
+         hTg+u4KAELjZeBi6DCqALnPO+dE7VkXd2LnIp05UQ78gROLdT0x4i0LHFm7CyQ4/ILPI
+         WDeKjRdRFi+b8VxRHfRYzDe9/KVGF9A7odGe7hmQlv5WbfUi8eJ2bswb1ASTe30i5d/t
+         i5D01YKwwHioufwRmCsE46tsH2dfeP0mzJShuEytpT7ad/wLNG/qpW7bYixkKKPMyUbL
+         uONw==
+X-Gm-Message-State: APjAAAV5hZ/j89ydkgeYXa+xIPqVAtyI+Lw/seea4HluUrXt4iNa3iLY
+        0PaDI968KjXPIgwEVvt5ME9La3OP60sE02iVFQY=
+X-Google-Smtp-Source: APXvYqzVfKG/trrY2PGsm9cmg20wXNecrjLhLePhheEZgQ9M+oCFkYExI/n6B5i0rwKxRYn+UeSlO4XQXMmGyVLSy40=
+X-Received: by 2002:a6b:7511:: with SMTP id l17mr8132359ioh.115.1574881455263;
+ Wed, 27 Nov 2019 11:04:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20191125203740.72249-1-emaste@freefall.freebsd.org>
+ <20191126004419.GE2404748@camp.crustytoothpaste.net> <CAPyFy2DLYHZnzrwA27JQRxGkpf=+Z8ND-6AX3+oepAL+RNwQGg@mail.gmail.com>
+In-Reply-To: <CAPyFy2DLYHZnzrwA27JQRxGkpf=+Z8ND-6AX3+oepAL+RNwQGg@mail.gmail.com>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Wed, 27 Nov 2019 10:17:41 -0500
+Message-ID: <CAPyFy2CN6LvL36yVB_JkLovTgO=2qQxAEqUGwxEev=d1R_Wo_g@mail.gmail.com>
+Subject: Re: [PATCH] ci: add Cirrus-CI config for FreeBSD CI
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this test, we have a command substitution whose output starts with a
-NUL byte.  bash and dash strip out any NUL bytes from the output; zsh
-does not.  As a consequence, zsh fails this test, since the command line
-argument we use the variable in is truncated by the NUL byte.
+On Wed, 27 Nov 2019 at 09:01, Ed Maste <emaste@freebsd.org> wrote:
+>
+> After some further investigation I believe these tests are technically
+> invalid but work with glibc because of its looser requirements. I've
+> sent a patch (t4210: skip i18n tests that don't work on FreeBSD) to
+> address the failures.
 
-POSIX says of a command substitution that if "the output contains any
-null bytes, the behavior is unspecified," so all of the shells are in
-compliance with POSIX.  To make our code more portable, let's avoid
-prefacing our variables with NUL bytes and instead leave only the
-trailing one behind.
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- t/t9001-send-email.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 997f90b42b..51be0b8cd6 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -2066,7 +2066,7 @@ test_expect_success $PREREQ 'leading and trailing whitespaces are removed' '
- 	TO1=$(echo "QTo 1 <to1@example.com>" | q_to_tab) &&
- 	TO2=$(echo "QZto2" | qz_to_tab_space) &&
- 	CC1=$(echo "cc1" | append_cr) &&
--	BCC1=$(echo "Q bcc1@example.com Q" | q_to_nul) &&
-+	BCC1=$(echo " bcc1@example.com Q" | q_to_nul) &&
- 	git send-email \
- 	--dry-run \
- 	--from="	Example <from@example.com>" \
+And a now-passing test run on FreeBSD with the change :
+https://cirrus-ci.com/task/5657957240406016
