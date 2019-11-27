@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23472C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7022C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:02:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ED38920871
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:01:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83D8420871
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:02:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Czcgw+Am"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="up0E0uJb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbfK0SBH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 13:01:07 -0500
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:56076 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726576AbfK0SBH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 13:01:07 -0500
-Received: by mail-yw1-f73.google.com with SMTP id x206so15679317ywa.22
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 10:01:07 -0800 (PST)
+        id S1727133AbfK0SCP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 13:02:15 -0500
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:39739 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727128AbfK0SCP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 13:02:15 -0500
+Received: by mail-pl1-f202.google.com with SMTP id x5so9980223pln.6
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 10:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=MmBii/78dVQJv0TMD/qigA288Xx5/oRBYcssZkd7mbA=;
-        b=Czcgw+Amyri5+s2WPJJKdqjjeHbZMyef+g5fGFI2UMrdmcLO8AiqF72viUhviNQkes
-         6dLgQz/q/U1NheO5Y0SqBQH3SkXQAqujGYQbpgksUSEAuk3nxqsisK+XLwEknpm2fCjO
-         PwV80fKtVchozS7kxKaRneuALZwXew6Qwjqk77ieVxd23a7EJohzGCsrymruSeKIBNru
-         PLmXXDRvhY9naUH8/EyVWC4NdVcArAeUKgMOKjoCxsBV9kMsNHddA1lvN4Q8211yQREu
-         r/cFOwIkwOzWJNrC1VaKFVZ1VZD71T/EddDfAmy+DYNlW6dMvcnoXW4xkgBM/sz+NWKG
-         RAhQ==
+        bh=bfAm56ekDYhKk1CaPQAfCLwXHezb9dyS3OsigHymmZ8=;
+        b=up0E0uJbmlKw5xhSo8jS4EPfIIrfUeyYbdW/J1U2PxMWntom5p9AOI2IfRvxAkC6pA
+         tgDdBzSThwTrPWzr5GvPtxOUxvh9UytARhSgT8WU1Scu3MVTKl2+iQihrfoooGy/J6hP
+         O2/TUU6Wjh3UP0syLPIl2HutAQjETzh4HMRF+Fcp5OpbMwSbZVUld2mlDm+mlNSdiHt+
+         6qGQ1NsZRZl1sbJQCDnF8AL0tYYaH3wVDUX5vCV1V+5aIUc6nHJY0e1O+xcIdpqDiIxq
+         WOdCCznWWz1qPbmAcwG7gT1AWbbvcUXLX4/AbhdQ8kPGm7ljB36u5++TBhqWbph25Hg8
+         1NJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=MmBii/78dVQJv0TMD/qigA288Xx5/oRBYcssZkd7mbA=;
-        b=nL8JCU9GCRnzWs/QhyGovhtydfyPUCK8FfxDO7MXM9ZsQaWWyo0VDL5qAbE7USjSXR
-         2MLBR9YTrvhMQKcTMIaL6escZRERpPhPNHF2SMhYlPlBh2PZXe+0cJdNBiqRk5h/INa0
-         WkU6zHs3nMzPM0wKDMXAU+p9Y39XROEgGUw0OvgzfxWrFQIQv85Iay/HfSgWa4Gr2kAy
-         C8JAvZBncZam5A8f2gPMqpkw9otAyw7ynX7Gv1d7R2p+3fNChH0cE7/RuOPWff1B8ob7
-         SrWGAui5wfa1fl0lq573/I2XYT8qiPEHhNxlR/2Snudwgq+AooQiXPf2tszhmsFUL6ZZ
-         UX2A==
-X-Gm-Message-State: APjAAAXyfy8dF/Jpf98BphVxQYwTuv19Ajb28or33o2dzHkEg8yCwK/N
-        0eV8Rq/RhtHNDcfpk6mEYtPUx3dQiKM+liYTf6Up
-X-Google-Smtp-Source: APXvYqyM5cHO/dafKGrb8lCi0lmf6VVl+1BEaT8pVfYZ3xH1q2qWNAFudIAHrxVEI2fjLI+uWe28swuMmSBM0dj14dW4
-X-Received: by 2002:a81:4d89:: with SMTP id a131mr3743624ywb.159.1574877665644;
- Wed, 27 Nov 2019 10:01:05 -0800 (PST)
-Date:   Wed, 27 Nov 2019 10:01:02 -0800
-In-Reply-To: <20191112103821.30265-14-szeder.dev@gmail.com>
-Message-Id: <20191127180102.167352-1-jonathantanmy@google.com>
+        bh=bfAm56ekDYhKk1CaPQAfCLwXHezb9dyS3OsigHymmZ8=;
+        b=WL4jbxmui61puxLgDBagw7u5OCegMiUvm3eLem8tGUyB+R6EfgB3QGlZkROL8eHu2e
+         +PlVIl/vYeh+GZquMPoNDPsweA1mGx1X6OzBS7GOcDjKierLDMTxZRjtwqzuwNQ5yjGy
+         4xkbm4RRWTDW/Vou3Mz7JY+kAIBxtGUbP6HzqpKc8zGe+q/Zdfd8tbGxqy6kSAK+8Zj8
+         SZCupl5pbSLJqp+exZnbjw3P5MtVDZ3hrEivDjJCooOcLuUrRHhbwL80X8IlS3dn4YvV
+         6kwJd7dmrNTSAS9y8YhDqI4Zbrlm/ycdmwdyq0iCzn6AUvmz+SbEGMTQTBp4oi9EqhoS
+         I83A==
+X-Gm-Message-State: APjAAAXuSZJg8dU4AuNqiW9Pbx4O4GiCH2NB5zf3IKF+luZk4H5s9EIs
+        t2cAVPSOKN+9LycLVUoPeo0RKv+/anNzTDHrZpx9
+X-Google-Smtp-Source: APXvYqxSxs2Tf0dKnYLofF9Um9Hd+ONZ3pvV7pFzhxuh6cHvNakINhe34UHY/xRi02UahNGsQKBH42AVRQ5CkBPFV9PS
+X-Received: by 2002:a63:4b52:: with SMTP id k18mr6375394pgl.394.1574877733338;
+ Wed, 27 Nov 2019 10:02:13 -0800 (PST)
+Date:   Wed, 27 Nov 2019 10:02:10 -0800
+In-Reply-To: <20191112103821.30265-3-szeder.dev@gmail.com>
+Message-Id: <20191127180210.168901-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20191112103821.30265-14-szeder.dev@gmail.com>
+References: <20191112103821.30265-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
-Subject: Re: [PATCH v2 13/13] name-rev: cleanup name_ref()
+Subject: Re: [PATCH v2 02/13] t6120-describe: modernize the 'check_describe' helper
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     szeder.dev@gmail.com
 Cc:     gitster@pobox.com, stolee@gmail.com, l.s.r@web.de,
@@ -67,14 +67,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Earlier patches in this series moved a couple of conditions from the
-> recursive name_rev() function into its caller name_ref(), for no other
-> reason than to make eliminating the recursion a bit easier to follow.
+> The 'check_describe' helper function runs 'git describe' outside of
+> 'test_expect_success' blocks, with extra hand-rolled code to record
+> and examine its exit code.
 > 
-> Since the previous patch name_rev() is not recursive anymore, so let's
-> move all those conditions back into name_rev().
+> Update this helper and move the 'git decribe' invocation inside the
+> 'test_expect_success' block.
 
-I don't really see the need for this code movement, to be honest. There
-is no big difference in doing the checks in one place or the other, and
-if you ask me, it might even be better to do it in the caller of
-name_rev(), and leave name_rev() to handle only the naming.
+decribe -> describe
+
+Otherwise, patches 1 and 2 are relatively straightforward and look good
+to me.
