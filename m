@@ -2,221 +2,89 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8DE2C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 23:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 885E9C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 23:45:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6620F215F2
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 23:35:33 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=runbox.com header.i=@runbox.com header.b="MUTj/Q7f"
+	by mail.kernel.org (Postfix) with ESMTP id 63E6C2086A
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 23:45:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727158AbfK0Xfc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 18:35:32 -0500
-Received: from aibo.runbox.com ([91.220.196.211]:48290 "EHLO aibo.runbox.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727141AbfK0Xfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 18:35:32 -0500
-X-Greylist: delayed 3072 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Nov 2019 18:35:31 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=runbox.com;
-         s=rbselector1; h=Content-Type:MIME-Version:Message-ID:Subject:To:From:Date;
-         bh=Sj9ia0A9RZZgkzTrfqFtu2wgszoGs2ciGP9EZYNuZEI=; b=MUTj/Q7fTWxsnOIsQjxLY7fbh
-        03t2RCjnCmXxy/726YVaqii/6R4NFLio7oowQ2uq3Qe9peddz14tsrph5+aTj1UeDxB0LqAYb3Q31
-        LkaNxJHxuu0hf0baB5pUOknZuAvk+/nhuyXGLVi/p/VV0wemUjuLQb7pEtAvWW6p+aib7ced+YY1q
-        FHse6ZdoHB3gq03eWgULMPsrWRkKfOKAPbAEVxtiyKO9LFN3+CiTj1yzGnHPM038FnyOiU3pMqVcS
-        2VwJYy/VRQ/PA8XsIr+XIMW7tp1gOLwuQoAEX4tBASNTt8R6z4i6FT30nuPEZJH0AtXyH38gViSkK
-        PLy2t17qw==;
-Received: from [10.9.9.203] (helo=mailfront21.runbox)
-        by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-        (envelope-from <cstolley@runbox.com>)
-        id 1ia62k-0008B5-OM
-        for git@vger.kernel.org; Wed, 27 Nov 2019 23:44:18 +0100
-Received: by mailfront21.runbox with esmtpsa  [Authenticated alias (602527)]  (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90_1)
-        id 1ia5k0-00066Y-B6
-        for git@vger.kernel.org; Wed, 27 Nov 2019 23:24:56 +0100
-Date:   Wed, 27 Nov 2019 16:24:53 -0600
-From:   Colin Stolley <cstolley@runbox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] packfile.c: speed up loading lots of packfiles.
-Message-ID: <20191127222453.GA3765@owl.colinstolley.com>
+        id S1727547AbfK0Xps (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 18:45:48 -0500
+Received: from mailout08.hostingdiscounter.nl ([91.217.57.99]:57066 "EHLO
+        mailout08.hostingdiscounter.nl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727126AbfK0Xps (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 27 Nov 2019 18:45:48 -0500
+Received: from localhost (localhost [127.0.0.1])
+        by mailout08.hostingdiscounter.nl (Postfix) with ESMTP id 47164C28;
+        Thu, 28 Nov 2019 00:45:26 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at mailout08.hostingdiscounter.nl
+Received: from mailout08.hostingdiscounter.nl ([127.0.0.1])
+        by localhost (mailout08.hostingdiscounter.nl [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id fwLA+I9mWrJB; Thu, 28 Nov 2019 00:45:20 +0100 (CET)
+Received: from mail41.hostingdiscounter.nl (mail41.hostingdiscounter.nl [IPv6:2a00:1478:200:0:f:1053:0:1])
+        by mailout08.hostingdiscounter.nl (Postfix) with ESMTPS;
+        Thu, 28 Nov 2019 00:45:20 +0100 (CET)
+Received: from [192.168.1.105] (130-208-201-31.ftth.glasoperator.nl [31.201.208.130])
+        by mail41.hostingdiscounter.nl (Postfix) with ESMTPSA id B60AD4054C;
+        Thu, 28 Nov 2019 00:45:53 +0100 (CET)
+Subject: Re: [PATCH] t5150: skip request-pull test if Perl is disabled
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+References: <4f11b5b3-a68e-642a-c5fb-7b5dae698669@veniogames.com>
+ <20191127112150.GA22221@sigill.intra.peff.net>
+From:   Ruud van Asseldonk <dev@veniogames.com>
+Message-ID: <55d0bcd1-1f15-46ff-42f1-be87eedc2e11@veniogames.com>
+Date:   Thu, 28 Nov 2019 00:45:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20191127112150.GA22221@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-PH
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When loading packfiles on start-up, we traverse the internal packfile
-list once per file to avoid reloading packfiles that have already
-been loaded. This check runs in quadratic time, so for poorly
-maintained repos with a large number of packfiles, it can be pretty
-slow.
+> Hmm. I don't think that technique gives complete coverage. There are
+> other scripts (e.g., filter-branch) that call a bare "perl" (not
+> PERL_PATH), which presumably pass the tests even though they'd break in
+> a real-world system without perl. In fact, many scripts used to do this
+> before fcb06a8d54 (use @@PERL@@ in built scripts, 2013-10-28). I don't
+> think the effects on NO_PERL were really considered there; it was more
+> about finding the right perl.
 
-Add a hashmap containing the packfile names as we load them so that
-the average runtime cost of checking for already-loaded packs becomes
-constant.
+Hmm, filter-branch calls bare "perl", not @@PERL@@ or Perl at an 
+absolute path. At first I thought that made it pass when "perl" is on 
+the PATH in tests. But even when I replace those with @@PERL@@, the test 
+still pass. I will investigate further.
 
-Add a perf test to p5303 to show speed-up.
+> I think NO_PERL has historically mostly meant "do not build or install
+> perl scripts", and not "everything ought to run fine without perl".
+> We've generally assumed you can run vanilla perl snippets from the
+> command line the same way you'd run awk or sed (and the tests use this
+> extensively, which is why you have to set PERL_PATH again to run them)
+> That said, most of those casual uses of perl in actual built scripts
+> have gone away because the shell scripts have gone away. It looks like
+> filter-branch, request-pull, and instaweb are the last holdouts. So
+> maybe we should be treating NO_PERL as disabling those scripts, too.
+> 
+> But then, should we be doing more to make it clear that those scripts
+> are broken in a NO_PERL build? Who knows what happens if you run
+> filter-branch without any perl available?
 
-The existing p5303 test runtimes are dominated by other factors and do
-not show an appreciable speed-up. The new test in p5303 clearly exposes
-a speed-up in bad cases. In this test we create 10,000 packfiles and
-measure the start-up time of git rev-parse, which does little else
-besides load in the packs.
+My understanding was that NO_PERL controlled the runtime dependencies of 
+Git, and that the tests require Perl either way. Of course, without Perl 
+any scripts that depend on it can't be used, but like you say, there are 
+few of them left. I think it would make sense to not install those 
+scripts when NO_PERL=1. Should I make a patch to change that in the 
+makefile?
 
-Here are the numbers for the new p5303 test:
-
-Test                         HEAD^             HEAD
----------------------------------------------------------------------
-5303.12: load 10,000 packs   1.03(0.92+0.10)   0.12(0.02+0.09) -88.3%
-
-Thanks-to: Jeff King <peff@peff.net>
-Signed-off-by: Colin Stolley <cstolley@runbox.com>
----
- object-store.h             | 21 +++++++++++++++++++++
- object.c                   |  3 +++
- packfile.c                 | 21 +++++++++++----------
- t/perf/p5303-many-packs.sh | 18 ++++++++++++++++++
- 4 files changed, 53 insertions(+), 10 deletions(-)
-
-diff --git a/object-store.h b/object-store.h
-index 7f7b3cdd80..55ee639350 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -60,6 +60,7 @@ struct oid_array *odb_loose_cache(struct object_directory *odb,
- void odb_clear_loose_cache(struct object_directory *odb);
- 
- struct packed_git {
-+	struct hashmap_entry packmap_ent;
- 	struct packed_git *next;
- 	struct list_head mru;
- 	struct pack_window *windows;
-@@ -88,6 +89,20 @@ struct packed_git {
- 
- struct multi_pack_index;
- 
-+static inline int pack_map_entry_cmp(const void *unused_cmp_data,
-+				     const struct hashmap_entry *entry,
-+				     const struct hashmap_entry *entry2,
-+				     const void *keydata)
-+{
-+	const char *key = keydata;
-+	const struct packed_git *pg1, *pg2;
-+
-+	pg1 = container_of(entry, const struct packed_git, packmap_ent);
-+	pg2 = container_of(entry2, const struct packed_git, packmap_ent);
-+
-+	return strcmp(pg1->pack_name, key ? key : pg2->pack_name);
-+}
-+
- struct raw_object_store {
- 	/*
- 	 * Set of all object directories; the main directory is first (and
-@@ -131,6 +146,12 @@ struct raw_object_store {
- 	/* A most-recently-used ordered version of the packed_git list. */
- 	struct list_head packed_git_mru;
- 
-+	/*
-+	 * A map of packfiles to packed_git structs for tracking which
-+	 * packs have been loaded already.
-+	 */
-+	struct hashmap pack_map;
-+
- 	/*
- 	 * A fast, rough count of the number of objects in the repository.
- 	 * These two fields are not meant for direct access. Use
-diff --git a/object.c b/object.c
-index 3b8b8c55c9..142ef69399 100644
---- a/object.c
-+++ b/object.c
-@@ -479,6 +479,7 @@ struct raw_object_store *raw_object_store_new(void)
- 
- 	memset(o, 0, sizeof(*o));
- 	INIT_LIST_HEAD(&o->packed_git_mru);
-+	hashmap_init(&o->pack_map, pack_map_entry_cmp, NULL, 0);
- 	return o;
- }
- 
-@@ -518,6 +519,8 @@ void raw_object_store_clear(struct raw_object_store *o)
- 	INIT_LIST_HEAD(&o->packed_git_mru);
- 	close_object_store(o);
- 	o->packed_git = NULL;
-+
-+	hashmap_free(&o->pack_map);
- }
- 
- void parsed_object_pool_clear(struct parsed_object_pool *o)
-diff --git a/packfile.c b/packfile.c
-index 355066de17..253559fa87 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -856,20 +856,21 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
- 
- 	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
- 	    !(data->m && midx_contains_pack(data->m, file_name))) {
--		/* Don't reopen a pack we already have. */
--		for (p = data->r->objects->packed_git; p; p = p->next) {
--			size_t len;
--			if (strip_suffix(p->pack_name, ".pack", &len) &&
--			    len == base_len &&
--			    !memcmp(p->pack_name, full_name, len))
--				break;
--		}
-+		struct hashmap_entry hent;
-+		char *pack_name = xstrfmt("%.*s.pack", (int)base_len, full_name);
-+		unsigned int hash = strhash(pack_name);
-+		hashmap_entry_init(&hent, hash);
- 
--		if (!p) {
-+		/* Don't reopen a pack we already have. */
-+		if (!hashmap_get(&data->r->objects->pack_map, &hent, pack_name)) {
- 			p = add_packed_git(full_name, full_name_len, data->local);
--			if (p)
-+			if (p) {
-+				hashmap_entry_init(&p->packmap_ent, hash);
-+				hashmap_add(&data->r->objects->pack_map, &p->packmap_ent);
- 				install_packed_git(data->r, p);
-+			}
- 		}
-+		free(pack_name);
- 	}
- 
- 	if (!report_garbage)
-diff --git a/t/perf/p5303-many-packs.sh b/t/perf/p5303-many-packs.sh
-index 3779851941..ede78e19e2 100755
---- a/t/perf/p5303-many-packs.sh
-+++ b/t/perf/p5303-many-packs.sh
-@@ -84,4 +84,22 @@ do
- 	'
- done
- 
-+# Measure pack loading with 10,000 packs.
-+test_expect_success 'generate lots of packs' '
-+	for i in $(test_seq 10000); do
-+		echo "blob"
-+		echo "data <<EOF"
-+		echo "blob $i"
-+		echo "EOF"
-+		echo "checkpoint"
-+	done |
-+	git -c fastimport.unpackLimit=0 fast-import
-+'
-+
-+# The purpose of this test is to evaluate load time for a large number
-+# of packs while doing as little other work as possible.
-+test_perf "load 10,000 packs" '
-+	git rev-parse --verify "HEAD^{commit}"
-+'
-+
- test_done
--- 
-2.23.0
-
+Best,
+Ruud
