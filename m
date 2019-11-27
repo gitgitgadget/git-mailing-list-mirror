@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC78EC432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D248C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B4EE02082D
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3364C20835
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cqu7+fS4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oygJPds4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727300AbfK0TxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:53:23 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:37072 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbfK0TxV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:53:21 -0500
-Received: by mail-pj1-f67.google.com with SMTP id bb19so6999085pjb.4
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:21 -0800 (PST)
+        id S1727305AbfK0Tx1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:53:27 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:40956 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727279AbfK0Tx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:53:26 -0500
+Received: by mail-pg1-f193.google.com with SMTP id e17so11450110pgd.7
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/2KT3kKWIIcN5EEEvD1lTeDl+prBaH3cSls3K6bAnXc=;
-        b=cqu7+fS4yikeY645gXSbHy87iCBV6Dl+U8OELlOyy6/EAREZ2QCcUhdd6d9mmdURMm
-         Mab4N7TgjxR6a1Rh3PHOPUZH1jAhH9FZVgGygGoHLMvNQJkW6Qa/Uh7STHwsh0YiXol2
-         qAEVWITnd09H4Bmu0Npxsi5AlZJ9GzPH0EXXhBJ3762tQARTbMJQhmXWBXKAasMQnJTR
-         VkPH0jlwU07WP6xTffONsvDPPlrNxuTVeASKK4Fqti089iWp7Y8Ufkbqc0Yh+WfPBv7T
-         TJptY498OU/CS6uJBAz5EYNpyN6QvW4xDNdlWr0W8zoHKdcKt+s/oP7PpGJKL3tTeqkI
-         Pw6w==
+        bh=p7VPx+FtrqEcEOfcK3GddzAjZhHm6Shlg+PLWPLbqfs=;
+        b=oygJPds4I5RTrUX5H4reC2aeVns6RAM6dajdgz3R6Ck+O2uoCcKx7elvrY0U/kxfpz
+         wvK9V6RO8bsoG+0kaNjva1b41lX51PBt2qLuAUi9Tb6/Zd5k9LVLjOGOXucOJ3V7WuH6
+         HFTFakB4iWlFR13ilYKhasXRcItNiCmU3FRlKuz0ljxHGHSzqbcvxiYSFjsaVKiBW1Kq
+         qy/V7KQTQZKHE31olKlSzOJeJiiAM8btpZzHzhMdSEdgvm9gxvNb7yNQSk31RK1SCSsK
+         ZM7r26xiI2ms3fqk3l/90hxUtFpQ/b18qxElV3Oj+oIt2pQ7iJflK3zI08+hgHVP01qH
+         Mw6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/2KT3kKWIIcN5EEEvD1lTeDl+prBaH3cSls3K6bAnXc=;
-        b=kq3WPNTb+EqtJN/dDqK5MScRO2bEcRGePV/TbFdgtUOFsbodAucKmshtJdTdXwRaCG
-         fybIHn9icLbnY3z4vWQgFRWC6ZB5z53hiONt40eFHHR9QctRvn4ZW3oZ6ZksryQfBztZ
-         HqIEY9fp1xCVNvPfglt8gn42A4t0j3+x8BBfn7p2sg7VOj8N6CUFN7x+AhyGeUJtBAnL
-         q50lpktPlCvrYZmdMmkSaCHSw9aUC+wTWfKcX4FWcgrdiMjyXtPL9TBCCDuNQAWuoJCM
-         qhIU8qKfIop6AJIQJKjSntyicczpfAXd3NJE1oFcaY2RfCMU06YOZkx6qyYVcWHxGr9a
-         mGRg==
-X-Gm-Message-State: APjAAAWQ56P6jfaWG1/GVb7AN0YkEYSp9Fl6ojMUDE2P6P1u8t3dUaYw
-        Qp0w9PRKejhRcCpXRDyvuM6p0t8U
-X-Google-Smtp-Source: APXvYqxs6ib+woWrF6+oN+jbWwy8xqlNTbBMsqQmk8TJwQNseG6ZsL+f4ACIfkcRwCRAyIPFAKnPBA==
-X-Received: by 2002:a17:902:8e87:: with SMTP id bg7mr6002146plb.134.1574884400565;
-        Wed, 27 Nov 2019 11:53:20 -0800 (PST)
+        bh=p7VPx+FtrqEcEOfcK3GddzAjZhHm6Shlg+PLWPLbqfs=;
+        b=OErG/noDquCKM5/0cU52evrJNbv4OvNPGekDBElIcHkm9Jhpijy01QsUFT1ClJKiVX
+         ZDA0w5dBWM1+CRtI9i6W85zDYZCCgxTPxRHAM3KY8eETYPKlHy/OMD2EM4i/qKHSC1Gb
+         pszKqsdK2KRtBDRBQoTpCcBpiHCw+4qfifmninq8uQmzHzUX/vz/ybFz2EKunZquFe8J
+         P9R46B6xyyhMlofYGNRN0SJHaqA2sxQPwKslId5A8S9WnrrgtX8YCnWZc93vqrBgY2Gy
+         aAZt4YFbXRULJFYxrklwGBJ3PCc9lXdMkXOXdxbYtO++7+glSUHHY56UbacztzHnlj3t
+         rrFQ==
+X-Gm-Message-State: APjAAAXrz9aDzfVO6jPZirCJJlySs9285wnlXMooMxn51u2y/DQQKfJy
+        jmj+n4dz2spDyn6MD5kfQQ2em2mm
+X-Google-Smtp-Source: APXvYqw/+RGR1b76PD7LQncg7QsqocAxwA8rdkwndB9HoEsK6uHkPUHA8uViHHefY0lkPkm5QhvBgg==
+X-Received: by 2002:a63:f54a:: with SMTP id e10mr6436587pgk.401.1574884404270;
+        Wed, 27 Nov 2019 11:53:24 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id s7sm2312703pfe.22.2019.11.27.11.53.19
+        by smtp.gmail.com with ESMTPSA id j23sm17218641pfe.95.2019.11.27.11.53.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 11:53:19 -0800 (PST)
-Date:   Wed, 27 Nov 2019 11:53:18 -0800
+        Wed, 27 Nov 2019 11:53:22 -0800 (PST)
+Date:   Wed, 27 Nov 2019 11:53:20 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 07/26] t3600: stop losing return codes of git commands
-Message-ID: <a8aeca67956f503829ac1f16072782ae5a906dd8.1574884302.git.liu.denton@gmail.com>
+Subject: [PATCH v5 08/26] t3600: comment on inducing SIGPIPE in `git rm`
+Message-ID: <e3db06578df23ee6e2036c18a25e79ae6c4d46e3.1574884302.git.liu.denton@gmail.com>
 References: <cover.1574731022.git.liu.denton@gmail.com>
  <cover.1574884302.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,41 +74,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a command is in a non-assignment command substitution, the return
-code will be lost in favour of the surrounding command's. As a result,
-if a git command fails, we won't know about it. Rewrite instances of
-this so that git commands are either run in an assignment-only command
-substitution so that their return codes aren't lost.
+Add a comment about intentionally inducing SIGPIPE since this is unusual
+and future developers should be aware. Also, even though we are trying
+to refactor git commands out of the upstream of pipes, we cannot do it
+here since we rely on it being upstream to induce SIGPIPE. Comment on
+that as well so that future developers do not try to change it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3600-rm.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t3600-rm.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index f6e659b7e9..0c3bf10edd 100755
+index 0c3bf10edd..0ea858d652 100755
 --- a/t/t3600-rm.sh
 +++ b/t/t3600-rm.sh
-@@ -304,7 +304,8 @@ EOF
- 
- test_expect_success 'rm removes empty submodules from work tree' '
- 	mkdir submod &&
--	git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) submod &&
-+	hash=$(git rev-parse HEAD) &&
-+	git update-index --add --cacheinfo 160000 "$hash" submod &&
- 	git config -f .gitmodules submodule.sub.url ./. &&
- 	git config -f .gitmodules submodule.sub.path submod &&
- 	git submodule init &&
-@@ -623,7 +624,8 @@ test_expect_success 'setup subsubmodule' '
- 	git submodule update &&
- 	(
- 		cd submod &&
--		git update-index --add --cacheinfo 160000 $(git rev-parse HEAD) subsubmod &&
-+		hash=$(git rev-parse HEAD) &&
-+		git update-index --add --cacheinfo 160000 "$hash" subsubmod &&
- 		git config -f .gitmodules submodule.sub.url ../. &&
- 		git config -f .gitmodules submodule.sub.path subsubmod &&
- 		git submodule init &&
+@@ -251,6 +251,7 @@ test_expect_success 'choking "git rm" should not let it die with cruft' '
+ 		echo "100644 $hash 0	some-file-$i"
+ 		i=$(( $i + 1 ))
+ 	done | git update-index --index-info &&
++	# git command is intentionally placed upstream of pipe to induce SIGPIPE
+ 	git rm -n "some-file-*" | : &&
+ 	test_path_is_missing .git/index.lock
+ '
 -- 
 2.24.0.504.g3cd56eb17d
 
