@@ -2,65 +2,67 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,URIBL_SBL,URIBL_SBL_A,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8586CC432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 15:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E106C432C3
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 15:14:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5E45520674
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 15:13:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4FF820674
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 15:14:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E1fIKBIA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ussHstnE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727309AbfK0PNv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 10:13:51 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38599 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726984AbfK0PNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 10:13:46 -0500
-Received: by mail-pg1-f196.google.com with SMTP id t3so10570065pgl.5
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 07:13:46 -0800 (PST)
+        id S1727336AbfK0PNz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 10:13:55 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36827 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727316AbfK0PNy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 10:13:54 -0500
+Received: by mail-pf1-f196.google.com with SMTP id b19so11175924pfd.3
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 07:13:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5pJOomD/OGzubWwTYaYcOOj/gx5u5i0oyvQjWMcZg1I=;
-        b=E1fIKBIAGffiU5hx/POU42I2fLVbF1VTiLhECjbElXpZpCHsNAOVFddmAzWJGG+88Z
-         SDhQuFApuWqaUWM+/VM7eke32ZVfjrAGEfZbCX25df8wJv31PH3SjiMHbwNeJDoSGhXd
-         D82KMXiuY1UDn/gi2rZDQwSoHpKyHkN+dIrRkyuFwKrD4cWclGMlP1OX1NYzr3Mzaird
-         bZTu7ZZcag0B+rPKtzby31f8Z9EIw/CDQSNlZ7eVettCiWJKWaCSRQHYUVRZbpSn+Is0
-         JoJGP8xRH96GizLXYpbPqOBaH+saJzRNs3qtLPhEKsBl9IJMClIJ3+FeArY16Rr3Ih27
-         Z5gg==
+        bh=AMrsALJBItk45lz95Supq0IXRiFpPbM5ypdJSQL2TXk=;
+        b=ussHstnEKWLq0AKX7RRJ7MV5vZzk2Ki7ILoP/Oq+DFHtcCHeVe0AhtEhun83ywHcGG
+         c4WTDYP2EU9yCUglpEQa2IQVkPi3v0kXqylRHaZ75uUTA3oR59GnxjxFL6/iLUQevjon
+         SXsVaVq7VU31xgnaKGouieF4vfADsFQUzjDRnA1ZWJPt4U6F8fYZ0YLfzRec4x+uOS81
+         6sqSJ3nLHgWCeKdPhbiGM6A1XZgedNBx6yHYpCXW6sVZ8Ac2yAZZsj2cn5J+6VQRv4b0
+         p2cYyAfTjk6hKvWZQt8jAW4F9mTPQyci2NPRfd2ZrVPRSqSR68FOKiw05jK4boUA46MT
+         wZQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5pJOomD/OGzubWwTYaYcOOj/gx5u5i0oyvQjWMcZg1I=;
-        b=MJ5DA7mWgw+yCr25tIPwI6ty9ithlQfozWlzTYPoLb/ZF/u4hn1loiSryAgQhs7yY9
-         2n2oPLBYYsutAgHd2DiCuKig+vN02KWzK5Jyk+ZzJnaqqTESlOrcZ6PkKpniyZMqX6Xn
-         w/p8FMXGLnhn9TGK2w/9EyoaYxmdxj89kN7dmpobZp4sJGr/YKewogddhMhTTXMEeap8
-         ZBzZU5DfePS82QIEdL22YFhbd15VW2ZjuIHkNQQRAOxvkz2qKDX3HtoWlsCDnkMkJQG5
-         9bQ6N40WmYSK5YqbBfs/ICWdifRA+x9BGB4p/o5ddjZBHu6dOncAGQud+tVB3XldZn6M
-         r4Lw==
-X-Gm-Message-State: APjAAAWP1XzUNzC0Bzo+sNbRHJMnEpEdIoyOxbbqnUEGBGgoG1IEJ0cv
-        p3sGLL8UdVL/bFa+WWHYkf3vk2DM
-X-Google-Smtp-Source: APXvYqzo0UU3SIUvPog6LkCnMNi7BaLH47AHsvdqASD1hEeXOitlBoXqQZqu6J8oX5Wul+lM+8/aaw==
-X-Received: by 2002:aa7:8e15:: with SMTP id c21mr48230470pfr.122.1574867625791;
-        Wed, 27 Nov 2019 07:13:45 -0800 (PST)
+        bh=AMrsALJBItk45lz95Supq0IXRiFpPbM5ypdJSQL2TXk=;
+        b=tWQNb4OMZYeH2+cQObhHLdWZRA3fOCK9MFc1FclnF2iGkYw9MTwlPUvBUkhzeuzOG5
+         IcPs6h/+7w9tzlZHGVo8Jv5xVPQxPD0tuljOvDaASlnYMssfKsNfSd/DW851DjxOg00O
+         aCP79tj5Lg2j0WU1cHRrtbKGhgUuIdtQpHEfWPHtKOQma6iWtzHFvX+tfDjouUtdxkOe
+         RuoxQXa3YPywl2bD4nDGP5i4ihsZTDEMwJ5fQR07847BRsIwSuyXRznSRyboIpmTjDlq
+         5xvbbzLH+NNEbMeM0mnEraxTLp0cB1OTtN1DD5JZGLGYxdH9EE+c3iBTslvIJE5PxcaB
+         qn/Q==
+X-Gm-Message-State: APjAAAVhztVpL8iglWI8g4U2x1XdzaAfAC2x+ZJ6NArYac25vcbQlTXg
+        qA4JmdszCL1knn9QELQkY/Rf7Vbg
+X-Google-Smtp-Source: APXvYqzVME7KSIAjpZudEH5sK8UepepKC45iO74yypsyTFRupwQDgYZVn/zBkyDy7ubk2tKESomhDA==
+X-Received: by 2002:a65:66d7:: with SMTP id c23mr2769952pgw.40.1574867633629;
+        Wed, 27 Nov 2019 07:13:53 -0800 (PST)
 Received: from localhost.localdomain ([2402:800:6375:24ff:b05:3145:6413:309f])
-        by smtp.gmail.com with ESMTPSA id g192sm16883674pgc.3.2019.11.27.07.13.44
+        by smtp.gmail.com with ESMTPSA id g192sm16883674pgc.3.2019.11.27.07.13.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Nov 2019 07:13:45 -0800 (PST)
+        Wed, 27 Nov 2019 07:13:53 -0800 (PST)
 From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>
-Subject: [PATCH 4/5] archive-zip: use reentrant localtime_r(3)
-Date:   Wed, 27 Nov 2019 22:13:20 +0700
-Message-Id: <f6fd89dfe12afbfddbdf718cb691025bb1541eef.1574867409.git.congdanhqx@gmail.com>
+Cc:     Doan Tran Cong Danh <congdanhqx@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 5/5] mingw: use {gm,local}time_s as backend for {gm,local}time_r
+Date:   Wed, 27 Nov 2019 22:13:21 +0700
+Message-Id: <2c39f9a04f98fc3d365c80ce57e8edce305846fb.1574867409.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.24.0.158.gd77a74f4dd.dirty
 In-Reply-To: <cover.1574867409.git.congdanhqx@gmail.com>
 References: <cover.1574867409.git.congdanhqx@gmail.com>
@@ -71,39 +73,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Since Windows doesn't provide gmtime_r(3) and localtime_r(3),
+we're providing a compat version by using non-reentrant gmtime(3) and
+localtime(3) as backend. Then, we copy the returned data into the
+buffer.
+
+By doing that, in case of failure, we will dereference a NULL pointer
+returned by gmtime(3), and localtime(3), and we always return a valid
+pointer instead of NULL.
+
+Drop the memcpy(3) by using gmtime_s, and localtime_s as backend on
+Windows, and make sure we will return NULL in case of failure.
+
+Cc: Johannes Sixt <j6t@kdbg.org>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
 ---
- archive-zip.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ compat/mingw.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 4d66b5be6e..8bbd3e5884 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -603,18 +603,18 @@ static void write_zip_trailer(const struct object_id *oid)
- static void dos_time(timestamp_t *timestamp, int *dos_date, int *dos_time)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index fe609239dd..7b21f4eee5 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1,6 +1,7 @@
+ #include "../git-compat-util.h"
+ #include "win32.h"
+ #include <conio.h>
++#include <errno.h>
+ #include <wchar.h>
+ #include "../strbuf.h"
+ #include "../run-command.h"
+@@ -986,16 +987,16 @@ int pipe(int filedes[2])
+ 
+ struct tm *gmtime_r(const time_t *timep, struct tm *result)
  {
- 	time_t time;
--	struct tm *t;
-+	struct tm tm;
- 
- 	if (date_overflows(*timestamp))
- 		die(_("timestamp too large for this system: %"PRItime),
- 		    *timestamp);
- 	time = (time_t)*timestamp;
--	t = localtime(&time);
-+	localtime_r(&time, &tm);
- 	*timestamp = time;
- 
--	*dos_date = t->tm_mday + (t->tm_mon + 1) * 32 +
--	            (t->tm_year + 1900 - 1980) * 512;
--	*dos_time = t->tm_sec / 2 + t->tm_min * 32 + t->tm_hour * 2048;
-+	*dos_date = tm.tm_mday + (tm.tm_mon + 1) * 32 +
-+	            (tm.tm_year + 1900 - 1980) * 512;
-+	*dos_time = tm.tm_sec / 2 + tm.tm_min * 32 + tm.tm_hour * 2048;
+-	/* gmtime() in MSVCRT.DLL is thread-safe, but not reentrant */
+-	memcpy(result, gmtime(timep), sizeof(struct tm));
+-	return result;
++	if (gmtime_s(result, timep) == 0)
++		return result;
++	return NULL;
  }
  
- static int archive_zip_config(const char *var, const char *value, void *data)
+ struct tm *localtime_r(const time_t *timep, struct tm *result)
+ {
+-	/* localtime() in MSVCRT.DLL is thread-safe, but not reentrant */
+-	memcpy(result, localtime(timep), sizeof(struct tm));
+-	return result;
++	if (localtime_s(result, timep) == 0)
++		return result;
++	return NULL;
+ }
+ 
+ char *mingw_getcwd(char *pointer, int len)
 -- 
 2.24.0.158.gd77a74f4dd.dirty
 
