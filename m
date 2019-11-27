@@ -2,138 +2,94 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C65C8C432C3
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 12:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B224C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 12:33:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A44B32075C
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 12:32:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FF3F20409
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 12:33:46 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZsowtkM5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbfK0McN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 07:32:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33806 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726383AbfK0McM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 07:32:12 -0500
-Received: (qmail 10926 invoked by uid 109); 27 Nov 2019 12:32:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Nov 2019 12:32:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9721 invoked by uid 111); 27 Nov 2019 12:36:15 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2019 07:36:15 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 Nov 2019 07:32:11 -0500
-From:   Jeff King <peff@peff.net>
-To:     "Patrick Marlier (pamarlie)" <pamarlie@cisco.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] send-pack: use OBJECT_INFO_QUICK to check negative objects
-Message-ID: <20191127123211.GG22221@sigill.intra.peff.net>
-References: <CH2PR11MB429411CA1288526D21C7AF26CF4C0@CH2PR11MB4294.namprd11.prod.outlook.com>
+        id S1726957AbfK0Mdp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 07:33:45 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:60697 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726526AbfK0Mdp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 07:33:45 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EAD6320D49;
+        Wed, 27 Nov 2019 07:33:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=G7nnpPchHAK28Q5MKHqKvypVa7o=; b=ZsowtkM5skOwLn+uJYJp
+        xGZYzUYk5Dt8WDwdpR42//WuF8GQLPFYq6L3AFj/vCZGASCZHJI/uxIZyVCC+/nV
+        0zgTYJBH4nSNvE7+dyU+eJLVhZMqcyBi62j8fDadCkFr3I/6yRGp3ax1qbX5XFqH
+        Y0gaDsd78kIpLrVCd8TfYs0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=xebmY40gm/0LBzj/QEgjG30OcriCTNhgvRllaiDZni7b0p
+        dKGaDpy+P9j9p+5MPOYtNPb7dJHUYKjqEm3AtLinEB7RpxhpzX2gu0XAGvjTVAQ8
+        Ns6agZYVqSRr6rA4l8N3ep4weO61At2zf2ITfS6Xic2aWLxijdqLhrNz7aNc0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E2AF120D48;
+        Wed, 27 Nov 2019 07:33:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54AF820D47;
+        Wed, 27 Nov 2019 07:33:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jack Bates <bk874k@nottheoilrig.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Bug? clone ignores --git-dir
+References: <7d28416e-c927-4cd3-bac2-d8bfd02ce949@nottheoilrig.com>
+Date:   Wed, 27 Nov 2019 21:33:41 +0900
+Message-ID: <xmqqh82pv6qi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CH2PR11MB429411CA1288526D21C7AF26CF4C0@CH2PR11MB4294.namprd11.prod.outlook.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 25731EC6-1112-11EA-92DF-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 19, 2019 at 01:12:51PM +0000, Patrick Marlier (pamarlie) wrote:
+Jack Bates <bk874k@nottheoilrig.com> writes:
 
-> I am hitting a performance issue with "git push <remote> <refspec>".
-> The local repository has only few refs and the remote repository has a
-> lot of refs (1000+) with objects unknown to the local repository.
-> 
-> "git push" of only one refspec takes minutes to complete. A quick
-> analysis shows that a lot of time is spent in the client side.
-> A deeper analysis shows that the client receives the entire list of
-> refs on the remote, then the client is checking in its local
-> repository if the objects exist for all remote refs.
+> ... repositories, however `clone` ignores `--git-dir`:
 
-Right, this is expected. The client send-pack feeds the list of remote
-objects (that it has) to pack-objects, which can then limit the size of
-the packfile it sends based on what the other side has.
+An intentional design decision (and it may be an unfortunate one by
+now [*1*]) was to have the GIT_DIR (hence --git-dir) talk about the
+*source side* of the clone, not the destination, e.g.
 
-So the patch you showed (to skip refs that aren't part of the push)
-would miss many opportunities for a smaller push. E.g., imagine I create
-a new branch "topic" from the remote branch "master", and then try to
-push it up. If I do not look at which objects are in "master", I'll end
-up sending the whole history again, when I really just need to send the
-differences between the two.
+	cd /home/me/working/tree
+	export GIT_DIR=/home/me/repo/sitory
+	export GIT_WORK_TREE=$(pwd)
 
-> Since the local repository has a only few refs, most of the objects
-> are unknown.
->
-> This issue is particularly amplified because the local repository is
-> using many alternates. Indeed for each unknown object, git will try to
-> find in all alternates too.
+	# the above told Git that /home/me/working/tree has a
+	# checkout but its repository body is not anywhere in its
+	# subdirectory -- it is /home/me/repo/sitory.
 
-I think the patch below would help you.
+	# now we clone the repository we are currently working on
+	# without GIT_DIR applying to the source side, it won't
+	# work.
+	git clone . /else/where
 
--- >8 --
-Subject: [PATCH] send-pack: use OBJECT_INFO_QUICK to check negative objects
+And we cannot allow /home/me/repo/sitory (i.e. GIT_DIR for the
+source repository) become the GIT_DIR for the resulting /else/where
+repository (you'd be cloning to yourself).
 
-When pushing, we feed pack-objects a list of both positive and negative
-objects. The positive objects are what we want to send, and the negative
-objects are what the other side told us they have, which we can use to
-limit the size of the push.
 
-Before passing along a negative object, send_pack() will make sure we
-actually have it (since we only know about it because the remote
-mentioned it, not because it's one of our refs). So it's expected that
-some of these objects will be missing on the local side. But looking for
-a missing object is more expensive than one that we have: it triggers
-reprepare_packed_git() to handle a racy repack, plus it has to explore
-every alternate's loose object tree (which can be slow if you have a lot
-of them, or have a high-latency filesystem).
+[Footnote]
 
-This isn't usually a big problem, since repositories you're pushing to
-don't generally have a large number of refs that are unrelated to what
-the client has. But there's no reason such a setup is wrong, and it
-currently performs poorly.
-
-We can fix this by using OBJECT_INFO_QUICK, which tells the lookup
-code that we expect objects to be missing. Notably, it will not re-scan
-the packs, and it will use the loose cache from 61c7711cfe (sha1-file:
-use loose object cache for quick existence check, 2018-11-12).
-
-The downside is that in the rare case that we race with a local repack,
-we might fail to feed some objects to pack-objects, making the resulting
-push larger. But we'd never produce an invalid or incorrect push, just a
-less optimal one. That seems like a reasonable tradeoff, and we already
-do similar things on the fetch side (e.g., when marking COMPLETE
-commits).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-Interestingly, upload-pack does not use OBJECT_INFO_QUICK when it's
-getting oids from the other side. But I think it could possibly benefit
-in the same way. Nobody seems to have noticed. Perhaps it simply comes
-up less, as servers would tend to have more objects than their clients?
-
- send-pack.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/send-pack.c b/send-pack.c
-index 34c77cbb1a..16d6584439 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -41,7 +41,9 @@ int option_parse_push_signed(const struct option *opt,
- static void feed_object(const struct object_id *oid, FILE *fh, int negative)
- {
- 	if (negative &&
--	    !has_object_file_with_flags(oid, OBJECT_INFO_SKIP_FETCH_OBJECT))
-+	    !has_object_file_with_flags(oid,
-+					OBJECT_INFO_SKIP_FETCH_OBJECT |
-+					OBJECT_INFO_QUICK))
- 		return;
- 
- 	if (negative)
--- 
-2.24.0.716.g722aff65ed
+*1* with use of "git worktree" gaining traction, perhaps the need to
+    create local clone out of the shared/same GIT_DIR may have
+    diminished.
 
