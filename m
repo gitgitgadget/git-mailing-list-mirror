@@ -2,134 +2,181 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B98C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8FE7C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC0712082D
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:54:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A8D320661
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YaI0Rugh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/r/Np1S"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727443AbfK0TyI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:54:08 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:38511 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726947AbfK0TyH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:54:07 -0500
-Received: by mail-pg1-f194.google.com with SMTP id t3so11018323pgl.5
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:54:07 -0800 (PST)
+        id S1727126AbfK0T4P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:56:15 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50943 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726729AbfK0T4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:56:15 -0500
+Received: by mail-wm1-f66.google.com with SMTP id l17so8461065wmh.0
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:56:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X7N4J8rstHNCXMeIkDde+BaZpUa1sAaV3I3B+UrlLPs=;
-        b=YaI0RughtqgmxCRgw+2HLrC8X07bYwXsVpvmaN6Y7NiE7fR24Hb9bF4Ce2V4tWHhmI
-         yS3Mmi6y7j7M4gtf2JvBJZMq9WEML6TOlRKntNxalGTfN+ktTRIh2My4cxgKGKfczDPn
-         Oj8lylcVD0li4dU8tL/09gUDY0VGjmx56QN8vq2cPEZgYeqJwgiY8V/83lZKHUqjz+Sf
-         HjhtQKrSgWdc/+/uTGI9Q6YkjXNItIgWJQHK8azWKkNXAHvsJ5RVXLBfsoWRsOTIT+iM
-         FDGD45I/L9MWra3uBj6yys21JyeQZqM4Jvg3rPHsKjMnaHFlvB66jwrRnk1/qaqV7Yno
-         OBCw==
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=g0e3iGPSRI7xKHRuf3tSf3Wdfp2uAMG9FEJV0sYAmbA=;
+        b=f/r/Np1Sw/Au/6sMZj7a73YuxMQI2RnFnv4D6IB5fL5QM8yjAPrh4qFQ/J9ujnQ7rO
+         TDhNv65qd6K9/NlI2OLTJXH0PwZyCAEvd255f3DgsEBasJEPWlw7jVUuPWqEkr1mO8aK
+         E30saemek/q/NNUloN7W7FXxi57nV6H3f7AHo7zNlA0D5y1xgKjmP4owcYzEpHPkRj/g
+         SEl5Bvt3vNwt/aIIQ+YYxEBIKEBKr+dpnDtEZZwRqLdAYRkTValDLvjsbT0pt8X2gbT0
+         HYy7KYeX37vJ21rY/4APWbtzA2uusrjOo416glQ0+XcPvBZg4mu7fShS0xRyb1t27mCQ
+         nBtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X7N4J8rstHNCXMeIkDde+BaZpUa1sAaV3I3B+UrlLPs=;
-        b=lGvULQqhVKYKMvrclzfdGJWosBGEqqCvPMnNP43+Xx87YI76L9dtEqc7xsyM/OdMEu
-         s1htrpBkMm6l8bccAimuGu8YTGc5O/fU3xiDIO6w2KrFYapxpBNGy4MeMyr/79BfsG/+
-         Oxo4QqeN9MQP+m3hM9WeOQhZFHQZmu9bqBzd5p44vzPRXk1z+/A1xGkzfdKFpMgT/uIl
-         MTddCkcHX/KEqeTTzI/RrlOONPTgPQDm2PTSO7eQQ4tkEJeDNunJI2DgEIpAhBY/EZhR
-         FDFQKbfrtA4IhbiiDjjXAfUFL5AJyj3dTUUs6Kv4CMv4K6XlvkvjFHfEMdx0j5Z2sW52
-         uhfw==
-X-Gm-Message-State: APjAAAXSUzDw4zK/q7vLhBe28C4SvaGo8gFxFdfeP0oNHX4mWrycXLRy
-        eBY7zapIIHnWCjqXTwsXWFl5Ef82
-X-Google-Smtp-Source: APXvYqwBOhIU4BdKvrlP1NyzevjwDLrhxcMgv+2cFlgoRfzhlPxWkir+RhlBMXEyIIqMtCjbRZYwMQ==
-X-Received: by 2002:a65:4c4c:: with SMTP id l12mr6662315pgr.377.1574884446299;
-        Wed, 27 Nov 2019 11:54:06 -0800 (PST)
-Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id u20sm17158661pgf.29.2019.11.27.11.54.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 11:54:05 -0800 (PST)
-Date:   Wed, 27 Nov 2019 11:54:04 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 26/26] t7700: stop losing return codes of git commands
-Message-ID: <1f6d9a80ad45fd9f51c8cffe9ce3721fce9b80c0.1574884302.git.liu.denton@gmail.com>
-References: <cover.1574731022.git.liu.denton@gmail.com>
- <cover.1574884302.git.liu.denton@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=g0e3iGPSRI7xKHRuf3tSf3Wdfp2uAMG9FEJV0sYAmbA=;
+        b=ci+hbhCX1ZTGvx5eJjGNhMWfg7odJilTVyx8uITemfRw88jLI1zAUPaTlhDtad0CBh
+         zyrY53IqCiZ20LiXpplRXU6EAYdWrLJXuXiO+rusf2kwGd5noY1Ce04OdB8siYzxEbYx
+         1Ms+lATERxklXPFKDG5SUQua2Wad3IbolnN6WTrDogwQ5Shm/8znupLD7X3sRzDBau1j
+         /aBrKSI8OLskMjPr6M8FAJLmdS3K8PnDwdcNlAkjIbkzgvTinIMBTjkyQuwxAk1rZ8wY
+         MMm15RK94z/dVt+iYEotf4hEUilbn8/UmqC7IZ7M8sFoCWPavUHONNym3TXy14ft6PJf
+         pYHA==
+X-Gm-Message-State: APjAAAVq0X7RAySkC/+CjsICg002RRHtcUbKO32TBBniillrOezMnwX6
+        NsbyPjpmFHvqSlbaawo3qbY=
+X-Google-Smtp-Source: APXvYqyJaYJVcY2EhEYuqFE+DcCsnzQzUIy8b0uYAfqe1go4/UvpFF2vthrq4CmGbN9lMYgUhKjMnQ==
+X-Received: by 2002:a7b:cb86:: with SMTP id m6mr6416392wmi.124.1574884573459;
+        Wed, 27 Nov 2019 11:56:13 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-658-1-110-106.w86-199.abo.wanadoo.fr. [86.199.33.106])
+        by smtp.gmail.com with ESMTPSA id a24sm5776358wmb.29.2019.11.27.11.56.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Nov 2019 11:56:12 -0800 (PST)
+Subject: Re: [PATCH v4 5/5] sequencer: directly call pick_commits() from
+ complete_action()
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        phillip.wood@dunelm.org.uk, gitster@pobox.com
+References: <20191124174332.30887-6-alban.gruin@gmail.com>
+ <20191126184103.146421-1-jonathantanmy@google.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <aa162f9c-9ae8-9844-6829-7fc0d9c50f9c@gmail.com>
+Date:   Wed, 27 Nov 2019 20:56:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1574884302.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <20191126184103.146421-1-jonathantanmy@google.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a pipe, only the return code of the last command is used. Thus, all
-other commands will have their return codes masked. Rewrite pipes so
-that there are no git commands upstream so that we will know if a
-command fails.
+Hi Jonathan,
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t7700-repack.sh | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+Le 26/11/2019 à 19:41, Jonathan Tan a écrit :
+>> Currently, complete_action(), used by builtin/rebase.c to start a new
+>> rebase, calls sequencer_continue() to do it.  Before the former calls
+>> pick_commits(), it
+>>
+>>  - calls read_and_refresh_cache() -- this is unnecessary here as we've
+>>    just called require_clean_work_tree() in complete_action()
+> 
+> require_clean_work_tree() and read_and_refresh_cache() seem to be
+> different functions - can you explain why running the former is a good
+> substitute for running the latter?
+> 
 
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 1edb21bf93..d5cce7c06f 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -48,14 +48,13 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
- 	git commit -m initial_commit &&
- 	# Create two packs
- 	# The first pack will contain all of the objects except one
--	git rev-list --objects --all | grep -v file2 |
--		git pack-objects pack &&
-+	git rev-list --objects --all >objs &&
-+	grep -v file2 objs | git pack-objects pack &&
- 	# The second pack will contain the excluded object
--	packid=$(git rev-list --objects --all | grep file2 |
--		git pack-objects pack) &&
-+	packid=$(grep file2 objs | git pack-objects pack) &&
- 	>pack-$packid.keep &&
--	oid=$(git verify-pack -v pack-$packid.idx | head -n 1 |
--		sed -e "s/^\($OID_REGEX\).*/\1/") &&
-+	git verify-pack -v pack-$packid.idx >packlist &&
-+	oid=$(head -n 1 packlist | sed -e "s/^\($OID_REGEX\).*/\1/") &&
- 	mv pack-* .git/objects/pack/ &&
- 	git repack -A -d -l &&
- 	git prune-packed &&
-@@ -134,8 +133,8 @@ test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
- 	    --unpack-unreachable </dev/null pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
--	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		grep "^$coid " | sort | uniq | wc -l) &&
-+	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
-+	! grep "^$coid " packlist &&
- 	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $coid
- '
-@@ -151,8 +150,8 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
- 	    --unpack-unreachable </dev/null pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
--	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
--		grep "^$coid " | sort | uniq | wc -l) &&
-+	git verify-pack -v -- .git/objects/pack/*.idx >packlist &&
-+	! grep "^$coid " &&
- 	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $coid
- '
--- 
-2.24.0.504.g3cd56eb17d
+They both refresh the index.
+
+require_clean_work_tree(), called when starting a new rebase, will also
+check if there are any unstaged or uncommitted changes, in which case we
+do not want to start a rebase.
+
+This is not what we want when resuming a rebase (with `rebase
+--continue'), because the changes might be the result of a conflict
+resolution.  In this case, the last commit is amended, and the rebase is
+resumed.
+
+>>  - calls read_populate_opts() -- this is unnecessary as we're starting a
+>>    new rebase, so `opts' is fully populated
+> 
+> My comment from [1] has not been addressed. Quoting it here:
+> 
+>> So complete_action() (the function modified in this commit) is called
+>> only by do_interactive_rebase() (in builtin/rebase.c), which is only
+>> called by run_rebase_interactive() (in builtin/rebase.c) when command is
+>> ACTION_NONE, so indeed, we're starting a new rebase. But where the
+>> options fully populated? I see that in do_interactive_rebase(), it is
+>> initialized with get_replay_opts(), but that seems different from
+>> read_populate_opts().
+> 
+> [1] https://lore.kernel.org/git/20191119204146.168001-1-jonathantanmy@google.com/
+> 
+
+Sorry.
+
+For the first part of your comment, I added a comment at the beginning
+of the message, although I did _not_ include an analysis on when
+complete_action() is used.
+
+get_replay_opts() converts a `struct rebase_options' (which contains the
+arguments passed to `git rebase') into a `struct replay_opts' which can
+be used by the sequencer, whereas read_populate_opts() loads the options
+from the disk.
+
+So, when are they written to the disk?  In do_interactive_rebase()
+(builtin/rebase.c), after using get_replay_opts() to convert `opts' to
+`replay', init_basic_state() is called, which calls write_basic_state(),
+which write the options to the disk.
+
+Then, until complete_action() is called, `opts' is not modified.
+
+>>  - loads the todo list -- this is unnecessary as we've just populated
+>>    the todo list in complete_action()
+> 
+> Both functions indeed have their own todo lists that they pass to
+> pick_commits(), but I don't see (at least, by glancing at the code) that
+> both these todo lists are identical.
+> 
+
+Near the end of complete_action(), the todo list is written to the disk.
+ The destination is obtained with rebase_path_todo().
+
+read_populate_todo() will read a file and parse it.  In the case of
+`rebase -i', the location is obtained with rebase_path_todo(), and only
+`total_nr' will be modified to contain the number of commands done and todo.
+
+In the case of a new rebase, the done list might not be empty after
+tajjimh skip_unnecessary_picks() from complete_action().  Skipped
+commands are moved from the todo list to the done list.  As `total_nr'
+is not changed by skip_unnecessary_picks(), it is also equal to the
+number of commands remaining in the todo list and in the done list.  So,
+when read_populate_todo() reads the list and the done list from the
+disk, as they should not have been modified, `total_nr' should remain
+the same, too.
+
+The only thing that can change is the internal buffer (`buf'), because
+skip_unnecessary_picks() don’t change it.  Since
+ag/sequencer-reduce-rewriting-todo, it is no longer a textual
+representation of the todo list.  Each command contains a pointer to a
+location in the buffer and a length to represent its argument.
+
+>>  - commits any staged changes -- this is unnecessary as we're starting a
+>>    new rebase, so there are no staged changes
+>>  - calls record_in_rewritten() -- this is unnecessary as we're starting
+>>    a new rebase.
+> 
+> OK - I don't know enough about the rebase mechanism to verify these, but
+> these seem reasonable to me.
+> 
+
+Cheers,
+Alban
 
