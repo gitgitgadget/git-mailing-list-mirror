@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8771BC432C3
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E60FCC432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 58D7720835
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC6312084D
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DeV7ZguG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUr0TzoU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727310AbfK0Tx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:53:28 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45217 "EHLO
+        id S1727319AbfK0Txd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:53:33 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:36453 "EHLO
         mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbfK0Tx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:53:27 -0500
-Received: by mail-pl1-f194.google.com with SMTP id w7so10275399plz.12
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:27 -0800 (PST)
+        with ESMTP id S1727279AbfK0Txc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:53:32 -0500
+Received: by mail-pl1-f194.google.com with SMTP id d7so10304989pls.3
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=yQSbzla2VsXVGIGD/kDLshGkcMr2JlalSddTEq6v7J0=;
-        b=DeV7ZguGDnuuNkenDYlpFNGy+lFakrL31tJaN32FhkBuT0wrx9n2rZLJpImLBgW1S5
-         YPACKr8mLcP5Hknc2oqhAiZq591fLe2J/lv0JSrO9dG68nv6XnjME8qB51fUYTVBck5j
-         xgeQt2vqAuSJlS6XoGyHUW3pMAyxVe2adY+YmabfGoQ6lmkyYeDbQhxKDlyugytKKJb+
-         lyDCtFltf3VYban3p7ypvYS5di1K7Ch0lTJHDcD3asLxyIJ2H66wU5bNYL5ZG8gMgWA0
-         RDo6mu3TJTvPuCp4Mpn60l+7WCyCfyZFmIisFlyEHooXB7DzqTy/SjIT9CVf0f/0xFax
-         s6og==
+        bh=s+25cXUitbRIILBQxNigN1bTyahqYM675wyaEPunVdE=;
+        b=gUr0TzoUTQoEuCEDE9ZYOSLBJlAhD9gSGzN6V2FTWX+7ymOh7mVNycUq8qOX2QxTWK
+         3TMSRCQd+5bBpspvFjFcdJr/x3KKWPwOk9cHsrYQnOB740lxeqF7/3dz4p2p1swIY+Rs
+         ApCDM0gra+vKGNyLEExjkRhkpr6S5jI/qKYb5IOCnhD0SAyBNRVTCHZIx6MIEIf2fEFD
+         UcClDX6s2yEXKBqva1MagNLGBruCvk5HHgqXn03xZwdSq3ohLcIxY1e4Efv2qKp/OFpU
+         wuLDCvuh+4bD77uuYSRU10mJow+6hlVUuMl0/kJlpYaaY+4MwZQfvh1dGhbHKc2qbRQ4
+         KMDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yQSbzla2VsXVGIGD/kDLshGkcMr2JlalSddTEq6v7J0=;
-        b=hhstD8kEcqeGXUzPYfV+77+IfYO7cGiD3wr5axYdUCupXexI1DI0e4gyaRZ3XsPvYK
-         XqCnRTX98djbbVHQxGnEOgrO5BVteUV7MbdNtsONk9ed8zbD779B1ZhqSgvQd4SEx7LO
-         7HzieX65Ya78B7/f9Syn9uE68SfEzH8d6erGadAbckC23OPBiYNZI45q80MzT//CVpK0
-         rnEeXaAf7htXvTMngNm07JXnJgd2ndAF6yXNgfXtybBFfChDxg1U2fmyOAvP+cYaEdLR
-         xFjAQn6e0N4krt/ZoAVaYZolGLK5RO4x+SIJxswxiJ93OavqMDNlI5zcR5mUd4dEftRa
-         huYA==
-X-Gm-Message-State: APjAAAWnNPnklHKxGTU26yMIW89B9U8DLws6lJAgkAjr8v5jOQM9f6Ej
-        P4UMRCcVvpXC7i26qZaRXbbYNBoy
-X-Google-Smtp-Source: APXvYqyvYq6SJn2TH0HmMeJAEF576b0XP7TQnTgvoPl0PLn5Apn0t85cNSsTVx4r9XNOzp7dse7cFA==
-X-Received: by 2002:a17:902:4a:: with SMTP id 68mr6034372pla.158.1574884406648;
-        Wed, 27 Nov 2019 11:53:26 -0800 (PST)
+        bh=s+25cXUitbRIILBQxNigN1bTyahqYM675wyaEPunVdE=;
+        b=spJko3zX5rXQWU9eV6qGtPLIIGq5NozxPV9w+UHDa1aQtf2tXBDeGd1ZNTfJzkAQwc
+         Wij3QrtoDYl5HighqgE3Ay59pndNNPG5p9gWl0Ji/Fi8SWFNNaz5h+q3QZO2tjnBopfv
+         kcKAVYjMKwQZEFeNMTJpQ+y8glKp/e07PoOHFWkqWp6GIVOAHrlC9Yw64eLcVl09wHG2
+         gZsEzIigV8VZxVz2lmxxXGGUjjquXHg3O7zyg6WZVeAiCE5jdRK0/t9e5LuIxDY0Ks2h
+         X3RNBTq/MJzufMTlVck1tdwKQbO5GcAMAGMWtNmxNBXowPcRqKUJ8JcWuerjACHujb5k
+         mkCg==
+X-Gm-Message-State: APjAAAWc70UtFJlPcEbtS71S834vpzCRn9raUw46YlXHBhHuR08lS08Z
+        R4ANaHjPs1vUHjWnM7EYSKojNlAW
+X-Google-Smtp-Source: APXvYqzxaXzFEA1o0MulhgBfhT6UOr9gT5FrOpHW7KDzoU92ZUYu6VfZD656VjzhzhgXR2tzwudGEw==
+X-Received: by 2002:a17:90a:1a8a:: with SMTP id p10mr7866016pjp.6.1574884411178;
+        Wed, 27 Nov 2019 11:53:31 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id 136sm17849396pfb.49.2019.11.27.11.53.25
+        by smtp.gmail.com with ESMTPSA id 20sm16868413pgw.71.2019.11.27.11.53.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 11:53:26 -0800 (PST)
-Date:   Wed, 27 Nov 2019 11:53:24 -0800
+        Wed, 27 Nov 2019 11:53:30 -0800 (PST)
+Date:   Wed, 27 Nov 2019 11:53:29 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 09/26] t4015: stop losing return codes of git commands
-Message-ID: <22ea5d736e98205c08716c0d898d280be7f6cbef.1574884302.git.liu.denton@gmail.com>
+Subject: [PATCH v5 11/26] t4138: stop losing return codes of git commands
+Message-ID: <d512319be0f3a19cafb696ca9f6f2ccb7d0b8e85.1574884302.git.liu.denton@gmail.com>
 References: <cover.1574731022.git.liu.denton@gmail.com>
  <cover.1574884302.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,319 +74,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, there are two ways where the return codes of git commands are
-lost. The first way is when a command is in the upstream of a pipe. In a
-pipe, only the return code of the last command is used. Thus, all other
-commands will have their return codes masked. Rewrite pipes so that
-there are no git commands upstream.
-
-The other way is when a command is in a non-assignment command
-substitution. The return code will be lost in favour of the surrounding
-command's. Rewrite instances of this so that git commands are either run
-on their own or in an assignment-only command substitution.
+In a pipe, only the return code of the last command is used. Thus, all
+other commands will have their return codes masked. Rewrite pipes so
+that there are no git commands upstream so that we will know if a
+command fails.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4015-diff-whitespace.sh | 119 ++++++++++++++++++++++---------------
- 1 file changed, 72 insertions(+), 47 deletions(-)
+ t/t4138-apply-ws-expansion.sh | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index eadaf57262..7fb83c8eff 100755
---- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -16,7 +16,8 @@ test_expect_success "Ray Lehtiniemi's example" '
- 	} while (0);
- 	EOF
- 	git update-index --add x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	old_hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$old_hash_x") &&
+diff --git a/t/t4138-apply-ws-expansion.sh b/t/t4138-apply-ws-expansion.sh
+index 3b636a63a3..b19faeb67a 100755
+--- a/t/t4138-apply-ws-expansion.sh
++++ b/t/t4138-apply-ws-expansion.sh
+@@ -17,8 +17,8 @@ test_expect_success setup '
+ 	printf "\t%s\n" 1 2 3 >after &&
+ 	printf "%64s\n" a b c >>after &&
+ 	printf "\t%s\n" 4 5 6 >>after &&
+-	git diff --no-index before after |
+-		sed -e "s/before/test-1/" -e "s/after/test-1/" >patch1.patch &&
++	test_expect_code 1 git diff --no-index before after >patch1.patch.raw &&
++	sed -e "s/before/test-1/" -e "s/after/test-1/" patch1.patch.raw >patch1.patch &&
+ 	printf "%64s\n" 1 2 3 4 5 6 >test-1 &&
+ 	printf "%64s\n" 1 2 3 a b c 4 5 6 >expect-1 &&
  
- 	cat <<-\EOF >x &&
- 	do
-@@ -25,7 +26,8 @@ test_expect_success "Ray Lehtiniemi's example" '
- 	}
- 	while (0);
- 	EOF
--	after=$(git rev-parse --short $(git hash-object x)) &&
-+	new_hash_x=$(git hash-object x) &&
-+	after=$(git rev-parse --short "$new_hash_x") &&
- 
- 	cat <<-EOF >expect &&
- 	diff --git a/x b/x
-@@ -63,7 +65,8 @@ test_expect_success 'another test, without options' '
- 	EOF
- 
- 	git update-index x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	old_hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$old_hash_x") &&
- 
- 	tr "_" " " <<-\EOF >x &&
- 	_	whitespace at beginning
-@@ -73,7 +76,8 @@ test_expect_success 'another test, without options' '
- 	unchanged line
- 	CR at end
- 	EOF
--	after=$(git rev-parse --short $(git hash-object x)) &&
-+	new_hash_x=$(git hash-object x) &&
-+	after=$(git rev-parse --short "$new_hash_x") &&
- 
- 	tr "Q_" "\015 " <<-EOF >expect &&
- 	diff --git a/x b/x
-@@ -526,13 +530,15 @@ test_expect_success 'ignore-blank-lines: mix changes and blank lines' '
- test_expect_success 'check mixed spaces and tabs in indent' '
- 	# This is indented with SP HT SP.
- 	echo " 	 foo();" >x &&
--	git diff --check | grep "space before tab in indent"
-+	test_must_fail git diff --check >check &&
-+	grep "space before tab in indent" check
- '
- 
- test_expect_success 'check mixed tabs and spaces in indent' '
- 	# This is indented with HT SP HT.
- 	echo "	 	foo();" >x &&
--	git diff --check | grep "space before tab in indent"
-+	test_must_fail git diff --check >check &&
-+	grep "space before tab in indent" check
- '
- 
- test_expect_success 'check with no whitespace errors' '
-@@ -753,20 +759,23 @@ test_expect_success 'check tab-in-indent excluded from wildcard whitespace attri
- test_expect_success 'line numbers in --check output are correct' '
- 	echo "" >x &&
- 	echo "foo(); " >>x &&
--	git diff --check | grep "x:2:"
-+	test_must_fail git diff --check >check &&
-+	grep "x:2:" check
- '
- 
- test_expect_success 'checkdiff detects new trailing blank lines (1)' '
- 	echo "foo();" >x &&
- 	echo "" >>x &&
--	git diff --check | grep "new blank line"
-+	test_must_fail git diff --check >check &&
-+	grep "new blank line" check
- '
- 
- test_expect_success 'checkdiff detects new trailing blank lines (2)' '
- 	{ echo a; echo b; echo; echo; } >x &&
- 	git add x &&
- 	{ echo a; echo; echo; echo; echo; } >x &&
--	git diff --check | grep "new blank line"
-+	test_must_fail git diff --check >check &&
-+	grep "new blank line" check
- '
- 
- test_expect_success 'checkdiff allows new blank lines' '
-@@ -794,14 +803,16 @@ test_expect_success 'whitespace-only changes reported across renames' '
- 	git reset --hard &&
- 	for i in 1 2 3 4 5 6 7 8 9; do echo "$i$i$i$i$i$i"; done >x &&
- 	git add x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$hash_x") &&
- 	git commit -m "base" &&
- 	sed -e "5s/^/ /" x >z &&
- 	git rm x &&
- 	git add z &&
--	after=$(git rev-parse --short $(git hash-object z)) &&
--	git diff -w -M --cached |
--	sed -e "/^similarity index /s/[0-9][0-9]*/NUM/" >actual &&
-+	hash_z=$(git hash-object z) &&
-+	after=$(git rev-parse --short "$hash_z") &&
-+	git diff -w -M --cached >actual.raw &&
-+	sed -e "/^similarity index /s/[0-9][0-9]*/NUM/" actual.raw >actual &&
- 	cat <<-EOF >expect &&
- 	diff --git a/x b/z
- 	similarity index NUM%
-@@ -840,7 +851,8 @@ test_expect_success 'combined diff with autocrlf conversion' '
- 	git config core.autocrlf true &&
- 	test_must_fail git merge master &&
- 
--	git diff | sed -e "1,/^@@@/d" >actual &&
-+	git diff >actual.raw &&
-+	sed -e "1,/^@@@/d" actual.raw >actual &&
- 	! grep "^-" actual
- 
- '
-@@ -864,11 +876,14 @@ test_expect_success 'diff that introduces a line with only tabs' '
- 	git config core.whitespace blank-at-eol &&
- 	git reset --hard &&
- 	echo "test" >x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	old_hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$old_hash_x") &&
- 	git commit -m "initial" x &&
- 	echo "{NTN}" | tr "NT" "\n\t" >>x &&
--	after=$(git rev-parse --short $(git hash-object x)) &&
--	git diff --color | test_decode_color >current &&
-+	new_hash_x=$(git hash-object x) &&
-+	after=$(git rev-parse --short "$new_hash_x") &&
-+	git diff --color >current.raw &&
-+	test_decode_color <current.raw >current &&
- 
- 	cat >expected <<-EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
-@@ -891,17 +906,19 @@ test_expect_success 'diff that introduces and removes ws breakages' '
- 		echo "0. blank-at-eol " &&
- 		echo "1. blank-at-eol "
- 	} >x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	old_hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$old_hash_x") &&
- 	git commit -a --allow-empty -m preimage &&
- 	{
- 		echo "0. blank-at-eol " &&
- 		echo "1. still-blank-at-eol " &&
- 		echo "2. and a new line "
- 	} >x &&
--	after=$(git rev-parse --short $(git hash-object x)) &&
-+	new_hash_x=$(git hash-object x) &&
-+	after=$(git rev-parse --short "$new_hash_x") &&
- 
--	git diff --color |
--	test_decode_color >current &&
-+	git diff --color >current.raw &&
-+	test_decode_color <current.raw >current &&
- 
- 	cat >expected <<-EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
-@@ -925,14 +942,16 @@ test_expect_success 'ws-error-highlight test setup' '
- 		echo "0. blank-at-eol " &&
- 		echo "1. blank-at-eol "
- 	} >x &&
--	before=$(git rev-parse --short $(git hash-object x)) &&
-+	old_hash_x=$(git hash-object x) &&
-+	before=$(git rev-parse --short "$old_hash_x") &&
- 	git commit -a --allow-empty -m preimage &&
- 	{
- 		echo "0. blank-at-eol " &&
- 		echo "1. still-blank-at-eol " &&
- 		echo "2. and a new line "
- 	} >x &&
--	after=$(git rev-parse --short $(git hash-object x)) &&
-+	new_hash_x=$(git hash-object x) &&
-+	after=$(git rev-parse --short "$new_hash_x") &&
- 
- 	cat >expect.default-old <<-EOF &&
- 	<BOLD>diff --git a/x b/x<RESET>
-@@ -974,32 +993,32 @@ test_expect_success 'ws-error-highlight test setup' '
- 
- test_expect_success 'test --ws-error-highlight option' '
- 
--	git diff --color --ws-error-highlight=default,old |
--	test_decode_color >current &&
-+	git diff --color --ws-error-highlight=default,old >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.default-old current &&
- 
--	git diff --color --ws-error-highlight=all |
--	test_decode_color >current &&
-+	git diff --color --ws-error-highlight=all >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.all current &&
- 
--	git diff --color --ws-error-highlight=none |
--	test_decode_color >current &&
-+	git diff --color --ws-error-highlight=none >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.none current
- 
- '
- 
- test_expect_success 'test diff.wsErrorHighlight config' '
- 
--	git -c diff.wsErrorHighlight=default,old diff --color |
--	test_decode_color >current &&
-+	git -c diff.wsErrorHighlight=default,old diff --color >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.default-old current &&
- 
--	git -c diff.wsErrorHighlight=all diff --color |
--	test_decode_color >current &&
-+	git -c diff.wsErrorHighlight=all diff --color >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.all current &&
- 
--	git -c diff.wsErrorHighlight=none diff --color |
--	test_decode_color >current &&
-+	git -c diff.wsErrorHighlight=none diff --color >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.none current
- 
- '
-@@ -1007,18 +1026,18 @@ test_expect_success 'test diff.wsErrorHighlight config' '
- test_expect_success 'option overrides diff.wsErrorHighlight' '
- 
- 	git -c diff.wsErrorHighlight=none \
--		diff --color --ws-error-highlight=default,old |
--	test_decode_color >current &&
-+		diff --color --ws-error-highlight=default,old >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.default-old current &&
- 
- 	git -c diff.wsErrorHighlight=default \
--		diff --color --ws-error-highlight=all |
--	test_decode_color >current &&
-+		diff --color --ws-error-highlight=all >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.all current &&
- 
- 	git -c diff.wsErrorHighlight=all \
--		diff --color --ws-error-highlight=none |
--	test_decode_color >current &&
-+		diff --color --ws-error-highlight=none >current.raw &&
-+	test_decode_color <current.raw >current &&
- 	test_cmp expect.none current
- 
- '
-@@ -1038,7 +1057,8 @@ test_expect_success 'detect moved code, complete file' '
- 	git mv test.c main.c &&
- 	test_config color.diff.oldMoved "normal red" &&
- 	test_config color.diff.newMoved "normal green" &&
--	git diff HEAD --color-moved=zebra --color --no-renames | test_decode_color >actual &&
-+	git diff HEAD --color-moved=zebra --color --no-renames >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
- 	cat >expected <<-EOF &&
- 	<BOLD>diff --git a/main.c b/main.c<RESET>
- 	<BOLD>new file mode 100644<RESET>
-@@ -1141,9 +1161,12 @@ test_expect_success 'detect malicious moved code, inside file' '
- 			bar();
- 		}
- 	EOF
--	after_main=$(git rev-parse --short $(git hash-object main.c)) &&
--	after_test=$(git rev-parse --short $(git hash-object test.c)) &&
--	git diff HEAD --no-renames --color-moved=zebra --color | test_decode_color >actual &&
-+	hash_main=$(git hash-object main.c) &&
-+	after_main=$(git rev-parse --short "$hash_main") &&
-+	hash_test=$(git hash-object test.c) &&
-+	after_test=$(git rev-parse --short "$hash_test") &&
-+	git diff HEAD --no-renames --color-moved=zebra --color >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
- 	cat <<-EOF >expected &&
- 	<BOLD>diff --git a/main.c b/main.c<RESET>
- 	<BOLD>index $before_main..$after_main 100644<RESET>
-@@ -1192,7 +1215,8 @@ test_expect_success 'plain moved code, inside file' '
- 	test_config color.diff.oldMovedAlternative "blue" &&
- 	test_config color.diff.newMovedAlternative "yellow" &&
- 	# needs previous test as setup
--	git diff HEAD --no-renames --color-moved=plain --color | test_decode_color >actual &&
-+	git diff HEAD --no-renames --color-moved=plain --color >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
- 	cat <<-EOF >expected &&
- 	<BOLD>diff --git a/main.c b/main.c<RESET>
- 	<BOLD>index $before_main..$after_main 100644<RESET>
-@@ -1771,7 +1795,8 @@ test_expect_success 'move detection with submodules' '
- 	! grep BRED decoded_actual &&
- 
- 	# nor did we mess with it another way
--	git diff --submodule=diff --color | test_decode_color >expect &&
-+	git diff --submodule=diff --color >expect.raw &&
-+	test_decode_color <expect.raw >expect &&
- 	test_cmp expect decoded_actual &&
- 	rm -rf bananas &&
- 	git submodule deinit bananas
+@@ -33,8 +33,8 @@ test_expect_success setup '
+ 		x=$(( $x + 1 ))
+ 	done &&
+ 	printf "\t%s\n" d e f >>after &&
+-	git diff --no-index before after |
+-		sed -e "s/before/test-2/" -e "s/after/test-2/" >patch2.patch &&
++	test_expect_code 1 git diff --no-index before after >patch2.patch.raw &&
++	sed -e "s/before/test-2/" -e "s/after/test-2/" patch2.patch.raw >patch2.patch &&
+ 	printf "%64s\n" a b c d e f >test-2 &&
+ 	printf "%64s\n" a b c >expect-2 &&
+ 	x=1 &&
+@@ -56,8 +56,8 @@ test_expect_success setup '
+ 		x=$(( $x + 1 ))
+ 	done &&
+ 	printf "\t%s\n" d e f >>after &&
+-	git diff --no-index before after |
+-	sed -e "s/before/test-3/" -e "s/after/test-3/" >patch3.patch &&
++	test_expect_code 1 git diff --no-index before after >patch3.patch.raw &&
++	sed -e "s/before/test-3/" -e "s/after/test-3/" patch3.patch.raw >patch3.patch &&
+ 	printf "%64s\n" a b c d e f >test-3 &&
+ 	printf "%64s\n" a b c >expect-3 &&
+ 	x=0 &&
+@@ -84,8 +84,8 @@ test_expect_success setup '
+ 		printf "\t%02d\n" $x >>after
+ 		x=$(( $x + 1 ))
+ 	done &&
+-	git diff --no-index before after |
+-	sed -e "s/before/test-4/" -e "s/after/test-4/" >patch4.patch &&
++	test_expect_code 1 git diff --no-index before after >patch4.patch.raw &&
++	sed -e "s/before/test-4/" -e "s/after/test-4/" patch4.patch.raw >patch4.patch &&
+ 	>test-4 &&
+ 	x=0 &&
+ 	while test $x -lt 50
 -- 
 2.24.0.504.g3cd56eb17d
 
