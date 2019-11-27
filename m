@@ -2,146 +2,112 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB7CC432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 07:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCE37C432C3
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 07:51:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2DE5A204FD
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 07:32:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 99EEF20684
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 07:51:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a2D5P6z1"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="sZFtsEbi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726478AbfK0Hct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 02:32:49 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39302 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726112AbfK0Hct (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 02:32:49 -0500
-Received: by mail-ed1-f65.google.com with SMTP id n26so18787175edw.6
-        for <git@vger.kernel.org>; Tue, 26 Nov 2019 23:32:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UZCaqYom2yaFcGgExgZ8ztuia1uGVzZJkpbHtQKfsC4=;
-        b=a2D5P6z1cGchz83F8taKlU4CiTGlYbcgPhrqCdIaZVpF7OMbEEB6hoxQn7uX0vXHhH
-         VuuPPstOALQtIZHWOhSRZA9VOaE7Ui4D5cbjs33xInguxolSYBA/OBQPkB8ozTu61wYi
-         cKFzxZ7ivc868xTls5W5zy5eAS/e5PGa2UyNkoA/AsPZP7/Mgw6EHKCki2mgP2a6RKfC
-         ebB2ojmvcDEReMOchBWnPZzHyPC3P2+r+pN7yy5Lp/MJHBk65PbVdMbR4advw/ePMiL8
-         KH/PeH+HHewuJLGOmBWsLsmEoxkKJ2+GeD4kiPRoiKIwo7VzuNKY5CuMKQ1UfPdlM2Zb
-         7JIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UZCaqYom2yaFcGgExgZ8ztuia1uGVzZJkpbHtQKfsC4=;
-        b=nt3WK6UxvAPx0fTfp7jyfZ6kP1DbIOXQMq3+wgzt2HTvNBwX7OHIyMIix9mK/QUQ8F
-         XC1vHQ4E39OGPIUFbgTmVAxSC1MOg1IPXgrnQT3sjuxHyXzzKh7WaWd/4yjTBbQx45UA
-         BsVvRIF9Jke9lZRmzkvb/quWP+p0o3ymUIg0J8syHIkR4Z9UrnO6F3QQpBKcXFQMEq/I
-         CJKafnjksnmU1gPBMXTPvpv/be8BCsTpZFzgvegaanr+2DWwU0PBIeC1DJ9NPt8DMcfL
-         6Evfz5IO63wzabE3lCO7Qe/53cFDSgUmXNC0CbwfZceGO6C/49giboT7NuOFVK2fR3PF
-         OuZw==
-X-Gm-Message-State: APjAAAUE22D6/J5f+8xRP4yAQ65aYsuGMGw52yQIHdnN435PGLRx1OTd
-        aoo9rLMgr2fsPSxrq/dzUZPiQEEGJLOg0w5sPhA=
-X-Google-Smtp-Source: APXvYqwBKvXAI/hCQeLX1i5KoPqUZSEt9r+mNyYamoldU5aHZeo0iWgLf2oC1SvwJ69aoDRyKpdbVLW9LNBjgHAiJRk=
-X-Received: by 2002:aa7:cd52:: with SMTP id v18mr30378842edw.280.1574839967659;
- Tue, 26 Nov 2019 23:32:47 -0800 (PST)
+        id S1726281AbfK0Hvi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 02:51:38 -0500
+Received: from mout.web.de ([212.227.15.4]:38125 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726092AbfK0Hvi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 02:51:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1574841093;
+        bh=VUfsQy3tErg0pYDeC/4yxRPkm9DeiiEMpl/BxZD93rY=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=sZFtsEbiNywTj2itiMwQuFwReZhp8/gFiHaIYV68zonDkJDZPLx6soGO75x7dyxA2
+         1Nra3bCTlR2UMbzFoRLvCTJ1YWcUyA/pynE4SGfH6QsYAj/SLOs4SDIkea0Y8Jg9eA
+         FtKX14tXBPcAqSfqc60lZZfP1kAf1nmxIzKCuL2U=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.158.92]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lr59f-1hw9Rf3sFn-00efVK; Wed, 27
+ Nov 2019 08:51:32 +0100
+Subject: Re: [PATCH] test: use test_must_be_empty F instead of test_cmp empty
+ F
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <52479277-b753-c3c0-7f6c-5d013016964e@web.de>
+ <20191126200239.GA36748@generichostname>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <8dc0b50d-4e41-bc79-33a1-7e2a1ef7aa0b@web.de>
+Date:   Wed, 27 Nov 2019 08:51:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <87o8x06sbw.fsf@sydneypc> <20191125141635.GD494@sigill.intra.peff.net>
- <CAAE-R+8betprfFOH+m_mMATX2mODHQ8pFUpLo4tyLVBVAVtySg@mail.gmail.com> <CAAE-R+8dqbxWr9an63OGCL2g1sm1h-ds3yKrzz7Shwq3UyfWxQ@mail.gmail.com>
-In-Reply-To: <CAAE-R+8dqbxWr9an63OGCL2g1sm1h-ds3yKrzz7Shwq3UyfWxQ@mail.gmail.com>
-From:   chen bin <chenbin.sh@gmail.com>
-Date:   Wed, 27 Nov 2019 18:32:37 +1100
-Message-ID: <CAAE-R+8yZOchnsa-au+w4JveCQffw9bpGZ54oL+DApa8Y094=Q@mail.gmail.com>
-Subject: Re: A new idea to extend git-blame
-To:     Jeff King <peff@peff.net>
-Cc:     Git ML <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20191126200239.GA36748@generichostname>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:J2TtLuTvtaknNk8+DSvMoa1GSBY0yzettpuK3HtDwZgw8XDD5M+
+ YNp4d8c2sMxibsMenz5ic0w1OzUbYs9SDlA8xp3RXwwh0co2DWFNr0JL2PkWNMvCP3Kzxbn
+ zpyzHD3nzcht1iVQThoV3zyxy3cyL0zkNC/r+7MlvKJAs52G5q60wwfttNMlGDQb9Cxw+WI
+ DcXZ7w0nWuUOEU1qhDfCw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:HXGE/E6g9DM=:OSNFVAXV/WfKBBkKy0MS3H
+ oAQxlHo0kWkFOugPTlXuigSZU5Zd7l9D44BFM88KbxSFcSc9jF8VeCKPS5eUT05RnNXuSeJbr
+ L8QcFqFcVajqqKC10kQvRDzavszMPtfbqEvhqVpkDVtTlEOajFiJw88SuTKN531MdkKPjiYFw
+ EgYBl+rVsB4epCJl1KXtejP0soRmQn66DltsOI0a6w444sTukpWPd/aNT3IqBJcc+EOb6B8K8
+ /tcHRLir3Li0xvUt62yNn2R6z/LAvooNlYCkaIDPcmO7WtLus6lWl+C1Ikws9W+A8GEWtfgX4
+ k6oaGMXNv6Nd+exKbjpgk96riMqUXCkVon/fu4AEVTzDV/L1NpocHt3/SaaMqCJYh9xBfrT9H
+ IZ3X0jFPmRbQ/Va6IO/VWqv3AwQsvEYSpRD6s9FH6euel2OD9w7JN1YF7Uip5C0sDCkI+48jk
+ GvC+QZAWmUQjWvxuqrE7AQDuAowGDcoPieyHPP/BA0ANkA6TrloUSVBZKlFkGmBFbye+JQapQ
+ N90hxpF4az4hVXKolBEpb4lde5FPjHahyJ1HlCG7WshfcqVRr1LvZAW0K7j3lp8FskzNw9ie8
+ JvEWpbx4ad1P1qib4j4JgTjEtDe4Fd0JsxVXrOMNZSgZtyq4IK2JJJgOCKrtc9UephXAGf7rf
+ UZMopuL9C934ZckajjbupC2ul8HEKXoUDBOQsE9guQT46zzw/qpyUxe3kx95hrfBvvpuGLdob
+ ueyMve7+PBxHHeMc6y58HBjGbOGIZ5bzKLgZQuP//bowANvsbHPlzaFeBO2hT6V3s8+biDJUk
+ +M7qbx0Uf2n4eoGUV/OBPL8mElO2MOJOVql1lh9StXokjBcD3bp3Nu+mqZxPO50I5xZFzfjvu
+ EoKlSlJw1cQTi0a38jNRIJ2rmX92a+StfueMxWzIFdbV3+EJcPmQ9y/DsrC4vHBasYh4ORnXc
+ idylp30jNNpfRVe0/O4iJ4AMJRcKa8+mJtp3Pz+D0xJaA7eZCQOzrK30GnmuvYprJuYxq+Iou
+ XNOt7FZZHNPmx+pcW5vbe4QkbF/1zsZunAgt2CayvrZxAIPaqSCZYYda7BJ/FwJO1rlcrGCNG
+ HYgg/ILsLsNrlklAN6PfPe8IzDZNll9pQ234dtpaIEh2AmIW1RcK6AtBxQ1ZCzkWyrcoUoGtU
+ e5eWu5PJ8IbPxuEtXyYKblYeLYkESV9kkRckuLYq1g7h/8elAzA+k9t4ZmYjyQJd4VFEHPFee
+ 6e65VpVlVAazYcjbcgLi2430r6DFLZtq0ygqSfA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-HI, Jeff,
-Just double checking, the feature I suggested is fine, right? I will
-send the patch asap. It may take 2 weeks to implement.
+Am 26.11.19 um 21:02 schrieb Denton Liu:
+>> diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
+>> index 0b20b07e68..3a3d8d3bd5 100755
+>> --- a/t/t9010-svn-fe.sh
+>> +++ b/t/t9010-svn-fe.sh
+>> @@ -53,9 +53,7 @@ text_no_props () {
+>>  	printf "%s\n" "$text"
+>>  }
+>>
+>> ->empty
+>> -
+>> -test_expect_success 'empty dump' '
+>> +test_expect_success PIPE 'empty dump' '
+>
+> How come we need the PIPE prereq here? At the top of this file, we have
+>
+> 	if test_have_prereq !PIPE
+> 	then
+> 		skip_all=3D"svn dumpfile importer testing requires the PIPE prerequisi=
+te"
+> 		test_done
+> 	fi
+>
+> which should guarantee PIPE at this point already.
 
-On Tue, Nov 26, 2019 at 4:36 PM chen bin <chenbin.sh@gmail.com> wrote:
->
-> The problem of recursive blaming with 3rd party script is it's slow.
-> The script have to restart git process multiple times. Besides, as I
-> already did in Emacs (see
-> https://github.com/redguardtoo/vc-msg/commit/1f7775f951fdd9e6571afbb3a767c42d20617f52),
-> it's still lots of code.
->
-> So if it's possible to use a simple cli option like `git blame
-> -S"text"`to do the same thing, it would be easier to migrate vc-msg's
-> functionality to other text editors.
->
-> On Tue, Nov 26, 2019 at 3:55 PM chen bin <chenbin.sh@gmail.com> wrote:
-> >
-> > I re-tested `git log -L20,20:README.md` in git's own repo with HEAD
-> > d01d26f2df. Looks git log is not what I expected. The output contains
-> > many unrelated commits. So it will be slow in real project.
-> >
-> > A recursive blame with the algorithm I suggest will get correct commit
-> > in short time. So my suggestion still hold.
-> >
-> > I could submit a patch to enhance blame.
-> >
-> > On Tue, Nov 26, 2019 at 1:16 AM Jeff King <peff@peff.net> wrote:
-> > >
-> > > On Mon, Nov 25, 2019 at 11:41:55PM +1100, Chen Bin wrote:
-> > >
-> > > > The key algorithm is simple,
-> > > >
-> > > > The algorithm only works for one line blame and the user must
-> > > > select text inside the line first.
-> > > >
-> > > > Step 1, `git blame -L6,1 --porcelain -- hello.js` output,
-> > > >
-> > > >     4f87408612e0dacfd89a1cd2515944e21cf68561 6 6 1
-> > > >     skip...
-> > > >     filename hello.js
-> > > >      doit({bad: 'destroy world', good: 'hello world', ...});
-> > > >
-> > > > I got the commit id (1st column), the line number (2nd column),
-> > > > file name (hello.js) and the code line (last line).
-> > > >
-> > > > Step 2, if the code line does not contain the selected text, the
-> > > >   recursive search stops
-> > > >
-> > > > Step 3, or else use commit id, line number and file name to build
-> > > >   new git blame cli, like,
-> > > >
-> > > > `git blame -L line-num,1 --porcelain 4f8740^ file-name`
-> > > >
-> > > > Step 4, execute new git blame command and start from Step 1
-> > >
-> > > This sounds a lot like how git-log's "-L" option works, which tries to
-> > > find the history of a line over many changes.
-> > >
-> > > It's also similar to the "re-blame from parent" feature of many blame
-> > > viewers. There we have a human in the loop saying "no, this is not quite
-> > > the change I'm looking for; go back further".
-> > >
-> > > -Peff
-> >
-> >
-> >
-> > --
-> > help me, help you.
->
->
->
-> --
-> help me, help you.
+Right, we haven't needed it since 7236a34c98 (t9010-*.sh: skip all tests
+if the PIPE prereq is missing, 2017-09-17).  Thanks for catching this!
 
+My patch had been gathering dust here already before that time, and
+sometime along the way I did a sloppy rebase.  Didn't see it before
+sending because I was focusing on "can we remove the empty file?".  O_o
 
-
--- 
-help me, help you.
+Ren=C3=A9
