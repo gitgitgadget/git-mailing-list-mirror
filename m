@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7022C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17EF4C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:13:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83D8420871
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:02:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D77302070B
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 18:13:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="up0E0uJb"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y475/Y6T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727133AbfK0SCP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 13:02:15 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:39739 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727128AbfK0SCP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 13:02:15 -0500
-Received: by mail-pl1-f202.google.com with SMTP id x5so9980223pln.6
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 10:02:13 -0800 (PST)
+        id S1727010AbfK0SN1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 13:13:27 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:43876 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbfK0SN0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 13:13:26 -0500
+Received: by mail-pf1-f202.google.com with SMTP id w201so14498311pfc.10
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 10:13:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=bfAm56ekDYhKk1CaPQAfCLwXHezb9dyS3OsigHymmZ8=;
-        b=up0E0uJbmlKw5xhSo8jS4EPfIIrfUeyYbdW/J1U2PxMWntom5p9AOI2IfRvxAkC6pA
-         tgDdBzSThwTrPWzr5GvPtxOUxvh9UytARhSgT8WU1Scu3MVTKl2+iQihrfoooGy/J6hP
-         O2/TUU6Wjh3UP0syLPIl2HutAQjETzh4HMRF+Fcp5OpbMwSbZVUld2mlDm+mlNSdiHt+
-         6qGQ1NsZRZl1sbJQCDnF8AL0tYYaH3wVDUX5vCV1V+5aIUc6nHJY0e1O+xcIdpqDiIxq
-         WOdCCznWWz1qPbmAcwG7gT1AWbbvcUXLX4/AbhdQ8kPGm7ljB36u5++TBhqWbph25Hg8
-         1NJQ==
+        bh=NJP1ahQYMBUyk0fFRCpI0Q8tfcMovbNZF6MATsucUUg=;
+        b=Y475/Y6TdvKYwmI/dvDEntUn4QTR8818A2sbO4z35IoklQHgz9i3y9EPQn4jAoyUfo
+         OB4yLQ6gm5hWgZy/NoF1HP4LKiYXmB9ERpt3i1qYPJDcO9WkKYkyhKzR5l4u0kjZ2wgX
+         udKT5yNTjElPZIH/boBgpm7x37hYvQmOAzGBSV3PNuGq0M+0mykI/xU8NMwVG/C6rL2Z
+         AtLxPnSz/gSO/ezjmgegiUeOkqZP6uL5TgrGUnzejrO/Oofatyi/lPo5p3/HFnwYqezH
+         4xp2zmrEZFSD5/aNGA8zzF5x+spojHibOoQ+eKzbQ6wbrDJIwMCJIZAi91w4A0nMzmcx
+         n+Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=bfAm56ekDYhKk1CaPQAfCLwXHezb9dyS3OsigHymmZ8=;
-        b=WL4jbxmui61puxLgDBagw7u5OCegMiUvm3eLem8tGUyB+R6EfgB3QGlZkROL8eHu2e
-         +PlVIl/vYeh+GZquMPoNDPsweA1mGx1X6OzBS7GOcDjKierLDMTxZRjtwqzuwNQ5yjGy
-         4xkbm4RRWTDW/Vou3Mz7JY+kAIBxtGUbP6HzqpKc8zGe+q/Zdfd8tbGxqy6kSAK+8Zj8
-         SZCupl5pbSLJqp+exZnbjw3P5MtVDZ3hrEivDjJCooOcLuUrRHhbwL80X8IlS3dn4YvV
-         6kwJd7dmrNTSAS9y8YhDqI4Zbrlm/ycdmwdyq0iCzn6AUvmz+SbEGMTQTBp4oi9EqhoS
-         I83A==
-X-Gm-Message-State: APjAAAXuSZJg8dU4AuNqiW9Pbx4O4GiCH2NB5zf3IKF+luZk4H5s9EIs
-        t2cAVPSOKN+9LycLVUoPeo0RKv+/anNzTDHrZpx9
-X-Google-Smtp-Source: APXvYqxSxs2Tf0dKnYLofF9Um9Hd+ONZ3pvV7pFzhxuh6cHvNakINhe34UHY/xRi02UahNGsQKBH42AVRQ5CkBPFV9PS
-X-Received: by 2002:a63:4b52:: with SMTP id k18mr6375394pgl.394.1574877733338;
- Wed, 27 Nov 2019 10:02:13 -0800 (PST)
-Date:   Wed, 27 Nov 2019 10:02:10 -0800
-In-Reply-To: <20191112103821.30265-3-szeder.dev@gmail.com>
-Message-Id: <20191127180210.168901-1-jonathantanmy@google.com>
+        bh=NJP1ahQYMBUyk0fFRCpI0Q8tfcMovbNZF6MATsucUUg=;
+        b=LEPyP6njrgYut7bFPlsPP9MmIuw6iafiWSg0iIT5R1pzTcemXK+lg3DndSxSGWtF4j
+         0x0YHaQIRCR+VEJaiOH7oQrS1OhdbAwo01fkriueWKGyqOGvaTgpKch66Qzm3OuYxNMU
+         EnsO9xd1sRD7weqs4dOSYrVKhqjyDVpYJnlVxfqU5PO/fgD+WxjPmA2G6zHFPdDtk1pb
+         vmYPEUIdgt7CV4GF6ZwTicGvJDseo/swxY6kusveOCWBSW/fw2zuA7Y53fyux6WSuyme
+         7tSL3/mRpjUEhO5Q+7iDt+m+JeWbdUhfNyUW+0xOTC2R+1gkHvIyFHdot+XdLuJruC2f
+         hXxg==
+X-Gm-Message-State: APjAAAWqQxL8QXFnMwOO7jmI62T5F5upaqeSSOC2nOkZzZQKEDSZafsN
+        exoaWo4lgmnBgRusNTvwK8aEzaOBa8m2KExJ/NvL
+X-Google-Smtp-Source: APXvYqzZ07nhM7gn6XPMUfWSziWHrIEEMqqseh9j1vfBgaIHsxQ24aYr9G+CuWm4RUfY7o5Pvw0w6jjGflU2rKwz1K0K
+X-Received: by 2002:a63:dd58:: with SMTP id g24mr6545711pgj.376.1574878405966;
+ Wed, 27 Nov 2019 10:13:25 -0800 (PST)
+Date:   Wed, 27 Nov 2019 10:13:22 -0800
+In-Reply-To: <20191112103821.30265-12-szeder.dev@gmail.com>
+Message-Id: <20191127181322.171734-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20191112103821.30265-3-szeder.dev@gmail.com>
+References: <20191112103821.30265-12-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.24.0.432.g9d3f5f5b63-goog
-Subject: Re: [PATCH v2 02/13] t6120-describe: modernize the 'check_describe' helper
+Subject: Re: [PATCH v2 11/13] name-rev: drop name_rev()'s 'generation' and
+ 'distance' parameters
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     szeder.dev@gmail.com
 Cc:     gitster@pobox.com, stolee@gmail.com, l.s.r@web.de,
@@ -67,14 +68,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The 'check_describe' helper function runs 'git describe' outside of
-> 'test_expect_success' blocks, with extra hand-rolled code to record
-> and examine its exit code.
-> 
-> Update this helper and move the 'git decribe' invocation inside the
-> 'test_expect_success' block.
+>  		if (create_or_update_name(parent, new_name, taggerdate,
+> -					  new_generation, new_distance,
+> +					  generation, distance,
+>  					  from_tag))
+> -			name_rev(parent, new_name, taggerdate,
+> -				 new_generation, new_distance, from_tag);
+> +			name_rev(parent, new_name, taggerdate, from_tag);
+>  	}
+>  }
 
-decribe -> describe
+[snip]
 
-Otherwise, patches 1 and 2 are relatively straightforward and look good
-to me.
+>  			if (create_or_update_name(commit, tip_name, taggerdate,
+>  						  0, 0, from_tag))
+> -				name_rev(commit, tip_name, taggerdate, 0, 0,
+> +				name_rev(commit, tip_name, taggerdate,
+>  					 from_tag);
+>  			else
+>  				free(to_free);
+
+All invocations of name_rev() are first preceded by
+create_or_update_name(), which sets the "generation" and "distance"
+fields in the name accordingly, so this looks good. All preceding
+patches look good too. I have already sent emails for patch 12 and 13,
+so this concludes my review.
