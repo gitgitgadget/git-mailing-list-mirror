@@ -2,181 +2,173 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8FE7C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 909CBC432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A8D320661
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6423620661
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:56:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f/r/Np1S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mXqhGArL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727126AbfK0T4P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:56:15 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:50943 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726729AbfK0T4P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:56:15 -0500
-Received: by mail-wm1-f66.google.com with SMTP id l17so8461065wmh.0
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:56:14 -0800 (PST)
+        id S1727158AbfK0T4S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:56:18 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:45102 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726593AbfK0T4S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:56:18 -0500
+Received: by mail-pf1-f196.google.com with SMTP id z4so11617329pfn.12
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:56:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=g0e3iGPSRI7xKHRuf3tSf3Wdfp2uAMG9FEJV0sYAmbA=;
-        b=f/r/Np1Sw/Au/6sMZj7a73YuxMQI2RnFnv4D6IB5fL5QM8yjAPrh4qFQ/J9ujnQ7rO
-         TDhNv65qd6K9/NlI2OLTJXH0PwZyCAEvd255f3DgsEBasJEPWlw7jVUuPWqEkr1mO8aK
-         E30saemek/q/NNUloN7W7FXxi57nV6H3f7AHo7zNlA0D5y1xgKjmP4owcYzEpHPkRj/g
-         SEl5Bvt3vNwt/aIIQ+YYxEBIKEBKr+dpnDtEZZwRqLdAYRkTValDLvjsbT0pt8X2gbT0
-         HYy7KYeX37vJ21rY/4APWbtzA2uusrjOo416glQ0+XcPvBZg4mu7fShS0xRyb1t27mCQ
-         nBtQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=eRn63DcFnoPvu7TR3FJvpy+wrj+0K6IwJAG/Q1PokYk=;
+        b=mXqhGArLsN4u+unKAy2WslxSKs1vUwPRRe0bKx818ss7du8SLI5zUt4p6zggXZDSRS
+         lp6Msw0IvdfOPrgaN4AStrP5u+v9R9Z8LWhidRvGyRUbV3QF1lPLfEjVEoBGGDrPUME+
+         V+QEGazwkUSJ8ZF8MMTnhiwIT69mxAa45vRlg/ucowcY6X/BL37ACYuBiJq4gokS43oo
+         CQdsGBPIlzkRwkJ0kJy6BJi3ioy17XjZ9QVBFz9weVIUoruw4NgIEDPoddgziMFh7kJM
+         QunFwfvCzsVI8IVWXu2a+bOBThgUy7aQ2LaVppDsDGqitM9kdl3xTvL3uedn93uWxnu/
+         YJfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=g0e3iGPSRI7xKHRuf3tSf3Wdfp2uAMG9FEJV0sYAmbA=;
-        b=ci+hbhCX1ZTGvx5eJjGNhMWfg7odJilTVyx8uITemfRw88jLI1zAUPaTlhDtad0CBh
-         zyrY53IqCiZ20LiXpplRXU6EAYdWrLJXuXiO+rusf2kwGd5noY1Ce04OdB8siYzxEbYx
-         1Ms+lATERxklXPFKDG5SUQua2Wad3IbolnN6WTrDogwQ5Shm/8znupLD7X3sRzDBau1j
-         /aBrKSI8OLskMjPr6M8FAJLmdS3K8PnDwdcNlAkjIbkzgvTinIMBTjkyQuwxAk1rZ8wY
-         MMm15RK94z/dVt+iYEotf4hEUilbn8/UmqC7IZ7M8sFoCWPavUHONNym3TXy14ft6PJf
-         pYHA==
-X-Gm-Message-State: APjAAAVq0X7RAySkC/+CjsICg002RRHtcUbKO32TBBniillrOezMnwX6
-        NsbyPjpmFHvqSlbaawo3qbY=
-X-Google-Smtp-Source: APXvYqyJaYJVcY2EhEYuqFE+DcCsnzQzUIy8b0uYAfqe1go4/UvpFF2vthrq4CmGbN9lMYgUhKjMnQ==
-X-Received: by 2002:a7b:cb86:: with SMTP id m6mr6416392wmi.124.1574884573459;
-        Wed, 27 Nov 2019 11:56:13 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-110-106.w86-199.abo.wanadoo.fr. [86.199.33.106])
-        by smtp.gmail.com with ESMTPSA id a24sm5776358wmb.29.2019.11.27.11.56.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Nov 2019 11:56:12 -0800 (PST)
-Subject: Re: [PATCH v4 5/5] sequencer: directly call pick_commits() from
- complete_action()
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        phillip.wood@dunelm.org.uk, gitster@pobox.com
-References: <20191124174332.30887-6-alban.gruin@gmail.com>
- <20191126184103.146421-1-jonathantanmy@google.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <aa162f9c-9ae8-9844-6829-7fc0d9c50f9c@gmail.com>
-Date:   Wed, 27 Nov 2019 20:56:03 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=eRn63DcFnoPvu7TR3FJvpy+wrj+0K6IwJAG/Q1PokYk=;
+        b=HsnoYAn5H80SaP7MUJS6CvdBMBVbOeOsUP56IjF43mfjFAWysbLYML2SSHg+LcnhFE
+         cOC7GtzH/8Y2nsPTgLvzoQzHJddEeFmTEUmZudgcz7FwbZ3sA9kLSRe/H/t8ZyXRj5a/
+         tMut47cPAgwjOYRYy8viUpw8/Y3JkwVPfpUjuf/xgXlcTJajAkP+PnXSkeTUfHWUK1Va
+         AcaCtJe1pd1x8X/NUZEkjcQR7x9Wl5MuiiaTp5ulIRG72FZWJhqMD7tEGTQv86L4+bBs
+         39yBpQF3uTzu5rX47KJ9A0IjaemwurNc0SbSY/r7F37S8hRQQe5gICMn5ZjK5sotjB+C
+         zrEg==
+X-Gm-Message-State: APjAAAW9/dEpKnXnubiKPtvPrQIk++PEvlleMv8MaGEx/0UcyIuCvIai
+        CwgCDkuuJ/JJgBG+YjyKQrhWaSpu
+X-Google-Smtp-Source: APXvYqxv4CxjTloTrrdciJacOZT9a8nZBQ6VqcJ20YFHz7i7B9j8K7viCciR+5QVCHA5CqO/Tv41VA==
+X-Received: by 2002:a63:d20f:: with SMTP id a15mr7265025pgg.268.1574884577297;
+        Wed, 27 Nov 2019 11:56:17 -0800 (PST)
+Received: from generichostname ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id l9sm4153119pgh.34.2019.11.27.11.56.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Nov 2019 11:56:16 -0800 (PST)
+Date:   Wed, 27 Nov 2019 11:56:15 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Christian Biesinger <cbiesinger@google.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/5] format-patch: teach --no-base
+Message-ID: <20191127195615.GA7413@generichostname>
+References: <cover.1574820308.git.liu.denton@gmail.com>
+ <cover.1574878089.git.liu.denton@gmail.com>
+ <f7e5325cc0a7c29b62abe361e188c7cf9c59a9ca.1574878089.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20191126184103.146421-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f7e5325cc0a7c29b62abe361e188c7cf9c59a9ca.1574878089.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
-
-Le 26/11/2019 à 19:41, Jonathan Tan a écrit :
->> Currently, complete_action(), used by builtin/rebase.c to start a new
->> rebase, calls sequencer_continue() to do it.  Before the former calls
->> pick_commits(), it
->>
->>  - calls read_and_refresh_cache() -- this is unnecessary here as we've
->>    just called require_clean_work_tree() in complete_action()
+On Wed, Nov 27, 2019 at 10:13:46AM -0800, Denton Liu wrote:
+> If `format.useAutoBase = true`, there was no way to override this from
+> the command-line. Teach format-patch the `--no-base` option which
+> overrides `format.useAutoBase`.
 > 
-> require_clean_work_tree() and read_and_refresh_cache() seem to be
-> different functions - can you explain why running the former is a good
-> substitute for running the latter?
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
+> ---
+>  Documentation/git-format-patch.txt |  5 +++--
+>  builtin/log.c                      | 24 +++++++++++++++++++++---
+>  t/t4014-format-patch.sh            |  6 ++++++
+>  3 files changed, 30 insertions(+), 5 deletions(-)
 > 
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+> index 00bdf9b125..0d4f8951bb 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -333,11 +333,12 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+>    Output an all-zero hash in each patch's From header instead
+>    of the hash of the commit.
+>  
+> ---base=<commit>::
+> +--[no-]base[=<commit>]::
+>  	Record the base tree information to identify the state the
+>  	patch series applies to.  See the BASE TREE INFORMATION section
+>  	below for details. If <commit> is "auto", a base commit is
+> -	automatically chosen.
+> +	automatically chosen. The `--no-base` option overrides a
+> +	`format.useAutoBase` configuration.
+>  
+>  --root::
+>  	Treat the revision argument as a <revision range>, even if it
+> diff --git a/builtin/log.c b/builtin/log.c
+> index 9c44682f61..c017df4056 100644
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -1388,6 +1388,23 @@ static int from_callback(const struct option *opt, const char *arg, int unset)
+>  	return 0;
+>  }
+>  
+> +static int base_callback(const struct option *opt, const char *arg, int unset)
+> +{
+> +	char **base_commit = opt->value;
+> +
+> +	free(*base_commit);
+> +
+> +	if (unset) {
+> +		base_auto = 0;
+> +		*base_commit = NULL;
+> +	} else if (arg) {
+> +		*base_commit = xstrdup(arg);
+> +	} else {
+> +		BUG("arg is NULL");
+> +	}
+> +	return 0;
+> +}
+> +
+>  struct base_tree_info {
+>  	struct object_id base_commit;
+>  	int nr_patch_id, alloc_patch_id;
+> @@ -1676,10 +1693,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  			    PARSE_OPT_OPTARG, thread_callback },
+>  		OPT_STRING(0, "signature", &signature, N_("signature"),
+>  			    N_("add a signature")),
+> -		OPT_STRING(0, "base", &base_commit, N_("base-commit"),
+> -			   N_("add prerequisite tree info to the patch series")),
+> +		{ OPTION_CALLBACK, 0, "base", &base_commit, N_("base-commit"),
+> +			   N_("add prerequisite tree info to the patch series"),
+> +			   0, base_callback },
+>  		OPT_FILENAME(0, "signature-file", &signature_file,
+> -				N_("add a signature from a file")),
+> +			N_("add a signature from a file")),
 
-They both refresh the index.
+Oops, this is reindentation is a spurious change and should be dropped.
 
-require_clean_work_tree(), called when starting a new rebase, will also
-check if there are any unstaged or uncommitted changes, in which case we
-do not want to start a rebase.
-
-This is not what we want when resuming a rebase (with `rebase
---continue'), because the changes might be the result of a conflict
-resolution.  In this case, the last commit is amended, and the rebase is
-resumed.
-
->>  - calls read_populate_opts() -- this is unnecessary as we're starting a
->>    new rebase, so `opts' is fully populated
+>  		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+>  		OPT_BOOL(0, "progress", &show_progress,
+>  			 N_("show progress while generating patches")),
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index c7cc643adf..a5b6302a1c 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -1958,6 +1958,12 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'format-patch --no-base overrides format.useAutoBase' '
+> +	test_config format.useAutoBase true &&
+> +	git format-patch --stdout --no-base -1 >patch &&
+> +	! grep "^base-commit:" patch
+> +'
+> +
+>  test_expect_success 'format-patch --base with --attach' '
+>  	git format-patch --attach=mimemime --stdout --base=HEAD~ -1 >patch &&
+>  	sed -n -e "/^base-commit:/s/.*/1/p" -e "/^---*mimemime--$/s/.*/2/p" \
+> -- 
+> 2.24.0.504.g3cd56eb17d
 > 
-> My comment from [1] has not been addressed. Quoting it here:
-> 
->> So complete_action() (the function modified in this commit) is called
->> only by do_interactive_rebase() (in builtin/rebase.c), which is only
->> called by run_rebase_interactive() (in builtin/rebase.c) when command is
->> ACTION_NONE, so indeed, we're starting a new rebase. But where the
->> options fully populated? I see that in do_interactive_rebase(), it is
->> initialized with get_replay_opts(), but that seems different from
->> read_populate_opts().
-> 
-> [1] https://lore.kernel.org/git/20191119204146.168001-1-jonathantanmy@google.com/
-> 
-
-Sorry.
-
-For the first part of your comment, I added a comment at the beginning
-of the message, although I did _not_ include an analysis on when
-complete_action() is used.
-
-get_replay_opts() converts a `struct rebase_options' (which contains the
-arguments passed to `git rebase') into a `struct replay_opts' which can
-be used by the sequencer, whereas read_populate_opts() loads the options
-from the disk.
-
-So, when are they written to the disk?  In do_interactive_rebase()
-(builtin/rebase.c), after using get_replay_opts() to convert `opts' to
-`replay', init_basic_state() is called, which calls write_basic_state(),
-which write the options to the disk.
-
-Then, until complete_action() is called, `opts' is not modified.
-
->>  - loads the todo list -- this is unnecessary as we've just populated
->>    the todo list in complete_action()
-> 
-> Both functions indeed have their own todo lists that they pass to
-> pick_commits(), but I don't see (at least, by glancing at the code) that
-> both these todo lists are identical.
-> 
-
-Near the end of complete_action(), the todo list is written to the disk.
- The destination is obtained with rebase_path_todo().
-
-read_populate_todo() will read a file and parse it.  In the case of
-`rebase -i', the location is obtained with rebase_path_todo(), and only
-`total_nr' will be modified to contain the number of commands done and todo.
-
-In the case of a new rebase, the done list might not be empty after
-tajjimh skip_unnecessary_picks() from complete_action().  Skipped
-commands are moved from the todo list to the done list.  As `total_nr'
-is not changed by skip_unnecessary_picks(), it is also equal to the
-number of commands remaining in the todo list and in the done list.  So,
-when read_populate_todo() reads the list and the done list from the
-disk, as they should not have been modified, `total_nr' should remain
-the same, too.
-
-The only thing that can change is the internal buffer (`buf'), because
-skip_unnecessary_picks() don’t change it.  Since
-ag/sequencer-reduce-rewriting-todo, it is no longer a textual
-representation of the todo list.  Each command contains a pointer to a
-location in the buffer and a length to represent its argument.
-
->>  - commits any staged changes -- this is unnecessary as we're starting a
->>    new rebase, so there are no staged changes
->>  - calls record_in_rewritten() -- this is unnecessary as we're starting
->>    a new rebase.
-> 
-> OK - I don't know enough about the rebase mechanism to verify these, but
-> these seem reasonable to me.
-> 
-
-Cheers,
-Alban
-
