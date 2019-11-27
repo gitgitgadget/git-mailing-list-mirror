@@ -2,130 +2,101 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 254BBC432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 17:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD797C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 17:15:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EC614206E0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 17:15:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 80060206E0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 17:15:38 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="B+OU8rTj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbfK0RPM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 12:15:12 -0500
-Received: from mx2.freebsd.org ([96.47.72.81]:40219 "EHLO mx2.freebsd.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726510AbfK0RPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 12:15:12 -0500
-Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mx1.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx2.freebsd.org (Postfix) with ESMTPS id DEDE674C36;
-        Wed, 27 Nov 2019 17:15:09 +0000 (UTC)
-        (envelope-from emaste@freebsd.org)
-Received: from freefall.freebsd.org (freefall.freebsd.org [96.47.72.132])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         server-signature RSA-PSS (4096 bits)
-         client-signature RSA-PSS (4096 bits) client-digest SHA256)
-        (Client CN "freefall.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx1.freebsd.org (Postfix) with ESMTPS id 47NS7x4vYkz4Jxp;
-        Wed, 27 Nov 2019 17:15:09 +0000 (UTC)
-        (envelope-from emaste@freebsd.org)
-Received: by freefall.freebsd.org (Postfix, from userid 1079)
-        id A0D8CE6BC; Wed, 27 Nov 2019 17:15:09 +0000 (UTC)
-From:   Ed Maste <emaste@freefall.freebsd.org>
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, Ed Maste <emaste@freebsd.org>
-Subject: [PATCH v2] t4210: skip i18n tests that don't work on FreeBSD
-Date:   Wed, 27 Nov 2019 17:15:07 +0000
-Message-Id: <20191127171507.56354-1-emaste@freefall.freebsd.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191127151708.50531-1-emaste@freefall.freebsd.org>
-References: <20191127151708.50531-1-emaste@freefall.freebsd.org>
+        id S1727150AbfK0RPh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 12:15:37 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:45048 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbfK0RPh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 12:15:37 -0500
+Received: by mail-ot1-f66.google.com with SMTP id c19so19745241otr.11
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 09:15:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rPJaiEpb8ZY65+0SAwjWkQFmCy8YkzhLeGXIN2TnbU4=;
+        b=B+OU8rTjX90YtjPgyFRhDQbquXkFhmVIg7u0UJmKNUsde4Wds+GfJlzFppKI9Kshwx
+         1WvYlmbZ1GetotPZO+WvAvBuQqvVLzFUwQb7vojpuQJwuxFSQwB9rlNjePvagPWOd2tJ
+         Gkf83WJZQTas/wu5x8T2qF1YVYhxvvao6xtVJGgDxJKAW4BjY/zYfe+VmZ1qJ1ctxfzS
+         pjdnRDzZbIKDuCnyqc2032d8IdYCqy5VL65Pwn6oXOYjS+rRY5O7zBWdCrvgcEu7Xmpl
+         arXoCW5Jf+VXG6WRarQ9bv28+UV37OUOkResS6sL7ocOqfcN4H7qwzOw9xRd/PtafeUH
+         6FPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rPJaiEpb8ZY65+0SAwjWkQFmCy8YkzhLeGXIN2TnbU4=;
+        b=fpzKeZm23YfG6VBYKWwzNImDr3dR4rpfqSBKRT3ot2HG/3wwwNxvPCqAZ+Ms+Cq//H
+         dqdIXFCI4bgR8pgHJRVHEMn1PuE34mVoFalcSkXkbn9rMMRXyN/kV5Rlg0kCnwTocv1G
+         kw3f/1muy+yAC9Mcxp4NZBHFNiRloosaJRsKgwfTsqMfiFlooqVwaVQE5sdB00RM263H
+         ZFSG8WBK/uAZb1u7GS5/mz/K16AwuGqMcwv20f2SNGLaXdN0njjjRB2G+EYEHKwR4N5y
+         0y0SlaQVxAJ8341O5fpXUPftaU+iPx1jqkvHsbjovnZ26V+WhtjdVda4w6DNPoQhaLXH
+         oR3Q==
+X-Gm-Message-State: APjAAAWbBzrv5OtsyLJnojEmJyY8lGmp6tc7nhpjztNnU+yvf5le+rd7
+        v1UPQwuTVMXLQTXr9OWJ8bPufuDnhv1Tnmug2fOIjg==
+X-Google-Smtp-Source: APXvYqx0sjzgdhelvU7sFfqShY8YJFpW3LKFb007iShWJ9zPvL8cZuoiDuMgJyJeAW3eZZCJDzaFJ4Wiq7TQj1jT4PQ=
+X-Received: by 2002:a05:6830:22e2:: with SMTP id t2mr4546741otc.129.1574874935867;
+ Wed, 27 Nov 2019 09:15:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAPTJ0XEcMJEwPBEL4akncJ_A5XwyQyKL95fpf2tC0rNXJK65Og@mail.gmail.com>
+ <cover.1574820308.git.liu.denton@gmail.com>
+In-Reply-To: <cover.1574820308.git.liu.denton@gmail.com>
+From:   Christian Biesinger <cbiesinger@google.com>
+Date:   Wed, 27 Nov 2019 11:14:59 -0600
+Message-ID: <CAPTJ0XH62P_-R4XCy5Jv-egQ06H8eJZ4YhLdRGAt721WVD5bXQ@mail.gmail.com>
+Subject: Re: [PATCH 0/5] rebase: fix breakage with `format.useAutoBase`
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ed Maste <emaste@freebsd.org>
+On Tue, Nov 26, 2019 at 8:09 PM Denton Liu <liu.denton@gmail.com> wrote:
+>
+> Thanks for reporting the breakage, Christian.
+>
+> Apparently, this use case has been broken for a long time... Since
+> bb52995f3e (format-patch: introduce format.useAutoBase configuration,
+> 2016-04-26). I'm surprised it's only been reported now.
 
-A number of t4210-log-i18n tests added in 4e2443b181 set LC_ALL to a UTF-8
-locale (is_IS.UTF-8) but then pass an invalid UTF-8 string to --grep.
-FreeBSD's regcomp() fails in this case with REG_ILLSEQ, "illegal byte
-sequence," which git then passes to die():
+Thanks for fixing! Maybe few people use this option as it's not
+documented in the format-patch manpage? (A separate thing to fix, I
+guess)
 
-fatal: command line: '�': illegal byte sequence
+Christian
 
-When these tests were added the commit message stated:
-
-| It's possible that this
-| test breaks the "basic" and "extended" backends on some systems that
-| are more anal than glibc about the encoding of locale issues with
-| POSIX functions that I can remember
-
-which seems to be the case here.
-
-Extend test-lib.sh to add a REGEX_ILLSEQ prereq, set it on FreeBSD, and
-add !REGEX_ILLSEQ to the two affected tests.
-
-Signed-off-by: Ed Maste <emaste@freebsd.org>
----
- t/t4210-log-i18n.sh | 4 ++--
- t/test-lib.sh       | 8 +++++++-
- 2 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/t/t4210-log-i18n.sh b/t/t4210-log-i18n.sh
-index 6e61f57f09..c3792081e6 100755
---- a/t/t4210-log-i18n.sh
-+++ b/t/t4210-log-i18n.sh
-@@ -70,7 +70,7 @@ do
- 	then
- 	    force_regex=.*
- 	fi
--	test_expect_success !MINGW,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
-+	test_expect_success !MINGW,!REGEX_ILLSEQ,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not find non-reencoded values (latin1 + locale)" "
- 		cat >expect <<-\EOF &&
- 		latin1
- 		utf8
-@@ -84,7 +84,7 @@ do
- 		test_must_be_empty actual
- 	"
- 
--	test_expect_success !MINGW,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
-+	test_expect_success !MINGW,!REGEX_ILLSEQ,GETTEXT_LOCALE,$prereq "-c grep.patternType=$engine log --grep does not die on invalid UTF-8 value (latin1 + locale + invalid needle)" "
- 		LC_ALL=\"$is_IS_locale\" git -c grep.patternType=$engine log --encoding=ISO-8859-1 --format=%s --grep=\"$force_regex$invalid_e\" >actual &&
- 		test_must_be_empty actual
- 	"
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 46c4440843..3b2b8795fd 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1422,7 +1422,7 @@ else
- 	'
- fi
- 
--# Fix some commands on Windows
-+# Fix some commands on Windows, and other OS-specific things
- uname_s=$(uname -s)
- case $uname_s in
- *MINGW*)
-@@ -1453,6 +1453,12 @@ case $uname_s in
- 	test_set_prereq SED_STRIPS_CR
- 	test_set_prereq GREP_STRIPS_CR
- 	;;
-+FreeBSD)
-+	test_set_prereq REGEX_ILLSEQ
-+	test_set_prereq POSIXPERM
-+	test_set_prereq BSLASHPSPEC
-+	test_set_prereq EXECKEEPSPID
-+	;;
- *)
- 	test_set_prereq POSIXPERM
- 	test_set_prereq BSLASHPSPEC
--- 
-2.24.0
-
+> This patchset fixes the breakage by teaching
+> `git format-patch --no-base` and making rebase use it.
+>
+> Denton Liu (5):
+>   t3400: demonstrate failure with format.useAutoBase
+>   format-patch: fix indentation
+>   t4014: use `test_config`
+>   format-patch: teach --no-base
+>   rebase: fix `format.useAutoBase` breakage
+>
+>  Documentation/git-format-patch.txt |  5 +++--
+>  builtin/log.c                      | 26 ++++++++++++++++++++++----
+>  builtin/rebase.c                   |  3 ++-
+>  t/t3400-rebase.sh                  |  6 ++++++
+>  t/t4014-format-patch.sh            | 14 +++++++++-----
+>  5 files changed, 42 insertions(+), 12 deletions(-)
+>
+> --
+> 2.24.0.504.g3cd56eb17d
+>
