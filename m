@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0DA3C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB484C432C3
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 928382082D
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4BE32082D
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:53:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uTY0pBMt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epliJ1zm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727377AbfK0Txw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:53:52 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:46453 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbfK0Txu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:53:50 -0500
-Received: by mail-pl1-f196.google.com with SMTP id k20so5835051pll.13
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:50 -0800 (PST)
+        id S1727387AbfK0Txx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:53:53 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:39673 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727372AbfK0Txx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:53:53 -0500
+Received: by mail-pg1-f193.google.com with SMTP id b137so9149088pga.6
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:53:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=TTGArOLNSDO/W+ec6Zao4SyPEJrHIiSW7J0frH7zG98=;
-        b=uTY0pBMt5HUOzG5/HtC4PJmwh4rFQLIQZnc7Sd0CbT9R2B/ub05WeMtZulutMNOqIU
-         qk5lD+la6c/NOxwc0QpHuO1W5NWBl0tNKZw/aVpRA5h+XquikYEgx3ctVf0JUFbXgeI1
-         sdMKw9oCfs4JhI3dQH+j6BV3/jeU+1phAZQDWZ++SsH3X+VhsA3mcZ643mQjgg7GsoyE
-         sw/dptNRrf+6GtJ+pk7Hiso1F6r9Weq6WnznTXFxcqVMtOcsfMaSTnz8U9RTAqdqu3ec
-         PgSsjzDwHkgUm8dLZeqSUSyUPL58dIEjy8EXzbNZK2mWYUzmmrwgS9f2oIkystHOFhXU
-         nC5w==
+        bh=d1AG+rPKY26gU4AjXr/WO4BMUs1TbXq2102nCb0bGWo=;
+        b=epliJ1zmXDobUIEkRtE+g/vAkVBKa4ZIXVP+OGwJPDhBYNWowxcFOL5Byy/u65ChPQ
+         augnm9JsbDZP8c4FDvjHRkd911NO5lkGkLbqCP6Swv46E1zx0zrzW1fQ5vd42Lcvu48/
+         y62kw+9LVvk1JirQyxYytBj1Aoiu+U9EpOvKUyzt5uCG/7MXs7EzjQV+Km0CNeWA7FHQ
+         ENaKBhkAkV5pEnaTPeImgeJSlpiW+Pbm2csoV5dLl+25AARPyboQkVt1oDhXLwFy5Le5
+         VZus+AM8t2lpYGnAmwVJquPUcQqFVPPh5R3Iwg1DvrtWoe+4JDqZlFZc0YYu80aOzgbB
+         QD8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TTGArOLNSDO/W+ec6Zao4SyPEJrHIiSW7J0frH7zG98=;
-        b=SUwfOu7Z087ZqeWrt7FVDNOQCOwpPBsdqybeI8sg2YjHsBjYaMybZYu9PWkXsQiUUD
-         ubDpJy92uGroCql0EZgCIHEF1/TonYr5iluf/TO+CGWJwTGtn7KAYZrboZBWvYyhjAtu
-         vYGD7CYwtlezBbKGqtwuok5bEJURhQqzy61u/2FwKwl3ktfVV6i1yL5vhftOUPCgrvWi
-         Amf+7oFVpDBUYLTQguPeYIE2jeKwVjlChX3QYpcLBCvhWR6QOTNCZynGxu+1EjTLVXiA
-         2w/JV97I9QbboWblfwA+BJFllkK8ZWacGZ/4+1WOFz78HEGrnkb5um1bnHgAh4Rs0T3U
-         bS8g==
-X-Gm-Message-State: APjAAAWCq08LEvagJAdOvC7rGHa5xtW2yl6Xkn6qaP6w+xQtalZ8HNtQ
-        jYHlJaW2pQDEsi8fn/XXUBt7NMtT
-X-Google-Smtp-Source: APXvYqxF+at9mEgdx2fs8Cp59IYFM7bl2DhquWIO7ZVvvCWmQsGvaiT9Jx/p/RR8+Er/WAlH4BL10A==
-X-Received: by 2002:a17:90a:cb16:: with SMTP id z22mr8300423pjt.71.1574884429567;
-        Wed, 27 Nov 2019 11:53:49 -0800 (PST)
+        bh=d1AG+rPKY26gU4AjXr/WO4BMUs1TbXq2102nCb0bGWo=;
+        b=GjU4YQclxuD2uxABdVssn49J/sPoHiJLE8Owa84zprdbtx7iNL1eDpYLpHvd4hBUb3
+         c7Kqu4SUKWysPlMWZ4hq9YnpQ7mPfnnO4Ne4pxwtDtgRrTGrzqVezSdh2eeFr4pWpuyG
+         gmEgny0si61ryj0bi9bi5Yc4gAq1e9JGwMyuiMkk9o2x5mun+ck7n1jj/R+IA55vlkHi
+         lLRQcX90oQ+bQJBmn2VNw87sF+6zawzD3QniksFCzUO9PIaAUAl61y+0pEIA/mOS+ovc
+         28QZUyHoKdTdmgENzfWFZ99Bhdw+fkBetoqxeDC5a1+kvewOaG8VuIhuXz3j5Rm0T05H
+         f3AQ==
+X-Gm-Message-State: APjAAAU/odXf023P0c4+SJYi5/fKOiwrGF+AQntsMXA6YPRpOY82r449
+        eqwrH1C4hEADgcas2bvlkNLAsRBK
+X-Google-Smtp-Source: APXvYqw0KQI7MAWYYHk/RYxww4w3ZojL3/qg+4nvkX+KuObKJF8KbWk+2VRzD+KKtMKDU/4AMu6aSw==
+X-Received: by 2002:a62:e716:: with SMTP id s22mr48969836pfh.258.1574884431861;
+        Wed, 27 Nov 2019 11:53:51 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id a21sm7681343pjv.20.2019.11.27.11.53.48
+        by smtp.gmail.com with ESMTPSA id y14sm18087001pff.69.2019.11.27.11.53.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 11:53:49 -0800 (PST)
-Date:   Wed, 27 Nov 2019 11:53:47 -0800
+        Wed, 27 Nov 2019 11:53:51 -0800 (PST)
+Date:   Wed, 27 Nov 2019 11:53:49 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 19/26] t7700: remove spaces after redirect operators
-Message-ID: <58ae066d12144a226ceb7617a3597c5799a2cd58.1574884302.git.liu.denton@gmail.com>
+Subject: [PATCH v5 20/26] t7700: move keywords onto their own line
+Message-ID: <82bf24d06ab663d404a717ae9091dd272d1c3396.1574884302.git.liu.denton@gmail.com>
 References: <cover.1574731022.git.liu.denton@gmail.com>
  <cover.1574884302.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -74,83 +74,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For shell scripts, the usual convention is for there to be no space
-after redirection operators, (e.g. `>file`, not `> file`). Remove these
-spaces wherever they appear.
+The code style for tests is to have statements on their own line if
+possible. Move keywords onto their own line so that they conform with
+the test style.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t7700-repack.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t7700-repack.sh | 51 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 34 insertions(+), 17 deletions(-)
 
 diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index e1a689d6a9..8936928387 100755
+index 8936928387..a96e876c4e 100755
 --- a/t/t7700-repack.sh
 +++ b/t/t7700-repack.sh
-@@ -11,8 +11,8 @@ commit_and_pack() {
- }
- 
- test_expect_success 'objects in packs marked .keep are not repacked' '
--	echo content1 > file1 &&
--	echo content2 > file2 &&
-+	echo content1 >file1 &&
-+	echo content2 >file2 &&
- 	git add . &&
- 	test_tick &&
- 	git commit -m initial_commit &&
-@@ -75,8 +75,8 @@ test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
- 
- test_expect_success 'loose objects in alternate ODB are not repacked' '
- 	mkdir alt_objects &&
--	echo $(pwd)/alt_objects > .git/objects/info/alternates &&
--	echo content3 > file3 &&
-+	echo $(pwd)/alt_objects >.git/objects/info/alternates &&
-+	echo content3 >file3 &&
- 	objsha1=$(GIT_OBJECT_DIRECTORY=alt_objects git hash-object -w file3) &&
- 	git add file3 &&
- 	test_tick &&
-@@ -111,7 +111,7 @@ test_expect_success 'packed obs in alt ODB are repacked even when local repo is
- 
- test_expect_success 'packed obs in alt ODB are repacked when local repo has packs' '
- 	rm -f .git/objects/pack/* &&
--	echo new_content >> file1 &&
-+	echo new_content >>file1 &&
- 	git add file1 &&
- 	test_tick &&
- 	git commit -m more_content &&
-@@ -169,12 +169,12 @@ test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
+@@ -29,10 +29,12 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
  	mv pack-* .git/objects/pack/ &&
- 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
- 		egrep "^$csha1 " | sort | uniq | wc -l) &&
--	echo > .git/objects/info/alternates &&
-+	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $csha1
- '
- 
- test_expect_success 'local packed unreachable obs that exist in alternate ODB are not loosened' '
--	echo $(pwd)/alt_objects > .git/objects/info/alternates &&
-+	echo $(pwd)/alt_objects >.git/objects/info/alternates &&
- 	echo "$csha1" | git pack-objects --non-empty --all --reflog pack &&
- 	rm -f .git/objects/pack/* &&
- 	mv pack-* .git/objects/pack/ &&
-@@ -186,7 +186,7 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
- 	mv pack-* .git/objects/pack/ &&
- 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
- 		egrep "^$csha1 " | sort | uniq | wc -l) &&
--	echo > .git/objects/info/alternates &&
-+	echo >.git/objects/info/alternates &&
- 	test_must_fail git show $csha1
- '
- 
-@@ -196,7 +196,7 @@ test_expect_success 'objects made unreachable by grafts only are kept' '
- 	H0=$(git rev-parse HEAD) &&
- 	H1=$(git rev-parse HEAD^) &&
- 	H2=$(git rev-parse HEAD^^) &&
--	echo "$H0 $H2" > .git/info/grafts &&
-+	echo "$H0 $H2" >.git/info/grafts &&
- 	git reflog expire --expire=$test_tick --expire-unreachable=$test_tick --all &&
+ 	git repack -A -d -l &&
+ 	git prune-packed &&
+-	for p in .git/objects/pack/*.idx; do
++	for p in .git/objects/pack/*.idx
++	do
+ 		idx=$(basename $p)
+ 		test "pack-$packsha1.idx" = "$idx" && continue
+-		if git verify-pack -v $p | egrep "^$objsha1"; then
++		if git verify-pack -v $p | egrep "^$objsha1"
++		then
+ 			found_duplicate_object=1
+ 			echo "DUPLICATE OBJECT FOUND"
+ 			break
+@@ -45,10 +47,12 @@ test_expect_success 'writing bitmaps via command-line can duplicate .keep object
+ 	# build on $objsha1, $packsha1, and .keep state from previous
+ 	git repack -Adbl &&
+ 	test_when_finished "found_duplicate_object=" &&
+-	for p in .git/objects/pack/*.idx; do
++	for p in .git/objects/pack/*.idx
++	do
+ 		idx=$(basename $p)
+ 		test "pack-$packsha1.idx" = "$idx" && continue
+-		if git verify-pack -v $p | egrep "^$objsha1"; then
++		if git verify-pack -v $p | egrep "^$objsha1"
++		then
+ 			found_duplicate_object=1
+ 			echo "DUPLICATE OBJECT FOUND"
+ 			break
+@@ -61,10 +65,12 @@ test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
+ 	# build on $objsha1, $packsha1, and .keep state from previous
+ 	git -c repack.writebitmaps=true repack -Adl &&
+ 	test_when_finished "found_duplicate_object=" &&
+-	for p in .git/objects/pack/*.idx; do
++	for p in .git/objects/pack/*.idx
++	do
+ 		idx=$(basename $p)
+ 		test "pack-$packsha1.idx" = "$idx" && continue
+-		if git verify-pack -v $p | egrep "^$objsha1"; then
++		if git verify-pack -v $p | egrep "^$objsha1"
++		then
+ 			found_duplicate_object=1
+ 			echo "DUPLICATE OBJECT FOUND"
+ 			break
+@@ -83,8 +89,10 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
+ 	git commit -m commit_file3 &&
+ 	git repack -a -d -l &&
+ 	git prune-packed &&
+-	for p in .git/objects/pack/*.idx; do
+-		if git verify-pack -v $p | egrep "^$objsha1"; then
++	for p in .git/objects/pack/*.idx
++	do
++		if git verify-pack -v $p | egrep "^$objsha1"
++		then
+ 			found_duplicate_object=1
+ 			echo "DUPLICATE OBJECT FOUND"
+ 			break
+@@ -99,10 +107,13 @@ test_expect_success 'packed obs in alt ODB are repacked even when local repo is
+ 	git repack -a &&
+ 	myidx=$(ls -1 .git/objects/pack/*.idx) &&
+ 	test -f "$myidx" &&
+-	for p in alt_objects/pack/*.idx; do
++	for p in alt_objects/pack/*.idx
++	do
+ 		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
+-	done | while read sha1 rest; do
+-		if ! ( git verify-pack -v $myidx | grep "^$sha1" ); then
++	done | while read sha1 rest
++	do
++		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
++		then
+ 			echo "Missing object in local pack: $sha1"
+ 			return 1
+ 		fi
+@@ -119,10 +130,13 @@ test_expect_success 'packed obs in alt ODB are repacked when local repo has pack
  	git repack -a -d &&
- 	git cat-file -t $H1
+ 	myidx=$(ls -1 .git/objects/pack/*.idx) &&
+ 	test -f "$myidx" &&
+-	for p in alt_objects/pack/*.idx; do
++	for p in alt_objects/pack/*.idx
++	do
+ 		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
+-	done | while read sha1 rest; do
+-		if ! ( git verify-pack -v $myidx | grep "^$sha1" ); then
++	done | while read sha1 rest
++	do
++		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
++		then
+ 			echo "Missing object in local pack: $sha1"
+ 			return 1
+ 		fi
+@@ -144,10 +158,13 @@ test_expect_success 'packed obs in alternate ODB kept pack are repacked' '
+ 	git repack -a -d &&
+ 	myidx=$(ls -1 .git/objects/pack/*.idx) &&
+ 	test -f "$myidx" &&
+-	for p in alt_objects/pack/*.idx; do
++	for p in alt_objects/pack/*.idx
++	do
+ 		git verify-pack -v $p | sed -n -e "/^[0-9a-f]\{40\}/p"
+-	done | while read sha1 rest; do
+-		if ! ( git verify-pack -v $myidx | grep "^$sha1" ); then
++	done | while read sha1 rest
++	do
++		if ! ( git verify-pack -v $myidx | grep "^$sha1" )
++		then
+ 			echo "Missing object in local pack: $sha1"
+ 			return 1
+ 		fi
 -- 
 2.24.0.504.g3cd56eb17d
 
