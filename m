@@ -2,226 +2,117 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A67E1C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D9D7C43215
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:33:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 74C5F20862
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:29:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0A04206E0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 19:33:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oj81T0BS"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="I9ChtnNf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727489AbfK0T3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 14:29:01 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:43516 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727484AbfK0T3B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 14:29:01 -0500
-Received: by mail-pj1-f65.google.com with SMTP id a10so10484652pju.10
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 11:29:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=TAMe7EHz20gLq4f0tkurN9Abs0czbDlZxZLD1zA9eJk=;
-        b=oj81T0BSwAMojjrjJm3KwtJh9BFEp+QgYdFDxVZHnOJ9WQMmNM9IEv782lL3OUBM2G
-         Emw/YIanP7+/hhEMtlw0s6IFSNAE4W6uVBrUU8pOfF+SjiiMF2pwKx2wZ0rmVJ1qZyOf
-         ZHfSFZGIg/KtpkHhM1z6s8yst7BhnNu5KpZo32bYTBmp3IIWAbpYcVDuq/uOTx2S7h4L
-         Q/Aox/Uxw7iLEdes65l/cJYTtIVnLHXJ3wDSCePufSkUPs9EPjvPRLYLVbBocZgkPsIX
-         fKqsWew/t8zTbYEThqTCdNvwKpVq7V06gfCMqtj6MqC1nfGqbYZuf49mrNHVAK7kELO/
-         63vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=TAMe7EHz20gLq4f0tkurN9Abs0czbDlZxZLD1zA9eJk=;
-        b=KdCqj+kiLT6JfNBZoN3hM1uHAn1Mzlv7K0ZvuOUri2PGfLDoU2WbEFC2fZv2Var6Wv
-         RWktGasHmvf3nUNfSz1LxhTdlSFKRcRpTJkVxLIDEHTFobrxM7vsu4ZPm0hBSc9RRqHW
-         3CTqzQdAurSdz4TdDninQpR4hiikx42Q9qOVHb1aUOEmaKMQxvHYz3ZM3ErxY/QNPl56
-         xroXCXWjx0CjgLeK0ObEqPOGCrW9fJn6bwl3qtEvu/vCB/kuBmCCBlj80ggJ/gm5vzZd
-         YmMRxHjyeDXEUBlQ2QsqKzrQ/0UuEVTfBz+VU1jdl3h99wLNIUmEyBjik8jyXnWB5Jy5
-         +hMA==
-X-Gm-Message-State: APjAAAXL9sbHTW7eEzHe4OzpuBTqBPu8EjvEWF+P2+4sDZGfSfSDXBAG
-        T0Hc332rPEm9yWilf0fry5FiKOHA
-X-Google-Smtp-Source: APXvYqzqZtZkhrCwaFXDxV4VdeYLe+FBaRDr2i4l9JAKemezwx4Ehj9yZXXLXiEvFY0BYHZmHlQnjQ==
-X-Received: by 2002:a17:902:aa4a:: with SMTP id c10mr5816614plr.107.1574882939844;
-        Wed, 27 Nov 2019 11:28:59 -0800 (PST)
-Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id x12sm16745532pfm.130.2019.11.27.11.28.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 11:28:59 -0800 (PST)
-Date:   Wed, 27 Nov 2019 11:28:57 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        Eric Wong <e@80x24.org>
-Subject: [PATCH 2/2] RelNotes: replace Gmane with real Message-IDs
-Message-ID: <ebb2328a02dd96c740c5e9cf70abc03446dbf592.1574882812.git.liu.denton@gmail.com>
-References: <20191127125231.GH22221@sigill.intra.peff.net>
- <cover.1574882812.git.liu.denton@gmail.com>
+        id S1727825AbfK0TdJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 14:33:09 -0500
+Received: from mout.gmx.net ([212.227.17.21]:37225 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726984AbfK0TdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 14:33:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1574883186;
+        bh=G06JqozBRZWzV1DFwlx9aIu8fycviW3mj1wkZhb9plA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=I9ChtnNfz52QDNAqZj8I3DPzaMVqV8nOLONpV4QusyHUoYogQMwfquJh0ntk2E5cg
+         lxjV/yRZPpDaYEQu8kLnKN0G7IVLOiojTtjj5xvtyBZP23rw0jTVDzupcpHqyadOq0
+         njhrIKi6m0+7RpHjkvWkbS2f0U39hQUKKlIOaEag=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6KUT-1hlYvT1HeD-016gOs; Wed, 27
+ Nov 2019 20:33:06 +0100
+Date:   Wed, 27 Nov 2019 20:32:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Git List <git@vger.kernel.org>
+Subject: Re: Git Test Coverage Report (Nov 25)
+In-Reply-To: <59ae5223-6dd8-00cd-4c39-b307f8364457@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1911272029050.31080@tvgsbejvaqbjf.bet>
+References: <1cb7ddbf-020e-d63a-85b6-5a9267c0a5a3@gmail.com> <nycvar.QRO.7.76.6.1911262116100.31080@tvgsbejvaqbjf.bet> <59ae5223-6dd8-00cd-4c39-b307f8364457@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1574882812.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:61b9HyAYmhol+UyAbvELGnL78RlXI8JgWCiNtl++0HhwjDdaJNQ
+ YjrGoBuMW3suYy2VUygpt7xoFqASuDRupqbVB0ScXvqCX8UrPEIoKxuTf5izzepRYR4weO7
+ ExJN/9M1o3pg9zf1zfKRBYbEW2NElixix93uL8VPQSPoaoXCm8o4EiM2/Nt3XIdxKoi8SaB
+ 1Ou8FhwLQcIXMINAXTniw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:hdm97AD9aTw=:HtZdg8b/u0ZDW1lP9spkVd
+ AVzoFH/FzxpxXQL4Ft+gcoYwAxHuVFbs0S9/5GVahyg7q+x1ymlZGEQDNHLXVDDLytmJdDK89
+ HEFl9dRN22rbcHqO5EWRwyWCstwe1MpqdDaiEi4h+2NlO7z3adwGsnPfEIQDAeBTPdyg9sc1u
+ u5wpcLrzmmoke4xhZLOm55WojceUHCX84UUHnwHiFbAh6/Au56KxBkZ8bu9c9IR+yP/59LCEA
+ 0Vp0fBlxs14X2Zdk+aLSUUeAIZ8FVhNb/6Id6itJFc5OA0nTjmP0lKbT3dHhAlNZkNCwPEDNu
+ 6fnHhcnLpAelY2jJ9MwEsc6QcfqwkccwEorz91/sJMLoHEQ+RG8Vl/Q3bUVP3FMNWoWt8PYF7
+ JU11onNe0UdnNgpEh31vdzMxUzi+usKyoAr5bXnZDREHH/XbQ+bTNxKGrmY8fADj2f03m1kzl
+ SfG0vbyrTmcVX4coqd7oBpHILlL5ZYjR4cgLVeBM/Qt7JWw9pNaH6B9ArOcBKOzz4GVLMwNRu
+ scH3vqMAdoE67KW0lSMX7rUdo++MQbtSUG32vZ813Glao7/M8UKzY+U2BixKWjXfueJbH2KG5
+ RIc8RIFm65S8c4N2Sy3QSbmvdB64WofAadiLdIC06bzp7eOiOBO1Tvyydy6DSjIYUQF3YTP7F
+ J5K7awpunB6IP+8vN5tdhjU+KfXUBe6hSwYhGc9lP9x595vafR4+x7n/DZMibAwohdWE769Gc
+ CfgU7YjiLaHYaH1aOi/Nm1SyBJTonRT+Gi4laOgZ7FZWk9ErQegw9Pl1KjfGaNvT478MaWSyB
+ 7M5SkGR9i3XGwwILdQ6Lgj3v/HVlI9KYQufnYzcZT8tsBkxg03V/1Nvod8vPXWfxr/HMBKsjG
+ m08tT5N5NCusJ8xAn4jV0metG/7/6tNg6TioPavobZJcdNt3T6TTjkAGqBp06zJs3HPewC7fW
+ T/Nbi6b8RNB6cQmfXxC9daU3jLt8UWzOwNpKG2Q62jUOEqXAVuIW9lz7zxaIig4cqQd+g1YNT
+ C6oRk+5xjlTSJd00iLsEC5qnIOHxCvjDCj01QgYuoX1oqCt5fOEzUWFG+bRTU+E+PHtx0iO2I
+ H8daQaY1t3MBNYBpYNDVAuZFC0zmU6AaYX+5nkm2ushHjNH8Y/DsM8B/nXEDt9Nw98VPPCZsS
+ WMNxx8EX+zMrHFSV9A3D+qZpE+eM7mYlX5wVh1/OYDkzEM++gN2ehJVtCJm3b9M9wf3giIEXm
+ wiptsYb3QZP5G2BZH/LIfEiD7lOZoy+rJlqvMZeOuxiLWDngAdG5IX9+9Ja8=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The only references to Gmane that remain are in RelNotes. Although these
-are definitely not in active use, they might be of historical interest
-for future readers so let's ensure that mail references are more robust.
+Hi Stolee,
 
-Replace links to Gmane with links to LKML (which is our new preferred
-mailing list archive and has the Message-ID in the URL) and bare Gmane
-ID references with Message-IDs.
+On Wed, 27 Nov 2019, Derrick Stolee wrote:
 
-The Message-IDs were found by searching for "gmane:<id>" on
-https://public-inbox.org/git/ and taking the resulting message.
+> On 11/26/2019 3:46 PM, Johannes Schindelin wrote:
+>
+> > [...] the Windows build.
+>
+> Sorry that I have not set up a Windows build, but the Linux test-coverag=
+e
+> build already takes a long time so adding Windows would be complicated.
+> (Not to mention that merging the uncovered lines across two platforms wo=
+uld
+> be a huge challenge.)
+>
+> If anyone wants to consider such an effort, I'm willing to play along.
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/RelNotes/1.6.2.txt | 2 +-
- Documentation/RelNotes/1.6.3.txt | 2 +-
- Documentation/RelNotes/1.6.4.txt | 2 +-
- Documentation/RelNotes/1.6.5.txt | 2 +-
- Documentation/RelNotes/1.6.6.txt | 2 +-
- Documentation/RelNotes/1.8.4.txt | 2 +-
- Documentation/RelNotes/2.5.0.txt | 3 ++-
- Documentation/RelNotes/2.8.3.txt | 4 ++--
- Documentation/RelNotes/2.9.0.txt | 2 +-
- 9 files changed, 11 insertions(+), 10 deletions(-)
+I fear it is even worse: once upon a time, I tried to set up a gcov run
+with mingw-w64-gcc, and it failed miserably (there was simply no output at
+all).
 
-diff --git a/Documentation/RelNotes/1.6.2.txt b/Documentation/RelNotes/1.6.2.txt
-index ad060f4f89..980adfb315 100644
---- a/Documentation/RelNotes/1.6.2.txt
-+++ b/Documentation/RelNotes/1.6.2.txt
-@@ -11,7 +11,7 @@ push running this release will issue a big warning when the
- configuration variable is missing.  Please refer to:
- 
-   http://git.or.cz/gitwiki/GitFaq#non-bare
--  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-+  https://lore.kernel.org/git/7vbptlsuyv.fsf@gitster.siamese.dyndns.org/
- 
- for more details on the reason why this change is needed and the
- transition plan.
-diff --git a/Documentation/RelNotes/1.6.3.txt b/Documentation/RelNotes/1.6.3.txt
-index 418c685cf8..4bcff945e0 100644
---- a/Documentation/RelNotes/1.6.3.txt
-+++ b/Documentation/RelNotes/1.6.3.txt
-@@ -11,7 +11,7 @@ push running this release will issue a big warning when the
- configuration variable is missing.  Please refer to:
- 
-   http://git.or.cz/gitwiki/GitFaq#non-bare
--  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-+  https://lore.kernel.org/git/7vbptlsuyv.fsf@gitster.siamese.dyndns.org/
- 
- for more details on the reason why this change is needed and the
- transition plan.
-diff --git a/Documentation/RelNotes/1.6.4.txt b/Documentation/RelNotes/1.6.4.txt
-index 7a904419f7..a2a34b43a7 100644
---- a/Documentation/RelNotes/1.6.4.txt
-+++ b/Documentation/RelNotes/1.6.4.txt
-@@ -11,7 +11,7 @@ push running this release will issue a big warning when the
- configuration variable is missing.  Please refer to:
- 
-   http://git.or.cz/gitwiki/GitFaq#non-bare
--  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-+  https://lore.kernel.org/git/7vbptlsuyv.fsf@gitster.siamese.dyndns.org/
- 
- for more details on the reason why this change is needed and the
- transition plan.
-diff --git a/Documentation/RelNotes/1.6.5.txt b/Documentation/RelNotes/1.6.5.txt
-index ee141c19ad..6c7f7da7eb 100644
---- a/Documentation/RelNotes/1.6.5.txt
-+++ b/Documentation/RelNotes/1.6.5.txt
-@@ -22,7 +22,7 @@ push running this release will issue a big warning when the
- configuration variable is missing.  Please refer to:
- 
-   http://git.or.cz/gitwiki/GitFaq#non-bare
--  http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-+  https://lore.kernel.org/git/7vbptlsuyv.fsf@gitster.siamese.dyndns.org/
- 
- for more details on the reason why this change is needed and the
- transition plan.
-diff --git a/Documentation/RelNotes/1.6.6.txt b/Documentation/RelNotes/1.6.6.txt
-index c50b59c495..3ed1e01433 100644
---- a/Documentation/RelNotes/1.6.6.txt
-+++ b/Documentation/RelNotes/1.6.6.txt
-@@ -64,7 +64,7 @@ users will fare this time.
-    Please refer to:
- 
-    http://git.or.cz/gitwiki/GitFaq#non-bare
--   http://thread.gmane.org/gmane.comp.version-control.git/107758/focus=108007
-+   https://lore.kernel.org/git/7vbptlsuyv.fsf@gitster.siamese.dyndns.org/
- 
-    for more details on the reason why this change is needed and the
-    transition process that already took place so far.
-diff --git a/Documentation/RelNotes/1.8.4.txt b/Documentation/RelNotes/1.8.4.txt
-index 02f681b710..255e185af6 100644
---- a/Documentation/RelNotes/1.8.4.txt
-+++ b/Documentation/RelNotes/1.8.4.txt
-@@ -58,7 +58,7 @@ Foreign interfaces, subsystems and ports.
-    credential helper interface from Git.pm.
- 
-  * Update build for Cygwin 1.[57].  Torsten Bögershausen reports that
--   this is fine with Cygwin 1.7 ($gmane/225824) so let's try moving it
-+   this is fine with Cygwin 1.7 (cf. <51A606A0.5060101@web.de>) so let's try moving it
-    ahead.
- 
-  * The credential helper to talk to keychain on OS X (in contrib/) has
-diff --git a/Documentation/RelNotes/2.5.0.txt b/Documentation/RelNotes/2.5.0.txt
-index 87044504c5..84723f912a 100644
---- a/Documentation/RelNotes/2.5.0.txt
-+++ b/Documentation/RelNotes/2.5.0.txt
-@@ -172,7 +172,8 @@ Performance, Internal Implementation, Development Support etc.
-    incorrect patch text to "git apply".  Add tests to demonstrate
-    this.
- 
--   I have a slight suspicion that this may be $gmane/87202 coming back
-+   I have a slight suspicion that this may be
-+   cf. <7vtzf77wjp.fsf@gitster.siamese.dyndns.org> coming back
-    and biting us (I seem to have said "let's run with this and see
-    what happens" back then).
- 
-diff --git a/Documentation/RelNotes/2.8.3.txt b/Documentation/RelNotes/2.8.3.txt
-index fedd9968e5..266c4781a8 100644
---- a/Documentation/RelNotes/2.8.3.txt
-+++ b/Documentation/RelNotes/2.8.3.txt
-@@ -55,8 +55,8 @@ Fixes since v2.8.2
-    This is necessary to use Git on Windows shared directories, and is
-    already enabled for the MinGW and plain Windows builds.  It also
-    has been used in Cygwin packaged versions of Git for quite a while.
--   See http://thread.gmane.org/gmane.comp.version-control.git/291853
--   and http://thread.gmane.org/gmane.comp.version-control.git/275680.
-+   See https://lkml.org/git/20160419091055.GF2345@dinwoodie.org/
-+   and https://lkml.org/git/20150811100527.GW14466@dinwoodie.org/.
- 
-  * "git replace -e" did not honour "core.editor" configuration.
- 
-diff --git a/Documentation/RelNotes/2.9.0.txt b/Documentation/RelNotes/2.9.0.txt
-index b61d36712f..d5f95b6641 100644
---- a/Documentation/RelNotes/2.9.0.txt
-+++ b/Documentation/RelNotes/2.9.0.txt
-@@ -368,7 +368,7 @@ notes for details).
-    This is necessary to use Git on Windows shared directories, and is
-    already enabled for the MinGW and plain Windows builds.  It also
-    has been used in Cygwin packaged versions of Git for quite a while.
--   See http://thread.gmane.org/gmane.comp.version-control.git/291853
-+   See https://lkml.org/git/20160419091055.GF2345@dinwoodie.org/
- 
-  * "merge-octopus" strategy did not ensure that the index is clean
-    when merge begins.
--- 
-2.24.0.504.g3cd56eb17d
+So I, for one, am completely comfortable with keeping the status quo for
+the time being.
 
+> >> Johannes Schindelin	116d1fa6 vreportf(): avoid relying on stdio buffe=
+ring
+> >> usage.c
+> >> 116d1fa6 16) fprintf(stderr, "BUG!!! too long a prefix '%s'\n", prefi=
+x);
+> >> 116d1fa6 17) abort();
+> >> 116d1fa6 22) *p =3D '\0'; /* vsnprintf() failed, clip at prefix */
+> >
+> > Those are defensive programming, so this is expected not to be covered=
+.
+>
+> I wonder why we are not using BUG() here (for the fprintf and abort).
+
+It's because `BUG()` calls `vreportf()`, and even if the _current_ version
+would bail out at some point, I would be uncomfortable calling `BUG()`
+from `vreportf()` and risk a (future-only) recursion ad infinitum.
+
+Thanks!
+Dscho
