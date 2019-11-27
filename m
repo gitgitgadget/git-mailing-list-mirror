@@ -6,69 +6,68 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FC05C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 11:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BD71C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 11:58:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4F5852070B
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 11:51:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC7662053B
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 11:58:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfK0LvZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 06:51:25 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33756 "HELO cloud.peff.net"
+        id S1726537AbfK0L6L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 06:58:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33764 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726320AbfK0LvZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 06:51:25 -0500
-Received: (qmail 10638 invoked by uid 109); 27 Nov 2019 11:51:25 -0000
+        id S1726496AbfK0L6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 06:58:10 -0500
+Received: (qmail 10684 invoked by uid 109); 27 Nov 2019 11:58:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Nov 2019 11:51:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 27 Nov 2019 11:58:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9505 invoked by uid 111); 27 Nov 2019 11:55:28 -0000
+Received: (qmail 9522 invoked by uid 111); 27 Nov 2019 12:02:13 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2019 06:55:28 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 27 Nov 2019 07:02:13 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 27 Nov 2019 06:51:24 -0500
+Date:   Wed, 27 Nov 2019 06:58:09 -0500
 From:   Jeff King <peff@peff.net>
-To:     Jack Bates <bk874k@nottheoilrig.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug? clone ignores --git-dir
-Message-ID: <20191127115124.GE22221@sigill.intra.peff.net>
-References: <7d28416e-c927-4cd3-bac2-d8bfd02ce949@nottheoilrig.com>
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Subject: Re: [PATCH] t7812: add missing redirects
+Message-ID: <20191127115809.GF22221@sigill.intra.peff.net>
+References: <20190724151415.3698-1-avarab@gmail.com>
+ <20190726150818.6373-7-avarab@gmail.com>
+ <87blsyl32c.fsf_-_@igel.home>
+ <nycvar.QRO.7.76.6.1911262325390.31080@tvgsbejvaqbjf.bet>
+ <874kyqkzbe.fsf@igel.home>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <7d28416e-c927-4cd3-bac2-d8bfd02ce949@nottheoilrig.com>
+In-Reply-To: <874kyqkzbe.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 26, 2019 at 11:07:27AM -0700, Jack Bates wrote:
+On Wed, Nov 27, 2019 at 12:11:49AM +0100, Andreas Schwab wrote:
 
-> If you `git rebase --exec 'gulp runtests-parallel --runners user'` this
-> project, the tests perform Git operations on various subprojects [1], but
-> because Git exports `GIT_DIR` and `GIT_WORK_TREE`, they end up operating on
-> the parent project instead.
+> On Nov 26 2019, Johannes Schindelin wrote:
 > 
-> Adding `--git-dir` and `--work-tree` overrides `GIT_DIR` and `GIT_WORK_TREE`
-> [2], forcing the tests to operate on the correct repositories, however
-> `clone` ignores `--git-dir`:
+> > footer, and the commit reference is not in the recommended format either
+> > because it lacks the date),
 > 
-> > git init repository
-> > git --git-dir git-dir clone repository directory
-> I'd expect Git to create a directory `git-dir` and put the index, etc.
-> there, but instead it creates `directory/.git`, as usual. I'm not sure if
-> this is a bug or the expected behavior?
+> Where is that documented?
 
-This is the expected behavior. "clone" and "init" are special in that
-they are creating _new_ repositories, so they explicitly ignore the
-any notion of the current repository.
+It's mentioned as the preferred way to reference commits in
+SubmittingPatches (search for %ad).
 
-I'm not quite sure what you're trying to do. I'd think:
+But I don't see why it is "not a footer". The "Fixes:" key conforms to
+the trailer syntax, and the value of a trailer is free-form. Running:
 
-  git clone --bare repository git-dir
+  git log --format='%(trailers:key=Fixes)'
 
-would do what you want, but then I'm not sure why you're specifying
-"directory" in the first place, or what you expect to happen. Are you
-looking for clone's --separate-git-dir option, perhaps?
+shows that Git is happy with it. And indeed, a few other people have
+used it before you. None of them with a date. ;)
 
 -Peff
