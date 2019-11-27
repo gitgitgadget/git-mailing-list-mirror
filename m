@@ -2,104 +2,130 @@ Return-Path: <SRS0=iCZD=ZT=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFF05C432C0
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 08:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13986C432C3
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 09:49:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BD3042070B
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 08:46:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D7A7120678
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 09:49:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t5l/Y2uN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VFqBQps1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbfK0IqF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 03:46:05 -0500
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:43398 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726143AbfK0IqE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 03:46:04 -0500
-Received: by mail-pg1-f175.google.com with SMTP id b1so10445983pgq.10
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 00:46:04 -0800 (PST)
+        id S1727017AbfK0JtC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 04:49:02 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36191 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbfK0JtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 04:49:01 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so771451wma.1
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 01:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yl+Qj2PxA3FSdnQZA1B0F87Y00sClFwBWEbxjrish4g=;
-        b=t5l/Y2uNadP3paeb0kgxZoKJ7NDHjUopeW/0kieRf6BJ/TG8KJvVJ2K3elfY/1nnBv
-         LOsEmkCZsM1oyATMbdv1LJNbm8EN8+Isl8R2iaV9TWXNqYu3FtB5jWF+9EaDhNOduL/z
-         rK+VcbNEdmIAtIaqWNhV6Dk6KjQCXqjsdEm2zBk4HN9sQ3ihQnZXle+M48inCscAkU56
-         4uDJVk7JD9F9g2h9fJu2d39RYmzl/4cv8hIF5h1utI+ssKGf+5EmXwDafZdCg3sRHwjM
-         f8RR9MmxkVU7zmVij9aRdajGW1Ed3aD+oXaC4B/7Kfwd9FcZAIX4ZQYk3Sz6LrCBc8xJ
-         NufQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
+        b=VFqBQps1Y5YLDOWDQa9rrxLweRhM9QJt9dR0tCUPayMWTXaosYJh5Ooc4d1uufBrNu
+         hQr8YhFfPu8QxdqMxUmYoRQjyLSwBXnhTlizi53GrOHN+tXWiSb5tYoSuVT4amUH2T8G
+         a7v7eYjvy0UyLRTqbkJxJm9P5ue2O4Z2E+6aKAhaVeVXvs7FkUgE3yaMEova4jU/kvHa
+         nPDf3+W3HYuIM+Xqq8z4AKNrrJY7hNVZElEZPuW6OGx20kLr1AMyPz73TlYGtZgcjc8+
+         04Xs1qPRh2UVlmDTVFLsgrnTtL71X0lSvT4etP81oa1HYG6duvE48oW2zXGauuStqMGR
+         UGuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yl+Qj2PxA3FSdnQZA1B0F87Y00sClFwBWEbxjrish4g=;
-        b=PlnTm77Xk6Bjs4JVyCMLMm9dts/PJjxhoJsVPPewesm78ZTqN+TOsocquX0p5Tb2YK
-         6sXuJez7rcflxrvUyC+fGdO7cD6WeQAK+Aksr3Ohx6YdILjDxHViLikHK4Q226TGVVqv
-         QmID6f38hkII5rEgtS8vxJ6LB39cmjJOTukokv5uxEWuVrqFgwPsod4j2P2YWsW53BOo
-         6VzHGoDqd6VOcKckG/XtOgSQdts3HWUU3WOy4TqRBAyrLB9L+owQKyuPcUVnkrAxJmP/
-         oG4bUtPZCHzuZuMIU9SXQgrwUH0EXwJWuCUscRejSJMd7kFZSmC37O/lw2WGbLQbB3yO
-         Wvhg==
-X-Gm-Message-State: APjAAAUlH7J1H7rz9SICAHAnkBJz5fwUVlF9v/fKlM4mJpEmrBDpY0+J
-        fpUWBD0wcnvwRu6JUbW4CKo=
-X-Google-Smtp-Source: APXvYqxHtzmSGa38Bvlt6yZUVP74tAyMV6e2oSJ2BWttgzUwZx+coSbbzQtVANpEX3IsenzBGbh27Q==
-X-Received: by 2002:a63:4948:: with SMTP id y8mr3661807pgk.333.1574844363728;
-        Wed, 27 Nov 2019 00:46:03 -0800 (PST)
-Received: from generichostname ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id i22sm5885474pjx.1.2019.11.27.00.46.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Nov 2019 00:46:02 -0800 (PST)
-Date:   Wed, 27 Nov 2019 00:46:01 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     John Ferreira <jferreira@nvidia.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: "git diff --no-index" Implies "--exit-code"
-Message-ID: <20191127084601.GA47023@generichostname>
-References: <MN2PR12MB289677B16DBF67772627B595DE440@MN2PR12MB2896.namprd12.prod.outlook.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
+        b=eA7YbVDuvsFuND4jVJD60XmQ6K0/TIf1B8/pVshLLoG/2WL85/o/tYiyva09Bqn9T1
+         D9NT+OjUeVWg2WBJAxSThd4xkWwzyUdPyszwhtvwgnQzwiumyFzi7sC55BaRW+MPe8cN
+         cw9BW/8pWUvuQIUEJF2wRIL1zr+vwHQ4bOdCowO1li+PxDxPxF8z3q9JejguLASv1KWi
+         kmcl9yPQGhSS85GcM0rIUluMIApm5M2CXHT03Eq74MrSLNZySlJakSHhtw/LFu+7DAW5
+         A+BOw6eBY0vq8j5aNv33LrXFeJJeDCHRuSKN9HlB15lk7QrbeIe609leS1MCOx3lCAY6
+         FCcw==
+X-Gm-Message-State: APjAAAUHRQCXfObjseEZwjdXIVemXNHLtIItmUtwSp/w3t4SFaetifvI
+        1zUuDtKpjfmvyGn0+h5ksIbRwGHf
+X-Google-Smtp-Source: APXvYqwSHnZX848fkNMiRZ245/AZjuVVlojd3XgTpQfaP719NfAgLh+uI6s9FTyUmnGXINIgpoRQLQ==
+X-Received: by 2002:a7b:c92c:: with SMTP id h12mr3343042wml.106.1574848139533;
+        Wed, 27 Nov 2019 01:48:59 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 17sm6086588wmg.19.2019.11.27.01.48.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 27 Nov 2019 01:48:59 -0800 (PST)
+Message-Id: <c5b92ce3ed629ccd5efddb9d5c7a754ed2e8ddbe.1574848137.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.477.git.1574848137.gitgitgadget@gmail.com>
+References: <pull.477.git.1574848137.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 27 Nov 2019 09:48:56 +0000
+Subject: [PATCH 1/2] parse_branchname_arg(): extract part as new function
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <MN2PR12MB289677B16DBF67772627B595DE440@MN2PR12MB2896.namprd12.prod.outlook.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+To:     git@vger.kernel.org
+Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-On Wed, Nov 27, 2019 at 04:03:48AM +0000, John Ferreira wrote:
-> I suspect this may be a bug:
-> Because I am not specifying the "--exit-code" flag,  I expect "git diff --no-index" to have the same exit code style as git diff.
-> But it does not.  
-> See comment in source linked below.  
-> Or, if this is intended, this side effect should be noted in the documentation for --no-index.
-> 
-> https://git-scm.com/docs/git-diff
-> --exit-code
-> Make the program exit with codes similar to diff(1). That is, it exits with 1 if there were differences and 0 means no differences.
-> 
-> git diff [<options>] --no-index [--] <path> <path>
-> This form is to compare the given two paths on the filesystem. You can omit the --no-index option when running the command in a working tree controlled by Git and at least one of the paths points outside the working tree, or when running the command outside a working tree controlled by Git.
-> 
-> 
-> https://github.com/git/git/blob/83232e38648b51abbcbdb56c94632b6906cc85a6/diff-no-index.c#L307
-> /*
->  * The return code for --no-index imitates diff(1):
->  * 0 = no changes, 1 = changes, else error
-> */
+This is done for the next commit to avoid crazy 7x tab code padding.
 
-This is a documentation bug. It's already a known issue and there's a
-fix for it already queued up in next[1].
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ builtin/checkout.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-Thanks,
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3634a3dac1..e1b9df1543 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1113,6 +1113,22 @@ static void setup_new_branch_info_and_source_tree(
+ 	}
+ }
+ 
++static const char *parse_remote_branch(const char *arg,
++				       struct object_id *rev,
++				       int could_be_checkout_paths,
++				       int *dwim_remotes_matched)
++{
++	const char *remote = unique_tracking_name(arg, rev, dwim_remotes_matched);
++	
++	if (remote && could_be_checkout_paths) {
++		die(_("'%s' could be both a local file and a tracking branch.\n"
++			"Please use -- (and optionally --no-guess) to disambiguate"),
++		    arg);
++	}
++
++	return remote;
++}
++
+ static int parse_branchname_arg(int argc, const char **argv,
+ 				int dwim_new_local_branch_ok,
+ 				struct branch_info *new_branch_info,
+@@ -1223,13 +1239,10 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 			recover_with_dwim = 0;
+ 
+ 		if (recover_with_dwim) {
+-			const char *remote = unique_tracking_name(arg, rev,
+-								  dwim_remotes_matched);
++			const char *remote = parse_remote_branch(arg, rev,
++								 could_be_checkout_paths,
++								 dwim_remotes_matched);
+ 			if (remote) {
+-				if (could_be_checkout_paths)
+-					die(_("'%s' could be both a local file and a tracking branch.\n"
+-					      "Please use -- (and optionally --no-guess) to disambiguate"),
+-					    arg);
+ 				*new_branch = arg;
+ 				arg = remote;
+ 				/* DWIMmed to create local branch, case (3).(b) */
+-- 
+gitgitgadget
 
-Denton
-
-[1]: https://github.com/gitster/git/commit/0115e5d929d06ad41eff83742a3e6a1e91ecc0c4
