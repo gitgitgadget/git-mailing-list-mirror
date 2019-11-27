@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F250C432C3
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 02:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74A07C432C0
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 02:09:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 724E92071A
-	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 02:09:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4ABC0207DD
+	for <git@archiver.kernel.org>; Wed, 27 Nov 2019 02:09:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YmD5Z/YJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="COJH78dP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726990AbfK0CJX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 26 Nov 2019 21:09:23 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:42133 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726983AbfK0CJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 26 Nov 2019 21:09:23 -0500
-Received: by mail-pj1-f65.google.com with SMTP id y21so9186287pjn.9
-        for <git@vger.kernel.org>; Tue, 26 Nov 2019 18:09:23 -0800 (PST)
+        id S1727007AbfK0CJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 26 Nov 2019 21:09:27 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:37297 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726968AbfK0CJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 26 Nov 2019 21:09:27 -0500
+Received: by mail-pj1-f68.google.com with SMTP id bb19so5643726pjb.4
+        for <git@vger.kernel.org>; Tue, 26 Nov 2019 18:09:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=WduSD2IPzjEU0/WgYXmAZ9p6BxEYXVae+cF+2ORr6kg=;
-        b=YmD5Z/YJW2FGtcAU0ciktGznv8OtPmK5rdcsuGg6l+Soex9/Jvcd47QEY/flJLpeev
-         sk9ksCDB/z/8MuhIamswIU3mnL9b6sHtk6ZRO42kOwu3cc40f0ytn/Eb8m12tWKiuRGQ
-         ywxAoeNvpChBEzOueB/R56sRPiPeJADsgveeC1ZiHCU1rOZ5cSsKF12WATc1SqtTIUf2
-         2RQqgZel4mzzL4Use1Cg6mMjsRdcglwHSibIrBSeCGj2UAJ6FYi9wznr4/EZq+vWFwJc
-         5ChbV8bLXwQRYfCLu7cmgkleHZ3c1XgmwDy0pXgJZ5jWm7RE7vwjEdvp+Uc060LrOXdJ
-         Tzug==
+        bh=JIRONt4eVDia24S068TJ4YBtQTJiUFIG9TnFAFHkdD0=;
+        b=COJH78dPhWDqwJ/oJ56/pmg7gjt30sPiVXP6dG5teNOGBQTKlb0Xd7W8oyDdoLdDY/
+         6eA03WeJ19hclnA6Os4Asu8Ff1/9c0OFcRRIK0V43febdlAjgv/i7oXh3FZW79ELz2ah
+         s5V1tkDA0TytyHSpbuseLSXP5WQtvxm4iL0UK9sWmlAt6a0+Q8SeDXPcJzhPma4mQKoZ
+         pbxEtTdouKH/RP4qpqlsGxs9jJJCVriGhplNNpUn1GeoXZPzAOnwDZVriH14olkjV6Yy
+         fxWdQMSlgIsQtbDqRFXqzxUrt9cDJrWrpVZNG2MFSaJ/927wsF89+RX1mxuAnOQNbBT2
+         SKsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WduSD2IPzjEU0/WgYXmAZ9p6BxEYXVae+cF+2ORr6kg=;
-        b=VfKB2xjgOVSsqgsDnuSbMTi4+IvV1Sp5FIOYUuZct7r4Bbo9SFG9QSa8pn0yO9LX89
-         bGme6OOMqFzv4qYqXOBtn70l9cBiVjZYRhbBNbjNcAJTJFROz47snbGiz6BDJ2NRrcYS
-         oisWPpRF0mIoqaB3nTOiQa1IQX/WGMsBYBrdwVwSERoR/LRgDHze4B3hcihOvTkRJJNW
-         8iw+mcojutT6UvtOTMkiIPNcEbQtkOxzvgjfYQtIH2iHV7cpeKE5xe2rezED7YqcaTtw
-         iWjY6J6J6NEQa+8IZGm7GZubqtBiddXxP//c0KCaBtJAOaQGDlEeWRxtx4vFDeXx2X16
-         BVpA==
-X-Gm-Message-State: APjAAAX4Z9yjPc2Fc/jiPh3+oNZX8dtW6sRH3IuV3+cjK7Rn4dLQs+s2
-        mSMuEDJUTLa4Z2kUx+F0kYlzx1z7
-X-Google-Smtp-Source: APXvYqzOVP+YdPx1xN7Ljt3eqYruHlN59Ts1Iz4QlLBZf4eB3n0TvvNbAwqc34au1uvGg1wlVpKtqg==
-X-Received: by 2002:a17:90a:bf81:: with SMTP id d1mr2808326pjs.125.1574820562290;
-        Tue, 26 Nov 2019 18:09:22 -0800 (PST)
+        bh=JIRONt4eVDia24S068TJ4YBtQTJiUFIG9TnFAFHkdD0=;
+        b=bRq90DozR65sZ4hVQdMrcTrKnH1DRt6FI9mPfjhjx4VUI9Cxp++3h4iwtvkdIGL11T
+         VdT1nz59+k2lne7SMXQ9Rwb+80usPP75Eb5N1aSKVwKwgiQgQ0x5EWew5rwyV+MTWvEW
+         4hSw1nZFeDS/a0PtjVmmJMI0Cv9TAXH1hiPwCw9+1rNjL6SxDrnucXibVHrWyKLHOdL3
+         xRMWjK2CwCXj1a8lA7b0iZnuljl886rqdgmZ78QQrSt8345MRG6IiLR+bJcNIlB9/Zyh
+         6jctXtLI5wFbx2lsfY5XAQBb3XGHySmN87erv/2PUp1ZlETf6kSdBl+Sak4GVRBWoV4P
+         6SJA==
+X-Gm-Message-State: APjAAAWCEtERAw4L8bqBopko4zk/WnIPRMac9m8rji+4cyLoS4Ab8LFm
+        gjOhyCi+bAJmYnYFQ2R0g9cV9yzs
+X-Google-Smtp-Source: APXvYqzmVSYtprAsiuw4CyT77EMsXPd29exeJuJxwtsJexCosVpbyccL3whJQBwvk5VuLp+c4kkltQ==
+X-Received: by 2002:a17:90a:ec07:: with SMTP id l7mr2840369pjy.68.1574820564615;
+        Tue, 26 Nov 2019 18:09:24 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id s26sm13935204pfh.66.2019.11.26.18.09.21
+        by smtp.gmail.com with ESMTPSA id ds4sm4422916pjb.6.2019.11.26.18.09.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Nov 2019 18:09:21 -0800 (PST)
-Date:   Tue, 26 Nov 2019 18:09:19 -0800
+        Tue, 26 Nov 2019 18:09:24 -0800 (PST)
+Date:   Tue, 26 Nov 2019 18:09:22 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Christian Biesinger <cbiesinger@google.com>
-Subject: [PATCH 4/5] format-patch: teach --no-base
-Message-ID: <e072c36e6a41ef70d2a15c052c672f94b54ce930.1574820308.git.liu.denton@gmail.com>
+Subject: [PATCH 5/5] rebase: fix `format.useAutoBase` breakage
+Message-ID: <15e6ccb2037d1e27b461d2344a13ebf1d5e10136.1574820308.git.liu.denton@gmail.com>
 References: <CAPTJ0XEcMJEwPBEL4akncJ_A5XwyQyKL95fpf2tC0rNXJK65Og@mail.gmail.com>
  <cover.1574820308.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -73,96 +73,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If `format.useAutoBase = true`, there was no way to override this from
-the command-line. Teach format-patch the `--no-base` option which
-overrides `format.useAutoBase`.
+With `format.useAutoBase = true`, running rebase resulted in an
+error when an upstream was't set:
 
+	fatal: failed to get upstream, if you want to record base commit automatically,
+	please use git branch --set-upstream-to to track a remote branch.
+	Or you could specify base commit by --base=<base-commit-id> manually
+	error:
+	git encountered an error while preparing the patches to replay
+	these revisions:
+
+	    ede2467cdedc63784887b587a61c36b7850ebfac..d8f581194799ae29bf5fa72a98cbae98a1198b12
+
+	As a result, git cannot rebase them.
+
+Fix this by always passing `--no-base` to format-patch from rebase so
+that the effect of `format.useAutoBase` is negated.
+
+Reported-by: Christian Biesinger <cbiesinger@google.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/git-format-patch.txt |  5 +++--
- builtin/log.c                      | 24 +++++++++++++++++++++---
- t/t4014-format-patch.sh            |  6 ++++++
- 3 files changed, 30 insertions(+), 5 deletions(-)
+ builtin/rebase.c  | 3 ++-
+ t/t3400-rebase.sh | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 00bdf9b125..0d4f8951bb 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -333,11 +333,12 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
-   Output an all-zero hash in each patch's From header instead
-   of the hash of the commit.
- 
----base=<commit>::
-+--[no-]base[=<commit>]::
- 	Record the base tree information to identify the state the
- 	patch series applies to.  See the BASE TREE INFORMATION section
- 	below for details. If <commit> is "auto", a base commit is
--	automatically chosen.
-+	automatically chosen. The `--no-base` option overrides a
-+	`format.useAutoBase` configuration.
- 
- --root::
- 	Treat the revision argument as a <revision range>, even if it
-diff --git a/builtin/log.c b/builtin/log.c
-index 9c44682f61..c017df4056 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1388,6 +1388,23 @@ static int from_callback(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int base_callback(const struct option *opt, const char *arg, int unset)
-+{
-+	char **base_commit = opt->value;
-+
-+	free(*base_commit);
-+
-+	if (unset) {
-+		base_auto = 0;
-+		*base_commit = NULL;
-+	} else if (arg) {
-+		*base_commit = xstrdup(arg);
-+	} else {
-+		BUG("arg is NULL");
-+	}
-+	return 0;
-+}
-+
- struct base_tree_info {
- 	struct object_id base_commit;
- 	int nr_patch_id, alloc_patch_id;
-@@ -1676,10 +1693,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_OPTARG, thread_callback },
- 		OPT_STRING(0, "signature", &signature, N_("signature"),
- 			    N_("add a signature")),
--		OPT_STRING(0, "base", &base_commit, N_("base-commit"),
--			   N_("add prerequisite tree info to the patch series")),
-+		{ OPTION_CALLBACK, 0, "base", &base_commit, N_("base-commit"),
-+			   N_("add prerequisite tree info to the patch series"),
-+			   0, base_callback },
- 		OPT_FILENAME(0, "signature-file", &signature_file,
--				N_("add a signature from a file")),
-+			N_("add a signature from a file")),
- 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
- 		OPT_BOOL(0, "progress", &show_progress,
- 			 N_("show progress while generating patches")),
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index c7cc643adf..a5b6302a1c 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -1958,6 +1958,12 @@ test_expect_success 'format-patch --base overrides format.useAutoBase' '
- 	test_cmp expect actual
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index e755087b0f..51980ab63d 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1012,7 +1012,8 @@ static int run_am(struct rebase_options *opts)
+ 	argv_array_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
+ 			 "--full-index", "--cherry-pick", "--right-only",
+ 			 "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
+-			 "--no-cover-letter", "--pretty=mboxrd", "--topo-order", NULL);
++			 "--no-cover-letter", "--pretty=mboxrd", "--topo-order",
++			 "--no-base", NULL);
+ 	if (opts->git_format_patch_opt.len)
+ 		argv_array_split(&format_patch.args,
+ 				 opts->git_format_patch_opt.buf);
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index ca99e8c6c4..1323f30fee 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -159,7 +159,7 @@ test_expect_success 'fail when upstream arg is missing and not configured' '
+ 	test_must_fail git rebase
  '
  
-+test_expect_success 'format-patch --no-base overrides format.useAutoBase' '
-+	test_config format.useAutoBase true &&
-+	git format-patch --stdout --no-base -1 >patch &&
-+	! grep "^base-commit:" patch
-+'
-+
- test_expect_success 'format-patch --base with --attach' '
- 	git format-patch --attach=mimemime --stdout --base=HEAD~ -1 >patch &&
- 	sed -n -e "/^base-commit:/s/.*/1/p" -e "/^---*mimemime--$/s/.*/2/p" \
+-test_expect_failure 'rebase works with format.useAutoBase' '
++test_expect_success 'rebase works with format.useAutoBase' '
+ 	test_config format.useAutoBase true &&
+ 	git checkout topic &&
+ 	git rebase master
 -- 
 2.24.0.504.g3cd56eb17d
 
