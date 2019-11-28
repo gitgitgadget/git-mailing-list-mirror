@@ -2,95 +2,170 @@ Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD85C432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57247C432C0
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DA1652176D
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:55:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 295DE21774
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ye+tWTYI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HuR5LkJD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbfK1MzE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 07:55:04 -0500
-Received: from mout.gmx.net ([212.227.15.15]:36865 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726227AbfK1MzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 07:55:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1574945702;
-        bh=2CttFXkHI51U8Ec/bO5qiXmoyNwPNO7uiwd2vcn8Kdw=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ye+tWTYIDB2Z+wsdx6A2gKD8Xt5AG3BI5bF1TgYBXUYco3gF3uTgOBnk3FmofFYBj
-         fsZQ6GWPV3uPaYzBg9FBNNUMu9uA0lpSvg0nCrEw1l1Wh91Q9q+OUojuFmFFjXVzDT
-         +mACUb87gjc9hlUf87vw+dKZCUFpH6RbHFwLYn94=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N8XPn-1hnTzI3mcL-014TC0; Thu, 28
- Nov 2019 13:55:02 +0100
-Date:   Thu, 28 Nov 2019 13:54:47 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Yang Zhao <yang.zhao@skyboxlabs.com>
-cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/4] git-p4: python 3 compatability
-In-Reply-To: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
-Message-ID: <nycvar.QRO.7.76.6.1911281352130.31080@tvgsbejvaqbjf.bet>
-References: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726715AbfK1TcX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 14:32:23 -0500
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:40533 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726696AbfK1TcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Nov 2019 14:32:22 -0500
+Received: by mail-wm1-f44.google.com with SMTP id y5so12727436wmi.5
+        for <git@vger.kernel.org>; Thu, 28 Nov 2019 11:32:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+UfiOnuE1uHHqLaqJrZF+9D8jVPuGot7i0UjK9ko0zo=;
+        b=HuR5LkJD4gMe1tJ/rvaem/1DKEbj/iOTiB0ZbeslOkT9Tn2/n6+n4AUMWVSePwfnWv
+         UxFmq6Zf2R5icFhwpdgkxtd9hw10p0M3w9qOBMgqu7Lei0VQHvllSgr1PMjmxq0RBwAP
+         Ir/msT7nziR6zWN1UyU3sL7JqZ19I4O/2LDxtyRDgk/wUndymY8Nw6sy3B/SGUceTCZ3
+         ORjosrdp7BkZvdjGCIncsUdmTp7WtYJUAzSgmrwjHbnJOcokBQrY+r6RpylFnlpfONTA
+         4m+yklXehCMjLK+dnpSqua+jbmsDbTvYS/zhTel6QaWQZBkrn0dFfyaOX6Ice6E9mwLY
+         yXdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+UfiOnuE1uHHqLaqJrZF+9D8jVPuGot7i0UjK9ko0zo=;
+        b=T1dV5CgIrlG1AImkxUz3Q9iQEX5GADbLNyjr2crGsZlnX1YotKnnc97Nva4uQA1358
+         VZWXWKGbZoP4S07XRqTgxJ4JxzQ6ScBfaiCpOfAJZyC1ZbTdONBFAGwlZGzM5Vu71ZjN
+         LZbUL7YatMDLDaFK7+ectzF1us3mhum7xL4EdshEVrHPSNrpXzrKcYqPQ/nw6tQL3Bjk
+         Ml6vWSCf9eoRtWVFjorDpsvHf2cFpwaS64wpwfGKJ6nBc6Mv42w91819mUgE5GVk838x
+         M4WCerEDynfSbY6mZ8cErESYGctd5tTG46gx+Q3cPTAwgVZS+BGrDrDJF/qSRjv7aiwp
+         Zcgg==
+X-Gm-Message-State: APjAAAWK4+sPtQOqNCkD0AfgvSw8A9qS8QfmrWKxL9rq8kjTnT+XgXwQ
+        4ZS0ZclC3Qz2IQRfwIjnS+t3lLDi
+X-Google-Smtp-Source: APXvYqyxlQHM6AdljEBB831J6O+3nEDMQ+9h8JGyEX9RLxf9gC4SsjIbB27RQ0jkVHfXmfs4YRmheQ==
+X-Received: by 2002:a05:600c:2549:: with SMTP id e9mr10698828wma.177.1574969540545;
+        Thu, 28 Nov 2019 11:32:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b2sm24765598wrr.76.2019.11.28.11.32.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Nov 2019 11:32:20 -0800 (PST)
+Message-Id: <771947d01f759a72b9f8999e929bf1f7765327aa.1574969538.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.479.git.1574969538.gitgitgadget@gmail.com>
+References: <pull.479.git.1574969538.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 28 Nov 2019 19:32:14 +0000
+Subject: [PATCH 1/5] parse_branchname_arg(): fix dash_dash_pos, drop argcount
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JTD6Q/nLvrWFkLEebmBvOMfmaAb4IJ4sB9B5b1vpRWd0/fnHozU
- K8L4k3sJhE3CW5mn96+FWlzq9LQKffb5/r1UHGU0/9PV/CCuXvfdCw60z3FBCWdFkACpswK
- WOmk5uGxCYhjnYVC+FNqld537lGqiYq57apUGehlWuikFHqG4aKkK0oYCDFSnSB+10xNOp+
- 2cOKVCGGocfzQyjKtENQA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:S+u7ADHPhKM=:a6EwaWfIXcJF48Jl0HuWEy
- LvcDuvL/RVrzDUf8i2pCUSH2NbWZaJVhpDBwvUYQu1a3lkhfAO3Z1X0/TNwtPWt1Dmt1xhe8u
- XY0eWphFZXiiQVVK5sGQBXaOCk/zuds/sqltIzIdfmXySccjGZf9fY2KrrRJT36yVpWx2eAhc
- /PRNfH6LlpWuxxYaYYsyCZpa4XnXqGUIwFlwFGTHf8XdvA93znqtGgRaI8VMMVZV0JMvp1hsM
- pKZ3tE5Bnheo1KSKDd50H5ePmlhJsF+Gu6N87S0yfVUrrf8A1l5k/td+akG9wezKrt5d3FFa3
- l2uC37rc/Z2ro/WWTFDDK7RMQj9j/ariYAwfBzj73IuUztS4uTQbaA3lc92AoQIOObQde6qiu
- Y01Zhao2LGhQoNFWtVAy4W7Ld6EoaP7eZjCDRgxKWPL2TinQv4YAAiUfpaXxN2rfhAQS6nzl8
- veRx4Zkkr6WYzfv3ohfOxG2e7PdVufrnZfCtwsMuJck6gBhbRGe/1CkgWZJuokeR7UBB+m5Bl
- POUbfh2AS0quDDYwcMhTLD+l/eiXE8jtybXHNkBoO8dVn4v1rttVhCHFrCPilueQ7N9CRsv9S
- /AT9UA2vhh88rG6LFqu6+X+h4qoVUolmxSSvo0FBtOLeKa1sqrjQyyrJhdoFKEnZtB/whfQ27
- tLxE+lUPxsdCkdYPDTChDYBMP/xzqCik2YFV4UZ+D9Hu71gTE/wK9B88aKJqTbTG9T4al1nar
- cA9EHGprXwEr5+hMNm9mh8T4ZMOukwBgCVcbQVOBHZnbnzbfc/j/93vIjG7F0FFRap7FXrgbc
- 3Gv3CCRJeL3TWk5M6VmGG0hM1mXPgCw1hRjStBF0rALVcbbgXUMw7FAO136jf/HQCCfqWqU7s
- S9a3OVQE2BS/Xg0q5iaz7jIXC/N7x9ECwNgn2hPKPShO90+xNMyV2aC0WFJGcTxR4bs4fSTMD
- QLfGN/x6GI6WACmKYP6FyQoVOeeHeRouDi0PehuktdPCnsoZtk22GdBQ+icCbKza9E1DR0WNf
- gMJxN4khiTBTa9JzzxgsYzu8BsV6zpiMIH5XXJyICjLNu0xtogJzBfmeRavc08Cp1uURXBDfJ
- kTnavdc20o0OJ7gDkDctvveI7746OF7i/DQtkfRjgN2dwpqGsr0OvwDtwYyKCJ3vayiQTLTos
- ftLYtlUHxMekHwGNRMI1D1kT1axQFIcb5bRx8nYQRmhmlP9c5b2HRPfcJrJBEC1h0MVnmR6Pg
- rpnNuXCF2zbNKvE+29OYt+HDIt4bVcvRAc4PJJP1o0Ttq8ifHK8+g28bibeI=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-On Wed, 27 Nov 2019, Yang Zhao wrote:
+`dash_dash_pos` was only calculated under `opts->accept_pathspec`. This
+is unexpected to readers and made it harder to reason about the code.
+Fix this by restoring the expected meaning.
 
-> This patchset the necessary changes to have git-p4 run under python 3.
->
-> I'm submitting this as an RFC as the changes are not exhaustive. I do no=
-t have
-> p4d available, and therefore cannot run the tests locally. I have made
-> best-effort attempts to test the changes against a repo I do have read a=
-ccess to.
+Simplify the code by dropping `argcount` and useless `argc` / `argv`
+manipulations.
 
-How about opening a PR at https://github.com/git/git? This will run our
-Travis and Azure Pipelines builds, and I am sure that you can add a
-debug-only patch to force-use Python3 on the Perforce tests (and if I were
-you, I would also restrict the run to those tests by editing `.travis.yml`
-and `azure-pipelines.yml`, both of which files should be easy enough to
-understand without additional documentation).
+This should not change behavior in any way.
 
-Ciao,
-Johannes
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ builtin/checkout.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 3634a3dac1..655b389756 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1121,7 +1121,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 				int *dwim_remotes_matched)
+ {
+ 	const char **new_branch = &opts->new_branch;
+-	int argcount = 0;
+ 	const char *arg;
+ 	int dash_dash_pos;
+ 	int has_dash_dash = 0;
+@@ -1180,17 +1179,21 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	arg = argv[0];
+ 	dash_dash_pos = -1;
+ 	for (i = 0; i < argc; i++) {
+-		if (opts->accept_pathspec && !strcmp(argv[i], "--")) {
++		if (!strcmp(argv[i], "--")) {
+ 			dash_dash_pos = i;
+ 			break;
+ 		}
+ 	}
+-	if (dash_dash_pos == 0)
+-		return 1; /* case (2) */
+-	else if (dash_dash_pos == 1)
+-		has_dash_dash = 1; /* case (3) or (1) */
+-	else if (dash_dash_pos >= 2)
+-		die(_("only one reference expected, %d given."), dash_dash_pos);
++
++	if (opts->accept_pathspec) {
++	    if (dash_dash_pos == 0)
++		    return 1; /* case (2) */
++	    else if (dash_dash_pos == 1)
++		    has_dash_dash = 1; /* case (3) or (1) */
++	    else if (dash_dash_pos >= 2)
++		    die(_("only one reference expected, %d given."), dash_dash_pos);
++	}
++
+ 	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
+ 
+ 	if (!strcmp(arg, "-"))
+@@ -1241,15 +1244,10 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		if (!recover_with_dwim) {
+ 			if (has_dash_dash)
+ 				die(_("invalid reference: %s"), arg);
+-			return argcount;
++			return 0;
+ 		}
+ 	}
+ 
+-	/* we can't end up being in (2) anymore, eat the argument */
+-	argcount++;
+-	argv++;
+-	argc--;
+-
+ 	setup_new_branch_info_and_source_tree(new_branch_info, opts, rev, arg);
+ 
+ 	if (!opts->source_tree)                   /* case (1): want a tree */
+@@ -1262,15 +1260,11 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		 * even if there happen to be a file called 'branch';
+ 		 * it would be extremely annoying.
+ 		 */
+-		if (argc)
++		if (argc > 1)
+ 			verify_non_filename(opts->prefix, arg);
+-	} else if (opts->accept_pathspec) {
+-		argcount++;
+-		argv++;
+-		argc--;
+ 	}
+ 
+-	return argcount;
++	return (dash_dash_pos == 1) ? 2 : 1;
+ }
+ 
+ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
+-- 
+gitgitgadget
+
