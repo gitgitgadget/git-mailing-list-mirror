@@ -5,63 +5,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75C4AC432C3
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEED7C43215
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3C235216F4
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F80C2176D
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crUa4MT9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPdDJyZE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727480AbfK1Iam (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 03:30:42 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:37483 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727443AbfK1Ial (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 03:30:41 -0500
-Received: by mail-wr1-f45.google.com with SMTP id g7so9282237wrw.4
+        id S1727484AbfK1Iao (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 03:30:44 -0500
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:37493 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727454AbfK1Ian (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Nov 2019 03:30:43 -0500
+Received: by mail-wr1-f54.google.com with SMTP id g7so9282289wrw.4
         for <git@vger.kernel.org>; Thu, 28 Nov 2019 00:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wHrrRl+Dp83FV4BMvMMtP7JLT67I+jVT60YmG+z4XtY=;
-        b=crUa4MT9l56khKJBK0YSsvUC0X8aHHGQiA45hnDyxCVeTiUc2DpeYxZga0cjf+YcCk
-         QXFeAndnGIkeG7m/4d6+Q7in9ZmrEtU+KGHzyFc7418MfsHmJN5u5UiluhfMdAjTkQu8
-         6LAS/4c10hyWKfm1IFod6G2BO0Hg7G7PBWsNDYle8scIvUquE36gtNfcDHHjE4Je6r6o
-         ItT5n0BdsfhsJEG8MdRap2ICdSF9cnGJpItA9c3M/CtDqWeZ4RE4FV4U8KfkKkHfP3ax
-         roxz3WLX2h3QUsBGE0aVRZ/iemG5M60/JUZJI13bOLNgPombcYm+MiqMZo08LmcTrwCx
-         LhBw==
+        bh=2wb/SmZuG3FWv0agI7vfifV8A3449FNQrgTWhz5o9ag=;
+        b=NPdDJyZEiDq7YjXxGaY42+EodX+zH+C9WyGkUUp7gdBEHps6GdkmnDBwTiKAoSrLHX
+         ImJK2aSe70HzEA7MKqASMHz9aaJa26kFQ8ijTU6dz0Azm3ueR7dD69ttBZGx8jyd9Uta
+         RMnozSghcO4yX2ZZqdHFz2bAImNWtv4PyCubUe970UQFTJ/5WOOykZ20YfDiNFO1i/O7
+         PmEKpy/95dxgJzBSDM31Ah9IT0NylriRM6hIuZA+konCWRQgX7iYKUbbbrKJ382qE+ch
+         JqACPutcZzNKxvYHJob/kQ2IVnWwg1pdJ0cH/m18Duz9KE6L9YFo1LTPZnwvkX+RL+F/
+         VMwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wHrrRl+Dp83FV4BMvMMtP7JLT67I+jVT60YmG+z4XtY=;
-        b=i2eovo1RC65RNjqQuOPX2365qCZlvD+0PjNkYD59ujJtWGCgTl9w/lZWYutTca/DLg
-         etqD8meQddM5cYIxFXwKlhCULz8BKvyBMvnpxIZ7L0lHJR/lroLOkg2Ncnjf8zKhKHXu
-         aP3KzFqCTawW5nUEJlUOl1knbTVEh+DQC+T8yuU5TzrHf2D7QCHchTroRuxkCdb1x9i6
-         i+0x658S0eig3G4Tcoi3qcxzWF+OQpKViGj2mEGEsOMkykWpl/jXFL77PzeoNo6JANev
-         BIjJDXXDpJIodNhfNUebL66jTliG/yx+jGPyWBgCd8/BRS9oAmxxRb5sl71bwJuj2WyE
-         8xHg==
-X-Gm-Message-State: APjAAAXqyMojCGqt/i2ZHevNYeVTwNhU8u5LQuAku4vwElUtyY4VLeqK
-        WQJOiEX9GJryKT0RCrWwiV/cuZWD
-X-Google-Smtp-Source: APXvYqzZdyZIpCTu0svcx7S9odrHv5aJzb/QrwQheM6CGS1Epc6EiG8mqK24hyRyFaeMfnL6C2sJOg==
-X-Received: by 2002:adf:e70d:: with SMTP id c13mr47115691wrm.248.1574929836715;
-        Thu, 28 Nov 2019 00:30:36 -0800 (PST)
+        bh=2wb/SmZuG3FWv0agI7vfifV8A3449FNQrgTWhz5o9ag=;
+        b=o0PzI8pBL0acjeBZIJLqMecq1dLCLl8xC504WFjh7yxdu2UHO0HO3mm9M40P1CTXNB
+         IUitY5SColYM62p7w2LtAcE3h7dEY/3j13CTn2CVt+LkiXN416gOY4E5coQx6JhqvvIX
+         zTXJsQW1fl9RetfQcBmWvJqYU5f7/gMbxIK8FQBsoMjO0NAao6JhevWb+WmuzuRxBK68
+         Rop9ybw0gYLVnk9jgoJ1FLpbbnh5VtFHH9QdudOmKzdKXfHwrIdj4gl77Fr7I1VS26Ly
+         8BfpCeUNB6rUvywv37anUZqHI4Z9wo7mXASx+vQ2i2j2YP+/jSOcIjPGYWmklxwa9eJo
+         5F/w==
+X-Gm-Message-State: APjAAAWSZJevVj5b9eOkKZCheyP/dA1jKsTQh6Hmw99sq01ypOPWKIQe
+        bLQCVjRC6aEAyBU95dpsLGKUEawu
+X-Google-Smtp-Source: APXvYqwnZj9LFXRWede6LKgoIoM+zFydj6oON9BzfNgxLXb95YYJbTU8SDRFf/9VQuEIv7T9pjKSUw==
+X-Received: by 2002:adf:9c8a:: with SMTP id d10mr6893834wre.156.1574929837437;
+        Thu, 28 Nov 2019 00:30:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r15sm23278385wrc.5.2019.11.28.00.30.36
+        by smtp.gmail.com with ESMTPSA id m15sm22419699wrq.97.2019.11.28.00.30.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Nov 2019 00:30:36 -0800 (PST)
-Message-Id: <ab3d8e54c3d3d5174fe222ee77101ab3b8e9cab8.1574929833.git.gitgitgadget@gmail.com>
+        Thu, 28 Nov 2019 00:30:37 -0800 (PST)
+Message-Id: <3388407871f2e209354df03669d7efd78978bed3.1574929833.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.436.v6.git.1574929833.gitgitgadget@gmail.com>
 References: <pull.436.v5.git.1574627876.gitgitgadget@gmail.com>
         <pull.436.v6.git.1574929833.gitgitgadget@gmail.com>
 From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 Nov 2019 08:30:32 +0000
-Subject: [PATCH v6 2/3] git-gui: update status bar to track operations
+Date:   Thu, 28 Nov 2019 08:30:33 +0000
+Subject: [PATCH v6 3/3] git-gui: revert untracked files by deleting them
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,961 +76,707 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-Update the status bar to track updates as individual "operations" that
-can overlap. Update all call sites to interact with the new status bar
-mechanism. Update initialization to explicitly clear status text,
-since otherwise it may persist across future operations.
+Update the revert_helper proc to check for untracked files as well as
+changes, and then handle changes to be reverted and untracked files with
+independent blocks of code. Prompt the user independently for untracked
+files, since the underlying action is fundamentally different (rm -f).
+If after deleting untracked files, the directory containing them becomes
+empty, then remove the directory as well. Migrate unlocking of the index
+out of _close_updateindex to a responsibility of the caller, to permit
+paths that don't directly unlock the index, and refactor the error
+handling added in d4e890e5 so that callers can make flow control
+decisions in the event of errors. Update Tcl/Tk dependency from 8.4 to
+8.6 in git-gui.sh.
+
+A new proc delete_files takes care of actually deleting the files in
+batches, using the Tcler's Wiki recommended approach for keeping the UI
+responsive.
+
+Since the checkout_index and delete_files calls are both asynchronous
+and could potentially complete in any order, a "chord" is used to
+coordinate unlocking the index and returning the UI to a usable state
+only after both operations are complete. The `SimpleChord` class,
+based on TclOO (Tcl/Tk 8.6), is added in this commit.
 
 Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
 ---
- git-gui.sh                |  31 +++---
- lib/blame.tcl             |  24 ++--
- lib/checkout_op.tcl       |  15 +--
- lib/choose_repository.tcl | 120 +++++++++++++-------
- lib/index.tcl             |  31 ++++--
- lib/merge.tcl             |  14 ++-
- lib/status_bar.tcl        | 229 +++++++++++++++++++++++++++++++++-----
- 7 files changed, 354 insertions(+), 110 deletions(-)
+ lib/chord.tcl | 160 +++++++++++++++++++
+ lib/index.tcl | 422 ++++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 500 insertions(+), 82 deletions(-)
+ create mode 100644 lib/chord.tcl
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 0d21f5688b..6dcf6551b6 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -30,8 +30,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.}]
- ##
- ## Tcl/Tk sanity check
- 
--if {[catch {package require Tcl 8.4} err]
-- || [catch {package require Tk  8.4} err]
-+if {[catch {package require Tcl 8.6} err]
-+ || [catch {package require Tk  8.6} err]
- } {
- 	catch {wm withdraw .}
- 	tk_messageBox \
-@@ -1797,10 +1797,10 @@ proc ui_status {msg} {
- 	}
- }
- 
--proc ui_ready {{test {}}} {
-+proc ui_ready {} {
- 	global main_status
- 	if {[info exists main_status]} {
--		$main_status show [mc "Ready."] $test
-+		$main_status show [mc "Ready."]
- 	}
- }
- 
-@@ -2150,8 +2150,6 @@ proc incr_font_size {font {amt 1}} {
- ##
- ## ui commands
- 
--set starting_gitk_msg [mc "Starting gitk... please wait..."]
--
- proc do_gitk {revs {is_submodule false}} {
- 	global current_diff_path file_states current_diff_side ui_index
- 	global _gitdir _gitworktree
-@@ -2206,10 +2204,11 @@ proc do_gitk {revs {is_submodule false}} {
- 		set env(GIT_WORK_TREE) $_gitworktree
- 		cd $pwd
- 
--		ui_status $::starting_gitk_msg
--		after 10000 {
--			ui_ready $starting_gitk_msg
--		}
-+		set status_operation [$::main_status \
-+			start \
-+			[mc "Starting %s... please wait..." "gitk"]]
+diff --git a/lib/chord.tcl b/lib/chord.tcl
+new file mode 100644
+index 0000000000..275a6cd4a1
+--- /dev/null
++++ b/lib/chord.tcl
+@@ -0,0 +1,160 @@
++# Simple Chord for Tcl
++#
++# A "chord" is a method with more than one entrypoint and only one body, such
++# that the body runs only once all the entrypoints have been called by
++# different asynchronous tasks. In this implementation, the chord is defined
++# dynamically for each invocation. A SimpleChord object is created, supplying
++# body script to be run when the chord is completed, and then one or more notes
++# are added to the chord. Each note can be called like a proc, and returns
++# immediately if the chord isn't yet complete. When the last remaining note is
++# called, the body runs before the note returns.
++#
++# The SimpleChord class has a constructor that takes the body script, and a
++# method add_note that returns a note object. Since the body script does not
++# run in the context of the procedure that defined it, a mechanism is provided
++# for injecting variables into the chord for use by the body script. The
++# activation of a note is idempotent; multiple calls have the same effect as
++# a simple call.
++#
++# If you are invoking asynchronous operations with chord notes as completion
++# callbacks, and there is a possibility that earlier operations could complete
++# before later ones are started, it is a good practice to create a "common"
++# note on the chord that prevents it from being complete until you're certain
++# you've added all the notes you need.
++#
++# Example:
++#
++#   # Turn off the UI while running a couple of async operations.
++#   lock_ui
++#
++#   set chord [SimpleChord new {
++#     unlock_ui
++#     # Note: $notice here is not referenced in the calling scope
++#     if {$notice} { info_popup $notice }
++#   }
++#
++#   # Configure a note to keep the chord from completing until
++#   # all operations have been initiated.
++#   set common_note [$chord add_note]
++#
++#   # Pass notes as 'after' callbacks to other operations
++#   async_operation $args [$chord add_note]
++#   other_async_operation $args [$chord add_note]
++#
++#   # Communicate with the chord body
++#   if {$condition} {
++#     # This sets $notice in the same context that the chord body runs in.
++#     $chord eval { set notice "Something interesting" }
++#   }
++#
++#   # Activate the common note, making the chord eligible to complete
++#   $common_note
++#
++# At this point, the chord will complete at some unknown point in the future.
++# The common note might have been the first note activated, or the async
++# operations might have completed synchronously and the common note is the
++# last one, completing the chord before this code finishes, or anything in
++# between. The purpose of the chord is to not have to worry about the order.
 +
-+		after 3500 [list $status_operation stop]
- 	}
- }
- 
-@@ -2240,10 +2239,11 @@ proc do_git_gui {} {
- 		set env(GIT_WORK_TREE) $_gitworktree
- 		cd $pwd
- 
--		ui_status $::starting_gitk_msg
--		after 10000 {
--			ui_ready $starting_gitk_msg
--		}
-+		set status_operation [$::main_status \
-+			start \
-+			[mc "Starting %s... please wait..." "git-gui"]]
++# SimpleChord class:
++#   Represents a procedure that conceptually has multiple entrypoints that must
++#   all be called before the procedure executes. Each entrypoint is called a
++#   "note". The chord is only "completed" when all the notes are "activated".
++oo::class create SimpleChord {
++	variable notes body is_completed
 +
-+		after 3500 [list $status_operation stop]
- 	}
- }
- 
-@@ -4159,6 +4159,9 @@ if {$picked && [is_config_true gui.autoexplore]} {
- 	do_explore
- }
- 
-+# Clear "Initializing..." status
-+after 500 {$main_status show ""}
-+
- # Local variables:
- # mode: tcl
- # indent-tabs-mode: t
-diff --git a/lib/blame.tcl b/lib/blame.tcl
-index a1aeb8b96e..bfcacd5584 100644
---- a/lib/blame.tcl
-+++ b/lib/blame.tcl
-@@ -24,6 +24,7 @@ field w_cviewer  ; # pane showing commit message
- field finder     ; # find mini-dialog frame
- field gotoline   ; # line goto mini-dialog frame
- field status     ; # status mega-widget instance
-+field status_operation ; # operation displayed by status mega-widget
- field old_height ; # last known height of $w.file_pane
- 
- 
-@@ -274,6 +275,7 @@ constructor new {i_commit i_path i_jump} {
- 	pack $w_cviewer -expand 1 -fill both
- 
- 	set status [::status_bar::new $w.status]
-+	set status_operation {}
- 
- 	menu $w.ctxm -tearoff 0
- 	$w.ctxm add command \
-@@ -602,16 +604,23 @@ method _exec_blame {cur_w cur_d options cur_s} {
- 	} else {
- 		lappend options $commit
- 	}
-+
-+	# We may recurse in from another call to _exec_blame and already have
-+	# a status operation.
-+	if {$status_operation == {}} {
-+		set status_operation [$status start \
-+			$cur_s \
-+			[mc "lines annotated"]]
-+	} else {
-+		$status_operation show $cur_s
++	# Constructor:
++	#   set chord [SimpleChord new {body}]
++	#     Creates a new chord object with the specified body script. The
++	#     body script is evaluated at most once, when a note is activated
++	#     and the chord has no other non-activated notes.
++	constructor {body} {
++		set notes [list]
++		my eval [list set body $body]
++		set is_completed 0
 +	}
 +
- 	lappend options -- $path
- 	set fd [eval git_read --nice blame $options]
- 	fconfigure $fd -blocking 0 -translation lf -encoding utf-8
- 	fileevent $fd readable [cb _read_blame $fd $cur_w $cur_d]
- 	set current_fd $fd
- 	set blame_lines 0
--
--	$status start \
--		$cur_s \
--		[mc "lines annotated"]
- }
- 
- method _read_blame {fd cur_w cur_d} {
-@@ -806,10 +815,11 @@ method _read_blame {fd cur_w cur_d} {
- 				[mc "Loading original location annotations..."]
- 		} else {
- 			set current_fd {}
--			$status stop [mc "Annotation complete."]
-+			$status_operation stop [mc "Annotation complete."]
-+			set status_operation {}
- 		}
- 	} else {
--		$status update $blame_lines $total_lines
-+		$status_operation update $blame_lines $total_lines
- 	}
- } ifdeleted { catch {close $fd} }
- 
-@@ -1124,7 +1134,7 @@ method _blameparent {} {
- 			set diffcmd [list diff-tree --unified=0 $cparent $cmit -- $new_path]
- 		}
- 		if {[catch {set fd [eval git_read $diffcmd]} err]} {
--			$status stop [mc "Unable to display parent"]
-+			$status_operation stop [mc "Unable to display parent"]
- 			error_popup [strcat [mc "Error loading diff:"] "\n\n$err"]
- 			return
- 		}
-diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
-index a5228297db..21ea768d80 100644
---- a/lib/checkout_op.tcl
-+++ b/lib/checkout_op.tcl
-@@ -341,9 +341,9 @@ method _readtree {} {
- 	global HEAD
- 
- 	set readtree_d {}
--	$::main_status start \
-+	set status_bar_operation [$::main_status start \
- 		[mc "Updating working directory to '%s'..." [_name $this]] \
--		[mc "files checked out"]
-+		[mc "files checked out"]]
- 
- 	set fd [git_read --stderr read-tree \
- 		-m \
-@@ -354,26 +354,27 @@ method _readtree {} {
- 		$new_hash \
- 		]
- 	fconfigure $fd -blocking 0 -translation binary
--	fileevent $fd readable [cb _readtree_wait $fd]
-+	fileevent $fd readable [cb _readtree_wait $fd $status_bar_operation]
- }
- 
--method _readtree_wait {fd} {
-+method _readtree_wait {fd status_bar_operation} {
- 	global current_branch
- 
- 	set buf [read $fd]
--	$::main_status update_meter $buf
-+	$status_bar_operation update_meter $buf
- 	append readtree_d $buf
- 
- 	fconfigure $fd -blocking 1
- 	if {![eof $fd]} {
- 		fconfigure $fd -blocking 0
-+		$status_bar_operation stop
- 		return
- 	}
- 
- 	if {[catch {close $fd}]} {
- 		set err $readtree_d
- 		regsub {^fatal: } $err {} err
--		$::main_status stop [mc "Aborted checkout of '%s' (file level merging is required)." [_name $this]]
-+		$status_bar_operation stop [mc "Aborted checkout of '%s' (file level merging is required)." [_name $this]]
- 		warn_popup [strcat [mc "File level merge required."] "
- 
- $err
-@@ -384,7 +385,7 @@ $err
- 		return
- 	}
- 
--	$::main_status stop
-+	$status_bar_operation stop
- 	_after_readtree $this
- }
- 
-diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
-index 80f5a59bbb..1ea0c9f7b8 100644
---- a/lib/choose_repository.tcl
-+++ b/lib/choose_repository.tcl
-@@ -9,6 +9,18 @@ field w_body      ; # Widget holding the center content
- field w_next      ; # Next button
- field w_quit      ; # Quit button
- field o_cons      ; # Console object (if active)
++	# Method:
++	#   $chord eval {script}
++	#     Runs the specified script in the same context (namespace) in which
++	#     the chord body will be evaluated. This can be used to set variable
++	#     values for the chord body to use.
++	method eval {script} {
++		namespace eval [self] $script
++	}
 +
-+# Status mega-widget instance during _do_clone2 (used by _copy_files and
-+# _link_files). Widget is destroyed before _do_clone2 calls
-+# _do_clone_checkout
-+field o_status
++	# Method:
++	#   set note [$chord add_note]
++	#     Adds a new note to the chord, an instance of ChordNote. Raises an
++	#     error if the chord is already completed, otherwise the chord is
++	#     updated so that the new note must also be activated before the
++	#     body is evaluated.
++	method add_note {} {
++		if {$is_completed} { error "Cannot add a note to a completed chord" }
 +
-+# Operation displayed by status mega-widget during _do_clone_checkout =>
-+# _readtree_wait => _postcheckout_wait => _do_clone_submodules =>
-+# _do_validate_submodule_cloning. The status mega-widget is a difference
-+# instance than that stored in $o_status in earlier operations.
-+field o_status_op
++		set note [ChordNote new [self]]
 +
- field w_types     ; # List of type buttons in clone
- field w_recentlist ; # Listbox containing recent repositories
- field w_localpath  ; # Entry widget bound to local_path
-@@ -659,12 +671,12 @@ method _do_clone2 {} {
- 
- 	switch -exact -- $clone_type {
- 	hardlink {
--		set o_cons [status_bar::two_line $w_body]
-+		set o_status [status_bar::two_line $w_body]
- 		pack $w_body -fill x -padx 10 -pady 10
- 
--		$o_cons start \
-+		set status_op [$o_status start \
- 			[mc "Counting objects"] \
--			[mc "buckets"]
-+			[mc "buckets"]]
- 		update
- 
- 		if {[file exists [file join $objdir info alternates]]} {
-@@ -689,6 +701,7 @@ method _do_clone2 {} {
- 			} err]} {
- 				catch {cd $pwd}
- 				_clone_failed $this [mc "Unable to copy objects/info/alternates: %s" $err]
-+				$status_op stop
- 				return
- 			}
- 		}
-@@ -700,7 +713,7 @@ method _do_clone2 {} {
- 			-directory [file join $objdir] ??]
- 		set bcnt [expr {[llength $buckets] + 2}]
- 		set bcur 1
--		$o_cons update $bcur $bcnt
-+		$status_op update $bcur $bcnt
- 		update
- 
- 		file mkdir [file join .git objects pack]
-@@ -708,7 +721,7 @@ method _do_clone2 {} {
- 			-directory [file join $objdir pack] *] {
- 			lappend tolink [file join pack $i]
- 		}
--		$o_cons update [incr bcur] $bcnt
-+		$status_op update [incr bcur] $bcnt
- 		update
- 
- 		foreach i $buckets {
-@@ -717,10 +730,10 @@ method _do_clone2 {} {
- 				-directory [file join $objdir $i] *] {
- 				lappend tolink [file join $i $j]
- 			}
--			$o_cons update [incr bcur] $bcnt
-+			$status_op update [incr bcur] $bcnt
- 			update
- 		}
--		$o_cons stop
-+		$status_op stop
- 
- 		if {$tolink eq {}} {
- 			info_popup [strcat \
-@@ -747,6 +760,8 @@ method _do_clone2 {} {
- 		if {!$i} return
- 
- 		destroy $w_body
++		lappend notes $note
 +
-+		set o_status {}
- 	}
- 	full {
- 		set o_cons [console::embed \
-@@ -781,9 +796,9 @@ method _do_clone2 {} {
- }
- 
- method _copy_files {objdir tocopy} {
--	$o_cons start \
-+	set status_op [$o_status start \
- 		[mc "Copying objects"] \
--		[mc "KiB"]
-+		[mc "KiB"]]
- 	set tot 0
- 	set cmp 0
- 	foreach p $tocopy {
-@@ -798,7 +813,7 @@ method _copy_files {objdir tocopy} {
- 
- 				while {![eof $f_in]} {
- 					incr cmp [fcopy $f_in $f_cp -size 16384]
--					$o_cons update \
-+					$status_op update \
- 						[expr {$cmp / 1024}] \
- 						[expr {$tot / 1024}]
- 					update
-@@ -808,17 +823,19 @@ method _copy_files {objdir tocopy} {
- 				close $f_cp
- 			} err]} {
- 			_clone_failed $this [mc "Unable to copy object: %s" $err]
-+			$status_op stop
- 			return 0
- 		}
- 	}
-+	$status_op stop
- 	return 1
- }
- 
- method _link_files {objdir tolink} {
- 	set total [llength $tolink]
--	$o_cons start \
-+	set status_op [$o_status start \
- 		[mc "Linking objects"] \
--		[mc "objects"]
-+		[mc "objects"]]
- 	for {set i 0} {$i < $total} {} {
- 		set p [lindex $tolink $i]
- 		if {[catch {
-@@ -827,15 +844,17 @@ method _link_files {objdir tolink} {
- 					[file join $objdir $p]
- 			} err]} {
- 			_clone_failed $this [mc "Unable to hardlink object: %s" $err]
-+			$status_op stop
- 			return 0
- 		}
- 
- 		incr i
- 		if {$i % 5 == 0} {
--			$o_cons update $i $total
-+			$status_op update $i $total
- 			update
- 		}
- 	}
-+	$status_op stop
- 	return 1
- }
- 
-@@ -958,11 +977,26 @@ method _do_clone_checkout {HEAD} {
- 		return
- 	}
- 
--	set o_cons [status_bar::two_line $w_body]
-+	set status [status_bar::two_line $w_body]
- 	pack $w_body -fill x -padx 10 -pady 10
--	$o_cons start \
++		return $note
++	}
 +
-+	# We start the status operation here.
-+	#
-+	# This function calls _readtree_wait as a callback.
-+	#
-+	# _readtree_wait in turn either calls _do_clone_submodules directly,
-+	# or calls _postcheckout_wait as a callback which then calls
-+	# _do_clone_submodules.
-+	#
-+	# _do_clone_submodules calls _do_validate_submodule_cloning.
-+	#
-+	# _do_validate_submodule_cloning stops the status operation.
-+	#
-+	# There are no other calls into this chain from other code.
++	# This method is for internal use only and is intentionally undocumented.
++	method notify_note_activation {} {
++		if {!$is_completed} {
++			foreach note $notes {
++				if {![$note is_activated]} { return }
++			}
 +
-+	set o_status_op [$status start \
- 		[mc "Creating working directory"] \
--		[mc "files"]
-+		[mc "files"]]
- 
- 	set readtree_err {}
- 	set fd [git_read --stderr read-tree \
-@@ -976,33 +1010,9 @@ method _do_clone_checkout {HEAD} {
- 	fileevent $fd readable [cb _readtree_wait $fd]
- }
- 
--method _do_validate_submodule_cloning {ok} {
--	if {$ok} {
--		$o_cons done $ok
--		set done 1
--	} else {
--		_clone_failed $this [mc "Cannot clone submodules."]
--	}
--}
--
--method _do_clone_submodules {} {
--	if {$recursive eq {true}} {
--		destroy $w_body
--		set o_cons [console::embed \
--			$w_body \
--			[mc "Cloning submodules"]]
--		pack $w_body -fill both -expand 1 -padx 10
--		$o_cons exec \
--			[list git submodule update --init --recursive] \
--			[cb _do_validate_submodule_cloning]
--	} else {
--		set done 1
--	}
--}
--
- method _readtree_wait {fd} {
- 	set buf [read $fd]
--	$o_cons update_meter $buf
-+	$o_status_op update_meter $buf
- 	append readtree_err $buf
- 
- 	fconfigure $fd -blocking 1
-@@ -1050,6 +1060,34 @@ method _postcheckout_wait {fd_ph} {
- 	fconfigure $fd_ph -blocking 0
- }
- 
-+method _do_clone_submodules {} {
-+	if {$recursive eq {true}} {
-+		$o_status_op stop
-+		set o_status_op {}
++			set is_completed 1
 +
-+		destroy $w_body
-+
-+		set o_cons [console::embed \
-+			$w_body \
-+			[mc "Cloning submodules"]]
-+		pack $w_body -fill both -expand 1 -padx 10
-+		$o_cons exec \
-+			[list git submodule update --init --recursive] \
-+			[cb _do_validate_submodule_cloning]
-+	} else {
-+		set done 1
++			namespace eval [self] $body
++			namespace delete [self]
++		}
 +	}
 +}
 +
-+method _do_validate_submodule_cloning {ok} {
-+	if {$ok} {
-+		$o_cons done $ok
-+		set done 1
-+	} else {
-+		_clone_failed $this [mc "Cannot clone submodules."]
++# ChordNote class:
++#   Represents a note within a chord, providing a way to activate it. When the
++#   final note of the chord is activated (this can be any note in the chord,
++#   with all other notes already previously activated in any order), the chord's
++#   body is evaluated.
++oo::class create ChordNote {
++	variable chord is_activated
++
++	# Constructor:
++	#   Instances of ChordNote are created internally by calling add_note on
++	#   SimpleChord objects.
++	constructor {chord} {
++		my eval set chord $chord
++		set is_activated 0
++	}
++
++	# Method:
++	#   [$note is_activated]
++	#     Returns true if this note has already been activated.
++	method is_activated {} {
++		return $is_activated
++	}
++
++	# Method:
++	#   $note
++	#     Activates the note, if it has not already been activated, and
++	#     completes the chord if there are no other notes awaiting
++	#     activation. Subsequent calls will have no further effect.
++	#
++	# NB: In TclOO, if an object is invoked like a method without supplying
++	#     any method name, then this internal method `unknown` is what
++	#     actually runs (with no parameters). It is used in the ChordNote
++	#     class for the purpose of allowing the note object to be called as
++	#     a function (see example above). (The `unknown` method can also be
++	#     used to support dynamic dispatch, but must take parameters to
++	#     identify the "unknown" method to be invoked. In this form, this
++	#     proc serves only to make instances behave directly like methods.)
++	method unknown {} {
++		if {!$is_activated} {
++			set is_activated 1
++			$chord notify_note_activation
++		}
 +	}
 +}
-+
- ######################################################################
- ##
- ## Open Existing Repository
 diff --git a/lib/index.tcl b/lib/index.tcl
-index 28d4d2a54e..62f4773ef4 100644
+index 62f4773ef4..1254145634 100644
 --- a/lib/index.tcl
 +++ b/lib/index.tcl
-@@ -45,13 +45,13 @@ proc _close_updateindex {fd after} {
- 		wm deiconify $w
- 		tkwait window $w
+@@ -7,53 +7,60 @@ proc _delete_indexlock {} {
+ 	}
+ }
  
--		$::main_status stop
-+		$::main_status stop_all
+-proc _close_updateindex {fd after} {
+-	global use_ttk NS
+-	fconfigure $fd -blocking 1
+-	if {[catch {close $fd} err]} {
+-		set w .indexfried
+-		Dialog $w
+-		wm withdraw $w
+-		wm title $w [strcat "[appname] ([reponame]): " [mc "Index Error"]]
+-		wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
+-		set s [mc "Updating the Git index failed.  A rescan will be automatically started to resynchronize git-gui."]
+-		text $w.msg -yscrollcommand [list $w.vs set] \
+-			-width [string length $s] -relief flat \
+-			-borderwidth 0 -highlightthickness 0 \
+-			-background [get_bg_color $w]
+-		$w.msg tag configure bold -font font_uibold -justify center
+-		${NS}::scrollbar $w.vs -command [list $w.msg yview]
+-		$w.msg insert end $s bold \n\n$err {}
+-		$w.msg configure -state disabled
+-
+-		${NS}::button $w.continue \
+-			-text [mc "Continue"] \
+-			-command [list destroy $w]
+-		${NS}::button $w.unlock \
+-			-text [mc "Unlock Index"] \
+-			-command "destroy $w; _delete_indexlock"
+-		grid $w.msg - $w.vs -sticky news
+-		grid $w.unlock $w.continue - -sticky se -padx 2 -pady 2
+-		grid columnconfigure $w 0 -weight 1
+-		grid rowconfigure $w 0 -weight 1
+-
+-		wm protocol $w WM_DELETE_WINDOW update
+-		bind $w.continue <Visibility> "
+-			grab $w
+-			focus %W
+-		"
+-		wm deiconify $w
+-		tkwait window $w
+-
+-		$::main_status stop_all
++proc close_and_unlock_index {fd after} {
++	if {![catch {_close_updateindex $fd} err]} {
  		unlock_index
- 		rescan $after 0
- 		return
+-		rescan $after 0
+-		return
++		uplevel #0 $after
++	} else {
++		rescan_on_error $err $after
  	}
++}
++
++proc _close_updateindex {fd} {
++	fconfigure $fd -blocking 1
++	close $fd
++}
++
++proc rescan_on_error {err {after {}}} {
++	global use_ttk NS
++
++	set w .indexfried
++	Dialog $w
++	wm withdraw $w
++	wm title $w [strcat "[appname] ([reponame]): " [mc "Index Error"]]
++	wm geometry $w "+[winfo rootx .]+[winfo rooty .]"
++	set s [mc "Updating the Git index failed.  A rescan will be automatically started to resynchronize git-gui."]
++	text $w.msg -yscrollcommand [list $w.vs set] \
++		-width [string length $s] -relief flat \
++		-borderwidth 0 -highlightthickness 0 \
++		-background [get_bg_color $w]
++	$w.msg tag configure bold -font font_uibold -justify center
++	${NS}::scrollbar $w.vs -command [list $w.msg yview]
++	$w.msg insert end $s bold \n\n$err {}
++	$w.msg configure -state disabled
++
++	${NS}::button $w.continue \
++		-text [mc "Continue"] \
++		-command [list destroy $w]
++	${NS}::button $w.unlock \
++		-text [mc "Unlock Index"] \
++		-command "destroy $w; _delete_indexlock"
++	grid $w.msg - $w.vs -sticky news
++	grid $w.unlock $w.continue - -sticky se -padx 2 -pady 2
++	grid columnconfigure $w 0 -weight 1
++	grid rowconfigure $w 0 -weight 1
++
++	wm protocol $w WM_DELETE_WINDOW update
++	bind $w.continue <Visibility> "
++		grab $w
++		focus %W
++	"
++	wm deiconify $w
++	tkwait window $w
  
--	$::main_status stop
-+	$::main_status stop_all
+ 	$::main_status stop_all
  	unlock_index
- 	uplevel #0 $after
+-	uplevel #0 $after
++	rescan [concat $after [list ui_ready]] 0
  }
-@@ -67,7 +67,7 @@ proc update_indexinfo {msg path_list after} {
- 	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
  
--	$::main_status start $msg [mc "files"]
-+	set status_bar_operation [$::main_status start $msg [mc "files"]]
- 	set fd [git_write update-index -z --index-info]
- 	fconfigure $fd \
- 		-blocking 0 \
-@@ -81,15 +81,18 @@ proc update_indexinfo {msg path_list after} {
- 		$path_list \
- 		$total_cnt \
+ proc update_indexinfo {msg path_list after} {
+@@ -93,7 +100,7 @@ proc write_update_indexinfo {fd path_list total_cnt batch status_bar_operation \
+ 
+ 	if {$update_index_cp >= $total_cnt} {
+ 		$status_bar_operation stop
+-		_close_updateindex $fd $after
++		close_and_unlock_index $fd $after
+ 		return
+ 	}
+ 
+@@ -162,7 +169,7 @@ proc write_update_index {fd path_list total_cnt batch status_bar_operation \
+ 
+ 	if {$update_index_cp >= $total_cnt} {
+ 		$status_bar_operation stop
+-		_close_updateindex $fd $after
++		close_and_unlock_index $fd $after
+ 		return
+ 	}
+ 
+@@ -199,7 +206,7 @@ proc write_update_index {fd path_list total_cnt batch status_bar_operation \
+ 	$status_bar_operation update $update_index_cp $total_cnt
+ }
+ 
+-proc checkout_index {msg path_list after} {
++proc checkout_index {msg path_list after capture_error} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+@@ -232,17 +239,33 @@ proc checkout_index {msg path_list after} {
  		$batch \
-+		$status_bar_operation \
+ 		$status_bar_operation \
  		$after \
++		$capture_error \
  		]
  }
  
--proc write_update_indexinfo {fd path_list total_cnt batch after} {
-+proc write_update_indexinfo {fd path_list total_cnt batch status_bar_operation \
-+	after} {
+ proc write_checkout_index {fd path_list total_cnt batch status_bar_operation \
+-	after} {
++	after capture_error} {
  	global update_index_cp
  	global file_states current_diff_path
  
  	if {$update_index_cp >= $total_cnt} {
-+		$status_bar_operation stop
- 		_close_updateindex $fd $after
+ 		$status_bar_operation stop
+-		_close_updateindex $fd $after
++
++		# We do not unlock the index directly here because this
++		# operation expects to potentially run in parallel with file
++		# deletions scheduled by revert_helper. We're done with the
++		# update index, so we close it, but actually unlocking the index
++		# and dealing with potential errors is deferred to the chord
++		# body that runs when all async operations are completed.
++		#
++		# (See after_chord in revert_helper.)
++
++		if {[catch {_close_updateindex $fd} err]} {
++			uplevel #0 $capture_error [list $err]
++		}
++
++		uplevel #0 $after
++
  		return
  	}
-@@ -119,7 +122,7 @@ proc write_update_indexinfo {fd path_list total_cnt batch after} {
- 		display_file $path $new
- 	}
  
--	$::main_status update $update_index_cp $total_cnt
-+	$status_bar_operation update $update_index_cp $total_cnt
+@@ -397,66 +420,301 @@ proc do_add_all {} {
+ 	add_helper [mc "Adding all changed files"] $paths
  }
  
- proc update_index {msg path_list after} {
-@@ -133,7 +136,7 @@ proc update_index {msg path_list after} {
- 	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
- 
--	$::main_status start $msg [mc "files"]
-+	set status_bar_operation [$::main_status start $msg [mc "files"]]
- 	set fd [git_write update-index --add --remove -z --stdin]
- 	fconfigure $fd \
- 		-blocking 0 \
-@@ -147,15 +150,18 @@ proc update_index {msg path_list after} {
- 		$path_list \
- 		$total_cnt \
- 		$batch \
-+		$status_bar_operation \
- 		$after \
- 		]
- }
- 
--proc write_update_index {fd path_list total_cnt batch after} {
-+proc write_update_index {fd path_list total_cnt batch status_bar_operation \
-+	after} {
- 	global update_index_cp
++# Copied from TclLib package "lambda".
++proc lambda {arguments body args} {
++	return [list ::apply [list $arguments $body] {*}$args]
++}
++
+ proc revert_helper {txt paths} {
  	global file_states current_diff_path
  
- 	if {$update_index_cp >= $total_cnt} {
-+		$status_bar_operation stop
- 		_close_updateindex $fd $after
- 		return
- 	}
-@@ -190,7 +196,7 @@ proc write_update_index {fd path_list total_cnt batch after} {
- 		display_file $path $new
- 	}
+ 	if {![lock_index begin-update]} return
  
--	$::main_status update $update_index_cp $total_cnt
-+	$status_bar_operation update $update_index_cp $total_cnt
- }
- 
- proc checkout_index {msg path_list after} {
-@@ -204,7 +210,7 @@ proc checkout_index {msg path_list after} {
- 	set batch [expr {int($total_cnt * .01) + 1}]
- 	if {$batch > 25} {set batch 25}
- 
--	$::main_status start $msg [mc "files"]
-+	set status_bar_operation [$::main_status start $msg [mc "files"]]
- 	set fd [git_write checkout-index \
- 		--index \
- 		--quiet \
-@@ -224,15 +230,18 @@ proc checkout_index {msg path_list after} {
- 		$path_list \
- 		$total_cnt \
- 		$batch \
-+		$status_bar_operation \
- 		$after \
- 		]
- }
- 
--proc write_checkout_index {fd path_list total_cnt batch after} {
-+proc write_checkout_index {fd path_list total_cnt batch status_bar_operation \
-+	after} {
- 	global update_index_cp
- 	global file_states current_diff_path
- 
- 	if {$update_index_cp >= $total_cnt} {
-+		$status_bar_operation stop
- 		_close_updateindex $fd $after
- 		return
- 	}
-@@ -253,7 +262,7 @@ proc write_checkout_index {fd path_list total_cnt batch after} {
++	# Common "after" functionality that waits until multiple asynchronous
++	# operations are complete (by waiting for them to activate their notes
++	# on the chord).
++	#
++	# The asynchronous operations are each indicated below by a comment
++	# before the code block that starts the async operation.
++	set after_chord [SimpleChord new {
++		if {[string trim $err] != ""} {
++			rescan_on_error $err
++		} else {
++			unlock_index
++			if {$should_reshow_diff} { reshow_diff }
++			ui_ready
++		}
++	}]
++
++	$after_chord eval { set should_reshow_diff 0 }
++
++	# This function captures an error for processing when after_chord is
++	# completed. (The chord is curried into the lambda function.)
++	set capture_error [lambda \
++		{chord error} \
++		{ $chord eval [list set err $error] } \
++		$after_chord]
++
++	# We don't know how many notes we're going to create (it's dynamic based
++	# on conditional paths below), so create a common note that will delay
++	# the chord's completion until we activate it, and then activate it
++	# after all the other notes have been created.
++	set after_common_note [$after_chord add_note]
++
+ 	set path_list [list]
+-	set after {}
++	set untracked_list [list]
++
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
++		?O {
++			lappend untracked_list $path
++		}
+ 		?M -
+ 		?T -
+ 		?D {
+ 			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+-				set after {reshow_diff;}
++				$after_chord eval { set should_reshow_diff 1 }
+ 			}
+ 		}
  		}
  	}
  
--	$::main_status update $update_index_cp $total_cnt
-+	$status_bar_operation update $update_index_cp $total_cnt
- }
- 
- proc unstage_helper {txt paths} {
-diff --git a/lib/merge.tcl b/lib/merge.tcl
-index 9f253db5b3..8df8ffae55 100644
---- a/lib/merge.tcl
-+++ b/lib/merge.tcl
-@@ -241,23 +241,27 @@ Continue with resetting the current changes?"]
- 	if {[ask_popup $op_question] eq {yes}} {
- 		set fd [git_read --stderr read-tree --reset -u -v HEAD]
- 		fconfigure $fd -blocking 0 -translation binary
--		fileevent $fd readable [namespace code [list _reset_wait $fd]]
--		$::main_status start [mc "Aborting"] [mc "files reset"]
-+		set status_bar_operation [$::main_status \
-+			start \
-+			[mc "Aborting"] \
-+			[mc "files reset"]
-+		fileevent $fd readable [namespace code [list \
-+			_reset_wait $fd $status_bar_operation]]
- 	} else {
- 		unlock_index
- 	}
- }
- 
--proc _reset_wait {fd} {
-+proc _reset_wait {fd status_bar_operation} {
- 	global ui_comm
- 
--	$::main_status update_meter [read $fd]
-+	$status_bar_operation update_meter [read $fd]
- 
- 	fconfigure $fd -blocking 1
- 	if {[eof $fd]} {
- 		set fail [catch {close $fd} err]
--		$::main_status stop
- 		unlock_index
-+		$status_bar_operation stop
- 
- 		$ui_comm delete 0.0 end
- 		$ui_comm edit modified false
-diff --git a/lib/status_bar.tcl b/lib/status_bar.tcl
-index 02111a1742..32193d23ec 100644
---- a/lib/status_bar.tcl
-+++ b/lib/status_bar.tcl
-@@ -1,16 +1,42 @@
- # git-gui status bar mega-widget
- # Copyright (C) 2007 Shawn Pearce
- 
-+# The status_bar class manages the entire status bar. It is possible for
-+# multiple overlapping asynchronous operations to want to display status
-+# simultaneously. Each one receives a status_bar_operation when it calls the
-+# start method, and the status bar combines all active operations into the
-+# line of text it displays. Most of the time, there will be at most one
-+# ongoing operation.
-+#
-+# Note that the entire status bar can be either in single-line or two-line
-+# mode, depending on the constructor. Multiple active operations are only
-+# supported for single-line status bars.
++	set path_cnt [llength $path_list]
++	set untracked_cnt [llength $untracked_list]
 +
- class status_bar {
- 
-+field allow_multiple ; # configured at construction
-+
- field w         ; # our own window path
- field w_l       ; # text widget we draw messages into
- field w_c       ; # canvas we draw a progress bar into
- field c_pack    ; # script to pack the canvas with
--field status  {}; # single line of text we show
--field prefix  {}; # text we format into status
--field units   {}; # unit of progress
--field meter   {}; # current core git progress meter (if active)
-+
-+field baseline_text   ; # text to show if there are no operations
-+field status_bar_text ; # combined text for all operations
-+
-+field operations ; # list of current ongoing operations
-+
-+# The status bar can display a progress bar, updated when consumers call the
-+# update method on their status_bar_operation. When there are multiple
-+# operations, the status bar shows the combined status of all operations.
-+#
-+# When an overlapping operation completes, the progress bar is going to
-+# abruptly have one fewer operation in the calculation, causing a discontinuity.
-+# Therefore, whenever an operation completes, if it is not the last operation,
-+# this counter is increased, and the progress bar is calculated as though there
-+# were still another operation at 100%. When the last operation completes, this
-+# is reset to 0.
-+field completed_operation_count
- 
- constructor new {path} {
- 	global use_ttk NS
-@@ -18,12 +44,19 @@ constructor new {path} {
- 	set w_l $w.l
- 	set w_c $w.c
- 
-+	# Standard single-line status bar: Permit overlapping operations
-+	set allow_multiple 1
-+
-+	set baseline_text ""
-+	set operations [list]
-+	set completed_operation_count 0
-+
- 	${NS}::frame $w
- 	if {!$use_ttk} {
- 		$w configure -borderwidth 1 -relief sunken
- 	}
- 	${NS}::label $w_l \
--		-textvariable @status \
-+		-textvariable @status_bar_text \
- 		-anchor w \
- 		-justify left
- 	pack $w_l -side left
-@@ -44,9 +77,16 @@ constructor two_line {path} {
- 	set w_l $w.l
- 	set w_c $w.c
- 
-+	# Two-line status bar: Only one ongoing operation permitted.
-+	set allow_multiple 0
-+
-+	set baseline_text ""
-+	set operations [list]
-+	set completed_operation_count 0
-+
- 	${NS}::frame $w
- 	${NS}::label $w_l \
--		-textvariable @status \
-+		-textvariable @status_bar_text \
- 		-anchor w \
- 		-justify left
- 	pack $w_l -anchor w -fill x
-@@ -56,7 +96,7 @@ constructor two_line {path} {
- 	return $this
- }
- 
--method start {msg uds} {
-+method ensure_canvas {} {
- 	if {[winfo exists $w_c]} {
- 		$w_c coords bar 0 0 0 20
- 	} else {
-@@ -68,31 +108,170 @@ method start {msg uds} {
- 		$w_c create rectangle 0 0 0 20 -tags bar -fill navy
- 		eval $c_pack
- 	}
-+}
-+
-+method show {msg} {
-+	$this ensure_canvas
-+	set baseline_text $msg
-+	$this refresh
-+}
-+
-+method start {msg {uds {}}} {
-+	set baseline_text ""
-+
-+	if {!$allow_multiple && [llength $operations]} {
-+		return [lindex $operations 0]
-+	}
-+
-+	$this ensure_canvas
-+
-+	set operation [status_bar_operation::new $this $msg $uds]
-+
-+	lappend operations $operation
-+
-+	$this refresh
-+
-+	return $operation
-+}
-+
-+method refresh {} {
-+	set new_text ""
-+
-+	set total [expr $completed_operation_count * 100]
-+	set have $total
-+
-+	foreach operation $operations {
-+		if {$new_text != ""} {
-+			append new_text " / "
++	# Asynchronous operation: revert changes by checking them out afresh
++	# from the index.
++	if {$path_cnt > 0} {
++		# Split question between singular and plural cases, because
++		# such distinction is needed in some languages. Previously, the
++		# code used "Revert changes in" for both, but that can't work
++		# in languages where 'in' must be combined with word from
++		# rest of string (in different way for both cases of course).
++		#
++		# FIXME: Unfortunately, even that isn't enough in some languages
++		# as they have quite complex plural-form rules. Unfortunately,
++		# msgcat doesn't seem to support that kind of string
++		# translation.
++		#
++		if {$path_cnt == 1} {
++			set query [mc \
++				"Revert changes in file %s?" \
++				[short_path [lindex $path_list]] \
++				]
++		} else {
++			set query [mc \
++				"Revert changes in these %i files?" \
++				$path_cnt]
 +		}
+ 
+-	# Split question between singular and plural cases, because
+-	# such distinction is needed in some languages. Previously, the
+-	# code used "Revert changes in" for both, but that can't work
+-	# in languages where 'in' must be combined with word from
+-	# rest of string (in different way for both cases of course).
+-	#
+-	# FIXME: Unfortunately, even that isn't enough in some languages
+-	# as they have quite complex plural-form rules. Unfortunately,
+-	# msgcat doesn't seem to support that kind of string translation.
+-	#
+-	set n [llength $path_list]
+-	if {$n == 0} {
+-		unlock_index
+-		return
+-	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+-	} else {
+-		set query [mc "Revert changes in these %i files?" $n]
++		set reply [tk_dialog \
++			.confirm_revert \
++			"[appname] ([reponame])" \
++			"$query
 +
-+		append new_text [$operation get_status]
++[mc "Any unstaged changes will be permanently lost by the revert."]" \
++			question \
++			1 \
++			[mc "Do Nothing"] \
++			[mc "Revert Changes"] \
++			]
 +
-+		set total [expr $total + 100]
-+		set have [expr $have + [$operation get_progress]]
-+	}
-+
-+	if {$new_text == ""} {
-+		set new_text $baseline_text
-+	}
-+
-+	set status_bar_text $new_text
-+
-+	if {[winfo exists $w_c]} {
-+		set pixel_width 0
-+		if {$have > 0} {
-+			set pixel_width [expr {[winfo width $w_c] * $have / $total}]
++		if {$reply == 1} {
++			checkout_index \
++				$txt \
++				$path_list \
++				[$after_chord add_note] \
++				$capture_error
 +		}
+ 	}
+ 
+-	set reply [tk_dialog \
+-		.confirm_revert \
+-		"[appname] ([reponame])" \
+-		"$query
++	# Asynchronous operation: Deletion of untracked files.
++	if {$untracked_cnt > 0} {
++		# Split question between singular and plural cases, because
++		# such distinction is needed in some languages.
++		#
++		# FIXME: Unfortunately, even that isn't enough in some languages
++		# as they have quite complex plural-form rules. Unfortunately,
++		# msgcat doesn't seem to support that kind of string
++		# translation.
++		#
++		if {$untracked_cnt == 1} {
++			set query [mc \
++				"Delete untracked file %s?" \
++				[short_path [lindex $untracked_list]] \
++				]
++		} else {
++			set query [mc \
++				"Delete these %i untracked files?" \
++				$untracked_cnt \
++				]
++		}
+ 
+-[mc "Any unstaged changes will be permanently lost by the revert."]" \
+-		question \
+-		1 \
+-		[mc "Do Nothing"] \
+-		[mc "Revert Changes"] \
+-		]
+-	if {$reply == 1} {
+-		checkout_index \
+-			$txt \
++		set reply [tk_dialog \
++			.confirm_revert \
++			"[appname] ([reponame])" \
++			"$query
 +
-+		$w_c coords bar 0 0 $pixel_width 20
++[mc "Files will be permanently deleted."]" \
++			question \
++			1 \
++			[mc "Do Nothing"] \
++			[mc "Delete Files"] \
++			]
++
++		if {$reply == 1} {
++			$after_chord eval { set should_reshow_diff 1 }
++
++			delete_files $untracked_list [$after_chord add_note]
++		}
 +	}
++
++	# Activate the common note. If no other notes were created, this
++	# completes the chord. If other notes were created, then this common
++	# note prevents a race condition where the chord might complete early.
++	$after_common_note
 +}
 +
-+method stop {operation stop_msg} {
-+	set idx [lsearch $operations $operation]
++# Delete all of the specified files, performing deletion in batches to allow the
++# UI to remain responsive and updated.
++proc delete_files {path_list after} {
++	# Enable progress bar status updates
++	set status_bar_operation [$::main_status \
++		start \
++		[mc "Deleting"] \
++		[mc "files"]]
 +
-+	if {$idx >= 0} {
-+		set operations [lreplace $operations $idx $idx]
-+		set completed_operation_count [expr \
-+			$completed_operation_count + 1]
++	set path_index 0
++	set deletion_errors [list]
++	set batch_size 50
 +
-+		if {[llength $operations] == 0} {
-+			set completed_operation_count 0
++	delete_helper \
++		$path_list \
++		$path_index \
++		$deletion_errors \
++		$batch_size \
++		$status_bar_operation \
++		$after
++}
 +
-+			destroy $w_c
-+			if {$stop_msg ne {}} {
-+				set baseline_text $stop_msg
++# Helper function to delete a list of files in batches. Each call deletes one
++# batch of files, and then schedules a call for the next batch after any UI
++# messages have been processed.
++proc delete_helper {path_list path_index deletion_errors batch_size \
++	status_bar_operation after} {
++	global file_states
++
++	set path_cnt [llength $path_list]
++
++	set batch_remaining $batch_size
++
++	while {$batch_remaining > 0} {
++		if {$path_index >= $path_cnt} { break }
++
++		set path [lindex $path_list $path_index]
++
++		set deletion_failed [catch {file delete -- $path} deletion_error]
++
++		if {$deletion_failed} {
++			lappend deletion_errors [list "$deletion_error"]
++		} else {
++			remove_empty_directories [file dirname $path]
++
++			# Don't assume the deletion worked. Remove the file from
++			# the UI, but only if it no longer exists.
++			if {![path_exists $path]} {
++				unset file_states($path)
++				display_file $path __
 +			}
 +		}
 +
-+		$this refresh
++		incr path_index 1
++		incr batch_remaining -1
++	}
++
++	# Update the progress bar to indicate that this batch has been
++	# completed. The update will be visible when this procedure returns
++	# and allows the UI thread to process messages.
++	$status_bar_operation update $path_index $path_cnt
++
++	if {$path_index < $path_cnt} {
++		# The Tcler's Wiki lists this as the best practice for keeping
++		# a UI active and processing messages during a long-running
++		# operation.
++
++		after idle [list after 0 [list \
++			delete_helper \
+ 			$path_list \
+-			[concat $after [list ui_ready]]
++			$path_index \
++			$deletion_errors \
++			$batch_size \
++			$status_bar_operation \
++			$after
++			]]
+ 	} else {
+-		unlock_index
++		# Finish the status bar operation.
++		$status_bar_operation stop
++
++		# Report error, if any, based on how many deletions failed.
++		set deletion_error_cnt [llength $deletion_errors]
++
++		if {($deletion_error_cnt > 0)
++		 && ($deletion_error_cnt <= [MAX_VERBOSE_FILES_IN_DELETION_ERROR])} {
++			set error_text [mc "Encountered errors deleting files:\n"]
++
++			foreach deletion_error $deletion_errors {
++				append error_text "* [lindex $deletion_error 0]\n"
++			}
++
++			error_popup $error_text
++		} elseif {$deletion_error_cnt == $path_cnt} {
++			error_popup [mc \
++				"None of the %d selected files could be deleted." \
++				$path_cnt \
++				]
++		} elseif {$deletion_error_cnt > 1} {
++			error_popup [mc \
++				"%d of the %d selected files could not be deleted." \
++				$deletion_error_cnt \
++				$path_cnt \
++				]
++		}
++
++		uplevel #0 $after
 +	}
 +}
 +
-+method stop_all {{stop_msg {}}} {
-+	# This makes the operation's call to stop a no-op.
-+	set operations_copy $operations
-+	set operations [list]
++proc MAX_VERBOSE_FILES_IN_DELETION_ERROR {} { return 10; }
 +
-+	foreach operation $operations_copy {
-+		$operation stop
-+	}
-+
-+	if {$stop_msg ne {}} {
-+		set baseline_text $stop_msg
-+	}
-+
-+	$this refresh
++# This function is from the TCL documentation:
++#
++#   https://wiki.tcl-lang.org/page/file+exists
++#
++# [file exists] returns false if the path does exist but is a symlink to a path
++# that doesn't exist. This proc returns true if the path exists, regardless of
++# whether it is a symlink and whether it is broken.
++proc path_exists {name} {
++	expr {![catch {file lstat $name finfo}]}
 +}
 +
-+method _delete {current} {
-+	if {$current eq $w} {
-+		delete_this
-+	}
-+}
++# Remove as many empty directories as we can starting at the specified path,
++# walking up the directory tree. If we encounter a directory that is not
++# empty, or if a directory deletion fails, then we stop the operation and
++# return to the caller. Even if this procedure fails to delete any
++# directories at all, it does not report failure.
++proc remove_empty_directories {directory_path} {
++	set parent_path [file dirname $directory_path]
 +
-+}
++	while {$parent_path != $directory_path} {
++		set contents [glob -nocomplain -dir $directory_path *]
 +
-+# The status_bar_operation class tracks a single consumer's ongoing status bar
-+# activity, with the context that there are a few situations where multiple
-+# overlapping asynchronous operations might want to display status information
-+# simultaneously. Instances of status_bar_operation are created by calling
-+# start on the status_bar, and when the caller is done with its stauts bar
-+# operation, it calls stop on the operation.
++		if {[llength $contents] > 0} { break }
++		if {[catch {file delete -- $directory_path}]} { break }
 +
-+class status_bar_operation {
-+
-+field status_bar; # reference back to the status_bar that owns this object
-+
-+field is_active;
-+
-+field status   {}; # single line of text we show
-+field progress {}; # current progress (0 to 100)
-+field prefix   {}; # text we format into status
-+field units    {}; # unit of progress
-+field meter    {}; # current core git progress meter (if active)
-+
-+constructor new {owner msg uds} {
-+	set status_bar $owner
- 
- 	set status $msg
-+	set progress 0
- 	set prefix $msg
- 	set units  $uds
- 	set meter  {}
-+
-+	set is_active 1
-+
-+	return $this
- }
- 
-+method get_is_active {} { return $is_active }
-+method get_status {} { return $status }
-+method get_progress {} { return $progress }
-+
- method update {have total} {
--	set pdone 0
--	set cdone 0
-+	if {!$is_active} { return }
-+
-+	set progress 0
-+
- 	if {$total > 0} {
--		set pdone [expr {100 * $have / $total}]
--		set cdone [expr {[winfo width $w_c] * $have / $total}]
-+		set progress [expr {100 * $have / $total}]
- 	}
- 
- 	set prec [string length [format %i $total]]
-+
- 	set status [mc "%s ... %*i of %*i %s (%3i%%)" \
- 		$prefix \
- 		$prec $have \
- 		$prec $total \
--		$units $pdone]
--	$w_c coords bar 0 0 $cdone 20
-+		$units $progress]
-+
-+	$status_bar refresh
- }
- 
- method update_meter {buf} {
-+	if {!$is_active} { return }
-+
- 	append meter $buf
- 	set r [string last "\r" $meter]
- 	if {$r == -1} {
-@@ -109,23 +288,23 @@ method update_meter {buf} {
++		set directory_path $parent_path
++		set parent_path [file dirname $directory_path]
  	}
  }
  
--method stop {{msg {}}} {
--	destroy $w_c
--	if {$msg ne {}} {
--		set status $msg
-+method stop {{stop_msg {}}} {
-+	if {$is_active} {
-+		set is_active 0
-+		$status_bar stop $this $stop_msg
- 	}
- }
- 
--method show {msg {test {}}} {
--	if {$test eq {} || $status eq $test} {
--		set status $msg
--	}
-+method show {msg} {
-+	if {!$is_active} { return }
-+
-+	set status $msg
-+	$status_bar refresh
- }
- 
--method _delete {current} {
--	if {$current eq $w} {
--		delete_this
--	}
-+method _delete {} {
-+	stop
-+	delete_this
- }
- 
- }
 -- 
 gitgitgadget
-
