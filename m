@@ -2,64 +2,67 @@ Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3959DC432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BC0C432C0
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EC07120880
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C0883208E4
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="RPvaZ0Wh"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="Zjbz8/CB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727176AbfK1B3D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 20:29:03 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:37070 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727088AbfK1B3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 20:29:03 -0500
-Received: by mail-pl1-f193.google.com with SMTP id bb5so10810997plb.4
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 17:29:03 -0800 (PST)
+        id S1727516AbfK1B3I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 20:29:08 -0500
+Received: from mail-pl1-f173.google.com ([209.85.214.173]:45042 "EHLO
+        mail-pl1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727088AbfK1B3I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 20:29:08 -0500
+Received: by mail-pl1-f173.google.com with SMTP id az9so10798343plb.11
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 17:29:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j1bz03o7XITNB/GLOtm5mw+EOiU5ulw05JqkSmsoKRg=;
-        b=RPvaZ0WhS6/7gTXgkOim7YOSlEXWGPXVQ0JNblx7+yLG+ZKry9CvHnwx2uqz99noGu
-         Yptai6pBFAfKljIZcBedgH8AKgUHvGREmskum1UUfPrChzG4e83ajG9Nl662qG0BsBPb
-         kgx9gtmv6Dli2ZFrcNUY5GW4WH4Z34CtrOjf2SF2mFs8TM9q9B7vzPToxHrPHg5teDpC
-         Sv490LFe0gpGIYIemq4t93wyFRdoNxitXGmvYJIrf4gOxnZkmQc+nc6c/+YJQ8jUNDOH
-         BwZfilQiZ7NALzJ6tAvkeineHhS162M03T3hjTkyurU6NVqA4MMkINtFIr2q1RBPW6eA
-         1nYg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=wZnaiYekNG2qVXBlJ0+Ui2ty5/7tzQtiW/cndr7jrgM=;
+        b=Zjbz8/CBeMxMAMfJReryXtLS6d/g3BeAf5tznSP9iyitDCUFXZ041wd924e0sq76Y4
+         rc9ZXqQyKbhTWvCVFI7YpCj4vO/+Z0ISyQZs4LqOkbhKuL517VjgifT/R9mpEk/QnTSi
+         oyyWCm9XdHN4Z3//Ms+GTvccVkbC/K/kCL8D88teORrbmIcbcxoYzvm3uE0lRTzqJuCC
+         mtTSz2vbx/EdX0ha/+8zJMNNhoH/MdBByr4JEg7F+bWXiSuV4fShkl8gHnNn0BIo7GTp
+         DFzCqLqaAl5JAqYKlo0m5asc+yzOEqNMfeBewcacmqcSsZBh6GwB47RVxoDW5EbWf/uV
+         oxrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=j1bz03o7XITNB/GLOtm5mw+EOiU5ulw05JqkSmsoKRg=;
-        b=tzGP/Zw3a6HI/DaFSD8V9Fr64wnWwK2mTBcgLMoCnf6LK0NIvRTCqOHnV9jWZiHwGC
-         DKkIrWl1bLYSf1g6/7Lby11RR+ZRryCuKw9QLKWktSQpHVR90sj+FBonigxaqArSceEE
-         IxZdxEiS3YQSkiaquRvjyw4RzpafUhIp22KuPuucTjlADQPYaR5gFNtm9KqI6y2xjSUo
-         V15pDEN5Vm3C6Z4kfLdlfqUTGybQKnKzfoULqt/NQ2Y3qPhE0ZQqpgDSXnOjUkXmOqPD
-         4B2IeW0IZAQ2mDA9BiHntQBEn8ugl3wXHUSM3zwhaSsPQ/AXJZNSdqqyQhjiEzdVi9LJ
-         dhWQ==
-X-Gm-Message-State: APjAAAVmKJ5oDW0V9GMMz+ncIq3AkwXlu0QWB2b4YOUO5TV7aLuiwURT
-        xvxbFfdfXL7pcQnmWUU96a80N0xrkedbNg==
-X-Google-Smtp-Source: APXvYqwuar3EOVjvireEFR1y9qJUSw1yfjDdfia5IgVMBkOk2m5728Z8qi22ZJzjFfh0g65EKyKrcA==
-X-Received: by 2002:a17:90a:bc41:: with SMTP id t1mr9874935pjv.89.1574904542454;
-        Wed, 27 Nov 2019 17:29:02 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=wZnaiYekNG2qVXBlJ0+Ui2ty5/7tzQtiW/cndr7jrgM=;
+        b=CrSw5R9TUdi+xWhnZusJRR9O7LsTC+QOvtQMqyU31oebygK8be3b0AAXR2GoGSkoZO
+         +twNy4NgFU5H3iyAVrt01rsO+3ws4t2OiKD5JSISC21myLSr1bqzrze2sAdemFvi7h7v
+         c0xmzOmTiaKB/c3vh2HEgqGR2e39CISGQdqwIZM3vCDz1sFcr5VWhw+Azow1ESNk6/D2
+         h1CEA6zaCftwLh6XOSFPWH7mpwd5KQPB3DCeosi+/XsVG/YNCohnErzdUxKph4O5VgAS
+         SpULZ0kEGu0qblGNZlJZ+dqRr6vKIyWg2Q4AG9e92jvKMzPX97F49mvUJ2egWNH4a6yk
+         yhYA==
+X-Gm-Message-State: APjAAAXzWW1R+BtEqqL2tAvGeK2bUoCIVlbjHUNBJUW14LLoWKOgeQ7d
+        8CrtfK0lDdwE/DnGRc14ljzlEN6yjkmEmg==
+X-Google-Smtp-Source: APXvYqwWT3d7n2NklHZiMg02DsrjY91OO/tS1HN2dcBaZWWwwuO3LXX+ocNYWrl5uarEyrZbswvJyA==
+X-Received: by 2002:a17:90a:ead5:: with SMTP id ev21mr9703965pjb.76.1574904547311;
+        Wed, 27 Nov 2019 17:29:07 -0800 (PST)
 Received: from SBL-PC-YZHAO.skyboxlabs.local ([184.67.13.114])
-        by smtp.gmail.com with ESMTPSA id w15sm17507215pfn.13.2019.11.27.17.29.01
+        by smtp.gmail.com with ESMTPSA id w15sm17507215pfn.13.2019.11.27.17.29.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Nov 2019 17:29:01 -0800 (PST)
+        Wed, 27 Nov 2019 17:29:06 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>
-Subject: [RFC PATCH 0/4] git-p4: python 3 compatability
-Date:   Wed, 27 Nov 2019 17:28:03 -0800
-Message-Id: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
+Subject: [RFC PATCH 2/4] git-p4: properly encode/decode communication with git for python 3
+Date:   Wed, 27 Nov 2019 17:28:05 -0800
+Message-Id: <20191128012807.3103-3-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.24.0.windows.2
+In-Reply-To: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
+References: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -67,21 +70,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patchset the necessary changes to have git-p4 run under python 3.
+Under python3, calls to write() on the stream to `git fast-import` must
+be encoded.  This patch wraps the IO object such that this encoding is
+done transparently.
 
-I'm submitting this as an RFC as the changes are not exhaustive. I do not have
-p4d available, and therefore cannot run the tests locally. I have made
-best-effort attempts to test the changes against a repo I do have read access to.
+Conversely, any text data read from subprocesses must also be decoded
+before running through the rest of the pipeline.
 
-Yang Zhao (4):
-  git-p4: decode response from p4 to str for python3
-  git-p4: properly encode/decode communication with git for python 3
-  git-p4: open .gitp4-usercache.txt in text mode
-  git-p4: use utf-8 encoding for file paths throughout
+Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
+---
+ git-p4.py | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
- git-p4.py | 58 +++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 17 deletions(-)
-
+diff --git a/git-p4.py b/git-p4.py
+index ead9d816e1..d79cbf7005 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -237,6 +237,9 @@ def read_pipe_lines(c):
+     if pipe.close() or p.wait():
+         die('Command failed: %s' % str(c))
+ 
++    if use_encoded_streams:
++        val = [line.decode() for line in val]
++
+     return val
+ 
+ def p4_read_pipe_lines(c):
+@@ -631,7 +634,7 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+             stdin_file.write(stdin)
+         else:
+             for i in stdin:
+-                stdin_file.write(i + '\n')
++                stdin_file.write((i + '\n').encode())
+         stdin_file.flush()
+         stdin_file.seek(0)
+ 
+@@ -3547,6 +3550,15 @@ def openStreams(self):
+         self.gitStream = self.importProcess.stdin
+         self.gitError = self.importProcess.stderr
+ 
++        if use_encoded_streams:
++            # Wrap gitStream.write() so that it can be called using `str` arguments
++            def make_encoded_write(write):
++                def encoded_write(s):
++                    return write(s.encode() if isinstance(s, str) else s)
++                return encoded_write
++
++            self.gitStream.write = make_encoded_write(self.gitStream.write)
++
+     def closeStreams(self):
+         self.gitStream.close()
+         if self.importProcess.wait() != 0:
 -- 
 2.24.0.windows.2
 
