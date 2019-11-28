@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D895AC432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C6BC432C0
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B03AF20880
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4876A20880
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 01:29:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="MaioPWHW"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="K8/J4g39"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727280AbfK1B3L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 27 Nov 2019 20:29:11 -0500
-Received: from mail-pj1-f48.google.com ([209.85.216.48]:34351 "EHLO
-        mail-pj1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727327AbfK1B3J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 27 Nov 2019 20:29:09 -0500
-Received: by mail-pj1-f48.google.com with SMTP id bo14so11075550pjb.1
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 17:29:09 -0800 (PST)
+        id S1727327AbfK1B3M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 27 Nov 2019 20:29:12 -0500
+Received: from mail-pj1-f42.google.com ([209.85.216.42]:34346 "EHLO
+        mail-pj1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727406AbfK1B3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 27 Nov 2019 20:29:10 -0500
+Received: by mail-pj1-f42.google.com with SMTP id bo14so11075579pjb.1
+        for <git@vger.kernel.org>; Wed, 27 Nov 2019 17:29:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jirMrtMbbfygz0Mvte69eBi0wwNFaFcYUyLoCS+ocHw=;
-        b=MaioPWHW/Ab2pCsYxA/taA4JOdhpPaqnaIHD6hs7DzUdJ327jMSm+ZLh5DNjW36oEX
-         HgYg2W/3VEloNxyb+vm8FVTyUZFPcytkiH2v4mYjGozE2xyFPdRTuriRBCsHv2RFvwt9
-         6nv3x+Gfyp13R3yUpOJ6/N3Hmaoemdhf2kFCuQY69JyO/w5V0/S4Pe6q3Wm2H9VT2fuY
-         5XrehyzQ12WCwVvYH4CH30t4DkqAnHw7+Cw5JglYw6J3CJp4xiQh2O8YgqmR9QBZH5Wt
-         LF3wVr9tfL6Ibw6EHNg7zlp7G+RPZxY4hNmP0EVgNWV7KR4GFV7RiMfDLbpTWyBY0BtB
-         KN5Q==
+        bh=oReAEeoBT0m7v3nh92Oi4PY4yB4CzTlkxXMzEGITb9c=;
+        b=K8/J4g39b00ACnTZqPXXSs/bUQSrfzI5uw1C29+Y5UR15izAxtWGOTQ3Tx/cA/rJNm
+         9MpgUeOLb1MUKFEEv+szo0Zm3upyexb4CAkXdK5S0DVUd+D+tc1YDNRD21G5ejSNr3D2
+         eGfNP24DztAsJgZYqmCkF+0ZQ/xTmrfoltS+OcJgSydqUMrcn2W/EhwnxQQPizdgcNdr
+         h2cPp6w6zWC5TqGBBzcxdx2w7h+Eqn9yZLCLjITIPHe2ztaU4AirNO2/VbzHpyI13G9L
+         h5w+u7aGz2oRkuVOawTamE8k6O2xWwLctidQI6LYgNJdv716DrJHt/klO7XONjpWoGDo
+         9fyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jirMrtMbbfygz0Mvte69eBi0wwNFaFcYUyLoCS+ocHw=;
-        b=iAeE9Qks9VSMav46hhFTn159U8+0z3SlODuuPfE6jeBY2q0xJn4F2KL1kJ2RbzkvtW
-         qjEk8IFvohezDIsN13xIjfRHvsD8COJvD7qTvEuBmlsD4jmaAYX8nzcOl6i9Xp+Hy/T0
-         jtNkRVA7X31pIH69PBKgh3BFNEcsjrBaOUogtNZSNs4UeEXla50cRcoXRov5wPyNMhHX
-         OpMz/Ju7WowsIeDitrmRpe/B4/y1om01pJHrTKXLQqfKehkOaEJf4I4WOvy4kLSxBa57
-         ygk2QDsEY4oPGzIQJGfdPsmdwGWDR92vTzSRNkU6FVEQoevjTyQzPtA2VcmjDrKh6BOZ
-         2XYg==
-X-Gm-Message-State: APjAAAU9a+vL8jaS7Ig25jnldIzkKkzWZ07zhn7W7H/1uwCGZylgJi0c
-        qlrEsmkypmlCAbGWQzL9aMoUKv3Vwpcy1A==
-X-Google-Smtp-Source: APXvYqxieo2B/1y/aOJgd2JNNZK1DpQcgTVOKDhSTjkcRTE1y28CJQsjWFwH/wj8ftKR49PHtyNyQA==
-X-Received: by 2002:a17:90a:4e5:: with SMTP id g92mr9707128pjg.94.1574904548383;
-        Wed, 27 Nov 2019 17:29:08 -0800 (PST)
+        bh=oReAEeoBT0m7v3nh92Oi4PY4yB4CzTlkxXMzEGITb9c=;
+        b=ffhpepKu2Six6/UTuWZ63fzpWeDCpcZXbpLP1x+UVWwyJxJw/YNJ6xNC2DqrYup7lF
+         qE+E47YS0PNcUdGBzWXFJIg61aZaMePbJoEN1zmZnxCJ39wkjZB4Dqu5C/Ws24iAaiT1
+         2ladGB1hLyuvR3wKkc7NIDFn9TN4V0TDaXC0i3eYEIZKUgy39mk2b2KasEW+6agTObg1
+         bkUJdTmNHZtVQNO4V3ryM+A/90+HveYnem5MnuX99HKKno0iBFOjn65+NteR7zxM4so2
+         CZbxDZFGq5f1NHap4+7MRWYkYIi+s6/cFAq4Hi7XHp+zjyVxitpXmuxghSjolXTBGqgz
+         svKA==
+X-Gm-Message-State: APjAAAU84Uw6u5Rk9Z0SO2haSHGJKl3FGMVFSnhyye9X5FQgeUJYJNYH
+        fITKPrH2mhAuK+2O9D5zwNzlEZllPXDBRA==
+X-Google-Smtp-Source: APXvYqx99v08dcJZ7sEgFKZYrh1zh2r3FkrvMHhOvbk6cPisnYhZxpRqywocxDm0vdq0G8UJZuzCwA==
+X-Received: by 2002:a17:902:9a49:: with SMTP id x9mr6980000plv.331.1574904549449;
+        Wed, 27 Nov 2019 17:29:09 -0800 (PST)
 Received: from SBL-PC-YZHAO.skyboxlabs.local ([184.67.13.114])
-        by smtp.gmail.com with ESMTPSA id w15sm17507215pfn.13.2019.11.27.17.29.07
+        by smtp.gmail.com with ESMTPSA id w15sm17507215pfn.13.2019.11.27.17.29.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 27 Nov 2019 17:29:07 -0800 (PST)
+        Wed, 27 Nov 2019 17:29:08 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>
-Subject: [RFC PATCH 3/4] git-p4: open .gitp4-usercache.txt in text mode
-Date:   Wed, 27 Nov 2019 17:28:06 -0800
-Message-Id: <20191128012807.3103-4-yang.zhao@skyboxlabs.com>
+Subject: [RFC PATCH 4/4] git-p4: use utf-8 encoding for file paths throughout
+Date:   Wed, 27 Nov 2019 17:28:07 -0800
+Message-Id: <20191128012807.3103-5-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.24.0.windows.2
 In-Reply-To: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
 References: <20191128012807.3103-1-yang.zhao@skyboxlabs.com>
@@ -70,35 +70,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Opening .gitp4-usercache.txt in text mode makes python 3 happy without
-explicitly adding encoding and decoding.
+Try to decode file paths in responses from p4 as soon as possible so
+that we are working with unicode string throughout the rest of the flow.
+This makes python 3 a lot happier.
 
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
 ---
- git-p4.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+
+This is probably the most risky patch out of the set. It's very likely
+that I've neglected to consider certain corner cases with decoding of
+path data.
+
+ git-p4.py | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index d79cbf7005..6821d6aafd 100755
+index 6821d6aafd..bd693e1404 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1387,14 +1387,14 @@ def getUserMapFromPerforceServer(self):
-         for (key, val) in self.users.items():
-             s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
+@@ -650,11 +650,27 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+             if use_encoded_streams:
+                 # Decode unmarshalled dict to use str keys and values, except for:
+                 #   - `data` which may contain arbitrary binary data
+-                #   - `depotFile` which may contain non-UTF8 encoded text
++                #   - `depotFile` which may contain non-UTF8 encoded text, and is decoded
++                #     according to git-p4.pathEncoding config
+                 decoded_entry = {}
+                 for key, value in entry.items():
+                     key = key.decode()
+-                    decoded_entry[key] = value.decode() if not (key in ['data', 'depotFile'] or isinstance(value, str)) else value
++                    if key == 'data':
++                        pass
++                    elif key == 'depotFile':
++                        try:
++                            value = value.decode('ascii')
++                        except:
++                            encoding = 'utf-8'
++                            if gitConfig('git-p4.pathEncoding'):
++                                encoding = gitConfig('git-p4.pathEncoding')
++                            path = path.decode(encoding, 'replace')
++                            if verbose:
++                                print('Path with non-ASCII characters detected. Used %s to decode: %s ' % (encoding, path))
++                    elif not isinstance(value, str):
++                        value = value.decode()
++
++                    decoded_entry[key] = value
+                 entry = decoded_entry
+             if skip_info:
+                 if 'code' in entry and entry['code'] == 'info':
+@@ -2758,24 +2774,11 @@ def writeToGitStream(self, gitMode, relPath, contents):
+             self.gitStream.write(d)
+         self.gitStream.write('\n')
  
--        open(self.getUserCacheFilename(), "wb").write(s)
-+        open(self.getUserCacheFilename(), 'w', encoding='utf-8').write(s)
-         self.userMapFromPerforceServer = True
+-    def encodeWithUTF8(self, path):
+-        try:
+-            path.decode('ascii')
+-        except:
+-            encoding = 'utf8'
+-            if gitConfig('git-p4.pathEncoding'):
+-                encoding = gitConfig('git-p4.pathEncoding')
+-            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
+-            if self.verbose:
+-                print('Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path))
+-        return path
+-
+     # output one file from the P4 stream
+     # - helper for streamP4Files
  
-     def loadUserMapFromCache(self):
-         self.users = {}
-         self.userMapFromPerforceServer = False
-         try:
--            cache = open(self.getUserCacheFilename(), "rb")
-+            cache = open(self.getUserCacheFilename(), 'r', encoding='utf-8')
-             lines = cache.readlines()
-             cache.close()
-             for line in lines:
+     def streamOneP4File(self, file, contents):
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+-        relPath = self.encodeWithUTF8(relPath)
+         if verbose:
+             if 'fileSize' in self.stream_file:
+                 size = int(self.stream_file['fileSize'])
+@@ -2858,7 +2861,6 @@ def streamOneP4File(self, file, contents):
+ 
+     def streamOneP4Deletion(self, file):
+         relPath = self.stripRepoPath(file['path'], self.branchPrefixes)
+-        relPath = self.encodeWithUTF8(relPath)
+         if verbose:
+             sys.stdout.write("delete %s\n" % relPath)
+             sys.stdout.flush()
 -- 
 2.24.0.windows.2
 
