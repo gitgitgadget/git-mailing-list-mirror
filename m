@@ -2,156 +2,106 @@ Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B5EBC43215
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3924C432C3
 	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5499F21775
+	by mail.kernel.org (Postfix) with ESMTP id 7CA8021774
 	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kD0g7lmD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m5ea4EZW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726726AbfK1TcY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 14:32:24 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33319 "EHLO
+        id S1726703AbfK1TcW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 14:32:22 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42889 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726698AbfK1TcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 14:32:23 -0500
-Received: by mail-wr1-f68.google.com with SMTP id b6so2767010wrq.0
-        for <git@vger.kernel.org>; Thu, 28 Nov 2019 11:32:21 -0800 (PST)
+        with ESMTP id S1726401AbfK1TcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Nov 2019 14:32:22 -0500
+Received: by mail-wr1-f68.google.com with SMTP id a15so32401707wrf.9
+        for <git@vger.kernel.org>; Thu, 28 Nov 2019 11:32:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=/5UMlCIswklxeMVedpg2esFSM+V/lkBd0ecdU6ZnX88=;
-        b=kD0g7lmD3PA6VOAG5O1Zv+WvfqZTMGbolI8ddGqPQmCl6bWaLoWre3fEJJC9+o/s7A
-         2RmNlWwdhGxKFfLShUDsoPBp1FzFPY7BbE1LjrCHYgyPIeJmd6bq7OV+ffk87uWTTjKm
-         tSEACUIjKilzYxKEoNqpXTBAwwd7vgKE2IHBbJVwgteriV4Z+5KZyNTz58QTFiC1bTHc
-         8XdxeGSlXShikRaCmYVlk0SJ8DGbTsYc/lQvhkoui3oOigNrrleNF77xFsc34nRSXAb7
-         Sij+Z22JxQbY99Y30M/Ydmu4Bl95R7cWEfP/9pteF++Gie9WxogACKK4FdxQbMOOOI1s
-         DqqA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Z5toBR16lzVnR5kaO0XkwtjB5wYpZvbNSrmEZ/fSfMw=;
+        b=m5ea4EZWtafGLs6quIGRSLfumSxRpq0t8tTt/mlw798Qso+ckxu9joydmIurARc3p0
+         zZI+kv5OL6aRx5NbVSzuDf749G5E6bAw75yXfts5rvV6dLnA5qXnHmLccqQfPnhexdPQ
+         d+szJFUjEKAWhwxsnYTyO9KimV7Q+7MtY1pOFkr5Sym4OhhD/oub2x5LNIVFgNKSw1vR
+         rH4pwSybjjHB6wPrJgAEXCK3386cciqYcEUC8nBe4UZpRSXQTUP1OUypy5tCn8Azcp0V
+         qaXFfIi8/sE9jBIzJkZlw3kRtWDy3EL7KZESTUqksKJZCqROKZnGQSY0Pf4rsZqjLHc+
+         fcsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/5UMlCIswklxeMVedpg2esFSM+V/lkBd0ecdU6ZnX88=;
-        b=si8ryjNbSWC5HZVxk3fbrEMUPG64+dzIRcrOajRC/rIe3rlvgc/PjuMsfV445OhRmm
-         SErJbwncbFtULrQNvf188cARj/IWqEbAHaudOupnqZJeIIiUY3kVZGKJBgGa5O4+u8HF
-         /IhVD1Yl4HbkFaWnpMxNrgRkatmiFjYYT1lZUeZTCb6dhrjH+Va6/5AZ5leJlbIMFILT
-         inrLoBnRSdqi9paKJekVp0GBx4da2X61sgoVGGgSTOtWfYCFj2CjmLz7zayQx8duKJis
-         xRphkstCixmbNfTjK1iFdJEndYqI477fyN515mLQIGIKyvJgFiP1nxMBZptK0s6zAUHA
-         barQ==
-X-Gm-Message-State: APjAAAVjZN6mS2MYBRhigDwqeHYZSTenMUnbg/i5QZohcoU2WfRqTFrp
-        Q0bjQRcTNl8t3nA4qNhN3uZvwOuC
-X-Google-Smtp-Source: APXvYqwIiMbQOxUZ5Kw0xWA3Xgntn0p2slycGhWtWr7ylx36XG8echY2LuojRcZFEBtqp2qEZex1nQ==
-X-Received: by 2002:a5d:49c4:: with SMTP id t4mr43634854wrs.226.1574969541239;
-        Thu, 28 Nov 2019 11:32:21 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Z5toBR16lzVnR5kaO0XkwtjB5wYpZvbNSrmEZ/fSfMw=;
+        b=IIpFDcHQ6LhEf9c4N6m80pbBt4+VxiQEAKrXygQ41r2KTd5Oqmu54Mvx+2cOsgCCW1
+         AFwQiH3rcuVo4IllCxwSE7tbrK1fyIiChqzMSztR3DCNZgJb9JtADTpaxzT9/SSOaJ9f
+         rnXBHldKVXtrCBU2/MJ7MQhza9AnlvYqBh06gZe5/niETfD2A3dNo4VFlOl34W8VQ3Dg
+         h02MMdppjVEk6R14V8bno3Gi8ZSWCUyHI05mFAuMQi/Dr0eh5LbMZBc2olb+k8fEwfns
+         tY65o7mrOEI5bh0o00JBo4sBdgkZxnA8CGcOYDYVX8S9cmpccbhdO1mIUvZzFoEgMwzF
+         NFYA==
+X-Gm-Message-State: APjAAAW68YsQR3SKU9eBwNMYORBf/qr/dbOplJ4fp0HkEmUkLRTHhrBL
+        PnBAERamt3fhXn1qKBX8AJBCJqvY
+X-Google-Smtp-Source: APXvYqxFb5ndQyNa+MdOqb9H0OeGhlebIjFyfsD8HyzcllMJ7j8g9YHspvBJ1OQBTsBrNZyxqLshRg==
+X-Received: by 2002:a5d:4a45:: with SMTP id v5mr52243245wrs.288.1574969539871;
+        Thu, 28 Nov 2019 11:32:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z2sm9101202wmf.47.2019.11.28.11.32.20
+        by smtp.gmail.com with ESMTPSA id h8sm7460109wrx.63.2019.11.28.11.32.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Nov 2019 11:32:20 -0800 (PST)
-Message-Id: <a84633a44474aa25bd1101a9ca2a5d9687900bf2.1574969538.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.479.git.1574969538.gitgitgadget@gmail.com>
-References: <pull.479.git.1574969538.gitgitgadget@gmail.com>
+        Thu, 28 Nov 2019 11:32:19 -0800 (PST)
+Message-Id: <pull.479.git.1574969538.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 Nov 2019 19:32:15 +0000
-Subject: [PATCH 2/5] parse_branchname_arg(): introduce expect_commit_only
+Date:   Thu, 28 Nov 2019 19:32:13 +0000
+Subject: [PATCH 0/5] parse_branchname_arg(): make code easier to understand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+My bigger goal is to complete my --pathspec-from-file series of patches.
 
-`has_dash_dash` unexpectedly takes `opts->accept_pathspec` into account.
-While this may sound clever at first sight, it becomes pretty hard to
-reason (and not be a victim) about code, especially in combination with
-`argc` here:
+For this, I needed to evaluate whether parse_branchname_arg() heuristics
+needs any changes when pathspec is passed, but NOT in args.
 
-	if (!(argc == 1 && !has_dash_dash) &&
-	    !(argc == 2 && has_dash_dash) &&
-	    opts->accept_pathspec)
-		recover_with_dwim = 0;
+I found it surprisingly hard to reason about the code in this function. This
+mostly happens due to "obfuscated" variables, where they have a clear name
+and a different actual meaning. Ultimately, it was hard to mentally expand
+them to true meaning AND see all possible combinations of branches at once.
 
-Introduce a new non-obfuscated variable to reduce the amount of diffs in
-next patch.
+I have split this refactoring in 4 patches, so that diffs are not too big in
+every single patch.
 
-This should not change behavior in any way.
+To my understanding, there should be no changes in git's behavior, except
+for a couple better die() messages.
 
-Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
----
- builtin/checkout.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+Alexandr Miloslavskiy (5):
+  parse_branchname_arg(): fix dash_dash_pos, drop argcount
+  parse_branchname_arg(): introduce expect_commit_only
+  parse_branchname_arg(): update code comments
+  parse_branchname_arg(): refactor the decision making
+  t2024: cover more cases
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 655b389756..5c6131dbe6 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1123,7 +1123,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	const char **new_branch = &opts->new_branch;
- 	const char *arg;
- 	int dash_dash_pos;
--	int has_dash_dash = 0;
-+	int has_dash_dash = 0, expect_commit_only = 0;
- 	int i;
- 
- 	/*
-@@ -1194,7 +1194,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		    die(_("only one reference expected, %d given."), dash_dash_pos);
- 	}
- 
--	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
-+	if (has_dash_dash)
-+	    expect_commit_only = 1;
-+
-+	opts->count_checkout_paths = !opts->quiet && !expect_commit_only;
- 
- 	if (!strcmp(arg, "-"))
- 		arg = "@{-1}";
-@@ -1210,10 +1213,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		 */
- 		int recover_with_dwim = dwim_new_local_branch_ok;
- 
--		int could_be_checkout_paths = !has_dash_dash &&
-+		int could_be_checkout_paths = !expect_commit_only &&
- 			check_filename(opts->prefix, arg);
- 
--		if (!has_dash_dash && !no_wildcard(arg))
-+		if (!expect_commit_only && !no_wildcard(arg))
- 			recover_with_dwim = 0;
- 
- 		/*
-@@ -1242,7 +1245,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		}
- 
- 		if (!recover_with_dwim) {
--			if (has_dash_dash)
-+			if (expect_commit_only)
- 				die(_("invalid reference: %s"), arg);
- 			return 0;
- 		}
-@@ -1253,7 +1256,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	if (!opts->source_tree)                   /* case (1): want a tree */
- 		die(_("reference is not a tree: %s"), arg);
- 
--	if (!has_dash_dash) {	/* case (3).(d) -> (1) */
-+	if (!expect_commit_only) {	/* case (3).(d) -> (1) */
- 		/*
- 		 * Do not complain the most common case
- 		 *	git checkout branch
+ builtin/checkout.c       | 174 ++++++++++++++++-----------------------
+ t/t2024-checkout-dwim.sh |  27 ++++++
+ 2 files changed, 97 insertions(+), 104 deletions(-)
+
+
+base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-479%2FSyntevoAlex%2F%230225(git)_refactor_parse_branchname_arg-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-479/SyntevoAlex/#0225(git)_refactor_parse_branchname_arg-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/479
 -- 
 gitgitgadget
-
