@@ -2,231 +2,377 @@ Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E782CC432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 07:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 138C7C432C3
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8C181206BF
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 07:34:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D3869216F4
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 08:30:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=deltaq.org header.i=@deltaq.org header.b="AtVbctph"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lytbfDtT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbfK1Hek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 02:34:40 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:46395 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726963AbfK1Hek (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 02:34:40 -0500
-Received: by mail-lj1-f196.google.com with SMTP id e9so27319072ljp.13
-        for <git@vger.kernel.org>; Wed, 27 Nov 2019 23:34:36 -0800 (PST)
+        id S1727467AbfK1Iaj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 03:30:39 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:51673 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726301AbfK1Iai (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Nov 2019 03:30:38 -0500
+Received: by mail-wm1-f41.google.com with SMTP id g206so10017380wme.1
+        for <git@vger.kernel.org>; Thu, 28 Nov 2019 00:30:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=deltaq.org; s=deltaq;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4JcDwX+KJmeyp2xW144pvKRfoK19splzmSi2C0nQW0E=;
-        b=AtVbctph8uL9keupo40HckoZC2nQWncF1L+5fVFKtjNHuxZBZwL1LiLOuTSKuXEGR5
-         jscekWeKlNZOkA+2d1f+U+p0ea4f5RdTJ2vJVTnoNBbUi96tdrszVIP38MxTlXakXNjL
-         mlfLasGg8SWQ3qvU+cr5WEo4K1PdqSD7HSdpA=
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=lytbfDtTacQ7zC2CLY44ce9j70nGLGVJV6+7TQXjG48r/MNZQISJxcZLuWqgZHXsO1
+         d1UqxTI3l0kiVDeagn/TCxruP4yjf0DIAUtj5hYGpMicylDlCz9+N/H3TRDgesRtjJvB
+         edHrTnwRPaab3QgFgcY1sLZYvHit3fg39zaoEPnwKDChcBrsW+/w+JXBMRlcMsNWwzkb
+         fNP9GcFp+uZbwwMJ1sAQpq29KGdUam7utnNbILlG58m8QSFCd5XX6QvCl7e/7O/2xXKX
+         UnsOCbqROREGuQOB2KVuHN9kHhJf5J9b+/1WBAwI4J2gMoTtgFotSXE0qpQfdDLqhvC2
+         4Apw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4JcDwX+KJmeyp2xW144pvKRfoK19splzmSi2C0nQW0E=;
-        b=qiOtlWJ2g8L3fQhm4qpDlSBUnqoSJntHSQ42iQ1pFs7W70gwuTekUO1EkrUi0pjbJc
-         2sMYjUyzFzRWy2s+Y6T2VzU7aApOa5zyYydSBIDAlYAj/nFNbKrdP8+HjwHMgAoMr932
-         W/nqawAg7A3FqJZei9dzxs256i8A8304/L2rkxJCmD0eGu6CF+I+F8t8t6HBZ/dbyjBh
-         juWfoykiZja2UTzZX9FVjk+I7r0NF4GLty93rjK42e64Vd6J35kg4Pv1H9nMR30enc/x
-         CJI+0Mz1Y7VV0myt9LRoBh1hBnxVEreQZe5Rd73Uc+MRhQnADQs3LBDJ/g97it65bWwP
-         SIPA==
-X-Gm-Message-State: APjAAAU8jJEOxoKWpbhCZUy09xTmez8ua9K6fM01snN5Ay1ne3W+Ptv0
-        qhZH3pXNkvOgAik5fXa3fx3QHdqBNod8ZjamWXdstA==
-X-Google-Smtp-Source: APXvYqx29eV4fm7YAias7Q0Hw6eGQrKXaba1ydQO0lHVSaKQw90xnk1scpUYgodrgfVXtEd6Zip54FbL12TkAujM7vc=
-X-Received: by 2002:a2e:818e:: with SMTP id e14mr19017433ljg.245.1574926475140;
- Wed, 27 Nov 2019 23:34:35 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=sbqQKPFLwqefjSeatY3TgmSApYsc1DIwXSJjnSoXqzg=;
+        b=sldU1QXTyCBsJiLq3PqFzjJ+U5KdU9fmrYKTuaz6kLtF57eWlRmpcBDqFaZtrk8uRN
+         xgCXU3Xm1gGa4jHRkNVh+tq+fa+zDL8YyRC9XI6RwPmuiYHiEXUSVIR3rPbWnUN7nqve
+         dMW/LHepO8UftePGPXsthritB+Xe0Z67d2sAlZGQmHaoHeOSPSZ2/UEpNqSbCdENuXSN
+         J7YuU7TOFZIeIRGiohheqopw5DxUYQHl10/FdHu5GfAC2cIy1b6VuymioUG+zeyBj671
+         uiwqqmoVycqh3tbmkZDeV+Eo4zRIKk98JWtqaMmz4tDiEpP4QJqPFZgcba5iQbYBSV4G
+         5xaA==
+X-Gm-Message-State: APjAAAWE7fdLCrTGUk6N+ZFnFkLTMFjhkAY+MPgr6vIs5IvWX+U6oSJa
+        kc6EbgVMSY53GeEc9fr2b2nnIDr+
+X-Google-Smtp-Source: APXvYqwpt2ozoc6K4qvrMfe6b9jD4rWGSRJHtjqcxjljBCxUEvEOp+qw7YtsnW+FhnuscLUQe6zNxQ==
+X-Received: by 2002:a1c:9d8d:: with SMTP id g135mr4062967wme.114.1574929835724;
+        Thu, 28 Nov 2019 00:30:35 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c72sm10162037wmd.11.2019.11.28.00.30.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Nov 2019 00:30:35 -0800 (PST)
+Message-Id: <da1704c56e0bd3f1ac53af96b702e3777bb3eb37.1574929833.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.436.v6.git.1574929833.gitgitgadget@gmail.com>
+References: <pull.436.v5.git.1574627876.gitgitgadget@gmail.com>
+        <pull.436.v6.git.1574929833.gitgitgadget@gmail.com>
+From:   "Jonathan Gilbert via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 28 Nov 2019 08:30:31 +0000
+Subject: [PATCH v6 1/3] git-gui: consolidate naming conventions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.436.v4.git.1573973770.gitgitgadget@gmail.com>
- <pull.436.v5.git.1574627876.gitgitgadget@gmail.com> <aa05a78d285dd9c5f4897b03467f1d43d7a5ad83.1574627876.git.gitgitgadget@gmail.com>
- <20191127215503.x2lt2b3nce7q4yj2@yadavpratyush.com>
-In-Reply-To: <20191127215503.x2lt2b3nce7q4yj2@yadavpratyush.com>
-From:   Jonathan Gilbert <logic@deltaq.org>
-Date:   Thu, 28 Nov 2019 01:34:21 -0600
-Message-ID: <CAPSOpYvv+QZORJoGSNPisE=S_bAtS5tFtodnK9sHZVuTqVVxFg@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] git-gui: update status bar to track operations
-To:     "Pratyush Yadav me-at-yadavpratyush.com |GitHub Public/Example Allow|" 
-        <172q77k4bxwj0zt@sneakemail.com>
-Cc:     Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
-        Jonathan Gilbert <JonathanG@iqmetrix.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
+        Pratyush Yadav <me@yadavpratyush.com>,
+        Jonathan Gilbert <JonathanG@iQmetrix.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 27, 2019 at 3:59 PM Pratyush Yadav me-at-yadavpratyush.com
-|GitHub Public/Example Allow| <172q77k4bxwj0zt@sneakemail.com> wrote:
-> On 24/11/19 08:37PM, Jonathan Gilbert via GitGitGadget wrote:
-> > -proc ui_ready {{test {}}} {
-> > +proc ui_ready {} {
->
-> This is not quite correct. There is one user of 'ui_ready' that uses
-> 'test'. It is in git-gui.sh:2211. It is used when starting gitk. This
-> change breaks that call. 10 seconds after opening gitk via the
-> "Visualise master's history" option, I get the following error:
->
->   wrong # args: should be "ui_ready"
->       while executing
->   "ui_ready $starting_gitk_msg"
->       ("after" script)
-[..]
-> I'm not sure if this heuristic/hack is really needed, and that we need
-> to keep the "Starting gitk..." message around for 10 seconds.
-[..]
-> So, I vote for just getting rid of this hack.
+From: Jonathan Gilbert <JonathanG@iQmetrix.com>
 
-Oh geeze, I can't believe I missed this. This looks like it ought to
-be relatively straightforward to port to the new operations, though,
-which is a more isolated approach (keeping this change's fingers where
-they belong), and then the operation provides segregation that means
-it can just be ended after X seconds without caring what anything else
-might be doing with the status bar. We can independently figure out if
-we want to restructure that part. Given that computers are faster now
-and that the status bar could end up doing something else in the
-meantime (well let's be realistic, probably not, but who knows :-) ),
-I'd vote for reducing the time the message is shown from 10 seconds
-to, I dunno, 3 or 4 seconds.
+A few variables in this file use camelCase, while the overall standard
+is snake_case. A consistent naming scheme will improve readability of
+future changes. To avoid mixing naming changes with semantic changes,
+this commit contains only naming changes.
 
-One other thing I note is that both `do_gitk` and `do_git_gui` use
-`$starting_gitk_msg`, which means that when `do_git_gui` is invoked to
-launch a Git Gui child process for a submodule, it will be setting the
-status bar text to say that it is launching Gitk.
+Signed-off-by: Jonathan Gilbert <JonathanG@iQmetrix.com>
+---
+ lib/index.tcl | 92 +++++++++++++++++++++++++--------------------------
+ 1 file changed, 46 insertions(+), 46 deletions(-)
 
-Speaking of things that are out of scope for this PR, I did notice
-this in the code:
+diff --git a/lib/index.tcl b/lib/index.tcl
+index e07b7a3762..28d4d2a54e 100644
+--- a/lib/index.tcl
++++ b/lib/index.tcl
+@@ -56,15 +56,15 @@ proc _close_updateindex {fd after} {
+ 	uplevel #0 $after
+ }
+ 
+-proc update_indexinfo {msg pathList after} {
++proc update_indexinfo {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -78,26 +78,26 @@ proc update_indexinfo {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_indexinfo \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_indexinfo {fd pathList totalCnt batch after} {
++proc write_update_indexinfo {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		set s $file_states($path)
+@@ -119,18 +119,18 @@ proc write_update_indexinfo {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc update_index {msg pathList after} {
++proc update_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -144,26 +144,26 @@ proc update_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_update_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_update_index {fd pathList totalCnt batch after} {
++proc write_update_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -190,18 +190,18 @@ proc write_update_index {fd pathList totalCnt batch after} {
+ 		display_file $path $new
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+-proc checkout_index {msg pathList after} {
++proc checkout_index {msg path_list after} {
+ 	global update_index_cp
+ 
+ 	if {![lock_index update]} return
+ 
+ 	set update_index_cp 0
+-	set pathList [lsort $pathList]
+-	set totalCnt [llength $pathList]
+-	set batch [expr {int($totalCnt * .01) + 1}]
++	set path_list [lsort $path_list]
++	set total_cnt [llength $path_list]
++	set batch [expr {int($total_cnt * .01) + 1}]
+ 	if {$batch > 25} {set batch 25}
+ 
+ 	$::main_status start $msg [mc "files"]
+@@ -221,26 +221,26 @@ proc checkout_index {msg pathList after} {
+ 	fileevent $fd writable [list \
+ 		write_checkout_index \
+ 		$fd \
+-		$pathList \
+-		$totalCnt \
++		$path_list \
++		$total_cnt \
+ 		$batch \
+ 		$after \
+ 		]
+ }
+ 
+-proc write_checkout_index {fd pathList totalCnt batch after} {
++proc write_checkout_index {fd path_list total_cnt batch after} {
+ 	global update_index_cp
+ 	global file_states current_diff_path
+ 
+-	if {$update_index_cp >= $totalCnt} {
++	if {$update_index_cp >= $total_cnt} {
+ 		_close_updateindex $fd $after
+ 		return
+ 	}
+ 
+ 	for {set i $batch} \
+-		{$update_index_cp < $totalCnt && $i > 0} \
++		{$update_index_cp < $total_cnt && $i > 0} \
+ 		{incr i -1} {
+-		set path [lindex $pathList $update_index_cp]
++		set path [lindex $path_list $update_index_cp]
+ 		incr update_index_cp
+ 		switch -glob -- [lindex $file_states($path) 0] {
+ 		U? {continue}
+@@ -253,7 +253,7 @@ proc write_checkout_index {fd pathList totalCnt batch after} {
+ 		}
+ 	}
+ 
+-	$::main_status update $update_index_cp $totalCnt
++	$::main_status update $update_index_cp $total_cnt
+ }
+ 
+ proc unstage_helper {txt paths} {
+@@ -261,7 +261,7 @@ proc unstage_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -269,19 +269,19 @@ proc unstage_helper {txt paths} {
+ 		M? -
+ 		T? -
+ 		D? {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_indexinfo \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	}
+ }
+@@ -305,7 +305,7 @@ proc add_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -321,19 +321,19 @@ proc add_helper {txt paths} {
+ 		?M -
+ 		?D -
+ 		?T {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+ 		}
+ 		}
+ 	}
+-	if {$pathList eq {}} {
++	if {$path_list eq {}} {
+ 		unlock_index
+ 	} else {
+ 		update_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after {ui_status [mc "Ready to commit."]}]
+ 	}
+ }
+@@ -393,7 +393,7 @@ proc revert_helper {txt paths} {
+ 
+ 	if {![lock_index begin-update]} return
+ 
+-	set pathList [list]
++	set path_list [list]
+ 	set after {}
+ 	foreach path $paths {
+ 		switch -glob -- [lindex $file_states($path) 0] {
+@@ -401,7 +401,7 @@ proc revert_helper {txt paths} {
+ 		?M -
+ 		?T -
+ 		?D {
+-			lappend pathList $path
++			lappend path_list $path
+ 			if {$path eq $current_diff_path} {
+ 				set after {reshow_diff;}
+ 			}
+@@ -420,12 +420,12 @@ proc revert_helper {txt paths} {
+ 	# as they have quite complex plural-form rules. Unfortunately,
+ 	# msgcat doesn't seem to support that kind of string translation.
+ 	#
+-	set n [llength $pathList]
++	set n [llength $path_list]
+ 	if {$n == 0} {
+ 		unlock_index
+ 		return
+ 	} elseif {$n == 1} {
+-		set query [mc "Revert changes in file %s?" [short_path [lindex $pathList]]]
++		set query [mc "Revert changes in file %s?" [short_path [lindex $path_list]]]
+ 	} else {
+ 		set query [mc "Revert changes in these %i files?" $n]
+ 	}
+@@ -444,7 +444,7 @@ proc revert_helper {txt paths} {
+ 	if {$reply == 1} {
+ 		checkout_index \
+ 			$txt \
+-			$pathList \
++			$path_list \
+ 			[concat $after [list ui_ready]]
+ 	} else {
+ 		unlock_index
+-- 
+gitgitgadget
 
-> # -- Always start git gui through whatever we were loaded with.  This
-> #    lets us bypass using shell process on Windows systems.
-> #
-> set exe [list [_which git]]
-
-As far as I can tell, there's virtually no connection between the
-comment and what the code is actually doing. I haven't yet figured out
-what exactly it is or where it comes from, but on my Windows systems,
-`git-gui` is actually an EXE file `git-gui.exe`, and I _think_ what it
-is doing is running `wish.exe`, which I'm guessing has something to do
-with hosting a Tcl interpreter with Win32 support for Tk GUI.
-
-I'm not sure whether the code is doing the right thing here or not,
-but I'm pretty sure what it's _not_ doing is figuring out how the
-current `git-gui` process was started/is being hosted. :-P
-
-> >  field finder     ; # find mini-dialog frame
-> >  field gotoline   ; # line goto mini-dialog frame
-> >  field status     ; # status mega-widget instance
-> > +field status_operation ; # status operation
->
-> Nitpick: The comment doesn't give any information the field name doesn't
-> already give. Either remove it or replace it with something more
-> descriptive.
-
-Hmm, okay. I didn't want something that felt wildly imbalanced with
-respect to the other lines, but you're right that this particular line
-is literally just repeating the variable name. :-P
-
-> > +     if {$status_operation == {}} {
-> > +             set status_operation [$status start \
-> > +                     $cur_s \
-> > +                     [mc "lines annotated"]]
->
-> The call to this method from '_read_blame' specifies a different $cur_s.
-> So shouldn't we be destroying $status_operation (after stopping it), and
-> creating a new one?
-
-We can change the text by calling `$status_operation show`.
-
-> >  method _read_blame {fd cur_w cur_d} {
->
-> You did not update 'lib/choose_repository.tcl'. It still uses the old
-> version of the status bar. Other than that, the rest of the patch looks
-> good. Thanks.
-
-Ugh, I can't believe I overlooked this. I was aware of the file using
-the status bar, because it's the one place that uses the `two_line`
-constructor, but then I forgot to actually make it create and use the
-(single concurrent) operation that a `two_line`-er is allowed.
-
-The code in there seems to overload the purpose of the `o_cons`
-variable, so that sometimes it is pointing at a status bar and
-sometimes it is pointing at whatever `console::embed` returns. I will
-change this.
-
-This code also depends heavily on `update` to keep the UI active,
-which as I understand it is problematic because it could potentially
-result in re-entrance since the user can interact with the UI in the
-middle of the operation. I will not make any attempt to change this,
-though. :-)
-
-> [0]:
->   Curiously, if I do 'git log -L 2208,+5:git-gui.sh' to find the origins
->   of the line, it leads me to the commit 25476c6. And looking at the
->   commit, it does indeed appear to be the origin of the line since the
->   line is in the post-image, and not the pre-image. But I accidentally
->   noticed the line in a parent of that commit. Looking further, it turns
->   out the line originated in e210e67. Probably a bug in some really old
->   versions of git. Interesting nonetheless.
-
-In e210e67, I see this:
-
-set starting_gitk_msg {Please wait... Starting gitk...}
-proc do_gitk {} {
-        global tcl_platform ui_status_value starting_gitk_msg
-
-        set ui_status_value $starting_gitk_msg
-        after 5000 {
-                if {$ui_status_value == $starting_gitk_msg} {
-                        set ui_status_value {Ready.}
-                }
-        }
-        ...
-
-In 043f7011, all string comparisons were changed from ==/!= to eq/ne.
-The commit message explains that when you use == and !=, Tcl will
-attempt to convert either side to numeric if one of the two sides
-looks like a numeric. Guess I should review my commit for this error
-:-P
-
--                if {$ui_status_value == $starting_gitk_msg} {
-+                if {$ui_status_value eq $starting_gitk_msg} {
-
-In 699d5601 "Refactor our ui_status_value update technique", this became:
-
-set starting_gitk_msg [mc "Starting gitk... please wait..."]
-...
-        global ... starting_gitk_msg
-...
-        ui_status $starting_gitk_msg
-        after 10000 {
-                ui_ready $starting_gitk_msg
-        }
-
-Finally it became this in 02efd48f, apparently an unrelated
-refactoring removed the global variable declaration:
-
-set starting_gitk_msg [mc "Starting gitk... please wait..."]
-...
-        ui_status $::starting_gitk_msg
-        after 10000 {
-                ui_ready $starting_gitk_msg
-        }
-
-I gathered this information using Git Gui's blame function, which I
-guess is a good demonstration that my latest blame.tcl revision
-corrects the problems in the earlier submission :-D
-
-Next revision coming soon.
-
-Jonathan Gilbert
