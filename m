@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5251AC432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CB19C43141
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2368D21775
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D04E921774
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 19:32:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TGRkmnYX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LuExml/j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726734AbfK1Tc0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 14:32:26 -0500
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:33218 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726702AbfK1TcY (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726731AbfK1TcZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 14:32:25 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37036 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726716AbfK1TcY (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 28 Nov 2019 14:32:24 -0500
-Received: by mail-wr1-f44.google.com with SMTP id b6so2767038wrq.0
-        for <git@vger.kernel.org>; Thu, 28 Nov 2019 11:32:22 -0800 (PST)
+Received: by mail-wm1-f67.google.com with SMTP id f129so12747553wmf.2
+        for <git@vger.kernel.org>; Thu, 28 Nov 2019 11:32:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=n4kSQZRXiNjSmumdTbm6VA+QlEvnicZ1QQS9bp8Noi8=;
-        b=TGRkmnYXGHSx5a09vSOVCOCbUUZTHHLMCrnzBV4nHP1G+58EDjDELdZCrzK07dgW1r
-         MuWeW7C+Wx9Yx0Rld60OSIAbde7qPpwrOLN2LMxR2vKtvKvDkUFpoCv/jwqnPEXQdu2N
-         mfMl/CAav97hC6bGGJnevwLkeDuglguuj8glyqD4kBlEH87FaCXXNXBRLzRJbNQyIqBB
-         6J+dsiRgNlbpnbRCqVm3AA4AgiuZgFDah6/8iwry7k7SFgECA/yxbuU9A9tQTwWjAdD+
-         XwJyz44EWomU7x4yCfebIo+tqQtlwYPh7tk/BxMDn6KO/sR6dZO8l2eyRi2wpKC2Cint
-         mvvg==
+        bh=gWm3qRU8/b9EA8Ccj/0mlX2J5PcJaCewLwWdbDLd69A=;
+        b=LuExml/jlPXLEYQ5zypqFhyfmwNtdlSm7YqeHLqgLklGEeGjIb31mEjm4lr40oPU9H
+         jPykyN4VpxpQxcRxt9xOpjG60l/PaRlXHA97wKBAWbJ5VlBQU1XcWCOpRN5yAST5XiQ2
+         F8+3iftzIXPfgECI/zmBQkBrgWhKwNckzjOIYPq+6u24AfXlP5jTzuiIjQe9wMFOyD47
+         5PLHdZ2u74qsTlyFV932G1d7t1G3DbXDobimMTAobVjYl6pqb/ApE1GwMXyglH4BSVGl
+         Xi6uEJVn7AOQx0pngeyR+aDXR5YT2SaPifRtqv9OS+k1UDqAuqMCRs+FhsJUtgelbjur
+         m2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=n4kSQZRXiNjSmumdTbm6VA+QlEvnicZ1QQS9bp8Noi8=;
-        b=dCVj2eo4EvcPjqLsYaIA5+eR0UhPErF/Oj1KW4BwHQPb8IhggjrKaXkAV+an+MkXXH
-         dFdN3atpoy3eCLlQeXl9ov17g5rsqRQrziYvCz59DEPRmDMwHS6Q4dMy0d6v20Xzja54
-         +TrDGqAREIIzVZ8+pxh8OaI03mxtnap9H7zMwDcAG32IHKRih1PQl7n0sEgWS+J2CjTE
-         YJkA6xJr02uScWQmJWKQfMKQcWF7PFrmKGdB80uUsUBp5LLJ6dbsb67LmnAnJScfATbH
-         zoxUfyV5F6+/EcaY9Gwm8kTIlJ2c+c2Qongyy57mr/OulYXir+Da+nsMzzJduMo3tqE6
-         /jhg==
-X-Gm-Message-State: APjAAAUt/D8L013EBq38IfkdvlhupysSOf2O5wPFGzGARmogV5tqAldu
-        j4pf8kNvZS20LmXnxPaq8rnYrflO
-X-Google-Smtp-Source: APXvYqyYDhSJamgFEpx7NZcg8fNwHJ3R/WOhKwMeYA4klGyepF80lCpOMwCgZxdqHhceXCifom3/rg==
-X-Received: by 2002:adf:fa87:: with SMTP id h7mr39548991wrr.172.1574969541883;
-        Thu, 28 Nov 2019 11:32:21 -0800 (PST)
+        bh=gWm3qRU8/b9EA8Ccj/0mlX2J5PcJaCewLwWdbDLd69A=;
+        b=jhhFFNAirfec7YoOX3LRaV+pbbab7UjIjZoDbiMR3UdsArVnuwxR+PWHCmcVs5HuiV
+         JJGQY1I2a+BMOqSHURU7kXK7Qaj4jkb6qodsVSeozCilzOzEbDEuSoADWJ7bYe4w8nfU
+         iU9bxoZLNYSs5LpEUl/KMuu5xOJXLFUR3cVi8yhyAxEBJjUTZU6VIcFWyPk0/iMErc3c
+         vA0T38QPaCB7F87gD6VaWsvLsVCM/xuEW4ILX6PJhdJfwLoyWTSiGXQ2n/11QXc+XDAB
+         UUvA4yOnbSxjPw86OZdVS6aJ16Tt+QL3+pwlMuEKKXyeuBlcn4iQxPqi3faVQ2SkEDaC
+         HO6w==
+X-Gm-Message-State: APjAAAVLIg+sG51096ODpsozR0JnobUhAqBJ22/cZFmv2y4DWMiNiACu
+        EM5l4l4V5YGCHnMT9sFEHDA526lg
+X-Google-Smtp-Source: APXvYqzYtn+uAO1zNSqGbz8QtJ+Kn9A5Q1a3qqeo7qu+K077pWPwDPzace4aEc7sNs5I34Bt62tzgg==
+X-Received: by 2002:a1c:2703:: with SMTP id n3mr11453711wmn.94.1574969542591;
+        Thu, 28 Nov 2019 11:32:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z2sm9101229wmf.47.2019.11.28.11.32.21
+        by smtp.gmail.com with ESMTPSA id q15sm24727237wrs.91.2019.11.28.11.32.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Nov 2019 11:32:21 -0800 (PST)
-Message-Id: <3918aafdbd6ae63ddb9b4ea7328b9ec2e0f76fe9.1574969538.git.gitgitgadget@gmail.com>
+        Thu, 28 Nov 2019 11:32:22 -0800 (PST)
+Message-Id: <45db345304d5771017026a32d96251c5c5c47f11.1574969538.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.479.git.1574969538.gitgitgadget@gmail.com>
 References: <pull.479.git.1574969538.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 28 Nov 2019 19:32:16 +0000
-Subject: [PATCH 3/5] parse_branchname_arg(): update code comments
+Date:   Thu, 28 Nov 2019 19:32:17 +0000
+Subject: [PATCH 4/5] parse_branchname_arg(): refactor the decision making
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,155 +76,143 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-These parts repeat git documentation:
-    ... if <something> is A...B <...>
-    ... remote named in checkout.defaultRemote ...
+Make it easier to understand which branches handle which cases.
 
-Some parts repeat the code below. With next patch, code will be easier
-to understand, so this is no longer needed.
+Drop obfuscated variable `has_dash_dash` which also took
+`opts->accept_pathspec` into account, making it pretty hard to reason
+about code, especially when used together with `argc` and
+`opts->accept_pathspec` here:
 
-This is a separate patch to reduce the amount of diffs in next patch.
+	if (!(argc == 1 && !has_dash_dash) &&
+		!(argc == 2 && has_dash_dash) &&
+		opts->accept_pathspec)
+		recover_with_dwim = 0;
+
+Avoid double-negation in the code mentioned above ("it is not OK to
+proceed if it's not one of those cases").
+
+Avoid hard-to-understand condition `opts->accept_pathspec` in the code
+mentioned above.
+
+There are some minor die() message changes for:
+`git switch <commit> <unexpected>`
+`git switch <commit> -- <unexpected>`
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/checkout.c | 86 +++++++++++-----------------------------------
- 1 file changed, 21 insertions(+), 65 deletions(-)
+ builtin/checkout.c | 71 +++++++++++++++++++++++++++-------------------
+ 1 file changed, 42 insertions(+), 29 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5c6131dbe6..723aaca0ef 100644
+index 723aaca0ef..8f679d1b6a 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1127,45 +1127,21 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	int i;
+@@ -1122,9 +1122,8 @@ static int parse_branchname_arg(int argc, const char **argv,
+ {
+ 	const char **new_branch = &opts->new_branch;
+ 	const char *arg;
+-	int dash_dash_pos;
+-	int has_dash_dash = 0, expect_commit_only = 0;
+-	int i;
++	int dash_dash_pos, i;
++	int recover_with_dwim, expect_commit_only;
  
  	/*
--	 * case 1: git checkout <ref> -- [<paths>]
--	 *
--	 *   <ref> must be a valid tree, everything after the '--' must be
--	 *   a path.
--	 *
--	 * case 2: git checkout -- [<paths>]
--	 *
--	 *   everything after the '--' must be paths.
--	 *
--	 * case 3: git checkout <something> [--]
--	 *
--	 *   (a) If <something> is a commit, that is to
--	 *       switch to the branch or detach HEAD at it.  As a special case,
--	 *       if <something> is A...B (missing A or B means HEAD but you can
--	 *       omit at most one side), and if there is a unique merge base
--	 *       between A and B, A...B names that merge base.
--	 *
--	 *   (b) If <something> is _not_ a commit, either "--" is present
--	 *       or <something> is not a path, no -t or -b was given, and
--	 *       and there is a tracking branch whose name is <something>
--	 *       in one and only one remote (or if the branch exists on the
--	 *       remote named in checkout.defaultRemote), then this is a
--	 *       short-hand to fork local <something> from that
--	 *       remote-tracking branch.
--	 *
--	 *   (c) Otherwise, if "--" is present, treat it like case (1).
--	 *
--	 *   (d) Otherwise :
--	 *       - if it's a reference, treat it like case (1)
--	 *       - else if it's a path, treat it like case (2)
--	 *       - else: fail.
--	 *
--	 * case 4: git checkout <something> <paths>
--	 *
--	 *   The first argument must not be ambiguous.
--	 *   - If it's *only* a reference, treat it like case (1).
--	 *   - If it's only a path, treat it like case (2).
--	 *   - else: fail.
--	 *
-+	 * Resolve ambiguity where argv[0] may be <pathspec> or <commit>.
-+	 * High-level approach is:
-+	 * 1) Use various things to reduce ambiguity, examples:
-+	 *    * '--' is present
-+	 *    * command doesn't accept <pathspec>
-+	 *    * additional options like '-b' were given
-+	 * 2) If ambiguous and matches both existing <commit> and existing
-+	 *    file, complain. However, in 1-argument 'git checkout <arg>'
-+	 *    treat as <commit> to avoid annoying users.
-+	 * 3) Otherwise, if it matches some existing <commit>, treat as
-+	 *    <commit>.
-+	 * 4) Otherwise, if it matches a remote branch, and it's considered
-+	 *    reasonable to DWIM to create a local branch from remote branch,
-+	 *    do that and proceed with (2)(3).
-+	 * 5) Otherwise, let caller proceed with <pathspec> interpretation.
+ 	 * Resolve ambiguity where argv[0] may be <pathspec> or <commit>.
+@@ -1143,15 +1142,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	 *    do that and proceed with (2)(3).
+ 	 * 5) Otherwise, let caller proceed with <pathspec> interpretation.
  	 */
- 	if (!argc)
- 		return 0;
-@@ -1187,9 +1163,9 @@ static int parse_branchname_arg(int argc, const char **argv,
- 
- 	if (opts->accept_pathspec) {
- 	    if (dash_dash_pos == 0)
--		    return 1; /* case (2) */
-+		    return 1;
- 	    else if (dash_dash_pos == 1)
--		    has_dash_dash = 1; /* case (3) or (1) */
-+		    has_dash_dash = 1;
- 	    else if (dash_dash_pos >= 2)
- 		    die(_("only one reference expected, %d given."), dash_dash_pos);
+-	if (!argc)
+-		return 0;
+-
+-	if (!opts->accept_pathspec) {
+-		if (argc > 1)
+-			die(_("only one reference expected"));
+-		has_dash_dash = 1; /* helps disambiguate */
+-	}
+-
++	 
+ 	arg = argv[0];
+ 	dash_dash_pos = -1;
+ 	for (i = 0; i < argc; i++) {
+@@ -1161,17 +1152,46 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		}
  	}
-@@ -1203,14 +1179,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 
+-	if (opts->accept_pathspec) {
+-	    if (dash_dash_pos == 0)
+-		    return 1;
+-	    else if (dash_dash_pos == 1)
+-		    has_dash_dash = 1;
+-	    else if (dash_dash_pos >= 2)
+-		    die(_("only one reference expected, %d given."), dash_dash_pos);
+-	}
++	if (dash_dash_pos == -1) {
++		if (argc == 0) {
++			/* 'git checkout/switch/restore' */
++			return 0;
++		} else if (argc == 1) {
++			/* 'git checkout/switch/restore <something>' */
++			recover_with_dwim = dwim_new_local_branch_ok;
++		} else if (!opts->accept_pathspec) {
++			/* 'git switch <commit> <unexpected> [...]' */
++			die(_("only one reference expected, %d given."), argc);
++		} else {
++			/* 'git checkout/restore <something> <pathspec> [...]' */
++			recover_with_dwim = 0;
++		}
++
++		/* Absence of '--' leaves <pathspec>/<commit> ambiguity */
++		expect_commit_only = !opts->accept_pathspec;
++	} else if (dash_dash_pos == 0) {
++		/* 'git checkout/switch/restore -- [...]' */
++		return 1;  /* Eat '--' */
++	} else if (dash_dash_pos == 1) {
++		if (!opts->accept_pathspec) {
++			/* 'git switch <commit> -- [...]' */
++			die(_("incompatible with pathspec arguments"));
++		}
+ 
+-	if (has_dash_dash)
+-	    expect_commit_only = 1;
++		if (argc == 2) {
++			/* 'git checkout/restore <commit> --' */
++			recover_with_dwim = dwim_new_local_branch_ok;
++		} else {
++			/* 'git checkout/restore <commit> -- <pathspec> [...]' */
++			recover_with_dwim = 0;
++		}
++
++		/* Presence of '--' makes it certain that arg is <commit> */
++		expect_commit_only = 1;
++	} else {
++		/* 'git checkout/switch/restore <commit> <unxpected> [...] -- [...]' */
++		die(_("only one reference expected, %d given."), dash_dash_pos);
++	}
+ 
+ 	opts->count_checkout_paths = !opts->quiet && !expect_commit_only;
+ 
+@@ -1179,19 +1199,12 @@ static int parse_branchname_arg(int argc, const char **argv,
  		arg = "@{-1}";
  
  	if (get_oid_mb(arg, rev)) {
--		/*
--		 * Either case (3) or (4), with <something> not being
--		 * a commit, or an attempt to use case (1) with an
--		 * invalid ref.
--		 *
--		 * It's likely an error, but we need to find out if
--		 * we should auto-create the branch, case (3).(b).
--		 */
- 		int recover_with_dwim = dwim_new_local_branch_ok;
- 
+-		int recover_with_dwim = dwim_new_local_branch_ok;
+-
  		int could_be_checkout_paths = !expect_commit_only &&
-@@ -1219,10 +1187,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 			check_filename(opts->prefix, arg);
+ 
  		if (!expect_commit_only && !no_wildcard(arg))
  			recover_with_dwim = 0;
  
--		/*
--		 * Accept "git checkout foo", "git checkout foo --"
--		 * and "git switch foo" as candidates for dwim.
--		 */
- 		if (!(argc == 1 && !has_dash_dash) &&
- 		    !(argc == 2 && has_dash_dash) &&
- 		    opts->accept_pathspec)
-@@ -1238,7 +1202,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 					    arg);
- 				*new_branch = arg;
- 				arg = remote;
--				/* DWIMmed to create local branch, case (3).(b) */
-+				/* DWIMmed to create local branch */
- 			} else {
- 				recover_with_dwim = 0;
- 			}
-@@ -1253,19 +1217,11 @@ static int parse_branchname_arg(int argc, const char **argv,
- 
- 	setup_new_branch_info_and_source_tree(new_branch_info, opts, rev, arg);
- 
--	if (!opts->source_tree)                   /* case (1): want a tree */
-+	if (!opts->source_tree)
- 		die(_("reference is not a tree: %s"), arg);
- 
--	if (!expect_commit_only) {	/* case (3).(d) -> (1) */
--		/*
--		 * Do not complain the most common case
--		 *	git checkout branch
--		 * even if there happen to be a file called 'branch';
--		 * it would be extremely annoying.
--		 */
--		if (argc > 1)
--			verify_non_filename(opts->prefix, arg);
--	}
-+	if (!expect_commit_only && argc > 1)
-+		verify_non_filename(opts->prefix, arg);
- 
- 	return (dash_dash_pos == 1) ? 2 : 1;
- }
+-		if (!(argc == 1 && !has_dash_dash) &&
+-		    !(argc == 2 && has_dash_dash) &&
+-		    opts->accept_pathspec)
+-			recover_with_dwim = 0;
+-
+ 		if (recover_with_dwim) {
+ 			const char *remote = unique_tracking_name(arg, rev,
+ 								  dwim_remotes_matched);
 -- 
 gitgitgadget
 
