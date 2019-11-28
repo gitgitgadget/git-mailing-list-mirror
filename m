@@ -2,99 +2,201 @@ Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C091C432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC31C432C0
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:25:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3BDA2217C3
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:16:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A3BEB2158A
+	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 12:25:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hmkkWaQn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4MdoJrR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbfK1MQQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 07:16:16 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41211 "EHLO
+        id S1726496AbfK1MZ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 28 Nov 2019 07:25:27 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:46202 "EHLO
         mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbfK1MQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 07:16:16 -0500
-Received: by mail-pf1-f196.google.com with SMTP id s18so4502954pfd.8
-        for <git@vger.kernel.org>; Thu, 28 Nov 2019 04:16:16 -0800 (PST)
+        with ESMTP id S1726227AbfK1MZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 28 Nov 2019 07:25:27 -0500
+Received: by mail-pf1-f196.google.com with SMTP id 193so13059135pfc.13
+        for <git@vger.kernel.org>; Thu, 28 Nov 2019 04:25:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=vEAqH9xxeeAv8dzKwV8JLYEEOTM8p+4BoCYPNrmUWl4=;
-        b=hmkkWaQnKhNfZ/Vk3tRVB3ZkVsivo/wtGo6z6mES1DiglzRoF5DWCQsgMhtR5bpwLb
-         FSoYraUCjOAz5XjpYVqr30+MSsy/e2f/QczlxaioZcn81yuWaHsg3s/XTsARDMRt3D3v
-         BJN0s0dzFLmeyhFj8FYxXlT2+Hpv1miG0mubxKXEZkicDpILFYgjhKTCN5imLZlDgy+t
-         ZWMzsOUTz4IAj8v2uo51DU7Ddcp5Xn+Osovaa0xpPdIbn3DdE9osd5lfuyM3fKDy9FvV
-         FN2ITY5qzCHXKdeYXk1WNtuv5bixRhXqJyoirUdp86CU8PKylarciLwyB6eY8LAVbs4h
-         7xBw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=02MJ1nQjnvLsmuFm1biNpqIssGDVVB3HH9Wa6BBhcl8=;
+        b=h4MdoJrR77Bi6w1k5RVYyRS7hYU5G7wT5nhZfP7n18VSKJIfwdpY9LjDqmJnFAii4M
+         WFEV7aA5k/TmOpsugJZGQGAeD/swGPn6cYN8Z8d8wR2784EM35e+X+Sa/pMsYfvq07+J
+         dOfwUpDPhsfYHgw54i8nrAtzwo16efQmeKiznvwgl+NpgK1lvuTV6JHdtbT/rRRX1elY
+         1lPDVr8baTgQSwH123Z4Ct8Gwoz/NsWqcHIRjIsaFABO9mazwm8zMPolmGr66QJn1sD0
+         N/1ox1/8TQ5nsLdSuykPNWbZ9P6Byc72H2b9sY9+vEkeGJ6BnVVX5qxeN06qWN6sSzve
+         pP3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=vEAqH9xxeeAv8dzKwV8JLYEEOTM8p+4BoCYPNrmUWl4=;
-        b=RWpHsYkM43fBu7YmwK8kDUWYzWLl5n55gVmugergAKYpr50Y8LyQH/CqEolqUHu31P
-         p0sMC3vSvtGHD/Xjol5N4/GKA9XfpU4UH/NIppuvri0WPOwLgkUED8pSg/8XOVAVKdtL
-         4YxN/o0X/AnkQpvW6RnuxXKx/Qtbg6P43W+FT+qB99wQk9nz9pZ8az6BfisskoJlSzZW
-         Oe/VgEF9msTw2vgZBiYT2sCMNVrkgUyZxWePEhn8C8HnoY1yL7qq9tqJFtuMUDuGn26V
-         HLJfvQMLMona1TADQkmcYKyB0jN+jXTENAMWubwWpZ8ImzFHNbVPx2HQUQIBHYX7ALVL
-         2l9Q==
-X-Gm-Message-State: APjAAAXzEdNvm/ZR/FFRhotY6Oy/HbgH+wvrVLd+Da8ncK6IoTwm3C2/
-        xo4qW+R9U85eiG6Vrs7OURAcZpk0
-X-Google-Smtp-Source: APXvYqwmlG/7NOgP5UQGhDs4uW8mpusF51R02n3vYQl2acbx1M18zNw0BmxpyfIpFLXni9uLC5RHDg==
-X-Received: by 2002:a62:6044:: with SMTP id u65mr52780830pfb.227.1574943375995;
-        Thu, 28 Nov 2019 04:16:15 -0800 (PST)
-Received: from localhost ([2402:800:6375:24ff:b05:3145:6413:309f])
-        by smtp.gmail.com with ESMTPSA id b16sm8263196pfo.64.2019.11.28.04.16.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Nov 2019 04:16:15 -0800 (PST)
-Date:   Thu, 28 Nov 2019 19:16:13 +0700
-From:   Danh Doan <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] drop non-reentrant time usage
-Message-ID: <20191128121613.GC9067@danh.dev>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=02MJ1nQjnvLsmuFm1biNpqIssGDVVB3HH9Wa6BBhcl8=;
+        b=RUyspgLpgC0LdQ+yR1GG/5+viqH6ivTd6VBNNGacGMeC8MdYjkGY4vWYv4p8RgjUSv
+         4n4yRd6HJk9eZwww7+Ub00Ai4M32RbGsD+kruAOH5ntNidAR9WjV/wYBdvaBoS2uQt40
+         OvgEmMs9qN7zjZ27rTX47jYSdc2VVtzvI9VJIewgidtR7lqkXUwpDcM/BHjgxqfumIcx
+         6hfrTTAVr2zkSKKqVzxHdDDrVNm1XVDkdo7BEOMGDSSNP24W00tnlX1PHsloA7R63yN5
+         tbyX4Ps0H//DQP1NXBw9257Svn6Lw2ymi05ZZtsEPR8DFDa1a8ESR50OMPpkJA0t1nlF
+         xaJQ==
+X-Gm-Message-State: APjAAAWiWczxaFIX+Rz4/6WTQ7sjMC/INcZqc0WxLslY/sJwsnRPuC0c
+        xYBt6kPzdLYTSDo9NrnFACZ944sw
+X-Google-Smtp-Source: APXvYqxMEATMo/gEBm17Ss3OjKi/qST7NvWzvjZ5ybGfDh9wtq52v4qf5PUJYmCLdtcbCezEOOaxEw==
+X-Received: by 2002:a63:e4e:: with SMTP id 14mr10944819pgo.237.1574943924852;
+        Thu, 28 Nov 2019 04:25:24 -0800 (PST)
+Received: from localhost.localdomain ([2402:800:6375:24ff:b05:3145:6413:309f])
+        by smtp.gmail.com with ESMTPSA id r28sm18849448pgk.75.2019.11.28.04.25.23
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 28 Nov 2019 04:25:24 -0800 (PST)
+From:   Doan Tran Cong Danh <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Doan Tran Cong Danh <congdanhqx@gmail.com>
+Subject: [PATCH v2 0/3] Phase out non-reentrant time functions
+Date:   Thu, 28 Nov 2019 19:25:02 +0700
+Message-Id: <cover.1574943677.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.24.0.615.g37f5bfbdea
+In-Reply-To: <cover.1574867409.git.congdanhqx@gmail.com>
 References: <cover.1574867409.git.congdanhqx@gmail.com>
- <20191127162930.GC30581@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20191127162930.GC30581@sigill.intra.peff.net>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-11-27 11:29:30-0500, Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 27, 2019 at 10:13:16PM +0700, Doan Tran Cong Danh wrote:
-> 
-> > gmtime/localtime is considered unsafe in multithread environment.
-> > 
-> > git was started as single-thread application, but we have some
-> > multi-thread code, right now.
-> > 
-> > replace all usage of gmtime/localtime by their respective reentrant ones.
-> 
-> I think this is a good change.
-> 
-> A minor point, but I think it may be simpler if the first four were just
-> a single patch. There's no rationale given at all in the 3rd and 4th
-> ones. Which is because you already explained it in patch 1, but that
-> won't help somebody who digs up the commit via "git blame".
-> 
-> So I think they either ought to be one patch, or they should repeat the
-> rationale (I'd probably go with the first, but I could live with the
-> second).
+gmtime/localtime is considered unsafe in multithread environment.
 
-I'll merge first three into one since both of them are in date.c,
-the 4th one changed another file.
+git was started as single-thread application, but we have some
+multi-thread code, right now.
 
+replace all usage of gmtime/localtime by their respective reentrant ones.
+
+On most POSIX systems, we won't notice any differences in performance,
+since they implemented gmtime and gmtime_r mostly the same.
+
+On Windows, we may be taxed, since gmtime_r and localtime_r is our compat
+functions, because we memcpy from returned data of gmtime/localtime.
+
+To address that, I made patch #3 and included it together with this series.
+I'm not sure how much portable it is.
+
+
+Doan Tran Cong Danh (3):
+  date.c: switch to reentrant {gm,local}time_r
+  archive-zip.c: switch to reentrant localtime_r
+  mingw: use {gm,local}time_s as backend for {gm,local}time_r
+
+ archive-zip.c  | 10 +++++-----
+ compat/mingw.c | 12 ++++++------
+ date.c         | 18 ++++++++++--------
+ 3 files changed, 21 insertions(+), 19 deletions(-)
+
+Range-diff against v1:
+1:  1e7e08b3c7 < -:  ---------- date.c::datestamp: switch to reentrant localtime_r
+2:  130eba77db ! 1:  71de738864 date.c::time_to_tm_local: use reentrant localtime_r(3)
+    @@ Metadata
+     Author: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+      ## Commit message ##
+    -    date.c::time_to_tm_local: use reentrant localtime_r(3)
+    +    date.c: switch to reentrant {gm,local}time_r
+     
+    -    Phase out `localtime(3)' in favour of reentrant `localtime_r(3)'
+    +    Originally, git was intended to be single-thread executable.
+    +    `gmtime(3)' and `localtime(3)' can be used in such codebase
+    +    for cleaner code.
+    +
+    +    Overtime, we're employing multithread in our code base.
+    +
+    +    Let's phase out `gmtime(3)' and `localtime(3)' in favour of
+    +    `gmtime_r(3)' and `localtime_r(3)'.
+     
+         Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+      ## date.c ##
+    -@@ date.c: static struct tm *time_to_tm(timestamp_t time, int tz)
+    - 	return gmtime(&t);
+    +@@ date.c: static time_t gm_time_t(timestamp_t time, int tz)
+    +  * thing, which means that tz -0100 is passed in as the integer -100,
+    +  * even though it means "sixty minutes off"
+    +  */
+    +-static struct tm *time_to_tm(timestamp_t time, int tz)
+    ++static struct tm *time_to_tm(timestamp_t time, int tz, struct tm *tm)
+    + {
+    + 	time_t t = gm_time_t(time, tz);
+    +-	return gmtime(&t);
+    ++	return gmtime_r(&t, tm);
+      }
+      
+     -static struct tm *time_to_tm_local(timestamp_t time)
+    @@ date.c: const char *show_date(timestamp_t time, int tz, const struct date_mode *
+     -		tm = time_to_tm_local(time);
+     +		tm = time_to_tm_local(time, &tmbuf);
+      	else
+    - 		tm = time_to_tm(time, tz);
+    +-		tm = time_to_tm(time, tz);
+    ++		tm = time_to_tm(time, tz, &tmbuf);
+      	if (!tm) {
+    +-		tm = time_to_tm(0, 0);
+    ++		tm = time_to_tm(0, 0, &tmbuf);
+    + 		tz = 0;
+    + 	}
+    + 
+    +@@ date.c: void datestamp(struct strbuf *out)
+    + {
+    + 	time_t now;
+    + 	int offset;
+    ++	struct tm tm = { 0 };
+    + 
+    + 	time(&now);
+    + 
+    +-	offset = tm_to_time_t(localtime(&now)) - now;
+    ++	offset = tm_to_time_t(localtime_r(&now, &tm)) - now;
+    + 	offset /= 60;
+    + 
+    + 	date_string(now, offset, out);
+3:  ce7fe7bcf3 < -:  ---------- date.c::time_to_tm: use reentrant gmtime_r(3)
+4:  f6fd89dfe1 ! 2:  77798f1773 archive-zip: use reentrant localtime_r(3)
+    @@ Metadata
+     Author: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+      ## Commit message ##
+    -    archive-zip: use reentrant localtime_r(3)
+    +    archive-zip.c: switch to reentrant localtime_r
+    +
+    +    Originally, git was intended to be single-thread executable.
+    +    `localtime(3)' can be used in such codebase for cleaner code.
+    +
+    +    Overtime, we're employing multithread in our code base.
+    +
+    +    Let's phase out `gmtime(3)' in favour of `localtime_r(3)'.
+    +
+    +    Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+      ## archive-zip.c ##
+     @@ archive-zip.c: static void write_zip_trailer(const struct object_id *oid)
+5:  2c39f9a04f ! 3:  33a67eb377 mingw: use {gm,local}time_s as backend for {gm,local}time_r
+    @@ Commit message
+         Signed-off-by: Doan Tran Cong Danh <congdanhqx@gmail.com>
+     
+      ## compat/mingw.c ##
+    -@@
+    - #include "../git-compat-util.h"
+    - #include "win32.h"
+    - #include <conio.h>
+    -+#include <errno.h>
+    - #include <wchar.h>
+    - #include "../strbuf.h"
+    - #include "../run-command.h"
+     @@ compat/mingw.c: int pipe(int filedes[2])
+      
+      struct tm *gmtime_r(const time_t *timep, struct tm *result)
 -- 
-Danh
+2.24.0.615.g37f5bfbdea
+
