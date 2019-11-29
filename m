@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC1EBC432C0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6CA5C432C3
 	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:11:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7EA6521771
+	by mail.kernel.org (Postfix) with ESMTP id A9CC1217BA
 	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:11:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hg0rJryA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mTtFJrzO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbfK2VLz (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727205AbfK2VL4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Nov 2019 16:11:56 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41980 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727166AbfK2VLz (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 29 Nov 2019 16:11:55 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:34476 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbfK2VLz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Nov 2019 16:11:55 -0500
-Received: by mail-wr1-f46.google.com with SMTP id t2so36656744wrr.1
-        for <git@vger.kernel.org>; Fri, 29 Nov 2019 13:11:53 -0800 (PST)
+Received: by mail-wr1-f67.google.com with SMTP id b18so36702350wrj.8
+        for <git@vger.kernel.org>; Fri, 29 Nov 2019 13:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=X131tDd4rJf08E/nb2McAvkR5IeeSoPCHzIQjA2NF24=;
-        b=hg0rJryAG3tOLwdc/T+Yw6v4pe47igboZ/7s6EPl1rMvlmWp6IXaHxfiHYykp4OSB1
-         zVinW24Wof3Y8sXd1Q5wFtUh9YDh4D6v8uHNB4/Hqzt6vrFdUaOGzoVeMZjdq5fv2vmb
-         4Q6ZQNkuwXlxx3qlbWljk4kS8rVr1M9VhlxMsf0bG2cgYg/ee0RnVXlXO+QyG5lM2nDp
-         49+hGe3ZYff1W1nmmk03VcVYTTyvQAKMop2iKOGAsH4cPfbraSXZ7WNbcBWtfJLG6u0m
-         9a6kzlPrTH9SPULDT5QTuxDF6eVfyt4jEAehCYZb+2VBYXbuBHt7hgFxOzu1+YnbwMcK
-         EP3w==
+        bh=Tmpu0Cq5uARILE7xc2V9fByh2Sl+uM3jOJKSMIXYbD8=;
+        b=mTtFJrzOTw4g5RiSXkiKS91sI6G01/Lj+P8kNhhN3xlIirY+W9tLmC7pNqoeId6oPI
+         o5apijnnqb/68QwZ753eR7MU3G9rel6ZeceMAUeCs35+JE60/jS7rcAaLBcbRpQzMzde
+         apcPStxSY+gDvskOkS0CaE3tXNJKNPvarY5WVWj+ARhCUlCHSOO3Kospp/Uus9oZacQb
+         JHL2FDarF2Jt0QltH2EdKBFg4XLyz88syT+0vYxW8PLnvGfmOIAWB5s9MDgjcS085Cdp
+         Lnhl136FCT5J+N00m2AZwrF/aJoROEx1Wpazt4hInoSX9/HdWnT4z6s6Sg1GOi3mjNhu
+         2y0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=X131tDd4rJf08E/nb2McAvkR5IeeSoPCHzIQjA2NF24=;
-        b=iMWpM5xUcr7BzblxfbTTH/M30Sng/gHlDKFeRIb9qUmgt6Cux/pm2DAz+qduMunBXh
-         MYq09OgtbuWL0M8OzB+qJkrhlpXjonrm8bM4HI2yyPiRIBWiNSu7zV6f88HSQFgihHSk
-         w7zXejabx57F/ah0s2AEdFwsrM6oIMDAkwVeEhIAgZlSifJ2qCzCIOG2kB2vvapmnVL0
-         TLMA9z4ZEfiWqDsjdAoPMrJ+c0woAW8JRKNCOComcJ/jDdFMZT2hWM1bBaftTWpl1Bsj
-         iGD7HITYKiIX6jefXN1GacDWWNOMN5mjk+mwA8sdHAqOFc/K4IUMMv1k7w3ksQzOt1L5
-         5Z4A==
-X-Gm-Message-State: APjAAAUReamyBft7Vb0V1cg2E2/Jeb8OewN179KTrfu4ESHGtfLKadyC
-        nZ/6ge1rX1Y08VL480BzNJk0uQ2F
-X-Google-Smtp-Source: APXvYqy4L/jLeID7T+MiEkTYdpMs2VzGDAW9umgM5e5YZAfFYmsNMXmbra2gmsqfU2ZbRgfhfJy09w==
-X-Received: by 2002:adf:ec48:: with SMTP id w8mr8914248wrn.19.1575061912535;
-        Fri, 29 Nov 2019 13:11:52 -0800 (PST)
+        bh=Tmpu0Cq5uARILE7xc2V9fByh2Sl+uM3jOJKSMIXYbD8=;
+        b=IfMOdiFoJKmfCKAQg4vXIZbI3NcrLvahg8827KUNKXFPzRg+eWuOiMe73IzveIPYIR
+         CuwecY5uwHL/msGpIQ+CxanS/uGuJhEIjjgTPAb0ygHb0gn82Yyx3aZp4RyXNGV5wtFn
+         /GLWWEDdfdEBazETGPB70MPKVsOEzS1VErVYQiLOT1+1jy5+o0XlWDlcvwV92d4424Ve
+         WmkuS90CHWgSXKiTgC4ZGhwNyeRwS25sjSuUPY4yph0yVvo4WxTkeOinJTGXsJrdbxGH
+         KSdDSt6aKIEnLNq+WI5J6VB0fFrFxmHywGjlWGHdJFOKijMSy2uMzxneyjZB5/qrORlP
+         sb4g==
+X-Gm-Message-State: APjAAAWEgkCG6RtqeAX9ANCUft4pzgym48gSX++Doi/xe7mEi5ycSGaH
+        KN461C7TkX+leqFyyE7EwCBT8qbh
+X-Google-Smtp-Source: APXvYqzbRHKmI3Z79oj760UXgCKtKhPw3LxMx0/+Mr9qgyCsF90cRRWTDnH4sJj5PHXUphmdxTxv4g==
+X-Received: by 2002:a5d:6b47:: with SMTP id x7mr523239wrw.277.1575061913316;
+        Fri, 29 Nov 2019 13:11:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u18sm1215463wrt.26.2019.11.29.13.11.51
+        by smtp.gmail.com with ESMTPSA id h8sm12051900wrx.63.2019.11.29.13.11.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 29 Nov 2019 13:11:52 -0800 (PST)
-Message-Id: <fab098d86eb47d8ef108e62080db87c1381b2e56.1575061909.git.gitgitgadget@gmail.com>
+Message-Id: <58a581f4ee020f3557bbca889355ba54b7399b56.1575061909.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.171.v2.git.1575061909.gitgitgadget@gmail.com>
 References: <pull.171.git.1573821382.gitgitgadget@gmail.com>
         <pull.171.v2.git.1575061909.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 29 Nov 2019 21:11:42 +0000
-Subject: [PATCH v2 2/9] built-in add -i: allow filtering the modified files
- list
+Date:   Fri, 29 Nov 2019 21:11:43 +0000
+Subject: [PATCH v2 3/9] built-in add -i: prepare for multi-selection commands
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,127 +76,263 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the `update` command of `git add -i`, we are primarily interested in the
-list of modified files that have worktree (i.e. unstaged) changes.
-
-At the same time, we need to determine _also_ the staged changes, to be
-able to produce the full added/deleted information.
-
-The Perl script version of `git add -i` has a parameter of the
-`list_modified()` function for that matter. In C, we can be a lot more
-precise, using an `enum`.
-
-The C implementation of the filter also has an easier time to avoid
-unnecessary work, simply by using an adaptive order of the `diff-index`
-and `diff-files` phases, and then skipping files in the second phase
-when they have not been seen in the first phase.
-
-Seeing as we change the meaning of the `phase` field, we rename it to
-`mode` to reflect that the order depends on the exact invocation of the
-`git add -i` command.
+The `update`, `revert` and `add-untracked` commands allow selecting
+multiple entries. Let's extend the `list_and_choose()` function to
+accommodate those use cases.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c | 33 ++++++++++++++++++++++++++-------
- 1 file changed, 26 insertions(+), 7 deletions(-)
+ add-interactive.c | 114 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 89 insertions(+), 25 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
-index de2fccb0ef..c62d63e35b 100644
+index c62d63e35b..ea406e903b 100644
 --- a/add-interactive.c
 +++ b/add-interactive.c
-@@ -344,10 +344,11 @@ static int pathname_entry_cmp(const void *unused_cmp_data,
+@@ -72,15 +72,17 @@ static void init_add_i_state(struct add_i_state *s, struct repository *r)
+ struct prefix_item_list {
+ 	struct string_list items;
+ 	struct string_list sorted;
++	int *selected; /* for multi-selections */
+ 	size_t min_length, max_length;
+ };
+ #define PREFIX_ITEM_LIST_INIT \
+-	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_NODUP, 1, 4 }
++	{ STRING_LIST_INIT_DUP, STRING_LIST_INIT_NODUP, NULL, 1, 4 }
+ 
+ static void prefix_item_list_clear(struct prefix_item_list *list)
+ {
+ 	string_list_clear(&list->items, 1);
+ 	string_list_clear(&list->sorted, 0);
++	FREE_AND_NULL(list->selected);
  }
  
- struct collection_status {
--	enum { FROM_WORKTREE = 0, FROM_INDEX = 1 } phase;
-+	enum { FROM_WORKTREE = 0, FROM_INDEX = 1 } mode;
- 
- 	const char *reference;
- 
-+	unsigned skip_unseen:1;
- 	struct string_list *files;
- 	struct hashmap file_map;
+ static void extend_prefix_length(struct string_list_item *p,
+@@ -182,11 +184,12 @@ static ssize_t find_unique(const char *string, struct prefix_item_list *list)
+ struct list_options {
+ 	int columns;
+ 	const char *header;
+-	void (*print_item)(int i, struct string_list_item *item, void *print_item_data);
++	void (*print_item)(int i, int selected, struct string_list_item *item,
++			   void *print_item_data);
+ 	void *print_item_data;
  };
-@@ -375,6 +376,9 @@ static void collect_changes_cb(struct diff_queue_struct *q,
- 		entry = hashmap_get_entry_from_hash(&s->file_map, hash, name,
- 						    struct pathname_entry, ent);
- 		if (!entry) {
-+			if (s->skip_unseen)
-+				continue;
-+
- 			add_file_item(s->files, name);
  
- 			entry = xcalloc(sizeof(*entry), 1);
-@@ -385,7 +389,7 @@ static void collect_changes_cb(struct diff_queue_struct *q,
+-static void list(struct add_i_state *s, struct string_list *list,
++static void list(struct add_i_state *s, struct string_list *list, int *selected,
+ 		 struct list_options *opts)
+ {
+ 	int i, last_lf = 0;
+@@ -199,7 +202,8 @@ static void list(struct add_i_state *s, struct string_list *list,
+ 				 "%s", opts->header);
+ 
+ 	for (i = 0; i < list->nr; i++) {
+-		opts->print_item(i, list->items + i, opts->print_item_data);
++		opts->print_item(i, selected ? selected[i] : 0, list->items + i,
++				 opts->print_item_data);
+ 
+ 		if ((opts->columns) && ((i + 1) % (opts->columns))) {
+ 			putchar('\t');
+@@ -218,6 +222,10 @@ struct list_and_choose_options {
+ 	struct list_options list_opts;
+ 
+ 	const char *prompt;
++	enum {
++		SINGLETON = (1<<0),
++		IMMEDIATE = (1<<1),
++	} flags;
+ 	void (*print_help)(struct add_i_state *s);
+ };
+ 
+@@ -225,7 +233,8 @@ struct list_and_choose_options {
+ #define LIST_AND_CHOOSE_QUIT  (-2)
+ 
+ /*
+- * Returns the selected index.
++ * Returns the selected index in singleton mode, the number of selected items
++ * otherwise.
+  *
+  * If an error occurred, returns `LIST_AND_CHOOSE_ERROR`. Upon EOF,
+  * `LIST_AND_CHOOSE_QUIT` is returned.
+@@ -234,8 +243,19 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 			       struct prefix_item_list *items,
+ 			       struct list_and_choose_options *opts)
+ {
++	int singleton = opts->flags & SINGLETON;
++	int immediate = opts->flags & IMMEDIATE;
++
+ 	struct strbuf input = STRBUF_INIT;
+-	ssize_t res = LIST_AND_CHOOSE_ERROR;
++	ssize_t res = singleton ? LIST_AND_CHOOSE_ERROR : 0;
++
++	if (!singleton) {
++		free(items->selected);
++		CALLOC_ARRAY(items->selected, items->items.nr);
++	}
++
++	if (singleton && !immediate)
++		BUG("singleton requires immediate");
+ 
+ 	find_unique_prefixes(items);
+ 
+@@ -244,15 +264,16 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 
+ 		strbuf_reset(&input);
+ 
+-		list(s, &items->items, &opts->list_opts);
++		list(s, &items->items, items->selected, &opts->list_opts);
+ 
+ 		color_fprintf(stdout, s->prompt_color, "%s", opts->prompt);
+-		fputs("> ", stdout);
++		fputs(singleton ? "> " : ">> ", stdout);
+ 		fflush(stdout);
+ 
+ 		if (strbuf_getline(&input, stdin) == EOF) {
+ 			putchar('\n');
+-			res = LIST_AND_CHOOSE_QUIT;
++			if (immediate)
++				res = LIST_AND_CHOOSE_QUIT;
+ 			break;
+ 		}
+ 		strbuf_trim(&input);
+@@ -268,7 +289,9 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 		p = input.buf;
+ 		for (;;) {
+ 			size_t sep = strcspn(p, " \t\r\n,");
+-			ssize_t index = -1;
++			int choose = 1;
++			/* `from` is inclusive, `to` is exclusive */
++			ssize_t from = -1, to = -1;
+ 
+ 			if (!sep) {
+ 				if (!*p)
+@@ -277,30 +300,70 @@ static ssize_t list_and_choose(struct add_i_state *s,
+ 				continue;
+ 			}
+ 
+-			if (isdigit(*p)) {
++			/* Input that begins with '-'; de-select */
++			if (*p == '-') {
++				choose = 0;
++				p++;
++				sep--;
++			}
++
++			if (sep == 1 && *p == '*') {
++				from = 0;
++				to = items->items.nr;
++			} else if (isdigit(*p)) {
+ 				char *endp;
+-				index = strtoul(p, &endp, 10) - 1;
+-				if (endp != p + sep)
+-					index = -1;
++				/*
++				 * A range can be specified like 5-7 or 5-.
++				 *
++				 * Note: `from` is 0-based while the user input
++				 * is 1-based, hence we have to decrement by
++				 * one. We do not have to decrement `to` even
++				 * if it is 0-based because it is an exclusive
++				 * boundary.
++				 */
++				from = strtoul(p, &endp, 10) - 1;
++				if (endp == p + sep)
++					to = from + 1;
++				else if (*endp == '-') {
++					to = strtoul(++endp, &endp, 10);
++					/* extra characters after the range? */
++					if (endp != p + sep)
++						from = -1;
++				}
+ 			}
+ 
+ 			if (p[sep])
+ 				p[sep++] = '\0';
+-			if (index < 0)
+-				index = find_unique(p, items);
++			if (from < 0) {
++				from = find_unique(p, items);
++				if (from >= 0)
++					to = from + 1;
++			}
+ 
+-			if (index < 0 || index >= items->items.nr)
++			if (from < 0 || from >= items->items.nr ||
++			    (singleton && from + 1 != to)) {
+ 				color_fprintf_ln(stdout, s->error_color,
+ 						 _("Huh (%s)?"), p);
+-			else {
+-				res = index;
++				break;
++			} else if (singleton) {
++				res = from;
+ 				break;
+ 			}
+ 
++			if (to > items->items.nr)
++				to = items->items.nr;
++
++			for (; from < to; from++)
++				if (items->selected[from] != choose) {
++					items->selected[from] = choose;
++					res += choose ? +1 : -1;
++				}
++
+ 			p += sep;
  		}
  
- 		file_item = entry->item;
--		adddel = s->phase == FROM_INDEX ?
-+		adddel = s->mode == FROM_INDEX ?
- 			&file_item->index : &file_item->worktree;
- 		adddel->seen = 1;
- 		adddel->add = stat.files[i]->added;
-@@ -396,13 +400,22 @@ static void collect_changes_cb(struct diff_queue_struct *q,
- 	free_diffstat_info(&stat);
+-		if (res != LIST_AND_CHOOSE_ERROR)
++		if ((immediate && res != LIST_AND_CHOOSE_ERROR) ||
++		    !strcmp(input.buf, "*"))
+ 			break;
+ 	}
+ 
+@@ -500,7 +563,7 @@ struct print_file_item_data {
+ 	struct strbuf buf, index, worktree;
+ };
+ 
+-static void print_file_item(int i, struct string_list_item *item,
++static void print_file_item(int i, int selected, struct string_list_item *item,
+ 			    void *print_file_item_data)
+ {
+ 	struct file_item *c = item->util;
+@@ -515,7 +578,7 @@ static void print_file_item(int i, struct string_list_item *item,
+ 	strbuf_addf(&d->buf, d->modified_fmt,
+ 		    d->index.buf, d->worktree.buf, item->string);
+ 
+-	printf(" %2d: %s", i + 1, d->buf.buf);
++	printf("%c%2d: %s", selected ? '*' : ' ', i + 1, d->buf.buf);
  }
  
--static int get_modified_files(struct repository *r, struct string_list *files,
-+enum modified_files_filter {
-+	NO_FILTER = 0,
-+	WORKTREE_ONLY = 1,
-+	INDEX_ONLY = 2,
-+};
-+
-+static int get_modified_files(struct repository *r,
-+			      enum modified_files_filter filter,
-+			      struct string_list *files,
- 			      const struct pathspec *ps)
- {
- 	struct object_id head_oid;
- 	int is_initial = !resolve_ref_unsafe("HEAD", RESOLVE_REF_READING,
- 					     &head_oid, NULL);
--	struct collection_status s = { FROM_WORKTREE };
-+	struct collection_status s = { 0 };
-+	int i;
- 
- 	if (discard_index(r->index) < 0 ||
- 	    repo_read_index_preload(r, ps, 0) < 0)
-@@ -412,10 +425,16 @@ static int get_modified_files(struct repository *r, struct string_list *files,
- 	s.files = files;
- 	hashmap_init(&s.file_map, pathname_entry_cmp, NULL, 0);
- 
--	for (s.phase = FROM_WORKTREE; s.phase <= FROM_INDEX; s.phase++) {
-+	for (i = 0; i < 2; i++) {
- 		struct rev_info rev;
- 		struct setup_revision_opt opt = { 0 };
- 
-+		if (filter == INDEX_ONLY)
-+			s.mode = (i == 0) ? FROM_INDEX : FROM_WORKTREE;
-+		else
-+			s.mode = (i == 0) ? FROM_WORKTREE : FROM_INDEX;
-+		s.skip_unseen = filter && i;
-+
- 		opt.def = is_initial ?
- 			empty_tree_oid_hex() : oid_to_hex(&head_oid);
- 
-@@ -429,7 +448,7 @@ static int get_modified_files(struct repository *r, struct string_list *files,
- 		if (ps)
- 			copy_pathspec(&rev.prune_data, ps);
- 
--		if (s.phase == FROM_INDEX)
-+		if (s.mode == FROM_INDEX)
- 			run_diff_index(&rev, 1);
- 		else {
- 			rev.diffopt.flags.ignore_dirty_submodules = 1;
-@@ -502,7 +521,7 @@ static void print_file_item(int i, struct string_list_item *item,
  static int run_status(struct add_i_state *s, const struct pathspec *ps,
- 		      struct string_list *files, struct list_options *opts)
- {
--	if (get_modified_files(s->r, files, ps) < 0)
-+	if (get_modified_files(s->r, NO_FILTER, files, ps) < 0)
+@@ -524,7 +587,7 @@ static int run_status(struct add_i_state *s, const struct pathspec *ps,
+ 	if (get_modified_files(s->r, NO_FILTER, files, ps) < 0)
  		return -1;
  
- 	list(s, files, opts);
+-	list(s, files, opts);
++	list(s, files, NULL, opts);
+ 	putchar('\n');
+ 
+ 	return 0;
+@@ -563,7 +626,8 @@ struct print_command_item_data {
+ 	const char *color, *reset;
+ };
+ 
+-static void print_command_item(int i, struct string_list_item *item,
++static void print_command_item(int i, int selected,
++			       struct string_list_item *item,
+ 			       void *print_command_item_data)
+ {
+ 	struct print_command_item_data *d = print_command_item_data;
+@@ -596,7 +660,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 	struct print_command_item_data data = { "[", "]" };
+ 	struct list_and_choose_options main_loop_opts = {
+ 		{ 4, N_("*** Commands ***"), print_command_item, &data },
+-		N_("What now"), command_prompt_help
++		N_("What now"), SINGLETON | IMMEDIATE, command_prompt_help
+ 	};
+ 	struct {
+ 		const char *string;
 -- 
 gitgitgadget
 
