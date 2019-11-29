@@ -6,70 +6,87 @@ X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36272C432C3
-	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 13:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22120C432C0
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 13:31:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 03C9920833
-	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 13:19:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E3D0320869
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 13:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726778AbfK2NTo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Nov 2019 08:19:44 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:21700 "EHLO smtp.hosts.co.uk"
+        id S1726806AbfK2Nb1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Nov 2019 08:31:27 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:59968 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726608AbfK2NTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Nov 2019 08:19:44 -0500
+        id S1726608AbfK2Nb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Nov 2019 08:31:27 -0500
 Received: from [79.66.3.179] (helo=[192.168.1.22])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1iagBS-0003Tn-8K; Fri, 29 Nov 2019 13:19:42 +0000
-Subject: Re: [PATCH 1/1] contrib/buildsystems: fix Visual Studio Debug
- configuration
+        id 1iagMl-0000a2-6H; Fri, 29 Nov 2019 13:31:24 +0000
+Subject: Re: git-rebase produces incorrect output
+To:     Pavel Roskin <plroskin@gmail.com>, git@vger.kernel.org
+References: <CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com>
 From:   Philip Oakley <philipoakley@iee.email>
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <pull.348.git.gitgitgadget@gmail.com>
- <525669b3b38ed57d6d4f188dfe0bb8fe10b63749.1569227313.git.gitgitgadget@gmail.com>
- <c89cc506-b515-b913-bb0a-353b04fe4210@iee.email>
- <8e7ff0b2-9f62-8ec6-5316-eb9cee25024e@syntevo.com>
- <70bc64f6-3513-2924-9ba0-0e38e0e9d308@iee.email>
- <0b2124b5-6d40-08bb-6cc5-a8cef2b7a9b1@syntevo.com>
- <365668d0-ebb8-6b5c-99bd-29f0c8cec132@iee.email>
-Message-ID: <9c5157df-adb0-0a84-2ff2-852ad7536874@iee.email>
-Date:   Fri, 29 Nov 2019 13:19:41 +0000
+Message-ID: <eadb7c7e-5c8c-7e0b-2be0-ddc31d6ff7d4@iee.email>
+Date:   Fri, 29 Nov 2019 13:31:23 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.1
 MIME-Version: 1.0
-In-Reply-To: <365668d0-ebb8-6b5c-99bd-29f0c8cec132@iee.email>
+In-Reply-To: <CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 29/11/2019 11:53, Philip Oakley wrote:
-> On 28/11/2019 10:07, Alexandr Miloslavskiy wrote:
->> On 28.11.2019 1:34, Philip Oakley wrote:
->>
->>> Hmm, 45 minutes of cloning and rebuild, but finally it compiled 
->>> clean (both Release and Debug)
->>
->> I understand that the issue is resolved now.
->>
->> Probably your old repo was missing the libraries for whatever reason 
->> (like antivirus deleting them, etc), but build script thought that 
->> dependencies are properly built, so didn't attempt to rebuild them.
-> I think I'll report that as an issue to the 
-> https://github.com/microsoft/vcpkg folks so that there's better 
-> detection for 'out of date' / updated vcpkg issues.
+On 29/11/2019 08:21, Pavel Roskin wrote:
+> Hi!
 >
-> The vcpkg_install.bat in /compat/vcbuild may need updating to do a 
-> 'pull' if there is an existing directory. At the moment it's a rather 
-> simplistic 'all or nothing' for getting all those extra packages.
+> I've discovered an issue with "git rebase" producing a subtly
+> incorrect file. In fact, that files even compiled but failed in unit
+> tests! That's so scary that I'm going to stop using "git rebase" for
+> now. Fortunately, "git rebase --merge" is working correctly, so I'll
+> use it. Too bad there is no option to use "--merge" by default.
+>
+> The issue was observed in git 2.23 and reproduced in today's next
+> branch (2.24.0.449.g4c06f74957) on up-to-date Fedora 31 x86_64.
+>
+> I've created a repository that demonstrates the issue:
+> https://github.com/proski/git-rebase-demo
+>
+> The branch names should be self-explanatory. "master" is the base,
+> "branch1" and "branch2" contain one change each. If "branch1" is
+> rebased on top of "branch2", the result is incorrect, saved in the
+> "rebase-bad" branch. If "git rebase -m" is used, the result is
+> correct, saved in the "merge-good" branch.
+>
+> The files in "rebase-bad" and "merge-good" have exactly the same lines
+> but in a different order. Yet the changes on branch1 and branch2
+> affect non-overlapping parts of the file. There should be no doubt how
+> the merged code should look like.
+>
+> I believe the change on branch2 shifts the lines, so that the first
+> change from branch1 is applies to a place below the intended location,
+> and then git goes back to an earlier line to apply the next hunk. I
+> can imagine that it would do the right thing in case of swapped blocks
+> of code. Yet I have a real life example where it does a very wrong
+> thing.
+>
+> Indeed, "git diff origin/branch2 origin/rebase-bad" and "git diff
+> origin/branch2 origin/merge-good" both produce diffs of 9957 bytes
+> long, different only in the order of the hunks.
+>
+> Another interesting data point - "git rebase --interactive" is working
+> correctly.
+>
+Which specific lines is this on?
 
-Issue submitted as https://github.com/microsoft/vcpkg/issues/9148
---
+Using the Github compare facility [1], I see multiple changes, some of 
+which are probably just noise from the example.
+  https://github.com/proski/git-rebase-demo/compare/merge-good...rebase-bad
+
 Philip
+
+[1] 
+https://help.github.com/en/github/committing-changes-to-your-project/comparing-commits-across-time
