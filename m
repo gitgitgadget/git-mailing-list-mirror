@@ -2,144 +2,104 @@ Return-Path: <SRS0=rBju=ZV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0451C432C0
-	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BF9B2C432C0
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:44:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7E77C2464B
-	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:39:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8E29B2464A
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 21:44:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="N4CtcAHy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUEPv9Fw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387433AbfK2Vjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 29 Nov 2019 16:39:36 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61889 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387424AbfK2Vjg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 29 Nov 2019 16:39:36 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3355336029;
-        Fri, 29 Nov 2019 16:39:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=FIUlxL7iEdm8s0QRD2MuZOljOXI=; b=N4CtcA
-        HyKmESVohvzl8aWcK4+Cb7rxL0ZqCNwq1D/dOD+9OvJuZk3mXXUcPamxVpR0AJhX
-        IJ+VxfYdzqHXvqe+2/MPlGlV098SKUXxdcR3V1KUQTx7UxfQ+nGmWU1Y9FF34NoH
-        wwJXi+8JqK1lA1PImgcNyjQF2h25sH/MFqNJg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=R1ovHQ9VVSIVLr6C/4QttpJ8pn7GFKYt
-        wCjh0zu0AZngNmYB925RETR6jS5SsmIIVVtJXFiGiYHKFDITz6+yydhyJjEqXML0
-        xRKX6SuWd7ehkxrmNDAPgleylR0halbGsCh/kDz9qGucjxuvSEPgndoQUD7M8iu1
-        Cg3tcrnj1XE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B9C936028;
-        Fri, 29 Nov 2019 16:39:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8A93536026;
-        Fri, 29 Nov 2019 16:39:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 22/26] t7700: consolidate code into test_no_missing_in_packs()
-References: <cover.1574731022.git.liu.denton@gmail.com>
-        <cover.1574884302.git.liu.denton@gmail.com>
-        <a99a45cb6f2cc7328ef0e52fc2ea8fec537bfba9.1574884302.git.liu.denton@gmail.com>
-Date:   Fri, 29 Nov 2019 13:39:30 -0800
-In-Reply-To: <a99a45cb6f2cc7328ef0e52fc2ea8fec537bfba9.1574884302.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Wed, 27 Nov 2019 11:53:54 -0800")
-Message-ID: <xmqq7e3i4b1p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727141AbfK2Vok (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Nov 2019 16:44:40 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46679 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727073AbfK2Vok (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Nov 2019 16:44:40 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z7so33311461wrl.13
+        for <git@vger.kernel.org>; Fri, 29 Nov 2019 13:44:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=FVpANwDKmrTeuKVeakyamw0VJf/oicWr4e+CIMyDVAM=;
+        b=mUEPv9FwphcFPgc1I7CPKGP9RsI5+fs+Tr1SlnNeBkaG+L1uo5EtAU8SFsujC4I6eT
+         VvpNCatLr3iVAWxD0GRCuk4/kJ53Bj0oG960YN1mWmXxKynGyiBdK5eSPZbMJjKMNeJv
+         H9EwBvtSSbdgifCdGoKEMFsOUzfctwTwo02QqRiHu0+j6+lO5m5PbCuUUrnBcHyNCfLY
+         NmR8qN/Ac13E0qLSQgOUxe6nGjOJUjyNKUvwtuH/TI18VzCoVVY//Eo1ji5HKFVg+pjy
+         uInd1qg0aQa9j8C8cQbb37avb1XfgHbF+6n8nFTw5QMRY5VtxcsdgKtZ3D97Qi0l/Kn5
+         /P8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FVpANwDKmrTeuKVeakyamw0VJf/oicWr4e+CIMyDVAM=;
+        b=Jma8mex//TGK5zxu7e9ho30i2BtPz7QcV9YE+1JGgUGVz/NN4yXa83iTq/OUkLE7J0
+         d2Qi3TDCm03HPmgjr3wiUKMj+vIkvY92YE2GzfHEqMPFoACWI91+h8YKspK+IMJcH8W2
+         9RzDRoseAkHJ75zgg3OJkQdzL8YsBUu/04fEoYBbxy/QBdBtOGR7i1gfAm84gw9/NfW4
+         uzVioei1+C05jwvs02mZT4pWWzft2rMx1qJDq94NtmgdycQpZ+HBkO9fOxE64omFxEOg
+         nK4EZ9ScYs0T76jk+FmvUu6irNvM4eiyNYjlN+ELnj+J5+RLK4ey9VNglaSMi4f/sCv9
+         wAzQ==
+X-Gm-Message-State: APjAAAUTCpKxCuNV1iqGCc35ZjDt+eHRbrUlf28K8GDd5fvdSpXJf6A2
+        IsJZJD9+Gy9m8hhn7mq28H1QMw64
+X-Google-Smtp-Source: APXvYqyrwwYHaOC8UyO+Jnh8ODvC/pEaFt48bqpnEy276puGAz7mLx+Fch8UtlDLKuC5qtliIHxPMQ==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr55025828wrx.145.1575063877497;
+        Fri, 29 Nov 2019 13:44:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s8sm28386026wrt.57.2019.11.29.13.44.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 29 Nov 2019 13:44:37 -0800 (PST)
+Message-Id: <pull.480.git.1575063876.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 29 Nov 2019 21:44:35 +0000
+Subject: [PATCH 0/1] Brown-bag fix on top of js/mingw-inherit-only-std-handles
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA553C06-12F0-11EA-AF0E-C28CBED8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Johannes "Hannes" Sixt pointed out that this patch series (which already
+made it to next) introduces a problem: when falling back to spawning the
+process without restricting the file handles, errno is not set accurately.
 
-> The code to test that objects were not missing from the packfile was
-> duplicated many times. Extract the duplicated code into
-> test_no_missing_in_packs() and use that instead.
->
-> Refactor the resulting extraction so that if any git commands fail,
-> their return codes are not silently lost.
->
-> We were using sed to filter lines. Although not incorrect, this is
-> exactly what grep is built for. Replace this invocation of sed with grep
-> so that we use the correct tool for the job.
+Sadly, the regression test failure observed by Hannes did not show up over
+here, nor in the PR builds (or, for that matter, the literally hundreds of
+CI builds that patch series underwent as part of Git for Windows' master 
+branch). The cause was that errno is set to the expected ENOENT by another 
+part of the code, too, that happens right before the calls to 
+CreateProcessW(): the test whether a given path refers to a script that
+needs to be executed via an interpreter (such as sh.exe) obviously needs to
+open the file, and that obviously fails, setting errno = ENOENT!
 
-Well, 
+I have currently no idea what function call could be responsible for
+re-setting errno to the reported ERANGE... But at least over here, when I
+partially apply this patch, the part that sets errno = 0;, t0061.2 fails for
+me, too.
 
-    $ sed -n -e 's/required match/desired part of the line/p'
+Johannes Schindelin (1):
+  mingw: do set `errno` correctly when trying to restrict handle
+    inheritance
 
-is much much more approirate than 
+ compat/mingw.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-    $ grep -e "requred match" |
-      extract desired part of the line
 
-"grep" is better only if the original were
-
-    $ sed -n -e '/required match/p'
-
-but everybody would write it with grep to begin with ;-)
-
-So, I dunno about this part of the conversion.
-
-> Instead of verifying each file of `alt_objects/pack/*.idx` individually
-> in a for-loop, batch them together into one verification step.
-
-Do you mean this one?
-
-	git verify-pack -v alt_objects/pack/*.idx
-
-where we may pass 1 or more .idx file to the command?  At first my
-reading was interrupted by a "Huh?", but that does look good.  We'd
-need to be a bit careful to make sure that we have at least 1 .idx
-file, as the shell will happily feed a file whose name is "*.idx",
-which verify-pack would be unhappy about.
-
-> The original testing construct was O(n^2): it used a grep in a loop to
-> test whether any objects were missing in the packfile. Rewrite this to
-> sort the files then use `comm -23` so that finding missing lines from
-> the original file is done more efficiently.
-
-OK.  If we an show measurable speedups, it would be great, but the
-loop structure does look O(n^2) and unnecessary costly.
-
-> +test_no_missing_in_packs () {
-> +	myidx=$(ls -1 .git/objects/pack/*.idx) &&
-> +	test_path_is_file "$myidx" &&
-
-If there are 2 or more .idx files, or if there is none, $myidx would
-hopefully be a concatenation of these filenames or a string that
-ends with asterisk-dot-idx and would fail path_is_file.  Sounds OK.
-
-Ah, I do not have to review this part---these are repeated patterns
-in the original.
-
-> +	git verify-pack -v alt_objects/pack/*.idx >orig.raw &&
-> +	grep "^[0-9a-f]\{40\}" orig.raw | cut -d" " -f1 | sort >orig &&
-
-If output from 'grep' can be used as-is, it is worth doing, but if
-you have to pipe it to cut, the original that used sed to filter and
-edit the line would probably be a better way to write it.
-
-> +	git verify-pack -v $myidx >dest.raw &&
-
-This part does not quote $myidx" (inherited from the original); it
-probably is OK, as any potentially problematic value in $myidx would
-have been caught as an error much earlier in this test.
-
+base-commit: ac33519ddfa818f420b4ef5a09b4a7b3ac8adeb8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-480%2Fdscho%2Fmingw-inherit-only-std-handles-set-errno-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-480/dscho/mingw-inherit-only-std-handles-set-errno-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/480
+-- 
+gitgitgadget
