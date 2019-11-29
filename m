@@ -1,108 +1,108 @@
-Return-Path: <SRS0=/qQH=ZU=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=rBju=ZV=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AE2EC432C0
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 23:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDEB3C432C0
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 08:05:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EF55620869
-	for <git@archiver.kernel.org>; Thu, 28 Nov 2019 23:02:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8048B21721
+	for <git@archiver.kernel.org>; Fri, 29 Nov 2019 08:05:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ivHqH1Zq"
+	dkim=pass (2048-bit key) header.d=loskot-net.20150623.gappssmtp.com header.i=@loskot-net.20150623.gappssmtp.com header.b="NoaGeZNO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbfK1XCT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 28 Nov 2019 18:02:19 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34991 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726609AbfK1XCT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 28 Nov 2019 18:02:19 -0500
-Received: by mail-wm1-f67.google.com with SMTP id n5so13125007wmc.0
-        for <git@vger.kernel.org>; Thu, 28 Nov 2019 15:02:17 -0800 (PST)
+        id S1726834AbfK2IFc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 29 Nov 2019 03:05:32 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46754 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726741AbfK2IFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 29 Nov 2019 03:05:32 -0500
+Received: by mail-ed1-f66.google.com with SMTP id m8so2310473edi.13
+        for <git@vger.kernel.org>; Fri, 29 Nov 2019 00:05:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XqXG/NBN0z58IjMNHmH3kEgPE/g3Ulvdn7ZDW7LLISM=;
-        b=ivHqH1ZqH0U5dFtIk+lcV0roDdejFkbczfws4z0ckJ01MsHpNJHeJxaW+jvssWcYon
-         F8wf9NRR8iN8bdIwaoOHDEU9ixZYg3ejZTbf/WdJ0DtKKJ+sDVmxE3ZccC+N1kvd4L2N
-         pJsVxyJ1f7iVtcOhMpBmUDnXAPHU/9XMIaAB6Uwfv+Wjomz+iAmebk45wYx5WDGv10UU
-         jl+mlYMF8iulQbOgysUhGaL6W3siKBv1w0R7mV1tdiYwdkPgzLsA5GV2lDMbasGr33AM
-         pbINjLnbBDQFRXdoATwASGRIFUDwG/ZKo1m9Mn/8NeTH5I6sickwilxINYf0ZPWCAXIx
-         VC7w==
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=MR3U4EBtTE4fPEj8HBbt0QVnOf569e9HEuMpVnOdPoc=;
+        b=NoaGeZNOlFvyJU3T5GZ8ezxf9WNUB04+FetwNNSCwlWWJai2vMs99Ma4AYn+GMrNM2
+         UYkrJFs5lhuF4RqRmUPhJ0HG4k08/uSg0+zFT855HJUhe88Qa3oLPNesg6isn6K/pnTt
+         dDIONW3y2qcv8iM2NFi73/lsAc7zlCYej9YxsBM85vMQ7n2UXJtyhPGu7zCJPQObbgbX
+         sDhZXDF//wfs0SE9WknntfZq2y1wtGJOBXWkNvL5HzJAQnxdKQ2WWq31j538JiBn1bMD
+         a5K8oW3Jt7J9m1EB/bz8Vz31vBYqkYH7lQUb+lzZ3VQu8e41XUEmUtdApuykx3HubIf9
+         xv0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=XqXG/NBN0z58IjMNHmH3kEgPE/g3Ulvdn7ZDW7LLISM=;
-        b=KiwqgcU8xqSYXzS50rosBGayMVBemQ+K/y2gFITef2+159NCUneSepzoGfrZgW+jP0
-         z8PsVW7WXCNXZRTgpat2o/0TDkTO9qzsKB5koZ/jmDTEb1k5qRhXnZCySkfOrB8ff+3E
-         RZcY2Q1Wb0Y/m1gyiOkjal+1R7AGJiE8n6Vd3ALKxM8Ac5E+YuIvuctsIjyp1Pyn/7vp
-         5NyRsu8kVNy2M5roWwCduSWYK9yP9obEyUfmgFDtlpAd2x2ywNE09wziTyssMrsNHCVm
-         WSWLohMsMHY71F//Aqwol1rmmCriBCJ8a1S1+cUTRZYlNA2CKn9ZrK+Ed5Bn4SK39ff3
-         7XAA==
-X-Gm-Message-State: APjAAAWUrkL1su94kU4tSffQTpZGrN+q5Oprj08xcbXah0BzymMFOoNf
-        +m9Lg5PB4nPXZY+Pg6Spx8se52tL
-X-Google-Smtp-Source: APXvYqyFplRHYlm+dy7jaIQEzkuqmV7wq6/Gfkma1pOiYZvkB/GzS5LuAnge2uBfW0ocNV710fHFwg==
-X-Received: by 2002:a05:600c:2318:: with SMTP id 24mr11424520wmo.21.1574982136885;
-        Thu, 28 Nov 2019 15:02:16 -0800 (PST)
-Received: from localhost.localdomain (atoulouse-658-1-25-142.w86-222.abo.wanadoo.fr. [86.222.24.142])
-        by smtp.googlemail.com with ESMTPSA id f1sm6665537wrp.93.2019.11.28.15.02.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 28 Nov 2019 15:02:16 -0800 (PST)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v1 1/1] sequencer: fix a memory leak in sequencer_continue()
-Date:   Fri, 29 Nov 2019 00:02:03 +0100
-Message-Id: <20191128230203.26058-1-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.24.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=MR3U4EBtTE4fPEj8HBbt0QVnOf569e9HEuMpVnOdPoc=;
+        b=hgJwPbWUIO3+fsmNQjqz4ADmr6mP0Hx2K1Sg4/Y5b6gAJlR3ckCOgwkmfQpunqCwTe
+         zh/yjg+5pV6+P7UI4E7iuJnXaNwmKfNbmwXq58eGCPALGz3q8pYQZyk9g6ObkLCRc2Kt
+         vCrO1TJu5CZTsKl8VBAZJXu4Fegg33Kl+FomCQCGCg2sbbWkT5ZjwIKikNDkxIWWDMSp
+         LLzVUCT5fSYXIRsD/7RW5MK+d6A94iTq742R/rujILwXIKsuVOCgc4eWzNSQCqYHm2hq
+         9b2D96gLjaN+QumHY4u27XYfBI4JbE95D3255Nm96tVWtjjG6lQgPsklaKTzZJHwxKH4
+         1BIA==
+X-Gm-Message-State: APjAAAWn/rj3In91rjhQy7jR/oRRXnEDXh2cCaSUM6BJBw3zh8DD0nvG
+        FnM9XsNWpSmHRkoyqvF2DcFvVH9hSO7AUxoZKpnkUEainc3CzQ==
+X-Google-Smtp-Source: APXvYqxJyhvVnYUsmBO8jVscGu/cUpY95G1tw20oxz0DBI47wzIzxngzP26NDcVc0Z9Slsf7luutBp55OzTbQaZjw1A=
+X-Received: by 2002:a17:906:9153:: with SMTP id y19mr11561921ejw.274.1575014730101;
+ Fri, 29 Nov 2019 00:05:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CABUeae82_qQrR5s_QYsDzkVX6CeVM-B7pT5DZt_BjpL=KJdtBg@mail.gmail.com>
+ <20191113051530.GA3547@sigill.intra.peff.net> <xmqq8sokb673.fsf@gitster-ct.c.googlers.com>
+ <CABUeae9m+r-p-aaix_NFTFB1cAomFHgC8mckRHPiiRt1qRwv_w@mail.gmail.com>
+In-Reply-To: <CABUeae9m+r-p-aaix_NFTFB1cAomFHgC8mckRHPiiRt1qRwv_w@mail.gmail.com>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Fri, 29 Nov 2019 09:06:13 +0100
+Message-ID: <CABUeae9jBpvkxPGZPC=vFsuxB2r63W457LqWvXynF4Jnbm4HXg@mail.gmail.com>
+Subject: Re: Merge commit says refs/heads/<branchname> instead of <branchname>
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When continuing an interactive rebase after a merge conflict was solved,
-if the resolution could not be committed, sequencer_continue() would
-return early without releasing its todo list, resulting in a memory
-leak.  This plugs this leak by jumping to the end of the function, where
-the todo list is deallocated.
+On Fri, 15 Nov 2019 at 22:54, Mateusz Loskot <mateusz@loskot.net> wrote:
+> On Wed, 13 Nov 2019 at 08:12, Junio C Hamano <gitster@pobox.com> wrote:
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > If I do:
+> > >
+> > >   git reset --hard tip && git merge --no-edit refs/heads/side
+> > >   git log -1 --oneline
+> > >
+> > > then I get:
+> > >
+> > >   Merge branch 'refs/heads/side'
+> > >
+> > > And the behavior seems the same going back to older versions of Git. Are
+> > > you sure your workflow hasn't changed somehow?
+> > >
+> > > Can you show an example that triggers the behavior for you?
+> >
+> > Yes, I am curious, too.
+>
+> Jeff, Junio,
+>
+> Thank you very much for your responses and confirmations
+> of expected behaviours.
+>
+> I will try to confirm with my colleagues what's changed,
+> what are actual commands and Git versions in use.
+> I'll be back here if I discover anything suspicious.
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
-I found this while adding support of rebase.missingCommitCheck to `git
-rebase --continue'.
+Apparently, the workflow involved Git client Fork and one of recent
+updates of the client introduced the change in the behaviour:
 
- sequencer.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+I reported the issue
+https://github.com/ForkIssues/TrackerWin/issues/570
+and the bug has been confirmed
+"we replaced git merge branch with git merge /refs/heads/branch"
 
-diff --git a/sequencer.c b/sequencer.c
-index 8952cfa89b..64227a71e5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4208,8 +4208,10 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
- 	if (is_rebase_i(opts)) {
- 		if ((res = read_populate_todo(r, &todo_list, opts)))
- 			goto release_todo_list;
--		if (commit_staged_changes(r, opts, &todo_list))
--			return -1;
-+		if (commit_staged_changes(r, opts, &todo_list)) {
-+			res = -1;
-+			goto release_todo_list;
-+		}
- 	} else if (!file_exists(get_todo_path(opts)))
- 		return continue_single_pick(r);
- 	else if ((res = read_populate_todo(r, &todo_list, opts)))
+Jeff, Junio, thanks for help.
+
+Best regards,
 -- 
-2.24.0
-
+Mateusz Loskot, http://mateusz.loskot.net
