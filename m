@@ -2,126 +2,160 @@ Return-Path: <SRS0=RoqO=ZW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5540BC432C0
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 16:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5A38C432C0
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 17:00:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1B9F720732
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 16:38:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FB102073C
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 17:00:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vhu/AT+V"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FlmspWMZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726946AbfK3QiG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Nov 2019 11:38:06 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:37241 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726497AbfK3QiG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Nov 2019 11:38:06 -0500
-Received: by mail-oi1-f196.google.com with SMTP id 128so20575490oih.4
-        for <git@vger.kernel.org>; Sat, 30 Nov 2019 08:38:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=xwPssNUgUhU++f1K9vX9F0TUuOTjhsYutWGmGRkxXLY=;
-        b=vhu/AT+V5orDe3+qruON0LXqDEK9pLTERJcMvShb3RfZgevYEXlf/04ExEx6t9jmRD
-         Yd6OnT1A2LDykIzbQhXRo4HVO2HJTfgKTy4o7yyL4Wnq1b6lPDpj50+ROQkCw8Z7Ihxp
-         R2gWbV0SJQNdlTLpySVVi0AS49MYV8bKpMLAvOdrRNigZZPtrOtd4ra3VwEslz3YjMOe
-         MQ/gtcoJINMSIv7OJvLC8g5HyEIPKZW2sMTYHZQ2dTHffWqgnjfdGA3ogHxAwJI2f7l3
-         l8njFIHgbtf7ScQaPlQVZUEhcrvV4Vcr783mrwDYW2mkk2fj2Y62FHHKpm1KnlpIvkdx
-         oxBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=xwPssNUgUhU++f1K9vX9F0TUuOTjhsYutWGmGRkxXLY=;
-        b=Q23/r4GvXeNaReEcP2HnDLMk1Te8YVzZ4On+6cDmEymzHrWoP+W1v/HICH4KIusxIh
-         FBGRtArarH3uBJN9dMrKGHToSM6TEJoP9tst8EcdwJ5HAwaK5kixXGWFAWkLVj3+ANQg
-         5Be81mWBEVyGCo6jUsvLCuWO8fg5n8sIOBxN/SFw+wDkxIW+lCGTWFt/InNFVTLBj0fF
-         lVh/zw05qmztP134KCtwTfwGcYC9sIUrOfq11YYfuOKNiqfE4IHJOBmPUX+bDJCatoC4
-         jReokZgCTA73N2h/l+Xv+RhB6kV3v1aZpC6dCuLIqBicwWWs/aHP6IRVDkt0GDgzXpQF
-         AKpg==
-X-Gm-Message-State: APjAAAUumprbmYYbD4wQzowUli0xEHsfW2a7aByyiF8ha0Q7293sCt6x
-        a2PDUCA0rk0rVX66DsB8t++C5A8EewJfz20MdGY=
-X-Google-Smtp-Source: APXvYqxE3cUAp7O8XpGusdbdfWS/oE5gbyezfrqE61AGq51maYOjuVTM249jEpLAZ3M772XlBznqNGBy5MuWaycnV1A=
-X-Received: by 2002:aca:dc45:: with SMTP id t66mr1272235oig.39.1575131885178;
- Sat, 30 Nov 2019 08:38:05 -0800 (PST)
+        id S1726964AbfK3RAQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Nov 2019 12:00:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56921 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726497AbfK3RAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Nov 2019 12:00:15 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C03AB89C72;
+        Sat, 30 Nov 2019 12:00:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PuViafyIOG2VOB52d+ahYSQWi4g=; b=FlmspW
+        MZfjPTXDVrvfnc/0pLHGXOMoYghOwW0FDOUpl+EmUzlNEmFDpmPiViDZybPpfWou
+        AJCAF5gd6oc5pi/53wGJqzVHUSjbgxGut3g6sjO8vGz/4fLTDanA1ja1NTLWf5IL
+        Np3LTA1V9suSrvWi7ENnfbhCUhejMUzOLa13Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xNR1SmjzDmWk8H+Qo0Nx0zAcYjyDzsYi
+        lRIR1wKX3RW1CwH+ww19BF40cymvoTRfNu0m2JYkxGnWU1dur9CQ4HUQ+9wgJhGM
+        sDaeapmJTHviDSQxeSkqkbjUk4Nnqj/vz3kf/4sRfTJgAqcBQmQoY4L2Ku8REAQp
+        tCOA/BSRNBA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B7E1989C71;
+        Sat, 30 Nov 2019 12:00:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7ACFA89C70;
+        Sat, 30 Nov 2019 12:00:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Danh Doan <congdanhqx@gmail.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 26/26] t7700: stop losing return codes of git commands
+References: <cover.1574731022.git.liu.denton@gmail.com>
+        <cover.1574884302.git.liu.denton@gmail.com>
+        <1f6d9a80ad45fd9f51c8cffe9ce3721fce9b80c0.1574884302.git.liu.denton@gmail.com>
+        <20191130104812.GA18401@danh.dev>
+        <CAPig+cQ38J_0wHLw0CuhSdWBBEP-RuAchgG014GPHiSp6QOpsQ@mail.gmail.com>
+Date:   Sat, 30 Nov 2019 09:00:08 -0800
+In-Reply-To: <CAPig+cQ38J_0wHLw0CuhSdWBBEP-RuAchgG014GPHiSp6QOpsQ@mail.gmail.com>
+        (Eric Sunshine's message of "Sat, 30 Nov 2019 06:31:04 -0500")
+Message-ID: <xmqqv9r12tbb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com>
- <CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com>
-In-Reply-To: <CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 30 Nov 2019 08:37:54 -0800
-Message-ID: <CABPp-BHPkwnbLR0xNaY3SphCpmR6QRA1j953c2hU7ZFpL38Nig@mail.gmail.com>
-Subject: Re: git-rebase produces incorrect output
-To:     Pavel Roskin <plroskin@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: DE5FC362-1392-11EA-8861-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 29, 2019 at 8:22 PM Elijah Newren <newren@gmail.com> wrote:
-> On Fri, Nov 29, 2019 at 12:24 AM Pavel Roskin <plroskin@gmail.com> wrote:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> So, to summarize here:
->   * you have a case where the default 3 lines of context mess stuff
-> up; but rebase --merge works great
->   * am doesn't have a -U option, and ignores the diff.context setting,
-> making it impossible to force the am backend to work on your case
->   * rebase doesn't have an option to use the merge/interactive backend
-> by default (nor an --am option to override it)
+> On Sat, Nov 30, 2019 at 5:48 AM Danh Doan <congdanhqx@gmail.com> wrote:
+>> On 2019-11-27 11:54:04-0800, Denton Liu <liu.denton@gmail.com> wrote:
+>> > +   ! grep "^$coid " packlist &&
+>>
+>> I think we want to use test_must_fail instead of !
 >
-> Also:
->   * The performance of the merge/interactive backend is slightly
-> better than the am-backend
-> (https://public-inbox.org/git/CABPp-BF=ev03WgODk6TMQmuNoatg2kiEe5DR__gJ0OTVqHSnfQ@mail.gmail.com/)
-> and will continue to get better
->   * The merge/interactive backend supports many more options than the
-> am-backend, though the am one still has a few the merge backend
-> doesn't.  Once the ra/rebase-i-more-options topic merges, --whitespace
-> will be the only consequential option that the am-backend supports
-> that the merge/interactive-backend doesn't.  (There's also -C, but as
-> noted above, the merge/interactive backend already have access to the
-> full file).
+> test_must_fail() is intended only for use with 'git' commands; "!"
+> should be used otherwise. Quoting from t/README:
+>
+>     Don't use '! git cmd' when you want to make sure the git command
+>     exits with failure in a controlled way by calling "die()".  Instead,
+>     use 'test_must_fail git cmd'.  This will signal a failure if git
+>     dies in an unexpected way (e.g. segfault).
+>
+>     On the other hand, don't use test_must_fail for running regular
+>     platform commands; just use '! cmd'.  We are not in the business
+>     of verifying that the world given to us sanely works.
+>
+> So, Denton's use of "!" here is correct.
 
-In case it wasn't clear above, the merge/interactive backend could
-just accept the -C option and ignore it and do nothing, since it
-already has access to the full file (thus why I consider the -C option
-to not be consequential).
+I wonder we can make the framework a bit more self-documenting to
+avoid having to waste time on discovering potential issues and
+explaining why it is not an issue, like this exchange.
 
-Also, I remembered and dug out a few more items about the default
-rebase backend that might be worth including in this summary:
-  * The am backend operates with incomplete tree information as well,
-limiting what the merge/resolve/whatever can do and what information
-can be provided to the user (see
-https://public-inbox.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/)
-  * The interactive backend, although slightly faster than the
-am-backend (on p3400 at least), is slightly slower with split-index
-which hasn't yet been investigated (see
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet/)
+Some ideas:
 
-> Maybe we should just switch the default, for everyone?  (And provide
-> an --am option to override it and a config setting to get the old
-> default?)
+ * Perhaps test_must_fail is not descriptive enough that it should
+   apply only to git command invocation.  Would it make it more
+   obvious to rename it to say git_must_fail?  That would also make
+   it unnecessary to give this rather unfortunate comment in
+   test-lib-functions.sh:
 
-CC'ing a few folks for opinions on switching the default backend of
-rebase from --am to --merge.  Johannes already agreed it was the right
-path eventually[1], and Junio suggested the am backend should be
-deprecated[2] and eventually replaced, so I was going to push on this
-after some merge performance work but perhaps it's a good time to
-query if it's time to switch the default sooner.
+   # This is not among top-level (test_expect_success | test_expect_failure)
+   # but is a prefix that can be used in the test script, like:
+   #
+   #	test_expect_success 'complain and die' '
+   #           do something &&
+   #           do something else &&
+   #	    test_must_fail git checkout ../outerspace
+   #	'
+   #
 
-[1] See the end of
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1808311158540.71@tvgsbejvaqbjf.bet/,
-also linked above.
-[2] https://public-inbox.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/,
-also linked above.
+ * If it is too much trouble to rename it, perhaps test_must_fail
+   can be documented better up there?
+
+   diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+   index b299ecc326..052d88c5da 100644
+   --- a/t/test-lib-functions.sh
+   +++ b/t/test-lib-functions.sh
+   @@ -817,6 +817,13 @@ list_contains () {
+    #     Multiple signals can be specified as a comma separated list.
+    #     Currently recognized signal names are: sigpipe, success.
+    #     (Don't use 'success', use 'test_might_fail' instead.)
+   +#
+   +# Do not use this to run anything but "git".  We are not in the business
+   +# of vetting system supplied commands---IOW this is wrong:
+   +#
+   +#    test_must_fail grep pattern output
+   +#
+   +# Just use '!' instead.
+
+    test_must_fail () {
+           case "$1" in
+
+ * Or perhaps we can detect its use on anything that is not "git"
+   automatically?  This is merely to illustrate the idea (the
+   exemption of "env" shown here is too broad for production use)
+
+   diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+   index b299ecc326..7ab113cd50 100644
+   --- a/t/test-lib-functions.sh
+   +++ b/t/test-lib-functions.sh
+   @@ -828,6 +828,10 @@ test_must_fail () {
+                   _test_ok=
+                   ;;
+           esac
+   +	case "$1" in
+   +	git|test-tool|env) ;;
+   +	*) echo >&7 "warning: test_must_fail $*???" ;;
+   +	esac
+           "$@" 2>&7
+           exit_code=$?
+           if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
+
+Hmm?
