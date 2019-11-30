@@ -6,115 +6,91 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8F97C432C3
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 17:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14E1FC432C3
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 18:04:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73BBB2075C
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 17:58:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB5322075C
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 18:04:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o9BfWUqE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rf5xsiTR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbfK3R6U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Nov 2019 12:58:20 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56963 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726946AbfK3R6U (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Nov 2019 12:58:20 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 29F879BC95;
-        Sat, 30 Nov 2019 12:58:18 -0500 (EST)
+        id S1727217AbfK3SEd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Nov 2019 13:04:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54388 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbfK3SEd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Nov 2019 13:04:33 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id CEDEF3CB94;
+        Sat, 30 Nov 2019 13:04:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=z5NxN2UGwa1DyQtg9JnPDHmwWiE=; b=o9BfWU
-        qEiTZmioxniKo/iIKG487zepk3gA0SyuAw8PUy44nmfeVDricrkwbEpxoAhbj9Cq
-        BGYGatxyRXevN/aGv9FpnQy28YgJi9e3gHRrILFoI0rZJbBR1F4Y+XqND48PDZTm
-        m9CSL+lFZZ6SCPbfRbGlaWLSNfVLXDihA2FUw=
+        :content-type; s=sasl; bh=Q6INp2lv4qyq/DiXAxGy1Tg1nKY=; b=rf5xsi
+        TRZveI3LzzYwwt9IJZouth9x+g/uJ+L+Q9R3w0iNjlQ3gTp1M3Dg3vGz1xnuvu/i
+        be4OL5m4eFXCbUeBuOdrJ3qg+HmUsLEEDjVIGtdoEdQE9+jDj7WgWKCbGCum+IeM
+        B3hu4LcjLTfCGU/7+MSLP3KAP30e3b98u8ILc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nRZWsV2/+lGi8d5odxNW8tWhY9bxU0jm
-        1XBh687XeS5Jy+iALV+l9JO8zSnNItu4EqpaV+WWIkoEOroapR9dl+3r1yQUeZGa
-        lv82jT6H0Dmqk6CV4FV0gTB2+AOpFPyfjvv5j0sMCOiru1BgoyU+crfbDeXLH2ma
-        TNYJQVUvBY8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 16D159BC94;
-        Sat, 30 Nov 2019 12:58:18 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=fFPDR2Unil7DzRBWAmJdkPPWfBOfPqVE
+        KZxKF8K/1Tf06kUR9oC2QjOPKIAdFTV51vrlsRVvldoj/I31uk0o+j1yuNrBTy/S
+        n6DcZwEZyNfWmBCGaM6E5vQxC0ANPVZkuoSirV8fJgZqJM42AhY9blQuqGNLp3iC
+        J7r4ujQ8Jt8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C5CE93CB93;
+        Sat, 30 Nov 2019 13:04:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D552E9BC93;
-        Sat, 30 Nov 2019 12:58:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2F24A3CB92;
+        Sat, 30 Nov 2019 13:04:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Pavel Roskin <plroskin@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: git-rebase produces incorrect output
-References: <CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com>
-        <CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com>
-Date:   Sat, 30 Nov 2019 09:58:11 -0800
-In-Reply-To: <CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 29 Nov 2019 20:22:37 -0800")
-Message-ID: <xmqqa78d2qmk.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] Brown-bag fix on top of js/mingw-inherit-only-std-handles
+References: <pull.480.git.1575063876.gitgitgadget@gmail.com>
+        <pull.480.v2.git.1575110200.gitgitgadget@gmail.com>
+Date:   Sat, 30 Nov 2019 10:04:29 -0800
+In-Reply-To: <pull.480.v2.git.1575110200.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Sat, 30 Nov 2019 10:36:38
+        +0000")
+Message-ID: <xmqq5zj12qc2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: FA9FC862-139A-11EA-A602-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: DAEDDFBC-139B-11EA-BB1A-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Sadly, I tried to force this with git rebase, but -C5 only affected
-> the apply side and there's no option to pass to rebase to pass through
-> -U5 to the diff logic.  Also, although there is a diff.context config
-> option, git-am ignores it (Note that git_am_config() does not directly
-> check that value and it calls git_default_config(), not
-> git_diff_ui_config() or even git_diff_basic_config()).
+>  * We now assign errno only when the call to CreateProcessW() failed.
 
-Not essential but puzzled.  The context applies to the generation
-side, not acceptance side, no?  IOW, I suspect that you are talking
-about "git format-patch" that sits on the upstream side of the pipe
-that feeds "git am".
+Meaning the global variable 'errno' is left as it was (instead of
+getting cleared) when a system call succeeds?  That I think is the
+correct behaviour people who use the variable expect.
 
-> So, to summarize here:
->   * you have a case where the default 3 lines of context mess stuff
-> up; but rebase --merge works great
->   * am doesn't have a -U option, and ignores the diff.context setting,
-> making it impossible to force the am backend to work on your case
-> and also:
+>  * For good measure, we teach the err_win_to_posix() function to translate 
+>    ERROR_SUCCESS into the errno value 0.
 
-I do not think it is super hard to teach "git rebase" to pass
-backend specific options so that "git rebase--am" can be told to
-work with wider context (which will reduce the risk of ambiguous
-patch like this example, trading the increased risk of unnecessary
-conflicts; it is a good trade-off most of the time for added safety,
-as nobody wants a system that produces a wrong result silently and
-quickly).
+So, I am not sure if this is a good idea---who are the callers of
+this function and why do they call it?  I would imagine that a
+caller who makes a system call, upon seeing a failure from the
+system call, calls this helper with the Windows error code it
+received from the system call so that errno can be updated with a
+POSIXy value.  If my imagination is correct, such a caller should
+not be assigning anything to errno if the underlying system call
+succeeds, i.e. returns ERROR_SUCCESS.  So a better solution might
+be for the function to BUG() when fed ERROR_SUCCESS to point fingers
+at the caller, no?
 
-Having said that,
+If my imagination is not correct, then ignore the whole paragraph
+above ;-).
 
->   * rebase doesn't have an option to use the merge/interactive backend
-> by default (nor an --am option to override it)
-
-I think addition of rebase.backend would be a good first step for
-eventually flipping the default, which by the way I have no trouble
-with.
-
-> Maybe we should just switch the default, for everyone?  (And provide
-> an --am option to override it and a config setting to get the old
-> default?)
-
-Yes, that would be a sensible second step.  I actually think a
-longer term goal is to deprecate the am backend.  It was invented
-first and then kept to be the default backend for a long time
-because the merge based backend historically has been noticeably
-slow (it was expected to be---it was essentially a shell script that
-run cherry-pick repeatedly in a loop).  In some future, it would
-outlive its usefulness, and that I think that that future is just
-around the corner.
-
-
+Thanks.
