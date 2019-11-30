@@ -2,98 +2,92 @@ Return-Path: <SRS0=RoqO=ZW=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94B44C432C0
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 21:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57113C432C0
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 21:58:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 517E92082E
-	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 21:23:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 206632075A
+	for <git@archiver.kernel.org>; Sat, 30 Nov 2019 21:58:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="RI33lINf"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qSK7bJM0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727318AbfK3VXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 30 Nov 2019 16:23:00 -0500
-Received: from mout.gmx.net ([212.227.17.21]:36549 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727027AbfK3VXA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 30 Nov 2019 16:23:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575148972;
-        bh=HN0rRnzR4qlR4x8uIzn3mw2EJuSuGv3lgTvLI8s0aBI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=RI33lINfATfcLPXYfLrMSrOexm6Cs8cCDRs7uRaCOTIOzzvpBxwUle5Cxb01jhjKk
-         YnuWaU1jjh+1NS3V57Wg6XBKZl4hXF/HCM3hKEoOF19IfFUxTR56lrSW9d1rg/uAh8
-         qS55BiLBV4uiwUF+jSULVbU2bTaXZdgd+DyPWNSk=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McH9Y-1i57AW2yya-00ciUV; Sat, 30
- Nov 2019 22:22:52 +0100
-Date:   Sat, 30 Nov 2019 22:22:36 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Andreas Schwab <schwab@linux-m68k.org>
-cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 0/2] Brown-bag fix on top of
- js/mingw-inherit-only-std-handles
-In-Reply-To: <87y2vxrt6t.fsf@igel.home>
-Message-ID: <nycvar.QRO.7.76.6.1911302219350.31080@tvgsbejvaqbjf.bet>
-References: <pull.480.git.1575063876.gitgitgadget@gmail.com> <pull.480.v2.git.1575110200.gitgitgadget@gmail.com> <xmqq5zj12qc2.fsf@gitster-ct.c.googlers.com> <6beaf25f-1369-3e77-fd54-fdb5a1e63707@kdbg.org> <8736e5t98b.fsf@igel.home> <xmqqwobh15c7.fsf@gitster-ct.c.googlers.com>
- <87y2vxrt6t.fsf@igel.home>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727227AbfK3V57 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 30 Nov 2019 16:57:59 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57326 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727179AbfK3V56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 30 Nov 2019 16:57:58 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E06E37BEB;
+        Sat, 30 Nov 2019 16:57:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gLLvaNvtELyYY0QiwXIjl6MFQRo=; b=qSK7bJ
+        M046K0NyGN1JTsSZ8gsJ6LtpVFAjoRQbBQemNNSXecP2/+i9PwkVR/Qh5ONTtVwP
+        hYRY0xIDFFnmJqeLMQ1uafsYdGxoLJHvLcIUgXw0zErKco+Ney2uWvoH8ZzZF1wO
+        /UVveIvQZnMskG2Ec2H1ne47kIL/fyQdiJaUc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Y5jO6Et3NBLdOJGYgJEwm2LOGv4BzB4p
+        4+YGdBKsAG3e5+Xt8xNdu4iSHNG4VDhxll2mEGlKkbLIq8GVVbO9ByWe76L8/gdC
+        UvBd77xYFkY2F9XSazDF+KUCOnEkoZLDPyP40IM91p3VJUYVsVwqxMxi3vojKwqo
+        yFbEZgCY/6M=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 46A6237BEA;
+        Sat, 30 Nov 2019 16:57:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB0AF37BE9;
+        Sat, 30 Nov 2019 16:57:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] gpg-interface: prefer check_signature() for GPG verification
+References: <20191127174821.5830-1-hji@dyntopia.com>
+        <20191127174821.5830-2-hji@dyntopia.com>
+Date:   Sat, 30 Nov 2019 13:57:54 -0800
+In-Reply-To: <20191127174821.5830-2-hji@dyntopia.com> (Hans Jerry Illikainen's
+        message of "Wed, 27 Nov 2019 17:48:21 +0000")
+Message-ID: <xmqqo8wt10yl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iNYigm/qnc6H1rLDjM4J4eUOVEJipWKUx966qwm7l3Wf5+W1F1N
- JCWELxcxQTeOF9P5+vDFs4/EskJAeZiARNEJLTh8zqHoXNfjX9617IC5IixpHVv/UofqIYW
- VGNhSvAUSg2Y+ib6lkZef4NFBusMzJALk/T69oSWD05HZUC0QvLXiokXZ12u8w7b0WFISMn
- ajYe8uBxB1jq+g9BuFJ3g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mRz1Yg5TSzo=:w9hwx6KZQHmZdWMItw13Q/
- Lqn69D1e/Gy/8EBV0AkKuydC7gvBCPOPGuQzjEzCy/0G6ByXbLUX+Agyeg8AzLvWVU9QWbTj5
- 9jtjmCR32PILjeHuLBoGOnUxAYS2N9hl35LXySUNZbLc31DVAm7Y5iWEHzIIOd16l6XaqI4Gd
- AcmNarBhBhXLupoYszWQY4hEfhBb7HqFRsZwk0rBgFoG4+cSGQG8VlCNDrmGng2dmEk6jIc+r
- +UtRNWhPez0uJ5fb3Pf072j4RZhtTTQHXKNFJyalfXR1QxPExy9EdMkaC2R6vcy75TqgJU5s1
- wk7rYHuZRM+OHUA1OnZpb0dMzPnx4vVcG0FbA4Cx72oqASyd4b/LtkX3mb9rj8pD+c7bnIBGt
- 6STCkaS/qfTpOtIbv1eZyjtkYDsq+KXTwfKc9BucJ/8meGp1IU3/1133WIZDf61Xx0C2mnmKi
- LqnsJCRexxL2qbRBmpOt61Tks1ktiSZtZ08WHJu5MFFyP+xostgPpD6sErrAdQOMkzzvyI5jB
- fG4LMKx3AoDxF/Hid/2NWovMa/8Gq7nYOut8x0a/oi2BG2NrEkMNcJObRdbrzp0d6SKS2y0UD
- 7SNP5xhj9bdUD87/zQsQsAI+bwF4cXUjTTUGTIVZBtPMoTzxTLPpr8idEw/bTsd3bB2NTn9NP
- D0uiCR+oErI4A2015ZS2rU5AmDtFRHo1FsjGT1WFDqvzWsxdcyyF8EQCRHY9P5v2NcoMO0a/m
- mwTYg30h56oxd/9fkvFIhjsh5tvzTqgQX+N3DtG3B1U9fnY2WXvnP9r+bFlkA9e9aSEy5hG8d
- /8W5l320H5Y2veAQFMDuhr5aR3VKm2WmnuVyVUCRVMiNM6wK16jPNgDta6HJWElc+WKSLUyxz
- RsUiHRk4QnHDRaT9/gG1K5p/yt1ACPnUu0w3y4eEXGwfAqLlY/v7Ll/K7h9KBjob0pHqtjRlE
- 4+T+sz9TnMib348Y2wDB3JbtJ8yh7fCb8fnvbi48RziUhec5Dw++XCk/qegWRGcDIgzFq7MBw
- HMnSgvXibHKOqDD5QdH+kkrsFyTD1VnWm9bG6mnop9OyVULnezI3ORKhp56w6XHrlvMUdAyeb
- zaehKBscEOnpyYm4r91VNL9dxSDLrRYjU/c2u/X9dc3tw3MhN9xlM0wM7/23mdVM+BsMY+s79
- ypY+6/dw7LFJX4+GNUI7m558Lx6k0Jl08gf4TVnWwrgPUi/iw0knvWPYRl+5LoDou4hBe3743
- af8xrlUo71/37gsCozrrOOfxbDt7UFylTBhhIghjbeKFzkogZ65XOMWC02yQ=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 76DC44C0-13BC-11EA-BA92-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andreas,
+Hans Jerry Illikainen <hji@dyntopia.com> writes:
 
-On Sat, 30 Nov 2019, Andreas Schwab wrote:
-
-> On Nov 30 2019, Junio C Hamano wrote:
+> This commit refactors the use of verify_signed_buffer() outside of
+> gpg-interface.c to use check_signature() instead.  It also turns
+> verify_signed_buffer() into a file-local function since it's now only
+> invoked internally by check_signature().
 >
-> > IOW, we cannot take advantage of that POSIX guarantee in the
-> > codepaths that use our internal API.  So...
->
-> But it's still a good practice to follow.
+> There were previously two globally scoped functions used in different
+> parts of Git to perform GPG signature verification:
+> verify_signed_buffer() and check_signature().  Now only
+> check_signature() is used.
 
-An even better practice is to focus on what's important.
+OK.  I wondered why the former does not get removed, but if the
+latter uses it as its implementation detail, then it is expected
+that it has to remain.  So check_signature() allows it to make a
+minimum sanity check, but it does its own verification based on the
+status output, and both have to pass for a signature to be valid?
+Which makes sense to me.
 
-You could, for example, review the original patches again that needed this
-fixup, to make sure that nothing similar lurks in them. That would seem to
-me certainly more meaningful than harping on POSIX semantics in a context
-where they do not actually matter.
+> Now all operations that does signature verification share a single entry
+> point to gpg-interface.c.  This makes it easier to propagate changed or
+> additional functionality in GPG signature verification to all parts of
+> Git, without having odd edge-cases that don't perform the same degree of
+> verification.
 
-Ciao,
-Johannes
+Makes sense.
