@@ -2,84 +2,82 @@ Return-Path: <SRS0=LEOb=ZX=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5B3CC432C0
-	for <git@archiver.kernel.org>; Sun,  1 Dec 2019 20:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46A13C432C0
+	for <git@archiver.kernel.org>; Sun,  1 Dec 2019 23:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 60CDF20833
-	for <git@archiver.kernel.org>; Sun,  1 Dec 2019 20:10:21 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=deltaq.org header.i=@deltaq.org header.b="LjIlZR1/"
+	by mail.kernel.org (Postfix) with ESMTP id 196E22146E
+	for <git@archiver.kernel.org>; Sun,  1 Dec 2019 23:41:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727259AbfLAUKU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Dec 2019 15:10:20 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:42854 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbfLAUKU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Dec 2019 15:10:20 -0500
-Received: by mail-lf1-f68.google.com with SMTP id y19so26263047lfl.9
-        for <git@vger.kernel.org>; Sun, 01 Dec 2019 12:10:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=deltaq.org; s=deltaq;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3oBApDGQJm4ngkQM/HM8fkAB2ftPQbCTwaw4w0neRT0=;
-        b=LjIlZR1/dX5eZbAwWQWsyD7JqjqwJFuq/6ca924cQzSDhPA5Wj1o4ymt1684EWUK+1
-         8tM5JQzCU/0zt8nOzJ52usDD+qevRAbIPoIuVwtLKZXVHhrAAiomPzGgeiaKVmBidDNm
-         M867Ilf8bS7UCeNwigMLIpkp9+Yt+KYd6lMfU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3oBApDGQJm4ngkQM/HM8fkAB2ftPQbCTwaw4w0neRT0=;
-        b=Eca3UHNlp7Zk0Voi0CR/NoE/u5Bd6mKs5Q5vkhSNNRyL808OkZsQw5L5bZW3SDw2zK
-         Kn58fKVx3/cg2H7as6GdrRkB71WyjW3NxeCgLR0kr646jER0cxp4ZEsF6Q/rfnjMiIX/
-         e3qE1G5/DfzHON0yjKuXBg5hAm4IB9thbtgahVwiUjp+dDNuQsd+ivovcJG5W44iCZe9
-         GgTXT93A/xF2r/Lt/Kol1PkYPJvzJ4AGXZKPJs3se+fzgv96KjgNR+hGKFzKzGZ6K9I5
-         mw+n5unTh4DKhTMDPG/bzD7Tr2qkFxkgNaVhztQqjJBF8Vllk4NwBG5M5WipMhApcuKV
-         xSHA==
-X-Gm-Message-State: APjAAAUNqvwDLHL+1TkZr8IPxpNThyTb1Me6Atq9VnwFgF5Yax/ckCbH
-        m/dJGMuaAkyNVWbf//iF1N5ikW4z9nQIoo2/PxyIug==
-X-Google-Smtp-Source: APXvYqxViGcI/lT1mFONTRMba2l6PfHo0YNddZuaJKiJMGisCugShfW3bYUwB1L2SOZFXfhUoIQmAA4yDbCTme2bAh4=
-X-Received: by 2002:a19:cc08:: with SMTP id c8mr40412552lfg.124.1575231012846;
- Sun, 01 Dec 2019 12:10:12 -0800 (PST)
+        id S1727280AbfLAXly (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Dec 2019 18:41:54 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:57070 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726689AbfLAXly (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Dec 2019 18:41:54 -0500
+Received: from [79.66.3.179] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ibYqe-0000HW-9z; Sun, 01 Dec 2019 23:41:52 +0000
+Subject: Re: [PATCH 1/1] contrib/buildsystems: fix Visual Studio Debug
+ configuration
+To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Alexandr Miloslavskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.348.git.gitgitgadget@gmail.com>
+ <525669b3b38ed57d6d4f188dfe0bb8fe10b63749.1569227313.git.gitgitgadget@gmail.com>
+ <c89cc506-b515-b913-bb0a-353b04fe4210@iee.email>
+ <8e7ff0b2-9f62-8ec6-5316-eb9cee25024e@syntevo.com>
+ <70bc64f6-3513-2924-9ba0-0e38e0e9d308@iee.email>
+ <0b2124b5-6d40-08bb-6cc5-a8cef2b7a9b1@syntevo.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <021de37a-5317-6c96-eae3-d0228a193d8b@iee.email>
+Date:   Sun, 1 Dec 2019 23:41:52 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-References: <pull.436.v5.git.1574627876.gitgitgadget@gmail.com>
- <pull.436.v6.git.1574929833.gitgitgadget@gmail.com> <ab3d8e54c3d3d5174fe222ee77101ab3b8e9cab8.1574929833.git.gitgitgadget@gmail.com>
- <20191130230543.p5xtapnx5a56arng@yadavpratyush.com> <90eb7e96-6352-deb9-0c22-14993ce42c8e@iee.email>
-In-Reply-To: <90eb7e96-6352-deb9-0c22-14993ce42c8e@iee.email>
-From:   Jonathan Gilbert <logic@deltaq.org>
-Date:   Sun, 1 Dec 2019 14:09:54 -0600
-Message-ID: <CAPSOpYuLWzqYBvP_4y__UTV_Krv0A2FqKKQir-xadWNbN5zq-Q@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] git-gui: update status bar to track operations
-To:     "Philip Oakley philipoakley-at-iee.email |GitHub Public/Example Allow|" 
-        <ogvdf9gsg7oxult@sneakemail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        Jonathan Gilbert via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jonathan Gilbert <rcq8n2xf3v@liamekaens.com>,
-        Jonathan Gilbert <JonathanG@iqmetrix.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <0b2124b5-6d40-08bb-6cc5-a8cef2b7a9b1@syntevo.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 1, 2019 at 5:43 AM Philip Oakley philipoakley-at-iee.email
-|GitHub Public/Example Allow| <ogvdf9gsg7oxult@sneakemail.com> wrote:
-> On 30/11/2019 23:05, Pratyush Yadav wrote:
->  > On 28/11/19 08:30AM, Jonathan Gilbert via GitGitGadget wrote:
-> >> +# Operation displayed by status mega-widget during _do_clone_checkout =>
-> >> +# _readtree_wait => _postcheckout_wait => _do_clone_submodules =>
-> >> +# _do_validate_submodule_cloning. The status mega-widget is a difference
+On 28/11/2019 10:07, Alexandr Miloslavskiy wrote:
+> On 28.11.2019 1:34, Philip Oakley wrote:
 >
-> should this be "different", rather than 'difference'?
+>> Hmm, 45 minutes of cloning and rebuild, but finally it compiled clean 
+>> (both Release and Debug)
+>
+> I understand that the issue is resolved now.
+>
+> Probably your old repo was missing the libraries for whatever reason 
+> (like antivirus deleting them, etc), but build script thought that 
+> dependencies are properly built, so didn't attempt to rebuild them.
 
-It absolutely should and I have corrected that in the re-roll.
+I was searching for how Visual Studio managed to decide if the vcpkg 
+needed installing. I think I've found it in 384a61bc6a 
+("contrib/buildsystems: add a backend for modern Visual Studio 
+versions", 2019-07-29) where dscho says:
 
-Thanks :-)
+    we initialize the `vcpkg` conditionally, in the `libgit` project's
+    `PreBuildEvent`. To allow for parallel building of the projects, we
+    therefore put `libgit` at the bottom of the project hierarchy.
 
-Jonathan
+
+What's not clear is if the conditional pre-build can have an if-else 
+option so that we can have an 'update' check if already installed. 
+Adding the vcpkg update to the vcpkg_install.bat didn't work :-(
+
+Philip
+
+PS. the https://github.com/CoatiSoftware/Sourcetrail visualiser is 
+looking nice.
+
+
