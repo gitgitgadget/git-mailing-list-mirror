@@ -2,134 +2,100 @@ Return-Path: <SRS0=5D3W=ZY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C39B3C432C0
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 22:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AAC1C432C0
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:28:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 967F72071E
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 22:53:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DD5472070B
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:28:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yIvgtjTu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nEm1/w9H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726189AbfLBWxQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Dec 2019 17:53:16 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62687 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725835AbfLBWxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Dec 2019 17:53:16 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 55C52ADDAF;
-        Mon,  2 Dec 2019 17:53:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gaB0Hl7jwKq9Mcder+Pk+OYorhM=; b=yIvgtj
-        Tu/i1uvbtAAZmYTEIw0gzvz1WCEQ0cUU3IBnf3vq+W8Xjcfwqjc92+dQpfcOYdJq
-        tlVEpiaEbwToyuE+wy29RE52h+Q4SRK91YypVCU2vDA9OHrc3Drh4srAWMXvKg3b
-        Cwq3/SQWG0a9nKi3kadASEwyLsvaIbgUV4+LA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ceu6dAJtvZYu1KItXdOOmFpm9sbl7A7/
-        /MDg14qO2v2GHNZDwv7TJSCnFMzyzp9lGSBtV+nQv9Y9iLLfnyz9WgHkpz7owvAZ
-        zfn76DRhAgo72uAk8uKUAfQJV8ZdLQuIj5N404T6X5FLWajEFTgykIYMal+r26py
-        0RFK8z4ofm8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D63EADDAE;
-        Mon,  2 Dec 2019 17:53:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 72035ADDAB;
-        Mon,  2 Dec 2019 17:53:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
+        id S1725997AbfLBX2U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Dec 2019 18:28:20 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42615 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbfLBX2T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Dec 2019 18:28:19 -0500
+Received: by mail-pf1-f194.google.com with SMTP id l22so638142pff.9
+        for <git@vger.kernel.org>; Mon, 02 Dec 2019 15:28:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=nrupA1CvVfsQPgZQ5fOwtRe4o9wVshVpgq7+df7Skxo=;
+        b=nEm1/w9HLm3LLTObHFp6Hf2yUQFKs87RfOYUI6/5fSmoQ5gfr8k43o5tCgtKoGtE/n
+         nxCg/7uin4WgNPr5ULrT8VL0n42raF9jhsxIcyHqZYgEJh1fXNEVQY7lDenPa3OGQK26
+         VtzBoY7/h7vNBjeLB1eXo8EGY5D+yHIaqVo4XlBnX1XSJDDjIAJn6eoQjF0adR/G8S5e
+         I9N/OplenCEG4EBNHBubnkTOF3WtvLUtCYycqRtOCanxXeg9da53JC1j1MD6L/O35iT+
+         KtdJ5HEy8p4k/q1VEZT05wgh1kf0lAgvqUz20u6tDGConYuFKFOkL1BBLDFS3IaFHijN
+         GY+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=nrupA1CvVfsQPgZQ5fOwtRe4o9wVshVpgq7+df7Skxo=;
+        b=aOvAW1KxoBwT2sRY/+ElT3B07oNx22LFqhNQ2op8CkSWDnvCJsnZDfKQCEbrXUEJX4
+         sns55ss1DUXR6xBKqqQ108GdwFEyyvMfF5iYaRrmD8giqyrZBgFl5ebsXcxF06rqwDuh
+         R1Uf+S366iHAOPd8JXaBvAHppe/qS2wyyynPmOLw/OrHjyxJ+6jRriToKtS/7KPFZpcy
+         quty7d+dfK7F0xp+vnFJslGcMjhCJiDLTsN2CvaGP01QfJfWJY2WinBN6I0KmkXfb0ut
+         JFyX0z8BMXe9kOa2SWcsyUPG6A9ZCu5KDK3nkvW1vCSffs9GGotSs4WGD2ufU55XqTxS
+         6Z4g==
+X-Gm-Message-State: APjAAAX3oOnI7HdpzCVkQfTMrSYCaVHtLc7su0HgH451OJWt7S82Gweh
+        jIkdKpa9YMEb4F1UXi/6Ot8=
+X-Google-Smtp-Source: APXvYqz4Ujt4S9pvJJ9Z+/Yf2wRbUhOrHzDBW+yCxMZmXN9fRIkBRoDiCZzGJcDRF9PWNvY6stWUUQ==
+X-Received: by 2002:a63:6cc8:: with SMTP id h191mr1857332pgc.345.1575329299006;
+        Mon, 02 Dec 2019 15:28:19 -0800 (PST)
+Received: from generichostname ([204.14.239.138])
+        by smtp.gmail.com with ESMTPSA id u9sm584427pfm.102.2019.12.02.15.28.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Dec 2019 15:28:18 -0800 (PST)
+Date:   Mon, 2 Dec 2019 15:28:16 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 22/26] t7700: consolidate code into test_no_missing_in_packs()
+Subject: Re: [PATCH v5 22/26] t7700: consolidate code into
+ test_no_missing_in_packs()
+Message-ID: <20191202232816.GA26892@generichostname>
 References: <cover.1574731022.git.liu.denton@gmail.com>
-        <cover.1574884302.git.liu.denton@gmail.com>
-        <a99a45cb6f2cc7328ef0e52fc2ea8fec537bfba9.1574884302.git.liu.denton@gmail.com>
-        <xmqq7e3i4b1p.fsf@gitster-ct.c.googlers.com>
-        <20191202205037.GA43606@generichostname>
-Date:   Mon, 02 Dec 2019 14:53:09 -0800
-In-Reply-To: <20191202205037.GA43606@generichostname> (Denton Liu's message of
-        "Mon, 2 Dec 2019 12:50:37 -0800")
-Message-ID: <xmqqo8wqwd9m.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <cover.1574884302.git.liu.denton@gmail.com>
+ <a99a45cb6f2cc7328ef0e52fc2ea8fec537bfba9.1574884302.git.liu.denton@gmail.com>
+ <xmqq7e3i4b1p.fsf@gitster-ct.c.googlers.com>
+ <20191202205037.GA43606@generichostname>
+ <xmqqo8wqwd9m.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 840A46D8-1556-11EA-9BCE-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo8wqwd9m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi Junio,
 
-> Hi Junio,
-> ...
->> "grep" is better only if the original were
->> 
->>     $ sed -n -e '/required match/p'
->> 
->> but everybody would write it with grep to begin with ;-)
->
-> This was what I was intending. It was originally written like the above
-> and it made sense to convert it to use grep. I guess "filter lines" in
-> my commit message is a little bit vague. Could we change this to "filter
-> matching lines" perhaps?
+On Mon, Dec 02, 2019 at 02:53:09PM -0800, Junio C Hamano wrote:
+> > (By the way, if I were to reroll this series, should I keep sending out
+> > the entire patchset? It feels very noisy to send out 20-something emails
+> > every reroll when I'm just making a small one or two line change.)
+> 
+> Especially if it is near the end of the series, just a single step
+> is OK.  But is there anything that is glaringly wrong that needs a
+> reroll?  Or would it be "this is good enough, so let's have them
+> cook in 'next' and graduate to 'master'---further clean-up can be
+> done after all the dust settles"?  I have an impression that we
+> reached the latter by now.
 
-Ah, I see.  I somehow thought that some of the "sed" invocation in
-the original version were doing "find lines and filter its
-contents" (i.e. "-n -e 's/find/munge/p'"), but all three of them are
-just "find lines" (i.e. "-n -e '/find/p'").  So I think the change
-made by the patch is OK.
+Perhaps the log message could use some improvement to document the
+discussion we had? I don't know if that's worth a reroll, though. Aside
+from that, I agree that it's ready for 'next'.
 
-I think I was reacting to the output of "grep" being piped to "cut".
-IOW, the original
-
-	... | sed -n -e '/find/p' |
-	while read sha1 garbage
-	do
-		... use sha1 ...
-
-were rewritten to
-
-	... >raw &&
-	grep -e 'find' raw | cut -d" " -f1 >orig
-	... use orig as a list of sha1s ...
-
-But the "grep piped to cut" can be a single process
-
-	... >raw &&
-	sed -n -e 's/\(find\).*/\1/p' raw >orig
-	... use orig as a list of sha1s ...
-
-So in the tiniest picture, turning "sed -n -e /find/p" into "grep"
-is not wrong per-se, but if you step back a bit and see a larger
-picture, using "sed" a bit more effectively turns out to be still a
-better rewrite.
-
-... and I wrote the above before I read the remainder of your
-response, where you considered which one is easier to read between
-"grep piped to cut" and "sed" ;-)
-
-
-> (By the way, if I were to reroll this series, should I keep sending out
-> the entire patchset? It feels very noisy to send out 20-something emails
-> every reroll when I'm just making a small one or two line change.)
-
-Especially if it is near the end of the series, just a single step
-is OK.  But is there anything that is glaringly wrong that needs a
-reroll?  Or would it be "this is good enough, so let's have them
-cook in 'next' and graduate to 'master'---further clean-up can be
-done after all the dust settles"?  I have an impression that we
-reached the latter by now.
-
-Thanks.
+> 
+> Thanks.
