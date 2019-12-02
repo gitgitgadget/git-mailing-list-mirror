@@ -2,312 +2,212 @@ Return-Path: <SRS0=5D3W=ZY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E79E7C432C0
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 205F5C43215
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:48:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9E43220640
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:46:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E0AD1206ED
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 23:48:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="H515V45m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TSsfqGg7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725865AbfLBXqP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Dec 2019 18:46:15 -0500
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:43767 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbfLBXqP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Dec 2019 18:46:15 -0500
-Received: by mail-pf1-f176.google.com with SMTP id h14so669049pfe.10
-        for <git@vger.kernel.org>; Mon, 02 Dec 2019 15:46:13 -0800 (PST)
+        id S1726105AbfLBXse (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Dec 2019 18:48:34 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33510 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725919AbfLBXsd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Dec 2019 18:48:33 -0500
+Received: by mail-wr1-f65.google.com with SMTP id b6so1503126wrq.0
+        for <git@vger.kernel.org>; Mon, 02 Dec 2019 15:48:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=poR1QbChCUxSy/njpi8gALydu/xSt1MlG5H0jVVEZ0U=;
-        b=H515V45mtPhm8rXefYfIug68O4/R/B4R8LfQJtVze2LHAoUGS9+mk28QGWRcohWUxo
-         ks6UtGM04QPfidc483oMUabdHUcKOfGP/1Oc8mfPSZxSUZeq7P7PSwvVQJXobkxO9Ltm
-         Xb9lXwwyl1rxrsB6lBPuoJSpY8dy6f/5t9OpLjNUjy8xkWEgHU9xATiAkx6mPNBfqkjm
-         LXexD6a7IQCBm98HXx1qNiRVhJqcBLFnkWMSw7f+9akZqh5+JSjQD0Uw4TF54cOrBkLl
-         Et/uKj+0luP2zgk7MWYA9qzd2nE01dZiCn3GOgpasVsHNJZ9S5BcGgl2ETVA9LWODhFT
-         7Yjg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=oCQ608+YtJjzyJ+RDmqlwR9TSXTs5Id9DK4Pfy2fWds=;
+        b=TSsfqGg7djapjGI5XyNQG76fyaPzE14v8MP6hfLMQDx4l0KSOwWSYRSVAiu+EpyVL5
+         wboNqoJ/8O3Gz7HSg5+G2+Uqi7CKvxQt2WIZjAqa5TyyfTwch9tu3O++ksIMlHxHzjAa
+         93SsGBsZLns+lv9DwAMn12DvBIFB25Etv7xXCwLwTytlX5dEF3VwFMtz3BfMtQx43m1E
+         poz2lM9Hxw7l70g7FHG81N+0z7XlG7ETYCGEjCjF4DkCUQsK4iTqTj4wPfI1g7YrLSp+
+         2ZiIkK9OsRUyWHY+M1BuCbPrT1O7i5U5LRQE2SbkBWgRJeIYDFuz8QwcUMv4TFlc1wgh
+         C2dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=poR1QbChCUxSy/njpi8gALydu/xSt1MlG5H0jVVEZ0U=;
-        b=Jp4sFJYHiiyl6KmJ93IRftoAMOvYjjnlF7xj/ERHS5HP8Eqs7Af2ZVTbjlYIK+hDtd
-         jag6omXXIX74PCFFK1V2gnsc16g153FGvlRklm7bN5cdnif8LajPRFgwBXN/R+8qWZwV
-         i4rKP1XbZ2aUhdjF30gbh/i0N1Eip3m0mpxGaw1a81pvkVhdOYNj9BWwmhvUuqXq5z2Q
-         BOgbOhEA99StfJ9Wb3PKdB4gxDqKDLYGvm9ryfg3LCL1GHYddPKip5xc6La+8IYv5zQZ
-         e8GBhKRyVDMgOfSLGZkdvUkO6cgv7OsGFJJhAEJQ6LbEY5DfMwdltAYr6HV0uULvTUkW
-         Jfqw==
-X-Gm-Message-State: APjAAAUKg/oS9kEMxK7bG/qSMkPUsFPiGxcIHOCVWpYTSFQ42Xr0fPcL
-        cuEuMRMS5Je6SeYr+hVkmnBMUw==
-X-Google-Smtp-Source: APXvYqywpuQ3Hj6t2PTJjyI+QaHHQRF/YWbP8ZD8nV/sSwmkynwJP+jcv/0P3cd3QOX4JeUFLJJR7A==
-X-Received: by 2002:a63:f702:: with SMTP id x2mr1811199pgh.300.1575330372072;
-        Mon, 02 Dec 2019 15:46:12 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id p21sm619182pfn.103.2019.12.02.15.46.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Dec 2019 15:46:11 -0800 (PST)
-Date:   Mon, 2 Dec 2019 15:46:05 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC] Hook management via 'git hooks' command
-Message-ID: <20191202234605.GA17687@google.com>
-References: <20191116011125.GG22855@google.com>
- <20191116054501.GA6538@camp.crustytoothpaste.net>
- <20191118223819.GI22855@google.com>
- <20191119005136.GA6430@camp.crustytoothpaste.net>
- <20191123011924.GC101478@google.com>
- <20191125030445.GB2404748@camp.crustytoothpaste.net>
- <20191125222113.GA83137@google.com>
- <20191126002806.GD2404748@camp.crustytoothpaste.net>
- <20191126005614.GA251804@google.com>
- <20191126024147.GF2404748@camp.crustytoothpaste.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=oCQ608+YtJjzyJ+RDmqlwR9TSXTs5Id9DK4Pfy2fWds=;
+        b=kINUdcMPmyAPlofq30eZF+yrvryS3SY/aMGwJKXsuZPMz8/gjB6iHM1bIak8LDnRWs
+         BkFTYO3UjbRTba9o55Siz4Sfpe4NjBjQPDz7W97IlmSXFLGHmHFj++YGLpqfs1eQXkyV
+         arpYCWZfi/+TpDdlr3vlWbxG6NoWnxZZhbhec5v+FTP/7aE5PZBBXmKwVWyApkvI/WBl
+         jmcm2l+/dhs+fGpY3qqDmKCVeN2CRcOdaNk18Rr5gyf9IiL4RBaJL9/9WTQChP2Mn7c8
+         ba4X/gNWwfkat2b9SR+2zcaOT9wodaCYJPItQPN7ay6osm4FM1TaNmugMdvn5M9ZSH2T
+         P8/Q==
+X-Gm-Message-State: APjAAAWRT4qKwfzB/SMel7ZQgH10hFWgVIBI7KOagUJluNlK6RXWmvI5
+        lArqconqnSMoWNfP6AskYoFSTuh7
+X-Google-Smtp-Source: APXvYqzp0vdOyv53Avyh6LWSofa/jUMJd0Kbty+MvszxBFCPUWRCsmz7yv6emctO3KKnGCcDAx5Eng==
+X-Received: by 2002:adf:cd03:: with SMTP id w3mr1663622wrm.191.1575330511106;
+        Mon, 02 Dec 2019 15:48:31 -0800 (PST)
+Received: from localhost.localdomain (atoulouse-658-1-25-142.w86-222.abo.wanadoo.fr. [86.222.24.142])
+        by smtp.googlemail.com with ESMTPSA id e16sm1148360wrj.80.2019.12.02.15.48.29
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 02 Dec 2019 15:48:30 -0800 (PST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH v3 1/2] sequencer: move check_todo_list_from_file() to rebase-interactive.c
+Date:   Tue,  3 Dec 2019 00:47:58 +0100
+Message-Id: <20191202234759.26201-2-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.24.0
+In-Reply-To: <20191202234759.26201-1-alban.gruin@gmail.com>
+References: <20191104095449.9964-1-alban.gruin@gmail.com>
+ <20191202234759.26201-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191126024147.GF2404748@camp.crustytoothpaste.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for waiting as I took half of last week off to host family for
-holiday. :)
+The message contained in `edit_todo_list_advice' (sequencer.c) is
+printed after the initial edit of the todo list if it can't be parsed or
+if commits were dropped.  This is done either in complete_action() for
+`rebase -i', or in check_todo_list_from_file() for `rebase -p'.
 
-On Tue, Nov 26, 2019 at 02:41:47AM +0000, brian m. carlson wrote:
-> On 2019-11-26 at 00:56:14, Emily Shaffer wrote:
-> > Hopefully I am not beating a dead horse here but I really want to
-> > understand. Let me take another guess with examples at what you mean;
-> > please correct me!
-> > 
-> > For our purposes, let's assume:
-> > 
-> > .git/hooks/
-> >   update
-> >   update.d/
-> >     update-1
-> >     update-2
-> > 
-> > update:
-> >   #!/bin/bash
-> > 
-> >   ./git/hooks/update.d/update-1 &&
-> >   ./git/hooks/update.d/update-2
-> > 
-> > The goal is to make sure update-1 and update-2 are run when other update
-> > hooks happen.
-> 
-> 
-> 
-> > With my proposal as is, I see two options:
-> > 
-> > 1)
-> > .git/config:
-> >   hook.runHookDir = true
-> > 
-> > This will run whatever else is in hook.update, and then it will run
-> > .git/hooks/update. This is not ideal because hookDir could change, and
-> > then the content of update will be incorrect:
-> > 
-> >   git config --add core.hookdir=~/hooks/
-> >   mv .git/hooks/update* ~/hooks/
-> >   # call something which invokes update hooks
-> >   # ~/hooks/update fails, .git/hooks/update-1 is gone :(
-> > 
-> 
-> This is actually fine.  We assume the user knows where they want to
-> store their hooks.  If they change that, then that's intentional.
-> 
-> > .git/config:
-> >   hook.update = 001:/project/path/.git/hooks/update.d/update-1
-> >   hook.update = 002:/project/path/.git/hooks/update.d/update-2
-> > 
-> > This will run each update hook individually and have no notion of
-> > whether they're in a "hook dir" or not. It sees a path, it hands it to
-> > 'sh' to run, it checks the return code.
-> 
-> Correct.  This is the logical porting of the above shell script to the
-> config syntax if you use an absolute path.
-> 
-> > Now I run 'mv .git/hooks/update* ~/hooks/'. Next time I invoke something
-> > which would run the 'update' hook, it fails, because the path in the
-> > config isn't pointing to anything. But this way is unrelated to hookdir.
-> 
-> Yes, that's correct.
-> 
-> It sounds like you're thinking of the config approach as completely
-> orthogonal to the hook directory.  However, I want to have multiple
-> per-repository hooks that do not live within the repository but move
-> with it.  The logical place to store those hooks is in the hook
-> directory, even if it's not being invoked by Git explicitly.  To use
-> that with the config approach so I can have multiple hooks in a useful
-> way that's compatible with other tools, I need some way to refer to
-> whatever the hook directory is at a given point in time.
+Since we want to add this check when editing the list, we also want to
+use this message from edit_todo_list() (rebase-interactive.c).  To this
+end, check_todo_list_from_file() is moved to rebase-interactive.c, and
+`edit_todo_list_advice' is copied there.  In the next commit,
+complete_action() will stop using it, and `edit_todo_list_advice' will
+be removed from sequencer.c.
 
-This sounds like a use case we can expect other users to want to work.
-It is very different from the way I think about and use hooks, so I'm
-glad you explained it to me.
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+---
+ rebase-interactive.c | 35 +++++++++++++++++++++++++++++++++++
+ rebase-interactive.h |  2 ++
+ sequencer.c          | 29 -----------------------------
+ sequencer.h          |  1 -
+ 4 files changed, 37 insertions(+), 30 deletions(-)
 
-(For the record, the way I think of hooks is something like this: I want
-all repositories to run git-secrets before I push; I want a handful of
-repositories to run the Gerrit Change-Id hook after I commit; I want one
-repo to run linter A, and three or four other repos to run linter B. So
-I tend to think "how can I apply hooks I have downloaded a la carte to
-my repositories?" You seem to be thinking "how can I write hooks for one
-repository?" They are both totally valid, of course.)
-
-> 
-> > It sounds like you might be asking for something like:
-> > 
-> > .git/config:
-> >   hook.update = 001:__HOOKDIR__/update.d/update-1
-> > 
-> > I'm not sure that I like the idea of this. My own dream is to eliminate
-> > the need for a hookdir entirely, so it's logically easy for my Gerrit
-> > hook to live in ~/gerrit-tools/ and my linter to live in ~/clang-tidy/
-> > and so on.
-> 
-> Using the config syntax eliminates per-repository storage for hooks.  I,
-> personally, want to store multiple one-off hooks in my hooks directory.
-> I want to use tools that install one-off hooks into my repository
-> without needing to depend on the location of those tools in the future.
-> I don't want those hooks to live elsewhere on my file system, since that
-> makes my repository no longer self contained.
-> 
-> I want to store those hooks in the hook directory, wherever I've
-> configured that, and whatever that happens to be at this point in time.
-> 
-> I may additionally have tools that live in other locations as well and
-> may use other syntaxes to invoke them.  For example, I may install a
-> hook that's provided by a Debian package and refer to it using a bare
-> program name.
-> 
-> If your goal is to eliminate the hook directory entirely, then I can't
-> say that I'm in support of that.  A design which does that won't meet my
-> needs, and it likely won't meet the needs of other users.
-
-Internally, that is our goal, absolutely. However, you yourself are
-proving it's not a reasonable goal for the entire world. That was
-somewhat expected, which is why I hoped "hook.runHookDir" and
-"hook.warnHookDir" would provide a path for users to decide by
-themselves that they don't want to use the hook directory anymore. A
-self-paced hook directoy phase out seems like a good fit to make us both
-happy, where your pace can be "over my dead body" if you so choose ;)
-
-> 
-> The benefit of your proposed config syntax for me is that it provides a
-> standard way to configure multiple hooks.  I still want many of those
-> hooks to live in the hook directory, although others may live elsewhere.
-> 
-> > I could see option 1 being alleviated by writing it as something like:
-> > 
-> > update:
-> >   $GIT_HOOKDIR/update.d/update-1 &&
-> >   $GIT_HOOKDIR/update.d/update-2
-> > 
-> > or
-> > update:
-> >   $(git config core.hookdir)/update.d/update-1 &&
-> >   $(git config core.hookdir)/update.d/update-2
-> 
-> This is similar to what I want, and why I want to pass it to the shell.
-> I can write the following, and everything just works:
-> 
-> .git/config:
->   hook.update = 001:$(git config core.hookdir || echo .git/hooks)/update.d/update-1
->   hook.update = 002:$(git config core.hookdir || echo .git/hooks)/update.d/update-2
-> 
-> Wherever I have placed my hooks for this repository, I can refer to
-> them with a shell script.  I can also add the following line as well:
-> 
-> .git/config:
->   hook.update = debian-package-hook update
-> 
-> …and everything just works.
-> 
-> > But, I think once you "buy in" to the idea of providing a full path to
-> > the final target - not to a trampoline script - in your config, you
-> > should forget about the idea of "core.hookdir" having anything to do
-> > with it.
-> 
-> I have no intention of providing a full path to any hook, since that's
-> quite brittle.  There are very few paths on my system which can be
-> guaranteed not to change, and all of them are things like /bin/sh or
-> /usr/bin/env.  If my hooks are in the hook directory (or even in the
-> working tree) with a full path and I move that repository, they become
-> broken.  If they're shipped by Debian and Debian decides to move the
-> command, they're broken.
-
-I think this is again stemming from the different ways you and I are
-thinking about our hooks, and that's fine. I'm open to the idea of
-relative-path hooks, and a blurb in the interactive "git hook edit" mode
-(or whatever it ends up being) explaining where relative paths will be
-relative to. Is that OK for you?
-
-> I'm very interested in learning more about why you seem to want to
-> specify full paths.  It seems very at odds with the way the rest of Git
-> works.
-
-I hope my description closer to the top of this mail helps to explain.
-
-> If the goal is to support other syntaxes in the future, then
-> let's use a prefix character (e.g. !) to denote commands vs.
-> non-commands or something like that.  If the goal is security, then I'd
-> like to hear more about the security model you're trying to achieve with
-> this design.
-
-As for the security model, I think Jonathan explained it quite well in
-the link I posted at the top of this thread. The tl;dr is that Malicious
-User can hand Victim Sysadmin a .zip with a repo that is "broken",
-and when Victim Sysadmin starts to explore it, she inadvertently
-triggers hooks which were packaged in that .zip and compromises her
-workstation. Eliminating the use of .git/hooks/ alone doesn't protect
-from this - .git/config is also a vector, as one can include an alias
-there - but I believe it's heading towards the right direction.
-
-> 
-> > To quote you out-of-order now:
-> > 
-> > > If we want to allow people to have multiple hooks under something like
-> > > .git/hooks/pre-push.d, then we need to have a way to wire them up in the
-> > > configuration using the correct location of the hook directory instead
-> > > of using a helper script like the one I linked above.
-> > 
-> > I think I may spot the misunderstanding. It sounds like you hope someone
-> > can provide "hook.update=001:~/update.d/" and have all the contents of
-> > update.d executed. I'll be clear and say that I didn't have the
-> > intention to support that at all; instead I was hoping to support a case
-> > like 2. above. Recursing through directories like that sounds scary to
-> > order.
-> 
-> I don't need a particular way to do that, since I can do it already, but
-> I do need a way to wire up multiple hooks that are per-repository and
-> move with the repository but aren't in the repository.  In other words,
-> I need a functional replacement for that approach if we're not going to
-> use that approach itself.
-
-It sounds like simply supporting relative paths in the config, with
-adequate explanation to the user about where the paths are relative to,
-will solve this for you. What do you think?
-
-> 
-> Hopefully I've done a better job at explaining myself here.
-
-Yeah, I think I made a breakthrough understanding you from this mail.
-Thanks :) :)
-
- - Emily
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index aa18ae82b7..ad5dd49c31 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -6,6 +6,12 @@
+ #include "commit-slab.h"
+ #include "config.h"
+ 
++static const char edit_todo_list_advice[] =
++N_("You can fix this with 'git rebase --edit-todo' "
++"and then run 'git rebase --continue'.\n"
++"Or you can abort the rebase with 'git rebase"
++" --abort'.\n");
++
+ enum missing_commit_check_level {
+ 	MISSING_COMMIT_CHECK_IGNORE = 0,
+ 	MISSING_COMMIT_CHECK_WARN,
+@@ -187,3 +193,32 @@ int todo_list_check(struct todo_list *old_todo, struct todo_list *new_todo)
+ 	clear_commit_seen(&commit_seen);
+ 	return res;
+ }
++
++int check_todo_list_from_file(struct repository *r)
++{
++	struct todo_list old_todo = TODO_LIST_INIT, new_todo = TODO_LIST_INIT;
++	int res = 0;
++
++	if (strbuf_read_file(&new_todo.buf, rebase_path_todo(), 0) < 0) {
++		res = error(_("could not read '%s'."), rebase_path_todo());
++		goto out;
++	}
++
++	if (strbuf_read_file(&old_todo.buf, rebase_path_todo_backup(), 0) < 0) {
++		res = error(_("could not read '%s'."), rebase_path_todo_backup());
++		goto out;
++	}
++
++	res = todo_list_parse_insn_buffer(r, old_todo.buf.buf, &old_todo);
++	if (!res)
++		res = todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo);
++	if (!res)
++		res = todo_list_check(&old_todo, &new_todo);
++	if (res)
++		fprintf(stderr, _(edit_todo_list_advice));
++out:
++	todo_list_release(&old_todo);
++	todo_list_release(&new_todo);
++
++	return res;
++}
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+index 44dbb06311..5f41bf5a28 100644
+--- a/rebase-interactive.h
++++ b/rebase-interactive.h
+@@ -13,4 +13,6 @@ int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+ 		   const char *shortonto, unsigned flags);
+ int todo_list_check(struct todo_list *old_todo, struct todo_list *new_todo);
+ 
++int check_todo_list_from_file(struct repository *r);
++
+ #endif
+diff --git a/sequencer.c b/sequencer.c
+index ec0b793fc5..181bb35f5f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4992,35 +4992,6 @@ N_("You can fix this with 'git rebase --edit-todo' "
+ "Or you can abort the rebase with 'git rebase"
+ " --abort'.\n");
+ 
+-int check_todo_list_from_file(struct repository *r)
+-{
+-	struct todo_list old_todo = TODO_LIST_INIT, new_todo = TODO_LIST_INIT;
+-	int res = 0;
+-
+-	if (strbuf_read_file_or_whine(&new_todo.buf, rebase_path_todo()) < 0) {
+-		res = -1;
+-		goto out;
+-	}
+-
+-	if (strbuf_read_file_or_whine(&old_todo.buf, rebase_path_todo_backup()) < 0) {
+-		res = -1;
+-		goto out;
+-	}
+-
+-	res = todo_list_parse_insn_buffer(r, old_todo.buf.buf, &old_todo);
+-	if (!res)
+-		res = todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo);
+-	if (!res)
+-		res = todo_list_check(&old_todo, &new_todo);
+-	if (res)
+-		fprintf(stderr, _(edit_todo_list_advice));
+-out:
+-	todo_list_release(&old_todo);
+-	todo_list_release(&new_todo);
+-
+-	return res;
+-}
+-
+ /* skip picking commits whose parents are unchanged */
+ static int skip_unnecessary_picks(struct repository *r,
+ 				  struct todo_list *todo_list,
+diff --git a/sequencer.h b/sequencer.h
+index 574260f621..75ddc5db3a 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -155,7 +155,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+ 
+ void todo_list_add_exec_commands(struct todo_list *todo_list,
+ 				 struct string_list *commands);
+-int check_todo_list_from_file(struct repository *r);
+ int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
+ 		    const char *shortrevisions, const char *onto_name,
+ 		    struct commit *onto, const char *orig_head, struct string_list *commands,
+-- 
+2.24.0
 
