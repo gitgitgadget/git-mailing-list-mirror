@@ -2,76 +2,61 @@ Return-Path: <SRS0=5D3W=ZY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=0.3 required=3.0 tests=DATE_IN_PAST_03_06,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C86D2C432C3
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 14:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 424EFC432C0
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 14:49:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9E7F120718
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 14:39:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 132AC2073C
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 14:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727563AbfLBOjp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Dec 2019 09:39:45 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36602 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727386AbfLBOjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Dec 2019 09:39:45 -0500
-Received: (qmail 30318 invoked by uid 109); 2 Dec 2019 14:39:45 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 02 Dec 2019 14:39:45 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6382 invoked by uid 111); 2 Dec 2019 14:43:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 02 Dec 2019 09:43:50 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 2 Dec 2019 09:39:44 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Colin Stolley <cstolley@runbox.com>, git@vger.kernel.org
-Subject: Re: hashmap vs khash? Re: [PATCH] packfile.c: speed up loading lots
- of packfiles.
-Message-ID: <20191202143944.GA18276@sigill.intra.peff.net>
-References: <20191127222453.GA3765@owl.colinstolley.com>
- <20191128004202.GA25910@dcvr>
+        id S1727418AbfLBOty (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Dec 2019 09:49:54 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:32920 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbfLBOty (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Dec 2019 09:49:54 -0500
+Received: by mail-io1-f66.google.com with SMTP id j13so40866498ioe.0
+        for <git@vger.kernel.org>; Mon, 02 Dec 2019 06:49:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=9IlSOGjkufcUns0MTmZnB6MHCf4TGmMWfGqGpFlut0g=;
+        b=hDfk9/5+P11QfwPnPyklHFfVJ0COZ3Dib6Yl1rs0M8cZ2NUmYSOCe+RqPuPmCT4CYN
+         KOqeqG+EsLNd1MNM3B20ujsP7JhH2LJfy847qPE3/OZsUXpeADuBBvguheW5vUr6wx82
+         fv2CKrgi09EdgkE53EdiK7SLws/h7RA/l14fJK7xp4QcmeTtQiYB28yb0NdP1WenEvjk
+         B5eMQ8D9XQ+C5Ej6Y/i9sf/o+WW+vyLgF4COJoefTA0chCyr/Bcgu6Ql5+sSyHuetcio
+         tXJCD6whVGR0fYVFF3bdRk2NYbBDGPRLlck56EBID4ZFkFpRc3ktwQeqHYRKCzunUL8m
+         C8eg==
+X-Gm-Message-State: APjAAAU8EO4iG0DI9b9PC5QjvZ9LF1A6DLZjij31TtomdmtGNTmsWIHd
+        HRoneZYbqU8f0jTrMvc1PL7JY5H7eFbAAiZq9LrQtGB6
+X-Google-Smtp-Source: APXvYqzXNRGJG+StQ+4j2i7zRtskvWPv9LL8L8bi9NiNXvfJ2OC3rhw9cc5lTsTrvFShUg2z/ilq6DPJdkhiwnEy2fI=
+X-Received: by 2002:a6b:5a13:: with SMTP id o19mr17155685iob.120.1575298193540;
+ Mon, 02 Dec 2019 06:49:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191128004202.GA25910@dcvr>
+References: <20191127151708.50531-1-emaste@freefall.freebsd.org>
+ <20191127171507.56354-1-emaste@freefall.freebsd.org> <20191127172035.GB1123@sigill.intra.peff.net>
+In-Reply-To: <20191127172035.GB1123@sigill.intra.peff.net>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Mon, 2 Dec 2019 06:03:23 -0500
+Message-ID: <CAPyFy2CiRS_Mwgg=_uc6h0MtPfw0D-t9xiwuFVVy=-U85dyLPw@mail.gmail.com>
+Subject: Re: [PATCH v2] t4210: skip i18n tests that don't work on FreeBSD
+To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 28, 2019 at 12:42:02AM +0000, Eric Wong wrote:
+On Wed, 27 Nov 2019 at 12:20, Jeff King <peff@peff.net> wrote:
+>
+> It would probably be cleaner to set them ahead of time and just unset
+> them selectively in MINGW, etc. But we don't have any way to unset a
+> prereq, so lets' go with this for now. :)
 
-> > Add a hashmap containing the packfile names as we load them so that
-> > the average runtime cost of checking for already-loaded packs becomes
-> > constant.
-> 
-> Btw, would you have time to do a comparison against khash?
-> 
-> AFAIK hashmap predates khash in git; and hashmap was optimized
-> for removal.   Removals don't seem to be a problem for pack
-> loading.
-
-Actually, they came around simultaneously. I think hashmap.[ch] was
-mostly a response to our open-coded hashes, like the one in object.c
-(which still uses neither of the reusable forms!). Those didn't handle
-removal at all. khash does handle removal, though you pay a price in
-tombstone entries until the next resize operation.
-
-> I'm interested in exploring the removing of hashmap entirely in
-> favor of khash to keep our codebase smaller and easier-to-learn.
-> khash shows up more in other projects, and ought to have better
-> cache-locality.
-
-I have been tempted to push for that, too. Every timing I have ever done
-shows khash as faster (though for a trivial use like this one, I would
-be quite surprised if it mattered either way).
-
-My hesitation is that khash can be harder to debug because of the macro
-implementation. But I have rarely needed to look beneath its API.
-
--Peff
+Also, what's the next step for this patch (is there anything I should
+do)? I'd like to next work on getting FreeBSD CI going (via Cirrus-CI)
+once this is sorted, so that I can start with no failing tests.
