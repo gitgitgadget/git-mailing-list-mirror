@@ -2,185 +2,157 @@ Return-Path: <SRS0=5D3W=ZY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 586DCC432C0
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 17:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19C90C432C0
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 19:02:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1C93120640
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 17:40:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEC0521774
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 19:02:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aJoTtUIr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbyUKWVp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727915AbfLBRkl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Dec 2019 12:40:41 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45108 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727671AbfLBRkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Dec 2019 12:40:41 -0500
-Received: by mail-wr1-f66.google.com with SMTP id j42so104747wrj.12
-        for <git@vger.kernel.org>; Mon, 02 Dec 2019 09:40:39 -0800 (PST)
+        id S1728096AbfLBTCV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Dec 2019 14:02:21 -0500
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:36845 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727586AbfLBTCV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Dec 2019 14:02:21 -0500
+Received: by mail-wr1-f48.google.com with SMTP id z3so539557wru.3
+        for <git@vger.kernel.org>; Mon, 02 Dec 2019 11:02:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Xl6WsvaR7TTX2DSqyvAxC+1SGN5P++rM1s0/r6bstsA=;
-        b=aJoTtUIrzWwAAS565Gi81aRk9s/X5ljojWe8sSKOkkr8bRVITFw26jmxhR2Sl4VwBG
-         rWW952zQFZfWFfhReiD73qAfP4LmQHHUecsNskG1Ms66SD5iZy5TNHs9gio17/1l+R07
-         jhzbJrFLYjCYFmAN+G2c8vAN3Z51JIvpUzSzLB9ZJO9Gti28NpjYs/N7Ls0sjQPLsjGL
-         Z7AeTgxd/G7CnPP35c3GeukkgUzBWYB9D9Ptin09rqpIDa+WdqQqeFhulg77Ml7TMbe0
-         xoQVqw6nsoWIBLaIi9kGqjvtFH9JbTj8EkZAr2cppsMs5NWtJbwBBsn0g8kDLKIPiCej
-         2PuQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=amLyMbqCohkIPr33r1nznA1K+NL1BmTXJPhUYfpKYko=;
+        b=EbyUKWVp2jVwZLmJsC8g7HMY60Tpx6QWrXUBXi/iWnimsfya6tuTFX1IJ7IniO5zmG
+         7Jww/T+djmdnr4NSyaVBduN4OMfWxwapB21/zfnphy0szRmRPSDU6x5ksXmGLOqwz1HQ
+         +TJdgZ5mUOPa+oOcAU1dXH15eszEFtjBZ9cjzSKNYla5STij0W7oQfngvKTVvB6lwsRV
+         slohSgW0lWYU4h6xbWixNN7uQTxQyBO6VXv4LEt8iJaip9HT574Xr7Beba/RpHTi41ge
+         0qUxMAIrSd9pLY+tAPoYl53CdKAEWnGDY61uwYRjLsSltwDROYuNVTh6FwojjvBkjMpr
+         MCOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Xl6WsvaR7TTX2DSqyvAxC+1SGN5P++rM1s0/r6bstsA=;
-        b=poJ+opRMxZKSj590sE83BiaPwVivqpVLZaa0330ueMbR0T+HfBYcc3X6ZsDp/xlF8j
-         4Yr23S1SKfc7HG7NsfjmD30MjtYKyODlGkQ0vTm66ljmdFtwG6W4a4vqD5ewfo7ogP+F
-         8gq5Daqc7Ih/wNQ+u3bb/NCcSl5ip37wGufqk2nDnCYeDr7e548g4RwFOh45p7B5D+nd
-         duOuXrzZk6HvmcIDhz2WDIIc2e4GkQpbLm87sLytvUVyT4+Csmg8PVy/44YrdLTDFQM6
-         hJMIFIbM51jS0Zb6DHCmbIJRTly1srcWZ+N1lEY+T9NcSdjzLrfUlPVaEulV55MqH4eD
-         kW0g==
-X-Gm-Message-State: APjAAAWID9/LbKWMGN8SKlooXRhvkOHncFMMfn9xV67apVvNroPM8zqB
-        UDfXufJI/DM8PgmjEjl5ktZi9GEZ
-X-Google-Smtp-Source: APXvYqzzJdKzrylU7E6qs4b6ZVZTtOElj47N6J9nOuu+6/32s6U7QQhKPOhHYFf//0kC3SkCKlfhzA==
-X-Received: by 2002:a05:6000:1288:: with SMTP id f8mr106733wrx.66.1575308438317;
-        Mon, 02 Dec 2019 09:40:38 -0800 (PST)
-Received: from szeder.dev (x4db59591.dyn.telefonica.de. [77.181.149.145])
-        by smtp.gmail.com with ESMTPSA id 189sm150818wmc.7.2019.12.02.09.40.36
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=amLyMbqCohkIPr33r1nznA1K+NL1BmTXJPhUYfpKYko=;
+        b=mkHg3MIwZ/5NAvAVZFUAkenjnejvXaKpGiv7qJeqkrnpy0zeC35CYpBdL6CGfKCBM4
+         htCQTHoU7iQthCmDs02HlwHGYB+diBJoIl8yUT5bdIcEnnGhuQRat5NN7emTz0JcMwKT
+         iWSOjz4vX1CDSBpHQr2yFQs9DVduumscRAq1JNh9nmA5uP/6t+5QIjqZeg++vSaU6172
+         4DsYP5FD+l/lia8e/z28UICXPH2rHFrl0EnuRRdl3MFgkmfak2QJr5gZhZN18MFAdbRC
+         bDoHEgvCywlmHHGfzGqsP2w4WAeTByROrU0L6sYWzpsabuCtN7Zm2Q9rU5qOvBETlUuS
+         N/QA==
+X-Gm-Message-State: APjAAAXZzh2V2yAhCbQM+HA+YeK8+Cet70mXerGzx0ocyz6970ql3REq
+        Fahh1IrJlmY39YeosQM2ZP0m/d/d
+X-Google-Smtp-Source: APXvYqz0GqAqIu6IO05hKUjXAjO/GgR1LMPtHoEdpiPzGB0c0B19cu263dqVwnlpbW4nCF5DG4ex2w==
+X-Received: by 2002:a5d:4a84:: with SMTP id o4mr498825wrq.396.1575313338315;
+        Mon, 02 Dec 2019 11:02:18 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a7sm400162wrr.50.2019.12.02.11.02.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 02 Dec 2019 09:40:37 -0800 (PST)
-Date:   Mon, 2 Dec 2019 18:40:35 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Colin Stolley <cstolley@runbox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] packfile.c: speed up loading lots of packfiles.
-Message-ID: <20191202174035.GJ23183@szeder.dev>
-References: <20191127222453.GA3765@owl.colinstolley.com>
+        Mon, 02 Dec 2019 11:02:17 -0800 (PST)
+Message-Id: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
+In-Reply-To: <pull.463.v2.git.1573828756.gitgitgadget@gmail.com>
+References: <pull.463.v2.git.1573828756.gitgitgadget@gmail.com>
+From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 02 Dec 2019 19:02:15 +0000
+Subject: [PATCH v3 0/1] git-p4.py: Cast byte strings to unicode strings in python3
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20191127222453.GA3765@owl.colinstolley.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     git@vger.kernel.org
+Cc:     Ben Keene <seraphire@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 27, 2019 at 04:24:53PM -0600, Colin Stolley wrote:
-> When loading packfiles on start-up, we traverse the internal packfile
-> list once per file to avoid reloading packfiles that have already
-> been loaded. This check runs in quadratic time, so for poorly
-> maintained repos with a large number of packfiles, it can be pretty
-> slow.
-> 
-> Add a hashmap containing the packfile names as we load them so that
-> the average runtime cost of checking for already-loaded packs becomes
-> constant.
-> 
-> Add a perf test to p5303 to show speed-up.
-> 
-> The existing p5303 test runtimes are dominated by other factors and do
-> not show an appreciable speed-up. The new test in p5303 clearly exposes
-> a speed-up in bad cases. In this test we create 10,000 packfiles and
-> measure the start-up time of git rev-parse, which does little else
-> besides load in the packs.
-> 
-> Here are the numbers for the new p5303 test:
-> 
-> Test                         HEAD^             HEAD
-> ---------------------------------------------------------------------
-> 5303.12: load 10,000 packs   1.03(0.92+0.10)   0.12(0.02+0.09) -88.3%
-> 
-> Thanks-to: Jeff King <peff@peff.net>
-> Signed-off-by: Colin Stolley <cstolley@runbox.com>
-> ---
+Issue: The current git-p4.py script does not work with python3.
 
-This patch break test 'gc --keep-largest-pack' in 't6500-gc.sh' when
-run with GIT_TEST_MULTI_PACK_INDEX=1, because there is a duplicate
-entry in '.git/objects/info/packs':
+I have attempted to use the P4 integration built into GIT and I was unable
+to get the program to run because I have Python 3.8 installed on my
+computer. I was able to get the program to run when I downgraded my python
+to version 2.7. However, python 2 is reaching its end of life.
 
-  expecting success of 6500.7 'gc --keep-largest-pack':
-          test_create_repo keep-pack &&
-          (
-                  cd keep-pack &&
-                  test_commit one &&
-                  test_commit two &&
-                  test_commit three &&
-                  git gc &&
-                  ( cd .git/objects/pack && ls *.pack ) >pack-list &&
-                  test_line_count = 1 pack-list &&
-                  BASE_PACK=.git/objects/pack/pack-*.pack &&
-                  test_commit four &&
-                  git repack -d &&
-                  test_commit five &&
-                  git repack -d &&
-                  ( cd .git/objects/pack && ls *.pack ) >pack-list &&
-                  test_line_count = 3 pack-list &&
-                  git gc --keep-largest-pack &&
-                  ( cd .git/objects/pack && ls *.pack ) >pack-list &&
-                  test_line_count = 2 pack-list &&
-                  awk "/^P /{print \$2}" <.git/objects/info/packs >pack-info &&
-                  test_line_count = 2 pack-info &&
-                  test_path_is_file $BASE_PACK &&
-                  git fsck
-          )
-  
-  + test_create_repo keep-pack
-  Initialized empty Git repository in /home/szeder/src/git/t/trash directory.t6500-gc/keep-pack/.git/
-  + cd keep-pack
-  + test_commit one
-  [master (root-commit) d79ce16] one
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 one.t
-  + test_commit two
-  [master 139b20d] two
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 two.t
-  + test_commit three
-  [master 7c7cd71] three
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 three.t
-  + git gc
-  Computing commit graph generation numbers:  33% (1/3)^MComputing commit graph generation numbers:  66% (2/3)^MComputing commit graph generation numbers: 100% (3/3)^MComputing commit graph generation numbers: 100% (3/3), done.
-  + cd .git/objects/pack
-  + ls pack-a4b37b9b5458e8116b1c1840185b39fb5e6b8726.pack
-  + test_line_count = 1 pack-list
-  + BASE_PACK=.git/objects/pack/pack-*.pack
-  + test_commit four
-  [master fd8d77e] four
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 four.t
-  + git repack -d
-  + test_commit five
-  [master a383792] five
-   Author: A U Thor <author@example.com>
-   1 file changed, 1 insertion(+)
-   create mode 100644 five.t
-  + git repack -d
-  + cd .git/objects/pack
-  + ls pack-057d7f493a7c26d58090f4777ff66d4c226c4408.pack pack-54feec766fc7d2d204b03879d96f4595d7e48c37.pack pack-a4b37b9b5458e8116b1c1840185b39fb5e6b8726.pack
-  + test_line_count = 3 pack-list
-  + git gc --keep-largest-pack
-  Computing commit graph generation numbers:  20% (1/5)^MComputing commit graph generation numbers:  40% (2/5)^MComputing commit graph generation numbers:  60% (3/5)^MComputing commit graph generation numbers:  80% (4/5)^MComputing commit graph generation numbers: 100% (5/5)^MComputing commit graph generation numbers: 100% (5/5), done.
-  + cd .git/objects/pack
-  + ls pack-390dbbb8e27c014b080c08dfc482d4982d4c6644.pack pack-a4b37b9b5458e8116b1c1840185b39fb5e6b8726.pack
-  + test_line_count = 2 pack-list
-  + awk /^P /{print $2}
-  + test_line_count = 2 pack-info
-  test_line_count: line count for pack-info != 2
-  pack-a4b37b9b5458e8116b1c1840185b39fb5e6b8726.pack
-  pack-a4b37b9b5458e8116b1c1840185b39fb5e6b8726.pack
-  pack-390dbbb8e27c014b080c08dfc482d4982d4c6644.pack
-  error: last command exited with $?=1
-  not ok 7 - gc --keep-largest-pack
+Submission: I am submitting a patch for the git-p4.py script that partially
+supports python 3.8. This code was able to pass the basic tests (t9800) when
+run against Python3. This provides basic functionality. 
+
+In an attempt to pass the t9822 P4 path-encoding test, a new parameter for
+git P4 Clone was introduced. 
+
+--encoding Format-identifier
+
+This will create the GIT repository following the current functionality;
+however, before importing the files from P4, it will set the
+git-p4.pathEncoding option so any files or paths that are encoded with
+non-ASCII/non-UTF-8 formats will import correctly.
+
+Technical details: The script was updated by futurize (
+https://python-future.org/futurize.html) to support Py2/Py3 syntax. The few
+references to classes in future were reworked so that future would not be
+required. The existing code test for Unicode support was extended to
+normalize the classes “unicode” and “bytes” to across platforms:
+
+ * ‘unicode’ is an alias for ‘str’ in Py3 and is the unicode class in Py2.
+ * ‘bytes’ is bytes in Py3 and an alias for ‘str’ in Py2.
+
+New coercion methods were written for both Python2 and Python3:
+
+ * as_string(text) – In Python3, this encodes a bytes object as a UTF-8
+   encoded Unicode string. 
+ * as_bytes(text) – In Python3, this decodes a Unicode string to an array of
+   bytes.
+
+In Python2, these functions do not change the data since a ‘str’ object
+function in both roles as strings and byte arrays. This reduces the
+potential impact on backward compatibility with Python 2.
+
+ * to_unicode(text) – ensures that the supplied data is encoded as a UTF-8
+   string. This function will encode data in both Python2 and Python3. * 
+      path_as_string(path) – This function is an extension function that
+      honors the option “git-p4.pathEncoding” to convert a set of bytes or
+      characters to UTF-8. If the str/bytes cannot decode as ASCII, it will
+      use the encodeWithUTF8() method to convert the custom encoded bytes to
+      Unicode in UTF-8.
+   
+   
+
+Generally speaking, information in the script is converted to Unicode as
+early as possible and converted back to a byte array just before passing to
+external programs or files. The exception to this rule is P4 Repository file
+paths.
+
+Paths are not converted but left as “bytes” so the original file path
+encoding can be preserved. This formatting is required for commands that
+interact with the P4 file path. When the file path is used by GIT, it is
+converted with encodeWithUTF8().
+
+Signed-off-by: Ben Keene seraphire@gmail.com [seraphire@gmail.com]
+
+Ben Keene (1):
+  Python3 support for t9800 tests. Basic P4/Python3 support
+
+ git-p4.py | 825 +++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 628 insertions(+), 197 deletions(-)
 
 
+base-commit: d9f6f3b6195a0ca35642561e530798ad1469bd41
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-463%2Fseraphire%2Fseraphire%2Fp4-python3-unicode-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-463/seraphire/seraphire/p4-python3-unicode-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/463
+
+Range-diff vs v2:
+
+ 1:  0bca930ff8 < -:  ---------- Cast byte strings to unicode strings in python3
+ 2:  0435d0e2cb < -:  ---------- FIX: cast as unicode fails when a value is already unicode
+ 3:  2288690b94 < -:  ---------- FIX: wrap return for read_pipe_lines in ustring() and wrap GitLFS read of the pointer file in ustring()
+ -:  ---------- > 1:  02b3843e9f Python3 support for t9800 tests. Basic P4/Python3 support
+
+-- 
+gitgitgadget
