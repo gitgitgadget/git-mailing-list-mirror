@@ -2,97 +2,92 @@ Return-Path: <SRS0=5D3W=ZY=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B327C432C0
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 15:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80C97C432C0
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 17:02:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A37F2084F
-	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 15:59:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 26E6B20848
+	for <git@archiver.kernel.org>; Mon,  2 Dec 2019 17:02:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E5uzEcjp"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tGMO6Qgb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727490AbfLBP7a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Dec 2019 10:59:30 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:37793 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727453AbfLBP7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Dec 2019 10:59:30 -0500
-Received: by mail-ot1-f66.google.com with SMTP id k14so15854833otn.4
-        for <git@vger.kernel.org>; Mon, 02 Dec 2019 07:59:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nu1uS01HDpaxyu9Vo6DulSsPjjDeJo818TbXTrRpSsU=;
-        b=E5uzEcjp82QOEhat/9pfMr0zaKGhnAEuAmHNUaWuHCN14+xBGdw23BW+7Z7NKlh7C6
-         zoYs77qn1djeNAE8PeF+xq4TFkJJn/mfOgFwSGYBkz0NexTW7WrnwIaCoKwVS/nsvztC
-         DKo2gbtWSm4c/otbuHO6Y00TLv2oTKEMPAbYQsKR6y8aSx7Uu1R9Tag7emhtUt9azpIG
-         D+HXmG0/PR2ndmzzkOQ9GEg1AFRnnuL/ZPBtuvpK3SFKAmh0zhGY4PEg1J7+0QWw91K1
-         Qf1tuykMeFTGgaOnkir22wL8N3IQw8bkPk349J46yNFTwlM4JsQ1fzuC3q2eZ/3LuiQV
-         kp2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nu1uS01HDpaxyu9Vo6DulSsPjjDeJo818TbXTrRpSsU=;
-        b=CodW5AOD9/C87/8jUoCOInzxtSHKghKowfW7OCCHzBUARFbvPiaIAvU6f/hfmJHHmh
-         o9rKk0ZOJuTT+lI6bv0tbelR47Y8HfRmW+Go2LZ4vubfjHtOlHdQ7JbITKuMPObRF0En
-         GZoD1zKrf0bKFewsBZe3RWdut7AJI+zi+L7YXOqzRNn+AxBtsCjuYPOPUVQGaAJmXOjK
-         S7ZKmAD2soBSaBrNSpyJQrAAwIKNBM8RhQaSKaACe6d0GoIW2cMc7uU7cXK0IDOC6o3F
-         Ox48MIZ/+wQ+g5CvJtZ5o3h/e8n+8lwBOnMZgD3BGzbbzW69a0YEJ7p/DFBBscaIX8H+
-         g+zA==
-X-Gm-Message-State: APjAAAV50D6jFwDpG3xLuenngPOFxS/XXn0Hsi5CN6ClnK6XIo1KnZ5s
-        mXZ6Y5lS/z8+KyZT31t8osm7IKeN1rtEtIFkguo=
-X-Google-Smtp-Source: APXvYqxlbIT3jssty2R5r9j5/58HafGMsIEfZSrS1+Sm1IfAYafig5HtcS9CNm1cut21FrGsuqVpHVhsa4cABCDIbW4=
-X-Received: by 2002:a9d:6f07:: with SMTP id n7mr10324450otq.112.1575302369306;
- Mon, 02 Dec 2019 07:59:29 -0800 (PST)
+        id S1727556AbfLBRCD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Dec 2019 12:02:03 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53040 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727460AbfLBRCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Dec 2019 12:02:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E3C31AB69F;
+        Mon,  2 Dec 2019 12:02:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=PfVGsb1aRVGjk5aYWY+Wr+jw+ks=; b=tGMO6Q
+        gbsECOnfo8u+ZSdyCMBJ8Ep7g8FIWz7M8tdtFtFzoKgKs0J1jglsSwK2craxaf72
+        Blbu5uSp1GSfPDVcbe5mT2Q0S2fEaBsYpO0ynNNeneIhU0iW7WWQMnqjDDMRKj9b
+        pgNKvwTV5nuyNKzWMoQ/kceqa7zGgEb26TPSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Nzo3YUdCBqMeGPn8qdpE4+DXdiSH1Da2
+        /te3RVWWqhAiCF8arwPA9vX702+t20of6JGZ9c3JXYR+02T4lhla23qXH7UjKQoU
+        SZu3ySBwm7qltrpYKq3fJOU5rSibLjkGYWZS+mw50duMNmfF+G2G3t9LwmyeKnL9
+        uTuOgcW6/64=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DC7DAAB69E;
+        Mon,  2 Dec 2019 12:02:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 1C729AB69D;
+        Mon,  2 Dec 2019 12:01:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ed Maste <emaste@freefall.freebsd.org>, git@vger.kernel.org,
+        Ed Maste <emaste@freebsd.org>
+Subject: Re: [PATCH v2] t4210: skip i18n tests that don't work on FreeBSD
+References: <20191127151708.50531-1-emaste@freefall.freebsd.org>
+        <20191127171507.56354-1-emaste@freefall.freebsd.org>
+        <20191127172035.GB1123@sigill.intra.peff.net>
+Date:   Mon, 02 Dec 2019 09:01:55 -0800
+In-Reply-To: <20191127172035.GB1123@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 27 Nov 2019 12:20:35 -0500")
+Message-ID: <xmqqd0d6y83g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 2 Dec 2019 07:59:18 -0800
-Message-ID: <CABPp-BE01sXeNT9QtK+svfpeiVRvjw-U+R91BtJfiKhJCkrfxA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2019, #01; Mon, 2)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 73578C5A-1525-11EA-88CB-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 2, 2019 at 6:19 AM Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Nov 27, 2019 at 05:15:07PM +0000, Ed Maste wrote:
 >
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+>> Extend test-lib.sh to add a REGEX_ILLSEQ prereq, set it on FreeBSD, and
+>> add !REGEX_ILLSEQ to the two affected tests.
 >
-> The second batch of topics are now in 'master'; this was a rather
-> large update, so there might be some fallout.  Many topics are still
-> in 'next' to be merged to 'master' soonish, and many others are
-> waiting to be in 'next'.
+> Thanks, this is much nicer.
+>
+>> +FreeBSD)
+>> +	test_set_prereq REGEX_ILLSEQ
+>> +	test_set_prereq POSIXPERM
+>> +	test_set_prereq BSLASHPSPEC
+>> +	test_set_prereq EXECKEEPSPID
+>> +	;;
+>
+> I scratched my head at these for a minute, but I see you are just
+> covering the bits set in the "*" case that we now no longer trigger.
+>
+> It would probably be cleaner to set them ahead of time and just unset
+> them selectively in MINGW, etc. But we don't have any way to unset a
+> prereq, so lets' go with this for now. :)
 
-Did you forget to push these out?  I see:
-
-$ git ls-remote git://github.com/gitster/git | grep refs/heads/master
-d9f6f3b6195a0ca35642561e530798ad1469bd41 refs/heads/master
-$ git ls-remote git://git.kernel.org/pub/scm/git/git.git | grep
-refs/heads/master
-d9f6f3b6195a0ca35642561e530798ad1469bd41 refs/heads/master
-(...and the same for a few other clone URLs)
-
-$ git log -1 d9f6f3b6195a0ca35642561e530798ad1469bd41
-commit d9f6f3b6195a0ca35642561e530798ad1469bd41 (origin/master,
-origin/HEAD, gitster/master)
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Sun Nov 10 18:00:59 2019 +0900
-
-    The first batch post 2.24 cycle
-
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Thanks, both.  Queued.  Will merge to 'next' shortly.
