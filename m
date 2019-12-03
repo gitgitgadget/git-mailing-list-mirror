@@ -2,144 +2,144 @@ Return-Path: <SRS0=UYkv=ZZ=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F4D8C432C3
-	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 08:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F8A3C432C0
+	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 09:08:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1FA6720661
-	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 08:56:29 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="vIb/7/rA"
+	by mail.kernel.org (Postfix) with ESMTP id 49B1C2073C
+	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 09:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725848AbfLCI42 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Dec 2019 03:56:28 -0500
-Received: from mail-il1-f182.google.com ([209.85.166.182]:45500 "EHLO
-        mail-il1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbfLCI41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Dec 2019 03:56:27 -0500
-Received: by mail-il1-f182.google.com with SMTP id o18so2415701ils.12
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 00:56:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=23ozhQdmXLubTiU7cKLmran0N+iSRK0dc5WnOoPPi50=;
-        b=vIb/7/rA02GJPrlkEeDvJAv1kW/x8MMQ/ewoP57UNd+OvRvsJa4GrYb2xpQF6bt6Dv
-         XhUXOaIE7x2PDVoSFX4Xmx++GD4nvUcsr5NZ+N+RTBILDrG4tcBVt6z8t+s9OluZQo8Y
-         mmKkAXUjmJkAUlz+BukNWajEUPC7LfliNW+510CSZZLmWQPADNCAFSa0RpXIESr1HorB
-         elILEUiuQloVChrTUcBe31Fy69Y77Cw6gvYK8utNqGuXlTlRiahpv/UvNfxlQvuWcBzX
-         j59rk3FhxaTF9qKKEPTc9IFID9IIaGEbD4YbtkpfOPsnXc7rfzF+3ufKS0FQ0uTFbz6k
-         8KsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=23ozhQdmXLubTiU7cKLmran0N+iSRK0dc5WnOoPPi50=;
-        b=a0m9UiBevrtzJ9BxORhBN2Krvmd2ATtiUnzmujiAOv5LCvuV4KjtmsHG/NcIUHJ+RQ
-         Jj9aF2K+e3UYOVL1KYUrEaqtdvSumN87yK0Gy7/6b5xS769EONwMcZFRvLPolx4hDj73
-         yp0/FnPFVRtxMSGcT2Hc25sV1KFR4VwNEqhj9/YNYKEu28mb/WbsZEZzXxlUX8b3EoI8
-         VdK4A4o9T2D6/1mDWLdAlI4onel1q0MWCQ5TXHnV7X+ChDkzne8XE3pQicVEAmAzFKS+
-         iRx9s9/Wzw6ACAebYxkr1tdAncBWs573Tm/TxHVWLrd12FZdhHBoHPN9BKSFFbZD1dvc
-         lPmQ==
-X-Gm-Message-State: APjAAAUCSqM4IglYxtEEzLV8HrTdHUGZm2XKJHN1sAO/aCpzVZDxa13e
-        qt+Sz/6qiN8RPTq0kBc7SAiPCA6AZbc/JFG3LMF2fw==
-X-Google-Smtp-Source: APXvYqx3FBb1evmpKajk/5N6C6sbn37ciIbXPekvXb1BwpoABT3ViDO06KotRK78omwGV0tFpEBsnWN19widFQxHW/M=
-X-Received: by 2002:a92:901:: with SMTP id y1mr3558626ilg.274.1575363386731;
- Tue, 03 Dec 2019 00:56:26 -0800 (PST)
-MIME-Version: 1.0
+        id S1726086AbfLCJIn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Dec 2019 04:08:43 -0500
+Received: from cnshjsmin05.app.nokia-sbell.com ([116.246.26.45]:3266 "EHLO
+        cnshjsmin05.nokia-sbell.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725997AbfLCJIn (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 3 Dec 2019 04:08:43 -0500
+X-AuditID: ac18929d-537ff70000002afa-15-5de626180f90
+Received: from CNSHPPEXCH1602.nsn-intra.net (Unknown_Domain [135.251.51.102])
+        (using TLS with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client did not present a certificate)
+        by cnshjsmin05.nokia-sbell.com (Symantec Messaging Gateway) with SMTP id 9A.85.11002.81626ED5; Tue,  3 Dec 2019 17:08:40 +0800 (HKT)
+Received: from CNSHPPEXCH1610.nsn-intra.net (135.251.51.110) by
+ CNSHPPEXCH1602.nsn-intra.net (135.251.51.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1713.5; Tue, 3 Dec 2019 17:08:40 +0800
+Received: from CNSHPPEXCH1610.nsn-intra.net ([135.251.51.110]) by
+ CNSHPPEXCH1610.nsn-intra.net ([135.251.51.110]) with mapi id 15.01.1713.007;
+ Tue, 3 Dec 2019 17:08:40 +0800
+From:   "Lou, Pengfei (NSB - CN/Hangzhou)" <pengfei.lou@nokia-sbell.com>
+To:     Bryan Turner <bturner@atlassian.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: one bug on git
+Thread-Topic: one bug on git
+Thread-Index: AdWpqKh+Y3gz8IRUTs2wD1ZmDLyXiAACqzigAAAZwpD//4F1AP//d3wQ
+Date:   Tue, 3 Dec 2019 09:08:40 +0000
+Message-ID: <a755356230794fb58bdd48dd74714aee@nokia-sbell.com>
 References: <defeb7be75f54e8483ce529b2571478d@nokia-sbell.com>
- <5e27e2a9f6374742859b4b87d85c56e9@nokia-sbell.com> <1af00173f96243bea760baaddeb15777@nokia-sbell.com>
-In-Reply-To: <1af00173f96243bea760baaddeb15777@nokia-sbell.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 3 Dec 2019 00:56:16 -0800
-Message-ID: <CAGyf7-FW_8RjVPEtmKiNFnF5QNZ4f+kqZ_BAGnGu76QcR=F25Q@mail.gmail.com>
-Subject: Re: one bug on git
-To:     "Lou, Pengfei (NSB - CN/Hangzhou)" <pengfei.lou@nokia-sbell.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <5e27e2a9f6374742859b4b87d85c56e9@nokia-sbell.com>
+ <1af00173f96243bea760baaddeb15777@nokia-sbell.com>
+ <CAGyf7-FW_8RjVPEtmKiNFnF5QNZ4f+kqZ_BAGnGu76QcR=F25Q@mail.gmail.com>
+In-Reply-To: <CAGyf7-FW_8RjVPEtmKiNFnF5QNZ4f+kqZ_BAGnGu76QcR=F25Q@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [135.251.51.115]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuphkeLIzCtJLcpLzFFi42Jp/22cpiuh9izWYPZqS4sfl2Qtuq50Mzkw
+        eXw88oDV4/MmuQCmKC6blNSczLLUIn27BK6MZd332Apm6VZc7V3B1sDYotPFyMkhIWAi8Xrf
+        UbYuRi4OIYFDTBLnZrRBOX8YJU7MOs8I4WxklNg9cTYjSAubgJvE/r+9zCC2iICGxOfbN8Di
+        zAL6Ep/+HGACsYUFpCV6/25mh6iRkdh7aB8LhO0m0dX6EcxmEVCROP18JdgcXgE7iS/bFrJA
+        LHvPKNGzsxdsEKdAoMSWu/1gRYwCYhLfT61hglgmLnHryXwmiB8EJJbsOc8MYYtKvHz8j7WL
+        kQPIVpLo28AEYjILaEqs36UP0akoMaX7ITvEWkGJkzOfsExgFJuFZOgshI5ZSDpmIelYwMiy
+        ilE6Oa84I6s4NzPPwFQvLz87M1G3OCk1J0cvOT93EyMwjtZITJq7g7GzM/4QowAHoxIPb8av
+        J7FCrIllxZW5hxglOJiVRHi3STyNFeJNSaysSi3Kjy8qzUktPsQozcGiJM7bMnlhrJBAemJJ
+        anZqakFqEUyWiYNTqoFx2pJ1RzXUDrPr92bmGpz6sr4+6Fnc0R8LsjIUjA8/kDa0+BkfGCe7
+        R/BvUlV2y/up182L35/tvrNshUlCe8KewBdeVhvsIvMTNJWipLv0egpLnhXZFv3i1zjuf0L/
+        15lvr9rNZ+ZIJsxRO8Vo+ijxuP+9G+1z37mnrnhS4+wtvebknJ/RYV1KLMUZiYZazEXFiQDR
+        BO0GnwIAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 3, 2019 at 12:29 AM Lou, Pengfei (NSB - CN/Hangzhou)
-<pengfei.lou@nokia-sbell.com> wrote:
->
-> Hello community
->      One problem I found recently within my working, please check my deta=
-il below.
->
->      I tried to run my script (check the attached file 'problem.sh') to b=
-uild one git repository , it can be successful, but the command "git log -r=
-aw -1 ${revision}^ ${revision}" on that repo would generate some  unexpecte=
-d result,  please check the result below
->
-> [pelou@hzling29 try_des]$ git --version
-> git version 2.6.2
->
-> [pelou@hzling29 try_des]$ git log --raw -1 164304f48726d31336e2e130a90e42=
-b7f1c480f8
-> commit 164304f48726d31336e2e130a90e42b7f1c480f8
-> Author: pelou <mailto:pengfei.lou@nokia-sbell.com>
-> Date:   Tue Dec 3 14:54:33 2019 +0800
->
->     3
->
-> :100644 100644 9a7456b... 8148ef7... M  lpf
-> [pelou@hzling29 try_des]$ git log --raw -1 164304f48726d31336e2e130a90e42=
-b7f1c480f8^ 164304f48726d31336e2e130a90e42b7f1c480f8
-> commit dd1a95338ffd471e5b270a487b585bbfcf9926a5
-> Author: pelou <mailto:pengfei.lou@nokia-sbell.com>
-> Date:   Tue Dec 3 14:54:33 2019 +0800
->
->     2
->
-> :100644 100644 d474e1b... 9a7456b... M  lpf
->
->      Next step I changed my script(check the attached file good.sh) and o=
-nly add some delays after "git push", everything is normal, check it below
-> [pelou@hzling29 try_des]$ git log --raw -1 2027dc54da1896cf1dfa301c3444b1=
-690d6cb1d8
-> commit 2027dc54da1896cf1dfa301c3444b1690d6cb1d8
-> Author: pelou <mailto:pengfei.lou@nokia-sbell.com>
-> Date:   Tue Dec 3 15:00:45 2019 +0800
->
->     3
->
-> :100644 100644 9a7456b... 8148ef7... M  lpf
-> [pelou@hzling29 try_des]$ git log --raw -1 2027dc54da1896cf1dfa301c3444b1=
-690d6cb1d8^ 2027dc54da1896cf1dfa301c3444b1690d6cb1d8
-> commit 2027dc54da1896cf1dfa301c3444b1690d6cb1d8
-> Author: pelou <mailto:pengfei.lou@nokia-sbell.com>
-> Date:   Tue Dec 3 15:00:45 2019 +0800
->
->     3
->
-> :100644 100644 9a7456b... 8148ef7... M  lpf
->
-> So please help me fix it. Please let me know if I was wrong or miss some =
-thing
-
-By default, git log sorts commits by their timestamps and outputs them
-in reverse chronological order (as stated in the git log
-documentation[1]), not the order you requested the commits in. Without
-the delays, the commits can happen so fast you end up with identical
-timestamps on each commit. I'm not sure git log has a tie-breaker in
-such a case (it may just end up being input order).
-
-If you want the commits to be output in the order you ask for them in,
-you might try something like "git log --raw --no-walk=3Dunsorted sha^
-sha". This will output exactly the commits you ask for (so "sha"'s
-first parent and "sha") in the same order you requested them in.
-
-Hope this helps,
-Bryan Turner
-
-[1] https://git-scm.com/docs/git-log#_commit_ordering
-
->
-> Br, Hercules
+SGkNCiAgIFRoYW5rcyBmb3IgeW91ciBzdXBwb3J0DQogDQogICAgQnV0IHlvdXIgaWRlYSB3YXMg
+c3RpbGwgbm90IHdvcmtpbmcgYXMgbXkgd2FudGVkICwgcGxlYXNlIGNoZWNrIHRoZSByZXN1bHQg
+YmVsb3cNCg0KW3BlbG91QGh6bGluZzI5IHRyeV9kZXNdJCBnaXQgbG9nIC0xIC0tcmF3IC0tbm8t
+d2Fsaz11bnNvcnRlZCA1N2NmNTZiOGMxYWY5MTE1YTdmOGUxYzFjOGYwN2U0ZDY1N2U4YjE1XiA1
+N2NmNTZiOGMxYWY5MTE1YTdmOGUxYzFjOGYwN2U0ZDY1N2U4YjE1DQpjb21taXQgOWQwMGNjNjA4
+OTkzODQwZTI0ZjY1YzdiNzlhZTEwZjg1YzJkNzJmZg0KQXV0aG9yOiBwZWxvdSA8cGVuZ2ZlaS5s
+b3VAbm9raWEtc2JlbGwuY29tPg0KRGF0ZTogICBUdWUgRGVjIDMgMTc6MDA6NDcgMjAxOSArMDgw
+MA0KDQogICAgMg0KDQo6MTAwNjQ0IDEwMDY0NCBkNDc0ZTFiLi4uIDlhNzQ1NmIuLi4gTSAgbHBm
+DQpbcGVsb3VAaHpsaW5nMjkgdHJ5X2Rlc10kIGdpdCBsb2cgLS1yYXcgLS1uby13YWxrPXVuc29y
+dGVkIDU3Y2Y1NmI4YzFhZjkxMTVhN2Y4ZTFjMWM4ZjA3ZTRkNjU3ZThiMTVeIDU3Y2Y1NmI4YzFh
+ZjkxMTVhN2Y4ZTFjMWM4ZjA3ZTRkNjU3ZThiMTUNCmNvbW1pdCA5ZDAwY2M2MDg5OTM4NDBlMjRm
+NjVjN2I3OWFlMTBmODVjMmQ3MmZmDQpBdXRob3I6IHBlbG91IDxwZW5nZmVpLmxvdUBub2tpYS1z
+YmVsbC5jb20+DQpEYXRlOiAgIFR1ZSBEZWMgMyAxNzowMDo0NyAyMDE5ICswODAwDQoNCiAgICAy
+DQoNCjoxMDA2NDQgMTAwNjQ0IGQ0NzRlMWIuLi4gOWE3NDU2Yi4uLiBNICBscGYNCg0KY29tbWl0
+IDU3Y2Y1NmI4YzFhZjkxMTVhN2Y4ZTFjMWM4ZjA3ZTRkNjU3ZThiMTUNCkF1dGhvcjogcGVsb3Ug
+PHBlbmdmZWkubG91QG5va2lhLXNiZWxsLmNvbT4NCkRhdGU6ICAgVHVlIERlYyAzIDE3OjAwOjQ3
+IDIwMTkgKzA4MDANCg0KICAgIDMNCg0KU28geW91IG1lYW4gaXQgaXMgbm90IG9uZSBidWcgL2lz
+c3VlLCBhbmQgIGFkZGluZyBkZWxheSB3YXMgbWFuZGF0b3J5IGZvciB0aGlzIGNhc2U/IEFjdHVh
+bGx5ICwgSSBmb3VuZCBpdCB3YXMgc3RpbGwgYmUgZmFpbHVyZSBpZiB0aGUgZGVsYXkgd2FzIHNl
+dCAwLjUgc2Vjb25kcy4gDQoNCnRrcw0KQnIsIEhlcmN1bGVzDQoNCi0tLS0tT3JpZ2luYWwgTWVz
+c2FnZS0tLS0tDQpGcm9tOiBCcnlhbiBUdXJuZXIgPGJ0dXJuZXJAYXRsYXNzaWFuLmNvbT4gDQpT
+ZW50OiAyMDE55bm0MTLmnIgz5pelIDE2OjU2DQpUbzogTG91LCBQZW5nZmVpIChOU0IgLSBDTi9I
+YW5nemhvdSkgPHBlbmdmZWkubG91QG5va2lhLXNiZWxsLmNvbT4NCkNjOiBnaXRAdmdlci5rZXJu
+ZWwub3JnDQpTdWJqZWN0OiBSZTogb25lIGJ1ZyBvbiBnaXQNCg0KT24gVHVlLCBEZWMgMywgMjAx
+OSBhdCAxMjoyOSBBTSBMb3UsIFBlbmdmZWkgKE5TQiAtIENOL0hhbmd6aG91KSA8cGVuZ2ZlaS5s
+b3VAbm9raWEtc2JlbGwuY29tPiB3cm90ZToNCj4NCj4gSGVsbG8gY29tbXVuaXR5DQo+ICAgICAg
+T25lIHByb2JsZW0gSSBmb3VuZCByZWNlbnRseSB3aXRoaW4gbXkgd29ya2luZywgcGxlYXNlIGNo
+ZWNrIG15IGRldGFpbCBiZWxvdy4NCj4NCj4gICAgICBJIHRyaWVkIHRvIHJ1biBteSBzY3JpcHQg
+KGNoZWNrIHRoZSBhdHRhY2hlZCBmaWxlICdwcm9ibGVtLnNoJykgDQo+IHRvIGJ1aWxkIG9uZSBn
+aXQgcmVwb3NpdG9yeSAsIGl0IGNhbiBiZSBzdWNjZXNzZnVsLCBidXQgdGhlIGNvbW1hbmQgDQo+
+ICJnaXQgbG9nIC1yYXcgLTEgJHtyZXZpc2lvbn1eICR7cmV2aXNpb259IiBvbiB0aGF0IHJlcG8g
+d291bGQgZ2VuZXJhdGUgDQo+IHNvbWUgIHVuZXhwZWN0ZWQgcmVzdWx0LCAgcGxlYXNlIGNoZWNr
+IHRoZSByZXN1bHQgYmVsb3cNCj4NCj4gW3BlbG91QGh6bGluZzI5IHRyeV9kZXNdJCBnaXQgLS12
+ZXJzaW9uIGdpdCB2ZXJzaW9uIDIuNi4yDQo+DQo+IFtwZWxvdUBoemxpbmcyOSB0cnlfZGVzXSQg
+Z2l0IGxvZyAtLXJhdyAtMSANCj4gMTY0MzA0ZjQ4NzI2ZDMxMzM2ZTJlMTMwYTkwZTQyYjdmMWM0
+ODBmOA0KPiBjb21taXQgMTY0MzA0ZjQ4NzI2ZDMxMzM2ZTJlMTMwYTkwZTQyYjdmMWM0ODBmOA0K
+PiBBdXRob3I6IHBlbG91IDxtYWlsdG86cGVuZ2ZlaS5sb3VAbm9raWEtc2JlbGwuY29tPg0KPiBE
+YXRlOiAgIFR1ZSBEZWMgMyAxNDo1NDozMyAyMDE5ICswODAwDQo+DQo+ICAgICAzDQo+DQo+IDox
+MDA2NDQgMTAwNjQ0IDlhNzQ1NmIuLi4gODE0OGVmNy4uLiBNICBscGYNCj4gW3BlbG91QGh6bGlu
+ZzI5IHRyeV9kZXNdJCBnaXQgbG9nIC0tcmF3IC0xIA0KPiAxNjQzMDRmNDg3MjZkMzEzMzZlMmUx
+MzBhOTBlNDJiN2YxYzQ4MGY4XiANCj4gMTY0MzA0ZjQ4NzI2ZDMxMzM2ZTJlMTMwYTkwZTQyYjdm
+MWM0ODBmOA0KPiBjb21taXQgZGQxYTk1MzM4ZmZkNDcxZTViMjcwYTQ4N2I1ODViYmZjZjk5MjZh
+NQ0KPiBBdXRob3I6IHBlbG91IDxtYWlsdG86cGVuZ2ZlaS5sb3VAbm9raWEtc2JlbGwuY29tPg0K
+PiBEYXRlOiAgIFR1ZSBEZWMgMyAxNDo1NDozMyAyMDE5ICswODAwDQo+DQo+ICAgICAyDQo+DQo+
+IDoxMDA2NDQgMTAwNjQ0IGQ0NzRlMWIuLi4gOWE3NDU2Yi4uLiBNICBscGYNCj4NCj4gICAgICBO
+ZXh0IHN0ZXAgSSBjaGFuZ2VkIG15IHNjcmlwdChjaGVjayB0aGUgYXR0YWNoZWQgZmlsZSBnb29k
+LnNoKSANCj4gYW5kIG9ubHkgYWRkIHNvbWUgZGVsYXlzIGFmdGVyICJnaXQgcHVzaCIsIGV2ZXJ5
+dGhpbmcgaXMgbm9ybWFsLCBjaGVjayANCj4gaXQgYmVsb3cNCj4gW3BlbG91QGh6bGluZzI5IHRy
+eV9kZXNdJCBnaXQgbG9nIC0tcmF3IC0xIA0KPiAyMDI3ZGM1NGRhMTg5NmNmMWRmYTMwMWMzNDQ0
+YjE2OTBkNmNiMWQ4DQo+IGNvbW1pdCAyMDI3ZGM1NGRhMTg5NmNmMWRmYTMwMWMzNDQ0YjE2OTBk
+NmNiMWQ4DQo+IEF1dGhvcjogcGVsb3UgPG1haWx0bzpwZW5nZmVpLmxvdUBub2tpYS1zYmVsbC5j
+b20+DQo+IERhdGU6ICAgVHVlIERlYyAzIDE1OjAwOjQ1IDIwMTkgKzA4MDANCj4NCj4gICAgIDMN
+Cj4NCj4gOjEwMDY0NCAxMDA2NDQgOWE3NDU2Yi4uLiA4MTQ4ZWY3Li4uIE0gIGxwZg0KPiBbcGVs
+b3VAaHpsaW5nMjkgdHJ5X2Rlc10kIGdpdCBsb2cgLS1yYXcgLTEgDQo+IDIwMjdkYzU0ZGExODk2
+Y2YxZGZhMzAxYzM0NDRiMTY5MGQ2Y2IxZDheIA0KPiAyMDI3ZGM1NGRhMTg5NmNmMWRmYTMwMWMz
+NDQ0YjE2OTBkNmNiMWQ4DQo+IGNvbW1pdCAyMDI3ZGM1NGRhMTg5NmNmMWRmYTMwMWMzNDQ0YjE2
+OTBkNmNiMWQ4DQo+IEF1dGhvcjogcGVsb3UgPG1haWx0bzpwZW5nZmVpLmxvdUBub2tpYS1zYmVs
+bC5jb20+DQo+IERhdGU6ICAgVHVlIERlYyAzIDE1OjAwOjQ1IDIwMTkgKzA4MDANCj4NCj4gICAg
+IDMNCj4NCj4gOjEwMDY0NCAxMDA2NDQgOWE3NDU2Yi4uLiA4MTQ4ZWY3Li4uIE0gIGxwZg0KPg0K
+PiBTbyBwbGVhc2UgaGVscCBtZSBmaXggaXQuIFBsZWFzZSBsZXQgbWUga25vdyBpZiBJIHdhcyB3
+cm9uZyBvciBtaXNzIA0KPiBzb21lIHRoaW5nDQoNCkJ5IGRlZmF1bHQsIGdpdCBsb2cgc29ydHMg
+Y29tbWl0cyBieSB0aGVpciB0aW1lc3RhbXBzIGFuZCBvdXRwdXRzIHRoZW0gaW4gcmV2ZXJzZSBj
+aHJvbm9sb2dpY2FsIG9yZGVyIChhcyBzdGF0ZWQgaW4gdGhlIGdpdCBsb2cgZG9jdW1lbnRhdGlv
+blsxXSksIG5vdCB0aGUgb3JkZXIgeW91IHJlcXVlc3RlZCB0aGUgY29tbWl0cyBpbi4gV2l0aG91
+dCB0aGUgZGVsYXlzLCB0aGUgY29tbWl0cyBjYW4gaGFwcGVuIHNvIGZhc3QgeW91IGVuZCB1cCB3
+aXRoIGlkZW50aWNhbCB0aW1lc3RhbXBzIG9uIGVhY2ggY29tbWl0LiBJJ20gbm90IHN1cmUgZ2l0
+IGxvZyBoYXMgYSB0aWUtYnJlYWtlciBpbiBzdWNoIGEgY2FzZSAoaXQgbWF5IGp1c3QgZW5kIHVw
+IGJlaW5nIGlucHV0IG9yZGVyKS4NCg0KSWYgeW91IHdhbnQgdGhlIGNvbW1pdHMgdG8gYmUgb3V0
+cHV0IGluIHRoZSBvcmRlciB5b3UgYXNrIGZvciB0aGVtIGluLCB5b3UgbWlnaHQgdHJ5IHNvbWV0
+aGluZyBsaWtlICJnaXQgbG9nIC0tcmF3IC0tbm8td2Fsaz11bnNvcnRlZCBzaGFeIHNoYSIuIFRo
+aXMgd2lsbCBvdXRwdXQgZXhhY3RseSB0aGUgY29tbWl0cyB5b3UgYXNrIGZvciAoc28gInNoYSIn
+cyBmaXJzdCBwYXJlbnQgYW5kICJzaGEiKSBpbiB0aGUgc2FtZSBvcmRlciB5b3UgcmVxdWVzdGVk
+IHRoZW0gaW4uDQoNCkhvcGUgdGhpcyBoZWxwcywNCkJyeWFuIFR1cm5lcg0KDQpbMV0gaHR0cHM6
+Ly9naXQtc2NtLmNvbS9kb2NzL2dpdC1sb2cjX2NvbW1pdF9vcmRlcmluZw0KDQo+DQo+IEJyLCBI
+ZXJjdWxlcw0K
