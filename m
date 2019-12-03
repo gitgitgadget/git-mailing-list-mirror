@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFD05C432C0
-	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B6B2C43141
+	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A5D7120684
+	by mail.kernel.org (Postfix) with ESMTP id EBC7C20684
 	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c01cyQfI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBLqO/4Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbfLCOC0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726608AbfLCOC0 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 3 Dec 2019 09:02:26 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:41539 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726534AbfLCOCZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Dec 2019 09:02:25 -0500
-Received: by mail-wr1-f46.google.com with SMTP id b18so3785859wrj.8
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:23 -0800 (PST)
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33476 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726469AbfLCOCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Dec 2019 09:02:24 -0500
+Received: by mail-wr1-f68.google.com with SMTP id b6so3883247wrq.0
+        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=/uK7BgEr7oMW5g58dt51M2VtdlmyVxFS9orGRLslvD0=;
-        b=c01cyQfIfKXW7rZt3DOhl7W/ktVPJ6srSdSI78w8aGexgrtOvjDH05SZ3+njlNydL+
-         KsBv6xhbsAybLB2spTlmTzJvvjqidq5y0tZTxCd8wi/L4KCPIhXuemILCyB2Ozo87G/w
-         zOtE8cLyQxB6L3sWnk3ovz7B6JHrWanU05EvaB4xBgobs+rKclcZDQhQFXyRHxXKtvKE
-         6b9qcXqSFl1pkPHI/0uIQVQ6qbiaMU/mSUd42rM/yF2nFGjmzlTCxvl/TZRRgh1pgf4k
-         0pE/Ju51yw5j8gOc3LCwuO90li99ok9NpLIfexNEKInHFbo/RzYoCAZjRVxJebQ1aHgN
-         qEtg==
+        bh=HjSBzc0rGvd4vC7CgPBj9hyIis2u+fMfIGl4JldqIGg=;
+        b=XBLqO/4YwdWR9ThEKPklxMevitqKooo/yY46FbLySXQPYo3PRU6lTCfh2s7NCnSxDA
+         cUildRWeL8jIX1eJ8mSR+Bkd0i3XIzcHAxbDACs+S3qMhXhx/12DPf8qnTkS2mD5e3LR
+         wzNzx8Hf7hRSpTIwhpYFPw2HxN7Nm570V+99w4LGXK3cjN2ff9jx0ahlFIEmAYhoz94j
+         jdMWm4rEQ/bDm0IHwGxjp76n4fNxB/mHMKUbObnRY3lZPjiMwTkD6jpIA4q6qHXsOf4W
+         JbeaJfYkr0RPVmg/RaQ1jD30n6vYb1FE0vRmFHMJTH5FFJ/9juFyQaVaeLc/Im83qe0o
+         PPzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=/uK7BgEr7oMW5g58dt51M2VtdlmyVxFS9orGRLslvD0=;
-        b=raI4/XSBL9vK640A2hCpyVTGhFwjCmKQ0inDZWzupC7d3Ja9SZgo3NgISJkSEldZ4+
-         hGeUaH4X0i1KUOKIGzoho7bQXc4g1S6/oOEG881NZQ0xfT2RDoRmoL8b3p32+OsBKgpZ
-         NW7FJv8JVPnZ/6vXJWILBVdnWJXM8s3NsVTSYEP0ERIoNxaTsrlZnFtqz5wW3ECLQLxL
-         LQYTtMt+0OT7//X07GQzD5RM8HgyVyAM2ABGrTSrN9/zw3pLsURxQkFfklnuEAJ4JIWA
-         0uBpRCQ5n4uLbOl/FnewbV2vFyChekSa2DM2evE/EdOzJHMUFS4+VOrCD24xEA02kbwY
-         caRw==
-X-Gm-Message-State: APjAAAUx7N+j1wULTBcHbMTai26S90DkdvjpJIEQl5HNH+5r5DcrwYWA
-        gpq4IKZxYujOINrdnOZ+SJOtR4Lp
-X-Google-Smtp-Source: APXvYqxdHE5enguw57OiRaQ+oMW/LCYEnx0loK7wpm/hV7rpTW1I4Iwm3DJ8xwbW0r1eZj78tC9FKA==
-X-Received: by 2002:a05:6000:367:: with SMTP id f7mr5268154wrf.174.1575381742755;
-        Tue, 03 Dec 2019 06:02:22 -0800 (PST)
+        bh=HjSBzc0rGvd4vC7CgPBj9hyIis2u+fMfIGl4JldqIGg=;
+        b=bdm9IL7DWvrpkYD7Jv6BYUg2huGRlsBsuwFqRD6OzsZFO8ZtDeHzVm1ZH5BoTr3LA5
+         04jfzJD/+EaQIoXvMrLv3Z+7e7KX0tVOAqIJ5Md4zYmBi/v7FYGZV5wKn5dwtaGrCv8z
+         z6vXXJUvvpaDJ5cvzYYo/mIQZRfCRGXw2ZFmshoV+3GmwgjaG6GOlcAX5+NhfbthGoLJ
+         S4tLdkCvX10vQOoZQEa9Skmof7RM3mCnghHj9L2WlqlFhiXtreZxdwrsA6nFOtV3eLMq
+         dE0fHC0H/7u2A5efHVlYq3kj6nj5DKBwBfHeprwNh8lwByxhvljuf1I7U7V7hCaKnwjc
+         FBnw==
+X-Gm-Message-State: APjAAAVTBPvzQ6+KueRd3ox64uEr6eFhZfF20PVQ4MB/dpIG4FNGKzbr
+        hqn4Fd5oY2ddTIN4QUKvrs33nGO/
+X-Google-Smtp-Source: APXvYqyxjUgoZdEuBUy8lg2C/jgd4g8+RY5JOcVolVqRajVgHKPmi+N3l9QMlfrpzD4rCDfl87VZbA==
+X-Received: by 2002:a5d:4749:: with SMTP id o9mr5222048wrs.242.1575381741975;
+        Tue, 03 Dec 2019 06:02:21 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f1sm3686178wrp.93.2019.12.03.06.02.22
+        by smtp.gmail.com with ESMTPSA id r6sm3715014wrv.40.2019.12.03.06.02.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Dec 2019 06:02:22 -0800 (PST)
-Message-Id: <1182ba39535bc7c0cc4a241bd19d4c66cf6277d7.1575381738.git.gitgitgadget@gmail.com>
+        Tue, 03 Dec 2019 06:02:21 -0800 (PST)
+Message-Id: <fea64dfbf9085b45192f91aaaabd6143ae9469bc.1575381738.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 References: <pull.445.v3.git.1574182135.gitgitgadget@gmail.com>
         <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Dec 2019 14:02:08 +0000
-Subject: [PATCH v4 03/13] doc: reset: synchronize <pathspec> description
+Date:   Tue, 03 Dec 2019 14:02:07 +0000
+Subject: [PATCH v4 02/13] pathspec: add new function to parse file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,90 +77,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-`git add` shows an example of good writing, follow it.
+This will be used to support the new option '--pathspec-from-file' in
+`git add`, `git-commit`, `git reset` etc.
 
+Note also that we specifically handle CR/LF line endings to support
+Windows better.
+
+To simplify code, file is first parsed into `argv_array`. This allows
+to avoid refactoring `parse_pathspec()`.
+
+I considered adding `nul_term_line` to `flags` instead, but decided
+that it doesn't fit there.
+
+The new code is mostly taken from `cmd_update_index()` and
+`split_mail_conv()`.
+
+Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-reset.txt | 29 ++++++++++++++++++-----------
- builtin/reset.c             |  4 ++--
- 2 files changed, 20 insertions(+), 13 deletions(-)
+ pathspec.c | 38 ++++++++++++++++++++++++++++++++++++++
+ pathspec.h | 10 ++++++++++
+ 2 files changed, 48 insertions(+)
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 97e0544d9e..d517a43e73 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -8,8 +8,8 @@ git-reset - Reset current HEAD to the specified state
- SYNOPSIS
- --------
- [verse]
--'git reset' [-q] [<tree-ish>] [--] <paths>...
--'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]
-+'git reset' [-q] [<tree-ish>] [--] <pathspec>...
-+'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
- 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+diff --git a/pathspec.c b/pathspec.c
+index 12c2b322b3..128f27fcb7 100644
+--- a/pathspec.c
++++ b/pathspec.c
+@@ -3,6 +3,8 @@
+ #include "dir.h"
+ #include "pathspec.h"
+ #include "attr.h"
++#include "argv-array.h"
++#include "quote.h"
  
- DESCRIPTION
-@@ -19,23 +19,23 @@ In the third form, set the current branch head (`HEAD`) to `<commit>`,
- optionally modifying index and working tree to match.
- The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
+ /*
+  * Finds which of the given pathspecs match items in the index.
+@@ -613,6 +615,42 @@ void parse_pathspec(struct pathspec *pathspec,
+ 	}
+ }
  
--'git reset' [-q] [<tree-ish>] [--] <paths>...::
--	This form resets the index entries for all `<paths>` to their
--	state at `<tree-ish>`.  (It does not affect the working tree or
--	the current branch.)
-+'git reset' [-q] [<tree-ish>] [--] <pathspec>...::
-+	This form resets the index entries for all paths that match the
-+	`<pathspec>` to their state at `<tree-ish>`.  (It does not affect
-+	the working tree or the current branch.)
- +
--This means that `git reset <paths>` is the opposite of `git add
--<paths>`. This command is equivalent to
--`git restore [--source=<tree-ish>] --staged <paths>...`.
-+This means that `git reset <pathspec>` is the opposite of `git add
-+<pathspec>`. This command is equivalent to
-+`git restore [--source=<tree-ish>] --staged <pathspec>...`.
- +
--After running `git reset <paths>` to update the index entry, you can
-+After running `git reset <pathspec>` to update the index entry, you can
- use linkgit:git-restore[1] to check the contents out of the index to
- the working tree. Alternatively, using linkgit:git-restore[1]
- and specifying a commit with `--source`, you
- can copy the contents of a path out of a commit to the index and to the
- working tree in one go.
- 
--'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]::
-+'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]::
- 	Interactively select hunks in the difference between the index
- 	and `<tree-ish>` (defaults to `HEAD`).  The chosen hunks are applied
- 	in reverse to the index.
-@@ -101,6 +101,13 @@ OPTIONS
- 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
- 	override the default behavior.
- 
-+\--::
-+	Do not interpret any more arguments as options.
++void parse_pathspec_file(struct pathspec *pathspec, unsigned magic_mask,
++			 unsigned flags, const char *prefix,
++			 const char *file, int nul_term_line)
++{
++	struct argv_array parsed_file = ARGV_ARRAY_INIT;
++	strbuf_getline_fn getline_fn = nul_term_line ? strbuf_getline_nul :
++						       strbuf_getline;
++	struct strbuf buf = STRBUF_INIT;
++	struct strbuf unquoted = STRBUF_INIT;
++	FILE *in;
 +
-+<pathspec>...::
-+	Limits the paths affected by the operation.
-++
-+For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- 
- EXAMPLES
- --------
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fdd572168b..9291c0fd72 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -30,8 +30,8 @@
- 
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
--	N_("git reset [-q] [<tree-ish>] [--] <paths>..."),
--	N_("git reset --patch [<tree-ish>] [--] [<paths>...]"),
-+	N_("git reset [-q] [<tree-ish>] [--] <pathspec>..."),
-+	N_("git reset --patch [<tree-ish>] [--] [<pathspec>...]"),
- 	NULL
- };
++	if (!strcmp(file, "-"))
++		in = stdin;
++	else
++		in = xfopen(file, "r");
++
++	while (getline_fn(&buf, in) != EOF) {
++		if (!nul_term_line && buf.buf[0] == '"') {
++			strbuf_reset(&unquoted);
++			if (unquote_c_style(&unquoted, buf.buf, NULL))
++				die(_("line is badly quoted: %s"), buf.buf);
++			strbuf_swap(&buf, &unquoted);
++		}
++		argv_array_push(&parsed_file, buf.buf);
++		strbuf_reset(&buf);
++	}
++
++	strbuf_release(&unquoted);
++	strbuf_release(&buf);
++	if (in != stdin)
++		fclose(in);
++
++	parse_pathspec(pathspec, magic_mask, flags, prefix, parsed_file.argv);
++	argv_array_clear(&parsed_file);
++}
++
+ void copy_pathspec(struct pathspec *dst, const struct pathspec *src)
+ {
+ 	int i, j;
+diff --git a/pathspec.h b/pathspec.h
+index 1c18a2c90c..a27dc81ba2 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -85,6 +85,16 @@ void parse_pathspec(struct pathspec *pathspec,
+ 		    unsigned flags,
+ 		    const char *prefix,
+ 		    const char **args);
++/*
++ * Same as parse_pathspec() but uses file as input.
++ * When 'file' is exactly "-" it uses 'stdin' instead.
++ */
++void parse_pathspec_file(struct pathspec *pathspec,
++			 unsigned magic_mask,
++			 unsigned flags,
++			 const char *prefix,
++			 const char *file,
++			 int nul_term_line);
+ void copy_pathspec(struct pathspec *dst, const struct pathspec *src);
+ void clear_pathspec(struct pathspec *);
  
 -- 
 gitgitgadget
