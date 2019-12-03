@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75BE9C432C3
-	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68797C43215
+	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4227F20684
-	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 329DC20684
+	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m5+By/TT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u2DPvFSz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726791AbfLCOCa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Dec 2019 09:02:30 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41707 "EHLO
+        id S1726008AbfLCOCe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Dec 2019 09:02:34 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41717 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726474AbfLCOC0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Dec 2019 09:02:26 -0500
-Received: by mail-wr1-f68.google.com with SMTP id b18so3785928wrj.8
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:24 -0800 (PST)
+        with ESMTP id S1726550AbfLCOC3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Dec 2019 09:02:29 -0500
+Received: by mail-wr1-f68.google.com with SMTP id b18so3786190wrj.8
+        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+buHZ51n44LNLRAp/5N82/ndSWJeE5B71CXkIfxwgzQ=;
-        b=m5+By/TTlbI2ifcG4r2PIPA5GLbVUUYOpHO/t93BKJsG+aKf7VW6S2n5HPJRuNxXSL
-         6hVW9IvE7Rc/Y+LrqO51wyfv53gvW1j0sx02ixwvkY640Aol/Y/xgWQO2fnxAABhFpQT
-         ZTIk80035y9Ydq93xtr84OHRdzKpEOIBWrbELpEXWLA/a/9POLvNEeHyr4UhzC/+ve1n
-         ViCPMdOp2Z/Do5OXP4sKdbKkU3Biz5YEB6JCapMoUc9k+rIu2PnBmnZkFSCu4Q6WsMbq
-         7fg6kS4AxfbJXLComm8/pvzEHGjW75xlOl4ARBwh19D7cIuFlEh208BzUZRLCmfimldB
-         VLzg==
+        bh=65y5REQOnztt7F0mA7wPZUa0Ym+EPup2v6lwxwt+TmU=;
+        b=u2DPvFSzplWQQ5epmwyLhF2lgSd09Z5qgrG5/Yp8mPLgFPJW/kawggitfXBYtVJaT9
+         SFbaedMqMsFK+KEVNkppjWJV/QU9gnKN4vo7ds/nJ6j4JTyCgWe4QQDb/OcBHWpfeDB5
+         Q3WlS3O/phzuVERM+bcEd9dXoJ1gDsMacvTpy/F44QQ0CPjphRONrojGgdLTspIBwDYq
+         Cs/RgMqYKiZoM8OoNw7nhVBQzN7CBsJt/8bvsZp7xqglnlFzvo8J+y1vi9/NuAfnzCGi
+         zaaKQW/p+Y3csw9X0OBS+BnNsfY84C5xvtK4F097HI2a3bqUykS/GLGaVtIDw/L1/RWK
+         BUWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+buHZ51n44LNLRAp/5N82/ndSWJeE5B71CXkIfxwgzQ=;
-        b=HthgKy4SHVX+2WvGsG3LIP0luGy0YRLAgnHhVWFyvmmjirnInmKsxPzQB53kYox+kV
-         FJ792nlIbKF/8bUOXMf8I78XqCydv4BcwL68dNeXA9zOaQtqTHMwtfAz9piqQt2z8OQV
-         GBw+51UuxGh4Vse4CpcH2J5NOkCyHJAUXY7apqMP/lpiIU9k/rQ1D8g8uUJ2sFFh3Y7z
-         gUgnJQMhEJGZ0Z6xHCuWWKdjvwBnq3Lqk1D0fWd0Ty6QF9klCq74o8WXtqLxr3ZIPaxx
-         +a581LtcW+7f3raJxroa2wvOd6pqdyMcqtISsJ5j95Kd/Ob96pUyorpsIAkvsDeX8zzr
-         EKdQ==
-X-Gm-Message-State: APjAAAU+mSf7M2llieaX/PmOBTFs+a3pn3d6/QVV5YGzOwmb4JgMriR+
-        +vl4a6NMnHJvLDlsF3tTkVcJxVQ9
-X-Google-Smtp-Source: APXvYqxNfujSpARpldejATBQRPaMqYhia098AD5ya3y5aBpD0bwqzk71ytuyxKCWNKH2sW1dHy1HLg==
-X-Received: by 2002:adf:8150:: with SMTP id 74mr5629369wrm.114.1575381743708;
-        Tue, 03 Dec 2019 06:02:23 -0800 (PST)
+        bh=65y5REQOnztt7F0mA7wPZUa0Ym+EPup2v6lwxwt+TmU=;
+        b=MZPHZaj53BBZjZNu2sktkzr68HsLBZnOphXEhmwFQZySvtE5r7HCmmJCOB/MtM4HZ+
+         UAqLqClLrAEkOPCWaG6aE9iQmIWRPKEz9NMDn6risCGzTrSh3tc7jaf21opdZHya+7LJ
+         9qVFOOzme8+uaXpwlk3658bDtGolxtEmi75kkRHTWFb9TtF3zVqrJdZ1g8yjY/tnP7rc
+         k78DW9sO4pPsSF8lc++o/xnaexh2X34je0Jw02hPvkE3Ji1x0UzmzT1R0YGQqdxQnR5A
+         Nmc/aML79ambAb6HfEIxXThjObQsfEqkO0dZNSz7qYA6wIZP16CystggUC9QvIbQCavl
+         mZnA==
+X-Gm-Message-State: APjAAAU/Om3tO5oX7Xjq8vZhHzU5UUmguAFVQmNVxk2HBl1DMdphyPVQ
+        0bPE+x8uyX03I3aZs5znLK5eYP1D
+X-Google-Smtp-Source: APXvYqyRhRdjxZCKEGHqja+/2Tcwxy+EE5yieN3bwo0eaJZmhlJAGi5geQ1kll1u2JUNXdsUQYO9DQ==
+X-Received: by 2002:a05:6000:1044:: with SMTP id c4mr5539236wrx.204.1575381746923;
+        Tue, 03 Dec 2019 06:02:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i127sm3261454wma.35.2019.12.03.06.02.22
+        by smtp.gmail.com with ESMTPSA id u69sm3324018wmu.39.2019.12.03.06.02.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Dec 2019 06:02:23 -0800 (PST)
-Message-Id: <cea470fc91bb3af9169cea9e1ec7a705ffb93e76.1575381738.git.gitgitgadget@gmail.com>
+        Tue, 03 Dec 2019 06:02:26 -0800 (PST)
+Message-Id: <9a62da3470b34b490717699ce40a7c73984d1cea.1575381738.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 References: <pull.445.v3.git.1574182135.gitgitgadget@gmail.com>
         <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Dec 2019 14:02:09 +0000
-Subject: [PATCH v4 04/13] reset: support the `--pathspec-from-file` option
+Date:   Tue, 03 Dec 2019 14:02:13 +0000
+Subject: [PATCH v4 08/13] add: support the --pathspec-from-file option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,51 +79,36 @@ From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
 Decisions taken for simplicity:
 1) For now, `--pathspec-from-file` is declared incompatible with
-   `--patch`, even when <file> is not `stdin`. Such use case it not
-   really expected. Also, it is harder to support in `git commit`, so
-   I decided to make it incompatible in all places.
+   `--interactive/--patch/--edit`, even when <file> is not `stdin`.
+   Such use case it not really expected. Also, it would require changes
+   to `interactive_add()` and `edit_patch()`.
 2) It is not allowed to pass pathspec in both args and file.
 
-Co-authored-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-reset.txt    |  21 ++++-
- builtin/reset.c                |  21 ++++-
- t/t7107-reset-pathspec-file.sh | 155 +++++++++++++++++++++++++++++++++
- 3 files changed, 192 insertions(+), 5 deletions(-)
- create mode 100755 t/t7107-reset-pathspec-file.sh
+ Documentation/git-add.txt    |  16 ++++-
+ builtin/add.c                |  30 +++++++--
+ t/t3704-add-pathspec-file.sh | 127 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 168 insertions(+), 5 deletions(-)
+ create mode 100755 t/t3704-add-pathspec-file.sh
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index d517a43e73..932080c55d 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -9,18 +9,20 @@ SYNOPSIS
- --------
- [verse]
- 'git reset' [-q] [<tree-ish>] [--] <pathspec>...
-+'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]
- 'git reset' (--patch | -p) [<tree-ish>] [--] [<pathspec>...]
- 'git reset' [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 8b0e4c7fa8..be5e3ac54b 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+ 	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
+ 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+-	  [--chmod=(+|-)x] [--] [<pathspec>...]
++	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
++	  [--] [<pathspec>...]
  
  DESCRIPTION
  -----------
--In the first and second form, copy entries from `<tree-ish>` to the index.
--In the third form, set the current branch head (`HEAD`) to `<commit>`,
-+In the first three forms, copy entries from `<tree-ish>` to the index.
-+In the last form, set the current branch head (`HEAD`) to `<commit>`,
- optionally modifying index and working tree to match.
- The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
- 
- 'git reset' [-q] [<tree-ish>] [--] <pathspec>...::
--	This form resets the index entries for all paths that match the
-+'git reset' [-q] [--pathspec-from-file=<file> [--pathspec-file-nul]] [<tree-ish>]::
-+	These forms reset the index entries for all paths that match the
- 	`<pathspec>` to their state at `<tree-ish>`.  (It does not affect
- 	the working tree or the current branch.)
- +
-@@ -101,6 +103,19 @@ OPTIONS
- 	`reset.quiet` config option. `--quiet` and `--no-quiet` will
- 	override the default behavior.
+@@ -187,6 +188,19 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	bit is only changed in the index, the files on disk are left
+ 	unchanged.
  
 +--pathspec-from-file=<file>::
 +	Pathspec is passed in `<file>` instead of commandline args. If
@@ -139,102 +124,116 @@ index d517a43e73..932080c55d 100644
 +	literally (including newlines and quotes).
 +
  \--::
- 	Do not interpret any more arguments as options.
+ 	This option can be used to separate command-line options from
+ 	the list of files, (useful when filenames might be mistaken
+diff --git a/builtin/add.c b/builtin/add.c
+index 4fabdc72e6..9f6b263aba 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -28,6 +28,8 @@ static const char * const builtin_add_usage[] = {
+ static int patch_interactive, add_interactive, edit_interactive;
+ static int take_worktree_changes;
+ static int add_renormalize;
++static int pathspec_file_nul;
++static const char *pathspec_from_file;
  
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 9291c0fd72..246bf9d737 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -31,6 +31,7 @@
- static const char * const git_reset_usage[] = {
- 	N_("git reset [--mixed | --soft | --hard | --merge | --keep] [-q] [<commit>]"),
- 	N_("git reset [-q] [<tree-ish>] [--] <pathspec>..."),
-+	N_("git reset [-q] [--pathspec-from-file [--pathspec-file-nul]] [<tree-ish>]"),
- 	N_("git reset --patch [<tree-ish>] [--] [<pathspec>...]"),
- 	NULL
+ struct update_callback_data {
+ 	int flags;
+@@ -309,6 +311,8 @@ static struct option builtin_add_options[] = {
+ 		   N_("override the executable bit of the listed files")),
+ 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
+ 			N_("warn when adding an embedded repository")),
++	OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
++	OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+ 	OPT_END(),
  };
-@@ -284,8 +285,8 @@ static int git_reset_config(const char *var, const char *value, void *cb)
- int cmd_reset(int argc, const char **argv, const char *prefix)
- {
- 	int reset_type = NONE, update_ref_status = 0, quiet = 0;
--	int patch_mode = 0, unborn;
--	const char *rev;
-+	int patch_mode = 0, pathspec_file_nul = 0, unborn;
-+	const char *rev, *pathspec_from_file = NULL;
- 	struct object_id oid;
- 	struct pathspec pathspec;
- 	int intent_to_add = 0;
-@@ -306,6 +307,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('p', "patch", &patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL('N', "intent-to-add", &intent_to_add,
- 				N_("record only the fact that removed paths will be added later")),
-+		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
-+		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
- 		OPT_END()
- 	};
  
-@@ -316,6 +319,20 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 						PARSE_OPT_KEEP_DASHDASH);
- 	parse_args(&pathspec, argv, prefix, patch_mode, &rev);
+@@ -402,11 +406,17 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
+ 	if (patch_interactive)
+ 		add_interactive = 1;
+-	if (add_interactive)
++	if (add_interactive) {
++		if (pathspec_from_file)
++			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+ 		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
++	}
  
+-	if (edit_interactive)
++	if (edit_interactive) {
++		if (pathspec_from_file)
++			die(_("--pathspec-from-file is incompatible with --edit"));
+ 		return(edit_patch(argc, argv, prefix));
++	}
+ 	argc--;
+ 	argv++;
+ 
+@@ -439,13 +449,25 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		       PATHSPEC_SYMLINK_LEADING_PATH,
+ 		       prefix, argv);
+ 
+-	if (require_pathspec && argc == 0) {
 +	if (pathspec_from_file) {
-+		if (patch_mode)
-+			die(_("--pathspec-from-file is incompatible with --patch"));
-+
 +		if (pathspec.nr)
 +			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
 +
-+		parse_pathspec_file(&pathspec, 0,
-+				    PATHSPEC_PREFER_FULL,
++		parse_pathspec_file(&pathspec, PATHSPEC_ATTR,
++				    PATHSPEC_PREFER_FULL |
++				    PATHSPEC_SYMLINK_LEADING_PATH,
 +				    prefix, pathspec_from_file, pathspec_file_nul);
 +	} else if (pathspec_file_nul) {
 +		die(_("--pathspec-file-nul requires --pathspec-from-file"));
 +	}
 +
- 	unborn = !strcmp(rev, "HEAD") && get_oid("HEAD", &oid);
- 	if (unborn) {
- 		/* reset on unborn branch: treat as reset to empty tree */
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
++	if (require_pathspec && pathspec.nr == 0) {
+ 		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+ 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+ 		return 0;
+ 	}
+ 
+-	if (!take_worktree_changes && addremove_explicit < 0 && argc)
++	if (!take_worktree_changes && addremove_explicit < 0 && pathspec.nr)
+ 		/* Turn "git add pathspec..." to "git add -A pathspec..." */
+ 		addremove = 1;
+ 
+diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
 new file mode 100755
-index 0000000000..6b1a731fff
+index 0000000000..3cfdb669b7
 --- /dev/null
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -0,0 +1,155 @@
++++ b/t/t3704-add-pathspec-file.sh
+@@ -0,0 +1,127 @@
 +#!/bin/sh
 +
-+test_description='reset --pathspec-from-file'
++test_description='add --pathspec-from-file'
 +
 +. ./test-lib.sh
 +
 +test_tick
 +
 +test_expect_success setup '
++	test_commit file0 &&
 +	echo A >fileA.t &&
 +	echo B >fileB.t &&
 +	echo C >fileC.t &&
-+	echo D >fileD.t &&
-+	git add . &&
-+	git commit --include . -m "Commit" &&
-+	git tag checkpoint
++	echo D >fileD.t
 +'
 +
 +restore_checkpoint () {
-+	git reset --hard checkpoint
++	git reset
 +}
 +
 +verify_expect () {
-+	git status --porcelain -- fileA.t fileB.t fileC.t fileD.t >actual &&
++	git status --porcelain --untracked-files=no -- fileA.t fileB.t fileC.t fileD.t >actual &&
 +	test_cmp expect actual
 +}
 +
 +test_expect_success '--pathspec-from-file from stdin' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
-+	echo fileA.t | git reset --pathspec-from-file=- &&
++	echo fileA.t | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
++	A  fileA.t
 +	EOF
 +	verify_expect
 +'
@@ -242,12 +241,11 @@ index 0000000000..6b1a731fff
 +test_expect_success '--pathspec-from-file from file' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
 +	echo fileA.t >list &&
-+	git reset --pathspec-from-file=list &&
++	git add --pathspec-from-file=list &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
++	A  fileA.t
 +	EOF
 +	verify_expect
 +'
@@ -255,12 +253,11 @@ index 0000000000..6b1a731fff
 +test_expect_success 'NUL delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\0fileB.t\0" | git reset --pathspec-from-file=- --pathspec-file-nul &&
++	printf "fileA.t\0fileB.t\0" | git add --pathspec-from-file=- --pathspec-file-nul &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
-+	 D fileB.t
++	A  fileA.t
++	A  fileB.t
 +	EOF
 +	verify_expect
 +'
@@ -268,12 +265,11 @@ index 0000000000..6b1a731fff
 +test_expect_success 'LF delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\nfileB.t\n" | git reset --pathspec-from-file=- &&
++	printf "fileA.t\nfileB.t\n" | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
-+	 D fileB.t
++	A  fileA.t
++	A  fileB.t
 +	EOF
 +	verify_expect
 +'
@@ -281,12 +277,11 @@ index 0000000000..6b1a731fff
 +test_expect_success 'no trailing delimiter' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\nfileB.t" | git reset --pathspec-from-file=- &&
++	printf "fileA.t\nfileB.t" | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
-+	 D fileB.t
++	A  fileA.t
++	A  fileB.t
 +	EOF
 +	verify_expect
 +'
@@ -294,12 +289,11 @@ index 0000000000..6b1a731fff
 +test_expect_success 'CRLF delimiters' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t &&
-+	printf "fileA.t\r\nfileB.t\r\n" | git reset --pathspec-from-file=- &&
++	printf "fileA.t\r\nfileB.t\r\n" | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
-+	 D fileB.t
++	A  fileA.t
++	A  fileB.t
 +	EOF
 +	verify_expect
 +'
@@ -307,11 +301,10 @@ index 0000000000..6b1a731fff
 +test_expect_success 'quotes' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
-+	printf "\"file\\101.t\"" | git reset --pathspec-from-file=- &&
++	printf "\"file\\101.t\"" | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	 D fileA.t
++	A  fileA.t
 +	EOF
 +	verify_expect
 +'
@@ -319,37 +312,18 @@ index 0000000000..6b1a731fff
 +test_expect_success 'quotes not compatible with --pathspec-file-nul' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t &&
 +	printf "\"file\\101.t\"" >list &&
-+	# Note: "git reset" has not yet learned to fail on wrong pathspecs
-+	git reset --pathspec-from-file=list --pathspec-file-nul &&
-+
-+	cat >expect <<-\EOF &&
-+	 D fileA.t
-+	EOF
-+	test_must_fail verify_expect
-+'
-+
-+test_expect_success '--pathspec-from-file is not compatible with --soft or --hard' '
-+	restore_checkpoint &&
-+
-+	git rm fileA.t &&
-+	echo fileA.t >list &&
-+	test_must_fail git reset --soft --pathspec-from-file=list &&
-+	test_must_fail git reset --hard --pathspec-from-file=list
++	test_must_fail git add --pathspec-from-file=list --pathspec-file-nul
 +'
 +
 +test_expect_success 'only touches what was listed' '
 +	restore_checkpoint &&
 +
-+	git rm fileA.t fileB.t fileC.t fileD.t &&
-+	printf "fileB.t\nfileC.t\n" | git reset --pathspec-from-file=- &&
++	printf "fileB.t\nfileC.t\n" | git add --pathspec-from-file=- &&
 +
 +	cat >expect <<-\EOF &&
-+	D  fileA.t
-+	 D fileB.t
-+	 D fileC.t
-+	D  fileD.t
++	A  fileB.t
++	A  fileC.t
 +	EOF
 +	verify_expect
 +'
