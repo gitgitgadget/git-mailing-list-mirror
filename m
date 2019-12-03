@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91BC5C432C0
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9DD3C43141
 	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 64A3620684
+	by mail.kernel.org (Postfix) with ESMTP id 91CD62073C
 	for <git@archiver.kernel.org>; Tue,  3 Dec 2019 14:02:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHd9hnTf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wl/iHwbn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726896AbfLCOCi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Dec 2019 09:02:38 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:40519 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726534AbfLCOCb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Dec 2019 09:02:31 -0500
-Received: by mail-wm1-f65.google.com with SMTP id t14so3577950wmi.5
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:29 -0800 (PST)
+        id S1726881AbfLCOCh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Dec 2019 09:02:37 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36900 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726449AbfLCOCc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Dec 2019 09:02:32 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w15so3826918wru.4
+        for <git@vger.kernel.org>; Tue, 03 Dec 2019 06:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=37S1UXMADHTUnnmVEO9FnwfxmeS1XCFMqK/czkp+DU0=;
-        b=iHd9hnTfUuBN0bO3DtW7Pe1BFETMpYJobFTfWMxV5SQxMrlRfMywWL+cv5hXRC2XZC
-         YVqsRRxu5U9xFdPqL5+wCquNn7jSXW64wkhlYZVCJ7pPHg2XLCMrvI62k/WB6AOM2/gc
-         ppEZvkL7qlHa/SshFZAIcrlR/ou7/myBu+ZPa9S7S/iOtkX30sTvBnid1kzxEe1DjClT
-         Zu2BwWBCbpXI0/xCtJmARGFWudbgERb+OVxnlsr3x9GpqdP1mHJGlpRYohSne9iQ+oQW
-         cyqT50LLTq8RfjOmn5+gvOE3Or5SpRd+n5cCJQxawv4lLrRrOjozEqQNrE0DI/fof8wW
-         ZItg==
+        bh=G7opqmJudGICA/Y3BZzKEcINzC9/yKeSSKBMoBEqXVI=;
+        b=Wl/iHwbnSNOYAw6AWxh8NZOjbSPvJgoEX5kwkSV61LY7Aj0pdUkQPjgoicwsqbXG66
+         rRdHiI2rpKw9Cw6V2Jdm5Z4xqNjQS5+afDgRiI3Vq1EUlUW5rc91syc9yIgzVp9dZPET
+         wH2gGBrRTgNJBayPw1rXEicS4d117Pe7gWGm5KwpT30h82AGt6PpbBNcUFuX0y5kpgCJ
+         JTdan7sPDFIG7HV7dCq1PGXyCNlxfoI3PtDFBQIAFkcYOz93wEEthWVmtcDdEznEaE/c
+         WjrmEb+LJEVwLrMfINNXfkjO78oh6WlQfxiJNY3z2AwGgaYPYZChbUvDLCifQKUgezLg
+         e5ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=37S1UXMADHTUnnmVEO9FnwfxmeS1XCFMqK/czkp+DU0=;
-        b=UKpjohfMHFMPJ0V4rJQAwAsXjL/BBdFLU6ybCgWB7Noh+ACSgqSdACHiDT3xtpLb2N
-         VL849AAb0ozKy+oeoGV7GI1YJ4ua6hmlECenlfGf64xThc4GYXxpXqWrg/I87b1JelWq
-         GGif6hcqvq4s82DRyV54H1LYAj63hbhYnCeOpHAtYH1YlK48uxwbsukhF+Ey2eCg2WaY
-         67/5hq7USCL0dDYrlOODZ9cUEXmwNM+HMLB505qAQPdV7qJEtRvwNTQd9MpzqAT+cuDJ
-         87t1/CPf9IFU7zekz6JuFNmm4t40UQrF8sUH8Vlh+xynUD7AyTiEOMJUvcybC1HRVdjB
-         JU0g==
-X-Gm-Message-State: APjAAAU03T3tx94pl7vcDDzQ0lAbhkHyhy1r/39jKeIhE3k0XKunXMgx
-        0Z1ZMQHL7UAysEM02wRUHeus1IJR
-X-Google-Smtp-Source: APXvYqxc0farsbNIaNWQNJF6OMomEulCS2yONoiT9OcdnfBCFUbfU/ZX3BJc3WdiLPam7VXc4Pm10w==
-X-Received: by 2002:a1c:7e91:: with SMTP id z139mr34402466wmc.15.1575381749087;
+        bh=G7opqmJudGICA/Y3BZzKEcINzC9/yKeSSKBMoBEqXVI=;
+        b=ojaDLq/OzPy475x6oALjnHqClqlZYKlMh7TP27kR9fvsA9fCnJJRcbbRXouM0DHMOx
+         CaYd5E8O0gJi5wo3KxhoKZHpKmbTfbP85NnWjpRV1WP+sqeEmNli+NX1qX/jxmruDIXE
+         hcodAryULs9K+GdzNhTPU8NWipu0grGGLkUKHMcCwV6R/A8sCINYXM/rPB1vEsJd+qa5
+         E7nuJj27BYC9a3S9LhRGm+CqFesZhpSxu+pbxxHMODWtDnUr46AG/CdydJE2IGFg9Awu
+         bvNIAGAL7VbTADyIYMcUQtDkyxN5+YH14fNdGy/nVQPf1kfqNe6sinyQ+2nOJ9+4rO/2
+         wiFQ==
+X-Gm-Message-State: APjAAAWcqZ+wz05RJ4L5XMJXHwQA4ir5j2ZW0v/KpQ47TayH8/2e+xXs
+        uY/si9/pdcrCh8ZioWDKlfedbKws
+X-Google-Smtp-Source: APXvYqyT0iUUJasLaaYLp05JWheQ1hlGvCbxxPR4dvZShBBcgG1sLwj7cWE3bPE6Qx5Dg8ogLTEgVQ==
+X-Received: by 2002:adf:fd07:: with SMTP id e7mr5239607wrr.21.1575381749798;
         Tue, 03 Dec 2019 06:02:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l17sm3104773wme.45.2019.12.03.06.02.28
+        by smtp.gmail.com with ESMTPSA id e8sm3730274wrt.7.2019.12.03.06.02.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 03 Dec 2019 06:02:28 -0800 (PST)
-Message-Id: <fd166755aa137b03f738601826c42ac64ae89771.1575381738.git.gitgitgadget@gmail.com>
+        Tue, 03 Dec 2019 06:02:29 -0800 (PST)
+Message-Id: <9e37a740e6f420b1e19e7bf829227c25aa42efe6.1575381738.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 References: <pull.445.v3.git.1574182135.gitgitgadget@gmail.com>
         <pull.445.v4.git.1575381738.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Dec 2019 14:02:16 +0000
-Subject: [PATCH v4 11/13] doc: checkout: synchronize <pathspec> description
+Date:   Tue, 03 Dec 2019 14:02:17 +0000
+Subject: [PATCH v4 12/13] doc: restore: synchronize <pathspec> description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,64 +81,39 @@ From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-checkout.txt | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ Documentation/git-restore.txt | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d47046e050..93124f3ad9 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -12,13 +12,13 @@ SYNOPSIS
- 'git checkout' [-q] [-f] [-m] --detach [<branch>]
- 'git checkout' [-q] [-f] [-m] [--detach] <commit>
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
--'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
--'git checkout' (-p|--patch) [<tree-ish>] [--] [<paths>...]
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
-+'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index 1ab2e40ea9..d7bf016bba 100644
+--- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -8,8 +8,8 @@ git-restore - Restore working tree files
+ SYNOPSIS
+ --------
+ [verse]
+-'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>...
+-'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>...]
++'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
++'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
  
  DESCRIPTION
  -----------
- Updates files in the working tree to match the version in the index
--or the specified tree.  If no paths are given, 'git checkout' will
-+or the specified tree.  If no pathspec was given, 'git checkout' will
- also update `HEAD` to set the specified branch as the current
- branch.
- 
-@@ -78,13 +78,13 @@ be used to detach `HEAD` at the tip of the branch (`git checkout
- +
- Omitting `<branch>` detaches `HEAD` at the tip of the current branch.
- 
--'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...::
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...::
- 
--	Overwrite paths in the working tree by replacing with the
--	contents in the index or in the `<tree-ish>` (most often a
--	commit).  When a `<tree-ish>` is given, the paths that
--	match the `<pathspec>` are updated both in the index and in
--	the working tree.
-+	Overwrite the contents of the files that match the pathspec.
-+	When the `<tree-ish>` (most often a commit) is not given, 
-+	overwrite working tree with the contents in the index.
-+	When the `<tree-ish>` is given, overwrite both the index and
-+	the working tree with the contents at the `<tree-ish>`.
- +
- The index may contain unmerged entries because of a previous failed merge.
- By default, if you try to check out such an entry from the index, the
-@@ -336,7 +336,13 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 	Tree to checkout from (when paths are given). If not specified,
- 	the index will be used.
+@@ -113,6 +113,14 @@ in linkgit:git-checkout[1] for details.
+ 	appear in the `--source` tree are removed, to make them match
+ 	`<tree>` exactly. The default is no-overlay mode.
  
 +\--::
 +	Do not interpret any more arguments as options.
- 
++
 +<pathspec>...::
 +	Limits the paths affected by the operation.
 ++
 +For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
++
+ EXAMPLES
+ --------
  
- DETACHED HEAD
- -------------
 -- 
 gitgitgadget
 
