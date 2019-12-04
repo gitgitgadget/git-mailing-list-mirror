@@ -8,61 +8,60 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BBF0C43603
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E47E8C2D0B1
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:03:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6BC792073C
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:03:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B784721823
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:03:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a1N0Qcjk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aJJz0Vdi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728229AbfLDWDU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 17:03:20 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:35374 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727989AbfLDWDU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 17:03:20 -0500
-Received: by mail-pg1-f194.google.com with SMTP id l24so521794pgk.2
-        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:03:20 -0800 (PST)
+        id S1728378AbfLDWD0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 17:03:26 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:44498 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727989AbfLDWDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 17:03:25 -0500
+Received: by mail-pj1-f68.google.com with SMTP id w5so354152pjh.11
+        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:03:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=b60uezCEopvQvo36hmyWSpQLOhAgYwOufKH99W8KA34=;
-        b=a1N0Qcjk5RO/Bdt2TZv/UVoUvlthAsRVKC8iVO6X0UjFS7ZoMTtAmr7jJ6sJ/02Gyk
-         R051DRMIvi+KdhiLzpL1XOPVlsBWibny+xeVxNauP/cJPwTpnB/FAJ01NEK4Q9xIZT/q
-         Sr4u1P/ymSqLaMQfTZiZdTngJOQ+o45E6YihiI33SD8USBAuPC6BvrTQkzk9JS1aHM35
-         wXC7Hcw2mX8LEbfqMcogkS5hU+I4gSe/EtYl40sJByBq7ns36wbgw+MaBLLJ3kDYp4mU
-         IbOJRM9LWucWFnEtrVHL2e7bSR5AtOdXwjHvCGyxAo7sSIPlaBVql0GL6hOdsGDu15LK
-         Okkg==
+        bh=wQAWHVnUI9MZ2leYUkYV6h6KgNbJhq8DQeyyJJG6pZc=;
+        b=aJJz0VdiBai8uCYaWeq8NKjYRaRATUZmOF+QPwcHJUv/xoavN9TcrbQctCE+WGbFuD
+         I+CgMMXbKZZLTIErJ/CnIE3BdhDhliIh0lHhuajx2E0UEHeWMNhdiL8L4EHsvKyovOp6
+         UvbwydVvXuaaxpVby08ZmwQ8ouuD3sWY+GyBo/a77oPpA3XLuI+T+jmFlyY/kl2o4pyP
+         BlfXLJaybEo8tUOSJXNkRs4NiVeyCDT9BcuZrKF0EWXulxy4hr4z09UrNuUDrcaAbSqE
+         EkNTWnIscbJao+hj2fMNGZiEAFVyQ5Q4Al+BEHtAJo323PByOfEOSjwMfAt+1NmAF9J6
+         M8TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=b60uezCEopvQvo36hmyWSpQLOhAgYwOufKH99W8KA34=;
-        b=AbwIFiLKPIIlCXjdyVOZaqWMSRFdVAHNmRgCpKDnIwuAk5ySIvwPDm31kts5GuOGyK
-         Rfz13P6CeIXW+eh55s2Wd4acJ+36LAIMwoo7WzGon9RZ8HLXYxpC7YXNTI28wpiUWFWz
-         I9ovoXl61vSXIRWsm1C+SuyD8ySYy8tk/dFpK6+FLeo06qOh1jNmIaqqQ9MTk3N4hJx1
-         l2Y/yf7L+zzBnJL2PvpUSCY5FDjKmgG6Di30uOFz/VWlBwubgDxcPGdNX0mCpTsIKV3q
-         ezajDhvBWVcnF8YYS3Ti4nsAbEoNmxUjn26vk4V9vZTO5x8XODf2lvVghH78/TFXXIGm
-         YW4w==
-X-Gm-Message-State: APjAAAUIAnZfjz6iklj/o+kR+FP57mxDGQFVjekJCIWBM1AcIJR3w1db
-        QKlsBYr10nEN0gMkBM25v0Rx8uWN
-X-Google-Smtp-Source: APXvYqzh0afnatYvp5UTvmVvf9vFbNqZrIAhAQwF9ADfewzYvoz6tirFO5oG1lvm6aOGNIVIlGO39w==
-X-Received: by 2002:a63:a449:: with SMTP id c9mr5788709pgp.53.1575496999377;
-        Wed, 04 Dec 2019 14:03:19 -0800 (PST)
+        bh=wQAWHVnUI9MZ2leYUkYV6h6KgNbJhq8DQeyyJJG6pZc=;
+        b=VBlx24kKBkRb6TWHJoq+04VQM2FKie5QLjzB3jP8PrL5nGh6QD95tWnyMduN7gOnXj
+         ZBAET0vDD9DZOhgSlAh40xjKd7NNOfT9PEoL7BNyq99Gf+t2lQAkkjOBbnrBaVu1covd
+         +VbbupmahOA2kEC9W2BENjOv6/4DKXKzUoQvgcynFeswDlPkhwDSvrs9a3LRNylip8UI
+         NY0MBJ/jmlj9o1bvTr4UksdoUm+pYqr8JiEENP+0NJue1ZfeIJL7/ip3/V0+tuXaVOG0
+         MOVO8qn7VdTtW2/9UMUCN4c0puRW+fMolnrLORvEvx8HFN7Ls4q/IsdCQkAhABrZVyY+
+         XyMA==
+X-Gm-Message-State: APjAAAUOpuQst6bw0oR2qihVfZaGrQHNW0Ga79vXh9kSnXkNNNXnRXJ4
+        Z5480V6H7+xSlTOleAefNBTbL5RV
+X-Google-Smtp-Source: APXvYqwDvMPkzgBRNYefUxv6rARn58hUxkbWopNeINiYXhBoSgfMq8E/Gvmmwn5JVesM3bDyi8A8cA==
+X-Received: by 2002:a17:902:8d83:: with SMTP id v3mr5566167plo.205.1575497004520;
+        Wed, 04 Dec 2019 14:03:24 -0800 (PST)
 Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id v8sm7873925pfn.76.2019.12.04.14.03.17
+        by smtp.gmail.com with ESMTPSA id 20sm8194268pgw.71.2019.12.04.14.03.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2019 14:03:18 -0800 (PST)
-Date:   Wed, 4 Dec 2019 14:03:14 -0800
+        Wed, 04 Dec 2019 14:03:23 -0800 (PST)
+Date:   Wed, 4 Dec 2019 14:03:19 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v6 2/5] t7700: consolidate code into
- test_has_duplicate_object()
-Message-ID: <f3a0470edc7816bda151b0d11ddff8657b56cdfa.1575496684.git.liu.denton@gmail.com>
+Subject: [PATCH v6 3/5] t7700: replace egrep with grep
+Message-ID: <c34477a5a9f5c48c20046abd6ebee2064095bbe5.1575496684.git.liu.denton@gmail.com>
 References: <xmqq1rtk557e.fsf@gitster-ct.c.googlers.com>
  <cover.1575496683.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -75,124 +74,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The code to test that objects were not duplicated from the packfile was
-duplicated many times. Extract the duplicated code into
-test_has_duplicate_object() and use that instead.
-
-Refactor the resulting extraction so that if the git command fails,
-the return code is not silently lost.
+The egrep expressions in this test suite were of the form `^$variable`.
+Although egrep works just fine, it's overkill since we're not using any
+extended regex. Replace egrep invocations with grep so that we aren't
+swatting flies with a sledgehammer.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t7700-repack.sh | 71 +++++++++++++++--------------------------------
- 1 file changed, 23 insertions(+), 48 deletions(-)
+ t/t7700-repack.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index 5fb9e99f34..80ded48088 100755
+index 80ded48088..bfef5888a2 100755
 --- a/t/t7700-repack.sh
 +++ b/t/t7700-repack.sh
-@@ -21,6 +21,25 @@ test_no_missing_in_packs () {
- 	test_must_be_empty missing
- }
- 
-+# we expect $packsha1 and $objsha1 to be defined
-+test_has_duplicate_object () {
-+	want_duplicate_object="$1"
-+	found_duplicate_object=false
-+	for p in .git/objects/pack/*.idx
-+	do
-+		idx=$(basename $p)
-+		test "pack-$packsha1.idx" = "$idx" && continue
-+		git verify-pack -v $p >packlist || return $?
-+		if egrep "^$objsha1" packlist
-+		then
-+			found_duplicate_object=true
-+			echo "DUPLICATE OBJECT FOUND"
-+			break
-+		fi
-+	done &&
-+	test "$want_duplicate_object" = "$found_duplicate_object"
-+}
-+
- test_expect_success 'objects in packs marked .keep are not repacked' '
- 	echo content1 >file1 &&
- 	echo content2 >file2 &&
-@@ -40,54 +59,19 @@ test_expect_success 'objects in packs marked .keep are not repacked' '
+@@ -30,7 +30,7 @@ test_has_duplicate_object () {
+ 		idx=$(basename $p)
+ 		test "pack-$packsha1.idx" = "$idx" && continue
+ 		git verify-pack -v $p >packlist || return $?
+-		if egrep "^$objsha1" packlist
++		if grep "^$objsha1" packlist
+ 		then
+ 			found_duplicate_object=true
+ 			echo "DUPLICATE OBJECT FOUND"
+@@ -135,7 +135,7 @@ test_expect_success 'packed unreachable obs in alternate ODB are not loosened' '
+ 	rm -f .git/objects/pack/* &&
  	mv pack-* .git/objects/pack/ &&
- 	git repack -A -d -l &&
- 	git prune-packed &&
--	for p in .git/objects/pack/*.idx
--	do
--		idx=$(basename $p)
--		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
--		then
--			found_duplicate_object=1
--			echo "DUPLICATE OBJECT FOUND"
--			break
--		fi
--	done &&
--	test -z "$found_duplicate_object"
-+	test_has_duplicate_object false
+ 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
+-		egrep "^$csha1 " | sort | uniq | wc -l) &&
++		grep "^$csha1 " | sort | uniq | wc -l) &&
+ 	echo >.git/objects/info/alternates &&
+ 	test_must_fail git show $csha1
  '
- 
- test_expect_success 'writing bitmaps via command-line can duplicate .keep objects' '
- 	# build on $objsha1, $packsha1, and .keep state from previous
- 	git repack -Adbl &&
--	test_when_finished "found_duplicate_object=" &&
--	for p in .git/objects/pack/*.idx
--	do
--		idx=$(basename $p)
--		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
--		then
--			found_duplicate_object=1
--			echo "DUPLICATE OBJECT FOUND"
--			break
--		fi
--	done &&
--	test "$found_duplicate_object" = 1
-+	test_has_duplicate_object true
+@@ -152,7 +152,7 @@ test_expect_success 'local packed unreachable obs that exist in alternate ODB ar
+ 	rm -f .git/objects/pack/* &&
+ 	mv pack-* .git/objects/pack/ &&
+ 	test 0 = $(git verify-pack -v -- .git/objects/pack/*.idx |
+-		egrep "^$csha1 " | sort | uniq | wc -l) &&
++		grep "^$csha1 " | sort | uniq | wc -l) &&
+ 	echo >.git/objects/info/alternates &&
+ 	test_must_fail git show $csha1
  '
- 
- test_expect_success 'writing bitmaps via config can duplicate .keep objects' '
- 	# build on $objsha1, $packsha1, and .keep state from previous
- 	git -c repack.writebitmaps=true repack -Adl &&
--	test_when_finished "found_duplicate_object=" &&
--	for p in .git/objects/pack/*.idx
--	do
--		idx=$(basename $p)
--		test "pack-$packsha1.idx" = "$idx" && continue
--		if git verify-pack -v $p | egrep "^$objsha1"
--		then
--			found_duplicate_object=1
--			echo "DUPLICATE OBJECT FOUND"
--			break
--		fi
--	done &&
--	test "$found_duplicate_object" = 1
-+	test_has_duplicate_object true
- '
- 
- test_expect_success 'loose objects in alternate ODB are not repacked' '
-@@ -100,16 +84,7 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
- 	git commit -m commit_file3 &&
- 	git repack -a -d -l &&
- 	git prune-packed &&
--	for p in .git/objects/pack/*.idx
--	do
--		if git verify-pack -v $p | egrep "^$objsha1"
--		then
--			found_duplicate_object=1
--			echo "DUPLICATE OBJECT FOUND"
--			break
--		fi
--	done &&
--	test -z "$found_duplicate_object"
-+	test_has_duplicate_object false
- '
- 
- test_expect_success 'packed obs in alt ODB are repacked even when local repo is packless' '
 -- 
 2.24.0.578.g4820254054
 
