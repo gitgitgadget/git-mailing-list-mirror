@@ -7,94 +7,103 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1977DC432C0
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 04:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3522C43141
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 04:44:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D69732068E
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 04:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7442320659
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 04:44:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BSmMZGX5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HJlIzte4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726958AbfLDEXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Dec 2019 23:23:38 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:37838 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726804AbfLDEXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Dec 2019 23:23:38 -0500
-Received: by mail-pj1-f68.google.com with SMTP id ep17so2430566pjb.4
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 20:23:38 -0800 (PST)
+        id S1727091AbfLDEow (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Dec 2019 23:44:52 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42196 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726835AbfLDEow (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Dec 2019 23:44:52 -0500
+Received: by mail-pf1-f196.google.com with SMTP id l22so2965606pff.9
+        for <git@vger.kernel.org>; Tue, 03 Dec 2019 20:44:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=7POaD8C3QZNNqXA3R3tKwYxVTQPVQcyN3AY0TU3/VJ0=;
-        b=BSmMZGX5LsWPFTPmAWWp3PmV3ByXC7VYiI/oKDlqOffTiWu65TrFApk8dkaaP+kRQf
-         D1MViAdxtF198VT8C1B46fGDvd6/xafud7FwAe8V6LYsJvVYcc1xlutljGJcCbG0S00Y
-         6KSp3l71oLIJxK6qQOXyn9P4MvsHlalzEAGWuGojwFIDC/c25tvdwV2pwFXlZcmn91wK
-         TiRFokzCiv86e4QVnab6W70GtZq1easkZ1WAPk0Xgu/rOCjpFz414w3hWiCQs7QUDjUS
-         vuV3ip4hpKjx8KzlBByJWo1SQvjMqHDD0It6Lzx2J2XWVVTiTy9eMMXkUAJfKAmIvTuI
-         JQkw==
+        bh=kAAM4rP7Y9pA4vO4uIPTkJqPiYRXWBJBRaIgTB7Cx74=;
+        b=HJlIzte44BZaPSbwyTmYAFHPXBmxsCuuzr4eHJZIDBTZ/doI0Q3gL2r3iSFtIVeTC0
+         Yfkv+2OQZ8zAV6/K7PNBwBGLFdjnjiSRu+KmF8iwrcmHpdMvFpnXF55qeub1ECYKTaCr
+         fVd+1qJ3XnbGe7rEtZA41rWXz6m6kgy0Xi0nz79cOusiS+Oa57SiwPRkQXlnOM5qUs/Z
+         B8yvco9n0NrxMLzfSHeR9KrG3fQOz9F8wFZ1QYjDl4zUrxA8fbWFWQku4DAIC7EPW9s1
+         Npum/89FAOL+/8S9r4peWnMu7bQXLlxJ8zJpyh/bM3v3XaHFeHBkEkxmPFCWRheemeCu
+         itWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7POaD8C3QZNNqXA3R3tKwYxVTQPVQcyN3AY0TU3/VJ0=;
-        b=RMhso4dxQUTizisE8Bot6TYcmCXFaVyz9coU0jZDi3JybGjp8JrqaF45cPUkEM4ztL
-         1BOinoJ9V4+18l9rtNtkxznimNt2lCleaySq0tEvzPRkmBttqmST6E89nVWuQhfteFtV
-         6d3CJMFJOY+L9VVTtAOMXf/S58yYwGbycF/a7ps2ZpYE4rsrwuIOvqkTczqGGRMFi1iA
-         FLaPb2G9sKhI57WuGFfj30AYB18S8zL4CgruD0UO+fR7QNYbaUGANwg7X6O3ogMcI/Mz
-         j5NAB1p9GLfL3s4TOusqLzZF7hACEnVh4YiwUdaPyOSs3ToSfFbUJ8X3OXNQJ5Gbn9n1
-         3qzA==
-X-Gm-Message-State: APjAAAWNs0NOmAVssRudtOFX6Ad8/E1miuHS3MV0v/zSr1g/Xn4B7aKN
-        5tpKMt65YfVRVxog5i5dC4Q=
-X-Google-Smtp-Source: APXvYqz/0/GnV+ybPZ0NQWufrnZVGJm0gRa3IeHAM5IHSXg/5J+nyQzNW1HfJkb5O+RyB+pgwmVBKg==
-X-Received: by 2002:a17:90a:1f8e:: with SMTP id x14mr1208606pja.29.1575433417779;
-        Tue, 03 Dec 2019 20:23:37 -0800 (PST)
+        bh=kAAM4rP7Y9pA4vO4uIPTkJqPiYRXWBJBRaIgTB7Cx74=;
+        b=eTlwuWuwhQ4Z5ooU+EDcEBk+WutzgDLLkHwM8PDbRjVrLB4NhUOxFUwMJEIcefAqH3
+         Kc/eGTxP2jFwrCxFhikzj8mNM68bfOdJrCC4LCy3iZARjsc5IpoYH7x058LYrx8cuxOq
+         v0tW+LB6DqfmuIDCXHX6G8sN91SkSBw6w+Y5nKVAV3HAwD3h0ZC28cyi/rZE+Q+/ZNlg
+         UL0dRR16hX/ja4mz29Lrfokmho5s1t7YINcFDkWNrAI3RG8KULqHgAaC8GIS8KuyaIzf
+         opkAxY8UxgrWbH6e4VSppcxWmhMYUOW3eU153i/zb/3wP/5hNWP6JGk/UYaRhLBe1Ojv
+         qZrA==
+X-Gm-Message-State: APjAAAVwxPUVTIwQhm0+IbuOXRZNXQ4dDwNTQwr2RnqB1mT+W8C1ZfLt
+        seNHfgHUxlbWim+3hHUNGck=
+X-Google-Smtp-Source: APXvYqyGqhZ0pAL8Q3fURZVJTujguzYBvrTn8B4GW/1vV9Mvp1hAETZV6nHsmiGpq/ceDHcONx2yCA==
+X-Received: by 2002:a62:7a11:: with SMTP id v17mr1516671pfc.191.1575434691621;
+        Tue, 03 Dec 2019 20:44:51 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id j23sm5473153pfe.95.2019.12.03.20.23.33
+        by smtp.gmail.com with ESMTPSA id fh2sm4753504pjb.30.2019.12.03.20.44.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2019 20:23:34 -0800 (PST)
-Date:   Tue, 3 Dec 2019 20:23:32 -0800
+        Tue, 03 Dec 2019 20:44:51 -0800 (PST)
+Date:   Tue, 3 Dec 2019 20:44:49 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Colin Stolley <cstolley@runbox.com>, git@vger.kernel.org,
-        Martin Fick <mfick@codeaurora.org>
-Subject: Re: [PATCH] packfile.c: speed up loading lots of packfiles.
-Message-ID: <20191204042332.GG214771@google.com>
-References: <20191127222453.GA3765@owl.colinstolley.com>
- <20191202174035.GJ23183@szeder.dev>
- <20191202194231.GA10707@sigill.intra.peff.net>
- <xmqq7e3d75vk.fsf@gitster-ct.c.googlers.com>
- <20191203221730.GA28419@sigill.intra.peff.net>
+To:     "Michael S. Tsirkin" <mst@redhat.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] contrib: git-cpcover: copy cover letter
+Message-ID: <20191204044449.GB226135@google.com>
+References: <20191203201233.661696-1-mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191203221730.GA28419@sigill.intra.peff.net>
+In-Reply-To: <20191203201233.661696-1-mst@redhat.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Hi,
 
-> I agree that 10,000 packs is ridiculous, but we do see it (and worse)
-> occasionally from people pushing in a loop before our scheduled
-> maintenance kicks in.
+Michael S. Tsirkin wrote:
 
-On that subject: one thing Martin Fick (cc-ed) has suggested is moving
-more of the garbage collection work "inline" into the push path.  That
-is, instead of letting someone push 10,000 packs in a loop, build
-concatenated packs ("exponential rollup") in the push path and don't
-return success and commit the packs into the object store until we're
-done.  That way a reasonably small amortized cost is paid up front by
-the pusher instead of later by everyone.
+> My flow looks like this:
+> 1. git format-patch -v<n> --cover-letter <params> -o <dir>
+> 2. vi <dir>/v<n-1>-0000-cover-letter.patch <dir>/v<n>-0000-cover-letter.patch
+>
+> copy subject and blurb, avoiding patchset stats
+>
+> 3. add changelog update blurb as appropriate
+>
+> 4. git send-email <dir>/v<n>-*
+>
+> The following perl script automates step 2 above.
 
-Midx changes things a little: it might make sense to build
-concatenated idxes instead of packs, which would still avoid the same
-quadratic behavior.
+Neat.  I wonder, should "git format-patch" learn an option for this?
+E.g.
 
-Just a random thought,
+	git format-patch -v<n> --cover-letter \
+		--last-cover-letter=<dir>/v<n-1>-0000-cover-letter.patch \
+		-o <dir>
+
+What would your ideal interface for this flow look like?
+
+[...]
+> Any feedback on this? Interest in taking this into contrib/ for now?
+
+I don't know what Junio's preferences are for new contrib/
+contributions, but I kind of like it.  If putting it in contrib/, my
+main advice would be to put it in a subdirectory there with a README.
+That way, we have a good place to document what it was replaced by
+once it has graduated to a standard format-patch feature.
+
+Thanks and hope that helps,
 Jonathan
