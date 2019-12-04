@@ -2,160 +2,123 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA808C43603
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 10:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E549FC43603
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 12:59:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5F3462068E
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 10:36:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B799A20803
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 12:59:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="H1JjOoz+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e6sLtpcy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727615AbfLDKgn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 05:36:43 -0500
-Received: from mout.web.de ([212.227.17.12]:57377 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727268AbfLDKgn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 05:36:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1575455793;
-        bh=dbt2LG5ycuYCeAykFxHqk3lKP2G46k0V91bpv76gXuc=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=H1JjOoz+RVJ1RJI/tAFUeyBGzbh2iwA1vv7XXpaa6eiOG/ubppdgy+RdEy0xEAkIX
-         lE8AtyjpvZ/IEQeSyDMLOHb135Y8u77hLZftPNMTt1+d+9cK/1ebX3gUmNEyvOqFqC
-         B+A+aHqVyiHR4XKFPCAXbnawmOq+G3NsoJhqId2I=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.158.92]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MYvxn-1iFkck39MJ-00ViLX; Wed, 04
- Dec 2019 11:36:33 +0100
-Subject: Re: [PATCH v3 4/5] format-patch: teach --no-base
-To:     Denton Liu <liu.denton@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Christian Biesinger <cbiesinger@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <cover.1574878089.git.liu.denton@gmail.com>
- <cover.1575445582.git.liu.denton@gmail.com>
- <6cba51ca247423c76bda498152c162900aba1b59.1575445583.git.liu.denton@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3d355c0c-805a-a55d-eb4e-e4918585e30c@web.de>
-Date:   Wed, 4 Dec 2019 11:36:25 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726832AbfLDM7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 07:59:41 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42959 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726010AbfLDM7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 07:59:41 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 4so78707pfz.9
+        for <git@vger.kernel.org>; Wed, 04 Dec 2019 04:59:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=d1B/eW83O5+UXTJi9QC4VXyS3n33OJ69Kjmz7IT6g9o=;
+        b=e6sLtpcytg3d/enyFQzX32yuU4fo9j8UZ+y5WxEyKjYXJ5B27COgT1tHlZI3hsJpbs
+         vRoh9PtETI5K0/HyPQaJ7cG1cWr9/BISftf19IdNNIy3zoPdV0XTLnp23OSU6i7DJNKe
+         SraryAzXFKko4HkVVaAGxxGrwzTufr2KtQZtHGEIONSu5xfgrrwcSb7qe1VcQYKKQJDm
+         hidjqo1OamLnluWQBhFLDgDOD5H+2JQ9bPhcKsT6CqoTpWPP0nlAxP2o/3gepFerPQx5
+         fBCSEf6QJ+uP+7ExZST1NHTvMqnw02I6KSMRceTJ105krxlrQE+6MXGxsRa/B9eZbQ5I
+         AIhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=d1B/eW83O5+UXTJi9QC4VXyS3n33OJ69Kjmz7IT6g9o=;
+        b=jD7r1CJCBmH7DTyeU+XEQWe7mykP2yifrpl0qorKo3w8QGcmQo9w30+z+TSdIDSw3O
+         RdzWhtG06oWvNCKCmSuE8BCLKUnl23it2h7iNwp+rcMbpOql92/bnTmFHVsFQOmkUHif
+         /FBgbCS9xYgjSLvmRBZAX0WCeCW5CRKpt0R9xjxBl0hDpZ1SxE+8rPdLSQQ20bJeJf+l
+         8ULs/NpR6L2lNpYcd63U7KjmzrQZbE3L5dY8Vw5Me9LubEGPTl0dtJBMnzKDJ/42Y1C6
+         ayKqp2EubjphZ4kAPqdI/GbV/jnpcG1jfEavi56+7xOpHWKr1ZPWzkAffDXasyw6dcN/
+         IuJQ==
+X-Gm-Message-State: APjAAAWrwIGeMtjaGowEX1z9mUnKm6Kg7ETSbnRw1qSMY9KFoEiGrWg5
+        g9NF55X/UAkB5gWoTKnS/RU=
+X-Google-Smtp-Source: APXvYqwv0Srvdw4/nbiIbk3j7kyxjSyXFauXL57wGF11/YSSZ5fHVnKz8Pi7od9JqSuAJaPy0JFifg==
+X-Received: by 2002:a63:4b24:: with SMTP id y36mr3376411pga.176.1575464380470;
+        Wed, 04 Dec 2019 04:59:40 -0800 (PST)
+Received: from generichostname ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
+        by smtp.gmail.com with ESMTPSA id q9sm7068645pjb.27.2019.12.04.04.59.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Dec 2019 04:59:39 -0800 (PST)
+Date:   Wed, 4 Dec 2019 04:59:37 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Danh Doan <congdanhqx@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Subject: t: remove inappropriate uses of test_must_fail(), was Re: [PATCH v5
+ 26/26] t7700: stop losing return codes of git commands
+Message-ID: <20191204125937.GA798672@generichostname>
+References: <cover.1574731022.git.liu.denton@gmail.com>
+ <cover.1574884302.git.liu.denton@gmail.com>
+ <1f6d9a80ad45fd9f51c8cffe9ce3721fce9b80c0.1574884302.git.liu.denton@gmail.com>
+ <20191130104812.GA18401@danh.dev>
+ <CAPig+cQ38J_0wHLw0CuhSdWBBEP-RuAchgG014GPHiSp6QOpsQ@mail.gmail.com>
+ <xmqqv9r12tbb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <6cba51ca247423c76bda498152c162900aba1b59.1575445583.git.liu.denton@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xupxPTIbiLGR+/YD02k//Y5n0KmytyxnmJDa9urBR2fVbB9krEY
- s6TKQtBPDZWyvL/0nncZCKWXXCR7By5O/HE88bxHxxy6vnuIzGtwtRks3NL9AkH1ub2FNox
- xA58KW/iGmwLtPwK9FkEixPdf19Q04v2bpF9UcepjurRLB1Soa4mrO+2RqXypCYFsYP174L
- WlWxYJiVAlyRBYXBtXQKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CEyIxvai7AY=:BrLFzsd2nB8J/pxmrewBIf
- nxrkzya+9WcG+htayX1skvFMHRWzUfmX/zXG/GJjhkbgd+C8EPAQayBTbKTNRuaKxiNURpnHr
- WqjY06RfHuC8srhAUCKnCjThEHJ3hvRknVtdRA5OcdpUKYkGjDK8/IWiNuzaM51vArh/kZe+0
- h79BaP1pgeF5uDPuBHnBZ7bbjhr1G8ZDrJ7o9gN1hqQOFHCAi1tgBwpduMqNmNMIEyYD95xaC
- p91wQmHho47tOMWCyrqDrpZWbccabrFZqcC7i+Wgn6QQWpjZ320twGmE3tkZVCr8/e8YRF08I
- XdkNkbihjnyTjP3Cq/7yNKbUcIgL1GNJt2EnzDe1CxGPA3GPnXOMA8ahodkA3Pu9bAiHxJ1h1
- +efu4nLgHe6USJSMeHsgWYZ+M5wxrJe5PwaYi6t78Sq3pPlTxl9LOuJqeAaUif5R3G60H8Wz8
- b3cEw2s9c3b0PIWTV1xUB0ItHD4dX5Biht8NrH22VzoqNZOdQczUSa+ZY8ipta5J15MJwmTzN
- sROg+aiDoZGqs5kOdwjiKOS5D9rjxZ5NcQbGdHtg2SvZNFy1r+3OFaycqvZ20VcqXLLuMVlxb
- 77VeJXCk8FIIOZrBzgrNXWhRl0cuj2vu5BBmjPa5KmA4pZLG2UerpbAi/4HwJGoEa1aOzVaO2
- 8bTGcZz3We+bQ27E4yLfrA1dNZ0OEijmcI7rTxM4V3JjbT+0KpVUQBrMqA+Nv+hC27hplS2KT
- hm5QtVLvUkSldIJh7GNvnCgmtcg2mNRLJisvLStc3f5KmAm0TVuSouqH8k0tGh/Ow2WUNyz5C
- hxZlRshppEf6UohH8RauCVRsxfdhrCBRQWGDm1P4HLwdYHOd9xW7nhA8nJqdIf559iO9SDPft
- Bgw9252OpEnO2usP9pwx436lXmZiHQ/ByB3e24+0x66aCWGN5OAZlibojZIntt/8sHWhtP0Fa
- 6h9rGjoPEJGHf3NlVt31sgznifSNc7pFi84QHiDSsy0u29PvbspfH0FxwDpkBj+su4tyoHtAf
- FSgAPxN0BN211nAD+AhiPb2591DWAGhcTIm4gTetj/xzdV9/aBXRBDInOyR33H9bObrmrHBt2
- ECkj0q/uPBwLLGt/gJFZYL2ILcP64oJdX7LvniMGyA+mqqJ5DJdEzOTWN3+KjfZtmbp3YIY9P
- CtfhG64wdEDYq2YRBUhAj9q6e4Q1fE478kB7fvQBxxc2563l3JRjtEP0ScprgoGddIsK8k3gI
- IiOm5U8doUkWUN0DgAhQWK9uMNXckMHLlbD6VUA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqv9r12tbb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 04.12.19 um 08:47 schrieb Denton Liu:
-> If `format.useAutoBase =3D true`, there was no way to override this from
-> the command-line. Teach format-patch the `--no-base` option which
-> overrides `format.useAutoBase`.
+Hi all,
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 9c44682f61..645d6db7cc 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1388,6 +1388,23 @@ static int from_callback(const struct option *opt=
-, const char *arg, int unset)
->  	return 0;
->  }
->
-> +static int base_callback(const struct option *opt, const char *arg, int=
- unset)
-> +{
-> +	char **base_commit =3D opt->value;
-> +
-> +	free(*base_commit);
-> +
-> +	if (unset) {
-> +		base_auto =3D 0;
-> +		*base_commit =3D NULL;
-> +	} else if (arg) {
-> +		*base_commit =3D xstrdup(arg);
-> +	} else {
-> +		BUG("arg is NULL");
-> +	}
-> +	return 0;
-> +}
-> +
->  struct base_tree_info {
->  	struct object_id base_commit;
->  	int nr_patch_id, alloc_patch_id;
-> @@ -1676,8 +1693,9 @@ int cmd_format_patch(int argc, const char **argv, =
-const char *prefix)
->  			    PARSE_OPT_OPTARG, thread_callback },
->  		OPT_STRING(0, "signature", &signature, N_("signature"),
->  			    N_("add a signature")),
-> -		OPT_STRING(0, "base", &base_commit, N_("base-commit"),
-> -			   N_("add prerequisite tree info to the patch series")),
-> +		{ OPTION_CALLBACK, 0, "base", &base_commit, N_("base-commit"),
-> +			   N_("add prerequisite tree info to the patch series"),
-> +			   0, base_callback },
->  		OPT_FILENAME(0, "signature-file", &signature_file,
->  				N_("add a signature from a file")),
->  		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+On Sat, Nov 30, 2019 at 09:00:08AM -0800, Junio C Hamano wrote:
+>  * Or perhaps we can detect its use on anything that is not "git"
+>    automatically?  This is merely to illustrate the idea (the
+>    exemption of "env" shown here is too broad for production use)
+> 
+>    diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+>    index b299ecc326..7ab113cd50 100644
+>    --- a/t/test-lib-functions.sh
+>    +++ b/t/test-lib-functions.sh
+>    @@ -828,6 +828,10 @@ test_must_fail () {
+>                    _test_ok=
+>                    ;;
+>            esac
+>    +	case "$1" in
+>    +	git|test-tool|env) ;;
+>    +	*) echo >&7 "warning: test_must_fail $*???" ;;
+>    +	esac
+>            "$@" 2>&7
+>            exit_code=$?
+>            if test $exit_code -eq 0 && ! list_contains "$_test_ok" success
 
-Clearing the global variable base_auto feels unclean to me, as does the
-introduction of a callback for that purpose.  Why not set base_commit
-after reading the config and before parsing command line options to
-reflect base_auto?  That would achieve the intended precedence in a
-simpler way, something like this:
+I've been cooking a series that gets rid of inappropriate uses
+test_must_fail() for a while now. As a finishing touch, I implemented
+the idea Junio suggested above and it seems to be working well.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index a26f223ab4..af1b0d0209 100644
-=2D-- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1714,6 +1714,8 @@ int cmd_format_patch(int argc, const char **argv, co=
-nst char *prefix)
- 		rev.mime_boundary =3D default_attach;
- 		rev.no_inline =3D 1;
- 	}
-+	if (base_auto)
-+		base_commit =3D "auto";
+It's a pretty hefty series, weighing in at 46 patches. After the dust
+settles on 'dl/test-cleanup' (once it gets merged to master), I'll
+probably start sending out this test_must_fail() series around 10
+patches at a time.
 
- 	/*
- 	 * Parse the arguments before setup_revisions(), or something
-@@ -1973,7 +1975,7 @@ int cmd_format_patch(int argc, const char **argv, co=
-nst char *prefix)
- 	}
+An advanced preview can be found here[1]. Or, if you'd like me to
+privately mail you the series, I can do that too. Early comments would
+be very appreciated.
 
- 	memset(&bases, 0, sizeof(bases));
--	if (base_commit || base_auto) {
-+	if (base_commit) {
- 		struct commit *base =3D get_base_commit(base_commit, list, nr);
- 		reset_revision_walk();
- 		clear_object_flags(UNINTERESTING);
+Thanks,
 
+Denton
+
+[1]: https://github.com/Denton-L/git/commits/ready/cleanup-test-must-fail
