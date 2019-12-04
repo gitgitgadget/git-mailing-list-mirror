@@ -2,143 +2,133 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45010C2D0C3
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 07:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CF86C43603
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 07:47:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C4FC20803
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 07:24:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 554BA20637
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 07:47:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hjy78vDN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eHIslWec"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727269AbfLDHYl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 02:24:41 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:36472 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726053AbfLDHYl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 02:24:41 -0500
-Received: by mail-pf1-f196.google.com with SMTP id b19so3185226pfd.3
-        for <git@vger.kernel.org>; Tue, 03 Dec 2019 23:24:41 -0800 (PST)
+        id S1726217AbfLDHrw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 02:47:52 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38742 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726048AbfLDHrw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 02:47:52 -0500
+Received: by mail-pg1-f195.google.com with SMTP id t3so2960235pgl.5
+        for <git@vger.kernel.org>; Tue, 03 Dec 2019 23:47:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Kg6JSHzKDLj/oMkAU9c8gQoL9W0PuInQLHtHDZngbEg=;
-        b=Hjy78vDNLYb/IC4qx1JCVe6Zw0Se2dvlWUH0FzBJ2QHVMrqLkDtpD7+LRSBFFL/RJB
-         LuQrQ74Q3oxjNS9e6U9xEMPu9Yl1T2prZpK54AJjwcO7SBPe5S4gyMEe1znQWZVlT2gP
-         FXUFn034A+JnjTXWkxKWWJ4BOg6OFu+4nNJZx4YwFzf+91D4j7cuWGUxJffDSkntxJvG
-         JiO4TCIxhGaHGSmCXHBYia8gseMJRxshTv/pd/O/EDRC3dO3zoGUV4cXmDYaVp0Qyo2W
-         noNxE9lFpr66EbTaES2sCS1BYLld2Q3Rp9JbakTgqYQlcTZjSU1FdgCGqzXgh9up0z+S
-         9HTg==
+        bh=GfmW/7RmEs3AfjkNmpuAa8mu6tqyS7XsDBOCvOFxbtY=;
+        b=eHIslWecYEa8dX7TEgFy4f3fj+cOiVpGQrrWu73AHxBfDG9eJDZSq/AZ2tobcfaAYc
+         7Uf1+XpA7Ndhp5kf6dEvChcHyy1Asgn56wLX2Jsh0YLvcYIZNoVJrviR92DeHEcTzcB3
+         0HZJ0KQlmMCydEjWjUDUJbiSYiHR8KyM/yO8LCkjV8Pvft7tIPTDPgSodYZPXvLXimWQ
+         Y7fblYxGPoxIPgqQIWw5v09bbGqcd7UbfHPQ6DX1YUMypVGTtMb6iN2QD2MXKfdt7jWY
+         440dG7ajdhJxzMPcBR8zG958MN5Z0IoVH9oVdBKbteK2fs/Ih5wgKdRkUi/tJmxxDIvy
+         VMcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Kg6JSHzKDLj/oMkAU9c8gQoL9W0PuInQLHtHDZngbEg=;
-        b=ddE8948jGs3whRqr1+jnEHApq5tVjueR2mMy7mLfaf+nKEMEaypWsfb1CSceCpMEtB
-         nctoDsPrNMt1hQlUleqYcSeKHMpdyPmPhysWAB/EeoOh/J0UhC/IJHM+20QDX1SQB5rG
-         OepmOxgGTA4JpoVJ1MYScU1UHkammfoiHR2XgoD1+gMqaYiYbYCZJEedh6PN0YD6GNmz
-         Gcwiw8tlZdZehxlLn9GbIhyIIo0suMAFRYjaBiQGNOr0YCJDaX1wKe+Ybe9yzwmd9ZXg
-         uxT+mshPlB2QkfJFfALgSnSSKx8RXV+ouQidtDqoGdG7e1Pvs3rUitNoCXq1y5IbNsWN
-         ogWA==
-X-Gm-Message-State: APjAAAUTR7CFEJqrlqGLi1fdUohKgmFNJIISfiq6Ki0jp56XUwrggCEx
-        xcMtOSe3oXhFGViaKFI1cnY=
-X-Google-Smtp-Source: APXvYqwX/IlNhxgh2r+v3+8hZoR3XOGtkwaEWu3kTP/erzXIbtMl4CqlVjDkQ3KIrm9AKWQUb3Pz8A==
-X-Received: by 2002:aa7:85d3:: with SMTP id z19mr2151445pfn.62.1575444280873;
-        Tue, 03 Dec 2019 23:24:40 -0800 (PST)
+        bh=GfmW/7RmEs3AfjkNmpuAa8mu6tqyS7XsDBOCvOFxbtY=;
+        b=aP8zttc1uBHL7e/g2I/m7HLBP74TDiBhtw1u8WufD4wh7icXK0Wh5ltCZ2NgKDrg2y
+         BMVTevs1kReoSj/o0Ck1YIH4bsOEOt+cvYRwSfl3B89bng3DQmfKyXr2/hFi6QlLXbyN
+         NRLnmKtxs/JqWSYusBbp5i9IeNCCD3pqm/Ylt7QV+PhpbKHKmglhiwIXKa8voNZ7GscO
+         lJzAutBZyTssZCkdBDnD57ixVxtSHPDfH59u0PeNS9YOuNJEPwAko9svgu44QBb4T0Dl
+         oBaedqalTzqzf7YQa8FqBlL7EuL3RLwX06sF3BT32JSze3sYwJrUMOVRyvaACzWsAtsR
+         YDjw==
+X-Gm-Message-State: APjAAAVMLue3qYXiu03MIFRP29mXzbYTHjLycvBrpuh20SR6d+zD9GZm
+        1LsZgXz2jIhUJ8yTaTZGVHrdrdkz
+X-Google-Smtp-Source: APXvYqwYRVcIIAh9TuKlEiWMZOrQvgSHCvsC8APJ7nFBjvtUtsfmbh8bzI+7ckAkhUF1DArIcnMmGQ==
+X-Received: by 2002:a63:cf14:: with SMTP id j20mr2079937pgg.430.1575445671239;
+        Tue, 03 Dec 2019 23:47:51 -0800 (PST)
 Received: from generichostname ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id q11sm6284115pff.111.2019.12.03.23.24.39
+        by smtp.gmail.com with ESMTPSA id r10sm5911394pgn.68.2019.12.03.23.47.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Dec 2019 23:24:40 -0800 (PST)
-Date:   Tue, 3 Dec 2019 23:24:37 -0800
+        Tue, 03 Dec 2019 23:47:50 -0800 (PST)
+Date:   Tue, 3 Dec 2019 23:47:49 -0800
 From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Christian Biesinger <cbiesinger@google.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 22/26] t7700: consolidate code into
- test_no_missing_in_packs()
-Message-ID: <20191204072437.GA3395833@generichostname>
-References: <cover.1574731022.git.liu.denton@gmail.com>
- <cover.1574884302.git.liu.denton@gmail.com>
- <a99a45cb6f2cc7328ef0e52fc2ea8fec537bfba9.1574884302.git.liu.denton@gmail.com>
- <xmqq7e3i4b1p.fsf@gitster-ct.c.googlers.com>
- <20191202205037.GA43606@generichostname>
- <xmqqo8wqwd9m.fsf@gitster-ct.c.googlers.com>
- <20191202232816.GA26892@generichostname>
- <xmqqblsp76xs.fsf@gitster-ct.c.googlers.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/5] rebase: fix breakage with `format.useAutoBase`
+Message-ID: <cover.1575445582.git.liu.denton@gmail.com>
+References: <cover.1574878089.git.liu.denton@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqblsp76xs.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <cover.1574878089.git.liu.denton@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Apparently, this use case has been broken for a long time... Since
+bb52995f3e (format-patch: introduce format.useAutoBase configuration,
+2016-04-26). I'm surprised it's only been reported now.
 
-On Tue, Dec 03, 2019 at 07:41:19AM -0800, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> >> Especially if it is near the end of the series, just a single step
-> >> is OK.  But is there anything that is glaringly wrong that needs a
-> >> reroll?  Or would it be "this is good enough, so let's have them
-> >> cook in 'next' and graduate to 'master'---further clean-up can be
-> >> done after all the dust settles"?  I have an impression that we
-> >> reached the latter by now.
-> >
-> > Perhaps the log message could use some improvement to document the
-> > discussion we had? I don't know if that's worth a reroll, though. Aside
-> > from that, I agree that it's ready for 'next'.
-> 
-> Sure, let's see what you have in mind.
+This patchset fixes the breakage by teaching
+`git format-patch --no-base` and making rebase use it.
 
-Here's a complete replacement for the commit message:
+This patch is based on the latest master since it's such an old bug that
+only got noticed recently, I'm not sure if it's worth fixing in 'maint'.
+The series does not apply cleanly on top of 'maint' because it relies on
+c1a6f21cd4 (Doc: add more detail for git-format-patch, 2019-08-27) but
+the conflicts are relatively minor.
 
-	t7700: consolidate code into test_no_missing_in_packs()
+Changes since v2:
 
-	The code to test that objects were not missing from the packfile was
-	duplicated many times. Extract the duplicated code into
-	test_no_missing_in_packs() and use that instead.
+* Remove spurious indentation change
 
-	Refactor the resulting extraction so that if any git commands fail,
-	their return codes are not silently lost.
+* Rebase onto the latest master
 
-	We were using sed to filter lines. Although not incorrect, this is
-	exactly what grep is built for. Replace this invocation of sed with grep
-	so that we use the correct tool for the job.
+Changes since v1:
 
-	Instead of verifying each file of `alt_objects/pack/*.idx` individually
-	in a for-loop, batch them together into one verification step.
+* Update some log messages
 
-	The original testing construct was O(n^2): it used a grep in a loop to
-	test whether any objects were missing in the packfile. Rewrite this to
-	sort the files then use `comm -23` so that finding missing lines from
-	the original file is done more efficiently.
+Denton Liu (5):
+  t3400: demonstrate failure with format.useAutoBase
+  format-patch: fix indentation
+  t4014: use test_config()
+  format-patch: teach --no-base
+  rebase: fix format.useAutoBase breakage
 
-	The result of this is that we end up with a `grep | cut | sort`
-	pipeline. Previously, we were extracting the `sha1` as part of the
-	`while read sha1 rest` loop. Since we removed the while-loop, we need to
-	use `cut` to extract the `sha1` field. Note that we could have chosen to
-	combine the `grep | cut` into a single `sed` invocation but we
-	consciously leave it separate as it makes the intent more clear.
+ Documentation/git-format-patch.txt |  5 +++--
+ builtin/log.c                      | 24 +++++++++++++++++++++---
+ builtin/rebase.c                   |  3 ++-
+ t/t3400-rebase.sh                  |  6 ++++++
+ t/t4014-format-patch.sh            | 14 +++++++++-----
+ 5 files changed, 41 insertions(+), 11 deletions(-)
 
-	While we're at it, add a space to `commit_and_pack ()` for style.
+Range-diff against v2:
+1:  4089e51041 = 1:  8d67bbe5bf t3400: demonstrate failure with format.useAutoBase
+2:  d288d6c3a5 = 2:  8cfde9f98e format-patch: fix indentation
+3:  196b5d8dbc = 3:  638c4add00 t4014: use test_config()
+4:  f7e5325cc0 ! 4:  6cba51ca24 format-patch: teach --no-base
+    @@ builtin/log.c: int cmd_format_patch(int argc, const char **argv, const char *pre
+     +			   N_("add prerequisite tree info to the patch series"),
+     +			   0, base_callback },
+      		OPT_FILENAME(0, "signature-file", &signature_file,
+    --				N_("add a signature from a file")),
+    -+			N_("add a signature from a file")),
+    + 				N_("add a signature from a file")),
+      		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+    - 		OPT_BOOL(0, "progress", &show_progress,
+    - 			 N_("show progress while generating patches")),
+     
+      ## t/t4014-format-patch.sh ##
+     @@ t/t4014-format-patch.sh: test_expect_success 'format-patch --base overrides format.useAutoBase' '
+5:  62c59c12e3 = 5:  eb266aaedc rebase: fix format.useAutoBase breakage
+-- 
+2.24.0.578.g4820254054
 
-	Signed-off-by: Denton Liu <liu.denton@gmail.com>
-
-The only change between this and the old commit message is the addition
-of the "The result of this..." paragraph.
-
-Thanks,
-
-Denton
-
-> 
-> Thanks for working on this.
