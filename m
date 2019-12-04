@@ -2,127 +2,135 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=CHARSET_FARAWAY_HEADER,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LONGWORDS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F223C2BC73
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 18:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 806EEC2BD09
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 18:53:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 15CB42073B
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 18:37:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5370A20661
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 18:53:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=ksysllc.onmicrosoft.com header.i=@ksysllc.onmicrosoft.com header.b="KZhECh0w"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JJ/F+10q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728372AbfLDShC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 13:37:02 -0500
-Received: from mail-eopbgr1320040.outbound.protection.outlook.com ([40.107.132.40]:61152
-        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728059AbfLDShB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 13:37:01 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Y+RtBkFx+JzpazuNxrJ7TVCHIOFJ8fU5DvbXYsLoVWgLMZMarKrqpCxhIbH4xtctW80bXtq6dySaRA4APU0pX07XLiz5sCK3DUqM03V88zyqUJBTLyJ2TGWF01Omg5VOxwtfwyKovZUbl+/xtHhUdpIwJQH3cGE3ex+x5W9U6EU3967KPtuWY2mXF0SVhPae6ke1JWKkLV2OJlNEhjtQMX65JMDPqSUJPji+n5Mq0uZ+x3NM9DDoLN5zQtvlJ6Ipd648Yx0jJD8ugGXahg8NMYkpNJYeEcguhrl8NciyivS7ETY95X1+U82SFn6K/RkEY3Eu6/DCsD5ASycRRUgFHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R3I8GFIfsA3DE1FryiKseX2kkfopEA4Xf0B1+29IJb4=;
- b=PfZvhtr4S1qiIeG825fXA9uxvtsxpYBLuIrBvFSo9Uq7bmXXmXA2AVA0ukUCNjowWJdgWIlbwutyucDqHx5nox+sK3lQixiuVjIMnSd8NEXIbvO9R0YlbgDat9ffLCuJbvUpZNhwiOrcQkKM4S0ocO1t48SsPsbdSSfPeN6fAHKrrnpzMtZDeiyG/GgVGVpQ+vW2luPWcwjOGAre/DEl6R2P+6SilLV7ffp6QxzE2Jey78aJIDrQ5LJItULPMqw2yEdVXPxPTOWKIz1z7BzH8vva+fcKY44vgRtygwWaitVHewn7VL1DKCVsYm3d6S0EO4ifqZ58CcMdYiigpomnRg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ksysllc.co.jp; dmarc=pass action=none
- header.from=ksysllc.co.jp; dkim=pass header.d=ksysllc.co.jp; arc=none
+        id S1728318AbfLDSxS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 13:53:18 -0500
+Received: from mail-yw1-f50.google.com ([209.85.161.50]:43684 "EHLO
+        mail-yw1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728154AbfLDSxS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 13:53:18 -0500
+Received: by mail-yw1-f50.google.com with SMTP id s187so122487ywe.10
+        for <git@vger.kernel.org>; Wed, 04 Dec 2019 10:53:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ksysllc.onmicrosoft.com; s=selector2-ksysllc-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=R3I8GFIfsA3DE1FryiKseX2kkfopEA4Xf0B1+29IJb4=;
- b=KZhECh0wwznXJrSA20sKlM/mkrvPqAv57EM2fzRDpeVsdO84vleB9txVxyuB94P6Lq+jL9/Ak3UhVJILYPnBbSnupft1Mh8nknMVrDOZ6RCCCKpPGWkPyGzVG89BGEPQIUQWYzk365N/MujcrGWAdZA8yrdayOQVhGQ3nnUWnJI=
-Received: from TY2PR01MB2427.jpnprd01.prod.outlook.com (20.177.100.73) by
- TY2PR01MB4859.jpnprd01.prod.outlook.com (20.179.172.20) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2516.12; Wed, 4 Dec 2019 18:36:57 +0000
-Received: from TY2PR01MB2427.jpnprd01.prod.outlook.com
- ([fe80::b074:84bd:8776:a29f]) by TY2PR01MB2427.jpnprd01.prod.outlook.com
- ([fe80::b074:84bd:8776:a29f%7]) with mapi id 15.20.2516.014; Wed, 4 Dec 2019
- 18:36:57 +0000
-From:   =?iso-2022-jp?B?GyRCMkNGIzBsR24bKEI=?= <kato-k@ksysllc.co.jp>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] gitk branch name encoding utf-8 probrem 
-Thread-Topic: [PATCH] gitk branch name encoding utf-8 probrem 
-Thread-Index: AdWq0cuhgH7WTTbHQwq0du7Qsjt4IQ==
-Date:   Wed, 4 Dec 2019 18:36:57 +0000
-Message-ID: <TY2PR01MB24271C32E2FD9FD8C27CA8C2CA5D0@TY2PR01MB2427.jpnprd01.prod.outlook.com>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=kato-k@ksysllc.co.jp; 
-x-originating-ip: [123.223.66.231]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 4cc30ff8-c149-49ad-6656-08d778e8f1b8
-x-ms-traffictypediagnostic: TY2PR01MB4859:
-x-microsoft-antispam-prvs: <TY2PR01MB485925A6FDF9C91EDC364ED2CA5D0@TY2PR01MB4859.jpnprd01.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:2958;
-x-forefront-prvs: 0241D5F98C
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(346002)(136003)(396003)(366004)(39830400003)(189003)(199004)(52536014)(508600001)(14454004)(64756008)(66556008)(66476007)(66446008)(81166006)(76116006)(966005)(66946007)(3846002)(8936002)(8676002)(26005)(1730700003)(81156014)(6116002)(5660300002)(5640700003)(4743002)(316002)(2501003)(25786009)(6506007)(99286004)(33656002)(71200400001)(7736002)(55016002)(2906002)(4744005)(102836004)(6436002)(186003)(74316002)(85182001)(71190400001)(9686003)(305945005)(86362001)(6306002)(2351001)(7696005)(6916009);DIR:OUT;SFP:1101;SCL:1;SRVR:TY2PR01MB4859;H:TY2PR01MB2427.jpnprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: ksysllc.co.jp does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: qrXGRYlyfBOrgwRQDGfxR7npnDORkqOZwU2WqSwv0eI4FanSH4k5meqdQ//Hxd0R/RY+LcnjUA0bFqQapo8QskhPa1ITGBjEW47ep3H/Gu3XV4LvbbJ680zv9Cjg76vYGmfHbdfQsrecvObob1QnWR3jz7GyA5SK2F0iFaXVMPPoB5mS9r+hjkrD56n6XhPY3J2BTmIK0y2f/T8mPn6+5Bw5uo35gkusPcvTWgpk+v4/7lVHx9X/+WdbrZBdb3fzSuOnayWnFDAcWFRTNsDnm35drrxshuqJD+AO/CpEy1v5GI7DLU1d0SKifEVuPx0NDJXviycTl3jhoJqfQ9btDJdAfnWV3U+rRIDzUMuqug8rskDiSaszizapSLv/d/BK4LmHiZpcl+1fjc6YOo5xYPcGg5+RjkfgfNjET1y8gRFEpcaHewjg3PgdWOicC0gKvcOBS7m8I7DNxnoYNsZhjwUJzzHs5+ZdzgjyFq0QVMA=
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-2022-jp"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=JbYDk+QtEY2Vc8sIBcgsv6o0XKGY1pqeWwgB9nW5c7U=;
+        b=JJ/F+10qu+TJI6EvPUEDtRVmFXPgdBFa2UF3DZUXeyTvi8WP1o1TKCD6FZRTp7QPim
+         6xM0+oR6lavAJtbPTr1yOMQFTkVtPxg/e9fUtU0a+W82+TnTNSotTgtPEWaNZ1pVWKD4
+         2b1cHTA1QBVGRE82o1eRleAWSx6HgLMcBbRN5xMbASp/pyjgyTuf/sFyxwdziRP1e8iX
+         GU64c+HbJ45J7qbNchTK4XBTxEPyiFj81M3CuDH/Lo/quBTUYtpON7MQlAF+RrMAojor
+         ZaMUWENDVDtff/7kCTRqYaw/xv7op1TV+SkcT6o60MtTagMA5DKxOm7YfMTB0HgdpJc7
+         fUNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=JbYDk+QtEY2Vc8sIBcgsv6o0XKGY1pqeWwgB9nW5c7U=;
+        b=QFdNNg2iyvWUIg+XYZBr7xmResx18hN9vLMCjOdlphTyPL5Hzr9qebh4S4YOvM2heq
+         Q2AfxkwtBHksLFJoAdxS40spHxTU+ORi1sOXusFU0idAgjFsGnTTpBJ/2o48AvM7Srbl
+         xKOHlWbaYKwRszXNOL268pV35C2ZM84lgJewO6h8lpIDWWkWl6pqwCX5nOTXZGXOpO2U
+         9Si0Xn+mWQYaSRKIJK5ku5kACGcuyyG3xRH0RGhHzJkHNI1G9ShNxbX1ukf33RtDJmwt
+         WmohSULhwu1Ix+3oU2nNEsuft1eVPjoVz5R+pXKnrZgQgxx+i3LsZjq0JAmqbwc+K6+z
+         846w==
+X-Gm-Message-State: APjAAAXHRz0/6TTvcJjILWxbhgRNTlDftotVvoW3NC1ZZlRLykRN+/ff
+        jT8lRGoK9V5a0jleN/Wl5UY=
+X-Google-Smtp-Source: APXvYqwoEfWG7HAVVU4yA1+OtKnYZ65JOgVEXFZcMym+PZtS209MPw+na4jiKwlt9ZqnAxe/0ZO3AQ==
+X-Received: by 2002:a81:4f0d:: with SMTP id d13mr2991492ywb.315.1575485597220;
+        Wed, 04 Dec 2019 10:53:17 -0800 (PST)
+Received: from [192.168.1.76] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id 138sm3322389ywj.94.2019.12.04.10.53.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Dec 2019 10:53:16 -0800 (PST)
+Subject: Re: What's cooking in git.git (Dec 2019, #01; Mon, 2)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <bea26b66-ac52-8f0e-9557-c958db7be628@gmail.com>
+Date:   Wed, 4 Dec 2019 13:53:10 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101
+ Thunderbird/71.0
 MIME-Version: 1.0
-X-OriginatorOrg: ksysllc.co.jp
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4cc30ff8-c149-49ad-6656-08d778e8f1b8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Dec 2019 18:36:57.8484
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: e2e801e1-1bfd-4c29-8e88-a6b5a79038d8
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L/lZiRq5Ff3/O/qV01a/M+EzYy5LzvBf9fXYNE5nITHthL9Wp+iAFKefDy+8V2iV5GbhTCv5ZbwEnBP0R78oNw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR01MB4859
+In-Reply-To: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello.
+On 12/2/2019 9:16 AM, Junio C Hamano wrote:
+> * ds/sparse-cone (2019-11-22) 19 commits
+>  - sparse-checkout: check for dirty status
+>  - sparse-checkout: update working directory in-process for 'init'
+>  - sparse-checkout: cone mode should not interact with .gitignore
+>  - sparse-checkout: write using lockfile
+>  - sparse-checkout: use in-process update for disable subcommand
+>  - sparse-checkout: update working directory in-process
+>  - sparse-checkout: sanitize for nested folders
+>  - unpack-trees: add progress to clear_ce_flags()
+>  - unpack-trees: hash less in cone mode
+>  - sparse-checkout: init and set in cone mode
+>  - sparse-checkout: use hashmaps for cone patterns
+>  - sparse-checkout: add 'cone' mode
+>  - trace2: add region in clear_ce_flags
+>  - sparse-checkout: create 'disable' subcommand
+>  - sparse-checkout: add '--stdin' option to set subcommand
+>  - sparse-checkout: 'set' subcommand
+>  - clone: add --sparse mode
+>  - sparse-checkout: create 'init' subcommand
+>  - sparse-checkout: create builtin with 'list' subcommand
+> 
+>  Management of sparsely checked-out working tree has gained a
+>  dedicated "sparse-checkout" command.
+> 
+>  How well is this topic done at this point?
 
-Here is a patch to gitk branch name utf-8 probrem.
+Hopefully this is ready to merge and I can start on the
+follow-up topics. I think this is ready enough that any
+further comments can be done in follow-up commits.
 
-See issue
-https://github.com/kkato233/gitk/issues/1
-and fix it=20
-https://github.com/kkato233/gitk/pull/2
+That said, I thought the topic was in that state before
+the 2.24.0 release, but then Szeder found several good
+points worthy to address here. He is CC'd to hopefully
+comment.
 
+> * ds/fsmonitor-testing (2019-11-22) 11 commits
+>  - test-lib: clear watchman watches at test completion
+>  - t7519: disable external GIT_TEST_FSMONITOR variable
+>  - t7063: disable fsmonitor with status cache
+>  - tests: disable fsmonitor in submodule tests
+>  - t3600-rm.sh: disable fsmonitor when deleting populated submodule
+>  - t3030-merge-recursive.sh: disable fsmonitor when tweaking GIT_WORK_TREE
+>  - fsmonitor: disable fsmonitor with worktrees
+>  - t1510-repo-setup.sh: disable fsmonitor if no .git dir
+>  - t1301-shared-repo.sh: disable FSMONITOR
+>  - fsmonitor: do not output to stderr for tests
+>  - fsmonitor: disable in a bare repo
+> 
+>  Updates around testing fsmoitor integration.
+> 
+>  Will merge to 'next'.
 
----
+Please hold off. As mentioned in the thread, I didn't do
+a very good job of writing my commit messages. I do plan to
+get back to this with better descriptions, and that may
+motivate others to read the series and provide feedback.
 
-diff --git a/gitk b/gitk
-index abe4805..3f61a5b 100755
---- a/gitk
-+++ b/gitk
-@@ -1780,11 +1780,15 @@ proc readrefs {} {
-     global otherrefids idotherrefs mainhead mainheadid
-     global selecthead selectheadid
-     global hideremotes
-+    global tclencoding
-
-     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
-        unset -nocomplain $v
-     }
-     set refd [open [list | git show-ref -d] r]
-+    if {$tclencoding !=3D {}} {
-+       fconfigure $refd -encoding $tclencoding
-+    }
-     while {[gets $refd line] >=3D 0} {
-        if {[string index $line 40] ne " "} continue
-        set id [string range $line 0 39]
---
-
---
-kato-k@ksysllc.co.jp
-
+Thanks,
+-Stolee
