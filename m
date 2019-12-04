@@ -2,66 +2,67 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,PDS_BTC_ID,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93DC3C2D0B1
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B110BC2D0BF
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6482020661
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EB1220661
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="InwIWT5f"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VI+7/EZL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728407AbfLDW3s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 17:29:48 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46791 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728383AbfLDW3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 17:29:46 -0500
-Received: by mail-wr1-f68.google.com with SMTP id z7so1058146wrl.13
-        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:29:45 -0800 (PST)
+        id S1728452AbfLDW34 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 17:29:56 -0500
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:43654 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728121AbfLDW3v (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 17:29:51 -0500
+Received: by mail-wr1-f42.google.com with SMTP id d16so1079996wre.10
+        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:29:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Gl/kCKnStjrJrZ8zYMAsY2UtbM6GFFGrW5BTTTWrAJo=;
-        b=InwIWT5f0TWB+CWZDzIb8hZ7i9caFbha13Llo188+2lvOPKMX85rLyCXGrRW50GUVN
-         /lHnSn2MbY6PjBe4Gn/WsB5yAUSOBNacQ7XnY4pfpCik5fVfB8FvqmHRLM1FfD7WoY8J
-         ZSTUQTGJkGXmy02bhRUYxSmzRy2AMuwzit75hO/7vR5O5I79q+JW0UWQKsu3F9E5DcX5
-         0xcRcumZAuKRSaRfTxAirZ+l04huq2rso3iCduzKr+AK0bKVLTUkCvJzio24UHsCUU/1
-         ADwI7M3kV4p/AnR6RqV8R1HbQtk/0t4yOwoIjRQXPAj2qdpbge3E89j+vDfUYch33a0y
-         Ezbg==
+        bh=eOj7bjIGPqbI50TlPYX2df7olY1qCgwxw+3WomzswE0=;
+        b=VI+7/EZLPYBRtIQg+BSzberqSoFlVFDZwSZTzi6Q98QxeRIL128HLBjN9o8dpmzzEu
+         R9mpMTVuED6HFtaEus5sAcXj1ah+0d+yZEvJnaSGHAtErJGbEUYPjyZDZTQNvky4Aupl
+         YNQdPjQeKztoo1qAXwmWv/p26X3fXOUOVhgA8ysVJuqrnV5ckAwC785T0EpOLBVdfHFZ
+         k6wZnPTO8ZXsPtTd1AyXUecwGgk6D4fyclz9cgKVA/atEdyxz7OT6FSpbxW1WjEGrfhP
+         SqlMj3WRZ2C9TTxOwzJDw6iTvdIBVAz0lTaaaEQ/LMuCF9ganmnupBfuxE6ggpO7LFyA
+         3IsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Gl/kCKnStjrJrZ8zYMAsY2UtbM6GFFGrW5BTTTWrAJo=;
-        b=gEOJHmsnypDdv31lqyEobJylv+rzkfpCLt4UzHhA1Uken5U5KP8IEClR8HpJVU+Khc
-         6mILw+0PFn4vf6mdOAQh8ZEGFpCnIrihVSD065a3iHQVS3PmJdjPlYiD21tzQcE4wxHq
-         DwZ3q1x8KBCunf3VHQ9RfkDWhAkvyBXXR5KZE0LruhzaMfrlQqdzSyGBfznD22HlRYCs
-         KGhmqN3LaEJSk8vI29Oy6rwbvme5zbYQ9OohMdvey3S8cOoKw8kPbdvJKdnq9pX69LQ6
-         78S7OGCpQoEFavQzdVbWLjnlUOvrJLnb1muWGpQp8jXaCcfNd4Iw+/MOsw+PaQmhwRqz
-         mRRQ==
-X-Gm-Message-State: APjAAAWNp4/mA+fs5Ap4gnWaU4OWgsuY8wpOwQ9LY0SQ6d24zJ5LSt/X
-        E67ys1PdkMHmrl72A09UPC0OKnPl
-X-Google-Smtp-Source: APXvYqzxmb29+gDHimSo89zXuslpXY7zRA5R/oopMPUi3Cse2Q4wMUMQ+jmTSauBE3tdcBlP1XKz9w==
-X-Received: by 2002:a5d:65c5:: with SMTP id e5mr6488357wrw.311.1575498584553;
-        Wed, 04 Dec 2019 14:29:44 -0800 (PST)
+        bh=eOj7bjIGPqbI50TlPYX2df7olY1qCgwxw+3WomzswE0=;
+        b=dPitFA5bYrmBdMI/FUtV8xP49/BRla7ddhO0dX+TqN+k8A39H/jgt4A7PYVeKhj7K5
+         vij1UgVb1pVW1QZCQDb+m700+575XjPsetrdcoLMatRlZ1eDKcQSlGELdRQRPkka9PTr
+         SpCmjtH4Bt21NiBEKgT582d09dadhYZIhtPU4e7gzkk3sQqmOxAMXWzY1S0iMPiBnUmA
+         kYicG1kHX+vI1TaNbK4eQucEiiWA4ncAx8EUMyUoo7yVcQLsWf0xazNSDIR3c9/cw6dG
+         10Z8hZn+CEjVqYgYuFjY5EGHQWfIn0L+W3ltvRaCeVTXcxWaG20d7yQpPVDHBmV0haeQ
+         Jyvg==
+X-Gm-Message-State: APjAAAWk43nUIxCus6dyowciOFB3HMtMZDKFq4jKQh42lGeZxwS1sPqn
+        v+xI9QSl9tDkQcqCVX1x2ye/tUfO
+X-Google-Smtp-Source: APXvYqwgJZJgGu3jYzt6u4TLjHIWQus/mNWhwjzllDdJDGEJsYdE3oD1AhtDBUi6vXMtpnG1JfF1mw==
+X-Received: by 2002:a5d:5091:: with SMTP id a17mr6435075wrt.362.1575498587617;
+        Wed, 04 Dec 2019 14:29:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s10sm9960434wrw.12.2019.12.04.14.29.43
+        by smtp.gmail.com with ESMTPSA id t5sm9982068wrr.35.2019.12.04.14.29.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Dec 2019 14:29:44 -0800 (PST)
-Message-Id: <8f5752c12737fd861274609fdafac095ad95c519.1575498578.git.gitgitgadget@gmail.com>
+        Wed, 04 Dec 2019 14:29:47 -0800 (PST)
+Message-Id: <04a0aedbaa213f046c49f97b0cb47581962e282c.1575498578.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
 References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
         <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Dec 2019 22:29:32 +0000
-Subject: [PATCH v4 06/11] git-p4: Fix assumed path separators to be more
- Windows friendly
+Date:   Wed, 04 Dec 2019 22:29:36 +0000
+Subject: [PATCH v4 10/11] git-p4: Support python3 for basic P4 clone, sync,
+ and submit
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,67 +78,697 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-When a computer is configured to use Git for windows and Python for windows, and not a Unix subsystem like cygwin or WSL, the directory separator changes and causes git-p4 to fail to properly determine paths.
+Issue: Python 3 is still not properly supported for any use with the git-p4 python code.
+Warning - this is a very large atomic commit.  The commit text is also very large.
 
-Fix 3 path separator errors:
+Change the code such that, with the exception of P4 depot paths and depot files, all text read by git-p4 is cast as a string as soon as possible and converted back to bytes as late as possible, following Python2 to Python3 conversion best practices.
 
-1. getUserCacheFilename should not use string concatenation. Change this code to use os.path.join to build an OS tolerant path.
-2. defaultDestiantion used the OS.path.split to split depot paths.  This is incorrect on windows. Change the code to split on a forward slash(/) instead since depot paths use this character regardless  of the operating system.
-3. The call to isvalidGitDir() in the main code also used a literal forward slash. Change the cose to use os.path.join to correctly format the path for the operating system.
+Important: Do not cast the bytes that contain the p4 depot path or p4 depot file name.  These should be left as bytes until used.
 
-These three changes allow the suggested windows configuration to properly locate files while retaining the existing behavior on non-windows operating systems.
+These two values should not be converted because the encoding of these values is unknown.  git-p4 supports a configuration value git-p4.pathEncoding that is used by the encodeWithUTF8()  to determine what a UTF8 version of the path and filename should be.  However, since depot path and depot filename need to be sent to P4 in their original encoding, they will be left as byte streams until they are actually used:
+
+* When sent to P4, the bytes are literally passed to the p4 command
+* When displayed in text for the user, they should be passed through the path_as_string() function
+* When used by GIT they should be passed through the encodeWithUTF8() function
+
+Change all the rest of system calls to cast output (stdin) as_bytes() and input (stdout) as_string().  This retains existing Python 2 support, and adds python 3 support for these functions:
+* read_pipe_full
+* read_pipe_lines
+* p4_has_move_command (used internally)
+* gitConfig
+* branch_exists
+* GitLFS.generatePointer
+* applyCommit - template must be read and written to the temporary file as_bytes() since it is created in memory as a string.
+* streamOneP4File(file, contents) - wrap calls to the depotFile in path_as_string() for display. The file contents must be retained as bytes, so update the RCS changes to be forced to bytes.
+* streamP4Files
+* importHeadRevision(revision) - encode the depotPaths for display separate from the text for processing.
+
+Py23File usage -
+Change the P4Sync.OpenStreams() function to cast the gitOutput, gitStream, and gitError streams as Py23File() wrapper classes.  This facilitates taking strings in both python 2 and python 3 and casting them to bytes in the wrapper class instead of having to modify each method. Since the fast-import command also expects a raw byte stream for file content, add a new stream handle - gitStreamBytes which is an unwrapped verison of gitStream.
+
+Literal text -
+Depending on context, most literal text does not need casting to unicode or bytes as the text is Python dependent - In python 2, the string is implied as 'str' and python 3 the string is implied as 'unicode'. Under these conditions, they match the rest of the operating text, following best practices.  However, when a literal string is used in functions that are dealing with the raw input from and raw ouput to files streams, literal bytes may be required. Additionally, functions that are dealing with P4 depot paths or P4 depot file names are also dealing with bytes and will require the same casting as bytes.  The following functions cast text as byte strings:
+* wildcard_decode(path) - the path parameter is a P4 depot and is bytes. Cast all the literals to bytes.
+* wildcard_encode(path) - the path parameter is a P4 depot and is bytes. Cast all the literals to bytes.
+* streamP4FilesCb(marshalled) - the marshalled data is in bytes. Cast the literals as bytes. When using this data to manipulate self.stream_file, encode all the marshalled data except for the 'depotFile' name.
+* streamP4Files
+
+Special behavior:
+* p4_describe - encoding is disabled for the depotFile(x) and path elements since these are depot path and depo filenames.
+* p4PathStartsWith(path, prefix) - Since P4 depot paths can contain non-UTF-8 encoded strings, change this method to compare paths while supporting the optional encoding.
+   - First, perform a byte-to-byte check to see if the path and prefix are both identical text.  There is no need to perform encoding conversions if the text is identical.
+   - If the byte check fails, pass both the path and prefix through encodeWithUTF8() to ensure both paths are using the same encoding. Then perform the test as originally written.
+* patchRCSKeywords(file, pattern) - the parameters of file and pattern are both strings. However this function changes the contents of the file itentified by name "file". Treat the content of this file as binary to ensure that python does not accidently change the original encoding. The regular expression is cast as_bytes() and run against the file as_bytes(). The P4 keywords are ASCII strings and cannot span lines so iterating over each line of the file is acceptable.
+* writeToGitStream(gitMode, relPath, contents) - Since 'contents' is already bytes data, instead of using the self.gitStream, use the new self.gitStreamBytes - the unwrapped gitStream that does not cast as_bytes() the binary data.
+* commit(details, files, branch, parent = "", allow_empty=False) - Changed the encoding for the commit message to the preferred format for fast-import. The number of bytes is sent in the data block instead of using the EOT marker.
+* Change the code for handling the user cache to use binary files. Cast text as_bytes() when writing to the cache and as_string() when reading from the cache.  This makes the reading and writing of the cache determinstic in it's encoding. Unlike file paths, P4 encodes the user names in UTF-8 encoding so no additional string encoding is required.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
-(cherry picked from commit a5b45c12c3861638a933b05a1ffee0c83978dcb2)
+(cherry picked from commit 65ff0c74ebe62a200b4385ecfd4aa618ce091f48)
 ---
- git-p4.py | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ git-p4.py | 287 ++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 205 insertions(+), 82 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 2659531c2e..7ac8cb42ef 100755
+index f13e4645a3..05db2ec657 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1454,8 +1454,10 @@ def p4UserIsMe(self, p4User):
-             return True
+@@ -268,6 +268,8 @@ def read_pipe_full(c):
+     expand = not isinstance(c, list)
+     p = subprocess.Popen(c, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=expand)
+     (out, err) = p.communicate()
++    out = as_string(out)
++    err = as_string(err)
+     return (p.returncode, out, err)
  
-     def getUserCacheFilename(self):
-+        """ Returns the filename of the username cache 
-+	    """
-         home = os.environ.get("HOME", os.environ.get("USERPROFILE"))
--        return home + "/.gitp4-usercache.txt"
-+        return os.path.join(home, ".gitp4-usercache.txt")
+ def read_pipe(c, ignore_error=False):
+@@ -294,10 +296,17 @@ def read_pipe_text(c):
+         return out.rstrip()
+ 
+ def p4_read_pipe(c, ignore_error=False):
++    """ Read output from the P4 command 'c'. Returns the output text on
++        success. On failure, terminates execution, unless
++        ignore_error is True, when it returns an empty string.
++    """
+     real_cmd = p4_build_cmd(c)
+     return read_pipe(real_cmd, ignore_error)
+ 
+ def read_pipe_lines(c):
++    """ Returns a list of text from executing the command 'c'.
++        The program will die if the command fails to execute.
++    """
+     if verbose:
+         sys.stderr.write('Reading pipe: %s\n' % str(c))
+ 
+@@ -307,6 +316,11 @@ def read_pipe_lines(c):
+     val = pipe.readlines()
+     if pipe.close() or p.wait():
+         die('Command failed: %s' % str(c))
++    # Unicode conversion from byte-string
++    # Iterate and fix in-place to avoid a second list in memory.
++    if isunicode:
++        for i in range(len(val)):
++            val[i] = as_string(val[i])
+ 
+     return val
+ 
+@@ -335,6 +349,8 @@ def p4_has_move_command():
+     cmd = p4_build_cmd(["move", "-k", "@from", "@to"])
+     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     (out, err) = p.communicate()
++    out=as_string(out)
++    err=as_string(err)
+     # return code will be 1 in either case
+     if err.find("Invalid option") >= 0:
+         return False
+@@ -462,16 +478,20 @@ def p4_last_change():
+     return int(results[0]['change'])
+ 
+ def p4_describe(change, shelved=False):
+-    """Make sure it returns a valid result by checking for
+-       the presence of field "time".  Return a dict of the
+-       results."""
++    """ Returns information about the requested P4 change list.
++
++        Data returned is not string encoded (returned as bytes)
++    """
++    # Make sure it returns a valid result by checking for
++    #   the presence of field "time".  Return a dict of the
++    #   results.
+ 
+     cmd = ["describe", "-s"]
+     if shelved:
+         cmd += ["-S"]
+     cmd += [str(change)]
+ 
+-    ds = p4CmdList(cmd, skip_info=True)
++    ds = p4CmdList(cmd, skip_info=True, encode_data=False)
+     if len(ds) != 1:
+         die("p4 describe -s %d did not return 1 result: %s" % (change, str(ds)))
+ 
+@@ -481,12 +501,23 @@ def p4_describe(change, shelved=False):
+         die("p4 describe -s %d exited with %d: %s" % (change, d["p4ExitCode"],
+                                                       str(d)))
+     if "code" in d:
+-        if d["code"] == "error":
++        if d["code"] == b"error":
+             die("p4 describe -s %d returned error code: %s" % (change, str(d)))
+ 
+     if "time" not in d:
+         die("p4 describe -s %d returned no \"time\": %s" % (change, str(d)))
+ 
++    # Do not convert 'depotFile(X)' or 'path' to be UTF-8 encoded, however 
++    # cast as_string() the rest of the text. 
++    keys=d.keys()
++    for key in keys:
++        if key.startswith('depotFile'):
++            d[key]=d[key] 
++        elif key == 'path':
++            d[key]=d[key] 
++        else:
++            d[key] = as_string(d[key])
++
+     return d
+ 
+ #
+@@ -800,6 +831,8 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+     return result
+ 
+ def p4Cmd(cmd):
++    """ Executes a P4 command and returns the results in a dictionary
++    """
+     list = p4CmdList(cmd)
+     result = {}
+     for entry in list:
+@@ -908,13 +941,15 @@ def gitDeleteRef(ref):
+ _gitConfig = {}
+ 
+ def gitConfig(key, typeSpecifier=None):
++    """ Return a configuration setting from GIT
++	"""
+     if key not in _gitConfig:
+         cmd = [ "git", "config" ]
+         if typeSpecifier:
+             cmd += [ typeSpecifier ]
+         cmd += [ key ]
+         s = read_pipe(cmd, ignore_error=True)
+-        _gitConfig[key] = s.strip()
++        _gitConfig[key] = as_string(s).strip()
+     return _gitConfig[key]
+ 
+ def gitConfigBool(key):
+@@ -988,6 +1023,7 @@ def branch_exists(branch):
+     cmd = [ "git", "rev-parse", "--symbolic", "--verify", branch ]
+     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     out, _ = p.communicate()
++    out = as_string(out)
+     if p.returncode:
+         return False
+     # expect exactly one line of output: the branch name
+@@ -1171,9 +1207,22 @@ def p4PathStartsWith(path, prefix):
+     #
+     # we may or may not have a problem. If you have core.ignorecase=true,
+     # we treat DirA and dira as the same directory
++    
++    # Since we have to deal with mixed encodings for p4 file
++    # paths, first perform a simple startswith check, this covers
++    # the case that the formats and path are identical.
++    if as_bytes(path).startswith(as_bytes(prefix)):
++        return True
++    
++    # attempt to convert the prefix and path both to utf8
++    path_utf8 = encodeWithUTF8(path)
++    prefix_utf8 = encodeWithUTF8(prefix)
++
+     if gitConfigBool("core.ignorecase"):
+-        return path.lower().startswith(prefix.lower())
+-    return path.startswith(prefix)
++        # Check if we match byte-per-byte.  
++        
++        return path_utf8.lower().startswith(prefix_utf8.lower())
++    return path_utf8.startswith(prefix_utf8)
+ 
+ def getClientSpec():
+     """Look at the p4 client spec, create a View() object that contains
+@@ -1229,18 +1278,24 @@ def wildcard_decode(path):
+     # Cannot have * in a filename in windows; untested as to
+     # what p4 would do in such a case.
+     if not platform.system() == "Windows":
+-        path = path.replace("%2A", "*")
+-    path = path.replace("%23", "#") \
+-               .replace("%40", "@") \
+-               .replace("%25", "%")
++        path = path.replace(b"%2A", b"*")
++    path = path.replace(b"%23", b"#") \
++               .replace(b"%40", b"@") \
++               .replace(b"%25", b"%")
+     return path
+ 
+ def wildcard_encode(path):
+     # do % first to avoid double-encoding the %s introduced here
+-    path = path.replace("%", "%25") \
+-               .replace("*", "%2A") \
+-               .replace("#", "%23") \
+-               .replace("@", "%40")
++    if isinstance(path, unicode):
++        path = path.replace("%", "%25") \
++                   .replace("*", "%2A") \
++                   .replace("#", "%23") \
++                   .replace("@", "%40")
++    else:
++        path = path.replace(b"%", b"%25") \
++                   .replace(b"*", b"%2A") \
++                   .replace(b"#", b"%23") \
++                   .replace(b"@", b"%40")
+     return path
+ 
+ def wildcard_present(path):
+@@ -1372,7 +1427,7 @@ def generatePointer(self, contentFile):
+             ['git', 'lfs', 'pointer', '--file=' + contentFile],
+             stdout=subprocess.PIPE
+         )
+-        pointerFile = pointerProcess.stdout.read()
++        pointerFile = as_string(pointerProcess.stdout.read())
+         if pointerProcess.wait():
+             os.remove(contentFile)
+             die('git-lfs pointer command failed. Did you install the extension?')
+@@ -1479,6 +1534,8 @@ def getUserCacheFilename(self):
+         return os.path.join(home, ".gitp4-usercache.txt")
  
      def getUserMapFromPerforceServer(self):
-         if self.userMapFromPerforceServer:
-@@ -3973,13 +3975,16 @@ def __init__(self):
-         self.cloneBare = False
- 
-     def defaultDestination(self, args):
-+        """ Returns the last path component as the default git 
-+            repository directory name
++        """ Creates the usercache from the data in P4.
 +        """
-         ## TODO: use common prefix of args?
-         depotPath = args[0]
-         depotDir = re.sub("(@[^@]*)$", "", depotPath)
-         depotDir = re.sub("(#[^#]*)$", "", depotDir)
-         depotDir = re.sub(r"\.\.\.$", "", depotDir)
-         depotDir = re.sub(r"/$", "", depotDir)
--        return os.path.split(depotDir)[1]
-+        return depotDir.split('/')[-1]
+         if self.userMapFromPerforceServer:
+             return
+         self.users = {}
+@@ -1504,18 +1561,22 @@ def getUserMapFromPerforceServer(self):
+         for (key, val) in list(self.users.items()):
+             s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
  
-     def run(self, args):
-         if len(args) < 1:
-@@ -4252,8 +4257,8 @@ def main():
-                         chdir(cdup);
+-        open(self.getUserCacheFilename(), "wb").write(s)
++        cache = io.open(self.getUserCacheFilename(), "wb")
++        cache.write(as_bytes(s))
++        cache.close()
+         self.userMapFromPerforceServer = True
  
-         if not isValidGitDir(cmd.gitdir):
--            if isValidGitDir(cmd.gitdir + "/.git"):
--                cmd.gitdir += "/.git"
-+            if isValidGitDir(os.path.join(cmd.gitdir, ".git")):
-+                cmd.gitdir = os.path.join(cmd.gitdir, ".git")
+     def loadUserMapFromCache(self):
++        """ Reads the P4 username to git email map 
++        """
+         self.users = {}
+         self.userMapFromPerforceServer = False
+         try:
+-            cache = open(self.getUserCacheFilename(), "rb")
++            cache = io.open(self.getUserCacheFilename(), "rb")
+             lines = cache.readlines()
+             cache.close()
+             for line in lines:
+-                entry = line.strip().split("\t")
++                entry = as_string(line).strip().split("\t")
+                 self.users[entry[0]] = entry[1]
+         except IOError:
+             self.getUserMapFromPerforceServer()
+@@ -1715,21 +1776,27 @@ def prepareLogMessage(self, template, message, jobs):
+         return result
+ 
+     def patchRCSKeywords(self, file, pattern):
+-        # Attempt to zap the RCS keywords in a p4 controlled file matching the given pattern
++        """ Attempt to zap the RCS keywords in a p4 
++            controlled file matching the given pattern
++        """
++        bSubLine = as_bytes(r'$\1$')
+         (handle, outFileName) = tempfile.mkstemp(dir='.')
+         try:
+-            outFile = os.fdopen(handle, "w+")
+-            inFile = open(file, "r")
+-            regexp = re.compile(pattern, re.VERBOSE)
++            outFile = os.fdopen(handle, "w+b")
++            inFile = open(file, "rb")
++            regexp = re.compile(as_bytes(pattern), re.VERBOSE)
+             for line in inFile.readlines():
+-                line = regexp.sub(r'$\1$', line)
++                line = regexp.sub(bSubLine, line)
+                 outFile.write(line)
+             inFile.close()
+             outFile.close()
++            outFile = None
+             # Forcibly overwrite the original file
+             os.unlink(file)
+             shutil.move(outFileName, file)
+         except:
++            if outFile != None:
++                outFile.close()
+             # cleanup our temporary file
+             os.unlink(outFileName)
+             print("Failed to strip RCS keywords in %s" % file)
+@@ -2149,7 +2216,7 @@ def applyCommit(self, id):
+         tmpFile = os.fdopen(handle, "w+b")
+         if self.isWindows:
+             submitTemplate = submitTemplate.replace("\n", "\r\n")
+-        tmpFile.write(submitTemplate)
++        tmpFile.write(as_bytes(submitTemplate))
+         tmpFile.close()
+ 
+         if self.prepare_p4_only:
+@@ -2199,8 +2266,8 @@ def applyCommit(self, id):
+                 message = tmpFile.read()
+                 tmpFile.close()
+                 if self.isWindows:
+-                    message = message.replace("\r\n", "\n")
+-                submitTemplate = message[:message.index(separatorLine)]
++                    message = message.replace(b"\r\n", b"\n")
++                submitTemplate = message[:message.index(as_bytes(separatorLine))]
+ 
+                 if update_shelve:
+                     p4_write_pipe(['shelve', '-r', '-i'], submitTemplate)
+@@ -2843,8 +2910,11 @@ def stripRepoPath(self, path, prefixes):
+         return path
+ 
+     def splitFilesIntoBranches(self, commit):
+-        """Look at each depotFile in the commit to figure out to what
+-           branch it belongs."""
++        """ Look at each depotFile in the commit to figure out to what
++            branch it belongs.
++
++            Data in the commit will NOT be encoded
++        """
+ 
+         if self.clientSpecDirs:
+             files = self.extractFilesFromCommit(commit)
+@@ -2885,16 +2955,22 @@ def splitFilesIntoBranches(self, commit):
+         return branches
+ 
+     def writeToGitStream(self, gitMode, relPath, contents):
+-        self.gitStream.write('M %s inline %s\n' % (gitMode, relPath))
++        """ Writes the bytes[] 'contents' to the git fast-import
++            with the given 'gitMode' and 'relPath' as the relative
++            path.
++        """
++        self.gitStream.write('M %s inline %s\n' % (gitMode, as_string(relPath)))
+         self.gitStream.write('data %d\n' % sum(len(d) for d in contents))
+         for d in contents:
+-            self.gitStream.write(d)
++            self.gitStreamBytes.write(d)
+         self.gitStream.write('\n')
+ 
+-    # output one file from the P4 stream
+-    # - helper for streamP4Files
+-
+     def streamOneP4File(self, file, contents):
++        """ output one file from the P4 stream to the git inbound stream.
++            helper for streamP4files.
++
++            contents should be a bytes (bytes) 
++        """
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+         relPath = encodeWithUTF8(relPath, self.verbose)
+         if verbose:
+@@ -2902,7 +2978,7 @@ def streamOneP4File(self, file, contents):
+                 size = int(self.stream_file['fileSize'])
              else:
-                 die("fatal: cannot locate git repository at %s" % cmd.gitdir)
+                 size = 0 # deleted files don't get a fileSize apparently
+-            sys.stdout.write('\r%s --> %s (%i MB)\n' % (file['depotFile'], relPath, size//1024//1024))
++            sys.stdout.write('\r%s --> %s (%i MB)\n' % (path_as_string(file['depotFile']), as_string(relPath), size//1024//1024))
+             sys.stdout.flush()
  
+         (type_base, type_mods) = split_p4_type(file["type"])
+@@ -2920,7 +2996,7 @@ def streamOneP4File(self, file, contents):
+                 # to nothing.  This causes p4 errors when checking out such
+                 # a change, and errors here too.  Work around it by ignoring
+                 # the bad symlink; hopefully a future change fixes it.
+-                print("\nIgnoring empty symlink in %s" % file['depotFile'])
++                print("\nIgnoring empty symlink in %s" % path_as_string(file['depotFile']))
+                 return
+             elif data[-1] == '\n':
+                 contents = [data[:-1]]
+@@ -2960,16 +3036,16 @@ def streamOneP4File(self, file, contents):
+             # Ideally, someday, this script can learn how to generate
+             # appledouble files directly and import those to git, but
+             # non-mac machines can never find a use for apple filetype.
+-            print("\nIgnoring apple filetype file %s" % file['depotFile'])
++            print("\nIgnoring apple filetype file %s" % path_as_string(file['depotFile']))
+             return
+ 
+         # Note that we do not try to de-mangle keywords on utf16 files,
+         # even though in theory somebody may want that.
+-        pattern = p4_keywords_regexp_for_type(type_base, type_mods)
++        pattern = as_bytes(p4_keywords_regexp_for_type(type_base, type_mods))
+         if pattern:
+             regexp = re.compile(pattern, re.VERBOSE)
+-            text = ''.join(contents)
+-            text = regexp.sub(r'$\1$', text)
++            text = b''.join(contents)
++            text = regexp.sub(as_bytes(r'$\1$'), text)
+             contents = [ text ]
+ 
+         if self.largeFileSystem:
+@@ -2988,15 +3064,19 @@ def streamOneP4Deletion(self, file):
+         if self.largeFileSystem and self.largeFileSystem.isLargeFile(relPath):
+             self.largeFileSystem.removeLargeFile(relPath)
+ 
+-    # handle another chunk of streaming data
+     def streamP4FilesCb(self, marshalled):
++        """ Callback function for recording P4 chunks of data for streaming 
++            into GIT.
++
++            marshalled data is bytes[] from the caller
++        """
+ 
+         # catch p4 errors and complain
+         err = None
+-        if "code" in marshalled:
+-            if marshalled["code"] == "error":
+-                if "data" in marshalled:
+-                    err = marshalled["data"].rstrip()
++        if b"code" in marshalled:
++            if marshalled[b"code"] == b"error":
++                if b"data" in marshalled:
++                    err = marshalled[b"data"].rstrip()
+ 
+         if not err and 'fileSize' in self.stream_file:
+             required_bytes = int((4 * int(self.stream_file["fileSize"])) - calcDiskFree())
+@@ -3018,11 +3098,11 @@ def streamP4FilesCb(self, marshalled):
+             # ignore errors, but make sure it exits first
+             self.importProcess.wait()
+             if f:
+-                die("Error from p4 print for %s: %s" % (f, err))
++                die("Error from p4 print for %s: %s" % (path_as_string(f), err))
+             else:
+                 die("Error from p4 print: %s" % err)
+ 
+-        if 'depotFile' in marshalled and self.stream_have_file_info:
++        if b'depotFile' in marshalled and self.stream_have_file_info:
+             # start of a new file - output the old one first
+             self.streamOneP4File(self.stream_file, self.stream_contents)
+             self.stream_file = {}
+@@ -3032,13 +3112,16 @@ def streamP4FilesCb(self, marshalled):
+         # pick up the new file information... for the
+         # 'data' field we need to append to our array
+         for k in list(marshalled.keys()):
+-            if k == 'data':
++            if k == b'data':
+                 if 'streamContentSize' not in self.stream_file:
+                     self.stream_file['streamContentSize'] = 0
+-                self.stream_file['streamContentSize'] += len(marshalled['data'])
+-                self.stream_contents.append(marshalled['data'])
++                self.stream_file['streamContentSize'] += len(marshalled[b'data'])
++                self.stream_contents.append(marshalled[b'data'])
+             else:
+-                self.stream_file[k] = marshalled[k]
++                if k == b'depotFile':
++                    self.stream_file[as_string(k)] = marshalled[k]
++                else:
++                    self.stream_file[as_string(k)] = as_string(marshalled[k])
+ 
+         if (verbose and
+             'streamContentSize' in self.stream_file and
+@@ -3047,13 +3130,14 @@ def streamP4FilesCb(self, marshalled):
+             size = int(self.stream_file["fileSize"])
+             if size > 0:
+                 progress = 100.0*self.stream_file['streamContentSize']/size
+-                sys.stdout.write('\r%s %4.1f%% (%i MB)' % (self.stream_file['depotFile'], progress, int(size//1024//1024)))
++                sys.stdout.write('\r%s %4.1f%% (%i MB)' % (path_as_string(self.stream_file['depotFile']), progress, int(size//1024//1024)))
+                 sys.stdout.flush()
+ 
+         self.stream_have_file_info = True
+ 
+-    # Stream directly from "p4 files" into "git fast-import"
+     def streamP4Files(self, files):
++        """ Stream directly from "p4 files" into "git fast-import" 
++        """
+         filesForCommit = []
+         filesToRead = []
+         filesToDelete = []
+@@ -3074,7 +3158,7 @@ def streamP4Files(self, files):
+             self.stream_contents = []
+             self.stream_have_file_info = False
+ 
+-            # curry self argument
++            # Callback for P4 command to collect file content
+             def streamP4FilesCbSelf(entry):
+                 self.streamP4FilesCb(entry)
+ 
+@@ -3083,9 +3167,9 @@ def streamP4FilesCbSelf(entry):
+                 if 'shelved_cl' in f:
+                     # Handle shelved CLs using the "p4 print file@=N" syntax to print
+                     # the contents
+-                    fileArg = '%s@=%d' % (f['path'], f['shelved_cl'])
++                    fileArg = b'%s@=%d' % (f['path'], as_bytes(f['shelved_cl']))
+                 else:
+-                    fileArg = '%s#%s' % (f['path'], f['rev'])
++                    fileArg = b'%s#%s' % (f['path'], as_bytes(f['rev']))
+ 
+                 fileArgs.append(fileArg)
+ 
+@@ -3105,7 +3189,7 @@ def make_email(self, userid):
+ 
+     def streamTag(self, gitStream, labelName, labelDetails, commit, epoch):
+         """ Stream a p4 tag.
+-        commit is either a git commit, or a fast-import mark, ":<p4commit>"
++            commit is either a git commit, or a fast-import mark, ":<p4commit>"
+         """
+ 
+         if verbose:
+@@ -3177,7 +3261,22 @@ def commit(self, details, files, branch, parent = "", allow_empty=False):
+                 .format(details['change']))
+             return
+ 
++        # fast-import:
++        #'commit' SP <ref> LF
++	    #mark?
++	    #original-oid?
++	    #('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
++	    #'committer' (SP <name>)? SP LT <email> GT SP <when> LF
++	    #('encoding' SP <encoding>)?
++	    #data
++	    #('from' SP <commit-ish> LF)?
++	    #('merge' SP <commit-ish> LF)*
++	    #(filemodify | filedelete | filecopy | filerename | filedeleteall | notemodify)*
++	    #LF?
++        
++        #'commit' - <ref> is the name of the branch to make the commit on
+         self.gitStream.write("commit %s\n" % branch)
++        #'mark' SP :<idnum>
+         self.gitStream.write("mark :%s\n" % details["change"])
+         self.committedChanges.add(int(details["change"]))
+         committer = ""
+@@ -3187,19 +3286,29 @@ def commit(self, details, files, branch, parent = "", allow_empty=False):
+ 
+         self.gitStream.write("committer %s\n" % committer)
+ 
+-        self.gitStream.write("data <<EOT\n")
+-        self.gitStream.write(details["desc"])
++        # Per https://git-scm.com/docs/git-fast-import
++        # The preferred method for creating the commit message is to supply the 
++        # byte count in the data method and not to use a Delimited format. 
++        # Collect all the text in the commit message into a single string and 
++        # compute the byte count.
++        commitText = details["desc"]
+         if len(jobs) > 0:
+-            self.gitStream.write("\nJobs: %s" % (' '.join(jobs)))
+-
++            commitText += "\nJobs: %s" % (' '.join(jobs))
+         if not self.suppress_meta_comment:
+-            self.gitStream.write("\n[git-p4: depot-paths = \"%s\": change = %s" %
+-                                (','.join(self.branchPrefixes), details["change"]))
+-            if len(details['options']) > 0:
+-                self.gitStream.write(": options = %s" % details['options'])
+-            self.gitStream.write("]\n")
++            # coherce the path to the correct formatting in the branch prefixes as well.
++            dispPaths = []
++            for p in self.branchPrefixes:
++                dispPaths += [path_as_string(p)]
+ 
+-        self.gitStream.write("EOT\n\n")
++            commitText += ("\n[git-p4: depot-paths = \"%s\": change = %s" %
++                                (','.join(dispPaths), details["change"]))
++            if len(details['options']) > 0:
++                commitText += (": options = %s" % details['options'])
++            commitText += "]"
++        commitText += "\n" 
++        self.gitStream.write("data %s\n" % len(as_bytes(commitText)))
++        self.gitStream.write(commitText)
++        self.gitStream.write("\n")
+ 
+         if len(parent) > 0:
+             if self.verbose:
+@@ -3606,30 +3715,35 @@ def sync_origin_only(self):
+                 system("git fetch origin")
+ 
+     def importHeadRevision(self, revision):
+-        print("Doing initial import of %s from revision %s into %s" % (' '.join(self.depotPaths), revision, self.branch))
+-
++        # Re-encode depot text
++        dispPaths = []
++        utf8Paths = []
++        for p in self.depotPaths:
++            dispPaths += [path_as_string(p)]
++        print("Doing initial import of %s from revision %s into %s" % (' '.join(dispPaths), revision, self.branch))
+         details = {}
+         details["user"] = "git perforce import user"
+-        details["desc"] = ("Initial import of %s from the state at revision %s\n"
+-                           % (' '.join(self.depotPaths), revision))
++        details["desc"] = ("Initial import of %s from the state at revision %s\n" %
++                           (' '.join(dispPaths), revision))
+         details["change"] = revision
+         newestRevision = 0
++        del dispPaths
+ 
+         fileCnt = 0
+         fileArgs = ["%s...%s" % (p,revision) for p in self.depotPaths]
+ 
+-        for info in p4CmdList(["files"] + fileArgs):
++        for info in p4CmdList(["files"] + fileArgs, encode_data = False):
+ 
+-            if 'code' in info and info['code'] == 'error':
++            if 'code' in info and info['code'] == b'error':
+                 sys.stderr.write("p4 returned an error: %s\n"
+-                                 % info['data'])
+-                if info['data'].find("must refer to client") >= 0:
++                                 % as_string(info['data']))
++                if info['data'].find(b"must refer to client") >= 0:
+                     sys.stderr.write("This particular p4 error is misleading.\n")
+                     sys.stderr.write("Perhaps the depot path was misspelled.\n");
+                     sys.stderr.write("Depot path:  %s\n" % " ".join(self.depotPaths))
+                 sys.exit(1)
+             if 'p4ExitCode' in info:
+-                sys.stderr.write("p4 exitcode: %s\n" % info['p4ExitCode'])
++                sys.stderr.write("p4 exitcode: %s\n" % as_string(info['p4ExitCode']))
+                 sys.exit(1)
+ 
+ 
+@@ -3642,8 +3756,10 @@ def importHeadRevision(self, revision):
+                 #fileCnt = fileCnt + 1
+                 continue
+ 
++            # Save all the file information, howerver do not translate the depotFile name at 
++            # this time. Leave that as bytes since the encoding may vary.
+             for prop in ["depotFile", "rev", "action", "type" ]:
+-                details["%s%s" % (prop, fileCnt)] = info[prop]
++                details["%s%s" % (prop, fileCnt)] = (info[prop] if prop == "depotFile" else as_string(info[prop]))
+ 
+             fileCnt = fileCnt + 1
+ 
+@@ -3663,13 +3779,18 @@ def importHeadRevision(self, revision):
+             print(self.gitError.read())
+ 
+     def openStreams(self):
++        """ Opens the fast import pipes.  Note that the git* streams are wrapped
++            to expect Unicode text.  To send a raw byte Array, use the importProcess
++            underlying port
++        """
+         self.importProcess = subprocess.Popen(["git", "fast-import"],
+                                               stdin=subprocess.PIPE,
+                                               stdout=subprocess.PIPE,
+                                               stderr=subprocess.PIPE);
+-        self.gitOutput = self.importProcess.stdout
+-        self.gitStream = self.importProcess.stdin
+-        self.gitError = self.importProcess.stderr
++        self.gitOutput = Py23File(self.importProcess.stdout, verbose = self.verbose)
++        self.gitStream = Py23File(self.importProcess.stdin, verbose = self.verbose)
++        self.gitError = Py23File(self.importProcess.stderr, verbose = self.verbose)
++        self.gitStreamBytes = self.importProcess.stdin
+ 
+     def closeStreams(self):
+         self.gitStream.close()
+@@ -4035,15 +4156,17 @@ def run(self, args):
+             self.cloneDestination = depotPaths[-1]
+             depotPaths = depotPaths[:-1]
+ 
++        dispPaths = []
+         for p in depotPaths:
+             if not p.startswith("//"):
+                 sys.stderr.write('Depot paths must start with "//": %s\n' % p)
+                 return False
++            dispPaths += [path_as_string(p)]
+ 
+         if not self.cloneDestination:
+             self.cloneDestination = self.defaultDestination(args)
+ 
+-        print("Importing from %s into %s" % (', '.join(depotPaths), self.cloneDestination))
++        print("Importing from %s into %s" % (', '.join(dispPaths), path_as_string(self.cloneDestination)))
+ 
+         if not os.path.exists(self.cloneDestination):
+             os.makedirs(self.cloneDestination)
 -- 
 gitgitgadget
 
