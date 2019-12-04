@@ -2,67 +2,65 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,PDS_BTC_ID,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73B17C2D0BE
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89483C43603
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3DA1220661
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 527DF2073C
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 22:29:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLYDdcFD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ucuuZIe0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728401AbfLDW3q (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728410AbfLDW3s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 17:29:48 -0500
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:39345 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728121AbfLDW3q (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 4 Dec 2019 17:29:46 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40571 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728372AbfLDW3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 17:29:44 -0500
-Received: by mail-wr1-f68.google.com with SMTP id c14so1109107wrn.7
-        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:29:42 -0800 (PST)
+Received: by mail-wr1-f43.google.com with SMTP id y11so1112207wrt.6
+        for <git@vger.kernel.org>; Wed, 04 Dec 2019 14:29:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=DzCCkTzgUyIYBFSfzj6iOR0jXzzfHfA2nkvr+WW+YTg=;
-        b=OLYDdcFDY3eYTY+kyIJE+WcC81H2vJfV5GmabrM/60a7g5yQ+Ak1b2qy2HisIai2lz
-         HfiTRX3u5iKUZA0ZBsJuMn5PtcpM0nmVhXlryDSDYtRqbb8UDGbW4a5SHK2xygoDjFj2
-         FNifTTNQ4GGZgq7ugvJpP+KuoCtcZ+5eeW4w3qmyeDV+8JUc1CwIyuivcCKUgG1U4vy5
-         ggmTKrmPyW4kMIX8Ro2gM0SmhQ+Ix1Ae0ZR90J2LUv4U44cqL5Vgu2Oa6hwnyAcADxDt
-         BVsZsfPBc4Yoak4ETlF/3mLOthPq/RFTI2LZuT1uWw4EXz+QFiQavVgCuYFAmGFJCQwh
-         w1Dw==
+        bh=N2pqbez6QuyRw2bMBb/v8SGaZ3M53Bs8crmhS9TCJyQ=;
+        b=ucuuZIe0L7dUsjesrTS4Mv0EaOBr3HRijsdzBGdt4HtohP4D3TqlMW9ZF2gjGacLUi
+         T4K/rJ28kek5RzJOveO3fI8lQaSjqw94C23nhry3+UQor7lYd9CeA3qeolYSRsUaXhgc
+         DkTOwCXMWpRXXeddvb0xmn2k3fkAAmadvzxvLyQ1moc/3kbnoh/3rOq0hUyNFaD+Su2b
+         qFxsvFpDIQgEt8ItlGkcutHLtczePnICnGuIs3CnZ2ctUlrqdA2x/9Kz/moFnVPgkyrl
+         mqMEmELnTKkuRbxjCOD0fKsaJMhHi+lN+wvEf8FGipzXNOyFyXrRHweX5B7vG5NHlpCT
+         N+xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DzCCkTzgUyIYBFSfzj6iOR0jXzzfHfA2nkvr+WW+YTg=;
-        b=GHLrqqjGi5aEI6bCGJmdQfdZB2Hfzd4anFC235grA4/swkKPG2CeaQmk120LGJQ5wK
-         w6J2LhUnw1Yx99haNpwLYnJJVX3RD1jn30i3uek9ekyzA071sOWH0Rta4M1RAz9M4aeE
-         rcF1JQpo3ZxOjYke/Mo/v8UVcbvs627drzDHStg8wROLT1ACqbQX3U9687xf4HT+pXRR
-         Adwz+HxgsLbUPQ72Qlg7vkeeBylU3nattcziALWcza6GRF2lGxbFfzbLgyFJ9pv3LNwR
-         ZE+VfoAzjevyxJ/tquHWqg8quWU/8grVNv33sqaKx0pTn5EXFR8ug8/S2sn+VWFLbZXN
-         Hwlw==
-X-Gm-Message-State: APjAAAVm8dH7IzfI5X7jet7XlB0ZKvfWl9wzF94N+HmFfjxVyWSN9uHH
-        ah9Urfw6LgWih2U2+/mbtXDxp/nK
-X-Google-Smtp-Source: APXvYqwuWk4wADZCTIgjkblSDgMklOH+iNWyCpa3DK84qNFHnhBvzC1kxwmY9i2Fdh3imNUOgZr/8w==
-X-Received: by 2002:a5d:50d2:: with SMTP id f18mr6564178wrt.366.1575498581993;
-        Wed, 04 Dec 2019 14:29:41 -0800 (PST)
+        bh=N2pqbez6QuyRw2bMBb/v8SGaZ3M53Bs8crmhS9TCJyQ=;
+        b=pHNLm47xjdyQPVRavRIOeRmAJfF87YSYlBNcKy2vbtTFhknjwKQGUUFAvANF2rb/Xw
+         SFI4HHdKjcDrhkXoS3fiMXAd+YBJILAwvsxyv9af+AbEMdmXQchS845shUuCu/GD3mVT
+         toqH7c4dq5jp5o6mvqvpgvyHhI/Kr96SQMf7gcVSXh+it1qyUEDhhdamxr2hV+nQ0yp9
+         wh29b4M4U/f8vxGXKzhuxstAattuIPoKMa52lIVPB9cam4P/n10dViT/ZecsymRoJJjx
+         +840GwYybs94XNsWgIuVAH9uGamQsFjWtDyjP6GTSEuaT+cv+BzU2bZYnx0xIXuQsWyl
+         84bg==
+X-Gm-Message-State: APjAAAWxIAXtnhDBBEujD2EduuEvBvcapNQg08o6TmEBFMkbzfDsKV6M
+        UCuli+OESvceoMlsweFu2N3SHTyp
+X-Google-Smtp-Source: APXvYqzGFygr+hDpTkac/FkitSpTcpYQI8HUWz7RG87htDsca9Gs2sp3mmSli+OsLdhbS+eX60uVGA==
+X-Received: by 2002:adf:f508:: with SMTP id q8mr3398517wro.334.1575498583782;
+        Wed, 04 Dec 2019 14:29:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p5sm9495990wrt.79.2019.12.04.14.29.41
+        by smtp.gmail.com with ESMTPSA id z64sm8991043wmg.30.2019.12.04.14.29.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Dec 2019 14:29:41 -0800 (PST)
-Message-Id: <f0e658b984ca009c575368e661016f785922f970.1575498577.git.gitgitgadget@gmail.com>
+        Wed, 04 Dec 2019 14:29:43 -0800 (PST)
+Message-Id: <1bf7b073b047ca7625d0861b160a9602135f7baf.1575498578.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
 References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
         <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 04 Dec 2019 22:29:29 +0000
-Subject: [PATCH v4 03/11] git-p4: add new helper functions for python3
- conversion
+Date:   Wed, 04 Dec 2019 22:29:31 +0000
+Subject: [PATCH v4 05/11] git-p4: Add new functions in preparation of usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,121 +76,134 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-Python 3+ handles strings differently than Python 2.7.  Since Python 2 is reaching it's end of life, a series of changes are being submitted to enable python 3.7+ support. The current code fails basic tests under python 3.7.
+This changelist is an intermediate submission for migrating the P4 support from Python2 to Python3. The code needs access to the encodeWithUTF8() for support of non-UTF8 filenames in the clone class as well as the sync class.
 
-Change the existing unicode test add new support functions for python2-python3 support.
+Move the function encodeWithUTF8() from the P4Sync class to a stand-alone function.  This will allow other classes to use this function without instanciating the P4Sync class. Change the self.verbose reference to an optional method parameter. Update the existing references to this function to pass the self.verbose since it is no longer available on "self" since the function is no longer contained on the P4Sync class.
 
-Define the following variables:
-- isunicode - a boolean variable that states if the version of python natively supports unicode (true) or not (false). This is true for Python3 and false for Python2.
-- unicode - a type alias for the datatype that holds a unicode string.  It is assigned to a str under python 3 and the unicode type for Python2.
-- bytes - a type alias for an array of bytes.  It is assigned the native bytes type for Python3 and str for Python2.
+Modify the functions write_pipe() and p4_write_pipe() to remove the return value.  The return value for both functions is the number of bytes, but the meaning is lost under python3 since the count does not match the number of characters that may have been encoded.  Additionally, the return value was never used, so this is removed to avoid future ambiguity.
 
-Add the following new functions:
-
-- as_string(text) - A new function that will convert a byte array to a unicode (UTF-8) string under python 3.  Under python 2, this returns the string unchanged.
-- as_bytes(text) - A new function that will convert a unicode string to a byte array under python 3.  Under python 2, this returns the string unchanged.
-- to_unicode(text) - Converts a text string as Unicode(UTF-8) on both Python2 and Python3.
-
-Add a new function alias raw_input:
-If raw_input does not exist (it was renamed to input in python 3) alias input as raw_input.
-
-The AS_STRING and AS_BYTES functions allow for modifying the code with a minimal amount of impact on Python2 support.  When a string is expected, the as_string() will be used to convert "cast" the incoming "bytes" to a string type. Conversely as_bytes() will be used to convert a "string" to a "byte array" type. Since Python2 overloads the datatype 'str' to serve both purposes, the Python2 versions of these function do not change the data, since the str functions as both a byte array and a string.
-
-basestring is removed since its only references are found in tests that were changed in the previous change list.
+Add a new method gitConfigSet(). This method will set a value in the git configuration cache list.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
-(cherry picked from commit 7921aeb3136b07643c1a503c2d9d8b5ada620356)
+(cherry picked from commit affe888f432bb6833df78962e8671fccdf76c47a)
 ---
- git-p4.py | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 66 insertions(+), 4 deletions(-)
+ git-p4.py | 60 ++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 44 insertions(+), 16 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 0f27996393..93dfd0920a 100755
+index b283ef1029..2659531c2e 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -32,16 +32,78 @@
-     unicode = unicode
- except NameError:
-     # 'unicode' is undefined, must be Python 3
--    str = str
-+    #
-+    # For Python3 which is natively unicode, we will use 
-+    # unicode for internal information but all P4 Data
-+    # will remain in bytes
-+    isunicode = True
-     unicode = str
-     bytes = bytes
--    basestring = (str,bytes)
-+
-+    def as_string(text):
-+        """Return a byte array as a unicode string"""
-+        if text == None:
-+            return None
-+        if isinstance(text, bytes):
-+            return unicode(text, "utf-8")
-+        else:
-+            return text
-+
-+    def as_bytes(text):
-+        """Return a Unicode string as a byte array"""
-+        if text == None:
-+            return None
-+        if isinstance(text, bytes):
-+            return text
-+        else:
-+            return bytes(text, "utf-8")
-+
-+    def to_unicode(text):
-+        """Return a byte array as a unicode string"""
-+        return as_string(text)    
-+
-+    def path_as_string(path):
-+        """ Converts a path to the UTF8 encoded string """
-+        if isinstance(path, unicode):
-+            return path
-+        return encodeWithUTF8(path).decode('utf-8')
-+    
- else:
-     # 'unicode' exists, must be Python 2
--    str = str
-+    #
-+    # We will treat the data as:
-+    #   str   -> str
-+    #   bytes -> str
-+    # So for Python2 these functions are no-ops
-+    # and will leave the data in the ambiguious
-+    # string/bytes state
-+    isunicode = False
-     unicode = unicode
-     bytes = str
--    basestring = basestring
-+
-+    def as_string(text):
-+        """ Return text unaltered (for Python3 support) """
-+        return text
-+
-+    def as_bytes(text):
-+        """ Return text unaltered (for Python3 support) """
-+        return text
-+
-+    def to_unicode(text):
-+        """Return a string as a unicode string"""
-+        return text.decode('utf-8')
-+    
-+    def path_as_string(path):
-+        """ Converts a path to the UTF8 encoded bytes """
-+        return encodeWithUTF8(path)
-+
-+
-+ 
-+# Check for raw_input support
-+try:
-+    raw_input
-+except NameError:
-+    raw_input = input
+@@ -237,6 +237,8 @@ def die(msg):
+         sys.exit(1)
  
- try:
-     from subprocess import CalledProcessError
+ def write_pipe(c, stdin):
++    """ Executes the command 'c', passing 'stdin' on the standard input
++    """
+     if verbose:
+         sys.stderr.write('Writing pipe: %s\n' % str(c))
+ 
+@@ -248,11 +250,12 @@ def write_pipe(c, stdin):
+     if p.wait():
+         die('Command failed: %s' % str(c))
+ 
+-    return val
+ 
+ def p4_write_pipe(c, stdin):
++    """ Runs a P4 command 'c', passing 'stdin' data to P4
++    """
+     real_cmd = p4_build_cmd(c)
+-    return write_pipe(real_cmd, stdin)
++    write_pipe(real_cmd, stdin)
+ 
+ def read_pipe_full(c):
+     """ Read output from  command. Returns a tuple
+@@ -653,6 +656,38 @@ def isModeExec(mode):
+     # otherwise False.
+     return mode[-3:] == "755"
+ 
++def encodeWithUTF8(path, verbose = False):
++    """ Ensure that the path is encoded as a UTF-8 string
++
++        Returns bytes(P3)/str(P2)
++    """
++   
++    if isunicode:
++        try:
++            if isinstance(path, unicode):
++                # It is already unicode, cast it as a bytes
++                # that is encoded as utf-8.
++                return path.encode('utf-8', 'strict')
++            path.decode('ascii', 'strict')
++        except:
++            encoding = 'utf8'
++            if gitConfig('git-p4.pathEncoding'):
++                encoding = gitConfig('git-p4.pathEncoding')
++            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
++            if verbose:
++                print('\nNOTE:Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, to_unicode(path)))
++    else:    
++        try:
++            path.decode('ascii')
++        except:
++            encoding = 'utf8'
++            if gitConfig('git-p4.pathEncoding'):
++                encoding = gitConfig('git-p4.pathEncoding')
++            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
++            if verbose:
++                print('Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path))
++    return path
++
+ class P4Exception(Exception):
+     """ Base class for exceptions from the p4 client """
+     def __init__(self, exit_code):
+@@ -891,6 +926,11 @@ def gitConfigList(key):
+             _gitConfig[key] = []
+     return _gitConfig[key]
+ 
++def gitConfigSet(key, value):
++    """ Set the git configuration key 'key' to 'value' for this session
++    """
++    _gitConfig[key] = value
++
+ def p4BranchesInGit(branchesAreInRemotes=True):
+     """Find all the branches whose names start with "p4/", looking
+        in remotes or heads as specified by the argument.  Return
+@@ -2814,24 +2854,12 @@ def writeToGitStream(self, gitMode, relPath, contents):
+             self.gitStream.write(d)
+         self.gitStream.write('\n')
+ 
+-    def encodeWithUTF8(self, path):
+-        try:
+-            path.decode('ascii')
+-        except:
+-            encoding = 'utf8'
+-            if gitConfig('git-p4.pathEncoding'):
+-                encoding = gitConfig('git-p4.pathEncoding')
+-            path = path.decode(encoding, 'replace').encode('utf8', 'replace')
+-            if self.verbose:
+-                print('Path with non-ASCII characters detected. Used %s to encode: %s ' % (encoding, path))
+-        return path
+-
+     # output one file from the P4 stream
+     # - helper for streamP4Files
+ 
+     def streamOneP4File(self, file, contents):
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+-        relPath = self.encodeWithUTF8(relPath)
++        relPath = encodeWithUTF8(relPath, self.verbose)
+         if verbose:
+             if 'fileSize' in self.stream_file:
+                 size = int(self.stream_file['fileSize'])
+@@ -2914,7 +2942,7 @@ def streamOneP4File(self, file, contents):
+ 
+     def streamOneP4Deletion(self, file):
+         relPath = self.stripRepoPath(file['path'], self.branchPrefixes)
+-        relPath = self.encodeWithUTF8(relPath)
++        relPath = encodeWithUTF8(relPath, self.verbose)
+         if verbose:
+             sys.stdout.write("delete %s\n" % relPath)
+             sys.stdout.flush()
 -- 
 gitgitgadget
 
