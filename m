@@ -2,98 +2,109 @@ Return-Path: <SRS0=IU/p=Z2=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8CB84C43603
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 21:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63DE8C43603
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 21:25:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5FD8E206DF
-	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 21:25:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0521206DF
+	for <git@archiver.kernel.org>; Wed,  4 Dec 2019 21:25:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epSI8Nil"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z7cZON+N"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728071AbfLDVZB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Dec 2019 16:25:01 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:40893 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728053AbfLDVZB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Dec 2019 16:25:01 -0500
-Received: by mail-pl1-f193.google.com with SMTP id g6so252042plp.7
-        for <git@vger.kernel.org>; Wed, 04 Dec 2019 13:25:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9vkWyVPTtrMK6GEWgIf/a1BR/PZo9PO1eeJ9G6m+Xhk=;
-        b=epSI8NilMrzO++S8EyCOujsdOuCcOnpU4uwqlG8bXOEGRaXd3GA2RWryVei7Ovgs7H
-         iLxpuHe45ts/WNlpRb29ibQkNmmmx6cbIL9lpE3a0Hpi652hanRtctkK9d8DVJohRsfg
-         oskVvOGLypBcOD5DlQhjDKq8EuWeCYLVbG+Da7gaT0AQ1KrLUFOBwo+wiJxAe02O3Yyz
-         K6BfcpVCtxq9/Z+WVokV4M/oja5Us5iRCAFbbVqlojr17+ZW1vyzu1hUhKhgHZxfLoR3
-         SrXsC+24YwscpVbunM0JKhdTSzA0hBHIhrj3KqsikFBZb5nhhR5/NqaAc7z3MohmEmrK
-         lV9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9vkWyVPTtrMK6GEWgIf/a1BR/PZo9PO1eeJ9G6m+Xhk=;
-        b=KViVIuWaI/w2H2COpLaftvDxvHQELjhPjdw8WPQgV/VzfPjANX5zGeOXoqUfNnwJ4k
-         /76ZiC/X2lAvZP9yV/tsdbTHkaS4ct8HHYbsWfuEyv05ayEko3yYzjLfuD7BRrbBfITK
-         QEShVCeZLleKSJN9TdKwkKM45cCjA4J227cSIc5Uzlf3QtsKMv8OajfycOLdn1cbv886
-         j3PWVxKtgmrxBVupEAQ17yFFUkQl/xEP1rfHdxd/IqwLIKFMUnN2cmROtEUtOwIO9uU8
-         gSX+NyYBFqQe281LYbgKnyzRa/BORu24kzTfdHU0tS3WhDg2+k8SliXAYJYGmemNxU2Z
-         O+fw==
-X-Gm-Message-State: APjAAAVTZBilxoY0sv8mBnk5QWjeAx4VqUI4YsX+s5qZ1FNlFzwNhaI4
-        yI6Y96OqCYlL4M1k+zbVTbv+H7kl
-X-Google-Smtp-Source: APXvYqyMh/SIWvPTpkN6FYJsqfcx2mom0awIYoZarKkMcxSkawmoxqyX6H5xDQjNGbeWuUPDBoSqtw==
-X-Received: by 2002:a17:902:409:: with SMTP id 9mr5443449ple.306.1575494700406;
-        Wed, 04 Dec 2019 13:25:00 -0800 (PST)
-Received: from generichostname ([204.14.239.138])
-        by smtp.gmail.com with ESMTPSA id d22sm5252429pfo.187.2019.12.04.13.24.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Dec 2019 13:24:59 -0800 (PST)
-Date:   Wed, 4 Dec 2019 13:24:55 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Christian Biesinger <cbiesinger@google.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: [PATCH v4 2/5] format-patch: fix indentation
-Message-ID: <0464bd61c26109bc6d98ac56bb8bf1fe9d1a6864.1575494618.git.liu.denton@gmail.com>
-References: <cover.1575445582.git.liu.denton@gmail.com>
- <cover.1575494617.git.liu.denton@gmail.com>
+        id S1728089AbfLDVZD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Dec 2019 16:25:03 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64464 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727961AbfLDVZC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Dec 2019 16:25:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8CBFD8F96D;
+        Wed,  4 Dec 2019 16:25:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9EVBFv5Hw/3JjmT57rm00rlkLFk=; b=Z7cZON
+        +NP3e5m0KVnIdNOfxXuEPSaKNhXNSKSQsMnaNHYUz2AW5ipeRfxzg5PdHeqzhw82
+        6oclt4Rc4+cQmrzPPdLT0zzC3DzKJxRoBoHqUtaxO9PacYB2pdYzBDuFBcWISgxs
+        GTN3vhWwHmuQ6yhLIAy0xAZqxph1PoCIc9iDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Cf6a+x2SkFdVJjJiCg6Q0OvM5XgZ4zbZ
+        f0YWZ4t2uWQyIyC9IpCoVnS08gWjfa+u8fBocr7YV24xqwuZF9MIPW5SKDzjUj3X
+        kSVui1BQeMF7SDZ6iz2CGAEeLBdNgBjKjpv7aVRs98JAk+I8QlIX2nXHVushthc2
+        QwnRrRuc/RU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 863428F96B;
+        Wed,  4 Dec 2019 16:25:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 952BD8F969;
+        Wed,  4 Dec 2019 16:24:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH v2] grep: support the --pathspec-from-file option
+References: <20191122011646.218346-1-emilyshaffer@google.com>
+        <20191204203911.237056-1-emilyshaffer@google.com>
+        <20191204210514.GA89300@generichostname>
+Date:   Wed, 04 Dec 2019 13:24:55 -0800
+In-Reply-To: <20191204210514.GA89300@generichostname> (Denton Liu's message of
+        "Wed, 4 Dec 2019 13:05:14 -0800")
+Message-ID: <xmqqy2vr3hso.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1575494617.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 857AC54C-16DC-11EA-865C-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- builtin/log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Denton Liu <liu.denton@gmail.com> writes:
 
-diff --git a/builtin/log.c b/builtin/log.c
-index a26f223ab4..9c44682f61 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1350,7 +1350,7 @@ static int header_callback(const struct option *opt, const char *arg, int unset)
- 		string_list_clear(&extra_to, 0);
- 		string_list_clear(&extra_cc, 0);
- 	} else {
--	    add_header(arg);
-+		add_header(arg);
- 	}
- 	return 0;
- }
--- 
-2.24.0.578.g4820254054
+>> +--pathspec-file-nul::
+>> +	Only meaningful with `--pathspec-from-file`. Pathspec elements are
+>> +	separated with NUL character and all other characters are taken
+>> +	literally (including newlines and quotes).
+>
+> Does it make sense to have a corresponding --patterns-file-nul option?
 
+I do not think so.  "grep" is always record oriented and the record
+separter is the LF, so patterns file can safely be delimited with
+LF.
+
+>> +test_expect_success 'setup pathspecs-file tests' '
+>> +cat >excluded-file <<EOF &&
+>> +bar
+>> +EOF
+>> ...
+>> +git add excluded-file pathspec-file unrelated-file
+>> +'
+>
+> Could you please change these here-docs to be <<-\EOF and then indent
+> the test case?
+
+Good suggestion.
+
+	test_expect_success 'setup ...' '
+		cat >excluded-file <<-\EOF &&
+		bar
+		EOF
+		...
+		git add ...
+	'
+
+If each line in these files consists of a short single token (which
+seems to be the case), perhaps consider using test_write_lines?
+
+	test_write_lines >excluded-file bar &&
+	test_write_lines >pathspec-file foo bar baz &&
+	test_write_lines >unrelated-file xyz &&
+	test_write_lines >pathspecs pathspec-file unrelated-file &&
