@@ -6,85 +6,50 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AED5C43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 11:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84874C43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 12:35:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4550C20675
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 11:58:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 636952245C
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 12:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729259AbfLEL6Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 06:58:25 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.18.13]:8365 "EHLO
-        smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729187AbfLEL6Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 06:58:24 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay01.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1icpm0-0007bi-Tz; Thu, 05 Dec 2019 12:58:21 +0100
-Subject: Re: [PATCH v2] grep: support the --pathspec-from-file option
-To:     git@vger.kernel.org
-Cc:     Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20191204203911.237056-1-emilyshaffer@google.com>
-X-Otrs-Customeruser: Emily Shaffer <emilyshaffer@google.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <6af006eb-6d67-4eb5-c4f5-1677d6cbd120@syntevo.com>
-Date:   Thu, 5 Dec 2019 12:58:19 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1729406AbfLEMf2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 07:35:28 -0500
+Received: from feynman.df7cb.de ([195.49.152.168]:35872 "EHLO feynman.df7cb.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729240AbfLEMf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 07:35:28 -0500
+Received: from msg.df7cb.de (unknown [IPv6:2003:5b:203b:100:7627:eaff:fe52:8e03])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (Client did not present a certificate)
+        by feynman.df7cb.de (Postfix) with ESMTPSA id 47TFYS4bR6z3Dwp;
+        Thu,  5 Dec 2019 13:35:24 +0100 (CET)
+Date:   Thu, 5 Dec 2019 13:35:24 +0100
+From:   Christoph Berg <myon@debian.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git clone git clone some://url
+Message-ID: <20191205123524.GA30724@msg.df7cb.de>
+References: <20191119141537.GD18924@msg.df7cb.de>
+ <20191204214017.GA195537@google.com>
 MIME-Version: 1.0
-In-Reply-To: <20191204203911.237056-1-emilyshaffer@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20191204214017.GA195537@google.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm excited to see someone else join my effort, thanks for continuing my 
-effort! Also, less work for me :)
+Re: Jonathan Nieder 2019-12-04 <20191204214017.GA195537@google.com>
+> > $ git clone git clone some://url
+> > fatal: Too many arguments.
+> 
+> I feel your pain.  Is there an issue tracker post or support ticket
+> open for some of these hosting sites to make it do the intuitive thing
+> (just copy the URL) instead?
 
-On 04.12.2019 21:39, Emily Shaffer wrote:
+I created one for sf.net now: https://sourceforge.net/p/forge/feature-requests/721/
 
->   static int file_callback(const struct option *opt, const char *arg, int unset)
->   {
->   	struct grep_opt *grep_opt = opt->value;
-> -	int from_stdin;
->   	FILE *patterns;
->   	int lno = 0;
->   	struct strbuf sb = STRBUF_INIT;
->   
->   	BUG_ON_OPT_NEG(unset);
->   
-> -	from_stdin = !strcmp(arg, "-");
-> -	patterns = from_stdin ? stdin : fopen(arg, "r");
-> +	patterns_from_stdin = !strcmp(arg, "-");
-> +
-> +	if (patterns_from_stdin && pathspec_from_stdin)
-
-To my understanding, this check will not work as expected. 
-`file_callback` will be called at the moment of parsing args. 
-`pathspec_from_stdin` is only initialized later.
-
-Maybe it would be better to convert `file_callback` into a regular 
-function and call it after the options were parsed, similar to how 
-`pathspec_from_file` is parsed later?
-
-This will also allow to move global variables into local scope and 
-resolve other small issues raised by other reviewers.
-
-> +test_expect_success 'grep with two stdin inputs fails' '
-> +	test_must_fail git grep --pathspec-from-file - --patterns-from-file - <pathspecs
-> +'
-> +
-
-It is usually a good idea to test for specific error, like this:
-
-   test_must_fail git grep --pathspec-from-file - --patterns-from-file - 
-<pathspecs 2>err &&
-   test_i18ngrep "cannot specify both patterns and pathspec via stdin" 
-err &&
+Christoph
