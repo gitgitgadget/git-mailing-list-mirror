@@ -2,114 +2,105 @@ Return-Path: <SRS0=7IA6=Z3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDFABC43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 23:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DAD0C43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 23:25:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE25024658
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 23:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8BDD22525
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 23:25:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OmJvmyGr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdBOLesk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726020AbfLEXQE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 18:16:04 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39804 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbfLEXQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 18:16:04 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y11so5701221wrt.6
-        for <git@vger.kernel.org>; Thu, 05 Dec 2019 15:16:02 -0800 (PST)
+        id S1726225AbfLEXZu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 18:25:50 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42255 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbfLEXZt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 18:25:49 -0500
+Received: by mail-lj1-f195.google.com with SMTP id e28so5526131ljo.9
+        for <git@vger.kernel.org>; Thu, 05 Dec 2019 15:25:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gjonClAzsuBrWP9GzTnhk8kjMLSxyJj9Oy/So/JAVOw=;
-        b=OmJvmyGrz+89j1g8fIacN6twtn29qARZuVzhpOgEZF9Pg/FlYAJyoru55y5RWZ1Ae0
-         b2Knt8btTvlnh/v1CyvqekpYKldlRb1LiMDDkJCyGMNXUEvEgVPrjrkNbUfMwQQf5Rrb
-         z3Lnov/0Mw9g5TlwDn+W4lnznvuzCxwd7V3/CgD7/ROda9M5bPz9ZJhIH+KmllV3VURX
-         iZNpoDA5gwyd2c+I7roly1bXpVIVfsiG28ZRQ4KdKtsqKtHONMPfIo3Z5OfCq2Jyl5eB
-         hoSdQ215oAKADJO6sGGCbNbWOVexJqV5pLtJXRr0NweQf4iZ9VyQIVis7yqyoT6jzBiI
-         JqzQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=quH8+LRJ/HAH3xPEhdtToG6M7nu5IXFhqzPLDzs0Axs=;
+        b=kdBOLesk75sanPmgIVfA1UgvN6sLkcNHP63DTf3cJslBFENYd1godDYIPf/GEIQoC2
+         7YPD/CtrKYSm6MTf0DaIaQ9yIKXjTKWAsXv1jk2cJzjcxTaSaislm1w85VrPs+o3wOYn
+         yTnQV568AmYHx9CgkwkyEhzZtFFgubpUQGYM/klY05RxfJ5tMCOo6EdH+CrY2GYFqmwo
+         CYKdQSj2RdiyjECHxD7zTucCInh0tnSfenaN8NIfnPAeZP0DBV/0fSSzT6QMyfYjrRrd
+         5texebQhTxCwZ03ngcMZNQP8YDAkjfxEN7Tu7MgHxjq8YEDPUVZlakJ2KiE0lqfNin6Q
+         cvlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gjonClAzsuBrWP9GzTnhk8kjMLSxyJj9Oy/So/JAVOw=;
-        b=YIPMQTm7K+1oCjLUtYi7j9zEjLKYFcNTjpVD26vHrcc/fBi4Tf4AJaqUyBRbtd7Eer
-         nFbqCWR1cALFtR4JRzLVaGkXAh7TcBS4nGK8LV7+w+F23dUkp5Sob5UEzlUfACCaeT3n
-         nJv+PwCz4ZkdAW8cXwZH362SHp+JKtHVsbV7zlySaI8mJ8fNP/igieZUY2eq23Ndf+Km
-         31pW36jUmeZqC9y1H+ocJy3OfYNZj7N+vPXmYEHQDknNyIqR8uNj90LR+Jt32sxS4A1J
-         oBtUHRH6xuur8NiuJq9EasyBqMCQPkLlgXGM+h74hNkC9fdMr/jaNdeY9uVKQsIlllia
-         f9DA==
-X-Gm-Message-State: APjAAAWWb6RNRprebhQ2r1e7IJSPPXhG9Yyz6dyV1K3am5tIMFh6BOHH
-        KhUGq+WoflLzjI9Q/YEI3us=
-X-Google-Smtp-Source: APXvYqzurnSEcaNbQs6ZNFvilCercFmzOVHRdzZZYT7fU4Inj0afMG4QmeSe845WEwA1fLwj8DfwXg==
-X-Received: by 2002:adf:ea51:: with SMTP id j17mr12525609wrn.83.1575587762009;
-        Thu, 05 Dec 2019 15:16:02 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-58-185.w92-136.abo.wanadoo.fr. [92.136.153.185])
-        by smtp.gmail.com with ESMTPSA id u14sm13677834wrm.51.2019.12.05.15.16.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2019 15:16:01 -0800 (PST)
-Subject: Re: [PATCH v3 0/2] rebase -i: extend rebase.missingCommitsCheck
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20191104095449.9964-1-alban.gruin@gmail.com>
- <20191202234759.26201-1-alban.gruin@gmail.com>
- <xmqqmuc73gk7.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <580f1a75-be77-8720-b368-e87a70fe8fec@gmail.com>
-Date:   Fri, 6 Dec 2019 00:15:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=quH8+LRJ/HAH3xPEhdtToG6M7nu5IXFhqzPLDzs0Axs=;
+        b=SALRHsybcGyCBXlynDy4CLR0ox84tB6esxVgq11S/VFf8hCnp8qWqmZx/zRGQ3iUAy
+         0FMrpkcCR3lI8VYOjB+GCtn2H/pmiIv36vTved+2ehRFUcVisi11FyIMJZ/JuJdKClfc
+         mH/t4vfGB1eKZc/WpBjdccH5/jaCScWv0mreyZnA0QrYTx//+xhYruKFIdnVugpjcztZ
+         lF0mSZJ8J7tTRnbNwlEr6z6oqgnG8P8how6iyOyVe2TuF8eqns8lTqkaifNDrG9ozR/Q
+         79iWl4BRogR/9a4IAjjklZ2urBhfFqBDQbOP3x+NaGg7jhspG9pOTZfu8WoCL043uEqf
+         FNrw==
+X-Gm-Message-State: APjAAAUuaA+cFj6EqrnB8/F1YoO7Mc76LIDdkdLjaF72UC8XMiING1vp
+        MVOLfbkzL4t21Jn+5fl3xixSU+qQDm9l1CKo54A=
+X-Google-Smtp-Source: APXvYqypPpalQPVYlVmdYF//RZs5EAM+KU3X/1BW24Eptz5PG2gNZSCMVzqbMeO4POMCHqIrbaaSmdCByjsa4+gthWI=
+X-Received: by 2002:a2e:9606:: with SMTP id v6mr7004369ljh.223.1575588347484;
+ Thu, 05 Dec 2019 15:25:47 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmuc73gk7.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <20191205225322.5529-1-alext9@gmail.com> <20191205225322.5529-2-alext9@gmail.com>
+ <xmqqv9quxtle.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqv9quxtle.fsf@gitster-ct.c.googlers.com>
+From:   Alex Torok <alext9@gmail.com>
+Date:   Thu, 5 Dec 2019 18:25:36 -0500
+Message-ID: <CANmPhj20-K1f4sL6m3YmZEy+9WdV9YknXfUdLsGCaehv+axb+Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rebase: add test for rebase --fork-point with short upstream
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+That was the intention. Your idea for ordering makes more sense.
 
-Le 04/12/2019 à 22:51, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
-> 
->> To prevent mistakes when editing a branch, rebase features a knob,
->> rebase.missingCommitsCheck, to warn the user if a commit was dropped.
->> Unfortunately, this check is only effective for the initial edit, which
->> means that if you edit the todo list at a later point of the rebase and
->> drop a commit, no warnings or errors would be issued.
->> ...
->>  rebase-interactive.c          | 57 ++++++++++++++++++++----
->>  rebase-interactive.h          |  2 +
->>  sequencer.c                   | 53 ++++++----------------
->>  sequencer.h                   |  1 -
->>  t/t3404-rebase-interactive.sh | 83 +++++++++++++++++++++++++++++++++++
->>  5 files changed, 147 insertions(+), 49 deletions(-)
-> 
-> This passes the self-test when tested by itself, but when merged
-> near the tip of 'pu', it breaks t3404.116, it seems.
-> 
+I'll reorder the commits and submit new patches.
 
-After a quick investigation, it comes from
-pw/post-commit-from-sequencer.  Since then, tests are expected to setup
-the editor and run the commands using it in a subshell.  So the fix is
-straightforward.
 
-Perhaps I should take ag/sequencer-todo-updates, merge
-pw/post-commit-from-sequencer, rebase this series onto the result, fix
-the issue, and reroll the series?
-
-Cheers,
-Alban
-
+On Thu, Dec 5, 2019 at 6:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Alex Torok <alext9@gmail.com> writes:
+>
+> > This proves the bug of "rebase --fork-point upstream branch" not using
+> > the fork point of upstream and branch if upstream is not the full
+> > refname of the upstream branch.
+> >
+> > Signed-off-by: Alex Torok <alext9@gmail.com>
+> > ---
+> >  t/t3431-rebase-fork-point.sh | 1 +
+> >  1 file changed, 1 insertion(+)
+>
+> Is this new test expected to fail after applying only 1/3 and then
+> starts working after applying all 3 patches?
+>
+> If so, it probably makes a lot mroe sense to reorder the series to
+> have 2/3 as a single preparatory patch, with 1/3 + 3/3 combined into
+> a single patch "rebase: find --fork-point with full ref" to fix the
+> code and protect the fix with the test at the same time.
+>
+> > diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
+> > index 78851b9a2a..6ecdae918e 100755
+> > --- a/t/t3431-rebase-fork-point.sh
+> > +++ b/t/t3431-rebase-fork-point.sh
+> > @@ -49,6 +49,7 @@ test_rebase 'G F C D B A' --no-fork-point --onto D
+> >  test_rebase 'G F C B A' --no-fork-point --keep-base
+> >  test_rebase 'G F E D B A' --fork-point refs/heads/master
+> >  test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
+> > +test_rebase 'G F D B A' --fork-point --onto D master
+> >  test_rebase 'G F B A' --fork-point --keep-base refs/heads/master
+> >  test_rebase 'G F C E D B A' refs/heads/master
+> >  test_rebase 'G F C D B A' --onto D refs/heads/master
