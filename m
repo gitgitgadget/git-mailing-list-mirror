@@ -2,77 +2,76 @@ Return-Path: <SRS0=7IA6=Z3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DD7EC43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 19:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C60FC43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 20:23:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2771E20707
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 19:52:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6895B20707
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 20:23:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bQ7TL2hR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iA2YmWI1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729417AbfLETwZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 14:52:25 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:36932 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729145AbfLETwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 14:52:24 -0500
-Received: by mail-qk1-f193.google.com with SMTP id m188so4432156qkc.4
-        for <git@vger.kernel.org>; Thu, 05 Dec 2019 11:52:24 -0800 (PST)
+        id S1729747AbfLEUXn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 15:23:43 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:36235 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729154AbfLEUXn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 15:23:43 -0500
+Received: by mail-qt1-f196.google.com with SMTP id k11so4817783qtm.3
+        for <git@vger.kernel.org>; Thu, 05 Dec 2019 12:23:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=HrXRvbiTW+t1byJCg3zQZZxcrltSnYIihgRCPxcP0hk=;
-        b=bQ7TL2hR/b/PO48ocHovE/xeLtwyyp8enmT8JD03QsTHz71PwecLpag5O6EkcgbULG
-         1qrwSFk+hsniLiDHhMdsLSpQ0CIliiLg2mMLKjrOYU3zDg/6ie2ArVVh2oBpJZCtLqA7
-         DXbocm7mYMCdoJeH47jVo//muUQJkKR7ozRGYzFBwBY8mpB2A+gvW/wYxI2piZvKPFsR
-         QyHw+Fpt9a2Sv0pZ2uYp7dJCWNueS7myV4SLZ3IXiaxatlcetXnuqkzQbZm0qXsfDWAc
-         gE0xxoUy4yYEeHu+Owmg+Ss7d0xz3+Axu4Cf0tvMpuaxcWLj6iUx2rRL9HrGHPYvDKjd
-         l7OA==
+        bh=IgwygAx+OHINIGnl7dThycL3koqmbhZ5DfVFpW2jcw0=;
+        b=iA2YmWI18jOUvpinYs0uOFmqFWG5Pz7XSf9cwRoDRx6Q+7PZmzsnkF7XhbvbrsC28d
+         Hmg0oqvkkHGaWce68V/244IxEdWhOO3AybqoLrMrqO7LBxd4+irFqpvmNxoXLip/UkRv
+         Xj+JPUhWmrlQIt2olRWf3N34xgo0mKiY3jbpUiD8lZd4rpYB3A+OiYsRkeBIUUL+FgxQ
+         vUWc05E9bCNBb2lLOe9BtecdK3ULYB1O1c1ZwSdLmaXJUoSbOWj98IDt+1vJhARQFbup
+         sW9Yi8weE0l50KPElWDi2Z6H034JJokdxbA2ucXdhgE5g4FPoymiMt9StkWSGrVRpbZn
+         qqnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=HrXRvbiTW+t1byJCg3zQZZxcrltSnYIihgRCPxcP0hk=;
-        b=O4RAd/XoRp6hGlwGQwaifn4N0XlSq5A8Vc5ni+x6oIi9dlf6HcPIg0Swlq5lVEIzVX
-         71F62iIBWJOK10o2/fdN7R+qpPuG8NK/29e85pWNB9rjtEdYSeroQ2S3dQCkihw/DTz2
-         HmEPD8Tvx9O1qI5BTK9Vmam86V/4AR9PhpVD6bv8tP416W3G0pKmq2I4DwAG2KGqQScX
-         8GGEwqKXB792FAymKmBOXycY+FyiKwpWfr+6QVPOxTc6duAwJ8ocuJ1M1D3F5omgvMgX
-         gy8webTUoC0hyvstxiH8HoKGB+gGwFlIJQ/aZG9LF8SKIp7i2r23jHawQIizzLgSNvi7
-         kSMg==
-X-Gm-Message-State: APjAAAVUqutFpqU/hEhMYoLbHQiTgSoF9Ax5XURsxYerxVdjLbKIgaOH
-        AXyZcBDKEo9Z96HmsiyTj267tUcegoI=
-X-Google-Smtp-Source: APXvYqwCQft4ip7zwMnMf8o3EeZyEhi3jVX26irom4riIfwLiPHES7b3t9NCQFTqCqNjqiCtfpUyag==
-X-Received: by 2002:a37:6644:: with SMTP id a65mr10464700qkc.369.1575575543475;
-        Thu, 05 Dec 2019 11:52:23 -0800 (PST)
+        bh=IgwygAx+OHINIGnl7dThycL3koqmbhZ5DfVFpW2jcw0=;
+        b=LQkL2uXdSj2/s5mzlvXamzkZD/tbRWofcxzAgID3f6sFykYgRevL/FRPeOEsmsBnj5
+         fd6qWcp028WJSC7+2BCbd3Avncvaya3zNMoyyp42fbxWlN3Hlr3dSkE8yTm7ObOCFOXI
+         PGp1qoDXVnDdX9u4CtaFCU101GxTZatkIuOBdEzJtYZO19LXNhazMQFesrbHAftm5fPr
+         zSN470qGaJTH8mKLFTDPsbXzCMF0mUdg7cTyUCyv7M7/FA9Au5gEi7U66TWH+9RrDtqm
+         M/+ulC9dsPkLYVxKrB+jciU4wO43XNmQurcEkSJcn87par49PJXLBEp9gd+zqX3R5N3b
+         lbyA==
+X-Gm-Message-State: APjAAAU4rvibT9bKZmaXJKxow5eXtCz2AjETPI7khVpr0cuAy71uHtUU
+        vDUGGI4QsLVjYnD6zGba15ASZ29Pjao=
+X-Google-Smtp-Source: APXvYqwKpNgFA9VeI6A/zulReKDuFl6yIOWTLGhpIzn97eRtr72T0M68ipPiVy1HciyRIBXRLMLyCw==
+X-Received: by 2002:aed:212e:: with SMTP id 43mr9640593qtc.25.1575577421973;
+        Thu, 05 Dec 2019 12:23:41 -0800 (PST)
 Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id k14sm5163679qki.66.2019.12.05.11.52.22
+        by smtp.gmail.com with ESMTPSA id n198sm5202637qke.0.2019.12.05.12.23.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2019 11:52:23 -0800 (PST)
-Subject: Re: [PATCH v4 07/11] git-p4: Add a helper class for stream writing
+        Thu, 05 Dec 2019 12:23:41 -0800 (PST)
+Subject: Re: [PATCH v4 08/11] git-p4: p4CmdList - support Unicode encoding
 To:     Junio C Hamano <gitster@pobox.com>,
         Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org
 References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
  <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
- <10dc059444b965c3db3fda5600de64da32de53b4.1575498578.git.gitgitgadget@gmail.com>
- <xmqqo8wm28k6.fsf@gitster-ct.c.googlers.com>
+ <e1a424a955071414a634a703a85f1969f968bb0f.1575498578.git.gitgitgadget@gmail.com>
+ <xmqqk17a27y5.fsf@gitster-ct.c.googlers.com>
 From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <1fc5c388-c9bf-0699-3cfe-a5c7adaf9a0e@gmail.com>
-Date:   Thu, 5 Dec 2019 14:52:22 -0500
+Message-ID: <e1df7518-07ae-4e24-7fc0-749c94c8a25c@gmail.com>
+Date:   Thu, 5 Dec 2019 15:23:40 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.2.2
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8wm28k6.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk17a27y5.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -80,120 +79,48 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On 12/5/2019 8:42 AM, Junio C Hamano wrote:
+On 12/5/2019 8:55 AM, Junio C Hamano wrote:
 > "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
 >> From: Ben Keene <seraphire@gmail.com>
 >>
->> This is a transtional commit that does not change current behvior.  It adds a new class Py23File.
-> Perhaps s/transitional/preparatory/?  It does not change the
-> behaviour because nobody uses the class yet, if I understand
-> correctly.  Which is fine.
+>> The p4CmdList is a commonly used function in the git-p4 code. It is used to execute a command in P4 and return the results of the call in a list.
+> Somewhere in the midway of the series, the log message starts using
+> all-caps AS_STRING and AS_BYTES to describe some specific things,
+> and it would help readers if the first one of these steps explain
+> what they mean (I am guessing AS_STRING is an unicode object in both
+> Python 2 and 3, and AS_BYTES is a plain vanilla string in Python 2,
+> or something like that?).
+
+I rewrote almost the entire commit message. Hopefully this will clarify 
+the code.
+
+>> Change this code to take a new optional parameter, encode_data that will optionally convert the data AS_STRING() that isto be returned by the function.
+> s/isto/is to/;
 >
-> It is kind of surprising that each project needs to reinvent and
-> maintain a wrapper class like this one, as what the new class does
-> smells quite generic.
+> This sentence is a bit hard to read.
+>
+> This change does not make the function optionally convert the input
+> we feed to the p4 command---it only changes the values in the
+> command output.  But the readers cannot tell that easily until
+> reading to the very end of the sentence, i.e. "returned by the
+> function", as written.
+>
+> We probably want to be a bit more explicit to say what gets
+> converted; perhaps renaming the parameter to encode_cmd_output may
+> help.
 
-It is a rather generic class.  My intention was to avoid adding
-any additional dependencies so a small class that only implements
-the few methods we need seemed safest.
 
-I cleaned up this commit message as well.
+I renamed the parameter as suggested.
 
->> Following the Python recommendation of keeping text as unicode internally and only converting to and from bytes on input and output, this class provides an interface for the methods used for reading and writing files and file like streams.
->>
->> Create a class that wraps the input and output functions used by the git-p4.py code for reading and writing to standard file handles.
->>
->> The methods of this class should take a Unicode string for writing and return unicode strings in reads.  This class should be a drop-in for existing file like streams
->>
->> The following methods should be coded for supporting existing read/write calls:
->> * write - this should write a Unicode string to the underlying stream
->> * read - this should read from the underlying stream and cast the bytes as a unicode string
->> * readline - this should read one line of text from the underlying stream and cast it as a unicode string
->> * readline - this should read a number of lines, optionally hinted, and cast each line as a unicode string
->>
->> The expression "cast as a unicode string" is used because the code should use the AS_BYTES() and AS_UNICODE() functions instead of cohercing the data to actual unicode strings or bytes.  This allows python 2 code to continue to use the internal "str" data type instead of converting the data back and forth to actual unicode strings. This retains current python2 support while python3 support may be incomplete.
->>
->> Signed-off-by: Ben Keene <seraphire@gmail.com>
->> (cherry picked from commit 12919111fbaa3e4c0c4c2fdd4f79744cc683d860)
->> ---
->>   git-p4.py | 66 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 66 insertions(+)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 7ac8cb42ef..0da640be93 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -4182,6 +4182,72 @@ def run(self, args):
->>               print("%s <= %s (%s)" % (branch, ",".join(settings["depot-paths"]), settings["change"]))
->>           return True
->>   
->> +class Py23File():
->> +    """ Python2/3 Unicode File Wrapper
->> +    """
->> +
->> +    stream_handle = None
->> +    verbose       = False
->> +    debug_handle  = None
->> +
->> +    def __init__(self, stream_handle, verbose = False):
->> +        """ Create a Python3 compliant Unicode to Byte String
->> +            Windows compatible wrapper
->> +
->> +            stream_handle = the underlying file-like handle
->> +            verbose       = Boolean if content should be echoed
->> +        """
->> +        self.stream_handle = stream_handle
->> +        self.verbose       = verbose
->> +
->> +    def write(self, utf8string):
->> +        """ Writes the utf8 encoded string to the underlying
->> +            file stream
->> +        """
->> +        self.stream_handle.write(as_bytes(utf8string))
->> +        if self.verbose:
->> +            sys.stderr.write("Stream Output: %s" % utf8string)
->> +            sys.stderr.flush()
->> +
->> +    def read(self, size = None):
->> +        """ Reads int charcters from the underlying stream
->> +            and converts it to utf8.
->> +
->> +            Be aware, the size value is for reading the underlying
->> +            bytes so the value may be incorrect. Usage of the size
->> +            value is discouraged.
->> +        """
->> +        if size == None:
->> +            return as_string(self.stream_handle.read())
->> +        else:
->> +            return as_string(self.stream_handle.read(size))
->> +
->> +    def readline(self):
->> +        """ Reads a line from the underlying byte stream
->> +            and converts it to utf8
->> +        """
->> +        return as_string(self.stream_handle.readline())
->> +
->> +    def readlines(self, sizeHint = None):
->> +        """ Returns a list containing lines from the file converted to unicode.
->> +
->> +            sizehint - Optional. If the optional sizehint argument is
->> +            present, instead of reading up to EOF, whole lines totalling
->> +            approximately sizehint bytes are read.
->> +        """
->> +        lines = self.stream_handle.readlines(sizeHint)
->> +        for i in range(0, len(lines)):
->> +            lines[i] = as_string(lines[i])
->> +        return lines
->> +
->> +    def close(self):
->> +        """ Closes the underlying byte stream """
->> +        self.stream_handle.close()
->> +
->> +    def flush(self):
->> +        """ Flushes the underlying byte stream """
->> +        self.stream_handle.flush()
->> +
->>   class HelpFormatter(optparse.IndentedHelpFormatter):
->>       def __init__(self):
->>           optparse.IndentedHelpFormatter.__init__(self)
+
+>> Change the code so that the key will always be encoded AS_STRING()
+> s/key/key of the returned hash/ or something to clarify what key you
+> are talking about.
+>
+>> Data that is passed for standard input (stdin) should be AS_BYTES() to ensure unicode text that is supplied will be written out as bytes.
+> "Data that is passed to the standard input stream of the p4 process"
+> to clarify whose standard input you are talking about (iow, "git p4"
+> also has and it may use its standard input, but this function does
+> not muck with it).
+>
