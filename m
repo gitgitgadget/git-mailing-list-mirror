@@ -2,143 +2,103 @@ Return-Path: <SRS0=7IA6=Z3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70C9DC43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 14:05:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67783C43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 14:13:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3E6E322525
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 14:05:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BCA021823
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 14:13:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aaO47cba"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cZ6iRO9D"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729609AbfLEOFB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 09:05:01 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:61734 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729512AbfLEOFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 09:05:01 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id C7C783AD1E;
-        Thu,  5 Dec 2019 09:04:58 -0500 (EST)
+        id S1729489AbfLEONg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 09:13:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50264 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729426AbfLEONg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 09:13:36 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CF3F198A2;
+        Thu,  5 Dec 2019 09:13:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l/w6FJS7UGsXE+D1Pw0Kb9zICVs=; b=aaO47c
-        baRAvJZYWqtk9s7LsiU7uh/4fjWUv7HSkgfmOu7Ff2vTF4GTSjvbtfveJXK/Kjeu
-        J1fEXzm9R8AGEGrWIJOVjQgFoN4q6gmEnkTxWK50LA1d/92mqAwlMlEak1Su2jkl
-        oCX7Jc1XlUCbG34fTRvnOhM8+nnsrCOFijji0=
+        :content-type; s=sasl; bh=1yaPWy/Hgmw55pL1k8xcRl8Vfgg=; b=cZ6iRO
+        9D03s9dN8wG7jcjZVOa/5kSoORn9HtbH36Rdh/lzJEyLY45c70Tlg8g+unQjDT3A
+        lhCXZOfWRzuOF+mYDv7FL/Qa3cP+zLLVxl/PlDapX2G2PzDrSdKw+5njXg1JMCeb
+        Px/6ce55B7GiLs/6/AhNn5zEOAjrF8/lj/Sw0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dI9R2MZ3R1EBFd27bOH7BEw04AaIebBE
-        1XYnRzTOUhTqkYOlLloUE+NWGTW5YtZJX84gzo9mXlphqn/ouFC2m14izWgZ6lNK
-        asYVSzsB6LVAHvxJX1RwdFDA0D11Uj+3X/2uka6hhGkxrFMVlCAhVt3Y8LxRxWgx
-        NsQW+LykEAE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BF2D43AD1D;
-        Thu,  5 Dec 2019 09:04:58 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=W8c3Y0b4ZqEk7p4Sboilk88qkyNJWWls
+        WFk/M6LLiMXrVpcYPe45YupfoBOYHiQ7SOW61QBEOsTk1vW/4i3mYKIY6AfX4khx
+        nUzmXxl6NpZxvfcOdIjTMbqkY5hye2ERWYHjubTo3UVajfkfj/CjPY0EXmD4uDd/
+        tG8cTCpZtwA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5469C198A0;
+        Thu,  5 Dec 2019 09:13:35 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2C62C3AD1C;
-        Thu,  5 Dec 2019 09:04:58 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B55521989D;
+        Thu,  5 Dec 2019 09:13:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH v4 09/11] git-p4: Add usability enhancements
-References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
-        <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
-        <4fc49313f0d68a913ad19085ddb337ac4c18d0fe.1575498578.git.gitgitgadget@gmail.com>
-Date:   Thu, 05 Dec 2019 06:04:57 -0800
-In-Reply-To: <4fc49313f0d68a913ad19085ddb337ac4c18d0fe.1575498578.git.gitgitgadget@gmail.com>
-        (Ben Keene via GitGitGadget's message of "Wed, 04 Dec 2019 22:29:35
+To:     "ryenus via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ryenus <ryenus@gmail.com>
+Subject: Re: [PATCH 1/1] fix-typo: consecutive-word duplications
+References: <pull.482.git.1575517503.gitgitgadget@gmail.com>
+        <abb9e55ad5ef72242ee97e03316827b55ef2f4c8.1575517503.git.gitgitgadget@gmail.com>
+Date:   Thu, 05 Dec 2019 06:13:33 -0800
+In-Reply-To: <abb9e55ad5ef72242ee97e03316827b55ef2f4c8.1575517503.git.gitgitgadget@gmail.com>
+        (ryenus via GitGitGadget's message of "Thu, 05 Dec 2019 03:45:03
         +0000")
-Message-ID: <xmqqfthy27hy.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqblsm273m.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 389BC190-1768-11EA-AFC7-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 6C806D34-1769-11EA-82B5-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"ryenus via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Ben Keene <seraphire@gmail.com>
+> From: ryenus <ryenus@gmail.com>
 >
-> Issue: when prompting the user with raw_input, the tests are not forgiving of user input.  For example, on the first query asks for a yes/no response. If the user enters the full word "yes" or "no" the test will fail. Additionally, offer the suggestion of setting git-p4.attemptRCSCleanup when applying a commit fails because of RCS keywords. Both of these changes are usability enhancement suggestions.
+> Correct unintentional duplication(s) of words, such as "the the",
+> and "can can" etc.
 
-Drop "Issue: " and upcase "when" that follows.  The rest of the
-paragraph reads a lot better without it as a human friendly
-description.
+Understood.
 
-"are usability enhancement suggestions"???  Leaves readers wonder
-who suggested them, or you are suggesting but are willing the change
-to be dropped, or what.  Be a bit more assertive if you want to say
-that you believe these two would improve usability.
+I would rather honor the original when it is not clearly wrong,
+misleading to readers or prone to misunderstanding.  Hence, I'd
+rather not change this particular one.
 
-> Change the code prompting the user for input to sanitize the user input before checking the response by asking the response as a lower case string, trimming leading/trailing spaces, and returning the first character.
->
-> Change the applyCommit() method that when applying a commit fails becasue of the P4 RCS Keywords, the user should consider setting git-p4.attemptRCSCleanup.
+> "we didn't do so so far" becomes "we didn't do that so far".
 
-s/becasue/because/;
+And also this one.
 
-I have a feeling that these two may be worth doing but are totally
-separate issues, deserving two separate commits.  Is there a good
-reason why these two must go hand-in-hand?
+>   * This should use the pathname to decide on whether it wants to do some
+>   * more interesting conversions (automatic gzip/unzip, general format
+> - * conversions etc etc), but by default it just does automatic CRLF<->LF
+> + * conversions etc), but by default it just does automatic CRLF<->LF
 
+Everything else in this patch is improving what is clearly wrong and
+is very much appreciated, though.
 
-> Signed-off-by: Ben Keene <seraphire@gmail.com>
-> (cherry picked from commit 1fab571664f5b6ad4ef321199f52615a32a9f8c7)
-> ---
->  git-p4.py | 31 ++++++++++++++++++++++++++-----
->  1 file changed, 26 insertions(+), 5 deletions(-)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index f7c0ef0c53..f13e4645a3 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -1909,7 +1909,8 @@ def edit_template(self, template_file):
->              return True
->  
->          while True:
-> -            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
-> +            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ").lower() \
-> +                .strip()[0]
+Just a reminder, as I do not know your cultural background so ryenus
+in all lowercase may be your real name, in which case please ignore
+this part of the response, but Documentation/SubmittingPatches says
 
-You could have saved the patch by doing
+    [[real-name]]
+    Also notice that a real name is used in the Signed-off-by: line. Please
+    don't hide your real name.
 
-	+	.lower().strip()[0]
+about the Signed-off-by: line.
 
-instead, no?
-
-I wonder if it would be better to write a thin wrapper around raw_input()
-that does the "downcase and take the first meaningful letter" thing
-for you and call it prompt() or something like that.
-
-> @@ -4327,7 +4343,12 @@ def main():
->                                     description = cmd.description,
->                                     formatter = HelpFormatter())
->  
-> -    (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
-> +    try:
-> +        (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
-> +    except:
-> +        parser.print_help()
-> +        raise
-> +
-
-This change may be a good idea to give help text when the command
-line parsing fails, but a good change deserves to be explained.  I
-do not think I saw any mention of it in the proposed log message,
-though.
-
->      global verbose
->      verbose = cmd.verbose
->      if cmd.needsGit:
+Thanks.
