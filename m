@@ -2,110 +2,222 @@ Return-Path: <SRS0=7IA6=Z3=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,PDS_BTC_ID,
+	PDS_BTC_MSGID,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9762C43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 10:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F12FC43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 10:41:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83E0F24654
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 10:27:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDBD6206D9
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 10:41:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WY0aFm3l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="roSoQpt2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729223AbfLEK11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 05:27:27 -0500
-Received: from mail-pj1-f65.google.com ([209.85.216.65]:37332 "EHLO
-        mail-pj1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728707AbfLEK11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 05:27:27 -0500
-Received: by mail-pj1-f65.google.com with SMTP id ep17so1129594pjb.4
-        for <git@vger.kernel.org>; Thu, 05 Dec 2019 02:27:26 -0800 (PST)
+        id S1729096AbfLEKlA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 05:41:00 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:38487 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729018AbfLEKk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 05:40:59 -0500
+Received: by mail-pf1-f193.google.com with SMTP id x185so1426685pfc.5
+        for <git@vger.kernel.org>; Thu, 05 Dec 2019 02:40:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=/kB+rphAc0nuJJBEns/ktL13BOBybjMLArdQEIrvlEc=;
-        b=WY0aFm3lUFOWK4LzLWUfc9ur0kiGej6MAJRQtFwpju0q6CXdokCcYKhuYfQNiiGKcy
-         a7en9I7LdN+t2jgp3luQb7SwGqeGUN4DJlp8eKuGkFHw0zS2+8j3O/jTq2T+8U9Cjfxl
-         qHsbtOMUfn9pVvvl5a1iH36aBZHhvUdBviISy5Nu+6xc9Ux/nSbKNaRxptbCnigElnaH
-         7xHovHg2oHqLVHuUhIZ61vrS7Vp+gC/RCq7PbUGK3tAh9/BOAGpWjjJjHNmiS4NLZW/h
-         nMmBmghDxNr/4Z0NgTJ9Jgw/cNUTZVP1ssBv2jWynwk8JiUD4Tm7jbw9F23ud5JvnL0r
-         a3JA==
+        bh=vSNqQFy2vZK+HVkviRWWijifC62/tHrgzr7ZlNx326c=;
+        b=roSoQpt2oGPVpcYzJEQ6wV5D+AqPR5oju1Z0VQ9+8rYsQQfZFC7EUBYffNZpiNiRYC
+         6mb9l1E6uwZ1fRTfvRjFeAlJ9aXvPbDe6i0ioEcJNOltsZyI+tQeRVTrf1WkHXoAyZUR
+         QoiwNYC5S1tootIrsaXtPOv8+fAvk4lHwmTBmk2CoU6l7yigdlD9yjcFMuxpEtw4u1DW
+         8gKeGKfNLONeiI/O3o/MF1GiMovZUCiwh8t4Gxwa+14sPyHrZqFsPfiFrhAq84KK6fsR
+         S8O5gCGa8abWXipEwo7VKftUIc6phoM8y7hkQ3rDiak9E38MAoQUr7nt3MZkMjuvwvoy
+         11Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/kB+rphAc0nuJJBEns/ktL13BOBybjMLArdQEIrvlEc=;
-        b=Vsp0UEVonyfdrOC8H+hCw7mgMscC48DzPwBnmXgXZTiLV1q+mEBgBi/tAonk7wrQ1o
-         YTzUXP/kQsGZEgvISPJ/lxYV2dVvIsza1AU4wcMWLnJcxzqV5MZnc2s7IlgTtMmvfhiv
-         03IBZj+vrAQXRDR533oNX5Ul+UeSKQr02ekK0Jr7UAhCS+LvsKk4OcUwLN6WXbDmQjuy
-         MI/qoLqnmPHeETsSUb4f6772PBMNQJp6oXWeuEUW7rdUo5Ug/nybsNx/wXjGYhVfVclE
-         P+zfOrZS0hqnuxDLdxR6ZfMOzKhRQrMSTfIzXDcJiAV6Z/pN6Js7U+gbwpB8NXOAhDyC
-         OOqw==
-X-Gm-Message-State: APjAAAXUExHoM7i4YsVGXzYpBIuLH8GHUxhAFqujQxQjVVOk9TEQxmjg
-        QtqXSQUdTgm+zvF8Kr7cFwbkLJTY
-X-Google-Smtp-Source: APXvYqxyq0kGRxPhzlpSzfHryMmSl/oDRGP4VtG5SsuN86yVlTCYDh57H/KGWp7QEgf+X8O974Ouzw==
-X-Received: by 2002:a17:902:59c9:: with SMTP id d9mr8066345plj.184.1575541646371;
-        Thu, 05 Dec 2019 02:27:26 -0800 (PST)
+        bh=vSNqQFy2vZK+HVkviRWWijifC62/tHrgzr7ZlNx326c=;
+        b=Hq0dPHMa3e6kGpaZ4/hEbjEcetycSLjBmYE1oeqcnJJ+ys5JgLPurp3ECC8yx4XNLA
+         mHWyJwh2xbAa5uL1KuL4fuIq0dOe0TH4Nvc3Ha3pkfLxb0ILuLeSnpAllnxY4uuszzSi
+         QT+1+z8FPI7zGI1jTaYSPIXqy5Pty9NaCApnqxVcRdzvF2lHTt5BQyCmIJqjme/QIr1g
+         2zr11QYXMxFzCZRAnJncnn+lc8V7SESZCakYEAkp0Wcel2ojp8DmNJieoZF6rpHjSD3/
+         avdMgI1WnwGbcr9S8h11Qr6OCarJ7KCfPKsgevYBHBmQtrGnkoOix6eirbwiWiKqTCX5
+         y7Vg==
+X-Gm-Message-State: APjAAAUPFLZZuE+3zXQ943LEHL7GdtUB5Ll5YPDETh7qdsLxjOisZgYm
+        ZPmYULNc//G78dEHnGLX/+Y6TXWg
+X-Google-Smtp-Source: APXvYqxPJLe2YuaRUkpJrzh+62HasmTouvd2sWVqER9PgYGhzJ0zsnv2ONWjNE6ACSLYMkQW2EsRwQ==
+X-Received: by 2002:a63:465b:: with SMTP id v27mr8745977pgk.257.1575542458901;
+        Thu, 05 Dec 2019 02:40:58 -0800 (PST)
 Received: from generichostname ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id v72sm9486988pjb.25.2019.12.05.02.27.25
+        by smtp.gmail.com with ESMTPSA id m27sm11411125pff.179.2019.12.05.02.40.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Dec 2019 02:27:25 -0800 (PST)
-Date:   Thu, 5 Dec 2019 02:27:24 -0800
+        Thu, 05 Dec 2019 02:40:58 -0800 (PST)
+Date:   Thu, 5 Dec 2019 02:40:56 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 02/11] git-p4: change the expansion test from
- basestring to list
-Message-ID: <20191205102724.GB315203@generichostname>
+Subject: Re: [PATCH v4 03/11] git-p4: add new helper functions for python3
+ conversion
+Message-ID: <20191205104056.GA1192079@generichostname>
 References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
  <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
- <0ef2f56b04803cad2e60bf881e86d8bdd69463a6.1575498577.git.gitgitgadget@gmail.com>
+ <f0e658b984ca009c575368e661016f785922f970.1575498577.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0ef2f56b04803cad2e60bf881e86d8bdd69463a6.1575498577.git.gitgitgadget@gmail.com>
+In-Reply-To: <f0e658b984ca009c575368e661016f785922f970.1575498577.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
-
-On Wed, Dec 04, 2019 at 10:29:28PM +0000, Ben Keene via GitGitGadget wrote:
+On Wed, Dec 04, 2019 at 10:29:29PM +0000, Ben Keene via GitGitGadget wrote:
 > From: Ben Keene <seraphire@gmail.com>
 > 
-> Python 3+ handles strings differently than Python 2.7.
+> Python 3+ handles strings differently than Python 2.7.  Since Python 2 is reaching it's end of life, a series of changes are being submitted to enable python 3.7+ support. The current code fails basic tests under python 3.7.
+> 
+> Change the existing unicode test add new support functions for python2-python3 support.
+> 
+> Define the following variables:
+> - isunicode - a boolean variable that states if the version of python natively supports unicode (true) or not (false). This is true for Python3 and false for Python2.
+> - unicode - a type alias for the datatype that holds a unicode string.  It is assigned to a str under python 3 and the unicode type for Python2.
+> - bytes - a type alias for an array of bytes.  It is assigned the native bytes type for Python3 and str for Python2.
+> 
+> Add the following new functions:
+> 
+> - as_string(text) - A new function that will convert a byte array to a unicode (UTF-8) string under python 3.  Under python 2, this returns the string unchanged.
+> - as_bytes(text) - A new function that will convert a unicode string to a byte array under python 3.  Under python 2, this returns the string unchanged.
+> - to_unicode(text) - Converts a text string as Unicode(UTF-8) on both Python2 and Python3.
+> 
+> Add a new function alias raw_input:
+> If raw_input does not exist (it was renamed to input in python 3) alias input as raw_input.
+> 
+> The AS_STRING and AS_BYTES functions allow for modifying the code with a minimal amount of impact on Python2 support.  When a string is expected, the as_string() will be used to convert "cast" the incoming "bytes" to a string type. Conversely as_bytes() will be used to convert a "string" to a "byte array" type. Since Python2 overloads the datatype 'str' to serve both purposes, the Python2 versions of these function do not change the data, since the str functions as both a byte array and a string.
 
-Do you mean Python 3?
-
-> Since Python 2 is reaching it's end of life, a series of changes are being submitted to enable python 3.7+ support. The current code fails basic tests under python 3.7.
-
-Python 3.5 doesn't reach EOL until Q4 2020[1]. We should be testing
-these changes under 3.5 to ensure that we're not accidentally
-introducing stuff that's not backwards compatible.
+How come AS_STRING and AS_BYTES are all-caps here?
 
 > 
-> Change references to basestring in the isinstance tests to use list instead. This prepares the code to remove all references to basestring.
-> 
-> The original code used basestring in a test to determine if a list or literal string was passed into 9 different functions.  This is used to determine if the shell should be evoked when calling subprocess methods.
-
-Once again, I'd swap the above two paragraphs. Problem then solution.
-
-Also, did you mean "invoked" instead of "evoked"?
-
+> basestring is removed since its only references are found in tests that were changed in the previous change list.
 > 
 > Signed-off-by: Ben Keene <seraphire@gmail.com>
-> (cherry picked from commit 5b1b1c145479b5d5fd242122737a3134890409e6)
+> (cherry picked from commit 7921aeb3136b07643c1a503c2d9d8b5ada620356)
 > ---
->  git-p4.py | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
+>  git-p4.py | 70 +++++++++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 66 insertions(+), 4 deletions(-)
+> 
+> diff --git a/git-p4.py b/git-p4.py
+> index 0f27996393..93dfd0920a 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -32,16 +32,78 @@
+>      unicode = unicode
+>  except NameError:
+>      # 'unicode' is undefined, must be Python 3
+> -    str = str
+> +    #
+> +    # For Python3 which is natively unicode, we will use 
+> +    # unicode for internal information but all P4 Data
+> +    # will remain in bytes
+> +    isunicode = True
+>      unicode = str
+>      bytes = bytes
+> -    basestring = (str,bytes)
+> +
+> +    def as_string(text):
+> +        """Return a byte array as a unicode string"""
+> +        if text == None:
 
-The patch itself looks good, though.
+Nit: use `text is None` instead. Actually, any time you're checking an
+object to see if it's None, you should use `is` instead of `==` since
+there's usually only one None reference.
 
-[1]: https://devguide.python.org/#branchstatus
+> +            return None
+> +        if isinstance(text, bytes):
+> +            return unicode(text, "utf-8")
+> +        else:
+> +            return text
+> +
+> +    def as_bytes(text):
+> +        """Return a Unicode string as a byte array"""
+> +        if text == None:
+> +            return None
+> +        if isinstance(text, bytes):
+> +            return text
+> +        else:
+> +            return bytes(text, "utf-8")
+> +
+> +    def to_unicode(text):
+> +        """Return a byte array as a unicode string"""
+> +        return as_string(text)    
+> +
+> +    def path_as_string(path):
+> +        """ Converts a path to the UTF8 encoded string """
+> +        if isinstance(path, unicode):
+> +            return path
+> +        return encodeWithUTF8(path).decode('utf-8')
+> +    
+
+Trailing whitespace.
+
+>  else:
+>      # 'unicode' exists, must be Python 2
+> -    str = str
+> +    #
+> +    # We will treat the data as:
+> +    #   str   -> str
+> +    #   bytes -> str
+> +    # So for Python2 these functions are no-ops
+> +    # and will leave the data in the ambiguious
+> +    # string/bytes state
+> +    isunicode = False
+>      unicode = unicode
+>      bytes = str
+> -    basestring = basestring
+> +
+> +    def as_string(text):
+> +        """ Return text unaltered (for Python3 support) """
+
+I didn't mention this in earlier emails but it's been bothering me a
+lot: is there any reason why you write it as "Python3" vs. "Python 3"
+sometimes (and Python2 as well)? If there's no difference, then we
+should probably stick to one variant in both the commit messages and in
+the code. (I prefer the spaced variant.)
+
+> +        return text
+> +
+> +    def as_bytes(text):
+> +        """ Return text unaltered (for Python3 support) """
+> +        return text
+> +
+> +    def to_unicode(text):
+> +        """Return a string as a unicode string"""
+> +        return text.decode('utf-8')
+> +    
+
+Trailing whitespace.
+
+> +    def path_as_string(path):
+> +        """ Converts a path to the UTF8 encoded bytes """
+> +        return encodeWithUTF8(path)
+> +
+> +
+> + 
+
+Trailing whitespace.
+
+> +# Check for raw_input support
+> +try:
+> +    raw_input
+> +except NameError:
+> +    raw_input = input
+>  
+>  try:
+>      from subprocess import CalledProcessError
+> -- 
+> gitgitgadget
+> 
