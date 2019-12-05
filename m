@@ -6,70 +6,70 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2668C43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 20:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D29B6C43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 21:09:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB91D24671
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 20:51:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9B3D320707
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 21:09:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730594AbfLEUvB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 15:51:01 -0500
-Received: from relay11.mail.gandi.net ([217.70.178.231]:50837 "EHLO
-        relay11.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730184AbfLEUvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 15:51:00 -0500
-Received: from localhost (unknown [157.36.201.94])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay11.mail.gandi.net (Postfix) with ESMTPSA id 71499100003;
-        Thu,  5 Dec 2019 20:50:56 +0000 (UTC)
-Date:   Fri, 6 Dec 2019 02:20:52 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     =?utf-8?B?5Yqg6Jek5LiA5Y2a?= <kato-k@ksysllc.co.jp>
-Cc:     Paul Mackerras <paulus@ozlabs.org>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk branch name encoding utf-8 probrem
-Message-ID: <20191205205052.aaw4q57y2hlzghgd@yadavpratyush.com>
-References: <TY2PR01MB24271C32E2FD9FD8C27CA8C2CA5D0@TY2PR01MB2427.jpnprd01.prod.outlook.com>
- <20191204222921.GB195537@google.com>
- <TY2PR01MB2427631CC07116A662AF3D38CA5C0@TY2PR01MB2427.jpnprd01.prod.outlook.com>
- <xmqqimmuzfe1.fsf@gitster-ct.c.googlers.com>
+        id S1729892AbfLEVJq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 16:09:46 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39598 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729861AbfLEVJq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 16:09:46 -0500
+Received: (qmail 12689 invoked by uid 109); 5 Dec 2019 21:09:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 05 Dec 2019 21:09:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21700 invoked by uid 111); 5 Dec 2019 21:13:55 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Dec 2019 16:13:55 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 5 Dec 2019 16:09:45 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?5YiY54Kc?= <lw17qhdz@gmail.com>
+Subject: Re: [PATCH] xdiff: unignore changes in function context
+Message-ID: <20191205210945.GA49397@coredump.intra.peff.net>
+References: <3053f7a8-0723-aaa7-fe43-9b8b13b2e259@web.de>
+ <xmqq5ziu1y0l.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqimmuzfe1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq5ziu1y0l.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi 加藤一博,
+On Thu, Dec 05, 2019 at 09:29:46AM -0800, Junio C Hamano wrote:
 
-On 05/12/19 12:28PM, Junio C Hamano wrote:
-> 加藤一博 <kato-k@ksysllc.co.jp> writes:
+> > -# Note that the "6" in the expected hunk header below is funny, since we only
+> > -# show 5 lines (the missing one was blank and thus ignored). This is how
+> > -# --ignore-blank-lines behaves even without --function-context, and this test
+> > -# is just checking the interaction of the two features. Don't take it as an
+> > -# endorsement of that output.
 > 
-> > fix branch name encoding error on gitk.
-> >
-> > git checkout -b '漢字'
-> > gitk show branch name broken like this '貍｢蟄'
-> > fix this problem.
-> 
-> Paul (the gitk maintainer), the patch text itself does look
-> reasonable.
-> 
->     After "git checkout -b '漢字'" to create a branch with UTF-8
->     character in it, "gitk" shows the branch name incorrectly, as it
->     forgets to turns the bytes read from the "git show-ref" command
->     into Unicode characters.
+> Nice to see that somebody anticipated that we may fix this some day.
 
-This commit message would work for the git-gui patch as well (change 
-"gitk" to "git-gui").
- 
-> is how I would phrase the log message.
-> 
-> Thanks.
+Or that somebody just didn't want to be embarrassed by introducing such
+obvious nonsense into the test suite. :)
 
--- 
-Regards,
-Pratyush Yadav
+I was curious, though, whether there was still a lurking bug in
+"--ignore-blank-lines", based on what that comment says. But I don't
+think so. It reports the correct numbers for this test case, but that's
+because the blank line drops off the context. If we add -U4, then it
+does mention 6 lines in the preimage, and includes the line.
+
+Which matches what René claimed in the commit message: "Changes
+involving only blank lines are hidden with --ignore-blank-lines, unless
+they appear in the context lines of other changes." But now I've
+double-checked. :)
+
+(And I agree that the output after this patch is way better).
+
+-Peff
