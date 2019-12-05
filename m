@@ -8,150 +8,163 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75AFAC43603
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 15:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FA2BC43603
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 16:15:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3EAA5206DB
-	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 15:41:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54D6E20801
+	for <git@archiver.kernel.org>; Thu,  5 Dec 2019 16:15:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="roDatJzg"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="dORqsdB7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729497AbfLEPk7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Dec 2019 10:40:59 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:37741 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726028AbfLEPk6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Dec 2019 10:40:58 -0500
-Received: by mail-qt1-f194.google.com with SMTP id w47so3941075qtk.4
-        for <git@vger.kernel.org>; Thu, 05 Dec 2019 07:40:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=hXztEI30rWQHHtxHwDfyEdX0wU4LYUj4YCb8pK7ARZo=;
-        b=roDatJzg0YoscISkqfl2iFd7mqO06ict7I7pLNS0xJC8QDxC+qsdaZ3Nv/2YvD0Zw5
-         KgncIylZZpgU46SC78C/eGEfK9ItudUm7A4Btxxd1eqNOO3lKhLS/pM3ncrNSDA3GfAo
-         1SXnjhmOmtOHxA+ZdCWp1UQ/8DyqR2qRRNlkL/TW4CU0O+9JRj+SXhxcrLY/422ACTeZ
-         JzZz0al+aHIU37izWxJbgx5HYDMS5+Jbxn/v3XCze/+ST5kkmh1qfu92sfZ5sZxidCEq
-         N9P7TYp5R+PBhsl/cBKY+Nsa22+3bb+mOdVP92ReF+6+9v66HCOXu59YAn9pi8tacD9R
-         2jiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=hXztEI30rWQHHtxHwDfyEdX0wU4LYUj4YCb8pK7ARZo=;
-        b=DG1k2on4ZvqbJ+vKVFYGQZV2EtR3i8vZ5vfzBGlb+DTJ1GOlhI+M3+rMr7I2Dx7Hd6
-         kZ3qCoTY+rqRxoHvG5Q7HcQQBMiNQROaqVouZR9g2QxKlRpKbIW0V4cSMcVcP9YXlx9y
-         DzTUJQYfowXMte+Zb6QZTpGEUFILFDe3/kwSa0KDePAeVFP/l2yq+MpWyGvPSeHWljiL
-         mIKNE3umFYv3QIOTE8GgZpyMhJGcc0A+LhdCUqcXDlp5zUBOJueCEzoubEKlxDEWVQ9f
-         Iod9m41g22vS1ZRIkcGe1EeP7LAKhA4B5vQ6/9wKYIlFgU1wK3E9l8axcY8AqDBrQCcl
-         mZDg==
-X-Gm-Message-State: APjAAAX8M4LPG3B4yxIjSucSLZyZrdZYUI80gep/xThpr+pLiWjCNWv/
-        A1asa4T6FLj1kF6SOIqA9rG78ZIfPBY=
-X-Google-Smtp-Source: APXvYqyrJ1CVz/5Bf3QLAX81QwL41HEFYK18DZkrecQqmkiCV2SZ0iGwmwt6aPqTs3EA2A+QpsRw4Q==
-X-Received: by 2002:ac8:6ec5:: with SMTP id f5mr8261498qtv.137.1575560457377;
-        Thu, 05 Dec 2019 07:40:57 -0800 (PST)
-Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id e6sm4899757qkg.89.2019.12.05.07.40.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Dec 2019 07:40:56 -0800 (PST)
-Subject: Re: [PATCH v4 09/11] git-p4: Add usability enhancements
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.463.v3.git.1575313336.gitgitgadget@gmail.com>
- <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
- <4fc49313f0d68a913ad19085ddb337ac4c18d0fe.1575498578.git.gitgitgadget@gmail.com>
- <xmqqfthy27hy.fsf@gitster-ct.c.googlers.com>
-From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <652370f7-d1c5-a78a-aa5f-6e0c3219cd36@gmail.com>
-Date:   Thu, 5 Dec 2019 10:40:56 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+        id S1729815AbfLEQPv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Dec 2019 11:15:51 -0500
+Received: from mout.web.de ([212.227.17.11]:32773 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729723AbfLEQPu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Dec 2019 11:15:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1575562541;
+        bh=9PcVqxXSN/AcHOKeDEfigXipBzU7N6N2BiMxaZ0jYMA=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=dORqsdB7ARTmttxtZCcuVaJ5BUZz9BQNq5KhkkZ//lkn1EIAkIjZONUvK5wF0B95d
+         A6AEw7ppqOxaCBR2+Hiyl/MC/6plTcJkNV/NnjX4mJEZaprEeAvroy6i7z8ib23g/C
+         yGyLcyy+iiU/v8YbXWTL2zhfEIKx04XHbkTxmlFU=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.158.92]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lk8t4-1i2BOR3Jow-00c83g; Thu, 05
+ Dec 2019 17:15:41 +0100
+X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?5YiY54Kc?= <lw17qhdz@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] xdiff: unignore changes in function context
+Message-ID: <3053f7a8-0723-aaa7-fe43-9b8b13b2e259@web.de>
+Date:   Thu, 5 Dec 2019 17:15:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqfthy27hy.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:ijXab8mxYb2XiJzq+xpKtwVc3NfuFb+1ZoSX/Gm6/vBjS2EdZ2M
+ zuXmEPaIfLuaoR/kqt7egYUT6CtqQCqn41jEJlFTOyWZ6e/9AClb7xOEItKYeHkjMn6e312
+ Jgxm/ZAWtC/vxzDC+wiV2lq7zyz5pyGRlG73919r85Os2Q57vNqCRkCFl1UTMyEI8wVV88u
+ t5zMQgCpuz0LMciAGfjPA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zOKuTbbeyVI=:eU3smrsZSh2Fh51zoWPbdz
+ 4ml7dd+/n+XVHPra0v0Um3iUXSxJxg1xFsUqQaOJTIPcL444ifw/ya3I6ijZEzZU8wZeCK9BL
+ eiMG0i7fQvXk7r8OLk59PzQWHfJ2aHQZxtWcI2HPVKXXdOTyZc1kKpuJFRqGTdHT6uMmccIBy
+ tPGXnoh5XldPF8yVALySFXduKPiPCxsGwK8wHOMqqMdHltxAGKaRKTparQBHMVzsCeX6MCSBF
+ jHRGlsElUEcxx6b0Q5W94kLH4mh8Cr9ewrvE/kRsSSnCAKAR37YAyt4Kqc+b9p+D+8j2tHQXh
+ gTvRjdVpP2fioZMQnCnv7Qts0WvZsfMNPUyrz3WHd8XP/eT79Axeevi5NjurNG8MaIvVxjRtn
+ IICmgklo8G0pnp6FsZLTp+rt3sdI51IlHSnncnbrpOi0bkovgZg2FofBkbWOJ08u0EUcLjxJW
+ Xw8ilZAWz/VJPVOzyn/QOiAn4aIg1mrMoLo5Cdf4Hzl9WUVWIyLSDpvQ1ZasY2JWHHLAI11Wm
+ Fb2qBP4RfNsO38uj8m6wZQEvp5btTU4Gt4QShMP/L8sJuoZ+K4zcABlA7A0iH61gJdqRgs+08
+ 6LCgln6r6aASaQC/zLimG09QvX9ctJxfj8w34HAA+NkCXrj50uLXs8QmoXOz4lezkxm0SEpkR
+ lJii52j4i3WdeFHwmq+pWfPhWHQGvz6CkHfrPvR9jkZ1tVHX72WqanmYdD//S+KI7QsdbbMsl
+ cLo4MzJWCkqTJHJ2M6N/xKy65TLCU9JeP8FoWJiR4hm326x+zT03Ht5uSrg386/jiVBKcT3YO
+ Z8scBNn5F/kzP/uC7iuhx4I3wo3zdxvwfRXjRaj/aMhqlMcXADTaAwT6Ht+//PEaA2NE5b7mw
+ IFk2iHLaDwNW8J3fSGCrhaH4M7pNPcd0sSZZvqU/TPeVdFz6/WUoatz+k9kr6taYlilnwnSUl
+ S1F4jFjHVdjKRjlYnua8H6fdlijOYD1PmMxUQ3wspmhQ+qX2j83qJevm2iDlKhn9z11J+Neid
+ wUitkRNzlu64Cn7/Ya7QkRB06UQQh3XH8/I/KGL6nIpmA/qu2jFx7Nubu5SHS3EvfKFalyBtp
+ xxmbOVWUWHhp1c4wjro4IK4DbDuuUwZI1bTPuHwSpNBSubl0oGkRsrWi5rJ43OorTsWqbTEdS
+ nph5VlGuWa1DNZck9wahCSAkzvqHIY1RxNmnGHrIB3D7SpduZtrjULOwfOuYKKFzak3Qs/I8h
+ k5XCvv44TitI8Dw14vGSNK5WWDOqT7URotGWTig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Changes involving only blank lines are hidden with --ignore-blank-lines,
+unless they appear in the context lines of other changes.  This is
+handled by xdl_get_hunk() for context added by --inter-hunk-context, -u
+and -U.
 
-On 12/5/2019 9:04 AM, Junio C Hamano wrote:
-> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Ben Keene <seraphire@gmail.com>
->>
->> Issue: when prompting the user with raw_input, the tests are not forgiving of user input.  For example, on the first query asks for a yes/no response. If the user enters the full word "yes" or "no" the test will fail. Additionally, offer the suggestion of setting git-p4.attemptRCSCleanup when applying a commit fails because of RCS keywords. Both of these changes are usability enhancement suggestions.
-> Drop "Issue: " and upcase "when" that follows.  The rest of the
-> paragraph reads a lot better without it as a human friendly
-> description.
->
-> "are usability enhancement suggestions"???  Leaves readers wonder
-> who suggested them, or you are suggesting but are willing the change
-> to be dropped, or what.  Be a bit more assertive if you want to say
-> that you believe these two would improve usability.
-Thank you and I reworked my submissions. I'm moving them to a separate 
-PR and will split the commit into 3 separate commits.
->> Change the code prompting the user for input to sanitize the user input before checking the response by asking the response as a lower case string, trimming leading/trailing spaces, and returning the first character.
->>
->> Change the applyCommit() method that when applying a commit fails becasue of the P4 RCS Keywords, the user should consider setting git-p4.attemptRCSCleanup.
-> s/becasue/because/;
->
-> I have a feeling that these two may be worth doing but are totally
-> separate issues, deserving two separate commits.  Is there a good
-> reason why these two must go hand-in-hand?
->
-Good idea, and I split them out.
->> Signed-off-by: Ben Keene <seraphire@gmail.com>
->> (cherry picked from commit 1fab571664f5b6ad4ef321199f52615a32a9f8c7)
->> ---
->>   git-p4.py | 31 ++++++++++++++++++++++++++-----
->>   1 file changed, 26 insertions(+), 5 deletions(-)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index f7c0ef0c53..f13e4645a3 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -1909,7 +1909,8 @@ def edit_template(self, template_file):
->>               return True
->>   
->>           while True:
->> -            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
->> +            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ").lower() \
->> +                .strip()[0]
-> You could have saved the patch by doing
->
-> 	+	.lower().strip()[0]
->
-> instead, no?
->
-> I wonder if it would be better to write a thin wrapper around raw_input()
-> that does the "downcase and take the first meaningful letter" thing
-> for you and call it prompt() or something like that.
-I created a new function prompt() as you suggested.
->> @@ -4327,7 +4343,12 @@ def main():
->>                                      description = cmd.description,
->>                                      formatter = HelpFormatter())
->>   
->> -    (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
->> +    try:
->> +        (cmd, args) = parser.parse_args(sys.argv[2:], cmd);
->> +    except:
->> +        parser.print_help()
->> +        raise
->> +
-> This change may be a good idea to give help text when the command
-> line parsing fails, but a good change deserves to be explained.  I
-> do not think I saw any mention of it in the proposed log message,
-> though.
+Function context for -W and --function-context added by xdl_emit_diff()
+doesn't pay attention to such ignored changes; it relies fully on
+xdl_get_hunk() and shows just the post-image of ignored changes
+appearing in function context.  That's inconsistent and confusing.
 
-Yes, you're right.  I split this out into a separate commit as well and 
-gave it a place or prominence.
+Improve the result of using --ignore-blank-lines and --function-context
+together by fully showing ignored changes if they happen to fall within
+function context.
 
->>       global verbose
->>       verbose = cmd.verbose
->>       if cmd.needsGit:
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t4015-diff-whitespace.sh |  6 +-----
+ xdiff/xemit.c              | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
+index eadaf57262..5888ae5ed3 100755
+=2D-- a/t/t4015-diff-whitespace.sh
++++ b/t/t4015-diff-whitespace.sh
+@@ -2025,11 +2025,6 @@ test_expect_success 'compare mixed whitespace delta=
+ across moved blocks' '
+ 	test_cmp expected actual
+ '
+
+-# Note that the "6" in the expected hunk header below is funny, since we =
+only
+-# show 5 lines (the missing one was blank and thus ignored). This is how
+-# --ignore-blank-lines behaves even without --function-context, and this =
+test
+-# is just checking the interaction of the two features. Don't take it as =
+an
+-# endorsement of that output.
+ test_expect_success 'combine --ignore-blank-lines with --function-context=
+' '
+ 	test_write_lines 1 "" 2 3 4 5 >a &&
+ 	test_write_lines 1    2 3 4   >b &&
+@@ -2039,6 +2034,7 @@ test_expect_success 'combine --ignore-blank-lines wi=
+th --function-context' '
+ 	cat <<-\EOF >expect &&
+ 	@@ -1,6 +1,4 @@
+ 	 1
++	-
+ 	 2
+ 	 3
+ 	 4
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 30713ae9a9..9d7d6c5087 100644
+=2D-- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -172,10 +172,12 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xd=
+emitcb_t *ecb,
+ 	struct func_line func_line =3D { 0 };
+
+ 	for (xch =3D xscr; xch; xch =3D xche->next) {
++		xdchange_t *xchp =3D xch;
+ 		xche =3D xdl_get_hunk(&xch, xecfg);
+ 		if (!xch)
+ 			break;
+
++pre_context_calculation:
+ 		s1 =3D XDL_MAX(xch->i1 - xecfg->ctxlen, 0);
+ 		s2 =3D XDL_MAX(xch->i2 - xecfg->ctxlen, 0);
+
+@@ -212,6 +214,21 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr, xde=
+mitcb_t *ecb,
+ 			if (fs1 < s1) {
+ 				s2 =3D XDL_MAX(s2 - (s1 - fs1), 0);
+ 				s1 =3D fs1;
++
++				/*
++				 * Did we extend context upwards into an
++				 * ignored change?
++				 */
++				while (xchp !=3D xch &&
++				       xchp->i1 + xchp->chg1 <=3D s1 &&
++				       xchp->i2 + xchp->chg2 <=3D s2)
++					xchp =3D xchp->next;
++
++				/* If so, show it after all. */
++				if (xchp !=3D xch) {
++					xch =3D xchp;
++					goto pre_context_calculation;
++				}
+ 			}
+ 		}
+
+=2D-
+2.24.0
