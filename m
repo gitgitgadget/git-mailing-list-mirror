@@ -2,145 +2,79 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFA54C43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46FEFC43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:54:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 92D072173E
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:24:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 11CEE206DF
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:54:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AR7VcqwK"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="lWsXPf+f"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbfLFSYI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 13:24:08 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57410 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726312AbfLFSYI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 13:24:08 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3424D1E4FC;
-        Fri,  6 Dec 2019 13:24:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qCRAJbsqwQISJK0iQ+WKugPO/qc=; b=AR7Vcq
-        wKCOyAs1rtyFY1Bclg/bgfsBeXFLnVyu9lw+UbXLQIsNzrtbyFC6dg76Ifj+ar/s
-        N1yTRMwt4IUp9FNoIo35UDLJDK2DaGLBDpJSyXiuLDF7ZbvojXxIvXSaQ7cXsem6
-        9DeJG+YfSAqkoLdsaWWiTBeSB7lpLCerM6j9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=h6jy0ptwdLF3Qk7IXnCINZ5MptoIebl2
-        PNch9m0kIoSTiggXQI83LSCFzpa1RVKUsBet8o04UqUDGl9Go2gkB4MY2hnObu5T
-        TC+Hx4SFOdIs3mhU0Ue6TXRA9tXbOwaH/+chzkZgnjgE/T4B1T1cBqVEPpmgwpfM
-        MfmGjDLfW2o=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2B87A1E4FB;
-        Fri,  6 Dec 2019 13:24:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7AF0D1E4F8;
-        Fri,  6 Dec 2019 13:24:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 6/9] commit: encapsulate determine_whence() for sequencer
-References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
-        <20191206160614.631724-1-phillip.wood123@gmail.com>
-        <20191206160614.631724-7-phillip.wood123@gmail.com>
-Date:   Fri, 06 Dec 2019 10:24:01 -0800
-In-Reply-To: <20191206160614.631724-7-phillip.wood123@gmail.com> (Phillip
-        Wood's message of "Fri, 6 Dec 2019 16:06:11 +0000")
-Message-ID: <xmqqwob9wbwe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726336AbfLFSyK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 13:54:10 -0500
+Received: from mout.gmx.net ([212.227.17.22]:46733 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726325AbfLFSyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 13:54:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1575658448;
+        bh=QI43x8jxcgRwEe6iSDbx/FACOK95atk9RZAaPxzj3SE=;
+        h=X-UI-Sender-Class:To:From:Subject:Date;
+        b=lWsXPf+fMv7OPeM3S0bgERpQShox8B37GiI3HWXPc4gDb098pq1So28UUoc6R3FBT
+         MQNWiWFZu4tttNl7IXEdmRS9uAlr+uKmzTu9F3m6VfnRqXIfe/wdhO6bRx0z4DKliz
+         iMGgTFDAqVnNUfmP4edkrBgbzYzh6rVa4qERoeYo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.1.32] ([84.133.76.115]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MatVb-1i1Uol2lK7-00cQ8X for
+ <git@vger.kernel.org>; Fri, 06 Dec 2019 19:54:08 +0100
+To:     git@vger.kernel.org
+From:   Andreas Kalz <andreas-kalz@gmx.de>
+Subject: Git as data archive
+Message-ID: <21fcdc5f-955a-e027-0d71-15f476f6162c@gmx.de>
+Date:   Fri, 6 Dec 2019 19:54:08 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 942950CA-1855-11EA-98FD-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:J4lAILUym40jQB8yA9zjPvOo3jmPUXOz99AolDNXP68c630RwIv
+ NImSRzLwPoh3TVCrikb7E/qPLJPvksFIRkYYeiqNC+TmZsq2whG4IDOYUuceg6FPpgg24qm
+ MMioDdv8HUqJyrFaqYzM4P7VX2P78CEYh1px/kWeZOPJFr8W8u0nCO7X7+piwtRgLoJkCCW
+ InxyfB3cMPInpwepGDw+w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ICKx6JQMrYk=:wGhDy0AoFvW8ZR6ewFj5Yu
+ s7o4IOSMkZT5oGCuPFrd+mqdqAV4enQ2Fk9L/t5v7CmNiIatwPMlZOI21EUqsMRWXb25RL+UU
+ ZUmpw4LfDeWBVknqgPvS9xR7AAsRJK8e9MD3AcV5D9E4oAUckqOzSE+zhEtHwXf6zCha/5gNS
+ O27LCwGHDA/qU/X/knC+fITxMR/ivGMsJLlA8mnXDx5egeZiKFf3QEyt9Fk9P3YhK5GXTET01
+ 3gZyy5SHOZqXn1pyKWKnyndrCLqFwP6ZwT+yLjamqqR+qhyEzuU89oKqiHLJrPW0Iyx60q4yr
+ Y2SEBzwJdJ7wLTNYeK8EiTZrXvzb119lfG1518pP3IpoFCm+xIElam0h3h7A1Uw77H2dFlEOf
+ yaQuFnu9fHV8gZFxtb9977ihJSb1mCTHpvRzXRgFNBURIauf7pLofcGoudME4XuOEsSStxSCE
+ Htfdugjd8rnKkrpzhTyx9nAsQbd0scW/MZyltEE/9YKaA523fGDow/cOQkcZbgL7AiXwMvzLH
+ ShrzGLWGmpaKgmnlTfo/Ll1PLbyuzJnmHnDGEaNBNS0MUxsG33pJ0A/OXBBPGf65st68pbYRm
+ JYlT08y3QVFDAwJxVVzFiVNZv6kK1y7jVwEvuIVfyzteoA7TC/3Qa37CPjVMWNx7oNaq56axi
+ BUNWrbeqfUcDNgOlWfVdik7zvx8PYet95d08CUrftQy9LTgNi/VYcJqpyV468Mqz9Gbw7h3Pz
+ rVRrwZ8ylYmu8FeabL8AcfFDA6AhCElHOpWbRXZzkW7fVmNeOoSV4UQg1nv/+Qo4P2cPTM/Hh
+ 8yUeNKJKQhE7VwmMnl++vOfWHtakd8GfMD9qD40+JXnZ8DllESYxMruEMy6hcOcQaKh6X3MMZ
+ pPycHACngCkXNU/6cPR/pebEs0Gfg6mpP6rhCcmFDwW935bUyohru1HcrOWgJcGXQAdGV/O3Z
+ ojM6sFFFnNDfwiLeak4LJ+wxPFdx+KN3fcsnsxR4q02WQ46S7jDZDC51srPDeMm+uUWFQGexn
+ 2UVLPD5PDyOVF0rMsl/Zuph1zI9JQPWghwKna2Z4TqVrW11WBpy2dL+aRkjJaOo/dlAolQL7i
+ +3Qxzwss1fpxtqHh/Vt3jH5J5jBFacEWKxjztRivsxVhxbUFh7bHQYuSzQi60Wh/XeNrDV0z1
+ 0+75q9x3v9hmeOqd762Es64GnhtQAyc6D7soJgyqyMrDCNTfCgQI/2EYpwbvDZtdli8pexwOh
+ cDIRpmuZYoUyX5hdjrcGi78kioMxAoRPk9awTzKqi7HeZDI+M4iA1e3QfQ20=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Working out which command wants to create a commit requires detailed
-> knowledge of the sequencer internals and that knowledge is going to
-> increase in subsequent commits. With that in mind lets encapsulate that
-> knowledge in sequencer.c rather than spreading it into builtin/commit.c.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  builtin/commit.c |  5 +----
->  sequencer.c      | 13 ++++++++++++-
->  sequencer.h      |  3 ++-
->  3 files changed, 15 insertions(+), 6 deletions(-)
->
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 3b463522be..d8d4c8e419 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -178,10 +178,7 @@ static void determine_whence(struct wt_status *s)
->  {
->  	if (file_exists(git_path_merge_head(the_repository)))
->  		whence = FROM_MERGE;
-> -	else if (file_exists(git_path_cherry_pick_head(the_repository)))
-> -		whence = file_exists(git_path_seq_dir()) ?
-> -			FROM_CHERRY_PICK_MULTI : FROM_CHERRY_PICK_SINGLE;
-> -	else
-> +	else if (!sequencer_determine_whence(the_repository, &whence))
->  		whence = FROM_COMMIT;
->  	if (s)
->  		s->whence = whence;
-> diff --git a/sequencer.c b/sequencer.c
-> index 4e0370277b..98e007556c 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -40,7 +40,7 @@ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
->  
->  GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
->  
-> -GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
-> +static GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
->  
->  static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
->  static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
-> @@ -5256,3 +5256,14 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->  
->  	return 0;
->  }
-> +
-> +int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
-> +{
-> +	if (file_exists(git_path_cherry_pick_head(r))) {
-> +		*whence = file_exists(git_path_seq_dir()) ?
-> +			FROM_CHERRY_PICK_MULTI : FROM_CHERRY_PICK_SINGLE;
-> +		return 1;
-> +	}
-> +
-> +	return 0;
-> +}
-
-I am not sure if this is a good move---determine_whence() that can
-tell not just we are in the middle of cherry-pick (either a single
-or multi) but also during a merge may be at the right abstraction
-level.  Why would we want to invent a separate function that says "I
-dunno" during a merge, instead of moving the logic for merge to the
-new helper as well?  The original determine_whence that takes
-wt_status and populates it still has to call the new helper either
-way.  Also for the matter FROM_COMMIT may also want to be part of
-the helper.  This all depends on the new callers you plan to invent,
-of course.
-
-Not part of this topic, but the call to file_exists() may want to
-become a call to dir_exists() as git-path-seq-dir is clearly a
-directory and cannot be a file, right?
+Hello,
+I am using git as archive and versioning also for photos. Apart from
+performance issues, I wanted to ask if there are hard limits and
+configurable limits (how to configure?) for maximum single file size and
+maximum .git archive size (Windows 64 Bit system)?
+Thanks in advance for your answer.
+All the best,
+Andreas
