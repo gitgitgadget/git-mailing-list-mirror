@@ -2,136 +2,134 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73A2EC43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B978C2BBE2
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:08:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3B6E92075C
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:08:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC3052075C
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:08:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGUuxjuf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qSfkr6UQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726272AbfLFNI3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:08:29 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42942 "EHLO
+        id S1726298AbfLFNId (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 08:08:33 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46545 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726168AbfLFNI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 08:08:29 -0500
-Received: by mail-wr1-f67.google.com with SMTP id a15so7663191wrf.9
-        for <git@vger.kernel.org>; Fri, 06 Dec 2019 05:08:27 -0800 (PST)
+        with ESMTP id S1726168AbfLFNIb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 08:08:31 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z7so7617433wrl.13
+        for <git@vger.kernel.org>; Fri, 06 Dec 2019 05:08:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=4m4KWrVVS3bAY1qtblxTKaEarB+FdIi8UGxMGzj21QE=;
-        b=fGUuxjufbNqMlf9Bl1rQhYF80+DBa8uwZF82hqfcEHUOfY+alt+RdRQZh5TUPSG1Ta
-         WGHiQZRIyvV6xNof+RQ3cO66UHW9JtLojuzq4rfwF3UoRT0w0HrbA/e3gaGiu9S1arGj
-         uzRMhyrexsLZ0ou8BHRmks+s5JXgBeRxOsG7EkdYxwZ5fMAOdfaLy2AC4eFoV7HXeOYC
-         TUfJxodtJyKOHUYkn+HidPJewyF+3zdsOzwLdq1fS56Y3HvQduXYfF+qjBGYd0HWE+ro
-         bU0IfMadzY/rmcX/7jJ8yrEEFZK6dPlCyo1O9PdN0hf4Atj5eG0r1GyT3G6hES7g+4Tt
-         7NaQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=FbYx9s5BzVDyeboThLHY4f9FslCWDrhTHE6FCY7J7qQ=;
+        b=qSfkr6UQPbMcdoXANwgnxjui4K2v8vbx6DF/buFLBKqk/GLzP78ZrUywL5acjB4Su0
+         fRK5cl5myHhrsGmNs6TBjNgELlGYe/NK0y9uto0+uuWiPlr+b8IJtaLNkf74v+3irjUq
+         VHYfBuVjr0KTm7epVbaDA4bMXTXvF7sbEz3gIabDneVULhTaFqqc/xHyj3jETrSu4u+l
+         /ZG4PAGJhLWWkMrovDCuRWcuxDvIzNPC9J8lGaoURJmSuOqjOV984kSr+MeGmp/cLA4L
+         lTrpFxSMPNKDYVBv+9uuw+swKpqgR+vQCHwG82/NlaMhWS8XNy9xQADGiwiyRBGEPqL3
+         vLTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=4m4KWrVVS3bAY1qtblxTKaEarB+FdIi8UGxMGzj21QE=;
-        b=RFlovsKBE1QbFC2NGsajWz98xIZ7eceD/GI5QzsM3q5iYGkG0HxeaKlwxuDzlcs3Da
-         TxUMhMlp2pFS7wzRdQjp4ZJZYAxmz11u49PYCmKwfFFnE8CEAocVXlS3Sq1S3udWhmBc
-         bJze+QHq521rKM5rIHG2VcygT1K9wzRl7diMssJ4tsLYBQ9cJnLFMC/WVNVGpB8BnqEh
-         oU9D0gfeX7q3lsE6L8c1GEzbopSH8iTfB9B51W80HGHmpqKAWsYQrJd8wRe8aMZ1dRMn
-         DVYZv0V89Q/r+e1vjpXoAqgVlh1LFe4384bAR+zuB6DXf0I0MZHwOTHbZZUbnkcQZfJv
-         TLyg==
-X-Gm-Message-State: APjAAAXkPo1UGJsoHVB/h3C+55sU6qFBPgR/XbRECu5cLuENnbDXfLjI
-        hzIguD8JZRG8K3sNoojq2rHDfprz
-X-Google-Smtp-Source: APXvYqym87xsTN0EfCNSm32JFMTCWY4OBSgpFVkBOMvGtD5wBbtJ/mdyG0meWEO1qaPZBgZ18fp1fA==
-X-Received: by 2002:adf:eb48:: with SMTP id u8mr15163925wrn.283.1575637706836;
-        Fri, 06 Dec 2019 05:08:26 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=FbYx9s5BzVDyeboThLHY4f9FslCWDrhTHE6FCY7J7qQ=;
+        b=CWQhvDzYd/3z9hRJ7fMgDWmOZwGEsGcxbX4zmOaX1T8VsZ4VPX/Gu4RBqVNbkoEC/9
+         fwgjHhRRes4TpJCJuM2Cud2T1x9LOE1HJSpKqt34rq3IVztVVO7TNxIn5oNuhZspylm9
+         qr9aWsaXF0QrxCW1Qu6eEeELwWs4h3xktkzgn4zTch0FmlH/+6LhX3740pwIwPzE+qjC
+         VCNyoFe93ByyPknJHKuKidj2hkui97h9iZaKOhUKx3L7twWqs3cHWt6Kykxt0S/qk7yp
+         Jj4PhUaaJlpj2NIOcbUsDOLudA9Ll6zeOGSG1gnc/883ZgXJXkwv6v1eXysZqQ2YXrlC
+         XJCQ==
+X-Gm-Message-State: APjAAAXEZ4t5m7d/JEJg5iM6WWnE1zWYvfetk7Iy4SP3aZ+3sa2BJ1ws
+        c0mc4Pwippl9lER7pkpTl/Gvw5+a
+X-Google-Smtp-Source: APXvYqzZIaPFJEF7PalObgJkqt0yD+fnL1F6e91NmO6I7/TH7ueJ4NHNbcqAYGI5OVeS6zw+46PkAQ==
+X-Received: by 2002:a5d:65c5:: with SMTP id e5mr15688426wrw.311.1575637709133;
+        Fri, 06 Dec 2019 05:08:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 60sm17250859wrn.86.2019.12.06.05.08.26
+        by smtp.gmail.com with ESMTPSA id z12sm3390565wmd.16.2019.12.06.05.08.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Dec 2019 05:08:26 -0800 (PST)
-Message-Id: <pull.172.git.1575637705.gitgitgadget@gmail.com>
+        Fri, 06 Dec 2019 05:08:28 -0800 (PST)
+Message-Id: <a8bd214c905ff76d3651eec05766ad5b774847e8.1575637705.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.172.git.1575637705.gitgitgadget@gmail.com>
+References: <pull.172.git.1575637705.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 06 Dec 2019 13:08:18 +0000
-Subject: [PATCH 0/7] add -i: close some regression test gaps
+Date:   Fri, 06 Dec 2019 13:08:21 +0000
+Subject: [PATCH 3/7] t3701: add a test for the different `add -p` prompts
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While re-implementing git add -i and git add -p in C, I tried to make sure
-that there is test coverage for all of the features I convert from Perl to
-C, to give me some confidence in the correctness from running the test suite
-both with GIT_TEST_ADD_I_USE_BUILTIN=true and with 
-GIT_TEST_ADD_I_USE_BUILTIN=false.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-However, I discovered that there are a couple of gaps. This patch series
-intends to close them.
+The `git add -p` command offers different prompts for regular diff hunks
+vs mode change pseudo hunks vs diffs deleting files.
 
-The first patch might actually not be considered a gap by some: it basically
-removes the need for the TTY prerequisite in the git add -i tests to verify
-that the output is colored all right. This change is rather crucial for me,
-though: on Windows, where the conversion to a built-in shows the most
-obvious benefits, there are no pseudo terminals (yet), therefore git.exe 
-cannot work with them (even if the MSYS2 Perl interpreter used by Git for
-Windows knows about some sort of pty emulation). And I really wanted to make
-sure that the colors work on Windows, as I personally get a lot out of those
-color cues.
+Let's cover this in the regresion test suite, in preparation for
+re-implementing `git add -p` in C.
 
-The patch series ends by addressing two issues that are not exactly covering
-testing gaps:
+For the mode change prompt, we use a trick that lets this test case pass
+even on systems without executable bit, i.e. where `core.filemode =
+false` (such as Windows): we first add the file to the index with `git
+add --chmod=+x`, and then call `git add -p` with `core.filemode` forced
+to `true`. The file on disk has no executable bit set, therefore we will
+see a mode change.
 
- * While adding a test case, I noticed that git add -p exited with success 
-   when it could not even generate a diff. This is so obviously wrong that I
-   had to fix it right away (I noticed, actually, because my in-progress
-   built-in git add -p failed, and the Perl version did not), and I used the
-   same test case to verify that this is fixed once and for all.
-   
-   
- * While working on covering those test gaps, I noticed a problem in an
-   early version of the built-in version of git add -p where the git apply
-   --allow-overlap mode failed to work properly, for little reason, and I
-   fixed it real quick.
-   
-   It would seem that the --allow-overlap function is not only purposefully
-   under-documented, but also purposefully under-tested, probably to
-   discourage its use. I do not quite understand the aversion to that
-   option, but I did not feel like I should put up a battle here, so I did
-   not accompany this fix with a new test script.
-   
-   In the end, the built-in version of git add -p does not use the 
-   --allow-overlap function at all, anyway. Which should make everybody a
-   lot happier.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3701-add-interactive.sh | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-Johannes Schindelin (7):
-  t3701: add a test for advanced split-hunk editing
-  t3701: avoid depending on the TTY prerequisite
-  t3701: add a test for the different `add -p` prompts
-  t3701: verify the shown messages when nothing can be added
-  t3701: verify that the diff.algorithm config setting is handled
-  git add -p: use non-zero exit code when the diff generation failed
-  apply --allow-overlap: fix a corner case
-
- apply.c                    | 10 +++++
- git-add--interactive.perl  |  8 ++--
- t/t3701-add-interactive.sh | 90 ++++++++++++++++++++++++++++++++++----
- 3 files changed, 97 insertions(+), 11 deletions(-)
-
-
-base-commit: 2e697ced9d647d6998d70f010d582ba8019fe3af
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-172%2Fdscho%2Fadd-i-fixes-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-172/dscho/add-i-fixes-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/172
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 793ce28297..c90aaa25b0 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -105,7 +105,6 @@ test_expect_success 'revert works (commit)' '
+ 	grep "unchanged *+3/-0 file" output
+ '
+ 
+-
+ test_expect_success 'setup expected' '
+ 	cat >expected <<-\EOF
+ 	EOF
+@@ -274,6 +273,24 @@ test_expect_success FILEMODE 'stage mode and hunk' '
+ 
+ # end of tests disabled when filemode is not usable
+ 
++test_expect_success 'different prompts for mode change/deleted' '
++	git reset --hard &&
++	>file &&
++	>deleted &&
++	git add --chmod=+x file deleted &&
++	echo changed >file &&
++	rm deleted &&
++	test_write_lines n n n |
++	git -c core.filemode=true add -p >actual &&
++	sed -n "s/^\(([0-9/]*) Stage .*?\).*/\1/p" actual >actual.filtered &&
++	cat >expect <<-\EOF &&
++	(1/1) Stage deletion [y,n,q,a,d,?]?
++	(1/2) Stage mode change [y,n,q,a,d,j,J,g,/,?]?
++	(2/2) Stage this hunk [y,n,q,a,d,K,g,/,e,?]?
++	EOF
++	test_cmp expect actual.filtered
++'
++
+ test_expect_success 'setup again' '
+ 	git reset --hard &&
+ 	test_chmod +x file &&
 -- 
 gitgitgadget
+
