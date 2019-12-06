@@ -2,119 +2,140 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87D23C43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:45:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 742B4C43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:46:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 465A020637
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:45:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 45887206DF
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 13:46:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qsi8vyBI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XH1+5dSC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfLFNp5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 08:45:57 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58987 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726234AbfLFNp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 08:45:57 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B4FBC1C298;
-        Fri,  6 Dec 2019 08:45:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=16pElyQRSTlpg2d/VlCgcdcDOzk=; b=qsi8vy
-        BI7DFMPY5rYHWj96IEpxRkPFkSSsWDRfArcLlKG3nS0QplfVNk5gYaW1WByxbWsh
-        IQ0vP8CwF72X865vilmG5cJ/jKhwqwZZFM8ZJ9rxRK9XgIOBBxwTG7h+lam2HKm4
-        Z0YhFSwVK5zrO7TIkMwdfz1iCfoaQ5kc9y1bQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=KiCGI9dVrcXjF613EyRwYuaMBPolFCNa
-        WtpWYLzy7LUc1ysgc15Y8V9p7WanBdxAOORmg3iKfDDNrxu9A2xLRqsYUcfYGrnf
-        0CUKwd5q+Bw60JWff4OYS/4piswi4LAFW2e+JK4LY5yAGXYlngPqEJIvRXbopT42
-        vPVyyxqysPY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AD6F01C297;
-        Fri,  6 Dec 2019 08:45:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 170541C296;
-        Fri,  6 Dec 2019 08:45:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 7/7] apply --allow-overlap: fix a corner case
-References: <pull.172.git.1575637705.gitgitgadget@gmail.com>
-        <15c4cce5a027d56c7ddbe5523cf0f3beabd06ed7.1575637705.git.gitgitgadget@gmail.com>
-Date:   Fri, 06 Dec 2019 05:45:52 -0800
-In-Reply-To: <15c4cce5a027d56c7ddbe5523cf0f3beabd06ed7.1575637705.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Fri, 06 Dec 2019
-        13:08:25 +0000")
-Message-ID: <xmqqr21hy3cf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726251AbfLFNqn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 08:46:43 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:36064 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726201AbfLFNqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 08:46:42 -0500
+Received: by mail-lj1-f193.google.com with SMTP id r19so7742183ljg.3
+        for <git@vger.kernel.org>; Fri, 06 Dec 2019 05:46:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6YoK37DbXR5iDMDpiq3BzbStR1Ut7Lj9WI8NnFzDc/8=;
+        b=XH1+5dSCcFshJsNUzV5kU3hWJqFedJNHWS2mE4RzUg3TtmBBtc9NwMmrTnXIQGKPzg
+         Ev1nguAdyUY52DRQUFFJ5invostPYH5wQmiZXoJC66HehDCisU+i4Ratc538W4bKiysE
+         cZAu6EM/eLMmAHtI/4S0wYm5MJolXpSTmm3PTRscptVkrwrzLMvP5vE72QgJYQGe7EXu
+         bqP5tTs4Aomn+MD3XJyiqCDaQ8fXGdN/3AxJpF6Ty1jfx+Yhq8daBCVmj9DEFwcf6b9j
+         Dlv1WwWEvlr8rcKC7BqCn8Osh3JjkFjj8IzD/bOJ89SXKQBYTsBWMIB8pHsLSv7UV3WM
+         vUCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6YoK37DbXR5iDMDpiq3BzbStR1Ut7Lj9WI8NnFzDc/8=;
+        b=NTjT7i06avN7R8amnSVQc2as4Wr2sk2hY6V8LrF37VUkgoBXReS8QWG3sDBCnx5dUk
+         sOyAEZB78w82XL2Z1BvkLbFW8uxsvzlA4qKqBmfO4nMGJLzPD0GxzLOrLXrJh7Kw4bQu
+         WKRAUCzpuS3xpujXfoo8lo4+nb43op9gphMs9pg5ScuxD2d4bX9PK8vAJ/jhdBNiIm8T
+         R6QSmHIyiSm31btSz+BfW3bSKeAD/HrPy4r8yaK8f75huKJv23wybsavIdZqufP3S+eq
+         v74nAKWmU5L5loIu4nENMhAMzyXTO/dKLZZKC+zr/uIcVZ/gMPtT8omZzCUI9ti78NW7
+         RgWA==
+X-Gm-Message-State: APjAAAXrYqv93S5gaVxTs8YMF9ptLzDSQ2iCH+BKpT3GLI42GIqAKxqV
+        BSCPOTWId7+300OpHrSK8YuU+cohDnbOk/drdTk=
+X-Google-Smtp-Source: APXvYqyL8euGmPLKp0jMu5kKrDgBv+Pw3GY9uTlg7RiZ4VKWHse7rEJ+UcerAO8AkCXggTPkKGEMi9wyZ64MD4YDGV4=
+X-Received: by 2002:a2e:a163:: with SMTP id u3mr2132795ljl.13.1575640000883;
+ Fri, 06 Dec 2019 05:46:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B9173BDA-182E-11EA-8A29-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <20191205225322.5529-1-alext9@gmail.com> <20191205235704.31385-1-alext9@gmail.com>
+ <20191205235704.31385-3-alext9@gmail.com> <20191206014828.GB16183@generichostname>
+ <e898ad43-5649-8f4c-7c93-fab09197fc92@gmail.com>
+In-Reply-To: <e898ad43-5649-8f4c-7c93-fab09197fc92@gmail.com>
+From:   Alex Torok <alext9@gmail.com>
+Date:   Fri, 6 Dec 2019 08:46:29 -0500
+Message-ID: <CANmPhj38UqZiePEPbPJBwUTOEJrfA6j3aP8KBHvAY6EA-J7Nsw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] rebase: find --fork-point with full ref
+To:     phillip.wood@dunelm.org.uk
+Cc:     Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Thank you for the feedback Denton & Phillip!
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Fri, Dec 6, 2019 at 5:52 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> On 06/12/2019 01:48, Denton Liu wrote:
+> > nit: * should be attached to the variable name.
 >
-> Yes, yes, this is supposed to be only a band-aid option for `git add -p`
-> not Doing The Right Thing. But as long as we carry the `--allow-overlap`
-> option, we might just as well get it right.
+> I think you also need to free it once you've called get_fork_point() as
+> well.
 
-It probably depends on the definition of "right", where it may not
-even exist (otherwise it wouldn't be a band-aid but be a real
-feature) ;-)
+Yup. Got it.
 
-> This fixes the case where one hunk inserts a line before the first line,
-> and is followed by a hunk whose context overlaps with the first one's
-> and which appends a line at the end.
-
-The in-code comment makes me wonder if we need to further loosen the
-check in the other direction, though.  What makes begin more special
-than end?  Can a hunk be seen that pretends to extend to the end but
-no longer does because there was an overlapping hunk that has been
-wiggled in?
-
+> On 06/12/2019 01:48, Denton Liu wrote:
+> >
+> >> +            dwim_ref_or_die(options.upstream_name, strlen(options.upstream_name), &full_name);
+> >
+> > Also, thinking about this more, would it be possible to put the dwim_ref
+> > logic into get_fork_point() directly? There are currently only these two
+> > callers so I suspect it should be fine and it'll result in cleaner
+> > logic.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  apply.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/apply.c b/apply.c
-> index f8a046a6a5..720a631eaa 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -2661,6 +2661,16 @@ static int find_pos(struct apply_state *state,
->  	unsigned long backwards, forwards, current;
->  	int backwards_lno, forwards_lno, current_lno;
->  
-> +	/*
-> +	 * When running with --allow-overlap, it is possible that a hunk is
-> +	 * seen that pretends to start at the beginning (but no longer does),
-> +	 * and that *still* needs to match the end. So trust `match_end` more
-> +	 * than `match_beginning`.
-> +	 */
-> +	if (state->allow_overlap && match_beginning && match_end &&
-> +	    img->nr - preimage->nr != 0)
-> +		match_beginning = 0;
-> +
->  	/*
->  	 * If match_beginning or match_end is specified, there is no
->  	 * point starting from a wrong line that will never match and
+> If you do that then it would be better to use error() rather than die()
+> in get_fork_point() and return an error to the caller as we try to avoid
+> adding code to libgit that dies. This lets the caller handle any cleanup
+> that they need to before exiting.
+
+Would the signature of get_fork_point change to be something like:
+int get_fork_point(const char *refname, struct commit *commit,
+   struct commit **fork_point, struct strbuf *err)
+
+If not, could you point me to an example of some existing code
+that does what you're talking about?
+
+
+> On 06/12/2019 01:48, Denton Liu wrote:
+> > It's not obvious why this was failing in the first place. Perhaps we
+> > could document it better in the commit message?
+> >
+> > Maybe something like:
+> >
+> >       We used to pass in the upstream_name directly into the
+> >       get_fork_point() machinery. However, get_fork_point() was
+> >       expecting a fully qualified ref name even though most users use
+> >       the short name for branches. This resulted in `--fork-point` not
+> >       working as expected since, without the full ref name, the reflog
+> >       lookup would fail and it would behave as if we weren't passing
+> >       in `--fork-point` at all.
+
+Sounds good.
+
+> > Also, I'm not why this test case in particular that was duplicated (and
+> > not the one above) given that the first three `--fork-point` test cases
+> > fail without the change to rebase. Perhaps we want to duplicate all
+> > "refs/heads/master" tests with a corresponding "master" test?
+
+I only duplicated one so that there would only be one test case that
+would fail if a regression around getting the fork point with a short
+ref name was introduced.
+
+I just happened to pick that one because it was closest to the rebase
+command I was running when I found the bug :)
+
+I can include some of the above reasoning in the commit message.
+Alternatively:
+* I could duplicate all of tests
+* I could change all of the tests to use the short ref name
+
+I'm leaning towards just leaving one test (maybe with a comment?)
+for the short ref name --fork-point so that there is more resolution
+around where a bug could be on test failure.
+
+Let me know what you think,
+Alex
