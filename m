@@ -2,95 +2,101 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0894C43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 15:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDBB5C43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 15:57:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B675A2173E
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 15:52:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC9F62173E
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 15:57:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="OYX3MVS8"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HK1CoEL5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726284AbfLFPwn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 10:52:43 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49879 "EHLO mout.gmx.net"
+        id S1726312AbfLFP5P (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 10:57:15 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51291 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726256AbfLFPwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 10:52:42 -0500
+        id S1726261AbfLFP5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 10:57:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575647557;
-        bh=eKrC427ZjE4aHY1pi23TFIFhJNSYNNdiYucfo6KFAoI=;
+        s=badeba3b8450; t=1575647828;
+        bh=KFEMBsfKgtJ3uLJGsChoYSb/BQQvBxK8MWpno7wVVEE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=OYX3MVS8nS3yLUU2jG6wJeuY4/JR69DGypEhux+fdri52bs2xd23D/OmMNqjngQ1C
-         62spmWk7STC1/bRjIAOO4guFa7S+CNEWBJ3sSU1VMW/OEKZ3rJMqdQ+na3xAudvBgz
-         IkJ42yxuFQU3Trmkowxi8TifkVfYd1hxuiAIxHmQ=
+        b=HK1CoEL51Nw9sNOwCS0OCqa/TKNKE8JxH3sogN/HCs+n0aCiIiTJ6yemlmQB3i1XN
+         1eXfcYpwcgXiMJSL0pms7gIZCZZWuNReg+8/Jswu34t/9+YyryHNDGoS450M9BgTTB
+         waRcd0tO3ralQ2bAqE7S1RKWPP8WeNxhb35iJPbo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N0X8u-1hs0ye3K2W-00wZ2j; Fri, 06
- Dec 2019 16:52:36 +0100
-Date:   Fri, 6 Dec 2019 16:52:22 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MrQIv-1i0Ze725yh-00oY0B; Fri, 06
+ Dec 2019 16:57:08 +0100
+Date:   Fri, 6 Dec 2019 16:56:53 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 cc:     git@vger.kernel.org
-Subject: ag/edit-todo-drop-check, Re: What's cooking in git.git (Dec 2019,
+Subject: js/advise-rebase-skip, was Re: What's cooking in git.git (Dec 2019,
  #02; Thu, 5)
 In-Reply-To: <xmqqzhg6xuvc.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1912061651110.31080@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1912061653370.31080@tvgsbejvaqbjf.bet>
 References: <xmqqzhg6xuvc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:b/83A7kdPXMf7G/FMbuGPktjexuvEwJXz8gM5ls0Iv38xs+77gQ
- wHfrnFjp+pJxo5TvqFWJikM4DTcjFHOEWB0R9Qlyt70VUXaKOBxjIMCI75KdhO7S8WI1YTb
- wMan0Mfgo8YFtjzj2VtzCS4eoZMyrD7AaxLjG09aW6MEduIEUz4y82bKPQXfLe5eZ9sRDPu
- by2by0MeVI0yf6fzScwYQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:F9g5qzwjZDo=:eMqdxcv1y+OasVfpP7ShnV
- rrPmfKz3hOoYk0UZkhOtu4CsOB2a3FTOwB5Bo5SftGQOOa8HT0xXjfMYgW0ObMocwY7yzpGrR
- tR2C6ebxJ20KGAH2NAoqaf2TrS+LgjHRAQ/atxFG1FVpk90DWjLgiXBbsous3H0TLL+A1nDsz
- +Qf2L7jcq5FBUpqiVHBYKRoadUX2Ahy6E9hO7VfPlFVCKWzWwsCoKtLHajwHb0JWN2958ovCC
- GD0mg6bC8/+3Gg2aDwciz7pxJqONdyRWkBSJRaK0y+Lo4BJRk4ARC+U8QUZptjSimWlkTdrxA
- mSRLfqU9wE/zp0Q2jzqvL26vrENb60fnkSLwaRmuvt2+hNc6eO95MwCN99racvbS9GIw7SAqM
- HvANhU6b0ug7hp2/fe+yHwLwXxBi+29Mysf+2bA5pSC9bR/npOTkFpTV9bD0eWFiIej/Nu+/T
- ylHH7TNmnNOCBV+Y7pwNagt0Zd1pDKmdbKlCSL2dfgEtzBn6wwKZ8Dq8T1/jTVp5vw04nDm3m
- 2qO4Vyw4ranQLmPc1JJ5stLvu1YpDuG5P7W9+J8cFpZheTJaZVQoYuF1Mzbrr7RWN8HKYTCwC
- ZHP3NEs8nei2pmDF1JVBov8CEkUwO17e4lBbdwY+/6bBFwgO1qR1O0g/EN7/fzFaYrIrkHRHn
- ctBXpWg4K67QxboRwcThxpN2G/rDN+Mzgy54Dbv6iWvNGPQwWEn1GIhu3WQk78ACRY9CsFisi
- romWBxbEJYiK+q5ZAHasUsMwcnmlbwxOy+HnhUvP+z5XzDUXFOm+6U7OwuNk9NoGIljne91cM
- qPoNO6jv41nVBX0ZvUvs+zV8ZmVdZgW/0fHqbPMkNLmCoVt38ekMXlGYax8E+ggfeUBmobcJG
- 4eVJTfZa1er9xvYpJUlH65TqoNaFSu+YsJJfcE9QRxYYZsmzjXCmQmmLc0/VvW+hMMoAWcGvu
- 4xO7Me5iJLgXO8ZwoF6aGHIlkqawBRL8yZJcr95fdZO2UppPBdnq1rP0/8U+640jbbcnfwYjc
- 61Kwkek4jTvwcb44EbU6CpDniJJWw2jASvW3396Dgpllm6beqCVyrF45npU25ZpsmVOlRHy/g
- TW84IhlrdvaONoplgnpkyfjD2U6zx8YVhfbtlOR0cU1cNvJHY0ERVpe6DtBeAvDJ6c+WtlXGN
- GabB8MMv4DlI2Ya0IGIqNdNfmO7vZDI+QwbLF4tPrPTCdEjSO1m55jSvIzEEHz/RqNLxpfdtm
- GO8n2dzDKvkdoR2yBDDFvx5LFPfRaDZLBeRnEjMVXThWFXm4vT9NI+J9r6dU=
+X-Provags-ID: V03:K1:N0/QGHi4V/iU4U9r9DRgQ6rPH93s6lvX3XOSXupgCtPQTXAKSc/
+ ACTht9vstZTOTPAZxZrKWLsCn9cJUnN90THh0TuulMzLh0XVtnW+dJ3o6R5/KOnTHvrlRDh
+ 3bxpnQgL2E+aCoF7IRojYM5CPNmRHX+qEkVviUUeRJX5vt8szko9FBMPYyZNYeJY8aAA8kO
+ Pc16TrMCkGCHPWTAtTGaA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D7SUYmarQmc=:5WfDOgUdAIxsb+g99J6dUd
+ PoRJV6cEWA/3ZEM4MPuIaYe0MW9obPj+SfC4y60gqGfqTUDL8ur4n7W9DdMA3/JY8jC0hiYRc
+ Amt8er+9Xohf7tqLahlqd/8Ok0eqG/llZjgMD8Sz1vXJCzFeIBZeLrIGkNue2hrvl8aTrAOj4
+ FUM8AKP2sDUMyrpO7XNJ2eOUdWgqQS+u8jd14NRroh0W9j9PdOsBsbcNMnPmgdyQjzRPQsUm4
+ qsm9tecAYf86IlCLVBuAtoaek/1X48qaou5hMViDdQA5zYNRyU3n0xIPTgdBAGJ1bPcEQT3xh
+ bW0pXiTgUrKV7aL14vLF7w8PTyCLZIN8uidKlz7N6CH2mvFdtQvrfgWy4+ouP+q5D0NBePR7a
+ ulL9iQPLjtUP7fCE+J+fQVzyh7jyrqBdpy50noFtb8Ebfgdpw6lDYCrv7Im4N9rDjyTn3NByv
+ Hb55Mh8BvmCXhvMhWdfM4XZh1a5mteKDlOT1YdOb7lteJsY3yzbwp53qM3H//tE7ssG0/rzKi
+ 4/K216ADDknouBwX4aK8dGs7dm6BFMrqifb8tZl6MIVqJJVedc+bi8HnJK7wl0aYouFEzH73J
+ Nmec67HWCRQfVF9BbOCk+pWS5U6SMvGSB7cza/mlwPIhtpcL1SgXGByYI6JUjkB/FxQc6AD+y
+ +zyXsk1wx/BRZhEywIVhqrPd7RpiBIX7GfMRw5V5nWNgkhFzZzoADH9lOH6lJHSP672MkVOeQ
+ idjToZm3Kpr455bLYrvO36JnOjM6rmO8T0IIOg5q+OxYP8/ivxr8ArYtfYds117tW1DyX6jTt
+ ruGT+gQGBcwozVK2k276Zi+vgtEYF/Iaf8EuirwTfiScLArmn/Rr0C1inFBE51ZCiZ3UeAb6y
+ vcroXjScfXHlF+Ttj6qVApVyU+8b4iXmC2m/a64jMQPGns4hkr1Oh2LLBWEf5IiyOUVrL1y2c
+ +Ux003oVMZDxDGUj4iiR7Zw/lbGVBLyVcLeOgb5dOFaDWne3WPMBgch1Dv/VLSdN+ep1WI1QE
+ wsq8NMy673mYZMtfdvf0JuCYJPDWosT4rdukucpL9WLi85kM7UM65UgZOeisKW0M08S7Gx0Ci
+ siRJO/u9Hm04WGxj1vBLsboKuC8Jk3hzGubtuBEUyWG6tnWnkz3UEjW5CxYX0XIzPXjy4Mt3l
+ JneqEzSAmRaqNGUmdrUHBiOcjTMhHw/NeI70yh2nEI+sv4Y9Pflvx2Gd0vtgbE5gaUOtAReBe
+ DMMizYYpNK/efXEI1KZOzxkwAUKm7HbFeCHPeHC3ksavP57nAOb86dCfDprQ=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio & Alban,
+Hi Junio,
 
 On Thu, 5 Dec 2019, Junio C Hamano wrote:
 
-> * ag/edit-todo-drop-check (2019-12-04) 2 commits
->  - rebase-interactive: warn if commit is dropped with `rebase --edit-tod=
-o'
->  - sequencer: move check_todo_list_from_file() to rebase-interactive.c
->  (this branch uses ag/sequencer-todo-updates.)
+> * js/advise-rebase-skip (2019-10-23) 3 commits
+>  - commit: give correct advice for empty commit during a rebase
+>  - sequencer: export the function to get the path of `.git/rebase-merge/=
+`
+>  - cherry-pick: add test for `--skip` advice in `git commit`
 >
->  Allow the rebase.missingCommitsCheck configuration to kick in when
->  "rebase --edit-todo" and "rebase --continue" restarts the procedure.
+>  The logic used in "git commit" to give hints and errors depending
+>  on what operation was in progress learned to distinguish rebase and
+>  cherry-pick better.
 >
->  Seems to break when merged to 'pu'.
+>  Kicked back to 'pu'.
+>  cf. <nycvar.QRO.7.76.6.1911081508560.46@tvgsbejvaqbjf.bet>
 
-I provided a patch that intends to fix up the tip commit.
+Phillip already opened a GitGitGadget PR to replace this, and it will soon
+hit the Git mailing list, I think (or it already did and I missed it):
+https://github.com/gitgitgadget/git/pull/484
+
+Feel free to drop my patches as soon as you integrate Phillips'.
 
 Ciao,
 Dscho
