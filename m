@@ -2,166 +2,153 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B5CC2BBE2
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 19:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2817C43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 19:11:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AD55E2467A
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 19:03:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B5B1221835
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 19:11:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pJBbNk2+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0bkN933"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726353AbfLFTDn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 14:03:43 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:37242 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfLFTDm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 14:03:42 -0500
-Received: by mail-wm1-f41.google.com with SMTP id f129so8401469wmf.2
-        for <git@vger.kernel.org>; Fri, 06 Dec 2019 11:03:41 -0800 (PST)
+        id S1726328AbfLFTL0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 14:11:26 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40834 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbfLFTL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 14:11:26 -0500
+Received: by mail-pl1-f194.google.com with SMTP id g6so3092869plp.7
+        for <git@vger.kernel.org>; Fri, 06 Dec 2019 11:11:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bFBObAohbnDPuC/lP+UX9a/nOUfyslN1OyKzum4UjVU=;
-        b=pJBbNk2+i7BGqYCrKohmVmVLKK7zDcomGlhJvkfIVVD5fik21xL5FwDdHToRA21kyV
-         etOmSpMiE/Ok+/qhwmhcdeAtXAITghzjtGb0oPagtr2j68t/ywDN60xaSs675kXc2dO/
-         1M8mX/I3bFNBBj2k9OaZ6i6Twpxa8/XU6gCAUpWkSaXSbwfp/yVGWnt6cuzkxE+ViRiK
-         WfLBasD1L2qrrs2RLbgWrRqicf8dk7rtxbfZLcpFG9dKnj3lTTiceNqk7l28z/3trj8u
-         ArUOC+uaEU4WC6+8uGtf6QPgnNbJOPAma5/f3TT1fe9HqZUSXgTQyntVvDsEJ99YtSBH
-         /3PQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8/xwvnEziANiwt0713qzGo2DtW55Q2iM/GH5KgtVVHI=;
+        b=Y0bkN933i/Smnk7b/FAhTWQ6n//4Zbhxtqg8ZGhyUzZrowRQ8Y27LDUcMBvzCbXGqu
+         s5SuGqQzlecoNxwrSg7AUcyB6H2xBM5UHETSV9RPAJQkJC39djwkcZZsZUolxZrFGZXN
+         SQk7Jy6r8Gy4QlT/NlGpaqGwtCLi5pqDwmf6lX5mvxjWSFKjGsv/2eqpzvTPNDxWR8cL
+         7GPTTioXezz49U0pKUNtTNp2bp2eepdePF3/8uUUyAj/Wp2a83KMRrZjbm41DVq2OHv7
+         dEqML5ERdkbBC6O7iAFyZIWfWMX9JkP3OYzbIB4yFCe8upZwJBuGWhXbyvfuoX48OYia
+         JOlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bFBObAohbnDPuC/lP+UX9a/nOUfyslN1OyKzum4UjVU=;
-        b=U2WAacG2Gf3hzGW07LMipSZPJJMT+2d6olYtdJsvPidOnJNicbINPAyuSRFgDNnqYC
-         0pvhjQigJP9v/kr2I1KiNW/6O7n6qbc2F6pBlWeLK4rlgRlv9t9VL82QbEv1HlCRFDuk
-         zEXrTQIArAe4s4XK3If1BvMEiGcEy1/Nz+w5M5+Y3xSGggOPZghcfhBf+jWu2JxM6GAE
-         jIncbSgyqMH0mXh3y1CHm+hvVgq/ub26KgwPtcvcUvC2tSrTr3J/nzhQRRdvv0aNoeIH
-         /Rp9Gd9qF7PnzpTj3+oK0J66ec9JlmUo87SaEXe2HlpXlYNCIODiFVuEMp83b+oXZbbu
-         5ErQ==
-X-Gm-Message-State: APjAAAUZt9G9z+cEshAZGrsmb+NSOpdnXbUKmXG1UBRpQtMmfUjWY2+G
-        t8k5iEhe3zAX96bao11dZjg=
-X-Google-Smtp-Source: APXvYqw0GQvK1qSnc0BFzYx2+PlAjzoqFEOg/7Tog9Ytt++ntGyeJ/4Y5dqtMuoXvYlxQ5LKqzjHeA==
-X-Received: by 2002:a1c:4e03:: with SMTP id g3mr12497087wmh.22.1575659020870;
-        Fri, 06 Dec 2019 11:03:40 -0800 (PST)
-Received: from localhost.localdomain (x4d0c7a95.dyn.telefonica.de. [77.12.122.149])
-        by smtp.gmail.com with ESMTPSA id d19sm4399100wmd.38.2019.12.06.11.03.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 06 Dec 2019 11:03:40 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 2/2] t9300-fast-import: don't hang if background fast-import exits too early
-Date:   Fri,  6 Dec 2019 20:03:31 +0100
-Message-Id: <20191206190331.29443-3-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.24.0.801.g241c134b8d
-In-Reply-To: <20191206190331.29443-1-szeder.dev@gmail.com>
-References: <20191130104644.17350-1-szeder.dev@gmail.com>
- <20191206190331.29443-1-szeder.dev@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8/xwvnEziANiwt0713qzGo2DtW55Q2iM/GH5KgtVVHI=;
+        b=T7c5JxqIf0qZJQWNYr0jmREUtsExL13yvqxV9TDNyMzWH3FhLpaCrhHI54O9QfrsPE
+         ZjKU+oLP3TIIzpHL7zAO4qUe5naTWs9bQfg2r6F0I4Ea4Nad6jeVTxJMwXR3UkWhGQ92
+         lVACxlXZf/RQ4S7wZ81isDds09ddDMzOpM6YTyadGX6m6lyFYsd9hVpT0rIPAlFYvD6s
+         4VWV+iCujgxj8jnBKXDrWhMauh6/dD5CuDksO6ZZc3y1y/ECWuaaIexBqdRGisrfyeBE
+         BqaoKqOeMslO9uVMppQWBKSVoiBUDS5LBTGjLCHMbzvScwCehAFQGGqqXQ3LAJhE7KKS
+         IVeA==
+X-Gm-Message-State: APjAAAW1/Fkd2j6l4U2O8uXsc6Z9vpdvE/4egXe2SGcLmzkta1od5bMa
+        4HZXBNZ5ZJZ20ecF0oQQLmc=
+X-Google-Smtp-Source: APXvYqxRm6NSdDnlj0pvwe9Sa18cpnjyLZHPN+IA+OANLETFJ29GS+/NfJx388X+aP+6SB5D2EIFXQ==
+X-Received: by 2002:a17:902:b403:: with SMTP id x3mr16384592plr.109.1575659485757;
+        Fri, 06 Dec 2019 11:11:25 -0800 (PST)
+Received: from generichostname ([204.14.239.137])
+        by smtp.gmail.com with ESMTPSA id t137sm16102938pgb.40.2019.12.06.11.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Dec 2019 11:11:24 -0800 (PST)
+Date:   Fri, 6 Dec 2019 11:11:47 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Alex Torok <alext9@gmail.com>, g@generichostname
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] rebase: find --fork-point with full refgg
+Message-ID: <20191206191147.GA16379@generichostname>
+References: <20191205225322.5529-1-alext9@gmail.com>
+ <20191205235704.31385-1-alext9@gmail.com>
+ <20191205235704.31385-3-alext9@gmail.com>
+ <20191206014828.GB16183@generichostname>
+ <e898ad43-5649-8f4c-7c93-fab09197fc92@gmail.com>
+ <CANmPhj38UqZiePEPbPJBwUTOEJrfA6j3aP8KBHvAY6EA-J7Nsw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CANmPhj38UqZiePEPbPJBwUTOEJrfA6j3aP8KBHvAY6EA-J7Nsw@mail.gmail.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The five tests checking 'git fast-import's checkpoint handling in
-'t9300-fast-import.sh', all with the prefix "V:" in their test
-description, can hang indefinitely if 'git fast-import' unexpectedly
-dies early in any of these tests.
+Hi Alex,
 
-These five tests run 'git fast-import' in the background, while
-feeding instructions to its standard input through a fifo (fd 8) from
-a background subshell, and reading and verifying its standard output
-through another fifo (fd 9) in the test script's main shell process.
-This "reading and verifying" is basically a 'while read ...' shell
-loop iterating until 'git fast-import' outputs the expected line,
-ignoring any other output.  This doesn't work very well when 'git
-fast-import' dies before printing that particular line, because the
-'read' builtin doesn't get EOF after the death of 'git fast-import',
-as their input and output are not connected directly but through a
-fifo.  Consequently, that 'read' hangs waiting for the next line from
-the already dead 'git fast-import', leaving the test script and in
-turn the whole test suite hanging.
+On Fri, Dec 06, 2019 at 08:46:29AM -0500, Alex Torok wrote:
+> Thank you for the feedback Denton & Phillip!
+> 
+> On Fri, Dec 6, 2019 at 5:52 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+> > On 06/12/2019 01:48, Denton Liu wrote:
+> > > nit: * should be attached to the variable name.
+> >
+> > I think you also need to free it once you've called get_fork_point() as
+> > well.
+> 
+> Yup. Got it.
+> 
+> > On 06/12/2019 01:48, Denton Liu wrote:
+> > >
+> > >> +            dwim_ref_or_die(options.upstream_name, strlen(options.upstream_name), &full_name);
+> > >
+> > > Also, thinking about this more, would it be possible to put the dwim_ref
+> > > logic into get_fork_point() directly? There are currently only these two
+> > > callers so I suspect it should be fine and it'll result in cleaner
+> > > logic.
+> >
+> > If you do that then it would be better to use error() rather than die()
+> > in get_fork_point() and return an error to the caller as we try to avoid
+> > adding code to libgit that dies. This lets the caller handle any cleanup
+> > that they need to before exiting.
+> 
+> Would the signature of get_fork_point change to be something like:
+> int get_fork_point(const char *refname, struct commit *commit,
+>    struct commit **fork_point, struct strbuf *err)
 
-Avoid this hang by checking whether the background 'git fast-import'
-process exited unexpectedly early, and interrupt the 'while read' loop
-if it did.  We have to jump through some hoops to achive that, though:
+I would drop the last parameter. If an error is detected, you could just
+do
 
-  - Start the background 'git fast-import' in another background
-    subshell, which then:
+	return error(_("oh no, something bad happened"));
 
-      - prints the PID of that 'git fast-import' process to the fifo,
-	to be read by the main shell process, so it will know which
-	process to kill when the test is finished.
+Even though we try and avoid dying in the middle of libgit, we print
+errors out very often so it should be fine here.
 
-      - waits until that 'git fast-import' process exits.  If it does
-	exit, then report its exit code, and write a message to the
-	fifo used for 'git fast-import's standard output, thus
-	un-block the 'read' builtin in the main shell process.
+> > > Also, I'm not why this test case in particular that was duplicated (and
+> > > not the one above) given that the first three `--fork-point` test cases
+> > > fail without the change to rebase. Perhaps we want to duplicate all
+> > > "refs/heads/master" tests with a corresponding "master" test?
+> 
+> I only duplicated one so that there would only be one test case that
+> would fail if a regression around getting the fork point with a short
+> ref name was introduced.
+> 
+> I just happened to pick that one because it was closest to the rebase
+> command I was running when I found the bug :)
+> 
+> I can include some of the above reasoning in the commit message.
+> Alternatively:
+> * I could duplicate all of tests
+> * I could change all of the tests to use the short ref name
+> 
+> I'm leaning towards just leaving one test (maybe with a comment?)
+> for the short ref name --fork-point so that there is more resolution
+> around where a bug could be on test failure.
 
-  - Modify that 'while read' loop to break the loop upon seeing that
-    message, and fail the test in the usual way.
+I would just duplicate all of the tests. When the tests are pretty cheap
+to run (as they are in this case), I tend to err on the side of adding
+more tests since they might catch more odd edge-cases but, in this case,
+all of the fork point logic goes through one common block so the
+duplicate logic doesn't really buy us anything.
 
-  - Once the test is finished kill that background subshell as well,
-    and do so before killing the background 'git fast-import'.
-    Otherwise the background 'git fast-import' and subshell processes
-    would die racily, and if 'git fast-import' were to die sooner,
-    then we might get some undesired and potentially confusing
-    messages in the test's output.
+I'm pretty impartial so I'll leave it up to you ;)
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t9300-fast-import.sh | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+Thanks,
 
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 6820ebbb63..8f6f80f021 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -3164,12 +3164,21 @@ background_import_then_checkpoint () {
- 	exec 9<>V.output
- 	rm V.output
- 
--	git fast-import $options <&8 >&9 &
--	fi_pid=$!
-+	(
-+		git fast-import $options <&8 >&9 &
-+		echo $! >&9
-+		wait $!
-+		echo >&2 "background fast-import terminated too early with exit code $?"
-+		# Un-block the read loop in the main shell process.
-+		echo >&9 UNEXPECTED
-+	) &
-+	sh_pid=$!
-+	read fi_pid <&9
- 	# We don't mind if fast-import has already died by the time the test
- 	# ends.
- 	test_when_finished "
- 		exec 8>&-; exec 9>&-;
-+		kill $sh_pid && wait $sh_pid
- 		kill $fi_pid && wait $fi_pid
- 		true"
- 
-@@ -3190,6 +3199,9 @@ background_import_then_checkpoint () {
- 		then
- 			error=0
- 			break
-+		elif test "$output" = "UNEXPECTED"
-+		then
-+			break
- 		fi
- 		# otherwise ignore cruft
- 		echo >&2 "cruft: $output"
--- 
-2.24.0.801.g241c134b8d
+Denton
 
+> 
+> Let me know what you think,
+> Alex
