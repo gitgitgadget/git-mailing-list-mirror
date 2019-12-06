@@ -6,101 +6,93 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 326B2C43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 21:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 251C0C43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 21:42:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB47120659
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 21:31:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0E2721835
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 21:42:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rXd9ERTO"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IkqUQe0h"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726397AbfLFVbm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 16:31:42 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62942 "EHLO
+        id S1726374AbfLFVmi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 16:42:38 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54988 "EHLO
         pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726330AbfLFVbm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 16:31:42 -0500
+        with ESMTP id S1726352AbfLFVmi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 16:42:38 -0500
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 994C2ADC13;
-        Fri,  6 Dec 2019 16:31:40 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6655FADCC8;
+        Fri,  6 Dec 2019 16:42:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xi09KCsmH6hQ/UILVf7+cVyhKLU=; b=rXd9ER
-        TOhJIl9srXi5XEDlWOEv8av5aQWZKKcDHsJc/E0rzdn9sebdYmY43UFlJL/97sQm
-        pTPQf1d1l2Emi2OZaFAbSrEBuLWG8mELhbkQZAVTk9nFhvaBJxoULu5WKqVbNKA2
-        WNIPHSjHT4eAEYl9ovpHPsjQgQ+FFTEpVkQvY=
+        :content-type; s=sasl; bh=xqt7SKb9lt77FDMdzDskN1cr06s=; b=IkqUQe
+        0hjgFkOFPnKEgo6HluzSGCPh4imUciwMsZLKAIoys5trKGR2LXof4EN0YZrT1fZF
+        AMWykbPJfuz913rFJ8WgPqnvlEucvHyvrVHLEU4JbKCD7yXzLdHQaMP4HNMfLE/3
+        t1UHaRF7Lp/rV5zcYkRigq2Xq8svaCgve5SIo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=jTLfcAu2nn0xmLSsnzJd/mVmLCKv+dMD
-        GXyloSBiiQMZQdx/sCkpDgSJb5wPWJrWVdBmKG67gK5Y1kohMFXXL7RvIQ/O0LuY
-        aZ6MWt69q2ZbIwVO3WWq/UfNNRG5jXxYuaTNGXqWIu37N2g8VOIdy2EPx6lqxKiO
-        cvz/bxHMTcY=
+        :content-type; q=dns; s=sasl; b=IUp+rjMtvyQhw7eS5dOHDq9fTnALQE/H
+        IycZ9G8x9pv1QqcgppFSVrMGl/6gsYvPletrqogNfqY3rP08zzkoT1dqYhvulrmd
+        y+x2/pH6OyztVjvIa807IxLdVZoB7WosHOlVWhYZSPxRVw69uGtHHB1mfNctUens
+        OTtljlYehWg=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92299ADC12;
-        Fri,  6 Dec 2019 16:31:40 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5E365ADCC7;
+        Fri,  6 Dec 2019 16:42:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BC019ADC0A;
-        Fri,  6 Dec 2019 16:31:37 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 82C78ADCC6;
+        Fri,  6 Dec 2019 16:42:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2019, #01; Mon, 2)
-References: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
-        <bea26b66-ac52-8f0e-9557-c958db7be628@gmail.com>
-Date:   Fri, 06 Dec 2019 13:31:35 -0800
-In-Reply-To: <bea26b66-ac52-8f0e-9557-c958db7be628@gmail.com> (Derrick
-        Stolee's message of "Wed, 4 Dec 2019 13:53:10 -0500")
-Message-ID: <xmqqd0d1w37s.fsf@gitster-ct.c.googlers.com>
+To:     peff@peff.net
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        christian.couder@gmail.com, git@vger.kernel.org,
+        chriscool@tuxfamily.org, ramsay@ramsayjones.plus.com
+Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
+References: <20191115141541.11149-1-chriscool@tuxfamily.org>
+        <20191115180319.113991-1-jonathantanmy@google.com>
+        <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com>
+        <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 06 Dec 2019 13:42:31 -0800
+In-Reply-To: <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 25 Nov 2019 15:36:25 +0900")
+Message-ID: <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C8D20D70-186F-11EA-96CE-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 4FAFD60A-1871-11EA-B7D8-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 12/2/2019 9:16 AM, Junio C Hamano wrote:
->> * ds/sparse-cone (2019-11-22) 19 commits
->>  - sparse-checkout: check for dirty status
->>  - sparse-checkout: update working directory in-process for 'init'
->>  - sparse-checkout: cone mode should not interact with .gitignore
->>  - sparse-checkout: write using lockfile
->>  - sparse-checkout: use in-process update for disable subcommand
->>  - sparse-checkout: update working directory in-process
->>  - sparse-checkout: sanitize for nested folders
->>  - unpack-trees: add progress to clear_ce_flags()
->>  - unpack-trees: hash less in cone mode
->>  - sparse-checkout: init and set in cone mode
->>  - sparse-checkout: use hashmaps for cone patterns
->>  - sparse-checkout: add 'cone' mode
->>  - trace2: add region in clear_ce_flags
->>  - sparse-checkout: create 'disable' subcommand
->>  - sparse-checkout: add '--stdin' option to set subcommand
->>  - sparse-checkout: 'set' subcommand
->>  - clone: add --sparse mode
->>  - sparse-checkout: create 'init' subcommand
->>  - sparse-checkout: create builtin with 'list' subcommand
->> 
->>  Management of sparsely checked-out working tree has gained a
->>  dedicated "sparse-checkout" command.
->> 
->>  How well is this topic done at this point?
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Hopefully this is ready to merge and I can start on the
-> follow-up topics. I think this is ready enough that any
-> further comments can be done in follow-up commits.
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>>
+>>>> It could be a good idea if Peff could answer some of the comments made
+>>>> by Jonathan Tan about patch 9/9.
+>>>> 
+>>>> I have put Peff as the author of all the commits.
+>>>
+>>> Thanks. I think the series looks mostly good except for the questions I
+>>> raised in patch 9/9, so I'll wait for Peff to respond too.
+>>
+>> Hmph, the round before this one has been in 'next' for quite a
+>> while, so should I eject it before waiting for Peff to respond
+>> before queuing this one?
 >
-> That said, I thought the topic was in that state before
-> the 2.24.0 release, but then Szeder found several good
-> points worthy to address here. He is CC'd to hopefully
-> comment.
+> After rebasing these v3 patches on top of the base of the one in
+> 'next', the only difference seems to be the log message of 3/9 and
+> the contents of 9/9.  I guess I'll mark the topic as "on hold" for
+> now before doing anything, as I am officially taking a time-off most
+> of this week ;-)
 
-Ping?
+So..., that week has passed---anything new?
+
+Thanks.
