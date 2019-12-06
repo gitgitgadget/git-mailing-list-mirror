@@ -2,129 +2,161 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6E33C43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 11:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 647DEC43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 11:34:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AFDDB20706
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 11:23:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 28C6224658
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 11:34:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jcP1rsIZ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lNeyBIyh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbfLFLXD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 06:23:03 -0500
-Received: from mout.gmx.net ([212.227.15.18]:39811 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726070AbfLFLXD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 06:23:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575631376;
-        bh=1VFzx9pa8HQl/DClVn/CrTsh4HlQ2wbsQaBEgG1rkQY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jcP1rsIZgys+evG/yHQAF09DY2EZwoNqzW0pb6C1uczDWhEPlFXzmfjWdJ2gBeWK2
-         HwJR4P6hZtXc47n+eST/kQ2ewmjNg4KWM6SVuoJtM0hC2JEOqBO2XbXri3IMoUEann
-         KHC9U4Vj8NNF81FEPkQOgi/GWuGnWmKoKS99L3A4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGyxN-1iYSc847LX-00E9b3; Fri, 06
- Dec 2019 12:22:56 +0100
-Date:   Fri, 6 Dec 2019 12:22:41 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1726264AbfLFLeL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 06:34:11 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:54277 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726088AbfLFLeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 06:34:10 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so7454859wmj.4
+        for <git@vger.kernel.org>; Fri, 06 Dec 2019 03:34:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MZQaEG/8xOYb1yN7kS5kI7lytZ+NVHvw7zJst9OuX1g=;
+        b=lNeyBIyhJJfBA6rPV4SUwbOBHipOjVlJMqEr6DKrpTmBR1yuWAPVXAsw9htF/tRg63
+         CmdDgSNQ7fNlZcUGvq59lAv9ZAe504GPEV2y9IPiesXZe2rJ2z5JyIPmwESTlMjBN+hP
+         EUXPM8g9g7a0HLMd65yFgm8L34tay5o0C4WlnBv8esQRag/QyHJbg8Eim+bQ2QOLTTKb
+         FhQFvRAoo9KpekTRi3kN+12i9Czr5kIK5bNAuM/l63cuGnTbgKJMuLDkWyt07THUl4WS
+         fI5DPaQYoSuD5l6ScDdiHoIbZEzRNA+sYpaWT06uzjB6AOKdd6MzcE8WZRRx7i9CoXGT
+         2ELQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MZQaEG/8xOYb1yN7kS5kI7lytZ+NVHvw7zJst9OuX1g=;
+        b=O2QShQtKRkXiw77E8pG9PoRQtqofJi0b9DdsL4IM4J3pDVGcoQQMVDNP1GbvGJMEGL
+         0ESu5vhC75YX8USa/FWwauc746kUm1qYobWP7EB/N+c3KdHtjf+Hd6t+CzUK1evxxBbK
+         ArkCVlaW2SekGZBKuLbSVZpAgUvZn2jpX8atWX0A8DWVVConTsVevG+4YpYcw2RX9qkf
+         vBkw9Q1GKJGQ9DXI4hz+2pbE0I0sCXAkERdfxZk4NuNrO/zdb1XAIAwwiiTb2cdoCT2J
+         yEZe6ZcvAHkj0xFqZMjOByG9emKSwipnVriAdFWE4x/EKozKz3Mk4Sf0nc53jxX0Ojjs
+         CQiw==
+X-Gm-Message-State: APjAAAXIbvW8z0SsSAgk+RuZMBrZDAtNP5s3DB8Mld9QHSN83ng2rP6O
+        6JDmMjMiqllzsay1QL84VEk=
+X-Google-Smtp-Source: APXvYqySap/fQrU8WFpf1m91XuA3DCwV8opi1otsDHQZNSjtXgZt0KwgcrFjdEJ8lKI26K8zqMRN2Q==
+X-Received: by 2002:a7b:c113:: with SMTP id w19mr9867555wmi.144.1575632048873;
+        Fri, 06 Dec 2019 03:34:08 -0800 (PST)
+Received: from szeder.dev (x4d0c7a95.dyn.telefonica.de. [77.12.122.149])
+        by smtp.gmail.com with ESMTPSA id s25sm3001851wmh.4.2019.12.06.03.34.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Dec 2019 03:34:08 -0800 (PST)
+Date:   Fri, 6 Dec 2019 12:34:01 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     git@vger.kernel.org,
+Cc:     git@vger.kernel.org,
         Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
         Denton Liu <liu.denton@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v2] grep: support the --pathspec-from-file option
-In-Reply-To: <20191204203911.237056-1-emilyshaffer@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1912061220400.31080@tvgsbejvaqbjf.bet>
-References: <20191204203911.237056-1-emilyshaffer@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Message-ID: <20191206113401.GA2746@szeder.dev>
+References: <20191122011646.218346-1-emilyshaffer@google.com>
+ <20191204203911.237056-1-emilyshaffer@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:stiS8WBoDieTuPnwJGv++ID3cNx3whDZ+klxCa70Q+6bPis5FKe
- B2jzvenf5JQRQDlbXoqCLaqP6mH//qjg/ufAn6STDJyR7Up/m7q9rGIzN4LviQRwbQ624Kn
- nzmk/PoiRSQvJlBwuSnqUfwyA51LGro3M9tFHvImPQ9N2aZiMbmsj89E/0KNZ2sArj2uKEA
- Ufr3D0ORhGsLATmuSCZKA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ncdqbH0bpm0=:3WS4PLqwUib1PXd9l1q/8u
- CJr9Wlk9zUNeK6h9i6cFRWd/1m1k/bQj81vIIBFISkUaLcND+K5mSqiSZwWXgJAaueFyTahv9
- D6U135PbA0gmfJHLDs47t692ad2lzNdUKTrCc3rg5KYfDHsG/3IK/QSEXvAswonAT73fIqxfA
- AU7Qm+S+IvytK09cQJNeCLDxkeSE7GydP1AtFx1XZc62GnxSvx/1ixALxXb+trFmcQw6kT4xt
- gmKf6W5Z1LJIO5jSpK8pz+mtEeQ0RwyzbV6ZPLM2w7sTfLw05by61B9n92g+lE2HDxox71Qd6
- 31icctv+QufcipAgAgSObATav5qYb2tTqA+FcoX7hVoLke7BcX/3AI/F2ITXUwT+hdjVl+om3
- A5t9OGQG0t83NCQc2KdgACJHaPPQPm+V33JfaAL2gPaXUba9l5cmDaJ7bWLJWrHXqEjb9Ieni
- olxa6Nt/LrrwjjWNQOFqiAE6xJAZ+2gi/wp43r/h33UwyBVguEJUT+QRupEARAiHSnEdaLcO2
- +5aR03IgLT+oBw5wVnkhZQcV83ZRUCM4WX4HHLy2XSCCtmlYcJvYM2FYRnrhCbqwYCPtiG20G
- PuifIHlA2UgqEfCZ1khatpHZW7QOWufXaIdlvCA1u6APUgeRf1P2h5SiqaNy9Jko5QlR61GvA
- R4/6yVQB6UjlbE17uff0pMqvu88/omVvdHnCMRnlrjUXWvOxmF6YF7+W5yPN0SXhjK2qCnFx/
- FjuL1FVQ9tdBM28QkhELxyWLrxnK63qmVrzX5ZiFYwkyG0jvM1Sh6u6z373D1Ukg01s8fqY5F
- 7IR8QlJoglvFj6yKc4qY0AgEqTh0J3KzOk27aohg8Qx0fEfRYXUmLGoG9TV3E6FjgivBMdCaK
- cEBHTCjjvcjMzx5PQunX1329ubZ22FHeK3lQjvbevuPTJ71lHfnVphV/NqjhzqCF3tgq7Gs5q
- uRQa658V0vCbtuaSJQl2EILTeBPLA6kE3sckYSGj9G5kpD5wsNrvz00emhAlLQV2AZ/CN/xG5
- FfvUHMS45WBs8CX3eU5X6BCVuuqOGQFvNlss0aEcj61HFkWVXZkpBXxDVEAQw8Qtkg/24Lij3
- +c932tkFrCgIhiCOJkaTAvKgzuQqaDkrE7J+sbG/bYQ213oj207WzgR3/2iqdE3BTqDr0UMH4
- SxshjbtOy6IZ4aMIfZ36Zj4eWccQ7Pbbs/6HywebLnORfjxjG6r92s7IIky1mTdbwucbUq98l
- 3shCfP5Qkb80/QGrke1QNhdZUKn7yEBfiqDr4U+X3Th+Ebt0xiF2c56Tpr8M=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191204203911.237056-1-emilyshaffer@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
-
-On Wed, 4 Dec 2019, Emily Shaffer wrote:
+On Wed, Dec 04, 2019 at 12:39:11PM -0800, Emily Shaffer wrote:
+> Teach 'git grep' to use OPT_PATHSPEC_FROM_FILE and update the
+> documentation accordingly.
 
 > diff --git a/builtin/grep.c b/builtin/grep.c
 > index 50ce8d9461..54ba991c42 100644
 > --- a/builtin/grep.c
 > +++ b/builtin/grep.c
-> @@ -809,6 +813,8 @@ int cmd_grep(int argc, const char **argv, const char=
- *prefix)
->  	int use_index =3D 1;
->  	int pattern_type_arg =3D GREP_PATTERN_TYPE_UNSPECIFIED;
+
+> @@ -809,6 +813,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  	int use_index = 1;
+>  	int pattern_type_arg = GREP_PATTERN_TYPE_UNSPECIFIED;
 >  	int allow_revs;
 > +	char *pathspec_from_file;
 > +	int pathspec_file_nul;
->
->  	struct option options[] =3D {
 
-I need this on top to make it work without problems (I have not yet
-triggered the CI build, but I will in a moment):
+Uninitialized variables ...
+>  
+>  	struct option options[] = {
+>  		OPT_BOOL(0, "cached", &cached,
+> @@ -896,8 +902,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  		OPT_BOOL('W', "function-context", &opt.funcbody,
+>  			N_("show the surrounding function")),
+>  		OPT_GROUP(""),
+> -		OPT_CALLBACK('f', NULL, &opt, N_("file"),
+> +		OPT_CALLBACK('f', "patterns-from-file", &opt, N_("file"),
+>  			N_("read patterns from file"), file_callback),
+> +		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
+> +		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+>  		{ OPTION_CALLBACK, 'e', NULL, &opt, N_("pattern"),
+>  			N_("match <pattern>"), PARSE_OPT_NONEG, pattern_callback },
+>  		{ OPTION_CALLBACK, 0, "and", &opt, NULL,
+> @@ -1062,6 +1070,23 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  	pathspec.recursive = 1;
+>  	pathspec.recurse_submodules = !!recurse_submodules;
+>  
+> +	if (pathspec_from_file) {
 
-=2D- snipsnap --
-Subject: [PATCH] fixup??? grep: support the --pathspec-from-file option
+... one of which is checked here ...
 
-We must not use those variables uninitialized, this causes CI build
-failures left and right (see e.g.
-https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D22821)
+> +		if (pathspec.nr)
+> +			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-=2D--
- builtin/grep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+... causing a lot of tests to fail in our OSX CI builds (but,
+strangely, in none of the Linux builds), either with the above error
+message, e.g.:
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 54ba991c425..c2aa1aeebd6 100644
-=2D-- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -813,8 +813,8 @@ int cmd_grep(int argc, const char **argv, const char *=
-prefix)
- 	int use_index =3D 1;
- 	int pattern_type_arg =3D GREP_PATTERN_TYPE_UNSPECIFIED;
- 	int allow_revs;
--	char *pathspec_from_file;
--	int pathspec_file_nul;
-+	char *pathspec_from_file =3D NULL;
-+	int pathspec_file_nul =3D 0;
+  expecting success of 4014.150 'format-patch --pretty=mboxrd':
+  [...]
+  ++git format-patch --pretty=mboxrd --stdout -1 01b96447182ff76f30268fb82d3f9e9e09b14e6c~1..01b96447182ff76f30268fb82d3f9e9e09b14e6c
+  ++git grep -h --no-index -A11 '^>From could trip up a loose mbox parser' patch
+  fatal: --pathspec-from-file is incompatible with pathspec arguments
+  error: last command exited with $?=128
 
- 	struct option options[] =3D {
- 		OPT_BOOL(0, "cached", &cached,
-=2D-
-2.24.0.windows.2.611.ge9aced84530
+or with:
 
+  expecting success of 7814.2 'grep correctly finds patterns in a submodule': 
+  [...]
+  ++git grep -e '(3|4)' --recurse-submodules
+  fatal: could not open '����?' for reading: No such file or directory
+  error: last command exited with $?=128
+
+> +		pathspec_from_stdin = !strcmp(pathspec_from_file, "-");
+> +
+> +		if (patterns_from_stdin && pathspec_from_stdin)
+> +			die(_("cannot specify both patterns and pathspec via stdin"));
+> +
+> +		parse_pathspec_file(&pathspec, 0, PATHSPEC_PREFER_CWD |
+> +				    (opt.max_depth != -1 ? PATHSPEC_MAXDEPTH_VALID : 0),
+> +				    prefix, pathspec_from_file,
+> +				    pathspec_file_nul);
+
+The other uninitialized variable is passed as parameter above and
+checked below, but I haven't seen any test failures caused by it.
+
+> +	} else if (pathspec_file_nul) {
+> +		die(_("--pathspec-file-nul requires --pathspec-from-file"));
+> +	}
+> +
+>  	if (list.nr || cached || show_in_pager) {
+>  		if (num_threads > 1)
+>  			warning(_("invalid option combination, ignoring --threads"));
