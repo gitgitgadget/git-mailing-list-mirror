@@ -2,114 +2,108 @@ Return-Path: <SRS0=yMBz=Z4=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D58FDC43603
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 17:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC5CFC43603
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:13:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A3E7624670
-	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 17:57:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83ECC24673
+	for <git@archiver.kernel.org>; Fri,  6 Dec 2019 18:13:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bLt4rbsb"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gn+lYmSl"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbfLFR5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Dec 2019 12:57:13 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50463 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726312AbfLFR5N (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Dec 2019 12:57:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575655027;
-        bh=gaKX+/ECHgVgDtbdXhhLCrYnkuXloh4g2FPORBjgiV8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=bLt4rbsb0IMJgXtMOoXqKV3IvweA3o9qcGDAfKSNJqt7KTWO3JN/uwrNbnGpSYk6a
-         XDNyl46I6obXlS40P80JwF3g8pQZ3tR52vlEveQk4pc5oHj7APoGgDn/P4rR4Vu3jx
-         /IN4moU3S4+g0rPbewtGpGn/7C9hUCBXVI0pY1ng=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MlNtF-1huMqU0H1h-00li9Z; Fri, 06
- Dec 2019 18:57:07 +0100
-Date:   Fri, 6 Dec 2019 18:56:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 7/7] apply --allow-overlap: fix a corner case
-In-Reply-To: <xmqqa785xv9w.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1912061849300.31080@tvgsbejvaqbjf.bet>
-References: <pull.172.git.1575637705.gitgitgadget@gmail.com>        <15c4cce5a027d56c7ddbe5523cf0f3beabd06ed7.1575637705.git.gitgitgadget@gmail.com>        <xmqqr21hy3cf.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.1912061502110.31080@tvgsbejvaqbjf.bet>
- <xmqqa785xv9w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726315AbfLFSNg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Dec 2019 13:13:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57878 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726287AbfLFSNg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Dec 2019 13:13:36 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D4B5F1E42B;
+        Fri,  6 Dec 2019 13:13:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=IG7kX/Hodmr3VOwmWzx6aKFwVJs=; b=Gn+lYm
+        Slmp73PeUJjjWXcezb5Tre5IqqxG782RvVTDkOi39YLHn6tXX51ihQjHaFty17GP
+        f+w5dbbgOSKj4PF5/o0tFZjGcWds+CkIi21sSY9iB4QkettUaUG1IXNgFefFjtgj
+        2hTY+qXisJjQkpr2JiKr7R8vadPvVtFK8cZl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PaPzLyCXS0hSVfS/uvyYmPsdOlSnN3iT
+        ti1FXt/CxrIsSKtQpBMzQbnBNBXr9M3noXRJfdZET0I33zCQ1SU/HUdvPJT3t34+
+        yytGooul7Ea/7wIVdjtgweDkY17UjphfIQaDT4gllw4gnOzG4NEKO/KJ+PEXq5LF
+        N83q1/tlWKk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CB4581E42A;
+        Fri,  6 Dec 2019 13:13:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 07B1E1E429;
+        Fri,  6 Dec 2019 13:13:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 5/9] commit: use enum value for multiple cherry-picks
+References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
+        <20191206160614.631724-1-phillip.wood123@gmail.com>
+        <20191206160614.631724-6-phillip.wood123@gmail.com>
+Date:   Fri, 06 Dec 2019 10:13:31 -0800
+In-Reply-To: <20191206160614.631724-6-phillip.wood123@gmail.com> (Phillip
+        Wood's message of "Fri, 6 Dec 2019 16:06:10 +0000")
+Message-ID: <xmqq1rthxqyc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:uuCBzZtix0SICH1QcC26JL62EHhKy5Y7ybWwAte+wnNMgACh8hJ
- /3xwTqchXQFNDNxpPaYLEZe0dSAEa7G12XdDCHxAp6KR5X+FHiwLFCdCDZsufpQsUJM5Cun
- aE6+RgJpVs1ZzUM/ooJEO2wyKOFUGZg9kyQEeFCB3rk6FW9b80CRHZ2HqryLjc0pnOuSTQc
- /m/npLgMgviOA7zqa0teA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:+QNvQNQL0ig=:gp322kriTMvXf2U0FiJt/h
- +g1Ih87SgefPkToxGfLVPf6vQUJc210dOr9uaXM6Mf8dEbdwewU82UlnucxGfioXOFrFLbPTw
- q4mi3ov4NCjdASqKBvD0W7k7UrijTBEzd3xmoFfPGIa81/hPfOKMAY1u9cji+PxQYTfU+mEng
- dxLDdrG3+oqJHLgVgtIzNr1R49NkJFk0J08tyL76f3r3v/OO1aPNwLe4pz+diwvhoZRnRtrkr
- uB1a/u630wb/LzO2/aAuImg9KZ232ih0G5pVq4peGXviOUgKjMfz717nm3OMTV0zan2dZ7063
- B88v+6hB+wG4M5jIxjhnSJElXi5crV9fDYZO+gQFD2bK8EXj2ZWOV7hDsnd0PtxaSdhZuGXx3
- x1F5/Dd0UZKD2nxPumbdljGI4cjaFd4YAJIvho6Wa3atz6Yb8dGf5X+uEnYYfL+coVzypnpoL
- aAm6z5Y2ihNeAxnYyJSFH6DPxPAmO0m3sxH/FzB+nR7wkRxhPg9T59xHGzeIkqhqY5fG7AHzf
- wt6GgJ+XJGzuQqCNT9dEJ3nkbC8XUKZ0kgVmhp/tBFttxBuOHuEAF/06Ef3ZIiWyzneW8yyep
- ZaKypxrfqwOP1Bvxs0GDfa0Serj0EBAOXeGr6U/d4VCyCZPoxsn+lP37ZLcVOUUIr8vBKUnzz
- /EPf724qLf7jgyu/whH+u0kq0c/bNtL8tbEDClMi9OgiNyRUmKye12q5tuZJlEOTPbT3MIoFZ
- uNRtIHhYQ6h0uPeAJNhCa7ZKhmUP39r5tFBWE1vfjqK5larnF3BUzCVnqLIJuaEFaQUdxSly3
- X0JdkHEJOvZNDTfkLwFED7JjQt+YlAs2+iY/wqCeSnIbYPVjZPIRGILmxMvqnc7eeCKUh0J/o
- qkqY5/E/UmWMBqBFVkWeTt+hU51es3nm1WJD7ox4nV+nIduvpCCyznzMuOe9QxxTxNqkznOXK
- AKecizSIu3yrQ0Xr/67ghskFVdGSjRmsua7H8XNLVEJkEp/zl4aEYJWacJByy+vOYsPPrYIci
- m+MhCM2Ysbv2OiJSV5T5SzjeMi4Fk7dpIwZX9e0hwadcN1TLvQt5nQWBfONIs+DzJa10vzaco
- B7YpnDkeoFX1U/zkni9Shm2vSLdDpBgD1e90noIuDqaY1a+/qKYpmxvV+2tLHGuhLLEDL+ZrL
- UPStB9ThDM4RFg4OIp3VYCqqPvY3+4BRK5ACB6WCL7xR7zQseIMR6mMEhiep6T7KTBGVixwzb
- p4jGx+61ZIKl5r+ePiZ+TvtRGgsf7Ufu4puXnfhU/iqkpAvI22LmSwCdahQc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1CF6CE66-1854-11EA-B3C9-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-On Fri, 6 Dec 2019, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> > The beginning is more special than the end because it is associated wi=
-th
-> > the line number 1. The end line number is flexible already.
+> Add FROM_CHERRY_PICK_MULTI for a sequence of cherry-picks rather than
+> using a separate variable.
 >
-> Yeah, we do not insist "the lineno must be X" at the end like we do
-> at the beginning, but we still insist "there cannot be no post
-> context if we are adding at the end" just like there cannot be any
-> pre context for a patch that adds at the beginning, no?
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/commit.c | 25 +++++++++++--------------
+>  wt-status.h      |  9 ++++++++-
+>  2 files changed, 19 insertions(+), 15 deletions(-)
 
-True.
+Makes sense.  The checks have become quite pleasant to read, thanks
+to the new helper function.
 
-> > There is another difference: after splitting hunks, the first hunk is
-> > applied first, and may render the line numbers of succeeding hunks
-> > incorrect. The same is not true for the last hunk: it cannot render th=
-e
-> > preceding hunks' line numbers incorrect, as it has not been applied ye=
-t.
->
-> This truly may make quite a difference, especially because the hunks
-> are applied in order.
+> ...
+> -	if (whence == FROM_CHERRY_PICK && !renew_authorship) {
+> +	if (is_from_cherry_pick(whence) && !renew_authorship) {
+>  		author_message = "CHERRY_PICK_HEAD";
+>  		author_message_buffer = read_commit_message(author_message);
+>  	}
+> diff --git a/wt-status.h b/wt-status.h
+> index 64f1ddc9fd..0098fdb0b5 100644
+> --- a/wt-status.h
+> +++ b/wt-status.h
+> @@ -39,9 +39,16 @@ enum show_ignored_type {
+>  enum commit_whence {
+>  	FROM_COMMIT,     /* normal */
+>  	FROM_MERGE,      /* commit came from merge */
+> -	FROM_CHERRY_PICK /* commit came from cherry-pick */
+> +	FROM_CHERRY_PICK_SINGLE, /* commit came from cherry-pick */
+> +	FROM_CHERRY_PICK_MULTI /* commit came from a sequence of cherry-picks */
+>  };
 
-I think you're right, I fooled myself into believing that the line number
-1 is special, but the real culprit is that the second hunk is applied
-_after_ the first one may have changed the (overlapping) context. The same
-is not true for the second-to-last hunk: it will always be applied before
-the end of the file can possibly become no longer the end of the file.
+It might be worth to end PICK_MULTI with a trailing comma to
+future-proof, but not worth a reroll for this alone.
 
-I'll try to think up a concise paragraph about this, and stick it into the
-commit message.
-
-Ciao,
-Dscho
