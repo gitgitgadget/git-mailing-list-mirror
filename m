@@ -2,100 +2,115 @@ Return-Path: <SRS0=g+dp=Z5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36EBAC43603
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 18:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C3F3C43603
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:17:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 06E30206D6
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 18:04:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 344DC2082E
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:17:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="XhRwDAKE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726473AbfLGSEs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Dec 2019 13:04:48 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:58098 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726455AbfLGSEs (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 7 Dec 2019 13:04:48 -0500
-Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1ideRi-0002ZC-7Z; Sat, 07 Dec 2019 19:04:46 +0100
-Subject: Re: Git as data archive
-To:     Philip Oakley <philipoakley@iee.email>,
-        Andreas Kalz <andreas-kalz@gmx.de>, git@vger.kernel.org
-References: <21fcdc5f-955a-e027-0d71-15f476f6162c@gmx.de>
- <60945f9c-d79c-7806-0c5e-3e2affcea001@iee.email>
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Message-ID: <1c81112d-5a1b-a791-b43f-d6a67d5b2e04@virtuell-zuhause.de>
-Date:   Sat, 7 Dec 2019 19:04:45 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        id S1726528AbfLGTRI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Dec 2019 14:17:08 -0500
+Received: from mout.web.de ([212.227.17.11]:39805 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726473AbfLGTRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Dec 2019 14:17:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1575746212;
+        bh=NkRyhW3FkwKRstoEEUMCpcCoRRlnc0n4Rod2+LlcHqE=;
+        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
+        b=XhRwDAKEuYlGNMMvLluXJFIs9co9cl+/M8Cnggx1N3kRpyWrxmh1gAvdwQXHZQ59n
+         rp6CmrOd3xdKhaUxQdi3RCoMZz4jfrmeroEIGf3xgs+hCczftb/9ztpvbXcYX+qWHJ
+         krKJy1LN+yL8+fbvo/9KrHmcJUCw7g5YeeggfLX4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.26] ([91.47.158.92]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgOL4-1iQw9C3JwM-00Nm1M; Sat, 07
+ Dec 2019 20:16:52 +0100
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] patch-id: use oid_to_hex() to print multiple object IDs
+Message-ID: <bebcac17-f560-bb73-9aee-72f944df7d95@web.de>
+Date:   Sat, 7 Dec 2019 20:16:51 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-In-Reply-To: <60945f9c-d79c-7806-0c5e-3e2affcea001@iee.email>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1575741887;969885e3;
-X-HE-SMSGID: 1ideRi-0002ZC-7Z
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+r1zSQy9lrbFkG7fL6dTJXt/hATySDKsJalkDuykvcBPyoVMeRU
+ eGiBmlmATyMXbTUqJke/F/dfU3bPIbpZJYYLRcQEYid0oX4LQYu+yTbs34FKvkZ5Psw32dE
+ /IHkVxWCdH/Mh+2iuM0xm+dda9HQLYLD4ZZTs3N4X1eJmpdeh0Kmml4n9xZJpBCpxlYW2si
+ mPo+xgZ0LchKpTIUHAFbA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4YJMV6FtzpE=:CH93AeHENXwnHzWrM6EGoQ
+ sxCzevgZT+SDnj1Yth7oyyAS6jeldKAggyivudkaC4LE1/BOKub9S73ettSnHGespwvKRk2gH
+ 873G9OvmhWYC0XgKBz30EoGf32dF1XGJKM3cQEVSg4qDuXqErbMm9vtR0XVuMDAYvTMLS/335
+ h2bSFqq3yr26eEajL6o0kC7YYvVVAsbtnl4vQViiBKyiT6BXQzT/HiWVWY5dFcwfjZOMO8IOO
+ QBjTx53yVO0qwRm8j6SSq3TbjMQAa3Jv/nG4ogKFNP7CnLN4DNoKgmRlPkIU/YyExGxJfcxWP
+ jqPQCSk4JWe3SitZ/ITDBsxJAayDhnpHfcFkiY4uc/DF6/61RrTcb1FYgLPDkMOSi3bE7NHLM
+ ODvDkmlY3yKkhpJ85ba8e2uudG08RDcgvPW04r7gZWhE7OoLZJKrYacyJCFepc6L1B7lnhIV5
+ 4XtU8m09uQHXzWyQLSurNUXR5pyxRx6GXHGoUWls1wxKxpeYQuMzEGpYHe3FswtjFFxzrtK+5
+ /1LwsHToCQOQW1st8XKLjk610Lx/meUh0TDS5WvpAV2NOloWK7KU9j4GY0jlDxlCFy5pZQ1+t
+ lIK+fqkL5DU89PivOHzQ0GMJbgxJ6hQxvF0bOKhD2Zj29//VI05GawVdyRmv1Cda7j70co/6E
+ 5RsjQEFrQIj2AZ1ZjwQuK2iqHbNQ2l48TeJuxId324KDydRmyyFpHl9rgex8df7L6HS6D1tcG
+ TtADU/wCAfNCt5MqZ9eFD4/45GTYRlokkTWzpu4yzggj+uVX7vWpZydJCzlCUbmFGO5yfn4hQ
+ SL5xuHXebxUdPQbN9Ir8pKs3GqVv+d6E8Y9W0q1zdZRmLPMnXZwBGGpRQ2Son2QGU5ULf2Pmu
+ ezx2yS18FwPYHQI/56AEjbI86G/5CgIGgdlOzpC0ZspA3a4nZWNdYpCr/NEywvRl6DXNZLoM2
+ a2iVl+qwJbca77HUaczzKLp8rAXfGZ9eTxW6+DhZUqN0pGdfEJ7Nq49Al2pSqdbSnmaF5OTUk
+ cbMXFNIebDzdH24PRZToKDF8J/Lc6YJaIW7KWfH5sJo5Np5Tp1QtCPHltsFE01KjSYAvsakCd
+ R/3DVvPNFsKORvFa76klsmPAER8BA0MrsrxJPjfS+j5ClW6qKuQapx3L8wh0hT2qOmEIN50u3
+ SdrhLeh4Pb8YVzAwm33fl31ck54ZNFvoXFXvZaD91SDEaryF2Es38aWiqeU8iN1zguIDds5pw
+ 0fdPalarJ9be0DZ37RcF2mZUm16VMtfCGclVfsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07.12.2019 17:54, Philip Oakley wrote:
-> Hi Andreas,
-> 
-> On 06/12/2019 18:54, Andreas Kalz wrote:
->> Hello,
->> I am using git as archive and versioning also for photos. Apart from
->> performance issues, I wanted to ask if there are hard limits and
->> configurable limits (how to configure?) for maximum single file size and
->> maximum .git archive size (Windows 64 Bit system)?
->> Thanks in advance for your answer.
->> All the best,
->> Andreas
-> 
-> On Git the file size is currently limited to size of `long`, rather than
-> `size_t`. Hence on Git-for Windows the size limit is 32bit ~4GiB
-> 
-> Any change will be a big change as it ripples through many places in the
-> code base and, for some, will feel 'wrong'. I did some work [1-4] on top
-> of those of many others that was almost there, but...
+flush_current_id() prints the hexadecimal representation of two object
+IDs.  When the code was added in f97672225b (Add "git-patch-id" program
+to generate patch ID's., 2005-06-23), sha1_to_hex() had only a single
+internal static buffer, so the result of one invocation had to be stored
+in a local buffer.
 
-Adding to what Philip said. On Windows the size of exported archives
-(git archive) is currently also limited to 4GB. The reason being also
-the long vs size_t issue (which is not present on linux though).
+Since dcb3450fd8 (sha1_to_hex() usage cleanup, 2006-05-03) it rotates
+through four buffers, which allows to print up to four object IDs at the
+same time.  1a876a69af6 (patch-id: convert to use struct object_id,
+2015-03-13) replaced sha1_to_hex() with oid_to_hex(), which has the same
+feature.  Use it to simplify the code.
 
-So if you can switch to Linux or even MacOSX these issues are gone.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/patch-id.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-The number of files in .git, only the number packfiles would be of
-interest here I guess, do not have the long vs size_t issue. So
-packfiles can be larger than 4GB on 64bit Windows (with 64bit git of
-course).
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3059e525b8..822ffff51f 100644
+=2D-- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -5,13 +5,8 @@
 
-But depending on how large the biggest files are, it might be worth
-tweaking some of the settings, so that the created packfiles are
-readable on all platforms. I once created a repo on linux which could
-not be checked on windows, and that is a bit annoying.
+ static void flush_current_id(int patchlen, struct object_id *id, struct o=
+bject_id *result)
+ {
+-	char name[GIT_MAX_HEXSZ + 1];
+-
+-	if (!patchlen)
+-		return;
+-
+-	memcpy(name, oid_to_hex(id), the_hash_algo->hexsz + 1);
+-	printf("%s %s\n", oid_to_hex(result), name);
++	if (patchlen)
++		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
+ }
 
-So the questions are how large is each file? And what repository size do
-you expect? Are we talking about 20MB files and 10GB repository? Or a
-factor 100 more? And are you just adding files or are you modifying the
-added files? Depending on the file sizes it might then also be
-beneficial to tweak the delta compression settings and/or the big file
-threshold limits.
-
-Thomas
-
-> The alternative is git-lfs, which I don't personally use (see [4]).
-> 
-> Philip
-> 
-> [1] https://github.com/git-for-windows/git/pull/2179
-> [2] https://github.com/gitgitgadget/git/pull/115
-> [3] https://github.com/git-for-windows/git/issues/1063
-> [4] https://github.com/git-lfs/git-lfs/issues/2434
-> 
-> 
-
+ static int remove_space(char *line)
+=2D-
+2.24.0
