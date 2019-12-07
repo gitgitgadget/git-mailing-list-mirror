@@ -2,115 +2,71 @@ Return-Path: <SRS0=g+dp=Z5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C3F3C43603
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74FD7C43603
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:47:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 344DC2082E
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:17:09 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="XhRwDAKE"
+	by mail.kernel.org (Postfix) with ESMTP id 48566206DB
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 19:47:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726528AbfLGTRI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Dec 2019 14:17:08 -0500
-Received: from mout.web.de ([212.227.17.11]:39805 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726473AbfLGTRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Dec 2019 14:17:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1575746212;
-        bh=NkRyhW3FkwKRstoEEUMCpcCoRRlnc0n4Rod2+LlcHqE=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=XhRwDAKEuYlGNMMvLluXJFIs9co9cl+/M8Cnggx1N3kRpyWrxmh1gAvdwQXHZQ59n
-         rp6CmrOd3xdKhaUxQdi3RCoMZz4jfrmeroEIGf3xgs+hCczftb/9ztpvbXcYX+qWHJ
-         krKJy1LN+yL8+fbvo/9KrHmcJUCw7g5YeeggfLX4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([91.47.158.92]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MgOL4-1iQw9C3JwM-00Nm1M; Sat, 07
- Dec 2019 20:16:52 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] patch-id: use oid_to_hex() to print multiple object IDs
-Message-ID: <bebcac17-f560-bb73-9aee-72f944df7d95@web.de>
-Date:   Sat, 7 Dec 2019 20:16:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726635AbfLGTr6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Dec 2019 14:47:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41182 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726489AbfLGTr6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Dec 2019 14:47:58 -0500
+Received: (qmail 5371 invoked by uid 109); 7 Dec 2019 19:47:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 07 Dec 2019 19:47:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7435 invoked by uid 111); 7 Dec 2019 19:52:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 07 Dec 2019 14:52:11 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 7 Dec 2019 14:47:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings
+ in python3
+Message-ID: <20191207194756.GA43949@coredump.intra.peff.net>
+References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
+ <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+r1zSQy9lrbFkG7fL6dTJXt/hATySDKsJalkDuykvcBPyoVMeRU
- eGiBmlmATyMXbTUqJke/F/dfU3bPIbpZJYYLRcQEYid0oX4LQYu+yTbs34FKvkZ5Psw32dE
- /IHkVxWCdH/Mh+2iuM0xm+dda9HQLYLD4ZZTs3N4X1eJmpdeh0Kmml4n9xZJpBCpxlYW2si
- mPo+xgZ0LchKpTIUHAFbA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4YJMV6FtzpE=:CH93AeHENXwnHzWrM6EGoQ
- sxCzevgZT+SDnj1Yth7oyyAS6jeldKAggyivudkaC4LE1/BOKub9S73ettSnHGespwvKRk2gH
- 873G9OvmhWYC0XgKBz30EoGf32dF1XGJKM3cQEVSg4qDuXqErbMm9vtR0XVuMDAYvTMLS/335
- h2bSFqq3yr26eEajL6o0kC7YYvVVAsbtnl4vQViiBKyiT6BXQzT/HiWVWY5dFcwfjZOMO8IOO
- QBjTx53yVO0qwRm8j6SSq3TbjMQAa3Jv/nG4ogKFNP7CnLN4DNoKgmRlPkIU/YyExGxJfcxWP
- jqPQCSk4JWe3SitZ/ITDBsxJAayDhnpHfcFkiY4uc/DF6/61RrTcb1FYgLPDkMOSi3bE7NHLM
- ODvDkmlY3yKkhpJ85ba8e2uudG08RDcgvPW04r7gZWhE7OoLZJKrYacyJCFepc6L1B7lnhIV5
- 4XtU8m09uQHXzWyQLSurNUXR5pyxRx6GXHGoUWls1wxKxpeYQuMzEGpYHe3FswtjFFxzrtK+5
- /1LwsHToCQOQW1st8XKLjk610Lx/meUh0TDS5WvpAV2NOloWK7KU9j4GY0jlDxlCFy5pZQ1+t
- lIK+fqkL5DU89PivOHzQ0GMJbgxJ6hQxvF0bOKhD2Zj29//VI05GawVdyRmv1Cda7j70co/6E
- 5RsjQEFrQIj2AZ1ZjwQuK2iqHbNQ2l48TeJuxId324KDydRmyyFpHl9rgex8df7L6HS6D1tcG
- TtADU/wCAfNCt5MqZ9eFD4/45GTYRlokkTWzpu4yzggj+uVX7vWpZydJCzlCUbmFGO5yfn4hQ
- SL5xuHXebxUdPQbN9Ir8pKs3GqVv+d6E8Y9W0q1zdZRmLPMnXZwBGGpRQ2Son2QGU5ULf2Pmu
- ezx2yS18FwPYHQI/56AEjbI86G/5CgIGgdlOzpC0ZspA3a4nZWNdYpCr/NEywvRl6DXNZLoM2
- a2iVl+qwJbca77HUaczzKLp8rAXfGZ9eTxW6+DhZUqN0pGdfEJ7Nq49Al2pSqdbSnmaF5OTUk
- cbMXFNIebDzdH24PRZToKDF8J/Lc6YJaIW7KWfH5sJo5Np5Tp1QtCPHltsFE01KjSYAvsakCd
- R/3DVvPNFsKORvFa76klsmPAER8BA0MrsrxJPjfS+j5ClW6qKuQapx3L8wh0hT2qOmEIN50u3
- SdrhLeh4Pb8YVzAwm33fl31ck54ZNFvoXFXvZaD91SDEaryF2Es38aWiqeU8iN1zguIDds5pw
- 0fdPalarJ9be0DZ37RcF2mZUm16VMtfCGclVfsw==
+Content-Disposition: inline
+In-Reply-To: <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-flush_current_id() prints the hexadecimal representation of two object
-IDs.  When the code was added in f97672225b (Add "git-patch-id" program
-to generate patch ID's., 2005-06-23), sha1_to_hex() had only a single
-internal static buffer, so the result of one invocation had to be stored
-in a local buffer.
+On Sat, Dec 07, 2019 at 05:47:28PM +0000, Ben Keene via GitGitGadget wrote:
 
-Since dcb3450fd8 (sha1_to_hex() usage cleanup, 2006-05-03) it rotates
-through four buffers, which allows to print up to four object IDs at the
-same time.  1a876a69af6 (patch-id: convert to use struct object_id,
-2015-03-13) replaced sha1_to_hex() with oid_to_hex(), which has the same
-feature.  Use it to simplify the code.
+> Ben Keene (13):
+>   git-p4: select P4 binary by operating-system
+>   git-p4: change the expansion test from basestring to list
+>   git-p4: promote encodeWithUTF8() to a global function
+>   git-p4: remove p4_write_pipe() and write_pipe() return values
+>   git-p4: add new support function gitConfigSet()
+>   git-p4: add casting helper functions for python 3 conversion
+>   git-p4: python 3 syntax changes
+>   git-p4: fix assumed path separators to be more Windows friendly
+>   git-p4: add Py23File() - helper class for stream writing
+>   git-p4: p4CmdList - support Unicode encoding
+>   git-p4: support Python 3 for basic P4 clone, sync, and submit (t9800)
+>   git-p4: added --encoding parameter to p4 clone
+>   git-p4: Add depot manipulation functions
+> 
+> Jeff King (2):
+>   t/gitweb-lib.sh: drop confusing quotes
+>   t/gitweb-lib.sh: set $REQUEST_URI
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- builtin/patch-id.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Hmm, looks like rebasing leftovers. :) I think we can probably drop
+these first two?
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3059e525b8..822ffff51f 100644
-=2D-- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -5,13 +5,8 @@
-
- static void flush_current_id(int patchlen, struct object_id *id, struct o=
-bject_id *result)
- {
--	char name[GIT_MAX_HEXSZ + 1];
--
--	if (!patchlen)
--		return;
--
--	memcpy(name, oid_to_hex(id), the_hash_algo->hexsz + 1);
--	printf("%s %s\n", oid_to_hex(result), name);
-+	if (patchlen)
-+		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
- }
-
- static int remove_space(char *line)
-=2D-
-2.24.0
+-Peff
