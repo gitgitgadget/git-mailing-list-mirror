@@ -2,95 +2,79 @@ Return-Path: <SRS0=g+dp=Z5=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91A2BC43603
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 07:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F7BDC43603
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 07:35:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 61A0C21835
-	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 07:29:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 071D821835
+	for <git@archiver.kernel.org>; Sat,  7 Dec 2019 07:35:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="bT0qQtqe"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="0qDh6AdP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726289AbfLGH3h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Dec 2019 02:29:37 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:35713 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725923AbfLGH3h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Dec 2019 02:29:37 -0500
-Received: by mail-lj1-f193.google.com with SMTP id j6so10111812lja.2
-        for <git@vger.kernel.org>; Fri, 06 Dec 2019 23:29:35 -0800 (PST)
+        id S1726307AbfLGHfI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Dec 2019 02:35:08 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:37757 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725923AbfLGHfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Dec 2019 02:35:07 -0500
+Received: by mail-lj1-f196.google.com with SMTP id u17so10103170lja.4
+        for <git@vger.kernel.org>; Fri, 06 Dec 2019 23:35:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=65d63Ku8ifDNMXTZkbBrspuW/sG4/fa3uvoH5pySM2c=;
-        b=bT0qQtqe8nph46vXiIcoliDC2R0c3Uv7js1vT2zp2aL1bccylXlmKwsfD+2YOKojS2
-         nkm8ty2ukVDJUs8j15ByS059AaLx8Tdq1o+AsjRr7atM8v7noyGmR0KKDJIBPjbXZeAy
-         MzMi9KRmq0BwYJPiOkc59Ii1EWdc/ImICulKdIxKHuz2S2QlKB4oX+M6SPMy5nb47/BW
-         qOyJhuGoOP5Y8MY2t9ku38aRu2g5202M4MTzTNj3id2LRTPGmeT9E048b0ZyykQfkE7i
-         Sj9vrvp8lmy72UedHN19nkaInZOrH8JijDrJEg1JGK4cOi9XHtLrkuLUL5hV+sy4YZCc
-         RMGA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=F1MoBOJspG9i2u4AqfvtCBQGcA577AIxEcXZ+SXvghs=;
+        b=0qDh6AdPwBT6lSUXzXF0Jzpm+sKGNkhdJphCFGwFZjB9wFltAEL6fAu1G5fHH6wnEG
+         nbB6shsBas2ycCFRW3Qmq+ROC4tojow6QSvCqCUGPTXdgAafmXL2PHnbunjM7COzD3l5
+         R9Mf86DrP/nsM1ik+VvzJM6mAyHOPBc5InGfDa6wVflXKNXt3azDKFGDqT3rwxwsdZRz
+         xsWK/W/ul/wq6j4SLZ30NVSkXEWm6ev6revK4mFh4O69DUpCv0TZ1z8MLvKA5GAOvV7j
+         3AmknAciS4ze5ZUNwaYbD6aXGQ9AVRrgxq1FODq646uKQl2heSSHKS2OUo6WF9408myC
+         KDGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=65d63Ku8ifDNMXTZkbBrspuW/sG4/fa3uvoH5pySM2c=;
-        b=tm9CLvhkBBQDEEEKX7e9b8e/v8o2STMY8vZGCne43gzsHPIgKzV5E6k+HK+N8X+WJc
-         T0oytA/kzSLhm9NF0oZGlV3xJwHKNP2Xt0tt/HQcGlehTJMIK0YEJwOVpzrwgOBhqb/V
-         2nzxYuo9wNh+EmOEmfvqvNcYYD+yCiMX19HbAj3oGURL1P7WEvh9gZwhMBLAwvWPEV80
-         YaxcUlxBD4FVvRJS1m4fcxaQhJK3g7zljedaz5b5GoJoZJ9TgdGax58rk/40jaBnsWK5
-         q/ffRhI+ofWduTuyRoRplx3zRYTbhAQa4FWzXtX8M1wIgy0+nr+3gFd+sHjcpPmbCDSz
-         6piw==
-X-Gm-Message-State: APjAAAXOvsHAHahyyTQmLzcdSFtTxTQGAew/9AOCt5pSDy9qdRoXx5Ye
-        IQUrrh2Oli+RTC4dcFzsyyv67vyL+746wIujOFVgHg==
-X-Google-Smtp-Source: APXvYqzJlNVm1RNqRS53goVWR3FSXjxfgVXI17gGE8y/XwVfZYplt7acpkIi08d2Sl9FX5+YlwRIqtBrX4JRvYvKGUQ=
-X-Received: by 2002:a2e:7816:: with SMTP id t22mr10825332ljc.161.1575703775132;
- Fri, 06 Dec 2019 23:29:35 -0800 (PST)
+         :message-id:subject:to;
+        bh=F1MoBOJspG9i2u4AqfvtCBQGcA577AIxEcXZ+SXvghs=;
+        b=eKS5EUDoTiB1/d4AkeBpffRzLDBkfWi203zxR/ZMhV9nW/TiF4w+HEVnXCHkv4dgE8
+         7Uf2SQFBn5JM2dftuIY7xxUkesU1QExh4D8LJu5p10RQYOsMW7rQUc6rkdOBIvNwd99o
+         ub8w3ou377I4jWzZH/mUtULm6eNHYqt06GV8v+rF1QGnr3SSkk1fXmg94Sg+pbat/qAn
+         iHQVoVwwcCuu5i2ZbOLdyBsuLQ8KsEpumCtyZRuVkiQPcMZUxl2MWK51urt8R+0Zb3P+
+         Me9yC4i3/UKFv3kjAlxNoKjKdHbq8q1nnSkHJdxCofNPBnyr8s7ObIluz+bik5btt+gD
+         evZg==
+X-Gm-Message-State: APjAAAXuY0XU5mPOaQVAJq+NdufTtSU4UhxOCA7WrpKlvcI7JtN1ExO+
+        FzkzuMJziHTi6+EtqJHVHS4TTeZC2mqFqHGm4mwqnG7rX74=
+X-Google-Smtp-Source: APXvYqxYZeX8/gQ6BoSGrSK2TY/09UmTkUsV8QDBgqBSJwBTMp6BvHJoSLXyCNEcp3g/rNZa6eD0SvzRBlv/QSKYWW8=
+X-Received: by 2002:a2e:7816:: with SMTP id t22mr10837255ljc.161.1575704105370;
+ Fri, 06 Dec 2019 23:35:05 -0800 (PST)
 MIME-Version: 1.0
-References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com> <20191207010938.GA75094@generichostname>
-In-Reply-To: <20191207010938.GA75094@generichostname>
+References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
+In-Reply-To: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
-Date:   Fri, 6 Dec 2019 23:29:20 -0800
-Message-ID: <CABvFv3+viMXJO0z5HAQbCya7MU9tWd7P_LxUhu66T74XGN99yA@mail.gmail.com>
+Date:   Fri, 6 Dec 2019 23:34:51 -0800
+Message-ID: <CABvFv3+06yTTaF6VQ=DpRV5U5wDBBmrQc2ZNXDEmvoGw6R_o0Q@mail.gmail.com>
 Subject: Re: [PATCH 00/13] git-p4: python3 compatibility
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 6, 2019 at 5:09 PM Denton Liu <liu.denton@gmail.com> wrote:
-> On Fri, Dec 06, 2019 at 04:33:18PM -0800, Yang Zhao wrote:
-> > This patchset adds python3 compatibility to git-p4.
-> > ...
+On Fri, Dec 6, 2019 at 4:33 PM Yang Zhao <yang.zhao@skyboxlabs.com> wrote:
+> This patchset adds python3 compatibility to git-p4.
 >
-> Currently, there's a competing effort to do the same thing[1] by Ben
-> Keene (CC'd). Like the last time[2] two competing topics arose at the
-> same time, I'm going to make the same suggestion.
+> While some clean-up refactoring would have been nice, I specifically avoided
+> making any major changes to the internal API, aiming to have passing tests
+> with as few changes as possible.
 >
-> Would it be possible for both of you to join forces?
+> CI results can be seen from this GitHub PR: https://github.com/git/git/pull/673
 
-Yes, I do believe we are aware of each other's efforts. I had submitted
-an RFC patch set around the time Ben was preparing his own patchset.
+Looks like p4 LFS tests are failing for python3.  Looks like it's just
+more bytes vs str.
 
-I have not reviewed Ben's first patchset as I did not feel that I understood
-the systems well enough at the time. I've briefly skimmed through Ben's latest
-iteration and it would appear the general approach is very similar, but there's
-more added abstractions and just general code change in his version.
+Will have to enable LFS tests in my own environment.
 
-Regardless, I'm open to working together.
-
-Ideally, I would prefer we land something minimal and working in mainline soon,
-then further collaborate on changes that clean up code and enable more features.
-
-My end-game is to have P4 Streams working in git-p4, and maybe LFS-like support
-that uses p4 as the backend. It would be great to not be the only one
-spending effort
-in that direction.
-
-Yang
+-- 
+Yang Zhao
