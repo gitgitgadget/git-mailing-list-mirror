@@ -2,75 +2,69 @@ Return-Path: <SRS0=+MKA=Z6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C5C3C43603
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 19:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A10FBC43603
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 23:00:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E59FD205F4
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 19:40:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35B2A206D5
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 23:00:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gc4bU1B9";
+	dkim=pass (1024-bit key) header.d=kyleam.com header.i=@kyleam.com header.b="uY63F/RZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726535AbfLHTkx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 14:40:53 -0500
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:37051 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726506AbfLHTkx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Dec 2019 14:40:53 -0500
-X-Originating-IP: 157.36.244.240
-Received: from localhost (unknown [157.36.244.240])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 0E7EAFF806;
-        Sun,  8 Dec 2019 19:40:49 +0000 (UTC)
-Date:   Mon, 9 Dec 2019 01:10:46 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] git-gui: allow closing console window with Escape
-Message-ID: <20191208194046.csf35b7rgycst2vc@yadavpratyush.com>
-References: <20191206222040.toj4enbbbbamnrww@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1912071723010.31080@tvgsbejvaqbjf.bet>
+        id S1726697AbfLHXAD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Dec 2019 18:00:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:64369 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726661AbfLHXAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Dec 2019 18:00:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AE004953F5;
+        Sun,  8 Dec 2019 18:00:00 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=SKYRIHdl4i9cBrJAbObtkkcUm+4=; b=Gc4bU1
+        B90fn1WbIUUHaJdKuEdB/SDKZLP3X9Epy7cDOdUHuH7doXmCov4ZqH3KlaDEoS94
+        Dt/7bQN+bUT9lsNCshWON9cdP6VWnxg4oDcRFmfTHREjgEiDUQ4UEXiUV6e1V/p7
+        dcI0O0/ejyf3eKhP7s6/Fobj6EgOFPJ0RN7xI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A5F66953F4;
+        Sun,  8 Dec 2019 18:00:00 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=S+SS4IrzAp/ijVYx8NQCKB3N56fxtN2vMZnLPeeYT6Q=; b=uY63F/RZh+IwJUcnbGo+f6RvWQkkSdlX69qF6ibx/WwQc/XmTrtJ4Z+DzeyjMzwgzj4SN1fKPHtLm/QLpUobnC4iO9Ry+xxcBWWqn6cuUHFxmO7AjaGQHfAz9Ax57k62PJOPLHmp1MHdUqpwRUq4dV8nd7UCtqr8BQL24jyvnvY=
+Received: from localhost (unknown [45.33.91.115])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 02571953EA;
+        Sun,  8 Dec 2019 17:59:58 -0500 (EST)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [BUG?] ls-files -o now traverses nested repo when given multiple pathspecs
+In-Reply-To: <CABPp-BGpfATCdiat0A6OHx3aG22BzOcC37HG8wBMRrrbLG_Mfw@mail.gmail.com>
+References: <874kyf6en3.fsf@kyleam.com> <871rtfv0wn.fsf@kyleam.com> <CABPp-BEvr+wB_yqOAG9oOaONtckYzn-zghyAtx2fWJweg55ovA@mail.gmail.com> <CABPp-BGpfATCdiat0A6OHx3aG22BzOcC37HG8wBMRrrbLG_Mfw@mail.gmail.com>
+Date:   Sun, 08 Dec 2019 17:59:56 -0500
+Message-ID: <87v9qqtocz.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1912071723010.31080@tvgsbejvaqbjf.bet>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 74D5BAFA-1A0E-11EA-ADC3-8D86F504CC47-24757444!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/12/19 05:24PM, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Sat, 7 Dec 2019, Pratyush Yadav wrote:
-> 
-> > It is often expected that popup windows like the console window be
-> > close-able with Esc.
-> 
-> Seeing as the console windows is not your regular popup window with an
-> "OK" button, I could see how it would be all too easy to close the window
-> via the Esc button all too easily, annoying users.
+Elijah Newren <newren@gmail.com> writes:
 
-I'm not sure why it is "too easy" to hit Escape. If you're hitting Esc 
-(which for most people is pretty far from other more frequently used 
-keys) you expect _something_ to happen. People don't just spam Esc for 
-no reason, do they?
- 
-> For windows like the console one, I would expect Ctrl+W a much more
-> natural keyboard shortcut to close it.
+> If you want to take an early look, I've got some patches up at
+> https://github.com/git/git/pull/676.  I plan to write a proper cover
+> letter and submit to the list on Monday.
 
-But, that "something" the user expects to happen could also be "stop the 
-command". AFAIK, Esc is often expected to stop commands. But closing the 
-console window won't actually stop the command. It will keep running in 
-the background, and when the command is done, the window will open again 
-showing the final output.
-
-So all in all, I do think Ctrl-W would be a better idea. Will re-roll.
- 
-> Ciao,
-> Dscho
-
--- 
-Regards,
-Pratyush Yadav
+I can confirm that your patches resolve the cases reported here.  Thank
+you for working on this!
