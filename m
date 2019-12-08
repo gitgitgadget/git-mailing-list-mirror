@@ -8,63 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8041AC43603
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 17:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81C36C43603
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 18:06:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 47A872054F
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 17:29:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 58BF920700
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 18:06:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wflnakag"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hktEOSSR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726476AbfLHR3w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 12:29:52 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52111 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726472AbfLHR3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Dec 2019 12:29:52 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g206so12968951wme.1
-        for <git@vger.kernel.org>; Sun, 08 Dec 2019 09:29:51 -0800 (PST)
+        id S1726659AbfLHSGT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Dec 2019 13:06:19 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:33994 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726220AbfLHSGT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Dec 2019 13:06:19 -0500
+Received: by mail-lf1-f65.google.com with SMTP id l18so8942273lfc.1
+        for <git@vger.kernel.org>; Sun, 08 Dec 2019 10:06:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2QGn5ZJwgksvhC18izzyV/qCLIsq1L2UpgdETUlaodU=;
-        b=WflnakagRX0l9x16sqG5h7EBmgUEAQOP8uUT1D+xsXOnxN1lXwOwSSBUMRvOxrqMaO
-         L9wKt5BMtNCxGevA/8NPP308eWozSSlPUuriTLegclVTm9pZlqm7eBZKCDT9zLP/7o0G
-         nZkCc6rOjl8oKPggwcjbaz7XuHDQctah1NzV4fZT8LPfSifO8qW0JqTLYVD/30FgpMnr
-         MTO4+G9YCr/4pa/thpmOXLCPYx+BXs8Vs98jm1d/j3+DIQLe90TIBFOwXMwPwToFug0D
-         OumZnZ8LFTCmhhsh8eHVJNTLbolBtDhjSkeIrlxL7A1EApCKjITAE4276w1cOScSvDss
-         1+QA==
+        bh=X5Vepp81X2nwHQX9TWhpw5ZglAPMRnEv7rDnL3HBB28=;
+        b=hktEOSSRY5fevq8ofwhBPYgrSFPtGGtqVO8JShfVYrRLbFb2vblnqQbLeA9vZ4gmgO
+         e31F20SjBwHuvojzpbvsNZXj2A6x79rgJL9PiX5KIxQiX155eihmz2TVIj3zq+fbYqqK
+         Aia4yWrMK80gG5vbZU17U7UhYhE0a6F//4gfu8ZZUx3iCTPUTzcXoBMhRFFJ3ioor7Ye
+         gnTQHK38ulV6+/79HhXS/VvsMLNKrs35wTlVzGfVEmjvAbycpUu1A397djSfNEV5KPPN
+         jBfSzTj1Ju0hK2L+YseoP5VfKN07Nc0TYAzeUy2MtIAMevqHoKUv122K41ixi2kzibZx
+         rfKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=2QGn5ZJwgksvhC18izzyV/qCLIsq1L2UpgdETUlaodU=;
-        b=hbI360uSe/OLGPHNRfiuS+6bU0ISYnTGgGB+Ug/8PCfy9LaQBrFYmaRmtfGKHRrE8Y
-         BA2OcoRmS/0HTuzudvWpzLbUIy1LkbqYsz0dVHJWEcg4DJbbDs8o/8pr9nCcPBa8Aq0+
-         mH6XSyni0QeA0J+JuI1C7hxrgx+/KNoIw0FsdBrOup+IRdiS7LWh9PFR3lM7jgxm9oA3
-         E9qijCVga2ELnNMxCKTTbNYe/ndyicxrNFs6bYqzGy93edRNkul2lMZvtJXQzcydY1ds
-         V/iHyc6hw0PCXIwqdqb0PLK/2TVwpg7VGT+WoyDbLlsXEjEJTmYvf7M8oTn4mgmLgkLV
-         3Tag==
-X-Gm-Message-State: APjAAAWCRCexJUajtiNcx73oB8EmJb65Ta+cr3WwxktSJ9a8SWNtbnng
-        WBWQ2yP6vKg2soJvfEae1AjU/MCw1XE=
-X-Google-Smtp-Source: APXvYqwnXYJnOfaEuxq3LgXEV7BjuKuW9DPI/DHh99cIkhfczNGKkRnT5DEGxst8dLN8IZ09jBJJqg==
-X-Received: by 2002:a1c:9d4a:: with SMTP id g71mr21056137wme.50.1575826190389;
-        Sun, 08 Dec 2019 09:29:50 -0800 (PST)
-Received: from localhost.localdomain ([139.47.114.52])
-        by smtp.gmail.com with ESMTPSA id m3sm23962848wrs.53.2019.12.08.09.29.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 08 Dec 2019 09:29:49 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
+        bh=X5Vepp81X2nwHQX9TWhpw5ZglAPMRnEv7rDnL3HBB28=;
+        b=tt4pMbAqothq+NW+qaCMsy9ARasTuzPB+GMCZ/6c42m/HRdU66fb1im+tGZgqsVzq8
+         3e4mNOnq8xDzYp7WAVzkqAUZFhieniZdP3k45F11Uifewecef2Ze5yKsliTKjJg51WNG
+         Xmnwmzc86Ziqm5R9ew4ZQJamauB0JTPzrp0vOVzUFXBuMjSknkRrs8UU/bcglu1FJDdN
+         2Ls41xaPjRyl6a1+9E9Vd2zbQ86FsQQokYm8gSs2F/tRDGq1aSDvHMa36DS2Iw9SU/j1
+         vnyjTgPyUIfeBcSvjUiQwbGPhHEXXyScSRS+cM3SdM20AWXgtM6k3xdsaOXckqKCDEA8
+         8yTg==
+X-Gm-Message-State: APjAAAV3t/z+TOMjpjoDQCoQsYkpvxbJNJWDk+JddSNIrmrRBQF7xmSA
+        Cb3nt1BVbISH7ZkQjDioymXGDETZ82H6/w==
+X-Google-Smtp-Source: APXvYqxUU32KLT0jAAMa0W+01r2Bo1TB3nViDQNNVIaPNYMbujqhZUD5bDav/B/krQ6szI4yKTQWAQ==
+X-Received: by 2002:ac2:44d9:: with SMTP id d25mr6672371lfm.15.1575828376640;
+        Sun, 08 Dec 2019 10:06:16 -0800 (PST)
+Received: from crux.lan ([2a02:2149:8784:6e00:5968:5337:69b5:bbae])
+        by smtp.gmail.com with ESMTPSA id n13sm9229719lji.91.2019.12.08.10.06.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Dec 2019 10:06:16 -0800 (PST)
+From:   otalpster@gmail.com
 To:     git@vger.kernel.org
-Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [Outreachy] [PATCH] bisect--helper: refer branch.buf before strbuf_release(...)
-Date:   Sun,  8 Dec 2019 18:28:13 +0100
-Message-Id: <20191208172813.16518-1-mirucam@gmail.com>
-X-Mailer: git-send-email 2.21.0 (Apple Git-122.2)
+Cc:     mhagger@alum.mit.edu, matheus.bernardino@usp.br,
+        Plato <otalpster@gmail.com>
+Subject: [PATCH] entry.c: use dir-iterator to avoid explicit dir traversal
+Date:   Sun,  8 Dec 2019 20:04:39 +0200
+Message-Id: <20191208180439.19018-1-otalpster@gmail.com>
+X-Mailer: git-send-email 2.24.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -72,39 +70,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanushree Tumane <tanushreetumane@gmail.com>
+From: Plato <otalpster@gmail.com>
 
-Move `error("...%s...", branch.buf);` before `strbuf_release(&branch);`
-to release string buffer `branch` and the memory it used.
+Replace usage of opendir/readdir/closedir API to traverse directories
+recursively, at remove_subtree() function, by the dir-iterator API. This
+simplifies the code and avoids recursive calls to remove_subtree().
 
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+Signed-off-by: Plato <otalpster@gmail.com>
 ---
- builtin/bisect--helper.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Hello,
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 1fbe156e67..3055b2bb50 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -169,11 +169,12 @@ static int bisect_reset(const char *commit)
+This is my first patch.
+I hope I cc'd the correct people and didn't mess up.
+
+The changes pass the test suite t/ and Travis CI.
+Please point out any mistakes.
+
+Thanks for your time! :)
+
+ entry.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
+
+diff --git a/entry.c b/entry.c
+index 53380bb614..e7f4881d3b 100644
+--- a/entry.c
++++ b/entry.c
+@@ -2,6 +2,8 @@
+ #include "blob.h"
+ #include "object-store.h"
+ #include "dir.h"
++#include "iterator.h"
++#include "dir-iterator.h"
+ #include "streaming.h"
+ #include "submodule.h"
+ #include "progress.h"
+@@ -50,29 +52,25 @@ static void create_directories(const char *path, int path_len,
  
- 		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
- 		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-+			error(_("could not check out original"
-+				" HEAD '%s'. Try 'git bisect"
-+				" reset <commit>'."), branch.buf);
- 			strbuf_release(&branch);
- 			argv_array_clear(&argv);
--			return error(_("could not check out original"
--				       " HEAD '%s'. Try 'git bisect"
--				       " reset <commit>'."), branch.buf);
-+			return -1;
- 		}
- 		argv_array_clear(&argv);
+ static void remove_subtree(struct strbuf *path)
+ {
+-	DIR *dir = opendir(path->buf);
+-	struct dirent *de;
+-	int origlen = path->len;
++	int ok;
++	unsigned int flags = DIR_ITERATOR_PEDANTIC;
++	struct dir_iterator *iter = dir_iterator_begin(path->buf, flags);
+ 
+-	if (!dir)
++	if (!iter)
+ 		die_errno("cannot opendir '%s'", path->buf);
+-	while ((de = readdir(dir)) != NULL) {
+-		struct stat st;
+ 
+-		if (is_dot_or_dotdot(de->d_name))
++	while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
++		if (is_dot_or_dotdot(iter->path.buf))
+ 			continue;
+ 
+-		strbuf_addch(path, '/');
+-		strbuf_addstr(path, de->d_name);
+-		if (lstat(path->buf, &st))
+-			die_errno("cannot lstat '%s'", path->buf);
+-		if (S_ISDIR(st.st_mode))
+-			remove_subtree(path);
+-		else if (unlink(path->buf))
+-			die_errno("cannot unlink '%s'", path->buf);
+-		strbuf_setlen(path, origlen);
++		if (unlink(iter->path.buf)) {
++			die_errno("cannot unlink '%s'", iter->path.buf);
++		}
  	}
+-	closedir(dir);
++
++	if (ok != ITER_DONE)
++		die(_("failed to iterate over '%s'"), path->buf);
++
+ 	if (rmdir(path->buf))
+ 		die_errno("cannot rmdir '%s'", path->buf);
+ }
 -- 
-2.21.0 (Apple Git-122.2)
+2.24.0
 
