@@ -2,213 +2,158 @@ Return-Path: <SRS0=+MKA=Z6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DC60C43603
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 14ED5C43603
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:53:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F32F5206D5
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:49:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D581F206F4
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:53:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BOwEbPM0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YFBf7tN0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726001AbfLHHtM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 02:49:12 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:41727 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725787AbfLHHtL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Dec 2019 02:49:11 -0500
-Received: by mail-ot1-f66.google.com with SMTP id r27so9547058otc.8
-        for <git@vger.kernel.org>; Sat, 07 Dec 2019 23:49:10 -0800 (PST)
+        id S1726163AbfLHHxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Dec 2019 02:53:45 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46938 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725554AbfLHHxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Dec 2019 02:53:45 -0500
+Received: by mail-ed1-f68.google.com with SMTP id m8so9596416edi.13
+        for <git@vger.kernel.org>; Sat, 07 Dec 2019 23:53:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BST8B9DrSIxlYBdwDFXYZva5Fsdj4GzPoWQX2hhhcvs=;
-        b=BOwEbPM06p+otuchFGQ8OGhsvXYj6dKuyK9ObLRecENLddbh6YuYc0hIuHT9dDi44v
-         YAucIVXwKeI9VTyfE+4nC3U6Q0fPc7qyCTMJC6YQE3pabKKnZCTV8Ep/nrBKM5KIeiEk
-         LQ4SYBalQglP+v28L0RoagUlw3uwqH9EmaM7M2tuvHOFXxfrUX5L/7a7EEhTsVcGTcAM
-         CPZRpPswutDHu1oM1D/P7d/9pTyR9yNxnpX3fCdAjRxClsPFDsWGmGoMP/EiKJhipYhy
-         BwZCxBbf/gog74dNfSzFf0ZewCiNcaB0frA47FB4R5Uf/KM8E1y0/qyQuy4GoM+0jzlG
-         SGoQ==
+        bh=aXjdPshW1fiEQELmf1ZSah8N+tO1lfLfVAT6mLUMpJQ=;
+        b=YFBf7tN0sam/3iJzoDzi2PvnCXIANYRoPYOrPThkBZ8fNFfAb6l7CwiIvlk0xuW104
+         2eT2gPi28SBPynKssS3bpIh2tRjKUeZbR+J1qjamWqON+ly96XXFdiBPVg6P8nhRJEms
+         tmWMVoXM2JR5tl0gNlmu0OsDd6OFzBAZrT2Jh3U/afR3VOKDu2SrnVvpZEj+axE9DdTk
+         6ntOm74NdbdX7TCMvJLZUxvlz53ml26omqoqLibbgQaXtLJZb9EFnVO5fPwAjKoH/xlv
+         xY77tKVuFr4OyZwD26HMpiGcRSUvOk7arMK99wg/YPTHNmMGaCeG5AE0X7Xb4I2r0ygS
+         iljg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BST8B9DrSIxlYBdwDFXYZva5Fsdj4GzPoWQX2hhhcvs=;
-        b=DJeZnaH1nOx6ScB8pcWwr3xqwcNetGgRfeD3Ndz20B1ux5H27L4oejFFQDVToGalsU
-         +bN753TYfeHNxjObcL1JJPKhl7wLoNyQTobsyOVz3ISISYgx89yBLiOON0GsxYmOcCZP
-         XLRZmqHBCMSlypBJ6Oub/U/EKCr/XnSkofSxwvOIoTdbgbR3hOsJ4Mk9aHMIKMfTFhuc
-         QWkz+s8QXKE3/DfmIthx/K+CEaNmsVqzqAS6u5FKtewGhNScjBMaRvQRe/i2Tve8gFOG
-         XnbHa7v6J4NMQW4A0fvheIeITdt8OaKIcj+oVZ/ix/dg0tzvEBkGfKdTFijaNaSWXmTR
-         SQLw==
-X-Gm-Message-State: APjAAAXjsvhh/MzbOmqpo8GeftWdjguYpqDsgG7yxOIFFuSrbeO5CcLK
-        RDHkpzO2f+E/L5ODhtrCO7vAJ7iSBX54Hncb9yA=
-X-Google-Smtp-Source: APXvYqzao/hZMHOgGwRYE84akJBx9KguoTdvwRm68jp2gyalSJt1u5Mkd2+IhQ02LGk/v19nmn2DF9COT69gMHFlOSU=
-X-Received: by 2002:a9d:1988:: with SMTP id k8mr18017072otk.316.1575791350346;
- Sat, 07 Dec 2019 23:49:10 -0800 (PST)
+        bh=aXjdPshW1fiEQELmf1ZSah8N+tO1lfLfVAT6mLUMpJQ=;
+        b=P32ocMgutQjC5JWrFZFz5lYPTGmNBKtHOYDvLu15/jGkMEMZ3Vbfvy/dpUSW+btF7x
+         j2pFM9eORVlJELJ3Uqj/umR7gFy5gg9adzmLnkduZ8wFaOsG8MKys1Hw4EfBOHG2vn7Y
+         8wTnb/SkB3H2Y+XXlGO9j6TnNVdAXd9OJFgbQn7sSRRvflw27sXTsuxKX8ogp/n4CF7f
+         OZ/SBdjR0Px3YnPs/kTtxcOUN+BxLw840zCShjD/bCkAcEtTgYV6R7WzfiR+93JMLtfr
+         ai3qJtHctSYxdOSgt5RRA3TmNoJaxHx5Sa+Sdj7VRWVFuM0DTyNUegOz/754JXtwU/RH
+         Manw==
+X-Gm-Message-State: APjAAAWXK/4Ud5qSJVQyLVhL22xJeGuWZ7SDdp+bHrpNAqMP69KG8z/u
+        bJALT1AOq/P4T3yHw4XFPBeiC5u8uh944c3OxGg=
+X-Google-Smtp-Source: APXvYqxqe7InCETAAYHuqm19m+/D/dTIxJyiWh7x6dvzYIvdTTlASBMVN33vDelggJ52sIPeCCsbN+lEkTglWiVN4O8=
+X-Received: by 2002:a17:906:f49:: with SMTP id h9mr24335357ejj.6.1575791623354;
+ Sat, 07 Dec 2019 23:53:43 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1558048212.git.liu.denton@gmail.com> <7cb770e190f235accf50e4af3ec9a964f26358c5.1558048212.git.liu.denton@gmail.com>
-In-Reply-To: <7cb770e190f235accf50e4af3ec9a964f26358c5.1558048212.git.liu.denton@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 7 Dec 2019 23:48:59 -0800
-Message-ID: <CABPp-BF44+6gvZVNimKf-k7AWbOjw3OK-cJeFunNR96wvZGkcw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] format-patch: teach format.notes config option
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Pavel Roskin <plroskin@gmail.com>
+References: <20191115141541.11149-1-chriscool@tuxfamily.org>
+ <20191115180319.113991-1-jonathantanmy@google.com> <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com>
+ <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com> <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
+ <CAP8UFD20LMxuV7KWAvobybHYZruDiADX-yOFPLyMxsHS7HZN0g@mail.gmail.com> <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 8 Dec 2019 08:53:31 +0100
+Message-ID: <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton,
+Hi Johannes,
 
-I was recently digging in this area (due to the recent
-rebase-applies-patches-incorrectly bug report) and found a couple bugs
-from this old commit:
-
-On Thu, May 16, 2019 at 5:27 PM Denton Liu <liu.denton@gmail.com> wrote:
+On Sat, Dec 7, 2019 at 9:47 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> In git-format-patch, notes can be appended with the `--notes` option.
-> However, this must be specified by the user on an
-> invocation-by-invocation basis. If a user is not careful, it's possible
-> that they may forget to include it and generate a patch series without
-> notes.
+> On Sat, 7 Dec 2019, Christian Couder wrote:
 >
-> Teach git-format-patch the `format.notes` config option. Its value is a
-> notes ref that will be automatically appended. The special value of
-> "standard" can be used to specify the standard notes. This option is
-> overridable with the `--no-notes` option in case a user wishes not to
-> append notes.
+> > On Fri, Dec 6, 2019 at 10:42 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > >
+> > > Junio C Hamano <gitster@pobox.com> writes:
+> > >
+> > > > Junio C Hamano <gitster@pobox.com> writes:
+> > > >
+> > > >> Jonathan Tan <jonathantanmy@google.com> writes:
+> > > >>
+> > > >>>> It could be a good idea if Peff could answer some of the comments made
+> > > >>>> by Jonathan Tan about patch 9/9.
+> > > >>>>
+> > > >>>> I have put Peff as the author of all the commits.
+> > > >>>
+> > > >>> Thanks. I think the series looks mostly good except for the questions I
+> > > >>> raised in patch 9/9, so I'll wait for Peff to respond too.
+> > > >>
+> > > >> Hmph, the round before this one has been in 'next' for quite a
+> > > >> while, so should I eject it before waiting for Peff to respond
+> > > >> before queuing this one?
+> > > >
+> > > > After rebasing these v3 patches on top of the base of the one in
+> > > > 'next', the only difference seems to be the log message of 3/9 and
+> > > > the contents of 9/9.  I guess I'll mark the topic as "on hold" for
+> > > > now before doing anything, as I am officially taking a time-off most
+> > > > of this week ;-)
+> > >
+> > > So..., that week has passed---anything new?
+> >
+> > Unfortunately, no.
+> >
+> > If you want I can send an incremental change on the content of 9/9 on
+> > top of what's in next. Otherwise I can't see what I could do on this.
+> >
+> > Peff, could you tell us if you might have time to take a look at this soon?
 >
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
->  Documentation/config/format.txt    | 15 +++++++
->  Documentation/git-format-patch.txt |  3 ++
->  builtin/log.c                      | 20 ++++++++-
->  t/t4014-format-patch.sh            | 70 ++++++++++++++++++++++++++++++
->  4 files changed, 107 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
-> index dc77941c48..414a5a8a9d 100644
-> --- a/Documentation/config/format.txt
-> +++ b/Documentation/config/format.txt
-> @@ -85,3 +85,18 @@ format.outputDirectory::
->  format.useAutoBase::
->         A boolean value which lets you enable the `--base=auto` option of
->         format-patch by default.
-> +
-> +format.notes::
-> +       Provides the default value for the `--notes` option to
-> +       format-patch. Accepts a boolean value, or a ref which specifies
-> +       where to get notes. If false, format-patch defaults to
-> +       `--no-notes`. If true, format-patch defaults to `--notes`. If
-> +       set to a non-boolean value, format-patch defaults to
-> +       `--notes=<ref>`, where `ref` is the non-boolean value. Defaults
-> +       to false.
-> ++
-> +If one wishes to use the ref `ref/notes/true`, please use that literal
-> +instead.
-> ++
-> +This configuration can be specified multiple times in order to allow
-> +multiple notes refs to be included.
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index 2c3971390e..9ce5b8aaee 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -275,6 +275,9 @@ these explanations after `format-patch` has run but before sending,
->  keeping them as Git notes allows them to be maintained between versions
->  of the patch series (but see the discussion of the `notes.rewrite`
->  configuration options in linkgit:git-notes[1] to use this workflow).
-> ++
-> +The default is `--no-notes`, unless the `format.notes` configuration is
-> +set.
->
->  --[no-]signature=<signature>::
->         Add a signature to each message produced. Per RFC 3676 the signature
-> diff --git a/builtin/log.c b/builtin/log.c
-> index e43ee12fb1..dad63cffc6 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -779,6 +779,8 @@ enum {
->
->  static int git_format_config(const char *var, const char *value, void *cb)
->  {
-> +       struct rev_info *rev = cb;
-> +
->         if (!strcmp(var, "format.headers")) {
->                 if (!value)
->                         die(_("format.headers without value"));
-> @@ -864,6 +866,22 @@ static int git_format_config(const char *var, const char *value, void *cb)
->                         from = NULL;
->                 return 0;
->         }
-> +       if (!strcmp(var, "format.notes")) {
-> +               struct strbuf buf = STRBUF_INIT;
-> +               int b = git_parse_maybe_bool(value);
-> +               if (!b)
-> +                       return 0;
-> +               rev->show_notes = 1;
-> +               if (b < 0) {
-> +                       strbuf_addstr(&buf, value);
-> +                       expand_notes_ref(&buf);
-> +                       string_list_append(&rev->notes_opt.extra_notes_refs,
-> +                                       strbuf_detach(&buf, NULL));
-> +               } else {
-> +                       rev->notes_opt.use_default_notes = 1;
-> +               }
-> +               return 0;
-> +       }
+> Chris, correct me if I am wrong, but was it not your decision to
+> contribute these patches?
 
-What if someone has multiple format.notes entries in their config
-file, but the last entry is "false" -- shouldn't that disable notes?
-Also, what if they specify both "true" and e.g.
-"refs/notes/my-cool-notes"?  In that case, should it show
-refs/notes/my-cool-notes because that's obviously showing some notes
-so it satisfies true as well as the specific request about which note,
-or should it treat "true" the same as the-default-notes-ref and then
-add the two refs together and show them both?
+Please take a look at:
 
->
->         return git_log_config(var, value, cb);
->  }
-> @@ -1617,8 +1635,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->         extra_to.strdup_strings = 1;
->         extra_cc.strdup_strings = 1;
->         init_log_defaults();
-> -       git_config(git_format_config, NULL);
->         repo_init_revisions(the_repository, &rev, prefix);
-> +       git_config(git_format_config, &rev);
+https://public-inbox.org/git/3E56B0FD-EBE8-4057-A93A-16EBB09FBCE0@jramsay.com.au/
 
-Calling git_config() after repo_init_revisions() breaks things;
-generally git_config() should always be called first.  Here,
-git_format_config() can set up parameters used by
-repo_init_revisions(), and by reversing the order of the two you end
-up ignoring settings specified by the user (e.g. diff.context having a
-value of 5).  This came up due to the bug report at
-https://lore.kernel.org/git/xmqqa78d2qmk.fsf@gitster-ct.c.googlers.com/T/#mb6a09958ff10acde295b37a9136bc3791fd4a2c2
-(though fixing the issue there _also_ requires fixing git_am_config()
-to call git_diff_ui_config()).  To break the circular dependency here,
-we'd need to store the information that git_format_config() discovers
-in some data structure besides rev, and then after the
-repo_init_revisions() call has finished then update rev.
+and Peff's response to James Ramsay's email.
 
-I was just going to do that, but then ran into the questions above
-about multiple format.notes entries in the config file, and am not as
-sure about what should be done about that stuff (and I don't want to
-try to translate the current behavior as-is while tweaking where the
-stuff is stored, both because I'm not sure of the right behavior and
-because I don't want future folks to blame the code to me when they
-hit bugs in this area), so I'm firing off this email instead.
+Peff wrote:
 
-So, um...help?
+> It's been on my todo list to upstream for a while, but I've dragged my
+> feet on it because there's a lot of cleanup/polishing from the original
+> patches (they were never very clean in the first place, and we've merged
+> a dozen or more times with upstream since then, so the updates are
+> spread across a bunch of merge commits).
 
-Thanks,
-Elijah
+and then:
+
+> Yeah, I think we should work on getting our changes (including those
+> stats) into upstream.
+
+So actually I thought that I was helping Peff on this, though I know
+of course that it's also helping GitLab and everyone else. That's why
+I put Peff as the author of the patches.
+
+> Are you saying that you do not understand them
+> well enough to drive this patch series forward (e.g. address all reviews
+> and questions) and are basically trying to force Peff to contribute them
+> instead?
+
+Yeah, I don't understand them well enough to answer Jonathan Tan's questions.
+
+But no I am not trying to force Peff. I am trying to work with him.
+When he said he thought we should work on getting the change into
+upstream, I just thought he meant it and would be willing to help.
+
+
+
+
+
+> Ciao,
+> Johannes
