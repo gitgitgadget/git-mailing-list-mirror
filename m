@@ -2,156 +2,112 @@ Return-Path: <SRS0=+MKA=Z6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE6A5C43603
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 10:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 171EAC43603
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 10:31:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 957DB20663
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 10:26:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0D045206F4
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 10:31:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g6CX0w42"
+	dkim=pass (2048-bit key) header.d=nadavsinai-com.20150623.gappssmtp.com header.i=@nadavsinai-com.20150623.gappssmtp.com header.b="MVJu0GNn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbfLHK05 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 05:26:57 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36496 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726163AbfLHK05 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Dec 2019 05:26:57 -0500
-Received: by mail-ed1-f68.google.com with SMTP id j17so9805045edp.3
-        for <git@vger.kernel.org>; Sun, 08 Dec 2019 02:26:56 -0800 (PST)
+        id S1726277AbfLHKbB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Dec 2019 05:31:01 -0500
+Received: from mail-lf1-f42.google.com ([209.85.167.42]:43628 "EHLO
+        mail-lf1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726220AbfLHKbB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Dec 2019 05:31:01 -0500
+Received: by mail-lf1-f42.google.com with SMTP id 9so8465468lfq.10
+        for <git@vger.kernel.org>; Sun, 08 Dec 2019 02:31:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hbAnnQEeRrE1HgGjbuUsL1aLXBk2ROrdiG4CLHzYiAk=;
-        b=g6CX0w42rr9+ZLtn43/C9cGkZlgJH+dTCsyKQcXcVJnPMw/Jrqxd+3/I6P7Yq0AP6L
-         hD+ZM93HON94mq4t3wN0wY8qBJT7jxwwiOc8xg+0EltaHe+abo6mMK9lhg821PoKVcld
-         Jz2VTXPm8XXqtHg+pMh8rCh61pjA0wqlmz0EXqu4+NsjVFbHtKkCoEPU6JJNwASUiSwg
-         V688nlARFqyt8umBzl/tN5jNDi6t9gmSILr7v5Fu98zqqvDNtDIioKYk3m8oGJAjWJ4q
-         ZGdxzU8Iy/JZtd24heMTRvIW5jV6zzEWnWPfbOuKEQmo6zVs65ffJA5CghtAia7Tb3IB
-         t4Eg==
+        d=nadavsinai-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=M3L6KxL6i/gbin+k/dS/FwrPK2xEK+FNftxkL4SmtY4=;
+        b=MVJu0GNnGHNqCqTrUscWLmOvuykTbV/ub6gUwcij7dhVR/yhhnvtFwxvDdHfCA/ZE7
+         3FOK9WQNhciWDUdp9a0A/T2bDG+sEFBeGDA3R7TYqmSpDgkPK42FRsee/azMtfMY+vGn
+         aurpYnmN9PwxQd2Ga1TYst/e8lP0GKSVKb702acJ7YuZnD3afz85Eef02879aRv1R+qA
+         zJOWFfOFM2a55h6Th+LDO7+bgsLmLnvMQC0Wb2PLqy5KAgp3939AX1BIVM8OeCilb4nq
+         vrnQMxmxCR6pyZdZfuUB0SduAetT9x5AORG7b4dX/MYk2IQhAfWfRJ+f0mtKABS9WfnH
+         3zRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hbAnnQEeRrE1HgGjbuUsL1aLXBk2ROrdiG4CLHzYiAk=;
-        b=KXShjrBpXLUpUwX8rMCZwXiuuVB07WNIqVgBGrJquNckEDj0KBlmRSXKaKnhc0TMWr
-         Xu7aCxUZuWavp6M/lQmi1Cr4agxckEzS80nStS2rKp/NbngOKlpKytYwvrLecn/DB3v0
-         QfcILK0s2p+2tJSSnJo2qNKiRs2IuKl9//e3GA0I5wvWeIaQpuDGEydcfthJJsIJgrMm
-         hBnUUS4p22zN5bhBP0yk+35NQaspz6nK/zOhME5nIsrji1aF9jx3RVRPo9qLvK26vYWf
-         0WUTkYtIkIpr3QNJQAhdd+T2oOJPybGlrub/+ngkeijin6MgNesAJ+08aQfzJ/k04vcZ
-         4YGA==
-X-Gm-Message-State: APjAAAUsMjaYRsrHQW6Et9jcDHZJrvcmND4PYFdR/I0Z1OxMLKxUQSwC
-        +sMAABwzFHrBIrj9lVLlOAFv91b16CLwCfHxZCo=
-X-Google-Smtp-Source: APXvYqwaNwJdUbxuOic0pe9kptuIxqDrbL8d+ZATlfgzqr4LSMKyG6GldJQjLmQZkjv1nPE50VOtHXUhtYi6dPqfo+k=
-X-Received: by 2002:a17:906:681:: with SMTP id u1mr24540713ejb.81.1575800815210;
- Sun, 08 Dec 2019 02:26:55 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=M3L6KxL6i/gbin+k/dS/FwrPK2xEK+FNftxkL4SmtY4=;
+        b=GAkDPbWhkBu0JFQHuUW2lmxnbdaACzAvisfN1B7bDrFMs+DBO3eCnhnMvEsg5p/CH+
+         5onaV9OGgfeZYMoU/DK+udhuwrfgJv+fJSfyai7G5IBqv0nIr82BJUpfphM+GVyXdrf2
+         R4vZPt15JSRQK8Erhtndmjh+4vxIivfwvmhiZ2ZgZ9Zn4+LNnT3H7gfqyDIAXDLIANd/
+         TZE+P62xFxDOcN/KQIBvtS7CmEP7whZoGRFcSnIxjxh8oagXIbSNFLPOvPDf6ju9Wn1K
+         JDcbQi5bND584beDqCvNC9r6Wxt/H87kHwLKxi9GMnTtxO+snynyKII+yil5R2UUGwlr
+         ldVA==
+X-Gm-Message-State: APjAAAUIzbRPToA9WNZxynKhx4nPELXTsOvxaCTpbuDqPlxyfyToi6IS
+        XGKe4RPMTr6rcMXM0+vpv7TfSNpDA4YZg7WMvh7rBQ==
+X-Google-Smtp-Source: APXvYqwQ3z7X3UZVgeKJPoT8sBeY816eAL9Ze92DgPPQ29Kvo4nchG5BoWbhtdd7rglsTjCjir8p9ZkPuWcl3iOanFs=
+X-Received: by 2002:a19:888:: with SMTP id 130mr12605094lfi.167.1575801059357;
+ Sun, 08 Dec 2019 02:30:59 -0800 (PST)
 MIME-Version: 1.0
-References: <20191115141541.11149-1-chriscool@tuxfamily.org>
- <20191115180319.113991-1-jonathantanmy@google.com> <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com>
- <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com> <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
- <CAP8UFD20LMxuV7KWAvobybHYZruDiADX-yOFPLyMxsHS7HZN0g@mail.gmail.com>
- <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet> <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1912080942360.31080@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1912080942360.31080@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 8 Dec 2019 11:26:43 +0100
-Message-ID: <CAP8UFD1fp_uaR5+=Hp24y4zq+rVuwfgiFntDtr8i3B7Bx4k-_w@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
+From:   Nadav SInai <ns@nadavsinai.com>
+Date:   Sun, 8 Dec 2019 12:30:48 +0200
+Message-ID: <CANxxO2MGJ2Wo6Y-33KzzPXz6vktRACk0Oi2Y6o_s-cDFRhG7+Q@mail.gmail.com>
+Subject: RE: Regression in git-subtree.sh, introduced in 2.20.1, after 315a84f9aa0e2e629b0680068646b0032518ebed
+To:     roger.strain@swri.org
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+        marc@msys.ch, pclouds@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Hi, I'm curious if any of you had any luck in preventing that
+seg-fault in git-subtree script
+I'm encountering it myself using git 2.24.0.windows.2., seg-fault is
+in the same while loop (currently on line 757)
+When I tried your suggestion of adding the ($parents) ($rev) to the
+progress print I see that the last commit have only one revision
+printed
+like this:
 
-On Sun, Dec 8, 2019 at 9:54 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> On Sun, 8 Dec 2019, Christian Couder wrote:
->
-> > Peff wrote:
-> >
-> > > It's been on my todo list to upstream for a while, but I've dragged my
-> > > feet on it because there's a lot of cleanup/polishing from the original
-> > > patches (they were never very clean in the first place, and we've merged
-> > > a dozen or more times with upstream since then, so the updates are
-> > > spread across a bunch of merge commits).
-> >
-> > and then:
-> >
-> > > Yeah, I think we should work on getting our changes (including those
-> > > stats) into upstream.
-> >
-> > So actually I thought that I was helping Peff on this, though I know
-> > of course that it's also helping GitLab and everyone else.
->
-> In my experience, sending the initial set of patches is the easiest part
-> of contributing patches, by far. The most involved part of the process is
-> to react to reviewer comments and to prepare new iterations.
->
-> You can see this challenge in action in all the Git for Windows
-> patches/patch series I am "upstreaming".
->
-> So actually I think that you are doing a disservice to Peff: if he had
-> time for that tedious part of the patch contribution, I am sure it would
-> have been no burden at all to send the initial set of patches.
+259/290 (523) [271] (843dd34090d36dfabd6a2e3e8459a4887427313b)
+(a69ee056f66acf66c63f89f55d26c0cc17036623)
+259/290 (525) [273] (f5eea1a3cbe1e16acba53e8a9fe07b6525a8b97c)
+(843dd34090d36dfabd6a2e3e8459a4887427313b)
+259/290 (527) [275] (82303752a428cf1d789ac9f156008adb2798b7b5)
+(f5eea1a3cbe1e16acba53e8a9fe07b6525a8b97c)
+259/290 (528) [276]
+(7187897883c9fb4d33d4c87a02b876f8603728ff05f0945ae2ce9f98a35135)
+259/290 (529) [277]
+(a00a3665343439a426671958dd90ed0407a22cad9ac9f156008adb2798b7b5)
+259/290 (530) [278]
+(90beb94ebd331c457d79d05341453f5829a50bfcd4c87a02b876f8603728ff)
+259/290 (531) [279]
+(9582e0acbed1910173564e250f350b5cc4291a7f671958dd90ed0407a22cad)
+259/290 (532) [280]
+(f183930d6fabd3dccdddc5ec35d754ad28caf3b879d05341453f5829a50bfc)
+259/290 (533) [281]
+(c9309f3a38c41f7991d9e78ddb47f7e85b8521eb564e250f350b5cc4291a7f)
+259/290 (534) [282]
+(3bcf08f63a0e2b93ecc376bd679a16c80e99e7b1ddc5ec35d754ad28caf3b8)
+259/290 (535) [283]
+(134621bb55a0470cdf6519ce08d6909af43ce0e5d9e78ddb47f7e85b8521eb)
+259/290 (536) [284]
+(edb3471fbba29748f9784d29b3cee1dee2df4b37c376bd679a16c80e99e7b1)
+259/290 (537) [285]
+(dd947a095df07a32dfd56666a395a7c42b25ca116519ce08d6909af43ce0e5)
+259/290 (538) [286]
+(a639e09d2cbe1ea1149c080c1c95b8b018340ae2784d29b3cee1dee2df4b37)
+C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 757:
+8853 Done                    eval "$grl"
+      8854 Segmentation fault      (core dumped) | while read rev parents; do
+    process_split_commit "$rev" "$parents" 0;
+done
 
-I think Peff can say by himself what he thinks about my work when I
-rework the raw patches he sends to help get them upstreamed.
+I downgraded git to 2.19.0-windows.1 and it works now.
 
-It's not the first time that I have done that and every time I have
-done it, I think he has found it useful. Even this time he also wrote
-that my work has been useful.
 
-> > That's why I put Peff as the author of the patches.
->
-> No, that is not the reason. You might think that that is the reason, but
-> the real reason why Peff is marked as the author of those patches is that
-> he really authored those patches.
-
-That doesn't contradict at all what I am saying. I am saying that I
-kept Peff as the author because I am just helping him, which means
-that I actually acknowledge that he really authored those patches, no?
-
-> In light of what you said, I don't think that it is a good idea to go
-> forward by leaning even further on Peff. From his activity on the Git
-> mailing list, I deduce that he is not exactly in need of even more work.
-
-I think it's ok to ping people, even many times, when they have said
-that they want to work on something but for some reason don't do it.
-That's what Junio did by the way too. Junio just pinged everyone
-involved, and then I pinged Peff specifically as I think the part of
-the work left is more his than mine.
-
-If Peff had said that he doesn't want to work on this any more then I
-wouldn't ping him, and I would perhaps try something else, like just
-ask for only the first patch (1/9) to be merged.
-
-> Instead, I think that if you truly want to push these patches forward, you
-> will have to dig deeper yourself, and answer Jonathan Tan's questions, and
-> possibly adjust the patches accordingly and send a new iteration.
-
-I think that it's ok to ping Peff until he says that he doesn't or
-cannot for some reason work on this anymore. This shouldn't be a big
-burden for him to say that, no?
-
-> I perceive it as very unfair toward Peff that this has not yet happened.
-
-I perceive it as unfair to me that you think that I have to do a lot
-of work on this when Peff hasn't even said that he doesn't want to, or
-cannot, answer Jonathan's question.
-
-Best,
-Christian.
+I'm thankful for your insights
+Nadav Sinai
+Web Tech lead
+Philips-Algotec
