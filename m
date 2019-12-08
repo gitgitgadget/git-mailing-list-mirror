@@ -2,158 +2,130 @@ Return-Path: <SRS0=+MKA=Z6=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14ED5C43603
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:53:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C717C43603
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 08:54:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D581F206F4
-	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 07:53:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B7E45206D6
+	for <git@archiver.kernel.org>; Sun,  8 Dec 2019 08:54:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YFBf7tN0"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Y9760Bgx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726163AbfLHHxp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 02:53:45 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46938 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725554AbfLHHxp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Dec 2019 02:53:45 -0500
-Received: by mail-ed1-f68.google.com with SMTP id m8so9596416edi.13
-        for <git@vger.kernel.org>; Sat, 07 Dec 2019 23:53:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aXjdPshW1fiEQELmf1ZSah8N+tO1lfLfVAT6mLUMpJQ=;
-        b=YFBf7tN0sam/3iJzoDzi2PvnCXIANYRoPYOrPThkBZ8fNFfAb6l7CwiIvlk0xuW104
-         2eT2gPi28SBPynKssS3bpIh2tRjKUeZbR+J1qjamWqON+ly96XXFdiBPVg6P8nhRJEms
-         tmWMVoXM2JR5tl0gNlmu0OsDd6OFzBAZrT2Jh3U/afR3VOKDu2SrnVvpZEj+axE9DdTk
-         6ntOm74NdbdX7TCMvJLZUxvlz53ml26omqoqLibbgQaXtLJZb9EFnVO5fPwAjKoH/xlv
-         xY77tKVuFr4OyZwD26HMpiGcRSUvOk7arMK99wg/YPTHNmMGaCeG5AE0X7Xb4I2r0ygS
-         iljg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aXjdPshW1fiEQELmf1ZSah8N+tO1lfLfVAT6mLUMpJQ=;
-        b=P32ocMgutQjC5JWrFZFz5lYPTGmNBKtHOYDvLu15/jGkMEMZ3Vbfvy/dpUSW+btF7x
-         j2pFM9eORVlJELJ3Uqj/umR7gFy5gg9adzmLnkduZ8wFaOsG8MKys1Hw4EfBOHG2vn7Y
-         8wTnb/SkB3H2Y+XXlGO9j6TnNVdAXd9OJFgbQn7sSRRvflw27sXTsuxKX8ogp/n4CF7f
-         OZ/SBdjR0Px3YnPs/kTtxcOUN+BxLw840zCShjD/bCkAcEtTgYV6R7WzfiR+93JMLtfr
-         ai3qJtHctSYxdOSgt5RRA3TmNoJaxHx5Sa+Sdj7VRWVFuM0DTyNUegOz/754JXtwU/RH
-         Manw==
-X-Gm-Message-State: APjAAAWXK/4Ud5qSJVQyLVhL22xJeGuWZ7SDdp+bHrpNAqMP69KG8z/u
-        bJALT1AOq/P4T3yHw4XFPBeiC5u8uh944c3OxGg=
-X-Google-Smtp-Source: APXvYqxqe7InCETAAYHuqm19m+/D/dTIxJyiWh7x6dvzYIvdTTlASBMVN33vDelggJ52sIPeCCsbN+lEkTglWiVN4O8=
-X-Received: by 2002:a17:906:f49:: with SMTP id h9mr24335357ejj.6.1575791623354;
- Sat, 07 Dec 2019 23:53:43 -0800 (PST)
-MIME-Version: 1.0
-References: <20191115141541.11149-1-chriscool@tuxfamily.org>
- <20191115180319.113991-1-jonathantanmy@google.com> <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com>
- <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com> <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
- <CAP8UFD20LMxuV7KWAvobybHYZruDiADX-yOFPLyMxsHS7HZN0g@mail.gmail.com> <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 8 Dec 2019 08:53:31 +0100
-Message-ID: <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        id S1726001AbfLHIyl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Dec 2019 03:54:41 -0500
+Received: from mout.gmx.net ([212.227.17.22]:43801 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725832AbfLHIyl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Dec 2019 03:54:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1575795259;
+        bh=Y6JVmC9GhH2IbfsvoaQi3DoyMHU5HdYNlptBWvTrYow=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=Y9760Bgx9T0OqDMqMyQvtZbau6z3pH7nOSmGVI+90s7GzRYROOM1lzb1TwXpTo2vz
+         +TIaCru9BztNiuxbv6KROsk6JtUC+Rm0aNEr+YbBY0KoEboyvxUos5wSMYuHJF2GAP
+         R/uICzYp0GjPWPTPvulkQs9uOhpghMte/wIphH4M=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3lcJ-1iehPU0Zxj-000s5p; Sun, 08
+ Dec 2019 09:54:19 +0100
+Date:   Sun, 8 Dec 2019 09:54:01 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Christian Couder <christian.couder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         git <git@vger.kernel.org>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
+In-Reply-To: <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1912080942360.31080@tvgsbejvaqbjf.bet>
+References: <20191115141541.11149-1-chriscool@tuxfamily.org> <20191115180319.113991-1-jonathantanmy@google.com> <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com> <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com> <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
+ <CAP8UFD20LMxuV7KWAvobybHYZruDiADX-yOFPLyMxsHS7HZN0g@mail.gmail.com> <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet> <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OIeXnVmwxMkDK9Owcpe30LYCAGI01h04ANNLo81plIJuSw6VU1v
+ KoUdqloMfjuoxFNG5S3g0g8A5gs92Su444qXrSoyqloKsMGSIsIQ58wTuRuJnIbCr8ClW3g
+ AEWsgIprhGrDwLI7ZnATrcw1eWgWi4rW6OOmpu8FgMNVf9pFUl/kXfsQIVSWBiXB7VaCiP9
+ NqEgMUoOk+zRHGI1fk0dg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9oZsUKQqenw=:MNhLmp8wZN8R+aqDzc8fbo
+ PdeAfU2ZwQEbh7JdXRIXJrk6GT6kTQTMPwxcU8ac3EXJn6OndmaYUWhY58VzMCgW/bYBG/hrj
+ fYAJLYiRmBJtGbGFCdNssKCTMV7ghi40ZTTgrP4rvIu0g9zf8DAWPX039vYdAbYu7YW5mGEnh
+ qW4FmJp9kPGDxzR6wq59/WVJqu9wfvdBfHh83CkEMm3/4oRn2TFZtz2MCeYMeZ7DTLbqSWjns
+ wZ7sXOG9DfUW10NOPebm3EQ9YlIAEiaIzx9hjh5Q/oCthQlRQVCRhr+o+47DUX/K7vE7QwNmX
+ OHGSFNB+6qvE7bFMv7RKklgI4QSN7Rot86b5uzSYIAShdfniQ7zB7ZD6aZOuZrLtr9amLcFui
+ CzClifVT3FCp0FTZbOgzoNbRr8BIJe5MFFs+GlKwt0t5N8jyoOux7PS6ogYQecU9TBLvscAfe
+ ZvMfDUg9PaYJ9Y3j6k4i0sUx2ogVIkQSBuhmBK5+GEQD6WgjuWSBvfpkoTePQ7G7HqCWwd7Qp
+ EYHBF2qFXM6d5iy3JX041q8dAkwD76+sbeVYqJbOxFNno+izrAN6M7DjucSZC1cm5vkk+4elC
+ BLoDCbq40N8ONleGei/JR1MbqWKq3ZQg/O8O1A5xKczG9jr4FOi81qf1AqUGdCP/nsDVo/LDY
+ qJWmQTDzm4HkLWXBlmaHxGMIM+xCDmYNZEsVBLnCDVPrzQ7SwGMwEKHa7VAb7pJijMm5/lML+
+ LNQrWQHilphfDE/aaOT6q+nOdf/SKCS+ZxfPyAbJyq1uLD8D0cMUVqQ0vTzt8yVc6VQUNKgmW
+ a0NQ8GlcWKzb7wJIy9QIUMveDRR8jMGPPrb97nuqbGaztXIZWW/ngiz2DKvvu9/PSMFBkb3Ov
+ eEP9bTGAQQ3o6Qq3wG+aF0UX5WLtukrSrT/TFDKHkfA8eWjsYJYv1x0zuCR3z+f8qLk89d9a9
+ uAQyN1cbSDqcoyNcLEmdUkbLHh/QLejFFPiNMvBJegibHC68Csyzef/dx7ACWn4dO7lYg72KR
+ 57rjUJi3JXmoUX5IsVXhIetx4ggn79/M1HDzVLcyDZN2K+RJ5pALEpM0AV4VeAWjPxz7cMz+E
+ W2WFyZN0CxakGWX+x8T3mValyPWLp+7PE0iROp0f+HEmNe8K896wLB1GnhWfELGL2E0eeJ/hr
+ EDDLpdKsXlpxapknoL1xxHm3lsQfo1S1Ug3K/bvbF3Su2t/+O/MMUSFzZmWEShcDCOZZjl/zo
+ Jxu8mBEBxHe+MiyQMXbUvH/TrU9yHR9UJDoKrVA3g64UJyxGFJX8wsBVT5bM=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+Hi Chris,
 
-On Sat, Dec 7, 2019 at 9:47 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Sun, 8 Dec 2019, Christian Couder wrote:
+
+> Peff wrote:
 >
-> On Sat, 7 Dec 2019, Christian Couder wrote:
+> > It's been on my todo list to upstream for a while, but I've dragged my
+> > feet on it because there's a lot of cleanup/polishing from the origina=
+l
+> > patches (they were never very clean in the first place, and we've merg=
+ed
+> > a dozen or more times with upstream since then, so the updates are
+> > spread across a bunch of merge commits).
 >
-> > On Fri, Dec 6, 2019 at 10:42 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > >
-> > > Junio C Hamano <gitster@pobox.com> writes:
-> > >
-> > > > Junio C Hamano <gitster@pobox.com> writes:
-> > > >
-> > > >> Jonathan Tan <jonathantanmy@google.com> writes:
-> > > >>
-> > > >>>> It could be a good idea if Peff could answer some of the comments made
-> > > >>>> by Jonathan Tan about patch 9/9.
-> > > >>>>
-> > > >>>> I have put Peff as the author of all the commits.
-> > > >>>
-> > > >>> Thanks. I think the series looks mostly good except for the questions I
-> > > >>> raised in patch 9/9, so I'll wait for Peff to respond too.
-> > > >>
-> > > >> Hmph, the round before this one has been in 'next' for quite a
-> > > >> while, so should I eject it before waiting for Peff to respond
-> > > >> before queuing this one?
-> > > >
-> > > > After rebasing these v3 patches on top of the base of the one in
-> > > > 'next', the only difference seems to be the log message of 3/9 and
-> > > > the contents of 9/9.  I guess I'll mark the topic as "on hold" for
-> > > > now before doing anything, as I am officially taking a time-off most
-> > > > of this week ;-)
-> > >
-> > > So..., that week has passed---anything new?
-> >
-> > Unfortunately, no.
-> >
-> > If you want I can send an incremental change on the content of 9/9 on
-> > top of what's in next. Otherwise I can't see what I could do on this.
-> >
-> > Peff, could you tell us if you might have time to take a look at this soon?
+> and then:
 >
-> Chris, correct me if I am wrong, but was it not your decision to
-> contribute these patches?
+> > Yeah, I think we should work on getting our changes (including those
+> > stats) into upstream.
+>
+> So actually I thought that I was helping Peff on this, though I know
+> of course that it's also helping GitLab and everyone else.
 
-Please take a look at:
+In my experience, sending the initial set of patches is the easiest part
+of contributing patches, by far. The most involved part of the process is
+to react to reviewer comments and to prepare new iterations.
 
-https://public-inbox.org/git/3E56B0FD-EBE8-4057-A93A-16EBB09FBCE0@jramsay.com.au/
+You can see this challenge in action in all the Git for Windows
+patches/patch series I am "upstreaming".
 
-and Peff's response to James Ramsay's email.
+So actually I think that you are doing a disservice to Peff: if he had
+time for that tedious part of the patch contribution, I am sure it would
+have been no burden at all to send the initial set of patches.
 
-Peff wrote:
+> That's why I put Peff as the author of the patches.
 
-> It's been on my todo list to upstream for a while, but I've dragged my
-> feet on it because there's a lot of cleanup/polishing from the original
-> patches (they were never very clean in the first place, and we've merged
-> a dozen or more times with upstream since then, so the updates are
-> spread across a bunch of merge commits).
+No, that is not the reason. You might think that that is the reason, but
+the real reason why Peff is marked as the author of those patches is that
+he really authored those patches.
 
-and then:
+In light of what you said, I don't think that it is a good idea to go
+forward by leaning even further on Peff. From his activity on the Git
+mailing list, I deduce that he is not exactly in need of even more work.
 
-> Yeah, I think we should work on getting our changes (including those
-> stats) into upstream.
+Instead, I think that if you truly want to push these patches forward, you
+will have to dig deeper yourself, and answer Jonathan Tan's questions, and
+possibly adjust the patches accordingly and send a new iteration.
 
-So actually I thought that I was helping Peff on this, though I know
-of course that it's also helping GitLab and everyone else. That's why
-I put Peff as the author of the patches.
+I perceive it as very unfair toward Peff that this has not yet happened.
 
-> Are you saying that you do not understand them
-> well enough to drive this patch series forward (e.g. address all reviews
-> and questions) and are basically trying to force Peff to contribute them
-> instead?
-
-Yeah, I don't understand them well enough to answer Jonathan Tan's questions.
-
-But no I am not trying to force Peff. I am trying to work with him.
-When he said he thought we should work on getting the change into
-upstream, I just thought he meant it and would be willing to help.
-
-
-
-
-
-> Ciao,
-> Johannes
+Ciao,
+Johannes
