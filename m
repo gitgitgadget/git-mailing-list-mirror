@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86D80C04E30
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5AC8C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 50151206D5
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B8A2A206D5
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpxYq8tD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nN5qTR43"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726915AbfLIUrw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 15:47:52 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56017 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726598AbfLIUru (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 15:47:50 -0500
-Received: by mail-wm1-f65.google.com with SMTP id q9so801695wmj.5
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:47:49 -0800 (PST)
+        id S1726932AbfLIUry (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 15:47:54 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43256 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726874AbfLIUrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 15:47:53 -0500
+Received: by mail-wr1-f66.google.com with SMTP id d16so17664294wre.10
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:47:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=RpxYq8tDR3SDanmflqYAWCw6j1NaRw0Cb4rTRJg9IH1BH+8Oc2wY60JbpyN4G4kS90
-         ljyEVhQwmzPUAD8UFktu63nW2nU2Un/vPMx3LggwWFeh9XTWeELBdgOrBMbVBLDWsifL
-         2J5tckTjgq9t4drKk+OIEsipW5daeHoPqeP5fDuPHoSshCs8tH7ovVdL/t3xezONmUni
-         KsavwZie8mxBLFDSVehcUshElSHs7AAWA+2NRTWsCD1imqbq37j4COCswEWv8whg17XR
-         qAQap5VSOoUTtsk+t7Ri7bhxY5KShkpVA1FAMjFEdgbqMZAQ/ykMPe4AknVNW0xM1+J9
-         J8tw==
+        bh=+CgvyKrM09apU1qkOsJft1P4o4wqjmDRS+ywvTmG7xU=;
+        b=nN5qTR43O7A7ycMNH5oaxA34tkT+OMiWWawKvzV2eesD+QSJtR4D6R28iA+Og6rB/v
+         MrdJbsN7kT+Fn1IlGb/NA7YtIXLF96IwX4qpEd+/XcLnZpELJtcxWjKJK8swqhjatTZr
+         DMcaHZjuKXsa9vhLjrjWsqcREOIS3ZkkrcehQhmDtoFrtpTCE2L4djBAelv9sNXxuijA
+         xn59cXPPlWcSrHopj6uw+0eCVpKnAq2BsUuoKAAnNAOqhYXWe/XoiKuU+ycz6NqdsD0y
+         ImkzzRQrxiBf9vGM/k/UPT1mSlfNKzhQJ1VEvSRmYR2kB22FT65Aaaqs8vaOfKho9jc6
+         d7WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=nzhxrDAhRknffGEBKNd99UeXIx21QCnK0b59ALP//1LQ4v4vR97Uab5m0GOiJcBZCF
-         l4+t3Wa8nSK9HPW9YQafSxF98UKJ0SjKm0JN5BBkfgBXuWri3ho73bm5welkH/+5rAEd
-         fP4PcIwb8S2KoLuzNUJRa53SE3qThwm39X8vq+lfyAKSXwhrIbsXLqmhkET/yRoliyN4
-         7eX0Y32+xjHdMOKaVuvhCen9D0WphfeV9j8OZMtsiYsybuNTlk0iwfgKKe0bbaOm9ZJR
-         2oRR/IDoVC11PkliDCBV3pVGZeCcTcDm1qfPzwhirclEB82msppnW9oZH40jDrit0zK+
-         S9Dg==
-X-Gm-Message-State: APjAAAXoGgPAjuaDfJ8v/9VwsQhfy3ZYqLFU/envNC5KZ8MuKCWTM+Kq
-        g+bv80DCgLgI7vYz3k4pS6hjhL5a
-X-Google-Smtp-Source: APXvYqxKdSoJpKvNv3HhfNlKnxevKaIeOK6NOfXtIa5WTHWqDywPg4jJv/KHz9DirFRX0C8NPk+SdQ==
-X-Received: by 2002:a1c:730e:: with SMTP id d14mr967739wmb.88.1575924469141;
-        Mon, 09 Dec 2019 12:47:49 -0800 (PST)
+        bh=+CgvyKrM09apU1qkOsJft1P4o4wqjmDRS+ywvTmG7xU=;
+        b=DzyAQIIWHQEu47kH+4PW45RP/rYrcvQHoaeuYKlwsN7ahDZ9daqVd50TM74wFWHl06
+         Z5fwj0yTV0HF0gCZpqFrgt3NGZwBI5YIi6lQ9ohqof3EjJZOaczhm+PM67ghKwYufWpN
+         NMytDnll8+S01uiMQzazr1F8OkbAj+mtf3/kbLsqXDKHllEWPIUuMM1zXTUA1x6rO6vB
+         nISIKhJjpikUGlajTbEFEn1Uy9Z80ShfeKDpJAVwQBTTbiwIojGAwAabb/j7QIfRZD2S
+         I4EtrcvMbdT2LPmuM1lSIfCTzvqfH5M965BgYYSt0STedO1BDWOSquBlqgJcUxBv/Yly
+         +viA==
+X-Gm-Message-State: APjAAAUGp6nYJGwh0buxWZcvMyBIsuw9MFYv312+TzRZp1dpeNa9xXdf
+        KChuuq0E+BPAZV+G70ADWGKSxpDl
+X-Google-Smtp-Source: APXvYqxToTJ2VS/lekdhYsFU1qmA1Lr7UJvj41s/16M6BIUevit0K7MA7whQEh2b0KEP1sSWqB2eYw==
+X-Received: by 2002:a5d:49c3:: with SMTP id t3mr4206882wrs.113.1575924470458;
+        Mon, 09 Dec 2019 12:47:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v17sm667523wrt.91.2019.12.09.12.47.48
+        by smtp.gmail.com with ESMTPSA id s65sm566690wmf.48.2019.12.09.12.47.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2019 12:47:48 -0800 (PST)
-Message-Id: <ea2588e87cd4f42f685eef0aa41da83c8fd7333f.1575924465.git.gitgitgadget@gmail.com>
+        Mon, 09 Dec 2019 12:47:50 -0800 (PST)
+Message-Id: <738d9ae4c9ca0e54502b9ef606e2fc8dba9a94e1.1575924465.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
 References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 09 Dec 2019 20:47:40 +0000
-Subject: [PATCH 3/8] dir: remove stray quote character in comment
+Date:   Mon, 09 Dec 2019 20:47:42 +0000
+Subject: [PATCH 5/8] dir: break part of read_directory_recursive() out for
+ reuse
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,24 +75,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+Create an add_path_to_appropriate_result_list() function from the code
+at the end of read_directory_recursive() so we can use it elsewhere.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ dir.c | 60 ++++++++++++++++++++++++++++++++++++-----------------------
+ 1 file changed, 37 insertions(+), 23 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 0dd5266629..5dacacd469 100644
+index 517a569e10..645b44ea64 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -373,7 +373,7 @@ static int match_pathspec_item(const struct index_state *istate,
- 		    !ps_strncmp(item, match, name, namelen))
- 			return MATCHED_RECURSIVELY_LEADING_PATHSPEC;
+@@ -1932,6 +1932,40 @@ static void close_cached_dir(struct cached_dir *cdir)
+ 	}
+ }
  
--		/* name" doesn't match up to the first wild character */
-+		/* name doesn't match up to the first wild character */
- 		if (item->nowildcard_len < item->len &&
- 		    ps_strncmp(item, match, name,
- 			       item->nowildcard_len - prefix))
++static void add_path_to_appropriate_result_list(struct dir_struct *dir,
++	struct untracked_cache_dir *untracked,
++	struct cached_dir *cdir,
++	struct index_state *istate,
++	struct strbuf *path,
++	int baselen,
++	const struct pathspec *pathspec,
++	enum path_treatment state)
++{
++	/* add the path to the appropriate result list */
++	switch (state) {
++	case path_excluded:
++		if (dir->flags & DIR_SHOW_IGNORED)
++			dir_add_name(dir, istate, path->buf, path->len);
++		else if ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
++			((dir->flags & DIR_COLLECT_IGNORED) &&
++			exclude_matches_pathspec(path->buf, path->len,
++						 pathspec)))
++			dir_add_ignored(dir, istate, path->buf, path->len);
++		break;
++
++	case path_untracked:
++		if (dir->flags & DIR_SHOW_IGNORED)
++			break;
++		dir_add_name(dir, istate, path->buf, path->len);
++		if (cdir->fdir)
++			add_untracked(untracked, path->buf + baselen);
++		break;
++
++	default:
++		break;
++	}
++}
++
+ /*
+  * Read a directory tree. We currently ignore anything but
+  * directories, regular files and symlinks. That's because git
+@@ -2035,29 +2069,9 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
+ 			continue;
+ 		}
+ 
+-		/* add the path to the appropriate result list */
+-		switch (state) {
+-		case path_excluded:
+-			if (dir->flags & DIR_SHOW_IGNORED)
+-				dir_add_name(dir, istate, path.buf, path.len);
+-			else if ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
+-				((dir->flags & DIR_COLLECT_IGNORED) &&
+-				exclude_matches_pathspec(path.buf, path.len,
+-							 pathspec)))
+-				dir_add_ignored(dir, istate, path.buf, path.len);
+-			break;
+-
+-		case path_untracked:
+-			if (dir->flags & DIR_SHOW_IGNORED)
+-				break;
+-			dir_add_name(dir, istate, path.buf, path.len);
+-			if (cdir.fdir)
+-				add_untracked(untracked, path.buf + baselen);
+-			break;
+-
+-		default:
+-			break;
+-		}
++		add_path_to_appropriate_result_list(dir, untracked, &cdir,
++						    istate, &path, baselen,
++						    pathspec, state);
+ 	}
+ 	close_cached_dir(&cdir);
+  out:
 -- 
 gitgitgadget
 
