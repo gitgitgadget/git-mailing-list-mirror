@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18976C43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E5B8C47409
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E18D42080D
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6FE62080D
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r3hzY9uj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+++/GdJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727650AbfLILxO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 06:53:14 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36424 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727572AbfLILxM (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727643AbfLILxM (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 9 Dec 2019 06:53:12 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p17so14604287wma.1
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 03:53:10 -0800 (PST)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36421 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727613AbfLILxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 06:53:10 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p17so14604210wma.1
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 03:53:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4Pbe5KQ85ZLxENN2+z/4SBlB5jH4XSS0gS13sv4wgVU=;
-        b=r3hzY9ujj7+UydULxq38KTphDSVmKN5gG9G3RsIxoU1SF+WlHmR8XrKukkpY6oLZTW
-         elz6t/M4kl73uhzyaVmaHjEKCKrT7g4vSUx+wfM8PS5+ZzvQ5Mbhrvd6Ejx9g0nn2r6+
-         XcJQCgER9/SBzo2SmZYLzt1fNE9iRTfB2mWOMPlMsDuiR2QpLPkvuKyy47HDa4ZneE/w
-         pAIJryyDmQBCG9xTYraZ8eISH050P7Ddb3fCcAs29Zlt3513MajjHIHbaUwL/cC4puqx
-         ATivAHCe4Z9Vbis6xeZCeg5NsEBZnrBsdCmIsqBdaaloELeDNyyoAhb7Tc6BRYeyCL00
-         kPRQ==
+        bh=ntQIdsWuGW1GM27W+NVe76XWcYgjKNaO6G8Cw8nRNoE=;
+        b=b+++/GdJXCVeIky8LNE0rP0zlaFLClYMp4zi7Mz+ixxeC0zAhiEJgueeJU76A1EaoN
+         yp25z7NtYfHfYdXWroIeQ55N0c9EyJYCwUxhSMVl4ei3v390saO8BQuOaBzf89y5A7vK
+         TDa3TXsj0vE2ooUzWbjHy6g8e5VPBewONSpb7SApp2ALA30IWigMbXH+JwkyrZpsoTd3
+         xJgsuAQEGtU5/2EKN2iJglObw02E7e8qzcdUYv4MKC7EHx2rqgyEMhYnVVzp1XeBx8eV
+         sENSipb13FHueL9YSriUWLy9kOceo4W+SzaqJonLup/q/5nn+bTT5pd74ZwtQN4amapw
+         /7xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4Pbe5KQ85ZLxENN2+z/4SBlB5jH4XSS0gS13sv4wgVU=;
-        b=tMnnnDyt++VnEr8UjFIj/05WiRIaHSXar3hdttI3g+2sCJhBXKm0QDFh3NrACTFXlT
-         a2L6jtWCE1bao8h6TynK+ulgojgLLkMDnFER1Zgw/PCGbFSkD7P3m2yRMzVIbFHCtDP+
-         TJ1wuymZHvIZMuox1+sxGBTFJydOJ1fPKVyk872taFWplT0hEdiLbuw/s1vFS9mGHn/H
-         kxten+8k/povsXy7NLAQ4CGZ/a6HNQNjkNNkDhg++3eCYdHa/l7HuAwEvARStRqa5Txe
-         ChBLr+JUEYqlHQK19CobM5LXK82w6oNfxy2kVFk9LZXDR7+NWGNtOgD0zTqE/fJIZjVo
-         ozZQ==
-X-Gm-Message-State: APjAAAUhudMJ7ZEsnE3D+h3w/04lXXsCGbEaaXc0WUBTSVJiEvVxVaTt
-        mbutiQG1M9GCcnX4wLZdIXg=
-X-Google-Smtp-Source: APXvYqwXt298g+8y5AIuNmZ6qMhISi6vn54zETt8NYZ9WCscuA9PkdJHUJA0Xfzqf3aPbzn72nvPEw==
-X-Received: by 2002:a1c:4483:: with SMTP id r125mr23841987wma.97.1575892389802;
-        Mon, 09 Dec 2019 03:53:09 -0800 (PST)
+        bh=ntQIdsWuGW1GM27W+NVe76XWcYgjKNaO6G8Cw8nRNoE=;
+        b=HsOfprUsOF17a2kHQirN1nkc2AbtKP3DhZS18xl6XQMGOgoHTF1zrTChFKhcXCBKw4
+         5KSB0v34KB/pcJGVIzarVXfoF03/1W6XmaPAnWUIXgDsBq97kv0FLceOMn8asVBIoVld
+         M1vnFjDDWwJRtnWvQMWLmP9MGh7jbTfsnFCgv2ioAtKrAWHRSWcIAD0k3MOWszwOUA5R
+         4aqeeST2TXGx7uSfGKVQl2pMc4xa2mhGykz56K71F/caVfim+HybMbU1nizF3AGBSj+i
+         m5N2xSntPWWDNx6PvDX2XNQsCPe2Ea62OPaBZOYKHI7fBOkswkM8T18Mgj5kpHzPRlTS
+         RbJg==
+X-Gm-Message-State: APjAAAVO05iwlThC3kCyp0wxv9XlTrdzKOPHZn6KSf3MXbIoQbzNLbr+
+        u3vzuUN8r1/lYbhVgFd8otg=
+X-Google-Smtp-Source: APXvYqy8xsPByZKzQP7ZvL1fIc8RdJWxKwEYFj3tR/gVbXQZwgUuTXjvXLpTq1VyS8WjmycEs+zupQ==
+X-Received: by 2002:a05:600c:2254:: with SMTP id a20mr24656878wmm.97.1575892388660;
+        Mon, 09 Dec 2019 03:53:08 -0800 (PST)
 Received: from localhost.localdomain (x4db55b9c.dyn.telefonica.de. [77.181.91.156])
-        by smtp.gmail.com with ESMTPSA id k8sm27239621wrl.3.2019.12.09.03.53.08
+        by smtp.gmail.com with ESMTPSA id k8sm27239621wrl.3.2019.12.09.03.53.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Dec 2019 03:53:09 -0800 (PST)
+        Mon, 09 Dec 2019 03:53:08 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 06/14] t6120: add a test to cover inner conditions in 'git name-rev's name_rev()
-Date:   Mon,  9 Dec 2019 12:52:50 +0100
-Message-Id: <20191209115258.9281-7-szeder.dev@gmail.com>
+Subject: [PATCH v3 05/14] name-rev: use sizeof(*ptr) instead of sizeof(type) in allocation
+Date:   Mon,  9 Dec 2019 12:52:49 +0100
+Message-Id: <20191209115258.9281-6-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.24.0.801.g241c134b8d
 In-Reply-To: <20191209115258.9281-1-szeder.dev@gmail.com>
 References: <20191112103821.30265-1-szeder.dev@gmail.com>
@@ -76,126 +76,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 'builtin/name-rev.c' in the name_rev() function there is a loop
-iterating over all parents of the given commit, and the loop body
-looks like this:
-
-  if (parent_number > 1) {
-      if (generation > 0)
-          // branch #1
-          new_name = ...
-      else
-          // branch #2
-          new_name = ...
-      name_rev(parent, new_name, ...);
-  } else {
-      // branch #3
-      name_rev(...);
-  }
-
-These conditions are not covered properly in the test suite.  As far
-as purely test coverage goes, they are all executed several times over
-in 't6120-describe.sh'.  However, they don't directly influence the
-command's output, because the repository used in that test script
-contains several branches and tags pointing somewhere into the middle
-of the commit DAG, and thus result in a better name for the
-to-be-named commit.  This can hide bugs: e.g. by replacing the
-'new_name' parameter of the first recursive name_rev() call with
-'tip_name' (effectively making both branch #1 and #2 a noop) 'git
-name-rev --all' shows thousands of bogus names in the Git repository,
-but the whole test suite still passes successfully.  In an early
-version of a later patch in this series I managed to mess up all three
-branches (at once!), but the test suite still passed.
-
-So add a new test case that operates on the following history:
-
-  A--------------master
-   \            /
-    \----------M2
-     \        /
-      \---M1-C
-       \ /
-        B
-
-and names the commit 'B' to make sure that all three branches are
-crucial to determine 'B's name:
-
-  - There is only a single ref, so all names are based on 'master',
-    without any undesired interference from other refs.
-
-  - Each time name_rev() follows the second parent of a merge commit,
-    it appends "^2" to the name.  Following 'master's second parent
-    right at the start ensures that all commits on the ancestry path
-    from 'master' to 'B' have a different base name from the original
-    'tip_name' of the very first name_rev() invocation.  Currently,
-    while name_rev() is recursive, it doesn't matter, but it will be
-    necessary to properly cover all three branches after the recursion
-    is eliminated later in this series.
-
-  - Following 'M2's second parent makes sure that branch #2 (i.e. when
-    'generation = 0') affects 'B's name.
-
-  - Following the only parent of the non-merge commit 'C' ensures that
-    branch #3 affects 'B's name, and that it increments 'generation'.
-
-  - Coming from 'C' 'generation' is 1, thus following 'M1's second
-    parent makes sure that branch #1 affects 'B's name.
-
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/t6120-describe.sh | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ builtin/name-rev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
-index a2988fa0c2..0d119e9652 100755
---- a/t/t6120-describe.sh
-+++ b/t/t6120-describe.sh
-@@ -438,4 +438,45 @@ test_expect_success 'name-rev a rev shortly after epoch' '
- 	test_cmp expect actual
- '
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index e40f51c2b4..7e003c2702 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -102,7 +102,7 @@ static void name_rev(struct commit *commit,
+ 	}
  
-+# A--------------master
-+#  \            /
-+#   \----------M2
-+#    \        /
-+#     \---M1-C
-+#      \ /
-+#       B
-+test_expect_success 'name-rev covers all conditions while looking at parents' '
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		echo A >file &&
-+		git add file &&
-+		git commit -m A &&
-+		A=$(git rev-parse HEAD) &&
-+
-+		git checkout --detach &&
-+		echo B >file &&
-+		git commit -m B file &&
-+		B=$(git rev-parse HEAD) &&
-+
-+		git checkout $A &&
-+		git merge --no-ff $B &&  # M1
-+
-+		echo C >file &&
-+		git commit -m C file &&
-+
-+		git checkout $A &&
-+		git merge --no-ff HEAD@{1} && # M2
-+
-+		git checkout master &&
-+		git merge --no-ff HEAD@{1} &&
-+
-+		echo "$B master^2^2~1^2" >expect &&
-+		git name-rev $B >actual &&
-+
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
+ 	if (name == NULL) {
+-		name = xmalloc(sizeof(rev_name));
++		name = xmalloc(sizeof(*name));
+ 		set_commit_rev_name(commit, name);
+ 		goto copy_data;
+ 	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
 -- 
 2.24.0.801.g241c134b8d
 
