@@ -2,73 +2,67 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1660CC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 09:33:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 13876C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:22:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DDDC92073D
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 09:33:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D83D620836
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:22:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HZhGfZqy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dQzslmt4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727299AbfLIJdj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 04:33:39 -0500
-Received: from mout.gmx.net ([212.227.15.18]:44965 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727113AbfLIJdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 04:33:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575884015;
-        bh=/wU3GfN5FmWabpZVtGUSdtPCP5xJRsSR//5Nm5ilUfs=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HZhGfZqyhseQZsH7qjbCdGFOiJLoDb+rH1DmQz9Tifk9kPLjDLlIxhbNMJagg0WDa
-         u3kmBEueDkszjKeXSAzE65m+SYYN1MyMEDEzHnSpGlzwfIi9UsP0NeCyPCaZOk4Sw5
-         +a5/NvbuHNCca8IP7xRdlk1siBEKg+jaLuJcTvZ4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4QsO-1hdEtd0bx8-011NyB; Mon, 09
- Dec 2019 10:33:35 +0100
-Date:   Mon, 9 Dec 2019 10:33:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org, Tanushree Tumane <tanushreetumane@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [Outreachy] [PATCH] bisect--helper: avoid free-after-use
-In-Reply-To: <20191209084022.18650-1-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1912091030310.31080@tvgsbejvaqbjf.bet>
-References: <20191209084022.18650-1-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727283AbfLIKWf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 05:22:35 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:36467 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbfLIKWf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 05:22:35 -0500
+Received: by mail-ed1-f67.google.com with SMTP id j17so12214218edp.3
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 02:22:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0JBqaoMKUFPxt940hmjV9FB7doZCN0uiVhnU/dBu6Hg=;
+        b=dQzslmt49JvLpiqPMTV/2tq3yGbCdUODj775GsAs53MUxPFsb64R0V2CGwcS9hCdBS
+         Vkgt0l7n6ECtrkabGAz4ZjsexHojXOLvi9kmvtqVpZ7C00lU3a5GKjDcW1j8Z153cMZC
+         rBNT9LN01f6leUeCJP34m6jbOHODHQB/aTDAUebOfnXw83nCK1vs5pKb1+8fmmn+Bn5A
+         I1vSlD/AhoeD6sBru7KGrM8pXUefx3qUFbFIDF2vLqXEGDPAq39oeE/zkRwWqLHKzh+I
+         4202O1JeTzZMiRFREW4PX90mgdswTWJCpil1vEAByyWyNzDLu5hoXq7R4T+qKZWv2jhF
+         fTlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0JBqaoMKUFPxt940hmjV9FB7doZCN0uiVhnU/dBu6Hg=;
+        b=sZ2ZCWrorONuBEyZuzTI5QIGMZPbiQsAWb3eyPhpPleu7cr6+ezAz/mdAJlf8KoSzB
+         ITTv15CY6BqO3CBiMBS8W4gP6cqpkih8cw/PoSpNt5/VSA3+lN/JkFmyuPkz4h5DYWYX
+         rkfOUbFCmpwdEVdS0ufIXAt1mL1cooFjuHOZGSvqgVcRucJawWDZCxEXjMpZv9S3Uu3E
+         EZg0t127tSjyrFurURQ739Y9Puwhtx1fzoLaJhMN+J992VLagKIYndGWW5FAYE6Xkziv
+         XOu7Rf+q47uvm/fLn6tu7+aGxtGe8PA4FhC7YeGQpAXsIYmP7n5dkyPRPTu99jf31UtU
+         vkAQ==
+X-Gm-Message-State: APjAAAVNa3owRqh1oZmx1EK7iIhf7nxO5CRX6rh/J6Pn4EFzg5fEiMrE
+        Hho19iDRVG4OWtF2lRblRLgnvzuK941ZZgMxo3o=
+X-Google-Smtp-Source: APXvYqx+YhRNhWtjQoTXfNmkrJ6mpl50tzFfXrwAsgc1NXPtzdYYqPWwIqGcHZA4DKW8SvvwXcEGZ+ETGI+aScVm9+M=
+X-Received: by 2002:a50:e00a:: with SMTP id e10mr31660191edl.119.1575886953542;
+ Mon, 09 Dec 2019 02:22:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ptaImewAMyHY2xN6LdqpnbhprTCuuLelKihc6TOYYX76hJHF0/Y
- PfyHbh/fNWD+OHqoUtAhYf8wGhu/LZlWi01aNF1IuPuUYIlgaiImXDP2E79zUOCzSy0vhsX
- rkdbA3+iVGDCJxUItsQFPv2DcbH5ZE9015HdzDwxGCcz3GI4AHggvu8xrdQ8DTGnG233Lp5
- Ro4AqyqHg4wQJzIG7Bdww==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:YC/TVsip/gI=:CXXQHdlP0Mj4GAlbpnrhAL
- Xb+SKdCNaNmHoyeneHTopsyoBuNJRJJvKqTSjffXNzPxW9w3zIjXit6hGNHiNIzkr2t6Bai45
- yFblf18veKxXLzucfZkouh4v2buR7/SI7ovb0X6toY4v2xjdYZKekSy/U3KZPO9eEZ+aDFFuJ
- Bc7lVQQssTQOFWwc6FwyeNSWpFe5+KXAaRPxn8MSum1Thdkm1emE2VxOcexfd1vmcZVCifZvr
- hN2+hn8eFIq+E10Is7YkPupJWkKR3/d5CvccxXDVpEejoBSABHOFaMa/y4/ma6hOeWLkwzdR/
- hjXXaSZ8/RrsBB1Lh/idPY6SuPWPDiisfUCiHugjUEy8eLg+JU7ztSsLSvawxaCle/5dX1lrn
- /rdt3guUywM+/EGLpqX11s5rlLou6BXGbNWxZJ+8kkGPOi8+YRn3n3A0Cq7dF/vYret7bCWfs
- s+5Ypa38TXP0I0bQuDrKysWU2tWgXocke1LSbYlWC/xE76qmL2kkvxwAPFvpStayMBBLaenbc
- MmoefUNXIxaxr6a6DavxEAvxzYcgjcWBt0BuTlcZZSLii0UzBNL8eCBIN4sFTh3OxTG7jZJqv
- +GQsNF9FC2FdoWXcHyvSlVe6jRvdatjmZYYDjoaRhRYlKL7RGLHG7eqCTMyRlQbvdh9Nkb7YQ
- Qr0qlg6aD4HtTjc43rtsqR9icQTZhPiBxp8jN2cq88VAX0hkQcl8J+4aZHlkWWEDoY4Tflsww
- IKutkHWPtPq6/9fEPdYps4+fKNpYj2qGM906i7LCt/DJif7BSZXFX3zonLrSzP7m8DgXHEYO5
- YkU/hr8HCBdYXQlFpGqt907GHdnCiIBtiJ0p7OritHjqqXtQxsLUu4OS1D76+2O5T7r46cfFi
- kB30ClMkSzzr9baQThJZVw8fQUWVJprk0nkLxnbRfEFhVUEOT3Kc0nlkAhI6LFKAJI6FfPEx7
- TlB2tDSEZFNjSZc90Q9fgesENhCAGsbUzv0qr1f2lZ26dKzSBJhoSpMY1jwpAJoQ5zRow41OT
- yjV0DfMVIw+Vz9ah1iIJ6AfybM/jcOsniksxUHdTRNJwqFZcCophlczxP5yd1Xs2G01Z+GCUl
- NqNqN/7YENG1MvqAE24C9SSv+uxBm12vjDCEZ217gdaWd2U6TE5z0CYeSmxGTDflRtVu4QxJw
- FnezyBBfO35vYgCSx/DzW5GNkr/rVopu1wkOJtyU9bkUFUCnzCskq584aNbjR+wWFrb+U5SYq
- KCWH5L3ctJuL8iqJmAyzM7RMcXLj70so37KgnoQDtw4xsHzEpDs5x+zKRNkc=
-Content-Transfer-Encoding: quoted-printable
+References: <20191209084022.18650-1-mirucam@gmail.com>
+In-Reply-To: <20191209084022.18650-1-mirucam@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 9 Dec 2019 11:22:21 +0100
+Message-ID: <CAP8UFD2C0uh+e_tH2H=z2RqDwSC7SEu-JoBx3z2KefVND8OqYQ@mail.gmail.com>
+Subject: Re: [Outreachy] [PATCH] bisect--helper: avoid free-after-use
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -76,14 +70,12 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Miriam,
 
-just a little note on the process: the convention on the Git mailing list
-is to use `[PATCH v2]`, `[PATCH v3]`, etc when sending revised patch
-series. It is even available in `git format-patch`'s options: `-v 2` (see
-https://git-scm.com/docs/git-format-patch#Documentation/git-format-patch.t=
-xt--vltngt)
+As Dscho suggests, next time please use [PATCH v2] or [PATCH v3]
+instead of [PATCH] if the patch has already been sent, even if the
+subject has changed.
 
-On Mon, 9 Dec 2019, Miriam Rubio wrote:
-
+On Mon, Dec 9, 2019 at 9:40 AM Miriam Rubio <mirucam@gmail.com> wrote:
+>
 > From: Tanushree Tumane <tanushreetumane@gmail.com>
 >
 > In 5e82c3dd22a (bisect--helper: `bisect_reset` shell function in C,
@@ -94,42 +86,24 @@ On Mon, 9 Dec 2019, Miriam Rubio wrote:
 > However, this error message used the `strbuf` that had just been
 > released already. Let's switch that around: first use it, then release
 > it.
->
+
+Great!
+
+I think keeping Tanushree as the author and changing the commit
+message and the subject was the right thing to do.
+
 > Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 > ---
 
-ACK!
+Here (after the line starting with "---") you can add comments about
+the patch. One useful comment here would be to say that this patch is
+a new version of
+https://public-inbox.org/git/20191208172813.16518-1-mirucam@gmail.com/
+which itself has been sent previously by Tanushree
+(https://public-inbox.org/git/64117cde718f0d56ebfa4c30f4d8fe2155f5cf65.1551003074.git.gitgitgadget@gmail.com/).
 
 Thanks,
-Dscho
-
->  builtin/bisect--helper.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> index 1fbe156e67..3055b2bb50 100644
-> --- a/builtin/bisect--helper.c
-> +++ b/builtin/bisect--helper.c
-> @@ -169,11 +169,12 @@ static int bisect_reset(const char *commit)
->
->  		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
->  		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-> +			error(_("could not check out original"
-> +				" HEAD '%s'. Try 'git bisect"
-> +				" reset <commit>'."), branch.buf);
->  			strbuf_release(&branch);
->  			argv_array_clear(&argv);
-> -			return error(_("could not check out original"
-> -				       " HEAD '%s'. Try 'git bisect"
-> -				       " reset <commit>'."), branch.buf);
-> +			return -1;
->  		}
->  		argv_array_clear(&argv);
->  	}
-> --
-> 2.21.0 (Apple Git-122.2)
->
->
+Christian.
