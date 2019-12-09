@@ -2,113 +2,158 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD31FC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:49:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B55FC43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:17:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ADDC7206E0
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:49:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 046812068E
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:17:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gOOa5kJz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YK5Veo+O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726602AbfLITtF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 14:49:05 -0500
-Received: from mout.gmx.net ([212.227.17.22]:40739 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726342AbfLITtE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 14:49:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575920942;
-        bh=wWc2RTvdgHGPUSBtuY5qUqOkg8JgOPlp6X8km/tFKB8=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gOOa5kJzm8/nCeJZ1kRyc8IaeWbbPxmoOiXwEMpLeblt930d2O1r+Pc67c35Dq6Tk
-         8yiYe1H/+piM2Uk4WNVrpeyMdfZivFXOG59c166e9xMYmZrKH//7HAWttZEXGATLsl
-         TKn8DqcWsFvRpvnyw44vATsWfAuga7WOdfxdzCuA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1Obb-1hcEsP0fLn-012pJA; Mon, 09
- Dec 2019 20:49:02 +0100
-Date:   Mon, 9 Dec 2019 20:48:45 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ben Keene <seraphire@gmail.com>
-cc:     Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 00/13] git-p4: python3 compatibility
-In-Reply-To: <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
-References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com> <20191207010938.GA75094@generichostname> <CABvFv3+viMXJO0z5HAQbCya7MU9tWd7P_LxUhu66T74XGN99yA@mail.gmail.com> <b21d153a-02f9-b9a1-7388-59b5a882d4f2@gmail.com> <CABvFv3Jf9i06OmBqOC2zfS+7Sm88PRYa19_rB8rELtMoN2E8CQ@mail.gmail.com>
- <afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com> <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726771AbfLIURR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 15:17:17 -0500
+Received: from mail-oi1-f169.google.com ([209.85.167.169]:37501 "EHLO
+        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726647AbfLIURP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 15:17:15 -0500
+Received: by mail-oi1-f169.google.com with SMTP id x195so7600984oix.4
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:17:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ucK68VQu71jQfeoxS7dUtE1Gw8jggTKGZw26PzL9RJY=;
+        b=YK5Veo+OBd58Pb79b9BEUwzTUik/Uy2CsA2K8j0ILqcDY9QEf+a5Lbhx8+uoLNZmJb
+         bKW2vyKmhF0/BG1EUmSox9g8j2IwNp+RSWCga+tfvxtsVJU/v6XFTBSPLwW1TxECwXlz
+         IF64COCTaHbCQZBC9BUQnYBG/wWn7LIlpNtZrRzjb5HBdS6MK5WwPOfwPjSoly+a65HK
+         fcq137H2I1XA7jkAoJa2oyXhc0BjxEx5L3aPwLiIRflCjUlJxgDKyXqijVaD673LZKev
+         P5r0LEO9U0PqMHBLgiXNUa8Kqj+sHm1mNoADNS44Mec2XaAB0XlGDR+4KzGHFs1DgTdS
+         dMMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ucK68VQu71jQfeoxS7dUtE1Gw8jggTKGZw26PzL9RJY=;
+        b=RRARHqlt7dDQjgORAj6RUMmCTXBDmCmpQWWgHuZJ59xhB3e4K/y5yRAq9r1Pz8q3/0
+         wNltMbH84eGPDZtmws3hXkX06c0ovFQmo4T8nb90YlJsYga1HRB/IeLTPLn24wmGVLms
+         Of2fHRnYaKQ9XxA+o3O3qLZ2nvau5tqXvZDB71hOLHKSUqaaZQ/Jxn9gmwmKToo2IX5U
+         mfA8xjxYmSyvtH1rK7MvmylEIUp0Z2ROZ6h1m/G14WkWDcIN5LXUcelCyiuQP5so0PyW
+         7WKJb2qQegv7OY98SMkjQDoEsn6h3nnf7i2BWcanNO+8u+Jbgn2x/2s5w3AsGp0Q9ueq
+         4uzg==
+X-Gm-Message-State: APjAAAXcGSrTMXMvnCOCEZSKTz7OFGmDsRZXu0nFW/8gx+H1xQL9xWjL
+        H6zn/ycL4oWj1s5eaIJjlXU=
+X-Google-Smtp-Source: APXvYqxJqQ17XxmldJUhViGowdfbQ0E/x39jIhzFsVKL0150Vd+upiM+ARBP+eqX4qmSZ3qn95CjnA==
+X-Received: by 2002:a54:4e8d:: with SMTP id c13mr831235oiy.27.1575922634939;
+        Mon, 09 Dec 2019 12:17:14 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id l128sm408360oif.55.2019.12.09.12.17.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Dec 2019 12:17:14 -0800 (PST)
+Subject: Re: Git Test Coverage Report (Mon. Dec 9)
+From:   Derrick Stolee <stolee@gmail.com>
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <903fcdea-6f08-caf5-77a4-2e82b8585edf@gmail.com>
+ <e47b77b4-7b7a-3d59-9e24-934528c5e297@web.de>
+ <CAPig+cTrAsn64S0Qm7PdJVFhsquVA3+ugwngLpo1S4yUjMcrGA@mail.gmail.com>
+ <58a3e2c4-4c5a-e276-f74e-128438f2ab40@gmail.com>
+ <a9c2c409-778c-48e2-e6d5-229eab45a707@web.de>
+ <676dc5c1-5823-ac83-878b-995f3793bfb8@gmail.com>
+Message-ID: <944d66f0-7745-b70f-bec8-1d3610e7b8d0@gmail.com>
+Date:   Mon, 9 Dec 2019 15:17:12 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:X8AvYc4iGz5Vv50Nr3JkZqs4p9tPh5dEK9KCwyYfr7+4eMAq0Jr
- qc0Z9ZjAcPREUqjsvXY7agob4ZM0Mus17RkTH6/c1IKHfKb1TuRnGG+Ps0sNcYVn4Ls4IQ+
- 6RIUupqpl5hdV2sP1qayv5viwjZLBPRQc9GK3fS6ZkeaJP3ssOvoXTl21iThKexSHChyOBC
- rXXwnB5pjmUJtssQejqVQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9MMxQ2taoxQ=:wl7Gim9BEuB6lYzR1h+EcN
- 4RI2bNoXFVIXix0XNsBf4Oi5wf3tysqoBqwAuQHHdNUX1ecn4ekBWOaP+wJty2T9SagX7FYaq
- iBueLQ7ahHQfNWTZSWI6E9Q+MEnoAIXpBnbGNPYtT6sy4mY4YGg6106G0vNeuBiAFGKqePFX1
- jNOyHz23LcU/EqdaUZ+rJjmJZqmWb864PK03h3AgG/kTj8klrGdioZW62gS6lBSJnENTKgiYl
- CDfvm09Rc+wZ3QtDvYT2bQWmVJD+nmQfGHFJGOli24C/p1ft4GHWlUCVGOr2Sv0K0ncPjWZ3n
- cQrOmhUlzMr8P6kWHI/bHZJ18PhM2IXmj8O44p0EME+o0zMP+ZNxl8p7W00D6ZG6d2RiECfhr
- zbCAiB9cy40liTovcgs/zy5l4GQb0n7trFYX3zTR8LN3ffnNsQCEQYSBlqtB8uNGyJ2aWusrx
- gRrwjhQDHyLA53wU1qg2j22bsxKpU2ZjibHmRZfH3Up4o1V9OXvY5Fm7Yb8AABowAj4O3KrF2
- fYGOp1PJjii1TXnLgt82UkFXVacG2jALLvhuLCjF+XLtNVHzIuMMVJeFAYz/ePyfzDrWEQdgQ
- tIXZ8LhH2gjXRIx7zEMTCdq7CmEzw/cawUDjg5btO7UrxQkRCVqDx1mOmTU4/28UJLpK9FoQW
- kdsw0HQVtWp/0pii5R8R9mUM0LqU5W16HiP7QSxArdVYuX2VG+1ekBKyBN6/PZNN8ZtNl7TQV
- BhNSHWSg/uAgqdXZyYWs4sPWwbVr2TJUu63faMjuAI3AR07MuO85lpyXTgx25YRluTfMDoNBP
- 4sdR+GMftrL2VIF/8ICqyLNyYhgazxmhteEDfeaZPKZzUSoAFZfoL+bW00V68UGWVuzYd1ozH
- PY7D3A6Ha5nwqceXcs/9duVKx6id14yy+oCT8z+lwTQwG2rgG2j0rx3qJN1/f1+tZO7yZZlhX
- UqRh5spCpsLEFRH4/ryioEQSt4nFpRS2I8RqLHtCrtvG96V3jicdWvwVwyn2HPqfEVMq1T4rd
- k2CnJEH5rxbf7JdpqQcAVKhheX+9E+rESthT3ZjC3SypGlFwShDEy+3VA9F+3rp9hTIoaZ1HH
- iON/9rE36Xbgb8+JjNM5gOGPNK/zVkeSri+faZF0BEf/TjI8DyWemwCDPkgjLkrydt20tuqOx
- tcStLC1matNO0tar2Xvj/ldIJ2VcpZURyrchm1iHVONqI2vHpzSqir8e70Qcv5ELL6nDKijpV
- DQ02HBr9a1et6Bi/nCQEbmEdH5UWe32yed4yhiV1i4RGjxVsPQ2Ly1znr9k4=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <676dc5c1-5823-ac83-878b-995f3793bfb8@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben,
+On 12/9/2019 1:23 PM, Derrick Stolee wrote:
+> On 12/9/2019 1:10 PM, René Scharfe wrote:
+>> Am 09.12.19 um 18:44 schrieb Derrick Stolee:
+>>> On 12/9/2019 12:19 PM, Eric Sunshine wrote:
+>>>> On Mon, Dec 9, 2019 at 12:11 PM René Scharfe <l.s.r@web.de> wrote:
+>>>>> Am 09.12.19 um 16:36 schrieb Derrick Stolee:
+>>>>>> René Scharfe  0bb313a5 xdiff: unignore changes in function context
+>>>>>> xdiff/xemit.c
+>>>>>> 0bb313a5 223)        xchp->i1 + xchp->chg1 <= s1 &&
+>>>>>> 0bb313a5 224)        xchp->i2 + xchp->chg2 <= s2)
+>>>>>> 0bb313a5 225) xchp = xchp->next;
+>>>>>
+>>>>> Hmm, line 223 *is* exercised by t4015.85.
+>>>>
+>>>> This, along with Dscho's[1] review of an earlier coverage report,
+>>>> makes one wonder if there is some off-by-one error in the reporting
+>>>> logic, such that it is reporting the wrong lines as not covered.
+>>>
+>>> This is definitely possible. I'll see if I can locate the bug in
+>>> my report-generation code.
+>>>
+>>> However, line 222 is here [1]
+>>>
+>>> 	while (xchp != xch &&
+>>>
+>>> So if this is always false, then the rest of the while condition
+>>> will not be tested, nor will the body (line 225: xchp = xchp->next;).
+>>
+>> 0bb313a5 also added lines 228 and 229, which are not in the report, so
+>> xchp != xch must be true at least once (it is, in t4015.85).
+>>
+>> 222)				while (xchp != xch &&
+>> 223)				       xchp->i1 + xchp->chg1 <= s1 &&
+>> 224)				       xchp->i2 + xchp->chg2 <= s2)
+>> 225)					xchp = xchp->next;
+>> 226)
+>> 227)				/* If so, show it after all. */
+>> 228)				if (xchp != xch) {
+>> 229)					xch = xchp;
+> 
+> Thanks for pointing out that context.
+> 
+> My guess is that gcov is marking the line as uncovered because the &&
+> operator is on that line. I'm testing [1] by breaking style conventions
+> and using the following:
+> 
+> 				while (xchp != xch
+> 				       && xchp->i1 + xchp->chg1 <= s1
+> 				       && xchp->i2 + xchp->chg2 <= s2)
+> 					xchp = xchp->next;
+> 
+> [1] https://dev.azure.com/git/git/_build/results?buildId=1453
 
-On Mon, 9 Dec 2019, Ben Keene wrote:
+Confirmed:
 
-> So, I just attempted to run a base case on windows: git p4 clone //depot=
- and
-> I'm getting an error:
->
-> Depot paths must start with "//": /depot
+target	fork/test-gcov
+base	e0522318ac56aeb88f14e72ba2db25912e9972de
 
-You started this in a Bash, right?
 
-The Git Bash has the very specific problem that many of Git's shell
-scripts assume that forward slashes are directory separators, not
-backslashes, and that absolute paths start with a single forward slash. In
-other words, they expect Unix paths.
+Uncovered code in 'target' not in 'base'
+--------------------------------------------------------
 
-But we're on Windows! So the MSYS2 runtime (which is the POSIX emulation
-layer derived from Cygwin which allows us to build and run Bash on
-Windows) "translates" between the paths. For example, if you pass `/depot`
-as a parameter to a Git command, the MSYS2 runtime notices that `git.exe`
-is not an MSYS2 program (i.e. it does not understand pseudo-Unix paths),
-and translates the path to `C:/Program Files/Git/depot`.
+xdiff/xemit.c
+ddd5ad00 224)        && xchp->i2 + xchp->chg2 <= s2)
 
-However, your call has _two_ slashes, right? That is unfortunately MSYS2's
-trick to say "oh BTW keep the slash, this is not a Unix path".
+Commits introducing uncovered code:
+Derrick Stolee	ddd5ad00 TEST: switch position of &&
 
-To avoid this, just set `MSYS_NO_PATHCONV`, like so:
 
-	MSYS_NO_PATHCONV=3D1 git p4 clone //depot
+For future reference: having the "&&" at the end of the
+line will mark the line as uncovered if the right-hand
+side of the && is uncovered. The same holds for other
+short-circuit operators.
 
-This behavior is documented in our release notes, by the way:
-https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.md=
-#known-issues
-
-Ciao,
-Johannes
+Thanks,
+-Stolee
