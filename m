@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D852C04E30
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA6DC43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:59:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A3022073D
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F23A120726
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 10:59:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OYglOzun"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cxu3SEd0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727541AbfLIKjl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 05:39:41 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46158 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727466AbfLIKjl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 05:39:41 -0500
-Received: by mail-wr1-f65.google.com with SMTP id z7so15510768wrl.13
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 02:39:39 -0800 (PST)
+        id S1727237AbfLIK70 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 05:59:26 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35716 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727143AbfLIK7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 05:59:25 -0500
+Received: by mail-wr1-f66.google.com with SMTP id g17so15705636wro.2
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 02:59:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=dBmT2y5FlZ/1ndfuePBW6QOP3veQTqg4gA6WSvgEqvs=;
-        b=OYglOzunDOlnG4HhiUrLpHKmb1G8fkjzfdxsgqJgMrOoH6VrLcN5WVpcaeCA+HgXoH
-         BEhCWE5vuMN0PgZS/J3reKdh0z25iR4BGosL30sWsndwmlhc5QVmJ0eDcGIGxyKsthmH
-         K8LdBBytXg7b2rEtmnH/gKZN7rfw4b5h7kXxO78Gm8tMsl84caC+lo/vgET37hiYX1R6
-         tcYceXHZ/OKZUXEv3dfCha5ANBDN50Js+fEcykmb4ceFLmTguDhuIRATnVgjvqjdec7z
-         BtRTh2WvIj9vy/y06PpLg6/J08AXnJaOeYaLJda0Z67i3vDi2ukINKNxbmzZnwuOhUia
-         XYjw==
+        b=Cxu3SEd0/AzsKgL1a4bpBTKbZrc9FvM7djBd7z307lV5y4CAWIT/BVfLGHc+3LF4d6
+         n6l47sk5JZY976ue0pohMvPvp2t+7Lv+7lWwJVk1aSEmEG/jLVdrCnt2evcDxqTdFxz4
+         UEek01cnHakW3yKY2R2+OuF/ICbTPtAbvdrUS7LCF7Gvz5n4uQUAWi50ZXuZN8QVGTdn
+         hZIXap7ogDCRDJAhytSIQocshPUpSgJZtrmQU9tAvG/SAc/susglqmlbkTXOqlpVjD9U
+         CiDL9Ffec7+5CMCiszGioN4JFB+zouzG6JfkPo1yjcuCx8Pq4uCNX3tqAOPlpp5cr47R
+         CQNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=dBmT2y5FlZ/1ndfuePBW6QOP3veQTqg4gA6WSvgEqvs=;
-        b=JlyL7nxKcJLmEKmcAHWAi9Bq2wfyfhXHxGXs/Kk9jkLwHWEsnvy8B57ZYcE8ndqAT9
-         5mV44QDiGiU8yAbEP7XS72fvIkOSMvJKfhjPkim7ilFJJds3bL/EI3JnG66Sl3xRkXwi
-         /MGEW1dL0F/blbPm438frwbUW/KTLuFlvqybEcqvlLdasGtzg+tCB9k8cPKVNJJLoV+P
-         EwS4TV6oXJekbAChFqZPjts/bWT9jc4gJ9FomEZ5JGjYdBOsrpSHuv4ijEQI6ggdeMdS
-         r8kqROoGmuqPdEMT3qUhgUcKlbg4jVkei1fJJDIQYrsTwwbSJMlNHWtBXzl8bTA6JGgY
-         4EtQ==
-X-Gm-Message-State: APjAAAWFccI+yk1l4xFwQIcT3Lqz/PDEr4u9iDw6zvvZlRfwXkDxXfwV
-        suSoA8wkToEtgY8++Q4rLgLxBZ8ucP8=
-X-Google-Smtp-Source: APXvYqyvj0SMn4/F2uT+orGqt/oTJCP2g5cVuOX5zXhiJYUHw0a7Qk66VfhHa+Lb25cVB6k1BfOCxQ==
-X-Received: by 2002:a05:6000:12:: with SMTP id h18mr1245069wrx.87.1575887978820;
-        Mon, 09 Dec 2019 02:39:38 -0800 (PST)
+        b=IWI7FHlWetomB5GuMQgqSRv1Fn7fEYQ+TcqoOyIUrvPqaIHCo1wRGxaZpw9q6GSmmj
+         i/PihjtpylUBdMq6FKKuCt9wvbq2E8I1wYsxQxE5hh17BtFxyLecftBzggbUEXX5HHAE
+         qd/o/8NLWLBRwfMiqxZc860mFGizVsoBnxLm00xDkBvc5KpQOsEvYCyL9nOakKBHENGo
+         td7BC1cjoFJg2Ack+0UK0VbPNnFZmoywntefG/dmhyL1JEaTFqhFa6Gr7OkCPo0ySU+n
+         27kxNMinRp4dgeocQ5epAQQfq9gR9ovmTHi7KFulnqj2yfC/dU6ZCKc9JUnlgL6gmX4d
+         czng==
+X-Gm-Message-State: APjAAAWFyA4VVpfIzupjvxyIm/Uv3u9+8E+axoP2fBi20ud3l6StG/eL
+        NJN3dxjpo0swzoPlP7VkYHvQ5Go53PI=
+X-Google-Smtp-Source: APXvYqwxN6dyVeL90T9DbnSq0pFEw8ZZdbBSeZdco4Tqg7g6mG99WpQRvuOGvYrU1mB5/OVnsF40Kg==
+X-Received: by 2002:a5d:4044:: with SMTP id w4mr1440568wrp.322.1575889163455;
+        Mon, 09 Dec 2019 02:59:23 -0800 (PST)
 Received: from localhost.localdomain ([139.47.114.52])
-        by smtp.gmail.com with ESMTPSA id s82sm13138789wms.28.2019.12.09.02.39.37
+        by smtp.gmail.com with ESMTPSA id 2sm27995658wrq.31.2019.12.09.02.59.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2019 02:39:38 -0800 (PST)
+        Mon, 09 Dec 2019 02:59:22 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
@@ -62,8 +62,8 @@ Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Miriam Rubio <mirucam@gmail.com>
 Subject: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-use
-Date:   Mon,  9 Dec 2019 11:39:23 +0100
-Message-Id: <20191209103923.21659-1-mirucam@gmail.com>
+Date:   Mon,  9 Dec 2019 11:56:47 +0100
+Message-Id: <20191209105647.21855-1-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.0 (Apple Git-122.2)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
