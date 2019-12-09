@@ -6,47 +6,44 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F5CFC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFAB7C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:36:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 25E132077B
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:30:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A91CA207FD
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727437AbfLIOaS convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 9 Dec 2019 09:30:18 -0500
-Received: from smtp.msys.ch ([46.175.8.2]:4727 "EHLO sleipnir.msys.ch"
+        id S1727529AbfLIOgw convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 9 Dec 2019 09:36:52 -0500
+Received: from smtp.msys.ch ([46.175.8.2]:29786 "EHLO sleipnir.msys.ch"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726687AbfLIOaS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 09:30:18 -0500
-X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Dec 2019 09:30:17 EST
+        id S1727403AbfLIOgv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 09:36:51 -0500
 Received: from mail.msys.ch (smtp.msys.ch [46.175.8.2])
-        by sleipnir.msys.ch (8.14.3/8.14.3) with ESMTP id xB9FNJwD018007
+        by sleipnir.msys.ch (8.14.3/8.14.3) with ESMTP id xB9F6xfp008536
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Mon, 9 Dec 2019 15:23:20 GMT
+        Mon, 9 Dec 2019 15:07:00 GMT
 Received: from [46.175.8.181] ([46.175.8.181])
         (authenticated bits=0)
-        by mail.msys.ch (8.14.3/8.14.3) with ESMTP id xB9FNI1f020765
+        by mail.msys.ch (8.14.3/8.14.3) with ESMTP id xB9F6x1a016647
         (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Mon, 9 Dec 2019 15:23:19 GMT
+        Mon, 9 Dec 2019 15:06:59 GMT
 Content-Type: text/plain;
         charset=us-ascii
 Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
 Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
  315a84f9aa0e2e629b0680068646b0032518ebed
 From:   Marc Balmer <marc@msys.ch>
-In-Reply-To: <e19d7992acf0efc990aea356716a3afa34e13cb7.camel@swri.org>
-Date:   Mon, 9 Dec 2019 15:30:07 +0100
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+In-Reply-To: <3b9408a9bd87ea488c4a6b9bc2583aba56ce3949.camel@swri.org>
+Date:   Mon, 9 Dec 2019 15:13:47 +0100
+Cc:     "ns@nadavsinai.com" <ns@nadavsinai.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
         "gitster@pobox.com" <gitster@pobox.com>,
-        "ns@nadavsinai.com" <ns@nadavsinai.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>
 Content-Transfer-Encoding: 8BIT
-Message-Id: <1676A670-C8B7-482B-B330-B03B35CB6B5E@msys.ch>
+Message-Id: <E8FC0E5F-DD83-4470-B068-21865ECA84D2@msys.ch>
 References: <CANxxO2MGJ2Wo6Y-33KzzPXz6vktRACk0Oi2Y6o_s-cDFRhG7+Q@mail.gmail.com>
  <3b9408a9bd87ea488c4a6b9bc2583aba56ce3949.camel@swri.org>
- <E8FC0E5F-DD83-4470-B068-21865ECA84D2@msys.ch>
- <e19d7992acf0efc990aea356716a3afa34e13cb7.camel@swri.org>
 To:     "Strain, Roger L." <roger.strain@swri.org>
 X-Mailer: Apple Mail (2.3601.0.10)
 X-SMTP-Vilter-Version: 1.3.6
@@ -56,42 +53,14 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am not familiar with the source code, so I can not send in that revert.  I can, however, say that I am grateful to whomever does it ;)
+Roger,
+
+I am all for reverting it. if that does not cause any other regressions or headaches (or both...)
 
 - Marc
 
 
-> Am 09.12.2019 um 15:18 schrieb Strain, Roger L. <roger.strain@swri.org>:
-> 
-> As I said, I'm using a custom script here. I don't know if anybody else
-> benefited from the change and hasn't said anything, but I won't object
-> to someone submitting that revert.
-> 
-> -- 
-> Roger
-> 
-> -----Original Message-----
-> From: Marc Balmer <marc@msys.ch>
-> To: "Strain, Roger L." <roger.strain@swri.org>
-> Cc: ns@nadavsinai.com <ns@nadavsinai.com>, git@vger.kernel.org <
-> git@vger.kernel.org>, Johannes.Schindelin@gmx.de <
-> Johannes.Schindelin@gmx.de>, gitster@pobox.com <gitster@pobox.com>, 
-> pclouds@gmail.com <pclouds@gmail.com>
-> Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
-> 315a84f9aa0e2e629b0680068646b0032518ebed
-> Date: Mon, 09 Dec 2019 15:13:47 +0100
-> 
-> Roger,
-> 
-> I am all for reverting it. if that does not cause any other regressions
-> or headaches (or both...)
-> 
-> - Marc
-> 
-> 
-> 
-> Am 09.12.2019 um 15:11 schrieb Strain, Roger L. <roger.strain@swri.org>
-> :
+> Am 09.12.2019 um 15:11 schrieb Strain, Roger L. <roger.strain@swri.org>:
 > 
 > I haven't been able to find anything relating to the issue, but I also
 > haven't had a repo that exposes the problem to test more thoroughly
@@ -101,13 +70,7 @@ I am not familiar with the source code, so I can not send in that revert.  I can
 > That being said, if the community feels it would be better to revert
 > the changes that were introduced, I won't object. I've had to further
 > customize the script for our internal use, and those changes aren't
-> something that would be useful for the public at large. (A few changes
-> relate to the presence/absence of a specific file, which I certainly
-> wouldn't expect anyone else to have.) Short story is we're going to
-> have to use a custom script going forward, so keeping or reverting the
-> changes here make no difference to us. I still feel that the changes
-> which were made make the script more correct, but clearly there's some
-> undiagnosed logic error somewhere.
+> something that would be useful for the public at large. (A few changes relate to the presence/absence of a specific file, which I certainly wouldn't expect anyone else to have.) Short story is we're going to have to use a custom script going forward, so keeping or reverting the changes here make no difference to us. I still feel that the changes which were made make the script more correct, but clearly there's some undiagnosed logic error somewhere.
 > 
 > Honestly, I'm surprised we didn't see this particular issue show up on
 > our own repo; it's ridiculously large and complex. At least if it had,
@@ -166,9 +129,9 @@ I am not familiar with the source code, so I can not send in that revert.  I can
 > (a639e09d2cbe1ea1149c080c1c95b8b018340ae2784d29b3cee1dee2df4b37)
 > C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 757:
 > 8853 Done                    eval "$grl"
->     8854 Segmentation fault      (core dumped) | while read rev
+>      8854 Segmentation fault      (core dumped) | while read rev
 > parents; do
->   process_split_commit "$rev" "$parents" 0;
+>    process_split_commit "$rev" "$parents" 0;
 > done
 > 
 > I downgraded git to 2.19.0-windows.1 and it works now.
@@ -178,9 +141,6 @@ I am not familiar with the source code, so I can not send in that revert.  I can
 > Nadav Sinai
 > Web Tech lead
 > Philips-Algotec
-> 
-> 
-> 
 > 
 > 
 
