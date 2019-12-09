@@ -2,88 +2,120 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42462C43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41D5EC43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D34922068E
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:30:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DBA220637
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pivPMi00"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmcmzYRt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbfLIUag (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 15:30:36 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53623 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726354AbfLIUaf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 15:30:35 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8ED083F418;
-        Mon,  9 Dec 2019 15:30:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8eU5kCBLcGFUDgleB6Sj2CvBlR8=; b=pivPMi
-        00pkziohaUEZDGMsywzKz/MX/vwa9xYGG2a+sgGle1vLDMn4qwS08sW9gFoI0nQh
-        OmV0fxdu0LeQmCIGtkHJQJGpB5BAuN1VuOpoYOl8TYjY/OJk+j6kpTJnkw+CPx0M
-        ZAK7w0Ols7J20ZNrBO2fBzw/Q7VGJLFQUWXO0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=QLWdOPVkJeYaeBsdomyEyPFxWjVti7z0
-        7icP5o+4SgWZi/BGUKLfOqUfv16tR1QUOQwZhPjdlWop5eGfbk+9DL1w2sRCNjFF
-        Sx01imKffaexPdhHdSppXdBWjI4k5GJv1/6cOnbUR4qJf4h/FUQ73qi5Z5bT2sGb
-        wGUhAmIwYm4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 869733F416;
-        Mon,  9 Dec 2019 15:30:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DEE823F415;
-        Mon,  9 Dec 2019 15:30:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] l10n: minor case fix in 'git branch' '--unset-upstream' description
-References: <20191208092647.7588-1-dimitriy.ryazantcev@gmail.com>
-Date:   Mon, 09 Dec 2019 12:30:31 -0800
-In-Reply-To: <20191208092647.7588-1-dimitriy.ryazantcev@gmail.com> (Dimitriy
-        Ryazantcev's message of "Sun, 8 Dec 2019 11:26:47 +0200")
-Message-ID: <xmqq4ky9utqw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726595AbfLIUrt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 15:47:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:52614 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726483AbfLIUrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 15:47:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p9so815479wmc.2
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:47:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=EAx3crMgQ1AToqU+KuMPHqZBnV7nxJn/qZTgDLIQvr0=;
+        b=SmcmzYRtvs+o0tNlXIcjg7jWK6IFwUGzIMuT52Ym2mjoYgYCqkzzaiJFyGDwRrkQsQ
+         feVbp0pb3lqtTC1sxExd816GIRyq0V9bZPtSby6jgihxkBmUM3xIlncS1VWW28YM0bP/
+         NUyEjHq/NzlJo4O/dVWBfuzdJt+UEEQtt6M2O1NERKfVGYXZNfGgtgYYMadNfc3ZAde3
+         ImRObXeWOAdkzKWluKa161NMBA36Wc7cEK+VI4c0GzmJ861Nw9WGw0r+eDTHIbpt/CDI
+         h950W/kKvpOpEUJzWhNcE7XIiIqEh8KpAtUiZJ3bZvYmZf4LhnNxXFOnx7QlZjQpV6Vk
+         aHoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=EAx3crMgQ1AToqU+KuMPHqZBnV7nxJn/qZTgDLIQvr0=;
+        b=jOx3C1hkX2BpQDnxQejm1Gx6Bgc1duADpMCzUj6Wr62AtlThF+5xM6YzXieEO9LA1V
+         Pmm0Hm7eosqHwI0ZM2+UzzPeVWchzvZCiCvC/N2vVmNJV92ZYdvF85RZcQX+vc2owhlE
+         BJTA0VQcj3kD8HoEJwoJrSnCy7LJPSF/1XcWzTj1eCPyP9SNeqm5jk+8p2+uYlplyevp
+         in3xWWrSa9s9aDXFc2yR4ahoA49kp6LunWUQoA2V0Hc6DgyYuI0LFlf9jIegh+lzmz54
+         jvekSyi18Flg16VNBU0O2rJcnj6AbXiftddtotQ/We35uKD78VL/XJnbz0DQu9p0Vaq9
+         4Gog==
+X-Gm-Message-State: APjAAAVyvxZd8tSNOBTTwRC/bb9z9/dDUkJo/v6gavwGeTM29PvEayI3
+        koshEa4rjNo9HM191WJCnCoeKpwk
+X-Google-Smtp-Source: APXvYqx25NbAjZTaiz1pThCWC+JJkCnJ/tC7GW8e9tsPf+BJvn/5e3NizvrXiCaL895GGrBsjjG49Q==
+X-Received: by 2002:a1c:20d6:: with SMTP id g205mr1034434wmg.38.1575924467038;
+        Mon, 09 Dec 2019 12:47:47 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a184sm588483wmf.29.2019.12.09.12.47.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 09 Dec 2019 12:47:46 -0800 (PST)
+Message-Id: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Dec 2019 20:47:37 +0000
+Subject: [PATCH 0/8] Directory traversal bugs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BFA29E22-1AC2-11EA-9FCD-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com> writes:
+This series fixes multiple fill_directory() bugs, one of them new to 2.24.0
+coming from en/clean-nested-with-ignored-topic, the rest having been around
+in versions of git going back up to a decade. There is also one testcase it
+documents but does not fix; I tracked the code for that testcase far enough
+to determine that fill_directory() and its callees were not at fault; rather
+post-fill_directory() processing done by ls-files eventually calls
+git_fnmatch() and it incorrectly filters out one of the returned paths. I
+suspect there's a whole can of wildmatch() worms to be found following that
+thread, so I just opted to document my findings next to that testcase.
 
-> Signed-off-by: Dimitriy Ryazantcev <dimitriy.ryazantcev@gmail.com>
-> ---
->  builtin/branch.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 2ef214632f..d8297f80ff 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -624,7 +624,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  		OPT_SET_INT_F(0, "set-upstream", &track, N_("do not use"),
->  			BRANCH_TRACK_OVERRIDE, PARSE_OPT_HIDDEN),
->  		OPT_STRING('u', "set-upstream-to", &new_upstream, N_("upstream"), N_("change the upstream info")),
-> -		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("Unset the upstream info")),
-> +		OPT_BOOL(0, "unset-upstream", &unset_upstream, N_("unset the upstream info")),
->  		OPT__COLOR(&branch_use_color, N_("use colored output")),
->  		OPT_SET_INT('r', "remotes",     &filter.kind, N_("act on remote-tracking branches"),
->  			FILTER_REFS_REMOTES),
+See https://lore.kernel.org/git/87fti15agv.fsf@kyleam.com/ for the report
+spawning this series.
 
-Consistency is good.  Thanks.
+Some comments about notable items in this series:
+
+ * Patch 2: Revert a previous patch which fixed status --ignore behavior
+   incorrectly and which complicates code that we will need to significantly
+   restructure in order to fix all the issues we want to address (patches 6
+   & 7 provide the right fix)
+ * Patch 4: a fix to my en/clean-nested-with-ignored-topic, fixing the new
+   bugs
+ * Patches 6&7: the fixes to the old issues (Other patches were adding
+   testcases, code cleanups, comment cleanups, etc.)
+
+CC: blees@dcon.de, gitster@pobox.com, kyle@kyleam.com, sxlijin@gmail.com
+
+Elijah Newren (8):
+  t3011: demonstrate directory traversal failures
+  Revert "dir.c: make 'git-status --ignored' work within leading
+    directories"
+  dir: remove stray quote character in comment
+  dir: exit before wildcard fall-through if there is no wildcard
+  dir: break part of read_directory_recursive() out for reuse
+  dir: fix checks on common prefix directory
+  dir: synchronize treat_leading_path() and read_directory_recursive()
+  dir: consolidate similar code in treat_directory()
+
+ dir.c                                         | 174 +++++++++++-----
+ ...common-prefixes-and-directory-traversal.sh | 193 ++++++++++++++++++
+ t/t7061-wtstatus-ignore.sh                    |   7 +-
+ 3 files changed, 323 insertions(+), 51 deletions(-)
+ create mode 100755 t/t3011-common-prefixes-and-directory-traversal.sh
+
+
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-676%2Fnewren%2Fls-files-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-676/newren/ls-files-bug-v1
+Pull-Request: https://github.com/git/git/pull/676
+-- 
+gitgitgadget
