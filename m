@@ -2,107 +2,113 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C731C43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD31FC43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:49:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5734C206E0
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:47:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADDC7206E0
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 19:49:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UUjdNEID"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gOOa5kJz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbfLITrh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 14:47:37 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52901 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726342AbfLITrh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 14:47:37 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3F47F9F1BB;
-        Mon,  9 Dec 2019 14:47:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=e7C7J5qynm9EqM+U7d8BFLGfgV0=; b=UUjdNE
-        ID5jy7LVTmv+RgGfGolBKjk8wywp04/q325OHsEOKAj6dyY5jHiO04AwRWoAY5xp
-        H+c29aqbVTVs9yKccE2drUyzL7LLNimfooX2dGqvT4Fs3kpLXp/vXWa9BrkOpWMq
-        U78JUjnVYUR4+G1kLWKAgD2lIzP+1C9Vq0TMs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XYBpj64skntYZ17gjHbBkHNB7Bt133nW
-        Idrb7BZJYUsPdUIfiKqWcrmFYXkfwsdeQN7ACEO2iZnJA2jeu3lPK1GL3t9Mj2Aw
-        +zT5f8Hg3E/7qVV/iynjFTh9kswPXzUq7MNOc8rgCLxsM6/dZJ8ACa/aV4QcIbNk
-        lnkBySlFNpE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A9449F1B9;
-        Mon,  9 Dec 2019 14:47:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 526FC9F1B8;
-        Mon,  9 Dec 2019 14:47:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH v5 03/15] git-p4: select P4 binary by operating-system
-References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
-        <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
-        <e425ccc10fbc1f5e135eb59ffc84626f9d0ae4ff.1575740863.git.gitgitgadget@gmail.com>
-Date:   Mon, 09 Dec 2019 11:47:30 -0800
-In-Reply-To: <e425ccc10fbc1f5e135eb59ffc84626f9d0ae4ff.1575740863.git.gitgitgadget@gmail.com>
-        (Ben Keene via GitGitGadget's message of "Sat, 07 Dec 2019 17:47:31
-        +0000")
-Message-ID: <xmqqd0cxuvql.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726602AbfLITtF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 14:49:05 -0500
+Received: from mout.gmx.net ([212.227.17.22]:40739 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726342AbfLITtE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 14:49:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1575920942;
+        bh=wWc2RTvdgHGPUSBtuY5qUqOkg8JgOPlp6X8km/tFKB8=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=gOOa5kJzm8/nCeJZ1kRyc8IaeWbbPxmoOiXwEMpLeblt930d2O1r+Pc67c35Dq6Tk
+         8yiYe1H/+piM2Uk4WNVrpeyMdfZivFXOG59c166e9xMYmZrKH//7HAWttZEXGATLsl
+         TKn8DqcWsFvRpvnyw44vATsWfAuga7WOdfxdzCuA=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1Obb-1hcEsP0fLn-012pJA; Mon, 09
+ Dec 2019 20:49:02 +0100
+Date:   Mon, 9 Dec 2019 20:48:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ben Keene <seraphire@gmail.com>
+cc:     Yang Zhao <yang.zhao@skyboxlabs.com>,
+        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 00/13] git-p4: python3 compatibility
+In-Reply-To: <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
+References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com> <20191207010938.GA75094@generichostname> <CABvFv3+viMXJO0z5HAQbCya7MU9tWd7P_LxUhu66T74XGN99yA@mail.gmail.com> <b21d153a-02f9-b9a1-7388-59b5a882d4f2@gmail.com> <CABvFv3Jf9i06OmBqOC2zfS+7Sm88PRYa19_rB8rELtMoN2E8CQ@mail.gmail.com>
+ <afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com> <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BD7DCFFA-1ABC-11EA-BFCF-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:X8AvYc4iGz5Vv50Nr3JkZqs4p9tPh5dEK9KCwyYfr7+4eMAq0Jr
+ qc0Z9ZjAcPREUqjsvXY7agob4ZM0Mus17RkTH6/c1IKHfKb1TuRnGG+Ps0sNcYVn4Ls4IQ+
+ 6RIUupqpl5hdV2sP1qayv5viwjZLBPRQc9GK3fS6ZkeaJP3ssOvoXTl21iThKexSHChyOBC
+ rXXwnB5pjmUJtssQejqVQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9MMxQ2taoxQ=:wl7Gim9BEuB6lYzR1h+EcN
+ 4RI2bNoXFVIXix0XNsBf4Oi5wf3tysqoBqwAuQHHdNUX1ecn4ekBWOaP+wJty2T9SagX7FYaq
+ iBueLQ7ahHQfNWTZSWI6E9Q+MEnoAIXpBnbGNPYtT6sy4mY4YGg6106G0vNeuBiAFGKqePFX1
+ jNOyHz23LcU/EqdaUZ+rJjmJZqmWb864PK03h3AgG/kTj8klrGdioZW62gS6lBSJnENTKgiYl
+ CDfvm09Rc+wZ3QtDvYT2bQWmVJD+nmQfGHFJGOli24C/p1ft4GHWlUCVGOr2Sv0K0ncPjWZ3n
+ cQrOmhUlzMr8P6kWHI/bHZJ18PhM2IXmj8O44p0EME+o0zMP+ZNxl8p7W00D6ZG6d2RiECfhr
+ zbCAiB9cy40liTovcgs/zy5l4GQb0n7trFYX3zTR8LN3ffnNsQCEQYSBlqtB8uNGyJ2aWusrx
+ gRrwjhQDHyLA53wU1qg2j22bsxKpU2ZjibHmRZfH3Up4o1V9OXvY5Fm7Yb8AABowAj4O3KrF2
+ fYGOp1PJjii1TXnLgt82UkFXVacG2jALLvhuLCjF+XLtNVHzIuMMVJeFAYz/ePyfzDrWEQdgQ
+ tIXZ8LhH2gjXRIx7zEMTCdq7CmEzw/cawUDjg5btO7UrxQkRCVqDx1mOmTU4/28UJLpK9FoQW
+ kdsw0HQVtWp/0pii5R8R9mUM0LqU5W16HiP7QSxArdVYuX2VG+1ekBKyBN6/PZNN8ZtNl7TQV
+ BhNSHWSg/uAgqdXZyYWs4sPWwbVr2TJUu63faMjuAI3AR07MuO85lpyXTgx25YRluTfMDoNBP
+ 4sdR+GMftrL2VIF/8ICqyLNyYhgazxmhteEDfeaZPKZzUSoAFZfoL+bW00V68UGWVuzYd1ozH
+ PY7D3A6Ha5nwqceXcs/9duVKx6id14yy+oCT8z+lwTQwG2rgG2j0rx3qJN1/f1+tZO7yZZlhX
+ UqRh5spCpsLEFRH4/ryioEQSt4nFpRS2I8RqLHtCrtvG96V3jicdWvwVwyn2HPqfEVMq1T4rd
+ k2CnJEH5rxbf7JdpqQcAVKhheX+9E+rESthT3ZjC3SypGlFwShDEy+3VA9F+3rp9hTIoaZ1HH
+ iON/9rE36Xbgb8+JjNM5gOGPNK/zVkeSri+faZF0BEf/TjI8DyWemwCDPkgjLkrydt20tuqOx
+ tcStLC1matNO0tar2Xvj/ldIJ2VcpZURyrchm1iHVONqI2vHpzSqir8e70Qcv5ELL6nDKijpV
+ DQ02HBr9a1et6Bi/nCQEbmEdH5UWe32yed4yhiV1i4RGjxVsPQ2Ly1znr9k4=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Ben,
 
-> From: Ben Keene <seraphire@gmail.com>
->
-> The original code unconditionally used "p4" as the binary filename.
->
-> Depending on the version of Git and Python installed, the perforce
-> program (p4) may not resolve on Windows without the program extension.
->
-> Check the operating system (platform.system) and if it is reporting that
-> it is Windows, use the full filename of "p4.exe" instead of "p4"
->
-> This change is Python 2 and Python 3 compatible.
->
-> Signed-off-by: Ben Keene <seraphire@gmail.com>
-> ---
->  git-p4.py | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+On Mon, 9 Dec 2019, Ben Keene wrote:
 
-Makes sense.  Ack from somebody on Windows (not required but would
-be nice to have)?
+> So, I just attempted to run a base case on windows: git p4 clone //depot=
+ and
+> I'm getting an error:
+>
+> Depot paths must start with "//": /depot
 
-> diff --git a/git-p4.py b/git-p4.py
-> index 60c73b6a37..65e926758c 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -75,7 +75,10 @@ def p4_build_cmd(cmd):
->      location. It means that hooking into the environment, or other configuration
->      can be done more easily.
->      """
-> -    real_cmd = ["p4"]
-> +    if (platform.system() == "Windows"):
-> +        real_cmd = ["p4.exe"]
-> +    else:
-> +        real_cmd = ["p4"]
->  
->      user = gitConfig("git-p4.user")
->      if len(user) > 0:
+You started this in a Bash, right?
+
+The Git Bash has the very specific problem that many of Git's shell
+scripts assume that forward slashes are directory separators, not
+backslashes, and that absolute paths start with a single forward slash. In
+other words, they expect Unix paths.
+
+But we're on Windows! So the MSYS2 runtime (which is the POSIX emulation
+layer derived from Cygwin which allows us to build and run Bash on
+Windows) "translates" between the paths. For example, if you pass `/depot`
+as a parameter to a Git command, the MSYS2 runtime notices that `git.exe`
+is not an MSYS2 program (i.e. it does not understand pseudo-Unix paths),
+and translates the path to `C:/Program Files/Git/depot`.
+
+However, your call has _two_ slashes, right? That is unfortunately MSYS2's
+trick to say "oh BTW keep the slash, this is not a Unix path".
+
+To avoid this, just set `MSYS_NO_PATHCONV`, like so:
+
+	MSYS_NO_PATHCONV=3D1 git p4 clone //depot
+
+This behavior is documented in our release notes, by the way:
+https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.md=
+#known-issues
+
+Ciao,
+Johannes
