@@ -2,89 +2,98 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E40BC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:42:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AE0C00454
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:51:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5BF64205C9
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:42:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 471D0205C9
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:51:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vbJDU/Pp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HG7zx53r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726562AbfLIVm2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 16:42:28 -0500
-Received: from mail-oi1-f195.google.com ([209.85.167.195]:45454 "EHLO
-        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726483AbfLIVm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 16:42:28 -0500
-Received: by mail-oi1-f195.google.com with SMTP id v10so7781817oiv.12
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 13:42:27 -0800 (PST)
+        id S1726913AbfLIVvj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 16:51:39 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:33001 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbfLIVvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 16:51:39 -0500
+Received: by mail-ot1-f68.google.com with SMTP id d17so13693906otc.0
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 13:51:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=dP57npe4gQu8ou+x5dhAPialjh7N6vKmkBDTMw2IIYE=;
-        b=vbJDU/Pp5IHwZOrN2KBPa9NH7skfMC7bwOLOCzA3wWC3UAYKJ56HWaolpMkIBjwAo2
-         v/FFpICFRkcR7eb1091LMRmcXGCSMH4T6/DekTYIIFJQPX1cLBangKFGdUkV/HiAnnKt
-         ivNFqMCAZj96ih/b5V0gZKddxaKFXVhw7AnOAMQZW3MXv/tBLT18Hc+O7T40Kerjc6WU
-         bYvFCWos6zBd6G3QIG5rmtR37LS7KX4PC9CasxkL2T4jS89uwflZkcA/3fiTOSt4t7vA
-         GJu03iczyxfy1AENY14ksK5TW55dsj6JRyjzKMfIeksvSOtBi7x0MxwZsHmUMdDNuE4p
-         uqLA==
+        bh=7lYLPwvNqTmyxvG/79Gg5Xu4L1gonSEnG/NkiGp4Gus=;
+        b=HG7zx53rpbhqRTIOdhKIfHpO4YmRUEsbhLhemBH4GVIG2mupWDt3lCqOWd+WDv1jb4
+         RyplE8c9IHpaKTuMJAOCO6MGiAYW2VI5PXHihLRlDYDlnHFUBuXOnWMNVCw8WhmhXb/D
+         SMAc1BfkZR1g0nXtYXzoqjNHW+AErjEB9uO6vaiuFrgnrwapeIf+L4h3pRtlj0hKnGv1
+         E8k3+KRwS54YRbh+DAgc46jCB9JbRlOwih2Rv971+mO/IaXYDUPCcM26hOEvcULyHeyQ
+         3CJz37BwtkPOc66i0tlS9POaj5+tTBeUI3/Z4LuC63eHsSrjLtabuqf+8NE5Ao/AYqDO
+         Vd5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=dP57npe4gQu8ou+x5dhAPialjh7N6vKmkBDTMw2IIYE=;
-        b=g8nye1sRrZKFM8l+vG4diZ2ehKtsiarDsy/eiQCtpgTTBHmcZ68XO01jS4JI/dWm6L
-         zPRv/WsiA648Mdj444kRZVZ2DZMX+vp8t/Hc6Jw4dIwsH4qD4TF2Asxf52epoayMqzcb
-         a+KEElFo7nvue7RAQ+K/Zm/xeHkwda/UIM0xcTpb55Zl2H75thbRrKdutCocbd7x8yXL
-         x64IInVDz9otssKVW8HMcaNBPUyJpWiWVLXXt/V87Cxr3EGpM0O0nwreYbEBUIRrvbhM
-         TDrkElshedLqPAt12XD5rFPFhXfaW2kVPSY17Vb2b1L3cwUZ7iJu7EUGmdE3NVQMDv6b
-         m+bA==
-X-Gm-Message-State: APjAAAUA2AhPwffgHP0BrtWC15x3y3xNZJkkOHAEapg8kDBztxUw6VGP
-        azwLAlJkOlDlpJgqqK4VJ465/sDvxkYS4eDgq4s=
-X-Google-Smtp-Source: APXvYqzJIKh7p3LNTuHJGN9ZvDTvnf1YGtqtVl/Gg0W8+gxnYweipx3vjBN/9tqB6LwdZV7Tfds/1xx5DF0JiKWj/B0=
-X-Received: by 2002:aca:dc45:: with SMTP id t66mr1184782oig.39.1575927747181;
- Mon, 09 Dec 2019 13:42:27 -0800 (PST)
+        bh=7lYLPwvNqTmyxvG/79Gg5Xu4L1gonSEnG/NkiGp4Gus=;
+        b=PMMT7CW8Y5IhkqHOHmnxhw7D4+fLAe/snctIQexG9LFEP3RwO9ZxJs63OI9xypddDL
+         S+h9f1GFxaziVv2rYzw3oBsN/omT9PR3tN7m1xOhf7FXWlSiMqK3B0Ltcvmw/p4zMF/J
+         MFR/C+2HWE1zPEf8cijFVKeUnlgUFRZQn4OhD960rocq1gJWtHO5KER1ely3dRGMRqLD
+         oE0B5++OTFQN9kOLJJQc9Lus4AkBENVhJcSZysRyIAwSV5wik6FWgy0z4pZTIMr2a9fS
+         Nc6S09vd62arWm6oK+pbEUg7aUKccr2QKQYnrpTrqhBY1wHcJMBhg+mhbMLyb5ExcCh1
+         qG7A==
+X-Gm-Message-State: APjAAAXeMHCUZm3VgvYSgjaglLdyr2QizROdLKD0PTjrjdPzM0flcG6v
+        wRdZ7np0E4vc90stivq5O1jL3gXIed0PTbzlcdSliw==
+X-Google-Smtp-Source: APXvYqxEdzlT54GcIf+0If6YmwzQMWwfoRonYFn6qP+6kevPVEkB5d30dEjNnJKExvJK/zqyfdsIu6LLuYMEGb6q8u0=
+X-Received: by 2002:a9d:6a50:: with SMTP id h16mr15636997otn.267.1575928298300;
+ Mon, 09 Dec 2019 13:51:38 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1575896661.git.liu.denton@gmail.com>
-In-Reply-To: <cover.1575896661.git.liu.denton@gmail.com>
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+ <bfaf7592ee611f7e9f6fbcf7b1e4ae32f8307548.1575924465.git.gitgitgadget@gmail.com>
+ <20191209213246.GA41680@generichostname>
+In-Reply-To: <20191209213246.GA41680@generichostname>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 9 Dec 2019 13:42:16 -0800
-Message-ID: <CABPp-BFstgQya9mKXdDVWkf=U_3RQqY=_+2MpZpw_u9ci+0mqA@mail.gmail.com>
-Subject: Re: [PATCH 0/5] format-patch: improve handling of `format.notes`
+Date:   Mon, 9 Dec 2019 13:51:27 -0800
+Message-ID: <CABPp-BGdUjQ8gg-VH+udmwBmW-cfhiE7wX=qkQ2jnCgS6eQJiw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] Revert "dir.c: make 'git-status --ignored' work
+ within leading directories"
 To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Pavel Roskin <plroskin@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 9, 2019 at 5:10 AM Denton Liu <liu.denton@gmail.com> wrote:
+On Mon, Dec 9, 2019 at 1:32 PM Denton Liu <liu.denton@gmail.com> wrote:
 >
-> In this email[1], Elijah pointed out that the handling of multiple
-> `format.notes` configurations could be buggy. If we had
-> `format.notes = <ref1>`, `format.notes = false` and
-> `format.notes = <ref2>`, the behaviour is ambiguous. This series uses
-> the way `--notes=<ref1> --no-notes --notes=<ref2>` is handled as a model
-> and structures the handling of `format.notes` in a similar manner,
-> allowing one `format.notes = false` to override previous configs.
+> Hi Elijah,
 >
-> Also, in the same email, it was pointed out that git_config() should be
-> called before repo_init_revisions(). In 13cdf78094 (format-patch: teach
-> format.notes config option, 2019-05-16), the order was reversed. This
-> series changes it back such that git_config() is called before
-> repo_init_revisions().
+> On Mon, Dec 09, 2019 at 08:47:39PM +0000, Elijah Newren via GitGitGadget wrote:
+> > diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
+> > index 0c394cf995..ded7f97181 100755
+> > --- a/t/t7061-wtstatus-ignore.sh
+> > +++ b/t/t7061-wtstatus-ignore.sh
+> > @@ -43,11 +43,14 @@ test_expect_success 'status untracked directory with --ignored -u' '
+> >       test_cmp expected actual
+> >  '
+> >  cat >expected <<\EOF
+> > -?? untracked/uncommitted
+> > +?? untracked/
+> >  !! untracked/ignored
+> >  EOF
+> >
+> > -test_expect_success 'status prefixed untracked directory with --ignored' '
+> > +test_expect_failure 'status of untracked directory with --ignored works with or without prefix' '
+> > +     git status --porcelain --ignored | grep untracked/ >actual &&
+>
+> Can we break this pipe up into two invocations so that we don't have a
+> git command in the upstream of a pipe?
 
-Sweet, thanks for working on this.  I took a very cursory glance over
-the patches and didn't spot anything egregiously wrong, though I'm
-also not familiar with the notes machinery.  Mostly I'm just piping up
-to thank you for tackling this so quickly.  :-)
+Sigh...yeah, I keep doing this.  And I'll probably keep doing it if
+someone can't chainlint (or pipefail) it.  I'll fix it up.
