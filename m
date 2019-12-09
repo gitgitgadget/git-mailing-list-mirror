@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4BB9C2BD09
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 789A1C00454
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA7C2207FF
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FB72207FF
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 11:53:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0fjLYgn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DroHumxQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727640AbfLILxL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 06:53:11 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52845 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727637AbfLILxJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 06:53:09 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p9so15138464wmc.2
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 03:53:08 -0800 (PST)
+        id S1727646AbfLILxN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 06:53:13 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40395 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727629AbfLILxM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 06:53:12 -0500
+Received: by mail-wr1-f65.google.com with SMTP id c14so15855918wrn.7
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 03:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=WRCuS8uoGdooWawEks4A6ADDNXlbiIEL6gyZ7gENGQQ=;
-        b=N0fjLYgniiHtCz+NxfGQmOP+VkBI/Zh4GZupKh61vBxIsV+MBGBcMbmAEOSmMHkE8I
-         XjX+7Wp0iSUwemDbBC6/slfEGJPqQWWAvb+ZEmVTmolcHPQA4E8XHNfrtQJCJyC9seA5
-         HGeyaCslHk6Z9GZFOnp/LvpOidiuf5BP3RZmsepC7agvjjg4lfFBJZDOLyddeDcW3zXN
-         QY6rOGFtH0ivCmlgTn38l3iFA9LCFoKfZEyKmQyY5M5GHYzsvUmMKZZQf3k4HYtu311k
-         mF6nDPeC4fOcZqvK6KZBkUwDl3gSu8j0Rn8jHNiO3auXa+KuBqeioltQ+du52pkysRPG
-         5ItA==
+        bh=QrX7df9gsdQ60K203c9+tqg6YksYfzuqMXfI1+OFi+o=;
+        b=DroHumxQjM+OcIw5h0oobHBnXWadLdmpBD2Knxj/ifCVrOaH+E00lhVhCgNtNz+LYY
+         iMPVIb6Rk3oJyTHDwWX31X0mJHZPMrIqzCbFPtHrtH0VOrjNOMdY8vpowijGP09EkIhi
+         jw0ykpahME7WZ0DVDPDeZ3fd2pl6Sp9jp6PCbeojUjUxOs/lunfHqomtoD1q4A6o9mkl
+         Jpa5rQx2cKKWNaBFszIESpe50XX7G/t11g5zrY9LB4qyzMQIQ7Ruv6xzr57cHNu0+ORJ
+         neCW5QJE9JhktKSmr1JzHubYrVPMe00RhEUCvqsg7Hv+NGdTsU0ssdPY4YA+b081Xuux
+         glKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=WRCuS8uoGdooWawEks4A6ADDNXlbiIEL6gyZ7gENGQQ=;
-        b=G71RvFqWMnnOIdepO9HGJZuW8OfjhflvzUF6cqII8d1VqQdQ0mo+2yOJRNziRJ/elx
-         YZBsiW51MKdW70TNGBZtSpsKN1CX9wFxLg4zzGDJ8pm/Y7YR8L760yogT4BGvs62rp8Q
-         sHfFvfuNZqvGYa29lxNM3EIPk127H1pfNsCEC509eRVW7VZV9SUP6QcPGGYs+IghMdnN
-         ITYofjPd3sFrzMvbSEDgm5fybL30H8n4o4WFUvsbXEc7lgouWpNhUbHQWc2KU4Mkbzja
-         Zqi36sKWfCK9KaEBBDO3WZI/pNq5+FFqefSK/y/vCmxbf3k1W18DNGBMkgjRcvztKLP/
-         GHdQ==
-X-Gm-Message-State: APjAAAUXzE7xGoH8UpnExNYdS04DqF5s+f41NKsdwluUJsBJz/XoN7Hv
-        43KFK/NL4zpO0AQQdcVl2FI=
-X-Google-Smtp-Source: APXvYqzrQuvjUCcl5+esy4ROfHXXsvNwBGn7R0R2ihrCTiyQL/OX2HeQUmXm2a7Unr1JyRAYTd3qNg==
-X-Received: by 2002:a1c:a70e:: with SMTP id q14mr24217037wme.142.1575892387640;
-        Mon, 09 Dec 2019 03:53:07 -0800 (PST)
+        bh=QrX7df9gsdQ60K203c9+tqg6YksYfzuqMXfI1+OFi+o=;
+        b=ti260no/PSOCObRB/TT9UXFg0RNt5YuZduXHRW8M5R/gYBc+LDkjGlYI7ggSeZpjo0
+         r8dTyH6C5JV40sQzOSX2whnoEmS9TSVlk0sHFmX3sZs138A59/yZ0OUeCqUN7adDtXBC
+         WA8dBCJ29/oLS0wrawxHAKguKO7wD7osGDe0T80O/q1anyauWCvFD3iEWBqHiLeYXUlE
+         ThHW1blfYq51WTmJ/OjW63kCMaWWNsO3dpLb3BKsim6YI1PsXzmxbbjEhfvAg/7tGVPF
+         /GrtzZwZ6MizScf/D2pPL0L4LOZ72vhr0hnzVJX0pr8EGIJDDKl+R9yBQsS3Nrvua1PR
+         6vFQ==
+X-Gm-Message-State: APjAAAVourcSPVXptCOKg3xElIIW+cJz2DR1+Dx4XoaboQ1JnmZacs5K
+        VnF1ZsWAuAPqznQAW38Ds/6ddVpI
+X-Google-Smtp-Source: APXvYqxpvoovbKoxwkQykhaQmuBZZP37vPVn2d3ekm8/JmxSfOeiVrcOyzNlQobyW3iEkaLvPz3lvA==
+X-Received: by 2002:a5d:6748:: with SMTP id l8mr1799023wrw.188.1575892391018;
+        Mon, 09 Dec 2019 03:53:11 -0800 (PST)
 Received: from localhost.localdomain (x4db55b9c.dyn.telefonica.de. [77.181.91.156])
-        by smtp.gmail.com with ESMTPSA id k8sm27239621wrl.3.2019.12.09.03.53.06
+        by smtp.gmail.com with ESMTPSA id k8sm27239621wrl.3.2019.12.09.03.53.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 09 Dec 2019 03:53:07 -0800 (PST)
+        Mon, 09 Dec 2019 03:53:10 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 04/14] name-rev: avoid unnecessary cast in name_ref()
-Date:   Mon,  9 Dec 2019 12:52:48 +0100
-Message-Id: <20191209115258.9281-5-szeder.dev@gmail.com>
+Subject: [PATCH v3 07/14] name-rev: extract creating/updating a 'struct name_rev' into a helper
+Date:   Mon,  9 Dec 2019 12:52:51 +0100
+Message-Id: <20191209115258.9281-8-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.24.0.801.g241c134b8d
 In-Reply-To: <20191209115258.9281-1-szeder.dev@gmail.com>
 References: <20191112103821.30265-1-szeder.dev@gmail.com>
@@ -76,27 +76,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Casting a 'struct object' to 'struct commit' is unnecessary there,
-because it's already available in the local 'commit' variable.
+In a later patch in this series we'll want to do this in two places.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- builtin/name-rev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/name-rev.c | 40 +++++++++++++++++++++++++++-------------
+ 1 file changed, 27 insertions(+), 13 deletions(-)
 
 diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 15919adbdb..e40f51c2b4 100644
+index 7e003c2702..e43df19709 100644
 --- a/builtin/name-rev.c
 +++ b/builtin/name-rev.c
-@@ -272,7 +272,7 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
- 		int from_tag = starts_with(path, "refs/tags/");
+@@ -79,12 +79,36 @@ static int is_better_name(struct rev_name *name,
+ 	return 0;
+ }
  
- 		if (taggerdate == TIME_MAX)
--			taggerdate = ((struct commit *)o)->date;
-+			taggerdate = commit->date;
- 		path = name_ref_abbrev(path, can_abbreviate_output);
- 		name_rev(commit, xstrdup(path), taggerdate, 0, 0,
- 			 from_tag, deref);
++static struct rev_name *create_or_update_name(struct commit *commit,
++					      const char *tip_name,
++					      timestamp_t taggerdate,
++					      int generation, int distance,
++					      int from_tag)
++{
++	struct rev_name *name = get_commit_rev_name(commit);
++
++	if (name == NULL) {
++		name = xmalloc(sizeof(*name));
++		set_commit_rev_name(commit, name);
++		goto copy_data;
++	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
++copy_data:
++		name->tip_name = tip_name;
++		name->taggerdate = taggerdate;
++		name->generation = generation;
++		name->distance = distance;
++		name->from_tag = from_tag;
++
++		return name;
++	} else
++		return NULL;
++}
++
+ static void name_rev(struct commit *commit,
+ 		const char *tip_name, timestamp_t taggerdate,
+ 		int generation, int distance, int from_tag,
+ 		int deref)
+ {
+-	struct rev_name *name = get_commit_rev_name(commit);
+ 	struct commit_list *parents;
+ 	int parent_number = 1;
+ 	char *to_free = NULL;
+@@ -101,18 +125,8 @@ static void name_rev(struct commit *commit,
+ 			die("generation: %d, but deref?", generation);
+ 	}
+ 
+-	if (name == NULL) {
+-		name = xmalloc(sizeof(*name));
+-		set_commit_rev_name(commit, name);
+-		goto copy_data;
+-	} else if (is_better_name(name, taggerdate, distance, from_tag)) {
+-copy_data:
+-		name->tip_name = tip_name;
+-		name->taggerdate = taggerdate;
+-		name->generation = generation;
+-		name->distance = distance;
+-		name->from_tag = from_tag;
+-	} else {
++	if (!create_or_update_name(commit, tip_name, taggerdate, generation,
++				   distance, from_tag)) {
+ 		free(to_free);
+ 		return;
+ 	}
 -- 
 2.24.0.801.g241c134b8d
 
