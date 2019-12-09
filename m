@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 649DDC00454
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 163A5C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2A868206D5
+	by mail.kernel.org (Postfix) with ESMTP id DC2E2206D5
 	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 20:47:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mNmO9RRF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kwuweCja"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726801AbfLIUry (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726923AbfLIUr4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 15:47:56 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:52621 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726928AbfLIUry (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 9 Dec 2019 15:47:54 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34200 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726923AbfLIUrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 15:47:53 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f4so745782wmj.1
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:47:52 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id p9so815696wmc.2
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 12:47:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TxfuD3DIvF4/jJBYVQfQ67Z5+jOsIpci86DYhHcr4cs=;
-        b=mNmO9RRFDOMdHN0fj0TpxkO12HcD2I6lx57tgQWRjdlbzHGNdE/se96JM978qzDB9w
-         nagbATG799WDZAlWA81SZQ70fqFseuzuoK9yTuCm2DBhVAhxNETr0/gzbiCOfzZZC+jc
-         50y5oy1kWL2HrJPXGHKJXJOUGPHPVMx9dQkm/gB2ifgt/siyfo19P40fVNLEn6FxT3o4
-         ZW6IqVisaYi3NNntz5ETFHIhyMSkc5vIWf3GHyif8MuKkqwWTqI/1Q5uzM4f65gvnwIu
-         8uPI7y3SC2CjsYoziJT2yh69bWuxitJ6l9E06whIZpF1OV2zk1zE5blUS4/7OHWHipUR
-         H1pQ==
+        bh=zze0uH3Nj4ZOmvZ1O0g/xeKVlrddGGSxpyF/tpjrz40=;
+        b=kwuweCjaJkU3vII5kt60YqdqslKQlYH09Nih/cp/dAK1ziyO/bTwMkbRSB8KV9exCo
+         Nkg9l5kUG7sFNNdzzyk4WiQnEUVYMvkcE2iMPVHJqrIU40FY5x4ZiEHdlLOhCdAA/z8q
+         cq6KtBB9ZU91AVbYJnr4SjsuYOy8GqO6ls7hqJGm6zhJULiPFWzOl0R8iteO+3WCq46Y
+         Y15nbkyNarKdcOerJPYGeZOHQXxuTENSRNY+duTNx69S4GaoY6xr7LOfw2R7ZAYYYHIX
+         e/pG3rHxKt/H5WFCNOx4pTg5x4F9hjciOfL7WmwRsvSIUzI5iqyCvb80K7tqB9hrCtCQ
+         KHJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TxfuD3DIvF4/jJBYVQfQ67Z5+jOsIpci86DYhHcr4cs=;
-        b=ADbteh8LTiTP872RhLObnNXdnmlR6B+Zs0sgcVnXRcbfkFIrgoeWOXIgGyGn57z4i/
-         Puj9cS8flNY/XAfJ4sSDJJE55njj69oyb3knKNuPjwSpbm7AFc5tx9neOvQ2HM2BCJ4m
-         98Oi/tkJWmJ7Uhpe13AVnfe/vJrDzZrIonEfIVuckGNytKyDpRJmxRbPdNFfNsCfQoHm
-         JLh8sFoSia4tavFFwuh+xe/s+c4ptBj8g7ifVhPlu26uoq2laZ+F4hKgiysdTSvimJXk
-         R8wFXzM0yLkKvToRaS31OIYOknAmxvr83wFyIKbNMibOQOtfN0f0Hz+dKeoeLI/W1+0g
-         UQvw==
-X-Gm-Message-State: APjAAAWqzAOeo8Qi9ei2ELXfvXWKZqKucBuu7cZdoSAbeq4lj1BUGJdP
-        pg9mku1EhL96lpCrV3wXvtgm2YQO
-X-Google-Smtp-Source: APXvYqxr1Z10Ve08Z0aA/Jobmb8LX9mx+QGxlNeeVQ6sq6GBUjdROH1K75vZGAi8M8nEmS3aKCTj8g==
-X-Received: by 2002:a05:600c:24b:: with SMTP id 11mr984858wmj.19.1575924471947;
-        Mon, 09 Dec 2019 12:47:51 -0800 (PST)
+        bh=zze0uH3Nj4ZOmvZ1O0g/xeKVlrddGGSxpyF/tpjrz40=;
+        b=JZ8O2c7TO/T+YqbFjRzU1vBkSAK7Mr3UrobionNWb/HqWBR/pnqDchLrHkkGzLbo0y
+         cWEvPkBEu3iqsGl70ovRvpXEgq9ec2BeOzJM8qxtFqJj5O2Axp3DjKdONEzB2gq25YMU
+         QD1WecY0WLLp5kEdmBE0dZYd8lQZzsbNLSOWVA8CkiYELMvXWDOWgCDeHhIcmVGhoDwe
+         M05AnzS0fFXVT0NOye9vOqSLwzQ4MaiXCOI3SZo5SsAFibgjJP6Oty2sHYCgpwNubmtE
+         lH4+peFXrJP+MvoxptHPqB7pXXX6TNxMHok81jQvf9sfnO3UGyBS5V55cuxomjPybDiq
+         LwTA==
+X-Gm-Message-State: APjAAAXnjsFOS5OK69Y/uJ/K+moSz2LYZxO42zdowH/QWX4U8sZLTI2m
+        zb3B7SERlRPfnuIO4ypC3xXkw6o8
+X-Google-Smtp-Source: APXvYqyn2t3MO0Pqy1G+0werV4PDGYwBlpCR2yqEdWND7eNL2rmgmqIGpJEeJUwlE7/H6FJLA+tc7g==
+X-Received: by 2002:a1c:2155:: with SMTP id h82mr1024901wmh.21.1575924472683;
+        Mon, 09 Dec 2019 12:47:52 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 2sm740961wrq.31.2019.12.09.12.47.51
+        by smtp.gmail.com with ESMTPSA id x11sm538002wmg.46.2019.12.09.12.47.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2019 12:47:51 -0800 (PST)
-Message-Id: <4f8bf05d265bdf6c9242e21feeda14ad86dd0a4c.1575924466.git.gitgitgadget@gmail.com>
+        Mon, 09 Dec 2019 12:47:52 -0800 (PST)
+Message-Id: <2200bf144af2eab98919dd6ed6313d408b1cba1e.1575924466.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
 References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 09 Dec 2019 20:47:44 +0000
-Subject: [PATCH 7/8] dir: synchronize treat_leading_path() and
- read_directory_recursive()
+Date:   Mon, 09 Dec 2019 20:47:45 +0000
+Subject: [PATCH 8/8] dir: consolidate similar code in treat_directory()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,117 +74,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Our optimization to avoid calling into read_directory_recursive() when
-all pathspecs have a common leading directory mean that we need to match
-the logic that read_directory_recursive() would use if we had just
-called it from the root.  Since it does more than call treat_path() we
-need to copy that same logic.
-
-Alternatively, we could try to change treat_path to return path_recurse
-for an untracked directory under the given special circumstances that
-this logic checks for, but a simple switch results in many test failures
-such as 'git clean -d' not wiping out untracked but empty directories.
-To work around that, we'd need the caller of treat_path to check for
-path_recurse and sometimes special case it into path_untracked.  In
-other words, we'd still have extra logic in both places.
-
-Needing to duplicate logic like this means it is guaranteed someone will
-eventually need to make further changes and forget to update both
-locations.  It is tempting to just nuke the leading_directory special
-casing to avoid such bugs and simplify the code, but unpack_trees'
-verify_clean_subdirectory() also calls read_directory() and does so with
-a non-empty leading path, so I'm hesitant to try to restructure further.
-Add obnoxious warnings to treat_leading_path() and
-read_directory_recursive() to try to warn people of such problems.
+Both the DIR_SKIP_NESTED_GIT and DIR_NO_GITLINKS cases were checking for
+whether a path was actually a nonbare repository.  That code could be
+shared, with just the result of how to act differing between the two
+cases.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c                                         | 30 +++++++++++++++++++
- ...common-prefixes-and-directory-traversal.sh |  2 +-
- t/t7061-wtstatus-ignore.sh                    |  2 +-
- 3 files changed, 32 insertions(+), 2 deletions(-)
+ dir.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 9c71a9ac21..bb6e481909 100644
+index bb6e481909..04541b798b 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1990,6 +1990,15 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 	struct untracked_cache_dir *untracked, int check_only,
- 	int stop_at_first_file, const struct pathspec *pathspec)
+@@ -1461,6 +1461,8 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 	const char *dirname, int len, int baselen, int exclude,
+ 	const struct pathspec *pathspec)
  {
-+	/*
-+	 * WARNING WARNING WARNING:
-+	 *
-+	 * Any updates to the traversal logic here may need corresponding
-+	 * updates in treat_leading_path().  See the commit message for the
-+	 * commit adding this warning as well as the commit preceding it
-+	 * for details.
-+	 */
++	int nested_repo = 0;
 +
- 	struct cached_dir cdir;
- 	enum path_treatment state, subdir_state, dir_state = path_none;
- 	struct strbuf path = STRBUF_INIT;
-@@ -2101,6 +2110,15 @@ static int treat_leading_path(struct dir_struct *dir,
- 			      const char *path, int len,
- 			      const struct pathspec *pathspec)
- {
-+	/*
-+	 * WARNING WARNING WARNING:
-+	 *
-+	 * Any updates to the traversal logic here may need corresponding
-+	 * updates in treat_leading_path().  See the commit message for the
-+	 * commit adding this warning as well as the commit preceding it
-+	 * for details.
-+	 */
-+
- 	struct strbuf sb = STRBUF_INIT;
- 	int prevlen, baselen;
- 	const char *cp;
-@@ -2154,6 +2172,18 @@ static int treat_leading_path(struct dir_struct *dir,
- 		de.d_name[baselen-prevlen] = '\0';
- 		state = treat_path(dir, NULL, &cdir, istate, &sb, prevlen,
- 				    pathspec);
-+		if (state == path_untracked &&
-+		    get_dtype(cdir.de, istate, sb.buf, sb.len) == DT_DIR &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO ||
-+		     do_match_pathspec(istate, pathspec, sb.buf, sb.len,
-+				       baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)) {
-+			add_path_to_appropriate_result_list(dir, NULL, &cdir,
-+							    istate,
-+							    &sb, baselen,
-+							    pathspec, state);
-+			state = path_recurse;
-+		}
-+
- 		if (state != path_recurse)
- 			break; /* do not recurse into it */
- 		if (len <= baselen)
-diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b/t/t3011-common-prefixes-and-directory-traversal.sh
-index 0151ea8b6d..d48ee1a320 100755
---- a/t/t3011-common-prefixes-and-directory-traversal.sh
-+++ b/t/t3011-common-prefixes-and-directory-traversal.sh
-@@ -179,7 +179,7 @@ test_expect_success 'git ls-files -o consistent between one or two dirs' '
+ 	/* The "len-1" is to strip the final '/' */
+ 	switch (directory_exists_in_index(istate, dirname, len-1)) {
+ 	case index_directory:
+@@ -1470,15 +1472,16 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 		return path_none;
  
- # ls-files doesn't have a way to request showing both untracked and ignored
- # files at the same time, so use `git status --ignored`
--test_expect_failure 'git status --ignored shows same files under dir with or without pathspec' '
-+test_expect_success 'git status --ignored shows same files under dir with or without pathspec' '
- 	cat <<-EOF >expect &&
- 	?? an_untracked_dir/
- 	!! an_untracked_dir/ignored
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index ded7f97181..d8060a42e4 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -47,7 +47,7 @@ cat >expected <<\EOF
- !! untracked/ignored
- EOF
+ 	case index_nonexistent:
+-		if (dir->flags & DIR_SKIP_NESTED_GIT) {
+-			int nested_repo;
++		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
++		    !(dir->flags & DIR_NO_GITLINKS)) {
+ 			struct strbuf sb = STRBUF_INIT;
+ 			strbuf_addstr(&sb, dirname);
+ 			nested_repo = is_nonbare_repository_dir(&sb);
+ 			strbuf_release(&sb);
+-			if (nested_repo)
+-				return path_none;
+ 		}
++		if (nested_repo)
++			return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
++				(exclude ? path_excluded : path_untracked));
  
--test_expect_failure 'status of untracked directory with --ignored works with or without prefix' '
-+test_expect_success 'status of untracked directory with --ignored works with or without prefix' '
- 	git status --porcelain --ignored | grep untracked/ >actual &&
- 	test_cmp expected actual &&
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+ 			break;
+@@ -1506,13 +1509,6 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 
+ 			return path_none;
+ 		}
+-		if (!(dir->flags & DIR_NO_GITLINKS)) {
+-			struct strbuf sb = STRBUF_INIT;
+-			strbuf_addstr(&sb, dirname);
+-			if (is_nonbare_repository_dir(&sb))
+-				return exclude ? path_excluded : path_untracked;
+-			strbuf_release(&sb);
+-		}
+ 		return path_recurse;
+ 	}
  
 -- 
 gitgitgadget
-
