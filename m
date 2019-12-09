@@ -2,111 +2,151 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04889C04E30
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CCD6C3F68F
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:29:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CEF7C207FD
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:28:47 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/7fr5nq"
+	by mail.kernel.org (Postfix) with ESMTP id 2949E207FF
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 14:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727391AbfLIO2r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 09:28:47 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46614 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727038AbfLIO2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 09:28:46 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z7so16331986wrl.13
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 06:28:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3sFU7MtcM1KdJV72KCQjmet37yl/mAC/mT4LGqrkZDI=;
-        b=b/7fr5nqHlaN2HvWxVgd2Ev+O7hwUgAFDRCUgZhXPIsHB1DCZMJMgYjcGMXQyn7pra
-         WTv0fFvH+jCFtm5ta6Mbn/BWyb068pPlU2WxbjmgUDIZ1db5Qi0eTZ3KpYh4wvkFyMQx
-         scHVAHc5tbShvvjrf803+HlSfmjZwI0biKum2FVslcC8lRsTw6tyrnUeIaYP70lu8T/T
-         kBlu2Q0WowJxQ7xX9n4MTygpeeiLPbbOTLKajNOLU8o7H6C7okdcn/IZJgpsSNWoPALE
-         44Aw35tv4WsHD9H8uehLncXBOKUwGh4HIWJs8vDLAseYlWkCYbJUPLU/n6sb3Kutl8OL
-         GEUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3sFU7MtcM1KdJV72KCQjmet37yl/mAC/mT4LGqrkZDI=;
-        b=oJhlyLlGgCo9NR2DeNm0r4KyQdfAtdrN5xgXiJbRNXVK6pDcUh3OD791sBPijKZWWc
-         ddgKZYevqObV/54iiFDY1uyDUIFnhgBirmArjaGiWbNWPYxalGAzoQXag8G1LwNyz2u8
-         JIA7u8gPrQMhMxFiocZUYv00jGrsgeCSHDQEPcivTyINHw5X4yyHmaSrOYVU7ne1he5s
-         KRlBib0X73pkIBcRB4T0yitoRtRr+NZYyu6hmr7NqIPqZ+CjK9B8Z+kBQcJPWg3vNuvn
-         G27Exli2UeI93NaRwUKa23X42a0yKpXm4+O+6/n+pDpyJNRjGOue/f821Aj6s6lHaII5
-         hLWg==
-X-Gm-Message-State: APjAAAWdH6RT3mzmTWHbRdH4kqTsaofHwBL3+jE1GS07yAim9PtZaPzc
-        W22flAaDk0cHBKvYqAZnh6wp/Ojy
-X-Google-Smtp-Source: APXvYqx/7qEHnmleW/IUVIZ4C8JEOmJ8oKQ5xPKjvDaLTgLfwzybI1eXAZs0PcGdSo9MSeuE71LTFA==
-X-Received: by 2002:a05:6000:160d:: with SMTP id u13mr2609513wrb.22.1575901723842;
-        Mon, 09 Dec 2019 06:28:43 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g74sm13584325wme.5.2019.12.09.06.28.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2019 06:28:43 -0800 (PST)
-Message-Id: <e65375c528bdcdcc928dce8159edfccddcf77070.1575901722.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.483.v2.git.1575901722.gitgitgadget@gmail.com>
-References: <pull.483.git.1575466209.gitgitgadget@gmail.com>
-        <pull.483.v2.git.1575901722.gitgitgadget@gmail.com>
-From:   "panzercheg via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 09 Dec 2019 14:28:42 +0000
-Subject: [PATCH v2 1/1] "git lfs" allows users to specify the custom storage
- location by configuration variable lfs.storage, but when "git p4" interacts
- with GitLFS pointers, it always used the hardcoded default that is the
- .git/lfs/ directory, without paying attention to the configuration.
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727626AbfLIO3V convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 9 Dec 2019 09:29:21 -0500
+Received: from esg260-1.itc.swri.org ([129.162.252.140]:37560 "EHLO
+        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727038AbfLIO3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 09:29:20 -0500
+X-Greylist: delayed 1077 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Dec 2019 09:29:19 EST
+Received: from smtp.swri.org (MBX256.adm.swri.edu [129.162.26.125])
+        by esg260-1.itc.swri.edu (8.16.0.27/8.16.0.27) with ESMTPS id xB9EB3bn105338
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+        Mon, 9 Dec 2019 08:11:03 -0600
+Received: from mbx260-2.adm.swri.edu (129.162.29.120) by MBX256.adm.swri.edu
+ (129.162.26.125) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 9 Dec
+ 2019 08:11:03 -0600
+Received: from mbx260-2.adm.swri.edu ([192.168.222.13]) by
+ mbx260-2.adm.swri.edu ([192.168.222.13]) with mapi id 15.00.1497.000; Mon, 9
+ Dec 2019 08:11:03 -0600
+From:   "Strain, Roger L." <roger.strain@swri.org>
+To:     "ns@nadavsinai.com" <ns@nadavsinai.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "marc@msys.ch" <marc@msys.ch>
+Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
+ 315a84f9aa0e2e629b0680068646b0032518ebed
+Thread-Topic: Regression in git-subtree.sh, introduced in 2.20.1, after
+ 315a84f9aa0e2e629b0680068646b0032518ebed
+Thread-Index: AQHVrbKXNpX9IVDGJUeg6jm3c9jaIqeyPikA
+Date:   Mon, 9 Dec 2019 14:11:03 +0000
+Message-ID: <3b9408a9bd87ea488c4a6b9bc2583aba56ce3949.camel@swri.org>
+References: <CANxxO2MGJ2Wo6Y-33KzzPXz6vktRACk0Oi2Y6o_s-cDFRhG7+Q@mail.gmail.com>
+In-Reply-To: <CANxxO2MGJ2Wo6Y-33KzzPXz6vktRACk0Oi2Y6o_s-cDFRhG7+Q@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [129.162.26.94]
+Content-Type: text/plain; charset="iso-8859-15"
+Content-ID: <4D7C9059869B2C498E2EFC848D324E32@sw.pvt>
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        panzercheg <panzercheg@gmail.com>
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-09_04:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
+ scancount=1 engine=8.0.1-1911140001 definitions=main-1912090122
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: panzercheg <panzercheg@gmail.com>
+I haven't been able to find anything relating to the issue, but I also
+haven't had a repo that exposes the problem to test more thoroughly
+against. If this happens to be a public repo somewhere, I'd be more
+than happy to take a second look.
 
-Use the value configured in lfs.storage, if exists, as all the
-"git" operations do, for consistency.
+That being said, if the community feels it would be better to revert
+the changes that were introduced, I won't object. I've had to further
+customize the script for our internal use, and those changes aren't
+something that would be useful for the public at large. (A few changes relate to the presence/absence of a specific file, which I certainly wouldn't expect anyone else to have.) Short story is we're going to have to use a custom script going forward, so keeping or reverting the changes here make no difference to us. I still feel that the changes which were made make the script more correct, but clearly there's some undiagnosed logic error somewhere.
 
-Signed-off-by: r.burenkov <panzercheg@gmail.com>
----
- git-p4.py | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+Honestly, I'm surprised we didn't see this particular issue show up on
+our own repo; it's ridiculously large and complex. At least if it had,
+I'd be able to troubleshoot it more reliably.
 
-diff --git a/git-p4.py b/git-p4.py
-index 60c73b6a37..0b3a07cb31 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1257,9 +1257,15 @@ def generatePointer(self, contentFile):
-             pointerFile = re.sub(r'Git LFS pointer for.*\n\n', '', pointerFile)
- 
-         oid = re.search(r'^oid \w+:(\w+)', pointerFile, re.MULTILINE).group(1)
-+        # if someone use external lfs.storage ( not in local repo git )
-+        lfs_path = gitConfig('lfs.storage')
-+        if not lfs_path:
-+            lfs_path = 'lfs'
-+        if not os.path.isabs(lfs_path):
-+            lfs_path = os.path.join(os.getcwd(), '.git', lfs_path)
-         localLargeFile = os.path.join(
--            os.getcwd(),
--            '.git', 'lfs', 'objects', oid[:2], oid[2:4],
-+            lfs_path,
-+            'objects', oid[:2], oid[2:4],
-             oid,
-         )
-         # LFS Spec states that pointer files should not have the executable bit set.
--- 
-gitgitgadget
+--  
+Roger Strain
+
+-----Original Message-----
+From: Nadav SInai <ns@nadavsinai.com>
+To: roger.strain@swri.org
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com,
+marc@msys.ch, pclouds@gmail.com
+Subject: RE: Regression in git-subtree.sh, introduced in 2.20.1, after
+315a84f9aa0e2e629b0680068646b0032518ebed
+Date: Sun, 08 Dec 2019 12:30:48 +0200
+
+[EXTERNAL EMAIL]
+
+Hi, I'm curious if any of you had any luck in preventing that
+seg-fault in git-subtree script
+I'm encountering it myself using git 2.24.0.windows.2., seg-fault is
+in the same while loop (currently on line 757)
+When I tried your suggestion of adding the ($parents) ($rev) to the
+progress print I see that the last commit have only one revision
+printed
+like this:
+
+259/290 (523) [271] (843dd34090d36dfabd6a2e3e8459a4887427313b)
+(a69ee056f66acf66c63f89f55d26c0cc17036623)
+259/290 (525) [273] (f5eea1a3cbe1e16acba53e8a9fe07b6525a8b97c)
+(843dd34090d36dfabd6a2e3e8459a4887427313b)
+259/290 (527) [275] (82303752a428cf1d789ac9f156008adb2798b7b5)
+(f5eea1a3cbe1e16acba53e8a9fe07b6525a8b97c)
+259/290 (528) [276]
+(7187897883c9fb4d33d4c87a02b876f8603728ff05f0945ae2ce9f98a35135)
+259/290 (529) [277]
+(a00a3665343439a426671958dd90ed0407a22cad9ac9f156008adb2798b7b5)
+259/290 (530) [278]
+(90beb94ebd331c457d79d05341453f5829a50bfcd4c87a02b876f8603728ff)
+259/290 (531) [279]
+(9582e0acbed1910173564e250f350b5cc4291a7f671958dd90ed0407a22cad)
+259/290 (532) [280]
+(f183930d6fabd3dccdddc5ec35d754ad28caf3b879d05341453f5829a50bfc)
+259/290 (533) [281]
+(c9309f3a38c41f7991d9e78ddb47f7e85b8521eb564e250f350b5cc4291a7f)
+259/290 (534) [282]
+(3bcf08f63a0e2b93ecc376bd679a16c80e99e7b1ddc5ec35d754ad28caf3b8)
+259/290 (535) [283]
+(134621bb55a0470cdf6519ce08d6909af43ce0e5d9e78ddb47f7e85b8521eb)
+259/290 (536) [284]
+(edb3471fbba29748f9784d29b3cee1dee2df4b37c376bd679a16c80e99e7b1)
+259/290 (537) [285]
+(dd947a095df07a32dfd56666a395a7c42b25ca116519ce08d6909af43ce0e5)
+259/290 (538) [286]
+(a639e09d2cbe1ea1149c080c1c95b8b018340ae2784d29b3cee1dee2df4b37)
+C:/Program Files/Git/mingw64/libexec/git-core\git-subtree: line 757:
+8853 Done                    eval "$grl"
+      8854 Segmentation fault      (core dumped) | while read rev
+parents; do
+    process_split_commit "$rev" "$parents" 0;
+done
+
+I downgraded git to 2.19.0-windows.1 and it works now.
+
+
+I'm thankful for your insights
+Nadav Sinai
+Web Tech lead
+Philips-Algotec
+
+
