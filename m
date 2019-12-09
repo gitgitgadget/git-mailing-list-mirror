@@ -2,123 +2,108 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69EBAC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 02:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D04CAC43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 06:19:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3582A206F4
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 02:06:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xdgE6ngL"
+	by mail.kernel.org (Postfix) with ESMTP id AD19C2071E
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 06:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbfLICGa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Dec 2019 21:06:30 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59960 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726635AbfLICGa (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 8 Dec 2019 21:06:30 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id BE86F60428;
-        Mon,  9 Dec 2019 02:06:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1575857188;
-        bh=LV4s3a1oigEpd8HFhDXmo+ND/BwZl9MqGe/w8pnJPUY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=xdgE6ngLjpG5q9VhCbqnGjsz5om/FJ2BqFfWdS6OZ35IMYlI1ta+fmFdZtkEvFER5
-         z10IsY8uLT//8PMl8geSPh6WOOBLym9TCkwAx4Z1Ap6g5palfseCFjSSgesxUzDW0L
-         YgI8nLiroe3Onq+JLKp83i6f6ATNz89TKSI0gA8CqhpA2ktUdPnJ+EHF1Hw+UfASbv
-         UBcDTbC3yzyQTfrO8so2vInBg5NjjLNfRO0K1iGRZJvk9zGyBC6ADdZTFXJcho+8NE
-         dKO68wrwzA7h838iy4S3xaULRVnjUi4yJJ99WHRbPCd1I9Zs07BKl8FaLrxJSoX3C6
-         ahTKSlhGjqRUmUcxTGlCFTg75mCAS6iC0MMBDnhgQV5FrqHmPgLlL6/tM92aI70iiy
-         TiJH1NTcHrWWDpfnZhthbot03ycwp8ZGhJafMu4o2vn1yJIPt8LUBMGcuWADMLy9b3
-         3UbUps1P+NhbbUjZSMhuGbHtt/WG62i1YEb48DK4pGhoDq9TbOx
-Date:   Mon, 9 Dec 2019 02:06:17 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] patch-id: use oid_to_hex() to print multiple object IDs
-Message-ID: <20191209020617.GB1334263@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <bebcac17-f560-bb73-9aee-72f944df7d95@web.de>
+        id S1727054AbfLIGSz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 01:18:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41660 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726270AbfLIGSy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 01:18:54 -0500
+Received: (qmail 17834 invoked by uid 109); 9 Dec 2019 06:18:55 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 09 Dec 2019 06:18:55 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18127 invoked by uid 111); 9 Dec 2019 06:23:11 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 09 Dec 2019 01:23:11 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 9 Dec 2019 01:18:53 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH v3 0/9] Rewrite packfile reuse code
+Message-ID: <20191209061853.GA38588@coredump.intra.peff.net>
+References: <20191115141541.11149-1-chriscool@tuxfamily.org>
+ <20191115180319.113991-1-jonathantanmy@google.com>
+ <xmqqeexwxyc0.fsf@gitster-ct.c.googlers.com>
+ <xmqqa78kxy1i.fsf@gitster-ct.c.googlers.com>
+ <xmqq8snpw2pk.fsf@gitster-ct.c.googlers.com>
+ <CAP8UFD20LMxuV7KWAvobybHYZruDiADX-yOFPLyMxsHS7HZN0g@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1912072145290.31080@tvgsbejvaqbjf.bet>
+ <CAP8UFD1rmv7dvWBe5=dnrh8icfsE_PWEukmuUmqB9dWJ9NQTkg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1912080942360.31080@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EuxKj2iCbKjpUGkD"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <bebcac17-f560-bb73-9aee-72f944df7d95@web.de>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-2-amd64)
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <nycvar.QRO.7.76.6.1912080942360.31080@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Dec 08, 2019 at 09:54:01AM +0100, Johannes Schindelin wrote:
 
---EuxKj2iCbKjpUGkD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > That's why I put Peff as the author of the patches.
+> 
+> No, that is not the reason. You might think that that is the reason, but
+> the real reason why Peff is marked as the author of those patches is that
+> he really authored those patches.
+> 
+> In light of what you said, I don't think that it is a good idea to go
+> forward by leaning even further on Peff. From his activity on the Git
+> mailing list, I deduce that he is not exactly in need of even more work.
+> 
+> Instead, I think that if you truly want to push these patches forward, you
+> will have to dig deeper yourself, and answer Jonathan Tan's questions, and
+> possibly adjust the patches accordingly and send a new iteration.
+> 
+> I perceive it as very unfair toward Peff that this has not yet happened.
 
-On 2019-12-07 at 19:16:51, Ren=C3=A9 Scharfe wrote:
-> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-> index 3059e525b8..822ffff51f 100644
-> --- a/builtin/patch-id.c
-> +++ b/builtin/patch-id.c
-> @@ -5,13 +5,8 @@
->=20
->  static void flush_current_id(int patchlen, struct object_id *id, struct =
-object_id *result)
->  {
-> -	char name[GIT_MAX_HEXSZ + 1];
-> -
-> -	if (!patchlen)
-> -		return;
-> -
-> -	memcpy(name, oid_to_hex(id), the_hash_algo->hexsz + 1);
-> -	printf("%s %s\n", oid_to_hex(result), name);
-> +	if (patchlen)
-> +		printf("%s %s\n", oid_to_hex(result), oid_to_hex(id));
->  }
->=20
->  static int remove_space(char *line)
+To be clear, I am not bothered by this. And in fact I feel bad that I
+promised Christian that I take a careful look at the patches again, but
+haven't gotten around to it (for an embarrassingly long time now).
 
-This seems like a nice cleanup to me.  Thanks for sending the patch.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Now I would _love_ if somebody else dug into the topic enough to
+understand all of the ins and outs, and whether what they're doing is
+sane (or could be done better). But barring that, these patches have
+been battle-tested for many years on GitHub's servers, so even if we
+just take them as-is I hope it would be an improvement.
 
---EuxKj2iCbKjpUGkD
-Content-Type: application/pgp-signature; name="signature.asc"
+Fortunately I have some other work to do that I would like very much to
+procrastinate on, so let me see if that can summon the willpower for me
+to review these.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+> Well, you have time enough to send lengthy replies on a Sunday morning
+> (while Peff apparently did not even have time to say that he lacks the
+> time to work on this).
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl3trBkACgkQv1NdgR9S
-9ouu/xAAlZX2k0T2ShbTlmlH3Iy1eGp7R+pzNcl0wyVV4Iih3rvTof0CM+k/A/xW
-R6RMRqceToIhApXz1ERhvkUWuqu8KelJzAbUbH6XSW8htJJfWUXdMrGG8t7gJP+h
-I7fZ2aYndyBemjLbqpQN2O1g6OeRdhK4BOhjAOduOrU4epuiex3aTGlTfPpFg0E8
-KOwe8hBzW27q0mJakC2ovwc2tK1CYBGxKxM+DUgl2aYtEwKLi1S46UDhnt7BXmS7
-GMgna18d6ZCbkvdL1nkKfh1aNqon0PGL8E7tPky+iR7nP+Ksn63S1hIQqZ7BA81v
-24DT46gTH+pQyUt/rbod9Oh44ZtlWoDtQdgmXm3x7GRVph4oeImuiRcgxcLyB7OV
-YiAsoa2fK8H2Iup2gxhvZby2hjJpkKht6orr1dzifD7qeEWgmnx4hg9XCGJg3dzu
-aYSD6J/Gs2bhqbCYJ1XUv2UTtsdND35ZnZKi1RJ81NkKyASTbiEP7pEFrLEdHeJz
-Uh1zWLAbByYhrtHqLtZ7n8Pt4Vw2UZS1wTxSuVTW84ys6beHMtJZqrxhPI7CUIvd
-rFYOLdt1gAIxl+vksCgq41WrwsfBK/Sl8C/32WVdcpdSxTS88Zjzngr9ElWRF8Je
-my0GFqNHo/eAGMYsPpyBCyt75I3usGjK9Xv+J64At7gKHpqko94=
-=cau0
------END PGP SIGNATURE-----
+One tricky thing here is that I leave messages or subthreads that I
+intend to act on in my incoming Git mbox. And of course as time goes on,
+those get pushed further back in the pile. But when new messages arrive,
+mutt attaches them to the old threads, and I sometimes don't see them
+(until I go back and sift through the pile).
 
---EuxKj2iCbKjpUGkD--
+I wish there was a good way to have mutt remain in threaded mode, but
+sort the threads by recent activity. Setting sort_aux=last-date kind of
+works, but last time I tried it, I got annoyed that it did funny things
+with the order of patches within a thread (if somebody replies to patch
+3/5, and then 2/5, it will pull 3/5 down as "more recent").
+
+Dscho, you may feel free to roll your eyes and mutter under your breath
+about email if you wish. ;)
+
+-Peff
