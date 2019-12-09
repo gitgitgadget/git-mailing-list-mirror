@@ -2,172 +2,133 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E052DC43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 17:41:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B53E0C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 17:44:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B01222077B
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 17:41:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8918F2077B
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 17:44:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="RITTz05G"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jOerTPLj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726354AbfLIRlp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 12:41:45 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:41933 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725904AbfLIRlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 12:41:45 -0500
-Received: by mail-lf1-f65.google.com with SMTP id m30so11377807lfp.8
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 09:41:44 -0800 (PST)
+        id S1726495AbfLIRod (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 12:44:33 -0500
+Received: from mail-yw1-f42.google.com ([209.85.161.42]:36779 "EHLO
+        mail-yw1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726335AbfLIRod (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 12:44:33 -0500
+Received: by mail-yw1-f42.google.com with SMTP id u133so6124602ywb.3
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 09:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vxcJHZE3b1nlBQz/aoU0A9wv9AmilWzQrf0xHthvOoc=;
-        b=RITTz05GtdZC1WU8fGJ3f/JMwYvoAZ6CNtlaJ78UNWwx1E5jbSSsTpiWY3LllANkBO
-         lNDi7SutPlTTcal5S49sVPr0zW7WAoteVazs906YuySlOdfAkvLzB9nJ+ByFXwfWxbBf
-         0mjndJ7NlT80E7E3FgWMeBJpyad9sH+GGzZofTHGR0d28bTbgF2702+RNi81RBTm8g4U
-         lzlUfH+EvXlZppxcV4X0/07kCbP9SORYgLzJ1jkxFGL/RGOKvPkETCi4V8DHAVrU1FjU
-         CWGyn3qqsHvdeiYfZDZpxThIRALQtAfWQ916DcwWkK3yH0Ver64LCgVsktvaDWNP/pVf
-         h5Qw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Fu4GwWFiegLB3kXzAryK7dJxj7LOs64rFW2CQhsD8gI=;
+        b=jOerTPLjqGK3If+RLdAM/vWRgSeDxpetUGe7DQM1EqDg7jen//alnUAJ+658pD7U+V
+         NSyUvxTw3nooO9wUHhLtMiUnwlsObYvZAfB19yE8UkBLKWinqN5yd7TCAcoyj5mLM9Xn
+         CkxCTwrdDJr8/mnyf1Ht+OCq98b6Uwb9zxN9+ihDzPUuXFufGwSQnWFdhGrSU33HEsSy
+         EFH/M03MzmIAaD7yNB//7/Jmqv/DVFRTUYVKXmXI6D1MYoCrQHwStX4TeCXkNQsT5LrZ
+         it2tTsr/ZT1NIryBAG+1XthMEUTzphOlA+0cXWgPgKVcA26mhrOc8rVQlFOxISQBGKO0
+         AdOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vxcJHZE3b1nlBQz/aoU0A9wv9AmilWzQrf0xHthvOoc=;
-        b=lxRZQ9YKdzAhyZmnr7FFQVq0HItH0T7TjfQf0zQ5poKsRA4E5dKyUpszerQFkBZ+Gh
-         Gl/hKQ/M0NBqXGyrYCl740lQQzhCt7JVNFUVtEfR1y+fd7jlWexa9N322VulUBQxB9FD
-         cS0DJTVIXE6TAYyC6UaNmwx+PSxz2m7apNmGqQcgteItDHZGZON0VJplc3HJbTMvbORu
-         MuVugYrTGg2oxfcE4twLFZNkIUDJ3vcNh0lFQu4QpTCJHnJZNsanpnjkAucOtT0Z4opB
-         G85Ob92I6z34fJ6OXWIzlIbqrmOXZhbmY8OhJWb0Uu28pKN4KbkEr6iSaQj7XlcQeBJy
-         zgOw==
-X-Gm-Message-State: APjAAAXDwYj6IhumYaPZmisbxPz3FEzQOSB4hl95MWV11eIeLxJEW6jd
-        T77w+8V1RLI9g7ExvHMpQQjQV6RJmiKqpoJKM7S8AA==
-X-Google-Smtp-Source: APXvYqyv3F0aGkmGYVHnqSgdeHa+ZNurjQUCTUKy11tBm3ubFUqZh6OCE9lYnhBOvxz7opVi20LRtUoxrAWKsgORRYE=
-X-Received: by 2002:a19:f80a:: with SMTP id a10mr16801178lff.107.1575913303210;
- Mon, 09 Dec 2019 09:41:43 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Fu4GwWFiegLB3kXzAryK7dJxj7LOs64rFW2CQhsD8gI=;
+        b=RY6CYBu46nibmArbY5di9rREEnHVp2Wc2rKqUHhRfcTV7pDkAoZ7HBL1y4R/0Tm3YG
+         0Ck2+jzTKotGQm6DoFO9sAKiGlWZEOSdCJxPVyvP3/hBLuVXYzAklC+uTtRgkTJueULV
+         EtlhVp7ldl1JU23PooY86wj5aUa8LowGGqVJ1pnxLotTAV3SusdM7/k2QfUspGXYq1Ra
+         ZaeS5b4T/X5WDNw8eftigKL4Z8Wo8MLzWTrQR7cqkY5lAFZy9VbUV8OkqYeMl2uOj9rZ
+         6B4KHvRWCvvJJKI5fOY+ZolDyj82LEJtZWayhsX+DkOB+hfvzzGmesc/TG0/0s0ftA/J
+         nG3w==
+X-Gm-Message-State: APjAAAVNIrJamZOC+A2ngJOci8nkhU/uSdN5FiKCsVM09f0208xEwWeP
+        QbTKN5lbBi/wZxHQBeRgYQw=
+X-Google-Smtp-Source: APXvYqycsJ33l5M5mQdFpbJ0G5tbCh2Hyq7pBOe/rHarAslOf1t6amTpfnMFpveCRCRnl6P+d8yB6w==
+X-Received: by 2002:a81:19d7:: with SMTP id 206mr9207405ywz.153.1575913472097;
+        Mon, 09 Dec 2019 09:44:32 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id z23sm257253ywa.24.2019.12.09.09.44.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Dec 2019 09:44:31 -0800 (PST)
+Subject: Re: Git Test Coverage Report (Mon. Dec 9)
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+References: <903fcdea-6f08-caf5-77a4-2e82b8585edf@gmail.com>
+ <e47b77b4-7b7a-3d59-9e24-934528c5e297@web.de>
+ <CAPig+cTrAsn64S0Qm7PdJVFhsquVA3+ugwngLpo1S4yUjMcrGA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <58a3e2c4-4c5a-e276-f74e-128438f2ab40@gmail.com>
+Date:   Mon, 9 Dec 2019 12:44:30 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-References: <20191208180439.19018-1-otalpster@gmail.com>
-In-Reply-To: <20191208180439.19018-1-otalpster@gmail.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Mon, 9 Dec 2019 14:41:31 -0300
-Message-ID: <CAHd-oW4MzH9Wrb2zNPF0JBN8+FRB4NtDX0166Qt2Kbqs0mDgcw@mail.gmail.com>
-Subject: Re: [PATCH] entry.c: use dir-iterator to avoid explicit dir traversal
-To:     otalpster@gmail.com
-Cc:     git <git@vger.kernel.org>, Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPig+cTrAsn64S0Qm7PdJVFhsquVA3+ugwngLpo1S4yUjMcrGA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 8, 2019 at 3:06 PM <otalpster@gmail.com> wrote:
->
-> From: Plato <otalpster@gmail.com>
->
-> Replace usage of opendir/readdir/closedir API to traverse directories
-> recursively, at remove_subtree() function, by the dir-iterator API. This
-> simplifies the code and avoids recursive calls to remove_subtree().
->
-> Signed-off-by: Plato <otalpster@gmail.com>
-> ---
-> Hello,
->
-> This is my first patch.
+On 12/9/2019 12:19 PM, Eric Sunshine wrote:
+> On Mon, Dec 9, 2019 at 12:11 PM René Scharfe <l.s.r@web.de> wrote:
+>> Am 09.12.19 um 16:36 schrieb Derrick Stolee:
+>>> René Scharfe  0bb313a5 xdiff: unignore changes in function context
+>>> xdiff/xemit.c
+>>> 0bb313a5 223)        xchp->i1 + xchp->chg1 <= s1 &&
+>>> 0bb313a5 224)        xchp->i2 + xchp->chg2 <= s2)
+>>> 0bb313a5 225) xchp = xchp->next;
+>>
+>> Hmm, line 223 *is* exercised by t4015.85.
+> 
+> This, along with Dscho's[1] review of an earlier coverage report,
+> makes one wonder if there is some off-by-one error in the reporting
+> logic, such that it is reporting the wrong lines as not covered.
 
-Hello Plato, and welcome!
-Thanks for working on this.
+This is definitely possible. I'll see if I can locate the bug in
+my report-generation code.
 
-> I hope I cc'd the correct people and didn't mess up.
->
-> The changes pass the test suite t/ and Travis CI.
-> Please point out any mistakes.
->
-> Thanks for your time! :)
->
->  entry.c | 32 +++++++++++++++-----------------
->  1 file changed, 15 insertions(+), 17 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index 53380bb614..e7f4881d3b 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -2,6 +2,8 @@
->  #include "blob.h"
->  #include "object-store.h"
->  #include "dir.h"
-> +#include "iterator.h"
-> +#include "dir-iterator.h"
->  #include "streaming.h"
->  #include "submodule.h"
->  #include "progress.h"
-> @@ -50,29 +52,25 @@ static void create_directories(const char *path, int path_len,
->
->  static void remove_subtree(struct strbuf *path)
->  {
-> -       DIR *dir = opendir(path->buf);
-> -       struct dirent *de;
-> -       int origlen = path->len;
-> +       int ok;
-> +       unsigned int flags = DIR_ITERATOR_PEDANTIC;
-> +       struct dir_iterator *iter = dir_iterator_begin(path->buf, flags);
->
-> -       if (!dir)
-> +       if (!iter)
->                 die_errno("cannot opendir '%s'", path->buf);
+However, line 222 is here [1]
 
-Nitpick: since dir_iterator_begin() might fail for reasons other than
-an opendir() error, I think the error message here could be more
-generic. Maybe "failed to start iterator over %s"?
+	while (xchp != xch &&
 
-> -       while ((de = readdir(dir)) != NULL) {
-> -               struct stat st;
->
-> -               if (is_dot_or_dotdot(de->d_name))
-> +       while ((ok = dir_iterator_advance(iter)) == ITER_OK) {
-> +               if (is_dot_or_dotdot(iter->path.buf))
+So if this is always false, then the rest of the while condition
+will not be tested, nor will the body (line 225: xchp = xchp->next;).
 
-This check is already done by dir-iterator internally, so you may
-remove it here.
+If it's just an off-by-one error in either direction, then line 224
+still is definitely not covered (which would imply that 225 is not
+covered, either).
+ 
+> Footnotes:
+> 
+> [1]: https://lore.kernel.org/git/nycvar.QRO.7.76.6.1911262116100.31080@tvgsbejvaqbjf.bet/
+> which, among other seeming anomalies pointed out by Dscho, showed a
+> closing brace '}' not covered by a test:
+> 
+>     > Johannes Schindelin 867bc1d2 rebase-merges: ...
+>     > sequencer.c
+>     > 867bc1d2 4539) }
+> 
+>     Not sure why this closing parenthesis isn't covered :-D
 
->                         continue;
->
-> -               strbuf_addch(path, '/');
-> -               strbuf_addstr(path, de->d_name);
-> -               if (lstat(path->buf, &st))
-> -                       die_errno("cannot lstat '%s'", path->buf);
-> -               if (S_ISDIR(st.st_mode))
-> -                       remove_subtree(path);
-> -               else if (unlink(path->buf))
-> -                       die_errno("cannot unlink '%s'", path->buf);
-> -               strbuf_setlen(path, origlen);
-> +               if (unlink(iter->path.buf)) {
+That closing paren is the end of a for loop [2] that has an if (*) break; inside.
+The closing paren _could_ be uncovered if the "break;" is hit every time.
 
-unlink()-ing a directory in Linux will return a EISDIR error. So I
-think you still need to use S_ISDIR() to check if iter->path.buf is a
-directory and call rmdir(), in this case.
-
-However, note that the dir-iterator API gives entries in pre-order.
-I.e. a directory appears before its subentries. In the use case of
-remove_subtree(), though, we need to traverse in post-order, since we
-have to remove the subentries before removing the directory where they
-reside. My suggestion is that you add a preliminary patch,
-implementing a new DIR_ITERATOR_POST_ORDER flag to dir-iterator.h, and
-then use it in this patch.
-
-You may also want to check this[1] series, which worked towards the
-same goal of converting remove_subtree(). It ended up not getting
-merged, back them, but some of the patches were re-used in this[2]
-series which got merged. I think you could also re-use some of the
-code from [1] that implements the post-order traversing and a test[3]
-for remove_subtree().
+So, these seem like reasonable lines to report as uncovered. However, I'll
+continue to look for a problem in my code as I would hate to cause readers
+to stress over an actually-covered line.
 
 Thanks,
-Matheus
+-Stolee
 
-[1]: https://public-inbox.org/git/1493226219-33423-1-git-send-email-bnmvco@gmail.com/
-[2]: https://public-inbox.org/git/cover.1562801254.git.matheus.bernardino@usp.br/
-[3]: https://public-inbox.org/git/1493226219-33423-3-git-send-email-bnmvco@gmail.com/
+[1] https://github.com/git/git/blob/e0522318ac56aeb88f14e72ba2db25912e9972de/xdiff/xemit.c#L223
+[2] https://github.com/git/git/blob/083378cc35c4dbcc607e4cdd24a5fca440163d17/sequencer.c#L4539
