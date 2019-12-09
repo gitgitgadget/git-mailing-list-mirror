@@ -2,98 +2,143 @@ Return-Path: <SRS0=90au=Z7=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71AE0C00454
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2775C43603
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 22:01:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 471D0205C9
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 21:51:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7598A20726
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 22:01:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HG7zx53r"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yGrC1VYa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbfLIVvj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 16:51:39 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:33001 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726230AbfLIVvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 16:51:39 -0500
-Received: by mail-ot1-f68.google.com with SMTP id d17so13693906otc.0
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 13:51:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7lYLPwvNqTmyxvG/79Gg5Xu4L1gonSEnG/NkiGp4Gus=;
-        b=HG7zx53rpbhqRTIOdhKIfHpO4YmRUEsbhLhemBH4GVIG2mupWDt3lCqOWd+WDv1jb4
-         RyplE8c9IHpaKTuMJAOCO6MGiAYW2VI5PXHihLRlDYDlnHFUBuXOnWMNVCw8WhmhXb/D
-         SMAc1BfkZR1g0nXtYXzoqjNHW+AErjEB9uO6vaiuFrgnrwapeIf+L4h3pRtlj0hKnGv1
-         E8k3+KRwS54YRbh+DAgc46jCB9JbRlOwih2Rv971+mO/IaXYDUPCcM26hOEvcULyHeyQ
-         3CJz37BwtkPOc66i0tlS9POaj5+tTBeUI3/Z4LuC63eHsSrjLtabuqf+8NE5Ao/AYqDO
-         Vd5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7lYLPwvNqTmyxvG/79Gg5Xu4L1gonSEnG/NkiGp4Gus=;
-        b=PMMT7CW8Y5IhkqHOHmnxhw7D4+fLAe/snctIQexG9LFEP3RwO9ZxJs63OI9xypddDL
-         S+h9f1GFxaziVv2rYzw3oBsN/omT9PR3tN7m1xOhf7FXWlSiMqK3B0Ltcvmw/p4zMF/J
-         MFR/C+2HWE1zPEf8cijFVKeUnlgUFRZQn4OhD960rocq1gJWtHO5KER1ely3dRGMRqLD
-         oE0B5++OTFQN9kOLJJQc9Lus4AkBENVhJcSZysRyIAwSV5wik6FWgy0z4pZTIMr2a9fS
-         Nc6S09vd62arWm6oK+pbEUg7aUKccr2QKQYnrpTrqhBY1wHcJMBhg+mhbMLyb5ExcCh1
-         qG7A==
-X-Gm-Message-State: APjAAAXeMHCUZm3VgvYSgjaglLdyr2QizROdLKD0PTjrjdPzM0flcG6v
-        wRdZ7np0E4vc90stivq5O1jL3gXIed0PTbzlcdSliw==
-X-Google-Smtp-Source: APXvYqxEdzlT54GcIf+0If6YmwzQMWwfoRonYFn6qP+6kevPVEkB5d30dEjNnJKExvJK/zqyfdsIu6LLuYMEGb6q8u0=
-X-Received: by 2002:a9d:6a50:: with SMTP id h16mr15636997otn.267.1575928298300;
- Mon, 09 Dec 2019 13:51:38 -0800 (PST)
+        id S1726787AbfLIWBD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 17:01:03 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58703 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726495AbfLIWBD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 17:01:03 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 15996AA576;
+        Mon,  9 Dec 2019 17:01:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=j6NRMX2QcNdRw9DDbMiraAtIp/g=; b=yGrC1V
+        Ya8EvRqqC8aUN/YcMWN8DTzbl2MVuGKiXZR2dU/ilAE56/iPd4XX4154neyy2nK8
+        xajeCHNXIxtmQEvq6ws37ivBSf7EzxPvy2eeD1gs7a7i/xupJPhP3wcDbj1TlG5z
+        rHpuYDyFbPhh5Dqy0FZ8YlSWsU1FipjgOmpI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rJJpKloI5idKjmXDEMfMGpG5fkR2LVWD
+        0QidtxSPilinWEUX5CWweNo4Ls5E1Pd4frUyzds8GAIq0+jFXT10ahZRkSoch5PW
+        vjy2kzMGWkatqrXrOw5z6kDwD2pArmyCjCV/duJEwh5oNjxloXTV8DyrLnX5vbvt
+        VhLaaBfENhw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0E363AA575;
+        Mon,  9 Dec 2019 17:01:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 13DC4AA570;
+        Mon,  9 Dec 2019 17:00:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH 1/3] git-p4: [usability] yes/no prompts should sanitize user text
+References: <pull.675.git.git.1575901009.gitgitgadget@gmail.com>
+        <e721cdaa008263b896c1d162e411c4e7a04c5710.1575901009.git.gitgitgadget@gmail.com>
+Date:   Mon, 09 Dec 2019 14:00:55 -0800
+In-Reply-To: <e721cdaa008263b896c1d162e411c4e7a04c5710.1575901009.git.gitgitgadget@gmail.com>
+        (Ben Keene via GitGitGadget's message of "Mon, 09 Dec 2019 14:16:47
+        +0000")
+Message-ID: <xmqqimmptazs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
- <bfaf7592ee611f7e9f6fbcf7b1e4ae32f8307548.1575924465.git.gitgitgadget@gmail.com>
- <20191209213246.GA41680@generichostname>
-In-Reply-To: <20191209213246.GA41680@generichostname>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 9 Dec 2019 13:51:27 -0800
-Message-ID: <CABPp-BGdUjQ8gg-VH+udmwBmW-cfhiE7wX=qkQ2jnCgS6eQJiw@mail.gmail.com>
-Subject: Re: [PATCH 2/8] Revert "dir.c: make 'git-status --ignored' work
- within leading directories"
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 61497690-1ACF-11EA-A3DE-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 9, 2019 at 1:32 PM Denton Liu <liu.denton@gmail.com> wrote:
->
-> Hi Elijah,
->
-> On Mon, Dec 09, 2019 at 08:47:39PM +0000, Elijah Newren via GitGitGadget wrote:
-> > diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-> > index 0c394cf995..ded7f97181 100755
-> > --- a/t/t7061-wtstatus-ignore.sh
-> > +++ b/t/t7061-wtstatus-ignore.sh
-> > @@ -43,11 +43,14 @@ test_expect_success 'status untracked directory with --ignored -u' '
-> >       test_cmp expected actual
-> >  '
-> >  cat >expected <<\EOF
-> > -?? untracked/uncommitted
-> > +?? untracked/
-> >  !! untracked/ignored
-> >  EOF
-> >
-> > -test_expect_success 'status prefixed untracked directory with --ignored' '
-> > +test_expect_failure 'status of untracked directory with --ignored works with or without prefix' '
-> > +     git status --porcelain --ignored | grep untracked/ >actual &&
->
-> Can we break this pipe up into two invocations so that we don't have a
-> git command in the upstream of a pipe?
+"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sigh...yeah, I keep doing this.  And I'll probably keep doing it if
-someone can't chainlint (or pipefail) it.  I'll fix it up.
+> From: Ben Keene <seraphire@gmail.com>
+>
+> When prompting the user interactively for direction, the tests are
+> not forgiving of user input format.
+>
+> For example, the first query asks for a yes/no response. If the user
+> enters the full word "yes" or "no" or enters a capital "Y" the test
+> will fail.
+>
+> Create a new function, prompt(prompt_text, choices) where
+>   * promt_text is the text prompt for the user
+>   * is a list of lower-case, single letter choices.
+> This new function must  prompt the user for input and sanitize it by
+> converting the response to a lower case string, trimming leading and
+> trailing spaces, and checking if the first character is in the list
+> of choices. If it is, return the first letter.
+>
+> Change the current references to raw_input() to use this new function.
+>
+> Signed-off-by: Ben Keene <seraphire@gmail.com>
+> ---
+>  git-p4.py | 17 ++++++++++++++---
+>  1 file changed, 14 insertions(+), 3 deletions(-)
+>
+> diff --git a/git-p4.py b/git-p4.py
+> index 60c73b6a37..0fa562fac9 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -167,6 +167,17 @@ def die(msg):
+>          sys.stderr.write(msg + "\n")
+>          sys.exit(1)
+>  
+> +def prompt(prompt_text, choices = []):
+> +    """ Prompt the user to choose one of the choices
+> +    """
+> +    while True:
+> +        response = raw_input(prompt_text).strip().lower()
+> +        if len(response) == 0:
+> +            continue
+> +        response = response[0]
+> +        if response in choices:
+> +            return response
+
+I think this is a strict improvement compared to the original, but
+the new loop makes me wonder if we need to worry more about getting
+EOF while calling raw_input() here.  I am assuming that we would get
+EOFError either way so this is no worse/better than the status quo,
+and we can keep it outside the topic (even though it may be a good
+candidate for a low-hanging fruit for newbies).
+
+>  def write_pipe(c, stdin):
+>      if verbose:
+>          sys.stderr.write('Writing pipe: %s\n' % str(c))
+> @@ -1779,7 +1790,7 @@ def edit_template(self, template_file):
+>              return True
+>  
+>          while True:
+> -            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
+> +            response = prompt("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ", ["y", "n"])
+>              if response == 'y':
+>                  return True
+>              if response == 'n':
+> @@ -2350,8 +2361,8 @@ def run(self, args):
+>                          # prompt for what to do, or use the option/variable
+>                          if self.conflict_behavior == "ask":
+>                              print("What do you want to do?")
+> -                            response = raw_input("[s]kip this commit but apply"
+> -                                                 " the rest, or [q]uit? ")
+> +                            response = prompt("[s]kip this commit but apply"
+> +                                                 " the rest, or [q]uit? ", ["s", "q"])
+>                              if not response:
+>                                  continue
+>                          elif self.conflict_behavior == "skip":
