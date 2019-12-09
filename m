@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CED57C43603
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 16:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54DBDC04E30
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 16:10:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9FE9F20692
-	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 16:10:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 229F2207FF
+	for <git@archiver.kernel.org>; Mon,  9 Dec 2019 16:10:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oikF3ZGD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="s01U2OfS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbfLIQKI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 11:10:08 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39617 "EHLO
+        id S1726584AbfLIQKK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 11:10:10 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39619 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726230AbfLIQKI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 11:10:08 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y11so16806448wrt.6
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 08:10:06 -0800 (PST)
+        with ESMTP id S1726265AbfLIQKJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 11:10:09 -0500
+Received: by mail-wr1-f67.google.com with SMTP id y11so16806505wrt.6
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 08:10:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=pfn0Wbyas+epD+7PkfHj1Q6CsjnDLoQMW5oNeHuZuqk=;
-        b=oikF3ZGDovZr9wcDhfRevkpxNy3NM8fXrpNGOBT2gF6grz5zTP7Bu7E4sfrqe7arT+
-         lDDp5doH8xkynClfeE6IfleOmLHiJuXvoSIARYqwz1E3ih770aZxoo+YJtw0X+tkWM1B
-         IzHbVUPZEsZSNNPSJzaJCIApxZ2WlZmH1+QFrxyZluLLytn5kb3PUtBfH8lpWSFShfkB
-         vSzpZp0SuUc2KYbdGtyOBWBHntWLldq8VDSNHzIkCkAOMPcyn9ZlCp8ptH2Bmaa6CXrf
-         5KdUeSskdsj2o16PRc0Pk0OYcbO1HpNOThrkduUHbIPEYgRJK0IhTt2CiFB5PyjapiS1
-         CHBA==
+        bh=ymnkwB7JOEvPi7Ws+rA1Lp/Cyqkxn5JphfBC72RMmsI=;
+        b=s01U2OfSM1M3kxxLoYTRlUuOyBilYg0/qPcR271kZ3j15uLkoVaN2XC5jGdaNdBvm0
+         b+Q2wXUTRGJelmMf3Grot3DiL4KUiT2HHOZJrRuJpY+9XeNrKA4blhe1CewaDEba/6M7
+         ZWYrpq79tdjwXmrgumI5lvTBaPBjH8KMxGa8rD+upGlimaNZNViMvYBCyRG9bu6S8pQC
+         FXRCpPlMCMXFy4rwQTzPR4OB/hFgwwnt7opVgja3+ZNwl1hQGgb4aV9PziranmiQjILU
+         BqULLSZ/27VyLr624/AzDSPYnq9XDrjubpVQOHq8I9pmjpKoBqLBX1IJj5ORWnpR8ZdE
+         Puaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pfn0Wbyas+epD+7PkfHj1Q6CsjnDLoQMW5oNeHuZuqk=;
-        b=dJHau7WTk0nCsNDQC8Qj0RksVU40KKzzwRCNLhgA4sveV+bOjzDsGtER9dOFp2FGxY
-         r4m4JJ+wL+TMuUGqE2CrvhKUXVKYDsShZlxFg/trPLLYMApU3IDSKYGzO1O/pSgiqEfK
-         1CQJbk1NAkJ+jdMa9TXmt9DLNrmlRDzWuPvJggc852zNmlP2TxdlnZf0WpYFjGNGrjLg
-         IQ6Eg9r4P9tFw5cjP5pjV+2gaMY+ZK24b9zdqNomjXfDxnWH9GpwG54yJnY8kxWBvNAU
-         cnGj0OTSDnvgDr+DMdoLuxg5Z7hvxn9hFgFoCZtthy7Sv/7PuKsHNadYQxAVX0F6QfU5
-         f4kg==
-X-Gm-Message-State: APjAAAWgV7dMkyg8HSrKkxa/p3sujittIdn8T/Cr2YWdpO9Vn++Gda+a
-        nSrcwfgyllO3LN/QuV3i2uPXVMh8
-X-Google-Smtp-Source: APXvYqwjp/SbL6x5/H70JAX0d3ysgzp38X2ZhVtQyuDM7oTEl8ASjrrTSCjK9GPQWTiaYvCPys/tBQ==
-X-Received: by 2002:adf:f70b:: with SMTP id r11mr3206136wrp.388.1575907806276;
+        bh=ymnkwB7JOEvPi7Ws+rA1Lp/Cyqkxn5JphfBC72RMmsI=;
+        b=DCCSXBi1peOn5Dndb4V9JL3qItoDVVvSyeo39tbiiQ+CpMZEcAaO3+RlDjYMhAsq5c
+         fpOpXZWsKOCKddhK0PP0tq77rGiQPEuBxRS1fkbwQxnoaNjBFN51CtvmCFQUu72JJIrI
+         BqCj6PPs+CHPHvuHKVKrmsBWKcfMv2DhsWWjk545Fi9a1qz7TrUjRY5ErXOEjCZcY8Fz
+         YD/9uz0ql1/i9OAxT8GA1COT06vQ+NisZv884KC6sbqWoNtN9m5UP59qvL4MvCsAMVyU
+         HAgK/jkbRAfk60Rc7tgqTLMN9uOJnWaCx6QRXOMxz1NSGuU6BO1amHX+/g3d/RBK3BNI
+         XFuw==
+X-Gm-Message-State: APjAAAVJSRtG7uqoMXm/jMA8Rua176qeEegjzGUS3rRIUyJCRBICpcKs
+        CZIHUJohGDU7S27ZahVXo3QIXuu5
+X-Google-Smtp-Source: APXvYqwIXV1P2fEC+EQJatf2Rk81pBPkhHTSRi2T/e9nLwHL6vsWNFzVPtvFT5Mg+eeAzOZaRRQqQQ==
+X-Received: by 2002:adf:ef03:: with SMTP id e3mr3124577wro.216.1575907806998;
         Mon, 09 Dec 2019 08:10:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x132sm306868wmg.0.2019.12.09.08.10.05
+        by smtp.gmail.com with ESMTPSA id k16sm29709640wru.0.2019.12.09.08.10.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 09 Dec 2019 08:10:05 -0800 (PST)
-Message-Id: <79bb4c8e7d74c9c85cd6e6616811fc9a2e7c0afa.1575907804.git.gitgitgadget@gmail.com>
+        Mon, 09 Dec 2019 08:10:06 -0800 (PST)
+Message-Id: <dd492091e329fbc75571dd5d64bfdfd845daec80.1575907804.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
         <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 09 Dec 2019 16:09:57 +0000
-Subject: [PATCH v2 1/8] fsmonitor: disable in a bare repo
+Date:   Mon, 09 Dec 2019 16:09:58 +0000
+Subject: [PATCH v2 2/8] fsmonitor: do not output to stderr for tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,33 +85,29 @@ better to run the entire test suite with watchman enabled. This
 would provide more confidence that the feature is working as
 intended.
 
-If the repository is bare, then there is no working directory to
-watch. Disable the core_fsmonitor global in this case.
-
-Before this change, the test t0003-attributes.sh would fail with
-GIT_TEST_FSMONITOR pointing to t/t7519/fsmonitor-watchman.
+The test t0003-attributes.sh and others would fail when
+GIT_TEST_FSMONITOR is pointing at t/t7519/fsmonitor-watchman because
+it sends a message over stderr when registering the repo with
+watchman for the first time. Remove this stderr message for the
+test script to avoid this noise.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- config.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ t/t7519/fsmonitor-watchman | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/config.c b/config.c
-index 3900e4947b..f6d4e2fae3 100644
---- a/config.c
-+++ b/config.c
-@@ -2339,6 +2339,11 @@ int git_config_get_max_percent_split_change(void)
+diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+index d8e7a1e5ba..06312876aa 100755
+--- a/t/t7519/fsmonitor-watchman
++++ b/t/t7519/fsmonitor-watchman
+@@ -94,7 +94,6 @@ sub launch_watchman {
+ 	my $o = $json_pkg->new->utf8->decode($response);
  
- int git_config_get_fsmonitor(void)
- {
-+	if (!the_repository->worktree) {
-+		core_fsmonitor = 0;
-+		return 0;
-+	}
-+
- 	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
- 		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
- 
+ 	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
+-		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
+ 		$retry--;
+ 		qx/watchman watch "$git_work_tree"/;
+ 		die "Failed to make watchman watch '$git_work_tree'.\n" .
 -- 
 gitgitgadget
 
