@@ -2,187 +2,111 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6AAC04E30
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA7E2C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 04:38:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F4892077B
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:34:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 851EF20726
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 04:38:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R5jzTwD4"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="UcjLdR/c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726743AbfLJCeG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 21:34:06 -0500
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:47233 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbfLJCeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 21:34:06 -0500
-Received: by mail-yw1-f73.google.com with SMTP id j9so13319846ywg.14
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 18:34:05 -0800 (PST)
+        id S1726818AbfLJEiX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 23:38:23 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:44634 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726619AbfLJEiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 23:38:23 -0500
+Received: by mail-lj1-f195.google.com with SMTP id c19so18187070lji.11
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 20:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=usp-br.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=L4/lhw0eWd7OzgLDjeTG7MAEG4lKOXjksggmyh8Tb5k=;
-        b=R5jzTwD4SPNhTEGoLY8Exs1foYGONL5uTz1cykWhmOSMr/vfg8bS3uORWABLWyB4Rt
-         OiPQMiYfgsWjvFYzE5LbziBMCeqzcDJAP6GGMtjp0vDxBXBqXUD1n1YApzE7bNiL/M/j
-         JE1ECqiiVwomo6+oc55bcw1B7JIlhFbMLeq3N0y/cO5jFJk/EtYhHZlenFLVSIKNVoqd
-         fW2vPjdJcd9hBWjE+832nGnCUat/fx+I5q9SG9T2KCadiak1U+vieBWO/as7RD85uFVs
-         NgbK0dhgdOKmN+ofla8cUsGkZbyLCjcaTaGz3obNZZLJiBqiFHK3CbEh7/KFf3z1cAtT
-         jpTQ==
+        bh=r/hgzbmSxxTeBpSOjudC8S2rEdnf16D+xxAOjvs9++0=;
+        b=UcjLdR/c4EN5B/rtbzJsJUAwFa0BbkXfCqFYMIU87MhHjv9PftzUMF9jdA1IUIs0lz
+         OgotCc5pZtcjkJcgDn6LJFiQDG+G4ZfdYDGbeqh5e9e0IMxZKykiHNuxhsdr4x1+yfOC
+         QUOGOuEOGmCunIk8hKWetz8tKWgF7IvhQmp6nb+5XnV1EEkwpwRWShyZg4AMmlWo9hzO
+         f6PohIPa8qynGMF9zjIAu7tQ+LvaOf23N5jGVDnzPHXGKHZ75j1NC16qbLU1+WasOtCe
+         l/Ebn6xXYNVnUzz+mh+6QrrV7Dvu3/YNaw1rCq1DKmPTp77ZCaFyl2i8jOAdcTiVTL56
+         kUmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=L4/lhw0eWd7OzgLDjeTG7MAEG4lKOXjksggmyh8Tb5k=;
-        b=Yl0pBgCmHS1S9KdXVzDVCF4nJ/+p4T5LzlUKjXHPPGv9N6KWg11Ui71q0TmC4duL/L
-         N7S/7qud3U/koTrc18qqJczqdkoTyPDL3ZcVeEl+zWCQ+wWGNk6YBfk917Ni3hxwfREG
-         TAgp7xkUR1I61JHSopu8hDAzbH9JelNVc2JocJpLwXoW/d4ZdRIr8y1uG9kisDbda8gL
-         9fv89RrkrueVgiB+Vg6y59T/767MQIsWZndpSN3EU8Yp/Lvfsp/1vHUogSlatPPXa01O
-         z1CNQR+mVPe1JEdTgaVKsq5jfmoqDCFoaqbOgeZeIGW+C8ZpPBEnI+lYPMzDTn0H+BB2
-         23Uw==
-X-Gm-Message-State: APjAAAV12+BSTIZrcoU/SYZi+nd9g8xX75AmvliFKAqMkOt947IlDM6c
-        nIKdno7+S261oBL01bu+wez3ZuSmuSe/DvDkhlK1Qzzis63u4uOXdom+pNlleJHcUUznVWkTsXf
-        JYoS0gPZSAB7y7WYxSOkiQr2rWVCl/ula0OldNXlU8TuO4b/gUvQnl0B5F4XhC+y7VjE4xMATnQ
-        ==
-X-Google-Smtp-Source: APXvYqz8c/UOxhdyw8yJ7D7EwUnoWafOiT/IRD99A25NzFMWlkCHY3HLmaON6Vz2BERxt7F6Q2VXbt8nyTecytVYpT8=
-X-Received: by 2002:a81:af5f:: with SMTP id x31mr24108915ywj.264.1575945245151;
- Mon, 09 Dec 2019 18:34:05 -0800 (PST)
-Date:   Mon,  9 Dec 2019 18:33:35 -0800
-In-Reply-To: <20191210023335.49987-1-emilyshaffer@google.com>
-Message-Id: <20191210023335.49987-7-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20191210023335.49987-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
-Subject: [PATCH 6/6] hook: teach --porcelain mode
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=r/hgzbmSxxTeBpSOjudC8S2rEdnf16D+xxAOjvs9++0=;
+        b=mOONA2S2jkxCxYkw8id/b19VNlkdsF7Xx3Ut0W3ead7kQnGRm6HI6qszCgdwaS2tEy
+         91M6xfVe2Cz5e+cTMp29pkU0Z/qaEt885CbOyCt+lYd1v8i1fzz6/3aHO9ei0pbY9g1C
+         EJCtIvUTA+1uH+FtIvcV+CB/VMss9mZli5rluvFYMVbCm3Q5wSoKu1vB6GRD6CYmmO4H
+         tNS+B66gR9XYrXiZ7FGqYBYSUBPu7um8Q2g7JeK5tZecVuCdEug40yDqE9u6bkr4hSK9
+         ga5YuJfvCyHIaSQTqz/lMROoU1pgsvrbfKNGhSMh2tUv3RqcH1t1nio1yPoUYKXMXqHX
+         p/VA==
+X-Gm-Message-State: APjAAAVZn/evZ3sk2I005/ulyRepBhBMz4YrTXaTUR/Miko4pCbeA1Vo
+        C9k7w7iNgDBjVe/73QDB/VSCyhzoEuDrumZd9mAFBA==
+X-Google-Smtp-Source: APXvYqyRYS9ZQQsCWbh1/njS1djQg2IOs+fVRXRni8tlV3TQeHGf1AYYvgtWrnfMbw5Sp40NoSutqPecmntaVzrSMsg=
+X-Received: by 2002:a2e:5357:: with SMTP id t23mr19352388ljd.227.1575952700893;
+ Mon, 09 Dec 2019 20:38:20 -0800 (PST)
+MIME-Version: 1.0
+References: <20191208180439.19018-1-otalpster@gmail.com> <CAHd-oW4MzH9Wrb2zNPF0JBN8+FRB4NtDX0166Qt2Kbqs0mDgcw@mail.gmail.com>
+ <xmqqv9qptcyz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqv9qptcyz.fsf@gitster-ct.c.googlers.com>
+From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+Date:   Tue, 10 Dec 2019 01:38:09 -0300
+Message-ID: <CAHd-oW5tVNP=yNZqPANkk4JLWKJyPkb4g4AeUerrd1O=xdLKXQ@mail.gmail.com>
+Subject: Re: [PATCH] entry.c: use dir-iterator to avoid explicit dir traversal
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     otalpster@gmail.com, git <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It might be desirable - for a user script, or a scripted Git command -
-to run the appropriate set of hooks from outside of the compiled Git
-binary. So, teach --porcelain in a way that enables the following:
+On Mon, Dec 9, 2019 at 6:18 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
+>
+> >> The changes pass the test suite t/ and Travis CI.
+> >> Please point out any mistakes.
+> >> ...
+> >> -               strbuf_addch(path, '/');
+> >> -               strbuf_addstr(path, de->d_name);
+> >> -               if (lstat(path->buf, &st))
+> >> -                       die_errno("cannot lstat '%s'", path->buf);
+> >> -               if (S_ISDIR(st.st_mode))
+> >> -                       remove_subtree(path);
+> >> -               else if (unlink(path->buf))
+> >> -                       die_errno("cannot unlink '%s'", path->buf);
+> >> -               strbuf_setlen(path, origlen);
+> >> +               if (unlink(iter->path.buf)) {
+> >
+> > unlink()-ing a directory in Linux will return a EISDIR error. So I
+> > think you still need to use S_ISDIR() to check if iter->path.buf is a
+> > directory and call rmdir(), in this case.
+> >
+> > However, note that the dir-iterator API gives entries in pre-order.
+> > I.e. a directory appears before its subentries. In the use case of
+> > remove_subtree(), though, we need to traverse in post-order, since we
+> > have to remove the subentries before removing the directory where they
+> > reside. My suggestion is that you add a preliminary patch,
+> > implementing a new DIR_ITERATOR_POST_ORDER flag to dir-iterator.h, and
+> > then use it in this patch.
+>
+> Thanks for a review and a few hints to nudge a new contributor in
+> the right direction.  Very much appreciated.
+>
+> I wonder why the bugs in this patch weren't caught by self test we
+> already have, by the way.  We need a bit better test coverage,
+> perhaps?
 
-  git hook --list --porcelain pre-commit | xargs -I% sh "%"
+I think there is no current test that covers remove_subtree() being
+called with nested directories. But we could use the test proposed by
+Daniel[1], which does fail when this current patch is applied. So,
+maybe, Plato could also include this test in v2, before performing the
+dir-iterator convertion.
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- Documentation/git-hook.txt    |  5 ++++-
- builtin/hook.c                | 19 +++++++++++++------
- t/t1360-config-based-hooks.sh | 12 ++++++++++++
- 3 files changed, 29 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index b4a992d43f..34276f5bce 100644
---- a/Documentation/git-hook.txt
-+++ b/Documentation/git-hook.txt
-@@ -8,7 +8,7 @@ git-hook - Manage configured hooks
- SYNOPSIS
- --------
- [verse]
--'git hook' -l | --list <hook-name>
-+'git hook' -l | --list [--porcelain] <hook-name>
- 
- DESCRIPTION
- -----------
-@@ -45,6 +45,9 @@ OPTIONS
- 	in the order they should be run. Output of this command follows the
- 	format '<order number> <origin config> <hook command>'.
- 
-+--porcelain::
-+	Print in a machine-readable format suitable for scripting.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/builtin/hook.c b/builtin/hook.c
-index 8261302b27..b76dd3ad8f 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -16,7 +16,7 @@ enum hook_command {
- 	HOOK_LIST,
- };
- 
--static int print_hook_list(const struct strbuf *hookname)
-+static int print_hook_list(const struct strbuf *hookname, int porcelain)
- {
- 	struct list_head *head, *pos;
- 	struct hook *item;
-@@ -25,10 +25,14 @@ static int print_hook_list(const struct strbuf *hookname)
- 
- 	list_for_each(pos, head) {
- 		item = list_entry(pos, struct hook, list);
--		if (item)
--			printf("%.3d\t%s\t%s\n", item->order,
--			       config_scope_to_string(item->origin),
--			       item->command.buf);
-+		if (item) {
-+			if (porcelain)
-+				printf("%s\n", item->command.buf);
-+			else
-+				printf("%.3d\t%s\t%s\n", item->order,
-+				       config_scope_to_string(item->origin),
-+				       item->command.buf);
-+		}
- 	}
- 
- 	return 0;
-@@ -38,11 +42,14 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
- {
- 	enum hook_command command = 0;
- 	struct strbuf hookname = STRBUF_INIT;
-+	int porcelain = 0;
- 
- 	struct option builtin_hook_options[] = {
- 		OPT_CMDMODE('l', "list", &command,
- 			    N_("list scripts which will be run for <hookname>"),
- 			    HOOK_LIST),
-+		OPT_BOOL(0, "porcelain", &porcelain,
-+			 N_("display in machine parseable format")),
- 		OPT_END(),
- 	};
- 
-@@ -59,7 +66,7 @@ int cmd_hook(int argc, const char **argv, const char *prefix)
- 
- 	switch(command) {
- 		case HOOK_LIST:
--			return print_hook_list(&hookname);
-+			return print_hook_list(&hookname, porcelain);
- 			break;
- 		default:
- 			usage_msg_opt("no command given.", builtin_hook_usage,
-diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index 66e70ae222..6f16ea1dd8 100755
---- a/t/t1360-config-based-hooks.sh
-+++ b/t/t1360-config-based-hooks.sh
-@@ -33,6 +33,18 @@ test_expect_success 'git hook --list orders by order number' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'git hook --list --porcelain' '
-+	cat >expected <<-\EOF &&
-+	/path/def
-+	/path/ghi
-+	/path/rst
-+	/path/uvw
-+	EOF
-+
-+	git hook --list --porcelain pre-commit >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'order number collisions resolved in config order' '
- 	cat >expected <<-\EOF &&
- 	010	global	/path/def
--- 
-2.24.0.393.g34dc348eaf-goog
-
+[1]: https://public-inbox.org/git/1493226219-33423-3-git-send-email-bnmvco@gmail.com/
