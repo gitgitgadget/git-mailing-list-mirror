@@ -2,115 +2,126 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64A40C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4177AC43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:45:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3F3982077B
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:31:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 100E8207FF
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:45:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOOxJyuW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbfLJNbR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 08:31:17 -0500
-Received: from relay9-d.mail.gandi.net ([217.70.183.199]:47513 "EHLO
-        relay9-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbfLJNbQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 08:31:16 -0500
-X-Originating-IP: 157.36.75.244
-Received: from localhost (unknown [157.36.75.244])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay9-d.mail.gandi.net (Postfix) with ESMTPSA id 378EDFF807;
-        Tue, 10 Dec 2019 13:31:09 +0000 (UTC)
-Date:   Tue, 10 Dec 2019 19:01:05 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Vasili Novikov <vasilii.novikov@zivver.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-gui: allow closing console window with Escape
-Message-ID: <20191210133105.apfim55w7osvskvh@yadavpratyush.com>
-References: <20191206222040.toj4enbbbbamnrww@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1912071723010.31080@tvgsbejvaqbjf.bet>
- <20191208194046.csf35b7rgycst2vc@yadavpratyush.com>
- <nycvar.QRO.7.76.6.1912091014220.31080@tvgsbejvaqbjf.bet>
- <1313cb5b-9d6a-f038-bda3-757b4e55bf33@zivver.com>
- <20191210120219.zc4k5dih25ae3da6@yadavpratyush.com>
- <949c8fca-bf7d-ebde-4f28-10cf193c0411@zivver.com>
+        id S1727407AbfLJNp3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 08:45:29 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:46681 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727145AbfLJNp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 08:45:29 -0500
+Received: by mail-ot1-f68.google.com with SMTP id g18so15462762otj.13
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 05:45:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=r2Aj4kdLXXvyOK29peCuI3LgaRN1nnOqnH3jD+il0BI=;
+        b=hOOxJyuWN2GhJVPMo+dtl/884KffmAvRcYWE/pEHGy5EUrUZipBdCQIXpGOelFHYlv
+         310rx3+pl+JgJ1ZwxcTrDrGzUT8vIWKI2YFrM/r/zeOT+x1z0udcjYzQzCk3xuNraaNZ
+         rFApKM21JAemadpITW5JYPFEr66Y4EWJ6YpI8WtDAZgOatpdRkja2kBzcY7gcWgHeub3
+         Af3vSfc1e2IlHsHZwAO+VdOw7WCdMSYP0+Y5zY8yRDBT3aAScBeYN4FaZVusiv6bNCsq
+         bd8a24MT1/gBRgKYh4z91z8ZFu1pin40mvwNClrkebcc1PS8S5VeLqjVK/niQHWJ9Xu6
+         n6fA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=r2Aj4kdLXXvyOK29peCuI3LgaRN1nnOqnH3jD+il0BI=;
+        b=JHT/nfTzfbCfc7A71nxTnnBiJZb0KwbK5Hm0YgZZGDlH+y8rnyt3nHxb3rvUwlBhH7
+         hjYUsF/3h47u3nF47Yw1bdXCW1ho3k71GOSwio/hc9INr3p95QzlUn0G1NYWzd+V8UDO
+         3Hu0HHey6fRl1vY9MsK6LcLcP7CRbPWxtahUjDx6diQzCn1vLrCP3fygB2wxXuFe9ri4
+         1+7sO0Y7NAxoXL1tEDkrck364+/nHEFRr5MdObDYVAfx8zNX++MvbS9sdOZSGSaVtNXK
+         /BoV180w45Vxgh/uCPhyLkZrDzmExncaLRqt3cW3yoR3C8jjLCKPAuR9PJ8YjAv5CsCG
+         4SkQ==
+X-Gm-Message-State: APjAAAV8CZHrWPkkjU316kzpM9IOAPxvhC/X5vvXk7jtAgLo0Zj6pEya
+        14lWzJx5YeQZ+ryzKDq1a7Q=
+X-Google-Smtp-Source: APXvYqyShVKiSIknWOnm/SY4HtjGQxu4SnQslUKzv13AL+fEPJ2zlQ/WUlnWRzktUNOO/WCiwbTP/A==
+X-Received: by 2002:a9d:67d8:: with SMTP id c24mr10282153otn.172.1575985528538;
+        Tue, 10 Dec 2019 05:45:28 -0800 (PST)
+Received: from [192.168.1.76] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id b20sm1381169oib.1.2019.12.10.05.45.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 05:45:27 -0800 (PST)
+Subject: Re: [PATCH v2 4/8] t3030-merge-recursive.sh: disable fsmonitor when
+ tweaking GIT_WORK_TREE
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ukshah2@illinois.edu,
+        Kevin.Willford@microsoft.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
+ <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
+ <efc16962ee2595db50bf051fc84632b8c70036b3.1575907804.git.gitgitgadget@gmail.com>
+ <20191210100732.GD6527@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <b3e8ad07-b2cb-e024-405e-27d9f065f5fc@gmail.com>
+Date:   Tue, 10 Dec 2019 08:45:27 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <949c8fca-bf7d-ebde-4f28-10cf193c0411@zivver.com>
+In-Reply-To: <20191210100732.GD6527@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(+Cc Dscho who got dropped from the Cc list somewhere along the way)
-
-Hi Vasili,
-
-On 10/12/19 01:11PM, Vasili Novikov wrote:
-> Hi all,
-> Sorry if threading was broken: Thunderbird possibly doesn't fully support
-> mbox import that I used. Or I did it unproperly. Either way, hope it's
-> correct now.
-
-Threading seems to works fine for you. I meant avoiding top posting. 
-More explanation on top posting and bottom posting here 
-http://www.idallen.com/topposting.html
- 
-> Thanks for explaining. I misunderstood the purpose of the window. If it's a
-> slow ongoing task, then indeed it should not be closeable with Esc. I'd say
-> it makes sense to allow Esc to work when it gets into "Success" state
-> though, as in the screenshot.
-
-Hmm, I like the idea. Does that work for you Dscho?
- 
+On 12/10/2019 5:07 AM, SZEDER Gábor wrote:
+> On Mon, Dec 09, 2019 at 04:10:00PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> The fsmonitor feature allows an external tool such as watchman to
+>> monitor the working directory. The direct test
+>> t7619-status-fsmonitor.sh provides some coverage, but it would be
+>> better to run the entire test suite with watchman enabled. This
+>> would provide more confidence that the feature is working as
+>> intended.
+>>
+>> Worktrees use a ".git" _file_ instead of a folder to point to
+>> the base repo's .git directory and the proper worktree HEAD. The
+>> fsmonitor hook tries to create a JSON file inside the ".git" folder
+>> which violates the expectation here.
 > 
-> Thanks,
-> Vasili
+> Yeah, there are a couple hardcoded paths in there, e.g.:
 > 
-> On 10/12/2019 13.02, Pratyush Yadav wrote:
-> > Hi Vasili,
-> > 
-> > Please try to not top-post on the list.
-> > 
-> > On 09/12/19 04:53PM, Vasili Novikov wrote:
-> > > What have console windows to do with git gui though? I'd work under the
-> > 
-> > Well, the window/popup in question is internally named "console" and is
-> > defined in lib/console.tcl. It is used by many parts of git-gui that
-> > need to execute a command and show the output to the user.
-> > 
-> > > following assumptions:
-> > > * we're talking about a GUI window, not a TUI one
-> > > * the window has no useful information at all except the fact that something
-> > > has "finished", is "done". There are no actions that you can take except to
-> > > dismiss the window.
-> > It also shows you the output of a command currently in progress (like
-> > git-push). My main argument with avoiding Escape is that people often
-> > expect Escape to stop an ongoing command. In this case though, closing
-> > the window does not actually stop the command. It keeps going on in the
-> > background.
-> > 
-> > But since the window is gone, people might think the command they were
-> > running has stopped, which might lead to some unexpected results.
-> > 
-> > > If we agree on the following assumptions, then I see these real-world
-> > > examples:
-> > > * Mousepad > About > Esc = closes the popup
-> > > * Firefox > About > Esc = closes the popup
-> > > * Thunar > select any file and ask its properties > Esc = closes the window
-> > > * file-roller (GNOME compressed archive manager) > Extract archive > Observe
-> > > success window upon completion > Esc = closes the window.
-> > 
-> > In this case, the thing is done. There is no ongoing task. Not quite the
-> > case with the console window in git-gui, which can also show ongoing
-> > tasks.
-> > > Are there any real-world examples where `Ctrl W` or `Esc D` work but `Esc`
-> > > doesn't, to consider these alternatives as more intuitive to users?
+>   open ($fh, ">", ".git/watchman-response.json");
+> 
+> and, worse, not only in the test helper hook in
+> 't/t7519/fsmonitor-watchman' but in the sample hook template
+> 'templates/hooks--fsmonitor-watchman.sample' as well.
+> 
+>> It would be better to properly
+>> find a safe folder for storing this JSON file.
+> 
+>   git rev-parse --git-path ''
+> 
+> gives us the right directory prefix to use and we could then append
+> the various filenames that must be accessed in there.
 
--- 
-Regards,
-Pratyush Yadav
+Adding another git process inside the hook is hopefully not
+the only way to achieve something like this. The performance
+hit (mostly on Windows) would be a non-starter for me. (Yes,
+the process creation to watchman is already a cost here, but
+let's not make it worse.)
+
+Perhaps a better strategy would be to do something in-memory
+instead of writing to a file. Not sure how much of that can
+be done in the script.
+
+-Stolee
