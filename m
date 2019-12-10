@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20292C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 20:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D687C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 20:00:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E553720838
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 20:00:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F4592077B
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 20:00:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uct62cGw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HgCTp7xg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727064AbfLJUAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 15:00:35 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39406 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725999AbfLJUAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 15:00:33 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y11so21493419wrt.6
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 12:00:32 -0800 (PST)
+        id S1727117AbfLJUAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 15:00:41 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41112 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727077AbfLJUAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 15:00:38 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so21526747wrw.8
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 12:00:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=uct62cGwhQxj7rBRZqbJvB+i/1SmS9Bh1eTx1CmmjS4qDYAoL2crQyWBUafh146V/G
-         49TCUATPbNOSkGecozq5pSQ03oT3A8dBf1eJZCJgWEdvEuipT4aB7rAg0ryd9Hxeri8Y
-         mZxYWFMSWGxPaLMOnk9sVZbgHnI+E66rLw15Om+d+ceodJjYXVpjE96LgN1Qn48NT55i
-         QxAjbDnSkKWUQT56/gDcNybkOXOdhVRxHjSqtJlfqgD6jXesOjwwKJR8yokzAjyfXqdR
-         Af8wIxYPai+f2apU+To4m+HuGNWNc7eSEYfWWUTY0R+pqcYQfcJWDoXsU4XqfsmLgIlh
-         ltLQ==
+        bh=zze0uH3Nj4ZOmvZ1O0g/xeKVlrddGGSxpyF/tpjrz40=;
+        b=HgCTp7xgXoz8tKiKqtfXE7pfEr3f4KBzDz6ZgFO6JxXdZnO75gqsmjlvAFH5NnXUnd
+         5eVUxAK+/hj+0qsRDgiCjQTe1qSzPrWjoaNTi5oYwgQXXEy0/r+TaDQB/xDOLko3ev98
+         eJCOCKc9kBUxpsj7A394bz3g42UTrY7rx6KCcmTnr/4WxL3nC6B0b56p8amI8IbqfUqZ
+         e16Xs3t0UHYIkWFInVgJfA+PBdpox7OJ/HyJ5dL0Jx6tN1rlG+tnZChasLiz2VB2eB0E
+         mrqK4w3PZSKR849jZGOiK9HLXAmnascvMh6hicJeMq02UtLo6QKDVgMkLicLsphDDcfK
+         AvlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=FUBiG2ikNQ8pqJDFgN9OQiwVAQv1RHRx+xquC1m7xMbRGQHM4cHHWkScb29g2gfqDN
-         evwiuIVpL7BVdRzK6tYuOm+Uw4jifgvUp63RknxD1EnlTKkq1NBoihi1f9WzPMsheyTv
-         g/A1lykynIphzEtz5zh4i4vvK7Vq4myJ8/U+8H3FNjV4SHOVIvXvwxXlhWHnYf1nh/gF
-         DYx/U7NqBqZ8ORbe46TKfPAlB09kDA5Ee7JezVCFvijy4TD6QjVhjvJPWXVplmGK7qmp
-         nLjCcl404OO8Sdu2celU7mXI5lOb8rh6NCL72pGrDJ0YbemmNal6U2qZLkUwe7BQwhJx
-         oLPA==
-X-Gm-Message-State: APjAAAV0poiFBxtbHeOOcBYvugDFdTHlF1Q6Th4bVWI6VmaUlQXlhxYS
-        NJZI7NUCQv3Q+0ZK6QHowFKlg0QG
-X-Google-Smtp-Source: APXvYqyF4gYUhlKL9tLCsfbH8YbCxQAQhdtndtDbTgF09fMWLWAHreP25dW5xZdhNV/BYsqrr4oxcQ==
-X-Received: by 2002:adf:fe8c:: with SMTP id l12mr4881837wrr.215.1576008031802;
-        Tue, 10 Dec 2019 12:00:31 -0800 (PST)
+        bh=zze0uH3Nj4ZOmvZ1O0g/xeKVlrddGGSxpyF/tpjrz40=;
+        b=Ta+GQw7+uQPe0yUsC+jbqAl72w78AVFGL13bLcGCBbGeSdWNh0UT7f66GPb++KS9nQ
+         WX1vBLRnqBbbiTkOpdRDu8RRyLIdDW0NN60vcwVwFunRrqpF2PAf+gGfimHPwMl++qHv
+         gOsQYoeUdNJcxQUQX8HjU27LHUTE6qoWYrbQG6ADH8PSp9/L3+gIlQ2cNG75cxd1jwOt
+         fv3JWL44+r6CpVaDiaHf/Fx3S05KR6OfcxgIF9wWZzNH7UhlBu3zA6iPJPmg9nLluyoe
+         PALe6eK28Qn8JoheHNRy0T1JA5+H8Bh1JSTiO9Yfc5nk4g/2c0YgQ0prjNEcO9FT+z52
+         xJMg==
+X-Gm-Message-State: APjAAAUMrvJNItveUqYFKuLuJCpoC6nZs5D8YP5F25rNmEhyVuFLdNfz
+        bEyeVhr52e84k3ERUnorfZHbat4h
+X-Google-Smtp-Source: APXvYqwq2eK4vao8wmsrRccwKufI20dX0+eZ5qn0vZK6ACm7nYAck0EnJK9Xxvp3XMp9Ip0q0uwD5g==
+X-Received: by 2002:adf:fbc9:: with SMTP id d9mr5029941wrs.20.1576008035971;
+        Tue, 10 Dec 2019 12:00:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 60sm4610644wrn.86.2019.12.10.12.00.31
+        by smtp.gmail.com with ESMTPSA id w19sm4093039wmc.22.2019.12.10.12.00.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2019 12:00:31 -0800 (PST)
-Message-Id: <d6f858cab122869425f5801d98713bcbb6d00334.1576008027.git.gitgitgadget@gmail.com>
+        Tue, 10 Dec 2019 12:00:35 -0800 (PST)
+Message-Id: <77b57e44fdd819536c9be37a6190a79792efbccb.1576008027.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com>
 References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
         <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Dec 2019 20:00:22 +0000
-Subject: [PATCH v2 3/8] dir: remove stray quote character in comment
+Date:   Tue, 10 Dec 2019 20:00:27 +0000
+Subject: [PATCH v2 8/8] dir: consolidate similar code in treat_directory()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,24 +76,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+Both the DIR_SKIP_NESTED_GIT and DIR_NO_GITLINKS cases were checking for
+whether a path was actually a nonbare repository.  That code could be
+shared, with just the result of how to act differing between the two
+cases.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ dir.c | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 0dd5266629..5dacacd469 100644
+index bb6e481909..04541b798b 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -373,7 +373,7 @@ static int match_pathspec_item(const struct index_state *istate,
- 		    !ps_strncmp(item, match, name, namelen))
- 			return MATCHED_RECURSIVELY_LEADING_PATHSPEC;
+@@ -1461,6 +1461,8 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 	const char *dirname, int len, int baselen, int exclude,
+ 	const struct pathspec *pathspec)
+ {
++	int nested_repo = 0;
++
+ 	/* The "len-1" is to strip the final '/' */
+ 	switch (directory_exists_in_index(istate, dirname, len-1)) {
+ 	case index_directory:
+@@ -1470,15 +1472,16 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 		return path_none;
  
--		/* name" doesn't match up to the first wild character */
-+		/* name doesn't match up to the first wild character */
- 		if (item->nowildcard_len < item->len &&
- 		    ps_strncmp(item, match, name,
- 			       item->nowildcard_len - prefix))
+ 	case index_nonexistent:
+-		if (dir->flags & DIR_SKIP_NESTED_GIT) {
+-			int nested_repo;
++		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
++		    !(dir->flags & DIR_NO_GITLINKS)) {
+ 			struct strbuf sb = STRBUF_INIT;
+ 			strbuf_addstr(&sb, dirname);
+ 			nested_repo = is_nonbare_repository_dir(&sb);
+ 			strbuf_release(&sb);
+-			if (nested_repo)
+-				return path_none;
+ 		}
++		if (nested_repo)
++			return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
++				(exclude ? path_excluded : path_untracked));
+ 
+ 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+ 			break;
+@@ -1506,13 +1509,6 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 
+ 			return path_none;
+ 		}
+-		if (!(dir->flags & DIR_NO_GITLINKS)) {
+-			struct strbuf sb = STRBUF_INIT;
+-			strbuf_addstr(&sb, dirname);
+-			if (is_nonbare_repository_dir(&sb))
+-				return exclude ? path_excluded : path_untracked;
+-			strbuf_release(&sb);
+-		}
+ 		return path_recurse;
+ 	}
+ 
 -- 
 gitgitgadget
-
