@@ -2,117 +2,122 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1F8FC43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 05:20:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C3B4C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 09:43:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8BEEB20663
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 05:20:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0C09320663
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 09:43:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w7lHDRFx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XFJdhc5Z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbfLJFUQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 00:20:16 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60222 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbfLJFUQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 00:20:16 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EE6FB1B307;
-        Tue, 10 Dec 2019 00:20:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=esUD7EcNUYOmklp9kY/PqgCs2og=; b=w7lHDR
-        FxNLOC5aH11iMQTvDozsnT2Lh2ZiEzRFETSTSlr/gzhCBUNL+lH4e5z72kTXLrLV
-        s6yqXcvUPdS1b4mWFOUh/rracOujTHXZNejgZEwlWbZyL7pLNb6zJNXx24nN4osl
-        1lZsUpHt5aqPRFIRWhxpfIxElJP8x+H/7iWA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=FqOuvyuNMLr9tSF1Tok8FTcayL5/cbGY
-        25EI7JW0Uzo/d2mx0qfzAZZsqE/ga6PFiQtzfWOqIrkWhq7PBYwwZOPeo39ud3Xa
-        FuLRFes079fAwiLyPJKJ/qUDMPkOp6OMj2EcXTJhNqkwoxuGrOkDoLsL3MG43mu0
-        EqPkcQCUKcs=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E69981B305;
-        Tue, 10 Dec 2019 00:20:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5DAB01B303;
-        Tue, 10 Dec 2019 00:20:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, ukshah2@illinois.edu,
+        id S1727007AbfLJJnI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 04:43:08 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37590 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbfLJJnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 04:43:08 -0500
+Received: by mail-wr1-f68.google.com with SMTP id w15so19301245wru.4
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 01:43:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vfLaEKBvvjnEPhKvpAG0JaJnOamY+4i2qJB1Ln/1jy8=;
+        b=XFJdhc5ZyebFq3oplVM1xrjrwFA2rsXNzR8p4gJ4mPj6B95bcTf5ozP17kwC/HXSds
+         xp/h2kvJBP5CVwVPmEMQhT3Z0eV8yzKNbJ4MTmWwTef/GZmiZsI/Rs3dDLHgKKARhSpz
+         vC0LVKBDwIIEzTBjKvQQ3qEozOhQLudxDq8wtE6wvOQodMw6xlBjU4HmtmZ+xh+H6HC1
+         f4X4qys1+b/m6sgFak4tHoMlwFhNeJzkUPy+1c+7Vq6NtJjsa4jS890rQEZJdpKru9Ul
+         zQQP/Sw9MT4GshNw29J8YYYCUPtlcqEcKUKEvG+eArlUMVEkpJBoJSit5aBrTSwvRljB
+         TZDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vfLaEKBvvjnEPhKvpAG0JaJnOamY+4i2qJB1Ln/1jy8=;
+        b=uF44ZIf81nm25RlX4UuSTfbHARxXwrG4/sAlX/z/dP7EyAlWe36Pbxw6PVbDJ6xTE7
+         QIn4rZaULu/mPz44Ym0nL2xcJ8j8M4kCUkUvT2SNY2EU0BEdjdC4jzEmi4Tvd4qeOEal
+         q/VyVBELFBxvDd0zisUZBVAzqEhJxwzH+JWodIDPf3Kpy79sIu10fUY5cKskgh8892yL
+         IMoyEmD+J9r5HP78VrvQdJgnyJx4GS+kXHEn94UzdCVCbfhUeri18Kj8+MymMRkZMxGw
+         50AnMXVXnuDDFTn8asDJ6rfi5xAC1DopZIUDj+EdEem0vlYy6hvZIjNsT2THemgxWhpx
+         CuaQ==
+X-Gm-Message-State: APjAAAW9hq2ht/Dl+ry2CuJv7LKbM2KHgzGDmCIWUxoXM7jKCSttv/3q
+        5jEqxAiBShpPeHlh/z4e3vQ=
+X-Google-Smtp-Source: APXvYqwOTxzr+rhrtycZLGqejvyfr0uB94zgVIRzFiS2lFRjj3xnk0C0sIKr8nn7nf8c5+eI5dyA1A==
+X-Received: by 2002:a05:6000:cb:: with SMTP id q11mr2054627wrx.14.1575970986299;
+        Tue, 10 Dec 2019 01:43:06 -0800 (PST)
+Received: from szeder.dev (x4db55d5d.dyn.telefonica.de. [77.181.93.93])
+        by smtp.gmail.com with ESMTPSA id z3sm2561602wrs.94.2019.12.10.01.43.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Dec 2019 01:43:05 -0800 (PST)
+Date:   Tue, 10 Dec 2019 10:43:01 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ukshah2@illinois.edu,
         Kevin.Willford@microsoft.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 8/8] test-lib: clear watchman watches at test completion
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/8] t1301-shared-repo.sh: disable FSMONITOR
+Message-ID: <20191210094301.GB6527@szeder.dev>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
-        <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
-        <e51165f260d564ccb7a9b8e696691eccb184c01a.1575907804.git.gitgitgadget@gmail.com>
-        <xmqqwob5ru27.fsf@gitster-ct.c.googlers.com>
-        <bfa73fab-ce2c-a05e-3568-cd406dd5c31f@gmail.com>
-Date:   Mon, 09 Dec 2019 21:20:12 -0800
-In-Reply-To: <bfa73fab-ce2c-a05e-3568-cd406dd5c31f@gmail.com> (Derrick
-        Stolee's message of "Mon, 9 Dec 2019 20:49:36 -0500")
-Message-ID: <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
+ <f9db0c3416ff50587bffe46bb00268d8094c1ad7.1575907804.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BE45A93A-1B0C-11EA-99D1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f9db0c3416ff50587bffe46bb00268d8094c1ad7.1575907804.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Mon, Dec 09, 2019 at 04:09:59PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> The fsmonitor feature allows an external tool such as watchman to
+> monitor the working directory. The direct test
+> t7619-status-fsmonitor.sh provides some coverage, but it would be
+> better to run the entire test suite with watchman enabled. This
+> would provide more confidence that the feature is working as
+> intended.
+> 
+> The test t1301-shared-repo.sh would fail when GIT_TEST_FSMONITOR
+> is set to t/t7519/fsmonitor-watchman because it changes permissions
+> in an incompatible way.
 
-> Hm. That is a good point. Can we assume that our version of grep has
-> a "-F" or "--fixed-strings" option? ([1] seems to say that "-F" would
-> work.)
+I don't understand this, and would like it to be more specific, i.e.
+which particular permission changes in which tests are incompatible
+with watchman.
 
-$ git grep "grep -F" -- \*.sh
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t1301-shared-repo.sh | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+> index 2dc853d1be..665ade0cf2 100755
+> --- a/t/t1301-shared-repo.sh
+> +++ b/t/t1301-shared-repo.sh
+> @@ -128,6 +128,7 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+>  '
+>  
+>  test_expect_success POSIXPERM 'forced modes' '
+> +	GIT_TEST_FSMONITOR="" &&
 
-is your friend ;-) 
+This is not in a subshell, so it disables GIT_TEST_FSMONITOR not only
+for the test it is executed in but for the remainder of the test
+script.  From the commit message I can't decide whether that's
+intended.
 
-And never use https://www.gnu.org/ manual as a yardstick---you will
-end up using GNUism that is not unavailable elsewhere pretty easily.
-
-> [1] https://www.gnu.org/savannah-checkouts/gnu/grep/manual/grep.html#index-grep-programs
->
->> What are these stripping of ", and " about?  Could you tell readers
->> how a typical output from the program we are reading from looks like
->> perhaps in the log message or in-code comment around here?
->
-> Watchman outputs its list of paths in JSON format. Luckily, it formats
-> the output so the path lines are on separate lines, each quoted.
->
-> For example:
->
-> {
-> 	"version": "4.9.0",
-> 	"roots": [
-> 		"<path1>",
-> 		"<path2>",
-> 		"<path3>"
-> 	]
-> }
-
-Yeek; how is a dq in path represented?  by doubling?  by
-backslash-quoting (if so how is a backslash in path represented)?
-By something else?
-
-It's OK at least for now to declare that our test repository does
-not contain any funny paths, but in the longer run does the above
-mean that we somehow need to be able to grok JSON reliably in our
-tests?  It may not be such a bad thing especially for longer term,
-as there are other parts of the system that may benefit from having
-JSON capable output readers in our tests (e.g. trace2 code can do
-JSON, right?)..
-
+>  	mkdir -p templates/hooks &&
+>  	echo update-server-info >templates/hooks/post-update &&
+>  	chmod +x templates/hooks/post-update &&
+> -- 
+> gitgitgadget
+> 
