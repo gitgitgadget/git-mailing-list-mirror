@@ -1,74 +1,116 @@
 Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8D12C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 09:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9C02C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:02:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ADAC020663
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 09:46:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D83E32073B
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:02:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ojq4xqOr"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="FldF86oz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727068AbfLJJqo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 04:46:44 -0500
-Received: from mail-io1-f43.google.com ([209.85.166.43]:42170 "EHLO
-        mail-io1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726915AbfLJJqo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 04:46:44 -0500
-Received: by mail-io1-f43.google.com with SMTP id f82so18081982ioa.9
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 01:46:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=/ve3gGVB1Cw/WBbGYxx0p1NsH4duZNxfNFOIjn0nu6I=;
-        b=Ojq4xqOrBMtuPj+L0QvTyQvR2KpKg52FC1qSZvOMlp6BbyZy2yGG4W2IeHxAbW8lOL
-         0bTVYTvZfcyLuwUBSO8WLfJEodKEr+FSOPC1KU7tTw66FQap8exdXVLVsY7GFMxNAu+7
-         5WIHIU5nXkNxMseQFBfiM63aRElxL+VJIr4fTkMVQAmck5rgs8M5Ea6ntMRL/iPT9aso
-         mvdVWlQqoPGOLa33FBeN90DzlcfrS0AWZNPVICnertD3eIHHFSmQ/0FD7d6ic67oLbW/
-         gFaqnGTSfl9lFv+XUwNb0nnLUgUd9Nhefp2PpZ0ul22kw9nfz9iRYabNuYGplxsxlQgj
-         U3BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=/ve3gGVB1Cw/WBbGYxx0p1NsH4duZNxfNFOIjn0nu6I=;
-        b=XEb/Hz5/uL+h6j4eED6SquZYXMJ5HesPIYqspQZr32ukSFyZ0bZ0QKGCQUVhyrhdD2
-         stsqsupdIphiBcr4DdcYaOsupTItocwKl6nMzdMJawXQNCwjiZQtSMEIudJUlMVGA3g/
-         io22ftGfTEygds1UrBrdrFOgTL+OQJI33a3XYpxkgoxeZA5eJqVJHTkayl6PSuTtUhKL
-         45uYI1YMPOhhBl3tvJea1RCqazjpycwFkUKhZKhKhG+ddo6cml8IZejpHKc+1dMmmXd0
-         R/MpnYfZ9enpoPVl+Z6gO4yi58URiWhv7TJ9Z44gY26GRJcdepcNUzzSldT8CKSwSsqB
-         +Hyw==
-X-Gm-Message-State: APjAAAUcWt3BUIkpVBQC/hBF3ou6lQKTs3YGKugnsEpuwAHLR69r2dh6
-        LWZJeXvCPL127i2Dx0PChTte5RwN+Z5rdVROt3Wg+6T01JA=
-X-Google-Smtp-Source: APXvYqzLf73iat3w/rWy15eHzwMt43l8y40gvsvnXICxJk429rWYRbWDWlGfhAGZpT+1i8E3qSNbiS7KllDgDD7BNYI=
-X-Received: by 2002:a6b:ed17:: with SMTP id n23mr4093695iog.99.1575971203901;
- Tue, 10 Dec 2019 01:46:43 -0800 (PST)
+        id S1727061AbfLJKCL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 05:02:11 -0500
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:25309 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726574AbfLJKCK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 05:02:10 -0500
+X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Dec 2019 05:02:09 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1575972128;
+        s=strato-dkim-0002; d=aepfle.de;
+        h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:
+        X-RZG-CLASS-ID:X-RZG-AUTH:From:Subject:Sender;
+        bh=zsvIG4teKGgXCpRYYC2ecEVgr1f2va5eKcaaYlbhQyw=;
+        b=FldF86ozX0iA5uYZ4kyJVgYuPCri9IXcy4ZKJyyFo9F2ts0taktPBVxclYyVCc6mQs
+        NVTSwCN8qwWeaPU0n9ToZm846LEsCbgc4GZTeC2vMnGBmVEXEILZzhiMvsJwBdlSEX2H
+        CzLWQnQWDWDcQtrxyO3GibEh5nXjh56SzW/H/VruesE8ACTbgDq+6waKmOl/yZza9Kkk
+        VncJdxtDyYbRBI04V4opb+hTnEz2KNc7fWItq6S8euVZOWq57uRg4KTU0PJZAgPFVm0p
+        2KWoHrZdn8FrBf08BTjh8Pjv+/ThCF14iCoLW2LFYwGv90NVi+NuDwu6a6Q7t6+BQ69D
+        /lnA==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QED/SSGq+wjGiUC4kV1cX92EW4mFvNjTRB"
+X-RZG-CLASS-ID: mo00
+Received: from sender
+        by smtp.strato.de (RZmta 46.0.2 AUTH)
+        with ESMTPSA id a09c40vBA9u54sD
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+        Tue, 10 Dec 2019 10:56:05 +0100 (CET)
+Date:   Tue, 10 Dec 2019 10:55:45 +0100
+From:   Olaf Hering <olaf@aepfle.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: How to detect if a tree is in status "merge"?
+Message-ID: <20191210105545.66768b7a.olaf@aepfle.de>
+In-Reply-To: <xmqqzhg1tdm9.fsf@gitster-ct.c.googlers.com>
+References: <20191208115517.6b319a44.olaf@aepfle.de>
+        <xmqqzhg1tdm9.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 2019.05.18 (GTK+ 2.24.32; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Tue, 10 Dec 2019 10:46:33 +0100
-Message-ID: <CAN7CjDAu8-q6BR7sT4w_AccciGyk81AON+wyMjce+YJ_nc3WgA@mail.gmail.com>
-Subject: [Outreachy] New Outreachy post.
-To:     git <git@vger.kernel.org>
-Cc:     "Miriam R." <mirucam@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ boundary="Sig_/R5KwA0KQul6xRC0emZ03iwR"; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
-as an Outreachy intern I have to post on an experience blog during my
-internship. This is my new entry with the first week in Git project:
+--Sig_/R5KwA0KQul6xRC0emZ03iwR
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-https://mirucam.gitlab.io/outreachy_blog/post/week1/
+Am Mon, 09 Dec 2019 13:04:14 -0800
+schrieb Junio C Hamano <gitster@pobox.com>:
 
-in case you find it interesting for reading.
-Comments, advice or insight about the topics I am writing are always welcome:).
+> Olaf Hering <olaf@aepfle.de> writes:
+> > Is there a way to detect (from a script) if the current working tree is=
+ in state 'merge'? =20
+> The first step is to define what "state 'merge'" is, I think.
 
-Thank you,
-Miriam.
+I do a fresh clone of a remote repository, checkout the target branch,
+then merge some other branch into it. Usually the 'git status' command
+gives me a list of files. In case it creates some output, 'git commit'
+is called. In case there is '^UU' in the output, manual intervention
+is required prior commit.
+
+In this case the resolved conflict resulted in no changes. I do remember
+a plain 'git status' showed something like 'a merge is going on'.
+Apparently there is no easy way to get this state from a git command.
+But as you said I may be able to test for existence of files in the
+.git directory. I will try to recreate the state to repeat this merge.
+
+> Why are you scripting around "git commit"?  Doesn't "git commit"
+> refrain from creating an empty commit when there is nothing to
+> commit anyway, unless it is recording a merge whose result happens
+> to be a no-op?
+
+'git commit' errors out if there is nothing to commit.
+But in this case it would have to create a merge commit.
+
+Olaf
+
+--Sig_/R5KwA0KQul6xRC0emZ03iwR
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAl3va6EACgkQ86SN7mm1
+DoAtGA/9FVXLWvy/9Pgz8e+9UyA0GQNJxDIaQ+04yDLASTV+tVUBu4zrWrESOVW+
+LVP8KZg+wFYvpz/Po6+hiA5lrx93jbodVpHk03eSWnC+CDSZBmwu6S5sWTgrA5pE
+Z4RjOqktNaMx36Xq+A3hupojlEkhbUkB9scdkcdB/fe7YqdIOJ0lpUt2L6f8ZOmQ
+ytnTJbV+lArcQ9mHIDpgt//P7axbndkEdubM4otkGnGnyTblfpkkGzsmE0PRswK1
+poayVDIgzfl3WZGjHr/7Xr1rxCoeJgW6xPYRPp7ymhn9I2w9zEfnNuVmy21ovZUi
+q21fOoF1C1X/o5089tlxo7h58A+itnvqSJ4SvwyrfH4BUZ2Up+qfKQ+qkdxi95Rv
+5Z6wd8P2PUQOLaNiH4fXFcbCgZKUGCt1uTcFA40IaUzN03dpeqghoDG3eCdX/pUt
+OwPwRizqSUuzdsfgCp6Xn3xKxvwdBaGjQEuiX9qt+M4jRgdthNs1t7Y7YqhIavij
+2BZCUmd1leZRtAMNDLbLDPaCfHpKfKs29c23dg1ofwPF64sAoAOmGMvR9P9V9rh5
+N686/AeQJLSYWukAp9aDRmWV5GcR2uRxUzhxhXPqgPL/szP/pDu3rl+ESlcDliK8
+Zk/+e9OTaSYbvM8y9e6luNkDhweN9IHXS7GmJhfEw09RQg5EBJ8=
+=RAnx
+-----END PGP SIGNATURE-----
+
+--Sig_/R5KwA0KQul6xRC0emZ03iwR--
