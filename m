@@ -2,165 +2,137 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 71859C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2C5C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:20:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 36DFE207FF
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:09:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8CDF8207FF
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:20:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Joef1hEC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KX1LUeie"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727332AbfLJOJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 09:09:35 -0500
-Received: from mout.gmx.net ([212.227.15.19]:44925 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727145AbfLJOJf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 09:09:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1575986962;
-        bh=b9HmsbuRXTqqIIf7z5t/RxMcjVJia3YFITdD8lmi0M0=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Joef1hECghzkUHdyYkrAd7QL/0x2CnzGCIksijV/5oVGjPCeJNHAOyoHAj5+ugTb2
-         rKOzhlmy8sh1yp2B5X2LenjlkLRb5m3VNUpGfk7CNUMr0ORxnFDlbt6e4aoUo4XoX/
-         izuoQsKIp+vawgfhQgeeiyLTxAod3U4LBXrgiRdE=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M6Ue3-1igd4a3ZVZ-0070Fy; Tue, 10
- Dec 2019 15:09:21 +0100
-Date:   Tue, 10 Dec 2019 15:09:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Derrick Stolee <stolee@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, ukshah2@illinois.edu,
-        Kevin.Willford@microsoft.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 8/8] test-lib: clear watchman watches at test
- completion
-In-Reply-To: <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1912101457200.31080@tvgsbejvaqbjf.bet>
-References: <pull.466.git.1574374826.gitgitgadget@gmail.com>        <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>        <e51165f260d564ccb7a9b8e696691eccb184c01a.1575907804.git.gitgitgadget@gmail.com>        <xmqqwob5ru27.fsf@gitster-ct.c.googlers.com>
-        <bfa73fab-ce2c-a05e-3568-cd406dd5c31f@gmail.com> <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727451AbfLJOUI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 09:20:08 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:36646 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727007AbfLJOUI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 09:20:08 -0500
+Received: by mail-qk1-f196.google.com with SMTP id a203so6403395qkc.3
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 06:20:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=au5f5Q1OyNHmUm79WmPwTI8yZSD3ETvjveBI9TaKIWI=;
+        b=KX1LUeieCUpVC8deN5DLW/z02PAfndK+5ew1UF26P8d6LGhQDEDgAuHxKXrNMt2ZN8
+         B8MpyPaGx71tEnNFqHnvDOFMC9JyM1fWr61JXOc+6yt1vgONgcYLdU9TVVPEkdO65FgT
+         mToW8HmDc/kAx6ysf22bwQhDA87wTuR4UOZZhgfExf2/VZaYtLKpnzQBxDGTPJDNgXSb
+         b7qTBzVyucEz/Ku9JRwU532tr9ZL4CblV3ljS/9FWW/HdwyQxx7O3/pq2c245c+ADFNF
+         FNabwZAn9JLIUydK75FOi+ZALcr2qsDrk15MXCpkCDqz2qYKC8MJn5lZZ3vS3PjWtBHa
+         P1Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=au5f5Q1OyNHmUm79WmPwTI8yZSD3ETvjveBI9TaKIWI=;
+        b=FyS0NAoYhuvC50k+FjlVkVpmTqjw0ls4cs1D/ysnpOx+erQoytYCDHWW6BEUZrjDiB
+         Z2wYe97NL1lDo47+f7PfFsdX+4cLf0xucPZ+47vU3hTw3fYx9kA5E6ssnFly30/rKH78
+         V6vNq2t0IFW/2LObsU6gQHrRt5vuu2n+TJUoSOmG7ZNGr97PMUdTiWLa2v/8aGoIDI+b
+         j46QCo0O/hOsfhBo0Cjk/ih9bdTsmLn9MVbbpcz+9jddqACMiC1LGJnqo5XYTMdIRdP/
+         s4LOeletsLSSNKEnWEescE9e2abVApPiauphQMMDVlHsMW8V2qkjjHjLJs9WL27F7g4Z
+         dxKA==
+X-Gm-Message-State: APjAAAVIpSPDT+Vx0Ppr/W6Pa+zWYfrY/DAlPMc9Si/VPgNybpbhBGqt
+        yYM+oVtV4WZpjOzpX9iqKjp+xM53C1I=
+X-Google-Smtp-Source: APXvYqwY7JCBH2TA04fXAtLX0qg9590FQiLDHX+Dib9Mj+gnDS+nKF+ZLMsbgnP5RTgVgojyfo1Ysw==
+X-Received: by 2002:a37:684a:: with SMTP id d71mr13213908qkc.201.1575987606922;
+        Tue, 10 Dec 2019 06:20:06 -0800 (PST)
+Received: from [10.10.31.126] ([24.229.121.34])
+        by smtp.gmail.com with ESMTPSA id 68sm966329qkj.102.2019.12.10.06.20.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Dec 2019 06:20:06 -0800 (PST)
+Subject: Re: [PATCH 00/13] git-p4: python3 compatibility
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>,
+        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
+References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
+ <20191207010938.GA75094@generichostname>
+ <CABvFv3+viMXJO0z5HAQbCya7MU9tWd7P_LxUhu66T74XGN99yA@mail.gmail.com>
+ <b21d153a-02f9-b9a1-7388-59b5a882d4f2@gmail.com>
+ <CABvFv3Jf9i06OmBqOC2zfS+7Sm88PRYa19_rB8rELtMoN2E8CQ@mail.gmail.com>
+ <afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com>
+ <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
+ <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
+From:   Ben Keene <seraphire@gmail.com>
+Message-ID: <caa4b235-8ec8-0b6f-49e5-3c95e3a5f5e3@gmail.com>
+Date:   Tue, 10 Dec 2019 09:20:05 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bcgb5GU21qszkbzcVQ0ziIfxMhXc4ESa5YkTO7Mpy96dTW2802x
- Ry5WyEORaJrPW0hphQ5TAT6jHwRGpJnV65mwy9Yy7glqOsWxv9FyQgtZAH6F4GoOp4Pxzbr
- 5mTtjsDHln4aSw6U//5MNNaxCKRxoNl267y/SBTbN+O+5lQfT7KAEJXAfVIbHVH4glq0UZb
- ggNhIxMt1eErmTf4TYJkg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ISCTTlcgH3M=:hI6wwOwuOMg0+8AMcM1Gp0
- McBXXC4oOrTDFC+GL4cq58TD/uNVm90zfrpwU9P34M3fjR1X4xytML5+nOCQsdajllrRsl4KH
- 9GwJ5LkgsPuBsaPdjTYN5TrNEAUTyMYpgiOagcp5OeawG3Rj7SAzoL5imtwW950oDU3K+fK6b
- 872d47OS/sOPb8NMDSXXuB09t4dBcbGg5njKVaijSn34Qo7+0BsLeu7QRKU2TIC81n20oWhLN
- zL7i0inK4EKp0bhfYmM+kGRh8tdb9TeoPPKfc2sGfQOsapCnlhsUg/O3zN6GWrTFsp5fg0w2C
- FptgXrj5elEqG3zQAMbSN/dpqzBAISWgpFsb5bpyRe1Z5kMVbbQBMOKRgoFVBaVJ3PLG9Wp3l
- QNWlkyOb6Mb/eEpiWKmNhhmqdZkv77iFcPTCz8sfo9WesATLIQqee5/KoPF/vqDacR8B6uHcF
- EqNPNjqOIlXB3Y5VFBMpiZj2HGSZgavDS12Ft3ttn5F+iKLxIJbnsRRCi8GUeEIb6vULc/xcU
- kh3mx0/AtC9HnZuNRakGQcjUrzB551k+9U6jlryYHQKxsggSzxgVECAeSY+k19Clx7PSDDo1L
- 4Tjgehf1NqbOuxYeEZHu3LAm44it8V8DT3Bd9CzWNp+lEr3eIBwzP/48hmh5yxzFMijQfVUrQ
- vhCuU++bmG7XWoG1k1ixy+FOgZ3Y1QzC27wvI6SBAE0rONE0Ge7VukxM2fnxCCGnUqBSRzOfh
- aYiuvWQnhXTYiNWAD4Eo99ZnVyxYXqvX8QPnZo2a7jGK68JLYOf4Y5c6aTWDcWs8/ebIwhK40
- mNcpomq6vmc8GWBGEpiBm6ez503kKz51w96Q+hgdSTL2z35GlbF2b4wkg5xQepU1NePaEi/KI
- WB/bsOQ3anNQqRIVWW3KBny9Jbl3MoyZQmxmsvOZmo1bFIhuLA8EcQWKIbgfVnj05m5AQjGzM
- 1eI6YlubV4AnxYwLDwuU0WYPedwVG9VOHLSC6K3Dxa8TeutSExQJMBfuB30y7A1ldtUltElwi
- DoR89KjDZGlV2PvmAg3kMHRrMIGqXRQVoSW5nwHTkdbnCRuaLme2eA4xigX0QQepQ8uoLaIaF
- gk+hU77NbqtSEqyv26yFHUMZpHZp5Mgd907BH/6rUPVpQU0bRirSrCXBWQm7HBmAyo29t+pA5
- oTzOGlriN6QLomwxuOpyJWYm7Ny50/jIKuG/a12rj2wU66NJJbltcF3pRbes8Lvxt3nkQnunc
- nQMr4QDVQ7gU3fbxA6348ZU7Kl4O7cLVka1aemLlBNcMzRCYHBpFI+ZRaXbA=
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Mon, 9 Dec 2019, Junio C Hamano wrote:
-
-> Derrick Stolee <stolee@gmail.com> writes:
+On 12/9/2019 2:48 PM, Johannes Schindelin wrote:
+> Hi Ben,
 >
-> > Hm. That is a good point. Can we assume that our version of grep has
-> > a "-F" or "--fixed-strings" option? ([1] seems to say that "-F" would
-> > work.)
+> On Mon, 9 Dec 2019, Ben Keene wrote:
 >
-> $ git grep "grep -F" -- \*.sh
+>> So, I just attempted to run a base case on windows: git p4 clone //depot and
+>> I'm getting an error:
+>>
+>> Depot paths must start with "//": /depot
+> You started this in a Bash, right?
+No, I started it from a windows command cmd.exe prompt.  (I almost never 
+use the bash prompt)
 >
-> is your friend ;-)
+> The Git Bash has the very specific problem that many of Git's shell
+> scripts assume that forward slashes are directory separators, not
+> backslashes, and that absolute paths start with a single forward slash. In
+> other words, they expect Unix paths.
 >
-> And never use https://www.gnu.org/ manual as a yardstick---you will
-> end up using GNUism that is not unavailable elsewhere pretty easily.
+> But we're on Windows! So the MSYS2 runtime (which is the POSIX emulation
+> layer derived from Cygwin which allows us to build and run Bash on
+> Windows) "translates" between the paths. For example, if you pass `/depot`
+> as a parameter to a Git command, the MSYS2 runtime notices that `git.exe`
+> is not an MSYS2 program (i.e. it does not understand pseudo-Unix paths),
+> and translates the path to `C:/Program Files/Git/depot`.
+That is good to know!
 >
-> > [1] https://www.gnu.org/savannah-checkouts/gnu/grep/manual/grep.html#i=
-ndex-grep-programs
-
-I often look at GNU grep's man page first and then verify via
-https://man.openbsd.org/grep and
-https://pubs.opengroup.org/onlinepubs/009695399/utilities/grep.html
-that the option can be considered portable.
-
-> >> What are these stripping of ", and " about?  Could you tell readers
-> >> how a typical output from the program we are reading from looks like
-> >> perhaps in the log message or in-code comment around here?
-> >
-> > Watchman outputs its list of paths in JSON format. Luckily, it formats
-> > the output so the path lines are on separate lines, each quoted.
-> >
-> > For example:
-> >
-> > {
-> > 	"version": "4.9.0",
-> > 	"roots": [
-> > 		"<path1>",
-> > 		"<path2>",
-> > 		"<path3>"
-> > 	]
-> > }
+> However, your call has _two_ slashes, right? That is unfortunately MSYS2's
+> trick to say "oh BTW keep the slash, this is not a Unix path".
 >
-> Yeek; how is a dq in path represented?  by doubling?  by
-> backslash-quoting (if so how is a backslash in path represented)?
-> By something else?
+> To avoid this, just set `MSYS_NO_PATHCONV`, like so:
+
+When I first installed git, I didn't read the release notes. (Shame on 
+me!) and I installed
+python for windows and added an alias for git-p4.py against the windows 
+version of
+python, so when I run git, it's not performing that conversion.
+
+> 	MSYS_NO_PATHCONV=1 git p4 clone //depot
 >
-> It's OK at least for now to declare that our test repository does
-> not contain any funny paths, but in the longer run does the above
-> mean that we somehow need to be able to grok JSON reliably in our
-> tests?  It may not be such a bad thing especially for longer term,
-> as there are other parts of the system that may benefit from having
-> JSON capable output readers in our tests (e.g. trace2 code can do
-> JSON, right?)..
+> This behavior is documented in our release notes, by the way:
+> https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.md#known-issues
+>
+> Ciao,
+> Johannes
 
-From
-https://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf
-(section "9 String"):
 
-A string is a sequence of Unicode code points wrapped with quotation marks
-(U+0022). All code points may be  placed  within  the  quotation  marks
-except  for  the code  points that  must  be  escaped:  quotation  mark
-(U+0022), reverse solidus (U+005C), and the control characters U+0000 to
-U+001F. There are two-character escape sequence representations of some
-characters.
+I'm starting to run out of time at work, so I'll be slow to try and 
+repro this.
 
-	\"	represents the quotation mark character (U+0022).
-	\\	represents the reverse solidus character(U+005C).
-	\/	represents the solidus character (U+002F).
-	\b	represents the backspace character(U+0008).
-	\f	represents the form feed character (U+000C).
-	\n	represents the line feed character (U+000A).
-	\r	represents the carriage return character (U+000D).
-	\t	represents the character tabulation character (U+0009).
+Thanks for the info!
 
-(Side note: It is amazing what things you learn unexpectedly, e.g. when
-researching information about the JSON format, you learn that about the
-word "solidus", that it refers to the slash, and that it was once also
-know as the "shilling mark"...)
+- Ben
 
-I am not sure why the forward slash needs to be escaped, but I guess that
-this is voluntary rather than mandatory.
-
-Ciao,
-Dscho
