@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B7AC43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 885F8C04E30
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:34:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 18BC020726
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:33:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F01A20726
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 02:34:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a4gNJTKC"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aDfGPglD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbfLJCd7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Dec 2019 21:33:59 -0500
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:40744 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbfLJCd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Dec 2019 21:33:58 -0500
-Received: by mail-pf1-f202.google.com with SMTP id d127so10479231pfa.7
-        for <git@vger.kernel.org>; Mon, 09 Dec 2019 18:33:58 -0800 (PST)
+        id S1726689AbfLJCeB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Dec 2019 21:34:01 -0500
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:40183 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726509AbfLJCeB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Dec 2019 21:34:01 -0500
+Received: by mail-pg1-f201.google.com with SMTP id z12so9761514pgf.7
+        for <git@vger.kernel.org>; Mon, 09 Dec 2019 18:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ggZF69UtlBPHcYM+6WWl8faTyBeVGaBUKV8FevVyN8w=;
-        b=a4gNJTKC3LvZpXtDpvE2mJ8EnYWm83+cPq/vuBz1ZD2aIAxOZohFTLDjmycU0h/6jl
-         VZSc+aGeIUq6yWOFbrOHnDWB884U3oT9K7B62josFfHV7Rqt/lqbujdDDjQB7+y0pur0
-         QQrZ/TZBs4CE6GVyrPafOBQlYvdxvaRVkSCLf+S4pJuPW2qZZWEuDxTTZ/gF3ZcbrKS2
-         sptLajOk+MY7mAK9CIS3C+L5kUSU/Cqg88dUoZKcgTnsi9L/ekzLxOO4lXdUoWt+pxZQ
-         v/v6yKv8jO04hINE8jspOFJg4FYvH7tPDNPTSUnl+48Rrsz2thMuGjCAZHcMK9MaClZt
-         mjyQ==
+        bh=K8or5ZeKpAf6ZAbE/hDuC3yP5yGtul5JFSNDQJlJ44c=;
+        b=aDfGPglDRkTxbdyR8PPurABCtyhX9fu9HjuP4qcq0rWJ2SDs4sb0iBwvZEHcDibRhx
+         AHVLMutbSro8aOWeefacGg56uq0KIbPA00UQGOjfqjJUbg/kWOcZ91SZ7AFiNtaOXxW3
+         04t5P6FW+DncxUwD6ZWyU9XS7e5xTXmjOnJXskCp14d9mn3IJWKocrPi6vwTJFkwpGo4
+         Cv3gMcp0+Lor/vgktfRmPeR6FdiQ/7YySF4b0zRvgaYDwZ7ufBWuI0dtkdjCxNGr2qpZ
+         fyRl2SXiI40d3gukWNZYX2Z5vwGxQjLryMR6foQZbwLaXTaE/i27ciZNJK0AG3ynuAsR
+         kFrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ggZF69UtlBPHcYM+6WWl8faTyBeVGaBUKV8FevVyN8w=;
-        b=ZU5sSycGUI+1j1VlQLzhm9L8ns0A6gIojgdFKIExgBwpCtfAAecgkOOQrZeCYsDMRu
-         EXGEdEqI2y2hfolk9Xk+5O6P8LzvsxZ8E9Y1jlwLWZ64/n87u2syT58d/+8jfP/KyfEK
-         wH5vrJsI6KvTiD8vRabbCm8ESxYc+S8+lal5L366URUY8l7B+diCCIRpRYz9EfWdxeSQ
-         WBa5IobscxLL99FEMPmKlzXNGFkahgbhBdoIxHLkApAyZRrFAeCN1ke0rMl1IpTMQcV8
-         z1lfZLl0xRtIoyoaFZpDfiSJkCArfkqnJkCX+Jt3A/xKc+I1tkjNIZvejFWFLagA4L/v
-         zN2w==
-X-Gm-Message-State: APjAAAWHE6onsAw6vuYeWOj2vyamrxHj6kySQzwr4qwDYqvVx+LzffwF
-        LQ58rGpqkkEAA59/c+P2zuqUUSqhdgwZaprfGQhVI3kIWShg58V2Fu0wtsBh91XHvT5FBfzvh8B
-        tEqvkhYRle0UQ8wNOaedD6af6uIO9U7hzvMEnKgKykRnw1HlrNPG1Xgwl/0G4oCWWlScMU8aobg
+        bh=K8or5ZeKpAf6ZAbE/hDuC3yP5yGtul5JFSNDQJlJ44c=;
+        b=gOlIgu42gnftbmeRpyZ+Y1VwHrbGr6bfCz9hyJwc2H4XaXEUymumQtKbQXY3Leqp5R
+         3jlfj+XTu2QtYFN9/OwV28XCQkBi9U2EAWKyj+56hsynEz4Li8uruVBG30DYWx+VZoMV
+         NFUR1WCvaisRxza0H3tSaFH4AiY3yzZWcf9vQ3hBwsylK/qeB38+juCWfdqvrtWFH/sL
+         csXAgKhbFhl4iqn5LVxTjBxugdFLuCUSEKWYAgzATymbP8fUMqLL52bdXBKcgguAfWig
+         4ZwZBwjR7NhDAFNyslsIbbW/b/e/oma7bAgrk6aWXoIAE8GHrjO5L+kdYakfFeALSwD6
+         ywGw==
+X-Gm-Message-State: APjAAAWp7GlpRqjhuOlWY/Ki5c2RNj/4dbYIAIKbaeWKs5uq8N5eEQEi
+        N4RNVfpEVOBMroIZYg+Fwi3uqI7eRfTDAg+UM7NMbMzIsoWUWiwaDIVogblVXqNqMiIps2pK3ZV
+        vuOHoPgAz/wzCgyJm7IFTsAZ2RJ/IXsZAIM0Blfrp8aDO/BDMJnNRsKrg0Ih2ptzNoGxrT7sFeQ
         ==
-X-Google-Smtp-Source: APXvYqzaZ7fFR6mo4rs0BvlePBRpw7NIVLDHp/i0qiAwCXlNWJrZgwQd36w5i3WrEOqjzKjoHD2JqmN1SpsnhWn2x60=
-X-Received: by 2002:a63:b26:: with SMTP id 38mr21914487pgl.116.1575945237982;
- Mon, 09 Dec 2019 18:33:57 -0800 (PST)
-Date:   Mon,  9 Dec 2019 18:33:32 -0800
+X-Google-Smtp-Source: APXvYqwdesb/UQy4Y++n5RYlzzoLZ2KCfYB2+VfGlDftcLVhKtJrrXJQrivkbCreGu4TZYexSI/vw9NIeRvaUoK90S0=
+X-Received: by 2002:a63:cc02:: with SMTP id x2mr22428641pgf.114.1575945240167;
+ Mon, 09 Dec 2019 18:34:00 -0800 (PST)
+Date:   Mon,  9 Dec 2019 18:33:33 -0800
 In-Reply-To: <20191210023335.49987-1-emilyshaffer@google.com>
-Message-Id: <20191210023335.49987-4-emilyshaffer@google.com>
+Message-Id: <20191210023335.49987-5-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191210023335.49987-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.0.393.g34dc348eaf-goog
-Subject: [PATCH 3/6] hook: add --list mode
+Subject: [PATCH 4/6] hook: support reordering of hook list
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,14 +68,11 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach 'git hook --list <hookname>', which checks the known configs in
-order to create an ordered list of hooks to run on a given hook event.
-
-The hook config format is "hook.<hookname> = <order>:<path-to-hook>".
-This paves the way for multiple hook support; hooks should be run in the
-order specified by the user in the config, and in the case of an order
-number collision, configuration order should be used (e.g. global hook
-004 will run before repo hook 004).
+It's possible that in most cases a user wants to run pre-commit hook
+'A', but in exactly one repo that user wants to run pre-commit hook 'A'
+first instead. Teach 'git hook' to support this by allowing a user to
+specify a new order number for a hook after the initial hook has been
+specified.
 
 For example:
 
@@ -83,312 +80,86 @@ For example:
   [hook]
           pre-commit = 001:~/test.sh
           pre-commit = 999:~/baz.sh
-
-  $ grep -A1 "\[hook\]" ~/git/.git/config
+  $ grep -A2 "\[hook\]" ~/git/.git/config
   [hook]
           pre-commit = 900:~/bar.sh
-
+          pre-commit = 050:~/baz.sh
   $ ./bin-wrappers/git hook --list pre-commit
   001     global  ~/test.sh
+  050     repo    ~/baz.sh
   900     repo    ~/bar.sh
-  999     global  ~/baz.sh
+
+In the above example, '~/baz.sh' is provided in the global config with
+order position 999. Then, in the local config, that order is overridden
+to 050. Instead of running ~/baz.sh twice (at order 050 and at order
+999), only run it once, in the position specified last in config order.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- Documentation/git-hook.txt    | 17 +++++++-
- Makefile                      |  1 +
- builtin/hook.c                | 54 ++++++++++++++++++++++-
- hook.c                        | 81 +++++++++++++++++++++++++++++++++++
- hook.h                        | 14 ++++++
- t/t1360-config-based-hooks.sh | 43 ++++++++++++++++++-
- 6 files changed, 206 insertions(+), 4 deletions(-)
- create mode 100644 hook.c
- create mode 100644 hook.h
+ Documentation/git-hook.txt    |  8 ++++++++
+ hook.c                        |  7 +++++++
+ t/t1360-config-based-hooks.sh | 14 ++++++++++++++
+ 3 files changed, 29 insertions(+)
 
 diff --git a/Documentation/git-hook.txt b/Documentation/git-hook.txt
-index 2d50c414cc..a141884239 100644
+index a141884239..0f7115f826 100644
 --- a/Documentation/git-hook.txt
 +++ b/Documentation/git-hook.txt
-@@ -8,12 +8,27 @@ git-hook - Manage configured hooks
- SYNOPSIS
- --------
- [verse]
--'git hook'
-+'git hook' -l | --list <hook-name>
+@@ -20,6 +20,14 @@ This command parses the default configuration files for lines which look like
+ single hook. Hooks are sorted in ascending order by order number; in the event
+ of an order number conflict, they are sorted in configuration order.
  
- DESCRIPTION
- -----------
- You can list, add, and modify hooks with this command.
++The order number of a hook can be changed at a more local scope, e.g.:
++
++  git config --add --global hook.pre-commit "001:/foo.sh"
++  git config --add --local hook.pre-commit "005:/foo.sh"
++
++When the order number is respecified this way, the previously specified hook
++configuration is overridden.
++
+ OPTIONS
+ -------
  
-+This command parses the default configuration files for lines which look like
-+"hook.<hook-name> = <order number>:<hook command>", e.g. "hook.pre-commit =
-+010:/path/to/script.sh". In this way, multiple scripts can be run during a
-+single hook. Hooks are sorted in ascending order by order number; in the event
-+of an order number conflict, they are sorted in configuration order.
-+
-+OPTIONS
-+-------
-+
-+-l::
-+--list::
-+	List the hooks which have been configured for <hook-name>. Hooks appear
-+	in the order they should be run. Output of this command follows the
-+	format '<order number> <origin config> <hook command>'.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 83263505c0..21b3a82208 100644
---- a/Makefile
-+++ b/Makefile
-@@ -892,6 +892,7 @@ LIB_OBJS += hashmap.o
- LIB_OBJS += linear-assignment.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
-+LIB_OBJS += hook.o
- LIB_OBJS += ident.o
- LIB_OBJS += interdiff.o
- LIB_OBJS += json-writer.o
-diff --git a/builtin/hook.c b/builtin/hook.c
-index b2bbc84d4d..8261302b27 100644
---- a/builtin/hook.c
-+++ b/builtin/hook.c
-@@ -1,21 +1,73 @@
- #include "cache.h"
- 
- #include "builtin.h"
-+#include "config.h"
-+#include "hook.h"
- #include "parse-options.h"
-+#include "strbuf.h"
- 
- static const char * const builtin_hook_usage[] = {
--	N_("git hook"),
-+	N_("git hook --list <hookname>"),
- 	NULL
- };
- 
-+enum hook_command {
-+	HOOK_NO_COMMAND = 0,
-+	HOOK_LIST,
-+};
-+
-+static int print_hook_list(const struct strbuf *hookname)
-+{
-+	struct list_head *head, *pos;
-+	struct hook *item;
-+
-+	head = hook_list(hookname);
-+
-+	list_for_each(pos, head) {
-+		item = list_entry(pos, struct hook, list);
-+		if (item)
-+			printf("%.3d\t%s\t%s\n", item->order,
-+			       config_scope_to_string(item->origin),
-+			       item->command.buf);
-+	}
-+
-+	return 0;
-+}
-+
- int cmd_hook(int argc, const char **argv, const char *prefix)
- {
-+	enum hook_command command = 0;
-+	struct strbuf hookname = STRBUF_INIT;
-+
- 	struct option builtin_hook_options[] = {
-+		OPT_CMDMODE('l', "list", &command,
-+			    N_("list scripts which will be run for <hookname>"),
-+			    HOOK_LIST),
- 		OPT_END(),
- 	};
- 
- 	argc = parse_options(argc, argv, prefix, builtin_hook_options,
- 			     builtin_hook_usage, 0);
- 
-+	if (argc < 1) {
-+		usage_msg_opt("a hookname must be provided to operate on.",
-+			      builtin_hook_usage, builtin_hook_options);
-+	}
-+
-+	strbuf_addstr(&hookname, "hook.");
-+	strbuf_addstr(&hookname, argv[0]);
-+
-+	switch(command) {
-+		case HOOK_LIST:
-+			return print_hook_list(&hookname);
-+			break;
-+		default:
-+			usage_msg_opt("no command given.", builtin_hook_usage,
-+				      builtin_hook_options);
-+	}
-+
-+	clear_hook_list();
-+	strbuf_release(&hookname);
-+
- 	return 0;
- }
 diff --git a/hook.c b/hook.c
-new file mode 100644
-index 0000000000..f8d1109084
---- /dev/null
+index f8d1109084..a7dcd18a2e 100644
+--- a/hook.c
 +++ b/hook.c
-@@ -0,0 +1,81 @@
-+#include "cache.h"
-+
-+#include "hook.h"
-+#include "config.h"
-+
-+static LIST_HEAD(hook_head);
-+
-+void free_hook(struct hook *ptr)
-+{
-+	if (ptr) {
-+		strbuf_release(&ptr->command);
-+		free(ptr);
-+	}
-+}
-+
-+static void emplace_hook(struct list_head *pos, int order, const char *command)
-+{
-+	struct hook *to_add = malloc(sizeof(struct hook));
-+	to_add->order = order;
-+	to_add->origin = current_config_scope();
-+	strbuf_init(&to_add->command, 0);
-+	strbuf_addstr(&to_add->command, command);
-+
-+	list_add_tail(&to_add->list, pos);
-+}
-+
-+static void remove_hook(struct list_head *to_remove)
-+{
-+	struct hook *hook_to_remove = list_entry(to_remove, struct hook, list);
-+	list_del(to_remove);
-+	free_hook(hook_to_remove);
-+}
-+
-+void clear_hook_list()
-+{
-+	struct list_head *pos, *tmp;
-+	list_for_each_safe(pos, tmp, &hook_head)
-+		remove_hook(pos);
-+}
-+
-+static int check_config_for_hooks(const char *var, const char *value, void *hookname)
-+{
-+	struct list_head *pos, *p;
-+	struct hook *item;
-+	const struct strbuf *hookname_strbuf = hookname;
-+
-+	if (!strcmp(var, hookname_strbuf->buf)) {
-+		int order = 0;
-+		// TODO this is bad - open to overflows
-+		char command[256];
-+		int added = 0;
-+		if (!sscanf(value, "%d:%s", &order, command))
-+			die(_("hook config '%s' doesn't match expected format"),
-+			    value);
-+
-+		list_for_each_safe(pos, p, &hook_head) {
-+			item = list_entry(pos, struct hook, list);
+@@ -64,6 +64,13 @@ static int check_config_for_hooks(const char *var, const char *value, void *hook
+ 				emplace_hook(pos, order, command);
+ 				added = 1;
+ 			}
 +
 +			/*
-+			 * the new entry should go just before the first entry
-+			 * which has a higher order number than it.
++			 * if the command already exists, this entry should be
++			 * replacing it.
 +			 */
-+			if (item->order > order && !added) {
-+				emplace_hook(pos, order, command);
-+				added = 1;
-+			}
-+		}
-+
-+		if (!added)
-+			emplace_hook(pos, order, command);
-+	}
-+
-+	return 0;
-+}
-+
-+struct list_head* hook_list(const struct strbuf* hookname)
-+{
-+	git_config(check_config_for_hooks, (void*)hookname);
-+
-+	return &hook_head;
-+}
-diff --git a/hook.h b/hook.h
-new file mode 100644
-index 0000000000..104df4c088
---- /dev/null
-+++ b/hook.h
-@@ -0,0 +1,14 @@
-+#include "config.h"
-+
-+struct hook
-+{
-+	struct list_head list;
-+	int order;
-+	enum config_scope origin;
-+	struct strbuf command;
-+};
-+
-+struct list_head* hook_list(const struct strbuf *hookname);
-+
-+void free_hook(struct hook *ptr);
-+void clear_hook_list();
++			if (!strcmp(item->command.buf, command))
++				remove_hook(pos);
+ 		}
+ 
+ 		if (!added)
 diff --git a/t/t1360-config-based-hooks.sh b/t/t1360-config-based-hooks.sh
-index 34b0df5216..1434051db3 100755
+index 1434051db3..1af43ef18d 100755
 --- a/t/t1360-config-based-hooks.sh
 +++ b/t/t1360-config-based-hooks.sh
-@@ -4,8 +4,47 @@ test_description='config-managed multihooks, including git-hook command'
- 
- . ./test-lib.sh
- 
--test_expect_success 'git hook command does not crash' '
--	git hook
-+test_expect_success 'git hook rejects commands without a mode' '
-+	test_must_fail git hook pre-commit
-+'
-+
-+
-+test_expect_success 'git hook rejects commands without a hookname' '
-+	test_must_fail git hook --list
-+'
-+
-+test_expect_success 'setup hooks in system, global, and local' '
-+	git config --add --global hook.pre-commit "010:/path/def" &&
-+	git config --add --global hook.pre-commit "999:/path/uvw" &&
-+
-+	git config --add --local hook.pre-commit "100:/path/ghi" &&
-+	git config --add --local hook.pre-commit "990:/path/rst"
-+'
-+
-+test_expect_success 'git hook --list orders by order number' '
-+	cat >expected <<-\EOF &&
-+	010	global	/path/def
-+	100	repo	/path/ghi
-+	990	repo	/path/rst
-+	999	global	/path/uvw
-+	EOF
-+
-+	git hook --list pre-commit >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'order number collisions resolved in config order' '
-+	cat >expected <<-\EOF &&
-+	010	global	/path/def
-+	010	repo	/path/abc
-+	100	repo	/path/ghi
-+	990	repo	/path/rst
-+	999	global	/path/uvw
-+	EOF
-+
-+	git config --add --local hook.pre-commit "010:/path/abc" &&
-+	git hook --list pre-commit >actual &&
-+	test_cmp expected actual
+@@ -47,4 +47,18 @@ test_expect_success 'order number collisions resolved in config order' '
+ 	test_cmp expected actual
  '
  
++test_expect_success 'adding a command with a different number reorders list' '
++	cat >expected <<-\EOF &&
++	010	repo	/path/abc
++	050	repo	/path/def
++	100	repo	/path/ghi
++	990	repo	/path/rst
++	999	global	/path/uvw
++	EOF
++
++	git config --add --local hook.pre-commit "050:/path/def" &&
++	git hook --list pre-commit >actual &&
++	test_cmp expected actual
++'
++
  test_done
 -- 
 2.24.0.393.g34dc348eaf-goog
