@@ -8,77 +8,76 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D040BC2D0C8
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2393BC2D0C6
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:13:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94E4F20828
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:07:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF5DE2077B
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 10:13:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JUaD5tK6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bF3NzZcu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727359AbfLJKHi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 05:07:38 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:42257 "EHLO
+        id S1727305AbfLJKN4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 05:13:56 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39021 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727334AbfLJKHh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 05:07:37 -0500
-Received: by mail-wr1-f68.google.com with SMTP id a15so19276175wrf.9
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 02:07:36 -0800 (PST)
+        with ESMTP id S1726574AbfLJKN4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 05:13:56 -0500
+Received: by mail-wr1-f68.google.com with SMTP id y11so19309150wrt.6
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 02:13:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=idQvBZoLfPJA2Qu2M+TaoA+ANJJoMnus1c4jEKSDSHg=;
-        b=JUaD5tK6pIsb4TGPmhQFFMTh8oxPXTk1k9VOABNHkhsuoxJ/3HfDCl4JgSzKXweUs2
-         eQBaYz5Yxji0ezLLy4wrS8n3fGpqVW3XjuaU6xDhnfz6xiAApFGqJcUrinAU3FE0pTNy
-         EZREWc/adHLp52xdDHCdp4gew/uLoRkoTwEv9CaBBrvxtwsT4+PrMND0OBtCOkeUSQsb
-         ylqaODfrW0YT1W8W0sVScj9ZLywBCrPoLGj74OOf3vviiZSNzzNUZ8ftAKanmfbx4IFk
-         rdSUZEpuI16Grbv9LEvb6w9mdZKCvnER203Isv4RlRb+Dob1F0VFBeXDPQ1s6BGy7kUd
-         UYfw==
+        bh=VQDOjwfVb5og7WVxDX8mM1vLoxrT+tj0wyWC02MlNR0=;
+        b=bF3NzZcuNHzg6Xu6rfLRDaAeUApHG9dFXc11H1Jp/shvDOMGZDfHUFdsqGGjBQmXBi
+         z3XTSt2W9DhSvvc1xNWogg7UGnpbveEKxs8qNWKd4VxoGrGdL8FA3EzofslW3HrE8mhZ
+         j4swi4MuTntIwFXzk5ERmjJWzsrpFtCyy8wkZl2CCrOF/P10S4rzvHgX10C3FPDsGpIH
+         NK+VF7T8pRKxl8UzP8R9rUHfXXldJS2/2V6YFTasWmdbfLw7E5QqmbwduVuJb624/elN
+         +hav+7MbtnAmwfxcCiUy9+ptz5CwVXGKhbUYgepQGe3cUPk+YOGbc1ADpz3L5cebIlCy
+         BT0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=idQvBZoLfPJA2Qu2M+TaoA+ANJJoMnus1c4jEKSDSHg=;
-        b=FzWD+GASEcfw4sDaDrf/W9FGPvm2Xfq73ITS5L2GXzIEW4x893PuuBjraz8m9VnfZ/
-         OzFTDOsXbie4RbgR8af9HerdA34PBL8DdJHyz9IKqqfGH/WPN0yxGqN6cIDCda4inTF+
-         EjAtcAu7SY1Pt7Cc/AeuCjulZVD3rBjeN/aA77ztti7yh9GrlnzyXolW3NWQlD6jBph1
-         cdTYVJgyji8uOcU5GKhWFPD1Z5WAM7ICxDdJhJOHyQqL22x+N/x0asyVxYi6tymB2dj/
-         SQ21daxAzbFZdWHNpWOT9QPFHgTDeYLtowEsjOxUYB3BBNq6UWQ/VBZWFUijAJ4G3ZS+
-         yhSw==
-X-Gm-Message-State: APjAAAV5Fxg0o5yWgZ+88Ifs4SljR0UBhWAqmEb9qHk21+4Z34G764zY
-        HRbF6W8/gsmrFXRtLffvwZU=
-X-Google-Smtp-Source: APXvYqx9x46QEU1ODWyfv08W4iCRMjEstt6UrMDpkSeVzCDyu1myCxL4/DExIOMIaDZOH1Be8Ou2uw==
-X-Received: by 2002:adf:9104:: with SMTP id j4mr2216241wrj.221.1575972455684;
-        Tue, 10 Dec 2019 02:07:35 -0800 (PST)
+        bh=VQDOjwfVb5og7WVxDX8mM1vLoxrT+tj0wyWC02MlNR0=;
+        b=NcOmwV8qyRMWTtfFedmDQloUJed5mYVdagCtexChQfA/GjqQhpoqrczU1uRVTuozUR
+         WNU8r1hADcckn0nH7SWs359XX7sRau0t5GDD5XnqNaRAo6g+bxfmh3K0fXw1xaSJaoS7
+         ytL6554vq7u2NrN5bjpp+U9pZmJtsdmFwGqil+TeLCRsZ0wrK1w3SQTnuaCEeaJC2n1M
+         1R74BLXppo0vsGPyiPo1OmWC5J5fquX10iyGbodbTmd/jhLwtKZ9qW953d7dRcP/Ss2d
+         /2OSSZdi2q8H3MFY7TBkpG1dHcFrqWi1wuZS0Box3eGOGdlZlFwgCg+z0fHPp3HQZZMZ
+         clfQ==
+X-Gm-Message-State: APjAAAX4GZ9tWyvmvQFcWRwOvDoVjDqMYOkhpNcrEJhLd6qMfGxGddnh
+        Nr7tb6bvv/bC5NZJgluaoLc=
+X-Google-Smtp-Source: APXvYqw6MlH+7MN35oZi4nVwlSNBkZgP1Dg+Y34fO+eDAxkH5DLhVEiO/HxcVD9yMqTdfvzvWeGbxA==
+X-Received: by 2002:adf:ee82:: with SMTP id b2mr2394426wro.194.1575972833877;
+        Tue, 10 Dec 2019 02:13:53 -0800 (PST)
 Received: from szeder.dev (x4db55d5d.dyn.telefonica.de. [77.181.93.93])
-        by smtp.gmail.com with ESMTPSA id a3sm2670333wmh.5.2019.12.10.02.07.33
+        by smtp.gmail.com with ESMTPSA id b63sm2486316wmb.40.2019.12.10.02.13.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Dec 2019 02:07:34 -0800 (PST)
-Date:   Tue, 10 Dec 2019 11:07:32 +0100
+        Tue, 10 Dec 2019 02:13:53 -0800 (PST)
+Date:   Tue, 10 Dec 2019 11:13:51 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, ukshah2@illinois.edu,
         Kevin.Willford@microsoft.com,
         Derrick Stolee <dstolee@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/8] t3030-merge-recursive.sh: disable fsmonitor when
- tweaking GIT_WORK_TREE
-Message-ID: <20191210100732.GD6527@szeder.dev>
+Subject: Re: [PATCH v2 5/8] tests: disable fsmonitor in submodule tests
+Message-ID: <20191210101351.GE6527@szeder.dev>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
  <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
- <efc16962ee2595db50bf051fc84632b8c70036b3.1575907804.git.gitgitgadget@gmail.com>
+ <a5b0bf6ac7cd28fa47e26ab481f781d74c656f6a.1575907804.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <efc16962ee2595db50bf051fc84632b8c70036b3.1575907804.git.gitgitgadget@gmail.com>
+In-Reply-To: <a5b0bf6ac7cd28fa47e26ab481f781d74c656f6a.1575907804.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 09, 2019 at 04:10:00PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Mon, Dec 09, 2019 at 04:10:01PM +0000, Derrick Stolee via GitGitGadget wrote:
 > From: Derrick Stolee <dstolee@microsoft.com>
 > 
 > The fsmonitor feature allows an external tool such as watchman to
@@ -88,80 +87,138 @@ On Mon, Dec 09, 2019 at 04:10:00PM +0000, Derrick Stolee via GitGitGadget wrote:
 > would provide more confidence that the feature is working as
 > intended.
 > 
-> Worktrees use a ".git" _file_ instead of a folder to point to
-> the base repo's .git directory and the proper worktree HEAD. The
-> fsmonitor hook tries to create a JSON file inside the ".git" folder
-> which violates the expectation here.
-
-Yeah, there are a couple hardcoded paths in there, e.g.:
-
-  open ($fh, ">", ".git/watchman-response.json");
-
-and, worse, not only in the test helper hook in
-'t/t7519/fsmonitor-watchman' but in the sample hook template
-'templates/hooks--fsmonitor-watchman.sample' as well.
-
-> It would be better to properly
-> find a safe folder for storing this JSON file.
-
-  git rev-parse --git-path ''
-
-gives us the right directory prefix to use and we could then append
-the various filenames that must be accessed in there.
-
-> This is also a problem when a test script uses GIT_WORK_TREE.
+> The fsmonitor feature struggles with submodules. Disable the
+> GIT_TEST_FSMONITOR environment variable before running tests with
+> a lot of submodule interactions.
 > 
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
->  t/t1510-repo-setup.sh      | 1 +
->  t/t2400-worktree-add.sh    | 2 ++
->  t/t3030-merge-recursive.sh | 2 ++
->  3 files changed, 5 insertions(+)
+>  t/t3404-rebase-interactive.sh                | 1 +
+>  t/t3600-rm.sh                                | 1 +
+>  t/t4060-diff-submodule-option-diff-format.sh | 3 +++
+>  t/t5526-fetch-submodules.sh                  | 2 ++
+>  t/t7402-submodule-rebase.sh                  | 3 +++
+>  t/t7406-submodule-update.sh                  | 2 ++
+>  t/t7506-status-submodule.sh                  | 3 +++
+>  t/t7508-status.sh                            | 3 +++
+>  8 files changed, 18 insertions(+)
 > 
-> diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-> index 9974457f56..28dce0c26f 100755
-> --- a/t/t1510-repo-setup.sh
-> +++ b/t/t1510-repo-setup.sh
-> @@ -775,6 +775,7 @@ test_expect_success '#29: setup' '
->  	setup_repo 29 non-existent gitfile true &&
->  	mkdir -p 29/sub/sub 29/wt/sub &&
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 461dd539ff..9dc7d1aefb 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -697,6 +697,7 @@ test_expect_success 'do "noop" when there is nothing to cherry-pick' '
+>  '
+>  
+>  test_expect_success 'submodule rebase setup' '
+> +	GIT_TEST_FSMONITOR="" &&
+
+This disables GIT_TEST_FSMONITOR for the remainder of the test script,
+but there are still a lot of non-submodule-specific tests to run.
+
+>  	git checkout A &&
+>  	mkdir sub &&
 >  	(
-> +		GIT_TEST_FSMONITOR="" &&
->  		cd 29 &&
->  		GIT_WORK_TREE="$here/29" &&
->  		export GIT_WORK_TREE &&
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index e819ba741e..d4d3cbae0f 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -1,5 +1,7 @@
+> diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+> index 66282a720e..64269bd89d 100755
+> --- a/t/t3600-rm.sh
+> +++ b/t/t3600-rm.sh
+> @@ -355,6 +355,7 @@ test_expect_success 'rm succeeds when given a directory with a trailing /' '
+>  '
+>  
+>  test_expect_success 'rm of a populated submodule with different HEAD fails unless forced' '
+> +	GIT_TEST_FSMONITOR="" &&
+
+Likewise.
+
+>  	git reset --hard &&
+>  	git submodule update &&
+>  	git -C submod checkout HEAD^ &&
+> diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
+> index 9dcb69df5c..017417790e 100755
+> --- a/t/t4060-diff-submodule-option-diff-format.sh
+> +++ b/t/t4060-diff-submodule-option-diff-format.sh
+> @@ -15,6 +15,9 @@ This test tries to verify the sanity of --submodule=diff option of git diff.
+>  # Tested non-UTF-8 encoding
+>  test_encoding="ISO8859-1"
+>  
+> +# fsmonitor does not work well with submodules
+> +GIT_TEST_FSMONITOR=""
+> +
+>  # String "added" in German (translated with Google Translate), encoded in UTF-8,
+>  # used in sample commit log messages in add_file() function below.
+>  added=$(printf "hinzugef\303\274gt")
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> index 63205dfdf9..fb346bff05 100755
+> --- a/t/t5526-fetch-submodules.sh
+> +++ b/t/t5526-fetch-submodules.sh
+> @@ -1,6 +1,8 @@
 >  #!/bin/sh
+>  # Copyright (c) 2010, Jens Lehmann
 >  
 > +GIT_TEST_FSMONITOR=""
 > +
->  test_description='test git worktree add'
+>  test_description='Recursive "git fetch" for submodules'
 >  
 >  . ./test-lib.sh
-> diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-> index ff641b348a..62f645d639 100755
-> --- a/t/t3030-merge-recursive.sh
-> +++ b/t/t3030-merge-recursive.sh
-> @@ -520,6 +520,7 @@ test_expect_success 'reset and bind merge' '
+> diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
+> index 8e32f19007..c78e9009cf 100755
+> --- a/t/t7402-submodule-rebase.sh
+> +++ b/t/t7402-submodule-rebase.sh
+> @@ -7,6 +7,9 @@ test_description='Test rebasing, stashing, etc. with submodules'
 >  
->  test_expect_success 'merge-recursive w/ empty work tree - ours has rename' '
->  	(
-> +		GIT_TEST_FSMONITOR="" &&
->  		GIT_WORK_TREE="$PWD/ours-has-rename-work" &&
->  		export GIT_WORK_TREE &&
->  		GIT_INDEX_FILE="$PWD/ours-has-rename-index" &&
-> @@ -545,6 +546,7 @@ test_expect_success 'merge-recursive w/ empty work tree - ours has rename' '
+>  . ./test-lib.sh
 >  
->  test_expect_success 'merge-recursive w/ empty work tree - theirs has rename' '
+> +# fsmonitor does not work well with submodules
+> +GIT_TEST_FSMONITOR=""
+> +
+>  test_expect_success setup '
+>  
+>  	echo file > file &&
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index c973278300..8d93aaef5f 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -11,6 +11,8 @@ submodule and "git submodule update --rebase/--merge" does not detach the HEAD.
+>  
+>  . ./test-lib.sh
+>  
+> +# fsmonitor does not work well with submodules
+> +GIT_TEST_FSMONITOR=""
+>  
+>  compare_head()
+>  {
+> diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+> index 08629a6e70..1a716f2c2a 100755
+> --- a/t/t7506-status-submodule.sh
+> +++ b/t/t7506-status-submodule.sh
+> @@ -4,6 +4,9 @@ test_description='git status for submodule'
+>  
+>  . ./test-lib.sh
+>  
+> +# fsmonitor does not work well with submodules
+> +GIT_TEST_FSMONITOR=""
+> +
+>  test_create_repo_with_commit () {
+>  	test_create_repo "$1" &&
 >  	(
-> +		GIT_TEST_FSMONITOR="" &&
->  		GIT_WORK_TREE="$PWD/theirs-has-rename-work" &&
->  		export GIT_WORK_TREE &&
->  		GIT_INDEX_FILE="$PWD/theirs-has-rename-index" &&
+> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+> index 4e676cdce8..bf0487632d 100755
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -846,6 +846,9 @@ test_expect_success 'status refreshes the index' '
+>  	test_cmp expect output
+>  '
+>  
+> +# fsmonitor does not work well with submodules
+> +GIT_TEST_FSMONITOR=""
+> +
+
+Likewise.
+
+>  test_expect_success 'setup status submodule summary' '
+>  	test_create_repo sm && (
+>  		cd sm &&
 > -- 
 > gitgitgadget
 > 
