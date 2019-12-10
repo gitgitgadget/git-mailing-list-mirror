@@ -2,79 +2,74 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE2C5C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F16D1C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:26:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8CDF8207FF
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:20:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C36302073B
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:26:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KX1LUeie"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q2BlBcP5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbfLJOUI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 09:20:08 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:36646 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbfLJOUI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 09:20:08 -0500
-Received: by mail-qk1-f196.google.com with SMTP id a203so6403395qkc.3
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 06:20:07 -0800 (PST)
+        id S1727509AbfLJO0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 09:26:25 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:42671 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727178AbfLJO0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 09:26:25 -0500
+Received: by mail-qt1-f194.google.com with SMTP id j5so2902882qtq.9
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 06:26:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=au5f5Q1OyNHmUm79WmPwTI8yZSD3ETvjveBI9TaKIWI=;
-        b=KX1LUeieCUpVC8deN5DLW/z02PAfndK+5ew1UF26P8d6LGhQDEDgAuHxKXrNMt2ZN8
-         B8MpyPaGx71tEnNFqHnvDOFMC9JyM1fWr61JXOc+6yt1vgONgcYLdU9TVVPEkdO65FgT
-         mToW8HmDc/kAx6ysf22bwQhDA87wTuR4UOZZhgfExf2/VZaYtLKpnzQBxDGTPJDNgXSb
-         b7qTBzVyucEz/Ku9JRwU532tr9ZL4CblV3ljS/9FWW/HdwyQxx7O3/pq2c245c+ADFNF
-         FNabwZAn9JLIUydK75FOi+ZALcr2qsDrk15MXCpkCDqz2qYKC8MJn5lZZ3vS3PjWtBHa
-         P1Pg==
+        bh=3CzKzMxyhoeTtwtqj+I1x1M/sgiI5aFasOuxpTD3zik=;
+        b=q2BlBcP5Q2VQvTVKiQtoDVIpL14n7A/+AVOxZvqC1dttWGA/1oNKhv6ow3mF+PDoms
+         KZoeBRxIwhoT2BgyXEzVjwIMpqa+TsKeuKkzE789COO6I6L8gC+O6kJwCvhLgeVEaMJj
+         OrafrQeiMdou22l++Ar95GjLyOuoz43On1k9609q9PIg50a5yS7zU3/2jU7gRQl3Yum3
+         k7DtMTVr1E7BJtNK77N9JL/tTEj0Sd4wRptmypoJN6PlQQ//EI++JpaLGrBCaCkH9hzT
+         ak1XG2kFKle+gMCu1Cy3kN7qHDBwxBjYpA3uiPNWPXo+RSVY8lwUoeTFw7D+m2XRTnJR
+         5C6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=au5f5Q1OyNHmUm79WmPwTI8yZSD3ETvjveBI9TaKIWI=;
-        b=FyS0NAoYhuvC50k+FjlVkVpmTqjw0ls4cs1D/ysnpOx+erQoytYCDHWW6BEUZrjDiB
-         Z2wYe97NL1lDo47+f7PfFsdX+4cLf0xucPZ+47vU3hTw3fYx9kA5E6ssnFly30/rKH78
-         V6vNq2t0IFW/2LObsU6gQHrRt5vuu2n+TJUoSOmG7ZNGr97PMUdTiWLa2v/8aGoIDI+b
-         j46QCo0O/hOsfhBo0Cjk/ih9bdTsmLn9MVbbpcz+9jddqACMiC1LGJnqo5XYTMdIRdP/
-         s4LOeletsLSSNKEnWEescE9e2abVApPiauphQMMDVlHsMW8V2qkjjHjLJs9WL27F7g4Z
-         dxKA==
-X-Gm-Message-State: APjAAAVIpSPDT+Vx0Ppr/W6Pa+zWYfrY/DAlPMc9Si/VPgNybpbhBGqt
-        yYM+oVtV4WZpjOzpX9iqKjp+xM53C1I=
-X-Google-Smtp-Source: APXvYqwY7JCBH2TA04fXAtLX0qg9590FQiLDHX+Dib9Mj+gnDS+nKF+ZLMsbgnP5RTgVgojyfo1Ysw==
-X-Received: by 2002:a37:684a:: with SMTP id d71mr13213908qkc.201.1575987606922;
-        Tue, 10 Dec 2019 06:20:06 -0800 (PST)
+        bh=3CzKzMxyhoeTtwtqj+I1x1M/sgiI5aFasOuxpTD3zik=;
+        b=dherVJInQJeQoVzVuu1NVHOUkIBzeLcRfZjTJ8UZKgXVAx2endHXJB0HyFR8eeLkWZ
+         3jk/tmOiOP7u3Kv3a7Fk9bbHD96SQ1CaYRBuVz2gVSXffHa6KVw0g8WHpgxpcNGrmo02
+         TbHTacOQxxS3eppeR20tf7lTUHYPYl6NcChkf8w5zBjoStTp/YECbCDflvLrNASEeZuJ
+         iP8wf0KUYrw7EQGH4KjgDqCKbWXNnN3kIeEd32VnpPXoKu8c0x77x8DVTdhI3mZFWA4q
+         WC6jvgxBX2Ztq+fG9SCD15gbw6ogWPp0gJQzSySvO2F9ocp7fnZzDQ14GljnGH4dtBTD
+         4X/g==
+X-Gm-Message-State: APjAAAVW0ufhHyZWs431uMQmIvHAFoiBpF2XXBstrLOAsxDIIIfn6Eqb
+        lZUhAMgrGHat7dfSb8PD28KhqWjJPSs=
+X-Google-Smtp-Source: APXvYqze4GXhFuhhVShoqgxrtl+AaR+z/TBMEsu4AdydKRztAknV5xeK90DW400waSoBSzhmVApPAw==
+X-Received: by 2002:ac8:6b59:: with SMTP id x25mr5657335qts.299.1575987984257;
+        Tue, 10 Dec 2019 06:26:24 -0800 (PST)
 Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id 68sm966329qkj.102.2019.12.10.06.20.05
+        by smtp.gmail.com with ESMTPSA id z12sm935227qki.64.2019.12.10.06.26.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Dec 2019 06:20:06 -0800 (PST)
-Subject: Re: [PATCH 00/13] git-p4: python3 compatibility
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Denton Liu <liu.denton@gmail.com>, git@vger.kernel.org
-References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
- <20191207010938.GA75094@generichostname>
- <CABvFv3+viMXJO0z5HAQbCya7MU9tWd7P_LxUhu66T74XGN99yA@mail.gmail.com>
- <b21d153a-02f9-b9a1-7388-59b5a882d4f2@gmail.com>
- <CABvFv3Jf9i06OmBqOC2zfS+7Sm88PRYa19_rB8rELtMoN2E8CQ@mail.gmail.com>
- <afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com>
- <ec301179-f9dc-4148-8634-2abc9263af5f@gmail.com>
- <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
+        Tue, 10 Dec 2019 06:26:23 -0800 (PST)
+Subject: Re: [PATCH 1/3] git-p4: [usability] yes/no prompts should sanitize
+ user text
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+References: <pull.675.git.git.1575901009.gitgitgadget@gmail.com>
+ <e721cdaa008263b896c1d162e411c4e7a04c5710.1575901009.git.gitgitgadget@gmail.com>
+ <xmqqimmptazs.fsf@gitster-ct.c.googlers.com>
 From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <caa4b235-8ec8-0b6f-49e5-3c95e3a5f5e3@gmail.com>
-Date:   Tue, 10 Dec 2019 09:20:05 -0500
+Message-ID: <179dd921-d9d0-d26d-33e9-3664bf97fcc2@gmail.com>
+Date:   Tue, 10 Dec 2019 09:26:22 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.3.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1912092043470.31080@tvgsbejvaqbjf.bet>
+In-Reply-To: <xmqqimmptazs.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -83,56 +78,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/9/2019 2:48 PM, Johannes Schindelin wrote:
-> Hi Ben,
+
+On 12/9/2019 5:00 PM, Junio C Hamano wrote:
+> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> On Mon, 9 Dec 2019, Ben Keene wrote:
->
->> So, I just attempted to run a base case on windows: git p4 clone //depot and
->> I'm getting an error:
+>> From: Ben Keene <seraphire@gmail.com>
 >>
->> Depot paths must start with "//": /depot
-> You started this in a Bash, right?
-No, I started it from a windows command cmd.exe prompt.  (I almost never 
-use the bash prompt)
->
-> The Git Bash has the very specific problem that many of Git's shell
-> scripts assume that forward slashes are directory separators, not
-> backslashes, and that absolute paths start with a single forward slash. In
-> other words, they expect Unix paths.
->
-> But we're on Windows! So the MSYS2 runtime (which is the POSIX emulation
-> layer derived from Cygwin which allows us to build and run Bash on
-> Windows) "translates" between the paths. For example, if you pass `/depot`
-> as a parameter to a Git command, the MSYS2 runtime notices that `git.exe`
-> is not an MSYS2 program (i.e. it does not understand pseudo-Unix paths),
-> and translates the path to `C:/Program Files/Git/depot`.
-That is good to know!
->
-> However, your call has _two_ slashes, right? That is unfortunately MSYS2's
-> trick to say "oh BTW keep the slash, this is not a Unix path".
->
-> To avoid this, just set `MSYS_NO_PATHCONV`, like so:
+>> When prompting the user interactively for direction, the tests are
+>> not forgiving of user input format.
+>>
+>> For example, the first query asks for a yes/no response. If the user
+>> enters the full word "yes" or "no" or enters a capital "Y" the test
+>> will fail.
+>>
+>> Create a new function, prompt(prompt_text, choices) where
+>>    * promt_text is the text prompt for the user
+>>    * is a list of lower-case, single letter choices.
+>> This new function must  prompt the user for input and sanitize it by
+>> converting the response to a lower case string, trimming leading and
+>> trailing spaces, and checking if the first character is in the list
+>> of choices. If it is, return the first letter.
+>>
+>> Change the current references to raw_input() to use this new function.
+>>
+>> Signed-off-by: Ben Keene <seraphire@gmail.com>
+>> ---
+>>
+>> +def prompt(prompt_text, choices = []):
+>> +    """ Prompt the user to choose one of the choices
+>> +    """
+>> +    while True:
+>> +        response = raw_input(prompt_text).strip().lower()
+>> +        if len(response) == 0:
+>> +            continue
+>> +        response = response[0]
+>> +        if response in choices:
+>> +            return response
+> I think this is a strict improvement compared to the original, but
+> the new loop makes me wonder if we need to worry more about getting
+> EOF while calling raw_input() here.  I am assuming that we would get
+> EOFError either way so this is no worse/better than the status quo,
+> and we can keep it outside the topic (even though it may be a good
+> candidate for a low-hanging fruit for newbies).
+That is a good catch.  What should we expect the default behavior
+to be in these two questions if the EOFError occurs?  I would think
+that we should extend this to an abort of the process?
+> response = prompt("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ", ["y", "n"])
+> response = prompt("[s]kip this commit but apply the rest, or [q]uit? ", ["s", "q"])
 
-When I first installed git, I didn't read the release notes. (Shame on 
-me!) and I installed
-python for windows and added an alias for git-p4.py against the windows 
-version of
-python, so when I run git, it's not performing that conversion.
-
-> 	MSYS_NO_PATHCONV=1 git p4 clone //depot
->
-> This behavior is documented in our release notes, by the way:
-> https://github.com/git-for-windows/build-extra/blob/master/ReleaseNotes.md#known-issues
->
-> Ciao,
-> Johannes
-
-
-I'm starting to run out of time at work, so I'll be slow to try and 
-repro this.
-
-Thanks for the info!
-
-- Ben
+Should a quit be added to the first prompt and have those be the 
+defaults on EOFError?
 
