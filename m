@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA1A9C00454
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 15:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC04C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 15:23:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC36220637
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 15:23:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 51C9120637
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 15:23:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tBohWi7V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJZ/d2G+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727518AbfLJPXB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 10:23:01 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55097 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727448AbfLJPXB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 10:23:01 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b11so3673956wmj.4
+        id S1727519AbfLJPXC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 10:23:02 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38594 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727420AbfLJPXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 10:23:00 -0500
+Received: by mail-wr1-f68.google.com with SMTP id y17so20568278wrh.5
         for <git@vger.kernel.org>; Tue, 10 Dec 2019 07:22:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=o+vj6uvVsChVb0svYX33+5HkrkO+BSUa9jCDybMu8Ss=;
-        b=tBohWi7V+L/aT7gGnPMpOiTw+JZUkkrHCJMwnriz/kDgz4cYIFR7BgYDSy59264Byo
-         njXY5oE5GV1LknO7n36IycXRAiMdnFxBtxz6woyxP+TL0YGcKRb0tU1upM+KCjxTW8lj
-         ZWII23494/v3LFauxLuhaCTXpRQ4N+KV5y4chs2i3jvNChweoVZQUTUF1hQLuYNV/TnO
-         gNSZad/+/Oeyo03saTF3xKmq5hxdkYh7XxdaSO86gRDVRbKJE7cgQ4Wp2JAGIDV8C2BG
-         Tiv0shqP2fNFr4Fg2F6WRQeEt1AaTnGxHDDGxIgjtrRt9rezEFHezZ2krwl/4AELrK1A
-         e8wQ==
+        bh=FBAOdDPXQT8RIvWETg0jbhbh0C+4swdyuA4nLPlM7pE=;
+        b=MJZ/d2G+1paxdmVuava67jCkErEF3Psg80+HLTgk9dw0wwo7PyXFZWABUHGmxABTr/
+         uYQ/DIzBniVLE5EJ9Ozw3qEr46EA4pysvDJmgdXpjpfzubYprk42OTl9sWe9GuiQ7PWN
+         ZaA8BsoQJxqHgdQ0bxaagqhGlMmDNstxJ4sEkWLzU+8twj2TmXBkpwk+Yzb1MKjEvapm
+         r2J0W5TMi/tmR03ejvNDwR9ObfXgzQ3VL5h8lEt8zGUNBFWIFPhG6KjPYB3NXOXhj3mR
+         lHD+xCMc2NH6kGjAWiW4XtoPJwyb5m3v2lS5MTNAVkbwSWz3muDLEri4uZFkPhta+Id8
+         EmhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o+vj6uvVsChVb0svYX33+5HkrkO+BSUa9jCDybMu8Ss=;
-        b=kXYcbgQRM0k+7X/ymkzNRD6kwvZDKGt0/+Y2KC6ukdfcdGeOZzwYzD5Oxs0EM9WfJj
-         C57zy1oIhqxBpZNHmdRrKuNKN+56niT1Rxk9JmV7T/pCByk/dtTVjyEzy3TC9p/USzf7
-         gGuUKgycrSmUOz9K9Ezsc1Wf/9pa/A022MyrCAnx8s1dvWOtTFMhWBMxpGgtLjZdCOwl
-         9Nh7nsQ3Ad149GqJhC3tmA+IYIqH2j0kiMuoCxa5S3ktr44GbNrAOjQ8Kj1fipHxv8fb
-         eFVPcv2oQpDKVNgjJ//kyZeumyPrda4sEFCpKtrmHkvFsbd0QdXfk5/U+iKJPJNoh+KT
-         0Fxw==
-X-Gm-Message-State: APjAAAXYHOJwotBtDKQ8+1CWGcqiZdlXywdJAY8GCJeFjrFy220UFFKT
-        jymHDjB8IT3CEc1h2f73x16FXZrq
-X-Google-Smtp-Source: APXvYqxJaJ8N1i4VCMjukYI6aDO5NWUPm+V5l9RhjdwxBs2gNjbE7VK6bkwxYUYvZnJrNCsEZGTdCA==
-X-Received: by 2002:a1c:4483:: with SMTP id r125mr5690398wma.97.1575991379224;
-        Tue, 10 Dec 2019 07:22:59 -0800 (PST)
+        bh=FBAOdDPXQT8RIvWETg0jbhbh0C+4swdyuA4nLPlM7pE=;
+        b=ErXzW50WDCbUQGPXFQdHn3DuZFjfgKe+3uxxbLFVxRBGnVoHlCLk8xjemXb1wvM+oj
+         WyvGiiI5Vg1ewU0nMqCYW9jA6AiIF/VO0TvQtTrqSOufYJskx0v+VvVNyAPP7h4jQKd3
+         xZl1HdZC/4NbcvVwnBiGaMqjL3Wm4od+2aSI9rAVkhXMzb5kjIARWX3zt62jxjV48DIX
+         oRPPPuz8xf1YpZBlTclfUy0WbErkIo8zFKaZWWa/qW+5tTAsOHexgduF1GYAg3Lsi4nk
+         oW8Uo5JUsCUPbai/E5T5rdz5hycNeqH8ZogfoP0FB+FXwVW5s+jTMpane7JGcpJpwsMD
+         m1Cg==
+X-Gm-Message-State: APjAAAUmvDY+mfEAr+iuxOMCnBn/pkf4fnS2YiThw7KKcU+uPBux1Qn8
+        /28EwgILmfesbJkSad3TRlWlVcqf
+X-Google-Smtp-Source: APXvYqwSuV7pa9raVAhReLgTzNlt7jeKLxtKDwRkJ1pA7HkjrASHbgPDoXxtYZGwdUPLkUfrhhnSVg==
+X-Received: by 2002:adf:fbc9:: with SMTP id d9mr3643989wrs.20.1575991378607;
+        Tue, 10 Dec 2019 07:22:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z18sm3365285wmf.21.2019.12.10.07.22.58
+        by smtp.gmail.com with ESMTPSA id g9sm3693608wro.67.2019.12.10.07.22.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 10 Dec 2019 07:22:58 -0800 (PST)
-Message-Id: <50e9a175c3323074ceec848c0d4054edd240e862.1575991375.git.gitgitgadget@gmail.com>
+Message-Id: <20aa557193c14292a31f91a93a5a8f4ea3ff332b.1575991375.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.675.v2.git.git.1575991374.gitgitgadget@gmail.com>
 References: <pull.675.git.git.1575901009.gitgitgadget@gmail.com>
         <pull.675.v2.git.git.1575991374.gitgitgadget@gmail.com>
 From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Dec 2019 15:22:54 +0000
-Subject: [PATCH v2 4/4] git-p4: failure because of RCS keywords should show
- help
+Date:   Tue, 10 Dec 2019 15:22:53 +0000
+Subject: [PATCH v2 3/4] git-p4: wrap patchRCSKeywords test to revert changes
+ on failure
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,37 +77,40 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Ben Keene <seraphire@gmail.com>
 
-When applying a commit fails because of RCS keywords, Git
-will fail the P4 submit. It would help the user if Git suggested that
-the user set git-p4.attemptRCSCleanup to true.
+The patchRCSKeywords function has the potentional of throwing
+an exception and this would leave files checked out in P4 and partially
+modified.
 
-Change the applyCommit() method that when applying a commit fails
-becasue of the P4 RCS Keywords, the user should consider setting
-git-p4.attemptRCSCleanup to true.
+Add a try-catch block around the patchRCSKeywords call and revert
+the edited files in P4 before leaving the method.
 
 Signed-off-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ git-p4.py | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 174200bb6c..cb594baeef 100755
+index daa6e8a57a..174200bb6c 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -1959,6 +1959,14 @@ def applyCommit(self, id):
-                         for f in editedFiles:
-                             p4_revert(f)
-                         raise
-+            else:
-+                # They do not have attemptRCSCleanup set, this might be the fail point
-+                # Check to see if the file has RCS keywords and suggest setting the property.
-+                for file in editedFiles | filesToDelete:
-+                    if p4_keywords_regexp_for_file(file) != None:
-+                        print("At least one file in this commit has RCS Keywords that may be causing problems. ")
-+                        print("Consider:\ngit config git-p4.attemptRCSCleanup true")
-+                        break
+@@ -1950,8 +1950,15 @@ def applyCommit(self, id):
+                     # disable the read-only bit on windows.
+                     if self.isWindows and file not in editedFiles:
+                         os.chmod(file, stat.S_IWRITE)
+-                    self.patchRCSKeywords(file, kwfiles[file])
+-                    fixed_rcs_keywords = True
++                    
++                    try:
++                        self.patchRCSKeywords(file, kwfiles[file])
++                        fixed_rcs_keywords = True
++                    except:
++                        # We are throwing an exception, undo all open edits
++                        for f in editedFiles:
++                            p4_revert(f)
++                        raise
  
              if fixed_rcs_keywords:
                  print("Retrying the patch with RCS keywords cleaned up")
 -- 
 gitgitgadget
+
