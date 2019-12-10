@@ -7,121 +7,146 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4177AC43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF997C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:51:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 100E8207FF
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:45:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66E84207FF
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:51:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOOxJyuW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p9oSSBCn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbfLJNp3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 08:45:29 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:46681 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727145AbfLJNp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 08:45:29 -0500
-Received: by mail-ot1-f68.google.com with SMTP id g18so15462762otj.13
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 05:45:29 -0800 (PST)
+        id S1727272AbfLJNvU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 08:51:20 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:38797 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727007AbfLJNvU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 08:51:20 -0500
+Received: by mail-oi1-f196.google.com with SMTP id b8so9828796oiy.5
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 05:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=r2Aj4kdLXXvyOK29peCuI3LgaRN1nnOqnH3jD+il0BI=;
-        b=hOOxJyuWN2GhJVPMo+dtl/884KffmAvRcYWE/pEHGy5EUrUZipBdCQIXpGOelFHYlv
-         310rx3+pl+JgJ1ZwxcTrDrGzUT8vIWKI2YFrM/r/zeOT+x1z0udcjYzQzCk3xuNraaNZ
-         rFApKM21JAemadpITW5JYPFEr66Y4EWJ6YpI8WtDAZgOatpdRkja2kBzcY7gcWgHeub3
-         Af3vSfc1e2IlHsHZwAO+VdOw7WCdMSYP0+Y5zY8yRDBT3aAScBeYN4FaZVusiv6bNCsq
-         bd8a24MT1/gBRgKYh4z91z8ZFu1pin40mvwNClrkebcc1PS8S5VeLqjVK/niQHWJ9Xu6
-         n6fA==
+        bh=UVlCf5MyzMQ5sVNKAnYPUwC63Z1JIIFJm6Oo86NOdAU=;
+        b=p9oSSBCned0LbVP6WHBJUnlkzCotztMDkZTkdli6rLA1iXe+OfaiOLN4z76opMm0p6
+         TOe2q2/KAvWh7ietFldN/UMnjoAdwAMSZ6bg2Gp5QSD3EogssS/msI4dWjDg7uyHRS0g
+         43rgVpuEJw/SOrmXP6GEQjw5uxyroXgdYopL1VL0iB/g5cMPS2vlLO9vwbPhnUauKC0s
+         XE3Gc25WYYjy5garL0+mFHnN5o5aFRNver4Mu/Gp6xq8ARPu/0ljjKljT+ublR7QMNFh
+         gwJo0najooyGr8R4HM27aLNmqYG1OXDlbb6+vwfEagDzBk4kOZrFoBYSXZh3cGnPWPID
+         VC5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=r2Aj4kdLXXvyOK29peCuI3LgaRN1nnOqnH3jD+il0BI=;
-        b=JHT/nfTzfbCfc7A71nxTnnBiJZb0KwbK5Hm0YgZZGDlH+y8rnyt3nHxb3rvUwlBhH7
-         hjYUsF/3h47u3nF47Yw1bdXCW1ho3k71GOSwio/hc9INr3p95QzlUn0G1NYWzd+V8UDO
-         3Hu0HHey6fRl1vY9MsK6LcLcP7CRbPWxtahUjDx6diQzCn1vLrCP3fygB2wxXuFe9ri4
-         1+7sO0Y7NAxoXL1tEDkrck364+/nHEFRr5MdObDYVAfx8zNX++MvbS9sdOZSGSaVtNXK
-         /BoV180w45Vxgh/uCPhyLkZrDzmExncaLRqt3cW3yoR3C8jjLCKPAuR9PJ8YjAv5CsCG
-         4SkQ==
-X-Gm-Message-State: APjAAAV8CZHrWPkkjU316kzpM9IOAPxvhC/X5vvXk7jtAgLo0Zj6pEya
-        14lWzJx5YeQZ+ryzKDq1a7Q=
-X-Google-Smtp-Source: APXvYqyShVKiSIknWOnm/SY4HtjGQxu4SnQslUKzv13AL+fEPJ2zlQ/WUlnWRzktUNOO/WCiwbTP/A==
-X-Received: by 2002:a9d:67d8:: with SMTP id c24mr10282153otn.172.1575985528538;
-        Tue, 10 Dec 2019 05:45:28 -0800 (PST)
+        bh=UVlCf5MyzMQ5sVNKAnYPUwC63Z1JIIFJm6Oo86NOdAU=;
+        b=XUWOFbQGEsC4h+yA1WzMHaRhylMmQ0ByJASwVGp53R6L5VmpBlnkNKLo17MSPKWoYA
+         arBrga+Bf/WylRxL2HKXhsEk8JiNLL2UQI+Yu9EaiS5KUwCm8lKgwslwsNySBUT7tg2K
+         r9oNaa3liLddL5e9w1aEX0ZZUkUoIjIzv+g68YESWpMHR+6q45ylgTbP4haW7V71MGAL
+         qwBCbVoDLMM65dcx76PqIROSBSoogkB8qr+5/iGPgarQz1QNKvr+POJQFfOphltagdMJ
+         JTd34R4t+Hk2OU6elB5zBC8+UEw86QGWuU18GVgH4PZ4xkDBrpGTl06RJ3F1d0ry040b
+         aQDw==
+X-Gm-Message-State: APjAAAU9frD8XiG3iBmhWO+hoO8TWPo6i0raaUX39HC2lpOF8sROZJhJ
+        vSdXHWRGQX26lRuY6WJaJL0=
+X-Google-Smtp-Source: APXvYqxaZq29lDG3v5lE0lDEpbtWwVwYVGf4ZPeMPlziTYte+oIDmcZIVJo17uMAKViUdg+bJH9OuQ==
+X-Received: by 2002:a05:6808:56:: with SMTP id v22mr3733983oic.37.1575985878988;
+        Tue, 10 Dec 2019 05:51:18 -0800 (PST)
 Received: from [192.168.1.76] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id b20sm1381169oib.1.2019.12.10.05.45.27
+        by smtp.gmail.com with ESMTPSA id 47sm1410368otf.54.2019.12.10.05.51.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Dec 2019 05:45:27 -0800 (PST)
-Subject: Re: [PATCH v2 4/8] t3030-merge-recursive.sh: disable fsmonitor when
- tweaking GIT_WORK_TREE
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, ukshah2@illinois.edu,
+        Tue, 10 Dec 2019 05:51:18 -0800 (PST)
+Subject: Re: [PATCH v2 8/8] test-lib: clear watchman watches at test
+ completion
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, szeder.dev@gmail.com, ukshah2@illinois.edu,
         Kevin.Willford@microsoft.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Derrick Stolee <dstolee@microsoft.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
  <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
- <efc16962ee2595db50bf051fc84632b8c70036b3.1575907804.git.gitgitgadget@gmail.com>
- <20191210100732.GD6527@szeder.dev>
+ <e51165f260d564ccb7a9b8e696691eccb184c01a.1575907804.git.gitgitgadget@gmail.com>
+ <xmqqwob5ru27.fsf@gitster-ct.c.googlers.com>
+ <bfa73fab-ce2c-a05e-3568-cd406dd5c31f@gmail.com>
+ <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b3e8ad07-b2cb-e024-405e-27d9f065f5fc@gmail.com>
-Date:   Tue, 10 Dec 2019 08:45:27 -0500
+Message-ID: <dd8c14d3-21b6-731c-bd50-650d063d686f@gmail.com>
+Date:   Tue, 10 Dec 2019 08:51:16 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
  Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <20191210100732.GD6527@szeder.dev>
+In-Reply-To: <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10/2019 5:07 AM, SZEDER Gábor wrote:
-> On Mon, Dec 09, 2019 at 04:10:00PM +0000, Derrick Stolee via GitGitGadget wrote:
->> From: Derrick Stolee <dstolee@microsoft.com>
+
+
+On 12/10/2019 12:20 AM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> Hm. That is a good point. Can we assume that our version of grep has
+>> a "-F" or "--fixed-strings" option? ([1] seems to say that "-F" would
+>> work.)
+> 
+> $ git grep "grep -F" -- \*.sh
+> 
+> is your friend ;-) 
+
+Yes, of course I should have just looked for examples.
+
+> And never use https://www.gnu.org/ manual as a yardstick---you will
+> end up using GNUism that is not unavailable elsewhere pretty easily.
+
+I tried to focus on the part that said "this is part of POSIX", but
+you are right that may not be the best place to look.
+
+>> [1] https://www.gnu.org/savannah-checkouts/gnu/grep/manual/grep.html#index-grep-programs
 >>
->> The fsmonitor feature allows an external tool such as watchman to
->> monitor the working directory. The direct test
->> t7619-status-fsmonitor.sh provides some coverage, but it would be
->> better to run the entire test suite with watchman enabled. This
->> would provide more confidence that the feature is working as
->> intended.
+>>> What are these stripping of ", and " about?  Could you tell readers
+>>> how a typical output from the program we are reading from looks like
+>>> perhaps in the log message or in-code comment around here?
 >>
->> Worktrees use a ".git" _file_ instead of a folder to point to
->> the base repo's .git directory and the proper worktree HEAD. The
->> fsmonitor hook tries to create a JSON file inside the ".git" folder
->> which violates the expectation here.
+>> Watchman outputs its list of paths in JSON format. Luckily, it formats
+>> the output so the path lines are on separate lines, each quoted.
+>>
+>> For example:
+>>
+>> {
+>> 	"version": "4.9.0",
+>> 	"roots": [
+>> 		"<path1>",
+>> 		"<path2>",
+>> 		"<path3>"
+>> 	]
+>> }
 > 
-> Yeah, there are a couple hardcoded paths in there, e.g.:
+> Yeek; how is a dq in path represented?  by doubling?  by
+> backslash-quoting (if so how is a backslash in path represented)?
+> By something else?
 > 
->   open ($fh, ">", ".git/watchman-response.json");
-> 
-> and, worse, not only in the test helper hook in
-> 't/t7519/fsmonitor-watchman' but in the sample hook template
-> 'templates/hooks--fsmonitor-watchman.sample' as well.
-> 
->> It would be better to properly
->> find a safe folder for storing this JSON file.
-> 
->   git rev-parse --git-path ''
-> 
-> gives us the right directory prefix to use and we could then append
-> the various filenames that must be accessed in there.
+> It's OK at least for now to declare that our test repository does
+> not contain any funny paths, but in the longer run does the above
+> mean that we somehow need to be able to grok JSON reliably in our
+> tests?  It may not be such a bad thing especially for longer term,
+> as there are other parts of the system that may benefit from having
+> JSON capable output readers in our tests (e.g. trace2 code can do
+> JSON, right?)..
 
-Adding another git process inside the hook is hopefully not
-the only way to achieve something like this. The performance
-hit (mostly on Windows) would be a non-starter for me. (Yes,
-the process creation to watchman is already a cost here, but
-let's not make it worse.)
+trace2 can _write_ JSON, not parse it. However, we have some parsing
+code (using a package) in the performance tests. I could try
+adapting that for this purpose. That package is not currently required
+by the test suite, so it causes some dependency issues when first
+running the perf suite. At least we wouldn't need the package
+unless running with GIT_TEST_FSMONITOR.
 
-Perhaps a better strategy would be to do something in-memory
-instead of writing to a file. Not sure how much of that can
-be done in the script.
+My guess is that this patch is going to be trouble, so I'll eject
+it in the next version and save the JSON parsing and everything
+for its own series. We only really need it when we are getting
+close to running watchman in CI on Windows.
 
+Thanks,
 -Stolee
