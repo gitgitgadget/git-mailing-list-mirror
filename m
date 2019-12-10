@@ -2,130 +2,136 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F16D1C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BADFC43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:57:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C36302073B
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:26:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E612207FF
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 14:57:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="q2BlBcP5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aynkgATt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727509AbfLJO0Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 09:26:25 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:42671 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727178AbfLJO0Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 09:26:25 -0500
-Received: by mail-qt1-f194.google.com with SMTP id j5so2902882qtq.9
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 06:26:25 -0800 (PST)
+        id S1727518AbfLJO5t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 09:57:49 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37896 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727272AbfLJO5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 09:57:49 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so3523112wmi.3
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 06:57:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=3CzKzMxyhoeTtwtqj+I1x1M/sgiI5aFasOuxpTD3zik=;
-        b=q2BlBcP5Q2VQvTVKiQtoDVIpL14n7A/+AVOxZvqC1dttWGA/1oNKhv6ow3mF+PDoms
-         KZoeBRxIwhoT2BgyXEzVjwIMpqa+TsKeuKkzE789COO6I6L8gC+O6kJwCvhLgeVEaMJj
-         OrafrQeiMdou22l++Ar95GjLyOuoz43On1k9609q9PIg50a5yS7zU3/2jU7gRQl3Yum3
-         k7DtMTVr1E7BJtNK77N9JL/tTEj0Sd4wRptmypoJN6PlQQ//EI++JpaLGrBCaCkH9hzT
-         ak1XG2kFKle+gMCu1Cy3kN7qHDBwxBjYpA3uiPNWPXo+RSVY8lwUoeTFw7D+m2XRTnJR
-         5C6w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MeHpIBvTgxLOcxEwTns+FfjUSgjdHLH4vDK9C93di18=;
+        b=aynkgATtf6Hs9t3Vn83h3UiUv/MbPBX+yQC7Q4kSEnomlZ7u2kyaAxrvDNW6yiX9r1
+         wzUcuMG+eQ2Dn2m/c8CZ8I/Esb/vO8rDBo+/RFYbecCemiVCaW6ovZxQbutXLe25wU7G
+         BAY6YWtjSXubOVvLMvqa5gRu+9TxDGk+KWlePI5MS96ZaB79bjp3eX8pxE3/2rVj+2y4
+         DRJLYyIYJdRWa28GKWXkgmAAfdpJOz+5vpLogv22eOM3OiTwzf8Ssq8nokZtKLSoOewr
+         wJ5FXFITv5TXdZXacZqdGAsQh4lffV5aqUW4RXICrTJbcW7tRd4iwcXOp8qPK9+3LY9J
+         KM6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=3CzKzMxyhoeTtwtqj+I1x1M/sgiI5aFasOuxpTD3zik=;
-        b=dherVJInQJeQoVzVuu1NVHOUkIBzeLcRfZjTJ8UZKgXVAx2endHXJB0HyFR8eeLkWZ
-         3jk/tmOiOP7u3Kv3a7Fk9bbHD96SQ1CaYRBuVz2gVSXffHa6KVw0g8WHpgxpcNGrmo02
-         TbHTacOQxxS3eppeR20tf7lTUHYPYl6NcChkf8w5zBjoStTp/YECbCDflvLrNASEeZuJ
-         iP8wf0KUYrw7EQGH4KjgDqCKbWXNnN3kIeEd32VnpPXoKu8c0x77x8DVTdhI3mZFWA4q
-         WC6jvgxBX2Ztq+fG9SCD15gbw6ogWPp0gJQzSySvO2F9ocp7fnZzDQ14GljnGH4dtBTD
-         4X/g==
-X-Gm-Message-State: APjAAAVW0ufhHyZWs431uMQmIvHAFoiBpF2XXBstrLOAsxDIIIfn6Eqb
-        lZUhAMgrGHat7dfSb8PD28KhqWjJPSs=
-X-Google-Smtp-Source: APXvYqze4GXhFuhhVShoqgxrtl+AaR+z/TBMEsu4AdydKRztAknV5xeK90DW400waSoBSzhmVApPAw==
-X-Received: by 2002:ac8:6b59:: with SMTP id x25mr5657335qts.299.1575987984257;
-        Tue, 10 Dec 2019 06:26:24 -0800 (PST)
-Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id z12sm935227qki.64.2019.12.10.06.26.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Dec 2019 06:26:23 -0800 (PST)
-Subject: Re: [PATCH 1/3] git-p4: [usability] yes/no prompts should sanitize
- user text
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.675.git.git.1575901009.gitgitgadget@gmail.com>
- <e721cdaa008263b896c1d162e411c4e7a04c5710.1575901009.git.gitgitgadget@gmail.com>
- <xmqqimmptazs.fsf@gitster-ct.c.googlers.com>
-From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <179dd921-d9d0-d26d-33e9-3664bf97fcc2@gmail.com>
-Date:   Tue, 10 Dec 2019 09:26:22 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MeHpIBvTgxLOcxEwTns+FfjUSgjdHLH4vDK9C93di18=;
+        b=KO2Xt9pNpG7A3Yq0pVRSsBI6bXkNfftAYQr7V7LXelYXSmeiNQ1LjSMxW+fmlwvEps
+         AOD7qZZva7Z5TGUr0Qf7D+pcbnEXRvQVxSWiUpnXl0FgZSaij52FaZ9J+62/tlzN9T0w
+         AIybfNqZ0xsjVEEEiNuMuhtGONijXEb0DgOukrxu7iZ7BePunXJfUsUVGBvYSnssjDQj
+         Cikz1U4srkllXSRmENq2wi4+bV49Ml3Nndpw8O0UFZ2bXYv5TwByo9woi1v5/xHlNnQr
+         OUDPA4w3nJvSM2Tl9s13uvNWvxfcHZzojevkUuHztUgjvkYltVgFIY/Zi03VffO2E3Km
+         WFAw==
+X-Gm-Message-State: APjAAAVq2Q2enNBok/lzUsqF/7X9mviGp3n7k0VY9pdUXKLlvKtvL2dQ
+        f77GhaKS6N9FBVOAKLjb1gc=
+X-Google-Smtp-Source: APXvYqxxQSS71DBwUTP3P9CVC1mieHiLcKFgUQ/77yx7EF/ibUi7TgiFVao0y+INZZ0Y6RUbnGlKKQ==
+X-Received: by 2002:a1c:3d07:: with SMTP id k7mr5281258wma.88.1575989867132;
+        Tue, 10 Dec 2019 06:57:47 -0800 (PST)
+Received: from szeder.dev (x4db55d5d.dyn.telefonica.de. [77.181.93.93])
+        by smtp.gmail.com with ESMTPSA id w17sm3478569wrt.89.2019.12.10.06.57.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Dec 2019 06:57:46 -0800 (PST)
+Date:   Tue, 10 Dec 2019 15:57:43 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, ukshah2@illinois.edu,
+        Kevin.Willford@microsoft.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/8] t3030-merge-recursive.sh: disable fsmonitor when
+ tweaking GIT_WORK_TREE
+Message-ID: <20191210145743.GG6527@szeder.dev>
+References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
+ <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
+ <efc16962ee2595db50bf051fc84632b8c70036b3.1575907804.git.gitgitgadget@gmail.com>
+ <20191210100732.GD6527@szeder.dev>
+ <b3e8ad07-b2cb-e024-405e-27d9f065f5fc@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqimmptazs.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <b3e8ad07-b2cb-e024-405e-27d9f065f5fc@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Dec 10, 2019 at 08:45:27AM -0500, Derrick Stolee wrote:
+> On 12/10/2019 5:07 AM, SZEDER Gábor wrote:
+> > On Mon, Dec 09, 2019 at 04:10:00PM +0000, Derrick Stolee via GitGitGadget wrote:
+> >> From: Derrick Stolee <dstolee@microsoft.com>
+> >>
+> >> The fsmonitor feature allows an external tool such as watchman to
+> >> monitor the working directory. The direct test
+> >> t7619-status-fsmonitor.sh provides some coverage, but it would be
+> >> better to run the entire test suite with watchman enabled. This
+> >> would provide more confidence that the feature is working as
+> >> intended.
+> >>
+> >> Worktrees use a ".git" _file_ instead of a folder to point to
+> >> the base repo's .git directory and the proper worktree HEAD. The
+> >> fsmonitor hook tries to create a JSON file inside the ".git" folder
+> >> which violates the expectation here.
+> > 
+> > Yeah, there are a couple hardcoded paths in there, e.g.:
+> > 
+> >   open ($fh, ">", ".git/watchman-response.json");
+> > 
+> > and, worse, not only in the test helper hook in
+> > 't/t7519/fsmonitor-watchman' but in the sample hook template
+> > 'templates/hooks--fsmonitor-watchman.sample' as well.
+> > 
+> >> It would be better to properly
+> >> find a safe folder for storing this JSON file.
+> > 
+> >   git rev-parse --git-path ''
+> > 
+> > gives us the right directory prefix to use and we could then append
+> > the various filenames that must be accessed in there.
+> 
+> Adding another git process inside the hook is hopefully not
+> the only way to achieve something like this. The performance
+> hit (mostly on Windows) would be a non-starter for me. (Yes,
+> the process creation to watchman is already a cost here, but
+> let's not make it worse.)
 
-On 12/9/2019 5:00 PM, Junio C Hamano wrote:
-> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Ben Keene <seraphire@gmail.com>
->>
->> When prompting the user interactively for direction, the tests are
->> not forgiving of user input format.
->>
->> For example, the first query asks for a yes/no response. If the user
->> enters the full word "yes" or "no" or enters a capital "Y" the test
->> will fail.
->>
->> Create a new function, prompt(prompt_text, choices) where
->>    * promt_text is the text prompt for the user
->>    * is a list of lower-case, single letter choices.
->> This new function must  prompt the user for input and sanitize it by
->> converting the response to a lower case string, trimming leading and
->> trailing spaces, and checking if the first character is in the list
->> of choices. If it is, return the first letter.
->>
->> Change the current references to raw_input() to use this new function.
->>
->> Signed-off-by: Ben Keene <seraphire@gmail.com>
->> ---
->>
->> +def prompt(prompt_text, choices = []):
->> +    """ Prompt the user to choose one of the choices
->> +    """
->> +    while True:
->> +        response = raw_input(prompt_text).strip().lower()
->> +        if len(response) == 0:
->> +            continue
->> +        response = response[0]
->> +        if response in choices:
->> +            return response
-> I think this is a strict improvement compared to the original, but
-> the new loop makes me wonder if we need to worry more about getting
-> EOF while calling raw_input() here.  I am assuming that we would get
-> EOFError either way so this is no worse/better than the status quo,
-> and we can keep it outside the topic (even though it may be a good
-> candidate for a low-hanging fruit for newbies).
-That is a good catch.  What should we expect the default behavior
-to be in these two questions if the EOFError occurs?  I would think
-that we should extend this to an abort of the process?
-> response = prompt("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ", ["y", "n"])
-> response = prompt("[s]kip this commit but apply the rest, or [q]uit? ", ["s", "q"])
+Hrm, _when_ is the 'fsmonitor-watchman' hook invoked?!  Every time a
+git process tries to figure out what files have changed since e.g. the
+index was written?  For running an fsmonitor/watchman-enabled CI build
+it might be an acceptable compromise until we come up with something
+more clever.  'man githooks' is not clear on this at all, it only says
+that "This hook is invoked when the configuration option
+core.fsmonitor is set to .git/hooks/fsmonitor-watchman".
 
-Should a quit be added to the first prompt and have those be the 
-defaults on EOFError?
-
+> Perhaps a better strategy would be to do something in-memory
+> instead of writing to a file. Not sure how much of that can
+> be done in the script.
+> 
+> -Stolee
