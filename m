@@ -2,151 +2,145 @@ Return-Path: <SRS0=g4/7=2A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF997C43603
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B28F7C43603
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:57:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66E84207FF
-	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:51:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8162320652
+	for <git@archiver.kernel.org>; Tue, 10 Dec 2019 13:57:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p9oSSBCn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/zMRV9q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727272AbfLJNvU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 08:51:20 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:38797 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbfLJNvU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 08:51:20 -0500
-Received: by mail-oi1-f196.google.com with SMTP id b8so9828796oiy.5
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 05:51:19 -0800 (PST)
+        id S1727145AbfLJN53 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 08:57:29 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:38370 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727007AbfLJN53 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 08:57:29 -0500
+Received: by mail-oi1-f193.google.com with SMTP id b8so9845741oiy.5
+        for <git@vger.kernel.org>; Tue, 10 Dec 2019 05:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UVlCf5MyzMQ5sVNKAnYPUwC63Z1JIIFJm6Oo86NOdAU=;
-        b=p9oSSBCned0LbVP6WHBJUnlkzCotztMDkZTkdli6rLA1iXe+OfaiOLN4z76opMm0p6
-         TOe2q2/KAvWh7ietFldN/UMnjoAdwAMSZ6bg2Gp5QSD3EogssS/msI4dWjDg7uyHRS0g
-         43rgVpuEJw/SOrmXP6GEQjw5uxyroXgdYopL1VL0iB/g5cMPS2vlLO9vwbPhnUauKC0s
-         XE3Gc25WYYjy5garL0+mFHnN5o5aFRNver4Mu/Gp6xq8ARPu/0ljjKljT+ublR7QMNFh
-         gwJo0najooyGr8R4HM27aLNmqYG1OXDlbb6+vwfEagDzBk4kOZrFoBYSXZh3cGnPWPID
-         VC5A==
+        bh=k3g+4pGoOGb9IwFOko78LK42AJ2edX3BUiV5wG1QHYs=;
+        b=b/zMRV9qQbtQxVrvWVNX609Qi9zL10BdDjSeMgCKBvUem0bLSmQ5RQobsyFTdcFZ7/
+         1bcioOGQYrVjdvI6B00nfu/RoGVzNTCOCVOK7hTsUbjJeRsXhba5sORZiGBI0HpxGTiP
+         OnVeJuLdXLppDOpe/dbPqNWMV0TbaZ5OnSyzF6X/HUoHJ6EC/XIgf6YIBAjtHLOLYers
+         cWA6SEMpE8OU5Vb0FvUTXYpxa74ihCjBrK69WG7vMQZg3pj49gepnY8bSh81bu11jtA5
+         ww5PVJxNnTtPMpXs6GYXYJVk3Kvim19GB8t6C11MqocH8lDE/FtoZ4alksjP5gNqRbEU
+         Lj1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=UVlCf5MyzMQ5sVNKAnYPUwC63Z1JIIFJm6Oo86NOdAU=;
-        b=XUWOFbQGEsC4h+yA1WzMHaRhylMmQ0ByJASwVGp53R6L5VmpBlnkNKLo17MSPKWoYA
-         arBrga+Bf/WylRxL2HKXhsEk8JiNLL2UQI+Yu9EaiS5KUwCm8lKgwslwsNySBUT7tg2K
-         r9oNaa3liLddL5e9w1aEX0ZZUkUoIjIzv+g68YESWpMHR+6q45ylgTbP4haW7V71MGAL
-         qwBCbVoDLMM65dcx76PqIROSBSoogkB8qr+5/iGPgarQz1QNKvr+POJQFfOphltagdMJ
-         JTd34R4t+Hk2OU6elB5zBC8+UEw86QGWuU18GVgH4PZ4xkDBrpGTl06RJ3F1d0ry040b
-         aQDw==
-X-Gm-Message-State: APjAAAU9frD8XiG3iBmhWO+hoO8TWPo6i0raaUX39HC2lpOF8sROZJhJ
-        vSdXHWRGQX26lRuY6WJaJL0=
-X-Google-Smtp-Source: APXvYqxaZq29lDG3v5lE0lDEpbtWwVwYVGf4ZPeMPlziTYte+oIDmcZIVJo17uMAKViUdg+bJH9OuQ==
-X-Received: by 2002:a05:6808:56:: with SMTP id v22mr3733983oic.37.1575985878988;
-        Tue, 10 Dec 2019 05:51:18 -0800 (PST)
+        bh=k3g+4pGoOGb9IwFOko78LK42AJ2edX3BUiV5wG1QHYs=;
+        b=dPNAkmmJ6qwnTrpaDPzAgu1KZEJ/GqpOBkPpA1yS4OL8mh3iDTZwckYrqjRiJTeqRr
+         QE0nUQesQlucNNd1Hg9JQkpJcv8KITQE9eU3XL0reSOe+Qn/ejss547/auW9fCvFtlS7
+         cuC5EZQAaXmgHuPL+fVDl82XWkVKWTsvshuDrmp5bEaMPiSn72XzsG0ob02ocK24uY+h
+         ActJiUaWPmRhpGhB8+WrakMp/uX5r2KwJBlSrLZbGYCSmLgO2y5PzJlYb6dedtCMjGc4
+         nQb6ttIwV9CiexrEWaNVGYPNT2siNMG1oPim+hKoOCAtfgshaoFc1iz70cKCCw55HUbi
+         Jqww==
+X-Gm-Message-State: APjAAAVz1nY4weccDciy61kTBri25qeES9HXOPJOItKhTZL1rdV1mnAy
+        j4HBJayLo1nTudo0QBdvSyg=
+X-Google-Smtp-Source: APXvYqwROoURzG9D0TD1glReXQxSo29eWfSF70Ma30gYibwQfeur2WDfy//iqPBJdlqFelQqUHgYPg==
+X-Received: by 2002:aca:fdd7:: with SMTP id b206mr3828585oii.35.1575986248176;
+        Tue, 10 Dec 2019 05:57:28 -0800 (PST)
 Received: from [192.168.1.76] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id 47sm1410368otf.54.2019.12.10.05.51.17
+        by smtp.gmail.com with ESMTPSA id d59sm1411382otb.50.2019.12.10.05.57.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Dec 2019 05:51:18 -0800 (PST)
-Subject: Re: [PATCH v2 8/8] test-lib: clear watchman watches at test
- completion
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, ukshah2@illinois.edu,
+        Tue, 10 Dec 2019 05:57:27 -0800 (PST)
+Subject: Re: [PATCH v2 5/8] tests: disable fsmonitor in submodule tests
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, ukshah2@illinois.edu,
         Kevin.Willford@microsoft.com,
-        Derrick Stolee <dstolee@microsoft.com>
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
 References: <pull.466.git.1574374826.gitgitgadget@gmail.com>
  <pull.466.v2.git.1575907804.gitgitgadget@gmail.com>
- <e51165f260d564ccb7a9b8e696691eccb184c01a.1575907804.git.gitgitgadget@gmail.com>
- <xmqqwob5ru27.fsf@gitster-ct.c.googlers.com>
- <bfa73fab-ce2c-a05e-3568-cd406dd5c31f@gmail.com>
- <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
+ <a5b0bf6ac7cd28fa47e26ab481f781d74c656f6a.1575907804.git.gitgitgadget@gmail.com>
+ <20191210101351.GE6527@szeder.dev>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <dd8c14d3-21b6-731c-bd50-650d063d686f@gmail.com>
-Date:   Tue, 10 Dec 2019 08:51:16 -0500
+Message-ID: <1fa28a9c-2a4d-fbcb-653b-99a567dbc7da@gmail.com>
+Date:   Tue, 10 Dec 2019 08:57:25 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
  Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8wgsqnn.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191210101351.GE6527@szeder.dev>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 12/10/2019 12:20 AM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> Hm. That is a good point. Can we assume that our version of grep has
->> a "-F" or "--fixed-strings" option? ([1] seems to say that "-F" would
->> work.)
-> 
-> $ git grep "grep -F" -- \*.sh
-> 
-> is your friend ;-) 
-
-Yes, of course I should have just looked for examples.
-
-> And never use https://www.gnu.org/ manual as a yardstick---you will
-> end up using GNUism that is not unavailable elsewhere pretty easily.
-
-I tried to focus on the part that said "this is part of POSIX", but
-you are right that may not be the best place to look.
-
->> [1] https://www.gnu.org/savannah-checkouts/gnu/grep/manual/grep.html#index-grep-programs
+On 12/10/2019 5:13 AM, SZEDER Gábor wrote:
+> On Mon, Dec 09, 2019 at 04:10:01PM +0000, Derrick Stolee via GitGitGadget wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
 >>
->>> What are these stripping of ", and " about?  Could you tell readers
->>> how a typical output from the program we are reading from looks like
->>> perhaps in the log message or in-code comment around here?
+>> The fsmonitor feature allows an external tool such as watchman to
+>> monitor the working directory. The direct test
+>> t7619-status-fsmonitor.sh provides some coverage, but it would be
+>> better to run the entire test suite with watchman enabled. This
+>> would provide more confidence that the feature is working as
+>> intended.
 >>
->> Watchman outputs its list of paths in JSON format. Luckily, it formats
->> the output so the path lines are on separate lines, each quoted.
+>> The fsmonitor feature struggles with submodules. Disable the
+>> GIT_TEST_FSMONITOR environment variable before running tests with
+>> a lot of submodule interactions.
 >>
->> For example:
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>  t/t3404-rebase-interactive.sh                | 1 +
+>>  t/t3600-rm.sh                                | 1 +
+>>  t/t4060-diff-submodule-option-diff-format.sh | 3 +++
+>>  t/t5526-fetch-submodules.sh                  | 2 ++
+>>  t/t7402-submodule-rebase.sh                  | 3 +++
+>>  t/t7406-submodule-update.sh                  | 2 ++
+>>  t/t7506-status-submodule.sh                  | 3 +++
+>>  t/t7508-status.sh                            | 3 +++
+>>  8 files changed, 18 insertions(+)
 >>
->> {
->> 	"version": "4.9.0",
->> 	"roots": [
->> 		"<path1>",
->> 		"<path2>",
->> 		"<path3>"
->> 	]
->> }
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> index 461dd539ff..9dc7d1aefb 100755
+>> --- a/t/t3404-rebase-interactive.sh
+>> +++ b/t/t3404-rebase-interactive.sh
+>> @@ -697,6 +697,7 @@ test_expect_success 'do "noop" when there is nothing to cherry-pick' '
+>>  '
+>>  
+>>  test_expect_success 'submodule rebase setup' '
+>> +	GIT_TEST_FSMONITOR="" &&
 > 
-> Yeek; how is a dq in path represented?  by doubling?  by
-> backslash-quoting (if so how is a backslash in path represented)?
-> By something else?
+> This disables GIT_TEST_FSMONITOR for the remainder of the test script,
+> but there are still a lot of non-submodule-specific tests to run.
+...
+>> diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+>> index 4e676cdce8..bf0487632d 100755
+>> --- a/t/t7508-status.sh
+>> +++ b/t/t7508-status.sh
+>> @@ -846,6 +846,9 @@ test_expect_success 'status refreshes the index' '
+>>  	test_cmp expect output
+>>  '
+>>  
+>> +# fsmonitor does not work well with submodules
+>> +GIT_TEST_FSMONITOR=""
+>> +
 > 
-> It's OK at least for now to declare that our test repository does
-> not contain any funny paths, but in the longer run does the above
-> mean that we somehow need to be able to grok JSON reliably in our
-> tests?  It may not be such a bad thing especially for longer term,
-> as there are other parts of the system that may benefit from having
-> JSON capable output readers in our tests (e.g. trace2 code can do
-> JSON, right?)..
+> Likewise.
 
-trace2 can _write_ JSON, not parse it. However, we have some parsing
-code (using a package) in the performance tests. I could try
-adapting that for this purpose. That package is not currently required
-by the test suite, so it causes some dependency issues when first
-running the perf suite. At least we wouldn't need the package
-unless running with GIT_TEST_FSMONITOR.
-
-My guess is that this patch is going to be trouble, so I'll eject
-it in the next version and save the JSON parsing and everything
-for its own series. We only really need it when we are getting
-close to running watchman in CI on Windows.
+Would it make sense to wrap the tests in a subshell without
+increasing the tabbing inside the subshell? I can comment
+the beginning of the subshell that we are disabling the
+variable for a specific list of tests and the subshell can
+be removed after the proper fixes make it work.
 
 Thanks,
 -Stolee
