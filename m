@@ -2,148 +2,101 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40174C43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A2D0C2D0C6
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:13:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0D7DE21556
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:11:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DF962054F
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:13:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g8HY2Cez"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BCThuQog"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730958AbfLKRLH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 12:11:07 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53025 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730949AbfLKRLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 12:11:06 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AB9282BA76;
-        Wed, 11 Dec 2019 12:11:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xdlfqDbAn1Y3p6eSo3RBlMiunUQ=; b=g8HY2C
-        ezQOjSllqwY92yYu+sii4sMStgTC6pahhz8q/6k+E9cO7Y47FLJNrk7Q4kLCtAdm
-        AzEuAzDy1A8GugDvLLHKXGtkIXa1VcwZBFzK3aV87A9OVHvmAM0+9H+6HIUAD5vu
-        AjUNYR1WGNmJtPR6h1i9PrF4Y5ieNWhoVF1Z0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LRWgS/GejBf22p0ZirEvnicDqZk6gaoG
-        2s8HVwBcFEFdImyeOk/b40HEtc2pmzZSZmn3eQM9b82tqORHkoZsjM+SuF03hHCB
-        mYM4J340z1oQUzFvqWKBIQwGIl6l/PySyXpGpmN+U33gfgKvHB0goRNA3qq87bTb
-        9agDh4id2+s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A2432BA75;
-        Wed, 11 Dec 2019 12:11:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E98462BA73;
-        Wed, 11 Dec 2019 12:11:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH v5 07/15] git-p4: add new support function gitConfigSet()
+        id S1730982AbfLKRNB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 12:13:01 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41521 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729512AbfLKRNA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 12:13:00 -0500
+Received: by mail-pg1-f195.google.com with SMTP id x8so11060424pgk.8
+        for <git@vger.kernel.org>; Wed, 11 Dec 2019 09:13:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ZpHQmHW5A8/7Vpm8mflrZjs4foIerdYsMou5TBssh1c=;
+        b=BCThuQoggE6bUDqn+xq8bsffVb04O2t+bh7nQyB7GiGFyooDFOmULwrSoSlEnvuPHy
+         9TI1iXl+3JIlfva9yMcxaGVnJTKR3FYnQjbd1DIBI1jjEhkcLpwBgbeWcDI4hkjvzv35
+         lxQ0shWiDgOMwlk9UiCYVZ0ij7mrbIw7kMJgB/g8e6u8xroLZh8wMwfpa9Yl5cVU3GvT
+         VmFXKq1GzlFOylysxe29x1Cd2r/7AzM0augJNy53f+xCoXnN9fxchw0sI3gR0f36DEZb
+         +Br5r+C7xYcOaRfa1dDwKzeInnsDEGDwBXfx1HWNZPt2Xq467E3VFV5drK3S0em6zuCg
+         3RRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZpHQmHW5A8/7Vpm8mflrZjs4foIerdYsMou5TBssh1c=;
+        b=hLfRkJ95cj58hdJ9V38OzAyfFY4EvU0nWa/fHRjJY6q7mzgV5m6UKUhFx6HDhGAMQh
+         5PTJdlCbSLOrgryJtZU4xPWO8bPFEoBhlICd0c7V9e9WvzvOMhgz6n0pqptOBImFfgT6
+         Dg77WCLk97NWeCUQ8PKqA6x6lOoTcxLKB5umNy9PJtypuPcY5LgwQzRhaR9ySv8JdSGv
+         CugYAS412Vl/0zrId7uIMDNWwRbSUDQ1rZQodXVXEZy0+qrKh1l7gek4QzcpLCFwSIJt
+         7HBODeOfPXYfLFXt+hCXTgY1/KHNJY+NwPLuKPoTG+96CjGy1+MXH6rj6U9BpVDdwh8n
+         HvNw==
+X-Gm-Message-State: APjAAAVAvSMw7btTEYJCnvv7pYajshDoAsfNWI+v/rNMWHBvvBkDDF9S
+        zrLFR7gRbcXjSGM8vNpriFc=
+X-Google-Smtp-Source: APXvYqw2cphjXpj69v/SBn7bS5Uubtn7LAdpSs4rOfOtcnKwXKm3Zyd+ANd0UuMWHhY4W4+ydtJJFw==
+X-Received: by 2002:a63:70e:: with SMTP id 14mr5212535pgh.266.1576084380137;
+        Wed, 11 Dec 2019 09:13:00 -0800 (PST)
+Received: from generichostname (c-73-15-240-142.hsd1.ca.comcast.net. [73.15.240.142])
+        by smtp.gmail.com with ESMTPSA id k23sm3515973pgg.7.2019.12.11.09.12.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2019 09:12:59 -0800 (PST)
+Date:   Wed, 11 Dec 2019 09:13:56 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Keene <seraphire@gmail.com>, Jeff King <peff@peff.net>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings
+ in python3
+Message-ID: <20191211171356.GA72178@generichostname>
 References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
-        <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
-        <bc7009541b3f03c3065a7be2b569cd4bf91f7c05.1575740863.git.gitgitgadget@gmail.com>
-Date:   Wed, 11 Dec 2019 09:11:00 -0800
-In-Reply-To: <bc7009541b3f03c3065a7be2b569cd4bf91f7c05.1575740863.git.gitgitgadget@gmail.com>
-        (Ben Keene via GitGitGadget's message of "Sat, 07 Dec 2019 17:47:35
-        +0000")
-Message-ID: <xmqqsglqpz2z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+ <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
+ <20191207194756.GA43949@coredump.intra.peff.net>
+ <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com>
+ <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3536B084-1C39-11EA-B3F1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Dec 11, 2019 at 08:54:49AM -0800, Junio C Hamano wrote:
+> Ben Keene <seraphire@gmail.com> writes:
+> 
+> > Yes indeed!
+> >
+> > I hadn't pulled before I attempted the rebase, and got bit.  Yes those
+> > shouldn't be there!
+> 
+> So, other than that, this is ready to be at least queued on 'pu' if
+> not 'next' at this point?
 
-> From: Ben Keene <seraphire@gmail.com>
->
-> Add a new method gitConfigSet(). This method will set a value in the git
-> configuration cache list.
->
-> Signed-off-by: Ben Keene <seraphire@gmail.com>
-> ---
->  git-p4.py | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index e7c24817ad..e020958083 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -860,6 +860,11 @@ def gitConfigList(key):
->              _gitConfig[key] = []
->      return _gitConfig[key]
->  
-> +def gitConfigSet(key, value):
-> +    """ Set the git configuration key 'key' to 'value' for this session
-> +    """
-> +    _gitConfig[key] = value
-> +
->  def p4BranchesInGit(branchesAreInRemotes=True):
->      """Find all the branches whose names start with "p4/", looking
->         in remotes or heads as specified by the argument.  Return
+From what I can tell, Ben agreed to have this series superseded by Yang
+Zhao's competing series[1].
 
-I am not sure if we want to do this.  The function makes it look as
-if we are not just updating the cached version but also is updating
-the underlying configuration file, effective even for future use,
-but that is not what is happening (and you do not want to touch the
-configuration file with this helper anyway).  It is misleading.
+That being said, I haven't been following along too closely but it seems
+to me this series is further along and has received more review
+feedback so maybe it should be picked up?
 
-This seems to be used only in one place in a later patch (14/15)
- 
-         depotPaths = args
- 
-+        # If we have an encoding provided, ignore what may already exist
-+        # in the registry. This will ensure we show the displayed values
-+        # using the correct encoding.
-+        if self.setPathEncoding:
-+            gitConfigSet("git-p4.pathEncoding", self.setPathEncoding)
-+
-+        # If more than 1 path element is supplied, the last element
-+        # is the clone destination.
-         if not self.cloneDestination and len(depotPaths) > 1:
-             self.cloneDestination = depotPaths[-1]
-             depotPaths = depotPaths[:-1]
-
-and the reason why it is needed, I am guessing, is because pieces of
-code that gets the control later in the flow will use "git-p4.pathEncoding"
-configuration variable to determine how the path need to be encoded.
-
-I think the right fix for that kind of problem is to make sure that
-we clearly separate (1) what the configured value is, (2) what the
-value used to override the configured value for this single shot
-invocation is, and (3) which value is used.  Perhaps the existing
-code is fuzzy about the distinction and without allowing the caller
-to override, always uses the configured value, in which  case that
-is what needs to be fixed, perhaps?
-
-I see encodeWithUTF8(self, path) method of P4Sync class (I am
-working this review on the version in 'master', not with any of the
-previous steps in this series) unconditionally uses gitConfig() to
-grab the configured value.  Probably the logical thing to do there
-(i.e. before your step 05/15) would have been to store in the P4Sync
-instance (i.e. 'self') to hold its preferred path encoding in a new
-field (say 'self.pathEncoding'), and use that if exists before
-consulting the config and finally fall back to utf-8.  Or perhaps
-when the class is instantiated, populate that configured value to
-the 'self.pathEncoding' field, and then override it by whatever
-codepath you call gitConfigSet() in this series to instead override
-that field.  That way, encodeWithUTF8(self, path) method (by the
-way, that is a horrible name, as the function can use arbitrary
-encoding and not just UTF-8) can always encode in self.pathEncoding
-which would make the logic flow simpler, I would imagine.
-
+[1]: https://lore.kernel.org/git/afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com/
