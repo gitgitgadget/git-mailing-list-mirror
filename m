@@ -6,80 +6,79 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB77C43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:39:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E96C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:54:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 346F82073D
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:39:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5F8B6214AF
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:54:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="coQfT0fO"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PtU6hLQg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730150AbfLKQjw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 11:39:52 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52580 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729955AbfLKQjw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 11:39:52 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D9F892E2D;
-        Wed, 11 Dec 2019 11:39:50 -0500 (EST)
+        id S1730278AbfLKQy5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 11:54:57 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54509 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727118AbfLKQy5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 11:54:57 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C3C09287A;
+        Wed, 11 Dec 2019 11:54:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/H9Xfk8QCNwqXho10lSPKgSbSFc=; b=coQfT0
-        fOCSlrobgQkac+vvpVnHOAwornHBGUY8ZF9fqk3vpbUvqGehYEAOtrmDEIGdu94d
-        q1EFbzzrRiWMRyrNx7KW8vEXW3MoK2Y6IF812FnGF/j/jiNBoj7i986GhGm8/0gt
-        iNcYk+XCdWDSfXQSBD/1t+fVmZxPr1WihsMS8=
+        :content-type:content-transfer-encoding; s=sasl; bh=cYJbNPgyukni
+        S3YAVMj2wUGraZ4=; b=PtU6hLQgVVBFoOGTrVtrc8qMpsJ5cRiTg0bgU72w5pa9
+        Dfbx/LrDSrcHOiqNtQj1aEDXdcHAIxwPoVHrX6Q0eJkzldptkkpOouWwnepSS9vB
+        jIposn2qc1e540aNugpaIdcNw+A8iR6bsywUiti6AjvAVptSiiB6Ebc+/y7jTN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yaoUd5K9+xwVWku5olTqrZxwwTAkZEFp
-        mHQS1trAI1JDcxwgpOH0ftxkt+WVbmzUQpFv3RQpTODQ+574yNb4viucl4H5fNem
-        hrG87IOgLTx2mDYFh+sXNsnSl//yRM75Spo0NAsSF676qxRIJfFx6CQLw662DvMt
-        OUNuBnqskZE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0500A92E2C;
-        Wed, 11 Dec 2019 11:39:50 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=i6p8sf
+        Paf6hieSrUHYdFKRHdoYaur09C5z3LjPZx/UJ7r/QDiVjCPfBhMpZvu0y/8a37ZD
+        UKTWOmZRMbOf2z2thQOR4Et+f7zXOwGayeL7vE6TcdKuSTD40dX8hUurg/LCXy+t
+        WqbG2uaqsY7mGbgMMO4RtHZsKhy3k/DBGt9Yo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 333D692879;
+        Wed, 11 Dec 2019 11:54:55 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28D1C92E28;
-        Wed, 11 Dec 2019 11:39:47 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4783E92878;
+        Wed, 11 Dec 2019 11:54:52 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
-Subject: Re: [PATCH v5 05/15] git-p4: promote encodeWithUTF8() to a global function
+To:     Ben Keene <seraphire@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings in python3
 References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
         <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
-        <11d7703e411f1dced8a34defc68922ba44c614d5.1575740863.git.gitgitgadget@gmail.com>
-Date:   Wed, 11 Dec 2019 08:39:44 -0800
-In-Reply-To: <11d7703e411f1dced8a34defc68922ba44c614d5.1575740863.git.gitgitgadget@gmail.com>
-        (Ben Keene via GitGitGadget's message of "Sat, 07 Dec 2019 17:47:33
-        +0000")
-Message-ID: <xmqq1rtarf3j.fsf@gitster-ct.c.googlers.com>
+        <20191207194756.GA43949@coredump.intra.peff.net>
+        <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com>
+Date:   Wed, 11 Dec 2019 08:54:49 -0800
+In-Reply-To: <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com> (Ben Keene's
+        message of "Sat, 7 Dec 2019 16:27:29 -0500")
+Message-ID: <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D7C0A120-1C34-11EA-A267-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: F3400C7C-1C36-11EA-BB61-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ben Keene <seraphire@gmail.com> writes:
 
-> From: Ben Keene <seraphire@gmail.com>
+> Yes indeed!
 >
-> This changelist is an intermediate submission for migrating the P4
-> support from Python 2 to Python 3. The code needs access to the
-> encodeWithUTF8() for support of non-UTF8 filenames in the clone class as
-> well as the sync class.
->
-> Move the function encodeWithUTF8() from the P4Sync class to a
-> stand-alone function.  This will allow other classes to use this
-> function without instanciating the P4Sync class.
+> I hadn't pulled before I attempted the rebase, and got bit.=C2=A0 Yes t=
+hose
+> shouldn't be there!
 
-Makes quite a lot of sense, as I do not see a reason why this needs
-to be attached to any specific instance of P4Sync.
+So, other than that, this is ready to be at least queued on 'pu' if
+not 'next' at this point?
 
+Thanks.
