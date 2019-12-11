@@ -2,141 +2,145 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4291EC43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 19:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C7ABC43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 19:21:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1628B206A5
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 19:14:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 613C920836
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 19:21:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qWo88U7j"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="brz6c8c+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727854AbfLKTOP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 14:14:15 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:44130 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726312AbfLKTOP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 14:14:15 -0500
-Received: by mail-io1-f68.google.com with SMTP id w3so4366596iot.11
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 11:14:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rfYYJ28tt03Dz1tdx8tUy93FHx/d7Rb51EeJS3ZcNN0=;
-        b=qWo88U7jqSBkCAD1CJyQ8jL9Un+ljtl40lQTcYKZG9rOpeqFocyIZcLFGTRxoXJSJ0
-         kq0Uymb932HpjdE4Q2nT355y/MhWo1FeSrSqglGuPv50b0WTYz8Tzrh07qSKPhBNfPgW
-         GBp4qHPIVFtV1Bsobc2xOlaw5eR/+kqwFaOl9qAycYQwckZGfzqpm9BaAMn6XeqteJXt
-         Ni8GCKbvQxCwbHMPADl1fwH8yEnzuHjwm/mrcBhrbOsSRcvmhqTUkTOCztOcsmZdjM5e
-         8PFxGBPc2gZAYZVHLeORGZHlX7BGz2BOYxe9ZAqkvju/09ZbvX2BdoE8lLe+5aHeHnPJ
-         GoJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rfYYJ28tt03Dz1tdx8tUy93FHx/d7Rb51EeJS3ZcNN0=;
-        b=gIIihU8XMOEEz4gnTvA1m8OtZXsVZINc9dAqeNK86Mzbdyc8p/ArSE37WR4vyKikSa
-         eTXv3RZ2l5tokWvgCyBnCzfSirLDZHuXNhTxCBx2ZgvRqycj9wxYUqktEnD36yD0SoXk
-         ZysnlEsm/W8Bf1lV6u09qR94qx16EV3DgJfP4nfzOJcwKgXljEwOuethQSvvoqANmxLk
-         8hD+u24FmtJmLbF3vez4IUokDeNPKF2G4abv6mbnFg3uvp8SeVc8jVeDo6xyXKBDEjg3
-         xUw2vzOgrGK37QYAblmc7avZ2VSEUsNzQT/3+QI8jIyhwwEvvi00emAEkrEQAqEVpsk8
-         MRuQ==
-X-Gm-Message-State: APjAAAUaZnZCmXzXrQo7v7WlYJ5UgFBLOde+7TAlpPkEj7CaIvTg3AC3
-        E34OTiT+F06tYd1pa4N0ZLxF6xCG4aafTyUid3A=
-X-Google-Smtp-Source: APXvYqzxvAsLL80yLeqK7n6K/BeL8u8LnroYnSX0qvi9ETEUQZioopleqbg2O0VD3tZ4jhwKLwbKGatkJ8EF6cmOcJw=
-X-Received: by 2002:a5d:8744:: with SMTP id k4mr4021708iol.227.1576091654303;
- Wed, 11 Dec 2019 11:14:14 -0800 (PST)
+        id S1726808AbfLKTVn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 14:21:43 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65372 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726312AbfLKTVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 14:21:43 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 489E393D6E;
+        Wed, 11 Dec 2019 14:21:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=+O79fwHQPz/oCG3arFsJuZO2lOw=; b=brz6c8
+        c+gZpAfh/w4EZi1ZiWlFvLW9LwRhMGZFWjveGztfvls4fHax2awPr/iGvLAyrYf3
+        1mv9pmhcHoc9s51b4lEFnW3CEn4Z7JOsCKFjcU1pLM67GTsPfueEkkqsk0P+GeaS
+        Vt/OLjpCWjmsP6mduPY8kpTcdLhMbtiz9O1FQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gRhCiULXjJ6gD87PCPXlSkfLKQu0BCuk
+        uDVPoVy+BmolQZaEnO9MAw/6VkZ2v0tYjoRqliD1vRXRxxcUTuJW0wvdb5Q/U9AJ
+        Yfe0T1/9vOCUXktOQMZcxxEr+QQZhs5T0frXlsKkWCrdWO5lPb4VoBkOjbQHbMGi
+        A8Nd5CYCZtc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 40B3D93D6C;
+        Wed, 11 Dec 2019 14:21:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 614F793D6A;
+        Wed, 11 Dec 2019 14:21:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 4/6] hook: support reordering of hook list
+References: <20191210023335.49987-1-emilyshaffer@google.com>
+        <20191210023335.49987-5-emilyshaffer@google.com>
+Date:   Wed, 11 Dec 2019 11:21:36 -0800
+In-Reply-To: <20191210023335.49987-5-emilyshaffer@google.com> (Emily Shaffer's
+        message of "Mon, 9 Dec 2019 18:33:33 -0800")
+Message-ID: <xmqqlfrioegv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20191209103923.21659-1-mirucam@gmail.com> <xmqqo8wepyse.fsf@gitster-ct.c.googlers.com>
- <xmqqh826pyh4.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh826pyh4.fsf@gitster-ct.c.googlers.com>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Wed, 11 Dec 2019 20:14:03 +0100
-Message-ID: <CAN7CjDAYo=AZkVg4X_8iLLWTo43h=BBoOY+Ez-ODL0L_eb8xcg@mail.gmail.com>
-Subject: Re: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-use
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7418F58E-1C4B-11EA-B62A-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El mi=C3=A9., 11 dic. 2019 a las 18:24, Junio C Hamano
-(<gitster@pobox.com>) escribi=C3=B3:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Subject: Re: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-us=
-e
->
-> It is surprising with multiple mentors, nobody noticed free-after-use
-> is perfectly fine---it is use-after-free we would want to avoid.
->
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-Yes, you are right. I will send another version with the correct title.
+>   $ grep -A2 "\[hook\]" ~/.gitconfig
+>   [hook]
+>           pre-commit = 001:~/test.sh
+>           pre-commit = 999:~/baz.sh
+>   $ grep -A2 "\[hook\]" ~/git/.git/config
+>   [hook]
+>           pre-commit = 900:~/bar.sh
+>           pre-commit = 050:~/baz.sh
+>   $ ./bin-wrappers/git hook --list pre-commit
+>   001     global  ~/test.sh
+>   050     repo    ~/baz.sh
+>   900     repo    ~/bar.sh
+>
+> In the above example, '~/baz.sh' is provided in the global config with
+> order position 999. Then, in the local config, that order is overridden
+> to 050. Instead of running ~/baz.sh twice (at order 050 and at order
+> 999), only run it once, in the position specified last in config order.
 
-Thank you,
-Miriam
+Doesn't that depend on the nature of the hook?  A hook that is
+general enough to be used to inspect if another hook's effect is
+sane and reject the result may want to be run after invocation of
+each hook that is not itself, so I would prefer to avoid a design
+that forbids the same command to be specified twice.
 
-> > Miriam Rubio <mirucam@gmail.com> writes:
-> >
-> >> From: Tanushree Tumane <tanushreetumane@gmail.com>
-> >>
-> >> In 5e82c3dd22a (bisect--helper: `bisect_reset` shell function in C,
-> >> 2019-01-02), the `git bisect reset` subcommand was ported to C. When t=
-he
-> >> call to `git checkout` failed, an error message was reported to the
-> >> user.
-> >>
-> >> However, this error message used the `strbuf` that had just been
-> >> released already. Let's switch that around: first use it, then release
-> >> it.
-> >>
-> >> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> >> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> >> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> >> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> >> ---
-> >> This patch is a new version of
-> >> https://public-inbox.org/git/20191208172813.16518-1-mirucam@gmail.com/
-> >> which itself has been sent previously by Tanushree
-> >> (https://public-inbox.org/git/64117cde718f0d56ebfa4c30f4d8fe2155f5cf65=
-.1551003074.git.gitgitgadget@gmail.com/).
-> >>
-> >>  builtin/bisect--helper.c | 7 ++++---
-> >>  1 file changed, 4 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> >> index 1fbe156e67..3055b2bb50 100644
-> >> --- a/builtin/bisect--helper.c
-> >> +++ b/builtin/bisect--helper.c
-> >> @@ -169,11 +169,12 @@ static int bisect_reset(const char *commit)
-> >>
-> >>              argv_array_pushl(&argv, "checkout", branch.buf, "--", NUL=
-L);
-> >>              if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
-> >> +                    error(_("could not check out original"
-> >> +                            " HEAD '%s'. Try 'git bisect"
-> >> +                            " reset <commit>'."), branch.buf);
-> >>                      strbuf_release(&branch);
-> >>                      argv_array_clear(&argv);
-> >> -                    return error(_("could not check out original"
-> >> -                                   " HEAD '%s'. Try 'git bisect"
-> >> -                                   " reset <commit>'."), branch.buf);
-> >
-> > The original obviously was bad X-<.  Will queue.  Thanks.
-> >
-> >> +                    return -1;
-> >>              }
-> >>              argv_array_clear(&argv);
-> >>      }
+I would love it if it were possible without the precedence order and
+instead the order of appearance in git_config() stream were usable
+to decide the order these hooks are executed.  Unfortunately, there
+is a fixed order that the configuration files are read, and I do not
+see a way short of adding <number>: prefix like this design does to
+ensure that a hook defined in the local config can run before or
+after a hook defined in the global config, so <number>: in the above
+design is probably a necessary evil X-<.
+
+Having said that, I have a suspicion that the config file itself
+should be kept simple---if a hook appears twice with different
+numbers, they would be run twice, for example---and the tooling
+around it (e.g. "git hook add/edit/replace/reorder") should
+implement such a policy (e.g. "the same hook can run only once, so
+remove the other entries when adding the same") if desired.
+
+Which would mean that overriding/disabling an entry in the same
+configuration file should be done by replacing or removing the
+entry.  Adding another entry for the same command with different
+precedence should mean the command would run twice.
+
+And you would need a notation to override or disable an entry in a
+different configuration file (e.g. global tells us to run foo.sh at
+level 50 with "hook.pre-commit=50:foo.sh"; repository wants to say
+not to run it at all, or run it at 80 instead).  I would think you'd
+just need a notation to kill an existing entry (e.g. the local one
+adds "hook.pre-commit=-50:foo.sh" to countermand the entry in the
+earlier example, and then can add another one at level 80 if it
+desires).
+
+I am also tempted to say that the precedence level may not stay to
+be the only attribute for a <hookname, executable> pair wants to
+keep.  Instead of
+
+	[hook]
+                pre-commit = 900:bar.sh
+
+it may have to become more like
+
+	[hook "pre-commit"]
+		level = 900
+		path = bar.sh
+
+if we do not want to paint us into a corner from which we cannot get
+out of.  I dunno.
+
+Doesn't this require coordination between the three configuration
+sources how numbers are assigned and used, by the way?  Between the
+per-user and the per-repository config, they are set by the same
+person anyway, so there is not much to coordinate, but I am not sure
+what the expectations are to allow reading from the system-wide
+configuration (or, should we just disable reading from the
+system-wide configuration for, say, security reasons?)
