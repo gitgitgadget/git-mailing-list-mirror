@@ -2,117 +2,89 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84347C2D0C5
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 11:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3EC7C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 11:43:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5A5A522B48
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 11:28:14 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NwVVOMmn"
+	by mail.kernel.org (Postfix) with ESMTP id 938062073D
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 11:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728128AbfLKL2M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 06:28:12 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:40778 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbfLKL2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 06:28:12 -0500
-Received: by mail-pj1-f66.google.com with SMTP id s35so8823679pjb.7
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 03:28:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xOH3PvU7/5XYjSTnsR4l4IgGZhp40v7pg2mgdtnCrSU=;
-        b=NwVVOMmnDXFUphOo3VZQonfEHOWgJOYq1lbhM0iUMCuEMydfC009i4NUcqFkbE1TFr
-         RlV0/SlfkcpA1DUBJGmhoJCSp+jRiLVdx/fD6VjE/xzgaGw2rlxxEoMB7hoFH6RKvafx
-         ZF4G7x//qWNUk07QaRIadPmzPkfDlmrCqDVaRUHSglnXEwUMBchIESzjwEQpSDQPQsB9
-         +fnDGUQ7BR6zmhSyzWFNHJaRaycM1EtkPRYJ5irSKJprgNqU9/49FWxOFHQWVqVNSPtl
-         8WrYwqFUJ1sOgrItfzXi7ApaqnSx45tJbCAd2yOe2KCr0KocuMlAOwgkJOoXUFe4G/Vk
-         JiHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xOH3PvU7/5XYjSTnsR4l4IgGZhp40v7pg2mgdtnCrSU=;
-        b=ObFdsqUV52xnDY4JJXJjuIZjRZIrIz4KNfcKoA2g93hmAxRUSe4lY9QR76h9YOseaN
-         +xGJel/p0UDiXVzeujz4KJw3Ec88jYqviPeQIq3tFexiP5owfPvC/7228SWdydv4FN2G
-         gQAa7EbYcrJY4abKQgIC/A4PJNAPBP8MgRmfs3agbhewPeHikADyygArL2/Cfdjor6+u
-         XRDqtXBrRZi00Sh/0gjmfNHpAIfGlGtXL/eiE8OV482b2IzmYjyGgniuMFF0E3qtFVq8
-         i1jsH5kw5kU3nXJW2HfjbKpsDiosUE/jM9PvLj1AyGJdm8xUSLD3WVLdlpEE+K+pfXNI
-         20rw==
-X-Gm-Message-State: APjAAAWeN6bE2mtTlJiJHOmc76aEj7DBoyWH10SyX3b5yJYSTzT2XNcy
-        l4zeli3IDAT84l6nEOcC9tE=
-X-Google-Smtp-Source: APXvYqxFh3IdfCJcLp5DSkjS1gJZozVqp4TGx5GzV9rJxjQvaoEx3dbYY5Rj4gWXVwBaPJztlzLOfw==
-X-Received: by 2002:a17:902:9348:: with SMTP id g8mr2751048plp.323.1576063691433;
-        Wed, 11 Dec 2019 03:28:11 -0800 (PST)
-Received: from generichostname (c-73-15-240-142.hsd1.ca.comcast.net. [73.15.240.142])
-        by smtp.gmail.com with ESMTPSA id p16sm2583129pgi.50.2019.12.11.03.28.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 03:28:10 -0800 (PST)
-Date:   Wed, 11 Dec 2019 03:29:08 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/4] git-p4: failure because of RCS keywords should
- show help
-Message-ID: <20191211112908.GA41678@generichostname>
-References: <pull.675.git.git.1575901009.gitgitgadget@gmail.com>
- <pull.675.v2.git.git.1575991374.gitgitgadget@gmail.com>
- <50e9a175c3323074ceec848c0d4054edd240e862.1575991375.git.gitgitgadget@gmail.com>
+        id S1728401AbfLKLnz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 06:43:55 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.18.15]:11105 "EHLO
+        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727365AbfLKLnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 06:43:55 -0500
+Received: from [24.134.116.61] (helo=[192.168.92.208])
+        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92.3)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1if0PG-00075S-FF; Wed, 11 Dec 2019 12:43:50 +0100
+Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
+To:     phillip.wood@dunelm.org.uk,
+        Alexandr Miloslavskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
+ <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
+ <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
+ <25aaaca1-1c88-d2c6-b502-cd35752ce745@syntevo.com>
+ <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
+Date:   Wed, 11 Dec 2019 12:43:49 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <50e9a175c3323074ceec848c0d4054edd240e862.1575991375.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+In-Reply-To: <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 10, 2019 at 03:22:54PM +0000, Ben Keene via GitGitGadget wrote:
-> From: Ben Keene <seraphire@gmail.com>
-> 
-> When applying a commit fails because of RCS keywords, Git
-> will fail the P4 submit. It would help the user if Git suggested that
-> the user set git-p4.attemptRCSCleanup to true.
-> 
-> Change the applyCommit() method that when applying a commit fails
-> becasue of the P4 RCS Keywords, the user should consider setting
-> git-p4.attemptRCSCleanup to true.
-> 
-> Signed-off-by: Ben Keene <seraphire@gmail.com>
-> ---
->  git-p4.py | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/git-p4.py b/git-p4.py
-> index 174200bb6c..cb594baeef 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -1959,6 +1959,14 @@ def applyCommit(self, id):
->                          for f in editedFiles:
->                              p4_revert(f)
->                          raise
-> +            else:
-> +                # They do not have attemptRCSCleanup set, this might be the fail point
-> +                # Check to see if the file has RCS keywords and suggest setting the property.
-> +                for file in editedFiles | filesToDelete:
-> +                    if p4_keywords_regexp_for_file(file) != None:
+On 10.12.2019 11:42, Phillip Wood wrote:
+> I don't think it's so bad if the pathspec is cleaned up just after it is used,
+> the diff below applies on top of your patch - see what you think. The diff
+> also adds dies if --all is given with --pathspec-from-file which (together
+> with a test) would be worth adding to you series I think.
 
-small nit: we should use `is not None` here.
+Unfortunately, your reply came too late, topic was cooking in pu/next 
+for a while and merged into master yesterday: c58ae96f.
 
-> +                        print("At least one file in this commit has RCS Keywords that may be causing problems. ")
-> +                        print("Consider:\ngit config git-p4.attemptRCSCleanup true")
-> +                        break
->  
->              if fixed_rcs_keywords:
->                  print("Retrying the patch with RCS keywords cleaned up")
-> -- 
-> gitgitgadget
+I understand that your patch consists of two parts:
+
+1) Adding test for --all
+------------------------
+I must admit that I overlooked that there was a similar test for 
+args-based pathspec. I will add this part in my next topic for 
+--pathspec-from-file. I expect it to appear in the next day or two. I 
+will try to remember to CC you to it.
+
+2) Moving parsing/validation into `parse_and_validate_options()`
+------------------------
+Again, I agree that having parsing/validation outside is suboptimal.
+However, with current code, I find it to be a choice between two evils, 
+and my choice was "outside but clear" to "inside but obscure".
+
+What I find obscure in your suggestion/patch is that innocently looking 
+`prepare_index()` suddenly clears pathspec as well. It's even harder to 
+see when called through `dry_run_commit()`.
+
+Now, let me illustrate. There's a similar case in my TODO list, this 
+time involving a real bug in git. In `init_db()`, the bug occurs in 
+`set_git_dir(real_path(git_dir))`, also due to unexpected clearing.
+
+Now that I pointed my finger at it, please try to find what's wrong. I 
+imagine that it won't be easy at all. And it's way harder when there's 
+no reason to dig deep into a very specific line of code.
+
+I really try to avoid such type of pitfalls. That's why my choice 
+between two evils is what I did.
+
