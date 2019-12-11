@@ -2,116 +2,121 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A61C43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 21:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB22C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 21:46:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DC3F220409
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 21:38:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01E0E20836
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 21:46:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qeVyGhkV"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="H1oOMGVs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726687AbfLKViu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 16:38:50 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39872 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726673AbfLKViu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 16:38:50 -0500
-Received: by mail-pl1-f194.google.com with SMTP id o9so102751plk.6
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 13:38:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=VsxbzYLhDZRSZ+Fo3WOQrsR4CSpk1RxBNFeG9cLOFB0=;
-        b=qeVyGhkVeV2rE5uB4h5i94NANdzOYucqaFoeT0ztBRdzdqWRxIRT7KxzOr21NlaBt1
-         u0phw2DNPjXdd0i3PlSihDDy5Vzcdyl0VoPiRE3pqoc9PohB88oxNbdH/5/FFLhakZxi
-         mjEZM/wGXMuCiwW/WJiqTHUE7vYLOZsLcN5zjWSWtyt0v5qi5YmENp5U5qOrrsFKbk6K
-         E4nzDrSuVcumT5nNVKaM0ozRzlWFL24rkruS6MECOWyTryt7pB53KiI90h7ufkoXANJ8
-         1f5eVk/Db3anUMT0Syc94aiI65JqrFYgcJKhjt+ZNtCs1hnn4xb1nZbzS4r75PyYz+n/
-         7eeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=VsxbzYLhDZRSZ+Fo3WOQrsR4CSpk1RxBNFeG9cLOFB0=;
-        b=KzokeR9gFNUSLR9AzWUXkDRizfmuKKnlNFNdGbg3uN18tswnoP/mpY2NdYLes0VAX1
-         FagNt7wbPj8qyrsyeJlZ47YAJUoaoBayWvu+qiDOMWMdn5f3Q6z1PyFRgBFl8/kaC1nd
-         vslMPZikwSWp/OfhDQovfIFzxfLqRaIl9Iwr6xdKx9IyJYp8IrbUv3337O6x317rFqNS
-         F6R+E+ngjKi5jf0flj30M2+OtNp3wXlEZAgxW1l3wCRXN4s5W/8td4S0UWzZCuQpditF
-         mWvJgUDHP8R/U4Hw7lJRLBDIKmb+5lgg/mmRKs08dhoJkyWcR5b13wdosg3NoKT3v5Cg
-         HqGw==
-X-Gm-Message-State: APjAAAXpKRH0UFQdytLN1KAVc+yKNLetZaEMhviEr8UxzUxdQNDqXcOk
-        lvLdYUvGRMnM9scPwvqQP+geLebK
-X-Google-Smtp-Source: APXvYqyHfTbMKsTpX9Ps5dpjUSkYt2E3okCJSbI2T8+YpUJ30PAuSCTIiCsI0G81XR+c/nDwh433iA==
-X-Received: by 2002:a17:902:d883:: with SMTP id b3mr5369497plz.231.1576100328842;
-        Wed, 11 Dec 2019 13:38:48 -0800 (PST)
-Received: from generichostname ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id o184sm3815024pgo.62.2019.12.11.13.38.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 13:38:47 -0800 (PST)
-Date:   Wed, 11 Dec 2019 13:39:50 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Paul Mackerras <paulus@ozlabs.org>
-Subject: [PATCH] gitk: use --pretty=reference for copysummary
-Message-ID: <da9321b1bd56aafd16c8dcb99d5d628b79e2244e.1576100147.git.liu.denton@gmail.com>
+        id S1726411AbfLKVqu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 16:46:50 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60545 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726141AbfLKVqu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 16:46:50 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C216950A7;
+        Wed, 11 Dec 2019 16:46:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yTdQAaF/esF7PFbpCCmc3AYQc3k=; b=H1oOMG
+        VsDFuW/t1+H/SfgwvAZ1WmEdd7hiVhoCbFZcin8rLzu5bdDt0gekKgRfq3MuxpVK
+        BZusXpnOB0FoU6qfiop7MqQwj63Uz36p1BesRKyZC/k1M4Xl0OCCXiCQKMMFTvzC
+        4ijTPUkivE3eSDgV8BQC4czBlzD1DzuLGKVOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iaFPwmryMMqUPlqG1mkQGU4vkKEOtV8C
+        +Q+TtRMvpuwcAdlC/HPTm6GffKJpLuzBdtUMuh4+STS5cF0ucET+UUjQKe8QO0od
+        uABm3lLY44PWVw2XQHzT2hbrSrbsd2IECdsNwU89O9wtDzCHzHdW2X3Bh66iN7FW
+        c1unf+mpsPs=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 92F81950A6;
+        Wed, 11 Dec 2019 16:46:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B5618950A5;
+        Wed, 11 Dec 2019 16:46:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Denton Liu <liu.denton@gmail.com>, Ben Keene <seraphire@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        Yang Zhao <yang.zhao@skyboxlabs.com>
+Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings in python3
+References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
+        <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
+        <20191207194756.GA43949@coredump.intra.peff.net>
+        <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com>
+        <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
+        <20191211171356.GA72178@generichostname>
+        <xmqq1rtapwy1.fsf@gitster-ct.c.googlers.com>
+        <CAE5ih78O4_ZPm1sxA=D9Ff-u3ga5Ax1CbvrFg0_E4KrRdUihDQ@mail.gmail.com>
+Date:   Wed, 11 Dec 2019 13:46:40 -0800
+In-Reply-To: <CAE5ih78O4_ZPm1sxA=D9Ff-u3ga5Ax1CbvrFg0_E4KrRdUihDQ@mail.gmail.com>
+        (Luke Diamand's message of "Wed, 11 Dec 2019 20:19:48 +0000")
+Message-ID: <xmqq5zimo7r3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B84AC37C-1C5F-11EA-A5CD-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In an earlier commit[1], git learned the 'reference' pretty format.
-Update copysummary to use this pretty format instead of manually
-reimplementing it as a format string.
+Luke Diamand <luke@diamand.org> writes:
 
-With this change, we lose the double-quotes surrounding the commit
-subject but it seems the consensus is that the unquoted form is used
-more often anyway[2] so this change should be acceptable.
+> On Wed, 11 Dec 2019 at 17:57, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Denton Liu <liu.denton@gmail.com> writes:
+>>
+>> > On Wed, Dec 11, 2019 at 08:54:49AM -0800, Junio C Hamano wrote:
+>> >> Ben Keene <seraphire@gmail.com> writes:
+>> >>
+>> >> > Yes indeed!
+>> >> >
+>> >> > I hadn't pulled before I attempted the rebase, and got bit.  Yes those
+>> >> > shouldn't be there!
+>> >>
+>> >> So, other than that, this is ready to be at least queued on 'pu' if
+>> >> not 'next' at this point?
+>> >
+>> > From what I can tell, Ben agreed to have this series superseded by Yang
+>> > Zhao's competing series[1].
+>>
+>> OK.  Let me not worry about this one, then, at least not yet.
+>>
+>
+> Oh, I hadn't seen Yang's python3 changes!
 
-Since gitk and git are usually packaged and distributed together, their
-versions should be in sync so we should not have to worry a newer gitk
-running on top of an older version of git that doesn't support the
-'reference' pretty format.
+I haven't been paying attention to them either.  The patches I
+started commenting on from Ben were easy to read and understand, and
+I didn't even know until Denton pointed out that Ben's series
+yielded the way.
 
-[1]: 1f0fc1db85 (pretty: implement 'reference' format, 2019-11-19)
-[2]: fb2ffa77a6 (SubmittingPatches: remove dq from commit reference, 2019-11-19)
+> What do we need to do to get these ready for merging?
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-Beat Bolli sent a series out earlier that did the exact same thing[3].
-Since they haven't replied yet, I'll send out the version that I've been
-cooking for a while now since I think the commit message looks a bit
-better too and also it's based on top of Paul's tree.
+Somebody needs to take the ownership of the topic---we cannot afford
+to have two independently made topics competing reviewers' attention.
 
-[3]: https://lore.kernel.org/git/20191209182534.309884-1-dev+git@drbeat.li/
+If Ben wants to drop his version and instead wants to use Yang's
+ones, that's OK but Ben probably is in a lot better position than
+bystanders like me to review and comment on Yang's to suggest
+improvements, if he hasn't done so.  The same for those who reviewed
+Ben's series earlier.
 
- gitk | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/gitk b/gitk
-index abe4805ade..8bf198e338 100755
---- a/gitk
-+++ b/gitk
-@@ -9429,8 +9429,7 @@ proc mktaggo {} {
- proc copysummary {} {
-     global rowmenuid autosellen
- 
--    set format "%h (\"%s\", %ad)"
--    set cmd [list git show -s --pretty=format:$format --date=short]
-+    set cmd [list git show -s --pretty=reference]
-     if {$autosellen < 40} {
-         lappend cmd --abbrev=$autosellen
-     }
--- 
-2.24.0.627.geba02921db
-
+It would make sure that the single topic a combined effort to
+produce the best of both topics.  If there is something Ben's
+patches did that is lacking in Yang's, it may be worth rebuilding it
+on top of Yang's series.
