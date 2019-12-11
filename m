@@ -2,211 +2,271 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-12.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A017C43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F091C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:48:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 019E22077B
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:29:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0AC322173E
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:48:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vHt4Wqx4"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="EMT0Ek4k"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbfLKU3k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 15:29:40 -0500
-Received: from mail-qv1-f66.google.com ([209.85.219.66]:32897 "EHLO
-        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbfLKU3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 15:29:40 -0500
-Received: by mail-qv1-f66.google.com with SMTP id z3so15876qvn.0
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 12:29:39 -0800 (PST)
+        id S1727002AbfLKUsS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 15:48:18 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43459 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbfLKUsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 15:48:18 -0500
+Received: by mail-pl1-f193.google.com with SMTP id q16so44213plr.10
+        for <git@vger.kernel.org>; Wed, 11 Dec 2019 12:48:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=88Ol3kOSZt7rmIXgJnwd4cpETODu7NKOh6PIeBAqHc8=;
-        b=vHt4Wqx4y+PcIEK3bZMg+9YqeNWsZ+BTk36Brtk2yHx+HtMcmm1p/qRMV7zhvLlSm2
-         SQJsQOz/iReE63+LTz/EpPzY8sbW9rCjpl+U8giPuQpPqhWJTEXqVG0vSZChasgdTn3l
-         Pov2sx+60fgCk1dhS/BD/z8B5W/AaUSczLoOPa9Ci9zGY/qXPxeDaupAmZCQH3nB68G9
-         nS8N4Zb6HHeUPbQzxmpd9aSu7os7noRUi71Zu+mXrYdjeBaL5uSrTSBg5GrUvJ30hSJL
-         w9S1FFZAqNqjUVx8dXij+/NNvNj7ti8eK/6GeSFYF8OM0bZLEoMEUF9xk3hx+qyHRdpL
-         3oXw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HemmO+zGL/564bHX6OEW9+FHG3swTcNWyYL5r7qR3Ek=;
+        b=EMT0Ek4klTwmz1ZRabeBmHdzLk4ZGyVFxmyvAorz3ZGQ/RYa1+OeoH8CIhozeeY4FZ
+         SBgWwrp9D4SLVPog0X7Nw409W08JgS03gkzEkJRInkOYZIRKwHRatLlKOTLQZHW1RzB+
+         Wf9Dkgcz+UbmrTHoOPZkdO6psg6K3b80SGgmUuuOsH9aa03YZ3cjzDqW9ftmBK8Pgs/M
+         TbXwzxXJ1PbNlCS+Ilith/rEf9DPI41waOgRcgdyqrjbDkDeaBs3L9kuuENTxbgqXPxX
+         ei9Al1bCIgaGcETidtUJsiOexsEODWo4TXFwnFv1YxOiOZ8S2zzb3wtftJ8veVAQTO8g
+         3Syg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=88Ol3kOSZt7rmIXgJnwd4cpETODu7NKOh6PIeBAqHc8=;
-        b=X6pdtwQ3XfpXpHCg+5SirmQsW6+Fl4V3hC0VdtAtgFiIHNo307U4FleKOnJqq3qi3d
-         rzw+AQg/iiBw2bqgJ/q18xDqrsde6A6lPCqU97QaqGSzbuqXNEwceNvOI9JdCsPqN4iI
-         YMjHH1unBYw8M35IGxHDp9+bif6vo6DDaMM0VbSWlZscgez885QTcellHWcEcq5mH856
-         kbnNZ+p7toWh14esNayowQsJmrstG3+lQLS5SbMrmu6zIEFLNB6eneaYqKM09OgqQQYN
-         Kq+xKE0wq3XiUgjKWf1/lPiLnfcayT1E9gMalH4gHLm/z3v6BkPrqOAnyZpj+dhw+ARF
-         pX2Q==
-X-Gm-Message-State: APjAAAVfOke24YvgAHieTWObV/S6FqSQyIsJPOJsPS3jl0ffQj6/DbM5
-        1sZRUwtsMlPT0u/BIq6wAFI=
-X-Google-Smtp-Source: APXvYqzFrMlxqB5GpyoXNTH4tYBD10oBZDf761W57n8OV+XHawxMfe1pCUKPHbCkopskyJnFmTsXoA==
-X-Received: by 2002:a0c:fac1:: with SMTP id p1mr4980987qvo.231.1576096179117;
-        Wed, 11 Dec 2019 12:29:39 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:3126:c1d8:6135:a84d? ([2001:4898:a800:1012:e259:c1d8:6135:a84d])
-        by smtp.gmail.com with ESMTPSA id c84sm1020707qkg.78.2019.12.11.12.29.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2019 12:29:38 -0800 (PST)
-Subject: Re: [PATCH 1/1] sparse-checkout: respect core.ignoreCase in cone mode
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.488.git.1575920580.gitgitgadget@gmail.com>
- <23705845ce73992bf7ab645d28febebe0a698d49.1575920580.git.gitgitgadget@gmail.com>
- <xmqqtv66og63.fsf@gitster-ct.c.googlers.com>
- <9dbf6d43-ac1e-4790-84e5-4829d21f5fdb@gmail.com>
- <xmqqeexaocos.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3e64b470-93cc-5491-09e1-e499f0a7583d@gmail.com>
-Date:   Wed, 11 Dec 2019 15:29:38 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HemmO+zGL/564bHX6OEW9+FHG3swTcNWyYL5r7qR3Ek=;
+        b=lf2cnnmyaEWdJaItOu/Ncxb+Vfbo1zdEe50J4Fnl3I72l2uWEnD5n7YAWRDHPAGiXw
+         iFHWwgewEYvCyB+M1FLT7xLqc30e3wK0Wh5h4SOQiSh0f/wds9N4vjakVX8hFc06WCRC
+         ImahC3u++fRUBT9SEMCc6wyak+yBrRfq2yyFfFBrY5iRxr1abNtz1thsuHEJdqXE5im6
+         tij8kDRAyAQ+j/K3rAWcAOEql7Jaxd63gSbz/rDAk/vee4DZK1QfjeZ81P84BuCJnItY
+         Na3uClU5i9zf6oMp1uN6TKndXw/YnXLCt5/PL2A5VSrdGcVyQWEdVOJDY4piydM04/+c
+         dqOw==
+X-Gm-Message-State: APjAAAWzp0g5gPdULXC+v1Dbchs9Y8CQxlUp8Lwtg0v+R+G+jkxo8gDL
+        MhnMW4SeqYhVeQFgS8xPD/F1QT7XlkM=
+X-Google-Smtp-Source: APXvYqxf8waHh9aYyoLWl1uovTOFKZp/uNGgf+xmxJa7YZDnZOeW5sGEO8cECVHB5enF/IuYI9x4jw==
+X-Received: by 2002:a17:902:326:: with SMTP id 35mr5512998pld.248.1576097297158;
+        Wed, 11 Dec 2019 12:48:17 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id e7sm4088454pfe.168.2019.12.11.12.48.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Dec 2019 12:48:16 -0800 (PST)
+Date:   Wed, 11 Dec 2019 12:48:11 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 4/9] bugreport: add config values from whitelist
+Message-ID: <20191211204811.GC107889@google.com>
+References: <20191025025129.250049-1-emilyshaffer@google.com>
+ <20191025025129.250049-5-emilyshaffer@google.com>
+ <nycvar.QRO.7.76.6.1910281506040.46@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-In-Reply-To: <xmqqeexaocos.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1910281506040.46@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/11/2019 3:00 PM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
+On Mon, Oct 28, 2019 at 03:14:35PM +0100, Johannes Schindelin wrote:
+> Hi Emily,
+
+Sorry for the delay in replying. This work has been backburnered and
+this mail slipped through the cracks.
+
 > 
->> I'm trying to find a way around these two ideas:
->>
->> 1. The index is case-sensitive, and the sparse-checkout patterns are
->>    case-sensitive.
+> On Thu, 24 Oct 2019, Emily Shaffer wrote:
 > 
-> OK.  The latter is local to the repository and not shared to the
-> world where people with case sensitive systems would live, right?
-
-Yes, this information is local to a specific local copy. Even worktrees
-have distinct sparse-checkout files.
-
->> 2. If a filesystem is case-insensitive, most index-change operations
->>    already succeed with incorrect case, especially with core.ignoreCase
->>    enabled.
+> > Teach bugreport to gather the values of config options which are present
+> > in 'git-bugreport-config-whitelist'.
+> >
+> > Many config options are sensitive, and many Git add-ons use config
+> > options which git-core does not know about; it is better only to gather
+> > config options which we know to be safe, rather than excluding options
+> > which we know to be unsafe.
 > 
-> I am not sure about "incorrect", though.  
+> Should we still have the `// bugreport-exclude` comments, then?
+
+They were optional (useless) before too. I can remove them if you want;
+I suppose I like the idea of having precedent if someone wants to build
+their own internal version with opt-out configs rather than opt-in. I
+can remove them if we want; it doesn't matter very much to me either
+way.
+
 > 
-> My understanding is that modern case-insensitive systems are not
-> information-destroying [*1*].  A new file you create as "ReadMe.txt"
-> on your filesystem would be seen in that mixed case spelling via
-> readdir() or equivalent, so adding it to the index as-is would
-> likely be in the "correct" case, no?  If, after adding that path to
-> the index, you did "rm ReadMe.txt" and created "README.TXT", surely
-> we won't have both ReadMe.txt and README.TXT in the index with
-> ignoreCase set, and keep using ReadMe.txt that matches what you
-> added to the index.  I am not sure which one is the "incorrect" case
-> in such a scenario.
-
-The specific example I have in my mind is that the filesystem can have
-"README.TXT" as what it would report by readdir(), but a user can type
-
-	git add readme.txt
-
-Without core.ignoreCase, the index will store the path as "readme.txt",
-possibly adding a new entry in the index next to "README.TXT". If
-core.ignoreCase is enabled, then the case reported by readdir() is used.
-(This works both for a tracked and untracked path.)
-
->> The approach I have is to allow a user to provide a case that does not
->> match the index, and then we store the pattern in the sparse-checkout
->> that matches the case in the index.
+> >
+> > Reading the whitelist into memory and sorting it saves us time -
+> > since git_config_bugreport() is called for every option the user has
+> > configured, limiting the file IO to one open/read/close and performing
+> > option lookup in sublinear time is a useful optimization.
 > 
-> Yes, I understood that from your proposed log message and cover
-> letter.  They were very clearly written.
+> Maybe we even want a hashmap? That would reduce the time complexity even
+> further.
+
+Sure, we can do it. I'll make that change.
+
 > 
-> But imagine that your user writes ABC in the sparse pattern file,
-> and there is no abc anything in the index in any case permutations.
+> > diff --git a/bugreport.c b/bugreport.c
+> > index ada54fe583..afa4836ab1 100644
+> > --- a/bugreport.c
+> > +++ b/bugreport.c
+> > @@ -1,10 +1,24 @@
+> >  #include "cache.h"
+> >
+> >  #include "bugreport.h"
+> > +#include "config.h"
+> > +#include "exec-cmd.h"
+> >  #include "help.h"
+> >  #include "run-command.h"
+> >  #include "version.h"
+> >
+> > +/**
+> > + * A sorted list of config options which we will add to the bugreport. Managed
+> > + * by 'gather_whitelist(...)'.
+> > + */
+> > +struct string_list whitelist = STRING_LIST_INIT_DUP;
+> > +struct strbuf configs_and_values = STRBUF_INIT;
+> > +
+> > +// git version --build-options
+> > +// uname -a
+> > +// curl-config --version
+> > +// ldd --version
+> > +// echo $SHELL
 > 
-> When you check out a branch that has Abc, shouldn't the pattern ABC
-> affect the operation just like a pattern Abc would on a case
-> insensitive system?
+> These comments probably want to move to a single, C style comment, and
+> they probably want to be introduced together with `get_system_info()`.
+
+Yeah, it's stale and has been removed now. It was less commentary and
+more todo list for author ;)
+
 > 
-> Or are end users perfectly aware that the thing in that branch is
-> spelled "Abc" and not "ABC" (the data in Git does---it comes from a
-> tree object that is case sensitive)?  If so, then the pattern ABC
-> should not affect the subtree whose name is "Abc" even on a case
-> insensitive system.
+> I also have to admit that I might have missed where `$SHELL` was added
+> to the output...
 
-This is a case that is difficult to control for. We have no source
-of truth (filesystem or index) at the time of the 'git sparse-checkout
-set' command. I cannot think of a solution to this specific issue
-without doing the more-costly approach on every unpack_trees() call.
+I skipped it entirely since bugreport doesn't run in shell anymore. If
+you have advice for gathering the user's shell I can try to add it; is
+there such a difference between, say, a Debian user using bash and a
+Debian user using zsh? I suppose it could be useful if someone has an
+issue with GIT_PS1, or with autocompletion. I'll look into gathering it.
 
-I believe this case may be narrow enough to "document and don't-fix",
-but please speak up if anyone thinks this _must_ be fixed.
-
-The other thing I can say is that my current approach _could_ be
-replaced in the future by the more invasive check in unpack_trees().
-The behavior change would be invisible to users who don't inspect
-their sparse-checkout files other than this narrow case.
-
-Specifically, our internal customer is planning to update the
-sparse-checkout cone based on files in the workdir, which means that
-the paths are expected to be in the index at the time of the 'set'
-call.
-
-> I am not sure what the design of this part of the system expects out
-> of the end user.  Perhaps keeping the patterns case insensitive and
-> tell the end users to spell them correctly is the right way to go, I
-> guess, if it is just the filesystem that cannot represente the cases
-> correctly at times and the users are perfectly capable of telling
-> the right and wrong cases apart.
-
-My first reaction to this internal request was "just clean up your
-data." The issue is keeping it clean as users are changing the data
-often and the only current checks are whether the build passes (and
-the build "sees" the files because the filesystem accepts the wrong
-case).
-
-The "git add" behavior made me think there was sufficient precedent
-in Git to try this change.
-
-I'm happy to follow the community's opinion in this matter, including
-a hard "we will not correct for case in this feature" or "if you want
-this then you'll pay for it in performance." In the latter case I'd
-prefer a new config option to toggle the sparse-checkout case
-insensitivity. That way users could have core.ignoreCase behavior without
-the perf hit if they use clean input to the sparse-checkout feature.
-
-> But then I am not sure why correcting misspelled names by comparing
-> them with the index entries is a good idea, either.
-
-Right, that seems like a line too far.
-
->> It sounds like you are preferring this second option, despite the
->> performance costs. It is possible to use a case-insensitive hashing
->> algorithm when in the cone mode, but I'm not sure about how to do
->> a similar concept for the normal mode.
 > 
-> I have no strong preference, other than that I prefer to see things
-> being done consistently.  Don't we already use case folding hash
-> function to ensure that we won't add duplicate to the index on
-> case-insensitive system?  I suspect that we would need to do the
-> same, whether in cone mode or just a normal sparse-checkout mode
-> consistently.
+> >  void get_system_info(struct strbuf *sys_info)
+> >  {
+> >  	struct child_process cp = CHILD_PROCESS_INIT;
+> > @@ -53,3 +67,39 @@ void get_system_info(struct strbuf *sys_info)
+> >  	argv_array_clear(&cp.args);
+> >  	strbuf_reset(&std_out);
+> >  }
+> > +
+> > +void gather_whitelist(struct strbuf *path)
+> > +{
+> > +	struct strbuf tmp = STRBUF_INIT;
+> > +	strbuf_read_file(&tmp, path->buf, 0);
+> > +	string_list_init(&whitelist, 1);
+> > +	string_list_split(&whitelist, tmp.buf, '\n', -1);
+> > +	string_list_sort(&whitelist);
+> > +}
+> > +
+> > +int git_config_bugreport(const char *var, const char *value, void *cb)
+> > +{
+> > +	if (string_list_has_string(&whitelist, var)) {
+> > +		strbuf_addf(&configs_and_values,
+> > +			    "%s : %s\n",
+> > +			    var, value);
+> 
+> A quite useful piece of information would be the config source. Not sure
+> whether we can do that outside of `config.c` yet...
 
-Since the cone mode uses a hashset to match the paths to the patterns,
-that conversion is possible. I'm not sure how to start making arbitrary
-regexes be case-insensitive in the non-cone-mode case. Suggestions?
+It's possible. I can add it.
 
-Thank you for the discussion. I was hoping to get feedback on this
-approach, which is why this patch is isolated to only this issue.
+> 
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +void get_whitelisted_config(struct strbuf *config_info)
+> > +{
+> > +	struct strbuf path = STRBUF_INIT;
+> > +
+> > +	strbuf_addstr(&path, git_exec_path());
+> > +	strbuf_addstr(&path, "/git-bugreport-config-whitelist");
+> 
+> Hmm. I would have expected this patch to come directly after the patch
+> 2/9 that generates that white-list, and I would also have expected that
+> to be pre-sorted, and compiled in.
+> 
+> Do you want users to _edit_ the file in the exec path? In general, that
+> path will be write-protected, though. A better alternative would
+> probably be to compile in a hard-coded list, and to allow including more
+> values e.g. by offering command-line options to specify config setting
+> patterns. But if we allow patterns, we might actually want to have those
+> exclusions to prevent sensitive data from being included.
 
-Thanks,
--Stolee
+Hm, interesting. Do we have precedent for compiling in a header
+generated during the build process? I think I saw one when I was adding
+this script - I'll take a look.
 
+> 
+> > +
+> > +	gather_whitelist(&path);
+> > +	strbuf_init(&configs_and_values, whitelist.nr);
+> > +
+> > +	git_config(git_config_bugreport, NULL);
+> > +
+> > +	strbuf_reset(config_info);
+> > +	strbuf_addbuf(config_info, &configs_and_values);
+> > +}
+> > diff --git a/bugreport.h b/bugreport.h
+> > index ba216acf3f..7413e7e1be 100644
+> > --- a/bugreport.h
+> > +++ b/bugreport.h
+> > @@ -5,3 +5,10 @@
+> >   * The previous contents of sys_info will be discarded.
+> >   */
+> >  void get_system_info(struct strbuf *sys_info);
+> > +
+> > +/**
+> 
+> I also frequently use JavaDoc-style `/**`, but I am not sure that this
+> is actually desired in Git's source code ;-)
+> 
+> > + * Adds the values of the config items listed in
+> > + * 'git-bugreport-config-whitelist' to config_info. The previous contents of
+> > + * config_info will be discarded.
+> > + */
+> > +void get_whitelisted_config(struct strbuf *sys_info);
+> > diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+> > index 7232d31be7..70fe0d2b85 100644
+> > --- a/builtin/bugreport.c
+> > +++ b/builtin/bugreport.c
+> > @@ -56,6 +56,10 @@ int cmd_bugreport(int argc, const char **argv, const char *prefix)
+> >  	get_system_info(&buffer);
+> >  	strbuf_write(&buffer, report);
+> >
+> > +	add_header(report, "Whitelisted Config");
+> 
+> Quite honestly, I would like to avoid the term "whitelist" for good. How
+> about "Selected config settings" instead?
 
+Will do - thanks for the callout.
+
+> 
+> Thanks,
+> Dscho
+> 
+> > +	get_whitelisted_config(&buffer);
+> > +	strbuf_write(&buffer, report);
+> > +
+> >  	fclose(report);
+> >
+> >  	launch_editor(report_path.buf, NULL, NULL);
+> > --
+> > 2.24.0.rc0.303.g954a862665-goog
+> >
+> >
