@@ -2,68 +2,84 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F76C43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AB77C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:39:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0A53F205C9
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:20:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 346F82073D
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 16:39:53 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="coQfT0fO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730207AbfLKQUM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 11:20:12 -0500
-Received: from smtprelay08.ispgateway.de ([134.119.228.110]:37897 "EHLO
-        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728912AbfLKQUL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 11:20:11 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1if4ic-0003jN-My; Wed, 11 Dec 2019 17:20:06 +0100
-Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     phillip.wood@dunelm.org.uk,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
- <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
- <25aaaca1-1c88-d2c6-b502-cd35752ce745@syntevo.com>
- <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
- <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
- <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
- <9d77a425-da8d-d6e7-f51f-c4ce6ee988d5@syntevo.com>
- <xmqq5zimrg9i.fsf@gitster-ct.c.googlers.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <51a0c649-5140-5fa4-9c37-c0a0942a2e83@syntevo.com>
-Date:   Wed, 11 Dec 2019 17:20:06 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        id S1730150AbfLKQjw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 11:39:52 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52580 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729955AbfLKQjw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 11:39:52 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D9F892E2D;
+        Wed, 11 Dec 2019 11:39:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/H9Xfk8QCNwqXho10lSPKgSbSFc=; b=coQfT0
+        fOCSlrobgQkac+vvpVnHOAwornHBGUY8ZF9fqk3vpbUvqGehYEAOtrmDEIGdu94d
+        q1EFbzzrRiWMRyrNx7KW8vEXW3MoK2Y6IF812FnGF/j/jiNBoj7i986GhGm8/0gt
+        iNcYk+XCdWDSfXQSBD/1t+fVmZxPr1WihsMS8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yaoUd5K9+xwVWku5olTqrZxwwTAkZEFp
+        mHQS1trAI1JDcxwgpOH0ftxkt+WVbmzUQpFv3RQpTODQ+574yNb4viucl4H5fNem
+        hrG87IOgLTx2mDYFh+sXNsnSl//yRM75Spo0NAsSF676qxRIJfFx6CQLw662DvMt
+        OUNuBnqskZE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0500A92E2C;
+        Wed, 11 Dec 2019 11:39:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 28D1C92E28;
+        Wed, 11 Dec 2019 11:39:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH v5 05/15] git-p4: promote encodeWithUTF8() to a global function
+References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
+        <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
+        <11d7703e411f1dced8a34defc68922ba44c614d5.1575740863.git.gitgitgadget@gmail.com>
+Date:   Wed, 11 Dec 2019 08:39:44 -0800
+In-Reply-To: <11d7703e411f1dced8a34defc68922ba44c614d5.1575740863.git.gitgitgadget@gmail.com>
+        (Ben Keene via GitGitGadget's message of "Sat, 07 Dec 2019 17:47:33
+        +0000")
+Message-ID: <xmqq1rtarf3j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqq5zimrg9i.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7C0A120-1C34-11EA-A267-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11.12.2019 17:14, Junio C Hamano wrote:
-> If nobody commented on your patches, that is not a punishment.  It
-> could have been that reviewers were busy addressing other issues
-> back then, in which case a gentle ping by resending a polished
-> version (it could be that the changes were not presented well to
-> attract reviewers' attention---polishing the proposed log messages
-> without changing the patch text might be all it takes to make them
-> realize that the topic is worth looking at) would help.
+"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Thanks for letting me know! This is actually a relief.
+> From: Ben Keene <seraphire@gmail.com>
+>
+> This changelist is an intermediate submission for migrating the P4
+> support from Python 2 to Python 3. The code needs access to the
+> encodeWithUTF8() for support of non-UTF8 filenames in the clone class as
+> well as the sync class.
+>
+> Move the function encodeWithUTF8() from the P4Sync class to a
+> stand-alone function.  This will allow other classes to use this
+> function without instanciating the P4Sync class.
 
-I will then merge both topics with my next '--pathspec-from-file' batch, 
-because they are all parts of one work. I just thought that since they 
-can be submitted separately I should do that, maybe that was a mistake.
+Makes quite a lot of sense, as I do not see a reason why this needs
+to be attached to any specific instance of P4Sync.
+
