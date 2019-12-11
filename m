@@ -2,159 +2,253 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_2
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E616DC43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB9EC43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:39:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B7E0E214AF
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:27:50 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Exegv8Ma"
+	by mail.kernel.org (Postfix) with ESMTP id 95B07222C4
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729897AbfLKO1t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 09:27:49 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41149 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729841AbfLKO1t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 09:27:49 -0500
-Received: by mail-wr1-f67.google.com with SMTP id c9so24262522wrw.8
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 06:27:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=qXGGfbIHzcEo7UnTbMQJPTZCZ+fjPzY3sRahHoV8JpI=;
-        b=Exegv8MalkG7I5d6Isq1+MdpbncKFe/ErFPzQL13lq2u7m5Xo1WMRneihVl5VrgYaa
-         QUOOtG2s1XcQxq5tiKsrzxayrdqbdEce2HGlwxGKYpf5l7ej+tJtAhSH7ZoerXW18tS0
-         iyTN2o8xlJ9lYxlIhFKnZ9D/b+MvQCr1PkCHBRH/nnHmaiSrFivR8i85/p5g2gdkYL4c
-         SlYtP5slVjUR/qrmSkoRAIz0WcmttX+AsKYSibMOr2t589ohf400r6E0sOU+oI0p2jE/
-         KH6AVZkhpx6jRCYdhYtG9geKFYAzceAk/cVJi45DxMFY79WNbFlXrhVvTBL+n1nZowlu
-         wldg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=qXGGfbIHzcEo7UnTbMQJPTZCZ+fjPzY3sRahHoV8JpI=;
-        b=fvhdp1staKoQfVA95SA8pfiJ30rngRBbGO08RXaBfI3G/TkvE/liNE9raEInyEHcLd
-         +ogyAH/NrHoRkOwos/Hn/nEPBmZDViutMk8RE5n7CltHM9tnIhsCHWmVdF0dbSUKLll6
-         iCM3S9vpCRKdS51Jl8UCSBht0lhuJ4hL4NvDwqb0ZsdoyUgEsudrQB3YRUy5E3ks+9VX
-         PIVZT22MY+FuhUvbzAjQaIKV1b5rRzptNTEFbZRaDelAIS1xxUU3i6S1ECl428TlHbnF
-         MU/kXQf4zpB8cJkn6TCvimz+9eK9lbNUSuPx646i2bPRewQd1+mFgkuzzdo57M0ry9hO
-         36Jw==
-X-Gm-Message-State: APjAAAU1v82dFw4Dfypk0MWnBJjDDeLYYGZU5W0N/ODCtwc4NkddnA6F
-        uCFEL72VkxlrTyFEUyLAULfGY6s/
-X-Google-Smtp-Source: APXvYqz65jhLsg3cI8ll/xzOB46Nn7BdYp3Ncv/2qG9OcGIRvBUWTwBVp2DJpvaOrsRG3q58nDHMyQ==
-X-Received: by 2002:adf:93c6:: with SMTP id 64mr83504wrp.212.1576074468103;
-        Wed, 11 Dec 2019 06:27:48 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-0-192.as13285.net. [92.22.0.192])
-        by smtp.gmail.com with ESMTPSA id f1sm2487746wml.11.2019.12.11.06.27.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Dec 2019 06:27:47 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
-To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        phillip.wood@dunelm.org.uk,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
- <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
- <25aaaca1-1c88-d2c6-b502-cd35752ce745@syntevo.com>
- <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
- <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
-Date:   Wed, 11 Dec 2019 14:27:45 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.0
+        id S1730092AbfLKOjX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 09:39:23 -0500
+Received: from esg260-1.itc.swri.org ([129.162.252.140]:57768 "EHLO
+        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729686AbfLKOjW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 09:39:22 -0500
+Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
+        by esg260-1.itc.swri.edu (8.16.0.27/8.16.0.27) with ESMTPS id xBBEd4Nx025473
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
+        Wed, 11 Dec 2019 08:39:04 -0600
+Received: from mbx260-2.adm.swri.edu (129.162.29.120) by MBX260.adm.swri.edu
+ (129.162.29.125) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 11 Dec
+ 2019 08:39:04 -0600
+Received: from mbx260-2.adm.swri.edu ([192.168.222.13]) by
+ mbx260-2.adm.swri.edu ([192.168.222.13]) with mapi id 15.00.1497.000; Wed, 11
+ Dec 2019 08:39:04 -0600
+From:   "Strain, Roger L." <roger.strain@swri.org>
+To:     "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
+        "tqclarkson@icloud.com" <tqclarkson@icloud.com>
+CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "ns@nadavsinai.com" <ns@nadavsinai.com>,
+        "marc@msys.ch" <marc@msys.ch>,
+        "pclouds@gmail.com" <pclouds@gmail.com>
+Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
+ 315a84f9aa0e2e629b0680068646b0032518ebed
+Thread-Topic: Regression in git-subtree.sh, introduced in 2.20.1, after
+ 315a84f9aa0e2e629b0680068646b0032518ebed
+Thread-Index: AQHVrbKXNpX9IVDGJUeg6jm3c9jaIqeyPikAgAAAxYCAAAFhgIAAAy+AgAAPwoCAAAF1AIAARRQAgAI7MwCAAJWrgA==
+Date:   Wed, 11 Dec 2019 14:39:04 +0000
+Message-ID: <038c72f0349174bb92e1dd9c3b38f02543ba1d95.camel@swri.org>
+References: <nycvar.QRO.7.76.6.1912091615200.31080@tvgsbejvaqbjf.bet>
+         <7E95BE86-BD96-482F-9ECA-DBDD9C10D114@msys.ch>
+         <nycvar.QRO.7.76.6.1912092037540.31080@tvgsbejvaqbjf.bet>
+         <D99ED706-EC49-4A52-8186-5C9B0B5BC744@icloud.com>
+In-Reply-To: <D99ED706-EC49-4A52-8186-5C9B0B5BC744@icloud.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [129.162.26.93]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <D6750C14F1D68C43916944CCEA4B141E@sw.pvt>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-In-Reply-To: <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-11_03:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
+ scancount=1 engine=8.0.1-1911140001 definitions=main-1912110125
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alexandr
-
-On 11/12/2019 11:43, Alexandr Miloslavskiy wrote:
-> On 10.12.2019 11:42, Phillip Wood wrote:
->> I don't think it's so bad if the pathspec is cleaned up just after it 
->> is used,
->> the diff below applies on top of your patch - see what you think. The 
->> diff
->> also adds dies if --all is given with --pathspec-from-file which 
->> (together
->> with a test) would be worth adding to you series I think.
-> 
-> Unfortunately, your reply came too late, topic was cooking in pu/next 
-> for a while and merged into master yesterday: c58ae96f.
-
-Ah I thought it might be a bit late to fix up the patch, there could 
-always be a follow patch though.
-
-> 
-> I understand that your patch consists of two parts:
-> 
-> 1) Adding test for --all
-> ------------------------
-> I must admit that I overlooked that there was a similar test for 
-> args-based pathspec. I will add this part in my next topic for 
-> --pathspec-from-file. I expect it to appear in the next day or two. I 
-> will try to remember to CC you to it.
-
-Thanks, one other thing I forgot to mention yesterday is to ask what the 
-expected behavior is if the user passes an empty file to 
---pathspec-from-file. With no pathspecs on the command line commit, 
-checkout, reset and restore-files all default to operating on all paths 
-but passing --pathspec-from-file implies the user wants to specify 
-specific paths so I think it would perhaps be better to error out if no 
-paths are given. There is a precedent for this in checkout-index which 
-does nothing if no paths are given (though I can't remember if it errors 
-out or not).
-
-> 
-> 2) Moving parsing/validation into `parse_and_validate_options()`
-> ------------------------
-> Again, I agree that having parsing/validation outside is suboptimal.
-> However, with current code, I find it to be a choice between two evils, 
-> and my choice was "outside but clear" to "inside but obscure".
-> 
-> What I find obscure in your suggestion/patch is that innocently looking 
-> `prepare_index()` suddenly clears pathspec as well. It's even harder to 
-> see when called through `dry_run_commit()`.
-
-It would be easy enough to clear pathspec in cmd_commit() I just didn't 
-bother to do it.
-
-> 
-> Now, let me illustrate. There's a similar case in my TODO list, this 
-> time involving a real bug in git. In `init_db()`, the bug occurs in 
-> `set_git_dir(real_path(git_dir))`, also due to unexpected clearing.
-> 
-> Now that I pointed my finger at it, please try to find what's wrong. I 
-> imagine that it won't be easy at all. And it's way harder when there's 
-> no reason to dig deep into a very specific line of code.
-> 
-> I really try to avoid such type of pitfalls. That's why my choice 
-> between two evils is what I did.
-
-If I had to hazard a guess I'd say that either set_git_dir() calls 
-real_path() which messes up the path passed to it or it does not copy 
-the path passed to it and it is messed up by some other code calling 
-real_path() after set_git_dir() has returned. If my guess is correct (I 
-wouldn't be surprised if it's wrong) I think that's a bit different to 
-the pathspec case as it's about the lifetime of the return value of a 
-function rather than a function freeing an argument passed to it.
-
-Best Wishes
-
-Phillip
+VGhlIGNvbW1lbnQgYWJvdXQgIjQwMC01MDAgY29tbWl0cyIgaXMgaW50ZXJlc3RpbmcgdG8gbWU7
+IG91ciByZXBvcw0KcmVndWxhcmx5IGhhdmUgdG8gcHJvY2VzcyB0aG91c2FuZHMgKCEpIG9mIGNv
+bW1pdHMgbGlrZSB0aGlzLCB3aGljaCBpcw0KcGFydCBvZiB0aGUgcmVhc29uIEkgZmVsdCBhIG5l
+ZWQgdG8gdHJ5IHRvIGZpeCB0aGUgYmVoYXZpb3IuIFdoZW4gSQ0KbWFuYWdlIHRvIGdldCB0aGlu
+Z3MgaW50byBhIHJlYXNvbmFibHkgc2FuZSBzdGF0ZSwgdGhlIGNvbW1pdCBjb3VudCBtYXkNCnN0
+YXkgaW4gdGhlIGh1bmRyZWRzLCBidXQgaWYgdGhpbmdzIGdvIHRvbyBsb25nLCBJJ3ZlIHJlZ3Vs
+YXJseSBzZWVuDQpjb3VudHMgd2VsbCBvdmVyIDUwMDAuDQoNClRoaXMgbWFrZXMgbWUgd29uZGVy
+IGlmIHRoZSBwcm9ibGVtIGlzIHBlcmhhcHMgcmVsYXRlZCB0byB0aGUgaGFyZHdhcmUNCmludm9s
+dmVkOyBtYXliZSB0aGUgYWxnb3JpdGhtIGlzIGRvaW5nIGV4YWN0bHkgd2hhdCBpdCBzaG91bGQs
+IGJ1dCB0aGUNCmF2YWlsYWJsZSBSQU0gaXNuJ3Qgc3VmZmljaWVudC4gSWYgdGhhdCdzIHRoZSBw
+cm9ibGVtLCBwZXJoYXBzIHdlIGNvdWxkDQpmaW5kIGEgd2F5IHRvIHBlcmZvcm0gdGhlIHJlY3Vy
+c2l2ZSB3b3JrIHdpdGhvdXQgdXNpbmcgYWN0dWFsDQpyZWN1cnNpb24sIHJlZHVjaW5nIHRoZSBu
+dW1iZXIgb2YgaW5zdGFuY2VzIG9uIHRoZSBzdGFjay4NCg0KLS0gDQpSb2dlciBTdHJhaW4NCg0K
+T24gV2VkLCAyMDE5LTEyLTExIGF0IDE2OjQzICsxMTAwLCBUb20gQ2xhcmtzb24gd3JvdGU6DQo+
+ID4gSXMgdGhlcmUgYSBtaW5pbWFsLCBjb21wbGV0ZSBhbmQgdmVyaWZpYWJsZSBleGFtcGxlIHRo
+YXQgb3RoZXINCj4gPiBkZXZlbG9wZXJzDQo+ID4gY291bGQgdXNlIHRvIGFuYWx5emUgdGhlIGJ1
+Zz8NCj4gDQo+IEkgcmFuIGludG8gdGhpcyBidWcgdG9kYXksIGFuZCB3aGlsZSBub3QgbXVjaCBj
+bG9zZXIgdG8gYSBzb2x1dGlvbiwgSQ0KPiBiZWxpZXZlIEkgdW5kZXJzdGFuZCB3aHkgaXQgaXMg
+aGFwcGVuaW5nLiANCj4gDQo+IFRoZSByZWN1cnNpdmUgc2VhcmNoIGlzIHJlcXVpcmVkIGJlY2F1
+c2UgdGhlIG9yaWdpbmFsIHJldi1saXN0IGJhc2VkDQo+IGFwcHJvYWNoIGNvdWxkIGxlYXZlIG91
+dCBzb21lIHJlbGV2YW50IGNvbW1pdHMgLSBpZSByZXZlcnNpb24gd291bGQNCj4gcmVwbGFjZSBh
+biBvYnZpb3VzIGJ1ZyB3aXRoIGEgaGlkZGVuIG9uZS4NCj4gDQo+IFRoZSBzZWFyY2ggd2lsbCBz
+dG9wIHdoZW4gaXQgcmVhY2hlcyBlaXRoZXIgYSByb290IGNvbW1pdCBvciBvbmUNCj4gYWxyZWFk
+eSBtYXBwZWQgdG8gYSBzdWJ0cmVlIGNvbW1pdC4NCj4gDQo+IElmIHlvdSBoYXZlIGEgc21hbGwg
+cmVwbyBvciBydW4gZ2l0IHN1YnRyZWUgYWRkIGRpcmVjdGx5IG9uIHlvdXINCj4gbWFzdGVyIGJy
+YW5jaCwgdGhlIHNlYXJjaCB3aWxsIHRlcm1pbmF0ZSBmYWlybHkgcXVpY2tseS4NCj4gDQo+IEhv
+d2V2ZXIsIGlmIHlvdSBkbyBldmVyeXRoaW5nIHZpYSBwdWxsIHJlcXVlc3RzLCB0aGUgc2VhcmNo
+IHdpbGwgaGl0DQo+IGEgbWVyZ2UgY29tbWl0IHdoZXJlIG9uZSBzaWRlIGlzIGp1c3QgYWhlYWQg
+b2YgdGhlIHN1YnRyZWUgbWFwcGluZywNCj4gYnV0IHRoZSBvdGhlciBzaWRlIGlzIHNldmVyYWwg
+dGhvdXNhbmQgY29tbWl0cyB3aXRoIG5vIHNpZ24gb2YgZWl0aGVyDQo+IGEgcm9vdCBvciBhbnkg
+c3VidHJlZXMuDQo+IA0KPiBJ4oCZbSBub3Qgc3VyZSB5ZXQgaWYgaXQgaXMgdGhlIG51bWJlciBv
+ZiBjb21taXRzIG9yIG1lcmdlcw0KPiBzcGVjaWZpY2FsbHksIGJ1dCB0aGUgc2NyaXB0IHNlZW1z
+IHRvIGJlIGFibGUgdG8gaGFuZGxlIGFyb3VuZCA0MDAtDQo+IDUwMCBjb21taXRzIGJlZm9yZSBp
+dCBmYWxscyBvdmVyLg0KPiANCj4gPiA+IA0KPiA+ID4gDQo+ID4gPiA+IEFtIDA5LjEyLjIwMTkg
+dW0gMTc6MjAgc2NocmllYiBKb2hhbm5lcyBTY2hpbmRlbGluIDwNCj4gPiA+ID4gSm9oYW5uZXMu
+U2NoaW5kZWxpbkBnbXguZGU+Og0KPiA+ID4gPiANCj4gPiA+ID4g77u/SGksDQo+ID4gPiA+IA0K
+PiA+ID4gPiA+IE9uIE1vbiwgOSBEZWMgMjAxOSwgTWFyYyBCYWxtZXIgd3JvdGU6DQo+ID4gPiA+
+ID4gDQo+ID4gPiA+ID4gSSBhbSBub3QgZmFtaWxpYXIgd2l0aCB0aGUgc291cmNlIGNvZGUsIHNv
+IEkgY2FuIG5vdCBzZW5kIGluDQo+ID4gPiA+ID4gdGhhdA0KPiA+ID4gPiA+IHJldmVydC4gIEkg
+Y2FuLCBob3dldmVyLCBzYXkgdGhhdCBJIGFtIGdyYXRlZnVsIHRvIHdob21ldmVyDQo+ID4gPiA+
+ID4gZG9lcyBpdCA7KQ0KPiA+ID4gPiANCj4gPiA+ID4gSSBhbSBhZ2FpbnN0IHJldmVydGluZyB0
+aGUgY2hhbmdlIHdpdGhvdXQga25vd2luZyB0aGUgcm9vdA0KPiA+ID4gPiBjYXVzZS4NCj4gPiA+
+ID4gDQo+ID4gPiA+IFRoZSByZWNlbnQgcmVwb3J0ZXIgb25seSBjb21wYXJlZCBHaXQgZm9yIFdp
+bmRvd3MgdjIuMTkuMCB2cw0KPiA+ID4gPiB2Mi4yMC4xLA0KPiA+ID4gPiB3aGljaCBpcyBfcXVp
+dGVfIGEgYmlnIGRpZmZlcmVuY2UuDQo+ID4gPiA+IA0KPiA+ID4gPiBGb3Igd2hhdCBJIGtub3cs
+IHRoZSBwcm9ibGVtIG1pZ2h0IGJlIGEgY2hhbmdlIGluIHRoZSBNU1lTMg0KPiA+ID4gPiBydW50
+aW1lIHRoYXQNCj4gPiA+ID4gaXMgbWlzdGFrZW4gYnkgc29tZSBtYWx3YXJlIGZvciBtYWxpY2lv
+dXMgY29kZSAod2UgZGlkDQo+ID4gPiA+IGludHJvZHVjZSBzb21lIGNvZGUNCj4gPiA+ID4gdG8g
+ZW11bGF0ZSBDdHJsK0MgaW4gTWluVFRZIHdoaWNoIGluamVjdHMgYSByZW1vdGUgdGhyZWFkIGFu
+ZA0KPiA+ID4gPiBleGVjdXRlcw0KPiA+ID4gPiBFeGl0UHJvY2VzcygpIHRoZXJlLCB3aGljaCBt
+aWdodCB2ZXJ5IHdlbGwgYmUgY29uc3RydWVkIGFzIGFuDQo+ID4gPiA+IGF0dGFjaywgZXZlbg0K
+PiA+ID4gPiBpZiBpdCBpcyBhY3R1YWxseSB2ZXJ5IG11Y2ggZGVzaXJlZCBiZWhhdmlvcikuDQo+
+ID4gPiA+IA0KPiA+ID4gPiBUaGVzZSBzZWdtZW50YXRpb24gZmF1bHRzIGluIGBnaXQgc3VidHJl
+ZWAgb24gV2luZG93cyBoYXZlDQo+ID4gPiA+IHRyYWRpdGlvbmFsbHkNCj4gPiA+ID4gYmVlbiBf
+YWxsXyBiZWNhdXNlIG9mIG92ZXJ6ZWFsb3VzIGFudGktbWFsd2FyZS4NCj4gPiA+ID4gDQo+ID4g
+PiA+IFNvIGZpcnN0LCBhIG11Y2ggbW9yZSBmaW5lLWdyYWluZWQgYW5hbHlzaXMgd291bGQgYmUg
+cmVxdWlyZWQsDQo+ID4gPiA+IGUuZy4NCj4gPiA+ID4gY29tcGFyaW5nIHYyLjIwLjEgYWdhaW5z
+dCB2Mi4yMC4wLCB0aGVuIGNvcHlpbmcgX2p1c3RfIHRoZQ0KPiA+ID4gPiBgZ2l0LXN1YnRyZWVg
+DQo+ID4gPiA+IGZpbGUgZnJvbSBhIHdvcmtpbmcgaW50byBhIG5vbi13b3JraW5nIHZlcnNpb24g
+KG9yIHZpY2UgdmVyc2E7DQo+ID4gPiA+IEkgd291bGQNCj4gPiA+ID4gaGlnaGx5IHJlY29tbWVu
+ZCB1c2luZyB0aGUgcG9ydGFibGUgdmVyc2lvbnMgZm9yIHN1Y2ggc2lkZS1ieQ0KPiA+ID4gPiBz
+aWRlDQo+ID4gPiA+IGNvbXBhcmlzb24pLg0KPiA+ID4gPiANCj4gPiA+ID4gQ2lhbywNCj4gPiA+
+ID4gSm9oYW5uZXMNCj4gPiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4gLSBNYXJjDQo+ID4g
+PiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiA+IEFtIDA5LjEyLjIwMTkgdW0gMTU6MTgg
+c2NocmllYiBTdHJhaW4sIFJvZ2VyIEwuIDwNCj4gPiA+ID4gPiA+ID4gcm9nZXIuc3RyYWluQHN3
+cmkub3JnPjoNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gQXMgSSBzYWlkLCBJJ20gdXNpbmcg
+YSBjdXN0b20gc2NyaXB0IGhlcmUuIEkgZG9uJ3Qga25vdyBpZg0KPiA+ID4gPiA+ID4gYW55Ym9k
+eSBlbHNlDQo+ID4gPiA+ID4gPiBiZW5lZml0ZWQgZnJvbSB0aGUgY2hhbmdlIGFuZCBoYXNuJ3Qg
+c2FpZCBhbnl0aGluZywgYnV0IEkNCj4gPiA+ID4gPiA+IHdvbid0IG9iamVjdA0KPiA+ID4gPiA+
+ID4gdG8gc29tZW9uZSBzdWJtaXR0aW5nIHRoYXQgcmV2ZXJ0Lg0KPiA+ID4gPiA+ID4gDQo+ID4g
+PiA+ID4gPiAtLQ0KPiA+ID4gPiA+ID4gUm9nZXINCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4g
+LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gPiA+ID4gPiA+IEZyb206IE1hcmMgQmFsbWVy
+IDxtYXJjQG1zeXMuY2g+DQo+ID4gPiA+ID4gPiBUbzogIlN0cmFpbiwgUm9nZXIgTC4iIDxyb2dl
+ci5zdHJhaW5Ac3dyaS5vcmc+DQo+ID4gPiA+ID4gPiBDYzogbnNAbmFkYXZzaW5haS5jb20gPG5z
+QG5hZGF2c2luYWkuY29tPiwgDQo+ID4gPiA+ID4gPiBnaXRAdmdlci5rZXJuZWwub3JnIDwNCj4g
+PiA+ID4gPiA+IGdpdEB2Z2VyLmtlcm5lbC5vcmc+LCBKb2hhbm5lcy5TY2hpbmRlbGluQGdteC5k
+ZSA8DQo+ID4gPiA+ID4gPiBKb2hhbm5lcy5TY2hpbmRlbGluQGdteC5kZT4sIGdpdHN0ZXJAcG9i
+b3guY29tIDwNCj4gPiA+ID4gPiA+IGdpdHN0ZXJAcG9ib3guY29tPiwNCj4gPiA+ID4gPiA+IHBj
+bG91ZHNAZ21haWwuY29tIDxwY2xvdWRzQGdtYWlsLmNvbT4NCj4gPiA+ID4gPiA+IFN1YmplY3Q6
+IFJlOiBSZWdyZXNzaW9uIGluIGdpdC1zdWJ0cmVlLnNoLCBpbnRyb2R1Y2VkIGluDQo+ID4gPiA+
+ID4gPiAyLjIwLjEsIGFmdGVyDQo+ID4gPiA+ID4gPiAzMTVhODRmOWFhMGUyZTYyOWIwNjgwMDY4
+NjQ2YjAwMzI1MThlYmVkDQo+ID4gPiA+ID4gPiBEYXRlOiBNb24sIDA5IERlYyAyMDE5IDE1OjEz
+OjQ3ICswMTAwDQo+ID4gPiA+ID4gPiANCj4gPiA+ID4gPiA+IFJvZ2VyLA0KPiA+ID4gPiA+ID4g
+DQo+ID4gPiA+ID4gPiBJIGFtIGFsbCBmb3IgcmV2ZXJ0aW5nIGl0LiBpZiB0aGF0IGRvZXMgbm90
+IGNhdXNlIGFueSBvdGhlcg0KPiA+ID4gPiA+ID4gcmVncmVzc2lvbnMNCj4gPiA+ID4gPiA+IG9y
+IGhlYWRhY2hlcyAob3IgYm90aC4uLikNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gLSBNYXJj
+DQo+ID4gPiA+ID4gPiANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBB
+bSAwOS4xMi4yMDE5IHVtIDE1OjExIHNjaHJpZWIgU3RyYWluLCBSb2dlciBMLiA8DQo+ID4gPiA+
+ID4gPiByb2dlci5zdHJhaW5Ac3dyaS5vcmc+DQo+ID4gPiA+ID4gPiA6DQo+ID4gPiA+ID4gPiAN
+Cj4gPiA+ID4gPiA+IEkgaGF2ZW4ndCBiZWVuIGFibGUgdG8gZmluZCBhbnl0aGluZyByZWxhdGlu
+ZyB0byB0aGUgaXNzdWUsDQo+ID4gPiA+ID4gPiBidXQgSSBhbHNvDQo+ID4gPiA+ID4gPiBoYXZl
+bid0IGhhZCBhIHJlcG8gdGhhdCBleHBvc2VzIHRoZSBwcm9ibGVtIHRvIHRlc3QgbW9yZQ0KPiA+
+ID4gPiA+ID4gdGhvcm91Z2hseQ0KPiA+ID4gPiA+ID4gYWdhaW5zdC4gSWYgdGhpcyBoYXBwZW5z
+IHRvIGJlIGEgcHVibGljIHJlcG8gc29tZXdoZXJlLCBJJ2QNCj4gPiA+ID4gPiA+IGJlIG1vcmUN
+Cj4gPiA+ID4gPiA+IHRoYW4gaGFwcHkgdG8gdGFrZSBhIHNlY29uZCBsb29rLg0KPiA+ID4gPiA+
+ID4gDQo+ID4gPiA+ID4gPiBUaGF0IGJlaW5nIHNhaWQsIGlmIHRoZSBjb21tdW5pdHkgZmVlbHMg
+aXQgd291bGQgYmUgYmV0dGVyDQo+ID4gPiA+ID4gPiB0byByZXZlcnQNCj4gPiA+ID4gPiA+IHRo
+ZSBjaGFuZ2VzIHRoYXQgd2VyZSBpbnRyb2R1Y2VkLCBJIHdvbid0IG9iamVjdC4gSSd2ZSBoYWQN
+Cj4gPiA+ID4gPiA+IHRvIGZ1cnRoZXINCj4gPiA+ID4gPiA+IGN1c3RvbWl6ZSB0aGUgc2NyaXB0
+IGZvciBvdXIgaW50ZXJuYWwgdXNlLCBhbmQgdGhvc2UNCj4gPiA+ID4gPiA+IGNoYW5nZXMgYXJl
+bid0DQo+ID4gPiA+ID4gPiBzb21ldGhpbmcgdGhhdCB3b3VsZCBiZSB1c2VmdWwgZm9yIHRoZSBw
+dWJsaWMgYXQgbGFyZ2UuIChBDQo+ID4gPiA+ID4gPiBmZXcgY2hhbmdlcw0KPiA+ID4gPiA+ID4g
+cmVsYXRlIHRvIHRoZSBwcmVzZW5jZS9hYnNlbmNlIG9mIGEgc3BlY2lmaWMgZmlsZSwgd2hpY2gg
+SQ0KPiA+ID4gPiA+ID4gY2VydGFpbmx5DQo+ID4gPiA+ID4gPiB3b3VsZG4ndCBleHBlY3QgYW55
+b25lIGVsc2UgdG8gaGF2ZS4pIFNob3J0IHN0b3J5IGlzIHdlJ3JlDQo+ID4gPiA+ID4gPiBnb2lu
+ZyB0bw0KPiA+ID4gPiA+ID4gaGF2ZSB0byB1c2UgYSBjdXN0b20gc2NyaXB0IGdvaW5nIGZvcndh
+cmQsIHNvIGtlZXBpbmcgb3INCj4gPiA+ID4gPiA+IHJldmVydGluZyB0aGUNCj4gPiA+ID4gPiA+
+IGNoYW5nZXMgaGVyZSBtYWtlIG5vIGRpZmZlcmVuY2UgdG8gdXMuIEkgc3RpbGwgZmVlbCB0aGF0
+DQo+ID4gPiA+ID4gPiB0aGUgY2hhbmdlcw0KPiA+ID4gPiA+ID4gd2hpY2ggd2VyZSBtYWRlIG1h
+a2UgdGhlIHNjcmlwdCBtb3JlIGNvcnJlY3QsIGJ1dCBjbGVhcmx5DQo+ID4gPiA+ID4gPiB0aGVy
+ZSdzIHNvbWUNCj4gPiA+ID4gPiA+IHVuZGlhZ25vc2VkIGxvZ2ljIGVycm9yIHNvbWV3aGVyZS4N
+Cj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gSG9uZXN0bHksIEknbSBzdXJwcmlzZWQgd2UgZGlk
+bid0IHNlZSB0aGlzIHBhcnRpY3VsYXIgaXNzdWUNCj4gPiA+ID4gPiA+IHNob3cgdXAgb24NCj4g
+PiA+ID4gPiA+IG91ciBvd24gcmVwbzsgaXQncyByaWRpY3Vsb3VzbHkgbGFyZ2UgYW5kIGNvbXBs
+ZXguIEF0IGxlYXN0DQo+ID4gPiA+ID4gPiBpZiBpdCBoYWQsDQo+ID4gPiA+ID4gPiBJJ2QgYmUg
+YWJsZSB0byB0cm91Ymxlc2hvb3QgaXQgbW9yZSByZWxpYWJseS4NCj4gPiA+ID4gPiA+IA0KPiA+
+ID4gPiA+ID4gLS0NCj4gPiA+ID4gPiA+IFJvZ2VyIFN0cmFpbg0KPiA+ID4gPiA+ID4gDQo+ID4g
+PiA+ID4gPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+ID4gPiA+ID4gRnJvbTogTmFk
+YXYgU0luYWkgPG5zQG5hZGF2c2luYWkuY29tPg0KPiA+ID4gPiA+ID4gVG86IHJvZ2VyLnN0cmFp
+bkBzd3JpLm9yZw0KPiA+ID4gPiA+ID4gQ2M6IEpvaGFubmVzLlNjaGluZGVsaW5AZ214LmRlLCBn
+aXRAdmdlci5rZXJuZWwub3JnLCANCj4gPiA+ID4gPiA+IGdpdHN0ZXJAcG9ib3guY29tLA0KPiA+
+ID4gPiA+ID4gbWFyY0Btc3lzLmNoLCBwY2xvdWRzQGdtYWlsLmNvbQ0KPiA+ID4gPiA+ID4gU3Vi
+amVjdDogUkU6IFJlZ3Jlc3Npb24gaW4gZ2l0LXN1YnRyZWUuc2gsIGludHJvZHVjZWQgaW4NCj4g
+PiA+ID4gPiA+IDIuMjAuMSwgYWZ0ZXINCj4gPiA+ID4gPiA+IDMxNWE4NGY5YWEwZTJlNjI5YjA2
+ODAwNjg2NDZiMDAzMjUxOGViZWQNCj4gPiA+ID4gPiA+IERhdGU6IFN1biwgMDggRGVjIDIwMTkg
+MTI6MzA6NDggKzAyMDANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gW0VYVEVSTkFMIEVNQUlM
+XQ0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBIaSwgSSdtIGN1cmlvdXMgaWYgYW55IG9mIHlv
+dSBoYWQgYW55IGx1Y2sgaW4gcHJldmVudGluZw0KPiA+ID4gPiA+ID4gdGhhdA0KPiA+ID4gPiA+
+ID4gc2VnLWZhdWx0IGluIGdpdC1zdWJ0cmVlIHNjcmlwdA0KPiA+ID4gPiA+ID4gSSdtIGVuY291
+bnRlcmluZyBpdCBteXNlbGYgdXNpbmcgZ2l0IDIuMjQuMC53aW5kb3dzLjIuLA0KPiA+ID4gPiA+
+ID4gc2VnLWZhdWx0IGlzDQo+ID4gPiA+ID4gPiBpbiB0aGUgc2FtZSB3aGlsZSBsb29wIChjdXJy
+ZW50bHkgb24gbGluZSA3NTcpDQo+ID4gPiA+ID4gPiBXaGVuIEkgdHJpZWQgeW91ciBzdWdnZXN0
+aW9uIG9mIGFkZGluZyB0aGUgKCRwYXJlbnRzKQ0KPiA+ID4gPiA+ID4gKCRyZXYpIHRvIHRoZQ0K
+PiA+ID4gPiA+ID4gcHJvZ3Jlc3MgcHJpbnQgSSBzZWUgdGhhdCB0aGUgbGFzdCBjb21taXQgaGF2
+ZSBvbmx5IG9uZQ0KPiA+ID4gPiA+ID4gcmV2aXNpb24NCj4gPiA+ID4gPiA+IHByaW50ZWQNCj4g
+PiA+ID4gPiA+IGxpa2UgdGhpczoNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gMjU5LzI5MCAo
+NTIzKSBbMjcxXQ0KPiA+ID4gPiA+ID4gKDg0M2RkMzQwOTBkMzZkZmFiZDZhMmUzZTg0NTlhNDg4
+NzQyNzMxM2IpDQo+ID4gPiA+ID4gPiAoYTY5ZWUwNTZmNjZhY2Y2NmM2M2Y4OWY1NWQyNmMwY2Mx
+NzAzNjYyMykNCj4gPiA+ID4gPiA+IDI1OS8yOTAgKDUyNSkgWzI3M10NCj4gPiA+ID4gPiA+IChm
+NWVlYTFhM2NiZTFlMTZhY2JhNTNlOGE5ZmUwN2I2NTI1YThiOTdjKQ0KPiA+ID4gPiA+ID4gKDg0
+M2RkMzQwOTBkMzZkZmFiZDZhMmUzZTg0NTlhNDg4NzQyNzMxM2IpDQo+ID4gPiA+ID4gPiAyNTkv
+MjkwICg1MjcpIFsyNzVdDQo+ID4gPiA+ID4gPiAoODIzMDM3NTJhNDI4Y2YxZDc4OWFjOWYxNTYw
+MDhhZGIyNzk4YjdiNSkNCj4gPiA+ID4gPiA+IChmNWVlYTFhM2NiZTFlMTZhY2JhNTNlOGE5ZmUw
+N2I2NTI1YThiOTdjKQ0KPiA+ID4gPiA+ID4gMjU5LzI5MCAoNTI4KSBbMjc2XQ0KPiA+ID4gPiA+
+ID4gKDcxODc4OTc4ODNjOWZiNGQzM2Q0Yzg3YTAyYjg3NmY4NjAzNzI4ZmYwNWYwOTQ1YWUyY2U5
+Zjk4YTMNCj4gPiA+ID4gPiA+IDUxMzUpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MjkpIFsyNzdd
+DQo+ID4gPiA+ID4gPiAoYTAwYTM2NjUzNDM0MzlhNDI2NjcxOTU4ZGQ5MGVkMDQwN2EyMmNhZDlh
+YzlmMTU2MDA4YWRiMjc5OA0KPiA+ID4gPiA+ID4gYjdiNSkNCj4gPiA+ID4gPiA+IDI1OS8yOTAg
+KDUzMCkgWzI3OF0NCj4gPiA+ID4gPiA+ICg5MGJlYjk0ZWJkMzMxYzQ1N2Q3OWQwNTM0MTQ1M2Y1
+ODI5YTUwYmZjZDRjODdhMDJiODc2Zjg2MDM3DQo+ID4gPiA+ID4gPiAyOGZmKQ0KPiA+ID4gPiA+
+ID4gMjU5LzI5MCAoNTMxKSBbMjc5XQ0KPiA+ID4gPiA+ID4gKDk1ODJlMGFjYmVkMTkxMDE3MzU2
+NGUyNTBmMzUwYjVjYzQyOTFhN2Y2NzE5NThkZDkwZWQwNDA3YTINCj4gPiA+ID4gPiA+IDJjYWQp
+DQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MzIpIFsyODBdDQo+ID4gPiA+ID4gPiAoZjE4MzkzMGQ2
+ZmFiZDNkY2NkZGRjNWVjMzVkNzU0YWQyOGNhZjNiODc5ZDA1MzQxNDUzZjU4MjlhNQ0KPiA+ID4g
+PiA+ID4gMGJmYykNCj4gPiA+ID4gPiA+IDI1OS8yOTAgKDUzMykgWzI4MV0NCj4gPiA+ID4gPiA+
+IChjOTMwOWYzYTM4YzQxZjc5OTFkOWU3OGRkYjQ3ZjdlODViODUyMWViNTY0ZTI1MGYzNTBiNWNj
+NDI5DQo+ID4gPiA+ID4gPiAxYTdmKQ0KPiA+ID4gPiA+ID4gMjU5LzI5MCAoNTM0KSBbMjgyXQ0K
+PiA+ID4gPiA+ID4gKDNiY2YwOGY2M2EwZTJiOTNlY2MzNzZiZDY3OWExNmM4MGU5OWU3YjFkZGM1
+ZWMzNWQ3NTRhZDI4Y2ENCj4gPiA+ID4gPiA+IGYzYjgpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1
+MzUpIFsyODNdDQo+ID4gPiA+ID4gPiAoMTM0NjIxYmI1NWEwNDcwY2RmNjUxOWNlMDhkNjkwOWFm
+NDNjZTBlNWQ5ZTc4ZGRiNDdmN2U4NWI4NQ0KPiA+ID4gPiA+ID4gMjFlYikNCj4gPiA+ID4gPiA+
+IDI1OS8yOTAgKDUzNikgWzI4NF0NCj4gPiA+ID4gPiA+IChlZGIzNDcxZmJiYTI5NzQ4Zjk3ODRk
+MjliM2NlZTFkZWUyZGY0YjM3YzM3NmJkNjc5YTE2YzgwZTk5DQo+ID4gPiA+ID4gPiBlN2IxKQ0K
+PiA+ID4gPiA+ID4gMjU5LzI5MCAoNTM3KSBbMjg1XQ0KPiA+ID4gPiA+ID4gKGRkOTQ3YTA5NWRm
+MDdhMzJkZmQ1NjY2NmEzOTVhN2M0MmIyNWNhMTE2NTE5Y2UwOGQ2OTA5YWY0M2MNCj4gPiA+ID4g
+PiA+IGUwZTUpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MzgpIFsyODZdDQo+ID4gPiA+ID4gPiAo
+YTYzOWUwOWQyY2JlMWVhMTE0OWMwODBjMWM5NWI4YjAxODM0MGFlMjc4NGQyOWIzY2VlMWRlZTJk
+Zg0KPiA+ID4gPiA+ID4gNGIzNykNCj4gPiA+ID4gPiA+IEM6L1Byb2dyYW0gRmlsZXMvR2l0L21p
+bmd3NjQvbGliZXhlYy9naXQtY29yZVxnaXQtc3VidHJlZToNCj4gPiA+ID4gPiA+IGxpbmUgNzU3
+Og0KPiA+ID4gPiA+ID4gODg1MyBEb25lICAgICAgICAgICAgICAgICAgICBldmFsICIkZ3JsIg0K
+PiA+ID4gPiA+ID4gICA4ODU0IFNlZ21lbnRhdGlvbiBmYXVsdCAgICAgIChjb3JlIGR1bXBlZCkg
+fCB3aGlsZSByZWFkDQo+ID4gPiA+ID4gPiByZXYNCj4gPiA+ID4gPiA+IHBhcmVudHM7IGRvDQo+
+ID4gPiA+ID4gPiBwcm9jZXNzX3NwbGl0X2NvbW1pdCAiJHJldiIgIiRwYXJlbnRzIiAwOw0KPiA+
+ID4gPiA+ID4gZG9uZQ0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBJIGRvd25ncmFkZWQgZ2l0
+IHRvIDIuMTkuMC13aW5kb3dzLjEgYW5kIGl0IHdvcmtzIG5vdy4NCj4gPiA+ID4gPiA+IA0KPiA+
+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBJJ20gdGhhbmtmdWwgZm9yIHlvdXIgaW5zaWdodHMNCj4g
+PiA+ID4gPiA+IE5hZGF2IFNpbmFpDQo+ID4gPiA+ID4gPiBXZWIgVGVjaCBsZWFkDQo+ID4gPiA+
+ID4gPiBQaGlsaXBzLUFsZ290ZWMNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+
+ID4gPiANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4g
+DQo+ID4gPiANCj4gPiA+IA0KPiANCj4gDQo=
