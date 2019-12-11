@@ -4,145 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82378C00454
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D1A1C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:19:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 32105222C4
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:00:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1A66C20836
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 20:19:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m83StIeK"
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="IwGn0+n3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726686AbfLKUAN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 15:00:13 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62860 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbfLKUAN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 15:00:13 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 963A92D3C5;
-        Wed, 11 Dec 2019 15:00:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zVn2E6BkXaV26BylPT0Tu3Ejyv4=; b=m83StI
-        eKGPqquVkVfjTRw60Bb0Ibi3xwClW4Hb+ncFrH+Io2IXJ1oEvaE8nMlSJ+GyeSgt
-        +R6qk6yJrvjR/v+BDnL8Mj767eduRFfRvL3Ly50aucsgGXmY2cxqbV8rWxQjoh19
-        EQsUWgEuyqRAK17f3VowAZUh8giPK5QuLdRcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AqSrda+Z7EmG8jMXpXjePil40PAeT6qC
-        JrUIlisN2m30iVzgF1bYT/IPZLR8pOJxDlD/6xbFXCV7sLQqALW18IgxJdXmQH+n
-        hoaTPwjPvp7fHtCIQVHgIs4M6D/5YmAoQ1AvXCILT7syTSZK1t+Yiy6EAInHNWUh
-        csUSi6LIYcQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3651F2D3C4;
-        Wed, 11 Dec 2019 15:00:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ABDD72D3BD;
-        Wed, 11 Dec 2019 15:00:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] sparse-checkout: respect core.ignoreCase in cone mode
-References: <pull.488.git.1575920580.gitgitgadget@gmail.com>
-        <23705845ce73992bf7ab645d28febebe0a698d49.1575920580.git.gitgitgadget@gmail.com>
-        <xmqqtv66og63.fsf@gitster-ct.c.googlers.com>
-        <9dbf6d43-ac1e-4790-84e5-4829d21f5fdb@gmail.com>
-Date:   Wed, 11 Dec 2019 12:00:03 -0800
-In-Reply-To: <9dbf6d43-ac1e-4790-84e5-4829d21f5fdb@gmail.com> (Derrick
-        Stolee's message of "Wed, 11 Dec 2019 14:11:32 -0500")
-Message-ID: <xmqqeexaocos.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727223AbfLKUTp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 15:19:45 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41797 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726592AbfLKUTp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 15:19:45 -0500
+Received: by mail-wr1-f68.google.com with SMTP id c9so63285wrw.8
+        for <git@vger.kernel.org>; Wed, 11 Dec 2019 12:19:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vCmzwAmqpVH0YDMMy9fvP4eY2+qzFly+W3faPtz+A7E=;
+        b=IwGn0+n3lY3JMvBfJgdJf0g7ouyGhQLt+l0DwdUHQ634eh6NG1EO5An6BUqTpGmujV
+         pJ+KkzY75u3VN7puY9yC++cPqgCuVVWkb1MmqN5E7UKyGD+KQtoeFrRCcL19XK+KF6kW
+         fqldd0Yjcux8kV5O6N4Z9htaOd9p04Ls3UYzY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vCmzwAmqpVH0YDMMy9fvP4eY2+qzFly+W3faPtz+A7E=;
+        b=UbR6dKmvUWHsZuRcE7qBTrmrQB4O/0uRe/hTn8KwBKTkk8l5rgWPtah/pcdsuNuTL4
+         NofsVbONogzxZWsX8PiimODQoUd4FOe+YMaZAevbqxG6A2z6F8SFyL8eaLvmNYMjxalg
+         AaAVfWTZYO9rfjnHc5b3H1gz2NuXPfKbW3Hod1brQVzxhtsDn+PCglBVfOvuQ1g29QoX
+         CL01lRf5/hboDH05mV+obl9fHRftz6uBll0f7axzD9acshZ+WosmYtRIcKro4SZ+LwBD
+         PL4SArWNBLLX904O3m+AJyTlRrkHSUMOVgo5a2uKqvhBdhkzxiJHCZxL3aMXevzlYnJ0
+         6LGw==
+X-Gm-Message-State: APjAAAUjKyk2Hj0qs8gyt5WIAYtASmIL9qfaSqoD/kI6gkJmKyT5MPc1
+        xkIdgWb27RWWbwCOYo2HQLGGbIcycZ1t2400u4n+GQ==
+X-Google-Smtp-Source: APXvYqym/9Q7vsk8xO9ojEk2w7t99J98LqvmH7N/7rVxF4muTntUjmLynqxoytXjIQe1/0ZB283CYdU50hin4lZ6Dho=
+X-Received: by 2002:adf:f2d0:: with SMTP id d16mr1744494wrp.110.1576095583209;
+ Wed, 11 Dec 2019 12:19:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D3F545DE-1C50-11EA-8145-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
+ <pull.463.v5.git.1575740863.gitgitgadget@gmail.com> <20191207194756.GA43949@coredump.intra.peff.net>
+ <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com> <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
+ <20191211171356.GA72178@generichostname> <xmqq1rtapwy1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1rtapwy1.fsf@gitster-ct.c.googlers.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 11 Dec 2019 20:19:48 +0000
+Message-ID: <CAE5ih78O4_ZPm1sxA=D9Ff-u3ga5Ax1CbvrFg0_E4KrRdUihDQ@mail.gmail.com>
+Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings
+ in python3
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Denton Liu <liu.denton@gmail.com>, Ben Keene <seraphire@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Users <git@vger.kernel.org>,
+        Yang Zhao <yang.zhao@skyboxlabs.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-
-> I'm trying to find a way around these two ideas:
+On Wed, 11 Dec 2019 at 17:57, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> 1. The index is case-sensitive, and the sparse-checkout patterns are
->    case-sensitive.
+> Denton Liu <liu.denton@gmail.com> writes:
+>
+> > On Wed, Dec 11, 2019 at 08:54:49AM -0800, Junio C Hamano wrote:
+> >> Ben Keene <seraphire@gmail.com> writes:
+> >>
+> >> > Yes indeed!
+> >> >
+> >> > I hadn't pulled before I attempted the rebase, and got bit.  Yes those
+> >> > shouldn't be there!
+> >>
+> >> So, other than that, this is ready to be at least queued on 'pu' if
+> >> not 'next' at this point?
+> >
+> > From what I can tell, Ben agreed to have this series superseded by Yang
+> > Zhao's competing series[1].
+>
+> OK.  Let me not worry about this one, then, at least not yet.
+>
 
-OK.  The latter is local to the repository and not shared to the
-world where people with case sensitive systems would live, right?
+Oh, I hadn't seen Yang's python3 changes!
 
-> 2. If a filesystem is case-insensitive, most index-change operations
->    already succeed with incorrect case, especially with core.ignoreCase
->    enabled.
-
-I am not sure about "incorrect", though.  
-
-My understanding is that modern case-insensitive systems are not
-information-destroying [*1*].  A new file you create as "ReadMe.txt"
-on your filesystem would be seen in that mixed case spelling via
-readdir() or equivalent, so adding it to the index as-is would
-likely be in the "correct" case, no?  If, after adding that path to
-the index, you did "rm ReadMe.txt" and created "README.TXT", surely
-we won't have both ReadMe.txt and README.TXT in the index with
-ignoreCase set, and keep using ReadMe.txt that matches what you
-added to the index.  I am not sure which one is the "incorrect" case
-in such a scenario.
-
-> The approach I have is to allow a user to provide a case that does not
-> match the index, and then we store the pattern in the sparse-checkout
-> that matches the case in the index.
-
-Yes, I understood that from your proposed log message and cover
-letter.  They were very clearly written.
-
-But imagine that your user writes ABC in the sparse pattern file,
-and there is no abc anything in the index in any case permutations.
-
-When you check out a branch that has Abc, shouldn't the pattern ABC
-affect the operation just like a pattern Abc would on a case
-insensitive system?
-
-Or are end users perfectly aware that the thing in that branch is
-spelled "Abc" and not "ABC" (the data in Git does---it comes from a
-tree object that is case sensitive)?  If so, then the pattern ABC
-should not affect the subtree whose name is "Abc" even on a case
-insensitive system.
-
-I am not sure what the design of this part of the system expects out
-of the end user.  Perhaps keeping the patterns case insensitive and
-tell the end users to spell them correctly is the right way to go, I
-guess, if it is just the filesystem that cannot represente the cases
-correctly at times and the users are perfectly capable of telling
-the right and wrong cases apart.
-
-But then I am not sure why correcting misspelled names by comparing
-them with the index entries is a good idea, either.
-
-> It sounds like you are preferring this second option, despite the
-> performance costs. It is possible to use a case-insensitive hashing
-> algorithm when in the cone mode, but I'm not sure about how to do
-> a similar concept for the normal mode.
-
-I have no strong preference, other than that I prefer to see things
-being done consistently.  Don't we already use case folding hash
-function to ensure that we won't add duplicate to the index on
-case-insensitive system?  I suspect that we would need to do the
-same, whether in cone mode or just a normal sparse-checkout mode
-consistently.
-
-Thanks.
-
-
-[Footnote]
-
-*1* ... unlike HFS+ where everything is forced to NKD and a bit of
-information---whether the original was in NKC or NKD---is discarded
-forever.
+What do we need to do to get these ready for merging?
