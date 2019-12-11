@@ -2,213 +2,71 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A689DC43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 01:21:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08CD1C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 01:28:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6D6342073D
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 01:21:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 82615206D5
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 01:28:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0dRuvf+"
+	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="ZnIofhLS";
+	dkim=pass (1024-bit key) header.d=mail.ru header.i=@mail.ru header.b="ZnIofhLS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727310AbfLKBVV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Dec 2019 20:21:21 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:34825 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726362AbfLKBVV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Dec 2019 20:21:21 -0500
-Received: by mail-lj1-f195.google.com with SMTP id j6so22067774lja.2
-        for <git@vger.kernel.org>; Tue, 10 Dec 2019 17:21:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5yWgVnHsluKXh8VDxrkX6Mql5s/+aZ0ZHAH9x6SmosY=;
-        b=j0dRuvf+RVNTDaJLYnvvynZmZmNilmarGhzC08XAShvrUNRx5Nji4JHmwURdNsTOwC
-         lOvAvxcAv2CUBrTOqABOhPvY0sp/Xx6lHncobaifRuCsq1toyfiQ/uBA5vCvYayXJjzM
-         c7eqZL3FQ/NAcTmPzFrfzb4ccnXAbgB7WMIPk2CUDoB4VWUAMmqc43FRYlMbp1E/GQzW
-         PSUTSEqfrMEL40eNKJyAmma1mphEbDHb6aJTAYfG6mKQKWZfb9ChCPybMO0t3jZ/FlmL
-         XSxDVvNn/h7uP+kV2+JGpzA29pauEtOGpx2OuSh4KmvMrCzmHfmpS/9doetYhp3E8AAa
-         P0Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5yWgVnHsluKXh8VDxrkX6Mql5s/+aZ0ZHAH9x6SmosY=;
-        b=HNej3p7vobn2dwifqk6lnbSMFPrUriOKDuGvBCTcaRwqXyUjuo4rmGVD4l97dFsYSL
-         iErsCtdz0gpi0e3vDW6GocAFk0M3KyMG1wn725zZtUN5mIgKbPEcaFOwZ0z9gr0Yw5Ac
-         Rm7DQVrHMd7uSMUM0sdNYP867zStIT+l5G0iSrQXkh+pyAgLOlFETzT1s5+v5CB+ppFo
-         6AQFCZ7YzcmwiomU5ncavQb5iwAh+3dJ3veYWbzgqpFb1A+YDyY7F6pSgGNGZ9zkkYvz
-         x1+MtHsCWICcbxM94lPFZlyMJD7PfXk7/nnzKq9TMGNLiVz8P9CRTgoNc0OZtQ+Q5xTU
-         o0ow==
-X-Gm-Message-State: APjAAAUKqrRVAUGflfwFi1lPcX1NOFkJHk3M0ddTfuARze+36UmLniuH
-        zSL6iTs680Ddj3GUGH+PRgYk1Ebq55JAe502U3w=
-X-Google-Smtp-Source: APXvYqzLnvQeVBl/Ve4oyq3esJ2rWAth5JYTEHrQ72d8RQW7amMZS2qGsJgZz6ByrzDBVoXE0BqngQMbCnG89O9M52s=
-X-Received: by 2002:a05:651c:204f:: with SMTP id t15mr173539ljo.240.1576027278082;
- Tue, 10 Dec 2019 17:21:18 -0800 (PST)
+        id S1726592AbfLKB2m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Dec 2019 20:28:42 -0500
+Received: from fallback22.m.smailru.net ([94.100.176.132]:43418 "EHLO
+        fallback22.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726364AbfLKB2m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Dec 2019 20:28:42 -0500
+X-Greylist: delayed 3139 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Dec 2019 20:28:41 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+        h=Message-ID:From:CC:To:Subject:Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Date; bh=5yBosEB2ldSSPZmcSEc1FbH1Y8hfb0edDU6l+jcn7b8=;
+        b=ZnIofhLSGnarI4GNuvgmznMhWMSu7omZdWZrJCPlXvXsqpYaoUvNY84DKlcRwn7hlITzvdm22Kefyi+Xq6GSKRqpDs2ITGAoQCotbQw67aXw67q9Ce3eMaOrAJkr0cr4mXTjcYeDUDe8f8vS8G74NR2CKExCGjc31iGsxsHSntU=;
+Received: from [10.161.22.24] (port=48560 helo=smtp54.i.mail.ru)
+        by fallback22.m.smailru.net with esmtp (envelope-from <kolan_n@mail.ru>)
+        id 1iepzJ-0005gV-37
+        for git@vger.kernel.org; Wed, 11 Dec 2019 03:36:21 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail2;
+        h=Message-ID:From:CC:To:Subject:Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Date; bh=5yBosEB2ldSSPZmcSEc1FbH1Y8hfb0edDU6l+jcn7b8=;
+        b=ZnIofhLSGnarI4GNuvgmznMhWMSu7omZdWZrJCPlXvXsqpYaoUvNY84DKlcRwn7hlITzvdm22Kefyi+Xq6GSKRqpDs2ITGAoQCotbQw67aXw67q9Ce3eMaOrAJkr0cr4mXTjcYeDUDe8f8vS8G74NR2CKExCGjc31iGsxsHSntU=;
+Received: by smtp54.i.mail.ru with esmtpa (envelope-from <kolan_n@mail.ru>)
+        id 1iepzC-000172-Os; Wed, 11 Dec 2019 03:36:15 +0300
+Date:   Wed, 11 Dec 2019 03:36:12 +0300
+In-Reply-To: <xmqqeexbrffe.fsf@gitster-ct.c.googlers.com>
+References: <E2770343-BB39-458C-835E-04F0753783C3@mail.ru> <xmqqimmoq6vw.fsf@gitster-ct.c.googlers.com> <70575b23-6adb-a29b-8df8-f9099f86eb0e@gmail.com> <20191210205056.GA14079@coredump.intra.peff.net> <xmqqeexbrffe.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20191205235704.31385-1-alext9@gmail.com> <20191209145312.3251-1-alext9@gmail.com>
- <20191209145312.3251-2-alext9@gmail.com> <xmqq36dtwcvw.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36dtwcvw.fsf@gitster-ct.c.googlers.com>
-From:   Alex Torok <alext9@gmail.com>
-Date:   Tue, 10 Dec 2019 20:21:06 -0500
-Message-ID: <CANmPhj26C2ow-4kZZ5f5USPVE7aN_F7Y81sJK_6iWxBUwc0cmw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] rebase: fix --fork-point with short refname
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: Could /Documentation/technical/commit-graph.txt be relicensed under a permissive license?
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+CC:     git@vger.kernel.org
+From:   KOLANICH <kolan_n@mail.ru>
+Message-ID: <8E1DF461-094C-4BBD-9F8A-575A45ED051B@mail.ru>
+X-77F55803: 0A44E481635329DB0E1AA8A03B392317179C3E6C7981FFF2E17AE4FBB8DCD5A279F9D4B0C28A6DEEF688BCB05C26794D735BAB88EB1AB255C191B75660E600644D6555807B26807752C7DC8D19D8AB9AC77A06E522078DAD
+X-7FA49CB5: 0D63561A33F958A5A299C50361B2DD73FD345EF5291A43B5D1C46974DC82F6EE8941B15DA834481FA18204E546F3947CD2DCF9CF1F528DBCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B974A882099E279BDA471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C22492AA437DA6D0FD5573AA81AA40904B5D9CF19DD082D7633A063753DB72453AD9A3AA81AA40904B5D98AA50765F7900637D2C6F5AE34F7A4E5EC76A7562686271ED187B4DA314F1B5535872C767BF85DA227C277FBC8AE2E8B875DE86EB28C123B7E906E3727204FE835872C767BF85DA2F004C906525384306FED454B719173D6462275124DF8B9C99B0B8D173C204012BD9CCCA9EDD067B1EDA766A37F9254B7
+X-Mailru-Sender: A36CCA5E968A4DC96657DB7F7E6A9ED03CF0DCF8AC1B58E2166D42D05A940D8115634F2D3208598D813099610F3EF9D23DDE9B364B0DF2895C73AB06C8DF2F26327D77830F209D78AE208404248635DF
+X-Mras: OK
+X-PR7D5YW: DF2ZY7JUP
+X-77F55803: 5241C2F38277A35D7F9F52485CB584D7271FD7DF62800FDCA9256AF7A639AAD2EE2D16D473AE7728373E406096F16A43014C54FF4B30FA2C
+X-7FA49CB5: 0D63561A33F958A5186EDF39BBAF0675737D0ED146521041FF650BF36608E5878941B15DA834481FA18204E546F3947C062BEEFFB5F8EA3EF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B8C7ADC89C2F0B2A5A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249B665D0F56924861A76E601842F6C81A12EF20D2F80756B5F5C318D1F9ECD513A76E601842F6C81A127C277FBC8AE2E8B1656590379454B663AA81AA40904B5D99449624AB7ADAF37F910319684D6E05D462275124DF8B9C99B0B8D173C204012BD9CCCA9EDD067B1EDA766A37F9254B7
+X-Mailru-MI: 800
+X-Mailru-Sender: A5480F10D64C90054EBC784E05B222904EF3525F77511EC8EE2D16D473AE772884D8E182A4425033813099610F3EF9D23DDE9B364B0DF2895C73AB06C8DF2F26327D77830F209D78AE208404248635DF
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 9, 2019 at 1:51 PM Junio C Hamano <gitster@pobox.com> wrote:
-> and there are other calls to die(_("...")) in the caller everywhere,
-> so I'd say you are over-engineering a simple bugfix.
->
-> Wouldn't it be sufficient for this fix to be more like this?
+> spend the necessary effort to comply with the license as a waste of time=
+=2E
 
-This is essentially what I had done in the v2 version of my patch
-with the only "big" difference being pulling out the dwim_ref() switching
-and dying logic into a dwim_ref_or_die() function.
-
-Let me know if you want me to adjust my patch at all (my v2 patch is
-missing a call to free()...).
-
-If the patch that you replied here with is sufficient for how you would fix
-it, I'm fine with you just using that.
-
-> -- >8 --
->
-> Subject: rebase: --fork-point regression fix
->
-> "git rebase --fork-point master" used to work OK, as it internally
-> called "git merge-base --fork-point" that knew how to handle short
-> refname and dwim it to the full refname before calling the
-> underlying get_fork_point() function.
->
-> This is no longer true after the command was rewritten in C, as its
-> internall call made directly to get_fork_point() does not dwim a
-> short ref.
->
-> Move the "dwim the refname argument to the full refname" logic that
-> is used in "git merge-base" to the underlying get_fork_point()
-> function, so that the other caller of the function in the
-> implementation of "git rebase" behaves the same way to fix this
-> regression.
->
-> ---
->  builtin/merge-base.c         | 12 +-----------
->  commit.c                     | 15 +++++++++++++--
->  t/t3431-rebase-fork-point.sh | 20 ++++++++++++++++++++
->  3 files changed, 34 insertions(+), 13 deletions(-)
->
-> diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-> index e3f8da13b6..6719ac198d 100644
-> --- a/builtin/merge-base.c
-> +++ b/builtin/merge-base.c
-> @@ -114,26 +114,16 @@ static int handle_is_ancestor(int argc, const char **argv)
->  static int handle_fork_point(int argc, const char **argv)
->  {
->         struct object_id oid;
-> -       char *refname;
->         struct commit *derived, *fork_point;
->         const char *commitname;
->
-> -       switch (dwim_ref(argv[0], strlen(argv[0]), &oid, &refname)) {
-> -       case 0:
-> -               die("No such ref: '%s'", argv[0]);
-> -       case 1:
-> -               break; /* good */
-> -       default:
-> -               die("Ambiguous refname: '%s'", argv[0]);
-> -       }
-> -
->         commitname = (argc == 2) ? argv[1] : "HEAD";
->         if (get_oid(commitname, &oid))
->                 die("Not a valid object name: '%s'", commitname);
->
->         derived = lookup_commit_reference(the_repository, &oid);
->
-> -       fork_point = get_fork_point(refname, derived);
-> +       fork_point = get_fork_point(argv[0], derived);
->
->         if (!fork_point)
->                 return 1;
-> diff --git a/commit.c b/commit.c
-> index 40890ae7ce..016f14fe95 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -903,12 +903,22 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
->         struct commit_list *bases;
->         int i;
->         struct commit *ret = NULL;
-> +       char *full_refname;
-> +
-> +       switch (dwim_ref(refname, strlen(refname), &oid, &full_refname)) {
-> +       case 0:
-> +               die("No such ref: '%s'", refname);
-> +       case 1:
-> +               break; /* good */
-> +       default:
-> +               die("Ambiguous refname: '%s'", refname);
-> +       }
->
->         memset(&revs, 0, sizeof(revs));
->         revs.initial = 1;
-> -       for_each_reflog_ent(refname, collect_one_reflog_ent, &revs);
-> +       for_each_reflog_ent(full_refname, collect_one_reflog_ent, &revs);
->
-> -       if (!revs.nr && !get_oid(refname, &oid))
-> +       if (!revs.nr)
->                 add_one_commit(&oid, &revs);
->
->         for (i = 0; i < revs.nr; i++)
-> @@ -934,6 +944,7 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
->
->  cleanup_return:
->         free_commit_list(bases);
-> +       free(full_refname);
->         return ret;
->  }
->
-> diff --git a/t/t3431-rebase-fork-point.sh b/t/t3431-rebase-fork-point.sh
-> index 78851b9a2a..5b09aecd13 100755
-> --- a/t/t3431-rebase-fork-point.sh
-> +++ b/t/t3431-rebase-fork-point.sh
-> @@ -47,11 +47,31 @@ test_rebase 'G F B A' --keep-base
->  test_rebase 'G F C E D B A' --no-fork-point
->  test_rebase 'G F C D B A' --no-fork-point --onto D
->  test_rebase 'G F C B A' --no-fork-point --keep-base
-> +
->  test_rebase 'G F E D B A' --fork-point refs/heads/master
-> +test_rebase 'G F E D B A' --fork-point master
-> +
->  test_rebase 'G F D B A' --fork-point --onto D refs/heads/master
-> +test_rebase 'G F D B A' --fork-point --onto D master
-> +
->  test_rebase 'G F B A' --fork-point --keep-base refs/heads/master
-> +test_rebase 'G F B A' --fork-point --keep-base master
-> +
->  test_rebase 'G F C E D B A' refs/heads/master
-> +test_rebase 'G F C E D B A' master
-> +
->  test_rebase 'G F C D B A' --onto D refs/heads/master
-> +test_rebase 'G F C D B A' --onto D master
-> +
->  test_rebase 'G F C B A' --keep-base refs/heads/master
-> +test_rebase 'G F C B A' --keep-base master
-> +
-> +test_expect_success "git rebase --fork-point with ambigous refname" "
-> +       git checkout master &&
-> +       git checkout -b one &&
-> +       git checkout side &&
-> +       git tag one &&
-> +       test_must_fail git rebase --fork-point --onto D one
-> +"
->
->  test_done
+Necessity to treat so called free software with a technique invented to de=
+al with closed-source proprietary software by companies enjoying their wall=
+ed gardens and vigorously protecting their walls integrity in courts is a c=
+lear sign that there is something wrong with the software=2E I don't beleiv=
+e that free open-source software should to work this way=2E
