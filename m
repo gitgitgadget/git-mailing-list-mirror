@@ -3,252 +3,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_2
-	autolearn=no autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BEB9EC43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F334C43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 15:07:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 95B07222C4
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 14:39:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 794F0222C4
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 15:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730092AbfLKOjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 09:39:23 -0500
-Received: from esg260-1.itc.swri.org ([129.162.252.140]:57768 "EHLO
-        esg260-1.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729686AbfLKOjW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 09:39:22 -0500
-Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
-        by esg260-1.itc.swri.edu (8.16.0.27/8.16.0.27) with ESMTPS id xBBEd4Nx025473
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Wed, 11 Dec 2019 08:39:04 -0600
-Received: from mbx260-2.adm.swri.edu (129.162.29.120) by MBX260.adm.swri.edu
- (129.162.29.125) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 11 Dec
- 2019 08:39:04 -0600
-Received: from mbx260-2.adm.swri.edu ([192.168.222.13]) by
- mbx260-2.adm.swri.edu ([192.168.222.13]) with mapi id 15.00.1497.000; Wed, 11
- Dec 2019 08:39:04 -0600
-From:   "Strain, Roger L." <roger.strain@swri.org>
-To:     "Johannes.Schindelin@gmx.de" <Johannes.Schindelin@gmx.de>,
-        "tqclarkson@icloud.com" <tqclarkson@icloud.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "ns@nadavsinai.com" <ns@nadavsinai.com>,
-        "marc@msys.ch" <marc@msys.ch>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
- 315a84f9aa0e2e629b0680068646b0032518ebed
-Thread-Topic: Regression in git-subtree.sh, introduced in 2.20.1, after
- 315a84f9aa0e2e629b0680068646b0032518ebed
-Thread-Index: AQHVrbKXNpX9IVDGJUeg6jm3c9jaIqeyPikAgAAAxYCAAAFhgIAAAy+AgAAPwoCAAAF1AIAARRQAgAI7MwCAAJWrgA==
-Date:   Wed, 11 Dec 2019 14:39:04 +0000
-Message-ID: <038c72f0349174bb92e1dd9c3b38f02543ba1d95.camel@swri.org>
-References: <nycvar.QRO.7.76.6.1912091615200.31080@tvgsbejvaqbjf.bet>
-         <7E95BE86-BD96-482F-9ECA-DBDD9C10D114@msys.ch>
-         <nycvar.QRO.7.76.6.1912092037540.31080@tvgsbejvaqbjf.bet>
-         <D99ED706-EC49-4A52-8186-5C9B0B5BC744@icloud.com>
-In-Reply-To: <D99ED706-EC49-4A52-8186-5C9B0B5BC744@icloud.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [129.162.26.93]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <D6750C14F1D68C43916944CCEA4B141E@sw.pvt>
-Content-Transfer-Encoding: base64
+        id S1729496AbfLKPHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 10:07:04 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.38]:56761 "EHLO
+        smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729144AbfLKPHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 10:07:04 -0500
+Received: from [24.134.116.61] (helo=[192.168.92.208])
+        by smtprelay04.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.92.3)
+        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
+        id 1if3Zp-0001cY-No; Wed, 11 Dec 2019 16:06:57 +0100
+Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
+To:     phillip.wood@dunelm.org.uk,
+        Alexandr Miloslavskiy via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
+ <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
+ <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
+ <25aaaca1-1c88-d2c6-b502-cd35752ce745@syntevo.com>
+ <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
+ <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
+ <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
+From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Message-ID: <9d77a425-da8d-d6e7-f51f-c4ce6ee988d5@syntevo.com>
+Date:   Wed, 11 Dec 2019 16:06:57 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-11_03:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- spamscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
- scancount=1 engine=8.0.1-1911140001 definitions=main-1912110125
+In-Reply-To: <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-VGhlIGNvbW1lbnQgYWJvdXQgIjQwMC01MDAgY29tbWl0cyIgaXMgaW50ZXJlc3RpbmcgdG8gbWU7
-IG91ciByZXBvcw0KcmVndWxhcmx5IGhhdmUgdG8gcHJvY2VzcyB0aG91c2FuZHMgKCEpIG9mIGNv
-bW1pdHMgbGlrZSB0aGlzLCB3aGljaCBpcw0KcGFydCBvZiB0aGUgcmVhc29uIEkgZmVsdCBhIG5l
-ZWQgdG8gdHJ5IHRvIGZpeCB0aGUgYmVoYXZpb3IuIFdoZW4gSQ0KbWFuYWdlIHRvIGdldCB0aGlu
-Z3MgaW50byBhIHJlYXNvbmFibHkgc2FuZSBzdGF0ZSwgdGhlIGNvbW1pdCBjb3VudCBtYXkNCnN0
-YXkgaW4gdGhlIGh1bmRyZWRzLCBidXQgaWYgdGhpbmdzIGdvIHRvbyBsb25nLCBJJ3ZlIHJlZ3Vs
-YXJseSBzZWVuDQpjb3VudHMgd2VsbCBvdmVyIDUwMDAuDQoNClRoaXMgbWFrZXMgbWUgd29uZGVy
-IGlmIHRoZSBwcm9ibGVtIGlzIHBlcmhhcHMgcmVsYXRlZCB0byB0aGUgaGFyZHdhcmUNCmludm9s
-dmVkOyBtYXliZSB0aGUgYWxnb3JpdGhtIGlzIGRvaW5nIGV4YWN0bHkgd2hhdCBpdCBzaG91bGQs
-IGJ1dCB0aGUNCmF2YWlsYWJsZSBSQU0gaXNuJ3Qgc3VmZmljaWVudC4gSWYgdGhhdCdzIHRoZSBw
-cm9ibGVtLCBwZXJoYXBzIHdlIGNvdWxkDQpmaW5kIGEgd2F5IHRvIHBlcmZvcm0gdGhlIHJlY3Vy
-c2l2ZSB3b3JrIHdpdGhvdXQgdXNpbmcgYWN0dWFsDQpyZWN1cnNpb24sIHJlZHVjaW5nIHRoZSBu
-dW1iZXIgb2YgaW5zdGFuY2VzIG9uIHRoZSBzdGFjay4NCg0KLS0gDQpSb2dlciBTdHJhaW4NCg0K
-T24gV2VkLCAyMDE5LTEyLTExIGF0IDE2OjQzICsxMTAwLCBUb20gQ2xhcmtzb24gd3JvdGU6DQo+
-ID4gSXMgdGhlcmUgYSBtaW5pbWFsLCBjb21wbGV0ZSBhbmQgdmVyaWZpYWJsZSBleGFtcGxlIHRo
-YXQgb3RoZXINCj4gPiBkZXZlbG9wZXJzDQo+ID4gY291bGQgdXNlIHRvIGFuYWx5emUgdGhlIGJ1
-Zz8NCj4gDQo+IEkgcmFuIGludG8gdGhpcyBidWcgdG9kYXksIGFuZCB3aGlsZSBub3QgbXVjaCBj
-bG9zZXIgdG8gYSBzb2x1dGlvbiwgSQ0KPiBiZWxpZXZlIEkgdW5kZXJzdGFuZCB3aHkgaXQgaXMg
-aGFwcGVuaW5nLiANCj4gDQo+IFRoZSByZWN1cnNpdmUgc2VhcmNoIGlzIHJlcXVpcmVkIGJlY2F1
-c2UgdGhlIG9yaWdpbmFsIHJldi1saXN0IGJhc2VkDQo+IGFwcHJvYWNoIGNvdWxkIGxlYXZlIG91
-dCBzb21lIHJlbGV2YW50IGNvbW1pdHMgLSBpZSByZXZlcnNpb24gd291bGQNCj4gcmVwbGFjZSBh
-biBvYnZpb3VzIGJ1ZyB3aXRoIGEgaGlkZGVuIG9uZS4NCj4gDQo+IFRoZSBzZWFyY2ggd2lsbCBz
-dG9wIHdoZW4gaXQgcmVhY2hlcyBlaXRoZXIgYSByb290IGNvbW1pdCBvciBvbmUNCj4gYWxyZWFk
-eSBtYXBwZWQgdG8gYSBzdWJ0cmVlIGNvbW1pdC4NCj4gDQo+IElmIHlvdSBoYXZlIGEgc21hbGwg
-cmVwbyBvciBydW4gZ2l0IHN1YnRyZWUgYWRkIGRpcmVjdGx5IG9uIHlvdXINCj4gbWFzdGVyIGJy
-YW5jaCwgdGhlIHNlYXJjaCB3aWxsIHRlcm1pbmF0ZSBmYWlybHkgcXVpY2tseS4NCj4gDQo+IEhv
-d2V2ZXIsIGlmIHlvdSBkbyBldmVyeXRoaW5nIHZpYSBwdWxsIHJlcXVlc3RzLCB0aGUgc2VhcmNo
-IHdpbGwgaGl0DQo+IGEgbWVyZ2UgY29tbWl0IHdoZXJlIG9uZSBzaWRlIGlzIGp1c3QgYWhlYWQg
-b2YgdGhlIHN1YnRyZWUgbWFwcGluZywNCj4gYnV0IHRoZSBvdGhlciBzaWRlIGlzIHNldmVyYWwg
-dGhvdXNhbmQgY29tbWl0cyB3aXRoIG5vIHNpZ24gb2YgZWl0aGVyDQo+IGEgcm9vdCBvciBhbnkg
-c3VidHJlZXMuDQo+IA0KPiBJ4oCZbSBub3Qgc3VyZSB5ZXQgaWYgaXQgaXMgdGhlIG51bWJlciBv
-ZiBjb21taXRzIG9yIG1lcmdlcw0KPiBzcGVjaWZpY2FsbHksIGJ1dCB0aGUgc2NyaXB0IHNlZW1z
-IHRvIGJlIGFibGUgdG8gaGFuZGxlIGFyb3VuZCA0MDAtDQo+IDUwMCBjb21taXRzIGJlZm9yZSBp
-dCBmYWxscyBvdmVyLg0KPiANCj4gPiA+IA0KPiA+ID4gDQo+ID4gPiA+IEFtIDA5LjEyLjIwMTkg
-dW0gMTc6MjAgc2NocmllYiBKb2hhbm5lcyBTY2hpbmRlbGluIDwNCj4gPiA+ID4gSm9oYW5uZXMu
-U2NoaW5kZWxpbkBnbXguZGU+Og0KPiA+ID4gPiANCj4gPiA+ID4g77u/SGksDQo+ID4gPiA+IA0K
-PiA+ID4gPiA+IE9uIE1vbiwgOSBEZWMgMjAxOSwgTWFyYyBCYWxtZXIgd3JvdGU6DQo+ID4gPiA+
-ID4gDQo+ID4gPiA+ID4gSSBhbSBub3QgZmFtaWxpYXIgd2l0aCB0aGUgc291cmNlIGNvZGUsIHNv
-IEkgY2FuIG5vdCBzZW5kIGluDQo+ID4gPiA+ID4gdGhhdA0KPiA+ID4gPiA+IHJldmVydC4gIEkg
-Y2FuLCBob3dldmVyLCBzYXkgdGhhdCBJIGFtIGdyYXRlZnVsIHRvIHdob21ldmVyDQo+ID4gPiA+
-ID4gZG9lcyBpdCA7KQ0KPiA+ID4gPiANCj4gPiA+ID4gSSBhbSBhZ2FpbnN0IHJldmVydGluZyB0
-aGUgY2hhbmdlIHdpdGhvdXQga25vd2luZyB0aGUgcm9vdA0KPiA+ID4gPiBjYXVzZS4NCj4gPiA+
-ID4gDQo+ID4gPiA+IFRoZSByZWNlbnQgcmVwb3J0ZXIgb25seSBjb21wYXJlZCBHaXQgZm9yIFdp
-bmRvd3MgdjIuMTkuMCB2cw0KPiA+ID4gPiB2Mi4yMC4xLA0KPiA+ID4gPiB3aGljaCBpcyBfcXVp
-dGVfIGEgYmlnIGRpZmZlcmVuY2UuDQo+ID4gPiA+IA0KPiA+ID4gPiBGb3Igd2hhdCBJIGtub3cs
-IHRoZSBwcm9ibGVtIG1pZ2h0IGJlIGEgY2hhbmdlIGluIHRoZSBNU1lTMg0KPiA+ID4gPiBydW50
-aW1lIHRoYXQNCj4gPiA+ID4gaXMgbWlzdGFrZW4gYnkgc29tZSBtYWx3YXJlIGZvciBtYWxpY2lv
-dXMgY29kZSAod2UgZGlkDQo+ID4gPiA+IGludHJvZHVjZSBzb21lIGNvZGUNCj4gPiA+ID4gdG8g
-ZW11bGF0ZSBDdHJsK0MgaW4gTWluVFRZIHdoaWNoIGluamVjdHMgYSByZW1vdGUgdGhyZWFkIGFu
-ZA0KPiA+ID4gPiBleGVjdXRlcw0KPiA+ID4gPiBFeGl0UHJvY2VzcygpIHRoZXJlLCB3aGljaCBt
-aWdodCB2ZXJ5IHdlbGwgYmUgY29uc3RydWVkIGFzIGFuDQo+ID4gPiA+IGF0dGFjaywgZXZlbg0K
-PiA+ID4gPiBpZiBpdCBpcyBhY3R1YWxseSB2ZXJ5IG11Y2ggZGVzaXJlZCBiZWhhdmlvcikuDQo+
-ID4gPiA+IA0KPiA+ID4gPiBUaGVzZSBzZWdtZW50YXRpb24gZmF1bHRzIGluIGBnaXQgc3VidHJl
-ZWAgb24gV2luZG93cyBoYXZlDQo+ID4gPiA+IHRyYWRpdGlvbmFsbHkNCj4gPiA+ID4gYmVlbiBf
-YWxsXyBiZWNhdXNlIG9mIG92ZXJ6ZWFsb3VzIGFudGktbWFsd2FyZS4NCj4gPiA+ID4gDQo+ID4g
-PiA+IFNvIGZpcnN0LCBhIG11Y2ggbW9yZSBmaW5lLWdyYWluZWQgYW5hbHlzaXMgd291bGQgYmUg
-cmVxdWlyZWQsDQo+ID4gPiA+IGUuZy4NCj4gPiA+ID4gY29tcGFyaW5nIHYyLjIwLjEgYWdhaW5z
-dCB2Mi4yMC4wLCB0aGVuIGNvcHlpbmcgX2p1c3RfIHRoZQ0KPiA+ID4gPiBgZ2l0LXN1YnRyZWVg
-DQo+ID4gPiA+IGZpbGUgZnJvbSBhIHdvcmtpbmcgaW50byBhIG5vbi13b3JraW5nIHZlcnNpb24g
-KG9yIHZpY2UgdmVyc2E7DQo+ID4gPiA+IEkgd291bGQNCj4gPiA+ID4gaGlnaGx5IHJlY29tbWVu
-ZCB1c2luZyB0aGUgcG9ydGFibGUgdmVyc2lvbnMgZm9yIHN1Y2ggc2lkZS1ieQ0KPiA+ID4gPiBz
-aWRlDQo+ID4gPiA+IGNvbXBhcmlzb24pLg0KPiA+ID4gPiANCj4gPiA+ID4gQ2lhbywNCj4gPiA+
-ID4gSm9oYW5uZXMNCj4gPiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4gLSBNYXJjDQo+ID4g
-PiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiA+IEFtIDA5LjEyLjIwMTkgdW0gMTU6MTgg
-c2NocmllYiBTdHJhaW4sIFJvZ2VyIEwuIDwNCj4gPiA+ID4gPiA+ID4gcm9nZXIuc3RyYWluQHN3
-cmkub3JnPjoNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gQXMgSSBzYWlkLCBJJ20gdXNpbmcg
-YSBjdXN0b20gc2NyaXB0IGhlcmUuIEkgZG9uJ3Qga25vdyBpZg0KPiA+ID4gPiA+ID4gYW55Ym9k
-eSBlbHNlDQo+ID4gPiA+ID4gPiBiZW5lZml0ZWQgZnJvbSB0aGUgY2hhbmdlIGFuZCBoYXNuJ3Qg
-c2FpZCBhbnl0aGluZywgYnV0IEkNCj4gPiA+ID4gPiA+IHdvbid0IG9iamVjdA0KPiA+ID4gPiA+
-ID4gdG8gc29tZW9uZSBzdWJtaXR0aW5nIHRoYXQgcmV2ZXJ0Lg0KPiA+ID4gPiA+ID4gDQo+ID4g
-PiA+ID4gPiAtLQ0KPiA+ID4gPiA+ID4gUm9nZXINCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4g
-LS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gPiA+ID4gPiA+IEZyb206IE1hcmMgQmFsbWVy
-IDxtYXJjQG1zeXMuY2g+DQo+ID4gPiA+ID4gPiBUbzogIlN0cmFpbiwgUm9nZXIgTC4iIDxyb2dl
-ci5zdHJhaW5Ac3dyaS5vcmc+DQo+ID4gPiA+ID4gPiBDYzogbnNAbmFkYXZzaW5haS5jb20gPG5z
-QG5hZGF2c2luYWkuY29tPiwgDQo+ID4gPiA+ID4gPiBnaXRAdmdlci5rZXJuZWwub3JnIDwNCj4g
-PiA+ID4gPiA+IGdpdEB2Z2VyLmtlcm5lbC5vcmc+LCBKb2hhbm5lcy5TY2hpbmRlbGluQGdteC5k
-ZSA8DQo+ID4gPiA+ID4gPiBKb2hhbm5lcy5TY2hpbmRlbGluQGdteC5kZT4sIGdpdHN0ZXJAcG9i
-b3guY29tIDwNCj4gPiA+ID4gPiA+IGdpdHN0ZXJAcG9ib3guY29tPiwNCj4gPiA+ID4gPiA+IHBj
-bG91ZHNAZ21haWwuY29tIDxwY2xvdWRzQGdtYWlsLmNvbT4NCj4gPiA+ID4gPiA+IFN1YmplY3Q6
-IFJlOiBSZWdyZXNzaW9uIGluIGdpdC1zdWJ0cmVlLnNoLCBpbnRyb2R1Y2VkIGluDQo+ID4gPiA+
-ID4gPiAyLjIwLjEsIGFmdGVyDQo+ID4gPiA+ID4gPiAzMTVhODRmOWFhMGUyZTYyOWIwNjgwMDY4
-NjQ2YjAwMzI1MThlYmVkDQo+ID4gPiA+ID4gPiBEYXRlOiBNb24sIDA5IERlYyAyMDE5IDE1OjEz
-OjQ3ICswMTAwDQo+ID4gPiA+ID4gPiANCj4gPiA+ID4gPiA+IFJvZ2VyLA0KPiA+ID4gPiA+ID4g
-DQo+ID4gPiA+ID4gPiBJIGFtIGFsbCBmb3IgcmV2ZXJ0aW5nIGl0LiBpZiB0aGF0IGRvZXMgbm90
-IGNhdXNlIGFueSBvdGhlcg0KPiA+ID4gPiA+ID4gcmVncmVzc2lvbnMNCj4gPiA+ID4gPiA+IG9y
-IGhlYWRhY2hlcyAob3IgYm90aC4uLikNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gLSBNYXJj
-DQo+ID4gPiA+ID4gPiANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBB
-bSAwOS4xMi4yMDE5IHVtIDE1OjExIHNjaHJpZWIgU3RyYWluLCBSb2dlciBMLiA8DQo+ID4gPiA+
-ID4gPiByb2dlci5zdHJhaW5Ac3dyaS5vcmc+DQo+ID4gPiA+ID4gPiA6DQo+ID4gPiA+ID4gPiAN
-Cj4gPiA+ID4gPiA+IEkgaGF2ZW4ndCBiZWVuIGFibGUgdG8gZmluZCBhbnl0aGluZyByZWxhdGlu
-ZyB0byB0aGUgaXNzdWUsDQo+ID4gPiA+ID4gPiBidXQgSSBhbHNvDQo+ID4gPiA+ID4gPiBoYXZl
-bid0IGhhZCBhIHJlcG8gdGhhdCBleHBvc2VzIHRoZSBwcm9ibGVtIHRvIHRlc3QgbW9yZQ0KPiA+
-ID4gPiA+ID4gdGhvcm91Z2hseQ0KPiA+ID4gPiA+ID4gYWdhaW5zdC4gSWYgdGhpcyBoYXBwZW5z
-IHRvIGJlIGEgcHVibGljIHJlcG8gc29tZXdoZXJlLCBJJ2QNCj4gPiA+ID4gPiA+IGJlIG1vcmUN
-Cj4gPiA+ID4gPiA+IHRoYW4gaGFwcHkgdG8gdGFrZSBhIHNlY29uZCBsb29rLg0KPiA+ID4gPiA+
-ID4gDQo+ID4gPiA+ID4gPiBUaGF0IGJlaW5nIHNhaWQsIGlmIHRoZSBjb21tdW5pdHkgZmVlbHMg
-aXQgd291bGQgYmUgYmV0dGVyDQo+ID4gPiA+ID4gPiB0byByZXZlcnQNCj4gPiA+ID4gPiA+IHRo
-ZSBjaGFuZ2VzIHRoYXQgd2VyZSBpbnRyb2R1Y2VkLCBJIHdvbid0IG9iamVjdC4gSSd2ZSBoYWQN
-Cj4gPiA+ID4gPiA+IHRvIGZ1cnRoZXINCj4gPiA+ID4gPiA+IGN1c3RvbWl6ZSB0aGUgc2NyaXB0
-IGZvciBvdXIgaW50ZXJuYWwgdXNlLCBhbmQgdGhvc2UNCj4gPiA+ID4gPiA+IGNoYW5nZXMgYXJl
-bid0DQo+ID4gPiA+ID4gPiBzb21ldGhpbmcgdGhhdCB3b3VsZCBiZSB1c2VmdWwgZm9yIHRoZSBw
-dWJsaWMgYXQgbGFyZ2UuIChBDQo+ID4gPiA+ID4gPiBmZXcgY2hhbmdlcw0KPiA+ID4gPiA+ID4g
-cmVsYXRlIHRvIHRoZSBwcmVzZW5jZS9hYnNlbmNlIG9mIGEgc3BlY2lmaWMgZmlsZSwgd2hpY2gg
-SQ0KPiA+ID4gPiA+ID4gY2VydGFpbmx5DQo+ID4gPiA+ID4gPiB3b3VsZG4ndCBleHBlY3QgYW55
-b25lIGVsc2UgdG8gaGF2ZS4pIFNob3J0IHN0b3J5IGlzIHdlJ3JlDQo+ID4gPiA+ID4gPiBnb2lu
-ZyB0bw0KPiA+ID4gPiA+ID4gaGF2ZSB0byB1c2UgYSBjdXN0b20gc2NyaXB0IGdvaW5nIGZvcndh
-cmQsIHNvIGtlZXBpbmcgb3INCj4gPiA+ID4gPiA+IHJldmVydGluZyB0aGUNCj4gPiA+ID4gPiA+
-IGNoYW5nZXMgaGVyZSBtYWtlIG5vIGRpZmZlcmVuY2UgdG8gdXMuIEkgc3RpbGwgZmVlbCB0aGF0
-DQo+ID4gPiA+ID4gPiB0aGUgY2hhbmdlcw0KPiA+ID4gPiA+ID4gd2hpY2ggd2VyZSBtYWRlIG1h
-a2UgdGhlIHNjcmlwdCBtb3JlIGNvcnJlY3QsIGJ1dCBjbGVhcmx5DQo+ID4gPiA+ID4gPiB0aGVy
-ZSdzIHNvbWUNCj4gPiA+ID4gPiA+IHVuZGlhZ25vc2VkIGxvZ2ljIGVycm9yIHNvbWV3aGVyZS4N
-Cj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gSG9uZXN0bHksIEknbSBzdXJwcmlzZWQgd2UgZGlk
-bid0IHNlZSB0aGlzIHBhcnRpY3VsYXIgaXNzdWUNCj4gPiA+ID4gPiA+IHNob3cgdXAgb24NCj4g
-PiA+ID4gPiA+IG91ciBvd24gcmVwbzsgaXQncyByaWRpY3Vsb3VzbHkgbGFyZ2UgYW5kIGNvbXBs
-ZXguIEF0IGxlYXN0DQo+ID4gPiA+ID4gPiBpZiBpdCBoYWQsDQo+ID4gPiA+ID4gPiBJJ2QgYmUg
-YWJsZSB0byB0cm91Ymxlc2hvb3QgaXQgbW9yZSByZWxpYWJseS4NCj4gPiA+ID4gPiA+IA0KPiA+
-ID4gPiA+ID4gLS0NCj4gPiA+ID4gPiA+IFJvZ2VyIFN0cmFpbg0KPiA+ID4gPiA+ID4gDQo+ID4g
-PiA+ID4gPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+ID4gPiA+ID4gRnJvbTogTmFk
-YXYgU0luYWkgPG5zQG5hZGF2c2luYWkuY29tPg0KPiA+ID4gPiA+ID4gVG86IHJvZ2VyLnN0cmFp
-bkBzd3JpLm9yZw0KPiA+ID4gPiA+ID4gQ2M6IEpvaGFubmVzLlNjaGluZGVsaW5AZ214LmRlLCBn
-aXRAdmdlci5rZXJuZWwub3JnLCANCj4gPiA+ID4gPiA+IGdpdHN0ZXJAcG9ib3guY29tLA0KPiA+
-ID4gPiA+ID4gbWFyY0Btc3lzLmNoLCBwY2xvdWRzQGdtYWlsLmNvbQ0KPiA+ID4gPiA+ID4gU3Vi
-amVjdDogUkU6IFJlZ3Jlc3Npb24gaW4gZ2l0LXN1YnRyZWUuc2gsIGludHJvZHVjZWQgaW4NCj4g
-PiA+ID4gPiA+IDIuMjAuMSwgYWZ0ZXINCj4gPiA+ID4gPiA+IDMxNWE4NGY5YWEwZTJlNjI5YjA2
-ODAwNjg2NDZiMDAzMjUxOGViZWQNCj4gPiA+ID4gPiA+IERhdGU6IFN1biwgMDggRGVjIDIwMTkg
-MTI6MzA6NDggKzAyMDANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gW0VYVEVSTkFMIEVNQUlM
-XQ0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBIaSwgSSdtIGN1cmlvdXMgaWYgYW55IG9mIHlv
-dSBoYWQgYW55IGx1Y2sgaW4gcHJldmVudGluZw0KPiA+ID4gPiA+ID4gdGhhdA0KPiA+ID4gPiA+
-ID4gc2VnLWZhdWx0IGluIGdpdC1zdWJ0cmVlIHNjcmlwdA0KPiA+ID4gPiA+ID4gSSdtIGVuY291
-bnRlcmluZyBpdCBteXNlbGYgdXNpbmcgZ2l0IDIuMjQuMC53aW5kb3dzLjIuLA0KPiA+ID4gPiA+
-ID4gc2VnLWZhdWx0IGlzDQo+ID4gPiA+ID4gPiBpbiB0aGUgc2FtZSB3aGlsZSBsb29wIChjdXJy
-ZW50bHkgb24gbGluZSA3NTcpDQo+ID4gPiA+ID4gPiBXaGVuIEkgdHJpZWQgeW91ciBzdWdnZXN0
-aW9uIG9mIGFkZGluZyB0aGUgKCRwYXJlbnRzKQ0KPiA+ID4gPiA+ID4gKCRyZXYpIHRvIHRoZQ0K
-PiA+ID4gPiA+ID4gcHJvZ3Jlc3MgcHJpbnQgSSBzZWUgdGhhdCB0aGUgbGFzdCBjb21taXQgaGF2
-ZSBvbmx5IG9uZQ0KPiA+ID4gPiA+ID4gcmV2aXNpb24NCj4gPiA+ID4gPiA+IHByaW50ZWQNCj4g
-PiA+ID4gPiA+IGxpa2UgdGhpczoNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gMjU5LzI5MCAo
-NTIzKSBbMjcxXQ0KPiA+ID4gPiA+ID4gKDg0M2RkMzQwOTBkMzZkZmFiZDZhMmUzZTg0NTlhNDg4
-NzQyNzMxM2IpDQo+ID4gPiA+ID4gPiAoYTY5ZWUwNTZmNjZhY2Y2NmM2M2Y4OWY1NWQyNmMwY2Mx
-NzAzNjYyMykNCj4gPiA+ID4gPiA+IDI1OS8yOTAgKDUyNSkgWzI3M10NCj4gPiA+ID4gPiA+IChm
-NWVlYTFhM2NiZTFlMTZhY2JhNTNlOGE5ZmUwN2I2NTI1YThiOTdjKQ0KPiA+ID4gPiA+ID4gKDg0
-M2RkMzQwOTBkMzZkZmFiZDZhMmUzZTg0NTlhNDg4NzQyNzMxM2IpDQo+ID4gPiA+ID4gPiAyNTkv
-MjkwICg1MjcpIFsyNzVdDQo+ID4gPiA+ID4gPiAoODIzMDM3NTJhNDI4Y2YxZDc4OWFjOWYxNTYw
-MDhhZGIyNzk4YjdiNSkNCj4gPiA+ID4gPiA+IChmNWVlYTFhM2NiZTFlMTZhY2JhNTNlOGE5ZmUw
-N2I2NTI1YThiOTdjKQ0KPiA+ID4gPiA+ID4gMjU5LzI5MCAoNTI4KSBbMjc2XQ0KPiA+ID4gPiA+
-ID4gKDcxODc4OTc4ODNjOWZiNGQzM2Q0Yzg3YTAyYjg3NmY4NjAzNzI4ZmYwNWYwOTQ1YWUyY2U5
-Zjk4YTMNCj4gPiA+ID4gPiA+IDUxMzUpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MjkpIFsyNzdd
-DQo+ID4gPiA+ID4gPiAoYTAwYTM2NjUzNDM0MzlhNDI2NjcxOTU4ZGQ5MGVkMDQwN2EyMmNhZDlh
-YzlmMTU2MDA4YWRiMjc5OA0KPiA+ID4gPiA+ID4gYjdiNSkNCj4gPiA+ID4gPiA+IDI1OS8yOTAg
-KDUzMCkgWzI3OF0NCj4gPiA+ID4gPiA+ICg5MGJlYjk0ZWJkMzMxYzQ1N2Q3OWQwNTM0MTQ1M2Y1
-ODI5YTUwYmZjZDRjODdhMDJiODc2Zjg2MDM3DQo+ID4gPiA+ID4gPiAyOGZmKQ0KPiA+ID4gPiA+
-ID4gMjU5LzI5MCAoNTMxKSBbMjc5XQ0KPiA+ID4gPiA+ID4gKDk1ODJlMGFjYmVkMTkxMDE3MzU2
-NGUyNTBmMzUwYjVjYzQyOTFhN2Y2NzE5NThkZDkwZWQwNDA3YTINCj4gPiA+ID4gPiA+IDJjYWQp
-DQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MzIpIFsyODBdDQo+ID4gPiA+ID4gPiAoZjE4MzkzMGQ2
-ZmFiZDNkY2NkZGRjNWVjMzVkNzU0YWQyOGNhZjNiODc5ZDA1MzQxNDUzZjU4MjlhNQ0KPiA+ID4g
-PiA+ID4gMGJmYykNCj4gPiA+ID4gPiA+IDI1OS8yOTAgKDUzMykgWzI4MV0NCj4gPiA+ID4gPiA+
-IChjOTMwOWYzYTM4YzQxZjc5OTFkOWU3OGRkYjQ3ZjdlODViODUyMWViNTY0ZTI1MGYzNTBiNWNj
-NDI5DQo+ID4gPiA+ID4gPiAxYTdmKQ0KPiA+ID4gPiA+ID4gMjU5LzI5MCAoNTM0KSBbMjgyXQ0K
-PiA+ID4gPiA+ID4gKDNiY2YwOGY2M2EwZTJiOTNlY2MzNzZiZDY3OWExNmM4MGU5OWU3YjFkZGM1
-ZWMzNWQ3NTRhZDI4Y2ENCj4gPiA+ID4gPiA+IGYzYjgpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1
-MzUpIFsyODNdDQo+ID4gPiA+ID4gPiAoMTM0NjIxYmI1NWEwNDcwY2RmNjUxOWNlMDhkNjkwOWFm
-NDNjZTBlNWQ5ZTc4ZGRiNDdmN2U4NWI4NQ0KPiA+ID4gPiA+ID4gMjFlYikNCj4gPiA+ID4gPiA+
-IDI1OS8yOTAgKDUzNikgWzI4NF0NCj4gPiA+ID4gPiA+IChlZGIzNDcxZmJiYTI5NzQ4Zjk3ODRk
-MjliM2NlZTFkZWUyZGY0YjM3YzM3NmJkNjc5YTE2YzgwZTk5DQo+ID4gPiA+ID4gPiBlN2IxKQ0K
-PiA+ID4gPiA+ID4gMjU5LzI5MCAoNTM3KSBbMjg1XQ0KPiA+ID4gPiA+ID4gKGRkOTQ3YTA5NWRm
-MDdhMzJkZmQ1NjY2NmEzOTVhN2M0MmIyNWNhMTE2NTE5Y2UwOGQ2OTA5YWY0M2MNCj4gPiA+ID4g
-PiA+IGUwZTUpDQo+ID4gPiA+ID4gPiAyNTkvMjkwICg1MzgpIFsyODZdDQo+ID4gPiA+ID4gPiAo
-YTYzOWUwOWQyY2JlMWVhMTE0OWMwODBjMWM5NWI4YjAxODM0MGFlMjc4NGQyOWIzY2VlMWRlZTJk
-Zg0KPiA+ID4gPiA+ID4gNGIzNykNCj4gPiA+ID4gPiA+IEM6L1Byb2dyYW0gRmlsZXMvR2l0L21p
-bmd3NjQvbGliZXhlYy9naXQtY29yZVxnaXQtc3VidHJlZToNCj4gPiA+ID4gPiA+IGxpbmUgNzU3
-Og0KPiA+ID4gPiA+ID4gODg1MyBEb25lICAgICAgICAgICAgICAgICAgICBldmFsICIkZ3JsIg0K
-PiA+ID4gPiA+ID4gICA4ODU0IFNlZ21lbnRhdGlvbiBmYXVsdCAgICAgIChjb3JlIGR1bXBlZCkg
-fCB3aGlsZSByZWFkDQo+ID4gPiA+ID4gPiByZXYNCj4gPiA+ID4gPiA+IHBhcmVudHM7IGRvDQo+
-ID4gPiA+ID4gPiBwcm9jZXNzX3NwbGl0X2NvbW1pdCAiJHJldiIgIiRwYXJlbnRzIiAwOw0KPiA+
-ID4gPiA+ID4gZG9uZQ0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBJIGRvd25ncmFkZWQgZ2l0
-IHRvIDIuMTkuMC13aW5kb3dzLjEgYW5kIGl0IHdvcmtzIG5vdy4NCj4gPiA+ID4gPiA+IA0KPiA+
-ID4gPiA+ID4gDQo+ID4gPiA+ID4gPiBJJ20gdGhhbmtmdWwgZm9yIHlvdXIgaW5zaWdodHMNCj4g
-PiA+ID4gPiA+IE5hZGF2IFNpbmFpDQo+ID4gPiA+ID4gPiBXZWIgVGVjaCBsZWFkDQo+ID4gPiA+
-ID4gPiBQaGlsaXBzLUFsZ290ZWMNCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+
-ID4gPiANCj4gPiA+ID4gPiA+IA0KPiA+ID4gPiA+ID4gDQo+ID4gPiA+ID4gDQo+ID4gPiA+ID4g
-DQo+ID4gPiANCj4gPiA+IA0KPiANCj4gDQo=
+On 11.12.2019 15:27, Phillip Wood wrote:
+
+> Thanks, one other thing I forgot to mention yesterday is to ask what the 
+> expected behavior is if the user passes an empty file to 
+> --pathspec-from-file. With no pathspecs on the command line commit, 
+> checkout, reset and restore-files all default to operating on all paths 
+> but passing --pathspec-from-file implies the user wants to specify 
+> specific paths so I think it would perhaps be better to error out if no 
+> paths are given. There is a precedent for this in checkout-index which 
+> does nothing if no paths are given (though I can't remember if it errors 
+> out or not).
+
+Back when I composed patch for `git commit`, I spent some time thinking 
+about this question. I agree that empty `--pathspec-from-file` is weird. 
+Eventually I decided that `--pathspec-from-file` shall be as close as 
+possible to passing pathspec args. So empty file should behave the same 
+way as passing zero pathspec args. It's more or less the question "if 
+user does something unexpected, what is expected?". I decided that 
+treating as zero args doesn't sound dangerous to me, and it's a very 
+weird case anyway, so let's just treat as zero args.
+
+>> What I find obscure in your suggestion/patch is that innocently 
+>> looking `prepare_index()` suddenly clears pathspec as well. It's even 
+>> harder to see when called through `dry_run_commit()`.
+> 
+> It would be easy enough to clear pathspec in cmd_commit() I just didn't 
+> bother to do it.
+
+Yes, this thought also came to me after I replied. I agree that this is 
+viable and seems to solve most problems.
+
+Now I'm in the situation where before me, code already wasn't perfect, 
+and I can continue to extend it in the same direction, or try to 
+refactor to make it better. I actually choose the second path: [1][2]. 
+These were two "don't" lessons for me, as both topics now gather dust in 
+mail graveyard. No good deed remains unpunished, I guess?
+
+> I think that's a bit different to 
+> the pathspec case as it's about the lifetime of the return value of a 
+> function rather than a function freeing an argument passed to it.
+
+Both cases are about lifetime that ends where it was not expected. You 
+can probably agree that it never makes code easier to understand, and at 
+best it will be properly accounted for and does not explode. Again, both 
+choices were somewhat evil.
+
+[1] 
+https://public-inbox.org/git/pull.479.git.1574969538.gitgitgadget@gmail.com/
+[2] 
+https://public-inbox.org/git/pull.477.git.1574848137.gitgitgadget@gmail.com/T/#u
