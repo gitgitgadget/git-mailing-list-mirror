@@ -1,92 +1,88 @@
-Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,T_MONEY_PERCENT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F249C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 17:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0119DC43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 08:54:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A9D422465E
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 17:43:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC580214AF
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 08:54:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="s4Zye1CL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qv1GR1P9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbfLQRn2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 12:43:28 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64514 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbfLQRn2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 12:43:28 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 36A209A428;
-        Tue, 17 Dec 2019 12:43:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4puxefGXivw5E3s49FZ5+VaH1P4=; b=s4Zye1
-        CLzz6bicJ2uPhia5vts9xzraDRHoBpaBd770oap4Kt+7qbA3DoI1SYmLmwbQRpo5
-        kxssmp1jV17hMBPDl0OM472aGOEDpgYJVRxu6K0IrxHyuBMt9aUcu58F6w8yO9gs
-        R2QkhtKJSPrl8Pxenh6yDr0DJhZKc5z3Cu498=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Pkz4Lky5nDU7M9IGiNdir06b54bka9N/
-        8ZgUBGLA1TUjY7vk2mtKnOa98BpptRtYNNR79QMS6V+qs3U0PWMAR+Xw5yjrOaRf
-        nhFCC3nWrsKodeVzaAX+H6j3glGNH+QCln84t6U53yQG/Zr7SM1IIfph9H5x/0KV
-        yE7iFOwUTfw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2F1FA9A426;
-        Tue, 17 Dec 2019 12:43:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 55C459A425;
-        Tue, 17 Dec 2019 12:43:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 10/15] bugreport: add config values from safelist
-References: <20191213004312.169753-1-emilyshaffer@google.com>
-        <20191213004312.169753-11-emilyshaffer@google.com>
-        <xmqq4ky3j3w4.fsf@gitster-ct.c.googlers.com>
-        <20191216234036.GK135450@google.com>
-Date:   Tue, 17 Dec 2019 09:43:23 -0800
-In-Reply-To: <20191216234036.GK135450@google.com> (Emily Shaffer's message of
-        "Mon, 16 Dec 2019 15:40:36 -0800")
-Message-ID: <xmqqfthij1ac.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728432AbfLKIyY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 03:54:24 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:34803 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727253AbfLKIyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 03:54:23 -0500
+Received: by mail-qk1-f193.google.com with SMTP id d202so19028147qkb.1
+        for <git@vger.kernel.org>; Wed, 11 Dec 2019 00:54:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=nGIjsaBccfzgbG6AB9u8tl8iW74VAAyTBEMSpWPn7tU=;
+        b=Qv1GR1P9hccnzmNvd+tlfDuU0qY+a1TNXoq2C7vcZwsDu279h/kq/WsaSkhqzRTFDh
+         IHGYB+xsrE5zQ/4kF66RuhXJe25fLGXKZ2haKe3dQC4CU9YTUDMN66DPcs7uPm4ZTxX4
+         m3jU0z5PkK1zPgc7AKywizZRvZDObuM8JgIsRQqLEMgv+xzbSNur7hz6MwF9anx3WeYx
+         +5dDMKDeQCS5/yV3LRM9wELde2N3XA+s/a3UpQPorEtJO41KGFq7NrkCiaK2I0UoUTlp
+         XJLsphwC24haHkvdT4fS9W8WLrbu+pPEco+/jjo84Yh+wvudvz62Evg0rsVb1upGOWxb
+         YYOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=nGIjsaBccfzgbG6AB9u8tl8iW74VAAyTBEMSpWPn7tU=;
+        b=mnxEH8f4ZX4+Qoj49jzrBcyN1rUi/wQ2mYchish9fAG+oLuJmNSCVgslNItF6Pc5oa
+         MDhrBLL6U5CGAhFTnJuIyVlX+kQdpiWC2HZibQDOIOv8EDrenDtzq7lEXhWf0ikmuzCI
+         xd8F2P+840vFVfoHDc+hAoPWdVldrhE+kIJ48d2I3Dca1rjMIIIK0K28zoMGY8WXiBwv
+         StnzFJdE1WKV+pI78lpNGK6ppn2L4tM3hJzVfjvE+6eC2qazaDIZtg5HZ3GX32xItZaZ
+         g2xHnAzOl/SADnBgtNGWziug7TpJnvDNGQ9RQ3CaqnzfCQvPd9LAkZ/AIXIU2dewTntn
+         G8XA==
+X-Gm-Message-State: APjAAAXQNMdKFn8MKKyfS6qRxZvfg9O97kXmTDmiPOb4UxBXEcDCyyF1
+        gRZG9E8cBZS2XZEvzAie4qVeT/x9cP9fOSqYnsE=
+X-Google-Smtp-Source: APXvYqxiInSIWS48Tbyyxwc1txIjQAhyQCy9h17NLjtADDlNXz/M9OM/aZ1bRH5/EBMKCvoZwh3hLv5mYDyVMHbcRqU=
+X-Received: by 2002:a05:620a:166a:: with SMTP id d10mr1799816qko.37.1576054462860;
+ Wed, 11 Dec 2019 00:54:22 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: BA0BEC38-20F4-11EA-B8A5-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Received: by 2002:ac8:6601:0:0:0:0:0 with HTTP; Wed, 11 Dec 2019 00:54:22
+ -0800 (PST)
+Reply-To: sambo.salifou@post.com
+From:   Sambo <samba.akasi123@gmail.com>
+Date:   Wed, 11 Dec 2019 08:54:22 +0000
+Message-ID: <CACy=jcm-M60YGEMs2DCWZ_RTYu-6w4bwU7+n810h-0fgEPhQQQ@mail.gmail.com>
+Subject: Please lets make joint business
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Please lets make joint business
 
->> But that is too simple-minded.  If we wanted to safelist foo.*.bar,
->> where '*' can be anything, walking on the list of safe variables
->> would not work.  We must have a hash table that knows "foo.*.bar" is
->> allowed, and while walking all the configuration keys, when we see
->> foo.a.bar, we consult "foo.*.bar" as well as "foo.a.bar" to see if
->> it is whitelisted, or something like that.
->
-> ...unless we want to use wildcards like you suggest.
->
-> But I'm not sure it's a good idea. I envision someone writing another
-> Git add-on, which offers someone to specify "user.password" ...
-
-Wildcarding the leaf level of two (or for that matter three) level
-names like "user.*" in your example is of course a nonsense way to
-use the safelist.  But think about three-level names where the
-second level is designed to be used for user-supplied token to give
-things of similar nature a name the user can use to distinguish
-things.  If remote.origin.url is worth reporting, wouldn't
-remote.upstream.url also be?  Shouldn't remote.*.url be the way to
-say "the URL field for each and every remote is a safe thing to
-report" in the safelist?
+I am, Dr. Salifou Sambo a bank auditor, I am in-charge of transferring
+out funds or my village, which our village generates from the sales of
+our local mined gold. I have some left over fund in the bank here that
+I alone is aware of, and wants to transfer it out.
+My village that mines gold, has mandated me for sales of our raw Gold,
+and as a bank auditor I help our village to control their funds. I
+want to use this opportunity to look for some one who will provide an
+account to receive the sum of 4.2 million US dollars left in the bank,
+this was realized from gold sold, to be transferred out to our foreign
+account,now it is
+unknown by our village, This fund has been laying for onward transfer
+to overseas as we transfer out all funds sold from our gold, till now
+this fund is lying in the bank, I have all documents concerning the
+fund, and now I want to use it to establish outside my country. So if
+you are interested, then you will provide an account to receive the
+fund for a joint benefit and business and sharing, I will give you 30%
+of the fund. if you
+are interested reply me.
+Sincerely,
+Dr. SALIFOU Sambo
