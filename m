@@ -2,101 +2,117 @@ Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A2D0C2D0C6
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F200FC43603
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:17:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2DF962054F
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DE0E20409
+	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 17:17:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BCThuQog"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BAuhcIkU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730982AbfLKRNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 12:13:01 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:41521 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729512AbfLKRNA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 12:13:00 -0500
-Received: by mail-pg1-f195.google.com with SMTP id x8so11060424pgk.8
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 09:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ZpHQmHW5A8/7Vpm8mflrZjs4foIerdYsMou5TBssh1c=;
-        b=BCThuQoggE6bUDqn+xq8bsffVb04O2t+bh7nQyB7GiGFyooDFOmULwrSoSlEnvuPHy
-         9TI1iXl+3JIlfva9yMcxaGVnJTKR3FYnQjbd1DIBI1jjEhkcLpwBgbeWcDI4hkjvzv35
-         lxQ0shWiDgOMwlk9UiCYVZ0ij7mrbIw7kMJgB/g8e6u8xroLZh8wMwfpa9Yl5cVU3GvT
-         VmFXKq1GzlFOylysxe29x1Cd2r/7AzM0augJNy53f+xCoXnN9fxchw0sI3gR0f36DEZb
-         +Br5r+C7xYcOaRfa1dDwKzeInnsDEGDwBXfx1HWNZPt2Xq467E3VFV5drK3S0em6zuCg
-         3RRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ZpHQmHW5A8/7Vpm8mflrZjs4foIerdYsMou5TBssh1c=;
-        b=hLfRkJ95cj58hdJ9V38OzAyfFY4EvU0nWa/fHRjJY6q7mzgV5m6UKUhFx6HDhGAMQh
-         5PTJdlCbSLOrgryJtZU4xPWO8bPFEoBhlICd0c7V9e9WvzvOMhgz6n0pqptOBImFfgT6
-         Dg77WCLk97NWeCUQ8PKqA6x6lOoTcxLKB5umNy9PJtypuPcY5LgwQzRhaR9ySv8JdSGv
-         CugYAS412Vl/0zrId7uIMDNWwRbSUDQ1rZQodXVXEZy0+qrKh1l7gek4QzcpLCFwSIJt
-         7HBODeOfPXYfLFXt+hCXTgY1/KHNJY+NwPLuKPoTG+96CjGy1+MXH6rj6U9BpVDdwh8n
-         HvNw==
-X-Gm-Message-State: APjAAAVAvSMw7btTEYJCnvv7pYajshDoAsfNWI+v/rNMWHBvvBkDDF9S
-        zrLFR7gRbcXjSGM8vNpriFc=
-X-Google-Smtp-Source: APXvYqw2cphjXpj69v/SBn7bS5Uubtn7LAdpSs4rOfOtcnKwXKm3Zyd+ANd0UuMWHhY4W4+ydtJJFw==
-X-Received: by 2002:a63:70e:: with SMTP id 14mr5212535pgh.266.1576084380137;
-        Wed, 11 Dec 2019 09:13:00 -0800 (PST)
-Received: from generichostname (c-73-15-240-142.hsd1.ca.comcast.net. [73.15.240.142])
-        by smtp.gmail.com with ESMTPSA id k23sm3515973pgg.7.2019.12.11.09.12.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Dec 2019 09:12:59 -0800 (PST)
-Date:   Wed, 11 Dec 2019 09:13:56 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Keene <seraphire@gmail.com>, Jeff King <peff@peff.net>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v5 00/15] git-p4.py: Cast byte strings to unicode strings
- in python3
-Message-ID: <20191211171356.GA72178@generichostname>
-References: <pull.463.v4.git.1575498577.gitgitgadget@gmail.com>
- <pull.463.v5.git.1575740863.gitgitgadget@gmail.com>
- <20191207194756.GA43949@coredump.intra.peff.net>
- <95ead4b6-21bb-1aa2-f16f-888e61a4e4c0@gmail.com>
- <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
+        id S1730612AbfLKRR2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Dec 2019 12:17:28 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52581 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730318AbfLKRR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Dec 2019 12:17:28 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 523B492BCC;
+        Wed, 11 Dec 2019 12:17:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=wBR99JbDqBaw5LP6v8LVzDwMjBA=; b=BAuhcI
+        kU6X5y6znQ69cBsk6LkX3x2YdfdXyBOJFGmR1tqiUg73jXhvVmfs1D7iNXJi1YET
+        Lu27OGJlQo81+VBptJ1VH17acqVWAXcy5mjW155+R0WR8T9z5+lSEuGhLmTuzIn9
+        mnTsTucDm2yqj4/Cj30eABOjAjV2XApYGNaPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=L+kNNmviipuDYY0N5GmgSnPDwWlQHJg2
+        J4xOsxXHTbRSXaBuWuHZNbTf34c3aAl1OmvjUqo0MkFzDdU6ov2aN1G1AX1JuxVh
+        kFBoQcc20fq4tutoDtE/0lVH3nciqZOZYmYJEEb2RJQz4Ktz41+OpHA4tj3lmgvz
+        SIA+PAZDEjY=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4BA8E92BCB;
+        Wed, 11 Dec 2019 12:17:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6708F92BCA;
+        Wed, 11 Dec 2019 12:17:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Tanushree Tumane <tanushreetumane@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-use
+References: <20191209103923.21659-1-mirucam@gmail.com>
+Date:   Wed, 11 Dec 2019 09:17:21 -0800
+In-Reply-To: <20191209103923.21659-1-mirucam@gmail.com> (Miriam Rubio's
+        message of "Mon, 9 Dec 2019 11:39:23 +0100")
+Message-ID: <xmqqo8wepyse.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqwob2pzty.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1895FF06-1C3A-11EA-9244-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 11, 2019 at 08:54:49AM -0800, Junio C Hamano wrote:
-> Ben Keene <seraphire@gmail.com> writes:
-> 
-> > Yes indeed!
-> >
-> > I hadn't pulled before I attempted the rebase, and got bit.  Yes those
-> > shouldn't be there!
-> 
-> So, other than that, this is ready to be at least queued on 'pu' if
-> not 'next' at this point?
+Miriam Rubio <mirucam@gmail.com> writes:
 
-From what I can tell, Ben agreed to have this series superseded by Yang
-Zhao's competing series[1].
+> From: Tanushree Tumane <tanushreetumane@gmail.com>
+>
+> In 5e82c3dd22a (bisect--helper: `bisect_reset` shell function in C,
+> 2019-01-02), the `git bisect reset` subcommand was ported to C. When the
+> call to `git checkout` failed, an error message was reported to the
+> user.
+>
+> However, this error message used the `strbuf` that had just been
+> released already. Let's switch that around: first use it, then release
+> it.
+>
+> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> ---
+> This patch is a new version of
+> https://public-inbox.org/git/20191208172813.16518-1-mirucam@gmail.com/
+> which itself has been sent previously by Tanushree
+> (https://public-inbox.org/git/64117cde718f0d56ebfa4c30f4d8fe2155f5cf65.1551003074.git.gitgitgadget@gmail.com/).
+>
+>  builtin/bisect--helper.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+> index 1fbe156e67..3055b2bb50 100644
+> --- a/builtin/bisect--helper.c
+> +++ b/builtin/bisect--helper.c
+> @@ -169,11 +169,12 @@ static int bisect_reset(const char *commit)
+>  
+>  		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
+>  		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
+> +			error(_("could not check out original"
+> +				" HEAD '%s'. Try 'git bisect"
+> +				" reset <commit>'."), branch.buf);
+>  			strbuf_release(&branch);
+>  			argv_array_clear(&argv);
+> -			return error(_("could not check out original"
+> -				       " HEAD '%s'. Try 'git bisect"
+> -				       " reset <commit>'."), branch.buf);
 
-That being said, I haven't been following along too closely but it seems
-to me this series is further along and has received more review
-feedback so maybe it should be picked up?
+The original obviously was bad X-<.  Will queue.  Thanks.
 
-[1]: https://lore.kernel.org/git/afa761cf-9c0e-cdcc-9c32-be88c5507042@gmail.com/
+> +			return -1;
+>  		}
+>  		argv_array_clear(&argv);
+>  	}
