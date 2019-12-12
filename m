@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D5A7C00454
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C235DC43603
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4B2CA21655
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90A7A21655
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fsuIEcvq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UycH0JmH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729789AbfLLOge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Dec 2019 09:36:34 -0500
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:50443 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729753AbfLLOgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 09:36:32 -0500
-Received: by mail-wm1-f48.google.com with SMTP id a5so2632467wmb.0
-        for <git@vger.kernel.org>; Thu, 12 Dec 2019 06:36:31 -0800 (PST)
+        id S1729791AbfLLOgf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 09:36:35 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35049 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729709AbfLLOgb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Dec 2019 09:36:31 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so2777871wmb.0
+        for <git@vger.kernel.org>; Thu, 12 Dec 2019 06:36:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UTlc6qjNMhMEu4zUmegOUS6A2tNDjGefjNDO1CKZ5Kw=;
-        b=fsuIEcvqfpEcYouMXesGUhv+Q/tKR/CjF1/b8ELdjOlgdb0Celg4pYU32X4uTl+3wv
-         u79Ll3Ww2qzU90uE2y11/9h5gLducl12dgmeyluyIBtWf1X30BybuVcUeICtrZDJaFoH
-         efqqFN/nVK9ksezbt8whW6+moDb/li1HpO83TFLiYDghOCexNqmmGehiqi/0x4PziLp3
-         y+ZMkYajGzFR1S3/AdVRoYO5YYmwN0yoTledyAuiz6Ci3RgFeKps1e2dDr7+LhkTeIW4
-         LLqP9KLeG0ox/R3IJII08FGF5uQ/Gap/xb/5hvx6mUeSEcP96/DXVwihkuwa6g9UPMcD
-         gpcw==
+        bh=/50tsg0WF1RPAKWO+eD4BpY/4M3EHrjNNjTZh3wRJNU=;
+        b=UycH0JmHMm6oQgSwwh6G2acSFsEZ9L5ZdYXucWeB11VayokPqafeZb9E90S0n0ynqU
+         6q2QL8sujl9PhFVSzwAy5aa0l1HHgyf4BzM35AyNl4hdMtsRX4F0Vdkv7C40ro3e9XSU
+         3gumdisJqpRVZliXBZfgVZmqfSSZQwFG9gwVkHqWuZY2u/UnkSCJZKwtNZx2/Gbawa9+
+         4/qUwkIPAfg9nvvaz0nY4QZVIqMpMD/LYWzetOKFiolBKjOR0Z5FY0CCi6MlFQMe3mhS
+         hJPuA49bCYiM5vKBoSoDnMrUtgipxeX1AbIdHUr4kufR+VbW3oilLTXle+9vKpXswBpV
+         l6Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UTlc6qjNMhMEu4zUmegOUS6A2tNDjGefjNDO1CKZ5Kw=;
-        b=as1tMiu1y1FDx640bhVlIEzZVbV5AncBD+bEYK0CJxU8ofJB/sXU+RSnYLWKY7jnlK
-         jW47zRsTdkQnrScwYO7Pt45QHppNn4gyytqt38ry+efkU9NY51pERnDIwWLnoIME6+99
-         yIbxYgMoHHVblLy7Mbn584WsXmfpVA03FB8n0IDw5iLtAyiHQVL/wYgBAfVdN/fAB9Cb
-         YHpxsoaunM4hJAxczX4m4OG3qbrzmoew57orlH5u3LcseKSvEQE/7UOtqEurcks/BABS
-         b9r51AzIde2JTKNopAs0/fD3JLPv9HJPsWQT5RTJuL0etKxX/E9Si6h/lSESlIoMEXzP
-         OytQ==
-X-Gm-Message-State: APjAAAVHdE372SPvOW3ryW2Qp0YIQiFYUxNQXYL7zFqffPIXsXVBc2nM
-        C+kgoyeQB12hS5OoHd/FXkzX8zmh
-X-Google-Smtp-Source: APXvYqwiQ3bTyR9f7WxyiGZ56Nb65gfSloFRiM3LyKUH/cvD/p4jyVf7D7yPzfkzc/ScxUELAM0mTg==
-X-Received: by 2002:a05:600c:2150:: with SMTP id v16mr6513974wml.156.1576161390806;
-        Thu, 12 Dec 2019 06:36:30 -0800 (PST)
+        bh=/50tsg0WF1RPAKWO+eD4BpY/4M3EHrjNNjTZh3wRJNU=;
+        b=RJhV1q879kqd0ZoW9T/Kp1IdJJc8v1stpHE6MhFYSX2iXcpHl6I0Se1E8gv+Yt2x4i
+         PxuiR99CWQK8Yozzxhb9G41U4jT/VqsbUCP6P849WA8k9Z+0BNS0fvxm77Pd0TfjTs4P
+         N8680+BVyMd2rnaYn0oL3bRBtHnBxEKj1+de+ty8c1dDdK8Oa5hO8SAWwJJQTe9tkyJ5
+         yqPYFtOTUl9S1RUgIm+eevlqVxWhJqAcBcXm96w2RiMSnLnii/qz0hIRJndUrEKII7Km
+         MD4NvlJNZvq6Rhrh3e0007sxOst+ISn4lziKlV7sw7gOmIGbYGVK1E4DpDWpQV84lWpu
+         rlRg==
+X-Gm-Message-State: APjAAAWpQ0+AT03lZk2vCs+VaPFixB0JECoz4iqjL0V8aJ9sl4GQ/9Ko
+        LgsciMY0FGBUF0indQMdUH9jiApk
+X-Google-Smtp-Source: APXvYqxBN8HIvTveN3H0hZERVYhI/VXOzIbOFGqzydz6Dh8vl6+0kOgfkGVyIHSptq8FGVChBh5EDQ==
+X-Received: by 2002:a7b:cf01:: with SMTP id l1mr6696895wmg.86.1576161388572;
+        Thu, 12 Dec 2019 06:36:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a1sm6239837wrr.80.2019.12.12.06.36.30
+        by smtp.gmail.com with ESMTPSA id h2sm6384470wrt.45.2019.12.12.06.36.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Dec 2019 06:36:30 -0800 (PST)
-Message-Id: <2d87b6433b8965b833e300b36110b17d936403d1.1576161385.git.gitgitgadget@gmail.com>
+        Thu, 12 Dec 2019 06:36:28 -0800 (PST)
+Message-Id: <369096494223222ef96e38ca27f0b82c6eb59e92.1576161385.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.git.1576161385.gitgitgadget@gmail.com>
 References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Dec 2019 14:36:15 +0000
-Subject: [PATCH 06/16] doc: checkout: fix broken text reference
+Date:   Thu, 12 Dec 2019 14:36:12 +0000
+Subject: [PATCH 03/16] cmd_add: prepare for next patch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,32 +80,74 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
+Some code blocks were moved down to be able to test for `pathspec.nr`
+in the next patch. Blocks are moved as is without any changes. This
+is done as separate patch to reduce the amount of diffs in next patch.
+
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-checkout.txt | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ builtin/add.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 2011fdbb1d..d47046e050 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -95,12 +95,10 @@ using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
- file can be discarded to re-create the original conflicted merge result.
+diff --git a/builtin/add.c b/builtin/add.c
+index d4686d5218..3d1791dd82 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -430,10 +430,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	if (addremove && take_worktree_changes)
+ 		die(_("-A and -u are mutually incompatible"));
  
- 'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
--	This is similar to the "check out paths to the working tree
--	from either the index or from a tree-ish" mode described
--	above, but lets you use the interactive interface to show
--	the "diff" output and choose which hunks to use in the
--	result.  See below for the description of `--patch` option.
+-	if (!take_worktree_changes && addremove_explicit < 0 && argc)
+-		/* Turn "git add pathspec..." to "git add -A pathspec..." */
+-		addremove = 1;
 -
-+	This is similar to the previous mode, but lets you use the
-+	interactive interface to show the "diff" output and choose which
-+	hunks to use in the result.  See below for the description of
-+	`--patch` option.
+ 	if (!show_only && ignore_missing)
+ 		die(_("Option --ignore-missing can only be used together with --dry-run"));
  
- OPTIONS
- -------
+@@ -446,19 +442,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+ 
+-	flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
+-		 (show_only ? ADD_CACHE_PRETEND : 0) |
+-		 (intent_to_add ? ADD_CACHE_INTENT : 0) |
+-		 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0) |
+-		 (!(addremove || take_worktree_changes)
+-		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
+-
+-	if (require_pathspec && argc == 0) {
+-		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+-		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+-		return 0;
+-	}
+-
+ 	/*
+ 	 * Check the "pathspec '%s' did not match any files" block
+ 	 * below before enabling new magic.
+@@ -468,6 +451,23 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		       PATHSPEC_SYMLINK_LEADING_PATH,
+ 		       prefix, argv);
+ 
++	if (require_pathspec && argc == 0) {
++		fprintf(stderr, _("Nothing specified, nothing added.\n"));
++		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
++		return 0;
++	}
++
++	if (!take_worktree_changes && addremove_explicit < 0 && argc)
++		/* Turn "git add pathspec..." to "git add -A pathspec..." */
++		addremove = 1;
++
++	flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
++		 (show_only ? ADD_CACHE_PRETEND : 0) |
++		 (intent_to_add ? ADD_CACHE_INTENT : 0) |
++		 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0) |
++		 (!(addremove || take_worktree_changes)
++		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
++
+ 	if (read_cache_preload(&pathspec) < 0)
+ 		die(_("index file corrupt"));
+ 
 -- 
 gitgitgadget
 
