@@ -2,88 +2,93 @@ Return-Path: <SRS0=AaZj=2C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0034C43603
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 19:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6781C43603
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 19:16:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9465D2073B
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 19:01:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7A80C21556
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 19:16:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="oBhtON/U"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cb+u2qCq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730609AbfLLTBI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Dec 2019 14:01:08 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:36554 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730261AbfLLTBI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 14:01:08 -0500
-Received: by mail-lf1-f67.google.com with SMTP id n12so74740lfe.3
-        for <git@vger.kernel.org>; Thu, 12 Dec 2019 11:01:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jz9rKhZCM7p+Bzm/tdHY4FSQSKhfLXm6wg/r86n+yt8=;
-        b=oBhtON/Uzg7gRMYqIIPy4LMlvpi7CMkvWKkQXUjU8141AZZ3E2SHMNSmze+9VNbCXk
-         ckwiPTOchgSJrGaTCCEcaf/tHWi02ZMxC7Bfk5wKaiSego/+xnLOL9yLzIKsFrMOLQHj
-         16UluWmC1kpWSss56+ET/pyg9na+aNg9rRkQWVV178mMESvhjQiKh2xxpu7gG2gArN40
-         6MxIe5l3EViVafPiiDbExxJYvSgyVUSfhiHNkrWJN0za8hUnvxfQfvVGt0KdLZqwX4Ix
-         x4RKVYnc7QVclatkdJmh7/jTJDbAdgwj3vmDIJ7LlW9oJM2Ch5VuSmOwHUzvU3LTeai0
-         VPbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jz9rKhZCM7p+Bzm/tdHY4FSQSKhfLXm6wg/r86n+yt8=;
-        b=gzhR2xLpb1eXmmyTxo1K66yS1Vqpkg1ICo4BdMwZPgqbY1HaEFzlWTAPP4HbuvL5da
-         W+HttgRI70lIigOhxSapAhT+WL66yobBK+0LK8xSPhtbgiRc8eQaU6sfUcQoCC6pNE8p
-         2DboTYy03jTLT0QCwLAQ8yLLQgskoS945zame/nymNuAD/JWlIExVouAzbjGefiiopL5
-         RijAg5lh1cagJZ7Ur8Q+VSVxttlUWnTDnylTCV+AqUZJchrgJPjjWrLluCmInXCbveut
-         FAAQhTEDgBa8XkjrP5/zwbNlr8Xc2zYWjNqOMNjXSggoRoZGhJNkTqVRz+Hg0jWNgXvm
-         vngw==
-X-Gm-Message-State: APjAAAWeWYGq9mxtnB3Col/tLpOlp+A8eV59pEvYJ95G102bb92tGpoU
-        7hiwX/a4EyK3CaVDhTvR3br2X/mtnvMogmmBvevZ8ntBL00=
-X-Google-Smtp-Source: APXvYqylHxYB900eIvbU9Bmp3/V4JFv5YMY/F9ekTciQqfB3/mlC2GoFQKVT0wyDFGzagdVYhtSpQ16Xb6tvDvHmaBU=
-X-Received: by 2002:a19:f006:: with SMTP id p6mr6588012lfc.94.1576177266240;
- Thu, 12 Dec 2019 11:01:06 -0800 (PST)
+        id S1730486AbfLLTQy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 14:16:54 -0500
+Received: from mout.gmx.net ([212.227.17.21]:47651 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730355AbfLLTQy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Dec 2019 14:16:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1576178198;
+        bh=78hvCFM0wwbWV1CCVFsT12qhugb40ohA2c5zuvPMC8M=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=cb+u2qCqtPiXmSiXVGCsI58INBVNJhocadAhBR03tJL83FP1KQk0l2eiIqJjn2oGj
+         m6uMMu07VAvuksspbPBg/oTFs/D4abBn8s5O4kezP5p28If3+pZhOJNV2GjU1ve0xD
+         bjZt5vjaACMpL8r/RsGb5Jeep2w3TEFMgl3xJffg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1OXT-1hhmjV1Ttj-012qgG; Thu, 12
+ Dec 2019 20:16:38 +0100
+Date:   Thu, 12 Dec 2019 20:16:17 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Miriam Rubio <mirucam@gmail.com>, git@vger.kernel.org,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-use
+In-Reply-To: <xmqqh826pyh4.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1912122015200.46@tvgsbejvaqbjf.bet>
+References: <20191209103923.21659-1-mirucam@gmail.com> <xmqqo8wepyse.fsf@gitster-ct.c.googlers.com> <xmqqh826pyh4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
- <20191207003333.3228-2-yang.zhao@skyboxlabs.com> <20191210103014.GF6527@szeder.dev>
- <CABvFv3Lud80UzFXa6BRMGLwRV6gsJpNcs-mrgOiNHoJL0d+koA@mail.gmail.com>
- <20191212141322.GK6527@szeder.dev> <CABvFv3J8JjXGeAXSWDmK5zDav8qYNQ6Ce-8dPGAmuySGj8xvNg@mail.gmail.com>
- <20191212171516.GL6527@szeder.dev>
-In-Reply-To: <20191212171516.GL6527@szeder.dev>
-From:   Yang Zhao <yang.zhao@skyboxlabs.com>
-Date:   Thu, 12 Dec 2019 11:02:48 -0800
-Message-ID: <CABvFv3Ky4K4dFFCJogpY_8Z7Qk3HiUQUMqSch+B+fKDXjjfUeA@mail.gmail.com>
-Subject: Re: [PATCH 01/13] ci: also run linux-gcc pipeline with python-3.7 environment
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hg+z28Es12kWaAmmbd3CkttVHXub4y1YQdNQlZdRwSqYRieVSZ4
+ HxQ8TXv/lpMsDQCpF5nN0T0yeZ8LrWEUmc1abHgmX2J+aIil3UfZaR338IoziUxUsmTWNid
+ 2/sFKceCs3RSyyCPv0XfmkIXs5CdmrCwsxfb52DHC3r5oa3/9c2TrPLW2EVg0hVWDqqyEer
+ sWqRoqkE3z0YjvZmPD+IQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NbD9JzDHh+o=:7kEy7pv8u9worqX5SZQRpf
+ Y9+yec84+ViCdqYvL8GjlKAUzi6XPEv+FmLwc+RcatWRSbVsntyOb2vstGjdFGTjVR/KefI3A
+ s01hNONlvN8hDjWW9muRkSZhrGGiC3l3HGK3T7dcPYyPy2o+x0+LUZMrsIF1zMYAn12TiBkr3
+ 3+QNBoyayt+llz0S2vJ1quw4N8NdeKX2+gUypbLn+/fBoK3Rd8i6kPCUq0J/8RCwadt5Be5uy
+ rV/uFyj5TUvpWrKVEQYQMUyhpxCY7IG0pUU3Xq0SOqlr486CWiJVAM81YdtDYZfG/u7BENIDM
+ edCDhmEyDCGifz1AKWwEySBJtR7VRxLfhxmO5uG316iDSzE6z1eLtpmXVaN8oAaSqgNTHr/o5
+ Rb9hx9gIi1K7rrK6twDqm1GHcLa3ImRx8YATOkDvYSj+ZpEu78lj8Ln4UyQKgKBIMHVzZPo9m
+ 7Ve1oOGpze6o213ttcu2qeleN8xI7EV+9DwZZaHBjZ7gQZ3BIoolTZwvxTpggAUiYa8oGj4M1
+ K9ZgzSlb50+ONwtKdwUY0OxfKGbFZAOhbnrEkaLhUvrCx+eqFToSMb2krJercK5g6ha9IF1j3
+ bBImav5or27mM/oCMUJQGtLNhux0hXL0W/V+A5S4rlpUQpbM60AOQZVvwts5KIQoTTEh4JuNC
+ n0qfILVxN9RtmFMRjGuPvOMaeoK7svurYkSespXCLjLyFM3V4Q5uxbozUOrBQnOZUzLLDhMbu
+ n++ZXl7TjpZ6oPrcNjE0SBaa1VNaxSqcByleLPFtpn93szUjvazzRGu/ym7WVPIWEQAhzID2n
+ +5wcDe/QJpZnry79gd6wFMAfwXwI5ANTlT5x5CSJigASg75KoXsKwjEhP852mZzLuhSiwKmuF
+ R1k+L3y8hDAux9dowsWZK0RJyLAWWghNzGo6ohicUOXhcZ6VbkcKhirs9lNkyFpAObZZ4NBrP
+ M9tFNxOtfiUXGocjvgJTjpxIuXTSS7OFpw9HgzEvyN9ucmik5GbBBRQ/uDLsx/rN7e2KAPBr2
+ /OS4dBx3XQNCW8aAGgabkByEwLdgq2QRSy6ss+pXZMu82Sx9zqo3iCoUxRQ43lzJ8gKzsCdr6
+ DQINYamv/6EGc5StwZeRxQPrVtZehkf5fwyVXza4Fk57aaH/A4cqB3cM8bpeIuZtZNSM72u3s
+ llGtTvr2/L2LOhZeXdRZV7QKkKEKGBOrjkeLNpXJ9WEGucPui4FK+fCdqs+iHO+C1wGWyYexa
+ aOYACJLZCtz3p5EmLr9zrvdCePiHCMjk+bDJaikKh+wBjxIXjBf7BMACGzB4=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 12, 2019 at 9:15 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
-ote:
->
-> On Thu, Dec 12, 2019 at 09:04:24AM -0800, Yang Zhao wrote:
-> > Unless there's a very good reason to _not_ use Azure Pipeline's
-> > built-in Python version selection support, I believe it's more
-> > desirable in the long-run to leverage the feature rather than maintain
-> > some custom solution.
->
-> Azure Pipelines's built-in Python version selection support only works
-> on Azure Pipelines, therefore it's more desirable to have a general
-> solution.
+Hi Junio,
 
-That's fair. However, if we actually want to have something unified
-that works for Linux and macOS (t90** isn't run on Windows afaict)
-then I won't have the bandwidth for it in the near term. I'd be more
-inclined to drop the CI changes from the series if we don't want a
-stop-gap in the meantime.
+On Wed, 11 Dec 2019, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Subject: Re: [Outreachy] [PATCH v2] bisect--helper: avoid free-after-u=
+se
+>
+> It is surprising with multiple mentors, nobody noticed free-after-use
+> is perfectly fine---it is use-after-free we would want to avoid.
+
+Wow. It is totally my fault, and the only thing I can blame is the
+mind-numbing work I did on those security fixes. So glad that's over.
+
+Sorry for the mistake,
+Dscho
