@@ -2,58 +2,96 @@ Return-Path: <SRS0=AaZj=2C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ABFFC43603
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34BBFC43603
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 17:04:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7644B206C3
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:56:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0679E22527
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 17:04:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="VLwAvwqu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728929AbfLLO4r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Dec 2019 09:56:47 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:52625 "EHLO
-        smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728861AbfLLO4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 09:56:47 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay03.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1ifPtT-0003Tn-FK; Thu, 12 Dec 2019 15:56:43 +0100
-Subject: Re: [PATCH 5/5] commit: support the --pathspec-from-file option
-To:     phillip.wood@dunelm.org.uk,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <pull.445.git.1572895605.gitgitgadget@gmail.com>
- <f4847046896848d3f16bc5f3cb7a26271cefd97c.1572895605.git.gitgitgadget@gmail.com>
- <9ca7fa57-c438-7243-6ab1-956d8f132d37@gmail.com>
- <25aaaca1-1c88-d2c6-b502-cd35752ce745@syntevo.com>
- <4401823b-8039-99b4-2436-ed2f1a571d78@gmail.com>
- <2b573436-0ed2-9d24-f375-dfea0825a39e@syntevo.com>
- <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <92537826-cb89-4e97-8282-94d1d2ac3e9d@syntevo.com>
-Date:   Thu, 12 Dec 2019 15:56:42 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        id S1730066AbfLLREl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 12:04:41 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:41039 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729927AbfLLREl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Dec 2019 12:04:41 -0500
+Received: by mail-lf1-f68.google.com with SMTP id m30so2240605lfp.8
+        for <git@vger.kernel.org>; Thu, 12 Dec 2019 09:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yV64ITC9a6iVSinJG242v4iY7ffIrQgt1f0pjkjQCIQ=;
+        b=VLwAvwquzy6q0U3XvySGXwWDrSbfShRGoHiY5fA1MX6ikcwvAh4FOBlkB6i372Nnot
+         RsodHdJpbCQpUq1bI08JwxK+PYXRUWllKfleg8qoiUV6XFnfkvCmZCqpDVzj9cM53TiF
+         pbOAvsxVNd4pmIlOptj6laauB0qpvqG0slDW/tmSZ+5fMKehsDzQZV4Iy4SwIOjGkJyq
+         eKvWkmxKIqcC8xx8FNZ4Yu4ot/a8by5LYPeHJePOMEAXPde9ZNYK+A7C5QtA8YVaBVfE
+         Mrn3P7eb6ixpjvMs9Ej6vypEycZyyp6tRLB3ICuBb366oF4FVfeDx3TSy2yxCqkG2hXK
+         r3Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yV64ITC9a6iVSinJG242v4iY7ffIrQgt1f0pjkjQCIQ=;
+        b=F63Te9SbxhKzuM7CHnvX9ssk+irQ3xv1gj9VHEApJ9eAFat0AsHcHHFOTVhquTSjAs
+         yMDsdZRkiNjm3eyGPIoXivpYI6aVxoVqbR4Sgn4C0YfPPKAi3MUh3Nxq0AZFgl8f2zEr
+         HizQNJKdZpNNWCGlDnYFG3KCBvG9sjRAUmNsm4V0qM1/Ob5T0OglL32BJOKfVz1zAaKw
+         vpH8fhELuARb1UV3/vtpeyZxS7RLexi6eKRCRp0qnr3pD4qc81KJVScl3w6ON210JUJ8
+         DpO99fGm8Ek6Q42SRPGK/Tc1NHAjJtL33GJ623L+fhD1fYwfxsD6O0J8PGRL5lPXgD4n
+         +9iQ==
+X-Gm-Message-State: APjAAAU55hRELj4sqLPrI/YUXv1UkzTyxM1kWBWsYMHrwjn67ndA+2V4
+        HwB2lkHzz2hDaaibtm+o9rs8K3xT40AQnk6LagEiDQ==
+X-Google-Smtp-Source: APXvYqyejeC/QsoFwRJuAlVZeSUm+PEhjFIbAboE6+K3zjfPsblcPI9FO57atRrcfU2LUgyutthskg88g46sq4gsOu4=
+X-Received: by 2002:a19:f006:: with SMTP id p6mr6264005lfc.94.1576170279727;
+ Thu, 12 Dec 2019 09:04:39 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <b9454df6-7d31-e255-84bd-8a1c548cffd7@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+References: <20191207003333.3228-1-yang.zhao@skyboxlabs.com>
+ <20191207003333.3228-2-yang.zhao@skyboxlabs.com> <20191210103014.GF6527@szeder.dev>
+ <CABvFv3Lud80UzFXa6BRMGLwRV6gsJpNcs-mrgOiNHoJL0d+koA@mail.gmail.com> <20191212141322.GK6527@szeder.dev>
+In-Reply-To: <20191212141322.GK6527@szeder.dev>
+From:   Yang Zhao <yang.zhao@skyboxlabs.com>
+Date:   Thu, 12 Dec 2019 09:04:24 -0800
+Message-ID: <CABvFv3J8JjXGeAXSWDmK5zDav8qYNQ6Ce-8dPGAmuySGj8xvNg@mail.gmail.com>
+Subject: Re: [PATCH 01/13] ci: also run linux-gcc pipeline with python-3.7 environment
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The new topic is now submitted:
-https://lore.kernel.org/git/pull.490.git.1576161385.gitgitgadget@gmail.com/
-					
-Phillip, I tried to CC you, but GitGitGadget did something weird.
-I'm currently trying to fix CC issues there:
-https://github.com/gitgitgadget/gitgitgadget/pull/163
+On Thu, Dec 12, 2019 at 6:13 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+>
+> > The CI scripts as it is currently does not separate compiling and testi=
+ng for
+> > non-Windows builds. I don't see a good way to only run a specific set o=
+f tests
+> > given a particular environment without re-architecturing the CI pipelin=
+e.
+>
+> Building git and running the test suite is encapsulated in the
+> 'ci/run-build-and-tests.sh' script, while installing dependencies is
+> encapsulated in 'ci/install-dependencies.sh', just in case Azure
+> Pipelines Linux images don't contain both Python 2 and 3 (Travis CI
+> images contain 2.7 and 3.5)  So I don't think it's necessary to touch
+> 'azure-pipelines.yml' or '.travis.yml' at all.
+
+Yes, and this is implemented as a single step as far as the CI
+pipeline is concerned. It does not produce a build artifact that can
+then be loaded into multiple environments for running tests.
+
+Unless there's a very good reason to _not_ use Azure Pipeline's
+built-in Python version selection support, I believe it's more
+desirable in the long-run to leverage the feature rather than maintain
+some custom solution.
+
+--=20
+Yang
