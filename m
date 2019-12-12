@@ -2,62 +2,64 @@ Return-Path: <SRS0=AaZj=2C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F089AC43603
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B340C2D0C9
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B6D0621655
-	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 321AE2253D
+	for <git@archiver.kernel.org>; Thu, 12 Dec 2019 14:36:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mZACrQEU"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OldeYnjb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729727AbfLLOg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Dec 2019 09:36:29 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:54796 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729655AbfLLOg3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 09:36:29 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so2612442wmj.4
-        for <git@vger.kernel.org>; Thu, 12 Dec 2019 06:36:27 -0800 (PST)
+        id S1729745AbfLLOga (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 09:36:30 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34201 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729698AbfLLOga (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Dec 2019 09:36:30 -0500
+Received: by mail-wr1-f68.google.com with SMTP id t2so3014496wrr.1
+        for <git@vger.kernel.org>; Thu, 12 Dec 2019 06:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=91RcYvNjwbODoBD6ec9CSUDcz3DRZle1W2EWvAFVIG8=;
-        b=mZACrQEUY+MRahYSmfBDSArpqsJpPlK4fme+ov9N905tEh3iKo26a6HFwPLFYi9qDm
-         EkhLB+4VB2Yjkkc2ZIGXknefoRcZFHjAWgTaNAxG8jBaD6C0FbBvPJzrg1qBrSq8mxtL
-         7D+6vms+nojHkgIPneQRop+50utxeOUDsfoWk8/cPQi4Hkdi9+3qz+1x1aLa5Ak/GJYS
-         2oTQ+c3aqUodKQhBhR+Jd7WVVUOeEPiTaMb28fu7bliANoWN5El0/u+D7/B3zS6mls7B
-         YcYylLJ9epS1lH8cvWTjlz4bD+c4TNv/MiZaS++PzpIlnukjqMNv2pPCDP8sMcrRcn3H
-         59Gw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=MybhsUPZ79z1yOcG4p/4lYvkTj+f6wafOZ8uoXydn3A=;
+        b=OldeYnjbFi2DrVTnCibsaYDpfbNCnDpBHhF5n+EyE2rJ1hxQ3do/ZLHJDvR3Za5+EW
+         nfHCnEMWg/zdlNBtQnInKZTsodE7T/Boo8qwADue8UX43/qygeUAsHnrl1o1uw/fkf0i
+         MKYDwOJcMvodCzhxfbPq77c9+Gx3P0dc7gr9fU6+EJJCsx8Cs+7WTveVap7sZ4BvA48d
+         fIYQM4hUec5VvfuNtWBB20gRl1lq5XmICevsrVwkwG4Kwz6/2gCUcwVeMA67XMYGAfk4
+         +s34uAwMx8oJzqwkCyG4NOIMw6hpFVT0kwqKldA1DGLOylhRomlglRAj7B3ByYAN/wNg
+         wycA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=91RcYvNjwbODoBD6ec9CSUDcz3DRZle1W2EWvAFVIG8=;
-        b=LE4RTIF9FQYUaWC56o2VimmpeqYI2xvC0fQG82JdqgtTxNT2agmcCg3EeA9kBWJAaA
-         ul0UGHk1mCuV5JguHCCoelTe+iXp2SAhQHglvCIR6MpvkwZPP9jVrIs203BJZVmCXuVl
-         QPOoipkpjPQ5OzGPj7LJ8FNGNUNJEI1A6kEpDDZWss+RwxPpkzRXH9to0boYB46U/jIO
-         hOYx6JR0upBnvTsIxUnWkddR6W11Aujm1mvDsEyQsJpJlKE7LQXCocSrPHwSSa4XaiNT
-         mDDqXFf8zEvmzGfRpB9sIDvJWzmWL+LzZlG+ZPSC880AyNQtW77gmK5KR7Gt+KUvPoJm
-         zB2Q==
-X-Gm-Message-State: APjAAAVcNqBRvOg/N2MqRr/4tMY6fS5d6DQ2qd2HrJ2NmUGX/iDawddk
-        qkyahy6lAeAf3phy9LphMyVLjjUP
-X-Google-Smtp-Source: APXvYqxtZIlt61aoE4HBY0+zyKKFQd4aU0+4RjyVgE5Q0YhL6jc2r+jp45z/irgQ2zQTc02RC8GDGQ==
-X-Received: by 2002:a7b:c1cc:: with SMTP id a12mr6800626wmj.53.1576161386401;
-        Thu, 12 Dec 2019 06:36:26 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=MybhsUPZ79z1yOcG4p/4lYvkTj+f6wafOZ8uoXydn3A=;
+        b=pILhh3JwhahuE6JOUnH8uoKCfiKuBhOVwOcaGJz/D3ntEpT5hBnl6LDF47X9OlKA5Z
+         mBxaWB2BDLB153PQfsf0nsH2UErz+Wye4RRozZbbobLyOMfEcuvZxGxU0XBFx56MZcRY
+         SN4d/m34jf0wdEUlOXZdf6xAbBCWmDOQtlKz4njyZlKBmnMpmg2F4OWUkCgtaQCKOnWm
+         kP+KipS/O3ckT5bJ/VxtFBSFebojUTE64lMnrtP5SA+9InFFdGgC5uVLrRNuFUTVh+7V
+         hRqKsMPC2V5sCBA4k6x+nu25Ez6lybVDIARHng82ZFXZZ7f8QMNZ1B3wNbvTmu7STsKR
+         OlPw==
+X-Gm-Message-State: APjAAAVDwOUBeOSr/VFyXXGePmNGKAkbsxMevK6/OhWlBmknd6vEnFUH
+        quWM6Z1tafmFA557Ky1wx1qWFILN
+X-Google-Smtp-Source: APXvYqy+4mUPHygEh54fdtRh/1yNdGJhuDLf18UkpW+Ny7tTHCYnIz0OKPsPO5f2fcWJS4xCG5RD0Q==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr7026410wro.279.1576161387837;
+        Thu, 12 Dec 2019 06:36:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z11sm6307174wrt.82.2019.12.12.06.36.25
+        by smtp.gmail.com with ESMTPSA id 188sm443996wmd.1.2019.12.12.06.36.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Dec 2019 06:36:25 -0800 (PST)
-Message-Id: <pull.490.git.1576161385.gitgitgadget@gmail.com>
+        Thu, 12 Dec 2019 06:36:27 -0800 (PST)
+Message-Id: <c0980519ed319295c273d358b0547340cc511a6b.1576161385.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.490.git.1576161385.gitgitgadget@gmail.com>
+References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 12 Dec 2019 14:36:09 +0000
-Subject: [PATCH 00/16] Extend --pathspec-from-file to git add, checkout
+Date:   Thu, 12 Dec 2019 14:36:11 +0000
+Subject: [PATCH 02/16] commit: forbid --pathspec-from-file --all
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,109 +71,53 @@ Cc:     "Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano"
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>,
         Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This topic continues the effort to support `--pathspec-from-file` in various
-commands [1][2]. It also includes some refactorings that I developed while
-working on it - previously submitted separately [3][4] which was probably a
-mistake.
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Anatomy of the branch:
-  checkout, restore: support the --pathspec-from-file option
-    Extends `--pathspec-from-file` to `git checkout/restore`.
+I forgot this in my previous patch `--pathspec-from-file` for
+`git commit` [1]. When both `--pathspec-from-file` and `--all` were
+specified, `--all` took precedence and `--pathspec-from-file` was
+ignored. Before `--pathspec-from-file` was implemented, this case was
+prevented by this check in `parse_and_validate_options()` :
 
-  t2024: cover more cases
-    Some new tests for cases that I deemed worthy while working
-    on `parse_branchname_arg()` refactoring.
+    die(_("paths '%s ...' with -a does not make sense"), argv[0]);
 
-  parse_branchname_arg(): refactor the decision making
-  parse_branchname_arg(): update code comments
-  parse_branchname_arg(): introduce expect_commit_only
-  parse_branchname_arg(): easier to understand variables
-    These patches prepare for `|| opts->pathspec_from_file` addition in
-    `git checkout/restore` patch. Without this refactoring, I found it
-    pretty hard to modify the old code.
+It is unfortunate that these two cases are disconnected. This came as
+result of how the code was laid out before my patches, where `pathspec`
+is parsed outside of `parse_and_validate_options()`. This branch is
+already full of refactoring patches and I did not dare to go for another
+one.
 
-  checkout: die() on ambiguous tracking branches
-  parse_branchname_arg(): extract part as new function
-    Initially I was trying to remove some inconsistency standing in the
-    way of `git checkout/restore` patch. Later I figured that this change
-    is worthy on its own: it prevents some pretty surprising behavior of
-    git.
+Fix by mirroring `die()` for `--pathspec-from-file` as well.
 
-  doc: restore: synchronize <pathspec> description
-  doc: checkout: synchronize <pathspec> description
-  doc: checkout: fix broken text reference
-  doc: checkout: remove duplicate synopsis
-    Some polishing of docs in preparation for `git checkout/restore` patch.
+[1] Commit e440fc58 ("commit: support the --pathspec-from-file option" 2019-11-19)
 
-  add: support the --pathspec-from-file option
-  cmd_add: prepare for next patch
-    Extends `--pathspec-from-file` to `git add`.
+Co-authored-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ builtin/commit.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-  commit: forbid --pathspec-from-file --all
-  t7107, t7526: directly test parse_pathspec_file()
-    Some polishing of merged topic [1].
-
-CC'ing people who shown interest in any of the previous topics, thanks for
-your reviews!
-
-[1] https://public-inbox.org/git/pull.445.git.1572895605.gitgitgadget@gmail.com/
-[2] https://public-inbox.org/git/20191204203911.237056-1-emilyshaffer@google.com/
-[3] https://public-inbox.org/git/pull.477.git.1574848137.gitgitgadget@gmail.com/
-[4] https://public-inbox.org/git/pull.479.git.1574969538.gitgitgadget@gmail.com/
-
-Alexandr Miloslavskiy (16):
-  t7107, t7526: directly test parse_pathspec_file()
-  commit: forbid --pathspec-from-file --all
-  cmd_add: prepare for next patch
-  add: support the --pathspec-from-file option
-  doc: checkout: remove duplicate synopsis
-  doc: checkout: fix broken text reference
-  doc: checkout: synchronize <pathspec> description
-  doc: restore: synchronize <pathspec> description
-  parse_branchname_arg(): extract part as new function
-  checkout: die() on ambiguous tracking branches
-  parse_branchname_arg(): easier to understand variables
-  parse_branchname_arg(): introduce expect_commit_only
-  parse_branchname_arg(): update code comments
-  parse_branchname_arg(): refactor the decision making
-  t2024: cover more cases
-  checkout, restore: support the --pathspec-from-file option
-
- Documentation/git-add.txt           |  16 +-
- Documentation/git-checkout.txt      |  50 +++--
- Documentation/git-restore.txt       |  26 ++-
- Makefile                            |   1 +
- builtin/add.c                       |  60 ++++--
- builtin/checkout.c                  | 279 ++++++++++++++--------------
- builtin/commit.c                    |   3 +
- t/helper/test-parse-pathspec-file.c |  34 ++++
- t/helper/test-tool.c                |   1 +
- t/helper/test-tool.h                |   1 +
- t/t0067-parse_pathspec_file.sh      |  89 +++++++++
- t/t2024-checkout-dwim.sh            |  55 +++++-
- t/t2026-checkout-pathspec-file.sh   |  61 ++++++
- t/t2072-restore-pathspec-file.sh    | 139 ++++++++++++++
- t/t3704-add-pathspec-file.sh        |  49 +++++
- t/t7107-reset-pathspec-file.sh      | 105 +----------
- t/t7526-commit-pathspec-file.sh     |  80 +-------
- t/t9902-completion.sh               |   2 +
- 18 files changed, 694 insertions(+), 357 deletions(-)
- create mode 100644 t/helper/test-parse-pathspec-file.c
- create mode 100755 t/t0067-parse_pathspec_file.sh
- create mode 100755 t/t2026-checkout-pathspec-file.sh
- create mode 100755 t/t2072-restore-pathspec-file.sh
- create mode 100755 t/t3704-add-pathspec-file.sh
-
-
-base-commit: ad05a3d8e5a6a06443836b5e40434262d992889a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-490%2FSyntevoAlex%2F%230207_pathspec_from_file_2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-490/SyntevoAlex/#0207_pathspec_from_file_2-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/490
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 2db2ad0de4..893a9f29b2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -347,6 +347,9 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		if (interactive)
+ 			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+ 
++		if (all)
++			die(_("--pathspec-from-file with -a does not make sense"));
++
+ 		if (pathspec.nr)
+ 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
+ 
 -- 
 gitgitgadget
+
