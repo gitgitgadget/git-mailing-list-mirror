@@ -2,451 +2,76 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0294EC341BC
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1334FC43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:59:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 253412469B
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:52:08 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kAG9vyHC"
+	by mail.kernel.org (Postfix) with ESMTP id 4F9CC2469F
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726704AbfLMUwI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 15:52:08 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:60261 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfLMUwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 15:52:07 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CCDAA199E4;
-        Fri, 13 Dec 2019 15:52:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zkub0RDuUnvLPIInzpf/Ugk19lE=; b=kAG9vy
-        HCtrjeszTjt0Yi+YRpKgDDHVw1lTkvqu+97GcPsFk4jjEe6M2f3ETN08WnqZZuWm
-        CO1xlmgfeuZKULW5ezwfKilF3J3Lh9DG31bV7JJkgJcLALxnIba8veYeqQkFNf/d
-        f7nE3hCOr1SiXOwXNn0+TwEb9IQmGm7goif1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XdvKhkBPfl+VTuaKfTlsOyXFxbTUh0by
-        M6JJFTcSEeCU+kFQwiOaPphuF9YkTnab1S9F7spqgsFEshqKCR3cDEZ+eXNS7FS5
-        xdXpWTAPDnQ6x7SY4Ktv5CMUM7qOSMmYHKAiCFwYwgjAKk28PDh5JMY+gwEGeNxp
-        tX8wvppeDjI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BC32E199E3;
-        Fri, 13 Dec 2019 15:52:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D7177199E1;
-        Fri, 13 Dec 2019 15:51:59 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 02/15] help: move list_config_help to builtin/help
-References: <20191213004312.169753-1-emilyshaffer@google.com>
-        <20191213004312.169753-3-emilyshaffer@google.com>
-Date:   Fri, 13 Dec 2019 12:51:58 -0800
-In-Reply-To: <20191213004312.169753-3-emilyshaffer@google.com> (Emily
-        Shaffer's message of "Thu, 12 Dec 2019 16:42:59 -0800")
-Message-ID: <xmqqv9qkhrtd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-MIME-Version: 1.0
+        id S1726740AbfLMU72 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 15:59:28 -0500
+Received: from 195-159-176-226.customer.powertech.no ([195.159.176.226]:36360
+        "EHLO blaine.gmane.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfLMU72 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 15:59:28 -0500
+Received: from list by blaine.gmane.org with local (Exim 4.89)
+        (envelope-from <gcvg-git-3@m.gmane.org>)
+        id 1ifs1w-0011vv-9u
+        for git@vger.kernel.org; Fri, 13 Dec 2019 21:59:20 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
+From:   Achim Gratz <Stromeko@nexgo.de>
+Subject: Numbers with specific base (was: [PATCH] userdiff: remove empty subexpression from elixir regex)
+Date:   Fri, 13 Dec 2019 21:59:13 +0100
+Organization: Linux Private Site
+Message-ID: <87tv64ymam.fsf@Rainer.invalid>
+References: <20191213173902.71541-1-emaste@FreeBSD.org>
+Mime-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6860EB34-1DEA-11EA-98FF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Cancel-Lock: sha1:NMfH4hhzIz1/+6BeAt7ZtkKj78U=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Starting in 3ac68a93fd2, help.o began to depend on builtin/branch.o,
-> builtin/clean.o, and builtin/config.o. This meant that help.o was
-> unusable outside of the context of the main Git executable.
->
-> To make help.o usable by other commands again, move list_config_help()
-> into builtin/help.c (where it makes sense to assume other builtin libraries
-> are present).
->
-> When command-list.h is included but a member is not used, we start to
-> hear a compiler warning. Since the config list is generated in a fairly
-> different way than the command list, and since commands and config
-> options are semantically different, move the config list into its own
-> header and move the generator into its own script and build rule.
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
+Nothing to do with the patch from Ed, but the regex following his
+correction matches a lot of things that decidedly are not "Numbers with
+specific bases" as it claims to do in the comment.
 
-OK.  Looks like a clean-up that is very worthy even without the
-remainder of the topic.
+Ed Maste writes:
+>  PATTERNS("elixir",
+>  	 "^[ \t]*((def(macro|module|impl|protocol|p)?|test)[ \t].*)$",
+>  	 /* Atoms, names, and module attributes */
+> -	 "|[@:]?[a-zA-Z0-9@_?!]+"
+> +	 "[@:]?[a-zA-Z0-9@_?!]+"
+>  	 /* Numbers with specific base */
+>  	 "|[-+]?0[xob][0-9a-fA-F]+"
 
-Thanks.
+Here, things like "+0bad" would match as a base 2 number, which doesn't
+seem right.  If it's intended to match that broadly, I'd have expected a
+comment to that effect.  Maybe something like
 
->  .gitignore             |  1 +
->  Makefile               | 16 ++++++--
->  builtin/help.c         | 86 ++++++++++++++++++++++++++++++++++++++++++
->  generate-cmdlist.sh    | 19 ----------
->  generate-configlist.sh | 24 ++++++++++++
->  help.c                 | 85 -----------------------------------------
->  help.h                 |  1 -
->  7 files changed, 123 insertions(+), 109 deletions(-)
->  create mode 100755 generate-configlist.sh
->
-> diff --git a/.gitignore b/.gitignore
-> index 055a84c4a8..5dde2cc4c8 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -189,6 +189,7 @@
->  /gitweb/gitweb.cgi
->  /gitweb/static/gitweb.js
->  /gitweb/static/gitweb.min.*
-> +/config-list.h
->  /command-list.h
->  *.tar.gz
->  *.dsc
-> diff --git a/Makefile b/Makefile
-> index 9dff91436e..c49f55a521 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -815,6 +815,7 @@ LIB_FILE = libgit.a
->  XDIFF_LIB = xdiff/lib.a
->  VCSSVN_LIB = vcs-svn/lib.a
->  
-> +GENERATED_H += config-list.h
->  GENERATED_H += command-list.h
->  
->  LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
-> @@ -2127,7 +2128,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
->  
->  help.sp help.s help.o: command-list.h
->  
-> -builtin/help.sp builtin/help.s builtin/help.o: command-list.h GIT-PREFIX
-> +builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
->  builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
->  	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
->  	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
-> @@ -2147,6 +2148,12 @@ $(BUILT_INS): git$X
->  	ln -s $< $@ 2>/dev/null || \
->  	cp $< $@
->  
-> +config-list.h: generate-configlist.sh
-> +
-> +config-list.h:
-> +	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
-> +		>$@+ && mv $@+ $@
-> +
->  command-list.h: generate-cmdlist.sh command-list.txt
->  
->  command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
-> @@ -2784,7 +2791,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
->  .PHONY: sparse $(SP_OBJ)
->  sparse: $(SP_OBJ)
->  
-> -GEN_HDRS := command-list.h unicode-width.h
-> +GEN_HDRS := config-list.h command-list.h unicode-width.h
->  EXCEPT_HDRS := $(GEN_HDRS) compat/% xdiff/%
->  ifndef GCRYPT_SHA256
->  	EXCEPT_HDRS += sha256/gcrypt.h
-> @@ -2807,7 +2814,7 @@ hdr-check: $(HCO)
->  style:
->  	git clang-format --style file --diff --extensions c,h
->  
-> -check: command-list.h
-> +check: config-list.h command-list.h
->  	@if sparse; \
->  	then \
->  		echo >&2 "Use 'make sparse' instead"; \
-> @@ -3110,7 +3117,8 @@ clean: profile-clean coverage-clean cocciclean
->  	$(RM) $(HCC)
->  	$(RM) -r bin-wrappers $(dep_dirs)
->  	$(RM) -r po/build/
-> -	$(RM) *.pyc *.pyo */*.pyc */*.pyo command-list.h $(ETAGS_TARGET) tags cscope*
-> +	$(RM) *.pyc *.pyo */*.pyc */*.pyo config-list.h command-list.h
-> +	$(RM) $(ETAGS_TARGET) tags cscope*
->  	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
->  	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
->  	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-> diff --git a/builtin/help.c b/builtin/help.c
-> index e5590d7787..1c5f2b9255 100644
-> --- a/builtin/help.c
-> +++ b/builtin/help.c
-> @@ -8,6 +8,7 @@
->  #include "parse-options.h"
->  #include "run-command.h"
->  #include "column.h"
-> +#include "config-list.h"
->  #include "help.h"
->  #include "alias.h"
->  
-> @@ -62,6 +63,91 @@ static const char * const builtin_help_usage[] = {
->  	NULL
->  };
->  
-> +struct slot_expansion {
-> +	const char *prefix;
-> +	const char *placeholder;
-> +	void (*fn)(struct string_list *list, const char *prefix);
-> +	int found;
-> +};
-> +
-> +static void list_config_help(int for_human)
-> +{
-> +	struct slot_expansion slot_expansions[] = {
-> +		{ "advice", "*", list_config_advices },
-> +		{ "color.branch", "<slot>", list_config_color_branch_slots },
-> +		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
-> +		{ "color.diff", "<slot>", list_config_color_diff_slots },
-> +		{ "color.grep", "<slot>", list_config_color_grep_slots },
-> +		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-> +		{ "color.remote", "<slot>", list_config_color_sideband_slots },
-> +		{ "color.status", "<slot>", list_config_color_status_slots },
-> +		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
-> +		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-> +		{ NULL, NULL, NULL }
-> +	};
-> +	const char **p;
-> +	struct slot_expansion *e;
-> +	struct string_list keys = STRING_LIST_INIT_DUP;
-> +	int i;
-> +
-> +	for (p = config_name_list; *p; p++) {
-> +		const char *var = *p;
-> +		struct strbuf sb = STRBUF_INIT;
-> +
-> +		for (e = slot_expansions; e->prefix; e++) {
-> +
-> +			strbuf_reset(&sb);
-> +			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
-> +			if (!strcasecmp(var, sb.buf)) {
-> +				e->fn(&keys, e->prefix);
-> +				e->found++;
-> +				break;
-> +			}
-> +		}
-> +		strbuf_release(&sb);
-> +		if (!e->prefix)
-> +			string_list_append(&keys, var);
-> +	}
-> +
-> +	for (e = slot_expansions; e->prefix; e++)
-> +		if (!e->found)
-> +			BUG("slot_expansion %s.%s is not used",
-> +			    e->prefix, e->placeholder);
-> +
-> +	string_list_sort(&keys);
-> +	for (i = 0; i < keys.nr; i++) {
-> +		const char *var = keys.items[i].string;
-> +		const char *wildcard, *tag, *cut;
-> +
-> +		if (for_human) {
-> +			puts(var);
-> +			continue;
-> +		}
-> +
-> +		wildcard = strchr(var, '*');
-> +		tag = strchr(var, '<');
-> +
-> +		if (!wildcard && !tag) {
-> +			puts(var);
-> +			continue;
-> +		}
-> +
-> +		if (wildcard && !tag)
-> +			cut = wildcard;
-> +		else if (!wildcard && tag)
-> +			cut = tag;
-> +		else
-> +			cut = wildcard < tag ? wildcard : tag;
-> +
-> +		/*
-> +		 * We may produce duplicates, but that's up to
-> +		 * git-completion.bash to handle
-> +		 */
-> +		printf("%.*s\n", (int)(cut - var), var);
-> +	}
-> +	string_list_clear(&keys, 0);
-> +}
-> +
->  static enum help_format parse_help_format(const char *format)
->  {
->  	if (!strcmp(format, "man"))
-> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
-> index 71158f7d8b..45fecf8bdf 100755
-> --- a/generate-cmdlist.sh
-> +++ b/generate-cmdlist.sh
-> @@ -76,23 +76,6 @@ print_command_list () {
->  	echo "};"
->  }
->  
-> -print_config_list () {
-> -	cat <<EOF
-> -static const char *config_name_list[] = {
-> -EOF
-> -	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
-> -	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
-> -	sort |
-> -	while read line
-> -	do
-> -		echo "	\"$line\","
-> -	done
-> -	cat <<EOF
-> -	NULL,
-> -};
-> -EOF
-> -}
-> -
->  exclude_programs=
->  while test "--exclude-program" = "$1"
->  do
-> @@ -113,5 +96,3 @@ echo
->  define_category_names "$1"
->  echo
->  print_command_list "$1"
-> -echo
-> -print_config_list
-> diff --git a/generate-configlist.sh b/generate-configlist.sh
-> new file mode 100755
-> index 0000000000..eca6a00c30
-> --- /dev/null
-> +++ b/generate-configlist.sh
-> @@ -0,0 +1,24 @@
-> +#!/bin/sh
-> +
-> +echo "/* Automatically generated by generate-configlist.sh */"
-> +echo
-> +
-> +print_config_list () {
-> +	cat <<EOF
-> +static const char *config_name_list[] = {
-> +EOF
-> +	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
-> +	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
-> +	sort |
-> +	while read line
-> +	do
-> +		echo "	\"$line\","
-> +	done
-> +	cat <<EOF
-> +	NULL,
-> +};
-> +EOF
-> +}
-> +
-> +echo
-> +print_config_list
-> diff --git a/help.c b/help.c
-> index cf67624a94..a21487db77 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -407,91 +407,6 @@ void list_common_guides_help(void)
->  	putchar('\n');
->  }
->  
-> -struct slot_expansion {
-> -	const char *prefix;
-> -	const char *placeholder;
-> -	void (*fn)(struct string_list *list, const char *prefix);
-> -	int found;
-> -};
-> -
-> -void list_config_help(int for_human)
-> -{
-> -	struct slot_expansion slot_expansions[] = {
-> -		{ "advice", "*", list_config_advices },
-> -		{ "color.branch", "<slot>", list_config_color_branch_slots },
-> -		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
-> -		{ "color.diff", "<slot>", list_config_color_diff_slots },
-> -		{ "color.grep", "<slot>", list_config_color_grep_slots },
-> -		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-> -		{ "color.remote", "<slot>", list_config_color_sideband_slots },
-> -		{ "color.status", "<slot>", list_config_color_status_slots },
-> -		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
-> -		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-> -		{ NULL, NULL, NULL }
-> -	};
-> -	const char **p;
-> -	struct slot_expansion *e;
-> -	struct string_list keys = STRING_LIST_INIT_DUP;
-> -	int i;
-> -
-> -	for (p = config_name_list; *p; p++) {
-> -		const char *var = *p;
-> -		struct strbuf sb = STRBUF_INIT;
-> -
-> -		for (e = slot_expansions; e->prefix; e++) {
-> -
-> -			strbuf_reset(&sb);
-> -			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
-> -			if (!strcasecmp(var, sb.buf)) {
-> -				e->fn(&keys, e->prefix);
-> -				e->found++;
-> -				break;
-> -			}
-> -		}
-> -		strbuf_release(&sb);
-> -		if (!e->prefix)
-> -			string_list_append(&keys, var);
-> -	}
-> -
-> -	for (e = slot_expansions; e->prefix; e++)
-> -		if (!e->found)
-> -			BUG("slot_expansion %s.%s is not used",
-> -			    e->prefix, e->placeholder);
-> -
-> -	string_list_sort(&keys);
-> -	for (i = 0; i < keys.nr; i++) {
-> -		const char *var = keys.items[i].string;
-> -		const char *wildcard, *tag, *cut;
-> -
-> -		if (for_human) {
-> -			puts(var);
-> -			continue;
-> -		}
-> -
-> -		wildcard = strchr(var, '*');
-> -		tag = strchr(var, '<');
-> -
-> -		if (!wildcard && !tag) {
-> -			puts(var);
-> -			continue;
-> -		}
-> -
-> -		if (wildcard && !tag)
-> -			cut = wildcard;
-> -		else if (!wildcard && tag)
-> -			cut = tag;
-> -		else
-> -			cut = wildcard < tag ? wildcard : tag;
-> -
-> -		/*
-> -		 * We may produce duplicates, but that's up to
-> -		 * git-completion.bash to handle
-> -		 */
-> -		printf("%.*s\n", (int)(cut - var), var);
-> -	}
-> -	string_list_clear(&keys, 0);
-> -}
-> -
->  static int get_alias(const char *var, const char *value, void *data)
->  {
->  	struct string_list *list = data;
-> diff --git a/help.h b/help.h
-> index 7a455beeb7..9071894e8c 100644
-> --- a/help.h
-> +++ b/help.h
-> @@ -22,7 +22,6 @@ static inline void mput_char(char c, unsigned int num)
->  void list_common_cmds_help(void);
->  void list_all_cmds_help(void);
->  void list_common_guides_help(void);
-> -void list_config_help(int for_human);
->  
->  void list_all_main_cmds(struct string_list *list);
->  void list_all_other_cmds(struct string_list *list);
+"|[-+]?0b[01]+|[-+]?0o[0-7]+|[-+]?0x[0-9a-fA-F]+"
+
+or (if the resulting group is not a problem someplace else)
+
+"|[-+]?0(b[01]+|o[0-7]+|x[0-9a-fA-F]+)"
+
+to more specifically match only what the comment says?
+
+
+
+Regards,
+Achim.
+-- 
++<[Q+ Matrix-12 WAVE#46+305 Neuron microQkb Andromeda XTk Blofeld]>+
+
+SD adaptation for Waldorf rackAttack V1.04R1:
+http://Synth.Stromeko.net/Downloads.html#WaldorfSDada
+
