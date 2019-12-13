@@ -2,65 +2,65 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 737B9C2D0C9
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04E04C2D0CA
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3994524671
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4CD124676
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dpCHmcIe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4D5DgFd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726646AbfLMIIP (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726736AbfLMIIT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 03:08:19 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33500 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726623AbfLMIIP (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 13 Dec 2019 03:08:15 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51727 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbfLMIIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 03:08:13 -0500
-Received: by mail-wm1-f67.google.com with SMTP id d73so5270937wmd.1
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:11 -0800 (PST)
+Received: by mail-wr1-f67.google.com with SMTP id b6so5652995wrq.0
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+PpfMtGZebBWSOtAUXgzbvL3kkBMsHYpj4TYS3Xx4uc=;
-        b=dpCHmcIe+izi6Q8i+cS0BIpEfoTqI+Kt6I/YOf0TaWhXIuJyPxPCb55EgfQtWfm7F+
-         JWBWg31JhD0f47Mfsap1Nv+0vgn4mG6gv8H6aQFPKRa0800zuHIT16AO84qhqDRoo23H
-         XQ7YvnHZFvtf5WBGD5gUsALaOfQbQSws786fUfEWY2UuWjTfyaw2/Up+1XFitygLziP6
-         +1LfTBNH56P9sbw1LuT9N2a53r2EakgsM2zIDqm3sEVeLyDMN1Z7dwlqszmiv9OUQaHy
-         UjbOiTdtWVl5oDulZBsT04IkGpK8r+pSoWruGMCmF8n4dEWF+sHzL1a7utLgDLIZmwMG
-         t7Qw==
+        bh=b/wl3nCG4T1rjxfgLJQySEL32poHbbqczxEu4yayelM=;
+        b=R4D5DgFdaWMlilR9abT/8H+MnBDE7W5VILo+6y3mNNevCA+r8GHnEzrP5EfGkDphUK
+         o0nP8543ZmtpdTbaAwmT0B9d176PhvxBFpkLj+juS2SDwMyH2/4ToKcZQlGyiAWHElWu
+         rCg7YJCLcafvLSrG1udaVztg1yVU7WpPiIBRaLg3jVJMpgw48gMHcpRqajoKOmAOBUx5
+         e/+iMdayKw7SO78jw80ZOx8s3B3jPQBoFqGr1EyAjqTJXrPv3mmPB85CETSu9YAcIH7R
+         47ICl5rVleXx/6wYEV1FGsNtSlPLFNPBbxX+ZFYEVg8qjL1MFWIanKkokb1+FNiRi40d
+         VFeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+PpfMtGZebBWSOtAUXgzbvL3kkBMsHYpj4TYS3Xx4uc=;
-        b=HrVqroyWaZxDLY+S4NXX1WEfMeqlkp5mqBl6pE+Ud4tgxTNWwZJ/pb3dhw5rvV7dSe
-         aAhrWTMH6xYv6L+bFWCouz5v3R1Pl43pm7XgzfLVf99+3YQv5DL5QU6XKSW/Ny1d0gT8
-         omqRcOnVh2naSrMJFHQpvYzHL4g2iKVsg/OHK7k2U7eFoKFEISI3Qdgp6W4+FyKHSHyZ
-         FyPi6IJLAajm0pKjzwPfkvd2UcqWYs41g5rq6naUCnSm9zamVmRKJnZ7WhtrU7Dd+bwd
-         hkdhy7UXLknfnM+LCj6M0ii/6G2dmumHZmMW9YyR279hueNUdI16WH6BBuIwB8DRfF55
-         pILA==
-X-Gm-Message-State: APjAAAVFHQi1J4WbFwA+gG4w5gTmoQ1fuGBNkagaKMvM2oEjADo6khiH
-        w7ZK1nNatCOKZcar1/rKc9RZPBxk
-X-Google-Smtp-Source: APXvYqxYhEp2054YVD/O+xxkXn9wG2j0uOBvyXT2e3aitAuqkY/4M3P4X+j6SV2VXERRx4rs2X0wTg==
-X-Received: by 2002:a1c:5419:: with SMTP id i25mr11999794wmb.150.1576224490433;
-        Fri, 13 Dec 2019 00:08:10 -0800 (PST)
+        bh=b/wl3nCG4T1rjxfgLJQySEL32poHbbqczxEu4yayelM=;
+        b=ggOYtJqJebW6Vh+1/MSibrFC6V9hkXnTRgtRGmIO1xGEOm3S7SX2oVglqxNHGtupky
+         qiun/j35tFg3swnGRYFmp1/rNoHISQbd1VAszjYmMkoiv6pko55f9HPiAuwcwsFoS3PD
+         8XbJysOYBnX2uV7EMC4SwHnfExNsGzhIqbgFv44r5nyFzAA074gAJgi3ETjh/keEgvVU
+         08iKfnXdgTtY52klDg8A1aGz4B3k3oBoogi3IWNE7TeFYRpv02GJXJJPgzdQAM9b0SNq
+         fDHqlY5xzVxzVqcevzF7mnOuMpO60JdkswM4bs5FJLxsq2X2q16ZZJnr/1l6Sz3gsWI3
+         uNzw==
+X-Gm-Message-State: APjAAAUcQQumZ5f5w4pGcu3bhGdlPpRxDY/nFLS2p0gXnOS6bTYyXI6z
+        a+nCpRqxXn/Zqi5p/kGywG00PBoT
+X-Google-Smtp-Source: APXvYqx5R1TNR7Jv14DrwkgJaZjaEDih9NpltaAwMJEXidXYE1T3RhfSRgEuRy/Ed8ilh/2dOLgezQ==
+X-Received: by 2002:a5d:50cf:: with SMTP id f15mr11146983wrt.381.1576224493641;
+        Fri, 13 Dec 2019 00:08:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y22sm3559418wma.35.2019.12.13.00.08.09
+        by smtp.gmail.com with ESMTPSA id x11sm9364123wmg.46.2019.12.13.00.08.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 00:08:09 -0800 (PST)
-Message-Id: <438e6519fb7e81c451ebba3ea9efffc26b4c7a17.1576224486.git.gitgitgadget@gmail.com>
+        Fri, 13 Dec 2019 00:08:13 -0800 (PST)
+Message-Id: <0cd1522044c238286c4762dfb18d413e856f59e8.1576224486.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 References: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Dec 2019 08:07:50 +0000
-Subject: [PATCH 03/19] built-in add -p: show colored hunks by default
+Date:   Fri, 13 Dec 2019 08:07:54 +0000
+Subject: [PATCH 07/19] built-in add -p: support multi-file diffs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,199 +76,239 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Just like the Perl version, we now generate two diffs if `color.diff` is
-set: one with and one without color. Then we parse them in parallel and
-record which hunks start at which offsets in both.
-
-Note that this is a (slight) deviation from the way the Perl version did
-it: we are no longer reading the output of `diff-files` line by line
-(which is more natural for Perl than for C), but in one go, and parse
-everything later, so we might just as well do it in synchrony.
+For simplicity, the initial implementation in C handled only a single
+modified file. Now it handles an arbitrary number of files.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-patch.c | 79 +++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 62 insertions(+), 17 deletions(-)
+ add-patch.c | 91 +++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 53 insertions(+), 38 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index d1b1a080e4..79eefa9505 100644
+index f59471cdf2..7c1b3b3935 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -4,9 +4,10 @@
- #include "run-command.h"
- #include "argv-array.h"
- #include "pathspec.h"
-+#include "color.h"
- 
- struct hunk {
--	size_t start, end;
-+	size_t start, end, colored_start, colored_end;
- 	enum { UNDECIDED_HUNK = 0, SKIP_HUNK, USE_HUNK } use;
- };
- 
-@@ -15,7 +16,7 @@ struct add_p_state {
- 	struct strbuf answer, buf;
+@@ -29,9 +29,12 @@ struct add_p_state {
  
  	/* parsed diff */
--	struct strbuf plain;
-+	struct strbuf plain, colored;
- 	struct hunk head;
- 	struct hunk *hunk;
- 	size_t hunk_nr, hunk_alloc;
-@@ -39,26 +40,50 @@ static void setup_child_process(struct add_p_state *s,
+ 	struct strbuf plain, colored;
+-	struct hunk head;
+-	struct hunk *hunk;
+-	size_t hunk_nr, hunk_alloc;
++	struct file_diff {
++		struct hunk head;
++		struct hunk *hunk;
++		size_t hunk_nr, hunk_alloc;
++	} *file_diff;
++	size_t file_diff_nr;
+ };
  
- static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- {
--	struct strbuf *plain = &s->plain;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	struct strbuf *plain = &s->plain, *colored = NULL;
+ static void err(struct add_p_state *s, const char *fmt, ...)
+@@ -131,7 +134,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	struct strbuf *plain = &s->plain, *colored = NULL;
  	struct child_process cp = CHILD_PROCESS_INIT;
--	char *p, *pend;
--	size_t i;
-+	char *p, *pend, *colored_p = NULL, *colored_pend = NULL;
-+	size_t i, color_arg_index;
+ 	char *p, *pend, *colored_p = NULL, *colored_pend = NULL;
+-	size_t i, color_arg_index;
++	size_t file_diff_alloc = 0, i, color_arg_index;
++	struct file_diff *file_diff = NULL;
  	struct hunk *hunk = NULL;
  	int res;
  
- 	/* Use `--no-color` explicitly, just in case `diff.color = always`. */
--	setup_child_process(s, &cp,
--			 "diff-files", "-p", "--no-color", "--", NULL);
-+	argv_array_pushl(&args, "diff-files", "-p", "--no-color", "--", NULL);
-+	color_arg_index = args.argc - 2;
- 	for (i = 0; i < ps->nr; i++)
--		argv_array_push(&cp.args, ps->items[i].original);
-+		argv_array_push(&args, ps->items[i].original);
+@@ -171,7 +175,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	}
+ 	argv_array_clear(&args);
  
-+	setup_child_process(s, &cp, NULL);
-+	cp.argv = args.argv;
- 	res = capture_command(&cp, plain, 0);
--	if (res)
-+	if (res) {
-+		argv_array_clear(&args);
- 		return error(_("could not parse diff"));
--	if (!plain->len)
-+	}
-+	if (!plain->len) {
-+		argv_array_clear(&args);
- 		return 0;
-+	}
- 	strbuf_complete_line(plain);
- 
-+	if (want_color_fd(1, -1)) {
-+		struct child_process colored_cp = CHILD_PROCESS_INIT;
-+
-+		setup_child_process(s, &colored_cp, NULL);
-+		xsnprintf((char *)args.argv[color_arg_index], 8, "--color");
-+		colored_cp.argv = args.argv;
-+		colored = &s->colored;
-+		res = capture_command(&colored_cp, colored, 0);
-+		argv_array_clear(&args);
-+		if (res)
-+			return error(_("could not parse colored diff"));
-+		strbuf_complete_line(colored);
-+		colored_p = colored->buf;
-+		colored_pend = colored_p + colored->len;
-+	}
-+	argv_array_clear(&args);
-+
- 	/* parse hunks */
+-	/* parse hunks */
++	/* parse files and hunks */
  	p = plain->buf;
  	pend = p + plain->len;
-@@ -82,20 +107,37 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	while (p != pend) {
+@@ -180,17 +184,23 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 			eol = pend;
+ 
+ 		if (starts_with(p, "diff ")) {
+-			if (p != plain->buf)
+-				BUG("multi-file diff not yet handled");
+-			hunk = &s->head;
++			s->file_diff_nr++;
++			ALLOC_GROW(s->file_diff, s->file_diff_nr,
++				   file_diff_alloc);
++			file_diff = s->file_diff + s->file_diff_nr - 1;
++			memset(file_diff, 0, sizeof(*file_diff));
++			hunk = &file_diff->head;
++			hunk->start = p - plain->buf;
++			if (colored_p)
++				hunk->colored_start = colored_p - colored->buf;
+ 		} else if (p == plain->buf)
+ 			BUG("diff starts with unexpected line:\n"
+ 			    "%.*s\n", (int)(eol - p), p);
+ 		else if (starts_with(p, "@@ ")) {
+-			s->hunk_nr++;
+-			ALLOC_GROW(s->hunk, s->hunk_nr,
+-				   s->hunk_alloc);
+-			hunk = s->hunk + s->hunk_nr - 1;
++			file_diff->hunk_nr++;
++			ALLOC_GROW(file_diff->hunk, file_diff->hunk_nr,
++				   file_diff->hunk_alloc);
++			hunk = file_diff->hunk + file_diff->hunk_nr - 1;
  			memset(hunk, 0, sizeof(*hunk));
  
  			hunk->start = p - plain->buf;
-+			if (colored)
-+				hunk->colored_start = colored_p - colored->buf;
- 		}
- 
- 		p = eol == pend ? pend : eol + 1;
- 		hunk->end = p - plain->buf;
-+
-+		if (colored) {
-+			char *colored_eol = memchr(colored_p, '\n',
-+						   colored_pend - colored_p);
-+			if (colored_eol)
-+				colored_p = colored_eol + 1;
-+			else
-+				colored_p = colored_pend;
-+
-+			hunk->colored_end = colored_p - colored->buf;
-+		}
- 	}
- 
- 	return 0;
+@@ -265,16 +275,17 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
+ 			   hunk->end - hunk->start);
  }
  
- static void render_hunk(struct add_p_state *s, struct hunk *hunk,
--			struct strbuf *out)
-+			int colored, struct strbuf *out)
+-static void reassemble_patch(struct add_p_state *s, struct strbuf *out)
++static void reassemble_patch(struct add_p_state *s,
++			     struct file_diff *file_diff, struct strbuf *out)
  {
--	strbuf_add(out, s->plain.buf + hunk->start,
--		   hunk->end - hunk->start);
-+	if (colored)
-+		strbuf_add(out, s->colored.buf + hunk->colored_start,
-+			   hunk->colored_end - hunk->colored_start);
-+	else
-+		strbuf_add(out, s->plain.buf + hunk->start,
-+			   hunk->end - hunk->start);
- }
- 
- static void reassemble_patch(struct add_p_state *s, struct strbuf *out)
-@@ -103,12 +145,12 @@ static void reassemble_patch(struct add_p_state *s, struct strbuf *out)
  	struct hunk *hunk;
  	size_t i;
+ 	ssize_t delta = 0;
  
--	render_hunk(s, &s->head, out);
-+	render_hunk(s, &s->head, 0, out);
+-	render_hunk(s, &s->head, 0, 0, out);
++	render_hunk(s, &file_diff->head, 0, 0, out);
  
- 	for (i = 0; i < s->hunk_nr; i++) {
- 		hunk = s->hunk + i;
- 		if (hunk->use == USE_HUNK)
--			render_hunk(s, hunk, out);
-+			render_hunk(s, hunk, 0, out);
- 	}
- }
+-	for (i = 0; i < s->hunk_nr; i++) {
+-		hunk = s->hunk + i;
++	for (i = 0; i < file_diff->hunk_nr; i++) {
++		hunk = file_diff->hunk + i;
+ 		if (hunk->use != USE_HUNK)
+ 			delta += hunk->header.old_count
+ 				- hunk->header.new_count;
+@@ -294,7 +305,8 @@ N_("y - stage this hunk\n"
+    "K - leave this hunk undecided, see previous hunk\n"
+    "? - print help\n");
  
-@@ -130,12 +172,13 @@ static int patch_update_file(struct add_p_state *s)
- 	struct hunk *hunk;
- 	char ch;
+-static int patch_update_file(struct add_p_state *s)
++static int patch_update_file(struct add_p_state *s,
++			     struct file_diff *file_diff)
+ {
+ 	size_t hunk_index = 0;
+ 	ssize_t i, undecided_previous, undecided_next;
+@@ -303,27 +315,27 @@ static int patch_update_file(struct add_p_state *s)
  	struct child_process cp = CHILD_PROCESS_INIT;
-+	int colored = !!s->colored.len;
+ 	int colored = !!s->colored.len;
  
- 	if (!s->hunk_nr)
+-	if (!s->hunk_nr)
++	if (!file_diff->hunk_nr)
  		return 0;
  
  	strbuf_reset(&s->buf);
--	render_hunk(s, &s->head, &s->buf);
-+	render_hunk(s, &s->head, colored, &s->buf);
+-	render_hunk(s, &s->head, 0, colored, &s->buf);
++	render_hunk(s, &file_diff->head, 0, colored, &s->buf);
  	fputs(s->buf.buf, stdout);
  	for (;;) {
- 		if (hunk_index >= s->hunk_nr)
-@@ -162,7 +205,7 @@ static int patch_update_file(struct add_p_state *s)
+-		if (hunk_index >= s->hunk_nr)
++		if (hunk_index >= file_diff->hunk_nr)
+ 			hunk_index = 0;
+-		hunk = s->hunk + hunk_index;
++		hunk = file_diff->hunk + hunk_index;
+ 
+ 		undecided_previous = -1;
+ 		for (i = hunk_index - 1; i >= 0; i--)
+-			if (s->hunk[i].use == UNDECIDED_HUNK) {
++			if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
+ 				undecided_previous = i;
+ 				break;
+ 			}
+ 
+ 		undecided_next = -1;
+-		for (i = hunk_index + 1; i < s->hunk_nr; i++)
+-			if (s->hunk[i].use == UNDECIDED_HUNK) {
++		for (i = hunk_index + 1; i < file_diff->hunk_nr; i++)
++			if (file_diff->hunk[i].use == UNDECIDED_HUNK) {
+ 				undecided_next = i;
+ 				break;
+ 			}
+@@ -344,11 +356,12 @@ static int patch_update_file(struct add_p_state *s)
+ 			strbuf_addstr(&s->buf, ",K");
+ 		if (undecided_next >= 0)
+ 			strbuf_addstr(&s->buf, ",j");
+-		if (hunk_index + 1 < s->hunk_nr)
++		if (hunk_index + 1 < file_diff->hunk_nr)
+ 			strbuf_addstr(&s->buf, ",J");
+ 		color_fprintf(stdout, s->s.prompt_color,
+ 			      "(%"PRIuMAX"/%"PRIuMAX") ",
+-			      (uintmax_t)hunk_index + 1, (uintmax_t)s->hunk_nr);
++			      (uintmax_t)hunk_index + 1,
++			      (uintmax_t)file_diff->hunk_nr);
+ 		color_fprintf(stdout, s->s.prompt_color,
+ 			      _("Stage this hunk [y,n,a,d%s,?]? "),
+ 			      s->buf.buf);
+@@ -364,19 +377,19 @@ static int patch_update_file(struct add_p_state *s)
+ 			hunk->use = USE_HUNK;
+ soft_increment:
+ 			hunk_index = undecided_next < 0 ?
+-				s->hunk_nr : undecided_next;
++				file_diff->hunk_nr : undecided_next;
+ 		} else if (ch == 'n') {
+ 			hunk->use = SKIP_HUNK;
+ 			goto soft_increment;
+ 		} else if (ch == 'a') {
+-			for (; hunk_index < s->hunk_nr; hunk_index++) {
+-				hunk = s->hunk + hunk_index;
++			for (; hunk_index < file_diff->hunk_nr; hunk_index++) {
++				hunk = file_diff->hunk + hunk_index;
+ 				if (hunk->use == UNDECIDED_HUNK)
+ 					hunk->use = USE_HUNK;
+ 			}
+ 		} else if (ch == 'd') {
+-			for (; hunk_index < s->hunk_nr; hunk_index++) {
+-				hunk = s->hunk + hunk_index;
++			for (; hunk_index < file_diff->hunk_nr; hunk_index++) {
++				hunk = file_diff->hunk + hunk_index;
+ 				if (hunk->use == UNDECIDED_HUNK)
+ 					hunk->use = SKIP_HUNK;
+ 			}
+@@ -386,7 +399,7 @@ static int patch_update_file(struct add_p_state *s)
+ 			else
+ 				err(s, _("No previous hunk"));
+ 		} else if (s->answer.buf[0] == 'J') {
+-			if (hunk_index + 1 < s->hunk_nr)
++			if (hunk_index + 1 < file_diff->hunk_nr)
+ 				hunk_index++;
+ 			else
+ 				err(s, _("No next hunk"));
+@@ -406,14 +419,14 @@ static int patch_update_file(struct add_p_state *s)
+ 	}
+ 
+ 	/* Any hunk to be used? */
+-	for (i = 0; i < s->hunk_nr; i++)
+-		if (s->hunk[i].use == USE_HUNK)
++	for (i = 0; i < file_diff->hunk_nr; i++)
++		if (file_diff->hunk[i].use == USE_HUNK)
  			break;
  
+-	if (i < s->hunk_nr) {
++	if (i < file_diff->hunk_nr) {
+ 		/* At least one hunk selected: apply */
  		strbuf_reset(&s->buf);
--		render_hunk(s, hunk, &s->buf);
-+		render_hunk(s, hunk, colored, &s->buf);
- 		fputs(s->buf.buf, stdout);
+-		reassemble_patch(s, &s->buf);
++		reassemble_patch(s, file_diff, &s->buf);
  
- 		strbuf_reset(&s->buf);
-@@ -252,6 +295,7 @@ int run_add_p(struct repository *r, const struct pathspec *ps)
- 					 NULL, NULL, NULL) < 0 ||
- 	    parse_diff(&s, ps) < 0) {
- 		strbuf_release(&s.plain);
-+		strbuf_release(&s.colored);
+ 		discard_index(s->s.r->index);
+ 		setup_child_process(s, &cp, "apply", "--cached", NULL);
+@@ -434,6 +447,7 @@ int run_add_p(struct repository *r, const struct pathspec *ps)
+ 	struct add_p_state s = {
+ 		{ r }, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT, STRBUF_INIT
+ 	};
++	size_t i;
+ 
+ 	init_add_i_state(&s.s, r);
+ 
+@@ -446,8 +460,9 @@ int run_add_p(struct repository *r, const struct pathspec *ps)
  		return -1;
  	}
  
-@@ -261,5 +305,6 @@ int run_add_p(struct repository *r, const struct pathspec *ps)
+-	if (s.hunk_nr)
+-		patch_update_file(&s);
++	for (i = 0; i < s.file_diff_nr; i++)
++		if (patch_update_file(&s, s.file_diff + i))
++			break;
+ 
  	strbuf_release(&s.answer);
  	strbuf_release(&s.buf);
- 	strbuf_release(&s.plain);
-+	strbuf_release(&s.colored);
- 	return 0;
- }
 -- 
 gitgitgadget
 
