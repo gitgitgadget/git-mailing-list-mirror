@@ -8,59 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D81DC2D0BF
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DE19C2D0CC
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 052F22465A
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3333824658
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYQp3235"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WrQVCFhb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726767AbfLMIIX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 03:08:23 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52368 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726739AbfLMIIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 03:08:20 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p9so5270821wmc.2
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:19 -0800 (PST)
+        id S1726757AbfLMIIV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 03:08:21 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40105 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726674AbfLMIIS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 03:08:18 -0500
+Received: by mail-wm1-f66.google.com with SMTP id t14so5521963wmi.5
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Zagw8BugEWLxFwJ+vo56ycxQDxc0qcHDFD+dt8RRyrY=;
-        b=VYQp3235vUhYDrGE6qRozmbEIWlOIDyLGGqldLNo/wFDIjdM3O3eXTdPYbBJZjNAF6
-         HeUkysNE/R13xQZJbQg3WM3C/4qdLsBmSTZrgJixbyhaEaZ/24cWqRUt7k17aXTrxve/
-         CVism6DyMBhwV3BIXCAWQXQ9+CTKHK2sltpXLgzZgM7DICvFW7B+oB2xqgnOa/tkrlqN
-         XD9IUf8NaCe6ZmICcv2eJq26V+h64Yj+wSFtRLPr463XM8s1WamtJuZs/Lg3r9MNtM3d
-         LGX6IcrA99x+Nd3SZLpgLT0PY1OP5HSRhBU2cqqMGa8TcycZu/ma9hBRX+7jy7a9MldG
-         Syww==
+        bh=JSOKuOixMMAiWFnOLJKv9BBGlVka3bCAxtf42Rkumss=;
+        b=WrQVCFhbHsCzehdenZ/NGrogRjHjAZ27b+Cue/USRV1YhnlAe0/HvFSGg82jMI7R36
+         PoHIjPFizgEAEuqvp0YsjI8g7ONNSGqdLJ/KkUXdwyPHd6fACXaAJQL1ryUSb0LmEfkq
+         2rWxh9ovn9Uv/NC48DA9whSxlupDugiXFtVcvXmJgAaOn0Zu7y33tuqPHZvKF3yMMwGK
+         a10TSUtKpSUk0bV61R4PrJpYo0Co5fWZK7YyNhPT/6qH8pQdLfRL/AFUvItovKOEuQCO
+         z7M2I42N74RMHfuMlitb6N+Ua5kJUTeELbbiXVov8/Tvsp3QbPXV6e7YcA0mJMzSqpXo
+         d3ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Zagw8BugEWLxFwJ+vo56ycxQDxc0qcHDFD+dt8RRyrY=;
-        b=Ch2/3w+TT5W28sy1tP0zLUQfRjJwSue1cn+CxTep4elG7ZWENFokZX1Hgi+i7UUoII
-         V0gldic1qfEgtzrIgwjRc9gBmuaEiTcacqlnmxG80CytfDN1RNXX0Gqt7i3y8nj7v8CT
-         A4mGCdtnoHHB8mHWHTSX8WWhUerp1tZUogTaKWS65TDXQsMXQJXPqALnl+tIHeMe343N
-         ZutWmfkISTYEyp51r2zclRK/OdeRvEN/MdOZ7DXralzBP4rhiK5wabq58PEaW8ErXcNV
-         Zjw5Bqe46GeZWeI7Vuw+0Vg73y1j2aPDL22hBDWxgeqc52K/CgIJDDRi6Y26ouO39C4L
-         HSRQ==
-X-Gm-Message-State: APjAAAW9NkufEv14DDQo6KgmccxzqxH5paZa65HVbFJXe96nhUQcf3v0
-        5Kj6IEjkFYYbwvg9H9Mu8SvrCvNN
-X-Google-Smtp-Source: APXvYqyived3a4QEipkWYetWEQqibi+AdN7r+gPA98jxbMFsmRgywAX1CcDcFBQDq9VN/2EyzVYwAQ==
-X-Received: by 2002:a1c:7e13:: with SMTP id z19mr11622114wmc.67.1576224497561;
-        Fri, 13 Dec 2019 00:08:17 -0800 (PST)
+        bh=JSOKuOixMMAiWFnOLJKv9BBGlVka3bCAxtf42Rkumss=;
+        b=ckgLldynYhjMbV4G+S+6uAF7zkgSEwVBdFvZV2qg6f9dgqLUzNsURiwNEeaRWBB8Ma
+         wFxoPIrO6ZbP0v879PC2uVAm6VbBR8PQ9rTpAtWbkqHhP82nD/cmkpX93Ddfr18pA1VF
+         wBsuzPdil5VpP0fNwIAUvaMv4h+1AovvbnP2H6wPljT583JcO0PPWNmSCGiD46vH4XRt
+         ruF4zyyOZnbwITa98f1qXjleDwlluue5ZwSus21W/HV0H4vfAwo72dHLiV7Czp0dCJI9
+         yhl5elYw7Nhy4gB0cTa9N1xGrNdiyOX5KjzcAlYCVNDMMLZVDrK79X7EQ6QhEjAkxTHN
+         ppOw==
+X-Gm-Message-State: APjAAAWtK7n+Ccl27/htKV9IDY3IwRn0ab1AX6SWtWoepvGEgsczktl3
+        j4OlexP2+bUKOXG9dFlw9yWT79sW
+X-Google-Smtp-Source: APXvYqwTaBI4m8XMQEcp0Cv6oOZatOIs5v8PjzlCuhlprshU9QQRjV2D9oJcK0gOlQCpNcn8x5RmCQ==
+X-Received: by 2002:a7b:c389:: with SMTP id s9mr11787174wmj.7.1576224495909;
+        Fri, 13 Dec 2019 00:08:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4sm8964344wrw.97.2019.12.13.00.08.16
+        by smtp.gmail.com with ESMTPSA id e16sm8863503wrs.73.2019.12.13.00.08.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 00:08:16 -0800 (PST)
-Message-Id: <da950fdfc5c3e15c59ee2f9cf301590b776e8dca.1576224486.git.gitgitgadget@gmail.com>
+        Fri, 13 Dec 2019 00:08:15 -0800 (PST)
+Message-Id: <8d588896603e560b82f37e1924dd012a63df6d95.1576224486.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 References: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Dec 2019 08:07:59 +0000
-Subject: [PATCH 12/19] built-in add -p: coalesce hunks after splitting them
+Date:   Fri, 13 Dec 2019 08:07:57 +0000
+Subject: [PATCH 10/19] built-in add -p: show different prompts for mode
+ changes and deletions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,102 +77,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is considered "the right thing to do", according to 933e44d3a0
-("add -p": work-around an old laziness that does not coalesce hunks,
-2011-04-06).
+Just like the Perl version, we now helpfully ask the user whether they
+want to stage a mode change, or a deletion.
 
-Note: we cannot simply modify the hunks while merging them; Once we
-implement hunk editing, we will call `reassemble_patch()` whenever a
-hunk is edited, therefore we must not modify the hunks (because the user
-might e.g. hit `K` and change their mind whether to stage the previous
-hunk).
+Note that we define the prompts in an array, in preparation for a later
+patch that changes those prompts to yet different versions for `git
+reset -p`, `git stash -p` and `git checkout -p` (which all call the `git
+add -p` machinery to do the actual work).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-patch.c | 58 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 57 insertions(+), 1 deletion(-)
+ add-patch.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 2d34ddd7f4..c8d84aec68 100644
+index 2007f55e04..171025b08d 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -433,6 +433,55 @@ static void render_diff_header(struct add_p_state *s,
- 	}
- }
+@@ -7,6 +7,16 @@
+ #include "color.h"
+ #include "diff.h"
  
-+/* Coalesce hunks again that were split */
-+static int merge_hunks(struct add_p_state *s, struct file_diff *file_diff,
-+		       size_t *hunk_index, struct hunk *merged)
-+{
-+	size_t i = *hunk_index;
-+	struct hunk *hunk = file_diff->hunk + i;
-+	/* `header` corresponds to the merged hunk */
-+	struct hunk_header *header = &merged->header, *next;
++enum prompt_mode_type {
++	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK
++};
 +
-+	if (hunk->use != USE_HUNK)
-+		return 0;
++static const char *prompt_mode[] = {
++	N_("Stage mode change [y,n,a,d%s,?]? "),
++	N_("Stage deletion [y,n,a,d%s,?]? "),
++	N_("Stage this hunk [y,n,a,d%s,?]? ")
++};
 +
-+	*merged = *hunk;
-+	/* We simply skip the colored part (if any) when merging hunks */
-+	merged->colored_start = merged->colored_end = 0;
-+
-+	for (; i + 1 < file_diff->hunk_nr; i++) {
-+		hunk++;
-+		next = &hunk->header;
-+
-+		/*
-+		 * Stop merging hunks when:
-+		 *
-+		 * - the hunk is not selected for use, or
-+		 * - the hunk does not overlap with the already-merged hunk(s)
-+		 */
-+		if (hunk->use != USE_HUNK ||
-+		    header->new_offset >= next->new_offset ||
-+		    header->new_offset + header->new_count < next->new_offset ||
-+		    merged->start >= hunk->start ||
-+		    merged->end < hunk->start)
-+			break;
-+
-+		merged->end = hunk->end;
-+		merged->colored_end = hunk->colored_end;
-+
-+		header->old_count = next->old_offset + next->old_count
-+			- header->old_offset;
-+		header->new_count = next->new_offset + next->new_count
-+			- header->new_offset;
-+	}
-+
-+	if (i == *hunk_index)
-+		return 0;
-+
-+	*hunk_index = i;
-+	return 1;
-+}
-+
- static void reassemble_patch(struct add_p_state *s,
- 			     struct file_diff *file_diff, struct strbuf *out)
- {
-@@ -443,12 +492,19 @@ static void reassemble_patch(struct add_p_state *s,
- 	render_diff_header(s, file_diff, 0, out);
+ struct hunk_header {
+ 	unsigned long old_offset, old_count, new_offset, new_count;
+ 	/*
+@@ -422,6 +432,7 @@ static int patch_update_file(struct add_p_state *s,
+ 	char ch;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	int colored = !!s->colored.len;
++	enum prompt_mode_type prompt_mode_type;
  
- 	for (i = file_diff->mode_change; i < file_diff->hunk_nr; i++) {
-+		struct hunk merged = { 0 };
+ 	if (!file_diff->hunk_nr)
+ 		return 0;
+@@ -466,13 +477,20 @@ static int patch_update_file(struct add_p_state *s,
+ 			strbuf_addstr(&s->buf, ",j");
+ 		if (hunk_index + 1 < file_diff->hunk_nr)
+ 			strbuf_addstr(&s->buf, ",J");
 +
- 		hunk = file_diff->hunk + i;
- 		if (hunk->use != USE_HUNK)
- 			delta += hunk->header.old_count
- 				- hunk->header.new_count;
--		else
-+		else {
-+			/* merge overlapping hunks into a temporary hunk */
-+			if (merge_hunks(s, file_diff, &i, &merged))
-+				hunk = &merged;
++		if (file_diff->deleted)
++			prompt_mode_type = PROMPT_DELETION;
++		else if (file_diff->mode_change && !hunk_index)
++			prompt_mode_type = PROMPT_MODE_CHANGE;
++		else
++			prompt_mode_type = PROMPT_HUNK;
 +
- 			render_hunk(s, hunk, delta, 0, out);
-+		}
- 	}
- }
- 
+ 		color_fprintf(stdout, s->s.prompt_color,
+ 			      "(%"PRIuMAX"/%"PRIuMAX") ",
+ 			      (uintmax_t)hunk_index + 1,
+ 			      (uintmax_t)file_diff->hunk_nr);
+ 		color_fprintf(stdout, s->s.prompt_color,
+-			      _("Stage this hunk [y,n,a,d%s,?]? "),
+-			      s->buf.buf);
++			      _(prompt_mode[prompt_mode_type]), s->buf.buf);
+ 		fflush(stdout);
+ 		if (strbuf_getline(&s->answer, stdin) == EOF)
+ 			break;
 -- 
 gitgitgadget
 
