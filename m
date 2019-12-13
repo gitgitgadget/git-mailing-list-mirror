@@ -2,121 +2,132 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BF81BC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0C10C2D0BF
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 845E622527
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95DE32467A
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TTkFdcEd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GwMmoiaG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726345AbfLMIIK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 03:08:10 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38539 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbfLMIIK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 03:08:10 -0500
-Received: by mail-wm1-f66.google.com with SMTP id u2so525537wmc.3
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:08 -0800 (PST)
+        id S1726518AbfLMIIM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 03:08:12 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37837 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725890AbfLMIIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 03:08:12 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w15so5618194wru.4
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=nDe3GS87bP/7OT75S3Al+f55k34ElChxRQ6ITyesXQs=;
-        b=TTkFdcEdMUCD382w+iOtJs02soCEm+9IrdH7TvNp9rJX8EbDbUlaBs9YadPX6D71iN
-         lFpU3n7dJK87ecPh6t4gXlkGnUZtw4pUK4ZA2RxooGKP5161jpq1pUusP6nAAPYhDsUv
-         jO25doUJk/hTlc1DwbEZEiCkXUzfWIk6uMKQQwIHOLoF3wupgW4ctaxQ2veW4Q8rau7a
-         nRFO+xiO7QchomxhZvs38N2lTzUI67YdA+Y4oHDDMpnOcVy+EXAupjigaSdEZnWDYmjU
-         L3DoTLjjlmiu+gZKVK4wSiyuvLkyqlNr7NfREqxZyzJ4qWac/3f3iA2P3OV343eQknkv
-         YzWA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=WjSHLmTjBYyz9S1qv/kniGfV3/zKvBryGHZwD207f6o=;
+        b=GwMmoiaGx97oRXzgRmFykr4sfyXy8WNDYozs93M689hNZiT47bVa5ZyWjjdrkxeffw
+         QL7fP1hoiCI9KHWRpY/mXx3IDyIWsTAv53TVBzMDr75AmVR3lN4MEwLB53NKhF+oF/TA
+         3XWfOSqUluv7zxy05uApfFZFd1YLIa9+1szqycaFmo0rD8hxlGVOQ3dcU8PH8Jqe9+c9
+         5MbwYArJs9BWPwi55h6qqmaPV5vT/5+D21l2c0yB4gyEt8F2RDfaAn8kFArRhC4sO2Gy
+         nBGbZr7sTgODApFhpPt+VBksxxUzZgIFb5smjmW9tu8seoFL2DzuFXII3rkQwlqZc/NU
+         xoXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nDe3GS87bP/7OT75S3Al+f55k34ElChxRQ6ITyesXQs=;
-        b=iKhhEh8Jag4GErHAs6yvNbuE9Lg3/d15lZ6Q3URJqE8xvcIdjjmTJhp9x2HwuqTJoC
-         jeGQ0rA/rKsDo6W6xpJXTc0ezvyOwkaEwgisViqFQjSzeCHJtn/pn//9ePVelcHdMwsp
-         wSd1hT+1kRTZ7RgpFR4SQYZTPvCqBOz6FSTkKBbBqo1hwvfsklmX5HmWQMdxsxZbaVjM
-         5N0YhCC7DYHN/V5S+anzxNtPG6DzYM+fPtetnh3OamVrFzU58s45T9r50dIyG3QZ8fbY
-         cu4rna2wVjbeMtj8V3O7rfLfynfv9gT2oOZ0XUdv2RfOIG6AaNZl0BrXUqUlfBx7jhYS
-         DGSQ==
-X-Gm-Message-State: APjAAAUoqXlwuwLyHHagP57wvr1h0SErNwH3g3XoZuq6R3tu98cyqKsh
-        24uS/5zdN7svhHTIhWAmJqt3vFth
-X-Google-Smtp-Source: APXvYqziq+/1tflCSP3G9LxyX2fUsHixJCT1mYlZS8j2sZTLX2mVSTpAcuR8YegKs/uY/d5Yn9ScOQ==
-X-Received: by 2002:a05:600c:1007:: with SMTP id c7mr12295765wmc.158.1576224488080;
-        Fri, 13 Dec 2019 00:08:08 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=WjSHLmTjBYyz9S1qv/kniGfV3/zKvBryGHZwD207f6o=;
+        b=RK8c32EPH8IclfPuuz+Rkz1CnGVrrI3SIsQzNQTUah/Un/O/RAxSfR9c3DxFVMhTS0
+         DtGjOhDza5HhpjDyNz0ogVkqOFp9Vbh7RqgwxsI7KKuMMAJy4Ee6YjI78lpBN18+9dCl
+         riJ4lIxIZ5mJqYk45/KnTrnatgUrVCOLIjT2yqxecYFWH4LvUtGwao1TCnh3WoQekqW1
+         zteofcLPKNsr/DKZGTvjfgQ4J7SIb45TPwOCifqj9XAfGMONaxfqhUN7+tsz7L2OrOPk
+         5s1gMvctmzUviXBjPbL9PPVICjZy6rtaDhsPOwufGXAq7lVhCdiHuTQRkmO7PFFa8JDo
+         MdWg==
+X-Gm-Message-State: APjAAAV8zONaXU+PqiXBYfL6h3lhISDgcYh5SIogI7HKAuK6PWm1WAsf
+        Dgkb6yjlwSKXio3z1h9d0EKrf1oq
+X-Google-Smtp-Source: APXvYqwFt/SnN3l4XKiDWkq8Cmn0Y+QUHhEiXxuWLMZtY8a3EuE/6ozZqcI/F/PEBQDL/bx6RVVu8A==
+X-Received: by 2002:adf:cd03:: with SMTP id w3mr10763641wrm.191.1576224489613;
+        Fri, 13 Dec 2019 00:08:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v8sm9025312wrw.2.2019.12.13.00.08.07
+        by smtp.gmail.com with ESMTPSA id i11sm9276339wrs.10.2019.12.13.00.08.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 00:08:07 -0800 (PST)
-Message-Id: <pull.173.git.1576224486.gitgitgadget@gmail.com>
+        Fri, 13 Dec 2019 00:08:09 -0800 (PST)
+Message-Id: <03feb2f28bbfb4779afb4a26009cc30c939f0436.1576224486.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.173.git.1576224486.gitgitgadget@gmail.com>
+References: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Dec 2019 08:07:47 +0000
-Subject: [PATCH 00/19] Implement the git add --patch backend in C
+Date:   Fri, 13 Dec 2019 08:07:49 +0000
+Subject: [PATCH 02/19] built-in add -i: wire up the new C code for the `patch`
+ command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Out of all the patch series on the journey to provide git add --interactive 
-and git add --patch in built-in versions, this is the big one, as can be
-expected from the fact that the git add --patch functionality makes up over
-half of the 1,800+ lines of git-add--interactive.perl.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The two patches that stick out are of course the ones to implement hunk
-splitting and hunk editing: these operations are fundamentally more
-complicated, and less obvious, than the entire rest of the operations.
+The code in `git-add--interactive.perl` that takes care of the `patch`
+command can look quite intimidating. There are so many modes in which it
+can be called, for example.
 
-Johannes Schindelin (19):
-  built-in add -i: start implementing the `patch` functionality in C
-  built-in add -i: wire up the new C code for the `patch` command
-  built-in add -p: show colored hunks by default
-  built-in add -p: adjust hunk headers as needed
-  built-in add -p: color the prompt and the help text
-  built-in add -p: offer a helpful error message when hunk navigation
-    failed
-  built-in add -p: support multi-file diffs
-  built-in add -p: handle deleted empty files
-  built-in app -p: allow selecting a mode change as a "hunk"
-  built-in add -p: show different prompts for mode changes and deletions
-  built-in add -p: implement the hunk splitting feature
-  built-in add -p: coalesce hunks after splitting them
-  strbuf: add a helper function to call the editor "on an strbuf"
-  built-in add -p: implement hunk editing
-  built-in add -p: implement the 'g' ("goto") command
-  built-in add -p: implement the '/' ("search regex") command
-  built-in add -p: implement the 'q' ("quit") command
-  built-in add -p: only show the applicable parts of the help text
-  built-in add -p: show helpful hint when nothing can be staged
+But for the `patch` command in `git add -i`, only one mode is relevant:
+the `stage` mode. And we just implemented the beginnings of that mode in
+C so far. So let's use it when `add.interactive.useBuiltin=true`.
 
- Makefile                   |    1 +
- add-interactive.c          |   29 +-
- add-interactive.h          |   19 +
- add-patch.c                | 1338 ++++++++++++++++++++++++++++++++++++
- builtin/add.c              |   15 +-
- strbuf.c                   |   28 +
- strbuf.h                   |   11 +
- t/t3701-add-interactive.sh |   42 ++
- 8 files changed, 1464 insertions(+), 19 deletions(-)
- create mode 100644 add-patch.c
+Now, while the code in `add-patch.c` is far from reaching feature parity
+with the code in `git-add--interactive.perl` (color is not implemented,
+the diff algorithm cannot be configured, the colored diff cannot be
+post-processed via `interactive.diffFilter`, many commands are
+unimplemented yet, etc), hooking it all up with the part of `git add -i`
+that is already converted to C makes it easier to test and develop it.
 
+Note: at this stage, both the `add.interactive.useBuiltin` config
+setting is still safely opt-in, and will probably be fore quite some
+time, to allow for thorough testing "in the wild" without adversely
+affecting existing users.
 
-base-commit: b4bbbbd5a247e0e75d079bca591b657ec9084a46
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-173%2Fdscho%2Fadd-p-in-c-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-173/dscho/add-p-in-c-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/173
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ add-interactive.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/add-interactive.c b/add-interactive.c
+index f395d54c08..034c1dc02f 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -917,15 +917,18 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+ 	count = list_and_choose(s, files, opts);
+ 	if (count >= 0) {
+ 		struct argv_array args = ARGV_ARRAY_INIT;
++		struct pathspec ps_selected = { 0 };
+ 
+-		argv_array_pushl(&args, "git", "add--interactive", "--patch",
+-				 "--", NULL);
+ 		for (i = 0; i < files->items.nr; i++)
+ 			if (files->selected[i])
+ 				argv_array_push(&args,
+ 						files->items.items[i].string);
+-		res = run_command_v_opt(args.argv, 0);
++		parse_pathspec(&ps_selected,
++			       PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
++			       PATHSPEC_LITERAL_PATH, "", args.argv);
++		res = run_add_p(s->r, &ps_selected);
+ 		argv_array_clear(&args);
++		clear_pathspec(&ps_selected);
+ 	}
+ 
+ 	return res;
 -- 
 gitgitgadget
+
