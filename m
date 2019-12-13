@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 906E6C79DD8
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A83E0C3496F
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C4BC92474A
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC6EF24747
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LHJirQ7V"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CeCPq37t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728430AbfLMRQX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 12:16:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:51542 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728398AbfLMRQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 12:16:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 278353FFA7;
-        Fri, 13 Dec 2019 12:16:21 -0500 (EST)
+        id S1728508AbfLMRUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 12:20:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58879 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728470AbfLMRUY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 12:20:24 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1DC7D225AB;
+        Fri, 13 Dec 2019 12:20:22 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CwABNuXQq3fLsPeVzfk8NeD30uk=; b=LHJirQ
-        7Vo7jJs7drC3F1cfswXkSloHJe8EhOApHWsw4hZ0JSx59SfGl5CZ9A75SLFOpBCo
-        TrawLKHDT3luvXJxQ+rBozQ7fd8u3D4v9a1rLGzo9/IHqi9Dnhj1vOC1HEQ+XlNS
-        W5FfVTI70iwklYSmc287b/bgRsjKMYO+SGO1U=
+        :content-type; s=sasl; bh=t2TmWxRFy67RDf++H7EVgNpLdpw=; b=CeCPq3
+        7tzOAlCi97qx/bWhFRQ6zspaXF0A//wTjSBeIy5FMCP1orOV1dxab8xIMyNQ4gvl
+        fAs37vGICAyhYzMjS7sjkJf4oB1R5HoqvlIEXRXbCjEKdRPsEWGwlG92SDqYQorR
+        7l10zN/MKsXXse6OFLAFRxxRBmlWMVX/huXcU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=LjRwymFlb+B4DTGjB2LUNYNRLyiDMWuz
-        87bQVWnzjIokM+UrRfs91+c+DsamtoOaNM4nmprZGA4+IIoR3CfX5iYQ+slGmzI4
-        hPmoG8wr8f9CEpVWftuJ3m/z1XK5+veKVH479WqqdcUjHiK/t6cnYW+n4y8zJ19z
-        nk2mFM1pJBQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E7483FFA6;
-        Fri, 13 Dec 2019 12:16:21 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=lvg5TqTdWwOJ7r4n9xxpKPhQYrtCRf7Y
+        fqdaUywcMCnr/TvkazV5hC0FNyfgTAXRaTHdClxMU+mwE8Ce2kz0iBV0Bjyt67p7
+        /DHHoYqYxg4tSOcp4SAJ49PY6CeeFQyozhMUjYnz7DFIkEjPvHNGZbi0NIUqaeYe
+        4Hc+ab0fQAA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 15966225AA;
+        Fri, 13 Dec 2019 12:20:22 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 81F753FFA5;
-        Fri, 13 Dec 2019 12:16:20 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71877225A8;
+        Fri, 13 Dec 2019 12:20:21 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Denton Liu <liu.denton@gmail.com>, rottis@fea.st,
-        git@vger.kernel.org
-Subject: Re: git checkout --autostash and git branch --autopop
-References: <8ab7d980-9584-4ce7-b4ee-9acac62c030c@www.fastmail.com>
-        <20191212180901.GA35927@generichostname>
-        <e7850a51-4396-4698-ed98-62f991e33992@iee.email>
-Date:   Fri, 13 Dec 2019 09:16:19 -0800
-In-Reply-To: <e7850a51-4396-4698-ed98-62f991e33992@iee.email> (Philip Oakley's
-        message of "Thu, 12 Dec 2019 22:02:14 +0000")
-Message-ID: <xmqq7e30m9i4.fsf@gitster-ct.c.googlers.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>, Kerry@google.com,
+        Richard <richard.kerry@atos.net>
+Subject: Re: [PATCH v3] MyFirstContribution: add avenues for getting help
+References: <20191213013128.6268-1-emilyshaffer@google.com>
+Date:   Fri, 13 Dec 2019 09:20:20 -0800
+In-Reply-To: <20191213013128.6268-1-emilyshaffer@google.com> (Emily Shaffer's
+        message of "Thu, 12 Dec 2019 17:31:28 -0800")
+Message-ID: <xmqq36dom9bf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 47ED10F8-1DCC-11EA-B3CF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D788F9C0-1DCC-11EA-BA70-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-> Isn't this meant to be something similar to the --no-merge option for
-> checkout. That is: I am where I am, but really I want this to be on
-> branch X. Or is the --no-merge option meant to be something else?
+> Since #git-devel's traffic is fairly low, it should be OK to direct some
+> questions there too.
 
-Is there a --no-merge option to "git checkout"?  I know the reason
-why I invented "git checkout --merge" was because I wanted the
-command to carry more changes in the working tree than the default
-behaviour would while checking out another branch, but I do not
-think I added an option to do less, i.e. forbid it from carrying any
-change in the working tree while checking out another branch.
-
+Correct me if I recall wrong, but wasn't #git the original IRC
+channel we developers hang out on, and then somebody thought "the
+traffic is fairly low, so it should be OK" and directed non
+developer trafic there, which caused the developers to migrate out
+to #git-devel, a new channel?
