@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D515DC00454
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B25CC2D0C9
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB945206EE
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54625206EE
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="B4L6jYnW"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="diq3zjuo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726820AbfLMXxe (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726828AbfLMXxe (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 13 Dec 2019 18:53:34 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40456 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726769AbfLMXxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 18:53:30 -0500
-Received: by mail-pf1-f194.google.com with SMTP id q8so2292949pfh.7
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:30 -0800 (PST)
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42543 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726813AbfLMXxc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 18:53:32 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 4so2286891pfz.9
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=APGGNcfznxbhrfNSjyLU0pW4ZC5c1b9GUWn09pwP3PA=;
-        b=B4L6jYnWGyHKZo4v6tDnR9Z0MpCD7822QQnCTwm8WCxrAMVDhv/3LnvwfcoP//ZN5Y
-         774Rm5T5ZPBB6F6fCXvCoL47lFOwKq5WI7Mb6ftv1kf6/4ssC5+eWZEnsHsAH8cjxSVm
-         CpL740f0nK5hN5EkU3HwP9yTTvnIO1WCp78olfnTHmtOXkbIZu3wJAEKBhKH+KFG9ZPM
-         Xl5EjbAia/8TiKe/Y3NrtzOO155iW4IrXs54TwphxKG779rtp7CGWx3Vro0qb+nBIaI1
-         XPVpIY3jq/1ljjVdIuwn0pfjvI96RjREBr/lq07dQZetepftzfuUdfi/Qiri7Ln23g7w
-         5uZQ==
+        bh=34T1a/IEmgMUS4B/nrxuttRxXmASlCVG0uMyRUBcR7I=;
+        b=diq3zjuogGJE8egaMWF1eYiXU9cba8a1QAOy6XoI7GAls+yraNqk8fKN/wQ44cJfFk
+         PZTYqcrpTuFFiF8qEIraRkMu5jAGIV250jWsLY5entXlfGT6cgSSdL0WYjVT/SaJfCc3
+         DFYzrH7tRly0/JWWA569LluRCjws2fp/6gsLbhUpDjFl1M508lPmiEdZd4l3Suxdjbbm
+         lfMcb+T6NQqad46Ou6abWm2u4G6xmU4IcxFSAA51bqTHmfs9AcXJ5Kqkzn2nx+WXlmpo
+         Y0YtIOVX8PmEpsPUnXS5n/QR60oWjPNN9aBN708sFRP9VhFRJEqoxkeKxqNOrLf34/H/
+         kXjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=APGGNcfznxbhrfNSjyLU0pW4ZC5c1b9GUWn09pwP3PA=;
-        b=gezpKwdRnxXCW4jZxJ6MDVp5oFk9uzNmigL6QZslQse8acsGGiFVMlz2Kc8U/SHitI
-         OBXJvjmF2Xy2W8I0VZIgXkk7bvwUqjS9aIp33JuZLzRvcuBSFO3TPhr1fmwj/AxXrGn4
-         LyPZVkEEY3cJIm7x0OK57Yw4tZwtsdx5XIM6N9yYfqt+z7eZFbNwt8K5uH89C2mgEP/I
-         dDhMzPmY5lMF38ALpLEt01bC3cx0YLcNBdvUWohgASTnGQ4cAzzDhnJxcLbHQeE23ewm
-         mQgGgmNXbLg4sRhH8DOwZojK+9W3NRNFjUzdoHbeteDJAuIa360AZbBcRlBA4hZn5R03
-         tLsw==
-X-Gm-Message-State: APjAAAVvAEpe5pQ9M25S+6ZBqI3Bq4VGUj45aPWsa7st52XY8p8cUAzs
-        cjSjIzKXmnVj/SKGkPjqZe1uS2ks0eYtcw9P
-X-Google-Smtp-Source: APXvYqyqBillTFwLMuqSaoytTIYHhaFkW1yWyAZzFZi0JjPyQPAKq5sfFNwpis6AimAMlE7VG65z1Q==
-X-Received: by 2002:a63:647:: with SMTP id 68mr2449682pgg.202.1576281209880;
-        Fri, 13 Dec 2019 15:53:29 -0800 (PST)
+        bh=34T1a/IEmgMUS4B/nrxuttRxXmASlCVG0uMyRUBcR7I=;
+        b=nZ1QfglmSM3c9ZFIRw0+Z+GPm1jH93RCXtokdiodFJkZLIDV9HX6/4YDUU5XQ9rI5R
+         FII2+ztf65wKeyfKDBTTWMw9rbBWbLPei7ojef+hb0D95YMFIP6nZrycBoCimcPMIUSs
+         UvpDXjWFfac7+1JeoU0WFnaPS5fwf2fJM4lwuhAebPasUFBud0tJgxQHjr4vTYf0Fbv1
+         0Iz10ZmPTrWjFRf+6rf8a1AN12+A1TCIPRo8JG9A3mPlu1BXqPtSlGzo5yzBHJdRM2yc
+         fVnd32FxbwMSKfTGiqvC901EVkYaA3ZZLaRIDi7+KwELcpv4RFItZ/sLHvM0KN848ql7
+         1c3A==
+X-Gm-Message-State: APjAAAWzTmo1ulEdFHsQ6gVYesoi3AwcIfY8ATYX+Qf0Womuvh7b4mwt
+        rgCb5e0tcuGfkmLQKwDufWOFP8g3MILXdxVa
+X-Google-Smtp-Source: APXvYqxBEBF6co8Hh6NA10xHg5utwrHXcUu3P3PYUw9BNw50nqXmNVFn2kdbl1ho88WsUfBw3GDmdw==
+X-Received: by 2002:a63:5442:: with SMTP id e2mr2412657pgm.18.1576281211931;
+        Fri, 13 Dec 2019 15:53:31 -0800 (PST)
 Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
-        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.28
+        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:29 -0800 (PST)
+        Fri, 13 Dec 2019 15:53:31 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
         liu.denton@gmail.com, seraphire@gmail.com
-Subject: [PATCH v2 10/14] git-p4: use functools.reduce instead of reduce
-Date:   Fri, 13 Dec 2019 15:52:44 -0800
-Message-Id: <20191213235247.23660-12-yang.zhao@skyboxlabs.com>
+Subject: [PATCH v2 12/14] git-p4: simplify regex pattern generation for parsing diff-tree
+Date:   Fri, 13 Dec 2019 15:52:46 -0800
+Message-Id: <20191213235247.23660-14-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
 References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
@@ -71,35 +71,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For python3, reduce() has been moved to functools.reduce().  This is
-also available in python2.7.
+It is not clear why a generator was used to create the regex used to
+parse git-diff-tree output; I assume an early implementation required
+it, but is not part of the mainline change.
+
+Simply use a lazily initialized global instead.
 
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
+Reviewed-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ git-p4.py | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 68f9f4fdc6..7deee1b939 100755
+index b7e31d4738..3af8df9f83 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -13,6 +13,7 @@
-     sys.exit(1)
- import os
- import optparse
-+import functools
- import marshal
- import subprocess
- import tempfile
-@@ -1158,7 +1159,7 @@ def pushFile(self, localLargeFile):
-         assert False, "Method 'pushFile' required in " + self.__class__.__name__
+@@ -544,12 +544,7 @@ def getGitTags():
+         gitTags.add(tag)
+     return gitTags
  
-     def hasLargeFileExtension(self, relPath):
--        return reduce(
-+        return functools.reduce(
-             lambda a, b: a or b,
-             [relPath.endswith('.' + e) for e in gitConfigList('git-p4.largeFileExtensions')],
-             False
+-def diffTreePattern():
+-    # This is a simple generator for the diff tree regex pattern. This could be
+-    # a class variable if this and parseDiffTreeEntry were a part of a class.
+-    pattern = re.compile(':(\d+) (\d+) (\w+) (\w+) ([A-Z])(\d+)?\t(.*?)((\t(.*))|$)')
+-    while True:
+-        yield pattern
++_diff_tree_pattern = None
+ 
+ def parseDiffTreeEntry(entry):
+     """Parses a single diff tree entry into its component elements.
+@@ -570,7 +565,11 @@ def parseDiffTreeEntry(entry):
+ 
+     If the pattern is not matched, None is returned."""
+ 
+-    match = diffTreePattern().next().match(entry)
++    global _diff_tree_pattern
++    if not _diff_tree_pattern:
++        _diff_tree_pattern = re.compile(':(\d+) (\d+) (\w+) (\w+) ([A-Z])(\d+)?\t(.*?)((\t(.*))|$)')
++
++    match = _diff_tree_pattern.match(entry)
+     if match:
+         return {
+             'src_mode': match.group(1),
 -- 
 2.21.0.windows.1
 
