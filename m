@@ -4,152 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EE5BC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0361DC43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:44:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EF6532253D
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE46321655
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:44:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="CTOz1Rlk"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J5+usTc1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731765AbfLMAn5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Dec 2019 19:43:57 -0500
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:44513 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731763AbfLMAn5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 19:43:57 -0500
-Received: by mail-vk1-f201.google.com with SMTP id k16so303872vko.11
-        for <git@vger.kernel.org>; Thu, 12 Dec 2019 16:43:57 -0800 (PST)
+        id S1731770AbfLMAoA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 19:44:00 -0500
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:46793 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731342AbfLMAoA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Dec 2019 19:44:00 -0500
+Received: by mail-qt1-f202.google.com with SMTP id d9so697849qtq.13
+        for <git@vger.kernel.org>; Thu, 12 Dec 2019 16:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ab2bcDVKAZvq03F1lRiy63B2enXZnHSY50w8FqRsyTM=;
-        b=CTOz1Rlky5utrtsaS4yS/mh453m4jgOkVxx6QV6zrDlIKo8pfxQaAol8P2fniVjwTO
-         1BEd98aSsNlMfVC4aaTV+Mv2Ybt7Hp2n6IBD3xWtSk4S7tAVD2oEf6oSoHnsjtt/vlZj
-         DHioMcMdBGsvzKHCdT1+ft+tvuAfSi0KNhm95hlbbYUEq+fvoFwCYFooWdPyPVal3yOV
-         MbCV6tT1TaClta3+8l9245czqe1uJHCcZI2RaGRIKYiEHFDF1JRz2hBvHXCQ035bd59X
-         ghSQfXrBVu+oQ3dz7GmcwfKO7YoLtlgvlzZf6HxtB9FgW+zHFPeQTPAW3ePJWEQ3eKsl
-         nVuw==
+        bh=C2sLBme3gm/qdTQaSfkdtC92BFNSfqgpRg1jGgOX4/w=;
+        b=J5+usTc1iB85jPK9z2kZLsA2uOAjXKYfgzioytKr+eA1vPuVmT34/xOlNrrOWfB0Z1
+         pmssEw2/iDcInnCdX41QhS8T5fdCmlcd5YS1C62DAmcGSRRd7mlhkkECPGnlR9+ONxwS
+         TN26RVN2C16kxZOuJMi5LvOgKfg/I3sVqFSthUSAogPVAr9xMxerODE49nMrwHx7suew
+         ouNWvNCkKBMXXXyZ2cIGg4odTwLEGCa9UMQn3KXL4DhmlPVDJn5XYNfMqWnnRT44QsLd
+         DYeWOOc1iJ+JFEy73LZxsZde+A+UBTiLOW/6u2X54XMzx3Wb758DoX8XbBclKIhJAs5k
+         DKdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ab2bcDVKAZvq03F1lRiy63B2enXZnHSY50w8FqRsyTM=;
-        b=lGzhc2YojBlpedFY7YMBdKPGwNgQBxlJkY5o5R38UW6kMynJkovngwy/1Pm+xOy0It
-         a7McC1WGh0E8V9BJd/EYBBXqo7X7XPhfuW/wV5D2X+8x4yW/kSsZTxujFxkdP6dQn5m4
-         Pz/xuyVHnikmhUvEBD/joDscYrBxtOhT7YfIRJ5Nyh/96AQCeLJZlJa1mgjbC2yW31Hg
-         UgF95q52t2SDMxItlnXI6pe2ct5TMhgQ2peMlz+uanGevVBPs7F2Axe9gG1K4NRmGvl9
-         If50AKFq7jvNP+ZXMU5iJSHyrbK93xGUSO+JmxCFfaOlp3wDh3Lw/xR/FzqCwIYGhTxd
-         N2XQ==
-X-Gm-Message-State: APjAAAXnN07b3rCdnJrwzxWxxzSvhBT2I81IG6g4XA5rpBZY6/CEA3gW
-        +/ljkCoDbtLo10YicOH94SK/RpG0Kc2L5CKPAud3tgFj77kyQD85EAYf8RXbJu7wLea4GqoZ0Ne
-        aDQ3M0oBjXKAccWYdmZX7htYbPRMCl9sr9WnN+tEktNDLN77hHSzwdES3XsC4ETIn47t++XgV5A
+        bh=C2sLBme3gm/qdTQaSfkdtC92BFNSfqgpRg1jGgOX4/w=;
+        b=bMDgmHg+rrsHWB33EDsjKpRSboPkhEFsrXoRbQYvmgYtiXUbcZOmAqRNzIzrOVia2+
+         uwadVcGX/bdwBJ9LeG5D51QvWPh6k4G2DkliC0N/nTw34g1k2bdYb+izXCNSQJw6nEI6
+         Y4NvKz2SIogKiMBsX3O92rNU+w3ExZhSX936ulLS9s4PioB8bxmZaeFhJ3W9BsDZv7V5
+         iG/HWj83+GYA5sJF6ZE2S0Nk3JvxC2E0YJqcaL2a5r0onjXA/5X5jVJ/LKW/1umzry38
+         SgNn8kuMtfOiBC4Pd6F5aZDE3T4/32SAK0mrjmRjhwpIgokGiti3XhffDrT5FrT6Rvdl
+         mSEg==
+X-Gm-Message-State: APjAAAUTEt4FO8BgZhBi08neC49xNQ5tHqPACs1Xvn8zVhG2JU+P6XRA
+        0zgNjVnVGF+YmCR8SkJICsElR4wivCN3yImnQhrsvTf5yepOWJEQzkur8QOf73cAkbvTPt9hnms
+        rK7JGUCgzr01ZYePaQ6gDur+3MhLX0wWGsbRYvcsk1B6eDX802cCtBx4NnCPMLvOqyHfR4rgnzA
         ==
-X-Google-Smtp-Source: APXvYqwfwqsmnorG2+KMxRpbV1u+1Zqg5NEvseH0btROuAZZaToyeEXFMvoowHsSGG0nkhIQ5CERmfy2WsVo8siJQ9w=
-X-Received: by 2002:a1f:e3c6:: with SMTP id a189mr11599068vkh.82.1576197836471;
- Thu, 12 Dec 2019 16:43:56 -0800 (PST)
-Date:   Thu, 12 Dec 2019 16:43:09 -0800
+X-Google-Smtp-Source: APXvYqxN8zVEy7ts7Z3Q0U50oWVzjln30myrv2RORHu5M2+DPJuilOvkWI7RxhvAZkPQgLYMam0FCN60MUDedqdRJaw=
+X-Received: by 2002:ad4:4511:: with SMTP id k17mr10559420qvu.135.1576197838898;
+ Thu, 12 Dec 2019 16:43:58 -0800 (PST)
+Date:   Thu, 12 Dec 2019 16:43:10 -0800
 In-Reply-To: <20191213004312.169753-1-emilyshaffer@google.com>
-Message-Id: <20191213004312.169753-13-emilyshaffer@google.com>
+Message-Id: <20191213004312.169753-14-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191213004312.169753-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-Subject: [PATCH v4 12/15] bugreport: count loose objects
+Subject: [PATCH v4 13/15] bugreport: add packed object summary
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Emily Shaffer <emilyshaffer@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The number of unpacked objects in a user's repository may help us
-understand the root of the problem they're seeing, especially if a
-command is running unusually slowly.
+Alongside the list of loose objects, it's useful to see the list of
+object packs as well. It can help us to examine what Git did and did not
+pack.
 
-Rather than directly invoking 'git-count-objects', which may sometimes
-fail unexpectedly on Git for Windows, manually count the contents of
-.git/objects. Additionally, since we may wish to inspect other
-directories' contents for bugreport in the future, put the directory
-listing into a helper function.
-
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ bugreport.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/bugreport.c b/bugreport.c
-index f89cb8d754..3abb83d77f 100644
+index 3abb83d77f..992d8f9de7 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -173,6 +173,67 @@ static void get_populated_hooks(struct strbuf *hook_info)
- 	}
+@@ -234,6 +234,34 @@ static void get_loose_object_summary(struct strbuf *obj_info) {
+ 	strbuf_release(&dirpath);
  }
  
-+static int is_hex(const char *string, size_t count)
++static void get_packed_object_summary(struct strbuf *obj_info)
 +{
-+	for (; count; string++, count--) {
-+		if (!isxdigit(*string))
-+			return 0;
-+	}
-+	return 1;
-+}
-+
-+static void get_loose_object_summary(struct strbuf *obj_info) {
-+	struct dirent *d = NULL;
-+	DIR *dir, *subdir = NULL;
-+	size_t dir_len;
 +	struct strbuf dirpath = STRBUF_INIT;
++	struct dirent *d;
++	DIR *dir = NULL;
 +
 +	strbuf_addstr(&dirpath, get_object_directory());
 +	strbuf_complete(&dirpath, '/');
++	strbuf_addstr(&dirpath, "pack/");
 +
 +	dir = opendir(dirpath.buf);
 +	if (!dir) {
-+		strbuf_addf(obj_info, "could not open object directory '%s'\n",
++		strbuf_addf(obj_info, "could not open packed object directory '%s'\n",
 +			    dirpath.buf);
 +		strbuf_release(&dirpath);
 +		return;
 +	}
 +
-+	dir_len = dirpath.len;
-+
 +	while ((d = readdir(dir))) {
-+		int object_count = 0;
-+		char subdir_name[3];
-+
-+		if (d->d_type != DT_DIR)
-+			continue;
-+
-+		if ((strlen(d->d_name) != 2) || (!is_hex(d->d_name, 2)))
-+			continue;
-+
-+		/* copy directory name + \0 */
-+		memcpy(subdir_name, d->d_name, 3);
-+
-+		strbuf_setlen(&dirpath, dir_len);
-+		strbuf_addstr(&dirpath, d->d_name);
-+
-+		subdir = opendir(dirpath.buf);
-+		if (!subdir)
-+			continue;
-+		while ((d = readdir(subdir)))
-+			if (d->d_type == DT_REG)
-+				object_count++;
-+
-+		closedir(subdir);
-+
-+		strbuf_addf(obj_info, "%s: %d\n", subdir_name, object_count);
++		strbuf_addbuf(obj_info, &dirpath);
++		strbuf_addstr(obj_info, d->d_name);
++		strbuf_complete_line(obj_info);
 +	}
-+
 +
 +	closedir(dir);
 +	strbuf_release(&dirpath);
@@ -158,12 +116,12 @@ index f89cb8d754..3abb83d77f 100644
  static const char * const bugreport_usage[] = {
  	N_("git bugreport [-o|--output <file>]"),
  	NULL
-@@ -243,6 +304,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "Configured Hooks");
- 	get_populated_hooks(&buffer);
+@@ -307,6 +335,9 @@ int cmd_main(int argc, const char **argv)
+ 	get_header(&buffer, "Loose Object Counts");
+ 	get_loose_object_summary(&buffer);
  
-+	get_header(&buffer, "Loose Object Counts");
-+	get_loose_object_summary(&buffer);
++	get_header(&buffer, "Packed Object Summary");
++	get_packed_object_summary(&buffer);
 +
  	report = fopen_for_writing(report_path.buf);
  	strbuf_write(&buffer, report);
