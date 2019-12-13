@@ -2,76 +2,86 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1334FC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:59:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 603B7C43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 21:03:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4F9CC2469F
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:59:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9460B246A9
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 21:03:49 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mO+q1nzF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726740AbfLMU72 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 15:59:28 -0500
-Received: from 195-159-176-226.customer.powertech.no ([195.159.176.226]:36360
-        "EHLO blaine.gmane.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbfLMU72 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 15:59:28 -0500
-Received: from list by blaine.gmane.org with local (Exim 4.89)
-        (envelope-from <gcvg-git-3@m.gmane.org>)
-        id 1ifs1w-0011vv-9u
-        for git@vger.kernel.org; Fri, 13 Dec 2019 21:59:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
+        id S1726705AbfLMVDt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 16:03:49 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:33377 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbfLMVDs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 16:03:48 -0500
+Received: by mail-wr1-f47.google.com with SMTP id b6so219972wrq.0
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 13:03:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=iyFklqbJdMlBnGgLoMTMHwt8Strfpon3fUSow70zLSw=;
+        b=mO+q1nzFJBKOL7aV028l+Tein0CeNSCfeOxUvdnKpAVyBeXpAU5plrqPCGA+1qioD6
+         fMbmOjhi5966CRP3ZaNvEB5x/I9MnEeWwCavcxWB6ejZJ1CpX51XevjZcUyTlPPv4HqR
+         u6dBwBxSpyZdyHhjdGDKJ3/mSChFFcEJG/C/CTtn+tESlf0RkuU0qo7Q67uBGvOt5a+E
+         ha6Bu1a4jidOmHX00xdtJ+pUtz9Ib1nMNlhxF/1MnCWRroZq6RU5I+STA+GFnGGQPq7E
+         I1PU+xLQTxNGQKCUvsUi2vozTwizPAL7WA0YNGlrUuWOJTYE+8pcXLvyPnNW4Ld+VzGi
+         kwHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=iyFklqbJdMlBnGgLoMTMHwt8Strfpon3fUSow70zLSw=;
+        b=lbYW0vSfBZtzAHwvt6LyOIDWNe+LBttkl5wHmyloGeYucgGALb2SFqMRNpshYpNXZA
+         OCNY2qZomGZwW5QZ60IWCfxryo/0AL1XJ16UCcI2hLyhiddQ4ou6zl7O1NFJXcOkrHUA
+         XBLoArYiF1df6JN6J2BDWqpbMI+tR4gVlrk9pQvxIdE6miBkAVlsX39Sah9ymN3eHCLk
+         DAW1r0guD2E7laKl1a2cn3m2WO5HFNuz2BxB+aMMYqFF9dhXKp0cRXauk/Hms1oOHqJ3
+         S27pzpNiwW8PlCTlbDfMqPY6pgTyFc3K/RccO/lZKqTSlCx1HTyIjm8wk7W1w9kxQDUA
+         0o+Q==
+X-Gm-Message-State: APjAAAUME+eRRM843gqiMIkgp1ysPRntInBGnp/VLEWhKdC+daTZLAk0
+        ZWCJ2gulZdbimOz7lusfh/wvdEfM
+X-Google-Smtp-Source: APXvYqxTl2own76XaXjYj2CRCVJTZB4iABwYXFN5iadrEy+wplUS/Jv2dJq7ItyK8WuvgFnNnwmSPg==
+X-Received: by 2002:a5d:44cd:: with SMTP id z13mr14968600wrr.104.1576271026494;
+        Fri, 13 Dec 2019 13:03:46 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o7sm11518824wmc.41.2019.12.13.13.03.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Dec 2019 13:03:45 -0800 (PST)
+Message-Id: <pull.678.git.git.1576271025.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 13 Dec 2019 21:03:44 +0000
+Subject: [PATCH 0/1] t3434: mark successful test as such
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-From:   Achim Gratz <Stromeko@nexgo.de>
-Subject: Numbers with specific base (was: [PATCH] userdiff: remove empty subexpression from elixir regex)
-Date:   Fri, 13 Dec 2019 21:59:13 +0100
-Organization: Linux Private Site
-Message-ID: <87tv64ymam.fsf@Rainer.invalid>
-References: <20191213173902.71541-1-emaste@FreeBSD.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
-Cancel-Lock: sha1:NMfH4hhzIz1/+6BeAt7ZtkKj78U=
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+t3434.3 was fixed a week ago, but no-one noticed. Mark it as such.
 
-Nothing to do with the patch from Ed, but the regex following his
-correction matches a lot of things that decidedly are not "Numbers with
-specific bases" as it claims to do in the comment.
+Elijah Newren (1):
+  t3434: mark successful test as such
 
-Ed Maste writes:
->  PATTERNS("elixir",
->  	 "^[ \t]*((def(macro|module|impl|protocol|p)?|test)[ \t].*)$",
->  	 /* Atoms, names, and module attributes */
-> -	 "|[@:]?[a-zA-Z0-9@_?!]+"
-> +	 "[@:]?[a-zA-Z0-9@_?!]+"
->  	 /* Numbers with specific base */
->  	 "|[-+]?0[xob][0-9a-fA-F]+"
-
-Here, things like "+0bad" would match as a base 2 number, which doesn't
-seem right.  If it's intended to match that broadly, I'd have expected a
-comment to that effect.  Maybe something like
-
-"|[-+]?0b[01]+|[-+]?0o[0-7]+|[-+]?0x[0-9a-fA-F]+"
-
-or (if the resulting group is not a problem someplace else)
-
-"|[-+]?0(b[01]+|o[0-7]+|x[0-9a-fA-F]+)"
-
-to more specifically match only what the comment says?
+ t/t3434-rebase-i18n.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 
-
-Regards,
-Achim.
+base-commit: ad05a3d8e5a6a06443836b5e40434262d992889a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-678%2Fnewren%2Ft3434-successful-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-678/newren/t3434-successful-v1
+Pull-Request: https://github.com/git/git/pull/678
 -- 
-+<[Q+ Matrix-12 WAVE#46+305 Neuron microQkb Andromeda XTk Blofeld]>+
-
-SD adaptation for Waldorf rackAttack V1.04R1:
-http://Synth.Stromeko.net/Downloads.html#WaldorfSDada
-
+gitgitgadget
