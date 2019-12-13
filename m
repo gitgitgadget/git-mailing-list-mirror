@@ -2,65 +2,65 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D3ADC00454
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF8AC43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8650D206EE
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E60E20724
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="K6YPs6Z6"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="QIlWxUzB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726840AbfLMXxg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 18:53:36 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44668 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbfLMXxe (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726842AbfLMXxj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 18:53:39 -0500
+Received: from mail-pj1-f47.google.com ([209.85.216.47]:44328 "EHLO
+        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726818AbfLMXxe (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 13 Dec 2019 18:53:34 -0500
-Received: by mail-pf1-f195.google.com with SMTP id d199so2280643pfd.11
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:34 -0800 (PST)
+Received: by mail-pj1-f47.google.com with SMTP id w5so373347pjh.11
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OEk0DorHiKYXJBKppQcBNfdw2rH99FD8zEg6SjEwr9I=;
-        b=K6YPs6Z6Go8zbsd2T8J18nVNuGpQbZZyrAT3knPU4m/hCS5fYwRCaI69P1L8btyvvG
-         s7bcOZt+Qsy6SFp8p2aJh/CM9czo2DBmnnhAETlZrAPpUY0kHNzEIjeJeCu5RC+SP++G
-         Fj2ie1dWVB6ksCe10wppO7fQOzEJgAPVAhWBUzuSbgacePFF6HBx+HlGRRD1/d9L2Pza
-         3NVFT8LuKJlb55x+PoayIp5WPBP4ovrLrKqQwYKFuiJ+Ir1TV0YxSDD1xiFdA8PCdSBx
-         rtQOJRYhqxe9Oq/s/cAl5giLQAAgFkJW0F9vzFDblxKBEvUtbiT5C1jvELJtC9qdnHIY
-         nhuQ==
+        bh=4jyP80vwwKnkuAU276zRpKjBo7AE7L+0OfAIr/aaiRM=;
+        b=QIlWxUzBae0/WfdYjJaW+L6r2N6SUNyfHNBCimp23XIVW92Xl0OrcxhFbVStbbhsLG
+         pDam7xEunLIJZhy/nL64YJhUhwe8VLLhpV707nKDzQ/G8nmknIl07XV8GEiTyQD5j5Wq
+         L+rJnm9TFdHjMhV2n4Jo0Cw9PTF8fzFY5YYt0FrqmAnuTVZhyPvq5ueO5CSRBJRuEJk1
+         T2ReYAFoxhMMcgSgyXpoNMhEmxJU+6QWYaBqtqXd2fSh2oBXXOk4qfM1bJjWVxH4Ft76
+         w/Ouku2oZ+Fb9NATGlnWf8EtDNgGTABJwJXu3cokVhsNZjayPVJZKPsbuls6Jk88qN34
+         FVew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OEk0DorHiKYXJBKppQcBNfdw2rH99FD8zEg6SjEwr9I=;
-        b=S7nHm2/hED2tvCQ88AAxnufpusvpHlBM+3rFm+2mYZPZKdf/GS97s/AhkSLMUbH3Xb
-         Ct130HnS7OMasXmu0P4XRtHt8fJo6fBYt53+EkFl8uVgitiHOmhv0KsbbKTvt5bd2eKs
-         SwXN5b7//OYVwLKnTkkyki1WI4OZZCXub+qwqkoi13+TA4LHcSlwJgRX8GOu7C5Vs5Hb
-         WVGwNLClbztiwxICoa7zjY7DB/uCCb1BjKF2+CNi2/0QQO9YgWoQJkCR3eoZS3k8QJv8
-         vQ1+ahcqcqjb19ScSp+93NZjC6NxphEvLQyZgy7/txX77gBBJs+hkM9o8IgPfvRpTAKb
-         m6dA==
-X-Gm-Message-State: APjAAAUlwuF+u9nsqAaEsWuJNH1ss3VxRUJsXuTlykpdBBTaKE/gL/Mn
-        uImlNy59tEX6cDNNym9sBhlcUYQGWvWa68q8
-X-Google-Smtp-Source: APXvYqwx5aZJRbj+tIBEdxjBkQP5HcOZu0OH7/NPHD8GVWrZs6FAocoNeNZ7r2esCdGiNjRri30MRA==
-X-Received: by 2002:a63:e953:: with SMTP id q19mr2420825pgj.256.1576281213923;
-        Fri, 13 Dec 2019 15:53:33 -0800 (PST)
+        bh=4jyP80vwwKnkuAU276zRpKjBo7AE7L+0OfAIr/aaiRM=;
+        b=IrKVCAE6eJDmOTVBoZWu5aFQhXnTuKHFfht7EOiCk5apKvCNFojYLrd9gggsTumVqX
+         H1KW7exrBr3DLshVa2d51N6UyT8IxYGZL0Ces1pmN3n/x/M44sVMyH1DXoAXuXaA3Iz/
+         nzGTCh+80A/NhZBayBEHkv1TZBM0+HuBdZP0FBnRlYW7jbhdU7vv0n3cL2VknsGxTzGH
+         KpvyI7RdeO75A64Sd4X6JpOXxoLCCAO4svrPc1Bmt8JZFAmJ2w/iZXXr2rIwY09Tnq2B
+         U3wDqsaC8pgb51cB3RNwTgbFiE+ueFM2KdlF+PIlh8pxWAsThG/ow7MIjm1KRB+2lTSU
+         mQ9w==
+X-Gm-Message-State: APjAAAWSfeGPxHW57kNhEhk7Jbl228ZKpgzUXEzeO14h8dsspnSI/ksu
+        E+KyDqpyQUincxBCDKlZ/S1NpfPAnhlbkV3j
+X-Google-Smtp-Source: APXvYqwgUMOfiiGbMs2rMQ2NX+TSND/ukQekBkrUcTJyTBVJ6VZ+3JB0cIeDPEaUI9XiGmng4Oyhkg==
+X-Received: by 2002:a17:90a:d353:: with SMTP id i19mr2516746pjx.43.1576281212905;
+        Fri, 13 Dec 2019 15:53:32 -0800 (PST)
 Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
         by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:33 -0800 (PST)
+        Fri, 13 Dec 2019 15:53:32 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
-        liu.denton@gmail.com, seraphire@gmail.com, szeder.dev@gmail.com
-Subject: [RFC PATCH v2 14/14] ci: also run linux-gcc pipeline with python3.5 environment
-Date:   Fri, 13 Dec 2019 15:52:48 -0800
-Message-Id: <20191213235247.23660-16-yang.zhao@skyboxlabs.com>
+        liu.denton@gmail.com, seraphire@gmail.com
+Subject: [PATCH v2 13/14] git-p4: use python3's input() everywhere
+Date:   Fri, 13 Dec 2019 15:52:47 -0800
+Message-Id: <20191213235247.23660-15-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
 References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
@@ -71,59 +71,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-p4.py includes support for python3, but this was not previously
-validated in CI. Lets actually do that.
-
-As of writing, python-3.5 has reached end-of-life, but has been updated
-recently enough that it's reasonable to attemp to support it. We do not
-have a pressing need for features only available in 3.6 and later.
-
-Usage of python3 is limited to the linux-gcc pipeline on Azure. It is
-assumed that passing both python2 and python3 tests on one platform
-translates to doing the same on others.
-
-Travis-CI is unchanged, as no tests are run in those environments.
+Python3 deprecates raw_input() from 2.7 and replaced it with input().
+Since we do not need 2.7's input() semantics, `raw_input()` is aliased
+to `input()` for easy forward compatability.
 
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
 ---
+ git-p4.py | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-There has been some desire to make this more generally applicable instead
-of being Azure Pipelines specific.  There may be some significant work
-required to make that work for all platforms where t98** tests are being run.
-
-I most likely won't have the bandwith to take on that task in the near future.
-If this patch is deemed insufficient, I would perfer it be dropped form the
-series rather than become a roadblock.
-
-Previous discussion thread here:
-http://public-inbox.org/git/20191210103014.GF6527@szeder.dev/
-
- azure-pipelines.yml | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index af2a5ea484..c473365812 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -331,7 +331,18 @@ jobs:
-   displayName: linux-gcc
-   condition: succeeded()
-   pool: Hosted Ubuntu 1604
-+  strategy:
-+    matrix:
-+      python27:
-+        python.version: '2.7'
-+      python35:
-+        python.version: '3.5'
-   steps:
-+  - task: UsePythonVersion@0
-+    inputs:
-+      versionSpec: '$(python.version)'
-+  - bash: |
-+      echo "##vso[task.setvariable variable=python_path]$(which python)"
-   - bash: |
-        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+diff --git a/git-p4.py b/git-p4.py
+index 3af8df9f83..17f72f4309 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -27,6 +27,16 @@
+ import ctypes
+ import errno
  
++# On python2.7 where raw_input() and input() are both availble,
++# we want raw_input's semantics, but aliased to input for python3
++# compatibility
++# support basestring in python3
++try:
++    if raw_input and input:
++        input = raw_input
++except:
++    pass
++
+ verbose = False
+ 
+ # Only labels/tags matching this will be imported/exported
+@@ -1801,7 +1811,7 @@ def edit_template(self, template_file):
+             return True
+ 
+         while True:
+-            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
++            response = input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
+             if response == 'y':
+                 return True
+             if response == 'n':
+@@ -2372,7 +2382,7 @@ def run(self, args):
+                         # prompt for what to do, or use the option/variable
+                         if self.conflict_behavior == "ask":
+                             print("What do you want to do?")
+-                            response = raw_input("[s]kip this commit but apply"
++                            response = input("[s]kip this commit but apply"
+                                                  " the rest, or [q]uit? ")
+                             if not response:
+                                 continue
 -- 
 2.21.0.windows.1
 
