@@ -2,84 +2,94 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F753C7CFE6
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36246C7CFE8
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7376D24741
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 605F524741
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MSV+zp7h"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tCsvk5fj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728528AbfLMRry (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 12:47:54 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64637 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728445AbfLMRry (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 12:47:54 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E768DA7BD9;
-        Fri, 13 Dec 2019 12:47:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Qn/aVec4EELRqzQQsEEQerpHyeA=; b=MSV+zp
-        7h36ozXcRHJIQxTlSrJ5VNkGQZuMP61g2QiQp3wsCdzKy5iUEKS9g/0g7O1cqky1
-        qn8COdT8eZRPx/d2syiklugXDli8xvEJw3Db+M9MwAFp901gRdR9doAXqeNQH0Ox
-        MNf8BAmDSJdaFbxMc7xGV93j4hEbRsIJWPOck=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oWPYpfD3KCkgDl6x5I86m7dijVIh2eKo
-        ji0YLUND4mGltpw2xYLEZ7T3fsYN4Pg3AhiAh51gAtgag5GLcRXdKjwgGHjYa9PK
-        lbjAPg2laEx+udgeZMF7xvSZ4X6H5zziVGeQZLFUfYCI3zZsA8DqM2KvzCR800fc
-        AC9D3kCA1VE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E0BA0A7BD8;
-        Fri, 13 Dec 2019 12:47:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 075C7A7BD7;
-        Fri, 13 Dec 2019 12:47:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Gmail munges dates?
-References: <20191213015753.GA14249@generichostname>
-Date:   Fri, 13 Dec 2019 09:47:46 -0800
-In-Reply-To: <20191213015753.GA14249@generichostname> (Denton Liu's message of
-        "Thu, 12 Dec 2019 17:57:53 -0800")
-Message-ID: <xmqqy2vgkth9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728392AbfLMRtV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 12:49:21 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39001 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728130AbfLMRtU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 12:49:20 -0500
+Received: by mail-pg1-f194.google.com with SMTP id b137so170387pga.6
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 09:49:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=wbp2p3Nr6V8kQmDYkathF5yFVEbHBIgGAJJkG4NiS7Q=;
+        b=tCsvk5fjvrOK2uYbEMsggrwcmaF581UyhIgaDr8ezKiwY7FbCg0l3ev7cvzl0W7BBO
+         EGgm3KdSOegGywB+FHIoQpAcDSQceqYKSnUL3q9y2lw/fwCdKSCnJLj4hY+Ps3dAqvbK
+         C80Ag/HjIgyQ8KERoEGqw0gx/MvRt7wgrR3elYnP66RHTjYCPIWE/fCmPDXZwA2NZWEN
+         fegS88qCkZrvcSabv7+lVbp0u9jceWcCQakM8q3oniSPJ2ICcR8jXAXBqzq+NhS8om4z
+         go5X6JyH29zzq+V+HK+QtJzzt+uwLfPAMlWH2ogO6cs1VmmH0nyWuzk5i60lIc076tpA
+         AYww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=wbp2p3Nr6V8kQmDYkathF5yFVEbHBIgGAJJkG4NiS7Q=;
+        b=ZkDGbbgrlnjW5fVUluzbyttZOXE+5AoNp0ko8U2N9QngXRqrpcRm4itvnE/i3zfXcp
+         U5Igp7urSOyTbWDIYZMfkfhxd/gkpnhMt747xu6ieipd11WJY3x1/EPyTi2Bs6v07ywL
+         WFbgcFzJmQGPIbP/gm3te9zwAgCrcOLsKt5VEJGfUOtGxuGfFZOtRAUqauVFYnjDLLMX
+         WvvDbH2OHgDP1Ve3WulY7xpc/ZnBrGxNIiz3UMR3mt5+P0ayRL9En6bQUNUGPzfpK7z1
+         ft2AC3EiFsOvs/LJNgmlkfJoEaTPI6Tm5w/tIH7UuSqgVZKtvQpdV7LvTqCdFSfiDFQe
+         0PAg==
+X-Gm-Message-State: APjAAAVdpcu2DAenmYb7uno7eWVh+jS05JaTA2SnO/oHiMUbSl31Okb/
+        Z6y0dt+IplxiPuthtkvKgg+sIQ==
+X-Google-Smtp-Source: APXvYqzzr32/onxZPH2ARb8VB9XqgFDbHMuaCPQWl3MsZjZSVCV+9aIotUL1o562+CJFFYXa7/BpMg==
+X-Received: by 2002:a63:510e:: with SMTP id f14mr687957pgb.35.1576259359901;
+        Fri, 13 Dec 2019 09:49:19 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id d65sm12239273pfa.159.2019.12.13.09.49.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Dec 2019 09:49:19 -0800 (PST)
+Date:   Fri, 13 Dec 2019 09:49:15 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>, Kerry@google.com,
+        Richard <richard.kerry@atos.net>
+Subject: Re: [PATCH v3] MyFirstContribution: add avenues for getting help
+Message-ID: <20191213174915.GD135450@google.com>
+References: <20191213013128.6268-1-emilyshaffer@google.com>
+ <xmqq36dom9bf.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD8F4AD0-1DD0-11EA-84CF-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36dom9bf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Fri, Dec 13, 2019 at 09:20:20AM -0800, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > Since #git-devel's traffic is fairly low, it should be OK to direct some
+> > questions there too.
+> 
+> Correct me if I recall wrong, but wasn't #git the original IRC
+> channel we developers hang out on, and then somebody thought "the
+> traffic is fairly low, so it should be OK" and directed non
+> developer trafic there, which caused the developers to migrate out
+> to #git-devel, a new channel?
 
-> Unfortunately, it seems like mutt wasn't the culprit, it was Gmail
-> that's been munging the dates. For example, in this patch[1], the date
-> shows as
->
-> 	Date: Thu, 12 Dec 2019 16:44:50 -0800
->
-> even though locally, the output of the format-patch shows as
->
-> 	Date: Mon, 9 Dec 2019 19:25:34 +0100
+I certainly don't have the background to correct you, as that was before
+my time, but I can say that this document isn't directing non-developer
+traffic. This is a tutorial for aspiring Git developers to ask questions
+about Git development.
 
-"git send-email" records the timestamp of sending.  If you really
-want to force a specific author date, you could add a in-body Date:
-but it is discouraged in mailing-list centric workflow, because it
-is more natural for everybody other than the author to consider that
-the time the patch hits the list, i.e. the public eyes, is when the
-patch was "authored".
-
+ - Emily
