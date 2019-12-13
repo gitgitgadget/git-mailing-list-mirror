@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51EFFC2D0CE
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9466AC2D0CD
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1EEFE24658
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64DB224658
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 08:08:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CJLMFOye"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qyNDoypZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726762AbfLMIIW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 03:08:22 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42081 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726638AbfLMIIS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 03:08:18 -0500
-Received: by mail-wr1-f66.google.com with SMTP id q6so5566642wro.9
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:16 -0800 (PST)
+        id S1726772AbfLMIIY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 03:08:24 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37851 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726623AbfLMIIU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 03:08:20 -0500
+Received: by mail-wr1-f65.google.com with SMTP id w15so5618598wru.4
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 00:08:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qXuPaAPMgSHBDfzvUw3jAPvhvc003sVj6D1eanc8WVI=;
-        b=CJLMFOyeWE0+PxbLFWvRN6kUwxmVVQzikbrz4tteqScaNR6smqDzYyD8qhy8ExHRzn
-         snc7W8l214A0ckd4KGM/Hqi0qN+9bdmYQpXSa6Y9lixmFXov8lRwgE+FL4RPk55SuonW
-         yNc/XQkZREC9FA0GsfR/CQ6xeTw5Ck4FSZRx2V5xUI/Grq4yvTLQFqAKcx0U0tGV6URa
-         uk0O3gnBfqe9d9kzVa0s1OQatjG8osoorteqVjspJE7EnlkQQwc7FN8GrsKaziWUKdbv
-         bTNpAHCp4luTRXD0mCjBTd5JQ9GbmIkT5Qv6KY78ofDsdz2RAdhSMWcpRDyADn4wmuF+
-         7gEw==
+        bh=VT9oSHUP0RKB+EtGYSHiqIDVovWaaPzNGKQuJobuqtQ=;
+        b=qyNDoypZpJxUmLVkzf1c9Z8Y4/1yQr+62F3ETYKXCNQTihSN5OB2szCISqU5WOsaqw
+         FPVzVFd7QYqDYtnnYgK364eR8IojRL/VPvTUYqucyImiN70+WgVKDLqExEnv3oF1ZGPH
+         bfLCz0tc1meWbn/MedYXiH+jOa/0Tdxuk5kIg3V4/aknf0Pu6zB+EeH9sbdKI6hlfJCG
+         lxtfaKauGDGsXQrf51Ou4P64tQjVW5PZq06EF8D5HiHJtAH2Npd5iUltt9FUzyQwXl5X
+         fVLmsq8ovTH3gdTu3GXM6iHUSd09BlDr+gWEYdiFFiDpZuq1/iXpZeScb3Ub65C403N3
+         Srhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qXuPaAPMgSHBDfzvUw3jAPvhvc003sVj6D1eanc8WVI=;
-        b=KVqqTrnFLyqR+OvQLb0KAcQyLodT3pOF5W1pCmyle9h65Gge15rRlKDYSxOPgq2sfg
-         8JAXdk/mhgy9Zl6LHBcCICPHxyLiRy/HKCTZF0sq7MhMy2Jb2jJDDQ4dhBIjUgFpAmxd
-         WE1XlTUaOtaKuOJfhpqhpWIQG+l1opggM/TgnpjmTyZq8VLfCRV7iW9xMMvCleC1oGoZ
-         33BVDnikLH3XvCREg1gz9xAxUr10ZCWzkipKiTklpEswH29qBqvahxXoyuZxzfyAoFot
-         b7jhV9tBhn/C+B/H8dqhS6ar713OJf8O20tla/1zLQ81Sm2QRkeuD8tweRvo6o6cIncG
-         tyOQ==
-X-Gm-Message-State: APjAAAWNueWFclAT9GuxmJpbKktH0QNgeFK7DHanCyxpzmAPeXPrppy6
-        2Gbv+Lp9kichzpJQjMZRlew6KEx/
-X-Google-Smtp-Source: APXvYqyE6nOhFEnWRHYnntPBZae/WUrkKEEUcFfExbCjb4BmOV0MqWoF9tgQ/3kMdRsbtg10NzBQFA==
-X-Received: by 2002:adf:d184:: with SMTP id v4mr11192984wrc.76.1576224495327;
-        Fri, 13 Dec 2019 00:08:15 -0800 (PST)
+        bh=VT9oSHUP0RKB+EtGYSHiqIDVovWaaPzNGKQuJobuqtQ=;
+        b=Ylp/PmTeGDlY7IwchWGZ8nt6ZTW3iDrpXBdNOgg+UvMCVVKZ210bUX/Pt7gR2IaL9v
+         Usv1BOKsazolT0dliyNU5iRe8kTgCdT8PlcoIObiqqV8gRAql6IkCNfF2hAGsj8fSFxq
+         RHJYMst8TP6TBLe6CAYJHQjLaye0Ol186kPm47U6ugB+aKsi5wjEn5m7hGGkCZmZJlFd
+         dGfI0a0t5hsWjn31l8XbzosUbPo4St0JLk/6AY+aiswltuUlI3PwzGnSIX2F8eK4l+m6
+         QaFaBfw/15WCuWZYvAgsK78CKbI9HPca+m9nOkfrJStX5rBZfKqE9wvG6qjrFUYD3KOW
+         zfuw==
+X-Gm-Message-State: APjAAAX1kk4cdzyGsVkmpCHBhL/dlswtaYwG87rHvBYtFvJElBJvszoG
+        lKcqyEK3r9+pLX3nUnRvOnlJpZpl
+X-Google-Smtp-Source: APXvYqzpHZeELeUkBFAcCi2aZit6dL7MzkPuI0xer1bb4iDQFUEVAb3Ed0RZduPVtlWL8Y/xqjg4wA==
+X-Received: by 2002:a5d:6748:: with SMTP id l8mr11420789wrw.188.1576224498369;
+        Fri, 13 Dec 2019 00:08:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s15sm8980480wrp.4.2019.12.13.00.08.14
+        by smtp.gmail.com with ESMTPSA id b15sm559527wmj.13.2019.12.13.00.08.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 00:08:14 -0800 (PST)
-Message-Id: <a3624d720fa6aa77a3ef0f34618f27c417526fe7.1576224486.git.gitgitgadget@gmail.com>
+        Fri, 13 Dec 2019 00:08:17 -0800 (PST)
+Message-Id: <18c008fbe119036700faf2a82711c2b0f453df6a.1576224486.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 References: <pull.173.git.1576224486.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 13 Dec 2019 08:07:56 +0000
-Subject: [PATCH 09/19] built-in app -p: allow selecting a mode change as a
- "hunk"
+Date:   Fri, 13 Dec 2019 08:08:00 +0000
+Subject: [PATCH 13/19] strbuf: add a helper function to call the editor "on an
+ strbuf"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,192 +77,78 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This imitates the way the Perl version treats mode changes: it offers
-the mode change up for the user to decide, as if it was a diff hunk.
+This helper supports the scenario where Git has a populated `strbuf` and
+wants to let the user edit it interactively.
 
-In contrast to the Perl version, we make use of the fact that the mode
-line is the first hunk, and explicitly strip out that line from the diff
-header if that "hunk" was not selected to be applied, and skipping that
-hunk while coalescing the diff. The Perl version plays some kind of diff
-line lego instead.
+In `git add -p`, we will use this to allow interactive hunk editing: the
+diff hunks are already in memory, but we need to write them out to a
+file so that an editor can be launched, then read everything back once
+the user is done editing.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-patch.c | 109 +++++++++++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 104 insertions(+), 5 deletions(-)
+ strbuf.c | 28 ++++++++++++++++++++++++++++
+ strbuf.h | 11 +++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/add-patch.c b/add-patch.c
-index c32541f46d..2007f55e04 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -33,7 +33,7 @@ struct add_p_state {
- 		struct hunk head;
- 		struct hunk *hunk;
- 		size_t hunk_nr, hunk_alloc;
--		unsigned deleted:1;
-+		unsigned deleted:1, mode_change:1;
- 	} *file_diff;
- 	size_t file_diff_nr;
- };
-@@ -129,6 +129,17 @@ static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
+diff --git a/strbuf.c b/strbuf.c
+index aa48d179a9..f19da55b07 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -1125,3 +1125,31 @@ int strbuf_normalize_path(struct strbuf *src)
+ 	strbuf_release(&dst);
  	return 0;
  }
- 
-+static int is_octal(const char *p, size_t len)
++
++int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
++			      const char *const *env)
 +{
-+	if (!len)
-+		return 0;
++	char *path2 = NULL;
++	int fd, res = 0;
 +
-+	while (len--)
-+		if (*p < '0' || *(p++) > '7')
-+			return 0;
-+	return 1;
-+}
++	if (!is_absolute_path(path))
++		path = path2 = xstrdup(git_path("%s", path));
 +
- static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- {
- 	struct argv_array args = ARGV_ARRAY_INIT;
-@@ -181,7 +192,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 	pend = p + plain->len;
- 	while (p != pend) {
- 		char *eol = memchr(p, '\n', pend - p);
--		const char *deleted = NULL;
-+		const char *deleted = NULL, *mode_change = NULL;
- 
- 		if (!eol)
- 			eol = pend;
-@@ -218,8 +229,53 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 				file_diff->deleted = 1;
- 			else if (parse_hunk_header(s, hunk) < 0)
- 				return -1;
-+		} else if (hunk == &file_diff->head &&
-+			   skip_prefix(p, "old mode ", &mode_change) &&
-+			   is_octal(mode_change, eol - mode_change)) {
-+			if (file_diff->mode_change)
-+				BUG("double mode change?\n\n%.*s",
-+				    (int)(eol - plain->buf), plain->buf);
-+			if (file_diff->hunk_nr++)
-+				BUG("mode change in the middle?\n\n%.*s",
-+				    (int)(eol - plain->buf), plain->buf);
-+
-+			/*
-+			 * Do *not* change `hunk`: the mode change pseudo-hunk
-+			 * is _part of_ the header "hunk".
-+			 */
-+			file_diff->mode_change = 1;
-+			ALLOC_GROW(file_diff->hunk, file_diff->hunk_nr,
-+				   file_diff->hunk_alloc);
-+			memset(file_diff->hunk, 0, sizeof(struct hunk));
-+			file_diff->hunk->start = p - plain->buf;
-+			if (colored_p)
-+				file_diff->hunk->colored_start =
-+					colored_p - colored->buf;
-+		} else if (hunk == &file_diff->head &&
-+			   skip_prefix(p, "new mode ", &mode_change) &&
-+			   is_octal(mode_change, eol - mode_change)) {
-+
-+			/*
-+			 * Extend the "mode change" pseudo-hunk to include also
-+			 * the "new mode" line.
-+			 */
-+			if (!file_diff->mode_change)
-+				BUG("'new mode' without 'old mode'?\n\n%.*s",
-+				    (int)(eol - plain->buf), plain->buf);
-+			if (file_diff->hunk_nr != 1)
-+				BUG("mode change in the middle?\n\n%.*s",
-+				    (int)(eol - plain->buf), plain->buf);
-+			if (p - plain->buf != file_diff->hunk->end)
-+				BUG("'new mode' does not immediately follow "
-+				    "'old mode'?\n\n%.*s",
-+				    (int)(eol - plain->buf), plain->buf);
- 		}
- 
-+		if (file_diff->deleted && file_diff->mode_change)
-+			BUG("diff contains delete *and* a mode change?!?\n%.*s",
-+			    (int)(eol - (plain->buf + file_diff->head.start)),
-+			    plain->buf + file_diff->head.start);
-+
- 		p = eol == pend ? pend : eol + 1;
- 		hunk->end = p - plain->buf;
- 
-@@ -233,6 +289,16 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
- 
- 			hunk->colored_end = colored_p - colored->buf;
- 		}
-+
-+		if (mode_change) {
-+			if (file_diff->hunk_nr != 1)
-+				BUG("mode change in hunk #%d???",
-+				    (int)file_diff->hunk_nr);
-+			/* Adjust the end of the "mode change" pseudo-hunk */
-+			file_diff->hunk->end = hunk->end;
-+			if (colored)
-+				file_diff->hunk->colored_end = hunk->colored_end;
-+		}
- 	}
- 
- 	return 0;
-@@ -284,6 +350,39 @@ static void render_hunk(struct add_p_state *s, struct hunk *hunk,
- 			   hunk->end - hunk->start);
- }
- 
-+static void render_diff_header(struct add_p_state *s,
-+			       struct file_diff *file_diff, int colored,
-+			       struct strbuf *out)
-+{
-+	/*
-+	 * If there was a mode change, the first hunk is a pseudo hunk that
-+	 * corresponds to the mode line in the header. If the user did not want
-+	 * to stage that "hunk", we actually have to cut it out from the header.
-+	 */
-+	int skip_mode_change =
-+		file_diff->mode_change && file_diff->hunk->use != USE_HUNK;
-+	struct hunk *head = &file_diff->head, *first = file_diff->hunk;
-+
-+	if (!skip_mode_change) {
-+		render_hunk(s, head, 0, colored, out);
-+		return;
++	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0666);
++	if (fd < 0)
++		res = error_errno(_("could not open '%s' for writing"), path);
++	else if (write_in_full(fd, buffer->buf, buffer->len) < 0) {
++		res = error_errno(_("could not write to '%s'"), path);
++		close(fd);
++	} else if (close(fd) < 0)
++		res = error_errno(_("could not close '%s'"), path);
++	else {
++		strbuf_reset(buffer);
++		if (launch_editor(path, buffer, env) < 0)
++			res = error_errno(_("could not edit '%s'"), path);
++		unlink(path);
 +	}
 +
-+	if (colored) {
-+		const char *p = s->colored.buf;
-+
-+		strbuf_add(out, p + head->colored_start,
-+			    first->colored_start - head->colored_start);
-+		strbuf_add(out, p + first->colored_end,
-+			    head->colored_end - first->colored_end);
-+	} else {
-+		const char *p = s->plain.buf;
-+
-+		strbuf_add(out, p + head->start, first->start - head->start);
-+		strbuf_add(out, p + first->end, head->end - first->end);
-+	}
++	free(path2);
++	return res;
 +}
+diff --git a/strbuf.h b/strbuf.h
+index 84cf969721..bfa66569a4 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -621,6 +621,17 @@ int launch_editor(const char *path, struct strbuf *buffer,
+ int launch_sequence_editor(const char *path, struct strbuf *buffer,
+ 			   const char *const *env);
+ 
++/*
++ * In contrast to `launch_editor()`, this function writes out the contents
++ * of the specified file first, then clears the `buffer`, then launches
++ * the editor and reads back in the file contents into the `buffer`.
++ * Finally, it deletes the temporary file.
++ *
++ * If `path` is relative, it refers to a file in the `.git` directory.
++ */
++int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
++			      const char *const *env);
 +
- static void reassemble_patch(struct add_p_state *s,
- 			     struct file_diff *file_diff, struct strbuf *out)
- {
-@@ -291,9 +390,9 @@ static void reassemble_patch(struct add_p_state *s,
- 	size_t i;
- 	ssize_t delta = 0;
- 
--	render_hunk(s, &file_diff->head, 0, 0, out);
-+	render_diff_header(s, file_diff, 0, out);
- 
--	for (i = 0; i < file_diff->hunk_nr; i++) {
-+	for (i = file_diff->mode_change; i < file_diff->hunk_nr; i++) {
- 		hunk = file_diff->hunk + i;
- 		if (hunk->use != USE_HUNK)
- 			delta += hunk->header.old_count
-@@ -328,7 +427,7 @@ static int patch_update_file(struct add_p_state *s,
- 		return 0;
- 
- 	strbuf_reset(&s->buf);
--	render_hunk(s, &file_diff->head, 0, colored, &s->buf);
-+	render_diff_header(s, file_diff, colored, &s->buf);
- 	fputs(s->buf.buf, stdout);
- 	for (;;) {
- 		if (hunk_index >= file_diff->hunk_nr)
+ void strbuf_add_lines(struct strbuf *sb,
+ 		      const char *prefix,
+ 		      const char *buf,
 -- 
 gitgitgadget
 
