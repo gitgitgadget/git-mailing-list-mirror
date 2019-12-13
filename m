@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F96C43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46F73C43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A8D562253D
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D3152253D
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 00:43:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y6U+A+eb"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fY/TUXKE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731726AbfLMAnl (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1731733AbfLMAnn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Dec 2019 19:43:43 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:51309 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731722AbfLMAnl (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 12 Dec 2019 19:43:41 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:38822 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731722AbfLMAnj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Dec 2019 19:43:39 -0500
-Received: by mail-pg1-f201.google.com with SMTP id l13so351142pgt.5
-        for <git@vger.kernel.org>; Thu, 12 Dec 2019 16:43:38 -0800 (PST)
+Received: by mail-pf1-f202.google.com with SMTP id h22so372308pfo.18
+        for <git@vger.kernel.org>; Thu, 12 Dec 2019 16:43:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=qBQm09bh4S6bFa+KGMXaVCUH33mTauwB38+9NuRoiiY=;
-        b=Y6U+A+eb+7ML3hjQ4SomyKU8ngswbSEpbba+D+cBFFGzFtjg9C7taH55kYMlSNXDGb
-         l0KqwDKYY7okkoXLkpbEn+Q+fLQS3a+PL3Rt3kHOWAuA/kVsE7R1KxAiyCwmg6e5Auce
-         xLmESxrDYNzEnDyrYaV3hU8tEUCCw9dMk6zBsGyM1NN7OH7lQ0zHfRdMJTjRrmfHvYfY
-         Rgpy6g7a+13kwnF/2G/+RkNhVk9w+Ji0LivdXvIVZB30OQle3jirb1gSYySrTDEOF6SB
-         EZkNb5Wq8O9mMOpwdFMQhXM3KLdlfooHtewHseOTwObixhp5u4pMA+VlKVWZP+2uzAat
-         38ZQ==
+        bh=moNPuHjYyDs+iOyyWpo7dGT7iFTwBt05Fs9rna+PXXg=;
+        b=fY/TUXKE4sLpgXfwA96C/1tpmnPMp9rFTD1DnzVKfb9fGgJnOOYMD5+zc3Dig/oJdK
+         BVowk/ajHIC5txO3cekp+Sdbbk/B0d1jDAQaxBNVm9We/uxFelCteCAWR8rukpVJ8xCs
+         FbO109O5gV0SYup3j4l/FgDMgATuY+EOQo1726Hf7LqB1bA7zsSICyDLeAcAcAt+it28
+         OK3QGTwlMPU8D5sQL6slxSXs21QtLpbKonLAQbBAb3Er1bzKfzAQZLOAvBejcTH7HGcF
+         C0/MGKxoXGl0yOyW9hJ0VnjabtX2FJHuN2/tzxJw2C6OZvqAB92V4mETg/02kYePNBMi
+         bJSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=qBQm09bh4S6bFa+KGMXaVCUH33mTauwB38+9NuRoiiY=;
-        b=LCmHtUsvs8pFdiAuDva7BkJ43ulkhnXfgQTISY+9Wcz5m1HFUZCzZtQsaWkPX0pP5W
-         sE0mzWncP+OZooNcocTfkSY3pdvtPr8MFREllGS6GHIMAaZfj/unl2YGz7QhQcdP2D1O
-         GDkGNLw7YI4pLAQ0cJ5rHwxi25hIq0T4VnLWlbBiAleDzVB7diKynYLxPnDueNVtXVNz
-         RFd8AvOgl1zUCjxs4ogxxqJxDh5OZMjXRu/EdNx5CD8ZxOyneOKmUEbg3NDlqB2E5TSf
-         CXHDgjhyxnd2Lh0v3XYqixXpxrbwbhEjUQptkv+CfgkpMD+VrQyQ0whbdYk7XlQfYr9u
-         wjeQ==
-X-Gm-Message-State: APjAAAUEo9V9K8u7zgsObY/nl5YzSKevZyLA88dQ1T3dASD4RgFNCuQ0
-        tNqBEjcl+00UTMTLznNW44D0TxWeFizAUGWjOkLYq8Nge5P0xnS9twn1JDbjC1WQ/InVOybPqkp
-        dsVqDMwIgaX7vc3POgve68rFF86wNa5/eFXdJCfLdGsdeqXWdHeSJKpkpfHJwRDJXq3l/I0L2RQ
+        bh=moNPuHjYyDs+iOyyWpo7dGT7iFTwBt05Fs9rna+PXXg=;
+        b=iLKK1WJN4DvPKT2IiVSVe0eII8Rptw3urPD05rl94ck9Xa/q3/2A/aVNstLU9w/37i
+         0y+qofIrGi16qvMPG/iXbTNNi6jCBJHTmOObCfD6LICyLfU6zYWQMMlH9iHXadYGk0SS
+         amfvuNChujnq+vU6dE+4YPNOmxfW7JMSFHR5HQkInc7m0EA2xRPTF8Pf2mDpb/juVFpl
+         qTSeLBuP4CWgo1nYrgk+esawDIHov888AHbueNO0Srfy3gbE6txjT49GFatieCI1r4I8
+         FCNzGlkD4te2LmqnxAEagk8Fh/3KGari1o0AwlJFMEtjsYshQa7j9QxK/Uufl+UcYz9g
+         f3ig==
+X-Gm-Message-State: APjAAAU7jmRy3tUQqZk/SCWybolGBZX0J99NG1oQGdlKZkMHpT3LBuvq
+        Vtn0/5q1EiXMQSJpzwlLgcaNuvwkmXvy7oV0OvrBXwqQZAdK805Ypi0IcRwcur0ZXJMWSrqyRkv
+        x9WQZEebdAApe4qebyNq+7UQze0Mn7v7tGFJeaoKwyG32HB6OAntwxGJnoccWoSboZLX5IGDfHw
         ==
-X-Google-Smtp-Source: APXvYqyxJ2iTl5XlufBKiEvmUrT/Eqz8hm/fcP6MFan69V6nVst06eqmPNGsqWp+sVJISHzp560W9zISw487EmkGq4U=
-X-Received: by 2002:a63:d705:: with SMTP id d5mr13651541pgg.24.1576197818442;
- Thu, 12 Dec 2019 16:43:38 -0800 (PST)
-Date:   Thu, 12 Dec 2019 16:43:02 -0800
+X-Google-Smtp-Source: APXvYqwxnRnl6APfuewerGUWe/VownlBcjg1hwOV/ezwQg6srUfWPiMPkYsVvF7nKaNdBQjxlI4BzEmkfJxA9zAIHkA=
+X-Received: by 2002:a63:2ac2:: with SMTP id q185mr13907714pgq.417.1576197821103;
+ Thu, 12 Dec 2019 16:43:41 -0800 (PST)
+Date:   Thu, 12 Dec 2019 16:43:03 -0800
 In-Reply-To: <20191213004312.169753-1-emilyshaffer@google.com>
-Message-Id: <20191213004312.169753-6-emilyshaffer@google.com>
+Message-Id: <20191213004312.169753-7-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20191213004312.169753-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-Subject: [PATCH v4 05/15] bugreport: add uname info
+Subject: [PATCH v4 06/15] bugreport: add glibc version
 From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -68,43 +68,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The contents of uname() can give us some insight into what sort of
-system the user is running on, and help us replicate their setup if need
-be. The domainname field is not guaranteed to be available, so don't
-collect it.
+To help pinpoint the source of a regression, it is useful to know the
+version of libc which the user's Git client was built with. Let's
+include it alongside the other versioning information, which is used to
+identify how the client was built.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ bugreport.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/bugreport.c b/bugreport.c
-index 59d8b5a3af..9c69e3fa34 100644
+index 9c69e3fa34..af715dc157 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -8,12 +8,25 @@
+@@ -4,6 +4,7 @@
+ #include "strbuf.h"
+ #include "time.h"
+ #include "help.h"
++#include <gnu/libc-version.h>
+ 
  static void get_system_info(struct strbuf *sys_info)
  {
- 	struct strbuf version_info = STRBUF_INIT;
-+	struct utsname uname_info;
- 
- 	/* get git version from native cmd */
- 	strbuf_addstr(sys_info, "git version:\n");
- 	list_version_info(&version_info, 1);
- 	strbuf_addbuf(sys_info, &version_info);
- 	strbuf_complete_line(sys_info);
+@@ -27,6 +28,10 @@ static void get_system_info(struct strbuf *sys_info)
+ 			    uname_info.release,
+ 			    uname_info.version,
+ 			    uname_info.machine);
 +
-+	/* system call for other version info */
-+	strbuf_addstr(sys_info, "uname -a: ");
-+	if (uname(&uname_info))
-+		strbuf_addf(sys_info, "uname() failed with code %d\n", errno);
-+	else
-+		strbuf_addf(sys_info, "%s %s %s %s %s\n",
-+			    uname_info.sysname,
-+			    uname_info.nodename,
-+			    uname_info.release,
-+			    uname_info.version,
-+			    uname_info.machine);
++	strbuf_addstr(sys_info, "glibc version: ");
++	strbuf_addstr(sys_info, gnu_get_libc_version());
++	strbuf_complete_line(sys_info);
  }
  
  static const char * const bugreport_usage[] = {
