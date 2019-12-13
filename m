@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95511C43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 189A0C43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7C664206EE
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F234D22527
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="s4nG4MyK"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="N08wuF2C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbfLMXxX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 18:53:23 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:42342 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbfLMXxW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 18:53:22 -0500
-Received: by mail-pl1-f196.google.com with SMTP id x13so1882027plr.9
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:21 -0800 (PST)
+        id S1726767AbfLMXx0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 18:53:26 -0500
+Received: from mail-pl1-f172.google.com ([209.85.214.172]:40656 "EHLO
+        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726741AbfLMXxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 18:53:25 -0500
+Received: by mail-pl1-f172.google.com with SMTP id g6so1883010plp.7
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ecnvCqyfkZcd7TihBAMzcdaLrOm3d+1fccnRmDnk5Lk=;
-        b=s4nG4MyKtIBQCSP/U+yeLk+kYJ8wj5hSlWJfOjhlv3Wt0P6tQeLzIJB2LkQZ8pWAtL
-         tG0sN4dejCZqUQfnBOcaGdFdDgrJmKwDNxxvEcfhxfQ0ags8cgaCXCaNqbgshAS3pjpK
-         KE08KOb4k0ThgHvmI8NdroGDRrSz/FYA2Z8Zxs0FfTHg0OF8i6eWyR0CIV7GETk6lg0q
-         poLcbfdAj3thtd/ueuZFRbN53OWMXoW2ySBORUl/LVa1T1u3Y+4xwSDmy71mBVcNerGg
-         UEz73XiEuZPCReKIC5KXBqB5C9RR8Cs4Sf++igXE28fBaZwW78HLAHHg8Z7X9MpfAD04
-         RpgA==
+        bh=a4Lo37diy/qv5OQQYgH1+e/IZeMp2Ts13inSK6KPdzc=;
+        b=N08wuF2C2m+jBHEqvXAdimPEDx768SatkZpMIT6JtqI2OvWOhgG9K/paE7o4mzK4m5
+         IKRc+mJdKIdGExwP70FYN70igPkamZMlEvBuv9JoboJSDq4ey1dzZR9GhnsnhRBFUbjH
+         h5q5VKfS6rUJXPUS3AeGK12Zygs0xjICVhhZmb/1XRs1bGoeAKgrRqE6UvvHGdCbke6g
+         2K2pCc1nmnHQ4XUzD8PmUg9xxJ6UPjOKMBZuddmJt3QUOAx0Zl0ziAHSj+/9UKqmJheF
+         cJh9NA0w+Cc8dMidyEBHCm5CaQVfZ8D3vOqSZHKdz/YG7lcLuhnE6g0grjcKX/YWbonb
+         sQmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ecnvCqyfkZcd7TihBAMzcdaLrOm3d+1fccnRmDnk5Lk=;
-        b=LW4sQaM5uVTIJ8rW6CaQXwqhk3GQje8CuEybICp+nEV6sfIOYLQwYvoa6wSgF5zVAl
-         H9SO/ynhLmg+fEjnD8274NrZqGc8TWHyjBJNEbFDzoyp7bRFik6iRlFdigwKfRJARZUu
-         cWswDN2ryKDNlJE++CNhSwtZ+ZPmZjby5ftejyp5nWocDcEyeMD6RADyFY/2WRX+630G
-         TFVtfdx+Y3WfawotYtrdt4SoqBctEo4cVB7mSjbxvy3JOOfTyuH0xZKSnS8fu5yLTNDV
-         IQu+DADOvp1AeBCcCvWAkJ2iZNap3gvDn1jHUCLwtIs0bhLQWGF6m9IdiIXZPsiTM22+
-         4Izw==
-X-Gm-Message-State: APjAAAVQLAxGn7UsJFmeTLk0oY2aPqQMMX/PCKM9rAiEK2YXW51ceSOg
-        VnNrs5cQ17DSbfrsn1P2Yvbzxz03RRkhmmbw
-X-Google-Smtp-Source: APXvYqyxY8J/vklTD+1PT94znKD6EsrRrXTPvsCLIAcMxJTMB9T4IrRVpslNla+lZqEev3aG64Cyuw==
-X-Received: by 2002:a17:90a:1b6b:: with SMTP id q98mr2509216pjq.106.1576281201183;
-        Fri, 13 Dec 2019 15:53:21 -0800 (PST)
+        bh=a4Lo37diy/qv5OQQYgH1+e/IZeMp2Ts13inSK6KPdzc=;
+        b=QdkiN8QcI0WeUcTnTXgF3MP1oGNKAVRdbewpHOx1D5Tm//XYY4L+Q/uzhfx9/zYdXy
+         0gH7uV00T5YFqLQOAGc0c1ivVPjbEiF/nFMJq+ylF7o5KgyE4rcGOKi3Vhn2e91H3K8g
+         QlPaevq1DfMmBumCOoSmMlYnWTKqYQHK/1lY8zUgvNvroetgxb5OGJ6l0BtUhz/pNjkC
+         mTLb/Fjv9UYlJR1KBDevH3OjHKtH1R6tafeRgac3PevuUNXfCiEavu1/RdInZeAHxXG5
+         uSIAklOyBeX5u4pzXVsBq8oGS37eOgMEnZOB6ui9/QvccxyiFCNnz3OaRYPuBNtXrGNH
+         0iRQ==
+X-Gm-Message-State: APjAAAX42UiGxklkUO+XbVuWXexIv96ZOZXB4R1PqFyH0MphhyBGGSHW
+        ReZUwTjxVqEwVgk5NjHfG2X/puiXVWylzCLI
+X-Google-Smtp-Source: APXvYqxpsOZ/IWnJ3WRj87ah1hqmwNN2Ei2AEX1jo1qrhFpOVt09Y7j1cfHpe1vJNg9BC1akAcVYvw==
+X-Received: by 2002:a17:902:8688:: with SMTP id g8mr2351304plo.132.1576281204470;
+        Fri, 13 Dec 2019 15:53:24 -0800 (PST)
 Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
-        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.20
+        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:20 -0800 (PST)
+        Fri, 13 Dec 2019 15:53:23 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
-Cc:     Ben Keene <seraphire@gmail.com>, luke@diamand.org,
-        liu.denton@gmail.com, Yang Zhao <yang.zhao@skyboxlabs.com>
-Subject: [PATCH v2 02/14] git-p4: change the expansion test from basestring to list
-Date:   Fri, 13 Dec 2019 15:52:36 -0800
-Message-Id: <20191213235247.23660-4-yang.zhao@skyboxlabs.com>
+Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
+        liu.denton@gmail.com, seraphire@gmail.com
+Subject: [PATCH v2 05/14] git-p4: encode/decode communication with git for python3
+Date:   Fri, 13 Dec 2019 15:52:39 -0800
+Message-Id: <20191213235247.23660-7-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
 References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
@@ -71,126 +71,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Keene <seraphire@gmail.com>
+Under python3, calls to write() on the stream to `git fast-import` must
+be encoded.  This patch wraps the IO object such that this encoding is
+done transparently.
 
-Python 3 handles strings differently than Python 2.7. Since Python 2
-is reaching it's end of life, a series of changes are being submitted to
-enable python 3.5 and following support. The current code fails basic
-tests under python 3.5.
+Conversely, any text data read from subprocesses must also be decoded
+before running through the rest of the pipeline.
 
-Some codepaths can represent a command line the program
-internally prepares to execute either as a single string
-(i.e. each token properly quoted, concatenated with $IFS) or
-as a list of argv[] elements, and there are 9 places where
-we say "if X is isinstance(_, basestring), then do this
-thing to handle X as a command line in a single string; if
-not, X is a command line in a list form".
-
-This does not work well with Python 3, as there is no
-basestring (everything is Unicode now), and even with Python
-2, it was not an ideal way to tell the two cases apart,
-because an internally formed command line could have been in
-a single Unicode string.
-
-Flip the check to say "if X is not a list, then handle X as
-a command line in a single string; otherwise treat it as a
-command line in a list form".
-
-This will get rid of references to 'basestring', to migrate
-the code ready for Python 3.
-
-Thanks-to: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ben Keene <seraphire@gmail.com>
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
+Reviewed-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ git-p4.py | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index 37777bb9fd..2f177fb43b 100755
+index ca891e3d5d..d62fb05989 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -89,7 +89,7 @@ def p4_build_cmd(cmd):
-         # Provide a way to not pass this option by setting git-p4.retries to 0
-         real_cmd += ["-r", str(retries)]
- 
--    if isinstance(cmd,basestring):
-+    if not isinstance(cmd, list):
-         real_cmd = ' '.join(real_cmd) + ' ' + cmd
-     else:
-         real_cmd += cmd
-@@ -155,7 +155,7 @@ def write_pipe(c, stdin):
-     if verbose:
-         sys.stderr.write('Writing pipe: %s\n' % str(c))
- 
--    expand = isinstance(c,basestring)
-+    expand = not isinstance(c, list)
-     p = subprocess.Popen(c, stdin=subprocess.PIPE, shell=expand)
-     pipe = p.stdin
-     val = pipe.write(stdin)
-@@ -177,7 +177,7 @@ def read_pipe_full(c):
-     if verbose:
-         sys.stderr.write('Reading pipe: %s\n' % str(c))
- 
--    expand = isinstance(c,basestring)
-+    expand = not isinstance(c, list)
-     p = subprocess.Popen(c, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=expand)
+@@ -183,10 +183,12 @@ def read_pipe_full(c):
      (out, err) = p.communicate()
-     return (p.returncode, out, err)
-@@ -213,7 +213,7 @@ def read_pipe_lines(c):
-     if verbose:
-         sys.stderr.write('Reading pipe: %s\n' % str(c))
+     return (p.returncode, out, decode_text_stream(err))
  
--    expand = isinstance(c, basestring)
-+    expand = not isinstance(c, list)
-     p = subprocess.Popen(c, stdout=subprocess.PIPE, shell=expand)
-     pipe = p.stdout
-     val = pipe.readlines()
-@@ -256,7 +256,7 @@ def p4_has_move_command():
-     return True
+-def read_pipe(c, ignore_error=False):
++def read_pipe(c, ignore_error=False, raw=False):
+     """ Read output from  command. Returns the output text on
+         success. On failure, terminates execution, unless
+         ignore_error is True, when it returns an empty string.
++
++        If raw is True, do not attempt to decode output text.
+     """
+     (retcode, out, err) = read_pipe_full(c)
+     if retcode != 0:
+@@ -194,6 +196,8 @@ def read_pipe(c, ignore_error=False):
+             out = ""
+         else:
+             die('Command failed: %s\nError: %s' % (str(c), err))
++    if not raw:
++        out = decode_text_stream(out)
+     return out
  
- def system(cmd, ignore_error=False):
--    expand = isinstance(cmd,basestring)
-+    expand = not isinstance(cmd, list)
-     if verbose:
-         sys.stderr.write("executing %s\n" % str(cmd))
-     retcode = subprocess.call(cmd, shell=expand)
-@@ -268,7 +268,7 @@ def system(cmd, ignore_error=False):
- def p4_system(cmd):
-     """Specifically invoke p4 as the system command. """
-     real_cmd = p4_build_cmd(cmd)
--    expand = isinstance(real_cmd, basestring)
-+    expand = not isinstance(real_cmd, list)
-     retcode = subprocess.call(real_cmd, shell=expand)
-     if retcode:
-         raise CalledProcessError(retcode, real_cmd)
-@@ -506,7 +506,7 @@ def getP4OpenedType(file):
- # Return the set of all p4 labels
- def getP4Labels(depotPaths):
-     labels = set()
--    if isinstance(depotPaths,basestring):
-+    if not isinstance(depotPaths, list):
-         depotPaths = [depotPaths]
+ def read_pipe_text(c):
+@@ -220,7 +224,6 @@ def read_pipe_lines(c):
+     val = [decode_text_stream(line) for line in pipe.readlines()]
+     if pipe.close() or p.wait():
+         die('Command failed: %s' % str(c))
+-
+     return val
  
-     for l in p4CmdList(["labels"] + ["%s..." % p for p in depotPaths]):
-@@ -593,7 +593,7 @@ def isModeExecChanged(src_mode, dst_mode):
- def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-         errors_as_exceptions=False):
- 
--    if isinstance(cmd,basestring):
-+    if not isinstance(cmd, list):
-         cmd = "-G " + cmd
-         expand = True
-     else:
-@@ -610,7 +610,7 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-     stdin_file = None
-     if stdin is not None:
-         stdin_file = tempfile.TemporaryFile(prefix='p4-stdin', mode=stdin_mode)
--        if isinstance(stdin,basestring):
-+        if not isinstance(stdin, list):
+ def p4_read_pipe_lines(c):
+@@ -616,7 +619,8 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
              stdin_file.write(stdin)
          else:
              for i in stdin:
+-                stdin_file.write(i + '\n')
++                stdin_file.write(encode_text_stream(i))
++                stdin_file.write(b'\n')
+         stdin_file.flush()
+         stdin_file.seek(0)
+ 
+@@ -1245,7 +1249,7 @@ def generatePointer(self, contentFile):
+             ['git', 'lfs', 'pointer', '--file=' + contentFile],
+             stdout=subprocess.PIPE
+         )
+-        pointerFile = pointerProcess.stdout.read()
++        pointerFile = decode_text_stream(pointerProcess.stdout.read())
+         if pointerProcess.wait():
+             os.remove(contentFile)
+             die('git-lfs pointer command failed. Did you install the extension?')
+@@ -3538,6 +3542,15 @@ def openStreams(self):
+         self.gitStream = self.importProcess.stdin
+         self.gitError = self.importProcess.stderr
+ 
++        if bytes is not str:
++            # Wrap gitStream.write() so that it can be called using `str` arguments
++            def make_encoded_write(write):
++                def encoded_write(s):
++                    return write(s.encode() if isinstance(s, str) else s)
++                return encoded_write
++
++            self.gitStream.write = make_encoded_write(self.gitStream.write)
++
+     def closeStreams(self):
+         self.gitStream.close()
+         if self.importProcess.wait() != 0:
 -- 
 2.21.0.windows.1
 
