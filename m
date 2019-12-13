@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5BCC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D3ADC00454
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 52B38206EE
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8650D206EE
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="D6tNdfHT"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="K6YPs6Z6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726833AbfLMXxf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 18:53:35 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:32983 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726802AbfLMXxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 18:53:31 -0500
-Received: by mail-pg1-f195.google.com with SMTP id 6so265158pgk.0
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:31 -0800 (PST)
+        id S1726840AbfLMXxg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 18:53:36 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:44668 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726831AbfLMXxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 18:53:34 -0500
+Received: by mail-pf1-f195.google.com with SMTP id d199so2280643pfd.11
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AsFx78VLSxJNAtG4kOBuFFJgV8dMv4lwgcP7TH725+c=;
-        b=D6tNdfHTVlJsAsR1nREUWwAVRGCbmKtvUzB1DsEqTBJe7G7S9PQJwahBqHrFhKTPd4
-         t/yA9poEVA3lGSJN2BTtDVST9nZnw3BifOgcPgKRtDiq8BT1A8L6t1skb9HeponnoOQA
-         9oXt48wUdEJCigNT7Lg44bDzexcptbfnG7gaB0Qd4tQeUskEarN8ldsQSgHKkHETUiZ/
-         Z9scqEJYv9+gOV6thBqQfNwtnGt4IaszhJuP0KE9n6NjgGx33xcignuj7E1pQkEwuwE6
-         oeRUAFb37vw6dUkrPGX1SIjXd2PhUfdEGFnVDZdZgXtbQENyZA23mR3S0JwmBckx7wmk
-         EoLw==
+        bh=OEk0DorHiKYXJBKppQcBNfdw2rH99FD8zEg6SjEwr9I=;
+        b=K6YPs6Z6Go8zbsd2T8J18nVNuGpQbZZyrAT3knPU4m/hCS5fYwRCaI69P1L8btyvvG
+         s7bcOZt+Qsy6SFp8p2aJh/CM9czo2DBmnnhAETlZrAPpUY0kHNzEIjeJeCu5RC+SP++G
+         Fj2ie1dWVB6ksCe10wppO7fQOzEJgAPVAhWBUzuSbgacePFF6HBx+HlGRRD1/d9L2Pza
+         3NVFT8LuKJlb55x+PoayIp5WPBP4ovrLrKqQwYKFuiJ+Ir1TV0YxSDD1xiFdA8PCdSBx
+         rtQOJRYhqxe9Oq/s/cAl5giLQAAgFkJW0F9vzFDblxKBEvUtbiT5C1jvELJtC9qdnHIY
+         nhuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AsFx78VLSxJNAtG4kOBuFFJgV8dMv4lwgcP7TH725+c=;
-        b=PUjvKZyvVl4w1jrLM9VbtCXtHumHrhqh5Y3nDbt2sN6dx/h3mIuIuAO6JKNOTnxl0a
-         DG1DDWxi5Kmq5lvujolafUfXwWLQSesU9Sh+00UxMFSfXZo4y1NKy2rPpV9e4mCqJaXU
-         qRx8ZD3Hxtsrfuw9wz13pN4glwZ++jMRvLpeXioorDwrWIM3R2e91wY4O99+3lb9UXBV
-         GeaDN2Az3ECG213Xr6hNmK72orh2LzzRMRK/N91RxBTLo60WAVEir0jGZB4OZjveLh+3
-         TplfepMvE7ES1CIyXZyHaf7gDg1dxFAM5SeGHKZuJUdh7RzzOOw8vfP840xiZ9NKX0+y
-         sDiA==
-X-Gm-Message-State: APjAAAX049DAg1Bxax3aUwxOB5cNj6+wtLRHHIxaoPp/RSNkSgR7dzkk
-        RVuv7q5o5Kzs32WLfNAVtLXVCzUDfz2+DnYR
-X-Google-Smtp-Source: APXvYqyteDOP2DmNSiI652khGxCv/HSVwwPfZHLYriuOx8UTwaTErr6JfHDITweAyH1nYaHE6Mu58Q==
-X-Received: by 2002:aa7:8699:: with SMTP id d25mr2363813pfo.139.1576281210946;
-        Fri, 13 Dec 2019 15:53:30 -0800 (PST)
+        bh=OEk0DorHiKYXJBKppQcBNfdw2rH99FD8zEg6SjEwr9I=;
+        b=S7nHm2/hED2tvCQ88AAxnufpusvpHlBM+3rFm+2mYZPZKdf/GS97s/AhkSLMUbH3Xb
+         Ct130HnS7OMasXmu0P4XRtHt8fJo6fBYt53+EkFl8uVgitiHOmhv0KsbbKTvt5bd2eKs
+         SwXN5b7//OYVwLKnTkkyki1WI4OZZCXub+qwqkoi13+TA4LHcSlwJgRX8GOu7C5Vs5Hb
+         WVGwNLClbztiwxICoa7zjY7DB/uCCb1BjKF2+CNi2/0QQO9YgWoQJkCR3eoZS3k8QJv8
+         vQ1+ahcqcqjb19ScSp+93NZjC6NxphEvLQyZgy7/txX77gBBJs+hkM9o8IgPfvRpTAKb
+         m6dA==
+X-Gm-Message-State: APjAAAUlwuF+u9nsqAaEsWuJNH1ss3VxRUJsXuTlykpdBBTaKE/gL/Mn
+        uImlNy59tEX6cDNNym9sBhlcUYQGWvWa68q8
+X-Google-Smtp-Source: APXvYqwx5aZJRbj+tIBEdxjBkQP5HcOZu0OH7/NPHD8GVWrZs6FAocoNeNZ7r2esCdGiNjRri30MRA==
+X-Received: by 2002:a63:e953:: with SMTP id q19mr2420825pgj.256.1576281213923;
+        Fri, 13 Dec 2019 15:53:33 -0800 (PST)
 Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
-        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.30
+        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:30 -0800 (PST)
+        Fri, 13 Dec 2019 15:53:33 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
-        liu.denton@gmail.com, seraphire@gmail.com
-Subject: [PATCH v2 11/14] git-p4: use dict.items() iteration for python3 compatibility
-Date:   Fri, 13 Dec 2019 15:52:45 -0800
-Message-Id: <20191213235247.23660-13-yang.zhao@skyboxlabs.com>
+        liu.denton@gmail.com, seraphire@gmail.com, szeder.dev@gmail.com
+Subject: [RFC PATCH v2 14/14] ci: also run linux-gcc pipeline with python3.5 environment
+Date:   Fri, 13 Dec 2019 15:52:48 -0800
+Message-Id: <20191213235247.23660-16-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
 References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
@@ -71,30 +71,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Python3 uses dict.items() instead of .iteritems() to provide
-iteratoration over dict.  Although items() is technically less efficient
-for python2.7 (allocates a new list instead of simply iterating), the
-amount of data involved is very small and the penalty negligible.
+git-p4.py includes support for python3, but this was not previously
+validated in CI. Lets actually do that.
+
+As of writing, python-3.5 has reached end-of-life, but has been updated
+recently enough that it's reasonable to attemp to support it. We do not
+have a pressing need for features only available in 3.6 and later.
+
+Usage of python3 is limited to the linux-gcc pipeline on Azure. It is
+assumed that passing both python2 and python3 tests on one platform
+translates to doing the same on others.
+
+Travis-CI is unchanged, as no tests are run in those environments.
 
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
-Reviewed-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 7deee1b939..b7e31d4738 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1745,7 +1745,7 @@ def prepareSubmitTemplate(self, changelist=None):
-                 break
-         if not change_entry:
-             die('Failed to decode output of p4 change -o')
--        for key, value in change_entry.iteritems():
-+        for key, value in change_entry.items():
-             if key.startswith('File'):
-                 if 'depot-paths' in settings:
-                     if not [p for p in settings['depot-paths']
+There has been some desire to make this more generally applicable instead
+of being Azure Pipelines specific.  There may be some significant work
+required to make that work for all platforms where t98** tests are being run.
+
+I most likely won't have the bandwith to take on that task in the near future.
+If this patch is deemed insufficient, I would perfer it be dropped form the
+series rather than become a roadblock.
+
+Previous discussion thread here:
+http://public-inbox.org/git/20191210103014.GF6527@szeder.dev/
+
+ azure-pipelines.yml | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index af2a5ea484..c473365812 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -331,7 +331,18 @@ jobs:
+   displayName: linux-gcc
+   condition: succeeded()
+   pool: Hosted Ubuntu 1604
++  strategy:
++    matrix:
++      python27:
++        python.version: '2.7'
++      python35:
++        python.version: '3.5'
+   steps:
++  - task: UsePythonVersion@0
++    inputs:
++      versionSpec: '$(python.version)'
++  - bash: |
++      echo "##vso[task.setvariable variable=python_path]$(which python)"
+   - bash: |
+        test "$GITFILESHAREPWD" = '$(gitfileshare.pwd)' || ci/mount-fileshare.sh //gitfileshare.file.core.windows.net/test-cache gitfileshare "$GITFILESHAREPWD" "$HOME/test-cache" || exit 1
+ 
 -- 
 2.21.0.windows.1
 
