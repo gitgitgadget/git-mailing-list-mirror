@@ -2,61 +2,59 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.3 required=3.0 tests=DATE_IN_PAST_03_06,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D46E1C352A5
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1E59C7CFD2
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1F41624747
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BC4224741
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 20:39:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728384AbfLMRZA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 12:25:00 -0500
-Received: from mail-io1-f50.google.com ([209.85.166.50]:37558 "EHLO
-        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726404AbfLMRZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 12:25:00 -0500
-Received: by mail-io1-f50.google.com with SMTP id k24so410300ioc.4
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 09:24:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ew8TN2WwcGZMBjwClmCpn9EJSR2scNz+Pf4QHVYpeR4=;
-        b=H6xYfClqs1Nd38LeCCc6ESM3DiYbXiJXUNLT9xeqhOEtjySMZdkdS8Cd1OTLTAmFHD
-         sPUmehAwWlxoXKFicxvKhuzTvc8QJ1IFgb3po+PGT+9PF3pWGtktu8R+utL5Yz7ql79l
-         aM8H8ndnNHq8NlFAGoKwuTvTLqMo0Yx5+Om8uj+RbKDGdhLZDY8qer1aBLc3SblDa4Jz
-         Xkfwj7I0FxKBNjLJKpZT03IenoI3C42fawat1NYjwt184M6/CgDQK4aPSrP/J3RdTQpQ
-         RsQ6ypUTM3HD9yJ+ISd5r6nvODA9SBT0XhGu3QwQww3C90kKF+plxoGutc3TStOpLj0Y
-         Fbkw==
-X-Gm-Message-State: APjAAAUT3xnA7B0ueMer1BpnJKsH/fGh1161XyDKAKj7eIHQCPyJnc1k
-        XNMQVxgGFXWc8Gz1Y1t7McP4OBll28m2iRNYW+0=
-X-Google-Smtp-Source: APXvYqxkIWwGrAdn2Tb5IEJ2rmIN9eZWIINO3rq5+pzaDh9kBiIT2+QnOYNyvfnT0qVdWYE3klKD3A8lSilGlfEk4F0=
-X-Received: by 2002:a02:ba91:: with SMTP id g17mr490900jao.106.1576257899296;
- Fri, 13 Dec 2019 09:24:59 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnh6yfrl.fsf@gitster-ct.c.googlers.com>
-From:   Ed Maste <emaste@freebsd.org>
-Date:   Fri, 13 Dec 2019 08:38:35 -0500
-Message-ID: <CAPyFy2At-OjdKusxr9FaZmncjrBKWrVjs5REV0PeHtQFcYy8Ew@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2019, #01; Mon, 2)
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1728460AbfLMRjA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 12:39:00 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46136 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728413AbfLMRjA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 12:39:00 -0500
+Received: (qmail 2634 invoked by uid 109); 13 Dec 2019 17:38:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 13 Dec 2019 17:38:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25313 invoked by uid 111); 13 Dec 2019 17:43:27 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Dec 2019 12:43:27 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 13 Dec 2019 12:38:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Charles Diza <chdiza@gmail.com>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: Regression in 2.24.1 wrt progress indication
+Message-ID: <20191213173858.GA117158@coredump.intra.peff.net>
+References: <20191213172835.GA2315@349209-PHI-GMNO-CLAHS>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191213172835.GA2315@349209-PHI-GMNO-CLAHS>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, 2 Dec 2019 at 09:16, Junio C Hamano <gitster@pobox.com> wrote:
->
-> * ln/userdiff-elixir (2019-11-10) 1 commit
->   (merged to 'next' on 2019-11-19 at 6318918ba8)
->  + userdiff: add Elixir to supported userdiff languages
+On Fri, Dec 13, 2019 at 12:28:35PM -0500, Charles Diza wrote:
 
-t4018-diff-funcname.sh is failing on FreeBSD with this change,
-fatal: invalid regular expression:
-|[@:]?[a-zA-Z0-9@_?!]+|[-+]?0[xob][0-9a-fA-F]+|[-+]?[0-9][0-9_.]*([eE][-+]?[0-9_]+)?|:?(\+\+|--|\.\.|~~~|<>|\^\^\^|<?\|>|<<<?|>?>>|<<?~|~>?>|<~>|<=|>=|===?|!==?|=~|&&&?|\|\|\|?|=>|<-|\\\\|->)|:?%[A-Za-z0-9_.]\{\}?|[^[:space:]]|[<C0>-<FF>][<80>-<BF>]+
+> I reported a bug in progress display in git 2.23.0 earlier this year
+> in August.  This bug got fixed:
+> https://public-inbox.org/git/20191002154734.GC6116@sigill.intra.peff.net/
+> 
+> (See the earlier parts of that thread for the bug report.)
+> 
+> I am sorry to report that this bug has returned in 2.24.1.
+
+The bug in question typically showed due to the server side of the
+connection. Do you see it during a fetch (or pull) or push? If so, what
+server are you using? Is it possible that that server upgraded recently,
+and it has nothing to do with what version you're running on the client?
+
+-Peff
