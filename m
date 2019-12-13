@@ -2,94 +2,86 @@ Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFB1FC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 22:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 307E4C43603
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 22:22:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A944214AF
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 22:02:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EB05D20706
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 22:22:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xrLiThy7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkyIrbSS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726090AbfLMWC5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 17:02:57 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60869 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725554AbfLMWC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 17:02:57 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D7EC5A889C;
-        Fri, 13 Dec 2019 17:02:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=5IgQAv5AsTf5JB/gFm57Ihk8ARI=; b=xrLiTh
-        y71avSwMeikE36ZNfMZWYCrSvPx1jfma2k+7S/wBaGY5fI8up/0Sf8rEbyUiDgdX
-        jPOPlV3UnjdeL8aKUri86JLGdnVHopsx5nlRPq7eKzmgIyuigrSyzIF78EHTmMB5
-        7Ps++avyllwiGOlKlmgKQgUk+5cN069Uk3K5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fZQvR9KVrZb9raC8yLvVBZuXCQ9V4Kt2
-        WnHWEzGEorJ5HLnbf+UEbV11LdopTbcOryWI7LCCQm3n3cf+TRoP3QINwAgxxJRX
-        b5QlocDvIrM94SxCwVGCcR34zPVB6dalLq8OzDatb01KMgACWrFs9xhz/mdXwIWY
-        emtFTkufshw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CF83BA889B;
-        Fri, 13 Dec 2019 17:02:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E339DA8898;
-        Fri, 13 Dec 2019 17:02:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, szeder.dev@gmail.com, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] sparse-checkout: respect core.ignoreCase in cone mode
-References: <pull.488.git.1575920580.gitgitgadget@gmail.com>
-        <23705845ce73992bf7ab645d28febebe0a698d49.1575920580.git.gitgitgadget@gmail.com>
-        <7aeb1589-cc08-654f-1bc0-d48fec1c0729@gmail.com>
-        <xmqqwob0jbba.fsf@gitster-ct.c.googlers.com>
-        <d1b11424-db8b-e13c-e896-923d74b3d531@gmail.com>
-Date:   Fri, 13 Dec 2019 14:02:51 -0800
-In-Reply-To: <d1b11424-db8b-e13c-e896-923d74b3d531@gmail.com> (Derrick
-        Stolee's message of "Fri, 13 Dec 2019 14:40:58 -0500")
-Message-ID: <xmqqeex7hoj8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726590AbfLMWWK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 17:22:10 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:40891 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725948AbfLMWWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 17:22:10 -0500
+Received: by mail-wm1-f53.google.com with SMTP id t14so343071wmi.5
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 14:22:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=KzcMXRgrDpVEP95PyuYh12iJsKz2NhJnfxM57XGU8Dk=;
+        b=BkyIrbSS2vK4DUTihxLq4LLFLLSOCLrosvP1pLbyXX7BRbI8NcmGapFMdnA+sm9kt1
+         zBnGep3V3iuGG0llNWouNoPRBlHG67RtwBRbqfgtYvMi96S0u2LbPVNTpA9DenX9wvvL
+         QFDrfVuYRrHH3kKOG+X7/T0A5NjRAIV0QKTfGxoLwroKA+mz9EoEf/Mj7+qw0sPOdiJE
+         NeaSzt9jRuJJ1LMfNbjTt4hOgo+Wp97zbN6PsZ5wVsuamPBu5bPyB1fXDeeuSF0p2PwW
+         FabCI9+HUP2TSQJKSpHFN8i104Xs5XV1t43/Wqp1hR9JcvlrZmlhkg85o8CUjhp1Ap6c
+         liZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=KzcMXRgrDpVEP95PyuYh12iJsKz2NhJnfxM57XGU8Dk=;
+        b=BjJRP9+q1R6Xt2OFmVjH28PDk7cN7263mPlGyaMXGsf/kYKd+s896PQy/VpV+5qPj9
+         D7tqMpW9vtdDsuy6ElhMFsXPXxAxTxoACcX8rL7G1jrW9IlzVfLX9QXsGNSX3ytYqdPQ
+         U4f2ZPc5NZyUB7FzpytQpekx/D3nn10m9257VXJoC6vdG7rEO+ACy/170dihyZTiZAI9
+         0RY69r/CW/ylDJ2fQwrPkQAxMV5Rqgkz6poFEiurolbp52It8d7uLkYcosaseBWHAMaG
+         k+40oNZPMzxMLUgVbCx2X6UtcCPj2zGyKJ8ESP0SIXhU3dFThgNY01RKe4f/l5cJJ4IT
+         eK3A==
+X-Gm-Message-State: APjAAAUsd7sJhfF6D0bUH9jhvOWO8Sx7PrMQalj7UHCsOySHPH73Gorb
+        RK5sJtxWhAyf1u+7h73f9WBT6yHnaDnN0m3+ST8ktw==
+X-Google-Smtp-Source: APXvYqwk0wSEWISR/3er8Yyh1Ukzhq2xaz7jp5N/1kgDNP4Tv8Vi4A6VIK/FI0xUI3iwc8bfH0h8FoHRkOac0I3NnBw=
+X-Received: by 2002:a05:600c:2549:: with SMTP id e9mr3249153wma.6.1576275727587;
+ Fri, 13 Dec 2019 14:22:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4FFD8228-1DF4-11EA-ABC6-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20191213172835.GA2315@349209-PHI-GMNO-CLAHS> <20191213173858.GA117158@coredump.intra.peff.net>
+In-Reply-To: <20191213173858.GA117158@coredump.intra.peff.net>
+From:   Charles Diza <chdiza@gmail.com>
+Date:   Fri, 13 Dec 2019 17:21:56 -0500
+Message-ID: <CADv8sCUDSu7deSP4Wqry_S0TXM90QQu3EO_X_5ZONkXPocUiZA@mail.gmail.com>
+Subject: Re: Regression in 2.24.1 wrt progress indication
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
-
-> On 12/13/2019 2:05 PM, Junio C Hamano wrote:
->> Derrick Stolee <stolee@gmail.com> writes:
->> 
->>> If you have a plan for that branch and the merge status of those
->>> commits, then I'm happy to re-target my PR against 'next' or
->>> an equivalent branch.
->> 
->> This change does not make much sense without the cone-mode topic,
->> no?
+On Fri, Dec 13, 2019 at 12:38:58PM -0500, Jeff King wrote:
+> On Fri, Dec 13, 2019 at 12:28:35PM -0500, Charles Diza wrote:
 >
-> I'm saying it should go on top, as a new branch that depends on
-> ds/sparse-cone. Sorry for not making that clear.
+> > I reported a bug in progress display in git 2.23.0 earlier this year
+> > in August.  This bug got fixed:
+> > https://public-inbox.org/git/20191002154734.GC6116@sigill.intra.peff.net/
+> >
+> > (See the earlier parts of that thread for the bug report.)
+> >
+> > I am sorry to report that this bug has returned in 2.24.1.
+>
+> The bug in question typically showed due to the server side of the
+> connection. Do you see it during a fetch (or pull) or push? If so, what
+> server are you using? Is it possible that that server upgraded recently,
+> and it has nothing to do with what version you're running on the client?
 
-I thought that it was a *bug* that ds/sparse-cone topic does not
-match the pattern case insensitively on case insensitive systems,
-and from that point of view, letting the earlier part of the topic
-graduate without the fix would not make sense, I thought.
+It happens during pull.  I've seen this when pulling from gitlab.
+Reverting to 2.24.0 fixes the problem.
 
-Thanks.
-
-
+-Charles
+>
+> -Peff
