@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-9.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 189A0C43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CEBF9C2D0C9
 	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F234D22527
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B609F206EE
+	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="N08wuF2C"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="P43ZhtSa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726767AbfLMXx0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 18:53:26 -0500
-Received: from mail-pl1-f172.google.com ([209.85.214.172]:40656 "EHLO
-        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726741AbfLMXxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726757AbfLMXxZ (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 13 Dec 2019 18:53:25 -0500
-Received: by mail-pl1-f172.google.com with SMTP id g6so1883010plp.7
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:25 -0800 (PST)
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:41695 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726671AbfLMXxX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 18:53:23 -0500
+Received: by mail-pj1-f68.google.com with SMTP id ca19so381515pjb.8
+        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=a4Lo37diy/qv5OQQYgH1+e/IZeMp2Ts13inSK6KPdzc=;
-        b=N08wuF2C2m+jBHEqvXAdimPEDx768SatkZpMIT6JtqI2OvWOhgG9K/paE7o4mzK4m5
-         IKRc+mJdKIdGExwP70FYN70igPkamZMlEvBuv9JoboJSDq4ey1dzZR9GhnsnhRBFUbjH
-         h5q5VKfS6rUJXPUS3AeGK12Zygs0xjICVhhZmb/1XRs1bGoeAKgrRqE6UvvHGdCbke6g
-         2K2pCc1nmnHQ4XUzD8PmUg9xxJ6UPjOKMBZuddmJt3QUOAx0Zl0ziAHSj+/9UKqmJheF
-         cJh9NA0w+Cc8dMidyEBHCm5CaQVfZ8D3vOqSZHKdz/YG7lcLuhnE6g0grjcKX/YWbonb
-         sQmg==
+        bh=T6hpro0bovGWTPkEBpi6ztIjb9/FgW3Wl1ARP6O6imc=;
+        b=P43ZhtSaUZs8q8KtIAsRN0mdYgSv+vJOD7Va7j2HKhiigY8RkLNXCccFic1l/5a/Jq
+         pNr2p+JwkmujYXuefhdWlG1CgQUT8NPjYFh76yYHjV74rxC+6Is4p0hFBFCc4TrgYOQ1
+         CIypuY6ET4QAV32RKInqsruC0+myTWoyeRzCQqM3cacA0NiSR3NXleb9z1Nuod2rnU+E
+         QUsmZBCPpnGNeTIYVDj2Rd5JUyai7ioAw7Z05mH0hth4yBbKo3n/Spx5kFiZgu0ZY/Qx
+         puyCNLdUPCKC5K/swXqVps2O5tzmO5sBg+1skLrDEagJixu8f1DSY75sE1DwTmzmgsWZ
+         ULUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=a4Lo37diy/qv5OQQYgH1+e/IZeMp2Ts13inSK6KPdzc=;
-        b=QdkiN8QcI0WeUcTnTXgF3MP1oGNKAVRdbewpHOx1D5Tm//XYY4L+Q/uzhfx9/zYdXy
-         0gH7uV00T5YFqLQOAGc0c1ivVPjbEiF/nFMJq+ylF7o5KgyE4rcGOKi3Vhn2e91H3K8g
-         QlPaevq1DfMmBumCOoSmMlYnWTKqYQHK/1lY8zUgvNvroetgxb5OGJ6l0BtUhz/pNjkC
-         mTLb/Fjv9UYlJR1KBDevH3OjHKtH1R6tafeRgac3PevuUNXfCiEavu1/RdInZeAHxXG5
-         uSIAklOyBeX5u4pzXVsBq8oGS37eOgMEnZOB6ui9/QvccxyiFCNnz3OaRYPuBNtXrGNH
-         0iRQ==
-X-Gm-Message-State: APjAAAX42UiGxklkUO+XbVuWXexIv96ZOZXB4R1PqFyH0MphhyBGGSHW
-        ReZUwTjxVqEwVgk5NjHfG2X/puiXVWylzCLI
-X-Google-Smtp-Source: APXvYqxpsOZ/IWnJ3WRj87ah1hqmwNN2Ei2AEX1jo1qrhFpOVt09Y7j1cfHpe1vJNg9BC1akAcVYvw==
-X-Received: by 2002:a17:902:8688:: with SMTP id g8mr2351304plo.132.1576281204470;
-        Fri, 13 Dec 2019 15:53:24 -0800 (PST)
+        bh=T6hpro0bovGWTPkEBpi6ztIjb9/FgW3Wl1ARP6O6imc=;
+        b=h9V3QvJPBlX6BskJmwJA4qjFixKJYEAOy0V8eE1MeDQfzpc/hlqJOvYrojSdxFYv7/
+         gVeKVAVYn7/76PV8fiwnoj4/N/l15hYznlIXqgWU6nSSGMDBKiQlbYXMB32AM89CMoe/
+         uPwQPNZSO2nDr1POjTmsYgGjoGrRs9Nt+k0wGeoLosf9ipTCry6bDi3QYeCaDU8iHuT6
+         UikCUfzQ8IuRYWHBT0I+K+x0E2m92HQDrogh3K4NX074y07PF8RDtoOH0406lcbmSCDp
+         gaEOfJgl9vC9+IxUH+Rj+HIIBhVu5430LowhfmXoH6BI0uqw6WQiGhH8gqfETy0CZBEb
+         zxAQ==
+X-Gm-Message-State: APjAAAUPqLVrTMk8EiSTGMa99C2vCLIQgEYbcECf9J4SkNd9BD5Es8HN
+        HKwNqXs3AV9Ikswil4e9drx4np757uj6PlKs
+X-Google-Smtp-Source: APXvYqwouVJLr5GjNlTFD+olQQJKbIPxFN5IKHQxscAoAVRb9mgAhJ/v6ihbHyyl1T3QU8VUKZB1sA==
+X-Received: by 2002:a17:902:b083:: with SMTP id p3mr2225162plr.141.1576281202237;
+        Fri, 13 Dec 2019 15:53:22 -0800 (PST)
 Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
-        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.23
+        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:23 -0800 (PST)
+        Fri, 13 Dec 2019 15:53:21 -0800 (PST)
 From:   Yang Zhao <yang.zhao@skyboxlabs.com>
 To:     git@vger.kernel.org
 Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
         liu.denton@gmail.com, seraphire@gmail.com
-Subject: [PATCH v2 05/14] git-p4: encode/decode communication with git for python3
-Date:   Fri, 13 Dec 2019 15:52:39 -0800
-Message-Id: <20191213235247.23660-7-yang.zhao@skyboxlabs.com>
+Subject: [PATCH v2 03/14] git-p4: remove string type aliasing
+Date:   Fri, 13 Dec 2019 15:52:37 -0800
+Message-Id: <20191213235247.23660-5-yang.zhao@skyboxlabs.com>
 X-Mailer: git-send-email 2.21.0.windows.1
 In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
 References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
@@ -71,89 +71,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Under python3, calls to write() on the stream to `git fast-import` must
-be encoded.  This patch wraps the IO object such that this encoding is
-done transparently.
-
-Conversely, any text data read from subprocesses must also be decoded
-before running through the rest of the pipeline.
+Now that python2.7 is the minimum required version and we no longer use
+the basestring type, it is not necessary to use type aliasing to ensure
+python3 compatibility.
 
 Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
-Reviewed-by: Ben Keene <seraphire@gmail.com>
 ---
- git-p4.py | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ git-p4.py | 16 ----------------
+ 1 file changed, 16 deletions(-)
 
 diff --git a/git-p4.py b/git-p4.py
-index ca891e3d5d..d62fb05989 100755
+index 2f177fb43b..153aff16f3 100755
 --- a/git-p4.py
 +++ b/git-p4.py
-@@ -183,10 +183,12 @@ def read_pipe_full(c):
-     (out, err) = p.communicate()
-     return (p.returncode, out, decode_text_stream(err))
+@@ -26,22 +26,6 @@
+ import ctypes
+ import errno
  
--def read_pipe(c, ignore_error=False):
-+def read_pipe(c, ignore_error=False, raw=False):
-     """ Read output from  command. Returns the output text on
-         success. On failure, terminates execution, unless
-         ignore_error is True, when it returns an empty string.
-+
-+        If raw is True, do not attempt to decode output text.
-     """
-     (retcode, out, err) = read_pipe_full(c)
-     if retcode != 0:
-@@ -194,6 +196,8 @@ def read_pipe(c, ignore_error=False):
-             out = ""
-         else:
-             die('Command failed: %s\nError: %s' % (str(c), err))
-+    if not raw:
-+        out = decode_text_stream(out)
-     return out
- 
- def read_pipe_text(c):
-@@ -220,7 +224,6 @@ def read_pipe_lines(c):
-     val = [decode_text_stream(line) for line in pipe.readlines()]
-     if pipe.close() or p.wait():
-         die('Command failed: %s' % str(c))
+-# support basestring in python3
+-try:
+-    unicode = unicode
+-except NameError:
+-    # 'unicode' is undefined, must be Python 3
+-    str = str
+-    unicode = str
+-    bytes = bytes
+-    basestring = (str,bytes)
+-else:
+-    # 'unicode' exists, must be Python 2
+-    str = str
+-    unicode = unicode
+-    bytes = str
+-    basestring = basestring
 -
-     return val
+ verbose = False
  
- def p4_read_pipe_lines(c):
-@@ -616,7 +619,8 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
-             stdin_file.write(stdin)
-         else:
-             for i in stdin:
--                stdin_file.write(i + '\n')
-+                stdin_file.write(encode_text_stream(i))
-+                stdin_file.write(b'\n')
-         stdin_file.flush()
-         stdin_file.seek(0)
- 
-@@ -1245,7 +1249,7 @@ def generatePointer(self, contentFile):
-             ['git', 'lfs', 'pointer', '--file=' + contentFile],
-             stdout=subprocess.PIPE
-         )
--        pointerFile = pointerProcess.stdout.read()
-+        pointerFile = decode_text_stream(pointerProcess.stdout.read())
-         if pointerProcess.wait():
-             os.remove(contentFile)
-             die('git-lfs pointer command failed. Did you install the extension?')
-@@ -3538,6 +3542,15 @@ def openStreams(self):
-         self.gitStream = self.importProcess.stdin
-         self.gitError = self.importProcess.stderr
- 
-+        if bytes is not str:
-+            # Wrap gitStream.write() so that it can be called using `str` arguments
-+            def make_encoded_write(write):
-+                def encoded_write(s):
-+                    return write(s.encode() if isinstance(s, str) else s)
-+                return encoded_write
-+
-+            self.gitStream.write = make_encoded_write(self.gitStream.write)
-+
-     def closeStreams(self):
-         self.gitStream.close()
-         if self.importProcess.wait() != 0:
+ # Only labels/tags matching this will be imported/exported
 -- 
 2.21.0.windows.1
 
