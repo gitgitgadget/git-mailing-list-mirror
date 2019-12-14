@@ -2,256 +2,281 @@ Return-Path: <SRS0=+pXB=2E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PLING_QUERY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0CF8C43603
-	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 16:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BB38C43603
+	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 18:00:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C4D5D24656
-	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 16:15:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15A2420724
+	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 18:00:08 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=tomaszubiri-com.20150623.gappssmtp.com header.i=@tomaszubiri-com.20150623.gappssmtp.com header.b="pcBMSlKN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726358AbfLNQPT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Dec 2019 11:15:19 -0500
-Received: from relay4-d.mail.gandi.net ([217.70.183.196]:50047 "EHLO
-        relay4-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbfLNQPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Dec 2019 11:15:18 -0500
-X-Originating-IP: 157.36.95.247
-Received: from localhost.localdomain (unknown [157.36.95.247])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay4-d.mail.gandi.net (Postfix) with ESMTPSA id BE2E4E0003
-        for <git@vger.kernel.org>; Sat, 14 Dec 2019 16:15:12 +0000 (UTC)
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     <git@vger.kernel.org>
-Subject: [PATCH 1/1] worktree: delete branches auto-created by 'worktree add'
-Date:   Sat, 14 Dec 2019 21:44:38 +0530
-Message-Id: <20191214161438.16157-2-me@yadavpratyush.com>
-X-Mailer: git-send-email 2.24.1
-In-Reply-To: <20191214161438.16157-1-me@yadavpratyush.com>
-References: <20191214161438.16157-1-me@yadavpratyush.com>
+        id S1726794AbfLNSAG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Dec 2019 13:00:06 -0500
+Received: from mail-qk1-f182.google.com ([209.85.222.182]:39535 "EHLO
+        mail-qk1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726072AbfLNSAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Dec 2019 13:00:06 -0500
+Received: by mail-qk1-f182.google.com with SMTP id c16so1971751qko.6
+        for <git@vger.kernel.org>; Sat, 14 Dec 2019 10:00:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tomaszubiri-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=1V0Ivg4eg1KY5Ss8TY85/4TFy29537nO+7l6vGDiLEc=;
+        b=pcBMSlKN3eOej7fm6hepD5kL3RMGKyUgKmvIC1c8pr9BjsTrrXOPZEB1hICbnMHpbx
+         DD+3HUi/FwNBxyhpZcnmLvoT2S6vq/LTlQuyRNfxmGjxUBlykziCREzwq50nMTwbBf7i
+         n07fNGPxIfsXh8MMydIkrqKaPkxd/Mmsu2+lR2Gcs/gbxJ9qbx66/5QDqLKJzROMeCqp
+         tB62P7nOLMwnIBfBa0sY7ud4Xwn6OZ3naka5VkW/lH6S0IMZvgFdlioqlI5EIRYB/ViG
+         AkMGGKqoigD52n6UuMQFJiqcZW96vHuMrOvi3K+o9cd1kgmI0K87TFcy2xx9JwAejnii
+         RSgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=1V0Ivg4eg1KY5Ss8TY85/4TFy29537nO+7l6vGDiLEc=;
+        b=AYKuPobJ4oyHIoHONU+rq5ed0dOdmUUCbOxnyBaNYb8fj0QPI2Fx5+5rc2JjkxxIU7
+         ///thmq/pirUEdTqt1o3ZlJN0za3AcakOLcR7PPRBPRNH4FxaToRz9lvSaKllvzgY1mu
+         qE9JXCSDNLRT2s/gyxmEe/SR8dbmfYj9u4D7tAktKqsgMwr62VMcuiOBtrvU2pnFzAJd
+         aceZYGhA3fQWqXxM6jgiKFSHCM+4a7oZXpoka1ni3ImRON16uzjou31IBzLKLq9vpDkv
+         v5XpglDgWmiJeHy20SPaW9kLsMmCNVMUCopLW0CG8EVB/lZlVuXqlprd4L6y8MPoDnqV
+         RUmg==
+X-Gm-Message-State: APjAAAXLKg7qB/mkDywaw4QeHUHLoRz+MciVrdAXuzc8jvANePWENUik
+        QUZ9gzL2dMzsXJQF0vjLbN7yiu/+yluEt1/OWYQbAvWUVuo=
+X-Google-Smtp-Source: APXvYqzWPHHtwBRbN4AUoz7TYxNlLN5O+aIBK8HRCOELKTrb1Zq1+SJpaOdRyukQtLBjjIr7kpNfN75xV1+glupr0cE=
+X-Received: by 2002:a05:620a:2050:: with SMTP id d16mr13460657qka.473.1576346404132;
+ Sat, 14 Dec 2019 10:00:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Tomas Zubiri <me@tomaszubiri.com>
+Date:   Sat, 14 Dec 2019 15:00:01 -0300
+Message-ID: <CAE3VKEpPye+GyR7Uo9WBa=1i1L=dFq9AHfdNnhiw19K-jWLtBA@mail.gmail.com>
+Subject: Head, Branch != Head -> Branch?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When no branch name is supplied to 'worktree add', it creates a new
-branch based on the name of the directory the new worktree is located
-in. But when the worktree is later removed, that created branch is left
-over.
+Hello, I'm writing because I believe I found a case where git could be
+simplified. I'm posting my terminal log so that you can see exactly
+what I saw. Comments are marked with >> . Important spanish git was
+translated.
 
-Remove that branch when removing the worktree. To make sure no commits
-are lost, the branch won't be deleted if it has moved.
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git status
+HEAD detached at 54da1ac
+Cambios no rastreados para el commit:
+  (usa "git add <archivo>..." para actualizar lo que ser=C3=A1 confirmado)
+  (usa "git checkout -- <archivo>..." para descartar los cambios en el
+directorio de trabajo)
 
-An example use case of when something like this is useful is when the
-user wants to check out a separate worktree to run and test on an older
-version, but don't want to touch the current worktree. So, they create a
-worktree, run some tests, and then remove it. But this leaves behind a
-branch the user never created in the first place.
+modificado:     cv/en/index.html
+modificado:     cv/index.html
 
-So, remove the branch if nothing was done on it.
+sin cambios agregados al commit (usa "git add" y/o "git commit -a")
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git add cv/en/index.html
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git add cv/index.html
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git commit -m
+"Agrego mi celular, por favor no me manden spam"
+[HEAD detached 82b2b55] Agrego mi celular, por favor no me manden spam
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push
+fatal: Actualmente no est=C3=A1s en una rama.
+Para hacer un push a la historia que lleva al estado actual
+(HEAD detached), use
 
-Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
----
- Documentation/git-worktree.txt |  9 ++++--
- builtin/worktree.c             | 52 ++++++++++++++++++++++++++++++++--
- t/t2403-worktree-move.sh       | 45 +++++++++++++++++++++++++++++
- 3 files changed, 101 insertions(+), 5 deletions(-)
+git push origin HEAD:<nombre-de-rama-remota>
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 85d92c9761..87b84be608 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -73,8 +73,9 @@ If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
- then, as a convenience, the new worktree is associated with a branch
- (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
- doesn't exist, a new branch based on HEAD is automatically created as
--if `-b <branch>` was given.  If `<branch>` does exist, it will be
--checked out in the new worktree, if it's not checked out anywhere
-+if `-b <branch>` was given.  In this case, if `<branch>` is not moved, it is
-+automatically deleted when the worktree is removed.  If `<branch>` does exist,
-+it will be checked out in the new worktree, if it's not checked out anywhere
- else, otherwise the command will refuse to create the worktree (unless
- `--force` is used).
- 
-@@ -108,6 +109,10 @@ Remove a working tree. Only clean working trees (no untracked files
- and no modification in tracked files) can be removed. Unclean working
- trees or ones with submodules can be removed with `--force`. The main
- working tree cannot be removed.
-++
-+Removing a working tree might lead to its associated branch being deleted if
-+it was auto-created and has not moved since. See `add` for more information on
-+when exactly this can happen.
- 
- unlock::
- 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index d6bc5263f1..c62811259a 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -35,6 +35,7 @@ struct add_opts {
- static int show_only;
- static int verbose;
- static int guess_remote;
-+static int auto_create;
- static timestamp_t expire;
- 
- static int git_worktree_config(const char *var, const char *value, void *cb)
-@@ -270,11 +271,13 @@ static int add_worktree(const char *path, const char *refname,
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	struct argv_array child_env = ARGV_ARRAY_INIT;
- 	unsigned int counter = 0;
--	int len, ret;
-+	int len, ret, fd;
- 	struct strbuf symref = STRBUF_INIT;
- 	struct commit *commit = NULL;
- 	int is_branch = 0;
- 	struct strbuf sb_name = STRBUF_INIT;
-+	struct object_id oid;
-+	char *hex;
- 
- 	validate_worktree_add(path, opts);
- 
-@@ -353,6 +356,18 @@ static int add_worktree(const char *path, const char *refname,
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
- 	write_file(sb.buf, "../..");
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/auto_created", sb_repo.buf);
-+	/* Mark this branch as an "auto-created" one. */
-+	if (auto_create) {
-+		fd = xopen(sb.buf, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-+		get_oid("HEAD", &oid);
-+		hex = oid_to_hex(&oid);
-+		write_file_buf(sb.buf, hex, strlen(hex));
-+
-+		if (close(fd))
-+			die(_("could not close '%s'"), sb.buf);
-+	}
- 
- 	argv_array_pushf(&child_env, "%s=%s", GIT_DIR_ENVIRONMENT, sb_git.buf);
- 	argv_array_pushf(&child_env, "%s=%s", GIT_WORK_TREE_ENVIRONMENT, path);
-@@ -576,6 +591,8 @@ static int add(int ac, const char **av, const char *prefix)
- 		if (run_command(&cp))
- 			return -1;
- 		branch = new_branch;
-+
-+		auto_create = 1;
- 	} else if (opt_track) {
- 		die(_("--[no-]track can only be used if a new branch is created"));
- 	}
-@@ -912,9 +929,10 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
- 		OPT_END()
- 	};
- 	struct worktree **worktrees, *wt;
--	struct strbuf errmsg = STRBUF_INIT;
-+	struct strbuf errmsg = STRBUF_INIT, sb = STRBUF_INIT, hex = STRBUF_INIT;
- 	const char *reason = NULL;
--	int ret = 0;
-+	int ret = 0, delete_auto_created = 0;
-+	struct object_id oid;
- 
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
- 	if (ac != 1)
-@@ -939,6 +957,23 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
- 		    errmsg.buf);
- 	strbuf_release(&errmsg);
- 
-+	/*
-+	 * Check if we auto-created a branch for this worktree and it hasn't
-+	 * moved since. Do it before the contents of the worktree get wiped.
-+	 * Delete the branch later because it is checked out right now.
-+	 */
-+	git_path_buf(&sb, "worktrees/%s/auto_created", wt->id);
-+	if (file_exists(sb.buf)) {
-+		strbuf_read_file(&hex, sb.buf, 0);
-+		get_oid(wt->id, &oid);
-+
-+		if (strcmp(hex.buf, oid_to_hex(&oid)) == 0)
-+			delete_auto_created = 1;
-+	}
-+
-+	strbuf_release(&sb);
-+	strbuf_release(&hex);
-+
- 	if (file_exists(wt->path)) {
- 		if (!force)
- 			check_clean_worktree(wt, av[0]);
-@@ -952,6 +987,17 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
- 	ret |= delete_git_dir(wt->id);
- 	delete_worktrees_dir_if_empty();
- 
-+	if (delete_auto_created) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+		cp.git_cmd = 1;
-+
-+		argv_array_push(&cp.args, "branch");
-+		argv_array_push(&cp.args, "-d");
-+		argv_array_push(&cp.args, wt->id);
-+
-+		ret |= run_command(&cp);
-+	}
-+
- 	free_worktrees(worktrees);
- 	return ret;
- }
-diff --git a/t/t2403-worktree-move.sh b/t/t2403-worktree-move.sh
-index 939d18d728..c71c0bc1c7 100755
---- a/t/t2403-worktree-move.sh
-+++ b/t/t2403-worktree-move.sh
-@@ -222,4 +222,49 @@ test_expect_success 'not remove a repo with initialized submodule' '
- 	)
- '
- 
-+test_expect_success 'remove auto-created branch' '
-+	(
-+		git worktree add to-remove &&
-+		git worktree remove to-remove &&
-+		git branch -l to-remove >branch_list &&
-+		test_line_count = 0 branch_list
-+	)
-+'
-+
-+test_expect_success 'do not remove a branch that was not auto-created' '
-+	(
-+		git worktree add -b new_branch to-remove &&
-+		git worktree remove to-remove &&
-+		git branch -l new_branch >branch_list &&
-+		test_line_count = 1 branch_list &&
-+		git branch -d new_branch &&
-+		git branch foo &&
-+		git worktree add to-remove foo &&
-+		git worktree remove to-remove &&
-+		git branch -l foo >branch_list &&
-+		test_line_count = 1 branch_list &&
-+		git branch -d foo &&
-+		git branch to-remove &&
-+		git worktree add to-remove &&
-+		git worktree remove to-remove &&
-+		git branch -l to-remove >branch_list &&
-+		test_line_count = 1 branch_list &&
-+		git branch -d to-remove
-+	)
-+'
-+
-+test_expect_success 'do not remove auto-created branch that was moved' '
-+	(
-+		git worktree add to-remove &&
-+		cd to-remove &&
-+		test_commit foo &&
-+		cd ../ &&
-+		git worktree remove to-remove &&
-+		git branch -l to-remove >branch_list &&
-+		test_line_count = 1 branch_list &&
-+		git branch -D to-remove
-+	)
-+'
-+
-+
- test_done
--- 
-2.24.1
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push origin ^C
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 82b2b55b3f7768a60e3d8bcda97d4d623ff0e044 (HEAD)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
 
+    Agrego mi celular, por favor no me manden spam
+>> This is the commit I wanted to push
+
+commit 54da1ac07a5c7c2e7234911a0af76aee042b5b99
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 20:33:11 2019 -0300
+
+    Limpio url para cv en ingl=C3=A9s.
+>> This is an abandoned commit I didn't push.
+
+
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+>> This is what's in production
+
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git checkout origin/mast=
+er^C
+>> ^C cancels the command, I notice there's an extra commit.
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git branch newmaster
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git checkout origin/mast=
+er
+La posici=C3=B3n previa de HEAD era 82b2b55 Agrego mi celular, por favor no
+me manden spam
+>> Previous head position was..
+
+HEAD est=C3=A1 ahora en 81542e7 especifico tecnolog=C3=ADas de contribuci=
+=C3=B3n de codigo
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git cherry-pick newmaste=
+r
+[HEAD desacoplado 912c91a] Agrego mi celular, por favor no me manden spam
+ Date: Fri Dec 13 21:37:30 2019 -0300
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 912c91a92e17de33247e2040d1dd01adbfc218eb (HEAD)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
+
+    Agrego mi celular, por favor no me manden spam
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+>> Looks good.
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git branch master
+fatal: Una rama llamada 'master' ya existe.
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git branch -D master
+Eliminada la rama master (era 679eaf3)..
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git branch master
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push^C
+>> Gotta double check.
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 912c91a92e17de33247e2040d1dd01adbfc218eb (HEAD, master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
+
+    Agrego mi celular, por favor no me manden spam
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push
+fatal: Actualmente no est=C3=A1s en una rama.
+>> Fatal: You are not currently on a branch.
+
+Para hacer un push a la historia que lleva al estado actual
+(HEAD desacoplado), use
+
+git push origin HEAD:<nombre-de-rama-remota>
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push origin/master
+fatal: Actualmente no est=C3=A1s en una rama.
+Para hacer un push a la historia que lleva al estado actual
+(HEAD desacoplado), use
+
+git push origin/master HEAD:<nombre-de-rama-remota>
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push ^Cigin/master
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 912c91a92e17de33247e2040d1dd01adbfc218eb (HEAD, master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
+
+    Agrego mi celular, por favor no me manden spam
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push >> So
+confused I repeated a command.
+fatal: Actualmente no est=C3=A1s en una rama.
+Para hacer un push a la historia que lleva al estado actual
+(HEAD desacoplado), use
+
+git push origin HEAD:<nombre-de-rama-remota>
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 912c91a92e17de33247e2040d1dd01adbfc218eb (HEAD, master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
+
+    Agrego mi celular, por favor no me manden spam
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push
+fatal: Actualmente no est=C3=A1s en una rama.
+>> Fatal: Not currently on a branch
+
+Para hacer un push a la historia que lleva al estado actual
+(HEAD desacoplado), use
+
+git push origin HEAD:<nombre-de-rama-remota>
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git checkout master
+Cambiado a rama 'master'
+>> Now on 'master' branch
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git push
+fatal: La rama actual master no tiene una rama upstream.
+>> This error message is something I would expect, since I deleted the mast=
+er branch and created a new one. That's ok.
+
+Para realizar un push de la rama actual y configurar el remoto como
+upstream, use
+
+git push --set-upstream origin master
+
+(base) tomas@toms:~/Projects/tomaszubiri.com/site$ git log
+commit 912c91a92e17de33247e2040d1dd01adbfc218eb (HEAD -> master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Dec 13 21:37:30 2019 -0300
+
+    Agrego mi celular, por favor no me manden spam
+
+commit 81542e725149ba5da36560ad14d4871eb7ea01e6 (origin/master)
+Author: Tomas Zubiri <me@tomaszubiri.com>
+Date:   Fri Oct 18 17:08:50 2019 -0300
+
+    especifico tecnolog=C3=ADas de contribuci=C3=B3n de codigo
+
+
+Thank you for stepping in my shoes for a moment here. I understand now
+that Head is a special kind of tag and it must be attached to a
+branch. But I don't yet understand why the distinction between head
+attached to branch and head and branch in the same commit is
+necessary. Couple that to the fact that git forgot (perhaps with good
+cause) what remote master pointed to, it feels like this is a place
+where git could improve in simplicity.
+
+My naive suggestion would be as follows:
+
+ When HEAD is pointing to a commit and another branch is pointing to
+the same commit, consider the head attached to that commit.
+I understand that, if there were multiple branches on the same commit,
+git wouldn't know what remote to push to, so in such case a
+disambiguation would be needed, but the case here would be that we are
+on 2 branches, not none!
+
+What am I missing here? Would this change have catastrophic consequences?
+
+Regards.
