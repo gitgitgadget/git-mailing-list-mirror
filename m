@@ -1,124 +1,83 @@
-Return-Path: <SRS0=h4OP=2D=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=+pXB=2E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AF8AC43603
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF7D7C43603
+	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 00:38:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0E60E20724
-	for <git@archiver.kernel.org>; Fri, 13 Dec 2019 23:53:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="QIlWxUzB"
+	by mail.kernel.org (Postfix) with ESMTP id C2E5A20724
+	for <git@archiver.kernel.org>; Sat, 14 Dec 2019 00:38:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726842AbfLMXxj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Dec 2019 18:53:39 -0500
-Received: from mail-pj1-f47.google.com ([209.85.216.47]:44328 "EHLO
-        mail-pj1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfLMXxe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Dec 2019 18:53:34 -0500
-Received: by mail-pj1-f47.google.com with SMTP id w5so373347pjh.11
-        for <git@vger.kernel.org>; Fri, 13 Dec 2019 15:53:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=4jyP80vwwKnkuAU276zRpKjBo7AE7L+0OfAIr/aaiRM=;
-        b=QIlWxUzBae0/WfdYjJaW+L6r2N6SUNyfHNBCimp23XIVW92Xl0OrcxhFbVStbbhsLG
-         pDam7xEunLIJZhy/nL64YJhUhwe8VLLhpV707nKDzQ/G8nmknIl07XV8GEiTyQD5j5Wq
-         L+rJnm9TFdHjMhV2n4Jo0Cw9PTF8fzFY5YYt0FrqmAnuTVZhyPvq5ueO5CSRBJRuEJk1
-         T2ReYAFoxhMMcgSgyXpoNMhEmxJU+6QWYaBqtqXd2fSh2oBXXOk4qfM1bJjWVxH4Ft76
-         w/Ouku2oZ+Fb9NATGlnWf8EtDNgGTABJwJXu3cokVhsNZjayPVJZKPsbuls6Jk88qN34
-         FVew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=4jyP80vwwKnkuAU276zRpKjBo7AE7L+0OfAIr/aaiRM=;
-        b=IrKVCAE6eJDmOTVBoZWu5aFQhXnTuKHFfht7EOiCk5apKvCNFojYLrd9gggsTumVqX
-         H1KW7exrBr3DLshVa2d51N6UyT8IxYGZL0Ces1pmN3n/x/M44sVMyH1DXoAXuXaA3Iz/
-         nzGTCh+80A/NhZBayBEHkv1TZBM0+HuBdZP0FBnRlYW7jbhdU7vv0n3cL2VknsGxTzGH
-         KpvyI7RdeO75A64Sd4X6JpOXxoLCCAO4svrPc1Bmt8JZFAmJ2w/iZXXr2rIwY09Tnq2B
-         U3wDqsaC8pgb51cB3RNwTgbFiE+ueFM2KdlF+PIlh8pxWAsThG/ow7MIjm1KRB+2lTSU
-         mQ9w==
-X-Gm-Message-State: APjAAAWSfeGPxHW57kNhEhk7Jbl228ZKpgzUXEzeO14h8dsspnSI/ksu
-        E+KyDqpyQUincxBCDKlZ/S1NpfPAnhlbkV3j
-X-Google-Smtp-Source: APXvYqwgUMOfiiGbMs2rMQ2NX+TSND/ukQekBkrUcTJyTBVJ6VZ+3JB0cIeDPEaUI9XiGmng4Oyhkg==
-X-Received: by 2002:a17:90a:d353:: with SMTP id i19mr2516746pjx.43.1576281212905;
-        Fri, 13 Dec 2019 15:53:32 -0800 (PST)
-Received: from SBL-LP-YZHAO.skyboxlabs.local (d173-180-108-168.bchsia.telus.net. [173.180.108.168])
-        by smtp.gmail.com with ESMTPSA id r2sm11926036pgv.16.2019.12.13.15.53.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 13 Dec 2019 15:53:32 -0800 (PST)
-From:   Yang Zhao <yang.zhao@skyboxlabs.com>
-To:     git@vger.kernel.org
-Cc:     Yang Zhao <yang.zhao@skyboxlabs.com>, luke@diamand.org,
-        liu.denton@gmail.com, seraphire@gmail.com
-Subject: [PATCH v2 13/14] git-p4: use python3's input() everywhere
-Date:   Fri, 13 Dec 2019 15:52:47 -0800
-Message-Id: <20191213235247.23660-15-yang.zhao@skyboxlabs.com>
-X-Mailer: git-send-email 2.21.0.windows.1
-In-Reply-To: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
-References: <20191213235247.23660-1-yang.zhao@skyboxlabs.com>
+        id S1726752AbfLNAiW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Dec 2019 19:38:22 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46710 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726678AbfLNAiW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Dec 2019 19:38:22 -0500
+Received: (qmail 4962 invoked by uid 109); 14 Dec 2019 00:38:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 14 Dec 2019 00:38:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32010 invoked by uid 111); 14 Dec 2019 00:42:50 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Dec 2019 19:42:50 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 13 Dec 2019 19:38:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] Makefile: drop GEN_HDRS
+Message-ID: <20191214003820.GA927924@coredump.intra.peff.net>
+References: <xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Python3 deprecates raw_input() from 2.7 and replaced it with input().
-Since we do not need 2.7's input() semantics, `raw_input()` is aliased
-to `input()` for easy forward compatability.
+On Fri, Dec 13, 2019 at 03:25:41PM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Yang Zhao <yang.zhao@skyboxlabs.com>
----
- git-p4.py | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+> Get rid of GEN_HDRS, which is used only once to list the headers we
+> do not run hdr-check test on, and instead explicitly list that the
+> ones, either tracked or generated, that we exempt from the test.
 
-diff --git a/git-p4.py b/git-p4.py
-index 3af8df9f83..17f72f4309 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -27,6 +27,16 @@
- import ctypes
- import errno
- 
-+# On python2.7 where raw_input() and input() are both availble,
-+# we want raw_input's semantics, but aliased to input for python3
-+# compatibility
-+# support basestring in python3
-+try:
-+    if raw_input and input:
-+        input = raw_input
-+except:
-+    pass
-+
- verbose = False
- 
- # Only labels/tags matching this will be imported/exported
-@@ -1801,7 +1811,7 @@ def edit_template(self, template_file):
-             return True
- 
-         while True:
--            response = raw_input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
-+            response = input("Submit template unchanged. Submit anyway? [y]es, [n]o (skip this patch) ")
-             if response == 'y':
-                 return True
-             if response == 'n':
-@@ -2372,7 +2382,7 @@ def run(self, args):
-                         # prompt for what to do, or use the option/variable
-                         if self.conflict_behavior == "ask":
-                             print("What do you want to do?")
--                            response = raw_input("[s]kip this commit but apply"
-+                            response = input("[s]kip this commit but apply"
-                                                  " the rest, or [q]uit? ")
-                             if not response:
-                                 continue
--- 
-2.21.0.windows.1
+Yeah, I think this is an improvement by itself.
 
+After reading this, though:
+
+>  - If we value the header cleanliness check, we eventually want to
+>    teach our header generating scripts to produce clean headers.
+>    Keeping the blanket "generated headers can be left as dirty as we
+>    want" exception does not nudge us in the right direction.
+
+I did expect to see the actual hdr-check behavior move towards checking
+these generated versions. However, both are kind of interesting.
+
+unicode-width.h isn't a "real" header file; it's meant to be included in
+the middle of a function. I think it _could_ be changed to define
+"struct interval" itself, and then be a static file-scope variable. But
+there's not really a compelling reason to do so.
+
+But "command-list.h" is more of a traditional header file, being
+included at the top of help.c. In theory the hdr-check target could add
+a dependency on it, and then we could check it along with everything
+else. But even without that first step, if I remove it from EXCEPT_HDRS,
+nothing happens!
+
+That's because LIB_H is created by running find in the local filesystem.
+So until it's generated, we don't realize it's there to check. I kind of
+wonder if it should be part of LIB_H. I suspect that on some systems,
+we'd fail to notice a rebuild when command-list.txt is updated (but
+nobody noticed, because it is only systems that do not have
+compiler-supported dependency tracking, and most developers are no
+modern platforms that do).
+
+-Peff
