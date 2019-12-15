@@ -2,107 +2,121 @@ Return-Path: <SRS0=YD5J=2F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D74AC3F68F
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 19:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 644AAC43603
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:18:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 46AFD2467A
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 19:44:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B5D920700
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:18:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vdq/+Kqx"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="a4xnjRW3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726514AbfLOToR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Dec 2019 14:44:17 -0500
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:36757 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726219AbfLOToQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Dec 2019 14:44:16 -0500
-Received: by mail-wr1-f43.google.com with SMTP id z3so4675577wru.3
-        for <git@vger.kernel.org>; Sun, 15 Dec 2019 11:44:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=8lZ+iV3HHC3oOGgxqbO/IpfvRogpJS9rILNP24mk+ZY=;
-        b=vdq/+Kqxkw4ZZ0F+HUl1BlNSMtc0N0aSsbaNo7Ln1eYIt4QPlb6/4x4KO5MObCTUBd
-         pAxHxkheUUKPG0nO4cBiQWrOnFd6hCW7r75NV8AVqQwojzOb3OJl4hIl09Tq30FlumKD
-         7k5KSKdXDfaj3GW/VO6Qb/25J5tEk1F7WJBrWskXp4uPHbNDhvLZnfIgULP6sN/F+8i3
-         lDj2Jrn58pHUGpWD1EdkuTePf1zARcnpQ4q0Cp5zcuyMN7aiaZqbcOHEBlnCuvGEiFZ7
-         N4aiDw2rCEgU7zmC0BsxrRAo/Fa0E3AsYA/IvDGgzFs8Aa450nA2b7nbnrdND8GbOXh1
-         P70A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=8lZ+iV3HHC3oOGgxqbO/IpfvRogpJS9rILNP24mk+ZY=;
-        b=GHZcYAzuFvmVTVTONDqCRZgddyhdfDd8MKhs9ihaSVyY54Vz8pJgMaJMpUGwpwa/M+
-         +rm4Pkn7nDpQV+cgh3GJSKqrAjTptiawpm3NxkRBbg1JlQRPeg0xFiilj/4v4rKhgNQd
-         nY5LVq1gNqFGvEgVoxLEcVyJkQVOu5X3iqM42Js+wnPG+h2lDD/WIobxGQ9X9Q0ofK+E
-         2oMd05lhzFqwN6JMKjb2r7S4thl7kxEHlL1aibtE4rb71ElMpyPz6Xwwz4FGVHh90Pcq
-         rSMvS45IsAr9otOkzjQ1VBHg8KDdgNh+hEfLsU94fAz2ljDvo2pJtYYixRwSoOQtC4V8
-         +R7A==
-X-Gm-Message-State: APjAAAUv7i/01JjVT2GMhNBsfjYg85Z+qQBAfC8/4sqrApZbSMcH10c0
-        776B501XomvifwRgjzP56vDCm3cH
-X-Google-Smtp-Source: APXvYqxEk15gO5x3eVn0B1MRT23uKa6Rmc935wFzawCJe4DFrU14daDo+HSlxCnat6pxkGEioQ3GSQ==
-X-Received: by 2002:adf:ef49:: with SMTP id c9mr25537558wrp.292.1576439054827;
-        Sun, 15 Dec 2019 11:44:14 -0800 (PST)
-Received: from localhost (p200300DF4F2B29E5D9755E3431C6BEA2.dip0.t-ipconnect.de. [2003:df:4f2b:29e5:d975:5e34:31c6:bea2])
-        by smtp.gmail.com with ESMTPSA id u14sm18975350wrm.51.2019.12.15.11.44.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 15 Dec 2019 11:44:14 -0800 (PST)
-From:   Ralf Thielow <ralf.thielow@gmail.com>
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: Reword generation numbers
-Date:   Sun, 15 Dec 2019 20:44:12 +0100
-Message-Id: <20191215194412.7549-1-ralf.thielow@gmail.com>
-X-Mailer: git-send-email 2.24.1.735.g03f4e72817
-In-Reply-To: <2099929548.270607.1576431348524@ox.hosteurope.de>
-References: <2099929548.270607.1576431348524@ox.hosteurope.de>
+        id S1726292AbfLOUSS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Dec 2019 15:18:18 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60071 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726146AbfLOUSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Dec 2019 15:18:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1576441093;
+        bh=mg8ILOnFTPSTKXO5qr65EEOVMnoYQgB29DL443PR3Xw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=a4xnjRW3mONIz9D2pEUtW00uCJUgCiBHYHZ/JhTii3RXtVdr+aoduFDz8wf1Ou4qh
+         NPj/YsLlfQEHnlv78mhMvi3Nx+Md0KTCiLgVUCKt5M8uPqMPKEgUd2MhY/XX36zgh3
+         rejrE9rk9YOo1eG/eKmdINnL1cKMz5epJIBXCVzI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sit-1hdMx00n0x-018KOZ; Sun, 15
+ Dec 2019 21:18:13 +0100
+Date:   Sun, 15 Dec 2019 21:17:57 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Subject: Re: [PATCH v4 09/15] bugreport: generate config safelist based on
+ docs
+In-Reply-To: <20191213004312.169753-10-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1912152116030.46@tvgsbejvaqbjf.bet>
+References: <20191213004312.169753-1-emilyshaffer@google.com> <20191213004312.169753-10-emilyshaffer@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:JMkqqFqDfsxc9Sv+NqY8ht1i/0KaWHsDlQe7pYTt5PrQy2JakSv
+ pA1S9i7cMmQNzdKoKqpW+5TVbHFhyK9xcGydJhzHimxN+fv0YecB1+CsOafmZl2u7jUCIR3
+ Z8pb0r7Vd1obSMflbDA9UU8zsILdebGjhsxhtOaEWq5UcEfhBmNARnWb6maNZ1EBy7wX3ze
+ jMFF6fNTvKw1Ya1wLXKjQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:usWepAZ7ml4=:14h976ScR8gxiJ6V06CDka
+ bDRz8TLk2M8jAPbENY7hfxV7CdS5GcB3ONUYEYRjcwrR+H1r3gLT2rwP17JvukPwfeMnvbYSQ
+ FvXV4NpIifKxwBjMPEUi7IOQzmN1iPUxtdqVaUwA0FHRG9RwCFiHZwBa2mnbd8+TwKB7tZOIo
+ i+Fgx8NiS8M7bQcwh6jN9mZ7c0Zt1OcYdR3oMISseDAqjyWwY2t6LzU5VPVnsMTbXQxIMTRKD
+ hxqKwW3Bd67dqcppBASXAT6hjUcydm3urdVra39UBjnvwMc/ntdnQZ2/E417wbanpLkvew0uZ
+ XYImSWcKJBmSS9Fm9MHHF+Z+tCe9yKxnoF3VcXiiQcu3MAh36g4dnMgVlI+elzZkf2mCZPO/L
+ 3AEgylu6TJX4pv3R8CodpQucc34Q7B2OZkl/39vuZWY1ur07Ia2/85qAaVyHWHXS0NgxQUdmA
+ zrWvPL8RbT0wMNO+cCLXZwwjFXz9z/muXaKWWkvBI3GoJ113YBgCuW2N8KwsHbgF3ouVNnNou
+ U3vOpHVHYP/MKiAkyuNgkuEvKwltDaHNP8OV97Saa0AM/e9N6n8y61tLwy3R6UwqU2rFLj59h
+ hWBnk9VMciFrCJUZg7TIBJNyjs6GXHe9XNJV8IeY0IU4P3xNqjlqzt/6QJmSRsD31QiOB9Ipu
+ rQBVaUyWmJKpds0HryXoQNWUiX0jSYw4yqrYlAs0VNbzcs4PvjfqGscvk8DwdpFJHbQGYj+CF
+ gUUMy8r8hVL6JbOFrBE/GzyEpt67ZKnmPQbDvx3hjp8XrvQQer6qf/R6MbQQ+QCywzU0n2MQq
+ QCb0aIskGh539yCMxvH+P9BVAf6d7k7HIPQ/KDRV8bdRkyr8L+eBWP3elqZLNG9Zmd/PToPfm
+ x6Sirx5rFsP3+pwFHElLE6fZSTAHO7VTgaR/NV6OrjcQr2oXb7JhhVr/Chn+j+2gxK1ttbG1I
+ 8Iy/SKPqGufkDel8AUpMnZpj/p3TAg4wC1b+BUeHkp3k2BqvanpuS4uVXT2sURynbgzMQo+Ci
+ xkCm2PKY5vayX3/5/O7nh2bIBg1YWPlj2zVUQ6aOXayYmRZmfiq2VJhUmenQvDy6blgX12tY8
+ qNS1qBjb41bq9/lwe4ZOoA7+tw7jEO6f4m4NtCtKkroa1MK3uvuHpoWjCMfcKkVfg5FlqtgUO
+ kvrx3omFitvtg8moT8dHYuB2tXd2emwpC6FG4o767etfS76xGQcHtIfOvsyzzJZwcvHTOOVTA
+ WTzz4YzaP5qQS471vdISp6/MP0D0as8ush83M0ZIB2vexiPznPdXhEeAGi3c=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Hi Emily,
 
-The english term generation is here not used in the sense of "to
-generate" but in the sense of "generations of beings".
+On Thu, 12 Dec 2019, Emily Shaffer wrote:
 
-This corrects the initial translation from cf4c0c25 (l10n: update German
-translation, 2018-12-06).
+> diff --git a/generate-bugreport-config-safelist.sh b/generate-bugreport-=
+config-safelist.sh
+> new file mode 100755
+> index 0000000000..06b8e0c3c4
+> --- /dev/null
+> +++ b/generate-bugreport-config-safelist.sh
+> @@ -0,0 +1,22 @@
+> +#!/bin/sh
+> +
+> +cat <<EOF
+> +/* Automatically generated by bugreport-generate-config-safelist.sh */
+> +
+> +
+> +static const char *bugreport_config_safelist[] =3D {
+> +EOF
+> +
+> +# cat all regular files in Documentation/config
+> +find Documentation/config -type f -exec cat {} \; |
+> +# print the command name which matches the bugreport-include macro
+> +sed -n 's/^\(.*\) \+bugreport:include.* ::$/\1/p' |
 
-Fixed-by: SZEDER Gábor <szeder.dev@gmail.com>
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
-Thank you. The change looks good to me. I'll send a pull request
-with this patch to the German translation repo at Github.
+If you use `/  "\1",/` as replacement, you can totally avoid that ugly
+`while` loop (that is unfortunately quite slow in MSYS2/Cygwin). You can
+still pipe the result into `sort` just the same.
 
- po/de.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ciao,
+Dscho
 
-diff --git a/po/de.po b/po/de.po
-index 066326a687..773e361f6f 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1535,7 +1535,7 @@ msgstr "Lösche Commit-Markierungen in Commit-Graph"
- 
- #: commit-graph.c:1104
- msgid "Computing commit graph generation numbers"
--msgstr "Commit-Graph Generierungsnummern berechnen"
-+msgstr "Commit-Graph Generationsnummern berechnen"
- 
- #: commit-graph.c:1179
- #, c-format
--- 
-2.24.1.735.g03f4e72817
-
+> +sort |
+> +while read line
+> +do
+> +	echo "	\"$line\","
+> +done
+> +
+> +cat <<EOF
+> +};
+> +EOF
+> --
+> 2.24.1.735.g03f4e72817-goog
+>
+>
