@@ -2,121 +2,126 @@ Return-Path: <SRS0=YD5J=2F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 644AAC43603
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B349C43603
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:31:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2B5D920700
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:18:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0FEFD24676
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 20:31:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="a4xnjRW3"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KoGXtnor"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726292AbfLOUSS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Dec 2019 15:18:18 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60071 "EHLO mout.gmx.net"
+        id S1726267AbfLOUbE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Dec 2019 15:31:04 -0500
+Received: from mout.gmx.net ([212.227.15.18]:34255 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726146AbfLOUSR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Dec 2019 15:18:17 -0500
+        id S1726219AbfLOUbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Dec 2019 15:31:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1576441093;
-        bh=mg8ILOnFTPSTKXO5qr65EEOVMnoYQgB29DL443PR3Xw=;
+        s=badeba3b8450; t=1576441857;
+        bh=xZsnzR6jtO5RZPLXmWDh4BLhdspQu9qZCnzjHr5J3W8=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a4xnjRW3mONIz9D2pEUtW00uCJUgCiBHYHZ/JhTii3RXtVdr+aoduFDz8wf1Ou4qh
-         NPj/YsLlfQEHnlv78mhMvi3Nx+Md0KTCiLgVUCKt5M8uPqMPKEgUd2MhY/XX36zgh3
-         rejrE9rk9YOo1eG/eKmdINnL1cKMz5epJIBXCVzI=
+        b=KoGXtnorR10l0eK1VvVjPp7wiUL6s06Da3VKw2jPlqyNGUhMxyO8Fna/D1qD0zONc
+         qh+3uvUCgDLUAfrK3OGBbApUlmdaD+vkTkN+WshOeldDCDCRDtOtLTfT/Y3/Hf3bmp
+         a34AgYKTGDnV33eyBvlR05rYWCEexIjgBzTKnSrY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sit-1hdMx00n0x-018KOZ; Sun, 15
- Dec 2019 21:18:13 +0100
-Date:   Sun, 15 Dec 2019 21:17:57 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MZTqW-1iAEWl0PTC-00WVrp; Sun, 15
+ Dec 2019 21:30:57 +0100
+Date:   Sun, 15 Dec 2019 21:30:40 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Emily Shaffer <emilyshaffer@google.com>
-cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v4 09/15] bugreport: generate config safelist based on
- docs
-In-Reply-To: <20191213004312.169753-10-emilyshaffer@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1912152116030.46@tvgsbejvaqbjf.bet>
-References: <20191213004312.169753-1-emilyshaffer@google.com> <20191213004312.169753-10-emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Denton Liu <liu.denton@gmail.com>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ben Keene <seraphire@gmail.com>
+Subject: Re: [PATCH v3 1/4] git-p4: yes/no prompts should sanitize user
+ text
+In-Reply-To: <xmqqsgloj9fd.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1912152125390.46@tvgsbejvaqbjf.bet>
+References: <pull.675.v2.git.git.1575991374.gitgitgadget@gmail.com>        <pull.675.v3.git.git.1576179987.gitgitgadget@gmail.com>        <fff93acf4430e2e7702ae1345f9899244a9867aa.1576179987.git.gitgitgadget@gmail.com>        <20191213014537.GA13064@generichostname>
+ <xmqqsgloj9fd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JMkqqFqDfsxc9Sv+NqY8ht1i/0KaWHsDlQe7pYTt5PrQy2JakSv
- pA1S9i7cMmQNzdKoKqpW+5TVbHFhyK9xcGydJhzHimxN+fv0YecB1+CsOafmZl2u7jUCIR3
- Z8pb0r7Vd1obSMflbDA9UU8zsILdebGjhsxhtOaEWq5UcEfhBmNARnWb6maNZ1EBy7wX3ze
- jMFF6fNTvKw1Ya1wLXKjQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:usWepAZ7ml4=:14h976ScR8gxiJ6V06CDka
- bDRz8TLk2M8jAPbENY7hfxV7CdS5GcB3ONUYEYRjcwrR+H1r3gLT2rwP17JvukPwfeMnvbYSQ
- FvXV4NpIifKxwBjMPEUi7IOQzmN1iPUxtdqVaUwA0FHRG9RwCFiHZwBa2mnbd8+TwKB7tZOIo
- i+Fgx8NiS8M7bQcwh6jN9mZ7c0Zt1OcYdR3oMISseDAqjyWwY2t6LzU5VPVnsMTbXQxIMTRKD
- hxqKwW3Bd67dqcppBASXAT6hjUcydm3urdVra39UBjnvwMc/ntdnQZ2/E417wbanpLkvew0uZ
- XYImSWcKJBmSS9Fm9MHHF+Z+tCe9yKxnoF3VcXiiQcu3MAh36g4dnMgVlI+elzZkf2mCZPO/L
- 3AEgylu6TJX4pv3R8CodpQucc34Q7B2OZkl/39vuZWY1ur07Ia2/85qAaVyHWHXS0NgxQUdmA
- zrWvPL8RbT0wMNO+cCLXZwwjFXz9z/muXaKWWkvBI3GoJ113YBgCuW2N8KwsHbgF3ouVNnNou
- U3vOpHVHYP/MKiAkyuNgkuEvKwltDaHNP8OV97Saa0AM/e9N6n8y61tLwy3R6UwqU2rFLj59h
- hWBnk9VMciFrCJUZg7TIBJNyjs6GXHe9XNJV8IeY0IU4P3xNqjlqzt/6QJmSRsD31QiOB9Ipu
- rQBVaUyWmJKpds0HryXoQNWUiX0jSYw4yqrYlAs0VNbzcs4PvjfqGscvk8DwdpFJHbQGYj+CF
- gUUMy8r8hVL6JbOFrBE/GzyEpt67ZKnmPQbDvx3hjp8XrvQQer6qf/R6MbQQ+QCywzU0n2MQq
- QCb0aIskGh539yCMxvH+P9BVAf6d7k7HIPQ/KDRV8bdRkyr8L+eBWP3elqZLNG9Zmd/PToPfm
- x6Sirx5rFsP3+pwFHElLE6fZSTAHO7VTgaR/NV6OrjcQr2oXb7JhhVr/Chn+j+2gxK1ttbG1I
- 8Iy/SKPqGufkDel8AUpMnZpj/p3TAg4wC1b+BUeHkp3k2BqvanpuS4uVXT2sURynbgzMQo+Ci
- xkCm2PKY5vayX3/5/O7nh2bIBg1YWPlj2zVUQ6aOXayYmRZmfiq2VJhUmenQvDy6blgX12tY8
- qNS1qBjb41bq9/lwe4ZOoA7+tw7jEO6f4m4NtCtKkroa1MK3uvuHpoWjCMfcKkVfg5FlqtgUO
- kvrx3omFitvtg8moT8dHYuB2tXd2emwpC6FG4o767etfS76xGQcHtIfOvsyzzJZwcvHTOOVTA
- WTzz4YzaP5qQS471vdISp6/MP0D0as8ush83M0ZIB2vexiPznPdXhEeAGi3c=
+X-Provags-ID: V03:K1:PTJxFW5jaCdwVnwXeB/aVmfuqnccN1/8UGdCE8ZmSvUi3jjLcyf
+ xBx3+/vM+nfvIvcmt/ZZjIUMldmaCVg5UgQBtwMRmIQ7VXGOKRXARGegUPdxoq3sEOTlGIQ
+ hvusSgj1fBUnh0V+Ww7ZxMG84/zUTPgU5SOQ3JFuOzTeGXoY3kSsMP/WEGhP6ko9vwQVs9K
+ bXVNCuAwQVxnlZNE2nXEg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9H5Xs+3f4Nk=:GvTkxVy8lyPfr29rtk+jpu
+ x9K861l+JfJHb+UVlVC4fr6bIPhgzFRD1JruTra/TbNhSCCnRUGF2Wcj11CVLqMIrbWwnj6KB
+ lYOw3M7oqy2mbS1qf4pXattvMnEZgmOI6zOgVwdpXC1188IfgwESLQGWL6e3x4sXC3PenmP17
+ IAIBxXXbtIiieTm8RDRbsoNtyXXYwaOSKI3UNnvBEFPN3Xdn83mkLmm52baQJ8pSh4g8Zo5yA
+ AkS8KhkeLyAaA67rLGIbbBH2oAREO8EtS7C+91GA9Fbh1YjZ48eGiROA5eFb3MxiuRBZGQaaE
+ V8/7mJ4A4JwakiSIRDBfn9iFuYi32J+cMhk200GRDDXMQqwU2h4DUQkNn/T8D5CsPHkwA6oF9
+ wTjCh61ITL0ZeZnA5pDwVCtoILwaw7Wy1ys31tqRWG4HB+JEjXdifRo7Ak5MKCspeUS+5shwO
+ CGTtWDWi9SU+zLJgU330AjlobQEbVPgsIrc7KBIifqNzBsy9R+CLirKmFR5OWe/VEikoFIZoI
+ arPh39dQT9bOiMEPzxJ9r9+OwKSit1IQ5lcoTrKfDEVsipJ7OSkjU4fZoR0nt5a/00QkWrwgC
+ dFB/kEbi6iE5OmW1j6ebn68qWs1VoLukCR6ZeoLzUfYabrcH9m8OlEgJ29pELmo5iZpZ6XGUX
+ WKOM4mkvMU+uKKKGxrGAFrrjtVwkZ2ivO0aZZzJvIPube2ph8OR8aAaHxx+aH5yk98UBvJy0H
+ wsvLiLGjhD8ckjdfLiZk89svaCWNJJsMQMU7tXgMG6ZlpCyE50dCNg5m4YIk6Ll+z5/VBKVlx
+ 2dqwHNfzuUFN8L1x51O1LchnXv6IR20nEiEkePOz0HrPkC6oqciWXM9x3E06z+ljztBw0L/K7
+ WJviU7TwciS5/mzd1yaYU7m7GNz/OZYbmYqGVqc/tP0cbwvlLvykm+1kHI815bGegVSPX0xPe
+ UcVozVOR2P9ROssbjwSJDv/5heqHzN2GPvh1Rdpk4Ci6And8KQEe2F3k7rbBEPiew3S16mRx5
+ 401RFP6bWeL0rf8HZCXalj4kIw/KQ+r6zerH2lZbeKmPk5ZHy5SPX8yqGfrUGMWt7YS40O3BM
+ pKagCBQ+DjZaM9PeJg1iHuY8R4IGTkAF7TmpZO8TpUpxuabH2xffQIg32Uu2qFQeASMRzh+kM
+ KYHUub4FUVJrRKghd/HqCqdTBJ8t8W1yhJczW/AGFmR/O8XEYvoRhzCMrzgD+YGyVPmO2vO48
+ XeiFI67ScoWWwxEn+scHcUwWIuWv7A/P0pl5pzsCpQDuosupkB7UvnJQSRXI=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Emily,
+Hi Junio,
 
-On Thu, 12 Dec 2019, Emily Shaffer wrote:
+On Fri, 13 Dec 2019, Junio C Hamano wrote:
 
-> diff --git a/generate-bugreport-config-safelist.sh b/generate-bugreport-=
-config-safelist.sh
-> new file mode 100755
-> index 0000000000..06b8e0c3c4
-> --- /dev/null
-> +++ b/generate-bugreport-config-safelist.sh
-> @@ -0,0 +1,22 @@
-> +#!/bin/sh
-> +
-> +cat <<EOF
-> +/* Automatically generated by bugreport-generate-config-safelist.sh */
-> +
-> +
-> +static const char *bugreport_config_safelist[] =3D {
-> +EOF
-> +
-> +# cat all regular files in Documentation/config
-> +find Documentation/config -type f -exec cat {} \; |
-> +# print the command name which matches the bugreport-include macro
-> +sed -n 's/^\(.*\) \+bugreport:include.* ::$/\1/p' |
+> Denton Liu <liu.denton@gmail.com> writes:
+>
+> >> @@ -4170,3 +4175,4 @@ def main():
+> >>
+> >>  if __name__ =3D=3D '__main__':
+> >>      main()
+> >> +
+> >
+> > Spurious trailing line. Perhaps we could make GGG error out on
+> > whitespace errors before submissions are allowed?
+>
+> I think you are asking the tool for too much support.
+>
+> It may help a lot more if we gave a Makefile target (or two) that
+> the contributors can run before going public.  Perhaps
+>
+>
+> 	O=3Dorigin/master
+> 	upstream-check::
+> 		git log -p --check $(O)..
+>
+> that can be used like so:
+>
+> 	$ make upstream-check
+> 	$ make O=3Dgitster/next upstream-check
+>
+> That way, those who use format-patch+email without GGG or those who
+> push to a shared repository to be reviewed among the peer developers
+> before going public would benefit, not just GGG users.
+>
+> Hmm?
 
-If you use `/  "\1",/` as replacement, you can totally avoid that ugly
-`while` loop (that is unfortunately quite slow in MSYS2/Cygwin). You can
-still pipe the result into `sort` just the same.
+I'd like that a lot, _and_ I think GitGitGadget could learn the trick of
+running that `Makefile` target and report failures back to the PR
+_especially_ because GitGitGadget knows the base branch of the PR.
+
+In my opinion, there is a lot of value in having GitGitGadget doing this,
+as new contributors are likely to miss such a helpful `Makefile` target.
+For example, I vividly remember when I contributed to cURL for the first
+time and had totally and completely missed the invocation `make -C src
+checksrc` to help me get the code into the preferred shape.
 
 Ciao,
 Dscho
-
-> +sort |
-> +while read line
-> +do
-> +	echo "	\"$line\","
-> +done
-> +
-> +cat <<EOF
-> +};
-> +EOF
-> --
-> 2.24.1.735.g03f4e72817-goog
->
->
