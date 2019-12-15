@@ -2,160 +2,93 @@ Return-Path: <SRS0=YD5J=2F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE3B0C2D0CB
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 15:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 07849C43603
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 17:19:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 94C1820866
-	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 15:12:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jvE/Vl5x"
+	by mail.kernel.org (Postfix) with ESMTP id CFB612465E
+	for <git@archiver.kernel.org>; Sun, 15 Dec 2019 17:19:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726204AbfLOPM3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Dec 2019 10:12:29 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42834 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726125AbfLOPM3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Dec 2019 10:12:29 -0500
-Received: by mail-wr1-f66.google.com with SMTP id q6so4136052wro.9
-        for <git@vger.kernel.org>; Sun, 15 Dec 2019 07:12:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=B8z/WqSKv7R2bd/ewASzg3qkWmm4v4TMnbxPC+acI08=;
-        b=jvE/Vl5x0Nh4l2VocvGO9DfXtm59FtIU/Z4lMptOXWLnBLK75mPzGSJ6UW9Wlvyo/a
-         rNq6659cmm40cIOk7r3XlDpTh8ZHDI9RzoPwGv4zPYw+4DS2gG7tFbA5w0YraGston3E
-         V2Ql/Hu2COGD/4YhpALbiO1b6R8eruWi2LBlWwSG6tlWNvQUTCoStxl4u8yijrqwERev
-         tdNIaeIvvRiD/cFRheUOQiyWRpktN0wh8qS5LV9wZHmwGsCUi8MJ1/3+DwZXK2GfOzCS
-         I91KlyV1ihFQGxTLtdhsUy39LSquwK5r22QRqdKtsgv2pGl/DQW8/UbV31DIV6HKJZPx
-         COFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=B8z/WqSKv7R2bd/ewASzg3qkWmm4v4TMnbxPC+acI08=;
-        b=XBtF244LVg4r1FSa7FHLw15DCwswkw3Ykr8+3ED3zJ/FJLlOE7A/pr4p2Zrc/tiQVn
-         ePS2zyavC8T/uPpgtmLTdMIjSM9AImPZeQ4OLmoNTdCcn6PSSGvRNsw/pI0K+s3xeIXk
-         RlUFWCezWB84TUxDZ7Bh1SXxDfHEctSsL3Woi3vLdQ6eU2loo64zxayP5ethoraKc6co
-         azDFZAvfPrSAuG6WZeYNBtoW5l1bWZQrj4J5H2oe/QVx3Hw3G1szugjTmJ2mpGtAuTn6
-         DeOpSjUGAv3AMbpBdYkJFKnXHeyZDlp+xBbQsIhFPBOsrz8rCUb8SeLk1Csxt0zP0Jlp
-         BGpw==
-X-Gm-Message-State: APjAAAWPd98Io1VU5LuMFTtEJtQs5kIBn7bDupkROSkpKIZSa2XwZgWz
-        Z5gsMr1Rx5u0YbPSaLARyYUt8HoN
-X-Google-Smtp-Source: APXvYqzssgg8JqTPJB+OWWgVT7MCb+oM/VC8KIYMck0Z7jMqIE0q9wNQpVeujl9yf9iytdUkHtf1VA==
-X-Received: by 2002:adf:e78a:: with SMTP id n10mr26246091wrm.62.1576422746959;
-        Sun, 15 Dec 2019 07:12:26 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z189sm19342898wmc.2.2019.12.15.07.12.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 15 Dec 2019 07:12:26 -0800 (PST)
-Message-Id: <318074125990be47843cfa54b4276f93edde0ec5.1576422744.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.482.v2.git.1576422744.gitgitgadget@gmail.com>
-References: <pull.482.git.1575517503.gitgitgadget@gmail.com>
-        <pull.482.v2.git.1576422744.gitgitgadget@gmail.com>
-From:   "ryenus via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 15 Dec 2019 15:12:24 +0000
-Subject: [PATCH v2 1/1] fix-typo: consecutive-word duplications
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726292AbfLORTI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Dec 2019 12:19:08 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:43300 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726135AbfLORTH (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 15 Dec 2019 12:19:07 -0500
+Received: from app10-neu.ox.hosteurope.de ([92.51.170.144]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
+        id 1igXXt-0006MX-BA; Sun, 15 Dec 2019 18:19:05 +0100
+Date:   Sun, 15 Dec 2019 18:19:05 +0100 (CET)
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+To:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Message-ID: <264571040.270538.1576430345179@ox.hosteurope.de>
+In-Reply-To: <b7d5a758-9753-bb8b-f66e-6435fb19046b@gmail.com>
+References: <492636883.190386.1576264842701@ox.hosteurope.de>
+ <bdb9201f-b77f-ab3c-251f-d902c76fa9bc@gmail.com>
+ <20191213195215.GA862734@coredump.intra.peff.net>
+ <b7d5a758-9753-bb8b-f66e-6435fb19046b@gmail.com>
+Subject: Re: Parallel fetch and commit graph writing results in locking
+ failure (even on linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, ryenus <ryenus@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev64
+X-Originating-Client: open-xchange-appsuite
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1576430347;f830f7ac;
+X-HE-SMSGID: 1igXXt-0006MX-BA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: ryenus <ryenus@gmail.com>
+> Derrick Stolee <stolee@gmail.com> hat am 13. Dezember 2019 um 20:58 geschrieben:
+> 
+> 
+> On 12/13/2019 2:52 PM, Jeff King wrote:
+> > On Fri, Dec 13, 2019 at 02:35:47PM -0500, Derrick Stolee wrote:
+> > 
+> >> I don't think so. I think you just found a bug where the
+> >> fetch.writeCommitGraph logic doesn't work with parallel fetch
+> >> jobs (only one can write at a time).
+> >>
+> >> I believe the fix would be to write the commit-graph after
+> >> all of the jobs have completed, which should mean we need to
+> >> move the call to write_commit_graph_reachable() somewhere else
+> >> inside builtin/fetch.c.
+> > 
+> > This should be fixed in master by bcb06e204c (Merge branch
+> > 'js/fetch-multi-lockfix', 2019-12-01), I think.
+> 
+> Thanks, Peff. That exactly looks like the right fix. The
+> actual commit is 7d8e72b9 ("fetch: avoid locking issues between
+> fetch.jobs/fetch.writeCommitGraph" 2019-11-03). I had forgotten
+> that this was already fixed.
 
-Correct unintentional duplication(s) of words, such as "the the",
-and "can can" etc.
-
-The changes are only applied to cases where it's fixing what is clearly
-wrong or prone to misunderstanding, as suggested by the reviewers.
-
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Helped-by: Denton Liu <liu.denton@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: ryenus <ryenus@gmail.com>
----
- Documentation/RelNotes/2.7.3.txt | 2 +-
- Makefile                         | 2 +-
- graph.c                          | 2 +-
- submodule-config.c               | 2 +-
- t/t5314-pack-cycle-detection.sh  | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/RelNotes/2.7.3.txt b/Documentation/RelNotes/2.7.3.txt
-index 6adf038915..f618d71efd 100644
---- a/Documentation/RelNotes/2.7.3.txt
-+++ b/Documentation/RelNotes/2.7.3.txt
-@@ -20,7 +20,7 @@ Fixes since v2.7.2
-    tests.
+Thanks Stolee and Peff, I'll update to a version with that fix. And in the unlikely case this does not resolve my issue, report back.
  
-  * "git show 'HEAD:Foo[BAR]Baz'" did not interpret the argument as a
--   rev, i.e. the object named by the the pathname with wildcard
-+   rev, i.e. the object named by the pathname with wildcard
-    characters in a tree object.
- 
-  * "git rev-parse --git-common-dir" used in the worktree feature
-diff --git a/Makefile b/Makefile
-index b7d7374dac..42a061d3fb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -481,7 +481,7 @@ all::
- #
- # When DEVELOPER is set, DEVOPTS can be used to control compiler
- # options.  This variable contains keywords separated by
--# whitespace. The following keywords are are recognized:
-+# whitespace. The following keywords are recognized:
- #
- #    no-error:
- #
-diff --git a/graph.c b/graph.c
-index e3fd0ea5f8..5da111f567 100644
---- a/graph.c
-+++ b/graph.c
-@@ -218,7 +218,7 @@ struct git_graph {
- 	int merge_layout;
- 	/*
- 	 * The number of columns added to the graph by the current commit. For
--	 * 2-way and octopus merges, this is is usually one less than the
-+	 * 2-way and octopus merges, this is usually one less than the
- 	 * number of parents:
- 	 *
- 	 * 		| | |			| |    \
-diff --git a/submodule-config.c b/submodule-config.c
-index b93482d834..85064810b2 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -626,7 +626,7 @@ static void submodule_cache_check_init(struct repository *repo)
- 
- /*
-  * Note: This function is private for a reason, the '.gitmodules' file should
-- * not be used as as a mechanism to retrieve arbitrary configuration stored in
-+ * not be used as a mechanism to retrieve arbitrary configuration stored in
-  * the repository.
-  *
-  * Runs the provided config function on the '.gitmodules' file found in the
-diff --git a/t/t5314-pack-cycle-detection.sh b/t/t5314-pack-cycle-detection.sh
-index e525466de0..0aec8619e2 100755
---- a/t/t5314-pack-cycle-detection.sh
-+++ b/t/t5314-pack-cycle-detection.sh
-@@ -53,7 +53,7 @@ immediately after the lookup for "dummy".
- 
- 
- 
--# Create a pack containing the the tree $1 and blob $1:file, with
-+# Create a pack containing the tree $1 and blob $1:file, with
- # the latter stored as a delta against $2:file.
- #
- # We convince pack-objects to make the delta in the direction of our choosing
--- 
-gitgitgadget
+> Here is the diff, for reference:
+> 
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 8d27f8abb7..20bcda09c4 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1602,7 +1602,8 @@ static int fetch_multiple(struct string_list *list, int max_children)
+>                         return errcode;
+>         }
+>  
+> -       argv_array_pushl(&argv, "fetch", "--append", "--no-auto-gc", NULL);
+> +       argv_array_pushl(&argv, "fetch", "--append", "--no-auto-gc",
+> +                       "--no-write-commit-graph", NULL);
+>         add_options_to_argv(&argv);
+>  
+>         if (max_children != 1 && list->nr != 1) {
+> 
+> -Stolee
+>
