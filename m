@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D391C2D0C3
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5020AC43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E99E820725
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20CBD20725
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EsK6F6kN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mdSYCqj9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728542AbfLPPsT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 10:48:19 -0500
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:34135 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728511AbfLPPsP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 10:48:15 -0500
-Received: by mail-wr1-f43.google.com with SMTP id t2so7884705wrr.1
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 07:48:14 -0800 (PST)
+        id S1728556AbfLPPsW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 10:48:22 -0500
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:34984 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728534AbfLPPsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 10:48:18 -0500
+Received: by mail-wm1-f43.google.com with SMTP id p17so7251586wmb.0
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 07:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=UTlc6qjNMhMEu4zUmegOUS6A2tNDjGefjNDO1CKZ5Kw=;
-        b=EsK6F6kNaj5OqN43sSYOMHbGwbhXR3AXc0cLwLwgRLLULpEDhcQGQkxE+Zt7Z2KcHK
-         qbcG5hd6IBUqnb55AalvMco6n50A9Da0ReIsi974jOc5wrg8BJsKprGpxdVIDubNwqgA
-         JZRNklyBpTuNVEkKf9RPmWvioyoSRAxGwOJ+eizvNErK7GqH/fGcGGFB9dzhHeA38E4U
-         L719T+Jgx2aj+QD/z1XSaTuWOCpuRS8efzo0s/NA/Vu3fVypBCXg9HpOuUbj1qpBOEli
-         uWLuGTU7YpetahhtGk4dX+kF1DqIFTVcmuQqlFBvaKUbQfCMnRMpTNKcNF71RuNgbqTg
-         Ryow==
+        bh=PT+xykgIecQEKrUEpLdmeS0n9SYkZV/dk/Evq5pXETE=;
+        b=mdSYCqj9fpWLDb6nLbz8IV0CrgaQz0eEnEGm74D3OF9JqdvGetTentVAFCdWLJwC40
+         duIcCJOrwyX5oKYyniUZNMgaP2CiLSEE+UesK2KDJcj3le0R4/zlTSGPt/sfQxgMHEXb
+         QMAVcNlAz9GmfnMCKKIgH4OS6gOVVS70uLqBV4Vh4cyKI3FNFXPWVPk3EcGS+B6HcROG
+         YU79jF2H+9aTa1vtE/6+7yYo8u8gZHlGIDXKWbDFdFwlLvTLzdNokUfx//Vza3CuUOwO
+         peF6jILV5TlxRJQcbBhak6v+/nHM1/UWXhBDdMIx0wx3LP0DmIuJ20TlyqkadIasFOjZ
+         OUvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UTlc6qjNMhMEu4zUmegOUS6A2tNDjGefjNDO1CKZ5Kw=;
-        b=i3UEbfDPcGiUn399AqZNtp/3NpFnsjJaheXXKBLS1VUdNEbdJo9vos/0sjzaz/Wf8y
-         GsIMAL3IZN83ASwgDvMTLxtew+M9V7OI91YauilJpLPTT8l+pGVYsb+uXh/+SzK7eQLM
-         h1uKPIkakEPUP7WbVKb3wWr5BkSoShp+iLbm8S5LjilsRSg+xG+tn/ZFxv82/RL2cieJ
-         duD3i25XV+nTiuCzOs5l50K17vVrlDQp4dQuYgm6WbsymAgU06kdfUEDGY0EgKZvPKY4
-         Q9GimX3wf+V3rP6vaWw3NkpkletYD5789FNbkuy7EVdlIujGv3ynEo6xgXiQIfz9+YZw
-         8GaA==
-X-Gm-Message-State: APjAAAWR87bVWJ6U1lOJEt2Bdsk4m7FUXVJrs6KrJAv2aRJusdVvAJwx
-        dQmSxNK+OH4gYBMaiqL2zjneNzj5
-X-Google-Smtp-Source: APXvYqzTCfFVtSgw78Tm8bAFeHbBtZH1DaOq/1oa+YzwnARRyfiRAsz6jO7ijzuvxPF5ilGnlBfXBA==
-X-Received: by 2002:a5d:53d1:: with SMTP id a17mr30084618wrw.327.1576511293525;
-        Mon, 16 Dec 2019 07:48:13 -0800 (PST)
+        bh=PT+xykgIecQEKrUEpLdmeS0n9SYkZV/dk/Evq5pXETE=;
+        b=OKkr/3gn6AIMzx6urhez7khP0+KNJts1J9SwnaWOmKPCA308bjaPgK6bzTOMwe0cW8
+         n/bppQkq2FWLHF/ILdVRtbuEtyVCbJ8nx3EHCPxgq2nfD8xC1FUpi/5fHeRrnrDVEDQg
+         Jgl+hREQjWCtObL30Xm/S7I706DboRJF+m2rNUPiwDJgyIOIm4W8Vt9KBgW8VODrvpeJ
+         zjy08vl1/x2RR9/edvu7geuPNSi43UejrJDxBrmxM2mw6dWgOv2+Uy311LpDiNm3EPqn
+         K5u2ZUth3kgzEYo1QIZupsBSFaT3XyMwuaCEYlYi9TGs51hRXTBr8ZvKejNmJyK6NWzQ
+         z1ew==
+X-Gm-Message-State: APjAAAX1EejZZaUTfEDV69r7EWH4PZY/94UgVcvBxDRmnDJqvPuYRy/x
+        dv14nUqM7z5vrSQk0UV94fu2VaBT
+X-Google-Smtp-Source: APXvYqxNCZTLMruAGj10zKJIaIIfwOY8GdJnqkb9mJGAZUHoPVqPjd4Mvl1pK/Sin4p8cSZTxaH0/A==
+X-Received: by 2002:a1c:48c1:: with SMTP id v184mr32210037wma.5.1576511296853;
+        Mon, 16 Dec 2019 07:48:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o7sm6052283wmh.11.2019.12.16.07.48.13
+        by smtp.gmail.com with ESMTPSA id d8sm21904571wre.13.2019.12.16.07.48.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Dec 2019 07:48:13 -0800 (PST)
-Message-Id: <85f7ccc4e07294d8107b2f1ddd19b9b1c2a65708.1576511287.git.gitgitgadget@gmail.com>
+        Mon, 16 Dec 2019 07:48:16 -0800 (PST)
+Message-Id: <24988252302780577b27e636237319724848a47a.1576511287.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
         <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Dec 2019 15:47:56 +0000
-Subject: [PATCH v2 08/18] doc: checkout: fix broken text reference
+Date:   Mon, 16 Dec 2019 15:48:01 +0000
+Subject: [PATCH v2 13/18] parse_branchname_arg(): easier to understand
+ variables
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,32 +83,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
+`dash_dash_pos` was only calculated under `opts->accept_pathspec`. This
+is unexpected to readers and made it harder to reason about the code.
+Fix this by restoring the expected meaning.
+
+Simplify the code by dropping `argcount` and useless `argc` / `argv`
+manipulations.
+
+This should not change behavior in any way.
+
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-checkout.txt | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ builtin/checkout.c | 34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 2011fdbb1d..d47046e050 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -95,12 +95,10 @@ using `--ours` or `--theirs`.  With `-m`, changes made to the working tree
- file can be discarded to re-create the original conflicted merge result.
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b847695d2b..f35fe2cc26 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1152,7 +1152,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 				struct object_id *rev)
+ {
+ 	const char **new_branch = &opts->new_branch;
+-	int argcount = 0;
+ 	const char *arg;
+ 	int dash_dash_pos;
+ 	int has_dash_dash = 0;
+@@ -1211,17 +1210,21 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	arg = argv[0];
+ 	dash_dash_pos = -1;
+ 	for (i = 0; i < argc; i++) {
+-		if (opts->accept_pathspec && !strcmp(argv[i], "--")) {
++		if (!strcmp(argv[i], "--")) {
+ 			dash_dash_pos = i;
+ 			break;
+ 		}
+ 	}
+-	if (dash_dash_pos == 0)
+-		return 1; /* case (2) */
+-	else if (dash_dash_pos == 1)
+-		has_dash_dash = 1; /* case (3) or (1) */
+-	else if (dash_dash_pos >= 2)
+-		die(_("only one reference expected, %d given."), dash_dash_pos);
++
++	if (opts->accept_pathspec) {
++	    if (dash_dash_pos == 0)
++		    return 1; /* case (2) */
++	    else if (dash_dash_pos == 1)
++		    has_dash_dash = 1; /* case (3) or (1) */
++	    else if (dash_dash_pos >= 2)
++		    die(_("only one reference expected, %d given."), dash_dash_pos);
++	}
++
+ 	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
  
- 'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]::
--	This is similar to the "check out paths to the working tree
--	from either the index or from a tree-ish" mode described
--	above, but lets you use the interactive interface to show
--	the "diff" output and choose which hunks to use in the
--	result.  See below for the description of `--patch` option.
+ 	if (!strcmp(arg, "-"))
+@@ -1268,15 +1271,10 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		if (!recover_with_dwim) {
+ 			if (has_dash_dash)
+ 				die(_("invalid reference: %s"), arg);
+-			return argcount;
++			return 0;
+ 		}
+ 	}
+ 
+-	/* we can't end up being in (2) anymore, eat the argument */
+-	argcount++;
+-	argv++;
+-	argc--;
 -
-+	This is similar to the previous mode, but lets you use the
-+	interactive interface to show the "diff" output and choose which
-+	hunks to use in the result.  See below for the description of
-+	`--patch` option.
+ 	setup_new_branch_info_and_source_tree(new_branch_info, opts, rev, arg);
  
- OPTIONS
- -------
+ 	if (!opts->source_tree)                   /* case (1): want a tree */
+@@ -1289,15 +1287,11 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		 * even if there happen to be a file called 'branch';
+ 		 * it would be extremely annoying.
+ 		 */
+-		if (argc)
++		if (argc > 1)
+ 			verify_non_filename(opts->prefix, arg);
+-	} else if (opts->accept_pathspec) {
+-		argcount++;
+-		argv++;
+-		argc--;
+ 	}
+ 
+-	return argcount;
++	return (dash_dash_pos == 1) ? 2 : 1;
+ }
+ 
+ static int switch_unborn_to_new_branch(const struct checkout_opts *opts)
 -- 
 gitgitgadget
 
