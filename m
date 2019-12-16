@@ -2,114 +2,140 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 429D8C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 11:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 785D7C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:02:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 16C8420726
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 11:57:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 49B522072D
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:02:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g49wsczA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="akuxgYoY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727480AbfLPL5X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 06:57:23 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:45314 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727344AbfLPL5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 06:57:23 -0500
-Received: by mail-wr1-f41.google.com with SMTP id j42so2698505wrj.12
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 03:57:21 -0800 (PST)
+        id S1727425AbfLPMCk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 07:02:40 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41045 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727241AbfLPMCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 07:02:39 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so6910473wrw.8
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 04:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=9rqHsI9nfHLtTYussObj/S0AA2NSg82fy5KKAoj5bbc=;
-        b=g49wsczAzAGCOF1JeLl+hfbn0p0b9Unxv9K1ezL23T9ObRjDtagqvlOVH1EDbNjBps
-         9AhrowJ6ZvivurVCtmPLLiv/IE4UQjnxpFJR6xApHfpAW8MSxL1z18sswQRJ/lYVRxPP
-         j4YQiJXBUZmGSJwJYkTqeKyYW8xJ+TLlB3NEf0jpBDTBX0ow99it91iRA9oY5XPkASVj
-         /b6MLS2PQBDiGM1Uk0sCoqcb9b0Zty+JBLyHRsAgnrGrHQhkpMcvfPmGbCKEvxddhPo/
-         lZ2jJQEtq20AOQNPgvUb1sK9SwYUwbGokBQkNfj8xDLXapIzamp+aRr+cd73x573mQkS
-         AK0A==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZH9hfuMDerobcSoTSV5KCleEZmGts2Z1T8NAPa0gm/8=;
+        b=akuxgYoYfzxgW2F1hJxMvDHo1cIlUO/iQNiUUA2NuEkQU8c7W4C3qIQY9FWxab0EFC
+         0Rk8Ld5y9sEHDLnw1giTAv5ANXwWnk29HBAny/UVtsA/w4w7TE0XdRjDijAW2Mm3Wnop
+         Y7eIaZn/mqpe/fcxbr2FuEbhEJ9Z9tprsf07f0vQjnPXflNqJTiJsDlAneExOSXh0nUw
+         FjhCqDhBdIj7eOg8e+hj52FvHhYUvRGx8SR2RjxckljY6y4h4+cgssJBSsgeUVogzX+M
+         BA3pnUHHNozbFgnEJ5zB/gubhrOJRJ3erQW1+qLFo2CjoAv5f+0BoxL1z350Trq70Ls9
+         rLcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=9rqHsI9nfHLtTYussObj/S0AA2NSg82fy5KKAoj5bbc=;
-        b=ei7VnCs9DChCfqt2BoE8FIejsJU5xOgYQi4Iwh3bHy2fAAAuHNf+9McPsfxIh/5s13
-         YGNZ1/HN88JznAQrODOiVypFX5Smk2uuRdyTuQ+UdUTcMssIw94V4aHeIzV76l4ibtK3
-         InPdnaCniUcZRfLr7IQtlVqHyR9vVTtYsFu1XwZ3/Kkzn6s2PJQkDSD34eSwpI2wKnGO
-         5I+htNYpu+2kN8j9YRDM4/7lWCYLXH5sNHzL2T+Fv75BBtiIDT310al9u1uaVpy5qSty
-         52+Yg7d2WIpmmfcWMWqgijEG3mjQ8uPuM6kLwH4RznwtPCs34D7GSM5qJkvgn4DA6+Nk
-         7uvA==
-X-Gm-Message-State: APjAAAUsHjVlIXrdsaUEF1LyZPINxJibtmOedXkBQvpipUDrBsyd246D
-        jF1goxmXotSI/jke3ped6SH5fqfD
-X-Google-Smtp-Source: APXvYqzynZ07/fEvfvE6HqxL5rSm9Dc75l2/SusiUQBI+/0ylTEgTsmC3oTlYOTmOgNylk3Pt7Zwkw==
-X-Received: by 2002:adf:ef03:: with SMTP id e3mr30818905wro.216.1576497440531;
-        Mon, 16 Dec 2019 03:57:20 -0800 (PST)
+        bh=ZH9hfuMDerobcSoTSV5KCleEZmGts2Z1T8NAPa0gm/8=;
+        b=N/TmRsAcPukFjO19XMQRlekK4yHmR+VWaabR2MNiQvFexvuLudTUlyriH8MuI6nwb/
+         LevDEyfUXSGHy01mqcC+XB8jy/lNIzax0+4bp2BXNU/HXTUY50x0y0O8aPp1X1Wgj78C
+         V99mKLk2vNIOrQHN5+Modi1PoSpurSTJUcNCHximzZf39sxmYuUYdPV55Uj/FywK7ev+
+         7hnBd41QIT+65dNEFpb/oYDHBATGwzzYE6BpmEzo+p5t7cppswAto5EUrXWDFajOSplh
+         skLSjko3rhriMTdkClZPkeZDICO13aQv57VbSLQ+V8gnAET3yoMT1SaQmIcsiDPiioND
+         57NA==
+X-Gm-Message-State: APjAAAWEgulMj/v34ZJUDHvrJR0hdBpeZWyf+qcbYo54G9DGsWLi2RC/
+        QS5Z9I/qvZfbSLpKbVaYrys=
+X-Google-Smtp-Source: APXvYqwt86/30bZoyDg0oT60AA298xa5+Q1UXeeq84q4Yrm1ngJShEQhanOwoXihAY8KU0Z86vIuZg==
+X-Received: by 2002:a5d:5283:: with SMTP id c3mr31209964wrv.148.1576497757398;
+        Mon, 16 Dec 2019 04:02:37 -0800 (PST)
 Received: from [192.168.2.201] (host-92-22-0-192.as13285.net. [92.22.0.192])
-        by smtp.googlemail.com with ESMTPSA id x10sm21123072wrp.58.2019.12.16.03.57.19
+        by smtp.googlemail.com with ESMTPSA id x11sm20894199wmg.46.2019.12.16.04.02.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2019 03:57:19 -0800 (PST)
-Subject: Re: git restore --staged --worktree does not restore the index (Git
- 2.24.1)
-To:     =?UTF-8?Q?Henr=c3=a9_Botha?= <henrebotha@gmail.com>,
+        Mon, 16 Dec 2019 04:02:36 -0800 (PST)
+Subject: Re: [PATCH 02/16] commit: forbid --pathspec-from-file --all
+To:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-References: <CAHbriemxQLVFQw9pTb37JmoD2QVqLcfgY43qFg4Ab8prrBSkuw@mail.gmail.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
+ <c0980519ed319295c273d358b0547340cc511a6b.1576161385.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <4c1324bb-faca-23e2-22b0-5fe2e2aa92e3@gmail.com>
-Date:   Mon, 16 Dec 2019 11:57:17 +0000
+Message-ID: <5928a257-a1f4-dad3-052e-7a0dbf1df8e3@gmail.com>
+Date:   Mon, 16 Dec 2019 12:02:35 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.3.0
 MIME-Version: 1.0
-In-Reply-To: <CAHbriemxQLVFQw9pTb37JmoD2QVqLcfgY43qFg4Ab8prrBSkuw@mail.gmail.com>
+In-Reply-To: <c0980519ed319295c273d358b0547340cc511a6b.1576161385.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Henré
+Hi Alexandr
 
-On 16/12/2019 10:51, Henré Botha wrote:
-> git help restore says:
+On 12/12/2019 14:36, Alexandr Miloslavskiy via GitGitGadget wrote:
+> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 > 
->     The command can also be used to restore the content in the index
-> with --staged, or restore both the working tree and the index with
-> --staged --worktree.
+> I forgot this in my previous patch `--pathspec-from-file` for
+> `git commit` [1]. When both `--pathspec-from-file` and `--all` were
+> specified, `--all` took precedence and `--pathspec-from-file` was
+> ignored. Before `--pathspec-from-file` was implemented, this case was
+> prevented by this check in `parse_and_validate_options()` :
 > 
-> However, this doesn't seem to work as advertised:
+>     die(_("paths '%s ...' with -a does not make sense"), argv[0]);
 > 
->     $ mkdir foo; cd foo; git init
->     $ touch a b; git add a b && git commit -m "Initial commit"
->     $ echo "Foo" > a; echo "Bar" > b
->     $ git add a
->     $ git status --short
->     M  a
->      M b
->     $ git restore --staged --worktree .
->     $ git status --short
->     M  a
+> It is unfortunate that these two cases are disconnected. This came as
+> result of how the code was laid out before my patches, where `pathspec`
+> is parsed outside of `parse_and_validate_options()`. This branch is
+> already full of refactoring patches and I did not dare to go for another
+> one.
 > 
-> I'm not sure whether I expect 'a' to be empty at the end of this
-> sequence, but I definitely expect it not to contain staged changes.
+> Fix by mirroring `die()` for `--pathspec-from-file` as well.
+> 
+> [1] Commit e440fc58 ("commit: support the --pathspec-from-file option" 2019-11-19)
+> 
+> Co-authored-by: Phillip Wood <phillip.wood123@gmail.com>
 
-Thanks for taking the time to report this. The man page for git restore
-states
-
-When both `--staged` and `--worktree` are specified, `--source` must
-also be specified."
-
-So I think the bug is in the code that checks the options. It looks like
-it is just restoring from the index which is why there's no change to 'a'.
+Thanks for fixing this. If you want to credit me then I think
+Reported-by: would be more appropriate as I didn't write this patch.
+Also I tend to use phillip.wood@dunelm.org.uk for footers as it's a
+portable email address (I should add a mailmap entry...). It would be
+nice to have tests for the various error conditions at some point.
 
 Best Wishes
 
 Phillip
+
+> Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+> ---
+>  builtin/commit.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 2db2ad0de4..893a9f29b2 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -347,6 +347,9 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+>  		if (interactive)
+>  			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+>  
+> +		if (all)
+> +			die(_("--pathspec-from-file with -a does not make sense"));
+> +
+>  		if (pathspec.nr)
+>  			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
+>  
+> 
 
