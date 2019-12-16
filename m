@@ -2,94 +2,90 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68F76C2D0C3
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 22:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EE50C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 22:39:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3B65E206E0
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 22:34:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C95921739
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 22:39:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oA8X5l+q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PabxQo5o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727607AbfLPWeX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 17:34:23 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:46236 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727594AbfLPWeW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 17:34:22 -0500
-Received: by mail-pf1-f194.google.com with SMTP id y14so6386647pfm.13
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 14:34:22 -0800 (PST)
+        id S1727749AbfLPWjr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 17:39:47 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:45814 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727516AbfLPWjr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 17:39:47 -0500
+Received: by mail-oi1-f193.google.com with SMTP id v10so4605221oiv.12
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 14:39:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7ZBuEC6mL86zCB+VmpFHbbnPBik9S4SMG4qQvWq12rI=;
-        b=oA8X5l+qG44wDeLVcPh5ZdnwhgPYZETe9fMFJFrSIsLwhykotmgAE/5XsscqBXhPyp
-         ZBDHp9dc0TF8o+RKeU4jQuMgJEGFg2b5GLDzIwseiIBh0wNtumK7t2Ky6NZuznfiOeEN
-         D8vbmjKDVjLiU0tGeg7UOullOe6byx9+rPZNMQFZFJhLR8F2W3kjA7GVXJrH8lyY9kNF
-         dQEOVazn4iX8bV49TBhoTDmqDxypGFun7dMjMT3zg2lNodzrSk7AsrW74+NklGtxrQcj
-         UB82/a8yutxHsUT/zsfsmKhgqC4TNRi7DPotOm6MvpoNRHS0u7/jgIAIxEUtHB4pEyAU
-         Belg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=86UakFp1MM5C0JeK7sWZzNowF5bDwotIxTmpv4c3t2Q=;
+        b=PabxQo5ovZNuW1MswOYaDAoQYjzdlwtGSlHFbh98oa/U8MFlvjn/0Vv0uds9SHYdal
+         6pY9P7ff9dGQFdgNl9s28147Hvy7fA1O6C1+oY7j6xh1Js1ipDhNssBFADPJjv80Z8A3
+         UJzLlI077T+G8XnNNOPxzWQEiXWd+REk2BZ8BGMCNHNG4YU/oRLnlXRvVvtEPePcSQY/
+         +RIAN/49I/oVOAI4sYoi7+rsAgjU5tXNaBGioRcQ8hWD/nUMhR630s/fKuZzHcL2gmqo
+         JdblBVaRYH5iMTJQiV6+KaU3uh7lbz7IJkqNylnF5gdILmtnmLJy3e6LLBrSUCurr1bK
+         +jQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7ZBuEC6mL86zCB+VmpFHbbnPBik9S4SMG4qQvWq12rI=;
-        b=WqMUaK9Za14GDHTFdkgH5oQg33qev45DfHG58+mHlZ+jKb3KdiTC7s3cXWfclFjsPi
-         YEJam4l6MNzt5M58qKYxV2mfVrZG40oarfHL/+gnCVEpHfSs9n2f9W84We4Iy3axYXRr
-         vIwD6MayhuEd2hf/Ur9xPS7gyPo+BKGFsgMUPtH5nwObxujfhl/iilAYRi7yuoCQLqfq
-         ftJpZC/HkZ4dG5Vq+rIxD7xFWFLmj8UdybRbkSXb8FpdiQsVvDENOnHRdcrxf1jv7mOj
-         KkJgP84pleExfsp5J5aIUvrX7zXOKdJHLX8MFYdreaV4C42rmM9XDelqUWRfSUawvMwq
-         L3zA==
-X-Gm-Message-State: APjAAAUrJ6hxXNUVfaIzGBNTHPMCLHl1pv+esvecAhW6maO2fg8NqF4K
-        8dYDYZzBLSMgHWaIyAlVWAVYltW2JuU=
-X-Google-Smtp-Source: APXvYqzmcDaLOH46nBytV/6kWB5oLdnDVeRrCjnAlO8h1Oj5TB9aiR2Vix3G5rut/nUSbhaMbKbkgw==
-X-Received: by 2002:a63:5c59:: with SMTP id n25mr20998425pgm.415.1576535661369;
-        Mon, 16 Dec 2019 14:34:21 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id v13sm10382235pgc.54.2019.12.16.14.34.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2019 14:34:20 -0800 (PST)
-Date:   Mon, 16 Dec 2019 14:34:16 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v4 02/15] help: move list_config_help to builtin/help
-Message-ID: <20191216223416.GF135450@google.com>
-References: <20191213004312.169753-1-emilyshaffer@google.com>
- <20191213004312.169753-3-emilyshaffer@google.com>
- <xmqqv9qkhrtd.fsf@gitster-ct.c.googlers.com>
- <20191216213625.GE135450@google.com>
- <xmqqv9qfj4l7.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=86UakFp1MM5C0JeK7sWZzNowF5bDwotIxTmpv4c3t2Q=;
+        b=bScug6Z7CmxbgMOA+asttDW85lAgA6bd8oAjEZAmLHIPjTjwUUTKnFbOtSGbvxD5xy
+         9gn/6xBUOQRcBjDYjnJqpoA4W6BA1ChMxwUI/zJ/XTuVmK5/tqiLh8Qsqh/iTbi+o2jd
+         y9BGGR4aiwRLbg2VYY+uszewy0JcnpLJ1TT24JpyoydCf0LUbRpq0SzytI9wuxTe7hs7
+         wzthqF6Cr1zLGS2wf4flPH1W2h/AwyHSB7u4Cmf3GZUQ2bueQq4RBmdeIkRdEUH992JJ
+         Vm3e8/kCJu2vI5xW5XjaFGMb7ffAa97/pblrihWkh/F5EFbKcmr6giPls4ggOFmit8Zy
+         e0cQ==
+X-Gm-Message-State: APjAAAX+PmQfAKbxU1diTmxHU8Is2mXIrDanWEjTgSrE0Sa6bqHfdPgi
+        J2DkbJR+5TBPC3lUeHDj9ieMMwuVPkB+TPe6Ebs=
+X-Google-Smtp-Source: APXvYqy+7OPjgKfpUx/Hn63Yhq+1Z7wakQT1abLXT19teUnUputiGdDtozcf1DElJYeN5YQKuqbKq2b5DRKGIPoUOIk=
+X-Received: by 2002:aca:230b:: with SMTP id e11mr433860oie.167.1576535985791;
+ Mon, 16 Dec 2019 14:39:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv9qfj4l7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+ <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet> <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com>
+ <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
+ <xmqqwoawjg09.fsf@gitster-ct.c.googlers.com> <CABPp-BF2UL5m4_f2tETfZvq=011KsKheGA=axFwYhC+kJXi0JQ@mail.gmail.com>
+ <xmqqzhfshsk2.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhfshsk2.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 16 Dec 2019 14:39:34 -0800
+Message-ID: <CABPp-BHETKt1rTT76u9phGqjN+RU6B-ydzM=S0tzE6To_N4PQw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
+        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 16, 2019 at 02:19:48PM -0800, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> >> OK.  Looks like a clean-up that is very worthy even without the
-> >> remainder of the topic.
-> >> 
-> >> Thanks.
-> >
-> > Ok. Are you going to take it on its own?
-> 
-> Not really.  Unless you abandon the rest of the topic, in which case
-> it may be worth resurrecting this one on its own, that is.  But that
-> is not what you plan to do anyway, so I expect to see it as part of
-> an updated series ;-)
+On Mon, Dec 16, 2019 at 1:25 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Any bright ideas about what to do here?
+>
+> Restructuring the code so that we do not use "struct dirent" in the
+> first place, even in the original code that used only those obtained
+> from readdir(), perhaps?  Then the codepath that would take the _thing_
+> that describes the diretory entry would expect to see the data in
+> the struct you define (not "struct dirent" from the system), and you
+> can safely manufacture ones out of thin air.
 
-Ok! That's fine and makes my life easier. Just making sure. :)
-
- - Emily
+Okay, I'll submit a new series dropping most the patches, but note
+this thread in the commit message of the new testcases in case someone
+(maybe my future self?) wants to dig further.
