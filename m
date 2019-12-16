@@ -6,103 +6,99 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EED4AC43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92A39C2D0BF
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:32:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9D43D20674
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:30:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 631A0206EC
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:32:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sa4UZW2s"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rF1GCkJB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730128AbfLPS37 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 13:29:59 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64127 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731085AbfLPSNR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 13:13:17 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BBCE95445;
-        Mon, 16 Dec 2019 13:13:16 -0500 (EST)
+        id S1730450AbfLPScc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 13:32:32 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54282 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729143AbfLPScb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 13:32:31 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DA4063B95E;
+        Mon, 16 Dec 2019 13:32:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=dZrrdyFPSgCv6lge6eS/85lY5oQ=; b=sa4UZW
-        2squDkgBNbxr509oPcNrYHjl76xLUWW1bxS/MkCUDXA+yMtcX1XU1j6J/w4+6tmM
-        ZxWQqz2CAK/F2z29LW4+Bw12WZ5kkHlOJ3zErdea1uv5mGa64iKjov2W3TCN6JEm
-        CH/729r7TTZDswxkrdNFQMXK66EHXjsPEZPKA=
+        :content-type; s=sasl; bh=7ndqYyd5YZkzfR8ylsI0JOMc1CA=; b=rF1GCk
+        JBw7e6Y7L9Hz6I1z3tTRsUXKL6AoLcSmvyg+oueSGTq5OfhRaUIdJ1kPzAqNW74n
+        DCA4edlEIhr52uLDNRd992F3I8nHNxuXOL0WkwDVnrQKa+ItwpAn88nzVSUU1CoV
+        20A4HYyYydgg3g2Ty3ebvZf/ukpa9OCVFzlg8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CCx5P+dGRm4kNNiRE8IZlxEfeeHx6REi
-        eJdZ4gOd5djcZfg8knF7LDL1cRU1pyI2+tqpJO3WF6wRMT9upWvoSgFX6tZgewKb
-        UzsvRAoAf5F5FJorAl67sOziKFFHZuw+zZX62nhVqq3R5zDnIaics7QIS4FvJJ3y
-        Sr934j7cPfA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 930BB95444;
-        Mon, 16 Dec 2019 13:13:16 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=cgNnLNQw6csk3OLq23yCupzo9ZP5Bvdk
+        FeIa1AB0Bll5pZRkSHVSLA/vt0ht7EX7truMIqsiSrgQ6iGI5mM+KTPkHquftEpL
+        uu5PB+L8w3K6xbu/YEPw4XstEEF6RDu0QkvqltKBRcMXXb92GE5X/DSHFxIr102a
+        sMB4T0EJE3I=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D1C943B95D;
+        Mon, 16 Dec 2019 13:32:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B4A5A95443;
-        Mon, 16 Dec 2019 13:13:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BF703B95C;
+        Mon, 16 Dec 2019 13:32:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
-        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
-References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
-        <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com>
-        <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
-        <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com>
-        <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
-Date:   Mon, 16 Dec 2019 10:13:10 -0800
-In-Reply-To: <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 16 Dec 2019 08:00:56 -0800")
-Message-ID: <xmqqwoawjg09.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Ruud van Asseldonk <dev@veniogames.com>, git@vger.kernel.org,
+        Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] t5150: skip request-pull test if Perl is disabled
+References: <4f11b5b3-a68e-642a-c5fb-7b5dae698669@veniogames.com>
+        <20191127112150.GA22221@sigill.intra.peff.net>
+        <20191128013111.GA76989@google.com>
+        <xmqqblsrz1uk.fsf@gitster-ct.c.googlers.com>
+        <20191213074659.GA95694@coredump.intra.peff.net>
+Date:   Mon, 16 Dec 2019 10:32:26 -0800
+In-Reply-To: <20191213074659.GA95694@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 13 Dec 2019 02:46:59 -0500")
+Message-ID: <xmqqsglkjf45.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B9984424-202F-11EA-986E-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 69BC292C-2032-11EA-B4B4-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> > > +     memset(&cdir, 0, sizeof(cdir));
->> > > +     memset(&de, 0, sizeof(de));
->> > > +     cdir.de = &de;
->> > > +     de.d_type = DT_DIR;
+> On Sun, Dec 01, 2019 at 10:19:15PM -0800, Junio C Hamano wrote:
+>
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> 
+>> >   Not-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 >> >
->> > So here, `de` is zeroed out, and therefore `de.d_name` is `NULL`.
->>
->> Um, yeah...didn't I have an allocation of de.d_name here?  It will
->> always have a subset of path copied into it, so an allocation of len+1
->> is plenty long enough.
+>> > --- the patch shouldn't be applied as is.
+>> > ...
+>> > Agreed: if we want to follow this approach, we should install stubs in
+>> > place of those scripts when NO_PERL=YesPlease.  Will say more about
+>> > this in a separate reply.
+>> 
+>> I am just leaving a note here in the thread to make sure I notice if
+>> there is any progress/conclusion, until which time I'll keep the
+>> patch on hold.  Thanks.
 >
-> Actually, it looks like I looked up the definition of dirent
-> previously and forgot by the time you emailed.  On linux, from
-> /usr/include/bits/dirent.h:
+> Thinking on this more, it might not be a bad idea to take Ruud's initial
+> patch here. It certainly makes things better for his NO_PERL case now,
+> and then in the future we can either:
 >
-> struct dirent
->   {
->     ....
->     unsigned char d_type;
->     char d_name[256];           /* We must not include limits.h! */
->   };
+>  - stop building request-pull entirely with NO_PERL, but we'd still need
+>    the tests to realize that we shouldn't be testing it
 >
-> ...
+>  - change request-pull to not require perl, at which point we'd remove
+>    this restriction
 
-Uh, oh.  The size of "struct dirent" is unspecified and it is asking
-for trouble to allocate one yourself (iow, treat it pretty much as
-something you can only get a pointer to an instance from readdir()).
-For example, a dirent that comes back readdir() may have a lot
-longer name than the sizeof(.d_name[]) above may imply.
+Hmph, that is a reasonable stance to take, I would think.  Let's
+move it forward.
 
-Do you really need to manufacture a dirent yourself, or can you use
-a more concrete type you invent yourself?
+Thanks.
