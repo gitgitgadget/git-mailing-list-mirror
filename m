@@ -2,95 +2,156 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B553C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24C85C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 14:02:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C9D6206A5
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:53:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE163206B7
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 14:02:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ii6NxcyK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uHYpODgE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727952AbfLPNxT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 08:53:19 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:39538 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727895AbfLPNxS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 08:53:18 -0500
-Received: by mail-qk1-f193.google.com with SMTP id c16so1469622qko.6
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 05:53:18 -0800 (PST)
+        id S1728014AbfLPOC0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 09:02:26 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35850 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727807AbfLPOCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 09:02:25 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z3so7390572wru.3
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 06:02:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=YrwmzdJA47quop0r99pCqtnS4ym9b1svwOx6pjYeBMo=;
-        b=Ii6NxcyKBEYfPrROeLrM3Zs49/dwB0bsQRp99F2a4w+Jt7SBE+kWokMUb3hqDgMdG6
-         Eh3+y/ikqDB0R5lornwPdj/b2dZNbcq/pGrDvqmBqJfIjEx6t0itIJGlq/Bpn2f10Kai
-         id/O/71eh5etX6Yhq+5jZyJZ6eYws2E+5valr1EH54wYBxsm/7Y/MEvYGAGaU4lHwRpG
-         NeR+CGZFckKlAI/zkXB12s55Vrtx6dOZjsKkaDOLTtTdXK15zQt2zRMPbECVa6piF5JY
-         o6i7dU1Q0mC+HbaP+837+SBuz1YqcLEg9IKLGeth2N/CmOLTPimEe4RfGirdI+RmJeiI
-         Hnrw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=NZB4S2mSwe2xBw+sVtXH6+5aj8jDr35k4sU89BXUnG4=;
+        b=uHYpODgEDiJdgwlwE+TMlj/itOdkuLNz1KbQUF9UokwcurcDyRbqgIKBycv2zvmmHm
+         bx3gUwOlL3Dkz1bzvlf0TRNk3zR+YVxGxS5oNqBQ6U3UQzHRzYLzXuv/Co7LZP4YpGob
+         1vAyWw6NaOM0iPlHy3Tx6R+kv7bwoGF9QgwHYm6hoitX58AQy0Ibz5+vlqoyjLgWj10s
+         nSzGGC6QtEqkF2Ig093QBI1Fa3x182YR3eImoAiXD9RRreSuQ/EH8srpSPMm7+68rS5l
+         kmSDosiLpA1qhNoflFhRkRSN28UiyHIWtQ8eB4jZQZVTSzgL6QD03yyZAAxn8pqByY0c
+         sSVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=YrwmzdJA47quop0r99pCqtnS4ym9b1svwOx6pjYeBMo=;
-        b=DM7xwn0t5hOQ4wfTH7xEFSdjwsMYnBbbf13TL1eB3hA6qcl1gHMxi1e+iMb61IIOWg
-         TxwvyLC1C7OqDkn+ZXS0zZAjg9obtd9JQq8DnMuyaJ1TJsArKzYBUdWqAHE9l/A0+hmX
-         LDOVlPjAjFBRTS0S/Cf6FidD8eIT5McXHJQ6mJ71IsT872e1PFCn6MQfVWvXUA8ykjcL
-         LR5OgILi3cPh7YJAAXsWBvDGnu/BnbFVw8hR5esCPhTItdkKhyXDU90Ae5C3tfDNA3is
-         n+N6A+fkXlWE4rbyRocTf0bEE81yHCyWGQhJAqPfBkAQYW4mUU9viIlW/v8uHunAwnyD
-         OZTw==
-X-Gm-Message-State: APjAAAUioq2Kfod/s1f6EtH7v23GdTSJGFSjmxzvnPiDDbP2+jRMK0Kf
-        cs1U4jJ/ncqaXFQHQ3XdIAA=
-X-Google-Smtp-Source: APXvYqwdogRRjEjC6aYKZ/aHje0NbelzrGx7RauUhNvlaXP5XrAuj2cW9bBKtWmVE+i7qd5cz9aTIQ==
-X-Received: by 2002:a05:620a:2094:: with SMTP id e20mr26109499qka.315.1576504397638;
-        Mon, 16 Dec 2019 05:53:17 -0800 (PST)
-Received: from [10.10.31.126] ([24.229.121.34])
-        by smtp.gmail.com with ESMTPSA id r80sm5989971qke.134.2019.12.16.05.53.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2019 05:53:17 -0800 (PST)
-Subject: Re: [PATCH v4 1/4] git-p4: yes/no prompts should sanitize user text
-To:     Denton Liu <liu.denton@gmail.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.675.v3.git.git.1576179987.gitgitgadget@gmail.com>
- <pull.675.v4.git.git.1576245481.gitgitgadget@gmail.com>
- <6c23cd56842e76e5c11f32ba59fd7729769ab4b7.1576245481.git.gitgitgadget@gmail.com>
- <20191213225444.GA31452@generichostname>
-From:   Ben Keene <seraphire@gmail.com>
-Message-ID: <750db524-8c99-dd9c-9fef-5936ce548edb@gmail.com>
-Date:   Mon, 16 Dec 2019 08:53:16 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
-MIME-Version: 1.0
-In-Reply-To: <20191213225444.GA31452@generichostname>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=NZB4S2mSwe2xBw+sVtXH6+5aj8jDr35k4sU89BXUnG4=;
+        b=PdsuCCDpZpc73VazweHsJCV10oKJNczwDMlGvWqwtuKCAEWbX3aPqhyuo1jF8hU/1C
+         uh/1/qhjBs2AR+59YBCplokLrkvfOscTnFXzuF31UEle3Vk4XkxtYrLwrUOxxvByIZt0
+         Dta1bITENhiOnAXgq8QUp12B7AZrJPByCv4CH63i/cmXcD3YMzJp1NpSThKp7jgzHwvF
+         VQhwP1jKzqPMEPt9P0xhWvbaVDJkuhQZaOg00Pyh7KJbUc1HLNgag9apZc77SJvqs/tx
+         eBm0pgCZkDuYY4eBZPrF5yKcSBm3G4dAlGFzSqQQw8/f0LHC2gllx9OeQcF6PwfAWpaQ
+         P15A==
+X-Gm-Message-State: APjAAAU4+Kxn/LbVpmcmI9G0d4zUyko5hDOPA4yEnbiqhyBFBWp4SAKh
+        3vFuvxZCKtyvTaymyvoYipU/4Wn2
+X-Google-Smtp-Source: APXvYqwjCeumYW/H+p0D1ckc3pYKKWFmrSkTIGZyW2i/gBtcw3zPMG12pyIKQWrnHjLa6t2XUqsSug==
+X-Received: by 2002:adf:ff84:: with SMTP id j4mr32786563wrr.27.1576504943410;
+        Mon, 16 Dec 2019 06:02:23 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id s3sm20570842wmh.25.2019.12.16.06.02.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Dec 2019 06:02:22 -0800 (PST)
+Message-Id: <pull.675.v5.git.git.1576504942.gitgitgadget@gmail.com>
+In-Reply-To: <pull.675.v4.git.git.1576245481.gitgitgadget@gmail.com>
+References: <pull.675.v4.git.git.1576245481.gitgitgadget@gmail.com>
+From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 16 Dec 2019 14:02:18 +0000
+Subject: [PATCH v5 0/4] git-p4: Usability enhancements
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Ben Keene <seraphire@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Some user interaction with git-p4 is not as user-friendly as the rest of the
+Git ecosystem. 
 
-On 12/13/2019 5:54 PM, Denton Liu wrote:
-> Hi Ben,
->
-> On Fri, Dec 13, 2019 at 01:57:58PM +0000, Ben Keene via GitGitGadget wrote:
->> From: Ben Keene <seraphire@gmail.com>
->> ...
->> Thanks-to: Denton Liu <Denton Liu>
-> Thanks-to: Denton Liu <liu.denton@gmail.com>?
->
-> Anyway, it's probably not worth a reroll. Aside from that, all the
-> patches look good to me from a Python perspective.
+Here are three areas that can be improved on:
 
-I was /so/ close!  I'll reroll it anyway.
+1) When a patch fails and the user is prompted, there is no sanitization of
+the user input so for a "yes/no" question, if the user enters "YES" instead
+of a lowercase "y", they will be re-prompted to enter their answer. 
 
->> Signed-off-by: Ben Keene <seraphire@gmail.com>
+Commit 1 addresses this by sanitizing the user text by trimming and
+lowercasing their input before testing. Now "YES" will succeed!
+
+2) If the command line arguments are incorrect for git-p4, the program
+reports that there was a syntax error, but doesn't show what the correct
+syntax is.
+
+Commit 2 displays the context help for the failed command.
+
+3) If Git generates an error while attempting to clean up the RCS Keyword
+expansions, it currently leaves P4 in an invalid state. Files that were
+checked out by P4 are not revereted.
+
+Commit 3 adds and exception handler that catches this condition and issues a
+P4 Revert for the files that were previously edited.
+
+4) Git can handle scraping the RCS Keyword expansions out of source files
+when it is preparing to submit them to P4. However, if the config value
+"git-p4.attemptRCSCleanup" isn't set, it will just report that it fails.
+
+Commit 4 adds a helpful suggestion, that the user might want to set
+git-p4.attemptRCSCleanup.
+
+Revisions
+=========
+
+v3 - Implemented the various suggestions from Luke and Denton.
+
+I did not add additional exception handling for the EOFError in the prompt
+method. I do believe that it is a good idea, but that would change the logic
+handling of the existing code to handle this new "no answer" condition and I
+didn't want to introduce that at this time.
+
+v4 - Whitespace clean up and commit clarifications.
+
+Submit 3 suggested some clarifications to the commit test and revealed some
+whitespace errors.
+
+v5 - Fixed typo in a commit message. (Invalid attribute to Thanks-to: Denton
+Liu liu.denton@gmail.com [liu.denton@gmail.com])
+
+Ben Keene (4):
+  git-p4: yes/no prompts should sanitize user text
+  git-p4: show detailed help when parsing options fail
+  git-p4: wrap patchRCSKeywords test to revert changes on failure
+  git-p4: failure because of RCS keywords should show help
+
+ git-p4.py | 93 +++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 59 insertions(+), 34 deletions(-)
+
+
+base-commit: ad05a3d8e5a6a06443836b5e40434262d992889a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-675%2Fseraphire%2Fseraphire%2Fp4-usability-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-675/seraphire/seraphire/p4-usability-v5
+Pull-Request: https://github.com/git/git/pull/675
+
+Range-diff vs v4:
+
+ 1:  6c23cd5684 ! 1:  7e0145fa32 git-p4: yes/no prompts should sanitize user text
+     @@ -26,7 +26,7 @@
+          choices, remove the loop from the calling code that handles response
+          verification.
+      
+     -    Thanks-to: Denton Liu <Denton Liu>
+     +    Thanks-to: Denton Liu <liu.denton@gmail.com>
+          Signed-off-by: Ben Keene <seraphire@gmail.com>
+      
+       diff --git a/git-p4.py b/git-p4.py
+ 2:  bfdd3dc517 = 2:  4960d1fa22 git-p4: show detailed help when parsing options fail
+ 3:  20f6398693 = 3:  81a09a1228 git-p4: wrap patchRCSKeywords test to revert changes on failure
+ 4:  c78e2e4db1 = 4:  4c4b783fd5 git-p4: failure because of RCS keywords should show help
+
+-- 
+gitgitgadget
