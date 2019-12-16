@@ -2,107 +2,107 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6D6C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EED4AC43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:30:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AAA38206E0
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:48:33 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D43D20674
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 18:30:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="LNiril9X"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sa4UZW2s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726655AbfLPQsc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 11:48:32 -0500
-Received: from mail-yw1-f41.google.com ([209.85.161.41]:35518 "EHLO
-        mail-yw1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbfLPQsc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 11:48:32 -0500
-Received: by mail-yw1-f41.google.com with SMTP id i190so2715234ywc.2
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 08:48:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=r+Zm36GX8FUYLHZzV4eqG7l9TYxDvkF6Zm4nOLil35o=;
-        b=LNiril9XtmzC0ea1p3lq/A+WSVT+2/CrCSmAS4Vviy0QtQnp0CjNcnmCQz5zhsbPpG
-         UcmffRmlerUbr91rzU9UxDfatlsIWdpxcss/jKMGkaucJmWS8ti8DtaB4dhnA43nPtLF
-         +KLlbfb3WkaOJA8fhe1AcXIaBf95sCk9p1nkDK7PK2E9W0isNJc7oAxNa6Lbiahe3SDO
-         Acy/N1U4z8lTkQDa6b/kih+KRezNw2yUAWcMEveHe6CE62nu92vyV9c8B/SpuJ9kwEFH
-         CvVIp+66OiRKvoGHsur+mEz/oYtfUc1Vx4ey8UsiTdDF2d80lyemjhrV/neDYnIJhIlt
-         esfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=r+Zm36GX8FUYLHZzV4eqG7l9TYxDvkF6Zm4nOLil35o=;
-        b=GyIq16lHnXdD4zF7q7WQM4cXt4xLpEzNWX8eALrC7nL46S0d3QM0SQ27/B/+8b0icF
-         BTl4/HpsFug263fe/TH1ygEepMoNJmBSseCAEt/4ajnc3na+ZydjYgn+OjqtkVHjbgyC
-         bZVVDhciJTIcbe/p3hlurpofMuzo1J2spchMtP/GysBfevk87eD/1b32qs+msoeLworQ
-         Q7RkdDuRzCyd3xBNgmTLKVwu9m4T1qX+hq9H62QK6x0WAhOtXLa54IqSwrwkybGEvUqw
-         JfG4aTiTVIqTVSoh3cw/eudsfhtMuWFB2F98emkSBlwK6Wmxy48y+GrKMm84UERW6JmR
-         XXvQ==
-X-Gm-Message-State: APjAAAVsrbrrVz4pbaEA542uNO45vTU5Y2Sk45XrGSiLYZ/OcrQkyCAE
-        7Dz3gcLH1I/YCV7x9AEiSC5JGQ==
-X-Google-Smtp-Source: APXvYqzRhkRDKvf6KseWdShC+CCOxAupO5GuCzt/H7/rhYgLqCJUpiA6968fOMALxg972FzsXE7CUw==
-X-Received: by 2002:a81:7996:: with SMTP id u144mr5972852ywc.13.1576514911263;
-        Mon, 16 Dec 2019 08:48:31 -0800 (PST)
-Received: from localhost ([2601:401:c500:60a0:4d45:c8f4:844:e24d])
-        by smtp.gmail.com with ESMTPSA id s130sm8788012ywg.11.2019.12.16.08.48.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2019 08:48:30 -0800 (PST)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Mon, 16 Dec 2019 11:48:28 -0500
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.24.0
-Message-ID: <20191216164828.GA64423@syl.local>
-References: <xmqq7e4gyzgt.fsf@gitster-ct.c.googlers.com>
- <20191104054924.GA47418@syl.local>
- <xmqqo8xsxiyv.fsf@gitster-ct.c.googlers.com>
- <20191104062334.GA49488@syl.local>
- <20191216152047.GQ6527@szeder.dev>
+        id S1730128AbfLPS37 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 13:29:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64127 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731085AbfLPSNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 13:13:17 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BBCE95445;
+        Mon, 16 Dec 2019 13:13:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=dZrrdyFPSgCv6lge6eS/85lY5oQ=; b=sa4UZW
+        2squDkgBNbxr509oPcNrYHjl76xLUWW1bxS/MkCUDXA+yMtcX1XU1j6J/w4+6tmM
+        ZxWQqz2CAK/F2z29LW4+Bw12WZ5kkHlOJ3zErdea1uv5mGa64iKjov2W3TCN6JEm
+        CH/729r7TTZDswxkrdNFQMXK66EHXjsPEZPKA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CCx5P+dGRm4kNNiRE8IZlxEfeeHx6REi
+        eJdZ4gOd5djcZfg8knF7LDL1cRU1pyI2+tqpJO3WF6wRMT9upWvoSgFX6tZgewKb
+        UzsvRAoAf5F5FJorAl67sOziKFFHZuw+zZX62nhVqq3R5zDnIaics7QIS4FvJJ3y
+        Sr934j7cPfA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 930BB95444;
+        Mon, 16 Dec 2019 13:13:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B4A5A95443;
+        Mon, 16 Dec 2019 13:13:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
+        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
+Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+        <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com>
+        <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com>
+        <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
+        <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com>
+        <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
+Date:   Mon, 16 Dec 2019 10:13:10 -0800
+In-Reply-To: <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 16 Dec 2019 08:00:56 -0800")
+Message-ID: <xmqqwoawjg09.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191216152047.GQ6527@szeder.dev>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: B9984424-202F-11EA-986E-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 16, 2019 at 04:20:47PM +0100, SZEDER Gábor wrote:
-> On Sun, Nov 03, 2019 at 10:23:34PM -0800, Taylor Blau wrote:
-> > On Mon, Nov 04, 2019 at 03:18:32PM +0900, Junio C Hamano wrote:
-> > > Taylor Blau <me@ttaylorr.com> writes:
-> > >
-> > > > Thanks for a great release. As always, your release notes were
-> > > > very helpful in putting together GitHub's release highlights [1].
-> > >
-> > > Well, thanks for writing a version readable from humans ;-)
+Elijah Newren <newren@gmail.com> writes:
+
+>> > > +     memset(&cdir, 0, sizeof(cdir));
+>> > > +     memset(&de, 0, sizeof(de));
+>> > > +     cdir.de = &de;
+>> > > +     de.d_type = DT_DIR;
+>> >
+>> > So here, `de` is zeroed out, and therefore `de.d_name` is `NULL`.
+>>
+>> Um, yeah...didn't I have an allocation of de.d_name here?  It will
+>> always have a subset of path copied into it, so an allocation of len+1
+>> is plenty long enough.
 >
-> > Please do let me know if you find any other such typos :-).
+> Actually, it looks like I looked up the definition of dirent
+> previously and forgot by the time you emailed.  On linux, from
+> /usr/include/bits/dirent.h:
 >
-> The commit-graphs section contains a list, with one of the items
-> linking to "lots of bug fixes".  The last of those links points to
-> 2e09c01232 (name-rev: avoid cutoff timestamp underflow, 2019-09-24),
-> which isn't in any way related to commit-graphs.
+> struct dirent
+>   {
+>     ....
+>     unsigned char d_type;
+>     char d_name[256];           /* We must not include limits.h! */
+>   };
+>
+> ...
 
-Thanks. I think that this link may have gotten lost in one of the many
-shufflings of this blog post. I let one of the blog administrators know
-about this, and they should remove the link shortly.
+Uh, oh.  The size of "struct dirent" is unspecified and it is asking
+for trouble to allocate one yourself (iow, treat it pretty much as
+something you can only get a pointer to an instance from readdir()).
+For example, a dirent that comes back readdir() may have a lot
+longer name than the sizeof(.d_name[]) above may imply.
 
-> Better late than never, huh? :)
-
-;-).
-
-Thanks,
-Taylor
+Do you really need to manufacture a dirent yourself, or can you use
+a more concrete type you invent yourself?
