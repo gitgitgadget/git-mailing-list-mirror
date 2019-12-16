@@ -2,112 +2,174 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5728C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11606C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:51:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B63E3206CB
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:22:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CCD8A20684
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 13:51:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NA+sNGKR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SwKjOIPF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727843AbfLPNW5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 08:22:57 -0500
-Received: from mail-lj1-f175.google.com ([209.85.208.175]:46687 "EHLO
-        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727716AbfLPNW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 08:22:57 -0500
-Received: by mail-lj1-f175.google.com with SMTP id z17so6739033ljk.13
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 05:22:56 -0800 (PST)
+        id S1727916AbfLPNvn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 08:51:43 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:43621 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727788AbfLPNvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 08:51:43 -0500
+Received: by mail-ot1-f67.google.com with SMTP id p8so9273700oth.10
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 05:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xM8E6vvoY+dpil5yHWluQvmhlybyKRChJU6H1he1ef0=;
-        b=NA+sNGKRIxWOuz83P9mEMe9o6RwULrnXkTpQVzWU4U8mRLBJ7zwv1ejz+Sv/OVG8AO
-         /RLcDnPlkmCJScFZ2CCN7qwa5M4k+Lv3bVnqFSrqV8yDkNZiJmVDC3ASCnZHOWrwY1Rx
-         vhfoEAd2eS1h0wgn7w1NM2erVFnDYSYBTJQbiOtSuJSqgfqrAcX6z4zC+qYC8pCDsqa+
-         B8fBkxVWAUnicCDnc21Wp5SrITpcWSyuComMOwL+ttN5K/s4w6fYGA5PdZHmq2cUUkFz
-         NYE3ZEJUgiMmh1MsxM98oa1eaza8AHMBsF2LYJKbSIsXQG9pKqFmLK8DpxvTwkNcN3va
-         tnLw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=eMLphM8iptsVq4LPU77bEmZDD7BPEb4ItUMsS5tfGKo=;
+        b=SwKjOIPF9ITouP0H1AFpq9y9jMVkOEM8QtiK6D/mgxG3lihoeiPe5SkqGQ8nB5VueG
+         OggXymZAOZ/VI8foGZeKgThYgM6Rwq3i72pKRfbwFZgBYQf+xRftLRHBUJ0yu1EkHeLm
+         Wh5Vm51o74bTSWkaGbwzPwd1zb+DLWdZlsGBzlpcK8jHuVE10m9MtrvY0mP+jd5wH+AC
+         VvXVuCbbXGZUhZ5XV84SpuppoMSLukkwDffjM4aXUBn5Wg7XWKnq52PvWMtFWCrRSzEM
+         88+fjMuPBOaUFSPHi6KJumV/Of5BvsMCSkNv1fHVTJ7guBUFNm3o6GuV2R7oPAD0JuBn
+         qptQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=xM8E6vvoY+dpil5yHWluQvmhlybyKRChJU6H1he1ef0=;
-        b=Yh4pUG2xnme7FLhJunaGMYOgcNSeFv9j9dzzxNbi36/gRDO335DW+fhHUY2/nMF31I
-         UkacnqSDTdeG+C2kB4o10CrMmIrPEpOBQEOW4b+vgci13BwbCjcU+thpqfvNUqlNTlmD
-         DDWatW1x40ehqi7YP6+MFLKY0eCnpC5mtvtao1xHLPx4EAdG7WyWKvwjE1pZIhlsuw3W
-         +oA6S/B/SzlVzQNBalLf/BR5aH6gYne8FMopjHZoc3DD1blof2FvVE8DQcpNRyAsCOC8
-         3YG4Ipoxbxefp1rUJOju2LOwlWhgxeTuVPrYsNDdw8K5tL6KQsPjv61LUHsDcbd+KxlU
-         qjag==
-X-Gm-Message-State: APjAAAWnVTiDkcukht8d6t6m4u7TiLpuP9kXTGOBgysu4l0Kf+FArSuq
-        fX8uDLBZr91ce8s4kRP+n9C90/IJ7Q==
-X-Google-Smtp-Source: APXvYqxxmSgMvvQX5CPahqGfbKUKvHlez7nGhKKfr4p6CmAc2dbr/Z5bs0AE/DaOZAfTGJSIcD9gMg==
-X-Received: by 2002:a2e:a490:: with SMTP id h16mr290506lji.251.1576502575213;
-        Mon, 16 Dec 2019 05:22:55 -0800 (PST)
-Received: from ?IPv6:2a00:1370:8116:64e8:7d77:758a:8ff2:3432? ([2a00:1370:8116:64e8:7d77:758a:8ff2:3432])
-        by smtp.gmail.com with ESMTPSA id o20sm10798576ljc.35.2019.12.16.05.22.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Dec 2019 05:22:54 -0800 (PST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3608.40.2.2.4\))
-Subject: Re: [BUG] Git bisect extends bisecting range on repeated good/bad
- data
-From:   Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org>
-In-Reply-To: <xmqq5zikkq6n.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 16 Dec 2019 16:22:52 +0300
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7A220DC9-C654-40E9-8F04-7B9B3ED3318D@linaro.org>
-References: <473FE927-FC11-46A0-8ABB-7A1FDC8C1A6C@linaro.org>
- <xmqq5zikkq6n.fsf@gitster-ct.c.googlers.com>
-To:     Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3608.40.2.2.4)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eMLphM8iptsVq4LPU77bEmZDD7BPEb4ItUMsS5tfGKo=;
+        b=EFagNDlUetYfbDQoUHbWUmxhpo7Blg5i9J4hyQAXSu56MhLcwpP3GFmRFBy+xCRs7y
+         DvOrZywNTgyJC15I0tgD3jJf+Y9D7w4sQKkqaqA3crDwfIFy+h5cZ+DKjyjKWaNfogic
+         mk2kNcPhcHiMxrVsl8ZxHrP570r5CdzUZH7tb8SpqDqNeUQsNRZZ0g74+AXfDduvrJK+
+         FCIlSmqtnMwGwZXMsp28+RXqC1DTz+Yfq1C6upAGauv15HjcuAwR7shy+0YUd9Y0haNC
+         3TE9ITNy4un7yFrdnY9tpKvWJ4LHYT9pO9oPCafVRstHKIPb9xBHYHImMFunPF6amcFc
+         4SCg==
+X-Gm-Message-State: APjAAAVVryelyB4TZd/tW0JSgLPF+wh5b7zXiXPeI28cUZMh+9XLcztL
+        54dICvsevnw9Ck1u/WS6Ps+XymmxBZe+silJ3nw=
+X-Google-Smtp-Source: APXvYqwodD4+nLQ6lnBlLILSISmapWZJ5QsI8q3ePAGRyxnS3LucdqepHr35vqlLpF56vn58CYHTAlOrpcm+MuRDBjE=
+X-Received: by 2002:a9d:6f07:: with SMTP id n7mr31018489otq.112.1576504301710;
+ Mon, 16 Dec 2019 05:51:41 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+ <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 16 Dec 2019 05:51:30 -0800
+Message-ID: <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
+        Junio C Hamano <gitster@pobox.com>,
+        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Dec 13, 2019, at 9:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> Maxim Kuvyrkov <maxim.kuvyrkov@linaro.org> writes:
->=20
->> Git bisect may /extend/ bisection range on repeated good/bad data.  =
-Is this expected?
->=20
-> It is not "repeated" that is an issue, but yes this is expected.
->=20
-> The bisection works by finding a mid point to cut the graph into two
-> pieces of roughly the same size, and the graph is defined by the
-> set of good commits on the bottom (i.e. "we were told that all these
-> good commits were good, so there is no point going back the history
-> beyond any of them") and the single "bad" commit you gave the last.
->=20
-> If you give 'bad' that is in the newer part of the history than the
-> one that is already known to be bad, then you rewind that single
-> "bad" commit, to force/allow the machinery to recompute the midpoint
-> [*1*], and because the area to search would be wider when you do so,
-> it is very much expected that you'd be offered to test more commits.
->=20
->=20
->=20
-> [Footnote]
->=20
-> *1* I said force/allow is because allowing the machinery to go back
->    and recompute is a way to recover when you gave a "bad" earlier
->    by mistake.
->=20
+On Sun, Dec 15, 2019 at 2:29 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> I have not had time to dive deeply into this, but I know that it _does_
+> cause a ton of segmentation faults in the `shears/pu` branch (where all of
+> Git for Windows' patches are rebased on top of `pu`):
 
-Hi Junio,
+Weird.  If it's going to cause segmentation faults at all, it would
+certainly do it all over the place, but I tested the patches on the
+major platforms using your Azure Pipelines setup on git.git so it
+should be good on all the platforms.  Did your shears/pu branch make
+some other changes to the setup?
 
-Thank you for the answer.
+> On Tue, 10 Dec 2019, Elijah Newren via GitGitGadget wrote:
+>
+> > diff --git a/dir.c b/dir.c
+> > index 645b44ea64..9c71a9ac21 100644
+> > --- a/dir.c
+> > +++ b/dir.c
+> > @@ -2102,37 +2102,69 @@ static int treat_leading_path(struct dir_struct *dir,
+> >                             const struct pathspec *pathspec)
+> >  {
+> >       struct strbuf sb = STRBUF_INIT;
+> > -     int baselen, rc = 0;
+> > +     int prevlen, baselen;
+> >       const char *cp;
+> > +     struct cached_dir cdir;
+> > +     struct dirent de;
+> > +     enum path_treatment state = path_none;
+> > +
+> > +     /*
+> > +      * For each directory component of path, we are going to check whether
+> > +      * that path is relevant given the pathspec.  For example, if path is
+> > +      *    foo/bar/baz/
+> > +      * then we will ask treat_path() whether we should go into foo, then
+> > +      * whether we should go into bar, then whether baz is relevant.
+> > +      * Checking each is important because e.g. if path is
+> > +      *    .git/info/
+> > +      * then we need to check .git to know we shouldn't traverse it.
+> > +      * If the return from treat_path() is:
+> > +      *    * path_none, for any path, we return false.
+> > +      *    * path_recurse, for all path components, we return true
+> > +      *    * <anything else> for some intermediate component, we make sure
+> > +      *        to add that path to the relevant list but return false
+> > +      *        signifying that we shouldn't recurse into it.
+> > +      */
+> >
+> >       while (len && path[len - 1] == '/')
+> >               len--;
+> >       if (!len)
+> >               return 1;
+> > +
+> > +     memset(&cdir, 0, sizeof(cdir));
+> > +     memset(&de, 0, sizeof(de));
+> > +     cdir.de = &de;
+> > +     de.d_type = DT_DIR;
+>
+> So here, `de` is zeroed out, and therefore `de.d_name` is `NULL`.
 
---
-Maxim Kuvyrkov
-https://www.linaro.org
+Um, yeah...didn't I have an allocation of de.d_name here?  It will
+always have a subset of path copied into it, so an allocation of len+1
+is plenty long enough.
 
+> >       baselen = 0;
+> > +     prevlen = 0;
+> >       while (1) {
+> > -             cp = path + baselen + !!baselen;
+> > +             prevlen = baselen + !!baselen;
+> > +             cp = path + prevlen;
+> >               cp = memchr(cp, '/', path + len - cp);
+> >               if (!cp)
+> >                       baselen = len;
+> >               else
+> >                       baselen = cp - path;
+> > -             strbuf_setlen(&sb, 0);
+> > +             strbuf_reset(&sb);
+> >               strbuf_add(&sb, path, baselen);
+> >               if (!is_directory(sb.buf))
+> >                       break;
+> > -             if (simplify_away(sb.buf, sb.len, pathspec))
+> > -                     break;
+> > -             if (treat_one_path(dir, NULL, istate, &sb, baselen, pathspec,
+> > -                                DT_DIR, NULL) == path_none)
+> > +             strbuf_reset(&sb);
+> > +             strbuf_add(&sb, path, prevlen);
+> > +             memcpy(de.d_name, path+prevlen, baselen-prevlen);
+>
+> But here we try to copy a path into that `de.d_name`, which is still
+> `NULL`?
+>
+> That can't be right, can it?
+
+Yes, it can't be right.  How did this possibly pass on any platform
+let alone all of them?
+(https://dev.azure.com/git/git/_build/results?buildId=1462&view=results).
+This is absolutely an important codepath that is hit; otherwise it
+couldn't fix the three tests from failure to success.  Further, the
+subsequent patch added code within this if-block after this memcpy and
+fixed a few tests from failures to success.  So it had to hit this
+code path as well.  How could it not have segfaulted?  I'm very
+confused...
