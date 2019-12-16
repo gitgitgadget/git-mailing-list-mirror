@@ -2,140 +2,127 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 785D7C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9AA6C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:19:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 49B522072D
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:02:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9D719206CB
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 12:19:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="akuxgYoY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8YcH3bC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727425AbfLPMCk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 07:02:40 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41045 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727241AbfLPMCj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 07:02:39 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c9so6910473wrw.8
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 04:02:38 -0800 (PST)
+        id S1727576AbfLPMTF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 07:19:05 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44562 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727481AbfLPMTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 07:19:05 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q10so6948520wrm.11
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 04:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZH9hfuMDerobcSoTSV5KCleEZmGts2Z1T8NAPa0gm/8=;
-        b=akuxgYoYfzxgW2F1hJxMvDHo1cIlUO/iQNiUUA2NuEkQU8c7W4C3qIQY9FWxab0EFC
-         0Rk8Ld5y9sEHDLnw1giTAv5ANXwWnk29HBAny/UVtsA/w4w7TE0XdRjDijAW2Mm3Wnop
-         Y7eIaZn/mqpe/fcxbr2FuEbhEJ9Z9tprsf07f0vQjnPXflNqJTiJsDlAneExOSXh0nUw
-         FjhCqDhBdIj7eOg8e+hj52FvHhYUvRGx8SR2RjxckljY6y4h4+cgssJBSsgeUVogzX+M
-         BA3pnUHHNozbFgnEJ5zB/gubhrOJRJ3erQW1+qLFo2CjoAv5f+0BoxL1z350Trq70Ls9
-         rLcQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vI7zLXL7e65zx497nLb1LGpDfyH+bvmGyRsYiguEyCM=;
+        b=I8YcH3bCXTazHf8jlQ2TuVjXGI99kyoOzaZN5P8vYqvMmnDXVJCDyUFw9kPDUNCk8b
+         CuH3Yn/0CRPXdxD+PwG1KCayVF82QXs2oWRZxCvItHYE7WyQFoD7zVn8fNh+Ox6LNWOc
+         t9+ibhZSFwy17a3EwfscPME+2equZCfEnzs0+lBxDwkGUm3Y4qR5jmL65hZKVPyPsreD
+         vv8rC1E0GJ1m7Rmy4zTNqvyyy1V+0LCTPZVs+vhW0YidCoZHHN59kvyBpIGUSD9zwru6
+         tYyhVdIsEj0k8soS0L6zDAhz+dS/q8c2qb9YezpW2fwXkDyWLXItPLZpB4Ml0BaHG6gL
+         v77w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ZH9hfuMDerobcSoTSV5KCleEZmGts2Z1T8NAPa0gm/8=;
-        b=N/TmRsAcPukFjO19XMQRlekK4yHmR+VWaabR2MNiQvFexvuLudTUlyriH8MuI6nwb/
-         LevDEyfUXSGHy01mqcC+XB8jy/lNIzax0+4bp2BXNU/HXTUY50x0y0O8aPp1X1Wgj78C
-         V99mKLk2vNIOrQHN5+Modi1PoSpurSTJUcNCHximzZf39sxmYuUYdPV55Uj/FywK7ev+
-         7hnBd41QIT+65dNEFpb/oYDHBATGwzzYE6BpmEzo+p5t7cppswAto5EUrXWDFajOSplh
-         skLSjko3rhriMTdkClZPkeZDICO13aQv57VbSLQ+V8gnAET3yoMT1SaQmIcsiDPiioND
-         57NA==
-X-Gm-Message-State: APjAAAWEgulMj/v34ZJUDHvrJR0hdBpeZWyf+qcbYo54G9DGsWLi2RC/
-        QS5Z9I/qvZfbSLpKbVaYrys=
-X-Google-Smtp-Source: APXvYqwt86/30bZoyDg0oT60AA298xa5+Q1UXeeq84q4Yrm1ngJShEQhanOwoXihAY8KU0Z86vIuZg==
-X-Received: by 2002:a5d:5283:: with SMTP id c3mr31209964wrv.148.1576497757398;
-        Mon, 16 Dec 2019 04:02:37 -0800 (PST)
-Received: from [192.168.2.201] (host-92-22-0-192.as13285.net. [92.22.0.192])
-        by smtp.googlemail.com with ESMTPSA id x11sm20894199wmg.46.2019.12.16.04.02.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Dec 2019 04:02:36 -0800 (PST)
-Subject: Re: [PATCH 02/16] commit: forbid --pathspec-from-file --all
-To:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
- <c0980519ed319295c273d358b0547340cc511a6b.1576161385.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <5928a257-a1f4-dad3-052e-7a0dbf1df8e3@gmail.com>
-Date:   Mon, 16 Dec 2019 12:02:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vI7zLXL7e65zx497nLb1LGpDfyH+bvmGyRsYiguEyCM=;
+        b=XgzgvnEFosUVVystbHX8CymriO0O1M/3sbmXrCdOxDTKK8q+RngliXM9IcIfpKbJQ7
+         ggIgfUyyFn+ropXtR8gqsupXhm2pqGQADjLiUQsAwLvAaJsM9gOt5eI0xFW3cCxWU8Yw
+         WCDCS0D51atjNXA21yurw4qUU/RKuE5e/LDJT6dC5ma7AmTHmxMvMlpH9mPShyPDT8Ot
+         OTcXueqgKKtTF836mfh50nfiBr6n82tXabZkpcD3Rd9zYC8XEDYg6hbnmJy50Q+77z05
+         KiP0rUz09fRR+l/ICllMXLhbELU2KK0FMhjZ0s21hYQlXWE44Hy8hNmuziJCYteTkPvE
+         1XeQ==
+X-Gm-Message-State: APjAAAWM/7PatV/W29v9B5bZlIPyI8VCb/KSFV/Y3ezua0bkOkkMNo6s
+        ZPw3fIitgTgp+FBwBN/W72s=
+X-Google-Smtp-Source: APXvYqxP3AXzy4z+z8V+D1IBw3dvL/C4ojtMDcJbD022H2Ov0pttjCKWPI5S7Va8mB6GAYU2XcOyzw==
+X-Received: by 2002:a5d:4602:: with SMTP id t2mr29429998wrq.37.1576498743094;
+        Mon, 16 Dec 2019 04:19:03 -0800 (PST)
+Received: from szeder.dev (x4dbe5d6c.dyn.telefonica.de. [77.190.93.108])
+        by smtp.gmail.com with ESMTPSA id s65sm21276882wmf.48.2019.12.16.04.19.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Dec 2019 04:19:02 -0800 (PST)
+Date:   Mon, 16 Dec 2019 13:18:59 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/7] t3701: avoid depending on the TTY prerequisite
+Message-ID: <20191216121859.GP6527@szeder.dev>
+References: <pull.172.git.1575637705.gitgitgadget@gmail.com>
+ <ed870d34a8479366df786e76e2770df344469a41.1575637705.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <c0980519ed319295c273d358b0547340cc511a6b.1576161385.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+In-Reply-To: <ed870d34a8479366df786e76e2770df344469a41.1575637705.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alexandr
+On Fri, Dec 06, 2019 at 01:08:20PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The TTY prerequisite is a rather heavy one: it not only requires Perl to
+> work, but also the IO/Pty.pm module (with native support, and it
+> requires pseudo terminals, too).
+> 
+> In particular, test cases marked with the TTY prerequisite would be
+> skipped in Git for Windows' SDK.
+> 
+> In the case of `git add -p`, we do not actually need that big a hammer,
+> as we do not want to test any functionality that requires a pseudo
+> terminal; all we want is for the interactive add command to use color,
+> even when being called from within the test suite.
+> 
+> And we found exactly such a trick earlier already: when we added a test
+> case to verify that the main loop of `git add -i` is colored
+> appropriately. Let's use that trick instead of the TTY prerequisite.
 
-On 12/12/2019 14:36, Alexandr Miloslavskiy via GitGitGadget wrote:
-> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-> 
-> I forgot this in my previous patch `--pathspec-from-file` for
-> `git commit` [1]. When both `--pathspec-from-file` and `--all` were
-> specified, `--all` took precedence and `--pathspec-from-file` was
-> ignored. Before `--pathspec-from-file` was implemented, this case was
-> prevented by this check in `parse_and_validate_options()` :
-> 
->     die(_("paths '%s ...' with -a does not make sense"), argv[0]);
-> 
-> It is unfortunate that these two cases are disconnected. This came as
-> result of how the code was laid out before my patches, where `pathspec`
-> is parsed outside of `parse_and_validate_options()`. This branch is
-> already full of refactoring patches and I did not dare to go for another
-> one.
-> 
-> Fix by mirroring `die()` for `--pathspec-from-file` as well.
-> 
-> [1] Commit e440fc58 ("commit: support the --pathspec-from-file option" 2019-11-19)
-> 
-> Co-authored-by: Phillip Wood <phillip.wood123@gmail.com>
+It's much more interesting _what_ that trick is than when it was
+found.  Is it setting TERM=vt100, or is it setting both TERM=vt100 and
+GIT_PAGER_IN_USE=true?  I'm inclined to think the latter, but I'm not
+sure I interpreted the comment below right.
 
-Thanks for fixing this. If you want to credit me then I think
-Reported-by: would be more appropriate as I didn't write this patch.
-Also I tend to use phillip.wood@dunelm.org.uk for footers as it's a
-portable email address (I should add a mailmap entry...). It would be
-nice to have tests for the various error conditions at some point.
+> +# This function uses a trick to manipulate the interactive add to use color:
+> +# the `want_color()` function special-cases the situation where a pager was
+> +# spawned and Git now wants to output colored text: to detect that situation,
+> +# the environment variable `GIT_PAGER_IN_USE` is set. However, color is
 
-Best Wishes
+Perhaps a s/is set/has to be set/ would have helped my interpreter,
+dunno.
 
-Phillip
-
-> Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-> ---
->  builtin/commit.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 2db2ad0de4..893a9f29b2 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -347,6 +347,9 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
->  		if (interactive)
->  			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
->  
-> +		if (all)
-> +			die(_("--pathspec-from-file with -a does not make sense"));
+> +# suppressed despite that environment variable if the `TERM` variable
+> +# indicates a dumb terminal, so we set that variable, too.
 > +
->  		if (pathspec.nr)
->  			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
->  
-> 
+> +force_color () {
+> +	env GIT_PAGER_IN_USE=true TERM=vt100 "$@"
+> +}
+
+In any case, there are a couple of tests in other test scripts that
+test color relying on the TTY prereq.  So maybe it would be worth to
+make this into a "global" helper function by adding it to
+'test-lib-functions.sh', so we can drop a few more prereqs.
+
+OTOH, some of those other tests have descriptions like:
+
+  t3203-branch-output.sh:test_expect_success TTY '%(color) present with tty'
+  t7004-tag.sh:test_expect_success TTY '%(color) present with tty'
+
+i.e. their description is specific about checking the behaviour with a
+tty, so I'm not entirely sure.
 
