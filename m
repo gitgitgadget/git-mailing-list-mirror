@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72CCCC2D0BF
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E268C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3EBA8206E0
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 447DF206E0
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zg5Fw2KE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2XrEiCj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728548AbfLPPsU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 10:48:20 -0500
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:38057 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728532AbfLPPsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 10:48:19 -0500
-Received: by mail-wr1-f47.google.com with SMTP id y17so7868907wrh.5
+        id S1728570AbfLPPs3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 10:48:29 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:37304 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728504AbfLPPsR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 10:48:17 -0500
+Received: by mail-wm1-f49.google.com with SMTP id f129so7246634wmf.2
         for <git@vger.kernel.org>; Mon, 16 Dec 2019 07:48:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vYMZZrAA8gSnK0xocnJOdw8ushEIXxcOsNHiNiWxEm8=;
-        b=Zg5Fw2KEjww9578aUlOb+2g+9dL2ucJ2cvpxhGRl9lSCpj/0hmFgtmHfP2cbYdmyV8
-         2gxtbpSPbKR4RuiHcNB24YrnHjUvFYJyIRAUU7pYKmEg8C6Lo8A4Mpa69oVTBk1kSIcK
-         Vu7nOguHkub+BUKITgkbcUMmtb372QDP+kh75sc9aSxhmLmcncu2PWkiXbDAEdA/Dx1W
-         px3uRf0DiBZgR31CojdUILG64ayW99j56oGSSg8AgfpA+sDJ6KKJxoW1gfGmGVabQKaD
-         +xKAf0LLuvjjuyjLfcfabCNygUz9vYue3k5MaIJcuXtyv8x5NyaYcKoy5XSeDvifwxpa
-         nIQQ==
+        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
+        b=c2XrEiCjW+2+z/lbavxRsMhiflpN2DrJCwWMkLQCdRrhyJznp27y3w8gkIXctGLP6B
+         L8gEtH3y7I/7duRp6b6yBMzZqf6mhS+VHsBOPUSHCtU1vc/UACPncTSGTWBvf1ZHY9GG
+         WpZBCI5CrlA/YgYMMJLc3bdxwKP+SCaj3xxOvZSlAODEfqlKs+ZQo14sAnhPq3Vz8aAA
+         Vp2KO8WMgSP1nIkNN8OAiAAzryEUItKph8ohFd+n6RYXx6Ebtm8A2//akXppM9Mu9Ik8
+         7y6I+KnWE0wvEFcwZZFu7Vvvfpj8Hv86jc6vlgwZliQRtytFUkkq6bxS63NnWpSe9EY+
+         SfYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vYMZZrAA8gSnK0xocnJOdw8ushEIXxcOsNHiNiWxEm8=;
-        b=othjgrzd3cjqELEZ1U+ZUqEpmY+OoBUuj3s2LS0mFML/r1y+/L0VtS+dbmzEsMy6Xv
-         AAO3NzNi2QZ/EHVVirwZX4N+Mx6et8vF8LKjebG9kYWLxVYP9qR2Gr5bOMyNtfR08SaI
-         D9e1vNWMjR2wrdiLW5Rytnys0MzBnoLVmRneNeYsr+lXX4cy/PDsmkEGt9P3JzlD/IxS
-         RGO4DebPJeiJFic3UYnHRF3k+nzRvXWMPLjfcH6tmq1DXFFlasOQFFtiy5oRpy+R/xmF
-         XaQsaoTZLUEvwFpc3J3nizZkQ5AQphBvQOlae7KCbDM0dia3CprkpL1E+7E1riyt36b+
-         L79Q==
-X-Gm-Message-State: APjAAAXlTTOHL46QY76nWkBPby7QCB1qyDNO0y8wkGTcqUrR/AKAC+1P
-        G9wO2x0TvKZwVmH4lTWo2F3sKx+D
-X-Google-Smtp-Source: APXvYqwzllwpSy1tlQQfkm/jWQppuzQMG+GyXxGiFmhdZ0Ht7KrNmJdaUD0eDGmOcY5i02NMMrxO4w==
-X-Received: by 2002:adf:eb0a:: with SMTP id s10mr27861119wrn.320.1576511296093;
-        Mon, 16 Dec 2019 07:48:16 -0800 (PST)
+        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
+        b=ORcC5V+b4j9MxhT8r4ioMa4kRjjW9VpxXpEGfhuCU64Wm9GFMRvLufSaGQ+Mg5uTjs
+         lrxOvVtpa3p9bmQBJAxzZ4OURYfrY1WeP5eUSTYqY44El58eZy+559VI8TxSlgpEE04p
+         F4qhpfeQ1U5c7uYWTC0CcvYoPzaOTHtbPAlSi0NFnT/5ehQfbZuQuuZVeUaP7Fv8a46J
+         iAoKq4kzcBQvOipobCgbuRn5qw3lbUNj9qu+gi/Bc0jAgARyptr4AF8O7QBfe3EkaR5J
+         RV55pPdvjmxSWzpSPGwIH86GmlnnU1qVMXx6KOBs894DeLQbdbVK3zpX8L6Q/upfAIry
+         qKMQ==
+X-Gm-Message-State: APjAAAUt9bW7R8YJfLe6yTYewwzYFqXLdNBQlV5LFDpzeMVQ4TN5Bg45
+        6MMFZq8aE8ikQBdoA96DKXf1T3Ty
+X-Google-Smtp-Source: APXvYqz9UxGMYFWU5s9tVp2D1axSnXYrMs1A6oBCkV7t/fbgdf3EM4afgYJclFtuD7sy0WOcCixJbQ==
+X-Received: by 2002:a1c:ddc5:: with SMTP id u188mr17645753wmg.83.1576511295470;
+        Mon, 16 Dec 2019 07:48:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a16sm21944925wrt.37.2019.12.16.07.48.15
+        by smtp.gmail.com with ESMTPSA id g21sm23337933wrb.48.2019.12.16.07.48.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Mon, 16 Dec 2019 07:48:15 -0800 (PST)
-Message-Id: <efd6876874512d9ded6352c979046dffd19a5a57.1576511287.git.gitgitgadget@gmail.com>
+Message-Id: <2c23bd602d3bcc88a9671aab1659b327fc056854.1576511287.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
         <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Dec 2019 15:48:00 +0000
-Subject: [PATCH v2 12/18] checkout: die() on ambiguous tracking branches
+Date:   Mon, 16 Dec 2019 15:47:59 +0000
+Subject: [PATCH v2 11/18] parse_branchname_arg(): extract part as new function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,205 +82,57 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Before this patch, when there were multiple DWIM candidates for remote
-branch, git decided to try the argument as pathspec instead. I believe
-that such behavior is a surprise: adding another remote suddenly causes
-git to discard file contents, because it was unsure which branch to
-pick. There was an incomplete attempt to prevent that in [3].
-
-I understand that this was never intended:
-
-  [1] introduces the unexpected behavior. Before, there was fallback
-  from not-a-ref to pathspec. This is reasonable DWIM. After, there is
-  another fallback from ambiguous-remote to pathspec. I understand that
-  it was kind of copy&paste oversight.
-
-  [2] noticed the unexpected behavior but chose to semi-document it
-  instead of forbidding, because the goal of the patch series was
-  focused on something else.
-
-  [3] adds `die()` when there is ambiguity between branch and file. The
-  case of multiple tracking branches is seemingly overlooked.
-
-Change to complain about ambiguity instead of doing unexpected things.
-
-[1] Commit 70c9ac2f ("DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"" 2009-10-18)
-    https://public-inbox.org/git/7vaazpxha4.fsf_-_@alter.siamese.dyndns.org/
-[2] Commit ad8d5104 ("checkout: add advice for ambiguous "checkout <branch>"", 2018-06-05)
-    https://public-inbox.org/git/20180502105452.17583-1-avarab@gmail.com/
-[3] Commit be4908f1 ("checkout: disambiguate dwim tracking branches and local files", 2018-11-13)
-    https://public-inbox.org/git/20181110120707.25846-1-pclouds@gmail.com/
+This is done for the next commit to avoid crazy 7x tab code padding.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/checkout.c       | 56 ++++++++++++++++++----------------------
- t/t2024-checkout-dwim.sh | 28 ++++++++++++++++++--
- 2 files changed, 51 insertions(+), 33 deletions(-)
+ builtin/checkout.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index e1b9df1543..b847695d2b 100644
+index 3634a3dac1..e1b9df1543 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -1115,10 +1115,10 @@ static void setup_new_branch_info_and_source_tree(
- 
- static const char *parse_remote_branch(const char *arg,
- 				       struct object_id *rev,
--				       int could_be_checkout_paths,
--				       int *dwim_remotes_matched)
-+				       int could_be_checkout_paths)
- {
--	const char *remote = unique_tracking_name(arg, rev, dwim_remotes_matched);
-+	int num_matches = 0;
-+	const char *remote = unique_tracking_name(arg, rev, &num_matches);
- 	
- 	if (remote && could_be_checkout_paths) {
- 		die(_("'%s' could be both a local file and a tracking branch.\n"
-@@ -1126,6 +1126,22 @@ static const char *parse_remote_branch(const char *arg,
- 		    arg);
+@@ -1113,6 +1113,22 @@ static void setup_new_branch_info_and_source_tree(
  	}
+ }
  
-+	if (!remote && num_matches > 1) {
-+	    if (advice_checkout_ambiguous_remote_branch_name) {
-+		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
-+			     "you can do so by fully qualifying the name with the --track option:\n"
-+			     "\n"
-+			     "    git checkout --track origin/<name>\n"
-+			     "\n"
-+			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
-+			     "one remote, e.g. the 'origin' remote, consider setting\n"
-+			     "checkout.defaultRemote=origin in your config."));
-+	    }
-+
-+	    die(_("'%s' matched multiple (%d) remote tracking branches"),
-+		arg, num_matches);
++static const char *parse_remote_branch(const char *arg,
++				       struct object_id *rev,
++				       int could_be_checkout_paths,
++				       int *dwim_remotes_matched)
++{
++	const char *remote = unique_tracking_name(arg, rev, dwim_remotes_matched);
++	
++	if (remote && could_be_checkout_paths) {
++		die(_("'%s' could be both a local file and a tracking branch.\n"
++			"Please use -- (and optionally --no-guess) to disambiguate"),
++		    arg);
 +	}
 +
- 	return remote;
- }
- 
-@@ -1133,8 +1149,7 @@ static int parse_branchname_arg(int argc, const char **argv,
++	return remote;
++}
++
+ static int parse_branchname_arg(int argc, const char **argv,
  				int dwim_new_local_branch_ok,
  				struct branch_info *new_branch_info,
- 				struct checkout_opts *opts,
--				struct object_id *rev,
--				int *dwim_remotes_matched)
-+				struct object_id *rev)
- {
- 	const char **new_branch = &opts->new_branch;
- 	int argcount = 0;
-@@ -1240,8 +1255,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+@@ -1223,13 +1239,10 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 			recover_with_dwim = 0;
  
  		if (recover_with_dwim) {
- 			const char *remote = parse_remote_branch(arg, rev,
--								 could_be_checkout_paths,
--								 dwim_remotes_matched);
-+								 could_be_checkout_paths);
+-			const char *remote = unique_tracking_name(arg, rev,
+-								  dwim_remotes_matched);
++			const char *remote = parse_remote_branch(arg, rev,
++								 could_be_checkout_paths,
++								 dwim_remotes_matched);
  			if (remote) {
+-				if (could_be_checkout_paths)
+-					die(_("'%s' could be both a local file and a tracking branch.\n"
+-					      "Please use -- (and optionally --no-guess) to disambiguate"),
+-					    arg);
  				*new_branch = arg;
  				arg = remote;
-@@ -1505,7 +1519,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 const char * const usagestr[])
- {
- 	struct branch_info new_branch_info;
--	int dwim_remotes_matched = 0;
- 	int parseopt_flags = 0;
- 
- 	memset(&new_branch_info, 0, sizeof(new_branch_info));
-@@ -1613,8 +1626,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			opts->track == BRANCH_TRACK_UNSPECIFIED &&
- 			!opts->new_branch;
- 		int n = parse_branchname_arg(argc, argv, dwim_ok,
--					     &new_branch_info, opts, &rev,
--					     &dwim_remotes_matched);
-+					     &new_branch_info, opts, &rev);
- 		argv += n;
- 		argc -= n;
- 	} else if (!opts->accept_ref && opts->from_treeish) {
-@@ -1672,28 +1684,10 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	}
- 
- 	UNLEAK(opts);
--	if (opts->patch_mode || opts->pathspec.nr) {
--		int ret = checkout_paths(opts, new_branch_info.name);
--		if (ret && dwim_remotes_matched > 1 &&
--		    advice_checkout_ambiguous_remote_branch_name)
--			advise(_("'%s' matched more than one remote tracking branch.\n"
--				 "We found %d remotes with a reference that matched. So we fell back\n"
--				 "on trying to resolve the argument as a path, but failed there too!\n"
--				 "\n"
--				 "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
--				 "you can do so by fully qualifying the name with the --track option:\n"
--				 "\n"
--				 "    git checkout --track origin/<name>\n"
--				 "\n"
--				 "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
--				 "one remote, e.g. the 'origin' remote, consider setting\n"
--				 "checkout.defaultRemote=origin in your config."),
--			       argv[0],
--			       dwim_remotes_matched);
--		return ret;
--	} else {
-+	if (opts->patch_mode || opts->pathspec.nr)
-+		return checkout_paths(opts, new_branch_info.name);
-+	else
- 		return checkout_branch(opts, &new_branch_info);
--	}
- }
- 
- int cmd_checkout(int argc, const char **argv, const char *prefix)
-diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-index fa0718c730..c35d67b697 100755
---- a/t/t2024-checkout-dwim.sh
-+++ b/t/t2024-checkout-dwim.sh
-@@ -37,7 +37,9 @@ test_expect_success 'setup' '
- 		git checkout -b foo &&
- 		test_commit a_foo &&
- 		git checkout -b bar &&
--		test_commit a_bar
-+		test_commit a_bar &&
-+		git checkout -b ambiguous_branch_and_file &&
-+		test_commit a_ambiguous_branch_and_file
- 	) &&
- 	git init repo_b &&
- 	(
-@@ -46,7 +48,9 @@ test_expect_success 'setup' '
- 		git checkout -b foo &&
- 		test_commit b_foo &&
- 		git checkout -b baz &&
--		test_commit b_baz
-+		test_commit b_baz &&
-+		git checkout -b ambiguous_branch_and_file &&
-+		test_commit b_ambiguous_branch_and_file
- 	) &&
- 	git remote add repo_a repo_a &&
- 	git remote add repo_b repo_b &&
-@@ -75,6 +79,26 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
- 	test_branch master
- '
- 
-+test_expect_success 'when arg matches multiple remotes, do not fallback to interpreting as pathspec' '
-+	# create a file with name matching remote branch name
-+	git checkout -b t_ambiguous_branch_and_file &&
-+	>ambiguous_branch_and_file &&
-+	git add ambiguous_branch_and_file &&
-+	git commit -m "ambiguous_branch_and_file" &&
-+
-+	# modify file to verify that it will not be touched by checkout
-+	test_when_finished "git checkout -- ambiguous_branch_and_file" &&
-+	echo "file contents" >ambiguous_branch_and_file &&
-+	cp ambiguous_branch_and_file expect &&
-+
-+	test_must_fail git checkout ambiguous_branch_and_file 2>err &&
-+
-+	test_i18ngrep "matched multiple (2) remote tracking branches" err &&
-+	
-+	# file must not be altered
-+	test_cmp expect ambiguous_branch_and_file
-+'
-+
- test_expect_success 'checkout of branch from multiple remotes fails with advice' '
- 	git checkout -B master &&
- 	test_might_fail git branch -D foo &&
+ 				/* DWIMmed to create local branch, case (3).(b) */
 -- 
 gitgitgadget
 
