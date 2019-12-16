@@ -2,128 +2,107 @@ Return-Path: <SRS0=PvcO=2G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06D20C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF6D6C43603
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:48:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C939420726
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:13:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AAA38206E0
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 16:48:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jx1YAhdG"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="LNiril9X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726646AbfLPQNh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 11:13:37 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:34867 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726571AbfLPQNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 11:13:36 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so7352615wmb.0
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 08:13:35 -0800 (PST)
+        id S1726655AbfLPQsc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 11:48:32 -0500
+Received: from mail-yw1-f41.google.com ([209.85.161.41]:35518 "EHLO
+        mail-yw1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726556AbfLPQsc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 11:48:32 -0500
+Received: by mail-yw1-f41.google.com with SMTP id i190so2715234ywc.2
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 08:48:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Aq2WMrua80tQCqYGkrLLXqAjgDKbgS/5UCigH1FPhYM=;
-        b=jx1YAhdGhluq02WrqZvwyDFzCfYpyfJ0EQFUO+uBkcvNtHYGrzQxVoYMKtp7o0ho/f
-         KR8HGt0u860db71PP9Ib1KLsDLZFBjVICVbVsD/ZxcsRi+2EOdT97IukACM0vof/lm5o
-         JONdHi/ZOIh+7xnF5tq8wb/f9Bctfdqe/gk1BW2SrifV0T3V9cmqhoKVIoKL8tb83NeM
-         Focq48AGvAm6CGdptfKip5BS/aSrrPItdfli+eahq3sMKDq10JknKv+/vYoTrZWADMAX
-         rChPpsCXGPrk+8QtfBMJeNOgOrY/RaChrG46AN1fRW/NYUNWQl4BJMp2mcgroVhPoegI
-         dt1w==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=r+Zm36GX8FUYLHZzV4eqG7l9TYxDvkF6Zm4nOLil35o=;
+        b=LNiril9XtmzC0ea1p3lq/A+WSVT+2/CrCSmAS4Vviy0QtQnp0CjNcnmCQz5zhsbPpG
+         UcmffRmlerUbr91rzU9UxDfatlsIWdpxcss/jKMGkaucJmWS8ti8DtaB4dhnA43nPtLF
+         +KLlbfb3WkaOJA8fhe1AcXIaBf95sCk9p1nkDK7PK2E9W0isNJc7oAxNa6Lbiahe3SDO
+         Acy/N1U4z8lTkQDa6b/kih+KRezNw2yUAWcMEveHe6CE62nu92vyV9c8B/SpuJ9kwEFH
+         CvVIp+66OiRKvoGHsur+mEz/oYtfUc1Vx4ey8UsiTdDF2d80lyemjhrV/neDYnIJhIlt
+         esfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Aq2WMrua80tQCqYGkrLLXqAjgDKbgS/5UCigH1FPhYM=;
-        b=djfg97Sp3cfFO/04SezfGy1Ln53tXTQy/gIbQ6BFE04CXImNmcObmDtVqTDv+vZbS4
-         zFkFs2JRufmk0IR2S3pM0LQ8QdgeMXKgLXB76c74AYvettEsJfeRXo/ykhnYX0b79dBm
-         PTpRdZDj8+SyTdxV1eTQAFuyLzDF08wBCBrOZmiKlyDsY6TJBPo3UvWqGLO99wWm9Ipz
-         pl/xBwUGffe+SlLhJv+Bg3WGzZga+/mhC+MnryhnJPv9ZgU3Hj7/6SbqWE98DR/OM5w1
-         g/fLHhd3DMstfC+2tvEABPAEXMyZ183wJKXbClU5ACdusj4bZib5URtg7gAIOyKnRqYE
-         b3FQ==
-X-Gm-Message-State: APjAAAVDgUft971harlUkXB78dAdHI/HyZNuYnDWlwj8EI2LVdHkWoUT
-        euxTb8nzvjcoQx1NezLrz3ietAh7bK61Rj7Mmmo=
-X-Google-Smtp-Source: APXvYqxYT9WSxMFdm7NdUlI4HFGhlzYd9vr/1eM0e7OUyNABx7q2jMgvICTjYC9urBErrg4jfDz5xbjJXMBTsN85Z9o=
-X-Received: by 2002:a05:600c:149:: with SMTP id w9mr30163944wmm.132.1576512814748;
- Mon, 16 Dec 2019 08:13:34 -0800 (PST)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=r+Zm36GX8FUYLHZzV4eqG7l9TYxDvkF6Zm4nOLil35o=;
+        b=GyIq16lHnXdD4zF7q7WQM4cXt4xLpEzNWX8eALrC7nL46S0d3QM0SQ27/B/+8b0icF
+         BTl4/HpsFug263fe/TH1ygEepMoNJmBSseCAEt/4ajnc3na+ZydjYgn+OjqtkVHjbgyC
+         bZVVDhciJTIcbe/p3hlurpofMuzo1J2spchMtP/GysBfevk87eD/1b32qs+msoeLworQ
+         Q7RkdDuRzCyd3xBNgmTLKVwu9m4T1qX+hq9H62QK6x0WAhOtXLa54IqSwrwkybGEvUqw
+         JfG4aTiTVIqTVSoh3cw/eudsfhtMuWFB2F98emkSBlwK6Wmxy48y+GrKMm84UERW6JmR
+         XXvQ==
+X-Gm-Message-State: APjAAAVsrbrrVz4pbaEA542uNO45vTU5Y2Sk45XrGSiLYZ/OcrQkyCAE
+        7Dz3gcLH1I/YCV7x9AEiSC5JGQ==
+X-Google-Smtp-Source: APXvYqzRhkRDKvf6KseWdShC+CCOxAupO5GuCzt/H7/rhYgLqCJUpiA6968fOMALxg972FzsXE7CUw==
+X-Received: by 2002:a81:7996:: with SMTP id u144mr5972852ywc.13.1576514911263;
+        Mon, 16 Dec 2019 08:48:31 -0800 (PST)
+Received: from localhost ([2601:401:c500:60a0:4d45:c8f4:844:e24d])
+        by smtp.gmail.com with ESMTPSA id s130sm8788012ywg.11.2019.12.16.08.48.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Dec 2019 08:48:30 -0800 (PST)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Mon, 16 Dec 2019 11:48:28 -0500
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.24.0
+Message-ID: <20191216164828.GA64423@syl.local>
+References: <xmqq7e4gyzgt.fsf@gitster-ct.c.googlers.com>
+ <20191104054924.GA47418@syl.local>
+ <xmqqo8xsxiyv.fsf@gitster-ct.c.googlers.com>
+ <20191104062334.GA49488@syl.local>
+ <20191216152047.GQ6527@szeder.dev>
 MIME-Version: 1.0
-References: <20191208180439.19018-1-otalpster@gmail.com> <CAHd-oW4MzH9Wrb2zNPF0JBN8+FRB4NtDX0166Qt2Kbqs0mDgcw@mail.gmail.com>
- <xmqqv9qptcyz.fsf@gitster-ct.c.googlers.com> <CAHd-oW5tVNP=yNZqPANkk4JLWKJyPkb4g4AeUerrd1O=xdLKXQ@mail.gmail.com>
-In-Reply-To: <CAHd-oW5tVNP=yNZqPANkk4JLWKJyPkb4g4AeUerrd1O=xdLKXQ@mail.gmail.com>
-From:   otalpster <otalpster@gmail.com>
-Date:   Mon, 16 Dec 2019 18:12:12 +0200
-Message-ID: <CAEKpa1QqrxyS1jeAUoSEAM2bC5h+trPJc_Mm1M18NVA73sCWKQ@mail.gmail.com>
-Subject: Re: [PATCH] entry.c: use dir-iterator to avoid explicit dir traversal
-To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191216152047.GQ6527@szeder.dev>
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 10, 2019 at 6:38 AM Matheus Tavares Bernardino
-<matheus.bernardino@usp.br> wrote:
->
-> On Mon, Dec 9, 2019 at 6:18 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Matheus Tavares Bernardino <matheus.bernardino@usp.br> writes:
-> >
-> > >> The changes pass the test suite t/ and Travis CI.
-> > >> Please point out any mistakes.
-> > >> ...
-> > >> -               strbuf_addch(path, '/');
-> > >> -               strbuf_addstr(path, de->d_name);
-> > >> -               if (lstat(path->buf, &st))
-> > >> -                       die_errno("cannot lstat '%s'", path->buf);
-> > >> -               if (S_ISDIR(st.st_mode))
-> > >> -                       remove_subtree(path);
-> > >> -               else if (unlink(path->buf))
-> > >> -                       die_errno("cannot unlink '%s'", path->buf);
-> > >> -               strbuf_setlen(path, origlen);
-> > >> +               if (unlink(iter->path.buf)) {
+On Mon, Dec 16, 2019 at 04:20:47PM +0100, SZEDER Gábor wrote:
+> On Sun, Nov 03, 2019 at 10:23:34PM -0800, Taylor Blau wrote:
+> > On Mon, Nov 04, 2019 at 03:18:32PM +0900, Junio C Hamano wrote:
+> > > Taylor Blau <me@ttaylorr.com> writes:
 > > >
-> > > unlink()-ing a directory in Linux will return a EISDIR error. So I
-> > > think you still need to use S_ISDIR() to check if iter->path.buf is a
-> > > directory and call rmdir(), in this case.
+> > > > Thanks for a great release. As always, your release notes were
+> > > > very helpful in putting together GitHub's release highlights [1].
 > > >
-> > > However, note that the dir-iterator API gives entries in pre-order.
-> > > I.e. a directory appears before its subentries. In the use case of
-> > > remove_subtree(), though, we need to traverse in post-order, since we
-> > > have to remove the subentries before removing the directory where they
-> > > reside. My suggestion is that you add a preliminary patch,
-> > > implementing a new DIR_ITERATOR_POST_ORDER flag to dir-iterator.h, and
-> > > then use it in this patch.
-> >
-> > Thanks for a review and a few hints to nudge a new contributor in
-> > the right direction.  Very much appreciated.
-> >
-> > I wonder why the bugs in this patch weren't caught by self test we
-> > already have, by the way.  We need a bit better test coverage,
-> > perhaps?
+> > > Well, thanks for writing a version readable from humans ;-)
 >
-> I think there is no current test that covers remove_subtree() being
-> called with nested directories. But we could use the test proposed by
-> Daniel[1], which does fail when this current patch is applied. So,
-> maybe, Plato could also include this test in v2, before performing the
-> dir-iterator convertion.
+> > Please do let me know if you find any other such typos :-).
 >
-> [1]: https://public-inbox.org/git/1493226219-33423-3-git-send-email-bnmvco@gmail.com/
+> The commit-graphs section contains a list, with one of the items
+> linking to "lots of bug fixes".  The last of those links points to
+> 2e09c01232 (name-rev: avoid cutoff timestamp underflow, 2019-09-24),
+> which isn't in any way related to commit-graphs.
 
-Hello!
-Thanks for the warm welcome and sorry for the late reply.
-Your review and hints you provided were very helpful and appreciated.
+Thanks. I think that this link may have gotten lost in one of the many
+shufflings of this blog post. I let one of the blog administrators know
+about this, and they should remove the link shortly.
 
-Yes, I can work and include the test in v2, as well as performing the
-dir-iterator conversion. The required process and the necessary
-changes I need to make were very clear.
+> Better late than never, huh? :)
 
-This week I'm very busy. I'll work on this in great detail from next week.
+;-).
 
 Thanks,
-Plato
+Taylor
