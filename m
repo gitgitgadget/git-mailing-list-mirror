@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 69CE8C43603
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73883C2D0BF
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3DA62206E0
-	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F98B20726
+	for <git@archiver.kernel.org>; Mon, 16 Dec 2019 15:48:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MMmakrJP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJ9ct4OF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728520AbfLPPsO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728526AbfLPPsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 10:48:15 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46290 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728502AbfLPPsO (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 16 Dec 2019 10:48:14 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45753 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728487AbfLPPsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 10:48:12 -0500
-Received: by mail-wr1-f66.google.com with SMTP id j42so3661924wrj.12
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 07:48:11 -0800 (PST)
+Received: by mail-wr1-f65.google.com with SMTP id z7so7811390wrl.13
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 07:48:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iCpCodiwQL5DzQGyiJhFi2eJdzpDVIO7zGr+qkEqLpU=;
-        b=MMmakrJPOKu2aJBhOvx/LUyCdm/q85ikjD38UgVeMSVVb+atU58TpR8UXyZDrk+IYi
-         MHlfhl60hRLGyAlbiehOGEfEolVjULazREeObqEpHEDEUxDksdNqoNj5+rySmtr11mnU
-         OjUYK5CjTFUNMpcW6Pans2fLTBxp3yHzmSvVaivFoGfeGnGUlcVnMp4GpLkKpwgoDtJc
-         hQSQDIHJAoxPqSTkr1+0Oe5EqW2UCxIYCxoTPOzTS7EUWJD7xk5JDJitaYX+qbXS7EmC
-         ThCLE0xEHp0kkMApYtMqOjTWYjhoAs0HNUjBSneXrSxqjwxJu4IneZd5XTMlGa4fa9aq
-         jq5w==
+        bh=/50tsg0WF1RPAKWO+eD4BpY/4M3EHrjNNjTZh3wRJNU=;
+        b=AJ9ct4OF3clBEGKLbj8nPWPkUMpOUnvb9GVS3rOn72/vhhfChf5nLVbeCS50PbOt89
+         bVTlAKDUWVM1g/udutUziB3Y0dXu2QFyAH4SAfD2nlD00eX7gvdbPzBQ8JfeScES2gw2
+         psahgOymI64GQH0u0Iiy0COgx75K1SLTctyTK1lUtNQFoY8lIFktl6lZ3wUcWq1Ul077
+         mpTnErdKB5gEhfF18nPOp+vY6KCyw0IRpaY0Zb6MmGRExe78UblVDgZRcYaCodZC+skA
+         Xa6s6HIqgpJ+RsaiaNOY5a9o+3KPb5fFA1ZfYRpUT/XbHbTTHUGnYf4AwecNcCuF6anB
+         fF+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iCpCodiwQL5DzQGyiJhFi2eJdzpDVIO7zGr+qkEqLpU=;
-        b=oTOnLy9dsqBIvdB+qBRF+WFafsuqpqOYaOKg5O1mOKiX8wy9ESHQMOsxCs9MxSjR45
-         T3mJUcbz6fzGPgZtIyXjMrDO/TYVbRrAFkIENwa2RRvocn/EajZEEla9TPCtOLuRY40i
-         LnX+i+IE+A/A12kbRfMGrI8/WMu5C0mv17YDJX8VIA1H/SawcBHxa9j9FVxXupMUuwhD
-         lEeORSSEeXyQy/4Vg+Qu/cZHA0G+W+640YC78+ZZjsXD/YNPwLki2Vk7pP1GxzlXH8zc
-         YT74vIaFL7Ax2w59FbJ4qH9wDda7rXB3kwRlBrl5RttyOAXmZbPugzThPaExwChEAFXy
-         Lr0A==
-X-Gm-Message-State: APjAAAVJxGxL5X4lBtqbZL22SKTFQzDMrivbUmRdXijiAvtzdUypq9WQ
-        xXmorg7MEyFpjOWNsQ6n9F1d6DRX
-X-Google-Smtp-Source: APXvYqxjglWlAupIa30xIC1UOVghLUUWXLh4kbBMC7uKSFJ8xH1WHS8uj9K7Olf/zujNR2oXbkXG0Q==
-X-Received: by 2002:adf:eb0a:: with SMTP id s10mr27860720wrn.320.1576511290898;
-        Mon, 16 Dec 2019 07:48:10 -0800 (PST)
+        bh=/50tsg0WF1RPAKWO+eD4BpY/4M3EHrjNNjTZh3wRJNU=;
+        b=E1B9IYIMhAbL4Rv71uXzBCQccUq/M+74+ooV3zn18ydv5WAsvsnf6RzDK/7y3gFDzt
+         +HrSTmTB6+D9dwHu2Lvj52tZ4tjVYz+JzCuxgVUzGNjZpD4ABm7RmID9Vkj6Q62FLGSd
+         V2Co6BwMeh6YvrJxcnkOYuZTUQbVxpVinmC44J7o5nb/LfcLlCG0hs2ji3M7p1GAT/+l
+         sFDr4HBtzcQCViUzVT/L8jE32BBm5I8ZUzFqd/XObnyDSy7Wm17haqIAEfETUKfsDFPa
+         S1hVxFVvjTL/aZeqBZyfIS1S+RZaE/uzEpzcSfS8zMC/7C1apug8kdl5l3knDjHL48Nf
+         /Hzw==
+X-Gm-Message-State: APjAAAW9+hdp56FUQXNBReRMxnPthSCT9uTo31CaU5Gi5iQAaE/x0ndR
+        M5AyMJQLrqrxMDIbA5/KAD4fQuBJ
+X-Google-Smtp-Source: APXvYqwPotTZZ3aP50PJTuMb7gjcas+Nnbm2eySzFjoiTAgE4Uvw+oZD/Vu87XUi8sDzdxAvB/6Pcw==
+X-Received: by 2002:adf:f586:: with SMTP id f6mr30157958wro.46.1576511291599;
+        Mon, 16 Dec 2019 07:48:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11sm21925522wrp.24.2019.12.16.07.48.10
+        by smtp.gmail.com with ESMTPSA id h2sm21970277wrv.66.2019.12.16.07.48.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Dec 2019 07:48:10 -0800 (PST)
-Message-Id: <deeb860a85d25e0645a5d2e1c82654653ab1e2d5.1576511287.git.gitgitgadget@gmail.com>
+        Mon, 16 Dec 2019 07:48:11 -0800 (PST)
+Message-Id: <204a0a4446942ac89a59aba672a7646f55185985.1576511287.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
         <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Dec 2019 15:47:52 +0000
-Subject: [PATCH v2 04/18] commit: forbid --pathspec-from-file --all
+Date:   Mon, 16 Dec 2019 15:47:53 +0000
+Subject: [PATCH v2 05/18] cmd_add: prepare for next patch
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,58 +82,73 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-I forgot this in my previous patch `--pathspec-from-file` for
-`git commit` [1]. When both `--pathspec-from-file` and `--all` were
-specified, `--all` took precedence and `--pathspec-from-file` was
-ignored. Before `--pathspec-from-file` was implemented, this case was
-prevented by this check in `parse_and_validate_options()` :
+Some code blocks were moved down to be able to test for `pathspec.nr`
+in the next patch. Blocks are moved as is without any changes. This
+is done as separate patch to reduce the amount of diffs in next patch.
 
-    die(_("paths '%s ...' with -a does not make sense"), argv[0]);
-
-It is unfortunate that these two cases are disconnected. This came as
-result of how the code was laid out before my patches, where `pathspec`
-is parsed outside of `parse_and_validate_options()`. This branch is
-already full of refactoring patches and I did not dare to go for another
-one.
-
-Fix by mirroring `die()` for `--pathspec-from-file` as well.
-
-[1] Commit e440fc58 ("commit: support the --pathspec-from-file option" 2019-11-19)
-
-Reported-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/commit.c                | 3 +++
- t/t7526-commit-pathspec-file.sh | 3 +++
- 2 files changed, 6 insertions(+)
+ builtin/add.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 2db2ad0de4..893a9f29b2 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -347,6 +347,9 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 		if (interactive)
- 			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+diff --git a/builtin/add.c b/builtin/add.c
+index d4686d5218..3d1791dd82 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -430,10 +430,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	if (addremove && take_worktree_changes)
+ 		die(_("-A and -u are mutually incompatible"));
  
-+		if (all)
-+			die(_("--pathspec-from-file with -a does not make sense"));
+-	if (!take_worktree_changes && addremove_explicit < 0 && argc)
+-		/* Turn "git add pathspec..." to "git add -A pathspec..." */
+-		addremove = 1;
+-
+ 	if (!show_only && ignore_missing)
+ 		die(_("Option --ignore-missing can only be used together with --dry-run"));
+ 
+@@ -446,19 +442,6 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 
+ 	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
+ 
+-	flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
+-		 (show_only ? ADD_CACHE_PRETEND : 0) |
+-		 (intent_to_add ? ADD_CACHE_INTENT : 0) |
+-		 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0) |
+-		 (!(addremove || take_worktree_changes)
+-		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
+-
+-	if (require_pathspec && argc == 0) {
+-		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+-		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+-		return 0;
+-	}
+-
+ 	/*
+ 	 * Check the "pathspec '%s' did not match any files" block
+ 	 * below before enabling new magic.
+@@ -468,6 +451,23 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		       PATHSPEC_SYMLINK_LEADING_PATH,
+ 		       prefix, argv);
+ 
++	if (require_pathspec && argc == 0) {
++		fprintf(stderr, _("Nothing specified, nothing added.\n"));
++		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
++		return 0;
++	}
 +
- 		if (pathspec.nr)
- 			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
- 
-diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
-index 68920e8ff9..ba769e0e5d 100755
---- a/t/t7526-commit-pathspec-file.sh
-+++ b/t/t7526-commit-pathspec-file.sh
-@@ -72,6 +72,9 @@ test_expect_success 'error conditions' '
- 	test_must_fail git commit --pathspec-from-file=- --patch -m "Commit" <list 2>err &&
- 	test_i18ngrep "\-\-pathspec-from-file is incompatible with \-\-interactive/\-\-patch" err &&
- 
-+	test_must_fail git commit --pathspec-from-file=- --all -m "Commit" <list 2>err &&
-+	test_i18ngrep "\-\-pathspec-from-file with \-a does not make sense" err &&
++	if (!take_worktree_changes && addremove_explicit < 0 && argc)
++		/* Turn "git add pathspec..." to "git add -A pathspec..." */
++		addremove = 1;
 +
- 	test_must_fail git commit --pathspec-from-file=- -m "Commit" -- fileA.t <list 2>err &&
- 	test_i18ngrep "\-\-pathspec-from-file is incompatible with pathspec arguments" err &&
++	flags = ((verbose ? ADD_CACHE_VERBOSE : 0) |
++		 (show_only ? ADD_CACHE_PRETEND : 0) |
++		 (intent_to_add ? ADD_CACHE_INTENT : 0) |
++		 (ignore_add_errors ? ADD_CACHE_IGNORE_ERRORS : 0) |
++		 (!(addremove || take_worktree_changes)
++		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
++
+ 	if (read_cache_preload(&pathspec) < 0)
+ 		die(_("index file corrupt"));
  
 -- 
 gitgitgadget
