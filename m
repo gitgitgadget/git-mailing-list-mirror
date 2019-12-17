@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE0B0C2D0D1
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD0D4C2D0C8
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A4AF8207FF
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B3C952082E
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FIMnsFHl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j0miTALw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727648AbfLQMBt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 07:01:49 -0500
-Received: from mail-pf1-f173.google.com ([209.85.210.173]:38358 "EHLO
-        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727487AbfLQMBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 07:01:49 -0500
-Received: by mail-pf1-f173.google.com with SMTP id x185so7429579pfc.5
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:49 -0800 (PST)
+        id S1727652AbfLQMBu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 07:01:50 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33008 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727535AbfLQMBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 07:01:48 -0500
+Received: by mail-pg1-f194.google.com with SMTP id 6so5570468pgk.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=nKs31bKPqqpEQn/St9HoqdzIChP8ZAjPesmnkKK5QN4=;
-        b=FIMnsFHlpUq+uONkRdwyVVk/jpf6YT7Mj+FrIVXoLk1R6k6L7cbb0AzmL0bPs/NF0c
-         ibL0PmrMYuq5KakZgssszunMdU/b0uEa9lITY2x+VFH6XPpnGZ4GGJfLVB6LiYYgmmaR
-         0COt8V9pyp0bcRp2iZvLiVu19Pn8/ivCJP45ASRWO/NN3YSS1FrU1bCOA2ChoE1OlOJK
-         BiFNB9KZcyGXlPVadKXneny/e9tmtZN2fbq1T3cz1txDVk/tjsUQwj04QPFviAEKljCn
-         H20sS5NOcZcNoBHhDPJLidWHf61Ry+07P/ogvLHe36mmXKJpWFT7mHNtVUcVt8KpLCIE
-         6uYQ==
+        bh=5BvE+dUV0tEMUPeGwMeNXRc4OJSkexat6Drb16D/tLo=;
+        b=j0miTALwbtUV3MrItFmwIh8a1Z+9T/kPEPIArAyMmwLLzsD0UvSTluz5D8EnfLhmRz
+         PhTWvzrjNGyc8OH5/p0wEHaWiXeKuiqsTE94Fy5/aLFXVvr5rRIya2cCx44HzRuTzEN9
+         QWMw3DSA0vVmjnKOQetDTqycgQjkckg7heanoNp4ZG/fODcfKrp/t+h8p5zdQKePChOp
+         B5BAxhBdqaEB9ipVohzBg3GVs0UibNV8HQlJpZ7Ne1tk8M9MrJC6DgR8+Abqv5Qx+Lnt
+         3EC4ubqTdhXVdOQkMSMMDylrCd7BtIOt7tbtJpXb9+ePnHQENUZ37Y4NZHV6H5/HLdy8
+         oRVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nKs31bKPqqpEQn/St9HoqdzIChP8ZAjPesmnkKK5QN4=;
-        b=WRSr1wWrPCIqRgnluKQZd7VCb0s6j89WBPiaVQ1ZzMQ1ANQPD8CIKJCLeNwvRTOwUK
-         XvQNYFCvN5IjBfcHIwjhtzFsCaOGJN/xoLovhW5yScQzJ8Ojm7Xuy4ovc0dwXZccuuIS
-         lv/jc3YLlJs6J4mvmiVZ/+aOfcDQkxyg0D0tOPitO5IDzYs3Q05msyskktACPqbA5T4o
-         wnF+wYCsA73IfeAvtpRz4F+PWAiKVHT6quJx1z+MSICsfCqNnC9p17J7NaifYHgbgfqi
-         0aKmexVOFJLUvk4W3WU97e/nsOB6mKvIU5hNN6K8WaJLWaZHxPUHTiYSlQpgBKolPoba
-         AWHw==
-X-Gm-Message-State: APjAAAX1YjIJhiK9jYa4lDrEPOQCE6FiZxloyRPSKD9yI/6l1270EE2O
-        Fk1VMWOURKIcgTJy9stfz/Lv1Mll
-X-Google-Smtp-Source: APXvYqx9HDaPPnKVZJaAOb9l+Bo5Pw0JTvVKiwpkkbiwkOjvAbJiRT6Or+L4loVYFt8q3DOz7+fB9g==
-X-Received: by 2002:a63:4f54:: with SMTP id p20mr24868272pgl.246.1576584108240;
-        Tue, 17 Dec 2019 04:01:48 -0800 (PST)
+        bh=5BvE+dUV0tEMUPeGwMeNXRc4OJSkexat6Drb16D/tLo=;
+        b=DaZEA8NBGe54h9V3+G4ouTWu+3odi5ndvdNINX1hMTFdNb6h7U3twJP/mlqx8IIdIb
+         BFggP3CQoCBoiTyHMaJwZ2CKKcAm5ttezjP8fw1aZ3uVjUveKJ0m1sCQwNlYYcWU/DYK
+         CUfICrZM+7i/XNp6pDanqOJjAyENqtEnxuleMVRObUdeKDx9eZ1xjTODjjzL01wgnVkz
+         KxrcaVWu+hAqzq59t284SKi5FhZx2vGaFmO0hRm9kC8TlTed2EmiNgCxAFb4mQiSIdlp
+         t8c+rD6kJ1EXJJTRhsDN1Sj7/C3FA6chr07cJg1XLAMJOadb0Rmb1PqhxD646Q+zI1m1
+         bapA==
+X-Gm-Message-State: APjAAAXXjLysts20Lm0FN3/LUJSHussdz6nWUVSim62fgcOsPAKohjuJ
+        RPgOwVEk+U4nuC6grvhXPuec5xer
+X-Google-Smtp-Source: APXvYqz4u6fsExPvVkDBZ85StTxxjvhqOLZp3lH6RLZWfmrCvLD3WQYAUH24Cb72ZutvtM/tkyZkqQ==
+X-Received: by 2002:a63:cc02:: with SMTP id x2mr24914038pgf.114.1576584107457;
+        Tue, 17 Dec 2019 04:01:47 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.47
+        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.46
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 17 Dec 2019 04:01:47 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 07/15] t0020: drop redirections to /dev/null
-Date:   Tue, 17 Dec 2019 04:01:32 -0800
-Message-Id: <d228dcfdc7d3f41c53a3813c52e56638cd8dd95e.1576583819.git.liu.denton@gmail.com>
+Subject: [PATCH 06/15] t0003: don't use `test_must_fail attr_check`
+Date:   Tue, 17 Dec 2019 04:01:31 -0800
+Message-Id: <3afa3a16ca2fc2fecba19ff9741925d513f68562.1576583819.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.0.627.geba02921db
 In-Reply-To: <cover.1576583819.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com>
@@ -71,28 +71,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since output is silenced when running without `-v` and debugging output
-is useful with `-v`, remove redirections to /dev/null as it is not
-useful.
+In an effort to remove test_must_fail for all invocations not related to
+git or test-tool, replace invocations of `test_must_fail attr_check`
+with a plain attr_check call with the $expect argument set to the
+actual value output by git.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0020-crlf.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0003-attributes.sh | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 854da0ae16..8281babde0 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -5,7 +5,7 @@ test_description='CRLF conversion'
- . ./test-lib.sh
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 53a730e2ee..8d4343afdb 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -28,7 +28,7 @@ attr_check_quote () {
  
- has_cr() {
--	tr '\015' Q <"$1" | grep Q >/dev/null
-+	tr '\015' Q <"$1" | grep Q
- }
+ test_expect_success 'open-quoted pathname' '
+ 	echo "\"a test=a" >.gitattributes &&
+-	test_must_fail attr_check a a
++	attr_check a unspecified
+ '
  
- # add or remove CRs to disk file in-place
+ 
+@@ -113,20 +113,20 @@ test_expect_success 'attribute test' '
+ 
+ test_expect_success 'attribute matching is case sensitive when core.ignorecase=0' '
+ 
+-	test_must_fail attr_check F f "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/F f "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/c/F f "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/G a/g "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/B/g a/b/g "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/b/G a/b/g "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/b/H a/b/h "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/b/D/g "a/b/d/*" "-c core.ignorecase=0" &&
+-	test_must_fail attr_check oNoFf unset "-c core.ignorecase=0" &&
+-	test_must_fail attr_check oFfOn set "-c core.ignorecase=0" &&
++	attr_check F unspecified "-c core.ignorecase=0" &&
++	attr_check a/F unspecified "-c core.ignorecase=0" &&
++	attr_check a/c/F unspecified "-c core.ignorecase=0" &&
++	attr_check a/G unspecified "-c core.ignorecase=0" &&
++	attr_check a/B/g a/g "-c core.ignorecase=0" &&
++	attr_check a/b/G unspecified "-c core.ignorecase=0" &&
++	attr_check a/b/H unspecified "-c core.ignorecase=0" &&
++	attr_check a/b/D/g a/g "-c core.ignorecase=0" &&
++	attr_check oNoFf unspecified "-c core.ignorecase=0" &&
++	attr_check oFfOn unspecified "-c core.ignorecase=0" &&
+ 	attr_check NO unspecified "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/b/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
++	attr_check a/b/D/NO unspecified "-c core.ignorecase=0" &&
+ 	attr_check a/b/d/YES a/b/d/* "-c core.ignorecase=0" &&
+-	test_must_fail attr_check a/E/f "A/e/F" "-c core.ignorecase=0"
++	attr_check a/E/f f "-c core.ignorecase=0"
+ 
+ '
+ 
+@@ -150,8 +150,8 @@ test_expect_success 'attribute matching is case insensitive when core.ignorecase
+ '
+ 
+ test_expect_success CASE_INSENSITIVE_FS 'additional case insensitivity tests' '
+-	test_must_fail attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=0" &&
+-	test_must_fail attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=0" &&
++	attr_check a/B/D/g a/g "-c core.ignorecase=0" &&
++	attr_check A/B/D/NO unspecified "-c core.ignorecase=0" &&
+ 	attr_check A/b/h a/b/h "-c core.ignorecase=1" &&
+ 	attr_check a/B/D/g "a/b/d/*" "-c core.ignorecase=1" &&
+ 	attr_check A/B/D/NO "a/b/d/*" "-c core.ignorecase=1"
 -- 
 2.24.0.627.geba02921db
 
