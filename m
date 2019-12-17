@@ -2,76 +2,74 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FDEBC43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:16:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E89C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:18:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0596E20733
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:16:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DDA482082E
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:18:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Fg3FfhsL"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="AMrdPS9+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727334AbfLQLQN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 06:16:13 -0500
-Received: from mout.gmx.net ([212.227.15.18]:52181 "EHLO mout.gmx.net"
+        id S1726623AbfLQLSi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 06:18:38 -0500
+Received: from mout.gmx.net ([212.227.17.20]:44687 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726824AbfLQLQN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 06:16:13 -0500
+        id S1726487AbfLQLSi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 06:18:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1576581359;
-        bh=KCOZP5ZHLUw4dTIVAHKcBoB897OieBwZVmiKcmf7VEM=;
+        s=badeba3b8450; t=1576581508;
+        bh=3YBUdJ2yzcV3k5lHuutbnoRE4hT0QgkpY8SAXS6dkgk=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Fg3FfhsLhRM+49W5WCKF4RR2TWmrT7GnWbFO/V4l5RHBfYpNyaarUsASXK62dHhZV
-         AdwIjHUBt8TxmC0WQd0OnsQwazrL2G0jDqO9jd5IrBrDp834QB9LxrRHESfITHnwVG
-         bODinOw0HmCRQMevV69LoydrxOKy8YsbbOpVjRKM=
+        b=AMrdPS9+RQourm+l+ZrA39852CCfwvQuO5sNQhnnkm+08hm+1yySPNu4ZyjvZ625k
+         VCMDdynkLtTmUBua4bhiS6njuC4upqhAiIbf7/PXgVA3rYD1WKgFFj/6/pxzusdhsL
+         dZeY5D4WpCYmmpoQ7L9+zudjbnKllMQCOrNJdyUM=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MTzay-1iHMTN30IU-00Qx0u; Tue, 17
- Dec 2019 12:15:59 +0100
-Date:   Tue, 17 Dec 2019 12:15:43 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N49hB-1hhkUn2kLZ-0106rS; Tue, 17
+ Dec 2019 12:18:28 +0100
+Date:   Tue, 17 Dec 2019 12:18:12 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
-        Junio C Hamano <gitster@pobox.com>,
-        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
-In-Reply-To: <CABPp-BGFRMNAgeyTvDQ3F5nH36ERn+ndjrwaXuLUE-Uto_RBdQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1912171209170.46@tvgsbejvaqbjf.bet>
-References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com> <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
- <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com> <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com> <nycvar.QRO.7.76.6.1912170101230.46@tvgsbejvaqbjf.bet>
- <CABPp-BGFRMNAgeyTvDQ3F5nH36ERn+ndjrwaXuLUE-Uto_RBdQ@mail.gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, blees@dcon.de,
+        Junio C Hamano <gitster@pobox.com>, kyle@kyleam.com,
+        sxlijin@gmail.com, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 0/3] Directory traversal bugs
+In-Reply-To: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1912171217000.46@tvgsbejvaqbjf.bet>
+References: <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dfCT4S3m6/2jN8Yeawsc+MsoYsgPa31bbAt7HtV45fA/lRTiOnQ
- 2T+LyBNVGq6BIaLU+N0/4OqW083CFWY5L2GnZAAkcikkcZe76kg276Q8FrXnsTlnzp12R8G
- gKTkt8XG+ApRb63qUpzTj45hT98aDCdi9PDyQdRBE6DROfr2NC4LNBjEUN2ysr8Hb4o/EuZ
- hDLusolzcv1QlCbgDbZFw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:D0WKZYOjPZk=:m4XTL7TykLBbhxZh7PXUOM
- k/efDiD9FibjrQH5FapLL4M6PNEWpi6maipljqi0c6tR9+wbbN9OmqpD9ZKHwSqLtxfhk8Kgh
- nxcKtuqq5T1p7n59b7acpBr0wXN8Nq71bZaBsRnMyaJs5VaIepmUwhqVbSdWA6w5+kWHe95++
- YjsOuFRbweylh0LJDyN4j2cWdwOZyE5SSnoM0cibfxur5b2SQntUMc0K8KZ8ZKtJAQ+sTmIvT
- 7x20LRwsO7+exNW/LLblgbGZp4ur5QLUVyVLUmbJ6CCqpeNZD4lRdRWgHCsX5UxRbFWuJBadC
- ig1AmBgybjmWE9FiDOBMQH7tZtEZHr3qNPtF2TPdNgnOqhQQJV5FRGnobjDKDtw/so5KBXDD5
- hFREtewgPY721rDEjFvJCPgUYrPc5UEzG7Nxi/XlUInPRR08MJGFSR7dfpSs92y6nZnxYdCZJ
- KWrfqF9GVDptDotLJw5JwVvSI02DjyITWJOvThPEAdcYCSoETs9yxt+8xYwrIv2BuPEBD+IGr
- zu4IGCEAebfDwqsqzzqS8vwvJL/8i0pTKbQj9pcTeUY39IZrya4AYKE5tRegCuVtA7xZSczfN
- CfdR7h3/bXieJ60WkiaSpDMWQbnGdRFJXXboCqYulMsFzzAPWSFYSlDpElxAJhNyRVqysOp2V
- z8zyn+sxopFTM1q+5wG4BCfuSzaYLckZsuWjq3jcJm7nEcJfyXdMiyA7H9xXBTotF9krXTaFM
- ga3CpVZxMnLBvhzXrqARYZa4tyALWnLx688oey/dTNDl6HeUVXerD1CcHzohn2mWRxbUUtJ5N
- yn0kmZZEwrxj4RSAPLzmjngNZPilv+6CS6mxmZ05RlkOf67Qq3EWyrmUYgZOwnD526xd6Rqlz
- JI10iT7VIDHjopCONxJyBmMrNPQKJWvSpqB8vA5O3tL9IJXg7kFqGpcGPOWtmqCxXa9CC0x77
- 34ZaZzhOfiGTOg/sSi7KTha/zxwlVzaPrkGToHt2dTfAGYUhoT8Ssl6g/wlLZU+85VmYFswiF
- /B8LQ0Uel/eARD/EKGLJChWkpINBBjkiMJo/WgvtEncEu+8lnRtkobZTQF2lr6WQUmPKxozKx
- HKpp2Qfh/sAq3vTfGUSzc93jNfG6I+J/aSDG2NSWm6ZdDq7s2KNhROvHhl7fx6ElhmIBt3aW3
- qUt2GjX3gwsyGG3RfGo3gME7ClbCerA6zQ5bwdM4UYly7uK5iSvCVDKEf4mu70Mx2wC8ywsAx
- ohym+swovNlV4aZNwg7h0Do3qjrFW7+8cyzlN+13/++AW8SV+30GISINeZsQ=
+X-Provags-ID: V03:K1:bNTp6xyzXMFYiX2ewVaz+YN17r6TrVlzB0hvcXuK3Y1YzgueBli
+ H98vPRIH6CfblV8o9sbHoZlYLF80GNq/87H3K/EsJrqf8cjdzqgag6ny3u6XUH7iX9Dq+4L
+ Qfan+IYPKCEp39DMRN56Nm5Q9wBiyF9ooCFj1aPIVWhVSx3QdjDcKuTqsbZ8xvII5mMs1gE
+ +X1XzHZygE+LLRFqMH1oQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GZYRJJyWrQo=:AxkqlxVeO4RmysJCTZKKFI
+ yS3RKMNh96wc/uYXwA6z1MSasBPLZZv3XpdbkX2n5B9hl3QItMtaSmbKVUslIexHagEdcr3w8
+ nx5+ABgWL4z6f6BiRD2Ayk3Bv44mMzBkFK7GX2B/AXBsFSEnrMmX8fO0YTB2vqrylMLZ9GDXr
+ q6FX/BZI6xDj62vrhGbHGMLJf0BhtpkPoa+pUtonwxZVld8btJ1WG3P+9+pFiUKZttXVR/Shp
+ OkcIIXNb0bjmpodW+ZNE989DFxYaa7oDZJoXaqZVODmSkknTpjwUnss0qVtbD7sqc1IsXjF4W
+ JPQBDBFJtdVn3NPh9Y5XWwIZ8yNUHNFgq/zCHd2nR2ElUC0pprNkvzI38ByDnTHgyAsdOtO6m
+ zsyRW5Zsg7AYUJfDO8TJxHiddz9C7s+MMhnzZgfQ6IsHID07fmKSLkXPsIQjihRvVXhQfU9sU
+ irm++pfdafNcLnrSefxDytVOF+En9FVk4aPNT+RvzlaU4kyfkrnqsrdJwNAh9k3c8ro1FO5xW
+ zVGvgpCC4nwXYtIl8NmmZUQ24N7q69jOuFe/M8a1PDs2UPzN5H5AtrDpZ8y2zDaK0QHo7VROB
+ XB0dm1/J3EnI1LFgQ/RmSURbK1WRfOXzEQTxYOO0It+IZwSyfP1U7hl7esSaZw+wipDK5WY2O
+ /MD9NNUqFrcGeVztSbTojhThOmZJQRKASwnQwdAxLb8ugrZRp0AjcPsToodiiF7IMl0T7y8VM
+ uTQt9G5ym4kByyKcKIqGfzfJBwiV/GogBZpubjtMmB5wG4AGP8phLrP5sJDsGYNw5PcP1RrRK
+ iK2ESDMlNRYKuV5AWW8kKc7TxtspyelF9drQg5MczJlezZHACm0XTNC8XwZyXKzjfiGqFPkET
+ Aml4kryaUPbdHCmYD15Lpe116qQzkCRZxH2K/WyvhetyVU/npa0FLp2HzuByS+1+7joQiEx1G
+ Kss9jktIh2qSnkJzPA2J25KoqPmg57pqbbqIi/AMnigcMVeTqjAePz8GMvApSfuJvaNqGhozz
+ X/kSR0qsSBrNiYFmld3QQacWMh1OlhBC1+DGRO7JKo65gDOQv9ootu0bNkPON5Wg42/1f+g67
+ 1bt0fw/JaWFzTGRQNJkeiya0sEwYIb4+EMKxLv7m1nZrqbD66ntPUE40Wl54SREftlQFfis2W
+ Ji4VVyJBfOQtRvlTa/YyeUmDxD1JB/QI37JmzDRzXIX8hemZnjuK/eFhsK99QHjNIHWgONzjU
+ AinXgX3ORtQI3IZvrmAur+VEV8HFdbBIBZYQXxDnVRpg77jtFnWLokQJA5YY=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -80,118 +78,99 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Elijah,
 
-On Mon, 16 Dec 2019, Elijah Newren wrote:
+On Tue, 17 Dec 2019, Elijah Newren via GitGitGadget wrote:
 
-> On Mon, Dec 16, 2019 at 4:04 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Mon, 16 Dec 2019, Elijah Newren wrote:
-> > > On Mon, Dec 16, 2019 at 5:51 AM Elijah Newren <newren@gmail.com> wro=
-te:
-> > > >
-> > > > On Sun, Dec 15, 2019 at 2:29 AM Johannes Schindelin
-> > > > <Johannes.Schindelin@gmx.de> wrote:
-> > > > >
-> > > > > Hi Elijah,
-> > > > >
-> > > > > I have not had time to dive deeply into this, but I know that it=
- _does_
-> > > > > cause a ton of segmentation faults in the `shears/pu` branch (wh=
-ere all of
-> > > > > Git for Windows' patches are rebased on top of `pu`):
-> > > >
-> > > > Weird.  If it's going to cause segmentation faults at all, it woul=
-d
-> > > > certainly do it all over the place, but I tested the patches on th=
-e
-> > > > major platforms using your Azure Pipelines setup on git.git so it
-> > > > should be good on all the platforms.  Did your shears/pu branch ma=
-ke
-> > > > some other changes to the setup?
-> >
-> > Not really.
-> >
-> > >
-> > > Actually, it looks like I looked up the definition of dirent
-> > > previously and forgot by the time you emailed.  On linux, from
-> > > /usr/include/bits/dirent.h:
-> ...
-> > > and from compat/win32/dirent.h defines it as:
-> > >
-> > > struct dirent {
-> > >         unsigned char d_type;      /* file type to prevent lstat aft=
-er
-> > > readdir */
-> > >         char d_name[MAX_PATH * 3]; /* file name (* 3 for UTF-8 conve=
-rsion) */
-> > > };
-> ...
-> >
-> > If you care to look at our very own `compat/win32/dirent.h`, you will =
-see
-> > this:
+> This series documents multiple fill_directory() bugs, and fixes the one =
+that
+> is new to 2.24.0 coming from en/clean-nested-with-ignored-topic, the res=
+t
+> having been around in versions of git going back up to a decade.
 >
-> Interesting, we both brought up compat/win32/dirent.h and quoted from
-> it in our emails...
+> Changes since v2:
 >
-> > struct dirent {
-> >         unsigned char d_type; /* file type to prevent lstat after read=
-dir */
-> >         char *d_name;         /* file name */
-> > };
->
-> ...but the contents were different?  Looks like git-for-windows forked
-> compat/win32/dirent.h, possibly in a way that violates POSIX as
-> pointed out by Junio.
+>  * gutted the series of most the fixes, dropping the patch count from 8 =
+to
+>    3, due to incompatibility with git-for-windows (which interestingly h=
+as a
+>    different compat/win32/dirent.h than git.git does). The only bugs
+>    reported by a user are fixed by patch 3, and fixing the remaining bug=
+s
+>    (which I found while investigating the one fixed bug) would require a
+>    major refactor that I don't have the time for currently.
 
-Yep, I messed that up, sorry.
+I am really sorry that I caused you so much work.
 
-> Any reason those changes weren't sent back upstream, by chance?  Feels
-> odd having a compat/win32/ directory that our downstream windows users
-> aren't actually using.  It also means the testing I'm getting from
-> gitgitgadget and your Azure setup (which all is really, really nice by
-> the way), is far less reassuring and helpful than I hoped.
+As I said elsewhere, if Git for Windows' FSCache hack is the only thing
+that is broken by this patch series, in light of the bugs that it _does_
+fix I would rather adjust the FSCache patches to accommodate v2.
 
-Yes. I was ready to submit the FSCache feature to the Git mailing list for
-review some 2.5 years ago when along came Ben Peart, finding ways to speed
-up FSCache even further. That is the reason why I held off, and I still
-have to condense the patches (which currently form a topology of 17 patch
-series!!!) into a nice small patch series that does not reflect the
-meandering history of the FSCache history, but instead presents one neat
-story.
-
-> > And looking at
-> > https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dirent.h.htm=
-l, I
-> > do not see any guarantee of that `[256]` at all:
-> >
-> > The <dirent.h> header shall [...] define the structure dirent which sh=
-all
-> > include the following members:
-> >
-> > [XSI][Option Start]
-> > ino_t  d_ino       File serial number.
-> > [Option End]
-> > char   d_name[]    Filename string of entry.
-> >
-> > You will notice that not even `d_type` is guaranteed.
->
-> Doh, yeah, I messed that up too.
->
-> Anyway, as I mentioned to Junio, I'll resubmit after gutting the
-> series.  I'll still include a fix for the issue that a real world user
-> reported, but all the other ancillary bugs I found that have been
-> around for over a decade aren't important enough to merit a major
-> refactor, IMO.
-
-Hmm. I am really sorry that I nudged you to go down this route. Quite
-honestly, I'd rather add an ugly work-around that is Windows-only just so
-that you can fix those ancillary bugs.
-
-I might even go so far as to adjust the FSCache's internal data structure
-to _store_ `struct dirent` items, then the fast `readdir()` implementation
-could be even faster by just pointing at those items.
-
-What do you think? Can we strike a deal to keep those bug fixes?
+What do you think?
 
 Ciao,
 Dscho
+
+> Elijah Newren (3):
+>   t3011: demonstrate directory traversal failures
+>   dir: remove stray quote character in comment
+>   dir: exit before wildcard fall-through if there is no wildcard
+>
+>  dir.c                                         |   9 +-
+>  ...common-prefixes-and-directory-traversal.sh | 209 ++++++++++++++++++
+>  2 files changed, 217 insertions(+), 1 deletion(-)
+>  create mode 100755 t/t3011-common-prefixes-and-directory-traversal.sh
+>
+>
+> base-commit: da72936f544fec5a335e66432610e4cef4430991
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-67=
+6%2Fnewren%2Fls-files-bug-v3
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-676/n=
+ewren/ls-files-bug-v3
+> Pull-Request: https://github.com/git/git/pull/676
+>
+> Range-diff vs v2:
+>
+>  1:  6d659b2302 ! 1:  61d303d8bd t3011: demonstrate directory traversal =
+failures
+>      @@ -14,6 +14,18 @@
+>           of the en/clean-nested-with-ignored-topic); the other 5 also f=
+ailed
+>           under git-2.23.0 and earlier.
+>
+>      +    The old failing tests can be traced down to the common prefix
+>      +    optimization in dir.c handling paths differently than
+>      +    read_directory_recursive() and treat_path() would, due to inco=
+mplete
+>      +    duplication of logic into treat_leading_path() and having that
+>      +    function call treat_one_path() rather than treat_path().  Fixi=
+ng
+>      +    that problem would require restructuring treat_path() and its =
+full
+>      +    call hierarchy to stop taking a dirent; see
+>      +       https://lore.kernel.org/git/xmqqzhfshsk2.fsf@gitster-ct.c.g=
+ooglers.com/
+>      +    and the thread surrounding it for details.
+>      +
+>      +    For now, simply document the breakages.
+>      +
+>           Signed-off-by: Elijah Newren <newren@gmail.com>
+>
+>        diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b=
+/t/t3011-common-prefixes-and-directory-traversal.sh
+>  2:  79f2b56174 < -:  ---------- Revert "dir.c: make 'git-status --ignor=
+ed' work within leading directories"
+>  3:  d6f858cab1 =3D 2:  49b0b628db dir: remove stray quote character in =
+comment
+>  4:  8d2d98eec3 =3D 3:  47814640e4 dir: exit before wildcard fall-throug=
+h if there is no wildcard
+>  5:  d2f5623bd7 < -:  ---------- dir: break part of read_directory_recur=
+sive() out for reuse
+>  6:  9839aca00a < -:  ---------- dir: fix checks on common prefix direct=
+ory
+>  7:  df7f08886a < -:  ---------- dir: synchronize treat_leading_path() a=
+nd read_directory_recursive()
+>  8:  77b57e44fd < -:  ---------- dir: consolidate similar code in treat_=
+directory()
+>
+> --
+> gitgitgadget
+>
