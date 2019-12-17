@@ -2,226 +2,144 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02F8EC43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 20:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F04D2C2D0CD
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 20:19:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A9A69206D7
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 20:13:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AB6F52176D
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 20:19:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="I2ivhsG4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xewvMTLW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727717AbfLQUNi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 15:13:38 -0500
-Received: from mout.gmx.net ([212.227.17.20]:48259 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726967AbfLQUNi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 15:13:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1576613616;
-        bh=8W0V8jvHXo7pLW/+GMHGDo8b4bHGguzO1bTYPKsm3zs=;
-        h=X-UI-Sender-Class:To:References:From:Subject:Date:In-Reply-To;
-        b=I2ivhsG4DI14KYfIetRBt+a5EBHdyAPgGXKcT/pdYNSM8RaBcu2fhEggaK7fN1unk
-         w9/H/7GZDcZDh2XzTzeABYwaNS60/WJZhSwVbZ2xl5ng0NOAKgwACXVPG0kz+3t8QG
-         7eU7rgR6Ul2XT/2/wvnZ0IioPP5vSouC52UnOIjw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.178.22] ([88.71.238.92]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MORAU-1iKoWc1Zeg-00Pv0E; Tue, 17
- Dec 2019 21:13:36 +0100
-To:     Steve Keller <keller.steve@gmx.de>, git@vger.kernel.org
-References: <trinity-c6dbf360-5abe-43df-8428-85514195a7a6-1576574916643@3c-app-gmx-bs62>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=s-beyer@gmx.net; prefer-encrypt=mutual; keydata=
- LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUVFOQkZJN0NUOEJJQUNX
- RlhtNmdSM1BPMkJoaDZXZ1Bvd1FNZEZWcHc4cDlybjE3d0k0K3N3TWVxSmxrSklnClBETlFi
- UXRPcGRGeUJYVzY4cHVDMXI1NjlNZnNhSldXYkluZGh3NVpwdTJ2djdjVXlOajlrUXR1dG10
- Zk1TcWYKdXRSZVAxZDNINmhzOWJSSGJvWkVqeXZqc0VTV0xYM3FFak9uRTYyVmNHMUpnNS9t
- dlFkOFRIZ3pwdDFlS0tSSAp3Vm1oY3JDRTV6a1l1YzNoZzdXdk5xNm96Vm9DbUpsYU9Qb3Zz
- NWw4UThUaHc1elQzL2hnY2QyeEFlODRIUEtJCkFBajVsSjZRU0l3bWYxcWROSVRvZCtLUGdl
- YnYwL3pBZ21vYUFRSW1LamdmelFMZk56WHI1TDJoNHNsaElPU0sKR0EzWnl2SXFqRGRnNmM1
- bFVWeFRKNDRaQkRFLzMvZEtTVG0zVW5MZjJDOTI2SGZUZGQ2ZHQ1T08yLzd5b3YxdApjWWc3
- K0t2VzV2ZWJMS0drbHhjRjhqdFMvSE9zOWxjQkJZeEg4WC9YL1N5YWc3QzIxckhGWE13aFZF
- QTlycmZVCkNFaFYyOXgwUGU5THFwRTd4ZGpIK1FXVlMrY1RHKzhHaGtGN0FuWUtpSXo4L29K
- VjQ1S2hTTjRrTXhPTFdZRSsKazJYd2VEOWhUTjQxMVJOd0FUS3ZJemlieElyV2xYVEVRbWJ3
- elMvUldDRXhTWTdSdHlUTVBIc1BZdDhzRmNzKwozVUFNZHNmdlF0cmtBdXZQY3BTYS9VS0FC
- SEF2a1VOeStvSkZqRmRUdEtrYy9oajk0UEVBQlJvbFlYUTFWRXFECjh2b1dKQ1lQUXlCUVl6
- RTZ0RzMxZFBnWFhzK25xdVhuSnBIRzJKS0lJWktXamJXcmVBSTFaQ2hCSThCOTFXbjIKdWpV
- VjVzdXRBbnk4VmtZY3BNQklwNVdVUVg1VDdxdE8wSUhsYmJ2RzVOZHllQ2tqMkI4Ly9LemZQ
- K0pqc3hqRwpHMzc1Uk9PdS81eC92eXhKZlp2SmUxcDRQRnNnVWF1MFRZbHExR2JuODFHSVMw
- MjU5NWtUSTdrVzdMcERMVG1xCnY2MEdYSWpKQWN1RFJQbWZyZktXSDhZNXk2VHVDMnZFVVpH
- TzVsR0dwV2NLM21HRGRpd1dCNlpYRmhJVGF3YUEKQWxWaHhCVUppZ2JQLyttaG00M1ozUzRC
- N1VqYVpsZGp6QjZuS3QzNzVQL28zYjU2NkdLaG5aVmh4S3ZvQXNoagorU3c4Vml5ZTlZb0ZC
- c3VSeTNndk92VW9MSGtic0JrS0ZncmM0RElXN1BHWVBOdmZVbW5VSXNFbFZYdlVsMWxjCjJG
- SWxYSnJhZDNzNlFMNW0rK0pJblZrWU5Mc2o0OVZpb2JMaUxBdk9Wd2ovN0JHQS9ralJEUXp0
- OGQrZzgrWVIKQnYwNHQ3Vkp3ZWU5SFp1cGFwUGdyb3JzL3hsL2NwSFVFcXEzSFdDSm5ucXpt
- MVJqbnpMZ2JwZVRjQjVBazFndgpKTDZmN05LMXYva0RucVl2a3B4K2YvUDJtNGhKdTVhTTE4
- ODJzWmc2NlF3WDFrREw5WklRbFladFFUOElmN1gvCmV5eGZVZG9WQUpEQThIcFM0NlEyTHp3
- WkVqZXFYYzkzTjNMSmxIZFQxcm1OZERDanhtd1BSUWllUW5TRTRRcmwKU05qWHducXl1M00z
- Vk43ajNNQ1hJMUdWNVUwQ3VvZVd1RGdpUnMzQ0ZqZTgxS25mL0RuYy9jL2RuNmpoeVR2aQpR
- a0NMY1hxUDY3Q0l1T2xVd3gzMU1iNWJpQ3IwL0R5YjVmVXBBQkVCQUFHMEgxTjBaWEJvWVc0
- Z1FtVjVaWElnClBITXRZbVY1WlhKQVoyMTRMbTVsZEQ2SkJHQUVFd0VDQUVvb0dtaDBkSEE2
- THk5d2EzRnpMbTVsZEM5K2MySmwKZVdWeUwyOXdaVzV3WjNBdmNHOXNhV041THdJYkF3SWVB
- UUlYZ0FVQ1Vqc1pYQVVMQ1FnSEF3VVZDZ2tJQ3dVVwpBZ01CQUFBS0NSQStEK3phekFwOE80
- LzlILzkyREltWFBiUkdSVFBjV2dOR0tKNHRBUWxWQm00eUZPQUtoTVlOCi9zcDRIME5FZlp2
- L2ZXMXZtV3FnNlZpbjRLNngxVmhkT205MVFCOE00UThtdzVtbWVneFhNZXdMZjJteUVHamYK
- WEt1STh2OTE3TGhkOFdvT1MydUhyOFZxVldWRGZKRzZXR3VoR3NxcTJtcnVhWk41ZzZMaDNO
- U2QybW9heDUxRAprYTYvam4yOW45KzluNWpHQzV2eDNnTHRuSnE5dmlNbk9OVGdEZVpUcUVL
- NmVxU1ZkMWIrNnp4TStRc0hzVFI0CklzcHNDcWgzbWxsTTdZL2Ntc0o1dWdsZHZURXhsem43
- VkloV1FBanowc2xvbFZHTlFSN2krcmNRK3BjRFJGS2EKOWJHU0xxR3lhdEUrdVlLWVJtdldJ
- bi9zT1FOU21MN2RXZzRiTW5wS0Njb0FBeHd6RFlQay94Sm1PSlU4QjFPQwpPMXo5b2pKZDha
- a0YwRTlVRmswOW42ajYyVDZZWEZaemo1dFRJUU5iNW5IUVRiRFBSZWZESXMxYTBycDBNNHN4
- CjRLZzJzZVVQZVFZVXBEV29YR3pYTHZ5ajRkMHlyWU9wUmpEb0ZJdE1oMCtndmhJd1Q0NGNv
- aHpUUW1vZEQzVHcKSUZZbDRKOWlrTFI4SmdvRzBHeEo4ZkpnN2tyenlnNS9MOWlMMDBvZjdZ
- ZVJuZktWTytyK05BUGk5Zld1Nm1ZRwpGaXZGQnRXYTh2Qzk4WHlWT2NUYXhvTzVSaC9WTUxm
- OUdFTG52VWdjSEpQZVgyK0FVbkxIcjBnZ3NIdFgvK2cxCkxIRVEwMFBQdUVjTkZSODNmZWlr
- L3FoMXVIQlhDSjIzYWJIaHVVR1Z0RXljeEY4ZWFZQ1VIYUh2VS9ldnlDSGUKeElRZWhKc2du
- NkkzWHJURTFzMWVDSXEwRS9kdDAyQXd2cHhDUFkxRXk3UkljM0ppTE1oNVh0elp2dGtsTFRy
- UAppREp6ekRXTll2V0RoRUJnWGM2alJteDk3VjdJZGZGbUI0K2pGR28yL1QxdlhMdElURmlO
- SGFTT20xdWFMM1dtCkI0OWk3UVFqZVVtQVd6UE1WNE52UjJWbnNiQmdHQ2Z0cHh4REcxdmh5
- U01TT2M3QUdXa2NtQnVKamxqcE1zVnMKSkVBaTdGVnBQUnBGcE9VdDdkcmNLSnd2aHZsV1dE
- eDhCQlhXcHNDN0pybElvRzJNZHpNNFRDa0o4Tk5wZUNCRgo1RXJmdHZDZzNvcjFFYVBHeGFk
- NUJsVUlUS0ZXM01ZbXhXbHo5cURHQ1E1Vm9jY3IrUkt4aGwycS9HVnhKTVRECi9JWHZ0VGNt
- OTFQWXp2ZW44Sy9KaUs1SjhNdVFpQ29RLzc5Y2VCYTM4NjZhN1dlUkMvdGlEZEtWcDBnamlS
- M1YKenhua0hYNU9Ud1ZLMkR6amZiTG11NC9LVVowUzNTNzkxdGRlbENRNzFhZk9DYUVRUmQw
- TVo5L0MvS1RxTEtuYwpGdFhEUDFnd2pzbTViSTJoK1JBTVdjbDh1TFI5ZjJ6ZFo4NG5NT211
- TUsxU2wxeXl4Qlo4aG9xVlZNeEJTcnZlClZHeHB5cm9PT0xOTitIdDhiMjkzdVY2NWZ6eUJy
- U0dTcGN6TUx2cTBYOTcxYmU5cnZGNlZaUUtDaEp3N25lV1IKWk1vQ3BiSnE0R0NNakhEdzlp
- Ymw0OWxrOUVWNytUelRiV0thVktvYzFyUmZCMzVyVUtMUWhPNGR2UlA2aFFNTwpwNUlzVHBM
- bWFXOERVUTZJSThJTTg5VEtTaDRQWStCSzZDR0MwKzF6clhPdTZDSW51UVFOQkZJN0NUOEJJ
- QURiCmtnOS9lVnVOeXdMR2RxVmpiV1NmOXdOV0ovWFBiZDY1MFlaRE5nUlNhNVE0NW1YZHhp
- WFdEL2pRRnhRcy9iRVIKU2hCTWdYOEVGMkVVUHpmRW9jY3B2MGMvZks0cGJwT0xseGVDcE04
- K3dZT3lSOWszRHNyZWtVa1FJaHlRcEZZVApZR0V3Zjg0TVBpT1pBSmVRYUtIVGRWMldZWjdl
- eDFqQXVRN1ZxOWZldUdBV1ZwUFAwN2hEa0JTQkVhbHZHZ2RPCmg1S3NJQVBybVBmRU5XM1ZD
- azhSVlNWdWIrUmRhZTdMMHBvU0VzSFhGRzlGR0ZRQlAzSGFUaFlOdk14MlR4R24KYnVQVy83
- am9TY0I2Y0tvZVkzY0ptRjdUOEtzR2dvaUcveTVjZWpNL3R1dmVJZ2VPUXZnUUQ4U0FKcCtt
- THBDMApqYk5UZGxsN1NET2ZXSXkwbm5OQ3ZFMGQ5ejhMbTZORDZvVEo0UCtURFpPbkpjbG1O
- Nkl5alNxT0E2ZHM3M0VkCjV0dlpiVll0VUJzN2QwY0NjOU1aNnBzZlJ1N1VnWVZpdE54VWND
- b2l3ZS9UOTc1NFl6a0I1SzZzeWZqL21OQjgKMDdNaXBRMTJuS3hMUXN5YjJuVlhmWnpIS1RZ
- RjJ1Z0t1MTNMM3k3ajZPYzdkTlY2QlVnS0pSaXRrUkFRN202cgplYldCVWJ4Q1VZRS9UbmxR
- cDlsNlhDVFNMV3FPNVI0R0JjRzJ1c091TEhDRU81dzdiVHBoSitGODgzKzZpYWM1CldpYVQ4
- bldZL2xTWGdvTEhwN1NTbk0xRU5BMlJSUmZYeUFrYUJ0YThIVGw3dkpDK2ptS251aHI1NUpZ
- d25NZzIKWXltOHVQNGlVLzcvMGlRa2Z6TmNPQk1JOURSZXJ0VjdEdHhBOHRtY1h0L1J3d2xM
- SkdIQUozTGc5dFNEYU9Nbwo3eUEydnZaVlkzcWlXRkJHeE41dVRBT2hHZHVPT2YwQ3VRd1JG
- b2ZuY1NkYjh5Y1BUSWVHTkxLcUo0Vk0wUHlICmNNcGtxUHpnc2FMTzZOT3NiZ1REcXZGU0N3
- VWcxdThWTUNJWWJXazd3eUg5Qnd5WVNNMGU3NURPcmJYSVFtSksKSWNWZlpEdmRqSVVaVGU1
- eXFpNWFMMkNJZkN4M0JKWTRFN21PZlBmT0Q0bmhUS1VONG9ZaXRVVmRWVlQwcEhtOApXclZM
- QWltTFRtUXVTT3RrRUJlRkN0eTRtWlpPdTU1Zkh2ZG1ZWTFVQXVLUHlNeExDaGJ0SXIxdDZE
- RTEwcUVZCktWR1RmUEpJc2dub3JxRTRiWGwzK2UzSjArWEtoeTdzbkNZNlZCQ2pNZkFMRDNu
- RDNXNktoc0JVeForWVZjMFMKVGlkSzB2ekF3Y0lJWWQxMDNMNEVkdXp4dGxLeG52QjdsMndG
- VUt5cW5DZGxsMnZrRXZUNkpSS0VOK0dLZ3cwOAozelExRzBYOEJKL3hNVDZsZXV2WGs2ckpX
- RHpBRk9iRndUT2dMSlR6R1VvYnUwK01xeEZMRUJPdmhtU3pkNHljCjRpbjMxY0t3Nnd5ODBp
- OEd3U0JSb2VqSSt1OWJqZGxIWXBENG1mdzdGRSsrQ1IrWXFadnJac2Foek8zUkx3WUsKVE1m
- cnByNUlhaWlDLzNFcmE3ZG1icytrdHFWR3Y0NTN1c0tzRnFvVDJpaXo4RGx0eHF6WXNTKy9h
- V3Q2N2JQRwo3TG5wdDl5alRLOHRnNE42dTFUdnl3dGMvejIvNUR2TjJBdlM1UG5LNkZaMU40
- V2pmTmd5NHhUL1F2QzJkb3VZCkNwZDRkakx2NU43UUhBdHY4WlNkQUJFQkFBR0pCRWdFR0FF
- Q0FESUZBbEk3Q1Q4b0dtaDBkSEE2THk5d2EzRnoKTG01bGRDOStjMkpsZVdWeUwyOXdaVzV3
- WjNBdmNHOXNhV041THdJYkRBQUtDUkErRCt6YXpBcDhPNDcwSC80bwpPWlZPQU5ROUw5SmpO
- LzU1RFArYUdoL3BoU1JHbmpWUWR5TXVEZzdYaFlEYkd5SGJESExoSlVCUEVMNU9PUG90CmRK
- Z3lZZFZsRTFoRktZRC9Mb0tiYWZDeUJDcE10VnNKTjhtRkxONWE0TjVnR05RUzNXUklaSG1i
- Y0YxaFA4cm0KSDdPWEtkNUVUb1VCS1FxTm1uZWc5WHJlTm5DWTZKUXFtWVhtS0RLazdWVFhN
- QUhQWVRmcjZuZjJzdS80bzNYVwp4aktSWHFGWDdsT1lRZEhZT1FyUzhMQU5qT0QreDBPelh4
- Q3ZhemJXdFpyZEl2MVV2NmNKWW1mZ2VwWk5HbS9TCi8xemdtV20ybjltNjYrNk9qSU4xWDdo
- dFNYQTlmcGtKbUIxcDZHeENEaTJkL3dtaUJuMmVJNXdFL21MOEQ2UEcKVEZGTGlOcTRXMUgv
- WXB5VkVaNUhWZTNjQzV5MnY4L1VPZWlOYWNVN1MvK1h6dnZpMDVPZWJxdUNBQTZ1SzlQTgpt
- Q24zZFI1K2RYWjRHdzY3QitTVEcrdWxlWnFSZ1NnTWpkN2tiNzlGMy9NczFKakgrMkl0NVVt
- enlsR0VTanpGCmpBZExBRjhPSzdQTGhzeHU2TFZrelZPTTIvRklIdGRsNmxmcVMzL1Y1b0p6
- cEozR2lQTERXOCtXTkxhemJBRHQKaXpFV2RKcXlaOEsxWFVMSHRoem93enFMUXNWWXBIWFpR
- VU8xb2kzYTVGTEcvckdOUlVGZXQrN0VzUlFNOGFDRgpRQ1FRbDY5RnhNYk41bUpabldGSWgz
- TDVmK1FSM0hUajlFZXVCTGVLWnZMSFJhWThpSVBpdVYxc25LMmdqSHl1Ckp2RjYvempaSDNN
- YzE4cXJlYzdOWStmZEk1QncwMVhyeWZwZVkwT2p4K3VHck5qdCtNS2NIL3FSeEJlWEl3WWoK
- UWJxNjZhSXhJWTNBR0xkWDhFNHVwd2V2SnRYT0xrK2dBTmk1c0tqeTdzV2NMTEROdE9YVXNr
- Y0tPT0k0M2huVwp0d1FMNFVLTmVVTUZ4MTdUYWVWZDVQYWZTYlRXRVRWODkwejI2RXpxZmhm
- N29ZSGtRSGs4TmtKakZSYTF2MWRsCmh6eTI0U01ESVBZQi9iVVZPN3c3NFNUU0g1b3hIRE0r
- cEI4YmZlOEFaU3hMWkhCdEFockZHTFk1NEE0YnNiM3YKKzJkd3d0a2RRNlJ4WDZuNVFpY29B
- bVpFZGRJNTFSd2lRdzRneWRTVG1iL2hhUDdCOVZyWlVOdW9aSXdWSGpldgpRZkV4Sm5aVUVE
- NEJCb3lPaDI4NzdJUEFDRFRwNVIwZTNnTDB2cE5aaHorYm5jZmQ4MlhzbnQ3T0tnM3dLTEds
- ClVzYjBJcXNTRmZ1MHFzejNJV2JvRmlaZk5yNGROcVFCeXJYUFFodXphWXlhUGExelhqazJM
- L3BKTGNOZjBzaEEKMkZiNGoxTjJ6b2NjMHlIWmp5ZWNSTUZBbyswWGU5MDkrRGRadXdqbmZ1
- SFhmYTZDckZsaGlpTlBtUHNJWG14bgpmTHVqWjVHZ3JxWTRVYXIzejNmNnZiNTVJM0srNTFu
- b3ZsNTdxYktuTHdGQWRRaFpHVjM3dDBpRkRsY01EcnZqCldGWVd3NzFQUUtaZmFuWkN6eWNR
- NFF1bi9GckR5d3NCckJxY0M1NmkrTHBWek11YzNYZmhpU0tHb2UrWXhFY2YKTmNuMWZIZGRy
- enpxaUVUQlhCQlNwSVJBUG14K0NCVUJWeXBRaXdBSG1lUTA0cC9icXYyTVNFTkpqeHhvam85
- QQpwUTcwK1I4SUV2dVhoMnJKVExlTQo9LzRnMwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
- TE9DSy0tLS0tCg==
-Subject: Re: Merging two Git-Repositories
-Message-ID: <a909ac32-c94a-fb17-ca4d-13e6ea42cc34@gmx.net>
-Date:   Tue, 17 Dec 2019 21:13:35 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1728516AbfLQUTW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 15:19:22 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51234 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727711AbfLQUTV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 15:19:21 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 778CE9B870;
+        Tue, 17 Dec 2019 15:19:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jeAdSaiE6onMzQG4pk1JdNB4DLI=; b=xewvMT
+        LWRoqcfYM7qitovxt2Rh46JlkRd3vd10t86IzN5gvyPpgOREFkqWsZdj93ebhadi
+        iI5yvb/zjX0gr7hu+Nhm2dzdh77L+QolNMasKrUBs20miodGi1r6wtfxxw/VwtI1
+        MMJ8wGSnvDfdtyuw58gfgmhdhzIC/vl9MgeG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=o/Rb+pZRH82OVvZFkaNjh4SxbTWO+QRU
+        U/42AJ3tMkYTTE6YZFfYtDOfy8jJ+2PK4FIiKhMlYVMWFwPmW7Kv2DtsbXIqLiRt
+        8nNFRZy5m8OnhlTwAknRw1UdUOdjMN4aQpQF/701lvVdC6QdMLSOL+cPJaFFdfvv
+        jOjqmYwud4Q=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7065B9B86F;
+        Tue, 17 Dec 2019 15:19:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 98C429B86D;
+        Tue, 17 Dec 2019 15:19:16 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 4/7] built-in stash: use the built-in `git add -p` if so configured
+References: <pull.174.git.1576579264.gitgitgadget@gmail.com>
+        <40c00302f67ed927317fb5955e13690328e2f4e8.1576579264.git.gitgitgadget@gmail.com>
+Date:   Tue, 17 Dec 2019 12:19:14 -0800
+In-Reply-To: <40c00302f67ed927317fb5955e13690328e2f4e8.1576579264.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 17 Dec 2019
+        10:41:01 +0000")
+Message-ID: <xmqqr212g0xp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <trinity-c6dbf360-5abe-43df-8428-85514195a7a6-1576574916643@3c-app-gmx-bs62>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-X-Provags-ID: V03:K1:KsI21/oDSn4vjHFRiOtUrUDKO3FZamMZ/QDafq5+fLSat3ikCH5
- li1abDb0cULy5LLJPT3zBncLYiDU7cMbxplmZNma7k6etmPkt0ls/8pgOkJu4GHfCU4vckg
- g6qoopY4ilovQfyYZKpMV7Ytnj/z/s2FNsj6fnV9C6NoCyVJKaEzR78wCNrjWjHU+fwBabW
- eJT0ydwP/D0odw8Qx08fg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0Cbb9/mObrs=:AKC1c/ukp1IWO5xm4OfAai
- u6XE3oEpEsVWEjRlybLCKogwoz8Z04LlfDGTEt1hM+uOWezoFRx/OQGoYEJglGlJGjkGHMdN0
- zuLnZ4y2zNWLYAxI2RsrXsYHKfaPicQD5NKplFJjjadYnNt4hHrr0W7r8Rx7vJI81UBnuAz05
- 5KPPi8WyrlNKkVxoK9FjeKtmIeaA16+jWDXERDZtkFaMmeDv/qZ9/QcTzvtukWpZM5H/GPLTm
- Vc0hUgxKfTq0ZPFSAqcMjZkaSF07/OjGuMERk0ZYFDoGkWJR3xESLdDwFA7TVukHEDNA/4/mc
- tCL20tFT1l6nN5f7ZyjRim3GdteQ4U617uXLFzK15qgRv/pfpLRNzaK0ITm+x/qSP9wvfvyHo
- ucycN/e3JVzc9JGtKYf2UTDYxiBtZt/3kR8btWrNWybiijEC3l3rXE7pEQI1jl4eppI+1EnUt
- m0IrI4IV/eLSIb3l/0BrbLTi2SxyAPwRAVXAyDJe5XhmKSicvHuZ26OIF3N1qNFXc9m+im9gS
- sI8YPjpaXLhWdMV314VJuBX9WjTRtwmE2NEGyz7By3AZhQeZtbUdUm1VBnqMNcQIdOTG45XSp
- HoWyFQ2HHA0ApNROxPJixuf/vChnvdkM4hqYwY1OgQrVJptajK97DbYhpFemHheaixGQCyf55
- kESDVhZ0YoEeDXvkQ2vTHnO17f/KiA5TfLIsp+X7CVG6LJVqdz5fApxgVvRnA5dhKvILVGLs5
- tJs2D/vrYFS97Ts6qf6eVHUZOSv5j0AE3v7vGHz/ruHBdNyrFfyfCIU2B9ErOxUAerYke8vnF
- BzXzeA/uMLDLU86IUgtCkJ1Rb36EuJziN2XCGlFVyNyh6GVpSq3hfODUXmzvMX68coJHjPcia
- JIWzq/9PHGIhFHDWfUH/16nXZXvZboYFEOm5RcUHQ5+z5Nr5CeiCZAp7xzX0NWuw3UH1gcAoV
- S4jj6Ls5nwGkmFSHYtpJDSFyymKLT4ZYA2XCO4IvePohVtaNl+074v8qaK6wTFiC3+50yZb35
- kx1BnNFJlOEyuqdm9C3/iF0wTouy820HfbaN3rXhaMO2/gTKmhqD9AE11SpCNQ2WH+ONfoakW
- MEUkClsN7tBDLkaWbZSQfXKDPR8Wt5eJD352XQGgbwvKsI1N+nuu6uxm4Yos/Lzf8qMu/bgzv
- HIF/QThYXUOuhDrTn6Ig1omNi80gkM1ph5s30i8/pxeX17kvNofzQyCU/obg+GU2Euz3EYaMj
- 84oM7KC4NZdD5wugRr0VHxooVJ1P4+pKgd1X+TFlFDEY9AQitLeEfXz6La+o=
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7FD6D97C-210A-11EA-8389-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/17/19 10:28 AM, Steve Keller wrote:
-> Is it possible to merge one Git-Repository into another?  I have
-> developed two independent repositories A and B, and now I find that
-> B should be part of A in new sub-directory, e.g. A/B.  I want to
-> move B into A while keeping the whole development history of B.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-If I get you right, you want a simple merge of two branches with no
-common ancestors. Here's a line-by-line sh example with project A in
-directory A and project B in directory B, and B will be merged into a
-subdirectory "project-b" in A:
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index 4e806176b0..2dafd97766 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -999,9 +999,9 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+>  {
+>  	int ret = 0;
+>  	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+> -	struct child_process cp_add_i = CHILD_PROCESS_INIT;
+>  	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+>  	struct index_state istate = { NULL };
+> +	char *old_index_env = NULL, *old_repo_index_file;
+>  
+>  	remove_path(stash_index_path.buf);
+>  
 
-  # change to B's directory
-  cd B
+Together with the previous step, it makes sense.  Earlier we always
+spawned the scripted version.  Now we first give control to the C
+code and allow it to punt to the scripted version unless it is told
+to take control with USE_BUILTIN.
 
-  # create the subdirectory where B's files will be in A
-  mkdir project-b
+> @@ -1015,16 +1015,19 @@ static int stash_patch(struct stash_info *info, const struct pathspec *ps,
+>  	}
+>  
+>  	/* Find out what the user wants. */
+> -	cp_add_i.git_cmd = 1;
+> -	argv_array_pushl(&cp_add_i.args, "add--interactive", "--patch=stash",
+> -			 "--", NULL);
+> -	add_pathspecs(&cp_add_i.args, ps);
+> -	argv_array_pushf(&cp_add_i.env_array, "GIT_INDEX_FILE=%s",
+> -			 stash_index_path.buf);
+> -	if (run_command(&cp_add_i)) {
+> -		ret = -1;
+> -		goto done;
+> -	}
+> +	old_repo_index_file = the_repository->index_file;
+> +	the_repository->index_file = stash_index_path.buf;
+> +	old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+> +	setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
+> +
+> +	ret = run_add_interactive(NULL, "--patch=stash", ps);
+> +
+> +	the_repository->index_file = old_repo_index_file;
+> +	if (old_index_env && *old_index_env)
+> +		setenv(INDEX_ENVIRONMENT, old_index_env, 1);
+> +	else
+> +		unsetenv(INDEX_ENVIRONMENT);
+> +	FREE_AND_NULL(old_index_env);
 
-  # move all files into project-b
-  git mv -k * project-b
+OK.  I suspect that, as we move more stuff that used to be an
+external call with one-shot environment assignments like this to an
+internall call, we'd see patterns of "save away the state of this
+and that environment variables, then replace them with these values"
+paired with "now restore the state of those environment variables".
 
-  # probably check if this worked for you
-  ls
-  git status
+We might eventually want to add a helper for doing so easily, which
+may make the caller look like
 
-  # commit
-  git commit -m "Move all files into subdirectory for inclusion into A"
+	extern void save_environment(struct saved_env *, ...);
 
-  # change to A's directory
-  cd ../A
+	struct saved_env env;
+	save_environment(&env, 
+			INDEX_ENVIRONMENT, the_repository->index_file,
+			NULL /* end of "VAR, val" tuples */);
 
-  # fetch and merge B into A
-  git pull --no-rebase --allow-unrelated-histories ../B
-  # ... change commit message to something more meaningful ...
+	ret = run_add_interactive(NULL, "--patch=stash", ps);
 
-That's it.
+        restore_environment(&env);
 
-If B is public you might want to replace its last commit by some commit
-that adds a note that further development is going on in A.
+It might (or might not) be premature to introduce such a helper at
+this stage in the series, though.
 
-Stephan
+Thanks.
