@@ -2,109 +2,150 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A40C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1087BC43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C7CA92072D
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D90D92072D
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMvlqvIp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f2EUKra8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726655AbfLQKlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 05:41:08 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33894 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725870AbfLQKlI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 05:41:08 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t2so10756820wrr.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 02:41:07 -0800 (PST)
+        id S1726867AbfLQKlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 05:41:11 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33542 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726731AbfLQKlK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 05:41:10 -0500
+Received: by mail-wr1-f67.google.com with SMTP id b6so10759934wrq.0
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 02:41:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=nXTBXfqQtloih21f81vhRjfaEf6eI3zhvmVaDoxuxpo=;
-        b=FMvlqvIpoTHZB+Sh1YPKELi9CsDj6r675O8+4p6XKvkz94IXdH0GQW3zbOJW0Rhb/m
-         SW9pkmMJnoFdkTF39AyDPt69Yp7l3jLlXY1x7z7iwa7h6dAaL6/iZlGoKk7idwkT2KOR
-         AYt0CP7tfaEDgyOcrzuj7JYDoujL5TbShhXh14xxNl2JfrcP4BquP3+dgWsexs10d1sL
-         pgBrS8gjoKfVZcXy+9lO/+H+4SeMJURY3IEMxsxjkFx6J6XeKMUzD0l3+u5ArfA2StXx
-         wbQg/Fr4xTeh7h/AmTsmH8QnxOXvII1abyaa0HXvV2pIGmgaLlNAON6HA6ZRHWdKyP4K
-         KxnA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+8SAi5y6uerHKVlb8p6GgTe/XE4+PO6Wi58s9vVSi/o=;
+        b=f2EUKra8g50I6SLquvLpBk2hwb4TJAwjbFPpkeAyX0egwBilxOzIN/DHnio33z8uYi
+         P/4D/5N9UqfBCwH7QIYNL5KPjEx4XJWw83Pus5r18AwUjsN8oW14IVWHWyiK2dlVYsQn
+         rUOnyd8uNSCXzdWTdo1tNVCbOfbBvgPQYVQcuV/x+KUNoaDX46kdNHi6N5q3t/XTl7GJ
+         8nmnKt6uJUFViCczaS32GdbSERik5u6ybiiBhOk1CI1cMR1v+R84bjroQdqHTisPYOFq
+         Ea68+CYQ1IIN/2AXVCMJPxwqS39nWbNDxmVR1c2RbOMfK+rZbwVFGyGNMg4L0viNlURF
+         GvUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nXTBXfqQtloih21f81vhRjfaEf6eI3zhvmVaDoxuxpo=;
-        b=nqYZXul8F8oGkR4eu3w/JdM1oYGghy1XHcsB9CBAzteDaOnq2uHr+ySynrstrZ91GZ
-         dwke/pFhg8i4uE93bF8SoGtmOZ7RP+gT6L/7kG+Yo1hxwFfZwlcGDDMdsUCAXgshtiHj
-         L8La4tSzOQp5WgPZiQ5nw1Q0fI9cvm2Tbhv+MALVp7PUqIUWBq0VnNZEq5BeVUlqQ88l
-         hKV9Dg+WQfUNJa2YYapJo7mQp39d2OhZvmkhjbZ5iPw71sK+JkRWv7xVOutBqy2b67aE
-         XJhqkCx/WB4wuxLrBc/SjOj+oAr41KAQNdHgcxy6uJXTkJkV/fS8E0tRZ4s9DNd29XCf
-         WUsA==
-X-Gm-Message-State: APjAAAXS2mFbUCZG7ynBCcrshn4Pf414sEsNRmU1+hrwad2+wzGCFT2l
-        40yzoRIBLJ2ACLTGU6XyS8MzrNpN
-X-Google-Smtp-Source: APXvYqwF1dvBepob+/rWBo0kk8ad5XZiVAU91FduExgAUyr2HhT0mwbclbeKzmQHy2jbtuD5uGt4wg==
-X-Received: by 2002:a5d:6a02:: with SMTP id m2mr34960487wru.52.1576579266253;
-        Tue, 17 Dec 2019 02:41:06 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+8SAi5y6uerHKVlb8p6GgTe/XE4+PO6Wi58s9vVSi/o=;
+        b=ATrtOPec3bV+sr/ijKPTwLSjicjRPbEzvwASrANlcynkGMKbBL95vl2kEwevjuYctW
+         JbuWDgxM6cqzEMobgO6c2+EjsJlMSS0mDc0aKDUf7qozqv9T1zr4/IamM3hNWEPpVA3Y
+         qdaVI4WnTg3PhGo1741w5qPdVAX9PTktfNES96hBgUhQoqN2a7b7/GzK/UweqiPqjWHB
+         kGJo+knfmzNldKciu+wPJXbAHIUMFbuydCt8SzQYGYGWdat5Lk37L+S/+y4mDlofQSSw
+         /OkQVjAGkzJm0QA9AxqRFZ80+hVKcmmyiut3UjnSYDutbGkkke8JimO7xzW1Y6tyBkgU
+         Y6bw==
+X-Gm-Message-State: APjAAAWLc4Ca7lJ5AA6LvEBOM4hMbYU/+o+U5MP/sXQbvkwND25FnFAy
+        mZ3IZFCHJCB08D6mJHNYmHcKlJQz
+X-Google-Smtp-Source: APXvYqzoI/teBcXUa6fv/DjqRdqp9ZFHeT/tEots4Q2Bh2dMxvK6ObeS4YbPO7jccY9ZsPmjOx1YXg==
+X-Received: by 2002:adf:de84:: with SMTP id w4mr34549730wrl.97.1576579268990;
+        Tue, 17 Dec 2019 02:41:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f17sm2516296wmc.8.2019.12.17.02.41.05
+        by smtp.gmail.com with ESMTPSA id n67sm2527642wmf.46.2019.12.17.02.41.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Dec 2019 02:41:05 -0800 (PST)
-Message-Id: <pull.174.git.1576579264.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2019 02:41:08 -0800 (PST)
+Message-Id: <cddc2cb9de645ecc49a74e94a73bcdf843035024.1576579264.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.174.git.1576579264.gitgitgadget@gmail.com>
+References: <pull.174.git.1576579264.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Dec 2019 10:40:57 +0000
-Subject: [PATCH 0/7] stash/reset/checkout -p: optionally use the add --patch backend written in
- pure C
+Date:   Tue, 17 Dec 2019 10:41:00 +0000
+Subject: [PATCH 3/7] legacy stash -p: respect the add.interactive.usebuiltin
+ setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At this stage on the journey to a fully built-in git add, we already have
-everything we need, including the --interactive and --patch options, as long
-as the add.interactive.useBuiltin setting is set to true. This config
-setting is kind of a feature flag that is currently turned off by default,
-and will be for a while, until we get confident enough that the built-in
-version does the job, and retire the Perl script.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-However, the internal add--interactive helper is also used to back the 
---patch option of git stash, git reset, git checkout and git worktree.
+As `git add` traditionally did not expose the `--patch=<mode>` modes via
+command-line options, the scripted version of `git stash` had to call
+`git add--interactive` directly.
 
-This patch series (based on js/add-p-in-c) brings them "online".
+But this prevents the built-in `add -p` from kicking in, as
+`add--interactive` is the scripted version (which does not have a
+"fall-back" to the built-in version).
 
-Johannes Schindelin (7):
-  built-in add -p: prepare for patch modes other than "stage"
-  built-in add -p: implement the "stash" and "reset" patch modes
-  legacy stash -p: respect the add.interactive.usebuiltin setting
-  built-in stash: use the built-in `git add -p` if so configured
-  built-in add -p: implement the "checkout" patch modes
-  built-in add -p: implement the "worktree" patch modes
-  commit --interactive: make it work with the built-in `add -i`
+So let's introduce support for internal switch for `git add` that the
+scripted `git stash` can use to call the appropriate backend (scripted
+or built-in, depending on `add.interactive.useBuiltin`).
 
- add-interactive.c   |   2 +-
- add-interactive.h   |  12 +-
- add-patch.c         | 353 ++++++++++++++++++++++++++++++++++++++++----
- builtin/add.c       |  35 ++++-
- builtin/commit.c    |   8 +-
- builtin/stash.c     |  25 ++--
- git-legacy-stash.sh |   2 +-
- 7 files changed, 388 insertions(+), 49 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ builtin/add.c       | 14 ++++++++++++++
+ git-legacy-stash.sh |  2 +-
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-
-base-commit: 2e4083198d1508206488af4c82093ceb6cf20f4e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-174%2Fdscho%2Fother-command-p-in-c-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-174/dscho/other-command-p-in-c-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/174
+diff --git a/builtin/add.c b/builtin/add.c
+index 583d8aab0d..f238e8b623 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -29,6 +29,7 @@ static const char * const builtin_add_usage[] = {
+ static int patch_interactive, add_interactive, edit_interactive;
+ static int take_worktree_changes;
+ static int add_renormalize;
++static int legacy_stash_p; /* support for the scripted `git stash` */
+ 
+ struct update_callback_data {
+ 	int flags;
+@@ -335,6 +336,8 @@ static struct option builtin_add_options[] = {
+ 		   N_("override the executable bit of the listed files")),
+ 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
+ 			N_("warn when adding an embedded repository")),
++	OPT_HIDDEN_BOOL(0, "legacy-stash-p", &legacy_stash_p,
++			N_("backend for `git stash -p`")),
+ 	OPT_END(),
+ };
+ 
+@@ -431,6 +434,17 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		add_interactive = 1;
+ 	if (add_interactive)
+ 		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
++	if (legacy_stash_p) {
++		struct pathspec pathspec;
++
++		parse_pathspec(&pathspec, 0,
++			PATHSPEC_PREFER_FULL |
++			PATHSPEC_SYMLINK_LEADING_PATH |
++			PATHSPEC_PREFIX_ORIGIN,
++			prefix, argv);
++
++		return run_add_interactive(NULL, "--patch=stash", &pathspec);
++	}
+ 
+ 	if (edit_interactive)
+ 		return(edit_patch(argc, argv, prefix));
+diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
+index 07ad4a5459..ed039dfcbb 100755
+--- a/git-legacy-stash.sh
++++ b/git-legacy-stash.sh
+@@ -206,7 +206,7 @@ create_stash () {
+ 
+ 		# find out what the user wants
+ 		GIT_INDEX_FILE="$TMP-index" \
+-			git add--interactive --patch=stash -- "$@" &&
++			git add --legacy-stash-p -- "$@" &&
+ 
+ 		# state of the working tree
+ 		w_tree=$(GIT_INDEX_FILE="$TMP-index" git write-tree) ||
 -- 
 gitgitgadget
+
