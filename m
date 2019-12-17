@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31A9CC43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 49EFFC2D0C8
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 04A70207FF
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E6FF207FF
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqAhIL2T"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qWS4sKSe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727706AbfLQMBx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 07:01:53 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:43647 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727656AbfLQMBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 07:01:51 -0500
-Received: by mail-pf1-f195.google.com with SMTP id h14so5529013pfe.10
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:51 -0800 (PST)
+        id S1727717AbfLQMBz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 07:01:55 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36678 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727649AbfLQMBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 07:01:50 -0500
+Received: by mail-pg1-f193.google.com with SMTP id k3so5560739pgc.3
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=EMvx28QOUtxXZ96LQ6qQggtpOTuwWkmPV+zOmRtkw9Q=;
-        b=jqAhIL2TJgBIu5FCPxPhdJ0TdkAiezMkx5QqcvlY3kz5giBBY6qKeI4YF3C13932md
-         NUl1CO0bea7RpC/ddGDufEhhiFcKzQsp2hh+R/XEl+3T6AcL8GXD/Sw+aNIyKkKEIqVL
-         Gtb6C7sZwY1GuR/JNsgPlWw39jOQLLlvBf00bAlLFgw0shH1k0Ij3q0jgKzaRSRhki1K
-         yg9sSluhdBvbJyIEl8XOvJiDxBIYOLEFbDpga94WbIe7XI9UeixlEkOIDKxrxVtumB4Z
-         cr1lj2dBrpULi652MqjvQhouc+p7P6WdjW450WA4KXw1sO74VM+Ur4KiC3/vFzxetcG3
-         4JSQ==
+        bh=QMPG2hrOQYiAnKUzMMM87GLRpQyF5v0A1WVo4CGCLpM=;
+        b=qWS4sKSeRpBPGh+dcTClhV/4SxIgJwn1Uhbc/wdKf0jTRvJ4kDbbaNRMrjuFUaPFwz
+         lCMrI8TRQG1RO0mjnP4LJMtfd9Ws70PmBd13D1bstvlWV5JRSpU26tgRBOiwEz7jUaXa
+         Mt5c8AT6c7ZSORtTAO+LVbV+fjN+MRCxHakedj89wCLYUry7xc2dLUuiA+McRVp1ebhE
+         AlwU08zvSS67MKN7P6rPA+CRnY6j3/cPofEXF+TVBYcT+MsCUjpJByKng8hJet1FRYmi
+         li4zM7POZqsmHhJC3MFaBxx3TSB2LS6rdR6BhtQCP8QWkmxz8fzb5OhtW+/BhyZmBqyb
+         SaiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=EMvx28QOUtxXZ96LQ6qQggtpOTuwWkmPV+zOmRtkw9Q=;
-        b=Cg/Jfz/kxvfvrVua/Xdxrl1jR31RPqX35LF+smOp19oGTyuQ7dvAk1eO3LsefizqRc
-         ZyF6IoYMp7fM09Jl9m7yU297GkE+WIF5hR17/csvhbfBJH6wPlQOBDAI7eKFMJuh014U
-         FUucf7YR2KcoRtIwq07QPr3GYjuAtLuKVZw0rJx1172Ch+TUatQ0DMTyXSrp4//PIYp8
-         adbdQ3AKzQwzHPtPnrH+JwPCit0XwJK3N2vuEuBkdDCb0/sRg0FyeB8uWEra499uYU0J
-         sqmeKrgYZstK7ZyeblIERb15YS2DLVWO7r7ikMNO1dGe0iOb3eeWiOr2c7JSFqeGBUWL
-         POcg==
-X-Gm-Message-State: APjAAAVJPgSas7InLJneW93Lb8/eVPUkB7clvhRV2eFPOvfYK0okv87Z
-        Fw+DEAU/SPSROK4rgsiDFyIInFHP
-X-Google-Smtp-Source: APXvYqweRWu/DP0knN9m1hHH+G85wVzfCYFRm8hSwaoqIW2QRTecx49Ws51ZBnGFAnIOyKe762WfsA==
-X-Received: by 2002:a63:6c09:: with SMTP id h9mr24249626pgc.34.1576584110579;
-        Tue, 17 Dec 2019 04:01:50 -0800 (PST)
+        bh=QMPG2hrOQYiAnKUzMMM87GLRpQyF5v0A1WVo4CGCLpM=;
+        b=PEY+88Cytp3apSPAoisKfycnlIsQRIDnCWEfxraA8xE50cRdAR06a2PqO8e4AIwdl2
+         1Eopfp7NrqQRgy8GbN4g0YEB1LFrdAqDeNe/2+f2fdDxJX7HFbGuTF9P6T5/CVjGRGA6
+         4ye0sWUexiZhd7fCCerF3Os5l+hIywkP0tvrxRHV24WZAxcMOr2xL7ceQljF917C9BWa
+         P6atzR91uW+9ij2oGSXnRzoMX8/kWrum329dBXI4celBu326ArYsrwHa5aybLpKPT3r2
+         oBYKn6sZeZGtKaz642kZ+zNnq1uX+P3VWHOvdoOEX+L79p/VkvSF9umjIgSFN5Rby0fj
+         iWXg==
+X-Gm-Message-State: APjAAAXxGX4XVC5mp3HfhbQ3WIG08m6CfdKOm5sa+X8oSDKBlXIYo9b7
+        GiKIhdyHCpxaglitA9uJatjEExN3
+X-Google-Smtp-Source: APXvYqyQuZceT2rQ5DeYzX00YwO3B76uM/6s7hZGLBg6TUcmep2NbJPnVlHkJHvJwENP+dbXmRvT6Q==
+X-Received: by 2002:a62:6187:: with SMTP id v129mr6749064pfb.212.1576584109492;
+        Tue, 17 Dec 2019 04:01:49 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.49
+        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.48
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 17 Dec 2019 04:01:49 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 10/15] t1306: convert `test_might_fail rm` to `rm -f`
-Date:   Tue, 17 Dec 2019 04:01:35 -0800
-Message-Id: <d39422505f16a14c64514b8a78ae351f41b75c44.1576583819.git.liu.denton@gmail.com>
+Subject: [PATCH 09/15] t0020: use ! check_packed_refs_marked
+Date:   Tue, 17 Dec 2019 04:01:34 -0800
+Message-Id: <b77b474422061960615449318b00488fb0f5277b.1576583819.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.0.627.geba02921db
 In-Reply-To: <cover.1576583819.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com>
@@ -71,48 +71,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail() family of functions (including test_might_fail())
-should only be used on git commands. Replace `test_might_fail rm` with
-`rm -f` so that we don't use `test_might_fail` on a non-git command.
+The test_must_fail function should only be used for git commands since
+we should assume that external commands work sanely. Since
+check_packed_refs_marked() just wraps a grep invocation, replace
+`test_must_fail check_packed_refs_marked` with
+`! check_packed_refs_marked`.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1306-xdg-files.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ t/t1409-avoid-packing-refs.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
-index 21e139a313..dd87b43be1 100755
---- a/t/t1306-xdg-files.sh
-+++ b/t/t1306-xdg-files.sh
-@@ -153,7 +153,7 @@ test_expect_success 'Checking attributes in both XDG and local attributes files'
+diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
+index e5cb8a252d..c46848eb8e 100755
+--- a/t/t1409-avoid-packing-refs.sh
++++ b/t/t1409-avoid-packing-refs.sh
+@@ -46,7 +46,7 @@ test_expect_success 'check that marking the packed-refs file works' '
+ 	git for-each-ref >actual &&
+ 	test_cmp expected actual &&
+ 	git pack-refs --all &&
+-	test_must_fail check_packed_refs_marked &&
++	! check_packed_refs_marked &&
+ 	git for-each-ref >actual2 &&
+ 	test_cmp expected actual2
+ '
+@@ -80,7 +80,7 @@ test_expect_success 'touch packed-refs on delete of packed' '
+ 	git pack-refs --all &&
+ 	mark_packed_refs &&
+ 	git update-ref -d refs/heads/packed-delete &&
+-	test_must_fail check_packed_refs_marked
++	! check_packed_refs_marked
+ '
  
- 
- test_expect_success 'Checking attributes in a non-XDG global attributes file' '
--	test_might_fail rm .gitattributes &&
-+	rm -f .gitattributes &&
- 	echo "f attr_f=test" >"$HOME"/my_gitattributes &&
- 	git config core.attributesfile "$HOME"/my_gitattributes &&
- 	echo "f: attr_f: test" >expected &&
-@@ -165,7 +165,7 @@ test_expect_success 'Checking attributes in a non-XDG global attributes file' '
- test_expect_success 'write: xdg file exists and ~/.gitconfig doesn'\''t' '
- 	mkdir -p "$HOME"/.config/git &&
- 	>"$HOME"/.config/git/config &&
--	test_might_fail rm "$HOME"/.gitconfig &&
-+	rm -f "$HOME"/.gitconfig &&
- 	git config --global user.name "write_config" &&
- 	echo "[user]" >expected &&
- 	echo "	name = write_config" >>expected &&
-@@ -183,8 +183,8 @@ test_expect_success 'write: xdg file exists and ~/.gitconfig exists' '
- 
- 
- test_expect_success 'write: ~/.config/git/ exists and config file doesn'\''t' '
--	test_might_fail rm "$HOME"/.gitconfig &&
--	test_might_fail rm "$HOME"/.config/git/config &&
-+	rm -f "$HOME"/.gitconfig &&
-+	rm -f "$HOME"/.config/git/config &&
- 	git config --global user.name "write_gitconfig" &&
- 	echo "[user]" >expected &&
- 	echo "	name = write_gitconfig" >>expected &&
+ test_expect_success 'leave packed-refs untouched on update of loose' '
 -- 
 2.24.0.627.geba02921db
 
