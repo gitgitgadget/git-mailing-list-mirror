@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23150C2D0D1
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5491C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DEC912072D
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7498B2072D
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FrnxeuZT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KOgCdqai"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726940AbfLQKlO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 05:41:14 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33905 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726852AbfLQKlN (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726959AbfLQKlP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 05:41:15 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36949 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726933AbfLQKlN (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 17 Dec 2019 05:41:13 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t2so10757103wrr.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 02:41:11 -0800 (PST)
+Received: by mail-wr1-f68.google.com with SMTP id w15so10754297wru.4
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 02:41:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=iKYjsTVoHCPqhKRIOYQ7xpxTcpGdRZqXJQ/3ZOkY8vg=;
-        b=FrnxeuZTkfdXDQmYoOczx7gFMirJS+CSqPo3qNCE3zpIrZmd4SWOPwo1o3yHNwaSEh
-         Tv3x1KTmSslms7PRQKSwbx52tHahp3LOZx7aXzZkr9NkhVd6QMRsAmbv74HJfTNpASm2
-         k5y29teG5WMHu7iy3e9Pv23g7z6IWKGCfSUKaFTJdqo1eS440MS7L22WZ3wx9m7mmIiL
-         99JFfF7QIZWh0waWQvlaRBWCtxor1A/ZNLXfzyABm65iUD+FRhoEbnNJCIatWcpBmpne
-         zR1QnipDB32sq4bQAIrq52eS6eIDfAOiVsJ4JZGXvJbNR2gdKFgnUACAzmvFpCAXJTC2
-         zUtQ==
+        bh=9J6uyGVm2yhh48GhZFu4j+VtolHE3Az7QExglRXOJ6A=;
+        b=KOgCdqai4fWpoh4D+nAVMvewLJg9GVEboqQ+B2ycdBHkIv+UfXslaT3u9bt2ncpq0K
+         FCFm6oGh5b1iqplad8zEy9v4u849b9+f+icVYv5sHXYt3MmR8jVYyJ7DW+kigX9RTgxw
+         k1TuQ6JwYV8vgKXz9NrSV7gfpZh4418OZr5b/0l3guJcB8jmH5xfg/LRSoV0tRQQkwrX
+         w+ylY/24mgkJot6e/ME86BrT0nhw0tKXmmQqTEjtPWHidM2K8Ljm5B4yg9I8ewHDXzAq
+         Z1ph/AnS5H7PjF478N4OohBiI/0rFH6aKcR1ahdSCxPW0lXvqVyCqNMt8NfEMQpRsh2n
+         wifA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=iKYjsTVoHCPqhKRIOYQ7xpxTcpGdRZqXJQ/3ZOkY8vg=;
-        b=JheUUkNVoNG+cEsPe06O75AhcsgyMielPF7v9SpYU30OJVeStuhgwYWQMdfaffLZCw
-         EpvKV5wUvJ6yjK6Nk+H5dHkuQrCWqQravMg4D5LokKHTCuKv/1k1WDjyMfobZaZCOU1R
-         yfSXgssu7FKcu+uDmtvZ4JSTVJkb919rgizPm1C82qBXsGZy1lzq8fWXEcMQctDd2RkM
-         NXghUqQ5UyIc5ONOkbewm7XrO5xG8+SkXjb9bOpg44lZMT4zUzTLhvstbg8zDI8iMRpu
-         NUwZYUz0MJpjkO9kmZYPO21mtdRrpA4gewB9xfQi9Ft9BnEzrjHmIohprzktcIVqsIw3
-         Nl4w==
-X-Gm-Message-State: APjAAAXUPv+y2s5yzEyywHbh2qvob+d/fSmag3nN9AHeW/twZ14aBdVo
-        1o3FP+o7FudPDBA617LoZ2BTdsKn
-X-Google-Smtp-Source: APXvYqxUirBTetksPgenBCgGjgMBJHKyAJbyWYBVjHSfV1U/SR/AhSqDHoC0etwU+D3RefjgTDgHDQ==
-X-Received: by 2002:a05:6000:cb:: with SMTP id q11mr34995390wrx.14.1576579270467;
-        Tue, 17 Dec 2019 02:41:10 -0800 (PST)
+        bh=9J6uyGVm2yhh48GhZFu4j+VtolHE3Az7QExglRXOJ6A=;
+        b=SwM9QBmPCge8D+Q8GoWuAKZAIyVLx/RzOqDmr7UZx2RYGtlHStf//n3oooBJgbqjus
+         F64d/Xd8kHE1V0q1C3Iceqjk+e0tFToctPo96hGc3ZuIe5IZ+ELk0X2+8005rAHbYIIy
+         N/oQCm9ABsXcm1kkJZAb/lrgtuwfcPkhkgVlEUMN1fc1mFnsodhAwtmJk23XwXWYp0M2
+         9wOXcWjFGKfWYHwIYWA00ZGAo0Atkvhu4qtgXmbvBFxBj/V9Qi9tteRwtX6SvrB0sBUg
+         /XKvbi3DbdcqUCBvHguqVFMZpD2rnJRAz0XDM8WF34WccZcT8WCJwd+/t/4Rn0RlNLHH
+         BWBg==
+X-Gm-Message-State: APjAAAWo/OlZLPX8XeLvqu41hgNttzBWM9tgU5Og+raF5YpyDRr7ZkxP
+        kD0GhM0EJsEDlstNpnBgZa8qhuik
+X-Google-Smtp-Source: APXvYqxkP23E935dTwWXHYvbr5pg5mQJ1CblHJmmzg2axfAAe7Px0v0WGHvZeAMn2BdR5o0fv0GDBA==
+X-Received: by 2002:adf:9104:: with SMTP id j4mr36460076wrj.221.1576579272235;
+        Tue, 17 Dec 2019 02:41:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c4sm2556657wml.7.2019.12.17.02.41.09
+        by smtp.gmail.com with ESMTPSA id l2sm2429456wmi.5.2019.12.17.02.41.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Dec 2019 02:41:10 -0800 (PST)
-Message-Id: <3c55f106c7e5f246d4bc55256249cd0bf7183dd8.1576579264.git.gitgitgadget@gmail.com>
+        Tue, 17 Dec 2019 02:41:11 -0800 (PST)
+Message-Id: <7a4c330d03716dac637cc566257647318beb93b4.1576579264.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.174.git.1576579264.gitgitgadget@gmail.com>
 References: <pull.174.git.1576579264.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Dec 2019 10:41:02 +0000
-Subject: [PATCH 5/7] built-in add -p: implement the "checkout" patch modes
+Date:   Tue, 17 Dec 2019 10:41:04 +0000
+Subject: [PATCH 7/7] commit --interactive: make it work with the built-in `add
+ -i`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,223 +76,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch teaches the built-in `git add -p` machinery all the tricks it
-needs to know in order to act as the work horse for `git checkout -p`.
+The built-in `git add -i` machinery obviously has its `the_repository`
+structure initialized at the point where `cmd_commit()` calls it, and
+therefore does not look at the environment variable `GIT_INDEX_FILE`.
 
-Apart from the minor changes (slightly reworded messages, different
-`diff` and `apply --check` invocations), it requires a new function to
-actually apply the changes, as `git checkout -p` is a bit special in
-that respect: when the desired changes do not apply to the index, but
-apply to the work tree, Git does not fail straight away, but asks the
-user whether to apply the changes to the worktree at least.
+But when being called from `commit --interactive`, it has to, because
+the index was already locked in that case, and we want to ask the
+interactive add machinery to work on the `index.lock` file instead of
+the `index` file.
+
+Technically, we could teach `run_add_i()`, or for that matter
+`run_add_p()`, to look specifically at that environment variable, but
+the entire idea of passing in a parameter of type `struct repository *`
+is to allow working on multiple repositories (and their index files)
+independently.
+
+So let's instead override the `index_file` field of that structure
+temporarily.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.h |   1 +
- add-patch.c       | 139 ++++++++++++++++++++++++++++++++++++++++++++--
- builtin/add.c     |   5 +-
- 3 files changed, 138 insertions(+), 7 deletions(-)
+ builtin/commit.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/add-interactive.h b/add-interactive.h
-index c278f3e26f..f865f1e8ca 100644
---- a/add-interactive.h
-+++ b/add-interactive.h
-@@ -27,6 +27,7 @@ enum add_p_mode {
- 	ADD_P_STAGE,
- 	ADD_P_STASH,
- 	ADD_P_RESET,
-+	ADD_P_CHECKOUT,
- };
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e588bc6ad3..32ffc7beee 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -347,7 +347,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		die(_("index file corrupt"));
  
- int run_add_p(struct repository *r, enum add_p_mode mode,
-diff --git a/add-patch.c b/add-patch.c
-index 694e8e6624..dea99a79a4 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -108,6 +108,72 @@ static struct patch_mode patch_mode_reset_nothead = {
- 			"the file\n"),
- };
+ 	if (interactive) {
+-		char *old_index_env = NULL;
++		char *old_index_env = NULL, *old_repo_index_file;
+ 		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
  
-+static struct patch_mode patch_mode_checkout_index = {
-+	.diff = { "diff-files", NULL },
-+	.apply = { "-R", NULL },
-+	.apply_check = { "-R", NULL },
-+	.is_reverse = 1,
-+	.prompt_mode = {
-+		N_("Discard mode change from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from worktree [y,n,q,a,d%s,?]? "),
-+	},
-+	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+			     "will immediately be marked for discarding."),
-+	.help_patch_text =
-+		N_("y - discard this hunk from worktree\n"
-+		   "n - do not discard this hunk from worktree\n"
-+		   "q - quit; do not discard this hunk or any of the remaining "
-+			"ones\n"
-+		   "a - discard this hunk and all later hunks in the file\n"
-+		   "d - do not discard this hunk or any of the later hunks in "
-+			"the file\n"),
-+};
-+
-+static struct patch_mode patch_mode_checkout_head = {
-+	.diff = { "diff-index", NULL },
-+	.apply_for_checkout = 1,
-+	.apply_check = { "-R", NULL },
-+	.is_reverse = 1,
-+	.prompt_mode = {
-+		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
-+	},
-+	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+			     "will immediately be marked for discarding."),
-+	.help_patch_text =
-+		N_("y - discard this hunk from index and worktree\n"
-+		   "n - do not discard this hunk from index and worktree\n"
-+		   "q - quit; do not discard this hunk or any of the remaining "
-+			"ones\n"
-+		   "a - discard this hunk and all later hunks in the file\n"
-+		   "d - do not discard this hunk or any of the later hunks in "
-+			"the file\n"),
-+};
-+
-+static struct patch_mode patch_mode_checkout_nothead = {
-+	.diff = { "diff-index", "-R", NULL },
-+	.apply_for_checkout = 1,
-+	.apply_check = { NULL },
-+	.is_reverse = 0,
-+	.prompt_mode = {
-+		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
-+	},
-+	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+			     "will immediately be marked for applying."),
-+	.help_patch_text =
-+		N_("y - apply this hunk to index and worktree\n"
-+		   "n - do not apply this hunk to index and worktree\n"
-+		   "q - quit; do not apply this hunk or any of the remaining "
-+			"ones\n"
-+		   "a - apply this hunk and all later hunks in the file\n"
-+		   "d - do not apply this hunk or any of the later hunks in "
-+			"the file\n"),
-+};
-+
- struct hunk_header {
- 	unsigned long old_offset, old_count, new_offset, new_count;
- 	/*
-@@ -1064,6 +1130,57 @@ static int edit_hunk_loop(struct add_p_state *s,
- 	}
- }
+ 		refresh_cache_or_die(refresh_flags);
+@@ -355,12 +355,16 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		if (write_locked_index(&the_index, &index_lock, 0))
+ 			die(_("unable to create temporary index"));
  
-+static int apply_for_checkout(struct add_p_state *s, struct strbuf *diff,
-+			      int is_reverse)
-+{
-+	const char *reverse = is_reverse ? "-R" : NULL;
-+	struct child_process check_index = CHILD_PROCESS_INIT;
-+	struct child_process check_worktree = CHILD_PROCESS_INIT;
-+	struct child_process apply_index = CHILD_PROCESS_INIT;
-+	struct child_process apply_worktree = CHILD_PROCESS_INIT;
-+	int applies_index, applies_worktree;
-+
-+	setup_child_process(s, &check_index,
-+			    "apply", "--cached", "--check", reverse, NULL);
-+	applies_index = !pipe_command(&check_index, diff->buf, diff->len,
-+				      NULL, 0, NULL, 0);
-+
-+	setup_child_process(s, &check_worktree,
-+			    "apply", "--check", reverse, NULL);
-+	applies_worktree = !pipe_command(&check_worktree, diff->buf, diff->len,
-+					 NULL, 0, NULL, 0);
-+
-+	if (applies_worktree && applies_index) {
-+		setup_child_process(s, &apply_index,
-+				    "apply", "--cached", reverse, NULL);
-+		pipe_command(&apply_index, diff->buf, diff->len,
-+			     NULL, 0, NULL, 0);
-+
-+		setup_child_process(s, &apply_worktree,
-+				    "apply", reverse, NULL);
-+		pipe_command(&apply_worktree, diff->buf, diff->len,
-+			     NULL, 0, NULL, 0);
-+
-+		return 1;
-+	}
-+
-+	if (!applies_index) {
-+		err(s, _("The selected hunks do not apply to the index!"));
-+		if (prompt_yesno(s, _("Apply them to the worktree "
-+					  "anyway? ")) > 0) {
-+			setup_child_process(s, &apply_worktree,
-+					    "apply", reverse, NULL);
-+			return pipe_command(&apply_worktree, diff->buf,
-+					    diff->len, NULL, 0, NULL, 0);
-+		}
-+		err(s, _("Nothing was applied.\n"));
-+	} else
-+		/* As a last resort, show the diff to the user */
-+		fwrite(diff->buf, diff->len, 1, stderr);
-+
-+	return 0;
-+}
-+
- #define SUMMARY_HEADER_WIDTH 20
- #define SUMMARY_LINE_WIDTH 80
- static void summarize_hunk(struct add_p_state *s, struct hunk *hunk,
-@@ -1389,11 +1506,16 @@ static int patch_update_file(struct add_p_state *s,
- 		reassemble_patch(s, file_diff, 0, &s->buf);
++		old_repo_index_file = the_repository->index_file;
++		the_repository->index_file =
++			(char *)get_lock_file_path(&index_lock);
+ 		old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+-		setenv(INDEX_ENVIRONMENT, get_lock_file_path(&index_lock), 1);
++		setenv(INDEX_ENVIRONMENT, the_repository->index_file, 1);
  
- 		discard_index(s->s.r->index);
--		setup_child_process(s, &cp, "apply", NULL);
--		argv_array_pushv(&cp.args, s->mode->apply);
--		if (pipe_command(&cp, s->buf.buf, s->buf.len,
--				 NULL, 0, NULL, 0))
--			error(_("'git apply' failed"));
-+		if (s->mode->apply_for_checkout)
-+			apply_for_checkout(s, &s->buf,
-+					   s->mode->is_reverse);
-+		else {
-+			setup_child_process(s, &cp, "apply", NULL);
-+			argv_array_pushv(&cp.args, s->mode->apply);
-+			if (pipe_command(&cp, s->buf.buf, s->buf.len,
-+					 NULL, 0, NULL, 0))
-+				error(_("'git apply' failed"));
-+		}
- 		if (!repo_read_index(s->s.r))
- 			repo_refresh_and_write_index(s->s.r, REFRESH_QUIET, 0,
- 						     1, NULL, NULL, NULL);
-@@ -1420,6 +1542,13 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 			s.mode = &patch_mode_reset_head;
+ 		if (interactive_add(argc, argv, prefix, patch_interactive) != 0)
+ 			die(_("interactive add failed"));
+ 
++		the_repository->index_file = old_repo_index_file;
+ 		if (old_index_env && *old_index_env)
+ 			setenv(INDEX_ENVIRONMENT, old_index_env, 1);
  		else
- 			s.mode = &patch_mode_reset_nothead;
-+	} else if (mode == ADD_P_CHECKOUT) {
-+		if (!revision)
-+			s.mode = &patch_mode_checkout_index;
-+		else if (!strcmp(revision, "HEAD"))
-+			s.mode = &patch_mode_checkout_head;
-+		else
-+			s.mode = &patch_mode_checkout_nothead;
- 	} else
- 		s.mode = &patch_mode_stage;
- 	s.revision = revision;
-diff --git a/builtin/add.c b/builtin/add.c
-index f238e8b623..f4d6eb9e06 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -206,9 +206,10 @@ int run_add_interactive(const char *revision, const char *patch_mode,
- 			mode = ADD_P_STASH;
- 		else if (!strcmp(patch_mode, "--patch=reset"))
- 			mode = ADD_P_RESET;
-+		else if (!strcmp(patch_mode, "--patch=checkout"))
-+			mode = ADD_P_CHECKOUT;
- 		else
--			die("'%s' not yet supported in the built-in add -p",
--			    patch_mode);
-+			die("'%s' not supported", patch_mode);
- 
- 		return !!run_add_p(the_repository, mode, revision, pathspec);
- 	}
 -- 
 gitgitgadget
-
