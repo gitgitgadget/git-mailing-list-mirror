@@ -6,43 +6,43 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 187D9C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 19:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D110EC43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 19:54:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E47E62146E
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 19:46:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A878620716
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 19:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728112AbfLQTqr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 14:46:47 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39108 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726612AbfLQTqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 14:46:47 -0500
-Received: by mail-wr1-f68.google.com with SMTP id y11so12624355wrt.6
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 11:46:46 -0800 (PST)
+        id S1727905AbfLQTyt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 14:54:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:56222 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727483AbfLQTyt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 14:54:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id q9so4151558wmj.5
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 11:54:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=nj1KrBW9h7qcb4avNCukFBVGulVti5fxnUVBhpebL9Q=;
-        b=I1Ftg4C0/PCMjMWJcqEkwrKqdt7JwMJUbUp3hQtZh/+XzbUjo1FyAr/1ekMXkQrcYG
-         FLV1uNz/KPx8oEzZ6F/ozM+VkQ52FO2TY+r9ink/zzdLg/UEblBxa7Yy5uUFRCniHKxH
-         hJaLUF32XyWJpBLtk29hFB8fYHTYQzw33pwo56ck+083TQ8RzGdUg20G0d2CveXg/aZz
-         zbgAJlebB6xJtfKUc99OGjVPaobMIx4fUuWS08W0WTYwVnMkUnIakvtgHP88E1fVNCx8
-         Try4VPpjmeVa30HlfXB5DlZWgdrFxSL5/yJzkPJ7swRfDHu0OkrT1OZihwccK58T7nYf
-         mO0Q==
-X-Gm-Message-State: APjAAAWy6luxqgRLw2CaUk7s0gVoG0jmJhZZLzeF+REbWQFR1WN4yuO2
-        zVSCkY+E232c7dHpYK+A+ErvAvc1aUCaRqQ2mNNdq1PI
-X-Google-Smtp-Source: APXvYqxVXG+bRea+8Rr/SlhKIDTsS93TCWGhXT7ljDqnQE/NHIg4QnwIHgfnZSjk5OjA8ZdLGujbVNUWWheif8w85B4=
-X-Received: by 2002:adf:b193:: with SMTP id q19mr38971914wra.78.1576612005333;
- Tue, 17 Dec 2019 11:46:45 -0800 (PST)
+        bh=YjcAi3nh88drtk50C1gnPXqqUC47TYGJGQHIVkNzouI=;
+        b=oz1Q9mOW2/cZw0aBs9wxY+hf0ZoZIQ+cAaXCaKYVe9KCRKSz9fX4hD2TRQJhj9VR3N
+         loPRnnj/f0n3QAz+v/St5u64wPHNgT74zAfSsg2eFDtEIEoj2yZTMJZsTvaC6gmbNIj7
+         K9BZ5uvLtKRbD8hE6ATv0hXSxdpuP8wrF01zRzweHDJC/6A658RQd/fyai/IT1pgVFyL
+         +Mz+PsqwrEFVLsJud0OUjPXwZtZwFwsIv2jNZUXjlyS4X2p7DzdN3r4NYKuJKtkUUklR
+         ovfnFnbPZcn1XFwpQehQqXhm2dPnuQq7qTUPffNn5VfG0LDRrMeC/GiRQZG3xXLCRC/A
+         aSxQ==
+X-Gm-Message-State: APjAAAX9C60BDRuXkv7Dt3uqiFHCJzK5qozmobkfRBTWq5DhoYdLH0Lr
+        KbpIYBZzR3AyG8nKz+Wb4pSXIxF69XBtvkIhBhMFut/xokc=
+X-Google-Smtp-Source: APXvYqyg1Y7AYSeDo2dC4x0/qqnVrjf6un3r0rGlrjEgKHaUFlQlL5e9k0JPmGo2lk5o8S0ZAe0hW1bEB8H7rOHsfOE=
+X-Received: by 2002:a05:600c:2215:: with SMTP id z21mr7755829wml.55.1576612457682;
+ Tue, 17 Dec 2019 11:54:17 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1576583819.git.liu.denton@gmail.com> <3d36511d5d95d2a2713b3cc8e2138b689d381c79.1576583819.git.liu.denton@gmail.com>
-In-Reply-To: <3d36511d5d95d2a2713b3cc8e2138b689d381c79.1576583819.git.liu.denton@gmail.com>
+References: <cover.1576583819.git.liu.denton@gmail.com> <cd392a74acb1bc7f3b09f167278afd5959a21fca.1576583819.git.liu.denton@gmail.com>
+In-Reply-To: <cd392a74acb1bc7f3b09f167278afd5959a21fca.1576583819.git.liu.denton@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 17 Dec 2019 14:46:34 -0500
-Message-ID: <CAPig+cSsJW3=3cYyFzwr2Lf0AcH+XUyrXMkHBGtNa4a5Smfp6w@mail.gmail.com>
-Subject: Re: [PATCH 14/15] t1501: remove use of `test_might_fail cp`
+Date:   Tue, 17 Dec 2019 14:54:06 -0500
+Message-ID: <CAPig+cQiNpgEURfNr91V=j2mk6Y3c28NPgKj9NigU3XFRS=ZbA@mail.gmail.com>
+Subject: Re: [PATCH 15/15] t1507: teach full_name() to accept `!` arg
 To:     Denton Liu <liu.denton@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -52,24 +52,52 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Dec 17, 2019 at 7:02 AM Denton Liu <liu.denton@gmail.com> wrote:
-> The test_must_fail() family of functions (including test_might_fail())
-> should only be used on git commands. Replace test_might_fail() with
-> test_non_git_might_fail().
+> Before, we were running `test_must_fail full_name`. However,
+> `test_must_fail` should only be used on git commands. Teach full_name()
+> to accept `!` as a potential first argument which will prepend
+> `test_must_fail` to the enclosed git command. This increases the
+> granularity of test_must_fail since it no longer runs on the `cd` as
+> well.
 >
 > Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
-> diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
-> @@ -350,7 +350,7 @@ test_expect_success 'Multi-worktree setup' '
->         cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
-> -       test_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
-> +       test_non_git_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
+> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+> @@ -29,8 +29,14 @@ test_expect_success 'setup' '
+>  full_name () {
+> +       fail= &&
+> +       if test "x$1" = 'x!'
+> +       then
+> +               fail=test_must_fail &&
+> +               shift
+> +       fi &&
+>         (cd clone &&
+> -        git rev-parse --symbolic-full-name "$@")
+> +        $fail git rev-parse --symbolic-full-name "$@")
+>  }
 
-Can you update the commit message to show that this change is indeed
-the correct choice so that readers of this patch don't have to go
-through the same investigative reasoning process you went through to
-convince yourself that it is correct. In other words, why was
-test_might_fail() used in the first place? Is it because there might
-not be a sharedindex.* file? Or is it because repo.git/repos/foo might
-not be writable? Or what? The answer to these questions should explain
-to the reader, for instance, why you chose to use
-`test_non_git_might_fail cp ...` as opposed to a simple `cp -f ...`.
+Yuck. These days this is entirely unnecessary. My suggestion is to
+drop the full_name() function altogether and just invoke git-rev-parse
+directly at the (few) call sites, taking advantage of the fact that we
+now have -C. So...
+
+> @@ -79,7 +85,7 @@ test_expect_success 'upstream of branch with @ at end' '
+>  test_expect_success 'refs/heads/my-side@{upstream} does not resolve to my-side{upstream}' '
+> -       test_must_fail full_name refs/heads/my-side@{upstream}
+> +       full_name ! refs/heads/my-side@{upstream}
+>  '
+
+This just becomes:
+
+    test_must_fail git -C clone rev-parse --symbolic-full-name
+refs/heads/my-side@{upstream}
+
+Similarly for the other call sites.
+
+> @@ -91,9 +97,9 @@ test_expect_success 'my-side@{u} resolves to correct commit' '
+>  test_expect_success 'not-tracking@{u} fails' '
+> -       test_must_fail full_name non-tracking@{u} &&
+> +       full_name ! non-tracking@{u} &&
+>         (cd clone && git checkout --no-track -b non-tracking) &&
+> -       test_must_fail full_name non-tracking@{u}
+> +       full_name ! non-tracking@{u}
+>  '
