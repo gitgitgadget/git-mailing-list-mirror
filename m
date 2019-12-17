@@ -2,81 +2,175 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D73B0C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:44:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EF73C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:45:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9DD3B20733
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:44:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E4CCC20733
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:45:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QG4271/z"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KYlLsH38"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727754AbfLQSoQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 13:44:16 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:59092 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727726AbfLQSoQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 13:44:16 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6958A9ABDA;
-        Tue, 17 Dec 2019 13:44:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DKi6fDVMmPsZvonQapnpBGd/ieI=; b=QG4271
-        /zamdnYWER9thjnCCpdUBMGFzEIxkyTMGGB1594cJPPAKvS+lsuBEB8iSAs4FK9D
-        Tb9r9MKkNs6mTh+UkS3xiSYrnXqwEHIz5hU3CIrgQ1w15lUelNHaT5CfwO5Y3t0v
-        CFsdN38t0nE2FyWzbfruOlHMs0Cvig899pW+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vqYLUtOrCxsUARCYaXXJCDJGJNOe6ofM
-        D6wewup/wEL/6xDKzfBzJTaGAiwNNQ78wOZ015uez4NIV+6deiMDhNphmM38SGLf
-        kQHEukE6XuqVD8xr74pRTinfZACA9vaQgCYf76ZOrpX8LmNX/KIETLAEvJx5RpuK
-        rGwNxZOjipk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 616BF9ABD9;
-        Tue, 17 Dec 2019 13:44:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9EB629ABD7;
-        Tue, 17 Dec 2019 13:44:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 06/15] t0003: don't use `test_must_fail attr_check`
-References: <cover.1576583819.git.liu.denton@gmail.com>
-        <3afa3a16ca2fc2fecba19ff9741925d513f68562.1576583819.git.liu.denton@gmail.com>
-Date:   Tue, 17 Dec 2019 10:44:09 -0800
-In-Reply-To: <3afa3a16ca2fc2fecba19ff9741925d513f68562.1576583819.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 17 Dec 2019 04:01:31 -0800")
-Message-ID: <xmqqo8w6hjwm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727140AbfLQSpb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 13:45:31 -0500
+Received: from mout.gmx.net ([212.227.17.21]:48839 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726742AbfLQSpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 13:45:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1576608328;
+        bh=nggEqtAqqFdnDOJIqtSDDhe7NTUwxC1Le0EYqNIXaJs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KYlLsH38r6Zi8seBEr1fpHCQCw6UzShHeS5RGO6BteTCUYX8LVPmUNZZnKb7m2Prc
+         ftSvY7uRPH7y0byKX3JNd25kKcmrF0beTDcvq5zBt2fZgaoN155jAl3vDIR6RGYItY
+         IT6HtluZfW4t0prK6Za95skaZqikhtyLpP3tIE9Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Msq24-1hoVOq1aY4-00tEVc; Tue, 17
+ Dec 2019 19:45:28 +0100
+Date:   Tue, 17 Dec 2019 19:45:12 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Emily Shaffer <emilyshaffer@google.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH v4 03/15] bugreport: gather git version and build info
+In-Reply-To: <20191213004312.169753-4-emilyshaffer@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1912171941451.46@tvgsbejvaqbjf.bet>
+References: <20191213004312.169753-1-emilyshaffer@google.com> <20191213004312.169753-4-emilyshaffer@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3768DFA8-20FD-11EA-9323-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vxNbWpskix9uaXKNhG733fvpx6BvXdhUVcOWItLRSJupDcqarQL
+ /h5Gx+jjcPGnEnE9WESok6j9UumhL9ca5dp23z4/rlCjJzJGL+JexxwjPYCTXXof+24MduK
+ DF2M0dgMpljLb0ieq0+8X/K+jgUbn7vVvmsJiiTomicZvnAJDHd8iRngS1aTaNDnOzsZgRc
+ wq7Vh4iaR2k9aAheGCVRA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:d3og0ycUgEk=:Cbf5rH7KMvshKOzIpOMqDX
+ Oc9pucnK8WES2KuFEyM8uvipcso0nFODwNgy9sYaJkibwvAdTbHJXtXLBtNGOYaf/RBxzxdp3
+ 5UQuHourFD42r2/1HaMKQuIkDUiZW2fEB2Ump2iyC38XekHPLKlzP8e8hXaylszsaJydmbPrH
+ eEbL3V094U/xMFSDE/Diy1SYxUHD2Nj32NgilsM+mVnd2vSXcMKc+JPIm7sIxnOpo6lo8nf9d
+ PocCFD2jVAly7EgrqLx4hCsIFrhqfeHNgWkj5YWRC8sM4MNnVLzGMJgIUSlGyqDJ9Xcjtbz4r
+ z5yeMtcQnaoUtZe1d8Q8pGSEwfPHRkksZdKcKZy+AwGkZU4X1AsouwdugrENag27ONAOF300c
+ uWEsYNmCJOHwJe6q4ZapPJXG37Vy8HB0277/CoS+5iM7i4WW0sQgqbebqKfsZn+aAQ21NIwG+
+ lY5PAQjj60AdpNSW5xKnN8QqeGwOVQMENYw4o05mWDk98JzJ17aNgP+25iE16gcsWYi3E/4T4
+ 0d6I4fowMYlPpCvXqjqYtc7W37RyRXp6GMVjhLCJmeh6F30NlGSa0JePVb2rgczUeeXF7Je9S
+ G5KXfIwo2+4UVKZJPN/J+JsC02+GBgIXmJfdRMDOnIdPBEpq4sbgA4PomU/qGitVmMuq4o8qk
+ bRWha7yn0reolT0jZ+iamTshsUHqFI1N+5f7QSRlPtxM2EDh7R4dXGoeED4H2BA1J9WbwkTab
+ UrlB2kV4y0p/khQZL0MYBuBNs64Hgytjm0gvEu4Runyz0D2n0Xa2QIcYnWJQITEEjgUhA7Uoe
+ Kqgn6kv6/vcL1DGESiOrrJ3I08kLA5s5HV5qjQBvJwr3rB5XXDdykwd8WWEm0JXGhklE9i1vx
+ 28VafibMwtQqk7ZQDJO/t0jKSwTc57b93iK16WSVjpL7aU12e5Fbbs3w5LIg0SzbRLhNNkaaW
+ GG4jqlsPORQzWq2tjMINLQsd2YlOzJFw1SGQmUPebVV0YraVW1oCi+ZY6mf0+pFwDrSXvQ9kr
+ 0mADJkB+IhfIyICXtwfMBTUZSANdJCN1cH0J19HR3S6iOQpG9afyC1foVtooWsKsc86y4eXUE
+ k9T5CIPyRUVWZT988LTsqVDBlqtQnzh36YSLGxahUmeOE0bdDNLDPBVvTu0FZWBNR0+Max/ic
+ XoBdmXOULjdfxZqpc9r547n8X+agZUiTjqyuMYo/JGGpX2wgG+wTF7VGnp6U3NlovU04NY0aD
+ ywbh1aIgOJLqO94wbrqifOum1pBDSUL9z4J7svgDmfNtksslBHkI+l8+A++k=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi Emily,
 
->  test_expect_success 'open-quoted pathname' '
->  	echo "\"a test=a" >.gitattributes &&
-> -	test_must_fail attr_check a a
-> +	attr_check a unspecified
->  '
+On Thu, 12 Dec 2019, Emily Shaffer wrote:
 
-I offhand do not think of a reason why "git check-attr" must be
-given freedom to choose from more than one answers (which is what
-the original test that said "as long as it does not report 'a', we
-are happy" allowed the command to), so it probably is OK to make the
-tests more strict like this patch does.
+> diff --git a/help.c b/help.c
+> index a21487db77..a43693fca5 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -622,8 +622,33 @@ const char *help_unknown_cmd(const char *cmd)
+>  	exit(1);
+>  }
+>
+> +void list_version_info(struct strbuf *buf, int build_options)
+> +{
+> +	strbuf_reset(buf);
+> +	/*
+> +	 * The format of this string should be kept stable for compatibility
+> +	 * with external projects that rely on the output of "git version".
+> +	 *
+> +	 * Always show the version, even if other options are given.
+> +	 */
+> +	strbuf_addf(buf, "git version %s\n", git_version_string);
+> +
+> +	if (build_options) {
+> +		strbuf_addf(buf, "cpu: %s\n", GIT_HOST_CPU);
+> +		if (git_built_from_commit_string[0])
+> +			strbuf_addf(buf, "built from commit: %s\n",
+> +			       git_built_from_commit_string);
+> +		else
+> +			strbuf_addf(buf, "no commit associated with this build\n");
 
-Thanks.
+The "StaticAnalysis" job of the Azure Pipeline is not happy with this,
+claiming that this should be an `strbuf_addstr()` call instead. For
+details, see:
+
+https://dev.azure.com/gitgitgadget/8fc4a374-71dc-4558-a5ea-dd1c081ea621/_a=
+pis/build/builds/23830/logs/68
+
+Ciao,
+Dscho
+
+> +		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
+> +		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
+> +		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+> +	}
+> +}
+> +
+>  int cmd_version(int argc, const char **argv, const char *prefix)
+>  {
+> +	struct strbuf buf =3D STRBUF_INIT;
+>  	int build_options =3D 0;
+>  	const char * const usage[] =3D {
+>  		N_("git version [<options>]"),
+> @@ -637,25 +662,9 @@ int cmd_version(int argc, const char **argv, const =
+char *prefix)
+>
+>  	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+>
+> -	/*
+> -	 * The format of this string should be kept stable for compatibility
+> -	 * with external projects that rely on the output of "git version".
+> -	 *
+> -	 * Always show the version, even if other options are given.
+> -	 */
+> -	printf("git version %s\n", git_version_string);
+> +	list_version_info(&buf, build_options);
+> +	printf("%s", buf.buf);
+>
+> -	if (build_options) {
+> -		printf("cpu: %s\n", GIT_HOST_CPU);
+> -		if (git_built_from_commit_string[0])
+> -			printf("built from commit: %s\n",
+> -			       git_built_from_commit_string);
+> -		else
+> -			printf("no commit associated with this build\n");
+> -		printf("sizeof-long: %d\n", (int)sizeof(long));
+> -		printf("sizeof-size_t: %d\n", (int)sizeof(size_t));
+> -		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+> -	}
+>  	return 0;
+>  }
+>
+> diff --git a/help.h b/help.h
+> index 9071894e8c..54f6b5f793 100644
+> --- a/help.h
+> +++ b/help.h
+> @@ -37,6 +37,7 @@ void add_cmdname(struct cmdnames *cmds, const char *na=
+me, int len);
+>  void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
+>  int is_in_cmdlist(struct cmdnames *cmds, const char *name);
+>  void list_commands(unsigned int colopts, struct cmdnames *main_cmds, st=
+ruct cmdnames *other_cmds);
+> +void list_version_info(struct strbuf *buf, int build_options);
+>
+>  /*
+>   * call this to die(), when it is suspected that the user mistyped a
+> --
+> 2.24.1.735.g03f4e72817-goog
+>
+>
+>
