@@ -2,90 +2,74 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B872C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 01:43:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59158C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 02:49:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2071020CC7
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 01:43:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJOlbw7z"
+	by mail.kernel.org (Postfix) with ESMTP id 3598421D7D
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 02:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726227AbfLQBnY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 20:43:24 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:42610 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbfLQBnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 20:43:24 -0500
-Received: by mail-pj1-f66.google.com with SMTP id o11so3806427pjp.9
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 17:43:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=sq2hvOgP06ksOXxpKHRx0fAv3/MP1fOkT5a0vHZa+/A=;
-        b=WJOlbw7zQXdydn96bORFzYDRomvtU0CeUZMHny+yJFqKShHTfIfWQVm5g3oRHoCNTH
-         Ztefqmxh7PZW5rqTNshnVS0XVExu5E2oPgEhqMOFYPuEmVdMCwJXD+4oqN6/+/iK9JL/
-         OTGSuOaokwZjn+wqbqQLIZaBMDSm2rY9bV/ula9BgGT6E/dMNqwpuqobvTxTiIHO4F4O
-         Uz7yR4gIiSzBQ697QPk6Y5hYP0UPSh2ND3Wf3h5cHQNcJYlMnaYfzFDjJC8RbZBwn4aO
-         PSagdvAFFFcfoAY35OcGDjA8NFeFECdmzHqJmfLDoU3QU3yu/G15IQctrqFtgCy7lcfY
-         Lv/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sq2hvOgP06ksOXxpKHRx0fAv3/MP1fOkT5a0vHZa+/A=;
-        b=BRhm0aqm94bxFtWnT4u0ORarjO2fz2lzSnUIpbus7Na0p0JFOftLK66FUQ2PPUYW6i
-         159NKwDlXhyBC6xk2D9wRfNQMdhgKGFn3bAj4i6drUCbYy2VZvjfSIIe0bU5/YD8Imx7
-         CGGj6xg2vKagzfW2vaV6CFMmNI2KYopKjJJ/JGeWmkpfEb2j8cHkbFkDpubpnGHOB04V
-         qceG0Wb1nHerJCFcyQ7aYRrIDqWAPkQAA0h1824SqgUta6gy8uWoAIbkZA7fcHT54U5h
-         r9m63yT/eht3Q1sQ5DZW6ehIPaocerbjasAcYq+fo8LLB62rIB9GeE0dfmsNvNyoMSBh
-         8Yag==
-X-Gm-Message-State: APjAAAXjodCEQoVWNzKccIZ1teBLQ2G+BWYLhcvEPxzxK1oL+IHfWS3F
-        s7LjZq+P+f3wBrEMxpTXdA8=
-X-Google-Smtp-Source: APXvYqy8D47LJGUvTqT/bbMc5tx0v/Jo7XMrW+ZiADlEboMOQrq4phgc2+e/+l23WoG9u1Wz9hacEg==
-X-Received: by 2002:a17:90a:d807:: with SMTP id a7mr3080839pjv.15.1576547003329;
-        Mon, 16 Dec 2019 17:43:23 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id ev11sm975838pjb.1.2019.12.16.17.43.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2019 17:43:22 -0800 (PST)
-Date:   Mon, 16 Dec 2019 17:43:21 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCH] Makefile: drop GEN_HDRS
-Message-ID: <20191217014321.GF10734@google.com>
-References: <xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com>
- <20191214003820.GA927924@coredump.intra.peff.net>
- <20191214010002.GA945704@coredump.intra.peff.net>
- <xmqqlfrcje1f.fsf@gitster-ct.c.googlers.com>
- <20191216192014.GA2678964@coredump.intra.peff.net>
+        id S1726739AbfLQCs7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 21:48:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48246 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726526AbfLQCs7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 21:48:59 -0500
+Received: (qmail 28908 invoked by uid 109); 17 Dec 2019 02:48:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 17 Dec 2019 02:48:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19241 invoked by uid 111); 17 Dec 2019 02:53:34 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Dec 2019 21:53:34 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 16 Dec 2019 21:48:58 -0500
+From:   Jeff King <peff@peff.net>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Luis Marsano <luis.marsano@gmail.com>,
+        Ted Zlatanov <tzz@lifelogs.com>
+Subject: Re: [PATCH 0/2] contrib/credential/netrc: Makefile + script cleanup
+Message-ID: <20191217024858.GA2734969@coredump.intra.peff.net>
+References: <cover.1576531851.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191216192014.GA2678964@coredump.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <cover.1576531851.git.liu.denton@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+On Mon, Dec 16, 2019 at 01:32:32PM -0800, Denton Liu wrote:
 
-> I actually wonder if the whole thing would be simpler if command-list.h
-> was a static tracked file with the declarations, and we generated
-> command-list.c with "extern const char *command_list[]", etc.
+> I recently switched my workflow to use this credential helper and I
+> noticed a couple of problems:
+> 
+> 1. The interpreter path was hardcoded to #!/usr/bin/perl
+> 
+> 2. The script refuses to run outside of a Git repository
+> 
+> This patch series should fix these problems.
 
-Right, or a "command-list.inc" file.
+Both of these patches look good to me.
 
-extern-ing it seems like the simplest way to go.
+It does make me wonder if many people are using credential-netrc, given
+these pretty obvious problems. You're certainly welcome to use it if it
+works for you, but I am curious what made you pick it versus one of the
+other more advanced helpers.
 
-Thanks,
-Jonathan
+I assume you're using a gpg-encrypted netrc (if not, you should probably
+just use credential-store). For "read-only" password access, I find the
+combination of pass[1] with config like this is a bit nicer:
+
+  [credential "https://github.com"]
+  username = peff
+  helper = "!f() { test $1 = get && echo password=`pass github/oauth`; }; f"
+
+-Peff
+
+[1] https://www.passwordstore.org/
