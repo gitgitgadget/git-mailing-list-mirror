@@ -7,101 +7,227 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DEA3C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 16:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A178C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 16:59:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0227C2467E
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 16:11:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D0D2721835
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 16:59:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RvNN+Ygx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o5YqH9LO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728251AbfLQQL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 11:11:26 -0500
-Received: from mail-io1-f43.google.com ([209.85.166.43]:37599 "EHLO
-        mail-io1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728089AbfLQQL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 11:11:26 -0500
-Received: by mail-io1-f43.google.com with SMTP id k24so9946148ioc.4
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 08:11:26 -0800 (PST)
+        id S1727572AbfLQQ7C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 11:59:02 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:36482 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726859AbfLQQ7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 11:59:02 -0500
+Received: by mail-oi1-f196.google.com with SMTP id c16so5149028oic.3
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 08:59:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=rYAA3F7KAgPy6gY9hTW542OSjYfL0TjLyG2MKZ3rAvU=;
-        b=RvNN+YgxpjCezvtEOzwDD7EWytYV0JRnQj4lJuX+wamN55OGYENzWcVcRXinJMoM4y
-         vfjac+SNEBnWAciM5i3cP2r5F2yMG2K00o0Aq2llzK3kEvKpiQEXB6DYAu5AHe1ScNAa
-         uu8/30C/g5100JD9qMIiObOptMvPSpelATtXdcGVzBF3ePsiyY9CEU0M3cTgwUaa7iMt
-         mSAyQLETDHbQcNqnDFMHlcneUqgiLTRENtaRKLat1qTvL1NC31STqe7Kh7F9WY1PK2r1
-         MO0gOG+CmKru/7tCd6rRu+aXvIx18+48xvGECn1+fousxG44fKiRPEQlqguJvmMd12EA
-         oPog==
+         :cc;
+        bh=GqKRMZJW3Ry1JYMGX/0BL+//O8rL35upFJX1CjYnOxE=;
+        b=o5YqH9LOoa0y4HT0XlRIbP0/h3pp+b34oPa4S1nIe7BU0TWbg9C25T79bNcYI9OoRj
+         BXyb4E+Nvp9oTxpzBrcYXb3CipYg1WYvnZSFDUXgHiWfLrp0wEDZOqVXNuT6aR2pGJph
+         EZ5GlqsPE35QOejnDjvNJUyrZaPk15BLqZfDq80Jx60HcCon6GULIQ81MdGZvxKUDvaH
+         SH4cp2hRIx1CeqGb3ICf3G+O4rM9d+cuQwL/Y/jE2RM/a+t7D58trwyWs9eh7Ka6+Dwy
+         /l3OnvvfyviwTieqhBjY3RMwMiV3gKVMEEXHmhDftxV9VCvCS9PkqCC99hLNFb7wqcTB
+         z2zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=rYAA3F7KAgPy6gY9hTW542OSjYfL0TjLyG2MKZ3rAvU=;
-        b=De8wwKhSu4UwrxEliD+OtDP57UKfSwX7pPh//lgvm5+EOZcpQzGUZ5KW2dqDqHCAHC
-         6saRK9nPSH6EqXzjMnlrlemKDkrWr7Jun4Nq5VT23YGhkz21bvuxWop4MR1Tb8CZ98d9
-         phJG8xqpT6xkBChs1vX2ek7R7I3yeQLifdUzJX4wYbBUFXcieEsoZkPYQI7XkxXumLOU
-         KKHWDUhAM0uoYpOT18J270Pdoo6b96tsgNfzc/o4PZzswxf6n+8J/V7NGHtXZH0zaK+k
-         bjD7Hp681BQTHe6p5veWrFfBO3WxPezDRPRnyx5MYhcvOZ3RBeq0rbFzTP85KrUzrG6T
-         BBow==
-X-Gm-Message-State: APjAAAUxf0x7UpiYoBySf+uqVnjIZdYidPWo+4WOgusUaJA3HKG40PsT
-        1lerJcsrxeDeN1s4OaA0X/CZ/cKq1OkcfqwDtziafh4B
-X-Google-Smtp-Source: APXvYqw6zmb9lfsty7a2dd8eVLkTJmuYDkzq9z/Abc75zmvG360eXKHlJvq+MwDkop4SI0ph2io/pFgd0v4yzvV81js=
-X-Received: by 2002:a6b:ed15:: with SMTP id n21mr1891562iog.128.1576599085663;
- Tue, 17 Dec 2019 08:11:25 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=GqKRMZJW3Ry1JYMGX/0BL+//O8rL35upFJX1CjYnOxE=;
+        b=WFXChO9LNP++GAxM4gjkaK6UqtYe/qdmr1gRmZhwZ98fB+NmzqMUmxzh4eTFSnATw4
+         XC1xc+Bfjd5VSM87Rz0qFgIw0xsFeaQ4RNNYUuBa4b1RxDGfCfQZJ3ONcVBGIwo16TbZ
+         hnJF1X4VKR4tRg+tM9dDQ4tJg6Om3ETLA+c2F/A2UHlx7kEmYWBbHLpQMq/aB7eSteUA
+         Id9QQsYBcjzkhkiesDNhQXnn/by8+lNvhAZJb5YGYtXu/6JQkpfTAlwLkfJzKfonIswp
+         lqEmeVwhgtCqckkxmCDH/DjcGyllCv2f98JZqR+u3ClVHU+Zc2Yh0kiOqV30vmiPo9z9
+         FsHQ==
+X-Gm-Message-State: APjAAAWqaKpzdxNykbH5ET73PcxGfQJsfgE9n1uBB4okurtsY4p/IdHp
+        o2E+7hGMtAc068wi8RkZ+RFSUsBUzu7ms51IP61bKQ==
+X-Google-Smtp-Source: APXvYqwU6DOrgTz3rJjKsAeIhMvT8raDjRUW3WOOCRas5/NJgM0Y3msJxvqzy7dvN6UmFoWBuLLLz8TSUm4yYTCXLJI=
+X-Received: by 2002:aca:5588:: with SMTP id j130mr1982405oib.122.1576601940890;
+ Tue, 17 Dec 2019 08:59:00 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+0NiBEFssPJsQ8UV6vRNBxzUEsJddF4Q-=-xVq-xgNUtFbHUA@mail.gmail.com>
- <CA+0NiBGcYwu1Gyyv3AQEbfQCMiE0rrurzgkQzwsjHgi9cEj4wQ@mail.gmail.com>
- <CA+0NiBFU46YRBFEbngK+Rc0e4uE_nSqQkYak9a-_UoTaCCb1Jg@mail.gmail.com>
- <CA+0NiBEifgam1xVJw7F=mO_DtLgfqK9g7eHJMK5dt3yc1JpaAQ@mail.gmail.com>
- <xmqqd0cojd7r.fsf@gitster-ct.c.googlers.com> <CA+0NiBGQHK_bVdH11zRErxNTjvyU-SqJYj=CHZy3afm47+reYA@mail.gmail.com>
- <20191217135945.GA5103@cat>
-In-Reply-To: <20191217135945.GA5103@cat>
-From:   Marce Romagnoli <marce.romagnoli@gmail.com>
-Date:   Tue, 17 Dec 2019 17:10:49 +0100
-Message-ID: <CA+0NiBHFcVZ0RpDB6kffCA5fzdfhcGwH7k=4q15kbXeF5J7UPQ@mail.gmail.com>
-Subject: Re: Fwd: `git stash pop -q` is deleting files.
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com>
+ <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com>
+ <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet> <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com>
+ <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1912170101230.46@tvgsbejvaqbjf.bet> <CABPp-BGFRMNAgeyTvDQ3F5nH36ERn+ndjrwaXuLUE-Uto_RBdQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1912171209170.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1912171209170.46@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 17 Dec 2019 08:58:49 -0800
+Message-ID: <CABPp-BEkX9cH1=r3dJ4WLzcJKVcF-KpGUkshL34MMp3Xhhhpuw@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
+        Junio C Hamano <gitster@pobox.com>,
+        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oh ok, thanks to everybody for your time!
+Hi Dscho,
 
-Marcelo Romagnoli
+On Tue, Dec 17, 2019 at 3:16 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Mon, 16 Dec 2019, Elijah Newren wrote:
+>
+> > On Mon, Dec 16, 2019 at 4:04 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > > On Mon, 16 Dec 2019, Elijah Newren wrote:
+> > > > On Mon, Dec 16, 2019 at 5:51 AM Elijah Newren <newren@gmail.com> wrote:
+> > > > >
+> > > > > On Sun, Dec 15, 2019 at 2:29 AM Johannes Schindelin
+> > > > > <Johannes.Schindelin@gmx.de> wrote:
+> > > > > >
+> > > > > > Hi Elijah,
+> > > > > >
+> > > > > > I have not had time to dive deeply into this, but I know that it _does_
+> > > > > > cause a ton of segmentation faults in the `shears/pu` branch (where all of
+> > > > > > Git for Windows' patches are rebased on top of `pu`):
+> > > > >
+> > > > > Weird.  If it's going to cause segmentation faults at all, it would
+> > > > > certainly do it all over the place, but I tested the patches on the
+> > > > > major platforms using your Azure Pipelines setup on git.git so it
+> > > > > should be good on all the platforms.  Did your shears/pu branch make
+> > > > > some other changes to the setup?
+> > >
+> > > Not really.
+> > >
+> > > >
+> > > > Actually, it looks like I looked up the definition of dirent
+> > > > previously and forgot by the time you emailed.  On linux, from
+> > > > /usr/include/bits/dirent.h:
+> > ...
+> > > > and from compat/win32/dirent.h defines it as:
+> > > >
+> > > > struct dirent {
+> > > >         unsigned char d_type;      /* file type to prevent lstat after
+> > > > readdir */
+> > > >         char d_name[MAX_PATH * 3]; /* file name (* 3 for UTF-8 conversion) */
+> > > > };
+> > ...
+> > >
+> > > If you care to look at our very own `compat/win32/dirent.h`, you will see
+> > > this:
+> >
+> > Interesting, we both brought up compat/win32/dirent.h and quoted from
+> > it in our emails...
+> >
+> > > struct dirent {
+> > >         unsigned char d_type; /* file type to prevent lstat after readdir */
+> > >         char *d_name;         /* file name */
+> > > };
+> >
+> > ...but the contents were different?  Looks like git-for-windows forked
+> > compat/win32/dirent.h, possibly in a way that violates POSIX as
+> > pointed out by Junio.
+>
+> Yep, I messed that up, sorry.
+>
+> > Any reason those changes weren't sent back upstream, by chance?  Feels
+> > odd having a compat/win32/ directory that our downstream windows users
+> > aren't actually using.  It also means the testing I'm getting from
+> > gitgitgadget and your Azure setup (which all is really, really nice by
+> > the way), is far less reassuring and helpful than I hoped.
+>
+> Yes. I was ready to submit the FSCache feature to the Git mailing list for
+> review some 2.5 years ago when along came Ben Peart, finding ways to speed
+> up FSCache even further. That is the reason why I held off, and I still
+> have to condense the patches (which currently form a topology of 17 patch
+> series!!!) into a nice small patch series that does not reflect the
+> meandering history of the FSCache history, but instead presents one neat
+> story.
+>
+> > > And looking at
+> > > https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dirent.h.html, I
+> > > do not see any guarantee of that `[256]` at all:
+> > >
+> > > The <dirent.h> header shall [...] define the structure dirent which shall
+> > > include the following members:
+> > >
+> > > [XSI][Option Start]
+> > > ino_t  d_ino       File serial number.
+> > > [Option End]
+> > > char   d_name[]    Filename string of entry.
+> > >
+> > > You will notice that not even `d_type` is guaranteed.
+> >
+> > Doh, yeah, I messed that up too.
+> >
+> > Anyway, as I mentioned to Junio, I'll resubmit after gutting the
+> > series.  I'll still include a fix for the issue that a real world user
+> > reported, but all the other ancillary bugs I found that have been
+> > around for over a decade aren't important enough to merit a major
+> > refactor, IMO.
+>
+> Hmm. I am really sorry that I nudged you to go down this route. Quite
+> honestly, I'd rather add an ugly work-around that is Windows-only just so
+> that you can fix those ancillary bugs.
 
-El mar., 17 dic. 2019 a las 14:59, Thomas Gummerer
-(<t.gummerer@gmail.com>) escribi=C3=B3:
->
-> [please don't top-post on this list]
->
-> On 12/17, Marce Romagnoli wrote:
-> > But it seems is still happening to me in 2.24.1 -latest-
->
-> It being in master doesn't mean it has made it into a release yet,
-> though it means it will in the future.  So you have a couple of
-> options in the meantime:
->
->   - Compile Git yourself from the 'master' branch
->   - Go back to an older version of git.  v2.23 didn't have this
->     problem, but it had a different issue that I was trying to fix in
->     34933d0eff ("stash: make sure to write refreshed cache",
->     2019-09-11), but where this bug was introduced.
->   - set the stash.useBuiltin configuration option to false, which will
->     make you use the legacy stash written as a shell script.  This
->     also shouldn't have this bug.
->
-> > El lun., 16 dic. 2019 a las 20:13, Junio C Hamano
-> > (<gitster@pobox.com>) escribi=C3=B3:
-> > >
-> > > I think this has already been fixed with
-> > >
-> > > http://lore.kernel.org/git/20191113150136.GB3047@cat
-> > >
-> > > at the tip of 'master' a few weeks ago.
-> > >
+You brought up issues; that's what you're supposed to do.  You
+shouldn't feel bad about that.  Besides, the d_type one is real, and
+means the patches at least need a
+    #if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+surrounding my explicit setting of d_type.  The problem wasn't what
+you brought up or how you brought it up, it's massive fatigue on my
+end from dir.c, from before even submitting this series[*].  I'm not
+giving up on these changes or trying to discourage anyone else from
+picking them up and extending them, I just don't want to touch them
+right now and would rather put them on the shelf for a while.
+
+Elijah
+
+
+[*]  If you're really curious...I got involved in dir.c because of a
+simple bug report nearly two years ago[1], and found myself working on
+a foundation that was error-prone by design[2], with ambiguous or even
+wrong documentation[3] about not just what the code does but the
+intent.  Further, it was a place where not only is the correct fix
+unclear, and not only is the "right" behavior unclear, but the cases
+in question affect so few people that pinging the list periodically
+over more than a year can't generate enough interest for anyone else
+to hazard a guess as to what "correct" behavior is[4].  Stack on that
+the fact that every time I touch this area, I think I'm really close
+to having a fix, only to find I never, ever am.  There's always
+one-more-thing before I can finally get back to something I really
+wanted to work on instead.  Speaking of which, I've only managed to
+work on my new merge strategy like once every 3-6 months for a small
+amount of time each time.  Yes, part of that's my fault with
+git-filter-repo (another case of perpetually thinking I'm close to
+done), rebase changes, and whatnot.  But this series arose right when
+I had my calendar nearly cleared so that I could work on the merge
+strategy again (and of course the rebase bug report came in about the
+same time too).  But at least git-filter-repo and rebase are generally
+useful; dir.c at most generates "meh, this seems annoying" reports.
+And I've already fixed all of those, the remaining fixes are stuff
+that it appears I'm the only one to have reported, and I only reported
+it because I was digging into the other "meh, seems annoying" reports.
+I'm usually happy when I have a patch series ready to submit to git;
+it means I think I'll make things better for others.  I didn't feel
+that way with this series; I kind of wanted to just drop it entirely
+and not even turn it in.  But I figured I should to at least document
+my findings, so I pushed myself to submit and hoped no one would
+respond.  Then this issue arose and when I mentioned in my
+possibilities of fixing it that ripping the usage of dirent out would
+be a lot of work and would probably cause me to give up and asked for
+ideas, Junio responded that we should rip out dirent.  I think he's
+right, and it's important the he defend code quality and point out the
+right way to do things, it's just that I want out of this rabbit hole
+right now.
+
+[1] https://lore.kernel.org/git/20180405173446.32372-1-newren@gmail.com/
+[2] https://lore.kernel.org/git/xmqqefjp6sko.fsf@gitster-ct.c.googlers.com/
+[3] e.g. https://lore.kernel.org/git/20190905154735.29784-10-newren@gmail.com/
+[4] https://lore.kernel.org/git/20190905154735.29784-1-newren@gmail.com/
+and links referenced therein
