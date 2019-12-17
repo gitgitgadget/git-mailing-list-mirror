@@ -2,194 +2,141 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E432C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2C22C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:08:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 354752064B
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:05:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A65C20716
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:08:41 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="VvlkK9RX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726730AbfLQLFE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 06:05:04 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:40301 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726383AbfLQLFE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 06:05:04 -0500
-Received: by mail-wr1-f45.google.com with SMTP id c14so10818597wrn.7
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 03:05:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7rHcVBCoBsSlc8Y25AXCInGoMk6tE88rJ75xUXP12mQ=;
-        b=gnlADFZGUS1G9uziLv5ZkyJTer8Y/ZUA/vFLd3KaqB4Tq+kTGmkkgHW4jMhvRskNeJ
-         F8+ln3XcsQ9791i1yAGXzeFrqqeRABiGjYSZ0q4Q+dm3AwYa7lh4cdVoC3APkJ3nA1mp
-         GZVQMD4cJzK1al3NScjXC9VzeUxxnNtNpfrtQvB/J/kmnd+oLmRZGm3cy20j0rEV7MwN
-         fzlI2DvgBuGlx+iccvlfG5AvG2ZYAhE2VOyVGIRqh4xR6Wa+ITSb0Yd9fKDKw/XvX7nU
-         wR5Ny4c7G8ZU+AlJ+aBwEDY9+G3i0IDed1cJ7o8weCuYRWHzeOMbifADIw3EAu+O69c/
-         5BbQ==
-X-Gm-Message-State: APjAAAWzSDt08wOezrVZoNRq1viio4T7dyH5m5RY+y6TglmsoQCyKv3P
-        L0CR+NrtuyOMpLGmXekofJTM+n1sfWJMYK7wgFxMIw==
-X-Google-Smtp-Source: APXvYqy0pVChJMcu1P6YwjsLDas/TzG47ucvJmWirS1Si9LSJdTZdCrViSakYy+Bp+zIPJFELX+7KuY6O7sut3/orNY=
-X-Received: by 2002:adf:df90:: with SMTP id z16mr38599100wrl.273.1576580701714;
- Tue, 17 Dec 2019 03:05:01 -0800 (PST)
+        id S1726571AbfLQLIk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 06:08:40 -0500
+Received: from mout.gmx.net ([212.227.17.21]:56971 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725940AbfLQLIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 06:08:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1576580908;
+        bh=Dna6WklwYMNQ+Y2dr5GtB7xiOOaXH9Z0KNL2q7Y+WWo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=VvlkK9RXE02Yg1GlFZWz1OCzp5TWHaiik4dMBr30INYFGnUYqwXdz1OeGe8eYAEb4
+         QkVMZ5zfE/Vuw67YaG0w3X7mh9Iqv4U0I7e/tzrOOklfz8tg6uufbN8F9sXH52+sC0
+         wvP4JceZSbBNJfQEysMgfa4XlhHED+zlcl7s6ekw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.120]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCbEp-1iZ9xP2KrD-009eb3; Tue, 17
+ Dec 2019 12:08:28 +0100
+Date:   Tue, 17 Dec 2019 12:08:12 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
+        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
+Subject: Re: [PATCH v2 6/8] dir: fix checks on common prefix directory
+In-Reply-To: <xmqqr213iz9z.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1912171157140.46@tvgsbejvaqbjf.bet>
+References: <pull.676.git.git.1575924465.gitgitgadget@gmail.com> <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <9839aca00a10b16d96c47db631ac025281ffc864.1576008027.git.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1912151126030.46@tvgsbejvaqbjf.bet>
+ <CABPp-BE04=A9wx1VfWsghn6scy8aaVFoENxV6YiW2AxgM2jhjQ@mail.gmail.com> <CABPp-BGoC_D6LzzMNyf30wFssTU2WA1kTLmFvJ2Do+Tfg4+YQA@mail.gmail.com> <nycvar.QRO.7.76.6.1912170101230.46@tvgsbejvaqbjf.bet> <xmqqr213iz9z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CA+PLxnUR2skor9CGfDKfEEm8XTmoHwM2cDf5Kpgt-ppo=4zhbQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1912152209020.46@tvgsbejvaqbjf.bet> <CA+PLxnWLWckpZdjy8XQLbO0EVJ1khiyUYi1T=Mcy_rBkvbLpZA@mail.gmail.com>
- <20191217073306.GA3313061@coredump.intra.peff.net>
-In-Reply-To: <20191217073306.GA3313061@coredump.intra.peff.net>
-From:   Mikael Simonsson <m@mikaelsimonsson.com>
-Date:   Tue, 17 Dec 2019 11:04:50 +0000
-Message-ID: <CA+PLxnVzu0zDtpT2T660UGhZ0RvFcq50nPfZz9Que7_7mqiSyQ@mail.gmail.com>
-Subject: Re: Bug? git commit fileA tries to delete fileB and other oddities
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:B690sCsgJMUXYmJTgp2jV+kW6Ip8u1ANIFrhPn2gqF9HK8RUYsd
+ 16TWBNiADPG57IGlgMfLrK+DrTXOW+RXoO/ChL3RuImmD6I/E5UPnKbVm7hMzrDgyqgrmyo
+ Na/ikWczFKe1IjBai00+xPLqewKTrFV+LhdugwR9YHPeKn4b04VwjGKyMNgWEaEgEwhW0yh
+ en7ZM3I+WRk/1kBTbqzaQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:fkNIbcg8daA=:aYYIkQpVKMQocPxunbhkF1
+ Krljfc2CMmrUAVGziBSPKHLvzqEjakovkx1xPkiTMBswXnT68/59BJIT52YR/wfXqaI6UgJtR
+ zxN+WM+SkNyK6+Br/Ti71Jut7zD0v0tX2TGzuaZbArhPgPsPLs8tRID5pzfpNyVXSQKVARd5I
+ YT4LuAx6Y+2cjGSdB2MrsVMuW8Ch57CLOlX5UfzrQD/ACDkKqKbyGtoyp1MavPfnLcyn2F2Qr
+ mrtKxE8+0x4eG2BYVyF3JI7wvtDdqz5qDq4g1R+szBI8IsbspqrwPgwI62nTMRS58SsIdtiRu
+ 5SoSDmw+/IX6s3F3V0vrsss8ohs2OIUjtvYv1+TbL0UMhIainWOud9PL0MGYr3Wcb04Qr3BlK
+ pQLU8WHXszvXSCTdkObUUhP8HF7Y88IW820rzbDtS9c+nWx/jPbeGGBzGT2tXgGj3k+icoqbR
+ wg80bLFdWI2t8TJv2hkG2YCSw00cOI56Ot2m7z/2C+879YiR1azAFrMxRuAIzHbKs+kCHWkzX
+ 9ykLw9J5F9BjlNli8eVmSWa0RpsYe3PAT6kPGlFN7jDdCwAr2JoglGRf2uRzs83oyaJT2IMeJ
+ 1PpifQkKzmujK8bazGU4n/WhQ/73pkos6PQVl+cmHbNGPEVSTQedeyLT06oHpUnwo5fDMa201
+ Vimx3VCbjDNUwNgcTjoZ446ND/gYPxKcQRBowUT5rKRzb9mm+1E1Up0nE4WUs6hvjhJtUhDXi
+ oyxUALxfWRSAAzpLQ7JYyhaQ7DIsBvh0nqm/MfapYyBBhhc7LAey8QSq94EAfw7bemWRuTbN1
+ 0mIXB38UU9jEnCfi5rUGRwUiAwpvTpJwqvVg9ltIwK4gBgKcevj2n/cwgqEen0NkmmHnaxtPA
+ X5aftgmmEdEaRC9QWT5uqG3r2k75N182Sjl2KEgUgMTDrjkBO+Vg8MqA2qYjd2tLKbrEmYoEq
+ KNK/1OeRdmOAoCBWQE92c1sh9WhymjXdnwr/WL8wWK4TI8xtCIVsFq3kkpp9NH9F55FL7N79g
+ Q5pXuR4t43kdYkqJF2Z6guHOm+0cfX+hN5bCTIr6uxazNhATKM0sAburuL3IJZ2LvXvVMyzC7
+ gG49suCgbYwci5DLgO71kuiHK3WI5R0uCTWK4tVzPb/wOZHCBzrJqFZzBCNAMkc2/gYF1x4ba
+ VBsQuPj50Emtsv9ui94SPbJX4NxTbUIAr32M+fUhBL5vQMeGeqoO06CouzM4YweQzcXD5hJYq
+ rE01vAoHM9v1aAB3IoVZzxOb8OfkGT7WZr7tbLxX5Ut6XgzwDmvN6aZUUX2s=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git bisect made that pretty easy, thanks. It looks like it started
-with this commit:
+Hi Junio,
 
-"unpack-trees: optimize walking same trees with cache-tree"
-https://github.com/git/git/commit/b4da37380b7774248086f42bcd59397a44e1ac79
+On Mon, 16 Dec 2019, Junio C Hamano wrote:
 
-(I ran git bisect between tags v2.19.2 and v2.20.0.)
-
-
-Testing the commit in question:
-% git checkout b4da37380b7774248086f42bcd59397a44e1ac79
-% gmake -j 6 NO_OPENSSL=YesPlease NO_PERL=YesPlease NO_TCLTK=YesPlease
-NO_GETTEXT=YesPlease NO_EXPAT=YesPlease all
-
-% ~/tmp/git-source/git version
-git version 2.18.0.751.gb4da37380b
-
-% ~/tmp/git-source/git commit null_terminated.hh
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# On branch master
-# Your branch is up to date with 'origin/master'.
-#
-# Changes to be committed:
-#       deleted:    algo/find.hh
-#       new file:   app/.reserved
-#       deleted:    ascii/contains_icase.hh
-#       deleted:    ascii/contains_icase.test.cc
-#       modified:   null_terminated.hh
-#
-# Changes not staged for commit:
-Aborting commit due to empty commit message.
-
-
-Note that the latest version behaves differently (it tries to delete
-another file):
-
-% git version
-git version 2.24.1
-
-% git commit null_terminated.hh
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# On branch master
-# Your branch is up to date with 'origin/master'.
-#
-# Changes to be committed:
-#       deleted:    defer.hh
-#       modified:   null_terminated.hh
-Aborting commit due to empty commit message.
-
-
-The commit before "unpack-trees: optimize walking same trees with
-cache-tree" works as it should:
-% git checkout b4da37380b7774248086f42bcd59397a44e1ac79^
-% gmake -j 6 NO_OPENSSL=YesPlease NO_PERL=YesPlease NO_TCLTK=YesPlease
-NO_GETTEXT=YesPlease NO_EXPAT=YesPlease all
-
-% ~/tmp/git-source/git version
-git version 2.18.0.750.g0d1ed5963d
-
-% ~/tmp/git-source/git commit null_terminated.hh
-
-# Please enter the commit message for your changes. Lines starting
-# with '#' will be ignored, and an empty message aborts the commit.
-#
-# On branch master
-# Your branch is up to date with 'origin/master'.
-#
-# Changes to be committed:
-#       modified:   null_terminated.hh
-#
-# Changes not staged for commit:
-Aborting commit due to empty commit message.
-
-
-Here's my local commit from about a week ago when the problems started.
-
-I'm sure I ran "git commit readme.md" because I had several files
-staged. The commit pulled in 3 staged files (I think there were more)
-and deleted 3 files that 100% weren't staged.
-
-% git show --numstat 7d5d43d849f1391b3cc11f12e037b8cb5174e3a3
-commit 7d5d43d849f1391b3cc11f12e037b8cb5174e3a3
-Author: Mikael Simonsson <m@mikaelsimonsson.com>
-Date:   Sun Dec 8 10:38:38 2019 +0000
-
-    Add short info and requirements for ranges
-
-56      0       algo/find.hh
-0       1       app/.reserved
-16      0       ascii/contains_icase.hh
-28      0       ascii/contains_icase.test.cc
-0       41      bench/bench.hh
-0       41      debug.hh
-76      0       readme.md
-
--Mikael
-
-
-
-On Tue, Dec 17, 2019 at 7:33 AM Jeff King <peff@peff.net> wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> On Mon, Dec 16, 2019 at 09:50:33AM +0000, Mikael Simonsson wrote:
->
-> > I will try to recreate the problem with a new repository.
+> > If you care to look at our very own `compat/win32/dirent.h`, you will =
+see
+> > this:
 > >
-> > So far I think I've narrowed it down to a bug introduced in git 2.20.0.
+> > struct dirent {
+> >         unsigned char d_type; /* file type to prevent lstat after read=
+dir */
+> >         char *d_name;         /* file name */
+> > };
 > >
-> > Not buggy:
-> > [...]
->
-> If you can build Git from source, you might try using "git bisect" to
-> find the exact commit where the problem starts.
->
-> > The buggy versions all try to delete fileX when running "git commit fileA":
+> > And looking at
+> > https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/dirent.h.htm=
+l, I
+> > do not see any guarantee of that `[256]` at all:
 > >
-> > % git commit fileA
+> > The <dirent.h> header shall [...] define the structure dirent which sh=
+all
+> > include the following members:
 > >
-> > # Please enter the commit message for your changes. Lines starting
-> > # with '#' will be ignored, and an empty message aborts the commit.
-> > #
-> > # On branch master
-> > # Your branch is up to date with 'origin/master'.
-> > #
-> > # Changes to be committed:
-> > #       deleted:    fileX
-> > #       modified:   fileA
-> > #
-> > # Changes not staged for commit:
+> > [XSI][Option Start]
+> > ino_t  d_ino       File serial number.
+> > [Option End]
+> > char   d_name[]    Filename string of entry.
+> >
+> > You will notice that not even `d_type` is guaranteed.
 >
-> Is there anything about "fileX" and "fileA"'s names that might be
-> relevant? E.g., might they case-fold to the same name or something?
+> I am reasonably sure that the code (without Elijah's patches anyway)
+> takes the possibility of missing d_type into account already.
 >
-> -Peff
+> Doesn't the above mean d_name[] has to be an in-place array of some
+> size (i.e. even a flex-array is OK)?  It does not look to me that it
+> allows for it to be a pointer pointing at elsewhere (possibly on
+> heap), which may be asking for trouble.
+
+You are right, of course.
+
+I also was not _quite_ spot on, as I had looked at Git for Windows'
+`shears/pu` branch, not at the `pu` branch. Alas, we have patches in Git
+for Windows that allow for switching to a faster, caching way to access
+the stat() and readdir() data (it is called the "FSCache" and it is
+responsible for some rather dramatic speed-ups). And these patches change
+`struct dirent` to the form that is quoted above, to allow switching back
+and forth between two _different_ backends, storing the actual `d_name`
+not in `struct dirent` but in `DIR`.
+
+Is this compliant with POSIX? I guess not. Does it work? Yes, it does.
+
+I can't know for sure that it makes a dent, but FSCache is designed for
+speed, and it actually does not even store the `d_name` in the `DIR`, but
+directly in the cache structure, avoiding copying at all.
+
+In short: if we can allow FSCache to keep operating that way (i.e. keep
+`d_name` as a pointer), then that would be helpful to keep the performance
+on Windows somewhat within acceptable boundaries.
+
+Ciao,
+Dscho
