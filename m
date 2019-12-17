@@ -1,88 +1,96 @@
-Return-Path: <SRS0=ratM=2B=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,T_MONEY_PERCENT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0119DC43603
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 08:54:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF915C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:16:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BC580214AF
-	for <git@archiver.kernel.org>; Wed, 11 Dec 2019 08:54:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C09D421582
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 18:16:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qv1GR1P9"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HqFBWjuX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728432AbfLKIyY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Dec 2019 03:54:24 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:34803 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727253AbfLKIyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Dec 2019 03:54:23 -0500
-Received: by mail-qk1-f193.google.com with SMTP id d202so19028147qkb.1
-        for <git@vger.kernel.org>; Wed, 11 Dec 2019 00:54:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=nGIjsaBccfzgbG6AB9u8tl8iW74VAAyTBEMSpWPn7tU=;
-        b=Qv1GR1P9hccnzmNvd+tlfDuU0qY+a1TNXoq2C7vcZwsDu279h/kq/WsaSkhqzRTFDh
-         IHGYB+xsrE5zQ/4kF66RuhXJe25fLGXKZ2haKe3dQC4CU9YTUDMN66DPcs7uPm4ZTxX4
-         m3jU0z5PkK1zPgc7AKywizZRvZDObuM8JgIsRQqLEMgv+xzbSNur7hz6MwF9anx3WeYx
-         +5dDMKDeQCS5/yV3LRM9wELde2N3XA+s/a3UpQPorEtJO41KGFq7NrkCiaK2I0UoUTlp
-         XJLsphwC24haHkvdT4fS9W8WLrbu+pPEco+/jjo84Yh+wvudvz62Evg0rsVb1upGOWxb
-         YYOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=nGIjsaBccfzgbG6AB9u8tl8iW74VAAyTBEMSpWPn7tU=;
-        b=mnxEH8f4ZX4+Qoj49jzrBcyN1rUi/wQ2mYchish9fAG+oLuJmNSCVgslNItF6Pc5oa
-         MDhrBLL6U5CGAhFTnJuIyVlX+kQdpiWC2HZibQDOIOv8EDrenDtzq7lEXhWf0ikmuzCI
-         xd8F2P+840vFVfoHDc+hAoPWdVldrhE+kIJ48d2I3Dca1rjMIIIK0K28zoMGY8WXiBwv
-         StnzFJdE1WKV+pI78lpNGK6ppn2L4tM3hJzVfjvE+6eC2qazaDIZtg5HZ3GX32xItZaZ
-         g2xHnAzOl/SADnBgtNGWziug7TpJnvDNGQ9RQ3CaqnzfCQvPd9LAkZ/AIXIU2dewTntn
-         G8XA==
-X-Gm-Message-State: APjAAAXQNMdKFn8MKKyfS6qRxZvfg9O97kXmTDmiPOb4UxBXEcDCyyF1
-        gRZG9E8cBZS2XZEvzAie4qVeT/x9cP9fOSqYnsE=
-X-Google-Smtp-Source: APXvYqxiInSIWS48Tbyyxwc1txIjQAhyQCy9h17NLjtADDlNXz/M9OM/aZ1bRH5/EBMKCvoZwh3hLv5mYDyVMHbcRqU=
-X-Received: by 2002:a05:620a:166a:: with SMTP id d10mr1799816qko.37.1576054462860;
- Wed, 11 Dec 2019 00:54:22 -0800 (PST)
+        id S1727902AbfLQSQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 13:16:31 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:51591 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727726AbfLQSQb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 13:16:31 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D1EE9EC4A;
+        Tue, 17 Dec 2019 13:16:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2HrqF6GXPilH1qrjouZ65Vi7nmg=; b=HqFBWj
+        uXV9BQERisY9Z2HBN0XLihTnQTLETX4lmYg+tpeQ5GtEpRwCoJGZQ2F4SEv/Xqwt
+        N7dh56s9BDAadTF/QKAeKR1BOGavSSDXmmMw4MiP51ZptNb86TmzbVbsI8ABtNJT
+        vprwcTxLacFn4Y1mYJYeQEMUQbPG36OIoH92I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vSGu3LOeC14fnJ1eEqzOE7rCpCOzo0dU
+        hg44gSntHMhPdZ0bzFy09SekV2kCY+yVRv6brb+0FOb6AUOyXra38O/IrNZsLD1Q
+        MdD8ED1tfi6mPLYIVhxnNqF1R0FUy0taDs4wAC6WMqCpyvuNWTaiJ1M0qAoJWbEv
+        ZUKoTtdHRNQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64CF49EC49;
+        Tue, 17 Dec 2019 13:16:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9E2FB9EC46;
+        Tue, 17 Dec 2019 13:16:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH 2/2] Documentation/git-log: mention that line-log regex must match in starting revision
+References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
+        <4ea4eeae0c1e23221012855168bf6640be93fd4f.1576559263.git.gitgitgadget@gmail.com>
+        <1d033204-80fd-25f8-3a80-0cb641953139@gmail.com>
+Date:   Tue, 17 Dec 2019 10:16:24 -0800
+In-Reply-To: <1d033204-80fd-25f8-3a80-0cb641953139@gmail.com> (Derrick
+        Stolee's message of "Tue, 17 Dec 2019 10:34:43 -0500")
+Message-ID: <xmqq5zieizrb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ac8:6601:0:0:0:0:0 with HTTP; Wed, 11 Dec 2019 00:54:22
- -0800 (PST)
-Reply-To: sambo.salifou@post.com
-From:   Sambo <samba.akasi123@gmail.com>
-Date:   Wed, 11 Dec 2019 08:54:22 +0000
-Message-ID: <CACy=jcm-M60YGEMs2DCWZ_RTYu-6w4bwU7+n810h-0fgEPhQQQ@mail.gmail.com>
-Subject: Please lets make joint business
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 56FD8C5A-20F9-11EA-AB95-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please lets make joint business
+Derrick Stolee <stolee@gmail.com> writes:
 
-I am, Dr. Salifou Sambo a bank auditor, I am in-charge of transferring
-out funds or my village, which our village generates from the sales of
-our local mined gold. I have some left over fund in the bank here that
-I alone is aware of, and wants to transfer it out.
-My village that mines gold, has mandated me for sales of our raw Gold,
-and as a bank auditor I help our village to control their funds. I
-want to use this opportunity to look for some one who will provide an
-account to receive the sum of 4.2 million US dollars left in the bank,
-this was realized from gold sold, to be transferred out to our foreign
-account,now it is
-unknown by our village, This fund has been laying for onward transfer
-to overseas as we transfer out all funds sold from our gold, till now
-this fund is lying in the bank, I have all documents concerning the
-fund, and now I want to use it to establish outside my country. So if
-you are interested, then you will provide an account to receive the
-fund for a joint benefit and business and sharing, I will give you 30%
-of the fund. if you
-are interested reply me.
-Sincerely,
-Dr. SALIFOU Sambo
+> On 12/17/2019 12:07 AM, Philippe Blain via GitGitGadget wrote:
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>> 
+>> When giving a regex as parameter <start> or <end> in
+>> `git log -L <start>,<end>:<file>`, or a function name in
+>> `git log -L :<funcname>:<file>`, the given regex must match in the starting
+>> revision, or else the command exits with a fatal error.
+>> 
+>> This is not obvious in the documentation, so add a note to that
+>> effect.
+>
+> This seems helpful. Thanks.
+
+Even when you specify <start> or <end> as a line number, they must
+exist in the starting revision or it would be a fatal error.  If we
+are clarifying with this patch for completeness, I think we should
+also mention it together.  
+
+Or we could even drop the mention of regex and say <start> and
+<end>, regardless of how they are specified (including :<funcname>
+format), must exist in the starting revision.
+
+
