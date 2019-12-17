@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 438DCC2D0CD
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93D49C43603
 	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 183A1207FF
+	by mail.kernel.org (Postfix) with ESMTP id 69C3A207FF
 	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h0tezVXp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQ/ylk7j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727735AbfLQMB4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727746AbfLQMB4 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 17 Dec 2019 07:01:56 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:35188 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727617AbfLQMBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 07:01:53 -0500
-Received: by mail-pj1-f67.google.com with SMTP id w23so4495551pjd.2
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44985 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727707AbfLQMBy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 07:01:54 -0500
+Received: by mail-pf1-f193.google.com with SMTP id d199so7414863pfd.11
         for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=8XNbQ+GgBYygTvD2vAIrwNfJPbbfGy3wwVKh2xbuCM0=;
-        b=h0tezVXpKUc8vblQwEJc2hStPsKdHaGwSavF0tDa8lgKoWvuWurSoQysIQkOYRYZqL
-         fzXpPmUfZiYz9/sr/yWP4R5uAQ6jFwQcY6JoZrgDER0gbvFhV94fwmDAujIHzM2Ikq0k
-         0EntQ1gw/7eRf39aWam0/jC3qfWET7CS8U/x6yN9EmPTrTAGe2g+eJfDFsEe/FmjfwTZ
-         voML/9owE3FIdL9rrywFkLdzJWHUuC0QG1FKrEE0ZKqar+CLOmbrbR933pzgWE8aIWkU
-         v3VtOX0iXek/jO7956hRX0+ETvwTKtSbOWvEyUjLod4JMfJ4Y3I59oQKHW0rXoBnSzTL
-         L6bw==
+        bh=xbfAXn74Dj6IEWvOst/CxgC1juY7ioFICG2DQe/nYfk=;
+        b=UQ/ylk7jp44S1WrDMh6NL5hb10MTZUnLMam9ecZ1kJ82McZ+Qzftv0ZtWIYJk9esyA
+         joMHA6eleqsR+4GsMxHpcAH3SIizPWeaoWcAnf2VFJ+JYtBzsFp31iezanz3iQmUPgJ+
+         9cfcDUZNeJ5vxqp1pan/fXsE3hN7g4w2jC2xnKKz4H5WvBCIt0Bj/GVLt7wbJH3oS3Zw
+         q4XzmHKvZd4w93Ptm9VTxuHebIyA4BN9fCdPGEkp7ko49y1x6DPxIriPbvmRYjGC4E3W
+         sQ6luMv8CfDASb6RoeB0zaYWdIglaODuk6TTx4L5cxrpqVTnEFEHgvjeKSZAC6goqf/C
+         nWqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8XNbQ+GgBYygTvD2vAIrwNfJPbbfGy3wwVKh2xbuCM0=;
-        b=kboI5S++W3SuDKB8/FMUuq3ZKALLfsk+MDH1kCpOVQHKSOt1wnNXQ6LahWFMRpHaWF
-         VVo/ucdWrOg/IZ+bhq19TfaIO9J1pVQvJX/y8MuswSBEm8fRYHWkRif3IerbdpeJa2zH
-         KGwP/E/vgo4nqjw1SL0YDv+0E1fpHTwvd22OixNb8ykIku3ACtB+lYHvuV7Q9N3gWuMG
-         UIIgV/A2UdeffPTB7b68b1T6jc1DnJIkJtleOdYP3vtSZLMx53a9CcNQCpO8SoyKzfAE
-         EtvqZLiTTn6d88JgceaekXpm2cr3cKjYoc9MXzSAnSBRSzXQWxNFAHvXpCoNb+BqEq9e
-         uhvw==
-X-Gm-Message-State: APjAAAX1zJqWaRwMaHdBgsn/KhbhijnGNlt/l5G0O4g8Ljk+EG+JR7WF
-        mda5viSeIqncfeZyDNqSkcc0O7ER
-X-Google-Smtp-Source: APXvYqzD6r+fCOqti0q94wD73QsnNT4JlyFa7dltsGvMxS1qeAbgPhwdBm5AwWyDzJWkdI+PSxE9Vw==
-X-Received: by 2002:a17:902:5a83:: with SMTP id r3mr22698614pli.145.1576584112517;
-        Tue, 17 Dec 2019 04:01:52 -0800 (PST)
+        bh=xbfAXn74Dj6IEWvOst/CxgC1juY7ioFICG2DQe/nYfk=;
+        b=ksKzLkDjxbSzf8NFJbVk7ApqAH2Nt8Oj2Y7GaErhgbDpYALhPMbKq6azKPaTCufWUT
+         AsmMp8nwhKywl4O79ud9S8wPe1VHSGZ/NzyA1M0afO57TkJdeEksKoCrMVBh8oQbVL9i
+         p/sGInksYXAo1zQpK9Di01zASpOX2KykTTPAwtdft8C1xVr870G1WL4YqL10LhTmqejg
+         F0zyN8H0dXO8nW+AhHigyu+CPDD/ncm7FPnpxITLUmtFet0eImzNnkjKzR8ac60DgcbF
+         H4PBtDXdSoQ+Ym2AQHDDKULP+8WaAf/C8/agMbkTE3I/9QfiOPkcuU4YMI20F9PgQl1/
+         +b/g==
+X-Gm-Message-State: APjAAAWX1SVtf8PeIK5cMKs5JFWEY1IrR/6975CBguR6J2wZzFxDXSta
+        KW5OIz5N1GvwFmdy75TPbkC3LjTo
+X-Google-Smtp-Source: APXvYqx0ZcaM4jJgA1BZEnBZsGOLJhapIsawsUu2hkqAHGte9DYIVEjcvxQhweEJlSYsMas8fC9SBA==
+X-Received: by 2002:a63:d406:: with SMTP id a6mr24989599pgh.264.1576584113161;
+        Tue, 17 Dec 2019 04:01:53 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.51
+        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.52
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 17 Dec 2019 04:01:52 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 13/15] t1409: use test_path_is_missing()
-Date:   Tue, 17 Dec 2019 04:01:38 -0800
-Message-Id: <27b32962427e5b74569b08dc4c0de40b67388615.1576583819.git.liu.denton@gmail.com>
+Subject: [PATCH 14/15] t1501: remove use of `test_might_fail cp`
+Date:   Tue, 17 Dec 2019 04:01:39 -0800
+Message-Id: <3d36511d5d95d2a2713b3cc8e2138b689d381c79.1576583819.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.0.627.geba02921db
 In-Reply-To: <cover.1576583819.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com>
@@ -71,41 +71,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail() function should only be used for git commands since
-we should assume that external commands work sanely. Replace
-`test_must_fail test -f` with `test_path_is_missing` since we expect
-these files to not exist.
+The test_must_fail() family of functions (including test_might_fail())
+should only be used on git commands. Replace test_might_fail() with
+test_non_git_might_fail().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1409-avoid-packing-refs.sh | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t1501-work-tree.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
-index f74d890e82..be12fb6350 100755
---- a/t/t1409-avoid-packing-refs.sh
-+++ b/t/t1409-avoid-packing-refs.sh
-@@ -27,15 +27,15 @@ test_expect_success 'setup' '
+diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
+index 3498d3d55e..067301a5ab 100755
+--- a/t/t1501-work-tree.sh
++++ b/t/t1501-work-tree.sh
+@@ -350,7 +350,7 @@ test_expect_success 'Multi-worktree setup' '
+ 	mkdir work &&
+ 	mkdir -p repo.git/repos/foo &&
+ 	cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
+-	test_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
++	test_non_git_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
+ 	sane_unset GIT_DIR GIT_CONFIG GIT_WORK_TREE
  '
  
- test_expect_success 'do not create packed-refs file gratuitously' '
--	test_must_fail test -f .git/packed-refs &&
-+	test_path_is_missing .git/packed-refs &&
- 	git update-ref refs/heads/foo $A &&
--	test_must_fail test -f .git/packed-refs &&
-+	test_path_is_missing .git/packed-refs &&
- 	git update-ref refs/heads/foo $B &&
--	test_must_fail test -f .git/packed-refs &&
-+	test_path_is_missing .git/packed-refs &&
- 	git update-ref refs/heads/foo $C $B &&
--	test_must_fail test -f .git/packed-refs &&
-+	test_path_is_missing .git/packed-refs &&
- 	git update-ref -d refs/heads/foo &&
--	test_must_fail test -f .git/packed-refs
-+	test_path_is_missing .git/packed-refs
- '
- 
- test_expect_success 'check that marking the packed-refs file works' '
 -- 
 2.24.0.627.geba02921db
 
