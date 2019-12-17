@@ -7,174 +7,192 @@ X-Spam-Status: No, score=-11.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
 	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26849C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 00:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 597EAC43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 01:28:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ED03B24655
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 00:41:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1D08520CC7
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 01:28:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IVqnOOL5"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="k+S+Y4Iy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727945AbfLQAle (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Dec 2019 19:41:34 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34525 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbfLQAle (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Dec 2019 19:41:34 -0500
-Received: by mail-pf1-f194.google.com with SMTP id l127so4763282pfl.1
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 16:41:33 -0800 (PST)
+        id S1726281AbfLQB2D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Dec 2019 20:28:03 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40200 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725805AbfLQB2C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Dec 2019 20:28:02 -0500
+Received: by mail-pj1-f68.google.com with SMTP id s35so3800654pjb.7
+        for <git@vger.kernel.org>; Mon, 16 Dec 2019 17:28:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=NReueiXPMWjVtv8u4x6rL4ygNU/pvwQYWzdQc+TOAA8=;
-        b=IVqnOOL53wxJnZkrVGd7MVokE1RT9GUEZi6ceTARoSuSGwm0NxJwTL3KLnrLAwXDzC
-         svxx2GsOJXq4OXz/tGWA5eLCBuKoI3wl5wM3gVkUFZ8zEUOJwslw70jt3DopXFIzZW6h
-         AHGQDWzGzO6zTo6rw0fQXp3o8NvurdXmuVnjt87zjTDKIMwyVw94UBpcIubiBvwNLcYH
-         HFiPwey15PC6B9t925IH41eTwCNzlOG8VMbPxFol+RRAbs5KAzZU51/nXov8T0lnpsLT
-         ApR4MrA0/g1WdW1DuRnnIxhoUfuMeLo/uLMp/EVmJ7nGDJf8CQDUouFlXUFGqQmqCyoP
-         dIWg==
+        bh=EDhz7tvNDi2nEuBdMnzrwAJazvicXMuCme8NnuJ8Oqc=;
+        b=k+S+Y4IyWw5ap9uBg0deeZpXet5MXS53g4LFy51YeV3tqt6zDMuEEHx9bHrJUaeD6v
+         8EFyorIDkSI3hWiYcbspoxAcQgcBr61E0FK2EN7TfujWzriTrpHNyWw043uZR29VleZY
+         xcrLC/bihOaIAPVZ+P1fjC1kKzlOO0JN9pI8zjy/EVUGq1NaVmwCrxpH1JRofvoIgRdN
+         WUyPZ7GD1Iq563lLOhOGw2RXT5lhvc2r+UmcGNXp8dVW307E0fPXeV47SOJhZRa/CVem
+         8M4iYGkL+ebhJ0tlfxj8yCzmgR7xvE03NZpW1AKQSf3lL37MaUrBOjAQTdt0zCKcvWsK
+         CadQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=NReueiXPMWjVtv8u4x6rL4ygNU/pvwQYWzdQc+TOAA8=;
-        b=PUJkjkrFLYxhTABAc4CW1c5Oz0ZpF3Eh9dByfbMv8ETx0gfOYbs8RciV7bNNiPxLUb
-         eGOdZYOZo6XHxyBeOE5Cum27gRec5I10qw44NBn3m6E3IKzuxEdAM3uSYv5SHIZ+Qpee
-         R37YVpMdsZNxvFZYj/pVvzRpuQHqa6EzjJM+JDB/U6xIzkO5uTVRrNEOQwfDNp0iAi5G
-         8ha7a37Ehr47vNcpDKD2/aEWWxUUtBExt/28iPUe5/berv2KBF4RrGfktLu33xANDxB5
-         GRvrZ8G2Nb8gw+Pnze67ULmt1mJGC4xYX3e8pU5gQ44dPA+QJY7Fn1d1rTBcvr4LHg05
-         WqZw==
-X-Gm-Message-State: APjAAAXcsoMSNyOd4dElJUm8Kd+t9HPV9N6V87QGIG5RYy1hqDW2Ya2J
-        TNh0IqIhF4TyTXIaMUDg/GLt3g==
-X-Google-Smtp-Source: APXvYqxBnJ0L4aAha4eSC6Jkfph7byMoPHjVCoPTtwIw+cVEAPXw8lBrIwlXnAQxz33j3D2AjT+BoQ==
-X-Received: by 2002:a63:3104:: with SMTP id x4mr21569659pgx.369.1576543292658;
-        Mon, 16 Dec 2019 16:41:32 -0800 (PST)
+        bh=EDhz7tvNDi2nEuBdMnzrwAJazvicXMuCme8NnuJ8Oqc=;
+        b=AVRJqv9VzOC37Jr79QEw7hly65FCx2ftLIYpbRzfUEQNehidXdWAHushMqX0DHtF7e
+         4FdC8F94eNp2Ru82t3AIyDrQy7G6I8YgWjn808pGahi3PKrAgfvd8LrLzwa/xlRYTXwi
+         hR/ODelIyQIf+KHgGgG8UGBq3j9OS86wrGiw/suCnMyueWaqUNBb79vn9XgnqB7Ef3YU
+         7l9BhrcLMB3kQ2gHMft+5C5qrtmP774LfAA7K2SQ/eRlAEeQFFV/KKbM+IJWEI0hLXJX
+         IM9hUq4YtXYao/Go76Qys462dK+c73jiJQ76LbfNGvjes+MqEoSDgER1qFf+vKnvXvE9
+         ZRww==
+X-Gm-Message-State: APjAAAUVm27WyTlvi5sR5cXFh+EVh9p0nhI2ILoRPGjnnXHj4t9zKZjA
+        sGXwPn5FKAXhOYcN7ofkUmZn8VF5NB0=
+X-Google-Smtp-Source: APXvYqybfXn327s0c6gP6u9vj6vrpbw6SVhUKLScSRKhrx5Ad1eaR5Yd7f+bwqcnJoJmpt6Y/Z8w6w==
+X-Received: by 2002:a17:902:82cc:: with SMTP id u12mr18495336plz.342.1576546081391;
+        Mon, 16 Dec 2019 17:28:01 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id u10sm23776376pgg.41.2019.12.16.16.41.31
+        by smtp.gmail.com with ESMTPSA id k9sm753660pje.26.2019.12.16.17.28.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Dec 2019 16:41:31 -0800 (PST)
-Date:   Mon, 16 Dec 2019 16:41:27 -0800
+        Mon, 16 Dec 2019 17:28:00 -0800 (PST)
+Date:   Mon, 16 Dec 2019 17:27:56 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 09/15] bugreport: generate config safelist based on
- docs
-Message-ID: <20191217004127.GP135450@google.com>
-References: <20191213004312.169753-1-emilyshaffer@google.com>
- <20191213004312.169753-10-emilyshaffer@google.com>
- <xmqq7e2zhm0i.fsf@gitster-ct.c.googlers.com>
- <20191216230124.GJ135450@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] Makefile: drop GEN_HDRS
+Message-ID: <20191217012756.GQ135450@google.com>
+References: <xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com>
+ <20191214003820.GA927924@coredump.intra.peff.net>
+ <20191214010002.GA945704@coredump.intra.peff.net>
+ <xmqqlfrcje1f.fsf@gitster-ct.c.googlers.com>
+ <20191216192014.GA2678964@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191216230124.GJ135450@google.com>
+In-Reply-To: <20191216192014.GA2678964@coredump.intra.peff.net>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 16, 2019 at 03:01:24PM -0800, Emily Shaffer wrote:
-> On Fri, Dec 13, 2019 at 02:57:17PM -0800, Junio C Hamano wrote:
-> > Emily Shaffer <emilyshaffer@google.com> writes:
-> > 
-> > > diff --git a/Makefile b/Makefile
-> > > index c49f55a521..76dc51e2b1 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -651,7 +651,7 @@ install-perl-script: $(SCRIPT_PERL_GEN)
-> > >  install-python-script: $(SCRIPT_PYTHON_GEN)
-> > >  	$(INSTALL) $^ '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-> > >  
-> > > -.PHONY: clean-perl-script clean-sh-script clean-python-script
-> > > +.PHONY: clean-perl-script clean-sh-script clean-python-script clean-script-dependencies
-> > >  clean-sh-script:
-> > >  	$(RM) $(SCRIPT_SH_GEN)
-> > >  clean-perl-script:
-> > > @@ -817,6 +817,7 @@ VCSSVN_LIB = vcs-svn/lib.a
-> > >  
-> > >  GENERATED_H += config-list.h
-> > >  GENERATED_H += command-list.h
-> > > +GENERATED_H += bugreport-config-safelist.h
-> > 
-> > OK.
-> > 
-> > >  LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
-> > >  	$(FIND) . \
-> > > @@ -2161,6 +2162,12 @@ command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Doc
-> > >  		$(patsubst %,--exclude-program %,$(EXCLUDED_PROGRAMS)) \
-> > >  		command-list.txt >$@+ && mv $@+ $@
-> > >  
-> > > +bugreport-config-safelist.h: generate-bugreport-config-safelist.sh
-> > > +
-> > > +bugreport-config-safelist.h: Documentation/config/*.txt
-> > > +	$(QUIET_GEN)$(SHELL_PATH) ./generate-bugreport-config-safelist.sh \
-> > > +		>$@+ && mv $@+ $@
-> > 
-> > OK.
-> > 
-> > >  SCRIPT_DEFINES = $(SHELL_PATH_SQ):$(DIFF_SQ):$(GIT_VERSION):\
-> > >  	$(localedir_SQ):$(NO_CURL):$(USE_GETTEXT_SCHEME):$(SANE_TOOL_PATH_SQ):\
-> > >  	$(gitwebdir_SQ):$(PERL_PATH_SQ):$(SANE_TEXT_GREP):$(PAGER_ENV):\
-> > 
-> > But bugreport.o needs this *.h file generated before a compiler
-> > attempts to produce it out of bugreport.c; that dependency is
-> > missing from this update to the Makefile.
+On Mon, Dec 16, 2019 at 02:20:14PM -0500, Jeff King wrote:
+> On Mon, Dec 16, 2019 at 10:55:40AM -0800, Junio C Hamano wrote:
 > 
-> Hm. Somewhere I misformatted my commits, then. My goal was to add the
-> new header here, but not add it as a dependency to anybody; then, in the
-> next commit, add it as a dependency to git-bugreport and start to use it
-> (commit 1: make the thing; commit 2: use the thing). But now when I look
-> at the next commit, I don't see a Makefile change. So I missed something
-> while I was shuffling around fixups.  Thanks for noticing.
-> 
+> > LIB_H could contain command-list.h (and other GENERATED_H files) if
+> > we did this, but dups in dependency does not hurt in general, and I
+> > did not find anything potentially problematic in the existing use of
+> > $(LIB_H) in our Makefile.
 > > 
-> > > @@ -2791,7 +2798,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
-> > >  .PHONY: sparse $(SP_OBJ)
-> > >  sparse: $(SP_OBJ)
-> > >  
-> > > -GEN_HDRS := config-list.h command-list.h unicode-width.h
-> > > +GEN_HDRS := config-list.h command-list.h unicode-width.h bugreport-config-safelist.h
-> > >  EXCEPT_HDRS := $(GEN_HDRS) compat/% xdiff/%
-> > >  ifndef GCRYPT_SHA256
-> > >  	EXCEPT_HDRS += sha256/gcrypt.h
-> > > @@ -3117,7 +3124,8 @@ clean: profile-clean coverage-clean cocciclean
-> > >  	$(RM) $(HCC)
-> > >  	$(RM) -r bin-wrappers $(dep_dirs)
-> > >  	$(RM) -r po/build/
-> > > -	$(RM) *.pyc *.pyo */*.pyc */*.pyo config-list.h command-list.h
-> > > +	$(RM) *.pyc *.pyo */*.pyc */*.pyo
-> > > +	$(RM) config-list.h command-list.h bugreport-config-safelist.h
-> > 
-> > It is kind of sad that GEN_HDRS defines the list of build artifact
-> > that we should be able to clean, and then we manually list them to
-> > be removed here independently.  Can we fix it up too?
+> > How about doing this as a further clean-up?  I am reasonably sure
+> > the status-quo description is correct, but I find the justification
+> > a bit weak (in other words, I do not have a good answer to "who
+> > cares if those that depend on $(LIB_H) are not rebuilt when
+> > command-list.h gets rebuilt?")
 > 
-> Yeah, I can do that. I thought so too when I was updating this.
-> 
-> I *think* what happened is that when I split config-list away (in the
-> earleir commit in this chain) I didn't notice that command-list.h was
-> already in GEN_HDRS, and instead just grepped Makefile for
-> "command-list.h" and added config-list.h next to it. So I'll try to fix
-> it much earlier, in that commit, and then simply add to the appropriate
-> variables in this commit.
-> 
-> > 
-> > We probably clean up the build/update procedure around unicode-width.h
-> > before we can do so, probably.  It may be generatable using contrib/
-> > script, but as far as our normal build is concerned, it is a tracked
-> > source and not part of the build byproducts, so we probably would
-> > want to remove it from GEN_HDRS.  When that happens, we can $(RM)
-> > all of the $(GEN_HDRS) in the "clean" target.
-> 
-> Noted. Thanks.
+> Yeah, I don't think there's any change in behavior here, since with the
+> exception of hdr-check, every mention of $(LIB_H) also mentioned
+> $(GENERATED_H). And in the case of hdr-check, we explicitly exclude the
+> only item found in $(GENERATED_H).
 
-Ah, after I sent this mail I saw your patch. For those playing along at
-home, https://lore.kernel.org/xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com
+To check my understanding - hdr-check just says "the headers are
+syntactically correct", right? $HCO's target '-o /dev/null' says
+"don't save the output", '-c' says "just compile, don't link", and '-xc'
+says "in C"; it expands to a target for each file ending in .h but not
+in $EXCEPT_HDRS, and hdr-check calls each one of those expanded targets,
+so I think I understand hdr-check is compiling each header...
 
-Will review.
+> 
+> But this would enable us to start checking command-list.h. I'm on the
+> fence on whether that's useful or not; the patch below makes it pass,
+> but I'm not sure if that is really turning up any useful problems. I
+> suppose somebody besides help.c could include command-list.h, in which
+> case some of those MAYBE_UNUSED bits could become useful.
 
- - Emily
+Firstly, I think if someone besides help.c includes command-list.h it
+blows up because there's no include guards :)
+
+My gut wants to say, "I need to be sure my generated header is correct!"
+But it seems that will also be checked when I try to include that header
+from something actually important. So maybe it's not actually useful.
+But then it seems like hdr-check target isn't that useful for anybody,
+since those headers should always be included sometime down the road (or
+why have them). So that makes me think I must still be missing
+something, like maybe I parsed hdr-check wrong.
+
+> 
+> I actually wonder if the whole thing would be simpler if command-list.h
+> was a static tracked file with the declarations, and we generated
+> command-list.c with "extern const char *command_list[]", etc.
+> 
+> > --- >8 ---
+> > Makefile: include GENERATED_H in LIB_H
+> > 
+> > $(LIB_H), which is meant to be the list of header files that can
+> > affect (hence trigger recompilation) the objects that go in
+> > libgit.a, in a directory extracted from a tarball is computed by
+> > running "find \*.h" but instead computed with "ls-files \*.h" in a
+> > working tree managed by a git repository.  The former can include
+> > generated header files after a build, and omit them in a clean
+> > state.  The latter would not, as generated header files are by
+> > definition not tracked.
+> > 
+> > Explicitly add $(GENERATED_H) to $(LIB_H) to make things consistent.
+> 
+> I do think this is slightly simpler to reason about than the existing
+> setup (though see my "should it just be a C file?" above).
+> 
+> Here's the patch that would make hdr-check work:
+> 
+> ---
+> diff --git a/Makefile b/Makefile
+> index 87b68962ed..1eac8e7a7a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2780,7 +2780,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>  .PHONY: sparse $(SP_OBJ)
+>  sparse: $(SP_OBJ)
+>  
+> -GEN_HDRS := command-list.h unicode-width.h
+> +GEN_HDRS := unicode-width.h
+>  EXCEPT_HDRS := $(GEN_HDRS) compat/% xdiff/%
+>  ifndef GCRYPT_SHA256
+>  	EXCEPT_HDRS += sha256/gcrypt.h
+> diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+> index 71158f7d8b..7b0751e3e1 100755
+> --- a/generate-cmdlist.sh
+> +++ b/generate-cmdlist.sh
+> @@ -48,6 +48,7 @@ define_categories () {
+>  define_category_names () {
+>  	echo
+>  	echo "/* Category names */"
+> +	echo "MAYBE_UNUSED"
+>  	echo "static const char *category_names[] = {"
+>  	bit=0
+>  	category_list "$1" |
+> @@ -61,6 +62,7 @@ define_category_names () {
+>  }
+>  
+>  print_command_list () {
+> +	echo "MAYBE_UNUSED"
+>  	echo "static struct cmdname_help command_list[] = {"
+>  
+>  	command_list "$1" |
+> @@ -78,6 +80,7 @@ print_command_list () {
+>  
+>  print_config_list () {
+>  	cat <<EOF
+> +MAYBE_UNUSED
+>  static const char *config_name_list[] = {
+>  EOF
+>  	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+> @@ -101,7 +104,8 @@ do
+>  	shift
+>  done
+>  
+> -echo "/* Automatically generated by generate-cmdlist.sh */
+> +echo "#include \"gettext.h\"
+> +/* Automatically generated by generate-cmdlist.sh */
+>  struct cmdname_help {
+>  	const char *name;
+>  	const char *help;
