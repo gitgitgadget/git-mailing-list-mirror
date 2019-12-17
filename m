@@ -2,107 +2,115 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6775C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 05:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB580C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 05:22:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8D4BF2146E
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 05:07:51 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sXvy3EFl"
+	by mail.kernel.org (Postfix) with ESMTP id 966122072B
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 05:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726652AbfLQFHu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 00:07:50 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39306 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726205AbfLQFHs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 00:07:48 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y11so9825230wrt.6
-        for <git@vger.kernel.org>; Mon, 16 Dec 2019 21:07:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=V14mNc57rBCn5QXF+8CWHLJ6BSS2smsHIE6g4bsKyNc=;
-        b=sXvy3EFlmGI5SJhX3YH9gmkc1gRPIaRf3T811fFzakzUz+YpEqGrVXfQhg2aC1E7Ex
-         jrAQVlOWi/NHpU976sWQt5twlkAxiu7EzgOFlO68jjyLSCejiVfTncTTSxPAMn57+Gf5
-         03CD7bF/+wua6G635t4vfroc9ss5wyts96+tU6nsYgoJPSgzNO5wxNW76bEN+3zds5Zs
-         pveHGQa0jVd6u+/2wB7R3x9MwsEbzHx5mKiQeSaxDKUqjHj7uOcAbcud/4bK14RAouKB
-         8NgHEFcGkhJozeGbpf2oM495KeGSangbMecds3Z6dU/B6/Bro3bCKNP0DPFqwKQRZts1
-         n4Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V14mNc57rBCn5QXF+8CWHLJ6BSS2smsHIE6g4bsKyNc=;
-        b=QbA/4V/kJNwq6DbGsqaQtyTJCoJjTg7Q4p7jH7InW4wHPQ4Wq36qZC5r7UKy1d3rNu
-         eX0TJWNraGnm4DJBUJH4rOn7aXmpz6wVZyQJHWQX5Z0SMPhROmqnGDcnQG6sb2KVFLp6
-         weJOHZb6onpWKIxp3YsrONv/Ov+FAKksFHG3NGPIDZ8b/AdCypFntOWaiX5ZgIlWqUX5
-         6m3+MZT4J5iyNSNiy/3Pb1frmoVeLXO8sA78NaLoaifnSo4v+lmssEoQUFT4erdUW4Zk
-         iLpNkzfZVhQ47HT5yCTTyTD4NNLpHwZNZIWPL4DWOMDpAzhRqvS1EN2g5loCSWZDGpBx
-         HesA==
-X-Gm-Message-State: APjAAAU+bxKAVRxRyaMrHFFw/2AE7JuS2h+rhYiFdcE5hA3ybTRkaDtS
-        pktj2ATr8A94y00QHPggjYwJvyrq
-X-Google-Smtp-Source: APXvYqy4Nr75QxqB5ZGhZijeD0astqPaSE+H6AqqTNy5sFfMpBWf325AFIhnBMWjkodUljwif78XXg==
-X-Received: by 2002:adf:ebc1:: with SMTP id v1mr33454609wrn.351.1576559266628;
-        Mon, 16 Dec 2019 21:07:46 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e6sm23950681wru.44.2019.12.16.21.07.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 16 Dec 2019 21:07:46 -0800 (PST)
-Message-Id: <4ea4eeae0c1e23221012855168bf6640be93fd4f.1576559263.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.494.git.1576559263.gitgitgadget@gmail.com>
-References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Dec 2019 05:07:43 +0000
-Subject: [PATCH 2/2] Documentation/git-log: mention that line-log regex must
- match in starting revision
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1725856AbfLQFWZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 00:22:25 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48282 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725796AbfLQFWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 00:22:25 -0500
+Received: (qmail 29695 invoked by uid 109); 17 Dec 2019 05:22:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 17 Dec 2019 05:22:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19660 invoked by uid 111); 17 Dec 2019 05:27:01 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 17 Dec 2019 00:27:01 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 17 Dec 2019 00:22:24 -0500
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] Makefile: drop GEN_HDRS
+Message-ID: <20191217052224.GA2762303@coredump.intra.peff.net>
+References: <xmqq1rt7hkp6.fsf@gitster-ct.c.googlers.com>
+ <20191214003820.GA927924@coredump.intra.peff.net>
+ <20191214010002.GA945704@coredump.intra.peff.net>
+ <xmqqlfrcje1f.fsf@gitster-ct.c.googlers.com>
+ <20191216192014.GA2678964@coredump.intra.peff.net>
+ <20191217012756.GQ135450@google.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "Thomas Rast <tr@thomasrast.ch>, Junio C Hamano" <gitster@pobox.com>,
-        Matthieu Moy <Matthieu.Moy@imag.fr>,
-        Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20191217012756.GQ135450@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Mon, Dec 16, 2019 at 05:27:56PM -0800, Emily Shaffer wrote:
 
-When giving a regex as parameter <start> or <end> in
-`git log -L <start>,<end>:<file>`, or a function name in
-`git log -L :<funcname>:<file>`, the given regex must match in the starting
-revision, or else the command exits with a fatal error.
+> > Yeah, I don't think there's any change in behavior here, since with the
+> > exception of hdr-check, every mention of $(LIB_H) also mentioned
+> > $(GENERATED_H). And in the case of hdr-check, we explicitly exclude the
+> > only item found in $(GENERATED_H).
+> 
+> To check my understanding - hdr-check just says "the headers are
+> syntactically correct", right? $HCO's target '-o /dev/null' says
+> "don't save the output", '-c' says "just compile, don't link", and '-xc'
+> says "in C"; it expands to a target for each file ending in .h but not
+> in $EXCEPT_HDRS, and hdr-check calls each one of those expanded targets,
+> so I think I understand hdr-check is compiling each header...
 
-This is not obvious in the documentation, so add a note to that
-effect.
+Sort of.  It's less about "syntactically correct" (which we'd find out
+easily when we try to compile it) and more about "does not have
+unexpected dependencies on other files".
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/git-log.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+E.g., imagine I write a header foo.h that mentions "struct bar", which
+is declared in bar.h. If the only C file that uses that does:
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index 1c52bf184d..5c3fd39048 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -76,7 +76,8 @@ produced by `--stat`, etc.
- 	(or the function name regex <funcname>) within the <file>.  You may
- 	not give any pathspec limiters.  This is currently limited to
- 	a walk starting from a single revision, i.e., you may only
--	give zero or one positive revision arguments.
-+	give zero or one positive revision arguments, and any given regex for
-+	<start> or <end> (or <funcname>) must match in the starting revision.
- 	You can specify this option more than once. Implies `--patch`.
- 	If ``:<funcname>'' is given, implies `--function-context`.
- 	Patch output can be suppressed using `-s`, but other diff formats
--- 
-gitgitgadget
+  #include "bar.h"
+  #include "foo.h"
+
+then the compiler is happy. But I've laid a trap for somebody later, who
+does just:
+
+  #include "foo.h"
+
+and gets an annoying compiler error (which is trivial to fix in this
+example, but can sometimes get complicated to untangle).
+
+So we declared a rule that header files should be self-sufficient
+(modulo git-compat-util.h), and hdr-check is the way to find out if that
+is true.
+
+> > but I'm not sure if that is really turning up any useful problems. I
+> > suppose somebody besides help.c could include command-list.h, in which
+> > case some of those MAYBE_UNUSED bits could become useful.
+> 
+> Firstly, I think if someone besides help.c includes command-list.h it
+> blows up because there's no include guards :)
+
+Only if another header file does it, which could easily cause double
+inclusion within the same source file. It's perfectly fine for another
+translation unit to include it.
+
+(Side note: builtin/help.c is declared in the Makefile as depending on
+it, but doesn't seem to actually include it).
+
+> My gut wants to say, "I need to be sure my generated header is correct!"
+> But it seems that will also be checked when I try to include that header
+> from something actually important. So maybe it's not actually useful.
+> But then it seems like hdr-check target isn't that useful for anybody,
+> since those headers should always be included sometime down the road (or
+> why have them). So that makes me think I must still be missing
+> something, like maybe I parsed hdr-check wrong.
+
+I think this is the "it compiles now but you've laid a trap..." thing
+mentioned above.
+
+As it is, command-list.h _does_ have such a trap; you need to include
+gettext.h first. But since so few callers use it (and are likely to use
+it) nobody has really noticed or cared.
+
+-Peff
