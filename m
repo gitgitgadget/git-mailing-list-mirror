@@ -2,183 +2,194 @@ Return-Path: <SRS0=ZKiS=2H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 92FF5C2D0D2
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E432C43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:05:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 620B32072D
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 10:41:17 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V2m0AJwZ"
+	by mail.kernel.org (Postfix) with ESMTP id 354752064B
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 11:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbfLQKlQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 05:41:16 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35887 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbfLQKlN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 05:41:13 -0500
-Received: by mail-wm1-f68.google.com with SMTP id p17so2543719wma.1
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 02:41:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=1nfSYCSnOPOFBUrxA7NbIL9qkJn0oXSIHR7HmoYxjt8=;
-        b=V2m0AJwZI2P0HmKZpixDQek6hEMHSuaFAUy73qx7CmNNBTVfelAA89JPQsW1uvPOBy
-         0ZFZiazsKvc6Is/lpLmqJbxPA/9vI9s+TU8iDHP+R2cvfa6OK8mHZeJTWi/2E0qxhnFh
-         xZo+XbfvR3OQF9tMOlmaPW6VDL7mW/EcqqbjOY5zTkSNLdng1DCj/WNyNZwt0lrYjCHQ
-         MOxvfOpvtzVDxanh6ZTdbtb6iXRH0smtwvRJYfJVRG5cNMv+YSfuCsj+5JUulup7JSQe
-         ToVWT95KRICzy1aljpqpgSJsaZOz23RNkC+T1XFpdokP59zwSw9ui1ijQV6pvN+/7U3k
-         MOQg==
+        id S1726730AbfLQLFE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 06:05:04 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:40301 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726383AbfLQLFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 06:05:04 -0500
+Received: by mail-wr1-f45.google.com with SMTP id c14so10818597wrn.7
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 03:05:02 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=1nfSYCSnOPOFBUrxA7NbIL9qkJn0oXSIHR7HmoYxjt8=;
-        b=j6V/3PW5lKjH0k8DIxnkXzOKWoWnpiYleXetshnEouxvO4MXBtM/gcs9+vIGHpVKQC
-         LgDoiEoBz2+y9v98KVsfbwl4hpdZ3oLO+2VYGk4up6hZZOcpp24RXWKKCHOYbouXyqh+
-         OA85CScZtRC2tjmSn/llwOg1TkfBAb3mHTnq4Iy0FgwfRY7D8/kgHoNKAQk1VuAvycac
-         XczdPppF/PiSPauLcL9LPIgpUGnGKBRyI1LV7Vv+Gq80uYJcwmUR6K5N6IWWHtYLsV5A
-         GKw2MO48zBkPD+gv006bpBClZHlWRZxBUtVpYEIFgIh+z9S6ys/ee8Yllsf1MZVBQ4J0
-         yWRw==
-X-Gm-Message-State: APjAAAXu9vj5m48VFe6lv+MvZBqxxBKYS3kTrnXO4/tv3R4P58xnAsmf
-        Lu3GhB4vhlNTWNhmQrLVLwZ7Wp4r
-X-Google-Smtp-Source: APXvYqwLgjoUmeTD2xeS4xeasKZxSxv3n/OyH/C9b5Dgl8NQVWXn5/n4acVteWKMLsDV39JU/ieDzg==
-X-Received: by 2002:a1c:9a44:: with SMTP id c65mr4952544wme.30.1576579271443;
-        Tue, 17 Dec 2019 02:41:11 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n189sm2605332wme.33.2019.12.17.02.41.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Dec 2019 02:41:10 -0800 (PST)
-Message-Id: <b63fca6dabd6f5dbbc8280647146153e82aca77c.1576579264.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.174.git.1576579264.gitgitgadget@gmail.com>
-References: <pull.174.git.1576579264.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 17 Dec 2019 10:41:03 +0000
-Subject: [PATCH 6/7] built-in add -p: implement the "worktree" patch modes
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=7rHcVBCoBsSlc8Y25AXCInGoMk6tE88rJ75xUXP12mQ=;
+        b=gnlADFZGUS1G9uziLv5ZkyJTer8Y/ZUA/vFLd3KaqB4Tq+kTGmkkgHW4jMhvRskNeJ
+         F8+ln3XcsQ9791i1yAGXzeFrqqeRABiGjYSZ0q4Q+dm3AwYa7lh4cdVoC3APkJ3nA1mp
+         GZVQMD4cJzK1al3NScjXC9VzeUxxnNtNpfrtQvB/J/kmnd+oLmRZGm3cy20j0rEV7MwN
+         fzlI2DvgBuGlx+iccvlfG5AvG2ZYAhE2VOyVGIRqh4xR6Wa+ITSb0Yd9fKDKw/XvX7nU
+         wR5Ny4c7G8ZU+AlJ+aBwEDY9+G3i0IDed1cJ7o8weCuYRWHzeOMbifADIw3EAu+O69c/
+         5BbQ==
+X-Gm-Message-State: APjAAAWzSDt08wOezrVZoNRq1viio4T7dyH5m5RY+y6TglmsoQCyKv3P
+        L0CR+NrtuyOMpLGmXekofJTM+n1sfWJMYK7wgFxMIw==
+X-Google-Smtp-Source: APXvYqy0pVChJMcu1P6YwjsLDas/TzG47ucvJmWirS1Si9LSJdTZdCrViSakYy+Bp+zIPJFELX+7KuY6O7sut3/orNY=
+X-Received: by 2002:adf:df90:: with SMTP id z16mr38599100wrl.273.1576580701714;
+ Tue, 17 Dec 2019 03:05:01 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CA+PLxnUR2skor9CGfDKfEEm8XTmoHwM2cDf5Kpgt-ppo=4zhbQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1912152209020.46@tvgsbejvaqbjf.bet> <CA+PLxnWLWckpZdjy8XQLbO0EVJ1khiyUYi1T=Mcy_rBkvbLpZA@mail.gmail.com>
+ <20191217073306.GA3313061@coredump.intra.peff.net>
+In-Reply-To: <20191217073306.GA3313061@coredump.intra.peff.net>
+From:   Mikael Simonsson <m@mikaelsimonsson.com>
+Date:   Tue, 17 Dec 2019 11:04:50 +0000
+Message-ID: <CA+PLxnVzu0zDtpT2T660UGhZ0RvFcq50nPfZz9Que7_7mqiSyQ@mail.gmail.com>
+Subject: Re: Bug? git commit fileA tries to delete fileB and other oddities
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+git bisect made that pretty easy, thanks. It looks like it started
+with this commit:
 
-This is a straight-forward port of 2f0896ec3ad4 (restore: support
---patch, 2019-04-25) which added support for `git restore -p`.
+"unpack-trees: optimize walking same trees with cache-tree"
+https://github.com/git/git/commit/b4da37380b7774248086f42bcd59397a44e1ac79
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- add-interactive.h |  1 +
- add-patch.c       | 51 +++++++++++++++++++++++++++++++++++++++++++++++
- builtin/add.c     |  2 ++
- 3 files changed, 54 insertions(+)
+(I ran git bisect between tags v2.19.2 and v2.20.0.)
 
-diff --git a/add-interactive.h b/add-interactive.h
-index f865f1e8ca..4895ed1df5 100644
---- a/add-interactive.h
-+++ b/add-interactive.h
-@@ -28,6 +28,7 @@ enum add_p_mode {
- 	ADD_P_STASH,
- 	ADD_P_RESET,
- 	ADD_P_CHECKOUT,
-+	ADD_P_WORKTREE,
- };
- 
- int run_add_p(struct repository *r, enum add_p_mode mode,
-diff --git a/add-patch.c b/add-patch.c
-index dea99a79a4..2ad18dc3cb 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -174,6 +174,50 @@ static struct patch_mode patch_mode_checkout_nothead = {
- 			"the file\n"),
- };
- 
-+static struct patch_mode patch_mode_worktree_head = {
-+	.diff = { "diff-index", NULL },
-+	.apply = { "-R", NULL },
-+	.apply_check = { "-R", NULL },
-+	.is_reverse = 1,
-+	.prompt_mode = {
-+		N_("Discard mode change from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard deletion from index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Discard this hunk from index and worktree [y,n,q,a,d%s,?]? "),
-+	},
-+	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+			     "will immediately be marked for discarding."),
-+	.help_patch_text =
-+		N_("y - discard this hunk from worktree\n"
-+		   "n - do not discard this hunk from worktree\n"
-+		   "q - quit; do not discard this hunk or any of the remaining "
-+			"ones\n"
-+		   "a - discard this hunk and all later hunks in the file\n"
-+		   "d - do not discard this hunk or any of the later hunks in "
-+			"the file\n"),
-+};
-+
-+static struct patch_mode patch_mode_worktree_nothead = {
-+	.diff = { "diff-index", "-R", NULL },
-+	.apply = { NULL },
-+	.apply_check = { NULL },
-+	.is_reverse = 0,
-+	.prompt_mode = {
-+		N_("Apply mode change to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply deletion to index and worktree [y,n,q,a,d%s,?]? "),
-+		N_("Apply this hunk to index and worktree [y,n,q,a,d%s,?]? "),
-+	},
-+	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
-+			     "will immediately be marked for applying."),
-+	.help_patch_text =
-+		N_("y - apply this hunk to worktree\n"
-+		   "n - do not apply this hunk to worktree\n"
-+		   "q - quit; do not apply this hunk or any of the remaining "
-+			"ones\n"
-+		   "a - apply this hunk and all later hunks in the file\n"
-+		   "d - do not apply this hunk or any of the later hunks in "
-+			"the file\n"),
-+};
-+
- struct hunk_header {
- 	unsigned long old_offset, old_count, new_offset, new_count;
- 	/*
-@@ -1549,6 +1593,13 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
- 			s.mode = &patch_mode_checkout_head;
- 		else
- 			s.mode = &patch_mode_checkout_nothead;
-+	} else if (mode == ADD_P_WORKTREE) {
-+		if (!revision)
-+			s.mode = &patch_mode_checkout_index;
-+		else if (!strcmp(revision, "HEAD"))
-+			s.mode = &patch_mode_worktree_head;
-+		else
-+			s.mode = &patch_mode_worktree_nothead;
- 	} else
- 		s.mode = &patch_mode_stage;
- 	s.revision = revision;
-diff --git a/builtin/add.c b/builtin/add.c
-index f4d6eb9e06..6fa2b2dd17 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -208,6 +208,8 @@ int run_add_interactive(const char *revision, const char *patch_mode,
- 			mode = ADD_P_RESET;
- 		else if (!strcmp(patch_mode, "--patch=checkout"))
- 			mode = ADD_P_CHECKOUT;
-+		else if (!strcmp(patch_mode, "--patch=worktree"))
-+			mode = ADD_P_WORKTREE;
- 		else
- 			die("'%s' not supported", patch_mode);
- 
--- 
-gitgitgadget
 
+Testing the commit in question:
+% git checkout b4da37380b7774248086f42bcd59397a44e1ac79
+% gmake -j 6 NO_OPENSSL=YesPlease NO_PERL=YesPlease NO_TCLTK=YesPlease
+NO_GETTEXT=YesPlease NO_EXPAT=YesPlease all
+
+% ~/tmp/git-source/git version
+git version 2.18.0.751.gb4da37380b
+
+% ~/tmp/git-source/git commit null_terminated.hh
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#       deleted:    algo/find.hh
+#       new file:   app/.reserved
+#       deleted:    ascii/contains_icase.hh
+#       deleted:    ascii/contains_icase.test.cc
+#       modified:   null_terminated.hh
+#
+# Changes not staged for commit:
+Aborting commit due to empty commit message.
+
+
+Note that the latest version behaves differently (it tries to delete
+another file):
+
+% git version
+git version 2.24.1
+
+% git commit null_terminated.hh
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#       deleted:    defer.hh
+#       modified:   null_terminated.hh
+Aborting commit due to empty commit message.
+
+
+The commit before "unpack-trees: optimize walking same trees with
+cache-tree" works as it should:
+% git checkout b4da37380b7774248086f42bcd59397a44e1ac79^
+% gmake -j 6 NO_OPENSSL=YesPlease NO_PERL=YesPlease NO_TCLTK=YesPlease
+NO_GETTEXT=YesPlease NO_EXPAT=YesPlease all
+
+% ~/tmp/git-source/git version
+git version 2.18.0.750.g0d1ed5963d
+
+% ~/tmp/git-source/git commit null_terminated.hh
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#       modified:   null_terminated.hh
+#
+# Changes not staged for commit:
+Aborting commit due to empty commit message.
+
+
+Here's my local commit from about a week ago when the problems started.
+
+I'm sure I ran "git commit readme.md" because I had several files
+staged. The commit pulled in 3 staged files (I think there were more)
+and deleted 3 files that 100% weren't staged.
+
+% git show --numstat 7d5d43d849f1391b3cc11f12e037b8cb5174e3a3
+commit 7d5d43d849f1391b3cc11f12e037b8cb5174e3a3
+Author: Mikael Simonsson <m@mikaelsimonsson.com>
+Date:   Sun Dec 8 10:38:38 2019 +0000
+
+    Add short info and requirements for ranges
+
+56      0       algo/find.hh
+0       1       app/.reserved
+16      0       ascii/contains_icase.hh
+28      0       ascii/contains_icase.test.cc
+0       41      bench/bench.hh
+0       41      debug.hh
+76      0       readme.md
+
+-Mikael
+
+
+
+On Tue, Dec 17, 2019 at 7:33 AM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Dec 16, 2019 at 09:50:33AM +0000, Mikael Simonsson wrote:
+>
+> > I will try to recreate the problem with a new repository.
+> >
+> > So far I think I've narrowed it down to a bug introduced in git 2.20.0.
+> >
+> > Not buggy:
+> > [...]
+>
+> If you can build Git from source, you might try using "git bisect" to
+> find the exact commit where the problem starts.
+>
+> > The buggy versions all try to delete fileX when running "git commit fileA":
+> >
+> > % git commit fileA
+> >
+> > # Please enter the commit message for your changes. Lines starting
+> > # with '#' will be ignored, and an empty message aborts the commit.
+> > #
+> > # On branch master
+> > # Your branch is up to date with 'origin/master'.
+> > #
+> > # Changes to be committed:
+> > #       deleted:    fileX
+> > #       modified:   fileA
+> > #
+> > # Changes not staged for commit:
+>
+> Is there anything about "fileX" and "fileA"'s names that might be
+> relevant? E.g., might they case-fold to the same name or something?
+>
+> -Peff
