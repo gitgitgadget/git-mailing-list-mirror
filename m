@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49F06C43603
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2CA9C2D0CD
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1FF60207FF
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A233207FF
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n19m+5EN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qlh6QTMM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbfLQMBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 17 Dec 2019 07:01:51 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40023 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727617AbfLQMBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 07:01:49 -0500
-Received: by mail-pg1-f195.google.com with SMTP id k25so5556095pgt.7
-        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:49 -0800 (PST)
+        id S1727691AbfLQMBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 17 Dec 2019 07:01:53 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:34101 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727617AbfLQMBw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 07:01:52 -0500
+Received: by mail-pj1-f67.google.com with SMTP id j11so4497977pjs.1
+        for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=tpUbgt4OCs0Mx0LsvTWXKmwc8VOcR5i+pTPppUKj8No=;
-        b=n19m+5ENwdbbmjhO71zkgTSxnZMU0U1vuw/ePB1iG2zuZ0XYR6PQQmNPyPfmH9tZl7
-         yQ8u1uni1yJgYttGfsCdOhShZzzMHN9+gbu7Chwk/47DIYj1yCmyomzkdbsn08HfSL4b
-         m/q8Lj0yVXmB+QnFdmz6ABm7u4FRzGnAmynsgebi1zJeQ+LwW1s0E47p73upT98gOG4A
-         NLOuJMSNqSeBQGfEBSqZGDL56Wv+Lx7D9e5+Qm6owC3zA4dsq3fir0xmuHD1ZZU5jjuv
-         E+ZmZpFzcxKnfjE780KFNECL9kPryLzLwNWVblYFhf/wE9qjePAY+Xr5wkm9nmYmZv4d
-         xzGQ==
+        bh=CAkrqt19tr4PU/c0NR+jni1gYZ5EFpMiOfpujG+skJw=;
+        b=qlh6QTMMyfntv/5BQX8dxbz70nKhEWQRRQnH+EOZyuKdTdeRMh9a8oejq7JaQbroeo
+         LJmN7nmewLxsv5dZvBVVrKRjnWyUzQz1gV91Y9AZjoeKHVfagieQ6YDYey4DETSa9072
+         8FgMXnV5LeEAtHjdmTtmCcobvU9Ck0OGcqTrykwLBOF1fssUCaSV3wKKycNNhPR6JkQd
+         GV5FCcEJhbuc2jUFCFpKokUyXhRkUOmCgScEXlWqJJFjoMihXobf9RPSkF3W481wgvGm
+         PpWcLs+pPG1vn7x2ybo5PQ8OjSao6JO6X7KAT9xTz5t5PLhHWWoXmLP3RkQUraLl9U9W
+         GW6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tpUbgt4OCs0Mx0LsvTWXKmwc8VOcR5i+pTPppUKj8No=;
-        b=aXNXmkMl72QRDnZ/v5FEKSLOCJ8pUa1PHuZzEY5XB1pigVHUWKWiS1KRyZ35FRvU1i
-         NjBKtRkZdJ4dQ7omsUPHxKG5DP+w9PPCOMAZVrfCoQ0WXj4psedmJbxdPs9O0suiWAua
-         uoc6niDLCNwECbTPQsAuDx5i9FES30wcC52yjsdcjj3pSZJLPDgXhN03B0ULir4FOKsy
-         I61hRaUbPt19VlguBeORcp9mBRAr5mq21EgIDC0uKvWZxrWw822uNImc2AKXCPnzNPkH
-         ODuDjmfSwgrkxjTEkbyLHUxTI9s6TDJ5bQ/UNHtALQjWcHyEs42ZqXysHWR2s+GITC92
-         wgdQ==
-X-Gm-Message-State: APjAAAWXCZUdc5zpRtochooRMTg1Opf/45vrpWVk48PK0oF2CoyO9eZZ
-        PxQXGd8XkLiLfcuUmfc7ccJDpHJe
-X-Google-Smtp-Source: APXvYqz+k233OwudOrosTSTrOg0auRdv0LeXaHwg6T4lUbmxSXjttQGH0OX0tg07nZ/fkgpuUSJdRQ==
-X-Received: by 2002:a62:1552:: with SMTP id 79mr21782465pfv.156.1576584108914;
-        Tue, 17 Dec 2019 04:01:48 -0800 (PST)
+        bh=CAkrqt19tr4PU/c0NR+jni1gYZ5EFpMiOfpujG+skJw=;
+        b=Yr7Lj+Y789vDyoREnxrQL7zzBqHBJxJAC/BVK53k1dV8VIH8p+omII+eOmi1KI4LAS
+         yJsYDQvCtQ2F7mV0dtqCHxGE853WsQNZY3oW1/jPVAXNSDS8f52kwH/e28SAjWA01iwo
+         GtRYlL04AwhZsVfRQNJ+WIyKNU4CVVq7yJShZH4OzMweZ+cC4qh5wYYuuYG0PdorHlS5
+         5omd9C5MsifuLAr+KvtXbpThhcYb2vd6rvBkL4pO2TfhshnSpmTNc0fHwlqb0fZXcWqH
+         9n/aRaybYUJX6WaZmyBPO+lKauTtvo7UDSUxMnDWD6F6orKMTRqIyIsZ8C9vbOrVyv9A
+         86IQ==
+X-Gm-Message-State: APjAAAVakKdmkT2aumhOd/Jio65P9R8Q2wwGIlyjwdtKnwYxeVfL+a+b
+        gDjCwX8Zl9lCbqKlYZmmbTjdY0Gq
+X-Google-Smtp-Source: APXvYqxHuTPLfRZrOwGeP7VJXTakcVi2OyutU6MmTtA55xVAWaDNdPe/DTE0wGi6z+5iw3RO61Ki8A==
+X-Received: by 2002:a17:902:be02:: with SMTP id r2mr21274154pls.76.1576584111222;
+        Tue, 17 Dec 2019 04:01:51 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.48
+        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.50
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 04:01:48 -0800 (PST)
+        Tue, 17 Dec 2019 04:01:50 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 08/15] t0020: s/test_must_fail has_cr/! has_cr/
-Date:   Tue, 17 Dec 2019 04:01:33 -0800
-Message-Id: <8adc5cd5aaeef76ddeef459c79ecec7a05a1fd7b.1576583819.git.liu.denton@gmail.com>
+Subject: [PATCH 11/15] t1307: reorder `nongit test_must_fail`
+Date:   Tue, 17 Dec 2019 04:01:36 -0800
+Message-Id: <2dd91c5568835f8263d18db62c787deb1eeb1650.1576583819.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.0.627.geba02921db
 In-Reply-To: <cover.1576583819.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com>
@@ -71,88 +71,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail function should only be used for git commands since
-we should assume that external commands work sanely. Since has_cr() just
-wraps a tr and grep pipeline, replace `test_must_fail has_cr` with
-`! has_cr`.
+In the future, we plan on only allowing `test_must_fail` to work on a
+restricted subset of commands, including `git`. Reorder the commands so
+that `nongit` comes before `test_must_fail`. This way, `test_must_fail`
+operates on a git command.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0020-crlf.sh | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ t/t1307-config-blob.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 8281babde0..4940e05a2e 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -159,8 +159,8 @@ test_expect_success 'checkout with autocrlf=input' '
- 	rm -f tmp one dir/two three &&
- 	git config core.autocrlf input &&
- 	git read-tree --reset -u HEAD &&
--	test_must_fail has_cr one &&
--	test_must_fail has_cr dir/two &&
-+	! has_cr one &&
-+	! has_cr dir/two &&
- 	git update-index -- one dir/two &&
- 	test "$one" = $(git hash-object --stdin <one) &&
- 	test "$two" = $(git hash-object --stdin <dir/two) &&
-@@ -237,9 +237,9 @@ test_expect_success '.gitattributes says two is binary' '
- 	git config core.autocrlf true &&
- 	git read-tree --reset -u HEAD &&
- 
--	test_must_fail has_cr dir/two &&
-+	! has_cr dir/two &&
- 	verbose has_cr one &&
--	test_must_fail has_cr three
-+	! has_cr three
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 37dc689d8c..002e6d3388 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -74,7 +74,7 @@ test_expect_success 'can parse blob ending with CR' '
  '
  
- test_expect_success '.gitattributes says two is input' '
-@@ -248,7 +248,7 @@ test_expect_success '.gitattributes says two is input' '
- 	echo "two crlf=input" >.gitattributes &&
- 	git read-tree --reset -u HEAD &&
- 
--	test_must_fail has_cr dir/two
-+	! has_cr dir/two
+ test_expect_success 'config --blob outside of a repository is an error' '
+-	test_must_fail nongit git config --blob=foo --list
++	nongit test_must_fail git config --blob=foo --list
  '
  
- test_expect_success '.gitattributes says two and three are text' '
-@@ -270,7 +270,7 @@ test_expect_success 'in-tree .gitattributes (1)' '
- 	rm -rf tmp one dir .gitattributes patch.file three &&
- 	git read-tree --reset -u HEAD &&
- 
--	test_must_fail has_cr one &&
-+	! has_cr one &&
- 	verbose has_cr three
- '
- 
-@@ -280,7 +280,7 @@ test_expect_success 'in-tree .gitattributes (2)' '
- 	git read-tree --reset HEAD &&
- 	git checkout-index -f -q -u -a &&
- 
--	test_must_fail has_cr one &&
-+	! has_cr one &&
- 	verbose has_cr three
- '
- 
-@@ -291,7 +291,7 @@ test_expect_success 'in-tree .gitattributes (3)' '
- 	git checkout-index -u .gitattributes &&
- 	git checkout-index -u one dir/two three &&
- 
--	test_must_fail has_cr one &&
-+	! has_cr one &&
- 	verbose has_cr three
- '
- 
-@@ -302,7 +302,7 @@ test_expect_success 'in-tree .gitattributes (4)' '
- 	git checkout-index -u one dir/two three &&
- 	git checkout-index -u .gitattributes &&
- 
--	test_must_fail has_cr one &&
-+	! has_cr one &&
- 	verbose has_cr three
- '
- 
+ test_done
 -- 
 2.24.0.627.geba02921db
 
