@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2CA9C2D0CD
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31A9CC43603
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A233207FF
-	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04A70207FF
+	for <git@archiver.kernel.org>; Tue, 17 Dec 2019 12:01:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qlh6QTMM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jqAhIL2T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727691AbfLQMBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727706AbfLQMBx (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 17 Dec 2019 07:01:53 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:34101 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727617AbfLQMBw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 17 Dec 2019 07:01:52 -0500
-Received: by mail-pj1-f67.google.com with SMTP id j11so4497977pjs.1
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:43647 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727656AbfLQMBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 17 Dec 2019 07:01:51 -0500
+Received: by mail-pf1-f195.google.com with SMTP id h14so5529013pfe.10
         for <git@vger.kernel.org>; Tue, 17 Dec 2019 04:01:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=CAkrqt19tr4PU/c0NR+jni1gYZ5EFpMiOfpujG+skJw=;
-        b=qlh6QTMMyfntv/5BQX8dxbz70nKhEWQRRQnH+EOZyuKdTdeRMh9a8oejq7JaQbroeo
-         LJmN7nmewLxsv5dZvBVVrKRjnWyUzQz1gV91Y9AZjoeKHVfagieQ6YDYey4DETSa9072
-         8FgMXnV5LeEAtHjdmTtmCcobvU9Ck0OGcqTrykwLBOF1fssUCaSV3wKKycNNhPR6JkQd
-         GV5FCcEJhbuc2jUFCFpKokUyXhRkUOmCgScEXlWqJJFjoMihXobf9RPSkF3W481wgvGm
-         PpWcLs+pPG1vn7x2ybo5PQ8OjSao6JO6X7KAT9xTz5t5PLhHWWoXmLP3RkQUraLl9U9W
-         GW6A==
+        bh=EMvx28QOUtxXZ96LQ6qQggtpOTuwWkmPV+zOmRtkw9Q=;
+        b=jqAhIL2TJgBIu5FCPxPhdJ0TdkAiezMkx5QqcvlY3kz5giBBY6qKeI4YF3C13932md
+         NUl1CO0bea7RpC/ddGDufEhhiFcKzQsp2hh+R/XEl+3T6AcL8GXD/Sw+aNIyKkKEIqVL
+         Gtb6C7sZwY1GuR/JNsgPlWw39jOQLLlvBf00bAlLFgw0shH1k0Ij3q0jgKzaRSRhki1K
+         yg9sSluhdBvbJyIEl8XOvJiDxBIYOLEFbDpga94WbIe7XI9UeixlEkOIDKxrxVtumB4Z
+         cr1lj2dBrpULi652MqjvQhouc+p7P6WdjW450WA4KXw1sO74VM+Ur4KiC3/vFzxetcG3
+         4JSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=CAkrqt19tr4PU/c0NR+jni1gYZ5EFpMiOfpujG+skJw=;
-        b=Yr7Lj+Y789vDyoREnxrQL7zzBqHBJxJAC/BVK53k1dV8VIH8p+omII+eOmi1KI4LAS
-         yJsYDQvCtQ2F7mV0dtqCHxGE853WsQNZY3oW1/jPVAXNSDS8f52kwH/e28SAjWA01iwo
-         GtRYlL04AwhZsVfRQNJ+WIyKNU4CVVq7yJShZH4OzMweZ+cC4qh5wYYuuYG0PdorHlS5
-         5omd9C5MsifuLAr+KvtXbpThhcYb2vd6rvBkL4pO2TfhshnSpmTNc0fHwlqb0fZXcWqH
-         9n/aRaybYUJX6WaZmyBPO+lKauTtvo7UDSUxMnDWD6F6orKMTRqIyIsZ8C9vbOrVyv9A
-         86IQ==
-X-Gm-Message-State: APjAAAVakKdmkT2aumhOd/Jio65P9R8Q2wwGIlyjwdtKnwYxeVfL+a+b
-        gDjCwX8Zl9lCbqKlYZmmbTjdY0Gq
-X-Google-Smtp-Source: APXvYqxHuTPLfRZrOwGeP7VJXTakcVi2OyutU6MmTtA55xVAWaDNdPe/DTE0wGi6z+5iw3RO61Ki8A==
-X-Received: by 2002:a17:902:be02:: with SMTP id r2mr21274154pls.76.1576584111222;
-        Tue, 17 Dec 2019 04:01:51 -0800 (PST)
+        bh=EMvx28QOUtxXZ96LQ6qQggtpOTuwWkmPV+zOmRtkw9Q=;
+        b=Cg/Jfz/kxvfvrVua/Xdxrl1jR31RPqX35LF+smOp19oGTyuQ7dvAk1eO3LsefizqRc
+         ZyF6IoYMp7fM09Jl9m7yU297GkE+WIF5hR17/csvhbfBJH6wPlQOBDAI7eKFMJuh014U
+         FUucf7YR2KcoRtIwq07QPr3GYjuAtLuKVZw0rJx1172Ch+TUatQ0DMTyXSrp4//PIYp8
+         adbdQ3AKzQwzHPtPnrH+JwPCit0XwJK3N2vuEuBkdDCb0/sRg0FyeB8uWEra499uYU0J
+         sqmeKrgYZstK7ZyeblIERb15YS2DLVWO7r7ikMNO1dGe0iOb3eeWiOr2c7JSFqeGBUWL
+         POcg==
+X-Gm-Message-State: APjAAAVJPgSas7InLJneW93Lb8/eVPUkB7clvhRV2eFPOvfYK0okv87Z
+        Fw+DEAU/SPSROK4rgsiDFyIInFHP
+X-Google-Smtp-Source: APXvYqweRWu/DP0knN9m1hHH+G85wVzfCYFRm8hSwaoqIW2QRTecx49Ws51ZBnGFAnIOyKe762WfsA==
+X-Received: by 2002:a63:6c09:: with SMTP id h9mr24249626pgc.34.1576584110579;
+        Tue, 17 Dec 2019 04:01:50 -0800 (PST)
 Received: from archbookpro.hsd1.ca.comcast.net ([2601:646:280:1b30:b0bc:639f:d5c8:2bcf])
-        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.50
+        by smtp.gmail.com with ESMTPSA id a15sm27531723pfh.169.2019.12.17.04.01.49
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Dec 2019 04:01:50 -0800 (PST)
+        Tue, 17 Dec 2019 04:01:49 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 11/15] t1307: reorder `nongit test_must_fail`
-Date:   Tue, 17 Dec 2019 04:01:36 -0800
-Message-Id: <2dd91c5568835f8263d18db62c787deb1eeb1650.1576583819.git.liu.denton@gmail.com>
+Subject: [PATCH 10/15] t1306: convert `test_might_fail rm` to `rm -f`
+Date:   Tue, 17 Dec 2019 04:01:35 -0800
+Message-Id: <d39422505f16a14c64514b8a78ae351f41b75c44.1576583819.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.0.627.geba02921db
 In-Reply-To: <cover.1576583819.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com>
@@ -71,29 +71,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the future, we plan on only allowing `test_must_fail` to work on a
-restricted subset of commands, including `git`. Reorder the commands so
-that `nongit` comes before `test_must_fail`. This way, `test_must_fail`
-operates on a git command.
+The test_must_fail() family of functions (including test_might_fail())
+should only be used on git commands. Replace `test_might_fail rm` with
+`rm -f` so that we don't use `test_might_fail` on a non-git command.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1307-config-blob.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1306-xdg-files.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
-index 37dc689d8c..002e6d3388 100755
---- a/t/t1307-config-blob.sh
-+++ b/t/t1307-config-blob.sh
-@@ -74,7 +74,7 @@ test_expect_success 'can parse blob ending with CR' '
- '
+diff --git a/t/t1306-xdg-files.sh b/t/t1306-xdg-files.sh
+index 21e139a313..dd87b43be1 100755
+--- a/t/t1306-xdg-files.sh
++++ b/t/t1306-xdg-files.sh
+@@ -153,7 +153,7 @@ test_expect_success 'Checking attributes in both XDG and local attributes files'
  
- test_expect_success 'config --blob outside of a repository is an error' '
--	test_must_fail nongit git config --blob=foo --list
-+	nongit test_must_fail git config --blob=foo --list
- '
  
- test_done
+ test_expect_success 'Checking attributes in a non-XDG global attributes file' '
+-	test_might_fail rm .gitattributes &&
++	rm -f .gitattributes &&
+ 	echo "f attr_f=test" >"$HOME"/my_gitattributes &&
+ 	git config core.attributesfile "$HOME"/my_gitattributes &&
+ 	echo "f: attr_f: test" >expected &&
+@@ -165,7 +165,7 @@ test_expect_success 'Checking attributes in a non-XDG global attributes file' '
+ test_expect_success 'write: xdg file exists and ~/.gitconfig doesn'\''t' '
+ 	mkdir -p "$HOME"/.config/git &&
+ 	>"$HOME"/.config/git/config &&
+-	test_might_fail rm "$HOME"/.gitconfig &&
++	rm -f "$HOME"/.gitconfig &&
+ 	git config --global user.name "write_config" &&
+ 	echo "[user]" >expected &&
+ 	echo "	name = write_config" >>expected &&
+@@ -183,8 +183,8 @@ test_expect_success 'write: xdg file exists and ~/.gitconfig exists' '
+ 
+ 
+ test_expect_success 'write: ~/.config/git/ exists and config file doesn'\''t' '
+-	test_might_fail rm "$HOME"/.gitconfig &&
+-	test_might_fail rm "$HOME"/.config/git/config &&
++	rm -f "$HOME"/.gitconfig &&
++	rm -f "$HOME"/.config/git/config &&
+ 	git config --global user.name "write_gitconfig" &&
+ 	echo "[user]" >expected &&
+ 	echo "	name = write_gitconfig" >>expected &&
 -- 
 2.24.0.627.geba02921db
 
