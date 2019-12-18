@@ -8,122 +8,94 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A150EC43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3BD5C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:12:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 70B45206D7
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:06:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9985821582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:12:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="k7UabW4m"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="YO15Uamf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727226AbfLRSGO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 13:06:14 -0500
-Received: from mout.web.de ([217.72.192.78]:33271 "EHLO mout.web.de"
+        id S1727323AbfLRSMF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 13:12:05 -0500
+Received: from mout.web.de ([217.72.192.78]:45785 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727121AbfLRSGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 13:06:13 -0500
+        id S1726996AbfLRSMF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 13:12:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1576692362;
-        bh=nQFdqD1h2KOBtxQsLOoiGE4X7mBO2UmD/feTWkQ0ZE4=;
+        s=dbaedf251592; t=1576692721;
+        bh=0DNz3umSex4/YibIxONLfsex2USqEjebUyWbVUgXE38=;
         h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=k7UabW4mMiNKVEnUoKuM5I3MK836C/GAfLx962EJ9P/tjFR5KWXaJpUAOajOdZET5
-         BafaU84fDDDSp1ikfYhoG20ah4PJHQoO6oGtDB3Zig6dgr3YLHzde8QVOHoCZwAwDJ
-         7tPl4P4iSDP41U9NSh1H29MB9YgAvSXqAfPQJns0=
+        b=YO15UamfTh2Kb0+XfOf1az4V16UXnwCV6zCrRyrTGnSF8qWnV1dpzwI0JzKLp4f9D
+         oMP+mOFWp7pfxgfSikaz5zTb4ni0hSjtGSmZcHKmmJomqTFV51nj58105v1fHJvJTt
+         dLS4riN1O0g6DO6jvNJYd4qVh1yIDj4fOddn152U=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.27.9]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Mg75d-1iMyCN2fa9-00NUOS; Wed, 18
- Dec 2019 19:06:02 +0100
-X-Mozilla-News-Host: news://nntp.public-inbox.org:119
+Received: from [192.168.178.26] ([79.203.27.9]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LwHkw-1hc2Vb1z8Y-0181NH; Wed, 18
+ Dec 2019 19:12:01 +0100
 To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH RESEND] t4015: improve coverage of function context test
-Message-ID: <fedd48bd-28e8-ccc8-ae50-42d9b2ea1c16@web.de>
-Date:   Wed, 18 Dec 2019 19:05:54 +0100
+Subject: [PATCH] t3501: don't create unused file
+Message-ID: <43395a82-34f9-30d1-b468-338e81467f39@web.de>
+Date:   Wed, 18 Dec 2019 19:12:00 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.9.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5bROHo3nBr/VnVNjAPX9xgpcd6nKmIe1jL67eex8WGO4ZmsWDN9
- PLjSe6t9ovURU8jeV2AC8K9QDI57eK4R9A4C6YvhTp09pBG9gOiWINaROrRI+o6XaxO29ta
- RTcR0lBgvYRL7z2BvMlFjA86SyJD/IzwFx3MITccqsPGXI6C5Hcwad6iN8RNVFMysg98cL7
- HzMYPiqyMIt+0IUYSRQsA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ixNCUV/Se3o=:HTaiBSO4c2tebJC2EaALap
- KDM8bm6WyxzP4SCIDK0m9ARpdwDocdDtIEL3JXZDQVJtnqqXgISmNlmdKH5w4vnKoJZiqC/vx
- FSIjhJV2qQe+sJ1H7pDT5b9wVC4gyUYinsO79FrGBDFey6k1UN0ZVfkNXNzUmgJOACJnTOQ4H
- msH4dMuuR8j3mSwmOrKSAJfSp7LEHBZ1wrYV9/osOgQVtymPADJGFiKB/g4Z262uetsJsOXVd
- ctct5LcQUdC4rt+5MwHH7CbVYFAXpzPLPvCTwFcPwAXS+j06mou/tGuOnGJCpnklB1fKCI8WM
- S38U0wURleayk3N5Ps9lmy48EZiTh9hVz0Ja7isnQtjZLR2mkGoTu9/j/waLVn505nW7xwqok
- OBNqC9AnyQmmLVG8Cc6jyItig1aYnbD8BATP6jST+3bq9ZxsVWKmu9zrmTyxD8mDuNkCiNWsM
- Iu3+eZIyVO+ESF6B3xHx4FwfP/IorAK1LeyOGBv8HmyBCoEyS4bmZuuICyXkd22MObzsZeefU
- LQq6FgLpZ7+8hY5uXy1WFSoNHxjBai8uG8QayldNA27NWIiowYUnqJWGgsbW3bAGEeoGunxCv
- HjTG6V6R6erNE7LTbxXkTeFXpePbmmhlqGZ+UGZRN8PtjP/BNJNxGRQK78ltIx7j/ioa9YS3h
- pX6MOMd5YpMLvxH1bgcTCcFKJ1E4ly5NR1SkKaf4IPna6BhDuVvVm8Qx2XEY70GWKQH6YFITw
- JLfVRQo9sMNEVTCfioQi55fhJbC5+n5M4PqqPYrEsiQLkY9qJUyvqcYpXdArrMRwrFCneQ7Im
- eqF6pUU8DnYLLa35bMQmuqnKOMhrtxir7sW8ioKuQH7fpZafUeIL7/Q9wfaYVnsIX7xybger3
- Zzjn5T1oZbo5mcgzN3xApbIfQ5Nt2hXY2NqZMEpGKR114I7/UO68656A3RVf9PtluwC2Il+SP
- eudF5W96sP0a+5qOWRitb5DAMeNSTK+qr2VNaqCyJEPIeshb+TruHQe337FuNBYPpUePRUMYt
- lbDBHezVG8ccGN9R9qHvk9ISdGCVTjl8ddkXFc6s/K0LfP0DRZN2ecOjvhEzn0Ni9n955p7x9
- iaa+DuQZSRRLetApaYLanMIKQGYRLnCRGnmsMPYN9bXKCMCZQWX5HsBrbDhtaTmG7fr50voPi
- +74/dXFaQAp21i+RNY17DNFWGA3Z2LhVCsfzWpU9poQC+sUbvCQrkiVN9Rt7LQ+lJwiFkdKjZ
- AfYqsHbNAfDG98ipnHwy1b3R2Ei7takgslrKOHg==
+X-Provags-ID: V03:K1:DOkR/0Rbso/KnX+gq2UmV5kR2N6sXgT/tOMVE6RUynAwxweIoEd
+ id7pqskOiqnBEoqBcSrwikmmQN/KYxN6K4T1Mn7sCWGhI7EcFdfYWS4J0eauzjJczBbcLjo
+ YdFm8UU1PKnl9ko4sM9KJOHv5fgUNwifY95AeVufiJr9K3DCVIy3AcmLjgfsHG4O7ju5zyR
+ hNYqYfRHItUubMbBTay7g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wmOoU4KbhA4=:fsa3MIhqzrE13N0bXJgafR
+ B5QBPILqtrgut0tLOExWyTLWmeU7n0bzuqhAhmtoXWDe5nJe2b5AmBU6RbqGkZvhJH86l50uC
+ 4RnIXcCb9T3vUbhhGgDNG2m/nCxUE4d8x3cE0TbPgQrBD25L+AKYcLV5nqMUb00xpyl59N10c
+ 0lS5U+4xT9rEpQM8ixI4aSNMhnQ34WWvhUYyB1zjE10rt8DMbLzU38wnPu+NFQp4u2y85hDY6
+ kYqlKMkIdJsy2A5QaE2O9agtrCyHq3WIUcWry7596y/dardvCC+jSpwWpSbYwEFUnKV5dn1qr
+ omDXx8Qx2ncWgpU6btCTYqEnjHpS/jDLfFSwiipm1gtXld4RdzAFPWnpdKnFAw5dgBo6zS4FW
+ b6RC356YhWPubU/reZH3TOlJA6ShcwgN2YTqmcQHk/yNrqMzG6j14tXA9QDaxe6pwydP7xrYF
+ LwR0bJV0veq1KvAB+5lS3rRvGnRrxS46sFeufA5bezZqzUjsZXNWSCE14qE1OHbFtvoC3MdtW
+ j1LyBXqACky8wEHqwlRyg7TTQVeJb/MxuyScQIlYYoXLCfxeogrg7hiyxI2MYucAFWdJ6ZKAN
+ JPo5UXaAjmQUlhVbVNFCE3a/ypT7xK2GzF6TdBsz4L3GtRLAcWrVa/zm2ImAMhaij8X+N3cB9
+ kAqcJT9KcDLvc7EuCB0MC8RMa/d0WWjbIKVKJJaD9+vqbP1KYuyqMHTWKSZyiT/l7VcXp6uf6
+ Y68MuFs0MVj+WRLpJNX0qxbVS1W9mXt1+kyK+Msui3rai0oLXwyvEJp4XqlWXxGFXjLWMcVBe
+ AuPawiYOs6H2D0j/olkrVKTPhTdFHd8GgNbbxCmMd3tljhQ6C4iJYKHA4YY2tg0E6zA/hJPdq
+ I2nDl4Xf56kw0g9yfr5zWEWzduueZux3Jhu51dDcWdP0UfUUwr+wA57TONyITY8e0/wHMu2bo
+ A7sLyBXMfjUrOElqm9R6pRqWBHVr/Ik6gHCRVIZokAIaBKkUijdMda0y+eK1H6WCYlOrpu1Mc
+ jlYyZKayDhsGoT9f+IebxHT4PHijxl7J6ek6Mwocqth+5DPMm75ciQkEJZo706yuCKOCPZpIC
+ 0RYuYL6G4f9DcgmFD51Kv42OkJroaAr1++o0gqwmEENy3Tyg1GWO7g+uncBYkRd0G1oNi7oC5
+ XxfMTCOObbnerfHD1GwR8XmLR19Agz48pgNd3mLqhOMLNNy6w8gWKtw472Zal53vVzhqPDO9z
+ F/eJ6FmZ5AXI8T56gP5K7rc4jz7Kkm0KTI+wtXQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Include an actual function line in the test files to check if context is
-expanded to include the whole function, and add an ignored change before
-function context to check if that one stays hidden, while the originally
-ignored change within function context is shown.
+The file "out" became unused with fd53b7ffd1 (merge-recursive: improve
+add_cacheinfo error handling, 2018-04-19); get rid of it.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
-Original submission:
-https://lore.kernel.org/git/e47b77b4-7b7a-3d59-9e24-934528c5e297@web.de/
+ t/t3501-revert-cherry-pick.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- t/t4015-diff-whitespace.sh | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
-
-diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index 65615e2fa9..59b2412c22 100755
-=2D-- a/t/t4015-diff-whitespace.sh
-+++ b/t/t4015-diff-whitespace.sh
-@@ -2051,19 +2051,24 @@ test_expect_success 'compare mixed whitespace delt=
-a across moved blocks' '
- '
-
- test_expect_success 'combine --ignore-blank-lines with --function-context=
-' '
--	test_write_lines 1 "" 2 3 4 5 >a &&
--	test_write_lines 1    2 3 4   >b &&
-+	test_write_lines    1 2 3 "" function 1 2 3 4 5 "" 6 7 8 9 >a &&
-+	test_write_lines "" 1 2 3 "" function 1 2 3 4 5    6 7 8   >b &&
- 	test_must_fail git diff --no-index \
- 		--ignore-blank-lines --function-context a b >actual.raw &&
- 	sed -n "/@@/,\$p" <actual.raw >actual &&
- 	cat <<-\EOF >expect &&
--	@@ -1,6 +1,4 @@
-+	@@ -5,11 +6,9 @@
-+	 function
- 	 1
--	-
- 	 2
- 	 3
- 	 4
--	-5
-+	 5
-+	-
-+	 6
-+	 7
-+	 8
-+	-9
- 	EOF
- 	test_cmp expect actual
+diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+index 1c51a9131d..7c1da21df1 100755
+=2D-- a/t/t3501-revert-cherry-pick.sh
++++ b/t/t3501-revert-cherry-pick.sh
+@@ -150,7 +150,7 @@ test_expect_success 'cherry-pick works with dirty rena=
+med file' '
+ 	test_tick &&
+ 	git commit -m renamed &&
+ 	echo modified >renamed &&
+-	git cherry-pick refs/heads/unrelated >out &&
++	git cherry-pick refs/heads/unrelated &&
+ 	test $(git rev-parse :0:renamed) =3D $(git rev-parse HEAD~2:to-rename.t)=
+ &&
+ 	grep -q "^modified$" renamed
  '
 =2D-
 2.24.1
