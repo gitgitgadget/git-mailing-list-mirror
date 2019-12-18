@@ -2,96 +2,139 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 991FFC43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0712C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6A640206D7
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6ECBE20674
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DV5TLl10"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BhSp5NpJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727528AbfLRT3J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 14:29:09 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:44061 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727099AbfLRT3J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 14:29:09 -0500
-Received: by mail-oi1-f196.google.com with SMTP id d62so1699389oia.11
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 11:29:08 -0800 (PST)
+        id S1727480AbfLRT3u (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 14:29:50 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38304 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbfLRT3u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 14:29:50 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y17so3563595wrh.5
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 11:29:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PBiKar+2ZHhzhrsq/igZWMr1cr2Ygpl1OskN0xN6+dI=;
-        b=DV5TLl10GNVy7f7RqnvnBXd5blXwOwUhMat/Grlv6PerD5ue6tGUbEluRZiNG0FXpu
-         Yz7w3QWAC0Q6PW9unkFa3n42TnWwT4Uuni7yWrsllOxqcuUvKmUvueI1Qlwwx6lbi8t5
-         cqKDj0CFzmJ9BMBpdDNh1TtCkv9pJFjnhjoMfwRweEyaMSh2/eFxA13uCO+emhUR+kRr
-         v2yqhOvA3umz18hf/Fdk9hI7mbBQgLb96WqJlt5zfAtUZtra/+BGVGvAm9D8njViOKul
-         j2pcI4aRaloAAccuM1Q/Fk/yNjC1TDT3SJYJHSbSs+RiPOxFQyfJcP7KsFljYEuGLmWu
-         bNTA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=J81fg3nqQjCy4e97I+LZg44A6ra7DZclNr1ZLK1IoxE=;
+        b=BhSp5NpJsYqD8W9AP0PDgg/GrW0xYyKb1U6TRFe4TayHF0fcD7TVIMu4F9xOoaJTrx
+         hsdSPV3Hk/qKR1S3RrAFU/TMg+Ymdr8TAUnDY24FZkV7BOx7IDxNawbktjd4Bf7+cL8O
+         v7bunwBLfdCpJV3XsotliQWRiAiY/iM3go+DVi9TR5/GEPlW4ckXc5PlCA/9MTIXmO9F
+         8P28RJTE8LA5iy3O9JBc2wK7s3PcNK72pQmh/vHmdUUe6v2nJmrrmlNoXeoO0wG99LgV
+         4xmUXsVfNGru5rXpQTyO5EcgPQbaCE9ubK+KDXNQlvFqlHvSqL8w6tnbpY27U9EEytZv
+         kktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PBiKar+2ZHhzhrsq/igZWMr1cr2Ygpl1OskN0xN6+dI=;
-        b=I/v3pbR0beSvwMa+gmE7mmWYsdrPte6/8gI8wy8K8FiMMXiIKofpX82f3YMBhcwFsE
-         w2k8JxxYv5CODTtZJZSl/SI0mljPgNUIDtB1xxdzKMDs95zgikQopSiKb1bWNrLlCYbT
-         7qVJx/eJqK0q2pVeucjZz+BQUrIHmitiQR5RsDM5Scs3L7nsVmjju8267MFpT2Mk+u9i
-         v6B8K5uHu35tp621Gfq6DEDkPeyl34Lsiz+vOeXwexQcc05ltOQhD9LkVGMR3zz3KjKa
-         ddycP9lavXWVUZdLpNW1U1HNSUJSRzTWXBSaJhEFvwKiy+3Yg+d3zMIBjNLvwRIFGxle
-         z+GQ==
-X-Gm-Message-State: APjAAAVPWybaZpsm96OGlKJo2wMt2UyB8pO0iejh9c3UHfTeORVboB6P
-        hE7lPfn0s/bVvsgAy9f8+FsS6IED96g1OtODuak=
-X-Google-Smtp-Source: APXvYqzk36BfS7fKqyc+6Ovtl3PWMW8FX+/JRrW0pqPxXoYkyb3gc0XcbilHPwihXnMYqmqW7k+ub/jd1flu6li3IFQ=
-X-Received: by 2002:aca:eb0f:: with SMTP id j15mr1209678oih.6.1576697348161;
- Wed, 18 Dec 2019 11:29:08 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=J81fg3nqQjCy4e97I+LZg44A6ra7DZclNr1ZLK1IoxE=;
+        b=ZH/Lgj3G+A5VwM207Ti0w2htOXB5gzlGjxPhMf3eftCGT3d29d2WVhhStP1tFte1dA
+         U8sIdm112GtuvPAoJrTyO14sfeflD8r5p6MioGKFeLsrNo1/Vt+CtuawoMh4h0Ur0ZTt
+         9jBw9JUy/Hxt2PiL8PO1gkL+/iye6c6yZA7t2WGVh0ZNDMmz/sbgc7JMWf+z2cnszdDM
+         dmYgKfTZwAgnki55HeVR1/6OtG+t7Xt9mupACToIXxOSUKUz7p2cD7OmCa3pSTE0D3kC
+         9zQgKAT/Z5ssAJ8rs/89IMOsnl166HcCQn6UQwE8QfJeIRAEbD2rNY5SkEBqTKi5qM31
+         BMUQ==
+X-Gm-Message-State: APjAAAWffF4kEJQcIVyPLDI9L3xZttkndxQHMVeOiK2JpGCy48olm2u8
+        RexCLDLjeQI+ETRqnNX48F0M3/NI
+X-Google-Smtp-Source: APXvYqzsUDHAeHfV08w6u/8vUKITZPKiDJ5tuxK72qNxYvrpfkWdhZCi9LeRHM2uvgkXIQ6MF6ZiZg==
+X-Received: by 2002:a5d:4805:: with SMTP id l5mr4538953wrq.3.1576697388147;
+        Wed, 18 Dec 2019 11:29:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k11sm3473297wmc.20.2019.12.18.11.29.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Dec 2019 11:29:47 -0800 (PST)
+Message-Id: <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
+References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 18 Dec 2019 19:29:38 +0000
+Subject: [PATCH v4 0/8] Directory traversal bugs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <43395a82-34f9-30d1-b468-338e81467f39@web.de>
-In-Reply-To: <43395a82-34f9-30d1-b468-338e81467f39@web.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 18 Dec 2019 11:28:57 -0800
-Message-ID: <CABPp-BGT1hPAKz9_NdARbFgeaTCvYAvtQQ-_ceLH_2DtF8MUvA@mail.gmail.com>
-Subject: Re: [PATCH] t3501: don't create unused file
-To:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     blees@dcon.de, gitster@pobox.com, kyle@kyleam.com,
+        sxlijin@gmail.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 18, 2019 at 10:12 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->
-> The file "out" became unused with fd53b7ffd1 (merge-recursive: improve
-> add_cacheinfo error handling, 2018-04-19); get rid of it.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  t/t3501-revert-cherry-pick.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.s=
-h
-> index 1c51a9131d..7c1da21df1 100755
-> --- a/t/t3501-revert-cherry-pick.sh
-> +++ b/t/t3501-revert-cherry-pick.sh
-> @@ -150,7 +150,7 @@ test_expect_success 'cherry-pick works with dirty ren=
-amed file' '
->         test_tick &&
->         git commit -m renamed &&
->         echo modified >renamed &&
-> -       git cherry-pick refs/heads/unrelated >out &&
-> +       git cherry-pick refs/heads/unrelated &&
->         test $(git rev-parse :0:renamed) =3D $(git rev-parse HEAD~2:to-re=
-name.t) &&
->         grep -q "^modified$" renamed
->  '
+This series documents multiple fill_directory() bugs, and fixes the one that
+is new to 2.24.0 coming from en/clean-nested-with-ignored-topic, the rest
+having been around in versions of git going back up to a decade. 
 
-Thanks for cleaning this up.
+Changes since v2 (v3 was sent earlier, but this series is closer to v2):
+
+ * protected access to d_type with a !defined(NO_D_TYPE_IN_DIRENT) and made
+   sure to allocate a dirent on the heap with some extra space for d_name
+   rather than allocating the dirent on the stack.
+
+Elijah Newren (8):
+  t3011: demonstrate directory traversal failures
+  Revert "dir.c: make 'git-status --ignored' work within leading
+    directories"
+  dir: remove stray quote character in comment
+  dir: exit before wildcard fall-through if there is no wildcard
+  dir: break part of read_directory_recursive() out for reuse
+  dir: fix checks on common prefix directory
+  dir: synchronize treat_leading_path() and read_directory_recursive()
+  dir: consolidate similar code in treat_directory()
+
+ dir.c                                         | 177 +++++++++++----
+ ...common-prefixes-and-directory-traversal.sh | 209 ++++++++++++++++++
+ t/t7061-wtstatus-ignore.sh                    |   9 +-
+ 3 files changed, 344 insertions(+), 51 deletions(-)
+ create mode 100755 t/t3011-common-prefixes-and-directory-traversal.sh
+
+
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-676%2Fnewren%2Fls-files-bug-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-676/newren/ls-files-bug-v4
+Pull-Request: https://github.com/git/git/pull/676
+
+Range-diff vs v3:
+
+ 1:  61d303d8bd ! 1:  6d659b2302 t3011: demonstrate directory traversal failures
+     @@ -14,18 +14,6 @@
+          of the en/clean-nested-with-ignored-topic); the other 5 also failed
+          under git-2.23.0 and earlier.
+      
+     -    The old failing tests can be traced down to the common prefix
+     -    optimization in dir.c handling paths differently than
+     -    read_directory_recursive() and treat_path() would, due to incomplete
+     -    duplication of logic into treat_leading_path() and having that
+     -    function call treat_one_path() rather than treat_path().  Fixing
+     -    that problem would require restructuring treat_path() and its full
+     -    call hierarchy to stop taking a dirent; see
+     -       https://lore.kernel.org/git/xmqqzhfshsk2.fsf@gitster-ct.c.googlers.com/
+     -    and the thread surrounding it for details.
+     -
+     -    For now, simply document the breakages.
+     -
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+       diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b/t/t3011-common-prefixes-and-directory-traversal.sh
+ -:  ---------- > 2:  79f2b56174 Revert "dir.c: make 'git-status --ignored' work within leading directories"
+ 2:  49b0b628db = 3:  d6f858cab1 dir: remove stray quote character in comment
+ 3:  47814640e4 = 4:  8d2d98eec3 dir: exit before wildcard fall-through if there is no wildcard
+ -:  ---------- > 5:  d2f5623bd7 dir: break part of read_directory_recursive() out for reuse
+ -:  ---------- > 6:  1f3978aa46 dir: fix checks on common prefix directory
+ -:  ---------- > 7:  542c6e5792 dir: synchronize treat_leading_path() and read_directory_recursive()
+ -:  ---------- > 8:  31079dc1cf dir: consolidate similar code in treat_directory()
+
+-- 
+gitgitgadget
