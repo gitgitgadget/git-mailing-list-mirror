@@ -2,88 +2,67 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A633FC43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 22:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F41C4C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 22:45:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 612FC20717
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 22:40:11 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rYi3FJ+8"
+	by mail.kernel.org (Postfix) with ESMTP id C502920717
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 22:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbfLRWkK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 17:40:10 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64301 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726463AbfLRWkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 17:40:10 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2B4F82864F;
-        Wed, 18 Dec 2019 17:40:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=X5Or9gkihmPfLTSIsPSJYPbLdlo=; b=rYi3FJ
-        +8rFpsLXRWj+1fIxrOaiWYaeaM8UH2sjMsAGyS2sIY1KLQD07QFouMuKtMu+ABN1
-        Zi4qHTmWcSwAx4dJqMN+vAQgjwN1pZ+1ecRkUxFDkbZUAppCctpVMeQ0i8z0Jwve
-        7TCSxzWitWUK+8lsPHfB13/f5KqWyy8WrV7WM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=m/Hbc3dwW3FoFCF5sIK5UdFGhcaSDmY/
-        B7XjtD5XwrqJBE9PuPIrXQnpcYu+Y8Q00yxQwHm1axxOd6BpNRPf5pHqdTW6c1XF
-        CwxL4udQhsu6xzLp3b9jyAcAsQnEh9tWgugp/x+uuwtOJdEkDvC4YnHXU4MvIQB/
-        UJm2xxf0MJI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 18B472864C;
-        Wed, 18 Dec 2019 17:40:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 490672864B;
-        Wed, 18 Dec 2019 17:40:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2019, #04; Tue, 17)
-References: <xmqqa77qfw99.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BEyNcJPp0BSPLiAYpmCMLWcqiQQc5GZnhahbCez2vyqzQ@mail.gmail.com>
-Date:   Wed, 18 Dec 2019 14:40:05 -0800
-In-Reply-To: <CABPp-BEyNcJPp0BSPLiAYpmCMLWcqiQQc5GZnhahbCez2vyqzQ@mail.gmail.com>
-        (Elijah Newren's message of "Wed, 18 Dec 2019 11:33:04 -0800")
-Message-ID: <xmqqa77pcl6i.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726565AbfLRWpF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 17:45:05 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:25022 "EHLO smtp.hosts.co.uk"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726510AbfLRWpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 17:45:05 -0500
+Received: from [92.30.123.115] (helo=[192.168.1.22])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ihi3z-0006Xp-58; Wed, 18 Dec 2019 22:45:03 +0000
+Subject: Re: [PATCH 1/1] config: allow user to know scope of config options
+To:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Matthew Rogers <mattr94@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
+ <ec699bb3e64c74e6e87a20bbb5efac12a13cb077.1576631464.git.gitgitgadget@gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+Message-ID: <9a91caa0-72c3-3a38-3eb7-55a43537762e@iee.email>
+Date:   Wed, 18 Dec 2019 22:45:04 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5741971C-21E7-11EA-9A5C-C28CBED8090B-77302942!pb-smtp1.pobox.com
+In-Reply-To: <ec699bb3e64c74e6e87a20bbb5efac12a13cb077.1576631464.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Matthew,
 
-> On Tue, Dec 17, 2019 at 2:03 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Here are the topics that have been cooking.  Commits prefixed with
->> '-' are only in 'pu' (proposed updates) while commits prefixed with
->> '+' are in 'next'.  The ones marked with '.' do not appear in any of
->> the integration branches, but I am still holding onto them.
->>
-> ...
->> [New Topics]
+On 18/12/2019 01:11, Matthew Rogers via GitGitGadget wrote:
+> From: Matthew Rogers <mattr94@gmail.com>
 >
-> It appears that
-> https://lore.kernel.org/git/2d1f9a8485e744e23b1f02826877afe829a639cf.1576271025.git.gitgitgadget@gmail.com/
-> from last Friday may have fallen through the cracks.  Could that one
-> be picked up?
+> Add new option --show-scope which allows a user to know what the scope
+> of listed config options are (local/global/system/etc.).
+>
+> Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+> ---
+>  builtin/config.c  | 60 ++++++++++++++++++++++++++++++++++++++++-------
+>  t/t1300-config.sh | 51 ++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 103 insertions(+), 8 deletions(-)
 
-Indeed.  I was quite sure that I picked up a "merge made a known
-breakage go away---this should have been done as an evil merge, but
-it wasn't, so here is a late fix" patch, but I apparently didn't.
+Doesn't this also need a man page update as well for adding the option
+to the synopsis.
 
-Thanks.
+The commit message doesn't fully highlight that the config list will
+often be all the users config values, so each value will be
+disambiguated/identified as to it's origin.
+
+Philip
