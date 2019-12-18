@@ -8,72 +8,71 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A9BDC43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 14:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FDA1C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 14:36:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D12BB218AC
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 14:27:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 54E1121582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 14:36:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9BbdWKh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bZ5J0XHC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbfLRO1A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 09:27:00 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:33480 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726856AbfLRO1A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 09:27:00 -0500
-Received: by mail-wm1-f67.google.com with SMTP id d139so4773095wmd.0
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 06:26:58 -0800 (PST)
+        id S1727050AbfLROgD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 09:36:03 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38476 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727024AbfLROgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 09:36:03 -0500
+Received: by mail-wm1-f68.google.com with SMTP id u2so2150375wmc.3
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 06:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+        h=reply-to:subject:from:to:cc:references:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=BmO9/qV/RLc6UCPQTkhCSHRLWyCzqs8uB15KDkTTDVY=;
-        b=m9BbdWKhj1+YtBePjB7qgyQcGHCXTHQ1Gjt1Y7Db5GDE0dBwtNGnwBi6oqe7/PSVAk
-         zrIWrcuSbP9PO29WKHB3qutmHf2xY/gcfOWQVicKQjseGYPTKjQUkB9sPCAAToID4AXc
-         hr2836UqOAjMjbNqR4qZ8R5/JXANdIATwgwr1VsV+gXQ6+WUQ7GxyqKm4HbwyIWbtUNW
-         o3HolnXsQEguKYl+U9idD1PRZzGvBvFmsoLKfY04FunB//Lyz21s+gmV8AlEVXnroLOM
-         UR4WkKQp8G2FUwIoPZnK+o9zP4qEKSrCjNI8xHRWkqTlF8FR09MG69Y9vQQJfbt7v0lf
-         y1xA==
+        bh=j/aLrt1BCEnBOWega63JZv2j2jD7VzBCGZvw08yw2oQ=;
+        b=bZ5J0XHCSaDOnHyWR6IRH/V4d4Qdskaj2NYBBbwCb8NgS3X3pBlCq6vWh59IR+vDU1
+         7X7y7MxgJBib8gmf+E3omwXKTeprSRkOicz1iOh9IIbyrvKxMftIxA8Znb3LnB71rBCZ
+         AjoxBhAzzHBDvCNlT6n2AGZy+/kth1uvrigcBccvvCEYcBnKMT4S0YpgogiKBonInwex
+         k4oIpJg2i/bslyyHSeuN+o5JtJS+5+1wU4HGwnxn7G8kRtAOOt1YoPcUtspA7u5c4vHD
+         Hjk4KfLkqpFoAG1ASCpm/X6cHqrlVSSJwiAuwS9R0Dl5LtoD+/UosJPKDMPl+4BxJwKA
+         6knA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+        h=x-gm-message-state:reply-to:subject:from:to:cc:references
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=BmO9/qV/RLc6UCPQTkhCSHRLWyCzqs8uB15KDkTTDVY=;
-        b=P9UprXcqPNZFjgy1EsUXlg9m+Uu9/a0MAmEowS/0FeNHHi0lCbQQXJDZ5rewhcvQPp
-         wner9KVnJ0QB0/Pr/K04CTdOd37HwsSnKbguiEM3BAVA5MKHJdRWr8SeBrQLD5WMiSEE
-         qMHiiw/+WiHwPPSSSi0UkEDOyAbDjF6/As9Yq0u5tnlbamfnU12ZhR5iojK2reZ5YNm/
-         9v594nmvjFosPLVNc0LW+2M09hoTWc8kLFpzVL1fKKNL1wveU2wid7gfoVKqyrjCqWt9
-         7nZ1LVAT57d9+QjlX1FaYjOqIYsIi3nBs3x9qPlfnueU911NDfAC4OEQYHzm5UR3hJL6
-         QBMA==
-X-Gm-Message-State: APjAAAWWpTICAyP2P4y73sJnKVJma+9VNyLsGSI52sQl1PrX2p/v6kq+
-        IHPfrQB8m70wQP6pVEfbHW0=
-X-Google-Smtp-Source: APXvYqzAwq7IQsgGEE2zNA62d2mOpWkekY7MuDCrDRHHT1jzJFFfeCdftKHW4A6dfom85M7nk+W0EQ==
-X-Received: by 2002:a7b:c3d7:: with SMTP id t23mr3708156wmj.33.1576679217981;
-        Wed, 18 Dec 2019 06:26:57 -0800 (PST)
+        bh=j/aLrt1BCEnBOWega63JZv2j2jD7VzBCGZvw08yw2oQ=;
+        b=kppTMtQ+fJYxRSgSsD2T6SpDffahSmhqctHJoJiT+Fh7sy7osqxxcltu8HkRG5yI+2
+         8vtwkm3IDOHxZA10UcLKwyr3F3FoAbfpm+IbnkI2H+207crDHCXEczV1l/oSBr1af8zr
+         kg5hI4Ey8i58TGbXhrmj0XAEvMq61v/p6rW3/DqH1Gi/Vo7VbLLI6PRDrPhN5IDWUlZw
+         5QGlX1GPLclvSFd7k9opSJO4LvVANyl12wji03vbLyoZCii5M11PNz/VmWeP/rgmthl8
+         v4b9x7hyxo0Mvxg2uxSLS8h8hXoD9GqTgwtQF75KQOtvYPeRssdKcr33eYlP1QiUF2hp
+         /gxA==
+X-Gm-Message-State: APjAAAV6yzIQIAqk1VR13hFg6d0UgNBdZsSysDc3WxMG1ZUta/Hpgsqk
+        rPvNzcFvzM8NKuOpomNQmY8=
+X-Google-Smtp-Source: APXvYqzLd8C9lESzRA9VNIXawKDVY+eILSxOQRuwE6zAQ8NFlx2TZd7KcNlHMLw3ImPqGt4l7Dla/Q==
+X-Received: by 2002:a1c:4008:: with SMTP id n8mr3454081wma.121.1576679760037;
+        Wed, 18 Dec 2019 06:36:00 -0800 (PST)
 Received: from [192.168.2.240] (host-92-22-0-192.as13285.net. [92.22.0.192])
-        by smtp.gmail.com with ESMTPSA id r15sm2561819wmh.21.2019.12.18.06.26.57
+        by smtp.gmail.com with ESMTPSA id s10sm2745025wrw.12.2019.12.18.06.35.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2019 06:26:57 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 6/9] commit: encapsulate determine_whence() for
- sequencer
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Wed, 18 Dec 2019 06:35:59 -0800 (PST)
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH v2 9/9] [RFC] rebase -i: leave CHERRY_PICK_HEAD when there
+ are conflicts
+From:   Phillip Wood <phillip.wood123@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
 References: <pull.417.git.1571787022.gitgitgadget@gmail.com>
  <20191206160614.631724-1-phillip.wood123@gmail.com>
- <20191206160614.631724-7-phillip.wood123@gmail.com>
- <xmqqwob9wbwe.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <141f95b0-cae0-06f6-2c29-618dc22ae000@gmail.com>
-Date:   Wed, 18 Dec 2019 14:26:56 +0000
+ <20191206160614.631724-10-phillip.wood123@gmail.com>
+Message-ID: <7e1b92f5-48df-e202-ebcc-5b15987a7d63@gmail.com>
+Date:   Wed, 18 Dec 2019 14:35:58 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
  Thunderbird/68.3.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqwob9wbwe.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191206160614.631724-10-phillip.wood123@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
@@ -82,95 +81,228 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/12/2019 18:24, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+On 06/12/2019 16:06, Phillip Wood wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 > 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Working out which command wants to create a commit requires detailed
->> knowledge of the sequencer internals and that knowledge is going to
->> increase in subsequent commits. With that in mind lets encapsulate that
->> knowledge in sequencer.c rather than spreading it into builtin/commit.c.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>   builtin/commit.c |  5 +----
->>   sequencer.c      | 13 ++++++++++++-
->>   sequencer.h      |  3 ++-
->>   3 files changed, 15 insertions(+), 6 deletions(-)
->>
->> diff --git a/builtin/commit.c b/builtin/commit.c
->> index 3b463522be..d8d4c8e419 100644
->> --- a/builtin/commit.c
->> +++ b/builtin/commit.c
->> @@ -178,10 +178,7 @@ static void determine_whence(struct wt_status *s)
->>   {
->>   	if (file_exists(git_path_merge_head(the_repository)))
->>   		whence = FROM_MERGE;
->> -	else if (file_exists(git_path_cherry_pick_head(the_repository)))
->> -		whence = file_exists(git_path_seq_dir()) ?
->> -			FROM_CHERRY_PICK_MULTI : FROM_CHERRY_PICK_SINGLE;
->> -	else
->> +	else if (!sequencer_determine_whence(the_repository, &whence))
->>   		whence = FROM_COMMIT;
->>   	if (s)
->>   		s->whence = whence;
->> diff --git a/sequencer.c b/sequencer.c
->> index 4e0370277b..98e007556c 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -40,7 +40,7 @@ static const char cherry_picked_prefix[] = "(cherry picked from commit ";
->>   
->>   GIT_PATH_FUNC(git_path_commit_editmsg, "COMMIT_EDITMSG")
->>   
->> -GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
->> +static GIT_PATH_FUNC(git_path_seq_dir, "sequencer")
->>   
->>   static GIT_PATH_FUNC(git_path_todo_file, "sequencer/todo")
->>   static GIT_PATH_FUNC(git_path_opts_file, "sequencer/opts")
->> @@ -5256,3 +5256,14 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
->>   
->>   	return 0;
->>   }
->> +
->> +int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
->> +{
->> +	if (file_exists(git_path_cherry_pick_head(r))) {
->> +		*whence = file_exists(git_path_seq_dir()) ?
->> +			FROM_CHERRY_PICK_MULTI : FROM_CHERRY_PICK_SINGLE;
->> +		return 1;
->> +	}
->> +
->> +	return 0;
->> +}
-> 
-> I am not sure if this is a good move---determine_whence() that can
-> tell not just we are in the middle of cherry-pick (either a single
-> or multi) but also during a merge may be at the right abstraction
-> level.  Why would we want to invent a separate function that says "I
-> dunno" during a merge, instead of moving the logic for merge to the
-> new helper as well?  The original determine_whence that takes
-> wt_status and populates it still has to call the new helper either
-> way.  Also for the matter FROM_COMMIT may also want to be part of
-> the helper.  This all depends on the new callers you plan to invent,
-> of course.
+> Since the inception of CHERRY_PICK_HEAD in d7e5c0cbfb ("Introduce
+> CHERRY_PICK_HEAD", 2011-02-19) 'rebase -i' has removed it when there are
+> conflicts. The rationale for this was that the rebase wanted to handle
+> the conflicts itself. However sometimes (e.g. after an edit command) the
+> user wants to commit the conflict resolution before making some other
+> changes or running some tests. Without CHERRY_PICK_HEAD the authorship
+> information is lost when the user makes the commit. Fix this by leaving
+> CHERRY_PICK_HEAD when we're not amending.
 
-The idea was for determine_whence() to be able to delegate to the 
-sequencer to ask if it is doing something without having to expose all 
-the implementation details of that check in builtin/commit.c. It is 
-simple enough at this stage but the next patches add more complexity 
-which would mean exposing various sequencer state files to 
-builtin/commit.c. This function is only meant to be called from 
-determine_whence() - callers that want to know if any operations (merge, 
-cherry-pick etc.) are in progress should be calling that not the 
-function added here.
-
-> Not part of this topic, but the call to file_exists() may want to
-> become a call to dir_exists() as git-path-seq-dir is clearly a
-> directory and cannot be a file, right?
-
-Yes
+I'm not so sure about this approach as it wont work with 'merge' 
+commands when rebasing. I wonder if it would be better to add a new file 
+COMMIT_AUTHOR (or maybe MERGE_AUTHOR) that can be parsed by 
+split_ident() and sets the authorship for a commit. The file would 
+override $GIT_AUTHOR_NAME/EMAIL/DATE but could be overridden on the 
+commandline by --author/date/reset-author
 
 Best Wishes
 
 Phillip
+
+> Note that this changes the output of `git status`. The advice to run
+> `git reset` is not appropriate for rebase as we do not allow partial
+> commits.
+> 
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> 
+> Notes:
+>      This has semantic conflicts with ra/rebase-i-more-options as it does not
+>      respect the options passed to rebase when the user commits
+>      
+>      I haven't checked how this affects the shell prompt in contrib yet, I
+>      suspect it may need changing to cope the presence of CHERRY_PICK_HEAD
+>      during a rebase.
+>      
+>      I'd like to change the existing authorship tests to rely on the "Original
+>      Author" changes here, but they are a web of hidden interdependencies which is
+>      hard to untangle.
+> 
+>   sequencer.c                   |  12 ++--
+>   t/t3404-rebase-interactive.sh | 104 +++++++++++++++++++++++++---------
+>   t/t7512-status-help.sh        |   2 -
+>   3 files changed, 85 insertions(+), 33 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 64242f4ce7..624e96c930 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -372,11 +372,15 @@ static void print_advice(struct repository *r, int show_hint,
+>   	if (msg) {
+>   		fprintf(stderr, "%s\n", msg);
+>   		/*
+> -		 * A conflict has occurred but the porcelain
+> -		 * (typically rebase --interactive) wants to take care
+> -		 * of the commit itself so remove CHERRY_PICK_HEAD
+> +		 * A conflict has occurred but the porcelain wants to take care
+> +		 * of the commit itself so remove CHERRY_PICK_HEAD. Note that we
+> +		 * do not do this for interactive rebases anymore in order to
+> +		 * preserve the author identity when the user runs 'git commit'
+> +		 * to commit the conflict resolution rather than relying on
+> +		 * 'rebase --continue' to do it for them.
+>   		 */
+> -		unlink(git_path_cherry_pick_head(r));
+> +		if (!is_rebase_i(opts))
+> +			unlink(git_path_cherry_pick_head(r));
+>   		return;
+>   	}
+>   
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 5afa6f28cd..5cd7db18f8 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -33,31 +33,35 @@ Initial setup:
+>   # in the expect2 file for the 'stop on conflicting pick' test.
+>   
+>   test_expect_success 'setup' '
+> -	test_commit A file1 &&
+> -	test_commit B file1 &&
+> -	test_commit C file2 &&
+> -	test_commit D file1 &&
+> -	test_commit E file3 &&
+> -	git checkout -b branch1 A &&
+> -	test_commit F file4 &&
+> -	test_commit G file1 &&
+> -	test_commit H file5 &&
+> -	git checkout -b branch2 F &&
+> -	test_commit I file6 &&
+> -	git checkout -b conflict-branch A &&
+> -	test_commit one conflict &&
+> -	test_commit two conflict &&
+> -	test_commit three conflict &&
+> -	test_commit four conflict &&
+> -	git checkout -b no-conflict-branch A &&
+> -	test_commit J fileJ &&
+> -	test_commit K fileK &&
+> -	test_commit L fileL &&
+> -	test_commit M fileM &&
+> -	git checkout -b no-ff-branch A &&
+> -	test_commit N fileN &&
+> -	test_commit O fileO &&
+> -	test_commit P fileP
+> +	(
+> +		GIT_AUTHOR_NAME="Original Author" &&
+> +		GIT_AUTHOR_EMAIL="original.author@example.com" &&
+> +		test_commit A file1 &&
+> +		test_commit B file1 &&
+> +		test_commit C file2 &&
+> +		test_commit D file1 &&
+> +		test_commit E file3 &&
+> +		git checkout -b branch1 A &&
+> +		test_commit F file4 &&
+> +		test_commit G file1 &&
+> +		test_commit H file5 &&
+> +		git checkout -b branch2 F &&
+> +		test_commit I file6 &&
+> +		git checkout -b conflict-branch A &&
+> +		test_commit one conflict &&
+> +		test_commit two conflict &&
+> +		test_commit three conflict &&
+> +		test_commit four conflict &&
+> +		git checkout -b no-conflict-branch A &&
+> +		test_commit J fileJ &&
+> +		test_commit K fileK &&
+> +		test_commit L fileL &&
+> +		test_commit M fileM &&
+> +		git checkout -b no-ff-branch A &&
+> +		test_commit N fileN &&
+> +		test_commit O fileO &&
+> +		test_commit P fileP
+> +	)
+>   '
+>   
+>   # "exec" commands are run with the user shell by default, but this may
+> @@ -252,12 +256,12 @@ test_expect_success 'stop on conflicting pick' '
+>   	-A
+>   	+G
+>   	EOF
+> -	cat >expect2 <<-\EOF &&
+> +	cat >expect2 <<-EOF &&
+>   	<<<<<<< HEAD
+>   	D
+>   	=======
+>   	G
+> -	>>>>>>> 5d18e54... G
+> +	>>>>>>> $(git rev-parse --short HEAD)... G
+>   	EOF
+>   	git tag new-branch1 &&
+>   	test_must_fail git rebase -i master &&
+> @@ -1628,6 +1632,52 @@ test_expect_success 'correct error message for commit --amend after empty pick'
+>   	test_i18ngrep "middle of a rebase -- cannot amend." err
+>   '
+>   
+> +test_expect_success 'correct error message for partial commit after confilct' '
+> +	test_when_finished "git rebase --abort" &&
+> +	git checkout D &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_LINES="2 3" &&
+> +		export FAKE_LINES &&
+> +		test_must_fail git rebase -i A
+> +	) &&
+> +	echo x >file1 &&
+> +	echo y >file2 &&
+> +	git add file1 file2 &&
+> +	test_must_fail git commit file1 2>err &&
+> +	test_i18ngrep "cannot do a partial commit during a rebase." err
+> +'
+> +
+> +test_expect_success 'correct error message for commit --amend after conflict' '
+> +	test_when_finished "git rebase --abort" &&
+> +	git checkout D &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_LINES=3 &&
+> +		export FAKE_LINES &&
+> +		test_must_fail git rebase -i A
+> +	) &&
+> +	echo x>file1 &&
+> +	test_must_fail git commit -a --amend 2>err &&
+> +	test_i18ngrep "middle of a rebase -- cannot amend." err
+> +'
+> +
+> +test_expect_success 'correct authorship and message after conflict' '
+> +	git checkout D &&
+> +	(
+> +		set_fake_editor &&
+> +		FAKE_LINES=3 &&
+> +		export FAKE_LINES &&
+> +		test_must_fail git rebase -i A
+> +	) &&
+> +	echo x >file1 &&
+> +	git commit -a &&
+> +	git log --pretty=format:"%an <%ae>%n%ad%n%B" -1 D >expect &&
+> +	git log --pretty=format:"%an <%ae>%n%ad%n%B" -1 HEAD >actual &&
+> +	test_cmp expect actual &&
+> +	git rebase --continue
+> +'
+> +
+>   # This must be the last test in this file
+>   test_expect_success '$EDITOR and friends are unchanged' '
+>   	test_editor_unchanged
+> diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+> index c1eb72555d..2adceb35e2 100755
+> --- a/t/t7512-status-help.sh
+> +++ b/t/t7512-status-help.sh
+> @@ -148,7 +148,6 @@ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO
+>     (use "git rebase --abort" to check out the original branch)
+>   
+>   Unmerged paths:
+> -  (use "git reset HEAD <file>..." to unstage)
+>     (use "git add <file>..." to mark resolution)
+>   
+>   	both modified:   main.txt
+> @@ -176,7 +175,6 @@ You are currently rebasing branch '\''rebase_i_conflicts_second'\'' on '\''$ONTO
+>     (all conflicts fixed: run "git rebase --continue")
+>   
+>   Changes to be committed:
+> -  (use "git reset HEAD <file>..." to unstage)
+>   
+>   	modified:   main.txt
+>   
+> 
