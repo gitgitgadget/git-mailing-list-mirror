@@ -2,105 +2,147 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A04C43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 43757C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A346C218AC
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:10:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 155FB21582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=brightrockgames-com.20150623.gappssmtp.com header.i=@brightrockgames-com.20150623.gappssmtp.com header.b="ExJF3qh3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gy5PVzPQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726705AbfLRLKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 06:10:40 -0500
-Received: from mail-ot1-f44.google.com ([209.85.210.44]:34108 "EHLO
-        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726545AbfLRLKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:10:40 -0500
-Received: by mail-ot1-f44.google.com with SMTP id a15so2091726otf.1
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:10:40 -0800 (PST)
+        id S1726802AbfLRL0I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:26:08 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40854 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725930AbfLRL0I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:26:08 -0500
+Received: by mail-wr1-f68.google.com with SMTP id c14so1871751wrn.7
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brightrockgames-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=MVXfUuHKxtN4n3xOAn3tAdDdVEIgzOISE3jpVp0kGHM=;
-        b=ExJF3qh3V93V88m1DAWN43mAuIXx9RxlejwF10CfuWnA+80NEwhtdsv+YklqsmL+xt
-         JlIMcJCVs2NPrT9NQcnFZDpsFn+pRNPT6WLKvVAsEFrnB0KFBCIA0Y+imMM2MNejgb8U
-         iDMWGZ9o699L7oOKu+FxUqW6npCD2XAYgCSV8ZE8aad6GJ8eAPC7L1D+bLpQM0WUarac
-         7RMGEZ54bb8pKq69+KYeUFKjSc1P7rNj1LTbL2jq6ZIW8lhzh1FLgHdm+JW7KMae/JP0
-         /1OtIjk1iRy7Uf/vfFxOkUpI2epgE/5n59kJg6ptJjI07O7Cy3eQBUKD9X/XnJ7Rp6f1
-         juPA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=au2HVdG34UXqJ67JVTDVUwy6iuN/ns4k110mWzroCBI=;
+        b=gy5PVzPQwpeGacthFfSpupU9hL+etCVLp5Dw+MqjPkXNKq7vHfwbRkfGfIVlBA6xlT
+         WjRbstXQyjaC4ef9h8GuQon1wkX3aGXKO7lzWgM0EjaEFKjqNtIu6aH/u3bhj2qttXp2
+         TdKmodz9Fsgo2NFnCDmmzOIFYSEl7FzDdqocojil4F81XCl8k4Vvq6jYUthAlHSCA9z5
+         SMrbVtzNhGQ7QBo+/zwnbAkj8sv5IjexLZ1bw9ibgXTDAEf0uW2CkiQzk3dmcgJ8mE9f
+         8ZcNE4bgvGyV+P4C34kv20RHb2PyuJ2dL4Ux4QYzTutwapTpKzfNno6amSusqNzgqZGn
+         RlMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=MVXfUuHKxtN4n3xOAn3tAdDdVEIgzOISE3jpVp0kGHM=;
-        b=UBYl5GcRreQOPEvSWODcgc0dhmx533WmNYSZz2BXf9CRQwYWd/SDRpkcFBXtU/NEvF
-         4D6yvKl76fhUV6eKXPG+5N3B60pDTY2/0X6iGzUvxyzTKySTBlsiP0wx/XRnbAf2wqLH
-         ngHPOdBnjYbS3/t4IoE6MxjtReSVFCpTMdzoXoKyHBnmBoI3CiQl+ZjPFJhKKu6Vur0z
-         h3IIiK97cN4rpJfEUJA05QH5/WmyDT9d3jhIc9i0gLJYh235B0hvlyHgLYtOs7ukWrbJ
-         WlAi00ngwoAY39h9it6f8joAH+PFh/4W3068COD5DAZeE+W37+HT0LaJK+WSHaGFfMgq
-         1AUg==
-X-Gm-Message-State: APjAAAUQ3F7RNesOEZl7HAhEgLO9BrzVQSTU01aIqmGWnxd/YEhLmURv
-        ChiqaC200hsZeDOJ/NsAGgAE0x9A5mIdJe13oCQMmT9j0BXlQQ==
-X-Google-Smtp-Source: APXvYqwyORCWafKf9iBybnEbisR5JYzP+Qy8AmFMv40gWZtTRto9L7Rrdl6HW/w++gglnyL0BaLyJLfgnBP3a4AMxp8=
-X-Received: by 2002:a05:6830:2110:: with SMTP id i16mr1922750otc.337.1576667439534;
- Wed, 18 Dec 2019 03:10:39 -0800 (PST)
-MIME-Version: 1.0
-From:   Scott Richmond <scott@brightrockgames.com>
-Date:   Wed, 18 Dec 2019 11:10:27 +0000
-Message-ID: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
-Subject: Ability to ignore EOL changes for certain projects
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=au2HVdG34UXqJ67JVTDVUwy6iuN/ns4k110mWzroCBI=;
+        b=PitvTcmzAMc4Jx6cccQOWE09F4Sotuf92h5xDjkBABuuTJAU53N2GcGTBwdKR6rmT6
+         xQQcpy6pDRnH5LQqPCqVaUTZ+yEQPJqI4yd0PyRK4UzxJd8ICbvmJwrIE/i6w5+YmJl6
+         oRtFuV3YIGMuXDNy9hGDWISZw+vky9sdV+5nE+eyprNU5PF8Wz9JnHesksEn5x0xyp3B
+         NuFNeb+23Tkts/6DCx4z32zMFXTnpqhzgcXuHj7SSEDm486KamxoHlaa+0FNTLvZ61NX
+         t/NVX+vBjIpDuA8i5YrzHfyn9Oy2Gq5zrs1+FfhNqCQ5KEGiqvfCOwN8c2XK4cxFpfpS
+         TSfg==
+X-Gm-Message-State: APjAAAW//A0SWNvHdLiLByUQdo6YL/7fsiAFChsvImP4nWxx9FrMJw4f
+        qJW0+q75MoUuTUBl7/ICHK4KMTRP
+X-Google-Smtp-Source: APXvYqzT37SXwJPsU7OCRP8Ormr7aJA8e9w62bemV0dz1KCfyOLQLd3oMiKqPu9kBxkfGlLnrDmq9Q==
+X-Received: by 2002:a05:6000:1052:: with SMTP id c18mr2258310wrx.268.1576668366406;
+        Wed, 18 Dec 2019 03:26:06 -0800 (PST)
+Received: from localhost.localdomain ([2a04:cec0:116b:f417:15eb:66f2:c98d:a463])
+        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Dec 2019 03:26:05 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: [PATCH v4 00/12] Rewrite packfile reuse code
+Date:   Wed, 18 Dec 2019 12:25:35 +0100
+Message-Id: <20191218112547.4974-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.24.1.498.g561400140f
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Problem Domain
-In certain dev environments (Unity3D projects) there is (AFAIK) an
-unsolvable problem where some files are often modified with line
-endings that aren't the native system or not the committed line
-endings for that file. Secondarily, in this case line endings don't
-matter - Nothing in the dev environment "cares" which kind of line
-ending is used.
+This patch series is rewriting the code that tries to reuse existing
+packfiles.
 
-The Problem
-Git always cares about EOL. Git has options to transparently modify
-EOLs when files are checked in or out. However it is not possible to
-tell Git to ignore EOLs in other commands:
-Git status shows the file modified.
-Merging/Pulling has to care because it can't merge with a modified
-working tree. Which means the user has to care - They have to either
-stash the EOL changes or wipe them out. Sometimes, if the user has a
-particular app running, it may automatically reload that file and
-recreate the modified EOL changes, causing an endless loop. This
-problem is often made unclear to the user how to solve, especially if
-they aren't domain experts.
+The code in this patch series was written by GitHub, and Peff nicely
+provided it in the following discussion:
 
-To be clear, in this particular dev environment, I can say with
-confidence that this particular issue is a major and common pain point
-for users. It is made worse as many users in this environment aren't
-programmers by trade and aren't domain experts in version control. I
-also believe this environment is becoming a non-trivial portion of the
-Git userbase and it would be worthwhile looking into resolving.
+https://public-inbox.org/git/3E56B0FD-EBE8-4057-A93A-16EBB09FBCE0@jramsay.com.au/
 
-Solution Request
-It would be fantastic if we could tell Git to stop caring about EOL
-changes on a per-repo basis, with the effective output being that git
-status shouldn't show changes for files with differing EOLs.
+The first versions of this patch series were also discussed:
 
-I'm experienced with Git, though I am not expert enough to consider
-creating such a change myself - It is unclear to me just how
-complicated a change may be. However maybe I could look into it if it
-was made clear that this improvement is possible and has no serious
-side effects.
+v3: https://public-inbox.org/git/20191115141541.11149-1-chriscool@tuxfamily.org/
+V2: https://public-inbox.org/git/20191019103531.23274-1-chriscool@tuxfamily.org/
+V1: https://public-inbox.org/git/20190913130226.7449-1-chriscool@tuxfamily.org/
 
-Regards,
+Thanks to the reviewers!
 
-Scott Richmond.
-  Director, Producer, Programmer
-  Brightrock Games
-  T: 07480795661
+According to Peff this new code is a lot smarter than what it
+replaces. It allows "holes" in the chunks of packfile to be reused,
+and skips over them. It rewrites OFS_DELTA offsets as it goes to
+account for the holes. So it's basically a linear walk over the
+packfile, but with the important distinction that we don't add those
+objects to the object_entry array, which makes them very lightweight
+(especially in memory use, but they also aren't considered bases for
+finding new deltas, etc). It seems like a good compromise between the
+cost to serve a clone and the quality of the resulting packfile.
+
+This series has been rebased onto current master ad05a3d8e5 (The fifth
+batch, 2019-12-10).
+
+Other changes since the previous patch series have all been suggested
+by Peff. Thanks to him! They are the following:
+
+  - Add note in commit message of patch 3/12.
+
+  - Move previous patch 4/9 to patch 12/12 at the end of the series to
+    avoid test failures.
+
+  - Add new patches 5/12 and 6/12.
+
+  - Improve commit message and documentation of pack.allowPackReuse in
+    patch 8/12.
+
+  - Improve commit message of patch 10/12.
+
+  - Extract patch 11/12 from patch 10/12.
+
+Jeff King (12):
+  builtin/pack-objects: report reused packfile objects
+  packfile: expose get_delta_base()
+  ewah/bitmap: introduce bitmap_word_alloc()
+  pack-bitmap: introduce bitmap_walk_contains()
+  pack-bitmap: uninteresting oid can be outside bitmapped packfile
+  pack-bitmap: simplify bitmap_has_oid_in_uninteresting()
+  csum-file: introduce hashfile_total()
+  pack-objects: introduce pack.allowPackReuse
+  builtin/pack-objects: introduce obj_is_packed()
+  pack-objects: improve partial packfile reuse
+  pack-objects: add checks for duplicate objects
+  pack-bitmap: don't rely on bitmap_git->reuse_objects
+
+ Documentation/config/pack.txt |   7 +
+ builtin/pack-objects.c        | 243 +++++++++++++++++++++++++++-------
+ csum-file.h                   |   9 ++
+ ewah/bitmap.c                 |  13 +-
+ ewah/ewok.h                   |   1 +
+ pack-bitmap.c                 | 192 ++++++++++++++++++---------
+ pack-bitmap.h                 |   6 +-
+ packfile.c                    |  10 +-
+ packfile.h                    |   3 +
+ 9 files changed, 362 insertions(+), 122 deletions(-)
+
+-- 
+2.24.1.498.g561400140f
+
