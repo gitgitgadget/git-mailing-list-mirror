@@ -2,95 +2,96 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.6 required=3.0 tests=DATE_IN_PAST_06_12,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3ECDC43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 17:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C22D9C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 17:58:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7E54D2082E
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 17:15:48 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="it2/82Xb"
+	by mail.kernel.org (Postfix) with ESMTP id A17AF206D7
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 17:58:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727021AbfLRRPr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 12:15:47 -0500
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:46173 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726960AbfLRRPr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 12:15:47 -0500
-Received: by mail-ot1-f48.google.com with SMTP id c22so3305041otj.13
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 09:15:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lJUs2IVeeGudMULatIBraKfeG3YaqsRz1yJcxvQKUBU=;
-        b=it2/82Xb+EwAN0/xFQ5suMimQkgDb6Z/JxZwINKdi6uHl0DOO7KPYEBfNy7lJEkI+b
-         Dc1kziq9vg/k6warS/yyYHiTJrXyNOrVDm5PZaIvnsFWNLszt1OAl2roFqYPLY05DgYm
-         XTc6NLdCtHtS0jfRPgsQLAL/CJY+M1wfE+bl7AVkMtjHJMKVTBekrI8FS3kH1uNRDfV8
-         yRJkSKM8mmR9FWw4k9E2oQRzTQbyRYmKtLWxcvVa0FHTpdIJQnSr2hcb858cyzk/Ek7/
-         IhS6eMxc+VbWgEKh+TkdyafqXNG3xJjEjHw3jsyHncogJe4Qta6va0cQAmlLO6Ugg0BS
-         GSWQ==
+        id S1727034AbfLRR6s convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Wed, 18 Dec 2019 12:58:48 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:39002 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726960AbfLRR6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 12:58:48 -0500
+Received: by mail-io1-f66.google.com with SMTP id c16so1482122ioh.6
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 09:58:48 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lJUs2IVeeGudMULatIBraKfeG3YaqsRz1yJcxvQKUBU=;
-        b=G8/kVF9QBprTRExafinAYvrSNbtmK2bXVhIMJTbeEcT0XOW7Bl1VhlBC7+u/xZb8BL
-         zxird2UVY4onPl5ya816jwERkDyvDqw5LdodYSjn+CKoMk/qbNV4p76wREuvGYi9AS/2
-         mkahyXBecFHbyEL6X+nSO5VnwiKljvtkPEdO2GUUHiT3eBE1jy28/k12JJvhX9G8SCFt
-         t2netBPJzNtZeQirVslZUuP1UfAkemkzyYL0tlTa/F5eykE04qkgeQNqEi7GxVk/Gex+
-         fG2rS6Flhy6luzkJvFxWILBLxLOCD5Y3zEvCm5N3MKt7ZqAQ4Cas/7ORP/tfLpUHoH9P
-         1pHA==
-X-Gm-Message-State: APjAAAWUbtUS3JZlMf82Cx2Jt1QNS1X80Ga69opW+ghRqBidl4SFWgfl
-        e0K9Od8X3d4xBqjfZIQ7Fyq7+TaDZiRbnYnev4A7VA==
-X-Google-Smtp-Source: APXvYqxFqSTXBNgt/d82HDdsblbrO+Gntf7FbIO7I5FVn5bWtgoCv8TB/vfd1wG63/MOxoxdjMVPWHXGS+PE9B0gIcs=
-X-Received: by 2002:a05:6830:158:: with SMTP id j24mr3782474otp.316.1576689346095;
- Wed, 18 Dec 2019 09:15:46 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1uQvNs7n8BYFecDMKYvaLcfBbmVumJkhLoZArOSeVeM=;
+        b=okDs44Zs7ijZGXBhUh7uV7+DRynPDxeESqMouahVpL5N+lx+neFiATVqhms6mbdr4J
+         wT6ekPfbccvVRSLPQuNCE+9Two6DCPxYZ3iLwSMWpDzRAFzRonuakp/AAg0A1ZNjb7o8
+         r9Ld6/Ii8r8LEZ9DM80ssEFwZlGC5OpPAGFJ4XAPKrlNBE5QEvRg0w5g4KqPenIBwPGd
+         0HpFMAZSpTpSnWKEmtUx1btodG3WseXGUZsloiTRHRPkphLLKlYyYlt0QoT78a0OXgxD
+         Q798lRS2oQ/8Ka4PMiaBCpTi3x/uKbkNd4FM8UWQ1in3iCnKBONcM+uLPlCVRJ1/VZhf
+         u3Yg==
+X-Gm-Message-State: APjAAAUSa8YyguoQ+m02rK6mBWreC3yV75M0KguRd4Q8qKfYVEVq62lR
+        q9dbQ+Pt05V+QVvWylYfus+IZwS6njKsR+KLmZI=
+X-Google-Smtp-Source: APXvYqwsTWeBpSjqNGkZ8HwGlzhgdAIFzRvAxZ1k9a7lQL8BtADfRX73bkfldidG7ZfFc9JCLVEnL5LPi4TfzuVkto0=
+X-Received: by 2002:a05:6638:41d:: with SMTP id q29mr3481792jap.128.1576691927815;
+ Wed, 18 Dec 2019 09:58:47 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqa77qfw99.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqa77qfw99.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 18 Dec 2019 09:15:35 -0800
-Message-ID: <CABPp-BGRjewgHtFQ7F_isrqnC25EQyWoPbpdyVJeDzfVEysiCg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2019, #04; Tue, 17)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAPyFy2AsmaxU-BDf_teZJE5hiaVpTSZc8fftnuXPb_4-j7j5Fw@mail.gmail.com>
+ <D4C58338-10C6-4E5A-BF1F-F48EC2EBDAD5@icloud.com>
+In-Reply-To: <D4C58338-10C6-4E5A-BF1F-F48EC2EBDAD5@icloud.com>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Wed, 18 Dec 2019 05:23:06 -0500
+Message-ID: <CAPyFy2AKSVQJtSY0RNgJDJ5k1P=-gjNXVjDgPh+CdghhZtJXDw@mail.gmail.com>
+Subject: Re: git-subtree split misbehaviour with a commit having empty ls-tree
+ for the specified subdir
+To:     Tom Clarkson <tqclarkson@icloud.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 17, 2019 at 2:03 PM Junio C Hamano <gitster@pobox.com> wrote:
-
-> * en/fill-directory-fixes (2019-12-11) 8 commits
->  - dir: consolidate similar code in treat_directory()
->  - dir: synchronize treat_leading_path() and read_directory_recursive()
->  - dir: fix checks on common prefix directory
->  - dir: break part of read_directory_recursive() out for reuse
->  - dir: exit before wildcard fall-through if there is no wildcard
->  - dir: remove stray quote character in comment
->  - Revert "dir.c: make 'git-status --ignored' work within leading directories"
->  - t3011: demonstrate directory traversal failures
+On Tue, 17 Dec 2019 at 19:17, Tom Clarkson <tqclarkson@icloud.com> wrote:
 >
->  Assorted fixes to the directory traversal API.
+> The algorithm I am looking at to replace the file based mainline detection is
 >
->  Will merge to 'next'.
+>  - If subtree root is unknown (as on the initial split), everything is mainline.
+>
+>  - If subtree root is reachable and mainline root is not, it’s a subtree commit
+>
+>  - Otherwise, treat as mainline. This will also pick up commits from other subtrees but they hopefully won’t contain the subtree folder. I don’t think there is an unambiguous way to distinguish a subtree merge from a regular merge - the message produced is pretty generic. It may be possible to check reachability of all known subtrees, but that adds a fair bit of complexity.
+>
+> That leaves us with the question of how to record the empty mainline commits. The most correct result for your repro is probably four commits (add/delete everything/restore/modify), but I can see that falling over in a scenario where deleting a subtree is more like unlinking a library than editing that library to do nothing.
+>
+> Is it sufficiently correct for your scenario to treat ‘restore file1’ as the initial subtree commit?
 
-Please hold; even if you are willing to accept a manufactured dirent,
-the discussion did highlight two bugs in this series:
+My reproduction scenario is really a demonstration of the real issue I
+encountered. Running the initial "subtree split" on the real repo
+takes about 40 minutes so I wanted something trivial that shows the
+same issue. In the demonstration case (i.e., actually removing and
+readding the subtree) I think it's reasonable to start with the commit
+that added it back.
 
-1) I shouldn't assume dirent has a d_type member; my one access to it
-should be guarded with a !defined(NO_D_TYPE_IN_DIRENT).
+Overall I think your proposed algorithm is reasonable (even though I
+think it won't address some of the cases in our repo). Will your
+algorithm allow us to pass $dir to git rev-list, for the initial
+split?
 
-2) I should allocate my dirent on the heap (with some extra buffer
-space) rather than the stack, because if dirent has a "char d_name[]"
-rather than a "char d_name[BIG_ENOUGH]" declaration, then my
-stack-based allocation followed by writing to d_name will smash the
-stack.
+My actual issue stems from the way svn2git converted some odd svn
+history, and is described in more detail on the freebsd-git mailing
+list at https://lists.freebsd.org/pipermail/freebsd-git/2019-November/000218.html.
 
-I'll submit a re-roll with those two things fixed.
+Perhaps we can have some command-line options to provide metadata for
+cases that cannot be inferred? The cases in our repo come from svn2git
+creating subtree merges to represent updates from vendor code. AFAIK
+these should be basically identical to what subtree creates, except
+that we don't have any of the metadata it adds.
+
+For a concrete example (from the repo at
+https://github.com/freebsd/freebsd), 7f3a50b3b9f8 is a mainline commit
+that added a new subtree, from 9ee787636908. I think that if I could
+inform subtree split that 9ee787636908 is the root it would work for
+me.
