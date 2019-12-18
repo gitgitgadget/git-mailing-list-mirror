@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70837C2D0C3
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4824AC2D0CD
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 41E5E21582
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1DC1121582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNCCvPTS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m10ixN2v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726916AbfLRL0Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 06:26:24 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38376 "EHLO
+        id S1726921AbfLRL0Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:26:25 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36539 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726856AbfLRL0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:26:22 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y17so1881987wrh.5
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:20 -0800 (PST)
+        with ESMTP id S1726895AbfLRL0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:26:20 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z3so1893667wru.3
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7ZF7E9SDkzTDxY+2XMD91lyyqEH3cakGYfsZejGNZcg=;
-        b=MNCCvPTSrRqqcymmanakYTzldGUeVryFqNhI3mEJTO0/Amk9k9bvFfYrybNYcGnDIx
-         /3RwqIXCh3BeasE4+ADEf74UxykB2/cU4BYjcdF8hqsvO1AHgajZYj/CBLS4ykdc3zvL
-         eKaBmJrbg+QnG0ujYSRNb60fnBJT/7Y/oMda4JReNd5fttnEyaiiwJiGLCtXe4GAwJKn
-         RXrjv6p3YTKNp+ktQ24GWnuZmZzo4LBG9eU+O98IKnFp0JNI0tB9QJtebtc7T0syt5Ye
-         0emsCdmISIUpsAQvjOOpB5dRXamCIbiKdN7ovy4FNx29DuAnJFSQ3i9/SAx7jPG2yJg4
-         gVyQ==
+        bh=ZU0Fq2ekjvI6QJ11VjQCePiqYvjvOa6DerBBZH6+aEc=;
+        b=m10ixN2vBc60PDGF0bgaSjxbFuPz/YJ2P/J/vFX0F6yDN34gBLrUXi3KqJua9QIVSi
+         LKg9y1WuyjdvDrvRJ+J4I4cyVCAY+7f74HlwdDRNTQoo6RKk9ain2VPVfmAsPVO50v0H
+         C1bJCo5TWmLG9LsObOXrMD5b2+94aJIaapfvcTUkcVQRKEadUteCx8u/6OPkPdoSTNUB
+         tinc1XUZQNMATtHWnqLFvISjyF+aZe4ELKZPM4yT0CXXBv9hLsCcHDLarKRd5aamMgBf
+         +4XnPmS9H8wNF/V+9YJPg1s0XeaaOy0lOSrwUVqL7RNphjgoq/3llbCV7E2k5UtTh29O
+         4ngA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7ZF7E9SDkzTDxY+2XMD91lyyqEH3cakGYfsZejGNZcg=;
-        b=W6fbpFFfYVhoI826na4dOSDNfK+bQMZ/9Vk9ZcDfa8wQ7IcUlQH3eMKzHBOX2xwo4U
-         6NJyTjsfVvLJuo8UgbuPot04W0JLGgcxjIFzDzYmasWC3BABr9uY0AmZiOjztoHgE1B5
-         NwIOu/pA7aw2kTm8zgOXDtLG0XQqnXJE2eRWmTRuu4D4HF2JmKsw1aeUbJgjZwSodimP
-         jDHgZPq9hVNx6fM+hTKtINeSQVqheMUfTVzYM6+8LdmQfioqHxPAr/VSEuwAB4TxtQXC
-         DhKBs4HuRIAynLBgvjhMORaYVAdGH9Mj+/zB/wijomtEBDFfAWKrF9aF9CRJ/vHEaxrm
-         eohg==
-X-Gm-Message-State: APjAAAWSs/VGL6cYWafbvNVwzOQuKCJznx/iip4E5Ups5xW36k1SbBe3
-        96QhHVru980g4YiSNnSTE4Jv6lyA
-X-Google-Smtp-Source: APXvYqydYYPMrqyGWjvcdvkEpUB9a6vF1J9ogpoMOfCTEMLgLjmqQYjbUszyaigoDeXwEFscSr+8GQ==
-X-Received: by 2002:adf:f604:: with SMTP id t4mr2384095wrp.33.1576668379731;
-        Wed, 18 Dec 2019 03:26:19 -0800 (PST)
+        bh=ZU0Fq2ekjvI6QJ11VjQCePiqYvjvOa6DerBBZH6+aEc=;
+        b=cNlKt69XdmdINBmwT70mZAjw19+yewxak0z5TG01RAqIP6ULXCGwtAOuc5Vjlj9PQB
+         I+olrRB4KtVokyAf+eU0v6WMoL931aiAN5dzodid3jkOfxXl9cK9RY4JldF5IQm6Aos8
+         pBGkdva2bBf87FdrF9rTHdGnx4R8rEhv8aOKJ03t110CUeLK3LvIuokwB8YY5uPYnrlA
+         xkfDj/AC++yJHpN9uOnD2+qwRqeMUJ/LVsGUE+n36D5vZcPV8Jsn7oqxdozIswU+cklv
+         nzFNwfFJRrcjzLGR0NLar5zBR8PbG21WCIg6m24E8SuCrBYD4Cp0lsT5VtaB6oAcqwu2
+         RQ8g==
+X-Gm-Message-State: APjAAAXI7SmnFZRmA+JaUcLh2uDqhsoPuPWrCPo1dHzWT3v7I2ZvM1e+
+        l/31vTh9rWudq3XrRS+72KdOhKUa
+X-Google-Smtp-Source: APXvYqwqTtno13MiyDnuhYed+nwRcYOn/hcEqwuEHduPbhLsZvbvP92h2eFvYKXVt/Xif//1djqQLw==
+X-Received: by 2002:a5d:4a8c:: with SMTP id o12mr2244413wrq.43.1576668378540;
+        Wed, 18 Dec 2019 03:26:18 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:116b:f417:15eb:66f2:c98d:a463])
-        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.18
+        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 03:26:19 -0800 (PST)
+        Wed, 18 Dec 2019 03:26:17 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v4 12/12] pack-bitmap: don't rely on bitmap_git->reuse_objects
-Date:   Wed, 18 Dec 2019 12:25:47 +0100
-Message-Id: <20191218112547.4974-13-chriscool@tuxfamily.org>
+Subject: [PATCH v4 11/12] pack-objects: add checks for duplicate objects
+Date:   Wed, 18 Dec 2019 12:25:46 +0100
+Message-Id: <20191218112547.4974-12-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.1.498.g561400140f
 In-Reply-To: <20191218112547.4974-1-chriscool@tuxfamily.org>
 References: <20191218112547.4974-1-chriscool@tuxfamily.org>
@@ -77,69 +77,62 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We no longer compute bitmap_git->reuse_objects, so we
-cannot rely on it anymore to terminate the loop early;
-we have to iterate to the end.
+Additional checks are added in have_duplicate_entry() and
+obj_is_packed() to avoid duplicate objects in the reuse
+bitmap. It was probably buggy to not have such a check
+before.
+
+Git as a client would never both asks for a tag by sha1 and
+specify "include-tag", but libgit2 will, so a libgit2 client
+cloning from a Git server would trigger the bug.
+
+If a client both asks for a tag by sha1 and specifies
+"include-tag", we may end up including the tag in the reuse
+bitmap (due to the first thing), and then later adding it to
+the packlist (due to the second). This results in duplicate
+objects in the pack, which git chokes on. We should notice
+that we are already including it when doing the include-tag
+portion, and avoid adding it to the packlist.
+
+The simplest place to fix this is right in add_ref_tag(),
+where we could avoid peeling the tag at all if we know that
+we are already including it. However, this pushes the check
+instead into have_duplicate_entry(). This fixes not only
+this case, but also means that we cannot have any similar
+problems lurking in other code.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- pack-bitmap.c | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ builtin/pack-objects.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index a1d43d367a..5a8689cdf8 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -629,7 +629,7 @@ static void show_objects_for_type(
- 	enum object_type object_type,
- 	show_reachable_fn show_reach)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index c80c1fac94..b1998202fb 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1127,6 +1127,10 @@ static int have_duplicate_entry(const struct object_id *oid,
  {
--	size_t pos = 0, i = 0;
-+	size_t i = 0;
- 	uint32_t offset;
+ 	struct object_entry *entry;
  
- 	struct ewah_iterator it;
-@@ -637,13 +637,15 @@ static void show_objects_for_type(
- 
- 	struct bitmap *objects = bitmap_git->result;
- 
--	if (bitmap_git->reuse_objects == bitmap_git->pack->num_objects)
--		return;
--
- 	ewah_iterator_init(&it, type_filter);
- 
--	while (i < objects->word_alloc && ewah_iterator_next(&filter, &it)) {
-+	for (i = 0; i < objects->word_alloc &&
-+			ewah_iterator_next(&filter, &it); i++) {
- 		eword_t word = objects->words[i] & filter;
-+		size_t pos = (i * BITS_IN_EWORD);
++	if (reuse_packfile_bitmap &&
++	    bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid))
++		return 1;
 +
-+		if (!word)
-+			continue;
+ 	entry = packlist_find(&to_pack, oid);
+ 	if (!entry)
+ 		return 0;
+@@ -2681,7 +2685,9 @@ static void ll_find_deltas(struct object_entry **list, unsigned list_size,
  
- 		for (offset = 0; offset < BITS_IN_EWORD; ++offset) {
- 			struct object_id oid;
-@@ -655,9 +657,6 @@ static void show_objects_for_type(
- 
- 			offset += ewah_bit_ctz64(word >> offset);
- 
--			if (pos + offset < bitmap_git->reuse_objects)
--				continue;
--
- 			entry = &bitmap_git->pack->revindex[pos + offset];
- 			nth_packed_object_oid(&oid, bitmap_git->pack, entry->nr);
- 
-@@ -666,9 +665,6 @@ static void show_objects_for_type(
- 
- 			show_reach(&oid, object_type, 0, hash, bitmap_git->pack, entry->offset);
- 		}
--
--		pos += BITS_IN_EWORD;
--		i++;
- 	}
+ static int obj_is_packed(const struct object_id *oid)
+ {
+-	return !!packlist_find(&to_pack, oid);
++	return packlist_find(&to_pack, oid) ||
++		(reuse_packfile_bitmap &&
++		 bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
  }
  
+ static void add_tag_chain(const struct object_id *oid)
 -- 
 2.24.1.498.g561400140f
 
