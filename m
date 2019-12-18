@@ -3,173 +3,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBCF2C43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23624C2D0BF
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:57:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A854B218AC
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:33:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D6B7D21D7D
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:57:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=brightrockgames-com.20150623.gappssmtp.com header.i=@brightrockgames-com.20150623.gappssmtp.com header.b="TIVH0Gq4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hEQjS61t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726556AbfLRVdo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 16:33:44 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:35268 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726387AbfLRVdo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 16:33:44 -0500
-Received: by mail-oi1-f193.google.com with SMTP id k4so1988107oik.2
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 13:33:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=brightrockgames-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=/Zvza/HJrIy+bdLx6p9IoIJ5O83y1Nus6tf06XmUr7U=;
-        b=TIVH0Gq4DF6V63VmjDuZSW63JRp6Acx8R8tqeFjunOvCk5QD8S/csOCBEfGvCmPETQ
-         CVAa35jVIDPw+LRq/FlGW6D2nZJh5suS4hmiflTxAppQfm8wbuoRbnaGs3chzbD7B65s
-         nH2LUeZuYyZEgRPK+PtmLeXXXzFCzXNMhhKCJmF5PczdoyGCSeHgn4jnr9dm6ybB7xAG
-         KYj6RY2l8OCLoMSlUtNK/y0HpVVadQVSUyVwrjjrIo865u+EXWJLp0fsnh64UJSFRiCd
-         6aRKtYCpcMBdhGwVxONLPOXzFZeJsI198lWF7pJHEkQ2F624MiVnmEqDbDRsI4qum4rM
-         qz8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=/Zvza/HJrIy+bdLx6p9IoIJ5O83y1Nus6tf06XmUr7U=;
-        b=GhXSBCOL0eiDOkBX7torygYmGHDLVTfZZ7N0XKMfjuk1VQJLHHKwXerRnUG+ODoxUP
-         rJ60ajfu5oWkD6sEJ9doWkbfhjsTtxMM7prFn5t/UoMBr21Ip1YNBsiN0Y/m71TXiLdC
-         SnQ8yQS/C8mHm6pM/FuTjQbSxvX0sxbaxFm6RjfMG9el8BbfC+ef/0BJTYLHNnYG3IBI
-         Q3sRWmVXEmD3+m0w+G30rgKZrwU9A+VtUW7/f2e8yi3FL8vzJ4ZOg/IY+X4PBCvVE2Sw
-         bPi/YL0bn63FedA+FUXNSlSULguJL7pDmBsgsXnGqRjren5pEVmeGSdszLr+Pl+zheU6
-         mXVQ==
-X-Gm-Message-State: APjAAAVb210A6/A0iFrOh2eBbD6Id4omY0Ns2iuHUePsQpmkEChhNwJv
-        CGO+GJxGYrWrexSiMDP1nHHgQYmk0/gD8TswKaxYew==
-X-Google-Smtp-Source: APXvYqxhty9zHPHFFc+FpQWpqLt1rm++TcmrENQAM6AkRtBBT+WJl6+B7VASzQimR/UGzQy4jO7Dmz74oR1ecoPVwi0=
-X-Received: by 2002:aca:c509:: with SMTP id v9mr1431415oif.151.1576704823164;
- Wed, 18 Dec 2019 13:33:43 -0800 (PST)
+        id S1727337AbfLRV50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 16:57:26 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60191 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726971AbfLRV5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 16:57:24 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D515A9285;
+        Wed, 18 Dec 2019 16:57:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4KM35uyCsaoLoDda1sLzM8ilx5o=; b=hEQjS6
+        1tlTh6FZfQEXAvY0E0qktpneRpONm9Pj8HA1+Cmc+2GKJdI5NB9Xnzy6XhX3AakE
+        wwOUFYaJ/bFY0sMSi6G05thF364R5qnJJ2pn9Mukz8BExZwzVtxyxTSRHolY5Bvb
+        J4adV0UEYUll8GkImUzi26VOw4LSkv8FizOW8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fw1oMDpKK6aT8gP6NaOEN79yO2WeKCfV
+        LYF2rZx10mNBHHidfO0eqCJWJzZ31eu0ouWltD7rQ5dehC0yrjUKj3M0UF8Th4Pv
+        hCQGldJBvVsljzWAh62dZd6q/AJqkIeWi7e+itzwAxBY+Om20LzVuG8nZjw6ZiMP
+        bN+HOlxHPuo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64EAFA9284;
+        Wed, 18 Dec 2019 16:57:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 86FB3A9283;
+        Wed, 18 Dec 2019 16:57:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH v2 01/18] t7107, t7526: directly test parse_pathspec_file()
+References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
+        <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
+        <8d5fb9f40b8fc766ef022f910529e6308d9c2d80.1576511287.git.gitgitgadget@gmail.com>
+Date:   Wed, 18 Dec 2019 13:57:17 -0800
+In-Reply-To: <8d5fb9f40b8fc766ef022f910529e6308d9c2d80.1576511287.git.gitgitgadget@gmail.com>
+        (Alexandr Miloslavskiy via GitGitGadget's message of "Mon, 16 Dec 2019
+        15:47:49 +0000")
+Message-ID: <xmqqwoatcn5u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
- <20191218192741.ybi3xpvax7lrrubz@tb-raspi4>
-In-Reply-To: <20191218192741.ybi3xpvax7lrrubz@tb-raspi4>
-From:   Scott Richmond <scott@brightrockgames.com>
-Date:   Wed, 18 Dec 2019 21:33:32 +0000
-Message-ID: <CAB1T5w1Ct7_D7kiUypRuoK+zeiocyPJn0SindXfs6M5wUkVavw@mail.gmail.com>
-Subject: Re: Ability to ignore EOL changes for certain projects
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5CC07B64-21E1-11EA-9BE8-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Torsten,
+"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Thanks for the reply!
+> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+>
+> In my previous patches, `parse_pathspec_file()` was tested indirectly by
+> invoking `git reset` and `git commit` with properly crafted inputs. This
+> has some disadvantages:
+> 1) A number of tests are copy&pasted for every command where
+>    `--pathspec-from-file` is supported. With just two commands, it
+>    wasn't too bad, but I'm going to extend support to many more
+>    commands, which would make a handful of low-value tests.
+> 2) Tests are located in suboptimal test packages
+> 3) Tests are indirect
 
-Correct me if am wrong, but those steps don't tell git to "ignore"
-line endings. That just causes git to check all text files in and out
-with a specific EOL type (Either automatically chosen, or not). If an
-app in the dev env changes a files' EOL to something else, git will
-notice the change locally.
+That cuts both ways.  For a developer who is too narrowly focused
+(because s/he spent enough time staring at the code), testing the
+underlying machinery in a more direct way does feel attractive, but
+at the same time, what matters to the end users is how well the
+feature, when integrated into the commands they use (not the test
+scaffolding like the "test-parse-pathspec-file" command), works.
 
-Regards,
+So "indirect" is not necessarily a bad thing.
 
-Scott Richmond.
-  Director, Producer, Programmer
-  Brightrock Games
-  T: 07480795661
-
-On Wed, Dec 18, 2019 at 7:27 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
->
-> On Wed, Dec 18, 2019 at 11:10:27AM +0000, Scott Richmond wrote:
-> > The Problem Domain
-> > In certain dev environments (Unity3D projects) there is (AFAIK) an
-> > unsolvable problem where some files are often modified with line
-> > endings that aren't the native system or not the committed line
-> > endings for that file. Secondarily, in this case line endings don't
-> > matter - Nothing in the dev environment "cares" which kind of line
-> > ending is used.
-> >
-> > The Problem
-> > Git always cares about EOL. Git has options to transparently modify
-> > EOLs when files are checked in or out. However it is not possible to
-> > tell Git to ignore EOLs in other commands:
-> > Git status shows the file modified.
-> > Merging/Pulling has to care because it can't merge with a modified
-> > working tree. Which means the user has to care - They have to either
-> > stash the EOL changes or wipe them out. Sometimes, if the user has a
-> > particular app running, it may automatically reload that file and
-> > recreate the modified EOL changes, causing an endless loop. This
-> > problem is often made unclear to the user how to solve, especially if
-> > they aren't domain experts.
-> >
-> > To be clear, in this particular dev environment, I can say with
-> > confidence that this particular issue is a major and common pain point
-> > for users. It is made worse as many users in this environment aren't
-> > programmers by trade and aren't domain experts in version control. I
-> > also believe this environment is becoming a non-trivial portion of the
-> > Git userbase and it would be worthwhile looking into resolving.
-> >
-> > Solution Request
-> > It would be fantastic if we could tell Git to stop caring about EOL
-> > changes on a per-repo basis, with the effective output being that git
-> > status shouldn't show changes for files with differing EOLs.
-> >
-> > I'm experienced with Git, though I am not expert enough to consider
-> > creating such a change myself - It is unclear to me just how
-> > complicated a change may be. However maybe I could look into it if it
-> > was made clear that this improvement is possible and has no serious
-> > side effects.
->
-> Hej Scott,
-> I think that you problem can be solved.
-> For each repository, you can tell Git to ignore the line endings,
-> CRLF vs LF.
->
-> If you start with a fresh repo,
-> you can do something like:
->
-> echo "* text=3Dauto" >.gitattributes
-> git add .gitattributes
-> git commit -m "Add .gitattributes"
->
-> For existing repos, we need to take another step:
->
-> echo "* text=3Dauto" >.gitattributes
-> git add .gitattributes
-> git add  --renormlize .
-> git commit -m "Add .gitattributes"
->
-> More information can be found e.g. here:
-> https://git-scm.com/docs/git-add
->
-> Once you done that, you can merge branches
-> into the master branch with help of the renormalize
->
-> git merge -X renormalze branch-name
->
-> See even here:
-> https://git-scm.com/docs/git-merge
->
->
-> This is just a (too) short introduction, I hope that it
-> helps and that you find the time to dig somewhat deeper into
-> the documentation.
->
-> Other developers have that problem as well, you are not alone.
->
-> If you have a public repo, I could help with one example.
->
->
-> >
-> > Regards,
-> >
-> > Scott Richmond.
-> >   Director, Producer, Programmer
-> >   Brightrock Games
-> >   T: 07480795661
