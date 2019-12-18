@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 479F5C2D0CD
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F3F1C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1C53321582
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D624821582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dcA9KLAx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqRvmovJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbfLRL0S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 06:26:18 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43158 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726787AbfLRL0Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:26:16 -0500
-Received: by mail-wr1-f67.google.com with SMTP id d16so1856249wre.10
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:14 -0800 (PST)
+        id S1726910AbfLRL0V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:26:21 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:37480 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726674AbfLRL0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:26:17 -0500
+Received: by mail-wm1-f42.google.com with SMTP id f129so1482898wmf.2
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JQQgqz1yIUMmNdx3lVEw8Zcw26jdsVnZB5A9Dhbx604=;
-        b=dcA9KLAx7KZq4q2B/ClJRO8sr3Wcclzgdocnrh+FdjmH6XbsJJgOXQCJyJNNpkNyy7
-         VTe2k52ImroWdlJ7Lj2AWSqWBZ96hPVPdGKNpiOddPgNj6hftLWJLAhv6OTVVAm/Ms4I
-         ZxWgQiaWw9XohcIYORn4D75Ogp8+sUreSCveLKXHYAxKfXT/RHvrmFW6KmEj1bZdNERH
-         ZPTSBUQsw4pfdtaliMprauGCu7deUpaIWQDnqcqSJ8lXd0fUKZ2KF/tq2s12yZfert/N
-         5P3CWn5rvxYlmoc2u+xXT5KkV8oMH6lqIE8UxHoH00qgUnGcc1Z7ykzAlm3ZGEh3W9Eh
-         ZfDg==
+        bh=WiHLNDiBzU2tElAJNWa4G3aQ14D40sJWpcuGm33EBgE=;
+        b=LqRvmovJ0ATUayGlBQTj9cTRt/GwiXivn1Zihy5glO3536Zi0pOLuSmj3jc4ix9M1q
+         ZWqtbl4z4kTieLo+cfdvAXIty1AGcIhmlY1EAcfv3AlpbeXb4DKFeHTnAfn4hgU4DoiG
+         gGP0HWUS5f6yUf8UzXhZE2WQzCi9GIQWdx6x8WWz5/TTU/Z3IfV9nVXNjKyVF+O72fLr
+         R5J1eHTvgqcY7KZLBfNnHZMfFANhIEXA9tAncQNght/drrG1DE6NYoulV3p0pjT43HAr
+         wAnZYhxuFVie5q1YtKe2+fk8mipybP1ql7VUEc//Odov+Rvpan99+yTXlgPKe0O09eTK
+         Momw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JQQgqz1yIUMmNdx3lVEw8Zcw26jdsVnZB5A9Dhbx604=;
-        b=rcqLM66wiiE28YaQbnHsfvRXTQjD8+uPd/n4gpgTsvhIZRFkrNe3ZBUDgQr8Duvnzq
-         9rRQaf3wWexPvmUGdbDOoniuLAJmBzf656DbIKEiFgh8inGVmuu8E+NHty31KZoZQM2z
-         7+zAwLntA737DgdFl4eKUssgGLAFIJ8dbNxA9q3D0/UsOTp95iz844ri9iPORg7L4VFU
-         I6MMTNIqBpEp/QlrH+ZgOPA4B3TrpLODYyL3vHN97SQZskHjsipmO75+inf8YGmyGwtH
-         nE14ukrtyLETl1hkPIr86Cf9rsCe3bymfQeCPx1nFDv6ZrX3xLZPAoN+Nbeu7tfCxh4e
-         HwbA==
-X-Gm-Message-State: APjAAAXxO0fiJ5jUznojdIfg0ZXUaxZWNDH7qpAvs3dXlil0u1UySBwS
-        xSkBhdkAKAEdeVF8pk7Dqk71eGi5
-X-Google-Smtp-Source: APXvYqxD8vnvV10neS85Amw6reQQkHnljXYWYOKKZEkfRpDYYhITtBZKpdTxxEDqJjR61gpCFtQUuw==
-X-Received: by 2002:adf:fd87:: with SMTP id d7mr2296529wrr.226.1576668373989;
-        Wed, 18 Dec 2019 03:26:13 -0800 (PST)
+        bh=WiHLNDiBzU2tElAJNWa4G3aQ14D40sJWpcuGm33EBgE=;
+        b=SOklMLE2RBxOCkRDdOtnEcfQZsIE5rndv0TvrY95cf6yGDzancs9pDs8MpuRmu7aYT
+         rytefTUgGz45kc+ZQFNZf4EyelgXwsNoJQAOrTP7a8r+L96Pp6XPokOUMFcMmbQIgyp4
+         TbZeombnfZFX0HvOUSpNN/y3Lb6pIiM8USBmci9dv7XC51fgq+ChdlRqie6J5NLRcJ8w
+         AfXtVspf4USUwuvDEbLaJwl1KufFsWLQhfO/NWRAkCV3UN6+A1KCrPVRsbB3EOxLdIxa
+         27MB4w6S9g7nD/L+hJn7oxQmKdUPYMJQfUUh0wZ7sXY5IbDsJTxFz98mPz52FYc4UAB0
+         5DDQ==
+X-Gm-Message-State: APjAAAVT7XHclLp1Vi4BcEEADhpnFhBRWRatO06TlSaITN1lsB0S/QlB
+        tDMQXFd1ZtYP6YZc6SXxnwvGkZx7
+X-Google-Smtp-Source: APXvYqzFhSYvZ0GV/gDNdFkumai3U5Jq2mSJT1XJdIf/ZxndbfOwQONHL8DY/6k8BeL2zlMvSbST0Q==
+X-Received: by 2002:a1c:1fd0:: with SMTP id f199mr2667021wmf.113.1576668375195;
+        Wed, 18 Dec 2019 03:26:15 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:116b:f417:15eb:66f2:c98d:a463])
-        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.13
+        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 03:26:13 -0800 (PST)
+        Wed, 18 Dec 2019 03:26:14 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v4 07/12] csum-file: introduce hashfile_total()
-Date:   Wed, 18 Dec 2019 12:25:42 +0100
-Message-Id: <20191218112547.4974-8-chriscool@tuxfamily.org>
+Subject: [PATCH v4 08/12] pack-objects: introduce pack.allowPackReuse
+Date:   Wed, 18 Dec 2019 12:25:43 +0100
+Message-Id: <20191218112547.4974-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.1.498.g561400140f
 In-Reply-To: <20191218112547.4974-1-chriscool@tuxfamily.org>
 References: <20191218112547.4974-1-chriscool@tuxfamily.org>
@@ -77,35 +77,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We will need this helper function in a following commit
-to give us total number of bytes fed to the hashfile so far.
+Let's make it possible to configure if we want pack reuse or not.
+
+The main reason it might not be wanted is probably debugging and
+performance testing, though pack reuse _might_ cause larger packs,
+because we wouldn't consider the reused objects as bases for
+finding new deltas.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- csum-file.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ Documentation/config/pack.txt | 7 +++++++
+ builtin/pack-objects.c        | 8 +++++++-
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/csum-file.h b/csum-file.h
-index a98b1eee53..f9cbd317fb 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -42,6 +42,15 @@ void hashflush(struct hashfile *f);
- void crc32_begin(struct hashfile *);
- uint32_t crc32_end(struct hashfile *);
+diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+index 1d66f0c992..0dac580581 100644
+--- a/Documentation/config/pack.txt
++++ b/Documentation/config/pack.txt
+@@ -27,6 +27,13 @@ Note that changing the compression level will not automatically recompress
+ all existing objects. You can force recompression by passing the -F option
+ to linkgit:git-repack[1].
  
-+/*
-+ * Returns the total number of bytes fed to the hashfile so far (including ones
-+ * that have not been written out to the descriptor yet).
-+ */
-+static inline off_t hashfile_total(struct hashfile *f)
-+{
-+	return f->total + f->offset;
-+}
++pack.allowPackReuse::
++	When true, and when reachability bitmaps are enabled,
++	pack-objects will try to send parts of the bitmapped packfile
++	verbatim. This can reduce memory and CPU usage to serve fetches,
++	but might result in sending a slightly larger pack. Defaults to
++	true.
 +
- static inline void hashwrite_u8(struct hashfile *f, uint8_t data)
+ pack.island::
+ 	An extended regular expression configuring a set of delta
+ 	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 369f46fbc5..801e23dfe7 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -96,6 +96,7 @@ static off_t reuse_packfile_offset;
+ 
+ static int use_bitmap_index_default = 1;
+ static int use_bitmap_index = -1;
++static int allow_pack_reuse = 1;
+ static enum {
+ 	WRITE_BITMAP_FALSE = 0,
+ 	WRITE_BITMAP_QUIET,
+@@ -2699,6 +2700,10 @@ static int git_pack_config(const char *k, const char *v, void *cb)
+ 		use_bitmap_index_default = git_config_bool(k, v);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "pack.allowpackreuse")) {
++		allow_pack_reuse = git_config_bool(k, v);
++		return 0;
++	}
+ 	if (!strcmp(k, "pack.threads")) {
+ 		delta_search_threads = git_config_int(k, v);
+ 		if (delta_search_threads < 0)
+@@ -3030,7 +3035,8 @@ static void loosen_unused_packed_objects(void)
+  */
+ static int pack_options_allow_reuse(void)
  {
- 	hashwrite(f, &data, sizeof(data));
+-	return pack_to_stdout &&
++	return allow_pack_reuse &&
++	       pack_to_stdout &&
+ 	       allow_ofs_delta &&
+ 	       !ignore_packed_keep_on_disk &&
+ 	       !ignore_packed_keep_in_core &&
 -- 
 2.24.1.498.g561400140f
 
