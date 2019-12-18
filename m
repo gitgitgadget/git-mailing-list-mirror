@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F739C43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8CD0C2D0BF
 	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DA284206A5
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DF2C206A5
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8eH2Rd8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMxrW/nd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727573AbfLRT3y (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727570AbfLRT3y (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 18 Dec 2019 14:29:54 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37700 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727538AbfLRT3w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 14:29:52 -0500
-Received: by mail-wr1-f65.google.com with SMTP id w15so3555183wru.4
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 11:29:51 -0800 (PST)
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39297 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbfLRT3x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 14:29:53 -0500
+Received: by mail-wm1-f65.google.com with SMTP id 20so3069715wmj.4
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 11:29:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=H8eH2Rd8eIkjZ03b4g+SLET4Dfy7r9o4BOwRHA5q7+pEG/3CAGgI2BB6qczT1Qhm8i
-         yLGGHq4u4ZxKQCfV4QryFah5hIEenJBXNw8tZ0SoIUaFTVsl+RHYGxdOBIxE/pmQURah
-         DEYl2hF6ZvX4Oj8U/2C2jSdECB5pFxmUqO+UHrpdfHphmwM8NnZYjfDUajthD7yypgBJ
-         G8fYWCZfoCM/O4mXdPyQ6LkDCQP1D4w+bxd2t1FVGG8laqgHg0mDTf2u4frP1+CCTSvr
-         8iXWkxiAcyH94YInsQ2c1H3HYe5NIG37aJPfw8HBTojOdz/9o21CBqMIfyWEG6EzU09h
-         d+KA==
+        bh=xbAMdwUoczvFExTFmHXxzR/2/texrkL36eKuhAIvlbk=;
+        b=eMxrW/ndFjc70f5o/0z7zOE5eFOBUnADz+0Hvm8hwLaafNLi8/Krxu+jNySNTeNpTh
+         4OG8hFO1VXFfqzaI5iv+7JBHWuCDZ3NZ8hHofH/usY/8Mdtt8F+dq/bUTZAWt2XPOVS7
+         3RjcIxYnpnwoEv7JaqTa4aq+s8SYZJpRkNWwoT85D4pkA9bMVF+LB6+AxSDl6ho16BJj
+         FQLAfczqTEq2K+oIIJrEoU0ya1nxg/n+jamXjsa/Lijbl1ppwVbUji5o9ztZtnlx4H6O
+         7no7cSDdhZbe9Sbiy2uAktuLF6CsrvwCtasxInMy+26o2GpLhimP1N/5dAUAnBYAlmmo
+         qMiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=H1rfc3Xakcj/y7/qH6kpuw834RYNToBjdWGDvsRGWdg=;
-        b=OySNqsL4NF+V6D5xXxATtyyncrsZQzn5TDEKeTs1aEf7zvy4O1d8a5ExHdcLfFz0Ou
-         MycHx3vB3WtksENIQYNTyyTmEk72FagREsr2OI3nMqDcmh+jj3Wnn/GLXDRPjvginAEH
-         mYlmNo1sb1q+wjxOv8Atwvo31i2vDSb3tR7pCrGwhs2gx3nRZufoOvCDjnMKxumDxzBY
-         X8H2H/vZadb/V7EizbzjfYBQ4fE6PKe2MPnOFkHixAjzf22knwEvN+lh709ea3ypEniY
-         qtCsGqmx59VS5UPCOxqu4ipNvi7F5zxTGhdmYAOGcLiDy+n4lw73KkyW0P5ZF9CNq2VE
-         WUrg==
-X-Gm-Message-State: APjAAAV9sRdqkH6A1iRyj7DnWYpXdT7Lf7OHkPLkKh1KPVIy3WK1tm/Q
-        klsfGsDgPrWVMnWgQgkmH9V15p1+
-X-Google-Smtp-Source: APXvYqxfkaVuTg35V3LpDXIzU3wZXnG81plXHv0geJniwIdKl7+knghmZyVol/UJ5fgU7sfSbDuBvw==
-X-Received: by 2002:a5d:50d2:: with SMTP id f18mr4714356wrt.366.1576697390785;
-        Wed, 18 Dec 2019 11:29:50 -0800 (PST)
+        bh=xbAMdwUoczvFExTFmHXxzR/2/texrkL36eKuhAIvlbk=;
+        b=s3kSIL+rnPaM0Kc6ByVpUqImm/+3cpI8SKl8FyeDZXA5u7T0qWafSMDhsNIjrwmgDw
+         zFsW3zH8BOKM6rj34LswsyFvpVF//wwOKSjyfmTi8a7hY4sfKQeZUXcHzroq/4juK10T
+         SUSARuFlEYalnUxuEBT3exG8g0yE7Zx3TaOXjtC+ALV8grq6godEVpFIiw2dOroU6x6w
+         SHuVq6zSRynuaAGJTdMALWxiAXpakGyIOtfqbBb/uDpVQMHMe9eQAvVRTGObQ3y8pe2V
+         Nx76Co/6cklE67c6cs/DfD+DixtOQjA0artT2XYokTHxshbZTzQamDHtGMnEu/DJOH47
+         kLCA==
+X-Gm-Message-State: APjAAAUNBj+xd3f8XfHETNqbuxsOnWgYqfUuSFCn0hk4tuhv+FUzn6q1
+        snoq53oAL7DbEbnjFosBAJc188U3
+X-Google-Smtp-Source: APXvYqxkD961nzMx1zsG3CwuDWiUySlAlu9JJA3UBZHfA8wUxBOQPdggffY1utCXIurEF6sCCE/KVA==
+X-Received: by 2002:a1c:3187:: with SMTP id x129mr5186435wmx.91.1576697391478;
+        Wed, 18 Dec 2019 11:29:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y22sm3465214wma.35.2019.12.18.11.29.50
+        by smtp.gmail.com with ESMTPSA id c4sm3575175wml.7.2019.12.18.11.29.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Dec 2019 11:29:50 -0800 (PST)
-Message-Id: <d6f858cab122869425f5801d98713bcbb6d00334.1576697386.git.gitgitgadget@gmail.com>
+        Wed, 18 Dec 2019 11:29:51 -0800 (PST)
+Message-Id: <8d2d98eec3c620c55100a322087ef83e4f51c8cf.1576697386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
 References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
         <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Dec 2019 19:29:41 +0000
-Subject: [PATCH v4 3/8] dir: remove stray quote character in comment
+Date:   Wed, 18 Dec 2019 19:29:42 +0000
+Subject: [PATCH v4 4/8] dir: exit before wildcard fall-through if there is no
+ wildcard
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,24 +77,58 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+The DO_MATCH_LEADING_PATHSPEC had a fall-through case for if there was a
+wildcard, noting that we don't yet have enough information to determine
+if a further paths under the current directory might match due to the
+presence of wildcards.  But if we have no wildcards in our pathspec,
+then we shouldn't get to that fall-through case.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ dir.c                                              | 7 +++++++
+ t/t3011-common-prefixes-and-directory-traversal.sh | 4 ++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index 0dd5266629..5dacacd469 100644
+index 5dacacd469..517a569e10 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -373,7 +373,7 @@ static int match_pathspec_item(const struct index_state *istate,
- 		    !ps_strncmp(item, match, name, namelen))
- 			return MATCHED_RECURSIVELY_LEADING_PATHSPEC;
- 
--		/* name" doesn't match up to the first wild character */
-+		/* name doesn't match up to the first wild character */
- 		if (item->nowildcard_len < item->len &&
- 		    ps_strncmp(item, match, name,
+@@ -379,6 +379,13 @@ static int match_pathspec_item(const struct index_state *istate,
  			       item->nowildcard_len - prefix))
+ 			return 0;
+ 
++		/*
++		 * name has no wildcard, and it didn't match as a leading
++		 * pathspec so return.
++		 */
++		if (item->nowildcard_len == item->len)
++			return 0;
++
+ 		/*
+ 		 * Here is where we would perform a wildmatch to check if
+ 		 * "name" can be matched as a directory (or a prefix) against
+diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b/t/t3011-common-prefixes-and-directory-traversal.sh
+index 54f80c62b8..d6e161ddd8 100755
+--- a/t/t3011-common-prefixes-and-directory-traversal.sh
++++ b/t/t3011-common-prefixes-and-directory-traversal.sh
+@@ -92,7 +92,7 @@ test_expect_failure 'git ls-files -o untracked_repo/ does not recurse' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure 'git ls-files -o untracked_dir untracked_repo recurses into untracked_dir only' '
++test_expect_success 'git ls-files -o untracked_dir untracked_repo recurses into untracked_dir only' '
+ 	cat <<-EOF >expect &&
+ 	untracked_dir/empty
+ 	untracked_repo/
+@@ -110,7 +110,7 @@ test_expect_success 'git ls-files -o untracked_dir/ untracked_repo/ recurses int
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_failure 'git ls-files -o --directory untracked_dir untracked_repo does not recurse' '
++test_expect_success 'git ls-files -o --directory untracked_dir untracked_repo does not recurse' '
+ 	cat <<-EOF >expect &&
+ 	untracked_dir/
+ 	untracked_repo/
 -- 
 gitgitgadget
 
