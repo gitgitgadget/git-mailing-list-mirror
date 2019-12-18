@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F510C2D0C3
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4688C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6104A21582
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7981B21D7D
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhX8kR6j"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bf5zVVf9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726735AbfLRL0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726861AbfLRL0Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:26:16 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39217 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726856AbfLRL0O (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 18 Dec 2019 06:26:14 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:35293 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726141AbfLRL0N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:26:13 -0500
-Received: by mail-wm1-f41.google.com with SMTP id p17so1491187wmb.0
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:11 -0800 (PST)
+Received: by mail-wm1-f67.google.com with SMTP id 20so1353733wmj.4
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cBvBDYGTTds24xnjho/x6hcXxB6lw9adCvPuXB2U0XU=;
-        b=DhX8kR6jyPN7bl10W7Hir9GQzpCFGit3ppFCgnbDR0gOdWIVCSr4BVnCWEgyl82KSb
-         JUlRzuTq78guvd9yFVMhysQtISBBcyWyTcL4uCw4dvnhWLBzqEeRp00QluN22rz0ct3+
-         VYM6VC/QTdlmOXNeAxCMF3ueMjjp5M9fNL2+kVsqDRmFVyg+5R68dRUOulkH2xl9J030
-         F+t2HyKq4hl34spjvPkPHTd5dLiCWH8/xte1qY3s3RlsY/5pyi6awsWoq7zdYhTMnQAI
-         X+ARdBSiqm3U201A98hnM2joZ6/8xJBI741w6ZtIeyWSvOcY43aGgLBHrxgi8Stxlamw
-         59hQ==
+        bh=f8M8cZ+gRv/rNN8fFjyF98stzkGZ+D510F0bBH0psTM=;
+        b=bf5zVVf9Boxmlyw+Q9rxrvFiNi/SY9wInvo57fxt1TAzze9NuD/MoJfFtqgyOCupIb
+         mm0+H3WfiI84ylf87s1IgAD82fSWJSTbYPy5yo/yKGbYw7moQFRaUQeGH1Xb1i6koOeP
+         6cym/Pas0mp9kGV3oyf7WhplmC896gZe0+7V16bkgNI9O8iWvW5jMKaECdJdaGJF2cZ4
+         r8N2s/QYw+ADfwh749Ve11xarDPj/L4BdWKzVblm9WwhkrpJVCsu2NgO/ZVKuSfEz+pH
+         ceKHBlMH/f7sW3JCH6xv7f2Y1BQeVuQAQj+so4H+plt/spS5JNFgCaJ0pucIt9zNXR6r
+         r4QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cBvBDYGTTds24xnjho/x6hcXxB6lw9adCvPuXB2U0XU=;
-        b=NWwNgDQcE5SsMzg4Wwh/qvf49F4J8zb6kwBkGHyqUydQVlF67/3AuHDMK6ElgyLRlE
-         pZXOVGlq5Vg6po06xjfBEERAXvE7r/j56A5yiCYY9CHq/m0JpPWkWzXbkbZRy6+zHffp
-         304F1uNJdj3chzks6SGWpNXpTH+YkLykpDgp1ZUhclAtk6/t9oQmKuHl1EWfAm2AFoLx
-         p/f5XQaJfLZGh1l50C7C6HNutFZ35S7is+0BU2psusOj+wb4b0P1bepIYHcePbf/VTAH
-         sXV2MtP2h+0Vn+YA+iSeyXzu4B0ocGgrxM7sFJ2YJ6W2mUmAI+2crQTk7W/ikdGNAyQ8
-         ijyw==
-X-Gm-Message-State: APjAAAUzqPaiuntiWoYcqwJv58gf6anxD//Zx4Bj8E/MRjwGkrCoIc2r
-        5+w8p9/4QTKj6F1mXiZqRo3JuTTs
-X-Google-Smtp-Source: APXvYqyoREQmM/KcZPdKTwNhabqSzZOAx+58FpFZVpWY+MUdO+bX2oi92JRROoIKosKtVmnek0Q9XA==
-X-Received: by 2002:a1c:9d8b:: with SMTP id g133mr2575470wme.27.1576668370765;
-        Wed, 18 Dec 2019 03:26:10 -0800 (PST)
+        bh=f8M8cZ+gRv/rNN8fFjyF98stzkGZ+D510F0bBH0psTM=;
+        b=mLSpHcFRsdy3Kkn6hTia+j+49tACebdgGGiVPLKb3/0BdtXcWAyg9O81/RoiGmBh3o
+         Whh7kqWluvhwrW2/k/rJJDe09hirsfkb4ZjUzrI+M9ll0a+BftF6vGsCjLCksC4IzV0G
+         0HTRYG0xiuI6fRXR41REeLbF7h0cqxaPd3sdcCyqAJXuJsPu9pUaxQu01psOSD1XMRkH
+         IM68yDWmDNZ7ZCuWG+g49N4sTl20FPhAPV1rNgjeJ+aZJeq46i17gAWJk4u45U60SRm/
+         UrnzUa5xtYlDFox+cU4VQmt9lj7PzqEl87uPxceT9ptnuYrLkdiBwUIjv082kwePONNi
+         S3Yg==
+X-Gm-Message-State: APjAAAX5LUHkpo+urCxFkUbYL5EYSqrxEgnm2Tf68gm6xBx5hUfHGlcJ
+        oyt3DjvhfcBgLoLQCPLW1AJW+Zjo
+X-Google-Smtp-Source: APXvYqx6U4PcvS3CxdH3mSrHJr0T43Q6UAzTm8RjBZF7iAeQIXS+rfXshQ3MhxcN4F2NJHOE/6UMjg==
+X-Received: by 2002:a05:600c:21c6:: with SMTP id x6mr2543724wmj.177.1576668371878;
+        Wed, 18 Dec 2019 03:26:11 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:116b:f417:15eb:66f2:c98d:a463])
-        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.09
+        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 03:26:10 -0800 (PST)
+        Wed, 18 Dec 2019 03:26:11 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v4 04/12] pack-bitmap: introduce bitmap_walk_contains()
-Date:   Wed, 18 Dec 2019 12:25:39 +0100
-Message-Id: <20191218112547.4974-5-chriscool@tuxfamily.org>
+Subject: [PATCH v4 05/12] pack-bitmap: uninteresting oid can be outside bitmapped packfile
+Date:   Wed, 18 Dec 2019 12:25:40 +0100
+Message-Id: <20191218112547.4974-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.1.498.g561400140f
 In-Reply-To: <20191218112547.4974-1-chriscool@tuxfamily.org>
 References: <20191218112547.4974-1-chriscool@tuxfamily.org>
@@ -77,60 +77,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-We will use this helper function in a following commit to
-tell us if an object is packed.
+bitmap_has_oid_in_uninteresting() only used bitmap_position_packfile(),
+not bitmap_position(). So it wouldn't find objects which weren't in the
+bitmapped packfile (i.e., ones where we extended the bitmap to handle
+loose objects, or objects in other packs).
+
+As we could reuse a delta against such an object it is suboptimal not
+to use bitmap_position(), so let's use it instead of
+bitmap_position_packfile().
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- pack-bitmap.c | 12 ++++++++++++
- pack-bitmap.h |  3 +++
- 2 files changed, 15 insertions(+)
+ pack-bitmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index e07c798879..fb4f6297f2 100644
+index fb4f6297f2..de65f2fc36 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -830,6 +830,18 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
- 	return 0;
- }
+@@ -1137,7 +1137,7 @@ int bitmap_has_oid_in_uninteresting(struct bitmap_index *bitmap_git,
+ 	if (!bitmap_git->haves)
+ 		return 0; /* walk had no "haves" */
  
-+int bitmap_walk_contains(struct bitmap_index *bitmap_git,
-+			 struct bitmap *bitmap, const struct object_id *oid)
-+{
-+	int idx;
-+
-+	if (!bitmap)
-+		return 0;
-+
-+	idx = bitmap_position(bitmap_git, oid);
-+	return idx >= 0 && bitmap_get(bitmap, idx);
-+}
-+
- void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
- 				 show_reachable_fn show_reachable)
- {
-diff --git a/pack-bitmap.h b/pack-bitmap.h
-index 466c5afa09..6ab6033dbe 100644
---- a/pack-bitmap.h
-+++ b/pack-bitmap.h
-@@ -3,6 +3,7 @@
+-	pos = bitmap_position_packfile(bitmap_git, oid);
++	pos = bitmap_position(bitmap_git, oid);
+ 	if (pos < 0)
+ 		return 0;
  
- #include "ewah/ewok.h"
- #include "khash.h"
-+#include "pack.h"
- #include "pack-objects.h"
- 
- struct commit;
-@@ -53,6 +54,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
- int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
- 			     kh_oid_map_t *reused_bitmaps, int show_progress);
- void free_bitmap_index(struct bitmap_index *);
-+int bitmap_walk_contains(struct bitmap_index *,
-+			 struct bitmap *bitmap, const struct object_id *oid);
- 
- /*
-  * After a traversal has been performed by prepare_bitmap_walk(), this can be
 -- 
 2.24.1.498.g561400140f
 
