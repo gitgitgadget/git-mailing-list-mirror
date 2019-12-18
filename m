@@ -7,95 +7,120 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 071B1C43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 10:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EEEC2D0CD
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:09:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CD3C924686
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 10:55:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0648A206D7
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:09:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pRsj+w8D"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJGOsGgN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726676AbfLRKza (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 05:55:30 -0500
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:41244 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726545AbfLRKz3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 05:55:29 -0500
-Received: by mail-yb1-f195.google.com with SMTP id b145so552460yba.8
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 02:55:29 -0800 (PST)
+        id S1726698AbfLRLJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:09:35 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35314 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725930AbfLRLJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:09:34 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f8so1325447edv.2
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Gvp/ujNXK6EyresOku+TfIIb9V4hWxGnsO23pfTnMgY=;
-        b=pRsj+w8DsHF65M4jz5gxfNpeiwSOKZKbhQeWgm8tzGIuNuZ3c3uQFHMI9NXQr3MuNR
-         zDjM6hzGx0ZEI6+wYfYSTg1Rphm7m84k+9Qn0XlWgJUVGn5O8VN5gjF3mtIusV4B4HSl
-         PlXHAJN0pPrPDk2GsuASD/GyjMXJidU971hhkvRkIMdLG8gjZ0b6JqklRXysOV9B6gpX
-         0ypggaEEQcgL8lxImBHVPxXQ3sr4hmxXSeLUIJ5sVG6rI2SBPckXBk2xnNE4hPAmVdoT
-         QnW1WCCsEbod5umZDiNFlEjXXDXYjXs3Js0JBtNPwBfBZOXbqaQwOfUQTREEhr/ZsA3I
-         tCWQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=fUmEsiElKhDKhlT3SfLGEU08rVbAl9ZDdGZHeDZ/yRc=;
+        b=lJGOsGgNI9bcJitbUT6Ffx141acMG/RXmKwIu1GoB2s/t8YojQU5g7tdoxiS5Bj4wK
+         1PusTHZV6vl4bfhe3PZU2tGaUozC80w3klWLeC7K74mMB2u+0ea8K6Q2BilerfgWJEC0
+         Irq+ZDKKP+frNKbkk/QfDoaLTFBZU/u/o0AIyR/Vq7AFdDvInt0BMoDKA8V9SPxjViTL
+         ywTPoxRRe0iwWJaSYegS27/IQ5E+Aq2E7OPbt4gcWQmGkk6KAUuEPG0Iqb0RrjIhjoq7
+         MUJBEZjtQQtbHpIYYH0ociVY43NvVZD2M40Z1Lf8CLBq+Zpt0oFVXF5CyqJPwxKqF84f
+         t0sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Gvp/ujNXK6EyresOku+TfIIb9V4hWxGnsO23pfTnMgY=;
-        b=ZO6WKrU04o7iqS7TjHfe1xNPzs5yKpDZlkqmiKjBiZl8A6//Jd/a/UorAi135q4zwt
-         72wrWgDT0FO+tGzI9KkAZ4f1YPCpYQaMttHG9MzFKBB61DBGkjY3UnjZjqesA1NuOUFh
-         D5DG0DgzGLA7bvB9AMVIyx+tzh9w+yFW072GeuFq2kmWjhyuyrps9a8tCL6NK5XIMwjB
-         Y0xgbhBdIIBc1vn+qMmnhG3bSjIEzi2KEPMmNxEoShmLzK3b5Mi1rJPb4vu2VBklPUNo
-         cWqM9H1B7wCdbSIb+oJU4MphTAi2548UivWu8NNFG4g6m7qJQI6imyLYjZACgnutc+py
-         5XJw==
-X-Gm-Message-State: APjAAAUFmL/8VKxtAR/Gnt9m8P6o/MpU/wqZnYr7wVPn0KY7aWYSaSf2
-        8FFJyr0yqTP9XevILEbt9jk=
-X-Google-Smtp-Source: APXvYqxJvhz4OTXC7T70gaeRb/OXUGj/UiRWnaJBOdu+wewVaQPkQKbpWFThZ01WwK92ZCTYwDSnXg==
-X-Received: by 2002:a25:df84:: with SMTP id w126mr1286840ybg.387.1576666528746;
-        Wed, 18 Dec 2019 02:55:28 -0800 (PST)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id n3sm773899ywd.35.2019.12.18.02.55.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Dec 2019 02:55:28 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=fUmEsiElKhDKhlT3SfLGEU08rVbAl9ZDdGZHeDZ/yRc=;
+        b=ltKUa/xBiUx89c93P1QGFrQBI6age+q+8GRoL038DiZG2USrVv1fwszvf19xrXS96Y
+         lez/RZEzfLQOqziS4rlJv3G9BGFbOjd0cgVRLb5O8sQXS6revhNTyZiV7BPwAm1QvIIX
+         Z1IBczksJpgFTj8cTh7nbPU8rD19NCfWLy9KnMArdFGwviMYBCB+T5m+QY5mvD6aal3R
+         /UkERX/ZIKiwMPlMerwP1Qe+WPjQiZtXcxyVFZh17/C3NkYntrwDLkVvhifbfYvhSEZu
+         cZsYdvb6eVte+GCkXxFBvTCZdl0hAeEtS9ZipMJmLsUrOCqvCQJD8yUdiaYMgHkK7wOV
+         wsgg==
+X-Gm-Message-State: APjAAAWpEnQsHjLmasBXOxkU81uInPpUBOIBXOp0AqeBLBE8Yup78gRp
+        +pP3mZINsVhNZ/RK1VDe4y4=
+X-Google-Smtp-Source: APXvYqw4l1YMwmzmn1/fYByd1TthcsvoaGIXQuP46uFX7clD/MYkzGluZNiFWh9sy6sm0WKlhHlNLw==
+X-Received: by 2002:aa7:d897:: with SMTP id u23mr1619991edq.50.1576667373077;
+        Wed, 18 Dec 2019 03:09:33 -0800 (PST)
+Received: from szeder.dev (x4db36940.dyn.telefonica.de. [77.179.105.64])
+        by smtp.gmail.com with ESMTPSA id w12sm22509edq.94.2019.12.18.03.09.31
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Dec 2019 03:09:32 -0800 (PST)
+Date:   Wed, 18 Dec 2019 12:09:29 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
 Subject: Re: [PATCH 2/2] Documentation/git-log: mention that line-log regex
  must match in starting revision
-To:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
+Message-ID: <20191218110929.GB8609@szeder.dev>
 References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
  <4ea4eeae0c1e23221012855168bf6640be93fd4f.1576559263.git.gitgitgadget@gmail.com>
  <1d033204-80fd-25f8-3a80-0cb641953139@gmail.com>
  <xmqq5zieizrb.fsf@gitster-ct.c.googlers.com>
  <147443E8-EA04-45D2-B3BC-D879A5FFECDC@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d8e753ec-2835-331f-99de-35a4a5369b48@gmail.com>
-Date:   Wed, 18 Dec 2019 05:55:25 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <147443E8-EA04-45D2-B3BC-D879A5FFECDC@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <147443E8-EA04-45D2-B3BC-D879A5FFECDC@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/17/2019 10:28 PM, Philippe Blain wrote:
+On Tue, Dec 17, 2019 at 10:28:37PM -0500, Philippe Blain wrote:
 > 
->> Le 17 déc. 2019 à 13:16, Junio C Hamano <gitster@pobox.com> a écrit :
->> Even when you specify <start> or <end> as a line number, they must
->> exist in the starting revision or it would be a fatal error.  If we
->> are clarifying with this patch for completeness, I think we should
->> also mention it together.  
-...
+> > Le 17 déc. 2019 à 13:16, Junio C Hamano <gitster@pobox.com> a écrit :
+> > Even when you specify <start> or <end> as a line number, they must
+> > exist in the starting revision or it would be a fatal error.  If we
+> > are clarifying with this patch for completeness, I think we should
+> > also mention it together.  
+> Thanks for the feedback. I did some tests : 
+
+I'll swap the order of your first two tests:
+
 >     git log -L 300,2000000085:Documentation/git-log.txt 
 > errors out:
 >     fatal: file Documentation/git-log.txt has only 239 lines
 
-This case seems important enough to include what it means to "match".
+Here the entire line range is outside of the file, so there is not
+much we can do about it, but error out.
 
-Specifically, the range must match at least one line in the file.
+An alternative would be to treat it as an empty line range and then
+don't show any commits but exit silently, but I think that would be
+confusing ("why didn't I get any output?!"), and telling the user
+what's wrong is better ("Ah, ok, I mistyped 192 as 912").
+
+>     git log -L 73,2000000085:Documentation/git-log.txt
+> does not error and shows the history from line 73 to the end of the file.
+
+Here there is an overlap between the given line range and the file
+(lines 73-239), so we have two possibilities:
+
+  - be strict and error out saying that the <end> doesn't make sense.
+
+  - be lax about it, and interpret the <end> as the end of file.  This
+    allows for cases like "I want line log from here to the end of
+    file, but instead of finding out the exact number of lines in the
+    file I'll just say 999999 that is surely larger than the file, and
+    you shall do what I mean".
+
+Those who implemented the line-log feature chose the latter.  I think
+it's the better choice.
 
 > But 
 >     git log -L 300,-2000000085:Documentation/git-log.txt
@@ -103,32 +128,14 @@ Specifically, the range must match at least one line in the file.
 >     git log -L 1,-2000000085:Documentation/git-log.txt
 > does not error out and gives the history for the first line.
 
-Negative numbers in the ranges are a bit strange to include, and the
-large magnitude you include here seems unnecessary for the test.
-However, it appears that we do store signed values in the line-log
-machinery:
+These are a variant of the previous case, with the difference that
+because of the '-' in <end> it is not an absolute line number but
+relative, and is interpreted as that many lines before <start> (i.e.
+in this case <start> actually means the end of the line range).
 
-/* A range [start,end].  Lines are numbered starting at 0, and the
- * ranges include start but exclude end. */
-struct range {
-	long start, end;
-};
+I think the same argument can be made about <end> pointing past the
+beginning of the file, though, arguably, it's not as useful, because
+the first line as always 1, and '-L 123,-99999' is more keystrokes
+than '-L 1,123'.
 
-Perhaps these should be replaced with an unsigned value instead,
-just to be clear that negative values do not make sense in this
-context?
-
-Or rather, do we want to enforce start < end if they are to be
-valuable? We apparently do assert() this in
-range_set_check_invariants() for all that does.
-
-The current behavior of showing only the first line
-is a strange byproduct of allowing these odd ranges, but we may
-want to keep it for consistency. That would imply we allow
-start <= end, and auto-correct these negative values to have
-end = start. (This does not fix the 300,-1 case, but that
-is strange enough to be considered a bug, right?)
-
-Thanks,
--Stolee
-
+> So I think that it’s really only regex that must match...
