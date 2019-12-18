@@ -2,140 +2,105 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32EEEC2D0CD
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A04C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:10:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0648A206D7
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:09:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A346C218AC
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:10:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJGOsGgN"
+	dkim=pass (2048-bit key) header.d=brightrockgames-com.20150623.gappssmtp.com header.i=@brightrockgames-com.20150623.gappssmtp.com header.b="ExJF3qh3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726698AbfLRLJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 06:09:35 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35314 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfLRLJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:09:34 -0500
-Received: by mail-ed1-f66.google.com with SMTP id f8so1325447edv.2
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:09:33 -0800 (PST)
+        id S1726705AbfLRLKk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:10:40 -0500
+Received: from mail-ot1-f44.google.com ([209.85.210.44]:34108 "EHLO
+        mail-ot1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbfLRLKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:10:40 -0500
+Received: by mail-ot1-f44.google.com with SMTP id a15so2091726otf.1
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:10:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=fUmEsiElKhDKhlT3SfLGEU08rVbAl9ZDdGZHeDZ/yRc=;
-        b=lJGOsGgNI9bcJitbUT6Ffx141acMG/RXmKwIu1GoB2s/t8YojQU5g7tdoxiS5Bj4wK
-         1PusTHZV6vl4bfhe3PZU2tGaUozC80w3klWLeC7K74mMB2u+0ea8K6Q2BilerfgWJEC0
-         Irq+ZDKKP+frNKbkk/QfDoaLTFBZU/u/o0AIyR/Vq7AFdDvInt0BMoDKA8V9SPxjViTL
-         ywTPoxRRe0iwWJaSYegS27/IQ5E+Aq2E7OPbt4gcWQmGkk6KAUuEPG0Iqb0RrjIhjoq7
-         MUJBEZjtQQtbHpIYYH0ociVY43NvVZD2M40Z1Lf8CLBq+Zpt0oFVXF5CyqJPwxKqF84f
-         t0sw==
+        d=brightrockgames-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=MVXfUuHKxtN4n3xOAn3tAdDdVEIgzOISE3jpVp0kGHM=;
+        b=ExJF3qh3V93V88m1DAWN43mAuIXx9RxlejwF10CfuWnA+80NEwhtdsv+YklqsmL+xt
+         JlIMcJCVs2NPrT9NQcnFZDpsFn+pRNPT6WLKvVAsEFrnB0KFBCIA0Y+imMM2MNejgb8U
+         iDMWGZ9o699L7oOKu+FxUqW6npCD2XAYgCSV8ZE8aad6GJ8eAPC7L1D+bLpQM0WUarac
+         7RMGEZ54bb8pKq69+KYeUFKjSc1P7rNj1LTbL2jq6ZIW8lhzh1FLgHdm+JW7KMae/JP0
+         /1OtIjk1iRy7Uf/vfFxOkUpI2epgE/5n59kJg6ptJjI07O7Cy3eQBUKD9X/XnJ7Rp6f1
+         juPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=fUmEsiElKhDKhlT3SfLGEU08rVbAl9ZDdGZHeDZ/yRc=;
-        b=ltKUa/xBiUx89c93P1QGFrQBI6age+q+8GRoL038DiZG2USrVv1fwszvf19xrXS96Y
-         lez/RZEzfLQOqziS4rlJv3G9BGFbOjd0cgVRLb5O8sQXS6revhNTyZiV7BPwAm1QvIIX
-         Z1IBczksJpgFTj8cTh7nbPU8rD19NCfWLy9KnMArdFGwviMYBCB+T5m+QY5mvD6aal3R
-         /UkERX/ZIKiwMPlMerwP1Qe+WPjQiZtXcxyVFZh17/C3NkYntrwDLkVvhifbfYvhSEZu
-         cZsYdvb6eVte+GCkXxFBvTCZdl0hAeEtS9ZipMJmLsUrOCqvCQJD8yUdiaYMgHkK7wOV
-         wsgg==
-X-Gm-Message-State: APjAAAWpEnQsHjLmasBXOxkU81uInPpUBOIBXOp0AqeBLBE8Yup78gRp
-        +pP3mZINsVhNZ/RK1VDe4y4=
-X-Google-Smtp-Source: APXvYqw4l1YMwmzmn1/fYByd1TthcsvoaGIXQuP46uFX7clD/MYkzGluZNiFWh9sy6sm0WKlhHlNLw==
-X-Received: by 2002:aa7:d897:: with SMTP id u23mr1619991edq.50.1576667373077;
-        Wed, 18 Dec 2019 03:09:33 -0800 (PST)
-Received: from szeder.dev (x4db36940.dyn.telefonica.de. [77.179.105.64])
-        by smtp.gmail.com with ESMTPSA id w12sm22509edq.94.2019.12.18.03.09.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Dec 2019 03:09:32 -0800 (PST)
-Date:   Wed, 18 Dec 2019 12:09:29 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH 2/2] Documentation/git-log: mention that line-log regex
- must match in starting revision
-Message-ID: <20191218110929.GB8609@szeder.dev>
-References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
- <4ea4eeae0c1e23221012855168bf6640be93fd4f.1576559263.git.gitgitgadget@gmail.com>
- <1d033204-80fd-25f8-3a80-0cb641953139@gmail.com>
- <xmqq5zieizrb.fsf@gitster-ct.c.googlers.com>
- <147443E8-EA04-45D2-B3BC-D879A5FFECDC@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=MVXfUuHKxtN4n3xOAn3tAdDdVEIgzOISE3jpVp0kGHM=;
+        b=UBYl5GcRreQOPEvSWODcgc0dhmx533WmNYSZz2BXf9CRQwYWd/SDRpkcFBXtU/NEvF
+         4D6yvKl76fhUV6eKXPG+5N3B60pDTY2/0X6iGzUvxyzTKySTBlsiP0wx/XRnbAf2wqLH
+         ngHPOdBnjYbS3/t4IoE6MxjtReSVFCpTMdzoXoKyHBnmBoI3CiQl+ZjPFJhKKu6Vur0z
+         h3IIiK97cN4rpJfEUJA05QH5/WmyDT9d3jhIc9i0gLJYh235B0hvlyHgLYtOs7ukWrbJ
+         WlAi00ngwoAY39h9it6f8joAH+PFh/4W3068COD5DAZeE+W37+HT0LaJK+WSHaGFfMgq
+         1AUg==
+X-Gm-Message-State: APjAAAUQ3F7RNesOEZl7HAhEgLO9BrzVQSTU01aIqmGWnxd/YEhLmURv
+        ChiqaC200hsZeDOJ/NsAGgAE0x9A5mIdJe13oCQMmT9j0BXlQQ==
+X-Google-Smtp-Source: APXvYqwyORCWafKf9iBybnEbisR5JYzP+Qy8AmFMv40gWZtTRto9L7Rrdl6HW/w++gglnyL0BaLyJLfgnBP3a4AMxp8=
+X-Received: by 2002:a05:6830:2110:: with SMTP id i16mr1922750otc.337.1576667439534;
+ Wed, 18 Dec 2019 03:10:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <147443E8-EA04-45D2-B3BC-D879A5FFECDC@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+From:   Scott Richmond <scott@brightrockgames.com>
+Date:   Wed, 18 Dec 2019 11:10:27 +0000
+Message-ID: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
+Subject: Ability to ignore EOL changes for certain projects
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 17, 2019 at 10:28:37PM -0500, Philippe Blain wrote:
-> 
-> > Le 17 déc. 2019 à 13:16, Junio C Hamano <gitster@pobox.com> a écrit :
-> > Even when you specify <start> or <end> as a line number, they must
-> > exist in the starting revision or it would be a fatal error.  If we
-> > are clarifying with this patch for completeness, I think we should
-> > also mention it together.  
-> Thanks for the feedback. I did some tests : 
+The Problem Domain
+In certain dev environments (Unity3D projects) there is (AFAIK) an
+unsolvable problem where some files are often modified with line
+endings that aren't the native system or not the committed line
+endings for that file. Secondarily, in this case line endings don't
+matter - Nothing in the dev environment "cares" which kind of line
+ending is used.
 
-I'll swap the order of your first two tests:
+The Problem
+Git always cares about EOL. Git has options to transparently modify
+EOLs when files are checked in or out. However it is not possible to
+tell Git to ignore EOLs in other commands:
+Git status shows the file modified.
+Merging/Pulling has to care because it can't merge with a modified
+working tree. Which means the user has to care - They have to either
+stash the EOL changes or wipe them out. Sometimes, if the user has a
+particular app running, it may automatically reload that file and
+recreate the modified EOL changes, causing an endless loop. This
+problem is often made unclear to the user how to solve, especially if
+they aren't domain experts.
 
->     git log -L 300,2000000085:Documentation/git-log.txt 
-> errors out:
->     fatal: file Documentation/git-log.txt has only 239 lines
+To be clear, in this particular dev environment, I can say with
+confidence that this particular issue is a major and common pain point
+for users. It is made worse as many users in this environment aren't
+programmers by trade and aren't domain experts in version control. I
+also believe this environment is becoming a non-trivial portion of the
+Git userbase and it would be worthwhile looking into resolving.
 
-Here the entire line range is outside of the file, so there is not
-much we can do about it, but error out.
+Solution Request
+It would be fantastic if we could tell Git to stop caring about EOL
+changes on a per-repo basis, with the effective output being that git
+status shouldn't show changes for files with differing EOLs.
 
-An alternative would be to treat it as an empty line range and then
-don't show any commits but exit silently, but I think that would be
-confusing ("why didn't I get any output?!"), and telling the user
-what's wrong is better ("Ah, ok, I mistyped 192 as 912").
+I'm experienced with Git, though I am not expert enough to consider
+creating such a change myself - It is unclear to me just how
+complicated a change may be. However maybe I could look into it if it
+was made clear that this improvement is possible and has no serious
+side effects.
 
->     git log -L 73,2000000085:Documentation/git-log.txt
-> does not error and shows the history from line 73 to the end of the file.
+Regards,
 
-Here there is an overlap between the given line range and the file
-(lines 73-239), so we have two possibilities:
-
-  - be strict and error out saying that the <end> doesn't make sense.
-
-  - be lax about it, and interpret the <end> as the end of file.  This
-    allows for cases like "I want line log from here to the end of
-    file, but instead of finding out the exact number of lines in the
-    file I'll just say 999999 that is surely larger than the file, and
-    you shall do what I mean".
-
-Those who implemented the line-log feature chose the latter.  I think
-it's the better choice.
-
-> But 
->     git log -L 300,-2000000085:Documentation/git-log.txt
-> does not error out and shows the history for the whole file. Also,
->     git log -L 1,-2000000085:Documentation/git-log.txt
-> does not error out and gives the history for the first line.
-
-These are a variant of the previous case, with the difference that
-because of the '-' in <end> it is not an absolute line number but
-relative, and is interpreted as that many lines before <start> (i.e.
-in this case <start> actually means the end of the line range).
-
-I think the same argument can be made about <end> pointing past the
-beginning of the file, though, arguably, it's not as useful, because
-the first line as always 1, and '-L 123,-99999' is more keystrokes
-than '-L 1,123'.
-
-> So I think that it’s really only regex that must match...
+Scott Richmond.
+  Director, Producer, Programmer
+  Brightrock Games
+  T: 07480795661
