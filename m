@@ -2,73 +2,188 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B61F4C43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 20:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C545BC43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:29:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 86C7F21D7D
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 20:12:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9229C218AC
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 21:29:34 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mNLxeYd/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726831AbfLRUMm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 15:12:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49678 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726699AbfLRUMm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 15:12:42 -0500
-Received: (qmail 18967 invoked by uid 109); 18 Dec 2019 20:12:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 18 Dec 2019 20:12:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31686 invoked by uid 111); 18 Dec 2019 20:17:21 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Dec 2019 15:17:21 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 18 Dec 2019 15:12:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH RESEND] t4015: improve coverage of function context test
-Message-ID: <20191218201241.GA6452@coredump.intra.peff.net>
-References: <fedd48bd-28e8-ccc8-ae50-42d9b2ea1c16@web.de>
+        id S1726470AbfLRV3d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 16:29:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:53473 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726188AbfLRV3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 16:29:33 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 162B827D31;
+        Wed, 18 Dec 2019 16:29:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=VleZt/ffZpAA0D3Crg4zhsYRox8=; b=mNLxeY
+        d/+W8JUU9BUwCAaNZO78zidCFsTFbicAt9QNzfwjThCq87Eav6Tb0gDBBtXzxTyN
+        U2EWsN+hMyIAUrDoy9sM+pS8HmebEMfWRp++lDDD7JDogT4hodOK10r8qBtiO9Co
+        Aoqu7vfWVbPeLQDWP4nWnbmKDQK/o+ShiQxI0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pT/BSOJs407hLZZnG46G5/QwZChnCiVz
+        9+JGdwILk8ZNuVuhk+T4HwiqJW2UN5rya1EA1tkkhdt4rb7kGR1iCkzhZaOPHNlh
+        48zPo+qnz984t/L9qqx8S1lT/hBZN+fXyo5bH+FXd0/QaIqBfDA+ab7mRw+GpAA3
+        rWlxTk3B9Ug=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CA9827D2E;
+        Wed, 18 Dec 2019 16:29:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 64A8827D2B;
+        Wed, 18 Dec 2019 16:29:26 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, blees@dcon.de, kyle@kyleam.com,
+        sxlijin@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 6/8] dir: fix checks on common prefix directory
+References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
+        <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
+        <1f3978aa461929923eeb5037e69be6569f0ba331.1576697386.git.gitgitgadget@gmail.com>
+Date:   Wed, 18 Dec 2019 13:29:25 -0800
+In-Reply-To: <1f3978aa461929923eeb5037e69be6569f0ba331.1576697386.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Wed, 18 Dec 2019
+        19:29:44 +0000")
+Message-ID: <xmqq1rt1e30q.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <fedd48bd-28e8-ccc8-ae50-42d9b2ea1c16@web.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 777BC2AA-21DD-11EA-87CB-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 18, 2019 at 07:05:54PM +0100, René Scharfe wrote:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Include an actual function line in the test files to check if context is
-> expanded to include the whole function, and add an ignored change before
-> function context to check if that one stays hidden, while the originally
-> ignored change within function context is shown.
+> ...
+> Fix most these problems by making treat_leading_path() not only loop
+> over each leading path component, but calling treat_path() directly on
+> each.  To do so, we have to create a synthetic dir_entry, but that only
+> takes a few lines.  Then, pay attention to the path_treatment result we
+> get from treat_path() and don't treat path_excluded, path_untracked, and
+> path_recurse all the same as path_recurse.
 >
-> [...]
->  test_expect_success 'combine --ignore-blank-lines with --function-context' '
-> -	test_write_lines 1 "" 2 3 4 5 >a &&
-> -	test_write_lines 1    2 3 4   >b &&
-> +	test_write_lines    1 2 3 "" function 1 2 3 4 5 "" 6 7 8 9 >a &&
-> +	test_write_lines "" 1 2 3 "" function 1 2 3 4 5    6 7 8   >b &&
+> This leaves one remaining problem, the new inconsistency from commit
+> df5bcdf83ae.  That will be addressed in a subsequent commit.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  dir.c                                         | 57 +++++++++++++++----
+>  ...common-prefixes-and-directory-traversal.sh |  6 +-
+>  2 files changed, 49 insertions(+), 14 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 645b44ea64..1de5d7ad33 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -2102,37 +2102,72 @@ static int treat_leading_path(struct dir_struct *dir,
+>  			      const struct pathspec *pathspec)
+>  {
+>  	struct strbuf sb = STRBUF_INIT;
+> -	int baselen, rc = 0;
+> +	int prevlen, baselen;
+>  	const char *cp;
+> +	struct cached_dir cdir;
+> +	struct dirent *de;
+> +	enum path_treatment state = path_none;
+> +
+> +	/*
+> +	 * For each directory component of path, we are going to check whether
+> +	 * that path is relevant given the pathspec.  For example, if path is
+> +	 *    foo/bar/baz/
+> +	 * then we will ask treat_path() whether we should go into foo, then
+> +	 * whether we should go into bar, then whether baz is relevant.
+> +	 * Checking each is important because e.g. if path is
+> +	 *    .git/info/
+> +	 * then we need to check .git to know we shouldn't traverse it.
+> +	 * If the return from treat_path() is:
+> +	 *    * path_none, for any path, we return false.
+> +	 *    * path_recurse, for all path components, we return true
+> +	 *    * <anything else> for some intermediate component, we make sure
+> +	 *        to add that path to the relevant list but return false
+> +	 *        signifying that we shouldn't recurse into it.
+> +	 */
+>  
+>  	while (len && path[len - 1] == '/')
+>  		len--;
+>  	if (!len)
+>  		return 1;
+> +
+> +	de = xcalloc(1, sizeof(struct dirent)+len+1);
 
-I'm a little mixed on this one. This _is_ a much better test of how the
-two features should be have together. But I think the reason the
-original was so short was that it was added when fixing a bug where we'd
-iterate off the beginning of list of lines, which now no longer happens.
+That "+len+1" may deserve a comment?  If we wanted to shoot for the
+minimum memory consumption (and we do not), we would probably
+allocate
 
-Maybe we should cover both cases in two separate tests?
+	(sizeof(struct dirent) - sizeof(de->d_name)) +
+		max(sizeof(de->d_name), len + 1)
 
-I'd also suggest using "a b c" for the first three lines to avoid
-confusion (I don't think it's important that they're the same as the
-lines inside the "function").
+bytes, but unconditionally adding len+1 is simpler and easier to
+understand.  Either way, we *are* relying on the assumption that
+either:
 
--Peff
+ (1) the "struct dirent" would have d_name[] array at the end of the
+     struct, and by over-allocating, we can safely fit and carry a
+     name that is much longer than sizeof(.d_name[]); OR
+
+ (2) the "struct dirent" has d_name[] that is large enough to hold len+1
+     bytes, if the assumption (1) does not hold.
+
+is true.
+
+> +	memset(&cdir, 0, sizeof(cdir));
+> +	cdir.de = de;
+> +#if defined(DT_UNKNOWN) && !defined(NO_D_TYPE_IN_DIRENT)
+> +	de->d_type = DT_DIR;
+> +#endif
+>  	baselen = 0;
+> +	prevlen = 0;
+>  	while (1) {
+> -		cp = path + baselen + !!baselen;
+> +		prevlen = baselen + !!baselen;
+> +		cp = path + prevlen;
+>  		cp = memchr(cp, '/', path + len - cp);
+>  		if (!cp)
+>  			baselen = len;
+>  		else
+>  			baselen = cp - path;
+> -		strbuf_setlen(&sb, 0);
+> +		strbuf_reset(&sb);
+>  		strbuf_add(&sb, path, baselen);
+>  		if (!is_directory(sb.buf))
+>  			break;
+
+
+
+> -		if (simplify_away(sb.buf, sb.len, pathspec))
+> -			break;
+> -		if (treat_one_path(dir, NULL, istate, &sb, baselen, pathspec,
+> -				   DT_DIR, NULL) == path_none)
+> +		strbuf_reset(&sb);
+> +		strbuf_add(&sb, path, prevlen);
+> +		memcpy(de->d_name, path+prevlen, baselen-prevlen);
+> +		de->d_name[baselen-prevlen] = '\0';
+> +		state = treat_path(dir, NULL, &cdir, istate, &sb, prevlen,
+> +				    pathspec);
+
+So this is the crux fo the fix---instead of doing a (poor) imitation
+of what treat_path() does by calling simplify_away() and
+treat_one_path() ourselves, we make a call to the real thing.
+
+Looking good.  Thanks.
