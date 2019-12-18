@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDFEDC2D0BF
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26A94C2D0D1
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9EA1D206A5
+	by mail.kernel.org (Postfix) with ESMTP id EEBD0206A5
 	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 19:29:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ANoIYT9R"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRlxFmpR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727557AbfLRT3w (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727560AbfLRT3w (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 18 Dec 2019 14:29:52 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36933 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727484AbfLRT3v (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36581 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727185AbfLRT3v (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 18 Dec 2019 14:29:51 -0500
-Received: by mail-wm1-f65.google.com with SMTP id f129so3194193wmf.2
+Received: by mail-wr1-f65.google.com with SMTP id z3so3563332wru.3
         for <git@vger.kernel.org>; Wed, 18 Dec 2019 11:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=O5bdAKERjFqZXYHkEGuYnzcy5g3lzmd91EZmqMjMLxI=;
-        b=ANoIYT9RmotzFGAC7755K52g45bkv6qRWoMjZrqepOAUOQ6m1O8vLE3BzfOd2L0pfO
-         5cYk+L4NJ25b/M9V55UoLN/nwifi1XkBRwzlPNmyQIUz9rzVV8YpJcxEMtwR9Y3U1PkT
-         T6nIrzQokva/G53uM4gktKBDjoPgsjZtq3m8LIjDo1LbrpMZRA+jrPcAMruo/IUnsb3V
-         7OLE2yQZm7q4Ao8i0YxzMSAShTSJQTdIpEAkoe0qTFrYYtDKHoNdB7TS9RRD5UNNXEPE
-         WB7k+imzLZtm6RBmBN3vMMYeZTlUHhk3vQQzCTP2/60NMganCcL7yUyQaTU/kTDjO/Gm
-         477w==
+        bh=RjUWfqMLtbjNIPA16XEQPNcw4ayZ9uv9uVm9KQNo/JQ=;
+        b=VRlxFmpReAXrMfiBb6fR1RclV/+pc7/0Tlv6HqSg630pT4CXohbCzubNiZIakZG5l2
+         gIcaLZiIgzVqdUEn0JTHpds8LDacC7NuryJCKj+lZJeqybIjKsMMNYLdNCsPxi232B7p
+         0WhTYBtYBcJSdebo2B20IHTIjoHNUv7yHcqibIW0Ws3m7u+OQGfvUi1nqb8ouUYA9FXe
+         tCm3zag6ZidSp87Hikeccq6cgqHU4sos26OE3TQg3s2uSxvJ9u6vE+ReRsMBhBj5hW0B
+         2nU5l8IHl3eRevLk4DyUy+ZLfcrRtu65M0e0LmInHy2+a3FXbAPfqq7nWhXHQcJoCt5I
+         /Uww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=O5bdAKERjFqZXYHkEGuYnzcy5g3lzmd91EZmqMjMLxI=;
-        b=eJ+ktsq4oIvXEUBGGtr7AaZ3tNj6TbGxVjWADm68uOj8qkP1plN9rm6zT2H1KLdWqI
-         N+n1rrubeclMntdM5CCgSlBJJYqWLAoM5dkESWb2GvZRzAfob6nYvBw8asLgCI4708qz
-         MeNDDLlcGTPKDt/XOe38BuOzepdHneJccPVkXxeMMzpY/BsAMqwOrY6YxIlXh4X4RKun
-         JRBGlUmFiForCTEuiGbmJtaWngURCp0rU8ht2xkMU9HQiDYV9ko1a5agZtHCtDJoqyap
-         q2DQFAWVZtP/gICkZMPAuZuMUGRhCyKpimB9VFvLuAZw8wKK/LC3W46NLENqsQvzcZ4f
-         vIrw==
-X-Gm-Message-State: APjAAAUr8K9yHGnBhNB2Kdfr+B5q/WQz5QsJnRrtYIWYMFSTRvlnLbFj
-        pdF5+E+wSLQnGpX3EbF27GKu2JWb
-X-Google-Smtp-Source: APXvYqweZZgwtAyqq0dvyQRCc/DOwYWKlmUgMoHrQVEr6WW539Oc7XF/ll2/JlGj1FKavfCnn0a4cg==
-X-Received: by 2002:a1c:a543:: with SMTP id o64mr4897194wme.73.1576697390002;
-        Wed, 18 Dec 2019 11:29:50 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v83sm3574305wmg.16.2019.12.18.11.29.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=RjUWfqMLtbjNIPA16XEQPNcw4ayZ9uv9uVm9KQNo/JQ=;
+        b=VszqLD6Cjg/atXtOwn5l9irdkCnN4E5jEV3ldx7bqFXyxLwd/9Hy5iD+3thg1JPk/E
+         dEsFKNFKJkkyHLFR+s/ToKe2UMjBtGWqO+oMuMBpRkyaz9yRC9bBEL2zPXfL0KTtagBt
+         Xhe6MDnW/pXe8oMZXITJyS0bcFc3MQtORCUtY36L7sgUTbkzqKDX8nMZ0KrOzjsMLi4f
+         fr439WRsFSCrxs2yQNIlCACq/Yui+A9lBNwZ2GruEONLAmCf9JveI+Yj4HFgX9l5au7l
+         SLRN5n7gFcP8qrMKhBQROXkqU4fDAJ9pSg6pUJvRIM1/T6xh3JHkhiuwGTetnilKh3IS
+         +TFA==
+X-Gm-Message-State: APjAAAWQtadJVcAd2RuzNr5H774dUydHRDdzEDJux41vk3cxq1i3Nbop
+        7QkHM5FA89lci+KcCSdPMR8vCJOt
+X-Google-Smtp-Source: APXvYqwrjfsVpoxvfDhHTOABnv5UUc7PgZFM/RbWaQ08vOngY7hrSOb2FuEYSvOPjzV2/FD8LzX03Q==
+X-Received: by 2002:adf:eb51:: with SMTP id u17mr4681922wrn.29.1576697389232;
         Wed, 18 Dec 2019 11:29:49 -0800 (PST)
-Message-Id: <79f2b561742372234a52dc7194dd72026c6e96ec.1576697386.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a1sm3571663wrr.80.2019.12.18.11.29.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 18 Dec 2019 11:29:48 -0800 (PST)
+Message-Id: <6d659b230239b530c90fbcc15c9a869f8d5dd5c5.1576697386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
 References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
         <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 18 Dec 2019 19:29:40 +0000
-Subject: [PATCH v4 2/8] Revert "dir.c: make 'git-status --ignored' work within
- leading directories"
+Date:   Wed, 18 Dec 2019 19:29:39 +0000
+Subject: [PATCH v4 1/8] t3011: demonstrate directory traversal failures
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,100 +76,239 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Commit be8a84c52669 ("dir.c: make 'git-status --ignored' work within
-leading directories", 2013-04-15) noted that
-   git status --ignored <SOMEPATH>
-would not list ignored files and directories within <SOMEPATH> if
-<SOMEPATH> was untracked, and modified the behavior to make it show
-them.  However, it did so via a hack that broke consistency; it would
-show paths under <SOMEPATH> differently than a simple
-   git status --ignored | grep <SOMEPATH>
-would show them.  A correct fix is slightly more involved, and
-complicated slightly by this hack, so we revert this commit (but keep
-corrected versions of the testcases) and will later fix the original
-bug with a subsequent patch.
+Add several tests demonstrating directory traversal failures of various
+sorts in dir.c (and one similar looking test that turns out to be a
+git_fnmatch bug).  A lot of these tests look like near duplicates of
+each other, but an optimization path in dir.c to pre-descend into a
+common prefix and the specialized treatment of trailing slashes in dir.c
+mean the tiny differences are sometimes important and potentially cause
+different codepaths to be explored.
 
-Some history may be helpful:
-
-A very, very similar case to the commit we are reverting was raised in
-commit 48ffef966c76 ("ls-files: fix overeager pathspec optimization",
-2010-01-08); but it actually went in somewhat the opposite direction.  In
-that commit, it mentioned how
-   git ls-files -o --exclude-standard t/
-used to show untracked files under t/ even when t/ was ignored, and then
-changed the behavior to stop showing untracked files under an ignored
-directory.  More importantly, this commit considered keeping this
-behavior but noted that it would be inconsistent with the behavior when
-multiple pathspecs were specified and thus rejected it.
-
-The reason for this whole inconsistency when one pathspec is specified
-versus zero or two is because common prefixes of pathspecs are sent
-through a different set of checks (in treat_leading_path()) than normal
-file/directory traversal (those go through read_directory_recursive()
-and treat_path()).  As such, for consistency, one needs to check that
-both codepaths produce the same result.
-
-Revert commit be8a84c526691667fc04a8241d93a3de1de298ab, except instead
-of removing the testcase it added, modify it to check for correct and
-consistent behavior.  A subsequent patch in this series will fix the
-testcase.
+Of the 7 failing tests, 2 are new to git-2.24.0 (tweaked by side effects
+of the en/clean-nested-with-ignored-topic); the other 5 also failed
+under git-2.23.0 and earlier.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c                      | 3 ---
- t/t7061-wtstatus-ignore.sh | 9 +++++++--
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ ...common-prefixes-and-directory-traversal.sh | 209 ++++++++++++++++++
+ 1 file changed, 209 insertions(+)
+ create mode 100755 t/t3011-common-prefixes-and-directory-traversal.sh
 
-diff --git a/dir.c b/dir.c
-index 61f559f980..0dd5266629 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2083,14 +2083,12 @@ static int treat_leading_path(struct dir_struct *dir,
- 	struct strbuf sb = STRBUF_INIT;
- 	int baselen, rc = 0;
- 	const char *cp;
--	int old_flags = dir->flags;
- 
- 	while (len && path[len - 1] == '/')
- 		len--;
- 	if (!len)
- 		return 1;
- 	baselen = 0;
--	dir->flags &= ~DIR_SHOW_OTHER_DIRECTORIES;
- 	while (1) {
- 		cp = path + baselen + !!baselen;
- 		cp = memchr(cp, '/', path + len - cp);
-@@ -2113,7 +2111,6 @@ static int treat_leading_path(struct dir_struct *dir,
- 		}
- 	}
- 	strbuf_release(&sb);
--	dir->flags = old_flags;
- 	return rc;
- }
- 
-diff --git a/t/t7061-wtstatus-ignore.sh b/t/t7061-wtstatus-ignore.sh
-index 0c394cf995..84366050da 100755
---- a/t/t7061-wtstatus-ignore.sh
-+++ b/t/t7061-wtstatus-ignore.sh
-@@ -43,11 +43,16 @@ test_expect_success 'status untracked directory with --ignored -u' '
- 	test_cmp expected actual
- '
- cat >expected <<\EOF
--?? untracked/uncommitted
-+?? untracked/
- !! untracked/ignored
- EOF
- 
--test_expect_success 'status prefixed untracked directory with --ignored' '
-+test_expect_failure 'status of untracked directory with --ignored works with or without prefix' '
-+	git status --porcelain --ignored >tmp &&
-+	grep untracked/ tmp >actual &&
-+	rm tmp &&
-+	test_cmp expected actual &&
+diff --git a/t/t3011-common-prefixes-and-directory-traversal.sh b/t/t3011-common-prefixes-and-directory-traversal.sh
+new file mode 100755
+index 0000000000..54f80c62b8
+--- /dev/null
++++ b/t/t3011-common-prefixes-and-directory-traversal.sh
+@@ -0,0 +1,209 @@
++#!/bin/sh
 +
- 	git status --porcelain --ignored untracked/ >actual &&
- 	test_cmp expected actual
- '
++test_description='directory traversal handling, especially with common prefixes'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit hello &&
++
++	>empty &&
++	mkdir untracked_dir &&
++	>untracked_dir/empty &&
++	git init untracked_repo &&
++	>untracked_repo/empty &&
++
++	cat <<-EOF >.gitignore &&
++	ignored
++	an_ignored_dir/
++	EOF
++	mkdir an_ignored_dir &&
++	mkdir an_untracked_dir &&
++	>an_ignored_dir/ignored &&
++	>an_ignored_dir/untracked &&
++	>an_untracked_dir/ignored &&
++	>an_untracked_dir/untracked
++'
++
++test_expect_success 'git ls-files -o shows the right entries' '
++	cat <<-EOF >expect &&
++	.gitignore
++	actual
++	an_ignored_dir/ignored
++	an_ignored_dir/untracked
++	an_untracked_dir/ignored
++	an_untracked_dir/untracked
++	empty
++	expect
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o --exclude-standard shows the right entries' '
++	cat <<-EOF >expect &&
++	.gitignore
++	actual
++	an_untracked_dir/untracked
++	empty
++	expect
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o --exclude-standard >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o untracked_dir recurses' '
++	echo untracked_dir/empty >expect &&
++	git ls-files -o untracked_dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o untracked_dir/ recurses' '
++	echo untracked_dir/empty >expect &&
++	git ls-files -o untracked_dir/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o --directory untracked_dir does not recurse' '
++	echo untracked_dir/ >expect &&
++	git ls-files -o --directory untracked_dir >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'git ls-files -o --directory untracked_dir/ does not recurse' '
++	echo untracked_dir/ >expect &&
++	git ls-files -o --directory untracked_dir/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o untracked_repo does not recurse' '
++	echo untracked_repo/ >expect &&
++	git ls-files -o untracked_repo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'git ls-files -o untracked_repo/ does not recurse' '
++	echo untracked_repo/ >expect &&
++	git ls-files -o untracked_repo/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'git ls-files -o untracked_dir untracked_repo recurses into untracked_dir only' '
++	cat <<-EOF >expect &&
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o untracked_dir untracked_repo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o untracked_dir/ untracked_repo/ recurses into untracked_dir only' '
++	cat <<-EOF >expect &&
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o untracked_dir/ untracked_repo/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_failure 'git ls-files -o --directory untracked_dir untracked_repo does not recurse' '
++	cat <<-EOF >expect &&
++	untracked_dir/
++	untracked_repo/
++	EOF
++	git ls-files -o --directory untracked_dir untracked_repo >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o --directory untracked_dir/ untracked_repo/ does not recurse' '
++	cat <<-EOF >expect &&
++	untracked_dir/
++	untracked_repo/
++	EOF
++	git ls-files -o --directory untracked_dir/ untracked_repo/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o .git shows nothing' '
++	git ls-files -o .git >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_failure 'git ls-files -o .git/ shows nothing' '
++	git ls-files -o .git/ >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success FUNNYNAMES 'git ls-files -o untracked_* recurses appropriately' '
++	mkdir "untracked_*" &&
++	>"untracked_*/empty" &&
++
++	cat <<-EOF >expect &&
++	untracked_*/empty
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o "untracked_*" >actual &&
++	test_cmp expect actual
++'
++
++# It turns out fill_directory returns the right paths, but ls-files' post-call
++# filtering in show_dir_entry() via calling dir_path_match() which ends up
++# in git_fnmatch() has logic for PATHSPEC_ONESTAR that assumes the pathspec
++# must match the full path; it doesn't check it for matching a leading
++# directory.
++test_expect_failure FUNNYNAMES 'git ls-files -o untracked_*/ recurses appropriately' '
++	cat <<-EOF >expect &&
++	untracked_*/empty
++	untracked_dir/empty
++	untracked_repo/
++	EOF
++	git ls-files -o "untracked_*/" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success FUNNYNAMES 'git ls-files -o --directory untracked_* does not recurse' '
++	cat <<-EOF >expect &&
++	untracked_*/
++	untracked_dir/
++	untracked_repo/
++	EOF
++	git ls-files -o --directory "untracked_*" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success FUNNYNAMES 'git ls-files -o --directory untracked_*/ does not recurse' '
++	cat <<-EOF >expect &&
++	untracked_*/
++	untracked_dir/
++	untracked_repo/
++	EOF
++	git ls-files -o --directory "untracked_*/" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git ls-files -o consistent between one or two dirs' '
++	git ls-files -o --exclude-standard an_ignored_dir/ an_untracked_dir/ >tmp &&
++	! grep ^an_ignored_dir/ tmp >expect &&
++	git ls-files -o --exclude-standard an_ignored_dir/ >actual &&
++	test_cmp expect actual
++'
++
++# ls-files doesn't have a way to request showing both untracked and ignored
++# files at the same time, so use `git status --ignored`
++test_expect_failure 'git status --ignored shows same files under dir with or without pathspec' '
++	cat <<-EOF >expect &&
++	?? an_untracked_dir/
++	!! an_untracked_dir/ignored
++	EOF
++	git status --porcelain --ignored >output &&
++	grep an_untracked_dir output >expect &&
++	git status --porcelain --ignored an_untracked_dir/ >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 gitgitgadget
 
