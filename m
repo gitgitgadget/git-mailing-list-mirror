@@ -2,99 +2,141 @@ Return-Path: <SRS0=Z/Vr=2I=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B26A2C43603
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02B41C43603
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:14:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 87DAB24650
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:12:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 928E721582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 18:14:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="H/Y48Ncg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fMYoTYgc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727138AbfLRSMR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 13:12:17 -0500
-Received: from mout.web.de ([212.227.17.12]:45805 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726996AbfLRSMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 13:12:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1576692733;
-        bh=kgWdMA2if0GXDR2mW1V0rMPtilZ52EbAFoRHB2Dshq8=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=H/Y48Ncg20Rg/j656zbezsYrolSoacEwd2u70lCQlkB+MlDfvck7xy6/JVs3z06Rt
-         km9vnMdcmcOPGaViS3r39pfLGYSfBMnapzaBi1ombDPJcj5Zz3/iBuI+JAcFznoH6Z
-         H5kBygUFJcKUL+7ONl7yLsdazHPuKTxDKYuJcgvM=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.26] ([79.203.27.9]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVLj0-1iB6H51N0g-00Yimp; Wed, 18
- Dec 2019 19:12:13 +0100
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] t6030: don't create unused file
-Message-ID: <9b98d8c1-7847-5b6b-eb74-e3f3c0e809fc@web.de>
-Date:   Wed, 18 Dec 2019 19:12:12 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1727311AbfLRSO4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 13:14:56 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58556 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726939AbfLRSO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 13:14:56 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 04F40A7A8A;
+        Wed, 18 Dec 2019 13:14:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1CPDHIb3mBVCW32lWTiZBc5tFUk=; b=fMYoTY
+        gcMadzma4ifAFI0gcFiwxvDDa5qdAyw7nPA3uL7qikh5kfUn4748nlIoWiQPsgEZ
+        5vpFMxAVuS1nhszA1fXerX44vOAmuYaWrj+0tIqzo2KwGjE9laX/+A8qCuxBnrWs
+        TElxPrvTw8FXvP/2pP6GBbvmlMnZyrvhIg7yY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ovOu5P35/nS/2ffSGU8jpZ11zZg5Ceok
+        m+NX1kviOO/2I1UBZDMg8KExTUD/60AJJ3nBPmH2iNngNPR9luNQSSC2sVXZDh+m
+        YTlEej21pZJYDPnBmY4yRhcn8RqutWgr8cNMPZ3lvsWxzRhpx8vdQak7GuGA7QF+
+        Gmnwx80CSoc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F1678A7A89;
+        Wed, 18 Dec 2019 13:14:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 23546A7A88;
+        Wed, 18 Dec 2019 13:14:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, heba.waly@gmail.com
+Subject: Re: [PATCH 1/1] commit: display advice hints when commit fails
+References: <f23477c5a32e5d638310024194040146026972b8.1576574242.git.gitgitgadget@gmail.com>
+        <20191218031338.203382-1-jonathantanmy@google.com>
+Date:   Wed, 18 Dec 2019 10:14:47 -0800
+In-Reply-To: <20191218031338.203382-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 17 Dec 2019 19:13:38 -0800")
+Message-ID: <xmqqo8w5ec14.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ExtwVB3BooeFHqQzk+iMK79uiN3Xsw1BVYO4oQbW29yVfBCxSC6
- E4MATmS98ntdPbmXVdnendGGk9riuCX4z694Id56j0xtRQe07bmiiTaKY8fvoofr+V096Hm
- CgVIZBfINeiQfMDFQdfHhUGlbrGLQvUfWQ+6CiDIDC2ysBdY/NPEnvXyKjO36YZfSuLtxAh
- 9TjqwkSAJkZAseht4tNig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:CxexHNLD17U=:Iecee2JAPd08cWA+FnJb87
- NBKsyGwGQq2Nas19UHDXnyuVGupkP3/DgoaqrHxasCbjJy1rDPWPzbtbVQZRX7SbaEVdmNcr6
- Sn8q2CxPssigp2xzb84Yixuj7+o07iipa29onSrGR6hMWrMB1Q02JU4VbNw9Xxa4veUO1CDYY
- 2kj1ovu/rkR39/pFBnTiK4gj2LYq9OYCvfiCgul9XFxxMy8ml9Exb/kcCYPCDMqp/aUVOs/fz
- NNUpMQdHB1lqxAo7kyL/STmIapRqb5DNrZ8AfYy5S1+6vocWjurUG0U4B7fM2n+qQVlGHAVnL
- p4flo86JoienycP+aCw7vgkrPd0tckq16GFKQY52oICFl/FuOdrTkbBxkfX6ovUihJY7bmhny
- 962UhBEMTa+FL9ng40fAfcEJBAfeWDHbr/iMN8h8sQBoA9VPOsg5Vk9gdYHcsgnjMOHrhTKTu
- l4yktcOUMBBffO5RT1cO4Lq1xETB+GiDC98Luxr/SdAsKx7/qv4zLIIpH4L10DtCmp95TZXrI
- LMnfJuALjMUTOAGdNT4q1DdECWnzbKHMkfwi1Q2KZnRnS8yvf7sldcSN/MRpMLgJ2lKovr0+3
- frOTxgwDGGzpkEfvODCb1ByCoKoY/GAft0ftK1sgWrVbXC1BuYis24RPyDC6QHsM7ZXNvT/gW
- x6GJ/T58VBU/VlT/HOBl7CGlmNf160SgzD2AfBf3emjjD3NEZPTvkjWYMPx8/39NUDLKi/Ys4
- IaccLVs+PwVsSNrwZV2HzLLtkZp8rp6EsAy3PNMoOvPjjd63YvLi7ollvZDv4okNAtFGh7jYJ
- PUCB/MeyFrlMSWsUNkec6g80Ew4ZtAH9/153sFE/7phmgb/q7bGO3bhJeGVdqpZP5WtA5H1Ro
- 1RVNfSF5gJKOVejoG/OnUqHE6cXYADMv657ZlS8OdQ2IRcJmuQ+JiQrCe8UueakpctHyZnvAy
- LPW5WzHC0iagT2DWzmQUw8mRrtU31STZUXzgL2CpkNLaZpBmdwMQwIjgad5ZFZyw4B+lzx2Ia
- 5G1oYo/64yRT5uteG2KNLdMJ6YGlsUPoQ/vKaVltNbLeSAs7vWLqbFrGN1tQL0XikrD71AoL7
- BzbSlPXIhPLX/pnNCleqJyAUCCZqAJPm/ZDzbuVswTLicUr85posQVz7WsWvKqUaIhASZP7AO
- UErNA8Z/mVuw06GqVs3BZIVyZrlrK3x5qTYm6CEUVztg7ghdXthHrxjSeRnV7JlMRrz3jaRX5
- 0esSLIZfPyoyyLrelYLBe4m8/GwTgpjkI0n7FxA==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 47E23E90-21C2-11EA-9BFC-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-my_bisect_log3.txt was added by c9c4e2d5a2 (bisect: only check merge
-bases when needed, 2008-08-22), but hasn't been used then and since.
-Get rid of it.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/t6030-bisect-porcelain.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>> From: Heba Waly <heba.waly@gmail.com>
+>> 
+>> Display hints to the user when trying to commit without staging the modified
+>> files first (when advice.statusHints is set to true). Change the output of the
+>> unsuccessful commit from e.g:
+>
+> Wrap your commit messages at 72 characters.
+>
+>>   # [...]
+>>   # Changes not staged for commit:
+>>   #   modified:   builtin/commit.c
+>>   #
+>>   # no changes added to commit
+>> 
+>> to:
+>> 
+>>   # [...]
+>>   # Changes not staged for commit:
+>>   #   (use "git add <file>..." to update what will be committed)
+>>   #   (use "git checkout -- <file>..." to discard changes in working directory)
+>>   #
+>>   #   modified:   ../builtin/commit.c
+>
+> For tidiness, can this line also be "builtin/commit.c" (that is, without
+> the "../" at the beginning) to match what's before "to:"?
+>
+>> In ea9882bfc4 (commit: disable status hints when writing to COMMIT_EDITMSG,
+>> 2013-09-12) the intent was to disable status hints when writing to
+>> COMMIT_EDITMSG, but in fact the implementation disabled status messages in
+>> more locations, e.g in case the commit wasn't successful, status hints
+>> will still be disabled and no hints will be displayed to the user although
+>> advice.statusHints is set to true.
+>> 
+>> Signed-off-by: Heba Waly <heba.waly@gmail.com>
+>> ---
+>>  builtin/commit.c                          | 1 +
+>>  t/t7500-commit-template-squash-signoff.sh | 9 +++++++++
+>
+> I wondered if there was a better place to put the test, but I couldn't
+> find one, so this is fine.
+>
+>> @@ -961,6 +961,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>>  	 */
+>>  	if (!committable && whence != FROM_MERGE && !allow_empty &&
+>>  	    !(amend && is_a_merge(current_head))) {
+>> +		s->hints = advice_status_hints;
+>>  		s->display_comment_prefix = old_display_comment_prefix;
+>>  		run_status(stdout, index_file, prefix, 0, s);
+>>  		if (amend)
+>
+> I checked that this undoing of "s->hints = 0" is safe, because s is no
+> longer used in this function nor in the calling function cmd_commit()
+> (which is the one that declared s locally).
+>
+> Still probably worth a comment, though. For example:
+>
+>   This status is to be printed to stdout, so hints will be useful to the
+>   user. Reset s->hints to what the user configured.
+>
+> The corresponding comment on "s->hints = 0" might need to be tweaked,
+> too, but I can't think of anything at the moment.
+>
+>> +test_expect_success 'commit without staging files fails and displays hints' '
+>> +	echo "initial" >>file &&
+>> +	git add file &&
+>> +	git commit -m initial &&
+>> +	echo "changes" >>file &&
+>> +	test_must_fail git commit -m initial >actual &&
+>
+> Use another commit message for this, since this is no longer "initial".
+> (Maybe "after initial" or something like that.)
 
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index bdc42e9440..821a0c88cf 100755
-=2D-- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -482,7 +482,7 @@ test_expect_success 'optimized merge base checks' '
- 	git bisect good > my_bisect_log2.txt &&
- 	test -f ".git/BISECT_ANCESTORS_OK" &&
- 	test "$HASH6" =3D $(git rev-parse --verify HEAD) &&
--	git bisect bad > my_bisect_log3.txt &&
-+	git bisect bad &&
- 	git bisect good "$A_HASH" > my_bisect_log4.txt &&
- 	test_i18ngrep "merge base must be tested" my_bisect_log4.txt &&
- 	test_must_fail test -f ".git/BISECT_ANCESTORS_OK"
-=2D-
-2.24.1
+Thanks for a careful review.
