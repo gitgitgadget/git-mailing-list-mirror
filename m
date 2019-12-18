@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA90C2D0CD
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F510C2D0C3
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3E12821582
-	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6104A21582
+	for <git@archiver.kernel.org>; Wed, 18 Dec 2019 11:26:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tNofeJ3V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhX8kR6j"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbfLRL0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 06:26:12 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46341 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726825AbfLRL0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 18 Dec 2019 06:26:11 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z7so1835224wrl.13
-        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:09 -0800 (PST)
+        id S1726735AbfLRL0O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 06:26:14 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:35293 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726141AbfLRL0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 18 Dec 2019 06:26:13 -0500
+Received: by mail-wm1-f41.google.com with SMTP id p17so1491187wmb.0
+        for <git@vger.kernel.org>; Wed, 18 Dec 2019 03:26:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AAeYwn5IvUi1KRAkbfxvOQoJ/vX9+46kRwTaoV5Nr/U=;
-        b=tNofeJ3V7YLQm3LrGbxVCE7XuNQ9KNi9kC4JiP7iC9F7PZUw9xil4ozKYa8s+F2Yxl
-         Ew4iwVwXs4K14g0jGrFZjw+KGs4VmOTDdCA+E6zXLRQIkk4I45PKRPj2mx2kwdWEoHR+
-         +HvCfFfehefLGdw0o0RfxVy67mhvFQXrIFlCUW6AwgmwDgcyx3qZ+t1tw2TlMUX482uj
-         rgw5tJT5cA7lPTlV9uHqrApPYKkqIYWx8BsNcqu31li8ZvhGHzvU6nysWFqXdEWORDQZ
-         XIL4ucda4s67xJyGsqotZ9OEML00QAhoTHeLivwKHOOOwka1JRGHiYWQ+w/tnSOswLqt
-         njuA==
+        bh=cBvBDYGTTds24xnjho/x6hcXxB6lw9adCvPuXB2U0XU=;
+        b=DhX8kR6jyPN7bl10W7Hir9GQzpCFGit3ppFCgnbDR0gOdWIVCSr4BVnCWEgyl82KSb
+         JUlRzuTq78guvd9yFVMhysQtISBBcyWyTcL4uCw4dvnhWLBzqEeRp00QluN22rz0ct3+
+         VYM6VC/QTdlmOXNeAxCMF3ueMjjp5M9fNL2+kVsqDRmFVyg+5R68dRUOulkH2xl9J030
+         F+t2HyKq4hl34spjvPkPHTd5dLiCWH8/xte1qY3s3RlsY/5pyi6awsWoq7zdYhTMnQAI
+         X+ARdBSiqm3U201A98hnM2joZ6/8xJBI741w6ZtIeyWSvOcY43aGgLBHrxgi8Stxlamw
+         59hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AAeYwn5IvUi1KRAkbfxvOQoJ/vX9+46kRwTaoV5Nr/U=;
-        b=nPpHRTEpJ7B15C2SMbog19Z/a5yVnNsxnhjjg01+bd22GjSnPB4YYLIwJK2ufL971q
-         pUSiRPwhF0y+AONK3xmd5ejT1z0YYpZF9J47T2Y/lN0lF93rSQqxQG+qLL9+MECSVbyj
-         f+j7vCwtByuWn9Uu+6O6AfDlWAyJsaijNChqi5MrjTzlN0ijVK5ZvtO+LnRfv+TMivfl
-         DTJRF1pwcf118sKo49H5P06aZ+awNQ149qZEx1ciz6dVcI/MPy5QrTjjay4+5ypZgz78
-         lbFy1cVkuNs0gIr3XHB4CxicDf3LNZbunpWw0XQMqTsf8PsOpmfhEfzLAmFIP+DQbcp4
-         m3+A==
-X-Gm-Message-State: APjAAAU6pzbTJ2NE9z/Y+qbcrWpi6ehyvakWFclwvI6nmZlhMtXLKP+A
-        EVwCOK6Gj1WPK2gvHc/qXk8qbOpI
-X-Google-Smtp-Source: APXvYqxsGEnm6M2V2yj20rrbGf9jnveRvxWKI2XD7Q9x3yD2WiOoEzLR77rnDfyxw8vWgciRD1XXAw==
-X-Received: by 2002:adf:f850:: with SMTP id d16mr2283996wrq.161.1576668368573;
-        Wed, 18 Dec 2019 03:26:08 -0800 (PST)
+        bh=cBvBDYGTTds24xnjho/x6hcXxB6lw9adCvPuXB2U0XU=;
+        b=NWwNgDQcE5SsMzg4Wwh/qvf49F4J8zb6kwBkGHyqUydQVlF67/3AuHDMK6ElgyLRlE
+         pZXOVGlq5Vg6po06xjfBEERAXvE7r/j56A5yiCYY9CHq/m0JpPWkWzXbkbZRy6+zHffp
+         304F1uNJdj3chzks6SGWpNXpTH+YkLykpDgp1ZUhclAtk6/t9oQmKuHl1EWfAm2AFoLx
+         p/f5XQaJfLZGh1l50C7C6HNutFZ35S7is+0BU2psusOj+wb4b0P1bepIYHcePbf/VTAH
+         sXV2MtP2h+0Vn+YA+iSeyXzu4B0ocGgrxM7sFJ2YJ6W2mUmAI+2crQTk7W/ikdGNAyQ8
+         ijyw==
+X-Gm-Message-State: APjAAAUzqPaiuntiWoYcqwJv58gf6anxD//Zx4Bj8E/MRjwGkrCoIc2r
+        5+w8p9/4QTKj6F1mXiZqRo3JuTTs
+X-Google-Smtp-Source: APXvYqyoREQmM/KcZPdKTwNhabqSzZOAx+58FpFZVpWY+MUdO+bX2oi92JRROoIKosKtVmnek0Q9XA==
+X-Received: by 2002:a1c:9d8b:: with SMTP id g133mr2575470wme.27.1576668370765;
+        Wed, 18 Dec 2019 03:26:10 -0800 (PST)
 Received: from localhost.localdomain ([2a04:cec0:116b:f417:15eb:66f2:c98d:a463])
-        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.07
+        by smtp.gmail.com with ESMTPSA id f127sm1204647wma.4.2019.12.18.03.26.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Dec 2019 03:26:08 -0800 (PST)
+        Wed, 18 Dec 2019 03:26:10 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,9 +62,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Jonathan Tan <jonathantanmy@google.com>
-Subject: [PATCH v4 02/12] packfile: expose get_delta_base()
-Date:   Wed, 18 Dec 2019 12:25:37 +0100
-Message-Id: <20191218112547.4974-3-chriscool@tuxfamily.org>
+Subject: [PATCH v4 04/12] pack-bitmap: introduce bitmap_walk_contains()
+Date:   Wed, 18 Dec 2019 12:25:39 +0100
+Message-Id: <20191218112547.4974-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.24.1.498.g561400140f
 In-Reply-To: <20191218112547.4974-1-chriscool@tuxfamily.org>
 References: <20191218112547.4974-1-chriscool@tuxfamily.org>
@@ -77,52 +77,60 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-In a following commit get_delta_base() will be used outside
-packfile.c, so let's make it non static and declare it in
-packfile.h.
+We will use this helper function in a following commit to
+tell us if an object is packed.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- packfile.c | 10 +++++-----
- packfile.h |  3 +++
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ pack-bitmap.c | 12 ++++++++++++
+ pack-bitmap.h |  3 +++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/packfile.c b/packfile.c
-index 355066de17..81e66847bf 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1173,11 +1173,11 @@ const struct packed_git *has_packed_and_bad(struct repository *r,
- 	return NULL;
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index e07c798879..fb4f6297f2 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -830,6 +830,18 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+ 	return 0;
  }
  
--static off_t get_delta_base(struct packed_git *p,
--				    struct pack_window **w_curs,
--				    off_t *curpos,
--				    enum object_type type,
--				    off_t delta_obj_offset)
-+off_t get_delta_base(struct packed_git *p,
-+		     struct pack_window **w_curs,
-+		     off_t *curpos,
-+		     enum object_type type,
-+		     off_t delta_obj_offset)
++int bitmap_walk_contains(struct bitmap_index *bitmap_git,
++			 struct bitmap *bitmap, const struct object_id *oid)
++{
++	int idx;
++
++	if (!bitmap)
++		return 0;
++
++	idx = bitmap_position(bitmap_git, oid);
++	return idx >= 0 && bitmap_get(bitmap, idx);
++}
++
+ void traverse_bitmap_commit_list(struct bitmap_index *bitmap_git,
+ 				 show_reachable_fn show_reachable)
  {
- 	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
- 	off_t base_offset;
-diff --git a/packfile.h b/packfile.h
-index fc7904ec81..ec536a4ae5 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -151,6 +151,9 @@ void *unpack_entry(struct repository *r, struct packed_git *, off_t, enum object
- unsigned long unpack_object_header_buffer(const unsigned char *buf, unsigned long len, enum object_type *type, unsigned long *sizep);
- unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
-+off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
-+		     off_t *curpos, enum object_type type,
-+		     off_t delta_obj_offset);
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 466c5afa09..6ab6033dbe 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -3,6 +3,7 @@
  
- void release_pack_memory(size_t);
+ #include "ewah/ewok.h"
+ #include "khash.h"
++#include "pack.h"
+ #include "pack-objects.h"
  
+ struct commit;
+@@ -53,6 +54,8 @@ int reuse_partial_packfile_from_bitmap(struct bitmap_index *,
+ int rebuild_existing_bitmaps(struct bitmap_index *, struct packing_data *mapping,
+ 			     kh_oid_map_t *reused_bitmaps, int show_progress);
+ void free_bitmap_index(struct bitmap_index *);
++int bitmap_walk_contains(struct bitmap_index *,
++			 struct bitmap *bitmap, const struct object_id *oid);
+ 
+ /*
+  * After a traversal has been performed by prepare_bitmap_walk(), this can be
 -- 
 2.24.1.498.g561400140f
 
