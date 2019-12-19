@@ -2,86 +2,125 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00B36C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F03A7C3F68F
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BFB8C20716
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:56:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD5D320716
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="izBeTq6V"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lEJFRf0c"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbfLSR4S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 12:56:18 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62891 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726797AbfLSR4R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 12:56:17 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 734EA25B28;
-        Thu, 19 Dec 2019 12:56:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nvB+pZQPKXm+U1FWS2QQL7/C12Q=; b=izBeTq
-        6VR3XW8tGgEtCmKbo/vw6NLW/nVX563ddFTkLE1wgqfYEFj8vWcKo81wEu9Ib8sm
-        YDtH5TBF/sBJS1rOpCLZpxhtrxd5rlV1BDseTh3v+lO9JlMxj5WRnTkgALiG/xN2
-        HQoZ3a2+F+UZyW+VHH0GO3dKO7dZB1uYjVlfI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uBODYK1V6BOsEQiSiqNNVYQOgaUdu/4J
-        TseJ7p7YO94WihO/k4aJ/ieDQ1jGf0lEsN3Mx1A9JMjy1BDBtN8ajzwNYwO32AlP
-        Au+hFR/LMcA+6yGsW3L8MXvWOYZU2J4SVRIYG1XKAbCITMeHSWhjp5PrtheRfGD8
-        fJYuNr1Jc64=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6C14E25B27;
-        Thu, 19 Dec 2019 12:56:15 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CA68925B26;
-        Thu, 19 Dec 2019 12:56:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <mattr94@gmail.com>
-Cc:     "'Philip Oakley'" <philipoakley@iee.email>,
-        "'Matthew Rogers via GitGitGadget'" <gitgitgadget@gmail.com>,
-        <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] config: allow user to know scope of config options
-References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
-        <ec699bb3e64c74e6e87a20bbb5efac12a13cb077.1576631464.git.gitgitgadget@gmail.com>
-        <9a91caa0-72c3-3a38-3eb7-55a43537762e@iee.email>
-        <03b001d5b601$09b950e0$1d2bf2a0$@gmail.com>
-Date:   Thu, 19 Dec 2019 09:56:13 -0800
-In-Reply-To: <03b001d5b601$09b950e0$1d2bf2a0$@gmail.com> (mattr's message of
-        "Wed, 18 Dec 2019 19:12:44 -0500")
-Message-ID: <xmqqtv5wb3nm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726949AbfLSSCA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 13:02:00 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46472 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbfLSSCA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 13:02:00 -0500
+Received: by mail-ed1-f65.google.com with SMTP id m8so5747240edi.13
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:01:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qifUwXTQRgoJduZELBS2JiiJjoa39hlFHKYFbJCfiRQ=;
+        b=lEJFRf0cbUjkeCDuPQe0xfJGRqayJ2CM5mnbEVOBH4v+lgCo1Uw5FZ0XNzcbUZe7H6
+         xeFeat0ZT3s9BNZvBOEpeEM5WuqKAYI/HvYSO4LxY+ZY9n3+f8qJJxzK9eeSQLnV5woA
+         Ywge7a07LcNrUuBWfIboovDt6sAon3t//cA2HUo+p6SfhZ7BnyU98/foWppxyRKEGtah
+         m0swkWL83SoJdjyznJU7qPzeBQEg2sQRcVR5CLvRNfRWdb2LRny26KobRxg60k6Qholr
+         4j3IfmlC1DUDFA4taWPnhSjS9N6NxNdxKT7vxyhsh7AIG+3ltOMzDAX7kR+j18Qsgx+e
+         1IGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=qifUwXTQRgoJduZELBS2JiiJjoa39hlFHKYFbJCfiRQ=;
+        b=oZ2yDWaL6HxiDOyerumm/nq1GwRor2fCisK7Uon7BRpB57tCf4pqrUs4R9ljJY9Kmy
+         alVY4PDCffb8acZ6nUJ1hC5OgaRX5V3Mjl2AtuQAKsoLcVj1drTzBJoqUH9E+asH8ZsZ
+         SfIEgolelSysF8kZ0nOdI6HYmCH3hvmjmA6ehLvOwjDGEIZ76OJ0MPfx8dOA3xBljRzK
+         mIo4qerhLg2FY9zfKYDw3L/0zToIhGi3jOzXKmLv9obGUwZJbmgwv0yJOrGJk1+M5vwp
+         wmtHcjMLsBbkMQlDd2pxqe8rgmTtBh16cABXBhczW2q/TfcqnCfDuLg3ZGuoCPDLc0/Y
+         QkOQ==
+X-Gm-Message-State: APjAAAVe3FaekiPtZKGOFl8Kp2qnRQJ25uv+Iyjq77gQpQzyY+ipS0nD
+        vCTGOZe1MeQr8W0Jl8UpOlijauPq
+X-Google-Smtp-Source: APXvYqx8Yj921HehQmvZ+hBZWBKE5Rw8toqYmlWrQHaYBg9lYnNecN0Gk2BWU0IhcAApxL4/RhDLDQ==
+X-Received: by 2002:a05:6402:b87:: with SMTP id cf7mr10784272edb.214.1576778518668;
+        Thu, 19 Dec 2019 10:01:58 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id pv11sm639532ejb.75.2019.12.19.10.01.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Dec 2019 10:01:57 -0800 (PST)
+Message-Id: <14d30dd0e17d5e017dea05e4751f378f2128be14.1576778515.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
+References: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
+        <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Dec 2019 18:01:39 +0000
+Subject: [PATCH v3 02/18] t7526: add tests for error conditions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9843D00-2288-11EA-9ED7-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood123@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<mattr94@gmail.com> writes:
+From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
->>These are correct changes, but is unrelated noise in the context of
->>the theme of the patch, no?
->
-> I think that's the case, would the recommended course of action be to
-> move these changes into its own commit? 
->
+Suggested-By: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+---
+ t/t7526-commit-pathspec-file.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-Yup, and it generally is a good idea to make such a clean-up patch
-either early in the series, or as a standalone patch (with a note
-under three-dash lines that another topic is coming on top of the
-cleanup), because it would be much less likely to introduce new bugs
-and can be merged quicly to 'next' and then to 'master' to serve as
-a base to build your other changes on top.
+diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
+index 4e592f7472..b71c1013e7 100755
+--- a/t/t7526-commit-pathspec-file.sh
++++ b/t/t7526-commit-pathspec-file.sh
+@@ -61,4 +61,28 @@ test_expect_success 'only touches what was listed' '
+ 	verify_expect
+ '
+ 
++test_expect_success 'error conditions' '
++	restore_checkpoint &&
++	echo fileA.t >list &&
++	>empty_list &&
++
++	test_must_fail git commit --pathspec-from-file=- --interactive -m "Commit" <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
++
++	test_must_fail git commit --pathspec-from-file=- --patch -m "Commit" <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
++
++	test_must_fail git commit --pathspec-from-file=- -m "Commit" -- fileA.t <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
++
++	test_must_fail git commit --pathspec-file-nul -m "Commit" 2>err &&
++	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
++
++	test_must_fail git commit --pathspec-from-file=- --include -m "Commit" <empty_list 2>err &&
++	test_i18ngrep -e "No paths with --include/--only does not make sense." err &&
++
++	test_must_fail git commit --pathspec-from-file=- --only -m "Commit" <empty_list 2>err &&
++	test_i18ngrep -e "No paths with --include/--only does not make sense." err
++'
++
+ test_done
+-- 
+gitgitgadget
 
