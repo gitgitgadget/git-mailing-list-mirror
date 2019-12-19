@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BF64C2D0C1
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A0FFC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E155820716
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38F1120716
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nG3oKBug"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YusdT6/X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbfLSSCR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 13:02:17 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:46501 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727024AbfLSSCN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 13:02:13 -0500
-Received: by mail-ed1-f50.google.com with SMTP id m8so5747843edi.13
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:11 -0800 (PST)
+        id S1727096AbfLSSCS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 13:02:18 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:43379 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727052AbfLSSCQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 13:02:16 -0500
+Received: by mail-ed1-f54.google.com with SMTP id dc19so5756140edb.10
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3GRmCyf+uKkl57ZYwIW/lK7wuKjEqv6YODr0zquS4f8=;
-        b=nG3oKBugSPGlKIQM8fiRnoaOEsYyDiRp2gRdulPPeRBggYOgX3pzgYyPGKHCVsmcaE
-         uwxiU0asN0vQsidVEEgtxfaEUtT2sSBgxtQw/rOUe/6IgQ/znjMhAejjG0ccy712Pfcw
-         1Y0oO2S/xAh62B0xykP/MpLVcY2Df7eV/32UP8hPT+7p/+TXmRxVOczMhSkET80hDpvf
-         bsM2tZV861rMYXO4blvrYrokK+bYAQvrUs1J6dQPPyaRxV2ix8Nfq9FsKlGOt7+0UcIq
-         DmqRB66X3yon9al4xWyTUHlnWzugYWUzZqiNGuKMF/E7ms7bb1dDufNKl7xIA6sauTSa
-         6gzQ==
+        bh=5MgGYeWMCCRYnae/q9iD5uMWOQfLIJcWu0JLO6ISVv0=;
+        b=YusdT6/XYCwy7xGCfeYKJotylMzTMyazQYjuwpUTI+zp0eGroslJepN1gst3tSjqm9
+         W62EfPEuClGBcP1DrWCcIpiFSkkU8ikOHo08HV7P//p1aIXCYKgHY90SWk/Lnb0KNV2n
+         Va3HlpnQfL6qAJZhSMoM1KmlV6f2sRqdvw6VeN7CvMMH7WIkW2cxMdZulAxs/Op6ne8Z
+         miOrM634f8OJkNB+b3kOEYVUfUSKyp4u8erNdCPeVNMoK6v2YvhaeJsn4+79hFhI7S2W
+         izTf8gmy7cKLsj+aqnyFRCZ6Bz4/Dr7og45Gbf0cWFirvEg/pdGEZ3hvyBSb55pTg0zD
+         2G3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3GRmCyf+uKkl57ZYwIW/lK7wuKjEqv6YODr0zquS4f8=;
-        b=KG8y/WqY/OfxIG+kHTct+wu/Aj2AWN++i54MeEjQ9cpw92cErrl7HUpeoQG1t6jStn
-         arELNjspaMN7s49kXT5RwIxtdTkm7se7/HIRw4WMSTvIDF+HS4d/ltEsu2vCUdA0adza
-         pY6FIjQGnPgconRH/WD7ToSzr2hQ+qP+x4/E4mL5a/oKOCXmJBPL992wZrLQYZ8obCwU
-         BN4kUxA/m6HpqrbxV33Un9ZQ6vgy813oRXEVxm4sP1D/4Mzr/PkcGQb/v04ERNaytr+n
-         0PPJuL7rMdfs0HyPBM0tJ2PbZnTKzzYkoko4Pv7iDJDhY342LepebVmB+a7sPYwJMO1k
-         MbAQ==
-X-Gm-Message-State: APjAAAWezY4skKDAHNk4iUqWonGoGUAQsD3Geedd9AG9B8ViC+6UXufz
-        ALbBZApoR22brA91a93p6/JWl2eD
-X-Google-Smtp-Source: APXvYqyq7nh6dx8fTddIL0lFHv26K3/jvhhKH43z2iOr5KnEqLhNY1QIvn4P8zwtUF/MPY7MCVrJuw==
-X-Received: by 2002:a17:906:8486:: with SMTP id m6mr11061612ejx.194.1576778530536;
-        Thu, 19 Dec 2019 10:02:10 -0800 (PST)
+        bh=5MgGYeWMCCRYnae/q9iD5uMWOQfLIJcWu0JLO6ISVv0=;
+        b=T6uLPyrjpWQ7JCDBMi1EaZUBuowP4isvKYkF35/Q6OxZytCDDbz3wCaHIN+PUJ/fGb
+         XxhAMM1mIej0UfzviLhtFKItgcizQLKAglI9jniCyFyKJqeoUJycinGrWG5y/Uf3dr6n
+         X40E+ZqVZgibH9r38VbhDFZOXTuM/FYWlAWCsZroFnib02togRbBk34UDt+/bHob5x8O
+         Du72egi1enUaV/OHNwSMiV7Eq1HK2+RGmskWwgmfj6LxqGs+hoae7YTEwuGvUBAm4TvV
+         Tbb+iSrt02Z+NznWVXk64OGJc6CZfmnftA5s+k+eKQcKvqSCjBML4ytIoQ3viHnfA/rx
+         3LAQ==
+X-Gm-Message-State: APjAAAUXcNKGiUqQWShyDMOXUVexcl0R6AJK+mr66TViuSytDbwR7UVl
+        lFhX4wvuKGZqGCa7eIk9J/o9ctgk
+X-Google-Smtp-Source: APXvYqzrpO34LwcULkjQH9sxqqPQTP0v05B3clOgJcJO6Bn1iK84KW+jNjJIyj9MOLo5YSOQpc8nMw==
+X-Received: by 2002:a17:906:af8d:: with SMTP id mj13mr10925616ejb.156.1576778534618;
+        Thu, 19 Dec 2019 10:02:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e24sm561417edy.93.2019.12.19.10.02.09
+        by smtp.gmail.com with ESMTPSA id w5sm633897eje.14.2019.12.19.10.02.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 10:02:09 -0800 (PST)
-Message-Id: <dd35cad0d9ff9a0247d0a99bb4cdc294ef46ba96.1576778515.git.gitgitgadget@gmail.com>
+        Thu, 19 Dec 2019 10:02:13 -0800 (PST)
+Message-Id: <121d3f06a6341fd9b3970d60b2b5f04a808d2187.1576778515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 References: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
         <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Dec 2019 18:01:50 +0000
-Subject: [PATCH v3 13/18] parse_branchname_arg(): easier to understand
- variables
+Date:   Thu, 19 Dec 2019 18:01:54 +0000
+Subject: [PATCH v3 17/18] t2024: cover more cases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,124 +82,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-`dash_dash_pos` was only calculated under `opts->accept_pathspec`. This
-is unexpected to readers and made it harder to reason about the code.
-
-Fix this by restoring the expected meaning.
-
-`has_dash_dash` also takes `opts->accept_pathspec` into account.
-While this may sound clever at first sight, it becomes pretty hard to
-reason (and not be a victim) about code, especially in combination with
-`argc` here:
-
-	if (!(argc == 1 && !has_dash_dash) &&
-	    !(argc == 2 && has_dash_dash) &&
-	    opts->accept_pathspec)
-		recover_with_dwim = 0;
-
-Fix this by giving variable a better name and rewriting the above
-mentioned condition (it's easier to verify if you notice that it only
-holds when `opts->accept_pathspec` is true).
-
-This patch is not expected to change behavior in any way.
+After working on `parse_branchname_arg()` I think that these cases are
+worth testing.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/checkout.c | 36 ++++++++++++++++++++----------------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ t/t2024-checkout-dwim.sh | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b847695d2b..9144770b21 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1155,7 +1155,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	int argcount = 0;
- 	const char *arg;
- 	int dash_dash_pos;
--	int has_dash_dash = 0;
-+	int arg0_cant_be_pathspec = 0;
- 	int i;
+diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
+index c35d67b697..fd993bf45d 100755
+--- a/t/t2024-checkout-dwim.sh
++++ b/t/t2024-checkout-dwim.sh
+@@ -156,6 +156,33 @@ test_expect_success 'checkout of branch from a single remote succeeds #2' '
+ 	test_branch_upstream baz repo_b baz
+ '
  
- 	/*
-@@ -1205,24 +1205,28 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	if (!opts->accept_pathspec) {
- 		if (argc > 1)
- 			die(_("only one reference expected"));
--		has_dash_dash = 1; /* helps disambiguate */
-+		arg0_cant_be_pathspec = 1;
- 	}
- 
- 	arg = argv[0];
- 	dash_dash_pos = -1;
- 	for (i = 0; i < argc; i++) {
--		if (opts->accept_pathspec && !strcmp(argv[i], "--")) {
-+		if (!strcmp(argv[i], "--")) {
- 			dash_dash_pos = i;
- 			break;
- 		}
- 	}
--	if (dash_dash_pos == 0)
--		return 1; /* case (2) */
--	else if (dash_dash_pos == 1)
--		has_dash_dash = 1; /* case (3) or (1) */
--	else if (dash_dash_pos >= 2)
--		die(_("only one reference expected, %d given."), dash_dash_pos);
--	opts->count_checkout_paths = !opts->quiet && !has_dash_dash;
++test_expect_success 'checkout of branch from a single remote succeeds with --' '
++	git checkout -B master &&
++	test_might_fail git branch -D baz &&
 +
-+	if (opts->accept_pathspec) {
-+		if (dash_dash_pos == 0)
-+			return 1; /* case (2) */
-+		else if (dash_dash_pos == 1)
-+			arg0_cant_be_pathspec = 1; /* case (3) or (1) */
-+		else if (dash_dash_pos >= 2)
-+			die(_("only one reference expected, %d given."), dash_dash_pos);
-+	}
++	git checkout baz -- &&
++	status_uno_is_clean &&
++	test_branch baz &&
++	test_cmp_rev remotes/other_b/baz HEAD &&
++	test_branch_upstream baz repo_b baz
++'
 +
-+	opts->count_checkout_paths = !opts->quiet && !arg0_cant_be_pathspec;
- 
- 	if (!strcmp(arg, "-"))
- 		arg = "@{-1}";
-@@ -1238,18 +1242,18 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		 */
- 		int recover_with_dwim = dwim_new_local_branch_ok;
- 
--		int could_be_checkout_paths = !has_dash_dash &&
-+		int could_be_checkout_paths = !arg0_cant_be_pathspec &&
- 			check_filename(opts->prefix, arg);
- 
--		if (!has_dash_dash && !no_wildcard(arg))
-+		if (!arg0_cant_be_pathspec && !no_wildcard(arg))
- 			recover_with_dwim = 0;
- 
- 		/*
- 		 * Accept "git checkout foo", "git checkout foo --"
- 		 * and "git switch foo" as candidates for dwim.
- 		 */
--		if (!(argc == 1 && !has_dash_dash) &&
--		    !(argc == 2 && has_dash_dash) &&
-+		if (!(argc == 1 && dash_dash_pos == -1) &&
-+		    !(argc == 2 && dash_dash_pos == 1) &&
- 		    opts->accept_pathspec)
- 			recover_with_dwim = 0;
- 
-@@ -1266,7 +1270,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		}
- 
- 		if (!recover_with_dwim) {
--			if (has_dash_dash)
-+			if (arg0_cant_be_pathspec)
- 				die(_("invalid reference: %s"), arg);
- 			return argcount;
- 		}
-@@ -1282,7 +1286,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 	if (!opts->source_tree)                   /* case (1): want a tree */
- 		die(_("reference is not a tree: %s"), arg);
- 
--	if (!has_dash_dash) {	/* case (3).(d) -> (1) */
-+	if (!arg0_cant_be_pathspec) {	/* case (3).(d) -> (1) */
- 		/*
- 		 * Do not complain the most common case
- 		 *	git checkout branch
++test_expect_success 'dont DWIM with pathspec #1' '
++	git checkout -B master &&
++	test_might_fail git branch -D baz &&
++
++	test_must_fail git checkout baz nonExistingFile 2>err &&
++	test_i18ngrep "did not match any file(s) known to git" err
++'
++
++test_expect_success 'dont DWIM with pathspec #2' '
++	git checkout -B master &&
++	test_might_fail git branch -D baz &&
++
++	test_must_fail git checkout baz -- nonExistingFile 2>err &&
++	test_i18ngrep "fatal: invalid reference: baz" err
++'
++
+ test_expect_success '--no-guess suppresses branch auto-vivification' '
+ 	git checkout -B master &&
+ 	status_uno_is_clean &&
 -- 
 gitgitgadget
 
