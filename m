@@ -2,66 +2,76 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 446F2C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B9CDC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:51:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 21F7324672
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:38:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00A8724672
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 17:51:10 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NYn/Ssfp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbfLSRiO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 12:38:14 -0500
-Received: from smtprelay06.ispgateway.de ([80.67.18.29]:16862 "EHLO
-        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfLSRiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 12:38:13 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1ihzkX-00079s-TI; Thu, 19 Dec 2019 18:38:09 +0100
-Subject: Re: [PATCH v2 04/18] commit: forbid --pathspec-from-file --all
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Emily Shaffer <emilyshaffer@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>
-References: <pull.490.git.1576161385.gitgitgadget@gmail.com>
- <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
- <deeb860a85d25e0645a5d2e1c82654653ab1e2d5.1576511287.git.gitgitgadget@gmail.com>
- <195a5b2a-994a-5984-8cc7-280a698df2a0@gmail.com>
- <xmqqmubpcmtx.fsf@gitster-ct.c.googlers.com>
- <xmqqimmdcmq4.fsf@gitster-ct.c.googlers.com>
- <xmqqeex1cmam.fsf@gitster-ct.c.googlers.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <4eb804d5-863e-540d-0017-72d9402e911a@syntevo.com>
-Date:   Thu, 19 Dec 2019 18:38:09 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.0
+        id S1726928AbfLSRvK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 12:51:10 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57025 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbfLSRvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 12:51:10 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id A39FD96A8C;
+        Thu, 19 Dec 2019 12:51:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=w4JMCgPxrgH3wRoeoywkN25YlJE=; b=NYn/Ss
+        fplsts4isQg5Wk/2rCepxOuv0Xs3DM8t2B5629WbYckBzax5gL9vR3aB9RcdM1dx
+        tuodQUUa/q2ocMn5dbl+d0z6BH1Nc7wC0/FTkl66jlOkiTwL3gmahDxJGtb4IgfF
+        qx5NgJB9dRpkCMaSnkJp/W1H3h6lo2Vfa2rk8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OPRf8zSzLHG4oEFyGDupfxUKQJnZ+99q
+        vAfHIQOU/N/XYBErwKSSJit5gYK3q0tcuZKR19OoSpN2hkYwx3KokfnI8cb7wwoi
+        P7YCO/SjvQlq8otZUIbTMJcWIVY1AnlGKR916jR4hc9agfn7O8FbimaIGMwGpunK
+        GJPEm3PrOTQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C15496A8B;
+        Thu, 19 Dec 2019 12:51:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B6E1396A8A;
+        Thu, 19 Dec 2019 12:51:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Matthew Rogers <mattr94@gmail.com>
+Subject: Re: [PATCH 1/1] config: allow user to know scope of config options
+References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
+        <ec699bb3e64c74e6e87a20bbb5efac12a13cb077.1576631464.git.gitgitgadget@gmail.com>
+        <xmqqa77pe7sx.fsf@gitster-ct.c.googlers.com>
+        <20191219050545.GC89333@coredump.intra.peff.net>
+Date:   Thu, 19 Dec 2019 09:51:04 -0800
+In-Reply-To: <20191219050545.GC89333@coredump.intra.peff.net> (Jeff King's
+        message of "Thu, 19 Dec 2019 00:05:45 -0500")
+Message-ID: <xmqqy2v8b3w7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqeex1cmam.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain
+X-Pobox-Relay-ID: 21E318CE-2288-11EA-8470-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18.12.2019 23:16, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Here is what I'll queue directly on top of am/pathspec-from-file
-> e440fc58 ("commit: support the --pathspec-from-file option",
-> 2019-11-19), to be fast-tracked.
+> ... So if git_config_source grows an enum to select the type, and
+> all that filename-resolution gets pushed down into config_with_options(),
+> the whole thing would fall out naturally, I think.
 
-Roger.
-
-I will keep my branch as is currently and will rebase it on top of your 
-patch once it's in master.
-
+Makes sense.
