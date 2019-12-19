@@ -2,171 +2,239 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 822DEC2D0D2
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 00:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DEEDC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 01:26:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4D8FA24650
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 00:57:45 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="xuanjonZ"
+	by mail.kernel.org (Postfix) with ESMTP id 68F5C21D7D
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 01:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726717AbfLSA5o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 18 Dec 2019 19:57:44 -0500
-Received: from mr85p00im-hyfv06011301.me.com ([17.58.23.184]:54861 "EHLO
-        mr85p00im-hyfv06011301.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726536AbfLSA5o (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 18 Dec 2019 19:57:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1576717062;
-        bh=9Gv3T7x+2uP8c6nVo2PP9pw1fdyXIgaLtrTvq466Eus=;
-        h=Content-Type:Subject:From:Date:Message-Id:To;
-        b=xuanjonZudMwh7AqXwWg0zgfA4s6UsgVpnx4Mym//tWT8W5bO4qs4qZnFKUPwg1rU
-         Kfia+2jlHBmBCfjg9QBypMzJjusX5/Hbi6EmlMQ78ulwaXFi5BOJWp+gLImcK8Vrbf
-         1BxiWT26++g95+wVBOGuFXinqc0l3Jkgmgnt54WOHoxn0/blBW3dKz9jgqJFeS6nFW
-         hL1IzkX640RX8u3xgPW2LHumUVbKiuIOGcW+c5VN0g0dabSIugyf0VwI114FeRmkGA
-         VLuG2MCvMdyFitzneMnhaz0adCt2YU+G7kkEiGp4vwALaAGIHLyKdnastq0BaLnaAO
-         ER5WAFa1PKMNA==
-Received: from [10.100.5.107] (unknown [49.255.65.138])
-        by mr85p00im-hyfv06011301.me.com (Postfix) with ESMTPSA id 122CB5815CA;
-        Thu, 19 Dec 2019 00:57:41 +0000 (UTC)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 13.0 \(3601.0.10\))
-Subject: Re: git-subtree split misbehaviour with a commit having empty ls-tree
- for the specified subdir
-From:   Tom Clarkson <tqclarkson@icloud.com>
-In-Reply-To: <CAPyFy2AKSVQJtSY0RNgJDJ5k1P=-gjNXVjDgPh+CdghhZtJXDw@mail.gmail.com>
-Date:   Thu, 19 Dec 2019 11:57:38 +1100
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F0FBE3B6-0DF5-40A4-B1A3-18EF65D48FF3@icloud.com>
-References: <CAPyFy2AKSVQJtSY0RNgJDJ5k1P=-gjNXVjDgPh+CdghhZtJXDw@mail.gmail.com>
-To:     Ed Maste <emaste@freebsd.org>
-X-Mailer: Apple Mail (2.3601.0.10)
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-12-18_08:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-1912190005
+        id S1726671AbfLSB0A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 18 Dec 2019 20:26:00 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:35746 "EHLO
+        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726599AbfLSB0A (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 18 Dec 2019 20:26:00 -0500
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=[192.168.100.43]); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1ihkZh-0001PZ-Mk; Thu, 19 Dec 2019 02:25:57 +0100
+Subject: Re: Bug: Merge commit lost during interactive rebase
+To:     Valentina Finocchiaro <valentinafinocchiaro@gmail.com>,
+        git@vger.kernel.org
+References: <CA+Kr=1i09cw6o8J==psMiVEk8LaDr7nf2C-b85=TX4z=rV1oQg@mail.gmail.com>
+From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Message-ID: <ad9494ae-f1f6-269f-b4d0-49e890dcd147@virtuell-zuhause.de>
+Date:   Thu, 19 Dec 2019 02:25:49 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.0
+MIME-Version: 1.0
+In-Reply-To: <CA+Kr=1i09cw6o8J==psMiVEk8LaDr7nf2C-b85=TX4z=rV1oQg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1576718758;08b9b045;
+X-HE-SMSGID: 1ihkZh-0001PZ-Mk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 18.12.2019 23:04, Valentina Finocchiaro wrote:
 
+Hi Valentina,
 
-> On 19 Dec 2019, at 4:58 am, Ed Maste <emaste@freebsd.org> wrote:
->=20
-> =EF=BB=BFOn Tue, 17 Dec 2019 at 19:17, Tom Clarkson =
-<tqclarkson@icloud.com> wrote:
->>=20
->> The algorithm I am looking at to replace the file based mainline =
-detection is
->>=20
->> - If subtree root is unknown (as on the initial split), everything is =
-mainline.
->>=20
->> - If subtree root is reachable and mainline root is not, it=E2=80=99s =
-a subtree commit
->>=20
->> - Otherwise, treat as mainline. This will also pick up commits from =
-other subtrees but they hopefully won=E2=80=99t contain the subtree =
-folder. I don=E2=80=99t think there is an unambiguous way to distinguish =
-a subtree merge from a regular merge - the message produced is pretty =
-generic. It may be possible to check reachability of all known subtrees, =
-but that adds a fair bit of complexity.
->>=20
->> That leaves us with the question of how to record the empty mainline =
-commits. The most correct result for your repro is probably four commits =
-(add/delete everything/restore/modify), but I can see that falling over =
-in a scenario where deleting a subtree is more like unlinking a library =
-than editing that library to do nothing.
->>=20
->> Is it sufficiently correct for your scenario to treat =E2=80=98restore =
-file1=E2=80=99 as the initial subtree commit?
->=20
-> My reproduction scenario is really a demonstration of the real issue I
-> encountered. Running the initial "subtree split" on the real repo
-> takes about 40 minutes so I wanted something trivial that shows the
-> same issue. In the demonstration case (i.e., actually removing and
-> readding the subtree) I think it's reasonable to start with the commit
-> that added it back.
->=20
-> Overall I think your proposed algorithm is reasonable (even though I
-> think it won't address some of the cases in our repo). Will your
-> algorithm allow us to pass $dir to git rev-list, for the initial
-> split?
+see the --preserve-merges parameter, in newer versions called
+--rebase-merges, for git rebase. This avoids the default behaviour of
+dropping the merge commit.
 
-Is this just for performance reasons? As I understand it that was left =
-out because it would exclude relevant commits on an existing subtree, =
-but it could make sense as an optimization for the first split of a =
-large repo.
+Thomas
 
-> My actual issue stems from the way svn2git converted some odd svn
-> history, and is described in more detail on the freebsd-git mailing
-> list at =
-https://lists.freebsd.org/pipermail/freebsd-git/2019-November/000218.html.=
-
->=20
-> Perhaps we can have some command-line options to provide metadata for
-> cases that cannot be inferred? The cases in our repo come from svn2git
-> creating subtree merges to represent updates from vendor code. AFAIK
-> these should be basically identical to what subtree creates, except
-> that we don't have any of the metadata it adds.
-
-The existing --onto option comes pretty close - it marks everything in =
-the rev-list of $onto as a subtree commit to be used as-is
-
-For more flexibility, I think allowing more manipulation of the cache is =
-the way to go - $cachedir is currently based on process id, but I =
-don=E2=80=99t see any reason it can=E2=80=99t be based on prefix =
-instead. So the process becomes something like
-
- # clear the cache - shouldn't usually be necessary, but it's a =
-universal debugging step.
-git subtree clear-cache --prefix=3Ddir
-
-# ref and all its parents are before subtree add. Treat any children as =
-inital commits.
-git subtree ignore --prefix=3Ddir ref
-
-# ref and all its parents are known subtree commits to be included =
-without transformation.
-git subtree existing --prefix=3Ddir ref
-
-# Override an arbitrary mapping, either for performance or because that =
-commit is problematic=20
-git subtree map --prefix=3Ddir mainline-ref subtree-ref
-
-# Run the existing algorithm, but skipping anything defined manually
-git subtree split --prefix=3Ddir
-
-
-> For a concrete example (from the repo at
-> https://github.com/freebsd/freebsd), 7f3a50b3b9f8 is a mainline commit
-> that added a new subtree, from 9ee787636908. I think that if I could
-> inform subtree split that 9ee787636908 is the root it would work for
-> me.
-
-Aside from the metadata, that one is a bit different from a standard =
-subtree add in that it copies three folders from the subtree repo rather =
-than the root - so the contents of contrib/elftoolchain will never =
-exactly match the actual elftoolchain repo, and 9ee787636908 is neither =
-mainline nor subtree as subtree split understands it.
-
-If you ignore 9ee787636908, the resulting subtree will be fairly clean, =
-but won=E2=80=99t have much of a relationship to the external repo.
-
-If you treat 9ee787636908 as an existing subtree, the second commit on =
-your subtree will be based on 7f3a50b3b9f8, which deletes most of the =
-contents of the subtree. You should still be able to merge in updates =
-from the external repo, but if you try to push changes upstream the =
-deletion will break things.
-
+> this is to report a bug found during interactive rebase.
+> 
+> Bug description
+> 
+> Scenario:
+> - New commit on top of a Merge Commit.
+> - Dropping last commit during interactive rebase.
+> - Merge Commit is lost in history
+> 
+> Steps to reproduce this bug with “git version 2.18.1” on Centos8:
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git --version
+> git version 2.18.1
+> 
+> # Creating git repo
+> 
+> [root@a86e2b632fc2 /]# mkdir git-bug-rebase
+> [root@a86e2b632fc2 /]# cd git-bug-rebase/
+> [root@a86e2b632fc2 git-bug-rebase]# git init
+> Initialized empty Git repository in /git-bug-rebase/.git/
+> 
+> # Adding stuff on master branch and first commit
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# touch file1
+> [root@a86e2b632fc2 git-bug-rebase]# git add .
+> [root@a86e2b632fc2 git-bug-rebase]# git commit -m "first commit"
+> [master (root-commit) 39f2f9b] first commit
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 file1
+> [root@a86e2b632fc2 git-bug-rebase]# git log
+> commit 39f2f9b13feb0c1a4b6173cf179b45576fca9b96 (HEAD -> master)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:49:21 2019 +0000
+> 
+>     first commit
+> [root@a86e2b632fc2 git-bug-rebase]# git branch
+> * master
+> 
+> # Creating another branch: branch2, checkout on it and commit changes
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git branch branch2
+> [root@a86e2b632fc2 git-bug-rebase]# git branch
+>   branch2
+> * master
+> [root@a86e2b632fc2 git-bug-rebase]# git checkout branch2
+> Switched to branch 'branch2'
+> [root@a86e2b632fc2 git-bug-rebase]# touch file-branch-2
+> [root@a86e2b632fc2 git-bug-rebase]# git add .
+> [root@a86e2b632fc2 git-bug-rebase]# git commit -m "commit on branch2"
+> [branch2 786f836] commit on branch2
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 file-branch-2
+> 
+> # Checkout on master and commit something else
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git checkout master
+> Switched to branch 'master'
+> [root@a86e2b632fc2 git-bug-rebase]# touch file3
+> [root@a86e2b632fc2 git-bug-rebase]# git add .
+> [root@a86e2b632fc2 git-bug-rebase]# git commit -m "commit on master"
+> [master e3a957d] commit on master
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 file3
+> [root@a86e2b632fc2 git-bug-rebase]# git log
+> commit e3a957d99401101b9e2805c2b59459123b2c1883 (HEAD -> master)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:52:54 2019 +0000
+> 
+>     commit on master
+> 
+> commit 39f2f9b13feb0c1a4b6173cf179b45576fca9b96
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:49:21 2019 +0000
+> 
+>     first commit
+> 
+> # Merge two branches:
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git merge branch2
+> Merge made by the 'recursive' strategy.
+>  file-branch-2 | 0
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 file-branch-2
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git log
+> commit 9329daf43321d1b797652abf87106134ca516929 (HEAD -> master)
+> Merge: e3a957d 786f836
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:53:03 2019 +0000
+> 
+>     Merge branch 'branch2'
+> 
+> commit e3a957d99401101b9e2805c2b59459123b2c1883
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:52:54 2019 +0000
+> 
+>     commit on master
+> 
+> commit 786f836d941c101cb952aa008d10246cb0638e46 (branch2)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:50:30 2019 +0000
+> 
+>     commit on branch2
+> 
+> commit 39f2f9b13feb0c1a4b6173cf179b45576fca9b96
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:49:21 2019 +0000
+> 
+>     first commit
+> 
+> # Commit something after merge commit:
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# touch file-after-merge
+> [root@a86e2b632fc2 git-bug-rebase]# git add .
+> [root@a86e2b632fc2 git-bug-rebase]# git commit -m "commit after merge"
+> [master 1f33710] commit after merge
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 file-after-merge
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git log
+> commit 1f33710d6f011bb123cd947f82a004812b71f804 (HEAD -> master)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:53:43 2019 +0000
+> 
+>     commit after merge
+> 
+> commit 9329daf43321d1b797652abf87106134ca516929
+> Merge: e3a957d 786f836
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:53:03 2019 +0000
+> 
+>     Merge branch 'branch2'
+> 
+> commit e3a957d99401101b9e2805c2b59459123b2c1883
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:52:54 2019 +0000
+> 
+>     commit on master
+> 
+> commit 786f836d941c101cb952aa008d10246cb0638e46 (branch2)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:50:30 2019 +0000
+> 
+>     commit on branch2
+> 
+> commit 39f2f9b13feb0c1a4b6173cf179b45576fca9b96
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:49:21 2019 +0000
+> 
+>     first commit
+> 
+> # Delete last commit through interactive rebase (merge commit is not
+> shown on list):
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git rebase -i HEAD~3
+> Successfully rebased and updated refs/heads/master.
+> [root@a86e2b632fc2 git-bug-rebase]# git status
+> On branch master
+> nothing to commit, working tree clean
+> 
+> # Merge commit is lost:
+> 
+> [root@a86e2b632fc2 git-bug-rebase]# git log
+> commit 82a34e8b224d8fa9434cc484ed153b519ffa32a5 (HEAD -> master)
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:50:30 2019 +0000
+> 
+>     commit on branch2
+> 
+> commit e3a957d99401101b9e2805c2b59459123b2c1883
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:52:54 2019 +0000
+> 
+>     commit on master
+> 
+> commit 39f2f9b13feb0c1a4b6173cf179b45576fca9b96
+> Author: root <valentina.finocchiaro@gmail.com>
+> Date:   Wed Dec 18 09:49:21 2019 +0000
+> 
+>     first commit
+> 
+> 
+> Thanks and Best Regards,
+> Valentina
+> 
 
