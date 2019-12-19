@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2921C2D0D2
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E86FC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AD97524672
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6E9312467B
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzi0bwjk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IyUKS9wj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727274AbfLSWVt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 17:21:49 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:33420 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727211AbfLSWVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:21:44 -0500
-Received: by mail-pl1-f193.google.com with SMTP id c13so3214083pls.0
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:44 -0800 (PST)
+        id S1727282AbfLSWVv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 17:21:51 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35971 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727218AbfLSWVp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 17:21:45 -0500
+Received: by mail-pf1-f194.google.com with SMTP id x184so4084727pfb.3
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
-        b=bzi0bwjkdPXYG1qlJ7x7sgyrcKISEAvt2kazPMa/qZ8nNlYgw5lLxb9ugd4GDQoS9h
-         r7h36kNznjN0E5/KH1lW+iPg/YqDV9s0Ho33e0gNE6c94YGtjydhoMbdlpEkLYjbwtlI
-         FHzY89O5hrnEAlpv3uCLXNmH+utWNrS3N4WtOj07q5/TfijEImJfWBsR62O0/3qp0fNJ
-         e6X08pvxJVF70nw0fD66P+x0271Xbo5vq5exCY5BnhIGpLThbNq3ybYHlKlOneG5xmzo
-         K88JdU17EhdesUFWR2iAMKYXKfpfPllTsquY53eyjidK+G8XJeyu/C/kM0dBcVdkOZ1d
-         eufA==
+        bh=p2ArS+YljEb7t4oUKI+NSVa4SXdQS2+gUCxgbp6aCbE=;
+        b=IyUKS9wjqdoPmeVCKsufEaFsRxVk4dnB5t+pctJL6BnOEyrqoDrJeELRoolNtX4lq2
+         LIl5n5Xi2kkrUIyMz+DK9d12VqRujgHLngcosCOwY7ccg1zdc2t+Xz6tGwLfyt8NDW6j
+         zi8lFelLHDSW5sgXhydTUp72jTRwcoppbq+Zv7ZjxVAjHwb9KI4xeG0kVauCcgWeQPN3
+         CTw/Z52q4kRYL/UVyJ+xn4EuVpTsVgevWLm3qUPI7FtzW3OXzl8rIvl1L7p2WPJ/AcUJ
+         844rlYySmp8fCQtmhZns1XK3wEGsC1yfJZYDuKZhpwbiWjUCSmcOvSINh02kBx2f5wdu
+         LH5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
-        b=rYZeX1wCNx0Fs4+RYfUAl+9uLviAZycnHBYpqSppblWHQfcjW9w3zhpsynoVgCFVz6
-         cRQiU1UCifar5pR+qlNFXayOEBEZAUpchJmpj25CnZ2pqyZaz7TadY/gcBbIi0OkSTfe
-         740Rbky9JBALM2t4HEEfOxPmwBnmydrN7Dv167ZRCiMz6Dwvvf055/iJe8yiY4SzKXNK
-         PG0FtFqbjs3jSQJ2uO0XwMYg6BmvtHA7SkwNvyOflcqekTw+b/Hnr4oXrbucqIOCCcRl
-         KXeOiohgmOdNzKgjqvslsEsxMFgvOGgdGJNnUAq8Pfa9boayIoCnsyll3kde4CHnF1HA
-         D3Gg==
-X-Gm-Message-State: APjAAAXJvflYFhMm1oI/cq8AaUXXVho3Ug7R7QdVWMZZQMuIQlmKSM3Q
-        moCrlY40YmkrpmleQFibWpWO7UP2
-X-Google-Smtp-Source: APXvYqxmDNjwaJL0L0osHKRvBma/aJQ95EuKYMf4v0t6/jxbHOzCplxvOzu4lF5oyXTSoG/SkQehAg==
-X-Received: by 2002:a17:902:bd4b:: with SMTP id b11mr10485793plx.6.1576794103771;
-        Thu, 19 Dec 2019 14:21:43 -0800 (PST)
+        bh=p2ArS+YljEb7t4oUKI+NSVa4SXdQS2+gUCxgbp6aCbE=;
+        b=d2sBsyVw4fBmslQSK7Cg3POiH9lFd8FoSjhiH1x3VRQLfFuoR+enzHWSrhd+LFX+up
+         Z3LozrNaQfwjlnRzT+AogiqIgi10ZJg6sbqikE1nMHVcq/Lrh86QXAzSXcQwYAWVnSkK
+         tbCx6kbk8BDHlV9rMXx8VI+ofbEXn+CexnK/V54zEXFKsdS7wunQlu8IKEOxa/bevjQp
+         HBc8PglzhJ1fbi7AqMNUeBCgIoDdK1BKxMGcNa5jcJE5W0uO2Oxp6C7WylZ2wTlILoL3
+         3ert6M9SOwp/dyMbuam554KSNFKltJOvwu8Frm9N3Tb23eEMSCP/lZnPUSjY6oKNgmvw
+         wbyw==
+X-Gm-Message-State: APjAAAXVBb2F884M3fo7B3qQN5GQmp4xQmtFrBw4ROP5qZFmEBWiad8s
+        ox9beZ5PteNGVP79jEJNqkmK72we
+X-Google-Smtp-Source: APXvYqzNy9PGTOVIEVwNI3/j854q5XTz4UZ7EDFwq0d4QM6sLiWYSqK48xz3FL3Jnlt69RgKWDPFeg==
+X-Received: by 2002:a65:56c6:: with SMTP id w6mr11764226pgs.167.1576794104553;
+        Thu, 19 Dec 2019 14:21:44 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com ([216.52.21.197])
         by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 14:21:43 -0800 (PST)
+        Thu, 19 Dec 2019 14:21:44 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 10/16] t1307: reorder `nongit test_must_fail`
-Date:   Thu, 19 Dec 2019 14:22:45 -0800
-Message-Id: <d6ea8a6df0517c34136b0bddbce0948f9c8d448e.1576794144.git.liu.denton@gmail.com>
+Subject: [PATCH v2 11/16] t1409: let sed open its own input file
+Date:   Thu, 19 Dec 2019 14:22:46 -0800
+Message-Id: <d57dfe95e2ace0b543ddb4fba6f9c14cac5f02fc.1576794144.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576794144.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com> <cover.1576794144.git.liu.denton@gmail.com>
@@ -73,29 +73,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the future, we plan on only allowing `test_must_fail` to work on a
-restricted subset of commands, including `git`. Reorder the commands so
-that `nongit` comes before `test_must_fail`. This way, `test_must_fail`
-operates on a git command.
+In one case, we were using a redirection operator to feed input into
+sed. However, since sed is capable of opening its own input file, make
+sed do that instead of redirecting input into it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1307-config-blob.sh | 2 +-
+ t/t1409-avoid-packing-refs.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
-index 37dc689d8c..002e6d3388 100755
---- a/t/t1307-config-blob.sh
-+++ b/t/t1307-config-blob.sh
-@@ -74,7 +74,7 @@ test_expect_success 'can parse blob ending with CR' '
- '
+diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
+index c46848eb8e..f74d890e82 100755
+--- a/t/t1409-avoid-packing-refs.sh
++++ b/t/t1409-avoid-packing-refs.sh
+@@ -8,7 +8,7 @@ test_description='avoid rewriting packed-refs unnecessarily'
+ # shouldn't upset readers, and it should be omitted if the file is
+ # ever rewritten.
+ mark_packed_refs () {
+-	sed -e "s/^\(#.*\)/\1 t1409 /" <.git/packed-refs >.git/packed-refs.new &&
++	sed -e "s/^\(#.*\)/\1 t1409 /" .git/packed-refs >.git/packed-refs.new &&
+ 	mv .git/packed-refs.new .git/packed-refs
+ }
  
- test_expect_success 'config --blob outside of a repository is an error' '
--	test_must_fail nongit git config --blob=foo --list
-+	nongit test_must_fail git config --blob=foo --list
- '
- 
- test_done
 -- 
 2.24.1.703.g2f499f1283
 
