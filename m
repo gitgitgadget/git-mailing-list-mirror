@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 523EEC43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78B70C2D0D1
 	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 197F92465E
+	by mail.kernel.org (Postfix) with ESMTP id 46EC524676
 	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZIvMTXB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pT0GCijf"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbfLSSCL (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727028AbfLSSCL (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 19 Dec 2019 13:02:11 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33845 "EHLO
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39588 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726992AbfLSSCI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 13:02:08 -0500
-Received: by mail-ed1-f66.google.com with SMTP id l8so5785088edw.1
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:07 -0800 (PST)
+        with ESMTP id S1726984AbfLSSCH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 13:02:07 -0500
+Received: by mail-ed1-f66.google.com with SMTP id t17so5764054eds.6
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=37S1UXMADHTUnnmVEO9FnwfxmeS1XCFMqK/czkp+DU0=;
-        b=dZIvMTXBNvXTx7oMS2UvRbkhiGLitEiVrCT0FtjhHME0OfIQSdycY89ry4QbdNFORe
-         hblrmgPVLsxgjzooyXGo6V/Rje6bEa4oRCTgmgI0mRJe5HmousvNjHd/X73zffHi6ZAl
-         dZs1o1gmB1bVJJSQFuC0it3ZEIhrjQnKa0mpzn5eflGYxDAdHfI6Norr3frSeZ16Os4z
-         5MsC4Mf19aMdKqEPY5GGJwYKTyYJOhSZds6XtGcZCUq/GwlX9kClzIf0Vzd56FdvR6li
-         E7QuLxW/rxALMy6vzHwwxRzED88chbT54UyKGTe34A2QVIu3IbCiEdujllBHp8AYxWoy
-         rssA==
+        bh=6Pp5H1sU45MMQNSRrF2NLYaerXHtLpBVDIx7/QpfRTA=;
+        b=pT0GCijfp1zOXoKOsRQDgzWaU/8QOFL3YthUvFAWO+wHlEEf0uOLxTZxzR4BqkUYaH
+         1fS9dbJ5uKqlZR/CoIG/i/I7uKel8znMPs4Qt7eBFLNvGOctdCVKeLSMDzIKaMkZDt+Y
+         ulkJ/zG6XOn9tfdNmp06AXazTQ2dG40XEOn4AnFu4V2N4WuvMU9Gqs63qiiU+wje3TIb
+         xTTZSnaIZmjhIms38011xP7mvv6RVsH+CNZe8+8CA0s0KD4tH4cRnhIvwGKJfcuSGeoN
+         Ljx1mrX8isayHSN2dyCsaqIzqebrSMWn81eoES6O0wj/BDF5ty+h5a/OrqdPiV4fhsVw
+         9mvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=37S1UXMADHTUnnmVEO9FnwfxmeS1XCFMqK/czkp+DU0=;
-        b=o9j+RfYgsGu3WeEnepVfbBGCt2N/yWoZPEVBbsmUTDI2KthSqWK7/QBCY0xsGnn7Io
-         eZqzJ72FVmFZw7I/rRqVFQjUkQmH6+3QN4KxtB9bE1lHFWJoiHRVjVF9HkenOMMLqAEb
-         h9VT91mO+/Rw8foNS2JyfgmgjB1AufOyjGyUB+xuyz6i9N4yk2u2q7dftDMaVeKMJOW5
-         kSKu1TYcTx3V6qApeJVh2vu07zBc+SrVAJVuFNP/kw/NLzYkUEl5JF/XClqTbbOfiU6l
-         aaSA8pcvtWmtesowpz1xnw1S83Jd5C7ujRAqoEWUtczRvbdujnOKm/vDk6zWPJDyS81S
-         +2Eg==
-X-Gm-Message-State: APjAAAXfY2B/AZ6M/zNLQu6Phk5wX2y259QD5poWxzS8xTmklVtUBlbu
-        cvGNhVfFFyTNa/0fyVQLoFvcenJv
-X-Google-Smtp-Source: APXvYqxaT8+wUodwVh7eG2ULdGq3FPjZSqWDU0IKdyx6TboW6vYdpsVR4Cz2WaHnm///OxD7lDampg==
-X-Received: by 2002:a05:6402:689:: with SMTP id f9mr10620069edy.231.1576778526961;
-        Thu, 19 Dec 2019 10:02:06 -0800 (PST)
+        bh=6Pp5H1sU45MMQNSRrF2NLYaerXHtLpBVDIx7/QpfRTA=;
+        b=JoTZ5TTgqJNCzStkQbdFCTKj126wxwyIi+JGpfdDUaaFeTPEH//YIvDUDTO/l1yVBc
+         AJKpc2qubbnwrKH4wleenMaAG/PK6MKcKF+OR5twOiCSjW0CzF8GVDYJa36Vc8WyFP9D
+         MPE2Me7QAg8HEAwXxxpNWoo3OjSbAvufJ+pbgCKXC9Biw4gGhw4kakam3LatMYDgGVYW
+         47q0qq7/iPF0N7niqPZ0k9r+mn0+8pn1uuOiqLpfwLOTxZJHkQ5/Cu8a8fJsAlnzt29o
+         h6IUJRdNMsJNyJG/h9cT4gm+YtgUcFbi9TzQAXfyBeACar2G9eOxpd4jIWf4Nll3aTkY
+         GqoA==
+X-Gm-Message-State: APjAAAWe0NyinDIafFQDAE8jr9RfB7pxfs3AaZzdODYgw+mje3ZWhQju
+        swJplLIT9jg5bddAIdH2VLmuMTM5
+X-Google-Smtp-Source: APXvYqz9lWjPmIYMLDpO9W/PPKsop/3/lXhmujuI5g+aYaP4pP47L9zl+UrmoPtB7jsd4EQGTzOMug==
+X-Received: by 2002:a17:906:7708:: with SMTP id q8mr10936919ejm.33.1576778524473;
+        Thu, 19 Dec 2019 10:02:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id dk14sm666957ejb.12.2019.12.19.10.02.06
+        by smtp.gmail.com with ESMTPSA id b15sm647421eje.82.2019.12.19.10.02.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 10:02:06 -0800 (PST)
-Message-Id: <1d981b199f2564093d6d04e1eb8be9fa30c1d1da.1576778515.git.gitgitgadget@gmail.com>
+        Thu, 19 Dec 2019 10:02:03 -0800 (PST)
+Message-Id: <c8e59903f74d068983b136424b9a429cce821b17.1576778515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 References: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
         <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Dec 2019 18:01:46 +0000
-Subject: [PATCH v3 09/18] doc: checkout: synchronize <pathspec> description
+Date:   Thu, 19 Dec 2019 18:01:43 +0000
+Subject: [PATCH v3 06/18] add: support the --pathspec-from-file option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,68 +82,217 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-`git add` shows an example of good writing, follow it.
+Decisions taken for simplicity:
+1) For now, `--pathspec-from-file` is declared incompatible with
+   `--interactive/--patch/--edit`, even when <file> is not `stdin`.
+   Such use case it not really expected. Also, it would require changes
+   to `interactive_add()` and `edit_patch()`.
+2) It is not allowed to pass pathspec in both args and file.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-checkout.txt | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ Documentation/git-add.txt    | 16 ++++++-
+ builtin/add.c                | 30 +++++++++++--
+ t/t3704-add-pathspec-file.sh | 86 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 127 insertions(+), 5 deletions(-)
+ create mode 100755 t/t3704-add-pathspec-file.sh
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index d47046e050..93124f3ad9 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -12,13 +12,13 @@ SYNOPSIS
- 'git checkout' [-q] [-f] [-m] --detach [<branch>]
- 'git checkout' [-q] [-f] [-m] [--detach] <commit>
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
--'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
--'git checkout' (-p|--patch) [<tree-ish>] [--] [<paths>...]
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
-+'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 8b0e4c7fa8..be5e3ac54b 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -11,7 +11,8 @@ SYNOPSIS
+ 'git add' [--verbose | -v] [--dry-run | -n] [--force | -f] [--interactive | -i] [--patch | -p]
+ 	  [--edit | -e] [--[no-]all | --[no-]ignore-removal | [--update | -u]]
+ 	  [--intent-to-add | -N] [--refresh] [--ignore-errors] [--ignore-missing] [--renormalize]
+-	  [--chmod=(+|-)x] [--] [<pathspec>...]
++	  [--chmod=(+|-)x] [--pathspec-from-file=<file> [--pathspec-file-nul]]
++	  [--] [<pathspec>...]
  
  DESCRIPTION
  -----------
- Updates files in the working tree to match the version in the index
--or the specified tree.  If no paths are given, 'git checkout' will
-+or the specified tree.  If no pathspec was given, 'git checkout' will
- also update `HEAD` to set the specified branch as the current
- branch.
+@@ -187,6 +188,19 @@ for "git add --no-all <pathspec>...", i.e. ignored removed files.
+ 	bit is only changed in the index, the files on disk are left
+ 	unchanged.
  
-@@ -78,13 +78,13 @@ be used to detach `HEAD` at the tip of the branch (`git checkout
- +
- Omitting `<branch>` detaches `HEAD` at the tip of the current branch.
++--pathspec-from-file=<file>::
++	Pathspec is passed in `<file>` instead of commandline args. If
++	`<file>` is exactly `-` then standard input is used. Pathspec
++	elements are separated by LF or CR/LF. Pathspec elements can be
++	quoted as explained for the configuration variable `core.quotePath`
++	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
++	global `--literal-pathspecs`.
++
++--pathspec-file-nul::
++	Only meaningful with `--pathspec-from-file`. Pathspec elements are
++	separated with NUL character and all other characters are taken
++	literally (including newlines and quotes).
++
+ \--::
+ 	This option can be used to separate command-line options from
+ 	the list of files, (useful when filenames might be mistaken
+diff --git a/builtin/add.c b/builtin/add.c
+index 3d1791dd82..7c21ad492b 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -29,6 +29,8 @@ static const char * const builtin_add_usage[] = {
+ static int patch_interactive, add_interactive, edit_interactive;
+ static int take_worktree_changes;
+ static int add_renormalize;
++static int pathspec_file_nul;
++static const char *pathspec_from_file;
  
--'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...::
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...::
+ struct update_callback_data {
+ 	int flags;
+@@ -320,6 +322,8 @@ static struct option builtin_add_options[] = {
+ 		   N_("override the executable bit of the listed files")),
+ 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
+ 			N_("warn when adding an embedded repository")),
++	OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
++	OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
+ 	OPT_END(),
+ };
  
--	Overwrite paths in the working tree by replacing with the
--	contents in the index or in the `<tree-ish>` (most often a
--	commit).  When a `<tree-ish>` is given, the paths that
--	match the `<pathspec>` are updated both in the index and in
--	the working tree.
-+	Overwrite the contents of the files that match the pathspec.
-+	When the `<tree-ish>` (most often a commit) is not given, 
-+	overwrite working tree with the contents in the index.
-+	When the `<tree-ish>` is given, overwrite both the index and
-+	the working tree with the contents at the `<tree-ish>`.
- +
- The index may contain unmerged entries because of a previous failed merge.
- By default, if you try to check out such an entry from the index, the
-@@ -336,7 +336,13 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 	Tree to checkout from (when paths are given). If not specified,
- 	the index will be used.
+@@ -414,11 +418,17 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
+ 	if (patch_interactive)
+ 		add_interactive = 1;
+-	if (add_interactive)
++	if (add_interactive) {
++		if (pathspec_from_file)
++			die(_("--pathspec-from-file is incompatible with --interactive/--patch"));
+ 		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
++	}
  
-+\--::
-+	Do not interpret any more arguments as options.
+-	if (edit_interactive)
++	if (edit_interactive) {
++		if (pathspec_from_file)
++			die(_("--pathspec-from-file is incompatible with --edit"));
+ 		return(edit_patch(argc, argv, prefix));
++	}
+ 	argc--;
+ 	argv++;
  
-+<pathspec>...::
-+	Limits the paths affected by the operation.
-++
-+For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+@@ -451,13 +461,25 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		       PATHSPEC_SYMLINK_LEADING_PATH,
+ 		       prefix, argv);
  
- DETACHED HEAD
- -------------
+-	if (require_pathspec && argc == 0) {
++	if (pathspec_from_file) {
++		if (pathspec.nr)
++			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
++
++		parse_pathspec_file(&pathspec, PATHSPEC_ATTR,
++				    PATHSPEC_PREFER_FULL |
++				    PATHSPEC_SYMLINK_LEADING_PATH,
++				    prefix, pathspec_from_file, pathspec_file_nul);
++	} else if (pathspec_file_nul) {
++		die(_("--pathspec-file-nul requires --pathspec-from-file"));
++	}
++
++	if (require_pathspec && pathspec.nr == 0) {
+ 		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+ 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+ 		return 0;
+ 	}
+ 
+-	if (!take_worktree_changes && addremove_explicit < 0 && argc)
++	if (!take_worktree_changes && addremove_explicit < 0 && pathspec.nr)
+ 		/* Turn "git add pathspec..." to "git add -A pathspec..." */
+ 		addremove = 1;
+ 
+diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
+new file mode 100755
+index 0000000000..c229d21866
+--- /dev/null
++++ b/t/t3704-add-pathspec-file.sh
+@@ -0,0 +1,86 @@
++#!/bin/sh
++
++test_description='add --pathspec-from-file'
++
++. ./test-lib.sh
++
++test_tick
++
++test_expect_success setup '
++	test_commit file0 &&
++	echo A >fileA.t &&
++	echo B >fileB.t &&
++	echo C >fileC.t &&
++	echo D >fileD.t
++'
++
++restore_checkpoint () {
++	git reset
++}
++
++verify_expect () {
++	git status --porcelain --untracked-files=no -- fileA.t fileB.t fileC.t fileD.t >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'simplest' '
++	restore_checkpoint &&
++
++	echo fileA.t | git add --pathspec-from-file=- &&
++
++	cat >expect <<-\EOF &&
++	A  fileA.t
++	EOF
++	verify_expect
++'
++
++test_expect_success '--pathspec-file-nul' '
++	restore_checkpoint &&
++
++	printf "fileA.t\0fileB.t\0" | git add --pathspec-from-file=- --pathspec-file-nul &&
++
++	cat >expect <<-\EOF &&
++	A  fileA.t
++	A  fileB.t
++	EOF
++	verify_expect
++'
++
++test_expect_success 'only touches what was listed' '
++	restore_checkpoint &&
++
++	printf "fileB.t\nfileC.t\n" | git add --pathspec-from-file=- &&
++
++	cat >expect <<-\EOF &&
++	A  fileB.t
++	A  fileC.t
++	EOF
++	verify_expect
++'
++
++test_expect_success 'error conditions' '
++	restore_checkpoint &&
++	echo fileA.t >list &&
++	>empty_list &&
++
++	test_must_fail git add --pathspec-from-file=- --interactive <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
++
++	test_must_fail git add --pathspec-from-file=- --patch <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
++
++	test_must_fail git add --pathspec-from-file=- --edit <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with --edit" err &&
++
++	test_must_fail git add --pathspec-from-file=- -- fileA.t <list 2>err &&
++	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
++
++	test_must_fail git add --pathspec-file-nul 2>err &&
++	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
++	
++	# This case succeeds, but still prints to stderr
++	git add --pathspec-from-file=- <empty_list 2>err &&
++	test_i18ngrep -e "Nothing specified, nothing added." err
++'
++
++test_done
 -- 
 gitgitgadget
 
