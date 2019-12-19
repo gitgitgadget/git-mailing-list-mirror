@@ -2,86 +2,206 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAED3C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:30:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A8EBC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:45:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 850EC2467B
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:30:28 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R68sqYlG"
+	by mail.kernel.org (Postfix) with ESMTP id 6AF8D2067C
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:45:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbfLSVa1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 16:30:27 -0500
-Received: from mail-il1-f170.google.com ([209.85.166.170]:38437 "EHLO
-        mail-il1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726996AbfLSVa1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 16:30:27 -0500
-Received: by mail-il1-f170.google.com with SMTP id f5so6130485ilq.5
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 13:30:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=suLytnt3c6amtw4OAJBEWFO9BYt9qbsXa61LUxDNwbs=;
-        b=R68sqYlGjl6mZU2vqN2IDxNroVe2giauhD7VWrs3NQgccz1gcF0k66A4ttisDo0QHI
-         is7/6lOFEzSAiUy2BF2M14PzLDe8G7Mn0ugw6ZYQZMvuKEZheE1oGEpAvn2hoeGgORUX
-         TLQlQ+ba1X3sWH1NzBAoSxqF+TiDoCI4QpMdk9RLMvGUob4p4aHmDle79OYu+qcce5n2
-         ZDp3HcYEMX2bMu9ia7d+7GLdYN0cqF+swSRt1cYknEj0jhxuG+uG2OoQvRANbrz51IPp
-         lgarShUE61OPPfywInlB556zoi32HjMkA22FpTY5m4Wsn+5ewgD1SF3wY7UICvhS+38N
-         zEHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=suLytnt3c6amtw4OAJBEWFO9BYt9qbsXa61LUxDNwbs=;
-        b=osJ3qGAf9/A2lnm/F+qykV7PmKRRFBUFkKB+eaUZlRks1GhExPAUwxUTGDusU9W1hv
-         fBt7T1euWdygbcpd7aJtb2aZCpnXuX9eLVbVjWJR5njX3qAkuXzaTrVo1vDsieAfHyTx
-         IJGzfLSqVnBXRSGvPvlQK3mXCdhSyA/Ta0pmIwbUgADOpJauBa9VBmag4E4IzieymJ5Z
-         5dy9LphJucaGXfQBvYTGyzdGPD6oCC2yqB2CuzBN1V3/OyPQOFKwJq03ZOWL76zRqZ67
-         8EatUmijFZR138rdOlFxZx0XJwOAvQSOZHfcYkjVEmIdOefL6MkjWwbwcYln0ylqDiSG
-         GhYg==
-X-Gm-Message-State: APjAAAXIbp08StmuAWKgnOceNHbaCNIPQ1DIbU0mmCj9MEneUavAS55n
-        9r/f6tDjnjjqYH2vVYtZh7dpkZciqopIy3qHle5w13wc3a7M7w==
-X-Google-Smtp-Source: APXvYqzi2eptc2TShTldbsdy8fOlQWxAn9WXgI2yy1qj0gghfMRRq113TxqOXw9sS3xqx45Qw2wqwbubr780Rghcn+4=
-X-Received: by 2002:a92:da44:: with SMTP id p4mr9560344ilq.168.1576791026428;
- Thu, 19 Dec 2019 13:30:26 -0800 (PST)
+        id S1727255AbfLSVp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 16:45:28 -0500
+Received: from mx2.freebsd.org ([96.47.72.81]:59661 "EHLO mx2.freebsd.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726998AbfLSVp2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 16:45:28 -0500
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (Client CN "mx1.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
+        by mx2.freebsd.org (Postfix) with ESMTPS id D8E086F3C7;
+        Thu, 19 Dec 2019 21:45:26 +0000 (UTC)
+        (envelope-from emaste@freebsd.org)
+Received: from freefall.freebsd.org (freefall.freebsd.org [IPv6:2610:1c1:1:6074::16:84])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         server-signature RSA-PSS (4096 bits)
+         client-signature RSA-PSS (4096 bits) client-digest SHA256)
+        (Client CN "freefall.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
+        by mx1.freebsd.org (Postfix) with ESMTPS id 47f55f4dD1z48hj;
+        Thu, 19 Dec 2019 21:45:26 +0000 (UTC)
+        (envelope-from emaste@freebsd.org)
+Received: by freefall.freebsd.org (Postfix, from userid 1079)
+        id 7E19782F0; Thu, 19 Dec 2019 21:45:26 +0000 (UTC)
+From:   Ed Maste <emaste@FreeBSD.org>
+To:     git mailing list <git@vger.kernel.org>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
+        Ed Maste <emaste@FreeBSD.org>
+Subject: [PATCH v2] sparse-checkout: improve OS ls compatibility
+Date:   Thu, 19 Dec 2019 21:45:16 +0000
+Message-Id: <20191219214516.69209-1-emaste@FreeBSD.org>
+X-Mailer: git-send-email 2.22.0
+In-Reply-To: <20191219015833.49314-1-emaste@FreeBSD.org>
+References: <20191219015833.49314-1-emaste@FreeBSD.org>
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Christopher_D=C3=ADaz_Riveros?= 
-        <christopher.diaz.riv@gmail.com>
-Date:   Thu, 19 Dec 2019 15:30:15 -0600
-Message-ID: <CAHCo6soNwee3hN4i6v0KtxphKHa96v--e41KRqfHKV5i45OqcA@mail.gmail.com>
-Subject: IaC monitoring with Git
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On FreeBSD, when executed by root ls enables the '-A' option:
 
-I'm trying to figure out a git based solution for a use case we have
-at my work place. We use IaC for our infrastructure, when we want to
-create new instances/accounts/etc we add a certain set of tags in our
-files to indicate some key aspects of the instances/accounts.
+  -A  Include directory entries whose names begin with a dot (`.')
+      except for . and ...  Automatically set for the super-user unless
+      -I is specified.
 
-There is one specific tag, owner, which we use to set a contact point
-in case we need someone to make a change. The main issue with this is
-that you can set the tag to anything, valid or not, or it could become
-invalid over time.
+As a result the .git directory appeared in the output when run as root.
+Simulate no-dotfile ls behaviour using a shell glob.
 
-Would a valid approach for first issue be to set a pre-receive hook in
-our repositories so that before the PR is merged, we check validity of
-the contact email, a.k.a. owner tag (we assume validity means that
-email exist), maybe via ldapsearch or another command like this?
+Signed-off-by: Ed Maste <emaste@FreeBSD.org>
+Helped-by: Eric Wong <e@80x24.org>
+Helped-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t1091-sparse-checkout-builtin.sh | 32 +++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-For the second case, I'd assume git does not by default monitor
-contents of files on a regular basis, does anybody have faced this
-issue and successfully found a way to periodically check contents and
-trigger alerts on repositories based on same case (email becomes
-invalid, then trigger alert)?
+diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+index cee98a1c8a..7e8cac679e 100755
+--- a/t/t1091-sparse-checkout-builtin.sh
++++ b/t/t1091-sparse-checkout-builtin.sh
+@@ -4,6 +4,10 @@ test_description='sparse checkout builtin tests'
+ 
+ . ./test-lib.sh
+ 
++ls_no_dot() {
++	(cd "$1" && printf '%s\n' *)
++}
++
+ test_expect_success 'setup' '
+ 	git init repo &&
+ 	(
+@@ -50,7 +54,7 @@ test_expect_success 'git sparse-checkout init' '
+ 	EOF
+ 	test_cmp expect repo/.git/info/sparse-checkout &&
+ 	test_cmp_config -C repo true core.sparsecheckout &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	echo a >expect &&
+ 	test_cmp expect dir
+ '
+@@ -73,7 +77,7 @@ test_expect_success 'init with existing sparse-checkout' '
+ 		*folder*
+ 	EOF
+ 	test_cmp expect repo/.git/info/sparse-checkout &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		folder1
+@@ -90,7 +94,7 @@ test_expect_success 'clone --sparse' '
+ 		!/*/
+ 	EOF
+ 	test_cmp expect actual &&
+-	ls clone >dir &&
++	ls_no_dot clone >dir &&
+ 	echo a >expect &&
+ 	test_cmp expect dir
+ '
+@@ -119,7 +123,7 @@ test_expect_success 'set sparse-checkout using builtin' '
+ 	git -C repo sparse-checkout list >actual &&
+ 	test_cmp expect actual &&
+ 	test_cmp expect repo/.git/info/sparse-checkout &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		folder1
+@@ -139,7 +143,7 @@ test_expect_success 'set sparse-checkout using --stdin' '
+ 	git -C repo sparse-checkout list >actual &&
+ 	test_cmp expect actual &&
+ 	test_cmp expect repo/.git/info/sparse-checkout &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		folder1
+@@ -154,7 +158,7 @@ test_expect_success 'cone mode: match patterns' '
+ 	git -C repo read-tree -mu HEAD 2>err &&
+ 	test_i18ngrep ! "disabling cone patterns" err &&
+ 	git -C repo reset --hard &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		folder1
+@@ -177,7 +181,7 @@ test_expect_success 'sparse-checkout disable' '
+ 	test_path_is_file repo/.git/info/sparse-checkout &&
+ 	git -C repo config --list >config &&
+ 	test_must_fail git config core.sparseCheckout &&
+-	ls repo >dir &&
++	ls_no_dot repo >dir &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		deep
+@@ -191,24 +195,24 @@ test_expect_success 'cone mode: init and set' '
+ 	git -C repo sparse-checkout init --cone &&
+ 	git -C repo config --list >config &&
+ 	test_i18ngrep "core.sparsecheckoutcone=true" config &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	echo a >expect &&
+ 	test_cmp expect dir &&
+ 	git -C repo sparse-checkout set deep/deeper1/deepest/ 2>err &&
+ 	test_must_be_empty err &&
+-	ls repo >dir  &&
++	ls_no_dot repo >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		deep
+ 	EOF
+ 	test_cmp expect dir &&
+-	ls repo/deep >dir  &&
++	ls_no_dot repo/deep >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		deeper1
+ 	EOF
+ 	test_cmp expect dir &&
+-	ls repo/deep/deeper1 >dir  &&
++	ls_no_dot repo/deep/deeper1 >dir  &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		deepest
+@@ -234,7 +238,7 @@ test_expect_success 'cone mode: init and set' '
+ 		folder1
+ 		folder2
+ 	EOF
+-	ls repo >dir &&
++	ls_no_dot repo >dir &&
+ 	test_cmp expect dir
+ '
+ 
+@@ -256,7 +260,7 @@ test_expect_success 'revert to old sparse-checkout on bad update' '
+ 	test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
+ 	test_i18ngrep "cannot set sparse-checkout patterns" err &&
+ 	test_cmp repo/.git/info/sparse-checkout expect &&
+-	ls repo/deep >dir &&
++	ls_no_dot repo/deep >dir &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		deeper1
+@@ -313,7 +317,7 @@ test_expect_success 'cone mode: set with core.ignoreCase=true' '
+ 		/folder1/
+ 	EOF
+ 	test_cmp expect repo/.git/info/sparse-checkout &&
+-	ls repo >dir &&
++	ls_no_dot repo >dir &&
+ 	cat >expect <<-EOF &&
+ 		a
+ 		folder1
+-- 
+2.24.0
 
-Thanks a lot for your help!
