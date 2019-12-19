@@ -2,101 +2,142 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E2C0C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC290C43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 19:14:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 609B0222C2
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:58:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8DEB1222C2
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 19:14:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kbIUOLL6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rSAab13s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729936AbfLSS6k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 13:58:40 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43103 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730233AbfLSSyd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 13:54:33 -0500
-Received: by mail-pg1-f195.google.com with SMTP id k197so3588267pga.10
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:54:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=9l513TSRDR7hUZlHaoex9lk365u4DefbazTxFQ3ocEE=;
-        b=kbIUOLL6QDh/zPJxm5JwhT7e4cqDhXB3qVEnLld3a9epI1TNRYykUBQGDYjuVoo6qq
-         vay2F/HwsFB+CwpZ+MuX1JVASiR+HyW/mr6qQTWbZuTjaeYHCOw+W4abZz7wlaASlmM5
-         1TI0VLeAsjjdB3CF372JAkLoXOVK1tJQHXiPU/dHW36uKqdaFda7SWEO178LHAZ482gH
-         ro+EYvyEMExu/OYHpED4DlnddTPL4Nsv4dbGSODWfMmhJ1NWfeGIDfML/sIbOQyUpFxD
-         4M9+wF8hqkbgoiVMP56Qz7KQwqgg17I1IYIc8nMRqEdIM/RDwV0VTSNKnK6v9MSKp3KR
-         C91A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=9l513TSRDR7hUZlHaoex9lk365u4DefbazTxFQ3ocEE=;
-        b=D+tVBxtYH17XBcw1giYF2H7SOaE88YlGKAPLQGV0uvzREqlbw26YCwD5/SMuUni36l
-         zYPaW8hFKrVbfgFYf+08aH+YSCyarv48Iz6PWSdbGiAvZ5eAtBDtfXPOGIpzirGj+ZXT
-         SL9HqhfzgbIiqyhTvjR+tJ2egWqqpKHMWna/wU1KQ990IcqUfqIeWBcpvSIJVjgg7DNP
-         hArWD6T9Nj3PLgcqBGDvYNtCKRf3tB0DmgQYDK+YVeIooFCYVEQ2v/3z0V5XssI+EwTG
-         gazn1qja4ST48QoFjswo3Jfdyqi7DLEqno2epmBJZjt0EmnNjgaR/zeNJGPape4qTuJn
-         McfQ==
-X-Gm-Message-State: APjAAAU8cx5GrK1Dtqgbodk7VTou8r/v88Y5KhEDrxuA1yivwf4EeOpz
-        fd4JRTrvi72mae7dOipLxbeIww==
-X-Google-Smtp-Source: APXvYqze3Z8OSx6tbLCQ6q91bTcP8NVJTCbATluTTATKP0oMS1qoWRlMeMRv5pHpncedPbjP8JIZeA==
-X-Received: by 2002:a63:ff52:: with SMTP id s18mr10603912pgk.253.1576781672152;
-        Thu, 19 Dec 2019 10:54:32 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 200sm9287706pfz.121.2019.12.19.10.54.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2019 10:54:31 -0800 (PST)
-Date:   Thu, 19 Dec 2019 10:54:27 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v2 0/1] [Outreachy] commit: display advice hints when
- commit fails
-Message-ID: <20191219185427.GA227872@google.com>
+        id S1727052AbfLSTOX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 14:14:23 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63413 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbfLSTOX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 14:14:23 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A0FC0908FF;
+        Thu, 19 Dec 2019 14:14:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6p0v2NcxBd60bcuYKR2T2xSgZBQ=; b=rSAab1
+        3skhuiGdn/02EW9a9j4zO2C8CaLNF4QOQNBmC9cbNORKPBvkL7ewikBLQ0tOEK/c
+        ZdOI0wptGP3dZ/v6amqIlYdtyI12ZqQ038R2L91IM362j08/syBhrSs6KSa1Kr1g
+        0Rml+CZIGIt7bRFT8YBrOBJXARcIFsXFoyfoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pN8uozBeYOtJgNrvGfCd5aG6IXbwOkO/
+        Cd90gEUgQqtToq5YGskLLoDcnoExsPO4CL8SgcLGnTG2GtPodI1/MWrCARjKk2AC
+        sZYgwNsydw5ZUAX7VLJfQ8GWrXXBBvCTDNrUsZkGDecLZisbo92eecwPrq8aeggE
+        k+UOLZylJUI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9921B908FE;
+        Thu, 19 Dec 2019 14:14:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BA593908FD;
+        Thu, 19 Dec 2019 14:14:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
 References: <pull.495.git.1576574242.gitgitgadget@gmail.com>
- <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
- <xmqqlfr8b28v.fsf@gitster-ct.c.googlers.com>
+        <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
+        <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
+Date:   Thu, 19 Dec 2019 11:14:13 -0800
+In-Reply-To: <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
+        (Heba Waly via GitGitGadget's message of "Thu, 19 Dec 2019 09:16:22
+        +0000")
+Message-ID: <xmqqfthgb01m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqlfr8b28v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: BF922CBC-2293-11EA-B57D-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 10:26:40AM -0800, Junio C Hamano wrote:
-> "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> >      @@ -19,16 +19,16 @@
-> >             #   (use "git add <file>..." to update what will be committed)
-> >             #   (use "git checkout -- <file>..." to discard changes in working directory)
-> >             #
-> >      -      #   modified:   ../builtin/commit.c
-> >      +      #   modified:   /builtin/commit.c
-> 
-> Really?
+"Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It's hard to know what this cryptic comment means.. :)
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index e48c1fd90a..868c0d7819 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -811,12 +811,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  	old_display_comment_prefix = s->display_comment_prefix;
+>  	s->display_comment_prefix = 1;
+>  
+> -	/*
+> -	 * Most hints are counter-productive when the commit has
+> -	 * already started.
+> -	 */
+> -	s->hints = 0;
+> -
 
-This was a recommended change:
-https://lore.kernel.org/git/20191218031338.203382-1-jonathantanmy@google.com
+Hmm.
 
-Since other changes were being made at the same time, I personally don't
-mind a little nit fix in the commit message.
+> @@ -837,6 +831,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		int saved_color_setting;
+>  		struct ident_split ci, ai;
+>  
+> +		/*
+> +		 * Most hints are counter-productive when displayed in
+> +		 * the commit message editor.
+> +		 */
+> +		s->hints = 0;
+> +
 
-Or, do you mean that "now it looks like the file is at the filesystem
-root, which is wrong"? It is indeed wrong now when it wasn't before. But
-I, for one, can't tell what you mean by just the one word.
+We no longer drop s->hints when we are not using editor and not
+including status (i.e. the "else" side) because these lines are
+moved inside "if".  As this change is not about that "no editor"
+side, I am not 100% convinced that this is a good change.
 
- - Emily
+> @@ -912,6 +912,12 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  		saved_color_setting = s->use_color;
+>  		s->use_color = 0;
+>  		committable = run_status(s->fp, index_file, prefix, 1, s);
+> +		if(!committable)
+
+Style: SP between "if" and "(".
+
+> +			/*
+> +			 Status is to be printed to stdout, so hints will be useful to the
+> +			 user. Reset s->hints to what the user configured
+> +			 */
+> +			s->hints = advice_status_hints;
+
+The "if" side has been changed to flip s->hints to the configured
+advice hints value when !committable here.  The "else" side
+(i.e. when we are not using editor and not including status) does
+not do anything to s->hints after finding out if committable after
+this change.  Because "s->hints = 0" was moved to "if" with this
+patch, the "else" side no longer drops s->hints at all.
+
+So the final run_status() called when the attempt to commit is
+rejected will feed s->hints that is not cleared with this change.
+
+Is that intended?  Is the updated behaviour checked with a test?
+
+>  		s->use_color = saved_color_setting;
+>  		string_list_clear(&s->change, 1);
+>  	} else {
+
+This fix was about "we do not want to unconditionally drop the
+advice messages when we reject the attempt to commit and show the
+output like 'git status'", wasn't it?  The earlier single-liner fix
+in v1 that flips s->hints just before calling run_status() before
+rejecting the attempt to commit was a lot easier to reason about, as
+the fix was very focused and to the point.  Why are we seeing this
+many (seemingly unrelated) changes?
+
+Puzzled...
