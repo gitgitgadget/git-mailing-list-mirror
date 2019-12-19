@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2408DC43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C53BC2D0D3
 	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DFE6E20716
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4CBD224676
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQLfACDl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/Fq5HJ8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727106AbfLSSCV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 13:02:21 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37715 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727063AbfLSSCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 13:02:17 -0500
-Received: by mail-ed1-f68.google.com with SMTP id cy15so5773767edb.4
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:16 -0800 (PST)
+        id S1727066AbfLSSCQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 13:02:16 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:42937 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727031AbfLSSCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 13:02:14 -0500
+Received: by mail-ed1-f50.google.com with SMTP id e10so5764025edv.9
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=JHe5rzpOEMU0/87uRBXXHTuXYQ22pY8Cjl+sULLeKGg=;
-        b=EQLfACDl42hixg2GsR2lWnQ5P8O3aKqoBy7NQ7D/OtxcTjfpZz24rBrczKeXXZ149q
-         tf2GWXZ7grfjEv75WQeJfKkWALLUTB658dzFd2TA7uacI74Y/Pk0bm6/b3VxCQQ1otZC
-         uA3vTsA749riV3gW0O5mBM/HiinkjFlBlR4ihZjWVfnCsdxdf9s9R0XyN1ZXdYec7cjJ
-         tjbwfPU4O6TYsGPCjHH0nuiAq6/s+IQurxgEI4MhLEZKPNV5VY/7xOdfSaiB3aP5VcAi
-         1YNGXm81oDTnOti3xTAWmvjRCEfLSeuYoUyDndZw+QZs+K6G8F+tlNXuSIRh6ypoLot/
-         7GLw==
+        bh=Hebc/sJkecnZEkxOEWO9T5cMHBN6Q7V6uzSoDRnmRyA=;
+        b=N/Fq5HJ87hFERXYLPxT97baVNLwqxOiyiaMT0SNpYnX11j7YC0NpFgQ23v2ngdwGEH
+         qeN5KzAJX2gkQMSA3leOy7/HVakSez73j4t3YWeYzSV97u0kKA9EccdbYsnroH6UEjYY
+         P6avljPW/7AcOwO+uW7hpHbb9dT/ZXpX0PDJXbqcRhiBXqKeUZ5gNAtCNMiOQ/hp5dkA
+         GSyz/m7qnl3GRMOiTwCtbIPn3oSfmkZJAPN74fO8TbBx669BRl84TwSpXVvUtOn1JNQU
+         HG58uc+GzEuCjbjZmBz13+aVDwL09iHPIz51b9l6HRMEeTmBqwqv3T2b44GlYEq3jdgd
+         lxUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JHe5rzpOEMU0/87uRBXXHTuXYQ22pY8Cjl+sULLeKGg=;
-        b=L1hnwiNZBHKmfab2hld52Z6aSHWOEPJGswYMpwB11Yo3rO3QKjk6+k0mZ4UcdzPsUO
-         6tgqtYLLXtgbCZi9EhbI1NR06Fjz4kSwQgN/BNXssqWkHWF776V/zsa3rbDrFLr9lrGF
-         JcgbOqDd/yeFG7dmqEhidpCG8qXQq4oaIg+bzOUrRtgWAHUKxZ0M15FJ39HFXsS6awCy
-         PKgwhSVgTvehVrRnQOauklKmJQFPzycWxrje9Xbi2tA/44o0O7/8SYmFnqvK2h4ggDPL
-         pvS7j9hc+LgJiVFYyCL+Dny8dfIagG6dhDA9hS35tbDCe+A5ujDVRbkIGLc40lj5XSPe
-         Vj3Q==
-X-Gm-Message-State: APjAAAW7eQwSweuA86y/J0eC0Okgdb+zRwvrsEwluGnNxCgNRIUjcElO
-        qkUWpAw9v4zZ22JiHReNdtfNK3Zc
-X-Google-Smtp-Source: APXvYqxJkPegQ7a4YY6ba2nsSkIPgfGpdmq8yji68HazE3AjVimPRVQ18RlJ4mlyItk5yrOMXEy5yg==
-X-Received: by 2002:aa7:d412:: with SMTP id z18mr10591133edq.6.1576778535445;
-        Thu, 19 Dec 2019 10:02:15 -0800 (PST)
+        bh=Hebc/sJkecnZEkxOEWO9T5cMHBN6Q7V6uzSoDRnmRyA=;
+        b=IvL3h//Oo9847UfSg6HpqGdVgAxieRrohDgC+8qmjWfeMxs4gzVRM52faZrmAUQoz8
+         jrfRUqQYtGUREAC+qGM9dcMnb86NQNclfkL/YbTRrDV/UI3m/u9s3afuBnQSXno34Bdp
+         eL/uWsQl4f+1qCzO68bMx9f69ldZCEniboRS25B6/g1kHKXa8A4TyjpRH3Ek/QOyV3qR
+         u1J7aW5PNvHEe0InzRxsDTHUJg28dxLuzM8Nc11kLKjVNfSKfW+9a9G0udVlodBIMjRE
+         Re6n7kuIF1/x869bJVCuu/peBWUbOzOuMlz4pkm/e225H212YBvY+gIuRVYjStIgeL/b
+         d9cg==
+X-Gm-Message-State: APjAAAWZntQUh+18IGSr0fsgIu/p5/p4o1l9KD0dK+Jvc+HgaI2yWbVh
+        LbrBJnwBgzrm/sUF282gFfGYhkTp
+X-Google-Smtp-Source: APXvYqyloMAhcmC5QVVxisSUbvuNYAzq47kV29J9LJu3fXwUcRx68gmbmx71yPqAdZbxcvWQRNmKpA==
+X-Received: by 2002:a50:f012:: with SMTP id r18mr6816814edl.97.1576778532757;
+        Thu, 19 Dec 2019 10:02:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o88sm487561eda.41.2019.12.19.10.02.14
+        by smtp.gmail.com with ESMTPSA id w10sm559491eds.69.2019.12.19.10.02.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 10:02:15 -0800 (PST)
-Message-Id: <7324e091ba7f48e286e6c35c7b7c40490e5c85d1.1576778515.git.gitgitgadget@gmail.com>
+        Thu, 19 Dec 2019 10:02:12 -0800 (PST)
+Message-Id: <7989f0c5cf813010d8034e932ee78959c7b39c95.1576778515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 References: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
         <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Dec 2019 18:01:55 +0000
-Subject: [PATCH v3 18/18] checkout, restore: support the --pathspec-from-file
- option
+Date:   Thu, 19 Dec 2019 18:01:52 +0000
+Subject: [PATCH v3 15/18] parse_branchname_arg(): update code comments
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,384 +82,155 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Decisions taken for simplicity:
-1) For now, `--pathspec-from-file` is declared incompatible with
-   `--patch`, even when <file> is not `stdin`. Such use case it not
-   really expected.
-2) It is not allowed to pass pathspec in both args and file.
+These parts repeat git documentation:
+    ... if <something> is A...B <...>
+    ... remote named in checkout.defaultRemote ...
 
-`you must specify path(s) to restore` block was moved down to be able to
-test for `pathspec.nr` instead, because testing for `argc` is no longer
-correct.
+Some parts repeat the code below. With next patch, code will be easier
+to understand, so this is no longer needed.
 
-`git switch` does not support the new options because it doesn't expect
-`<pathspec>` arguments.
+This is a separate patch to reduce the amount of diffs in next patch.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-checkout.txt    | 15 +++++
- Documentation/git-restore.txt     | 14 +++++
- builtin/checkout.c                | 33 +++++++++--
- t/t2026-checkout-pathspec-file.sh | 90 ++++++++++++++++++++++++++++++
- t/t2072-restore-pathspec-file.sh  | 91 +++++++++++++++++++++++++++++++
- t/t9902-completion.sh             |  2 +
- 6 files changed, 240 insertions(+), 5 deletions(-)
- create mode 100755 t/t2026-checkout-pathspec-file.sh
- create mode 100755 t/t2072-restore-pathspec-file.sh
+ builtin/checkout.c | 86 +++++++++++-----------------------------------
+ 1 file changed, 21 insertions(+), 65 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 93124f3ad9..ffe3c1bff2 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 'git checkout' [-q] [-f] [-m] [--detach] <commit>
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]
- 'git checkout' (-p|--patch) [<tree-ish>] [--] [<pathspec>...]
- 
- DESCRIPTION
-@@ -79,6 +80,7 @@ be used to detach `HEAD` at the tip of the branch (`git checkout
- Omitting `<branch>` detaches `HEAD` at the tip of the current branch.
- 
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <pathspec>...::
-+'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] --pathspec-from-file=<file> [--pathspec-file-nul]::
- 
- 	Overwrite the contents of the files that match the pathspec.
- 	When the `<tree-ish>` (most often a commit) is not given, 
-@@ -306,6 +308,19 @@ Note that this option uses the no overlay mode by default (see also
- 	working tree, but not in `<tree-ish>` are removed, to make them
- 	match `<tree-ish>` exactly.
- 
-+--pathspec-from-file=<file>::
-+	Pathspec is passed in `<file>` instead of commandline args. If
-+	`<file>` is exactly `-` then standard input is used. Pathspec
-+	elements are separated by LF or CR/LF. Pathspec elements can be
-+	quoted as explained for the configuration variable `core.quotePath`
-+	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
-+	global `--literal-pathspecs`.
-+
-+--pathspec-file-nul::
-+	Only meaningful with `--pathspec-from-file`. Pathspec elements are
-+	separated with NUL character and all other characters are taken
-+	literally (including newlines and quotes).
-+
- <branch>::
- 	Branch to checkout; if it refers to a branch (i.e., a name that,
- 	when prepended with "refs/heads/", is a valid ref), then that
-diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
-index d7bf016bba..5bf60d4943 100644
---- a/Documentation/git-restore.txt
-+++ b/Documentation/git-restore.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
-+'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] --pathspec-from-file=<file> [--pathspec-file-nul]
- 'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
- 
- DESCRIPTION
-@@ -113,6 +114,19 @@ in linkgit:git-checkout[1] for details.
- 	appear in the `--source` tree are removed, to make them match
- 	`<tree>` exactly. The default is no-overlay mode.
- 
-+--pathspec-from-file=<file>::
-+	Pathspec is passed in `<file>` instead of commandline args. If
-+	`<file>` is exactly `-` then standard input is used. Pathspec
-+	elements are separated by LF or CR/LF. Pathspec elements can be
-+	quoted as explained for the configuration variable `core.quotePath`
-+	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
-+	global `--literal-pathspecs`.
-+
-+--pathspec-file-nul::
-+	Only meaningful with `--pathspec-from-file`. Pathspec elements are
-+	separated with NUL character and all other characters are taken
-+	literally (including newlines and quotes).
-+
- \--::
- 	Do not interpret any more arguments as options.
- 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9a85a3e4dc..3eb4301a80 100644
+index 63f4bb4da6..95a8e08793 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -70,6 +70,8 @@ struct checkout_opts {
- 	int checkout_worktree;
- 	const char *ignore_unmerged_opt;
- 	int ignore_unmerged;
-+	int pathspec_file_nul;
-+	const char *pathspec_from_file;
+@@ -1158,45 +1158,21 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 	int i;
  
- 	const char *new_branch;
- 	const char *new_branch_force;
-@@ -1202,7 +1204,7 @@ static int parse_branchname_arg(int argc, const char **argv,
- 		 * Absence of '--' leaves <pathspec>/<commit> ambiguity.
- 		 * Try to resolve it with additional knowledge about pathspec args.
- 		 */
--		arg0_cant_be_pathspec = !opts->accept_pathspec;
-+		arg0_cant_be_pathspec = !opts->accept_pathspec || opts->pathspec_from_file;
- 	} else if (dash_dash_pos == 0) {
- 		/* 'git checkout/switch/restore -- [...]' */
- 		return 1;  /* Eat '--' */
-@@ -1476,6 +1478,8 @@ static struct option *add_checkout_path_options(struct checkout_opts *opts,
- 		OPT_BOOL('p', "patch", &opts->patch_mode, N_("select hunks interactively")),
- 		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts->ignore_skipworktree,
- 			 N_("do not limit pathspecs to sparse entries only")),
-+		OPT_PATHSPEC_FROM_FILE(&opts->pathspec_from_file),
-+		OPT_PATHSPEC_FILE_NUL(&opts->pathspec_file_nul),
- 		OPT_END()
- 	};
- 	struct option *newopts = parse_options_concat(prevopts, options);
-@@ -1612,10 +1616,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			die(_("reference is not a tree: %s"), opts->from_treeish);
+ 	/*
+-	 * case 1: git checkout <ref> -- [<paths>]
+-	 *
+-	 *   <ref> must be a valid tree, everything after the '--' must be
+-	 *   a path.
+-	 *
+-	 * case 2: git checkout -- [<paths>]
+-	 *
+-	 *   everything after the '--' must be paths.
+-	 *
+-	 * case 3: git checkout <something> [--]
+-	 *
+-	 *   (a) If <something> is a commit, that is to
+-	 *       switch to the branch or detach HEAD at it.  As a special case,
+-	 *       if <something> is A...B (missing A or B means HEAD but you can
+-	 *       omit at most one side), and if there is a unique merge base
+-	 *       between A and B, A...B names that merge base.
+-	 *
+-	 *   (b) If <something> is _not_ a commit, either "--" is present
+-	 *       or <something> is not a path, no -t or -b was given, and
+-	 *       and there is a tracking branch whose name is <something>
+-	 *       in one and only one remote (or if the branch exists on the
+-	 *       remote named in checkout.defaultRemote), then this is a
+-	 *       short-hand to fork local <something> from that
+-	 *       remote-tracking branch.
+-	 *
+-	 *   (c) Otherwise, if "--" is present, treat it like case (1).
+-	 *
+-	 *   (d) Otherwise :
+-	 *       - if it's a reference, treat it like case (1)
+-	 *       - else if it's a path, treat it like case (2)
+-	 *       - else: fail.
+-	 *
+-	 * case 4: git checkout <something> <paths>
+-	 *
+-	 *   The first argument must not be ambiguous.
+-	 *   - If it's *only* a reference, treat it like case (1).
+-	 *   - If it's only a path, treat it like case (2).
+-	 *   - else: fail.
+-	 *
++	 * Resolve ambiguity where argv[0] may be <pathspec> or <commit>.
++	 * High-level approach is:
++	 * 1) Use various things to reduce ambiguity, examples:
++	 *    * '--' is present
++	 *    * command doesn't accept <pathspec>
++	 *    * additional options like '-b' were given
++	 * 2) If ambiguous and matches both existing <commit> and existing
++	 *    file, complain. However, in 1-argument 'git checkout <arg>'
++	 *    treat as <commit> to avoid annoying users.
++	 * 3) Otherwise, if it matches some existing <commit>, treat as
++	 *    <commit>.
++	 * 4) Otherwise, if it matches a remote branch, and it's considered
++	 *    reasonable to DWIM to create a local branch from remote branch,
++	 *    do that and proceed with (2)(3).
++	 * 5) Otherwise, let caller proceed with <pathspec> interpretation.
+ 	 */
+ 	if (!argc)
+ 		return 0;
+@@ -1218,9 +1194,9 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 
+ 	if (opts->accept_pathspec) {
+ 		if (dash_dash_pos == 0)
+-			return 1; /* case (2) */
++			return 1;
+ 		else if (dash_dash_pos == 1)
+-			arg0_cant_be_pathspec = 1; /* case (3) or (1) */
++			arg0_cant_be_pathspec = 1;
+ 		else if (dash_dash_pos >= 2)
+ 			die(_("only one reference expected, %d given."), dash_dash_pos);
  	}
+@@ -1231,14 +1207,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		arg = "@{-1}";
  
--	if (opts->accept_pathspec && !opts->empty_pathspec_ok && !argc &&
--	    !opts->patch_mode)	/* patch mode is special */
--		die(_("you must specify path(s) to restore"));
--
- 	if (argc) {
- 		parse_pathspec(&opts->pathspec, 0,
- 			       opts->patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
-@@ -1635,10 +1635,33 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		if (opts->force_detach)
- 			die(_("git checkout: --detach does not take a path argument '%s'"),
- 			    argv[0]);
-+	}
-+
-+	if (opts->pathspec_from_file) {
-+		if (opts->pathspec.nr)
-+			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-+
-+		if (opts->force_detach)
-+			die(_("--pathspec-from-file is incompatible with --detach"));
+ 	if (get_oid_mb(arg, rev)) {
+-		/*
+-		 * Either case (3) or (4), with <something> not being
+-		 * a commit, or an attempt to use case (1) with an
+-		 * invalid ref.
+-		 *
+-		 * It's likely an error, but we need to find out if
+-		 * we should auto-create the branch, case (3).(b).
+-		 */
+ 		int recover_with_dwim = dwim_new_local_branch_ok;
  
-+		if (opts->patch_mode)
-+			die(_("--pathspec-from-file is incompatible with --patch"));
-+
-+		parse_pathspec_file(&opts->pathspec, 0,
-+				    0,
-+				    prefix, opts->pathspec_from_file, opts->pathspec_file_nul);
-+	} else if (opts->pathspec_file_nul) {
-+		die(_("--pathspec-file-nul requires --pathspec-from-file"));
-+	}
-+
-+	if (opts->pathspec.nr) {
- 		if (1 < !!opts->writeout_stage + !!opts->force + !!opts->merge)
- 			die(_("git checkout: --ours/--theirs, --force and --merge are incompatible when\n"
- 			      "checking out of the index."));
-+	} else {
-+		if (opts->accept_pathspec && !opts->empty_pathspec_ok &&
-+		    !opts->patch_mode)	/* patch mode is special */
-+			die(_("you must specify path(s) to restore"));
- 	}
+ 		int could_be_checkout_paths = !arg0_cant_be_pathspec &&
+@@ -1247,10 +1215,6 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 		if (!arg0_cant_be_pathspec && !no_wildcard(arg))
+ 			recover_with_dwim = 0;
  
- 	if (opts->new_branch) {
-diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
-new file mode 100755
-index 0000000000..eb84d65546
---- /dev/null
-+++ b/t/t2026-checkout-pathspec-file.sh
-@@ -0,0 +1,90 @@
-+#!/bin/sh
-+
-+test_description='checkout --pathspec-from-file'
-+
-+. ./test-lib.sh
-+
-+test_tick
-+
-+test_expect_success setup '
-+	test_commit file0 &&
-+
-+	echo 1 >fileA.t &&
-+	echo 1 >fileB.t &&
-+	echo 1 >fileC.t &&
-+	echo 1 >fileD.t &&
-+	git add fileA.t fileB.t fileC.t fileD.t &&
-+	git commit -m "files 1" &&
-+
-+	echo 2 >fileA.t &&
-+	echo 2 >fileB.t &&
-+	echo 2 >fileC.t &&
-+	echo 2 >fileD.t &&
-+	git add fileA.t fileB.t fileC.t fileD.t &&
-+	git commit -m "files 2" &&
-+
-+	git tag checkpoint
-+'
-+
-+restore_checkpoint () {
-+	git reset --hard checkpoint
-+}
-+
-+verify_expect () {
-+	git status --porcelain --untracked-files=no -- fileA.t fileB.t fileC.t fileD.t >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'simplest' '
-+	restore_checkpoint &&
-+
-+	echo fileA.t | git checkout --pathspec-from-file=- HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	M  fileA.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success '--pathspec-file-nul' '
-+	restore_checkpoint &&
-+
-+	printf "fileA.t\0fileB.t\0" | git checkout --pathspec-from-file=- --pathspec-file-nul HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	M  fileA.t
-+	M  fileB.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success 'only touches what was listed' '
-+	restore_checkpoint &&
-+
-+	printf "fileB.t\nfileC.t\n" | git checkout --pathspec-from-file=- HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	M  fileB.t
-+	M  fileC.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+
-+	test_must_fail git checkout --pathspec-from-file=- --detach <list 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --detach" err &&
-+
-+	test_must_fail git checkout --pathspec-from-file=- --patch <list 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+
-+	test_must_fail git checkout --pathspec-from-file=- -- fileA.t <list 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git checkout --pathspec-file-nul 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err
-+'
-+
-+test_done
-diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
-new file mode 100755
-index 0000000000..bce617abfb
---- /dev/null
-+++ b/t/t2072-restore-pathspec-file.sh
-@@ -0,0 +1,91 @@
-+#!/bin/sh
-+
-+test_description='restore --pathspec-from-file'
-+
-+. ./test-lib.sh
-+
-+test_tick
-+
-+test_expect_success setup '
-+	test_commit file0 &&
-+
-+	echo 1 >fileA.t &&
-+	echo 1 >fileB.t &&
-+	echo 1 >fileC.t &&
-+	echo 1 >fileD.t &&
-+	git add fileA.t fileB.t fileC.t fileD.t &&
-+	git commit -m "files 1" &&
-+
-+	echo 2 >fileA.t &&
-+	echo 2 >fileB.t &&
-+	echo 2 >fileC.t &&
-+	echo 2 >fileD.t &&
-+	git add fileA.t fileB.t fileC.t fileD.t &&
-+	git commit -m "files 2" &&
-+
-+	git tag checkpoint
-+'
-+
-+restore_checkpoint () {
-+	git reset --hard checkpoint
-+}
-+
-+verify_expect () {
-+	git status --porcelain --untracked-files=no -- fileA.t fileB.t fileC.t fileD.t >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'simplest' '
-+	restore_checkpoint &&
-+
-+	echo fileA.t | git restore --pathspec-from-file=- --source=HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	 M fileA.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success '--pathspec-file-nul' '
-+	restore_checkpoint &&
-+
-+	printf "fileA.t\0fileB.t\0" | git restore --pathspec-from-file=- --pathspec-file-nul --source=HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	 M fileA.t
-+	 M fileB.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success 'only touches what was listed' '
-+	restore_checkpoint &&
-+
-+	printf "fileB.t\nfileC.t\n" | git restore --pathspec-from-file=- --source=HEAD^1 &&
-+
-+	cat >expect <<-\EOF &&
-+	 M fileB.t
-+	 M fileC.t
-+	EOF
-+	verify_expect
-+'
-+
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+	>empty_list &&
-+
-+	test_must_fail git restore --pathspec-from-file=- --patch --source=HEAD^1 <list 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+
-+	test_must_fail git restore --pathspec-from-file=- --source=HEAD^1 -- fileA.t <list 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git restore --pathspec-file-nul --source=HEAD^1 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	test_must_fail git restore --pathspec-from-file=- --source=HEAD^1 <empty_list 2>err &&
-+	test_i18ngrep -e "you must specify path(s) to restore" err
-+'
-+
-+test_done
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index ec3eccfd3d..93877ba9cd 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1438,6 +1438,8 @@ test_expect_success 'double dash "git checkout"' '
- 	--no-guess Z
- 	--no-... Z
- 	--overlay Z
-+	--pathspec-file-nul Z
-+	--pathspec-from-file=Z
- 	EOF
- '
+-		/*
+-		 * Accept "git checkout foo", "git checkout foo --"
+-		 * and "git switch foo" as candidates for dwim.
+-		 */
+ 		if (!(argc == 1 && dash_dash_pos == -1) &&
+ 		    !(argc == 2 && dash_dash_pos == 1) &&
+ 		    opts->accept_pathspec)
+@@ -1262,7 +1226,7 @@ static int parse_branchname_arg(int argc, const char **argv,
+ 			if (remote) {
+ 				*new_branch = arg;
+ 				arg = remote;
+-				/* DWIMmed to create local branch, case (3).(b) */
++				/* DWIMmed to create local branch */
+ 			} else {
+ 				recover_with_dwim = 0;
+ 			}
+@@ -1277,19 +1241,11 @@ static int parse_branchname_arg(int argc, const char **argv,
  
+ 	setup_new_branch_info_and_source_tree(new_branch_info, opts, rev, arg);
+ 
+-	if (!opts->source_tree)                   /* case (1): want a tree */
++	if (!opts->source_tree)
+ 		die(_("reference is not a tree: %s"), arg);
+ 
+-	if (!arg0_cant_be_pathspec) {	/* case (3).(d) -> (1) */
+-		/*
+-		 * Do not complain the most common case
+-		 *	git checkout branch
+-		 * even if there happen to be a file called 'branch';
+-		 * it would be extremely annoying.
+-		 */
+-		if (argc > 1)
+-			verify_non_filename(opts->prefix, arg);
+-	}
++	if (!arg0_cant_be_pathspec && argc > 1)
++		verify_non_filename(opts->prefix, arg);
+ 
+ 	return (opts->accept_pathspec && dash_dash_pos == 1) ? 2 : 1;
+ }
 -- 
 gitgitgadget
+
