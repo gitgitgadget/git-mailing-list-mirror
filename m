@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC4D0C2D0C1
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0549EC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE23320716
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CDACD20716
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 18:02:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LwhcxJ2s"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WME5F0LI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727039AbfLSSCO (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727049AbfLSSCO (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 19 Dec 2019 13:02:14 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45194 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727011AbfLSSCK (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:33306 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726996AbfLSSCK (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 19 Dec 2019 13:02:10 -0500
-Received: by mail-ed1-f65.google.com with SMTP id v28so5747335edw.12
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:09 -0800 (PST)
+Received: by mail-ed1-f66.google.com with SMTP id r21so5784629edq.0
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 10:02:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
-        b=LwhcxJ2sVe3+/SOpzPilFdqkRlfjx1KKJCjCGkveoRw94iwOCt1tJkuTmaSN1jCLmH
-         n8GMNqEawUBA0ixoRenUdxtpQNm2Ga9qflJAj9sKqLhEKGbHu0r4GGydc9bI4eW2Aobl
-         cf5C6R1lUuzc/BxEFLhQ9owHSWrYnWqOkwAHY/35/xECE3DizkWbSH4c0zXxTtrGhAMa
-         Rk+lE3Kr9mKS1m5JzlIUXsirRgXIe9qG9VRvVZj/J8HTb8eKbDmf9dp6yVUJOf9Pf5gf
-         +JptwQmoC22qfWIasZyzP97h3m9VYKttyMJCt4jOVDTKOG22nuPmYEwyUuTjTplwO1bf
-         ub9Q==
+        bh=G7opqmJudGICA/Y3BZzKEcINzC9/yKeSSKBMoBEqXVI=;
+        b=WME5F0LISPWmbJgyrQsHtOYy6CEzRT6KHEZWrg/89sp2ptbKPl8xdW9CXmbuQiU5yS
+         9zZilTX3g24qX2mwTw+TEAvmgHmiLOReaVQlWhTyRM2lsMQmvkOuaEAiCdos159+EyUt
+         Qj+05w6Ts9UvUFW9UsG6pl9NwutzAvgIQds5nZrQm60xrrICC0MtH+q5cqyFzfwJSd0v
+         Yq33L0jui2x2ntAQ3XGB3A/35gRhYA10ipn4XfWydV6TKu1j+47GLtIiScC+ROxkF46K
+         mUQ33/J6U9FtkoxyIs1GehJDedOQ8doqUI20iE8q1fyGbgCWIMaVGYdWd/5EOok1HfbH
+         i84w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2pdu4w9L5gn7kiCH/6G8ZLbD2+biJruLwAPyx7b5tiA=;
-        b=cZoW2miIJWvv8ZbzkowSD/aYSjLk1ODHqpbDDtpdNHfy6FJylolYrSR4odWc2Bk1td
-         Gouz9bNWzjacnJfZAIOWqKBCXHdOkFvaM/RWSmQ0CJXGHqk3rBk/vtVHGdf9mVQ+rdNw
-         RIWNCW9EWFOikAZj4/3XIyEVtQ2O46l2i+AuDUDEnSmKCtI+WEm3YYorOr0ffSXw1HeD
-         9C3eK75a2dAFvSV7KLvmhbhx1y1voJ8Xr2gifZ6YQclEHKqvpNdx2JZiBERfGbrXXubz
-         ozPYmQ2I7EGUpwU1nsRcktPCnjdPX3UKQJ3W5s3Fi7ro57ZN0vDomaeQy/z+xMTrse9A
-         WSMw==
-X-Gm-Message-State: APjAAAUKG1WTBheX1+x5U0JEftLIligBH1998TPt9fLy7q55uKnqgPq1
-        zEj7tZgOPArM+Xpurc7X1/rakjl9
-X-Google-Smtp-Source: APXvYqz47PYqXFpGU65g/7zNRPwo3N5920BrzO6ymh2t3OvlVYpa23wjjiYNa0lg5gywPjYgkJ2Okw==
-X-Received: by 2002:a50:d493:: with SMTP id s19mr10695452edi.77.1576778528859;
-        Thu, 19 Dec 2019 10:02:08 -0800 (PST)
+        bh=G7opqmJudGICA/Y3BZzKEcINzC9/yKeSSKBMoBEqXVI=;
+        b=DbVG6+ijj4b9fLcxDvOv6pklIWy4pZ0o/pdCd8SOx6tW9FmJhoD3i2TNqrgbDaBFl7
+         KKnP6wUUngTswge8u2iRn2FayA6UgDlOHiS5oq0YQDUdf7tMkV7tSp3+hA+//8nPsDaZ
+         XKw5jtbOaDvDYtj+BljbMQE6b6RHUbMywoSPKuGTiW/Zih7ZZoEb2DGWnOWmNz3YB15P
+         UBS110nlA3cRwE7KR9DIneZGsaYu/tbjCMOCwhFr9iIDblp8b2Nvv0k8rH+caY3oYX65
+         xwgvqgn6t7z5mCZlxGq8Tdx4Ip4TjaQanGxktcrZGsplcwldgqB7PsXQ8fv/o8svGRDo
+         w4PQ==
+X-Gm-Message-State: APjAAAXuO+nlWbNdyQ3yYUhp96Ieac59JUExqxPOJXWJtGSqcGcqKOFk
+        eq8KmfEmRRH9gYbjpVSe+0dk5+Xl
+X-Google-Smtp-Source: APXvYqxtWKpHI3V3EKb+coQf0v7GT8FBpgzZoRjjgednILa7qE8SmLhhY3ypy8OVMHhCZ+orFrN7oQ==
+X-Received: by 2002:a05:6402:1437:: with SMTP id c23mr10848794edx.48.1576778527925;
+        Thu, 19 Dec 2019 10:02:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c2sm638276ejd.2.2019.12.19.10.02.08
+        by smtp.gmail.com with ESMTPSA id e20sm637615ejq.62.2019.12.19.10.02.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 10:02:08 -0800 (PST)
-Message-Id: <f53bb13e4328a74c37cf92df4a23364a427f2f27.1576778515.git.gitgitgadget@gmail.com>
+        Thu, 19 Dec 2019 10:02:07 -0800 (PST)
+Message-Id: <137b697327aaf09384c660e4671bd55635c147c1.1576778515.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 References: <pull.490.v2.git.1576511287.gitgitgadget@gmail.com>
         <pull.490.v3.git.1576778515.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 19 Dec 2019 18:01:48 +0000
-Subject: [PATCH v3 11/18] parse_branchname_arg(): extract part as new function
+Date:   Thu, 19 Dec 2019 18:01:47 +0000
+Subject: [PATCH v3 10/18] doc: restore: synchronize <pathspec> description
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,57 +82,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-This is done for the next commit to avoid crazy 7x tab code padding.
+`git add` shows an example of good writing, follow it.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/checkout.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ Documentation/git-restore.txt | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 3634a3dac1..e1b9df1543 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1113,6 +1113,22 @@ static void setup_new_branch_info_and_source_tree(
- 	}
- }
+diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+index 1ab2e40ea9..d7bf016bba 100644
+--- a/Documentation/git-restore.txt
++++ b/Documentation/git-restore.txt
+@@ -8,8 +8,8 @@ git-restore - Restore working tree files
+ SYNOPSIS
+ --------
+ [verse]
+-'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] <pathspec>...
+-'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [<pathspec>...]
++'git restore' [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>...
++'git restore' (-p|--patch) [<options>] [--source=<tree>] [--staged] [--worktree] [--] [<pathspec>...]
  
-+static const char *parse_remote_branch(const char *arg,
-+				       struct object_id *rev,
-+				       int could_be_checkout_paths,
-+				       int *dwim_remotes_matched)
-+{
-+	const char *remote = unique_tracking_name(arg, rev, dwim_remotes_matched);
-+	
-+	if (remote && could_be_checkout_paths) {
-+		die(_("'%s' could be both a local file and a tracking branch.\n"
-+			"Please use -- (and optionally --no-guess) to disambiguate"),
-+		    arg);
-+	}
-+
-+	return remote;
-+}
-+
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new_branch_info,
-@@ -1223,13 +1239,10 @@ static int parse_branchname_arg(int argc, const char **argv,
- 			recover_with_dwim = 0;
+ DESCRIPTION
+ -----------
+@@ -113,6 +113,14 @@ in linkgit:git-checkout[1] for details.
+ 	appear in the `--source` tree are removed, to make them match
+ 	`<tree>` exactly. The default is no-overlay mode.
  
- 		if (recover_with_dwim) {
--			const char *remote = unique_tracking_name(arg, rev,
--								  dwim_remotes_matched);
-+			const char *remote = parse_remote_branch(arg, rev,
-+								 could_be_checkout_paths,
-+								 dwim_remotes_matched);
- 			if (remote) {
--				if (could_be_checkout_paths)
--					die(_("'%s' could be both a local file and a tracking branch.\n"
--					      "Please use -- (and optionally --no-guess) to disambiguate"),
--					    arg);
- 				*new_branch = arg;
- 				arg = remote;
- 				/* DWIMmed to create local branch, case (3).(b) */
++\--::
++	Do not interpret any more arguments as options.
++
++<pathspec>...::
++	Limits the paths affected by the operation.
+++
++For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
++
+ EXAMPLES
+ --------
+ 
 -- 
 gitgitgadget
 
