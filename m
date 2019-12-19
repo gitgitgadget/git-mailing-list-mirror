@@ -2,97 +2,115 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B7C9C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 643CDC43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 08D29222C2
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:01:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 34B5E24672
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xm73SzgD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nTU6T/tC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727152AbfLSWBP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 17:01:15 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52306 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726866AbfLSWBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:01:15 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A215D9891A;
-        Thu, 19 Dec 2019 17:01:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iEkzhV44fI8GbrzwxdOk7Vt5rHc=; b=Xm73Sz
-        gDA5EkyQ3nU5uPtqLr+gvRFOjmqT4wvG45UC+aJgdY5goKMIdnQntP6WeM3TErhn
-        1xT0JquKnOW6y0idCFt7LREB3OwYd99wkI0nkc1IwS940rF73Z2LIX8fkD86MJe0
-        6jmKAnqZMES7VmgT8QEgbLlQ1MVMtDSDbB9vQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ls3I9NOyAJo4SQ8KkJLhBhdEBAsok+7z
-        aR/LZJWwgIpE29Q1U6ogkT59p6diGXQaxJ8N+yeJ/w9m9E4qhAoFYahgYHmy1I/H
-        /f9WmUiqAoA4j5pawYD3jAaB5wVVlC8Tc3WK8vFpzy4fmTcFP6cPRGGayjFot0Lt
-        tQzYlgWx2Lw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9A31F98918;
-        Thu, 19 Dec 2019 17:01:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C678698915;
-        Thu, 19 Dec 2019 17:01:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ed Maste <emaste@freebsd.org>
-Cc:     Eric Wong <e@80x24.org>, git mailing list <git@vger.kernel.org>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH] sparse-checkout: improve OS ls compatibility
-References: <20191219015833.49314-1-emaste@FreeBSD.org>
-        <20191219024518.GA3411@dcvr>
-        <xmqqpngkb2ye.fsf@gitster-ct.c.googlers.com>
-        <CAPyFy2BubWbyq6tQmHYxquikn2+uHz+48VSfQ308BYiuE=SSWQ@mail.gmail.com>
-Date:   Thu, 19 Dec 2019 14:01:09 -0800
-In-Reply-To: <CAPyFy2BubWbyq6tQmHYxquikn2+uHz+48VSfQ308BYiuE=SSWQ@mail.gmail.com>
-        (Ed Maste's message of "Thu, 19 Dec 2019 15:56:39 -0500")
-Message-ID: <xmqqtv5w9dqy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727162AbfLSWVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 17:21:38 -0500
+Received: from mail-pf1-f171.google.com ([209.85.210.171]:42632 "EHLO
+        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbfLSWVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 17:21:37 -0500
+Received: by mail-pf1-f171.google.com with SMTP id 4so4068143pfz.9
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8gqVg+mKGwzsg9uBBepfi+0oVdFuohGoCSh4opBe2r0=;
+        b=nTU6T/tCzSDzBthI5jLnAppo7riyNFHaDFhUxJB3vyy4mSh951HEAZihPaQuC6pwgd
+         zew78JfwkYlYNY0zP0YOK8NqtQPUWej6f2jHAMt13R1PJQfwc8dAX53laKo9Qrwcy6u+
+         0G2yfC7nTf1wfjeWLfJ/YMq6XBBTHiEa/SqZPbAw2V2Kbs+TL05ECREPQiiSi+8BBp5L
+         PjEhmeWhpJGnX4NQa8dZheVB86eRtGjKFn4C27KoJTdXt1JSbnmo9w1H0xvcizdjSiFq
+         5HQ4dLS/8B6ro7nc+PnYfkEMyoXAlb4UY7V0nOzaEYybfMSQ08vQG9A23GYDBkWnI5uk
+         svtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8gqVg+mKGwzsg9uBBepfi+0oVdFuohGoCSh4opBe2r0=;
+        b=tj9Y6nxdzLG46/ZWR4X/U3YpDC52rM3BhTk5IKbuDp5gTkkhgy6qhcXiueh6OiDTtM
+         d1GxuPDUH+ic0imyCqV6JZDQIS0dnUq60NhKg7ln9I7J7kFisX831d/5vurrvZrt0hV1
+         hJcHIR47ATe9n8MfFyum28xVMKnLourGAAvr16iX5QeQ9RoZElIJVDsXHQHw7uiweaL8
+         mSUM4k8kRhuUQh5ANEYTNK4Q405Xrwxngh7K9T7BuzwoCQ2JyxmpWD/edevXf/aB1YhB
+         X6eXDvfCVfuMIl1lM4SVFMdBXYeuH9hdjWXl0m8dy2ehc5jXr2F47kZjpq0AUSq6XtCg
+         W1Cg==
+X-Gm-Message-State: APjAAAX80ejtZWCSMT5YKzfE86BwfpPsSGJsaNI+uPOSAQc0SVKoYSQP
+        lH/9AHA2ZFCVn6vkILLsKTjmMumH
+X-Google-Smtp-Source: APXvYqwFSsyFGCA/wFRQZ9GM830rqNxjEVKIGp+PdeFiLYpseeACoNpuQmZ/yTPpd9e6slg/p+db9Q==
+X-Received: by 2002:a63:554c:: with SMTP id f12mr11699922pgm.23.1576794096441;
+        Thu, 19 Dec 2019 14:21:36 -0800 (PST)
+Received: from dentonliu-ltm.internal.salesforce.com ([216.52.21.197])
+        by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Dec 2019 14:21:36 -0800 (PST)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 01/16] test-lib-functions: introduce test_non_git_might_fail()
+Date:   Thu, 19 Dec 2019 14:22:36 -0800
+Message-Id: <85cee927656cebed34bc93280d0b2d89e0caa570.1576794144.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.24.1.703.g2f499f1283
+In-Reply-To: <cover.1576794144.git.liu.denton@gmail.com>
+References: <cover.1576583819.git.liu.denton@gmail.com> <cover.1576794144.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1199C864-22AB-11EA-99B0-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ed Maste <emaste@freebsd.org> writes:
+In a future commit, we will be preventing the use of the
+test_must_fail()-family of functions (including test_might_fail()) on
+non-git comands. To prep for this, introduce the
+test_non_git_might_fail() function which is used to replace non-git
+invocations of test_might_fail().
 
->> Note that the helper function's name no longer reflects what it does
->> with such a change, so it needs to be renamed.  Together with style
->> fix, perhaps
->>
->>         ls_no_dot () {
->>                 (cd "$1" && printf "%s\n *)
->>         }
->>
->> is what we want,
->
-> I believe the tests should pass or be skipped when run as root, so I
-> think we should either require (something like) SANITY for these
-> tests, or make the change above. I'm happy with either option; I'll
-> send a v2 based on the approach above for consideration.
+The test_non_git_might_fail() function is a lightweight replacement,
+always masking the return status of the command and returning a
+non-error exit code. Unlike test_might_fail(), it does not check for
+abnormal exit conditions such as a segv. This is because we are not in
+the business of checking the sanity of the external environment and we
+can assume that it works properly.
 
-OK, after thinking about it a bit more, I think "Your ls is broken"
-was completely missing the point.  What we want in the callers of
-this helper is to list the contents of a directory, and "ls" is one
-possible (and easiest, if there were no "oops, sometimes -A is enabled
- implementation by default" complication) implementation.
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ t/test-lib-functions.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-And "ls_no_dot" is a misnomer from that point of view.  We are not
-even using "ls", so perhaps we should just call it "list_files" or
-something?
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 284c52d076..61d27f1ec6 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -891,6 +891,15 @@ test_expect_code () {
+ 	return 1
+ } 7>&2 2>&4
+ 
++# Similar to test_might_fail, but much simpler. This is intended for use
++# with non-git commands that we can assume will work sanely so we don't
++# need to check for conditions such as a segv.
++
++test_non_git_might_fail () {
++	"$@" 2>&7
++	return 0
++}
++
+ # test_cmp is a helper function to compare actual and expected output.
+ # You can use it like:
+ #
+-- 
+2.24.1.703.g2f499f1283
 
-Thanks.
