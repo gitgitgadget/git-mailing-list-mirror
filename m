@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC59EC43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A647C43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7C2BA24672
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3BD4624672
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V7jVQvgy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P7GXeVM1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfLSWVo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 17:21:44 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:50987 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727190AbfLSWVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:21:40 -0500
-Received: by mail-pj1-f66.google.com with SMTP id r67so3176301pjb.0
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:40 -0800 (PST)
+        id S1727218AbfLSWV4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 17:21:56 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44793 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727252AbfLSWVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 17:21:48 -0500
+Received: by mail-pg1-f195.google.com with SMTP id x7so3862843pgl.11
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ISkCmzf91CTIU8RodTdihc1hjhX0gWKk58ZbMkwYFMI=;
-        b=V7jVQvgyT4LDFZf8FMY5F743hpvP9tMz8cyi53ZY+v8KNgGk/cf0qfb1alwPeLUwEJ
-         plo/tajgPnhETZCqJEDnHsOGiJTLoa5+GaFum2LwwlgG+5j/X+eYQiDNTa9/Ho4sdu69
-         4BJ0gh5x0Cd2Y2IBq7wNd6zzZ+z1WwzK7YiEqW9edEKtc1hnFjPZYe+1blM5eZEeEIns
-         eOn9EcsZ6zwci1tLvNkcr+3cFUN264IfA8FAxKDxWfWbHwh3vcqf12H7z4NaFNFctMlA
-         To3pEv1RLGuF+D+8PPyuwy+snDqLCKYo0XHMsw5olaNMleFKWd7osSt7e2Dw8Gbfg69h
-         LrzA==
+        bh=3qlewRPUKbEN1Zgr/qeYy3s0HiHn2CrbEOGdInUgm+g=;
+        b=P7GXeVM1XtyDByWl/xt69wL27hJVBkbZKrW+b2C8lgKMKlwnYRomYuOcjjGltdkFFl
+         rzEYlECr6wy0+RC/sz138XAbdnnqNyEdLjjL+9Zoze8EB4c2y09Tbwl1y4vnxwl77Qm2
+         Vxyr4EN7N3N2YFoiWVvAzbiG9TcevCCPT4ZjIAkGuIxbTxS5DfUWFjDdiGF2FmgZ4bGc
+         GSM2v6ojdvWlKzAqglVKXpqq7iLh5qHJ8DlU9ec938eyx6ZxFvzQ+ebYGXb22yk/D1WT
+         yAyWl61ko0QrGwFqy8UsKkIMTxcK6G3DNhNOz0Zar3ijmDUhEMs1AfqyuxxjTXdPkEXs
+         E2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ISkCmzf91CTIU8RodTdihc1hjhX0gWKk58ZbMkwYFMI=;
-        b=EHUl1RiP0D1dPEkMiR8bpjx4a/Bv6jnJs07abEjNlkS7AM4/V/xQdFVutlNw25L4jX
-         wKi82/nXF9f5ztONRFrDTcIGlNEQm9pEMqXoVTgYnEwhBQT+Wyb75ldDL3Q2hACsJGNa
-         /0QnRa5mz9o62j43y+3oAGJcbfScpFvlnw/+v5j7Q+Vw2QHwNgB6yuNOZlAtlto3H8Aw
-         Hph/ZmzYeJrDzkza/tN2eqnnbTYaGECOslPccT7UoREnGS2F4Bq6pYZTcmiWLpNRri4z
-         Y7OkNgBBtrSjw1mYIS99C/nuNRHznNJ5ypbpmaKHb2ax+krYGd5Ytcl2pH/acL+2CHxZ
-         clvQ==
-X-Gm-Message-State: APjAAAUlBhI5NE6uhEPHnSSATZJ9CqK9qEIM8mGKSGiFST+LUohIQ5ro
-        zopnBFLNISonYlG2POAh25kByhb5
-X-Google-Smtp-Source: APXvYqxTXDRTMOKA/iXeERsldYHhPSA6LpbdkmXcPN/NSvXGUUa4LjvHAeJ45NNKOFl2lPZlyjorLA==
-X-Received: by 2002:a17:902:8541:: with SMTP id d1mr11839245plo.57.1576794099718;
-        Thu, 19 Dec 2019 14:21:39 -0800 (PST)
+        bh=3qlewRPUKbEN1Zgr/qeYy3s0HiHn2CrbEOGdInUgm+g=;
+        b=nWRgM8JyfbuYV8jamGN4Dl1K98V9ZCoakrsbdKyvr7V5113h60v335ZaZb7Z8LYH2g
+         WB+S4aReO7WVaB3XdO6zB5xlxnBYsJIAuuOLXHnXuDuxTgv2m59fp/WqUW5/5rak5wi0
+         kDru0nlVY1bIbbPpwYxyXjZOV7qJpCVxsb6qzW91HI0/Ha5SmVR9kJK/SCbfegSgIoVJ
+         nh/CkYKyCU3jM8BtPOeqvsNcYiqzqTKnpdJRJW1K6J7dOozwJyLUqNNWcjLdZQFyEkL2
+         xrFL6t2UZ68f2doOaAZYa8HTXdelNEe/69dcYpfvr9ZMU9uCoYz2r6iOmX4VKNvab+uN
+         VNgQ==
+X-Gm-Message-State: APjAAAXysEaMVgrh+QaL1ADmgrm6r5bi+RCKfQnfi9hDxklb7RjiNR1T
+        m3Albg3Hj4E3Bqi7buR8viXwxNBd
+X-Google-Smtp-Source: APXvYqxIjSTwoGyE5FE3GS631hZZrd4Zq8NxkEr+tyfzldQDX5HecwPPSwKnW9uA8o5svyp/Do215A==
+X-Received: by 2002:a63:1322:: with SMTP id i34mr11659498pgl.163.1576794106183;
+        Thu, 19 Dec 2019 14:21:46 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com ([216.52.21.197])
-        by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.39
+        by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 14:21:39 -0800 (PST)
+        Thu, 19 Dec 2019 14:21:45 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 05/16] t0003: use test_must_be_empty()
-Date:   Thu, 19 Dec 2019 14:22:40 -0800
-Message-Id: <e06a06cff5206d963d24074bdac06d679540d483.1576794144.git.liu.denton@gmail.com>
+Subject: [PATCH v2 13/16] t1501: remove use of `test_might_fail cp`
+Date:   Thu, 19 Dec 2019 14:22:48 -0800
+Message-Id: <83e47748bc9c541c725f6c42c553b1a69fd717ac.1576794144.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576794144.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com> <cover.1576794144.git.liu.denton@gmail.com>
@@ -73,46 +73,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In several places, we used `test_line_count = 0` to check for an empty
-file. Although this is correct, it's overkill. Use test_must_be_empty()
-instead because it's more suited for this purpose.
+The test_must_fail() family of functions (including test_might_fail())
+should only be used on git commands. Replace test_might_fail() with
+test_non_git_might_fail().
+
+The `test_might_fail cp` line was introduced in 466e8d5d66 (t1501: fix
+test with split index, 2015-03-24). It is necessary because there might
+exist some index files in `repo.git/sharedindex.*` and, if they exist,
+we want to copy them over. However, if they don't exist, we don't want
+to error out because we expect that possibility. As a result, we want to
+keep the "might fail" semantics so we use test_non_git_might_fail().
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0003-attributes.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t1501-work-tree.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 3569bef75d..c30c736d3f 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -10,7 +10,7 @@ attr_check () {
- 	git $git_opts check-attr test -- "$path" >actual 2>err &&
- 	echo "$path: test: $expect" >expect &&
- 	test_cmp expect actual &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- }
- 
- attr_check_quote () {
-@@ -241,7 +241,7 @@ EOF
- 	git check-attr foo -- "a/b/f" >>actual 2>>err &&
- 	git check-attr foo -- "a/b/c/f" >>actual 2>>err &&
- 	test_cmp expect actual &&
--	test_line_count = 0 err
-+	test_must_be_empty err
+diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
+index 3498d3d55e..067301a5ab 100755
+--- a/t/t1501-work-tree.sh
++++ b/t/t1501-work-tree.sh
+@@ -350,7 +350,7 @@ test_expect_success 'Multi-worktree setup' '
+ 	mkdir work &&
+ 	mkdir -p repo.git/repos/foo &&
+ 	cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
+-	test_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
++	test_non_git_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
+ 	sane_unset GIT_DIR GIT_CONFIG GIT_WORK_TREE
  '
  
- test_expect_success '"**" with no slashes test' '
-@@ -262,7 +262,7 @@ EOF
- 	git check-attr foo -- "a/b/f" >>actual 2>>err &&
- 	git check-attr foo -- "a/b/c/f" >>actual 2>>err &&
- 	test_cmp expect actual &&
--	test_line_count = 0 err
-+	test_must_be_empty err
- '
- 
- test_expect_success 'using --git-dir and --work-tree' '
 -- 
 2.24.1.703.g2f499f1283
 
