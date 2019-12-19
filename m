@@ -2,98 +2,135 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 169B8C43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 20:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67870C43603
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:28:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E4EDF227BF
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 20:56:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2886324679
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 21:28:31 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njmnspSK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726948AbfLSU4w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 15:56:52 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:36080 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726880AbfLSU4v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 15:56:51 -0500
-Received: by mail-io1-f65.google.com with SMTP id r13so7214645ioa.3
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 12:56:51 -0800 (PST)
+        id S1727114AbfLSV2a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 16:28:30 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43132 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726963AbfLSV2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 16:28:30 -0500
+Received: by mail-ed1-f65.google.com with SMTP id dc19so6291691edb.10
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 13:28:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2q8KnlNrJTDqyUI5VnahSB9Fm2w6Elk41S3NsW95Em8=;
+        b=njmnspSKgeqARZ1MdZQA6WjeTn0YPKdMFbbEeWUltLCACXSV1Cu1vyt1N6D9ip7fcH
+         ntWsLQeL9peppG9YHa9rVtFDjn3kZHgJJ95Y4twd+D2h2nkfNdGHBvyk3cziISVcR1uk
+         6qMlkBGwnxuOPeDttYraFkUIeXAG4ipOQxGxeebdlXadGM7q1x6AuKX1Ab/seuafiYTt
+         vQrzHUMCmFDs5pnkeWVce9jmIHXtAz9mvqs28WDklG6Y+1UEG5wAadxRvWICBwyS/3aJ
+         gUMCqjRIo8Wh2MmpooV99jJ0YdIn+ivMLFVrYyxCx1eozberCx1kM2ph+TPTeqlKtmR9
+         gFjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5ZI5BlvitawXciakQyNmllcQikEGaN8RouJA7OOpCYg=;
-        b=bhAZ1QEVT8ONOLRSmXliTL2jej9fEyUV3ow4ixp9t7JydVULEr6/oQH48BQWClna/h
-         L+KfwEEkRmkMcbN52ZHtnX0XuPScdqF0zsRl98CLnt0BTeElwp8T6ofrNFV+MDi+4SZu
-         2VFmiee8pDpq/gPJ4yCV/7HeEhnzXGTJx7N+PVhIDqA6nAYYD3RGRa8HWfVFx7oax8fi
-         3ekNM5pA6aEZeZx7oY8uD0TYyn40K0aC0vOShf7INvzgQ2SgmsvYQmH1OMQ6X/8Vf41T
-         T7d0C6ViFRB08KAuIqFF6ugBbyyhujoeJQt1yPRzRKLTOcg8977xfzazcvbPilGgxmxP
-         Ov0A==
-X-Gm-Message-State: APjAAAV/fmoAqwlT32DGNM/FGfWbcyErAUO/muiZm72nWNciinWK5QIH
-        p/IlIKxG+qYGO7oektHizRcShjc3OUS50ffBNzA=
-X-Google-Smtp-Source: APXvYqyUqGEfOfuDwU7FYUneyBS4BNl08bFTh0xvW8+PhTaEZX4SeQktCa3DhK2jRsvYhNGH2TLwPzoiVUSXfdyFbBk=
-X-Received: by 2002:a5e:aa12:: with SMTP id s18mr7036871ioe.182.1576789011185;
- Thu, 19 Dec 2019 12:56:51 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2q8KnlNrJTDqyUI5VnahSB9Fm2w6Elk41S3NsW95Em8=;
+        b=SUQ43b06d57Q9k3PyrdUSdTKc7XMFJ5Lx+vFwLbkRDN8XB6K/KGlBeAnzDPxHQO6lf
+         AYnG7O/Sp5VFqsXAenMORFCNcf1TEd7VSIPogSnTrGH6q9P5XTd6pmIEiitem1lnyVaG
+         soonh5+fB+iLOGKO90JTL98TOtkHpn+XhhV/M8jn8um5MIL4hOUL9IFeDcdfpJCyBPXp
+         9JGQsU37pWp/tZcIoSgGuA8ustjxeegCV8ORZd7aQ+u/afTdAWFqHKAeIUFsxSKunAqR
+         2aEn4OeIdaEScwlEBQuch+B+ne3eF9jxLAbx1iPvwom6hPnN9Hbrza/9tEEd22nxInN2
+         62mw==
+X-Gm-Message-State: APjAAAUvLl/pDpomU9Xb25tnssRIWR+tt8hoIyeIAeNit/y+6ZxxMLUz
+        6KX4Plo0ew8t5z4YEZhLk+LDnrsH
+X-Google-Smtp-Source: APXvYqzDueR5M4WzRWuDfCjWoL9DqukcErt8cFJAIZ6OprUoTGrtpzWim6y3dohsBl8gEbQTSxYZ3w==
+X-Received: by 2002:a50:cbc3:: with SMTP id l3mr11773289edi.258.1576790908407;
+        Thu, 19 Dec 2019 13:28:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y21sm674328edu.70.2019.12.19.13.28.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Dec 2019 13:28:27 -0800 (PST)
+Message-Id: <pull.676.v5.git.git.1576790906.gitgitgadget@gmail.com>
+In-Reply-To: <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
+References: <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 19 Dec 2019 21:28:18 +0000
+Subject: [PATCH v5 0/8] Directory traversal bugs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20191219015833.49314-1-emaste@FreeBSD.org> <20191219024518.GA3411@dcvr>
- <xmqqpngkb2ye.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpngkb2ye.fsf@gitster-ct.c.googlers.com>
-From:   Ed Maste <emaste@freebsd.org>
-Date:   Thu, 19 Dec 2019 15:56:39 -0500
-Message-ID: <CAPyFy2BubWbyq6tQmHYxquikn2+uHz+48VSfQ308BYiuE=SSWQ@mail.gmail.com>
-Subject: Re: [PATCH] sparse-checkout: improve OS ls compatibility
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Eric Wong <e@80x24.org>, git mailing list <git@vger.kernel.org>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     blees@dcon.de, gitster@pobox.com, kyle@kyleam.com,
+        sxlijin@gmail.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 19 Dec 2019 at 13:11, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Hmph, my honest me is very tempted to say
->
->  (1) don't run your tests as 'root', as that would break many tests
->      with prerequisite SANITY
+This series documents multiple fill_directory() bugs, and fixes the one that
+is new to 2.24.0 coming from en/clean-nested-with-ignored-topic, the rest
+having been around in versions of git going back up to a decade. 
 
-It looks like this is just Cirrus-CI's default without explicit
-configuration or scripting to use an unprivileged user. Certainly
-running the build and test as root is generally not a good idea, but
-it is a purpose-built throwaway VM and so doesn't matter much. Anyhow,
-it certainly needs to be addressed to avoid skipping the SANITY tests.
+Changes since v4:
 
->  (2) fix your "ls" to behave
+ * added a comment with the rationale for allocating an extra len+1 bytes
+   for the dirent.
 
-Well, given that hidden dot files were ostensibly a bug and BSD ls has
-had this behaviour for over 40 years it's far too late to change. I
-can see the rationale for showing all files for root, even though I
-dislike the behaviour changing between privileged and unprivileged
-users.
+Elijah Newren (8):
+  t3011: demonstrate directory traversal failures
+  Revert "dir.c: make 'git-status --ignored' work within leading
+    directories"
+  dir: remove stray quote character in comment
+  dir: exit before wildcard fall-through if there is no wildcard
+  dir: break part of read_directory_recursive() out for reuse
+  dir: fix checks on common prefix directory
+  dir: synchronize treat_leading_path() and read_directory_recursive()
+  dir: consolidate similar code in treat_directory()
 
-> but if you want to list paths that match shell glob *, this would do
->
->         (cd "$1" && printf "%s\n *)
->
-> without any loop (other than the one printf gives us implicitly for
-> free), wouldn't it?
+ dir.c                                         | 187 ++++++++++++----
+ ...common-prefixes-and-directory-traversal.sh | 209 ++++++++++++++++++
+ t/t7061-wtstatus-ignore.sh                    |   9 +-
+ 3 files changed, 354 insertions(+), 51 deletions(-)
+ create mode 100755 t/t3011-common-prefixes-and-directory-traversal.sh
 
-Yes.
 
-> Note that the helper function's name no longer reflects what it does
-> with such a change, so it needs to be renamed.  Together with style
-> fix, perhaps
->
->         ls_no_dot () {
->                 (cd "$1" && printf "%s\n *)
->         }
->
-> is what we want,
+base-commit: da72936f544fec5a335e66432610e4cef4430991
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-676%2Fnewren%2Fls-files-bug-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-676/newren/ls-files-bug-v5
+Pull-Request: https://github.com/git/git/pull/676
 
-I believe the tests should pass or be skipped when run as root, so I
-think we should either require (something like) SANITY for these
-tests, or make the change above. I'm happy with either option; I'll
-send a v2 based on the approach above for consideration.
+Range-diff vs v4:
+
+ 1:  6d659b2302 = 1:  6d659b2302 t3011: demonstrate directory traversal failures
+ 2:  79f2b56174 = 2:  79f2b56174 Revert "dir.c: make 'git-status --ignored' work within leading directories"
+ 3:  d6f858cab1 = 3:  d6f858cab1 dir: remove stray quote character in comment
+ 4:  8d2d98eec3 = 4:  8d2d98eec3 dir: exit before wildcard fall-through if there is no wildcard
+ 5:  d2f5623bd7 = 5:  d2f5623bd7 dir: break part of read_directory_recursive() out for reuse
+ 6:  1f3978aa46 ! 6:  97e145489d dir: fix checks on common prefix directory
+     @@ -93,6 +93,16 @@
+       	if (!len)
+       		return 1;
+      +
+     ++	/*
+     ++	 * We need a manufactured dirent with sufficient space to store a
+     ++	 * leading directory component of path in its d_name.  Here, we
+     ++	 * assume that the dirent's d_name is either declared as
+     ++	 *    char d_name[BIG_ENOUGH]
+     ++	 * or that it is declared at the end of the struct as
+     ++	 *    char d_name[]
+     ++	 * For either case, padding with len+1 bytes at the end will ensure
+     ++	 * sufficient storage space.
+     ++	 */
+      +	de = xcalloc(1, sizeof(struct dirent)+len+1);
+      +	memset(&cdir, 0, sizeof(cdir));
+      +	cdir.de = de;
+ 7:  542c6e5792 = 7:  5275e6d7f0 dir: synchronize treat_leading_path() and read_directory_recursive()
+ 8:  31079dc1cf = 8:  e4768931d0 dir: consolidate similar code in treat_directory()
+
+-- 
+gitgitgadget
