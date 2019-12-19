@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E1CAC43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 15:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F39DCC2D0C0
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 15:09:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5174E218AC
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 15:09:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C8BDA206EC
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 15:09:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PSS/Gw6b"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lW5mz0Mn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726882AbfLSPJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726887AbfLSPJp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 10:09:45 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:36097 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726751AbfLSPJo (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 19 Dec 2019 10:09:44 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:35683 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726855AbfLSPJn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 10:09:43 -0500
-Received: by mail-ed1-f45.google.com with SMTP id f8so5204892edv.2
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 07:09:42 -0800 (PST)
+Received: by mail-ed1-f48.google.com with SMTP id j17so5199202edp.3
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 07:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XDtZGmI4Qf9UqtN7O7P8VR69iBRvDrbUTxutBCjNSxc=;
-        b=PSS/Gw6bYjREimcMOyaCaS9gZ8M+h1ggxLdzDnSyLvo1bQGRfeJrUkt2AHCyOtS+nO
-         1XiTj+j4dlN8StS8ES+HvluuA4u/futStCj3fQFqHeZZshfP6gtQA7Gaan9hqJpmL3n3
-         c82xqOzDT7HBKSKs3idvcIo+vPPS2Slv0utBulFLsqAsFb0wDFkXVN4ocmm+zu+Am8iN
-         I0Z47NEz6Gu3yBady4CRbSRKKS8nkYokMFsU3kXSYnNdoiMbGonkzXrb/l355bCkKu5a
-         DEgsAmseYGCVzkUegbaA5SAtejl6i6pgfMx8RgmxEyih6hNXbrxjckG4gcFGvprIHMmc
-         /FPA==
+        bh=Ds+1FMLpsWgxiLO82c8N3i31zzTWGCJpAyzgzqrvajo=;
+        b=lW5mz0Mn8PCWVsvRQ8F1uMzx+z9hZJ9GNk1FJlp5awIdYduNdfAAe9Hc0UmklAx849
+         aoJfcwUqnoUAuT+AIIM+Jgh51f9niFyqN4aKIyyuyE1DSKEiDAdRmiUTLxNQdwEK0E22
+         Jye4s+pHj5r6EPk8dyZUrSNxgimjXHcrA/UK1ugXg/YNGK04M8HiIrcB0YTeJVPxpi04
+         lJk32Kof5pANLd2ihXYa9RqgkBJxGJhCEmVBiF0QLuTFN2K6QCTiEtmuB29oa2YcQXp0
+         iZbTSsE86sI8YE8zU4Exm7GDx5POTFUg/8t+4h1U2h40GRP301FuQoOKVE6F+NOkyn33
+         4Duw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XDtZGmI4Qf9UqtN7O7P8VR69iBRvDrbUTxutBCjNSxc=;
-        b=FwtcbVK3jV7x9JgluN0owzujeQjyBdJ0zPBcwCa7HU8yxcP8vNt9y7wEZriHTRdjTo
-         E67qLpJT/rIMbEFlADBFBxMFDVb7o1lBiy3pV6U/9GrNUdm43/sOQd61NMsIZ5UVwGx3
-         zgflbtL+rX9hP82ugnUefgXwkraC+RO5OSdjz2vDutVJMF0Qq1FOARiC9ieALAC24dWg
-         IrrDhKT6Mo6plOuhscE2qbb07vHNBsQmtvYSoRJX/KoulxoOlFkKYZA4nph70oreiOhw
-         WpieBHcmg4gpa+87SvGQIONsbnw6mo2tYVL90Wyg5moUX20oVHxD9vu6Y6nQG1jDq7wy
-         /weA==
-X-Gm-Message-State: APjAAAWnMpElmeClcsFpcmkw3WSKB8mhW2VdfdANFb5TNmzsvotJhafi
-        GTKl8uHStNmFlJAZj/wynIA7LsME
-X-Google-Smtp-Source: APXvYqy8kV6pYEEMjReqW4EqPZ1KSsVq96qJK3PqXLzZpNLAbnfen5TTMP1h1RnObiCwBCCgcxLPQg==
-X-Received: by 2002:a50:d5c9:: with SMTP id g9mr9609194edj.131.1576768181391;
-        Thu, 19 Dec 2019 07:09:41 -0800 (PST)
+        bh=Ds+1FMLpsWgxiLO82c8N3i31zzTWGCJpAyzgzqrvajo=;
+        b=nKNvLy66hYnWJbge21R3A/6L9yRIzlXo7B5i0ReEjJGk23dfvxKD2ma53StBUPQF8/
+         DwJZ8xT8TJYa4B5xAVqd6VFaIOZSo3G6ajC4snDBLD20aK5E6VVNDHfkKYDhBeesthO4
+         /lkAf/dZS6BpwlZyL6nbhxPFJAi8L1n3zvWdqw0iQqm2XcRqvVSb7Ry8vrIf7kftR5Ff
+         IKnx7/lffVbOrcytRBcucGGqOZLR+/1eF55jadQqk6CKhMLCpfDNSVLfXNLrgedRyz5r
+         +c8za8/tqQF65Twu8grCcCVK+KSLMalH/ET2Drmy0h98VZHnZQ+801PBk/t7LR8CdH4q
+         aM8w==
+X-Gm-Message-State: APjAAAUKKdfnFe3waZE/9bbSbz2fYcI25qFMlL/aT8AvGYKV6ksERoUc
+        ML+rcFSRVCWdvv4PtekEJ4E=
+X-Google-Smtp-Source: APXvYqxeWklzBh45cmhf+HIYycFDHEUVT+buqmiS7UxBHziTmU7AJKuM123lducKLzP61rGiC6yDtA==
+X-Received: by 2002:a05:6402:1547:: with SMTP id p7mr9717047edx.73.1576768182573;
+        Thu, 19 Dec 2019 07:09:42 -0800 (PST)
 Received: from localhost.localdomain (x4db583fb.dyn.telefonica.de. [77.181.131.251])
-        by smtp.gmail.com with ESMTPSA id b27sm546584ejg.40.2019.12.19.07.09.40
+        by smtp.gmail.com with ESMTPSA id b27sm546584ejg.40.2019.12.19.07.09.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Dec 2019 07:09:40 -0800 (PST)
+        Thu, 19 Dec 2019 07:09:41 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2 5/6] completion: list existing working trees for 'git worktree' subcommands
-Date:   Thu, 19 Dec 2019 16:09:20 +0100
-Message-Id: <20191219150921.5889-6-szeder.dev@gmail.com>
+Subject: [PATCH v2 6/6] completion: list paths and refs for 'git worktree add'
+Date:   Thu, 19 Dec 2019 16:09:21 +0100
+Message-Id: <20191219150921.5889-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.24.1.982.ga4d4aba446
 In-Reply-To: <20191219150921.5889-1-szeder.dev@gmail.com>
 References: <20191017173501.3198-1-szeder.dev@gmail.com>
@@ -74,81 +74,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Complete the paths of existing working trees for 'git worktree's
-'move', 'remove', 'lock', and 'unlock' subcommands.
+Complete paths after 'git worktree add <TAB>' and refs after 'git
+worktree add -b <TAB>' and 'git worktree add some/dir <TAB>'.
 
-Note that 'git worktree list --porcelain' shows absolute paths, so for
-simplicity's sake we'll complete full absolute paths as well (as
-opposed to turning them into relative paths by finding common leading
-directories between $PWD and the working tree's path and removing
-them, risking trouble with symbolic links or Windows drive letters; or
-completing them one path component at a time).
-
-Never list the path of the main working tree, as it cannot be moved,
-removed, locked, or unlocked.
-
-Ideally we would only list unlocked working trees for the 'move',
-'remove', and 'lock' subcommands, and only locked ones for 'unlock'.
-Alas, 'git worktree list --porcelain' doesn't indicate which working
-trees are locked, so for now we'll complete the paths of all existing
-working trees.
+Uncharacteristically for a Git command, 'git worktree add' takes a
+mandatory path parameter before a commit-ish as its optional last
+parameter.  In addition, it has both standalone --options and options
+with a mandatory unstuck parameter ('-b <new-branch>').  Consequently,
+trying to complete refs for that last optional commit-ish parameter
+resulted in a more convoluted than usual completion function, but
+hopefully all the included comments will make it not too hard to
+digest.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- contrib/completion/git-completion.bash | 30 +++++++++++++++++++++++++-
- 1 file changed, 29 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 36 ++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 643272eb2f..5eae0bfd18 100644
+index 5eae0bfd18..0b163e2c59 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2981,10 +2981,23 @@ _git_whatchanged ()
- 	_git_log
- }
- 
-+__git_complete_worktree_paths ()
-+{
-+	local IFS=$'\n'
-+	__gitcomp_nl "$(git worktree list --porcelain |
-+		# Skip the first entry: it's the path of the main worktree,
-+		# which can't be moved, removed, locked, etc.
-+		sed -n -e '2,$ s/^worktree //p')"
-+}
-+
- _git_worktree ()
- {
- 	local subcommands="add list lock move prune remove unlock"
--	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	local subcommand subcommand_idx
-+
-+	subcommand="$(__git_find_on_cmdline --show-idx "$subcommands")"
-+	subcommand_idx="${subcommand% *}"
-+	subcommand="${subcommand#* }"
- 
- 	case "$subcommand,$cur" in
- 	,*)
-@@ -2993,6 +3006,21 @@ _git_worktree ()
+@@ -3006,6 +3006,42 @@ _git_worktree ()
  	*,--*)
  		__gitcomp_builtin worktree_$subcommand
  		;;
-+	lock,*|remove,*|unlock,*)
-+		__git_complete_worktree_paths
++	add,*)	# usage: git worktree add [<options>] <path> [<commit-ish>]
++		# Here we are not completing an --option, it's either the
++		# path or a ref.
++		case "$prev" in
++		-b|-B)	# Complete refs for branch to be created/reseted.
++			__git_complete_refs
++			;;
++		-*)	# The previous word is an -o|--option without an
++			# unstuck argument: have to complete the path for
++			# the new worktree, so don't list anything, but let
++			# Bash fall back to filename completion.
++			;;
++		*)	# The previous word is not an --option, so it must
++			# be either the 'add' subcommand, the unstuck
++			# argument of an option (e.g. branch for -b|-B), or
++			# the path for the new worktree.
++			if [ $cword -eq $((subcommand_idx+1)) ]; then
++				# Right after the 'add' subcommand: have to
++				# complete the path, so fall back to Bash
++				# filename completion.
++				:
++			else
++				case "${words[cword-2]}" in
++				-b|-B)	# After '-b <branch>': have to
++					# complete the path, so fall back
++					# to Bash filename completion.
++					;;
++				*)	# After the path: have to complete
++					# the ref to be checked out.
++					__git_complete_refs
++					;;
++				esac
++			fi
++			;;
++		esac
 +		;;
-+	move,*)
-+		if [ $cword -eq $((subcommand_idx+1)) ]; then
-+			# The first parameter must be an existing working
-+			# tree to be moved.
-+			__git_complete_worktree_paths
-+		else
-+			# The second parameter is the destination: it could
-+			# be any path, so don't list anything, but let Bash
-+			# fall back to filename completion.
-+			:
-+		fi
-+		;;
- 	esac
- }
- 
+ 	lock,*|remove,*|unlock,*)
+ 		__git_complete_worktree_paths
+ 		;;
 -- 
 2.24.1.982.ga4d4aba446
 
