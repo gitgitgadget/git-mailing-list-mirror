@@ -2,210 +2,100 @@ Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6E6FC43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C651C2D0C1
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:26:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B1FD92465E
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:24:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1CC392465E
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:26:13 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SKSewrJn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727121AbfLSWYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 17:24:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:50754 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726866AbfLSWYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:24:05 -0500
-Received: (qmail 26928 invoked by uid 109); 19 Dec 2019 22:24:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 19 Dec 2019 22:24:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7724 invoked by uid 111); 19 Dec 2019 22:28:46 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 19 Dec 2019 17:28:46 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 19 Dec 2019 17:24:03 -0500
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
-        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: [PATCH v4 6/8] dir: fix checks on common prefix directory
-Message-ID: <20191219222403.GA705525@coredump.intra.peff.net>
-References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
- <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com>
- <1f3978aa461929923eeb5037e69be6569f0ba331.1576697386.git.gitgitgadget@gmail.com>
- <xmqq1rt1e30q.fsf@gitster-ct.c.googlers.com>
- <CABPp-BHhAPjL9daPdp7UmVT+vLrcpo6SX0rKt5s1bH4Vz31wxw@mail.gmail.com>
+        id S1727166AbfLSW0L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 17:26:11 -0500
+Received: from mail-pj1-f67.google.com ([209.85.216.67]:39308 "EHLO
+        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726880AbfLSW0K (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 17:26:10 -0500
+Received: by mail-pj1-f67.google.com with SMTP id t101so3194412pjb.4
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:26:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=0osw5RRFjAWNFDk6A88+K/HkAwVBhEys7X3C8uonrIs=;
+        b=SKSewrJny4gvuVeaHkyDuYGMUOJzQeFmf/7YHfg28pSairIzgpetyavpzr2hMwWAML
+         MrPRToFp8cwfLrsT7UiwuTDNYpETCofbanDWCkTpvk+x5T6N9p+ruCZ1L1miyu2mBBbM
+         pLCNR1gpoL6eaYNKaurQXr6ymTqRbrFvOgN6zAJLA7kXfbrYdQb9YgrzS+Zv5tRBeVhR
+         /e83qeauCBbM4PtJaMfFx86CURQh0XD//kauTxegbgLSw4Rt07Q68X6mT5Syw575bfFv
+         D/oHyWoN48H+urux2KHQYAJA6WI4nPme4RiqTdaxAnlo1YHOFO6Rdit3XqYQTjc9SrLp
+         kdgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=0osw5RRFjAWNFDk6A88+K/HkAwVBhEys7X3C8uonrIs=;
+        b=EzcUMXmZJrSuyqVYG+QVv53YX/lW7xDBmqs/gN57GDuoRDvmi5JNOzLnLSjQJ3dzKu
+         GzkqpX/iQNStzoCz7HRKfcuxvjnE3WeNvuliCEYh7YDDiiKi6kiMnlM44DmXTX7Fh1Tx
+         GubWLnZh3sL4bl0DCCL9CyN9WrJQsS4wHArWUbmOPMp9dE+FrEi+UP82uYfXF5P3/XXh
+         WwNk2Nl8SHXmBqSqPYsNfGlYJuFFOprfNN8+dsZRmspdXKv1KdOhm7lqfq7qxwuqShtR
+         UdfXjOnq+TrllEAOpzd5UT9UKz26BnE/bE3JZxiMx7XkX4wEVcDgUKiCTROREaqpQP7F
+         27vQ==
+X-Gm-Message-State: APjAAAVprZmNkZv0PyJT2X4Abdop90B2WOO/7Ed8d4Wjkm6Bdx9Yhiv6
+        SHE5x7NhwUcuvWceK0WJVRM=
+X-Google-Smtp-Source: APXvYqzmi9VdVQDmBI02IG4cs/lAH3rVJdVayaNLHvNXDI1HlnLJ+KGs/F8i4GorQX1IRjbHuTmIuA==
+X-Received: by 2002:a17:90a:62ca:: with SMTP id k10mr12230349pjs.59.1576794369847;
+        Thu, 19 Dec 2019 14:26:09 -0800 (PST)
+Received: from generichostname ([216.52.21.197])
+        by smtp.gmail.com with ESMTPSA id y38sm8504363pgk.33.2019.12.19.14.26.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Dec 2019 14:26:09 -0800 (PST)
+Date:   Thu, 19 Dec 2019 14:27:48 -0800
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Ed Maste <emaste@FreeBSD.org>
+Cc:     git mailing list <git@vger.kernel.org>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+Subject: Re: [PATCH v2] sparse-checkout: improve OS ls compatibility
+Message-ID: <20191219222748.GA63814@generichostname>
+References: <20191219015833.49314-1-emaste@FreeBSD.org>
+ <20191219214516.69209-1-emaste@FreeBSD.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BHhAPjL9daPdp7UmVT+vLrcpo6SX0rKt5s1bH4Vz31wxw@mail.gmail.com>
+In-Reply-To: <20191219214516.69209-1-emaste@FreeBSD.org>
+User-Agent: Mutt/1.12.2 (2019-09-21)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 12:23:29PM -0800, Elijah Newren wrote:
+Hi Ed,
 
-> > >       while (len && path[len - 1] == '/')
-> > >               len--;
-> > >       if (!len)
-> > >               return 1;
-> > > +
-> > > +     de = xcalloc(1, sizeof(struct dirent)+len+1);
-> >
-> > That "+len+1" may deserve a comment?
+On Thu, Dec 19, 2019 at 09:45:16PM +0000, Ed Maste wrote:
+> On FreeBSD, when executed by root ls enables the '-A' option:
 > 
-> Good point, I'll add one and send a re-roll.
+>   -A  Include directory entries whose names begin with a dot (`.')
+>       except for . and ...  Automatically set for the super-user unless
+>       -I is specified.
+> 
+> As a result the .git directory appeared in the output when run as root.
+> Simulate no-dotfile ls behaviour using a shell glob.
+> 
+> Signed-off-by: Ed Maste <emaste@FreeBSD.org>
+> Helped-by: Eric Wong <e@80x24.org>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
 
-Please use st_add3() while you are at it.
+Small nit: the Helped-by trailers should come before your sign-off.
 
-I'd also usually suggest FLEX_ALLOC_MEM() for even more simplicity, but
-it looks like filling the string is handled separately (and done many
-times).
+Trailers should come in chronological order. Chronologically, they
+helped you out with your patch and then, after that, you created your v2
+based on their review and signed off on it.
 
-I have to wonder, though, if it wouldn't be simpler to move away from
-"struct dirent" here (and it looks like Junio suggested the same earlier
-in the thread). I don't know this code very well, but it looks
-like it could easily get by passing around a name pointer and a dtype
-through the cached_dir. The patch below seems like it's not too bad a
-cleanup, but possibly the names could be better.
+Thanks,
 
----
- dir.c | 48 ++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index 43e2f47f66..e1cba688f3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -41,7 +41,8 @@ struct cached_dir {
- 	int nr_files;
- 	int nr_dirs;
- 
--	struct dirent *de;
-+	const char *d_name;
-+	int d_type;
- 	const char *file;
- 	struct untracked_cache_dir *ucd;
- };
-@@ -50,8 +51,8 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 	struct index_state *istate, const char *path, int len,
- 	struct untracked_cache_dir *untracked,
- 	int check_only, int stop_at_first_file, const struct pathspec *pathspec);
--static int get_dtype(struct dirent *de, struct index_state *istate,
--		     const char *path, int len);
-+static int resolve_dtype(int dtype, struct index_state *istate,
-+			 const char *path, int len);
- 
- int count_slashes(const char *s)
- {
-@@ -1050,8 +1051,7 @@ static struct path_pattern *last_matching_pattern_from_list(const char *pathname
- 		int prefix = pattern->nowildcardlen;
- 
- 		if (pattern->flags & PATTERN_FLAG_MUSTBEDIR) {
--			if (*dtype == DT_UNKNOWN)
--				*dtype = get_dtype(NULL, istate, pathname, pathlen);
-+			*dtype = resolve_dtype(*dtype, istate, pathname, pathlen);
- 			if (*dtype != DT_DIR)
- 				continue;
- 		}
-@@ -1639,10 +1639,9 @@ static int get_index_dtype(struct index_state *istate,
- 	return DT_UNKNOWN;
- }
- 
--static int get_dtype(struct dirent *de, struct index_state *istate,
--		     const char *path, int len)
-+static int resolve_dtype(int dtype, struct index_state *istate,
-+			 const char *path, int len)
- {
--	int dtype = de ? DTYPE(de) : DT_UNKNOWN;
- 	struct stat st;
- 
- 	if (dtype != DT_UNKNOWN)
-@@ -1667,14 +1666,13 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 					  struct strbuf *path,
- 					  int baselen,
- 					  const struct pathspec *pathspec,
--					  int dtype, struct dirent *de)
-+					  int dtype)
- {
- 	int exclude;
- 	int has_path_in_index = !!index_file_exists(istate, path->buf, path->len, ignore_case);
- 	enum path_treatment path_treatment;
- 
--	if (dtype == DT_UNKNOWN)
--		dtype = get_dtype(de, istate, path->buf, path->len);
-+	dtype = resolve_dtype(dtype, istate, path->buf, path->len);
- 
- 	/* Always exclude indexed files */
- 	if (dtype != DT_DIR && has_path_in_index)
-@@ -1782,21 +1780,18 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 				      int baselen,
- 				      const struct pathspec *pathspec)
- {
--	int dtype;
--	struct dirent *de = cdir->de;
--
--	if (!de)
-+	if (!cdir->d_name)
- 		return treat_path_fast(dir, untracked, cdir, istate, path,
- 				       baselen, pathspec);
--	if (is_dot_or_dotdot(de->d_name) || !fspathcmp(de->d_name, ".git"))
-+	if (is_dot_or_dotdot(cdir->d_name) || !fspathcmp(cdir->d_name, ".git"))
- 		return path_none;
- 	strbuf_setlen(path, baselen);
--	strbuf_addstr(path, de->d_name);
-+	strbuf_addstr(path, cdir->d_name);
- 	if (simplify_away(path->buf, path->len, pathspec))
- 		return path_none;
- 
--	dtype = DTYPE(de);
--	return treat_one_path(dir, untracked, istate, path, baselen, pathspec, dtype, de);
-+	return treat_one_path(dir, untracked, istate, path, baselen, pathspec,
-+			      cdir->d_type);
- }
- 
- static void add_untracked(struct untracked_cache_dir *dir, const char *name)
-@@ -1884,10 +1879,17 @@ static int open_cached_dir(struct cached_dir *cdir,
- 
- static int read_cached_dir(struct cached_dir *cdir)
- {
-+	struct dirent *de;
-+
- 	if (cdir->fdir) {
--		cdir->de = readdir(cdir->fdir);
--		if (!cdir->de)
-+		de = readdir(cdir->fdir);
-+		if (!de) {
-+			cdir->d_name = NULL;
-+			cdir->d_type = DT_UNKNOWN;
- 			return -1;
-+		}
-+		cdir->d_name = de->d_name;
-+		cdir->d_type = DTYPE(de);
- 		return 0;
- 	}
- 	while (cdir->nr_dirs < cdir->untracked->dirs_nr) {
-@@ -1970,7 +1972,7 @@ static enum path_treatment read_directory_recursive(struct dir_struct *dir,
- 		/* recurse into subdir if instructed by treat_path */
- 		if ((state == path_recurse) ||
- 			((state == path_untracked) &&
--			 (get_dtype(cdir.de, istate, path.buf, path.len) == DT_DIR) &&
-+			 (resolve_dtype(cdir.d_type, istate, path.buf, path.len) == DT_DIR) &&
- 			 ((dir->flags & DIR_SHOW_IGNORED_TOO) ||
- 			  (pathspec &&
- 			   do_match_pathspec(istate, pathspec, path.buf, path.len,
-@@ -2103,7 +2105,7 @@ static int treat_leading_path(struct dir_struct *dir,
- 		if (simplify_away(sb.buf, sb.len, pathspec))
- 			break;
- 		if (treat_one_path(dir, NULL, istate, &sb, baselen, pathspec,
--				   DT_DIR, NULL) == path_none)
-+				   DT_DIR) == path_none)
- 			break; /* do not recurse into it */
- 		if (len <= baselen) {
- 			rc = 1;
+Denton
