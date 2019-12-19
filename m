@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2474BC43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2921C2D0D2
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E4C6E24672
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AD97524672
+	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 22:21:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8U7J6YS"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzi0bwjk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727256AbfLSWVr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 17:21:47 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41692 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727184AbfLSWVj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 17:21:39 -0500
-Received: by mail-pf1-f193.google.com with SMTP id w62so4069046pfw.8
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:39 -0800 (PST)
+        id S1727274AbfLSWVt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 17:21:49 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33420 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727211AbfLSWVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 19 Dec 2019 17:21:44 -0500
+Received: by mail-pl1-f193.google.com with SMTP id c13so3214083pls.0
+        for <git@vger.kernel.org>; Thu, 19 Dec 2019 14:21:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wWeg/wl9RrK6mqFq+reQZd+RrvAMP1+PT+GY5lcwJck=;
-        b=N8U7J6YSxGDmmo/IS4/gssUaKbtMv/P6hJJ6fvylhND7vjBdZxvn8RNYLGY6k4eLXz
-         NyKAtjLpFlBFW1avS/0GfWvGzuDAK5geOWpGIS7Q9Lp1mebC2rloC/T+clt9ZaXkKipa
-         ucU2803yxK//Fhki6kxi0pW12G9qtLwlH/hW+tVDBL3uiQh6+6lA6z5qp5zATRtznosG
-         cHVEO/1FoKivqGdgendgUc2ICS4poX8rKaumHvQ9QDAfd12tYspj/T91DKRCJtoxjpJb
-         kxUJGwIjNoedviamfexQTH+s2GtzXLlmMkfQUqr3IJiOjS6PFEWSH7YvUZUxyZJCK5ls
-         W6yw==
+        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
+        b=bzi0bwjkdPXYG1qlJ7x7sgyrcKISEAvt2kazPMa/qZ8nNlYgw5lLxb9ugd4GDQoS9h
+         r7h36kNznjN0E5/KH1lW+iPg/YqDV9s0Ho33e0gNE6c94YGtjydhoMbdlpEkLYjbwtlI
+         FHzY89O5hrnEAlpv3uCLXNmH+utWNrS3N4WtOj07q5/TfijEImJfWBsR62O0/3qp0fNJ
+         e6X08pvxJVF70nw0fD66P+x0271Xbo5vq5exCY5BnhIGpLThbNq3ybYHlKlOneG5xmzo
+         K88JdU17EhdesUFWR2iAMKYXKfpfPllTsquY53eyjidK+G8XJeyu/C/kM0dBcVdkOZ1d
+         eufA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wWeg/wl9RrK6mqFq+reQZd+RrvAMP1+PT+GY5lcwJck=;
-        b=SQTxMQP5QvVa/ts/2r7YPccG5Lsn3sNnCjtV1fRkRAzzCuRT1QFkwCkat63m9K00rL
-         WzwmplSxrA/sqNacTP5i7r6DOY+WAEoMnMbuwz0I2Qc7N6WlUue3K5r+vW/IBWDeUOzK
-         +QtJcdSggNdrhG3rjaUz1hTgzVgQiXdyRywi4yETrQwdgxfCySC5Pm4BiUYFb6npqrna
-         p44S/CnIGYfGQOpPIqwzkIaNpoqDIAh/W7LJCN2rW7KV1+4y0hrBh7fn5k3Xh0IgkxcG
-         v0geoyd447wwaAmzVSm1NQSm4deoSlnUHnDZlJfQSlGiyb3DSFFwQ6p3/7BBl+StIDE+
-         lTyg==
-X-Gm-Message-State: APjAAAW49XF6I6o+kvvnhr3E8N3TrltDLniRSB27rXqWtqa1igEYl9AN
-        f4t8SwBXlBG/8gX3W5JQUzNM+vIy
-X-Google-Smtp-Source: APXvYqwwOgfbQ9buJ0iBC0dkdaU2svIOLP6NCkNn3feon0XsoJOq2oulu2Oscd5eFacm0KWq9ltzyQ==
-X-Received: by 2002:a63:fb05:: with SMTP id o5mr11577951pgh.355.1576794098956;
-        Thu, 19 Dec 2019 14:21:38 -0800 (PST)
+        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
+        b=rYZeX1wCNx0Fs4+RYfUAl+9uLviAZycnHBYpqSppblWHQfcjW9w3zhpsynoVgCFVz6
+         cRQiU1UCifar5pR+qlNFXayOEBEZAUpchJmpj25CnZ2pqyZaz7TadY/gcBbIi0OkSTfe
+         740Rbky9JBALM2t4HEEfOxPmwBnmydrN7Dv167ZRCiMz6Dwvvf055/iJe8yiY4SzKXNK
+         PG0FtFqbjs3jSQJ2uO0XwMYg6BmvtHA7SkwNvyOflcqekTw+b/Hnr4oXrbucqIOCCcRl
+         KXeOiohgmOdNzKgjqvslsEsxMFgvOGgdGJNnUAq8Pfa9boayIoCnsyll3kde4CHnF1HA
+         D3Gg==
+X-Gm-Message-State: APjAAAXJvflYFhMm1oI/cq8AaUXXVho3Ug7R7QdVWMZZQMuIQlmKSM3Q
+        moCrlY40YmkrpmleQFibWpWO7UP2
+X-Google-Smtp-Source: APXvYqxmDNjwaJL0L0osHKRvBma/aJQ95EuKYMf4v0t6/jxbHOzCplxvOzu4lF5oyXTSoG/SkQehAg==
+X-Received: by 2002:a17:902:bd4b:: with SMTP id b11mr10485793plx.6.1576794103771;
+        Thu, 19 Dec 2019 14:21:43 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com ([216.52.21.197])
-        by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.38
+        by smtp.gmail.com with ESMTPSA id o19sm11428528pjr.2.2019.12.19.14.21.43
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Dec 2019 14:21:38 -0800 (PST)
+        Thu, 19 Dec 2019 14:21:43 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 04/16] t0003: use named parameters in attr_check()
-Date:   Thu, 19 Dec 2019 14:22:39 -0800
-Message-Id: <dbc82d45c613e82a1905314e7b40eaf096c73102.1576794144.git.liu.denton@gmail.com>
+Subject: [PATCH v2 10/16] t1307: reorder `nongit test_must_fail`
+Date:   Thu, 19 Dec 2019 14:22:45 -0800
+Message-Id: <d6ea8a6df0517c34136b0bddbce0948f9c8d448e.1576794144.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576794144.git.liu.denton@gmail.com>
 References: <cover.1576583819.git.liu.denton@gmail.com> <cover.1576794144.git.liu.denton@gmail.com>
@@ -73,48 +73,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had named the parameters in attr_check() but $2 was being used
-instead of $expect. Make all variable accesses in attr_check() use named
-variables instead of numbered arguments for clarity.
-
-While we're at it, add variable assignments to the &&-chain. These
-aren't ever expected to fail but if a future developer ever adds some
-code above the assignments and they could fail in some way, the intact
-&&-chain will ensure that the failure is caught.
+In the future, we plan on only allowing `test_must_fail` to work on a
+restricted subset of commands, including `git`. Reorder the commands so
+that `nongit` comes before `test_must_fail`. This way, `test_must_fail`
+operates on a git command.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0003-attributes.sh | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ t/t1307-config-blob.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 71e63d8b50..3569bef75d 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -5,19 +5,16 @@ test_description=gitattributes
- . ./test-lib.sh
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 37dc689d8c..002e6d3388 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -74,7 +74,7 @@ test_expect_success 'can parse blob ending with CR' '
+ '
  
- attr_check () {
--	path="$1" expect="$2"
-+	path="$1" expect="$2" git_opts="$3" &&
+ test_expect_success 'config --blob outside of a repository is an error' '
+-	test_must_fail nongit git config --blob=foo --list
++	nongit test_must_fail git config --blob=foo --list
+ '
  
--	git $3 check-attr test -- "$path" >actual 2>err &&
--	echo "$path: test: $2" >expect &&
-+	git $git_opts check-attr test -- "$path" >actual 2>err &&
-+	echo "$path: test: $expect" >expect &&
- 	test_cmp expect actual &&
- 	test_line_count = 0 err
- }
- 
- attr_check_quote () {
--
--	path="$1"
--	quoted_path="$2"
--	expect="$3"
-+	path="$1" quoted_path="$2" expect="$3" &&
- 
- 	git check-attr test -- "$path" >actual &&
- 	echo "\"$quoted_path\": test: $expect" >expect &&
+ test_done
 -- 
 2.24.1.703.g2f499f1283
 
