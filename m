@@ -2,183 +2,174 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0A7C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 02:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19321C3F68F
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 03:03:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6E0472465E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 02:31:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C467C24682
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 03:03:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MRYmh7Hu"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Xbz8IUMq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbfLTCbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 21:31:34 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:33175 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726964AbfLTCbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 21:31:33 -0500
-Received: by mail-pg1-f196.google.com with SMTP id 6so4169575pgk.0
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 18:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oiRiZ5Cj5GEgGDbBi9KJH9BVuKkDuRgNWWUwIYZS04U=;
-        b=MRYmh7HujepccGR1hCww9zSLiPuyb0vsz3SbKUBqrQ7qn/DA3qc7iD+ECLnlqnPkeV
-         LkcJWlMojXD07v0EvM7ZWdNKkVBCPS2Qj7+GL4CJB8Semk4qBMkX/g0aHDw9XJg6vNsN
-         YXzqfpwvf7nqi2KgB2/p/i2MkjSnN7GlD746dNNOaZqmZC35+cMLOi1k9vCoI28E1f4d
-         D4wkYLR1qLmUVCCok1jlAo5wX5yeg8RGsDul992cC/Yb63/KnLyKBsfK7Y2FZMX82EPM
-         fR2OPUWEyhsCpN3mbMPpprem7fHur7zjymXtoJsDrraxLOvaDGRDFF2bBXfDgvYNgEl/
-         qf5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oiRiZ5Cj5GEgGDbBi9KJH9BVuKkDuRgNWWUwIYZS04U=;
-        b=J9VuE76oILXE7y+tA0Xhn2Yeq1on0UqnMRa9wnhhFSKjU22DTl0HgiHDRsfcn+jYN2
-         /cwuBKxpNAL/bbfSnRTMpbLsSX3ZCW8baUd7TPgQ+g820OXNmOMwH+K+pE5cehzoWez7
-         XjI/NGNY2SQx695lYGoO/DBWPzVCFfMyMx0aJKi//Av/btoDvgnK4EkzD0EvQsRj9D+N
-         PpFAGzsrLCZ5Rg34+O6yJYlO39ogjw6BVbZzWgABiOowMEQKosd1BHczq8MmJvtzaKPN
-         M+dgMvW7uBxtkQ4IvM+JuBfGkXlCcisW9JNQQHZZ0CsRH+dQG4xUab6ChgbS0z2NG32e
-         4Qew==
-X-Gm-Message-State: APjAAAXtOSWL9FdqIaFiQy2HRPMNYmjj/usKtFaJYF5suOd9mAkGRibo
-        YXVeelOoKxZsfTkW17+y2Mcm2A==
-X-Google-Smtp-Source: APXvYqzJkZb3hMY1O7SZgVpQ9upmUQWPYIM8/kO3hk8UVAeZYhGntLgchk+/ZUq+/5zHABE0MMu2Qg==
-X-Received: by 2002:a63:770c:: with SMTP id s12mr12844470pgc.25.1576809091129;
-        Thu, 19 Dec 2019 18:31:31 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id f8sm10070574pfn.2.2019.12.19.18.31.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2019 18:31:30 -0800 (PST)
-Date:   Thu, 19 Dec 2019 18:31:25 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
-Message-ID: <20191220023125.GD227872@google.com>
-References: <pull.495.git.1576574242.gitgitgadget@gmail.com>
- <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
- <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
- <xmqqfthgb01m.fsf@gitster-ct.c.googlers.com>
- <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
+        id S1727070AbfLTDDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 22:03:07 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40566 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727020AbfLTDDH (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 19 Dec 2019 22:03:07 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5623460446;
+        Fri, 20 Dec 2019 03:03:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1576810985;
+        bh=ly/AIi9Nf3yhrRU1MFBWRc7sMc3l/gbW7XQpxVVntc0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Xbz8IUMqr6XyzWPYdxOybnyHdlCINxAUGPSt4fS8AGqoIJD78ITXlfFki4laWHchr
+         O8RVXH0AJ3d6Y58nJg1RC6KafAWIW4Rx3rzg4ZeNC9CQKg1WundaX570h32w31FYfD
+         UgJ8EDu6yd60zqzmFB6mYYJtwESqGxnGi1ISYlBvaVJDoOqbILa11mBbK1rmCHw+4k
+         FOxr9j6gMCupWVFMwA9QKgBx01sJGWSKqB1QZfBh4JzeBUT0Bd/WAzSC8D7SSAlR/q
+         sWCDpWiPGlgt9XCXzYjTBhlwFgo1owehmw9a0on7G7wJ5pDvs/V1VhlZBC0nCPZjap
+         av0/EaKG9sSrp0MmaAciyleHL9pjlI5xptV+jMYBPZju/zOQSda7XKNs81pqeGX+B4
+         1iB6WKfImM1mzSl5KByHi4zgM21IC/4KPUhwgXYgN8pr6uvoUc///5yUgu0v856fmM
+         OGY2zxPgOdBDbWU9yiTcpdy3QDe0goP50qxDPiEt6S9aqnF/KmW
+Date:   Fri, 20 Dec 2019 03:02:59 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Scott Richmond <scott@brightrockgames.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Ability to ignore EOL changes for certain projects
+Message-ID: <20191220030259.GC163225@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Scott Richmond <scott@brightrockgames.com>, git@vger.kernel.org
+References: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="ghzN8eJ9Qlbqn3iT"
 Content-Disposition: inline
-In-Reply-To: <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 19, 2019 at 11:22:38AM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > This fix was about "we do not want to unconditionally drop the
-> > advice messages when we reject the attempt to commit and show the
-> > output like 'git status'", wasn't it?  The earlier single-liner fix
-> > in v1 that flips s->hints just before calling run_status() before
-> > rejecting the attempt to commit was a lot easier to reason about, as
-> > the fix was very focused and to the point.  Why are we seeing this
-> > many (seemingly unrelated) changes?
-> 
-> In any case, here is what I tentatively have in my tree (with heavy
-> rewrite to the proposed log message).
 
-Hm. I'm surprised to see this feedback come in the form of a local
-change when making the topic branch, rather than in a reply to the v1
-patch. What's the reasoning? (Or is this scissors patch intended to be
-the feedback?)
+--ghzN8eJ9Qlbqn3iT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I ask because out of all of us, it seems the Outreachy interns can
-benefit the most from advice on how and why to write their commit
-messages - that is, part of the point of an internship is to learn best
-practices and cultural norms in addition to coding practice. (Plus, I
-find being asked to rewrite a commit message tends to force me to
-understand my own change even better than before.)
+On 2019-12-18 at 11:10:27, Scott Richmond wrote:
+> The Problem Domain
+> In certain dev environments (Unity3D projects) there is (AFAIK) an
+> unsolvable problem where some files are often modified with line
+> endings that aren't the native system or not the committed line
+> endings for that file. Secondarily, in this case line endings don't
+> matter - Nothing in the dev environment "cares" which kind of line
+> ending is used.
 
-I'll go ahead and look through the changes to the commit message so I
-can learn what you're looking for too :)
+I'm not sure this syncs up with your statements below.  Typically,
+programs that do editing of text files either (a) write the line endings
+that the file started out with or (b) write the system line endings.  If
+you set the appropriate files with the `text` attribute in
+`.gitattributes` (or use `* text=3Dauto` if appropriate), then Git will
+always write in the system line endings and convert internally to LF,
+and programs that do either (a) or (b) will work.
 
-> 
-> -- >8 --
-> From: Heba Waly <heba.waly@gmail.com>
-> Date: Tue, 17 Dec 2019 09:17:22 +0000
-> Subject: [PATCH] commit: honor advice.statusHints when rejecting an empty
->  commit
-> 
-> In ea9882bfc4 (commit: disable status hints when writing to
-> COMMIT_EDITMSG, 2013-09-12) the intent was to disable status hints
-> when writing to COMMIT_EDITMSG, because giving the hints in the "git
-> status" like output in the commit message template are too late to
-> be useful (they say things like "'git add' to stage", but that is
-> only possible after aborting the current "git commit" session).
+Yet it sounds like you have development tools that don't do either (a)
+or (b): they write in some fixed line ending, and therefore care very
+much which line ending is being used.  In such a case, you could
+write (for example) `*.yaml text eol=3Dcrlf` (or `eol=3Dlf`) if you always
+want them to do that and Git will convert to those line endings and
+store in LF.
 
-More context on why the previous change was made - "by the time the
-editor was open, it was too late to apply hints anyways". Sure.
+If the problem is text editor settings, you can use a `.editorconfig`
+file, which is a cross-platform text editor configuration that can
+specify line endings.  Most text editors can be configured to honor such
+settings, although it may require a plugin.
 
-> 
-> But there is one case that the hints can be useful: When the current
-> attempt to commit is rejected because no change is recorded in the
-> index.  The message is given and "git commit" errors out, so the
-> hints can immediately be followed by the user.  Teach the codepath
-> to honor the configuration variable.
+If your problem is a shared Windows / Linux environment like WSL, you
+can set `core.eol` to `crlf` in the repository and things will work.  If
+you need settings like this, you can even set them up appropriately for
+the system using a make target or bootstrap script so you don't need to
+do that by hand on each system.
 
-Expanding the "but" to supply the specific story this commit touches,
-including "what happens instead" and "how are we gonna fix it".
+If you do this, then your tools will write the same line endings as are
+checked out, and files won't appear modified.  You can see how Git
+itself uses this to set up files appropriately for different systems.
 
-And the copy-paste of the output before and the output now is different.
-For me, I don't particularly see why we'd want to be rid of it - it sort
-of feels like "a picture is worth a thousand words" to include the
-actual use case in the commit message. Is there style guidance
-suggesting not to do that that I missed?
+The only case this wouldn't work is if the tools wrote some random line
+endings depending on an attribute other than the OS they're on, or if
+you had multiple tools doing different things.  If that's really your
+problem, then yes, you'd need a new Git feature.  It is of course
+possible to use a filter to strip out all carriage returns, but that
+doesn't prevent Git from showing the file as being modified.
 
- - Emily
+What I've proposed, of course, requires some setup work and
+configuration.  It isn't trivial, but it does work for a lot of projects
+already.
 
-> 
-> Signed-off-by: Heba Waly <heba.waly@gmail.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  builtin/commit.c                          | 1 +
->  t/t7500-commit-template-squash-signoff.sh | 9 +++++++++
->  2 files changed, 10 insertions(+)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index e588bc6ad3..0078faf117 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -944,6 +944,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->  	 */
->  	if (!committable && whence != FROM_MERGE && !allow_empty &&
->  	    !(amend && is_a_merge(current_head))) {
-> +		s->hints = advice_status_hints;
->  		s->display_comment_prefix = old_display_comment_prefix;
->  		run_status(stdout, index_file, prefix, 0, s);
->  		if (amend)
-> diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-> index 46a5cd4b73..a8179e4074 100755
-> --- a/t/t7500-commit-template-squash-signoff.sh
-> +++ b/t/t7500-commit-template-squash-signoff.sh
-> @@ -382,4 +382,13 @@ test_expect_success 'check commit with unstaged rename and copy' '
->  	)
->  '
->  
-> +test_expect_success 'commit without staging files fails and displays hints' '
-> +	echo "initial" >>file &&
-> +	git add file &&
-> +	git commit -m initial &&
-> +	echo "changes" >>file &&
-> +	test_must_fail git commit -m update >actual &&
-> +	test_i18ngrep "no changes added to commit (use \"git add\" and/or \"git commit -a\")" actual
-> +'
-> +
->  test_done
-> -- 
-> 2.24.1-732-ga9f9d4909c
-> 
+> Solution Request
+> It would be fantastic if we could tell Git to stop caring about EOL
+> changes on a per-repo basis, with the effective output being that git
+> status shouldn't show changes for files with differing EOLs.
+>=20
+> I'm experienced with Git, though I am not expert enough to consider
+> creating such a change myself - It is unclear to me just how
+> complicated a change may be. However maybe I could look into it if it
+> was made clear that this improvement is possible and has no serious
+> side effects.
+
+I'm not sure how such a feature would interact with how Git operates
+when it re-reads the index.  It isn't 100% clear to me when data is
+filtered through various text filters such as EOL filters.  All the
+filtering I've used is one-to-one, and therefore any modification of the
+file contents necessarily means that the indexed contents have changed.
+
+If Git does apply such filters when refreshing the index (such as
+happens before `git status`), then such a feature would be relatively
+easy to implement, although you'd incur a performance penalty when
+changing the EOL of a file, even if the file were otherwise identical.
+I suspect it would make the most sense as an additional value for
+`core.autocrlf`.
+
+If Git doesn't apply those filters, then there really isn't a way to do
+what you want without fundamentally changing the characteristics of how
+Git operates on the index, since it would still show files as modified.
+
+Maybe someone else can comment on the feasibility of this better than I
+can.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--ghzN8eJ9Qlbqn3iT
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl38OeMACgkQv1NdgR9S
+9osjqBAAp7EcfZvHhfyCwx1+FdBr+18F9Rd3fcSVq4a87RP2pO/dxHrTkfEQaHD+
+ROVki98lFJWytVXPc6aQaoHG0XMIYLKBOVix3xVuWk5yGMIUnOGReV/YxdsB4JLP
+6WBO/tqozJLs+hqvFNfDuQRisB29J/ywM1F90xdtkdkv3+7GiMTffCIHF61m9o5I
+Lua+E2YqfjSxed1aLw/vOarbSOHHQ2R4T/h/jrRYjttgN7/8I19jKhZ7hXmkYvkM
+0bsVzmwG25MnQt78H1ir/zE3mbK5+qyYR6dwE9x0bjybiRkB1aicOBh+xaxBIMSw
++mU7SuXZYpkN6FThe3nN2uPp7w6arqTmCkQ6AMOtwOxe6S4hTG6TndXkSaTEw9e+
+KSetLnAYU0THLsA+kRdFhcavysunnp7Z8ixruVXHSOqDz6z/FKzDLP230fWoPBwx
+a7jZ4SHRrPYME1tyvvW7DWJarjcVN7AEtEldF1HAVwHrh2XBHXF5LusN05QiDpN5
+Yp4B32MfdVROFiUuV+aU4gMP86DYCBtyVIWqBn7ykPqXPMhyzNNSSF/qCaWJywRI
+1WNjYvN+rBJDQH6q3fdR8dWErciUhZ+3YhTG/aA0jOiE5lxy/GwyzN18/dPI1VaE
+EFxgnYJHEAxcJwqN/nzqw89wWnkBdMxwUzc9Fty+tqOrjTOVHmU=
+=BsQ5
+-----END PGP SIGNATURE-----
+
+--ghzN8eJ9Qlbqn3iT--
