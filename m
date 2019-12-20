@@ -2,110 +2,93 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95288C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F53FC43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 16:05:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F08221D7E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:56:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0116321D7E
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 16:05:25 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fgjWGDaF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727384AbfLTP4m convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 20 Dec 2019 10:56:42 -0500
-Received: from mail-il1-f174.google.com ([209.85.166.174]:41001 "EHLO
-        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbfLTP4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 10:56:42 -0500
-Received: by mail-il1-f174.google.com with SMTP id f10so8328351ils.8
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 07:56:42 -0800 (PST)
+        id S1727359AbfLTQFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 11:05:24 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:42008 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726808AbfLTQFX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 11:05:23 -0500
+Received: by mail-qt1-f195.google.com with SMTP id j5so8573497qtq.9
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 08:05:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ylS2tPanDE+RxZ9Ssp0snJZDPZu5Qe5LdQ4+XtK/J9M=;
+        b=fgjWGDaFPSiuLwHNhmfq823bqw4nqogog1/HBN6iKiEtsU53DZdrJKBw554EUBGh5z
+         9sHS33gvPmJGdb62QsYdBxavxQoBsW6T31JvSsdf+fZWSgah/9YsKK5D/PtLzI64oltz
+         EINcrcbO6Ht2PNzy8ez2XqFDgtP0tTjejIM8upLTyBqvYZdvhlRkyrXjZg8vyR9qcxPZ
+         3laSVS9YJdQL/+R1Odjt/ymp88W/Es6jeSOXSsskS/AyE8BNRs1RhA6XVUiBi2rhcF9j
+         XZJOX9xDOFnYEVRxiCpi8hha2JC/+9qsdDFZC0066+sxUm5WfPNiLHFK80QcaQ9i1dqX
+         PORQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ivHv5dUoOI+p8VeNtZZ29znqLdKGkawwQ8TvAD7lSUc=;
-        b=dDawh/6pcH8iWrHPY9BlBjliWDn1DPrcAyNJdus4XZm8HMrT5QkNL3ia07yhyr3s3o
-         YfLGcF/VH8ykGMUvS/Vi0oXUOqFI2vrdCLWDryVFxBq32+ddII8mR+wg4RlDopVGHpwL
-         OxNEzbteDlLrFTILUAXpm4VoZkVA7X9avqkjxJfEDwQ5ZleLJAOlA8Mis5RBfGmxGqOD
-         sVqAptC/X7RkzGxkH/l0XHrbutE4J/S2Y1VyH0SqKvfpFEcG7VnJPytvdmHEJIRY95jy
-         EzvgJ4TW28DWe9TOnJUFLcYNGE48O4VBO836QJ7XOPvuqO1D79lUcne4KhXZ7v1FkTlw
-         o8Iw==
-X-Gm-Message-State: APjAAAX8Kj+BeHLMKFle4OXEZYJIKBESyAJWu6rIPTzN3DsDAj79cY2i
-        mQ1ThZBPIQx7PRW4b8JM1wpxRVKRRkp3UguEfuU=
-X-Google-Smtp-Source: APXvYqxsyluS9dbiz1aWraHpe7i7UzJymzjnh5Z3+s20Qoktazrh/91K0JjjkhoYe5q38kxIwIgzgus4dAwkWHEZZkw=
-X-Received: by 2002:a92:db4f:: with SMTP id w15mr12314969ilq.182.1576857401590;
- Fri, 20 Dec 2019 07:56:41 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ylS2tPanDE+RxZ9Ssp0snJZDPZu5Qe5LdQ4+XtK/J9M=;
+        b=qHzvrzOQvvyDiBDtfwFcsVSC9sHcNecyv/QEfx0zGTexXTyFBGIw5zGCGPo8PnLQhR
+         Tg/x0snqtCmkV5vAwYbL8E5/d/UP4WwhTQh3tZKdNjkD1n9Gulr+GqK7IeuTOnGTTIBE
+         b/yuzGOywtHDVdCwtJzHQ5ma+Fj/iIqW3ct5h04s60jhmhTESwQSDSvCe0JpwIsqwuW9
+         OJQ9znVhjRRNqeLfbCbZ8nJdw+GATbTEnHJPM2au4OhwYTQUrJKNv+G0z4+Zex5Y3x48
+         wFiHCHfCjP7b3NSe9Q+wDpLe8ZNVP+ws0KQlWQHrr4vA4TFc+MBDtItR4stJ0htJXeO8
+         cx+g==
+X-Gm-Message-State: APjAAAWv01xieMEc/tR4zYYqhLLuQ0HmpQLmewoZdx/JPqoj+m58sAUv
+        VT24kQrEfg02MEYvv+pOH2Y=
+X-Google-Smtp-Source: APXvYqzvSjBFH7lhDPPelGemGF8yINoQunwPdM8At4L9OZsFYeK0BkoBgsSdHR9/KvdcYDGdZ9nxtw==
+X-Received: by 2002:ac8:2e6a:: with SMTP id s39mr12464233qta.349.1576857923054;
+        Fri, 20 Dec 2019 08:05:23 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:b8d3:2731:aa33:5534? ([2001:4898:a800:1012:6a07:2731:aa33:5534])
+        by smtp.gmail.com with ESMTPSA id l19sm3143227qtq.48.2019.12.20.08.05.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Dec 2019 08:05:22 -0800 (PST)
+Subject: Re: [PATCH v3] sparse-checkout: improve OS ls compatibility
+To:     Ed Maste <emaste@FreeBSD.org>,
+        git mailing list <git@vger.kernel.org>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>
+References: <20191219015833.49314-1-emaste@FreeBSD.org>
+ <20191220153814.54899-1-emaste@FreeBSD.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <9c3d10c3-76fb-9e9e-013b-b3f66b934dd6@gmail.com>
+Date:   Fri, 20 Dec 2019 11:05:22 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-References: <CAPyFy2AKSVQJtSY0RNgJDJ5k1P=-gjNXVjDgPh+CdghhZtJXDw@mail.gmail.com>
- <F0FBE3B6-0DF5-40A4-B1A3-18EF65D48FF3@icloud.com>
-In-Reply-To: <F0FBE3B6-0DF5-40A4-B1A3-18EF65D48FF3@icloud.com>
-From:   Ed Maste <emaste@freebsd.org>
-Date:   Fri, 20 Dec 2019 10:56:29 -0500
-Message-ID: <CAPyFy2Ar+OncJtgZZyAzxs0PkXy5rSU6ALS+MimK8x5TzWjLug@mail.gmail.com>
-Subject: Re: git-subtree split misbehaviour with a commit having empty ls-tree
- for the specified subdir
-To:     Tom Clarkson <tqclarkson@icloud.com>
-Cc:     git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+In-Reply-To: <20191220153814.54899-1-emaste@FreeBSD.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 18 Dec 2019 at 19:57, Tom Clarkson <tqclarkson@icloud.com> wrote:
->
-> > Overall I think your proposed algorithm is reasonable (even though I
-> > think it won't address some of the cases in our repo). Will your
-> > algorithm allow us to pass $dir to git rev-list, for the initial
-> > split?
->
-> Is this just for performance reasons? As I understand it that was left out because it would exclude relevant commits on an existing subtree, but it could make sense as an optimization for the first split of a large repo.
+On 12/20/2019 10:38 AM, Ed Maste wrote:
+> On FreeBSD, when executed by root ls enables the '-A' option:
+> 
+>   -A  Include directory entries whose names begin with a dot (`.')
+>       except for . and ...  Automatically set for the super-user unless
+>       -I is specified.
+> 
+> As a result the .git directory appeared in the output when run as root.
+> Simulate no-dotfile ls behaviour using a shell glob.
 
-Yes, it's for performance reasons on a first split that I'd like to
-see it. On the FreeBSD repo the difference is some 40 minutes vs. a
-few seconds.
+This patch looks good to me and seems to match where the
+discussion landed. Thanks for finding and fixing this!
 
-> So the process becomes something like
->
->  # clear the cache - shouldn't usually be necessary, but it's a universal debugging step.
-> git subtree clear-cache --prefix=dir
->
-> # ref and all its parents are before subtree add. Treat any children as inital commits.
-> git subtree ignore --prefix=dir ref
->
-> # ref and all its parents are known subtree commits to be included without transformation.
-> git subtree existing --prefix=dir ref
->
-> # Override an arbitrary mapping, either for performance or because that commit is problematic
-> git subtree map --prefix=dir mainline-ref subtree-ref
->
-> # Run the existing algorithm, but skipping anything defined manually
-> git subtree split --prefix=dir
+-Stolee
 
-This sounds about perfect.
-
-> > For a concrete example (from the repo at
-> > https://github.com/freebsd/freebsd), 7f3a50b3b9f8 is a mainline commit
-> > that added a new subtree, from 9ee787636908. I think that if I could
-> > inform subtree split that 9ee787636908 is the root it would work for
-> > me.
->
-> Aside from the metadata, that one is a bit different from a standard subtree add in that it copies three folders from the subtree repo rather than the root - so the contents of contrib/elftoolchain will never exactly match the actual elftoolchain repo, and 9ee787636908 is neither mainline nor subtree as subtree split understands it.
-
-Fair enough, and we have lots of examples of slightly strange history
-in svn that svn2git represents in interesting ways.
-
-> If you ignore 9ee787636908, the resulting subtree will be fairly clean, but won’t have much of a relationship to the external repo.
->
-> If you treat 9ee787636908 as an existing subtree, the second commit on your subtree will be based on 7f3a50b3b9f8, which deletes most of the contents of the subtree. You should still be able to merge in updates from the external repo, but if you try to push changes upstream the deletion will break things.
-
-I think this is fine - our main goal here is to be able to update
-contrib/ code within FreeBSD as we do today with svn, and we may well
-always have some changes that are never intended to be pushed
-upstream.
-
-Continuing the example from our repo, there is more history in the
-"subtree" already, with 061ef1f9424f as the head. ca8624403626 is the
-merge to mainline.
