@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 484AEC2D0C8
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45FFAC43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1E8CA2082E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 211DD2082E
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q/RuCGn9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O31spNxx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727553AbfLTSOt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 13:14:49 -0500
-Received: from mail-pl1-f181.google.com ([209.85.214.181]:46294 "EHLO
-        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727533AbfLTSOq (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727538AbfLTSOq (ORCPT <rfc822;git@archiver.kernel.org>);
         Fri, 20 Dec 2019 13:14:46 -0500
-Received: by mail-pl1-f181.google.com with SMTP id y8so4415120pll.13
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:14:46 -0800 (PST)
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:37981 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727523AbfLTSOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 13:14:43 -0500
+Received: by mail-pj1-f68.google.com with SMTP id l35so4476066pje.3
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SeZOY/KKpQY2td5afYkTiUUHcs8wX+Qr20utB7VGqmc=;
-        b=Q/RuCGn9AdkLJ9igOBaju/3tPoqphtqJZ2sx5z1hLaLSI0PFobPlltM9L5/nhi9/3b
-         LitIzhOunRRMjCY+gtGwvRVTFzQYPQMQqi6wMhpwg/L6cwDcvuMRLpaOcovU8B6q+MZg
-         d1OgwH4nQ9chdlYZaOVIxq2Ay4epzXofX0Ip9dnX1oeQktQ6E7Bq8nTuGScCz6S6zpyo
-         DG5MjGZk4H1oYWqRq7heZBWgKhLWV/WKNrhFOWCQ/YDnioToBeCJCqetoPpTc8JNT/iL
-         WBckzOwh6y1/Xs1Ij/03Dm0Iw9zAW0yzlsq+289m9SVClLyFB5qIlp7qLwbO095zn9WY
-         SH0Q==
+        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
+        b=O31spNxxn7VQnEvwhSPthNMjvnj/eNVhK/PyoayF8qySczuOptBChGpQbA6+2uXt1w
+         peo0gD3j4Jp9gbvVF2SDbUTeRM63vt7bSA3i7pE3afAQ366jXO+sOoB8GhZ/REL7xgOc
+         3YPGAsxQ+pdL4DNkphWwJFK0M9lfdz0Pm7vSgb1ss21CA1iWwf5BhXcras3SBo1l1UwY
+         zjJYF6CYC8dh1WB3t4Zs3uf41QrGX67PIXUTWsg7npPdhx+RayIPQeIbYZ/1CjP+bLfv
+         MtuwhFp5UfmTWO3zcwfpLmgq1l9YQi+rLMvFPbmeuMV5PzskaDs8JLPCO4H+XNcQBru3
+         ytiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SeZOY/KKpQY2td5afYkTiUUHcs8wX+Qr20utB7VGqmc=;
-        b=MgNraSjsnCH4pr0fz7RyVV+gd/M0gxNY1TqTCF9jkPBJ9GGbCd8Yiuw4AyzqyRtaX7
-         /aiQnfC/lwPl4hTH4MP4HDWkhTaKVIy7CYds9xk10PAO+UrdKuGkjvYlWM0Vbrg2e0ug
-         xZv/XE3BU83gJSmnzsR17cqVtq5S0s2hI7WkozvvJspBtwmTje9szAkH//vUETYwXrtq
-         OpgB2CPNC11cJmFKWZvyc0Q4RzIs3928wX3N8gRM0P9xUi8JDTTTpWsdn45+WoRx1ACy
-         FvZsdv/7ORdKoFqfN8fuGYfGYUUsTrYcfik6fzkBycbjkc9ntWLv2rAtgOGhMgLuqWpC
-         Fg4w==
-X-Gm-Message-State: APjAAAXcbTL2+jQyYc3xxk96Xmh6hs9Fd0RQBuRYCIp6KVhrqBiGg/qx
-        TflHSqRst9YHMRXo3aBfMjQuHNWU
-X-Google-Smtp-Source: APXvYqxuvr8eFNjAYhey+2oOwDDMqVKAzxPOX/j67I7xRi+8bCMPsyaPMuwFSyqWD0udCvrCMN2koQ==
-X-Received: by 2002:a17:90b:1243:: with SMTP id gx3mr10019311pjb.117.1576865685422;
-        Fri, 20 Dec 2019 10:14:45 -0800 (PST)
+        bh=cq3i6CU2w1OvkLOnIHEPmtZ2dO3HE+MsuoDzwGrRs/Q=;
+        b=QHbMqmzJbixzL3TTM5BOu4RK9B3qKoQoXeN2WJ6Ke5oH4Zswajdzc0pTrW9k8mqgho
+         mMkKPTJ/dVGo+HT00W/viX0C2jMmq8v3aTTxqV4ugasVC0WHqth2XX39Xqk5TgLft3ji
+         KtY/z62nob6r8WdN+QWs29IOhyZPQuHBOvxeNBAHHinepP+VytMPdfPXXMCtvYJKzRd1
+         Z6aK58UoQ0H9v3fcfodXjmSHoK4Q6Jj4fp2jmjAiYxwGXwJ4Y5f7V/plgAFXeC+nhm96
+         gDIOhrp3atNpQifeYYww7gpR8iSxgyK638PvmInpqMD1Ls7iurotXHNDWKVitN+5qSxy
+         gm6g==
+X-Gm-Message-State: APjAAAVxXo0H/jpSNI2rG8+RMGDaEwMOqvp7BjYmR2bj/XDxd3IaGxh/
+        xfc3Y1Z3SpFCZeJE0dBNdlN1OD23
+X-Google-Smtp-Source: APXvYqwOHymacV08h6x7NwRWTiW3GxdU3sc9hkBg33hdI9deafbigBRqxlw6YxutJNhBQrg06KKc9w==
+X-Received: by 2002:a17:902:7787:: with SMTP id o7mr17089054pll.328.1576865682025;
+        Fri, 20 Dec 2019 10:14:42 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com.com ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.44
+        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 10:14:44 -0800 (PST)
+        Fri, 20 Dec 2019 10:14:41 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 13/15] t1507: stop losing return codes of git commands
-Date:   Fri, 20 Dec 2019 10:16:00 -0800
-Message-Id: <63ca18207d58a846f47887926582af9b3c55284e.1576865664.git.liu.denton@gmail.com>
+Subject: [PATCH v3 09/15] t1307: reorder `nongit test_must_fail`
+Date:   Fri, 20 Dec 2019 10:15:56 -0800
+Message-Id: <cf43579d654387ca19d3d8b10c4e775a8f663621.1576865664.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576865663.git.liu.denton@gmail.com>
 References: <cover.1576794144.git.liu.denton@gmail.com> <cover.1576865663.git.liu.denton@gmail.com>
@@ -73,119 +73,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The return code of git commands are lost when a command is in a
-non-assignment command substitution in favour of the surrounding
-command's. Rewrite instances of this so that git commands run
-on their own.
-
-In commit_subject(), use a `tformat` instead of `format` since,
-previously, we were testing the output of a command substitution which
-didn't care if there was a trailing newline since it was automatically
-stripped. Since we use test_cmp() now, the trailing newline matters so
-use `tformat` to always output it.
+In the future, we plan on only allowing `test_must_fail` to work on a
+restricted subset of commands, including `git`. Reorder the commands so
+that `nongit` comes before `test_must_fail`. This way, `test_must_fail`
+operates on a git command.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1507-rev-parse-upstream.sh | 45 +++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 13 deletions(-)
+ t/t1307-config-blob.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 8b4cf8a6e3..d81f289ace 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -35,7 +35,7 @@ full_name () {
- 
- commit_subject () {
- 	(cd clone &&
--	 git show -s --pretty=format:%s "$@")
-+	 git show -s --pretty=tformat:%s "$@")
- }
- 
- error_message () {
-@@ -44,18 +44,27 @@ error_message () {
- }
- 
- test_expect_success '@{upstream} resolves to correct full name' '
--	test refs/remotes/origin/master = "$(full_name @{upstream})" &&
--	test refs/remotes/origin/master = "$(full_name @{UPSTREAM})" &&
--	test refs/remotes/origin/master = "$(full_name @{UpSTReam})"
-+	echo refs/remotes/origin/master >expect &&
-+	full_name @{upstream} >actual &&
-+	test_cmp expect actual &&
-+	full_name @{UPSTREAM} >actual &&
-+	test_cmp expect actual &&
-+	full_name @{UpSTReam} >actual &&
-+	test_cmp expect actual
+diff --git a/t/t1307-config-blob.sh b/t/t1307-config-blob.sh
+index 37dc689d8c..002e6d3388 100755
+--- a/t/t1307-config-blob.sh
++++ b/t/t1307-config-blob.sh
+@@ -74,7 +74,7 @@ test_expect_success 'can parse blob ending with CR' '
  '
  
- test_expect_success '@{u} resolves to correct full name' '
--	test refs/remotes/origin/master = "$(full_name @{u})" &&
--	test refs/remotes/origin/master = "$(full_name @{U})"
-+	echo refs/remotes/origin/master >expect &&
-+	full_name @{u} >actual &&
-+	test_cmp expect actual &&
-+	full_name @{U} >actual &&
-+	test_cmp expect actual
+ test_expect_success 'config --blob outside of a repository is an error' '
+-	test_must_fail nongit git config --blob=foo --list
++	nongit test_must_fail git config --blob=foo --list
  '
  
- test_expect_success 'my-side@{upstream} resolves to correct full name' '
--	test refs/remotes/origin/side = "$(full_name my-side@{u})"
-+	echo refs/remotes/origin/side >expect &&
-+	full_name my-side@{u} >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'upstream of branch with @ in middle' '
-@@ -86,8 +95,11 @@ test_expect_success 'my-side@{u} resolves to correct commit' '
- 	git checkout side &&
- 	test_commit 5 &&
- 	(cd clone && git fetch) &&
--	test 2 = "$(commit_subject my-side)" &&
--	test 5 = "$(commit_subject my-side@{u})"
-+	echo 2 >expect &&
-+	commit_subject my-side >actual &&
-+	test_cmp expect actual &&
-+	echo 5 >expect &&
-+	commit_subject my-side@{u} >actual
- '
- 
- test_expect_success 'not-tracking@{u} fails' '
-@@ -99,8 +111,11 @@ test_expect_success 'not-tracking@{u} fails' '
- test_expect_success '<branch>@{u}@{1} resolves correctly' '
- 	test_commit 6 &&
- 	(cd clone && git fetch) &&
--	test 5 = $(commit_subject my-side@{u}@{1}) &&
--	test 5 = $(commit_subject my-side@{U}@{1})
-+	echo 5 >expect &&
-+	commit_subject my-side@{u}@{1} >actual &&
-+	test_cmp expect actual &&
-+	commit_subject my-side@{U}@{1} >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success '@{u} without specifying branch fails on a detached HEAD' '
-@@ -149,7 +164,9 @@ test_expect_success 'checkout other@{u}' '
- '
- 
- test_expect_success 'branch@{u} works when tracking a local branch' '
--	test refs/heads/master = "$(full_name local-master@{u})"
-+	echo refs/heads/master >expect &&
-+	full_name local-master@{u} >actual &&
-+	test_cmp expect actual
- '
- 
- test_expect_success 'branch@{u} error message when no upstream' '
-@@ -203,7 +220,9 @@ test_expect_success 'pull works when tracking a local branch' '
- 
- # makes sense if the previous one succeeded
- test_expect_success '@{u} works when tracking a local branch' '
--	test refs/heads/master = "$(full_name @{u})"
-+	echo refs/heads/master >expect &&
-+	full_name @{u} >actual &&
-+	test_cmp expect actual
- '
- 
- commit=$(git rev-parse HEAD)
+ test_done
 -- 
 2.24.1.703.g2f499f1283
 
