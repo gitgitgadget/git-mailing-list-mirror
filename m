@@ -2,137 +2,148 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 918F1C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BA65C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5E88E206D3
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:39:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 035B6218AC
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nOsq3fP1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNuXG1sc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727529AbfLTVjd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 16:39:33 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:38146 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727506AbfLTVjd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 16:39:33 -0500
-Received: by mail-pf1-f195.google.com with SMTP id x185so5932047pfc.5
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 13:39:33 -0800 (PST)
+        id S1727565AbfLTWFY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 17:05:24 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35520 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727473AbfLTWFY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 17:05:24 -0500
+Received: by mail-ed1-f67.google.com with SMTP id f8so9858943edv.2
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 14:05:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2ph4Ae4uZUYGgFdwRZK2A+yfBzwvz7ycih7+qj+630k=;
-        b=nOsq3fP12ulbebvjtmkl6y0A6R7wbFyMfk9TIytOEg20mTaAdgXAhR1yUOD2IeN/tK
-         eIIskls7b9vXeodqR38SWE+NXzow1s+UUvSeJUd7OHA33cJOpXCarGGu5nNb3Wy25Amp
-         2jBW2FsK1S0LKvSyghLlnIlRzmTjBrjY4NDZwl11LNo41fuwBTo7hSBtPfEkxh2oHV9e
-         j6z8ZclyIulVGAWGBP3BoW5FbamnIYiIGqAWMzeKuleMrgN3ku/ploLuzdpqsLTqpCO4
-         aSbRND+tUlSruA2n6ZHyAnQwVufKn2ZJv/yhNZ5sa5mno4GsaqrzEZXYwrqCD7HgmRkH
-         +pxQ==
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:mime-version:content-transfer-encoding
+         :fcc:to:cc;
+        bh=GqjoywjsgXkIOLG+hauRwpjnXfuWKFTzLJNZD9Q+qw4=;
+        b=kNuXG1scSiO60Q2sEw6i/g7QDxnkmFg8ROrP+lBR2KUc3w69WEPIGGh0Ggfak5Ij1B
+         HY/iCgaCFSnQA+YpcKevdidtrZ+zCiYE16G26/JsWtNLcDjTxAUuPGcketzbsj3Xp6vg
+         NbvM/eNScfJAFJuSuqp2WtILwb+NKvRdwB2f61NeT2G/NkuFKCSECyYWB6x+f2dgko5u
+         Y829jHPp9DR9uZBRPc+LPvgp3zipjG8DPV3xDERYk4JxFFfJriqrOQqFuuCVv7I56Zsc
+         cnHs0BSTasZnffsqOyvsDZm20jsyGZvBGvjtIHvo6CJMUQ5q4pa/Gh+nv9OaaGm4IjVa
+         w26g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2ph4Ae4uZUYGgFdwRZK2A+yfBzwvz7ycih7+qj+630k=;
-        b=GfAFsVScTzs6q3cizLPQAcktqPOkOgQU/yjleL5f0VPBbzWVj7vOSg/LdDdR+2bMfY
-         2duYVjHC28zxumpEjI5RkEPfRQyK+uDhYKG5a5ZY+LJAfFIOZCDeyNj309SxWJ5f5X88
-         nMnhcYAQ4wgbDgzRl8X/360JQVek/RQipmFOutChp2sxDkaeG+igK7tp81+Z5A3RiqEc
-         TnlPWrTFLMXDeuPpUMODsxPYBR+GpBujL2JYRinfMDrjh/gRiVKU7apLHlc69MpcPhbK
-         /5YzXM5gxGqRTKBt9dGFpfyAkIBD487mZk44v9S7d9qRvJSsvYs3axbECgUjxHE5D8u5
-         rdEg==
-X-Gm-Message-State: APjAAAV6OFsOwIwjPbxZvXcO1tPmxBAlKsQIzCe7fwFdIMPWcyU2FC0I
-        EDZw0ojIAlOeXtv01T7owhlsBw==
-X-Google-Smtp-Source: APXvYqxgwpAjEMPvbXPJcKQmMX490nEZTM1ArmH8of4OSiGTrWc1Nlxd2DgixKNOy02irklpHfvIDA==
-X-Received: by 2002:aa7:848c:: with SMTP id u12mr17885382pfn.12.1576877972466;
-        Fri, 20 Dec 2019 13:39:32 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id n7sm2066052pjq.8.2019.12.20.13.39.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Dec 2019 13:39:30 -0800 (PST)
-Date:   Fri, 20 Dec 2019 13:39:26 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
-Message-ID: <20191220213926.GA1876@google.com>
-References: <pull.495.git.1576574242.gitgitgadget@gmail.com>
- <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
- <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
- <xmqqfthgb01m.fsf@gitster-ct.c.googlers.com>
- <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
- <20191220023125.GD227872@google.com>
- <xmqqbls2alsb.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:message-id:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=GqjoywjsgXkIOLG+hauRwpjnXfuWKFTzLJNZD9Q+qw4=;
+        b=PlZFScf+beIUtnrCUwSQWVSLyXP89li2UIGtYTxT4F8jxDlttPdGjJV0TErJwSTa1E
+         rOYAA1yuhC7J2Dxy7/5uJc+AgZYHMDpAtH+UyZbY1l7v0SXE7dR99/L4flhbM2Ut7dvh
+         H38LnI9qRt55gTlErE4mR6TsEbyz92LBlkF2LbkwQGr+kk9xsST2ug7+l/RmNniqH9r6
+         v9hNFI234Wzlt5TNpYi95UUP+741xVz/ebTIuEJoQKMe+SGdvKKx11RGDBzEhawg3CRn
+         Ia2CBVtAn2HJUsLvERcm+Ub4jytj8Jji/SXFRTEAZg67D0toUY/tNUnkC5HvyfUnAUE+
+         gGRA==
+X-Gm-Message-State: APjAAAUIcosmFNQyWvcLKrjtizRcxXyWnDfInc34wqPUL2BDnE12aDD9
+        9SE5MokFXHwipU12imw64qk72XYN
+X-Google-Smtp-Source: APXvYqyh6QkbV+OERSFEUHTCaUel0UnZ3A9WyyPHtvLuCAoXtlrvzEbkjAEVBiTHMhBz66edaveOoA==
+X-Received: by 2002:a17:906:4e46:: with SMTP id g6mr18650829ejw.309.1576879522469;
+        Fri, 20 Dec 2019 14:05:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i4sm1098636edr.59.2019.12.20.14.05.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Dec 2019 14:05:21 -0800 (PST)
+Message-Id: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 20 Dec 2019 22:05:11 +0000
+Subject: [PATCH 0/9] [RFC] Changed Paths Bloom Filters
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbls2alsb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     stolee@gmail.com, szeder.dev@gmail.com, jonathantanmy@google.com,
+        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 20, 2019 at 10:34:28AM -0800, Junio C Hamano wrote:
-> Emily Shaffer <emilyshaffer@google.com> writes:
-> 
-> > Hm. I'm surprised to see this feedback come in the form of a local
-> > change when making the topic branch, rather than in a reply to the v1
-> > patch. What's the reasoning? (Or is this scissors patch intended to be
-> > the feedback?)
-> 
-> You haven't seen a suggestion in the form of counter-proposal?
+Hey! 
 
-I actually have only seen the scissors-patch as a "yes, and" in
-practice. I think this is a sign I should be doing more reviews ;)
+The commit graph feature brought in a lot of performance improvements across
+multiple commands. However, file based history continues to be a performance
+pain point, especially in large repositories. 
 
-> 
-> > I ask because out of all of us, it seems the Outreachy interns can
-> > benefit the most from advice on how and why to write their commit
-> > messages - that is, part of the point of an internship is to learn best
-> > practices and cultural norms in addition to coding practice. (Plus, I
-> > find being asked to rewrite a commit message tends to force me to
-> > understand my own change even better than before.)
-> 
-> It's something Mentors can help doing (I do not necessarily have
-> time for that myself), and you're welcome to use the "tenatively
-> queued" version as an example.
-> 
-> > I'll go ahead and look through the changes to the commit message so I
-> > can learn what you're looking for too :)
-> 
-> Nice.
-> 
-> One thing you missed in your review of the "tentatively queued"
-> version is the reversal of the order of presentation.  Instead of
-> starting with "I decided to do this" without explanation, give the
-> picture of status quo to set the stage, explain what issue exists in
-> the current behaviour, and then describe what approach was chosen to
-> solve the issue.
+Adopting changed path bloom filters has been discussed on the list before,
+and a prototype version was worked on by SZEDER Gábor, Jonathan Tan and Dr.
+Derrick Stolee [1]. This series is based on Dr. Stolee's approach [2] and
+presents an updated and more polished RFC version of the feature. 
 
-Thanks for explaining this - that's a good point for me to take home.
+Performance Gains: We tested the performance of git log -- path on the git
+repo, the linux repo and some internal large repos, with a variety of paths
+of varying depths.
 
-> 
-> > For me, I don't particularly see why we'd want to be rid of it - it sort
-> > of feels like "a picture is worth a thousand words" to include the
-> > actual use case in the commit message.
-> 
-> Output coming from commands and/or options that are used only in a
-> bit more advanced workflow and the ones that are rarely seen, I do
-> agree that showing example is a good way to illustrate exactly what
-> you are talking about.
-> 
-> On the other hand, for behaviour of basic local commands like "git
-> add", "git commit", "git diff", ..., I do not necessarily agree, as
-> these should be obvious and clear to all the intended audiences,
-> which would be "anybody who has used Git for say more than two
-> weeks.
+On the git and linux repos: We observed a 2x to 5x speed up.
 
-Hm, I see. Thanks for clarifying.
+On a large internal repo with files seated 6-10 levels deep in the tree: We
+observed 10x to 20x speed ups, with some paths going up to 28 times faster.
 
- - Emily
+Future Work (not included in the scope of this series):
+
+ 1. Supporting multiple path based revision walk
+ 2. Adopting it in git blame logic. 
+ 3. Interactions with line log git log -L
+
+This series is intended to start the conversation and many of the commit
+messages include specific call outs for suggestions and thoughts. 
+
+Cheers! Garima Singh
+
+[1] https://lore.kernel.org/git/20181009193445.21908-1-szeder.dev@gmail.com/
+[2] 
+https://lore.kernel.org/git/61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com/
+
+Garima Singh (9):
+  commit-graph: add --changed-paths option to write
+  commit-graph: write changed paths bloom filters
+  commit-graph: use MAX_NUM_CHUNKS
+  commit-graph: document bloom filter format
+  commit-graph: write changed path bloom filters to commit-graph file.
+  commit-graph: test commit-graph write --changed-paths
+  commit-graph: reuse existing bloom filters during write.
+  revision.c: use bloom filters to speed up path based revision walks
+  commit-graph: add GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS test flag
+
+ Documentation/git-commit-graph.txt            |   5 +
+ .../technical/commit-graph-format.txt         |  17 ++
+ Makefile                                      |   1 +
+ bloom.c                                       | 257 +++++++++++++++++
+ bloom.h                                       |  51 ++++
+ builtin/commit-graph.c                        |   9 +-
+ ci/run-build-and-tests.sh                     |   1 +
+ commit-graph.c                                | 116 +++++++-
+ commit-graph.h                                |   9 +-
+ revision.c                                    |  67 ++++-
+ revision.h                                    |   5 +
+ t/README                                      |   3 +
+ t/helper/test-read-graph.c                    |   4 +
+ t/t4216-log-bloom.sh                          |  77 ++++++
+ t/t5318-commit-graph.sh                       |   2 +
+ t/t5324-split-commit-graph.sh                 |   1 +
+ t/t5325-commit-graph-bloom.sh                 | 258 ++++++++++++++++++
+ 17 files changed, 875 insertions(+), 8 deletions(-)
+ create mode 100644 bloom.c
+ create mode 100644 bloom.h
+ create mode 100755 t/t4216-log-bloom.sh
+ create mode 100755 t/t5325-commit-graph-bloom.sh
+
+
+base-commit: b02fd2accad4d48078671adf38fe5b5976d77304
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-497%2Fgarimasi514%2FcoreGit-bloomFilters-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-497/garimasi514/coreGit-bloomFilters-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/497
+-- 
+gitgitgadget
