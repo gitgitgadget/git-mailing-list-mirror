@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 213A0C2D0D4
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F99BC2D0C8
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DFE052146E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 473B5218AC
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 22:05:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N/pcDop3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="snVPbPIV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727585AbfLTWFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 17:05:31 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37758 "EHLO
+        id S1727584AbfLTWF2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 17:05:28 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46994 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbfLTWFa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 17:05:30 -0500
-Received: by mail-ed1-f67.google.com with SMTP id cy15so9853334edb.4
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 14:05:28 -0800 (PST)
+        with ESMTP id S1727473AbfLTWF1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 17:05:27 -0500
+Received: by mail-ed1-f67.google.com with SMTP id m8so9821976edi.13
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 14:05:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=9hkApjfOp2Gt6TekmUQkVxOm6TDztfxvSwVC+YHKR44=;
-        b=N/pcDop3Mq1skxBgczMcWE0zCSCa2RZ7yQrqK3ja748pMZDn0waeNeiHlvfo/v+bhb
-         PzlqNA0yjB7z7eI4g9Y9LZWl6wBzJzYtaWST5Sk3YLAS+QURKI0oM8j9LLLtmJQhRtJv
-         TZLoNOE9pMCra9wd6TnQhpKyoVqL1wwn/4IvcZzxHLHieTCcFr0SLqPY1bxe4+o9JSkE
-         JErEWwQQYiILOUM5LfHYFs3Ajnj+txiVnsIX6Or2Nue9Pvpt7scxYzn7RjiVlble+bMk
-         jetJyZijO9erzAw2vuInp1I99eYvLMT6HGbeBihnsnnZ1Lr5b6fpM6zQOTDaJEHxKeTL
-         AM9A==
+        bh=n+fhWLRRV8jUrq3jgjTXCVMg0G/wpmNbhsUWvsWJmdg=;
+        b=snVPbPIVGAm6s3mv44QCDyyiYbDuhFjgsk1Xwzbq8rxP1JscFS3b4SXd/2ESTKquz5
+         FiVZnFWSeDpWCRt4YgwxTBOMTax9I3Qzv5KLTvnQWmedj49jylh3nF+dXfJJTUayi8Oz
+         k/b2lM3UwTd0TRrsfNskyjCECtZCFhncsklq+g+jJ5aCaU2kPscFoU3W+p3qLG6uuNqY
+         8CO4GAerYc79K/jesq7kYzyWk88JnQOr9aXDduiDpQEhT4eFnOm/GTCHtSYL4JVaBPH2
+         motEqV8BagZ2wRlBsUN8R6esn7F62FTuwJ0pIjvvHub0ZxyDpMFKwhUzrIR4Dd5CsX5i
+         PZgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=9hkApjfOp2Gt6TekmUQkVxOm6TDztfxvSwVC+YHKR44=;
-        b=cYJVXNVQVgvOdT+M9pVsKCSnNGOtPR5gBmuRWYDmBEthqQAHPmRk7Ploz3p3WWRRyE
-         2LBdCj7N48GIiDtgnVAzn95OAUZogdOHUHe5hfoKL1uMplsOl/iyxca/rpb02CFIcXkZ
-         NN7k9SCmYu2G1edp72vvLQPSgTXccg5FDVtAuWUMxPBMNMQwlo6d3O2jizzjEVPmp8be
-         RjRwulb2scjaV1mzRQkKmBQUuO8oJ3MZ1vx2CCiP3u5kjH7Pv3ggtnVoBLmRYNOcxW6G
-         PhsgExb8ZodAqoPAeC8gUg/iynu8edicE2piTznlh0WOiRzqJVx2qpKeuwKrOPteh8Ks
-         grDA==
-X-Gm-Message-State: APjAAAXesNvYksOziFKM0HZBh69rKVc2BTv7J8IDZnnMFkC1AsS0WJEh
-        KC16qEFoPQW93dI0Ifw7bZA6bjxB
-X-Google-Smtp-Source: APXvYqzsfM0wF1deS3rJABnQyQ7WHMJHJBWdEZy3ptNIffkOS1AEasCzlbtoraRpHdJKZ1Me3j2+SA==
-X-Received: by 2002:aa7:ce87:: with SMTP id y7mr18740632edv.82.1576879527350;
-        Fri, 20 Dec 2019 14:05:27 -0800 (PST)
+        bh=n+fhWLRRV8jUrq3jgjTXCVMg0G/wpmNbhsUWvsWJmdg=;
+        b=X7xvP20Z4Ee4yf8BeQwC1rb8i1n71xX4+ht6uqrLl/HV5suVfeM2pU4wOn0BAOpmWH
+         FzbgRIa6U/exaseIVkJQS3Jw1cV5ImXlk/Nr6p8I1KDMd9CrG7/T/1mPGi/w3RX5wwXS
+         dvgA18kp5F+7JvenXLSRKtpXyDrXDVVZR+ndBFsyKi1xE26f6Zy0reYS4s197hd0tXSD
+         mRZrK0IIvfJvtwe4x3RSa3NsN+AxF7uMHa5jfPfuINJdrrlFXg8E6E7j3SD5CR0Xq/lO
+         qPMcxjQrU1FCEMLpzNSsXMrmWALmy1hsFcjNSBD4Y7E7DNgqAtYVD9QKFl2o9Y647JuA
+         TC2g==
+X-Gm-Message-State: APjAAAWUeVnBaKBxKR4IJfeN5TssmGYjA208zKR6H3CLVhTGhNx3rSF2
+        MY2FlL/wu/fEPWLfLNp+brKsK2wO
+X-Google-Smtp-Source: APXvYqx+79Cu8GhthflJMCkm+Oo2gofjqN/EzD8MsBHeIrIjPWq6KVNUXiLyi79cjpfoCgdhpBLrGA==
+X-Received: by 2002:a50:e108:: with SMTP id h8mr18910851edl.196.1576879524043;
+        Fri, 20 Dec 2019 14:05:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s19sm1132673edr.55.2019.12.20.14.05.26
+        by smtp.gmail.com with ESMTPSA id e2sm1248520eja.37.2019.12.20.14.05.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 14:05:26 -0800 (PST)
-Message-Id: <85bfdfa59c48891343e3eeb740a4b3554405909a.1576879520.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2019 14:05:23 -0800 (PST)
+Message-Id: <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.497.git.1576879520.gitgitgadget@gmail.com>
 References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
 From:   "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 22:05:17 +0000
-Subject: [PATCH 6/9] commit-graph: test commit-graph write --changed-paths
+Date:   Fri, 20 Dec 2019 22:05:13 +0000
+Subject: [PATCH 2/9] commit-graph: write changed paths bloom filters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,297 +76,413 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Garima Singh <garima.singh@microsoft.com>
 
-Add tests for the --changed-paths feature when writing
-commit-graphs.
+The changed path bloom filters help determine which paths changed between a
+commit and its first parent. We already have the "--changed-paths" option
+for the "git commit-graph write" subcommand, now actually compute them under
+that option. The COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag enables this
+computation.
 
-RFC Notes:
-I plan to split this test across some of the earlier commits
-as appropriate.
+RFC Notes: Here are some details about the implementation and I would love
+to know your thoughts and suggestions for improvements here.
 
-Helped-by: Derrick Stolee <dstolee@microsoft.com>
+For details on what bloom filters are and how they work, please refer to
+Dr. Derrick Stolee's blog post [1].
+[1] https://devblogs.microsoft.com/devops/super-charging-the-git-commit-graph-iv-bloom-filters/
+
+1. The implementation sticks to the recommended values of 7 and 10 for the
+   number of hashes and the size of each entry, as described in the blog.
+   The implementation while not completely open to it at the moment, is flexible
+   enough to allow for tweaking these settings in the future.
+   Note: The performance gains we have observed so far with these values is
+   significant enough to not that we did not need to tweak these settings.
+   The cover letter of this series has the details and the commit where we have
+   git log use bloom filters.
+
+2. As described in the blog and the linked technical paper therin, we do not need
+   7 independent hashing functions. We use the Murmur3 hashing scheme - seed it
+   twice and then combine those to procure an arbitrary number of hash values.
+
+3. The filters are sized according to the number of changes in the each commit,
+   with minimum size of one 64 bit word.
+
+[Call for advice] We currently cap writing bloom filters for commits with
+atmost 512 changed files. In the current implementation, we compute the diff,
+and then just throw it away once we see it has more than 512 changes.
+Any suggestiongs on how to reduce the work we are doing in this case are more
+than welcome.
+
+[Call for advice] Would the git community like this commit to be split up into
+more granular commits? This commit could possibly be split out further with the
+bloom.c code in its own commit, to be used by the commit-graph in a subsequent
+commit. While I prefer it being contained in one commit this way, I am open to
+suggestions.
+
+[Call for advice] Would a technical document explaining the exact details of
+the bloom filter implemenation and the hashing calculations be helpful? I will
+be adding details into Documentation/technical/commit-graph-format.txt, but the
+bloom filter code is an independent subsystem and could be used outside of the
+commit-graph feature. Is it worth a separate document, or should we apply "You
+Ain't Gonna Need It" principles?
+
+[Call for advice] I plan to add unit tests for bloom.c, specifically to ensure
+that the hash algorithm and bloom key calculations are stable across versions.
+
 Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+Helped-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/helper/test-read-graph.c    |   4 +
- t/t5325-commit-graph-bloom.sh | 255 ++++++++++++++++++++++++++++++++++
- 2 files changed, 259 insertions(+)
- create mode 100755 t/t5325-commit-graph-bloom.sh
+ Makefile       |   1 +
+ bloom.c        | 201 +++++++++++++++++++++++++++++++++++++++++++++++++
+ bloom.h        |  46 +++++++++++
+ commit-graph.c |  32 +++++++-
+ 4 files changed, 279 insertions(+), 1 deletion(-)
+ create mode 100644 bloom.c
+ create mode 100644 bloom.h
 
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index d2884efe0a..aff597c7a3 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -45,6 +45,10 @@ int cmd__read_graph(int argc, const char **argv)
- 		printf(" commit_metadata");
- 	if (graph->chunk_extra_edges)
- 		printf(" extra_edges");
-+	if (graph->chunk_bloom_indexes)
-+		printf(" bloom_indexes");
-+	if (graph->chunk_bloom_data)
-+		printf(" bloom_data");
- 	printf("\n");
- 
- 	UNLEAK(graph);
-diff --git a/t/t5325-commit-graph-bloom.sh b/t/t5325-commit-graph-bloom.sh
-new file mode 100755
-index 0000000000..d7ef0e7fb3
+diff --git a/Makefile b/Makefile
+index 42a061d3fb..9d5e26f5d6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -838,6 +838,7 @@ LIB_OBJS += base85.o
+ LIB_OBJS += bisect.o
+ LIB_OBJS += blame.o
+ LIB_OBJS += blob.o
++LIB_OBJS += bloom.o
+ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
+ LIB_OBJS += bundle.o
+diff --git a/bloom.c b/bloom.c
+new file mode 100644
+index 0000000000..08328cc381
 --- /dev/null
-+++ b/t/t5325-commit-graph-bloom.sh
-@@ -0,0 +1,255 @@
-+#!/bin/sh
++++ b/bloom.c
+@@ -0,0 +1,201 @@
++#include "git-compat-util.h"
++#include "bloom.h"
++#include "commit-graph.h"
++#include "object-store.h"
++#include "diff.h"
++#include "diffcore.h"
++#include "revision.h"
++#include "hashmap.h"
 +
-+test_description='commit graph with bloom filters'
-+. ./test-lib.sh
++#define BITS_PER_BLOCK 64
 +
-+test_expect_success 'setup repo' '
-+	git init &&
-+	git config core.commitGraph true &&
-+	git config gc.writeCommitGraph false &&
-+	infodir=".git/objects/info" &&
-+	graphdir="$infodir/commit-graphs" &&
-+	test_oid_init
-+'
++define_commit_slab(bloom_filter_slab, struct bloom_filter);
 +
-+graph_read_expect() {
-+	OPTIONAL=""
-+	NUM_CHUNKS=5
-+	if test ! -z $2
-+	then
-+		OPTIONAL=" $2"
-+		NUM_CHUNKS=$((NUM_CHUNKS + $(echo "$2" | wc -w)))
-+	fi
-+	cat >expect <<- EOF
-+	header: 43475048 1 1 $NUM_CHUNKS 0
-+	num_commits: $1
-+	chunks: oid_fanout oid_lookup commit_metadata bloom_indexes bloom_data
-+	EOF
-+	test-tool read-graph >output &&
-+	test_cmp expect output
++struct bloom_filter_slab bloom_filters;
++
++struct pathmap_hash_entry {
++    struct hashmap_entry entry;
++    const char path[FLEX_ARRAY];
++};
++
++static uint32_t rotate_right(uint32_t value, int32_t count)
++{
++	uint32_t mask = 8 * sizeof(uint32_t) - 1;
++	count &= mask;
++	return ((value >> count) | (value << ((-count) & mask)));
 +}
 +
-+test_expect_success 'create commits and write commit-graph' '
-+	for i in $(test_seq 3)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git commit-graph write --reachable --changed-paths &&
-+	test_path_is_file $infodir/commit-graph &&
-+	graph_read_expect 3
-+'
++static uint32_t seed_murmur3(uint32_t seed, const char *data, int len)
++{
++	const uint32_t c1 = 0xcc9e2d51;
++	const uint32_t c2 = 0x1b873593;
++	const int32_t r1 = 15;
++	const int32_t r2 = 13;
++	const uint32_t m = 5;
++	const uint32_t n = 0xe6546b64;
++	int i;
++	uint32_t k1 = 0;
++	const char *tail;
 +
-+graph_git_two_modes() {
-+	git -c core.commitGraph=true $1 >output
-+	git -c core.commitGraph=false $1 >expect
-+	test_cmp expect output
++	int len4 = len / sizeof(uint32_t);
++
++	const uint32_t *blocks = (const uint32_t*)data;
++
++	uint32_t k;
++	for (i = 0; i < len4; i++)
++	{
++		k = blocks[i];
++		k *= c1;
++		k = rotate_right(k, r1);
++		k *= c2;
++
++		seed ^= k;
++		seed = rotate_right(seed, r2) * m + n;
++	}
++
++	tail = (data + len4 * sizeof(uint32_t));
++
++	switch (len & (sizeof(uint32_t) - 1))
++	{
++	case 3:
++		k1 ^= ((uint32_t)tail[2]) << 16;
++		/*-fallthrough*/
++	case 2:
++		k1 ^= ((uint32_t)tail[1]) << 8;
++		/*-fallthrough*/
++	case 1:
++		k1 ^= ((uint32_t)tail[0]) << 0;
++		k1 *= c1;
++		k1 = rotate_right(k1, r1);
++		k1 *= c2;
++		seed ^= k1;
++		break;
++	}
++
++	seed ^= (uint32_t)len;
++	seed ^= (seed >> 16);
++	seed *= 0x85ebca6b;
++	seed ^= (seed >> 13);
++	seed *= 0xc2b2ae35;
++	seed ^= (seed >> 16);
++
++	return seed;
 +}
 +
-+graph_git_behavior() {
-+	MSG=$1
-+	BRANCH=$2
-+	COMPARE=$3
-+	test_expect_success "check normal git operations: $MSG" '
-+		graph_git_two_modes "log --oneline $BRANCH" &&
-+		graph_git_two_modes "log --topo-order $BRANCH" &&
-+		graph_git_two_modes "log --graph $COMPARE..$BRANCH" &&
-+		graph_git_two_modes "branch -vv" &&
-+		graph_git_two_modes "merge-base -a $BRANCH $COMPARE"
-+	'
++static inline uint64_t get_bitmask(uint32_t pos)
++{
++	return ((uint64_t)1) << (pos & (BITS_PER_BLOCK - 1));
 +}
 +
-+graph_git_behavior 'graph exists' commits/3 commits/1
++void fill_bloom_key(const char *data,
++		    int len,
++		    struct bloom_key *key,
++		    struct bloom_filter_settings *settings)
++{
++	int i;
++	uint32_t seed0 = 0x293ae76f;
++	uint32_t seed1 = 0x7e646e2c;
 +
-+verify_chain_files_exist() {
-+	for hash in $(cat $1/commit-graph-chain)
-+	do
-+		test_path_is_file $1/graph-$hash.graph || return 1
-+	done
++	uint32_t hash0 = seed_murmur3(seed0, data, len);
++	uint32_t hash1 = seed_murmur3(seed1, data, len);
++
++	key->hashes = (uint32_t *)xcalloc(settings->num_hashes, sizeof(uint32_t));
++	for (i = 0; i < settings->num_hashes; i++)
++		key->hashes[i] = hash0 + i * hash1;
 +}
 +
-+test_expect_success 'add more commits, and write a new base graph' '
-+	git reset --hard commits/1 &&
-+	for i in $(test_seq 4 5)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/2 &&
-+	for i in $(test_seq 6 10)
-+	do
-+		test_commit $i &&
-+		git branch commits/$i || return 1
-+	done &&
-+	git reset --hard commits/2 &&
-+	git merge commits/4 &&
-+	git branch merge/1 &&
-+	git reset --hard commits/4 &&
-+	git merge commits/6 &&
-+	git branch merge/2 &&
-+	git commit-graph write --reachable --changed-paths &&
-+	graph_read_expect 12
-+'
++static void add_key_to_filter(struct bloom_key *key,
++			      struct bloom_filter *filter,
++			      struct bloom_filter_settings *settings)
++{
++	int i;
++	uint64_t mod = filter->len * BITS_PER_BLOCK;
 +
-+test_expect_success 'fork and fail to base a chain on a commit-graph file' '
-+	test_when_finished rm -rf fork &&
-+	git clone . fork &&
-+	(
-+		cd fork &&
-+		rm .git/objects/info/commit-graph &&
-+		echo "$(pwd)/../.git/objects" >.git/objects/info/alternates &&
-+		test_commit new-commit &&
-+		git commit-graph write --reachable --split --changed-paths &&
-+		test_path_is_file $graphdir/commit-graph-chain &&
-+		test_line_count = 1 $graphdir/commit-graph-chain &&
-+		verify_chain_files_exist $graphdir
-+	)
-+'
++	for (i = 0; i < settings->num_hashes; i++) {
++		uint64_t hash_mod = key->hashes[i] % mod;
++		uint64_t block_pos = hash_mod / BITS_PER_BLOCK;
 +
-+test_expect_success 'add three more commits, write a tip graph' '
-+	git reset --hard commits/3 &&
-+	git merge merge/1 &&
-+	git merge commits/5 &&
-+	git merge merge/2 &&
-+	git branch merge/3 &&
-+	git commit-graph write --reachable --split --changed-paths &&
-+	test_path_is_missing $infodir/commit-graph &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 2 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
++		filter->data[block_pos] |= get_bitmask(hash_mod);
++	}
++}
 +
-+graph_git_behavior 'split commit-graph: merge 3 vs 2' merge/3 merge/2
++void load_bloom_filters(void)
++{
++	init_bloom_filter_slab(&bloom_filters);
++}
 +
-+test_expect_success 'add one commit, write a tip graph' '
-+	test_commit 11 &&
-+	git branch commits/11 &&
-+	git commit-graph write --reachable --split --changed-paths &&
-+	test_path_is_missing $infodir/commit-graph &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 3 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
++struct bloom_filter *get_bloom_filter(struct repository *r,
++				      struct commit *c)
++{
++	struct bloom_filter *filter;
++	struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
++	int i;
++	struct rev_info revs;
++	const char *revs_argv[] = {NULL, "HEAD", NULL};
 +
-+graph_git_behavior 'three-layer commit-graph: commit 11 vs 6' commits/11 commits/6
++	filter = bloom_filter_slab_at(&bloom_filters, c);
++	init_revisions(&revs, NULL);
++	revs.diffopt.flags.recursive = 1;
 +
-+test_expect_success 'add one commit, write a merged graph' '
-+	test_commit 12 &&
-+	git branch commits/12 &&
-+	git commit-graph write --reachable --split --changed-paths &&
-+	test_path_is_file $graphdir/commit-graph-chain &&
-+	test_line_count = 2 $graphdir/commit-graph-chain &&
-+	ls $graphdir/graph-*.graph >graph-files &&
-+	test_line_count = 2 graph-files &&
-+	verify_chain_files_exist $graphdir
-+'
++	setup_revisions(2, revs_argv, &revs, NULL);
 +
-+graph_git_behavior 'merged commit-graph: commit 12 vs 6' commits/12 commits/6
++	if (c->parents)
++		diff_tree_oid(&c->parents->item->object.oid, &c->object.oid, "", &revs.diffopt);
++	else
++		diff_tree_oid(NULL, &c->object.oid, "", &revs.diffopt);
++	diffcore_std(&revs.diffopt);
 +
-+test_expect_success 'create fork and chain across alternate' '
-+	git clone . fork &&
-+	(
-+		cd fork &&
-+		git config core.commitGraph true &&
-+		rm -rf $graphdir &&
-+		echo "$(pwd)/../.git/objects" >.git/objects/info/alternates &&
-+		test_commit 13 &&
-+		git branch commits/13 &&
-+		git commit-graph write --reachable --split --changed-paths &&
-+		test_path_is_file $graphdir/commit-graph-chain &&
-+		test_line_count = 3 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files &&
-+		git -c core.commitGraph=true  rev-list HEAD >expect &&
-+		git -c core.commitGraph=false rev-list HEAD >actual &&
-+		test_cmp expect actual &&
-+		test_commit 14 &&
-+		git commit-graph write --reachable --split --changed-paths --object-dir=.git/objects/ &&
-+		test_line_count = 3 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files
-+	)
-+'
++	if (diff_queued_diff.nr <= 512) {
++		struct hashmap pathmap;
++		struct pathmap_hash_entry* e;
++		struct hashmap_iter iter;
++		hashmap_init(&pathmap, NULL, NULL, 0);
 +
-+graph_git_behavior 'alternate: commit 13 vs 6' commits/13 commits/6
++		for (i = 0; i < diff_queued_diff.nr; i++) {
++		    const char* path = diff_queued_diff.queue[i]->two->path;
++		    const char* p = path;
 +
-+test_expect_success 'test merge stragety constants' '
-+	git clone . merge-2 &&
-+	(
-+		cd merge-2 &&
-+		git config core.commitGraph true &&
-+		test_line_count = 2 $graphdir/commit-graph-chain &&
-+		test_commit 14 &&
-+		git commit-graph write --reachable --split --changed-paths --size-multiple=2 &&
-+		test_line_count = 3 $graphdir/commit-graph-chain
++		    /*
++		     * Add each leading directory of the changed file, i.e. for
++		     * 'dir/subdir/file' add 'dir' and 'dir/subdir' as well, so
++		     * the Bloom filter could be used to speed up commands like
++		     * 'git log dir/subdir', too.
++		     *
++		     * Note that directories are added without the trailing '/'.
++		     */
++		    do {
++				char* last_slash = strrchr(p, '/');
 +
-+	) &&
-+	git clone . merge-10 &&
-+	(
-+		cd merge-10 &&
-+		git config core.commitGraph true &&
-+		test_line_count = 2 $graphdir/commit-graph-chain &&
-+		test_commit 14 &&
-+		git commit-graph write --reachable --split --changed-paths --size-multiple=10 &&
-+		test_line_count = 1 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files
-+	) &&
-+	git clone . merge-10-expire &&
-+	(
-+		cd merge-10-expire &&
-+		git config core.commitGraph true &&
-+		test_line_count = 2 $graphdir/commit-graph-chain &&
-+		test_commit 15 &&
-+		git commit-graph write --reachable --split --changed-paths --size-multiple=10 --expire-time=1980-01-01 &&
-+		test_line_count = 1 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 3 graph-files
-+	) &&
-+	git clone --no-hardlinks . max-commits &&
-+	(
-+		cd max-commits &&
-+		git config core.commitGraph true &&
-+		test_line_count = 2 $graphdir/commit-graph-chain &&
-+		test_commit 16 &&
-+		test_commit 17 &&
-+		git commit-graph write --reachable --split --changed-paths --max-commits=1 &&
-+		test_line_count = 1 $graphdir/commit-graph-chain &&
-+		ls $graphdir/graph-*.graph >graph-files &&
-+		test_line_count = 1 graph-files
-+	)
-+'
++				FLEX_ALLOC_STR(e, path, path);
++				hashmap_entry_init(&e->entry, strhash(p));
++				hashmap_add(&pathmap, &e->entry);
 +
-+test_expect_success 'remove commit-graph-chain file after flattening' '
-+	git clone . flatten &&
-+	(
-+		cd flatten &&
-+		test_line_count = 2 $graphdir/commit-graph-chain &&
-+		git commit-graph write --reachable &&
-+		test_path_is_missing $graphdir/commit-graph-chain &&
-+		ls $graphdir >graph-files &&
-+		test_must_be_empty graph-files
-+	)
-+'
++				if (!last_slash)
++				    last_slash = (char*)p;
++				*last_slash = '\0';
 +
-+graph_git_behavior 'graph exists' merge/octopus commits/12
++		    } while (*p);
 +
-+test_expect_success 'split across alternate where alternate is not split' '
-+	git commit-graph write --reachable &&
-+	test_path_is_file .git/objects/info/commit-graph &&
-+	cp .git/objects/info/commit-graph . &&
-+	git clone --no-hardlinks . alt-split &&
-+	(
-+		cd alt-split &&
-+		rm -f .git/objects/info/commit-graph &&
-+		echo "$(pwd)"/../.git/objects >.git/objects/info/alternates &&
-+		test_commit 18 &&
-+		git commit-graph write --reachable --split --changed-paths &&
-+		test_line_count = 1 $graphdir/commit-graph-chain
-+	) &&
-+	test_cmp commit-graph .git/objects/info/commit-graph
-+'
++		    diff_free_filepair(diff_queued_diff.queue[i]);
++		}
 +
-+test_done
++		filter->len = (hashmap_get_size(&pathmap) * settings.bits_per_entry + BITS_PER_BLOCK - 1) / BITS_PER_BLOCK;
++		filter->data = xcalloc(filter->len, sizeof(uint64_t));
++
++		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
++		    struct bloom_key key;
++		    fill_bloom_key(e->path, strlen(e->path), &key, &settings);
++		    add_key_to_filter(&key, filter, &settings);
++		}
++
++		hashmap_free_entries(&pathmap, struct pathmap_hash_entry, entry);
++	} else {
++		filter->data = NULL;
++		filter->len = 0;
++	}
++
++	free(diff_queued_diff.queue);
++	DIFF_QUEUE_CLEAR(&diff_queued_diff);
++
++	return filter;
++}
+\ No newline at end of file
+diff --git a/bloom.h b/bloom.h
+new file mode 100644
+index 0000000000..ba8ae70b67
+--- /dev/null
++++ b/bloom.h
+@@ -0,0 +1,46 @@
++#ifndef BLOOM_H
++#define BLOOM_H
++
++struct commit;
++struct repository;
++
++struct bloom_filter_settings {
++	uint32_t hash_version;
++	uint32_t num_hashes;
++	uint32_t bits_per_entry;
++};
++
++#define DEFAULT_BLOOM_FILTER_SETTINGS { 1, 7, 10 }
++
++/*
++ * A bloom_filter struct represents a data segment to
++ * use when testing hash values. The 'len' member
++ * dictates how many uint64_t entries are stored in
++ * 'data'.
++ */
++struct bloom_filter {
++	uint64_t *data;
++	int len;
++};
++
++/*
++ * A bloom_key represents the k hash values for a
++ * given hash input. These can be precomputed and
++ * stored in a bloom_key for re-use when testing
++ * against a bloom_filter.
++ */
++struct bloom_key {
++	uint32_t *hashes;
++};
++
++void load_bloom_filters(void);
++
++struct bloom_filter *get_bloom_filter(struct repository *r,
++				      struct commit *c);
++
++void fill_bloom_key(const char *data,
++		    int len,
++		    struct bloom_key *key,
++		    struct bloom_filter_settings *settings);
++
++#endif
+diff --git a/commit-graph.c b/commit-graph.c
+index e771394aff..61e60ff98a 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -16,6 +16,7 @@
+ #include "hashmap.h"
+ #include "replace-object.h"
+ #include "progress.h"
++#include "bloom.h"
+ 
+ #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
+ #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
+@@ -794,9 +795,11 @@ struct write_commit_graph_context {
+ 	unsigned append:1,
+ 		 report_progress:1,
+ 		 split:1,
+-		 check_oids:1;
++		 check_oids:1,
++		 bloom:1;
+ 
+ 	const struct split_commit_graph_opts *split_opts;
++	uint32_t total_bloom_filter_size;
+ };
+ 
+ static void write_graph_chunk_fanout(struct hashfile *f,
+@@ -1139,6 +1142,28 @@ static void compute_generation_numbers(struct write_commit_graph_context *ctx)
+ 	stop_progress(&ctx->progress);
+ }
+ 
++static void compute_bloom_filters(struct write_commit_graph_context *ctx)
++{
++	int i;
++	struct progress *progress = NULL;
++
++	load_bloom_filters();
++
++	if (ctx->report_progress)
++		progress = start_progress(
++			_("Computing commit diff Bloom filters"),
++			ctx->commits.nr);
++
++	for (i = 0; i < ctx->commits.nr; i++) {
++		struct commit *c = ctx->commits.list[i];
++		struct bloom_filter *filter = get_bloom_filter(ctx->r, c);
++		ctx->total_bloom_filter_size += sizeof(uint64_t) * filter->len;
++		display_progress(progress, i + 1);
++	}
++
++	stop_progress(&progress);
++}
++
+ static int add_ref_to_list(const char *refname,
+ 			   const struct object_id *oid,
+ 			   int flags, void *cb_data)
+@@ -1791,6 +1816,8 @@ int write_commit_graph(const char *obj_dir,
+ 	ctx->split = flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+ 	ctx->check_oids = flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
+ 	ctx->split_opts = split_opts;
++	ctx->bloom = flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
++	ctx->total_bloom_filter_size = 0;
+ 
+ 	if (ctx->split) {
+ 		struct commit_graph *g;
+@@ -1885,6 +1912,9 @@ int write_commit_graph(const char *obj_dir,
+ 
+ 	compute_generation_numbers(ctx);
+ 
++	if (ctx->bloom)
++		compute_bloom_filters(ctx);
++
+ 	res = write_commit_graph_file(ctx);
+ 
+ 	if (ctx->split)
 -- 
 gitgitgadget
 
