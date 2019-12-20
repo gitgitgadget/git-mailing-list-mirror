@@ -2,141 +2,181 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4CA9C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B816BC43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:09:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A3BF621D7E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:00:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7739D206D3
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:09:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OspTIdXq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mLmvPfz3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727401AbfLTRAy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 12:00:54 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:46786 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727270AbfLTRAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 12:00:53 -0500
-Received: by mail-ot1-f65.google.com with SMTP id c22so12563506otj.13
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:00:53 -0800 (PST)
+        id S1727428AbfLTRJw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 12:09:52 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46297 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbfLTRJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 12:09:52 -0500
+Received: by mail-ed1-f67.google.com with SMTP id m8so8917394edi.13
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lBQNdUz7lXQqP9MQNfuyuoqcb1ygmcN52Y6XY0vIC1Y=;
-        b=OspTIdXqejzMzwzdmKc8OC4dF8ZU4zup7Z/3NeB0m3g9RjFByUPgNZN9+1unYIg+5u
-         WzEqoPFSxi1f9V0tDmYxUuZuK5uz1WY0PsxwY/YFygeD2TipnndPcBWemWxilxUQq33p
-         AdNO+y9ct58/GSImj+hqV1j3RM4afKziirO5hCa1McuGovIaGzUuRVzndTp2EcwhftIz
-         m2KcrD6Tuv+Ra/cVgWjpW0hF9wRI3qHDs/6LohwDBMbGtf1VR7adCQU2/5QUWH1kXKi+
-         092LV8QCDwQkcDupWBo/mui4oS4Ko3zMbSLc9l6pCB2APWcc1Kexls1xhChkSpNK9mTi
-         K1mw==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=uVWVkAWdK8NPheHLR3+zR3f2L46Kca6cZCwfB2Fdw/I=;
+        b=mLmvPfz3KCc4GycpjFKpPgZjO/EZ2g5ZC7qDwyHio2GWi+c0j93l8hhGb8cbp1T1/i
+         eLTh/3XeXdwvWv3YYR6c7pqRfkOXkFBAQkXM4da4uMOWNivSTAtT1fQUppBXUZY9VBG2
+         lpi16CYSMWuGr1xi+VuNqqmI42LK6+S8Fv0RnpPZvBqnQ7WB27FCoGBe45GoDIryQibZ
+         M9r12f3XQzUb+gCohJGfvUsl6I+0EtCxNmIVBanEZBHGb3cdqUJrz7Lnesjs+7gyON3N
+         HyzuWc8mVI4D0HVLEcD3ShBjnBbeYAbsjUl7kRzEguwGVznuXh13fwO4vzy+nX3VPWYz
+         O15g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lBQNdUz7lXQqP9MQNfuyuoqcb1ygmcN52Y6XY0vIC1Y=;
-        b=EcylK2i+f2c1noOJkmb61fZJqEsNK/5cZXiLdntEweC0Ia47PNYVtMPi5uq0vCTYQw
-         hBSXhph2DQ+tT7blk26a0sdFlVWUGau8I4L1XQUWam1TGaNPAVFkQPmBe7PdO0gub1a1
-         Yqp3d48y9DxTFSGC7xOoezPYfLIGV/fIgdjnbr1oAjueE6QylSmuw2Pu4Wb0yNHN6t4m
-         drT5+gNX9EiDm2ILFIM/nOp8+XQeHaO0acjNRKm2uM6y5k9jgVuj+9rs/VePJKyqcKrU
-         FBirVAuiRd/4zDxcSFGfTSFgmwfwSt8Dy2wb2hUqDxuaXwmpZKPQnJdjszauTST5oFAn
-         h/Tw==
-X-Gm-Message-State: APjAAAXH1gN9l4KijhAhOjJy9s5OyYMQu83D40zFTADuhWSh6QhJHb9q
-        J0n3PiX4j4ZaP7biIBNDhAlI69HC5car2a3KEmA=
-X-Google-Smtp-Source: APXvYqzNg8gZXwSxpXdxY+7fn29G/aYuIonm5uRCJp8+NTLfstBEUk0hp3Tiwj/aveHsYZ28x8WTu7Tn69WzdESVGL4=
-X-Received: by 2002:a9d:7d81:: with SMTP id j1mr10561857otn.267.1576861251696;
- Fri, 20 Dec 2019 09:00:51 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=uVWVkAWdK8NPheHLR3+zR3f2L46Kca6cZCwfB2Fdw/I=;
+        b=eIbOByiSJOojfQh76+VqbwLQeczlmBOFVVsmbafPAvjuyox2G4oDcOpSsaimRrysSp
+         1Af47G91apJZi8l3Be+Z5KpcoOLP57CpcJvHqSvR7G9jMMK3joX+SvdeCOZAHQ82T4D0
+         35XaVouZeWvkHeEMBe2t5DA2wM34HDF1FLCIRgf85yIwSgfNS7/ZzC6alBEXx4khwczP
+         Brlezo35+dQcoWup50GxXrSgbxVnI4hohr8OtfwuWCSQcIaZN0x5oLoJBqWQQbgaBFsx
+         ElBb9pjCtD/to2XKN6ykgDQDcILHCt3CCQgIZqUvEy6EV3bEHf8AnUqB57IBbN+v3ou3
+         eZqw==
+X-Gm-Message-State: APjAAAVSx0qxBQeDZrkYS7OsP6ORr8RWTQO5QRX3q3kjsNoqIGyI3n/v
+        diNICBw6y+W54fIzqcicmiFk3Ffp
+X-Google-Smtp-Source: APXvYqxjCblyhJ0GwZ87MqxSzcXm19JjLspDEXNsL6DWcsbMxeuci16Q0T9Yhwlfs4y93AGdl1VfhQ==
+X-Received: by 2002:aa7:da03:: with SMTP id r3mr16953625eds.163.1576861789782;
+        Fri, 20 Dec 2019 09:09:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o3sm1140184ejb.43.2019.12.20.09.09.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 20 Dec 2019 09:09:49 -0800 (PST)
+Message-Id: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 20 Dec 2019 17:09:33 +0000
+Subject: [PATCH 00/15] rebase: make the default backend configurable
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com>
- <pull.676.v4.git.git.1576697386.gitgitgadget@gmail.com> <1f3978aa461929923eeb5037e69be6569f0ba331.1576697386.git.gitgitgadget@gmail.com>
- <xmqq1rt1e30q.fsf@gitster-ct.c.googlers.com> <CABPp-BHhAPjL9daPdp7UmVT+vLrcpo6SX0rKt5s1bH4Vz31wxw@mail.gmail.com>
- <20191219222403.GA705525@coredump.intra.peff.net>
-In-Reply-To: <20191219222403.GA705525@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Dec 2019 09:00:40 -0800
-Message-ID: <CABPp-BEe7=LfR5KJriu1Lq-v5SVET-zm3GK3ZPjOYuLHrxqimg@mail.gmail.com>
-Subject: Re: [PATCH v4 6/8] dir: fix checks on common prefix directory
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, blees@dcon.de,
-        Kyle Meyer <kyle@kyleam.com>, Samuel Lijin <sxlijin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+This series does a lot of work around making the default rebase backend
+configurable:
 
-On Thu, Dec 19, 2019 at 2:24 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Dec 19, 2019 at 12:23:29PM -0800, Elijah Newren wrote:
->
-> > > >       while (len && path[len - 1] == '/')
-> > > >               len--;
-> > > >       if (!len)
-> > > >               return 1;
-> > > > +
-> > > > +     de = xcalloc(1, sizeof(struct dirent)+len+1);
-> > >
-> > > That "+len+1" may deserve a comment?
-> >
-> > Good point, I'll add one and send a re-roll.
->
-> Please use st_add3() while you are at it.
+ * provide configurability of handling empty commits and iron out
+   differences between backends
+ * increase/fix capabilities of the merge/interactive backend to make it
+   workable as the default
+ * document the remaining differences in backends more thoroughly
+ * add an --am option for explicitly requesting the am-backend
+ * extend merge/interactive backend testing to put it on par with the am
+   backend
+ * add a 'rebase.backend' config option and:
+ * switch the rebase.backend default value from 'am' to 'merge'.
 
-I would, but Junio already took the patches and applied them to next
-already.  (I am curious, though, why we're worried about overflow in a
-context like this?)
+Areas I'd like reviewers to focus, in priority order:
 
-> I'd also usually suggest FLEX_ALLOC_MEM() for even more simplicity, but
-> it looks like filling the string is handled separately (and done many
-> times).
+ * Patch 15 (Are we ready to switch the default backend? Or should we leave
+   this patch out for now? Junio suggested we may be ready or at least are
+   close[1])
+ * Patch 1 (Does my empty handling make sense? Do others agree I fixed 
+   --keep-empty, or do they view it as breaking it?)
+ * Patch 8 (Do the updates to the documentation of behavioral differences
+   make sense? Is it too long?) * Patch 11 (okay to change the
+      git-completion shell prompt slightly, especially in light of patches
+      15 & 16? We did a prompt change previously when we merged the merge
+      backend with the interactive one, so I assume so, but just want to
+      make sure people have a chance to chime in.)
+   
+   
 
-Yes, the string is handled separately; I don't manufacture a dirent
-per leading directory component of the common prefix, but just
-allocate one and re-use it.
+If it's too soon to switch from the 'am' to 'merge' backend, we can just
+drop the last patch and I'll resubmit it later. I generated this series
+mostly through switching the default first and then watching what broke, but
+moved the patch to the end to make it easy to drop.
 
-> I have to wonder, though, if it wouldn't be simpler to move away from
-> "struct dirent" here (and it looks like Junio suggested the same earlier
-> in the thread). I don't know this code very well, but it looks
-> like it could easily get by passing around a name pointer and a dtype
-> through the cached_dir. The patch below seems like it's not too bad a
-> cleanup, but possibly the names could be better.
+Briefly, reasons for switching the default backend boil down to the fact
+that the am-backend drops information and thus limits what it can do. This
+manifests in different ways:
 
-This was mentioned twice upthread, first by me then by Junio (and I'll
-include my final response too):
+ * lack of tree information that would allow us to warn users that new files
+   in old directories might want to move along with the other files that
+   were renamed with those directories[1]
+ * incorrect application of patches in the presence of non-unique context
+   lines[2], which could be avoided with access to the original files
+   involved.
+ * less information available to annotate conflict markers (since am creates
+   fake ancestors and commits on top of them, and doesn't have access to the
+   original commits)
 
->>> I need to manufacture a dirent myself; short of that, the most
->>> likely alternative is to drop patches 2 & 5-8 of this series and
->>> throw my hands in the air and give up.
->>> ...
->>> It'd be an awful lot of work to rip [dirent] out...unless someone
->>> else has some bright ideas about something clever we can do, then I
->>> think this problem blows up in complexity to a level where I don't
->>> think it's worth addressing.
->>> ...
->>> Any bright ideas about what to do here?
->>
->> Restructuring the code so that we do not use "struct dirent" in the
->> first place, even in the original code that used only those obtained
->> from readdir(), perhaps?
->
-> Okay, I'll submit a new series dropping most the patches.
+[1] https://lore.kernel.org/git/xmqqa78d2qmk.fsf@gitster-ct.c.googlers.com/
+[2] https://lore.kernel.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/
+[3] 
+https://lore.kernel.org/git/CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com/
 
-It's possible I vastly overestimated how much work ripping out the
-dirent would be; I mean I've mis-estimated absolutely everything in
-dir.c and assumed each "little" thing would all be a small amount of
-work, so maybe I'm just swinging the pendulum too far the other way.
-But, although I think this alternative would be the cleanest, I saw a
-couple things that looked like this was going to turn into a huge can
-of worms when I started to peek at what it all touched.  I'd be happy
-for someone to take this route, but it won't be me (see also
-https://lore.kernel.org/git/CABPp-BEkX9cH1=r3dJ4WLzcJKVcF-KpGUkshL34MMp3Xhhhpuw@mail.gmail.com/).
+Elijah Newren (15):
+  rebase: extend the options for handling of empty commits
+  t3406: simplify an already simple test
+  rebase, sequencer: remove the broken GIT_QUIET handling
+  rebase: make sure to pass along the quiet flag to the sequencer
+  rebase: fix handling of restrict_revision
+  t3432: make these tests work with either am or merge backends
+  rebase: allow more types of rebases to fast-forward
+  git-rebase.txt: add more details about behavioral differences of
+    backends
+  rebase: move incompatibility checks between backend options a bit
+    earlier
+  rebase: add an --am option
+  contrib: change the prompt for am-based rebases
+  rebase tests: mark tests specific to the am-backend with --am
+  rebase tests: repeat some tests using the merge backend instead of am
+  rebase: make the backend configurable via config setting
+  rebase: change the default backend from "am" to "merge"
 
-Elijah
+ Documentation/config/rebase.txt         |   8 ++
+ Documentation/git-rebase.txt            | 150 ++++++++++++++++----
+ builtin/rebase.c                        | 181 +++++++++++++++++++-----
+ contrib/completion/git-prompt.sh        |   2 +-
+ rebase-interactive.c                    |   4 +-
+ rebase-interactive.h                    |   2 +-
+ sequencer.c                             |  80 ++++++++---
+ sequencer.h                             |   6 +-
+ t/t3400-rebase.sh                       |  36 ++++-
+ t/t3401-rebase-and-am-rename.sh         |   4 +-
+ t/t3404-rebase-interactive.sh           |   2 +-
+ t/t3406-rebase-message.sh               |  19 ++-
+ t/t3407-rebase-abort.sh                 |   6 +-
+ t/t3420-rebase-autostash.sh             |   2 +-
+ t/t3421-rebase-topology-linear.sh       |   4 +-
+ t/t3424-rebase-empty.sh                 |  89 ++++++++++++
+ t/t3425-rebase-topology-merges.sh       |   8 +-
+ t/t3427-rebase-subtree.sh               |  16 ++-
+ t/t3432-rebase-fast-forward.sh          |  59 ++++----
+ t/t3433-rebase-options-compatibility.sh |  13 +-
+ t/t5407-post-rewrite-hook.sh            |  12 +-
+ t/t5520-pull.sh                         |  27 +++-
+ t/t6047-diff3-conflict-markers.sh       |  13 +-
+ t/t7512-status-help.sh                  |  12 +-
+ t/t9106-git-svn-commit-diff-clobber.sh  |   3 +-
+ t/t9903-bash-prompt.sh                  |   6 +-
+ 26 files changed, 582 insertions(+), 182 deletions(-)
+ create mode 100755 t/t3424-rebase-empty.sh
+
+
+base-commit: 12029dc57db23baef008e77db1909367599210ee
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-679%2Fnewren%2Frebase-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-679/newren/rebase-fixes-v1
+Pull-Request: https://github.com/git/git/pull/679
+-- 
+gitgitgadget
