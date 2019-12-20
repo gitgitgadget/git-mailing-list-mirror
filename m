@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 797D8C2D0C8
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EB0CC2D0D4
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5186A21D7E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DB6C206D3
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CB4hxB+z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqkbXbXK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727501AbfLTRKK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 12:10:10 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44839 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727406AbfLTRJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 12:09:59 -0500
-Received: by mail-ed1-f65.google.com with SMTP id bx28so8914826edb.11
+        id S1727494AbfLTRKG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 12:10:06 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43944 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727465AbfLTRKA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 12:10:00 -0500
+Received: by mail-ed1-f68.google.com with SMTP id dc19so8928582edb.10
         for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:09:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=SqstD6Ny1wmIne0e4CGcwdjJwhTnn5W/eNQ8HxFO2dQ=;
-        b=CB4hxB+zjkUFo3KVZ5+cdj5EbEWR858iNpxBCuqZEIPopMpC+Mpy+Q3ct1QZQZYJNw
-         tv3quyklSYQvndC9PFsEMniTaMbV3O6GRScAdTZn+8wwtfFy1owR688XkldHqKuoUWrv
-         nenqvSJESg9PaQFYXhhJqdazwYXMBJxT6WolQG37jkrOFXupAZ7d0IrQXGLRGMZKp6pN
-         aV+T7yk3c2RL8oDmqW/Cs7kv2mYBJY0W0Sx9m13TKHuTsBNrHCBZ5KWUYB9dyw54hIWI
-         fFQ/nGIAZHS5fMglZ/PZ5An2kWbimJzHiG9GgBu8qeh55kxtqopltBt9C1cvY3luOUQG
-         fAyQ==
+        bh=+4oVHBnhLP3pwB87CreOJWy9LLN4V/boH7Oiy8l2MPc=;
+        b=GqkbXbXK4isctBGmqSvDjcNuCC/m6RI78AMH4L2BxclXqrGrud6CS03XUAdeh7Mm5Q
+         8m26Ht6SLiAd2EJ+J01St8A562dHas1QnSNCILIqXU9fhtrr9jcZ0IXNy42C7jSMTBXK
+         EcwfO6WSwqXyEavoE9SEMa3++/ni4bo3WU/m8ml+WmbY8qBDI18/jBE4EigdZh3HqeuV
+         NkuT6ZvXAPFEDzJCVRe2zKh/R4Ysc34A42K45pZkrUNBLVmqghZ3XL/KhLLSAjdEZ11E
+         ukLLlTdfkRVVUq2qDkxNXeo99zuXyCdYpeMnL+6VBCS/vmXyMBd6VKA6IHqV2R4HvKUo
+         l5Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=SqstD6Ny1wmIne0e4CGcwdjJwhTnn5W/eNQ8HxFO2dQ=;
-        b=M9+IzYhm1o7P97MxGHmgCAXQqnZKlFMLqsAEBzt5L9/MwmW7vh58VO0oome5pEEkO8
-         8uiaPdkKsbYSRUx2IiQoVVRTsoPsddMIxIcojFOxCAygenqr2glvPYYCPMAckDwDvbi+
-         ArUWc/WGEKwkI4Iqxg6KKAVZnIwn3/XWi4vqFgUpFg0a5FkxNmHFWn4qLcUtKoUogCXr
-         nbKhqxyc3wZC2cKsRQg3coMICCQ/lfI7VWhpEZz6ubmw7kEa2AQghHkAOw1Z8+RL0si7
-         u/RJBxlqV1VYG+AW2ck5zUjhi+kvD2FoxWJRCDrHVG5Esn24gL3m45zcXXmt1WQA2lY3
-         Mpwg==
-X-Gm-Message-State: APjAAAUQFEBsD1HeV1pXGDniRbmlOOhKUeVreRIe3o1N/a39iXYRTK45
-        imbL5z9E9HkjSstrNTvOrmJu9MI+
-X-Google-Smtp-Source: APXvYqy63tPa942Jx9H09n1c+NuwujIRSoPEwJyCdX8SNtXfEtNnb8u3u7Rv5GaCi0DFsSnCe+/nvw==
-X-Received: by 2002:a50:b82c:: with SMTP id j41mr9417563ede.199.1576861797512;
-        Fri, 20 Dec 2019 09:09:57 -0800 (PST)
+        bh=+4oVHBnhLP3pwB87CreOJWy9LLN4V/boH7Oiy8l2MPc=;
+        b=bCJUuiH66FNA0Uq73EZFwL8IjplpYNDydCqddTapnR+rZEjJAAfA7vvWwJqq7BQtcj
+         QAzxKVEwqTZqHXYxnahQkoaPu5/NgotUJ1tPOjzazB6/GL+glopA+9Dodd4PD5bZ7Sq0
+         srqEiANPn+dvVDFPqLMyfOF/6f7tOzX3okNBW7IgeHXvGjIxRe7ohypcbAZ4pfCIF31H
+         yusOJqZ1kkqTWyYiMmjW2Nxx5QOooVLqO0++pvDij/eRUBu5kzODZzM9bc5aAkLTCcRd
+         9wS/v41E29LI3DWdS8yMW5l2npE/ZC7HsOFo7VfeWc0eCAmAe623k86r8rmJm4TBQT5r
+         2I3A==
+X-Gm-Message-State: APjAAAU05BZkyc8n+tpUQrcpwuUfTWl32vqXQKCWFIM2P1ht6aJf7v45
+        geEo132DzTW6qTNpJcvjmlFU0w6M
+X-Google-Smtp-Source: APXvYqz6wxRPl5riu4oN68My0CMX/YLg8P67CeC2BzrV4cg8itRbqPcxsUpBfoHrYzaZ2M4132S9Ew==
+X-Received: by 2002:a17:906:ce2e:: with SMTP id sd14mr17480052ejb.190.1576861798154;
+        Fri, 20 Dec 2019 09:09:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l26sm1032887edq.5.2019.12.20.09.09.56
+        by smtp.gmail.com with ESMTPSA id z25sm1014259edr.25.2019.12.20.09.09.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 20 Dec 2019 09:09:57 -0800 (PST)
-Message-Id: <340bf71c5cd2086c638a652d1e111876a723fc6a.1576861788.git.gitgitgadget@gmail.com>
+Message-Id: <1c3f8ba328982e633e1431eba3fabcb230821ddc.1576861788.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 17:09:43 +0000
-Subject: [PATCH 10/15] rebase: add an --am option
+Date:   Fri, 20 Dec 2019 17:09:44 +0000
+Subject: [PATCH 11/15] contrib: change the prompt for am-based rebases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,103 +76,55 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Currently, this option doesn't do anything except error out if any
-options requiring the interactive-backend are also passed.  However,
-when we make the default backend configurable later in this series, this
-flag will provide a way to override the config setting.
+The prompt for am-based rebases was REBASE, while for interactive-based
+rebases was REBASE-i.  A while ago, we switched merge-based rebases from
+using REBASE-m to REBASE-i via re-implementing the merge backend based
+on the interactive backend.  We will soon be changing the default rebase
+backend to the interactive one, meaning the default prompt will be
+REBASE-i rather than REBASE.  We have also noted in the documentation
+that currently am-specific options will be implemented in the
+interactive backend, and even the --am flag may eventually imply an
+interactive-based rebase.  As such, change the prompt for an am-based
+rebase from REBASE to REBASE-a.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 11 ++++++++++-
- builtin/rebase.c             | 18 +++++++++++++++++-
- 2 files changed, 27 insertions(+), 2 deletions(-)
+ contrib/completion/git-prompt.sh | 2 +-
+ t/t9903-bash-prompt.sh           | 6 +++---
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f1ace07c38..cf1ac2e359 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -258,6 +258,13 @@ See also INCOMPATIBLE OPTIONS below.
- 	original branch. The index and working tree are also left
- 	unchanged as a result.
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 1d510cd47b..3c81099d60 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -440,7 +440,7 @@ __git_ps1 ()
+ 			__git_eread "$g/rebase-apply/last" total
+ 			if [ -f "$g/rebase-apply/rebasing" ]; then
+ 				__git_eread "$g/rebase-apply/head-name" b
+-				r="|REBASE"
++				r="|REBASE-a"
+ 			elif [ -f "$g/rebase-apply/applying" ]; then
+ 				r="|AM"
+ 			else
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 88bc733ad6..8da5b1aee2 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -189,11 +189,11 @@ test_expect_success 'prompt - rebase merge' '
+ 	test_cmp expected "$actual"
+ '
  
-+--am:
-+	Use git-am internally to rebase.  This option may become a
-+	no-op in the future once the interactive backend handles
-+	everything the am one does.
-++
-+See also INCOMPATIBLE OPTIONS below.
-+
- --empty={drop,keep,ask}::
- 	How to handle commits that become empty (because they contain a
- 	subset of already upstream changes) or start empty.  With drop
-@@ -372,7 +379,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	Ensure at least <n> lines of surrounding context match before
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
--	ever ignored.
-+	ever ignored.  Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -417,6 +424,7 @@ with `--keep-base` in order to drop those commits from your branch.
- --whitespace=<option>::
- 	This flag is passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
-+	Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -567,6 +575,7 @@ INCOMPATIBLE OPTIONS
- 
- The following options:
- 
-+ * --am
-  * --whitespace
-  * -C
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 9e7e88b147..ab9e16b206 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1361,6 +1361,18 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	return res && is_linear_history(onto, head);
- }
- 
-+static int parse_opt_am(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	opts->type = REBASE_AM;
-+
-+	return 0;
-+}
-+
- /* -i followed by -m is still -i */
- static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
- {
-@@ -1550,6 +1562,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "show-current-patch", &action,
- 			    N_("show the patch file being applied or merged"),
- 			    ACTION_SHOW_CURRENT_PATCH),
-+		{ OPTION_CALLBACK, 0, "am", &options, NULL,
-+			N_("use apply-mail strategies to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_am },
- 		{ OPTION_CALLBACK, 'm', "merge", &options, NULL,
- 			N_("use merging strategies to rebase"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-@@ -1910,7 +1926,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
- 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
- 
--	if (options.git_am_opts.argc) {
-+	if (options.git_am_opts.argc || options.type == REBASE_AM) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
- 			if (strcmp(options.git_am_opts.argv[i], "-q"))
+-test_expect_success 'prompt - rebase' '
+-	printf " (b2|REBASE 1/3)" >expected &&
++test_expect_success 'prompt - rebase am' '
++	printf " (b2|REBASE-a 1/3)" >expected &&
+ 	git checkout b2 &&
+ 	test_when_finished "git checkout master" &&
+-	test_must_fail git rebase b1 b2 &&
++	test_must_fail git rebase --am b1 b2 &&
+ 	test_when_finished "git rebase --abort" &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
 -- 
 gitgitgadget
 
