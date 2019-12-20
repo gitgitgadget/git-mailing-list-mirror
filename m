@@ -2,216 +2,110 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AFFCC43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95288C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:56:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6801C21655
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:38:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6F08221D7E
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 15:56:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727407AbfLTPiU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 10:38:20 -0500
-Received: from mx2.freebsd.org ([96.47.72.81]:19767 "EHLO mx2.freebsd.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726808AbfLTPiU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 10:38:20 -0500
-Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
-        (Client CN "mx1.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx2.freebsd.org (Postfix) with ESMTPS id F116368B81;
-        Fri, 20 Dec 2019 15:38:18 +0000 (UTC)
-        (envelope-from emaste@freebsd.org)
-Received: from freefall.freebsd.org (freefall.freebsd.org [96.47.72.132])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         server-signature RSA-PSS (4096 bits)
-         client-signature RSA-PSS (4096 bits) client-digest SHA256)
-        (Client CN "freefall.freebsd.org", Issuer "Let's Encrypt Authority X3" (verified OK))
-        by mx1.freebsd.org (Postfix) with ESMTPS id 47fXvZ5Sw5z45D4;
-        Fri, 20 Dec 2019 15:38:18 +0000 (UTC)
-        (envelope-from emaste@freebsd.org)
-Received: by freefall.freebsd.org (Postfix, from userid 1079)
-        id 997C3139B8; Fri, 20 Dec 2019 15:38:18 +0000 (UTC)
-From:   Ed Maste <emaste@FreeBSD.org>
-To:     git mailing list <git@vger.kernel.org>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Eric Wong <e@80x24.org>,
-        Ed Maste <emaste@FreeBSD.org>
-Subject: [PATCH v3] sparse-checkout: improve OS ls compatibility
-Date:   Fri, 20 Dec 2019 15:38:14 +0000
-Message-Id: <20191220153814.54899-1-emaste@FreeBSD.org>
-X-Mailer: git-send-email 2.22.0
-In-Reply-To: <20191219015833.49314-1-emaste@FreeBSD.org>
-References: <20191219015833.49314-1-emaste@FreeBSD.org>
+        id S1727384AbfLTP4m convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Fri, 20 Dec 2019 10:56:42 -0500
+Received: from mail-il1-f174.google.com ([209.85.166.174]:41001 "EHLO
+        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbfLTP4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 10:56:42 -0500
+Received: by mail-il1-f174.google.com with SMTP id f10so8328351ils.8
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 07:56:42 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ivHv5dUoOI+p8VeNtZZ29znqLdKGkawwQ8TvAD7lSUc=;
+        b=dDawh/6pcH8iWrHPY9BlBjliWDn1DPrcAyNJdus4XZm8HMrT5QkNL3ia07yhyr3s3o
+         YfLGcF/VH8ykGMUvS/Vi0oXUOqFI2vrdCLWDryVFxBq32+ddII8mR+wg4RlDopVGHpwL
+         OxNEzbteDlLrFTILUAXpm4VoZkVA7X9avqkjxJfEDwQ5ZleLJAOlA8Mis5RBfGmxGqOD
+         sVqAptC/X7RkzGxkH/l0XHrbutE4J/S2Y1VyH0SqKvfpFEcG7VnJPytvdmHEJIRY95jy
+         EzvgJ4TW28DWe9TOnJUFLcYNGE48O4VBO836QJ7XOPvuqO1D79lUcne4KhXZ7v1FkTlw
+         o8Iw==
+X-Gm-Message-State: APjAAAX8Kj+BeHLMKFle4OXEZYJIKBESyAJWu6rIPTzN3DsDAj79cY2i
+        mQ1ThZBPIQx7PRW4b8JM1wpxRVKRRkp3UguEfuU=
+X-Google-Smtp-Source: APXvYqxsyluS9dbiz1aWraHpe7i7UzJymzjnh5Z3+s20Qoktazrh/91K0JjjkhoYe5q38kxIwIgzgus4dAwkWHEZZkw=
+X-Received: by 2002:a92:db4f:: with SMTP id w15mr12314969ilq.182.1576857401590;
+ Fri, 20 Dec 2019 07:56:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPyFy2AKSVQJtSY0RNgJDJ5k1P=-gjNXVjDgPh+CdghhZtJXDw@mail.gmail.com>
+ <F0FBE3B6-0DF5-40A4-B1A3-18EF65D48FF3@icloud.com>
+In-Reply-To: <F0FBE3B6-0DF5-40A4-B1A3-18EF65D48FF3@icloud.com>
+From:   Ed Maste <emaste@freebsd.org>
+Date:   Fri, 20 Dec 2019 10:56:29 -0500
+Message-ID: <CAPyFy2Ar+OncJtgZZyAzxs0PkXy5rSU6ALS+MimK8x5TzWjLug@mail.gmail.com>
+Subject: Re: git-subtree split misbehaviour with a commit having empty ls-tree
+ for the specified subdir
+To:     Tom Clarkson <tqclarkson@icloud.com>
+Cc:     git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On FreeBSD, when executed by root ls enables the '-A' option:
+On Wed, 18 Dec 2019 at 19:57, Tom Clarkson <tqclarkson@icloud.com> wrote:
+>
+> > Overall I think your proposed algorithm is reasonable (even though I
+> > think it won't address some of the cases in our repo). Will your
+> > algorithm allow us to pass $dir to git rev-list, for the initial
+> > split?
+>
+> Is this just for performance reasons? As I understand it that was left out because it would exclude relevant commits on an existing subtree, but it could make sense as an optimization for the first split of a large repo.
 
-  -A  Include directory entries whose names begin with a dot (`.')
-      except for . and ...  Automatically set for the super-user unless
-      -I is specified.
+Yes, it's for performance reasons on a first split that I'd like to
+see it. On the FreeBSD repo the difference is some 40 minutes vs. a
+few seconds.
 
-As a result the .git directory appeared in the output when run as root.
-Simulate no-dotfile ls behaviour using a shell glob.
+> So the process becomes something like
+>
+>  # clear the cache - shouldn't usually be necessary, but it's a universal debugging step.
+> git subtree clear-cache --prefix=dir
+>
+> # ref and all its parents are before subtree add. Treat any children as inital commits.
+> git subtree ignore --prefix=dir ref
+>
+> # ref and all its parents are known subtree commits to be included without transformation.
+> git subtree existing --prefix=dir ref
+>
+> # Override an arbitrary mapping, either for performance or because that commit is problematic
+> git subtree map --prefix=dir mainline-ref subtree-ref
+>
+> # Run the existing algorithm, but skipping anything defined manually
+> git subtree split --prefix=dir
 
-Helped-by: Eric Wong <e@80x24.org>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ed Maste <emaste@FreeBSD.org>
----
-Since v2, rename the function list_files and add a comment explaining why
-it's not just using ls.  Note that this change is not necessary when running
-the tests as an unprivileged user on FreeBSD, and the proposed FreeBSD CI
-patch has been updated to do so.  That said I still believe we should make
-either this change or add a prerequisite so this test does not run as root
-on FreeBSD.
+This sounds about perfect.
 
- t/t1091-sparse-checkout-builtin.sh | 35 ++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+> > For a concrete example (from the repo at
+> > https://github.com/freebsd/freebsd), 7f3a50b3b9f8 is a mainline commit
+> > that added a new subtree, from 9ee787636908. I think that if I could
+> > inform subtree split that 9ee787636908 is the root it would work for
+> > me.
+>
+> Aside from the metadata, that one is a bit different from a standard subtree add in that it copies three folders from the subtree repo rather than the root - so the contents of contrib/elftoolchain will never exactly match the actual elftoolchain repo, and 9ee787636908 is neither mainline nor subtree as subtree split understands it.
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index cee98a1c8a..168702784d 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -4,6 +4,13 @@ test_description='sparse checkout builtin tests'
- 
- . ./test-lib.sh
- 
-+# List files in a directory, excluding hidden dot files (such as .git).
-+# This is similar to ls, but some ls implementations include dot files by
-+# default when run as root.
-+list_files() {
-+	(cd "$1" && printf '%s\n' *)
-+}
-+
- test_expect_success 'setup' '
- 	git init repo &&
- 	(
-@@ -50,7 +57,7 @@ test_expect_success 'git sparse-checkout init' '
- 	EOF
- 	test_cmp expect repo/.git/info/sparse-checkout &&
- 	test_cmp_config -C repo true core.sparsecheckout &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	echo a >expect &&
- 	test_cmp expect dir
- '
-@@ -73,7 +80,7 @@ test_expect_success 'init with existing sparse-checkout' '
- 		*folder*
- 	EOF
- 	test_cmp expect repo/.git/info/sparse-checkout &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		folder1
-@@ -90,7 +97,7 @@ test_expect_success 'clone --sparse' '
- 		!/*/
- 	EOF
- 	test_cmp expect actual &&
--	ls clone >dir &&
-+	list_files clone >dir &&
- 	echo a >expect &&
- 	test_cmp expect dir
- '
-@@ -119,7 +126,7 @@ test_expect_success 'set sparse-checkout using builtin' '
- 	git -C repo sparse-checkout list >actual &&
- 	test_cmp expect actual &&
- 	test_cmp expect repo/.git/info/sparse-checkout &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		folder1
-@@ -139,7 +146,7 @@ test_expect_success 'set sparse-checkout using --stdin' '
- 	git -C repo sparse-checkout list >actual &&
- 	test_cmp expect actual &&
- 	test_cmp expect repo/.git/info/sparse-checkout &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		folder1
-@@ -154,7 +161,7 @@ test_expect_success 'cone mode: match patterns' '
- 	git -C repo read-tree -mu HEAD 2>err &&
- 	test_i18ngrep ! "disabling cone patterns" err &&
- 	git -C repo reset --hard &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		folder1
-@@ -177,7 +184,7 @@ test_expect_success 'sparse-checkout disable' '
- 	test_path_is_file repo/.git/info/sparse-checkout &&
- 	git -C repo config --list >config &&
- 	test_must_fail git config core.sparseCheckout &&
--	ls repo >dir &&
-+	list_files repo >dir &&
- 	cat >expect <<-EOF &&
- 		a
- 		deep
-@@ -191,24 +198,24 @@ test_expect_success 'cone mode: init and set' '
- 	git -C repo sparse-checkout init --cone &&
- 	git -C repo config --list >config &&
- 	test_i18ngrep "core.sparsecheckoutcone=true" config &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	echo a >expect &&
- 	test_cmp expect dir &&
- 	git -C repo sparse-checkout set deep/deeper1/deepest/ 2>err &&
- 	test_must_be_empty err &&
--	ls repo >dir  &&
-+	list_files repo >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		deep
- 	EOF
- 	test_cmp expect dir &&
--	ls repo/deep >dir  &&
-+	list_files repo/deep >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		deeper1
- 	EOF
- 	test_cmp expect dir &&
--	ls repo/deep/deeper1 >dir  &&
-+	list_files repo/deep/deeper1 >dir  &&
- 	cat >expect <<-EOF &&
- 		a
- 		deepest
-@@ -234,7 +241,7 @@ test_expect_success 'cone mode: init and set' '
- 		folder1
- 		folder2
- 	EOF
--	ls repo >dir &&
-+	list_files repo >dir &&
- 	test_cmp expect dir
- '
- 
-@@ -256,7 +263,7 @@ test_expect_success 'revert to old sparse-checkout on bad update' '
- 	test_must_fail git -C repo sparse-checkout set deep/deeper1 2>err &&
- 	test_i18ngrep "cannot set sparse-checkout patterns" err &&
- 	test_cmp repo/.git/info/sparse-checkout expect &&
--	ls repo/deep >dir &&
-+	list_files repo/deep >dir &&
- 	cat >expect <<-EOF &&
- 		a
- 		deeper1
-@@ -313,7 +320,7 @@ test_expect_success 'cone mode: set with core.ignoreCase=true' '
- 		/folder1/
- 	EOF
- 	test_cmp expect repo/.git/info/sparse-checkout &&
--	ls repo >dir &&
-+	list_files repo >dir &&
- 	cat >expect <<-EOF &&
- 		a
- 		folder1
--- 
-2.24.0
+Fair enough, and we have lots of examples of slightly strange history
+in svn that svn2git represents in interesting ways.
 
+> If you ignore 9ee787636908, the resulting subtree will be fairly clean, but won’t have much of a relationship to the external repo.
+>
+> If you treat 9ee787636908 as an existing subtree, the second commit on your subtree will be based on 7f3a50b3b9f8, which deletes most of the contents of the subtree. You should still be able to merge in updates from the external repo, but if you try to push changes upstream the deletion will break things.
+
+I think this is fine - our main goal here is to be able to update
+contrib/ code within FreeBSD as we do today with svn, and we may well
+always have some changes that are never intended to be pushed
+upstream.
+
+Continuing the example from our repo, there is more history in the
+"subtree" already, with 061ef1f9424f as the head. ca8624403626 is the
+merge to mainline.
