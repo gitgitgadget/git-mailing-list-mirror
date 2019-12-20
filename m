@@ -2,142 +2,137 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E666C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 918F1C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:39:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D08C921655
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:38:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5E88E206D3
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 21:39:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dAV+XKdx"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nOsq3fP1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727498AbfLTViF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 16:38:05 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50922 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727422AbfLTViF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 16:38:05 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8CC7A9A8A6;
-        Fri, 20 Dec 2019 16:38:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=pGtrC1ZeLEL/R3q0y/DH2P0of7Q=; b=dAV+XK
-        dxQR6kcsUfKcQ/AdoaJlariouEKZv0KIOnF9+PcZi7hL2EiuTsc3oo9U6Hc7I+G5
-        Y8NX6oDvGPzVOuEBBAtjY4Xw5D/DQOA/H56TmIVkx0ElXgYHEnVqQWHZj+2yTro3
-        l3xw5ApuzcJKgH6yleaFVWUOQpD+FbijUOvp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=x9BVvyZJh5MhL8icQeBygYkC/CImRag0
-        jCoqIyrzjGs3xGJpEpqnOy1RIO+kZfQFOxZoTOh3/s+kSbfbwxLQv2LejATmJ85T
-        cwWxIVMnz8Z6RGirq5BrBNe8IEq9B1AZfaxdqD0s9ifYaQ1Kr1n7N7jgOgP8gejx
-        +qALyd29Hqk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8431A9A8A5;
-        Fri, 20 Dec 2019 16:38:03 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A44AF9A89D;
-        Fri, 20 Dec 2019 16:38:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-        phillip.wood@dunelm.org.uk, liu.denton@gmail.com,
-        plroskin@gmail.com, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 05/15] rebase: fix handling of restrict_revision
-References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
-        <b84faa86846cba6fb3f4bfa1d4f216fbce3867eb.1576861788.git.gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 13:37:58 -0800
-In-Reply-To: <b84faa86846cba6fb3f4bfa1d4f216fbce3867eb.1576861788.git.gitgitgadget@gmail.com>
-        (Elijah Newren via GitGitGadget's message of "Fri, 20 Dec 2019
-        17:09:38 +0000")
-Message-ID: <xmqqa77m8yq1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727529AbfLTVjd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 16:39:33 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38146 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727506AbfLTVjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 16:39:33 -0500
+Received: by mail-pf1-f195.google.com with SMTP id x185so5932047pfc.5
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 13:39:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2ph4Ae4uZUYGgFdwRZK2A+yfBzwvz7ycih7+qj+630k=;
+        b=nOsq3fP12ulbebvjtmkl6y0A6R7wbFyMfk9TIytOEg20mTaAdgXAhR1yUOD2IeN/tK
+         eIIskls7b9vXeodqR38SWE+NXzow1s+UUvSeJUd7OHA33cJOpXCarGGu5nNb3Wy25Amp
+         2jBW2FsK1S0LKvSyghLlnIlRzmTjBrjY4NDZwl11LNo41fuwBTo7hSBtPfEkxh2oHV9e
+         j6z8ZclyIulVGAWGBP3BoW5FbamnIYiIGqAWMzeKuleMrgN3ku/ploLuzdpqsLTqpCO4
+         aSbRND+tUlSruA2n6ZHyAnQwVufKn2ZJv/yhNZ5sa5mno4GsaqrzEZXYwrqCD7HgmRkH
+         +pxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2ph4Ae4uZUYGgFdwRZK2A+yfBzwvz7ycih7+qj+630k=;
+        b=GfAFsVScTzs6q3cizLPQAcktqPOkOgQU/yjleL5f0VPBbzWVj7vOSg/LdDdR+2bMfY
+         2duYVjHC28zxumpEjI5RkEPfRQyK+uDhYKG5a5ZY+LJAfFIOZCDeyNj309SxWJ5f5X88
+         nMnhcYAQ4wgbDgzRl8X/360JQVek/RQipmFOutChp2sxDkaeG+igK7tp81+Z5A3RiqEc
+         TnlPWrTFLMXDeuPpUMODsxPYBR+GpBujL2JYRinfMDrjh/gRiVKU7apLHlc69MpcPhbK
+         /5YzXM5gxGqRTKBt9dGFpfyAkIBD487mZk44v9S7d9qRvJSsvYs3axbECgUjxHE5D8u5
+         rdEg==
+X-Gm-Message-State: APjAAAV6OFsOwIwjPbxZvXcO1tPmxBAlKsQIzCe7fwFdIMPWcyU2FC0I
+        EDZw0ojIAlOeXtv01T7owhlsBw==
+X-Google-Smtp-Source: APXvYqxgwpAjEMPvbXPJcKQmMX490nEZTM1ArmH8of4OSiGTrWc1Nlxd2DgixKNOy02irklpHfvIDA==
+X-Received: by 2002:aa7:848c:: with SMTP id u12mr17885382pfn.12.1576877972466;
+        Fri, 20 Dec 2019 13:39:32 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id n7sm2066052pjq.8.2019.12.20.13.39.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2019 13:39:30 -0800 (PST)
+Date:   Fri, 20 Dec 2019 13:39:26 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
+Message-ID: <20191220213926.GA1876@google.com>
+References: <pull.495.git.1576574242.gitgitgadget@gmail.com>
+ <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
+ <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
+ <xmqqfthgb01m.fsf@gitster-ct.c.googlers.com>
+ <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
+ <20191220023125.GD227872@google.com>
+ <xmqqbls2alsb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: FED4D1A8-2370-11EA-9FDE-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqbls2alsb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, Dec 20, 2019 at 10:34:28AM -0800, Junio C Hamano wrote:
+> Emily Shaffer <emilyshaffer@google.com> writes:
+> 
+> > Hm. I'm surprised to see this feedback come in the form of a local
+> > change when making the topic branch, rather than in a reply to the v1
+> > patch. What's the reasoning? (Or is this scissors patch intended to be
+> > the feedback?)
+> 
+> You haven't seen a suggestion in the form of counter-proposal?
 
-> From: Elijah Newren <newren@gmail.com>
->
-> restrict_revision in the original shell script was an excluded revision
-> range.  It is also treated that way by the am-backend.  In the
-> conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
-> implement the logic to initialize $revisions in C", 2018-08-28)), the
-> interactive-backend accidentally treated it as a positive revision
-> rather than a negated one.
->
-> This was missed as there were no tests in the testsuite that tested an
-> interactive rebase with fork-point behavior.
+I actually have only seen the scissors-patch as a "yes, and" in
+practice. I think this is a sign I should be doing more reviews ;)
 
-Thanks.
+> 
+> > I ask because out of all of us, it seems the Outreachy interns can
+> > benefit the most from advice on how and why to write their commit
+> > messages - that is, part of the point of an internship is to learn best
+> > practices and cultural norms in addition to coding practice. (Plus, I
+> > find being asked to rewrite a commit message tends to force me to
+> > understand my own change even better than before.)
+> 
+> It's something Mentors can help doing (I do not necessarily have
+> time for that myself), and you're welcome to use the "tenatively
+> queued" version as an example.
+> 
+> > I'll go ahead and look through the changes to the commit message so I
+> > can learn what you're looking for too :)
+> 
+> Nice.
+> 
+> One thing you missed in your review of the "tentatively queued"
+> version is the reversal of the order of presentation.  Instead of
+> starting with "I decided to do this" without explanation, give the
+> picture of status quo to set the stage, explain what issue exists in
+> the current behaviour, and then describe what approach was chosen to
+> solve the issue.
 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  builtin/rebase.c  |  4 ++--
->  t/t3400-rebase.sh | 20 +++++++++++++++++++-
->  2 files changed, 21 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index cc8f3f008f..b320bb3a30 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -364,8 +364,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->  
->  	argv_array_pushl(&make_script_args, "", revisions, NULL);
->  	if (opts->restrict_revision)
-> -		argv_array_push(&make_script_args,
-> -				oid_to_hex(&opts->restrict_revision->object.oid));
-> +		argv_array_pushf(&make_script_args, "^%s",
-> +				 oid_to_hex(&opts->restrict_revision->object.oid));
->  
->  	ret = sequencer_make_script(the_repository, &todo_list.buf,
->  				    make_script_args.argc, make_script_args.argv,
-> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> index 79762b989a..71fd6396cd 100755
-> --- a/t/t3400-rebase.sh
-> +++ b/t/t3400-rebase.sh
-> @@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
->  	git rebase master
->  '
->  
-> -test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-> +test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
->  	git checkout -b default-base master &&
->  	git checkout -b default topic &&
->  	git config branch.default.remote . &&
->  	git config branch.default.merge refs/heads/default-base &&
-> +	git rebase --merge &&
-> +	git rev-parse --verify default-base >expect &&
-> +	git rev-parse default~1 >actual &&
-> +	test_cmp expect actual &&
-> +	git checkout default-base &&
-> +	git reset --hard HEAD^ &&
-> +	git checkout default &&
-> +	git rebase --merge &&
-> +	git rev-parse --verify default-base >expect &&
-> +	git rev-parse default~1 >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-> +	git checkout -B default-base master &&
-> +	git checkout -B default topic &&
-> +	git config branch.default.remote . &&
-> +	git config branch.default.merge refs/heads/default-base &&
->  	git rebase &&
->  	git rev-parse --verify default-base >expect &&
->  	git rev-parse default~1 >actual &&
+Thanks for explaining this - that's a good point for me to take home.
+
+> 
+> > For me, I don't particularly see why we'd want to be rid of it - it sort
+> > of feels like "a picture is worth a thousand words" to include the
+> > actual use case in the commit message.
+> 
+> Output coming from commands and/or options that are used only in a
+> bit more advanced workflow and the ones that are rarely seen, I do
+> agree that showing example is a good way to illustrate exactly what
+> you are talking about.
+> 
+> On the other hand, for behaviour of basic local commands like "git
+> add", "git commit", "git diff", ..., I do not necessarily agree, as
+> these should be obvious and clear to all the intended audiences,
+> which would be "anybody who has used Git for say more than two
+> weeks.
+
+Hm, I see. Thanks for clarifying.
+
+ - Emily
