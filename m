@@ -6,102 +6,84 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE0B1C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 19:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BD22C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 19:28:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8A64E206DA
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 19:23:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 353002064B
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 19:28:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pq3hHsc3"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xXTBasNi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727435AbfLTTXY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 14:23:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50804 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727413AbfLTTXY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 14:23:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9449397F2;
-        Fri, 20 Dec 2019 14:23:21 -0500 (EST)
+        id S1727512AbfLTT2L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 14:28:11 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54544 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727459AbfLTT2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 14:28:11 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D4E899AF3;
+        Fri, 20 Dec 2019 14:28:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=GzvK85ehaj0Rh6QsyBHHURn71Xc=; b=pq3hHs
-        c3d3tQPrgZoIWNZwvYAUUNzT/r8lYcmV5kj6qzYRLM6EPZAzZ0i5dTmGhbUacvEF
-        s+Bffb21qR6sJIphjDzy8Y/FBqEOApm2v/Cypiic3TShOj407safehOKGKhOjLvZ
-        PUm+QKsj6oyXc+ev9DlVjEiD9NjGJX6tVle1k=
+        :content-type; s=sasl; bh=ZR68AwvhwZHI8upjbSmOwnQqNeQ=; b=xXTBas
+        NiIF9oIwq4LroKOBhggW7kKsCTKGdfRi0hSAmIVUQTTVb+UKZpKa6N3vymQ5uE/D
+        rMrrv73VYJWyDeIqEH79xtBzq8FcRwMK1F1UUuplKt5qI1172uO28MI4zdDo+scu
+        u3d/2rXWtRwE6hqjk50fBzNjgIICoFEGRMKVA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wJ2QNfxzOS8qJBtQcm7QAawwiKSj2m93
-        xEfvyfuCkV3teY9q1EUDr1K3+DOBaacW+6DAz3voXO3tFW8S/JwWC8993Okpddjk
-        t0RZEG+ejgNIfRSjUymk2xXO9Kj8ZqxGSEofIdLx5H2vPLC7uPeWCvPLDqZv9kfc
-        J0kwknyPNhQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id C04A4397F1;
-        Fri, 20 Dec 2019 14:23:21 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=gi2atHk9ch6PeEZzYekOxI4tTIChyAAw
+        EKDsvZAAT6Tmxa/6lIts7CnIjUDsKlAf6pvK+kTyisYBWNxZWHvkzbq/ybkKdAo7
+        B3XVTqmvwIIRweAY3hliVF09iQU7h7s9I2ukO4kGNOUpl+Nq4DQ3Jldkn0NRzFkC
+        F032e6+xCXY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 051CF99AF2;
+        Fri, 20 Dec 2019 14:28:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 05BB8397F0;
-        Fri, 20 Dec 2019 14:23:19 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CA45499AF0;
+        Fri, 20 Dec 2019 14:28:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ed Maste <emaste@freebsd.org>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        git mailing list <git@vger.kernel.org>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: Re: [PATCH v3] sparse-checkout: improve OS ls compatibility
-References: <20191219015833.49314-1-emaste@FreeBSD.org>
-        <20191220153814.54899-1-emaste@FreeBSD.org>
-        <CAPig+cS6XPc9KZo3ytEHLFjMxEFqCk5OJMUjZyFBP0cA95u9Lw@mail.gmail.com>
-        <xmqqftheamea.fsf@gitster-ct.c.googlers.com>
-        <CAPyFy2AF+zcriUfZnpbXy+9r7hRpNBUe0agMuan-cE1ryqTipw@mail.gmail.com>
-Date:   Fri, 20 Dec 2019 11:23:18 -0800
-In-Reply-To: <CAPyFy2AF+zcriUfZnpbXy+9r7hRpNBUe0agMuan-cE1ryqTipw@mail.gmail.com>
-        (Ed Maste's message of "Fri, 20 Dec 2019 13:34:43 -0500")
-Message-ID: <xmqq7e2qajix.fsf@gitster-ct.c.googlers.com>
+To:     "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        plroskin@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/2] am: pay attention to user-defined context size
+References: <pull.680.git.git.1576868036.gitgitgadget@gmail.com>
+        <e1870f3fee8be6ebbecdd618ae1803afb878e67e.1576868036.git.gitgitgadget@gmail.com>
+Date:   Fri, 20 Dec 2019 11:28:02 -0800
+In-Reply-To: <e1870f3fee8be6ebbecdd618ae1803afb878e67e.1576868036.git.gitgitgadget@gmail.com>
+        (Elijah Newren via GitGitGadget's message of "Fri, 20 Dec 2019
+        18:53:55 +0000")
+Message-ID: <xmqqwoaq94ql.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2E63E322-235E-11EA-B82D-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: D8256EF8-235E-11EA-982B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ed Maste <emaste@freebsd.org> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Fri, 20 Dec 2019 at 13:21, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "This is similar to ls" is not all that important, especially if we
->> then need to say how different from "ls" ours is.  The log message
->> that describes why we needed to move away from "ls" is a good place
->> to say what aspect of "ls" was unsuitable.
+> From: Elijah Newren <newren@gmail.com>
 >
-> Ok, I'm also happy if it goes in with no comment; the reason I added
-> it is I could foresee someone coming along in a few years, thinking
-> this is just a strange local implementation of ls, and changing it.
-> But, perhaps we can assume that any such person would check the
-> history before doing so and the comment is not needed.
->
->> If we _were_ to add an in-code comment, we may want to say something
->> like
->>
->>         # Do not replace this with "cd "$1" && ls", as FreeBSD "ls"
->>         # enables "-A" when run by root without being told, and ends
->>         # up including ".git" etc. in its output.
->>
->> to warn future developers against improving and/or cleaning up.
->
-> Indeed, that is more direct, although it's not just FreeBSD ls; this
-> came from 4.2BSD and is probably common to most/all non-GNU ls
-> implementations. In particular, macOS behaves the same way. (Also, the
-> replacement would be even simpler, just "ls $1".)
+> am previously only checked gpg-related config options and the default
+> config options while ignoring any diff-related options.  This meant that
+> when users tried to set diff.context to something larger than the
+> default value of 3, it was ignored.  Pay attention to the diff settings
+> too.
 
-Good piece of info to include.  Final try for the day from me:
+Can the benefit brought in by this change demonstrated by a new test
+or two?
 
-    # Do not replace this with 'ls "$1"', as "ls" with BSD-lineage
-    # enables "-A" by default for root and ends up ...
 
+Puzzled.  "am" accepts whatever patch somebody else prepared and
+has no control over how the incoming "diff" was produced by that
+somebody else.  
+
+Besides, I do not think it should be affected by any diff_*UI*_config()
+in the first place.
