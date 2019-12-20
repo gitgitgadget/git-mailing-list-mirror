@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 02462C43603
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F904C2D0C8
 	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:43:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D0AD6206DA
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:43:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 07FBE20866
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:43:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZeXd3w7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PBs6arvT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727442AbfLTSnZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727456AbfLTSn0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 13:43:26 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:38351 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727390AbfLTSnZ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Dec 2019 13:43:25 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46130 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727390AbfLTSnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 13:43:24 -0500
-Received: by mail-pf1-f193.google.com with SMTP id y14so5660703pfm.13
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:43:24 -0800 (PST)
+Received: by mail-pg1-f195.google.com with SMTP id a33so5363207pgm.5
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:43:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2dVfCjgWkGeZggmACsIUzF8y+H2uMcillGzFsSS+YaI=;
-        b=DZeXd3w76dxiegCn9LRqEvw/z3fXFZ7qVBYFYKZz19ey9qFw8fbGLakCTO2+zWp5AR
-         hENrTHd2OtJOoHc8eObL20/tqL4KKWwBzpCf715JPgq/agmpZ6smGCZpil5EAHlAmQCd
-         Y9PIlyxgfDd5jee9CUp6O89zvhKEDL2Xlc+S68tSib6Q2zz5M0lGkTfWLGdiO0wyPgiW
-         1lgylNAz3xpF7lYxF/+plyEsJGVO2ZhnkLYFsTyJ3Tji9zGeXL9vol3XWCTA8qYfI3Qg
-         NwB9qU2r7DjaA3jqgKWdZPbfcUxn8CaqU+oV/qQVwSrAzfHafvZ94ALDeA1Esxc0q4m2
-         BqKQ==
+        bh=AUS40UZ5F00ovcZ+niEj4PzC5yYCragUfzm1zDTFFR8=;
+        b=PBs6arvTMb4pxH3q7aj/Z174bOvNmmTu/YwtKJspa3vQTY0UhFb9GGKC40SBhMttv/
+         N/OglOM/mSXRc0jrGQ0WVsCnPezCRrA1B2Fr1fb8CpbYKytna+D2VOVa1SzvDxG89ETw
+         odvAVP3FWvF/Cs3JyMjmDx7GTVeC3+Z9J98YKTS3D8lnUCRJA5HWvoh25RSQ9a3RWK8X
+         CgXhb8LIzl1eSL4WEs9yyyFNswdiAY3wbXKRLCf9eXNID+RGBqyE6cirwSshIZjyyMCV
+         YERCQNWbBDMOQrBGXOGBvWE9lMbxMApMrsR1IMmpMFPt4NM7cxCcgpZFSoYG45ABr+JY
+         3VJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2dVfCjgWkGeZggmACsIUzF8y+H2uMcillGzFsSS+YaI=;
-        b=fpPipoCxxcLIlhRxZuHjt9kvanW332DBIOvzz5UVktg4cAMoGnFXXzQsxhF7xmO9w5
-         o37uKeiIh6+5hEAEc6wA6oSoX072Tx2GFYP7Vc7CIlht+oZG2PZUBHUVxnv9bSU4B5Jw
-         rk4OTecMnz8BBGNihRLSW5q092DvcpN5CLTq2yCwgXGlnfEiywJIt/mnu5gje0HVrbaW
-         2Hubj/Up8SfpCqvpt3Ri4CqKC89EMRDHIJ/uYoAhQdYBjfzmJ6uCUcbCfUW7q8+reFDD
-         YMW02tZBHzipR5v5jFNaqFB+M+hHcJJYcCNMuNk8+o0+Fd8O7BXVGJDLzIJ3PjM74BEt
-         8FIA==
-X-Gm-Message-State: APjAAAWV4/rRaNSKYfYEdErXGXbOWIVL4qQ/8L4aqNUtGqZ1DlaxvQeh
-        rgo+4vZWuna2bcd2AGB3/MMAXNVp
-X-Google-Smtp-Source: APXvYqyz9yHK24cLavX4WndOBbFTj2zdJZHvZlHheaDvKviaxf9szux5a6lYxBLzk9oZ2CJmc7MN5Q==
-X-Received: by 2002:aa7:9510:: with SMTP id b16mr17547109pfp.65.1576867403886;
-        Fri, 20 Dec 2019 10:43:23 -0800 (PST)
+        bh=AUS40UZ5F00ovcZ+niEj4PzC5yYCragUfzm1zDTFFR8=;
+        b=fmejC3x0M+WNfmXnW8uZZcpp4Qniu8xHd1ePNsGK7u3bA9kW0i1zQ6b26CWGBv76UC
+         5GfR7j/2xa1MRhy4JZf7g1FtH/JVTVp2dMoy0Hmldbo45kFOlMDtsizYibSkovobrhqD
+         8d5Ld23JFloPg9iDLksJWqEoLd5P+gbCjjlGXtdXB1NmL1eAuZBaSylkFeBRGWLMKMlN
+         LMAFg3Isf2Hnm422kfUrhl9wQSiNAWFjsGLnT5VRak5xLiBOYvpAj60AzfKwUBq7S6gE
+         r+ySvXEqnzXQNsSTzbGH7qfgfTS/4xbk6OY2MXAbH7syMuODNRqcQaDkm1Oaki3XBuZJ
+         S2LA==
+X-Gm-Message-State: APjAAAW/PsMNxP78ivuSBJzPiYlfmCBYB6M4hAqBKozLA/dFo3rM2g1s
+        GXtTfCALMCCC2rXmvM6X/11ienbT
+X-Google-Smtp-Source: APXvYqxS31HcvneiD7V3SlsV7JhlJ8UXmkC3C/6LwDhG262KzJu/kAbPGG5gVdFrfQ691e9/VpL6EQ==
+X-Received: by 2002:a63:5f91:: with SMTP id t139mr16146390pgb.185.1576867404619;
+        Fri, 20 Dec 2019 10:43:24 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com ([204.14.239.53])
         by smtp.gmail.com with ESMTPSA id ce15sm11403553pjb.4.2019.12.20.10.43.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 10:43:23 -0800 (PST)
+        Fri, 20 Dec 2019 10:43:24 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Luis Marsano <luis.marsano@gmail.com>,
         Ted Zlatanov <tzz@lifelogs.com>, Jeff King <peff@peff.net>
-Subject: [RESEND PATCH 1/2] contrib/credential/netrc: make PERL_PATH configurable
-Date:   Fri, 20 Dec 2019 10:45:00 -0800
-Message-Id: <fb01e34ec1c19dfac353f85e0f1b8162f1ca2434.1576867467.git.liu.denton@gmail.com>
+Subject: [RESEND PATCH 2/2] contrib/credential/netrc: work outside a repo
+Date:   Fri, 20 Dec 2019 10:45:01 -0800
+Message-Id: <d22eb1f9e2431199f1b6bea2aefe8473284e966e.1576867467.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576867467.git.liu.denton@gmail.com>
 References: <cover.1576531851.git.liu.denton@gmail.com> <cover.1576867467.git.liu.denton@gmail.com>
@@ -72,75 +72,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The shebang path for the Perl interpreter in git-credential-netrc was
-hardcoded. However, some users may have it located at a different
-location and thus, would have had to manually edit the script.
+Currently, git-credential-netrc does not work outside of a git
+repository. It fails with the following error:
 
-Add a .perl prefix to the script to denote it as a template and ignore
-the generated version. Augment the Makefile so that it generates
-git-credential-netrc from git-credential-netrc.perl, just like other
-Perl scripts.
+	fatal: Not a git repository: . at /usr/share/perl5/Git.pm line 214.
 
-The Makefile recipes were shamelessly stolen from
-contrib/mw-to-git/Makefile.
+There is no real reason why need to be within a repository, though.
+Credential helpers should be able to work just fine outside the
+repository as well.
+
+Call the non-self version of config() so that git-credential-netrc no
+longer needs to be run within a repository.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- contrib/credential/netrc/.gitignore           |  1 +
- contrib/credential/netrc/Makefile             | 26 +++++++++++++++++--
- ...ential-netrc => git-credential-netrc.perl} |  0
- 3 files changed, 25 insertions(+), 2 deletions(-)
- create mode 100644 contrib/credential/netrc/.gitignore
- rename contrib/credential/netrc/{git-credential-netrc => git-credential-netrc.perl} (100%)
+ contrib/credential/netrc/git-credential-netrc.perl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/credential/netrc/.gitignore b/contrib/credential/netrc/.gitignore
-new file mode 100644
-index 0000000000..d41cdde84b
---- /dev/null
-+++ b/contrib/credential/netrc/.gitignore
-@@ -0,0 +1 @@
-+git-credential-netrc
-diff --git a/contrib/credential/netrc/Makefile b/contrib/credential/netrc/Makefile
-index 6174e3bb83..c284fb8ac4 100644
---- a/contrib/credential/netrc/Makefile
-+++ b/contrib/credential/netrc/Makefile
-@@ -1,8 +1,30 @@
- # The default target of this Makefile is...
- all::
- 
--test:
-+SCRIPT_PERL = git-credential-netrc.perl
-+GIT_ROOT_DIR = ../../..
-+HERE = contrib/credential/netrc
-+
-+SCRIPT_PERL_FULL = $(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
-+
-+all:: build
-+
-+build:
-+	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
-+                build-perl-script
-+
-+install: build
-+	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
-+                install-perl-script
-+
-+clean:
-+	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
-+                clean-perl-script
-+
-+test: build
- 	./t-git-credential-netrc.sh
- 
--testverbose:
-+testverbose: build
- 	./t-git-credential-netrc.sh -d -v
-+
-+.PHONY: all build install clean test testverbose
-diff --git a/contrib/credential/netrc/git-credential-netrc b/contrib/credential/netrc/git-credential-netrc.perl
-similarity index 100%
-rename from contrib/credential/netrc/git-credential-netrc
-rename to contrib/credential/netrc/git-credential-netrc.perl
+diff --git a/contrib/credential/netrc/git-credential-netrc.perl b/contrib/credential/netrc/git-credential-netrc.perl
+index ebfc123ec6..bc57cc6588 100755
+--- a/contrib/credential/netrc/git-credential-netrc.perl
++++ b/contrib/credential/netrc/git-credential-netrc.perl
+@@ -423,7 +423,7 @@ sub load_config {
+ 	# load settings from git config
+ 	my $options = shift;
+ 	# set from command argument, gpg.program option, or default to gpg
+-	$options->{'gpg'} //= Git->repository()->config('gpg.program')
++	$options->{'gpg'} //= Git::config('gpg.program')
+ 	                  // 'gpg';
+ 	log_verbose("using $options{'gpg'} for GPG operations");
+ }
 -- 
 2.24.1.703.g2f499f1283
 
