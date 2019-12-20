@@ -8,61 +8,61 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94598C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95FF6C2D0D2
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FBA720866
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 68E112064B
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LEEZc6Am"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MrisMvnb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727438AbfLTSOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727443AbfLTSOi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 13:14:38 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35761 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727435AbfLTSOh (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Dec 2019 13:14:37 -0500
-Received: from mail-pj1-f67.google.com ([209.85.216.67]:55959 "EHLO
-        mail-pj1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727391AbfLTSOg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 13:14:36 -0500
-Received: by mail-pj1-f67.google.com with SMTP id d5so4439910pjz.5
+Received: by mail-pf1-f193.google.com with SMTP id i23so216546pfo.2
         for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:14:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/cHz9jXRyGP9I2nk3E8zlqOrVEHelcTSO/s6fkRs/BM=;
-        b=LEEZc6Amvb3s1lthQgg8WV6PmqeKOniVg5CM4m9MqQMd9Sgkfe3do3nx9so1oTlQ61
-         z6E019Zs/4DcuVFu8yRHh2kqEPnzlckCxvQq1HvSP0hq7ocq64Xu7lXpNTSmzDVEojSx
-         2dqnzVK96FPdaOli/xMC32GJkZ4VWKizxiC4LOgklMLWt932cQLGryNXga8AaHC8HcEO
-         W0XUL5u4NGoGtsirQVFOJ7lvLBvPOLEbDBpnyLqOaYfXbNjYzoNxjR4tKkutIg03fV7u
-         jZaZIEpmVqqc3Y0wgeKyelOnq/c4ZaRL+49Rhs4ZWLQkRNLZ+ECFxPnHf3m6dzDdMtyo
-         +WBw==
+        bh=wWeg/wl9RrK6mqFq+reQZd+RrvAMP1+PT+GY5lcwJck=;
+        b=MrisMvnbMA6+/h6WnOvvMszYRzjd2cw7NkL28d6skpjNKhN/mFD05W9gjI2ZxCc/JH
+         K9sld4NkcjBnjXEvrUEBrT3knlHHfPqQ+9CRThpMdF8tir63gCM1k+t6J/8jBcC2Ri81
+         JNx/4piinD3ufs6pk9sOE3oJ58odTtq43e8I2tHjjCSdBOJjt0HBzTzKoN0YbvNBkzzL
+         4IKjHfMGthRtO16a36fjBeAtZDntBBHlKO9LCkatIVuY8SmvDjScYnRJvdxnwYHa6L+2
+         yGtpd3nN8OSgmfNVYRtRlxaDqyHWJuAPgYKLmPqgfAf/A6cO/MMe4d1YdAHeD2KfKVWa
+         zozw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/cHz9jXRyGP9I2nk3E8zlqOrVEHelcTSO/s6fkRs/BM=;
-        b=CqwpAARkL/IZVJdrLLtHsdh3jdkXIzDblDBxGNvSsQVP7sHr7gNDGJ4WZYX032V0hf
-         PZ/ZB6coWHmsE5cW/F4Hr398Tw23ErsHMACYwKksrsu35WH9poMwlrFBEFmKvIHZ2sr1
-         nzy5Vy5eXLCd/ECwqQknHD/85KpYkGdDebK89AXD53mfEbzrV4doLwbilU6HDZrQQZ4j
-         3C+9HId3xgHeh5E6F5eJj8z5zJGQcXa/nHJNebhYNZX/SKFqMAjHdy5siN7zj1l38U4d
-         2tVLczGvSQurcPIVYfZlZpDxD6YpExbO0lMfz5chEstPiXT3X1hc4HDHhoXSZIsTwpvk
-         4e+Q==
-X-Gm-Message-State: APjAAAXRVQPBSwNBN/4ISXhyXKq+6yvH8lmZMEum9VaHvzJkW6iyic77
-        AFdC8SDyzqtq3zZrVk0uXzSC0urQ
-X-Google-Smtp-Source: APXvYqzdqvd5xWTDdxAaCe7fjVugxxqBMGkL4fUlr6Cayn2IaWfhpgBOlfYsKE4hkf5b3TysosBuSQ==
-X-Received: by 2002:a17:902:968c:: with SMTP id n12mr16944966plp.144.1576865675416;
-        Fri, 20 Dec 2019 10:14:35 -0800 (PST)
+        bh=wWeg/wl9RrK6mqFq+reQZd+RrvAMP1+PT+GY5lcwJck=;
+        b=qqr05BqvxuIG2F2c8KvVEMwJLBmOn8TxOfMoeddw04gdP9+vSGVEg0JDxL6fm+25g1
+         W+ww/NlD1ngqNUNu1GjptXylGG9wrldoiDj5B6NstEK8ZEZkPz/iPBkJNZGOgOCkrZkY
+         Nco2LA5LtiwiHHcvlrGBGWgTD8PStJDESvQBzqC1h5Zz9pbDvWfsI57OJAeFxU2MQJX2
+         wIwmOk2JYwgjNXx8UPW3G6zEvNb2KR8+9AVXlciGklRF7x9iFkt+ebnb3KM0Fqglo5nJ
+         /onjhNPvVDl9KZrK0YvZPiKJBcd4TBkjMJ8o70fefVMUNF4pNy9hA63hkVYm+144XNEU
+         zJwA==
+X-Gm-Message-State: APjAAAWBxv9fmiA7yiuCRDIngs9UHyB+jzczzJ4BswNUiEYHu1DP2hZo
+        WO0NeMrmmasGdh5Sx1sTVIZgAMG2
+X-Google-Smtp-Source: APXvYqz4ck+z2U10GRI1qa37crM5y3bHkEv0MQtrVr9lwDllOQXYgLuhjZz/9w3EtZtXuq/J3BdW2g==
+X-Received: by 2002:a62:a117:: with SMTP id b23mr17953271pff.174.1576865676347;
+        Fri, 20 Dec 2019 10:14:36 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com.com ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.34
+        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 10:14:34 -0800 (PST)
+        Fri, 20 Dec 2019 10:14:35 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 02/15] t0000: replace test_must_fail with run_sub_test_lib_test_err()
-Date:   Fri, 20 Dec 2019 10:15:49 -0800
-Message-Id: <51a2226726c941c1229e6aafa355376fdb6c61c5.1576865664.git.liu.denton@gmail.com>
+Subject: [PATCH v3 03/15] t0003: use named parameters in attr_check()
+Date:   Fri, 20 Dec 2019 10:15:50 -0800
+Message-Id: <9374fcd8db831b411c1485c204cf8d029426e966.1576865664.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576865663.git.liu.denton@gmail.com>
 References: <cover.1576794144.git.liu.denton@gmail.com> <cover.1576865663.git.liu.denton@gmail.com>
@@ -73,88 +73,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail function should only be used for git commands since
-we should assume that external commands work sanely. We use
-test_must_fail to test run_sub_test_lib_test() but that function does
-not invoke any git commands internally. Even better, we have a function
-that's exactly meant to be used when we expect to have a failing test
-suite: run_sub_test_lib_test_err()!
+We had named the parameters in attr_check() but $2 was being used
+instead of $expect. Make all variable accesses in attr_check() use named
+variables instead of numbered arguments for clarity.
 
-Replace `test_must_fail run_sub_test_lib_test` with
-`run_sub_test_lib_test_err`.
+While we're at it, add variable assignments to the &&-chain. These
+aren't ever expected to fail but if a future developer ever adds some
+code above the assignments and they could fail in some way, the intact
+&&-chain will ensure that the failure is caught.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t0000-basic.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/t0003-attributes.sh | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 8a81a249d0..3e440c078d 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -155,7 +155,7 @@ test_expect_success 'pretend we have a fully passing test suite' "
- "
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 71e63d8b50..3569bef75d 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -5,19 +5,16 @@ test_description=gitattributes
+ . ./test-lib.sh
  
- test_expect_success 'pretend we have a partially passing test suite' "
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		partial-pass '2/3 tests passing' <<-\\EOF &&
- 	test_expect_success 'passing test #1' 'true'
- 	test_expect_success 'failing test #2' 'false'
-@@ -219,7 +219,7 @@ test_expect_success 'pretend we have fixed one of two known breakages (run in su
- "
+ attr_check () {
+-	path="$1" expect="$2"
++	path="$1" expect="$2" git_opts="$3" &&
  
- test_expect_success 'pretend we have a pass, fail, and known breakage' "
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		mixed-results1 'mixed results #1' <<-\\EOF &&
- 	test_expect_success 'passing test' 'true'
- 	test_expect_success 'failing test' 'false'
-@@ -238,7 +238,7 @@ test_expect_success 'pretend we have a pass, fail, and known breakage' "
- "
+-	git $3 check-attr test -- "$path" >actual 2>err &&
+-	echo "$path: test: $2" >expect &&
++	git $git_opts check-attr test -- "$path" >actual 2>err &&
++	echo "$path: test: $expect" >expect &&
+ 	test_cmp expect actual &&
+ 	test_line_count = 0 err
+ }
  
- test_expect_success 'pretend we have a mix of all possible results' "
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		mixed-results2 'mixed results #2' <<-\\EOF &&
- 	test_expect_success 'passing test' 'true'
- 	test_expect_success 'passing test' 'true'
-@@ -274,7 +274,7 @@ test_expect_success 'pretend we have a mix of all possible results' "
- "
+ attr_check_quote () {
+-
+-	path="$1"
+-	quoted_path="$2"
+-	expect="$3"
++	path="$1" quoted_path="$2" expect="$3" &&
  
- test_expect_success C_LOCALE_OUTPUT 'test --verbose' '
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		t1234-verbose "test verbose" --verbose <<-\EOF &&
- 	test_expect_success "passing test" true
- 	test_expect_success "test with output" "echo foo"
-@@ -301,7 +301,7 @@ test_expect_success C_LOCALE_OUTPUT 'test --verbose' '
- '
- 
- test_expect_success 'test --verbose-only' '
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		t2345-verbose-only-2 "test verbose-only=2" \
- 		--verbose-only=2 <<-\EOF &&
- 	test_expect_success "passing test" true
-@@ -834,7 +834,7 @@ then
- fi
- 
- test_expect_success 'tests clean up even on failures' "
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		failing-cleanup 'Failing tests with cleanup commands' <<-\\EOF &&
- 	test_expect_success 'tests clean up even after a failure' '
- 		touch clean-after-failure &&
-@@ -863,7 +863,7 @@ test_expect_success 'tests clean up even on failures' "
- "
- 
- test_expect_success 'test_atexit is run' "
--	test_must_fail run_sub_test_lib_test \
-+	run_sub_test_lib_test_err \
- 		atexit-cleanup 'Run atexit commands' -i <<-\\EOF &&
- 	test_expect_success 'tests clean up even after a failure' '
- 		> ../../clean-atexit &&
+ 	git check-attr test -- "$path" >actual &&
+ 	echo "\"$quoted_path\": test: $expect" >expect &&
 -- 
 2.24.1.703.g2f499f1283
 
