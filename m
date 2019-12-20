@@ -1,108 +1,107 @@
-Return-Path: <SRS0=FxFb=2J=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F349AC43603
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 23:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD709C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 00:40:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C70772467E
-	for <git@archiver.kernel.org>; Thu, 19 Dec 2019 23:18:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7653A222C2
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 00:40:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gHI+q1UV"
+	dkim=pass (2048-bit key) header.d=edef.eu header.i=@edef.eu header.b="sVIqq+/d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k1cpALiO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727097AbfLSXSE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 19 Dec 2019 18:18:04 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37619 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbfLSXSD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 19 Dec 2019 18:18:03 -0500
-Received: by mail-pf1-f196.google.com with SMTP id p14so4141008pfn.4
-        for <git@vger.kernel.org>; Thu, 19 Dec 2019 15:18:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=cUz246jH7pKU81wldxu/TXXgTWgh72JHib7V6pHxwRs=;
-        b=gHI+q1UVy+wImB9gQYZt9DbvRoGKScoRyf6iGl1qyRdbJ5LUD6vHZisZd4nfHVB76o
-         iNQgcu6NUJvHMRIGGd3GOV/GzKOE07E43Yn5XUPGbk5d09T3dKYub0spYakk4nZCfwET
-         FgNSUiTifRFi3QwsmFk4/fGpouLGHShuCiYoLBJyO+EJ7weJ0IxpsfkgnTNWdgnUeXui
-         8iEISksLPN/0jttWmvVngndmf6QBOdgtD1u8tvH4/5LxngrnBffYt6aWvbr0kFKihu2p
-         pmtTKlU7A3EG939re1LOoS1uzcjDHvdOW8lgB76iGp6zwj2VbLG25KBWGlZUDq8Qgm/d
-         2Xcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=cUz246jH7pKU81wldxu/TXXgTWgh72JHib7V6pHxwRs=;
-        b=nHkBRo/l899rcw9WxjDEH5uVm01UsNt5d6/2zSEes0MtAMcoYMr/S1m5STWDiWrBgD
-         ljnF6FBVS0MQb1ROLI1mEmlpQO5dp/nK9HSmkq8iiBot6Ji+cMcDF441P2ibVqQ/Cvk/
-         snCTOj6Y9onsCuWBl9dfxpOUpEkWIeP/gL/vL3uVfm4z22NoWARcucWpEVMPowE4+7kW
-         3lDVnwpKtmtfYrMkUicdZqDvtwta47ojqD4Y+IDCObqwIvB+aRJ8ytij7XL7gfeiQaGh
-         Q2mjTSO6B2xYrXqvb4zxJXfF5K6aiMpOX2PVZufe3W7FRpNONYTUmPXsNGItimD+nzeu
-         WWQw==
-X-Gm-Message-State: APjAAAU0n0fFSzh3F5kv63tgiYp7rLQ7ZdUKO/F8Q3EJoPy//irt1760
-        wJs+4827SvDo84uYd3blB6I=
-X-Google-Smtp-Source: APXvYqyT7iESAAiLVOnGRCxg+BcRrDL/ZofRr/nyR6zbHWSxfpaz45BlHL5sEhB1o/gXOyUS7bpSfQ==
-X-Received: by 2002:a63:e30a:: with SMTP id f10mr11395230pgh.331.1576797482986;
-        Thu, 19 Dec 2019 15:18:02 -0800 (PST)
-Received: from generichostname ([216.52.21.197])
-        by smtp.gmail.com with ESMTPSA id f81sm9926521pfa.118.2019.12.19.15.18.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Dec 2019 15:18:02 -0800 (PST)
-Date:   Thu, 19 Dec 2019 15:19:40 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 13/16] t1501: remove use of `test_might_fail cp`
-Message-ID: <20191219231940.GA67903@generichostname>
-References: <cover.1576583819.git.liu.denton@gmail.com>
- <cover.1576794144.git.liu.denton@gmail.com>
- <83e47748bc9c541c725f6c42c553b1a69fd717ac.1576794144.git.liu.denton@gmail.com>
- <CAPig+cQuPDDun3NxnTwvmjo9zvPzSq+5f2utkHkS0f1c1Nwbvg@mail.gmail.com>
+        id S1726982AbfLTAj4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 19 Dec 2019 19:39:56 -0500
+Received: from out5-smtp.messagingengine.com ([66.111.4.29]:56487 "EHLO
+        out5-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726952AbfLTAj4 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 19 Dec 2019 19:39:56 -0500
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 4D55122672;
+        Thu, 19 Dec 2019 19:39:55 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Thu, 19 Dec 2019 19:39:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=edef.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm2; bh=0wKBU8iazye05gPDHstYHa4wMd
+        Ad3DQloo25VyWz1kc=; b=sVIqq+/dCWfemfT1zu0aMZkC4jAW872dUOBIeiA/qy
+        YC3qVq8L72tlb0xGbddOvEU+pznPwBnjVw2Ry4op9tpefJzZi1govIxYdnJQwFes
+        YBgq0IubPa4ZLJbOG/y1ec3XisZK05MuckvHzN6WCazE38R2gGM/Yoa8/eKcrheH
+        kmYYWPa/kSiWj/0hNjAZTCW0+C3AlAhIPBUczw+vvtVuSF0b1T9fRcVzZPHDBJsx
+        3uxhus3u3qMtHzqhto03Etb1f95AKI5+29hZAZPK0XzjY2Xl3LjKQ/LQxi5b3Yld
+        LGWd7cvD5QWLsixeifj23lp6C/agL1z8VoPC/OUznicg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=0wKBU8iazye05gPDH
+        stYHa4wMdAd3DQloo25VyWz1kc=; b=k1cpALiOeionXg96sfLowWbhUyfR2szZU
+        NewDItgmKuyclsGagFd0UyTb6pyEKvT9RDr5XhsCOLce60OElwmpsb+RSi/Llfrm
+        eDDUrs6W3kAIrtObL4ESScZCvxL5RozsqpMfp8Ine01IP81VNM5hvKr+FeWJoNOi
+        +xW0+soV5hqUA1EgCNgKb2a4kzlWDIDQv9cvj4zqNDaeC1e3tN4qKXHVPJpJfTnr
+        k5+q6a4ohh23coOHAlwxmIwbgdSLOSo/PL0010hzRk8Gl5Hb3ddfPoVjVbG9hLxI
+        XUIvLmbBU/v6RDSa907anG8n9+TSy4f5RI9Xl6iMyaLTEgXtkv/IQ==
+X-ME-Sender: <xms:Wxj8XUTK0ssez4TVX4Hy21xAN3gbPAYpF40hHwWnXgKEjfv6FsKrzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedufedrvdduvddgvdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvffufffkofgggfestdekredtre
+    dttdenucfhrhhomhepvgguvghfuceovgguvghfsegvuggvfhdrvghuqeenucffohhmrghi
+    nhepkhgrlhiiuhhmvghushdrtghomhenucfkphepudelhedrvddtuddrvddtiedrudejfe
+    enucfrrghrrghmpehmrghilhhfrhhomhepvgguvghfsegvuggvfhdrvghunecuvehluhhs
+    thgvrhfuihiivgeptd
+X-ME-Proxy: <xmx:Wxj8XQ-HRoWZieE8l-rFe9j5sn8E8DPj5mA3MSa01isttgtgxlTUfQ>
+    <xmx:Wxj8XYBYpSCNPfBbXcuK5l6MclO2PKewIU3gEYYzv63X_JPjJthGuA>
+    <xmx:Wxj8XZj4nsPYyQPSjyDzDLsnJEWDmxBmrWhCouTmxiss2Gv4q93HYQ>
+    <xmx:Wxj8XXqfgpKw6sY97ZkPUY47jRKiDsubNZK_vjrY1iaMQ2WTv2MKpA>
+Received: from localhost (uhura.edef.eu [195.201.206.173])
+        by mail.messagingengine.com (Postfix) with ESMTPA id CD12C306081D;
+        Thu, 19 Dec 2019 19:39:54 -0500 (EST)
+From:   edef <edef@edef.eu>
+To:     git@vger.kernel.org
+Cc:     edef <edef@edef.eu>
+Subject: [PATCH] mailinfo: don't discard names under 3 characters
+Date:   Fri, 20 Dec 2019 00:39:48 +0000
+Message-Id: <20191220003948.60272-1-edef@edef.eu>
+X-Mailer: git-send-email 2.21.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQuPDDun3NxnTwvmjo9zvPzSq+5f2utkHkS0f1c1Nwbvg@mail.gmail.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+I sometimes receive patches from people with short mononyms, and in my
+cultural environment these are not uncommon. To my dismay, git-am
+currently discards their names, and replaces them with their email
+addresses.
 
-On Thu, Dec 19, 2019 at 05:52:56PM -0500, Eric Sunshine wrote:
-> > diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
-> > @@ -350,7 +350,7 @@ test_expect_success 'Multi-worktree setup' '
-> >         cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
-> > -       test_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
-> > +       test_non_git_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
-> 
-> I can't say I'm a fan of patch 1 introducing the function
-> test_non_git_might_fail() for this one particular case. I'd rather see
-> this case follow existing precedence by being written this way:
-> 
->     { cp repo.git/sharedindex.* repo.git/repos/foo || :; } &&
-> 
-> which is the idiomatic way this sort of thing is handled in existing tests.
-> 
-> While it's true that it may look a bit cryptic to people new to shell
-> scripting, as with any idiom, it's understood at a glance by people
-> familiar with it. That bit about "at a glance" is important: it's much
-> easier to comprehend idiomatic code than code which you have to spend
-> a lot of time _reading_ (and "test_non_git_might_fail" is quite a
-> mouthful, or eyeful, or something, which takes a lot more effort to
-> read and understand).
+Link: https://www.kalzumeus.com/2010/06/17/falsehoods-programmers-believe-about-names/
+---
+I'm not *completely* sure there's even a case where `src = email` is 
+the right thing to do, but I'd rather not modify this code more than 
+strictly necessary.
 
-The reason why I chose to do this was because I found myself writing the
-above many times in (currently unsent) later test cases that I cleaned
-up. As a result, I felt like it could be wrapped up more nicely with a
-helper function. That being said, if you think that open coding the
-idiom looks nicer, I can reroll to inline it.
+ mailinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index b395adbdf2..7274232e28 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -19,7 +19,7 @@ static void cleanup_space(struct strbuf *sb)
+ static void get_sane_name(struct strbuf *out, struct strbuf *name, struct strbuf *email)
+ {
+ 	struct strbuf *src = name;
+-	if (name->len < 3 || 60 < name->len || strchr(name->buf, '@') ||
++	if (!name->len || 60 < name->len || strchr(name->buf, '@') ||
+ 		strchr(name->buf, '<') || strchr(name->buf, '>'))
+ 		src = email;
+ 	else if (name == out)
+-- 
+2.24.1
+
