@@ -2,117 +2,90 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96080C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85E73C43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:34:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5F40E206D3
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:34:39 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OGiqfTtK"
+	by mail.kernel.org (Postfix) with ESMTP id 5FF53206D3
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727417AbfLTSei (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 13:34:38 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50056 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727390AbfLTSei (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 13:34:38 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 68C4299509;
-        Fri, 20 Dec 2019 13:34:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JwdGJD2ucwrzUYsE/kGgc4TWSPo=; b=OGiqfT
-        tKTqB7IbpzVEhdtvGMak8hkEB9R37CdDamR6vvHxYOsyMXG1wGDGzm1IaGxTp0Ka
-        tTJatjsBxsJ9nM/L3qlEOvYS19W58kMuXsCgHDATUnMJQzFgQ+EvcrQa4tuOIqh7
-        hZh5SrzXUynrIsPOLzD3psPRfA+pGjRwMik60=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=oHjVZPYZZl/VHpB7Z41RwLuAL0be03cB
-        JOk8D+5UEEo5PUvWYSptFg7GEL+AVpYZOe4VXN+zJXoGAhFNQVTBnDuS0NUuavQ+
-        bRm+RDYnpJ1eb4984Esn0nNNGYkcf/YwvJX7EbQw2eusLqzAu0m6ZVw0wNugb8TQ
-        ZK05ZZkl/qY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A92999508;
-        Fri, 20 Dec 2019 13:34:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8443E99507;
-        Fri, 20 Dec 2019 13:34:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
-References: <pull.495.git.1576574242.gitgitgadget@gmail.com>
-        <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
-        <ebec2379207681152c6e5196a1418aca03da113a.1576746982.git.gitgitgadget@gmail.com>
-        <xmqqfthgb01m.fsf@gitster-ct.c.googlers.com>
-        <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
-        <20191220023125.GD227872@google.com>
-Date:   Fri, 20 Dec 2019 10:34:28 -0800
-In-Reply-To: <20191220023125.GD227872@google.com> (Emily Shaffer's message of
-        "Thu, 19 Dec 2019 18:31:25 -0800")
-Message-ID: <xmqqbls2alsb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727426AbfLTSeu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 13:34:50 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54008 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727390AbfLTSeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 13:34:50 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m24so9901600wmc.3
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:34:48 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jw7hQ1AEhQGkxczr49zfYavZP/d0oPSVn8orYM3HY5c=;
+        b=OeIvC8XHTkwJMIzOMcUT6rAeZT/RPTvVbVBnnmDHPhYwhi5hggfsALXtJKTBBd0OmP
+         Nv4K58rBTEmlgutQqMJoTC9Tgl2E3VPDn5YJhaxuuxk9pxy/u4G9lRO/9FS4hS2IP6wz
+         jSsM4Rx7CQN8JSaV13boJ22fVft5DRtRDCldKBg8vo8Ro1vg9ZdF5lkogMrOBkiGgDOp
+         QSqagVt+VyYFZl2GgX/3pkuq6LDkx8TNT4XGkd57d2m7FgoCKFB9G2AIZ9t3/+1HS6AT
+         5HKrcRNg/o/R//FVo42L4Tga4xfNoXVgGnhdSsHhw0Ads5oHU2WWKKsvlzgIfSGM04qn
+         pgtg==
+X-Gm-Message-State: APjAAAVmp0BAA4IfRwhWPezL4Q+xPZYvO6oXYrqdDCgaX9NkGN5CiViG
+        ZCrIzl5+BLcBhuTCPARvu/+iF+bq3OOBNvjegDw=
+X-Google-Smtp-Source: APXvYqzLYswXvQsIDGVJhwQERWqcP4IZUj+OCvtQspvgSc7Qwbt707CDZkVx9B8HLIZHUp4GK994NGZhr0v/pretnog=
+X-Received: by 2002:a05:600c:2503:: with SMTP id d3mr17521157wma.84.1576866888143;
+ Fri, 20 Dec 2019 10:34:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5C47E592-2357-11EA-B9DB-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20191219015833.49314-1-emaste@FreeBSD.org> <20191220153814.54899-1-emaste@FreeBSD.org>
+ <CAPig+cS6XPc9KZo3ytEHLFjMxEFqCk5OJMUjZyFBP0cA95u9Lw@mail.gmail.com> <xmqqftheamea.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftheamea.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 20 Dec 2019 13:34:36 -0500
+Message-ID: <CAPig+cQ29dEbQgnJmGvODy9kGYq9TqKaJV5-mOPXbGFZ1HRWmw@mail.gmail.com>
+Subject: Re: [PATCH v3] sparse-checkout: improve OS ls compatibility
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ed Maste <emaste@freebsd.org>,
+        git mailing list <git@vger.kernel.org>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Eric Wong <e@80x24.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+On Fri, Dec 20, 2019 at 1:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > anomalous behavior is still present. It would be helpful, therefore,
+> > to mention such an implementation by name:
+> >
+> >     ...some 'ls' implementations, such as on FreeBSD, include...
+> >
+> If we _were_ to add an in-code comment, we may want to say something
+> like
+>
+>         # Do not replace this with "cd "$1" && ls", as FreeBSD "ls"
+>         # enables "-A" when run by root without being told, and ends
+>         # up including ".git" etc. in its output.
+>
+> to warn future developers against improving and/or cleaning up.
 
-> Hm. I'm surprised to see this feedback come in the form of a local
-> change when making the topic branch, rather than in a reply to the v1
-> patch. What's the reasoning? (Or is this scissors patch intended to be
-> the feedback?)
+I would find this comment more helpful than the existing one since it
+spells out the issue precisely. A minor tweak:
 
-You haven't seen a suggestion in the form of counter-proposal?
+    # Do not replace this with "cd "$1" && ls", as FreeBSD "ls"
+    # enables "-A" by default when run by root, and ends up
+    # including ".git" etc. in its output.
 
-> I ask because out of all of us, it seems the Outreachy interns can
-> benefit the most from advice on how and why to write their commit
-> messages - that is, part of the point of an internship is to learn best
-> practices and cultural norms in addition to coding practice. (Plus, I
-> find being asked to rewrite a commit message tends to force me to
-> understand my own change even better than before.)
+> Not that we encourage running our tests as root, though.  I am
+> slightly worried that the above phrasing might be taken as such.
 
-It's something Mentors can help doing (I do not necessarily have
-time for that myself), and you're welcome to use the "tenatively
-queued" version as an example.
+I'm not sure we really need to spell it out, but something like this
+might allay that concern:
 
-> I'll go ahead and look through the changes to the commit message so I
-> can learn what you're looking for too :)
-
-Nice.
-
-One thing you missed in your review of the "tentatively queued"
-version is the reversal of the order of presentation.  Instead of
-starting with "I decided to do this" without explanation, give the
-picture of status quo to set the stage, explain what issue exists in
-the current behaviour, and then describe what approach was chosen to
-solve the issue.
-
-> For me, I don't particularly see why we'd want to be rid of it - it sort
-> of feels like "a picture is worth a thousand words" to include the
-> actual use case in the commit message.
-
-Output coming from commands and/or options that are used only in a
-bit more advanced workflow and the ones that are rarely seen, I do
-agree that showing example is a good way to illustrate exactly what
-you are talking about.
-
-On the other hand, for behaviour of basic local commands like "git
-add", "git commit", "git diff", ..., I do not necessarily agree, as
-these should be obvious and clear to all the intended audiences,
-which would be "anybody who has used Git for say more than two
-weeks.
+    # Do not replace this with "cd "$1" && ls", as FreeBSD "ls"
+    # enables "-A" by default when run by root, and ends up
+    # including ".git" etc. in its output. (Note, though, that
+    # running the test suite as root is generally not
+    # recommended.)
