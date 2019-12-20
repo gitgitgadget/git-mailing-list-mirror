@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE84C2D0D2
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA9F2C2D0D8
 	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D66F221D7E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 81371206D3
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBlgkbnW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZFs4ynH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727458AbfLTRJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 12:09:57 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42333 "EHLO
+        id S1727499AbfLTRKJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 12:10:09 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46326 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727442AbfLTRJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 12:09:55 -0500
-Received: by mail-ed1-f68.google.com with SMTP id e10so8935142edv.9
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:09:54 -0800 (PST)
+        with ESMTP id S1727451AbfLTRKE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 12:10:04 -0500
+Received: by mail-ed1-f68.google.com with SMTP id m8so8918082edi.13
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:10:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8CBJvG4wzRLjfBCPon2U1WRggvX4ia5WDIt+aDz58W8=;
-        b=IBlgkbnWv2Xj88MPi1Vp5K2N2uxHpft7EMQs8wXJF/sgXriRdbXNZvKC4QK1Z4FlHv
-         DZeBGZbK+6gPusPQwrFPhd2dKEaSF6cfsJ5S6PwzG+z4giYTIBr/JB9fra8zIw8WAmM2
-         0LB/WkNXWwzoQyZ5zqAQ+jcKWnaxJEKj+rUoceqp5OUiNosdM4bsy3YvHkoItQB5vAOx
-         CPakAUujGSjfsBCMpmeZBYofG4IsSF8SAyVziSrXNkSUCmKKiMoWo8kiusXbSRwUocgG
-         h1AL9JP5TPYZJkfOz0p9n64/W1g0G7PxePUh705rhXVOnjhU6us2/jQDoCJ7gqyBJmZ9
-         Tq7A==
+        bh=d4xgvwXx/l2lMtns8eZj50hTfgC0sHw7/l58fdRvfC8=;
+        b=NZFs4ynHD3FZbWGxND3xZVyXYc9s35mSbeHVC2lmutIw6GkfAgF2wZn1M8M533QjvB
+         cDuPU0a4uX90SxGk7ei1ftgqTsr76QmjwAPzuewctTsVQBHVE2V057vMYWYfn4JCN7w7
+         Agd9ni+idso6HynO9AmFQcyuWMWF7dK5mjdHzty2Nam9KvZ7cgxRR8kA2fdLc0Y0Ma34
+         jBfsaaG7taDBCdSXnQe6+8IyGSEE0IJ/8FpSuRhGvzkklRXBqxLZkU+hEOoErePkmFv2
+         IBzcPlX8REHZwO+0oCk5nFvI8dDjomg1SiA63ZliCuZcfvrqLkeJLnFpDQzqEfXmu1kZ
+         ymGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8CBJvG4wzRLjfBCPon2U1WRggvX4ia5WDIt+aDz58W8=;
-        b=fkK9RTxxl5K9G1LDZhx8Yv1hMWgTKCbKL8M7qKPbyaa3sDE6Ts4bDpPnid2qtyoMNm
-         LK9TlL4vZFr7Da214aUL2Ni/vv/1/aymX2oU92/F2ecMMJ0tSWUtXBJkzeIkoag9Zhjb
-         bByXfBoxWkwsxvn5IoSm7CRqXCbil5J8BcLc4GDJH+vjtUqNzMCtysneJH9HMGagqvs3
-         pIjzPS9lT3DscAP/1crMMDF2StLOre1q40vVq6PwHuz6SqeV72/VivmzHA8Sm+kZ1cqS
-         z94xPvL1Lk9RElnCXWxF+D867F4kCrYggd5Ct/ynPlVU3IzCZlb/54Rc2PqIofDZqbve
-         WY0g==
-X-Gm-Message-State: APjAAAXcF0s1pepo12MjkiexMubaPV1hGCGb2OhKGcG6vbh4zpS3iITm
-        dHjmRYRI36UR2FlCDEqQ7qoUtoRO
-X-Google-Smtp-Source: APXvYqxzhaJhrm5lR07XgBRqWGZdrHkfyLwll7TkZwU0g4ke4nUY/alGFrTnifdxDpFrF9CXBmjUvg==
-X-Received: by 2002:aa7:d343:: with SMTP id m3mr17154480edr.285.1576861793976;
-        Fri, 20 Dec 2019 09:09:53 -0800 (PST)
+        bh=d4xgvwXx/l2lMtns8eZj50hTfgC0sHw7/l58fdRvfC8=;
+        b=LWKJ0R25l6Df98J2r6Idj56YRUb3C+iOkxObu8xkqoK7Hhpai3OQumTrn5r78pMMI6
+         XMJ6Z58c2hcJP1nQo2skg8Eq/mU+eUk4DjIRFCE7mFMnohOuVnmWChfnC+UljmC1KQi2
+         YiKsT5JEBLIcnXMzV/rj6mQVsw7IjzcFgFkuxV5/l8Vsjd4oLJoeMWB8PpA0dLtOQLJb
+         nmMGkYO16gJnR+kgOMo6aupNxHnEDX40IKOY43OjMqA4h7E99ann59Uvhr4RAKxJHR3X
+         15rcE4bvkvG3D9E2oZ4DZt+4sp7Fm2nVN6GE8l9mJVhAnXM2bQ0DqbaEv2CEVznkTFsf
+         CuSA==
+X-Gm-Message-State: APjAAAVpOCJa7TLEYjCEEahOMixjXFLeyMhnnYaQJ4fIr1R/Sc+iff+l
+        n+i1sub1kf6m1V28uu6HhS9URz6H
+X-Google-Smtp-Source: APXvYqxASQAQLo8n81lFk0+6+f8Eck6VGD8sFmZbwmecBMGl6WvkLWfVe0Fof7hdFdZ+c6jC9vZR9Q==
+X-Received: by 2002:a05:6402:153:: with SMTP id s19mr17299972edu.149.1576861801951;
+        Fri, 20 Dec 2019 09:10:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y11sm1020978edw.73.2019.12.20.09.09.53
+        by smtp.gmail.com with ESMTPSA id y4sm1143399ejp.50.2019.12.20.09.10.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 09:09:53 -0800 (PST)
-Message-Id: <b84faa86846cba6fb3f4bfa1d4f216fbce3867eb.1576861788.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2019 09:10:01 -0800 (PST)
+Message-Id: <999587933b2ce52db1687922b7d2b6a55049a7e0.1576861788.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 17:09:38 +0000
-Subject: [PATCH 05/15] rebase: fix handling of restrict_revision
+Date:   Fri, 20 Dec 2019 17:09:48 +0000
+Subject: [PATCH 15/15] rebase: change the default backend from "am" to "merge"
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,72 +76,119 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-restrict_revision in the original shell script was an excluded revision
-range.  It is also treated that way by the am-backend.  In the
-conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
-implement the logic to initialize $revisions in C", 2018-08-28)), the
-interactive-backend accidentally treated it as a positive revision
-rather than a negated one.
+The am-backend drops information and thus limits what we can do:
 
-This was missed as there were no tests in the testsuite that tested an
-interactive rebase with fork-point behavior.
+  * lack of full tree information from the original commits means we
+    cannot do directory rename detection and warn users that they might
+    want to move some of their new files that they placed in old
+    directories to prevent their becoming orphaned.[1]
+  * reduction in context from only having a few lines beyond those
+    changed means that when context lines are non-unique we can apply
+    patches incorrectly.[2]
+  * lack of access to original commits means that conflict marker
+    annotation has less information available.
+
+Also, the merge/interactive backend have far more abilities, appear to
+currently have a slight performance advantage[3] and have room for more
+optimizations than the am backend[4] (and work is underway to take
+advantage of some of those possibilities).
+
+[1] https://lore.kernel.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/
+[2] https://lore.kernel.org/git/CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com/
+[3] https://public-inbox.org/git/CABPp-BF=ev03WgODk6TMQmuNoatg2kiEe5DR__gJ0OTVqHSnfQ@mail.gmail.com/
+[4] https://lore.kernel.org/git/CABPp-BGh7yW69QwxQb13K0HM38NKmQif3A6C6UULEKYnkEJ5vA@mail.gmail.com/
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c  |  4 ++--
- t/t3400-rebase.sh | 20 +++++++++++++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ Documentation/git-rebase.txt           |  2 +-
+ builtin/rebase.c                       |  4 ++--
+ t/t5520-pull.sh                        | 10 ++++++----
+ t/t9106-git-svn-commit-diff-clobber.sh |  3 ++-
+ 4 files changed, 11 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index cf1ac2e359..e819889a31 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -309,7 +309,7 @@ See also INCOMPATIBLE OPTIONS below.
+ --merge::
+ 	Use merging strategies to rebase.  When the recursive (default) merge
+ 	strategy is used, this allows rebase to be aware of renames on the
+-	upstream side.
++	upstream side.  This is the default.
+ +
+ Note that a rebase merge works by replaying each commit from the working
+ branch on top of the <upstream> branch.  Because of this, when a merge
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index cc8f3f008f..b320bb3a30 100644
+index eaa5eac59e..1c3d0b97d5 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -364,8 +364,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+@@ -104,7 +104,7 @@ struct rebase_options {
+ #define REBASE_OPTIONS_INIT {			  	\
+ 		.type = REBASE_UNSPECIFIED,	  	\
+ 		.empty = EMPTY_UNSPECIFIED,	  	\
+-		.default_backend = "am",	  	\
++		.default_backend = "merge",	  	\
+ 		.flags = REBASE_NO_QUIET, 		\
+ 		.git_am_opts = ARGV_ARRAY_INIT,		\
+ 		.git_format_patch_opt = STRBUF_INIT	\
+@@ -1949,7 +1949,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  
- 	argv_array_pushl(&make_script_args, "", revisions, NULL);
- 	if (opts->restrict_revision)
--		argv_array_push(&make_script_args,
--				oid_to_hex(&opts->restrict_revision->object.oid));
-+		argv_array_pushf(&make_script_args, "^%s",
-+				 oid_to_hex(&opts->restrict_revision->object.oid));
- 
- 	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.argc, make_script_args.argv,
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 79762b989a..71fd6396cd 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
- 	git rebase master
+ 	if (options.type == REBASE_UNSPECIFIED) {
+ 		if (!strcmp(options.default_backend, "merge"))
+-			options.type = REBASE_MERGE;
++			imply_interactive(&options, "--merge");
+ 		else if (!strcmp(options.default_backend, "am"))
+ 			options.type = REBASE_AM;
+ 		else
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 3fff6a06fa..4f9e7f7ff6 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -340,7 +340,7 @@ test_expect_success '--rebase with conflicts shows advice' '
+ 	test_tick &&
+ 	git commit -m "Create conflict" seq.txt &&
+ 	test_must_fail git pull --rebase . seq 2>err >out &&
+-	test_i18ngrep "Resolve all conflicts manually" out
++	test_i18ngrep "Resolve all conflicts manually" err
  '
  
--test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
- 	git checkout -b default-base master &&
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/default-base &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual &&
-+	git checkout default-base &&
-+	git reset --hard HEAD^ &&
-+	git checkout default &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+	git checkout -B default-base master &&
-+	git checkout -B default topic &&
-+	git config branch.default.remote . &&
-+	git config branch.default.merge refs/heads/default-base &&
- 	git rebase &&
- 	git rev-parse --verify default-base >expect &&
- 	git rev-parse default~1 >actual &&
+ test_expect_success 'failed --rebase shows advice' '
+@@ -354,7 +354,7 @@ test_expect_success 'failed --rebase shows advice' '
+ 	git checkout -f -b fails-to-rebase HEAD^ &&
+ 	test_commit v2-without-cr file "2" file2-lf &&
+ 	test_must_fail git pull --rebase . diverging 2>err >out &&
+-	test_i18ngrep "Resolve all conflicts manually" out
++	test_i18ngrep "Resolve all conflicts manually" err
+ '
+ 
+ test_expect_success '--rebase fails with multiple branches' '
+@@ -774,8 +774,10 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
+ 	(
+ 		cd dst &&
+ 		test_must_fail git pull --rebase &&
+-		find .git/rebase-apply -name "000*" >patches &&
+-		test_line_count = 1 patches
++		cat .git/rebase-merge/done .git/rebase-merge/git-rebase-todo >work &&
++		grep -v -e \# -e ^$ work >patches &&
++		test_line_count = 1 patches &&
++		rm -f work
+ 	)
+ '
+ 
+diff --git a/t/t9106-git-svn-commit-diff-clobber.sh b/t/t9106-git-svn-commit-diff-clobber.sh
+index dbe8deac0d..aec45bca3b 100755
+--- a/t/t9106-git-svn-commit-diff-clobber.sh
++++ b/t/t9106-git-svn-commit-diff-clobber.sh
+@@ -92,7 +92,8 @@ test_expect_success 'multiple dcommit from git svn will not clobber svn' "
+ 
+ 
+ test_expect_success 'check that rebase really failed' '
+-	test -d .git/rebase-apply
++	git status >output &&
++	grep currently.rebasing output
+ '
+ 
+ test_expect_success 'resolve, continue the rebase and dcommit' "
 -- 
 gitgitgadget
-
