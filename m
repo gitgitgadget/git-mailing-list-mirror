@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD084C2D0D7
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE84C2D0D2
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8B864206D3
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D66F221D7E
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 17:10:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BXJ+kAge"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBlgkbnW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727490AbfLTRKE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 12:10:04 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:40970 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbfLTRKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 12:10:02 -0500
-Received: by mail-ed1-f66.google.com with SMTP id c26so8934672eds.8
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:10:01 -0800 (PST)
+        id S1727458AbfLTRJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 12:09:57 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42333 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727442AbfLTRJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 12:09:55 -0500
+Received: by mail-ed1-f68.google.com with SMTP id e10so8935142edv.9
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 09:09:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=BAhNliR1ZkRUC0qZ6iUsnYc0YkrscXoRR69gsMZ/BNk=;
-        b=BXJ+kAgeQxHl8Mo/8UQ2+dVlK9e4Q2WUN9DiOH3zEDQA5pRO2uokqT54rgB7cb87LB
-         ZOXAauUbbbmfF+0D+yP8svVcQnY1M0z+GvoFzeExxyj9Q3LjkygUI4lyx2TjkTlJQDoD
-         H5+M2qmvCJ4tObvepljFOrcAOEKZLvt3K7BLxYV6Pug0zEROUdbz7Xtb5ztyi2+awahY
-         qraxsJIIAjfgqOyo2GhaY1wWqjDWMYf4XLVpmj2g14HftNDe4LHKG4azbplzB7d4d0Tm
-         RtKv+/sG0bwclgMKVHn/JdP6eKG6JTP09IuFOjLJMX3Ap/fIO4Wbo8eHPO8OVZtjBcc0
-         nu0Q==
+        bh=8CBJvG4wzRLjfBCPon2U1WRggvX4ia5WDIt+aDz58W8=;
+        b=IBlgkbnWv2Xj88MPi1Vp5K2N2uxHpft7EMQs8wXJF/sgXriRdbXNZvKC4QK1Z4FlHv
+         DZeBGZbK+6gPusPQwrFPhd2dKEaSF6cfsJ5S6PwzG+z4giYTIBr/JB9fra8zIw8WAmM2
+         0LB/WkNXWwzoQyZ5zqAQ+jcKWnaxJEKj+rUoceqp5OUiNosdM4bsy3YvHkoItQB5vAOx
+         CPakAUujGSjfsBCMpmeZBYofG4IsSF8SAyVziSrXNkSUCmKKiMoWo8kiusXbSRwUocgG
+         h1AL9JP5TPYZJkfOz0p9n64/W1g0G7PxePUh705rhXVOnjhU6us2/jQDoCJ7gqyBJmZ9
+         Tq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=BAhNliR1ZkRUC0qZ6iUsnYc0YkrscXoRR69gsMZ/BNk=;
-        b=JG3G7OIUvpDk51wYTmEsKNqVlD1DjdsEc2rvNZ2zN4MBCVyCp0ndMZ23jYFSHTPIZE
-         rcuwyRinx62fYWAkL7mQK8Ln8iFBaaHXajdiGI1coJWFIc2sOpMSJAbTBOw3QeBtQEL3
-         ibcXwTLoCM8v1+/0cjV4N4kftYJG40XOxUlhd2rOZzx2MdAxNNwMJYmig748E5Fwv+ow
-         avzG6QBilo0N9PCw/FPTPP7hN2f6Mvpw7eCyPeESz7maFEZFsQ5FYdg0ViDw7UnjOnqb
-         x7b32FTdV261bBbfQDvoeYp/T75J6ee3qCM2T9VfYp5EFthaQRcEXbwxa1J0OUDRHKoe
-         bXPw==
-X-Gm-Message-State: APjAAAV9alrbRU9kFITIH7cy5j/qhVkrV+p1z6Hi5Vwz1CaCki7owFe8
-        aTisiP5Vv9qCXARi03Pxh5ZzSTO2
-X-Google-Smtp-Source: APXvYqynXPj+5uoYt+6ieesYC2C/4LE3ubUJWHJj4NRcmGAn7j/nkBPz+Gqs2XGBnKHCLaxtjTmBeA==
-X-Received: by 2002:a05:6402:1ac4:: with SMTP id ba4mr16669169edb.201.1576861800593;
-        Fri, 20 Dec 2019 09:10:00 -0800 (PST)
+        bh=8CBJvG4wzRLjfBCPon2U1WRggvX4ia5WDIt+aDz58W8=;
+        b=fkK9RTxxl5K9G1LDZhx8Yv1hMWgTKCbKL8M7qKPbyaa3sDE6Ts4bDpPnid2qtyoMNm
+         LK9TlL4vZFr7Da214aUL2Ni/vv/1/aymX2oU92/F2ecMMJ0tSWUtXBJkzeIkoag9Zhjb
+         bByXfBoxWkwsxvn5IoSm7CRqXCbil5J8BcLc4GDJH+vjtUqNzMCtysneJH9HMGagqvs3
+         pIjzPS9lT3DscAP/1crMMDF2StLOre1q40vVq6PwHuz6SqeV72/VivmzHA8Sm+kZ1cqS
+         z94xPvL1Lk9RElnCXWxF+D867F4kCrYggd5Ct/ynPlVU3IzCZlb/54Rc2PqIofDZqbve
+         WY0g==
+X-Gm-Message-State: APjAAAXcF0s1pepo12MjkiexMubaPV1hGCGb2OhKGcG6vbh4zpS3iITm
+        dHjmRYRI36UR2FlCDEqQ7qoUtoRO
+X-Google-Smtp-Source: APXvYqxzhaJhrm5lR07XgBRqWGZdrHkfyLwll7TkZwU0g4ke4nUY/alGFrTnifdxDpFrF9CXBmjUvg==
+X-Received: by 2002:aa7:d343:: with SMTP id m3mr17154480edr.285.1576861793976;
+        Fri, 20 Dec 2019 09:09:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u10sm1158893ejx.20.2019.12.20.09.09.59
+        by smtp.gmail.com with ESMTPSA id y11sm1020978edw.73.2019.12.20.09.09.53
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 09:09:59 -0800 (PST)
-Message-Id: <81d0f18b3e296230b60fddb97720c708e35dce1a.1576861788.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2019 09:09:53 -0800 (PST)
+Message-Id: <b84faa86846cba6fb3f4bfa1d4f216fbce3867eb.1576861788.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 17:09:46 +0000
-Subject: [PATCH 13/15] rebase tests: repeat some tests using the merge backend
- instead of am
+Date:   Fri, 20 Dec 2019 17:09:38 +0000
+Subject: [PATCH 05/15] rebase: fix handling of restrict_revision
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,81 +76,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-In order to ensure the merge/interactive backend gets similar coverage
-to the am one, add some tests for cases where previously only the am
-backend was tested.
+restrict_revision in the original shell script was an excluded revision
+range.  It is also treated that way by the am-backend.  In the
+conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
+implement the logic to initialize $revisions in C", 2018-08-28)), the
+interactive-backend accidentally treated it as a positive revision
+rather than a negated one.
+
+This was missed as there were no tests in the testsuite that tested an
+interactive rebase with fork-point behavior.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t5520-pull.sh                   | 17 +++++++++++++++--
- t/t6047-diff3-conflict-markers.sh | 13 +++++++++++--
- 2 files changed, 26 insertions(+), 4 deletions(-)
+ builtin/rebase.c  |  4 ++--
+ t/t3400-rebase.sh | 20 +++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 602d996a33..3fff6a06fa 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -277,14 +277,27 @@ test_expect_success '--rebase' '
- 	test_cmp expect actual
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index cc8f3f008f..b320bb3a30 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -364,8 +364,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ 
+ 	argv_array_pushl(&make_script_args, "", revisions, NULL);
+ 	if (opts->restrict_revision)
+-		argv_array_push(&make_script_args,
+-				oid_to_hex(&opts->restrict_revision->object.oid));
++		argv_array_pushf(&make_script_args, "^%s",
++				 oid_to_hex(&opts->restrict_revision->object.oid));
+ 
+ 	ret = sequencer_make_script(the_repository, &todo_list.buf,
+ 				    make_script_args.argc, make_script_args.argv,
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 79762b989a..71fd6396cd 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
+ 	git rebase master
  '
  
--test_expect_success '--rebase fast forward' '
-+test_expect_success '--rebase (merge) fast forward' '
- 	git reset --hard before-rebase &&
- 	git checkout -b ff &&
- 	echo another modification >file &&
- 	git commit -m third file &&
- 
- 	git checkout to-rebase &&
--	git pull --rebase . ff &&
-+	git -c rebase.backend=merge pull --rebase . ff &&
-+	test_cmp_rev HEAD ff &&
-+
-+	# The above only validates the result.  Did we actually bypass rebase?
-+	git reflog -1 >reflog.actual &&
-+	sed "s/^[0-9a-f][0-9a-f]*/OBJID/" reflog.actual >reflog.fuzzy &&
-+	echo "OBJID HEAD@{0}: pull --rebase . ff: Fast-forward" >reflog.expected &&
-+	test_cmp reflog.expected reflog.fuzzy
+-test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
+ 	git checkout -b default-base master &&
+ 	git checkout -b default topic &&
+ 	git config branch.default.remote . &&
+ 	git config branch.default.merge refs/heads/default-base &&
++	git rebase --merge &&
++	git rev-parse --verify default-base >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual &&
++	git checkout default-base &&
++	git reset --hard HEAD^ &&
++	git checkout default &&
++	git rebase --merge &&
++	git rev-parse --verify default-base >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual
 +'
 +
-+test_expect_success '--rebase (am) fast forward' '
-+	git reset --hard before-rebase &&
-+
-+	git -c rebase.backend=am pull --rebase . ff &&
- 	test_cmp_rev HEAD ff &&
- 
- 	# The above only validates the result.  Did we actually bypass rebase?
-diff --git a/t/t6047-diff3-conflict-markers.sh b/t/t6047-diff3-conflict-markers.sh
-index 860542aad0..d383ce8130 100755
---- a/t/t6047-diff3-conflict-markers.sh
-+++ b/t/t6047-diff3-conflict-markers.sh
-@@ -186,7 +186,7 @@ test_expect_success 'check multiple merge bases' '
- 	)
- '
- 
--test_expect_success 'rebase describes fake ancestor base' '
-+test_expect_success 'rebase --merge describes parent of commit being picked' '
- 	test_create_repo rebase &&
- 	(
- 		cd rebase &&
-@@ -194,7 +194,16 @@ test_expect_success 'rebase describes fake ancestor base' '
- 		test_commit master file &&
- 		git checkout -b side HEAD^ &&
- 		test_commit side file &&
--		test_must_fail git -c merge.conflictstyle=diff3 rebase master &&
-+		test_must_fail git -c merge.conflictstyle=diff3 rebase --merge master &&
-+		grep "||||||| parent of" file
-+	)
-+'
-+
-+test_expect_success 'rebase --am describes fake ancestor base' '
-+	(
-+		cd rebase &&
-+		git rebase --abort &&
-+		test_must_fail git -c merge.conflictstyle=diff3 rebase --am master &&
- 		grep "||||||| constructed merge base" file
- 	)
- '
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++	git checkout -B default-base master &&
++	git checkout -B default topic &&
++	git config branch.default.remote . &&
++	git config branch.default.merge refs/heads/default-base &&
+ 	git rebase &&
+ 	git rev-parse --verify default-base >expect &&
+ 	git rev-parse default~1 >actual &&
 -- 
 gitgitgadget
 
