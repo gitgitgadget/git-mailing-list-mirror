@@ -2,104 +2,185 @@ Return-Path: <SRS0=PG55=2K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9D45C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 09:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1622CC43603
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 10:59:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 454BB2146E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 09:43:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C82B52467F
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 10:59:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b="nShzScx6"
+	dkim=pass (2048-bit key) header.d=brightrockgames-com.20150623.gappssmtp.com header.i=@brightrockgames-com.20150623.gappssmtp.com header.b="Kn+0P1fh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727169AbfLTJnH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 04:43:07 -0500
-Received: from lb2-smtp-cloud8.xs4all.net ([194.109.24.25]:54977 "EHLO
-        lb2-smtp-cloud8.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726111AbfLTJnH (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 20 Dec 2019 04:43:07 -0500
-Received: from pc09.procura.nl ([37.74.132.97])
-        by smtp-cloud8.xs4all.net with ESMTPSA
-        id iEoKilANVTsDeiEoLiHJjS; Fri, 20 Dec 2019 10:43:05 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1576834985; bh=nwzZHhWQ1VKOiuYZHkM4Zjcajt6FbZmsgcQbwBdfa/w=;
-        h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:From:
-         Subject;
-        b=nShzScx6Bqy6ccrwJQSu7tQU3tbI3MRgf5tjJNYhyd7vDW2pnUkjtvqjtQw1WNbfG
-         ZgZwSMvL1AzD3giciKfsn18pwxmSoHe74ctrPvpjCoxFQgM98nQPetETzT4Drmbo56
-         AgmDo3Rk6DfXUjPkc3bCL411PTK9JFo7uYP/+OFaHj8+Mf+cZYYc3sQq5zm13vQI/y
-         Iq6mf2g+Ueq+j766znzDgsNKJ0+Awvto1ejnand7D9Y3RPtUezE4/ovj2pvzeQpf2l
-         MLmpDiE0pOpLL9aZXTy9Bb976hVWJ+0MMiV1IKSWaitSK6AkIcyPAx3vCo4kNdczs9
-         0/1waAnooxhnA==
-Date:   Fri, 20 Dec 2019 10:42:58 +0100
-From:   "H.Merijn Brand" <h.m.brand@xs4all.nl>
-To:     git@vger.kernel.org
-Subject: Low prio: feature requests for git-gui
-Message-ID: <20191220104258.1110d00e@pc09.procura.nl>
-X-Mailer: Claws Mail 3.17.4git65 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
- JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
- e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
- TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
- LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
- NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
- AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
- n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
- 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
- LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
- I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+        id S1727188AbfLTK7B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 05:59:01 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:36089 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727177AbfLTK7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 05:59:00 -0500
+Received: by mail-wm1-f52.google.com with SMTP id p17so8774556wma.1
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 02:58:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=brightrockgames-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=wKBhLHATKV/iHpYra/bvMdgyXAeyF/bXoJJjWpZZCf4=;
+        b=Kn+0P1fhSFB5M4jZAxsTwTdsss9R5cEHg/aRulhjQc511yEjD7ZTnFbDnuTLHz2KwO
+         4xQ2m5a2jG1Ew/+nuWAtHJFGC6W6lq9PVHwI0orhZMY/9U/rRQO0OdOPPEfytaLb0cet
+         aT57eCqb+yF4TQQmILthIEhXFvj6PApESEi0n/kp7I1cHcA3abUACMve0OuLi49UOe+8
+         dJ6XORBoHZIRG5aApnoKBufiGisCFwP1VumOI9fRB6j0i76AkHuw8JKS5eqX9RyRvkbi
+         1sdAx8SUF4SMYY6eRtAVIH4sVy/GZMmIntjHWZDDyqkxF6LRaaCttygzXTi8mYQwVcai
+         PU5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=wKBhLHATKV/iHpYra/bvMdgyXAeyF/bXoJJjWpZZCf4=;
+        b=Cb57r6GrQCBozKOA7JfI4xsJzQFormj1tarcPAg24apaMbs+ydx5zaRrkwuw9JwyMj
+         Kax8R1iIgSBEVn8wciX8TCicWkvdtc18SvKVWTEjVZ0nrpM/ISc4ko0PdQGvTMkRgywI
+         naGj5RK/GD2K4nrTO8clogW5fydDOC2i8vU4kpIMoYr3unBySU7eLXxpgcgjkYo7eCH/
+         ur7+HWFSIzFTSNPGAK6lwWkDpX8tFr/xx27zKZ365x/ihrc5rZ7ide4zBfIqTxZ5H8Hh
+         a362NEe3WvrevKGDxf30trSQxU7qF9Os6Zm+1/130uukm4EsTj/yyFxVy0sbgi1LmtJp
+         TGyA==
+X-Gm-Message-State: APjAAAXs9yG5EO7qgS8I3uetZ0kYdRtYbsCwOORSQK4yvnIjGd5x62Ld
+        nXrbDlmftslS1Xi/KDt4ooLU8wd0caDU0f5vDGR1sA==
+X-Google-Smtp-Source: APXvYqx/5yG3m2XsN0dspmcfmsIWKly5Phm1icVexDnAD5MC8s9OJBubqzb5kWnExRXA6BnVQx58GFqE1rMY/mUHRpY=
+X-Received: by 2002:a1c:4d18:: with SMTP id o24mr15503194wmh.35.1576839537500;
+ Fri, 20 Dec 2019 02:58:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- boundary="Sig_//y8A6MzVX5tk/cs169Q6/S4"; protocol="application/pgp-signature"
-X-CMAE-Envelope: MS4wfKydJaHqK5Y1v9rlqYFETgGPyo72/eokL+HUt96Gm79A7XIAIdRIlXK+Oy3OckZtqEcRq7MMBV6IGrCrJ0WSjgJ8KaH9FwtW6baittSQHmxAmiYNuqV0
- twjji/K2NGUu8DrXS16vjWeUylkob7oL6A7NYi3LtJGrnKRt/7sjhg5e
+References: <CAB1T5w2GyfERoaCyFZeKaui_xuXd0r6J+Zvq4pecstBJ9UyRzw@mail.gmail.com>
+ <20191220030259.GC163225@camp.crustytoothpaste.net>
+In-Reply-To: <20191220030259.GC163225@camp.crustytoothpaste.net>
+From:   Scott Richmond <scott@brightrockgames.com>
+Date:   Fri, 20 Dec 2019 10:58:47 +0000
+Message-ID: <CAB1T5w0_Dp5u9JYRqGnQbuaL_pV2VN2ZTpXkDEJrEyHR2WJ3yA@mail.gmail.com>
+Subject: Re: Ability to ignore EOL changes for certain projects
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Scott Richmond <scott@brightrockgames.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---Sig_//y8A6MzVX5tk/cs169Q6/S4
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> I'm not sure this syncs up with your statements below...[snip]
 
-=E2=80=A2 Right click context menu on file-entry in Unstaged Changes list
+Unfortunately it is the latter case where certain dev apps, or plugins
+within dev apps, that can occasionally write incorrect line endings.
+We don't have configurable control over these things unfortunately.
+If I widen the scope to all the scenarios you presented though - My
+feature request could still have value as another way to alleviate the
+pressure EOL changes create on a git repo. I would agree that it would
+be best to solve the problem at its source where possible, but it is
+sometimes not possible.
 
-  - Reset changes =E2=86=92 git checkout this file
-    I see the current changes need to be reversed, are bogus or
-    invalid
-  - Restore this file =E2=86=92 git checkout this file
-    it was accidentally removed. Like the first option
-  - Remove this file from disk
-    Somehow an invalid restore, a misplaced output or other reason
-    (core dump, debug output from other tools) made this file appear
-    and I don't want to add it to .gitignore
-  - Add to .gitignore
-    Like above, but this file will re-appear more often
+> I'm not sure how such a feature would interact with how Git operates when it re-reads the index...
 
-Does this sound reasonable enough to make it a ticket/issue?
+AFAIK git status does not filter the results, as that would push
+writes to files (I think?) when the user wouldn't expect it to. So it
+makes sense that actions such as git status are unaffected by
+text/crlf options.
+I agree the additional cost to run a filter or similar action with git
+status would be a cause for concern, but maybe an optional and
+acceptable trade-off for the pain it alleviates elsewhere.
 
---=20
-H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
-using perl5.00307 .. 5.31      porting perl5 on HP-UX, AIX, and Linux
-https://useplaintext.email  https://tux.nl  http://www.test-smoke.org
-http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+I do not know the underlying way git works either, but I suspect it
+would have to be a 3rd test after sha1 & oid against the files that
+come out of git status. I'm guessing that is an area of git that has
+little configurability and therefore very difficult to make changes
+to. :/
 
---Sig_//y8A6MzVX5tk/cs169Q6/S4
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+Regards,
 
------BEGIN PGP SIGNATURE-----
+Scott Richmond.
+  Director, Producer, Programmer
+  Brightrock Games
+  T: 07480795661
 
-iQEzBAEBCAAdFiEEGolmczWuFi3lJEbAA6FHoT5dwJgFAl38l6IACgkQA6FHoT5d
-wJgYfAf/f/Tyc+3YkntLbnNg6xPGsDgIrta/R1UIORso8XhrUaS1DTg9SyJVQtsc
-BY2xMXJ3bRd7/lCFPCapYgcpmfydepr/qHxomSTyksEmbxGRODMvX8ZYgmFLsE4y
-RNtHuntnVX+iZAl+S6PlxWFuAPbMf+QLBGBNhT7wyhIeVc2Yb56NGq7olGW20ITK
-y9cpM97qtEiBO4HyS7iJQFcswMnAc9Gp5QnYADhGk41SgZ6pO0Xyz7+E4d37mR3T
-M4Ch5opWQ5lnO5PQy6c4ZO5841tY2rjncmm/UCuSQzfA5UvaEGV/L5JjFCsxkyv+
-6rAfVFQnkQzakIeYPlB8O2fTDkt2iA==
-=q8/l
------END PGP SIGNATURE-----
-
---Sig_//y8A6MzVX5tk/cs169Q6/S4--
+On Fri, Dec 20, 2019 at 3:03 AM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2019-12-18 at 11:10:27, Scott Richmond wrote:
+> > The Problem Domain
+> > In certain dev environments (Unity3D projects) there is (AFAIK) an
+> > unsolvable problem where some files are often modified with line
+> > endings that aren't the native system or not the committed line
+> > endings for that file. Secondarily, in this case line endings don't
+> > matter - Nothing in the dev environment "cares" which kind of line
+> > ending is used.
+>
+> I'm not sure this syncs up with your statements below.  Typically,
+> programs that do editing of text files either (a) write the line endings
+> that the file started out with or (b) write the system line endings.  If
+> you set the appropriate files with the `text` attribute in
+> `.gitattributes` (or use `* text=auto` if appropriate), then Git will
+> always write in the system line endings and convert internally to LF,
+> and programs that do either (a) or (b) will work.
+>
+> Yet it sounds like you have development tools that don't do either (a)
+> or (b): they write in some fixed line ending, and therefore care very
+> much which line ending is being used.  In such a case, you could
+> write (for example) `*.yaml text eol=crlf` (or `eol=lf`) if you always
+> want them to do that and Git will convert to those line endings and
+> store in LF.
+>
+> If the problem is text editor settings, you can use a `.editorconfig`
+> file, which is a cross-platform text editor configuration that can
+> specify line endings.  Most text editors can be configured to honor such
+> settings, although it may require a plugin.
+>
+> If your problem is a shared Windows / Linux environment like WSL, you
+> can set `core.eol` to `crlf` in the repository and things will work.  If
+> you need settings like this, you can even set them up appropriately for
+> the system using a make target or bootstrap script so you don't need to
+> do that by hand on each system.
+>
+> If you do this, then your tools will write the same line endings as are
+> checked out, and files won't appear modified.  You can see how Git
+> itself uses this to set up files appropriately for different systems.
+>
+> The only case this wouldn't work is if the tools wrote some random line
+> endings depending on an attribute other than the OS they're on, or if
+> you had multiple tools doing different things.  If that's really your
+> problem, then yes, you'd need a new Git feature.  It is of course
+> possible to use a filter to strip out all carriage returns, but that
+> doesn't prevent Git from showing the file as being modified.
+>
+> What I've proposed, of course, requires some setup work and
+> configuration.  It isn't trivial, but it does work for a lot of projects
+> already.
+>
+> > Solution Request
+> > It would be fantastic if we could tell Git to stop caring about EOL
+> > changes on a per-repo basis, with the effective output being that git
+> > status shouldn't show changes for files with differing EOLs.
+> >
+> > I'm experienced with Git, though I am not expert enough to consider
+> > creating such a change myself - It is unclear to me just how
+> > complicated a change may be. However maybe I could look into it if it
+> > was made clear that this improvement is possible and has no serious
+> > side effects.
+>
+> I'm not sure how such a feature would interact with how Git operates
+> when it re-reads the index.  It isn't 100% clear to me when data is
+> filtered through various text filters such as EOL filters.  All the
+> filtering I've used is one-to-one, and therefore any modification of the
+> file contents necessarily means that the indexed contents have changed.
+>
+> If Git does apply such filters when refreshing the index (such as
+> happens before `git status`), then such a feature would be relatively
+> easy to implement, although you'd incur a performance penalty when
+> changing the EOL of a file, even if the file were otherwise identical.
+> I suspect it would make the most sense as an additional value for
+> `core.autocrlf`.
+>
+> If Git doesn't apply those filters, then there really isn't a way to do
+> what you want without fundamentally changing the characteristics of how
+> Git operates on the index, since it would still show files as modified.
+>
+> Maybe someone else can comment on the feasibility of this better than I
+> can.
+> --
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
