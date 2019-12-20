@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DE87C3F68F
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:54:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF6E3C2D0C8
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:54:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7604220866
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:54:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 886B3206D8
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:54:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lV6pX9M3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XtTdyKSt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727467AbfLTSyA (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727471AbfLTSyB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 13:54:01 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35766 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727404AbfLTSyA (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 20 Dec 2019 13:54:00 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35764 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727394AbfLTSyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 13:54:00 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so10287089wmb.0
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:53:58 -0800 (PST)
+Received: by mail-wm1-f68.google.com with SMTP id p17so10287123wmb.0
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:53:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=3K+wouIc8/kTuhmIZRnOUmgpXaymPRCS0LswuFOt9CM=;
-        b=lV6pX9M3zG2PXFdnjvmdY5gQRAnrkDV3c2VvsaYsmH5qFrxOq+zGFAMPGlPzrc7GB9
-         jfZN2CG4xf1x1JrpIH0rl1eLdljj7EhvN2vHYjj8RDVWOqQ6eGJ3dU7zqvk0yIyLA/Uc
-         TBF6ti+mPefviLvnNd6M17qRL8PvbDWHipVx0eikYZhCdPyLyQbS4DHmHYDvdoWAmFyA
-         RNI+nik6heRJUm51zFC15xM6SgpjTtRNNKLzN7yNw56QkM+swtzXLQYl8ALG/KonERsR
-         YBdG4bXeyFhrEj87GsGZtSfbJF2Se2IZKyZOkLcXhQobt4Ka1ncoFYJfBYh5Vv5Gy5+t
-         iYEw==
+        bh=f3UwA+PZfDZtpgHX+o3IAZwzVToNn3PbEPAIVEQaBww=;
+        b=XtTdyKStb/a6FOwhZPLqDoqbK7737iriJsEH2e0C+YsY/xt4Cc+wdxOAfYTrWyC0vI
+         B/wNiWe2SZr4CBb39g9yfdvHA3RSzTJosS6dFXSqm2YjOr/HM+ogE8oTNkkv30c1R0E+
+         3YIMY1vez8ylwZJ6RKx877V36DSH3DQGIOh5OByXNPQYmUTGLixB520wX2q2/OwevoVH
+         j0umpjFqzpCWQsN4ZKyNVEm5nccUYTiZuroFDPxCn5ip0gBPEu1/hDijNaE/0kZqhQvv
+         kNOWtXjhMs5tVoqKaObsr4AVnF/WowISyBisOMrwZVYQhbpuUjMYP2/RFZOKg9FW1ymE
+         RcLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3K+wouIc8/kTuhmIZRnOUmgpXaymPRCS0LswuFOt9CM=;
-        b=jGR/fw/O7NA/ykYmxaYfnephumLoNAoQEDo8MZhUHavEHUdeeuMA/ZVOLcZOXH/mhq
-         tk2Ym//HHwicmGrSDBCNxsPOl0LwB4k9QsHEzqzpyp4R6HetWSWBxd8qDiLjItLBnOAW
-         WnPtflIr8nHby2sBqAuDh+RIfFkD4q0rIn2hOcFT8YG6dwlHa84gVzvymkdtduskJudn
-         AQtoodUg/MnkFn8CiWiWdY1aKhHxCqjwIevV1ZjwcttI4ZkU4JIcEq3eSGmkIeBdQMSY
-         RdT3mzQ9zwm6UHP51FkuWFYU2Ah+Px+pJNQWyofcaZT1IYW58jZcj2Rw2K6YIk4Drh05
-         07xQ==
-X-Gm-Message-State: APjAAAUxUaUs4tU3wIADeaH0Q/Yho+i4nQnR7caHvzuNSjIVlQiGPmq2
-        W2g3WdECv+Yj1QV6OFbzWbuWBkB5
-X-Google-Smtp-Source: APXvYqzk4p78wSeZHo593JvlzgMQybHT1ig7gDHEI8l9ABI3WUGicYHpKJCvAfQIKmyZlFn5XTyqZw==
-X-Received: by 2002:a7b:cb0a:: with SMTP id u10mr17705771wmj.165.1576868038061;
+        bh=f3UwA+PZfDZtpgHX+o3IAZwzVToNn3PbEPAIVEQaBww=;
+        b=TK03gZpKgOEFfa6aSyeiNW6W1jt7TJ1dwL+u4ZDLWISJNJw3k/2npySpDB9IUkq9Cn
+         84nk4EKp770NXP/4LNYX3nubaLd3qp49hlJXdoqiCJtlKW/XOTwnwABrpPIo6IVDecGh
+         VnJid8/cnpftIz2vOxFFomCq2d8KRC91goJuUmZZZJS9zoaPyVfvAp3oFCqu0ungYDjo
+         e1kN7qxOjk3erEqMshyDRJ2an6rq5h+5y6FmihHcpeNVAtBmf3mfrhDMbg+Wa7pOP0jh
+         qhRE1bvnphIXS09LAIddVK4Hwsb3PZXaf156SgzvU97SuJiqOfgLOFRHTjVR0SXDeO+J
+         n4Hg==
+X-Gm-Message-State: APjAAAV64zgZqRQPltfoSLkiV6QVKDC1VfAzJo2goUZTTZSmd+wG78sz
+        +VRi4+nOaZ9xaIL5itbj4t6MhLEW
+X-Google-Smtp-Source: APXvYqy0ysB7rv0egDKk4HPyRZ78c7YBLRfZqZTjX6scNTZv8H8jOq+LPxlMRRcnWaHpjj0Okh7XPg==
+X-Received: by 2002:a7b:c10f:: with SMTP id w15mr17269471wmi.69.1576868038701;
         Fri, 20 Dec 2019 10:53:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t125sm7523791wmf.17.2019.12.20.10.53.57
+        by smtp.gmail.com with ESMTPSA id p7sm10477982wmp.31.2019.12.20.10.53.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 20 Dec 2019 10:53:57 -0800 (PST)
-Message-Id: <e1870f3fee8be6ebbecdd618ae1803afb878e67e.1576868036.git.gitgitgadget@gmail.com>
+        Fri, 20 Dec 2019 10:53:58 -0800 (PST)
+Message-Id: <c64984e146e509a743c9adc7b61bf7b274103cf9.1576868036.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.680.git.git.1576868036.gitgitgadget@gmail.com>
 References: <pull.680.git.git.1576868036.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 20 Dec 2019 18:53:55 +0000
-Subject: [PATCH 1/2] am: pay attention to user-defined context size
+Date:   Fri, 20 Dec 2019 18:53:56 +0000
+Subject: [PATCH 2/2] rebase: fix saving of --signoff state for am-based
+ rebases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,36 +76,27 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-am previously only checked gpg-related config options and the default
-config options while ignoring any diff-related options.  This meant that
-when users tried to set diff.context to something larger than the
-default value of 3, it was ignored.  Pay attention to the diff settings
-too.
-
-In combination with commit 09ac67a1839e ("format-patch: move
-git_config() before repo_init_revisions()", 2019-12-09), which is part
-of the dl/format-patch-notes-config-fixup topic, this fixes
-   git -c diff.context=5 rebase
-to actually use five lines of context.
+This was an error introduced in the conversion from shell in commit
+21853626eac5 ("built-in rebase: call `git am` directly", 2019-01-18),
+which was noticed by a random browsing of the code.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/am.c | 2 +-
+ builtin/rebase.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 8181c2aef3..d4d131b7ee 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2136,7 +2136,7 @@ static int git_am_config(const char *k, const char *v, void *cb)
- 	if (status)
- 		return status;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index ddf33bc9d4..e354ec84bb 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -706,7 +706,7 @@ static int rebase_write_basic_state(struct rebase_options *opts)
+ 		write_file(state_dir_path("gpg_sign_opt", opts), "%s",
+ 			   opts->gpg_sign_opt);
+ 	if (opts->signoff)
+-		write_file(state_dir_path("strategy", opts), "--signoff");
++		write_file(state_dir_path("signoff", opts), "--signoff");
  
--	return git_default_config(k, v, NULL);
-+	return git_diff_ui_config(k, v, NULL);
+ 	return 0;
  }
- 
- int cmd_am(int argc, const char **argv, const char *prefix)
 -- 
 gitgitgadget
-
