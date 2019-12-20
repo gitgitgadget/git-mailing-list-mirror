@@ -8,51 +8,51 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC131C43603
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 484AEC2D0C8
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B1A1F2082E
-	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E8CA2082E
+	for <git@archiver.kernel.org>; Fri, 20 Dec 2019 18:14:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fR8e8x/i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q/RuCGn9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727551AbfLTSOs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 20 Dec 2019 13:14:48 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:35577 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727513AbfLTSOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 20 Dec 2019 13:14:45 -0500
-Received: by mail-pl1-f194.google.com with SMTP id g6so4437440plt.2
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:14:44 -0800 (PST)
+        id S1727553AbfLTSOt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 20 Dec 2019 13:14:49 -0500
+Received: from mail-pl1-f181.google.com ([209.85.214.181]:46294 "EHLO
+        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727533AbfLTSOq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 20 Dec 2019 13:14:46 -0500
+Received: by mail-pl1-f181.google.com with SMTP id y8so4415120pll.13
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 10:14:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kc3R5dRmMVYqjFAiyQAts3Ju9CV9qoOxk1oAWYwbw3c=;
-        b=fR8e8x/iushdVobNfwZ7ZBVo1vWfMFlA5/bu0B5pEe9JHRehopVkYDCLcBBGsO/0Dq
-         FKjGNgxL4YobJduh9kF7XqqzO5poVMfGRDrZhdeq1H4MaVZm9xmbFqJzmKGtDUtnKgvL
-         J5YLphXPsOvxIAruT8hvUQI9FZVTIPY30pXaXrbb039kzoEHJT0BWgV1wwKbX4ZMT0II
-         fxd4JEhYvHEF/TL0qzcTOeHRiJGzzUbE+j2U7xD3wbOyYh9girkWJ6urDUFiXk8t7hqL
-         j07QPkYKnXi9IbPPUXDfSVv88HLv+2eS2K4j1Nkkag97ykGIBHyHRBf3RoaJYDUH4tNa
-         r+QA==
+        bh=SeZOY/KKpQY2td5afYkTiUUHcs8wX+Qr20utB7VGqmc=;
+        b=Q/RuCGn9AdkLJ9igOBaju/3tPoqphtqJZ2sx5z1hLaLSI0PFobPlltM9L5/nhi9/3b
+         LitIzhOunRRMjCY+gtGwvRVTFzQYPQMQqi6wMhpwg/L6cwDcvuMRLpaOcovU8B6q+MZg
+         d1OgwH4nQ9chdlYZaOVIxq2Ay4epzXofX0Ip9dnX1oeQktQ6E7Bq8nTuGScCz6S6zpyo
+         DG5MjGZk4H1oYWqRq7heZBWgKhLWV/WKNrhFOWCQ/YDnioToBeCJCqetoPpTc8JNT/iL
+         WBckzOwh6y1/Xs1Ij/03Dm0Iw9zAW0yzlsq+289m9SVClLyFB5qIlp7qLwbO095zn9WY
+         SH0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kc3R5dRmMVYqjFAiyQAts3Ju9CV9qoOxk1oAWYwbw3c=;
-        b=Ic8UGkJw+To46JgGHF0QCvBSc7q2WvMAijPJG3KhFz5JfyO/1i+73QMn3cWtnfrM3F
-         YQ15qioaSvLU/mSKsCl/hnEm6nUMUD+ZTFmkKvvIFQIK/kA/WzEOWYsn8TU1Zyf0S1Dh
-         HbL96b/wNiSV+rR+WWI+cStRimpO5LNG4+FQPdtrb4QVkcZnOZRN1noESIh/D4wRm1gD
-         Ka5H6zpi83W/M7GVlYXI2UCxous2LdafhVS2nrEa1+fH6C1PyI88yPb6HdmOKGAKcWzM
-         m+2pZxdJM3JOaHdbXSaQDlskkvpDiIGmnhKbzqk7+w08ROpV2mYDvI620Fi9K/TzPeGr
-         LCJw==
-X-Gm-Message-State: APjAAAVN/Ofpcbl1VeQ4hcKtXP3y2nyjnd06M9GdTJvuSQsGej8pFZQW
-        nns/gx7jRmXPljIJh5vB2RqXIy3Z
-X-Google-Smtp-Source: APXvYqyGppinx82WIqeenteLccf4FWyMVftU5ggCzxfFga5KOK3m0qTI/A1oy85PYfBAFWMJEZxf1g==
-X-Received: by 2002:a17:902:67:: with SMTP id 94mr16934336pla.241.1576865684414;
-        Fri, 20 Dec 2019 10:14:44 -0800 (PST)
+        bh=SeZOY/KKpQY2td5afYkTiUUHcs8wX+Qr20utB7VGqmc=;
+        b=MgNraSjsnCH4pr0fz7RyVV+gd/M0gxNY1TqTCF9jkPBJ9GGbCd8Yiuw4AyzqyRtaX7
+         /aiQnfC/lwPl4hTH4MP4HDWkhTaKVIy7CYds9xk10PAO+UrdKuGkjvYlWM0Vbrg2e0ug
+         xZv/XE3BU83gJSmnzsR17cqVtq5S0s2hI7WkozvvJspBtwmTje9szAkH//vUETYwXrtq
+         OpgB2CPNC11cJmFKWZvyc0Q4RzIs3928wX3N8gRM0P9xUi8JDTTTpWsdn45+WoRx1ACy
+         FvZsdv/7ORdKoFqfN8fuGYfGYUUsTrYcfik6fzkBycbjkc9ntWLv2rAtgOGhMgLuqWpC
+         Fg4w==
+X-Gm-Message-State: APjAAAXcbTL2+jQyYc3xxk96Xmh6hs9Fd0RQBuRYCIp6KVhrqBiGg/qx
+        TflHSqRst9YHMRXo3aBfMjQuHNWU
+X-Google-Smtp-Source: APXvYqxuvr8eFNjAYhey+2oOwDDMqVKAzxPOX/j67I7xRi+8bCMPsyaPMuwFSyqWD0udCvrCMN2koQ==
+X-Received: by 2002:a17:90b:1243:: with SMTP id gx3mr10019311pjb.117.1576865685422;
+        Fri, 20 Dec 2019 10:14:45 -0800 (PST)
 Received: from dentonliu-ltm.internal.salesforce.com.com ([204.14.239.53])
-        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.43
+        by smtp.gmail.com with ESMTPSA id c78sm14063082pfb.122.2019.12.20.10.14.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 20 Dec 2019 10:14:44 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
@@ -60,9 +60,9 @@ To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 12/15] t1501: remove use of `test_might_fail cp`
-Date:   Fri, 20 Dec 2019 10:15:59 -0800
-Message-Id: <fddd2242259ccd8ec76954942901177b4f063a90.1576865664.git.liu.denton@gmail.com>
+Subject: [PATCH v3 13/15] t1507: stop losing return codes of git commands
+Date:   Fri, 20 Dec 2019 10:16:00 -0800
+Message-Id: <63ca18207d58a846f47887926582af9b3c55284e.1576865664.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.703.g2f499f1283
 In-Reply-To: <cover.1576865663.git.liu.denton@gmail.com>
 References: <cover.1576794144.git.liu.denton@gmail.com> <cover.1576865663.git.liu.denton@gmail.com>
@@ -73,36 +73,119 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test_must_fail() family of functions (including test_might_fail())
-should only be used on git commands. Replace test_might_fail() with
-a compound command wrapping the old cp invocation that always returns 0.
+The return code of git commands are lost when a command is in a
+non-assignment command substitution in favour of the surrounding
+command's. Rewrite instances of this so that git commands run
+on their own.
 
-The `test_might_fail cp` line was introduced in 466e8d5d66 (t1501: fix
-test with split index, 2015-03-24). It is necessary because there might
-exist some index files in `repo.git/sharedindex.*` and, if they exist,
-we want to copy them over. However, if they don't exist, we don't want
-to error out because we expect that possibility. As a result, we want to
-keep the "might fail" semantics so we always return 0, even if the
-underlying cp errors out.
+In commit_subject(), use a `tformat` instead of `format` since,
+previously, we were testing the output of a command substitution which
+didn't care if there was a trailing newline since it was automatically
+stripped. Since we use test_cmp() now, the trailing newline matters so
+use `tformat` to always output it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t1501-work-tree.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1507-rev-parse-upstream.sh | 45 +++++++++++++++++++++++++----------
+ 1 file changed, 32 insertions(+), 13 deletions(-)
 
-diff --git a/t/t1501-work-tree.sh b/t/t1501-work-tree.sh
-index 3498d3d55e..b75558040f 100755
---- a/t/t1501-work-tree.sh
-+++ b/t/t1501-work-tree.sh
-@@ -350,7 +350,7 @@ test_expect_success 'Multi-worktree setup' '
- 	mkdir work &&
- 	mkdir -p repo.git/repos/foo &&
- 	cp repo.git/HEAD repo.git/index repo.git/repos/foo &&
--	test_might_fail cp repo.git/sharedindex.* repo.git/repos/foo &&
-+	{ cp repo.git/sharedindex.* repo.git/repos/foo || :; } &&
- 	sane_unset GIT_DIR GIT_CONFIG GIT_WORK_TREE
+diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+index 8b4cf8a6e3..d81f289ace 100755
+--- a/t/t1507-rev-parse-upstream.sh
++++ b/t/t1507-rev-parse-upstream.sh
+@@ -35,7 +35,7 @@ full_name () {
+ 
+ commit_subject () {
+ 	(cd clone &&
+-	 git show -s --pretty=format:%s "$@")
++	 git show -s --pretty=tformat:%s "$@")
+ }
+ 
+ error_message () {
+@@ -44,18 +44,27 @@ error_message () {
+ }
+ 
+ test_expect_success '@{upstream} resolves to correct full name' '
+-	test refs/remotes/origin/master = "$(full_name @{upstream})" &&
+-	test refs/remotes/origin/master = "$(full_name @{UPSTREAM})" &&
+-	test refs/remotes/origin/master = "$(full_name @{UpSTReam})"
++	echo refs/remotes/origin/master >expect &&
++	full_name @{upstream} >actual &&
++	test_cmp expect actual &&
++	full_name @{UPSTREAM} >actual &&
++	test_cmp expect actual &&
++	full_name @{UpSTReam} >actual &&
++	test_cmp expect actual
  '
  
+ test_expect_success '@{u} resolves to correct full name' '
+-	test refs/remotes/origin/master = "$(full_name @{u})" &&
+-	test refs/remotes/origin/master = "$(full_name @{U})"
++	echo refs/remotes/origin/master >expect &&
++	full_name @{u} >actual &&
++	test_cmp expect actual &&
++	full_name @{U} >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'my-side@{upstream} resolves to correct full name' '
+-	test refs/remotes/origin/side = "$(full_name my-side@{u})"
++	echo refs/remotes/origin/side >expect &&
++	full_name my-side@{u} >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'upstream of branch with @ in middle' '
+@@ -86,8 +95,11 @@ test_expect_success 'my-side@{u} resolves to correct commit' '
+ 	git checkout side &&
+ 	test_commit 5 &&
+ 	(cd clone && git fetch) &&
+-	test 2 = "$(commit_subject my-side)" &&
+-	test 5 = "$(commit_subject my-side@{u})"
++	echo 2 >expect &&
++	commit_subject my-side >actual &&
++	test_cmp expect actual &&
++	echo 5 >expect &&
++	commit_subject my-side@{u} >actual
+ '
+ 
+ test_expect_success 'not-tracking@{u} fails' '
+@@ -99,8 +111,11 @@ test_expect_success 'not-tracking@{u} fails' '
+ test_expect_success '<branch>@{u}@{1} resolves correctly' '
+ 	test_commit 6 &&
+ 	(cd clone && git fetch) &&
+-	test 5 = $(commit_subject my-side@{u}@{1}) &&
+-	test 5 = $(commit_subject my-side@{U}@{1})
++	echo 5 >expect &&
++	commit_subject my-side@{u}@{1} >actual &&
++	test_cmp expect actual &&
++	commit_subject my-side@{U}@{1} >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success '@{u} without specifying branch fails on a detached HEAD' '
+@@ -149,7 +164,9 @@ test_expect_success 'checkout other@{u}' '
+ '
+ 
+ test_expect_success 'branch@{u} works when tracking a local branch' '
+-	test refs/heads/master = "$(full_name local-master@{u})"
++	echo refs/heads/master >expect &&
++	full_name local-master@{u} >actual &&
++	test_cmp expect actual
+ '
+ 
+ test_expect_success 'branch@{u} error message when no upstream' '
+@@ -203,7 +220,9 @@ test_expect_success 'pull works when tracking a local branch' '
+ 
+ # makes sense if the previous one succeeded
+ test_expect_success '@{u} works when tracking a local branch' '
+-	test refs/heads/master = "$(full_name @{u})"
++	echo refs/heads/master >expect &&
++	full_name @{u} >actual &&
++	test_cmp expect actual
+ '
+ 
+ commit=$(git rev-parse HEAD)
 -- 
 2.24.1.703.g2f499f1283
 
