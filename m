@@ -6,42 +6,63 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A70F0C2D0C0
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B6DEC2D0C0
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 12:00:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 83EA021927
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:51:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EC1D72070C
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 12:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726363AbfLULvJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 06:51:09 -0500
-Received: from 195-159-176-226.customer.powertech.no ([195.159.176.226]:37290
-        "EHLO blaine.gmane.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbfLULvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 06:51:09 -0500
-Received: from list by blaine.gmane.org with local (Exim 4.89)
-        (envelope-from <gcvg-git-3@m.gmane.org>)
-        id 1iidHm-000AO7-OZ
-        for git@vger.kernel.org; Sat, 21 Dec 2019 12:51:06 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Beat Bolli <dev+git@drbeat.li>
+        id S1726786AbfLUMAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 07:00:45 -0500
+Received: from mail-gateway-shared12.cyon.net ([194.126.200.65]:52890 "EHLO
+        mail-gateway-shared12.cyon.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726768AbfLUMAo (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 21 Dec 2019 07:00:44 -0500
+X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Sat, 21 Dec 2019 07:00:43 EST
+Received: from s019.cyon.net ([149.126.4.28])
+        by mail-gateway-shared12.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1iidHh-0005DY-F3
+        for git@vger.kernel.org; Sat, 21 Dec 2019 12:51:03 +0100
+Received: from [10.20.10.230] (port=10754 helo=mail.cyon.ch)
+        by s019.cyon.net with esmtpa (Exim 4.92)
+        (envelope-from <dev+git@drbeat.li>)
+        id 1iidHg-008lhG-7t; Sat, 21 Dec 2019 12:51:00 +0100
 Subject: Re: Cygwin git with schannel ("native Windows Secure Channel
  library")
-Date:   Sat, 21 Dec 2019 12:50:59 +0100
-Message-ID: <236e2b6b-d1ce-b0f2-ff56-4ca5e0dfb8e8@drbeat.li>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Keith Thompson <Keith.S.Thompson@gmail.com>,
+        git@vger.kernel.org
+Newsgroups: gmane.comp.version-control.git
 References: <CAAHpriOh=9Mh7_moxWCzXBHYTtNi9TOQQPBxa4CX=uLgOnpNtw@mail.gmail.com>
  <20191220231840.GD163225@camp.crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
+From:   Beat Bolli <dev+git@drbeat.li>
+Message-ID: <236e2b6b-d1ce-b0f2-ff56-4ca5e0dfb8e8@drbeat.li>
+Date:   Sat, 21 Dec 2019 12:50:59 +0100
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
  Gecko/20100101 Thunderbird/60.9.1
+MIME-Version: 1.0
 In-Reply-To: <20191220231840.GD163225@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-OutGoing-Spam-Status: No, score=-1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Message-ID: <20191221115059.vDMuMR4Wwt1hra_PxWtIn8HgZ7E6rprv883DUsu8iWc@z>
 
 On 21.12.19 00:18, brian m. carlson wrote:
 > On 2019-12-20 at 01:52:04, Keith Thompson wrote:
@@ -82,4 +103,3 @@ CryptoAPI. However, I don't know if the Cygwin OpenSSL build includes
 this engine.
 
 Cheers, Beat
-
