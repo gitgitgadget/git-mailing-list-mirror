@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8636C2D0D2
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 21:57:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AC38C2D0C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 21:57:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BE064206B7
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 21:57:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01ECB206B7
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 21:57:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nh+VRYV/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oMI0SGdd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726533AbfLUV5W (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726486AbfLUV5W (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 21 Dec 2019 16:57:22 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33577 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726139AbfLUV5V (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:40144 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726323AbfLUV5V (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 21 Dec 2019 16:57:21 -0500
-Received: by mail-ed1-f67.google.com with SMTP id r21so12024228edq.0
+Received: by mail-ed1-f66.google.com with SMTP id b8so12013040edx.7
         for <git@vger.kernel.org>; Sat, 21 Dec 2019 13:57:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZAzk+dyQS+fde6JUpQyd4vd2dkIGGQ6o2+2UPs2QMz4=;
-        b=Nh+VRYV/FCHwNxA6Occr5mD5PZXl1/lxGxQY9FOz0Gtp2xiZzfbr4/ZFE+iGmCW6DL
-         hti2ZMOxwJKx4ltjA7bh2PtyA4ssl/BRwRMo+DocIWxnUBb2c7NNXwpvQGY9QKTfTpNf
-         7c1wnYu66TTZMy+GrmG4agu12KVG4dIwn5zlJytcHiW6I+R2SU9K5cLl3xHTgmX7gD1b
-         xhKgtN20aNVjJSROLaTokI9covgIfvbOiQDtIFHPKiqrtenDfqq13yE/CIb5nRCLcgEt
-         oJpurIpx2bcmBk3xLrciX1tVZrEKuHT8Jx2lH0wYxxEW+x+ayICMZeqqPRpZyudaVSAz
-         ANGA==
+        bh=QIK/yWi2mHNX1QYUxJ0dJdvq/O6XJmG+5dnCmVm3Gb8=;
+        b=oMI0SGddBVjnCuFHsYD2h1ZQRr3sXp1OMrVKj5gA/XeN3HPw9Lo44220MR8F1iru8J
+         FO1w05WCdtnY2uhc6DuzibLxZthtHfaHuMfhHzaPhPcmFnYxe8kXow2Azo03ihE9wZpq
+         APUOxdjcSFP+74P6GmytFWPpwfaO7p5pNCc5ATd3TUhR3e3LCxBA6JvDxUUoKnX4UmC0
+         S0GxszuhZpHNgt5xGw6D89SCGn+/Wv5BvH5CR+g6DBodj+t4NXLFd/NK7ZH3Av89X3ll
+         k8cni1E5vYzjNxPZpq2i2l2c3f9wBYM3JbwWvcYis8SSabncNjP0jn1wJuiXfrE0xdNj
+         rRyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZAzk+dyQS+fde6JUpQyd4vd2dkIGGQ6o2+2UPs2QMz4=;
-        b=AXKhfmm5nIOHX1Bh/NAjNB44qVZa4HZV8KiXf+CxH57z2UtWnbyIV6KZtGVC+388DC
-         NA3vJ59beHe+e3l/t8SDmo8aSMKTeL/LCPo7ktWKqz9RFxoRH3Mk7Y760NxJj6X6j90e
-         8rlSjzrVoBr5Y01jT1pU7M6g/9vxMDlWwvWIfKpl8GZgjt2P2KvGxzE2sh6whKysheQM
-         KS5FWKQwMVYqb2hdJjePzwQEGllXGX9/sHhyX15fUb1XveX1fJY+xi+HOWwBvXmPxszS
-         LsNvO6JT9gZoxYbpDQjs1eqGeLfEyYXeLgM515EGlgS26tSu5mp1b4fihu0hWxTqyjEE
-         d+yQ==
-X-Gm-Message-State: APjAAAX6CkVqX/fO3sP+4uwEwN/1ail0HHFl3nffLA4Z4my1RtzZgJE3
-        9Qc2Q0sC5T7H3EPx2E+MxKDhVDm2
-X-Google-Smtp-Source: APXvYqyl3nDBF5diiM3WzJkGEEIyH1Alc3V/7dsOof2qhK+czSS0QaBSCKGpJY4/Q+7VX1WLzjrQgQ==
-X-Received: by 2002:a05:6402:1595:: with SMTP id c21mr24441464edv.32.1576965440193;
-        Sat, 21 Dec 2019 13:57:20 -0800 (PST)
+        bh=QIK/yWi2mHNX1QYUxJ0dJdvq/O6XJmG+5dnCmVm3Gb8=;
+        b=Qj16nwkH3GZere9oC9nfH4oy+t7Hg1SR6zDUkJLbwMkL8mTQ4MPW176WGTyUybkRKQ
+         7+l/2ds44qXB5reM95uITfiMZkX3+uggzNE29Hz4kMCmVNcSa4U7e5vIYdXfEEPDSOoO
+         5flFdi3biqQCdTRp4eJI71cQJq4zyVw9X1984mGSMNWNhb2ZPjKFZhqIl6WWxgRJz75M
+         1FFygUqMrbjqFjW2Ekw/E7fxXDU+lcOtNnOazLcBhduLi+3Cy26/Fe35+5fqE3ChOi2V
+         BRtjxwe52n267LsVGQPKiolpAlZFvPq57gXmi+7xvH5TcSbkcePlSpF/QnoNq5DsuZ9t
+         ytcg==
+X-Gm-Message-State: APjAAAXqbMcoP1wmgHssomm0yB/FHfwFT0Ex6MIo/diM9D1HRH6Zy+sr
+        lQ49oh4/oAWxxCfkoUpNuoJ0xy4d
+X-Google-Smtp-Source: APXvYqwImCpbE47sDKLTPkIEZJ1T4iTcHJLb6HgYYGxt6r0VaJfwbhwKXBuGWY601zQ40T85taOx1A==
+X-Received: by 2002:a17:906:2e47:: with SMTP id r7mr23925900eji.215.1576965439370;
+        Sat, 21 Dec 2019 13:57:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u25sm1630904ejb.53.2019.12.21.13.57.19
+        by smtp.gmail.com with ESMTPSA id ay24sm1543757edb.29.2019.12.21.13.57.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Sat, 21 Dec 2019 13:57:19 -0800 (PST)
-Message-Id: <bf9b7f897adce9a2a8316e85b504a0721afeaa35.1576965436.git.gitgitgadget@gmail.com>
+Message-Id: <6977bede86608636265c069e21779de706d0b917.1576965436.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.174.v2.git.1576965436.gitgitgadget@gmail.com>
 References: <pull.174.git.1576579264.gitgitgadget@gmail.com>
         <pull.174.v2.git.1576965436.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Dec 2019 21:57:12 +0000
-Subject: [PATCH v2 3/7] legacy stash -p: respect the
- add.interactive.usebuiltin setting
+Date:   Sat, 21 Dec 2019 21:57:11 +0000
+Subject: [PATCH v2 2/7] built-in add -p: implement the "stash" and "reset"
+ patch modes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,76 +77,156 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As `git add` traditionally did not expose the `--patch=<mode>` modes via
-command-line options, the scripted version of `git stash` had to call
-`git add--interactive` directly.
-
-But this prevents the built-in `add -p` from kicking in, as
-`add--interactive` is the scripted version (which does not have a
-"fall-back" to the built-in version).
-
-So let's introduce support for internal switch for `git add` that the
-scripted `git stash` can use to call the appropriate backend (scripted
-or built-in, depending on `add.interactive.useBuiltin`).
+The `git stash` and `git reset` commands support a `--patch` option, and
+both simply hand off to `git add -p` to perform that work. Let's teach
+the built-in version of that command to be able to perform that work, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/add.c       | 14 ++++++++++++++
- git-legacy-stash.sh |  2 +-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ add-interactive.h |  2 ++
+ add-patch.c       | 83 ++++++++++++++++++++++++++++++++++++++++++++---
+ builtin/add.c     |  4 +++
+ 3 files changed, 85 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/add.c b/builtin/add.c
-index b0d6891479..fa8bf6b10a 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -29,6 +29,7 @@ static const char * const builtin_add_usage[] = {
- static int patch_interactive, add_interactive, edit_interactive;
- static int take_worktree_changes;
- static int add_renormalize;
-+static int legacy_stash_p; /* support for the scripted `git stash` */
+diff --git a/add-interactive.h b/add-interactive.h
+index e29a769aba..1f6a61326e 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -25,6 +25,8 @@ int run_add_i(struct repository *r, const struct pathspec *ps);
  
- struct update_callback_data {
- 	int flags;
-@@ -335,6 +336,8 @@ static struct option builtin_add_options[] = {
- 		   N_("override the executable bit of the listed files")),
- 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
- 			N_("warn when adding an embedded repository")),
-+	OPT_HIDDEN_BOOL(0, "legacy-stash-p", &legacy_stash_p,
-+			N_("backend for `git stash -p`")),
- 	OPT_END(),
+ enum add_p_mode {
+ 	ADD_P_ADD,
++	ADD_P_STASH,
++	ADD_P_RESET,
  };
  
-@@ -431,6 +434,17 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		add_interactive = 1;
- 	if (add_interactive)
- 		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
-+	if (legacy_stash_p) {
-+		struct pathspec pathspec;
+ int run_add_p(struct repository *r, enum add_p_mode mode,
+diff --git a/add-patch.c b/add-patch.c
+index 71356fbd9a..af0a86f0f7 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -19,7 +19,7 @@ struct patch_mode {
+ 	 * trailing `NULL`.
+ 	 */
+ 	const char *diff_cmd[4], *apply_args[4], *apply_check_args[4];
+-	unsigned is_reverse:1, apply_for_checkout:1;
++	unsigned is_reverse:1, index_only:1, apply_for_checkout:1;
+ 	const char *prompt_mode[PROMPT_MODE_MAX];
+ 	const char *edit_hunk_hint, *help_patch_text;
+ };
+@@ -45,6 +45,72 @@ static struct patch_mode patch_mode_add = {
+ 			"the file\n")
+ };
+ 
++static struct patch_mode patch_mode_stash = {
++	.diff_cmd = { "diff-index", "HEAD", NULL },
++	.apply_args = { "--cached", NULL },
++	.apply_check_args = { "--cached", NULL },
++	.prompt_mode = {
++		N_("Stash mode change [y,n,q,a,d%s,?]? "),
++		N_("Stash deletion [y,n,q,a,d%s,?]? "),
++		N_("Stash this hunk [y,n,q,a,d%s,?]? "),
++	},
++	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
++			     "will immediately be marked for stashing."),
++	.help_patch_text =
++		N_("y - stash this hunk\n"
++		   "n - do not stash this hunk\n"
++		   "q - quit; do not stash this hunk or any of the remaining "
++			"ones\n"
++		   "a - stash this hunk and all later hunks in the file\n"
++		   "d - do not stash this hunk or any of the later hunks in "
++			"the file\n"),
++};
 +
-+		parse_pathspec(&pathspec, 0,
-+			PATHSPEC_PREFER_FULL |
-+			PATHSPEC_SYMLINK_LEADING_PATH |
-+			PATHSPEC_PREFIX_ORIGIN,
-+			prefix, argv);
++static struct patch_mode patch_mode_reset_head = {
++	.diff_cmd = { "diff-index", "--cached", NULL },
++	.apply_args = { "-R", "--cached", NULL },
++	.apply_check_args = { "-R", "--cached", NULL },
++	.is_reverse = 1,
++	.index_only = 1,
++	.prompt_mode = {
++		N_("Unstage mode change [y,n,q,a,d%s,?]? "),
++		N_("Unstage deletion [y,n,q,a,d%s,?]? "),
++		N_("Unstage this hunk [y,n,q,a,d%s,?]? "),
++	},
++	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
++			     "will immediately be marked for unstaging."),
++	.help_patch_text =
++		N_("y - unstage this hunk\n"
++		   "n - do not unstage this hunk\n"
++		   "q - quit; do not unstage this hunk or any of the remaining "
++			"ones\n"
++		   "a - unstage this hunk and all later hunks in the file\n"
++		   "d - do not unstage this hunk or any of the later hunks in "
++			"the file\n"),
++};
 +
-+		return run_add_interactive(NULL, "--patch=stash", &pathspec);
-+	}
++static struct patch_mode patch_mode_reset_nothead = {
++	.diff_cmd = { "diff-index", "-R", "--cached", NULL },
++	.apply_args = { "--cached", NULL },
++	.apply_check_args = { "--cached", NULL },
++	.index_only = 1,
++	.prompt_mode = {
++		N_("Apply mode change to index [y,n,q,a,d%s,?]? "),
++		N_("Apply deletion to index [y,n,q,a,d%s,?]? "),
++		N_("Apply this hunk to index [y,n,q,a,d%s,?]? "),
++	},
++	.edit_hunk_hint = N_("If the patch applies cleanly, the edited hunk "
++			     "will immediately be marked for applying."),
++	.help_patch_text =
++		N_("y - apply this hunk to index\n"
++		   "n - do not apply this hunk to index\n"
++		   "q - quit; do not apply this hunk or any of the remaining "
++			"ones\n"
++		   "a - apply this hunk and all later hunks in the file\n"
++		   "d - do not apply this hunk or any of the later hunks in "
++			"the file\n"),
++};
++
+ struct hunk_header {
+ 	unsigned long old_offset, old_count, new_offset, new_count;
+ 	/*
+@@ -1350,12 +1416,21 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
  
- 	if (edit_interactive)
- 		return(edit_patch(argc, argv, prefix));
-diff --git a/git-legacy-stash.sh b/git-legacy-stash.sh
-index 07ad4a5459..ed039dfcbb 100755
---- a/git-legacy-stash.sh
-+++ b/git-legacy-stash.sh
-@@ -206,7 +206,7 @@ create_stash () {
+ 	init_add_i_state(&s.s, r);
  
- 		# find out what the user wants
- 		GIT_INDEX_FILE="$TMP-index" \
--			git add--interactive --patch=stash -- "$@" &&
-+			git add --legacy-stash-p -- "$@" &&
+-	s.mode = &patch_mode_add;
++	if (mode == ADD_P_STASH)
++		s.mode = &patch_mode_stash;
++	else if (mode == ADD_P_RESET) {
++		if (!revision || !strcmp(revision, "HEAD"))
++			s.mode = &patch_mode_reset_head;
++		else
++			s.mode = &patch_mode_reset_nothead;
++	} else
++		s.mode = &patch_mode_add;
+ 	s.revision = revision;
  
- 		# state of the working tree
- 		w_tree=$(GIT_INDEX_FILE="$TMP-index" git write-tree) ||
+ 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0 ||
+-	    repo_refresh_and_write_index(r, REFRESH_QUIET, 0, 1,
+-					 NULL, NULL, NULL) < 0 ||
++	    (!s.mode->index_only &&
++	     repo_refresh_and_write_index(r, REFRESH_QUIET, 0, 1,
++					  NULL, NULL, NULL) < 0) ||
+ 	    parse_diff(&s, ps) < 0) {
+ 		strbuf_release(&s.plain);
+ 		strbuf_release(&s.colored);
+diff --git a/builtin/add.c b/builtin/add.c
+index 006016267e..b0d6891479 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -201,6 +201,10 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+ 
+ 		if (!strcmp(patch_mode, "--patch"))
+ 			mode = ADD_P_ADD;
++		else if (!strcmp(patch_mode, "--patch=stash"))
++			mode = ADD_P_STASH;
++		else if (!strcmp(patch_mode, "--patch=reset"))
++			mode = ADD_P_RESET;
+ 		else
+ 			die("'%s' not yet supported in the built-in add -p",
+ 			    patch_mode);
 -- 
 gitgitgadget
 
