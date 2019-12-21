@@ -2,108 +2,106 @@ Return-Path: <SRS0=QBG1=2L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4172C43603
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76232C2D0C0
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 10:19:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 732E42070B
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:37:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 115582072B
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 10:19:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmZLlHk1"
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="RdI1IEfj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725845AbfLUFha (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 00:37:30 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:45949 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbfLUFha (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 00:37:30 -0500
-Received: by mail-ot1-f66.google.com with SMTP id 59so14657616otp.12
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 21:37:29 -0800 (PST)
+        id S1726189AbfLUKTQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 05:19:16 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38271 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726074AbfLUKTQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 05:19:16 -0500
+Received: by mail-wr1-f67.google.com with SMTP id y17so11773285wrh.5
+        for <git@vger.kernel.org>; Sat, 21 Dec 2019 02:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=diamand.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PuFICcbVn+zc3bnsnp9arX3LFCWrmwLuh1ec1JyK5Gs=;
-        b=KmZLlHk1H0zqKyLkpNNADype+GHnb7BVwTxV9z2n7fdBnHYTowRYwocVmN9QSw2tTE
-         +T6iBnB/qADRC65DEki09WNcwh9bDjhhLQjGzOxlG0CncOhXJhOznY14kMMPTLvriLhn
-         8WNpB5Q9es82pKCeYHgEkC6zQiL9ufIizdMHTzADCkE2mkluRVN8HYEXqHE9JaZ3oqjn
-         396IfXaH2ZmKpmjEKMbdMisJc8gclnLNgXK5yDcp7Z0PwiunxfxYkGLZXmR/pTbw7RA0
-         qxnh88ayWBTtIDE/+J5ud33a99iqr023obgIlSB0UVi50kdsHbS5BEYK5kI6b6JtK9lD
-         N3sA==
+        bh=ts/pXBciwikOTwSdFZcpXJV1OQ1/UH8j0hSIK9ArHhk=;
+        b=RdI1IEfjZXpeHAI+Lf4R8Ih+X7fEl62qTj1PGQpAtSKvAE4K2pMCQx4YnVtYDv8zMt
+         eBuGn/KbjMHrGtX3dMqO1uuxbvpYF001pimiBOg+LKhjVCoMh8H/jNhDUFGgqstq3CpG
+         Vt+O1ZlnSZdp6kIskmW2YbcOlWV7t4YNq5Rw8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PuFICcbVn+zc3bnsnp9arX3LFCWrmwLuh1ec1JyK5Gs=;
-        b=ACZnd2WwZ72542K3y2EqU6aQ8wveRGk/bk+ntTOARYRG55GVkkO0OjvQhGB2rvLHAM
-         YLEHDOqMhkqW4R51iMLEmPW73+4grg4zunb8ADeX5ENNk2FmjfcfOdLwDWwpVzj0611I
-         BSCIE3M5AG89Ewp/T3ws97hnblF+v/g73NdwhKtq/D1C4y39qfCV9zW1Egyz35RtqYF9
-         PcG/v+rZFtbhkXm9RHHoEmJdNyHCbemiayBY8wrXumH8BqVHQx5HNH6E2W6xMsURiMFl
-         idL6l0Ayr8WUJycasdS7/HLVR/KAckHJxS4tDTcq+8akypqH2TFmoe5X+CAjVjeBEHld
-         NnJQ==
-X-Gm-Message-State: APjAAAVNGJsKa4f7gGF9+qBDa3+TggZUQ+kN2u8UJG7G+U9ejcioDq1e
-        N/8v74QZ7/lclbdwXNLq76E/t7WUA8l4AkZO/b4=
-X-Google-Smtp-Source: APXvYqw58tkrr4Hi80zWkFOorNE9+9qHNCxO5Zz4uXWblw93+oUTb/APcUwqh6QiClNXjxO54RHVU2o2dAhLs/k6q9U=
-X-Received: by 2002:a9d:7d81:: with SMTP id j1mr13791222otn.267.1576906649255;
- Fri, 20 Dec 2019 21:37:29 -0800 (PST)
+        bh=ts/pXBciwikOTwSdFZcpXJV1OQ1/UH8j0hSIK9ArHhk=;
+        b=L4Mr10zkJk//yEBiX8lXsQMGjPOH7vGOzaZCTwIMNB5BAQBNAfOI3E1ijv6Khr2bQ5
+         sNy8kLC4wooWaCPEj5Dxbd7LWRf6a6OdyvUYg9+I9U+uILFymv2MvKa3hiz8m/6UfMr8
+         MPZfPjQIBRCZgZb19u54/b5DmMsJBHXCLuG8C+AteifiScCTMLGAtNVo4kGy+6ZkxE2R
+         SoE8Qa4D9fZO+rtJKrN7O2aC5Ncu0ZuaXEsThYr59QEKm1wK0GkhkM57i2dUXuIEbttz
+         rYVYv72ZZOA1EEmrnuXJj7UjOW2s7ipCu9FRqv5eMnpwszokjJnO3EN+wGrI+NRW896K
+         8Ung==
+X-Gm-Message-State: APjAAAWWC3EX0MPJfgRd5f2PCqWlaNsxybd0tgr5wCDWjIyikd/vd75A
+        dHu6G9ZEkGi6Ksiwt4Xja3b9yr6j4+HXU5mhYz7Ctg==
+X-Google-Smtp-Source: APXvYqwznuikDNJ9zPLXy8aA4EAndUJp0UAQdejtEYxIfEdZaOp5b0BznvVyyMiDZ7d7+gbnAKpsTvrJH40kupn6h8g=
+X-Received: by 2002:a5d:4e90:: with SMTP id e16mr20891083wru.318.1576923554194;
+ Sat, 21 Dec 2019 02:19:14 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.680.git.git.1576868036.gitgitgadget@gmail.com>
- <e1870f3fee8be6ebbecdd618ae1803afb878e67e.1576868036.git.gitgitgadget@gmail.com>
- <xmqqwoaq94ql.fsf@gitster-ct.c.googlers.com> <CABPp-BFYyF5RbZVuwo8LtDZZQ9KQ2od4FQqQYaeSqNCNKcZXPw@mail.gmail.com>
- <CABPp-BGvh-NvooVE-K-WYpv9RAs4BZ_d0=Mv=b5iEoGbNt5amA@mail.gmail.com> <xmqq1rsy8w3c.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq1rsy8w3c.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 20 Dec 2019 21:37:17 -0800
-Message-ID: <CABPp-BEReoD+YUZuniNqkDabYqdKrFvzPeNbWpRPexXUuX0XiQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] am: pay attention to user-defined context size
+References: <pull.675.v4.git.git.1576245481.gitgitgadget@gmail.com>
+ <pull.675.v5.git.git.1576504942.gitgitgadget@gmail.com> <xmqq8sncj991.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8sncj991.fsf@gitster-ct.c.googlers.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Sat, 21 Dec 2019 10:19:03 +0000
+Message-ID: <CAE5ih7-ptmmb2UurBw+k+2ZjZQuOkLJ3c-eBoOXKrPX0CJeErA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/4] git-p4: Usability enhancements
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pavel Roskin <plroskin@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>, Ben Keene <seraphire@gmail.com>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 20, 2019 at 2:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, 16 Dec 2019 at 20:39, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Elijah Newren <newren@gmail.com> writes:
+> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> > diff.context should NOT affect plumbing.  So if it's not plumbing by
-> > that test, and it's not *UI* as per what you say, what exactly is it?
+> > Some user interaction with git-p4 is not as user-friendly as the rest of the
+> > ...
+> >
+> > Ben Keene (4):
+> >   git-p4: yes/no prompts should sanitize user text
+> >   git-p4: show detailed help when parsing options fail
+> >   git-p4: wrap patchRCSKeywords test to revert changes on failure
+> >   git-p4: failure because of RCS keywords should show help
 >
-> I actually was saying that diff.context is UI thing, and should make
-> no effect on how "am" interprets its input.
+> The reviews on the list seem to be in favor of these and I didn't
+> see much wrong (I think I fixed up an indented empty line) in the
+> series.  I'd appreciate a blessing from a git-p4 expert, though.
 >
-> Which the codepath in "am" are you trying to affect?  "am" is mainly
-> a consumer of "diff" output, and not a producer, so ...
 
-Okay, I can't seem to find a simple way to reproduce separate from the
-testcase reported here:
-    https://lore.kernel.org/git/CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com/
+$ git log --reverse --oneline --abbrev-commit
+origin/maint..origin/bk/p4-misc-usability
+e2aed5fd5b git-p4: yes/no prompts should sanitize user text
+   - looks good to me
 
-To summarize, when I run these exact steps:
-  git clone --quiet https://github.com/proski/git-rebase-demo
-  cd git-rebase-demo
-  git checkout --quiet branch1
-  git -c diff.context=5 rebase --quiet origin/branch2
-  test $? -eq 0 && echo Successfully rebased
+608e380502 git-p4: show detailed help when parsing options fail
+   - also looks good to me
 
-  echo Difference from expected:
-  git diff --shortstat origin/merge-good
+c4dc935311 git-p4: wrap patchRCSKeywords test to revert changes on failure
+   - why not just catch the exception, and then drop out of the "if-"
+condition and fall into the cleanup section at the bottom of that
+function (line 1976)? As it stands, this is duplicating the cleanup
+code now.
 
-The rebase succeeds in both cases, but I get different output from the
-shortstat depending on whether or not this git_am_config patch is
-applied.
+89c88c0ecf (origin/bk/p4-misc-usability) git-p4: failure because of
+RCS keywords should show help
+  - strictly speaking, the code does not actually check if there *are*
+any RCS keywords, it just checks if the filetype means that RCS kws
+*would* be expanded *if* they were present. The conflict might be just
+because....there's a conflict. As it stands this will be giving
+misleading advice. I would get it to check to see if there really are
+any RCS keywords in the file.
 
-I can't seem to track down why this patch makes a difference when as
-you say it shouldn't, nor can I seem to generate an am-only testcase.
-I feel like it should be easy to get at least one of these given the
-short steps to reproduce (the repo only has 1 file and three relevant
-commits), but it seems to be stumping me nonetheless.
+> Thanks.
