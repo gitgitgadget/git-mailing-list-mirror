@@ -6,66 +6,73 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AADC2D0C3
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE1BDC2D0C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:31:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F9B2206CB
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:23:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE0E9206CB
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726736AbfLUTXu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 14:23:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:51830 "HELO cloud.peff.net"
+        id S1726736AbfLUTbL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 14:31:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51838 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726107AbfLUTXu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 14:23:50 -0500
-Received: (qmail 8807 invoked by uid 109); 21 Dec 2019 19:23:50 -0000
+        id S1726107AbfLUTbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 14:31:11 -0500
+Received: (qmail 8852 invoked by uid 109); 21 Dec 2019 19:31:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Dec 2019 19:23:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 21 Dec 2019 19:31:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21436 invoked by uid 111); 21 Dec 2019 19:28:36 -0000
+Received: (qmail 21457 invoked by uid 111); 21 Dec 2019 19:35:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 21 Dec 2019 14:28:36 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 21 Dec 2019 14:35:58 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 21 Dec 2019 14:23:48 -0500
+Date:   Sat, 21 Dec 2019 14:31:10 -0500
 From:   Jeff King <peff@peff.net>
-To:     Beat Bolli <dev+git@drbeat.li>
+To:     Tom Miller <jackerran@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] contrib/git-jump: add mode commit
-Message-ID: <20191221192348.GA3339249@coredump.intra.peff.net>
-References: <20191221113846.169538-1-dev+git@drbeat.li>
- <20191221113846.169538-2-dev+git@drbeat.li>
+Subject: Re: Propose promoting 'contrib/rerere-train.sh' to command
+Message-ID: <20191221193110.GB3339249@coredump.intra.peff.net>
+References: <BZAQIE4YND2I.Z7BFCW7BLH3K@penguin>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191221113846.169538-2-dev+git@drbeat.li>
+In-Reply-To: <BZAQIE4YND2I.Z7BFCW7BLH3K@penguin>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 21, 2019 at 12:38:46PM +0100, Beat Bolli wrote:
+On Fri, Dec 20, 2019 at 08:17:57PM -0600, Tom Miller wrote:
 
-> After committing, I often want to return to the place of the latest
-> change to continue my work. Add the new mode "commit" which does exactly
-> this.
+> I would like to propose promoting 'contrib/rerere-train.sh' to one of the
+> following:
+> 
+>     1. A builtin c command 'builtin/rerere-train.c'
+>     2. To the top level directory as a built in script 'git-rerere-train.sh'
+> 
+> I have recently found myself writing scripts using 'contrib/rerere-train.sh'
+> and I wish it was built into the command. This would make it easier to use
+> rather than having to find it on different platforms. I think it could also
+> benefit from some documentation.
+> 
+> I am trying to gauge the interest in this change before spending some time on
+> working on it. I would also appreciate feedback or alternative approaches to
+> what I have suggested. Thank you for your time.
 
-That's one of my primary uses for git-jump, too. But you can already do
-that by jumping to the diff of HEAD^. Which has the additional advantage
-that it's a diff against the working tree. So if you did a partial
-commit, the diff will include any leftover changes.
+The situations where I need rerere-train don't come up often, but when
+they do, it has always worked easily and without hiccups for me. So
+perhaps there are lurking gotchas that Junio might know about, but AFAIK
+the quality is high enough for it to be part of normal Git.
 
-So I'm not opposed to this patch per se, given that it's not very many
-lines. But I'm not sure I see much advantage over "git jump diff HEAD^".
-It's slightly less typing, but I already alias "git jump diff" since
-it's so long.
+I'd suggest converting it to C and making it a sub-command of rerere
+(i.e., "git rerere train a..b") rather than a separate command.
 
-> Optional arguments are given to the "git show" call. So it's possible to
-> jump to changes of other commits than HEAD.
-
-This can also be done with "git jump diff $commit^ $commit". However,
-I've found that jumping based on older diffs is mostly useless, because
-the line numbers at $commit and those in the working tree don't always
-match up (and inherently you're always jumping in the working tree
-copy).
+It would be a nice bonus if it could do its work internally by looking
+at the commits, rather than munging the working tree through checkout
+and merge. I'm not sure how easy that would be, though. Historically the
+merge-recursive machinery has not worked well without having a working
+tree to dump the conflicted paths into, but I think that has gotten
+somewhat better recently. So even a straight C conversion of the shell
+script would be an OK starting point, I think.
 
 -Peff
