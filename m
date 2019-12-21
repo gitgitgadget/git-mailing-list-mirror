@@ -6,38 +6,32 @@ X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D58EC2D0C3
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 16:48:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E2B8C2D0D3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 17:00:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FEA320725
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 16:48:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 08E632070C
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 17:00:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726804AbfLUQsp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 11:48:45 -0500
-Received: from smtp.hosts.co.uk ([85.233.160.19]:29501 "EHLO smtp.hosts.co.uk"
+        id S1726889AbfLURAs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 12:00:48 -0500
+Received: from smtp.hosts.co.uk ([85.233.160.19]:59976 "EHLO smtp.hosts.co.uk"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726567AbfLUQsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 11:48:45 -0500
+        id S1726107AbfLURAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 12:00:48 -0500
 Received: from [92.30.123.115] (helo=[192.168.1.22])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1iihvn-00042G-3e; Sat, 21 Dec 2019 16:48:43 +0000
-Subject: Re: [PATCH 2/9] commit-graph: write changed paths bloom filters
-To:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     stolee@gmail.com, szeder.dev@gmail.com, jonathantanmy@google.com,
-        jeffhost@microsoft.com, me@ttaylorr.com, peff@peff.net,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
- <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
+        id 1iii7S-0006V4-4c; Sat, 21 Dec 2019 17:00:46 +0000
+Subject: Re: Propose promoting 'contrib/rerere-train.sh' to command
+To:     Tom Miller <jackerran@gmail.com>, git@vger.kernel.org
+References: <BZAQIE4YND2I.Z7BFCW7BLH3K@penguin>
 From:   Philip Oakley <philipoakley@iee.email>
-Message-ID: <39ef6bc6-4f21-1ba6-ad6e-06cb1a2423ac@iee.email>
-Date:   Sat, 21 Dec 2019 16:48:44 +0000
+Message-ID: <7b60ce55-700e-0c67-76ac-a983991e49f2@iee.email>
+Date:   Sat, 21 Dec 2019 17:00:48 +0000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
  Thunderbird/68.3.1
 MIME-Version: 1.0
-In-Reply-To: <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
+In-Reply-To: <BZAQIE4YND2I.Z7BFCW7BLH3K@penguin>
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Content-Language: en-GB
@@ -46,16 +40,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-spelling nit?
+Hi Tom,
 
-On 20/12/2019 22:05, Garima Singh via GitGitGadget wrote:
-> 1. The implementation sticks to the recommended values of 7 and 10 for the
->    number of hashes and the size of each entry, as described in the blog.
->    The implementation while not completely open to it at the moment, is flexible
->    enough to allow for tweaking these settings in the future.
->    Note: The performance gains we have observed so far with these values is
->    significant enough to not that we did not need to tweak these settings.
-s/not/note/ (first occurrence)
->    The cover letter of this series has the details and the commit where we have
->    git log use bloom filters.
+On 21/12/2019 02:17, Tom Miller wrote:
+> I would like to propose promoting 'contrib/rerere-train.sh' to one of the
+> following:
+>
+>     1. A builtin c command 'builtin/rerere-train.c'
+>     2. To the top level directory as a built in script 'git-rerere-train.sh'
+>
+> I have recently found myself writing scripts using 'contrib/rerere-train.sh'
+> and I wish it was built into the command. This would make it easier to use
+> rather than having to find it on different platforms. I think it could also
+> benefit from some documentation.
+>
+> I am trying to gauge the interest in this change before spending some time on
+> working on it. I would also appreciate feedback or alternative approaches to
+> what I have suggested. Thank you for your time.
+>
+> Thanks,
+> Tom Miller
+This sounds like a useful capability (especially the documentation!).
+
+I also had aspirations that there should also be a way of exchanging the
+essence of the rerere data when conflicts (e.g. feature vs master branch
+merges) are known locally and ought to be communicable with the patch sets.
+
+see messages:
+<37ccaad0-40b4-ca63-e057-791119d7fa69@talktalk.net>
+<nycvar.QRO.7.76.6.1909261253400.15067@tvgsbejvaqbjf.bet>
+
 Philip
