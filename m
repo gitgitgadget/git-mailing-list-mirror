@@ -2,241 +2,108 @@ Return-Path: <SRS0=QBG1=2L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B22F9C43603
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:03:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4172C43603
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:37:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6E62521655
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:03:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 732E42070B
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 05:37:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fK6QVUcC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KmZLlHk1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725944AbfLUFDL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 00:03:11 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42715 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725773AbfLUFDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 00:03:11 -0500
-Received: by mail-ed1-f66.google.com with SMTP id e10so10523649edv.9
-        for <git@vger.kernel.org>; Fri, 20 Dec 2019 21:03:09 -0800 (PST)
+        id S1725845AbfLUFha (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 00:37:30 -0500
+Received: from mail-ot1-f66.google.com ([209.85.210.66]:45949 "EHLO
+        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725773AbfLUFha (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 00:37:30 -0500
+Received: by mail-ot1-f66.google.com with SMTP id 59so14657616otp.12
+        for <git@vger.kernel.org>; Fri, 20 Dec 2019 21:37:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HuOzOQQBCCxY1TGO27nkzfrchgzSxnoiPDRyPaA4/8g=;
-        b=fK6QVUcCLKjzxhpV0dhXGkP7WrQ7N9eKCCXWxX2OqMU1c/6vMvVZ1SrlKK8pxSpRVW
-         FOCR888/VJNmkzljDV6CAMUJ69sDSKs0Eigjx9sqKph6DFdAQcBBBUaeYFpiudSJejgd
-         AsSVZNSv7aAqNau2XxTuHE9f9YXdHELrqdSbOr+QbcjxcVnF5vaNbR96tmPkyvH+jG9R
-         tmzxO/QBXI9sdziDMTF1RgI1fTxubRkxmT1ywgGMCQY7LVFd7o+GEFCdGY4N7Fy9wLy5
-         AW7wbvfM1R4vj12m/pEhwdOoWs91laKCcslQfDtN0phbPwdc5Mfcn0xwWadK35ZC+NhX
-         pdag==
+        bh=PuFICcbVn+zc3bnsnp9arX3LFCWrmwLuh1ec1JyK5Gs=;
+        b=KmZLlHk1H0zqKyLkpNNADype+GHnb7BVwTxV9z2n7fdBnHYTowRYwocVmN9QSw2tTE
+         +T6iBnB/qADRC65DEki09WNcwh9bDjhhLQjGzOxlG0CncOhXJhOznY14kMMPTLvriLhn
+         8WNpB5Q9es82pKCeYHgEkC6zQiL9ufIizdMHTzADCkE2mkluRVN8HYEXqHE9JaZ3oqjn
+         396IfXaH2ZmKpmjEKMbdMisJc8gclnLNgXK5yDcp7Z0PwiunxfxYkGLZXmR/pTbw7RA0
+         qxnh88ayWBTtIDE/+J5ud33a99iqr023obgIlSB0UVi50kdsHbS5BEYK5kI6b6JtK9lD
+         N3sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=HuOzOQQBCCxY1TGO27nkzfrchgzSxnoiPDRyPaA4/8g=;
-        b=XnzPaPkmrxMf7sc1wuaF4Fbdpsy1O313lAqGOj2f+wvl5hZfc9lYq/2s7Oa80JAaLw
-         u9tWZRTg2bbkUizO2sfoGb6u2k9ny4LTykWmu0e4M4xTGnM3OX5yV+r3k/cfLh4C1VTZ
-         XlrA94z1NwWslplzrElaN/mD1gyto2yQZX5p9H8UO4z9gSqkhRDQA9419NHCae5e1wAi
-         pQuTpE6E7tnK6YBJdZ/VEoQ1kNHLi4vvQQUIA1UBPhC30a8Lq+AzSpcVW9QpUnn9MOtN
-         idGWA2liZdtoI9aGiCudexWTIAPcwxLu6QNI6sRjSW41EdHUceKEJdggXfOX7wsBKrSS
-         ADVw==
-X-Gm-Message-State: APjAAAUEEfJnrgA9uujycZFehFXRqykxgvdeMBleZJ3h6kz15wsu+GOv
-        n6XaDHTzAVGYqvPGgGxhuGQRDhfMDxctt4YHc3w=
-X-Google-Smtp-Source: APXvYqw+szFvsVTbbZsvP1naMQpSNNDcNnzhewYmSpNwYSnJjyENB/e7oHDSwzLqBhGlrR0dy1lli5tHWamMSbwsi2k=
-X-Received: by 2002:a17:906:5208:: with SMTP id g8mr20528829ejm.104.1576904588435;
- Fri, 20 Dec 2019 21:03:08 -0800 (PST)
+        bh=PuFICcbVn+zc3bnsnp9arX3LFCWrmwLuh1ec1JyK5Gs=;
+        b=ACZnd2WwZ72542K3y2EqU6aQ8wveRGk/bk+ntTOARYRG55GVkkO0OjvQhGB2rvLHAM
+         YLEHDOqMhkqW4R51iMLEmPW73+4grg4zunb8ADeX5ENNk2FmjfcfOdLwDWwpVzj0611I
+         BSCIE3M5AG89Ewp/T3ws97hnblF+v/g73NdwhKtq/D1C4y39qfCV9zW1Egyz35RtqYF9
+         PcG/v+rZFtbhkXm9RHHoEmJdNyHCbemiayBY8wrXumH8BqVHQx5HNH6E2W6xMsURiMFl
+         idL6l0Ayr8WUJycasdS7/HLVR/KAckHJxS4tDTcq+8akypqH2TFmoe5X+CAjVjeBEHld
+         NnJQ==
+X-Gm-Message-State: APjAAAVNGJsKa4f7gGF9+qBDa3+TggZUQ+kN2u8UJG7G+U9ejcioDq1e
+        N/8v74QZ7/lclbdwXNLq76E/t7WUA8l4AkZO/b4=
+X-Google-Smtp-Source: APXvYqw58tkrr4Hi80zWkFOorNE9+9qHNCxO5Zz4uXWblw93+oUTb/APcUwqh6QiClNXjxO54RHVU2o2dAhLs/k6q9U=
+X-Received: by 2002:a9d:7d81:: with SMTP id j1mr13791222otn.267.1576906649255;
+ Fri, 20 Dec 2019 21:37:29 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.495.git.1576574242.gitgitgadget@gmail.com> <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
-In-Reply-To: <pull.495.v2.git.1576746982.gitgitgadget@gmail.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Sat, 21 Dec 2019 18:02:56 +1300
-Message-ID: <CACg5j254YMCsWrLPxGXitFa-PKqyyxwdkn2Wmq-2r1FgLFN0Mg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] [Outreachy] commit: display advice hints when
- commit fails
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+References: <pull.680.git.git.1576868036.gitgitgadget@gmail.com>
+ <e1870f3fee8be6ebbecdd618ae1803afb878e67e.1576868036.git.gitgitgadget@gmail.com>
+ <xmqqwoaq94ql.fsf@gitster-ct.c.googlers.com> <CABPp-BFYyF5RbZVuwo8LtDZZQ9KQ2od4FQqQYaeSqNCNKcZXPw@mail.gmail.com>
+ <CABPp-BGvh-NvooVE-K-WYpv9RAs4BZ_d0=Mv=b5iEoGbNt5amA@mail.gmail.com> <xmqq1rsy8w3c.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1rsy8w3c.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 20 Dec 2019 21:37:17 -0800
+Message-ID: <CABPp-BEReoD+YUZuniNqkDabYqdKrFvzPeNbWpRPexXUuX0XiQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] am: pay attention to user-defined context size
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Pavel Roskin <plroskin@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was brought to my attention that I should've elaborated in the
-cover letter the difference between v1 and v2 and the reason behind
-the change.
-So I'll elaborate that here:
+On Fri, Dec 20, 2019 at 2:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > diff.context should NOT affect plumbing.  So if it's not plumbing by
+> > that test, and it's not *UI* as per what you say, what exactly is it?
+>
+> I actually was saying that diff.context is UI thing, and should make
+> no effect on how "am" interprets its input.
+>
+> Which the codepath in "am" are you trying to affect?  "am" is mainly
+> a consumer of "diff" output, and not a producer, so ...
 
-As pointed out by this review on v1
-https://lore.kernel.org/git/xmqq36dgayma.fsf@gitster-ct.c.googlers.com/T/#m3adc84664e907bd8fcc13ac22c8702ae15925f8f
+Okay, I can't seem to find a simple way to reproduce separate from the
+testcase reported here:
+    https://lore.kernel.org/git/CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com/
 
-By default git honors the user's selection of displaying hints, but in
-the specific case of using the editor to write
-a commit message ea9882bfc4 wanted to turn it off temporarily because
-while the editor is open and the commit
-is in-progress, the user can't run these hints anyway
-(list discussion for reference
-https://lore.kernel.org/git/vpq4n9tghk5.fsf@anie.imag.fr/)
+To summarize, when I run these exact steps:
+  git clone --quiet https://github.com/proski/git-rebase-demo
+  cd git-rebase-demo
+  git checkout --quiet branch1
+  git -c diff.context=5 rebase --quiet origin/branch2
+  test $? -eq 0 && echo Successfully rebased
 
-So it makes more sense to see the change made for this specific editor
-case inside an if condition rather than
-applying it to all the commit cases, and then flip it back once the
-commit fails.
+  echo Difference from expected:
+  git diff --shortstat origin/merge-good
 
-Please correct me if I'm wrong, but I think for the rest of the cases,
-as long as there's no editor with status
-displayed inside (hints displayed while commit in progress), there's
-no need to turn off the hints.
+The rebase succeeds in both cases, but I get different output from the
+shortstat depending on whether or not this git_am_config patch is
+applied.
 
-Heba
-
-
-On Thu, Dec 19, 2019 at 10:16 PM Heba Waly via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Display hints to the user when trying to commit without staging the modified
-> files first (when advice.statusHints is set to true). Change the output of
-> the unsuccessful commit from e.g:
->
->  . [...] . Changes not staged for commit: . modified: builtin/commit.c . .
-> no changes added to commit
->
-> to:
->
->  . [...] . Changes not staged for commit: . (use "git add ..." to update
-> what will be committed) . (use "git checkout -- ..." to discard changes in
-> working directory) . . modified: ../builtin/commit.c . . no changes added to
-> commit (use "git add" and/or "git commit -a")
->
-> In ea9882bfc4 (commit: disable status hints when writing to COMMIT_EDITMSG,
-> 2013-09-12) the intent was to disable status hints when writing to
-> COMMIT_EDITMSG, but in fact the implementation disabled status messages in
-> more locations, e.g in case the commit wasn't successful, status hints will
-> still be disabled and no hints will be displayed to the user although
-> advice.statusHints is set to true.
->
-> Signed-off-by: Heba Waly heba.waly@gmail.com [heba.waly@gmail.com]
->
-> Heba Waly (1):
->   commit: display advice hints when commit fails
->
->  builtin/commit.c                          | 18 ++++++++++++------
->  t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
->  2 files changed, 21 insertions(+), 6 deletions(-)
->
->
-> base-commit: 12029dc57db23baef008e77db1909367599210ee
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-495%2FHebaWaly%2Fhints-for-unsuccessful-commit-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-495/HebaWaly/hints-for-unsuccessful-commit-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/495
->
-> Range-diff vs v1:
->
->  1:  f23477c5a3 ! 1:  ebec237920 commit: display advice hints when commit fails
->      @@ -2,9 +2,9 @@
->
->           commit: display advice hints when commit fails
->
->      -    Display hints to the user when trying to commit without staging the modified
->      -    files first (when advice.statusHints is set to true). Change the output of the
->      -    unsuccessful commit from e.g:
->      +    Display hints to the user when trying to commit without staging the
->      +    modified files first (when advice.statusHints is set to true). Change
->      +    the output of the unsuccessful commit from e.g:
->
->             # [...]
->             # Changes not staged for commit:
->      @@ -19,16 +19,16 @@
->             #   (use "git add <file>..." to update what will be committed)
->             #   (use "git checkout -- <file>..." to discard changes in working directory)
->             #
->      -      #   modified:   ../builtin/commit.c
->      +      #   modified:   /builtin/commit.c
->             #
->             # no changes added to commit (use "git add" and/or "git commit -a")
->
->      -    In ea9882bfc4 (commit: disable status hints when writing to COMMIT_EDITMSG,
->      -    2013-09-12) the intent was to disable status hints when writing to
->      -    COMMIT_EDITMSG, but in fact the implementation disabled status messages in
->      -    more locations, e.g in case the commit wasn't successful, status hints
->      -    will still be disabled and no hints will be displayed to the user although
->      -    advice.statusHints is set to true.
->      +    In ea9882bfc4 (commit: disable status hints when writing to
->      +    COMMIT_EDITMSG, 2013-09-12) the intent was to disable status hints when
->      +    writing to COMMIT_EDITMSG, but in fact the implementation disabled
->      +    status messages in more locations, e.g in case the commit wasn't
->      +    successful, status hints will still be disabled and no hints will be
->      +    displayed to the user although advice.statusHints is set to true.
->
->           Signed-off-by: Heba Waly <heba.waly@gmail.com>
->
->      @@ -36,13 +36,44 @@
->        --- a/builtin/commit.c
->        +++ b/builtin/commit.c
->       @@
->      -   */
->      -  if (!committable && whence != FROM_MERGE && !allow_empty &&
->      -      !(amend && is_a_merge(current_head))) {
->      -+         s->hints = advice_status_hints;
->      -          s->display_comment_prefix = old_display_comment_prefix;
->      -          run_status(stdout, index_file, prefix, 0, s);
->      -          if (amend)
->      +  old_display_comment_prefix = s->display_comment_prefix;
->      +  s->display_comment_prefix = 1;
->      +
->      +- /*
->      +-  * Most hints are counter-productive when the commit has
->      +-  * already started.
->      +-  */
->      +- s->hints = 0;
->      +-
->      +  if (clean_message_contents)
->      +          strbuf_stripspace(&sb, 0);
->      +
->      +@@
->      +          int saved_color_setting;
->      +          struct ident_split ci, ai;
->      +
->      ++         /*
->      ++          * Most hints are counter-productive when displayed in
->      ++          * the commit message editor.
->      ++          */
->      ++         s->hints = 0;
->      ++
->      +          if (whence != FROM_COMMIT) {
->      +                  if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
->      +                          !merge_contains_scissors)
->      +@@
->      +          saved_color_setting = s->use_color;
->      +          s->use_color = 0;
->      +          committable = run_status(s->fp, index_file, prefix, 1, s);
->      ++         if(!committable)
->      ++                 /*
->      ++                  Status is to be printed to stdout, so hints will be useful to the
->      ++                  user. Reset s->hints to what the user configured
->      ++                  */
->      ++                 s->hints = advice_status_hints;
->      +          s->use_color = saved_color_setting;
->      +          string_list_clear(&s->change, 1);
->      +  } else {
->
->        diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
->        --- a/t/t7500-commit-template-squash-signoff.sh
->      @@ -56,7 +87,7 @@
->       + git add file &&
->       + git commit -m initial &&
->       + echo "changes" >>file &&
->      -+ test_must_fail git commit -m initial >actual &&
->      ++ test_must_fail git commit -m update >actual &&
->       + test_i18ngrep "no changes added to commit (use \"git add\" and/or \"git commit -a\")" actual
->       +'
->       +
->
-> --
-> gitgitgadget
+I can't seem to track down why this patch makes a difference when as
+you say it shouldn't, nor can I seem to generate an am-only testcase.
+I feel like it should be easy to get at least one of these given the
+short steps to reproduce (the repo only has 1 file and three relevant
+commits), but it seems to be stumping me nonetheless.
