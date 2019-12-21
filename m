@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 96D00C2D0D4
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 411ECC2D0D2
 	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6D741206EC
+	by mail.kernel.org (Postfix) with ESMTP id 0D1A6206B7
 	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OMOndmqR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sNpQVMGv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726777AbfLUWmK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 17:42:10 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39576 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbfLUWmJ (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726733AbfLUWmJ (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 21 Dec 2019 17:42:09 -0500
-Received: by mail-ed1-f67.google.com with SMTP id t17so12059087eds.6
-        for <git@vger.kernel.org>; Sat, 21 Dec 2019 14:42:08 -0800 (PST)
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34783 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726066AbfLUWmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 17:42:06 -0500
+Received: by mail-ed1-f66.google.com with SMTP id l8so12074522edw.1
+        for <git@vger.kernel.org>; Sat, 21 Dec 2019 14:42:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aIVFmW+ag61G3qpmr5SfVtnq0Qq3IxumTrYFwfEvO/w=;
-        b=OMOndmqRpqtvzzvTJQJ0mjZr6untUXmpKYfr7BpdYYtBLL9Phd7moeymR7CGOM4J25
-         y7XveFS6P40YlTUxXp3SqGHzOBTT3ICw/aa8LRkVgbyuALlRls2w7iCNAaW/8D7StWxu
-         x0rXn8iuNpDkEUtNTdd0/rpKUvxgWVfeOPxqUvHy0Wk7d2xE3VwCa5qhpkRDldSismms
-         NQrgxG21Td0eHTQER20bSqUNzpT9bbtUFprkk8jqNFavkNBsWGWGiUWA3jb7KFzYF6y7
-         cYyukG71s4Qpdz7p5oyezBrKBrgPG6oI74FOtvq88QVQXLpUGRpS1tPviTDujfLYE5bE
-         QmdQ==
+        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
+        b=sNpQVMGvQ67Ux4KJX77fy8lIbq6z8T5sj4cyvLtUMmvQBErrT2ahIcCX67/6ynREE1
+         AaP7trzgqiAsPqBZ1BE25sziUCUEOXoZVUGTXy74TSNYt1AfM1CCLreXO0l6rFwgoTCD
+         qx6vcqJoEY5qIOwMHyajJ8u6jsYVZTK8+5Q1IEjs6SC7nFIWgrAIElA1IGNWXc1pDnON
+         0FL+RwJDlPFZK4vLdM5KhBclGPQsCvcS+OhpZcdGPwJA75v6qDWDKj/Ar3Z47wAgRhVn
+         hw15+0uZDo5iU9VvIavtSHLGLXlb7yW7HwE8aCk5W2oB2shYb5Ge39L51B1hRJlUww/B
+         o/cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aIVFmW+ag61G3qpmr5SfVtnq0Qq3IxumTrYFwfEvO/w=;
-        b=OwlWcPzaBZPZul6hHlHXc2osQRCI+T2xyM2iHGjfoC2oB7MuvrqpdVh74Yi/7ihJEA
-         93/ExEFPDrwa+AMc1PCxq9Lti7F/uNuhCSOsvI1NRJX8A4/R659s8YiAUZl8g/CjN2p1
-         TrH3klhDn9i6wX9ZkU9XX+WfgGHUmhp9Niyu0f+bms6H9JsQNj9vDx6uye1OHB1x0IG9
-         /nVj8dm9yl7NyvrdBkSl2Q3OpxsL/WcZXmpf5HD4jB1xVxnqYcbjxn4MoHYOLjZGQstd
-         4Ro2oJbOE7eUySZjnrME6CMwhOSdwif4N4spxqnrIxtpezQI7v0traz5/ow8fPdVcFKK
-         fFTw==
-X-Gm-Message-State: APjAAAUPbqvUXsvZ6pDr1TWlLZfnBIZj2H2vzYPfulsWW1d04cguYjRb
-        e/ceZSEvkhAgIqWCbjFUAbbgCspH
-X-Google-Smtp-Source: APXvYqxjnSJ4c+NfElEhPAWCG758K/kd2mkZFkmzj84NEBoJQVkHm0nFfi0bn2WI5Wo7+LgzRKA8tg==
-X-Received: by 2002:a05:6402:153:: with SMTP id s19mr24853069edu.149.1576968127897;
-        Sat, 21 Dec 2019 14:42:07 -0800 (PST)
+        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
+        b=C2ay+Yyme+LZ+E7SKcIuvHgYBSOhQOy8qjjxK412Dqh38NqIxg33JQQ5Wehdq3gvEQ
+         3QBDt4iCs3ZGaE90ubfzWekB97w9tSPa7lo1T7MQAJ5ce7exwesVNI6TRsu7czhzmInU
+         MSO9mkR+CgcZcfn40/DlFhQZqTXG7efQcDem3+GQyoOSd2UL4hxjnFBGjPv12uelJxzb
+         x+6vt/N0PMZQQ7E0Uajgk2he1A1H0iVJBDyBzieQIM3IPD5H2rbAFPgm3VwIKdu63orC
+         FbYGtNzsdbPOoZy5WRNACThmrfGZuH9+8+W8puXgIxFJe6lxTSOI2XbPs9k6sGBfQCZI
+         Y32w==
+X-Gm-Message-State: APjAAAULDW6GXqOcDzW4mG4eCEJo7gmK0pnBUj6k7tuCiniuIVjkIkDU
+        Q3inRqYdFCSODCeUSva+yNS7E3th
+X-Google-Smtp-Source: APXvYqzuUaVhMkOqGorjFnf+B9z+F2XP0pg30Yg7fqJwD2e0Ci1axSYzfcByClamLI2WWu3njeoM3w==
+X-Received: by 2002:aa7:d285:: with SMTP id w5mr23845664edq.246.1576968124687;
+        Sat, 21 Dec 2019 14:42:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j3sm1551444edb.50.2019.12.21.14.42.07
+        by smtp.gmail.com with ESMTPSA id x10sm1664992ejf.77.2019.12.21.14.42.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Dec 2019 14:42:07 -0800 (PST)
-Message-Id: <af9b59873833ad56d803d101a6c0d7f049017bfe.1576968120.git.gitgitgadget@gmail.com>
+        Sat, 21 Dec 2019 14:42:04 -0800 (PST)
+Message-Id: <a77fa914da14c84ff2ebadd26fbcac97456aae04.1576968120.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.git.1576968120.gitgitgadget@gmail.com>
 References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Dec 2019 22:41:59 +0000
-Subject: [PATCH 8/9] built-in add -p: handle Escape sequences more efficiently
+Date:   Sat, 21 Dec 2019 22:41:55 +0000
+Subject: [PATCH 4/9] terminal: accommodate Git for Windows' default terminal
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,148 +75,110 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `interactive.singlekey = true`, we react immediately to keystrokes,
-even to Escape sequences (e.g. when pressing a cursor key).
+Git for Windows' Git Bash runs in MinTTY by default, which does not have
+a Win32 Console instance, but uses MSYS2 pseudo terminals instead.
 
-The problem with Escape sequences is that we do not really know when
-they are done, and as a heuristic we poll standard input for half a
-second to make sure that we got all of it.
+This is a problem, as Git for Windows does not want to use the MSYS2
+emulation layer for Git itself, and therefore has no direct way to
+interact with that pseudo terminal.
 
-While waiting half a second is not asking for a whole lot, it can become
-quite annoying over time, therefore with this patch, we read the
-terminal capabilities (if available) and extract known Escape sequences
-from there, then stop polling immediately when we detected that the user
-pressed a key that generated such a known sequence.
+As a workaround, use the `stty` utility (which is included in Git for
+Windows, and which *is* an MSYS2 program, so it knows how to deal with
+the pseudo terminal).
 
-This recapitulates the remaining part of b5cc003253c8 (add -i: ignore
-terminal escape sequences, 2011-05-17).
+Note: If Git runs in a regular CMD or PowerShell window, there *is* a
+regular Win32 Console to work with. This is not a problem for the MSYS2
+`stty`: it copes with this scenario just fine.
 
-Note: We do *not* query the terminal capabilities directly. That would
-either require a lot of platform-specific code, or it would require
-linking to a library such as ncurses.
-
-Linking to a library in the built-ins is something we try very hard to
-avoid (we even kicked the libcurl dependency to a non-built-in remote
-helper, just to shave off a tiny fraction of a second from Git's startup
-time). And the platform-specific code would be a maintenance nightmare.
-
-Even worse: in Git for Windows' case, we would need to query MSYS2
-pseudo terminals, which `git.exe` simply cannot do (because it is
-intentionally *not* an MSYS2 program).
-
-To address this, we simply spawn `infocmp -L -1` and parse its output
-(which works even in Git for Windows, because that helper is included in
-the end-user facing installations).
-
-This is done only once, as in the Perl version, but it is done only when
-the first Escape sequence is encountered, not upon startup of `git add
--i`; This saves on startup time, yet makes reacting to the first Escape
-sequence slightly more sluggish. But it allows us to keep the
-terminal-related code encapsulated in the `compat/terminal.c` file.
+Also note that we introduce support for more bits than would be
+necessary for a mere `disable_echo()` here, in preparation for the
+upcoming `enable_non_canonical()` function.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/terminal.c | 73 ++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 72 insertions(+), 1 deletion(-)
+ compat/terminal.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/compat/terminal.c b/compat/terminal.c
-index b7f58d1781..35bca03d14 100644
+index 1fb40b3a0a..16e9949da1 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -4,6 +4,7 @@
+@@ -2,6 +2,8 @@
+ #include "compat/terminal.h"
+ #include "sigchain.h"
  #include "strbuf.h"
- #include "run-command.h"
- #include "string-list.h"
-+#include "hashmap.h"
++#include "run-command.h"
++#include "string-list.h"
  
  #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
  
-@@ -238,6 +239,71 @@ char *git_terminal_prompt(const char *prompt, int echo)
- 	return buf.buf;
- }
+@@ -64,11 +66,28 @@ static int disable_echo(void)
+ #define OUTPUT_PATH "CONOUT$"
+ #define FORCE_TEXT "t"
  
-+/*
-+ * The `is_known_escape_sequence()` function returns 1 if the passed string
-+ * corresponds to an Escape sequence that the terminal capabilities contains.
-+ *
-+ * To avoid depending on ncurses or other platform-specific libraries, we rely
-+ * on the presence of the `infocmp` executable to do the job for us (failing
-+ * silently if the program is not available or refused to run).
-+ */
-+struct escape_sequence_entry {
-+	struct hashmap_entry entry;
-+	char sequence[FLEX_ARRAY];
-+};
-+
-+static int sequence_entry_cmp(const void *hashmap_cmp_fn_data,
-+			      const struct escape_sequence_entry *e1,
-+			      const struct escape_sequence_entry *e2,
-+			      const void *keydata)
-+{
-+	return strcmp(e1->sequence, keydata ? keydata : e2->sequence);
-+}
-+
-+static int is_known_escape_sequence(const char *sequence)
-+{
-+	static struct hashmap sequences;
-+	static int initialized;
-+
-+	if (!initialized) {
++static int use_stty = 1;
++static struct string_list stty_restore = STRING_LIST_INIT_DUP;
+ static HANDLE hconin = INVALID_HANDLE_VALUE;
+ static DWORD cmode;
+ 
+ static void restore_term(void)
+ {
++	if (use_stty) {
++		int i;
 +		struct child_process cp = CHILD_PROCESS_INIT;
-+		struct strbuf buf = STRBUF_INIT;
-+		char *p, *eol;
 +
-+		hashmap_init(&sequences, (hashmap_cmp_fn)sequence_entry_cmp,
-+			     NULL, 0);
++		if (stty_restore.nr == 0)
++			return;
 +
-+		argv_array_pushl(&cp.args, "infocmp", "-L", "-1", NULL);
-+		if (pipe_command(&cp, NULL, 0, &buf, 0, NULL, 0))
-+			strbuf_setlen(&buf, 0);
-+
-+		for (eol = p = buf.buf; *p; p = eol + 1) {
-+			p = strchr(p, '=');
-+			if (!p)
-+				break;
-+			p++;
-+			eol = strchrnul(p, '\n');
-+
-+			if (starts_with(p, "\\E")) {
-+				char *comma = memchr(p, ',', eol - p);
-+				struct escape_sequence_entry *e;
-+
-+				p[0] = '^';
-+				p[1] = '[';
-+				FLEX_ALLOC_MEM(e, sequence, p, comma - p);
-+				hashmap_entry_init(&e->entry,
-+						   strhash(e->sequence));
-+				hashmap_add(&sequences, &e->entry);
-+			}
-+			if (!*eol)
-+				break;
-+		}
-+		initialized = 1;
++		argv_array_push(&cp.args, "stty");
++		for (i = 0; i < stty_restore.nr; i++)
++			argv_array_push(&cp.args, stty_restore.items[i].string);
++		run_command(&cp);
++		string_list_clear(&stty_restore, 0);
++		return;
 +	}
 +
-+	return !!hashmap_get_from_hash(&sequences, strhash(sequence), sequence);
-+}
-+
- int read_key_without_echo(struct strbuf *buf)
+ 	if (hconin == INVALID_HANDLE_VALUE)
+ 		return;
+ 
+@@ -79,6 +98,37 @@ static void restore_term(void)
+ 
+ static int disable_bits(DWORD bits)
  {
- 	static int warning_displayed;
-@@ -271,7 +337,12 @@ int read_key_without_echo(struct strbuf *buf)
- 		 * Start by replacing the Escape byte with ^[ */
- 		strbuf_splice(buf, buf->len - 1, 1, "^[", 2);
- 
--		for (;;) {
-+		/*
-+		 * Query the terminal capabilities once about all the Escape
-+		 * sequences it knows about, so that we can avoid waiting for
-+		 * half a second when we know that the sequence is complete.
-+		 */
-+		while (!is_known_escape_sequence(buf->buf)) {
- 			struct pollfd pfd = { .fd = 0, .events = POLLIN };
- 
- 			if (poll(&pfd, 1, 500) < 1)
++	if (use_stty) {
++		struct child_process cp = CHILD_PROCESS_INIT;
++
++		argv_array_push(&cp.args, "stty");
++
++		if (bits & ENABLE_LINE_INPUT) {
++			string_list_append(&stty_restore, "icanon");
++			argv_array_push(&cp.args, "-icanon");
++		}
++
++		if (bits & ENABLE_ECHO_INPUT) {
++			string_list_append(&stty_restore, "echo");
++			argv_array_push(&cp.args, "-echo");
++		}
++
++		if (bits & ENABLE_PROCESSED_INPUT) {
++			string_list_append(&stty_restore, "-ignbrk");
++			string_list_append(&stty_restore, "intr");
++			string_list_append(&stty_restore, "^c");
++			argv_array_push(&cp.args, "ignbrk");
++			argv_array_push(&cp.args, "intr");
++			argv_array_push(&cp.args, "");
++		}
++
++		if (run_command(&cp) == 0)
++			return 0;
++
++		/* `stty` could not be executed; access the Console directly */
++		use_stty = 0;
++	}
++
+ 	hconin = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
+ 	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
+ 	    FILE_ATTRIBUTE_NORMAL, NULL);
 -- 
 gitgitgadget
 
