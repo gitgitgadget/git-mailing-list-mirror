@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 411ECC2D0D2
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB446C2D0C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0D1A6206B7
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C1200206D8
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sNpQVMGv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PshyA10m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726733AbfLUWmJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726717AbfLUWmJ (ORCPT <rfc822;git@archiver.kernel.org>);
         Sat, 21 Dec 2019 17:42:09 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34783 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726066AbfLUWmG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 17:42:06 -0500
-Received: by mail-ed1-f66.google.com with SMTP id l8so12074522edw.1
-        for <git@vger.kernel.org>; Sat, 21 Dec 2019 14:42:05 -0800 (PST)
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35812 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726138AbfLUWmF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 17:42:05 -0500
+Received: by mail-ed1-f65.google.com with SMTP id f8so12074800edv.2
+        for <git@vger.kernel.org>; Sat, 21 Dec 2019 14:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=sNpQVMGvQ67Ux4KJX77fy8lIbq6z8T5sj4cyvLtUMmvQBErrT2ahIcCX67/6ynREE1
-         AaP7trzgqiAsPqBZ1BE25sziUCUEOXoZVUGTXy74TSNYt1AfM1CCLreXO0l6rFwgoTCD
-         qx6vcqJoEY5qIOwMHyajJ8u6jsYVZTK8+5Q1IEjs6SC7nFIWgrAIElA1IGNWXc1pDnON
-         0FL+RwJDlPFZK4vLdM5KhBclGPQsCvcS+OhpZcdGPwJA75v6qDWDKj/Ar3Z47wAgRhVn
-         hw15+0uZDo5iU9VvIavtSHLGLXlb7yW7HwE8aCk5W2oB2shYb5Ge39L51B1hRJlUww/B
-         o/cw==
+        bh=SoINhosxY8bQOCleNIF9uXXAb4CbGyczHohOpNqVWPc=;
+        b=PshyA10mtQdOpTKk9D17ZdTRUrGhmYfVbhqpXuf4Fj4yjNrmWN1XYBQMtB2ouWmb6s
+         m9Qpeut2+VcWPlmdEn5iUbTDhKb/ct2bsWyemlEVBuZ+SOA11ICu7l6Z1QHTA1oHQXPB
+         x33UK7BaExGej7UWhYGLeBxvW+qe7c+Eh2DIYxury2JdVsW0Wmax+pZkJoVZr4QauHj2
+         S3o1+LvO4P3jonQviN6ndZyyY5JqMjMcJ/UxN+/2VWYdp5p12KqefmS4qn/fTMhbNu05
+         kMg3TJC6oKllZITgcK3po3NxZiFt4hRD1jlhp8GfgzYafe7Lw3gogUkluXD3hnDG4r+S
+         4kag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=C2ay+Yyme+LZ+E7SKcIuvHgYBSOhQOy8qjjxK412Dqh38NqIxg33JQQ5Wehdq3gvEQ
-         3QBDt4iCs3ZGaE90ubfzWekB97w9tSPa7lo1T7MQAJ5ce7exwesVNI6TRsu7czhzmInU
-         MSO9mkR+CgcZcfn40/DlFhQZqTXG7efQcDem3+GQyoOSd2UL4hxjnFBGjPv12uelJxzb
-         x+6vt/N0PMZQQ7E0Uajgk2he1A1H0iVJBDyBzieQIM3IPD5H2rbAFPgm3VwIKdu63orC
-         FbYGtNzsdbPOoZy5WRNACThmrfGZuH9+8+W8puXgIxFJe6lxTSOI2XbPs9k6sGBfQCZI
-         Y32w==
-X-Gm-Message-State: APjAAAULDW6GXqOcDzW4mG4eCEJo7gmK0pnBUj6k7tuCiniuIVjkIkDU
-        Q3inRqYdFCSODCeUSva+yNS7E3th
-X-Google-Smtp-Source: APXvYqzuUaVhMkOqGorjFnf+B9z+F2XP0pg30Yg7fqJwD2e0Ci1axSYzfcByClamLI2WWu3njeoM3w==
-X-Received: by 2002:aa7:d285:: with SMTP id w5mr23845664edq.246.1576968124687;
-        Sat, 21 Dec 2019 14:42:04 -0800 (PST)
+        bh=SoINhosxY8bQOCleNIF9uXXAb4CbGyczHohOpNqVWPc=;
+        b=XSrR6AWE6soaYVVvqZMD/8gBXFRydWRSiagHzmfHoUTTyxzou9ZAZ0RGNXNTs4PVgY
+         p2JHy6d10iX0SIhrGKX1q2VZc3dqByDK8Mc0+U6NyUsCDIYAv+Vi9A/4lR9EXZdFX8DA
+         CExY4lBA2F07JI/kssbkN0F2AAqtVm2AqUZbJhicXWBKJ5cbEnGt+QF56FTYr7fullvi
+         UFm6aJ/OlFlgzpK9LZKYXfd7aQ2JLisFA4EUUXxiIkHoP1nxdtudtjdVbYsLgluKO1eL
+         AwGjz8uM03lomO79pZtTaif4USfpYjcxp2x3KuRwzoZXQHRKlGox1scXJHZqYD7bD62+
+         I4AA==
+X-Gm-Message-State: APjAAAUnDBRLYtf22RUU+rjT1yBs/rnpnsDCJZpB7adKnilmyIFI2kjU
+        AndyX5/ha1RuEamZvNNY6KyyM8lM
+X-Google-Smtp-Source: APXvYqyp9oQCJ+evKzdf2vSaTSRNXoMu1qxpOjOUeT886U76H/1XhMKl99yC5Pptuw8802UJPDSM+A==
+X-Received: by 2002:a05:6402:799:: with SMTP id d25mr24533336edy.221.1576968123943;
+        Sat, 21 Dec 2019 14:42:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x10sm1664992ejf.77.2019.12.21.14.42.04
+        by smtp.gmail.com with ESMTPSA id p24sm1570530eds.17.2019.12.21.14.42.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 21 Dec 2019 14:42:04 -0800 (PST)
-Message-Id: <a77fa914da14c84ff2ebadd26fbcac97456aae04.1576968120.git.gitgitgadget@gmail.com>
+        Sat, 21 Dec 2019 14:42:03 -0800 (PST)
+Message-Id: <7631c1ea8c82154581eaaed9dcc278a011897282.1576968120.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.git.1576968120.gitgitgadget@gmail.com>
 References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 21 Dec 2019 22:41:55 +0000
-Subject: [PATCH 4/9] terminal: accommodate Git for Windows' default terminal
+Date:   Sat, 21 Dec 2019 22:41:54 +0000
+Subject: [PATCH 3/9] terminal: make the code of disable_echo() reusable
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,110 +75,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows' Git Bash runs in MinTTY by default, which does not have
-a Win32 Console instance, but uses MSYS2 pseudo terminals instead.
+We are about to introduce the function `enable_non_canonical()`, which
+shares almost the complete code with `disable_echo()`.
 
-This is a problem, as Git for Windows does not want to use the MSYS2
-emulation layer for Git itself, and therefore has no direct way to
-interact with that pseudo terminal.
-
-As a workaround, use the `stty` utility (which is included in Git for
-Windows, and which *is* an MSYS2 program, so it knows how to deal with
-the pseudo terminal).
-
-Note: If Git runs in a regular CMD or PowerShell window, there *is* a
-regular Win32 Console to work with. This is not a problem for the MSYS2
-`stty`: it copes with this scenario just fine.
-
-Also note that we introduce support for more bits than would be
-necessary for a mere `disable_echo()` here, in preparation for the
-upcoming `enable_non_canonical()` function.
+Let's prepare for that, by refactoring out that shared code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/terminal.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ compat/terminal.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
 diff --git a/compat/terminal.c b/compat/terminal.c
-index 1fb40b3a0a..16e9949da1 100644
+index fa13ee672d..1fb40b3a0a 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -2,6 +2,8 @@
- #include "compat/terminal.h"
- #include "sigchain.h"
- #include "strbuf.h"
-+#include "run-command.h"
-+#include "string-list.h"
+@@ -32,7 +32,7 @@ static void restore_term(void)
+ 	term_fd = -1;
+ }
  
- #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
- 
-@@ -64,11 +66,28 @@ static int disable_echo(void)
- #define OUTPUT_PATH "CONOUT$"
- #define FORCE_TEXT "t"
- 
-+static int use_stty = 1;
-+static struct string_list stty_restore = STRING_LIST_INIT_DUP;
- static HANDLE hconin = INVALID_HANDLE_VALUE;
- static DWORD cmode;
- 
- static void restore_term(void)
+-static int disable_echo(void)
++static int disable_bits(tcflag_t bits)
  {
-+	if (use_stty) {
-+		int i;
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+
-+		if (stty_restore.nr == 0)
-+			return;
-+
-+		argv_array_push(&cp.args, "stty");
-+		for (i = 0; i < stty_restore.nr; i++)
-+			argv_array_push(&cp.args, stty_restore.items[i].string);
-+		run_command(&cp);
-+		string_list_clear(&stty_restore, 0);
-+		return;
-+	}
-+
- 	if (hconin == INVALID_HANDLE_VALUE)
- 		return;
+ 	struct termios t;
  
-@@ -79,6 +98,37 @@ static void restore_term(void)
+@@ -43,7 +43,7 @@ static int disable_echo(void)
+ 	old_term = t;
+ 	sigchain_push_common(restore_term_on_signal);
  
- static int disable_bits(DWORD bits)
+-	t.c_lflag &= ~ECHO;
++	t.c_lflag &= ~bits;
+ 	if (!tcsetattr(term_fd, TCSAFLUSH, &t))
+ 		return 0;
+ 
+@@ -53,6 +53,11 @@ static int disable_echo(void)
+ 	return -1;
+ }
+ 
++static int disable_echo(void)
++{
++	return disable_bits(ECHO);
++}
++
+ #elif defined(GIT_WINDOWS_NATIVE)
+ 
+ #define INPUT_PATH "CONIN$"
+@@ -72,7 +77,7 @@ static void restore_term(void)
+ 	hconin = INVALID_HANDLE_VALUE;
+ }
+ 
+-static int disable_echo(void)
++static int disable_bits(DWORD bits)
  {
-+	if (use_stty) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+
-+		argv_array_push(&cp.args, "stty");
-+
-+		if (bits & ENABLE_LINE_INPUT) {
-+			string_list_append(&stty_restore, "icanon");
-+			argv_array_push(&cp.args, "-icanon");
-+		}
-+
-+		if (bits & ENABLE_ECHO_INPUT) {
-+			string_list_append(&stty_restore, "echo");
-+			argv_array_push(&cp.args, "-echo");
-+		}
-+
-+		if (bits & ENABLE_PROCESSED_INPUT) {
-+			string_list_append(&stty_restore, "-ignbrk");
-+			string_list_append(&stty_restore, "intr");
-+			string_list_append(&stty_restore, "^c");
-+			argv_array_push(&cp.args, "ignbrk");
-+			argv_array_push(&cp.args, "intr");
-+			argv_array_push(&cp.args, "");
-+		}
-+
-+		if (run_command(&cp) == 0)
-+			return 0;
-+
-+		/* `stty` could not be executed; access the Console directly */
-+		use_stty = 0;
-+	}
-+
  	hconin = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
  	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
- 	    FILE_ATTRIBUTE_NORMAL, NULL);
+@@ -82,7 +87,7 @@ static int disable_echo(void)
+ 
+ 	GetConsoleMode(hconin, &cmode);
+ 	sigchain_push_common(restore_term_on_signal);
+-	if (!SetConsoleMode(hconin, cmode & (~ENABLE_ECHO_INPUT))) {
++	if (!SetConsoleMode(hconin, cmode & ~bits)) {
+ 		CloseHandle(hconin);
+ 		hconin = INVALID_HANDLE_VALUE;
+ 		return -1;
+@@ -91,6 +96,12 @@ static int disable_echo(void)
+ 	return 0;
+ }
+ 
++static int disable_echo(void)
++{
++	return disable_bits(ENABLE_ECHO_INPUT);
++}
++
++
+ #endif
+ 
+ #ifndef FORCE_TEXT
 -- 
 gitgitgadget
 
