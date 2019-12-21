@@ -2,98 +2,84 @@ Return-Path: <SRS0=QBG1=2L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C76C5C2D0D3
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A70F0C2D0C0
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:51:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A3DCA21D7D
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:39:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83EA021927
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 11:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726674AbfLULjV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 06:39:21 -0500
-Received: from mail-gateway-shared12.cyon.net ([194.126.200.65]:51666 "EHLO
-        mail-gateway-shared12.cyon.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726098AbfLULjV (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 21 Dec 2019 06:39:21 -0500
-Received: from s019.cyon.net ([149.126.4.28])
-        by mail-gateway-shared12.cyon.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim)
-        (envelope-from <bb@drbeat.li>)
-        id 1iid6L-00046Y-Vt
-        for git@vger.kernel.org; Sat, 21 Dec 2019 12:39:19 +0100
-Received: from [10.20.10.230] (port=64542 helo=mail.cyon.ch)
-        by s019.cyon.net with esmtpa (Exim 4.92)
-        (envelope-from <bb@drbeat.li>)
-        id 1iid6K-006Ksy-PQ; Sat, 21 Dec 2019 12:39:16 +0100
-Received: by drbeat.li (Postfix, from userid 1000)
-        id 93992180093; Sat, 21 Dec 2019 12:39:16 +0100 (CET)
+        id S1726363AbfLULvJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 06:51:09 -0500
+Received: from 195-159-176-226.customer.powertech.no ([195.159.176.226]:37290
+        "EHLO blaine.gmane.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbfLULvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 06:51:09 -0500
+Received: from list by blaine.gmane.org with local (Exim 4.89)
+        (envelope-from <gcvg-git-3@m.gmane.org>)
+        id 1iidHm-000AO7-OZ
+        for git@vger.kernel.org; Sat, 21 Dec 2019 12:51:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+To:     git@vger.kernel.org
 From:   Beat Bolli <dev+git@drbeat.li>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH 2/2] contrib/git-jump: add mode commit
-Date:   Sat, 21 Dec 2019 12:38:46 +0100
-Message-Id: <20191221113846.169538-2-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.24.1.592.g326176f9f0
-In-Reply-To: <20191221113846.169538-1-dev+git@drbeat.li>
-References: <20191221113846.169538-1-dev+git@drbeat.li>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-OutGoing-Spam-Status: No, score=-1.0
+Subject: Re: Cygwin git with schannel ("native Windows Secure Channel
+ library")
+Date:   Sat, 21 Dec 2019 12:50:59 +0100
+Message-ID: <236e2b6b-d1ce-b0f2-ff56-4ca5e0dfb8e8@drbeat.li>
+References: <CAAHpriOh=9Mh7_moxWCzXBHYTtNi9TOQQPBxa4CX=uLgOnpNtw@mail.gmail.com>
+ <20191220231840.GD163225@camp.crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
+ Gecko/20100101 Thunderbird/60.9.1
+In-Reply-To: <20191220231840.GD163225@camp.crustytoothpaste.net>
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After committing, I often want to return to the place of the latest
-change to continue my work. Add the new mode "commit" which does exactly
-this.
+On 21.12.19 00:18, brian m. carlson wrote:
+> On 2019-12-20 at 01:52:04, Keith Thompson wrote:
+>> I've posted this on Stack Overflow
+>> https://stackoverflow.com/q/59381061/827263
+>> but I haven't gotten any responses yet.
+>>
+>> When I install "Git for Windows" on Windows 10, the installation
+>> wizard offers the choice of using either the OpenSSL library or the
+>> "native Windows Secure Channel library".  (Whether that's offered
+>> seems to depend on what's available on the Windows 10 system.)
+>> I believe this is referred to in the git sources as "schannel".
+>>
+>> Is there a way to configure git under Cygwin to use the native
+>> Windows Secure Channel library?  An ideal solution would be a
+>> modification to my .gitconfig, but something that lets me build git
+>> (and possibly curl) from source would also be good.  See my Stack
+>> Overflow question for more details, including some things that I
+>> tried that didn't work.
+>>
+>> The problem I'm trying to solve: In my work environment, I can
+>> use Cygwin git for local operations, but I have to use Windows git
+>> for anything that talks to a remote (push, pull).I'd prefer to use
+>> Cygwin git exclusively.
+> 
+> I'm not 100% certain here, but I believe the answer is no.  In order to
+> use SChannel, you'll need to link against MSVCRT or a compatible
+> runtime, but it's not possible to link against both that and Cygwin at
+> the same time (probably because they both provide the same symbols).
+> 
+> If your constraint is that you need to interact with the Windows
+> certificate store or such, you could see if there's an OpenSSL or GnuTLS
+> plugin that will do that for you and then build against that library or
+> plugin.
 
-Optional arguments are given to the "git show" call. So it's possible to
-jump to changes of other commits than HEAD.
+There is the OpenSSL "CAPI" engine which interfaces with the Windows
+CryptoAPI. However, I don't know if the Cygwin OpenSSL build includes
+this engine.
 
-Signed-off-by: Beat Bolli <dev+git@drbeat.li>
----
- contrib/git-jump/git-jump | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index 776fa90f7f..e7192073c6 100644
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -9,6 +9,9 @@ The <mode> parameter is one of:
- 
- diff: elements are diff hunks. Arguments are given to diff.
- 
-+commit: element are the hunks of a commit (default HEAD). Arguments are
-+        given to git show.
-+
- merge: elements are merge conflicts. Arguments are ignored.
- 
- grep: elements are grep hits. Arguments are given to git grep or, if
-@@ -27,6 +30,10 @@ mode_diff() {
- 	git diff --no-prefix --relative "$@" | diff_to_quickfix
- }
- 
-+mode_commit() {
-+	git show --no-prefix --relative "$@" | diff_to_quickfix
-+}
-+
- diff_to_quickfix() {
- 	perl -ne '
- 	if (m{^\+\+\+ (.*)}) { $file = $1; next }
--- 
-2.21.0.1020.gf2820cf01a
+Cheers, Beat
 
