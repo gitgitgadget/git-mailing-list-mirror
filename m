@@ -2,104 +2,102 @@ Return-Path: <SRS0=QBG1=2L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90D16C2D0C3
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 18:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAC07C2D0C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5A49820665
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 18:52:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7F74D206C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 19:14:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="onWoNS7d"
+	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="MzMKPuTi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727031AbfLUSwN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 13:52:13 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:40445 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbfLUSwM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 13:52:12 -0500
-Received: by mail-ot1-f65.google.com with SMTP id w21so8655689otj.7
-        for <git@vger.kernel.org>; Sat, 21 Dec 2019 10:52:12 -0800 (PST)
+        id S1726940AbfLUTOl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 14:14:41 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45771 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726763AbfLUTOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 14:14:41 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 2so7047794pfg.12
+        for <git@vger.kernel.org>; Sat, 21 Dec 2019 11:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jxo32adcQJgGZlMVaUfbTYo5HQY8E0MtMOAo8B/J0kc=;
-        b=onWoNS7djLMXFfsXKleprjEWGCKy7b2NQvwAVURdxjkAw52rm8hkSe3xa4hWH6mRq9
-         7Ad1jOZvKJ/AwjQoDc6EqpKq6w/EBTC98QPSLy72natPX0UE7G23ZTrjKa/gek6IZQ3I
-         Karn3Rk027/eXUrq3SwS3VDCvu485fXL+FLIcfnl0207GwgO6zCx2ZZ/pHA/dF1j35IM
-         4V+plzITGynZB5mTV8E2BRcrtXsbi14Dfznz6oZ1tEEnX5AN7JOn8zH32hQLf8Tip699
-         FCWotjUy3AM0MUO6pudxrmTCuJIVFS19KfbEXJg8WYzCcNVQHPzrP4G7yc8e02hL+GWP
-         lSRw==
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:in-reply-to:references:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=B4qbr0PbHAP7hshWLePg0q0AK0RN5wLGg6Xx3ZM0VD0=;
+        b=MzMKPuTiCmalKW8H1pTRzqKudbuL31eHHPPznZlZ61JNBoIqzdPGVE9fQE6skz8jtf
+         QAeKn0K2KRWOkuzdR7C+dxVpC5J13UvYK+cKUIDmtTWhhdZ5hLlr2pnlJ5548vtRHIr4
+         BEpTDb63Sw1aO0+3LD0XXX/LdoH2tr9sV2iCcuSChyMcCmc7Bk4Pr97u/7LwwkDEFHTS
+         WjTSGC61KhZMO6oNFbkPxrrqZUid+oNnDubhtynthLqZYrV2m50HF4bs4jg4mbPYOsWE
+         bSEJzPca6V99RiISvpgmvBbja3XBgyIKmAVFSm/0DF0/6254FmIXPyaW69JnX2IXGGlQ
+         UC3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=jxo32adcQJgGZlMVaUfbTYo5HQY8E0MtMOAo8B/J0kc=;
-        b=L2t+hI+SsY0Ffyg/0rv9ZUgCtIoC9KTDG3Y/oZc/C7f/loxcQanRw14rR+dFWl8SSU
-         ztMl/QbrqZ40/J/ZrmglgqWUOImZq184kIH9ZOCHVZPlFr4dEvWKPmvq8oV7lx0ITGwh
-         qAjrKyZsxBPzKzhfG5IPJmsOoCcg75JZrekdiDb+qsuYg5ikTt/CpVqEb+8JfcAet42a
-         rsJmEB8Wm23+OgF+1eyA4izssOKn9/SBPrq8a3h0Z3h1VLnhcbWqfRLvDXpY7+UBDQf7
-         OCCNHoTj9mixktkQ1cpoUqCoJSzNqWthvheMaHVufpDsD21c3mM1Me4DgCQF0w3CeZV9
-         W1rg==
-X-Gm-Message-State: APjAAAVi+n02Av6Oh0ybnHbs4vL0fw3W+M4VZhUwNZEoX3VbKD4+Cr4m
-        I6Jh34f2pigXCqBWnl4kWfLmCtJPLVcqRfKfpw1Mii+N
-X-Google-Smtp-Source: APXvYqzXr5q7hBFGgqf415BUaSBCIskJVXVTzyaK3826r1+dQYJ6NQsKGgc/+hhBVxibKkLx/KHFlWoe3QdkkbMJAjo=
-X-Received: by 2002:a05:6830:158:: with SMTP id j24mr22804081otp.316.1576954331881;
- Sat, 21 Dec 2019 10:52:11 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=B4qbr0PbHAP7hshWLePg0q0AK0RN5wLGg6Xx3ZM0VD0=;
+        b=e4yfTGmhQnJ9gBoDyiTQOqcOdWaLJDby2/D8RrDEdSk+GkHTmdQUFis2XayXGoUWh9
+         oCUI4wiA1KrjxeU9BDu5VnOkymcqjUR5hWTTk+UtBMWjDJCtKcyLn7q4RG4ZOsY2DUp1
+         Z4NKtSkCn9pEOjgEwfggH0MujCTMwKuA7DfN4IYWLNoHOaSa7RFsVAZRqPpFuQrd5HKA
+         RcwDxDdXS6t/Q/fCFrRkMpX7o08NQB9hcCL3o5p24hXhbNKC3TS8pfJ6ksHPnptZCzRs
+         eDym2hog7VODS3zt4Js3zdKurBIqMgjPLrlkH1UZY0QEuAiC4dyenBCqgs8MtU2dDO6G
+         uJQQ==
+X-Gm-Message-State: APjAAAX4BSYXF51sdhwovIja8jHkg6eVC81ON+v9fGWYLtZHrsbNDC1W
+        U4UGiChNWS7k5pb4icvWYpPN5w==
+X-Google-Smtp-Source: APXvYqwPlWYNpkzNn8Q7QnN63mmPFVziy3BtMbvhswWAPeS26WH6CcH3VLruy2dtRNZu0GkH4y+Lcg==
+X-Received: by 2002:a63:7045:: with SMTP id a5mr22900380pgn.49.1576955680418;
+        Sat, 21 Dec 2019 11:14:40 -0800 (PST)
+Received: from localhost ([203.144.81.74])
+        by smtp.gmail.com with ESMTPSA id j9sm6478836pff.6.2019.12.21.11.14.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Dec 2019 11:14:39 -0800 (PST)
+From:   Hans Jerry Illikainen <hji@dyntopia.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/1] gpg-interface: add minTrustLevel as a configuration option
+In-Reply-To: <20191220225746.GF8609@szeder.dev>
+References: <20191216153204.8906-1-hji@dyntopia.com> <20191216153204.8906-2-hji@dyntopia.com> <20191220225746.GF8609@szeder.dev>
+Date:   Sat, 21 Dec 2019 18:59:08 +0000
+Message-ID: <87y2v54i9v.hji@dyntopia.com>
 MIME-Version: 1.0
-References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
- <13e2056e780b00baf86d4020c0974b6b05ce115b.1576861788.git.gitgitgadget@gmail.com>
- <xmqqimma8z3t.fsf@gitster-ct.c.googlers.com> <CABPp-BF5MaO60GAXbqYPfEePKyn_K-B_hQXNvTN_L4S6iA_93w@mail.gmail.com>
-In-Reply-To: <CABPp-BF5MaO60GAXbqYPfEePKyn_K-B_hQXNvTN_L4S6iA_93w@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 21 Dec 2019 10:52:01 -0800
-Message-ID: <CABPp-BHZ4nYaAN237w70cen=P0M3-TsWQz_+BeU_VtYEbRCbAQ@mail.gmail.com>
-Subject: Re: [PATCH 01/15] rebase: extend the options for handling of empty commits
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 20, 2019 at 4:32 PM Elijah Newren <newren@gmail.com> wrote:
+On Fri, Dec 20 2019, SZEDER Gábor wrote:
+> On Mon, Dec 16, 2019 at 03:32:04PM +0000, Hans Jerry Illikainen wrote:
+>> This patch introduces a new configuration option: gpg.minTrustLevel.  It
+>> consolidates trust-level verification to gpg-interface.c and adds a new
+>> `trust_level` member to the signature_check structure.
 >
-> On Fri, Dec 20, 2019 at 1:29 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-
-> > > +static long parse_empty_value(const char *value)
-> > > +{
-> > > +     if (!value)
-> > > +             return EMPTY_UNSPECIFIED;
-> > > +     else if (!strcasecmp(value, "drop"))
-> > > +             return EMPTY_DROP;
-> > > +     else if (!strcasecmp(value, "keep"))
-> > > +             return EMPTY_KEEP;
-> > > +     else if (!strcasecmp(value, "ask"))
-> > > +             return EMPTY_ASK;
-> >
-> > Not an error but just silently ignored?
+> This patch causes several test failures:
 >
-> Oops, I'll switch it to an error.
+>   https://travis-ci.org/git/git/jobs/627909430#L2259
+>
+> I see you've already posted an updated version, so I tried it locally,
+> and the same test scripts fail with the updated version as well.
 
-By the way, diff.c's parse_algorithm_value() and
-diff_opt_diff_algorithm() behave the same way, where
-parse_algorithm_value() will return a negative value if it's not one
-of the valid known cases, and diff_opt_diff_algorithm() checks for
-negative and throws an error.  Should I also modify those to put the
-error in parse_algorithm_value()?  (Not part of this series, but as a
-consistency cleanup since it clearly surprised you and even I forgot
-that I had the calling function returning the error when I copied that
-style?)
+Sorry for that!  I'm preparing a v2 (tested with both gpg1 and gpg2).
+
+> I noticed that only Linux CI jobs failed, while the OSX jobs
+> succeeded.  Our Linux CI jobs (and my box) are based on Ubuntu 16.04,
+> and thus use GnuPG v1.4, while the OSX jobs use v2.something.  Not
+> sure that the version difference is connected to the test failures,
+> but I figured it's worth pointing out.
+
+Your observation about the different GPG versions was spot on; thanks!
+That explains why all tests pass on my machine as well as on a personal
+CI setup for my git contributions (both using gpg2).
+
+The issue was that the search for the end of a trust level to parse
+relied on the TRUST_ line being space-separated.  But that is not always
+the case for gpg1 (only the lowest-two trust levels contain a space
+followed by additional information in gpg1).
+
+-- 
+hji
