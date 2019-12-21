@@ -2,102 +2,114 @@ Return-Path: <SRS0=QBG1=2L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0255DC2D0C3
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFC84C2D0C3
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BCFD7206B7
-	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:06:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91BD4206B7
+	for <git@archiver.kernel.org>; Sat, 21 Dec 2019 22:42:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="AVyPAKhT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDtHT7JR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726466AbfLUWGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 21 Dec 2019 17:06:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:42637 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726024AbfLUWGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 21 Dec 2019 17:06:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1576965973;
-        bh=Val5ALkVbikRrvMUphxfoOpu7cXbAHMd+lughA356DI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=AVyPAKhTL9Vz7RgsR5vlLyW6Kzq4J1PWFicTTjfStiugui7md/Uv7aLjmznFEMvUv
-         WkaXvel0l4VYPlgLy6NzQqHeg/r1paqlPUW7se6hlbVMVJNqZVHvFgVg1gIQYZ4B2r
-         F7p+mUhKYH+E8lVb7or15BhrAW5uy97r5iu+rqeM=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtfNl-1hoLgQ1dHT-00v4qO; Sat, 21
- Dec 2019 23:06:13 +0100
-Date:   Sat, 21 Dec 2019 23:05:54 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, blees@dcon.de, kyle@kyleam.com,
-        sxlijin@gmail.com
-Subject: Re: [PATCH v3 0/3] Directory traversal bugs
-In-Reply-To: <xmqq1rt2ized.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1912212305260.46@tvgsbejvaqbjf.bet>
-References: <pull.676.v2.git.git.1576008027.gitgitgadget@gmail.com> <pull.676.v3.git.git.1576571586.gitgitgadget@gmail.com> <nycvar.QRO.7.76.6.1912171217000.46@tvgsbejvaqbjf.bet> <xmqq1rt2ized.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726131AbfLUWmD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 21 Dec 2019 17:42:03 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33183 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbfLUWmD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 21 Dec 2019 17:42:03 -0500
+Received: by mail-ed1-f68.google.com with SMTP id r21so12069416edq.0
+        for <git@vger.kernel.org>; Sat, 21 Dec 2019 14:42:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=suG/qebKToSVAh96yvZVmiPSXY6JLPt7maVdk746ueA=;
+        b=cDtHT7JRMG1wqnAe/khVOkq01EuBFOSMSvI+llXV+FqCipZekraj3PYJyiVNnv79N7
+         btWf9mynnEDV+VU22mkiaNUmZezrjY55imkyFxFAvgF3WE+ULG+OtT38CKmDno0nBGKC
+         QZ5EjADejrznajHBM2FCbkLAZ9B1a3jET6m32eDHOdYRhdpAR3kCm2IcqBPV4XNxdvSL
+         2t3Yb+TWHEVvyzAQhJ8UoEv0SS7mV19QMi2qX4ayuoyXw9dUqUWqY48cTMZYzki+1AS8
+         lskpk4gGkLCji2Mzy64BSrnX1loefwSl1nyshk56z0cleu9Dxr7WrHVHM+LCtJ3urDdI
+         wHgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=suG/qebKToSVAh96yvZVmiPSXY6JLPt7maVdk746ueA=;
+        b=DPKIeNaYmyergZFz1QYaBbk4Jbs3nGZhZJ4mNv5wf+cVVD9pVZfyTqX3hXWaMoujnq
+         MAdrcE+RpdVIQSX8tFEzh4Nc/hRx5a9kjLWzrqyZa3Qh9vZ2WOTDC8ID0TwhNT3v+9RH
+         86xeR6uU4OY0c0kIkkge+5v3SjAzphkf2UfbgmBSg30De1MOfWlkqdIfFtQwHWmSsELV
+         iVvEtTqJKkqyyih8sMZHm6DKiG3v0bunms43gY+qMOgOOBsHYiHCY4yXGWHmKWHygQoU
+         lyInA3O49Tt04LZxYwSzGwoRWjTIWjm+cOpkjQp2181TauanCi36rZseyxv9eEjxbyc5
+         iFrA==
+X-Gm-Message-State: APjAAAWrgxi51QIgDytV4waJw27EubrL6qTzYNGY+WGEbcumtyLVnw3H
+        199sG9VziLRNfXRsXQ7XAVP47sVl
+X-Google-Smtp-Source: APXvYqymbiqakc97DMeqjhlvWOp/bxj6yZE7FPptRj6r9Sw3OJdC3mVp3kW3tBRZuwj+5GoBIkvJow==
+X-Received: by 2002:a50:d905:: with SMTP id t5mr24409571edj.67.1576968121490;
+        Sat, 21 Dec 2019 14:42:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d7sm1517136edv.90.2019.12.21.14.42.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 21 Dec 2019 14:42:01 -0800 (PST)
+Message-Id: <pull.175.git.1576968120.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 21 Dec 2019 22:41:51 +0000
+Subject: [PATCH 0/9] built-in add -p: add support for the same config settings as the Perl
+ version
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:EDTv9utE2gxRe2ogWxq63ojpbpyLWiF4mGDjmSCVNwVjpHYSwdR
- LJmh0X0RYxoWYcwFVIR10byP12dTvMky1+BDbf5EYesZFmJxKAwuSoqpsTLCkgf0gBtS9dr
- aRAUVoOqdRs2A5PpuzvNTHy7mHBcSU7Pss7mKFR0HqOlU9bh1tm74Rib42TkkgwA0ikB4zP
- +J6MGiwtv0jq+tvVsduWA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:p5K4ESAaJa0=:4JQcIxu/k5exLAwcMCHC9W
- LjTptw5UdckWqgasm0+LDjUi62Ca/TigSmzunnpH6+rgWtzayBqwzMfodANxwKaJ5VRbZEF3A
- w0D5upV11B1Rsvsg+oq2d1BfCmjpSb0IpoA2l9Gg8DuBhyoSpNh5o7gXA3NE1dMug3JM6cni+
- UH5hDy4k3t3VuNfo+x6dqrk5fFGHJPSVEYGnIMZ8G+Qb3xemQylaPw/ssw9xNnVdEfLavf9yv
- F1LaHllZF+dfYcRIoFk6ZBexRq9Y1tggT+wuZrAmSlAh+QD1TmAuHKPGTFUKwRfIYDlk8O897
- BQPqd5r7ye0YYwEe+d6lnlxwsp1JcfijvpL/H7CPWNuynGrxM8ROEeEqrc2pmTXkSa+jMP/gK
- EmoJB32NtgOaeKnHM/XSdWjrh+s4BmJg7/RBwZUh51M3NblS9XW25awLrbnFkOrZR7z4IdNW4
- Cq2Y7yOoZMrsTFCVC9iyI9zuxY++4o/OxAA8VZ+t683LFb5VnkLkEJIIPo+At0VZIQi6+pm8k
- l/K5Btmvkre8Zc2XhIBk6eEaVzTm8RZaidjxQBMzGpTkQV+SVkGRPwmaviPvLwuYgCnTNTl/U
- 5ZmYoJ9o1t3E+I5U7BdJqYn2eN2bp6VXaLrPdjCvUjizSVSiCDXvoWrMRlJUjD8f3pC2upO45
- /bpCiFKXFNgJKmOuKqHp1oEOeoCTE/5NoIzH11D47Nud2HOZpPocISO0w5S4J0b0D2/VZRw69
- ncrMkzpKOweq0SDhMw7O8a4sjvIrHq22faVPkk/jc7gfMi64ybGgQc2F6KJjvSt4C3s5paWl+
- 7U+ygGCviawpQ2/vfYrmBCH+DvfRUVN6wiFAweCnEXeb3QH4auZGllXcG0goq848H/s8MZzG+
- 2wHNXWLeFtxb/bY+UAlpFTllYVorDl8M+Z3CriDPMp0Z78tFO0BLbp9sdGg8uECZ5TwcdECyG
- 6UziBm0Q6WBeltzfYABhBXfR14kOWQsEIEODSDz1UUL/m75GNuwBT2EdIOHdBE1znYtcopeZA
- pq+hTqCPw043C7JL23zDWgInx6wRf3o/6DvIOzmB3ibvktdDNuk4aduKSb5eNdOnuQ9rSEbom
- ADzoxLHv9RXMN+tUCDSh1pFq15bJGmR+d+EkEQtylvq7PtrHJ73mjZ6Cs1idCEEfQzL/6AoCF
- hyAKICbSaboQUSQa0rcPY22JySheptfQBGqRKLxpsYmmWIqqO5SeIPv7YGci9GUtwCbLpPLFh
- lamJdrB72J1HbsEGkfcWoli49axmfwrAitPWbTIXil9x2u1AF+XG36TBmMfo=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+This is the final leg of the journey to a fully built-in git add: the git
+add -i and git add -p modes were re-implemented in C, but they lacked
+support for a couple of config settings.
 
-On Tue, 17 Dec 2019, Junio C Hamano wrote:
+The one that sticks out most is the interactive.singleKey setting: it was
+particularly hard to get to work, especially on Windows.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > As I said elsewhere, if Git for Windows' FSCache hack is the only thin=
-g
-> > that is broken by this patch series, in light of the bugs that it _doe=
-s_
-> > fix I would rather adjust the FSCache patches to accommodate v2.
->
-> With "FSCache hack", do you refer to the "d_name is a pointer to
-> elsewhere" thing?
+It also seems to be the setting that is incomplete already in the Perl
+version of the interactive add command: while the name of the config setting
+suggests that it applies to all of the interactive add, including the main
+loop of git add --interactive and to the file selections in that command, it
+does not. Only the git add --patch mode respects that setting.
 
-Yes.
+As it is outside the purpose of the conversion of git-add--interactive.perl 
+to C, we will leave that loose end for some future date.
 
-> If so, I too very much appreciate the direction you are suggesting.
-> Seeing that these three patches essentially are the same as three (1/8,
-> 3/8 and 4/8) from the v2, I'd keep all the 8 patches from v2 in my tree
-> for now.
->
-> Thanks, both.
+Johannes Schindelin (9):
+  built-in add -p: support interactive.diffFilter
+  built-in add -p: handle diff.algorithm
+  terminal: make the code of disable_echo() reusable
+  terminal: accommodate Git for Windows' default terminal
+  terminal: add a new function to read a single keystroke
+  built-in add -p: respect the `interactive.singlekey` config setting
+  built-in add -p: handle Escape sequences in interactive.singlekey mode
+  built-in add -p: handle Escape sequences more efficiently
+  ci: include the built-in `git add -i` in the `linux-gcc` job
 
-Thank you,
-Dscho
+ add-interactive.c         |  19 +++
+ add-interactive.h         |   4 +
+ add-patch.c               |  57 ++++++++-
+ ci/run-build-and-tests.sh |   1 +
+ compat/terminal.c         | 249 +++++++++++++++++++++++++++++++++++++-
+ compat/terminal.h         |   3 +
+ 6 files changed, 325 insertions(+), 8 deletions(-)
+
+
+base-commit: 2d4b85ddc76af3e703e6e3a6a72319b5e79c2d8b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-175%2Fdscho%2Fadd-p-in-c-config-settings-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-175/dscho/add-p-in-c-config-settings-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/175
+-- 
+gitgitgadget
