@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6466C2D0D2
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AACAC2D0D8
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7F2E920643
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 680AD20643
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHI6F5wq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iKI5BnLx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbfLWSuF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 13:50:05 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45715 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbfLWSuF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Dec 2019 13:50:05 -0500
-Received: by mail-ed1-f66.google.com with SMTP id v28so16083312edw.12
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 10:50:04 -0800 (PST)
+        id S1726944AbfLWSuP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Dec 2019 13:50:15 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38123 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726832AbfLWSuN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 13:50:13 -0500
+Received: by mail-ed1-f65.google.com with SMTP id i16so16119262edr.5
+        for <git@vger.kernel.org>; Mon, 23 Dec 2019 10:50:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=FGi8Re5Xsr69EALhyOtGMpdb7t1ii+72BJ5qReN/2e0=;
-        b=LHI6F5wqgsyQjaZZdRpAg+2hHQ1BdZky91zW5TKqzEaSwf2VERSM8yT5zOHFNl0ZE+
-         7p76jGPjDJ+rVzv4o1GkzJXTVG+dXS4Vndj65b49J4IXaaBIX5lrrjU6jGqPLY1NRBlF
-         PcSw4WhKfDqYR4fzgtljspx6FpqVl54dV8jEz+Tu5GpweVaX/eziJhwVDQioBw4VGLVT
-         +N26930MvfS2lb1/ZB4GGfR+c+6GWb/NsI9oHwOa+nPQTAo88Jj/6f2wftVf5ldoC5jU
-         KEHg2jMhjsO3i/3YOXxyEtH3236wMYdNVChO50S8538VoUljT83XrUg7QfHVZAhd8avD
-         WplQ==
+        bh=qk1xF7AiYAKNTqc/J1ZzwcIahg5CzNWuSjSJP3bYwHs=;
+        b=iKI5BnLx4gyc968EPNH0eoCvh+Q9a4luae4XbhQBipIzINeLYDtepvmyxctedKwrk3
+         hm2IRONO+Y6RVVNhdQSbbB4UJzdHZtR/FmcIglVH97kB5pfjlnRi/8kIU6T4Rv8r8m/j
+         useQt8cfr90XYGtjRH/hQ6bZIQfJlyKWEAraU6xLxVg06BcGsQkZogcYRtCuW3Qq+jBd
+         CrlMJ9Bf5YiYznBnk+PM0SIe7mUtToJ51IiFUaTSRMeBX+dQmrbEceYQkGZhKX0Ieswt
+         66MeIn9MGVDSOJ4c2F3k+zRgVVUB0YaU/ODOdZpqLozs7QOBRV0PhjVBXpuv3ksrGRuB
+         D+Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=FGi8Re5Xsr69EALhyOtGMpdb7t1ii+72BJ5qReN/2e0=;
-        b=ZLyqVS+oTfLMs4IxMOkS6j0mBFhF4f++oQw9eS4tHJHayKwfJl1gTNE52ZO8tGcIyi
-         YlQKipWa7SzLjL9oweHXXGqp9+URruRzG019EOZEA2ffXhaFemeKAYmt5rgs+tkESskr
-         eOlE8MdVSOjtkqH3WRrimagaUS6DbN+4UK1kpIdrcNlhaZYMCAZycuCFeZyLpUp+Tjae
-         ZRRyaMql/y1PGazCvQLPOt7tlKSUor5246luoEY2ByHxZukqAmifk6swcFezP5ObPhel
-         DbBSH91W4c+IuDYBRMeY5kvp1hxaExqOXBAQz1J8uG2K7ARxT/FDl9vYwHvWDY22SjGK
-         Ib1g==
-X-Gm-Message-State: APjAAAUf7KoGx4KzA6cRqhICXkfke8jyzLMZkVbNV/WAG4QEDAgtMVbF
-        1m3AeUqkrd79k/NLZcuaiskiCMIQ
-X-Google-Smtp-Source: APXvYqwr2vzmnGDiUXKdrMSzk0W1Xj4IdBKInLX/4OiiKcARLkbW3rKFTlC8bxWucwiHm4U1I6ByuA==
-X-Received: by 2002:a50:a2c7:: with SMTP id 65mr34127168edm.144.1577127003475;
-        Mon, 23 Dec 2019 10:50:03 -0800 (PST)
+        bh=qk1xF7AiYAKNTqc/J1ZzwcIahg5CzNWuSjSJP3bYwHs=;
+        b=OEJOcgklEwKxIWgKELQ8a1N8/df6KOgRFCDishJ6Pg3Sp/p4lN7/AN19KtcoA24IIe
+         WLqgTNeAxfdvS2AO7pUNfOpQutHg2tSVEZNTLl5JPlzkmRuv4G0/tciWJg4uAXNh+LoP
+         IU63B1mlk4IDHBKFGS8q1hW51xC9R3mIaFdbsx0kNShTM+w4mbYG1xflUAZ+QCn/pkdP
+         IeSVniaS1zT8Q69PFdGrvfq61Zlh7lIkTGYG819ZEPzVXyJ/v8MhqZO68lEb0gXYl96p
+         2sYPxMQOImM/9V0VNe9MirIATj9EPR92nriv57dPLm/TZEbPqJD1S8iC91zUYhVitiB/
+         rP7g==
+X-Gm-Message-State: APjAAAVVAEJDkd1FYctArbowGtK8kxADqq0UrCRCRtd4hQ/VSsKRCnYC
+        qQWXea0CfDi8Bt732MX25K8WWkzb
+X-Google-Smtp-Source: APXvYqypSmELYH8uJQrT5EzzqWh/bNniHQUkxxy0eGIfVD9CSTMWXPwX7utq/GsWl3ra7lPo3Yctvg==
+X-Received: by 2002:a17:906:71a:: with SMTP id y26mr34080822ejb.48.1577127011238;
+        Mon, 23 Dec 2019 10:50:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q3sm2392071eju.88.2019.12.23.10.50.02
+        by smtp.gmail.com with ESMTPSA id l26sm2365825ejr.23.2019.12.23.10.50.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Dec 2019 10:50:03 -0800 (PST)
-Message-Id: <49388b79fddc339f3a5df747406621ec5ad28789.1577127000.git.gitgitgadget@gmail.com>
+        Mon, 23 Dec 2019 10:50:10 -0800 (PST)
+Message-Id: <ec782e711c56673a70ed735980a3e4b74c45a61c.1577127000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
 References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
         <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Dec 2019 18:49:47 +0000
-Subject: [PATCH v2 03/15] rebase, sequencer: remove the broken GIT_QUIET
- handling
+Date:   Mon, 23 Dec 2019 18:49:58 +0000
+Subject: [PATCH v2 14/15] rebase: make the backend configurable via config
+ setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,71 +79,101 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-The GIT_QUIET environment variable was used to signal the non-am
-backends that the rebase should perform quietly.  The preserve-merges
-backend does not make use of the quiet flag anywhere (other than to
-write out its state whenever it writes state), and this mechanism was
-broken in the conversion from shell to C.  Since this environment
-variable was specifically designed for scripts and the only backend that
-would still use it is no longer a script, just gut this code.
-
-A subsequent commit will fix --quiet for the interactive/merge backend
-in a different way.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c | 6 ++----
- sequencer.c      | 6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ Documentation/config/rebase.txt |  8 ++++++++
+ builtin/rebase.c                | 31 ++++++++++++++++++++++++-------
+ 2 files changed, 32 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+index d98e32d812..e6ae30c999 100644
+--- a/Documentation/config/rebase.txt
++++ b/Documentation/config/rebase.txt
+@@ -5,6 +5,14 @@ rebase.useBuiltin::
+ 	is always used. Setting this will emit a warning, to alert any
+ 	remaining users that setting this now does nothing.
+ 
++rebase.backend::
++	Default backend to use for rebasing.  Possible choices are
++	'am' or 'merge' (note that the merge backend is sometimes also
++	refered to as the interactive backend or the interactive
++	machinery elsewhere in the docs).  Also, in the future, if the
++	merge backend gains all remaining capabilities of the am
++	backend, this setting may become unused.
++
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 6903249307..32026a62e8 100644
+index b7915fc0cb..d602b2da4c 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -718,8 +718,8 @@ static int rebase_write_basic_state(struct rebase_options *opts)
- 		   opts->onto ? oid_to_hex(&opts->onto->object.oid) : "");
- 	write_file(state_dir_path("orig-head", opts), "%s",
- 		   oid_to_hex(&opts->orig_head));
--	write_file(state_dir_path("quiet", opts), "%s",
--		   opts->flags & REBASE_NO_QUIET ? "" : "t");
-+	if (!(opts->flags & REBASE_NO_QUIET))
-+		write_file(state_dir_path("quiet", opts), "%s", "");
- 	if (opts->flags & REBASE_VERBOSE)
- 		write_file(state_dir_path("verbose", opts), "%s", "");
- 	if (opts->strategy)
-@@ -1178,8 +1178,6 @@ static int run_specific_rebase(struct rebase_options *opts, enum action action)
- 	add_var(&script_snippet, "revisions", opts->revisions);
- 	add_var(&script_snippet, "restrict_revision", opts->restrict_revision ?
- 		oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
--	add_var(&script_snippet, "GIT_QUIET",
--		opts->flags & REBASE_NO_QUIET ? "" : "t");
- 	sq_quote_argv_pretty(&buf, opts->git_am_opts.argv);
- 	add_var(&script_snippet, "git_am_opt", buf.buf);
- 	strbuf_release(&buf);
-diff --git a/sequencer.c b/sequencer.c
-index d2c11f34b7..71062212a5 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2688,8 +2688,6 @@ static void write_strategy_opts(struct replay_opts *opts)
- int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		      struct commit *onto, const char *orig_head)
- {
--	const char *quiet = getenv("GIT_QUIET");
--
- 	if (head_name)
- 		write_file(rebase_path_head_name(), "%s\n", head_name);
- 	if (onto)
-@@ -2698,8 +2696,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 	if (orig_head)
- 		write_file(rebase_path_orig_head(), "%s\n", orig_head);
+@@ -60,6 +60,7 @@ enum empty_type {
+ struct rebase_options {
+ 	enum rebase_type type;
+ 	enum empty_type empty;
++	const char *default_backend;
+ 	const char *state_dir;
+ 	struct commit *upstream;
+ 	const char *upstream_name;
+@@ -103,6 +104,7 @@ struct rebase_options {
+ #define REBASE_OPTIONS_INIT {			  	\
+ 		.type = REBASE_UNSPECIFIED,	  	\
+ 		.empty = EMPTY_UNSPECIFIED,	  	\
++		.default_backend = "am",	  	\
+ 		.flags = REBASE_NO_QUIET, 		\
+ 		.git_am_opts = ARGV_ARRAY_INIT,		\
+ 		.git_format_patch_opt = STRBUF_INIT	\
+@@ -1298,6 +1300,10 @@ static int rebase_config(const char *var, const char *value, void *data)
+ 		return 0;
+ 	}
  
--	if (quiet)
--		write_file(rebase_path_quiet(), "%s\n", quiet);
-+	if (opts->quiet)
-+		write_file(rebase_path_quiet(), "%s", "");
- 	if (opts->verbose)
- 		write_file(rebase_path_verbose(), "%s", "");
- 	if (opts->strategy)
++	if (!strcmp(var, "rebase.backend")) {
++		return git_config_string(&opts->default_backend, var, value);
++	}
++
+ 	return git_default_config(var, value, data);
+ }
+ 
+@@ -1928,9 +1934,23 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			if (strcmp(options.git_am_opts.argv[i], "-q"))
+ 				break;
+ 
+-		if (is_interactive(&options) && i >= 0)
+-			die(_("cannot combine am options with either "
+-			      "interactive or merge options"));
++		if (i >= 0) {
++			if (is_interactive(&options))
++				die(_("cannot combine am options with either "
++				      "interactive or merge options"));
++			else
++				options.type = REBASE_AM;
++		}
++	}
++
++	if (options.type == REBASE_UNSPECIFIED) {
++		if (!strcmp(options.default_backend, "merge"))
++			options.type = REBASE_MERGE;
++		else if (!strcmp(options.default_backend, "am"))
++			options.type = REBASE_AM;
++		else
++			die(_("Unknown rebase backend: %s"),
++			    options.default_backend);
+ 	}
+ 
+ 	switch (options.type) {
+@@ -1943,10 +1963,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.state_dir = apply_dir();
+ 		break;
+ 	default:
+-		/* the default rebase backend is `--am` */
+-		options.type = REBASE_AM;
+-		options.state_dir = apply_dir();
+-		break;
++		BUG("options.type was just set above; should be unreachable.");
+ 	}
+ 
+ 	if (options.empty == EMPTY_UNSPECIFIED) {
 -- 
 gitgitgadget
 
