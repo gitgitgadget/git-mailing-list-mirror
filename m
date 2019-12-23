@@ -2,75 +2,110 @@ Return-Path: <SRS0=vT7Y=2N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B57FEC2D0C0
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3298AC2D0C0
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 91D0420643
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:42:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E61CA20643
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:05 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIUIZjl9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726805AbfLWShe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 13:37:34 -0500
-Received: from ikke.info ([178.21.113.177]:56248 "EHLO vps892.directvps.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726756AbfLWShe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Dec 2019 13:37:34 -0500
-X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Dec 2019 13:37:33 EST
-Received: by vps892.directvps.nl (Postfix, from userid 1008)
-        id 5C9204400C6; Mon, 23 Dec 2019 19:29:39 +0100 (CET)
-Date:   Mon, 23 Dec 2019 19:29:39 +0100
-From:   Kevin Daudt <kdaudt@alpinelinux.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Arnaud Bertrand <xda@abalgo.com>, git@vger.kernel.org
-Subject: Re: Mismatch meaning between git-diff and git-log for the .. (double
- dot notation) and ... (triple dot notation)
-Message-ID: <20191223182939.GB676947@alpha>
-Mail-Followup-To: Kevin Daudt <kdaudt@alpinelinux.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Arnaud Bertrand <xda@abalgo.com>, git@vger.kernel.org
-References: <CAEW0o+gYqWT5u-Tf8aDoMgXaf36Mb-XOApLNs4D+GMVLvsOjxg@mail.gmail.com>
- <xmqqy2v26hu0.fsf@gitster-ct.c.googlers.com>
+        id S1726829AbfLWSuE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Dec 2019 13:50:04 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:32917 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726787AbfLWSuE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 13:50:04 -0500
+Received: by mail-ed1-f42.google.com with SMTP id r21so16130331edq.0
+        for <git@vger.kernel.org>; Mon, 23 Dec 2019 10:50:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3muzs1s8jPipA1T8GQk7Xh/VUjMuS5qZYkTINqYuvjk=;
+        b=bIUIZjl9N9mUTNHE+pDW/g+LNisdpKRsWKS+TGoNtpIUR/DWiVDxd9GENSxpgFW1Gf
+         VtTMdO1TYfax/JomWBXR625Xvw9jY3kFm9U+hSQ/4lYcKOxvBKllqaMjiVWbgrOBptAf
+         o5BmSxUaMTVcbHYXJJP7pdzS3dZ61oY/iWy0WhkICH0kgB4WkkIoYIDmgGXmk8rT8Wg8
+         IqfNhKTNQPdSj5jrwjg0LNVTeEXZUSHe4kYe3X+fJfha+faJxQLcTZBNYP7om8ZZClVw
+         UbU7VMPSrV1IjYYlTeg+duVhJt5p0zFL9YTITvtPIx61+yw/xiraekAPwbZqDnFzrdXa
+         BePQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=3muzs1s8jPipA1T8GQk7Xh/VUjMuS5qZYkTINqYuvjk=;
+        b=HUDItbvYsMfMlSBd9MP2/EH+NP8pfydOkht4tFEbC9MQVLk6n+H8dV5IedlLlYq02X
+         K8gP1fEDIx2OYCby36p9Am6vLEMIJ82BTgTZdjshkoHua+QswulpouK4RIrIcDzyICoo
+         0G6tFdp6GVq7mQOoPB36piIrwJL9wd4wdiSE6VIM2wJ7FbZ/hfPzMI310F+4SVO3irnz
+         ludEAVQ7FG48hszQfIJGCHZIs6EQE4USA2ceKyZkSWBtEXLzUJgLOYVViqK9t00KzGV/
+         s9hh8zmeph2g1mDDFia6VyBS36UGt3RjXBr6VjhvqQAbidTytFLljAv1vC61AZ9//ccO
+         +A0Q==
+X-Gm-Message-State: APjAAAWjJ9apna74EMhgsMFbY6KD6/dh025STNvxi2vbZx1tL6fMe5cR
+        s9uiwOzpglMjZ1nhGF0iSYLe8Eue
+X-Google-Smtp-Source: APXvYqxmUh4a1h/IhEvoyf4zZxIez/p4hVZPCPeKw/KAqOvv4A57QdPpI0IGVdI48MBinBQ5SBy8gQ==
+X-Received: by 2002:a50:fb96:: with SMTP id e22mr34411843edq.18.1577127002734;
+        Mon, 23 Dec 2019 10:50:02 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id y4sm2375773ejp.50.2019.12.23.10.50.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Dec 2019 10:50:02 -0800 (PST)
+Message-Id: <bd3c5ec155325d78f89afcbe910810cc18c0aaeb.1577127000.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
+References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
+        <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 23 Dec 2019 18:49:46 +0000
+Subject: [PATCH v2 02/15] t3406: simplify an already simple test
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqy2v26hu0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.12.2 (2019-09-21)
+To:     git@vger.kernel.org
+Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
+        alban.gruin@gmail.com, szeder.dev@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 23, 2019 at 10:02:31AM -0800, Junio C Hamano wrote:
-> Please unlearn dot-dot and three-dots when using "git diff", which
-> is not about ranges but about comparing two endpoints.  If we were
-> reinventing Git today from scratch, we would make "git diff A..B" an
-> error.  You can consider it a bug that the command accepts a range
-> notation, but this will not change any time soon without a large
-> fight to find and fix uses of the syntax in scripts by longtime Git
-> users have written over the years.
-> 
-> Allowing dot-dot on the command line of "git diff", instead of
-> diagnosing them as errors and dying, was a stupid mistake we (well,
-> mostly Linus, but I am willing to take the blame too) made due to
-> laziness when we reused the machinery, which we invented to parse
-> the command line of "log" family of commands to specify ranges, to
-> parse the command line of "diff", which accidentally ended up
-> allowing the syntax for ranges where it shouldn't be allowed.
-> 
-> And worse yet, since there was only dot-dot and three-dots came much
-> later, "git diff A..B" ended up comparing the endpoints A and B,
-> because there didn't even A...B notation exist.
-> 
-> This is not limited to you but any user of modern Git is better off
-> to pretend "git diff A..B" does not exist; please unlearn dot-dot
-> and three-dots when using "git diff" and you'd be happier.
+From: Elijah Newren <newren@gmail.com>
 
-I agreen that you should not use `A..B`, but what is wrong with
-`A...B`? The alternative is a lot more verbose.
+When the merge backend was re-implemented on top of the interactive
+backend, the output of rebase --merge changed a little.  This change
+allowed this test to be simplified, though it wasn't noticed until now.
+Simplify the testcase a little.
 
-git diff $(git merge-base A B) B
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t3406-rebase-message.sh | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-Kevin
+diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+index b393e1e9fe..0c2c569f95 100755
+--- a/t/t3406-rebase-message.sh
++++ b/t/t3406-rebase-message.sh
+@@ -18,11 +18,8 @@ test_expect_success 'setup' '
+ '
+ 
+ test_expect_success 'rebase -m' '
+-	git rebase -m master >report &&
+-	>expect &&
+-	sed -n -e "/^Already applied: /p" \
+-		-e "/^Committed: /p" report >actual &&
+-	test_cmp expect actual
++	git rebase -m master >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'rebase against master twice' '
+-- 
+gitgitgadget
+
