@@ -6,107 +6,80 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F558C2D0C0
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 13:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C56EC2D0C0
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 14:50:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE86D20709
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 13:22:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0F95A206B7
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 14:50:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726791AbfLWNWA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 08:22:00 -0500
-Received: from gateway23.websitewelcome.com ([192.185.49.124]:49252 "EHLO
-        gateway23.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726680AbfLWNWA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 23 Dec 2019 08:22:00 -0500
-X-Greylist: delayed 1261 seconds by postgrey-1.27 at vger.kernel.org; Mon, 23 Dec 2019 08:22:00 EST
-Received: from cm11.websitewelcome.com (cm11.websitewelcome.com [100.42.49.5])
-        by gateway23.websitewelcome.com (Postfix) with ESMTP id 5171BB1C4
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 07:00:58 -0600 (CST)
-Received: from gator4087.hostgator.com ([192.185.4.99])
-        by cmsmtp with SMTP
-        id jNKUixpWNiJ43jNKUiKf5u; Mon, 23 Dec 2019 07:00:58 -0600
-X-Authority-Reason: nr=8
-Received: from mail-qt1-f171.google.com ([209.85.160.171]:38544)
-        by gator4087.hostgator.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92)
-        (envelope-from <xda@abalgo.com>)
-        id 1ijNKU-001NgU-2s
-        for git@vger.kernel.org; Mon, 23 Dec 2019 07:00:58 -0600
-Received: by mail-qt1-f171.google.com with SMTP id n15so15332043qtp.5
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 05:00:58 -0800 (PST)
-X-Gm-Message-State: APjAAAWM3jRNlJY3QopZ6OhBJkQUtocScA0rH6ALTIKnpP3CVbxmHkTV
-        fSMqn6Uydw/BgwjwktmNywB4PYuEuhrdty2wuNU=
-X-Google-Smtp-Source: APXvYqwOCpGcUyuTW/FZp5cStjFYTJHDuJ2T4bYGNhgZIfmP4RFQ8DYgSxJQdFKXlyfzTPaVo+a+ulQTKOd0s2T6dK0=
-X-Received: by 2002:ac8:4708:: with SMTP id f8mr22850041qtp.129.1577106057648;
- Mon, 23 Dec 2019 05:00:57 -0800 (PST)
+        id S1726907AbfLWOuq convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 23 Dec 2019 09:50:46 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:33593 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726866AbfLWOuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 09:50:46 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id xBNEofGV011297
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 23 Dec 2019 09:50:41 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Hans Jerry Illikainen'" <hji@dyntopia.com>,
+        "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <20191216153204.8906-1-hji@dyntopia.com> <20191216153204.8906-2-hji@dyntopia.com> <20191220225746.GF8609@szeder.dev> <87y2v54i9v.hji@dyntopia.com>
+In-Reply-To: <87y2v54i9v.hji@dyntopia.com>
+Subject: RE: [PATCH 1/1] gpg-interface: add minTrustLevel as a configuration option
+Date:   Mon, 23 Dec 2019 09:50:34 -0500
+Message-ID: <011401d5b9a0$58604df0$0920e9d0$@nexbridge.com>
 MIME-Version: 1.0
-From:   Arnaud Bertrand <xda@abalgo.com>
-Date:   Mon, 23 Dec 2019 14:00:46 +0100
-X-Gmail-Original-Message-ID: <CAEW0o+gwbNyDqmiouFzO16LsRUfcAnSwj9K77oGe5hi=EVMB=w@mail.gmail.com>
-Message-ID: <CAEW0o+gwbNyDqmiouFzO16LsRUfcAnSwj9K77oGe5hi=EVMB=w@mail.gmail.com>
-Subject: Possible improvement in DB structure
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4087.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - abalgo.com
-X-BWhitelist: no
-X-Source-IP: 209.85.160.171
-X-Source-L: No
-X-Exim-ID: 1ijNKU-001NgU-2s
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: mail-qt1-f171.google.com [209.85.160.171]:38544
-X-Source-Auth: abalgo
-X-Email-Count: 1
-X-Source-Cap: YWJhbGdvO2FiYWxnbztnYXRvcjQwODcuaG9zdGdhdG9yLmNvbQ==
-X-Local-Domain: yes
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQH/oBb3ftzF/OFyCWbLkK6Mvt6t6gKRyqzRAmGGTpICW2zph6c5igZw
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On December 21, 2019 1:59 PM, Hans Jerry Illikainen wrote:
+> On Fri, Dec 20 2019, SZEDER Gábor wrote:
+> > On Mon, Dec 16, 2019 at 03:32:04PM +0000, Hans Jerry Illikainen wrote:
+> >> This patch introduces a new configuration option: gpg.minTrustLevel.
+> >> It consolidates trust-level verification to gpg-interface.c and adds
+> >> a new `trust_level` member to the signature_check structure.
+> >
+> > This patch causes several test failures:
+> >
+> >   https://travis-ci.org/git/git/jobs/627909430#L2259
+> >
+> > I see you've already posted an updated version, so I tried it locally,
+> > and the same test scripts fail with the updated version as well.
+> 
+> Sorry for that!  I'm preparing a v2 (tested with both gpg1 and gpg2).
+> 
+> > I noticed that only Linux CI jobs failed, while the OSX jobs
+> > succeeded.  Our Linux CI jobs (and my box) are based on Ubuntu 16.04,
+> > and thus use GnuPG v1.4, while the OSX jobs use v2.something.  Not
+> > sure that the version difference is connected to the test failures,
+> > but I figured it's worth pointing out.
+> 
+> Your observation about the different GPG versions was spot on; thanks!
+> That explains why all tests pass on my machine as well as on a personal CI
+> setup for my git contributions (both using gpg2).
+> 
+> The issue was that the search for the end of a trust level to parse relied on
+> the TRUST_ line being space-separated.  But that is not always the case for
+> gpg1 (only the lowest-two trust levels contain a space followed by additional
+> information in gpg1).
 
-According to my understanding, git has only 3 kinds of objects:
-(excluding the packed version)
-- the blobs
-- the trees
-- the commits
+Side question: are there any tests running with alternate GPG packages? I have a platform where the official GPG itself is not available, so am looking for alternatives for that community.
 
-Today to parse all objects of the same type, it is necessary to parse
-all the objects and test them one by one.
+Cheers,
+Randall
 
-It should be so simple to organize objects in
-.git/objects/blobs
-.git/objects/trees
-.git/object/commits
 
-May be due to my limited knowledge of git, I don't see any advantage
-to put everything together.
-By splitting the objects directory, the gain in performance could be
-important, the scripts simplified, the representation more clear.
-
-To be backward compatible, we can imagine a get-object() function that parses
-.git/objects/blobs
-.git/objects/trees
-.git/object/commits
-and, when not found
-.git/objects
-
-A get-tree() function that first parses
-git/objects/trees
-and when not found
-.git/objects
-
-idem for getblob() and getcommit()
-
-Is there a reason that I don't understand behind the decision to put
-everything together ?
-
-Best regards,
-
-Arnaud Bertrand
