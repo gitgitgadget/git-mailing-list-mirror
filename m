@@ -2,117 +2,88 @@ Return-Path: <SRS0=vT7Y=2N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BA44C2D0C0
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 17:17:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 99C37C2D0C0
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:02:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6F21920663
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 17:17:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5A99620643
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:02:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fxy46GMu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J13E9J2r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726871AbfLWRRd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 12:17:33 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:36458 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbfLWRRd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Dec 2019 12:17:33 -0500
-Received: by mail-oi1-f194.google.com with SMTP id c16so6951071oic.3
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 09:17:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7dFRbo7v3SNpyxbcZhe/751yNexof1g57jMsh5vui7s=;
-        b=Fxy46GMuZE987exUDVTO/EDhHpNwjjvzNHLIiI2IsimaHpR8nocNg0xonQdgZX/I4J
-         3ZHBkHcZyC3oMvcpveYco67eNFn+Dzwh18X27wJTat2m5QpqYm5xqaFRIvAJX2FYTDOJ
-         v/vzjgAJZNtqxHIVS1IDY7t5L03dQgjUj8ANWbowyKj/U/sGmPMnuhJuy7BmBzI0nRjk
-         7wiY08vluexGu0pX1oaqa7CvWfFkKaEwaG8rjyA4BoxOh9B8KDy8eDj4ROTMOAzDr2Gw
-         F2s3FPg0bd3WQQ/mWla0ChwXa0VV/BTwSM/D6lXQPmm01QTgi9avWjUFeJw0VOeGWwKw
-         S9fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7dFRbo7v3SNpyxbcZhe/751yNexof1g57jMsh5vui7s=;
-        b=KM9ZlPvYSsxkhyGAUEhYC07izDH0iPToiICKIWuCDn7Y+TF11rlSuanoC77Be1839m
-         KWZdjnAqY/uOX6wABkBr74NglmDJrdLhnjjclomN1RaWPNaCEaB9hfwcsFN7J+TOPgCB
-         1EiYrDmsF5iHTDP5rlvg5NtZ2g1Ziz/20T76i1mUGiw+E34HPyPAjcIYw8X+lL3XoqM9
-         PZi+kC1CJbICo9iUcAqQ0Y5709ECC/T/XB2PUJqRGn5QHksyMOY0Dac+fxHL7Uliazbj
-         BAxLMuH68s/fEx6g4eVz/xG0tQjgBIriXrqwZ9LC0pQydJ59q8gR7lYQ+r0upasNm3e5
-         sSWg==
-X-Gm-Message-State: APjAAAWO4Yih39c1jYey14zCxLg9xhKpmZZWk2O18hFCkVtX52CV6COa
-        ItcT7Km2VjZ1MmYKMwmaN+lgZ+xLn2WyIhL+Dh8=
-X-Google-Smtp-Source: APXvYqwFkSmazga1tljVaW1kQ1guBLBLEV1Ojkzw13JCa8oWl0udrH/ddncO7NDHzGGD4oZh40t0ePETrMsVuF/FcgQ=
-X-Received: by 2002:aca:ba88:: with SMTP id k130mr23705oif.167.1577121452065;
- Mon, 23 Dec 2019 09:17:32 -0800 (PST)
+        id S1726948AbfLWSCf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Dec 2019 13:02:35 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54915 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726766AbfLWSCf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 13:02:35 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 26922295A8;
+        Mon, 23 Dec 2019 13:02:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HZaChtUFVHPcCngCsMszYcPAgeI=; b=J13E9J
+        2ryiByrh90f2y4BSRk18KpuQw6zN1i9BageEbsYH1YCesu5ATZL2BX4f3geg0vGJ
+        e4KzDRh3LxWFDIw+NutbDgsXd0etfC5pqxAHqZUA4P1Z1mPOnEGQUlS9hBEQNTxv
+        Dv6SVUQodwFzvBWsCogjlKN/vcWgYgWnq7Go4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=pICmuQuipMVGQuLY1B85g5WbIMwdr49e
+        fKIHZaAEUSmxMXHM4GZM0MZwoieTLa07x8wHznaD91T3iNjKCCSm8gNFtIS3trH0
+        nmNk+cek+nhypsQfsNxvRexv5++xKdtke7uECXFas83leLJO3sdtUiVMIuTMoPNT
+        qdjkRN7UNu8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D059295A5;
+        Mon, 23 Dec 2019 13:02:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 76E5E295A3;
+        Mon, 23 Dec 2019 13:02:32 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Arnaud Bertrand <xda@abalgo.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Mismatch meaning between git-diff and git-log for the .. (double dot notation) and ... (triple dot notation)
+References: <CAEW0o+gYqWT5u-Tf8aDoMgXaf36Mb-XOApLNs4D+GMVLvsOjxg@mail.gmail.com>
+Date:   Mon, 23 Dec 2019 10:02:31 -0800
+In-Reply-To: <CAEW0o+gYqWT5u-Tf8aDoMgXaf36Mb-XOApLNs4D+GMVLvsOjxg@mail.gmail.com>
+        (Arnaud Bertrand's message of "Mon, 23 Dec 2019 13:51:12 +0100")
+Message-ID: <xmqqy2v26hu0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
- <9b1ad46c58b7f8397acbf2a8339e150dfb04c956.1576861788.git.gitgitgadget@gmail.com>
- <20191222051106.GA28890@generichostname>
-In-Reply-To: <20191222051106.GA28890@generichostname>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 23 Dec 2019 09:17:22 -0800
-Message-ID: <CABPp-BHXZHaQk--6=8-BBLqmCeRrLXYXRRru_gbVKUUdGAWqXQ@mail.gmail.com>
-Subject: Re: [PATCH 06/15] t3432: make these tests work with either am or
- merge backends
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pavel Roskin <plroskin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 64459CCC-25AE-11EA-B749-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 21, 2019 at 9:11 PM Denton Liu <liu.denton@gmail.com> wrote:
->
-> Hi Elijah,
->
-> On Fri, Dec 20, 2019 at 05:09:39PM +0000, Elijah Newren via GitGitGadget wrote:
-> > diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-> > index 92f95b57da..3879a43fa0 100755
-> > --- a/t/t3432-rebase-fast-forward.sh
-> > +++ b/t/t3432-rebase-fast-forward.sh
-> > @@ -44,19 +44,16 @@ test_rebase_same_head_ () {
-> >       test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
-> >               oldhead=\$(git rev-parse HEAD) &&
-> >               test_when_finished 'git reset --hard \$oldhead' &&
-> > +             cp .git/logs/HEAD expect &&
-> >               git rebase$flag $* >stdout &&
-> >               if test $what = work
-> >               then
-> > -                     # Must check this case first, for 'is up to
-> > -                     # date, rebase forced[...]rewinding head' cases
-> > -                     test_i18ngrep 'rewinding head' stdout
-> > +                     wc -l .git/logs/HEAD >old &&
-> > +                     wc -l .git/logs/HEAD >new &&
->
-> Are the above two lines some yet-to-be cleaned up leftovers? I can't see
-> where `old` and `new` are being used elsewhere.
+Please unlearn dot-dot and three-dots when using "git diff", which
+is not about ranges but about comparing two endpoints.  If we were
+reinventing Git today from scratch, we would make "git diff A..B" an
+error.  You can consider it a bug that the command accepts a range
+notation, but this will not change any time soon without a large
+fight to find and fix uses of the syntax in scripts by longtime Git
+users have written over the years.
 
-Um, this whole section is broken and causes it to pass the test for
-stupid reasons.  Not sure how I bungled that so badly.  I'll send a
-re-roll with a corrected 6/15.
+Allowing dot-dot on the command line of "git diff", instead of
+diagnosing them as errors and dying, was a stupid mistake we (well,
+mostly Linus, but I am willing to take the blame too) made due to
+laziness when we reused the machinery, which we invented to parse
+the command line of "log" family of commands to specify ranges, to
+parse the command line of "diff", which accidentally ended up
+allowing the syntax for ranges where it shouldn't be allowed.
 
->
-> > +                     test_line_count '-gt' $(($old + 2)) .git/logs/HEAD
-> >               elif test $what = noop
-> >               then
-> > -                     test_i18ngrep 'is up to date' stdout &&
-> > -                     test_i18ngrep ! 'rebase forced' stdout
-> > -             elif test $what = noop-force
-> > -             then
-> > -                     test_i18ngrep 'is up to date, rebase forced' stdout
-> > +                     test_cmp expect .git/logs/HEAD
-> >               fi &&
-> >               newhead=\$(git rev-parse HEAD) &&
-> >               if test $cmp = same
+And worse yet, since there was only dot-dot and three-dots came much
+later, "git diff A..B" ended up comparing the endpoints A and B,
+because there didn't even A...B notation exist.
+
+This is not limited to you but any user of modern Git is better off
+to pretend "git diff A..B" does not exist; please unlearn dot-dot
+and three-dots when using "git diff" and you'd be happier.
