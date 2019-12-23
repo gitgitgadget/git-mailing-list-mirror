@@ -7,106 +7,102 @@ X-Spam-Status: No, score=-0.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A150C2D0C0
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 21:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DFE1C2D0D5
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 21:59:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 348D9207FF
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 21:41:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E1A320709
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 21:59:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fbfBisbp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3RYPaiJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726846AbfLWVl3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 16:41:29 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44135 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726817AbfLWVl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Dec 2019 16:41:29 -0500
-Received: by mail-pf1-f193.google.com with SMTP id 195so8897705pfw.11
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 13:41:28 -0800 (PST)
+        id S1726897AbfLWV7b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Dec 2019 16:59:31 -0500
+Received: from mail-pj1-f53.google.com ([209.85.216.53]:52012 "EHLO
+        mail-pj1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbfLWV7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 16:59:31 -0500
+Received: by mail-pj1-f53.google.com with SMTP id j11so324102pjs.1
+        for <git@vger.kernel.org>; Mon, 23 Dec 2019 13:59:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=OysBAeE2XhO+fAmu3UoO7uDDuhfeORzgHDXy1nUN2sg=;
-        b=fbfBisbpTasSqLjwDfXHiVnAMbkWTv6K2xBc0G3vHf4C3UeYo+2XOUU2LdrjNlRUxs
-         8hoImHdydrB9h+GhXB3BQd8vKM4H3Q/BmPfETcriQ0PMFDNKTFc/E/a9sf+2obf1Plzk
-         PIFFEOGaeD3BWz4sNUXGANYWYNkwj716FPFVoIWdtJdFeyBGHShXecf0hLUmANvX+2fU
-         ykdAxChHatTYgvf7XDVm0iXPUedU2QCt0bsrRydK9Ghy53PLXfwOrIi4dtT8iGTXfmzY
-         momS6H07zxX2oSfCxgbFRqJDwXaYazMahlA4OgdTiXnDdfKT5qh/bdwsXHRH15RcKYNa
-         UMiA==
+        bh=SyrdCAQG3tMkzo900MY6dNpZqvK5+io8FBeOTx+mVyA=;
+        b=b3RYPaiJufMXG4UqNabwi51k67TQ2gBC2AqU5MBilRwbWJ//fJddCBnjse2IRkU2z/
+         pt7lc+dWd0tSGvYeygUfN5lMBTf+WzBqYEzKtevBu592MZWzVQTynhTpcoSnxMZobKgJ
+         eJI7Pu7nT9/xcOc0Qvnl+b+jTsQ3a4uYYCaKASrB2QvS0H01kiC4K+A/Vca2ncqGzNPr
+         wDp327ySZanBrR8ZkZ7ZlceA5Kin2qxJRHFLEehbXNPZbxNiDLRNqV2B1k5BK+Q8w2s0
+         7NQ4vrw6XnPMiy4o+ysS2AtaN+KSxtrs7JvN1dtK0JTdq9Stsnjy8NFWRFYp5UTpmymS
+         iubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=OysBAeE2XhO+fAmu3UoO7uDDuhfeORzgHDXy1nUN2sg=;
-        b=VXIIfE99oWwSf30yRKINAADMj5h3Na+uFMeVS9gxxnOzZpIePO1xoDJFwk1SLFW2lc
-         XB8eMI9ncnX+NuZhECaknr9DNac6SThp0JOiUkSeblTMHa8ah7L08ugLv29hia62SZcl
-         DyRJnEmzrd0uWQhcbGSUki2fr8gCfRCeqACvsIeHYPbYKQwRdLxBZxNr9NsoXHgzqgBQ
-         xezxZdq+odLuyCk+elQ5J12B6X6grHQbyIOtq44WS//sOIkelrcGf+Xrfe8eD27chGBY
-         I4H9pfCY4k6REN8z3X4ftH/X89+95JBhRPFBZl1pVvppVlcrEgwjfpo6QiIGfgHSusRV
-         JZoQ==
-X-Gm-Message-State: APjAAAVJTH5C993xOMPgGAM4xbumlEQdsEyXjbnOyOibtfso55oP0RaP
-        Gs6xaap2RvtRNN+ISkd0tWc=
-X-Google-Smtp-Source: APXvYqyoa7PMJiMjy6gprOqM8N1LpgsPd6bW0c+XbD8RJvKNWGIl51fwwnaRV5oOuTr+mtz8wRfnoQ==
-X-Received: by 2002:a63:9548:: with SMTP id t8mr32410299pgn.205.1577137288095;
-        Mon, 23 Dec 2019 13:41:28 -0800 (PST)
+        bh=SyrdCAQG3tMkzo900MY6dNpZqvK5+io8FBeOTx+mVyA=;
+        b=R5nZPoCSIqa6x0fM7rt6G2PmMJNko8hhN+QluG47LXPR5gsBTaT2YS5SbXZ9QHB++K
+         MOt3tHmHlMdsjLarr9jVq6EC0pwtsEtWWtyrJpEeYickeYQ+GRT8n1SCpCbGbXxvhquK
+         8lzBCPFuse4dRbe6t9/aoCLpgLttO0JH/8H0lEPPIlnm6HtJCPBkIbwJGRSINC3xsLXt
+         BowrjjyEVMK2Vzn6N2Bulmm+lMYTY0Dbrlm2VU91+18h+Zkcrnohdv4gGdB8FtYQcvGf
+         Gaf4GZHFFczw6pblEYFxPGLXVckwN0q7rfexONk9K583NjHiCDRc/g71Ws9mSqZxdig/
+         vWxg==
+X-Gm-Message-State: APjAAAUlNhDMZJV7tAkfMfnR6qOv6Wv4pGmNCmTslfdK+kLNjdOtlwiH
+        uQ8/jHgU/OKyjBApo1RhOe8=
+X-Google-Smtp-Source: APXvYqz1wbfewlWIOvn1QMuDnQkjVfV9DCtcTlTamVSB5NU64iOIiHsOHDInD2iWuYe5JrYojPX7Yw==
+X-Received: by 2002:a17:902:222:: with SMTP id 31mr32200060plc.117.1577138370753;
+        Mon, 23 Dec 2019 13:59:30 -0800 (PST)
 Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id p17sm24974600pfn.31.2019.12.23.13.41.27
+        by smtp.gmail.com with ESMTPSA id i23sm4821297pfo.11.2019.12.23.13.59.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Dec 2019 13:41:27 -0800 (PST)
-Date:   Mon, 23 Dec 2019 13:41:25 -0800
+        Mon, 23 Dec 2019 13:59:30 -0800 (PST)
+Date:   Mon, 23 Dec 2019 13:59:28 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Arnaud Bertrand <xda@abalgo.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: Possible improvement in DB structure
-Message-ID: <20191223214125.GA38316@google.com>
-References: <CAEW0o+gwbNyDqmiouFzO16LsRUfcAnSwj9K77oGe5hi=EVMB=w@mail.gmail.com>
- <20191223190950.GA6240@camp.crustytoothpaste.net>
- <CAEW0o+jRW8LJqfjsDVtUiSNxwM9yBkj0c=Ddy3kEGUdsYM8myQ@mail.gmail.com>
+To:     Kevin Daudt <kdaudt@alpinelinux.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Arnaud Bertrand <xda@abalgo.com>, git@vger.kernel.org
+Subject: Re: Mismatch meaning between git-diff and git-log for the .. (double
+ dot notation) and ... (triple dot notation)
+Message-ID: <20191223215928.GB38316@google.com>
+References: <CAEW0o+gYqWT5u-Tf8aDoMgXaf36Mb-XOApLNs4D+GMVLvsOjxg@mail.gmail.com>
+ <xmqqy2v26hu0.fsf@gitster-ct.c.googlers.com>
+ <20191223182939.GB676947@alpha>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAEW0o+jRW8LJqfjsDVtUiSNxwM9yBkj0c=Ddy3kEGUdsYM8myQ@mail.gmail.com>
+In-Reply-To: <20191223182939.GB676947@alpha>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Arnaud,
+Kevin Daudt wrote:
+> On Mon, Dec 23, 2019 at 10:02:31AM -0800, Junio C Hamano wrote:
 
-Arnaud Bertrand wrote:
-
-> Today, I think that tags are not located in objects directory but in
-> refs/tags which is a good idea.;-)
-
-Not precisely.  See "git help repository-layout" for more details, or
-https://www.kernel.org/pub/software/scm/git/docs/user-manual.html#hacking-git
-or the "git internals" chapter of https://git-scm.com/book/.
-
-> The origin of my reflection was that I wanted to find an old file.
+>> Please unlearn dot-dot and three-dots when using "git diff", which
+>> is not about ranges but about comparing two endpoints.  If we were
+>> reinventing Git today from scratch, we would make "git diff A..B" an
+>> error.  You can consider it a bug that the command accepts a range
+>> notation, but this will not change any time soon without a large
+>> fight to find and fix uses of the syntax in scripts by longtime Git
+>> users have written over the years.
+[...]
+> I agree that you should not use `A..B`, but what is wrong with
+> `A...B`? The alternative is a lot more verbose.
 >
-> I knew that in the past of my project, we had started to write a
-> driver for a device and it was abandoned. I wanted to find this file.
-> I knew a "key line" to search for and I knew the file was a .c file
-> but I didn't know the exact name.
+> git diff $(git merge-base A B) B
 
-Thanks for this context!  It's very helpful.
+Commands like "git checkout" have been learning a `...` shorthand
+which is not much better as far as intuitiveness goes:
 
-> So, the goal was to parse all the database, find all the different .c
-> files and grep it to find the the driver.
+	# doesn't work, just here for demonstration
+	git diff A...B B
 
-Git intends to make this kind of history mining not too difficult.
-You can run a command like
+With hindsight, "git diff A..B" would be the perfect spelling for
+this, but that would break too many people's muscle memories and
+scripts.  Would it make sense to have a commandline option for this?
 
-	git log --all -S'the key line' -- '*.c'
+	# doesn't work, just here for demonstration
+	git diff --fork-point A B
 
-and it should do the right thing.  Or you can do something more
-complex using something like "git rev-list --all | git diff-tree
---stdin --name-only --diff-filter=D" (to show deleted files).
-
-Is the problem that that command is too slow?
-
-Hope that helps,
+A random thought,
 Jonathan
