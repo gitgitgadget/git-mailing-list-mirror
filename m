@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 98A0AC2D0D0
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C0F0C2D0D7
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 73C86206CB
-	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 66B7520643
+	for <git@archiver.kernel.org>; Mon, 23 Dec 2019 18:50:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xc3DhTC3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N7CzNyyU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726971AbfLWSuV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 23 Dec 2019 13:50:21 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33977 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726887AbfLWSuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 23 Dec 2019 13:50:10 -0500
-Received: by mail-ed1-f67.google.com with SMTP id l8so16132906edw.1
-        for <git@vger.kernel.org>; Mon, 23 Dec 2019 10:50:09 -0800 (PST)
+        id S1726928AbfLWSuM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 23 Dec 2019 13:50:12 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:41902 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726884AbfLWSuI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 23 Dec 2019 13:50:08 -0500
+Received: by mail-ed1-f68.google.com with SMTP id c26so16113541eds.8
+        for <git@vger.kernel.org>; Mon, 23 Dec 2019 10:50:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=+RYvTrbrY2Vje09F3fIO6N2bOPnlcbiySWaMlI4TgVY=;
-        b=Xc3DhTC3ggxPqks8TAdRzEU45LP0W7f7TjXQmkF5H/p6ozB/Cn8dLAhpojekXjkVLf
-         wEjn52NuHoTse5/wuFkb0rDGh9D+I5Db3OcoHHmC1gO8lcsoG1+9HdFF8RI7iKrU+ILq
-         bAm2FVn94zyMUmGdTBuLUBuY08RBhyaVE4/7azlz5R+XU/RmXLoe0vqDp7TDDMGtSEIV
-         ryIhklsn3nXlF5U0U5DK7LhfcuV+EJ5kdIP9hHvAzNEnC5gL3iXWrFaM7pxHDMYEYOw/
-         p2EsATXIPRd580vGezhmP7UYbuXpyMgj8FXEB2QhDbru2ZdG1zh+lgpvV3zXT/ZNLdT/
-         xEWQ==
+        bh=ckHsml5tF8rbwrITNsBewcKB/RzAcohGKcZWm6pvdhc=;
+        b=N7CzNyyUBFjIKp6TcFAmumdMqvHwek8zfsvVo3bRsaILY5Otxlvqp2iBzt5mJMAGw9
+         wJqO1AyEe5f0HXJrlQWkbAAL0/tN3qWksa76uwBXwY1VllgZwpHe095aasLdKQ00/b4a
+         aJgUn2eBOKEFlcYHB0q/0cCOJu3QzHJpulyc8yZ0dy1mBbKzt+VNaM8b94zjSyrVnxJL
+         s2IdnBZmD7p8DmInVngvumN7Jsbcu9ZzTvYhgRdW0ww+kEWQwjCvgWqcJ9TomRhu5hAH
+         YlrECxWbMGwy4HARr+Q+k4PiI01bDx2dZrIQpfaqLGIInk0KskwiXVuhszNXuX9C98UY
+         Vc5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+RYvTrbrY2Vje09F3fIO6N2bOPnlcbiySWaMlI4TgVY=;
-        b=cAz/hAnxyJOfG2Wg0Cum7BwvU9xuyf6O2c+CdpxaqNIOn/MBV3kz5noriH8ro2GgV+
-         zx/vLnFc36vp8ld85RvayAjLb0G83o/c3Gu7LG/IS2V+MOOIZ2viwmphmVFgI+pZYja/
-         2vNKXx0qDKfI1ia/kBJd+nRGDnvFHwQVKWs1uzsh/1VItpLyjxakmGKeQ+AC1iElUxh1
-         ztaXX+PuQj2qhuDwyhu9JKnqkxgO9/uKbxe+k773+aCjev/EPMWA/0oRMLwfRFuW0UY7
-         q/UTzAJv4+RXgB+Sxy5yJ88fjOj6NHiLZbGT33aE2U4NX9D4C9cES3A+dOufAbGenpt9
-         C2tg==
-X-Gm-Message-State: APjAAAW+qQuvhwtqIXOqAjWMalLVAR1Qq2RCvSpf2AXMD06ccmlBnvJE
-        HDjufHi6IaGTgVDbNK/eqY1gtpuD
-X-Google-Smtp-Source: APXvYqzDxb2v4fFTtPbW8epIhg6Cp+En8usD0BOSGYpZpkICAVUAyrlsFmHthtLCD57wcyW2NE1/8Q==
-X-Received: by 2002:a17:906:1cc6:: with SMTP id i6mr884498ejh.31.1577127008415;
-        Mon, 23 Dec 2019 10:50:08 -0800 (PST)
+        bh=ckHsml5tF8rbwrITNsBewcKB/RzAcohGKcZWm6pvdhc=;
+        b=p0tiijd6u4sAVN/Y0GfG3eGUimV056quHVKL95F+42Z3KcaNBmEwtkoXQEfBfYoPNw
+         ZYMQj4L6UEt2dXRowP/Z/HtkKmNzBVyYVvlY4PFWqPjzZP1o5ynmGdAO/cUNTG5YSEwG
+         sxCexBzhc5qT9t2LKotamQvDL+CiburEO0zhKTJlnvfrzso3/ZuZcnJmOc+C53xEENkS
+         fJw9uDJnL7tFb9LHSENe+jxhxELjD3/ddQq+0pOLb28e910L8Lk9GIBaRYJxV/Q7wMle
+         qCgzdzoKSyhvEAw/4DfmnJQQWcB65VS2k+J4D4B+EcXmUICw7ujvDwS8hQ7fJEKduP7O
+         DouA==
+X-Gm-Message-State: APjAAAXuHMCvnz36e4+YOU2sNiWPbqhJGQxkomV6wyAdYsWH5tZbRgUv
+        EBb/pGB5dRqpmOGhib/5jtOD+zKW
+X-Google-Smtp-Source: APXvYqycfd42q5FdHg2JUFxc53qPuixWf+UblMbyOBcf5wwwaDCiwUIBD779MV/uJHTjRif8rRdOMA==
+X-Received: by 2002:a17:906:2651:: with SMTP id i17mr33419919ejc.246.1577127006282;
+        Mon, 23 Dec 2019 10:50:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x2sm2293389edi.95.2019.12.23.10.50.07
+        by smtp.gmail.com with ESMTPSA id u13sm2384708ejz.69.2019.12.23.10.50.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Dec 2019 10:50:08 -0800 (PST)
-Message-Id: <1df11f0b5105b1f602fdd723e0f74565e436faba.1577127000.git.gitgitgadget@gmail.com>
+        Mon, 23 Dec 2019 10:50:05 -0800 (PST)
+Message-Id: <f2c92853b47dc5f661e9b20fd390bc6d823ad6d9.1577127000.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
 References: <pull.679.git.git.1576861788.gitgitgadget@gmail.com>
         <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 23 Dec 2019 18:49:54 +0000
-Subject: [PATCH v2 10/15] rebase: add an --am option
+Date:   Mon, 23 Dec 2019 18:49:51 +0000
+Subject: [PATCH v2 07/15] rebase: allow more types of rebases to fast-forward
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,103 +78,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Currently, this option doesn't do anything except error out if any
-options requiring the interactive-backend are also passed.  However,
-when we make the default backend configurable later in this series, this
-flag will provide a way to override the config setting.
+In the past, we dis-allowed rebases using the interactive backend from
+performing a fast-forward to short-circuit the rebase operation.  This
+made sense for explicitly interactive rebases and some implicitly
+interactive rebases, but certainly became overly stringent when the
+merge backend was re-implemented via the interactive backend.
+
+Just as the am-based rebase has always had to disable the fast-forward
+based on a variety of conditions or flags (e.g. --signoff, --whitespace,
+etc.), we need to do the same but now with a few more options.  However,
+continuing to use REBASE_FORCE for tracking this is problematic because
+the interactive backend used it for a different purpose.  (When
+REBASE_FORCE wasn't set, the interactive backend would not fast-forward
+the whole series but would fast-forward individual "pick" commits at the
+beginning of the todo list, and then a squash or something would cause
+it to start generating new commits.)  So, introduce a new
+allow_preemptive_ff flag contained within cmd_rebase() and use it to
+track whether we are going to allow a pre-emptive fast-forward that
+short-circuits the whole rebase.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 11 ++++++++++-
- builtin/rebase.c             | 18 +++++++++++++++++-
- 2 files changed, 27 insertions(+), 2 deletions(-)
+ builtin/rebase.c               | 18 ++++++++++++++----
+ t/t3432-rebase-fast-forward.sh |  2 ++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f1ace07c38..cf1ac2e359 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -258,6 +258,13 @@ See also INCOMPATIBLE OPTIONS below.
- 	original branch. The index and working tree are also left
- 	unchanged as a result.
- 
-+--am:
-+	Use git-am internally to rebase.  This option may become a
-+	no-op in the future once the interactive backend handles
-+	everything the am one does.
-++
-+See also INCOMPATIBLE OPTIONS below.
-+
- --empty={drop,keep,ask}::
- 	How to handle commits that become empty (because they contain a
- 	subset of already upstream changes) or start empty.  With drop
-@@ -372,7 +379,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	Ensure at least <n> lines of surrounding context match before
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
--	ever ignored.
-+	ever ignored.  Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -417,6 +424,7 @@ with `--keep-base` in order to drop those commits from your branch.
- --whitespace=<option>::
- 	This flag is passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
-+	Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -567,6 +575,7 @@ INCOMPATIBLE OPTIONS
- 
- The following options:
- 
-+ * --am
-  * --whitespace
-  * -C
- 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d2b99e9908..b7915fc0cb 100644
+index f1de5c8186..7027e34567 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1361,6 +1361,18 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	return res && is_linear_history(onto, head);
+@@ -1493,6 +1493,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct object_id squash_onto;
+ 	char *squash_onto_name = NULL;
+ 	int reschedule_failed_exec = -1;
++	int allow_preemptive_ff = 1;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -1804,11 +1805,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	    options.ignore_date)
+ 		options.flags |= REBASE_FORCE;
+ 
++	if ((options.flags & REBASE_INTERACTIVE_EXPLICIT) ||
++	    (action != ACTION_NONE) ||
++	    (exec.nr > 0) ||
++	    options.autosquash) {
++		allow_preemptive_ff = 0;
++	}
++
+ 	for (i = 0; i < options.git_am_opts.argc; i++) {
+ 		const char *option = options.git_am_opts.argv[i], *p;
+ 		if (!strcmp(option, "--whitespace=fix") ||
+ 		    !strcmp(option, "--whitespace=strip"))
+-			options.flags |= REBASE_FORCE;
++			allow_preemptive_ff = 0;
+ 		else if (skip_prefix(option, "-C", &p)) {
+ 			while (*p)
+ 				if (!isdigit(*(p++)))
+@@ -2144,12 +2152,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	/*
+ 	 * Check if we are already based on onto with linear history,
+ 	 * in which case we could fast-forward without replacing the commits
+-	 * with new commits recreated by replaying their changes. This
+-	 * optimization must not be done if this is an interactive rebase.
++	 * with new commits recreated by replaying their changes.
++	 *
++	 * Note that can_fast_forward() initializes merge_base, so we have to
++	 * call it before checking allow_preemptive_ff.
+ 	 */
+ 	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
+ 		    &options.orig_head, &merge_base) &&
+-	    !is_interactive(&options)) {
++	    allow_preemptive_ff) {
+ 		int flag;
+ 
+ 		if (!(options.flags & REBASE_FORCE)) {
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 7432c0e241..40388ccf9f 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -30,6 +30,8 @@ test_rebase_same_head () {
+ 	shift &&
+ 	test_rebase_same_head_ $status_n $what_n $cmp_n "" "$*" &&
+ 	test_rebase_same_head_ $status_f $what_f $cmp_f " --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n " --merge" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f " --merge --no-ff" "$*"
  }
  
-+static int parse_opt_am(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	opts->type = REBASE_AM;
-+
-+	return 0;
-+}
-+
- /* -i followed by -m is still -i */
- static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
- {
-@@ -1546,6 +1558,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "show-current-patch", &action,
- 			    N_("show the patch file being applied or merged"),
- 			    ACTION_SHOW_CURRENT_PATCH),
-+		{ OPTION_CALLBACK, 0, "am", &options, NULL,
-+			N_("use apply-mail strategies to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_am },
- 		{ OPTION_CALLBACK, 'm', "merge", &options, NULL,
- 			N_("use merging strategies to rebase"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-@@ -1906,7 +1922,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
- 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
- 
--	if (options.git_am_opts.argc) {
-+	if (options.git_am_opts.argc || options.type == REBASE_AM) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
- 			if (strcmp(options.git_am_opts.argv[i], "-q"))
+ test_rebase_same_head_ () {
 -- 
 gitgitgadget
 
