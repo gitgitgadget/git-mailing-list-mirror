@@ -2,179 +2,100 @@ Return-Path: <SRS0=uLN7=2O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C8FBC2D0D0
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F48C2D0C3
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 22:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 67862206CB
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7CA69206CB
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 22:05:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Et0gIS+6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ldo+4yEt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbfLXTzN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 14:55:13 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34795 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbfLXTzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 14:55:11 -0500
-Received: by mail-ed1-f66.google.com with SMTP id l8so18682236edw.1
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:09 -0800 (PST)
+        id S1726244AbfLXWFs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 17:05:48 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:43598 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726216AbfLXWFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 17:05:48 -0500
+Received: by mail-qt1-f193.google.com with SMTP id d18so16349469qtj.10
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 14:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+RYvTrbrY2Vje09F3fIO6N2bOPnlcbiySWaMlI4TgVY=;
-        b=Et0gIS+6kh3cXlHyharE8G/Q8C18R1ZOSfRq3PFViIiQkQDxB+mlLMJdXTtdVkwzrz
-         Xl8YzA6k2sC7gR1+VoEfBLHGO0Aisd7n5OAyns3BQDB5n8zsovM88sizZrldGmbWmbbW
-         /BjojqRp3/emPjlsds+D+WrPQ/x0juqSKguRh/2efIjZcke5sQDD9KPHQVOgk3G+//q9
-         MtB8A9/QqYTBpBTklDlgO15UgmG+Aoj8vKF8nbfrVDYvZ05eNa1/14KtbtTZJzSEvVjx
-         9gmWmbX1vvn7FJ0AjB9R5n1ryR+ntMliwaPw3CHcQxB3EQEZEFCJwGs1XJeKPzflx43L
-         kI7A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W2Qv0EDq1HyQtmGCCg2vvoNhbMxTKtE4v8sDsCehGR0=;
+        b=ldo+4yEtNuTXLdwgGZRzH0Et9uXTk5lfPmye+A6iGGj4uwa0vIq7ALUKKq13oUNfSa
+         x8uWUuqKZI3gMnzWJaN8I0MuJeC5r38OL2Cv+emuhjw8MNUq6ehUo06IMLojvvbW5JcK
+         SQP3vmvm7FBUAgq1ea4pMiSIe5zJ0Le3DKxx3c9BIMkmolJZvbb69JBKB7mV9wErHo1n
+         LeIBQmvVkvzMkAkB4vdGwWlWJb0K5klkVFTH3ROrY91IL9BmjF7NG+Y5DspNd4VBU2p0
+         OE+5lnudfRgYptX7C0HmZavvaVa3+0oZpSEVFVtln6Tb6nUkqHwEe4TJ8urI+pptQxHc
+         wggQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+RYvTrbrY2Vje09F3fIO6N2bOPnlcbiySWaMlI4TgVY=;
-        b=gPbJ4hxwVPauMsS78NNI1RmDQh8E9QRbE/RTSPB748n4C6CDYP1YxkDWv1/BXAotGV
-         eDesriLHMfx2r5LPLZYF10fmZd9/fhhn3LF9PcIQNHmhIXnffoIezCipYdjOA3zbsEMZ
-         dEnThE5pwAs1Fb298Q2qNEUfEyOt7Yh3u1ZAlROQfNgS0PUgh1FEdMz/NxS0lkfscWfS
-         PiRPCGuMBg9Rdb39Cs64hibAa+LXwtnQCUjeXgYpdYKjWO938rZC4kJyKvQ5xWi0ZIhE
-         rsJUQtd6NmI9lzghCsb1A8zldA25up/5WLjJNmN0H8rJeEeLAmfww+XftQHObhXqerWy
-         6WIA==
-X-Gm-Message-State: APjAAAUAytv/R01bIE0Qj7foscEbGvSqxxeaAUwTLnuzE2xpZ7sNOYU1
-        53aH7oC92913QMMBj1oDzN9hAK9K
-X-Google-Smtp-Source: APXvYqyOJmujG93M57pYuEJ199YbuNqq8Pt60vxi3ReKDUpd58caGD3rGNnoQci3NhpG/HEMD64mYw==
-X-Received: by 2002:a17:906:bcd5:: with SMTP id lw21mr38351090ejb.144.1577217308955;
-        Tue, 24 Dec 2019 11:55:08 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u21sm2882726edv.43.2019.12.24.11.55.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Dec 2019 11:55:08 -0800 (PST)
-Message-Id: <1df11f0b5105b1f602fdd723e0f74565e436faba.1577217299.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
-References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
-        <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Dec 2019 19:54:54 +0000
-Subject: [PATCH v3 10/15] rebase: add an --am option
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W2Qv0EDq1HyQtmGCCg2vvoNhbMxTKtE4v8sDsCehGR0=;
+        b=lXAgDZjvwhqI88X6ZFxwmxaI7uItieo43FXgi495/BQRYzKo5bWsepE7iMFhAiMfFZ
+         SNSgXGon670cjfpwnuS9VmjBoBVhagIniP9fToq9C1Qe2YasxYc1wOQiIm3+6Apnue0U
+         a4oS+N2p6vH7tL1VimJpCR0fimwJJIjNYHmu5mHvYtOguwtjc9i5szmnoduaV2pBPyqy
+         aFq07YFBg5VBAEkYB+wyzi8fUxGQuGe+Tfi67WM8TWogy5xp4CvFrX/YV4O7qV5DVRSb
+         d0iQr/6CJIpYx6RSW1UnKG35c21o064WX4dm3qcC6hD4GNG7eUft7h5RVMwJHH13yd7N
+         YM3A==
+X-Gm-Message-State: APjAAAUW42/oSwgOaBQHMvoIK8U1N5TAHOipY68nRws0LUhok4FD968L
+        Pnq7oqnWFmQwVzRmCk3EzsM=
+X-Google-Smtp-Source: APXvYqy/RlueIfagLai44OAT8DO32H5Rvcz69bM9de7G7ebzlkWmeb7jnlBLKkKNUmS5wqXXbU9c+A==
+X-Received: by 2002:ac8:6f09:: with SMTP id g9mr29204968qtv.275.1577225147490;
+        Tue, 24 Dec 2019 14:05:47 -0800 (PST)
+Received: from generichostname (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id w1sm8013307qtk.31.2019.12.24.14.05.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Dec 2019 14:05:46 -0800 (PST)
+Date:   Tue, 24 Dec 2019 17:05:44 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] format-patch: make format.outputDirectory relative to
+ worktree
+Message-ID: <20191224220544.GA1917@generichostname>
+References: <9422e4225143b2b908bd1fed9a510b9333bf34a2.1577191015.git.liu.denton@gmail.com>
+ <xmqq36d95xwh.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, phillip.wood@dunelm.org.uk,
-        liu.denton@gmail.com, gitster@pobox.com, plroskin@gmail.com,
-        alban.gruin@gmail.com, szeder.dev@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36d95xwh.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Hi Junio,
 
-Currently, this option doesn't do anything except error out if any
-options requiring the interactive-backend are also passed.  However,
-when we make the default backend configurable later in this series, this
-flag will provide a way to override the config setting.
+On Tue, Dec 24, 2019 at 11:25:18AM -0800, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> > Rewrite the output directory logic for format-patch so that it will be
+> > relative to the worktree of the directory. An escape hatch is provided
+> > for if the previous behaviour is desired by prepending "./" to the
+> > variable.
+> 
+> Anything that forces existing users to change their existing
+> settings is not an escape hatch.  It merely is a regression with a
+> possible workaround.
+> 
+> So I dunno.  I probably would have accepted a patch that *adds*
+> outputDirectory configuration that behaves the way you are proposing
+> in this patch if we did not have the variable yet in the system
+> (i.e. three or four years ago), but I am not sure if it is a good
+> idea to change it after these years.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-rebase.txt | 11 ++++++++++-
- builtin/rebase.c             | 18 +++++++++++++++++-
- 2 files changed, 27 insertions(+), 2 deletions(-)
+Perhaps instead of switching the default behaviour so that it's always
+relative to the top of the worktree, we can add some sort of prefix to
+indicate that we want this behaviour. Maybe `worktree:path/from/top` or
+`^path/from/top` or something like this?
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f1ace07c38..cf1ac2e359 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -258,6 +258,13 @@ See also INCOMPATIBLE OPTIONS below.
- 	original branch. The index and working tree are also left
- 	unchanged as a result.
- 
-+--am:
-+	Use git-am internally to rebase.  This option may become a
-+	no-op in the future once the interactive backend handles
-+	everything the am one does.
-++
-+See also INCOMPATIBLE OPTIONS below.
-+
- --empty={drop,keep,ask}::
- 	How to handle commits that become empty (because they contain a
- 	subset of already upstream changes) or start empty.  With drop
-@@ -372,7 +379,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	Ensure at least <n> lines of surrounding context match before
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
--	ever ignored.
-+	ever ignored.  Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -417,6 +424,7 @@ with `--keep-base` in order to drop those commits from your branch.
- --whitespace=<option>::
- 	This flag is passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
-+	Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -567,6 +575,7 @@ INCOMPATIBLE OPTIONS
- 
- The following options:
- 
-+ * --am
-  * --whitespace
-  * -C
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index d2b99e9908..b7915fc0cb 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1361,6 +1361,18 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	return res && is_linear_history(onto, head);
- }
- 
-+static int parse_opt_am(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	opts->type = REBASE_AM;
-+
-+	return 0;
-+}
-+
- /* -i followed by -m is still -i */
- static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
- {
-@@ -1546,6 +1558,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "show-current-patch", &action,
- 			    N_("show the patch file being applied or merged"),
- 			    ACTION_SHOW_CURRENT_PATCH),
-+		{ OPTION_CALLBACK, 0, "am", &options, NULL,
-+			N_("use apply-mail strategies to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_am },
- 		{ OPTION_CALLBACK, 'm', "merge", &options, NULL,
- 			N_("use merging strategies to rebase"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-@@ -1906,7 +1922,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
- 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
- 
--	if (options.git_am_opts.argc) {
-+	if (options.git_am_opts.argc || options.type == REBASE_AM) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
- 			if (strcmp(options.git_am_opts.argv[i], "-q"))
--- 
-gitgitgadget
+Thanks,
 
+Denton
