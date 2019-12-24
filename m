@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0DBBC2D0D5
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B60B2C2D0CF
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B5B0320706
+	by mail.kernel.org (Postfix) with ESMTP id 8031E20643
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/5ZURlp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OPQleFu9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726271AbfLXLFz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 06:05:55 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:37243 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726246AbfLXLFx (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726251AbfLXLFx (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 24 Dec 2019 06:05:53 -0500
-Received: by mail-qt1-f196.google.com with SMTP id w47so17881897qtk.4
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:53 -0800 (PST)
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:40818 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726154AbfLXLFw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 06:05:52 -0500
+Received: by mail-qk1-f193.google.com with SMTP id c17so15775914qkg.7
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YFgXMROkeed/QDYtZ0Ndb0D56tSzSKygOpSe5QnYWm0=;
-        b=I/5ZURlp7ko4Qy4FbAK30EGstIVC5hhg98ECD5A1xVrw6m9jKTsOA4PxO9/n9ai6ff
-         k6SRrmzyY44aE+6Tvx3viEABZE5LoaHkwuoESwL7Y0XldKPT8aQ84v8OhGPt3+SiOR0j
-         E2jV4nxKAYNVpZwOPZUaKBdHpVFJQqoqxaEKGmBHPjtriguhm0qRrMdcCmC7JmhdASWc
-         mUIhPDh6xtRKlmg/BYD3D44WKtBDiEwP41CifMZHLEtNLBHiX/N/xdz98eEwriL0ifwg
-         lLILjlkvNWXRG+8oWNrREuDVoGNTMb1IIz7FyJdW9ArAcnNx8JZ7IgYheTnoSdJHA1kK
-         A7Bg==
+        bh=YlNOBbYAcOpwwPjd99hpmWTBnvLFoWj33D3WEAz/l9k=;
+        b=OPQleFu98UGv+hlH29+ZyWpq8K3H5qBz37ScfFMZXlcj8PzGrrl7te4edM9kzvz8Ym
+         6QGih8uOJm97OxaJpNvFM3jby9WNqyliaUvKQ64o1IPiA23uU00B8YDvHZFVQMybKwbA
+         13georxYa/3Wz1BERtMCSMIjaGnXekGP90SOTztcqqjpQJtxe8poDti0wuVXRuj4dnW8
+         GVNTHwd3c7uOuCw3xAzXxTeLseidCPKwmA6uJ6Y5vimgWaiyzziHUS/FJIf6bpRoeKDJ
+         LvtVWxg3BDeLS2KmQCq88lMjSitXWbg/Rqga48OKrKsl3IZjY/KMWmspEk72XhuQYBLs
+         9QVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YFgXMROkeed/QDYtZ0Ndb0D56tSzSKygOpSe5QnYWm0=;
-        b=qBXmN9uYlsK/9BykcqYG1dlxORJ7Y9PuRhN/HZderI8lR2cuECO7EY8NYIg3lDxGQi
-         XKghir7zgC6mXOp5yfgBP4vg0LA6eTvRQnmRJyzlOKRyinNBfzYTYab5yKXgcy8h3LQ5
-         R8UQPbAKXqVyLcKQ/39wvN5d4mrGRJtZqaOisFR0wcQjqyBe7PrLMHZAM0QVx/5zT82l
-         chulYfxMr+saVIVHyoDmwG/YtmaYTAeQrvR0ijpMtZIs7T0SmX1iYiyhu+AtWOEYnLkY
-         TwSCON9HdFHZbcCFnnuLkP7dA6mxW9BQ9kjf0OV02h3GbE6ukyXQq+P+2LhntGXgz86p
-         7A+Q==
-X-Gm-Message-State: APjAAAUGkOppH2U7k/hR9gTTf76sRNCTtTPKYzDsChAutw+OugekbLMm
-        Q8lk3OdyeFpexLMBAPTgwRZ6T+KD
-X-Google-Smtp-Source: APXvYqyun0yvbYimOfw3DBjzoVnviTZ4EccyljhiEcivxevQaAAtVuWLQUGjky5vEvgjd4Vt+RFoVg==
-X-Received: by 2002:ac8:6153:: with SMTP id d19mr26358923qtm.18.1577185552470;
-        Tue, 24 Dec 2019 03:05:52 -0800 (PST)
+        bh=YlNOBbYAcOpwwPjd99hpmWTBnvLFoWj33D3WEAz/l9k=;
+        b=EhHP3bxLWC93vbl/TsfCRTtKH58qJVrpQqhYlDbUN0SsTb462VFoZxkmMASbvaWxub
+         xBk78RiW54bxsXMXHH7mXX84Uqr5pezq5pRTeBPMVHou3ijd70mjXOgaLb5jBEr3h5mn
+         R1aZdWzCAe8K2mAPTius1CQPHtu2Q21pl6CY8PlyFRx2AsXVcq0Rr39xAnMS4SmcsEr4
+         7fvv4NAZmWxzdLelnVWKyF4IrVLxcU4fwRfOcP7gX6c3YgLRn2EwXh4CkhGXQKIZCQp3
+         VrtWMcHBIMEMHRwqvp0ssa6i+e27ciDZW/DZikSaSKkkwL8bK3Ty9ZQKj5OagCAi1KcR
+         SeYA==
+X-Gm-Message-State: APjAAAXJ6L5yorR70Q9Lfs4TYRRfdE6vulWl4zclKP2xN+PXLZ1GmTq9
+        YgIRlqajarIj+sc0bR90Y0SON/Ck
+X-Google-Smtp-Source: APXvYqwODRIypAISTgrEzwrN77bV5M+tjq7IIQ0TiJEMIyDg6Wc5/mwD8dT3JfN8uJZUvILgWoi4lw==
+X-Received: by 2002:a05:620a:1522:: with SMTP id n2mr29983986qkk.108.1577185550698;
+        Tue, 24 Dec 2019 03:05:50 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.51
+        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:05:52 -0800 (PST)
+        Tue, 24 Dec 2019 03:05:50 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 06/17] rebase: use read_oneliner()
-Date:   Tue, 24 Dec 2019 06:05:03 -0500
-Message-Id: <06c5bd48d767ff5dce45bebb58505888745af861.1577185374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 04/17] sequencer: configurably warn on non-existent files
+Date:   Tue, 24 Dec 2019 06:05:01 -0500
+Message-Id: <fd547aab491b24a47f683d717c6b77255ac16901.1577185374.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577185374.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com> <cover.1577185374.git.liu.denton@gmail.com>
@@ -74,113 +74,159 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since in sequencer.c, read_one() basically duplicates the functionality
-of read_oneliner(), reduce code duplication by replacing read_one() with
-read_oneliner().
+In the future, we plan on externing read_oneliner(). Future users of
+read_oneliner() will want the ability to output warnings in the event
+that the `path` doesn't exist. Introduce the `warn_nonexistence`
+parameter which, if true, would issue a warning when a file doesn't
+exist by skipping the `!file_exists()` check and letting
+`strbuf_read_file()` handle that case.
 
-This was done with the following Coccinelle script:
+Mechanically replace uses of read_oneliner() in sequencer.c with the
+following spatch so that current behaviour is maintained:
 
 	@@
-	expression a, b;
+	expression a, b, c;
 	@@
-	- read_one(a, b)
-	+ !read_oneliner(b, a, 0, 1)
+	  read_oneliner(a, b, c
+	+ , 0
+	  )
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- builtin/rebase.c | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ sequencer.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index ddf33bc9d4..68bedccb95 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -582,15 +582,6 @@ static const char *state_dir_path(const char *filename, struct rebase_options *o
- 	return path.buf;
- }
- 
--/* Read one file, then strip line endings */
--static int read_one(const char *path, struct strbuf *buf)
--{
--	if (strbuf_read_file(buf, path, 0) < 0)
--		return error_errno(_("could not read '%s'"), path);
--	strbuf_trim_trailing_newline(buf);
--	return 0;
--}
--
- /* Initialize the rebase options from the state directory. */
- static int read_basic_state(struct rebase_options *opts)
+diff --git a/sequencer.c b/sequencer.c
+index 5ba8b4383f..103cea1460 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -426,13 +426,13 @@ static int write_message(const void *buf, size_t len, const char *filename,
+  *
+  * Returns 1 if the file was read, 0 if it could not be read or does not exist.
+  */
+-static int read_oneliner(struct strbuf *buf,
+-	const char *path, int skip_if_empty)
++static int read_oneliner(struct strbuf *buf, const char *path,
++			 int skip_if_empty, int warn_nonexistence)
  {
-@@ -598,8 +589,8 @@ static int read_basic_state(struct rebase_options *opts)
- 	struct strbuf buf = STRBUF_INIT;
- 	struct object_id oid;
+ 	int ret = 0;
+ 	struct strbuf file_buf = STRBUF_INIT;
  
--	if (read_one(state_dir_path("head-name", opts), &head_name) ||
--	    read_one(state_dir_path("onto", opts), &buf))
-+	if (!read_oneliner(&head_name, state_dir_path("head-name", opts), 0, 1) ||
-+	    !read_oneliner(&buf, state_dir_path("onto", opts), 0, 1))
- 		return -1;
- 	opts->head_name = starts_with(head_name.buf, "refs/") ?
- 		xstrdup(head_name.buf) : NULL;
-@@ -615,9 +606,9 @@ static int read_basic_state(struct rebase_options *opts)
- 	 */
- 	strbuf_reset(&buf);
- 	if (file_exists(state_dir_path("orig-head", opts))) {
--		if (read_one(state_dir_path("orig-head", opts), &buf))
-+		if (!read_oneliner(&buf, state_dir_path("orig-head", opts), 0, 1))
- 			return -1;
--	} else if (read_one(state_dir_path("head", opts), &buf))
-+	} else if (!read_oneliner(&buf, state_dir_path("head", opts), 0, 1))
- 		return -1;
- 	if (get_oid(buf.buf, &opts->orig_head))
- 		return error(_("invalid orig-head: '%s'"), buf.buf);
-@@ -637,8 +628,7 @@ static int read_basic_state(struct rebase_options *opts)
- 
- 	if (file_exists(state_dir_path("allow_rerere_autoupdate", opts))) {
- 		strbuf_reset(&buf);
--		if (read_one(state_dir_path("allow_rerere_autoupdate", opts),
--			    &buf))
-+		if (!read_oneliner(&buf, state_dir_path("allow_rerere_autoupdate", opts), 0, 1))
- 			return -1;
- 		if (!strcmp(buf.buf, "--rerere-autoupdate"))
- 			opts->allow_rerere_autoupdate = RERERE_AUTOUPDATE;
-@@ -651,8 +641,7 @@ static int read_basic_state(struct rebase_options *opts)
- 
- 	if (file_exists(state_dir_path("gpg_sign_opt", opts))) {
- 		strbuf_reset(&buf);
--		if (read_one(state_dir_path("gpg_sign_opt", opts),
--			    &buf))
-+		if (!read_oneliner(&buf, state_dir_path("gpg_sign_opt", opts), 0, 1))
- 			return -1;
- 		free(opts->gpg_sign_opt);
- 		opts->gpg_sign_opt = xstrdup(buf.buf);
-@@ -660,7 +649,7 @@ static int read_basic_state(struct rebase_options *opts)
- 
- 	if (file_exists(state_dir_path("strategy", opts))) {
- 		strbuf_reset(&buf);
--		if (read_one(state_dir_path("strategy", opts), &buf))
-+		if (!read_oneliner(&buf, state_dir_path("strategy", opts), 0, 1))
- 			return -1;
- 		free(opts->strategy);
- 		opts->strategy = xstrdup(buf.buf);
-@@ -668,7 +657,7 @@ static int read_basic_state(struct rebase_options *opts)
- 
- 	if (file_exists(state_dir_path("strategy_opts", opts))) {
- 		strbuf_reset(&buf);
--		if (read_one(state_dir_path("strategy_opts", opts), &buf))
-+		if (!read_oneliner(&buf, state_dir_path("strategy_opts", opts), 0, 1))
- 			return -1;
- 		free(opts->strategy_opts);
- 		opts->strategy_opts = xstrdup(buf.buf);
-@@ -720,7 +709,7 @@ static int apply_autostash(struct rebase_options *opts)
- 	if (!file_exists(path))
+-	if (!file_exists(path))
++	if (!warn_nonexistence && !file_exists(path))
  		return 0;
  
--	if (read_one(path, &autostash))
-+	if (!read_oneliner(&autostash, path, 0, 1))
- 		return error(_("Could not read '%s'"), path);
- 	/* Ensure that the hash is not mistaken for a number */
- 	strbuf_addstr(&autostash, "^0");
+ 	if (strbuf_read_file(&file_buf, path, 0) < 0) {
+@@ -2558,10 +2558,10 @@ void parse_strategy_opts(struct replay_opts *opts, char *raw_opts)
+ static void read_strategy_opts(struct replay_opts *opts, struct strbuf *buf)
+ {
+ 	strbuf_reset(buf);
+-	if (!read_oneliner(buf, rebase_path_strategy(), 0))
++	if (!read_oneliner(buf, rebase_path_strategy(), 0, 0))
+ 		return;
+ 	opts->strategy = strbuf_detach(buf, NULL);
+-	if (!read_oneliner(buf, rebase_path_strategy_opts(), 0))
++	if (!read_oneliner(buf, rebase_path_strategy_opts(), 0, 0))
+ 		return;
+ 
+ 	parse_strategy_opts(opts, buf->buf);
+@@ -2572,7 +2572,7 @@ static int read_populate_opts(struct replay_opts *opts)
+ 	if (is_rebase_i(opts)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 
+-		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1)) {
++		if (read_oneliner(&buf, rebase_path_gpg_sign_opt(), 1, 0)) {
+ 			if (!starts_with(buf.buf, "-S"))
+ 				strbuf_reset(&buf);
+ 			else {
+@@ -2582,7 +2582,7 @@ static int read_populate_opts(struct replay_opts *opts)
+ 			strbuf_reset(&buf);
+ 		}
+ 
+-		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(), 1)) {
++		if (read_oneliner(&buf, rebase_path_allow_rerere_autoupdate(), 1, 0)) {
+ 			if (!strcmp(buf.buf, "--rerere-autoupdate"))
+ 				opts->allow_rerere_auto = RERERE_AUTOUPDATE;
+ 			else if (!strcmp(buf.buf, "--no-rerere-autoupdate"))
+@@ -2618,7 +2618,7 @@ static int read_populate_opts(struct replay_opts *opts)
+ 		strbuf_release(&buf);
+ 
+ 		if (read_oneliner(&opts->current_fixups,
+-				  rebase_path_current_fixups(), 1)) {
++				  rebase_path_current_fixups(), 1, 0)) {
+ 			const char *p = opts->current_fixups.buf;
+ 			opts->current_fixup_count = 1;
+ 			while ((p = strchr(p, '\n'))) {
+@@ -2627,7 +2627,7 @@ static int read_populate_opts(struct replay_opts *opts)
+ 			}
+ 		}
+ 
+-		if (read_oneliner(&buf, rebase_path_squash_onto(), 0)) {
++		if (read_oneliner(&buf, rebase_path_squash_onto(), 0, 0)) {
+ 			if (get_oid_hex(buf.buf, &opts->squash_onto) < 0)
+ 				return error(_("unusable squash-onto"));
+ 			opts->have_squash_onto = 1;
+@@ -3759,7 +3759,7 @@ static int apply_autostash(struct replay_opts *opts)
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 	int ret = 0;
+ 
+-	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1)) {
++	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1, 0)) {
+ 		strbuf_release(&stash_sha1);
+ 		return 0;
+ 	}
+@@ -4093,7 +4093,7 @@ static int pick_commits(struct repository *r,
+ 		if (todo_list->current < todo_list->nr)
+ 			return 0;
+ 
+-		if (read_oneliner(&head_ref, rebase_path_head_name(), 0) &&
++		if (read_oneliner(&head_ref, rebase_path_head_name(), 0, 0) &&
+ 				starts_with(head_ref.buf, "refs/")) {
+ 			const char *msg;
+ 			struct object_id head, orig;
+@@ -4106,13 +4106,13 @@ static int pick_commits(struct repository *r,
+ 				strbuf_release(&buf);
+ 				return res;
+ 			}
+-			if (!read_oneliner(&buf, rebase_path_orig_head(), 0) ||
++			if (!read_oneliner(&buf, rebase_path_orig_head(), 0, 0) ||
+ 					get_oid_hex(buf.buf, &orig)) {
+ 				res = error(_("could not read orig-head"));
+ 				goto cleanup_head_ref;
+ 			}
+ 			strbuf_reset(&buf);
+-			if (!read_oneliner(&buf, rebase_path_onto(), 0)) {
++			if (!read_oneliner(&buf, rebase_path_onto(), 0, 0)) {
+ 				res = error(_("could not read 'onto'"));
+ 				goto cleanup_head_ref;
+ 			}
+@@ -4145,7 +4145,7 @@ static int pick_commits(struct repository *r,
+ 				DIFF_FORMAT_DIFFSTAT;
+ 			log_tree_opt.disable_stdin = 1;
+ 
+-			if (read_oneliner(&buf, rebase_path_orig_head(), 0) &&
++			if (read_oneliner(&buf, rebase_path_orig_head(), 0, 0) &&
+ 			    !get_oid(buf.buf, &orig) &&
+ 			    !get_oid("HEAD", &head)) {
+ 				diff_tree_oid(&orig, &head, "",
+@@ -4230,7 +4230,7 @@ static int commit_staged_changes(struct repository *r,
+ 
+ 		if (get_oid("HEAD", &head))
+ 			return error(_("cannot amend non-existing commit"));
+-		if (!read_oneliner(&rev, rebase_path_amend(), 0))
++		if (!read_oneliner(&rev, rebase_path_amend(), 0, 0))
+ 			return error(_("invalid file: '%s'"), rebase_path_amend());
+ 		if (get_oid_hex(rev.buf, &to_amend))
+ 			return error(_("invalid contents: '%s'"),
+@@ -4391,7 +4391,7 @@ int sequencer_continue(struct repository *r, struct replay_opts *opts)
+ 		struct strbuf buf = STRBUF_INIT;
+ 		struct object_id oid;
+ 
+-		if (read_oneliner(&buf, rebase_path_stopped_sha(), 1) &&
++		if (read_oneliner(&buf, rebase_path_stopped_sha(), 1, 0) &&
+ 		    !get_oid_committish(buf.buf, &oid))
+ 			record_in_rewritten(&oid, peek_command(&todo_list, 0));
+ 		strbuf_release(&buf);
 -- 
 2.24.1.810.g65a2f617f4
 
