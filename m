@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3A8BC2D0CF
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44A05C2D0D5
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 92BE920643
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1AC4A20643
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bc1WNmEd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KiJ1ATKa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbfLXLGI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 06:06:08 -0500
-Received: from mail-qv1-f68.google.com ([209.85.219.68]:37554 "EHLO
-        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726328AbfLXLGC (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726184AbfLXLGJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 06:06:09 -0500
+Received: from mail-qv1-f47.google.com ([209.85.219.47]:35170 "EHLO
+        mail-qv1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726330AbfLXLGC (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Dec 2019 06:06:02 -0500
-Received: by mail-qv1-f68.google.com with SMTP id f16so7361615qvi.4
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:06:01 -0800 (PST)
+Received: by mail-qv1-f47.google.com with SMTP id u10so7285871qvi.2
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:06:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Orhsbl7UW5kzoTvVCex4pVPAyfm4BNosFr2OoqF3ox4=;
-        b=Bc1WNmEdqVGr6g2H5Hdtli4g30gMLuUEEhPF6KKHH0rUYIH5I4GHLtOTs7Yex8cy5n
-         NfGOgOU9UznjfxpYNvIUY5HcDmp9daovhx50U3CbTBVz4t2bTqBgZHmbzBsRnRocGmuz
-         5hCRigy/v4g+DeOv805grpxx179j+/O/O9lJ4wdH0TDBmym4dbFu234T7Gwn1UQHk6hS
-         coiqaLynOVkEJjxKCuyiBSG5OkO2lrwAwoH82TU6nllG3Rhf4FsqR0xpT+TqZIvOItc0
-         t9kq0d99aFD9aaHeeOEuCf7eM6/HCG90Teoji6376ygv2JqZXzMmEevDmKPnddciKJfw
-         R/nw==
+        bh=/3hRU+fqnAEdWhaHhgxjxvWGuQ2nCDHFjrxD+49aImA=;
+        b=KiJ1ATKaWUItYDXuuBXiBpV10sxTqts4xp83uaWO2U1PnMF2WdTKAOyWGJOhVOaFnh
+         8c7Bv5HhXa2qextydUym+kGr6pCEFuk2EBGi04gyw5HvyNLJy+k1GXI88L46PpIp1CWK
+         pqHHMQvGZQXRrB/Ck9IYCNlQFeI0zx1u5HJQAlmuX0kmlFOQPvAPnvxKVCHh9PMlH0SR
+         he6Ahz7zdXo09Pf+nuZAxP00P4OFQfyXJpk9fJzEw+7m3W7Pmn2/F68zjQzsd0DkmLe5
+         BTzNcmdyJMNEkMbw9gnLwI3w1GdYi+xuZn5NxUgvPg+MoEFmtG63ZDOVju3e7VAzLZps
+         Xy4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Orhsbl7UW5kzoTvVCex4pVPAyfm4BNosFr2OoqF3ox4=;
-        b=j/grJTuh3S/gWFCK9dbCOWX/dPQGgloW+eDrI1dz1NO0BV3nh5Zu169lAnEtgN6VMB
-         h2iOvk3YVroQe+qvsZwzuMhUMy0Rh7wi5lgKuKcc6TfitkFthnqubYQwfYjYxlqn0/Sf
-         0Rwr+ycqvWd3wM9+/jjOhDZ9/ReNK13DUMytOurqx5X/1h/Ki9Tucg2YAaF/yZaXb2ng
-         qllDDY/JGMm4ktctooIAdTVRIfHcIM4qVK6D/Ghvvdrubg+EKjktFPbqQ5HwdyDo5cWy
-         KMXtrOitYwlAe/ZP3OOjq5mkCvVZuQVXMRcw11+sm3aANgdGaGvfAvoo2rE7xrHFhKu+
-         Q/Qg==
-X-Gm-Message-State: APjAAAUUqD7Bcrn0vBt4yNE2fQS7S93edhcQg+a1X/Hv95qlYKWxZ98p
-        cwc6Xg5V1OxcIDrK4rQW+aIO1Qs0
-X-Google-Smtp-Source: APXvYqx0MVaT0LgrfFl1gyUMNPxnBa2RT6CJjuDa5Mmioa8XO7eCqZy7jfRUE8sLG7sBhosMVtjFMw==
-X-Received: by 2002:a0c:ef0f:: with SMTP id t15mr28475374qvr.123.1577185559703;
-        Tue, 24 Dec 2019 03:05:59 -0800 (PST)
+        bh=/3hRU+fqnAEdWhaHhgxjxvWGuQ2nCDHFjrxD+49aImA=;
+        b=rbBHbFIPX35QYHSkScaBAunVaHc1AboVC6kY93M0+l3Ul3UZWnD520KZCy7oFBMiGu
+         yOVkGI6y4oOYMDWvkXeq4jqmKwL9BAPyQgVgMiHgOVOo6Ip+6He/rPCB00FfC/QasUAA
+         vkwe3d/i3K+tL9zDU1+E04gEngU0jq+lKFuxYscv3hM+7BBR2k0GrVJjh16U1r0kWBHP
+         030GqIxNXohpGRrEOfBkzlqNhhRve1GgFFr5mFgQCgFlhSF/adtF5gvOtTiq9T9iEDko
+         x8kTKdWyq4U8HwlvixX2zDwqNluyjDZuqEXRqiukYH0g2DBMG7fD20EsGzUMtNynW6To
+         xyUQ==
+X-Gm-Message-State: APjAAAXMlMRuKYR7XpE0kS3xMZb1AmmlldJOyfomGQ6AbiBLk9lNJ8p1
+        zlpYq1pWFn6h52l618tMWNxUMOtV
+X-Google-Smtp-Source: APXvYqygCKsyk8fvVRUSzIU3XPE51Tlzj+dpFwjd6DbDTj4Cb2mNHk/IjElijw7rMgVoV58TrJFT5g==
+X-Received: by 2002:a05:6214:11ac:: with SMTP id u12mr28429843qvv.85.1577185561630;
+        Tue, 24 Dec 2019 03:06:01 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.58
+        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.06.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:05:59 -0800 (PST)
+        Tue, 24 Dec 2019 03:06:01 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 14/17] sequencer: unlink autostash in apply_autostash()
-Date:   Tue, 24 Dec 2019 06:05:11 -0500
-Message-Id: <2b167116802c7130e4cdecd0ecd5df501fe9a6e0.1577185374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 16/17] t5520: make test_pull_autostash() accept expect_parent_num
+Date:   Tue, 24 Dec 2019 06:05:13 -0500
+Message-Id: <c70643ca9fb504509c68b6265e35ea2ab9df99bc.1577185374.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577185374.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com> <cover.1577185374.git.liu.denton@gmail.com>
@@ -74,31 +74,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Explicitly remove autostash file in apply_autostash() once it has been
-applied successfully.
-
-This is currently a no-op because the only users of this function will unlink
-the state (including the autostash file) after this function runs.
-However, in the future, we will introduce a user of the function that
-does not explicitly remove the state so we do it here.
+Before, test_pull_autostash() was hardcoded to run
+`test_cmp_rev HEAD^ copy` to test that a rebase happened. However, in a
+future patch, we plan on testing merging as well. Make
+test_pull_autostash() accept a parent number as an argument so that, in
+the future, we can test if a merge happened in addition to a rebase.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 1 +
- 1 file changed, 1 insertion(+)
+ t/t5520-pull.sh | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index ba04ee2de8..cc0391ca35 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3834,6 +3834,7 @@ int apply_autostash(const char *path)
- 				  " \"git stash drop\" at any time.\n"));
- 	}
- 
-+	unlink(path);
- 	strbuf_release(&stash_sha1);
- 	return ret;
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 602d996a33..218f469d0a 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -10,11 +10,13 @@ modify () {
  }
+ 
+ test_pull_autostash () {
++	expect_parent_num="$1" &&
++	shift &&
+ 	git reset --hard before-rebase &&
+ 	echo dirty >new_file &&
+ 	git add new_file &&
+ 	git pull "$@" . copy &&
+-	test_cmp_rev HEAD^ copy &&
++	test_cmp_rev HEAD^"$expect_parent_num" copy &&
+ 	echo dirty >expect &&
+ 	test_cmp expect new_file &&
+ 	echo "modified again" >expect &&
+@@ -356,22 +358,22 @@ test_expect_success '--rebase fails with multiple branches' '
+ 
+ test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
+ 	test_config rebase.autostash true &&
+-	test_pull_autostash --rebase
++	test_pull_autostash 1 --rebase
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
+ 	test_config rebase.autostash true &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
+ 	test_config rebase.autostash false &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --autostash & rebase.autostash unset' '
+ 	test_unconfig rebase.autostash &&
+-	test_pull_autostash --rebase --autostash
++	test_pull_autostash 1 --rebase --autostash
+ '
+ 
+ test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
+@@ -409,7 +411,7 @@ test_expect_success 'pull.rebase' '
+ 
+ test_expect_success 'pull --autostash & pull.rebase=true' '
+ 	test_config pull.rebase true &&
+-	test_pull_autostash --autostash
++	test_pull_autostash 1 --autostash
+ '
+ 
+ test_expect_success 'pull --no-autostash & pull.rebase=true' '
 -- 
 2.24.1.810.g65a2f617f4
 
