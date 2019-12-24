@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F22C2D0D7
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1D2BC2D0D6
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D1DFF206D3
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9C84E206D3
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QbJGGQxC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3U6AyuE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbfLXTzM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 14:55:12 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44841 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726298AbfLXTzK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 14:55:10 -0500
-Received: by mail-ed1-f68.google.com with SMTP id bx28so18642526edb.11
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:08 -0800 (PST)
+        id S1726704AbfLXTzQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 14:55:16 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:37717 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726201AbfLXTzN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 14:55:13 -0500
+Received: by mail-ed1-f52.google.com with SMTP id cy15so18683875edb.4
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lhCCZYi0B8Y5DKm/BdvSQpxajRpqO1GMbHDyvaMtn7g=;
-        b=QbJGGQxCOOnJyQDaYy/24GumUGG/nKmwd3WyYa5q9sRhyXYsCVUqckyNNVGRDinjmr
-         c7McJaf3/Ug1X/VhrFx+SORKEfPrInW48u9KQBIXGISxiqhAJiBAtv1iXhqcmFPatOY9
-         k13p66qcyVFW2UWxlmwP+GisjQbWyrTW5k40ZrvUDhV4PANaB53zayQzUB0znmIkjo1D
-         ETYt9CBOecMrUm8nohf/WPpHrI5UqY+sh80eVa23IBhaRNhKcE82ml/mK8cvqLO1YSAw
-         yeXNlOV3Ftlra0Gh5mMSyY10u6E4JWRfAs7rwqoIJLQIhEG3WF5ELEqY7Sfc9rCSIFPH
-         mKPQ==
+        bh=ds1KRm/kbRB6rsjU/MsCu9BlXzLi/I6icRUWkrh+Dbg=;
+        b=e3U6AyuE4uQZ2uSCi1MGwo8n4f0wzz0nq1tt036u6X3Q/4i7kbzaCsederH3qv5pGk
+         gcgzkDKeJq3RYXMJYdyvoXaL94Xt2yJlj1w2uyHWmXLMuYVEXcU1zOxbU+ypWb1Er74w
+         SSROjdu6JjYJQs+bsWzc1iSDn/TzFkq74O5XVtU1hnCUxlYq/vAiZ+sYi25s0P/o/43Q
+         hpU7RKInbLdvuQbNvIeiC/o1PeW5z8Tfv3rzJT2rwJYKVmYQwt/esUBa2a5Z/ySrBLjm
+         4Oz8eRGrOAiHCiLjg4+7OR1uSVJwJqCWoJHGxNNUYbghxOxuV8UP+HNFX3/rRruf9qYW
+         2k4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lhCCZYi0B8Y5DKm/BdvSQpxajRpqO1GMbHDyvaMtn7g=;
-        b=gARmEsevQ2j+DNuj/pjaq7LYeAAdSsX1tLWxUnmI/uusy7QhuG3KMMh9n5eQXYjsNg
-         dGy5KagT0cGb9HFJaAjZdMj2D/FGWB2PyEb4eWgLXhXJ1zRa+JvAEkeVOpmtPE5VnUxl
-         AuMAiDmTwuKY2eZQQ1j1bOKuqo+GiV8BgQ/a8PgCNt9wWXNP+tIHpgJsD+trQPY5xBZz
-         2qIoowlnTvdo8JwsEWG91BBKpKX8zVvA/GnUdKXaImE3YIw9OmfSk9eu4egkdR8/1DOv
-         Sj/ta0tPE/RdMT2Vg3hs1W83TzFopj+ocNG6XnEOuv60ZD9eFsMnBPLnChR2Y8hb+BO4
-         sFnA==
-X-Gm-Message-State: APjAAAW6qT+PDNpH3WC0PnmgJfXFnSKI+KfsJpjLSuSXAN0teMMMf1NQ
-        Qdrknm5csWgP/1a5Oj4EsHQo2b0g
-X-Google-Smtp-Source: APXvYqz4MI/A2x3J2mZj1RjX8Mt3QIiQ1CqRNh8e+qSSg0o17/eVP7CZQ2gU3k/SlVvy40xVofHDdQ==
-X-Received: by 2002:a05:6402:797:: with SMTP id d23mr40418986edy.138.1577217307197;
-        Tue, 24 Dec 2019 11:55:07 -0800 (PST)
+        bh=ds1KRm/kbRB6rsjU/MsCu9BlXzLi/I6icRUWkrh+Dbg=;
+        b=GSGabEtzUTXG6+oGpXT+2Hbilg0xoLsXqRmlSPaLh1QZ0wSoImUNUYZIOYQ9USdaIp
+         49/itUjzOGFHh/nzByjTrlGIvoeOOEmG3cHfxVfADxEwyumxndFAR7RNz9nUVDq5YegO
+         QDhrz4tG9TrU0b/L6mla5yoiJvmjcxDM2Sdaoqbq5IEidQ/MwReUFXkP5D/TU/sCO42W
+         PUiHo15M4oh0TcBTm2V/1h7ctszKJtmXH08K5Ei8Yxf2RLD6UBqzgCg7QSdBS+tDuvot
+         xPVOYPugtC1KfxTZ6eihezT6MBiTpGJlw0Uq38BV8QJNU4Pw2jD7ILA7kEdQavXHnuyj
+         An2w==
+X-Gm-Message-State: APjAAAUttTqp2AlWINzkQaVV/8/Zrpa45v0TE1k8y3uLPTPJOOixhQ4i
+        W9+zjOmBPxybuSrP778Unyk4KKVG
+X-Google-Smtp-Source: APXvYqzbIQskRYiyH2U9cn1vIjyfbkf3ZNclpOk03fpL7OqpIP8orSpQoWayJNBqgwL9sckmyBxgfg==
+X-Received: by 2002:a17:906:b2d2:: with SMTP id cf18mr38405221ejb.93.1577217310504;
+        Tue, 24 Dec 2019 11:55:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u25sm2814197ejb.53.2019.12.24.11.55.06
+        by smtp.gmail.com with ESMTPSA id m6sm2815065ejj.19.2019.12.24.11.55.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Dec 2019 11:55:06 -0800 (PST)
-Message-Id: <b307340f7c79c87b2b5a5a2a25d98ef68be4ba4f.1577217299.git.gitgitgadget@gmail.com>
+        Tue, 24 Dec 2019 11:55:10 -0800 (PST)
+Message-Id: <99388f24e56c4db7a92a65633d8d7e77a11b88e3.1577217299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
         <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Dec 2019 19:54:52 +0000
-Subject: [PATCH v3 08/15] git-rebase.txt: add more details about behavioral
- differences of backends
+Date:   Tue, 24 Dec 2019 19:54:56 +0000
+Subject: [PATCH v3 12/15] rebase tests: mark tests specific to the am-backend
+ with --am
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,148 +79,371 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+We have many rebase tests in the testsuite, and often the same test is
+repeated multiple times just testing different backends.  For those
+tests that were specifically trying to test the am backend, add the --am
+flag.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt            | 102 +++++++++++++++++++++---
- t/t3433-rebase-options-compatibility.sh |   5 +-
- 2 files changed, 94 insertions(+), 13 deletions(-)
+ t/t3400-rebase.sh                       | 10 +++++-----
+ t/t3401-rebase-and-am-rename.sh         |  4 ++--
+ t/t3404-rebase-interactive.sh           |  2 +-
+ t/t3406-rebase-message.sh               | 12 ++++++------
+ t/t3407-rebase-abort.sh                 |  6 +++---
+ t/t3420-rebase-autostash.sh             |  2 +-
+ t/t3425-rebase-topology-merges.sh       |  8 ++++----
+ t/t3432-rebase-fast-forward.sh          |  4 ++--
+ t/t3433-rebase-options-compatibility.sh |  8 ++++----
+ t/t5407-post-rewrite-hook.sh            | 12 ++++++------
+ t/t7512-status-help.sh                  | 12 ++++++------
+ 11 files changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index ff32ca1080..f1ace07c38 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -409,13 +409,10 @@ your branch contains commits which were dropped, this option can be used
- with `--keep-base` in order to drop those commits from your branch.
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 71fd6396cd..0a491f2363 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -183,19 +183,19 @@ test_expect_success 'default to common base in @{upstream}s reflog if no upstrea
+ 	test_cmp expect actual
+ '
  
- --ignore-whitespace::
--	Behaves differently depending on which backend is selected.
--+
--'am' backend: When applying a patch, ignore changes in whitespace in
--context lines if necessary.
--+
--'interactive' backend: Treat lines with only whitespace changes as
--unchanged for the sake of a three-way merge.
-+	Ignore whitespace-only changes in the commits being rebased,
-+	which may avoid "unnecessary" conflicts.  (Both backends
-+	currently have differing edgecase bugs with this option; see
-+	BEHAVIORAL DIFFERENCES.)
+-test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--am)' '
+ 	git checkout -B default-base master &&
+ 	git checkout -B default topic &&
+ 	git config branch.default.remote . &&
+ 	git config branch.default.merge refs/heads/default-base &&
+-	git rebase &&
++	git rebase --am &&
+ 	git rev-parse --verify default-base >expect &&
+ 	git rev-parse default~1 >actual &&
+ 	test_cmp expect actual &&
+ 	git checkout default-base &&
+ 	git reset --hard HEAD^ &&
+ 	git checkout default &&
+-	git rebase &&
++	git rebase --am &&
+ 	git rev-parse --verify default-base >expect &&
+ 	git rev-parse default~1 >actual &&
+ 	test_cmp expect actual
+@@ -226,7 +226,7 @@ test_expect_success 'cherry-picked commits and fork-point work together' '
  
- --whitespace=<option>::
- 	This flag is passed to the 'git apply' program
-@@ -609,9 +606,94 @@ There are some subtle differences how the backends behave.
- Directory rename detection
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ test_expect_success 'rebase --am -q is quiet' '
+ 	git checkout -b quiet topic &&
+-	git rebase -q master >output.out 2>&1 &&
++	git rebase --am -q master >output.out 2>&1 &&
+ 	test_must_be_empty output.out
+ '
  
--Directory rename heuristics are enabled in the merge and interactive
--backends.  Due to the lack of accurate tree information, directory
--rename detection is disabled in the am backend.
-+Due to the lack of accurate tree information (arising from
-+constructing fake ancestors with the limited information available in
-+patches), directory rename detection is disabled in the am backend.
-+Disabled directory rename detection means that if one side of history
-+renames a directory and the other adds new files to the old directory,
-+then the new files will be left behind in the old directory without
-+any warning at the time of rebasing that you may want to move these
-+files into the new directory.
-+
-+Directory rename detection works with the merge and interactive
-+backends to provide you warnings in such cases.
-+
-+Context
-+~~~~~~~
-+
-+The am backend works by creating a sequence of patches (by calling
-+`format-patch` internally), and then applying the patches in sequence
-+(calling `am` internally).  Patches are composed of multiple hunks,
-+each with line numbers, a context region, and the actual changes.  The
-+line numbers have to be taken with some fuzz, since the other side
-+will likely have inserted or deleted lines earlier in the file.  The
-+context region is meant to help find how to adjust the line numbers in
-+order to apply the changes to the right lines.  However, if multiple
-+areas of the code have the same surrounding lines of context, the
-+wrong one can be picked.  There are real-world cases where this has
-+caused commits to be reapplied incorrectly with no conflicts reported.
-+Setting diff.context to a larger value may prevent such types of
-+problems, but increases the chance of spurious conflicts (since it
-+will require more lines of matching context to apply).
-+
-+The interactive backend works with a full copy of each relevant file,
-+insulating it from these types of problems.
-+
-+Labelling of conflicts markers
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+When there are content conflicts, the merge machinery tries to
-+annotate each side's conflict markers with the commits where the
-+content came from.  Since the am backend drops the original
-+information about the rebased commits and their parents (and instead
-+generates new fake commits based off limited information in the
-+generated patches), those commits cannot be identified; instead it has
-+to fall back to a commit summary.  Also, when merge.conflictStyle is
-+set to diff3, the am backend will use "constructed merge base" to
-+label the content from the merge base, and thus provide no information
-+about the merge base commit whatsoever.
-+
-+The interactive backend works with the full commits on both sides of
-+history and thus has no such limitations.
-+
-+--ignore-whitespace
-+~~~~~~~~~~~~~~~~~~~
-+
-+The --ignore-whitespace option is supposed to ignore whitespace-only
-+changes if it allows the code to merge cleanly.  Unfortunately, the
-+different backends implement this differently, and both have different
-+edge case bugs.
-++
-+'am' backend: When applying a patch, ignore changes in whitespace in
-+context lines if necessary.  (Which implies that if the whitespace
-+change was not in the context lines but on a line with a real change,
-+then the rebase will still fail with "unnecessary" content conflicts.)
-++
-+'interactive' backend: Treat lines with only whitespace changes as
-+unchanged for the sake of a three-way merge.  This means that if one
-+side made no changes and the commits being rebased had whitespace-only
-+changes, those whitespaces fixups will be discarded despite the fact
-+that they present no content conflict.
-+
-+Miscellaneous differences
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+There are a few more behavioral differences that most folks would
-+probably consider inconsequential but which are mentioned for
-+completeness:
-+
-+* Reflog: The two backends will use different wording when describing
-+  the changes made in the reflog, though both will make use of the
-+  word "rebase".
-+
-+* Progress, informational, and error messages: The two backends
-+  provide slightly different progress and informational messages.
-+  Also, the am backend writes error messages (such as "Your files
-+  would be overwritten...") to stdout, while the interactive backend
-+  writes them to stderr.
-+
-+* State directories: The two backends keep their state in different
-+  directories under .git/
+@@ -325,7 +325,7 @@ test_expect_success 'rebase --am and --show-current-patch' '
+ 		echo two >>init.t &&
+ 		git commit -a -m two &&
+ 		git tag two &&
+-		test_must_fail git rebase -f --onto init HEAD^ &&
++		test_must_fail git rebase --am -f --onto init HEAD^ &&
+ 		GIT_TRACE=1 git rebase --show-current-patch >/dev/null 2>stderr &&
+ 		grep "show.*$(git rev-parse two)" stderr
+ 	)
+diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
+index a0b9438b22..50803958fd 100755
+--- a/t/t3401-rebase-and-am-rename.sh
++++ b/t/t3401-rebase-and-am-rename.sh
+@@ -52,13 +52,13 @@ test_expect_success 'rebase --interactive: directory rename detected' '
+ 	)
+ '
  
- include::merge-strategies.txt[]
+-test_expect_failure 'rebase (am): directory rename detected' '
++test_expect_failure 'rebase --am: directory rename detected' '
+ 	(
+ 		cd dir-rename &&
  
+ 		git checkout B^0 &&
+ 
+-		git -c merge.directoryRenames=true rebase A &&
++		git -c merge.directoryRenames=true rebase --am A &&
+ 
+ 		git ls-files -s >out &&
+ 		test_line_count = 5 out &&
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ae6e55ce79..743b7e511a 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1137,7 +1137,7 @@ test_expect_success C_LOCALE_OUTPUT 'rebase --edit-todo does not work on non-int
+ 	git checkout conflict-branch &&
+ 	(
+ 		set_fake_editor &&
+-		test_must_fail git rebase -f --onto HEAD~2 HEAD~ &&
++		test_must_fail git rebase -f --am --onto HEAD~2 HEAD~ &&
+ 		test_must_fail git rebase --edit-todo
+ 	) &&
+ 	git rebase --abort
+diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+index 0c2c569f95..7ce617fc1f 100755
+--- a/t/t3406-rebase-message.sh
++++ b/t/t3406-rebase-message.sh
+@@ -23,24 +23,24 @@ test_expect_success 'rebase -m' '
+ '
+ 
+ test_expect_success 'rebase against master twice' '
+-	git rebase master >out &&
++	git rebase --am master >out &&
+ 	test_i18ngrep "Current branch topic is up to date" out
+ '
+ 
+ test_expect_success 'rebase against master twice with --force' '
+-	git rebase --force-rebase master >out &&
++	git rebase --force-rebase --am master >out &&
+ 	test_i18ngrep "Current branch topic is up to date, rebase forced" out
+ '
+ 
+ test_expect_success 'rebase against master twice from another branch' '
+ 	git checkout topic^ &&
+-	git rebase master topic >out &&
++	git rebase --am master topic >out &&
+ 	test_i18ngrep "Current branch topic is up to date" out
+ '
+ 
+ test_expect_success 'rebase fast-forward to master' '
+ 	git checkout topic^ &&
+-	git rebase topic >out &&
++	git rebase --am topic >out &&
+ 	test_i18ngrep "Fast-forwarded HEAD to topic" out
+ '
+ 
+@@ -89,7 +89,7 @@ test_expect_success 'GIT_REFLOG_ACTION' '
+ 	git checkout -b reflog-topic start &&
+ 	test_commit reflog-to-rebase &&
+ 
+-	git rebase reflog-onto &&
++	git rebase --am reflog-onto &&
+ 	git log -g --format=%gs -3 >actual &&
+ 	cat >expect <<-\EOF &&
+ 	rebase finished: returning to refs/heads/reflog-topic
+@@ -99,7 +99,7 @@ test_expect_success 'GIT_REFLOG_ACTION' '
+ 	test_cmp expect actual &&
+ 
+ 	git checkout -b reflog-prefix reflog-to-rebase &&
+-	GIT_REFLOG_ACTION=change-the-reflog git rebase reflog-onto &&
++	GIT_REFLOG_ACTION=change-the-reflog git rebase --am reflog-onto &&
+ 	git log -g --format=%gs -3 >actual &&
+ 	cat >expect <<-\EOF &&
+ 	rebase finished: returning to refs/heads/reflog-prefix
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index 910f218284..3e31826170 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -96,14 +96,14 @@ testrebase() {
+ 	'
+ }
+ 
+-testrebase "" .git/rebase-apply
++testrebase " --am" .git/rebase-apply
+ testrebase " --merge" .git/rebase-merge
+ 
+-test_expect_success 'rebase --quit' '
++test_expect_success 'rebase --am --quit' '
+ 	cd "$work_dir" &&
+ 	# Clean up the state from the previous one
+ 	git reset --hard pre-rebase &&
+-	test_must_fail git rebase master &&
++	test_must_fail git rebase --am master &&
+ 	test_path_is_dir .git/rebase-apply &&
+ 	head_before=$(git rev-parse HEAD) &&
+ 	git rebase --quit &&
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index 5f7e73cf83..3816159e20 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -234,7 +234,7 @@ test_expect_success "rebase: noop rebase" '
+ 	git checkout feature-branch
+ '
+ 
+-testrebase "" .git/rebase-apply
++testrebase " --am" .git/rebase-apply
+ testrebase " --merge" .git/rebase-merge
+ testrebase " --interactive" .git/rebase-merge
+ 
+diff --git a/t/t3425-rebase-topology-merges.sh b/t/t3425-rebase-topology-merges.sh
+index fd8efe84fe..19700b025b 100755
+--- a/t/t3425-rebase-topology-merges.sh
++++ b/t/t3425-rebase-topology-merges.sh
+@@ -54,7 +54,7 @@ test_run_rebase () {
+ 		test_linear_range 'n o' e..
+ 	"
+ }
+-test_run_rebase success ''
++test_run_rebase success --am
+ test_run_rebase success -m
+ test_run_rebase success -i
+ 
+@@ -70,7 +70,7 @@ test_run_rebase () {
+ 		test_linear_range "\'"$expected"\'" d..
+ 	"
+ }
+-test_run_rebase success 'n o e' ''
++test_run_rebase success 'n o e' --am
+ test_run_rebase success 'n o e' -m
+ test_run_rebase success 'n o e' -i
+ 
+@@ -86,7 +86,7 @@ test_run_rebase () {
+ 		test_linear_range "\'"$expected"\'" c..
+ 	"
+ }
+-test_run_rebase success 'd n o e' ''
++test_run_rebase success 'd n o e' --am
+ test_run_rebase success 'd n o e' -m
+ test_run_rebase success 'd n o e' -i
+ 
+@@ -102,7 +102,7 @@ test_run_rebase () {
+ 		test_linear_range "\'"$expected"\'" c..
+ 	"
+ }
+-test_run_rebase success 'd n o e' ''
++test_run_rebase success 'd n o e' --am
+ test_run_rebase success 'd n o e' -m
+ test_run_rebase success 'd n o e' -i
+ 
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 40388ccf9f..4b3cecce56 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -28,8 +28,8 @@ test_rebase_same_head () {
+ 	shift &&
+ 	cmp_f="$1" &&
+ 	shift &&
+-	test_rebase_same_head_ $status_n $what_n $cmp_n "" "$*" &&
+-	test_rebase_same_head_ $status_f $what_f $cmp_f " --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n " --am" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f " --am --no-ff" "$*"
+ 	test_rebase_same_head_ $status_n $what_n $cmp_n " --merge" "$*" &&
+ 	test_rebase_same_head_ $status_f $what_f $cmp_f " --merge --no-ff" "$*"
+ }
 diff --git a/t/t3433-rebase-options-compatibility.sh b/t/t3433-rebase-options-compatibility.sh
-index 5166f158dd..bd4d2d2f63 100755
+index bd4d2d2f63..a07e1f276b 100755
 --- a/t/t3433-rebase-options-compatibility.sh
 +++ b/t/t3433-rebase-options-compatibility.sh
-@@ -10,9 +10,8 @@ test_description='tests to ensure compatibility between am and interactive backe
- GIT_AUTHOR_DATE="1999-04-02T08:03:20+05:30"
- export GIT_AUTHOR_DATE
+@@ -51,9 +51,9 @@ test_expect_success '--ignore-whitespace works with am backend' '
+ 	new line 2
+ 	line 3
+ 	EOF
+-	test_must_fail git rebase main side &&
++	test_must_fail git rebase --am main side &&
+ 	git rebase --abort &&
+-	git rebase --ignore-whitespace main side &&
++	git rebase --am --ignore-whitespace main side &&
+ 	test_cmp expect file
+ '
  
--# This is a special case in which both am and interactive backends
--# provide the same output. It was done intentionally because
--# both the backends fall short of optimal behaviour.
-+# This is a common case in which both am and interactive backends
-+# provide the same output with --ignore-whitespace.
- test_expect_success 'setup' '
- 	git checkout -b topic &&
- 	q_to_tab >file <<-\EOF &&
+@@ -71,7 +71,7 @@ test_expect_success '--ignore-whitespace works with interactive backend' '
+ 
+ test_expect_success '--committer-date-is-author-date works with am backend' '
+ 	git commit --amend &&
+-	git rebase --committer-date-is-author-date HEAD^ &&
++	git rebase --am --committer-date-is-author-date HEAD^ &&
+ 	git show HEAD --pretty="format:%ai" >authortime &&
+ 	git show HEAD --pretty="format:%ci" >committertime &&
+ 	test_cmp authortime committertime
+@@ -103,7 +103,7 @@ test_expect_success '--committer-date-is-author-date works with rebase -r' '
+ # sets to +0530.
+ test_expect_success '--ignore-date works with am backend' '
+ 	git commit --amend --date="$GIT_AUTHOR_DATE" &&
+-	git rebase --ignore-date HEAD^ &&
++	git rebase --am --ignore-date HEAD^ &&
+ 	git show HEAD --pretty="format:%ai" >authortime &&
+ 	grep "+0000" authortime
+ '
+diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+index 7344253bfb..a8a73616e4 100755
+--- a/t/t5407-post-rewrite-hook.sh
++++ b/t/t5407-post-rewrite-hook.sh
+@@ -53,10 +53,10 @@ test_expect_success 'git commit --amend --no-post-rewrite' '
+ 	test ! -f post-rewrite.data
+ '
+ 
+-test_expect_success 'git rebase' '
++test_expect_success 'git rebase --am' '
+ 	git reset --hard D &&
+ 	clear_hook_input &&
+-	test_must_fail git rebase --onto A B &&
++	test_must_fail git rebase --am --onto A B &&
+ 	echo C > foo &&
+ 	git add foo &&
+ 	git rebase --continue &&
+@@ -68,10 +68,10 @@ test_expect_success 'git rebase' '
+ 	verify_hook_input
+ '
+ 
+-test_expect_success 'git rebase --skip' '
++test_expect_success 'git rebase --am --skip' '
+ 	git reset --hard D &&
+ 	clear_hook_input &&
+-	test_must_fail git rebase --onto A B &&
++	test_must_fail git rebase --am --onto A B &&
+ 	test_must_fail git rebase --skip &&
+ 	echo D > foo &&
+ 	git add foo &&
+@@ -84,10 +84,10 @@ test_expect_success 'git rebase --skip' '
+ 	verify_hook_input
+ '
+ 
+-test_expect_success 'git rebase --skip the last one' '
++test_expect_success 'git rebase --am --skip the last one' '
+ 	git reset --hard F &&
+ 	clear_hook_input &&
+-	test_must_fail git rebase --onto D A &&
++	test_must_fail git rebase --am --onto D A &&
+ 	git rebase --skip &&
+ 	echo rebase >expected.args &&
+ 	cat >expected.data <<-EOF &&
+diff --git a/t/t7512-status-help.sh b/t/t7512-status-help.sh
+index 66d7a62797..d22b0acf2a 100755
+--- a/t/t7512-status-help.sh
++++ b/t/t7512-status-help.sh
+@@ -71,10 +71,10 @@ test_expect_success 'prepare for rebase conflicts' '
+ '
+ 
+ 
+-test_expect_success 'status when rebase in progress before resolving conflicts' '
++test_expect_success 'status when rebase --am in progress before resolving conflicts' '
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD^^) &&
+-	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	test_must_fail git rebase --am HEAD^ --onto HEAD^^ &&
+ 	cat >expected <<EOF &&
+ rebase in progress; onto $ONTO
+ You are currently rebasing branch '\''rebase_conflicts'\'' on '\''$ONTO'\''.
+@@ -94,11 +94,11 @@ EOF
+ '
+ 
+ 
+-test_expect_success 'status when rebase in progress before rebase --continue' '
++test_expect_success 'status when rebase --am in progress before rebase --continue' '
+ 	git reset --hard rebase_conflicts &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD^^) &&
+-	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	test_must_fail git rebase --am HEAD^ --onto HEAD^^ &&
+ 	echo three >main.txt &&
+ 	git add main.txt &&
+ 	cat >expected <<EOF &&
+@@ -688,7 +688,7 @@ EOF
+ '
+ 
+ 
+-test_expect_success 'status when rebase conflicts with statushints disabled' '
++test_expect_success 'status when rebase --am conflicts with statushints disabled' '
+ 	git reset --hard master &&
+ 	git checkout -b statushints_disabled &&
+ 	test_when_finished "git config --local advice.statushints true" &&
+@@ -698,7 +698,7 @@ test_expect_success 'status when rebase conflicts with statushints disabled' '
+ 	test_commit three_statushints main.txt three &&
+ 	test_when_finished "git rebase --abort" &&
+ 	ONTO=$(git rev-parse --short HEAD^^) &&
+-	test_must_fail git rebase HEAD^ --onto HEAD^^ &&
++	test_must_fail git rebase --am HEAD^ --onto HEAD^^ &&
+ 	cat >expected <<EOF &&
+ rebase in progress; onto $ONTO
+ You are currently rebasing branch '\''statushints_disabled'\'' on '\''$ONTO'\''.
 -- 
 gitgitgadget
 
