@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD1FBC2D0D5
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03966C2D0D2
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A24EC206D3
+	by mail.kernel.org (Postfix) with ESMTP id CDFBB206CB
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIhMSnnc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r7nL0eHb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726284AbfLXTzH (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726314AbfLXTzI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 14:55:08 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:37708 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726201AbfLXTzH (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Dec 2019 14:55:07 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43493 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726214AbfLXTzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 14:55:06 -0500
-Received: by mail-ed1-f67.google.com with SMTP id dc19so18649632edb.10
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:05 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id cy15so18683762edb.4
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mI8fjeSdKsXqLIxIijlISP0IXKZR1ghClmld4gvxCyc=;
-        b=JIhMSnncjVLpmt6iw1yFOniIBBiL7X6autTmISGI1k6FMiyKHdlMtow4ahetmzEsXk
-         N/9XZLuIaswEyr6wNBSbf0EcXx8g3wlPG1M+86a0BcKXOMPhu7XNW2RM25BEDvyZ+Fdx
-         I3IaqhEzMdr0VsqzRMmDjU5t3HH/xBiRlG2YWCDFV0rFbebz2zQhwUrxiQQe9xKM+sSj
-         CWgtNuqd9owwKRfO/VOAkbenoM/Ui2HkRnuGNOv91jj5zHM56+RaTbWFZMjWHRFExkrw
-         zzHEKW2/vrNq77+bXsCgkor8ckPAFi6Hn2mZaUylyfW2go/bqUE96E5+CvzPnTP9sMDA
-         CylA==
+        bh=QDbhLq+anCcBMZ0842z90xgm8GuAOJH2crkKX3N2XTU=;
+        b=r7nL0eHbYmEfljbRbnQjoaOHMV2YdvhoSxPi/tOV32LWD296V9JXYhLBGkE8cDpvbs
+         +gSbLujrpOeRSYb6eiTe0vT1c7DVXKQj8p+grNlqjNHJwDxfy2YtJZ6e8QDN/ymr5DJu
+         qMGJ3bxkcPtOfkqiacqviH7KJfsRH6vCkAKwq13c7+e2J2xwOow3it4d+96hm4e1vMlf
+         eWiwm4sa34VDTG+L5Fz/KnnVMLQQWmFqnesO1zhHnZ28GHNbCYz7EVu8BY4F0Zed1tw4
+         t+gykuRBjNcHrEJmlN3QdGWS5YqlUU++hqpytqAlDN3S5r23NabuCkf69BngGUI5+sU+
+         xbWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mI8fjeSdKsXqLIxIijlISP0IXKZR1ghClmld4gvxCyc=;
-        b=dcNmxFiqcpJ4hNZgiHKXaxQ8Ie6bfiBTWINEogb8yMbAFOVL4O3XfKU14xwyvZZzIF
-         7Ckdix1yWKoa38Qv8L3Bb62K6tiYK4YOJo/6EG2mR/eMs8sn3t/TnCHc5EG05r+E0iov
-         w2P0zWnxCKIqjnhQqwW0Vn63Alb5ehrVViVPLotrPT69cPwJTLLT20kzC8WOuJ6hMRE3
-         HLjD9iUY8741qE38Q2Ldkmys8gvdLqbGp8PruXSHLWA0sl8VE8r17Kh7GRR+GC1THxGW
-         qC7OeHDHHQz365aZOME6o6dzJhWSHyVc8dAtdr1MQQERgL6YwI2TPymcbdISZfiiNRqn
-         DTzA==
-X-Gm-Message-State: APjAAAXFLxUM996JDsIQzWyP1HY0zU75i1One7zKXoQOD/Kmk8p0IB87
-        EIxlU6/N31ItB+765hCdM1LXb33e
-X-Google-Smtp-Source: APXvYqyhxmdLSZxDGuBvnceN7E95uLSxa5+imPKIENA66L4R0greYBRTDsK7531p4iGsbOuOHWphsQ==
-X-Received: by 2002:a05:6402:17fb:: with SMTP id t27mr40818385edy.159.1577217304884;
-        Tue, 24 Dec 2019 11:55:04 -0800 (PST)
+        bh=QDbhLq+anCcBMZ0842z90xgm8GuAOJH2crkKX3N2XTU=;
+        b=TBm6QrYMEVz/t26iEgaOW6Ewq31z/uqNULX7RpMMS48o4m1hFRVnajSB0J0UVGrytE
+         skZoOLa0Gx5NNQ/re1pUr2oxm4ZH/7iCw5Y2KbqO1A8XDPOE1YfBt4EwF5htF1ahUXK3
+         1ZWBGoZAai3amippPmX2frj9gJ1wlVY0EkCTF6RaAKNMjPmfC0oOrtBNALnqjbfoboEI
+         ru0g3c8O74g43chSoCkLujVqj4hdqcd9bD613lcHcmFbM7mGw0BPJej4GvWhn4cTzsfM
+         oXnI4/GdNoMao0IM59BSrAniByJqJx6hI5XQwPcBnyVKuYJ7bL6UYGY1tYwrtFcTgFyS
+         VmIA==
+X-Gm-Message-State: APjAAAV/RJMcGidKdbS7cZ0weJYTHHHxEGUjC16YI+JoFJ//mZZoYpRr
+        Iu28XwWDkwhRnz98CkGKp2UFyamu
+X-Google-Smtp-Source: APXvYqy2IQbzLXn229piccPrx9Tqsn7eIlv5A9lNtHP5d4FUeePsF4SXj70/avUNXvwAoIZqE6xTFQ==
+X-Received: by 2002:aa7:df09:: with SMTP id c9mr41034425edy.133.1577217305709;
+        Tue, 24 Dec 2019 11:55:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f7sm2796639ejq.38.2019.12.24.11.55.04
+        by smtp.gmail.com with ESMTPSA id m24sm2797153edr.83.2019.12.24.11.55.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Dec 2019 11:55:04 -0800 (PST)
-Message-Id: <ee26f5a161c2e21ee9a1723bd2851f323f93cb05.1577217299.git.gitgitgadget@gmail.com>
+        Tue, 24 Dec 2019 11:55:05 -0800 (PST)
+Message-Id: <34a69def330c2d0fc00f34b0897604c55bed1514.1577217299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
         <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Dec 2019 19:54:49 +0000
-Subject: [PATCH v3 05/15] rebase: fix handling of restrict_revision
+Date:   Tue, 24 Dec 2019 19:54:50 +0000
+Subject: [PATCH v3 06/15] t3432: make these tests work with either am or merge
+ backends
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,72 +79,115 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-restrict_revision in the original shell script was an excluded revision
-range.  It is also treated that way by the am-backend.  In the
-conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
-implement the logic to initialize $revisions in C", 2018-08-28)), the
-interactive-backend accidentally treated it as a positive revision
-rather than a negated one.
+t3432 had several stress tests for can_fast_forward(), whose intent was
+to ensure we were using the optimization of just fast forwarding when
+possible.  However, these tests verified that fast forwards had happened
+based on the output that rebase printed to the terminal.  We can instead
+test more directly that we actually fast-forwarded by checking the
+reflog, which also has the side effect of making the tests applicable
+for the merge/interactive backend.
 
-This was missed as there were no tests in the testsuite that tested an
-interactive rebase with fork-point behavior.
+This change does lose the distinction between "noop" and "noop-force",
+but as stated in commit c9efc216830f ("t3432: test for --no-ff's
+interaction with fast-forward", 2019-08-27) which introduced that
+distinction: "These tests aren't supposed to endorse the status quo,
+just test for what we're currently doing.".
+
+This change does not actually run these tests with the merge/interactive
+backend; instead this is just a preparatory commit.  A subsequent commit
+which fixes can_fast_forward() to work with that backend will then also
+change t3432 to add tests of that backend as well.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c  |  4 ++--
- t/t3400-rebase.sh | 20 +++++++++++++++++++-
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ t/t3432-rebase-fast-forward.sh | 48 ++++++++++++++++------------------
+ 1 file changed, 22 insertions(+), 26 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 5014c9a437..f1de5c8186 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -364,8 +364,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 92f95b57da..7432c0e241 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -44,19 +44,15 @@ test_rebase_same_head_ () {
+ 	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
+ 		oldhead=\$(git rev-parse HEAD) &&
+ 		test_when_finished 'git reset --hard \$oldhead' &&
++		cp .git/logs/HEAD expect &&
+ 		git rebase$flag $* >stdout &&
+ 		if test $what = work
+ 		then
+-			# Must check this case first, for 'is up to
+-			# date, rebase forced[...]rewinding head' cases
+-			test_i18ngrep 'rewinding head' stdout
++			old=\$(wc -l <expect) &&
++			test_line_count '-gt' \$old .git/logs/HEAD
+ 		elif test $what = noop
+ 		then
+-			test_i18ngrep 'is up to date' stdout &&
+-			test_i18ngrep ! 'rebase forced' stdout
+-		elif test $what = noop-force
+-		then
+-			test_i18ngrep 'is up to date, rebase forced' stdout
++			test_cmp expect .git/logs/HEAD
+ 		fi &&
+ 		newhead=\$(git rev-parse HEAD) &&
+ 		if test $cmp = same
+@@ -71,14 +67,14 @@ test_rebase_same_head_ () {
  
- 	argv_array_pushl(&make_script_args, "", revisions, NULL);
- 	if (opts->restrict_revision)
--		argv_array_push(&make_script_args,
--				oid_to_hex(&opts->restrict_revision->object.oid));
-+		argv_array_pushf(&make_script_args, "^%s",
-+				 oid_to_hex(&opts->restrict_revision->object.oid));
+ changes='no changes'
+ test_rebase_same_head success noop same success work same
+-test_rebase_same_head success noop same success noop-force same master
+-test_rebase_same_head success noop same success noop-force diff --onto B B
+-test_rebase_same_head success noop same success noop-force diff --onto B... B
+-test_rebase_same_head success noop same success noop-force same --onto master... master
+-test_rebase_same_head success noop same success noop-force same --keep-base master
+-test_rebase_same_head success noop same success noop-force same --keep-base
+-test_rebase_same_head success noop same success noop-force same --no-fork-point
+-test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
++test_rebase_same_head success noop same success work same master
++test_rebase_same_head success noop same success work diff --onto B B
++test_rebase_same_head success noop same success work diff --onto B... B
++test_rebase_same_head success noop same success work same --onto master... master
++test_rebase_same_head success noop same success work same --keep-base master
++test_rebase_same_head success noop same success work same --keep-base
++test_rebase_same_head success noop same success work same --no-fork-point
++test_rebase_same_head success noop same success work same --keep-base --no-fork-point
+ test_rebase_same_head success noop same success work same --fork-point master
+ test_rebase_same_head success noop same success work diff --fork-point --onto B B
+ test_rebase_same_head success noop same success work diff --fork-point --onto B... B
+@@ -91,14 +87,14 @@ test_expect_success 'add work same to side' '
  
- 	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.argc, make_script_args.argv,
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 79762b989a..71fd6396cd 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
- 	git rebase master
+ changes='our changes'
+ test_rebase_same_head success noop same success work same
+-test_rebase_same_head success noop same success noop-force same master
+-test_rebase_same_head success noop same success noop-force diff --onto B B
+-test_rebase_same_head success noop same success noop-force diff --onto B... B
+-test_rebase_same_head success noop same success noop-force same --onto master... master
+-test_rebase_same_head success noop same success noop-force same --keep-base master
+-test_rebase_same_head success noop same success noop-force same --keep-base
+-test_rebase_same_head success noop same success noop-force same --no-fork-point
+-test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
++test_rebase_same_head success noop same success work same master
++test_rebase_same_head success noop same success work diff --onto B B
++test_rebase_same_head success noop same success work diff --onto B... B
++test_rebase_same_head success noop same success work same --onto master... master
++test_rebase_same_head success noop same success work same --keep-base master
++test_rebase_same_head success noop same success work same --keep-base
++test_rebase_same_head success noop same success work same --no-fork-point
++test_rebase_same_head success noop same success work same --keep-base --no-fork-point
+ test_rebase_same_head success noop same success work same --fork-point master
+ test_rebase_same_head success noop same success work diff --fork-point --onto B B
+ test_rebase_same_head success noop same success work diff --fork-point --onto B... B
+@@ -112,8 +108,8 @@ test_expect_success 'add work same to upstream' '
  '
  
--test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
- 	git checkout -b default-base master &&
- 	git checkout -b default topic &&
- 	git config branch.default.remote . &&
- 	git config branch.default.merge refs/heads/default-base &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual &&
-+	git checkout default-base &&
-+	git reset --hard HEAD^ &&
-+	git checkout default &&
-+	git rebase --merge &&
-+	git rev-parse --verify default-base >expect &&
-+	git rev-parse default~1 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
-+	git checkout -B default-base master &&
-+	git checkout -B default topic &&
-+	git config branch.default.remote . &&
-+	git config branch.default.merge refs/heads/default-base &&
- 	git rebase &&
- 	git rev-parse --verify default-base >expect &&
- 	git rev-parse default~1 >actual &&
+ changes='our and their changes'
+-test_rebase_same_head success noop same success noop-force diff --onto B B
+-test_rebase_same_head success noop same success noop-force diff --onto B... B
++test_rebase_same_head success noop same success work diff --onto B B
++test_rebase_same_head success noop same success work diff --onto B... B
+ test_rebase_same_head success noop same success work diff --onto master... master
+ test_rebase_same_head success noop same success work diff --keep-base master
+ test_rebase_same_head success noop same success work diff --keep-base
 -- 
 gitgitgadget
 
