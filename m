@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A21A8C2D0C3
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2F4FC2D0D6
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7785F206CB
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C48D3206CB
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kuH/M/RY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YxiY6QST"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726259AbfLXTzG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 14:55:06 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45626 "EHLO
+        id S1726325AbfLXTzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 14:55:10 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45630 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726225AbfLXTzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 14:55:06 -0500
-Received: by mail-ed1-f67.google.com with SMTP id v28so18624112edw.12
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:05 -0800 (PST)
+        with ESMTP id S1726272AbfLXTzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 14:55:09 -0500
+Received: by mail-ed1-f67.google.com with SMTP id v28so18624144edw.12
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=qn1fi0por3x0HTg6UJQb4898IQuTlhoQdD5bPS1bny4=;
-        b=kuH/M/RYx3gmmgxA5qqN5/RhC/reo8MdHz/sWBlpZLnde/K9XzB/tCSLqxL8xVrZCE
-         yGoYbutWwBIsIEx06ch/iVw2go+sv5Ww5SH4sxlU1PLMjnRazJjBnB4LTNTrqksePQkg
-         1L1bKPonPcIqLfgijBFkT28tu5/T3eOtUHYHU/C9E2IkfTh+VmV4xc2+yj12IRqgbGIZ
-         ESxMQVNLyd5lKiNksaOvsVusvg2f6vS12H5hgkCNZB9qd92MV2wyeqXkweY9r3+Lu/lJ
-         iSBGvEOVmo8BtBXBMQuLQRzxuuZl5h2WmDbRlqz9JrLNB+0nMpugdZtRh29oxJvNdGFJ
-         hHYw==
+        bh=ckHsml5tF8rbwrITNsBewcKB/RzAcohGKcZWm6pvdhc=;
+        b=YxiY6QSTP5ZlWiwjGTktnoEWK12xSG91i/AxZJA0nTbSB2F3g0SSvJ+1FygnLMEVVb
+         9+RRX1i3Mq+PHBk0olhJEFDZ0Ke5+s+tdN/yjflnxEd/e9KMyuSSA4zkoGfwzT1Jjn/K
+         H2227n9ojaf0Xjq1q/sW9UB3hc1CcTK4z7oPamLY301Y/XPL4jryKxWee+epJFHj5vGS
+         usqYkKsYjG7BxIP+hFoZ8ilagG85OP4fG9iQr/PgVKkMIPMvi+5S2G8M8K69/n1IIkv2
+         kxazKXBJbKvm5U7jJCKEgbWzMJ60SkpPVeCFBKdGYeWeR3GRBUYwihb1Hs2GtvMBYuPH
+         rwJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=qn1fi0por3x0HTg6UJQb4898IQuTlhoQdD5bPS1bny4=;
-        b=AntkHI/P1/E9GBsMClJM2iSF2P+rfBFm3eyeY6t3dIg2vDpuZ8N1D9OmWC+YOfFtDr
-         2jPVwGnAHyVmEPDz2CWtPke3tvFTGVHbSTJAfNwkBqk61ga2LEBYgsh0Fs/K3ycr6U7e
-         eXjff/93RpSWjAKnGT0osAYwT8BLx1NuK1rwzW+yC66h8rVf21EJFYUDobrOrvSz71Vy
-         66WIFjnmSDzaEo1KeuztXmFzUbrqzYPLAwFFk9e67xWncnwPyota9gPL3aBd7Gj4+0bX
-         UOgkmg0xp0DI6n6qZLsh4wkfSg/fSs5uNjra1ih8fiEoZNPaaoop0WVGwWriO4Y9LWGa
-         ZJEw==
-X-Gm-Message-State: APjAAAVBRDqVLjQWE3YQjrGdvDgkFqh+zn9o/O2UoxJ21twBM7s2p+nh
-        cmaVor6ceHlkWjzGVFQa1y9zQch9
-X-Google-Smtp-Source: APXvYqyOHyqBQP8F1UOqZNvOVUvH5zzUqk+JdpjlOuz14sdBvnSuAbhddEH449/cOoIhEs65eT8gPA==
-X-Received: by 2002:a05:6402:1351:: with SMTP id y17mr40556824edw.130.1577217304159;
-        Tue, 24 Dec 2019 11:55:04 -0800 (PST)
+        bh=ckHsml5tF8rbwrITNsBewcKB/RzAcohGKcZWm6pvdhc=;
+        b=aGND9lTA5ZoLVuMGVi/e9VlzVvQkQqdzF8L9TS+MX5+qAqda4IaL2rSbgWb7QTPGs3
+         RYtmjzCEkvwGp2k3Fj59PMP2x9LI18in4SEudeprq0O2ZDNEmJMHLNAlrPvAHNsPtNDk
+         6441wZ8sw4l3nuGyvDaC5q3GXNtxcoaUF7PXiKv91C1CUIN1gHxv0AvwdJxiyj9ORqHk
+         P8yYQ6eRn8gDhSrrnwRU/iub9NL2VuLNi6mEM++ad0sDzDZFp3GX3X/Ed2bY5B0vPSY8
+         BGDS0vZjgUaxRcKUGNwH9EwSr4Mbs1UX7DjJW5cjoD/xYz2pgVOGhM+Ecpd4fsaI1Lzh
+         DQFg==
+X-Gm-Message-State: APjAAAUp4/FZUCVKtUHnbqyCiQ4WUWGkkHSBPXSTD9JFtoZWN9DX4pjW
+        hRfop9+G7/yWChDG5TEq5zDMnsPw
+X-Google-Smtp-Source: APXvYqwcGTi5IIxjJQhBsmEW0vtBstWWNj6xtrTGfYiZPQ1YeBZn9yoEva+XElpaPmyJjL5UwAtRwA==
+X-Received: by 2002:a05:6402:17cf:: with SMTP id s15mr40218026edy.189.1577217306440;
+        Tue, 24 Dec 2019 11:55:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y11sm2745630edw.73.2019.12.24.11.55.03
+        by smtp.gmail.com with ESMTPSA id l11sm2809101ejq.4.2019.12.24.11.55.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Dec 2019 11:55:03 -0800 (PST)
-Message-Id: <478479358ff21afe6b8374f076d2ed5e139ae6c0.1577217299.git.gitgitgadget@gmail.com>
+        Tue, 24 Dec 2019 11:55:06 -0800 (PST)
+Message-Id: <f2c92853b47dc5f661e9b20fd390bc6d823ad6d9.1577217299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
         <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Dec 2019 19:54:48 +0000
-Subject: [PATCH v3 04/15] rebase: make sure to pass along the quiet flag to
- the sequencer
+Date:   Tue, 24 Dec 2019 19:54:51 +0000
+Subject: [PATCH v3 07/15] rebase: allow more types of rebases to fast-forward
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,57 +78,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
+In the past, we dis-allowed rebases using the interactive backend from
+performing a fast-forward to short-circuit the rebase operation.  This
+made sense for explicitly interactive rebases and some implicitly
+interactive rebases, but certainly became overly stringent when the
+merge backend was re-implemented via the interactive backend.
+
+Just as the am-based rebase has always had to disable the fast-forward
+based on a variety of conditions or flags (e.g. --signoff, --whitespace,
+etc.), we need to do the same but now with a few more options.  However,
+continuing to use REBASE_FORCE for tracking this is problematic because
+the interactive backend used it for a different purpose.  (When
+REBASE_FORCE wasn't set, the interactive backend would not fast-forward
+the whole series but would fast-forward individual "pick" commits at the
+beginning of the todo list, and then a squash or something would cause
+it to start generating new commits.)  So, introduce a new
+allow_preemptive_ff flag contained within cmd_rebase() and use it to
+track whether we are going to allow a pre-emptive fast-forward that
+short-circuits the whole rebase.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/rebase.c  | 3 ++-
- t/t3400-rebase.sh | 8 +++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ builtin/rebase.c               | 18 ++++++++++++++----
+ t/t3432-rebase-fast-forward.sh |  2 ++
+ 2 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 32026a62e8..5014c9a437 100644
+index f1de5c8186..7027e34567 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -126,6 +126,7 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
- 	replay.keep_redundant_commits = (opts->empty == EMPTY_KEEP);
- 	replay.ask_on_initially_empty = (opts->empty == EMPTY_ASK &&
- 					 !(opts->flags & REBASE_INTERACTIVE_EXPLICIT));
-+	replay.quiet = !(opts->flags & REBASE_NO_QUIET);
- 	replay.verbose = opts->flags & REBASE_VERBOSE;
- 	replay.reschedule_failed_exec = opts->reschedule_failed_exec;
- 	replay.committer_date_is_author_date =
-@@ -1502,7 +1503,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			 N_("allow pre-rebase hook to run")),
- 		OPT_NEGBIT('q', "quiet", &options.flags,
- 			   N_("be quiet. implies --no-stat"),
--			   REBASE_NO_QUIET| REBASE_VERBOSE | REBASE_DIFFSTAT),
-+			   REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
- 		OPT_BIT('v', "verbose", &options.flags,
- 			N_("display a diffstat of what changed upstream"),
- 			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 221b35f2df..79762b989a 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -206,12 +206,18 @@ test_expect_success 'cherry-picked commits and fork-point work together' '
- 	test_cmp expect D
- '
+@@ -1493,6 +1493,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct object_id squash_onto;
+ 	char *squash_onto_name = NULL;
+ 	int reschedule_failed_exec = -1;
++	int allow_preemptive_ff = 1;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -1804,11 +1805,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	    options.ignore_date)
+ 		options.flags |= REBASE_FORCE;
  
--test_expect_success 'rebase -q is quiet' '
-+test_expect_success 'rebase --am -q is quiet' '
- 	git checkout -b quiet topic &&
- 	git rebase -q master >output.out 2>&1 &&
- 	test_must_be_empty output.out
- '
- 
-+test_expect_success 'rebase --merge -q is quiet' '
-+	git checkout -B quiet topic &&
-+	git rebase --merge -q master >output.out 2>&1 &&
-+	test_must_be_empty output.out
-+'
++	if ((options.flags & REBASE_INTERACTIVE_EXPLICIT) ||
++	    (action != ACTION_NONE) ||
++	    (exec.nr > 0) ||
++	    options.autosquash) {
++		allow_preemptive_ff = 0;
++	}
 +
- test_expect_success 'Rebase a commit that sprinkles CRs in' '
- 	(
- 		echo "One" &&
+ 	for (i = 0; i < options.git_am_opts.argc; i++) {
+ 		const char *option = options.git_am_opts.argv[i], *p;
+ 		if (!strcmp(option, "--whitespace=fix") ||
+ 		    !strcmp(option, "--whitespace=strip"))
+-			options.flags |= REBASE_FORCE;
++			allow_preemptive_ff = 0;
+ 		else if (skip_prefix(option, "-C", &p)) {
+ 			while (*p)
+ 				if (!isdigit(*(p++)))
+@@ -2144,12 +2152,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	/*
+ 	 * Check if we are already based on onto with linear history,
+ 	 * in which case we could fast-forward without replacing the commits
+-	 * with new commits recreated by replaying their changes. This
+-	 * optimization must not be done if this is an interactive rebase.
++	 * with new commits recreated by replaying their changes.
++	 *
++	 * Note that can_fast_forward() initializes merge_base, so we have to
++	 * call it before checking allow_preemptive_ff.
+ 	 */
+ 	if (can_fast_forward(options.onto, options.upstream, options.restrict_revision,
+ 		    &options.orig_head, &merge_base) &&
+-	    !is_interactive(&options)) {
++	    allow_preemptive_ff) {
+ 		int flag;
+ 
+ 		if (!(options.flags & REBASE_FORCE)) {
+diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
+index 7432c0e241..40388ccf9f 100755
+--- a/t/t3432-rebase-fast-forward.sh
++++ b/t/t3432-rebase-fast-forward.sh
+@@ -30,6 +30,8 @@ test_rebase_same_head () {
+ 	shift &&
+ 	test_rebase_same_head_ $status_n $what_n $cmp_n "" "$*" &&
+ 	test_rebase_same_head_ $status_f $what_f $cmp_f " --no-ff" "$*"
++	test_rebase_same_head_ $status_n $what_n $cmp_n " --merge" "$*" &&
++	test_rebase_same_head_ $status_f $what_f $cmp_f " --merge --no-ff" "$*"
+ }
+ 
+ test_rebase_same_head_ () {
 -- 
 gitgitgadget
 
