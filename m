@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 848EEC2D0D2
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F4AEC3F68F
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5BCB820706
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E1E8320643
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="olmsvdfK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vBE+vpyS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726259AbfLXLFy (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726268AbfLXLFz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 06:05:55 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:37242 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726256AbfLXLFy (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Dec 2019 06:05:54 -0500
-Received: from mail-qt1-f176.google.com ([209.85.160.176]:43638 "EHLO
-        mail-qt1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726244AbfLXLFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 06:05:52 -0500
-Received: by mail-qt1-f176.google.com with SMTP id d18so15172398qtj.10
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:52 -0800 (PST)
+Received: by mail-qt1-f193.google.com with SMTP id w47so17881917qtk.4
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=zU/36mqyT+YjZcY2b2v+QdftOJ5deD3IJu6PHjUcp0A=;
-        b=olmsvdfKC+Bj4PEzDx24CKhGmpDbbYvcIYrsddaDAkwLyk6gpvwj5oOi3lH9EoVijL
-         0r912WyrlHeULXkdxmKd/HCNJBPFOzYzJMlQ8VNIsUtGtuKbZYWE796Z5KMwkhhR6/PL
-         us11sraSDACzQavEFpG/OrNW+q4YZEEifnTkhh6TxKDQbElqYeABakr9JGKyCjPmg3ai
-         J+vqRsCDM7s8pcfBPKKsOXAZOuqKYHGcMM73dbnIvafNgidlT3p0OC39MZKDX/fpw7zR
-         ahXdc+UBP9J01T/+HLgSGL7Xe+PAEismRte+sBr6oGkIT8JOwEK/kHRPBlQgZkwlTpA0
-         gsbg==
+        bh=WD/kT5LIQG0g26xmrzoO7BeLyh+1b/dMXYQFa6b2kaQ=;
+        b=vBE+vpySSP259K+PugYPNW3G6g/d3m32pcRH6T+dpszUHfyfMXfLIs/HmOtqGvJF2p
+         KcBagcBUun54xyTxxJtIvP2gPxbJ7KXd1zFU8tZwXroAZ7G5/K0l0nW53bUKyassp2Vz
+         gqrox/stJdxvpCz+mDznPV1Kqyq8kBdoXVAhZ5koPmrefVI7SmaflH6fw1ZJV7Z7e973
+         udGf6Ouy1Qz8T84zOOX42++TfBcAWkm3McGkWawuGwN9Yd9xueY3HQRb9t6fo/xUlmSd
+         IGPdTMa7SV/LZ7QNnvLZoIz/61Pg+WbvOZSEcSUEvW8YGF2MKeBVyzMxmjVweBQXwbtd
+         mb0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=zU/36mqyT+YjZcY2b2v+QdftOJ5deD3IJu6PHjUcp0A=;
-        b=IG3irQLVbmA6SYnIiEc2ZC/RNusIysKjdKklexj7j5rs0c5WWLuX8Xfj4lTwZ9+bVt
-         GtKE+j3erzz76mZa525fulwo9IvNlfwMKS3i8OFzB5fTbYumT/hAzxR6Vvmy3m4D8cRn
-         mUMm/vF1M/rp1kZaWpusIwSPp4Qxzl1UQvIEn6AaWB+G1WEjxgMway3fK2VCT1Jd1EUz
-         361/jAAy/SvNYUR4H2B3VN9xZGI45OtYX45xweMc4swWI/QYF5NsaxIwbHU5DomPdBwX
-         Ky7/TlaSpfXWaX6IfsdNvy2ERHXfiv5Yed1mJaURJ4XXiybF0+1OR+mWF9t4SdaHjodw
-         AVAg==
-X-Gm-Message-State: APjAAAWHt57pVfjej2R07/j43D2WtYoAGJwSwV9rMwtUpw4EkdF94lEl
-        Sh7FLSIyqBP0P7txBDQmCCa9UutD
-X-Google-Smtp-Source: APXvYqwKclAeKeiwgbZdHXU7T7PLo9LKCppGdnz9Oo8a8rbJkWPM83T/RkS7klBok6LxLCOTl1o2vQ==
-X-Received: by 2002:ac8:2ffa:: with SMTP id m55mr26612949qta.189.1577185551586;
-        Tue, 24 Dec 2019 03:05:51 -0800 (PST)
+        bh=WD/kT5LIQG0g26xmrzoO7BeLyh+1b/dMXYQFa6b2kaQ=;
+        b=Opt5TBadQI5fvS1KQPAQnZcYsEgUiHYYrjMm4JboVg0kcbTZGQ9XJqWYG/78k7rO8z
+         H5hW/wSCU6FJakC2WKOPReWoag0g9wGkWAgrLUKQEROPIDophgPXKPR1adggdAnpSlbQ
+         EbG4OE5dUhUDaDbQeIEwiyH7eNty8jCXaJPy1chl5Wt/GXVbnwXpmGOF/c5BKvLyFHSk
+         zYIpsO57pfa1mJ4u5ml9ImuVvmTC51RQFLuArGm/BbdprlpydLCi3dnQIAvoA05vEAa2
+         WUnq/CguQ320JIo3jv/ltMdE8ZlFbdyPSm/6YtqMEsS191Hi7AqFvS3tTGDF+TQWVwEs
+         H2Zg==
+X-Gm-Message-State: APjAAAXPjZiXs4OzKp38mDhPjvqaPtwAvmELsHgbsP0+Uf5Nbj9Y+5u9
+        atulF/ibJXd3Q8x4qBaayjNU6C6x
+X-Google-Smtp-Source: APXvYqyGc31zvfUeDkFERgdRnnf/jHv/Hwhv8Eyh6EaIZArEkcM3pNE4xOABCG+o0azMscAj2p++/Q==
+X-Received: by 2002:ac8:5205:: with SMTP id r5mr26928681qtn.230.1577185553320;
+        Tue, 24 Dec 2019 03:05:53 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.50
+        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:05:51 -0800 (PST)
+        Tue, 24 Dec 2019 03:05:52 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 05/17] sequencer: make read_oneliner() extern
-Date:   Tue, 24 Dec 2019 06:05:02 -0500
-Message-Id: <819fb2203ba59df1fc446167d5648c6aae46ad17.1577185374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 07/17] sequencer: make apply_rebase() accept a path
+Date:   Tue, 24 Dec 2019 06:05:04 -0500
+Message-Id: <12c37d11babf2df496066d113328242584e405f0.1577185374.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577185374.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com> <cover.1577185374.git.liu.denton@gmail.com>
@@ -74,62 +74,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The function read_oneliner() is a generally useful util function.
-Instead of hiding it as a static function within sequencer.c, extern it
-so that it can be reused by others.
+In order to make apply_rebase() more generic for future extraction, make
+it accept a `path` argument so that the location from where to read the
+reference to the autostash commit can be customized. Remove the `opts`
+argument since it was unused before anyway.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 13 ++-----------
- sequencer.h | 11 +++++++++++
- 2 files changed, 13 insertions(+), 11 deletions(-)
+ sequencer.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 103cea1460..9ef9424f88 100644
+index 9ef9424f88..e1b7cb461c 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -417,17 +417,8 @@ static int write_message(const void *buf, size_t len, const char *filename,
- 	return 0;
+@@ -3744,13 +3744,13 @@ static enum todo_command peek_command(struct todo_list *todo_list, int offset)
+ 	return -1;
  }
  
--/*
-- * Reads a file that was presumably written by a shell script, i.e. with an
-- * end-of-line marker that needs to be stripped.
-- *
-- * Note that only the last end-of-line marker is stripped, consistent with the
-- * behavior of "$(cat path)" in a shell script.
-- *
-- * Returns 1 if the file was read, 0 if it could not be read or does not exist.
-- */
--static int read_oneliner(struct strbuf *buf, const char *path,
--			 int skip_if_empty, int warn_nonexistence)
-+int read_oneliner(struct strbuf *buf, const char *path,
-+		  int skip_if_empty, int warn_nonexistence)
+-static int apply_autostash(struct replay_opts *opts)
++static int apply_autostash(const char *path)
  {
+ 	struct strbuf stash_sha1 = STRBUF_INIT;
+ 	struct child_process child = CHILD_PROCESS_INIT;
  	int ret = 0;
- 	struct strbuf file_buf = STRBUF_INIT;
-diff --git a/sequencer.h b/sequencer.h
-index e9a0e03ea2..56cea80dd8 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -202,6 +202,17 @@ void print_commit_summary(struct repository *repo,
- 			  const struct object_id *oid,
- 			  unsigned int flags);
  
-+/*
-+ * Reads a file that was presumably written by a shell script, i.e. with an
-+ * end-of-line marker that needs to be stripped.
-+ *
-+ * Note that only the last end-of-line marker is stripped, consistent with the
-+ * behavior of "$(cat path)" in a shell script.
-+ *
-+ * Returns 1 if the file was read, 0 if it could not be read.
-+ */
-+int read_oneliner(struct strbuf *buf, const char *path,
-+		  int skip_if_empty, int warn_nonexistence);
- int read_author_script(const char *path, char **name, char **email, char **date,
- 		       int allow_missing);
- void parse_strategy_opts(struct replay_opts *opts, char *raw_opts);
+-	if (!read_oneliner(&stash_sha1, rebase_path_autostash(), 1, 0)) {
++	if (!read_oneliner(&stash_sha1, path, 1, 0)) {
+ 		strbuf_release(&stash_sha1);
+ 		return 0;
+ 	}
+@@ -3856,7 +3856,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
+ 		return error(_("%s: not a valid OID"), orig_head);
+ 
+ 	if (run_git_checkout(r, opts, oid_to_hex(onto), action)) {
+-		apply_autostash(opts);
++		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 		return error(_("could not detach HEAD"));
+ 	}
+@@ -4172,7 +4172,7 @@ static int pick_commits(struct repository *r,
+ 				run_command(&hook);
+ 			}
+ 		}
+-		apply_autostash(opts);
++		apply_autostash(rebase_path_autostash());
+ 
+ 		if (!opts->quiet) {
+ 			if (!opts->verbose)
+@@ -5213,7 +5213,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		todo_list_add_exec_commands(todo_list, commands);
+ 
+ 	if (count_commands(todo_list) == 0) {
+-		apply_autostash(opts);
++		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 
+ 		return error(_("nothing to do"));
+@@ -5224,12 +5224,12 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 	if (res == -1)
+ 		return -1;
+ 	else if (res == -2) {
+-		apply_autostash(opts);
++		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 
+ 		return -1;
+ 	} else if (res == -3) {
+-		apply_autostash(opts);
++		apply_autostash(rebase_path_autostash());
+ 		sequencer_remove_state(opts);
+ 		todo_list_release(&new_todo);
+ 
 -- 
 2.24.1.810.g65a2f617f4
 
