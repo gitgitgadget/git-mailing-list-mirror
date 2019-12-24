@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44A05C2D0D5
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A26FC2D0D0
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1AC4A20643
+	by mail.kernel.org (Postfix) with ESMTP id F113020643
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:06:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KiJ1ATKa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4J9hrKo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbfLXLGJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 06:06:09 -0500
-Received: from mail-qv1-f47.google.com ([209.85.219.47]:35170 "EHLO
-        mail-qv1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726330AbfLXLGC (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726559AbfLXLGL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 06:06:11 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:46593 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726325AbfLXLGC (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 24 Dec 2019 06:06:02 -0500
-Received: by mail-qv1-f47.google.com with SMTP id u10so7285871qvi.2
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:06:02 -0800 (PST)
+Received: by mail-qt1-f194.google.com with SMTP id g1so10956597qtr.13
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:06:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/3hRU+fqnAEdWhaHhgxjxvWGuQ2nCDHFjrxD+49aImA=;
-        b=KiJ1ATKaWUItYDXuuBXiBpV10sxTqts4xp83uaWO2U1PnMF2WdTKAOyWGJOhVOaFnh
-         8c7Bv5HhXa2qextydUym+kGr6pCEFuk2EBGi04gyw5HvyNLJy+k1GXI88L46PpIp1CWK
-         pqHHMQvGZQXRrB/Ck9IYCNlQFeI0zx1u5HJQAlmuX0kmlFOQPvAPnvxKVCHh9PMlH0SR
-         he6Ahz7zdXo09Pf+nuZAxP00P4OFQfyXJpk9fJzEw+7m3W7Pmn2/F68zjQzsd0DkmLe5
-         BTzNcmdyJMNEkMbw9gnLwI3w1GdYi+xuZn5NxUgvPg+MoEFmtG63ZDOVju3e7VAzLZps
-         Xy4A==
+        bh=H7QKuwLbnxTzeR6wlJIup1vWnTbHIMvnSnCLFnjonc8=;
+        b=e4J9hrKoIOwA/6rhZ72Hm+w/8KA62IRCfv+Ip8PgTPkCU8dmUxn+Aq4ymTWmmQYmCM
+         tKBXVC5ZLtZ5sWYMEiHA2Mk2tlo4BtZN/3Krni5x+fGMyR9x9vKBGpZyCj8R1ZKOWzdw
+         shxs2GEo2OfqUq+FuBNxjhPec6pvz3PGN1MPoiKlC8m3LXBbE1sKisvqRkl6SOmEzzcW
+         C5Y53m4HDVFK16TC9RwMUyTvVUYccfJQrjvOOyqDrepGq2K7HI9hxEnOZaEDdrGOGP2t
+         38ek7Ppn2pWpEjqsXJ1Bk65LrR2koRb3vvxExOJg1kOl6u+3VghJ2VizgRUiPtvxkxRM
+         Y06w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/3hRU+fqnAEdWhaHhgxjxvWGuQ2nCDHFjrxD+49aImA=;
-        b=rbBHbFIPX35QYHSkScaBAunVaHc1AboVC6kY93M0+l3Ul3UZWnD520KZCy7oFBMiGu
-         yOVkGI6y4oOYMDWvkXeq4jqmKwL9BAPyQgVgMiHgOVOo6Ip+6He/rPCB00FfC/QasUAA
-         vkwe3d/i3K+tL9zDU1+E04gEngU0jq+lKFuxYscv3hM+7BBR2k0GrVJjh16U1r0kWBHP
-         030GqIxNXohpGRrEOfBkzlqNhhRve1GgFFr5mFgQCgFlhSF/adtF5gvOtTiq9T9iEDko
-         x8kTKdWyq4U8HwlvixX2zDwqNluyjDZuqEXRqiukYH0g2DBMG7fD20EsGzUMtNynW6To
-         xyUQ==
-X-Gm-Message-State: APjAAAXMlMRuKYR7XpE0kS3xMZb1AmmlldJOyfomGQ6AbiBLk9lNJ8p1
-        zlpYq1pWFn6h52l618tMWNxUMOtV
-X-Google-Smtp-Source: APXvYqygCKsyk8fvVRUSzIU3XPE51Tlzj+dpFwjd6DbDTj4Cb2mNHk/IjElijw7rMgVoV58TrJFT5g==
-X-Received: by 2002:a05:6214:11ac:: with SMTP id u12mr28429843qvv.85.1577185561630;
-        Tue, 24 Dec 2019 03:06:01 -0800 (PST)
+        bh=H7QKuwLbnxTzeR6wlJIup1vWnTbHIMvnSnCLFnjonc8=;
+        b=bsCWWb4NIiTBydyEResnEDEK5Wv75RW4pOFXHUMbTVI1tXxSin50Ndk7VUstyqxGXS
+         POM6HyPoZgytijB3Z5/mueYQgpHIWGtjJ/xGhX24mds9bytFCvs51Ua815IatyeXkyEP
+         knhNS/IFGGuq3lP5sWe6a2DhWOxQvaQAwcINYd92iwA02vpyOKAbkhg2egFtHZrrGTeS
+         30oUoWovwN61g/NE+fBaUmWGAGNW0Q/rh6sfoxKIPq8JSU1qLc4sq/qq3GDVKExGeA4E
+         7XKt0GkfCI7rUFIf67c2Fp0fLzpTSWAsaXj9n1CwqzjFwQ2AUwLQOFMaOY0OHx3qX7zM
+         AxAw==
+X-Gm-Message-State: APjAAAX1+B30gy/U8fCnyEMstEbVVOP3EXdGLUPFPjMQFgC/rYOmOH0c
+        wQ31EwqQrld2W7dLhfusXIMqfmYe
+X-Google-Smtp-Source: APXvYqzO+6onqXiTpN25i7+eNK8Ggv2QOnK3Poog5EBg4NLnDlsOLoAWJCv0AngWoo5w/rvuau+cYA==
+X-Received: by 2002:ac8:602:: with SMTP id d2mr27139914qth.245.1577185560679;
+        Tue, 24 Dec 2019 03:06:00 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.06.00
+        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:06:01 -0800 (PST)
+        Tue, 24 Dec 2019 03:06:00 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 16/17] t5520: make test_pull_autostash() accept expect_parent_num
-Date:   Tue, 24 Dec 2019 06:05:13 -0500
-Message-Id: <c70643ca9fb504509c68b6265e35ea2ab9df99bc.1577185374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 15/17] merge: teach --autostash option
+Date:   Tue, 24 Dec 2019 06:05:12 -0500
+Message-Id: <6e987052c0910f0131317093cb917dcf9eea127d.1577185374.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577185374.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com> <cover.1577185374.git.liu.denton@gmail.com>
@@ -74,72 +74,341 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before, test_pull_autostash() was hardcoded to run
-`test_cmp_rev HEAD^ copy` to test that a rebase happened. However, in a
-future patch, we plan on testing merging as well. Make
-test_pull_autostash() accept a parent number as an argument so that, in
-the future, we can test if a merge happened in addition to a rebase.
+In rebase, one can pass the `--autostash` option to cause the worktree
+to be automatically stashed before continuing with the rebase. This
+option is missing in merge, however.
 
+Implement the `--autostash` option and corresponding `merge.autoStash`
+option in merge which stashes before merging and then pops after.
+
+This option is useful when a developer has some local changes on a topic
+branch but they realize that their work depends on another branch.
+Previously, they had to run something like
+
+	git fetch ...
+	git stash push
+	git merge FETCH_HEAD
+	git stash pop
+
+but now, that is reduced to
+
+	git fetch ...
+	git merge --autostash FETCH_HEAD
+
+Suggested-by: Alban Gruin <alban.gruin@gmail.com>
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t5520-pull.sh | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ Documentation/config/merge.txt  | 10 +++++
+ Documentation/merge-options.txt |  8 ++++
+ branch.c                        |  1 +
+ builtin/commit.c                |  2 +
+ builtin/merge.c                 | 17 +++++++++
+ path.c                          |  1 +
+ path.h                          |  4 +-
+ t/t3033-merge-toplevel.sh       | 22 +++++++++++
+ t/t7600-merge.sh                | 65 +++++++++++++++++++++++++++++++++
+ 9 files changed, 129 insertions(+), 1 deletion(-)
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 602d996a33..218f469d0a 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -10,11 +10,13 @@ modify () {
+diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
+index 6a313937f8..88b29127bf 100644
+--- a/Documentation/config/merge.txt
++++ b/Documentation/config/merge.txt
+@@ -70,6 +70,16 @@ merge.stat::
+ 	Whether to print the diffstat between ORIG_HEAD and the merge result
+ 	at the end of the merge.  True by default.
+ 
++merge.autoStash::
++	When set to true, automatically create a temporary stash entry
++	before the operation begins, and apply it after the operation
++	ends.  This means that you can run rebase on a dirty worktree.
++	However, use with care: the final stash application after a
++	successful rebase might result in non-trivial conflicts.
++	This option can be overridden by the `--no-autostash` and
++	`--autostash` options of linkgit:git-merge[1].
++	Defaults to false.
++
+ merge.tool::
+ 	Controls which merge tool is used by linkgit:git-mergetool[1].
+ 	The list below shows the valid built-in values.
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+index 40dc4f5e8c..34493eb58b 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -155,6 +155,14 @@ ifndef::git-pull[]
+ 	Note that not all merge strategies may support progress
+ 	reporting.
+ 
++--autostash::
++--no-autostash::
++	Automatically create a temporary stash entry before the operation
++	begins, and apply it after the operation ends.  This means
++	that you can run rebase on a dirty worktree.  However, use
++	with care: the final stash application after a successful
++	rebase might result in non-trivial conflicts.
++
+ endif::git-pull[]
+ 
+ --allow-unrelated-histories::
+diff --git a/branch.c b/branch.c
+index 579494738a..bf2536c70d 100644
+--- a/branch.c
++++ b/branch.c
+@@ -344,6 +344,7 @@ void remove_merge_branch_state(struct repository *r)
+ 	unlink(git_path_merge_rr(r));
+ 	unlink(git_path_merge_msg(r));
+ 	unlink(git_path_merge_mode(r));
++	apply_autostash(git_path_merge_autostash(r));
  }
  
- test_pull_autostash () {
-+	expect_parent_num="$1" &&
-+	shift &&
- 	git reset --hard before-rebase &&
- 	echo dirty >new_file &&
- 	git add new_file &&
- 	git pull "$@" . copy &&
--	test_cmp_rev HEAD^ copy &&
-+	test_cmp_rev HEAD^"$expect_parent_num" copy &&
- 	echo dirty >expect &&
- 	test_cmp expect new_file &&
- 	echo "modified again" >expect &&
-@@ -356,22 +358,22 @@ test_expect_success '--rebase fails with multiple branches' '
+ void remove_branch_state(struct repository *r, int verbose)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e48c1fd90a..ebb7f4d80e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1679,6 +1679,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	unlink(git_path_merge_mode(the_repository));
+ 	unlink(git_path_squash_msg(the_repository));
  
- test_expect_success 'pull --rebase succeeds with dirty working directory and rebase.autostash set' '
- 	test_config rebase.autostash true &&
--	test_pull_autostash --rebase
-+	test_pull_autostash 1 --rebase
++	apply_autostash(git_path_merge_autostash(the_repository));
++
+ 	if (commit_index_files())
+ 		die(_("repository has been updated, but unable to write\n"
+ 		      "new_index file. Check that disk is not full and quota is\n"
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 062e911441..a940bd4cbf 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -81,6 +81,7 @@ static int show_progress = -1;
+ static int default_to_upstream = 1;
+ static int signoff;
+ static const char *sign_commit;
++static int autostash;
+ static int no_verify;
+ 
+ static struct strategy all_strategy[] = {
+@@ -285,6 +286,8 @@ static struct option builtin_merge_options[] = {
+ 	OPT_SET_INT(0, "progress", &show_progress, N_("force progress reporting"), 1),
+ 	{ OPTION_STRING, 'S', "gpg-sign", &sign_commit, N_("key-id"),
+ 	  N_("GPG sign commit"), PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
++	OPT_BOOL(0, "autostash", &autostash,
++	      N_("automatically stash/stash pop before and after")),
+ 	OPT_BOOL(0, "overwrite-ignore", &overwrite_ignore, N_("update ignored files (default)")),
+ 	OPT_BOOL(0, "signoff", &signoff, N_("add Signed-off-by:")),
+ 	OPT_BOOL(0, "no-verify", &no_verify, N_("bypass pre-merge-commit and commit-msg hooks")),
+@@ -440,6 +443,7 @@ static void finish(struct commit *head_commit,
+ 		strbuf_addf(&reflog_message, "%s: %s",
+ 			getenv("GIT_REFLOG_ACTION"), msg);
+ 	}
++	apply_autostash(git_path_merge_autostash(the_repository));
+ 	if (squash) {
+ 		squash_message(head_commit, remoteheads);
+ 	} else {
+@@ -631,6 +635,9 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 	} else if (!strcmp(k, "commit.gpgsign")) {
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
++	} else if (!strcmp(k, "merge.autostash")) {
++		autostash = git_config_bool(k, v);
++		return 0;
+ 	}
+ 
+ 	status = fmt_merge_msg_config(k, v, cb);
+@@ -1288,6 +1295,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 		/* Invoke 'git reset --merge' */
+ 		ret = cmd_reset(nargc, nargv, prefix);
++		apply_autostash(git_path_merge_autostash(the_repository));
+ 		goto done;
+ 	}
+ 
+@@ -1508,6 +1516,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
+ 
++		if (autostash)
++			create_autostash(the_repository,
++					 git_path_merge_autostash(the_repository),
++					 "merge");
+ 		if (checkout_fast_forward(the_repository,
+ 					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+@@ -1574,6 +1586,11 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (fast_forward == FF_ONLY)
+ 		die(_("Not possible to fast-forward, aborting."));
+ 
++	if (autostash)
++		create_autostash(the_repository,
++				 git_path_merge_autostash(the_repository),
++				 "merge");
++
+ 	/* We are going to make a new commit. */
+ 	git_committer_info(IDENT_STRICT);
+ 
+diff --git a/path.c b/path.c
+index a76eec8b96..d8c4072f1a 100644
+--- a/path.c
++++ b/path.c
+@@ -1533,5 +1533,6 @@ REPO_GIT_PATH_FUNC(merge_msg, "MERGE_MSG")
+ REPO_GIT_PATH_FUNC(merge_rr, "MERGE_RR")
+ REPO_GIT_PATH_FUNC(merge_mode, "MERGE_MODE")
+ REPO_GIT_PATH_FUNC(merge_head, "MERGE_HEAD")
++REPO_GIT_PATH_FUNC(merge_autostash, "MERGE_AUTOSTASH")
+ REPO_GIT_PATH_FUNC(fetch_head, "FETCH_HEAD")
+ REPO_GIT_PATH_FUNC(shallow, "shallow")
+diff --git a/path.h b/path.h
+index 14d6dcad16..1f1bf8f87a 100644
+--- a/path.h
++++ b/path.h
+@@ -177,11 +177,12 @@ struct path_cache {
+ 	const char *merge_rr;
+ 	const char *merge_mode;
+ 	const char *merge_head;
++	const char *merge_autostash;
+ 	const char *fetch_head;
+ 	const char *shallow;
+ };
+ 
+-#define PATH_CACHE_INIT { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
++#define PATH_CACHE_INIT { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
+ 
+ const char *git_path_cherry_pick_head(struct repository *r);
+ const char *git_path_revert_head(struct repository *r);
+@@ -190,6 +191,7 @@ const char *git_path_merge_msg(struct repository *r);
+ const char *git_path_merge_rr(struct repository *r);
+ const char *git_path_merge_mode(struct repository *r);
+ const char *git_path_merge_head(struct repository *r);
++const char *git_path_merge_autostash(struct repository *r);
+ const char *git_path_fetch_head(struct repository *r);
+ const char *git_path_shallow(struct repository *r);
+ 
+diff --git a/t/t3033-merge-toplevel.sh b/t/t3033-merge-toplevel.sh
+index d314599428..e29c284b9b 100755
+--- a/t/t3033-merge-toplevel.sh
++++ b/t/t3033-merge-toplevel.sh
+@@ -142,6 +142,17 @@ test_expect_success 'refuse two-project merge by default' '
+ 	test_must_fail git merge five
  '
  
- test_expect_success 'pull --rebase --autostash & rebase.autostash=true' '
- 	test_config rebase.autostash true &&
--	test_pull_autostash --rebase --autostash
-+	test_pull_autostash 1 --rebase --autostash
++test_expect_success 'refuse two-project merge by default, quit before --autostash happens' '
++	t3033_reset &&
++	git reset --hard four &&
++	echo change >>one.t &&
++	git diff >expect &&
++	test_must_fail git merge --autostash five 2>err &&
++	test_i18ngrep ! "stash" err &&
++	git diff >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'two-project merge with --allow-unrelated-histories' '
+ 	t3033_reset &&
+ 	git reset --hard four &&
+@@ -149,4 +160,15 @@ test_expect_success 'two-project merge with --allow-unrelated-histories' '
+ 	git diff --exit-code five
  '
  
- test_expect_success 'pull --rebase --autostash & rebase.autostash=false' '
- 	test_config rebase.autostash false &&
--	test_pull_autostash --rebase --autostash
-+	test_pull_autostash 1 --rebase --autostash
++test_expect_success 'two-project merge with --allow-unrelated-histories with --autostash' '
++	t3033_reset &&
++	git reset --hard four &&
++	echo change >>one.t &&
++	git diff one.t >expect &&
++	git merge --allow-unrelated-histories --autostash five 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	git diff one.t >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 4fa0ef8e3b..e0c8a0bad4 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -30,13 +30,17 @@ Testing basic merge operations/option parsing.
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ 
+ test_write_lines 1 2 3 4 5 6 7 8 9 >file
++cp file file.orig
+ test_write_lines '1 X' 2 3 4 5 6 7 8 9 >file.1
++test_write_lines 1 2 '3 X' 4 5 6 7 8 9 >file.3
+ test_write_lines 1 2 3 4 '5 X' 6 7 8 9 >file.5
+ test_write_lines 1 2 3 4 5 6 7 8 '9 X' >file.9
+ test_write_lines 1 2 3 4 5 6 7 8 '9 Y' >file.9y
+ test_write_lines '1 X' 2 3 4 5 6 7 8 9 >result.1
+ test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 9 >result.1-5
++test_write_lines '1 X' 2 3 4 5 6 7 8 '9 X' >result.1-9
+ test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 '9 X' >result.1-5-9
++test_write_lines '1 X' 2 '3 X' 4 '5 X' 6 7 8 '9 X' >result.1-3-5-9
+ test_write_lines 1 2 3 4 5 6 7 8 '9 Z' >result.9z
+ 
+ create_merge_msgs () {
+@@ -675,6 +679,67 @@ test_expect_success 'refresh the index before merging' '
+ 	git merge c3
  '
  
- test_expect_success 'pull --rebase --autostash & rebase.autostash unset' '
- 	test_unconfig rebase.autostash &&
--	test_pull_autostash --rebase --autostash
-+	test_pull_autostash 1 --rebase --autostash
- '
- 
- test_expect_success 'pull --rebase --no-autostash & rebase.autostash=true' '
-@@ -409,7 +411,7 @@ test_expect_success 'pull.rebase' '
- 
- test_expect_success 'pull --autostash & pull.rebase=true' '
- 	test_config pull.rebase true &&
--	test_pull_autostash --autostash
-+	test_pull_autostash 1 --autostash
- '
- 
- test_expect_success 'pull --no-autostash & pull.rebase=true' '
++test_expect_success 'merge with --autostash' '
++	git reset --hard c1 &&
++	git merge-file file file.orig file.9 &&
++	git merge --autostash c2 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	git show HEAD:file >merge-result &&
++	test_cmp result.1-5 merge-result &&
++	test_cmp result.1-5-9 file
++'
++
++test_expect_success 'merge with merge.autoStash' '
++	test_config merge.autoStash true &&
++	git reset --hard c1 &&
++	git merge-file file file.orig file.9 &&
++	git merge c2 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	git show HEAD:file >merge-result &&
++	test_cmp result.1-5 merge-result &&
++	test_cmp result.1-5-9 file
++'
++
++test_expect_success 'fast-forward merge with --autostash' '
++	git reset --hard c0 &&
++	git merge-file file file.orig file.5 &&
++	git merge --autostash c1 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	test_cmp result.1-5 file
++'
++
++test_expect_success 'octopus merge with --autostash' '
++	git reset --hard c1 &&
++	git merge-file file file.orig file.3 &&
++	git merge --autostash c2 c3 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	git show HEAD:file >merge-result &&
++	test_cmp result.1-5-9 merge-result &&
++	test_cmp result.1-3-5-9 file
++'
++
++test_expect_success 'conflicted merge with --autostash, --abort restores stash' '
++	git reset --hard c3 &&
++	cp file.1 file &&
++	test_must_fail git merge --autostash c7 &&
++	git merge --abort 2>err &&
++	test_i18ngrep "Applied autostash." err &&
++	test_cmp file.1 file
++'
++
++test_expect_success 'merge with conflicted --autostash changes' '
++	git reset --hard c1 &&
++	git merge-file file file.orig file.9y &&
++	git diff >expect &&
++	test_when_finished "test_might_fail git stash drop" &&
++	git merge --autostash c3 2>err &&
++	test_i18ngrep "Applying autostash resulted in conflicts." err &&
++	git show HEAD:file >merge-result &&
++	test_cmp result.1-9 merge-result &&
++	git stash show -p >actual &&
++	test_cmp expect actual
++'
++
+ cat >expected.branch <<\EOF
+ Merge branch 'c5-branch' (early part)
+ EOF
 -- 
 2.24.1.810.g65a2f617f4
 
