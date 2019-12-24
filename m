@@ -2,75 +2,143 @@ Return-Path: <SRS0=uLN7=2O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C704C2D0CF
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 14:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3ABAC2D0C3
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 17:50:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 592C0206B7
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 14:20:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B18A20706
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 17:50:46 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GnQC0QZC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbfLXOUK convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 24 Dec 2019 09:20:10 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:12439 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfLXOUJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 09:20:09 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id xBOEK6XT082389
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 24 Dec 2019 09:20:06 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Hans Jerry Illikainen'" <hji@dyntopia.com>,
-        "=?UTF-8?Q?'SZEDER_G=C3=A1bor'?=" <szeder.dev@gmail.com>
-Cc:     <git@vger.kernel.org>
-References: <20191216153204.8906-1-hji@dyntopia.com> <20191216153204.8906-2-hji@dyntopia.com> <20191220225746.GF8609@szeder.dev> <87y2v54i9v.hji@dyntopia.com> <011401d5b9a0$58604df0$0920e9d0$@nexbridge.com> <877e2mq7t9.hji@dyntopia.com>
-In-Reply-To: <877e2mq7t9.hji@dyntopia.com>
-Subject: RE: [PATCH 1/1] gpg-interface: add minTrustLevel as a configuration option
-Date:   Tue, 24 Dec 2019 09:20:00 -0500
-Message-ID: <016c01d5ba65$3d8690f0$b893b2d0$@nexbridge.com>
+        id S1726213AbfLXRup (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 12:50:45 -0500
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:34313 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726184AbfLXRup (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 12:50:45 -0500
+Received: by mail-qk1-f180.google.com with SMTP id j9so16886772qkk.1
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 09:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=3nU8Hy0HtGqxZCUMW1yjg8e6uJ4kJv6BOpZ7XHvPStM=;
+        b=GnQC0QZCrZ2ZsblLPTk9oZ7NrMvKwKnm20erf0VIXsTlQMGBjHAPG6TqQcWKmE2i/Z
+         nQpoITCTdEuxc2QBaw/TTATnU/DSV+OazlONy43j30ka701coDIce1XnxV9QeerohtS8
+         LKxHjjxf2OciSBdybG8i3++lxsZd88lQ5tXJM5b2Tr8Sqb+Y1QbhS0hoNT/PhEX461c1
+         O1CuolwFfqDjBhuXrl0siAmUrE75wJes5XzaVZrZ1Ko89gcX3cwazskyuv6b3sww37xw
+         mUBrkBKATcPZI5MK9d+ljo2UqjBEA3Zl7qn6gkk2oe2mx3l9uBigszWxMNaK0E2cEW+K
+         ZsDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=3nU8Hy0HtGqxZCUMW1yjg8e6uJ4kJv6BOpZ7XHvPStM=;
+        b=iCno1RasNqF3KldWkI00alLRFsERdKft/pXW2sgEfn5QI77lWmfMhVIZj5qOWeJHEd
+         Ztpv+i9DW63H5YxXbqt8cuXOEufNDXRJYlAKc9tNT379nvgMGR9t/taaBlsLlnk6xHVw
+         MSH62qQrRV96ogSOUO3Hdw6GwXm9BKuk6gt/57hjBmujLtw00F+mM69VmDXiyoO0y2kW
+         OmBRq8ay46g1ehAExkCs/rH7YosrhvUbLqwX5k0vpML2WhVfe3+oKgw+WB7YQGDJj/K5
+         Vyb+kTSXOKemawxIomvdRP1Vz7onJRfQ6mAU0fpTYqX95oUzdeju5WIQwGXEa9GYVia8
+         nFgw==
+X-Gm-Message-State: APjAAAVMj/dGC2HnABigl3mnfQ65Q05Ou8VtMKXrK7cAT25OUWnOLKXZ
+        9jHAmNM40Qr/CnlYOIwB9ejbkUtATz/Rjt4WRN2lIXaq
+X-Google-Smtp-Source: APXvYqxgP+g3StrL8YCt9V2vCLojEzr1QkQ38RCeiYTa0t9CEauGZqax+2KdWNC+61ozn5kVFE4r8JLVLY5TTJv8iHM=
+X-Received: by 2002:a05:620a:147c:: with SMTP id j28mr28878555qkl.13.1577209843908;
+ Tue, 24 Dec 2019 09:50:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQH/oBb3ftzF/OFyCWbLkK6Mvt6t6gKRyqzRAmGGTpICW2zphwHB0rAnAhUIgR+nHFzZEA==
-Content-Language: en-ca
+From:   Hao Lee <haolee.swjtu@gmail.com>
+Date:   Wed, 25 Dec 2019 01:50:29 +0800
+Message-ID: <CA+PpKPm0_zXr978Mw8h7owHBChx-uqVCdjrtuh45uOS-A_0qrA@mail.gmail.com>
+Subject: [BUG] `git diff` treats an unchanged line as modified
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 24, 2019 6:31 AM, Hans Jerry Illikainen wrote:
-> To: Randall S. Becker <rsbecker@nexbridge.com>; 'SZEDER Gábor'
-> <szeder.dev@gmail.com>
-> Cc: git@vger.kernel.org
-> Subject: RE: [PATCH 1/1] gpg-interface: add minTrustLevel as a configuration
-> option
-> 
-> On Mon, Dec 23 2019, Randall S. Becker wrote:
-> > Side question: are there any tests running with alternate GPG
-> > packages? I have a platform where the official GPG itself is not
-> > available, so am looking for alternatives for that community.
-> 
-> Do you mean non-standard builds or forks of GnuPG, or alternative
-> implementations of PGP?
+Here are two files `old` and `new`.
 
-I am specially looking for alterative implementations of PGP, not forks of GnuPG. GnuPG v2 introduced some dependencies that are not available on a few platforms that I support.
+The content of `old` file:
 
-> As it stands, the test suite is hardcoded to use gpg and gpgsm (see e.g.
-> t/lib-gpg.sh).  For normal use, the gpg.program and gpg.<format>.program
-> config options can be used to override the programs to use.  However, any
-> alternative implementation would have to mimic the behavior of GnuPG (see
-> gpg-interface.c -- a number of hardcoded arguments are passed in
-> verify_signed_buffer() and sign_buffer(), and the output from various
-> operations are GnuPG-specific.)
+```
 
-Thanks,
-Randall
 
+
+kasan_poison_slab(page);//
+
+shuffle = shuffle_freelist(s, page);//
+
+if (!shuffle) {
+for_each_object_idx(p, idx, s, start, page->objects) {
+setup_object(s, page, p);
+if (likely(idx < page->objects))
+```
+
+The content of `new` file:
+
+```
+
+
+
+kasan_poison_slab(page);
+
+shuffle = shuffle_freelist(s, page);
+```
+
+When using git to compare these two files, the result is:
+
+```
+diff --git a/old b/new
+index 474ab07..d432a67 100644
+--- a/old
++++ b/new
+@@ -1,11 +1,6 @@
+
+
+
+-       kasan_poison_slab(page);//
+-
+-       shuffle = shuffle_freelist(s, page);//
+-
+-       if (!shuffle) {
+-               for_each_object_idx(p, idx, s, start, page->objects) {
+-                       setup_object(s, page, p);
+-                       if (likely(idx < page->objects))
++       kasan_poison_slab(page);
++
++       shuffle = shuffle_freelist(s, page);
+```
+
+However, the Linux diff command gives the following result:
+
+```
+--- old 2019-12-25 00:56:40.000000000 +0800
++++ new 2019-12-25 01:12:48.000000000 +0800
+@@ -1,11 +1,6 @@
+
+
+
+- kasan_poison_slab(page);//
++ kasan_poison_slab(page);
+
+- shuffle = shuffle_freelist(s, page);//
+-
+- if (!shuffle) {
+- for_each_object_idx(p, idx, s, start, page->objects) {
+- setup_object(s, page, p);
+- if (likely(idx < page->objects))
++ shuffle = shuffle_freelist(s, page);
+```
+
+I think the latter is correct because the fifth line is not changed
+and it's still a line which only contains a whitespace.
+
+Steps to Reproduce:
+
+curl -L https://git.io/JeFNy | base64 -d > file.tgz
+tar -xf file.tgz
+git diff --no-index old new
