@@ -2,89 +2,195 @@ Return-Path: <SRS0=uLN7=2O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7ABDDC2D0CF
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 520FFC2D0CF
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 12:38:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3FF19206B7
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:32:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 21EF720706
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 12:38:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="pjXhIjBV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CYngZOdT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbfLXLce (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 06:32:34 -0500
-Received: from mail-pf1-f171.google.com ([209.85.210.171]:46635 "EHLO
-        mail-pf1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726102AbfLXLce (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 06:32:34 -0500
-Received: by mail-pf1-f171.google.com with SMTP id n9so2772715pff.13
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:32:33 -0800 (PST)
+        id S1726250AbfLXMiA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 07:38:00 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:38092 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726195AbfLXMiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 07:38:00 -0500
+Received: by mail-qk1-f194.google.com with SMTP id k6so15943791qki.5
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 04:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=D+BUtS4EFIhepmEm7AponDg2q26v2INZttuLWWhsHXo=;
-        b=pjXhIjBVvxzMHBtLt0RhR1NpQzXqfBKrGAfNHa1PXvi2/PzRsvesMU6d5iDf1/l6bI
-         ZMshGKcTfGBE3FGmbl7i4EP0nJvrwlePAayFSHYn/sOEurU/tPkWlulUSh0VpkeoEtK9
-         LTcnD0k91gd2W/VEkP9JZVqqXAuIzRVjJJbDkcNPH52tmY3BYm33mYa81v9EBIQDAhN4
-         ruSd17ih8yfrwfWexgA8/PBE9HnuNDHk7MJIOg/cqR2v+47UhaM6xztkFtIW57B5ongM
-         IXqRzSlPVX8KC6F5rRNU4CUgpcfOA9InbSbon2cXpWCIpKMhok/xKt8JLJ/Tp181KbAi
-         +q1g==
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tkfuH/NktMWynwk5bkgWg7t7rq3ugORXMRZB9kOXnNc=;
+        b=CYngZOdTWXbJCHQ6Q/o+Bh4mPtUvrhcmEu0n91cVa8ZayA6/OI0a9LDIknKYq9vqu2
+         phC4tcEcgcQkRx8FU90dLsVS8Nbfl2QORW3G70ItLMqd3c1TcOEeEtotUmK1BoUwdV56
+         yiXB9QdWqb/MF/b+3J6nAnIk9NFoVkwrWc1oxNBVudCS/mokW01twPj6oRXhM+/BdIyL
+         YeLqd/UAaJALw+XqsLV0nlVkWfO/6ouYJDj8fAbqK5SroNsSk/xPT1yTnotAPv7cvk/I
+         03qXPKCoWvByA5CBYAyeOuungeFkmsSscs+mRkltlCRxzLWI5QuhbP5PfsdY6/eTaen1
+         FRZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=D+BUtS4EFIhepmEm7AponDg2q26v2INZttuLWWhsHXo=;
-        b=OThHO4Mw4U+Ymq8gdTq0YLToqnDOF1UF3KRu3SPTaFUr3kU4K8mBagi62mvSbkaRUV
-         XG7sdoeYG2aSIOJaRHggFcusiI9yyj2nXZ/BAjpkAhTeoreiX1F5D9HsJhmQEhlPf+BN
-         da34wJG8gKRHfcLlS3nKx3rq7wWjhbsNJ37N8o+2da/vuE01vzjOwAzv+9K2PXC01nQW
-         JGvwlEyirhockK2E4/aEhb7xKmoFK2sbmpF6bYOXfz4rUZl3X8JLyY4I6KNp6C5sS0xh
-         IOcYL7BUYF2B6YK1qgNBKu6PlX58zTgNNb+BeADFCxa3O1aOtbTX2AG0UWEHUDt50/Io
-         nvYQ==
-X-Gm-Message-State: APjAAAUvEh6naRLT3t7igsvrAhlCHSaIhsli0TLCXuctA5THzXszRZ3n
-        fOkItNbsidehHVpjpEmLIWb48g==
-X-Google-Smtp-Source: APXvYqw8OgPGFmR9F5+HGBD0jog383/zSklA3DB9aSIFGn9nzneAnFjVZBx4VOZ3y2ZWQsPfVBxSaw==
-X-Received: by 2002:a63:141b:: with SMTP id u27mr24654108pgl.314.1577187153472;
-        Tue, 24 Dec 2019 03:32:33 -0800 (PST)
-Received: from localhost ([202.129.236.211])
-        by smtp.gmail.com with ESMTPSA id d24sm29760168pfq.75.2019.12.24.03.32.32
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tkfuH/NktMWynwk5bkgWg7t7rq3ugORXMRZB9kOXnNc=;
+        b=WFmH0VchWNl64kwmOWsFOfli0oGqJHhvheG/O6jI0QhRZAvyt2I29AlZB5lOJPtakK
+         n1Y1myVZM6hXSHxq4B9SBn6cMxQmGyhWMnie7xrVtpbDfetLcT4C+9rLVaXZYUCKzgJn
+         HILYS3DptuCWoKSj1pJUQUtlPsL5WhPZ6xnoXHVGMNsI3Lf73tqLmiVXWUdb5D+E/eX4
+         Whr2/ngXcarK3hyoPaW7JiaQ+kpKQ4ZS9uEkbmhp+x2KB3Cnc1QoWy4vlPZHrvDnZquV
+         67kBrumi7S++YzWZP3UxozJTxnbDFDdUD4CmkMDOQIyAdFsCRKIXFG2xNEgmbAUlhXoS
+         S2SQ==
+X-Gm-Message-State: APjAAAUWMNIOOy8rgcwOgeM+dk7MwWbGTO23Rf2K4kfkANH4sNmtN0z2
+        //0+VYOHomn4RDvWkOQ8NhvUMZdc
+X-Google-Smtp-Source: APXvYqwtoI6Jh/QxpXi4crNAHrhiXWXbUlhONy9cp91ekPAHCBg9OAnZS45bek/qLP53trQOxHb1fw==
+X-Received: by 2002:a05:620a:84a:: with SMTP id u10mr30102202qku.182.1577191078537;
+        Tue, 24 Dec 2019 04:37:58 -0800 (PST)
+Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
+        by smtp.gmail.com with ESMTPSA id x11sm6787842qkf.50.2019.12.24.04.37.57
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:32:33 -0800 (PST)
-From:   Hans Jerry Illikainen <hji@dyntopia.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
-        'SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor'?= 
-        <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: RE: [PATCH 1/1] gpg-interface: add minTrustLevel as a configuration option
-In-Reply-To: <011401d5b9a0$58604df0$0920e9d0$@nexbridge.com>
-References: <20191216153204.8906-1-hji@dyntopia.com> <20191216153204.8906-2-hji@dyntopia.com> <20191220225746.GF8609@szeder.dev> <87y2v54i9v.hji@dyntopia.com> <011401d5b9a0$58604df0$0920e9d0$@nexbridge.com>
-Date:   Tue, 24 Dec 2019 11:30:58 +0000
-Message-ID: <877e2mq7t9.hji@dyntopia.com>
+        Tue, 24 Dec 2019 04:37:57 -0800 (PST)
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH] format-patch: make format.outputDirectory relative to worktree
+Date:   Tue, 24 Dec 2019 07:37:50 -0500
+Message-Id: <9422e4225143b2b908bd1fed9a510b9333bf34a2.1577191015.git.liu.denton@gmail.com>
+X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 23 2019, Randall S. Becker wrote:
-> Side question: are there any tests running with alternate GPG
-> packages? I have a platform where the official GPG itself is not
-> available, so am looking for alternatives for that community.
+Currently, when format-patch outputs patches to the path specified by
+the `format.outputDirectory` configuration variable, it is relative to
+the current working directory. However, it would make more sense for the
+path to be relative to the worktree if it exists so that patches will be
+placed in one location even if a user were to change directories.
 
-Do you mean non-standard builds or forks of GnuPG, or alternative
-implementations of PGP?
+Rewrite the output directory logic for format-patch so that it will be
+relative to the worktree of the directory. An escape hatch is provided
+for if the previous behaviour is desired by prepending "./" to the
+variable.
 
-As it stands, the test suite is hardcoded to use gpg and gpgsm (see e.g.
-t/lib-gpg.sh).  For normal use, the gpg.program and gpg.<format>.program
-config options can be used to override the programs to use.  However,
-any alternative implementation would have to mimic the behavior of GnuPG
-(see gpg-interface.c -- a number of hardcoded arguments are passed in
-verify_signed_buffer() and sign_buffer(), and the output from various
-operations are GnuPG-specific.)
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
+ Documentation/config/format.txt |  3 +++
+ builtin/log.c                   | 20 ++++++++++++-----
+ t/t4014-format-patch.sh         | 39 +++++++++++++++++++++++++++++++++
+ 3 files changed, 56 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/config/format.txt b/Documentation/config/format.txt
+index 513fcd88d5..fc9d110d88 100644
+--- a/Documentation/config/format.txt
++++ b/Documentation/config/format.txt
+@@ -88,6 +88,9 @@ format.coverLetter::
+ format.outputDirectory::
+ 	Set a custom directory to store the resulting files instead of the
+ 	current working directory. All directory components will be created.
++	The path specified will be relative to the worktree of the repository
++	unless the path begins with "./" or there is no worktree in which case
++	the path will be relative to current working directory.
+ 
+ format.useAutoBase::
+ 	A boolean value which lets you enable the `--base=auto` option of
+diff --git a/builtin/log.c b/builtin/log.c
+index 8c664067ca..fe072c7309 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -885,7 +885,7 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 	if (!strcmp(var, "format.outputdirectory"))
+-		return git_config_string(&config_output_directory, var, value);
++		return git_config_pathname(&config_output_directory, var, value);
+ 	if (!strcmp(var, "format.useautobase")) {
+ 		base_auto = git_config_bool(var, value);
+ 		return 0;
+@@ -1841,13 +1841,21 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	if (rev.show_notes)
+ 		init_display_notes(&rev.notes_opt);
+ 
+-	if (!output_directory && !use_stdout)
+-		output_directory = config_output_directory;
++	if (!use_stdout) {
++		const char *outdir_prefix = NULL;
++		const char *outdir = config_output_directory;
+ 
+-	if (!use_stdout)
+-		output_directory = set_outdir(prefix, output_directory);
+-	else
++		if (output_directory)
++			outdir = output_directory;
++
++		if (output_directory ||
++		    (config_output_directory && starts_with(config_output_directory, "./")))
++			outdir_prefix = prefix;
++
++		output_directory = set_outdir(outdir_prefix, outdir);
++	} else {
+ 		setup_pager();
++	}
+ 
+ 	if (output_directory) {
+ 		int saved;
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index a5b6302a1c..cc13cc4699 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -1813,6 +1813,45 @@ test_expect_success 'format-patch format.outputDirectory option' '
+ 	test_line_count = $count list
+ '
+ 
++test_expect_success 'format-patch format.outputDirectory option relative to git dir' '
++	test_config format.outputDirectory patches &&
++	rm -fr patches &&
++	mkdir -p sub &&
++	(
++		cd sub &&
++		git format-patch master..side
++	) &&
++	count=$(git rev-list --count master..side) &&
++	ls patches >list &&
++	test_line_count = $count list
++'
++
++test_expect_success 'format-patch format.outputDirectory option with relative path' '
++	test_config format.outputDirectory ./patches &&
++	mkdir -p sub &&
++	(
++		cd sub &&
++		rm -fr patches &&
++		git format-patch master..side &&
++		count=$(git rev-list --count master..side) &&
++		ls patches >list &&
++		test_line_count = $count list
++	)
++'
++
++test_expect_success 'format-patch format.outputDirectory option absolute path' '
++	test_config format.outputDirectory "$PWD/patches" &&
++	rm -fr patches &&
++	mkdir -p sub &&
++	(
++		cd sub &&
++		git format-patch master..side
++	) &&
++	count=$(git rev-list --count master..side) &&
++	ls patches >list &&
++	test_line_count = $count list
++'
++
+ test_expect_success 'format-patch -o overrides format.outputDirectory' '
+ 	test_config format.outputDirectory patches &&
+ 	rm -fr patches patchset &&
 -- 
-hji
+2.24.1.810.g65a2f617f4
+
