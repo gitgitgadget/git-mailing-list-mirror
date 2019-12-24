@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03966C2D0D2
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D97AC2D0C3
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CDFBB206CB
-	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57259206D3
+	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 19:55:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="r7nL0eHb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gJYLicRe"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726314AbfLXTzI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 14:55:08 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:37708 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726201AbfLXTzH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 24 Dec 2019 14:55:07 -0500
-Received: by mail-ed1-f46.google.com with SMTP id cy15so18683762edb.4
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:06 -0800 (PST)
+        id S1726559AbfLXTzO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 24 Dec 2019 14:55:14 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:42504 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726328AbfLXTzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 14:55:11 -0500
+Received: by mail-ed1-f67.google.com with SMTP id e10so18671631edv.9
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 11:55:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=QDbhLq+anCcBMZ0842z90xgm8GuAOJH2crkKX3N2XTU=;
-        b=r7nL0eHbYmEfljbRbnQjoaOHMV2YdvhoSxPi/tOV32LWD296V9JXYhLBGkE8cDpvbs
-         +gSbLujrpOeRSYb6eiTe0vT1c7DVXKQj8p+grNlqjNHJwDxfy2YtJZ6e8QDN/ymr5DJu
-         qMGJ3bxkcPtOfkqiacqviH7KJfsRH6vCkAKwq13c7+e2J2xwOow3it4d+96hm4e1vMlf
-         eWiwm4sa34VDTG+L5Fz/KnnVMLQQWmFqnesO1zhHnZ28GHNbCYz7EVu8BY4F0Zed1tw4
-         t+gykuRBjNcHrEJmlN3QdGWS5YqlUU++hqpytqAlDN3S5r23NabuCkf69BngGUI5+sU+
-         xbWg==
+        bh=GIfeYd8rHefjwmUR6xdd2aWhIeIwROqlPqBkSmCLbuI=;
+        b=gJYLicRewnR931Ih1pryEdxVfOqPekSj1cUyNmnOqhaDV3K4kz7AE6EF/bcXFIH1mN
+         pxHYVF6sqyshAiPfADr/ZSkjjVp8x1gLID3h38VCRYyEu0DFw9HJ36o1IPc4omoXzZvR
+         rdBTTUFTLwAVbKkyvD7Mcl8XLuGV1qV8NJXZp+fZNOjn5TMbvXUBNS2vX9eLMM9aPJFI
+         uHSPt8WF3E+RA/AFh8dnLrEeZWMYyeYHgkYF4uLx3AUUSJCxNxMqwyrPU01jrgDCa/VJ
+         o3gzjDeMF3fZFMwz1kmprMwaN3b4J7SK28F1jDWYxmh/SkUSmn5MIrfIDi7vw+p0/VNs
+         dmOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QDbhLq+anCcBMZ0842z90xgm8GuAOJH2crkKX3N2XTU=;
-        b=TBm6QrYMEVz/t26iEgaOW6Ewq31z/uqNULX7RpMMS48o4m1hFRVnajSB0J0UVGrytE
-         skZoOLa0Gx5NNQ/re1pUr2oxm4ZH/7iCw5Y2KbqO1A8XDPOE1YfBt4EwF5htF1ahUXK3
-         1ZWBGoZAai3amippPmX2frj9gJ1wlVY0EkCTF6RaAKNMjPmfC0oOrtBNALnqjbfoboEI
-         ru0g3c8O74g43chSoCkLujVqj4hdqcd9bD613lcHcmFbM7mGw0BPJej4GvWhn4cTzsfM
-         oXnI4/GdNoMao0IM59BSrAniByJqJx6hI5XQwPcBnyVKuYJ7bL6UYGY1tYwrtFcTgFyS
-         VmIA==
-X-Gm-Message-State: APjAAAV/RJMcGidKdbS7cZ0weJYTHHHxEGUjC16YI+JoFJ//mZZoYpRr
-        Iu28XwWDkwhRnz98CkGKp2UFyamu
-X-Google-Smtp-Source: APXvYqy2IQbzLXn229piccPrx9Tqsn7eIlv5A9lNtHP5d4FUeePsF4SXj70/avUNXvwAoIZqE6xTFQ==
-X-Received: by 2002:aa7:df09:: with SMTP id c9mr41034425edy.133.1577217305709;
-        Tue, 24 Dec 2019 11:55:05 -0800 (PST)
+        bh=GIfeYd8rHefjwmUR6xdd2aWhIeIwROqlPqBkSmCLbuI=;
+        b=QUVPaedZZTY6fM3NUG0dID2W/REZlA9InopelhuQueilW0Dw8rB+riU5mVt1Gn6cdm
+         KSHPWcRc278wjoINxEGv00yJ6hExFm1xCQG1zfui8Pexoc6CSS3Sq0yZluI4B6WlX/oR
+         eMIi7YaH8ngJ2apHFxqp/r4G5mNTWIdhgZRcdZWcnsIlF23hTXAQv87hq1TDhskd8mEj
+         Epkqg9WkYKSXlCL4jOgReXx+gR9N69B6PMCtTyrAXIeGrdB1SgUDSY1QAbhyBj/c3zlk
+         rStDFjFc8sesc3BVnIyH60+VjWRLD3yFEnkx5w6j8BtNInlPqqkTOTgpkprD5fQ9IvzY
+         6P2A==
+X-Gm-Message-State: APjAAAXguqr0cf730FndkzmRmDvGXTWDvIhVjzvbYVJFCnykuYrgT4ZR
+        p+KowwmmEuQWy80sU8PTPsah+XII
+X-Google-Smtp-Source: APXvYqz5BzIYXh3njmwk/BOnM83e4vvjfJOvFUoAYjSsUi5cxgLPXF39CN+TBKidUC+WxVtSjmxXRQ==
+X-Received: by 2002:a17:906:1fc2:: with SMTP id e2mr39681478ejt.26.1577217309781;
+        Tue, 24 Dec 2019 11:55:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m24sm2797153edr.83.2019.12.24.11.55.05
+        by smtp.gmail.com with ESMTPSA id w5sm2803281eje.14.2019.12.24.11.55.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 24 Dec 2019 11:55:05 -0800 (PST)
-Message-Id: <34a69def330c2d0fc00f34b0897604c55bed1514.1577217299.git.gitgitgadget@gmail.com>
+        Tue, 24 Dec 2019 11:55:09 -0800 (PST)
+Message-Id: <ff43593211fe913bfab4890ec3c7a60c4c4015cb.1577217299.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
         <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 24 Dec 2019 19:54:50 +0000
-Subject: [PATCH v3 06/15] t3432: make these tests work with either am or merge
- backends
+Date:   Tue, 24 Dec 2019 19:54:55 +0000
+Subject: [PATCH v3 11/15] git-prompt: change the prompt for interactive-based
+ rebases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,115 +79,97 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-t3432 had several stress tests for can_fast_forward(), whose intent was
-to ensure we were using the optimization of just fast forwarding when
-possible.  However, these tests verified that fast forwards had happened
-based on the output that rebase printed to the terminal.  We can instead
-test more directly that we actually fast-forwarded by checking the
-reflog, which also has the side effect of making the tests applicable
-for the merge/interactive backend.
+In the past, we had different prompts for different types of rebases:
+   REBASE: for am-based rebases
+   REBASE-m: for merge-based rebases
+   REBASE-i: for interactive-based rebases
 
-This change does lose the distinction between "noop" and "noop-force",
-but as stated in commit c9efc216830f ("t3432: test for --no-ff's
-interaction with fast-forward", 2019-08-27) which introduced that
-distinction: "These tests aren't supposed to endorse the status quo,
-just test for what we're currently doing.".
+It's not clear why this distinction was necessary or helpful; when the
+prompt was added in commit e75201963f67 ("Improve bash prompt to detect
+various states like an unfinished merge", 2007-09-30), it simply added
+these three different types.  Perhaps there was a useful purpose back
+then, but there have been some changes:
 
-This change does not actually run these tests with the merge/interactive
-backend; instead this is just a preparatory commit.  A subsequent commit
-which fixes can_fast_forward() to work with that backend will then also
-change t3432 to add tests of that backend as well.
+  * The merge backend was deleted after being implemented on top of the
+    interactive backend, causing the prompt for merge-based rebases to
+    change from REBASE-m to REBASE-i.
+  * The interactive backend is used for multiple different types of
+    non-interactive rebases, so the "-i" part of the prompt doesn't
+    really mean what it used to.
+  * Rebase backends have gained more abilities and have a great deal of
+    overlap, sometimes making it hard to distinguish them.
+  * Behavioral differences between the backends have also been ironed
+    out.
+  * We want to change the default backend from am to interactive, which
+    means people would get "REBASE-i" by default if we didn't change
+    the prompt, and only if they specified --am or --whitespace or -C
+    would they get the "REBASE" prompt.
+  * In the future, we plan to have "--whitespace", "-C", and even "--am"
+    run the interactive backend once it can handle everything the
+    am-backend can.
+
+For all these reasons, make the prompt for any type of rebase just be
+"REBASE".
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3432-rebase-fast-forward.sh | 48 ++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 26 deletions(-)
+ contrib/completion/git-prompt.sh | 6 +-----
+ t/t9903-bash-prompt.sh           | 8 ++++----
+ 2 files changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/t/t3432-rebase-fast-forward.sh b/t/t3432-rebase-fast-forward.sh
-index 92f95b57da..7432c0e241 100755
---- a/t/t3432-rebase-fast-forward.sh
-+++ b/t/t3432-rebase-fast-forward.sh
-@@ -44,19 +44,15 @@ test_rebase_same_head_ () {
- 	test_expect_$status "git rebase$flag $* with $changes is $what with $cmp HEAD" "
- 		oldhead=\$(git rev-parse HEAD) &&
- 		test_when_finished 'git reset --hard \$oldhead' &&
-+		cp .git/logs/HEAD expect &&
- 		git rebase$flag $* >stdout &&
- 		if test $what = work
- 		then
--			# Must check this case first, for 'is up to
--			# date, rebase forced[...]rewinding head' cases
--			test_i18ngrep 'rewinding head' stdout
-+			old=\$(wc -l <expect) &&
-+			test_line_count '-gt' \$old .git/logs/HEAD
- 		elif test $what = noop
- 		then
--			test_i18ngrep 'is up to date' stdout &&
--			test_i18ngrep ! 'rebase forced' stdout
--		elif test $what = noop-force
--		then
--			test_i18ngrep 'is up to date, rebase forced' stdout
-+			test_cmp expect .git/logs/HEAD
- 		fi &&
- 		newhead=\$(git rev-parse HEAD) &&
- 		if test $cmp = same
-@@ -71,14 +67,14 @@ test_rebase_same_head_ () {
- 
- changes='no changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success noop-force same master
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
--test_rebase_same_head success noop same success noop-force same --onto master... master
--test_rebase_same_head success noop same success noop-force same --keep-base master
--test_rebase_same_head success noop same success noop-force same --keep-base
--test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
-+test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
-+test_rebase_same_head success noop same success work same --onto master... master
-+test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --keep-base
-+test_rebase_same_head success noop same success work same --no-fork-point
-+test_rebase_same_head success noop same success work same --keep-base --no-fork-point
- test_rebase_same_head success noop same success work same --fork-point master
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-@@ -91,14 +87,14 @@ test_expect_success 'add work same to side' '
- 
- changes='our changes'
- test_rebase_same_head success noop same success work same
--test_rebase_same_head success noop same success noop-force same master
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
--test_rebase_same_head success noop same success noop-force same --onto master... master
--test_rebase_same_head success noop same success noop-force same --keep-base master
--test_rebase_same_head success noop same success noop-force same --keep-base
--test_rebase_same_head success noop same success noop-force same --no-fork-point
--test_rebase_same_head success noop same success noop-force same --keep-base --no-fork-point
-+test_rebase_same_head success noop same success work same master
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
-+test_rebase_same_head success noop same success work same --onto master... master
-+test_rebase_same_head success noop same success work same --keep-base master
-+test_rebase_same_head success noop same success work same --keep-base
-+test_rebase_same_head success noop same success work same --no-fork-point
-+test_rebase_same_head success noop same success work same --keep-base --no-fork-point
- test_rebase_same_head success noop same success work same --fork-point master
- test_rebase_same_head success noop same success work diff --fork-point --onto B B
- test_rebase_same_head success noop same success work diff --fork-point --onto B... B
-@@ -112,8 +108,8 @@ test_expect_success 'add work same to upstream' '
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 1d510cd47b..014cd7c3cf 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -429,11 +429,7 @@ __git_ps1 ()
+ 		__git_eread "$g/rebase-merge/head-name" b
+ 		__git_eread "$g/rebase-merge/msgnum" step
+ 		__git_eread "$g/rebase-merge/end" total
+-		if [ -f "$g/rebase-merge/interactive" ]; then
+-			r="|REBASE-i"
+-		else
+-			r="|REBASE-m"
+-		fi
++		r="|REBASE"
+ 	else
+ 		if [ -d "$g/rebase-apply" ]; then
+ 			__git_eread "$g/rebase-apply/next" step
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 88bc733ad6..7ca35d358d 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -163,7 +163,7 @@ test_expect_success 'prompt - inside bare repository' '
  '
  
- changes='our and their changes'
--test_rebase_same_head success noop same success noop-force diff --onto B B
--test_rebase_same_head success noop same success noop-force diff --onto B... B
-+test_rebase_same_head success noop same success work diff --onto B B
-+test_rebase_same_head success noop same success work diff --onto B... B
- test_rebase_same_head success noop same success work diff --onto master... master
- test_rebase_same_head success noop same success work diff --keep-base master
- test_rebase_same_head success noop same success work diff --keep-base
+ test_expect_success 'prompt - interactive rebase' '
+-	printf " (b1|REBASE-i 2/3)" >expected &&
++	printf " (b1|REBASE 2/3)" >expected &&
+ 	write_script fake_editor.sh <<-\EOF &&
+ 		echo "exec echo" >"$1"
+ 		echo "edit $(git log -1 --format="%h")" >>"$1"
+@@ -180,7 +180,7 @@ test_expect_success 'prompt - interactive rebase' '
+ '
+ 
+ test_expect_success 'prompt - rebase merge' '
+-	printf " (b2|REBASE-i 1/3)" >expected &&
++	printf " (b2|REBASE 1/3)" >expected &&
+ 	git checkout b2 &&
+ 	test_when_finished "git checkout master" &&
+ 	test_must_fail git rebase --merge b1 b2 &&
+@@ -189,11 +189,11 @@ test_expect_success 'prompt - rebase merge' '
+ 	test_cmp expected "$actual"
+ '
+ 
+-test_expect_success 'prompt - rebase' '
++test_expect_success 'prompt - rebase am' '
+ 	printf " (b2|REBASE 1/3)" >expected &&
+ 	git checkout b2 &&
+ 	test_when_finished "git checkout master" &&
+-	test_must_fail git rebase b1 b2 &&
++	test_must_fail git rebase --am b1 b2 &&
+ 	test_when_finished "git rebase --abort" &&
+ 	__git_ps1 >"$actual" &&
+ 	test_cmp expected "$actual"
 -- 
 gitgitgadget
 
