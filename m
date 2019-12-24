@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8C74C3F68F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8041C2D0D5
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A4F6820643
+	by mail.kernel.org (Postfix) with ESMTP id 704B820706
 	for <git@archiver.kernel.org>; Tue, 24 Dec 2019 11:05:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aq35PQXc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NM13H0Vs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbfLXLFv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 24 Dec 2019 06:05:51 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:37236 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726154AbfLXLFu (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726225AbfLXLFu (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 24 Dec 2019 06:05:50 -0500
-Received: by mail-qt1-f193.google.com with SMTP id w47so17881812qtk.4
-        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:50 -0800 (PST)
+Received: from mail-qt1-f173.google.com ([209.85.160.173]:43633 "EHLO
+        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfLXLFt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 24 Dec 2019 06:05:49 -0500
+Received: by mail-qt1-f173.google.com with SMTP id d18so15172320qtj.10
+        for <git@vger.kernel.org>; Tue, 24 Dec 2019 03:05:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gc3wctujx0pytxtJt0GHE/bW2ail+olVBf+H6OYuszA=;
-        b=aq35PQXcpzXT/Rdbc23jdqvSGcCFhkx94NqYcDlNT6Soiehw/Wj9+2w44qqnw64OLg
-         ZvfFzeSlDXZfvUCU+utGVWqATJ46SCs0/1qVQgPxtNd8fMTxZJAuC+wtu08Dm0F6gbjj
-         d60oQSsGk4ogNBZ3U8Lg9iXpl2xw8mdU+WXfYolKLYHUceyZYkwsXg31DtU7UWjAPiLW
-         AcV6w/UpefYoC+C1ShDga2Ay+lwzFjV6/gvkOrQY05+JYCY+7Bi6uRb6MrF0tackZXQn
-         HIgIGzAj3v1/9RZ64qIQylapXgK5xHD2UM3yzmbg8UHHdIU/Zkfs3MSmVMVk5XA1eWMS
-         f3oQ==
+        bh=RjOU2K7Uk41XDxasv1W2GCcRamYrZpRuMlCN34TchkI=;
+        b=NM13H0Vsco+GxYsv/1UNtX8t7cexkVKNgHu/8ULrmuW0+nqRGYremO6l3HAdpQOUG0
+         ff4Bgr3ReZsh8kDjXIsq2rJy8q4nvgB3Ybbq5pZQCX9GV8uzT7B/oIsC1oz+ZYX+18H4
+         6ihWsm9AF7aDitHM7zkJzd7URiv03l/8VOAhR5sAAuZindvwVUuXDo1H3EADgchBeCjh
+         5JvTme2JcwFFx2o5xrCfvbDiPdsq/8wce5qEU4tctQPDBxOb2NJMAExcMc+c9hGbP4Pi
+         k/hVMSv3IdpayqaLJJxUPrDbm+pLnFzC1BZw5k/AAqs2C2duIv9JA+i5z+tALBrVxfEB
+         eLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gc3wctujx0pytxtJt0GHE/bW2ail+olVBf+H6OYuszA=;
-        b=Q3UUEN26QTdPsPq8bKYxN6HzTLbt+tbKg095IP1SAnHrjpqGj03pdNyCEoEJ3h+T8Q
-         iU9m5igGf9dcQ7XgskU4LyEOhRRjAet1EuwKyTwb5+UTf045RjIsSB0R2PpvdGyr56d2
-         1tH3SlMzF7GeduRx4kNIoNh6dS1M/VuslsKuAzZIzPJo+6uY23cnEvYtAhggd4d7lBO9
-         6G9HXp/Ka8dU5ksL0a0SdO++GPsUB+pSc6QxWNqEE6CP3pMSH4FRLfEqdPIihbZ+VbrH
-         YaPXP4NFfP4cbeWjqYcXfE+gWvMZQHVKLSyoIVlbv7LpyW4raNcSOmcEDgZF280SJTfV
-         kcFA==
-X-Gm-Message-State: APjAAAXlct/cm/eQ/UszR6LdK3CYjgXYFkejl+/8ofZiGmFRb/xMUjNC
-        L10lk7KdruR7NKBxWEFeqL0k5khn
-X-Google-Smtp-Source: APXvYqy1ydJ0AgVxUPvLc8bOT51lyZlfItodCbv3PcxNIJ9unkrNf9Tn+K5oAPQIQ29ocFflIaoq7A==
-X-Received: by 2002:ac8:784:: with SMTP id l4mr26156735qth.286.1577185549752;
-        Tue, 24 Dec 2019 03:05:49 -0800 (PST)
+        bh=RjOU2K7Uk41XDxasv1W2GCcRamYrZpRuMlCN34TchkI=;
+        b=cgFAwMHu9yl9ilAimV+m8D4CWEo1lPZKr9LOnzM10MwU9Utxkf5ttVXxI5rZhm+YvW
+         6RsjZmin+mQXHQ4d3hXZ/q9yGVoYiuojkS60p+6xNpnbuF0jfXPfRcU8d1Tf2+9phxhk
+         2yTAVHmQhby/2G5N9vTuOzlY83qqbiE9yTglf2OtkUliLmO1d7ky08vSfzVFC87FZMtA
+         euTcORwXWYeVj3kjRlMErMdV4lKakT3Y7HpkEWLU65n0vFdHa6Gpncze+gkiJI/HG5NL
+         umUii0LdMd6J6b1LQmKIDf22UUEvFeaYwzqB0uDa20edxlfoRdeZb0VHMCWzz0lPhXzP
+         Hmrw==
+X-Gm-Message-State: APjAAAXS0REZ7QuHxGdhuaGobRPsTMh3Wuxl7IjSRvwhCEA2srjLB4Nh
+        Rn0zRLI55Kfc+8HZ8gn0RwX7b0uF
+X-Google-Smtp-Source: APXvYqwFxnlYRNhCMvc1GeTEW//zLyMvFrUYEIyfuL11/WvXui/eAxNFkkXQKWcSHT0Oah9k4Pg/XQ==
+X-Received: by 2002:aed:3fb7:: with SMTP id s52mr26616197qth.311.1577185548489;
+        Tue, 24 Dec 2019 03:05:48 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.48
+        by smtp.gmail.com with ESMTPSA id o19sm7446944qtb.43.2019.12.24.03.05.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Dec 2019 03:05:49 -0800 (PST)
+        Tue, 24 Dec 2019 03:05:48 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Alban Gruin <alban.gruin@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 03/17] sequencer: use file strbuf for read_oneliner()
-Date:   Tue, 24 Dec 2019 06:05:00 -0500
-Message-Id: <de79e27c17af27395401e0c2280d90a7d8bdef14.1577185374.git.liu.denton@gmail.com>
+Subject: [PATCH v2 02/17] t7600: use test_write_lines()
+Date:   Tue, 24 Dec 2019 06:04:59 -0500
+Message-Id: <2e0020b3e3d58d4be4fe9fabfb079d17b30cc994.1577185374.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577185374.git.liu.denton@gmail.com>
 References: <cover.1571246693.git.liu.denton@gmail.com> <cover.1577185374.git.liu.denton@gmail.com>
@@ -74,66 +74,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the original read_oneliner logic, we duplicated the logic for
-strbuf_trim_trailing_newline() with one exception: instead of preventing
-buffer accesses below index 0, it would prevent buffer accesses below
-index `orig_len`. Although this is correct, it isn't worth having the
-duplicated logic around.
-
-Add a second strbuf to which files are read and run
-strbuf_trim_trailing_newline() directly on this strbuf then concatenate
-this strbuf with the argument strbuf at the end of the function. The
-function's external behaviour is unchanged.
+In t7600, we were rewriting `printf '%s\n' ...` to create files from
+parameters, one per line. However, we already have a function that wraps
+this for us: test_write_lines(). Rewrite these instances to use that
+function instead of open coding it.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- sequencer.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ t/t7600-merge.sh | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 763ccbbc45..5ba8b4383f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -429,26 +429,28 @@ static int write_message(const void *buf, size_t len, const char *filename,
- static int read_oneliner(struct strbuf *buf,
- 	const char *path, int skip_if_empty)
- {
--	int orig_len = buf->len;
-+	int ret = 0;
-+	struct strbuf file_buf = STRBUF_INIT;
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 132608879a..4fa0ef8e3b 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -29,15 +29,15 @@ Testing basic merge operations/option parsing.
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-gpg.sh
  
- 	if (!file_exists(path))
- 		return 0;
+-printf '%s\n' 1 2 3 4 5 6 7 8 9 >file
+-printf '%s\n' '1 X' 2 3 4 5 6 7 8 9 >file.1
+-printf '%s\n' 1 2 3 4 '5 X' 6 7 8 9 >file.5
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 X' >file.9
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 Y' >file.9y
+-printf '%s\n' '1 X' 2 3 4 5 6 7 8 9 >result.1
+-printf '%s\n' '1 X' 2 3 4 '5 X' 6 7 8 9 >result.1-5
+-printf '%s\n' '1 X' 2 3 4 '5 X' 6 7 8 '9 X' >result.1-5-9
+-printf '%s\n' 1 2 3 4 5 6 7 8 '9 Z' >result.9z
++test_write_lines 1 2 3 4 5 6 7 8 9 >file
++test_write_lines '1 X' 2 3 4 5 6 7 8 9 >file.1
++test_write_lines 1 2 3 4 '5 X' 6 7 8 9 >file.5
++test_write_lines 1 2 3 4 5 6 7 8 '9 X' >file.9
++test_write_lines 1 2 3 4 5 6 7 8 '9 Y' >file.9y
++test_write_lines '1 X' 2 3 4 5 6 7 8 9 >result.1
++test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 9 >result.1-5
++test_write_lines '1 X' 2 3 4 '5 X' 6 7 8 '9 X' >result.1-5-9
++test_write_lines 1 2 3 4 5 6 7 8 '9 Z' >result.9z
  
--	if (strbuf_read_file(buf, path, 0) < 0) {
-+	if (strbuf_read_file(&file_buf, path, 0) < 0) {
- 		warning_errno(_("could not read '%s'"), path);
--		return 0;
-+		goto done;
- 	}
- 
--	if (buf->len > orig_len && buf->buf[buf->len - 1] == '\n') {
--		if (--buf->len > orig_len && buf->buf[buf->len - 1] == '\r')
--			--buf->len;
--		buf->buf[buf->len] = '\0';
--	}
-+	strbuf_trim_trailing_newline(&file_buf);
- 
--	if (skip_if_empty && buf->len == orig_len)
--		return 0;
-+	if (skip_if_empty && !file_buf.len)
-+		goto done;
- 
--	return 1;
-+	strbuf_addbuf(buf, &file_buf);
-+	ret = 1;
-+
-+done:
-+	strbuf_release(&file_buf);
-+	return ret;
+ create_merge_msgs () {
+ 	echo "Merge tag 'c2'" >msg.1-5 &&
+@@ -81,7 +81,7 @@ verify_head () {
  }
  
- static struct tree *empty_tree(struct repository *r)
+ verify_parents () {
+-	printf '%s\n' "$@" >parents.expected &&
++	test_write_lines "$@" >parents.expected &&
+ 	>parents.actual &&
+ 	i=1 &&
+ 	while test $i -le $#
+@@ -95,7 +95,7 @@ verify_parents () {
+ }
+ 
+ verify_mergeheads () {
+-	printf '%s\n' "$@" >mergehead.expected &&
++	test_write_lines "$@" >mergehead.expected &&
+ 	while read sha1 rest
+ 	do
+ 		git rev-parse $sha1
 -- 
 2.24.1.810.g65a2f617f4
 
