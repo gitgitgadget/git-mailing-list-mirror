@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 077ECC3F68F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1940C2D0DA
 	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D29342075B
-	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8D4E72075B
+	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/emTYJW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H5HzzLAd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbfLYL5K (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726702AbfLYL5L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Dec 2019 06:57:11 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40456 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726469AbfLYL5K (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 25 Dec 2019 06:57:10 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45492 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726106AbfLYL5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Dec 2019 06:57:08 -0500
-Received: by mail-ed1-f65.google.com with SMTP id v28so19722244edw.12
-        for <git@vger.kernel.org>; Wed, 25 Dec 2019 03:57:07 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id b8so19776918edx.7
+        for <git@vger.kernel.org>; Wed, 25 Dec 2019 03:57:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
-        b=U/emTYJWk3TeBQBzRfXODKDP+0VcN55L7AHOXEezszztS0eqmACgbk3DcDBTY3Z72y
-         qZEY6iSs34NiGnI3HqEhi4O4mMYYfC7gIM0qA2HeOMceu0IUFcpStHLsv49SrlrQCDQ3
-         z8NZMVbUHiO7NznIjN51Orl1L4cT89ls4K5lDcxqvaPb9p2LklI3fzs7QKEMXDvAS18M
-         oM7u4ruQcig5viuJEd6PIz3YSmXkC4Y6GCISCno+03KF45nchna/8+OzWatuB0Wlmbeo
-         ZzZ0lklHNgJ5oJynOdyzhLjpW1u14O4M9F9t5Xhpy9YyBbaWp23WHNEUfQFySkPwsFyY
-         LDjQ==
+        bh=aIVFmW+ag61G3qpmr5SfVtnq0Qq3IxumTrYFwfEvO/w=;
+        b=H5HzzLAdsxCOyuFxuIWfvLsUaXSghn6pWUWGCN2tFA1QcZTGIyZLgGh04pKtYrZePf
+         yXPhDnw/4yiduOZI5OYO5JI7PSGABs11oi5z0Kpqgf6tbGO0GWnwXKh0ur9xpRTjJuQw
+         mHeM4zuVPY4hUu/AYuD9FRHXPq7GiK6NSmhsjFrK+R1e7Tn/HmsRpLGCgRUWBkke1o5B
+         8Y8Mh9cKRjG35fU+opjC2ByP+HrHZ7mgzrkhkzGnB7iOcQgpQHCUYhiLCE/SfyCzgUQ4
+         0LSIM/Kh4gtuWYr87yie2NvYIYvkjhMKvdilUlA4x5emIc+8iSfhYlVzZnSZjRvQ7/WW
+         f3Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
-        b=tPb7wDqLjtDasm/IYxajOsqRiuHf0VoXl/8haTFnTfFBeOm1F53oUC3W8YEWS0fuNs
-         E6cJ52+yuvOTj2xaep3WaCKPM88nSTSM1K7LPaEKPU0Oi/3G3bjUPyylFq8Mq7ZwvLV5
-         NiLMq+878yBrU5Wfc74P1xI3gTDFi3WChSTm+OPDU1tZMf3s1zkl5q0YXFqNwZA9st7w
-         8hbewaZ/Atuxlt0TG5S8aNkNt6ppt0FHrRb8i3MOAIgZrN/jpVZgR1/QCdo5ZpvO7Hoi
-         QFDp4TEyIdwTrWl7ufwg4ZH7drt1xfnuDoZTtY7qLQn8PqYZ/On9CJMzvoaFbD4KjNUO
-         ECfg==
-X-Gm-Message-State: APjAAAU/aE3QEnntynYwPgxorqVwBqiJVsFACWmeFODDTcaKvBnhqT33
-        /ZvEwRxzOLIEd+CbheCrMKLlBIv5
-X-Google-Smtp-Source: APXvYqw4Di0WwZlnhNgcWmTe17UUf7QtmpmfxsSH8+AteRqKxLPJ4buuLSSNgYFp/WjgxPNLhshq4Q==
-X-Received: by 2002:aa7:d80c:: with SMTP id v12mr44839966edq.302.1577275026539;
-        Wed, 25 Dec 2019 03:57:06 -0800 (PST)
+        bh=aIVFmW+ag61G3qpmr5SfVtnq0Qq3IxumTrYFwfEvO/w=;
+        b=dgaQR1zlR+8F7/l/Yv2bC5Kn+W0HpNS36I6faw2AoV+5z6HuglYm4n6/jgoasvoOno
+         PehkBNO7bW3+QxY5YU6+L4cRX/si1jzakviDineZg2d7z6m11GVh279A82YawBSMwoAo
+         2dzBiTSa6Y07zNS8k9qvgSrdaAyvYq+aqw/d4Alj4DpaVdtmfXJMtnLn8ctuiBqs2/3d
+         F4KhMA/aYjVAPpJRmIguLKXWJ6/11Ca/ZbSkQznKEgbMh3L108p5kDROWJ1ulXe52Qsw
+         EUFPCCEiQ9zOv9c8/93zfEYCRT+eeXGKZWWE782yVVsWm9bMUVJlzljgRdcklPQsjWnV
+         /3+A==
+X-Gm-Message-State: APjAAAXdRum7NqNnawlv8ayvv+p6jb+VrtS86nykClgPV5RkR8UMMqHb
+        8rv79Rvmx74iTHm47GCUH62TOAXl
+X-Google-Smtp-Source: APXvYqy2SpIV9f8MAb5FD5v5lBRE4dadZy5pNv5vX2PDiivwj5/U+Kto9VtuZiu+Z+DS2IEzMCQCxA==
+X-Received: by 2002:a05:6402:1ac4:: with SMTP id ba4mr9866571edb.201.1577275028022;
+        Wed, 25 Dec 2019 03:57:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k26sm3190273edv.13.2019.12.25.03.57.06
+        by smtp.gmail.com with ESMTPSA id gl17sm3095093ejb.72.2019.12.25.03.57.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Dec 2019 03:57:06 -0800 (PST)
-Message-Id: <167dfa37dde5d04192fff40147f8566d74e96015.1577275020.git.gitgitgadget@gmail.com>
+        Wed, 25 Dec 2019 03:57:07 -0800 (PST)
+Message-Id: <703719ffce4e69fa1d22fd2b740ddfaa0ef7283d.1577275020.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
 References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
         <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 Dec 2019 11:56:57 +0000
-Subject: [PATCH v2 6/9] built-in add -p: respect the `interactive.singlekey`
- config setting
+Date:   Wed, 25 Dec 2019 11:56:59 +0000
+Subject: [PATCH v2 8/9] built-in add -p: handle Escape sequences more
+ efficiently
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,106 +77,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The Perl version of `git add -p` supports this config setting to allow
-users to input commands via single characters (as opposed to having to
-press the <Enter> key afterwards).
+When `interactive.singlekey = true`, we react immediately to keystrokes,
+even to Escape sequences (e.g. when pressing a cursor key).
 
-This is an opt-in feature because it requires Perl packages
-(Term::ReadKey and Term::Cap, where it tries to handle an absence of the
-latter package gracefully) to work. Note that at least on Ubuntu, that
-Perl package is not installed by default (it needs to be installed via
-`sudo apt-get install libterm-readkey-perl`), so this feature is
-probably not used a whole lot.
+The problem with Escape sequences is that we do not really know when
+they are done, and as a heuristic we poll standard input for half a
+second to make sure that we got all of it.
 
-In C, we obviously do not have these packages available, but we just
-introduced `read_single_keystroke()` that is similar to what
-Term::ReadKey provides, and we use that here.
+While waiting half a second is not asking for a whole lot, it can become
+quite annoying over time, therefore with this patch, we read the
+terminal capabilities (if available) and extract known Escape sequences
+from there, then stop polling immediately when we detected that the user
+pressed a key that generated such a known sequence.
+
+This recapitulates the remaining part of b5cc003253c8 (add -i: ignore
+terminal escape sequences, 2011-05-17).
+
+Note: We do *not* query the terminal capabilities directly. That would
+either require a lot of platform-specific code, or it would require
+linking to a library such as ncurses.
+
+Linking to a library in the built-ins is something we try very hard to
+avoid (we even kicked the libcurl dependency to a non-built-in remote
+helper, just to shave off a tiny fraction of a second from Git's startup
+time). And the platform-specific code would be a maintenance nightmare.
+
+Even worse: in Git for Windows' case, we would need to query MSYS2
+pseudo terminals, which `git.exe` simply cannot do (because it is
+intentionally *not* an MSYS2 program).
+
+To address this, we simply spawn `infocmp -L -1` and parse its output
+(which works even in Git for Windows, because that helper is included in
+the end-user facing installations).
+
+This is done only once, as in the Perl version, but it is done only when
+the first Escape sequence is encountered, not upon startup of `git add
+-i`; This saves on startup time, yet makes reacting to the first Escape
+sequence slightly more sluggish. But it allows us to keep the
+terminal-related code encapsulated in the `compat/terminal.c` file.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- add-interactive.c |  2 ++
- add-interactive.h |  1 +
- add-patch.c       | 21 +++++++++++++++++----
- 3 files changed, 20 insertions(+), 4 deletions(-)
+ compat/terminal.c | 73 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 72 insertions(+), 1 deletion(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 9e4bcb382c..39c3896494 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -60,6 +60,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
- 	FREE_AND_NULL(s->interactive_diff_algorithm);
- 	git_config_get_string("diff.algorithm",
- 			      &s->interactive_diff_algorithm);
+diff --git a/compat/terminal.c b/compat/terminal.c
+index b7f58d1781..35bca03d14 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -4,6 +4,7 @@
+ #include "strbuf.h"
+ #include "run-command.h"
+ #include "string-list.h"
++#include "hashmap.h"
+ 
+ #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
+ 
+@@ -238,6 +239,71 @@ char *git_terminal_prompt(const char *prompt, int echo)
+ 	return buf.buf;
+ }
+ 
++/*
++ * The `is_known_escape_sequence()` function returns 1 if the passed string
++ * corresponds to an Escape sequence that the terminal capabilities contains.
++ *
++ * To avoid depending on ncurses or other platform-specific libraries, we rely
++ * on the presence of the `infocmp` executable to do the job for us (failing
++ * silently if the program is not available or refused to run).
++ */
++struct escape_sequence_entry {
++	struct hashmap_entry entry;
++	char sequence[FLEX_ARRAY];
++};
 +
-+	git_config_get_bool("interactive.singlekey", &s->use_single_key);
- }
- 
- void clear_add_i_state(struct add_i_state *s)
-diff --git a/add-interactive.h b/add-interactive.h
-index 923efaf527..693f125e8e 100644
---- a/add-interactive.h
-+++ b/add-interactive.h
-@@ -16,6 +16,7 @@ struct add_i_state {
- 	char file_old_color[COLOR_MAXLEN];
- 	char file_new_color[COLOR_MAXLEN];
- 
-+	int use_single_key;
- 	char *interactive_diff_filter, *interactive_diff_algorithm;
- };
- 
-diff --git a/add-patch.c b/add-patch.c
-index 8f2ee8688b..d8dafa8168 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -6,6 +6,7 @@
- #include "pathspec.h"
- #include "color.h"
- #include "diff.h"
-+#include "compat/terminal.h"
- 
- enum prompt_mode_type {
- 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
-@@ -1149,14 +1150,27 @@ static int run_apply_check(struct add_p_state *s,
- 	return 0;
- }
- 
-+static int read_single_character(struct add_p_state *s)
++static int sequence_entry_cmp(const void *hashmap_cmp_fn_data,
++			      const struct escape_sequence_entry *e1,
++			      const struct escape_sequence_entry *e2,
++			      const void *keydata)
 +{
-+	if (s->s.use_single_key) {
-+		int res = read_key_without_echo(&s->answer);
-+		printf("%s\n", res == EOF ? "" : s->answer.buf);
-+		return res;
-+	}
-+
-+	if (strbuf_getline(&s->answer, stdin) == EOF)
-+		return EOF;
-+	strbuf_trim_trailing_newline(&s->answer);
-+	return 0;
++	return strcmp(e1->sequence, keydata ? keydata : e2->sequence);
 +}
 +
- static int prompt_yesno(struct add_p_state *s, const char *prompt)
++static int is_known_escape_sequence(const char *sequence)
++{
++	static struct hashmap sequences;
++	static int initialized;
++
++	if (!initialized) {
++		struct child_process cp = CHILD_PROCESS_INIT;
++		struct strbuf buf = STRBUF_INIT;
++		char *p, *eol;
++
++		hashmap_init(&sequences, (hashmap_cmp_fn)sequence_entry_cmp,
++			     NULL, 0);
++
++		argv_array_pushl(&cp.args, "infocmp", "-L", "-1", NULL);
++		if (pipe_command(&cp, NULL, 0, &buf, 0, NULL, 0))
++			strbuf_setlen(&buf, 0);
++
++		for (eol = p = buf.buf; *p; p = eol + 1) {
++			p = strchr(p, '=');
++			if (!p)
++				break;
++			p++;
++			eol = strchrnul(p, '\n');
++
++			if (starts_with(p, "\\E")) {
++				char *comma = memchr(p, ',', eol - p);
++				struct escape_sequence_entry *e;
++
++				p[0] = '^';
++				p[1] = '[';
++				FLEX_ALLOC_MEM(e, sequence, p, comma - p);
++				hashmap_entry_init(&e->entry,
++						   strhash(e->sequence));
++				hashmap_add(&sequences, &e->entry);
++			}
++			if (!*eol)
++				break;
++		}
++		initialized = 1;
++	}
++
++	return !!hashmap_get_from_hash(&sequences, strhash(sequence), sequence);
++}
++
+ int read_key_without_echo(struct strbuf *buf)
  {
- 	for (;;) {
- 		color_fprintf(stdout, s->s.prompt_color, "%s", _(prompt));
- 		fflush(stdout);
--		if (strbuf_getline(&s->answer, stdin) == EOF)
-+		if (read_single_character(s) == EOF)
- 			return -1;
--		strbuf_trim_trailing_newline(&s->answer);
- 		switch (tolower(s->answer.buf[0])) {
- 		case 'n': return 0;
- 		case 'y': return 1;
-@@ -1396,9 +1410,8 @@ static int patch_update_file(struct add_p_state *s,
- 			      _(s->mode->prompt_mode[prompt_mode_type]),
- 			      s->buf.buf);
- 		fflush(stdout);
--		if (strbuf_getline(&s->answer, stdin) == EOF)
-+		if (read_single_character(s) == EOF)
- 			break;
--		strbuf_trim_trailing_newline(&s->answer);
+ 	static int warning_displayed;
+@@ -271,7 +337,12 @@ int read_key_without_echo(struct strbuf *buf)
+ 		 * Start by replacing the Escape byte with ^[ */
+ 		strbuf_splice(buf, buf->len - 1, 1, "^[", 2);
  
- 		if (!s->answer.len)
- 			continue;
+-		for (;;) {
++		/*
++		 * Query the terminal capabilities once about all the Escape
++		 * sequences it knows about, so that we can avoid waiting for
++		 * half a second when we know that the sequence is complete.
++		 */
++		while (!is_known_escape_sequence(buf->buf)) {
+ 			struct pollfd pfd = { .fd = 0, .events = POLLIN };
+ 
+ 			if (poll(&pfd, 1, 500) < 1)
 -- 
 gitgitgadget
 
