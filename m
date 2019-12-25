@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D43D9C2D0DB
-	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 077ECC3F68F
+	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9DB122073B
+	by mail.kernel.org (Postfix) with ESMTP id D29342075B
 	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:57:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bzc6RJKd"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/emTYJW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbfLYL5K (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726627AbfLYL5K (ORCPT <rfc822;git@archiver.kernel.org>);
         Wed, 25 Dec 2019 06:57:10 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42186 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726388AbfLYL5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Dec 2019 06:57:07 -0500
-Received: by mail-ed1-f66.google.com with SMTP id e10so19769534edv.9
-        for <git@vger.kernel.org>; Wed, 25 Dec 2019 03:57:05 -0800 (PST)
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45492 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726106AbfLYL5I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Dec 2019 06:57:08 -0500
+Received: by mail-ed1-f65.google.com with SMTP id v28so19722244edw.12
+        for <git@vger.kernel.org>; Wed, 25 Dec 2019 03:57:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=bzc6RJKdS6rfo1XyAm08Id5e8cwQGOSTbdPfKkHA9Sue/8LV3HNzicsaOUNEDNtBsF
-         jmjwcJlDIz2ZAGvzkfFMLbQtBFdaCTzjkw++JUTvibZqaNdt3j6s85a6k/WITzvFof2K
-         pOK6VoHOTHxdLHgWzDP2hFzYj/FCBhzLYCgzPcfQULeO8w/4SD5dbOLWyjo7LDwEo4hV
-         Zkxi3aEZ9C0FyFycYbtsPwSPK9/nJPVdKyZop+c4IK7X0uLC4ztdn6XbAcOv4ZogAGbJ
-         /OXW1GYADXbuDJ/Qlq91i41fT0a4ZYtyD+ocEoIkBUizBT9KX/hD53qCg1pZA9MEO1d+
-         bztw==
+        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
+        b=U/emTYJWk3TeBQBzRfXODKDP+0VcN55L7AHOXEezszztS0eqmACgbk3DcDBTY3Z72y
+         qZEY6iSs34NiGnI3HqEhi4O4mMYYfC7gIM0qA2HeOMceu0IUFcpStHLsv49SrlrQCDQ3
+         z8NZMVbUHiO7NznIjN51Orl1L4cT89ls4K5lDcxqvaPb9p2LklI3fzs7QKEMXDvAS18M
+         oM7u4ruQcig5viuJEd6PIz3YSmXkC4Y6GCISCno+03KF45nchna/8+OzWatuB0Wlmbeo
+         ZzZ0lklHNgJ5oJynOdyzhLjpW1u14O4M9F9t5Xhpy9YyBbaWp23WHNEUfQFySkPwsFyY
+         LDjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=Aqyo1wLQ57okWJuWAIXGd7p8nlEk5s5htymJRSOZv/Ynpd116DStO2R8sjFPsXHDgO
-         Vj1c6VVNJ1ipExApQvHK+zunbCLvXhPJSY3XebTPihpsPYY6rSiGQjJfSpq3AYWm2jAp
-         HGjfhAmQfNpmEnAJexAqcpiNOsVSvGvRaPwl2/jgr9Vlrj1stkVBCbum18GFHSlSk2Yp
-         rqt8oRfjIYkkPF37kld2lmq09szk8aX66Dmb3kwEa6V4AfjBWA/FT5poRifzDBPRpl4i
-         SQt32luIEfOBXMuMpVxNyFi/mRhEwUbcECM+ZO8X4vI11JOypX1hyWTOSkRwyoKDy8LT
-         W48g==
-X-Gm-Message-State: APjAAAUFOeJomyW5I5N9evSnnYQIBseXHp7HGwQ/KlGN2CEa1bu4UhgE
-        lfHXPdW35YWu/U5aWiAqwTe2C16Z
-X-Google-Smtp-Source: APXvYqz6AVH+TfxQbbRbbykF+vkh/40WQMOLQJP/au+HLMc9dlCsv3DTNRdl4KZR/S6gs5wDIpB/TQ==
-X-Received: by 2002:a17:906:2e46:: with SMTP id r6mr42717320eji.310.1577275025023;
-        Wed, 25 Dec 2019 03:57:05 -0800 (PST)
+        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
+        b=tPb7wDqLjtDasm/IYxajOsqRiuHf0VoXl/8haTFnTfFBeOm1F53oUC3W8YEWS0fuNs
+         E6cJ52+yuvOTj2xaep3WaCKPM88nSTSM1K7LPaEKPU0Oi/3G3bjUPyylFq8Mq7ZwvLV5
+         NiLMq+878yBrU5Wfc74P1xI3gTDFi3WChSTm+OPDU1tZMf3s1zkl5q0YXFqNwZA9st7w
+         8hbewaZ/Atuxlt0TG5S8aNkNt6ppt0FHrRb8i3MOAIgZrN/jpVZgR1/QCdo5ZpvO7Hoi
+         QFDp4TEyIdwTrWl7ufwg4ZH7drt1xfnuDoZTtY7qLQn8PqYZ/On9CJMzvoaFbD4KjNUO
+         ECfg==
+X-Gm-Message-State: APjAAAU/aE3QEnntynYwPgxorqVwBqiJVsFACWmeFODDTcaKvBnhqT33
+        /ZvEwRxzOLIEd+CbheCrMKLlBIv5
+X-Google-Smtp-Source: APXvYqw4Di0WwZlnhNgcWmTe17UUf7QtmpmfxsSH8+AteRqKxLPJ4buuLSSNgYFp/WjgxPNLhshq4Q==
+X-Received: by 2002:aa7:d80c:: with SMTP id v12mr44839966edq.302.1577275026539;
+        Wed, 25 Dec 2019 03:57:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d19sm2413156ejd.21.2019.12.25.03.57.04
+        by smtp.gmail.com with ESMTPSA id k26sm3190273edv.13.2019.12.25.03.57.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 25 Dec 2019 03:57:04 -0800 (PST)
-Message-Id: <bd2306c5d55986ad991f7a84982f84609f848842.1577275020.git.gitgitgadget@gmail.com>
+        Wed, 25 Dec 2019 03:57:06 -0800 (PST)
+Message-Id: <167dfa37dde5d04192fff40147f8566d74e96015.1577275020.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
 References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
         <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 25 Dec 2019 11:56:55 +0000
-Subject: [PATCH v2 4/9] terminal: accommodate Git for Windows' default
- terminal
+Date:   Wed, 25 Dec 2019 11:56:57 +0000
+Subject: [PATCH v2 6/9] built-in add -p: respect the `interactive.singlekey`
+ config setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,110 +77,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows' Git Bash runs in MinTTY by default, which does not have
-a Win32 Console instance, but uses MSYS2 pseudo terminals instead.
+The Perl version of `git add -p` supports this config setting to allow
+users to input commands via single characters (as opposed to having to
+press the <Enter> key afterwards).
 
-This is a problem, as Git for Windows does not want to use the MSYS2
-emulation layer for Git itself, and therefore has no direct way to
-interact with that pseudo terminal.
+This is an opt-in feature because it requires Perl packages
+(Term::ReadKey and Term::Cap, where it tries to handle an absence of the
+latter package gracefully) to work. Note that at least on Ubuntu, that
+Perl package is not installed by default (it needs to be installed via
+`sudo apt-get install libterm-readkey-perl`), so this feature is
+probably not used a whole lot.
 
-As a workaround, use the `stty` utility (which is included in Git for
-Windows, and which *is* an MSYS2 program, so it knows how to deal with
-the pseudo terminal).
-
-Note: If Git runs in a regular CMD or PowerShell window, there *is* a
-regular Win32 Console to work with. This is not a problem for the MSYS2
-`stty`: it copes with this scenario just fine.
-
-Also note that we introduce support for more bits than would be
-necessary for a mere `disable_echo()` here, in preparation for the
-upcoming `enable_non_canonical()` function.
+In C, we obviously do not have these packages available, but we just
+introduced `read_single_keystroke()` that is similar to what
+Term::ReadKey provides, and we use that here.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/terminal.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ add-interactive.c |  2 ++
+ add-interactive.h |  1 +
+ add-patch.c       | 21 +++++++++++++++++----
+ 3 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 1fb40b3a0a..16e9949da1 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -2,6 +2,8 @@
- #include "compat/terminal.h"
- #include "sigchain.h"
- #include "strbuf.h"
-+#include "run-command.h"
-+#include "string-list.h"
- 
- #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
- 
-@@ -64,11 +66,28 @@ static int disable_echo(void)
- #define OUTPUT_PATH "CONOUT$"
- #define FORCE_TEXT "t"
- 
-+static int use_stty = 1;
-+static struct string_list stty_restore = STRING_LIST_INIT_DUP;
- static HANDLE hconin = INVALID_HANDLE_VALUE;
- static DWORD cmode;
- 
- static void restore_term(void)
- {
-+	if (use_stty) {
-+		int i;
-+		struct child_process cp = CHILD_PROCESS_INIT;
+diff --git a/add-interactive.c b/add-interactive.c
+index 9e4bcb382c..39c3896494 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -60,6 +60,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	FREE_AND_NULL(s->interactive_diff_algorithm);
+ 	git_config_get_string("diff.algorithm",
+ 			      &s->interactive_diff_algorithm);
 +
-+		if (stty_restore.nr == 0)
-+			return;
-+
-+		argv_array_push(&cp.args, "stty");
-+		for (i = 0; i < stty_restore.nr; i++)
-+			argv_array_push(&cp.args, stty_restore.items[i].string);
-+		run_command(&cp);
-+		string_list_clear(&stty_restore, 0);
-+		return;
++	git_config_get_bool("interactive.singlekey", &s->use_single_key);
+ }
+ 
+ void clear_add_i_state(struct add_i_state *s)
+diff --git a/add-interactive.h b/add-interactive.h
+index 923efaf527..693f125e8e 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -16,6 +16,7 @@ struct add_i_state {
+ 	char file_old_color[COLOR_MAXLEN];
+ 	char file_new_color[COLOR_MAXLEN];
+ 
++	int use_single_key;
+ 	char *interactive_diff_filter, *interactive_diff_algorithm;
+ };
+ 
+diff --git a/add-patch.c b/add-patch.c
+index 8f2ee8688b..d8dafa8168 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -6,6 +6,7 @@
+ #include "pathspec.h"
+ #include "color.h"
+ #include "diff.h"
++#include "compat/terminal.h"
+ 
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
+@@ -1149,14 +1150,27 @@ static int run_apply_check(struct add_p_state *s,
+ 	return 0;
+ }
+ 
++static int read_single_character(struct add_p_state *s)
++{
++	if (s->s.use_single_key) {
++		int res = read_key_without_echo(&s->answer);
++		printf("%s\n", res == EOF ? "" : s->answer.buf);
++		return res;
 +	}
 +
- 	if (hconin == INVALID_HANDLE_VALUE)
- 		return;
- 
-@@ -79,6 +98,37 @@ static void restore_term(void)
- 
- static int disable_bits(DWORD bits)
++	if (strbuf_getline(&s->answer, stdin) == EOF)
++		return EOF;
++	strbuf_trim_trailing_newline(&s->answer);
++	return 0;
++}
++
+ static int prompt_yesno(struct add_p_state *s, const char *prompt)
  {
-+	if (use_stty) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
-+
-+		argv_array_push(&cp.args, "stty");
-+
-+		if (bits & ENABLE_LINE_INPUT) {
-+			string_list_append(&stty_restore, "icanon");
-+			argv_array_push(&cp.args, "-icanon");
-+		}
-+
-+		if (bits & ENABLE_ECHO_INPUT) {
-+			string_list_append(&stty_restore, "echo");
-+			argv_array_push(&cp.args, "-echo");
-+		}
-+
-+		if (bits & ENABLE_PROCESSED_INPUT) {
-+			string_list_append(&stty_restore, "-ignbrk");
-+			string_list_append(&stty_restore, "intr");
-+			string_list_append(&stty_restore, "^c");
-+			argv_array_push(&cp.args, "ignbrk");
-+			argv_array_push(&cp.args, "intr");
-+			argv_array_push(&cp.args, "");
-+		}
-+
-+		if (run_command(&cp) == 0)
-+			return 0;
-+
-+		/* `stty` could not be executed; access the Console directly */
-+		use_stty = 0;
-+	}
-+
- 	hconin = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
- 	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
- 	    FILE_ATTRIBUTE_NORMAL, NULL);
+ 	for (;;) {
+ 		color_fprintf(stdout, s->s.prompt_color, "%s", _(prompt));
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			return -1;
+-		strbuf_trim_trailing_newline(&s->answer);
+ 		switch (tolower(s->answer.buf[0])) {
+ 		case 'n': return 0;
+ 		case 'y': return 1;
+@@ -1396,9 +1410,8 @@ static int patch_update_file(struct add_p_state *s,
+ 			      _(s->mode->prompt_mode[prompt_mode_type]),
+ 			      s->buf.buf);
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			break;
+-		strbuf_trim_trailing_newline(&s->answer);
+ 
+ 		if (!s->answer.len)
+ 			continue;
 -- 
 gitgitgadget
 
