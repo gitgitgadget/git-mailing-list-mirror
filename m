@@ -2,96 +2,132 @@ Return-Path: <SRS0=LPWw=2P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5307EC2D0DA
-	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 08:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A77AC2D0DA
+	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:56:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2FEC420643
-	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 08:51:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D9F4F2073B
+	for <git@archiver.kernel.org>; Wed, 25 Dec 2019 11:56:37 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="U2NjoK2A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbfLYIvk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 25 Dec 2019 03:51:40 -0500
-Received: from zucker2.schokokeks.org ([178.63.68.90]:39229 "EHLO
-        zucker2.schokokeks.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726025AbfLYIvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 25 Dec 2019 03:51:39 -0500
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Dec 2019 03:51:39 EST
-Received: from localhost (localhost [::1])
-  (AUTH: PLAIN simon@ruderich.org, TLS: TLSv1.3,256bits,TLS_AES_256_GCM_SHA384)
-  by zucker.schokokeks.org with ESMTPSA
-  id 0000000000020093.000000005E0321E8.00005864; Wed, 25 Dec 2019 09:46:32 +0100
-Date:   Wed, 25 Dec 2019 09:46:32 +0100
-From:   Simon Ruderich <simon@ruderich.org>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/9] built-in add -p: add support for the same config
- settings as the Perl version
-Message-ID: <20191225084632.GA461356@ruderich.org>
-References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
- <xmqqpngd60rx.fsf@gitster-ct.c.googlers.com>
- <xmqqimm5601h.fsf@gitster-ct.c.googlers.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512; protocol="application/pgp-signature"; boundary="=_zucker.schokokeks.org-22628-1577263592-0001-2"
-Content-Disposition: inline
-In-Reply-To: <xmqqimm5601h.fsf@gitster-ct.c.googlers.com>
+        id S1726371AbfLYL4f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 25 Dec 2019 06:56:35 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50881 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726185AbfLYL4f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 25 Dec 2019 06:56:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1577274989;
+        bh=vVOzrvlPzmbe8GHUjgscfOOkTOHJhSXWVm31zOzcTDk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=U2NjoK2AKaynVNk0MOkvLIojDC/bTVB5rAAHLYTIoOLpGX80KlcXl4oZTpAU8nYTk
+         7ENSzEoYCz/a4Z+7xxaAWHaw34y0Tu0M1pJreV5yPr9JibpnndpdEuakz2uaBrEdKu
+         70AUVMPQXSoWUpNNT3wZvQGWsrEOsK8BWyl96LWM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof9F-1jYaVZ3C2b-00p2oP; Wed, 25
+ Dec 2019 12:56:29 +0100
+Date:   Wed, 25 Dec 2019 12:56:12 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 9/9] ci: include the built-in `git add -i` in the
+ `linux-gcc` job
+In-Reply-To: <20191221225354.GB32750@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1912251255160.46@tvgsbejvaqbjf.bet>
+References: <pull.175.git.1576968120.gitgitgadget@gmail.com> <9719604a1fb6ec4cf1b1297875cae86c076c9cdd.1576968120.git.gitgitgadget@gmail.com> <20191221225354.GB32750@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-199454658-1577274989=:46"
+X-Provags-ID: V03:K1:gCDar50lRVQwvsvYzyblAEhszXv7OIzDX4tsy0NneMPezGU7Yrc
+ dmmiXqyH5MyIo8Pl4imisFVDw8YDEqHKFm0yWmje7M2pDCAOwxcEHdGD7/AMqgWOhoXsVG0
+ B3sf/92ie9xfO2AojXLknYotadAIPuMZ9zWS0sN1lcPjfnFP7xuG0lC0axvfe2yp6TC8DJm
+ 86NtkVzF4y7AVO/KCCTpg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:lrXXKfxzKfI=:h1d4Ar0QMLSNy0aN9VG31E
+ Q7j918eZMj34dc1vhZGBt78jcyQbn+0q5BRKlMWFFKB7yXjuE0Mnyjr4Pqm/9x6+/wWVqoz9D
+ hbS5A2ph0f9occaALl1OPe/vfNSFYLkJCzejH8EYSahACMqvNSZWHONXpdg8JVkKzIOGGKhcP
+ rJHTeuD8jNmOZBSRPj0lfy3N8iADK+I3SWIHjWmAEs1Nn1ZA8ymp2YK4n7VMpVn5kIWFRVMqV
+ cq/87tro5cXPAfpfYXHimjY1N5RNyWPmPXOJnxKS+xV0uaPwNmihFNLB9ZLWqLQqfoohGWnP7
+ sCgOQ+meA7+btJ2cI0EKtcVlh+2Bvdopx7DeK19mQrDewr+MsFdA/+FShm4nzx/kAhKmKCECR
+ Quhfz2NQ9aR4U5EvD6t46xBcGTHys50K7jlDGgNmo5qZUTxJzvKRZst5lJZ1751558P6OYhDu
+ z/XXB76RwdTTpV9eaZKujF9acFe0UWDQF1SrLddZNYOepUTQlDqCH+uBt3NmfwTVtsWCSUs3r
+ WKl6yYo/3b90r7sUCPqe/bZObTxOFwf6YloMOp5IuH/QmJMDch5KW5gD+z+tauSyI4XKM3ble
+ BM9P6Cc6hGrMSmJExRaEqBzE2IjKfFaxZaoL2ZO2aszfu+SEp/jNZCPHmPDjsX5JgA0m21Hax
+ ClYTJuA0J8vY/7wxyI5DiyFMv6DvXHKKljuOQ4JmFrkn0Ba9dB24Osx+BOLWsNOOdBHP82Sw8
+ jGat0SvMt7Pd5aP42fMBCgg/YHxQvlysqjOkp3Dm1YtmOoqS9zGJ+srFPwJMfLTyid3m1WPYh
+ ihiT6blfl77mw3sc8Vdla4e+Ie5u7ImCAg2637c2E2oA4rAAL3VsGxpb3GU1PX0rE6ylVuCaw
+ K4A2D0J+K7hbKZWEjwlNOAK9rThoibwqJ/XoBJ+QR6zZc9zbJ67rK7Re1plwtbxu4qh0JsO7W
+ J3e0PdqbVrp7W/ug57dwPLHrgWaiXihMKKPBMv1Yvr8iY8aN1hXR/S1wER2ULKLQ4+ny7YTOC
+ e9J1Qll/oscSvCk3gEzJXDbJhX800uunQqHRm4GV2XIeW81gPgz711D3DMftWeL9NaJNd8rhE
+ 3hl747wiqv+3tudxi6TF+JGyp5IY+GlPljT+OnELEOC0ovmvPiQnrqRZwLitJvAs5PvpCztD9
+ LMzOs+CN2EJ3wX1aiEISw5s9jpFw8Cg5RZ2RPWKcGWjeXktL15rfLugKMTgeZKVrkFBZBK3g6
+ 0lAAjbs3HTNmN96KJ4DUnMw46sRBIJRB5ddy2kbNINrKXOzVC3e8G6IrDLMI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---=_zucker.schokokeks.org-22628-1577263592-0001-2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--8323328-199454658-1577274989=:46
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Dec 24, 2019 at 10:39:06AM -0800, Junio C Hamano wrote:
-> I think it is a mistake to write the lower-level terminal access
-> code without using established libraries (or write it with a higher
-> level abstraction offered by scripting languages like Perl and
-> Pythnon), and I would personally take, given a choice between
-> accepting such maintenance/porting liability and dropping of
-> single-key behaviour, the latter in any second.
+Hi G=C3=A1bor,
 
-I've no opinion on the implementation or maintenance work.
+On Sat, 21 Dec 2019, SZEDER G=C3=A1bor wrote:
 
-But as a heavy user of `git add -p` with interactive.singlekey
-I'd like to keep this feature in Git. It makes using `git add -p`
-a lot more comfortable for me.
+> On Sat, Dec 21, 2019 at 10:42:00PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > This job runs the test suite twice, once in regular mode, and once wit=
+h
+> > a whole slew of `GIT_TEST_*` variables set.
+> >
+> > Now that the built-in version of `git add --interactive` is
+> > feature-complete, let's also throw `GIT_TEST_MULTI_PACK_INDEX` into th=
+at
+>
+> GIT_TEST_MULTI_PACK_INDEX? ;)
 
-Regards
-Simon
---=20
-+ privacy is necessary
-+ using gnupg http://gnupg.org
-+ public key id: 0x92FEFDB7E44C32F9
+Whoops. Copy/paste fail.
 
---=_zucker.schokokeks.org-22628-1577263592-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
+Fixed in v2,
+Dscho
 
------BEGIN PGP SIGNATURE-----
+>
+> > fray.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  ci/run-build-and-tests.sh | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> > index ff0ef7f08e..4df54c4efe 100755
+> > --- a/ci/run-build-and-tests.sh
+> > +++ b/ci/run-build-and-tests.sh
+> > @@ -20,6 +20,7 @@ linux-gcc)
+> >  	export GIT_TEST_OE_DELTA_SIZE=3D5
+> >  	export GIT_TEST_COMMIT_GRAPH=3D1
+> >  	export GIT_TEST_MULTI_PACK_INDEX=3D1
+> > +	export GIT_TEST_ADD_I_USE_BUILTIN=3D1
+> >  	make test
+> >  	;;
+> >  linux-gcc-4.8)
+> > --
+> > gitgitgadget
+>
+>
 
-iQIzBAEBCgAdFiEEO7rfWMMObpFkF3n0kv79t+RMMvkFAl4DId8ACgkQkv79t+RM
-MvlDbA//TvDEAfjXyiW0g9pBaXfSgbY0/qvd1d1fl4G/YEjyci5BZ2CGYU+49AYq
-AeY3raxT8YNed/4uAK4bMIAjFw5MsVCkpza5Q8w3j3Vw1MBd6oCabHnsxbaJDCSW
-mrw8353JoD0gCA7oNyzBoOxPfupT7EmJav2+AGO/P1KzYb2QrbIsD6AEX1O/sGnF
-7m0uIQVicwuRES+IMt/adI01lsbc4gxdJK/daTMYILNmdLen112Id++HYLbfi+Vf
-MjOxiXQLnhN9hn84psB5zARaej27CrYueBPT0vMXI+TTDNycjOgzZeTQH3wBNlXD
-6k9EsULqrKwVVXmIVB626nH04rUA063RL95xbaaAzE5AJKphmudHU6i4oqOGgnuA
-aDgAppB2Cue+uV9vi+8v0iUHMCwr4LJHiAWf3MBeb6O5QQfOaq1I85OuOjMR2BWv
-4sqa1HDt0NuM5HVBlCfGXiLvzydYtO0ULIR5nVehbevuTL1xPLsI9i9SvUwLMdK0
-XvLmaamCxaIOlwGnzK1VSOYM0skGwYq/dYsw2o4tBm/gg7K0BJooYsOWeYMBMmvJ
-2oct7GtfmzLGFAvotG4sOOt+4UgdUzshiyZZIuzptVnpk4AuImVWRidZwU8Jp5xO
-9dygYkOtq2bpez05iIcHTaQ3x0Sr9UmxSejxSUrCjJwVeBptAqI=
-=scPn
------END PGP SIGNATURE-----
-
---=_zucker.schokokeks.org-22628-1577263592-0001-2--
+--8323328-199454658-1577274989=:46--
