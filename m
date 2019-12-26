@@ -2,152 +2,79 @@ Return-Path: <SRS0=68ZU=2Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5681EC2D0DC
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 19:02:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1963EC2D0C0
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 19:22:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 31E782080D
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 19:02:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E73D620740
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 19:22:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H09lc6Q4"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PPAr7fEO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbfLZTCA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Dec 2019 14:02:00 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:37468 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726752AbfLZTB7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Dec 2019 14:01:59 -0500
-Received: by mail-ed1-f45.google.com with SMTP id cy15so23482995edb.4
-        for <git@vger.kernel.org>; Thu, 26 Dec 2019 11:01:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=96MUwtZu6NPDxyV7ei3g6CI/Wmwxa1h/TSlAOIf15N8=;
-        b=H09lc6Q4iM0hsFO/PCDYSYpDTcT1V4EqzqRUqVJ6NW1p0VWnaeiB21hGyWgZVrGWJa
-         G8F74aYNkGT3JJMJAaaiDUcD3OgkayZ1Ddq+ywR3vvpOfbOATlEF2j1xl28X8Ra6/9DN
-         ApsXUuK1Nw/66AT7VOEp6fVgylzcHKdOfWEyDF/BHk1OQ8QgvUlTlk4I4xKvpUhUVdI1
-         QkFTWYxq6yJCA7PbZRAqczE1+TniFhavp+QYzrXc7UEYxAAB++RymSfa4U/jf3mHuS1z
-         G3Y8OFSmC6tAr2zGTXoJcULSgu82mlsZOHOod7+2410O8T9gwCpbV97E4UAdkJDFS3Hp
-         IO1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=96MUwtZu6NPDxyV7ei3g6CI/Wmwxa1h/TSlAOIf15N8=;
-        b=kA5sT0nFaPW6CyR2251/C7/f2Q/f75kKUsLvl0cULDJqWnl5lXyHMX4bCddK+zlMVd
-         dkvk/Yup7Uu1JE3BLtUDpb2eU+2gJEBvuwrJxexaICzzN42zPyEpBDai9Mvncz56yI1g
-         +saq8iF7Jzc4Vou3XdxcyXfsphHEePGlckhd5pIXTNGeHKQN9y9AimjFrql4obxo6MYw
-         6K/nzau+8RuDIEA1ErXRP2Ob4n5MQImoxlwtpChVTokG8ws6mWralMHUxigPMmQS5het
-         1Dnd530+6uH2IbUsjMJ7IXcKQJ5mnhv1ifvhbG/yfRfrco84d4jOLrgMOF+vIKuDiPB4
-         bHLg==
-X-Gm-Message-State: APjAAAVvnDXe1YZugBw/2kU8j1+znZpmLLi+S4NkmaoGQpz21mdGDdk2
-        3WsF6iRcKqgduQo6A6VusNQqiYhc
-X-Google-Smtp-Source: APXvYqw4OFZ8F5Y6oQ2MYd4iydrDHy4nmc1cfT2CFpmr4x3BK30v6ZQk1iAI4EEzQmn8u3fw8dSJGA==
-X-Received: by 2002:a50:eb95:: with SMTP id y21mr51121236edr.212.1577386917604;
-        Thu, 26 Dec 2019 11:01:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p8sm3767412ejm.1.2019.12.26.11.01.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Dec 2019 11:01:57 -0800 (PST)
-Message-Id: <fce80f1b95f83915076640ca0be01aa473744777.1577386915.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.499.git.1577386915.gitgitgadget@gmail.com>
-References: <pull.499.git.1577386915.gitgitgadget@gmail.com>
-From:   "=?UTF-8?q?Zoli=20Szab=C3=B3?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Date:   Thu, 26 Dec 2019 19:01:55 +0000
-Subject: [PATCH 1/1] git-gui: add possibility to open currently selected file
+        id S1726944AbfLZTWV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Dec 2019 14:22:21 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62625 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726480AbfLZTWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Dec 2019 14:22:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A2EA39F1B4;
+        Thu, 26 Dec 2019 14:22:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=nopxgbLxU0FXGJfM78aBXZrl6YI=; b=PPAr7f
+        EOyeWNSrh+O+TVJYYoZr131fWDRhYiR2xzyYGQbiMjoTwUhrdtOv+A9M9RAQDTIT
+        6+g3pEIkfj0vtwTy/uHRWYWhX/yhYse6CVAMFRLSbVwVJy0fj/GOPyRH+k/PIPiK
+        0sOZcFgjHXLGMraR741I+RwycvqIJp3lVMigU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=J85TycovMGyqVOeU+KyNRk42lm6rhEOp
+        qW+w9P7grITMyOi1iLDwwQNUMKGSk4Ztf3g6wWw5lhT6pWRnnpShD88CqnbS2GMQ
+        1P1kM/wAIK86hNjvDalKLlsspXAx/ZwxgkqtrrpoSXkZrj5z3XsLwj/kWPEQ1CWk
+        XC+QWrdBg2U=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B7099F1B3;
+        Thu, 26 Dec 2019 14:22:18 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5249C9F1B0;
+        Thu, 26 Dec 2019 14:22:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/1] Disallow writing, but not fetching commits with file names containing backslashes
+References: <pull.682.git.git.1577382151.gitgitgadget@gmail.com>
+Date:   Thu, 26 Dec 2019 11:22:11 -0800
+In-Reply-To: <pull.682.git.git.1577382151.gitgitgadget@gmail.com> (Johannes
+        Schindelin via GitGitGadget's message of "Thu, 26 Dec 2019 17:42:30
+        +0000")
+Message-ID: <xmqqk16ilwnw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-To:     git@vger.kernel.org
-Cc:     Pratyush Yadav <me@yadavpratyush.com>,
-        =?UTF-8?q?Zoli=20Szab=C3=B3?= <zoli.szabo@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 05B6FED0-2815-11EA-B9C7-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =?UTF-8?q?Zoli=20Szab=C3=B3?= <zoli.szabo@gmail.com>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-...in the default associated app (e.g. in a text editor / IDE).
+> I would appreciate reviews with a particular eye on keeping users safe: I am
+> not 100% certain that all relevant file writes go through the index (I think 
+> that they all go through the index, but I might have well missed a corner
+> case).
 
-Many times there's the need to quickly open a source file (the one you're
-looking at in Git GUI) in the predefined text editor / IDE. Of course,
-the file can be searched for in your preferred file manager or directly
-in the text editor, but having the option to directly open the current
-file from Git GUI would be just faster. This change enables just that by:
- - Diff header path context menu -> Open;
- - or double-clicking the diff header path.
-
-One "downside" of the approach is that executable files will be run
-and not opened for editing.
-
-Signed-off-by: Zoli Szabó <zoli.szabo@gmail.com>
----
- git-gui.sh | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index c1be733e3e..705b97f7ab 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -2248,8 +2248,8 @@ proc do_git_gui {} {
- 	}
- }
- 
--proc do_explore {} {
--	global _gitworktree
-+# Get the system-specific explorer app/command.
-+proc get_explorer {} {
- 	set explorer {}
- 	if {[is_Cygwin] || [is_Windows]} {
- 		set explorer "explorer.exe"
-@@ -2259,9 +2259,25 @@ proc do_explore {} {
- 		# freedesktop.org-conforming system is our best shot
- 		set explorer "xdg-open"
- 	}
-+	return $explorer
-+}
-+
-+proc do_explore {} {
-+	global _gitworktree
-+	set explorer [get_explorer]
- 	eval exec $explorer [list [file nativename $_gitworktree]] &
- }
- 
-+# Trigger opening a file (relative to the working tree) by the default
-+# associated app of the OS (e.g. a text editor or IDE).
-+# FIXME: What about executables (will be run, not opened for editing)?
-+proc do_file_open {file} {
-+	global _gitworktree
-+	set explorer [get_explorer]
-+	set full_file_path [file join $_gitworktree $file]
-+	eval exec $explorer [list [file nativename $full_file_path]] &
-+}
-+
- set is_quitting 0
- set ret_code    1
- 
-@@ -3530,8 +3546,14 @@ $ctxm add command \
- 			-type STRING \
- 			-- $current_diff_path
- 	}
-+$ctxm add command \
-+	-label [mc Open] \
-+	-command {
-+		do_file_open $current_diff_path
-+	}
- lappend diff_actions [list $ctxm entryconf [$ctxm index last] -state]
- bind_button3 .vpane.lower.diff.header.path "tk_popup $ctxm %X %Y"
-+bind .vpane.lower.diff.header.path <Double-1> {do_file_open $current_diff_path}
- 
- # -- Diff Body
- #
--- 
-gitgitgadget
+There are peripheral commands that do not use the index at all, such
+as "archive"; piping "git archive" output to unarchiver that writes
+into the filesystem would be a way.  But I do not think that
+qualifies as an attack vector you are looking for.
