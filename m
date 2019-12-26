@@ -2,126 +2,154 @@ Return-Path: <SRS0=68ZU=2Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AABAFC2D0C0
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 22:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75155C2D0C0
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 22:37:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4E01D206CB
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 22:25:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 37C912080D
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 22:37:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ye/jPaUn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B9d+efOH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbfLZWZf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Dec 2019 17:25:35 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62903 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726277AbfLZWZf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Dec 2019 17:25:35 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 36D8AA04C0;
-        Thu, 26 Dec 2019 17:25:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AsHP3EyST4GBctF8wxC5ikAikv4=; b=Ye/jPa
-        UnOPRsQoUe4vr/fOhHg85J8QH6eNO4aBHedoTpNxqEvv8zFxXFMTY6VZjovWW4Q5
-        Lv0hCc8AmLOoEx28oBXkOc85f5XsCUlwHW5eqprd4Fc99nlkjueHPVWUqpMGcywL
-        7OonDawf4kJ6fj15+moyYa9vE7mhu25oEeE9E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pW7Ig2iKJG0REREBwI0rAaj1O7aHqMK4
-        jYGscRD+VU+87K3NwWRjIWin0gkddcKtIO5W2ka8MnJibF4lND7pHLfTsEUWeal2
-        bOrhrb22jgIShXRiaERL97xoO4ZHzMRRqOdiVrbwiVo8xBZ97of1rOlkr9hfmAy7
-        IxFa4s6PMLU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DC20A04BF;
-        Thu, 26 Dec 2019 17:25:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 61AB4A04BE;
-        Thu, 26 Dec 2019 17:25:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] mingw: only test index entries for backslashes, not tree entries
-References: <pull.682.git.git.1577382151.gitgitgadget@gmail.com>
-        <4a120fd0b32d2d6492eac6b0494ad6b1bc2ba500.1577382151.git.gitgitgadget@gmail.com>
-        <20191226200316.GD170890@google.com>
-        <nycvar.QRO.7.76.6.1912262221000.46@tvgsbejvaqbjf.bet>
-        <20191226214245.GA186931@google.com>
-        <xmqqfth6kaqi.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 26 Dec 2019 14:25:28 -0800
-In-Reply-To: <xmqqfth6kaqi.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 26 Dec 2019 14:01:09 -0800")
-Message-ID: <xmqqblruk9lz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726653AbfLZWha (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Dec 2019 17:37:30 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:44728 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726105AbfLZWha (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Dec 2019 17:37:30 -0500
+Received: by mail-pl1-f195.google.com with SMTP id az3so10955012plb.11
+        for <git@vger.kernel.org>; Thu, 26 Dec 2019 14:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fx8pxOUGCO42S5kGKdjzdpXnky6xvEs8pa2W+lLEH3o=;
+        b=B9d+efOH5jPks8sz60MYXpV5iB6gOH1monvsl6iYt1DGUrEZQTDk3VK6BagWxTc4Da
+         XjVQ6r2PwIPDnvIGizw/6mm+lPU15ox/VBM7zQpo98g4MZAxzUb180uSOBpiLLdi4uOd
+         UjOUuWj6sp90/rTLdiOo8mqWZEKZ5yDCatdGVJKuGe1ZgBmOF2DyHnjKjgIsqfHKWBO3
+         4iv70ZWcQ3T4uIfNuI8lSUJ7dCjrWS+bZt2++ce/xtsqsAgInysv4zhZXu74Lz/1gScP
+         9vkywcWCxYfVMkUqVQmHSEGln6uYAKEwvG6ws6yl9nkaq9CZSGhcUlaeumeC9390Dsp9
+         LIbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fx8pxOUGCO42S5kGKdjzdpXnky6xvEs8pa2W+lLEH3o=;
+        b=Ws0zFpEoT3LAEf43IvU0+44fE10vpoPZkvNsaynygq09ll8aXlKZ9vSAchX69/D1Bs
+         ZddAiCBxPkR3CE4WlaIjNr8KsHz7coZGn8q1PUTLS8v2AzXaOEiP+h9wFDzLSxXeKdTJ
+         o/Rt5GvI599fhwc9l6XbPk4KJFJT4zp0Uf6n/BBhKo2RvPNSt85Fw0Fqo3c0fcb/r/xF
+         VaXtyyOwR8plmNidskegjd68EpD746tq9RNSDpns6DGpIG4zDr4nukHSa2e8Vi2mmYFg
+         L4jToFPnB68dLWptgaPmYrborXS/yPrL2iYB8i6aDFOK/BO1QLOWmfKOelgXgF4Q7830
+         m+pQ==
+X-Gm-Message-State: APjAAAWkpSMI5EwlmExVmHOpyBUnREpfgNtAG9iq6thNt/jMPu8rrxdM
+        PE7Plt/cIOTAuA8ZpPb2CSM=
+X-Google-Smtp-Source: APXvYqwxuMnGL3s/EtF4gaWaGuHVp3zsAJYOOxX24twcnYjQrHXZbmpkClYzXqhctuydb+7YYoeJRQ==
+X-Received: by 2002:a17:902:7c13:: with SMTP id x19mr49724840pll.236.1577399849394;
+        Thu, 26 Dec 2019 14:37:29 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id b98sm11822883pjc.16.2019.12.26.14.37.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Dec 2019 14:37:28 -0800 (PST)
+Date:   Thu, 26 Dec 2019 14:37:27 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 2/2] t/check-non-portable-shell: detect "FOO=
+ shell_func", too
+Message-ID: <20191226223727.GB186931@google.com>
+References: <20191224005816.GC38316@google.com>
+ <20191224010110.GF38316@google.com>
+ <xmqqfth6lwgl.fsf@gitster-ct.c.googlers.com>
+ <20191226195357.GA170890@google.com>
+ <20191226195747.GC170890@google.com>
+ <xmqq7e2ilu1j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9FE0E7B4-282E-11EA-8997-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7e2ilu1j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+Junio C Hamano wrote:
 > Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>> Just like assigning a nonempty value, assigning an empty value to a
+>> shell variable when calling a function produces non-portable behavior:
+>> in some shells, the assignment lasts for the duration of the function
+>> invocation, and in others, it persists after the function returns.
+>>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> ---
+>> If it would be useful for me to send a copy of the "Enable protocol v2
+>> by default" series rebased on top of this, let me know.
 >
->> Is there anything we can or should do to prevent people checking in
->> new examples of paths with backslash in them (on all platforms)?
+> When rebased, t5552 passes (including the test lint) at the "request
+> v0 explicitly for some tests" step now.
 >
-> I obviously won't dictate what should happen on Windows, but I think
-> the overall principle for paths recorded in a tree object that can
-> be problematic on some of the platforms ought to be:
->
->  * fsck and transfer.fsckobjects should be taught to notice
->    offending characteristics (e.g. has a backslash in it, is one of
->    the "reserved names" on some platform like LPT1).
->
->  * if paths with the offending characteristics are *so* obviously
->    useless in real life and are possible only in a crafted path that
->    is only useful to attack users, the check in fsck should default
->    to "reject" to help the disease spread via hosting sites.
->
->  * otherwise, the check should be to "warn" but not "reject", so
->    that projects can keep using paths that may problematic on
->    platforms that do not matter to them.
->
-> I think LPT1 and friends fall into the "warning is fine" category,
-> and a path component that contains a backslash would fall into the
-> "this is an attack, just reject" category.
+> The tip of "promote proto v2 to default" series fails at 5552.5
+> with or without these two patches, though.
 
-I guess I should have stepped back a bit.
+Oh, subtle.  With shells that leak variable assignments after a
+function returns (such as bash when run as 'sh'), 5552.5 was running
+with GIT_TEST_PROTOCOL_VERSION=0, masking the issue.
 
-In the message I am responding to, I focused solely on how tree
-objects that originate elsewhere should be treated, but there are
-two more data paths we need to worry about:
+In protocol v2, there is no "stateful" mode: negotiation always uses
+the stateless-rpc path, and the stateless-rpc path involves more care
+to avoid chatter during negotiation (since request size increases with
+each round).
 
- * A new path gets introduced to the system, via "update-index",
-   "add", etc., to the index and then "write-tree" to form tree
-   objects in the local repository.
+This is why b1.c14 and b1.c9 don't show up in the v2 trace.  Processing
+the trace with "git name-rev --stdin" yields
 
- * A path in the index, either created locally via "update-index",
-   "add", etc., or read from a tree object, gets written to the
-   local filesystem, resulting in an attempt to create a path that
-   the local filesystem cannot represent (or worse---behaves badly,
-   like "sending random garbage to the printer").
+ packet:        fetch> want 184bd23dc533e1e63153e7e181411bd29acca918
+ packet:        fetch> have f65fc9b4d5c1cb76494a7f8df0230d8d29a33e67 (tags/b8.c19)
+ packet:        fetch> have 334d40a157dec5d93023976c30cd22b24bdc279a (tags/b7.c19)
+[...]
+ packet:        fetch> have e3496f08debed7528bd7e4c4a12b71d1a99d697f (tags/b1.c19)
+ packet:        fetch> have e7bb01cb25bebd0341c9d62f4c7e929a99b6ed4b (tags/b8.c17)
+ packet:        fetch> have 7f5656e94770d527d4f909fd5e2ea274ec63177a (tags/b7.c17)
+[...]
+ packet:        fetch> have 17639a004fe8511fe1de57dd9ddabf2ee0de902d (tags/b1.c17)
+ packet:        fetch> 0000
+ packet:        fetch< acknowledgments
+ packet:        fetch< ACK e3496f08debed7528bd7e4c4a12b71d1a99d697f (tags/b1.c19)
+ packet:        fetch< ACK 17639a004fe8511fe1de57dd9ddabf2ee0de902d (tags/b1.c17)
 
-I think we should apply the same principle as the one I outlined for
-the tree objects.  The fsckobjects mechanism may not be reusable to
-catch violations in add_index_entry_with_check() as-is, but we need
-to aim for as much reuse of logic and code as possible so that our
-checks at various layers all behave consistently.
+By comparison, with protocol v0 over stateful bidirectional
+transports, there's an additional round-trip folded in:
 
-Thanks.
+ packet:        fetch> have f65fc9b4d5c1cb76494a7f8df0230d8d29a33e67 (tags/b8.c19)
+ packet:        fetch> have 334d40a157dec5d93023976c30cd22b24bdc279a (tags/b7.c19)
+[...]
+ packet:        fetch> have e3496f08debed7528bd7e4c4a12b71d1a99d697f (tags/b1.c19)
+ packet:        fetch> have e7bb01cb25bebd0341c9d62f4c7e929a99b6ed4b (tags/b8.c17)
+ packet:        fetch> have 7f5656e94770d527d4f909fd5e2ea274ec63177a (tags/b7.c17)
+[...]
+ packet:        fetch> have 17639a004fe8511fe1de57dd9ddabf2ee0de902d (tags/b1.c17)
+ packet:        fetch> 0000
+ packet:        fetch> have a1d75daa2f482f89171f092778da506803e54531 (tags/b8.c14)
+ packet:        fetch> have b2e9b68d2650b77283421888be8a950c18bab29d (tags/b7.c14)
+[...]
+ packet:        fetch> have b89f6499d7cee40ef422edb15433a10f82de0206 (tags/b1.c14)
+ packet:        fetch> have e4190b433240834c895347214d29426a094f2fe2 (tags/b8.c9)
+ packet:        fetch> have 5f1aa7f016defcf74e5e1d4991342987c9d4b447 (tags/b7.c9)
+[...]
+ packet:        fetch> have b76868e654ce45adb9e06f638e48a72556843361 (tags/b1.c9)
+ packet:        fetch> 0000
+ packet:        fetch< ACK e3496f08debed7528bd7e4c4a12b71d1a99d697f (tags/b1.c19) common
+ packet:        fetch< ACK 17639a004fe8511fe1de57dd9ddabf2ee0de902d (tags/b1.c17) common
 
+Patch coming in a moment to force v0 here with a comment.
 
-
+Thanks,
+Jonathan
