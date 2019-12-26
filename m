@@ -8,156 +8,209 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85BC1C3F68F
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BD9BC2D0DA
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 616BB206CB
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:42:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0E3C2206CB
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+fakB1S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D1H7+XsP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbfLZRmg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Dec 2019 12:42:36 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39697 "EHLO
+        id S1726661AbfLZRnl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Dec 2019 12:43:41 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:39888 "EHLO
         mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726578AbfLZRmf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Dec 2019 12:42:35 -0500
-Received: by mail-ed1-f66.google.com with SMTP id t17so23232035eds.6
-        for <git@vger.kernel.org>; Thu, 26 Dec 2019 09:42:34 -0800 (PST)
+        with ESMTP id S1726511AbfLZRnk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Dec 2019 12:43:40 -0500
+Received: by mail-ed1-f66.google.com with SMTP id t17so23235492eds.6
+        for <git@vger.kernel.org>; Thu, 26 Dec 2019 09:43:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vesHcNww9E6q3lUswY+M2ZK8te4uXYbU9y8yM5Ierik=;
-        b=Y+fakB1StwOsQ1Nugr2DJJtFJgnPEEN3uMK1YB0FAt4Hv1Wx0JO7eGf4oSF/U3ZpPj
-         MYcD5WkL2kgZexsAS16FurplFQwPhYN6zFmTa/oQDxhDfDJiBSmA3I2KTDYSuJ6lRyIx
-         RKOA51iP5cR3zzx7+wCbH9LL6+SFrNDtrXTsfu9sjI2btuRSgvFQnHGpotEseE7Jp4dA
-         5PiZHHX6DgV+K+2LGJz9jdx2YC0i4wTKkwzVxqcjc3urhl22pCDIjunBUhYkZn3jdgjS
-         qdDATc1qCGVQEO9r/mIcG6ZruM9GFShch8MsQFlr0bkU83tBaFC/MUvYi7ToISGHk8uz
-         rd8w==
+        bh=EymN584Bi9uDOyoL88+AKCmCtrzV5rPmokQIcI1Ewa4=;
+        b=D1H7+XsP2PwvcX1/E0lHANpXrgeJLPorVhbXCkdl13wEYEouoXPm8/U+i0cVA1SFUZ
+         ewAXW6YqzpsEGgkifkR/1l0sgwm2oSPKnqUKtUN+/Y/9/cH9UJCPoDASL1XMFY9HfNbX
+         Kd3+5Iqb8G3k8xwXX+hf9fm1EUg9bjArGJJhzcM+KhZ8S6Bp9hEd5XC5lT0OqGJ6mb3v
+         vaIxii+yZ/wrjHEPxhGbaNuHon21Aqq/X1krYfSSb3KaGTSknAfGHtTSRz+X+xWzmlmB
+         mxlAV3WeS5weQDZeIZnTXidPtSnJgD2qOLkGDsLE0z707zpL5wnKVfVrfjwnxb30Vvad
+         sx2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vesHcNww9E6q3lUswY+M2ZK8te4uXYbU9y8yM5Ierik=;
-        b=IWfTo6naTrwww9ls27h2BTrVgLw5tDbuQ+3sBxtEwud8iN0akSqyxclNOq95CCe2Rg
-         dv25mg8C5ObYQdl1K0JjwXaPsee1AFVrhPxDmWsIHyV7dFMuShYqNJKe805l6FqWY4VW
-         SAf4j5gICVERji9Xx509j9ksU3FGlGexnHRPKcXrTfk6NNcydDUi3YZSLpw13XJuBMJj
-         +te2slqJ5EbiaMvBGmVghCwaN2LjkY20lKF5UOGtRMdyjvrA96gXv2x/yU2l+AU+EQF3
-         EfRbP7vCr4O26U06wlIOOg7YLCE8Vt6K6ePaQNQYSnVirc82TZ84+QlHvFt4QvFK3p5L
-         qCOg==
-X-Gm-Message-State: APjAAAWAvq8XkLDrfS2SQuvI64WUOVc2hN4KFTsKHL1j1s7liBwJ3jqt
-        uKIsFICQ4eZXRDnHwHyLt4s/vUO7
-X-Google-Smtp-Source: APXvYqy2R7B9S1n7SLKTAP5D/6/tqLR8vNIVmLxJEuTGtugykWZOoY2iDTmMddk7RgnpmM3sNpRD6w==
-X-Received: by 2002:a17:906:9248:: with SMTP id c8mr49999081ejx.37.1577382153632;
-        Thu, 26 Dec 2019 09:42:33 -0800 (PST)
+        bh=EymN584Bi9uDOyoL88+AKCmCtrzV5rPmokQIcI1Ewa4=;
+        b=I7mUVZthJAGT0a7bCNrTsMCbyYvi0UKJuHZp7H5aJl1xPzxZnx3+cYjglLgX0qwmbu
+         qArvwcND0Y7mLBvoVVxwg1sUZWog4ZyZ6ma3Fz16vfRRwrJkMFiEAfoXq3NhLL/hK1E1
+         c6qdQfSnKSsCLhSdtB49XLvX3zcLL51jXfAMTQADcJoDQQo4E1zvc6Xza3orPLxAeUQX
+         AzQWQqb7tYYaOTRCHqQrQLWtnxxa8Iso328R+aocZQfWxk11N7Gi+uoo4dGNkMGAxJ5q
+         tki2c6rQboo10UKRDUnxLZi3z7csvMhfnCnwUJ6OFiGdvCIZkitYMW3E4GG6XEEFOs3e
+         /EiA==
+X-Gm-Message-State: APjAAAUwHT680Ik8Mz3GDHVM+TVIDsxw+DFcwIbx7PGWSpz1MNdy4SYn
+        +WTgAl70ntaYe92SJbedfXkt+d+C
+X-Google-Smtp-Source: APXvYqwkpj2LxhWB798Wv5mn23D+Di9nxfAt8nTGY6dkCVdhrbeJZAEWjtnd50Ml9UYV0S8HZNedhw==
+X-Received: by 2002:a50:f38e:: with SMTP id g14mr50278337edm.168.1577382218219;
+        Thu, 26 Dec 2019 09:43:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q18sm1665487eje.34.2019.12.26.09.42.33
+        by smtp.gmail.com with ESMTPSA id y19sm3756687ejw.65.2019.12.26.09.43.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Dec 2019 09:42:33 -0800 (PST)
-Message-Id: <4a120fd0b32d2d6492eac6b0494ad6b1bc2ba500.1577382151.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.682.git.git.1577382151.gitgitgadget@gmail.com>
-References: <pull.682.git.git.1577382151.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Dec 2019 17:42:31 +0000
-Subject: [PATCH 1/1] mingw: only test index entries for backslashes, not tree
- entries
+        Thu, 26 Dec 2019 09:43:37 -0800 (PST)
+Message-Id: <pull.494.v2.git.1577382217.gitgitgadget@gmail.com>
+In-Reply-To: <pull.494.git.1576559263.gitgitgadget@gmail.com>
+References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 26 Dec 2019 17:43:35 +0000
+Subject: [PATCH v2 0/2] Improve line log documentation
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Thomas Rast <tr@thomasrast.ch>, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <Matthieu.Moy@imag.fr>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+These two patches add more information to the documentation for line history
+(git log -L) : 
 
-During a clone of a repository that contained a file with a backslash in
-its name in the past, as of v2.24.1(2), Git for Windows prints errors
-like this:
+ * Mention explicitly that only the --patch and --no-patch diff formats are
+   supported 
+ * Mention that parameters <start>, <end> and <funcname> must exist in the
+   starting revision
 
-	error: filename in tree entry contains backslash: '\'
+Regarding point 2 : I stumbled upon this while reading the history of
+'filter_refs' in fetch-pack.c. I did
 
-While the clone still succeeds, a similar error prevents the equivalent
-`git fetch` operation, which is inconsistent.
+    git log -s -L :filter_refs:fetch-pack.c
 
-Arguably, this is the wrong layer for that error, anyway: As long as the
-user never checks out the files whose names contain backslashes, there
-should not be any problem in the first place.
+which shows a list of commits starting with 745f7a8cac (fetch-pack: move
+core code to libgit.a, 2012-10-26). So then I did
 
-So let's instead prevent such files to be added to the index.
+    git log  -s -L :filter_refs:fetch-pack.c -L :filter_refs:builtin/fetch-pack.c
 
-This addresses https://github.com/git-for-windows/git/issues/2435
+which fails with
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- read-cache.c               | 5 +++++
- t/t7415-submodule-names.sh | 7 ++++---
- tree-walk.c                | 6 ------
- 3 files changed, 9 insertions(+), 9 deletions(-)
+    fatal: -L parameter 'filter_refs' starting at line 1: no match
 
-diff --git a/read-cache.c b/read-cache.c
-index ad0b48c84d..737916ebd9 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1278,6 +1278,11 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
- 	int new_only = option & ADD_CACHE_NEW_ONLY;
- 
-+#ifdef GIT_WINDOWS_NATIVE
-+	if (protect_ntfs && strchr(ce->name, '\\'))
-+		return error(_("filename in tree entry contains backslash: '%s'"), ce->name);
-+#endif
-+
- 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
- 		cache_tree_invalidate_path(istate, ce->name);
- 
-diff --git a/t/t7415-submodule-names.sh b/t/t7415-submodule-names.sh
-index 905a557585..7ae0dc8ff4 100755
---- a/t/t7415-submodule-names.sh
-+++ b/t/t7415-submodule-names.sh
-@@ -207,6 +207,9 @@ test_expect_success MINGW 'prevent git~1 squatting on Windows' '
- 			git hash-object -w --stdin)" &&
- 		rev="$(git rev-parse --verify HEAD)" &&
- 		hash="$(echo x | git hash-object -w --stdin)" &&
-+		test_must_fail git update-index --add \
-+			--cacheinfo 160000,$rev,d\\a 2>err &&
-+		test_i18ngrep backslash err &&
- 		git -c core.protectNTFS=false update-index --add \
- 			--cacheinfo 100644,$modules,.gitmodules \
- 			--cacheinfo 160000,$rev,c \
-@@ -214,9 +217,7 @@ test_expect_success MINGW 'prevent git~1 squatting on Windows' '
- 			--cacheinfo 100644,$hash,d./a/x \
- 			--cacheinfo 100644,$hash,d./a/..git &&
- 		test_tick &&
--		git -c core.protectNTFS=false commit -m "module" &&
--		test_must_fail git show HEAD: 2>err &&
--		test_i18ngrep backslash err
-+		git -c core.protectNTFS=false commit -m "module"
- 	) &&
- 	test_must_fail git -c core.protectNTFS=false \
- 		clone --recurse-submodules squatting squatting-clone 2>err &&
-diff --git a/tree-walk.c b/tree-walk.c
-index b3d162051f..d5a8e096a6 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -43,12 +43,6 @@ static int decode_tree_entry(struct tree_desc *desc, const char *buf, unsigned l
- 		strbuf_addstr(err, _("empty filename in tree entry"));
- 		return -1;
- 	}
--#ifdef GIT_WINDOWS_NATIVE
--	if (protect_ntfs && strchr(path, '\\')) {
--		strbuf_addf(err, _("filename in tree entry contains backslash: '%s'"), path);
--		return -1;
--	}
--#endif
- 	len = strlen(path) + 1;
- 
- 	/* Initialize the descriptor entry */
+Changes since v1:
+
+ * Shorten the commit titles
+ * Use long options names for --patch and --no-patch
+ * Remove inexact mention of --function-context
+ * Reword the clarification regarding <start>, <end> and <funcname> so that
+   it doesn't apply only to regex parameters
+ * Also add this clarification to Documentation/gitk.txt since it applies
+   there as well
+
+Philippe Blain (2):
+  doc: log, gitk: document accepted line-log diff formats
+  doc: log, gitk: line-log arguments must exist in starting revision
+
+ Documentation/git-log.txt | 8 ++++++--
+ Documentation/gitk.txt    | 8 ++++++--
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+
+base-commit: ad05a3d8e5a6a06443836b5e40434262d992889a
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-494%2Fphil-blain%2Fline-log-doc-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-494/phil-blain/line-log-doc-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/494
+
+Range-diff vs v1:
+
+ 1:  0ed04a8629 ! 1:  e68ef0ced3 Documentation/git-log: document accepted line-log diff formats
+     @@ -1,18 +1,16 @@
+      Author: Philippe Blain <levraiphilippeblain@gmail.com>
+      
+     -    Documentation/git-log: document accepted line-log diff formats
+     +    doc: log, gitk: document accepted line-log diff formats
+      
+          Currently the line-log functionality (git log -L) only supports
+     -    displaying patch output (`-p`, its default behavior) and suppressing it
+     -    (`-s`). A check was added in the code to that effect in 5314efaea (line-log:
+     -    detect unsupported formats, 2019-03-10) but the documentation was not
+     +    displaying patch output (`-p | --patch`, its default behavior) and suppressing it
+     +    (`-s | --no-patch`). A check was added in the code to that effect in 5314efaea
+     +    (line-log: detect unsupported formats, 2019-03-10) but the documentation was not
+          updated.
+      
+          Explicitly mention that `-L` implies `-p`, that patch output can be
+          suppressed using `-s`, and that all other diff formats are not allowed.
+      
+     -    Additionnally, mention that the ':<funcname>' form implies `--function-context`.
+     -
+          Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+      
+       diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+     @@ -24,8 +22,7 @@
+       	give zero or one positive revision arguments.
+      -	You can specify this option more than once.
+      +	You can specify this option more than once. Implies `--patch`.
+     -+	If ``:<funcname>'' is given, implies `--function-context`.
+     -+	Patch output can be suppressed using `-s`, but other diff formats
+     ++	Patch output can be suppressed using `--no-patch`, but other diff formats
+      +	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+      +	`--name-only`, `--name-status`, `--check`) are not currently implemented.
+       +
+     @@ -41,8 +38,7 @@
+       	give zero or one positive revision arguments.
+      -	You can specify this option more than once.
+      +	You can specify this option more than once. Implies `--patch`.
+     -+	If ``:<funcname>'' is given, implies `--function-context`.
+     -+	Patch output can be suppressed using `-s`, but other diff formats
+     ++	Patch output can be suppressed using `--no-patch`, but other diff formats
+      +	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+      +	`--name-only`, `--name-status`, `--check`) are not currently implemented.
+       +
+ 2:  4ea4eeae0c ! 2:  c7d489794c Documentation/git-log: mention that line-log regex must match in starting revision
+     @@ -1,10 +1,10 @@
+      Author: Philippe Blain <levraiphilippeblain@gmail.com>
+      
+     -    Documentation/git-log: mention that line-log regex must match in starting revision
+     +    doc: log, gitk: line-log arguments must exist in starting revision
+      
+     -    When giving a regex as parameter <start> or <end> in
+     -    `git log -L <start>,<end>:<file>`, or a function name in
+     -    `git log -L :<funcname>:<file>`, the given regex must match in the starting
+     +    The line number, regex or offset parameters <start> and <end> in
+     +    `git log -L <start>,<end>:<file>`, or the function name regex in
+     +    `git log -L :<funcname>:<file>` must exist in the starting
+          revision, or else the command exits with a fatal error.
+      
+          This is not obvious in the documentation, so add a note to that
+     @@ -20,8 +20,22 @@
+       	not give any pathspec limiters.  This is currently limited to
+       	a walk starting from a single revision, i.e., you may only
+      -	give zero or one positive revision arguments.
+     -+	give zero or one positive revision arguments, and any given regex for
+     -+	<start> or <end> (or <funcname>) must match in the starting revision.
+     ++	give zero or one positive revision arguments, and
+     ++	<start> and <end> (or <funcname>) must exist in the starting revision.
+       	You can specify this option more than once. Implies `--patch`.
+     - 	If ``:<funcname>'' is given, implies `--function-context`.
+     - 	Patch output can be suppressed using `-s`, but other diff formats
+     + 	Patch output can be suppressed using `--no-patch`, but other diff formats
+     + 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+     +
+     + diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+     + --- a/Documentation/gitk.txt
+     + +++ b/Documentation/gitk.txt
+     +@@
+     + 	(or the function name regex <funcname>) within the <file>.  You may
+     + 	not give any pathspec limiters.  This is currently limited to
+     + 	a walk starting from a single revision, i.e., you may only
+     +-	give zero or one positive revision arguments.
+     ++	give zero or one positive revision arguments, and
+     ++	<start> and <end> (or <funcname>) must exist in the starting revision.
+     + 	You can specify this option more than once. Implies `--patch`.
+     + 	Patch output can be suppressed using `--no-patch`, but other diff formats
+     + 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
+
 -- 
 gitgitgadget
