@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF8C3C2D0DC
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88220C2D0DB
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8ADF4206CB
-	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 62D23206CB
+	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 17:43:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oStFr1rR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="t9+YsRTY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726654AbfLZRnk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Dec 2019 12:43:40 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37014 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726578AbfLZRnk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Dec 2019 12:43:40 -0500
-Received: by mail-ed1-f68.google.com with SMTP id cy15so23251738edb.4
-        for <git@vger.kernel.org>; Thu, 26 Dec 2019 09:43:39 -0800 (PST)
+        id S1726697AbfLZRnm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Dec 2019 12:43:42 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:38409 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726635AbfLZRnl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Dec 2019 12:43:41 -0500
+Received: by mail-ed1-f67.google.com with SMTP id i16so23238766edr.5
+        for <git@vger.kernel.org>; Thu, 26 Dec 2019 09:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=I8f3xSDsUXIfoZkionzYqDbsTTalc1rHn66p4RC8so8=;
-        b=oStFr1rRUxjUeN7GHVSra8zght8g8f+4b/lFUadqY/kUpn7xcgaYD6fQyvzGLLDD7g
-         j1HCn/AdkwCwhpZ/yzYAqAs0OLhUwWabqJIpa5obdmZhuTbwuiwsJ5p6CwMeQX0rua7V
-         WKXbq31rdGEiYWSIWWtBs5EzNKAMkLPeRVW8pFo5dlj4rwSWm6njEgH33mGynsKY1779
-         iA1ICJYn40o8SLDLW6418Q8F23Dlm476kZkfu5KNDPfSazM/XTTxaaaP34fwfVrlW4Cf
-         An+te5TsBwzXReS2Tk1Jj+13ralvUgmCbCNKeSV0oBg/46dhESEH6vbuHYRH4A0zXSgx
-         peBQ==
+        bh=G/KE3Za+IaIPsFjK4t1B7JMKrINOsvrV0OcJcdOdrYQ=;
+        b=t9+YsRTYuzxU/6AC3dyEXWX4ggINbHG80V3f+i9+ZDp+FzUbo8JI0vfnVFwlzxHgxv
+         SeY8G18a/CY4jkFyrpZv63EbN0K46QkDAmNbjG8BDRQXzST379FPk9QPoXNzkFAu/HX8
+         A7c7kbx0LbuiaACTKERlu/AanyBKVrvxBwhGORaRSn1ublS4k36X8aggZX5fvo0egDDy
+         p+s3D8EjgnZ1oozySk2X2DQDcH0q2X5R0GZ0NxgPWVECP8bhTVH5sm/o2Py5Ecw333a8
+         6pBnTPXOPSrE0lVobua/XnqM2FSvKIccMIC1mbp8J7lj7vrOu8HTBUrzfBFibbHr3exy
+         ZquA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=I8f3xSDsUXIfoZkionzYqDbsTTalc1rHn66p4RC8so8=;
-        b=MDPKZ1UOBP6EuSMOrro7yzSHeFNoYaLalDRMGDJ2hv9Sz289Vy8FAJFqAVmc/UQma7
-         liWGDHxMIPGHTZU9zZqj+BLD5dkNPKuHiJ5ZnKd79SHAhNYwCcY7BHqhCvZfI3DTGpcc
-         Dyk1KVs+ifwYqyCDLe3tCrjb8YcLZl6HneE2hHHNK41NM+pMgEu2i/05EILTQF2VHsZD
-         R/RsTKcvqqyW9BZ9jnxposF/4uTcta2w1NXFr01UM5N3JicBkno/DlKzuvM+QBoAGfGp
-         YuciTBql41MwV+n9/hjihkBmp4q21Yazk95/0jJjds6tKugvkKB/f86G/i8x9/szBlyY
-         coeg==
-X-Gm-Message-State: APjAAAXm8yqLg3+nmluCdLeGcte4E8xCGi//XqigfA0rGgupdrcqBPfH
-        CmyL9yT2GRfBs0Op/tCMXhY20i6L
-X-Google-Smtp-Source: APXvYqzPbFM++7xXD5uVdB0itMvlqVYMpwKApQU7lcMnqHGWwmoUYHPeKT6GyyZ8trYFT/Js83QnEw==
-X-Received: by 2002:a50:fc85:: with SMTP id f5mr50997345edq.294.1577382218980;
-        Thu, 26 Dec 2019 09:43:38 -0800 (PST)
+        bh=G/KE3Za+IaIPsFjK4t1B7JMKrINOsvrV0OcJcdOdrYQ=;
+        b=LXsGZNhxtKXY7LoiHrWR0g5UK7gmV2O3RSVHHlCnUGnqvZAJozJT9bcFRzasjw8r1w
+         KefONiQG1/mm/wXWSvU/oMKxiGP9tod+lsyY1LGyuEHlAqBFmtaslhN0HM2AVnL6W8Im
+         ptl2oKSadMRKHTT7e9VkhVkE5WyXVEHZJosSE1d3JU8d9J5Jf8h8MRvvlqywImMt121t
+         zJRFXaAPrkrGD5Oi1cGTSryc/JlD5ug6Uo0rsIdRSvkCMoFOinfrT5twBJm9E+heAmip
+         N6cNOCo6vI2dCECpUontIjUQCUS1iHbk0hfN889BhIMGn7v9agNnhkqULhO94UnYxSOU
+         54LQ==
+X-Gm-Message-State: APjAAAVtGsSCLaX/81p+IDQkBcgN8Ei81zCb6rSxz/pfwVMIzv5NyPuv
+        etP+1YMioREYITOOtueT2H74YRyG
+X-Google-Smtp-Source: APXvYqzzUbBfrSlMw3ylJ6PgczGt6YGKWwU0IAdv9SV6NLQF+gip52gDPprRG9htiL42bOqP/cftkQ==
+X-Received: by 2002:a17:906:ae92:: with SMTP id md18mr38370817ejb.33.1577382219611;
+        Thu, 26 Dec 2019 09:43:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e21sm3653673eds.36.2019.12.26.09.43.38
+        by smtp.gmail.com with ESMTPSA id y4sm3669996ejp.50.2019.12.26.09.43.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 26 Dec 2019 09:43:38 -0800 (PST)
-Message-Id: <e68ef0ced3b6ec34009f725a7ac762e6df4fa868.1577382217.git.gitgitgadget@gmail.com>
+        Thu, 26 Dec 2019 09:43:39 -0800 (PST)
+Message-Id: <c7d489794caa8f76e8d3cc4ec95b76279333dff1.1577382217.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.494.v2.git.1577382217.gitgitgadget@gmail.com>
 References: <pull.494.git.1576559263.gitgitgadget@gmail.com>
         <pull.494.v2.git.1577382217.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 26 Dec 2019 17:43:36 +0000
-Subject: [PATCH v2 1/2] doc: log, gitk: document accepted line-log diff
- formats
+Date:   Thu, 26 Dec 2019 17:43:37 +0000
+Subject: [PATCH v2 2/2] doc: log, gitk: line-log arguments must exist in
+ starting revision
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,53 +80,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Currently the line-log functionality (git log -L) only supports
-displaying patch output (`-p | --patch`, its default behavior) and suppressing it
-(`-s | --no-patch`). A check was added in the code to that effect in 5314efaea
-(line-log: detect unsupported formats, 2019-03-10) but the documentation was not
-updated.
+The line number, regex or offset parameters <start> and <end> in
+`git log -L <start>,<end>:<file>`, or the function name regex in
+`git log -L :<funcname>:<file>` must exist in the starting
+revision, or else the command exits with a fatal error.
 
-Explicitly mention that `-L` implies `-p`, that patch output can be
-suppressed using `-s`, and that all other diff formats are not allowed.
+This is not obvious in the documentation, so add a note to that
+effect.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/git-log.txt | 5 ++++-
- Documentation/gitk.txt    | 5 ++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ Documentation/git-log.txt | 3 ++-
+ Documentation/gitk.txt    | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index b406bc4c48..6574c0d91f 100644
+index 6574c0d91f..bed09bb09e 100644
 --- a/Documentation/git-log.txt
 +++ b/Documentation/git-log.txt
-@@ -77,7 +77,10 @@ produced by `--stat`, etc.
+@@ -76,7 +76,8 @@ produced by `--stat`, etc.
+ 	(or the function name regex <funcname>) within the <file>.  You may
  	not give any pathspec limiters.  This is currently limited to
  	a walk starting from a single revision, i.e., you may only
- 	give zero or one positive revision arguments.
--	You can specify this option more than once.
-+	You can specify this option more than once. Implies `--patch`.
-+	Patch output can be suppressed using `--no-patch`, but other diff formats
-+	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
-+	`--name-only`, `--name-status`, `--check`) are not currently implemented.
- +
- include::line-range-format.txt[]
- 
+-	give zero or one positive revision arguments.
++	give zero or one positive revision arguments, and
++	<start> and <end> (or <funcname>) must exist in the starting revision.
+ 	You can specify this option more than once. Implies `--patch`.
+ 	Patch output can be suppressed using `--no-patch`, but other diff formats
+ 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
 diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
-index 1eabb0aaf3..c487af5b74 100644
+index c487af5b74..c653ebb6a8 100644
 --- a/Documentation/gitk.txt
 +++ b/Documentation/gitk.txt
-@@ -106,7 +106,10 @@ linkgit:git-rev-list[1] for a complete list.
+@@ -105,7 +105,8 @@ linkgit:git-rev-list[1] for a complete list.
+ 	(or the function name regex <funcname>) within the <file>.  You may
  	not give any pathspec limiters.  This is currently limited to
  	a walk starting from a single revision, i.e., you may only
- 	give zero or one positive revision arguments.
--	You can specify this option more than once.
-+	You can specify this option more than once. Implies `--patch`.
-+	Patch output can be suppressed using `--no-patch`, but other diff formats
-+	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
-+	`--name-only`, `--name-status`, `--check`) are not currently implemented.
- +
- *Note:* gitk (unlike linkgit:git-log[1]) currently only understands
- this option if you specify it "glued together" with its argument.  Do
+-	give zero or one positive revision arguments.
++	give zero or one positive revision arguments, and
++	<start> and <end> (or <funcname>) must exist in the starting revision.
+ 	You can specify this option more than once. Implies `--patch`.
+ 	Patch output can be suppressed using `--no-patch`, but other diff formats
+ 	(namely `--raw`, `--numstat`, `--shortstat`, `--dirstat`, `--summary`,
 -- 
 gitgitgadget
-
