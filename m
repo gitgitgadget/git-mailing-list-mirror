@@ -6,27 +6,27 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CBDEC2D0DA
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DEA6C3F68F
 	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 10:42:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5CD912080D
+	by mail.kernel.org (Postfix) with ESMTP id 7DFB420828
 	for <git@archiver.kernel.org>; Thu, 26 Dec 2019 10:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726220AbfLZKmX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 26 Dec 2019 05:42:23 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:54764 "EHLO dcvr.yhbt.net"
+        id S1726418AbfLZKm0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 26 Dec 2019 05:42:26 -0500
+Received: from dcvr.yhbt.net ([64.71.152.64]:54800 "EHLO dcvr.yhbt.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725954AbfLZKmX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 26 Dec 2019 05:42:23 -0500
+        id S1725954AbfLZKm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 26 Dec 2019 05:42:26 -0500
 Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id 28D0E1F466;
+        by dcvr.yhbt.net (Postfix) with ESMTP id 5BB981F46D;
         Thu, 26 Dec 2019 10:42:21 +0000 (UTC)
 From:   Eric Wong <e@80x24.org>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: [PATCH 1/2] packfile: remove redundant fcntl F_GETFD/F_SETFD
-Date:   Thu, 26 Dec 2019 10:42:19 +0000
-Message-Id: <20191226104220.27325-2-e@80x24.org>
+Subject: [PATCH 2/2] packfile: replace lseek+read with pread
+Date:   Thu, 26 Dec 2019 10:42:20 +0000
+Message-Id: <20191226104220.27325-3-e@80x24.org>
 In-Reply-To: <20191226104220.27325-1-e@80x24.org>
 References: <20191226104220.27325-1-e@80x24.org>
 MIME-Version: 1.0
@@ -36,42 +36,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git_open sets close-on-exec since cd66ada06588f797
-("sha1_file: open window into packfiles with O_CLOEXEC").
-There's no reason to keep using fcntl to set the close-on-exec
-flag, anymore.
+We already have pread emulation for portability, so there's
+there's no reason to make two syscalls where one suffices.
+
+Furthermore, readers of the packfile will be using mmap
+(or pread to emulate mmap), anyways, so the file description
+offset does not matter in this case.
 
 Signed-off-by: Eric Wong <e@80x24.org>
 ---
- packfile.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ packfile.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/packfile.c b/packfile.c
-index f0dc63e92f..1821cb7a3d 100644
+index 1821cb7a3d..7e7c04e4d8 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -510,7 +510,6 @@ static int open_packed_git_1(struct packed_git *p)
- 	struct pack_header hdr;
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	unsigned char *idx_hash;
--	long fd_flag;
- 	ssize_t read_result;
- 	const unsigned hashsz = the_hash_algo->rawsz;
- 
-@@ -554,16 +553,6 @@ static int open_packed_git_1(struct packed_git *p)
- 	} else if (p->pack_size != st.st_size)
- 		return error("packfile %s size changed", p->pack_name);
- 
--	/* We leave these file descriptors open with sliding mmap;
--	 * there is no point keeping them open across exec(), though.
--	 */
--	fd_flag = fcntl(p->pack_fd, F_GETFD, 0);
--	if (fd_flag < 0)
--		return error("cannot determine file descriptor flags");
--	fd_flag |= FD_CLOEXEC;
--	if (fcntl(p->pack_fd, F_SETFD, fd_flag) == -1)
--		return error("cannot set FD_CLOEXEC");
--
- 	/* Verify we recognize this pack file format. */
- 	read_result = read_in_full(p->pack_fd, &hdr, sizeof(hdr));
+@@ -576,9 +576,8 @@ static int open_packed_git_1(struct packed_git *p)
+ 			     " while index indicates %"PRIu32" objects",
+ 			     p->pack_name, ntohl(hdr.hdr_entries),
+ 			     p->num_objects);
+-	if (lseek(p->pack_fd, p->pack_size - hashsz, SEEK_SET) == -1)
+-		return error("end of packfile %s is unavailable", p->pack_name);
+-	read_result = read_in_full(p->pack_fd, hash, hashsz);
++	read_result = pread_in_full(p->pack_fd, hash, hashsz,
++					p->pack_size - hashsz);
  	if (read_result < 0)
+ 		return error_errno("error reading from %s", p->pack_name);
+ 	if (read_result != hashsz)
