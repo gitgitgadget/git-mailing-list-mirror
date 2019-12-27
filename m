@@ -2,68 +2,67 @@ Return-Path: <SRS0=DNff=2R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4800C2D0CE
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58ED6C2D0C6
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A7FED20CC7
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:48:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E89C20740
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMwH3Gxj"
+	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="aYg9d08O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbfL0NsE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 08:48:04 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45706 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727015AbfL0Nrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:47:43 -0500
-Received: by mail-qk1-f193.google.com with SMTP id x1so21498264qkl.12
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:43 -0800 (PST)
+        id S1726607AbfL0N4K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 08:56:10 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:37640 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbfL0N4J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 08:56:09 -0500
+Received: by mail-pg1-f196.google.com with SMTP id q127so14499231pga.4
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:56:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=UZESWUx3KrA60v6RRKj6VDQttqoC/p28mvonLMIIhQ0=;
-        b=LMwH3GxjQAsIms7UdCDnQ4D8sY7TInsX1tTM7wx2a7qdU38NbTNndMjbZ3CwtAAzkI
-         zsdSjTKlZAz7HnW1N/yiAkDlsWJnf8QXFmQSouX/Fxg6T7BdYfCDaKYw/TcnHvg8Qfa2
-         X+fDpjzuehXcQaFUzJtXL8ShkDzWrOV1i/z+x9VnVLYI9X+XslOHp4yT1cvx2XbPpksd
-         3CO/RdC5Elxh+f9yLa63fLCx0xZNqZ2rl5G/2/bAt0L7WFP5laz4Ec0Blif5g4k+x87L
-         HWDnog3iofBGoZJiIk8cQdZvtC5go/7SH6unAacZvD6C3GwLRN9pMkaPrNAjFaKfHOkj
-         1Tiw==
+        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=qNyeyGWq/jcNKOLG+ge1ZQhAvS2aFPXuJqzPsa8jk0Q=;
+        b=aYg9d08OLtb/mf2xGgo7ngEQg96aap1xDahTspKjawsttNVGzUE4j7iz/wOW4cSMmm
+         QHEVwcqJ0M/mz/85b4h09KyRFx10AQ4NUraGk/Bim/YaCuCFE6m1z2Zm0iWZmbYsL5ip
+         r3ByDrN0HSop0geFS0yNoB/UMmBDw/oP17vE0tktIphpnS1UqBIeL3Wrtcc5XcP3r2YJ
+         ldWrgnYzD/gbYo63tKDwgckVLTR3FnZBRoG5Z2fyNfHm56ewNXFt2NBejd+ZdrguZ7LS
+         IHPKzuSd4vJrcXPGlw4tEwI37zbE1xeRCQZRsMtnKJdfvJybCLJPHihlBxBRgdp6lGNy
+         Ghcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=UZESWUx3KrA60v6RRKj6VDQttqoC/p28mvonLMIIhQ0=;
-        b=T9Bcy4a2H/TAL4TelQDVuWifbXx5ndNy6q1vcP86d8ay1dawqw2k0V5RjXvP1WOPWk
-         zbPyvyzsUw9XDm/M9Hv/ZFGRAkBRwcTJhLDndS06Zri39A/O7GszN63+b00FaidKhWoE
-         ZsBv49CGRMU+/b5JQzFQEXm7SxiKfGNQoKcaOjcnASCIPRrz/z37/+5jM7bU6YXTXr8R
-         kJUOnuam0IEoapCzqdNZ0/z1LhvE2I+Ttbxvi6EGqjW64cQFly6kWOr5Jl+x1NlaVYE9
-         YIBXZmrIjdUSHjoQCOUdWgqUnDLP7Pk0ahYBD+itf60ZfJf7g33DK8KJIMisEKcc4Lo1
-         2gjA==
-X-Gm-Message-State: APjAAAWZKjJQfox3HnrzPtrVgidgKUGJ6m2bIBMrDa/nKcioR4W+4Ald
-        Zhob1p/xbR1vusGd9K9hnDiU0ZqL
-X-Google-Smtp-Source: APXvYqwj6De2MGS8SQXeFY381vAi+ASr0u5sFU5QHePJem6UAUDdwhQ/g8JCRvajE3236UIgHjWOZw==
-X-Received: by 2002:a37:4f8e:: with SMTP id d136mr43080728qkb.495.1577454462595;
-        Fri, 27 Dec 2019 05:47:42 -0800 (PST)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.41
-        for <git@vger.kernel.org>
+        bh=qNyeyGWq/jcNKOLG+ge1ZQhAvS2aFPXuJqzPsa8jk0Q=;
+        b=Xr7scpbxZueQKd2X9nd9vHfhl9jGIYkO3JjLuHXFYAYp0VpxQ/J+zC8mFX4pntzxzr
+         fMayAa0yqn51bks7BGR1Q8LjCawAeSokK2fTcG3oIrB1mRGyB7CIKRaqVy5YGZBcggdN
+         bQQNPYZ9TrtT5Xi9eiNYqTaFattinPtq3dwUHKdm2jJJqL+1VWeORKBwvfCPEuR2jMbp
+         1aGFoGauRLQxbJaUDqdr4F0VEKIxi2shcYUooXNjIQhIQ8z68Mi0amER8csXRLXfAW/K
+         exw2ne9X45+O/9cYxQS4yikd907yS5l4gzMCuFWzH4wFUEOjhaP0BzCs3anZ6KAFQCFD
+         DamA==
+X-Gm-Message-State: APjAAAWgu3qOLacp3NUnifOuttdGSreRec/jUc9QvxKtbjFT2WuzstSR
+        PBsBoBpASFHRVcRNHIlLSkFJlVTKuyI=
+X-Google-Smtp-Source: APXvYqw5YnwcHO3Db8EBgYjP/NFnfqFIcKtL5/bY2sQkQip9qyKy/5kcGSjiZk32kzXsfSjyBBzJ8A==
+X-Received: by 2002:aa7:8299:: with SMTP id s25mr53106491pfm.261.1577454968744;
+        Fri, 27 Dec 2019 05:56:08 -0800 (PST)
+Received: from localhost ([27.109.113.235])
+        by smtp.gmail.com with ESMTPSA id v4sm25649376pfn.181.2019.12.27.05.56.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:47:42 -0800 (PST)
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 08/16] t3310: extract common no_notes_merge_left()
-Date:   Fri, 27 Dec 2019 08:47:17 -0500
-Message-Id: <68eb05e10edf1f4b09bc4e02587ac5b15fd2c6e3.1577454401.git.liu.denton@gmail.com>
-X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
-In-Reply-To: <cover.1577454401.git.liu.denton@gmail.com>
-References: <cover.1577454401.git.liu.denton@gmail.com>
+        Fri, 27 Dec 2019 05:56:08 -0800 (PST)
+From:   Hans Jerry Illikainen <hji@dyntopia.com>
+To:     git@vger.kernel.org
+Cc:     Hans Jerry Illikainen <hji@dyntopia.com>
+Subject: [PATCH v3 0/1] gpg-interface: add minTrustLevel as a configuration option
+Date:   Fri, 27 Dec 2019 13:55:56 +0000
+Message-Id: <20191227135557.31437-1-hji@dyntopia.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20191222003123.10555-1-hji@dyntopia.com>
+References: <20191222003123.10555-1-hji@dyntopia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,83 +70,139 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had many statements which were duplicated. Extract and replace these
-duplicate statements with no_notes_merge_left().
+Previously, signature verification for merge and pull operations checked
+if the key had a trust-level of either TRUST_NEVER or TRUST_UNDEFINED in
+verify_merge_signature().  If that was the case, the process die()d.
 
-While we're at it, replace the test_might_fail(), which should only be
-used on git commands, with a compound command that always returns 0,
-even if the underlying ls fails.
+The other code paths that did signature verification relied entirely on
+the return code from check_commit_signature().  And signatures made with
+a good key, irregardless of its trust level, was considered valid by
+check_commit_signature().
 
-Also, remove the redirection from stderr to /dev/null. This is because
-the test scripts automatically suppress output already. Otherwise, if a
-developer asks for verbose output via the `-v` flag, the stderr output
-may be useful for debugging.
+This difference in behavior might induce users to erroneously assume
+that the trust level of a key in their keyring is always considered by
+Git, even for operations where it is not (e.g. during a verify-commit or
+verify-tag).
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- t/t3310-notes-merge-manual-resolve.sh | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+The way it worked was by gpg-interface.c storing the result from the
+key/signature status *and* the lowest-two trust levels in the `result`
+member of the signature_check structure (the last of these status lines
+that were encountered got written to `result`).  These are documented in
+GPG under the subsection `General status codes` and `Key related`,
+respectively [1].
 
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index 2dea846e25..1950764694 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -32,6 +32,11 @@ verify_notes () {
- 	test_cmp "expect_log_$notes_ref" "output_log_$notes_ref"
- }
- 
-+no_notes_merge_left () {
-+	{ ls .git/NOTES_MERGE_* >output || :; } &&
-+	test_must_be_empty output
-+}
-+
- cat <<EOF | sort >expect_notes_x
- 6e8e3febca3c2bb896704335cc4d0c34cb2f8715 $commit_sha4
- e5388c10860456ee60673025345fe2e153eb8cf8 $commit_sha3
-@@ -335,9 +340,7 @@ EOF
- y and z notes on 4th commit
- EOF
- 	git notes merge --commit &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	no_notes_merge_left &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
- 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
- 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-@@ -397,9 +400,7 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
- 
- test_expect_success 'abort notes merge' '
- 	git notes merge --abort &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	no_notes_merge_left &&
- 	# m has not moved (still == y)
- 	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
-@@ -464,9 +465,7 @@ EOF
- 	echo "new note on 5th commit" > .git/NOTES_MERGE_WORKTREE/$commit_sha5 &&
- 	# Finalize merge
- 	git notes merge --commit &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	no_notes_merge_left &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
- 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
- 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-@@ -553,9 +552,7 @@ EOF
- 
- test_expect_success 'resolve situation by aborting the notes merge' '
- 	git notes merge --abort &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	no_notes_merge_left &&
- 	# m has not moved (still == w)
- 	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
--- 
-2.24.1.810.g65a2f617f4
+The GPG documentation says the following on the TRUST_ status codes [1]:
 
+    """
+    These are several similar status codes:
+
+    - TRUST_UNDEFINED <error_token>
+    - TRUST_NEVER     <error_token>
+    - TRUST_MARGINAL  [0  [<validation_model>]]
+    - TRUST_FULLY     [0  [<validation_model>]]
+    - TRUST_ULTIMATE  [0  [<validation_model>]]
+
+    For good signatures one of these status lines are emitted to
+    indicate the validity of the key used to create the signature.
+    The error token values are currently only emitted by gpgsm.
+    """
+
+My interpretation is that the trust level is conceptionally different
+from the validity of the key and/or signature.  That seems to also have
+been the assumption of the old code in check_signature() where a result
+of 'G' (as in GOODSIG) and 'U' (as in TRUST_NEVER or TRUST_UNDEFINED)
+were both considered a success.
+
+The two cases where a result of 'U' had special meaning were in
+verify_merge_signature() (where this caused git to die()) and in
+format_commit_one() (where it affected the output of the %G? format
+specifier).
+
+I think it makes sense to refactor the processing of TRUST_ status lines
+such that users can configure a minimum trust level that is enforced
+globally, rather than have individual parts of git (e.g. merge) do it
+themselves (except for a grace period with backward compatibility).
+
+I also think it makes sense to not store the trust level in the same
+struct member as the key/signature status.  While the presence of a
+TRUST_ status code does imply that the signature is good (see the first
+paragraph in the included snippet above), as far as I can tell, the
+order of the status lines from GPG isn't well-defined; thus it would
+seem plausible that the trust level could be overwritten with the
+key/signature status if they were stored in the same member of the
+signature_check structure.
+
+This patch introduces a new configuration option: gpg.minTrustLevel.  It
+consolidates trust-level verification to gpg-interface.c and adds a new
+`trust_level` member to the signature_check structure.
+
+Backward-compatibility is maintained by introducing a special case in
+verify_merge_signature() such that if no user-configurable
+gpg.minTrustLevel is set, then the old behavior of rejecting
+TRUST_UNDEFINED and TRUST_NEVER is enforced.  If, on the other hand,
+gpg.minTrustLevel is set, then that value overrides the old behavior.
+
+Similarly, the %G? format specifier will continue show 'U' for
+signatures made with a key that has a trust level of TRUST_UNDEFINED or
+TRUST_NEVER, even though the 'U' character no longer exist in the
+`result` member of the signature_check structure.  A new format
+specifier, %GT, is also introduced for users that want to show all
+possible trust levels for a signature.
+
+Another approach would have been to simply drop the trust-level
+requirement in verify_merge_signature().  This would also have made the
+behavior consistent with other parts of git that perform signature
+verification.  However, requiring a minimum trust level for signing keys
+does seem to have a real-world use-case.  For example, the build system
+used by the Qubes OS project currently parses the raw output from
+verify-tag in order to assert a minimum trust level for keys used to
+sign git tags [2].
+
+
+Changes since v0:
+* Added backward-compatibility with the old behavior of
+  verify_merge_signature().  The old behavior is overridden if a user
+  has configured gpg.minTrustLevel.  My approach is kind of ugly because
+  now all users of verify_merge_signature() has to be aware of
+  gpg.minTrustLevel to know if it should override the default behavior.
+  An alternative might be to have a configurable per-operation trust
+  level (e.g. merge.minTrustLevel), but I'm not sure how sensible that
+  is either.
+* Added backward-compatiblity with the old behavior of %G?.
+
+Changes since v1:
+* Fixed compatibility with gpg1 in parse_gpg_output().  One significant
+  difference between gpg1 and gpg2 is that the trust levels above
+  TRUST_NEVER are written without any additional space-separated
+  information in gpg1 [3].  This broke the logic in the previous
+  iterations, because the end of the TRUST_ string were searched for by
+  looking for a space character.  Now a new-line is used as a fallback.
+
+Changes since v2:
+* Replaced strstr() + strchrnul() with strcspn().
+
+
+[1] https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/doc/DETAILS;h=bd00006e933ac56719b1edd2478ecd79273eae72;hb=refs/heads/master
+[2] https://github.com/QubesOS/qubes-builder/blob/9674c1991deef45b1a1b1c71fddfab14ba50dccf/scripts/verify-git-tag#L43
+[3] https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/DETAILS;h=de0f21ccba60c3037c2a155156202df1cd098507;hb=refs/heads/STABLE-BRANCH-1-4#l286
+
+Hans Jerry Illikainen (1):
+  gpg-interface: add minTrustLevel as a configuration option
+
+ Documentation/config/gpg.txt       | 15 +++++
+ Documentation/pretty-formats.txt   |  1 +
+ builtin/merge.c                    |  9 ++-
+ builtin/pull.c                     | 13 ++++-
+ commit.c                           | 12 ++--
+ commit.h                           | 12 +++-
+ gpg-interface.c                    | 91 ++++++++++++++++++++++++++----
+ gpg-interface.h                    | 10 +++-
+ pretty.c                           | 30 +++++++++-
+ t/t5573-pull-verify-signatures.sh  | 64 +++++++++++++++++++++
+ t/t7030-verify-tag.sh              | 24 ++++++++
+ t/t7510-signed-commit.sh           | 39 +++++++++++++
+ t/t7612-merge-verify-signatures.sh | 22 ++++++++
+ 13 files changed, 319 insertions(+), 23 deletions(-)
+
+--
+2.24.1.591.g64816733a6
