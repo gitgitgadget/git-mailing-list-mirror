@@ -6,83 +6,99 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F470C2D0C3
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 22:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 823C5C2D0C3
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 22:29:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4D20920828
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 22:21:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 424D120740
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 22:29:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lc5Qmpgd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UjtQs9H1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726220AbfL0WVW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 17:21:22 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:63954 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725860AbfL0WVV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 17:21:21 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8731524146;
-        Fri, 27 Dec 2019 17:21:19 -0500 (EST)
+        id S1726080AbfL0W3G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 17:29:06 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54359 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725306AbfL0W3F (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 17:29:05 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B2ECFB0BD4;
+        Fri, 27 Dec 2019 17:29:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RhQwkQ7QJYGUAyjYeB4nK0tV3iQ=; b=Lc5Qmp
-        gdZsaUvwyc2dwzYtnQAitnusxupCqsGgJsDLbJ9WPAXfta1QNyNdvPmysTAPmt9c
-        FpvJN9iHkQNF4lS0lflJvfkZBcIZJ4JqtDb7c5cLpKGfXPEN7Xihs9mPjafovZdF
-        0PKbBqOWB4gy4BCjyLYdanyyk1sZ0Pu868KqM=
+        :content-type; s=sasl; bh=RXG2RZt4u4rQU2Dm+reYiR3ejuM=; b=UjtQs9
+        H1g1UpXdARSD/J4PTXTt4TK1XilJYKkIPH1ZKFREW5F9llBhS6wR7tBgTAK6a/rU
+        qwCFZiuswZ0nn8kNMFQrEKafXIrKeGEyED+kaFxxnxVlqBlZIlj2DIF0k3cx2dwX
+        zFdqruIWpjBDAuFipaTYyQlCfk+3yBTrdVf6I=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cVMYRZOkKenS5ea/W8X+92GAPyQl5CUe
-        uTkjA501qbMje7BvflWj+RZ9urLLlIz9Pj1pfQauSlorPLrVY8OkJ/gXjAtKqvI3
-        +JeUIBhtDDlJZaC+1KGstfiOmL0ed55hgdm/VpQaY7cgJhRQvb1+Oe5AqqSrqwaX
-        SY5iSYYsR3M=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7EE6624145;
-        Fri, 27 Dec 2019 17:21:19 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=D2jUYjDSp6dtc8+ThnS4Z5eAvK9lgKOq
+        uaq2wXLLWfgAMoIjjJ+TbCU6A/QqCv/JpFgMB3APtjdsWDrdvij0rWyBep0dhXRd
+        GAXetl7nc+MY2f8odF72O1D9MYCEqTPTdHW6h7ko3X/7ELzziiDs6kvUw1+rU53a
+        WweKRrHDHDE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA8E0B0BD3;
+        Fri, 27 Dec 2019 17:29:04 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DAB3324144;
-        Fri, 27 Dec 2019 17:21:18 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CA0A0B0BD0;
+        Fri, 27 Dec 2019 17:29:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
+To:     Danh Doan <congdanhqx@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] gpg-interface: add minTrustLevel as a configuration option
-References: <20191219000140.9056-1-hji@dyntopia.com>
-        <20191222003123.10555-1-hji@dyntopia.com>
-        <20191222003123.10555-2-hji@dyntopia.com>
-        <xmqqblrx5yxu.fsf@gitster-ct.c.googlers.com>
-        <87r20pkhir.hji@dyntopia.com>
-Date:   Fri, 27 Dec 2019 14:21:17 -0800
-In-Reply-To: <87r20pkhir.hji@dyntopia.com> (Hans Jerry Illikainen's message of
-        "Fri, 27 Dec 2019 13:46:52 +0000")
-Message-ID: <xmqq7e2hjtpe.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [ANNOUNCE] Git v2.25.0-rc0
+References: <xmqqblrwm65l.fsf@gitster-ct.c.googlers.com>
+        <20191226143527.GA24268@danh.dev>
+        <xmqq4kxnm0w6.fsf@gitster-ct.c.googlers.com>
+        <20191227113858.GB24268@danh.dev>
+Date:   Fri, 27 Dec 2019 14:28:59 -0800
+In-Reply-To: <20191227113858.GB24268@danh.dev> (Danh Doan's message of "Fri,
+        27 Dec 2019 18:38:58 +0700")
+Message-ID: <xmqq36d5jtck.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 346281F4-28F7-11EA-BAD7-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 48502A08-28F8-11EA-8284-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+Danh Doan <congdanhqx@gmail.com> writes:
 
->> I wonder if the code becomes less misleading if we either (1)
->> renamed 'next' to a name that hints more strongly that it is not the
->> 'next' line but the end of the current token we are interested in,
->> or (2) get rid of the pointer and instead counted size of the
->> current token we are interested in, or perhaps both?  
+> On 2019-12-26 09:50:49-0800, Junio C Hamano <gitster@pobox.com> wrote:
+>> Danh Doan <congdanhqx@gmail.com> writes:
+>> 
+>> > My name should be moved down to next paragraph,
+>> > since I was lazy to type my name with all accents.
+>> 
+>> Your first contribution was back in v2.20 days, and then the recent
+>> ones are all within this cycle for v2.25.
+>> 
+>> I am a bit curious why you need to avoid being lazy just to give the
+>> correct name to your commits, though.  Isn't 
 >
-> Yeah the name 'next' does seem a bit counter-intuitive when used in
-> relation to 'line'.  Looking through the function it seems that both (1)
-> and (2) would work.
+> Some of my projects requires ASCII-only user.name,
+> instead of doing the right thing
+>
+> 	git config user.name <simplified-name>
+>
+> I decided to set it globally instead.
+> I rarely need to type in my native language,
+> hence I don't have the IME software start with Xorg.
 
-Thanks for thinking the code a bit more than necessary for the
-purpose of this topic.  Let's leave such a clean-up outside the
-scope of this topic, but perhaps a #leftoverbits marker may help us
-remember it as something we could do when we have nothing else
-better to do ;-)
+Hmph, but back in v2.20 days, you did have IME?
 
+In any case, if I were in such a situation to need my name spelled
+differently depending on the project I work on, I would probably use
+
+	$ git config --global user.name <simplified-name>
+	$ cd <repository of git>
+	$ git config user.name <name-with-accents>
+
+or the other way around (depends on which projects your focus is on).
+
+But perhaps that is not so useful to your situation?
