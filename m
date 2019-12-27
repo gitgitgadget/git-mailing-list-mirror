@@ -2,67 +2,68 @@ Return-Path: <SRS0=DNff=2R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58ED6C2D0C6
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80962C2D0C6
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1E89C20740
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3392720740
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="aYg9d08O"
+	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="dxMSb33a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726607AbfL0N4K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 08:56:10 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:37640 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726279AbfL0N4J (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:56:09 -0500
-Received: by mail-pg1-f196.google.com with SMTP id q127so14499231pga.4
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:56:09 -0800 (PST)
+        id S1726720AbfL0N4Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 08:56:16 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:42873 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbfL0N4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 08:56:15 -0500
+Received: by mail-pf1-f194.google.com with SMTP id 4so14776394pfz.9
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:56:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qNyeyGWq/jcNKOLG+ge1ZQhAvS2aFPXuJqzPsa8jk0Q=;
-        b=aYg9d08OLtb/mf2xGgo7ngEQg96aap1xDahTspKjawsttNVGzUE4j7iz/wOW4cSMmm
-         QHEVwcqJ0M/mz/85b4h09KyRFx10AQ4NUraGk/Bim/YaCuCFE6m1z2Zm0iWZmbYsL5ip
-         r3ByDrN0HSop0geFS0yNoB/UMmBDw/oP17vE0tktIphpnS1UqBIeL3Wrtcc5XcP3r2YJ
-         ldWrgnYzD/gbYo63tKDwgckVLTR3FnZBRoG5Z2fyNfHm56ewNXFt2NBejd+ZdrguZ7LS
-         IHPKzuSd4vJrcXPGlw4tEwI37zbE1xeRCQZRsMtnKJdfvJybCLJPHihlBxBRgdp6lGNy
-         Ghcg==
+        bh=frIxhRVhmiDL2784WbE1xBaA7aeupmUJjxEv/0P3qpY=;
+        b=dxMSb33a8TbJwW5Yokh5UHPEhhtIRNgX5gmjH/pv4w/Q8OT0MK0lniHRi3Cov+0tqq
+         qBD+THE4g2b+jAvTaDOn8/cc4PqSoMWvbWrRhsUYOJdDDW909AOczq1yPG7e4HGXPxUS
+         j00r3Ga927ku0qAJhkGQgG/I8gse5oe/M6D3LA5NSsd8XoOKP7gUoOfnuuT0tkx2dRf5
+         xJdEWcEWwEV1J5wwGm0p40FiJxchfpgAUm4XI+A0qU5OIRJdzGu9IpNmi4y0FEi0PLrZ
+         TIKAEHH4vwLcmEumdYd3kPxbSUNdJd2yZfVbKfp0ejapJNO/tha420Ukr6eNhIs0rxk7
+         io/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qNyeyGWq/jcNKOLG+ge1ZQhAvS2aFPXuJqzPsa8jk0Q=;
-        b=Xr7scpbxZueQKd2X9nd9vHfhl9jGIYkO3JjLuHXFYAYp0VpxQ/J+zC8mFX4pntzxzr
-         fMayAa0yqn51bks7BGR1Q8LjCawAeSokK2fTcG3oIrB1mRGyB7CIKRaqVy5YGZBcggdN
-         bQQNPYZ9TrtT5Xi9eiNYqTaFattinPtq3dwUHKdm2jJJqL+1VWeORKBwvfCPEuR2jMbp
-         1aGFoGauRLQxbJaUDqdr4F0VEKIxi2shcYUooXNjIQhIQ8z68Mi0amER8csXRLXfAW/K
-         exw2ne9X45+O/9cYxQS4yikd907yS5l4gzMCuFWzH4wFUEOjhaP0BzCs3anZ6KAFQCFD
-         DamA==
-X-Gm-Message-State: APjAAAWgu3qOLacp3NUnifOuttdGSreRec/jUc9QvxKtbjFT2WuzstSR
-        PBsBoBpASFHRVcRNHIlLSkFJlVTKuyI=
-X-Google-Smtp-Source: APXvYqw5YnwcHO3Db8EBgYjP/NFnfqFIcKtL5/bY2sQkQip9qyKy/5kcGSjiZk32kzXsfSjyBBzJ8A==
-X-Received: by 2002:aa7:8299:: with SMTP id s25mr53106491pfm.261.1577454968744;
-        Fri, 27 Dec 2019 05:56:08 -0800 (PST)
+        bh=frIxhRVhmiDL2784WbE1xBaA7aeupmUJjxEv/0P3qpY=;
+        b=UPchuJ1JbjyOTThHve6v0p72Ckgjy87/RKV/nR0YtalmeUcHGuuU00BRIGWDuGTr2K
+         a09GaeitXK02ojOJmzsuHp2aLrqNr39l9BvZGN2VIQZeCrNm4v7/vfbNyLQo7itNr6wo
+         tTmsB9p1FS64jai2Nd1U56aa8nni8TE50LPuilFGA3PrtMYRFb/KkVnL6YDdE+4GRlWH
+         x6XUUAXyP/cZcIj78XykGm1l/DQ2n7BzQSJD33jf65t6VjKwO7zBePyJfTrAItJ+3SyH
+         Rnpn/2HC/o9xUbWZqjKoRkfYgbz1UnjQ403CzvdbPqlQAGfvKGR66YFobC5rHRGolZoA
+         Xkfw==
+X-Gm-Message-State: APjAAAVKIH3XM+XKuWPrpI1WyX0A9cM1r4F6X6vBqQzQt7iWsT7EhOdM
+        oL+oJ9Sk7nLhuwlTAFSo7aXyx0CFu2o=
+X-Google-Smtp-Source: APXvYqyghYhX3TblHI8fz0MLmZ1kH2LOO35G1RCv6x4IgLIfTBD9OzaD7/KVosvDwkCA61mhR/33UQ==
+X-Received: by 2002:a63:ea4c:: with SMTP id l12mr53081585pgk.174.1577454974022;
+        Fri, 27 Dec 2019 05:56:14 -0800 (PST)
 Received: from localhost ([27.109.113.235])
-        by smtp.gmail.com with ESMTPSA id v4sm25649376pfn.181.2019.12.27.05.56.06
+        by smtp.gmail.com with ESMTPSA id r66sm41618627pfc.74.2019.12.27.05.56.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:56:08 -0800 (PST)
+        Fri, 27 Dec 2019 05:56:13 -0800 (PST)
 From:   Hans Jerry Illikainen <hji@dyntopia.com>
 To:     git@vger.kernel.org
 Cc:     Hans Jerry Illikainen <hji@dyntopia.com>
-Subject: [PATCH v3 0/1] gpg-interface: add minTrustLevel as a configuration option
-Date:   Fri, 27 Dec 2019 13:55:56 +0000
-Message-Id: <20191227135557.31437-1-hji@dyntopia.com>
+Subject: [PATCH v3 1/1] gpg-interface: add minTrustLevel as a configuration option
+Date:   Fri, 27 Dec 2019 13:55:57 +0000
+Message-Id: <20191227135557.31437-2-hji@dyntopia.com>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20191222003123.10555-1-hji@dyntopia.com>
+In-Reply-To: <20191227135557.31437-1-hji@dyntopia.com>
 References: <20191222003123.10555-1-hji@dyntopia.com>
+ <20191227135557.31437-1-hji@dyntopia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -158,37 +159,11 @@ used by the Qubes OS project currently parses the raw output from
 verify-tag in order to assert a minimum trust level for keys used to
 sign git tags [2].
 
-
-Changes since v0:
-* Added backward-compatibility with the old behavior of
-  verify_merge_signature().  The old behavior is overridden if a user
-  has configured gpg.minTrustLevel.  My approach is kind of ugly because
-  now all users of verify_merge_signature() has to be aware of
-  gpg.minTrustLevel to know if it should override the default behavior.
-  An alternative might be to have a configurable per-operation trust
-  level (e.g. merge.minTrustLevel), but I'm not sure how sensible that
-  is either.
-* Added backward-compatiblity with the old behavior of %G?.
-
-Changes since v1:
-* Fixed compatibility with gpg1 in parse_gpg_output().  One significant
-  difference between gpg1 and gpg2 is that the trust levels above
-  TRUST_NEVER are written without any additional space-separated
-  information in gpg1 [3].  This broke the logic in the previous
-  iterations, because the end of the TRUST_ string were searched for by
-  looking for a space character.  Now a new-line is used as a fallback.
-
-Changes since v2:
-* Replaced strstr() + strchrnul() with strcspn().
-
-
 [1] https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/doc/DETAILS;h=bd00006e933ac56719b1edd2478ecd79273eae72;hb=refs/heads/master
 [2] https://github.com/QubesOS/qubes-builder/blob/9674c1991deef45b1a1b1c71fddfab14ba50dccf/scripts/verify-git-tag#L43
-[3] https://git.gnupg.org/cgi-bin/gitweb.cgi?p=gnupg.git;a=blob;f=doc/DETAILS;h=de0f21ccba60c3037c2a155156202df1cd098507;hb=refs/heads/STABLE-BRANCH-1-4#l286
 
-Hans Jerry Illikainen (1):
-  gpg-interface: add minTrustLevel as a configuration option
-
+Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
+---
  Documentation/config/gpg.txt       | 15 +++++
  Documentation/pretty-formats.txt   |  1 +
  builtin/merge.c                    |  9 ++-
@@ -204,5 +179,667 @@ Hans Jerry Illikainen (1):
  t/t7612-merge-verify-signatures.sh | 22 ++++++++
  13 files changed, 319 insertions(+), 23 deletions(-)
 
---
+diff --git a/Documentation/config/gpg.txt b/Documentation/config/gpg.txt
+index cce2c89245..d94025cb36 100644
+--- a/Documentation/config/gpg.txt
++++ b/Documentation/config/gpg.txt
+@@ -18,3 +18,18 @@ gpg.<format>.program::
+ 	chose. (see `gpg.program` and `gpg.format`) `gpg.program` can still
+ 	be used as a legacy synonym for `gpg.openpgp.program`. The default
+ 	value for `gpg.x509.program` is "gpgsm".
++
++gpg.minTrustLevel::
++	Specifies a minimum trust level for signature verification.  If
++	this option is unset, then signature verification for merge
++	operations require a key with at least `marginal` trust.  Other
++	operations that perform signature verification require a key
++	with at least `undefined` trust.  Setting this option overrides
++	the required trust-level for all operations.  Supported values,
++	in increasing order of significance:
+++
++* `undefined`
++* `never`
++* `marginal`
++* `fully`
++* `ultimate`
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 1a7212ce5a..a4b6f49186 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -226,6 +226,7 @@ endif::git-rev-list[]
+ '%GF':: show the fingerprint of the key used to sign a signed commit
+ '%GP':: show the fingerprint of the primary key whose subkey was used
+ 	to sign a signed commit
++'%GT':: show the trust level for the key used to sign a signed commit
+ '%gD':: reflog selector, e.g., `refs/stash@{1}` or `refs/stash@{2
+ 	minutes ago}`; the format follows the rules described for the
+ 	`-g` option. The portion before the `@` is the refname as
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 062e911441..d127d2225f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -62,6 +62,7 @@ static int show_diffstat = 1, shortlog_len = -1, squash;
+ static int option_commit = -1;
+ static int option_edit = -1;
+ static int allow_trivial = 1, have_message, verify_signatures;
++static int check_trust_level = 1;
+ static int overwrite_ignore = 1;
+ static struct strbuf merge_msg = STRBUF_INIT;
+ static struct strategy **use_strategies;
+@@ -631,6 +632,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 	} else if (!strcmp(k, "commit.gpgsign")) {
+ 		sign_commit = git_config_bool(k, v) ? "" : NULL;
+ 		return 0;
++	} else if (!strcmp(k, "gpg.mintrustlevel")) {
++		check_trust_level = 0;
+ 	}
+ 
+ 	status = fmt_merge_msg_config(k, v, cb);
+@@ -1397,7 +1400,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			die(_("Can merge only exactly one commit into empty head"));
+ 
+ 		if (verify_signatures)
+-			verify_merge_signature(remoteheads->item, verbosity);
++			verify_merge_signature(remoteheads->item, verbosity,
++					       check_trust_level);
+ 
+ 		remote_head_oid = &remoteheads->item->object.oid;
+ 		read_empty(remote_head_oid, 0);
+@@ -1420,7 +1424,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 
+ 	if (verify_signatures) {
+ 		for (p = remoteheads; p; p = p->next) {
+-			verify_merge_signature(p->item, verbosity);
++			verify_merge_signature(p->item, verbosity,
++					       check_trust_level);
+ 		}
+ 	}
+ 
+diff --git a/builtin/pull.c b/builtin/pull.c
+index d25ff13a60..d4e3e77c8e 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -107,6 +107,7 @@ static char *opt_ff;
+ static char *opt_verify_signatures;
+ static int opt_autostash = -1;
+ static int config_autostash;
++static int check_trust_level = 1;
+ static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
+ static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
+ static char *opt_gpg_sign;
+@@ -355,6 +356,8 @@ static enum rebase_type config_get_rebase(void)
+  */
+ static int git_pull_config(const char *var, const char *value, void *cb)
+ {
++	int status;
++
+ 	if (!strcmp(var, "rebase.autostash")) {
+ 		config_autostash = git_config_bool(var, value);
+ 		return 0;
+@@ -362,7 +365,14 @@ static int git_pull_config(const char *var, const char *value, void *cb)
+ 		recurse_submodules = git_config_bool(var, value) ?
+ 			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
+ 		return 0;
++	} else if (!strcmp(var, "gpg.mintrustlevel")) {
++		check_trust_level = 0;
+ 	}
++
++	status = git_gpg_config(var, value, cb);
++	if (status)
++		return status;
++
+ 	return git_default_config(var, value, cb);
+ }
+ 
+@@ -587,7 +597,8 @@ static int pull_into_void(const struct object_id *merge_head,
+ 			die(_("unable to access commit %s"),
+ 			    oid_to_hex(merge_head));
+ 
+-		verify_merge_signature(commit, opt_verbosity);
++		verify_merge_signature(commit, opt_verbosity,
++				       check_trust_level);
+ 	}
+ 
+ 	/*
+diff --git a/commit.c b/commit.c
+index 434ec030d6..3f91d3efc5 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1136,21 +1136,23 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
+ 	return ret;
+ }
+ 
+-void verify_merge_signature(struct commit *commit, int verbosity)
++void verify_merge_signature(struct commit *commit, int verbosity,
++			    int check_trust)
+ {
+ 	char hex[GIT_MAX_HEXSZ + 1];
+ 	struct signature_check signature_check;
++	int ret;
+ 	memset(&signature_check, 0, sizeof(signature_check));
+ 
+-	check_commit_signature(commit, &signature_check);
++	ret = check_commit_signature(commit, &signature_check);
+ 
+ 	find_unique_abbrev_r(hex, &commit->object.oid, DEFAULT_ABBREV);
+ 	switch (signature_check.result) {
+ 	case 'G':
++		if (ret || (check_trust && signature_check.trust_level < TRUST_MARGINAL))
++			die(_("Commit %s has an untrusted GPG signature, "
++			      "allegedly by %s."), hex, signature_check.signer);
+ 		break;
+-	case 'U':
+-		die(_("Commit %s has an untrusted GPG signature, "
+-		      "allegedly by %s."), hex, signature_check.signer);
+ 	case 'B':
+ 		die(_("Commit %s has a bad GPG signature "
+ 		      "allegedly by %s."), hex, signature_check.signer);
+diff --git a/commit.h b/commit.h
+index 221cdaa34b..008a0fa4a0 100644
+--- a/commit.h
++++ b/commit.h
+@@ -383,8 +383,18 @@ int compare_commits_by_author_date(const void *a_, const void *b_, void *unused)
+  * Verify a single commit with check_commit_signature() and die() if it is not
+  * a good signature. This isn't really suitable for general use, but is a
+  * helper to implement consistent logic for pull/merge --verify-signatures.
++ *
++ * The check_trust parameter is meant for backward-compatibility.  The GPG
++ * interface verifies key trust with a default trust level that is below the
++ * default trust level for merge operations.  Its value should be non-zero if
++ * the user hasn't set a minimum trust level explicitly in their configuration.
++ *
++ * If the user has set a minimum trust level, then that value should be obeyed
++ * and check_trust should be zero, even if the configured trust level is below
++ * the default trust level for merges.
+  */
+-void verify_merge_signature(struct commit *commit, int verbose);
++void verify_merge_signature(struct commit *commit, int verbose,
++			    int check_trust);
+ 
+ int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused);
+ int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 5134ce2780..2d538bcd6e 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -7,6 +7,8 @@
+ #include "tempfile.h"
+ 
+ static char *configured_signing_key;
++static enum signature_trust_level configured_min_trust_level = TRUST_UNDEFINED;
++
+ struct gpg_format {
+ 	const char *name;
+ 	const char *program;
+@@ -85,6 +87,8 @@ void signature_check_clear(struct signature_check *sigc)
+ #define GPG_STATUS_UID		(1<<2)
+ /* The status includes key fingerprints */
+ #define GPG_STATUS_FINGERPRINT	(1<<3)
++/* The status includes trust level */
++#define GPG_STATUS_TRUST_LEVEL	(1<<4)
+ 
+ /* Short-hand for standard exclusive *SIG status with keyid & UID */
+ #define GPG_STATUS_STDSIG	(GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID|GPG_STATUS_UID)
+@@ -96,13 +100,23 @@ static struct {
+ } sigcheck_gpg_status[] = {
+ 	{ 'G', "GOODSIG ", GPG_STATUS_STDSIG },
+ 	{ 'B', "BADSIG ", GPG_STATUS_STDSIG },
+-	{ 'U', "TRUST_NEVER", 0 },
+-	{ 'U', "TRUST_UNDEFINED", 0 },
+ 	{ 'E', "ERRSIG ", GPG_STATUS_EXCLUSIVE|GPG_STATUS_KEYID },
+ 	{ 'X', "EXPSIG ", GPG_STATUS_STDSIG },
+ 	{ 'Y', "EXPKEYSIG ", GPG_STATUS_STDSIG },
+ 	{ 'R', "REVKEYSIG ", GPG_STATUS_STDSIG },
+ 	{ 0, "VALIDSIG ", GPG_STATUS_FINGERPRINT },
++	{ 0, "TRUST_", GPG_STATUS_TRUST_LEVEL },
++};
++
++static struct {
++	const char *key;
++	enum signature_trust_level value;
++} sigcheck_gpg_trust_level[] = {
++	{ "UNDEFINED", TRUST_UNDEFINED },
++	{ "NEVER", TRUST_NEVER },
++	{ "MARGINAL", TRUST_MARGINAL },
++	{ "FULLY", TRUST_FULLY },
++	{ "ULTIMATE", TRUST_ULTIMATE },
+ };
+ 
+ static void replace_cstring(char **field, const char *line, const char *next)
+@@ -115,6 +129,20 @@ static void replace_cstring(char **field, const char *line, const char *next)
+ 		*field = NULL;
+ }
+ 
++static int parse_gpg_trust_level(const char *level,
++				 enum signature_trust_level *res)
++{
++	size_t i;
++
++	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_trust_level); i++) {
++		if (!strcmp(sigcheck_gpg_trust_level[i].key, level)) {
++			*res = sigcheck_gpg_trust_level[i].value;
++			return 0;
++		}
++	}
++	return 1;
++}
++
+ static void parse_gpg_output(struct signature_check *sigc)
+ {
+ 	const char *buf = sigc->gpg_status;
+@@ -136,9 +164,18 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 		/* Iterate over all search strings */
+ 		for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+ 			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
++				/*
++				 * GOODSIG, BADSIG etc. can occur only once for
++				 * each signature.  Therefore, if we had more
++				 * than one then we're dealing with multiple
++				 * signatures.  We don't support them
++				 * currently, and they're rather hard to
++				 * create, so something is likely fishy and we
++				 * should reject them altogether.
++				 */
+ 				if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE) {
+ 					if (seen_exclusive_status++)
+-						goto found_duplicate_status;
++						goto error;
+ 				}
+ 
+ 				if (sigcheck_gpg_status[i].result)
+@@ -154,6 +191,25 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 						replace_cstring(&sigc->signer, line, next);
+ 					}
+ 				}
++
++				/* Do we have trust level? */
++				if (sigcheck_gpg_status[i].flags & GPG_STATUS_TRUST_LEVEL) {
++					/*
++					 * GPG v1 and v2 differs in how the
++					 * TRUST_ lines are written.  Some
++					 * trust lines contain no additional
++					 * space-separated information for v1.
++					 */
++					size_t trust_size = strcspn(line, " \n");
++					char *trust = xmemdupz(line, trust_size);
++
++					if (parse_gpg_trust_level(trust, &sigc->trust_level)) {
++						free(trust);
++						goto error;
++					}
++					free(trust);
++				}
++
+ 				/* Do we have fingerprint? */
+ 				if (sigcheck_gpg_status[i].flags & GPG_STATUS_FINGERPRINT) {
+ 					const char *limit;
+@@ -191,14 +247,7 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 	}
+ 	return;
+ 
+-found_duplicate_status:
+-	/*
+-	 * GOODSIG, BADSIG etc. can occur only once for each signature.
+-	 * Therefore, if we had more than one then we're dealing with multiple
+-	 * signatures.  We don't support them currently, and they're rather
+-	 * hard to create, so something is likely fishy and we should reject
+-	 * them altogether.
+-	 */
++error:
+ 	sigc->result = 'E';
+ 	/* Clear partial data to avoid confusion */
+ 	FREE_AND_NULL(sigc->primary_key_fingerprint);
+@@ -264,6 +313,7 @@ int check_signature(const char *payload, size_t plen, const char *signature,
+ 	int status;
+ 
+ 	sigc->result = 'N';
++	sigc->trust_level = -1;
+ 
+ 	status = verify_signed_buffer(payload, plen, signature, slen,
+ 				      &gpg_output, &gpg_status);
+@@ -273,7 +323,8 @@ int check_signature(const char *payload, size_t plen, const char *signature,
+ 	sigc->gpg_output = strbuf_detach(&gpg_output, NULL);
+ 	sigc->gpg_status = strbuf_detach(&gpg_status, NULL);
+ 	parse_gpg_output(sigc);
+-	status |= sigc->result != 'G' && sigc->result != 'U';
++	status |= sigc->result != 'G';
++	status |= sigc->trust_level < configured_min_trust_level;
+ 
+  out:
+ 	strbuf_release(&gpg_status);
+@@ -320,6 +371,8 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ {
+ 	struct gpg_format *fmt = NULL;
+ 	char *fmtname = NULL;
++	char *trust;
++	int ret;
+ 
+ 	if (!strcmp(var, "user.signingkey")) {
+ 		if (!value)
+@@ -339,6 +392,20 @@ int git_gpg_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "gpg.mintrustlevel")) {
++		if (!value)
++			return config_error_nonbool(var);
++
++		trust = xstrdup_toupper(value);
++		ret = parse_gpg_trust_level(trust, &configured_min_trust_level);
++		free(trust);
++
++		if (ret)
++			return error("unsupported value for %s: %s", var,
++				     value);
++		return 0;
++	}
++
+ 	if (!strcmp(var, "gpg.program") || !strcmp(var, "gpg.openpgp.program"))
+ 		fmtname = "openpgp";
+ 
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 93cc3aff5c..f4e9b4f371 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -7,6 +7,14 @@ struct strbuf;
+ #define GPG_VERIFY_RAW			2
+ #define GPG_VERIFY_OMIT_STATUS	4
+ 
++enum signature_trust_level {
++	TRUST_UNDEFINED,
++	TRUST_NEVER,
++	TRUST_MARGINAL,
++	TRUST_FULLY,
++	TRUST_ULTIMATE,
++};
++
+ struct signature_check {
+ 	char *payload;
+ 	char *gpg_output;
+@@ -16,7 +24,6 @@ struct signature_check {
+ 	 * possible "result":
+ 	 * 0 (not checked)
+ 	 * N (checked but no further result)
+-	 * U (untrusted good)
+ 	 * G (good)
+ 	 * B (bad)
+ 	 */
+@@ -25,6 +32,7 @@ struct signature_check {
+ 	char *key;
+ 	char *fingerprint;
+ 	char *primary_key_fingerprint;
++	enum signature_trust_level trust_level;
+ };
+ 
+ void signature_check_clear(struct signature_check *sigc);
+diff --git a/pretty.c b/pretty.c
+index 305e903192..f5fbbc5ffb 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1311,9 +1311,18 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 		case '?':
+ 			switch (c->signature_check.result) {
+ 			case 'G':
++				switch (c->signature_check.trust_level) {
++				case TRUST_UNDEFINED:
++				case TRUST_NEVER:
++					strbuf_addch(sb, 'U');
++					break;
++				default:
++					strbuf_addch(sb, 'G');
++					break;
++				}
++				break;
+ 			case 'B':
+ 			case 'E':
+-			case 'U':
+ 			case 'N':
+ 			case 'X':
+ 			case 'Y':
+@@ -1337,6 +1346,25 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 			if (c->signature_check.primary_key_fingerprint)
+ 				strbuf_addstr(sb, c->signature_check.primary_key_fingerprint);
+ 			break;
++		case 'T':
++			switch (c->signature_check.trust_level) {
++			case TRUST_UNDEFINED:
++				strbuf_addstr(sb, "undefined");
++				break;
++			case TRUST_NEVER:
++				strbuf_addstr(sb, "never");
++				break;
++			case TRUST_MARGINAL:
++				strbuf_addstr(sb, "marginal");
++				break;
++			case TRUST_FULLY:
++				strbuf_addstr(sb, "fully");
++				break;
++			case TRUST_ULTIMATE:
++				strbuf_addstr(sb, "ultimate");
++				break;
++			}
++			break;
+ 		default:
+ 			return 0;
+ 		}
+diff --git a/t/t5573-pull-verify-signatures.sh b/t/t5573-pull-verify-signatures.sh
+index 3e9876e197..a53dd8550d 100755
+--- a/t/t5573-pull-verify-signatures.sh
++++ b/t/t5573-pull-verify-signatures.sh
+@@ -60,6 +60,27 @@ test_expect_success GPG 'pull commit with untrusted signature with --verify-sign
+ 	test_i18ngrep "has an untrusted GPG signature" pullerror
+ '
+ 
++test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures and minTrustLevel=ultimate' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config gpg.minTrustLevel ultimate &&
++	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures and minTrustLevel=marginal' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config gpg.minTrustLevel marginal &&
++	test_must_fail git pull --ff-only --verify-signatures untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit with untrusted signature with --verify-signatures and minTrustLevel=undefined' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config gpg.minTrustLevel undefined &&
++	git pull --ff-only --verify-signatures untrusted >pulloutput &&
++	test_i18ngrep "has a good GPG signature" pulloutput
++'
++
+ test_expect_success GPG 'pull signed commit with --verify-signatures' '
+ 	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git pull --verify-signatures signed >pulloutput &&
+@@ -79,10 +100,53 @@ test_expect_success GPG 'pull commit with bad signature with --no-verify-signatu
+ '
+ 
+ test_expect_success GPG 'pull unsigned commit into unborn branch' '
++	test_when_finished "rm -rf empty-repo" &&
+ 	git init empty-repo &&
+ 	test_must_fail \
+ 		git -C empty-repo pull --verify-signatures ..  2>pullerror &&
+ 	test_i18ngrep "does not have a GPG signature" pullerror
+ '
+ 
++test_expect_success GPG 'pull commit into unborn branch with bad signature and --verify-signatures' '
++	test_when_finished "rm -rf empty-repo" &&
++	git init empty-repo &&
++	test_must_fail \
++		git -C empty-repo pull --ff-only --verify-signatures ../bad 2>pullerror &&
++	test_i18ngrep "has a bad GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures' '
++	test_when_finished "rm -rf empty-repo" &&
++	git init empty-repo &&
++	test_must_fail \
++		git -C empty-repo pull --ff-only --verify-signatures ../untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=ultimate' '
++	test_when_finished "rm -rf empty-repo" &&
++	git init empty-repo &&
++	test_config_global gpg.minTrustLevel ultimate &&
++	test_must_fail \
++		git -C empty-repo pull --ff-only --verify-signatures ../untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=marginal' '
++	test_when_finished "rm -rf empty-repo" &&
++	git init empty-repo &&
++	test_config_global gpg.minTrustLevel marginal &&
++	test_must_fail \
++		git -C empty-repo pull --ff-only --verify-signatures ../untrusted 2>pullerror &&
++	test_i18ngrep "has an untrusted GPG signature" pullerror
++'
++
++test_expect_success GPG 'pull commit into unborn branch with untrusted signature and --verify-signatures and minTrustLevel=undefined' '
++	test_when_finished "rm -rf empty-repo" &&
++	git init empty-repo &&
++	test_config_global gpg.minTrustLevel undefined &&
++	git -C empty-repo pull --ff-only --verify-signatures ../untrusted >pulloutput &&
++	test_i18ngrep "has a good GPG signature" pulloutput
++'
++
+ test_done
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 8f077bea60..5c5bc32ccb 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -86,6 +86,30 @@ test_expect_success GPGSM 'verify and show signatures x509' '
+ 	echo ninth-signed-x509 OK
+ '
+ 
++test_expect_success GPGSM 'verify and show signatures x509 with low minTrustLevel' '
++	test_config gpg.minTrustLevel undefined &&
++	git verify-tag ninth-signed-x509 2>actual &&
++	grep "Good signature from" actual &&
++	! grep "BAD signature from" actual &&
++	echo ninth-signed-x509 OK
++'
++
++test_expect_success GPGSM 'verify and show signatures x509 with matching minTrustLevel' '
++	test_config gpg.minTrustLevel fully &&
++	git verify-tag ninth-signed-x509 2>actual &&
++	grep "Good signature from" actual &&
++	! grep "BAD signature from" actual &&
++	echo ninth-signed-x509 OK
++'
++
++test_expect_success GPGSM 'verify and show signatures x509 with high minTrustLevel' '
++	test_config gpg.minTrustLevel ultimate &&
++	test_must_fail git verify-tag ninth-signed-x509 2>actual &&
++	grep "Good signature from" actual &&
++	! grep "BAD signature from" actual &&
++	echo ninth-signed-x509 OK
++'
++
+ test_expect_success GPG 'detect fudged signature' '
+ 	git cat-file tag seventh-signed >raw &&
+ 	sed -e "/^tag / s/seventh/7th forged/" raw >forged1 &&
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 682b23a068..0c06d22a00 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -109,6 +109,21 @@ test_expect_success GPG 'verify-commit exits success on untrusted signature' '
+ 	grep "not certified" actual
+ '
+ 
++test_expect_success GPG 'verify-commit exits success with matching minTrustLevel' '
++	test_config gpg.minTrustLevel ultimate &&
++	git verify-commit sixth-signed
++'
++
++test_expect_success GPG 'verify-commit exits success with low minTrustLevel' '
++	test_config gpg.minTrustLevel fully &&
++	git verify-commit sixth-signed
++'
++
++test_expect_success GPG 'verify-commit exits failure with high minTrustLevel' '
++	test_config gpg.minTrustLevel ultimate &&
++	test_must_fail git verify-commit eighth-signed-alt
++'
++
+ test_expect_success GPG 'verify signatures with --raw' '
+ 	(
+ 		for commit in initial second merge fourth-signed fifth-signed sixth-signed seventh-signed
+@@ -219,6 +234,30 @@ test_expect_success GPG 'show untrusted signature with custom format' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'show untrusted signature with undefined trust level' '
++	cat >expect <<-\EOF &&
++	undefined
++	65A0EEA02E30CAD7
++	Eris Discordia <discord@example.net>
++	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
++	D4BE22311AD3131E5EDA29A461092E85B7227189
++	EOF
++	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with ultimate trust level' '
++	cat >expect <<-\EOF &&
++	ultimate
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	EOF
++	git log -1 --format="%GT%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success GPG 'show unknown signature with custom format' '
+ 	cat >expect <<-\EOF &&
+ 	E
+diff --git a/t/t7612-merge-verify-signatures.sh b/t/t7612-merge-verify-signatures.sh
+index d99218a725..a426f3a89a 100755
+--- a/t/t7612-merge-verify-signatures.sh
++++ b/t/t7612-merge-verify-signatures.sh
+@@ -66,6 +66,20 @@ test_expect_success GPG 'merge commit with untrusted signature with verification
+ 	test_i18ngrep "has an untrusted GPG signature" mergeerror
+ '
+ 
++test_expect_success GPG 'merge commit with untrusted signature with verification and high minTrustLevel' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config gpg.minTrustLevel marginal &&
++	test_must_fail git merge --ff-only --verify-signatures side-untrusted 2>mergeerror &&
++	test_i18ngrep "has an untrusted GPG signature" mergeerror
++'
++
++test_expect_success GPG 'merge commit with untrusted signature with verification and low minTrustLevel' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config gpg.minTrustLevel undefined &&
++	git merge --ff-only --verify-signatures side-untrusted >mergeoutput &&
++	test_i18ngrep "has a good GPG signature" mergeoutput
++'
++
+ test_expect_success GPG 'merge commit with untrusted signature with merge.verifySignatures=true' '
+ 	test_when_finished "git reset --hard && git checkout initial" &&
+ 	test_config merge.verifySignatures true &&
+@@ -73,6 +87,14 @@ test_expect_success GPG 'merge commit with untrusted signature with merge.verify
+ 	test_i18ngrep "has an untrusted GPG signature" mergeerror
+ '
+ 
++test_expect_success GPG 'merge commit with untrusted signature with merge.verifySignatures=true and minTrustLevel' '
++	test_when_finished "git reset --hard && git checkout initial" &&
++	test_config merge.verifySignatures true &&
++	test_config gpg.minTrustLevel marginal &&
++	test_must_fail git merge --ff-only side-untrusted 2>mergeerror &&
++	test_i18ngrep "has an untrusted GPG signature" mergeerror
++'
++
+ test_expect_success GPG 'merge signed commit with verification' '
+ 	test_when_finished "git reset --hard && git checkout initial" &&
+ 	git merge --verbose --ff-only --verify-signatures side-signed >mergeoutput &&
+-- 
 2.24.1.591.g64816733a6
+
