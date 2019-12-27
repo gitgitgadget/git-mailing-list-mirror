@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D0C8C2D0CE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A59C3C2D0DB
 	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C768D20882
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 702B520CC7
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ENhz6GR7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlnD54+i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbfL0Nr5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 08:47:57 -0500
-Received: from mail-qk1-f181.google.com ([209.85.222.181]:40295 "EHLO
-        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbfL0Nry (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:47:54 -0500
-Received: by mail-qk1-f181.google.com with SMTP id c17so21534565qkg.7
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:53 -0800 (PST)
+        id S1727040AbfL0Nru (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 08:47:50 -0500
+Received: from mail-qv1-f53.google.com ([209.85.219.53]:38752 "EHLO
+        mail-qv1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726999AbfL0Nrq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 08:47:46 -0500
+Received: by mail-qv1-f53.google.com with SMTP id t6so10071059qvs.5
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=+FDqB+Bs8aMrZrdg71JpMtq5tQJuDAeH091ij9TslJE=;
-        b=ENhz6GR7HDnzA7lhhcPA9uMLCl324oyav0rs7jfpX1jzGm4iuvEhSqhmwUEwTQqubb
-         STs7dUrtV4s1saaDFJPt+L5WYSbuv5RndswkaOt4bc27SWXYD+gJxa9tobGtqhsYbHu0
-         H4HDdADYFiJO94VAEocsxzZsgRAuWofbZsGGCiP3nJHDdrP4obte+aHSllpzV+cggvDo
-         VTWO5CJ8h9ugGSTVQXI9D47sVmJUzKp+ZiNbkuYuxAsGkEodG0XrCaFCiD0I27JNTxa2
-         Y6BKRUfyHTsiO8s4EvnK62SEfCvibEOxzIwvnjk3elKnE3v1p/BVNUBgGNqFc8XHiGrf
-         IKgQ==
+        bh=hRHf+1abQ65c730N4vO7z7hEQYAWv5vbK/6rNYgALsQ=;
+        b=hlnD54+iYhWcfcKBMTkXNDN2qSNwHR/76sYROoOYQJ7vP9UARwU2W4m8gi4MKHJu7H
+         Q27z45TblENnqJO1lkiAv0F7EoIphosSxc5tk05n5+Qf2CHs6ALCSihu8C8gJJSDzfv3
+         ld1TaBtCsnrBCvKJyI+YR8d8mq674RnwJgoIsVciM0f+pHSrKIWaN3HPgjKNPiaAoguf
+         f8+d0TER7GURpWvxCmYUyhauvZiK6fJX09wbFxoEUFFc3ChkHk2RwwtQr0xr+KaPJcNK
+         2Nxji8ebL2P2QEAWA1lHTft81PyaZcOUzVD3809u/lQqouOwdjYnsyKT+x1PO6hSsrJ0
+         ndug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+FDqB+Bs8aMrZrdg71JpMtq5tQJuDAeH091ij9TslJE=;
-        b=gUJ3fTymDX+Rq6jtY2rMYsHCC//67O9Ini16uabZVlMHTw02inetkpea1KuCd3ORwE
-         X/B5yJ64HKpQA+x1al7U6xOVolAARmPKHPgm9CgGyfyAe3B4WvsFi3v0BkuMnTR/zeag
-         Zcv3+7FbCMm2f6MR3Q7D/sefLhvKzvI+ZBJ+pA5n5aiLmSvfb4TzWOIH7WVjiOsF6KPE
-         K2RCnRtlgjcMGIHruf1i7sFEeUZAcGVR/3W120UVV1uRc7y5NBuTSNUlIvXUsDwkxG3u
-         yzs7yZfgKSE/T57kW7sl8ZR0LSMfSMrKHzfWjXf4N6T3dqjvjQMTMdiVBajALIyJ6s6V
-         l8yQ==
-X-Gm-Message-State: APjAAAWMBXmfDNuWSIfnVqrmYFYRZMYdMfE48M5gxU/2/YLCWtQtZ/Rb
-        wgoXJTL25FEdSYkiSA9BGjv9TAW7
-X-Google-Smtp-Source: APXvYqyTl0TWHz4IyHcyCJcp4A1x5Cv53YqQNDhDEu57i2Ik5rq2d50vRCpathEitFIbcMi5Syjkdw==
-X-Received: by 2002:a37:6287:: with SMTP id w129mr42839369qkb.381.1577454472920;
-        Fri, 27 Dec 2019 05:47:52 -0800 (PST)
+        bh=hRHf+1abQ65c730N4vO7z7hEQYAWv5vbK/6rNYgALsQ=;
+        b=fjqXWBzYMgfaO70MY8G0yeb7KCIN9g8nl3OAlzhXM34ObXpyUmyvqGJmnV0K0Ealmn
+         flPLpPM2yFSTQeofz4emG5aglfz8ww7EtzJCxPa8I04Q9c+9fuz2wCZonrM1NYtr9FUC
+         PhqCFcvMqdL1+dITZbMo2dCiY8xFQXZrCmEIilsg5J5xe+WnfrQ0YBgm58DAjf8Nihoa
+         ph1oFzctUSTgabOypv0CVzkwBpXzFDO8X8IzUW3D2SoTyJtrTwronfW5ocLaD8hoI/ty
+         Yd1xQE77BaHJXR/nisXrYVNlMkX/eQ2w8BTAc8htMN/hREcGy8VRUTN/Iht/qua4qhbj
+         J/eQ==
+X-Gm-Message-State: APjAAAUhwLS9ecpKgAWyJekoapExHct3O+a8Wzmn+/i3z97GNDvziuOw
+        iZvw1quLu0v9soIDzSQ3YI3kecTl
+X-Google-Smtp-Source: APXvYqy/FBvHLWP9QrUnlYxcGGdcvz3dmSpqXADDhCzRzgK7QXqbJRJTAGRTZr6D/6VqrLgbBVlDOw==
+X-Received: by 2002:ad4:4d50:: with SMTP id m16mr39964312qvm.186.1577454464916;
+        Fri, 27 Dec 2019 05:47:44 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.49
+        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.44
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:47:52 -0800 (PST)
+        Fri, 27 Dec 2019 05:47:44 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 16/16] t4124: let sed open its own files
-Date:   Fri, 27 Dec 2019 08:47:25 -0500
-Message-Id: <54315fecfe373d8020f2172b9b43e02c0dae137d.1577454401.git.liu.denton@gmail.com>
+Subject: [PATCH 11/16] t3419: stop losing return code of git command
+Date:   Fri, 27 Dec 2019 08:47:20 -0500
+Message-Id: <a47c218392c0e91d8faf6def0bbf1197f686af3f.1577454401.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577454401.git.liu.denton@gmail.com>
 References: <cover.1577454401.git.liu.denton@gmail.com>
@@ -71,28 +71,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In one case, we were using a redirection operator to feed input into
-sed. However, since sed is capable of opening its own files, make sed
-open its own files instead of redirecting input into it.
+We had an instance of a git command in a non-assignment command
+substitution. Its return code was lost so we would not be able to detect
+if the command failed for some reason. Since we were testing to make
+sure the output of the command was empty, rewrite it in a more canonical
+way.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t4124-apply-ws-rule.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t3419-rebase-patch-id.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4124-apply-ws-rule.sh b/t/t4124-apply-ws-rule.sh
-index 21a4adc73a..2b19ef9811 100755
---- a/t/t4124-apply-ws-rule.sh
-+++ b/t/t4124-apply-ws-rule.sh
-@@ -42,7 +42,7 @@ apply_patch () {
- 		shift
- 	fi &&
- 	>target &&
--	sed -e "s|\([ab]\)/file|\1/target|" <patch |
-+	sed -e "s|\([ab]\)/file|\1/target|" patch |
- 	$should_fail git apply "$@"
- }
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index 49f548cdb9..94552669ae 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -80,7 +80,8 @@ do_tests () {
+ 		git commit -q -m "change big file again" &&
+ 		git checkout -q other^{} &&
+ 		git rebase master &&
+-		test_must_fail test -n "$(git rev-list master...HEAD~)"
++		git rev-list master...HEAD~ >revs &&
++		test_must_be_empty revs
+ 	'
  
+ 	test_expect_success $pr 'do not drop patch' '
 -- 
 2.24.1.810.g65a2f617f4
 
