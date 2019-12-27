@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAF0EC2D0C6
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4A3CC2D0DB
 	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 818AB21582
+	by mail.kernel.org (Postfix) with ESMTP id AC19F21744
 	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NcJ9XzFT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qFfZjVZq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbfL0Nrm (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727030AbfL0Nro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 08:47:44 -0500
+Received: from mail-qv1-f68.google.com ([209.85.219.68]:42193 "EHLO
+        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726999AbfL0Nrm (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 27 Dec 2019 08:47:42 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:46444 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726982AbfL0Nrl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:47:41 -0500
-Received: by mail-qk1-f195.google.com with SMTP id r14so21504489qke.13
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:40 -0800 (PST)
+Received: by mail-qv1-f68.google.com with SMTP id dc14so10054515qvb.9
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=XiHQuyipC06U7f1JdrTdwdShkKFIbWAMKbxCMzYKevE=;
-        b=NcJ9XzFTWa1y33Ogys0VTIwKyyxdeF95BW2qp5lJLRZy2G7Le8RdE4G/QPmsUZvGX4
-         vqPZIVx1RaD8/J1YO8BL/7p/xJ+B6b0+ii2Jgd9K+SdINplzBduO1E1oNoVH5NcNSn2N
-         wJm9WTG+babClKBGqfOCc9bWD+aiwvH8bCTGt1QWlXPBgTFz90wY5tXxOncHkNeFvbtv
-         jFdIthIcaMntd3FMdz2y4sXLJxf2NZsFp4aWVoDI93Cj9WsuCt/lc8wusVrh3PfbyzEJ
-         RhmO7S59nPGMbG/EubEkL3PZGwPm7oXgGzKjdmkqnM6GQzr8Dh5xFMsVvnWLt8Qe263s
-         O90A==
+        bh=d7hQBM8aYSWYDp+gYPVX5nvfL0SvXrbvxbv8P0yEBm8=;
+        b=qFfZjVZq1x1RFBQbR3DdBQc5U4tERh21SHxW5gsWEOIYimDVIp+SLBBNqhcu5cBfkZ
+         fkgkuHczrGpKZNOTpmyKTW1fBLmxFW7dobds6UoaMKnBguT17+Ez8/HOJGkvmMyTtIgz
+         ATO1qX1Tl+rmjv4WyR6PSSsO0AQpI9OQH0vRl5PzazHMNFVkQg95fvgTlQ3pTyHf0j1D
+         /TxfrOwrtp39YDAnHZ7TwI/XIqKV7tZ/9rXE++lA6TJaQlKf5XK8ueSqCwNXrPX3FIYu
+         GJXXElxIl9upi9ILVeWSDfJDTesVItXwBFhhjDESaYKCO8XhDGGZgTCzjBLcGMvbDSiJ
+         LsPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XiHQuyipC06U7f1JdrTdwdShkKFIbWAMKbxCMzYKevE=;
-        b=pFmPgzAXNeuR1qfMdOufhQYhV2Y3x9jn4dOxlWaGz5hR7QF8jL4GrO83issKRvPI4c
-         1cg5JGVrI1q6WK9Nct+thaWz5wLsA7Iy1HqPhoMLpH6VWAM6lDGWAeqaEaKo7sZImfD/
-         dtIeOHn7w9R2nKqAKPJHU7C4nE57ZYw3GClEC60OuZ8BogJA6btXLnzGear7aKNR5NDa
-         q3ZW4t+qlbJFg3hOTpjfsvKFDOFm8x6kNfj111cQ3LoQhJVx/xbmmcsMK4JLzCvc9m6S
-         FdE/jUhKMdynwXehrHcPktFH7VHhTi1/noV9qpJml/wf6jDW7xnh6fcLmIfYNs193cpF
-         z6+g==
-X-Gm-Message-State: APjAAAV3qCBfFnvCItHebYjsVWfA7Whttd1MPzi0vfBJzrdGx/vWpNGb
-        q2nV1e6dssgbl3+vWgBV2wxqyb0b
-X-Google-Smtp-Source: APXvYqxQ21WGtb2OTKAlCrPXDHFAPAVPQCvq22DTa3WJl8QPFkdO/WWRHcpSLiY9t7n6/Co7illDSw==
-X-Received: by 2002:a37:4b56:: with SMTP id y83mr43509914qka.42.1577454460030;
-        Fri, 27 Dec 2019 05:47:40 -0800 (PST)
+        bh=d7hQBM8aYSWYDp+gYPVX5nvfL0SvXrbvxbv8P0yEBm8=;
+        b=DmtmRlDdcxQbT4XIWXhBISf7XnrmHtyLWWVDEmIa1SIK+kPw9ICXZEBx2reTIfj62d
+         KrEV5AertmV0BYZYtL4rJmsrWRH1YprkZrhjz93Yn++CbZFmBR3x9URELL4/IpFEUqMI
+         1F9138byCY+yKnAxYylUrBoToQI7VlGuP1GklAjrGPY9fWuG3/xDsHFC1dMT+cbQmKiw
+         nHMAns6M9g0z8oqvJZz+HspOVxCRGN8gAlFX5sMa21oBrXhfWcw5nVrhRAR6YedLke8o
+         0WcE5296ipsnE5/+q+qryj64uIGEtTCAXtIh8xkqT20KWkcKCu698VJNKvn/qcISdwkx
+         4S0A==
+X-Gm-Message-State: APjAAAWaNPA4iRy5ylQcKA2Rh63Rt/JzVuplqVMPNLUyiJRAnbJRAOpq
+        94VbRsXg0S6ZVc3pXVbLleGNd4/1
+X-Google-Smtp-Source: APXvYqw72w67AGSR4nWPZZE/Ghy9yIwJN60Dt3u2ta0z9PuviMUorOmiqffdE4YzrdpRmy9b73KYZg==
+X-Received: by 2002:a0c:acc2:: with SMTP id n2mr39344946qvc.225.1577454461769;
+        Fri, 27 Dec 2019 05:47:41 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.39
+        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.41
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:47:39 -0800 (PST)
+        Fri, 27 Dec 2019 05:47:41 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 05/16] t2018: don't lose return code of git commands
-Date:   Fri, 27 Dec 2019 08:47:14 -0500
-Message-Id: <4fe247c09df89ebe908f366ee7c2a4ec1c209d86.1577454401.git.liu.denton@gmail.com>
+Subject: [PATCH 07/16] t3030: use test_path_is_missing()
+Date:   Fri, 27 Dec 2019 08:47:16 -0500
+Message-Id: <fd11241003c92f8709f32c66f3ca3b4e8ff8fee5.1577454401.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577454401.git.liu.denton@gmail.com>
 References: <cover.1577454401.git.liu.denton@gmail.com>
@@ -71,54 +71,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had some git commands wrapped in non-assignment command substitutions
-which would result in their return codes to be lost. Rewrite these
-instances so that their return codes are now checked.
+Previously, we would use `test_must_fail test -d` to ensure that the
+directory is removed. However, test_must_fail() should only be used for
+git commands. Use test_path_is_missing() instead to check that the
+directory has been removed.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t2018-checkout-branch.sh | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ t/t3030-merge-recursive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 43551332ed..69758041f4 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -23,7 +23,8 @@ do_checkout () {
- 	exp_ref="refs/heads/$exp_branch" &&
- 
- 	# if <sha> is not specified, use HEAD.
--	exp_sha=${2:-$(git rev-parse --verify HEAD)} &&
-+	head=$(git rev-parse --verify HEAD) &&
-+	exp_sha=${2:-$head} &&
- 
- 	# default options for git checkout: -b
- 	if [ -z "$3" ]; then
-@@ -36,8 +37,12 @@ do_checkout () {
- 
- 	if test -z "$should_fail"
- 	then
--		test $exp_ref = $(git rev-parse --symbolic-full-name HEAD) &&
--		test $exp_sha = $(git rev-parse --verify HEAD)
-+		echo "$exp_ref" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+		echo "$exp_sha" >sha.expect &&
-+		git rev-parse --verify HEAD >sha.actual &&
-+		test_cmp sha.expect sha.actual
- 	fi
- }
- 
-@@ -159,7 +164,8 @@ test_expect_success 'checkout -B to a merge base' '
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index 2170758e38..d48d211a95 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -604,7 +604,7 @@ test_expect_success 'merge removes empty directories' '
+ 	git commit -mremoved-d/e &&
+ 	git checkout master &&
+ 	git merge -s recursive rm &&
+-	test_must_fail test -d d
++	test_path_is_missing d
  '
  
- test_expect_success 'checkout -B to an existing branch from detached HEAD resets branch to HEAD' '
--	git checkout $(git rev-parse --verify HEAD) &&
-+	head=$(git rev-parse --verify HEAD) &&
-+	git checkout "$head" &&
- 
- 	do_checkout branch2 "" -B
- '
+ test_expect_success 'merge-recursive simple w/submodule' '
 -- 
 2.24.1.810.g65a2f617f4
 
