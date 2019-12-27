@@ -2,122 +2,140 @@ Return-Path: <SRS0=DNff=2R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE37CC2D0C6
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F5ACC2D0C6
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:05:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B16C820740
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:56:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 623BC20740
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:05:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="eULgfhkw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7uMLOhT"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbfL0N4k (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 08:56:40 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44269 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726279AbfL0N4k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:56:40 -0500
-Received: by mail-pl1-f196.google.com with SMTP id az3so11753441plb.11
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:56:39 -0800 (PST)
+        id S1726483AbfL0OFL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 09:05:11 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:46637 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726053AbfL0OFL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 09:05:11 -0500
+Received: by mail-qt1-f196.google.com with SMTP id g1so17718469qtr.13
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 06:05:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:in-reply-to:references:date:message-id
-         :mime-version;
-        bh=icy15Id/zba3+EXoO8JqxpullHeL9xxberavVWnCAU0=;
-        b=eULgfhkwaoG2CY/vXxXZEche26Zy4QT8BKiJL8ih+m5thyIss/usfKCcc5oDrBoaJ8
-         U9YNnxWP+HpHhdAor7lZPF07J16bYUyhpKJHqLXEQgtqEwqOAuoa4b1paCZmwqFtq9T9
-         qVLX17j8EMp9xXuM3d6155q3mwkgbYOQ7P2Sri+y7ubiBBYq0rsqTQaYexNw3D0RJzcp
-         RNWAEfOeHAnx2PeLW4I+kwUExXgM2E7kkpl3GcP1g5S0I31vp4Z+WgKFSwZ4aaag7Aup
-         zK67lwuDmPfo4ny+JkufzkgExOdYq/UJa/ZCC+61RXdlsjBZd4/8LtE/UAtHcGzo851S
-         Lhgw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ZfpOigyU5pqaHk20offcY1fWJupz19wiMxtCyPK4OWk=;
+        b=K7uMLOhTsc+dwmk33amzh87AYywyhKLMI/9gigzgACLp+oyZi3VB7juWqyOJ7bmFKt
+         k4BKjcYYJ9nzWU1C1e+9c7X5Ty6eFqr+co0a+zHx9qAZc4+3Og47IbPa6+6W4GWdPvy6
+         TMOMmF15T0jgs4DMI/QOLq/oQuubYYO+n5vZ6Lj+QHJkCL6rm5QX5zdLjNv8k/DYD77y
+         W3rvPjo4QQYZQmcktRBaBGNJ6H01z2FZ0qOe5swgrlD6KPTUzJ/t/uxwV6ELfcyHE27N
+         qE0ynAohdUs1HgUPZypWQRyc5f3oqx0AAuYB7W1Gc0XjPI/O6iEvIPwuzC+u5qtkfd3W
+         1KQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:in-reply-to:references:date
-         :message-id:mime-version;
-        bh=icy15Id/zba3+EXoO8JqxpullHeL9xxberavVWnCAU0=;
-        b=plyKnC1RbG3j2hJkH8z+lSxGtB4kI7QOgtREnVnluyMNJqe1oRJTJhunM0S0DwcBdz
-         TSPMrLNaWVbdGDLZPnM58/AbYkueON9bnY0hjPotNnc6F5ALQf+lBaKOun0AXM/Rahrj
-         RA242zSvCIXDZDEOQs2gyJLeLsOy7D4DWmWZnmaxPQhv9MaB6NcYyXOHz4E3wR64akGC
-         ++xtBcL7KmWdeKEZnpnRH0ss9ifqD0Eiadxz74TFJFoTf6WxWus0PSCJzppG+I/2l1aP
-         btJWZ72WgD+ElaK3wxl6u5q3MpyEIq6gqC9MzersFLWhHtT2ZrSJ4St7kKQG5+iGskjd
-         5n7g==
-X-Gm-Message-State: APjAAAUwfhsuIch/ARpxHH4mKW+netiiWCQLN4xIHV8/iyqk1TEQkXCg
-        3IR92XqYMb3/wO/CySQpUWINio1DECo=
-X-Google-Smtp-Source: APXvYqxBAhyna1a1vl6n0ttgzVFqWMCb20u/TA+IxEYAAA3dCB48Tc+BmqDoNnblk4KMLWjeM1/LDQ==
-X-Received: by 2002:a17:90a:77c1:: with SMTP id e1mr26495676pjs.134.1577454999516;
-        Fri, 27 Dec 2019 05:56:39 -0800 (PST)
-Received: from localhost ([27.109.113.235])
-        by smtp.gmail.com with ESMTPSA id c2sm14353026pjq.27.2019.12.27.05.56.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:56:39 -0800 (PST)
-From:   Hans Jerry Illikainen <hji@dyntopia.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] gpg-interface: add minTrustLevel as a configuration option
-In-Reply-To: <xmqqblrx5yxu.fsf@gitster-ct.c.googlers.com>
-References: <20191219000140.9056-1-hji@dyntopia.com> <20191222003123.10555-1-hji@dyntopia.com> <20191222003123.10555-2-hji@dyntopia.com> <xmqqblrx5yxu.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 27 Dec 2019 13:46:52 +0000
-Message-ID: <87r20pkhir.hji@dyntopia.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ZfpOigyU5pqaHk20offcY1fWJupz19wiMxtCyPK4OWk=;
+        b=dDAwNFkSGNh+3hpoehEPRVXYbUa3YV6W1U8gq++95ZaEqtLR8HlQGy6xR1RkRXUmfO
+         VArUl7NsszSeQdYctikrMy3sA+cB2S0qrZZuXGeNpLco219Rci29z4jku6wr2dXcb6IP
+         wqfzZtzBlqxu6aEPqJ5rfufoHvHAD9Xzlt58MjfTXE5jHdAO25UHrYR8zxTVZJl+rcin
+         xpGA3AqP4gJFwVl9bYWdB8tXgg30NE9GCivMLeAfT/Tu/IKCiwZwDfEhHUE958/2G6EZ
+         9Ub9Egdd+dAUrg1XxzqwitcPPiPXD1NdLykTB1918tiieAQeBolHmjBi1u8E85E+Y0Ql
+         ZXtw==
+X-Gm-Message-State: APjAAAUvbPubB/pU88coybbP0oFj/W9LnL4uBjB4dhv4IpYSfMqkQ3W2
+        Nwoq0hN6QloHj+V6EYbTR9I=
+X-Google-Smtp-Source: APXvYqx3ghqPiYp7eXpc54BrAsqFHnDe1Zk+k+YO11DkoJFsNC3yWmwr/e4iLdluIigUosfqnjwd8Q==
+X-Received: by 2002:ac8:2b26:: with SMTP id 35mr38082427qtu.341.1577455509978;
+        Fri, 27 Dec 2019 06:05:09 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:9d29:38a1:5885:e8b3? ([2001:4898:a800:1010:4e5f:38a1:5885:e8b3])
+        by smtp.gmail.com with ESMTPSA id p19sm10812287qte.81.2019.12.27.06.05.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Dec 2019 06:05:09 -0800 (PST)
+Subject: Re: [PATCH 1/1] sparse-checkout: list folders in cone mode
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com, newren@gmail.com,
+        jon@jonsimons.org, Derrick Stolee <dstolee@microsoft.com>
+References: <pull.500.git.1577393347.gitgitgadget@gmail.com>
+ <07be7b8dda679d79ac9b218b2a9b08e47d7762fd.1577393347.git.gitgitgadget@gmail.com>
+ <xmqqo8vukcqv.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <4ecc2696-421a-9b1b-7b2c-335091aa7b08@gmail.com>
+Date:   Fri, 27 Dec 2019 09:05:08 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <xmqqo8vukcqv.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 24 2019, Junio C Hamano wrote:
-> Hans Jerry Illikainen <hji@dyntopia.com> writes:
->
->> +				/* Do we have trust level? */
->> +				if (sigcheck_gpg_status[i].flags & GPG_STATUS_TRUST_LEVEL) {
->> +					/*
->> +					 * GPG v1 and v2 differs in how the
->> +					 * TRUST_ lines are written.  Some
->> +					 * trust lines contain no additional
->> +					 * space-separated information for v1.
->> +					 */
->> +					next = strchr(line, ' ');
->> +					if (!next)
->> +						next = strchrnul(line, '\n');
->> +					trust = xmemdupz(line, next - line);
->
-> I wonder if telling strcspn() to stop at either SP or LF is more in
-> line with the existing codebase [*1*] and/or more readable.  It
-> would make this part to:
->
-> 		size_t trust_size = strcspn(line, " \n");
-> 		trust = xmemdupz(line, trust_size);
->
-> without the need to use or update the 'next' variable, if I am not
-> mistaken?
+On 12/26/2019 4:17 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+>> Subject: Re: [PATCH 1/1] sparse-checkout: list folders in cone mode
+> s/folder/directory/ everywhere as the rest of Git.
+> 
+>> When core.sparseCheckoutCone is enabled, the 'git sparse-checkout set'
+>> command taks a list of folders as input, then creates an ordered
+> 
+> "takes"
 
-I agree; fixed in v3.
+Good catch.
 
-> By the way, while we are looking at this patch, I notice that,
-> throughout the function, the use of variable 'next' feels rather
-> misleading, at least to me.
->
-> [...]
->
-> I wonder if the code becomes less misleading if we either (1)
-> renamed 'next' to a name that hints more strongly that it is not the
-> 'next' line but the end of the current token we are interested in,
-> or (2) get rid of the pointer and instead counted size of the
-> current token we are interested in, or perhaps both?  
+>> list of sparse-checkout patterns such that those folders are
+>> recursively included and all sibling blobs along the parent folders
+> 
+> In this sentence, what does a "blob" really mean?  Do you mean a
+> filesystem entity, that is not a folder, that is immediately
+> contained in the "parent folder" (in other words, regular files
+> and symbolic links)?
 
-Yeah the name 'next' does seem a bit counter-intuitive when used in
-relation to 'line'.  Looking through the function it seems that both (1)
-and (2) would work.
+You're right, I'm using strange wording here. How about "sibling
+entries"?
 
-> This is not the fault of this patch, but I just mention it before I
-> forget.
->
-> Thanks.
+> How would this interact with a submodule by the way?
 
-Thanks for the review!
+I just checked with the Git repo by running:
 
--- 
-hji
+	git submodule init
+	git submodule update
+	git sparse-checkout init --cone
+
+The working directory then contains all blobs at root AND the
+sha1collisiondetection submodule. Interesting that the sparse-
+checkout feature ignores submodules. That seems like the best
+approach since the user can already enlist in a subset of the
+submodules.
+
+>> are also included. Listing the patterns is less user-friendly than the
+>> folders themselves.
+>>
+>> In cone mode, and as long as the patterns match the expected cone-mode
+>> pattern types, change the output of 'git sparse-checkout list' to only
+>> show the folders that created the patterns.
+>> ...
+>> +In the cone mode case, the `git sparse-checkout list` subcommand will list the
+>> +folders that define the recursive patterns. For the example sparse-checkout file
+>> +above, the output is as follows:
+>> +
+>> +--------------------------
+>> +$ git sparse-checkout list
+>> +A/B/C
+>> +--------------------------
+>> +
+> 
+> Sounds like a worthwhile usability improvement.
+ 
+Thanks,
+-Stolee
