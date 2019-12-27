@@ -8,59 +8,59 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A59C3C2D0DB
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F602C2D0CE
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:48:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 702B520CC7
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:47:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0258F20882
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 13:48:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hlnD54+i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WLxPfSOn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbfL0Nru (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 08:47:50 -0500
-Received: from mail-qv1-f53.google.com ([209.85.219.53]:38752 "EHLO
-        mail-qv1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726999AbfL0Nrq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 08:47:46 -0500
-Received: by mail-qv1-f53.google.com with SMTP id t6so10071059qvs.5
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:45 -0800 (PST)
+        id S1727101AbfL0NsA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 08:48:00 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:46706 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727092AbfL0Nrt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 08:47:49 -0500
+Received: by mail-qv1-f66.google.com with SMTP id u1so9222610qvk.13
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 05:47:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=hRHf+1abQ65c730N4vO7z7hEQYAWv5vbK/6rNYgALsQ=;
-        b=hlnD54+iYhWcfcKBMTkXNDN2qSNwHR/76sYROoOYQJ7vP9UARwU2W4m8gi4MKHJu7H
-         Q27z45TblENnqJO1lkiAv0F7EoIphosSxc5tk05n5+Qf2CHs6ALCSihu8C8gJJSDzfv3
-         ld1TaBtCsnrBCvKJyI+YR8d8mq674RnwJgoIsVciM0f+pHSrKIWaN3HPgjKNPiaAoguf
-         f8+d0TER7GURpWvxCmYUyhauvZiK6fJX09wbFxoEUFFc3ChkHk2RwwtQr0xr+KaPJcNK
-         2Nxji8ebL2P2QEAWA1lHTft81PyaZcOUzVD3809u/lQqouOwdjYnsyKT+x1PO6hSsrJ0
-         ndug==
+        bh=aWlBZHdRpXk08WEH4QPYmOi7GcWNXddjtBkRW14UKxQ=;
+        b=WLxPfSOnQKUH5qv3w6DSmzOJIoZu585SefWA0YfTTyFozqyNVJL3g1Og24+hvxrF6P
+         CiPPCdB2aE0KSfUXM7dUzlkt4BN885dowg7qLmsd3vStq+SJe6uoZlpEyLxk+tV7WkCH
+         Xk0c/GNENDuUggqQveHEg5s3FEmhwWFiCp3UoPg35MSa2erPcDt+EgEaW5Lg8IPFTSFX
+         FTmjkUjdobspSGXyh6n7b+niS9yd0idXms+X+MsvVtVrN5hIqv5WwBT8tbojfvEpTcgR
+         Gpj+oPLAV+epn8AU3SGxdorqQVvTmnUv5cjSNdiLpk3t++Mu0O7qD1jCvLY6xsnM9mIW
+         0Cug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hRHf+1abQ65c730N4vO7z7hEQYAWv5vbK/6rNYgALsQ=;
-        b=fjqXWBzYMgfaO70MY8G0yeb7KCIN9g8nl3OAlzhXM34ObXpyUmyvqGJmnV0K0Ealmn
-         flPLpPM2yFSTQeofz4emG5aglfz8ww7EtzJCxPa8I04Q9c+9fuz2wCZonrM1NYtr9FUC
-         PhqCFcvMqdL1+dITZbMo2dCiY8xFQXZrCmEIilsg5J5xe+WnfrQ0YBgm58DAjf8Nihoa
-         ph1oFzctUSTgabOypv0CVzkwBpXzFDO8X8IzUW3D2SoTyJtrTwronfW5ocLaD8hoI/ty
-         Yd1xQE77BaHJXR/nisXrYVNlMkX/eQ2w8BTAc8htMN/hREcGy8VRUTN/Iht/qua4qhbj
-         J/eQ==
-X-Gm-Message-State: APjAAAUhwLS9ecpKgAWyJekoapExHct3O+a8Wzmn+/i3z97GNDvziuOw
-        iZvw1quLu0v9soIDzSQ3YI3kecTl
-X-Google-Smtp-Source: APXvYqy/FBvHLWP9QrUnlYxcGGdcvz3dmSpqXADDhCzRzgK7QXqbJRJTAGRTZr6D/6VqrLgbBVlDOw==
-X-Received: by 2002:ad4:4d50:: with SMTP id m16mr39964312qvm.186.1577454464916;
-        Fri, 27 Dec 2019 05:47:44 -0800 (PST)
+        bh=aWlBZHdRpXk08WEH4QPYmOi7GcWNXddjtBkRW14UKxQ=;
+        b=WVh8CocP2NkRTuLtVDjCTCoI7ML+h6hmSVba06veq8f3Elx1MQhMplaiMVXPlqaKli
+         HjGwrmeyYQ1ivNfYpbZ1ZhJ5XH6K9VHB75MM1hjefbwopfCARK+53NyaPTlnEXBoOC3o
+         si6mWpp8o2pyXYzSHWRAimyI3uLeupqzW7/rrxw+qvYAh+Ai71Equ2xeqb9zIPVbqVuU
+         q2qsklCAgw0Z09c2PSCl7RFsx+grJKMBCvoaI41SSBhF01NYgevge+Our8UFTkLnKbo/
+         QIOr1IB+FxCHOy36rrTORCvKMCAQPXQ/8O/LVN9L+Uafx55Z362YrGN1Thwg/8HHPjfZ
+         MxfQ==
+X-Gm-Message-State: APjAAAXsI64A2Hf8Wa9CgOdF9ROL9q3F/5YkA1n5agJXA6hfBcYmEgBc
+        00xWGKhthbXwGwKeLi0i9V5eLvhj
+X-Google-Smtp-Source: APXvYqzuv+v9902ypCBK4xN1hR50EKiUh+K0P2U2AcEXIi+qpx4LQH6NF0iwP0kTzUA3zALp3VaJcw==
+X-Received: by 2002:a05:6214:1923:: with SMTP id es3mr41147767qvb.49.1577454468326;
+        Fri, 27 Dec 2019 05:47:48 -0800 (PST)
 Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [174.112.65.113])
-        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.44
+        by smtp.gmail.com with ESMTPSA id d9sm10510184qth.34.2019.12.27.05.47.47
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Dec 2019 05:47:44 -0800 (PST)
+        Fri, 27 Dec 2019 05:47:47 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH 11/16] t3419: stop losing return code of git command
-Date:   Fri, 27 Dec 2019 08:47:20 -0500
-Message-Id: <a47c218392c0e91d8faf6def0bbf1197f686af3f.1577454401.git.liu.denton@gmail.com>
+Subject: [PATCH 14/16] t3507: use test_path_is_missing()
+Date:   Fri, 27 Dec 2019 08:47:23 -0500
+Message-Id: <e885dd9c39e71089e73615a6dc8a60e1439a0284.1577454401.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.24.1.810.g65a2f617f4
 In-Reply-To: <cover.1577454401.git.liu.denton@gmail.com>
 References: <cover.1577454401.git.liu.denton@gmail.com>
@@ -71,31 +71,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We had an instance of a git command in a non-assignment command
-substitution. Its return code was lost so we would not be able to detect
-if the command failed for some reason. Since we were testing to make
-sure the output of the command was empty, rewrite it in a more canonical
-way.
+The test_must_fail() function should only be used for git commands since
+we should assume that external commands work sanely. Replace
+`test_must_fail test_path_exists` with `test_path_is_missing` since we
+expect these paths to not exist.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3419-rebase-patch-id.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t3507-cherry-pick-conflict.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index 49f548cdb9..94552669ae 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -80,7 +80,8 @@ do_tests () {
- 		git commit -q -m "change big file again" &&
- 		git checkout -q other^{} &&
- 		git rebase master &&
--		test_must_fail test -n "$(git rev-list master...HEAD~)"
-+		git rev-list master...HEAD~ >revs &&
-+		test_must_be_empty revs
- 	'
+diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conflict.sh
+index 2a0d119c8a..9bd482ce3b 100755
+--- a/t/t3507-cherry-pick-conflict.sh
++++ b/t/t3507-cherry-pick-conflict.sh
+@@ -168,7 +168,7 @@ test_expect_success 'successful final commit clears cherry-pick state' '
+ 	echo resolved >foo &&
+ 	test_path_is_file .git/sequencer/todo &&
+ 	git commit -a &&
+-	test_must_fail test_path_exists .git/sequencer
++	test_path_is_missing .git/sequencer
+ '
  
- 	test_expect_success $pr 'do not drop patch' '
+ test_expect_success 'reset after final pick clears cherry-pick state' '
+@@ -178,7 +178,7 @@ test_expect_success 'reset after final pick clears cherry-pick state' '
+ 	echo resolved >foo &&
+ 	test_path_is_file .git/sequencer/todo &&
+ 	git reset &&
+-	test_must_fail test_path_exists .git/sequencer
++	test_path_is_missing .git/sequencer
+ '
+ 
+ test_expect_success 'failed cherry-pick produces dirty index' '
+@@ -387,7 +387,7 @@ test_expect_success 'successful final commit clears revert state' '
+ 	echo resolved >foo &&
+ 	test_path_is_file .git/sequencer/todo &&
+ 	git commit -a &&
+-	test_must_fail test_path_exists .git/sequencer
++	test_path_is_missing .git/sequencer
+ '
+ 
+ test_expect_success 'reset after final pick clears revert state' '
+@@ -397,7 +397,7 @@ test_expect_success 'reset after final pick clears revert state' '
+ 	echo resolved >foo &&
+ 	test_path_is_file .git/sequencer/todo &&
+ 	git reset &&
+-	test_must_fail test_path_exists .git/sequencer
++	test_path_is_missing .git/sequencer
+ '
+ 
+ test_expect_success 'revert conflict, diff3 -m style' '
 -- 
 2.24.1.810.g65a2f617f4
 
