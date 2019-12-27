@@ -2,74 +2,76 @@ Return-Path: <SRS0=DNff=2R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F5ACC2D0C6
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:05:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAEA7C2D0C6
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:51:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 623BC20740
-	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:05:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A071420740
+	for <git@archiver.kernel.org>; Fri, 27 Dec 2019 14:51:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K7uMLOhT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FtbDZXWQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726483AbfL0OFL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 27 Dec 2019 09:05:11 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:46637 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726053AbfL0OFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 27 Dec 2019 09:05:11 -0500
-Received: by mail-qt1-f196.google.com with SMTP id g1so17718469qtr.13
-        for <git@vger.kernel.org>; Fri, 27 Dec 2019 06:05:10 -0800 (PST)
+        id S1726509AbfL0OvF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 27 Dec 2019 09:51:05 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:40343 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726053AbfL0OvF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 27 Dec 2019 09:51:05 -0500
+Received: by mail-qk1-f193.google.com with SMTP id c17so21654591qkg.7
+        for <git@vger.kernel.org>; Fri, 27 Dec 2019 06:51:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ZfpOigyU5pqaHk20offcY1fWJupz19wiMxtCyPK4OWk=;
-        b=K7uMLOhTsc+dwmk33amzh87AYywyhKLMI/9gigzgACLp+oyZi3VB7juWqyOJ7bmFKt
-         k4BKjcYYJ9nzWU1C1e+9c7X5Ty6eFqr+co0a+zHx9qAZc4+3Og47IbPa6+6W4GWdPvy6
-         TMOMmF15T0jgs4DMI/QOLq/oQuubYYO+n5vZ6Lj+QHJkCL6rm5QX5zdLjNv8k/DYD77y
-         W3rvPjo4QQYZQmcktRBaBGNJ6H01z2FZ0qOe5swgrlD6KPTUzJ/t/uxwV6ELfcyHE27N
-         qE0ynAohdUs1HgUPZypWQRyc5f3oqx0AAuYB7W1Gc0XjPI/O6iEvIPwuzC+u5qtkfd3W
-         1KQQ==
+        bh=EoRrHsObG7JI/amRViqPlZ2pajDPjBzpBnIIYDzGT3A=;
+        b=FtbDZXWQmChRNBf1CIxZVxbRu5Wm9dSu0UVKl/WLf1JoYVW3yzTJUvOHnIoYU/AJE9
+         lXnala0USJl8NnQtfEC8PckQl5BV84UWfIRcZm7oOyoKmbB9ZLUghrNbRIFekXbYUKCZ
+         z01uiTFG4Ojnc43Io3V46Cvepv1ZK4RB1q2mny6qRFyjK6NSXlrE1BoKgPaG4QMLcEyb
+         CcTMJp1Lp/eAU2HjDDFYT6ODDzW5lj8cEvn6Ih9lHOhEPj99gixC9Asg2Z4GchRHklH/
+         krHES6GS71wVB/aJuQ+eP0PPfUt6+Uo69p5w7zMf9a2UkG/J+6K+uxOVjoIilPmZSXKW
+         7fMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=ZfpOigyU5pqaHk20offcY1fWJupz19wiMxtCyPK4OWk=;
-        b=dDAwNFkSGNh+3hpoehEPRVXYbUa3YV6W1U8gq++95ZaEqtLR8HlQGy6xR1RkRXUmfO
-         VArUl7NsszSeQdYctikrMy3sA+cB2S0qrZZuXGeNpLco219Rci29z4jku6wr2dXcb6IP
-         wqfzZtzBlqxu6aEPqJ5rfufoHvHAD9Xzlt58MjfTXE5jHdAO25UHrYR8zxTVZJl+rcin
-         xpGA3AqP4gJFwVl9bYWdB8tXgg30NE9GCivMLeAfT/Tu/IKCiwZwDfEhHUE958/2G6EZ
-         9Ub9Egdd+dAUrg1XxzqwitcPPiPXD1NdLykTB1918tiieAQeBolHmjBi1u8E85E+Y0Ql
-         ZXtw==
-X-Gm-Message-State: APjAAAUvbPubB/pU88coybbP0oFj/W9LnL4uBjB4dhv4IpYSfMqkQ3W2
-        Nwoq0hN6QloHj+V6EYbTR9I=
-X-Google-Smtp-Source: APXvYqx3ghqPiYp7eXpc54BrAsqFHnDe1Zk+k+YO11DkoJFsNC3yWmwr/e4iLdluIigUosfqnjwd8Q==
-X-Received: by 2002:ac8:2b26:: with SMTP id 35mr38082427qtu.341.1577455509978;
-        Fri, 27 Dec 2019 06:05:09 -0800 (PST)
+        bh=EoRrHsObG7JI/amRViqPlZ2pajDPjBzpBnIIYDzGT3A=;
+        b=F8Ws2zjq6UIrTdp13DyfM7IBcvbfdN5ZgaGhbBKgbOVzxfB0DIvG3pewrKhrv2nQ6G
+         Fp8BJf0pM7wHs7QQkqKg2HxPAP7sfvdfW+qHrKPemMtKGkRJVoKoaX2agpr/oPJVl1H/
+         92y31NeOsXtO2f8nnt53LcMSj1SY/htfdern8fImScIO8+gA2C8trL0Q445EjXXQ5TIE
+         rQhN0tjAVy4LtDaa5+VkMvNghVd4ufZt58t1iLKGIAVmyPrFGlhCYnHVXYW5soL4Y6Xc
+         WBuwEC2RkFWbKsieaTEMuHmDKweZarJTd8rBlYm/tahygrvHE7Sidqb6IUfwpzmNz8U2
+         Ixsg==
+X-Gm-Message-State: APjAAAUzOeqXpplsxpo58p4/nMaWLWnBnIMwUgGOl7kgEbdw9bxSUHoe
+        w3TIC07wfvJcSZKL1UEqxXc=
+X-Google-Smtp-Source: APXvYqwYPFisN6b3RWrqL0CBzZCYuqY0wKSyfXQ7x/ByvJlFM04zh2k5H+WrMaWI4xH25V92WwY3Yg==
+X-Received: by 2002:ae9:f106:: with SMTP id k6mr45150861qkg.189.1577458264107;
+        Fri, 27 Dec 2019 06:51:04 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:9d29:38a1:5885:e8b3? ([2001:4898:a800:1010:4e5f:38a1:5885:e8b3])
-        by smtp.gmail.com with ESMTPSA id p19sm10812287qte.81.2019.12.27.06.05.09
+        by smtp.gmail.com with ESMTPSA id k22sm9837540qkg.80.2019.12.27.06.51.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Dec 2019 06:05:09 -0800 (PST)
-Subject: Re: [PATCH 1/1] sparse-checkout: list folders in cone mode
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com, newren@gmail.com,
-        jon@jonsimons.org, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.500.git.1577393347.gitgitgadget@gmail.com>
- <07be7b8dda679d79ac9b218b2a9b08e47d7762fd.1577393347.git.gitgitgadget@gmail.com>
- <xmqqo8vukcqv.fsf@gitster-ct.c.googlers.com>
+        Fri, 27 Dec 2019 06:51:03 -0800 (PST)
+Subject: Re: [PATCH 1/3] commit-graph: examine changed-path objects in pack
+ order
+To:     Jeff King <peff@peff.net>,
+        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <20191222093036.GA3449072@coredump.intra.peff.net>
+ <20191222093206.GA3460818@coredump.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4ecc2696-421a-9b1b-7b2c-335091aa7b08@gmail.com>
-Date:   Fri, 27 Dec 2019 09:05:08 -0500
+Message-ID: <8b331ef6-f431-56ef-37a9-1d6e263ea0fe@gmail.com>
+Date:   Fri, 27 Dec 2019 09:51:02 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
  Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <xmqqo8vukcqv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20191222093206.GA3460818@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -78,64 +80,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/26/2019 4:17 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 12/22/2019 4:32 AM, Jeff King wrote:
+> Looking at the diff of commit objects in pack order is much faster than
+> in sha1 order, as it gives locality to the access of tree deltas
+> (whereas sha1 order is effectively random). Unfortunately the
+> commit-graph code sorts the commits (several times, sometimes as an oid
+> and sometimes a pointer-to-commit), and we ultimately traverse in sha1
+> order.
 > 
->> From: Derrick Stolee <dstolee@microsoft.com>
-> 
->> Subject: Re: [PATCH 1/1] sparse-checkout: list folders in cone mode
-> s/folder/directory/ everywhere as the rest of Git.
-> 
->> When core.sparseCheckoutCone is enabled, the 'git sparse-checkout set'
->> command taks a list of folders as input, then creates an ordered
-> 
-> "takes"
+> Instead, let's remember the position at which we see each commit, and
+> traverse in that order when looking at bloom filters. This drops my time
+> for "git commit-graph write --changed-paths" in linux.git from ~4
+> minutes to ~1.5 minutes.
 
-Good catch.
+I'm doing my own perf tests on these patches, and my copy of linux.git
+has four packs of varying sizes (corresponding with my rare fetches and
+lack of repacks). My time goes from 3m50s to 3m00s. I was confused at
+first, but then realized that I used the "--reachable" flag. In that
+case, we never run set_commit_pos(), so all positions are equal and the
+sort is not helpful.
 
->> list of sparse-checkout patterns such that those folders are
->> recursively included and all sibling blobs along the parent folders
-> 
-> In this sentence, what does a "blob" really mean?  Do you mean a
-> filesystem entity, that is not a folder, that is immediately
-> contained in the "parent folder" (in other words, regular files
-> and symbolic links)?
+I thought that inserting some set_commit_pos() calls into close_reachable()
+and add_missing_parents() would give some amount of time-order to the
+commits as we compute the filters. However, the time did not change at
+all.
 
-You're right, I'm using strange wording here. How about "sibling
-entries"?
+I've included the patch below for reference, anyway.
 
-> How would this interact with a submodule by the way?
-
-I just checked with the Git repo by running:
-
-	git submodule init
-	git submodule update
-	git sparse-checkout init --cone
-
-The working directory then contains all blobs at root AND the
-sha1collisiondetection submodule. Interesting that the sparse-
-checkout feature ignores submodules. That seems like the best
-approach since the user can already enlist in a subset of the
-submodules.
-
->> are also included. Listing the patterns is less user-friendly than the
->> folders themselves.
->>
->> In cone mode, and as long as the patterns match the expected cone-mode
->> pattern types, change the output of 'git sparse-checkout list' to only
->> show the folders that created the patterns.
->> ...
->> +In the cone mode case, the `git sparse-checkout list` subcommand will list the
->> +folders that define the recursive patterns. For the example sparse-checkout file
->> +above, the output is as follows:
->> +
->> +--------------------------
->> +$ git sparse-checkout list
->> +A/B/C
->> +--------------------------
->> +
-> 
-> Sounds like a worthwhile usability improvement.
- 
 Thanks,
 -Stolee
+
+-->8--
+
+From e7c63d8db09be81ce213ba7f112bb3d2f537bf4a Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Fri, 27 Dec 2019 09:47:49 -0500
+Subject: [PATCH] commit-graph: set commit positions for --reachable
+
+When running 'git commit-graph write --changed-paths', we sort the
+commits by pack-order to save time when computing the changed-paths
+bloom filters. This does not help when finding the commits via the
+--reachable flag.
+
+Add calls to set_commit_pos() when walking the reachable commits,
+which provides an ordering similar to a topological ordering.
+
+Unfortunately, the performance did not improve with this change.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-graph.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index bf6c663772..a6c4ab401e 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1126,6 +1126,8 @@ static void add_missing_parents(struct write_commit_graph_context *ctx, struct c
+ 			oidcpy(&ctx->oids.list[ctx->oids.nr], &(parent->item->object.oid));
+ 			ctx->oids.nr++;
+ 			parent->item->object.flags |= REACHABLE;
++
++			set_commit_pos(ctx->r, &parent->item->object.oid);
+ 		}
+ 	}
+ }
+@@ -1142,8 +1144,10 @@ static void close_reachable(struct write_commit_graph_context *ctx)
+ 	for (i = 0; i < ctx->oids.nr; i++) {
+ 		display_progress(ctx->progress, i + 1);
+ 		commit = lookup_commit(ctx->r, &ctx->oids.list[i]);
+-		if (commit)
++		if (commit) {
+ 			commit->object.flags |= REACHABLE;
++			set_commit_pos(ctx->r, &commit->object.oid);
++		}
+ 	}
+ 	stop_progress(&ctx->progress);
+ 
+-- 
+2.25.0.rc0
+
