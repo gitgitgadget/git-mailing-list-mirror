@@ -2,136 +2,108 @@ Return-Path: <SRS0=w8S9=2S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28D01C2D0C6
-	for <git@archiver.kernel.org>; Sat, 28 Dec 2019 08:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEB2BC2D0C6
+	for <git@archiver.kernel.org>; Sat, 28 Dec 2019 12:54:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D4F9B20838
-	for <git@archiver.kernel.org>; Sat, 28 Dec 2019 08:34:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7376F20409
+	for <git@archiver.kernel.org>; Sat, 28 Dec 2019 12:54:39 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bDUC+neR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726371AbfL1IeR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 28 Dec 2019 03:34:17 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36828 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725999AbfL1IeQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 28 Dec 2019 03:34:16 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z3so28139174wru.3
-        for <git@vger.kernel.org>; Sat, 28 Dec 2019 00:34:15 -0800 (PST)
+        id S1726366AbfL1Myi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 28 Dec 2019 07:54:38 -0500
+Received: from mail-pj1-f44.google.com ([209.85.216.44]:39629 "EHLO
+        mail-pj1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726187AbfL1Myh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 28 Dec 2019 07:54:37 -0500
+Received: by mail-pj1-f44.google.com with SMTP id t101so6127321pjb.4
+        for <git@vger.kernel.org>; Sat, 28 Dec 2019 04:54:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vrXLsqWV7FheknKcwPAf05hj/QZB/ZPs+S/bMLjoyok=;
+        b=bDUC+neRrAFuad/DdESRvNKevt+JZiju4coZwvK9JSky6wJz/SCgxjExnPZeb0NpOr
+         aIr0dkM1OcbDSv7B6AfOFiEJWrU9lCspa9NvnXHV1F347k7FKhqEHtt22F9cZwhVXb2e
+         PM4PaXPEK1xfdV815G3G2Ffoxr7mAdpSMSFksUNZ7tTqFSumzySXuVXaMA7/Z6JtXBDP
+         oS4a9OAJhmiDYA/Uw8hDPwjTAdrUJdgJxUd5xFrZ0B9GjuZilK/mdod0P1oAwdrqc8MU
+         9CIfwgCe7obbxFOrFSUaNulvtiu/w5JB8vZNqBLq3W9WY9nPvzF8cpr4kMMF1AVjQsgN
+         9qGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yljHEb7lI+sKO+FTPYTCz9x5oz26vaejXAQdXchzNgY=;
-        b=QMDo15KB2HWK/vHTM0KkVE5zp3WLSMOt4fnd7pfVeXZpFU2a3BCJkB7O+iL9L5vcoZ
-         up79F8T8527Rm9V8dLDuQ022DikaP8ZXGWgP8CAjv2G5prYa5gsJVQOP/8nRyNX6SlBJ
-         IljDIq3PdZdZM0Aauxmxr+KXyp8iG5Vm3FYbeTBvept9WHjzArDr85HZZAgY9XxgSPF5
-         ju5b8xhW9pepqTAKT7cNlFEXHMWGiRSYA30oVJBZGCPdt3QLdajbWN9dF3AkzC3ZNJlt
-         wNKQnC+kmNlZolBf7W1vxlZQperv2epP8ggCBgRElcRCCxlJWbgiHjS1Wcd9HGeQVZuP
-         k1UA==
-X-Gm-Message-State: APjAAAWtydMMdeGl3uIHn9IKtC9HEWafwurOgOk3VKFDL3YVrvmS7AAX
-        FQ3Q32+HEzbjWw94X4vjwlNz2M9VGTp+tAESdn4=
-X-Google-Smtp-Source: APXvYqxDJCZFXv159cJJVcMx2K/3Yn0/5f16K5hOh6X2t3Sz8Mejc+5u4j08HF35pBI8n0SjVqIfvMV3pR7CQohrkeY=
-X-Received: by 2002:adf:db84:: with SMTP id u4mr55950637wri.317.1577522054412;
- Sat, 28 Dec 2019 00:34:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vrXLsqWV7FheknKcwPAf05hj/QZB/ZPs+S/bMLjoyok=;
+        b=jUmDdpqMx93afFYjnBClkzQl6QXsoHhll+UYu+47TL7TT33frFX9qf6fS5zBrxwJuh
+         gV9I0heP7USI+8zK81az63uVJuyZg2N79OLnsSPS1AJFSD9O3PX15MvFeecZ5Kv29JT3
+         yPrHRIE9TL3BTjK7jyyO2fVupxddHJd8RyhrIkghQanoY6gAOtknOcSbNwgcCIv4hc4/
+         vipKxTDyVMqoMYlA/VsFws07u3y1mDptMcbNp2nlBGtJfnATurPaz4sTGHxLyCacKmUq
+         HUeu0V1zPzLg2rbn7uCFvIAkkmnmzmIoJ5DPnVhMcl+jhw+gMijNVYAlBMcbKTADK4WN
+         jaWw==
+X-Gm-Message-State: APjAAAXgzZwkS/z+TcD/AkcuN9H8SKKffo90/Vau4n8GNdcUrSoxCbHd
+        YCMC+Cm9IdOCl9FT4+THUxhYqQ2j
+X-Google-Smtp-Source: APXvYqwKbpLokUfvUNMqjjBbvs5MoXPVT5mJgPvoUgnOKThKVUSMexJAXC4T3vdAxIiAtH5X/d0kOw==
+X-Received: by 2002:a17:90b:344f:: with SMTP id lj15mr33832178pjb.0.1577537676911;
+        Sat, 28 Dec 2019 04:54:36 -0800 (PST)
+Received: from localhost ([2402:800:6374:a714:860b:62b8:d6c5:f06c])
+        by smtp.gmail.com with ESMTPSA id m71sm17499042pje.0.2019.12.28.04.54.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Dec 2019 04:54:36 -0800 (PST)
+Date:   Sat, 28 Dec 2019 19:54:33 +0700
+From:   Danh Doan <congdanhqx@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.25.0-rc0
+Message-ID: <20191228125433.GC24268@danh.dev>
+References: <xmqqblrwm65l.fsf@gitster-ct.c.googlers.com>
+ <20191226143527.GA24268@danh.dev>
+ <xmqq4kxnm0w6.fsf@gitster-ct.c.googlers.com>
+ <20191227113858.GB24268@danh.dev>
+ <xmqq36d5jtck.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <cover.1577454401.git.liu.denton@gmail.com> <4eab751a3cf00bbffaf4b1084928dad264fa1572.1577454401.git.liu.denton@gmail.com>
-In-Reply-To: <4eab751a3cf00bbffaf4b1084928dad264fa1572.1577454401.git.liu.denton@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 28 Dec 2019 03:34:03 -0500
-Message-ID: <CAPig+cT242CjL9S0OcS1Pbsgf-u1N=SQzNfLdao03LU2OGEciQ@mail.gmail.com>
-Subject: Re: [PATCH 04/16] t2018: teach do_checkout() to accept `!` arg
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36d5jtck.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 27, 2019 at 8:47 AM Denton Liu <liu.denton@gmail.com> wrote:
-> Before, we were running `test_must_fail do_checkout`. However,
-> `test_must_fail` should only be used on git commands. Teach
-> do_checkout() to accept `!` as a potential first argument which will
-> prepend `test_must_fail` to the enclosed git command and skips the
-> remainder of the function.
+On 2019-12-27 14:28:59-0800, Junio C Hamano <gitster@pobox.com> wrote:
+> Danh Doan <congdanhqx@gmail.com> writes:
+> > Some of my projects requires ASCII-only user.name,
+> > instead of doing the right thing
+> >
+> > 	git config user.name <simplified-name>
+> >
+> > I decided to set it globally instead.
+> > I rarely need to type in my native language,
+> > hence I don't have the IME software start with Xorg.
+> 
+> Hmph, but back in v2.20 days, you did have IME?
 
-There's a grammatical problem here. s/skips/skip/ is one way to fix it.
+Back in the days, I had my IME started on logging in,
+then to save some tiny time on starting up,
+I turned it off.
+> 
+> In any case, if I were in such a situation to need my name spelled
+> differently depending on the project I work on, I would probably use
+> 
+> 	$ git config --global user.name <simplified-name>
+> 	$ cd <repository of git>
+> 	$ git config user.name <name-with-accents>
+> 
+> or the other way around (depends on which projects your focus is on).
 
-Use imperative mood when writing commit messages. Drop words such as
-"before" and "were". For instance:
+Yes, that's the the right way to do, but I didn't pick that way.
+I'm going through my ~/src and fixing it.
 
-    Stop using test_must_fail() with non-Git commands because...
+Thanks,
 
-(Same comment applies to pretty much all commit messages in this series.)
-
-> This increases the granularity of the test as, instead of blindly
-> checking that do_checkout() failed, we check that only the specific
-> expected invocation of git fails.
-
-This may be a case of trying to describe in prose too much of what is
-better described by the code itself. As a reviewer, I spent more time
-trying to figure out what this was saying that I did merely looking at
-the code and comprehending why the two checks following the
-git-checkout invocation should be skipped. Consequently, I lean toward
-dropping "...and skips the remainder..." through the end of the commit
-message.
-
-More below...
-
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-> @@ -13,6 +13,12 @@ test_description='checkout'
->  #
->  # If <checkout options> is not specified, "git checkout" is run with -b.
->  do_checkout () {
-> +       should_fail= &&
-> +       if test "x$1" = "x!"
-> +       then
-> +               should_fail=test_must_fail &&
-> +               shift
-> +       fi &&
-
-You forgot to update the function comment to talk about the new
-optional "!" argument.
-
-> @@ -26,10 +32,13 @@ do_checkout () {
-> -       git checkout $opts $exp_branch $exp_sha &&
-> +       $should_fail git checkout $opts $exp_branch $exp_sha &&
-
-If I read this literally, it says that the git checkout should always
-fail. A more wisely chosen variable name would help to alleviate this
-problem.
-
-When you start parameterizing the actual invocation of a command like
-this (I'm not talking about the command arguments which are also
-parameterized), the abstraction level and cognitive load increase...
-
-> -       test $exp_ref = $(git rev-parse --symbolic-full-name HEAD) &&
-> -       test $exp_sha = $(git rev-parse --verify HEAD)
-> +       if test -z "$should_fail"
-> +       then
-> +               test $exp_ref = $(git rev-parse --symbolic-full-name HEAD) &&
-> +               test $exp_sha = $(git rev-parse --verify HEAD)
-> +       fi
->  }
-
-You could reduce the cognitive load by making the code easier to
-understand at-a-glance (though at the cost of a minor bit of
-duplication) by structuring it instead like this:
-
-    if test -n "$should_fail"
-    then
-        test_must_fail git checkout $opts $exp_branch $exp_sha
-    else
-        git checkout $opts $exp_branch $exp_sha &&
-        test $exp_ref = $(git rev-parse --symbolic-full-name HEAD) &&
-        test $exp_sha = $(git rev-parse --verify HEAD)
-    fi
-
-where 'should_fail' is either empty or non-empty depending upon
-whether "!" was supplied as an argument. (And, when coded this way,
-"should_fail" is a reasonable variable name.)
+-- 
+Danh
