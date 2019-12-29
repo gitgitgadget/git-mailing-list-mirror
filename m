@@ -6,81 +6,74 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C2B5C2D0D1
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 23:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04BD8C2D0C0
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 23:19:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 24573207FF
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 23:15:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B25A920748
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 23:19:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OqbLi/aP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hofrp91T"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726607AbfL2XOv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Dec 2019 18:14:51 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62413 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbfL2XOu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Dec 2019 18:14:50 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DBE349758D;
-        Sun, 29 Dec 2019 18:14:48 -0500 (EST)
+        id S1726628AbfL2XR5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Dec 2019 18:17:57 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60079 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfL2XR4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Dec 2019 18:17:56 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7A3B5B6101;
+        Sun, 29 Dec 2019 18:17:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=OIzoo0s2omcP
-        /SDRuUDjW7UbhY4=; b=OqbLi/aPXAF1NbGCIYN41ukYXCTdzCnsH+EL0MqUvxd0
-        DCuH3JoIdY2QuaCqlavJC0kGOvQJvbUVIG8nIMFcHMm4hP9erXRJF6vz+UIsxK3C
-        aKtvOAs7BpopfFXlahOi0KnOZC0LkL9BMlM+7Zz2rDP2ziost7w8N/mXZYj2iUk=
+        :content-type; s=sasl; bh=rCE9mMvHMKRHCIlKIAC1HNxYxPg=; b=hofrp9
+        1TsusMat9cHmAWVvUSV4E2/9JJpOF/FCuyUHlwhwVg+IYAG9qFt1Lx5VBoPVjPgg
+        vFv0BecdvtjlKGrhF+hRD53A1EgR+TCuXH/qWcqEjbqcowSeNFxax/kued6ES0NL
+        0fgkU8d00KNIKI7DrNRaXEBmkEF2eYdX2nHSE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=WKn7eR
-        FW/Z/6pKjWJZiX9Wqt8BsM3qoKfxfVpB3nOqq+kV2N1k11ZNBo8Dwio5FF53DnYK
-        GH4QsfUQhY2dFxCkFxHMeMrpT0/UWyOETP04OuGQXH5QSSO4Qg+VOMsRMX8dN2MU
-        CuG9Zld3RYoWxLYriT5/0yVkGLDMd7l7LUo7g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D4CE79758C;
-        Sun, 29 Dec 2019 18:14:48 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=DceEQHLUQTVQIllWalTqx3WpjKo2aSAf
+        dnA0shGcLiPW8M03rzh3rnn2Nmf6z8CIvp5qEMwKh6+xyJx8zYoLtWaXKg5I/HlK
+        ynjp/nkou8idt4MsEQP+GBKsB5liwhW3OFyjSADSwvjKDunUkS/eRyIIDZEoI6Pn
+        6Y0vVdIk+jc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 72212B6100;
+        Sun, 29 Dec 2019 18:17:56 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0CD0B9758B;
-        Sun, 29 Dec 2019 18:14:45 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9DC5EB60FF;
+        Sun, 29 Dec 2019 18:17:53 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Zoli =?utf-8?Q?Szab=C3=B3?= <zoli.szabo@gmail.com>
-Cc:     Pratyush Yadav <me@yadavpratyush.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] git-gui: add possibility to open currently selected file
-References: <pull.499.git.1577386915.gitgitgadget@gmail.com>
-        <fce80f1b95f83915076640ca0be01aa473744777.1577386915.git.gitgitgadget@gmail.com>
-        <20191227193418.36uzeizs37nv7ywb@yadavpratyush.com>
-        <xmqqy2uxiemt.fsf@gitster-ct.c.googlers.com>
-        <ee041086-3579-190d-e607-1973bcc94c23@gmail.com>
-Date:   Sun, 29 Dec 2019 15:14:43 -0800
-In-Reply-To: <ee041086-3579-190d-e607-1973bcc94c23@gmail.com> ("Zoli
- =?utf-8?Q?Szab=C3=B3=22's?=
-        message of "Sun, 29 Dec 2019 22:15:34 +0200")
-Message-ID: <xmqqh81iiv18.fsf@gitster-ct.c.googlers.com>
+To:     Arnaud Bertrand <xda@abalgo.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature request: add a metadata in the commit: the "commited in branch" information
+References: <CAEW0o+jV+r1UMZReRXa3g_fyqCYxHTVYVf6pWvjB7_isofbBaw@mail.gmail.com>
+Date:   Sun, 29 Dec 2019 15:17:51 -0800
+In-Reply-To: <CAEW0o+jV+r1UMZReRXa3g_fyqCYxHTVYVf6pWvjB7_isofbBaw@mail.gmail.com>
+        (Arnaud Bertrand's message of "Mon, 23 Dec 2019 13:56:41 +0100")
+Message-ID: <xmqqd0c6iuw0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 00D307DC-2A91-11EA-9AEB-8D86F504CC47-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 70A33BC2-2A91-11EA-80F7-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Zoli Szab=C3=B3 <zoli.szabo@gmail.com> writes:
+Arnaud Bertrand <xda@abalgo.com> writes:
 
-> On 2019.12.28 00:32, Junio C Hamano wrote:
->
->> The phrasing on the title is a bit awkward.  "add possibility to do
->> X" is better spelled "allow doing X", no?
->
-> Thank you, Junio, for the hint. Updated the commit message accordingly
-> (PATCH v2).
+> I understood that in git philosophy, once it is merged, a branch can
+> disappear. But for a lot of companies, a SCM is also a guardian of the
+> history.
 
-Also, do not start the body of the proposed log message with half
-sentence.  The title is supposed to be a full sentence.
+A lot more important point than "once it is merged" is that the
+branch identity is strictly local to your repository.  Contaminating
+the object header, which is cast in stone and cannot be modified
+after the fact, with such a piece of information will not mix well
+with the rest of Git, so ...
 
 
