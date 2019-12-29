@@ -2,94 +2,89 @@ Return-Path: <SRS0=BEVv=2T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE7C8C2D0C0
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 19:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20711C2D0C0
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 20:15:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8EBB920718
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 19:39:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E488820748
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 20:15:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Kew13X9z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NP9mRFxz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbfL2Tjo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Dec 2019 14:39:44 -0500
-Received: from mout.gmx.net ([212.227.15.15]:38701 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727117AbfL2Tjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Dec 2019 14:39:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1577648377;
-        bh=tIO0K65WbSY9kDdySio7jjRPk+GWrBtlbCD+ZLPM/KI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Kew13X9zEKSuKq9VwWv37jahNb7q9nYqXlFvG247B978sfLE3IDBYFjGn9ZM9Hs8n
-         bpFKXjMPoacNef+0WHVr7NnULn27uyXhaP7tdQi78A/H1t64YBIfXUaUkPd2+vEOf3
-         UgNfK6i88sCxWEY8WmdlXZbP7VpME0ycpK+jbBmo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MLR1V-1j3b2I284x-00ISGn; Sun, 29
- Dec 2019 20:39:37 +0100
-Date:   Sun, 29 Dec 2019 20:39:22 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Subject: Git for Windows v2.25.0-rc0, was Re: [ANNOUNCE] Git v2.25.0-rc0
-In-Reply-To: <xmqqblrwm65l.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1912292035430.46@tvgsbejvaqbjf.bet>
-References: <xmqqblrwm65l.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727326AbfL2UPf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Dec 2019 15:15:35 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33595 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727117AbfL2UPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Dec 2019 15:15:35 -0500
+Received: by mail-wr1-f68.google.com with SMTP id b6so31103184wrq.0
+        for <git@vger.kernel.org>; Sun, 29 Dec 2019 12:15:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:subject:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ojTyYq0q/9PE8Fbaq2kwnG1roTyfK5i9cg7l9wQgCqU=;
+        b=NP9mRFxzWuDMnLaCQofgyhYUkgy6a57fe5asQN6tHyiR5kw2FUmCZzDscfCL9/k0kT
+         8ZE+OgtJiFMkpMuSISYt+VLyLnIh7Trstm3PxXKx/tJJhV01JfHSIMsIJpWJATtLx6gE
+         zqMvC6WeanCSr3VtHaLqNa9l5Ra/bwNQrQdN7WZ1qCnY6eW/zHucoqhLxaYMveUuvKwK
+         ip2GWL5jBplUNHPVQL9bFXC5X8a4GlWmc+luyV1aR2JM3+1xfvgS2GytlscSNWU+jGmq
+         g5nIG9KqElCuh2vb1IZ9/sYbEOTYINpvWM6aZzPmIq4XPhznv7Kd9THf2T2bLZVfJGac
+         afLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ojTyYq0q/9PE8Fbaq2kwnG1roTyfK5i9cg7l9wQgCqU=;
+        b=kNRiUUvJkfUlBvgS8AOgXQ1LOer7q83HZrFTEBkTY6+O7lTZrowFBss3E+RJxaSuue
+         EyQHVq1YrHT946d1HSv2lEsd6ojPhnApNYO/EybSXWp9IvtcovYACvFpgAqCsNtd/LZs
+         C31047nFKKrpfoQh6sLpch1xJVPh942BvhBlzuMtg+1VqmI1Gi59piHJuEvZhpFei37b
+         OJyl8B/GdFiPRbhcyUNzWimG8CknuKMnqD/HdENbcst/GegcXuvCZ0f6W8VBH51WhbEp
+         JgaMQjh8iKIED6xfJ+e79ayNHPQVd3pgrIbZOAO1qjFY4S46pKGUIdK1gK8AG5XMBLDF
+         939g==
+X-Gm-Message-State: APjAAAXmhjwOoeXYoZlM92gbJ6m+bDC4x02HJWAGscp/A8n4u8dj1C1C
+        kV0F/VaXJvxM7vRQ/i/Npv6K91VR
+X-Google-Smtp-Source: APXvYqyXDvcaGdTxqVbBV0gxeYq0Aqc1SAv5huBH362OdzWqY0N0xsQwe6KdzFJUv9bjUjd0Wdl3/Q==
+X-Received: by 2002:adf:ea0f:: with SMTP id q15mr60848725wrm.324.1577650533423;
+        Sun, 29 Dec 2019 12:15:33 -0800 (PST)
+Received: from [192.168.0.108] ([188.173.146.22])
+        by smtp.gmail.com with ESMTPSA id t190sm18360020wmt.44.2019.12.29.12.15.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 29 Dec 2019 12:15:32 -0800 (PST)
+From:   =?UTF-8?Q?Zoli_Szab=c3=b3?= <zoli.szabo@gmail.com>
+Subject: Re: Re: [PATCH 1/1] git-gui: add possibility to open currently
+ selected file
+To:     Junio C Hamano <gitster@pobox.com>,
+        Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org
+References: <pull.499.git.1577386915.gitgitgadget@gmail.com>
+ <fce80f1b95f83915076640ca0be01aa473744777.1577386915.git.gitgitgadget@gmail.com>
+ <20191227193418.36uzeizs37nv7ywb@yadavpratyush.com>
+ <xmqqy2uxiemt.fsf@gitster-ct.c.googlers.com>
+Message-ID: <ee041086-3579-190d-e607-1973bcc94c23@gmail.com>
+Date:   Sun, 29 Dec 2019 22:15:34 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:5sGB+Nn2YlaNB6v0HGMv1kswKGuw+ploE/9gAU6WR5soCOVC8qO
- Rgk1aJijwLCdWUqxHTmRJAp2pg+l0wMoLHQnKePU60kJbM4yT9EhXj0yDpfvKjdYkT5PXyS
- jXZFZrQMQkURIq84Wf7ykgEs3aT98pg+UfpG9cRvps/535EESJgGJmdDiy7S5TXydz/v2/A
- ks80RVRSxWfBeDXDuOquQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:r6ZfmheiW7A=:9X7CFt0UTVCBiZeUoT+Dij
- HdkAyQ4Rm5FEBXP7Ix0zJaJ3nn4wz8Bbst5sozfMPjXu4pjxhXRUV8+ZLfHWkCpsbD1918V05
- lQnlnbnBtXuD8CM+CsGPmrAVzIT0a2gSqweYvOjZqIu2AlC/evgqmbqMc2FwVG8LdcEOp1gI8
- PaRU0wR+Qk2K4reJrPLSt/JlpDjniKjoNzaiKQUftnvWT5JvbvhdWIZc11hVZ1kbWbSmLDQ3j
- RIKHsIVj8Ji/vbcfkeHXM5qBKucEnI7SNQJNdkodv7FgC2P+61r+0Xg88R3dwnlTrCVWJJqD9
- ajqA9wcsqYw0wz3bDGAgNIbZProeJau1ATO5vu6oeOCLCkDxBTD21azP69xY4V5Zh/G7V5zVD
- jmRetq3yeQ5fYPzHJhT5YRJUfe72XG4rTGGGRJQQO3Q1TjC0et7lV6c5Gphub3r/JSvfhbQiT
- dtbYWWx13sCVoo3OMqgrBKfNfy9ocTVK+1xG3oO3qTCasD93yoNC39etotFxBbqmPFd4EVdWZ
- zEEbmfPB38RrUEFiRGjEN7Mp49aA6I8O8c8S1jgVJjsmllylKC9EJl9o65pLPztk6ypAaXMNH
- Qy8YRmbgsUg3EJ1t/WHi0SAMh6qi9c620lnLjpuiJsa4r3PNVXvq2N1ljuioc+5YQic5iMcMf
- rdeiNN44UNZLTtxe8NlN7eiUJOpGQh/rtwzUNC/AbZeJ5l00jRMNsXLZGAUS1vbWuNjnLIvNI
- jC3LedULrA+5mnWtVMcwF1nlupCGmWkGtXDghH0pklS6FYjNiMMncfPUBMh/oUv50nRRLD++2
- /Capzsa4rpqEPmfZdE+MxhF5QL6Tn0GPUz3XylkmZg3wp1scBQ40EtHbkzn+ovBi69l5+4nlA
- w6RIit5Skm0VV3nnU6WDMY7eMwZCOTHIVCswC+knKN06ZJeeSyFwZhdTWlj77kVf6U6fnxTL1
- jnw3HY8MlMHWOlzePgr0+Qsu+tKFGabWJVYc8qT00fz81wquBUsQTGqCILkPyho8kW0vopEu7
- z7476qqe0zRg29PTb/utsHeJksQo+s5PB4+UDhUtE9G3E+RLnR5F0kBLTbJA5m3fXEO/pXVhD
- NesJ4TZMf4lFZP3/xDjZH3DpKBrLO+mX+Ri/+04JAwjSIOS6p/H235S8TcSmxTK790Rhy9FMj
- w+gC+XPJcc9umiMkVhE8xz3EJLWhzUON1ycRiEg1tmnVScA4J6ad+51B0XNaBNaf295//gphC
- T2vVWfxlw7iWLd0KifWCvCij9hQQFrVhR2yRBvca0DAtj6hlftcrlL2UBR+s=
+In-Reply-To: <xmqqy2uxiemt.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Team,
 
-On Wed, 25 Dec 2019, Junio C Hamano wrote:
+On 2019.12.28 00:32, Junio C Hamano wrote:
 
-> An early preview release Git v2.25.0-rc0 is now available for
-> testing at the usual places.  It is comprised of 531 non-merge
-> commits since v2.24.0, contributed by 61 people, 24 of which are
-> new faces.
+> The phrasing on the title is a bit awkward.  "add possibility to do
+> X" is better spelled "allow doing X", no?
 
-The corresponding Git for Windows version can now be found at
+Thank you, Junio, for the hint. Updated the commit message accordingly 
+(PATCH v2).
 
-https://github.com/git-for-windows/git/releases/tag/v2.25.0-rc0.windows.1
-
-The improvement most users are likely to notice is that the installer will
-skip over most of the installer "wizard" pages when upgrading: if you saw
-all of the options on the page before, it won't be shown unless you
-unchecked the box on the bottom.
-
-Ciao,
-Johannes
