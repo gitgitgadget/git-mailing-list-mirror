@@ -2,111 +2,144 @@ Return-Path: <SRS0=BEVv=2T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86BD9C2D0CE
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 15:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E414C2D0CE
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 16:05:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5ED4320748
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 15:49:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C4D682071E
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 16:05:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZPtSCtQA"
+	dkim=pass (2048-bit key) header.d=kaarsemaker-net.20150623.gappssmtp.com header.i=@kaarsemaker-net.20150623.gappssmtp.com header.b="t+Ibt8H5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726621AbfL2Ptz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Dec 2019 10:49:55 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:32793 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726410AbfL2Ptz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Dec 2019 10:49:55 -0500
-Received: by mail-ed1-f66.google.com with SMTP id r21so30177464edq.0
-        for <git@vger.kernel.org>; Sun, 29 Dec 2019 07:49:53 -0800 (PST)
+        id S1726602AbfL2QCC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Dec 2019 11:02:02 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:38119 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726455AbfL2QCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Dec 2019 11:02:02 -0500
+Received: by mail-wm1-f53.google.com with SMTP id u2so12381440wmc.3
+        for <git@vger.kernel.org>; Sun, 29 Dec 2019 08:02:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VBZWsDn4xn7LEsmnM9xarC6jwQZRkfZuuYa6ILSiOc0=;
-        b=ZPtSCtQAmIs2EGQyZB7xXgjDFNtYklQyjo44JdESJwXQHGldY0WmhGC8W/Tpaq0qTR
-         ulw/jSDUiLKix6uJOyrdBbHJM56PcxGtM6lGyIEZtE/FmcNKhSjSC/+GQBO0mD+0U3cI
-         uYNDs+Dbz4MdPrR/FbA9niI8TT4QQo/RYnb0IDlXEWSNNPQrCJ9sudjrPpIROQ+U0k4I
-         R5TRWeXdWuGzw9hdx07uPykkS4F7dq+aenvlH5l4MKHORxw7MY+PPdeGZR+AfuxOx+WN
-         Eja21x5Mggvwn1uU6qA4mFo1CzUkX7WB45qY6DASl+xgDhUFCBPvtOfTsodgHQ1eopKb
-         3r7Q==
+        d=kaarsemaker-net.20150623.gappssmtp.com; s=20150623;
+        h=message-id:subject:from:to:date:in-reply-to:references:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=rcpE+EJidz+zdDnuI/lBwoxfhO9NhMPjSo0Z8+r0TWw=;
+        b=t+Ibt8H5Vt1EDk5mC6h9gRvbnd8iVpEt9+BQ33ROyq3HKuF0fZeh2b1sKSpdLgpasE
+         Hae/jXlaVAKdStIb8nSlaj5QUhqORk0tHcFsF1GzNE+LpEtIcQQnk1M062SDfWHco7uz
+         OrwhoTAsWgOApuFLgESwzlTOUQSYVE4aG+l9l+MnuDD/Y2rl3LMQ/YiVysZH4pAEQEQN
+         2odi2m0aA1P9UN+SigcUI++EqgCezN0KchXBmsZIWztLs3PkZCJ7tBnrw506b6nT7mGW
+         0oq7KZqPTt0rhmyDtkD66SK1UBY/cl5zXg2K19ELyVgICcFyWxv1Eu6T+8j3RduMxtaT
+         D1dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=VBZWsDn4xn7LEsmnM9xarC6jwQZRkfZuuYa6ILSiOc0=;
-        b=oBD8AHxh3fagmTKPSFANS58Rpo0TmxnXwtzL/AgRl0CHaQ45gwNp3D+m4xu84w49/c
-         jnwlPoQ0T4V5BA8hBeXH1xhTiOlfjykRoSUR/3lyg4Y1Zh/efkG0kca6bhImP+XxRVsD
-         /IeQ1sciIub/Chm9kgRDfFMGLKtj9flWDwVYEPVWv0f5wnMAjCdYvf4o4SWXBp9rSrcq
-         2Pyd/4+xpGvBMJsg+ni2hN4mOdOftjAipVe7ZEB8nLeMMTI8nN/s4XS9RjiJ5NjO0f8g
-         LfE1GZojC4RYEFV1YAn2bpv1mg3PYUH+mDi8fC6jPvYfuFkL3sauQmHve7wkFTnpuVKe
-         5FIA==
-X-Gm-Message-State: APjAAAWGV3ssSgooNsXepXtgy9Mhv5YqrWrCErZIYODOqujWOMA5+UU6
-        OB9iKLLofqZSCFxiVTJXNC5uzy5d
-X-Google-Smtp-Source: APXvYqwNemGuyu6N8gebbnxa0geUzUkNRgb8ZRdDZwnMncNn7YSE8SyRxj0DuOQ/lcYGNVklq/Nadg==
-X-Received: by 2002:a17:906:504d:: with SMTP id e13mr66583040ejk.103.1577634592892;
-        Sun, 29 Dec 2019 07:49:52 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e1sm5004790edn.86.2019.12.29.07.49.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 29 Dec 2019 07:49:52 -0800 (PST)
-Message-Id: <547b3087ac2e8e05af86b4b9972cef8c20da1cdf.1577634590.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.684.git.git.1577634590.gitgitgadget@gmail.com>
-References: <pull.684.git.git.1577634590.gitgitgadget@gmail.com>
-From:   "Jack Bates via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 29 Dec 2019 15:49:50 +0000
-Subject: [PATCH 1/1] diff-highlight: highlight range-diff
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:message-id:subject:from:to:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=rcpE+EJidz+zdDnuI/lBwoxfhO9NhMPjSo0Z8+r0TWw=;
+        b=GoORQxouhN0tevN3D4R+cqWu07GWI1Ip/AcF3rO6KfiSOaskfFNk0BbfyeShVLb0Nh
+         qu1YTpPWsz7EeQruh8y3FiUZgXsr54mc7OgHh5abXLCXiRrQZOuZUeaLVrWm+RxssA/x
+         ZpMfJFl1WChUyL/aFlZu2C0E3YK+/id4/IrTWyLNtTCK2ewKymq2JOuf0/5eISpyqzuJ
+         8zHezyIK2T0fWflM8hBF+8tM42FZHPTiMx+/mg0htbSoN0Ji+6C+ap9/IUkKKaBAL2lJ
+         cVyigHIBouvtr7+skyT6k25SsD+6GktPTbGgJrXX5tJMGxj2DtgX46L2yUF2Yv0W4y5p
+         Bgvw==
+X-Gm-Message-State: APjAAAVlX+XxEag9FKQmkeA79M1NRNihRe6VlzVUYcyq196Z8sHtDtdh
+        /WEdag2SKG/iTvO5niQ8taH9lDc38z9L
+X-Google-Smtp-Source: APXvYqzHsj6SUlK/etIluzXrh1YWBee6EJhBQknI8EpBQxdnt0OjgrduuVGfTvpE1y57l0ZfRdLnkQ==
+X-Received: by 2002:a1c:4b0a:: with SMTP id y10mr31100298wma.78.1577635319561;
+        Sun, 29 Dec 2019 08:01:59 -0800 (PST)
+Received: from starfire (4dafbc34.ftth.telfortglasvezel.nl. [77.175.188.52])
+        by smtp.gmail.com with ESMTPSA id c9sm17320000wmc.47.2019.12.29.08.01.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Dec 2019 08:01:58 -0800 (PST)
+Message-ID: <ea322b4c06dce0332ead3521e45514d10f2a76b8.camel@kaarsemaker.net>
+Subject: Re: git filters don't get applied to dotfiles
+From:   Dennis Kaarsemaker <dennis@kaarsemaker.net>
+To:     Adrien LEMAIRE <lemaire.adrien@gmail.com>, git@vger.kernel.org
+Date:   Sun, 29 Dec 2019 17:01:58 +0100
+In-Reply-To: <CALqn52MbeiCrEzphMkcjeU6bPbLLaQOa-vzht2156uqVw1wL_g@mail.gmail.com>
+References: <CALqn52MbeiCrEzphMkcjeU6bPbLLaQOa-vzht2156uqVw1wL_g@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.1-2 
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jack Bates <jack@nottheoilrig.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jack Bates <jack@nottheoilrig.com>
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jack Bates <jack@nottheoilrig.com>
+On Fri, 2019-12-27 at 16:51 +0900, Adrien LEMAIRE wrote:
+> I'd like to report a bug regarding git filters not being applied to
+> files beginning with a dot character "."
+> Using git version 2.24.1
+> Please let me know if there is a better way to report bugs. The github
+> page only mentions this email.
 
-Piping `git range-diff` through diff-highlight currently has no effect,
-for two reasons:
+<snip reproduction recipe>
 
-  1. There are ANSI escapes before and after the `@@` hunk headers (when
-     color is enabled) which diff-highlight fails to match. One solution
-     is to match both escapes (`/^$COLOR*\@\@$COLOR* /`). This patch
-     drops the trailing space from the existing pattern instead.
+I was not able to reproduce this in the git test suite with a quick
+patch (see below). Your output does not show any git add command, is it
+possible that you added the changes before configuring the filter?
 
-  2. Unlike `git log`, `git range-diff` diffs are indented, which
-     diff-highlight also fails to match. This patch allows hunk headers
-     preceded by any amount of whitespace, and then skips past that
-     indentation when parsing subsequent lines, by reusing the machinery
-     that handles the --graph output.
+If you set GIT_TRACE=2 in your environment before doing the git add of
+the .mailrc file, you should see it run the filter command. It should
+look something like:
 
-Signed-off-by: Jack Bates <jack@nottheoilrig.com>
----
- contrib/diff-highlight/DiffHighlight.pm | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
++ git add test test.t test.i .mailrc
+trace: built-in: git add test test.t test.i .mailrc
+trace: run_command: ./rot13.sh
+trace: run_command: ./rot13.sh
 
-diff --git a/contrib/diff-highlight/DiffHighlight.pm b/contrib/diff-highlight/DiffHighlight.pm
-index e2589922a6..74f53e53c9 100644
---- a/contrib/diff-highlight/DiffHighlight.pm
-+++ b/contrib/diff-highlight/DiffHighlight.pm
-@@ -90,7 +90,8 @@ sub handle_line {
+(which is a part of the output of GIT_TRACE=2 ./t0021-conversion.sh -x
+-v -i)
+
+
+diff --git t/t0021-conversion.sh t/t0021-conversion.sh
+index 6c6d77b51a..32c27d513b 100755
+--- t/t0021-conversion.sh
++++ t/t0021-conversion.sh
+@@ -77,6 +77,7 @@ test_expect_success setup '
  
- 	if (!$in_hunk) {
- 		$line_cb->($orig);
--		$in_hunk = /^$COLOR*\@\@ /;
-+		$in_hunk = /^( *)$COLOR*\@\@/;
-+		$graph_indent = length($1);
- 	}
- 	elsif (/^$COLOR*-/) {
- 		push @removed, $orig;
--- 
-gitgitgadget
+        {
+            echo "*.t filter=rot13"
++           echo ".mailrc filter=rot13"
+            echo "*.i ident"
+        } >.gitattributes &&
+ 
+@@ -88,9 +89,10 @@ test_expect_success setup '
+        cat test >test.t &&
+        cat test >test.o &&
+        cat test >test.i &&
+-       git add test test.t test.i &&
++       cat test >.mailrc &&
++       git add test test.t test.i .mailrc &&
+        rm -f test test.t test.i &&
+-       git checkout -- test test.t test.i &&
++       git checkout -- test test.t test.i .mailrc &&
+ 
+        echo "content-test2" >test2.o &&
+        echo "content-test3 - filename with special characters" >"test3 '\''sq'\'',\$x=.o"
+@@ -102,6 +104,7 @@ test_expect_success check '
+ 
+        test_cmp test.o test &&
+        test_cmp test.o test.t &&
++       test_cmp test.o .mailrc &&
+ 
+        # ident should be stripped in the repository
+        git diff --raw --exit-code :test :test.i &&
+@@ -110,9 +113,12 @@ test_expect_success check '
+        test "z$id" = "z$embedded" &&
+ 
+        git cat-file blob :test.t >test.r &&
++       git cat-file blob :.mailrc >.mailrc.r &&
+ 
+        ./rot13.sh <test.o >test.t &&
+-       test_cmp test.r test.t
++       ./rot13.sh <test.o >.mailrc &&
++       test_cmp test.r test.t &&
++       test_cmp .mailrc.r .mailrc
+ '
+ 
+ # If an expanded ident ever gets into the repository, we want to make sure that
+
