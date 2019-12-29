@@ -6,98 +6,120 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36EDBC3F68F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D20BC2D0C0
 	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 06:33:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0BDEF208E4
-	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 06:33:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE567207FF
+	for <git@archiver.kernel.org>; Sun, 29 Dec 2019 06:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726359AbfL2G21 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Dec 2019 01:28:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:54904 "HELO cloud.peff.net"
+        id S1726230AbfL2GYQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Dec 2019 01:24:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54878 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725800AbfL2G21 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 29 Dec 2019 01:28:27 -0500
-Received: (qmail 20873 invoked by uid 109); 29 Dec 2019 06:28:27 -0000
+        id S1725800AbfL2GYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Dec 2019 01:24:15 -0500
+Received: (qmail 20828 invoked by uid 109); 29 Dec 2019 06:24:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 29 Dec 2019 06:28:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 29 Dec 2019 06:24:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5065 invoked by uid 111); 29 Dec 2019 06:33:34 -0000
+Received: (qmail 5032 invoked by uid 111); 29 Dec 2019 06:29:22 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 29 Dec 2019 01:33:34 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 29 Dec 2019 01:29:22 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 29 Dec 2019 01:28:25 -0500
+Date:   Sun, 29 Dec 2019 01:24:14 -0500
 From:   Jeff King <peff@peff.net>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, szeder.dev@gmail.com,
         jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] commit-graph: examine changed-path objects in pack
- order
-Message-ID: <20191229062825.GA222211@coredump.intra.peff.net>
-References: <20191222093036.GA3449072@coredump.intra.peff.net>
- <20191222093206.GA3460818@coredump.intra.peff.net>
- <8b331ef6-f431-56ef-37a9-1d6e263ea0fe@gmail.com>
- <20191229061246.GB220034@coredump.intra.peff.net>
+Subject: Re: [PATCH 0/9] [RFC] Changed Paths Bloom Filters
+Message-ID: <20191229062414.GC220034@coredump.intra.peff.net>
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+ <20191222093036.GA3449072@coredump.intra.peff.net>
+ <e9a4e4ff-5466-dc39-c3f5-c9a8b8f2f11d@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20191229061246.GB220034@coredump.intra.peff.net>
+In-Reply-To: <e9a4e4ff-5466-dc39-c3f5-c9a8b8f2f11d@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 29, 2019 at 01:12:46AM -0500, Jeff King wrote:
+On Fri, Dec 27, 2019 at 11:11:37AM -0500, Derrick Stolee wrote:
 
-> Yeah, I expected that would cover it, too. But instrumenting it to dump
-> the position of each commit (see patch below), and then decorating "git
-> log" output with the positions (see script below) shows that we're all
-> over the map:
+> > So here are a few patches to reduce the CPU and memory usage. They could
+> > be squashed in at the appropriate spots, or perhaps taken as inspiration
+> > if there are better solutions (especially for the first one).
+> 
+> I tested these patches with the Linux kernel repo and reported my results
+> on each patch. However, I wanted to also test on a larger internal repo
+> (the AzureDevOps repo), which has ~500 commits with more than 512 changes,
+> and generally has larger diffs than the Linux kernel repo.
+> 
+> | Version  | Time   | Memory |
+> |----------|--------|--------|
+> | Garima   | 16m36s | 27.0gb |
+> | Peff 1   | 6m32s  | 28.0gb |
+> | Peff 2   | 6m48s  |  5.6gb |
+> | Peff 3   | 6m14s  |  4.5gb |
+> | Shortcut | 3m47s  |  4.5gb |
+> 
+> For reference, I found the time and memory information using
+> "/usr/bin/time --verbose" in a bash script.
 
-I forgot the patch, of course. :)
+Thanks for giving it more exercise. My heap profiling was done with
+massif, which measures the heap directly. Measuring RSS would cover
+that, but will also include the mmap'd packfiles. That's probably why
+your linux.git numbers were slightly higher than mine.
 
-I just dumped this trace:
+(massif is a really great tool if you haven't used it, as it also shows
+which allocations were using the memory. But it's part of valgrind, so
+it definitely doesn't run on native Windows. It might work under WSL,
+though. I'm sure there are also other heap profilers on Windows).
 
----
-diff --git a/commit-graph.c b/commit-graph.c
-index a6c4ab401e..1cb77be45f 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -61,6 +61,7 @@ static void set_commit_pos(struct repository *r, const struct object_id *oid)
- 	if (!commit)
- 		return; /* should never happen, but be lenient */
- 
-+	trace_printf("pos %s = %d", oid_to_hex(oid), max_pos);
- 	*commit_pos_at(&commit_pos, commit) = max_pos++;
- }
- 
+> By "Shortcut" in the table above, I mean the following patch on top of
+> Garima's and Peff's changes. It inserts a max_changes option into struct
+> diff_options to halt the diff early. This seemed like an easier change
+> than creating a new tree diff algorithm wholesale.
 
-with:
+Yeah, I'm not opposed to a diff feature like this.
 
-  rm -f .git/objects/info/commit-graph
-  GIT_TRACE=$PWD/trace.out git commit-graph write --changed-paths --reachable
+But be careful, because...
 
-and then used:
+> diff --git a/diff.h b/diff.h
+> index 6febe7e365..9443dc1b00 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -285,6 +285,11 @@ struct diff_options {
+>  	/* Number of hexdigits to abbreviate raw format output to. */
+>  	int abbrev;
+>  
+> +	/* If non-zero, then stop computing after this many changes. */
+> +	int max_changes;
+> +	/* For internal use only. */
+> +	int num_changes;
 
-  cat >foo.pl <<\EOF
-  #!/usr/bin/perl
-  
-  my %deco = do {
-  	open(my $fh, '<', 'trace.out');
-  	map { /pos (\S+) = (\d+)/ ? ($1 => $2) : () } <$fh>
-  };
-  while (<>) {
-  	s/([0-9a-f]{40})/$deco{$1}/;
-  	print;
-  }
-  EOF
+This is holding internal state in diff_options, but the same
+diff_options is often used for multiple diffs (e.g., "git log --raw"
+would use the same rev_info.diffopt over and over again).
 
-like so:
+So it would need to be cleared between diffs. There's a similar feature
+in the "has_changes" flag, though it looks like it is cleared manually
+by callers. Yuck.
 
-  git log --graph --format=%H |
-  perl foo.pl |
-  less
+This isn't a problem for commit-graph right now, but:
+
+  - it actually could be using a single diff_options, which would be
+    slightly simpler (it doesn't seem to save much CPU, though, because
+    the initialization is relatively cheap)
+
+  - it's a bit of a subtle bug to leave hanging around for the next
+    person who tries to use the feature
+
+I actually wonder if this could be rolled into the has_changes and
+diff_can_quit_early() feature. This really just a generalization of that
+feature (which is like setting max_changes to "1").
 
 -Peff
