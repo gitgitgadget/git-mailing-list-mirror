@@ -2,130 +2,157 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8ED1C2D0C3
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 20:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9C81C2D0C3
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 20:33:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A72F3206DB
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 20:31:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 79029206DB
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 20:33:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xrx3Mrzg"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IuNBB/P/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727731AbfL3Uba (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 15:31:30 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35669 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727695AbfL3Uba (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 15:31:30 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g17so33676614wro.2
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 12:31:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aurQ+0Rjo39EvS3Lr9KML0BgMNpfiT6uPc2n4KtUoBQ=;
-        b=Xrx3Mrzgpbl7CHpz5tZMa3OokBbc9jaioBVUFbe0OOSbumvPmntYSMAYa57sYnkMSs
-         CEqgULAfrQbPbmV3scgecZTem8wINSeKmBt+HfgxAmfGiBYWg7KhTeb/JzTfZUG1p6Ju
-         AQdoRe3LmetQ/ka0l0futDCwGq17VSF+AvAkHi00OuDv0lVbmEPRNDO1XOzON578ygHI
-         Caz/FU+reylfCnxNOd1A4cZDhJtA9uPbE57vc/bf8si/R9XSWhtdgF084TYIzQzUB7UE
-         Fn1kD1IrSQRL2IpLGLesrLqTYecj1obk5iDFT1e/36pNZRRWQ3cgYIjCzN2mkqULimnk
-         XH7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aurQ+0Rjo39EvS3Lr9KML0BgMNpfiT6uPc2n4KtUoBQ=;
-        b=nNIH42uGFQO7GsO30C73v3CwTo6eOiUH5IRY4IwsJW47hxvnYUP/OAannER8t9bhIJ
-         a1AQeFGfCML1duS2i1dQecXGwEOfhHPaWjrKDWCrEg+B+Hlh2V3jtxC40D6YH7nvEUn2
-         wA3gm7fM4TuXaBBAXYQ5xzYt7yhGtqMQ/x/Bgrb97ecLKUnojGiH+Z0KASYD8s8b0Not
-         8PHsgR1upHafYwwAeu7CAeZgBmXko1amlgB3yw07bShzO89aLrefaaC0mc2UTTtsM5Js
-         8IQE5HD7LonrSk3uPNUKmBWOBrXS3uzEpZnOa9qddW6/vTparSkKB8pd5UgVCvUbWBco
-         dCAA==
-X-Gm-Message-State: APjAAAXXjhGR/yo6gYb7lEPlXN1P4Ah+DUDnpSiofxtX95LNV/IWlM8e
-        CoyaPlZlnd9DGJgLy8+U351cuz4e
-X-Google-Smtp-Source: APXvYqwoIlnfiOQYMY5i3zvp+IcKPzv3IFvnBkNNnd2SsjdM86LWpG8a3yACv/YFA4qpCwrO2e0wWg==
-X-Received: by 2002:adf:fe07:: with SMTP id n7mr69542025wrr.286.1577737888168;
-        Mon, 30 Dec 2019 12:31:28 -0800 (PST)
-Received: from [192.168.0.108] ([188.173.146.22])
-        by smtp.gmail.com with ESMTPSA id k16sm48871594wru.0.2019.12.30.12.31.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Dec 2019 12:31:27 -0800 (PST)
-Subject: Re: Re: [PATCH v3 1/1] git-gui: allow opening currently selected file
- in default app
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     git@vger.kernel.org
-References: <pull.499.v2.git.1577647930.gitgitgadget@gmail.com>
- <pull.499.v3.git.1577721419.gitgitgadget@gmail.com>
- <1b2363be726c6d70746aec9fae62edaf857cd665.1577721419.git.gitgitgadget@gmail.com>
- <20191230194129.kjmp6r5xuwmq4wum@yadavpratyush.com>
-From:   =?UTF-8?Q?Zoli_Szab=c3=b3?= <zoli.szabo@gmail.com>
-Message-ID: <2fac0090-8db7-885a-9b1b-0017db7ce91b@gmail.com>
-Date:   Mon, 30 Dec 2019 22:31:32 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1727738AbfL3UdE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 15:33:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58098 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727695AbfL3UdE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 15:33:04 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CA8F3B8E8;
+        Mon, 30 Dec 2019 15:33:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d3VMYJ4k/oLVQ1NDqKWaIdFnVfo=; b=IuNBB/
+        P/8ApEOEG3MgSG714osUrsCBi9/8CAzBzWD41UvUxbEARbbNJQQ4QcavRwWDThdQ
+        dJ6gKmHYBLH/bONqFVhj34JpafMfR1bUUKikk2v5/sTiIEeZx7II9HlGJzLnvcUy
+        qaKWr5u45EsHYbClc1fpNezrhCUK5skbpHZQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TiSjoXRqZUGNY4ZEyKilbc3Urf/C2EUN
+        ZkO4FQ4YfCSu/dzsuEi36dZH51O5NrJN4z+HZyVp6un0zZwGDfeLc5JjLGDzi7Ye
+        2SpkIYNOusKrcWTTAJ2SfhmKa7f7vf/ZJUEVcHet5zmLLnwjyfJz5zX8ZTez/h1C
+        CopMNQ1XsI4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 339333B8E6;
+        Mon, 30 Dec 2019 15:33:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89F573B8E5;
+        Mon, 30 Dec 2019 15:33:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, matvore@google.com
+Subject: Re: [PATCH] revision: allow missing promisor objects on CLI
+References: <xmqqlfqxhzvu.fsf@gitster-ct.c.googlers.com>
+        <20191230183801.28538-1-jonathantanmy@google.com>
+Date:   Mon, 30 Dec 2019 12:33:00 -0800
+In-Reply-To: <20191230183801.28538-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 30 Dec 2019 10:38:01 -0800")
+Message-ID: <xmqq1rslh7ur.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20191230194129.kjmp6r5xuwmq4wum@yadavpratyush.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 92E9F5D8-2B43-11EA-9A3B-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-On 2019.12.30 21:41, Pratyush Yadav wrote:
-> Hi Zoli,
-> 
-> On 30/12/19 03:56PM, Zoli Szabó via GitGitGadget wrote:
->> From: =?UTF-8?q?Zoli=20Szab=C3=B3?= <zoli.szabo@gmail.com>
->>
->> Many times there's the need to quickly open a source file (the one you're
->> looking at in Git GUI) in the predefined text editor / IDE. Of course,
->> the file can be searched for in your preferred file manager or directly
->> in the text editor, but having the option to directly open the current
->> file from Git GUI would be just faster. This change enables just that by:
->>   - clicking the diff header path (which is now highlighted as a hyperlink)
->>   - or diff header path context menu -> Open;
-> 
-> Semi-colon left in by mistake?
-> 
+>> Jonathan Tan <jonathantanmy@google.com> writes:
+>> 
+>> >  	object = get_reference(revs, arg, &oid, flags ^ local_flags);
+>> >  	if (!object)
+>> > -		return revs->ignore_missing ? 0 : -1;
+>> > +		/*
+>> > +		 * Either this object is missing and ignore_missing is true, or
+>> > +		 * this object is a (missing) promisor object and
+>> > +		 * exclude_promisor_objects is true.
+>> 
+>> I had to guess and dig where these assertions are coming from; we
+>> should not force future readers of the code to.
+>> 
+>> At least this comment must say why these assertions hold.  Say
+>> something like "get_reference() yields NULL on only such and such
+>> cases" before concluding with "and in any of these cases, we can
+>> safely ignore it because ...".
+>
+> OK, will do.
+>
+>> I think the two cases the comment covers are safe for this caller to
+>> silently return 0.  Another case get_reference() yields NULL is when
+>> oid_object_info() says it is a commit but it turns out that the
+>> object is found by repo_parse_commit() to be a non-commit, isn't it?
+>> I am not sure if it is safe for this caller to just return 0.  There
+>> may be some other "unusual-but-not-fatal" cases where get_reference()
+>> does not hit a die() but returns NULL.
+>
+> I don't think there is any other case where get_reference() yields NULL,
+> at least where I based my patch (99c33bed56 ("Git 2.25-rc0",
+> 2019-12-25)). Quoting the entire get_reference():
+>
+>> static struct object *get_reference(struct rev_info *revs, const char *name,
+>>                                     const struct object_id *oid,
+>>                                     unsigned int flags)
+>> {
+>>         struct object *object;
+>> 
+>>         /*
+>>          * If the repository has commit graphs, repo_parse_commit() avoids
+>>          * reading the object buffer, so use it whenever possible.
+>>          */
+>>         if (oid_object_info(revs->repo, oid, NULL) == OBJ_COMMIT) {
+>>                 struct commit *c = lookup_commit(revs->repo, oid);
+>>                 if (!repo_parse_commit(revs->repo, c))
+>>                         object = (struct object *) c;
+>>                 else
+>>                         object = NULL;
 
-Yes, that should have been a simple period (.), signaling the end of the 
-sentence.
+This is the case where oid must be COMMIT from oid_object_info()'s
+point of view, but repo_parse_commit() finds it as a non-commit, and
+object becomes NULL.  This is quite different from the normal lazy
+clone case where exclude-promisor-objects etc. wants to cover, that
+the object whose name is oid is truly missing because it can be
+fetched later from elsewhere.  Instead, we have found that there is
+an inconsistency in the data we have about the object, iow, a
+possible corruption.
 
+>>         if (!object) {
+>>                 if (revs->ignore_missing)
+>>                         return object;
+>
+> Return NULL (the value of object).
+>
+>>                 if (revs->exclude_promisor_objects && is_promisor_object(oid))
+>>                         return NULL;
+>
+> Return NULL.
+>
+>>                 die("bad object %s", name);
+>
+> Die (so this function invocation never returns). In conclusion, if
+> object is NULL at this point in time, get_reference() either returns
+> NULL or dies.
 
->> +	eval exec $explorer [list [file nativename $full_file_path]] &
-> 
-> IIUC, this line can be simplified to:
-> 
->    exec $explorer [file nativename $full_file_path] &
-> 
-> It works fine for me including on files with spaces in their names, but
-> a test on Windows would be appreciated just to rule out any hidden
-> surprises.
+And when !object, this does not die if
 
-You're right. It can be simplified like you have proposed. Tested it and 
-works correctly also on Windows. (Since I have copied that line from the 
-existing `do_explore` proc, the same simplification can be done there 
-too. (I did not realize this myself, since I am just learning some TCL 
-in order to have this feature in Git GUI...))
+ - ignore-missing is in effect, or
+ - exclude-promisor is in effect and this is a promisor object that
+   is missing from the local repository.
 
-> 
-> No need to send a re-roll just for these two small things. I have
-> updated the commit locally before pushing the new version out [0]. The
-> rest of the patch looks good. Will merge. Thanks.
->  
-> [0] https://github.com/prati0100/git-gui/tree/zs/open-current-file
-> 
+and instead return NULL.
 
-Thank you very much for your support!
-
-All the best,
-Zoli
+It just felt funny that the "we found something fishy about the
+asked-for object" case is treated the same way for the purpose of
+ignore-missing and exclude-promisor.  The asked-for objet is
+certainly not missing (i.e. we know more than we want to know about
+the object---some part of our database says it is a commit and some
+other part says it is not).
