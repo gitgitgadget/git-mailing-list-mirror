@@ -2,272 +2,126 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8CA4C2D0CE
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 15:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 201B1C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 15:40:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6E1B720718
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 15:38:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E111320730
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 15:40:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KQwRZmmN"
+	dkim=fail reason="signature verification failed" (768-bit key) header.d=mad-scientist.us header.i=@mad-scientist.us header.b="Xur3p4Pk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727634AbfL3Pim (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 10:38:42 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:32944 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727573AbfL3Pim (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 10:38:42 -0500
-Received: by mail-ed1-f65.google.com with SMTP id r21so32900616edq.0
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 07:38:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+/P6k4nV6O0kADLgcuI7flAuc5TiMcV6SX7jS8czaUA=;
-        b=KQwRZmmNHRiT4syrXuMpVjTDNwZT3oKnCgzaGPJ5V5KQhH5nlprF8yKDstW38yFbEw
-         WNDgfpHB38Lg3vUePBClVCtxnULx7LBOSCP0woOt2bVNCv40zYPE2vQayIZiEP96WwY+
-         TOzNhvkTv1/cw1fXODihWypdPWuOcuGm0DUIbCt6ks+ZLmCyPkCU5VAFOyP/WmafGkvR
-         khyOIPlFpx1uyCXh8QSZXwf+YCs6lmvfHaYngldjim2lK2ArCVJUzFbK5Xhs6+V4TS8s
-         Fvq1+YUnKBYSNim8iQ+30r2deeJAyfHObjDllE5RHt+2N9EbB2OJo6+yFadf5H3am337
-         hvzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+/P6k4nV6O0kADLgcuI7flAuc5TiMcV6SX7jS8czaUA=;
-        b=GfcIhrr7EjHHZWAsdo92nNyiJXGpNEvK5WcSh4K8wcM5IJhO85oVcVE/FpUi+l6lOK
-         mJrB9sSeevlxrt/df7Cyy6YDIXWh1+Bfz3+pPONmX34Abao1vpkFlc5VYj1UXMB/JxTQ
-         Rh+8hwQFaG10PP6UYQ4pR5q7ss9q+b+mRZMQzAnkZ6gx0Cn8yzRESlp/g2ofCY4d9jKb
-         y2o6U99tfMEF1gi9CnvArQFj/8BGTQkrP7Ct3tSgUO9hp42CkxqeXgtwVepzrrKB5QRF
-         yn9x0cagwg3iZjoaAM8QNXKeGR+7hv+nuES794vSKQ0yVr2OE6xrEjGUNEyrLq4FPDQd
-         Kuzg==
-X-Gm-Message-State: APjAAAWNAJXpoKpvum9rCAZzMqU0tX5n3h6sU0NSKnPd3Y5L/gqVd3As
-        D9SereAMSsVatL0dMTGClgR1Z4lI
-X-Google-Smtp-Source: APXvYqzSyOtLd+rqSzmUIdZe2BlQ30Ab3fOxlPSW2TddMC2J/1ggsfCWzqKGFsYB/Ip8RE6FwmZpVQ==
-X-Received: by 2002:a50:f982:: with SMTP id q2mr51797420edn.55.1577720319680;
-        Mon, 30 Dec 2019 07:38:39 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f11sm3598882ejk.62.2019.12.30.07.38.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Dec 2019 07:38:39 -0800 (PST)
-Message-Id: <7a30d7ef0c556ddc743ae53afc871c26e800ce1f.1577720318.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.502.git.1577720318.gitgitgadget@gmail.com>
-References: <pull.502.git.1577720318.gitgitgadget@gmail.com>
-From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Dec 2019 15:38:38 +0000
-Subject: [PATCH 1/1] t: add tests for error conditions with
- --pathspec-from-file
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727632AbfL3Pk0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 10:40:26 -0500
+Received: from gateway36.websitewelcome.com ([192.185.198.13]:25472 "EHLO
+        gateway36.websitewelcome.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727526AbfL3Pk0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 30 Dec 2019 10:40:26 -0500
+X-Greylist: delayed 1466 seconds by postgrey-1.27 at vger.kernel.org; Mon, 30 Dec 2019 10:40:26 EST
+Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
+        by gateway36.websitewelcome.com (Postfix) with ESMTP id E9065401A48ED
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 08:27:31 -0600 (CST)
+Received: from box5922.bluehost.com ([162.241.30.80])
+        by cmsmtp with SMTP
+        id lwlxiJp9u4kpjlwlxipDKX; Mon, 30 Dec 2019 09:15:57 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:MIME-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=hUqsIQGEfKUYocSHTS2xBkEqdVWVDadAM7khj4GF+fE=; b=Xur3p4PkmpenpaJhcJZ2Z0NL76
+        eOy7AQUeVbkuuB/bR9C7z6udAXiNzmcG/OuW+gNnRExV4PO1oyHqelAFqRPgcVlul2dZtQk0cGILI
+        Plmj/NFfm+4zsocRah2EnqjCj;
+Received: from pool-98-118-0-140.bstnma.fios.verizon.net ([98.118.0.140]:39376 helo=homebase.home)
+        by box5922.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.92)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1ilwlx-003YUg-F3; Mon, 30 Dec 2019 08:15:57 -0700
+Message-ID: <85e17e0628e05279d1dbbe62b877caa90a43ec38.camel@mad-scientist.net>
+Subject: Re: Feature request: add a metadata in the commit: the "commited in
+ branch" information
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Arnaud Bertrand <xda@abalgo.com>
+Cc:     git@vger.kernel.org
+Date:   Mon, 30 Dec 2019 10:15:56 -0500
+In-Reply-To: <CAEW0o+gtya5tm6Wb474Srmb2j4E9ocm9p75=aZWjTASbApsb1A@mail.gmail.com>
+References: <CAEW0o+jV+r1UMZReRXa3g_fyqCYxHTVYVf6pWvjB7_isofbBaw@mail.gmail.com>
+         <xmqqd0c6iuw0.fsf@gitster-ct.c.googlers.com>
+         <CAEW0o+g7vXj841h+4nNK8iSoO758Uh9fLKMCN87RE2w2Nd=CRg@mail.gmail.com>
+         <20191230041517.GA84036@mit.edu>
+         <CAEW0o+gtya5tm6Wb474Srmb2j4E9ocm9p75=aZWjTASbApsb1A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.34.1-2 
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5922.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 98.118.0.140
+X-Source-L: No
+X-Exim-ID: 1ilwlx-003YUg-F3
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-98-118-0-140.bstnma.fios.verizon.net (homebase.home) [98.118.0.140]:39376
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTkyMi5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+On Mon, 2019-12-30 at 12:59 +0100, Arnaud Bertrand wrote:
+> > Why does it need to be the branch name?  You can add your own extra
+> > metadata to the git description.
+> 
+> That's typically my problem.  It is not possible "by default", I mean
+> - It is only possible if the developer configure something
+> - or if there is an upper layer that guarantee this
+> By default, there is no hook embedded with the clone. So, as far as I
+> know (and I hope I'm wrong!), you have to use upper layer tools or to
+> change environment variables to activate this feature.
 
-Also move some old tests into the new tests: it doesn't seem reasonable
-to have individual error condition tests.
+In general I have found that trying to mandate what users do in their own
+repositories on their own systems is a losing proposition.
 
-Old test for `git commit` was corrected, previously it was instructed
-to use stdin but wasn't provided with any stdin. While this works at
-the moment, it's not exactly perfect.
+Instead, we put requirements on what content is pushed to the central
+repository.  Because the central repository is managed by the SCM admin
+team we always know only properly-constructed commits can appear there,
+without having to assume that every individual developer's local
+environment has been set up in a specific way.
 
-Old tests for `git reset` were improved to test for a specific error
-message.
+This can be done with hooks in the central repository: there are Git hooks
+that are run before any push is accepted, which can cause the push to be
+rejected, and hooks that are run after a push is accepted, which can be
+used for triggering other operations.
 
-Suggested-By: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
----
- t/t2026-checkout-pathspec-file.sh | 17 +++++++++++++++++
- t/t2072-restore-pathspec-file.sh  | 18 ++++++++++++++++++
- t/t3704-add-pathspec-file.sh      | 25 +++++++++++++++++++++++++
- t/t7107-reset-pathspec-file.sh    | 30 +++++++++++++++++++++---------
- t/t7526-commit-pathspec-file.sh   | 27 ++++++++++++++++++++++++---
- 5 files changed, 105 insertions(+), 12 deletions(-)
+So if you have a requirement about contents of Git commit message format,
+for example, you can enforce that via these hooks.  If someone attempts to
+push commits to the central repository and the commit message has an
+incorrect format then the push is rejected and they'll have to fix it
+before they can proceed to push.
 
-diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
-index f62fd27440..0926312370 100755
---- a/t/t2026-checkout-pathspec-file.sh
-+++ b/t/t2026-checkout-pathspec-file.sh
-@@ -136,4 +136,21 @@ test_expect_success 'only touches what was listed' '
- 	verify_expect
- '
- 
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+
-+	test_must_fail git checkout --pathspec-from-file=list --detach 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --detach" err &&
-+
-+	test_must_fail git checkout --pathspec-from-file=list --patch 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+
-+	test_must_fail git checkout --pathspec-from-file=list -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git checkout --pathspec-file-nul 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err
-+'
-+
- test_done
-diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
-index db58e83735..5c7abbbce3 100755
---- a/t/t2072-restore-pathspec-file.sh
-+++ b/t/t2072-restore-pathspec-file.sh
-@@ -136,4 +136,22 @@ test_expect_success 'only touches what was listed' '
- 	verify_expect
- '
- 
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+	>empty_list &&
-+
-+	test_must_fail git restore --pathspec-from-file=list --patch --source=HEAD^1 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+
-+	test_must_fail git restore --pathspec-from-file=list --source=HEAD^1 -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git restore --pathspec-file-nul --source=HEAD^1 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	test_must_fail git restore --pathspec-from-file=empty_list --source=HEAD^1 2>err &&
-+	test_i18ngrep -e "you must specify path(s) to restore" err
-+'
-+
- test_done
-diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
-index 3cfdb669b7..a1696e1a39 100755
---- a/t/t3704-add-pathspec-file.sh
-+++ b/t/t3704-add-pathspec-file.sh
-@@ -124,4 +124,29 @@ test_expect_success 'only touches what was listed' '
- 	verify_expect
- '
- 
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+	>empty_list &&
-+
-+	test_must_fail git add --pathspec-from-file=list --interactive 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+
-+	test_must_fail git add --pathspec-from-file=list --patch 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+
-+	test_must_fail git add --pathspec-from-file=list --edit 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --edit" err &&
-+
-+	test_must_fail git add --pathspec-from-file=list -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git add --pathspec-file-nul 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	# This case succeeds, but still prints to stderr
-+	git add --pathspec-from-file=empty_list 2>err &&
-+	test_i18ngrep -e "Nothing specified, nothing added." err
-+'
-+
- test_done
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
-index 6b1a731fff..975a9a930a 100755
---- a/t/t7107-reset-pathspec-file.sh
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -128,15 +128,6 @@ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	test_must_fail verify_expect
- '
- 
--test_expect_success '--pathspec-from-file is not compatible with --soft or --hard' '
--	restore_checkpoint &&
--
--	git rm fileA.t &&
--	echo fileA.t >list &&
--	test_must_fail git reset --soft --pathspec-from-file=list &&
--	test_must_fail git reset --hard --pathspec-from-file=list
--'
--
- test_expect_success 'only touches what was listed' '
- 	restore_checkpoint &&
- 
-@@ -152,4 +143,25 @@ test_expect_success 'only touches what was listed' '
- 	verify_expect
- '
- 
-+test_expect_success 'error conditions' '
-+	restore_checkpoint &&
-+	echo fileA.t >list &&
-+	git rm fileA.t &&
-+
-+	test_must_fail git reset --pathspec-from-file=list --patch 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --patch" err &&
-+
-+	test_must_fail git reset --pathspec-from-file=list -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git reset --pathspec-file-nul 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	test_must_fail git reset --soft --pathspec-from-file=list 2>err &&
-+	test_i18ngrep -e "fatal: Cannot do soft reset with paths" err &&
-+
-+	test_must_fail git reset --hard --pathspec-from-file=list 2>err &&
-+	test_i18ngrep -e "fatal: Cannot do hard reset with paths" err
-+'
-+
- test_done
-diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
-index 4b58901ed6..336197449f 100755
---- a/t/t7526-commit-pathspec-file.sh
-+++ b/t/t7526-commit-pathspec-file.sh
-@@ -127,10 +127,31 @@ test_expect_success 'only touches what was listed' '
- 	verify_expect
- '
- 
--test_expect_success '--pathspec-from-file and --all cannot be used together' '
-+test_expect_success 'error conditions' '
- 	restore_checkpoint &&
--	test_must_fail git commit --pathspec-from-file=- --all -m "Commit" 2>err &&
--	test_i18ngrep "[-]-pathspec-from-file with -a does not make sense" err
-+	echo fileA.t >list &&
-+	>empty_list &&
-+
-+	test_must_fail git commit --pathspec-from-file=list --interactive -m "Commit" 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+
-+	test_must_fail git commit --pathspec-from-file=list --patch -m "Commit" 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with --interactive/--patch" err &&
-+
-+	test_must_fail git commit --pathspec-from-file=list --all -m "Commit" 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file with -a does not make sense" err &&
-+
-+	test_must_fail git commit --pathspec-from-file=list -m "Commit" -- fileA.t 2>err &&
-+	test_i18ngrep -e "--pathspec-from-file is incompatible with pathspec arguments" err &&
-+
-+	test_must_fail git commit --pathspec-file-nul -m "Commit" 2>err &&
-+	test_i18ngrep -e "--pathspec-file-nul requires --pathspec-from-file" err &&
-+
-+	test_must_fail git commit --pathspec-from-file=empty_list --include -m "Commit" 2>err &&
-+	test_i18ngrep -e "No paths with --include/--only does not make sense." err &&
-+
-+	test_must_fail git commit --pathspec-from-file=empty_list --only -m "Commit" 2>err &&
-+	test_i18ngrep -e "No paths with --include/--only does not make sense." err
- '
- 
- test_done
--- 
-gitgitgadget
+In the environments I've been associated with we don't care about branch
+names; instead everything is based on bug tracker identifiers.  Every
+commit needs to be associated with a valid bug ID (added to the commit
+message) and the pre-push hook verifies this and rejects the commit if not.
+Then after the push is accepted, post-push hooks will update the bug
+tracker with information about the push (SHA, software version, etc.)  This
+ensures that development and management can use the bug tracker as their
+primary planning tool to know what has been accomplished and what is left
+to accomplish.  Since the commit message is persisted through cherry-picks, 
+etc. it allows us to know which bugs were fixed in which different patch
+release branches as well.
+
