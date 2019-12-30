@@ -2,101 +2,184 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97421C2D0C2
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69C57C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:52:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 66FC620409
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:49:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 14DAE206DB
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:52:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W88rzK3j"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mpgNEgnS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727565AbfL3Stv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 13:49:51 -0500
-Received: from mail-pl1-f176.google.com ([209.85.214.176]:40127 "EHLO
-        mail-pl1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727278AbfL3Stv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 13:49:51 -0500
-Received: by mail-pl1-f176.google.com with SMTP id s21so12217227plr.7
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 10:49:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=xB72vkMpsYhNH1y3QPU20ZpPXHgrww7YH/dcc6e/xRM=;
-        b=W88rzK3jmIjgmnY6jr37xUFXGQzjdw2Zqcgfea0KIvsXYXC7XxVYcnI2wYhPc7/eJU
-         xu72g5nlQrX8l37UHOQDPvQWrUeeSysY0jZKUse4WeSz+ps9bwrw+nxYMqYmbQ0hzXnt
-         YMWgaiPHHEGnLuJBIcL8lGMRcaphOu+7N398MpDOLmYM6+BXBKlUHoCZrtFRbJYHKvE3
-         YZdznDdOJBhjk5l2n/EOmSreG/hPsgkTHq7guqTlJlzy0WoC4Y7zZUHDHgyNm+banILb
-         2qcIspjlcqbJWlm9/Jt2cbPtyO8CMA/a1yxQm/R8C8nKJ6KEspx/ckzBGvus/ksMxlMW
-         BfcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xB72vkMpsYhNH1y3QPU20ZpPXHgrww7YH/dcc6e/xRM=;
-        b=OIU1/TdfuhCIpo/ORsdiYy2nEL/NT8XonLg9DjTUWqsUBmDv4D5v/pYoUoPWj56dYE
-         IRB3zuyzwzUQ4zqJbrlz98Cj1/zuP1uxfMM4gLnslp8c4slZ3+qafSTyChpkIjXLJITn
-         bcDVhxVmG89OvB7WzQJdFY541cjEpfBabB0l4ggdTmA8vGSF6w+Py67Ac5iq0S0omzoh
-         hOrui3dm9RXanSBBQBBzoWXePxjBlYzQDlDUTcW8a3aMzVuCoxN1v/1wq8UOwBCGOAtI
-         4nCbr18LQD8GWHXhtOhvT5+zUJ0OqtzIdzO1VBlicb0Oi+UGAZ8bPt8L6K3gqQOCf+eu
-         d1rw==
-X-Gm-Message-State: APjAAAVrHq/OEDizHEV1+it6vcCcXLa0uDfi41vNWbgc2dvpGm6ioOhf
-        7RhLWk24G9ITaOM0ok+2Pxn3q/ix
-X-Google-Smtp-Source: APXvYqxCFAHs/ZfI9yv9z6uHWyQnReyeewHEXlSVxxCMbINh9rps+Ps5De825zA3P25IT2wo4xOSPQ==
-X-Received: by 2002:a17:902:fe0d:: with SMTP id g13mr70097556plj.277.1577731790599;
-        Mon, 30 Dec 2019 10:49:50 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id 136sm47688730pgg.74.2019.12.30.10.49.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 10:49:49 -0800 (PST)
-Date:   Mon, 30 Dec 2019 10:49:48 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: ERANGE strikes again on my Windows build; RFH
-Message-ID: <20191230184948.GC57251@google.com>
-References: <6eb02a73-9dcb-f1fc-f015-80e71e9910d6@kdbg.org>
- <20191230180653.GA57251@google.com>
- <54522fee-0796-df46-a3cf-4331537ecf59@kdbg.org>
+        id S1727614AbfL3Swg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 13:52:36 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55951 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727630AbfL3Swf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 13:52:35 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6B93B94980;
+        Mon, 30 Dec 2019 13:52:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EZj+1d7jeAaOZHgf+Wb7x8ZWl60=; b=mpgNEg
+        nSTD789SqRvIaMK8M8AJm4U72a/ymCtRxQ4CwwcxhsRwD+McM923jYxKc2V2Jc+K
+        z8yGvNWzg9ifnhvTbduTJju8JILVzpC4A0eIJmuFfIsoEWZNLW9zgyuD1qoO+5WM
+        VUubTNoyXn9irmuV7VCalsM2Jn5Dnkx5786fY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=G/MNOJOW+ayvR3GaJ+5izx1NGHVucwfJ
+        +i6TzSHWkQdzYblfqqNf2I9YbtDbLHD42Xk2xJ6x1KEuab+cNRqOkbQYnS2+NVBB
+        APXhGptE3l3XEUh5KNcNYRxY2NJGGyAI6Kka+Onfxw1iOK0VCmGv0Icaqj35DPK0
+        88GCoBDkihU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 64B6D9497F;
+        Mon, 30 Dec 2019 13:52:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7CAA79497E;
+        Mon, 30 Dec 2019 13:52:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 2/3] t: directly test parse_pathspec_file()
+References: <pull.503.git.1577727747.gitgitgadget@gmail.com>
+        <27383a5b084b5e68152b08eb96fb4ddaf6d87f82.1577727747.git.gitgitgadget@gmail.com>
+Date:   Mon, 30 Dec 2019 10:52:28 -0800
+In-Reply-To: <27383a5b084b5e68152b08eb96fb4ddaf6d87f82.1577727747.git.gitgitgadget@gmail.com>
+        (Alexandr Miloslavskiy via GitGitGadget's message of "Mon, 30 Dec 2019
+        17:42:26 +0000")
+Message-ID: <xmqq8smthcib.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <54522fee-0796-df46-a3cf-4331537ecf59@kdbg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 881FC01E-2B35-11EA-BB86-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt wrote:
-> Am 30.12.19 um 19:06 schrieb Jonathan Nieder:
+"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->>                                                                    when
->> errno is meaningful for a function for a given return value, the usual
->> convention is
->>
->>  (1) it *always* sets errno for errors, not conditionally
->
-> You seem to understand that errno isn't set somewhere where it should be
-> set.
+> diff --git a/t/helper/test-parse-pathspec-file.c b/t/helper/test-parse-pathspec-file.c
+> new file mode 100644
+> index 0000000000..e7f525feb9
+> --- /dev/null
+> +++ b/t/helper/test-parse-pathspec-file.c
+> @@ -0,0 +1,34 @@
+> +#include "test-tool.h"
+> +#include "parse-options.h"
+> +#include "pathspec.h"
+> +#include "gettext.h"
+> + ...
+> +	parse_pathspec_file(&pathspec, 0, 0, 0, pathspec_from_file,
+> +			    pathspec_file_nul);
+> +
+> +	for (i = 0; i < pathspec.nr; i++) {
+> +		printf("%s\n", pathspec.items[i].original);
+> +	}
 
-On the contrary: this caller is using errno as an error *indicator*
-instead of a way of *distinguishing* between errors (or to put it
-another way, this caller is treating `errno == 0` as a meaningful
-condition).  This means the calling code is buggy.
+No need for {} around a single statement block.
 
-[...]
->> Do you have more details about the case where read_object is expected
->> to produce errno == 0?  I'm wondering whether we forgot to set 'errno
->> = ENOENT' explicitly somewhere.
->
-> I don't think that forgetting to set ENOENT is the problem.
->
-> It happens reproducibly in test 5 of t0410-partial-clone:
+> diff --git a/t/t0067-parse_pathspec_file.sh b/t/t0067-parse_pathspec_file.sh
+> new file mode 100755
+> index 0000000000..df7b319713
+> --- /dev/null
+> +++ b/t/t0067-parse_pathspec_file.sh
+> @@ -0,0 +1,89 @@
+> +#!/bin/sh
+> +
+> +test_description='Test parse_pathspec_file()'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'one item from stdin' '
+> +	echo fileA.t | test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	fileA.t
+> +	EOF
+> +	test_cmp expect actual
+> +'
 
-Thanks, will try it out.
+The use of the blank lines are somewhat inconsistent here.
+
+> + ...
+> +test_expect_success 'NUL delimiters' '
+> +	printf "fileA.t\0fileB.t\0" | test-tool parse-pathspec-file --pathspec-from-file=- --pathspec-file-nul >actual &&
+
+Fold line immediately after the pipe (same for the earlier and later ones).
+
+> +	cat >expect <<-\EOF &&
+> +	fileA.t
+> +	fileB.t
+> +	EOF
+> +	test_cmp expect actual
+> +'
+
+If you want to have a gap between the steps, i.e. "capturing the
+actual output", "creating the ideal output", and "seeing how they
+differ", using blank like this is OK:
+
+	printf "fileA.t\0fileB.t\0" |
+	test-tool parse-pathspec-file --pathspec-from-file=- --pathspec-file-nul >actual &&
+
+	cat >expect <<-\EOF &&
+	fileA.t
+	fileB.t
+	EOF
+
+	test_cmp expect actual
+
+I thought we typically prepare the ideal output sample before
+capturing the actual output, so if we follow that convention, the
+above becomes
+
+	cat >expect <<-\EOF &&
+	fileA.t
+	fileB.t
+	EOF
+
+	printf "fileA.t\0fileB.t\0" |
+	test-tool parse-pathspec-file --pathspec-from-file=- --pathspec-file-nul >actual &&
+
+	test_cmp expect actual
+
+
+> +test_expect_success 'quotes' '
+> +	# shell  takes \\\\101 and spits \\101
+> +	# printf takes   \\101 and spits  \101
+> +	# git    takes    \101 and spits     A
+> +	printf "\"file\\\\101.t\"" | test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	fileA.t
+> +	EOF
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success '--pathspec-file-nul takes quotes literally' '
+> +	# shell  takes \\\\101 and spits \\101
+> +	# printf takes   \\101 and spits  \101
+> +	printf "\"file\\\\101.t\"" | test-tool parse-pathspec-file --pathspec-from-file=- --pathspec-file-nul >actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	"file\101.t"
+> +	EOF
+> +	test_cmp expect actual
+> +'
+
+Testing low level machinery like this is of course a good idea, in
+addition to the end-to-end tests that make sure that the machinery
+is called correctly from the higher layer.
+
+Thanks.
