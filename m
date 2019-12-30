@@ -2,110 +2,152 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47A12C2D0C2
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76809C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:38:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0E2FE206DB
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:06:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4496120722
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 18:38:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cTEIwNox"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YSRrBI3r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727504AbfL3SG4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 13:06:56 -0500
-Received: from mail-pg1-f179.google.com ([209.85.215.179]:40762 "EHLO
-        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726602AbfL3SGz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 13:06:55 -0500
-Received: by mail-pg1-f179.google.com with SMTP id k25so18341590pgt.7
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 10:06:55 -0800 (PST)
+        id S1727642AbfL3SiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 13:38:06 -0500
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:54638 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727511AbfL3SiF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 13:38:05 -0500
+Received: by mail-vk1-f202.google.com with SMTP id b68so7977064vkh.21
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 10:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=nom+nP/w5Nd/V0vIlG4c9tcoNHbWQ+151H3bELLeHIc=;
-        b=cTEIwNoxWNKdmFjW6vOB7YLpWe3wUjDTRI2h/1SjeOD5lmp8HCiB/JGX933V4fNEoX
-         wzX8m+Ha7cHzRZHzEwFIXTuDUKJhqMcYpZ5AunLA1KeLkIUke4JImrhrxe8kfIkcRvfN
-         g/0qTczJXnnpxngTVZtF4dVwer+K1jb0DwQo4vuiyCMHHmWE8BIKQJBgwH+nW0gzPHjU
-         WXQa7cbH81fVBE0vMgQObfpJEo4ik+pTfy/bQjCrE0QZ6PScI7vDkLzMH2/6jVhNx5Ub
-         cVjb+izlvLfdYOzbmMcQq5f0g/XncvJbjFjv6EgnD8K0q1tzatU0UHs9sE/cYRka4fz8
-         +bKA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=BXor36qigWiytS67QOq7/kGUwZRz6hgn6BHuHQ5JTYU=;
+        b=YSRrBI3r2HRxcYsBaaUfyDsIIiZy1+xuGLWpCEpdn2RnCeBiYV5uMjuGKq52NbN8Ik
+         ueo/f94ppeCiBEmor/5BZuStAV2PmmJ84gK2mE/WT1HsKacuPp945gU4HTPSn9VWAdYV
+         Wp5O54M6jgfnk7IZ2sLTbNS2/DuYiRa5+61RThGbFs60X6AWUT5YATG92KHoTkv7JC9a
+         PL1kANjOVwBcdXYWzU3SncWIBvKgXKN995SG/wvp6NSxLH9MPqlEnKUIUuuA5ygwC2kN
+         1gPTS1qGK5TrSkzyWEVTK3nSLUo4CDDlXjeGVMyYiTFlooml/wAnJEX2DNhUpsFgvhPg
+         BvJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=nom+nP/w5Nd/V0vIlG4c9tcoNHbWQ+151H3bELLeHIc=;
-        b=aQZc58bXeflmRa3b51ajpZTVsOzHP4GOneiLWbO2UC1+W9b3ahXqNRqahG8GXx2UOJ
-         QnMb2XHMu6XdK/1AfDbvq/fPF3gPSZRvDZpRkBppqC3rJPfdFdg+ZTCDKKj/tbiwo61l
-         zykr/uC3rENoXa3e2U76rZVPXBFlRZk68PN7vS4287Hfxy1kzdz62sVMjDdmXkRjabLN
-         ZucP01yYf716mxjE8MhkClqoyRUJCKfnE6FFzfYQ+9CNRcKElFxiUYTFcYd4oPJ5ABTR
-         MIobMw3iaJmvLMZKQHHW772cpr5beNPBDj1b2mHiHI81ilflPxsas2vDnojObVJyboKu
-         ysWw==
-X-Gm-Message-State: APjAAAVxtjRlvzi66jcV/zz95PQQQ7kJHVW2C5/GrphI3bHkeLo7Cf3c
-        xlUs+OdSgrbme5+zvVRzSwHOTYxP
-X-Google-Smtp-Source: APXvYqw5MUDmd+0aw6eLIV6hdTeKsROu02UFUoNNsO5m0qCwTBZ3BPftEsJ7MQPQHFNK0SGBPEAeiQ==
-X-Received: by 2002:a62:1b4d:: with SMTP id b74mr74609373pfb.59.1577729215224;
-        Mon, 30 Dec 2019 10:06:55 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id b21sm54397936pfp.0.2019.12.30.10.06.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Dec 2019 10:06:54 -0800 (PST)
-Date:   Mon, 30 Dec 2019 10:06:53 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: ERANGE strikes again on my Windows build; RFH
-Message-ID: <20191230180653.GA57251@google.com>
-References: <6eb02a73-9dcb-f1fc-f015-80e71e9910d6@kdbg.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6eb02a73-9dcb-f1fc-f015-80e71e9910d6@kdbg.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=BXor36qigWiytS67QOq7/kGUwZRz6hgn6BHuHQ5JTYU=;
+        b=V9GlyurvDA472GoMLxyFcX0oC04S6fxhNkXszk4dQtv/mQskKitKSFYaLPR+QaPX8Q
+         wTYml6jbfpM1xR9/ElMZSfwZJj7kjTXpgZJQ3gJGyoc6QY9GePwzUGtFXlxT1W4HX40h
+         g4X20oiv2vVTn2/rGCyvMsF7H2woGFKTWcMb9pBG16GYYKUa89tAWqzLP0b6VzIhP/Uv
+         o51fz8c8u5YAZBQbNZxKJz/sRx8/g6ScxaV38ZweRC/D4CF63dhUAfxBURactCXxJ1q3
+         PdfxXnnWJBQe4tZpqeOpoXBZsgP730aUhf1gruIdldlCkUkmmjSGwxDrsb0d91lnhwMV
+         CImQ==
+X-Gm-Message-State: APjAAAU+c6UzGjnVLWpRYKL/h8MvPovWnf1uG9GDac0BMFaDiV5f4Jro
+        6Ps6LqJOTLNq/DFWSTxe1x6hDuFrugLXTa3zmKYy
+X-Google-Smtp-Source: APXvYqxUgbrI/EvsYdsQ3fdfxLuGaitnuerZLFcIlXR9+B+IapSkAmFYsBioRuxemlaxvUFztxWE2wQnr6mPCWZjY5FL
+X-Received: by 2002:ab0:2e92:: with SMTP id f18mr39770800uaa.143.1577731084573;
+ Mon, 30 Dec 2019 10:38:04 -0800 (PST)
+Date:   Mon, 30 Dec 2019 10:38:01 -0800
+In-Reply-To: <xmqqlfqxhzvu.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20191230183801.28538-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqlfqxhzvu.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
+Subject: Re: [PATCH] revision: allow missing promisor objects on CLI
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, matvore@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> >  	object = get_reference(revs, arg, &oid, flags ^ local_flags);
+> >  	if (!object)
+> > -		return revs->ignore_missing ? 0 : -1;
+> > +		/*
+> > +		 * Either this object is missing and ignore_missing is true, or
+> > +		 * this object is a (missing) promisor object and
+> > +		 * exclude_promisor_objects is true.
+> 
+> I had to guess and dig where these assertions are coming from; we
+> should not force future readers of the code to.
+> 
+> At least this comment must say why these assertions hold.  Say
+> something like "get_reference() yields NULL on only such and such
+> cases" before concluding with "and in any of these cases, we can
+> safely ignore it because ...".
 
-Johannes Sixt wrote:
+OK, will do.
 
-> In sha1-file.c:read_object_file_extended() we have the following pattern:
->
-> 	errno = 0;
-> 	data = read_object(r, repl, type, size);
-> 	if (data)
-> 		return data;
->
-> 	if (errno && errno != ENOENT)
-> 		die_errno(_("failed to read object %s"), oid_to_hex(oid));
->
-> That is, it is expected that read_object() does not change the value of
-> errno in the non-error case. I find it intriguing that we expect a quite
-> large call graph that is behind read_object() to behave this way.
+> I think the two cases the comment covers are safe for this caller to
+> silently return 0.  Another case get_reference() yields NULL is when
+> oid_object_info() says it is a commit but it turns out that the
+> object is found by repo_parse_commit() to be a non-commit, isn't it?
+> I am not sure if it is safe for this caller to just return 0.  There
+> may be some other "unusual-but-not-fatal" cases where get_reference()
+> does not hit a die() but returns NULL.
 
-Yes, this seems dubious.
+I don't think there is any other case where get_reference() yields NULL,
+at least where I based my patch (99c33bed56 ("Git 2.25-rc0",
+2019-12-25)). Quoting the entire get_reference():
 
-In fact this is only inspecting errno in the returned-NULL case.  If I
-look only at the code above and not at the implementation of
-read_object, then I would say that the bug is the 'errno &&' part: when
-errno is meaningful for a function for a given return value, the usual
-convention is
+> static struct object *get_reference(struct rev_info *revs, const char *name,
+>                                     const struct object_id *oid,
+>                                     unsigned int flags)
+> {
+>         struct object *object;
+> 
+>         /*
+>          * If the repository has commit graphs, repo_parse_commit() avoids
+>          * reading the object buffer, so use it whenever possible.
+>          */
+>         if (oid_object_info(revs->repo, oid, NULL) == OBJ_COMMIT) {
+>                 struct commit *c = lookup_commit(revs->repo, oid);
+>                 if (!repo_parse_commit(revs->repo, c))
+>                         object = (struct object *) c;
+>                 else
+>                         object = NULL;
+>         } else {
+>                 object = parse_object(revs->repo, oid);
+>         }
 
- (1) it *always* sets errno for errors, not conditionally
- (2) it never sets errno to 0
+No return statements at all prior to this line.
 
-There are some exceptions (like strtoul) but they are few and
-unfortunate, not something to be imitated.
+>         if (!object) {
+>                 if (revs->ignore_missing)
+>                         return object;
 
-Do you have more details about the case where read_object is expected
-to produce errno == 0?  I'm wondering whether we forgot to set 'errno
-= ENOENT' explicitly somewhere.
+Return NULL (the value of object).
 
-Thanks and hope that helps,
-Jonathan
+>                 if (revs->exclude_promisor_objects && is_promisor_object(oid))
+>                         return NULL;
+
+Return NULL.
+
+>                 die("bad object %s", name);
+
+Die (so this function invocation never returns). In conclusion, if
+object is NULL at this point in time, get_reference() either returns
+NULL or dies.
+
+>         }
+
+Since get_reference() did not return NULL or die, object is non-NULL
+here.
+
+>         object->flags |= flags;
+>         return object;
+
+Nothing has overridden object since, so we're returning non-NULL here.
+
+> }
+
+So I think get_reference() only returns NULL in those two safe cases.
+(Or did I miss something?)
