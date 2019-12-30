@@ -2,94 +2,87 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7F54C2D0C3
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3D59C2D0C3
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:57:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8DA17206DB
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:56:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A547206DB
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:57:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="X6Qf5vO5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727741AbfL3V4M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 16:56:12 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43427 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727691AbfL3V4M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 16:56:12 -0500
-Received: by mail-wr1-f68.google.com with SMTP id d16so33836920wre.10
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 13:56:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=slzVo2GqwA2ELGujWLwfw6SWmA8y1lIwnXMRJg6Iy58=;
-        b=D6ptv1/BVmDpVOg21dWUqn5ldUQNZ7OQKINTfWR+v0YBc6gBRca2dXQs+zI2BTqZKt
-         Dthp66Vo2z+5bH0WK6zyiHyzA+bEcwjhIR71jrOjK/KTVdbM1Lh4vu2It4f/5OiakdyN
-         S85uSxt5+s/l/IeiJQsum2OTk+0ytx8NJ9EV3jXwHBzRLpmAZnfw4mXu654YnZ4Ng0GY
-         DAJFhH+m/QTsNwHFxpuJO4qQLekprb3w+xgvIi7wULgN93FfXdRzbbhlCQWPhQrfTMac
-         /T0YpNmwsmY5wZxc6h79naBdkr9//NRpayZtm3nqsO5uRdt+ID3j7da8ecKNjULs4qkJ
-         ntRw==
-X-Gm-Message-State: APjAAAVraKHn67obKl6Q/smbUw49BKfFcZzm5TIR3zvp7/JRKuQ3+y0f
-        mBtXfpNlaX2eIKG3j4kHiuUXJ4DODF3vcz+Ezlrl6vKP
-X-Google-Smtp-Source: APXvYqxv1ZZfHn0Wm5P0U3pszOukHHKbC99IxTELQXR8Goqm0jjpxuchEC656xJlMIm3jRidbiVMgiwXBIEAcYxGaqw=
-X-Received: by 2002:adf:f382:: with SMTP id m2mr69157268wro.163.1577742969724;
- Mon, 30 Dec 2019 13:56:09 -0800 (PST)
+        id S1727731AbfL3V55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 16:57:57 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:53974 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727695AbfL3V55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 16:57:57 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B59B95E31;
+        Mon, 30 Dec 2019 16:57:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HtKyp8Tmf6b9C3BmORSwmXOSmSo=; b=X6Qf5v
+        O5RRLQSIdSV4nbCmHkadN49aiQLQmn2tqPEEyj5kP4h3/naGDs+UU/KzZVMpswp5
+        edWVbqQdV+pgnkNbFg4BBotekYzEyb2XAAopAXZoqqvVEPHthebD8cL8bj0NllEM
+        uUxz1pcFR30ajwhFaj0v4oyEa/nZpYXIm1I+A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yFhFA9RVUrArNH+xf77FBH36eNCgUUSO
+        hK4Iv/MPB43QR16wrwa4NifioUON3iLKyKY+eQ0WtuY9ZJX3+zi9TQ+vRK/n+jfg
+        ukA20V44fhS/teLGdfqgM8c7msH1DSv7lh7aG6dEdPoYlTKvm2S6QXBZhHLJE3M+
+        PaCTKqVsK5w=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 03A5A95E30;
+        Mon, 30 Dec 2019 16:57:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2741E95E2F;
+        Mon, 30 Dec 2019 16:57:52 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: only test index entries for backslashes, not tree entries
+References: <pull.682.git.git.1577382151.gitgitgadget@gmail.com>
+        <4a120fd0b32d2d6492eac6b0494ad6b1bc2ba500.1577382151.git.gitgitgadget@gmail.com>
+        <xmqqr20qlxtz.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1912262209190.46@tvgsbejvaqbjf.bet>
+Date:   Mon, 30 Dec 2019 13:57:49 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1912262209190.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Thu, 26 Dec 2019 22:16:15 +0100 (CET)")
+Message-ID: <xmqqk16dfpcy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.503.git.1577727747.gitgitgadget@gmail.com>
- <pull.503.v2.git.1577733329.gitgitgadget@gmail.com> <6193dc7396b9cc6cb78f382c1b1679d6bb455fe4.1577733329.git.gitgitgadget@gmail.com>
-In-Reply-To: <6193dc7396b9cc6cb78f382c1b1679d6bb455fe4.1577733329.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 30 Dec 2019 16:55:58 -0500
-Message-ID: <CAPig+cSSqAxuHYg9DxuJzC7m2HAt8F2YPNxT0x5+SksCGic4MA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] t: fix quotes tests for --pathspec-from-file
-To:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6D24DDAC-2B4F-11EA-BF46-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 30, 2019 at 2:15 PM Alexandr Miloslavskiy via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> While working on the next patch, I also noticed that quotes testing via
-> `"\"file\\101.t\""` was somewhat incorrect: I escaped `\` one time while
-> I had to escape it two times! Tests still worked due to `"` being
-> preserved which in turn prevented pathspec from matching files.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Turns out that this inconsistency is only in Git for Windows v2.24.1(2)
+> but not in current `master` of Git, so I simply struck that part from the
+> commit message.
+> ...
+> I rephrased it to:
 >
-> Fix this by properly escaping one more time.
->
-> Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-> ---
-> diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
-> @@ -109,7 +109,10 @@ test_expect_success 'CRLF delimiters' '
-> -       printf "\"file\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
-> +       # shell  takes \\\\101 and spits \\101
-> +       # printf takes   \\101 and spits  \101
-> +       # git    takes    \101 and spits     A
-> +       printf "\"file\\\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
+>     So let's loosen the requirements: we now leave tree entries with
+>     backslashes in their file names alone, but we do require any entries
+>     that are added to the Git index to contain no backslashes on Windows.
+> ...
 
-So, you want git-checkout to receive the following, quotes, backslash,
-and no newline, on its standard input?
+We are in -rc so there is no real rush, but I take these to mean
+that I should just leave this loose end hanging untied, and wait
+for an updated version to replace it sometime early next year.
 
-    "file\101.t"
-
-If so, another way to achieve the same without taxing the brain of the
-reader or the next person who works on this code would be:
-
-    tr -d "\012" | git checkout --pathspec-from-file=- HEAD^1 <<-\EOF &&
-    "file\101.t"
-    EOF
-
-Although it's three lines long, the body of the here-doc is the
-literal text you want sent to the Git command, so no counting
-backslashes, and no need for a lengthy in-code comment.
-
-But is the "no newline" bit indeed intentional? If not, then a simple
-echo would be even easier (though with a bit more escaping):
-
-    echo "\"file\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
+Thanks and happy new year.
