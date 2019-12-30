@@ -2,80 +2,78 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CA9C2D0C2
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 13:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB17C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:37:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B834520663
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 13:12:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FF8B20722
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:37:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lsQ65J+U"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9Wi6yRy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbfL3NL7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 08:11:59 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:40886 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727397AbfL3NL7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 08:11:59 -0500
-Received: by mail-qt1-f196.google.com with SMTP id e6so29599021qtq.7
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 05:11:58 -0800 (PST)
+        id S1727565AbfL3Ohb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 09:37:31 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:33805 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727445AbfL3Ohb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 09:37:31 -0500
+Received: by mail-qk1-f194.google.com with SMTP id j9so26756975qkk.1
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 06:37:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=puDRbHsEWCSSbaTEqhVSCiWumRU8FMDlsnYBwrR5Bf8=;
-        b=lsQ65J+UXUYbGt7rgtgtOvhLtDxK3gYnX8BaT8IoZRk0fY4NVtqayLVSK/whGQ/9dX
-         ET+D4zSx4/JMEvxZymYL99itcCu2axWvl1WW6Pn/f8Y9uR1hcl4IyLEQ714haS7Y8VFk
-         kUCS+/fb8c7dURx2wotHTwNrwcIWTzmyM+d8kX8jIvDA09YpUJ0k6YRsmKaC5FiJGAuT
-         PwdqN/BGgmmflhLkT7tyMLYGGGSvgq4AjrzQ420O6jtc9runf4UnHq0UkW6zrZ+8K4Ud
-         qDdzuc7TqJsAAKnJlAf5Qqm0LMqzNOzVyaxkuRz4a632+trx9ZWxUgzQHEVIa8YkSn9A
-         +oVA==
+        bh=Ev8OwRwsT1PPAfhkdwVkXGSdXVHVu+aOJPkWLHfN7SA=;
+        b=K9Wi6yRygYI4z5iGX2x7PHrBq7FptFlsCnJgFfps8PcEdJr1j6+42VuGmLuI0Fw+he
+         PPIuyQPL/f5Pl2uai4eSvoGkLg86TalhkvWZM348SYhYdkSiIq4Sy1HIgBYE94S8mwdG
+         rDbPa6pGdPiziIk8tj/uFveiMEHT03gOPeSkyUbplV3SG2foNSa5VzJ2OJExEPbz2Cc7
+         zg0aORFcdldhTkTaa9NGXJjvmK4nT/lIdRYL7h5IhOg/40CqAU8N1CUh/UwFlJw3QBb6
+         RNsgeX26jtfgVqNMqUjg6olIOxvI/GdJbBpByOglAqwMnOoMbnz5fVOhbT/ZoM/ynxF7
+         x+qQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=puDRbHsEWCSSbaTEqhVSCiWumRU8FMDlsnYBwrR5Bf8=;
-        b=AxPmUYF+aRujYdlxTDFgxgumW59k6K2QgOxI5RBvZs/HzHQ8t42/HkYDHJMunISqtp
-         y5hyrZ6XgpCa/hmwWorT/EOlIsxmmE2IeYlblOtObQJxt7uWABIM+aqwHv8AbLIP3FVn
-         8rzU/PzHNENPvbGIW51GcZS6+h/Lm2BUw/Y/ZhaWIts+Vjd3yfhfZOhyt0tctF2dFLH0
-         4W2yJjiIJIONgzE3lTKj3c+W3BsQMaG1di4F2C7QdQFP51EQWqj3SWh+ejKvRDw8vNjM
-         OHjGcPBTkwlO50E1YgPq7+UY44MbtxVzclVABj0Oib9Ztpym3sl3JnWf2yNkubo4Xk2x
-         Ug3Q==
-X-Gm-Message-State: APjAAAVhcfz/ginZX646NRSz+toz6bUEzaEsuB5mir80cuId7JuCImBs
-        AiT8tu3ApfgSrB16FhXsSU4=
-X-Google-Smtp-Source: APXvYqymMxKwQWBOMQXhY/YgynpJ9Sv1IfRn8B2f7qaDEFpvTjn4UEOG7ztvevQGkpfamd5er/aTWw==
-X-Received: by 2002:aed:22c8:: with SMTP id q8mr49864402qtc.133.1577711518285;
-        Mon, 30 Dec 2019 05:11:58 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:8072:d2a0:e229:7f78? ([2001:4898:a800:1010:31a8:d2a0:e229:7f78])
-        by smtp.gmail.com with ESMTPSA id d8sm13527978qtr.53.2019.12.30.05.11.57
+        bh=Ev8OwRwsT1PPAfhkdwVkXGSdXVHVu+aOJPkWLHfN7SA=;
+        b=uccEszaEg0Cee7CtT/mDJa1qaLTYl1cMDJzOu4gMiYtdNC8YFQRWwFCW6E/6HKCWNK
+         oJrgpbw7g2/UgdbWBoKAO9Csb6fpebdO8J9tKz/USTWInXQ+EUwJuiUE/dsHZ2MJzPjo
+         apstweBl7p+BrLSAFS0AEOrGVuA8yTN2WsVtndoXJdNiSLq+kUZBg+B7v8HKy0ws6YiV
+         B7yd652Q/zHBOb+01eHf7KxirN39zgdShFbWLlq6YVyfe4NVIaig+JnHc/qsqTB9ZoXr
+         Ll5NYtfDnqhdW6MAKDSA04Lumd1FkParZKYFGFdgAXVnGsArxxZganKAUYwehZ24pHWh
+         kcaA==
+X-Gm-Message-State: APjAAAVZ+KZ9qfUkPBBYNwhJtng02yZD29d03PbX97VbrBsS0/v/CpK4
+        zaAQFxdWMiNopXgyJwekAKg=
+X-Google-Smtp-Source: APXvYqzNtjg/XueSJ8GsZPZSqnvBysk1uVg1j+JLdE31NwRgiG85GlnEl42j1LZU+Vkf23wcAjwiOQ==
+X-Received: by 2002:a37:9dcd:: with SMTP id g196mr55854925qke.168.1577716649587;
+        Mon, 30 Dec 2019 06:37:29 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:58a9:3b9:96c0:ccb8? ([2001:4898:a800:1010:9df:3b9:96c0:ccb8])
+        by smtp.gmail.com with ESMTPSA id a24sm12468458qkl.82.2019.12.30.06.37.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Dec 2019 05:11:57 -0800 (PST)
-Subject: Re: [PATCH v2 2/2] sparse-checkout: document interactions with
- submodules
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Jon Simons <jon@jonsimons.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
+        Mon, 30 Dec 2019 06:37:29 -0800 (PST)
+Subject: Re: [PATCH 1/3] commit-graph: examine changed-path objects in pack
+ order
+To:     Jeff King <peff@peff.net>
+Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, szeder.dev@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
         Junio C Hamano <gitster@pobox.com>
-References: <pull.500.git.1577393347.gitgitgadget@gmail.com>
- <pull.500.v2.git.1577472469.gitgitgadget@gmail.com>
- <331bb7d6fbec6f2f429feb36cf32e0931307ae0b.1577472469.git.gitgitgadget@gmail.com>
- <CAPig+cTvFW_84TqKsOPjjBM37cX1OL9uX15APcEYpuKVjvM+dg@mail.gmail.com>
+References: <20191222093036.GA3449072@coredump.intra.peff.net>
+ <20191222093206.GA3460818@coredump.intra.peff.net>
+ <8b331ef6-f431-56ef-37a9-1d6e263ea0fe@gmail.com>
+ <20191229061246.GB220034@coredump.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d934ac0a-d6d7-cf65-5d61-1196abc63ff8@gmail.com>
-Date:   Mon, 30 Dec 2019 08:11:57 -0500
+Message-ID: <b9bd0c2e-63fc-5658-7a24-b8ab078acd44@gmail.com>
+Date:   Mon, 30 Dec 2019 09:37:28 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
  Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cTvFW_84TqKsOPjjBM37cX1OL9uX15APcEYpuKVjvM+dg@mail.gmail.com>
+In-Reply-To: <20191229061246.GB220034@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -84,62 +82,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/27/2019 3:20 PM, Eric Sunshine wrote:
-> On Fri, Dec 27, 2019 at 1:48 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
->> @@ -340,4 +340,32 @@ test_expect_success 'cone mode: set with core.ignoreCase=true' '
->> +test_expect_success 'interaction with submodules' '
->> +       ...
->> +       cat >expect <<-EOF &&
->> +               a
->> +               folder1
->> +               modules
->> +       EOF
+On 12/29/2019 1:12 AM, Jeff King wrote:
+> On Fri, Dec 27, 2019 at 09:51:02AM -0500, Derrick Stolee wrote:
 > 
-> You would normally use \-EOF rather than -EOF to make it clear that no
-> interpolation is needed/expected within the here-doc body. However,
-> this script is already full of -EOF when \-EOF ought to be used, so
-> being consistent with existing tests may override an objection.
+>> On 12/22/2019 4:32 AM, Jeff King wrote:
+>>> Looking at the diff of commit objects in pack order is much faster than
+>>> in sha1 order, as it gives locality to the access of tree deltas
+>>> (whereas sha1 order is effectively random). Unfortunately the
+>>> commit-graph code sorts the commits (several times, sometimes as an oid
+>>> and sometimes a pointer-to-commit), and we ultimately traverse in sha1
+>>> order.
+>>>
+>>> Instead, let's remember the position at which we see each commit, and
+>>> traverse in that order when looking at bloom filters. This drops my time
+>>> for "git commit-graph write --changed-paths" in linux.git from ~4
+>>> minutes to ~1.5 minutes.
+>>
+>> I'm doing my own perf tests on these patches, and my copy of linux.git
+>> has four packs of varying sizes (corresponding with my rare fetches and
+>> lack of repacks). My time goes from 3m50s to 3m00s. I was confused at
+>> first, but then realized that I used the "--reachable" flag. In that
+>> case, we never run set_commit_pos(), so all positions are equal and the
+>> sort is not helpful.
+>>
+>> I thought that inserting some set_commit_pos() calls into close_reachable()
+>> and add_missing_parents() would give some amount of time-order to the
+>> commits as we compute the filters. However, the time did not change at
+>> all.
+>>
+>> I've included the patch below for reference, anyway.
 > 
-> Likewise, please note for future reference that the usual way
-> here-docs are formatted in Git test scripts is to indent the body of
-> the here-doc to the same level as the command which opens it. That is:
+> Yeah, I expected that would cover it, too. But instrumenting it to dump
+> the position of each commit (see patch below), and then decorating "git
+> log" output with the positions (see script below) shows that we're all
+> over the map:
+> 
+>   *   3
+>   |\  
+>   | * 2791
+>   | * 5476
+>   | * 8520
+>   | * 12040
+>   | * 16036
+>   * |   2790
+>   |\ \  
+>   | * | 5475
+>   | * | 8519
+>   | * | 12039
+>   | * | 16035
+>   | * | 20517
+>   | * | 25527
+>   | |/  
+>   * |   5474
+>   |\ \  
+>   | * | 8518
+>   | * | 12038
+>   * | |   8517
+>   [...]
 
-Thanks for pointing out the difference, except...
+This makes a lot of sense why the previous approach did not work. Thanks!
+
+> I think the root issue is that we never do any date-sorting on the
+> commits. So:
+> 
+>   - we hit each ref tip in lexical order; with tags, this is quite often
+>     the opposite of reverse-chronological
+> 
+>   - we traverse breadth-first, but we don't order queue at all. So if we
+>     see a merge X, then we'll next process X^1 and X^2, and then X^1^,
+>     and then X^2^, and so forth. So we keep digging equally down
+>     simultaneous branches, even if one branch is way shorter than the
+>     other. Whereas a regular Git traversal will order the queue by
+>     commit timestamp, so it tends to be roughly chronological (of course
+>     a topo-sort would work too, but that's probably overkill).
+> 
+> I wonder if this would be simpler if "commit-graph --reachable" just
+> used the regular revision machinery instead of doing its own custom
+> traversal.
+
+Instead, why not use our already-computed generation numbers? That seems
+to improve the time a bit. (6m30s to 4m50s)
+
+-->8--
+
+From: Derrick Stolee <dstolee@microsoft.com>
+Date: Fri, 27 Dec 2019 09:47:49 -0500
+Subject: [PATCH] commit-graph: examine commits by generation number
+
+When running 'git commit-graph write --changed-paths', we sort the
+commits by pack-order to save time when computing the changed-paths
+bloom filters. This does not help when finding the commits via the
+--reachable flag.
+
+If not using pack-order, then sort by generation number before
+examining the diff. Commits with similar generation are more likely
+to have many trees in common, making the diff faster.
+
+On the Linux kernel repository, this change reduced the computation
+time for 'git commit-graph write --reachable --changed-paths' from
+6m30s to 4m50s.
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ commit-graph.c | 33 ++++++++++++++++++++++++++++++---
+ 1 file changed, 30 insertions(+), 3 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index bf6c663772..fe4ab545f2 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -72,6 +72,25 @@ static int commit_pos_cmp(const void *va, const void *vb)
+ 	       commit_pos_at(&commit_pos, b);
+ }
  
->     cat >expect <<\-EOF &&
++static int commit_gen_cmp(const void *va, const void *vb)
++{
++	const struct commit *a = *(const struct commit **)va;
++	const struct commit *b = *(const struct commit **)vb;
++
++	/* lower generation commits first */
++	if (a->generation < b->generation)
++		return -1;
++	else if (a->generation > b->generation)
++		return 1;
++
++	/* use date as a heuristic when generations are equal */
++	if (a->date < b->date)
++		return -1;
++	else if (a->date > b->date)
++		return 1;
++	return 0;
++}
++
+ char *get_commit_graph_filename(const char *obj_dir)
+ {
+ 	char *filename = xstrfmt("%s/info/commit-graph", obj_dir);
+@@ -849,7 +868,8 @@ struct write_commit_graph_context {
+ 		 report_progress:1,
+ 		 split:1,
+ 		 check_oids:1,
+-		 bloom:1;
++		 bloom:1,
++		 order_by_pack:1;
+ 
+ 	const struct split_commit_graph_opts *split_opts;
+ 	uint32_t total_bloom_filter_size;
+@@ -1245,7 +1265,11 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+ 
+ 	ALLOC_ARRAY(sorted_by_pos, ctx->commits.nr);
+ 	COPY_ARRAY(sorted_by_pos, ctx->commits.list, ctx->commits.nr);
+-	QSORT(sorted_by_pos, ctx->commits.nr, commit_pos_cmp);
++
++	if (ctx->order_by_pack)
++		QSORT(sorted_by_pos, ctx->commits.nr, commit_pos_cmp);
++	else
++		QSORT(sorted_by_pos, ctx->commits.nr, commit_gen_cmp);
+ 
+ 	for (i = 0; i < ctx->commits.nr; i++) {
+ 		struct commit *c = sorted_by_pos[i];
+@@ -1979,6 +2003,7 @@ int write_commit_graph(const char *obj_dir,
+ 	}
+ 
+ 	if (pack_indexes) {
++		ctx->order_by_pack = 1;
+ 		if ((res = fill_oids_from_packs(ctx, pack_indexes)))
+ 			goto cleanup;
+ 	}
+@@ -1988,8 +2013,10 @@ int write_commit_graph(const char *obj_dir,
+ 			goto cleanup;
+ 	}
+ 
+-	if (!pack_indexes && !commit_hex)
++	if (!pack_indexes && !commit_hex) {
++		ctx->order_by_pack = 1;
+ 		fill_oids_from_all_packs(ctx);
++	}
+ 
+ 	close_reachable(ctx);
+ 
+-- 
+2.25.0.rc0
 
-This should be <<-\EOF
 
->     a
->     folder1
->     modules
->     EOF
-> 
-> But, again, this script is already full of these malformatted
-> here-docs, so maintaining consistency with the existing test in the
-> script is probably okay.
 
-Hm. Having these lines have the same tabbing hurts my eyes (it is
-harder to see where the contents end, much like if we didn't tab
-inside a subshell or an if block).
-
-This is also a place where we are inconsistent, and it's not just
-my fault for writing the test script in my own style. Here are a
-few scripts that tab the same way as here:
-
-	t0008-ignore.sh
-	t4124-apply-ws-rule.sh
-	t9400-diff-highlight.sh
-
-These are definitely the minority. I just mention them so anyone
-who does a cleanup of this whitespace inconsistency takes the time
-to look for all examples.
-
-For now, I'll fix the here-doc interpolation issue for this test,
-but keep the whitespace matching the rest of the test script. I'll
-add this concern to my next series.
-
-Thanks,
--Stolee
