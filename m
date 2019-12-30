@@ -6,86 +6,92 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D22CCC2D0C3
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25943C2D0C3
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:44:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8E22120658
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:39:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C3AB420658
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 21:44:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MGfRW4dJ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fnUiJqA2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727750AbfL3Vix (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 16:38:53 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62099 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727691AbfL3Viw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 16:38:52 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A8783BF43;
-        Mon, 30 Dec 2019 16:38:50 -0500 (EST)
+        id S1727771AbfL3VoC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 16:44:02 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56572 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727691AbfL3VoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 16:44:02 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D28D595D78;
+        Mon, 30 Dec 2019 16:44:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=erIwWj3oIfNE7x6/KX18J3wqxbU=; b=MGfRW4
-        dJKO1gYyGGzystxOlspkOyKftKNZ51ua+84gFKS7hWxM2+/VxSqXTITb/Qjk/BMJ
-        kplxPPQ7vAGqiMj8uzcDzBvLs/MH7T5E67tEsw0MnWQu+Z5rPkxPwlrDLcMbnz5v
-        y2DaZJzoul8lwvL+jxsKloKtsk0Fp1Q9tAPjk=
+        :content-type; s=sasl; bh=GxRbn9K3F6hCCQSJqSiYGpUcoIk=; b=fnUiJq
+        A2Jg+AdiZ+S+qIR6SxThuEt4MzfWi33uoXQ6oXQmuDSzz85SOznq4tEHTdBDrh0M
+        xDbXGt/N+tKvGiCn3zfF6YlaqmB2gnrS3MdCJj95/dNQ4XCHB2CUH0W8cO+1irvq
+        6AeOQUZttQuJpxpVzcbkhHoqF/33WjYtm8tQs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=wX18aidwmmuGXHoX+kQ8XqVgCn/FaoDk
-        XKHY/mGuxjaiUcQv+sdYi1afPP8l2MGwDRDLj35ETwPvfLGnGphCdJUFe/ZmmSiA
-        ggAPX0Aoarn1NMmfLvvktAabq4llsbWGkQfGr9VU744hGfB3lkIOQ/WfYiVbPH2N
-        Lh8roG9wQxk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 605553BF42;
-        Mon, 30 Dec 2019 16:38:50 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=DnM2A3L8tIDR5yWMfM3srQTRQ2f6HKuf
+        9huSl0GaAXrKMC4A+Md+IhZ4atDVpb42Gmc7+bJRkMHOZw54H5tynPyUxuqkANsp
+        YwHuRCOwJ7Dw+Y8wl0lLs6/lOT3mDaGfvVl47fPC5Vjv+bEaRdrN1admzzqXw/AX
+        F9rDuwYABbw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CADED95D77;
+        Mon, 30 Dec 2019 16:44:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C99AE3BF41;
-        Mon, 30 Dec 2019 16:38:49 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EE76E95D74;
+        Mon, 30 Dec 2019 16:43:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 01/17] Makefile: alphabetically sort += lists
-References: <cover.1571246693.git.liu.denton@gmail.com>
-        <cover.1577185374.git.liu.denton@gmail.com>
-        <31055cdac4a5bfc48cf6f18179f4e9bce9a04c8c.1577185374.git.liu.denton@gmail.com>
-Date:   Mon, 30 Dec 2019 13:38:48 -0800
-In-Reply-To: <31055cdac4a5bfc48cf6f18179f4e9bce9a04c8c.1577185374.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Tue, 24 Dec 2019 06:04:58 -0500")
-Message-ID: <xmqqwoadfq8n.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] sha1-file: remove OBJECT_INFO_SKIP_CACHED
+References: <20191230211027.37002-1-jonathantanmy@google.com>
+Date:   Mon, 30 Dec 2019 13:43:56 -0800
+In-Reply-To: <20191230211027.37002-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Mon, 30 Dec 2019 13:10:27 -0800")
+Message-ID: <xmqqsgl1fq03.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C4423F42-2B4C-11EA-BF35-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7C86DA22-2B4D-11EA-99CE-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Note that if we omit file prefixes, the lists aren't sorted in strictly
-> alphabetical order (e.g. archive.o comes after archive-zip.o instead of
-> before archive-tar.o). This is intentional ...
+> In a partial clone, if a user provides the hash of the empty tree ("git
+> mktree </dev/null" - for SHA-1, this is 4b825d...) to a command which
+> requires that that object be parsed, for example:
+>
+>   git diff-tree 4b825d <a non-empty tree>
+>
+> then Git will lazily fetch the empty tree.
 
-That's fine, but then we shouldn't label it as "alphabetically sort".
+That sounds like a bug.  Shouldn't some objects like empty tree and
+empty blob whose names are hardcoded come internally without being
+fetched from anywhere?
 
-> because the purpose of
-> maintaining the sorted list is to ensure line insertions are
-> deterministic.
+> There are 2 functions: repo_has_object_file() which does not consult
+> find_cached_object() (which, among other things, knows about the empty
+> tree); and repo_read_object_file() which does. This issue occurs
+> because, as an optimization to avoid reading blobs into memory,
+> parse_object() calls repo_has_object_file() before
+> repo_read_object_file(). In the case of a regular repository (that is,
+> not a partial clone), repo_has_object_file() will return false for the
+> empty tree (thus bypassing the optimization) and...
 
-Truly alphabetic sorting is deterministic, too, so that is *not* the
-reason why you are not being strictly alphabetic.  The true reason
-is because it is easier to apply mechanical sorting in ascii order
-than truly sort alphabetically.  Both are equally deterministic and
-reproducible.  Alphabetic might be easier for humans to see and
-understand, but you value mechanical ease of sorting and that is why
-you chose ascii order over alphabetical sorting.
+OK, that bypassing already sounds wrong.  
 
+> ... it will no longer be the case that
+> repo_has_object_file() doesn't know about empty trees, but
+> repo_read_object_file() does.
+
+Yup, that sounds like the right solution to the bug, with or without
+lazy cloning.
