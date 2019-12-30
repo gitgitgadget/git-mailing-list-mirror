@@ -2,156 +2,128 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8B9FC2D0C0
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 02:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 526ACC2D0DD
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 04:15:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7C7472071E
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 02:32:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Yft8fiAM"
+	by mail.kernel.org (Postfix) with ESMTP id 1DF53207FF
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 04:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbfL3Ccz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 29 Dec 2019 21:32:55 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54356 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726832AbfL3Ccz (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 29 Dec 2019 21:32:55 -0500
-Received: from camp.crustytoothpaste.net (wsip-174-77-115-162.ri.ri.cox.net [174.77.115.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5F7F960433;
-        Mon, 30 Dec 2019 02:32:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1577673174;
-        bh=BwC9BjbiBPGeIEhruHB3YN2glBGbvu8qIVCyIhiW078=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Yft8fiAMP20lmnXYMP5wMN1lh7to81+aQkSKMPInZRxIH2nSFHMOTOxYm8jT6AEx2
-         QR9XkPEZhwYe5I88xBg0fuK5nBmbyIK6nM1dnILPKR9AHzMvQOnArtKCYUvlNMesbJ
-         pHdfbkGwyEaw7KsV9TmLhpPvCq8sfy+hUPjYCsPfptdxzzuUpMEkuoqPKpiIe4PYTq
-         6DahSt7ItRpvMQJDXVzwlr0REKPPIOoaRoVFS/dOkXSRyuozfaiTtve+J/BoKX2fxU
-         CQeTtvBD+J9wH3wxaryk4nAWMT9YxM0OHX1Dqm3IBPRTrYsrA9HVaOVGstBheXOcXX
-         6AG9SAsi9/EcU2rpbDIf4Q9NZkw2zTHeu56NX3GDw9bTW8zHcXz9cditcn8rApBVD9
-         epN37Asg7uvjInvuAFwMa0ueZLz8tFEBuEb1dQCzQQ7x+NAj1ZwjkcIE1FuYzogGzW
-         PZxMOlA6iQY5m/UzEJG3D9MXzQzImN5gUmMbKr0gY5JYY89uGab
-Date:   Mon, 30 Dec 2019 02:32:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Arnaud Bertrand <arnaud.bertrand@abalgo.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Arnaud Bertrand <xda@abalgo.com>
-Subject: Re: [RFC PATCH 0/1] *** Add branchname in commit header ***
-Message-ID: <20191230023250.GC6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Arnaud Bertrand <arnaud.bertrand@abalgo.com>, git@vger.kernel.org,
-        gitster@pobox.com, Arnaud Bertrand <xda@abalgo.com>
-References: <20191229222633.23815-1-arnaud.bertrand@abalgo.com>
+        id S1727082AbfL3EPq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 29 Dec 2019 23:15:46 -0500
+Received: from outgoing-auth-1.mit.edu ([18.9.28.11]:53938 "EHLO
+        outgoing.mit.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S1727069AbfL3EPq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 29 Dec 2019 23:15:46 -0500
+Received: from callcc.thunk.org (96-72-102-169-static.hfc.comcastbusiness.net [96.72.102.169] (may be forged))
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id xBU4FR53025049
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 29 Dec 2019 23:15:28 -0500
+Received: by callcc.thunk.org (Postfix, from userid 15806)
+        id 5E554420485; Sun, 29 Dec 2019 23:15:17 -0500 (EST)
+Date:   Sun, 29 Dec 2019 23:15:17 -0500
+From:   "Theodore Y. Ts'o" <tytso@mit.edu>
+To:     Arnaud Bertrand <xda@abalgo.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Feature request: add a metadata in the commit: the "commited in
+ branch" information
+Message-ID: <20191230041517.GA84036@mit.edu>
+References: <CAEW0o+jV+r1UMZReRXa3g_fyqCYxHTVYVf6pWvjB7_isofbBaw@mail.gmail.com>
+ <xmqqd0c6iuw0.fsf@gitster-ct.c.googlers.com>
+ <CAEW0o+g7vXj841h+4nNK8iSoO758Uh9fLKMCN87RE2w2Nd=CRg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="HWvPVVuAAfuRc6SZ"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20191229222633.23815-1-arnaud.bertrand@abalgo.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+In-Reply-To: <CAEW0o+g7vXj841h+4nNK8iSoO758Uh9fLKMCN87RE2w2Nd=CRg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Dec 30, 2019 at 12:53:56AM +0100, Arnaud Bertrand wrote:
+> Hi Junio,
+> 
+> It really depends how git is used. With big collaborative project
+> (like git or linux kernel), you are totally right.
+> for development limited to a company that has developments with team
+> of 10-20 developers and that uses
+> a correct SCM plan, the name of the branch is regulated and is
+> meaningful, mostly  linked to a bug tracking system
+> system. For audits and  traceability, the branch name is really
+> important... certainly more than the email of the developer ;-)
+> So the "contamination" is negligible compare to the bentefit in this context.
+> It will also helps the graphical tools to have a comprehensive
+> represeintation which can do git even better.
 
---HWvPVVuAAfuRc6SZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Why does it need to be the branch name?  You can add your own extra
+metadata to the git description.  So for example, I might have a git
+commit that looks like this:
 
-On 2019-12-29 at 22:26:32, Arnaud Bertrand wrote:
-> From: Arnaud Bertrand <xda@abalgo.com>
->=20
-> For tracability purpose it is often necessary to know which
-> commit is envolved in a branch
-> Keeping track of the branchname in the commit header
-> will make this traceability easy and will facilitate
-> the graphical toolis that represent the branches and
-> that have today to use complex algorithm to try to
-> determine the branch of a commit that was known at
-> the commit time.
->=20
-> no big change in the code, today rebase is not considered yet
-> I'm waiting feedback about that before touching
-> the rebase code.
+    ext4: avoid declaring fs inconsistent due to invalid file handles
 
-I encourage you to read back in the history of the list as to why we
-haven't done this and why it's not likely to be accepted now, but let me
-provide a few reasons of my own.
+    If we receive a file handle, either from NFS or open_by_handle_at(2),
+    and it points at an inode which has not been initialized, and the file
+    system has metadata checksums enabled, we shouldn't try to get the
+    inode, discover the checksum is invalid, and then declare the file
+    system as being inconsistent.
 
-First, as any contributor to the mailing list can tell you, I am
-absolutely terrible at naming things.  I frequently name my branches
-something that makes sense to me at the time without regard to whether
-that will make sense in the future.  I don't want to memorialize my
-momentary thoughtlessness in the history of the repository forever.
+    ... <details of repro omitted to keep this email short>
 
-Second, one workflow I commonly use is creating a branch with many
-commits and then breaking them down into small series that are logical
-and easy for review.  If I have a branch called "test-fixes-part7" with
-50 commits and then I decide to split that into two branches,
-test-fixes-part7 and test-fixes-part8, by copying the branch and using
-git reset --hard to truncate the old one, I don't want the old branch
-name in my new branch.  A lot of Git workflows assume you can reset and
-rename branches this way and having the branch name in the commit header
-breaks those workflows.
+    Google-Bug-Id: 120690101
+    Upstream-5.0-SHA1: 8a363970d1dc38c4ec4ad575c862f776f468d057
+    Tested: used the repro to verify that open_by_handle_at(2)
+       will not declare the fs inconsistent
+    Effort: storage/ext4       
+    Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+    Change-Id: Iafb6da7c360a4c34b882f7fd6a91e3bb
 
-Third, people reuse branch names.  Right now, I have eight branches with
-test fixes all starting with "test-fixes-part" because I'm working on
-one major project with all of those test fixes.  However, if a developer
-working on another major project also has a lot of changes to the test
-suite, they may have lots of identically named branches, which would be
-confusing, since our identically named test fix branches would relate to
-different projects.  (See my first point.)
+The tie-in to the bug tracking system is done via "Google-Bug-Id:".
+The Effort tag is used to identify which subteam should be responsble
+for rebasing the commit to a newer upstream kernel.  (E.g., how to
+account for all of the patches made on top of 4.14.x when you are
+rebasing to the newer 4.19 long-term-stable kernel, to make sure all
+not-yet-usptreamed commits are carried over during the rebase
+process.)
 
-However, despite the fact that we aren't likely to add this in the
-commit header, there are definitely ways to achieve this.
+The Upstream-X.Y-SHA1: tag indicates that this is an upstream commit
+that was backported to the internal kernel.  If the commit isn't an
+upstream backport, we have a policy (which is enforced via an
+automated bot when the commit goes through Gerritt for review) that
+there must be an "Upstream-Plan: " tag indicating how the committer
+plans to get the change upstream.
 
-If you want to include the branch name in the commit, you can do so with
-a trailer.  git interpret-trailers can then be used to manipulate and
-extract these, and along with a hook, add them automatically if they're
-missing.
+The automated review bot also enforces that a Tested: tag exists,
+describing how the developer tested the change, and Change-Id: is used
+to link the commit to Gerrit, which is how we enforce that all commits
+have to be reviewed by a second engineer before it is allowed into the
+production kernel sources.  We also maintain all of the Gerrit
+comments as history and so we can have accountability as to who
+reviewed a commit before it was submitted into the release repository.
 
-If you're working on a more centralized project and you want to require
-the branch name in your commit trailers, you can set your CI system to
-fail or reject commits that don't contain them.  This is the approach
-that systems like Gerrit use when the required trailers are missing and
-it seems to work reasonably well.
+We also have automated bots which will run checkpatch and note the
+warnings from checkpatch as Gerrit commits; and if the kernel doesn't
+build on a variety of architetures and configurations (e.g., debug,
+installer, etc.) a bot can also report this and add -1 Gerrit review.
 
-Hopefully these suggestions are helpful in getting you the traceability
-you desire without requiring fundamental changes to the way Git works.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+See?  You can do an awful lot without regulating and recording the
+branch name used by the engineer.  We have full audit and traceability
+through the Gerrit reviews, and we can use the Google-Bug-Id to track
+which release versions of which kernels have which bugs fixed.
 
---HWvPVVuAAfuRc6SZ
-Content-Type: application/pgp-signature; name="signature.asc"
+The bottom line is each company is going to have a different workflow
+for doing reviews, linkage to bug tracking systems, auditability, etc.
+If everybody were to demand their unique scheme was to be supported
+directly in Git, it would be a mess.  The scheme that I've described
+above needs no special git features.  It just uses some git hooks as a
+convenience to to developers to help them fill in these required
+fields, using Gerrit for commit review, and some bots which submit
+reviews to Gerrit.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Cheers,
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4JYdIACgkQv1NdgR9S
-9osY0w//bOferbz0VbK47V6+WEMsoLnVSBqBGCCMYawKTLJIMU6geheynU3WhiD8
-0O1985WGnYv1y5Acx8W7ZHFKL3mJvCxrEJZ8DuRB8XoX7NDjPu/vCZzAChKUzH4j
-J82noChCnQDsp7BYVY7L6mQ+wCq5xQx/ne0JATdQ5Z9Ru4Ql1RMxohTXIfI8P3L0
-AaRu04k1MEdoMphwL5dJLGJzCV98ZX2bS2GFYD6NqR7Kic+uE1hm95M00Z+wganr
-C7eSGw/i20cWQLo4D7tJtLkUTzag11bT1gkDIXrK0UivqllFNvvC55JMiRpV+LgG
-E+sui19wkpQ0U8o+ucYXKqKQTcX+n1qY8r3h5U0e9Btb4U/GhEosIT/b8rHZRst4
-t3/PHMkAgSIUdtpK9YBbIjNBl2ApZ4bXPqpU9taeR403NXblph/xZLve2Aazprmm
-5+Iwk7Lg9VHdEI501s1cC/3QpTvif7ldXej5CzVcuZrGalBS8EBlbX/cIbrtGPeh
-HnTqbcnXBMhyildRBi5Mici5rUDhgUwD99XWYQaPO4KLHj3SMWPpVXA3D5MgjHlJ
-BmUdHNFuGpfSApBDzI9RV34VFRl45EzbnicCLB0sRdAUAoYm6CSbCJMzh4zcIn+G
-F544SXLcfaCWMJ+WoBcCbvK/eS1u45X2J1p0J87L2VYqaS9ylFk=
-=cn7H
------END PGP SIGNATURE-----
-
---HWvPVVuAAfuRc6SZ--
+						- Ted
