@@ -2,177 +2,95 @@ Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22A30C2D0C2
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB7BAC2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:51:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E322920722
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:43:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9CC912071E
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 14:51:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mit9aV/F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtEND+/e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727515AbfL3OnM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 09:43:12 -0500
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:39033 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727445AbfL3OnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 09:43:12 -0500
-Received: by mail-ot1-f42.google.com with SMTP id 77so46464699oty.6
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 06:43:11 -0800 (PST)
+        id S1727538AbfL3Ov3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 09:51:29 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:35113 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727397AbfL3Ov3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 09:51:29 -0500
+Received: by mail-qv1-f66.google.com with SMTP id u10so12351754qvi.2
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 06:51:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZwdJWVClQnXz+y1Um5v5Es1byahvwD9YSnSGX3zab1k=;
-        b=Mit9aV/FUN4rECo/GD2PcipK5SBBMwFGHnn+DHQCdPsSikwnHv6bJZiW9nuzIb4mZP
-         MyKZAGXpyKjit/2GtVT6CTAVO5l/v4q4Uk0ShjHHJLmitrg5/eY38kNpRs554SjZlx1A
-         FAL/FEMEEpcIpqXxKCvx45yWHdHsw9+oB2KBnF1jKhouyi08+HN7WpbrXcJ5sQsR30kp
-         4gkFurfyEROEwBkCpgrS3yg0Q6l4b7ayLtUHdaERuZgXe3r4XoSqPZOUbOEH2aDgPpj8
-         i1U2mP+e29TAtfYiqzFiSMfkPpEw7OJ02UUKh2mgNXMWTw5qNdVqr10jQQe6aMM1Bjib
-         hFkA==
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rtDCKUL2KTN9c482ZEu8xbcQOkJknyEeY1wiVRgX5cM=;
+        b=dtEND+/en2EKKuHIuFUoFDQgmpZNGgsQF9SnJY3KxZcW2A/QT6wBxO3UYA5v4VtE7t
+         Y51eRFHGgL199YfTcLhyfmeO3YOMGiGEE92tjOpmMHL4Jsv8OF1sdv7zNroN9v23xP3p
+         fdPxeq20IATebV3xV6DAkL4QYbjh/TghIUmV0Y/nJiuXtqQv3/TUhcsU+quDvHXkNPS0
+         kXPVT4b79EqnPu/AHy2U7+DJ8cSVeRedSJh9qKWUBv/LXOyPUWomKibJsM4FKBkGzJ2p
+         fIZHWc5ZDuyUJonGmMxCRcT1QPuK9uqnbx3r0vYf+y6nQlJXj+4PkFZDWte8kuJHyHuW
+         OBjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZwdJWVClQnXz+y1Um5v5Es1byahvwD9YSnSGX3zab1k=;
-        b=pEgZfm/+QH9Z/mbApicITHnTOeiCLwhKRPLISkrgC4T1C189FQW5yFSkzrFmWDtczj
-         u+qtxdPzJEYEStqRRI2cEAEJTVS/o2VTq+pPF7LXcfKUqFhHlm015/p4LkRyl1YBWih7
-         WcAzERdAm/0104VEJna/kTDbTdJRKEv+Y4RthMjQUPjWi+z++29g7RSltPFyi/RdxgwM
-         Ra2CaFwLx08kxZhsq3+OxugHppj0p8lc0rq3fLYxqkwiAPzLXeU6LxkJ994LYe39NwuV
-         6D0v2dd3e8vXT5ziGCOWgdrguhOeyNEt1MqIQQ8xOoQhG/+mGU6AyViI2n0e37THG68U
-         HpzA==
-X-Gm-Message-State: APjAAAXvi4pV4HhAnjDIyy7rYzfmepRTzSodbce5X3yViTc44svIAdo3
-        rZVfZYOo/Tkz9/GAorhrkJE+xScTMX+QyiV6o0w9DtDF3V4=
-X-Google-Smtp-Source: APXvYqwk0Kj/wa9EuN4WWqA3tqLeNNCAZM0HMucCkpJ4SG15f0TY8MqkDoegWvMxICsRSAxipMUHxsAtHT8+GryCKOI=
-X-Received: by 2002:a9d:62c7:: with SMTP id z7mr66698994otk.189.1577716991409;
- Mon, 30 Dec 2019 06:43:11 -0800 (PST)
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rtDCKUL2KTN9c482ZEu8xbcQOkJknyEeY1wiVRgX5cM=;
+        b=do60xJCGqohM37LzRlBW6IV9yHTkRnz8MFhbqfcEFjpt3U1/xLDY/vLzfJieD2ghii
+         5uZZsitB+xQnzJH8bI5pXhmluItATx21mvCuBZFZ7vZ7YZJ0xkP24mF1y48oGDGz/uAX
+         Bn4J3mJSeGJZdkVH5Gwb5h0a9qpKB+hI8/xcWJmyZiytI7uTtSnAiN+NKlkueWmqhr+8
+         nBfzGWZzqvmmwtmps2XslpuNxo2WmFKLNerroZUgwsv8EEgw4Dqqk+yZ1SSY7/zfzhYH
+         WkOmKm/ocfFVn8zpul31qcncRh3JjjZZleyUY60KgRqr2LNuzT3Ypaqar0M3tRMR3942
+         KJ4w==
+X-Gm-Message-State: APjAAAVQcYr4m8kluf8DLYD+o7vL+fPe4Loyr+qcdkVQ62VfOw1V4MbJ
+        wNuMDA7lBE9poij844OAWzo=
+X-Google-Smtp-Source: APXvYqxtAHa6Rin20ImEPr5mOcef7AhOpqwDwHaLO8SFKgeq1w+QKqxNGeDs6anZl2d4d5XXYlEgBQ==
+X-Received: by 2002:ad4:51cc:: with SMTP id p12mr50221749qvq.113.1577717488044;
+        Mon, 30 Dec 2019 06:51:28 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:58a9:3b9:96c0:ccb8? ([2001:4898:a800:1010:9df:3b9:96c0:ccb8])
+        by smtp.gmail.com with ESMTPSA id b191sm12596504qkg.43.2019.12.30.06.51.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Dec 2019 06:51:27 -0800 (PST)
+Subject: Re: [PATCH 1/3] commit-graph: examine changed-path objects in pack
+ order
+From:   Derrick Stolee <stolee@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Garima Singh via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, szeder.dev@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <20191222093036.GA3449072@coredump.intra.peff.net>
+ <20191222093206.GA3460818@coredump.intra.peff.net>
+ <8b331ef6-f431-56ef-37a9-1d6e263ea0fe@gmail.com>
+ <20191229061246.GB220034@coredump.intra.peff.net>
+ <b9bd0c2e-63fc-5658-7a24-b8ab078acd44@gmail.com>
+Message-ID: <f0579d4c-b44e-e17f-f395-ae8970765f20@gmail.com>
+Date:   Mon, 30 Dec 2019 09:51:27 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-References: <CALqn52MbeiCrEzphMkcjeU6bPbLLaQOa-vzht2156uqVw1wL_g@mail.gmail.com>
- <ea322b4c06dce0332ead3521e45514d10f2a76b8.camel@kaarsemaker.net>
-In-Reply-To: <ea322b4c06dce0332ead3521e45514d10f2a76b8.camel@kaarsemaker.net>
-From:   Adrien LEMAIRE <lemaire.adrien@gmail.com>
-Date:   Mon, 30 Dec 2019 23:42:35 +0900
-Message-ID: <CALqn52MwvhTZ-dAfpg+8VSOQdv84uFei07vYRSj5=jiTYtmPxg@mail.gmail.com>
-Subject: Re: git filters don't get applied to dotfiles
-To:     Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b9bd0c2e-63fc-5658-7a24-b8ab078acd44@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dennis, and thanks for looking into this.
+On 12/30/2019 9:37 AM, Derrick Stolee wrote:
+> On the Linux kernel repository, this change reduced the computation
+> time for 'git commit-graph write --reachable --changed-paths' from
+> 6m30s to 4m50s.
 
-I cannot reproduce this issue anymore, and it works as expected:
+I apologize, these numbers are based on the AzureDevOps repo, not the
+Linux kernel repo. After re-running with the Linux kernel repo my
+times improve from 3m00s to 1m37s.
 
-$ GIT_TRACE=2 config add .mailrc
-23:31:05.135580 git.c:439               trace: built-in: git add .mailrc
-23:31:05.135902 run-command.c:663       trace: run_command: 'sed -e
-'\''s/gmail.com:.*@smtp/gmail.com:PASSWORD@smtp/'\'''
+-Stolee
 
-$ config diff --cached
-diff --git a/.mailrc b/.mailrc
-new file mode 100644
-index 0000000..2698128
---- /dev/null
-+++ b/.mailrc
-@@ -0,0 +1,4 @@
-+account gmail {
-+  set v15-compat
-+  set mta=smtp://lemaire.adrien%40gmail.com:PASSWORD@smtp.gmail.com:587
-smtp-use-starttls
-+}
 
-To answer your question, yes I first added the file without a filter.
-But I'm pretty sure I did a `config restore --staged .mailrc` after
-creating the filter (and I actually repeated the operation several
-times before contacting you the other day), but I must have been wrong
-about that.
-I didn't know about the GIT_TRACE environment variable. Thank you for
-teaching me something, and sorry about the false bug report.
-
-Best regards
-Adrien
-
-On Mon, Dec 30, 2019 at 1:02 AM Dennis Kaarsemaker
-<dennis@kaarsemaker.net> wrote:
->
-> On Fri, 2019-12-27 at 16:51 +0900, Adrien LEMAIRE wrote:
-> > I'd like to report a bug regarding git filters not being applied to
-> > files beginning with a dot character "."
-> > Using git version 2.24.1
-> > Please let me know if there is a better way to report bugs. The github
-> > page only mentions this email.
->
-> <snip reproduction recipe>
->
-> I was not able to reproduce this in the git test suite with a quick
-> patch (see below). Your output does not show any git add command, is it
-> possible that you added the changes before configuring the filter?
->
-> If you set GIT_TRACE=2 in your environment before doing the git add of
-> the .mailrc file, you should see it run the filter command. It should
-> look something like:
->
-> + git add test test.t test.i .mailrc
-> trace: built-in: git add test test.t test.i .mailrc
-> trace: run_command: ./rot13.sh
-> trace: run_command: ./rot13.sh
->
-> (which is a part of the output of GIT_TRACE=2 ./t0021-conversion.sh -x
-> -v -i)
->
->
-> diff --git t/t0021-conversion.sh t/t0021-conversion.sh
-> index 6c6d77b51a..32c27d513b 100755
-> --- t/t0021-conversion.sh
-> +++ t/t0021-conversion.sh
-> @@ -77,6 +77,7 @@ test_expect_success setup '
->
->         {
->             echo "*.t filter=rot13"
-> +           echo ".mailrc filter=rot13"
->             echo "*.i ident"
->         } >.gitattributes &&
->
-> @@ -88,9 +89,10 @@ test_expect_success setup '
->         cat test >test.t &&
->         cat test >test.o &&
->         cat test >test.i &&
-> -       git add test test.t test.i &&
-> +       cat test >.mailrc &&
-> +       git add test test.t test.i .mailrc &&
->         rm -f test test.t test.i &&
-> -       git checkout -- test test.t test.i &&
-> +       git checkout -- test test.t test.i .mailrc &&
->
->         echo "content-test2" >test2.o &&
->         echo "content-test3 - filename with special characters" >"test3 '\''sq'\'',\$x=.o"
-> @@ -102,6 +104,7 @@ test_expect_success check '
->
->         test_cmp test.o test &&
->         test_cmp test.o test.t &&
-> +       test_cmp test.o .mailrc &&
->
->         # ident should be stripped in the repository
->         git diff --raw --exit-code :test :test.i &&
-> @@ -110,9 +113,12 @@ test_expect_success check '
->         test "z$id" = "z$embedded" &&
->
->         git cat-file blob :test.t >test.r &&
-> +       git cat-file blob :.mailrc >.mailrc.r &&
->
->         ./rot13.sh <test.o >test.t &&
-> -       test_cmp test.r test.t
-> +       ./rot13.sh <test.o >.mailrc &&
-> +       test_cmp test.r test.t &&
-> +       test_cmp .mailrc.r .mailrc
->  '
->
->  # If an expanded ident ever gets into the repository, we want to make sure that
->
