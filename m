@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3E9DC2D0D3
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 19:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77513C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 19:15:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A0629206CB
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 19:15:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3639F206CB
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 19:15:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d0O9Wor+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIxs9mbQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727697AbfL3TPf (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727701AbfL3TPi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 14:15:38 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:44517 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727692AbfL3TPf (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 30 Dec 2019 14:15:35 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36590 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727648AbfL3TPd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 14:15:33 -0500
-Received: by mail-ed1-f66.google.com with SMTP id j17so33603063edp.3
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 11:15:32 -0800 (PST)
+Received: by mail-ed1-f44.google.com with SMTP id bx28so33569595edb.11
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 11:15:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Cy4MF7NHiupaUgOV8LYfnl8CAAaHnHZMsTwLHd0WUlg=;
-        b=d0O9Wor+NtK+mI0h+GQo4k0ov1jIDqaOJbkrs3urCcM0DBG+3IM/ksBfVtLrv7vxWN
-         A9kYjsRGOVFPAOMEGsN94nlBk01scw2dx5aYiA0sVwkngvd3UQZz7hj5OyhWYPG6Ff+Y
-         sas0rUSPrwFFMdcqDftXfuKCBX1F6jMRfb5TxXXKOQhyi8jxh4jCxCp8QfJMeY+syYMl
-         +MUcLoL80EBfMYGD8jyICb0OVSI07V+dvRfbiBggQl9502cZcjAeafENiJm/qIsNwEi7
-         bDNV93d1UI4NkQTZ0+kF6pfDSxdzghDIaaMhWWOXARds18IHc8tt5unSQPUaKqVZuZuy
-         tVQA==
+        bh=Vmz+WwZ7pDca1l5yXcR15q5m0qSpTWfj4qONzCMOWyE=;
+        b=lIxs9mbQzUoHOlXwr+yAFZOFgxY3xmtPy3VyYkIMwSV0MP2y4pNDXKy2+B11tprIuq
+         YL1qiefgOH1AdscgkynDbKYRour3mjXU+tPbR+LXRUQ2YwV/WdTMz4YEuLUUNv9MQmGZ
+         C5lbNnGekT6qmCzDu8+BsxKQffmLxxt+tDJNcpwbaUkM9DUVOrQ0E9RdVgKVNnDqvqRC
+         g8107bF5XicAMU2DI13FKIwPoMIhKmp0LnR/mfbN2pB7Hd6lLxIak4AwDuDh+AixFJP9
+         suL9UvjfRbyT9V3t/MtUUDawvZmIsMAFqy8yyz2QOnBme0PEg9q5tbTNf0yTtSEStCOU
+         0WMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Cy4MF7NHiupaUgOV8LYfnl8CAAaHnHZMsTwLHd0WUlg=;
-        b=Xj0/KlBFPJJBaTf7AiMMaWaKK4PnLAzMWtTrrPmOa42z6I4WCYGB0rhCvsChoh1Pv1
-         0w4k9nLXcaXFQ+mfN4nq/bvIkBsnukZXtL5LwFDSWQ3Ys8R5pP6y662wuGSA9zZUoM2R
-         4QHaT8FtceANkomT0pFAzeB/uqEdrEORFqU84bM8KQPQiu7IkdQqw0WFMqJu1Vzo+zjP
-         GnCGfzG/4YHZkMWhyJFJEfjh/p8pAemuPsJiM1FheOsDcBx2QqRl7OgHxPK9VAZ1ERXB
-         wsAe5/D4HSPnd88JeF02QaRcZXXaOHaIwCZvd4QN7+Ao1T9vK9dpLQo9mqwO3s3fzBRN
-         BH5w==
-X-Gm-Message-State: APjAAAWKZWciEHn+S3fBDcQlRIxYYXomBpGLkyousVF/ZhrG503lS2nq
-        zZ1S7wUk0B+/h1KCZ5KKp8yXBJ0D
-X-Google-Smtp-Source: APXvYqwrfsllyal7/RXPUoQIUdhLKTzK4qBmNHSOVmJXb2yet+TOUSQB0FhpQSYqQO86GO72wVnqFA==
-X-Received: by 2002:a17:906:52d7:: with SMTP id w23mr72537635ejn.74.1577733331475;
-        Mon, 30 Dec 2019 11:15:31 -0800 (PST)
+        bh=Vmz+WwZ7pDca1l5yXcR15q5m0qSpTWfj4qONzCMOWyE=;
+        b=dc4MGDSx+HWFm14pZiRK5HnKQZFPwMZmBB/1trbjm4z2CH/kV2eI5j6R/DryT/BdQ2
+         Bk8hv1AkNTdyfvP+4ZKXQ5hDezs3zs0qvdZzELluzxuzEa1k9u2vISHB3BJeYUQsyU9T
+         Trrebj4E4CBH8qc0f8yW+uTDrvxxaKDoZykuEPVAFbUyfb2UsujVjfRsLXMEI2dTxZtQ
+         rLtSckPKIVsGYQH+Flu9efk8dUrLO0bfNY0fn2A7tCCNqCuySRutKcHwWPQsID5fytm1
+         8kg+JdnNDs7gvbk4nTbbVgixCxxlP3xk8OvIxvIkBqgvcNBp6qL9UdmPU+kerzBSA67Y
+         m1Zw==
+X-Gm-Message-State: APjAAAV2vjmLmVltAl2gPeWQzFcMroQx4qW4HXhHfKQZXNTHRCRkogPq
+        1Jl2J9eBrD6UjS+398tihsoYTIfN
+X-Google-Smtp-Source: APXvYqx5gIDzTQCP+jcGGdub1KFNc7idAS4/0tOAMGkDhuTq/tGFPZ4j1pPZjpDJ/ncWOo18HCJRrA==
+X-Received: by 2002:a17:906:1d50:: with SMTP id o16mr71501864ejh.111.1577733333044;
+        Mon, 30 Dec 2019 11:15:33 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm5448829edn.52.2019.12.30.11.15.30
+        by smtp.gmail.com with ESMTPSA id f2sm5702437ejr.52.2019.12.30.11.15.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 30 Dec 2019 11:15:30 -0800 (PST)
-Message-Id: <6193dc7396b9cc6cb78f382c1b1679d6bb455fe4.1577733329.git.gitgitgadget@gmail.com>
+        Mon, 30 Dec 2019 11:15:32 -0800 (PST)
+Message-Id: <88086cebce73bcbc3eaf437bd86af5545d40e73b.1577733329.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.503.v2.git.1577733329.gitgitgadget@gmail.com>
 References: <pull.503.git.1577727747.gitgitgadget@gmail.com>
         <pull.503.v2.git.1577733329.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 30 Dec 2019 19:15:26 +0000
-Subject: [PATCH v2 1/3] t: fix quotes tests for --pathspec-from-file
+Date:   Mon, 30 Dec 2019 19:15:28 +0000
+Subject: [PATCH v2 3/3] t: drop copy&pasted tests for --pathspec-from-file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,159 +76,540 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-While working on the next patch, I also noticed that quotes testing via
-`"\"file\\101.t\""` was somewhat incorrect: I escaped `\` one time while
-I had to escape it two times! Tests still worked due to `"` being
-preserved which in turn prevented pathspec from matching files.
+With direct tests for `parse_pathspec_file()` already in place, it is
+not very reasonable to copy&paste 6 tests for `parse_pathspec_file()`
+for every git command that uses it (I counted 13 commands that could use
+it eventually).
 
-Fix this by properly escaping one more time.
+I believe that indirect tests are redundant because I don't expect
+direct tests to ever disagree with indirect tests.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- t/t2026-checkout-pathspec-file.sh | 9 +++++++--
- t/t2072-restore-pathspec-file.sh  | 9 +++++++--
- t/t3704-add-pathspec-file.sh      | 9 +++++++--
- t/t7107-reset-pathspec-file.sh    | 9 +++++++--
- t/t7526-commit-pathspec-file.sh   | 9 +++++++--
- 5 files changed, 35 insertions(+), 10 deletions(-)
+ t/t2026-checkout-pathspec-file.sh | 75 +--------------------------
+ t/t2072-restore-pathspec-file.sh  | 75 +--------------------------
+ t/t3704-add-pathspec-file.sh      | 75 +--------------------------
+ t/t7107-reset-pathspec-file.sh    | 84 +++----------------------------
+ t/t7526-commit-pathspec-file.sh   | 75 +--------------------------
+ 5 files changed, 16 insertions(+), 368 deletions(-)
 
 diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
-index f62fd27440..2dc8901bca 100755
+index 2dc8901bca..559b4528d7 100755
 --- a/t/t2026-checkout-pathspec-file.sh
 +++ b/t/t2026-checkout-pathspec-file.sh
-@@ -109,7 +109,10 @@ test_expect_success 'CRLF delimiters' '
- test_expect_success 'quotes' '
+@@ -35,7 +35,7 @@ verify_expect () {
+ 	test_cmp expect actual
+ }
+ 
+-test_expect_success '--pathspec-from-file from stdin' '
++test_expect_success 'simplest' '
  	restore_checkpoint &&
  
--	printf "\"file\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	# git    takes    \101 and spits     A
-+	printf "\"file\\\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
- 
- 	cat >expect <<-\EOF &&
- 	M  fileA.t
-@@ -120,7 +123,9 @@ test_expect_success 'quotes' '
- test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	restore_checkpoint &&
- 
--	printf "\"file\\101.t\"" >list &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	printf "\"file\\\\101.t\"" >list &&
- 	test_must_fail git checkout --pathspec-from-file=list --pathspec-file-nul HEAD^1
+ 	echo fileA.t | git checkout --pathspec-from-file=- HEAD^1 &&
+@@ -46,19 +46,7 @@ test_expect_success '--pathspec-from-file from stdin' '
+ 	verify_expect
  '
+ 
+-test_expect_success '--pathspec-from-file from file' '
+-	restore_checkpoint &&
+-
+-	echo fileA.t >list &&
+-	git checkout --pathspec-from-file=list HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	M  fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'NUL delimiters' '
++test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+ 	printf "fileA.t\0fileB.t\0" | git checkout --pathspec-from-file=- --pathspec-file-nul HEAD^1 &&
+@@ -70,65 +58,6 @@ test_expect_success 'NUL delimiters' '
+ 	verify_expect
+ '
+ 
+-test_expect_success 'LF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t\n" | git checkout --pathspec-from-file=- HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	M  fileA.t
+-	M  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'no trailing delimiter' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t" | git checkout --pathspec-from-file=- HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	M  fileA.t
+-	M  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'CRLF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\r\nfileB.t\r\n" | git checkout --pathspec-from-file=- HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	M  fileA.t
+-	M  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	# git    takes    \101 and spits     A
+-	printf "\"file\\\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	M  fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	printf "\"file\\\\101.t\"" >list &&
+-	test_must_fail git checkout --pathspec-from-file=list --pathspec-file-nul HEAD^1
+-'
+-
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
  
 diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
-index db58e83735..70e95ef3b6 100755
+index 70e95ef3b6..9b3125d582 100755
 --- a/t/t2072-restore-pathspec-file.sh
 +++ b/t/t2072-restore-pathspec-file.sh
-@@ -109,7 +109,10 @@ test_expect_success 'CRLF delimiters' '
- test_expect_success 'quotes' '
+@@ -35,7 +35,7 @@ verify_expect () {
+ 	test_cmp expect actual
+ }
+ 
+-test_expect_success '--pathspec-from-file from stdin' '
++test_expect_success 'simplest' '
  	restore_checkpoint &&
  
--	printf "\"file\\101.t\"" | git restore --pathspec-from-file=- --source=HEAD^1 &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	# git    takes    \101 and spits     A
-+	printf "\"file\\\\101.t\"" | git restore --pathspec-from-file=- --source=HEAD^1 &&
- 
- 	cat >expect <<-\EOF &&
- 	 M fileA.t
-@@ -120,7 +123,9 @@ test_expect_success 'quotes' '
- test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	restore_checkpoint &&
- 
--	printf "\"file\\101.t\"" >list &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	printf "\"file\\\\101.t\"" >list &&
- 	test_must_fail git restore --pathspec-from-file=list --pathspec-file-nul --source=HEAD^1
+ 	echo fileA.t | git restore --pathspec-from-file=- --source=HEAD^1 &&
+@@ -46,19 +46,7 @@ test_expect_success '--pathspec-from-file from stdin' '
+ 	verify_expect
  '
+ 
+-test_expect_success '--pathspec-from-file from file' '
+-	restore_checkpoint &&
+-
+-	echo fileA.t >list &&
+-	git restore --pathspec-from-file=list --source=HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	 M fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'NUL delimiters' '
++test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+ 	printf "fileA.t\0fileB.t\0" | git restore --pathspec-from-file=- --pathspec-file-nul --source=HEAD^1 &&
+@@ -70,65 +58,6 @@ test_expect_success 'NUL delimiters' '
+ 	verify_expect
+ '
+ 
+-test_expect_success 'LF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t\n" | git restore --pathspec-from-file=- --source=HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	 M fileA.t
+-	 M fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'no trailing delimiter' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t" | git restore --pathspec-from-file=- --source=HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	 M fileA.t
+-	 M fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'CRLF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\r\nfileB.t\r\n" | git restore --pathspec-from-file=- --source=HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	 M fileA.t
+-	 M fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	# git    takes    \101 and spits     A
+-	printf "\"file\\\\101.t\"" | git restore --pathspec-from-file=- --source=HEAD^1 &&
+-
+-	cat >expect <<-\EOF &&
+-	 M fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	printf "\"file\\\\101.t\"" >list &&
+-	test_must_fail git restore --pathspec-from-file=list --pathspec-file-nul --source=HEAD^1
+-'
+-
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
  
 diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
-index 3cfdb669b7..2e0141fcce 100755
+index 2e0141fcce..9009f8a9ac 100755
 --- a/t/t3704-add-pathspec-file.sh
 +++ b/t/t3704-add-pathspec-file.sh
-@@ -97,7 +97,10 @@ test_expect_success 'CRLF delimiters' '
- test_expect_success 'quotes' '
+@@ -23,7 +23,7 @@ verify_expect () {
+ 	test_cmp expect actual
+ }
+ 
+-test_expect_success '--pathspec-from-file from stdin' '
++test_expect_success 'simplest' '
  	restore_checkpoint &&
  
--	printf "\"file\\101.t\"" | git add --pathspec-from-file=- &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	# git    takes    \101 and spits     A
-+	printf "\"file\\\\101.t\"" | git add --pathspec-from-file=- &&
- 
- 	cat >expect <<-\EOF &&
- 	A  fileA.t
-@@ -108,7 +111,9 @@ test_expect_success 'quotes' '
- test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	restore_checkpoint &&
- 
--	printf "\"file\\101.t\"" >list &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	printf "\"file\\\\101.t\"" >list &&
- 	test_must_fail git add --pathspec-from-file=list --pathspec-file-nul
+ 	echo fileA.t | git add --pathspec-from-file=- &&
+@@ -34,19 +34,7 @@ test_expect_success '--pathspec-from-file from stdin' '
+ 	verify_expect
  '
+ 
+-test_expect_success '--pathspec-from-file from file' '
+-	restore_checkpoint &&
+-
+-	echo fileA.t >list &&
+-	git add --pathspec-from-file=list &&
+-
+-	cat >expect <<-\EOF &&
+-	A  fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'NUL delimiters' '
++test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+ 	printf "fileA.t\0fileB.t\0" | git add --pathspec-from-file=- --pathspec-file-nul &&
+@@ -58,65 +46,6 @@ test_expect_success 'NUL delimiters' '
+ 	verify_expect
+ '
+ 
+-test_expect_success 'LF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t\n" | git add --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	A  fileA.t
+-	A  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'no trailing delimiter' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t" | git add --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	A  fileA.t
+-	A  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'CRLF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\r\nfileB.t\r\n" | git add --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	A  fileA.t
+-	A  fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	# git    takes    \101 and spits     A
+-	printf "\"file\\\\101.t\"" | git add --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	A  fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	printf "\"file\\\\101.t\"" >list &&
+-	test_must_fail git add --pathspec-from-file=list --pathspec-file-nul
+-'
+-
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
  
 diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
-index 6b1a731fff..52a44f033d 100755
+index 52a44f033d..5b845f4f7c 100755
 --- a/t/t7107-reset-pathspec-file.sh
 +++ b/t/t7107-reset-pathspec-file.sh
-@@ -105,8 +105,11 @@ test_expect_success 'CRLF delimiters' '
- test_expect_success 'quotes' '
+@@ -25,7 +25,7 @@ verify_expect () {
+ 	test_cmp expect actual
+ }
+ 
+-test_expect_success '--pathspec-from-file from stdin' '
++test_expect_success 'simplest' '
  	restore_checkpoint &&
  
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	# git    takes    \101 and spits     A
  	git rm fileA.t &&
--	printf "\"file\\101.t\"" | git reset --pathspec-from-file=- &&
-+	printf "\"file\\\\101.t\"" | git reset --pathspec-from-file=- &&
+@@ -37,20 +37,7 @@ test_expect_success '--pathspec-from-file from stdin' '
+ 	verify_expect
+ '
+ 
+-test_expect_success '--pathspec-from-file from file' '
+-	restore_checkpoint &&
+-
+-	git rm fileA.t &&
+-	echo fileA.t >list &&
+-	git reset --pathspec-from-file=list &&
+-
+-	cat >expect <<-\EOF &&
+-	 D fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'NUL delimiters' '
++test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+ 	git rm fileA.t fileB.t &&
+@@ -63,76 +50,21 @@ test_expect_success 'NUL delimiters' '
+ 	verify_expect
+ '
+ 
+-test_expect_success 'LF delimiters' '
+-	restore_checkpoint &&
+-
+-	git rm fileA.t fileB.t &&
+-	printf "fileA.t\nfileB.t\n" | git reset --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	 D fileA.t
+-	 D fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'no trailing delimiter' '
+-	restore_checkpoint &&
+-
+-	git rm fileA.t fileB.t &&
+-	printf "fileA.t\nfileB.t" | git reset --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	 D fileA.t
+-	 D fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'CRLF delimiters' '
++test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
+ 
+-	git rm fileA.t fileB.t &&
+-	printf "fileA.t\r\nfileB.t\r\n" | git reset --pathspec-from-file=- &&
++	git rm fileA.t fileB.t fileC.t fileD.t &&
++	printf "fileB.t\nfileC.t\n" | git reset --pathspec-from-file=- &&
  
  	cat >expect <<-\EOF &&
- 	 D fileA.t
-@@ -117,8 +120,10 @@ test_expect_success 'quotes' '
- test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	restore_checkpoint &&
+-	 D fileA.t
++	D  fileA.t
+ 	 D fileB.t
++	 D fileC.t
++	D  fileD.t
+ 	EOF
+ 	verify_expect
+ '
  
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
- 	git rm fileA.t &&
--	printf "\"file\\101.t\"" >list &&
-+	printf "\"file\\\\101.t\"" >list &&
- 	# Note: "git reset" has not yet learned to fail on wrong pathspecs
- 	git reset --pathspec-from-file=list --pathspec-file-nul &&
+-test_expect_success 'quotes' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	# git    takes    \101 and spits     A
+-	git rm fileA.t &&
+-	printf "\"file\\\\101.t\"" | git reset --pathspec-from-file=- &&
+-
+-	cat >expect <<-\EOF &&
+-	 D fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	git rm fileA.t &&
+-	printf "\"file\\\\101.t\"" >list &&
+-	# Note: "git reset" has not yet learned to fail on wrong pathspecs
+-	git reset --pathspec-from-file=list --pathspec-file-nul &&
+-
+-	cat >expect <<-\EOF &&
+-	 D fileA.t
+-	EOF
+-	test_must_fail verify_expect
+-'
+-
+ test_expect_success '--pathspec-from-file is not compatible with --soft or --hard' '
+ 	restore_checkpoint &&
  
 diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
-index 4b58901ed6..e7dc2ff8b1 100755
+index e7dc2ff8b1..8d6c652690 100755
 --- a/t/t7526-commit-pathspec-file.sh
 +++ b/t/t7526-commit-pathspec-file.sh
-@@ -100,7 +100,10 @@ test_expect_success 'CRLF delimiters' '
- test_expect_success 'quotes' '
+@@ -26,7 +26,7 @@ verify_expect () {
+ 	test_cmp expect actual
+ }
+ 
+-test_expect_success '--pathspec-from-file from stdin' '
++test_expect_success 'simplest' '
  	restore_checkpoint &&
  
--	printf "\"file\\101.t\"" | git commit --pathspec-from-file=- -m "Commit" &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	# git    takes    \101 and spits     A
-+	printf "\"file\\\\101.t\"" | git commit --pathspec-from-file=- -m "Commit" &&
- 
- 	cat >expect <<-\EOF &&
- 	A	fileA.t
-@@ -111,7 +114,9 @@ test_expect_success 'quotes' '
- test_expect_success 'quotes not compatible with --pathspec-file-nul' '
- 	restore_checkpoint &&
- 
--	printf "\"file\\101.t\"" >list &&
-+	# shell  takes \\\\101 and spits \\101
-+	# printf takes   \\101 and spits  \101
-+	printf "\"file\\\\101.t\"" >list &&
- 	test_must_fail git commit --pathspec-from-file=list --pathspec-file-nul -m "Commit"
+ 	echo fileA.t | git commit --pathspec-from-file=- -m "Commit" &&
+@@ -37,19 +37,7 @@ test_expect_success '--pathspec-from-file from stdin' '
+ 	verify_expect
  '
+ 
+-test_expect_success '--pathspec-from-file from file' '
+-	restore_checkpoint &&
+-
+-	echo fileA.t >list &&
+-	git commit --pathspec-from-file=list -m "Commit" &&
+-
+-	cat >expect <<-\EOF &&
+-	A	fileA.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'NUL delimiters' '
++test_expect_success '--pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+ 	printf "fileA.t\0fileB.t\0" | git commit --pathspec-from-file=- --pathspec-file-nul -m "Commit" &&
+@@ -61,65 +49,6 @@ test_expect_success 'NUL delimiters' '
+ 	verify_expect
+ '
+ 
+-test_expect_success 'LF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t\n" | git commit --pathspec-from-file=- -m "Commit" &&
+-
+-	cat >expect <<-\EOF &&
+-	A	fileA.t
+-	A	fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'no trailing delimiter' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\nfileB.t" | git commit --pathspec-from-file=- -m "Commit" &&
+-
+-	cat >expect <<-\EOF &&
+-	A	fileA.t
+-	A	fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'CRLF delimiters' '
+-	restore_checkpoint &&
+-
+-	printf "fileA.t\r\nfileB.t\r\n" | git commit --pathspec-from-file=- -m "Commit" &&
+-
+-	cat >expect <<-\EOF &&
+-	A	fileA.t
+-	A	fileB.t
+-	EOF
+-	verify_expect
+-'
+-
+-test_expect_success 'quotes' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	# git    takes    \101 and spits     A
+-	printf "\"file\\\\101.t\"" | git commit --pathspec-from-file=- -m "Commit" &&
+-
+-	cat >expect <<-\EOF &&
+-	A	fileA.t
+-	EOF
+-	verify_expect expect
+-'
+-
+-test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+-	restore_checkpoint &&
+-
+-	# shell  takes \\\\101 and spits \\101
+-	# printf takes   \\101 and spits  \101
+-	printf "\"file\\\\101.t\"" >list &&
+-	test_must_fail git commit --pathspec-from-file=list --pathspec-file-nul -m "Commit"
+-'
+-
+ test_expect_success 'only touches what was listed' '
+ 	restore_checkpoint &&
  
 -- 
 gitgitgadget
-
