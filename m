@@ -7,193 +7,107 @@ X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FE76C2D0C2
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 17:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A56E7C2D0C2
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 17:42:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3810920718
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 17:18:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7BBC92071E
+	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 17:42:31 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j010DDb1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TG5aNemg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727275AbfL3RSd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 12:18:33 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:33028 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727207AbfL3RSd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 12:18:33 -0500
-Received: by mail-oi1-f194.google.com with SMTP id v140so11227135oie.0
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 09:18:32 -0800 (PST)
+        id S1727498AbfL3Rma (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 12:42:30 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37971 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726602AbfL3Rm3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 12:42:29 -0500
+Received: by mail-ed1-f67.google.com with SMTP id i16so33299628edr.5
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 09:42:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GClPg+tjo/WifOJbywzzuzUqHNJe06Y2fDvk7vXQ6as=;
-        b=j010DDb1ZH7od5deUUiDlDRhV21dSndyeY105IyOd9skbIdgE66m/JEQSVZObb+WP/
-         nJCR8NloTsXegQEuRimaqm5tMFcFKyT2MIV+HMeKuz8cNv4btn48Fux1dquZL8MYS1mA
-         T45+Y4YsWzh/whmdorTznWi1IBP6hXnQrX/WD3NWv345yzP/fTh4hBRzBS1j9xH3Nkv6
-         Sm1AlOQKNMTnSTh96Zk6LUMstjThykQ9FOPlu5SwuF+tkI7WIX6ViTKk+zHUb562VelA
-         Hxzzxtgsaiq5jk2Pw4nDI1FJdzdZejNHO19oLNKqpUfAjVsjPwBXqbwCJmnHr2h+yqUL
-         DKnA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Rz/qqeEXUbEPcpGMItMZwDcShV6UQePPH7aA9fsDgcM=;
+        b=TG5aNemgAd+ohlmBedws7oYL2pJzFovcKIFBUo3FGs8IDj7a4rHCqOEHsJwa82p+0g
+         WGSjAD/iqi7OPlI7uuu9rOQPEYZPfKeLeWKNLl4kBv7EZEhN3WxTrwiNnDnkukQSbGPi
+         gEwazXBBYC+spzdzbfpRCwxaz+ZRGI1JKCVY2aALvh1kjoPB0oPnfxVAOQpMyJATjdIc
+         xKKSTfCkQlKoXP5kHQ3c4jQCfzBoa25NGkCjFPHgzSbVWFLUnPSTbUfiqGu89Mik4Lv4
+         RbdAqA+8PQcKqxJngMqf+diIvczQoqJM43wf+R8sO/AGe8S8WSfZY4Xsp+fNxd6gM480
+         6vNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GClPg+tjo/WifOJbywzzuzUqHNJe06Y2fDvk7vXQ6as=;
-        b=qO+FOTXCNslzE37Ou/+69iSP6+mgMzvbBNywx9Gh5Y/I8/qw9r1NxgeQ7BLBzDPgTT
-         EH1nWY5ILD3YPTV6qTQym5yH/R0s3bJZ/Kcelez8BVz/EBuz6QQGXx6Vh4YJHf73CP97
-         9gjSkbqC4aO8xJ1YdBNgqL252VoEYf1GVP9zklZFPl37IyLhRPLKfwkrOZRgoIlDeh9Y
-         je7MW/3s/OtbDk6ZLno5WVLmYfFIpsRmdxSC7/rSyZfehYIW7MuzK37nEY4zwhumMytj
-         I1gdNHsJxlHLp9vmMm8kL+sYHCISv+ekyhC7AErtBu9sPDUdAGWWD6GsZIVk2Qh9LVXZ
-         7hoA==
-X-Gm-Message-State: APjAAAUBCN5bgJOQ2O611Qx5dCNp0198Z07W/pmPzM/JjqJqBCMMtOe4
-        PVDntDj0SKG32IuE3AxZAmHQnVsVQX6pVtqRjZA=
-X-Google-Smtp-Source: APXvYqxZzckbrCd5lsLt65A14+IChL/xEI+erNtBLicl1XC6gWosb5yg3P9GzpH0MeyN9EPpYWMIFc5ou5w3hc3m6Xk=
-X-Received: by 2002:aca:5588:: with SMTP id j130mr54377oib.122.1577726312073;
- Mon, 30 Dec 2019 09:18:32 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Rz/qqeEXUbEPcpGMItMZwDcShV6UQePPH7aA9fsDgcM=;
+        b=oaXxb9rVmBkumwz48c/YxvoKvqNFvRCoUmEOxAY3qwue+V9R8c23NAB9+HVkwkQCIz
+         5oQRenspAUyVbqQruDhrgLcLFes/0eUvk6x36ID1aOpNJcL+oVKbeQIEWKHv7d2eZqZD
+         1yu5vnz3TAbn24A7GzsBH5tCfbIXSiGXTS8vx/91A9y1fHGdfLitOUt+PL+rbkBH3+Pp
+         uT6PT0aBu29WLKbLZ/m1cy0FAEbGgIjhf1UzICQt20ClzqwsDUxSO+YvuMssMy19GYlZ
+         JeGE8/pchZUfX+QuKMvK1lnnfb5greKOAVyUlszCmDCdQ0AFOWi2Ukbjxa/VUae1Pr+A
+         rr3A==
+X-Gm-Message-State: APjAAAVaunB5Rk2yQC278hHfOOpHOrE4Yt8MQyxfE2vBYc9bc6kVM6oC
+        CJoPULdo6QI9KtT/A4U0dZnHY+l3
+X-Google-Smtp-Source: APXvYqx6Ca/SUQrD0c5cvnFBcy9CcAlheymjrCsMbJKjgRnbydq8/8+qt1gLAMxjNf+gSiYbTzohEQ==
+X-Received: by 2002:a17:906:4d89:: with SMTP id s9mr72565795eju.268.1577727748271;
+        Mon, 30 Dec 2019 09:42:28 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id gl17sm5662467ejb.72.2019.12.30.09.42.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 30 Dec 2019 09:42:27 -0800 (PST)
+Message-Id: <pull.503.git.1577727747.gitgitgadget@gmail.com>
+From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 30 Dec 2019 17:42:24 +0000
+Subject: [PATCH 0/3] t: rework tests for --pathspec-from-file
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.500.v2.git.1577472469.gitgitgadget@gmail.com> <pull.500.v3.git.1577719993.gitgitgadget@gmail.com>
-In-Reply-To: <pull.500.v3.git.1577719993.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 30 Dec 2019 09:18:22 -0800
-Message-ID: <CABPp-BGxMJjLCq9S54qqxKq3eFfNiRjVNvKgebRXgxzp=CoFpA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] sparse-checkout: list directories in cone mode
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        jon@jonsimons.org, Derrick Stolee <dstolee@microsoft.com>,
+To:     git@vger.kernel.org
+Cc:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>,
         Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Please refer to commit messages for rationale.
 
-Thanks for the fixups.  Just two small comments.
+This branch is a follow-up for [1] where part of branch was merged into `master` via [2].
 
-On Mon, Dec 30, 2019 at 7:33 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> When in cone mode, "git sparse-checkout set" takes a list of folders and
-> constructs an ordered list of patterns for the sparse-checkout file. The
-> "git sparse-checkout list" subcommand outputs the contents of the
-> sparse-checkout file in a very basic way.
->
-> This patch changes the behavior of "git sparse-checkout list" when
-> core.sparseCheckoutCone=true. It will output the folders that were used in
-> "git sparse-checkout set" to create the patterns, instead of the patterns
-> themselves.
->
-> I believe this was requested in the initial review, but I cannot find that
-> message now.
+Previously in [3] there were some concerns on whether removing
+copy&pasted tests is good. I still think that yes, it 's a good thing,
+mostly because of high volume of potential 13*6=78 duplicate tests.
 
-This sentence isn't still true, is it?
+Still, I separated this change as last patch, so that the remaining
+part of the branch can be taken without it.
 
-> I was going to include this as part of a longer follow-up series, but I
-> think this may be worth considering for the 2.25.0 release. Hence, it is
-> included by itself.
->
-> Update in V2:
->
->  * Fixed typos/word choice in commit message.
->
->
->  * Added a second commit including clarification on interactions with
->    submodules.
->
->
->
-> Thanks, -Stolee
->
-> Derrick Stolee (2):
->   sparse-checkout: list directories in cone mode
->   sparse-checkout: document interactions with submodules
->
->  Documentation/git-sparse-checkout.txt | 21 ++++++++++++++-
->  builtin/sparse-checkout.c             | 21 +++++++++++++++
->  t/t1091-sparse-checkout-builtin.sh    | 39 +++++++++++++++++++++++++++
->  3 files changed, 80 insertions(+), 1 deletion(-)
->
->
-> base-commit: 761e3d26bbe44c51f83c4f1ad198461f57029ebd
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-500%2Fderrickstolee%2Fsparse-checkout-list-v3
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-500/derrickstolee/sparse-checkout-list-v3
-> Pull-Request: https://github.com/gitgitgadget/git/pull/500
->
-> Range-diff vs v2:
->
->  1:  d6f4f40486 ! 1:  7d4295bd06 sparse-checkout: list folders in cone mode
->      @@ -1,17 +1,17 @@
->       Author: Derrick Stolee <dstolee@microsoft.com>
->
->      -    sparse-checkout: list folders in cone mode
->      +    sparse-checkout: list directories in cone mode
->
->           When core.sparseCheckoutCone is enabled, the 'git sparse-checkout set'
->      -    command takes a list of folders as input, then creates an ordered
->      -    list of sparse-checkout patterns such that those folders are
->      -    recursively included and all sibling entries along the parent folders
->      +    command takes a list of directories as input, then creates an ordered
->      +    list of sparse-checkout patterns such that those directories are
->      +    recursively included and all sibling entries along the parent directories
->           are also included. Listing the patterns is less user-friendly than the
->      -    folders themselves.
->      +    directories themselves.
->
->           In cone mode, and as long as the patterns match the expected cone-mode
->           pattern types, change the output of 'git sparse-checkout list' to only
->      -    show the folders that created the patterns.
->      +    show the directories that created the patterns.
->
->           With this change, the following piped commands would not change the
->           working directory:
->      @@ -41,8 +41,8 @@
->        based algorithms to compute inclusion in the sparse-checkout.
->
->       +In the cone mode case, the `git sparse-checkout list` subcommand will list the
->      -+folders that define the recursive patterns. For the example sparse-checkout file
->      -+above, the output is as follows:
->      ++directories that define the recursive patterns. For the example sparse-checkout
->      ++file above, the output is as follows:
->       +
->       +--------------------------
->       +$ git sparse-checkout list
->  2:  331bb7d6fb ! 2:  74bbd0f84d sparse-checkout: document interactions with submodules
->      @@ -2,11 +2,6 @@
->
->           sparse-checkout: document interactions with submodules
->
->      -    Junio asked what the behavior is between the sparse-checkout feature
->      -    and the submodule feature. The sparse-checkout builtin has not changed
->      -    the way these features interact, but we may as well document it in
->      -    the builtin docs.
->      -
+[1] https://lore.kernel.org/git/pull.490.git.1576161385.gitgitgadget@gmail.com/
+[2] https://public-inbox.org/git/pull.445.v4.git.1575381738.gitgitgadget@gmail.com/
+[3] https://lore.kernel.org/git/xmqqwoatcn5u.fsf@gitster-ct.c.googlers.com/
 
-I actually liked the second sentence of this paragraph and thought it
-provided useful information for future readers; I only thought the
-first sentence should be removed.
+Alexandr Miloslavskiy (3):
+  t: fix quotes tests for --pathspec-from-file
+  t: directly test parse_pathspec_file()
+  t: drop copy&pasted tests for --pathspec-from-file
 
->           Using 'git submodule (init|deinit)' a user can select a subset of
->           submodules to populate. This behaves very similar to the sparse-checkout
->           feature, but those directories contain their own .git directory
->      @@ -61,14 +56,14 @@
->       +         git sparse-checkout set folder1
->       + ) &&
->       + list_files super >dir &&
->      -+ cat >expect <<-EOF &&
->      ++ cat >expect <<-\EOF &&
->       +         a
->       +         folder1
->       +         modules
->       + EOF
->       + test_cmp expect dir &&
->       + list_files super/modules/child >dir &&
->      -+ cat >expect <<-EOF &&
->      ++ cat >expect <<-\EOF &&
->       +         a
->       +         deep
->       +         folder1
->
-> --
-> gitgitgadget
+ Makefile                            |  1 +
+ t/helper/test-parse-pathspec-file.c | 34 +++++++++++
+ t/helper/test-tool.c                |  1 +
+ t/helper/test-tool.h                |  1 +
+ t/t0067-parse_pathspec_file.sh      | 89 +++++++++++++++++++++++++++++
+ t/t2026-checkout-pathspec-file.sh   | 70 +----------------------
+ t/t2072-restore-pathspec-file.sh    | 70 +----------------------
+ t/t3704-add-pathspec-file.sh        | 70 +----------------------
+ t/t7107-reset-pathspec-file.sh      | 79 +++----------------------
+ t/t7526-commit-pathspec-file.sh     | 70 +----------------------
+ 10 files changed, 142 insertions(+), 343 deletions(-)
+ create mode 100644 t/helper/test-parse-pathspec-file.c
+ create mode 100755 t/t0067-parse_pathspec_file.sh
+
+
+base-commit: 0a76bd7381ec0dbb7c43776eb6d1ac906bca29e6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-503%2FSyntevoAlex%2F%230207(git)_2b_test_parse_directly-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-503/SyntevoAlex/#0207(git)_2b_test_parse_directly-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/503
+-- 
+gitgitgadget
