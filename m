@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EA416C2D0DD
-	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 09:53:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 309C2C3F68F
+	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 09:53:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B5325206E4
+	by mail.kernel.org (Postfix) with ESMTP id EF285206DB
 	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 09:53:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T4hI/p45"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="stPbeizo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbfLaJx6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726702AbfLaJx6 (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 31 Dec 2019 04:53:58 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35396 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726650AbfLaJx5 (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:33103 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbfLaJx5 (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 Dec 2019 04:53:57 -0500
-Received: by mail-ed1-f65.google.com with SMTP id f8so34915014edv.2
-        for <git@vger.kernel.org>; Tue, 31 Dec 2019 01:53:56 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id r21so34868806edq.0
+        for <git@vger.kernel.org>; Tue, 31 Dec 2019 01:53:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=By11ZhLNpGOJE7ks9nGpRahw14cn6l0tXfvSE8ofCmk=;
-        b=T4hI/p45TLiSoRwvLgkeeSqMM4tHh/lPDWIgXGJxMPz8ne5JKhRsybEMLBJPj4Ms7C
-         zuQwB0NcUnCw8pHZ5LfLIzni4XjIwdgtVQp7HN5ndLkdQPz11h0fxiOwObOX7DtmZgPv
-         nYlJ2HMF0/buaN1dhwFKPKTDHGdf4UosY+Z5E8fgJYE7LkGMvde4lZZihns8EgOx+Ie4
-         tHNHKcvrA+rDy/J2/6tUEVm3MMAn9bJPOneQ7bLLBgZ1vZ58fjLKjKIGiP86lTLPMRCE
-         5XJxWfJONPWS2y4IJ7J4Cew06Xb0HajU4wKCTY20/CXS9rhY7KllBO/Gozgg6yOJ/pNT
-         BCKA==
+        bh=mamBTIpI6RUiZZQUNzSTGXXJMrKd9H7YNNiekVfn2Sg=;
+        b=stPbeizoP6q0+aG3M4CyM7Yk/bV0uOJZsJiL/yByGW0+UmxMK+WeCH9jrz3zj7p46+
+         VnDwWvC71krkCtImwUfej5OwmC8AZHHxFPFxyhDP9YYHnh7D5Zw6t3eBBQQC+dmdfTWM
+         hlUW5tlraZSl+yGLnZD9P12Gpb6wkqM9RHlZdWbtMIErIXWZpzZbxCCtd02KmsC7FMr5
+         F+iMTTDNN79Blp9x0dira/i55acxgzmI2I7hYkcwfnofREcHqW5UfTzh7KQ5wzR2xVXc
+         JzMRs02mJ3dnEX5eaUi7weAQgrMzdEO2V6ZRS77n+WhQo/rQZ3MWlyM6N03vyhYs8oJW
+         GXcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=By11ZhLNpGOJE7ks9nGpRahw14cn6l0tXfvSE8ofCmk=;
-        b=Ptaq+PVfp5tli3Vee93yY3L5VufiiUBdRqvTyntBBxoIvaf+pD+I0+nZJ3My2Mj/eQ
-         vja6j9ag1lbXumw4Tv3P2sSvUgzothw2JyNAKeVbRqJAteNM4o4jWZ53W/DdIZIYdtvC
-         QyNS9RAsr2BDE8wQFrcRVwbk6oBTdgDHR2vI4EoOquppLX518Y21oICW+C9wMXQTwac0
-         onlOA9Mv5N84RX4jqkm49akJGe1FFqTdXob7VMfHhs0ZiaJOnLbz/5K4FgSdg0vKF5rP
-         9q9T2up2xDT3UcbTNY0ibwmp941/e/sTTtN3MWi0ODrqXmifM60hKh0L0+sYZ4IpvfiW
-         v6iw==
-X-Gm-Message-State: APjAAAUf+xuL4erCMNrcW8eOOUPIgtYJnfmNoHqB6YCfIYcDnTf5uP5q
-        TEFb9aVzbR6CcDdZS7qP0o1hLZNW
-X-Google-Smtp-Source: APXvYqwmaXVGydqFi5hsLpV2NjjYPjo2loYryZtP5qRCBGT4kCjDO+R5E6VXN/jl5ZMFfxUWl1VTcg==
-X-Received: by 2002:a50:e3c5:: with SMTP id c5mr75243226edm.7.1577786035702;
-        Tue, 31 Dec 2019 01:53:55 -0800 (PST)
+        bh=mamBTIpI6RUiZZQUNzSTGXXJMrKd9H7YNNiekVfn2Sg=;
+        b=ql/n8dHXgJa/wD8bR1Lqr3FXpFAXZePrXT35G09NnS3c4BvLK7o5CkkAPRP/tIEBG+
+         L98LfTvJhST8v9Xg/7A2dWuzY0PDtncunj9PTezOG8iMQAlHZ9e27lh/jDOXcEqatRxV
+         wGCcCySXmv2jMmsKVbu6Hg7Pb/YBxYbmunw+MnwqsH9VySd7Kt/Rw6Fqd6m8gTuwoNkq
+         8eNjf0UWczfG8AmGR1hWXNYt5Bj5iZ0zSckjqSkhiNhhQjLZj+BeP7AE0KaP3sWrqZAw
+         GJCvfb9cI5X/nvUwysUVgb3NTyTDw14URQRoyzW/44zsDMdzPz7eOJo3InRgTWLoY7h+
+         6Jew==
+X-Gm-Message-State: APjAAAUUQI3j/zCCsVONw8UGdzvuz/wzQ6BeHn6tv4lcOljqx8UBs/lp
+        9ZOZPCVSV/YMtISldUEhSAOzQysa
+X-Google-Smtp-Source: APXvYqzU7uBP7z0xKPCxtk6kHtKVZtn4qYNrqND73828WhCFBwMsYIBWGXxig3b7gAldcOgoMZqJyw==
+X-Received: by 2002:a17:907:20c5:: with SMTP id qq5mr54139729ejb.238.1577786034885;
+        Tue, 31 Dec 2019 01:53:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n14sm6106013ejx.11.2019.12.31.01.53.55
+        by smtp.gmail.com with ESMTPSA id b9sm5950573ejj.24.2019.12.31.01.53.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 31 Dec 2019 01:53:55 -0800 (PST)
-Message-Id: <68925c2712ab103af088417a6a80c782a90f3d51.1577786032.git.gitgitgadget@gmail.com>
+        Tue, 31 Dec 2019 01:53:54 -0800 (PST)
+Message-Id: <88790669ce44d591bad6b6f8c2985e6c8009f74e.1577786032.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.503.v3.git.1577786032.gitgitgadget@gmail.com>
 References: <pull.503.v2.git.1577733329.gitgitgadget@gmail.com>
         <pull.503.v3.git.1577786032.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 31 Dec 2019 09:53:51 +0000
-Subject: [PATCH v3 2/3] t: directly test parse_pathspec_file()
+Date:   Tue, 31 Dec 2019 09:53:50 +0000
+Subject: [PATCH v3 1/3] t: fix quotes tests for --pathspec-from-file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,213 +76,169 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Previously, `parse_pathspec_file()` was tested indirectly by invoking
-git commands with properly crafted inputs. As demonstrated by the
-previous bugfix, testing complicated black boxes indirectly can lead to
-tests that silently test the wrong thing.
+While working on the next patch, I also noticed that quotes testing via
+`"\"file\\101.t\""` was somewhat incorrect: I escaped `\` one time while
+I had to escape it two times! Tests still worked due to `"` being
+preserved which in turn prevented pathspec from matching files.
 
-Introduce direct tests for `parse_pathspec_file()`.
+Fix this by using here-doc instead.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Makefile                            |   1 +
- t/helper/test-parse-pathspec-file.c |  33 +++++++++
- t/helper/test-tool.c                |   1 +
- t/helper/test-tool.h                |   1 +
- t/t0067-parse_pathspec_file.sh      | 108 ++++++++++++++++++++++++++++
- 5 files changed, 144 insertions(+)
- create mode 100644 t/helper/test-parse-pathspec-file.c
- create mode 100755 t/t0067-parse_pathspec_file.sh
+ t/t2026-checkout-pathspec-file.sh | 11 +++++++++--
+ t/t2072-restore-pathspec-file.sh  | 11 +++++++++--
+ t/t3704-add-pathspec-file.sh      | 11 +++++++++--
+ t/t7107-reset-pathspec-file.sh    | 12 +++++++++---
+ t/t7526-commit-pathspec-file.sh   | 11 +++++++++--
+ 5 files changed, 45 insertions(+), 11 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 09f98b777c..0061f96e8a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -721,6 +721,7 @@ TEST_BUILTINS_OBJS += test-mktemp.o
- TEST_BUILTINS_OBJS += test-oidmap.o
- TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-parse-options.o
-+TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
- TEST_BUILTINS_OBJS += test-path-utils.o
- TEST_BUILTINS_OBJS += test-pkt-line.o
- TEST_BUILTINS_OBJS += test-prio-queue.o
-diff --git a/t/helper/test-parse-pathspec-file.c b/t/helper/test-parse-pathspec-file.c
-new file mode 100644
-index 0000000000..02f4ccfd2a
---- /dev/null
-+++ b/t/helper/test-parse-pathspec-file.c
-@@ -0,0 +1,33 @@
-+#include "test-tool.h"
-+#include "parse-options.h"
-+#include "pathspec.h"
-+#include "gettext.h"
-+
-+int cmd__parse_pathspec_file(int argc, const char **argv)
-+{
-+	struct pathspec pathspec;
-+	const char *pathspec_from_file = 0;
-+	int pathspec_file_nul = 0, i;
-+
-+	static const char *const usage[] = {
-+		"test-tool parse-pathspec-file --pathspec-from-file [--pathspec-file-nul]",
-+		NULL
-+	};
-+
-+	struct option options[] = {
-+		OPT_PATHSPEC_FROM_FILE(&pathspec_from_file),
-+		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
-+		OPT_END()
-+	};
-+
-+	parse_options(argc, argv, 0, options, usage, 0);
-+
-+	parse_pathspec_file(&pathspec, 0, 0, 0, pathspec_from_file,
-+			    pathspec_file_nul);
-+
-+	for (i = 0; i < pathspec.nr; i++)
-+		printf("%s\n", pathspec.items[i].original);
-+
-+	clear_pathspec(&pathspec);
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index f20989d449..c9a232d238 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -39,6 +39,7 @@ static struct test_cmd cmds[] = {
- 	{ "oidmap", cmd__oidmap },
- 	{ "online-cpus", cmd__online_cpus },
- 	{ "parse-options", cmd__parse_options },
-+	{ "parse-pathspec-file", cmd__parse_pathspec_file },
- 	{ "path-utils", cmd__path_utils },
- 	{ "pkt-line", cmd__pkt_line },
- 	{ "prio-queue", cmd__prio_queue },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 8ed2af71d1..c8549fd87f 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -29,6 +29,7 @@ int cmd__mktemp(int argc, const char **argv);
- int cmd__oidmap(int argc, const char **argv);
- int cmd__online_cpus(int argc, const char **argv);
- int cmd__parse_options(int argc, const char **argv);
-+int cmd__parse_pathspec_file(int argc, const char** argv);
- int cmd__path_utils(int argc, const char **argv);
- int cmd__pkt_line(int argc, const char **argv);
- int cmd__prio_queue(int argc, const char **argv);
-diff --git a/t/t0067-parse_pathspec_file.sh b/t/t0067-parse_pathspec_file.sh
-new file mode 100755
-index 0000000000..7bab49f361
---- /dev/null
-+++ b/t/t0067-parse_pathspec_file.sh
-@@ -0,0 +1,108 @@
-+#!/bin/sh
-+
-+test_description='Test parse_pathspec_file()'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'one item from stdin' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	EOF
-+
-+	echo fileA.t |
-+	test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'one item from file' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	EOF
-+
-+	echo fileA.t >list &&
-+	test-tool parse-pathspec-file --pathspec-from-file=list >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'NUL delimiters' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	fileB.t
-+	EOF
-+
-+	printf "fileA.t\0fileB.t\0" |
-+	test-tool parse-pathspec-file --pathspec-from-file=- --pathspec-file-nul >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'LF delimiters' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	fileB.t
-+	EOF
-+
-+	printf "fileA.t\nfileB.t\n" |
-+	test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'no trailing delimiter' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	fileB.t
-+	EOF
-+
-+	printf "fileA.t\nfileB.t" |
-+	test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'CRLF delimiters' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	fileB.t
-+	EOF
-+
-+	printf "fileA.t\r\nfileB.t\r\n" |
-+	test-tool parse-pathspec-file --pathspec-from-file=- >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'quotes' '
-+	cat >expect <<-\EOF &&
-+	fileA.t
-+	EOF
-+
+diff --git a/t/t2026-checkout-pathspec-file.sh b/t/t2026-checkout-pathspec-file.sh
+index f62fd27440..adad71f631 100755
+--- a/t/t2026-checkout-pathspec-file.sh
++++ b/t/t2026-checkout-pathspec-file.sh
+@@ -109,7 +109,11 @@ test_expect_success 'CRLF delimiters' '
+ test_expect_success 'quotes' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" | git checkout --pathspec-from-file=- HEAD^1 &&
 +	cat >list <<-\EOF &&
 +	"file\101.t"
 +	EOF
 +
-+	test-tool parse-pathspec-file --pathspec-from-file=list >actual &&
-+
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--pathspec-file-nul takes quotes literally' '
-+	# Note: there is an extra newline because --pathspec-file-nul takes
-+	# input \n literally, too
-+	cat >expect <<-\EOF &&
-+	"file\101.t"
-+
-+	EOF
-+
++	git checkout --pathspec-from-file=list HEAD^1 &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	M  fileA.t
+@@ -120,7 +124,10 @@ test_expect_success 'quotes' '
+ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" >list &&
 +	cat >list <<-\EOF &&
 +	"file\101.t"
 +	EOF
 +
-+	test-tool parse-pathspec-file --pathspec-from-file=list --pathspec-file-nul >actual &&
+ 	test_must_fail git checkout --pathspec-from-file=list --pathspec-file-nul HEAD^1
+ '
+ 
+diff --git a/t/t2072-restore-pathspec-file.sh b/t/t2072-restore-pathspec-file.sh
+index db58e83735..b407f6b779 100755
+--- a/t/t2072-restore-pathspec-file.sh
++++ b/t/t2072-restore-pathspec-file.sh
+@@ -109,7 +109,11 @@ test_expect_success 'CRLF delimiters' '
+ test_expect_success 'quotes' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" | git restore --pathspec-from-file=- --source=HEAD^1 &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
 +
-+	test_cmp expect actual
-+'
++	git restore --pathspec-from-file=list --source=HEAD^1 &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	 M fileA.t
+@@ -120,7 +124,10 @@ test_expect_success 'quotes' '
+ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" >list &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
 +
-+test_done
+ 	test_must_fail git restore --pathspec-from-file=list --pathspec-file-nul --source=HEAD^1
+ '
+ 
+diff --git a/t/t3704-add-pathspec-file.sh b/t/t3704-add-pathspec-file.sh
+index 3cfdb669b7..61b6e51009 100755
+--- a/t/t3704-add-pathspec-file.sh
++++ b/t/t3704-add-pathspec-file.sh
+@@ -97,7 +97,11 @@ test_expect_success 'CRLF delimiters' '
+ test_expect_success 'quotes' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" | git add --pathspec-from-file=- &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
++	git add --pathspec-from-file=list &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	A  fileA.t
+@@ -108,7 +112,10 @@ test_expect_success 'quotes' '
+ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" >list &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
+ 	test_must_fail git add --pathspec-from-file=list --pathspec-file-nul
+ '
+ 
+diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
+index 6b1a731fff..b0e84cdb42 100755
+--- a/t/t7107-reset-pathspec-file.sh
++++ b/t/t7107-reset-pathspec-file.sh
+@@ -105,8 +105,12 @@ test_expect_success 'CRLF delimiters' '
+ test_expect_success 'quotes' '
+ 	restore_checkpoint &&
+ 
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
+ 	git rm fileA.t &&
+-	printf "\"file\\101.t\"" | git reset --pathspec-from-file=- &&
++	git reset --pathspec-from-file=list &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	 D fileA.t
+@@ -117,8 +121,10 @@ test_expect_success 'quotes' '
+ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	git rm fileA.t &&
+-	printf "\"file\\101.t\"" >list &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
+ 	# Note: "git reset" has not yet learned to fail on wrong pathspecs
+ 	git reset --pathspec-from-file=list --pathspec-file-nul &&
+ 
+diff --git a/t/t7526-commit-pathspec-file.sh b/t/t7526-commit-pathspec-file.sh
+index 4b58901ed6..4a7c11368d 100755
+--- a/t/t7526-commit-pathspec-file.sh
++++ b/t/t7526-commit-pathspec-file.sh
+@@ -100,7 +100,11 @@ test_expect_success 'CRLF delimiters' '
+ test_expect_success 'quotes' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" | git commit --pathspec-from-file=- -m "Commit" &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
++	git commit --pathspec-from-file=list -m "Commit" &&
+ 
+ 	cat >expect <<-\EOF &&
+ 	A	fileA.t
+@@ -111,7 +115,10 @@ test_expect_success 'quotes' '
+ test_expect_success 'quotes not compatible with --pathspec-file-nul' '
+ 	restore_checkpoint &&
+ 
+-	printf "\"file\\101.t\"" >list &&
++	cat >list <<-\EOF &&
++	"file\101.t"
++	EOF
++
+ 	test_must_fail git commit --pathspec-from-file=list --pathspec-file-nul -m "Commit"
+ '
+ 
 -- 
 gitgitgadget
 
