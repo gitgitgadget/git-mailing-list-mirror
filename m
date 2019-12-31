@@ -2,120 +2,164 @@ Return-Path: <SRS0=sBbF=2V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C2BFC2D0C2
-	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 19:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2062C2D0CE
+	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 22:51:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 56276206DA
-	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 19:07:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 692E7206DA
+	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 22:51:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n/CNuYkO"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="fRzsxVlp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727085AbfLaTHC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 31 Dec 2019 14:07:02 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54875 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727071AbfLaTHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Dec 2019 14:07:02 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DAC011B253;
-        Tue, 31 Dec 2019 14:06:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gMLXITbhWikeoVSPTg19tSEN4vg=; b=n/CNuY
-        kOB61vHfucoLCTs1B6t2hbMv4LAoRW9TgSY9anLIZwOzf4u4HUCk9KvnBx5FtDC3
-        P8JSV0GIQpiUVpzJ/ABaB8p8lGFX2fB8j41obNmpKM0dgzfbV0GnF9Gsit9JzRqS
-        DJK1fzK49NOirc+jXySk9oazGqQvVRhpxTeVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mpYde8FSuQWrX7v5wlnhdhJba5VwopTA
-        SXjChMjJwoG8t5gOsL5HQW3wAGWo+RinNlhOrn6WaXFda4/lauK2U/gZ+mSsS4Ng
-        WoA3N7A2BeWx665ljB2HDN2fZ6rrRuAHwmjUIGIgxe2imr6Ok2AvHArxEmJ/UpdO
-        Z3zw1oKt9vo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D01CA1B252;
-        Tue, 31 Dec 2019 14:06:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3BF8C1B24F;
-        Tue, 31 Dec 2019 14:06:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, heba.waly@gmail.com
-Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
-References: <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
-        <20191231000420.32396-1-jonathantanmy@google.com>
-Date:   Tue, 31 Dec 2019 11:06:55 -0800
-In-Reply-To: <20191231000420.32396-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Mon, 30 Dec 2019 16:04:20 -0800")
-Message-ID: <xmqq7e2cfh68.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727085AbfLaWv4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 31 Dec 2019 17:51:56 -0500
+Received: from mout.gmx.net ([212.227.17.22]:43913 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727054AbfLaWv4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Dec 2019 17:51:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1577832710;
+        bh=aB5Mt5rBzPyszbarACqXzBmOuqYWDwUESFN/5XFCNYk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=fRzsxVlpO/3kBMYmSYvbs3n+5JU7ceuNTVfs5uEN6lNGR8rvgMSH3e9rt2NlPtRtf
+         OLuOCM0feKDGCcceMuK+zaiorLY8LbvKc+GY9VkIuIOQsx9svGeKVEWNuzOXlHo6Qn
+         m9nomgHl7btu0u9itV8j4ldqUDDw5MjpHrkCP8l0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MBlxM-1iuAfq2PSG-00C9cW; Tue, 31
+ Dec 2019 23:51:50 +0100
+Date:   Tue, 31 Dec 2019 23:51:35 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/1] mingw: only test index entries for backslashes, not
+ tree entries
+In-Reply-To: <xmqqblruk9lz.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1912312329480.46@tvgsbejvaqbjf.bet>
+References: <pull.682.git.git.1577382151.gitgitgadget@gmail.com> <4a120fd0b32d2d6492eac6b0494ad6b1bc2ba500.1577382151.git.gitgitgadget@gmail.com> <20191226200316.GD170890@google.com> <nycvar.QRO.7.76.6.1912262221000.46@tvgsbejvaqbjf.bet> <20191226214245.GA186931@google.com>
+ <xmqqfth6kaqi.fsf@gitster-ct.c.googlers.com> <xmqqblruk9lz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B68EC320-2C00-11EA-8A57-C28CBED8090B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Fz1ObAEU4EseQa7tjlExvDYyMwNloL5t/NRVv6oYFh+QlMlxd3k
+ uqtLgaMZlmIIrLpgIebMoD/Y0zexdJjrBq1Mk292k2hF2u1mia7ExLtOuhWfX+n0clzfLd6
+ QXKAWUse9u4In0oWwy7KbGPzCP/nkyxtVMmldfPLV2lS4AUHxF03/C1nfgrNds3sf0FPnBQ
+ 3cxX6ajxNiN6442ZXDNdw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:g1C2Ov0prwo=:3LKhhSGryY2Ez1vraK5eDa
+ 6e0c/gPuIMoV8D+azQeUucTVtjtyFWgkZsWZn0sDJsEiI/1dkH2T+G1O/H8eEb1tjQ2uxa9/Q
+ WNzjB4BUbHQUTnQxhErYN+anJ5dms/jQZXiSfhS5DwBTUdV5A1/m5zljAL/mUsrmWnIxGibVZ
+ Z/nB+jWNPBi0RbNe7lQjo2GuwiOj+whSOHCrp25L0VyctlbPZuTbtCr9QnkuGvA8sWRW0rgs/
+ t+RMqrjLNJ1TaBuZCoJb1E7SLoq05fQnZ56Hcn8jiNWFqASJ/LHvWf0wRGC4Ko1A1MjaR1x0i
+ CTUcTMHGSBxcgiVs7IT/18rkjrppYrEtS3YnUAD39b1T9BjYhJ0tXEdHq9FSo1OQ2H1h0t7zj
+ vxfbUN1jUg0k9YkwtVF5LVyzSfX0muQg+91SA9yWEPJL8k26aCh0CkWtOB2CnOw3WzmGfxW3N
+ hSbRQ2U/XVcKAotjzpyCFcw2E2pb0veapa68lb90eQDiCPRNHc366lC8B5/fnhdcndFfG5y26
+ Z9iK5lNa3RKzb4NKMuZsjWUF+xRNuhX+jaurLEgWTVek9MQsrmj24xZZTGpto0YBnYNuGDksF
+ XT4RayBYXpOpzToImcq3aYzdNUIoXsrmP/CpitbNKmWGFzfi0b9R3fCdEQ5JTEGD9IjC9mqDZ
+ rIhpMOycB6Vjj18Z50/aCY6TzAsZLSiGs2KmItys0EUOsgz4pIFWKuXa5FrSjUW4qSflp+krt
+ g9+LLOVOWDNcWis2wfh3MZtVbmdqHU8cyX0Wo8sd+l/IY1iIko2j8j347M9UC0et6GiSlQe4w
+ S3Vh9MzVmueqp1FlXZGXQ1vsHmggT3Cpft05cySL1J58iWu6I4PPIZfwRkXBLaa0FqZGOafTL
+ wIjQUqAgxjw3kAc15+PKObk4lrFbSt3zDomCRgBJdQfRqlLjUMiSpAbs4xGe+GgtbNlF5few8
+ ijtHgHXSpxxsDyBURWD+duOOxxunTNQGMIyAhKRCtMXZIjqcqvXKE8FFYvgWoaBHTRPyMF2rY
+ JB9rVqcf5kOJU3XelTefUa4MO+s90lmXx4MpUXVuEMRKFdB/LD3J2iD19EdfNOKkVsmqJlF1V
+ zpowbZdmj0PLxHTWcEhBFwxt8AaztGQIPu8ZY1RV+Gc+cKtoi1wXU7gL852oQbdTFhsjYQsfb
+ tV9AfFTWdsiKrhZNA7bqPGTbSPGuVklOpVQFSK+2MmL3po1JDzHMT3KEmiLgh93bNCxzlrxxR
+ 2Z1b3xbVPWgCNJjv0pK6YUQZrJlpBNnSZK64GJpr8/h/IEkti5STSEi+X0Is=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Hi Junio & Jonathan,
 
->> In any case, here is what I tentatively have in my tree (with heavy
->> rewrite to the proposed log message).
+On Thu, 26 Dec 2019, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Junio, what are your plans over what you have in your tree? If you'd
-> like to hear Heba's opinion on it, then she can chime in; if you'd like
-> a review, then I think it's good to go in.
+> > Jonathan Nieder <jrnieder@gmail.com> writes:
+> >
+> >> Is there anything we can or should do to prevent people checking in
+> >> new examples of paths with backslash in them (on all platforms)?
+> >
+> > I obviously won't dictate what should happen on Windows, but I think
+> > the overall principle for paths recorded in a tree object that can
+> > be problematic on some of the platforms ought to be:
+> >
+> >  * fsck and transfer.fsckobjects should be taught to notice
+> >    offending characteristics (e.g. has a backslash in it, is one of
+> >    the "reserved names" on some platform like LPT1).
 
-On hold until anything like those happens ;-) 
+Agree. This is on my radar, but so far not too-high priority, as the
+`fsck` checks are not (yet?) standard practice in PR builds (and warnings
+on the server side are prone to be ignored).
 
-A random reviewer mentioning something on a patch (either in a
-line-by-line critique form or "how about doing it this way instead"
-counterproposal form) without getting followed up by others
-(including the original author) is a stall review thread, and it
-does not change the equation if the random reviewer happens to be me.
+> >  * if paths with the offending characteristics are *so* obviously
+> >    useless in real life and are possible only in a crafted path that
+> >    is only useful to attack users, the check in fsck should default
+> >    to "reject" to help the disease spread via hosting sites.
 
->> I didn't try it on my end. Maybe it won't help much, because we think
->> we're going to use the editor right up until we realize it's not
->> committable?
+I don't think that reserved names such as `aux`, nor names containing
+backslashes should be rejected _always_. While I cannot think of _any_
+instance where I would want to have a backslash in a file name, I am sure
+that just like `aux.c`, there _must_ be somebody out there who thought of
+a file name that contains a backslash and makes at least some sort of
+sense.
+
+> >  * otherwise, the check should be to "warn" but not "reject", so
+> >    that projects can keep using paths that may problematic on
+> >    platforms that do not matter to them.
+
+Yes, it should be "warn".
+
+> > I think LPT1 and friends fall into the "warning is fine" category,
+> > and a path component that contains a backslash would fall into the
+> > "this is an attack, just reject" category.
 >
-> And I think the answer to that is "s" is used throughout the function in
-> various ways (in particular, used to print statuses both to stdout and
-> to the message template) so any wrapping or corralling of scope would
-> just make things more complicated. In particular, the way Heba did it in
-> v2 is more unclear - at the time of setting s->hints = 0, it's done
+> I guess I should have stepped back a bit.
+>
+> In the message I am responding to, I focused solely on how tree
+> objects that originate elsewhere should be treated, but there are
+> two more data paths we need to worry about:
+>
+>  * A new path gets introduced to the system, via "update-index",
+>    "add", etc., to the index and then "write-tree" to form tree
+>    objects in the local repository.
 
-You mean "less clear" (just double checking if I got the negation right)?
+Right, that's what I had in mind when I wrote this patch. The path gets
+added to the index, we detect a backslash, and on Windows (under
+`core.protectNTFS`) fail with an error.
 
-> within a "if (use_editor && include_status)" block, but (as far as I can
-> tell) the commit message template might also be used when there is no
-> editor - for example, as input to a hook. And more importantly, when
-> s->hints is reset to the config, we don't know at that point that the
-> next status is going to stdout. So I think it's better just to use the
-> v1 way.
+>  * A path in the index, either created locally via "update-index",
+>    "add", etc., or read from a tree object, gets written to the
+>    local filesystem, resulting in an attempt to create a path that
+>    the local filesystem cannot represent (or worse---behaves badly,
+>    like "sending random garbage to the printer").
 
-Yeah, thanks for going back to compare v1 and v2, and I agree with
-your assessment.
+Happily, my patch seems to catch this code path, too: when reading from a
+`tree` object into the index, we use `add_index_entry()` (called via
+various code paths in the `unpack_trees()` machinery). That's exactly the
+patched function.
 
-> The second area of discussion I see is in the commit message. Commit
-> messages have to balance brevity and comprehensiveness, and this can be
-> a subjective matter, but I think Junio's strikes a good balance.
+Or maybe you know of a code path in the `unpack_trees()` machinery that
+does _not_ go through `add_index_entry()`? I would be very interested to
+learn about such code paths.
 
-As one side of the comparison is my own, I won't be a good judge on
-this, but yes I tried to strick a good balance as much as possible.
+> I think we should apply the same principle as the one I outlined for
+> the tree objects.  The fsckobjects mechanism may not be reusable to
+> catch violations in add_index_entry_with_check() as-is, but we need
+> to aim for as much reuse of logic and code as possible so that our
+> checks at various layers all behave consistently.
 
-I think I've merged it to 'next' yesterday, but it does not mean
-that much as we are in -rc and it is not such an urgent "oops we
-broke it in this cycle, let's fix it" issue.  If we see a v3 that
-improves it, I do not mind at all reverting what I merged to 'next'
-and use the updated one instead (either way, it will be in 'master'
-during the next cycle at the earliest).
+I am afraid that we won't be able to reuse code paths for checking the
+backslash here, but for reserved names I am planning on refactoring the
+code accordingly.
 
-Thanks.
+Thanks,
+Dscho
