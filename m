@@ -1,186 +1,119 @@
-Return-Path: <SRS0=o5qA=2U=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=sBbF=2V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8513EC2D0C3
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 23:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11CFFC2D0C3
+	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 00:04:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 42673206CB
-	for <git@archiver.kernel.org>; Mon, 30 Dec 2019 23:45:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CB59C2071E
+	for <git@archiver.kernel.org>; Tue, 31 Dec 2019 00:04:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="IC7rFiQ8"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Uz6tKwQ1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727751AbfL3Xo7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 30 Dec 2019 18:44:59 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:47374 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727740AbfL3Xo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Dec 2019 18:44:58 -0500
-Received: by mail-pg1-f201.google.com with SMTP id l15so7256937pgk.14
-        for <git@vger.kernel.org>; Mon, 30 Dec 2019 15:44:57 -0800 (PST)
+        id S1727774AbfLaAEZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 30 Dec 2019 19:04:25 -0500
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:46878 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727751AbfLaAEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Dec 2019 19:04:25 -0500
+Received: by mail-pl1-f202.google.com with SMTP id t17so2661905plr.13
+        for <git@vger.kernel.org>; Mon, 30 Dec 2019 16:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lhDjSjsHkTkqGb/sSkYTqecednj5MvH+Fpc3X2c/W3o=;
-        b=IC7rFiQ8NhEFKpJvawBhRe4sYv+JIGsFqH5xXnmiZvZFpWyd177uLRLo+Bqy7yc+ai
-         vKCBY52O7D6FDT7ju444ZtUelnRiwn3VSV4JEjORCf7NrQqYCKGE2NIjspmJssrOiI+Z
-         WK8v06kae4q89PLHD8LH9rNVx/LVKy9LN6lzlRGhLhs0Gnb69bA/tRMluYo+ayxrHyBu
-         cipiTUckK5POynTqYYvUmZtdXX6E5sXGmDhRgIw5wttPKt9JSyt1HerTktfRG4ow5Mtd
-         QRlp7TpK3AP9fP9+k6XP8VdzelQ8bqGEI9SYMTKuw+nMm+ty9vPQQnDFftJDv9DC7Kyd
-         ugtg==
+        bh=Xk4APnXaHddH0v49lS7xOukxLH1KeAd1fdEP+SLRCSk=;
+        b=Uz6tKwQ12yQhEvi92IEEtt7ZD5YPqcUp9HOSkEyeqheOXAriiv1qCvoehXQxljAxdB
+         1qVjT3/Y1u9siDQFp/qkcv6wWyOBfpLRPgkbevtPkUXJfnC6wD5b3lXhbeDGpWGLwuIz
+         3sD+UoIpUh2xcycep/7KfDGyhJ4O2wv9qb7d5733BoJe4KsgXPcZkvjHFDrMvQyXKjCH
+         Ji5+/B50zNdCSXg2kLVf0D5u87MbsTuRKEKqeBno4Z5e9WfObJrAvGhyPkuiDk4Oyywg
+         QLYoKYybpJEeKCPK2EPJTL1aYSclK8Rh6WVp/KVH8JDfmhg0Og/jFrsvyJdc3bxMb+uL
+         wLCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lhDjSjsHkTkqGb/sSkYTqecednj5MvH+Fpc3X2c/W3o=;
-        b=SaHjCo3qG/SDGO3b/qv8KFXQ810VHkzOwQKsSOQhaZLp+FF5CQIGd2TSZhP5ci0aBV
-         HF41rUDpNXhNN3pXKh9aEERQ7OJO9736/62OJSB4Nk77tT826Eq4y/Fe8cO0Lob/HOme
-         z+8zCwOsA6QkP1IGrvASC8KW2rty8R9z53V/bbHKCR4PynaGqRID2dhHn/L5kdXBNQN9
-         7j+YvCw4GQmjqX2tw1fIRnWl0tdUJujR4s64og4O5flnvaGjVSYfxo5/dIzc+tb3NQAu
-         /uEbVq8DMsj/fjPoNjTjP/oqdL2CpPm+z0P27TgDREceGJTIM2Oyn0NgriPVB0t8xTYm
-         zcDw==
-X-Gm-Message-State: APjAAAUcRFTJTXwWJADeadTCk2pe8CwnHpXontGnzazqg76slEFl66Ym
-        rOEkAcSiQnnhndksS5AP2C2x/TpQ2q7jQb28ZhFEGQnXbLOZ6ziT7+zH4jcswq4Gz+gie0Sx4b8
-        N+DXvISkKsLI2r/WvAB5+vjloVnh6oUBx/5CkqaE75OV+f3IihNxynOq7nhp2K/C5FCmTdCB/UO
-        74
-X-Google-Smtp-Source: APXvYqxxEkPDpZB6tUdEysalqHL1VpPsUuksqlhLhaqqcNGdSMWMdh6evw715Zb0kELk6WuKfqx+qJY5e9CNjyUGzBlI
-X-Received: by 2002:a63:89c2:: with SMTP id v185mr73290013pgd.135.1577749496719;
- Mon, 30 Dec 2019 15:44:56 -0800 (PST)
-Date:   Mon, 30 Dec 2019 15:44:53 -0800
-In-Reply-To: <20191228003430.241283-1-jonathantanmy@google.com>
-Message-Id: <20191230234453.255082-1-jonathantanmy@google.com>
+        bh=Xk4APnXaHddH0v49lS7xOukxLH1KeAd1fdEP+SLRCSk=;
+        b=bu6paxA02kdFIrO6ALSu1eXChZM+8NpspmvnwNLHLfl8n2b9m0hm9X9VoVPaekxvKW
+         KpifV2zP28GaQj3Gf8tqmwLWie4f0HbttxHDqfB8T7VfJd6QgSV06IUPESvHvfHi5dQh
+         sT2hsCw0K0M9fNF5P7rfkFesnqb4jLhxfbzGC0nTNZwC+X2MdhMwBzCN3n1Lv67RZkPw
+         eqH4VFjJyOhDzCTklF/e1aCc/p/ZaDcA15oVKlIZbOlsoscsCW9k62S2cKnMZUHlTCqk
+         2DXbGnr6hUYTLzekBhlCMjqxCUE4genRjlDamxUMu1sTQfjubvLgMAyG3YnB0GZw7xCg
+         8Z4w==
+X-Gm-Message-State: APjAAAWrgkrRj/RNq1Jv4L+qa2KkdZOzf+mRl2Fg4ihaxxWNkS0quvo2
+        a9BAOH7KN1b3frw+V0W5LYuGM0LMkjurNMT8RKuL
+X-Google-Smtp-Source: APXvYqwI1yTnXsq1J9CpG4N0Zkp/Yy/jbAeqofD1tXeBTAWe0MTUM3kfZKTmeeVhRDvvWDp/lbnp7HNzBBfH5+4uoq8a
+X-Received: by 2002:a65:488f:: with SMTP id n15mr38375483pgs.61.1577750664605;
+ Mon, 30 Dec 2019 16:04:24 -0800 (PST)
+Date:   Mon, 30 Dec 2019 16:04:20 -0800
+In-Reply-To: <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20191231000420.32396-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <20191228003430.241283-1-jonathantanmy@google.com>
+References: <xmqqbls4aznl.fsf@gitster-ct.c.googlers.com>
 X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-Subject: [PATCH v2] revision: allow missing promisor objects on CLI
+Subject: Re: [PATCH v2 1/1] commit: display advice hints when commit fails
 From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com
+To:     gitster@pobox.com
+Cc:     gitgitgadget@gmail.com, git@vger.kernel.org, heba.waly@gmail.com,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 4cf67869b2 ("list-objects.c: don't segfault for missing cmdline
-objects", 2018-12-06) prevented some segmentation faults from occurring
-by tightening handling of missing objects provided through the CLI: if
---ignore-missing is set, then it is OK (and the missing object ignored,
-just like one would if encountered in traversal).
+> > This fix was about "we do not want to unconditionally drop the
+> > advice messages when we reject the attempt to commit and show the
+> > output like 'git status'", wasn't it?  The earlier single-liner fix
+> > in v1 that flips s->hints just before calling run_status() before
+> > rejecting the attempt to commit was a lot easier to reason about, as
+> > the fix was very focused and to the point.  Why are we seeing this
+> > many (seemingly unrelated) changes?
+> 
+> In any case, here is what I tentatively have in my tree (with heavy
+> rewrite to the proposed log message).
 
-However, in the case that --ignore-missing is not set but
---exclude-promisor-objects is set, there is still no distinction between
-the case wherein the missing object is a promisor object and the case
-wherein it is not. This is unnecessarily restrictive, since if a missing
-promisor object is encountered in traversal, it is ignored; likewise it
-should be ignored if provided through the CLI. Therefore, distinguish
-between these 2 cases. (As a bonus, the code is now simpler.)
+Junio, what are your plans over what you have in your tree? If you'd
+like to hear Heba's opinion on it, then she can chime in; if you'd like
+a review, then I think it's good to go in.
 
-(Note that this only affects handling of missing promisor objects.
-Handling of non-missing promisor objects is already done by setting all
-of them to UNINTERESTING in prepare_revision_walk().)
+I think the main area of discussion is whether we should go with Heba's
+attempt to address Emily's comment [1]:
 
-Additionally, clarify in get_reference() that error messages are already
-being printed by the functions called (parse_object(),
-repo_parse_commit(), and parse_commit_buffer() - invoked by the latter).
+> I think the intent of that commit was to not put hints into the editor,
+> so does it make sense to instead wrap this guy:
+> 
+>   /*                                                                       
+>    * Most hints are counter-productive when the commit has                 
+>    * already started.                                                      
+>    */                                                                      
+>   s->hints = 0;  
+> 
+> in "if (use_editor)"?
+> 
+> I didn't try it on my end. Maybe it won't help much, because we think
+> we're going to use the editor right up until we realize it's not
+> committable?
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Changes from v1: Improved code comments and commit message
+And I think the answer to that is "s" is used throughout the function in
+various ways (in particular, used to print statuses both to stdout and
+to the message template) so any wrapping or corralling of scope would
+just make things more complicated. In particular, the way Heba did it in
+v2 is more unclear - at the time of setting s->hints = 0, it's done
+within a "if (use_editor && include_status)" block, but (as far as I can
+tell) the commit message template might also be used when there is no
+editor - for example, as input to a hook. And more importantly, when
+s->hints is reset to the config, we don't know at that point that the
+next status is going to stdout. So I think it's better just to use the
+v1 way.
 
-> This is the case where oid must be COMMIT from oid_object_info()'s
-> point of view, but repo_parse_commit() finds it as a non-commit, and
-> object becomes NULL.  This is quite different from the normal lazy
-> clone case where exclude-promisor-objects etc. wants to cover, that
-> the object whose name is oid is truly missing because it can be
-> fetched later from elsewhere.  Instead, we have found that there is
-> an inconsistency in the data we have about the object, iow, a
-> possible corruption.
+The second area of discussion I see is in the commit message. Commit
+messages have to balance brevity and comprehensiveness, and this can be
+a subjective matter, but I think Junio's strikes a good balance.
 
-Thanks! I should have looked at the first half of get_reference() more
-carefully.
-
-If there is corruption in the form of hash mismatch, parse_object() will
-print a message and then return NULL, leaving get_reference() to handle
-it - and treat it as missing in this case. It seems reasonable to me to
-handle the repo_parse_commit() failure in a similar way. I've added
-comments to clarify that error messages are being printed.
----
- revision.c               | 23 ++++++++++++++++++++++-
- t/t0410-partial-clone.sh | 10 ++--------
- 2 files changed, 24 insertions(+), 9 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 8136929e23..af1e31b4fc 100644
---- a/revision.c
-+++ b/revision.c
-@@ -370,8 +370,18 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- 		if (!repo_parse_commit(revs->repo, c))
- 			object = (struct object *) c;
- 		else
-+			/*
-+			 * There is something wrong with the commit.
-+			 * repo_parse_commit() will have already printed an
-+			 * error message. For our purposes, treat as missing.
-+			 */
- 			object = NULL;
- 	} else {
-+		/*
-+		 * There is something wrong with the object. parse_object()
-+		 * will have already printed an error message. For our
-+		 * purposes, treat as missing.
-+		 */
- 		object = parse_object(revs->repo, oid);
- 	}
- 
-@@ -1907,7 +1917,18 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
- 		verify_non_filename(revs->prefix, arg);
- 	object = get_reference(revs, arg, &oid, flags ^ local_flags);
- 	if (!object)
--		return revs->ignore_missing ? 0 : -1;
-+		/*
-+		 * If this object is corrupt, get_reference() prints an error
-+		 * message and treats it as missing.
-+		 *
-+		 * get_reference() returns NULL only if this object is missing
-+		 * and ignore_missing is true, or this object is a (missing)
-+		 * promisor object and exclude_promisor_objects is true. In
-+		 * both these cases, we can safely ignore this object because
-+		 * this object will not appear in output and cannot be used as
-+		 * a source of UNINTERESTING ancestors (since it is missing).
-+		 */
-+		return 0;
- 	add_rev_cmdline(revs, object, arg_, REV_CMD_REV, flags ^ local_flags);
- 	add_pending_object_with_path(revs, object, arg, oc.mode, oc.path);
- 	free(oc.path);
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index a3988bd4b8..fd28f5402a 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -416,15 +416,9 @@ test_expect_success 'rev-list dies for missing objects on cmd line' '
- 	git -C repo config extensions.partialclone "arbitrary string" &&
- 
- 	for OBJ in "$COMMIT" "$TREE" "$BLOB"; do
--		test_must_fail git -C repo rev-list --objects \
-+		git -C repo rev-list --objects \
- 			--exclude-promisor-objects "$OBJ" &&
--		test_must_fail git -C repo rev-list --objects-edge-aggressive \
--			--exclude-promisor-objects "$OBJ" &&
--
--		# Do not die or crash when --ignore-missing is passed.
--		git -C repo rev-list --ignore-missing --objects \
--			--exclude-promisor-objects "$OBJ" &&
--		git -C repo rev-list --ignore-missing --objects-edge-aggressive \
-+		git -C repo rev-list --objects-edge-aggressive \
- 			--exclude-promisor-objects "$OBJ"
- 	done
- '
--- 
-2.24.1.735.g03f4e72817-goog
-
+[1] https://lore.kernel.org/git/20191217224541.GA230678@google.com/
