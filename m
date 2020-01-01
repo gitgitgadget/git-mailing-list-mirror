@@ -2,140 +2,118 @@ Return-Path: <SRS0=Tp/o=2W=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1757EC2D0DE
-	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 315D2C2D0DE
+	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:10:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CED3820722
-	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:07:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 020102073D
+	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:10:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="gGuj33a1"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="bIVluzzj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbgAAWHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jan 2020 17:07:22 -0500
-Received: from mout.gmx.net ([212.227.15.15]:46561 "EHLO mout.gmx.net"
+        id S1727397AbgAAWKy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jan 2020 17:10:54 -0500
+Received: from mout.gmx.net ([212.227.17.21]:43631 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727290AbgAAWHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jan 2020 17:07:22 -0500
+        id S1727290AbgAAWKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jan 2020 17:10:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1577916428;
-        bh=0BUnnJps0+aMIl3Sduej8OhhRAFtALnUPeFFEm5uGwA=;
+        s=badeba3b8450; t=1577916650;
+        bh=qihIGWxCKkZ89kB+ywVq5VWfmZtz3ds+0PcrPvsmtwM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=gGuj33a1BjKoHd3HFURi8QS3XVJ403HLolUVI9XcPKzeADsT1qTSzf4ZDVpjYzvNy
-         nUjXRILD91fFjgmG2fKghHyj3Pbp9XT9OzIij8IMZcEHznB1MZnHnInEG0eQ6bIO9N
-         74s+ejwfRdR2SSGo3JoR5O+1IAy+VD/ni9n79tPI=
+        b=bIVluzzjctPC9wPfqndwcrzTLzDg6sdD7FJ6QHtoYPwrKfWUm/EQy5/xUdCtNOVZF
+         8vI+DMQWMEfSvrVG3D+fza6EAWYOEb7Q77UoFdQd3nA0NsczAtCXusHpttqQUpLDfd
+         4vnjmLGVavnetNfNArSHrlvTiPiCtJuacuhb7QX0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McH5a-1jIo6a1gnE-00cisf; Wed, 01
- Jan 2020 23:07:08 +0100
-Date:   Wed, 1 Jan 2020 23:06:53 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M5wPb-1ipEFF1GG3-007RAK; Wed, 01
+ Jan 2020 23:10:50 +0100
+Date:   Wed, 1 Jan 2020 23:10:35 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Tom Miller <jackerran@gmail.com>
-cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: Propose promoting 'contrib/rerere-train.sh' to command
-In-Reply-To: <BZBZ3Y9WU7J7.3PGDZKEYVQ165@penguin>
-Message-ID: <nycvar.QRO.7.76.6.2001012303240.46@tvgsbejvaqbjf.bet>
-References: <BZBZ3Y9WU7J7.3PGDZKEYVQ165@penguin>
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 9/9] ci: include the built-in `git add -i` in the
+ `linux-gcc` job
+In-Reply-To: <600bb1f7-b54a-3bf7-40ae-af656768a752@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001012309390.46@tvgsbejvaqbjf.bet>
+References: <pull.175.git.1576968120.gitgitgadget@gmail.com> <pull.175.v2.git.1577275020.gitgitgadget@gmail.com> <23a3a47b0193395a280f32c01deaae5bdeeaa051.1577275020.git.gitgitgadget@gmail.com> <600bb1f7-b54a-3bf7-40ae-af656768a752@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:o2vDAxfga0zZgtP+G6HXcgVARLwbri/TD+Zl6DErDQPV8s40Q7Q
- gm0L4j/DbIxE+y6Y8ZBEIzLhkxM3Sa7CJAy78DvlHY6Abe24DQ6e7Zk0crBIny7Kh1+w7r6
- uxO2qqkQlwgea8+Fv+tYK9YHynNv5Henc3pZDwNyyIf2o31edf2Dvhdr/PEwrkCwqGRKMoy
- GcPsCtLbigDABsJy2miug==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OanBv/9P114=:7XRwSGskJGjjIqNHmrmsHZ
- abrf5uuz/5dtyPyAHf0EErB1CVL6htsa0uauRUAUvECkgDK0aHzLgYooX5GIlbjt6KXtNb5sp
- 0iKPoVyV3HQN7T5V8iPf4P7kLsjxRyEVgQe0C7h6qUP3WEUAh4OdRItfuIyirPEaDXm04pALS
- DI7UHduj4gGGqTMwK1hywENVcDzYg2ywGQ0uTGQ3PZgSJ6ovhgXXvgwy7uZka1Ro+C6yxHXbk
- eabocRVCywIkkVk0dpmJZUje1y6RGOv9peg34p9BBhmMm2guxtvFbmYIn2my3hcLBoXOaEoYH
- f51NpP2+rVvjMFlineuoR1rTfnopt6cCT0T7hzehSqziWJGzdnXbWiyudPqYufVVPLWGEotbc
- g0FMdrYU6odUlcoLv3KXUY8G8kt93k7HrUw26d9sCx4bwEyKArl7LLMKDMgx6vdL3PMzveTKZ
- MhJzfWfkysZ4Mv3L7iChaX9SsVYJUom4/hcM5R7EjY/dC0k1SIOMID40B5Wt9PT1ikHuyTein
- asskYJKoogT1brMij8Xv8jHHqTd8g+DeIP73cJnrkKv53VgqWDmx52L9I9u6WNEE44mEL8xkQ
- z9i4qqIPeVB+SSud+aHQ4OhtbxuCwwPaZlM8jrJidG789KfK2HeqNYF4vReuu+BCFa873SVa4
- t/UjlxiV5nc9Ta95lnIXuRb3j1ePQLqfP8QcCzyYAa0+RqllOhct8NOuBwRIMLkBi5bGWeJ5i
- ibKILPxZNwy1XJUeRWxSz0OFXLcQ5i+QgbIBfVEc03N6Bd/0X009EuYlGJ+ZeJ6kACkpARlJ2
- ZjykfIbDo6g9o/l4507jl/ro7Z1T3+a/vJmYbPacjXm8R6pe901IKP72UGxZTyGhT/9GRDZp0
- MWH/rmJRnRhyKjOFHz96mTqVcymWzZfX8a5sEchXEILN6D3gntgt67P/Fym86E4OYJbD78fRf
- 4hegfFS3TPZelDsJ6Mzjcv81ApDKELT2LjlIfPLLEvnbzYuokUzwZjreDjct0h9Ivwp6QKL30
- dTWtnZdPbkpnCSHPvC36H8DRd9+i+vppalx1HNGobwtd+j664sOjKR5WFnJAWnGBW//xR+25z
- Oyx6LtSLHfK/4sTSRKOTxRzlQ9o23KKjo0l3lLu+ROVWrCad2ZHKb/NyTFsQmjc/3LqqM2wve
- 00rwoS7U7/kV2KqD49JCEOblFaHjFr0HgxVCO4lYP7360CfsCEEAQObHppZ/YV+8BDXugw9Xp
- ntfXZjOJpJJesKnXvOHaL883TM7GINCs7QU+SfnpYoI+kPzwJVfa9ABFN5k4=
+X-Provags-ID: V03:K1:VULmofNQCSJyel1+4ERNENPCaohpycmpvmRZZ5P0SD5fZbLtavC
+ LgFGnN8n+1J/RZZ6chwdH7vxSLiMVBasQLgi6oQd2IUWafSbFTTowTt4aL9HGPMgBiGhQKR
+ LBZOWdKxnv8I9BLuETzAprxwlwLWi2YHn/B9IsjmvJbt+sbg6k8YOssSzarqsULF6WFEbnJ
+ Dv3fnYyFEez44PK/L6/Jg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sRVwIV4kEgU=:Bw340UEoGQXMt+7Cx+dTLR
+ LVeYi6aewrddoGx4QLQWIhrj/q4MT3hPsLcrTrqUXWf0gY1BovGoOJzOzDFoQmlFNWGUWtjEP
+ kTyr4DiTDSchySubkzTnZ0Oa+dppStmASz4glKZeOm6GNqK6x21jd9GEgiPp4FO6bvTrN9Z4Z
+ 2VJzzmBpsqoAGhbouLcB9U8rW8HqpZgNFzp3isL0q2nbxdJfH2O2zP2pWKsi44tABHtNP29D5
+ DN2lL4GUmnlScD+x5wuWW/ILUzpd1QKTHMDae9nPmTmcp+5U9TZqJtV4s8P/X0xrjzlL9RW1E
+ 8nO5ZetDkAzOODIkq5zHZy7H/wwWt3OgtdU52DRB+dqPbf0XfQYedQZLnJXHQLZ40aeLEvoiw
+ g5Le/uQNEEmnn1OK5rAFXA02do6BBbXaI4bEuqs2QTjnYg5mYNuAQwm/ll6F5I15t+6Cip8sa
+ ghbYMe21UAGuARTFNjycX0sPmCyuij3slxOUQL1e/ohIs3viG9G6FqpfxN2YJmXTcmfCrxqE8
+ AhUBY7wu3vYrtRG8f3rKvJRXodGUFBlX7iVqhaDI5DqPE18V6YdX1ab4KUeTIAwwoEcNPdY8r
+ zYXXoIlnoqCUjMRDJXAakp8llJ0XWmimZxKtTDFPEB53fYRvaqG6E1NLObgj4tkSwKKcaMm3f
+ sLscS9Tkd0mcX6KFeHGQTNzkX2IzmGdmW0IwUlKtHjPPoAfHE9G8dlYyPySWtXAT5dozOWoGq
+ o5kJrke9l7M4TIKAPC07KWJnyLdahRnf4MqRHHBTwlOsnr6624NCXigJoDykhMNvptoiCCDBx
+ ybxSFq9JwLSeJ2psICpfPZNLPi68B7q/7uk27iu+oPs3uO/0r9s/I1akn3oz4Anh6ykYnbSO1
+ XsfVNjVzaZzXMeXq+PTtmPW3i1RuRUdFVLCdWjG7+Dda+FKxozlWlqwFl7sI1gN8iVpvrWzYt
+ RRMSvjJxsHQRxaBP+reM0ZTrg3RGWQqA3Jl0jx9ALkjKboVcU6oH356HU9o+jk3eGYX5RGrWA
+ Ea+h+/0LK8h2zPZh5S49BztkXHs4Nf+rv6e5PowyFI9LowNHGGgs/bSqnIKjRsq83uIGZ7VMX
+ C4RAeLR+CP0xrLGPP4F4AF7q+2tJvs0XwbE3CneV17DG3VjMopSHVD1AH6hj8rmbdKpMKP3GB
+ 7fdGx/4JjKK9zeVZioyi9agacyrYeedAKmAdI087KLc1nqJb3cpodfW0+NaYljQJ1soLsvF9w
+ QMZupInrB5rRENQq/Bi5PkxUnT+T9wqq/DKlMAbMZfGgaOpZ+NKBIxRdWbaI=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Stolee,
 
-On Sun, 22 Dec 2019, Tom Miller wrote:
+On Thu, 26 Dec 2019, Derrick Stolee wrote:
 
-> On Sun Dec 22, 2019 at 2:58 AM, Jeff King wrote:
-> > On Sat, Dec 21, 2019 at 03:52:53PM -0800, Junio C Hamano wrote:
+> On 12/25/2019 6:57 AM, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
+> > This job runs the test suite twice, once in regular mode, and once wit=
+h
+> > a whole slew of `GIT_TEST_*` variables set.
 > >
-> > > Jeff King <peff@peff.net> writes:
-> > >
-> > > > The situations where I need rerere-train don't come up often, but =
-when
-> > > > they do, it has always worked easily and without hiccups for me. S=
-o
-> > > > perhaps there are lurking gotchas that Junio might know about, but=
- AFAIK
-> > > > the quality is high enough for it to be part of normal Git.
-> > >
-> > > I actually suspect that rewriting has a high chance of initially
-> > > degrading the quality, so we should take a two step approach if we
-> > > really want it as part of the core distribution.  As to the UI, I
-> > > think "git rerere train a..b" would be a good one, but if the
-> > > scripted version is of high quality (I haven't looked at it for a
-> > > long time---even though I used it for a couple of times a year in
-> > > recent years), perhaps we can add it as "git-rerere--train"
-> > > subcommand that is spawned from "builtin/rerere.c" for the first
-> > > cut?
+> > Now that the built-in version of `git add --interactive` is
+> > feature-complete, let's also throw `GIT_TEST_ADD_I_USE_BUILTIN` into
+> > that fray.
 > >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  ci/run-build-and-tests.sh | 1 +
+> >  1 file changed, 1 insertion(+)
 > >
-> > Yeah, I'd be pretty happy with that, too.
-> >
-> >
-> > I just suspect its ultimate fate is conversion to C, given the general
-> > trend. And converting it to C that just calls out to other git command=
-s
-> > via run_command would presumably behave just like the original, leavin=
-g
-> > the more challenging and error-prone conversion for later. Hopefully a=
-ny
-> > upgrade to "real Git command" would include some tests, though. :)
-> >
-> >
-> > -Peff
+> > diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> > index ff0ef7f08e..4df54c4efe 100755
+> > --- a/ci/run-build-and-tests.sh
+> > +++ b/ci/run-build-and-tests.sh
+> > @@ -20,6 +20,7 @@ linux-gcc)
+> >  	export GIT_TEST_OE_DELTA_SIZE=3D5
+> >  	export GIT_TEST_COMMIT_GRAPH=3D1
+> >  	export GIT_TEST_MULTI_PACK_INDEX=3D1
+> > +	export GIT_TEST_ADD_I_USE_BUILTIN=3D1
+> >  	make test
 >
-> Thanks for the feedback everyone! This is roughly the feedback I
-> expected. I think moving the shell version first will give more time to
-> focus on getting a strong test harness in place and a some decent
-> documentation. I happy with doing this in a multi phase approach as it
-> introduces less risk. When I get to the point of writing it in C I will
-> try to do the work internally by looking at commits as Jeff has
-> suggested, and fall back to run commands if I have to.
+> I see that I need to add this to the test-coverage builds.
 
-As the person who traditionally ends up being stuck with such conversions,
-I would like to point out that the rerere-train script has not changed _in
-years_ and that there is little point in trying to let it "cook" some more
-in the scripted form, _in particular_ because this would prevent the
-command from having access to the more powerful C API for future
-improvements.
+Thank you for catching this!
 
-One very obvious enhancement would be to perform the training in memory,
-without even clobbering the worktree. That's simply not a thing that a
-shell script can perform.
+It makes me wonder whether the test-coverage builds should use some `sed`
+invocation on the `ci/run-build-and-tests.sh` script, though, so that you
+do not have to edit the Azure Pipelines definition manually all the time?
 
-Food for thought,
+Ciao,
 Dscho
