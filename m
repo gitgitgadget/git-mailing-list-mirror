@@ -1,121 +1,91 @@
-Return-Path: <SRS0=Tp/o=2W=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=b7P8=2X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_SBL,URIBL_SBL_A,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB71FC2D0DE
-	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F413C2D0DE
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 02:49:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9550120722
-	for <git@archiver.kernel.org>; Wed,  1 Jan 2020 22:20:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3346520848
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 02:49:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HFwXpHDu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UJyWx08W"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbgAAWT6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 1 Jan 2020 17:19:58 -0500
-Received: from mout.gmx.net ([212.227.17.20]:55111 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727290AbgAAWT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Jan 2020 17:19:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1577917195;
-        bh=g3ZRVW0+VoHkkpzBO2rlen44RjwiuB4rMzBWByyoC0M=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HFwXpHDu6hdxhxI6OpbmbEIxMMkcz2PVgj9uLK5GKUSOnHQFH91pTjazSKb0iIprR
-         RJNbWsLPCir7CS5NrQXwFuq3tk41fH/ly8x9RnktQUxG6tHZPZgSCGNq/CjYCZ4h1Z
-         krzQGvKJZr7zfHvlsTvVsYeHZ5kiwzcdFwoZFp1w=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mof57-1jWqXq0O5Z-00p64z; Wed, 01
- Jan 2020 23:19:55 +0100
-Date:   Wed, 1 Jan 2020 23:19:39 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johannes Sixt <j6t@kdbg.org>
-cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] t3008: find test-tool through path lookup
-In-Reply-To: <2dc0b0f3-19ce-62ab-5af9-fdb2d05b00bd@kdbg.org>
-Message-ID: <nycvar.QRO.7.76.6.2001012319200.46@tvgsbejvaqbjf.bet>
-References: <2dc0b0f3-19ce-62ab-5af9-fdb2d05b00bd@kdbg.org>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727544AbgABCtv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 1 Jan 2020 21:49:51 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35110 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727509AbgABCtu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Jan 2020 21:49:50 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f8so38032590edv.2
+        for <git@vger.kernel.org>; Wed, 01 Jan 2020 18:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=5CuPPFi9AksWwFh01uOmZsz3VRoA1ojvz4bl5Yrw1r4=;
+        b=UJyWx08W87UO+scXK/DMrKoT2hIZtfqCD/DAeg6D0M26iC1BNIZRMC4SguuRdyBNbx
+         gv5fhhoTwvMEWvYsGYuRlGAsfeFr5MuumE+Oz3b5YhxNP7/yFNa4Exq2IMGKXr5UXiQF
+         /1OCjbspUPCKbCpAkXUywdFNnqxoLYtSsVufcxZ76wntuGRBnjnt/DgXa+PxJS4lxdaq
+         mqkY3sZmUELpBkSkkG8YAjd6b8APwbGfo6e15eajSOUBWysvZQwppXnAdsSmXNfo4k/i
+         6/EoYLWg8sT1QKcPFLGUU7U+Z7eAY1CPHU1rJqeg95kUgK5g8zWiXVoQl23UzHrpBKkS
+         XDmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5CuPPFi9AksWwFh01uOmZsz3VRoA1ojvz4bl5Yrw1r4=;
+        b=k4K4afvPLQGevc/Ah2dDZYxY7gTOkm7b1IO87WbyUnqnQQXvc6q+3TidimOSd4W/VT
+         XUzvhthwX52o9HBvLf+Ae6bNmH6aDE29duwMjHge2hlqby3+LzBtQ0uzEkYqWJ7ovlCs
+         g8zb66gwMMNZ8SM8oUJAXf7mn37XEfrXRM783CLPfebYiS5t7mDl72zB7dsgv/ZwCWJm
+         Mv7PFuTmRYmEiK788FBvT+eNuF9T/qvFOqdBueHzD+1BmHDoHS9XZJLnjuNKoV4FZFtt
+         T5yx+VwDz+HrVbA9Xp0UjV7kPi91DZ6LocGy9+HHD1DNragiNiVN8Te8aacgTlLnfrnp
+         gewA==
+X-Gm-Message-State: APjAAAVdK/gVsdO0rgZhGtENi0eHyDCNY/jwYZSbd4Y17Pi4uCqhZqDN
+        fs9MPbSxiM8VZnQ4f0Wc92g0A7Iu
+X-Google-Smtp-Source: APXvYqz9VLKan5ZFaWC9blLMGFLSdOsJtA5N/EbJ3tHIqoSGWvD9u3f+dU8OegzcRpLYgegyWpS7Bw==
+X-Received: by 2002:a17:906:f1c2:: with SMTP id gx2mr84423195ejb.135.1577933389021;
+        Wed, 01 Jan 2020 18:49:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h5sm7164355ejt.91.2020.01.01.18.49.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Jan 2020 18:49:48 -0800 (PST)
+Message-Id: <pull.507.git.1577933387.gitgitgadget@gmail.com>
+From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 02 Jan 2020 02:49:46 +0000
+Subject: [PATCH 0/1] [Outreachy] [RFC] branch: advise the user to checkout a different branch
+ before deleting
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nbkkTWFfWPzPxAKKsoOzFJOS2fveW5ygOijPrJex3LD6hCzq+uB
- M7rncCVqZM1tzz76I/9hVtlF2Tq0TwHcEYDS+6GBs1KcbL0mPEeTB210HKpQv7MqlEj1luA
- uRV8LBNt5+6Uw4I2gUivRv8AbudgYkMGiZLCnSuLCwRv8sUOdSp12oLD5pq9UQESdujonsm
- 0KPfBfLFizk9bmYpQ0dtg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rKvxlHZFJ60=:6VnDmLMN5iOpEYEFtG+B0J
- DGTo2WYDm9+DjZOMESXtGRxYQlx09ELBmoArOm8UF76hH44hOPssy4pXLT6iWFkjnhOR23+Ij
- ZoMJf/FOXWd/X24qPy081wrkG5cHoDSrPwX4zzGXPoIGUjq0POiM+wPDRFCRIB6Rw5XbU0t6X
- 3OBmO2fjqUSAndnDyNuqi4n8aS7/Rm1gOrnlEajV6oZXpbNjYbr6xrvb66YycvoFf8E3/WNEp
- AGV+PYRxYpGpE+b7xj62+0sBwuIqA4A0bSLziUzAHIaaKA3DjRc1ospKIkP5C1rQ949oo/j+b
- 8KXQpXRBbus3InqmoLkTruzgdFWCZpZ8Ksn76rmxWNlBQSa5U0NiJaSceUm7DSF+IZKUzfL2I
- JCrzSN1xal1cZui+FIxUmUpPIRePAasLR7UBfNk6gFp8wpFNjze5Tovm3FhYmLhz0Y/jyVB1T
- NKTuaM3TQKDbaFmwNe9ohtCD2saYdPznOlmU/wq37aGM9r6yy04Kpq4TZFpR91TsHmi/HOaXL
- Kxee09inKX20F1+v4SCl7nAJ8knBlhV9AZMWzeFfhMiL76aLur/Iif63D5aShJJsPGqHO0gzA
- sV25T7QSfEXpeJNMM0c4yjHceFxY+QGe60Hto6Xh6XLkX7PuMTDHCazcL9JIIkj2XRBsp7iW2
- 8sVpcVAk3kiU6nFmk5qtO60Mc73YNTp2rKWJhTHY+3q8Wgs8Bhz6e8nGRPWWjJR7ZXNW6fUkg
- vYujsukhjTbza6CMbwwS1obSNg92MmGl2vMiknooE4/KBSs1wDs7LQdAHowVxjz9+HMcopHjX
- AAFkRc2XCninqOB4o41r3sKnyV9VNk2g50fdTn+aR7vyZPExylbreqtksfHGUBNYyarR35wQ0
- QS2fhUKWbs05cgnhwDgtmQ+jaQgCXugFJJtr27jxA07Xu5eDboUODbFDt6Hm5GpA7pP/tdAeZ
- bqypr0xs8JXi27urem3iEDypxRiCeRs1F3LrdfrGXaoH4hOgHCRe7jDK7q6RSRWOmn+t8YObV
- TqNpB4VVjgDba44p2EPIgPmJR8WM0Kw21S3nfpYGcWLnEGLe1ZAdgMzbiOoAkJxpIMRdyY6SW
- 74OoZL2fKpG/pvheesEPpa2/tOMSanW9qxNCxNXLIwheikYrt/B5k++rKH/Y6X6EWidV0dQYT
- tH5W+s36aEPLX+kSB0XQYpvauLc6FXXdKdFOPbjoC01/lgx+lTTaMuks/wECsUXHGjo4g02D2
- NkR5UwNbF0UHS5cB0pHNVERFXkNH0Db+Lj4aD0y+nmsrYdVr+oDvKE1wFG80=
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Hannes,
+When a user attempts to delete a checked out branch, an error message is
+displayed saying: "error: Cannot delete branch checked out at ". This patch
+suggests displaying a hint after the error message advising the user to
+checkout another branch first using "git checkout ".
 
-On Sun, 22 Dec 2019, Johannes Sixt wrote:
+Heba Waly (1):
+  branch: advise the user to checkout a different branch before deleting
 
-> Do not use $GIT_BUILD_DIR without quotes; it may contain spaces and be
-> split into fields. But it is not necessary to access test-tool with an
-> absolute path in the first place as it can be found via path lookup.
-> Remove the explicit path.
->
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  Found this today coincidentally when I happened to look at the terminal
->  with test output at the right time and saw a suspicous error message
->  that included just one half of the build directory path.
+ builtin/branch.c  | 2 ++
+ t/t3200-branch.sh | 3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-This patch looks good to me.
 
-Thanks,
-Dscho
-
->
->  -- Hannes
->
->  t/t3008-ls-files-lazy-init-name-hash.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t3008-ls-files-lazy-init-name-hash.sh b/t/t3008-ls-files-=
-lazy-init-name-hash.sh
-> index 64f047332b..85f3704958 100755
-> --- a/t/t3008-ls-files-lazy-init-name-hash.sh
-> +++ b/t/t3008-ls-files-lazy-init-name-hash.sh
-> @@ -4,7 +4,7 @@ test_description=3D'Test the lazy init name hash with va=
-rious folder structures'
->
->  . ./test-lib.sh
->
-> -if test 1 -eq $($GIT_BUILD_DIR/t/helper/test-tool online-cpus)
-> +if test 1 -eq $(test-tool online-cpus)
->  then
->  	skip_all=3D'skipping lazy-init tests, single cpu'
->  	test_done
-> --
-> 2.24.1.524.gae569673ff
->
->
+base-commit: 0a76bd7381ec0dbb7c43776eb6d1ac906bca29e6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-507%2FHebaWaly%2Fdelete_branch_hint-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-507/HebaWaly/delete_branch_hint-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/507
+-- 
+gitgitgadget
