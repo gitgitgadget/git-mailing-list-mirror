@@ -2,192 +2,248 @@ Return-Path: <SRS0=b7P8=2X=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B0DC2D0C2
-	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5040AC2D0C2
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:17:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A6384217F4
-	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:16:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE9A521655
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:17:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YNoPNL2A"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="LzxHNzjM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725871AbgABUQf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jan 2020 15:16:35 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:46461 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725783AbgABUQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jan 2020 15:16:35 -0500
-Received: by mail-pg1-f201.google.com with SMTP id t12so27536033pgs.13
-        for <git@vger.kernel.org>; Thu, 02 Jan 2020 12:16:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Sm16XkiBG6aotAKeMSmMmmpB3+ZX2sLt4nkdeXBooKg=;
-        b=YNoPNL2ATfMJ49dqJwDCeiOBkhYg+FXY2YXEAl89B1pE2phOS07NdSUdZNbbqaD9FW
-         YK6LJ3jZiCKidGdVkSvNAhwGfC+xe8dP9RE4AxzYex55H25f50yI8ZZVGUMgiTvcspME
-         4hecKhJ62uNE8N4Tz7ESljewOsm9wew5nzlZ/onfW4aRzAmCSOb3OGu8p9dK8tnUyuTv
-         FFAV27eoxvAtqwLODRqHLAzZ8e5vIqe6m0Z67yW9zBti48D1Z36x/rZ31+8AAxhbmz/I
-         x6ye4tNSrst015QBa/1fyGuT3mSiibbHfinAZYKjAAmihEURx5svzTJmvRn1+MlrjBbT
-         KypA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Sm16XkiBG6aotAKeMSmMmmpB3+ZX2sLt4nkdeXBooKg=;
-        b=br+IYXnUY1D5jQUSncRBBbzNy5hl6yia/uNjtAWbiUq8ugyd9cusoq05dPeTW8Dw5f
-         nn2fgW3iVe0/JvCAqP6ejK83V7GTWsdN57HCG04C1Un51peub09taEEtMBk+w2eKRS9m
-         BU6rARxJoAGuy+Wz1NlkQ/mSK3mLS5E8DJAqYJewm5eG5SwR1JVFWnJp3jCdPWMkszRi
-         /OyX5CaF6N83Ge6CckRUrmPxhkgvlIn+lpDPMbx4XD9zCmMBV+g5QInvX3VRxAZ4S+gO
-         Lj+EqZZ7EaDdGQejzvAzLQVyvDYzFlZUF1gbLOyCzumB3GU0qZsympiQeKsEPrI8NL5h
-         y8tg==
-X-Gm-Message-State: APjAAAUlbt38Ct6XLpgsxKAtw60Apaiko02aHXdfH+6Jr39VSSimguLz
-        X6vWYVGstB2nXxYMwXLzeATUzAkzvpzYgQ5IVVIsn+9+M0vgCW3w9zSJaqwblBz3qmJnBs5ZQe9
-        dL82XetQyo/S3CRiT3oWKHDcsLcmhN2XgLwZPvRy0gtamBEnxUEPH1YsnsrqXpAoFQj4+ux8CsC
-        tt
-X-Google-Smtp-Source: APXvYqy+pL0K9ruk5z3/34rw/0A8cu7FZeB0c0aZ87f6E+m8stiWNdgkN7xDqG19C0jWiTzxHKegeMArhp4xdn9TwDCc
-X-Received: by 2002:a63:1346:: with SMTP id 6mr93052364pgt.111.1577996194429;
- Thu, 02 Jan 2020 12:16:34 -0800 (PST)
-Date:   Thu,  2 Jan 2020 12:16:30 -0800
-In-Reply-To: <20191230211027.37002-1-jonathantanmy@google.com>
-Message-Id: <20200102201630.180969-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20191230211027.37002-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-Subject: [PATCH v2] sha1-file: remove OBJECT_INFO_SKIP_CACHED
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
-        jrnieder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1725851AbgABUR4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jan 2020 15:17:56 -0500
+Received: from mout.gmx.net ([212.227.17.22]:40867 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725783AbgABURz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jan 2020 15:17:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1577996273;
+        bh=Mi7Vh9q3Dri9MraR9uMUohksbeok/1OYQjg8ejDn+MU=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LzxHNzjMgFMcCcaV3YbhWjnCXeP15w7R9/nw1ABUafGxH8/xD3rL+y8E7pT59S8Qs
+         eLjtYX2W1bJrQcPssSgWNvNqh2egQk5wr4UuKfSurv9uJu1byjeQ340ZRtE7o0rGDW
+         9Qvqn6gnAMNPwSS3LdszzcAOMdjBO/2t1Tpu0tJ8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MowKc-1jVpaJ1mX8-00qTIS; Thu, 02
+ Jan 2020 21:17:53 +0100
+Date:   Thu, 2 Jan 2020 21:17:36 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Comparing rebase --am with --interactive via p3400
+In-Reply-To: <16add63e-a631-5ebf-bbbe-17823d942ee9@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001022108280.46@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1901312310280.41@tvgsbejvaqbjf.bet> <a00e1689-ec7c-4039-a2e9-f72d452ae4ff@gmail.com> <CABPp-BGCQR+MLVTDoaXDmPrE4SCu+dQ794X6Kvx1PpiQ=6D7KQ@mail.gmail.com> <16add63e-a631-5ebf-bbbe-17823d942ee9@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="8323328-48933659-1577996272=:46"
+X-Provags-ID: V03:K1:qYuiIomGVlIXHUQi34CUtDsx3Szn3O/O5c11hHsrM3lW6ioqVTj
+ xlaaYmr51/zmkUKgsU4NQSYJjW28xFbqcz6z67R63lfPJUo7QV4PaqpfHOEgmyWq8/IjnuO
+ PBK16Nfj7vaC42ivmzst8qiMOI1vpFQ6ae01TgQb8J2tem34sBMDBVnpb9gTWgk61pYca+5
+ SdHh6/xYZHs4/39cQrbMw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:u9JeMzAstZU=:juITt7yjXuxBb6CiHog1tm
+ T2JYCClK+EW4QM0clQ3qRq7S7epQ4de4IkGTYefzDX+6vXSJfFlx/Ul+qZCHz1th7Aeu8BZ9d
+ OvW0FbYEModvDjBP2EI5xH+0dmXxExYVNOTQdZXolE55N30FO54svO5/EwwNwysi6kVWrPgX5
+ E+uPJrSyXXhz12NbixWz1Xhn/iGV9xmkF1i1alERzvxxUej0oLla+fYrnnVtzOfgkCm2DDOlQ
+ ipCZ7oFjwFS8/Ahc3WsP0kPibUTWyeNUmutdjC/UNFB7cjWPZvodx8d0nRG91k4nYCtgALc3y
+ aUezKsVYNz9nOqsX3sqPh/xZGMg8wvGSAOV/GgWQiTd2HQAG970TZojjg+iPR6+9mc89Q+uLy
+ /4I/9/UFN/ZNxtuOgofZg2OE6Jbi0pUvcTZEuEIeQED+xJmtwmyDwGUO76ewXsL2aoUYQVpQ0
+ iFsHn4O03HkgFcupk33M40S8WMDndmDQtFtBE5lbRse9GdbS1C7dWb+7OSW1mszowKObl7seI
+ GVWHQIB6wZOxtL0YdKIH+K+lbNxOHrPJ/BQbP2rLS0QAR9mhIrwjMHnPc8MjHgx+/GPU07Ab5
+ qHK6Q2ee7wP1eYFlPYLit6+7mh2ZPB05Kay2mQPx/VWZLDqg4gNyhFPHtTbNWJdOYApE8DRSK
+ VltdMldJ/S5SuKqpb03LxjRIBbD4tYXG3bXVuv98Iw4Vmoe3IXcU8LS+XSdmSvCYOnLhATruk
+ hzBqhwcuw/WZBO65vX37MaBQ1/DEp28y5ZGsogTnHkMcaEn+L4tmKNFHyRPdOaafzJqVsD3/7
+ DUKV9BA0nAiRZH1Adk9hXTJBAi01rl/04zcQsgVQlO6Nx6b65jtxTPjwkyFRZXavpq/zec6mh
+ 2AXwKQ81UqwsJeu3PBFtWfv83DTutWigccNLoL0APK5nLRYwveDr8crDsR9qcgys6aqK57cjG
+ 9sUU1LD0AF4EfOpFPRMMhnkeGqBWldcVq6JI4smmRFZW4xEsl5xhd3VWf83iCfrOoTp5RC8Kw
+ L+wy17knFNgF4+/Q0d3wuZq9MBfhVhLRuuC45vmQgx8621SvvL/z55gp5mLvMwh63oHWOs7Zb
+ YEjfkzKnJyBI9uMeqAJGNHNi1Wn7siplobhDrRhtoHztefIoUnf4QOrPNcWwvcHqXocKtjPmK
+ Np9Xk7Xamm9Sf4mdk8G6m4FddFQO3JumHDQKc950Cz58+P3s7yL1LAqMSs4S/grVDdU0VESaF
+ wuAXkJcrmh8Vb9P/IrZUv03+Y+bNirj+V3+3z3rwX7O6Pds4sScoKLgO4oCo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a partial clone, if a user provides the hash of the empty tree ("git
-mktree </dev/null" - for SHA-1, this is 4b825d...) to a command which
-requires that that object be parsed, for example:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-  git diff-tree 4b825d <a non-empty tree>
+--8323328-48933659-1577996272=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-then Git will lazily fetch the empty tree, unnecessarily, because
-parsing of that object invokes repo_has_object_file(), which does not
-special-case the empty tree.
+Hi Alban & Elijah,
 
-Instead, teach repo_has_object_file() to consult find_cached_object()
-(which handles the empty tree), thus bringing it in line with the rest
-of the object-store-accessing functions. A cost is that
-repo_has_object_file() will now need to oideq upon each invocation, but
-that is trivial compared to the filesystem lookup or the pack index
-search required anyway. (And if find_cached_object() needs to do more
-because of previous invocations to pretend_object_file(), all the more
-reason to be consistent in whether we present cached objects.)
+On Sun, 29 Dec 2019, Alban Gruin wrote:
 
-As a historical note, the function now known as repo_read_object_file()
-was taught the empty tree in 346245a1bb ("hard-code the empty tree
-object", 2008-02-13), and the function now known as oid_object_info()
-was taught the empty tree in c4d9986f5f ("sha1_object_info: examine
-cached_object store too", 2011-02-07). repo_has_object_file() was never
-updated, perhaps due to oversight. The flag OBJECT_INFO_SKIP_CACHED,
-introduced later in dfdd4afcf9 ("sha1_file: teach
-sha1_object_info_extended more flags", 2017-06-26) and used in
-e83e71c5e1 ("sha1_file: refactor has_sha1_file_with_flags", 2017-06-26),
-was introduced to preserve this difference in empty-tree handling, but
-now it can be removed.
+> Hi Elijah,
+>
+> Le 27/12/2019 =C3=A0 23:45, Elijah Newren a =C3=A9crit=C2=A0:
+> > Hi Alban,
+> >
+> > On Fri, Dec 27, 2019 at 1:11 PM Alban Gruin <alban.gruin@gmail.com> wr=
+ote:
+> >>
+> >> Hi Johannes & Elijah,
+> >>
+> >> Le 01/02/2019 =C3=A0 07:04, Johannes Schindelin a =C3=A9crit :
+> >>> Hi Elijah,
+> >>>
+> >>> as discussed at the Contributors' Summit, I ran p3400 as-is (i.e. wi=
+th the
+> >>> --am backend) and then with --keep-empty to force the interactive ba=
+ckend
+> >>> to be used. Here are the best of 10, on my relatively powerful Windo=
+ws 10
+> >>> laptop, with current `master`.
+> >>>
+> >>> With regular rebase --am:
+> >>>
+> >>> 3400.2: rebase on top of a lot of unrelated changes             5.32=
+(0.06+0.15)
+> >>> 3400.4: rebase a lot of unrelated changes without split-index   33.0=
+8(0.04+0.18)
+> >>> 3400.6: rebase a lot of unrelated changes with split-index      30.2=
+9(0.03+0.18)
+> >>>
+> >>> with --keep-empty to force the interactive backend:
+> >>>
+> >>> 3400.2: rebase on top of a lot of unrelated changes             3.92=
+(0.03+0.18)
+> >>> 3400.4: rebase a lot of unrelated changes without split-index   33.9=
+2(0.03+0.22)
+> >>> 3400.6: rebase a lot of unrelated changes with split-index      38.8=
+2(0.03+0.16)
+> >>>
+> >>> I then changed it to -m to test the current scripted version, trying=
+ to
+> >>> let it run overnight, but my laptop eventually went to sleep and the=
+ tests
+> >>> were not even done. I'll let them continue and report back.
+> >>>
+> >>> My conclusion after seeing these numbers is: the interactive rebase =
+is
+> >>> really close to the performance of the --am backend. So to me, it ma=
+kes a
+> >>> total lot of sense to switch --merge over to it, and to make --merge=
+ the
+> >>> default. We still should investigate why the split-index performance=
+ is so
+> >>> significantly worse, though.
+> >>>
+> >>> Ciao,
+> >>> Dscho
+> >>>
+> >>
+> >> I investigated a bit on this.  From a quick glance at a callgrind tra=
+ce,
+> >> I can see that ce_write_entry() is called 20 601[1] times with `git a=
+m',
+> >> but 739 802 times with the sequencer when the split-index is enabled.
+> >
+> > Sweet, thanks for digging in and analyzing this.
+> >
+> >> For reference, here are the timings, measured on my Linux machine, on=
+ a
+> >> tmpfs, with git.git as the repo:
+> >>
+> >> `rebase --am':
+> >>> 3400.2: rebase on top of a lot of unrelated changes             0.29=
+(0.24+0.03)
+> >>> 3400.4: rebase a lot of unrelated changes without split-index   6.77=
+(6.51+0.22)
+> >>> 3400.6: rebase a lot of unrelated changes with split-index      4.43=
+(4.29+0.13)
+> >> `rebase --quiet':
+> >
+> > --quiet?  Isn't that flag supposed to work with both backends and not
+> > imply either one?  We previously used --keep-empty, though there's a
+> > chance that flag means we're not doing a fair comparison (since 'am'
+> > will drop empty commits and thus have less work to do).  Is there any
+> > chance you actually ran a different command, but when you went to
+> > summarize just typed the wrong flag name?  Anyway, the best would
+> > probably be to use --merge here (at the time Johannes and I were
+> > testing, that wouldn't have triggered the sequencer, but it does now),
+> > after first applying the en/rebase-backend series just to make sure
+> > we're doing an apples to apples comparison.  However, I suspect that
+> > empty commits probably weren't much of a factor and you did find some
+> > interesting things...
+> >
+>
+> Yes, I did use `--keep-empty' but misremembered it when writing this ema=
+il=E2=80=A6
+>
+> >>> 3400.2: rebase on top of a lot of unrelated changes             0.24=
+(0.21+0.02)
+> >>> 3400.4: rebase a lot of unrelated changes without split-index   5.60=
+(5.32+0.27)
+> >>> 3400.6: rebase a lot of unrelated changes with split-index      5.67=
+(5.40+0.26)
+> >>
+> >> This comes from two things:
+> >>
+> >> 1. There is not enough shared entries in the index with the sequencer=
+.
+> >>
+> >> do_write_index() is called only by do_write_locked_index() with `--am=
+',
+> >> but is also called by write_shared_index() with the sequencer once fo=
+r
+> >> every other commit.  As the latter is only called by
+> >> write_locked_index(), which means that too_many_not_shared_entries()
+> >> returns true for the sequencer, but never for `--am'.
+> >>
+> >> Removing the call to discard_index() in do_pick_commit() (as in the
+> >> first attached patch) solve this particular issue, but this would
+> >> require a more thorough analysis to see if it is actually safe to do.
+> >
+> > I'm actually surprised the sequencer would call discard_index(); I
+> > would have thought it would have relied on merge_recursive() to do the
+> > necessary index changes and updates other than writing the new index
+> > out.  But I'm not quite as familar with the sequencer so perhaps
+> > there's some reason I'm unaware of.  (Any chance this is a left-over
+> > from when sequencer invoked external scripts to do the work, and thus
+> > the index was updated in another processes' memory and on disk, and it
+> > had to discard and re-read to get its own process updated?)
+> >
+>
+> The sequencer re-reads the index after invoking an external command
+> (either `git checkout', `git merge' or an `exec' command from the todo
+> list), which makes sense.  But this one seems to come from 6eb1b437933
+> ("cherry-pick/revert: make direct internal call to merge_tree()",
+> 2008-09-02).  So, yes, quite old, and perhaps no longer justified.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-Forgot to add v2 to the other email, so resending it with the correct
-email subject.
+Right. This commit also moved the `discard_cache()` call outside from the
+`else` clause of the `if (no_commit)`.
 
-Difference from v1: updated commit message in response to Jonathan
-Nieder's feedback. Hopefully I didn't remove too much.
----
- object-store.h |  2 --
- sha1-file.c    | 38 ++++++++++++++++++--------------------
- 2 files changed, 18 insertions(+), 22 deletions(-)
+That `else` clause goes all the way back to 9509af686bf (Make git-revert &
+git-cherry-pick a builtin, 2007-03-01), and I admit freely that my memory
+is no longer fresh on the specifics of this patch.
 
-diff --git a/object-store.h b/object-store.h
-index 55ee639350..61b8b13e3b 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -292,8 +292,6 @@ struct object_info {
- #define OBJECT_INFO_LOOKUP_REPLACE 1
- /* Allow reading from a loose object file of unknown/bogus type */
- #define OBJECT_INFO_ALLOW_UNKNOWN_TYPE 2
--/* Do not check cached storage */
--#define OBJECT_INFO_SKIP_CACHED 4
- /* Do not retry packed storage after checking packed and loose storage */
- #define OBJECT_INFO_QUICK 8
- /* Do not check loose object */
-diff --git a/sha1-file.c b/sha1-file.c
-index 188de57634..03ae9ae93a 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1417,6 +1417,7 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
- 			     struct object_info *oi, unsigned flags)
- {
- 	static struct object_info blank_oi = OBJECT_INFO_INIT;
-+	struct cached_object *co;
- 	struct pack_entry e;
- 	int rtype;
- 	const struct object_id *real = oid;
-@@ -1431,24 +1432,22 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
- 	if (!oi)
- 		oi = &blank_oi;
- 
--	if (!(flags & OBJECT_INFO_SKIP_CACHED)) {
--		struct cached_object *co = find_cached_object(real);
--		if (co) {
--			if (oi->typep)
--				*(oi->typep) = co->type;
--			if (oi->sizep)
--				*(oi->sizep) = co->size;
--			if (oi->disk_sizep)
--				*(oi->disk_sizep) = 0;
--			if (oi->delta_base_sha1)
--				hashclr(oi->delta_base_sha1);
--			if (oi->type_name)
--				strbuf_addstr(oi->type_name, type_name(co->type));
--			if (oi->contentp)
--				*oi->contentp = xmemdupz(co->buf, co->size);
--			oi->whence = OI_CACHED;
--			return 0;
--		}
-+	co = find_cached_object(real);
-+	if (co) {
-+		if (oi->typep)
-+			*(oi->typep) = co->type;
-+		if (oi->sizep)
-+			*(oi->sizep) = co->size;
-+		if (oi->disk_sizep)
-+			*(oi->disk_sizep) = 0;
-+		if (oi->delta_base_sha1)
-+			hashclr(oi->delta_base_sha1);
-+		if (oi->type_name)
-+			strbuf_addstr(oi->type_name, type_name(co->type));
-+		if (oi->contentp)
-+			*oi->contentp = xmemdupz(co->buf, co->size);
-+		oi->whence = OI_CACHED;
-+		return 0;
- 	}
- 
- 	while (1) {
-@@ -1932,8 +1931,7 @@ int repo_has_object_file_with_flags(struct repository *r,
- {
- 	if (!startup_info->have_repository)
- 		return 0;
--	return oid_object_info_extended(r, oid, NULL,
--					flags | OBJECT_INFO_SKIP_CACHED) >= 0;
-+	return oid_object_info_extended(r, oid, NULL, flags) >= 0;
- }
- 
- int repo_has_object_file(struct repository *r,
--- 
-2.24.1.735.g03f4e72817-goog
+Looking at that patch, I think I simply discarded the index because a
+subsequent code path would spawn the `git merge-recursive` process, which
+would have changed the index externally.
 
+> I know I had to add another discard_cache() in rebase--interactive.c
+> because it broke something with the submodules, but it does not seems
+> all that useful now that rebase.c no longer has to fork to use the
+> sequencer.
+
+FWIW I agree. The code is still quite complex at this point, but
+infinitely more readable (thank you Elijah for taking point on simplifying
+merge-recursive.c!). So I think that it might be the right point in time
+to make sure that the index is not re-read and re-discarded over and over
+again.
+
+Thanks,
+Dscho
+
+--8323328-48933659-1577996272=:46--
