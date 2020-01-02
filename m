@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DD06C2D0C2
-	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3B0DC2D0C2
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:16:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 334AE21655
-	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:15:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6384217F4
+	for <git@archiver.kernel.org>; Thu,  2 Jan 2020 20:16:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="U1LyaoFo"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="YNoPNL2A"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725862AbgABUPk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 2 Jan 2020 15:15:40 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:37049 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725790AbgABUPj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Jan 2020 15:15:39 -0500
-Received: by mail-pl1-f202.google.com with SMTP id t21so15683181plo.4
-        for <git@vger.kernel.org>; Thu, 02 Jan 2020 12:15:39 -0800 (PST)
+        id S1725871AbgABUQf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 2 Jan 2020 15:16:35 -0500
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:46461 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725783AbgABUQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Jan 2020 15:16:35 -0500
+Received: by mail-pg1-f201.google.com with SMTP id t12so27536033pgs.13
+        for <git@vger.kernel.org>; Thu, 02 Jan 2020 12:16:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=9JxhdVH0IVwNfoh4iVxHhIruKZBR6c1wHbh99ezqr80=;
-        b=U1LyaoFoF73ItJbl6FoOqLkcZD3Ez2059JDWojixa+LQW+hCpc3c7vLAlEGW4AOeFA
-         FsPJr+EgApDNrCQ3nlU7m530IA1pHT2vOl0vJr/5r/cG05WkNm5eth+pwsP3N6+sZmn/
-         MjaYw5YgQm/Vnu64EKTLMlcz5vO010OACKs9qVwqDuJogufniSTIdEIs8HiYR7kUPlEF
-         TorhRIryFGzX9+pClAWOcmqIBSzAfnYzMQrCeuSkb4XSQK7nH6q6TKOo+D2ge7/hoHWN
-         GdMfE21wOReCgkyxDambOXw/6vU5VoWFo70gujTzoXLAEjprwapT4cnokhT2zWnanWbU
-         l6vw==
+        bh=Sm16XkiBG6aotAKeMSmMmmpB3+ZX2sLt4nkdeXBooKg=;
+        b=YNoPNL2ATfMJ49dqJwDCeiOBkhYg+FXY2YXEAl89B1pE2phOS07NdSUdZNbbqaD9FW
+         YK6LJ3jZiCKidGdVkSvNAhwGfC+xe8dP9RE4AxzYex55H25f50yI8ZZVGUMgiTvcspME
+         4hecKhJ62uNE8N4Tz7ESljewOsm9wew5nzlZ/onfW4aRzAmCSOb3OGu8p9dK8tnUyuTv
+         FFAV27eoxvAtqwLODRqHLAzZ8e5vIqe6m0Z67yW9zBti48D1Z36x/rZ31+8AAxhbmz/I
+         x6ye4tNSrst015QBa/1fyGuT3mSiibbHfinAZYKjAAmihEURx5svzTJmvRn1+MlrjBbT
+         KypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=9JxhdVH0IVwNfoh4iVxHhIruKZBR6c1wHbh99ezqr80=;
-        b=Z4c6FCY/zo8/Pn+Kaa95Ng5m9jFiv8ZYQYIR7vXgNW2P1i14Cz2+L5y3/UFPghx1LF
-         I5qByzJtvqZ/K6aCU1zSMKHPxfcpovCReAsh9JTMCDYjwXjGf1oxl6SxzxWyjQL9Z5in
-         sixm/JGd++/G27pvxaJaqjYYS1e3z0QLGDgWrlyPFtfkrVMxjg6WlqqxH6xfsBZYwPgT
-         bu/oo5PR0NjxhoadA0s92KqAcs/YiQ59B2/uUpHdIRZ0LmTbujKk9Y1u55/pVXzpY0qV
-         uJOGMHVi2rzoL6/ECnbTSC/3wvbSj0KPSnDciWES05a1nUXM2oOqoAAC0q/qsbwzo8Cp
-         u1Uw==
-X-Gm-Message-State: APjAAAVw4aKoZZDFSt6JZCu+yFExGjWkh9k2U+p8jhsKEct4ckWcUwpj
-        VgXdAFXuVtc74TaoB+rvamlcyJOcQ3lXpcgGTN79ZZUkES/4gjwwPmCcsmIU0tO67Fvaq504UMh
-        eSiEp6y0PNLpq5euv2rzV6LU8Um49S6ppluGB1Fbd81uLqW1bgLKrCZfXBnm+Lp3hRDIhtMeAXV
-        Km
-X-Google-Smtp-Source: APXvYqy5HD68AqmimA94efChVSuzec6W7LhEt+eImJnxHQbQTf9j+fiR0tZpi2UpY1fo3z/Pt7MD0YEFyJfvhyXkWoN1
-X-Received: by 2002:a63:1b54:: with SMTP id b20mr90750222pgm.312.1577996138735;
- Thu, 02 Jan 2020 12:15:38 -0800 (PST)
-Date:   Thu,  2 Jan 2020 12:15:35 -0800
+        bh=Sm16XkiBG6aotAKeMSmMmmpB3+ZX2sLt4nkdeXBooKg=;
+        b=br+IYXnUY1D5jQUSncRBBbzNy5hl6yia/uNjtAWbiUq8ugyd9cusoq05dPeTW8Dw5f
+         nn2fgW3iVe0/JvCAqP6ejK83V7GTWsdN57HCG04C1Un51peub09taEEtMBk+w2eKRS9m
+         BU6rARxJoAGuy+Wz1NlkQ/mSK3mLS5E8DJAqYJewm5eG5SwR1JVFWnJp3jCdPWMkszRi
+         /OyX5CaF6N83Ge6CckRUrmPxhkgvlIn+lpDPMbx4XD9zCmMBV+g5QInvX3VRxAZ4S+gO
+         Lj+EqZZ7EaDdGQejzvAzLQVyvDYzFlZUF1gbLOyCzumB3GU0qZsympiQeKsEPrI8NL5h
+         y8tg==
+X-Gm-Message-State: APjAAAUlbt38Ct6XLpgsxKAtw60Apaiko02aHXdfH+6Jr39VSSimguLz
+        X6vWYVGstB2nXxYMwXLzeATUzAkzvpzYgQ5IVVIsn+9+M0vgCW3w9zSJaqwblBz3qmJnBs5ZQe9
+        dL82XetQyo/S3CRiT3oWKHDcsLcmhN2XgLwZPvRy0gtamBEnxUEPH1YsnsrqXpAoFQj4+ux8CsC
+        tt
+X-Google-Smtp-Source: APXvYqy+pL0K9ruk5z3/34rw/0A8cu7FZeB0c0aZ87f6E+m8stiWNdgkN7xDqG19C0jWiTzxHKegeMArhp4xdn9TwDCc
+X-Received: by 2002:a63:1346:: with SMTP id 6mr93052364pgt.111.1577996194429;
+ Thu, 02 Jan 2020 12:16:34 -0800 (PST)
+Date:   Thu,  2 Jan 2020 12:16:30 -0800
 In-Reply-To: <20191230211027.37002-1-jonathantanmy@google.com>
-Message-Id: <20200102201535.179417-1-jonathantanmy@google.com>
+Message-Id: <20200102201630.180969-1-jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20191230211027.37002-1-jonathantanmy@google.com>
 X-Mailer: git-send-email 2.24.1.735.g03f4e72817-goog
-Subject: [PATCH] sha1-file: remove OBJECT_INFO_SKIP_CACHED
+Subject: [PATCH v2] sha1-file: remove OBJECT_INFO_SKIP_CACHED
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
@@ -102,6 +102,9 @@ now it can be removed.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
+Forgot to add v2 to the other email, so resending it with the correct
+email subject.
+
 Difference from v1: updated commit message in response to Jonathan
 Nieder's feedback. Hopefully I didn't remove too much.
 ---
