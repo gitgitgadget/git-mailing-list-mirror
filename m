@@ -2,86 +2,90 @@ Return-Path: <SRS0=XQOF=2Y=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87AD8C2D0CE
-	for <git@archiver.kernel.org>; Fri,  3 Jan 2020 21:42:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B947BC00523
+	for <git@archiver.kernel.org>; Fri,  3 Jan 2020 22:08:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5288A215A4
-	for <git@archiver.kernel.org>; Fri,  3 Jan 2020 21:42:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A7B521835
+	for <git@archiver.kernel.org>; Fri,  3 Jan 2020 22:08:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZZTRpFJP"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="SxV1CuWn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728687AbgACVmN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jan 2020 16:42:13 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33943 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728631AbgACVmN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jan 2020 16:42:13 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t2so43675145wrr.1
-        for <git@vger.kernel.org>; Fri, 03 Jan 2020 13:42:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=WygS3Q7rxaLa/ASN44/pomA5Gy4w552ZYJ76Isw1pKk=;
-        b=ZZTRpFJPfNLOzAVe2v5HXz96SpKnFIlb+mTMLm3ZfwEB6lQihMyDnoN5rWFVF3huua
-         quX7BnU8Qp82MlLPMALm52K2Lxq5jFgWsl/W5MUca851XoImHsF0QWkOnfHYfUkNo0ZK
-         hGNpAjhlA78w2dPenhOkBRhcjCWnXxeVMi/Hv02yN/uZmehFQv+MEeLQQRuB9/oAVpRQ
-         DgzzVwOMrtbeEtvQxs5m2YCWMnOcCYE7P0tHlfV4v6oUxOmewsoIKhhIjHJ00VJCWeAW
-         uBtKZl6Mb7qxn8aFBl0IoUEMKQrq5K5ZL1Tz9f5X+huQaeYBs4hrc1zdeejcDZ40GZVk
-         F3jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=WygS3Q7rxaLa/ASN44/pomA5Gy4w552ZYJ76Isw1pKk=;
-        b=JkUJbtaootrSXTq/55h11HbSPFZJbLMv9Ie73aEVxUOS+Ul5s0lpuFzDaL4uFP9gh+
-         vuHKbq5IxIlZ8KwCTVJ5+HGw347QKHqJi+gA51SKX+wvC3AsTfjLp5W/lL/SDE/G/A3m
-         /ihnbU4VRL9QNcvcCKMCR4Roo6r3q6pyTTNS2RNqGF8Lhcnv1B4RC0Xi/KXGXV5XAuIh
-         3LXDQlDgQ61wjEAw/pWP20+klBwF049Qe4QB8llGgdAhGlu5VfqI6Vj51rFHlPoA8Y4N
-         FktuliiPfCxAPnrDTXq6SPzkRN/yixywzwhrVvCWDEnZ0ljc3x+hzRSrqlY5PKizs+Ef
-         WAMQ==
-X-Gm-Message-State: APjAAAWvdfbQigF436h6LxYFlBfzirIByHiTciVRp6asJJGR4yQpu0oh
-        mFk+jCZ9OwXBBo0YIzbKB9QJEGXH
-X-Google-Smtp-Source: APXvYqzJf2xcdHceCRevLaWViUGfscczoWYAgENf4yJLuqHfpODK4LNg2aZT+2k4Yf4Sr6exEjY4dA==
-X-Received: by 2002:adf:e5ce:: with SMTP id a14mr87323196wrn.214.1578087730968;
-        Fri, 03 Jan 2020 13:42:10 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b137sm14007758wme.26.2020.01.03.13.42.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2020 13:42:10 -0800 (PST)
-Message-Id: <pull.686.git.git.1578087730.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 03 Jan 2020 21:42:08 +0000
-Subject: [PATCH 0/1] unpack-trees: exit check_updates() early if updates are not wanted
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728716AbgACWIQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jan 2020 17:08:16 -0500
+Received: from mout.gmx.net ([212.227.17.21]:45419 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728549AbgACWIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jan 2020 17:08:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578089290;
+        bh=1fp8bkOuLfN0nLD4w+662ZJiLPaDIN/oj9ZPgb7pspk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=SxV1CuWneI8hZSbWaQStLvwgrnsGn5h1s2CpMirQf4DQVOZXuFbOLat+WuxXdPxoy
+         A3ETs9IsyAa8xqlh4Nr8ikXfv8ZAdbJ3Ago5ZkRD7ZeUaYcG+v5hhkn/NUXuLRNPhN
+         AcnPxFmotDrgnJvZwHJ6gmBDhyLpxfQHUEH8HKPM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mo6ux-1jWflx2pb9-00payH; Fri, 03
+ Jan 2020 23:08:10 +0100
+Date:   Fri, 3 Jan 2020 23:08:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Subject: Git for Windows v2.25.0-rc1, was Re: [ANNOUNCE] Git v2.25.0-rc1
+In-Reply-To: <xmqqpng1cu2c.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001032306580.46@tvgsbejvaqbjf.bet>
+References: <xmqqpng1cu2c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:xlG0sCua6pMOwjk4jTmLT+EXPd1iBaWHFCrfRbvvVoGrLgBLii3
+ ax1wqrZ/O47DCXmjDJeratR3vw86DYqTBy7+Coqwdty+j0j6Zqxq+60Ll8AgUnXwn0yx1Kx
+ 9g7R0QWahSpcpTEzNJo8fxJAXlKzVLcCN0jkLJB1qKvfwmIRmV2bimnTitz9J/SJbiku13l
+ ePtaqOMokuLJm7w2hHW3g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4+ARG5ZYWnU=:/HmutMIvlY7awlDZl40JH1
+ yDdmxwOvuWxjboaMCdRlVizpXc6Uz5dZbXOFx0mpywBUoqPgvo62MIN+VIJYh/QDUkFPrtDGw
+ zMs9xxwLX29Rpyi5nKz4DP5pi0p/23oBBlqxZC9J1nRNVBGZiozKkOQs/KJs56wGs/5K5PKsf
+ JwKXhaeMSFpZOGu/B1SgnRpz0OVcB9yvibIypI+FDHtqgrUB7LVjoSf5q6RXTS8hVxcfLFvtL
+ 7RS6N6tKh2xseKlhQ08LXx0nsFttO+gCqHr7kXCG9Wq4ZbbbSaBZBYJUuBFj8VAHg6xWrPHRR
+ 86T0PZ+O7IxWc4Jbp0GKJDWEtgQIRyeXgK4nhKH8uP8ig4Te/J5k6vPMPY0x2cBVffvVPjelq
+ Yr01NWRTxc4wRlERi7G+HNCxCJuJSyjGpW3sacm19PdXWcXNCSh7VGVPGTYjiFELSmUoufRgj
+ d/0wuKssOHtK6k4TlKiAI1QaInZrAmGuOIUCflsJGTdLe1pxVN/LNzDPXD6LNlVdbWcuYMuEE
+ KOwgUZlBnbOlC6jfWzCLCh9RuPaE0Fjyn6kls5O16Sh3Tj3Hhaf8BKqMys+EmwRDT7ss8YQqT
+ vei9UkBpoHYm5ykYaf9JKTNppz3OYLxa5rn75eWidua2cQaDq8dGSRylixV2EKgYCohB7rMAA
+ nNWFFuthFyefrrnwgCYW7NhULRjIoSPMxmqMrSTeiG7MNrkO3Z7QfLGEevIzntIVbZSeykETn
+ BrSdbyI0F5Ajl9hy3URzfcex7m+5t4YsN/ThywuojxQ8gDWq4HN9GtaPjry5OCnHkTnMzkzhJ
+ rl75F7E9BcR1yneTw3Y8MO2pnda1+g8nWze3SmduSD3q2wb/MpoFSQR99aYO/p/C8uy9rBJlR
+ OgzKDOPIoVrYhgn9trwlc6rL6a74cqdiHB27ECJuC3ULgC2HA7Gj0zeWqBbLslKDuRw3CXOQS
+ 4WyJKhvQhmtrwHGMp6IDhCrGk1nPvZUAH/R+SMK8fKvlyybL+va8FJwMBEib4VEZolHq0bNVy
+ 4SjwB5CrkBPq6YLzZcLPZvidxsROaYtS9FiveVmmAWpOMLlGylGRnY2kclGbYUIez7GoLkskx
+ CtPGeuD5/3xkWG2DE80rD5C3FgAtzLA2qPtC+qokx1g4dx6vC9IdFR3XpFK84sxpNjs6vgQj1
+ OH9NVWmGtXC5sKMjX9Y7PQOrL70bj9kav3MD8yzxkQ/cs0u1VIWcTqn0p2ToErVdCwASVguOn
+ rJmIHJ3FMPkqbtecrGd8g42RvxEGHJFT8GwX4MUV1PzOo3JfWhaVaRr9b+zM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In trying to understand check_updates(), I found I was able to simplify the
-function by making it exit early when updates are not wanted.
+Team,
 
-Elijah Newren (1):
-  unpack-trees: exit check_updates() early if updates are not wanted
+On Thu, 2 Jan 2020, Junio C Hamano wrote:
 
- unpack-trees.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+> A release candidate Git v2.25.0-rc1 is now available for testing
+> at the usual places.  It is comprised of 540 non-merge commits
+> since v2.24.0, contributed by 63 people, 24 of which are new faces.
 
+The corresponding Git for Windows v2.25.0-rc1 can be found here:
 
-base-commit: 8679ef24ed64018bb62170c43ce73e0261c0600a
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-686%2Fnewren%2Fsimplify-check-updates-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-686/newren/simplify-check-updates-v1
-Pull-Request: https://github.com/git/git/pull/686
--- 
-gitgitgadget
+	https://github.com/git-for-windows/git/releases/tag/v2.25.0-rc1.windows.1
+
+Please test!
+
+Thanks,
+Johannes
