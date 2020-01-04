@@ -2,108 +2,155 @@ Return-Path: <SRS0=9bkr=2Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 483EBC32771
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 20:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 746AFC32771
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 20:30:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 211E924650
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 20:14:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3B64022B48
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 20:30:54 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WDUmWBU4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726170AbgADUOf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jan 2020 15:14:35 -0500
-Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:43481 "EHLO
-        outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726118AbgADUOe (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 4 Jan 2020 15:14:34 -0500
-Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
-          by outpost.zedat.fu-berlin.de (Exim 4.85)
-          for git@vger.kernel.org with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id <1inpoe-003RCz-0p>; Sat, 04 Jan 2020 21:14:32 +0100
-Received: from p57ae5a32.dip0.t-ipconnect.de ([87.174.90.50] helo=[192.168.178.22])
-          by inpost2.zedat.fu-berlin.de (Exim 4.85)
-          for git@vger.kernel.org with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-          (envelope-from <glaubitz@physik.fu-berlin.de>)
-          id <1inpod-000zNi-Q7>; Sat, 04 Jan 2020 21:14:31 +0100
-To:     git@vger.kernel.org
-From:   John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Subject: Testsuite failures on ppc64, sparc64 and s390x (64-bit BE)
-Autocrypt: addr=glaubitz@physik.fu-berlin.de; keydata=
- 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
- scOkTAZQGVpD/8AaLH4v1w==
-Message-ID: <34ed7497-643e-5a38-d68c-7c075b647bcd@physik.fu-berlin.de>
-Date:   Sat, 4 Jan 2020 21:14:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1726207AbgADUax (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jan 2020 15:30:53 -0500
+Received: from mout.gmx.net ([212.227.17.21]:46551 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726118AbgADUaw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jan 2020 15:30:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578169844;
+        bh=6IKT1Bdoa8Q1Ds9036avBtoESPFlq1O+cvxgpBYH7wQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=WDUmWBU4HsCjRXnK0sg0WUWs8LImUa48JX45e8STkOuHGhc2sEa1c0cLUJ8wifeGe
+         iVny0P0Qlq1yp3dCLG6bI65kitCBSXzc+wJczQB6BGO87mCLIvWa6Mts8XxSSBHL2Z
+         SeSyZYbEXIpfcs4nAp67qh/rBJ9gT4wg9eu+w/Do=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MqaxU-1jRFLQ1wJs-00mZm0; Sat, 04
+ Jan 2020 21:30:44 +0100
+Date:   Sat, 4 Jan 2020 21:30:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Matthew DeVore <matvore@comcast.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        Matthew DeVore <matvore@gmail.com>, jonathantanmy@google.com,
+        jrnieder@gmail.com, steadmon@google.com
+Subject: Re: [RFC] xl command for visualizing recent history
+In-Reply-To: <xmqqk168cjn0.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001042115550.46@tvgsbejvaqbjf.bet>
+References: <20191029003023.122196-1-matvore@google.com> <20191031003929.GA22855@google.com> <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet> <20200103201423.GA20975@comcast.net> <xmqqk168cjn0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: 87.174.90.50
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4cfUkB2HObBu6urhEuA8HTivjYAxgOlWaTgofIUek0bLwloYdwp
+ KpkOUP2e3SrUc3LUQHUyuxEJ6CFLYjY/c0sBwpjrMFEYi9+d6nP6wMq5+AiVHPJlMpYdfsN
+ aARhoyTGB5IQ6W8dcrQE6ghZQZlE3S5dqjAGieNNGVYwbI6iDNlKkN2VwnFlluGRpzb5uFd
+ 2WXXYh9GxagoWIgih53kw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iTdqH3zwFgI=:CyAi9hsoklmXk+Bovsknl+
+ HJLbpbvh9u2o3r7ZVIL+KFJ21r5puwMKjvEuhJI2ZkQVzvJzHbjl0n+GYNZDEMz3lzlEyzdqY
+ 6YLAXPuft/H3FpU28p2UgFLwb2201xadZoYAlzzJwkZnAamMzF+4yeNj8DgvciiZXe8/MwUWw
+ /QvVjWpGSvQcgHnRZBUygoT+TVBj4pM1xlQlg3D7J8thuM+tfdrFEe1mdNjPihuOhmwlyMoqv
+ B2VHjVwkYdboeP2FODQqyXxyrBR5B8ta5ftN0I/B+lF4wtDssCPtOOYFOGin+pzaMwcaiG8rn
+ h7pCb4d9jucqD5rvXvla1JD0PLH4HiPBJcNJyeLQLy9x3de8/yQhqnp9oC3JyW81N0yFbTmsK
+ nPrGY5oeEg3xOcfgAUd1z3BzvsJmDJFu+P1SpgZexHnshdpTPcq/IukDcl/4bWf6DugTaraHw
+ UZAx8xUnLa/yZ4Sd+BaSwJCE9K/5ulu9nI2m2W3vAknyAxuybDjJ0blq+naTPZ3fv8WriiCH8
+ xS4J0IGOEvcbkhTaGzQ0wl0bg8dkqpJpYkx4fYE0AcCPN4Ul2m3HEV2L8xwd5gbIcODWbtGiH
+ kHBHxPfv8dkQEhc+6IrUBmv3b73UR4z2DKfGg1zfZV+fBlz2qH57j8uDG7PjIxjLT04/hE30M
+ 8etdhsdcs2Ec5VYbvwmcvtAHafzYHJHaGgzZ1SF1jMlqVXMOJlLmx2mKHEB/H7S55aDHlikzG
+ /CWN9pvIDXLZ7PUcCDCEfrbh5TU+FXIseZuWSAlr0XCDOM7xcGxQ68ZMJfQvLQ1wnUoC82jZQ
+ APUehfLPBV0iwwX27kUts16O472/uFWFCdl+oC9yVGjue16KLFFHLc+Zh4DptKgzfvGpmkMu5
+ 7+qjArgKEG+UwL2IgJYImUXhgH1CpeNPJXkBlrcpiC1KshfsmoavCzHBoyXDIMgULURJwyqIV
+ cwNokZ5enPqR66PV5eurGHDwhEXHFIfXTuVPNXUofMZz6/PTYMPOOaIiEqErbk7Ubh/ORmwkb
+ AQimosWTYfy3egrQGDF/BJK1oozul54430zfIdNISB4678chWlcRuujt1TVyMUHh4m5JOekd2
+ tL5t6NgeKjulSwHukioZXWugnPDWM2WaM1R2lXSOoAE1R1+d0I53OlO+ljJYmCcHIV3CXGWnm
+ kDbCm4q83ujIu4sH/JNfv85gI0ayqKoL4g+PfPK5a7R334hSLKDyz5SRSkaj4n7budpVSrI25
+ 7IQ4WOzkwTrnWUG3fMXKc1kmPFyO+YCeC6WwqV85rVKWIFmeHgO0GZvNYLqM=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+Hi,
 
-It seems that git is failing its testsuite on all 64-bit Big-Endian targets,
-full build log can be found in [1]. There seem to be multiple failures.
+On Fri, 3 Jan 2020, Junio C Hamano wrote:
 
-The issue first showed with 2.25-rc1 [2].
+> Matthew DeVore <matvore@comcast.net> writes:
+>
+> > On Thu, Oct 31, 2019 at 09:26:48AM +0100, Johannes Schindelin wrote:
+> >>
+> >> am stands for "apply mbox", and I think that the only reason it is no=
+t
+> >> called `git apply-mbox` is that the Linux maintainer uses it a lot an=
+d
+> >> wanted to save on keystrokes.
+>
+> No need to give an incorrect speculation if you do not know the
+> history in this discussion.
 
-Thanks,
-Adrian
+Oh, but where would be the fun in _not_ speculating???
 
-> [1] https://buildd.debian.org/status/fetch.php?pkg=git&arch=s390x&ver=1%3A2.25.0%7Erc1-1&stamp=1578096339&raw=0
-> [2] https://buildd.debian.org/status/logs.php?pkg=git&arch=s390x
+:-)
 
--- 
- .''`.  John Paul Adrian Glaubitz
-: :' :  Debian Developer - glaubitz@debian.org
-`. `'   Freie Universitaet Berlin - glaubitz@physik.fu-berlin.de
-  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
+> Back then, the command to apply mbox contents existed and was called
+> "git applymbox".  "am" was invented as a better replacement with more
+> rational behaviour and set of command line arguments.
+
+Now that you mention it, I vaguely remember reading about it. But even
+back then, I was not so much enthused with the idea of exporting Git
+history into emails and then turning those emails back into Git history
+(now with "New And Improved!" commit names), so I did actually not pay
+much attention.
+
+As you might recall, I was also a fervent opponent of `git rebase` (which
+I think was based on `git am` from the get-go), claiming that history
+should not be rewritten. Well, what did I know. I went on to write
+`git-edit-patch-series.sh` which you accepted into Git as `git rebase
+=2D-interactive`, so there.
+
+> >> Having said that, I do agree that `xl` is not a good name for this.
+> >> It is neither intuitive, nor is it particularly easy to type (on a
+> >> US-English keyboard, the `x` and the `l` key are far apart), and to
+> >> add
+> >
+> > There is a subjective element to this, but I would consider it easy to
+> > type since it is using two different hands....
+>
+> Give descriptive name to the command, define an alias of your choice and
+> use it privately.  Nobody would be able to guess what "git xl" or "git
+> extra-long" command would do ;-)
+
+I thought I made the point already that such short names are prone to be
+already used by users' aliases, and that shorter command names are very
+likely to break someone's setup.
+
+While I do not have any `xl` alias defined, I have 20 custom two-letter
+aliases, and I would be utterly surprised if there were less than a
+thousand Git users who defined `xl` to mean something already (by now,
+there are _a lot_ of Git users out there, and it would be foolish to
+assume that less than even the tiny fraction of a percent that translates
+into a thousand users didn't use this alias). While one might say that
+forcing a thousand users to adjust is not a big deal, I would counter that
+we should not, unless really necessary.
+
+And in this case, I deem it totally not necessary at all.
+
+But again, I was wrong before (see e.g. the `git rebase` comment above),
+so what do I know.
+
+In any case, as stated before, I would like to see this feature be
+implemented as a `git log` (or even `git rev-list`) option before
+implementing a dedicated command.
+
+In other words, this new feature should be treated as a _mode_ rather than
+a new command. The command can come later, just like `git whatchanged`
+is essentially a special-case version of `git log`.
+
+Ciao,
+Dscho
