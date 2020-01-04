@@ -2,90 +2,126 @@ Return-Path: <SRS0=9bkr=2Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6D7DC32767
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 23:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F2A73C32767
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 23:13:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7641A21734
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 23:03:21 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v3PZibOg"
+	by mail.kernel.org (Postfix) with ESMTP id C8CAB2464E
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 23:13:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbgADXDQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jan 2020 18:03:16 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51233 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726135AbgADXDQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Jan 2020 18:03:16 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0270F9F153;
-        Sat,  4 Jan 2020 18:03:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ho+2w4xv3/Ze8cePGyDhv13ywqc=; b=v3PZib
-        Og3n8sPtVU4jrzLbCX5Xgs41mcsEia4k3vQupm2Hh82yLUBK1/CTV2OoY0ogl8BZ
-        oL/5zlc5G8BxrkeBHnYXTgIbEEYpNRQuJhZzav9JOzTUtMlK5cXie9xt4bYHU9/A
-        R9Sob/DN6/yZudj8FelYP9LCh1LyOw6DPtu4k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=g4l/fNm/YwGfrQ5p0jg9HlhAGLWBI/4O
-        JMQHTXBtJRg/NQpvYsQDRk0iEgt+Y5QPk//j+dT1n4HkdHZ8/yvmJIMBwRZ7NsYQ
-        f/gxEYRbKkuhLP+BYVNcFtn7eFbQKnMy7I21CdkjStxqdt0Tvp1Jj7FuQkRGalTi
-        fKh6KbONR88=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EFF049F152;
-        Sat,  4 Jan 2020 18:03:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 225259F150;
-        Sat,  4 Jan 2020 18:03:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Berg <johannes@sipsolutions.net>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] multi-pack-index: correct configuration in documentation
-References: <20200104124314.10134-1-johannes@sipsolutions.net>
-Date:   Sat, 04 Jan 2020 15:03:08 -0800
-In-Reply-To: <20200104124314.10134-1-johannes@sipsolutions.net> (Johannes
-        Berg's message of "Sat, 4 Jan 2020 13:43:14 +0100")
-Message-ID: <xmqqr20ebz9v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726181AbgADXNh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jan 2020 18:13:37 -0500
+Received: from outpost1.zedat.fu-berlin.de ([130.133.4.66]:47185 "EHLO
+        outpost1.zedat.fu-berlin.de" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725871AbgADXNh (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 4 Jan 2020 18:13:37 -0500
+Received: from inpost2.zedat.fu-berlin.de ([130.133.4.69])
+          by outpost.zedat.fu-berlin.de (Exim 4.85)
+          with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id <1insbv-003waE-8Z>; Sun, 05 Jan 2020 00:13:35 +0100
+Received: from x4db71041.dyn.telefonica.de ([77.183.16.65] helo=[192.168.1.8])
+          by inpost2.zedat.fu-berlin.de (Exim 4.85)
+          with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+          (envelope-from <glaubitz@physik.fu-berlin.de>)
+          id <1insbv-001Ucu-2A>; Sun, 05 Jan 2020 00:13:35 +0100
+Subject: Re: Testsuite failures on ppc64, sparc64 and s390x (64-bit BE)
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <34ed7497-643e-5a38-d68c-7c075b647bcd@physik.fu-berlin.de>
+ <b7565f06-55a2-7087-d46e-94f9e7ada988@physik.fu-berlin.de>
+ <20200104224830.GF6570@camp.crustytoothpaste.net>
+Cc:     git@vger.kernel.org
+From:   John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Autocrypt: addr=glaubitz@physik.fu-berlin.de; keydata=
+ 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
+ scOkTAZQGVpD/8AaLH4v1w==
+Message-ID: <4b4ae893-430f-6633-f0d9-0e89f9b89696@physik.fu-berlin.de>
+Date:   Sun, 5 Jan 2020 00:13:34 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 611A3138-2F46-11EA-9485-8D86F504CC47-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20200104224830.GF6570@camp.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: 77.183.16.65
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Berg <johannes@sipsolutions.net> writes:
+Hi Brian!
 
-> It's core.multiPackIndex, not pack.multiIndex.
->
-> Signed-off-by: Johannes Berg <johannes@sipsolutions.net>
-> ---
->  Documentation/technical/multi-pack-index.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 1/4/20 11:48 PM, brian m. carlson wrote:
+> Did you build your version of Git with Subversion support, and if so,
+> which version of Subversion did you use (version of Debian package or
+> other source)?  The tests that were failing all require git-svn, which
+> in turn require libsvn-perl and subversion (/usr/bin/svn).  If you're
+> missing those packages, the Subversion tests will automatically be
+> skipped.
 
-Thanks, will queue.
+Good point. I just ran the configure script without any extra options.
 
-> diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-> index 1e312396966c..4e7631437a58 100644
-> --- a/Documentation/technical/multi-pack-index.txt
-> +++ b/Documentation/technical/multi-pack-index.txt
-> @@ -36,7 +36,7 @@ Design Details
->    directory of an alternate. It refers only to packfiles in that
->    same directory.
->  
-> -- The pack.multiIndex config setting must be on to consume MIDX files.
-> +- The core.multiPackIndex config setting must be on to consume MIDX files.
->  
->  - The file format includes parameters for the object ID hash
->    function, so a future change of hash algorithm does not require
+I will have another look and make sure git-svn is enabled.
+
+> The latest version on master is 2.25-rc1, and that's failing in the
+> Debian package.  I haven't checked recently, but last I looked, the
+> Debian package wasn't applying any additional patches on top of Git, so
+> the version you're getting off GitHub is literally the same version that
+> you're getting in the Debian package.
+
+Okay. I wasn't sure whether there were any additional commits after the
+2.25-rc1 tag, I hadn't checked yet as I was doing these tests on the
+side while watching TV.
+
+Adrian
+
+-- 
+ .''`.  John Paul Adrian Glaubitz
+: :' :  Debian Developer - glaubitz@debian.org
+`. `'   Freie Universitaet Berlin - glaubitz@physik.fu-berlin.de
+  `-    GPG: 62FF 8A75 84E0 2956 9546  0006 7426 3B37 F5B5 F913
