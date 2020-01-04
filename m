@@ -2,98 +2,56 @@ Return-Path: <SRS0=9bkr=2Z=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A33ECC00523
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 00:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DC72C00523
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 01:19:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 759DE21734
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 00:48:30 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cykpAYz9"
+	by mail.kernel.org (Postfix) with ESMTP id F4005217F4
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 01:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbgADAs3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 3 Jan 2020 19:48:29 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:35521 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726911AbgADAs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Jan 2020 19:48:29 -0500
-Received: by mail-pj1-f68.google.com with SMTP id s7so5332424pjc.0
-        for <git@vger.kernel.org>; Fri, 03 Jan 2020 16:48:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=cW27PUinhITbH5W0DDOKQnfy9AVD3T74uDxyOOn8OQo=;
-        b=cykpAYz9PAeTxIJiJ2EQpEhsHVY4qb+qPThnWBIjsFmhYFnEr37UfYkRvAVFhFtfHf
-         UdmhoR/sjKQ+JUMAgvs6/UvCPWJwMrv3ch3K+StltCE9nadhOzbQHx9cSeUT2taBXuAG
-         L+yGSqWdkO63NHbd/P2w/8vGQjjsFoAlndtfBGauMLfDFggb7XrbDKYrUDh2azReKz+b
-         OVol1Ux0SrfQbRwEaClXE+6i82wu5wLWnK8JAYP5IJLaBcEL/KJiqd6dQMJcZhdEDAAD
-         oSqFKB3GbxpqcTNGTACDstOqj+LjJxdgTIL/37icC3IcPEV3pJtIepfK8NUd7/wAVHRA
-         iW8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=cW27PUinhITbH5W0DDOKQnfy9AVD3T74uDxyOOn8OQo=;
-        b=GF6z5S0PT5zgiw/k4ja1QOD0Zdk5g77JdXXGgVd47tPqxvjub7wHUmzqDpHCEsvV0s
-         doZeiCBNsQ/VThABUzEM8TWfuZ4/EQF8rsHbTm2MrtPp+5tkj+NWMMFzD3Vb0PdT4wJ1
-         3h2gXZgiPvcyDpc8SqzyeT3rQNbiE6Kp+LeqUwlGC7ItwTsWgEdkrjKH54BZ3PJUaUcg
-         yrPEEQ/uZsPfrDUNp6pQeo3GZR+VWCu3tbhXCydWxEfcBu7/dAorV6VY6NsvUik2iDvn
-         NaRr/vfY/ncUpY54+LjW/0sBZwiXCJfGgODRGWv//hMUqujTrAZpC9GzXSFIZvAmMg6X
-         4cJQ==
-X-Gm-Message-State: APjAAAWbGB8vFEqtroTdbwYKQCzBH/lNhFmGFqK3dL9F0GZ8jhsLf+jH
-        f/Hkk8Vhia07g7nJRHmaf9Q=
-X-Google-Smtp-Source: APXvYqzIt1YvYsoSsCTyWJZOtX0m5kr4iPZPGevZwAeFJSDH7DvP8ifOrbqntPtQ3ZfMZ061grq1Pg==
-X-Received: by 2002:a17:902:244:: with SMTP id 62mr55065977plc.168.1578098908287;
-        Fri, 03 Jan 2020 16:48:28 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id g26sm60311284pfo.130.2020.01.03.16.48.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Jan 2020 16:48:28 -0800 (PST)
-Date:   Fri, 3 Jan 2020 16:48:26 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?RnJhbsOnb2lz?= WAUQUIER <wokier@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git checkout -
-Message-ID: <20200104004826.GC130883@google.com>
-References: <CAFS-fjvhAB5EcfHhfp6HYN57W11tkHOc8K8T3oey8qceutuYsg@mail.gmail.com>
+        id S1727189AbgADBTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 3 Jan 2020 20:19:11 -0500
+Received: from smtp37.cstnet.cn ([159.226.251.37]:51212 "EHLO cstnet.cn"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726968AbgADBTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Jan 2020 20:19:11 -0500
+Received: by ajax-webmail-APP-12 (Coremail) ; Sat, 4 Jan 2020 09:18:58 +0800
+ (GMT+08:00)
+X-Originating-IP: [106.120.127.15]
+Date:   Sat, 4 Jan 2020 09:18:58 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From:   wuzhouhui <wuzhouhui14@mails.ucas.ac.cn>
+To:     git@vger.kernel.org
+Subject: What the meaning of two commit ID in a merge commit's log
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.9a build 20190604(696d1518)
+ Copyright (c) 2002-2020 www.mailtech.cn cnic.cn
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFS-fjvhAB5EcfHhfp6HYN57W11tkHOc8K8T3oey8qceutuYsg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Message-ID: <56365810.1196c.16f6e224802.Coremail.wuzhouhui14@mails.ucas.ac.cn>
+X-Coremail-Locale: en_US
+X-CM-TRANSID: tgCowABHfJsC6A9emRMHAA--.7580W
+X-CM-SenderInfo: xzx2x05xkxxi2u6ptx1ovo3u1dvotugofq/1tbiBAMFAV02S2QAdw
+        ACsy
+X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
+        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
+        daVFxhVjvjDU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-François WAUQUIER wrote:
-
-> $ git checkout -
->
-> I often use this command to go back to previous branch from my history.
-> It is quite natural as it uses the same syntax as “cd -“
->
-> But i found out it is not documented in
-> https://git-scm.com/docs/git-checkout/2.24.0
-> I report this to help others to discover this time saving command.
-
-Thanks for reporting!
-
-Ideas for what the documentation should say about it?  (Bonus points
-if it comes in the form of a patch against Documentation/git-checkout.txt.
-;-)  See [1] for more about how that works.)
-
-Sincerely,
-Jonathan
-
-[1] https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html
+SGksCgpXaGVuIEkgdXNlICJnaXQgbG9nIiB0byBkaXNwbGF5IGNvbW1pdCBsb2csIEkgc2VlIHRo
+ZXJlIGFyZQp0d28gY29tbWl0IElEcyBpbiBhIG1lcmdlIGNvbW1pdCwgZS5nLgoKICAgIGNvbW1p
+dCAyMTg3ZjIxNWViYWFjNzNkZGJkODE0Njk2ZDdjN2ZhMzRmMGMzZGUwCiAgICBNZXJnZTogMmQz
+MTQ1ZjhkMjgwIGZiZDU0Mjk3MWFhMQogICAgQXV0aG9yOiBMaW51cyBUb3J2YWxkcyA8dG9ydmFs
+ZHNAbGludXgtZm91bmRhdGlvbi5vcmc+CiAgICBEYXRlOiAgIFR1ZSBEZWMgMTcgMTM6Mjc6MDIg
+MjAxOSAtMDgwMAoKICAgICAgICBNZXJnZSB0YWcgJ2Zvci01LjUtcmMyLXRhZycgb2YgZ2l0Oi8v
+Z2l0Lmtlcm5lbC5vcmcvcHViL3NjbS9saW51eC9rZXJuZWwvZ2l0L2tkYXZlL2xpbnV4CgpJbiB0
+aGUgcHJldmlvdXMgZXhhbXBsZSwgd2UgY2FuIHNlZSB0d28gY29tbWl0IElEczogMmQzMTQ1Zjhk
+MjgwIGFuZApmYmQ1NDI5NzFhYTEuIFNvLCB3aGF0J3MgdGhlIG1lYW5pbmcgb2YgdGhlbSwgcHJl
+Y2lzZWx5LgoKVGhhbmtz
