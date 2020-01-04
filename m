@@ -6,158 +6,102 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C151EC32767
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 22:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5E2BC32767
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 22:57:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 90DB6222C4
-	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 22:48:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7768724653
+	for <git@archiver.kernel.org>; Sat,  4 Jan 2020 22:57:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dtud1m2M"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jo6B2UN3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbgADWsh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 4 Jan 2020 17:48:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58984 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726135AbgADWsh (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 4 Jan 2020 17:48:37 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1726240AbgADW5F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 4 Jan 2020 17:57:05 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63987 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726135AbgADW5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Jan 2020 17:57:05 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F1BF5962CF;
+        Sat,  4 Jan 2020 17:57:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JOzeeGaCX2XCa3REPuJk0s5hQ/Q=; b=Jo6B2U
+        N3nd32jjdE7lQK9LnBMtaIKggJfYTeLj45HabCpSR6oBxB5EOABBJ1t71HZQOH0R
+        4Pb4CvE0QcBPHjqNQSeypaXWfOe1pB5dREc2NgBUxT9P6p2AWX3V20Lw4k0qw/9m
+        TMT3ossfN85Iml+xgFa2xEQctuwQNqEbPj/7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uAbeyROhRRw0KeusVHzVSoWqv0Rsw0ZR
+        7tTxTS6GqeFoy99I2XMSXyv8EIWQB+dWxrOUi5v4pn+E8JNfSCQ0tNzlaX0Et6O9
+        AgbEZQSLsfSfW3VIIJAr5eaWdejKmN+h9BBcGP0lHmKwJ8CIB+s67ziYzfvIi2HI
+        q8WvJorz2VA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E9805962CD;
+        Sat,  4 Jan 2020 17:57:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9C69060436;
-        Sat,  4 Jan 2020 22:48:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578178115;
-        bh=kst1BTGORUo97FT2MM4YpZ0OeJ9NXfqxBD5gQXSzGlY=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dtud1m2M8B7b4AA09oV+tYD8wpXNTAvv46T+HKzzSx/7kwBDc9sVfaQJnHOmLa7Ch
-         a/d5RfzwTuzHjUFADHneRxEteuvEz4wqmhn62ibEZn/zq8G3BU6bdyEzTxtoVdmN1m
-         cylXNH9kAfIKE5SW1Qgm9sdRXsNqc/IZAxLQSGY3onXE+/hps21udvzKsavEuZwMGe
-         UvY/YAIXLDO1y+powWE1JU5nsptFBOjDHTZlEV+loHa+jDGR9PLHXzB6anFPKEul5N
-         H5w7iYl6cKQO5WCSEyXv3vNeD3DuZnW/sKkgm4zl5hh7VpwFkBj9GDqO6Hv3gPhKkh
-         j4RXySQsqwqYnltuEA5ZDpducGBIMyxWpT4yzWaquwzsXUPupGcGPprLVtdTgzB2ve
-         tX6dYF7+YLxAV72VkRS1Pvge8gzjHfu830LAu9TJZgMCImW+x61fhMLr+4hOFny+JR
-         hQyp1fbhGRPubF29sGEi2/N35ztYcE6U+gFFCVSASeAzV/uj0EF
-Date:   Sat, 4 Jan 2020 22:48:30 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Testsuite failures on ppc64, sparc64 and s390x (64-bit BE)
-Message-ID: <20200104224830.GF6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-        git@vger.kernel.org
-References: <34ed7497-643e-5a38-d68c-7c075b647bcd@physik.fu-berlin.de>
- <b7565f06-55a2-7087-d46e-94f9e7ada988@physik.fu-berlin.de>
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 16FF1962C9;
+        Sat,  4 Jan 2020 17:56:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Matthew DeVore <matvore@comcast.net>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        Matthew DeVore <matvore@gmail.com>, jonathantanmy@google.com,
+        jrnieder@gmail.com, steadmon@google.com
+Subject: Re: [RFC] xl command for visualizing recent history
+References: <20191029003023.122196-1-matvore@google.com>
+        <20191031003929.GA22855@google.com>
+        <nycvar.QRO.7.76.6.1910310851300.46@tvgsbejvaqbjf.bet>
+        <20200103201423.GA20975@comcast.net>
+        <xmqqk168cjn0.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.2001042115550.46@tvgsbejvaqbjf.bet>
+Date:   Sat, 04 Jan 2020 14:56:57 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2001042115550.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sat, 4 Jan 2020 21:30:28 +0100 (CET)")
+Message-ID: <xmqqv9pqbzk6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ahP6B03r4gLOj5uD"
-Content-Disposition: inline
-In-Reply-To: <b7565f06-55a2-7087-d46e-94f9e7ada988@physik.fu-berlin.de>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 83F19E68-2F45-11EA-95BD-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---ahP6B03r4gLOj5uD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In any case, as stated before, I would like to see this feature be
+> implemented as a `git log` (or even `git rev-list`) option before
+> implementing a dedicated command.
+>
+> In other words, this new feature should be treated as a _mode_ rather than
+> a new command. The command can come later, just like `git whatchanged`
+> is essentially a special-case version of `git log`.
 
-On 2020-01-04 at 22:14:21, John Paul Adrian Glaubitz wrote:
-> Hi!
->=20
-> On 1/4/20 9:14 PM, John Paul Adrian Glaubitz wrote:
-> > It seems that git is failing its testsuite on all 64-bit Big-Endian tar=
-gets,
-> > full build log can be found in [1]. There seem to be multiple failures.
->=20
-> Just checked out git with git from github (SCNR ;)) and built and ran the
-> testsuite on ppc64, s390x and sparc64.
->=20
-> ppc64:
->=20
-> make aggregate-results
-> make[3]: Entering directory '/srv/glaubitz/git-git/t'
-> for f in 'test-results'/t*-*.counts; do \
->         echo "$f"; \
-> done | '/bin/sh' ./aggregate-results.sh
-> fixed   0
-> success 20683
-> failed  0
-> broken  239
-> total   21161
->=20
-> s390x:
->=20
-> make aggregate-results
-> make[3]: Entering directory '/home/glaubitz/git/t'
-> for f in 'test-results'/t*-*.counts; do \
->         echo "$f"; \
-> done | '/bin/sh' ./aggregate-results.sh
-> fixed   0
-> success 21298
-> failed  0
-> broken  249
-> total   21760
->=20
-> sparc64:
->=20
-> make aggregate-results
-> make[3]: Entering directory '/home/glaubitz/git/t'
-> for f in 'test-results'/t*-*.counts; do \
->         echo "$f"; \
-> done | '/bin/sh' ./aggregate-results.sh
-> fixed   0
-> success 20703
-> failed  0
-> broken  239
-> total   21176
->=20
-> So, it looks like the failures might be specific to the Debian package,
-> doesn't it? Where there maybe any recent commits that may have fixed
-> those issues?
+Yup, I agree that we may have plenty of commands that this can
+become a feature of, and if there is a good match, we should make it
+a mode of an existing command, and "git log" might be a natural
+first candidate.  If the focus is on the "recent topics in flight",
+"git show-branch" might be a good home.  There may be some other
+candidates.
 
-Did you build your version of Git with Subversion support, and if so,
-which version of Subversion did you use (version of Debian package or
-other source)?  The tests that were failing all require git-svn, which
-in turn require libsvn-perl and subversion (/usr/bin/svn).  If you're
-missing those packages, the Subversion tests will automatically be
-skipped.
+On the other hand, this thing may be sufficiently different from
+everything else and deserves to be a separate command, just like
+nobody would think it is a sane design choice to try making "git
+shortlog" a mere mode of "git log".
 
-The latest version on master is 2.25-rc1, and that's failing in the
-Debian package.  I haven't checked recently, but last I looked, the
-Debian package wasn't applying any additional patches on top of Git, so
-the version you're getting off GitHub is literally the same version that
-you're getting in the Debian package.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+An unrelated tangent, but I wonder if we want to start drafting the
+transition plans to deprecate whatchanged.  The command was invented
+about two weeks before "log", but back then the latter did not know
+how to drive diff-tree (iow, it was only about the commit log
+messages), so they have both stayed to be "useful" for some time,
+until the underlying machinery for "log" matured sufficiently and
+made "whatchanged" more or less a special case of "log".  It is not
+hurting right now to keep it as-is and unmaintained, though.
 
---ahP6B03r4gLOj5uD
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4RFj4ACgkQv1NdgR9S
-9otCHBAAlzstQK1C/Sb4/xNx344Who+kG3y8Yzovaw3Ty2oZRUsaXrb5DgWa+RyC
-PS0IUfxcReyZC9XnB1BH4NKwVRm8ieezTupahZnyPD246hXyHYRs1hXOtfBf94js
-mnCEN2KQmnkKQjtq2Q6oCgCtc48LE8q4mrBfPXKPOvlxu4eVISVd3T4v2N42Vfdm
-2XlBC6W3G99HgNRfMBIlNjrOv2+Z/ArtaiEG2U2MfzO3FbQ3h7oj7zI6ztfnPVb7
-gLKcYKSPR7M/U47WXB8l02yaA0hz3HtDLam4BJpRCVWilMn2gH4VtzNYSk72EGBt
-ccS81RJSO1gpV4/ECnH7OBMmI4+L4NLOg6XMIOmpT4KH0f5QZ2px3+THrofRC0Hk
-3vyeJhHMHqWdzDVR+XRN/5POnACCRaDFNKXf/uB1PThf+UV0bVsXuTz0sZWshy4Q
-EYZGKOgtOQPYJBGT46/rAKug+eQDrv/5JHFbCqAOJrpM46A9ttpXlP7ufMwTiILL
-eWQd6zVoIrZFUZQW8lU5zmecGmlS+NwP5bcAJr1xaHLHfwp9qcs5e7m8nMkPfd+0
-tsYEb4UzbAQ2fm+eSnvf/lyst1Z9EOkSZhajmOqgoQNaJw7EO4zsK8brEukV8LFV
-QiiG912e2TdD26IoPaI0j67n+bEGSj55l5RxVmVUplWfianO2TA=
-=Xa/A
------END PGP SIGNATURE-----
-
---ahP6B03r4gLOj5uD--
