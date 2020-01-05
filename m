@@ -2,64 +2,64 @@ Return-Path: <SRS0=oqjl=22=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-14.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EABEC33C99
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE352C47409
 	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 13:56:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2892C207FD
+	by mail.kernel.org (Postfix) with ESMTP id AA70C207FD
 	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 13:56:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="QvLKvJkh"
+	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="INI/rMfO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726383AbgAEN4c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 08:56:32 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:37221 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726192AbgAEN4c (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 08:56:32 -0500
-Received: by mail-pg1-f195.google.com with SMTP id q127so25618390pga.4
-        for <git@vger.kernel.org>; Sun, 05 Jan 2020 05:56:30 -0800 (PST)
+        id S1726402AbgAEN4h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jan 2020 08:56:37 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:39332 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbgAEN4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jan 2020 08:56:36 -0500
+Received: by mail-pj1-f66.google.com with SMTP id t101so6635714pjb.4
+        for <git@vger.kernel.org>; Sun, 05 Jan 2020 05:56:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=55nLchzx6IvJkp2UYdZ7M7nLUmQQOWhlZhMA3jCnvQw=;
-        b=QvLKvJkhPzLsjBcHq8/NHLy1Lh/9UeOhnHxqgQ8Kb4/ZPTiPv8QRgrzZpvB4vHwBs2
-         SlTOvtQb+sUxn9cOonaH0RWLOqune1kJBTjvgWFi4oBHi8UL7dviy1w0w+CaUj1ar0K2
-         Bi2ScPB0G97zgWsdJsttc8R5A9/OObDdJKXhcaAuyUHsJ9GO5qhZScbxB4Myhha+WT7E
-         tnwsMKqn6PzGlGoMP0CK8VHuiiu6Ra+b53Ofccn0/Q+/LUqwfMa8YrWT9ShMypxAzVoE
-         a3eT3Y2yN364OwBq37XxQimIPX1d68jMd3BuMGQPZzqI2sswBdiJcWqEQTs1Eu0BlvsN
-         3HTg==
+        bh=bLM8QK2C5if6y0he/V6koJU3K5H17mtsvkgtTJOYFCo=;
+        b=INI/rMfOzaYNGlhPRztEpl0y/oZH0F7rMFiUF/5hnbHL7OJIG3yvD0TG+c5cfoNTw7
+         lcsDT8pCJ9heJX6VIQcrSM2CTOmB+B13v+rKyi0sc9K+v5f2jttuKh1Kwd7O6eemAmnB
+         5wPu0Bo+sx75FvhC7gxy4t/nKS9tCM16MB6O+tR3CZSkKcjmODcCfDBo62lFIDByi5IM
+         4AFAA54JEOJobYNx+dGwS3JsB5UXxsYXUY7Z8mjAnoCRlFOYvdC3d2R5RtEwh9LwA6oe
+         vdvBKGS6oliWzSi5b/nbDyNFEWtrgxN4k9dUem+OH2+7/IKKg4uow8qT6jIQlBnc+55T
+         kkww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=55nLchzx6IvJkp2UYdZ7M7nLUmQQOWhlZhMA3jCnvQw=;
-        b=HIZ8DNWgAQcF9vO4Fq1aQX/usYgrUsEYuXZ8cyAq62dJgxCvDb03+CLO9Bop2Ha1HJ
-         YSvZBumAbRrK7xaEByfdaEiUBmUE2czxx9cK39N7LURrfBkvk0tktQ8Y3xJxBY453ulT
-         ziVqKaTPZU5kOof7ryNhhnDkSBb5EpO6DtfRIuwUHrsA1/WAEB7BCdYZprKFwgHQKWPe
-         uVp4V9/CCsk+th69y1EwTehyG5gO2xdGDRufjT26WSX3uwyaeDEgExt5U9yHvLkvYxHv
-         QPkTJyJEKSGFh08o0LXLyo9K+J+OzWSj+nk6m9uHIpdkoQIwb5z9VtTCPBZSepbtrkUI
-         Uhdg==
-X-Gm-Message-State: APjAAAUvCjuDueeOGFWKW+g/nx6PyIE7cgP4kGo/rPl6+SosE99jSYTW
-        Ea4i0h2ZlrrzRdGUdzceps9odfSOUC0=
-X-Google-Smtp-Source: APXvYqzeJmJlDhChfNximn1IKj8eD1T1V9RYAFR3ePi4H8GR1Bs9R2/nPksz+cXSyVp6j1PUtgYEGQ==
-X-Received: by 2002:a65:6914:: with SMTP id s20mr104318646pgq.44.1578232589569;
-        Sun, 05 Jan 2020 05:56:29 -0800 (PST)
+        bh=bLM8QK2C5if6y0he/V6koJU3K5H17mtsvkgtTJOYFCo=;
+        b=stuvkU232wCzMPyAcHLWD5Jyj3TbNshDu7fd1oeO/zAPHaUoWqgFxtGLL2b15PKwdt
+         dOtoAZb5fgXD69Z6jAaZc1HpOeMK8f5Rxwb4Rl+qDJ5ad347X/SnONAgCsw3618AapkM
+         gzzNxXkeo6iLgGUnZLNhEUpjSsCFTdGtD2uo8PU0cRbymGQppLMx8xLhFHkqmrhchGtL
+         ykBkFyt+1ZwFVfbCjRikWIVgSWpWctBlPY76LQfmqLr63K54tOLcFoHwmLOKr4ivKdax
+         mLYLDGYtxFowRwP96qtv+gsyEiZOtFW0DquresS5NJ2jrLZfYq/E35yzpPtrNMaF4Tx8
+         fpPA==
+X-Gm-Message-State: APjAAAXjiugIXbwfizrmKi2XJyqitZVVOJJ1pPG9BeOGG7iOihFUXTPy
+        /3wOO+w2XDSBlwhU3bOgMqUzkoMf1y4=
+X-Google-Smtp-Source: APXvYqz220hmTMWNzZSwF8cqr1C5IMnPivocU6xZVxFnN5Bq/2icnRTidCrs17y42rbZWgd83ulsBw==
+X-Received: by 2002:a17:902:7603:: with SMTP id k3mr51189811pll.93.1578232595092;
+        Sun, 05 Jan 2020 05:56:35 -0800 (PST)
 Received: from localhost ([202.62.47.81])
-        by smtp.gmail.com with ESMTPSA id u2sm69052959pgc.19.2020.01.05.05.56.28
+        by smtp.gmail.com with ESMTPSA id a9sm46688328pfn.38.2020.01.05.05.56.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jan 2020 05:56:29 -0800 (PST)
+        Sun, 05 Jan 2020 05:56:34 -0800 (PST)
 From:   Hans Jerry Illikainen <hji@dyntopia.com>
 To:     git@vger.kernel.org
 Cc:     Hans Jerry Illikainen <hji@dyntopia.com>
-Subject: [PATCH 3/5] commit: refactor signature verification helpers
-Date:   Sun,  5 Jan 2020 13:56:14 +0000
-Message-Id: <20200105135616.19102-4-hji@dyntopia.com>
+Subject: [PATCH 5/5] clone: support signature verification
+Date:   Sun,  5 Jan 2020 13:56:16 +0000
+Message-Id: <20200105135616.19102-6-hji@dyntopia.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200105135616.19102-1-hji@dyntopia.com>
 References: <20200105135616.19102-1-hji@dyntopia.com>
@@ -70,321 +70,651 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, signature verification for commits had a number of helper
-functions with slightly different behaviors:
+The merge operation (and as a consequence, pull) has had support for
+signature verification for quite some time.  However, there were no
+support for verifying GPG signatures for the initial clone.
 
-- builtin/verify-commit.c had a file-local helper, so it wasn't reusable
-  outside of the verify-commit builtin.
-- commit.c had verify_merge_signature() that die()d on errors, making it
-  difficult to reuse in parts of Git that mustn't (immediately) die on
-  failure.
-- commit.c also had check_commit_signature().  It's flexible enough to
-  be used anywhere, but it isn't as nice as gpg_verify_tag().  More
-  specifically, it doesn't take care of printing the result; nor does it
-  accept and parse arbitrary object IDs.
+Without signature verification for clone operations, users are forced to
+checkout a repository before using verify-commit or verify-tag on the
+tree.  This is potentially problematic for a few reasons:
 
-This commit changes check_commit_signature() to file-local scope.  It
-also introduces a gpg_verify_commit() function modelled after
-gpg_verify_tag().  It is written with the intent of removing the need to
-implement local helpers for operations that verifies commit signatures.
-This should hopefully make the code paths to the GPG interface easier to
-follow.
+- It's possible to forget to verify the tree when there's nothing that
+  enforce signature verification before a cloned repository is used.
+
+- Software on the users system might process the tree before it has been
+  successfully verified -- for example, file managers that automagically
+  creates thumbnails for images, videos and documents.
+
+Now, this could be worked around with a --no-checkout clone followed by
+signature verification and checkout.  There are also various scripts
+floating around that more-or-less re-implements 'git clone' with
+signature verification by using a combination of init + remote add +
+fetch + verify-commit + merge [1].  But none of these options are
+particularly user-friendly.
+
+This patch implements signature verification for the clone builtin to
+accommodate use-cases where the tree should be verified before use.
+
+There is one major quirk in this patch; namely, recursive clones of
+submodules.  It is worked around by passing --no-verify-signatures in
+clone_submodule().  The rationale for this approach is that:
+
+- The object ID for submodules are stored in the super repository.
+  Thus, if the super is trusted and signed (and the hash function is
+  secure), then it seems reasonable to also trust the submodules
+  referenced in the super repository.
+
+- Propagating signature verification to recursive clones of submodules
+  would lessen the use of signature verification for clones, because
+  then users would need the keys for each submodule author in their
+  keyring.  Also, not all submodule refs may be signed.
+
+[1] https://gist.github.com/tribut/50c0f7d0b8341fa6d1784c317d5275f0
 
 Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
 ---
- builtin/merge.c         | 16 ++++++++------
- builtin/pull.c          | 18 +++++-----------
- builtin/verify-commit.c | 25 +---------------------
- commit.c                | 47 ++++++++++++++++++++++++++++++-----------
- commit.h                | 31 ++++++---------------------
- gpg-interface.h         |  1 +
- pretty.c                |  3 ++-
- 7 files changed, 60 insertions(+), 81 deletions(-)
+ Documentation/config.txt           |   2 +
+ Documentation/config/clone.txt     |   3 +
+ Documentation/git-clone.txt        |   4 +
+ builtin/clone.c                    |  46 ++++
+ builtin/submodule--helper.c        |   6 +
+ t/t5619-clone-verify-signatures.sh | 411 +++++++++++++++++++++++++++++
+ tag.c                              |  10 +-
+ 7 files changed, 478 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/config/clone.txt
+ create mode 100755 t/t5619-clone-verify-signatures.sh
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index d127d2225f..e472f17738 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -62,8 +62,8 @@ static int show_diffstat = 1, shortlog_len = -1, squash;
- static int option_commit = -1;
- static int option_edit = -1;
- static int allow_trivial = 1, have_message, verify_signatures;
--static int check_trust_level = 1;
- static int overwrite_ignore = 1;
-+static unsigned gpg_flags = GPG_VERIFY_SHORT | GPG_VERIFY_COMPAT;
- static struct strbuf merge_msg = STRBUF_INIT;
- static struct strategy **use_strategies;
- static size_t use_strategies_nr, use_strategies_alloc;
-@@ -633,7 +633,7 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	} else if (!strcmp(k, "gpg.mintrustlevel")) {
--		check_trust_level = 0;
-+		gpg_flags ^= GPG_VERIFY_COMPAT;
- 	}
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 83e7bba872..fda69e660e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -331,6 +331,8 @@ include::config/checkout.txt[]
  
- 	status = fmt_merge_msg_config(k, v, cb);
-@@ -1399,9 +1399,10 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		if (remoteheads->next)
- 			die(_("Can merge only exactly one commit into empty head"));
+ include::config/clean.txt[]
  
--		if (verify_signatures)
--			verify_merge_signature(remoteheads->item, verbosity,
--					       check_trust_level);
-+		if (verify_signatures &&
-+		    gpg_verify_commit(&remoteheads->item->object.oid, NULL,
-+				      NULL, gpg_flags))
-+			die(_("Signature verification failed"));
- 
- 		remote_head_oid = &remoteheads->item->object.oid;
- 		read_empty(remote_head_oid, 0);
-@@ -1424,8 +1425,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 
- 	if (verify_signatures) {
- 		for (p = remoteheads; p; p = p->next) {
--			verify_merge_signature(p->item, verbosity,
--					       check_trust_level);
-+			if (gpg_verify_commit(&p->item->object.oid, NULL, NULL,
-+					      gpg_flags))
-+				die(_("Signature verification failed"));
- 		}
- 	}
- 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index d4e3e77c8e..e41c4032ae 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -107,11 +107,11 @@ static char *opt_ff;
- static char *opt_verify_signatures;
- static int opt_autostash = -1;
- static int config_autostash;
--static int check_trust_level = 1;
- static struct argv_array opt_strategies = ARGV_ARRAY_INIT;
- static struct argv_array opt_strategy_opts = ARGV_ARRAY_INIT;
- static char *opt_gpg_sign;
- static int opt_allow_unrelated_histories;
-+static unsigned gpg_flags = GPG_VERIFY_SHORT | GPG_VERIFY_COMPAT;
- 
- /* Options passed to git-fetch */
- static char *opt_all;
-@@ -366,7 +366,7 @@ static int git_pull_config(const char *var, const char *value, void *cb)
- 			RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
- 		return 0;
- 	} else if (!strcmp(var, "gpg.mintrustlevel")) {
--		check_trust_level = 0;
-+		gpg_flags ^= GPG_VERIFY_COMPAT;
- 	}
- 
- 	status = git_gpg_config(var, value, cb);
-@@ -589,17 +589,9 @@ static int run_fetch(const char *repo, const char **refspecs)
- static int pull_into_void(const struct object_id *merge_head,
- 		const struct object_id *curr_head)
- {
--	if (opt_verify_signatures) {
--		struct commit *commit;
--
--		commit = lookup_commit(the_repository, merge_head);
--		if (!commit)
--			die(_("unable to access commit %s"),
--			    oid_to_hex(merge_head));
--
--		verify_merge_signature(commit, opt_verbosity,
--				       check_trust_level);
--	}
-+	if (opt_verify_signatures)
-+		if (gpg_verify_commit(merge_head, NULL, NULL, gpg_flags))
-+			return 1;
- 
- 	/*
- 	 * Two-way merge: we treat the index as based on an empty tree,
-diff --git a/builtin/verify-commit.c b/builtin/verify-commit.c
-index acc01a7be9..3f392654dd 100644
---- a/builtin/verify-commit.c
-+++ b/builtin/verify-commit.c
-@@ -20,37 +20,14 @@ static const char * const verify_commit_usage[] = {
- 		NULL
- };
- 
--static int run_gpg_verify(struct commit *commit, unsigned flags)
--{
--	struct signature_check signature_check;
--	int ret;
--
--	memset(&signature_check, 0, sizeof(signature_check));
--
--	ret = check_commit_signature(commit, &signature_check);
--	print_signature_buffer(&commit->object.oid, &signature_check, ret,
--			       flags);
--
--	signature_check_clear(&signature_check);
--	return ret;
--}
--
- static int verify_commit(const char *name, unsigned flags)
- {
- 	struct object_id oid;
--	struct object *obj;
- 
- 	if (get_oid(name, &oid))
- 		return error("commit '%s' not found.", name);
- 
--	obj = parse_object(the_repository, &oid);
--	if (!obj)
--		return error("%s: unable to read file.", name);
--	if (obj->type != OBJ_COMMIT)
--		return error("%s: cannot verify a non-commit object of type %s.",
--				name, type_name(obj->type));
--
--	return run_gpg_verify((struct commit *)obj, flags);
-+	return gpg_verify_commit(&oid, NULL, NULL, flags);
- }
- 
- static int git_verify_commit_config(const char *var, const char *value, void *cb)
-diff --git a/commit.c b/commit.c
-index 519599469b..f8339916a6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1116,7 +1116,8 @@ static void handle_signed_tag(struct commit *parent, struct commit_extra_header
- 	free(buf);
- }
- 
--int check_commit_signature(const struct commit *commit, struct signature_check *sigc)
-+static int check_commit_signature(const struct commit *commit,
-+				  struct signature_check *sigc)
- {
- 	struct strbuf payload = STRBUF_INIT;
- 	struct strbuf signature = STRBUF_INIT;
-@@ -1136,21 +1137,43 @@ int check_commit_signature(const struct commit *commit, struct signature_check *
- 	return ret;
- }
- 
--void verify_merge_signature(struct commit *commit, int verbosity,
--			    int check_trust)
-+int gpg_verify_commit(const struct object_id *oid, const char *name_to_report,
-+		      struct signature_check *sigc, unsigned flags)
- {
--	struct signature_check signature_check;
-+	struct object *obj;
-+	struct signature_check tmp = { 0 };
- 	int ret;
--	memset(&signature_check, 0, sizeof(signature_check));
- 
--	ret = check_commit_signature(commit, &signature_check);
--	ret |= check_trust && signature_check.trust_level < TRUST_MARGINAL;
--	print_signature_buffer(&commit->object.oid, &signature_check, ret,
--			       GPG_VERIFY_SHORT);
--	if (ret)
--		die(_("Signature verification failed"));
-+	if (!sigc)
-+		sigc = &tmp;
- 
--	signature_check_clear(&signature_check);
-+	obj = parse_object(the_repository, oid);
-+	if (!obj)
-+		return error("%s: unable to read file.",
-+			     name_to_report ?
-+			     name_to_report :
-+			     find_unique_abbrev(oid, DEFAULT_ABBREV));
++include::config/clone.txt[]
 +
-+	if (obj->type != OBJ_COMMIT)
-+		return error("%s: cannot verify a non-commit object of type %s.",
-+			     name_to_report ?
-+			     name_to_report :
-+			     find_unique_abbrev(oid, DEFAULT_ABBREV),
-+			     type_name(obj->type));
-+
-+	ret = check_commit_signature((struct commit *)obj, sigc);
-+	/*
-+	 * Merge operations has historically required a trust level of
-+	 * 'marginal' or higher as a default.  Backward-compatibility is
-+	 * maintained here -- however, new users of this function should
-+	 * delegate trust level verification to the GPG interface.
-+	 */
-+	ret |= flags & GPG_VERIFY_COMPAT && sigc->trust_level < TRUST_MARGINAL;
-+
-+	print_signature_buffer(oid, sigc, ret, flags);
-+	signature_check_clear(&tmp);
-+
-+	return ret;
- }
+ include::config/color.txt[]
  
- void append_merge_tag_headers(struct commit_list *parents,
-diff --git a/commit.h b/commit.h
-index 008a0fa4a0..a31aaa7304 100644
---- a/commit.h
-+++ b/commit.h
-@@ -364,13 +364,14 @@ int parse_signed_commit(const struct commit *commit,
- int remove_signature(struct strbuf *buf);
+ include::config/column.txt[]
+diff --git a/Documentation/config/clone.txt b/Documentation/config/clone.txt
+new file mode 100644
+index 0000000000..9fd2ee3395
+--- /dev/null
++++ b/Documentation/config/clone.txt
+@@ -0,0 +1,3 @@
++clone.verifySignatures::
++	If true, this is equivalent to the --verify-signatures command
++	line option. See linkgit:git-clone[1] for details.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index bf24f1813a..47a9d1e182 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -285,6 +285,10 @@ or `--mirror` is given)
+ 	The number of submodules fetched at the same time.
+ 	Defaults to the `submodule.fetchJobs` option.
+ 
++--verify-signatures::
++--no-verify-signatures::
++	Verify that the newly created HEAD is signed with a valid key.
++
+ <repository>::
+ 	The (possibly remote) repository to clone from.  See the
+ 	<<URLS,GIT URLS>> section below for more information on specifying
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 0fc89ae2b9..037953bc4b 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -32,6 +32,8 @@
+ #include "connected.h"
+ #include "packfile.h"
+ #include "list-objects-filter-options.h"
++#include "object.h"
++#include "tag.h"
  
  /*
-- * Check the signature of the given commit. The result of the check is stored
-- * in sig->check_result, 'G' for a good signature, 'U' for a good signature
-- * from an untrusted signer, 'B' for a bad signature and 'N' for no signature
-- * at all.  This may allocate memory for sig->gpg_output, sig->gpg_status,
-- * sig->signer and sig->key.
-+ * Check the signature of the given commit.  The result is stored in sigc if it
-+ * is non-NULL.  However, note that a return code of 0 from this function
-+ * should be used to determine if the signature verified successfully, because
-+ * multiple members in the signature_check structure are needed to sufficiently
-+ * determine the outcome.
-  */
--int check_commit_signature(const struct commit *commit, struct signature_check *sigc);
-+int gpg_verify_commit(const struct object_id *oid, const char *name_to_report,
-+		      struct signature_check *sigc, unsigned flags);
+  * Overall FIXMEs:
+@@ -54,6 +56,7 @@ static int deepen;
+ static char *option_template, *option_depth, *option_since;
+ static char *option_origin = NULL;
+ static char *option_branch = NULL;
++static int option_verify_signatures = -1;
+ static struct string_list option_not = STRING_LIST_INIT_NODUP;
+ static const char *real_git_dir;
+ static char *option_upload_pack = "git-upload-pack";
+@@ -120,6 +123,8 @@ static struct option builtin_clone_options[] = {
+ 		   N_("use <name> instead of 'origin' to track upstream")),
+ 	OPT_STRING('b', "branch", &option_branch, N_("branch"),
+ 		   N_("checkout <branch> instead of the remote's HEAD")),
++	OPT_BOOL(0, "verify-signatures", &option_verify_signatures,
++		 N_("verify the GPG signature of the newly created HEAD")),
+ 	OPT_STRING('u', "upload-pack", &option_upload_pack, N_("path"),
+ 		   N_("path to git-upload-pack on the remote")),
+ 	OPT_STRING(0, "depth", &option_depth, N_("depth"),
+@@ -929,6 +934,40 @@ static int path_exists(const char *path)
+ 	return !stat(path, &sb);
+ }
  
- /* record author-date for each commit object */
- struct author_date_slab;
-@@ -378,24 +379,6 @@ void record_author_date(struct author_date_slab *author_date,
- 			struct commit *commit);
++static int verify_signature(const struct ref *our, const struct ref *remote)
++{
++	const struct object_id *oid = our ? &our->old_oid : &remote->old_oid;
++	enum object_type type = oid_object_info(the_repository, oid, NULL);
++	int flags = option_verbosity ? GPG_VERIFY_FULL : GPG_VERIFY_SHORT;
++
++	if (type == OBJ_COMMIT)
++		return gpg_verify_commit(oid, NULL, NULL, flags);
++	if (type == OBJ_TAG)
++		return gpg_verify_tag(oid, NULL, flags);
++	return error(_("%s: unknown object type: %s"),
++		     find_unique_abbrev(oid, DEFAULT_ABBREV), type_name(type));
++}
++
++static int git_clone_config(const char *var, const char *value, void *cb)
++{
++	int status;
++
++	if (!strcmp(var, "clone.verifysignatures")) {
++		option_verify_signatures = git_config_bool(var, value);
++		return 0;
++	}
++
++	if (!strcmp(var, "gpg.verifysignatures") &&
++	    option_verify_signatures < 0)
++		option_verify_signatures = git_config_bool(var, value);
++
++	status = git_gpg_config(var, value, cb);
++	if (status)
++		return status;
++
++	return git_default_config(var, value, cb);
++}
++
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+ 	int is_bundle = 0, is_local;
+@@ -952,6 +991,9 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	struct argv_array ref_prefixes = ARGV_ARRAY_INIT;
  
- int compare_commits_by_author_date(const void *a_, const void *b_, void *unused);
+ 	packet_trace_identity("clone");
++
++	git_config(git_clone_config, NULL);
++
+ 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
+ 			     builtin_clone_usage, 0);
+ 
+@@ -1267,6 +1309,10 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	else if (refs && complete_refs_before_fetch)
+ 		transport_fetch_refs(transport, mapped_refs);
+ 
++	if (option_verify_signatures > 0)
++		if (verify_signature(our_head_points_at, remote_head))
++			die(_("Signature verification failed"));
++
+ 	update_remote_refs(refs, mapped_refs, remote_head_points_at,
+ 			   branch_top.buf, reflog_msg.buf, transport,
+ 			   !is_local, filter_options.choice);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c72931ecd7..9e69c767c9 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1248,6 +1248,12 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
+ 
++	/*
++	 * The --no-verify-signatures parameter has to be passed in order to
++	 * make verification of super-repositories work on recursive clones.
++	 */
++	argv_array_push(&cp.args, "--no-verify-signatures");
++
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_push(&cp.args, url);
+ 	argv_array_push(&cp.args, path);
+diff --git a/t/t5619-clone-verify-signatures.sh b/t/t5619-clone-verify-signatures.sh
+new file mode 100755
+index 0000000000..7a93d57c2a
+--- /dev/null
++++ b/t/t5619-clone-verify-signatures.sh
+@@ -0,0 +1,411 @@
++#!/bin/sh
++
++test_description='Test cloning repos with signature verification'
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
++
++test_expect_success GPG 'create repositories with signed commits and tags' '
++	echo 0 >a && git add a &&
++	test_tick && git commit -m "initial-unsigned" &&
++	git tag -a -m "unsigned v0" v0-unsigned &&
++
++	git clone . signed &&
++	(
++		cd signed &&
++		echo 1 >b && git add b &&
++		test_tick && git commit -S -m "signed" &&
++		git branch signed-branch &&
++		git tag -s -m "signed v1" v1-signed
++	) &&
++
++	git clone . unsigned &&
++	(
++		cd unsigned &&
++		echo 2 >c && git add c &&
++		test_tick && git commit -m "unsigned" &&
++		git tag v2-unsigned-shallow &&
++		git tag -a -m "unsigned and annotated" v2-unsigned-annotated
++	) &&
++
++	git clone signed unsigned-tip &&
++	(
++		cd unsigned-tip &&
++		echo 3 >d && git add d &&
++		test_tick && git commit -m "unsigned tip" &&
++		git tag -a -m "unsigned v3 tip" v3-unsigned-tip &&
++		git branch signed-branch origin/signed-branch
++	) &&
++
++	git clone signed unsigned-branch &&
++	(
++		cd unsigned-branch &&
++		git checkout -b unsigned-branch &&
++		git commit --amend --no-edit &&
++		git checkout master
++	) &&
++
++	git clone . signed-tag-unsigned-commit &&
++	(
++		cd signed-tag-unsigned-commit &&
++		git tag -s -m "signed/unsigned v4" v4-signed-tag-unsigned-commit
++	) &&
++
++	git clone . bad &&
++	(
++		cd bad &&
++		echo 4 >d && git add d &&
++		test_tick && git commit -S -m "bad" &&
++		git cat-file commit HEAD >raw &&
++		sed -e "s/^bad/forged bad/" raw >forged &&
++		git hash-object -w -t commit forged >forged.commit &&
++		git checkout $(cat forged.commit)
++	) &&
++
++	git clone . untrusted &&
++	(
++		cd untrusted &&
++		echo 5 >e && git add e &&
++		test_tick && git commit -SB7227189 -m "untrusted"
++	) &&
++
++	git clone unsigned unsigned-detached &&
++	(
++		cd unsigned-detached &&
++		echo 6 >f && git add f &&
++		test_tick && git commit -S -m "signed" &&
++		git checkout HEAD^
++	) &&
++
++	git clone signed signed-detached &&
++	(
++		cd signed-detached &&
++		echo 7 >g && git add g &&
++		test_tick && git commit -S -m "signed" &&
++		git checkout HEAD^
++	) &&
++
++	git clone signed signed-with-unsigned-submodule &&
++	(
++		cd signed-with-unsigned-submodule &&
++		git submodule add "file://$PWD/../unsigned" &&
++		git commit -S -m "add submodule"
++	) &&
++
++	git clone signed signed-with-signed-submodule &&
++	(
++		cd signed-with-signed-submodule &&
++		git submodule add "file://$PWD/../signed" &&
++		git commit -S -m "add submodule"
++	) &&
++
++	git clone unsigned unsigned-with-unsigned-submodule &&
++	(
++		cd unsigned-with-unsigned-submodule &&
++		git submodule add "file://$PWD/../unsigned" &&
++		git commit -m "add submodule"
++	) &&
++
++	git clone unsigned unsigned-with-signed-submodule &&
++	(
++		cd unsigned-with-signed-submodule &&
++		git submodule add "file://$PWD/../signed" &&
++		git commit -m "add submodule"
++	)
++'
++
++test_expect_success GPG 'clone signed with --verify-signatures' '
++	test_when_finished "rm -rf dst" &&
++	git clone --verify-signatures signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed tag with --verify-signatures' '
++	test_when_finished "rm -rf dst" &&
++	git clone -b v1-signed --verify-signatures signed dst >out &&
++	test_i18ngrep "Tag [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with --depth=1 and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --depth=1 signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with --no-checkout and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --no-checkout signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with --mirror and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --mirror signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed without blobs and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --filter=blob:none signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed bare with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --bare signed dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed tag with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone -b v1-signed signed dst >out &&
++	test_i18ngrep "Tag [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone unsigned with defaults' '
++	test_when_finished "rm -rf dst" &&
++	git clone unsigned dst >out 2>&1 &&
++	! test_i18ngrep "GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with --depth=1 and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --depth=1 unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with --no-checkout and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --no-checkout unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with --mirror and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --no-checkout unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned without blobs and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --filter=blob:none unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned bare with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --bare unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with --verify-signatures and clone.verifySignatures=false' '
++	test_config_global clone.verifySignatures false &&
++	test_must_fail git clone --verify-signatures unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with --no-verify-signatures and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --no-verify-signatures unsigned dst >out &&
++	! test_i18ngrep "GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned with --no-verify-signatures and gpg.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global gpg.verifySignatures true &&
++	git clone --no-verify-signatures unsigned dst >out &&
++	! test_i18ngrep "GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned with clone.verifySignatures=false and gpg.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures false &&
++	test_config_global gpg.verifySignatures true &&
++	git clone unsigned dst >out &&
++	! test_i18ngrep "GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned with gpg.verifySignatures=true and clone.verifySignatures=false' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global gpg.verifySignatures true &&
++	test_config_global clone.verifySignatures false &&
++	git clone unsigned dst >out &&
++	! test_i18ngrep "GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned with gpg.verifySignatures=true' '
++	test_config_global gpg.verifySignatures true &&
++	test_must_fail git clone unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone bad signature with --verbose and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --verbose bad dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "gpg: BAD signature from " out
++'
++
++test_expect_success GPG 'clone bad signature with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone bad dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a bad GPG signature " out
++'
++
++test_expect_success GPG 'clone untrusted with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone untrusted dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone untrusted with clone.verifySignatures=true and gpg.minTrustLevel=fully' '
++	test_config_global clone.verifySignatures true &&
++	test_config_global gpg.minTrustLevel fully &&
++	test_must_fail git clone untrusted dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ has an untrusted GPG signature" out
++'
++
++test_expect_success GPG 'clone unsigned tip with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone unsigned-tip dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned tip tag with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone -b v3-unsigned-tip unsigned-tip dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Tag [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone signed tag from unsigned tip tag with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone -b v1-signed unsigned-tip dst >out &&
++	test_i18ngrep "Tag [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed branch from unsigned tip tag with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone -b signed-branch unsigned-tip dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone unsigned branch with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone -b unsigned-branch unsigned-branch dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned shallow tag with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone -b v2-unsigned-shallow unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned annotated tag with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone -b v2-unsigned-annotated unsigned dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Tag [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone signed tag for unsigned commit with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone -b v4-signed-tag-unsigned-commit signed-tag-unsigned-commit dst >out &&
++	test_i18ngrep "Tag [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone unsigned detached HEAD with clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone unsigned-detached dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone signed detached HEAD with clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone signed-detached dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with unsigned submodules and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --recurse-submodules signed-with-unsigned-submodule dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with unsigned submodules and --verify-signatures' '
++	test_when_finished "rm -rf dst" &&
++	git clone --recurse-submodules --verify-signatures \
++		signed-with-unsigned-submodule dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone signed with signed submodules and clone.verifySignatures=true' '
++	test_when_finished "rm -rf dst" &&
++	test_config_global clone.verifySignatures true &&
++	git clone --recurse-submodules signed-with-signed-submodule dst >out &&
++	test_i18ngrep "Commit [0-9a-f]\+ has a good GPG signature by " out
++'
++
++test_expect_success GPG 'clone unsigned with signed submodules and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --recurse-submodules unsigned-with-signed-submodule dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with signed submodules and --verify-signatures' '
++	test_must_fail git clone --recurse-submodules --verify-signatures \
++		unsigned-with-signed-submodule dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_expect_success GPG 'clone unsigned with unsigned submodules and clone.verifySignatures=true' '
++	test_config_global clone.verifySignatures true &&
++	test_must_fail git clone --recurse-submodules unsigned-with-unsigned-submodule dst 2>out &&
++	test_path_is_missing dst &&
++	test_i18ngrep "Commit [0-9a-f]\+ does not have a GPG signature." out
++'
++
++test_done
+diff --git a/tag.c b/tag.c
+index f6ad4171f9..deff55198a 100644
+--- a/tag.c
++++ b/tag.c
+@@ -13,17 +13,19 @@ const char *tag_type = "tag";
+ static int run_gpg_verify(const struct object_id *oid, const char *buf,
+ 			  unsigned long size, unsigned flags)
+ {
+-	struct signature_check sigc;
++	struct signature_check sigc = { .result = 'N' };
+ 	size_t payload_size;
+-	int ret;
 -
--/*
-- * Verify a single commit with check_commit_signature() and die() if it is not
-- * a good signature. This isn't really suitable for general use, but is a
-- * helper to implement consistent logic for pull/merge --verify-signatures.
-- *
-- * The check_trust parameter is meant for backward-compatibility.  The GPG
-- * interface verifies key trust with a default trust level that is below the
-- * default trust level for merge operations.  Its value should be non-zero if
-- * the user hasn't set a minimum trust level explicitly in their configuration.
-- *
-- * If the user has set a minimum trust level, then that value should be obeyed
-- * and check_trust should be zero, even if the configured trust level is below
-- * the default trust level for merges.
-- */
--void verify_merge_signature(struct commit *commit, int verbose,
--			    int check_trust);
--
- int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused);
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
+-	memset(&sigc, 0, sizeof(sigc));
++	int ret = 1;
  
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 2f349f8ed5..3f619cce0e 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -7,6 +7,7 @@ struct strbuf;
- #define GPG_VERIFY_RAW (1 << 1)
- #define GPG_VERIFY_FULL (1 << 2)
- #define GPG_VERIFY_SHORT (1 << 3)
-+#define GPG_VERIFY_COMPAT (1 << 4)
+ 	payload_size = parse_signature(buf, size);
  
- enum signature_trust_level {
- 	TRUST_UNDEFINED,
-diff --git a/pretty.c b/pretty.c
-index f5fbbc5ffb..c19620ffe6 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1302,7 +1302,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	if (size == payload_size) {
+ 		if (flags & GPG_VERIFY_VERBOSE)
+ 			write_in_full(1, buf, payload_size);
++
++		/* maybe print a detailed error message */
++		print_signature_buffer(oid, &sigc, ret, flags);
++
+ 		return error("no signature found");
+ 	}
  
- 	if (placeholder[0] == 'G') {
- 		if (!c->signature_check.result)
--			check_commit_signature(c->commit, &(c->signature_check));
-+			gpg_verify_commit(&c->commit->object.oid, NULL,
-+					  &(c->signature_check), 0);
- 		switch (placeholder[1]) {
- 		case 'G':
- 			if (c->signature_check.gpg_output)
 -- 
 2.25.0.rc1.302.gc71d20beed
 
