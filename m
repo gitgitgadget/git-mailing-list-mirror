@@ -2,198 +2,146 @@ Return-Path: <SRS0=oqjl=22=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F795C33C8C
-	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 17:41:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A0F2C00523
+	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 23:11:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1E45620848
-	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 17:41:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20DE82085B
+	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 23:11:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=dyntopia-com.20150623.gappssmtp.com header.i=@dyntopia-com.20150623.gappssmtp.com header.b="B1CIHv7z"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g+euhHUW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726454AbgAERlj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 12:41:39 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33798 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbgAERli (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 12:41:38 -0500
-Received: by mail-pf1-f195.google.com with SMTP id i6so19023396pfc.1
-        for <git@vger.kernel.org>; Sun, 05 Jan 2020 09:41:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dyntopia-com.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=M94F0b2eBv5xQZsYYAtQ3Ah1vFw7Dc9ty70GCJqGIcY=;
-        b=B1CIHv7zpye2uwwHtJVZxnnjEKGJ+WFMhXO1IbsZzn5H7wlqI7NtUPjtVw5VoKZBJg
-         hCNYeqNKY8qby35263Xzh6mdp7jpsS2Se9X9vLEg05QeQC6dEVPcknnm9VbseY43zwT1
-         eVbSx5onflwsjnnkLjyVEA3ljNkPd3YhwXa/AkdLxnSN/w96hwaQuRTg/6eibFvtcgup
-         ID3lVYf81T05CI+A/13syDiiRzKJplE1AMFmAJ+yRkYroVqVc7r+5QyzDmdyv1WqUv7x
-         XqShFTLm6oKlN9XYbOVv+W8Nfmp/WkReR6zpVNlvAMSCtK2j+Rcs60ElMrRjlrovmQh/
-         kUlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=M94F0b2eBv5xQZsYYAtQ3Ah1vFw7Dc9ty70GCJqGIcY=;
-        b=lw43zv+u2WJ8qo/I5Wnd6GR5PIpck2Jx/elIi8pd+z01LpATTprYpnhBItQckcvR+/
-         UC2xAG0GNGR1iaK6w4/htgYDlseW3Df8JhK5dWdAmecGk9OZcR1yDwk2abyrtyDcI/Sy
-         r4BDAhJ9hWTraVK+/EPHzoeMCSLaavGxPxP4GX9vwDeegxmAE20mZDXjqotrSK/RgTmA
-         Fi922wuxDkmsQ6RIT9fcIYKkvKAwtzlR+ttaK53n4HlRAcXpkyP2wYk5+ZLQVUD1TdU7
-         hjmXywJOJG1yoS1aYmICOa8e/bXRsgwCHF1KIHo45kKySSqZlZDXAMEw/ELPCji1Egw+
-         nIkQ==
-X-Gm-Message-State: APjAAAWkTCtsGsp7eF3G9fqs/3wJ08pNSUVFTn9oU2eP0TrYAUzKtUBG
-        g6BG2SLs0T9tRhCeSx8D95B4dSt+J88=
-X-Google-Smtp-Source: APXvYqycskU/bDFnq4c0kj9/WrGG4SZ97viwMzSpg/yF1owGMl3GcuaRCTcnU4cGBf4qqAaJSZ96Fw==
-X-Received: by 2002:a63:6787:: with SMTP id b129mr106959500pgc.103.1578246097488;
-        Sun, 05 Jan 2020 09:41:37 -0800 (PST)
-Received: from localhost ([202.62.47.81])
-        by smtp.gmail.com with ESMTPSA id a1sm61082475pfo.68.2020.01.05.09.41.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 05 Jan 2020 09:41:37 -0800 (PST)
-From:   Hans Jerry Illikainen <hji@dyntopia.com>
-To:     git@vger.kernel.org
-Cc:     Hans Jerry Illikainen <hji@dyntopia.com>
-Subject: [PATCH 1/1] commit: make the sign-off trailer configurable
-Date:   Sun,  5 Jan 2020 17:41:27 +0000
-Message-Id: <20200105174127.9278-2-hji@dyntopia.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200105174127.9278-1-hji@dyntopia.com>
-References: <20200105174127.9278-1-hji@dyntopia.com>
+        id S1727242AbgAEXLj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jan 2020 18:11:39 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53720 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726494AbgAEXLi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jan 2020 18:11:38 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADD62447E1;
+        Sun,  5 Jan 2020 18:11:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HXakbkqB4+de8AIV/4tj7NBr9uM=; b=g+euhH
+        UW5g4Zini6m5Fv0ZjsG0NYTfui61K8imwj1rvnBaRscLXcnRvfoOuUyrs+9Podf+
+        a2XDgwLuWb9iIuGFjTtz2Zia3S+RSHT00lN3/qLnFuDDml6rk7XE+POTfIFNhY4V
+        U/vwyNLGyLStw48LwCfnwOAELxK/8mdobIxQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ase4U6LHUeGSZBS/HDecB3gFnADgeBSl
+        LK/2rEF0oXKh39tQScmkQ31rfwwyzenSMM8hWR2t5p5Af87rS8psV9R2VJlQTMww
+        nZBPBo2z3x69vsTwy2tt4YvQU96CgZEHtGNYN6AxdWAWh5AcP6ohkKQQoUpMofuo
+        2lU46+VmTYI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A535D447E0;
+        Sun,  5 Jan 2020 18:11:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10A06447DF;
+        Sun,  5 Jan 2020 18:11:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Hans Jerry Illikainen <hji@dyntopia.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/5] refactor gpg-interface and add gpg verification for clones
+References: <20200105135616.19102-1-hji@dyntopia.com>
+Date:   Sun, 05 Jan 2020 15:11:35 -0800
+In-Reply-To: <20200105135616.19102-1-hji@dyntopia.com> (Hans Jerry
+        Illikainen's message of "Sun, 5 Jan 2020 13:56:11 +0000")
+Message-ID: <xmqq36ctbis8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B91249E6-3010-11EA-87D1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit builtin did not previously have a configuration option to
-enable the 'Signed-off-by' trailer by default.
+Hans Jerry Illikainen <hji@dyntopia.com> writes:
 
-For some use-cases (namely, when the user doesn't always have the right
-to contribute patches to a project) it makes sense to make it a
-conscientious decision to add the signoff trailer.  However, others'
-might always have the right to ship patches -- in which case it makes
-sense to have an option to add the trailer by default for projects that
-require it.
+> And finally, signature verification is added to the clone builtin.  It
+> obeys --(no-)verify-signatures, clone.verifySignatures and
+> gpg.verifySignatures (in decreasing order of significance).
 
-This patch introduces a commit.signOff configuration option that
-determine whether the trailer should be added for commits.  It can be
-overridden with the --(no-)signoff command-line option.
+It is clear for a merge or a pull what it means to verify
+signature---you trust your local history, and you are willing to
+merge in a commit only when it has a trusted signature (which
+automatically means that you trust the hash function and also the
+signer did some reasonable vetting of the history behind the tip
+commit, or you never check out your intermediate state, depending
+on your threat model).
 
-Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
----
- Documentation/config/commit.txt |  8 ++++++++
- Documentation/git-commit.txt    |  4 ++++
- builtin/commit.c                |  4 ++++
- t/t7502-commit-porcelain.sh     | 36 +++++++++++++++++++++++++++++++++
- 4 files changed, 52 insertions(+)
+I am not sure what it should mean to verify signature on clone.  I'd
+assume that our threat model and verification policy are consistent
+with what we use for a merge/pull, in that we trust all history
+behind a commit that has a trusted signature, so it is clear that
+you would want the tip commit of the default branch (or if you are
+naming a single branch to clone, then the tip of that branch) to
+carry a trusted signature.  But what about the commits that are
+reachable from other branches and tags that are *not* contained
+in the branch that is initially checked out?
 
-diff --git a/Documentation/config/commit.txt b/Documentation/config/commit.txt
-index 2c95573930..6ebfe384ac 100644
---- a/Documentation/config/commit.txt
-+++ b/Documentation/config/commit.txt
-@@ -15,6 +15,14 @@ commit.gpgSign::
- 	convenient to use an agent to avoid typing your GPG passphrase
- 	several times.
- 
-+commit.signOff::
-+	A boolean to specify whether commits should enable the
-+	`-s/--signoff` option by default.  *Note:* Adding the
-+	Signed-off-by: line to a commit message should be a conscious
-+	act and means that you certify you have the rights to submit the
-+	work under the same open source license.  Please see the
-+	'SubmittingPatches' document for further discussion.
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index ced5a9beab..61a362770d 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -165,12 +165,16 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
- 
- -s::
- --signoff::
-+--no-signoff::
- 	Add Signed-off-by line by the committer at the end of the commit
- 	log message.  The meaning of a signoff depends on the project,
- 	but it typically certifies that committer has
- 	the rights to submit this work under the same license and
- 	agrees to a Developer Certificate of Origin
- 	(see http://developercertificate.org/ for more information).
-+	This option can be enabled by default with the `commit.signOff`
-+	configuration option, in which case it can be disabled
-+	temporarily with `--no-signoff`.
- 
- -n::
- --no-verify::
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c70ad01cc9..497e29c58c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1474,6 +1474,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		sign_commit = git_config_bool(k, v) ? "" : NULL;
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.signoff")) {
-+		signoff = git_config_bool(k, v);
-+		return 0;
-+	}
- 	if (!strcmp(k, "commit.verbose")) {
- 		int is_bool;
- 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index 14c92e4c25..7510325698 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -151,6 +151,42 @@ test_expect_success 'sign off' '
- 
- '
- 
-+test_expect_success 'commit.signOff=true' '
-+	test_config commit.signOff true &&
-+	echo 1 >>positive &&
-+	git add positive &&
-+	git commit -m "thank you" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
-+	git var GIT_COMMITTER_IDENT >ident &&
-+	sed -e "s/>.*/>/" ident >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'commit.signOff=true and --no-signoff' '
-+	test_config commit.signOff true &&
-+	echo 2 >>positive &&
-+	git add positive &&
-+	git commit --no-signoff -m "thank you" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
-+	git var GIT_COMMITTER_IDENT >ident &&
-+	sed -e "s/>.*/>/" ident >expected &&
-+	! test_cmp expected actual
-+'
-+
-+test_expect_success 'commit.signOff=false and --signoff' '
-+	test_config commit.signOff false &&
-+	echo 1 >>positive &&
-+	git add positive &&
-+	git commit --signoff -m "thank you" &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
-+	git var GIT_COMMITTER_IDENT >ident &&
-+	sed -e "s/>.*/>/" ident >expected &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
--- 
-2.25.0.rc1.298.g45d5f025e1
+Later in the proposed log message of 5/5 you allude to risk of
+merely checking out a potentially untrustworthy contents to the
+working tree.  This is far stricter than the usual threat model we
+tend to think about as the developers of source code management
+system, where checking out is perfectly OK but running "make" or its
+equivalent is the first contact between the victim's system with
+malicious contents.
 
+Verifying the tip of the default/sole branch upon cloning before the
+tree of the commit is checked out certainly would cover that single
+case (i.e. the initial checkout after cloning), but I am not sure if
+it is the best way, and I am reasonably certain it is insufficient
+against your threat model.  After such a clone is made, when the
+user checks out another branch obtained from the "origin" remote,
+there is no mechanism that protects the user from the same risk you
+just covered with the new signature verification mechanism upon
+cloning, without validating the tip of that other branch, somewhere
+between the time the clone is made and that other branch gets
+checked out.
+
+It almost makes me suspect that what you are trying to do with the
+"verification upon cloning" may be much better done as a "verify the
+tree for trustworthyness before checking it out to the working tree"
+mechanism, where the trustworthyness of a tree-ish object may be
+defined (and possibly made customizable by the policy of the project
+the user is working on) like so:
+
+ - A tree is trustworthy if it is the tree of a trustworthy commit.
+
+ - A commit is trustworthy if
+
+   . it carries a trusted signature, or
+   . it is pointed by a tag that carries a trusted signature, or
+   . it is reachable from a trustworthy commit.
+
+Now, it is prohibitively expensive to compute the trusttworthiness
+of a tree, defined like the above, when checking it out, UNLESS you
+force each and every commit to carry a trusted signature, which is
+not necessarily practical in the real world.
+
+Another approach to ensure that any and all checkout would work only
+on a trustworthy tree might be to make sure that tips of *all* the
+refs are trustworthy commits immediately after cloning (instead of
+verifying only the branch you are going to checkout, which is what
+your patch does IIUC).  That way, any subsequent checkout in the
+repository would either be checking out a commit that was
+
+ - originally cloned from the remote, and is reachable from some ref
+   that was validated back when the repository was cloned, or
+
+ - created locally in this repository, which we trust, or
+
+ - fetched from somewhere else, and is reachable from the commit
+   that was validated back when "git pull" validated what was about
+   to be integrated into the history of *this* repository.
+
+Hmm?
