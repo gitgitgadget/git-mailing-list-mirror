@@ -2,86 +2,90 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 033A2C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 918ACC33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:39:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AADDD2072C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:36:40 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KQU+gPdb"
+	by mail.kernel.org (Postfix) with ESMTP id 6AE9B2072C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbgAFTgj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 14:36:39 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54441 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbgAFTgj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 14:36:39 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA7B7AE3B5;
-        Mon,  6 Jan 2020 14:36:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=AABDNmIzST07GEnb/4YqOFjDEIg=; b=KQU+gP
-        dbVLMS2oJjHmNeG2ndHxzbz2fE7VA0XSKVJ9E/Sw2o/t8inX+O95nt4d3Q/qDH6m
-        6ItaOPgryXDNMGJ8WLhJ9uaHnE6DnmTXKlljj88bcAorN++78wKyKqh8xOFcSZGS
-        6lta32/PsFR7u913GFvLLh6ngYxKT5KtpALCg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TRFOsnyg40GS0aqvNpaKU4kHtjDNzJLC
-        KyJ4P2m3WDEbcbpk/dcrBB6C5DbJADZ5MVgBliP3ptnot62HLQFctSvemAR0b3eW
-        aiggpnEZ9ky74BwxOK2TNJPA0cvTZp55Cm8YSbR0pC/ya4P7RJH5lUEisyijstKx
-        Nuv/ejzVuyk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A30FFAE3B4;
-        Mon,  6 Jan 2020 14:36:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E4657AE3B0;
-        Mon,  6 Jan 2020 14:36:34 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/5] commit: refactor signature verification helpers
-References: <20200105135616.19102-1-hji@dyntopia.com>
-        <20200105135616.19102-4-hji@dyntopia.com>
-Date:   Mon, 06 Jan 2020 11:36:32 -0800
-In-Reply-To: <20200105135616.19102-4-hji@dyntopia.com> (Hans Jerry
-        Illikainen's message of "Sun, 5 Jan 2020 13:56:14 +0000")
-Message-ID: <xmqqtv588ji7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726767AbgAFTjF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 14:39:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58150 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726569AbgAFTjF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 14:39:05 -0500
+Received: (qmail 2430 invoked by uid 109); 6 Jan 2020 19:39:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Jan 2020 19:39:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24694 invoked by uid 111); 6 Jan 2020 19:44:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2020 14:44:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 6 Jan 2020 14:39:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, szeder.dev@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] fetch: set size_multiple in split_commit_graph_opts
+Message-ID: <20200106193903.GB971477@coredump.intra.peff.net>
+References: <pull.509.git.1577981654.gitgitgadget@gmail.com>
+ <91d89356a20625d04af74d458c28b32445e760c1.1577981654.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D9370724-30BB-11EA-963D-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <91d89356a20625d04af74d458c28b32445e760c1.1577981654.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+On Thu, Jan 02, 2020 at 04:14:14PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-> +static unsigned gpg_flags = GPG_VERIFY_SHORT | GPG_VERIFY_COMPAT;
->  static struct strbuf merge_msg = STRBUF_INIT;
->  static struct strategy **use_strategies;
->  static size_t use_strategies_nr, use_strategies_alloc;
-> @@ -633,7 +633,7 @@ static int git_merge_config(const char *k, const char *v, void *cb)
->  		sign_commit = git_config_bool(k, v) ? "" : NULL;
->  		return 0;
->  	} else if (!strcmp(k, "gpg.mintrustlevel")) {
-> -		check_trust_level = 0;
-> +		gpg_flags ^= GPG_VERIFY_COMPAT;
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> In 50f26bd ("fetch: add fetch.writeCommitGraph config setting",
+> 2019-09-02), the fetch builtin added the capability to write a
+> commit-graph using the "--split" feature. This feature creates
+> multiple commit-graph files, and those can merge based on a set
+> of "split options" including a size multiple. The default size
+> multiple is 2, which intends to provide a log_2 N depth of the
+> commit-graph chain where N is the number of commits.
+> 
+> However, I noticed during dogfooding that my commit-graph chains
+> were becoming quite large when left only to builds by 'git fetch'.
+> It turns out that in split_graph_merge_strategy(), we default the
+> size_mult variable to 2 except we override it with the context's
+> split_opts if they exist. In builtin/fetch.c, we create such a
+> split_opts, but do not populate it with values.
+> 
+> This problem is due to two failures:
+> 
+>  1. It is unclear that we can add the flag COMMIT_GRAPH_WRITE_SPLIT
+>     with a NULL split_opts.
+>  2. If we have a non-NULL split_opts, then we override the default
+>     values even if a zero value is given.
+> 
+> Correct both of these issues. First, do not override size_mult when
+> the options provide a zero value. Second, stop creating a split_opts
+> in the fetch builtin.
 
-Did you really mean to "toggle the bit each time the variable
-appears"?  Or is this better written as
+Thanks, the explanation and fix (both parts) look good to me, modulo the
+subject correction you already noted.
 
-		gpg_flags &= ~GPG_VERIFY_COMPAT;
+> ---
+>  builtin/fetch.c | 4 +---
+>  commit-graph.c  | 4 +++-
 
-instead?  There may be another instance of the same in this patch.
+Is it worth covering this with a test?
 
+I guess the non-fetch code paths for splitting already cover this pretty
+well, and this is just about managing to get the right number into the
+commit-graph code. So perhaps it isn't worth it.
+
+-Peff
