@@ -2,156 +2,99 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC81C33C9A
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 00:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 332ADC00523
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 01:16:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DEAB02465E
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 00:42:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00FB42072C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 01:16:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JyLCkk3a"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xjBMbNZu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727165AbgAFAmR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 19:42:17 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46842 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbgAFAmR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 19:42:17 -0500
-Received: by mail-ed1-f67.google.com with SMTP id m8so46107923edi.13
-        for <git@vger.kernel.org>; Sun, 05 Jan 2020 16:42:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FbbUbDVrxNKtsB41OkwhyYU+8mhpHIsqnvKgRVLtZBY=;
-        b=JyLCkk3aVMoNi1S1FQOXs8lVWe+PJ3r/CSYKGaMijaU2nGMdTtbToop5a43okReFBt
-         HhlaKjz/LSnoVFCyPeYyKo4RxBcmtDZuY+cntw7CWZIFpoaXYT6HRx1g0axENOHXxDw/
-         oB7Cqsn7Lo8keITAqEJmtWskylqjcpxQL7r8ic2EOyxzmlKCCzaPGrjtE4URIM96Dn3x
-         oeyGpcH7phgCbAJW+gmbRuhM8vU211Zd+GzRqa0/pbqs85ooFKbpjIdbncAzS7hX5k5O
-         /d2U5MUKV2r/iEQbWxaFuPTjMPBh0rNBaWmpvtTUvD63Qy6jWQgX/yCtnZ+5EwY9u+Dd
-         /T/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FbbUbDVrxNKtsB41OkwhyYU+8mhpHIsqnvKgRVLtZBY=;
-        b=RT+a5PKXqbmoBQ/Ju4Vio65+SeUzLh+eMpMf2cGAgWSULSHzFrHkO2iQlQJdQ4CqtQ
-         8sUiNzjTAc8EaKOK5mxKQWDvACMm7yU8EAqWem3xdlX1Lu0INBOQdBs9lY+b4eUjJev7
-         FzC7U7pqdHRu7du95LTJUZ0ZIt9gf61I5zOeyn7uf3K95ZPWan5qhv2MDGYOvJidFWD7
-         PajVlpnwogoCVJOEKv/4yWr7K8rI4nM+zB0jAeCxAZWYtD1jHicddjeO5uLyHlsCQ4QB
-         lrzTTI8/TPwLuFeYkZIdZMGNziTSbXhGBv/vgQh7m3XDwWYCSVSZ01JOf1KRidJa+txX
-         GxGg==
-X-Gm-Message-State: APjAAAVhWIkZzMypHecJmLdA5BMi3YLFUv5PACnTHu+XRBlxRkaD7TBA
-        QUuflac7MyZ8yF1UIqssAWg3rFW1yXpZDDOudNq6xUYX
-X-Google-Smtp-Source: APXvYqyEPir4wTn6NJIWNvnRZwMCFA6ql9yPyMr8JH/ngjQ4ouGTVaD7j8B7V4zSTUhFqEWmnydW14i38w+UkhNd3Lg=
-X-Received: by 2002:a17:906:5208:: with SMTP id g8mr107057513ejm.104.1578271335218;
- Sun, 05 Jan 2020 16:42:15 -0800 (PST)
+        id S1727217AbgAFBQY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jan 2020 20:16:24 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51710 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727170AbgAFBQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jan 2020 20:16:23 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BABE9A8074;
+        Sun,  5 Jan 2020 20:16:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QV9yD+ExNKkdGuMSJyHwXBiiNyY=; b=xjBMbN
+        ZulwSwE7WKW2anN/ZpwDHpgdGU0in4x/2gR8CshpCaBV9B3AmVBwmbJeKKVX/r+U
+        AbWfJ05YVqd8G0L0snw/D1SJ8Ngvxor8yJ6ojywpW7fi9dBlF4DP1u8nvQNZvWdh
+        vpIuWyr429CdyrnbkSKbZO1r+ySMVXizXRJpE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CxiqSbukgyYrV8WWXhFh0Xu08pop3ZyU
+        F9g3IJ/o+nHq68+lDqLSdPKFcsjRUu8g8TOYf9PyGLBOXJ+g0OtVS4X8cNpfbnVU
+        7e7+8W2C4xS6mfoP9+lgSERqvgLsSnhkHbCc4kT3eJzWTX/FncNRe9ms7XaWbwZ1
+        dRfIpoJexvo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B2DD1A8073;
+        Sun,  5 Jan 2020 20:16:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8393AA8072;
+        Sun,  5 Jan 2020 20:16:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephen Oberholtzer <stevie@qrpff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] bisect run: allow inverting meaning of exit code
+References: <20200103043027.4537-1-stevie@qrpff.net>
+        <xmqqftgvdhpz.fsf@gitster-ct.c.googlers.com>
+        <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com>
+Date:   Sun, 05 Jan 2020 17:16:15 -0800
+In-Reply-To: <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com>
+        (Stephen Oberholtzer's message of "Sat, 4 Jan 2020 01:22:21 -0500")
+Message-ID: <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
- <82bf24ce537ca9333d72c2b4698864817801f10f.1577933387.git.gitgitgadget@gmail.com>
- <CAPig+cS39vcy6yT3Dg2HfGVCyg2U+7t7Xj85ayM7LaAk3zTjrg@mail.gmail.com>
-In-Reply-To: <CAPig+cS39vcy6yT3Dg2HfGVCyg2U+7t7Xj85ayM7LaAk3zTjrg@mail.gmail.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Mon, 6 Jan 2020 13:42:03 +1300
-Message-ID: <CACg5j25bNcy66R3bCwwc1NQ1F1rEoc=QOPBteyux0Xr6xwHLSQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] branch: advise the user to checkout a different
- branch before deleting
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 23C7FC70-3022-11EA-8A92-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 2, 2020 at 9:18 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Wed, Jan 1, 2020 at 9:50 PM Heba Waly via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > Display a hint to the user when attempting to delete a checked out
-> > branch saying "Checkout another branch before deleting this one:
-> > git checkout <branch_name>".
-> >
-> > Currently the user gets an error message saying: "error: Cannot delete
-> > branch <branch_name> checked out at <path>". The hint will be displayed
-> > after the error message.
-> >
-> > Signed-off-by: Heba Waly <heba.waly@gmail.com>
-> > ---
-> > diff --git a/builtin/branch.c b/builtin/branch.c
-> > @@ -240,6 +240,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
-> >                                 error(_("Cannot delete branch '%s' "
-> >                                         "checked out at '%s'"),
-> >                                       bname.buf, wt->path);
-> > +                               advise(_("Checkout another branch before deleting this "
-> > +                                                "one: git checkout <branch_name>"));
->
-> s/another/a different/ would make the meaning clearer.
->
-Ok.
+Stephen Oberholtzer <stevie@qrpff.net> writes:
 
-> Let's try to avoid underscores in placeholders. <branch-name> would be
-> better, however, git-checkout documentation just calls this <branch>,
-> so that's probably a good choice.
->
-Yes.
+>> In any case, I wonder why something along the line of the attached
+>> patch is not sufficient and it needs this much code.
+>> ...
+> Unfortunately, that doesn't behave properly.
+> As far as 'git bisect run' is concerned, there are four distinct sets
+> ...
+> What needs to happen is that status code lists for "test passed" (#1)
+> and "test failed" (#2) are swapped; even when bisecting a fix, #3
+> (untestable) and #4 (malfunction) remain unchanged.  Your patch remaps
+> case #4 to case #1.
 
-> However, these days, I think we're promoting git-switch rather than
-> git-checkout, so perhaps this advice should follow suit.
->
+Yeah, I know.  I didn't mean to give you a perfect solution and that
+was why I said "along the line of...".  I know I ignored the 128 and
+above, as I usually trust that our contributors are competent enough
+to be able to fill in the missing details given an outline.
 
-I didn't know that, will change it.
+The key takeaway I wanted you to notice was that a single case
+statement that maps the exit code external command would give us
+would look sufficient, without any of the {SUCCESS,FAIL}_TERM magic
+you had in your version, which indicates that there is more than the
+simple "using a run script to find where a bug was fixed can be done
+by swapping exit code" going on.  And it is quite unclear why that
+is needed either from the patch or the text that accompanied the
+patch.
 
-> Finally, is this advice sufficient for newcomers when the branch the
-> user is trying to delete is in fact checked out in a worktree other
-> than the worktree in which the git-branch command is being invoked?
-> That is:
->
->     $ pwd
->     /home/me/foo
->     $ git branch -D bip
->     Cannot delete  branch 'bip' checked out at '/home/me/bar'
->     hint: Checkout another branch before deleting this one:
->     hint: git checkout <branch>
->     $ git checkout master # user follows advice
->     $ git branch -D bip
->     Cannot delete  branch 'bip' checked out at '/home/me/foo'
->     hint: Checkout another branch before deleting this one:
->     hint: git checkout <branch>
->     $
->
-> And the user is left scratching his or her head wondering why
-> git-branch is still showing the error despite following the
-> instructions in the hint.
->
+Thanks.
 
-Understood.
 
-> > diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-> > @@ -808,7 +808,8 @@ test_expect_success 'test deleting branch without config' '
-> >  test_expect_success 'deleting currently checked out branch fails' '
-> >         git worktree add -b my7 my7 &&
-> >         test_must_fail git -C my7 branch -d my7 &&
-> > -       test_must_fail git branch -d my7 &&
-> > +       test_must_fail git branch -d my7 >actual.out 2>actual.err &&
-> > +       test_i18ngrep "hint: Checkout another branch" actual.err &&
->
-> Why does this capture standard output into 'actual.out' if that file
-> is never consulted?
->
 
-Correct, I missed this one.
 
-> >         rm -r my7 &&
-> >         git worktree prune
-> >  '
-
-Thanks Eric, will submit an updated version soon.
-
-Heba
