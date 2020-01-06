@@ -2,95 +2,110 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51A24C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C8BC33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 201B920731
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 753EC20731
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="HCr6Is8i"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="T562CJ7n"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbgAFXHU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 18:07:20 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:34966 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgAFXHU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 18:07:20 -0500
-Received: by mail-pg1-f195.google.com with SMTP id l24so27554133pgk.2
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 15:07:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BEkAJskrfQg3QuiE4B8Xz7ac7wc4c1EKMmn+efyOr2w=;
-        b=HCr6Is8i3HY4nSZuFe1y4nE3uyvviTx+RM1yQxCE1dFVgYwZnRR/quyR/xuUa2R2V7
-         EUGJ4CZkevye0wfrSS8YiJL6zpzUcMf6Bvsm6BnD7enFt3N8DoPo3BDBYzjGlEmRJ7Z1
-         VGsy9FWCXST8/Pbvo29udYZe2wSeMQYFBAmRa5olBWAeYVhjA+H937ANI3asKPXq9VXr
-         Aem4uJXqCFv1FKjv2fVqpUiTTJ0B1Rr6WCm92B5Jpn804EUNQgMQXcsV5s5M/Pqs86FQ
-         oguXgPEFz2Ffu5YZ6Z+jgBrWEgzvHqV3DoBVMqg+WZn30JgJ8Q80Jfdf8dJjy2q9V53P
-         DSLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BEkAJskrfQg3QuiE4B8Xz7ac7wc4c1EKMmn+efyOr2w=;
-        b=qTuMFwzx7io+N2uFLPrl/sQ84fzkBk+DtFMHQ2ry1hmT49WrVIdrkVW2xnof7ouI+J
-         ZBHV9IhJRK0CFwmrC5Rte+9+N//ZNEtdw34RAA0P6/Sz4ne5DdXiAgR+vXf0bcUwSg1i
-         Y+DrXpuCzzvzUvbNIuu7L49SGX6oIuf0dIZfsWjod/0786KY+Emoln4T2F+epejy6C1m
-         KC6MHAtU/dEYyMg8MtHLO8DJ8nCJ85p5yx43+0C02qAZDc3lCerPOcoa3kVGP+0D1frg
-         QTQd8R6yCsrCQn8aoZJnypZXGgHgnDVUwjyFB+AcyhSP8859EporMCFgwhz8VmIYZFnO
-         MPwQ==
-X-Gm-Message-State: APjAAAVOhJDmLhkbExqdNi36okzRWzDTuMy8i7bWN105gnYijCrkBlM8
-        OY2Ue+l8JFzWHwuS4FdBc13vZg==
-X-Google-Smtp-Source: APXvYqwxaoi1vrNQq5VISPQnS/KLnLMnqreAzs6oNhJGlvg+zl6FqlbFKKvihOyiHsCQkd2gUzb7Og==
-X-Received: by 2002:a63:e545:: with SMTP id z5mr112141654pgj.209.1578352039125;
-        Mon, 06 Jan 2020 15:07:19 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id g18sm75362951pfi.80.2020.01.06.15.07.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 15:07:17 -0800 (PST)
-Date:   Mon, 6 Jan 2020 15:07:12 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] add: use advise function to display hints
-Message-ID: <20200106230712.GA181522@google.com>
-References: <pull.508.git.1577934241.gitgitgadget@gmail.com>
- <90608636bf184de76f91e4e04d9e796a021775a0.1577934241.git.gitgitgadget@gmail.com>
+        id S1727025AbgAFXHZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 18:07:25 -0500
+Received: from mout.gmx.net ([212.227.17.22]:50387 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726721AbgAFXHZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 18:07:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578352043;
+        bh=msoQG8s0StrBEP5gFqAQ5NGkAt+idplxvW+s5MG8Wwk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=T562CJ7nq7938xIwADR8zxl+zPOk+nLfEmEyLYXGcsXYgLQ8gjhOWTu1NguXLj2l9
+         GxNch4oL/dyteQmkia/kpkSvh2Z6lhNvUCGTLmK9lT7vckr01af1nZkOE58rqwW13A
+         j4miFtw5xmTBpIVbm/YpHoDE1okyEPQNqnkwRv8I=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTqg-1jBAQH24hC-00WTfJ; Tue, 07
+ Jan 2020 00:07:23 +0100
+Date:   Tue, 7 Jan 2020 00:07:23 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Nirmal Khedkar <nirmalhk7@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Fwd: My Introduction and a Doubt
+In-Reply-To: <CAFFaXsx3Mtrq4mEGq6GYct7ZcRtucmZdRG-PQmjLrvVVTfq2Wg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001070007011.46@tvgsbejvaqbjf.bet>
+References: <CAFFaXszwB6F-Y9hHWW5ZuvuFSPqrOwkK=c2wUVMDm4yGq44X-Q@mail.gmail.com> <CAFFaXszUdyfun1W0TuvJuRihLo7Mz-XYL13Fm5gCv_gWrir-_Q@mail.gmail.com> <CAFFaXsx3Mtrq4mEGq6GYct7ZcRtucmZdRG-PQmjLrvVVTfq2Wg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <90608636bf184de76f91e4e04d9e796a021775a0.1577934241.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:bgz0Eb/0NFGVQ4owqAu6BZLDt0DMeEWFdKVHgtTYPRQ9rG9n0QE
+ aYozE7xm8PcoFJqlHJao5tz8McGKXTA65v0J31rCXjlLmrVvkiU0A+0GMuSlrGX2PQ8OiM2
+ bL1kQ4asZybhQvLq6J9w56B69u9nE+RBUrdH3ohRL3t5BysOPErsCFjRyeCVIkdvPLntmCi
+ MII4vC2f3MAHiYIv7aIKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:0ZgA9a73nBI=:/td6GXVWFA8TgaRsqZAny5
+ XnRE/14PI5Kr81Y0iXOgf2bZrpWDQfIatOvmixHcHAZAnhRTb326CgRM0wwMNi28QUyufm8dm
+ uKzz1sf182HfDC/lNt0JidlmjJWI8e0tHg6f0PqpiVEJZhSKJEODjUYJIBate9kCJH5rb2JR5
+ eiaX7FgnPNFmAFm0S7Jj08ID9Kyb59XlC3cPtxO5cdEWfmlQXVh8dXPZK+GT+Hukg7ZRKOmlX
+ nqHxwh/s3L2UvrJrpw6/dfQ4TaGF193i4R9Ajz1Ae9LHCYejjqxE2+d2Vl4MgV9Od5frWF6oW
+ LO5laqCV0A4qPf7YdCE/klpEYTr07y2EM1Ua4QR4H8jlvYsLJde7RzaMnOH0f8x+SFSWe3LED
+ G0HJWDSUhsXnHRfI+CfCj9CkeucOnwmN0BCH5J0gpY5s1dmQg0xv2SiAhQu6OyRFgoTV/Ivrs
+ Tltc5xSUkOxmOlaP2lYBnZQzWwaurFALxCXSbfavOz0Z4sxMdg43dlORfaY1Et+R9szTllCNf
+ tO7DJcdI0r0DN+rdOwbI54H9MurRHPeIqHU1AR3e3XM1b3UzFbtQvt6qoOa0yNkyZzVBxBr0v
+ e3R6FYSz1YDl174+XHG8czTPfZNr314oEGfnBqlnDH02MY81QWKZj/M9ChCvg1RP77MqIGEf2
+ wrwOPcoBDJJBpaySzAlsHueB2GsKimc9QuEYUbKZ/6YfEL1hqlITdK0IsQ3ogeyM355cOic0p
+ eVypYsDD1VQs1GbsfO2kSmHajrdYwnzVLBhE9WO10pWcO8baxUZOx3BJNP0oLM4K+W+ZzEBRg
+ t3nAHCosL7Eyw5d6yCVo4y9p8aPlDzcgqhZxn/RhZwh9rXUqpAsHUDxAP+jeKWp/R7ZHLoKQ2
+ vGbYWyw9nVYK8laxNTO5wU8fPQisYRaodh+Rjg+GNZ3nUJdd7H1AU/FIjkb85nZvYSMJIv1QP
+ 33z8uCyCZ3K+dNjhE2Z9yf9D/QDbWzIClaI6shrVmITx9wjZvqux9NXpX6FkWPPu4Q7CzIYD+
+ qBn8zHtUfKjj/OJq2cRyg62AeJkF0b5HWqlPFRsNXt1HshTRi/xn7SD/ASq13UOF936jiqCtL
+ uUGkWJAy0tItrKomusg6yLoplDs9BPiUjSYSMpfZDiazzLdk8VXpWLuGGAV75kFOI98SjoKLI
+ EdboZD/OIMQskqGiWr1Zuumd5jARhHHZix0D/bIJHuLJqE/dhrKVCVcWKrcKZWcWgxj6wEb1E
+ ooYVLhzvHxr7AynHjaTEjbWKGK6JOWJcui/+p8WRYHQyjLZZSqaqSUSBfrWQ=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 02, 2020 at 03:04:01AM +0000, Heba Waly via GitGitGadget wrote:
-> From: Heba Waly <heba.waly@gmail.com>
-> 
-> @@ -390,7 +390,7 @@ static int add_files(struct dir_struct *dir, int flags)
->  		fprintf(stderr, _(ignore_error));
->  		for (i = 0; i < dir->ignored_nr; i++)
->  			fprintf(stderr, "%s\n", dir->ignored[i]->name);
-> -		fprintf(stderr, _("Use -f if you really want to add them.\n"));
-> +		advise(_("Use -f if you really want to add them.\n"));
+Hi Nirmal,
 
-In the vein of the rest of your project, for me I'd rather see a
-copy-pasteable response here:
+On Sun, 5 Jan 2020, Nirmal Khedkar wrote:
 
-"Use 'git add -f " + name + "' if you really want to add them."
+> Hey everybody!
+>
+> I'd love to use this email to introduce myself to the community and
+> ask for help.
+>
+> I'm Nirmal Khedkar, student from India. I love making end user
+> applications, and in this FOSS world, there simply aren't many as big
+> and impactful as Git. I'd love to contribute Git for GSoC 2020 as well
+> as for long-term.
+>
+> Now the doubt:
+> I'm trying to wrap up the issue mentioned here
+> (https://github.com/gitgitgadget/git/issues/486) : basically allowing
+> git bisect to work from subdirectories.  I do consider myself okay in
+> C but I'm still kind-of stuck here: hence emailing this on the mailing
+> list.
+>
+>  When you do "git bisect" in a subdirectory, an error "You need to run
+> this command from the toplevel of the working tree." is raised. The
+> error is raised in "git-sh-setup.sh" and the command begins execution
+> in "bisect--helper.c", but I cant understand how the error appears.
+> Additionally I'd love to know how the C files linkwith the numerous
+> shell scripts within Git.
+>
+> I've searched all I could within the Git project, but if there's any
+> existing documentation on this, please let me know.
 
-That is, if you know the name of the file that was being added here, you
-could provide it so the user can simply copy and go, rather than
-retyping.
+I answered on that ticket:
+https://github.com/gitgitgadget/git/issues/486#issuecomment-571355006
 
-
- - Emily
+Ciao,
+Johannes
