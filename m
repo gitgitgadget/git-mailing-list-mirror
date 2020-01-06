@@ -2,129 +2,116 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 314D0C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01F44C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:14:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0333B21744
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:01:12 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kPz17GJH"
+	by mail.kernel.org (Postfix) with ESMTP id C7538207FF
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:14:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbgAFVBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 16:01:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52118 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726699AbgAFVBK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 16:01:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 60C97A71C3;
-        Mon,  6 Jan 2020 16:01:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=qrUrYTkbqZLm2HWlECyATkkhEpI=; b=kPz17G
-        JH9VKwbfH711z0Ek8IZEFTMI8bnKElfGjqtw24nYE+GQDUjqe+Jv/EWGjAuXIxHK
-        QWt0JqemmDWPfe2s1S0OIIHWIg3PimQJS9QypRFYEvmr+J9AbHpZsQveWxPHtpCD
-        F6rIx1IT61oLM95OmVDd+/SKyDlmq70Evi37s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dKwKd+liuBZMk5XuB25GlQtWMCqZfK88
-        lf+lA3Elp6altiTzw8JRKRLeYbtXwYtgye/64L/4rzj3GCrQbC6mSyYGnlzZiRCI
-        uHSV+t8QvNfMgqOGgAEiOAwyBDoHz0bI90hzba3UDBZLT/k8zFUEwDwIRJHt9Gw4
-        WS9BQ8PG0c0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 58D26A71C2;
-        Mon,  6 Jan 2020 16:01:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C503A71BD;
-        Mon,  6 Jan 2020 16:01:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/5] merge: verify signatures if gpg.verifySignatures is true
-References: <20200105135616.19102-1-hji@dyntopia.com>
-        <20200105135616.19102-5-hji@dyntopia.com>
-Date:   Mon, 06 Jan 2020 13:01:03 -0800
-In-Reply-To: <20200105135616.19102-5-hji@dyntopia.com> (Hans Jerry
-        Illikainen's message of "Sun, 5 Jan 2020 13:56:15 +0000")
-Message-ID: <xmqqa7708flc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726713AbgAFVOu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 16:14:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58208 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726683AbgAFVOu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 16:14:50 -0500
+Received: (qmail 3130 invoked by uid 109); 6 Jan 2020 21:14:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Jan 2020 21:14:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25094 invoked by uid 111); 6 Jan 2020 21:20:22 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2020 16:20:22 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 6 Jan 2020 16:14:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v2] sha1-file: remove OBJECT_INFO_SKIP_CACHED
+Message-ID: <20200106211449.GA980197@coredump.intra.peff.net>
+References: <20191230211027.37002-1-jonathantanmy@google.com>
+ <20200102201630.180969-1-jonathantanmy@google.com>
+ <xmqqftgxedtk.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: A78CC040-30C7-11EA-90B5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqftgxedtk.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+On Thu, Jan 02, 2020 at 01:41:27PM -0800, Junio C Hamano wrote:
 
-> @@ -610,6 +610,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
->  		show_diffstat = git_config_bool(k, v);
->  	else if (!strcmp(k, "merge.verifysignatures"))
->  		verify_signatures = git_config_bool(k, v);
-> +	else if (!strcmp(k, "gpg.verifysignatures") && verify_signatures < 0)
-> +		verify_signatures = git_config_bool(k, v);
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > As a historical note, the function now known as repo_read_object_file()
+> > was taught the empty tree in 346245a1bb ("hard-code the empty tree
+> > object", 2008-02-13), and the function now known as oid_object_info()
+> > was taught the empty tree in c4d9986f5f ("sha1_object_info: examine
+> > cached_object store too", 2011-02-07). repo_has_object_file() was never
+> > updated, perhaps due to oversight. The flag OBJECT_INFO_SKIP_CACHED,
+> > introduced later in dfdd4afcf9 ("sha1_file: teach
+> > sha1_object_info_extended more flags", 2017-06-26) and used in
+> > e83e71c5e1 ("sha1_file: refactor has_sha1_file_with_flags", 2017-06-26),
+> > was introduced to preserve this difference in empty-tree handling, but
+> > now it can be removed.
+> 
+> I am not 100% sure if the implication of this change is safe to
+> allow us to say "now it can be".
+> 
+> The has_object_file() helper wanted to say "no" when given a
+> non-existing object registered via the pretend_object_file(),
+> presumably because we wanted to allow a use pattern like:
+> 
+>  - prepare an in-core representation of an object we tentatively
+>    expect, but not absolutely sure, to be necessary.
+> 
+>  - perform operations, using the object data obtained via
+>    read_object() API, which is capable of yielding data even for
+>    such "pretend" objects (perhaps we are creating a tentative merge
+>    parents during a recursive merge).
+> 
+>  - write out final set of objects by enumerating those that do not
+>    really exist yet (via has_object_file() API).
+> 
+> Teaching about the empty tree to has_object_file() is a good thing
+> (especially because we do not necessarily write an empty tree object
+> to our repositories), but as a collateral damage of doing so, we
+> make such use pattern impossible.  
+> 
+> It is not a large loss---the third bullet in the above list can just
+> be made to unconditionally call write_object_file() without
+> filtering with has_object_file() and write_object_file() will apply
+> the right optimization anyway, so it probably is OK.
 
-Hmm, the next person who attempts to generalize the mechanism
-further would have a hard time introducing a fallback configuration
-that is even common than "gpg" when s/he has to start with this
-code, no?  That is, this patch introduced "gpg.verifysignatures is
-used when merge.verifysignatures is not defined" and with the two
-level override the code works OK, but to implement "if neither gpg.*
-or merge.* is defined, common.verifysignatures is used instead", the
-above part needs to be dismantled and redone.
+I agree that whoever called pretend_object_file() can be careful and
+write out the final set of objects itself via write_object_file(). But
+I'd worry a bit about a caller who doesn't necessarily realize that they
+need to do that. E.g., imagine we call pretend_object_file() for some
+blob oid, expecting it to be read-only. And then in the same process,
+some other bit of the code writes out a tree that mentions that blob.
+Oops, that tree is now corrupt after we exit the process. And IMHO
+neither the pretend-caller nor the tree-writer are to blame; the problem
+is that they shared global state they were not expecting.
 
-Keeping the "initialize verify_signatures to -1 (unspecified)" from
-this patch, setting a separate gpg_verify_signatures variable upon
-seeing gpg.verifysignatures, and consolidating the final finding
-after git_config(git_merge_config, NULL) returns into verify_signatures
-like so:
+This is pretty far-fetched given that the only user of
+pretend_object_file() is in git-blame right now. But it does give me
+pause. Overall, though, I'm more inclined to say that we should be
+dropping SKIP_CACHED here and considering pretend_object_file() to be a
+bit dangerous (i.e., to keep it in mind if somebody proposes more
+calls).
 
-	init_diff_ui_defaults();
-	git_config(git_merge_config, NULL);
+Another point of reference (in favor of Jonathan's patch):
 
-+	if (verify_signatures < 0)
-+		verify_signatures = (0 <= gpg_verify_signatures) 
-+				  ? gpg_verify_signatures 
-+				  : 0;
+  https://lore.kernel.org/git/20190304174053.GA27497@sigill.intra.peff.net/
 
-would be more in line with the way we arrange multiple configuration
-variables to serve as fallback defaults.  And that is more easily
-extensible.
+is a bug that would not have happened if this patch had been applied
+(there's also some discussion of the greater issue, but nothing that wasn't
+already brought up here, I think).
 
-Also with such an arrangement, "if (verify_signatures == 1)" we see
-below will become unnecessary, which is another plus.
-
-Thanks.
-
->  	else if (!strcmp(k, "pull.twohead"))
->  		return git_config_string(&pull_twohead, k, v);
->  	else if (!strcmp(k, "pull.octopus"))
-> @@ -1399,7 +1401,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		if (remoteheads->next)
->  			die(_("Can merge only exactly one commit into empty head"));
->  
-> -		if (verify_signatures &&
-> +		if (verify_signatures == 1 &&
->  		    gpg_verify_commit(&remoteheads->item->object.oid, NULL,
->  				      NULL, gpg_flags))
->  			die(_("Signature verification failed"));
-> @@ -1423,7 +1425,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
->  		usage_with_options(builtin_merge_usage,
->  			builtin_merge_options);
->  
-> -	if (verify_signatures) {
-> +	if (verify_signatures == 1) {
->  		for (p = remoteheads; p; p = p->next) {
->  			if (gpg_verify_commit(&p->item->object.oid, NULL, NULL,
->  					      gpg_flags))
-
+-Peff
