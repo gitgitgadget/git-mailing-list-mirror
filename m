@@ -2,145 +2,100 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51884C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 22:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB88C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 22:52:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23B1D207FF
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 22:47:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 885242075A
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 22:52:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XmLv40UD"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QZK+iUkw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727273AbgAFWru (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 17:47:50 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:45868 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbgAFWru (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 17:47:50 -0500
-Received: by mail-pf1-f194.google.com with SMTP id 2so27592886pfg.12
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 14:47:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3/E2yDWgx06aLcPf+lprIgDWB4FAuXQ2CoXoNvmjFQY=;
-        b=XmLv40UDzD9Vp9zOEYcGkuypMJ5ns77eXW+Tx4qruSseQj8fPm8RfWcA2nqFnREAOT
-         wiX+M+s5v6I3MPUgQC+kQy+5x6lvfiqPycLAbE1/WsvNgi9V0EwWyY6xJ7ODd8l/TAEv
-         8MSt9bizLlEr94wzalewePXwZseaTwZmgbOcjcBouA5Xwb2PfBIYdM2kPfjXYYHxqwiI
-         LTjSOElTrRmcCKcizQTW1CRTMVGNnGjM+d24ZwKzVe9ycs52KUngei1dEQ6MWNzpmmtF
-         ZgZZCxf9vEax8wZDCeNkWy5SHiHOTT6NllLsiAUtHceEeUxOtrQNTQp7uko5oB9IVPX8
-         KdtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3/E2yDWgx06aLcPf+lprIgDWB4FAuXQ2CoXoNvmjFQY=;
-        b=c13A2QLpcX67R4RhVr/K4ZrWhL6gFx+xdtzhX9b1vcJqaZRTe4FSP1+a/47W6BpgpH
-         g1nGnVPkF0GHFWQC+yQ0w+z0bkIfrX8cazWsgiz/OrHkQ9Ev/+1wl7zBErlDkpHuOR+V
-         +qoNJOsUqBcGC1h4VJ0I3Aq0JndOlLZcETjXNDwCdSnwhB+kYIa5kPwUVEk+JlZhsJ4t
-         5Ek0T2FKXNiAEuQ0VvP4FxAmuBd2IaIjvWeheN1OCnbgzcNwpj2l9rsrH+cwx0aWFTdP
-         Q18nwgF22TJ5e/5d8NKxt0n3MQPMhAtW0lA/oQQD2j5DCPNenSH7blucZTmb8+pgF6Eg
-         nBlQ==
-X-Gm-Message-State: APjAAAW6fAfquO/qyOAtH7ThcDF8OQKRZX+1sCyuHmjdRcYZ0uvEuzvl
-        /tcVgaDv/u+nuk6zv1CcSec=
-X-Google-Smtp-Source: APXvYqyme+6ewoyyXGIt/uRIuk9VOWiaYPBn75JZRY+hG0Pzo2ayAhf8rfBMNr7b0r+t0i5SBEpyDw==
-X-Received: by 2002:a63:5818:: with SMTP id m24mr113760695pgb.358.1578350869484;
-        Mon, 06 Jan 2020 14:47:49 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id g11sm72675128pgd.26.2020.01.06.14.47.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 14:47:49 -0800 (PST)
-Date:   Mon, 6 Jan 2020 14:47:47 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [Outreachy] Return value before or after free()?
-Message-ID: <20200106224747.GA92456@google.com>
-References: <CAN7CjDDBA0ZoCG9aaQf5rg3gxqny=EjR6v6jE1mnxvUJQSF_0Q@mail.gmail.com>
- <20200106213051.GD980197@coredump.intra.peff.net>
+        id S1727001AbgAFWwz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 17:52:55 -0500
+Received: from mout.gmx.net ([212.227.17.20]:58193 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726721AbgAFWwz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 17:52:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578351166;
+        bh=aPXx3t5jvFBeA+D/HOBasO7FMbAgsoo/r8htn2wIByo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=QZK+iUkwJmsF9oyHwjCmJ9WoaCufp6KeJgq7HJLqcy0aos8SMHIU1h1VLYDiRQVpi
+         w3JAEhRqjojCkM39d42D0zOfVoiCzruvIBVH3R8lI9AWZOdd3Rw8wdqyX8seu+CHMk
+         GoG7CB/OEEcvt8zG+fnJM1CUVV6BKundjBWLzT2Q=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MdvmY-1jODEm2ruo-00b0Fn; Mon, 06
+ Jan 2020 23:52:46 +0100
+Date:   Mon, 6 Jan 2020 23:52:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, thomas menzel <github@tomsit.de>
+Subject: Re: [PATCH 1/1] doc: submodule: fix typo for command absorbgitdirs
+In-Reply-To: <xmqqblrga4h1.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001062352010.46@tvgsbejvaqbjf.bet>
+References: <pull.688.git.git.1578322213.gitgitgadget@gmail.com>        <b032358ca97df3bd5605ff356196f82a1f16a320.1578322213.git.gitgitgadget@gmail.com> <xmqqblrga4h1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200106213051.GD980197@coredump.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:9Q3v8lF8a5HELbu3HedvZx2FrViJRcuAFOIK4AE6GjAhyvxqE3T
+ ohR6Rm+xL51wodPZ4iGzmZ3jQ2Eu/P+HJw3+w8+B2tX9+OkRmzX/I5YjwNqQqaGesf9Kj6K
+ JzIcbcuW6JtMWQQRv/y0HLPTP46m1jYAMByme8nHAUA7PPbWqaqPzVXE8UbZXnkLXguGZ9M
+ hPwRRF7/IR1scmWpaaAqQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:D+H/N+DRRa8=:MYoK+7P+fEvX6F6dSobWBu
+ jNWGGenUgUC8yQo9xH05MWh2MLEnyx/RjYe2AxiYgEXqdFCr2TkW432/zd4v1LPFa21r/qFzj
+ 0gsIYoDb4OtfKrtLTvNg8MTlCueuERD0BhGGXxDrvbkeCtgSmNJlo3SP53PAlGUYXho0iimt0
+ WQ2No0CAq230uCaF3Mq7wkEYo8PGN5BAzj20p0014DahVQlgyr1AgvSJKoT85JAEdTzE0/Rbt
+ NOfDjIeP0fvWgyPNzZ+i4003I0CiwydOyEaKGS6m1HOle5jyaSkXd3dHCtwkIxqKd3XBR218o
+ fI+aMHi3cIbV4X7hXZRaf+XkGO0wHiLNqBiyTaEPFAIYTbdaIcb0XQ8uPK1hskufILh3ZkKdQ
+ OYWG9lQbsQ8tY8TXTAYw0AMRHBkhFuRue/whGVMlQgZZ7FbVTHHU1emgrbG2Jt52KW3xy9VMK
+ 2KILSBiq/O/40rQAP6YQrSt2Rk3EaxJUWeCPNkQk/xABWyiGda5XegubR0pV+6IsNIlvTPqpa
+ 8XFNO0MtkIQk6qQZQtzFrGR1L+aKE0jK8OCr9tmjob8OIC4g+joUz2NdW6pbZBvVl+JetHq4W
+ l3KtTUJfb0zfa0OzFahvbUE5GueyRHPiJ6b7YwacQg7uaQ9u0Mu+I+uZytKe2lKGOS1ryBZdb
+ 4qf/b7h7FpNvAdUtZhv8h0zkg3yJifCPq5qj3MrIroAhCqp8Yv6D1P0G5U8OxPlFUvgOHSD32
+ V6Ba1/NfjyJPOZzW7w5SkEzoUREpdiQ2Lbqouf+eAkeImMWfDD33oNath9BUf+U+GNNjariRd
+ VB2wIcInzqOopDLt2OwYaqIT/AINxN2CXk5hGk2+TAb/LZs9oEfUHLqzZGjlgaOinWFvuPBgU
+ vhhfAEFDoYAJ3aEI4vIUu8F0kqQ7zBdBjLkovw5QA1P+qZrMvoJVgChwQdTjvrOMRESgBxa/u
+ wWwvhBJIifatGL6FyXFvUz/X1ESmn3HScPV5UF/84TmizC7nLIDUYMgUQX8A3IoOJUo3VY1W3
+ PLdZshiqi3XruYIStdJaFyg+euMMyOiuR7xS/GGffASo75KPip2b2zZHjzAPy8ktEdu8h5SrB
+ 0a88q5P+VlV7MT/NdcPgDCksB4mLMsVN+rnI+QFo1aWbVmZ8vRjL0B50qpdkqorqF2Tp+6grt
+ wNHec1VLQMyG+W4PT7VhSDz6f2CiiF0rLKOu+ltIH1TzePe4VM2ZroKciTIJXyvhPbrFREZ9m
+ goU3LSsJ4LGMVqba1vmerN8frwgwICeXtq732QXrJmYzS6xcjz0sRy+Yw2GE=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio,
 
-Jeff King wrote:
-> On Mon, Jan 06, 2020 at 10:15:53PM +0100, Miriam R. wrote:
+On Mon, 6 Jan 2020, Junio C Hamano wrote:
 
->> in run-command.c file `exists_in_PATH()` function does this:
->>
->> static int exists_in_PATH(const char *file)
->> {
->>	char *r = locate_in_PATH(file);
->>	free(r);
->>	return r != NULL;
->> }
->>
->> I wonder if it is correct to do return r != NULL; after free(r);
+> When anybody tries to respond to the quoted message [*1*] that came
+> from GGG in the way recommended for the list, the
+> *.noreply.github.com address gets placed on the Cc:, which is
+> probably not wanted.
 >
-> It is technically undefined behavior according to the C standard, but I
-> think it would be hard to find an implementation where it was not
-> perfectly fine in practice.
+> Can GGG do something about it?  As GitHub specific service, it is
+> not wrong for it to know what noreply.github.com means so dropping
+> such an address from its Cc: line shouldn't be too difficult.
 >
-> Ref: http://c-faq.com/malloc/ptrafterfree.html
+> Thanks.
 >
-> I'd probably leave it alone unless it is causing a problem (e.g., a
-> static analyzer complaining).
+>
+> Reference *1*
+>
+> <b032358ca97df3bd5605ff356196f82a1f16a320.1578322213.git.gitgitgadget@gm=
+ail.com>
 
-Today I learned.
+Right. I added it to the bug tracker:
+https://github.com/gitgitgadget/gitgitgadget/issues/182
 
-Miriam, do you have more context?  Did you notice this while reading or
-did a tool bring it to your attention?
-
-(Because I was curious, here's what I chased down in C99:
-
-7.20.3.2 "The free function" says: "The free function causes the space
-pointed to by ptr to be deallocated, that is, made available for
-further allocation."
-
-6.2.4 "Storage durations of objects" says: "The value of a pointer
-becomes indeterminate when the object it points to reaches the end of
-its lifetime."
-
-6.2.5 "Types" says: "A pointer type describes an object whose value
-provides a reference to an entity of the referenced type."
-
-6.5.9 "Equality operators": "Two pointers compare equal if and only if
-both are null pointers, both are pointers to the same object
-(including a pointer to an object and a subobject at its beginning) or
-function, both are pointers to one past the last element of the same
-array object, or one is a pointer to one past the end of one array
-object and the other is a pointer to the start of a different array
-object that happens to immediately follow the first array object in
-the address space."
-
-J.2 "Undefined behavior": "The behavior is undefined in the following
-circumstances: [...] The value of an object with automatic storage
-duration is used while it is indeterminate (6.2.4, 6.7.8, 6.8)"
-
-The reference to automatic storage duration there is interesting.  Of
-course `r` here does have automatic storage duration, but the
-distinction from
-
-	char **r = xmalloc(sizeof(*r));
-	*r = locate_in_PATH(file);
-	free(*r);
-	/* leak r */
-	return *r != NULL;
-
-is peculiar.  It looks like exists_in_PATH is indeed producing
-undefined behavior, but the intention of the standard was probably to
-make the behavior implementation defined.)
-
-Thanks,
-Jonathan
+Ciao,
+Dscho
