@@ -1,90 +1,78 @@
 Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: *
-X-Spam-Status: No, score=1.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PDS_TONAME_EQ_TOLOCAL_SHORT,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ED69C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA928C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:17:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 40B3A2070E
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:16:06 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apdeZuma"
+	by mail.kernel.org (Postfix) with ESMTP id A9C8A207FF
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 21:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726731AbgAFVQF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 16:16:05 -0500
-Received: from mail-il1-f172.google.com ([209.85.166.172]:45935 "EHLO
-        mail-il1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726683AbgAFVQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 16:16:05 -0500
-Received: by mail-il1-f172.google.com with SMTP id p8so43755726iln.12
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 13:16:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=5hjY3OI5bzNDBslpppVywXWBWiNc/J+diQD6/gzAp+A=;
-        b=apdeZumaNRLL7kEEE/evSlCOIArL0vFOOtIO1kr5VKqFU9OZeEfPvEGLlFD3A8GVa7
-         9feZTJYed/V3LEXd7l9iafOs+4c96BwlVGu397MMBGyOkBtDV4xKrbPOoWZPZWnQSTUN
-         hIgXfdFXPgLQgdcGhe1rkYsoqcNo1QaWIiQeljODrSNBhrqs5HKU2n71rBNL+cmz8LSj
-         OC/WAbAs9KbLVQ6/jR17aVOtlExkNr56pcm0JaHGF0Ca/UZ2sl7F3VJRYZmZu2XA5BIe
-         Yw8wK1r98jAa3klYBz+LQY2V1R1ticsPtMdk5ouVuPGIiuUlp/ckpqtryq7FGk+HUB9c
-         vE+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=5hjY3OI5bzNDBslpppVywXWBWiNc/J+diQD6/gzAp+A=;
-        b=bXUCIzeDfQYNyUabkM2/nSxwVIQFiOa9FdyTIunXZwbI3lRm64rA42de3chzUBtnce
-         anFIKU6kLVE6ylO6JFc8BdEMGzpcJDM1nXregZYYb0JL1lxAO2xYPZv005ZpNd70LfEe
-         za/ff/H4th7j1kviSeTX6ad/PdeI5tNoS27Jn1uLXMQzMh4JGFAJMCLANMkdRmOFoeqo
-         1Z7H+Ky1xwwdyU9xmQnk97GCgkfH6LmyglU0oVp+mNYCcJcCmAxiCP34q0fqva08wokB
-         4qppw92ZkQ/s0cr3KeE7Ioz4haSbMmxDNV/dx18cjypRYLJWkYCqw3dyKr6gEpBFItR+
-         jVhg==
-X-Gm-Message-State: APjAAAVjRY8m8DlhC5bdyJ59m+XCvQgCXkN1bqajZ5PK22InOrlEeI3T
-        1G5Wh9SGzz7ZhmVbG8yav9tdmuzyjqn7nYVRjXeNyjtS
-X-Google-Smtp-Source: APXvYqwD+4ND4H8u0/T5KKKMixM/Ekd1Jmll8v1Lyr37oldJ5A89usEb1VNamWwOAukYtktAHwFngd2sUQ5caf/2Pbw=
-X-Received: by 2002:a92:9885:: with SMTP id a5mr88899794ill.107.1578345364495;
- Mon, 06 Jan 2020 13:16:04 -0800 (PST)
+        id S1727108AbgAFVRc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 16:17:32 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58226 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726683AbgAFVRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 16:17:32 -0500
+Received: (qmail 3178 invoked by uid 109); 6 Jan 2020 21:17:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Jan 2020 21:17:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25141 invoked by uid 111); 6 Jan 2020 21:23:03 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2020 16:23:03 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 6 Jan 2020 16:17:30 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        gitster@pobox.com
+Subject: Re: [PATCH v2] sha1-file: remove OBJECT_INFO_SKIP_CACHED
+Message-ID: <20200106211730.GB980197@coredump.intra.peff.net>
+References: <20191230211027.37002-1-jonathantanmy@google.com>
+ <20200102201630.180969-1-jonathantanmy@google.com>
+ <20200104001331.GA130883@google.com>
 MIME-Version: 1.0
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Mon, 6 Jan 2020 22:15:53 +0100
-Message-ID: <CAN7CjDDBA0ZoCG9aaQf5rg3gxqny=EjR6v6jE1mnxvUJQSF_0Q@mail.gmail.com>
-Subject: [Outreachy] Return value before or after free()?
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200104001331.GA130883@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
-in run-command.c file `exists_in_PATH()` function does this:
+On Fri, Jan 03, 2020 at 04:13:31PM -0800, Jonathan Nieder wrote:
 
-static int exists_in_PATH(const char *file)
-{
-char *r = locate_in_PATH(file);
-free(r);
-return r != NULL;
-}
+> To follow up on Junio's hint in his review: callers can inject
+> additional cached objects by using pretend_object_file.  Junio
+> described how this would make sense as a mechanism for building
+> the virtual ancestor object, but we don't do that.  In fact, the
+> only caller is fake_working_tree_commit in "git blame", a read-only
+> code path. *phew*
+> 
+> -- >8 --
+> Subject: sha1-file: document how to use pretend_object_file
+> [...]
+> +/*
+> + * Add an object file to the in-memory object store, without writing it
+> + * to disk.
+> + *
+> + * Callers are responsible for calling write_object_file to record the
+> + * object in persistent storage before writing any other new objects
+> + * that reference it.
+> + */
+>  int pretend_object_file(void *, unsigned long, enum object_type,
+>  			struct object_id *oid);
+>  
 
-I wonder if it is correct to do return r != NULL; after free(r);
+I think this is an improvement over the status quo, but it's still a
+potential trap for code which happens to run in the same process (see my
+other email in the thread).
 
-Could be this version more readable? :
+Should the message perhaps be even more scary?
 
-static int exists_in_PATH(const char *file)
-{
-char *r = locate_in_PATH(file);
-int res = (r != NULL);
-free(r);
-return res;
-}
-
-Could you please give me your feedback?
-
-Thank you!
-
-Best,
-Miriam.
+-Peff
