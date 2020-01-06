@@ -2,112 +2,132 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EE68C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 224BFC33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 20:31:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5D7532081E
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 19:54:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E29E920715
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 20:31:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pITDJvM2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HoykT+l4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbgAFTyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 14:54:01 -0500
-Received: from mail-qv1-f67.google.com ([209.85.219.67]:45270 "EHLO
-        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbgAFTyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 14:54:01 -0500
-Received: by mail-qv1-f67.google.com with SMTP id l14so19538735qvu.12
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 11:54:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=dfXAlHUHmL3SkdH/O1LKA79bTY6nRbz+hZRpMvza8TU=;
-        b=pITDJvM2mqnN1L7+aiUZxT0YF6pFS3AA3dygO9hwk8j3WZjrv3J3RZ7nh/8VWy0W8f
-         P7op6lhaPX0gfCqGPebQBOMe15h1iYoc8VH9Rg1AOz4yY6JaaV371+6Xb1XbN16VuNvj
-         t/zwubkks2NVlzxTFUFCdEM0VJ7l68BFhWL39kaN9bX+AMqhhdND7d2Beh+BczgNyu8q
-         gN+LJQcNvShHSi3H95A9EED7AdCIoc5mPxHAUKNtJBP8EgFIDngVrhsnirPfUXZoISFF
-         d/KVy/dtgCouUvAiVQeEiW8B45rXQ6f0I4OZRf9DVf76OFr4GUNfvAo7wKpCnKBno54A
-         fbkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=dfXAlHUHmL3SkdH/O1LKA79bTY6nRbz+hZRpMvza8TU=;
-        b=ng3jX594HocHOcI7nI54YQb5NAfmzBxYN+AIao0QWuKlS+DFvZcayy0IZKD+uZ2dFf
-         +6TmGGdyuMxJqZeWoIiH+mgvO0s5mT+8DIz+jOoCb2ovoad4Tv4yPUcttQOfZOPUpaBV
-         5wjbnf33rGZSWfo3AwV/Hzm9YF+eMLzQBXpJoq6r3zmZLKrHzpRrd9LAsXh5p9GWQqbH
-         aziyGb0HdFfbfSiKXWNEJ5u7qMk7epscFty0ZixWF8ybFtOCAb/Ec7z1o9za2aNJeT3d
-         hDSx5bsdejcMY5lIxEw9pfakkLqtfhoyVFGEp6/mogOx8cePjYRp2H9JBcTYjJWTxD8D
-         Pb0A==
-X-Gm-Message-State: APjAAAVcLlnBrcnwUYLZWfR05U5PE3DX8cGIwV9uHEVe5VKJvIMHQCa6
-        bo5xaOz+LUAbIPLfrkS9Y3tKuXlD
-X-Google-Smtp-Source: APXvYqyb+cmZb8jOVJpwijGzfhN1TU8j6+edANUvMF/fateOUa8AfOUDW8PvVdRz0IwhctQcSy5g6w==
-X-Received: by 2002:a05:6214:8cb:: with SMTP id da11mr68874592qvb.228.1578340439743;
-        Mon, 06 Jan 2020 11:53:59 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:edba:a09c:727e:8e59? ([2001:4898:a800:1012:9eee:a09c:727e:8e59])
-        by smtp.gmail.com with ESMTPSA id h34sm24095906qtc.62.2020.01.06.11.53.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Jan 2020 11:53:59 -0800 (PST)
-Subject: Re: [PATCH 1/1] commit: make the sign-off trailer configurable
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1726913AbgAFUbg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 15:31:36 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50268 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726778AbgAFUbf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 15:31:35 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9943029E68;
+        Mon,  6 Jan 2020 15:31:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=L0h2c1fiPUPsJ6bMLBlh56D0CGM=; b=HoykT+
+        l4KWDJYbTSCNiKd/TDi2E+hv7ZzruyckR/Tf3WodCASFVHyJ5N2FXgDUMwN7S7Mu
+        mStxaLf8DeYxHz2dXl88ooywWchErolAtFTCUI4fZ/bo8haYIptQI0Ylr/eOC0QD
+        6L2RJSq5aurKDebpolbbW1xGYwbBfOFnKZxbI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kQoOORzWHBiB/JsXSyvgIO7IVkyqpiwM
+        vZWvkHUiCb7Ic0OCmASSOoaoBSZ3Aqqlte9emCEHY6MP+HgcAaXSN2+8GydNGdrI
+        OqdfRKXR+gay0NB+PyINjgld5oAQoDvxhNZF3k7o6v/BGrxhIwSUg7vxFDgD5Joj
+        8iOEAkHkqMY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 910DA29E67;
+        Mon,  6 Jan 2020 15:31:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EBC2429E64;
+        Mon,  6 Jan 2020 15:31:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Hans Jerry Illikainen <hji@dyntopia.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] commit: make the sign-off trailer configurable
 References: <20200105174127.9278-1-hji@dyntopia.com>
- <20200105174127.9278-2-hji@dyntopia.com>
- <71a718a7-2be7-391c-dc8f-0626a0a21aac@gmail.com>
- <xmqqtv58a5m2.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <cfa40ca5-98a1-fc9c-9ccc-f14b81119e60@gmail.com>
-Date:   Mon, 6 Jan 2020 14:53:58 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
+        <20200105174127.9278-2-hji@dyntopia.com>
+        <71a718a7-2be7-391c-dc8f-0626a0a21aac@gmail.com>
+        <xmqqtv58a5m2.fsf@gitster-ct.c.googlers.com>
+        <cfa40ca5-98a1-fc9c-9ccc-f14b81119e60@gmail.com>
+Date:   Mon, 06 Jan 2020 12:31:28 -0800
+In-Reply-To: <cfa40ca5-98a1-fc9c-9ccc-f14b81119e60@gmail.com> (Derrick
+        Stolee's message of "Mon, 6 Jan 2020 14:53:58 -0500")
+Message-ID: <xmqqpnfw8gyn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqtv58a5m2.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 853559B6-30C3-11EA-BB85-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/6/2020 11:53 AM, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->> My initial thought was that the sign-off was supposed to be a purposeful
->> decision, but then I also realized that I never do anything in the Git
->> codebase that I _can't_ put online under the GPL. (It may not make it
->> upstream, but it will always be put online somewhere.)
-> 
-> Hmm...
-> 
-> Sorry, but I do not quite understand the flow of your logic here,
-> especially, how "but then I also realized" trumps "signing off a
-> patch is a conscious act---it would weaken the legal meaning if you
-> automate it", which was why we deliberately avoided adding this
-> configuration variable for the last 10+ years.
-> 
-> So, I dunno.
+Derrick Stolee <stolee@gmail.com> writes:
 
-I guess I meant that enabling this config for a repo is also a
-conscious act, making me think this is not completely unreasonable.
+> Since I started the line of "this isn't a bad idea" I'll follow up with
+> the historical search. Here are previous attempts from 2018 [1], 2015 [2],
+> 2010 [3].
+>
+> Thanks,
+> -Stolee
+>
+> [1] https://lore.kernel.org/git/20180204020318.4363-1-chenjingpiao@gmail.com/
+> [2] https://lore.kernel.org/git/1435217454-5718-1-git-send-email-cmarcelo@gmail.com/
+> [3] https://lore.kernel.org/git/alpine.LNX.2.00.1001131635510.16395@vqena.qenxr.bet.am/
 
-But if we've already discussed and rejected this feature in the past,
-then that's sufficient.
+Thanks.  In an earlier thread, we did
 
-Since I started the line of "this isn't a bad idea" I'll follow up with
-the historical search. Here are previous attempts from 2018 [1], 2015 [2],
-2010 [3].
+https://lore.kernel.org/git/20090401175153.GA90421@macbook.lan/
 
-Thanks,
--Stolee
+to which I said "... the wording we can update if somebody can come
+up with a better one" in its follow-up.  Perhaps it's time for us to
+be that somebody to help everybody to be on the same page.
 
-[1] https://lore.kernel.org/git/20180204020318.4363-1-chenjingpiao@gmail.com/
-[2] https://lore.kernel.org/git/1435217454-5718-1-git-send-email-cmarcelo@gmail.com/
-[3] https://lore.kernel.org/git/alpine.LNX.2.00.1001131635510.16395@vqena.qenxr.bet.am/
+Here is my attempt, starting from what I wrote in
+
+https://lore.kernel.org/git/xmqqtw9m5s5m.fsf@gitster.mtv.corp.google.com/
+
+-- >8 --
+Subject: commit -s: document why commit.signoff option will not be added
+
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ As I said in https://lore.kernel.org/git/7veiw69p26.fsf@gitster.siamese.dyndns.org/
+ I have a mixed feeling about this.  To projects that use the same
+ definition of what SoB means, not adding the configuration ever is
+ the right thing to do, but Git is to be used by other projects, and
+ some of them may use SoB with a completely different meaning that
+ has no legal weight---and to them, lack of such an automation may
+ be a bug.  So ...
+
+ Documentation/git-commit.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index ced5a9beab..1909551087 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -171,6 +171,13 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	the rights to submit this work under the same license and
+ 	agrees to a Developer Certificate of Origin
+ 	(see http://developercertificate.org/ for more information).
+++
++As it makes it harder to argue against one who tells the court "that
++log message ends with a SoB by person X but it is very plausible
++that it was done by inertia without person X really intending to
++certify what DCO says, and the SoB is meaningless." to more
++publicized ways to add SoB automatically, Git does not (and will not)
++have a configuration variable to enable it by default.
+ 
+ -n::
+ --no-verify::
+
