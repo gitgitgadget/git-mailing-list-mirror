@@ -2,110 +2,93 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3C8BC33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AB79C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:13:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 753EC20731
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:07:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 386E820731
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 23:13:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="T562CJ7n"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PtlDvVCI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727025AbgAFXHZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 18:07:25 -0500
-Received: from mout.gmx.net ([212.227.17.22]:50387 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726721AbgAFXHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 18:07:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1578352043;
-        bh=msoQG8s0StrBEP5gFqAQ5NGkAt+idplxvW+s5MG8Wwk=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=T562CJ7nq7938xIwADR8zxl+zPOk+nLfEmEyLYXGcsXYgLQ8gjhOWTu1NguXLj2l9
-         GxNch4oL/dyteQmkia/kpkSvh2Z6lhNvUCGTLmK9lT7vckr01af1nZkOE58rqwW13A
-         j4miFtw5xmTBpIVbm/YpHoDE1okyEPQNqnkwRv8I=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MZTqg-1jBAQH24hC-00WTfJ; Tue, 07
- Jan 2020 00:07:23 +0100
-Date:   Tue, 7 Jan 2020 00:07:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Nirmal Khedkar <nirmalhk7@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: Fwd: My Introduction and a Doubt
-In-Reply-To: <CAFFaXsx3Mtrq4mEGq6GYct7ZcRtucmZdRG-PQmjLrvVVTfq2Wg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001070007011.46@tvgsbejvaqbjf.bet>
-References: <CAFFaXszwB6F-Y9hHWW5ZuvuFSPqrOwkK=c2wUVMDm4yGq44X-Q@mail.gmail.com> <CAFFaXszUdyfun1W0TuvJuRihLo7Mz-XYL13Fm5gCv_gWrir-_Q@mail.gmail.com> <CAFFaXsx3Mtrq4mEGq6GYct7ZcRtucmZdRG-PQmjLrvVVTfq2Wg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726731AbgAFXNX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 18:13:23 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57718 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726545AbgAFXNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 18:13:23 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B2498AFCAE;
+        Mon,  6 Jan 2020 18:13:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=QkBhmesqrZADl92FVw34I2q8n/E=; b=PtlDvV
+        CIqmjlAnywEXaT8GW+pFWsgZuicWPA8tvBmM3YH93hKbtA/lQtdz1AQyjgBeVuBg
+        IEa606ErwNZn0xrkiNjw2MjIucO5ZRqxe4hCgai3+WwciIzzl8T8QZAspoZ0SOCH
+        ahX/qDYHYNW2JPul8/k3/D+a0WEb+MzwgD2Ks=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=v4lTE7WnlBRyeiMoLCCg2+5puo4kjgXQ
+        CoLtxn16jY04ZlCRPcw/j2MeSmire+p/di0/2gtHMXsyr+DrzvFRYHp46Gj/s6+/
+        shqJEd8q0QmzV10d70V0N/VzTkbunW3NopHbaEwILn4QIJGzvlQvN0nX7AHYJeSj
+        4BoW3i5p53k=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AA7A1AFCAD;
+        Mon,  6 Jan 2020 18:13:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CD4FCAFCAB;
+        Mon,  6 Jan 2020 18:13:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH 1/1] add: use advise function to display hints
+References: <pull.508.git.1577934241.gitgitgadget@gmail.com>
+        <90608636bf184de76f91e4e04d9e796a021775a0.1577934241.git.gitgitgadget@gmail.com>
+        <20200106230712.GA181522@google.com>
+Date:   Mon, 06 Jan 2020 15:13:16 -0800
+In-Reply-To: <20200106230712.GA181522@google.com> (Emily Shaffer's message of
+        "Mon, 6 Jan 2020 15:07:12 -0800")
+Message-ID: <xmqq36cs89gz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bgz0Eb/0NFGVQ4owqAu6BZLDt0DMeEWFdKVHgtTYPRQ9rG9n0QE
- aYozE7xm8PcoFJqlHJao5tz8McGKXTA65v0J31rCXjlLmrVvkiU0A+0GMuSlrGX2PQ8OiM2
- bL1kQ4asZybhQvLq6J9w56B69u9nE+RBUrdH3ohRL3t5BysOPErsCFjRyeCVIkdvPLntmCi
- MII4vC2f3MAHiYIv7aIKg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0ZgA9a73nBI=:/td6GXVWFA8TgaRsqZAny5
- XnRE/14PI5Kr81Y0iXOgf2bZrpWDQfIatOvmixHcHAZAnhRTb326CgRM0wwMNi28QUyufm8dm
- uKzz1sf182HfDC/lNt0JidlmjJWI8e0tHg6f0PqpiVEJZhSKJEODjUYJIBate9kCJH5rb2JR5
- eiaX7FgnPNFmAFm0S7Jj08ID9Kyb59XlC3cPtxO5cdEWfmlQXVh8dXPZK+GT+Hukg7ZRKOmlX
- nqHxwh/s3L2UvrJrpw6/dfQ4TaGF193i4R9Ajz1Ae9LHCYejjqxE2+d2Vl4MgV9Od5frWF6oW
- LO5laqCV0A4qPf7YdCE/klpEYTr07y2EM1Ua4QR4H8jlvYsLJde7RzaMnOH0f8x+SFSWe3LED
- G0HJWDSUhsXnHRfI+CfCj9CkeucOnwmN0BCH5J0gpY5s1dmQg0xv2SiAhQu6OyRFgoTV/Ivrs
- Tltc5xSUkOxmOlaP2lYBnZQzWwaurFALxCXSbfavOz0Z4sxMdg43dlORfaY1Et+R9szTllCNf
- tO7DJcdI0r0DN+rdOwbI54H9MurRHPeIqHU1AR3e3XM1b3UzFbtQvt6qoOa0yNkyZzVBxBr0v
- e3R6FYSz1YDl174+XHG8czTPfZNr314oEGfnBqlnDH02MY81QWKZj/M9ChCvg1RP77MqIGEf2
- wrwOPcoBDJJBpaySzAlsHueB2GsKimc9QuEYUbKZ/6YfEL1hqlITdK0IsQ3ogeyM355cOic0p
- eVypYsDD1VQs1GbsfO2kSmHajrdYwnzVLBhE9WO10pWcO8baxUZOx3BJNP0oLM4K+W+ZzEBRg
- t3nAHCosL7Eyw5d6yCVo4y9p8aPlDzcgqhZxn/RhZwh9rXUqpAsHUDxAP+jeKWp/R7ZHLoKQ2
- vGbYWyw9nVYK8laxNTO5wU8fPQisYRaodh+Rjg+GNZ3nUJdd7H1AU/FIjkb85nZvYSMJIv1QP
- 33z8uCyCZ3K+dNjhE2Z9yf9D/QDbWzIClaI6shrVmITx9wjZvqux9NXpX6FkWPPu4Q7CzIYD+
- qBn8zHtUfKjj/OJq2cRyg62AeJkF0b5HWqlPFRsNXt1HshTRi/xn7SD/ASq13UOF936jiqCtL
- uUGkWJAy0tItrKomusg6yLoplDs9BPiUjSYSMpfZDiazzLdk8VXpWLuGGAV75kFOI98SjoKLI
- EdboZD/OIMQskqGiWr1Zuumd5jARhHHZix0D/bIJHuLJqE/dhrKVCVcWKrcKZWcWgxj6wEb1E
- ooYVLhzvHxr7AynHjaTEjbWKGK6JOWJcui/+p8WRYHQyjLZZSqaqSUSBfrWQ=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 20BE048A-30DA-11EA-9704-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Nirmal,
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-On Sun, 5 Jan 2020, Nirmal Khedkar wrote:
+> On Thu, Jan 02, 2020 at 03:04:01AM +0000, Heba Waly via GitGitGadget wrote:
+>> From: Heba Waly <heba.waly@gmail.com>
+>> 
+>> @@ -390,7 +390,7 @@ static int add_files(struct dir_struct *dir, int flags)
+>>  		fprintf(stderr, _(ignore_error));
+>>  		for (i = 0; i < dir->ignored_nr; i++)
+>>  			fprintf(stderr, "%s\n", dir->ignored[i]->name);
+>> -		fprintf(stderr, _("Use -f if you really want to add them.\n"));
+>> +		advise(_("Use -f if you really want to add them.\n"));
+>
+> In the vein of the rest of your project, for me I'd rather see a
+> copy-pasteable response here:
+>
+> "Use 'git add -f " + name + "' if you really want to add them."
+>
+> That is, if you know the name of the file that was being added here, you
+> could provide it so the user can simply copy and go, rather than
+> retyping.
 
-> Hey everybody!
->
-> I'd love to use this email to introduce myself to the community and
-> ask for help.
->
-> I'm Nirmal Khedkar, student from India. I love making end user
-> applications, and in this FOSS world, there simply aren't many as big
-> and impactful as Git. I'd love to contribute Git for GSoC 2020 as well
-> as for long-term.
->
-> Now the doubt:
-> I'm trying to wrap up the issue mentioned here
-> (https://github.com/gitgitgadget/git/issues/486) : basically allowing
-> git bisect to work from subdirectories.  I do consider myself okay in
-> C but I'm still kind-of stuck here: hence emailing this on the mailing
-> list.
->
->  When you do "git bisect" in a subdirectory, an error "You need to run
-> this command from the toplevel of the working tree." is raised. The
-> error is raised in "git-sh-setup.sh" and the command begins execution
-> in "bisect--helper.c", but I cant understand how the error appears.
-> Additionally I'd love to know how the C files linkwith the numerous
-> shell scripts within Git.
->
-> I've searched all I could within the Git project, but if there's any
-> existing documentation on this, please let me know.
+Just being a devil's advocate, but you are opening a can of worms by
+suggesting so---the path needs to be quoted proporly (and the way to
+do so may be different depending on the shell in use), for example.
 
-I answered on that ticket:
-https://github.com/gitgitgadget/git/issues/486#issuecomment-571355006
-
-Ciao,
-Johannes
