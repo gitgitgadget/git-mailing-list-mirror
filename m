@@ -2,253 +2,828 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 638B6C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D65CC33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:44:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23FA7206F0
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:10:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DAF7F208C4
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:44:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="NuKcrWx4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PneRuo+v"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbgAFSK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 13:10:57 -0500
-Received: from esa2.hc3370-68.iphmx.com ([216.71.145.153]:64340 "EHLO
-        esa2.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726536AbgAFSK4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 13:10:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=citrix.com; s=securemail; t=1578334255;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=ACe/XSoFFkyPQygOzShFIqdTrSZ4VCVrm4lMIlSUYhI=;
-  b=NuKcrWx4bsGRMto+wJRwENp5BDI0j4/m96TYwHb/nYv3cDLT+LX0VNrY
-   bQ9w2ZRTp0P3u/qSrVCnBfvFSY0aWElPCqIMhKcxWXJRKkoPl87Tsi3e1
-   UbnM0k8Sxh0dVnR2Y1ncfSc9TMSTlA6xmG6ukV/tEh5WCjEp96Dckk+2h
-   0=;
-Authentication-Results: esa2.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=george.dunlap@citrix.com; spf=Pass smtp.mailfrom=George.Dunlap@citrix.com; spf=None smtp.helo=postmaster@mail.citrix.com
-Received-SPF: None (esa2.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  george.dunlap@citrix.com) identity=pra;
-  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="george.dunlap@citrix.com";
-  x-conformance=sidf_compatible
-Received-SPF: Pass (esa2.hc3370-68.iphmx.com: domain of
-  George.Dunlap@citrix.com designates 162.221.158.21 as
-  permitted sender) identity=mailfrom;
-  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="George.Dunlap@citrix.com";
-  x-conformance=sidf_compatible; x-record-type="v=spf1";
-  x-record-text="v=spf1 ip4:209.167.231.154 ip4:178.63.86.133
-  ip4:195.66.111.40/30 ip4:85.115.9.32/28 ip4:199.102.83.4
-  ip4:192.28.146.160 ip4:192.28.146.107 ip4:216.52.6.88
-  ip4:216.52.6.188 ip4:162.221.158.21 ip4:162.221.156.83
-  ip4:168.245.78.127 ~all"
-Received-SPF: None (esa2.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  postmaster@mail.citrix.com) identity=helo;
-  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="postmaster@mail.citrix.com";
-  x-conformance=sidf_compatible
-IronPort-SDR: kNMbKDYBfFjG1yl7zkAOoBnL+FzNdFz2QMeEEX5QbYJy7jx6kYem7sq6aCvKfPhHw5wrTD1dgE
- l6DWDgVSsZNn9RqxgcIAWsXCK3lQ7hYA2esOUIIrF02Dk1vauqWwObp1W6819GHFgFOQ8BANww
- 1DMPgvZKMJF5gkWJmhnWXK3Ve1BzI0uSOZC0nzOaV5jpolsDQsiXFAzufvcUh+rWKmZIeOQu1e
- eNG4XT3OnvOyMoT2+BssNywSsy5T1iY8kPpq0xa5yamXtknXyRN5MsTtGwP+lD6S1snbGIGqye
- HKY=
-X-SBRS: 2.7
-X-MesageID: 10525038
-X-Ironport-Server: esa2.hc3370-68.iphmx.com
-X-Remote-IP: 162.221.158.21
-X-Policy: $RELAYED
-X-IronPort-AV: E=Sophos;i="5.69,403,1571716800"; 
-   d="scan'208";a="10525038"
-Subject: Re: git-am doesn't strip CRLF line endings when the mbox is
- base64-encoded
-To:     Junio C Hamano <gitster@pobox.com>
-CC:     <git@vger.kernel.org>
-References: <c44c3958-b0eb-22bd-bc35-04982706162f@citrix.com>
- <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
- <0c18df58-9d1d-550f-d69e-d6ffe6c01858@citrix.com>
- <xmqqpnfwa4y9.fsf@gitster-ct.c.googlers.com>
-From:   George Dunlap <george.dunlap@citrix.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=george.dunlap@citrix.com; prefer-encrypt=mutual; keydata=
- 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
- rIFfe2Dk+lD9A9BVd2rfoHA=
-Message-ID: <24562917-575a-4f0a-b948-d4eabb17eb94@citrix.com>
-Date:   Mon, 6 Jan 2020 18:10:34 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726797AbgAFSo2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 13:44:28 -0500
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:39421 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726612AbgAFSo2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 13:44:28 -0500
+Received: by mail-lj1-f182.google.com with SMTP id l2so51962447lja.6
+        for <git@vger.kernel.org>; Mon, 06 Jan 2020 10:44:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=0EoV1ZbTJXiFQMG5lfjtR0JH3ncskQZb2xuXNd4UsxY=;
+        b=PneRuo+vYkzey5388iEu+Nw9x/LBGp/t5WM/mXPF0mckQhYfRAnSnNQJQ2OREYJ/VR
+         3dPhAIqC6h8x7T7ke/rLNGXg2oHoVaoGiDSNhqMqT63UGRh14V531kBOTqDgX/vmFFHP
+         /A0ytIDCbvbSTibXZZ4YgQC8+YN/F9/n4z+gGEAwMXhKMKet2IEJMZFCwBodYnF/5JNB
+         hC8rjW4WgIuOAXLb6zlhARaYf8FLlZsPMJU85yoP0X6ZAjOFXv6i3UkzHa3aDUCYFc+7
+         ioUQZgO0dPNy/4nUKsCfMv/PycZOESqZB6oLN4WfDOGZ/9aOsn66PlEVtUxzIHaJ2U1T
+         /QJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=0EoV1ZbTJXiFQMG5lfjtR0JH3ncskQZb2xuXNd4UsxY=;
+        b=fLclqk/SxbSLvh4AVXhJ932cO8i0Zo0PulGscgKyxDoINc6Gjb2TiTguAZJ0UXtnYq
+         J1g2UeYKymoU0RNdi0UiOdST8l0hKwfhsyp+RDqxR9DbmA+e4j71vTNpYOiznbGbK30u
+         dauViGOtVkj90hzvUeZPT0YZ8O3dXBlqyRPRCbtnDUQ//ihp6e0+P3ssmMRBWDsCvZG6
+         yBK80nf3affAjqpjEKGj4QQWtNJk6AC3FO06KHZtCKM5D/VRJb1THcMtHnPRYWpAKwib
+         n2OmgiItT/vwHEtAZeQRv79zpp3IerOuMqP7XYLrCjxzcMP1DCLygQZfMp3ImxFrzhaq
+         YXpA==
+X-Gm-Message-State: APjAAAWEOucvL3PS/S1yxpjQoKZIl5f6YDp46nKRWIJjSQhygVvegX/g
+        PtxpVEhLn4dfRCMHyQUxW34=
+X-Google-Smtp-Source: APXvYqwFEqdgkaYcgLMiAMxLs4j4tF392fL+O4of98SIrEHOsl6wgilJqSq92pnm7tAzRXUka0gTmA==
+X-Received: by 2002:a2e:b0e3:: with SMTP id h3mr12143083ljl.56.1578336262643;
+        Mon, 06 Jan 2020 10:44:22 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id s23sm22282936lji.70.2020.01.06.10.44.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Jan 2020 10:44:21 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH 2/9] commit-graph: write changed paths bloom filters
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+        <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
+Date:   Mon, 06 Jan 2020 19:44:14 +0100
+In-Reply-To: <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
+        (Garima Singh via GitGitGadget's message of "Fri, 20 Dec 2019 22:05:13
+        +0000")
+Message-ID: <86eewczapt.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <xmqqpnfwa4y9.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/6/20 5:07 PM, Junio C Hamano wrote:
-> George Dunlap <george.dunlap@citrix.com> writes:
-> 
->> On 12/18/19 12:15 PM, George Dunlap wrote:
->>> On 12/18/19 11:42 AM, George Dunlap wrote:
->>>> Using git 2.24.0 from Debian testing.
->>>>
->>>> It seems that git-am will strip CRLF endings from mails before applying
->>>> patches when the mail isn't encoded in any way.  It will also decode
->>>> base64-encoded mails.  But it won't strip CRLF endings from
->>>> base64-encoded mails.
->>>>
->>>> Attached are two mbox files for two different recent series.
->>>> plainenc.am applies cleanly with `git am`, while base64enc.am doesn't.
->>>>
->>>> Poking around the man pages, it looks like part of the issue might be
->>>> that the CRLF stripping is done in `git mailsplit`, before the base64
->>>> encoding, rather than after.
->>>
->>> Poking around -- it looks like the CRLF stripping would be better done
->>> in `git mailinfo` after the decoding.
->>
->> Anyone want to take this up?  I mean, I could try to send a patch, but
->> since I've never looked at the git source code before, I'm sure it would
->> take me about 10x as much effort for me to do it as for someone already
->> familiar with the codebase.
-> 
-> Even before writing a patch, somebody needs to come up with a
-> sensible design first.  --[no-]keep-cr is about "because transfer of
-> e-mail messages between MTAs and to the receiving MUA is defined in
-> terms of CRLF delimited lines per RFC, Git cannot tell if the CRLF
-> in the input was meant to be part of the patch (i.e. the diff is
-> describing a change between preimage and postimage of a file that
-> uses CRLF line endings) or they are cruft added during transit.  By
-> default we favor LF endings so we will strip, but we leave an option
-> to keep CRs at the end of lines".  
-> 
-> What you are asking for is quite different, isn't it?  "We know the
-> CRLF in the payload is from the original because they were protected
-> from getting munged during the transfer by being MIME-encased.
-> Please tell Git to preprocess that payload to convert CRLF to LF
-> before treating it as a patch".
+"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Actually that's not true. :-)   The RFC specifies CRLF for text sections
-regardless of the encoding:
+> From: Garima Singh <garima.singh@microsoft.com>
+>
+> The changed path bloom filters help determine which paths changed between=
+ a
+> commit and its first parent. We already have the "--changed-paths" option
+> for the "git commit-graph write" subcommand, now actually compute them un=
+der
+> that option. The COMMIT_GRAPH_WRITE_BLOOM_FILTERS flag enables this
+> computation.
+>
+> RFC Notes: Here are some details about the implementation and I would love
+> to know your thoughts and suggestions for improvements here.
+>
+> For details on what bloom filters are and how they work, please refer to
+> Dr. Derrick Stolee's blog post [1].
+> [1] https://devblogs.microsoft.com/devops/super-charging-the-git-commit-g=
+raph-iv-bloom-filters/
+>
+> 1. The implementation sticks to the recommended values of 7 and 10 for the
+>    number of hashes and the size of each entry, as described in the blog.
 
-8<----
-   The canonical form of any MIME "text" subtype MUST always represent a
-   line break as a CRLF sequence.  Similarly, any occurrence of CRLF in
-   MIME "text" MUST represent a line break.  Use of CR and LF outside of
-   line break sequences is also forbidden.
------>8
+Please provide references to original work for this.  Derrick Stolee
+blog post references the following work:
 
-[1] https://tools.ietf.org/html/rfc2046#section-4.1.1
+  Flavio Bonomi, Michael Mitzenmacher, Rina Panigrahy, Sushil Singh, George=
+ Varghese
+  "An Improved Construction for Counting Bloom Filters"
+  http://theory.stanford.edu/~rinap/papers/esa2006b.pdf
+  https://doi.org/10.1007/11841036_61
 
-Just as for plaintext encoding, we do not, in fact, know that CRLF is in
-the original; in the example I included above, I'm confident that CRLF
-is *not* in the original, but was added by an MTA afterwards.
+However, we do not use Counting Bloom Filters, but ordinary Bloom
+Filters, if used in untypical way: instead of testing many elements
+(keys) against single filter, we test single element (path) against
+mainy filters.
 
-As such, at the moment what `mailsplit` does is generate a load of
-non-RFC-compliant email messages (since text-plain encoded messages
-won't have CRLF, in contravention of the spec), and `mailinfo`
-incorrectly interprets base64-encoded sections.  Moving the CR-stripping
-from mailsplit to mailinfo would make them both more RFC-compliant.
+Also, I'm not sure that values 10 bits per entry and 7 hash functions
+are recommended; the work states:
 
-(Sorry this wasn't in the original report -- I've been doing a lot more
-digging since then.)
+  "For example, when n/m =3D 10 and k =3D 7 the false positive probability
+  is just over 0.008."
 
-> So, if you are imagining to change the meaning of --[no-]keep-cr, I
-> do not think it will fly (that is why I said that we need a sensible
-> design before a patch).
-> 
-> And by stepping back a bit like so, and once we start viewing this
-> as "after receiving a piece of e-mail from MUA (where --[no-]keep-cr
-> may affect the outermost CRLF line endings) and unwrapping possible
-> MIME-encasing, we can optionally tell Git to pass the payload
-> further through a preprocess filter", we'd realize that this does
-> not have to be limited to just running dos2unix (you may want to run
-> iconv to fix encodings, for example), which would mean that the new
-> flag may not just want to be --strip-cr, which is too limiting, but
-> rather want to be --filter-message=<how> where <how> could be one of
-> the canned preprocess filter (among which your dos2unix may exist)
-> or an external script.
-> 
-> I am not saying that "--filter-message=<how>" must be the "sensible
-> design" I mentioned at the beginning of this message---the above is
-> to illustrate what kind of thought needs to go in before even the
-> first line of the patch gets written.
-As I mentioned in another thread, there's already an `applypatch-msg`
-hook which can be used to do arbitrary modifications on commit messages
-before applying.  Another way to fix this would be to add an
-`applypatch-patch` hook, which allowed you to do arbitrary modifications
-on the patch before applying.
+Given false positive probablity we can calculate best choice for n/m and
+k.
 
-I certainly think that `applypatch-patch` would be a useful thing to
-add.  But since making `mailsplit` and `mailinfo` more RFC-compliant is
-both good in itself, and probably easier, I still think that's the best
-thing to do first.
+On the other hand in https://arxiv.org/abs/1912.08258 we have
 
- -George
+  "For efficient memory usage, a Bloom filter with a false-positive
+   probability =CF=B5 should use about =E2=88=92 log_2(=CF=B5) hash functio=
+ns
+   [Broder2004]. At a false-positive probability of 1%, seven hash
+   functions are thus required."
+
+So k=3D7 being optimal is somewhat confirmed.
+
+>    The implementation while not completely open to it at the moment, is f=
+lexible
+>    enough to allow for tweaking these settings in the future.
+
+All right.
+
+>    Note: The performance gains we have observed so far with these values =
+is
+>    significant enough to not that we did not need to tweak these settings.
+                           ^^^
+s/not/note/
+
+Did you try to tweak settings, i.e. numbers of bits per entry, number
+of hash functions (which is derivative of the former - at least the
+optimal number), the size of the block, the cutoff threshold value?
+It is not needed to be in this patch series - fine tuning is probably
+better left for later.
+
+>    The cover letter of this series has the details and the commit where w=
+e have
+>    git log use bloom filters.
+
+The second part of this sentence, from "and the commit..." is a bit
+unclear.  Did you mean here that the future / subsequent commit in this
+patch series that makes Git actually use Bloom filters in `git log --
+<path>` will have more details in its commit message?
+
+> 2. As described in the blog and the linked technical paper therin, we do =
+not need
+                                                             ^^^^^^
+s/therin/therein/
+
+>    7 independent hashing functions. We use the Murmur3 hashing scheme - s=
+eed it
+>    twice and then combine those to procure an arbitrary number of hash va=
+lues.
+
+The "linked technical paper" in the blog post (which I would prefer to
+have linked directly to in the commit message) is
+
+  Peter C. Dillinger and Panagiotis Manolios
+  "Bloom Filters in Probabilistic Verification"
+  http://www.ccs.neu.edu/home/pete/pub/bloom-filters-verification.pdf
+  https://doi.org/10.1007/978-3-540-30494-4_26
+
+Sidenote: it looks like it is a reference from Wikipedia on Bloom filters.
+This is according to authors the original paper with the _double hashing_
+technique.
+
+They also examine in much detail the optimal number of hash functions.
+
+> 3. The filters are sized according to the number of changes in the each c=
+ommit,
+>    with minimum size of one 64 bit word.
+
+Do I understand it correctly that the size of filter is 10*(number of
+changed files) bits, rounded up to nearest multiple of 64?
+
+How do you count renames and copies?  As two changes?
+
+Do I understand it correctly that commit with no changes in it (which
+can rarely happen) would have 64-bits i.e. 8-bytes Bloom filter of all
+zeros: 0x0000000000000000?
+
+How merges are handled?  Does the filter uses all changed files, or just
+changes compared to first parent?
+
+>
+> [Call for advice] We currently cap writing bloom filters for commits with
+> atmost 512 changed files. In the current implementation, we compute the d=
+iff,
+> and then just throw it away once we see it has more than 512 changes.
+> Any suggestiongs on how to reduce the work we are doing in this case are =
+more
+> than welcome.
+
+This got solved in "[PATCH] diff: halt tree-diff early after max_changes"
+https://public-inbox.org/git/e9a4e4ff-5466-dc39-c3f5-c9a8b8f2f11d@gmail.com/
+
+> [Call for advice] Would the git community like this commit to be split up=
+ into
+> more granular commits? This commit could possibly be split out further wi=
+th the
+> bloom.c code in its own commit, to be used by the commit-graph in a subse=
+quent
+> commit. While I prefer it being contained in one commit this way, I am op=
+en to
+> suggestions.
+
+I think it might be a good idea to split this commit into purely Bloom
+filter implementation (bloom.c) AND unit tests for Bloom filter itself
+(which would probably involve some new test-tool).
+
+I have not read further messages in the series [edit: they don't], so I
+don't know if such tests already exist or not.  One could test for
+negative match, maybe also (for specific choice of hash function) for
+positive and maybe even false positive match, for filter size depending
+on the number of changes, for changes cap (maybe), maybe also for
+no-changes scenario.
+
+
+As for splitting the main part of the series, I would envision it in the
+following way (which is of course only one possibility):
+
+1. Implementation of generic-ish Bloom filter (with elements being
+   strings / paths, and optimized to test single key against many
+   filters, each taking small-ish space, variable size filter, limit on
+   maximum number of elements).
+
+   Technical documentation in comments in bloom.h (description of API)
+   and bloom.c (details of the algorithm, with references).
+
+   TODO: test-tool and unit tests.
+
+2. Using per-commit Bloom filter(s) to store changeset information
+   i.e. changed paths.  This would implement in-memory storage (on slab)
+   and creating Bloom filter out of commit and repository information.
+
+   Perhaps this should also get its own unit tests (that Bloom filter
+   catches changed files, and excluding false positivess catches
+   unchanged files).
+
+3. Storing per-commit Bloom filters in the commit-graph file:
+
+   a.) writing Bloom filters data to commit-graph file, which means
+       designing the chunk(s) format,
+   b.) verifying Bloom filter chunks, at least sanity-checks
+   c.) reading Bloom filters from commit-graph file into memory
+
+   Perhaps also some integration tests that the information is stored
+   and retrieved correctly, and that verifying finds bugs in
+   intentionally corrupted Bloom filter chunks.
+
+4. Using Bloom filters to speed up `git log -- <path>` (and similar
+   commands).
+
+   It would be nice to have some functional tests, and maybe some
+   performance tests, if possible.
+
+
+> [Call for advice] Would a technical document explaining the exact details=
+ of
+> the bloom filter implemenation and the hashing calculations be helpful? I=
+ will
+> be adding details into Documentation/technical/commit-graph-format.txt, b=
+ut the
+> bloom filter code is an independent subsystem and could be used outside o=
+f the
+> commit-graph feature. Is it worth a separate document, or should we apply=
+ "You
+> Ain't Gonna Need It" principles?
+
+As nowadays technical reference documentation is being moved from
+Documentation/technical/api-*.txt to appropriate header files, maybe the
+documentation of Bloom filter API (and some technical documentation and
+references) be put in bloom.h?  See for example comments in strbuf.h.
+
+> [Call for advice] I plan to add unit tests for bloom.c, specifically to e=
+nsure
+> that the hash algorithm and bloom key calculations are stable across vers=
+ions.
+
+Ah, so the unit tests for bloom.c does not exist, yet...
+
+> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+> Helped-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Makefile       |   1 +
+>  bloom.c        | 201 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  bloom.h        |  46 +++++++++++
+>  commit-graph.c |  32 +++++++-
+>  4 files changed, 279 insertions(+), 1 deletion(-)
+>  create mode 100644 bloom.c
+>  create mode 100644 bloom.h
+>
+> diff --git a/Makefile b/Makefile
+> index 42a061d3fb..9d5e26f5d6 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -838,6 +838,7 @@ LIB_OBJS +=3D base85.o
+>  LIB_OBJS +=3D bisect.o
+>  LIB_OBJS +=3D blame.o
+>  LIB_OBJS +=3D blob.o
+> +LIB_OBJS +=3D bloom.o
+>  LIB_OBJS +=3D branch.o
+>  LIB_OBJS +=3D bulk-checkin.o
+>  LIB_OBJS +=3D bundle.o
+
+I'll put bloom.h first, to make it easier to review.
+
+> diff --git a/bloom.h b/bloom.h
+> new file mode 100644
+> index 0000000000..ba8ae70b67
+> --- /dev/null
+> +++ b/bloom.h
+> @@ -0,0 +1,46 @@
+> +#ifndef BLOOM_H
+> +#define BLOOM_H
+> +
+> +struct commit;
+> +struct repository;
+
+This would probably be missing if this patch was split in two:
+introducing Bloom filter and saving Bloom filter in the repository
+metadata (in commit-graphh file).
+
+> +
+
+O.K., the names of fields are descriptive enough so that this struct
+doesn't need detailed description in comment (like the next one).
+
+> +struct bloom_filter_settings {
+> +	uint32_t hash_version;
+
+Do we need full half-word for hash version?
+
+> +	uint32_t num_hashes;
+
+Do we need full 32-bits for number of hashes?  The "Bloom Filters in
+Probabilistic Verification" paper mentioned in Stolee blog states that
+no one should need number of hashes greater than k=3D32 - the accuracy is
+so high that it doesn't matter that it is not optimal.
+
+  "Notice one last thing about Bloom filters in verification, if $m$ is
+   several gigabytes or less and $m/n$ calls for more than about 32 index
+   functions, the accuracy is going to be so high that there is not much
+   reason to use more than 32=E2=80=94for the next several years at least. =
+In
+   response to this, 3SPIN currently limits the user to $k =3D 32$. The
+   point of this observation is that we do not have to worry about the
+   runtime cost of $k$ being on the order of 64 or 100, because those
+   choices do not really buy us anything over 32."
+
+Here 'm' is the number of bits in Bloom filter, and m/n is number of
+bits per element added to filter.
+
+> +	uint32_t bits_per_entry;
+
+All right, we wouldn't really want large Bloom filters, as we use one
+filter per commit to match againts one key, not single Bloom filter to
+match againts many keys.
+
+> +};
+> +
+> +#define DEFAULT_BLOOM_FILTER_SETTINGS { 1, 7, 10 }
+> +
+> +/*
+> + * A bloom_filter struct represents a data segment to
+> + * use when testing hash values. The 'len' member
+> + * dictates how many uint64_t entries are stored in
+> + * 'data'.
+> + */
+> +struct bloom_filter {
+> +	uint64_t *data;
+> +	int len;
+> +};
+
+O.K., so it is single variable-sized (in 64-bit increments) Bloom filter
+bit vector (bitmap).
+
+> +
+> +/*
+> + * A bloom_key represents the k hash values for a
+> + * given hash input. These can be precomputed and
+> + * stored in a bloom_key for re-use when testing
+> + * against a bloom_filter.
+> + */
+> +struct bloom_key {
+> +	uint32_t *hashes;
+> +};
+
+That is smart.  I wonder however if it wouldn't be a good idea to
+'typedef' a hash function return type.
+
+I repeat myself: in Git case we have one key that we try to match
+against many Bloom filters which are never updated, while in an ordinary
+case many keys are matched against single Bloom filter - in many cases
+updated (with keys inserted to Bloom filter).
+
+I wonder if somebody from academia have examined such situation.
+I couldn't find a good search query.
+
+
+Sidenote: perhaps Xor or Xor+ filters from Graf & Lemire (2019)
+https://arxiv.org/abs/1912.08258 would be better solution - they also
+assume unchanging filter.  Though they are a very fresh proposal;
+also construction time might be important for Git.
+https://github.com/FastFilter/xor_singleheader
+
+> +
+> +void load_bloom_filters(void);
+> +
+> +struct bloom_filter *get_bloom_filter(struct repository *r,
+> +				      struct commit *c);
+
+Those two functions really need API documentation on how they are used,
+if they are to be used in any other role, especially what is their
+calling convention?  Why load_bloom_filters() doesn't take any
+parameters?
+
+Anyway, if this patch would be split into pure Bloom filter
+implementation and Git use^W store of Bloom filters, then this would be
+left for the latter patch.
+
+> +
+> +void fill_bloom_key(const char *data,
+> +		    int len,
+> +		    struct bloom_key *key,
+> +		    struct bloom_filter_settings *settings);
+
+It is a bit strange that two basic Bloom filter operations, namely
+adding element to Bloom filter (and constructing Bloom filter), and
+testing whether element is in Bloom filter are not part of a public
+API...
+
+This function should probably be documented, in particular the fact that
+*key is an in/out parameter.  This could also be a good place to
+document the mechanism itself (i.e. our implementation of Bloom filter,
+with references), though it might be better to keep the details of how
+it works in the bloom.c - close to the actual source (while keeping
+description of API in bloom.h comments).
+
+> +
+> +#endif
+> diff --git a/bloom.c b/bloom.c
+> new file mode 100644
+> index 0000000000..08328cc381
+> --- /dev/null
+> +++ b/bloom.c
+> @@ -0,0 +1,201 @@
+> +#include "git-compat-util.h"
+> +#include "bloom.h"
+> +#include "commit-graph.h"
+> +#include "object-store.h"
+> +#include "diff.h"
+> +#include "diffcore.h"
+> +#include "revision.h"
+> +#include "hashmap.h"
+> +
+> +#define BITS_PER_BLOCK 64
+> +
+> +define_commit_slab(bloom_filter_slab, struct bloom_filter);
+> +
+> +struct bloom_filter_slab bloom_filters;
+
+All right, so the Bloom filter data would be on slab.  This should
+probably be mentioned in the commit message, like in
+https://lore.kernel.org/git/61559c5b-546e-d61b-d2e1-68de692f5972@gmail.com/
+
+Sidenote: If I remember correctly one of the unmet prerequisites for
+switching to generation numbers v2 (corrected commit date with monotonic
+offsets) was moving 'generation' field out of 'struct commit' and on to
+slab (possibly also 'graph_pos'), and certainly having 'corrected_date'
+on slab (Inside-Out Object style).  Which probably could be done with
+Coccinelle script...
+
+> +
+> +struct pathmap_hash_entry {
+> +    struct hashmap_entry entry;
+> +    const char path[FLEX_ARRAY];
+> +};
+
+Hmmm... I wonder why use hashmap and not string_list.  This is for
+adding path with leading directories to the Bloom filter, isn't it?
+
+> +
+> +static uint32_t rotate_right(uint32_t value, int32_t count)
+> +{
+> +	uint32_t mask =3D 8 * sizeof(uint32_t) - 1;
+> +	count &=3D mask;
+> +	return ((value >> count) | (value << ((-count) & mask)));
+> +}
+
+Does it actually work with count being negative?  Shouldn't 'count' be
+of unsigned type, and if int32_t is needed, perhaps add an assertion (if
+needed)?  I think it does not.
+
+It looks like it is John Regehr [2] safe and compiler-friendly
+implementation, with explicit 8 in place of CHAR_BIT from <limits.h>,
+which should compile to "rotate" assembly instruction... it looks like
+it is the case, see https://godbolt.org/z/5JP1Jb (at least for C++
+compiler).
+
+[2]: https://en.wikipedia.org/wiki/Circular_shift
+
+
+I wonder if this should, in the future, be a part of 'compat/', maybe
+even using compiler intrinsics for "rotate right" if available (see
+https://stackoverflow.com/a/776523/46058).  But that might be outside of
+the scope of this patch (perhaps outside of choosing function name).
+
+> +
+
+It would be nice to have reference to the source of algorithm, or to the
+code that was borrowed for this in the header comment for the following
+function.
+
+I will be comparing the algorithm itself in Wikipedia
+https://en.wikipedia.org/wiki/MurmurHash#Algorithm
+and its implementation in C in qLibc library (BSD licensed)
+https://github.com/wolkykim/qlibc/blob/03a8ce035391adf88d6d755f9a26967c16a1=
+a567/src/utilities/qhash.c#L258
+
+> +static uint32_t seed_murmur3(uint32_t seed, const char *data, int len)
+> +{
+> +	const uint32_t c1 =3D 0xcc9e2d51;
+> +	const uint32_t c2 =3D 0x1b873593;
+> +	const int32_t r1 =3D 15;
+> +	const int32_t r2 =3D 13;
+
+Those two: r1 and r1, probably should be both uint32_t type.
+
+> +	const uint32_t m =3D 5;
+> +	const uint32_t n =3D 0xe6546b64;
+> +	int i;
+> +	uint32_t k1 =3D 0;
+> +	const char *tail;
+
+*tail should probably be 'uint8_t', not 'char', isn't it?
+
+> +
+> +	int len4 =3D len / sizeof(uint32_t);
+
+All length variables and parameters, i.e. `len`, `len4`, `i`, could
+possibly be `size_t` and not `int` type.
+
+> +
+> +	const uint32_t *blocks =3D (const uint32_t*)data;
+> +
+
+Some implementations copy `seed` (or assume seed=3D0) to the local
+variable named `h` or `hash`.
+
+> +	uint32_t k;
+> +	for (i =3D 0; i < len4; i++)
+> +	{
+> +		k =3D blocks[i];
+> +		k *=3D c1;
+> +		k =3D rotate_right(k, r1);
+
+Shouldn't it be *rotate_left* (ROL), not rotate_right (ROR)???
+This affects all cases / uses.
+
+> +		k *=3D c2;
+> +
+> +		seed ^=3D k;
+> +		seed =3D rotate_right(seed, r2) * m + n;
+> +	}
+> +
+> +	tail =3D (data + len4 * sizeof(uint32_t));
+> +
+
+We could have reused variable `k`, like the implementation in qLibc
+does, instead of introducing new `k1` variable, but this way it is more
+clean.  Or name it `remainingBytes` instead of `k1`
+
+> +	switch (len & (sizeof(uint32_t) - 1))
+> +	{
+> +	case 3:
+> +		k1 ^=3D ((uint32_t)tail[2]) << 16;
+> +		/*-fallthrough*/
+> +	case 2:
+> +		k1 ^=3D ((uint32_t)tail[1]) << 8;
+> +		/*-fallthrough*/
+> +	case 1:
+> +		k1 ^=3D ((uint32_t)tail[0]) << 0;
+> +		k1 *=3D c1;
+> +		k1 =3D rotate_right(k1, r1);
+> +		k1 *=3D c2;
+> +		seed ^=3D k1;
+> +		break;
+> +	}
+> +
+> +	seed ^=3D (uint32_t)len;
+> +	seed ^=3D (seed >> 16);
+> +	seed *=3D 0x85ebca6b;
+> +	seed ^=3D (seed >> 13);
+> +	seed *=3D 0xc2b2ae35;
+> +	seed ^=3D (seed >> 16);
+> +
+> +	return seed;
+> +}
+> +
+
+It would be nice to have header comment describing what this function is
+intended to actually do.
+
+> +static inline uint64_t get_bitmask(uint32_t pos)
+> +{
+> +	return ((uint64_t)1) << (pos & (BITS_PER_BLOCK - 1));
+> +}
+
+Sidenote: I wonder if ewah/bitmap.c implements something similar.
+Certainly possible consolidation, if any possible exists, should be left
+for the future.
+
+> +
+> +void fill_bloom_key(const char *data,
+> +		    int len,
+> +		    struct bloom_key *key,
+> +		    struct bloom_filter_settings *settings)
+> +{
+> +	int i;
+> +	uint32_t seed0 =3D 0x293ae76f;
+> +	uint32_t seed1 =3D 0x7e646e2c;
+
+Where did those constants came from?  It would be nice to have a
+reference either in header comment (in bloom.h or bloom.c), or in a
+commit message, or both.
+
+Note that above *constants* are each used only once.
+
+> +
+> +	uint32_t hash0 =3D seed_murmur3(seed0, data, len);
+> +	uint32_t hash1 =3D seed_murmur3(seed1, data, len);
+
+Those are constant values, so perhaps they should be `const uint32_t`.
+
+> +
+> +	key->hashes =3D (uint32_t *)xcalloc(settings->num_hashes, sizeof(uint32=
+_t));
+> +	for (i =3D 0; i < settings->num_hashes; i++)
+> +		key->hashes[i] =3D hash0 + i * hash1;
+
+It looks like this code implements the double hashing technique given in
+Eq. (4) in http://www.ccs.neu.edu/home/pete/pub/bloom-filters-verification.=
+pdf
+that is "Bloom Filters in Probabilistic Verification".
+
+Note that Dillinger and Manolios in this paper propose also _enhanced_
+double hashing algorithm (Algorithm 2 on page 11), which has closed form
+given by Eq. (6) - with better science-theoretical properties at
+similar cost.
+
+
+It might be a good idea to explicitly state in the header comment that
+all arithmetic is performed with unsigned 32-bit integers, which means
+that operations are performed modulo 2^32.  Or it might not be needed.
+
+> +}
+> +
+> +static void add_key_to_filter(struct bloom_key *key,
+> +			      struct bloom_filter *filter,
+> +			      struct bloom_filter_settings *settings)
+> +{
+> +	int i;
+> +	uint64_t mod =3D filter->len * BITS_PER_BLOCK;
+> +
+> +	for (i =3D 0; i < settings->num_hashes; i++) {
+> +		uint64_t hash_mod =3D key->hashes[i] % mod;
+> +		uint64_t block_pos =3D hash_mod / BITS_PER_BLOCK;
+
+All right.  Because Bloom filters for different commits (and the same
+key) may have different lengths, we can perform modulo operation only
+here.  `hash_mod` is i-th hash modulo size of filter, and `block_pos` is
+the block the '1' bit would go into.
+
+> +
+> +		filter->data[block_pos] |=3D get_bitmask(hash_mod);
+
+I'm not quite convinced that get_bitmask() is a good name: this function
+returns bitmap with hash_mod's bit set to 1.  On the other hand it
+doesn't matter, because it is static (file-local) helper function.
+
+Never mind then.
+
+> +	}
+> +}
+> +
+> +void load_bloom_filters(void)
+> +{
+> +	init_bloom_filter_slab(&bloom_filters);
+> +}
+
+Why *load* if all it does is initialize?
+
+> +
+> +struct bloom_filter *get_bloom_filter(struct repository *r,
+> +				      struct commit *c)
+
+I will not comment on this function; see Jeff King reply and Derrick
+Stolee reply.
+
+> +{
+[...]
+> +}
+> \ No newline at end of file
+
+Why there is no newline at the end of the file?  Accident?
+
+> diff --git a/commit-graph.c b/commit-graph.c
+> index e771394aff..61e60ff98a 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -16,6 +16,7 @@
+>  #include "hashmap.h"
+>  #include "replace-object.h"
+>  #include "progress.h"
+> +#include "bloom.h"
+>=20=20
+>  #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
+>  #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
+> @@ -794,9 +795,11 @@ struct write_commit_graph_context {
+>  	unsigned append:1,
+>  		 report_progress:1,
+>  		 split:1,
+> -		 check_oids:1;
+> +		 check_oids:1,
+> +		 bloom:1;
+
+Very minor nitpick: why `bloom` and not `bloom_filter`?
+
+>=20=20
+>  	const struct split_commit_graph_opts *split_opts;
+> +	uint32_t total_bloom_filter_size;
+
+All right, I guess size of all Bloom filters would fit in uint32_t, no
+need for size_t, is it?
+
+Shouldn't it be total_bloom_filters_size -- it is not a single Bloom
+filter, but many (minor nitpick)?
+
+>  };
+>=20=20
+>  static void write_graph_chunk_fanout(struct hashfile *f,
+> @@ -1139,6 +1142,28 @@ static void compute_generation_numbers(struct writ=
+e_commit_graph_context *ctx)
+>  	stop_progress(&ctx->progress);
+>  }
+>=20=20
+> +static void compute_bloom_filters(struct write_commit_graph_context *ctx)
+> +{
+> +	int i;
+> +	struct progress *progress =3D NULL;
+> +
+> +	load_bloom_filters();
+> +
+> +	if (ctx->report_progress)
+> +		progress =3D start_progress(
+> +			_("Computing commit diff Bloom filters"),
+> +			ctx->commits.nr);
+> +
+> +	for (i =3D 0; i < ctx->commits.nr; i++) {
+> +		struct commit *c =3D ctx->commits.list[i];
+> +		struct bloom_filter *filter =3D get_bloom_filter(ctx->r, c);
+> +		ctx->total_bloom_filter_size +=3D sizeof(uint64_t) * filter->len;
+
+Wouldn't it be more future proof instead of using `sizeof(uint64_t)` to
+use `sizeof(filter->data[0])` here?  This may be not worth it, and be
+less readable (we have hard-coded use of 64-bits blocks in other places).
+
+> +		display_progress(progress, i + 1);
+> +	}
+> +
+> +	stop_progress(&progress);
+> +}
+> +
+>  static int add_ref_to_list(const char *refname,
+>  			   const struct object_id *oid,
+>  			   int flags, void *cb_data)
+> @@ -1791,6 +1816,8 @@ int write_commit_graph(const char *obj_dir,
+>  	ctx->split =3D flags & COMMIT_GRAPH_WRITE_SPLIT ? 1 : 0;
+>  	ctx->check_oids =3D flags & COMMIT_GRAPH_WRITE_CHECK_OIDS ? 1 : 0;
+>  	ctx->split_opts =3D split_opts;
+> +	ctx->bloom =3D flags & COMMIT_GRAPH_WRITE_BLOOM_FILTERS ? 1 : 0;
+
+All right, this flag was defined in [PATCH 1/9].
+
+The ordering of setting `ctx` members looks a bit strange.  Now it is
+neither check `flags` firsts, neither keep related stuff together (see
+ctx->split vs ctx->split_opts).  This is a very minor nitpick.
+
+> +	ctx->total_bloom_filter_size =3D 0;
+>=20=20
+>  	if (ctx->split) {
+>  		struct commit_graph *g;
+> @@ -1885,6 +1912,9 @@ int write_commit_graph(const char *obj_dir,
+>=20=20
+>  	compute_generation_numbers(ctx);
+>=20=20
+> +	if (ctx->bloom)
+> +		compute_bloom_filters(ctx);
+> +
+>  	res =3D write_commit_graph_file(ctx);
+>=20=20
+>  	if (ctx->split)
+
+Regards,
+--=20
+Jakub Nar=C4=99bski
