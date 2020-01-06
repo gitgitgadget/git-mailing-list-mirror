@@ -2,147 +2,72 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC6F0C33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 11:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5CB3C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 13:38:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 859A5207FF
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 11:58:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AEF9B2072E
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 13:38:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="DeXpk/6X"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qBrwddCs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbgAFL6v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 06:58:51 -0500
-Received: from esa4.hc3370-68.iphmx.com ([216.71.155.144]:60112 "EHLO
-        esa4.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbgAFL6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 06:58:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=citrix.com; s=securemail; t=1578311929;
-  h=subject:from:to:references:message-id:date:mime-version:
-   in-reply-to:content-transfer-encoding;
-  bh=Hh1XGyrISr9A3sDr7a5mpCM9ynw56fEhunalzXYogbs=;
-  b=DeXpk/6X6e7B9G/cs0dlsS61GBBoWnwq2XPmq36EvXIU6uNPByj1fPpF
-   xTSM3Ovi7ZIQxituRATJ20F+9lVDMwG0cUOyTH/a8zfHVATzCUy3wfQ+R
-   eSucD/VDdFNOWtvfdU497pHfPB/yIYs5qJxfecMmxX+Yytmgr0tiGXysA
-   U=;
-Authentication-Results: esa4.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=george.dunlap@citrix.com; spf=Pass smtp.mailfrom=George.Dunlap@citrix.com; spf=None smtp.helo=postmaster@mail.citrix.com
-Received-SPF: None (esa4.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  george.dunlap@citrix.com) identity=pra;
-  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="george.dunlap@citrix.com";
-  x-conformance=sidf_compatible
-Received-SPF: Pass (esa4.hc3370-68.iphmx.com: domain of
-  George.Dunlap@citrix.com designates 162.221.158.21 as
-  permitted sender) identity=mailfrom;
-  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="George.Dunlap@citrix.com";
-  x-conformance=sidf_compatible; x-record-type="v=spf1";
-  x-record-text="v=spf1 ip4:209.167.231.154 ip4:178.63.86.133
-  ip4:195.66.111.40/30 ip4:85.115.9.32/28 ip4:199.102.83.4
-  ip4:192.28.146.160 ip4:192.28.146.107 ip4:216.52.6.88
-  ip4:216.52.6.188 ip4:162.221.158.21 ip4:162.221.156.83
-  ip4:168.245.78.127 ~all"
-Received-SPF: None (esa4.hc3370-68.iphmx.com: no sender
-  authenticity information available from domain of
-  postmaster@mail.citrix.com) identity=helo;
-  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
-  envelope-from="George.Dunlap@citrix.com";
-  x-sender="postmaster@mail.citrix.com";
-  x-conformance=sidf_compatible
-IronPort-SDR: 4xB1qDrlIeWWaw0uRiOqY27i0nfcKBAcYr0M/T4b/7+kZDjStDJvfufGQxEv2YmErScW1YrRaK
- OERDrvI0GY85WtYn4yll70ye5ob6FtgnOTQd6zYT1D8n+Q0C9dasnS6bBbXRP5i6nBdFcCh6xz
- 5JpJvsKq7NCdrN8qRBuEearYkHgHJHqqEHqmQ8Mz8Ydik2N2UPbtdv6ouO6bAfsAb8nPUu0Hqc
- 2s3aDHlFfVDI4krqMarIm4b3VuleSr6H5ZNj7vHkw8JDxp9WOY3LcnBM4VL9rwoBJd6hyIQQwM
- FAE=
-X-SBRS: 2.7
-X-MesageID: 11081498
-X-Ironport-Server: esa4.hc3370-68.iphmx.com
-X-Remote-IP: 162.221.158.21
-X-Policy: $RELAYED
-X-IronPort-AV: E=Sophos;i="5.69,402,1571716800"; 
-   d="scan'208";a="11081498"
-Subject: Re: git-am doesn't strip CRLF line endings when the mbox is
- base64-encoded
-From:   George Dunlap <george.dunlap@citrix.com>
-To:     <git@vger.kernel.org>
-References: <c44c3958-b0eb-22bd-bc35-04982706162f@citrix.com>
- <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=george.dunlap@citrix.com; prefer-encrypt=mutual; keydata=
- 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
- rIFfe2Dk+lD9A9BVd2rfoHA=
-Message-ID: <0c18df58-9d1d-550f-d69e-d6ffe6c01858@citrix.com>
-Date:   Mon, 6 Jan 2020 11:58:48 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S1726496AbgAFNi1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 08:38:27 -0500
+Received: from mail-qv1-f67.google.com ([209.85.219.67]:45073 "EHLO
+        mail-qv1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726173AbgAFNi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 08:38:27 -0500
+Received: by mail-qv1-f67.google.com with SMTP id l14so19005453qvu.12
+        for <git@vger.kernel.org>; Mon, 06 Jan 2020 05:38:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=CKRbw38bfVf0uouHxU8tKRqXgvc0YdyRf5SybqAUlM8=;
+        b=qBrwddCsVOq5u8kiXa86L6e5AlTD4IBCQ36yEBG59y4UD4zhpf0MbyENZg/Ttj+2tF
+         A9fP/D2chRcbTTN9AdWD2LCDDQzMPLCctGxuIl5c61cDmbgPYeU/xy6fblu5KUh+eiXT
+         VqBBiavAtW1O3rC4iIp52MzUiy0gb6Q9etPq3SfxVr5yGsJee7AquCxkzOw030biKuPh
+         U8fRSH8RFazg5hpad5Fdl42ijSEZdURh9TPe5qn8E9zHVeXoKFF1Zd7Nnqb9OOHEMLIA
+         GrFlYgrT3hAFDe+UfvcQjk36QRHc4uquLP8UEr/CC8YFJmbLvJLqDZL0kXXhIjELmBLn
+         BFLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=CKRbw38bfVf0uouHxU8tKRqXgvc0YdyRf5SybqAUlM8=;
+        b=ZFll4g8N6QzzGDfAPVjJPr59f8jGCj4Ij7bMULBwT100j6hiQZTDiVEpXJD4uW5Vwh
+         UtupKxVH7L6m19qVDJQEnJ8nftL7vSAx6ysCdcF9skyfOYG2rsDOCrBsEyPNrHOLQzSj
+         Qv6/r5Cszko7YvQi9yDRI+IJKX5VTkSJ9X1wQ4NU755vwev918Q1xWxX+KRUM2kA2zyG
+         293RhLUZXugD2dps4l5KRiMEoLohsygwThQ2Pd7vQg9jY+MBHEETt/PAaIaiUuQhvasI
+         p88exQ/CppPb6KouGOsv9tw0XKrJae6o7eCxGcZCqW9GV7Kvd0JimCVWWpAZRIFi226k
+         voKw==
+X-Gm-Message-State: APjAAAWmKzu4Uc/eK2B++UI7dRysfDj3a3Hl8eBN0BGSI4Zmsr2evbr8
+        XSgNAajrqxfRyKSteFIWE9j2n6uc
+X-Google-Smtp-Source: APXvYqzMFAmx5O3pgAU87QqptIMTxJURJIsXXOlgGljnAjNzY2mZEqLTvp/hL+bnbdUeDBr/h1pjiw==
+X-Received: by 2002:a05:6214:1189:: with SMTP id t9mr77701558qvv.153.1578317905165;
+        Mon, 06 Jan 2020 05:38:25 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:edba:a09c:727e:8e59? ([2001:4898:a800:1010:9ef0:a09c:727e:8e59])
+        by smtp.gmail.com with ESMTPSA id r205sm20694934qke.34.2020.01.06.05.38.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Jan 2020 05:38:24 -0800 (PST)
+Subject: Re: [PATCH 1/1] commit: make the sign-off trailer configurable
+To:     Hans Jerry Illikainen <hji@dyntopia.com>, git@vger.kernel.org
+References: <20200105174127.9278-1-hji@dyntopia.com>
+ <20200105174127.9278-2-hji@dyntopia.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <71a718a7-2be7-391c-dc8f-0626a0a21aac@gmail.com>
+Date:   Mon, 6 Jan 2020 08:38:23 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20200105174127.9278-2-hji@dyntopia.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -150,31 +75,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/18/19 12:15 PM, George Dunlap wrote:
-> On 12/18/19 11:42 AM, George Dunlap wrote:
->> Using git 2.24.0 from Debian testing.
->>
->> It seems that git-am will strip CRLF endings from mails before applying
->> patches when the mail isn't encoded in any way.  It will also decode
->> base64-encoded mails.  But it won't strip CRLF endings from
->> base64-encoded mails.
->>
->> Attached are two mbox files for two different recent series.
->> plainenc.am applies cleanly with `git am`, while base64enc.am doesn't.
->>
->> Poking around the man pages, it looks like part of the issue might be
->> that the CRLF stripping is done in `git mailsplit`, before the base64
->> encoding, rather than after.
+On 1/5/2020 12:41 PM, Hans Jerry Illikainen wrote:
+> The commit builtin did not previously have a configuration option to
+> enable the 'Signed-off-by' trailer by default.
 > 
-> Poking around -- it looks like the CRLF stripping would be better done
-> in `git mailinfo` after the decoding.
+> For some use-cases (namely, when the user doesn't always have the right
+> to contribute patches to a project) it makes sense to make it a
+> conscientious decision to add the signoff trailer.  However, others'
+> might always have the right to ship patches -- in which case it makes
+> sense to have an option to add the trailer by default for projects that
+> require it.
 
-Anyone want to take this up?  I mean, I could try to send a patch, but
-since I've never looked at the git source code before, I'm sure it would
-take me about 10x as much effort for me to do it as for someone already
-familiar with the codebase.
+My initial thought was that the sign-off was supposed to be a purposeful
+decision, but then I also realized that I never do anything in the Git
+codebase that I _can't_ put online under the GPL. (It may not make it
+upstream, but it will always be put online somewhere.)
 
-(And I've already done that work for stackgit:
-https://github.com/ctmarinas/stgit/pull/46)
+> This patch introduces a commit.signOff configuration option that
+> determine whether the trailer should be added for commits.  It can be
+> overridden with the --(no-)signoff command-line option.
 
- -George
+With that in mind, I think this is a valuable feature.
+ 
+> Signed-off-by: Hans Jerry Illikainen <hji@dyntopia.com>
+
+Did you generate this with your config option? ;)
+
+> +commit.signOff::
+> +	A boolean to specify whether commits should enable the
+> +	`-s/--signoff` option by default.  *Note:* Adding the
+> +	Signed-off-by: line to a commit message should be a conscious
+> +	act and means that you certify you have the rights to submit the
+> +	work under the same open source license.  Please see the
+> +	'SubmittingPatches' document for further discussion.
+> +
+
+I wonder about the language of "should be a conscious act" here. It's
+as if you are trying to convince someone to not use this feature. Perhaps
+switch it to "is a deliberate act" and add something such as "Enable this
+value only in repos where you are the only user and always have these
+rights."
+
+The multi-user scenario may be worth clarifying explicitly here. If there
+is any chance that another user will join the machine and use that same
+repo, then they would have a different user.name and user.email in their
+global config (probably) but this as a local setting would provide their
+sign-off.
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index c70ad01cc9..497e29c58c 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1474,6 +1474,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+>  		sign_commit = git_config_bool(k, v) ? "" : NULL;
+>  		return 0;
+>  	}
+> +	if (!strcmp(k, "commit.signoff")) {
+> +		signoff = git_config_bool(k, v);
+> +		return 0;
+> +	}
+
+Since we are directly modifying the same global used by the --[no-]signoff
+option, I verified that the config options are checked before the arguments
+are parsed. Thus, --no-signoff will override commit.signOff=true...
+
+> +test_expect_success 'commit.signOff=true' '
+> +	test_config commit.signOff true &&
+> +	echo 1 >>positive &&
+> +	git add positive &&
+> +	git commit -m "thank you" &&
+> +	git cat-file commit HEAD >commit.msg &&
+> +	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
+> +	git var GIT_COMMITTER_IDENT >ident &&
+> +	sed -e "s/>.*/>/" ident >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'commit.signOff=true and --no-signoff' '
+> +	test_config commit.signOff true &&
+> +	echo 2 >>positive &&
+> +	git add positive &&
+> +	git commit --no-signoff -m "thank you" &&
+> +	git cat-file commit HEAD >commit.msg &&
+> +	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
+> +	git var GIT_COMMITTER_IDENT >ident &&
+> +	sed -e "s/>.*/>/" ident >expected &&
+> +	! test_cmp expected actual
+> +'
+
+...which you test here, too. Excellent.
+
+> +test_expect_success 'commit.signOff=false and --signoff' '
+> +	test_config commit.signOff false &&
+> +	echo 1 >>positive &&
+> +	git add positive &&
+> +	git commit --signoff -m "thank you" &&
+
+Perhaps it is worth adding an explicit "-c commit.signOff=false" here?
+
+> +	git cat-file commit HEAD >commit.msg &&
+> +	sed -ne "s/Signed-off-by: //p" commit.msg >actual &&
+> +	git var GIT_COMMITTER_IDENT >ident &&
+> +	sed -e "s/>.*/>/" ident >expected &&
+> +	test_cmp expected actual
+> +'
+> +
+
+I wonder if the boilerplate for these tests could be simplified or
+shared across the tests?
+
+For example: could we not just use test_i18ngrep to see if commit.msg
+contains (or does not contain) the string "Signed-off-by"?
+
+I believe this patch delivers the stated feature well. Hopefully others
+can add commentary on its usefulness or possible issues in using it.
+
+Thanks,
+-Stolee
