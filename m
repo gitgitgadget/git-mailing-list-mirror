@@ -2,102 +2,179 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDBAC32767
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 04:20:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC6F0C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 11:58:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CD62721734
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 04:20:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 859A5207FF
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 11:58:52 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="DeXpk/6X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727491AbgAFEUy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 23:20:54 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35437 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727432AbgAFEUy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 23:20:54 -0500
-Received: by mail-wr1-f68.google.com with SMTP id g17so48209250wro.2
-        for <git@vger.kernel.org>; Sun, 05 Jan 2020 20:20:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=75wjtenD+0DJNIkH6zmNfmhtImz4RC041AwkNFd5XJU=;
-        b=G8aVs6GrJ2NEOaUfqnfsvIWsK8sLHYPuc6L1JuxD4iXAL93yZ2xAevPRj5owrBn3fN
-         vzrx7uKK/weEX7+c4bg+r+Subq0UEVJkT2FQJCPe/jcJkVdRRU/08d4Eve1+uRDmvX6b
-         jWMobvvkmhFVw2KHTn4iaPrJnYp9Ph5UtlkPtQlpk7JZOSlrqN45ZxefEfFJDNqlD4P2
-         rnvDS4Si2Cg4gbAl0JjgbsoZ+1LB6wBExjREMwgYbGpV4g6urU3LwsdHzKnMpPmzzqgs
-         ztSpNATU/jJYswZHegW+tw719PDUzagMNqaX2dY3I9mbYL+jPOG1UwMrSEEHHbSEsMdl
-         V/TA==
-X-Gm-Message-State: APjAAAUOktjiYGXWGeqKywQbIiJNd+VpKm+jmq5HWcvhk7yZ5x3zrPaN
-        sLJpsLHS5SQpaBHovrzUwojvFxN1k8yfIKY54pFV8abe
-X-Google-Smtp-Source: APXvYqy2Zx5ekQY4qw6XpjbY4NDCpfLCdwUzT4a//mY8XFJkC7AlMNUxldN1zWf3Di5uKJqhI9bwnpuMBqSbriKypw0=
-X-Received: by 2002:adf:b193:: with SMTP id q19mr100720522wra.78.1578284452344;
- Sun, 05 Jan 2020 20:20:52 -0800 (PST)
+        id S1726296AbgAFL6v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 06:58:51 -0500
+Received: from esa4.hc3370-68.iphmx.com ([216.71.155.144]:60112 "EHLO
+        esa4.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726281AbgAFL6v (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 06:58:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=citrix.com; s=securemail; t=1578311929;
+  h=subject:from:to:references:message-id:date:mime-version:
+   in-reply-to:content-transfer-encoding;
+  bh=Hh1XGyrISr9A3sDr7a5mpCM9ynw56fEhunalzXYogbs=;
+  b=DeXpk/6X6e7B9G/cs0dlsS61GBBoWnwq2XPmq36EvXIU6uNPByj1fPpF
+   xTSM3Ovi7ZIQxituRATJ20F+9lVDMwG0cUOyTH/a8zfHVATzCUy3wfQ+R
+   eSucD/VDdFNOWtvfdU497pHfPB/yIYs5qJxfecMmxX+Yytmgr0tiGXysA
+   U=;
+Authentication-Results: esa4.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=george.dunlap@citrix.com; spf=Pass smtp.mailfrom=George.Dunlap@citrix.com; spf=None smtp.helo=postmaster@mail.citrix.com
+Received-SPF: None (esa4.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  george.dunlap@citrix.com) identity=pra;
+  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="george.dunlap@citrix.com";
+  x-conformance=sidf_compatible
+Received-SPF: Pass (esa4.hc3370-68.iphmx.com: domain of
+  George.Dunlap@citrix.com designates 162.221.158.21 as
+  permitted sender) identity=mailfrom;
+  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="George.Dunlap@citrix.com";
+  x-conformance=sidf_compatible; x-record-type="v=spf1";
+  x-record-text="v=spf1 ip4:209.167.231.154 ip4:178.63.86.133
+  ip4:195.66.111.40/30 ip4:85.115.9.32/28 ip4:199.102.83.4
+  ip4:192.28.146.160 ip4:192.28.146.107 ip4:216.52.6.88
+  ip4:216.52.6.188 ip4:162.221.158.21 ip4:162.221.156.83
+  ip4:168.245.78.127 ~all"
+Received-SPF: None (esa4.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  postmaster@mail.citrix.com) identity=helo;
+  client-ip=162.221.158.21; receiver=esa4.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="postmaster@mail.citrix.com";
+  x-conformance=sidf_compatible
+IronPort-SDR: 4xB1qDrlIeWWaw0uRiOqY27i0nfcKBAcYr0M/T4b/7+kZDjStDJvfufGQxEv2YmErScW1YrRaK
+ OERDrvI0GY85WtYn4yll70ye5ob6FtgnOTQd6zYT1D8n+Q0C9dasnS6bBbXRP5i6nBdFcCh6xz
+ 5JpJvsKq7NCdrN8qRBuEearYkHgHJHqqEHqmQ8Mz8Ydik2N2UPbtdv6ouO6bAfsAb8nPUu0Hqc
+ 2s3aDHlFfVDI4krqMarIm4b3VuleSr6H5ZNj7vHkw8JDxp9WOY3LcnBM4VL9rwoBJd6hyIQQwM
+ FAE=
+X-SBRS: 2.7
+X-MesageID: 11081498
+X-Ironport-Server: esa4.hc3370-68.iphmx.com
+X-Remote-IP: 162.221.158.21
+X-Policy: $RELAYED
+X-IronPort-AV: E=Sophos;i="5.69,402,1571716800"; 
+   d="scan'208";a="11081498"
+Subject: Re: git-am doesn't strip CRLF line endings when the mbox is
+ base64-encoded
+From:   George Dunlap <george.dunlap@citrix.com>
+To:     <git@vger.kernel.org>
+References: <c44c3958-b0eb-22bd-bc35-04982706162f@citrix.com>
+ <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=george.dunlap@citrix.com; prefer-encrypt=mutual; keydata=
+ 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
+ rIFfe2Dk+lD9A9BVd2rfoHA=
+Message-ID: <0c18df58-9d1d-550f-d69e-d6ffe6c01858@citrix.com>
+Date:   Mon, 6 Jan 2020 11:58:48 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-References: <20191214161438.16157-1-me@yadavpratyush.com> <20191214161438.16157-2-me@yadavpratyush.com>
- <CAPig+cRL5w7azdALeBKKisTZwjgU6QhBqJRzQqDENjYiaTT0oA@mail.gmail.com>
-In-Reply-To: <CAPig+cRL5w7azdALeBKKisTZwjgU6QhBqJRzQqDENjYiaTT0oA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 5 Jan 2020 23:20:41 -0500
-Message-ID: <CAPig+cQmqKiYWDWFH5eK2S6XPOi2t2+8Oas8yZa8R=bKLym3wQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] worktree: delete branches auto-created by 'worktree add'
-To:     Pratyush Yadav <me@yadavpratyush.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 27, 2019 at 6:05 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Sat, Dec 14, 2019 at 11:16 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > When no branch name is supplied to 'worktree add', it creates a new
-> > branch based on the name of the directory the new worktree is located
-> > in. But when the worktree is later removed, that created branch is left
-> > over.
->
-> This is describing the existing (intentional) behavior but doesn't
-> explain why this might be annoying or problematic. To help sell the
-> patch, it might make sense to say something about how the behavior can
-> trip up newcomers to git-worktree, leaving them to wonder why they are
-> accumulating so many branches that they weren't aware they created. A
-> comment about why you think "git worktree add -d foo" is not a viable
-> way to side-step the creation of unwanted branches might also be
-> worthwhile.
+On 12/18/19 12:15 PM, George Dunlap wrote:
+> On 12/18/19 11:42 AM, George Dunlap wrote:
+>> Using git 2.24.0 from Debian testing.
+>>
+>> It seems that git-am will strip CRLF endings from mails before applying
+>> patches when the mail isn't encoded in any way.  It will also decode
+>> base64-encoded mails.  But it won't strip CRLF endings from
+>> base64-encoded mails.
+>>
+>> Attached are two mbox files for two different recent series.
+>> plainenc.am applies cleanly with `git am`, while base64enc.am doesn't.
+>>
+>> Poking around the man pages, it looks like part of the issue might be
+>> that the CRLF stripping is done in `git mailsplit`, before the base64
+>> encoding, rather than after.
+> 
+> Poking around -- it looks like the CRLF stripping would be better done
+> in `git mailinfo` after the decoding.
 
-As an alternative to this patch, would the simpler approach of
-improving git-worktree documentation to do a better job of pointing
-people at -d/--detach as a way to side-step unwanted branch creation
-make sense? That is, at minimum, enhance the "Description" section to
-prominently talk about throwaway worktrees (created with -d/--detach),
-and add an example to the "Examples" section (perhaps as the first
-example) showing creation/use/deletion of a throwaway worktree.
+Anyone want to take this up?  I mean, I could try to send a patch, but
+since I've never looked at the git source code before, I'm sure it would
+take me about 10x as much effort for me to do it as for someone already
+familiar with the codebase.
 
-Some points in favor of just updating the documentation to address
-this issue (rather than implementing the new behavior suggested by
-this patch) include:
+(And I've already done that work for stackgit:
+https://github.com/ctmarinas/stgit/pull/46)
 
-* far simpler; no code to implement or debug
-
-* no (surprising) behavior changes
-
-* "git worktree add -d foo" is about as easy to type and remember as
-  "git worktree add foo"
-
-Of lesser importance, it might make sense, as a followup, to add a
-configuration which changes the default behavior to detach instead of
-auto-creating a branch. I wonder if this could be piggybacked on the
-existing "worktree.guessremote" configuration. Or rather,
-retire/deprecate that configuration and add a new one which affects
-DWIM'ing behavior such that it becomes multi-state. Some possible
-values for the new configuration: "auto" (or "dwim" or whatever),
-"guessremote", "detach". (I haven't thought this through thoroughly,
-so there might be holes in my suggestion.)
-
-There's at least one point not in favor of merely updating the
-documentation to promote -d/--detach more heavily, and that is that
-(presumably) the concept of detached HEAD is perceived as an advanced
-topic, so it may not be suitable for the newcomer or casual user.
+ -George
