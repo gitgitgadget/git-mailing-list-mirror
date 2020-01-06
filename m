@@ -2,99 +2,102 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 332ADC00523
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 01:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBDBAC32767
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 04:20:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 00FB42072C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 01:16:25 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xjBMbNZu"
+	by mail.kernel.org (Postfix) with ESMTP id CD62721734
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 04:20:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbgAFBQY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 20:16:24 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51710 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbgAFBQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 20:16:23 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BABE9A8074;
-        Sun,  5 Jan 2020 20:16:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QV9yD+ExNKkdGuMSJyHwXBiiNyY=; b=xjBMbN
-        ZulwSwE7WKW2anN/ZpwDHpgdGU0in4x/2gR8CshpCaBV9B3AmVBwmbJeKKVX/r+U
-        AbWfJ05YVqd8G0L0snw/D1SJ8Ngvxor8yJ6ojywpW7fi9dBlF4DP1u8nvQNZvWdh
-        vpIuWyr429CdyrnbkSKbZO1r+ySMVXizXRJpE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CxiqSbukgyYrV8WWXhFh0Xu08pop3ZyU
-        F9g3IJ/o+nHq68+lDqLSdPKFcsjRUu8g8TOYf9PyGLBOXJ+g0OtVS4X8cNpfbnVU
-        7e7+8W2C4xS6mfoP9+lgSERqvgLsSnhkHbCc4kT3eJzWTX/FncNRe9ms7XaWbwZ1
-        dRfIpoJexvo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B2DD1A8073;
-        Sun,  5 Jan 2020 20:16:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8393AA8072;
-        Sun,  5 Jan 2020 20:16:17 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen Oberholtzer <stevie@qrpff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH] bisect run: allow inverting meaning of exit code
-References: <20200103043027.4537-1-stevie@qrpff.net>
-        <xmqqftgvdhpz.fsf@gitster-ct.c.googlers.com>
-        <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com>
-Date:   Sun, 05 Jan 2020 17:16:15 -0800
-In-Reply-To: <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com>
-        (Stephen Oberholtzer's message of "Sat, 4 Jan 2020 01:22:21 -0500")
-Message-ID: <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727491AbgAFEUy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jan 2020 23:20:54 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35437 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727432AbgAFEUy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jan 2020 23:20:54 -0500
+Received: by mail-wr1-f68.google.com with SMTP id g17so48209250wro.2
+        for <git@vger.kernel.org>; Sun, 05 Jan 2020 20:20:53 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=75wjtenD+0DJNIkH6zmNfmhtImz4RC041AwkNFd5XJU=;
+        b=G8aVs6GrJ2NEOaUfqnfsvIWsK8sLHYPuc6L1JuxD4iXAL93yZ2xAevPRj5owrBn3fN
+         vzrx7uKK/weEX7+c4bg+r+Subq0UEVJkT2FQJCPe/jcJkVdRRU/08d4Eve1+uRDmvX6b
+         jWMobvvkmhFVw2KHTn4iaPrJnYp9Ph5UtlkPtQlpk7JZOSlrqN45ZxefEfFJDNqlD4P2
+         rnvDS4Si2Cg4gbAl0JjgbsoZ+1LB6wBExjREMwgYbGpV4g6urU3LwsdHzKnMpPmzzqgs
+         ztSpNATU/jJYswZHegW+tw719PDUzagMNqaX2dY3I9mbYL+jPOG1UwMrSEEHHbSEsMdl
+         V/TA==
+X-Gm-Message-State: APjAAAUOktjiYGXWGeqKywQbIiJNd+VpKm+jmq5HWcvhk7yZ5x3zrPaN
+        sLJpsLHS5SQpaBHovrzUwojvFxN1k8yfIKY54pFV8abe
+X-Google-Smtp-Source: APXvYqy2Zx5ekQY4qw6XpjbY4NDCpfLCdwUzT4a//mY8XFJkC7AlMNUxldN1zWf3Di5uKJqhI9bwnpuMBqSbriKypw0=
+X-Received: by 2002:adf:b193:: with SMTP id q19mr100720522wra.78.1578284452344;
+ Sun, 05 Jan 2020 20:20:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 23C7FC70-3022-11EA-8A92-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20191214161438.16157-1-me@yadavpratyush.com> <20191214161438.16157-2-me@yadavpratyush.com>
+ <CAPig+cRL5w7azdALeBKKisTZwjgU6QhBqJRzQqDENjYiaTT0oA@mail.gmail.com>
+In-Reply-To: <CAPig+cRL5w7azdALeBKKisTZwjgU6QhBqJRzQqDENjYiaTT0oA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 5 Jan 2020 23:20:41 -0500
+Message-ID: <CAPig+cQmqKiYWDWFH5eK2S6XPOi2t2+8Oas8yZa8R=bKLym3wQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] worktree: delete branches auto-created by 'worktree add'
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen Oberholtzer <stevie@qrpff.net> writes:
+On Fri, Dec 27, 2019 at 6:05 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Dec 14, 2019 at 11:16 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
+> > When no branch name is supplied to 'worktree add', it creates a new
+> > branch based on the name of the directory the new worktree is located
+> > in. But when the worktree is later removed, that created branch is left
+> > over.
+>
+> This is describing the existing (intentional) behavior but doesn't
+> explain why this might be annoying or problematic. To help sell the
+> patch, it might make sense to say something about how the behavior can
+> trip up newcomers to git-worktree, leaving them to wonder why they are
+> accumulating so many branches that they weren't aware they created. A
+> comment about why you think "git worktree add -d foo" is not a viable
+> way to side-step the creation of unwanted branches might also be
+> worthwhile.
 
->> In any case, I wonder why something along the line of the attached
->> patch is not sufficient and it needs this much code.
->> ...
-> Unfortunately, that doesn't behave properly.
-> As far as 'git bisect run' is concerned, there are four distinct sets
-> ...
-> What needs to happen is that status code lists for "test passed" (#1)
-> and "test failed" (#2) are swapped; even when bisecting a fix, #3
-> (untestable) and #4 (malfunction) remain unchanged.  Your patch remaps
-> case #4 to case #1.
+As an alternative to this patch, would the simpler approach of
+improving git-worktree documentation to do a better job of pointing
+people at -d/--detach as a way to side-step unwanted branch creation
+make sense? That is, at minimum, enhance the "Description" section to
+prominently talk about throwaway worktrees (created with -d/--detach),
+and add an example to the "Examples" section (perhaps as the first
+example) showing creation/use/deletion of a throwaway worktree.
 
-Yeah, I know.  I didn't mean to give you a perfect solution and that
-was why I said "along the line of...".  I know I ignored the 128 and
-above, as I usually trust that our contributors are competent enough
-to be able to fill in the missing details given an outline.
+Some points in favor of just updating the documentation to address
+this issue (rather than implementing the new behavior suggested by
+this patch) include:
 
-The key takeaway I wanted you to notice was that a single case
-statement that maps the exit code external command would give us
-would look sufficient, without any of the {SUCCESS,FAIL}_TERM magic
-you had in your version, which indicates that there is more than the
-simple "using a run script to find where a bug was fixed can be done
-by swapping exit code" going on.  And it is quite unclear why that
-is needed either from the patch or the text that accompanied the
-patch.
+* far simpler; no code to implement or debug
 
-Thanks.
+* no (surprising) behavior changes
 
+* "git worktree add -d foo" is about as easy to type and remember as
+  "git worktree add foo"
 
+Of lesser importance, it might make sense, as a followup, to add a
+configuration which changes the default behavior to detach instead of
+auto-creating a branch. I wonder if this could be piggybacked on the
+existing "worktree.guessremote" configuration. Or rather,
+retire/deprecate that configuration and add a new one which affects
+DWIM'ing behavior such that it becomes multi-state. Some possible
+values for the new configuration: "auto" (or "dwim" or whatever),
+"guessremote", "detach". (I haven't thought this through thoroughly,
+so there might be holes in my suggestion.)
 
-
+There's at least one point not in favor of merely updating the
+documentation to promote -d/--detach more heavily, and that is that
+(presumably) the concept of detached HEAD is perceived as an advanced
+topic, so it may not be suitable for the newcomer or casual user.
