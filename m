@@ -2,130 +2,253 @@ Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0FEDC33C8C
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 638B6C33C8C
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:10:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CF6C120715
-	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:01:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23FA7206F0
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 18:10:58 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=citrix.com header.i=@citrix.com header.b="NuKcrWx4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726681AbgAFSBU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 13:01:20 -0500
-Received: from relay2-d.mail.gandi.net ([217.70.183.194]:35313 "EHLO
-        relay2-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726448AbgAFSBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 13:01:20 -0500
-X-Originating-IP: 157.49.189.75
-Received: from localhost (unknown [157.49.189.75])
-        (Authenticated sender: me@yadavpratyush.com)
-        by relay2-d.mail.gandi.net (Postfix) with ESMTPSA id 7347040008;
-        Mon,  6 Jan 2020 18:01:16 +0000 (UTC)
-Date:   Mon, 6 Jan 2020 23:31:01 +0530
-From:   Pratyush Yadav <me@yadavpratyush.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] worktree: delete branches auto-created by 'worktree
- add'
-Message-ID: <20200106180101.wwznvthla35x3qd2@yadavpratyush.com>
-References: <20191214161438.16157-1-me@yadavpratyush.com>
- <20191214161438.16157-2-me@yadavpratyush.com>
- <CAPig+cRL5w7azdALeBKKisTZwjgU6QhBqJRzQqDENjYiaTT0oA@mail.gmail.com>
- <CAPig+cQmqKiYWDWFH5eK2S6XPOi2t2+8Oas8yZa8R=bKLym3wQ@mail.gmail.com>
+        id S1726779AbgAFSK5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 13:10:57 -0500
+Received: from esa2.hc3370-68.iphmx.com ([216.71.145.153]:64340 "EHLO
+        esa2.hc3370-68.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726536AbgAFSK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 13:10:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=citrix.com; s=securemail; t=1578334255;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=ACe/XSoFFkyPQygOzShFIqdTrSZ4VCVrm4lMIlSUYhI=;
+  b=NuKcrWx4bsGRMto+wJRwENp5BDI0j4/m96TYwHb/nYv3cDLT+LX0VNrY
+   bQ9w2ZRTp0P3u/qSrVCnBfvFSY0aWElPCqIMhKcxWXJRKkoPl87Tsi3e1
+   UbnM0k8Sxh0dVnR2Y1ncfSc9TMSTlA6xmG6ukV/tEh5WCjEp96Dckk+2h
+   0=;
+Authentication-Results: esa2.hc3370-68.iphmx.com; dkim=none (message not signed) header.i=none; spf=None smtp.pra=george.dunlap@citrix.com; spf=Pass smtp.mailfrom=George.Dunlap@citrix.com; spf=None smtp.helo=postmaster@mail.citrix.com
+Received-SPF: None (esa2.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  george.dunlap@citrix.com) identity=pra;
+  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="george.dunlap@citrix.com";
+  x-conformance=sidf_compatible
+Received-SPF: Pass (esa2.hc3370-68.iphmx.com: domain of
+  George.Dunlap@citrix.com designates 162.221.158.21 as
+  permitted sender) identity=mailfrom;
+  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="George.Dunlap@citrix.com";
+  x-conformance=sidf_compatible; x-record-type="v=spf1";
+  x-record-text="v=spf1 ip4:209.167.231.154 ip4:178.63.86.133
+  ip4:195.66.111.40/30 ip4:85.115.9.32/28 ip4:199.102.83.4
+  ip4:192.28.146.160 ip4:192.28.146.107 ip4:216.52.6.88
+  ip4:216.52.6.188 ip4:162.221.158.21 ip4:162.221.156.83
+  ip4:168.245.78.127 ~all"
+Received-SPF: None (esa2.hc3370-68.iphmx.com: no sender
+  authenticity information available from domain of
+  postmaster@mail.citrix.com) identity=helo;
+  client-ip=162.221.158.21; receiver=esa2.hc3370-68.iphmx.com;
+  envelope-from="George.Dunlap@citrix.com";
+  x-sender="postmaster@mail.citrix.com";
+  x-conformance=sidf_compatible
+IronPort-SDR: kNMbKDYBfFjG1yl7zkAOoBnL+FzNdFz2QMeEEX5QbYJy7jx6kYem7sq6aCvKfPhHw5wrTD1dgE
+ l6DWDgVSsZNn9RqxgcIAWsXCK3lQ7hYA2esOUIIrF02Dk1vauqWwObp1W6819GHFgFOQ8BANww
+ 1DMPgvZKMJF5gkWJmhnWXK3Ve1BzI0uSOZC0nzOaV5jpolsDQsiXFAzufvcUh+rWKmZIeOQu1e
+ eNG4XT3OnvOyMoT2+BssNywSsy5T1iY8kPpq0xa5yamXtknXyRN5MsTtGwP+lD6S1snbGIGqye
+ HKY=
+X-SBRS: 2.7
+X-MesageID: 10525038
+X-Ironport-Server: esa2.hc3370-68.iphmx.com
+X-Remote-IP: 162.221.158.21
+X-Policy: $RELAYED
+X-IronPort-AV: E=Sophos;i="5.69,403,1571716800"; 
+   d="scan'208";a="10525038"
+Subject: Re: git-am doesn't strip CRLF line endings when the mbox is
+ base64-encoded
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     <git@vger.kernel.org>
+References: <c44c3958-b0eb-22bd-bc35-04982706162f@citrix.com>
+ <dece7350-7b58-bf19-9fdf-4ccf8df268fb@citrix.com>
+ <0c18df58-9d1d-550f-d69e-d6ffe6c01858@citrix.com>
+ <xmqqpnfwa4y9.fsf@gitster-ct.c.googlers.com>
+From:   George Dunlap <george.dunlap@citrix.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=george.dunlap@citrix.com; prefer-encrypt=mutual; keydata=
+ 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
+ rIFfe2Dk+lD9A9BVd2rfoHA=
+Message-ID: <24562917-575a-4f0a-b948-d4eabb17eb94@citrix.com>
+Date:   Mon, 6 Jan 2020 18:10:34 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQmqKiYWDWFH5eK2S6XPOi2t2+8Oas8yZa8R=bKLym3wQ@mail.gmail.com>
+In-Reply-To: <xmqqpnfwa4y9.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/01/20 11:20PM, Eric Sunshine wrote:
-> On Fri, Dec 27, 2019 at 6:05 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Sat, Dec 14, 2019 at 11:16 AM Pratyush Yadav <me@yadavpratyush.com> wrote:
-> > > When no branch name is supplied to 'worktree add', it creates a new
-> > > branch based on the name of the directory the new worktree is located
-> > > in. But when the worktree is later removed, that created branch is left
-> > > over.
-> >
-> > This is describing the existing (intentional) behavior but doesn't
-> > explain why this might be annoying or problematic. To help sell the
-> > patch, it might make sense to say something about how the behavior can
-> > trip up newcomers to git-worktree, leaving them to wonder why they are
-> > accumulating so many branches that they weren't aware they created. A
-> > comment about why you think "git worktree add -d foo" is not a viable
-> > way to side-step the creation of unwanted branches might also be
-> > worthwhile.
+On 1/6/20 5:07 PM, Junio C Hamano wrote:
+> George Dunlap <george.dunlap@citrix.com> writes:
 > 
-> As an alternative to this patch, would the simpler approach of
-> improving git-worktree documentation to do a better job of pointing
-> people at -d/--detach as a way to side-step unwanted branch creation
-> make sense? That is, at minimum, enhance the "Description" section to
-> prominently talk about throwaway worktrees (created with -d/--detach),
-> and add an example to the "Examples" section (perhaps as the first
-> example) showing creation/use/deletion of a throwaway worktree.
+>> On 12/18/19 12:15 PM, George Dunlap wrote:
+>>> On 12/18/19 11:42 AM, George Dunlap wrote:
+>>>> Using git 2.24.0 from Debian testing.
+>>>>
+>>>> It seems that git-am will strip CRLF endings from mails before applying
+>>>> patches when the mail isn't encoded in any way.  It will also decode
+>>>> base64-encoded mails.  But it won't strip CRLF endings from
+>>>> base64-encoded mails.
+>>>>
+>>>> Attached are two mbox files for two different recent series.
+>>>> plainenc.am applies cleanly with `git am`, while base64enc.am doesn't.
+>>>>
+>>>> Poking around the man pages, it looks like part of the issue might be
+>>>> that the CRLF stripping is done in `git mailsplit`, before the base64
+>>>> encoding, rather than after.
+>>>
+>>> Poking around -- it looks like the CRLF stripping would be better done
+>>> in `git mailinfo` after the decoding.
+>>
+>> Anyone want to take this up?  I mean, I could try to send a patch, but
+>> since I've never looked at the git source code before, I'm sure it would
+>> take me about 10x as much effort for me to do it as for someone already
+>> familiar with the codebase.
 > 
-> Some points in favor of just updating the documentation to address
-> this issue (rather than implementing the new behavior suggested by
-> this patch) include:
+> Even before writing a patch, somebody needs to come up with a
+> sensible design first.  --[no-]keep-cr is about "because transfer of
+> e-mail messages between MTAs and to the receiving MUA is defined in
+> terms of CRLF delimited lines per RFC, Git cannot tell if the CRLF
+> in the input was meant to be part of the patch (i.e. the diff is
+> describing a change between preimage and postimage of a file that
+> uses CRLF line endings) or they are cruft added during transit.  By
+> default we favor LF endings so we will strip, but we leave an option
+> to keep CRs at the end of lines".  
 > 
-> * far simpler; no code to implement or debug
+> What you are asking for is quite different, isn't it?  "We know the
+> CRLF in the payload is from the original because they were protected
+> from getting munged during the transfer by being MIME-encased.
+> Please tell Git to preprocess that payload to convert CRLF to LF
+> before treating it as a patch".
+
+Actually that's not true. :-)   The RFC specifies CRLF for text sections
+regardless of the encoding:
+
+8<----
+   The canonical form of any MIME "text" subtype MUST always represent a
+   line break as a CRLF sequence.  Similarly, any occurrence of CRLF in
+   MIME "text" MUST represent a line break.  Use of CR and LF outside of
+   line break sequences is also forbidden.
+----->8
+
+[1] https://tools.ietf.org/html/rfc2046#section-4.1.1
+
+Just as for plaintext encoding, we do not, in fact, know that CRLF is in
+the original; in the example I included above, I'm confident that CRLF
+is *not* in the original, but was added by an MTA afterwards.
+
+As such, at the moment what `mailsplit` does is generate a load of
+non-RFC-compliant email messages (since text-plain encoded messages
+won't have CRLF, in contravention of the spec), and `mailinfo`
+incorrectly interprets base64-encoded sections.  Moving the CR-stripping
+from mailsplit to mailinfo would make them both more RFC-compliant.
+
+(Sorry this wasn't in the original report -- I've been doing a lot more
+digging since then.)
+
+> So, if you are imagining to change the meaning of --[no-]keep-cr, I
+> do not think it will fly (that is why I said that we need a sensible
+> design before a patch).
 > 
-> * no (surprising) behavior changes
+> And by stepping back a bit like so, and once we start viewing this
+> as "after receiving a piece of e-mail from MUA (where --[no-]keep-cr
+> may affect the outermost CRLF line endings) and unwrapping possible
+> MIME-encasing, we can optionally tell Git to pass the payload
+> further through a preprocess filter", we'd realize that this does
+> not have to be limited to just running dos2unix (you may want to run
+> iconv to fix encodings, for example), which would mean that the new
+> flag may not just want to be --strip-cr, which is too limiting, but
+> rather want to be --filter-message=<how> where <how> could be one of
+> the canned preprocess filter (among which your dos2unix may exist)
+> or an external script.
 > 
-> * "git worktree add -d foo" is about as easy to type and remember as
->   "git worktree add foo"
+> I am not saying that "--filter-message=<how>" must be the "sensible
+> design" I mentioned at the beginning of this message---the above is
+> to illustrate what kind of thought needs to go in before even the
+> first line of the patch gets written.
+As I mentioned in another thread, there's already an `applypatch-msg`
+hook which can be used to do arbitrary modifications on commit messages
+before applying.  Another way to fix this would be to add an
+`applypatch-patch` hook, which allowed you to do arbitrary modifications
+on the patch before applying.
 
-FYI, I'm running Git v2.24.1 and 'git worktree add' doesn't accept the 
-option '-d'. It only accepts '--detach'. And looking at the current 
-'next', I don't see the option mentioned in git-worktree.txt. So at the 
-very least, we should start by actually adding the option.
- 
-> Of lesser importance, it might make sense, as a followup, to add a
-> configuration which changes the default behavior to detach instead of
-> auto-creating a branch. I wonder if this could be piggybacked on the
-> existing "worktree.guessremote" configuration. Or rather,
-> retire/deprecate that configuration and add a new one which affects
-> DWIM'ing behavior such that it becomes multi-state. Some possible
-> values for the new configuration: "auto" (or "dwim" or whatever),
-> "guessremote", "detach". (I haven't thought this through thoroughly,
-> so there might be holes in my suggestion.)
+I certainly think that `applypatch-patch` would be a useful thing to
+add.  But since making `mailsplit` and `mailinfo` more RFC-compliant is
+both good in itself, and probably easier, I still think that's the best
+thing to do first.
 
-Honestly, coupled with a configuration variable this alternative fits my 
-use-case really well.
-
-I think 'guessremote' does not describe very well what the config 
-variable would actually do. So I think deprecating it would be a better 
-idea.
-
-Does 'worktree.newBranch' sound like a good name? (Disclaimer: I am 
-terrible at naming things).
- 
-> There's at least one point not in favor of merely updating the
-> documentation to promote -d/--detach more heavily, and that is that
-> (presumably) the concept of detached HEAD is perceived as an advanced
-> topic, so it may not be suitable for the newcomer or casual user.
-
-I'm basing this off no data so take it with a grain of salt, but I think 
-people who know Git enough to understand the concept of multiple 
-worktrees should also understand what a detached HEAD is. And even if 
-they already don't know what it is, they should have no trouble quickly 
-reading one of the many great explanations available with a simple 
-Google search.
-
-My argument in favor of auto-deletion is that we should still try to 
-have sane defaults. Leaving behind a branch the user didn't explicitly 
-create and didn't use doesn't sound like a sane default to me.
-
-The configuration variable path is easier and suits my needs really 
-well, so I am inclined to just go with it. But making the whole user 
-experience better for everyone is still something worthwhile. But then 
-again, introducing a backwards-incompatible change might not be the best 
-idea. So, I dunno.
-
--- 
-Regards,
-Pratyush Yadav
+ -George
