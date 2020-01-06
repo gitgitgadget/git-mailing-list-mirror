@@ -1,147 +1,157 @@
-Return-Path: <SRS0=oqjl=22=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=yIgW=23=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A0F2C00523
-	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 23:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC81C33C9A
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 00:42:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 20DE82085B
-	for <git@archiver.kernel.org>; Sun,  5 Jan 2020 23:11:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DEAB02465E
+	for <git@archiver.kernel.org>; Mon,  6 Jan 2020 00:42:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g+euhHUW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JyLCkk3a"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727242AbgAEXLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 5 Jan 2020 18:11:39 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53720 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726494AbgAEXLi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Jan 2020 18:11:38 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ADD62447E1;
-        Sun,  5 Jan 2020 18:11:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HXakbkqB4+de8AIV/4tj7NBr9uM=; b=g+euhH
-        UW5g4Zini6m5Fv0ZjsG0NYTfui61K8imwj1rvnBaRscLXcnRvfoOuUyrs+9Podf+
-        a2XDgwLuWb9iIuGFjTtz2Zia3S+RSHT00lN3/qLnFuDDml6rk7XE+POTfIFNhY4V
-        U/vwyNLGyLStw48LwCfnwOAELxK/8mdobIxQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ase4U6LHUeGSZBS/HDecB3gFnADgeBSl
-        LK/2rEF0oXKh39tQScmkQ31rfwwyzenSMM8hWR2t5p5Af87rS8psV9R2VJlQTMww
-        nZBPBo2z3x69vsTwy2tt4YvQU96CgZEHtGNYN6AxdWAWh5AcP6ohkKQQoUpMofuo
-        2lU46+VmTYI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A535D447E0;
-        Sun,  5 Jan 2020 18:11:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 10A06447DF;
-        Sun,  5 Jan 2020 18:11:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Hans Jerry Illikainen <hji@dyntopia.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/5] refactor gpg-interface and add gpg verification for clones
-References: <20200105135616.19102-1-hji@dyntopia.com>
-Date:   Sun, 05 Jan 2020 15:11:35 -0800
-In-Reply-To: <20200105135616.19102-1-hji@dyntopia.com> (Hans Jerry
-        Illikainen's message of "Sun, 5 Jan 2020 13:56:11 +0000")
-Message-ID: <xmqq36ctbis8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727165AbgAFAmR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 5 Jan 2020 19:42:17 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46842 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726731AbgAFAmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Jan 2020 19:42:17 -0500
+Received: by mail-ed1-f67.google.com with SMTP id m8so46107923edi.13
+        for <git@vger.kernel.org>; Sun, 05 Jan 2020 16:42:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FbbUbDVrxNKtsB41OkwhyYU+8mhpHIsqnvKgRVLtZBY=;
+        b=JyLCkk3aVMoNi1S1FQOXs8lVWe+PJ3r/CSYKGaMijaU2nGMdTtbToop5a43okReFBt
+         HhlaKjz/LSnoVFCyPeYyKo4RxBcmtDZuY+cntw7CWZIFpoaXYT6HRx1g0axENOHXxDw/
+         oB7Cqsn7Lo8keITAqEJmtWskylqjcpxQL7r8ic2EOyxzmlKCCzaPGrjtE4URIM96Dn3x
+         oeyGpcH7phgCbAJW+gmbRuhM8vU211Zd+GzRqa0/pbqs85ooFKbpjIdbncAzS7hX5k5O
+         /d2U5MUKV2r/iEQbWxaFuPTjMPBh0rNBaWmpvtTUvD63Qy6jWQgX/yCtnZ+5EwY9u+Dd
+         /T/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FbbUbDVrxNKtsB41OkwhyYU+8mhpHIsqnvKgRVLtZBY=;
+        b=RT+a5PKXqbmoBQ/Ju4Vio65+SeUzLh+eMpMf2cGAgWSULSHzFrHkO2iQlQJdQ4CqtQ
+         8sUiNzjTAc8EaKOK5mxKQWDvACMm7yU8EAqWem3xdlX1Lu0INBOQdBs9lY+b4eUjJev7
+         FzC7U7pqdHRu7du95LTJUZ0ZIt9gf61I5zOeyn7uf3K95ZPWan5qhv2MDGYOvJidFWD7
+         PajVlpnwogoCVJOEKv/4yWr7K8rI4nM+zB0jAeCxAZWYtD1jHicddjeO5uLyHlsCQ4QB
+         lrzTTI8/TPwLuFeYkZIdZMGNziTSbXhGBv/vgQh7m3XDwWYCSVSZ01JOf1KRidJa+txX
+         GxGg==
+X-Gm-Message-State: APjAAAVhWIkZzMypHecJmLdA5BMi3YLFUv5PACnTHu+XRBlxRkaD7TBA
+        QUuflac7MyZ8yF1UIqssAWg3rFW1yXpZDDOudNq6xUYX
+X-Google-Smtp-Source: APXvYqyEPir4wTn6NJIWNvnRZwMCFA6ql9yPyMr8JH/ngjQ4ouGTVaD7j8B7V4zSTUhFqEWmnydW14i38w+UkhNd3Lg=
+X-Received: by 2002:a17:906:5208:: with SMTP id g8mr107057513ejm.104.1578271335218;
+ Sun, 05 Jan 2020 16:42:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B91249E6-3010-11EA-87D1-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
+ <82bf24ce537ca9333d72c2b4698864817801f10f.1577933387.git.gitgitgadget@gmail.com>
+ <CAPig+cS39vcy6yT3Dg2HfGVCyg2U+7t7Xj85ayM7LaAk3zTjrg@mail.gmail.com>
+In-Reply-To: <CAPig+cS39vcy6yT3Dg2HfGVCyg2U+7t7Xj85ayM7LaAk3zTjrg@mail.gmail.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Mon, 6 Jan 2020 13:42:03 +1300
+Message-ID: <CACg5j25bNcy66R3bCwwc1NQ1F1rEoc=QOPBteyux0Xr6xwHLSQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] branch: advise the user to checkout a different
+ branch before deleting
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hans Jerry Illikainen <hji@dyntopia.com> writes:
+On Thu, Jan 2, 2020 at 9:18 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Wed, Jan 1, 2020 at 9:50 PM Heba Waly via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > Display a hint to the user when attempting to delete a checked out
+> > branch saying "Checkout another branch before deleting this one:
+> > git checkout <branch_name>".
+> >
+> > Currently the user gets an error message saying: "error: Cannot delete
+> > branch <branch_name> checked out at <path>". The hint will be displayed
+> > after the error message.
+> >
+> > Signed-off-by: Heba Waly <heba.waly@gmail.com>
+> > ---
+> > diff --git a/builtin/branch.c b/builtin/branch.c
+> > @@ -240,6 +240,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+> >                                 error(_("Cannot delete branch '%s' "
+> >                                         "checked out at '%s'"),
+> >                                       bname.buf, wt->path);
+> > +                               advise(_("Checkout another branch before deleting this "
+> > +                                                "one: git checkout <branch_name>"));
+>
+> s/another/a different/ would make the meaning clearer.
+>
+Ok.
 
-> And finally, signature verification is added to the clone builtin.  It
-> obeys --(no-)verify-signatures, clone.verifySignatures and
-> gpg.verifySignatures (in decreasing order of significance).
+> Let's try to avoid underscores in placeholders. <branch-name> would be
+> better, however, git-checkout documentation just calls this <branch>,
+> so that's probably a good choice.
+>
+Yes.
 
-It is clear for a merge or a pull what it means to verify
-signature---you trust your local history, and you are willing to
-merge in a commit only when it has a trusted signature (which
-automatically means that you trust the hash function and also the
-signer did some reasonable vetting of the history behind the tip
-commit, or you never check out your intermediate state, depending
-on your threat model).
+> However, these days, I think we're promoting git-switch rather than
+> git-checkout, so perhaps this advice should follow suit.
+>
 
-I am not sure what it should mean to verify signature on clone.  I'd
-assume that our threat model and verification policy are consistent
-with what we use for a merge/pull, in that we trust all history
-behind a commit that has a trusted signature, so it is clear that
-you would want the tip commit of the default branch (or if you are
-naming a single branch to clone, then the tip of that branch) to
-carry a trusted signature.  But what about the commits that are
-reachable from other branches and tags that are *not* contained
-in the branch that is initially checked out?
+I didn't know that, will change it.
 
-Later in the proposed log message of 5/5 you allude to risk of
-merely checking out a potentially untrustworthy contents to the
-working tree.  This is far stricter than the usual threat model we
-tend to think about as the developers of source code management
-system, where checking out is perfectly OK but running "make" or its
-equivalent is the first contact between the victim's system with
-malicious contents.
+> Finally, is this advice sufficient for newcomers when the branch the
+> user is trying to delete is in fact checked out in a worktree other
+> than the worktree in which the git-branch command is being invoked?
+> That is:
+>
+>     $ pwd
+>     /home/me/foo
+>     $ git branch -D bip
+>     Cannot delete  branch 'bip' checked out at '/home/me/bar'
+>     hint: Checkout another branch before deleting this one:
+>     hint: git checkout <branch>
+>     $ git checkout master # user follows advice
+>     $ git branch -D bip
+>     Cannot delete  branch 'bip' checked out at '/home/me/foo'
+>     hint: Checkout another branch before deleting this one:
+>     hint: git checkout <branch>
+>     $
+>
+> And the user is left scratching his or her head wondering why
+> git-branch is still showing the error despite following the
+> instructions in the hint.
+>
 
-Verifying the tip of the default/sole branch upon cloning before the
-tree of the commit is checked out certainly would cover that single
-case (i.e. the initial checkout after cloning), but I am not sure if
-it is the best way, and I am reasonably certain it is insufficient
-against your threat model.  After such a clone is made, when the
-user checks out another branch obtained from the "origin" remote,
-there is no mechanism that protects the user from the same risk you
-just covered with the new signature verification mechanism upon
-cloning, without validating the tip of that other branch, somewhere
-between the time the clone is made and that other branch gets
-checked out.
+Understood.
 
-It almost makes me suspect that what you are trying to do with the
-"verification upon cloning" may be much better done as a "verify the
-tree for trustworthyness before checking it out to the working tree"
-mechanism, where the trustworthyness of a tree-ish object may be
-defined (and possibly made customizable by the policy of the project
-the user is working on) like so:
+> > diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> > @@ -808,7 +808,8 @@ test_expect_success 'test deleting branch without config' '
+> >  test_expect_success 'deleting currently checked out branch fails' '
+> >         git worktree add -b my7 my7 &&
+> >         test_must_fail git -C my7 branch -d my7 &&
+> > -       test_must_fail git branch -d my7 &&
+> > +       test_must_fail git branch -d my7 >actual.out 2>actual.err &&
+> > +       test_i18ngrep "hint: Checkout another branch" actual.err &&
+>
+> Why does this capture standard output into 'actual.out' if that file
+> is never consulted?
+>
 
- - A tree is trustworthy if it is the tree of a trustworthy commit.
+Correct, I missed this one.
 
- - A commit is trustworthy if
+> >         rm -r my7 &&
+> >         git worktree prune
+> >  '
 
-   . it carries a trusted signature, or
-   . it is pointed by a tag that carries a trusted signature, or
-   . it is reachable from a trustworthy commit.
+Thanks Eric, will submit an updated version soon.
 
-Now, it is prohibitively expensive to compute the trusttworthiness
-of a tree, defined like the above, when checking it out, UNLESS you
-force each and every commit to carry a trusted signature, which is
-not necessarily practical in the real world.
-
-Another approach to ensure that any and all checkout would work only
-on a trustworthy tree might be to make sure that tips of *all* the
-refs are trustworthy commits immediately after cloning (instead of
-verifying only the branch you are going to checkout, which is what
-your patch does IIUC).  That way, any subsequent checkout in the
-repository would either be checking out a commit that was
-
- - originally cloned from the remote, and is reachable from some ref
-   that was validated back when the repository was cloned, or
-
- - created locally in this repository, which we trust, or
-
- - fetched from somewhere else, and is reachable from the commit
-   that was validated back when "git pull" validated what was about
-   to be integrated into the history of *this* repository.
-
-Hmm?
+Heba
