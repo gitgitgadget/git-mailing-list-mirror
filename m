@@ -6,112 +6,129 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0213C32771
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 488F1C32771
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:08:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8FE5B2072E
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:10:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 15F812072C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:08:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=qrpff.net header.i=@qrpff.net header.b="a1l3LiCo"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="E7vDNeiz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbgAGAKW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 19:10:22 -0500
-Received: from bonobo.elm.relay.mailchannels.net ([23.83.212.22]:21285 "EHLO
-        bonobo.elm.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726858AbgAGAKW (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 19:10:22 -0500
-X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id EEBD2E1163
-        for <git@vger.kernel.org>; Tue,  7 Jan 2020 00:10:20 +0000 (UTC)
-Received: from pdx1-sub0-mail-a42.g.dreamhost.com (100-96-85-12.trex.outbound.svc.cluster.local [100.96.85.12])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 59FA7E1378
-        for <git@vger.kernel.org>; Tue,  7 Jan 2020 00:10:20 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
-Received: from pdx1-sub0-mail-a42.g.dreamhost.com ([TEMPUNAVAIL].
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.18.5);
-        Tue, 07 Jan 2020 00:10:20 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|stevie@qrpff.net
-X-MailChannels-Auth-Id: dreamhost
-X-Daffy-Army: 2710e43d52aa8a2b_1578355820811_2081901665
-X-MC-Loop-Signature: 1578355820811:1867239328
-X-MC-Ingress-Time: 1578355820810
-Received: from pdx1-sub0-mail-a42.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a42.g.dreamhost.com (Postfix) with ESMTP id 4263181DE3
-        for <git@vger.kernel.org>; Mon,  6 Jan 2020 16:10:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=qrpff.net; h=mime-version
-        :references:in-reply-to:from:date:message-id:subject:to:cc
-        :content-type; s=qrpff.net; bh=k2yJKaUVui49jE+8AaPv2v/ZdG4=; b=a
-        1l3LiCohMaPeKR4cXYqfcTK4LZlCnPdqfNqk8PB/lhgYb4logRfCLg516au1EGi4
-        S4M5hZ9txiWQ5BxHWHU9JTu8VfxEYrIm790lK+k+c5GbfYA9NWH7Nxihhu66/NKk
-        ofro1QjnTd5EjYEtog2e4wsw9eUoFsoUQmq30ANJ0o=
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S1727348AbgAGBIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 20:08:17 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60640 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727295AbgAGBIR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 20:08:17 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: stevie@qrpff.net)
-        by pdx1-sub0-mail-a42.g.dreamhost.com (Postfix) with ESMTPSA id D663D81D55
-        for <git@vger.kernel.org>; Mon,  6 Jan 2020 16:10:14 -0800 (PST)
-Received: by mail-lj1-f176.google.com with SMTP id l2so52785994lja.6
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 16:10:14 -0800 (PST)
-X-Gm-Message-State: APjAAAVNU7dCq1pCo64ggX0Irl0cuj6mfgBY0EkatdTqZczGlvSi8dNT
-        0PGczB1JdS7vfnKPXpZR9Y/kzmjcpKy3eXKXPRE=
-X-Google-Smtp-Source: APXvYqyhV1VGOGexi/PPZfD9+np81EM8PvtARzu+Pf3d7PUNyMT9pZ6rjlAoe5kde3A/7Abr5FBGYsAppzTUqWUh7f0=
-X-Received: by 2002:a2e:868c:: with SMTP id l12mr17291055lji.194.1578355813074;
- Mon, 06 Jan 2020 16:10:13 -0800 (PST)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 18CC260482;
+        Tue,  7 Jan 2020 01:08:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1578359296;
+        bh=OoPHPsYeHWjkABSaFlK7I7idLWxwHn9PAlbuX5rr6kA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=E7vDNeiz+c/TyFReask77zzv+tXLl0JM0LGO3LNLokwFj4Ap7d+0GAXZ+tycbgTZl
+         N7fQfSb08wcmCinYSJ8MS7AnFcpUcKT2DUha474bOf8emNU4mnIY4siyrUej6cSPwe
+         ZKa5nL/SEVLVlWLGBWGkY5La8m9Wj4TuDZD4oNNmo5ZuMv2vYdWTBxZs51+pWqhIJv
+         HR1yyeUexA9CESMITFEGlh5hHQD+mSvA7+p3oeHj+8NjShTqy2KsUK4+6EJ+7IW6rm
+         uT5R0H5OTcTSeEDPnMyMzB0u/yqAdAludQYNars779Cry9AQHj13HORvjySxf7ZsOI
+         4zISnrI98UfkScArP6NtD/RFegSFOCWv+eSuD2plcwBYxi+zleef/Uv5CfjtILMdCP
+         n70y9Nc+aUbVnvnGTDqQneru5/JFlFjaHG0k7Y3MPJgI9GNSwzO1F5ZVJem0xnLkyy
+         xLK4fUpw1H7I9A5CjM8sQ6sSs8JaMrZURmM3NEbvrwPko1W9/i0
+Date:   Tue, 7 Jan 2020 01:08:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [Outreachy] Return value before or after free()?
+Message-ID: <20200107010809.GH6570@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, "Miriam R." <mirucam@gmail.com>,
+        git <git@vger.kernel.org>
+References: <CAN7CjDDBA0ZoCG9aaQf5rg3gxqny=EjR6v6jE1mnxvUJQSF_0Q@mail.gmail.com>
+ <20200106213051.GD980197@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <20200103043027.4537-1-stevie@qrpff.net> <xmqqftgvdhpz.fsf@gitster-ct.c.googlers.com>
- <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com> <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
-X-DH-BACKEND: pdx1-sub0-mail-a42
-From:   Stephen Oberholtzer <stevie@qrpff.net>
-Date:   Mon, 6 Jan 2020 19:10:00 -0500
-X-Gmail-Original-Message-ID: <CAD_xR9dGNKdVNzFgFUaZCgJetpW5tXxb8wERovdjbc=1jS-KxA@mail.gmail.com>
-Message-ID: <CAD_xR9dGNKdVNzFgFUaZCgJetpW5tXxb8wERovdjbc=1jS-KxA@mail.gmail.com>
-Subject: Re: [RFC PATCH] bisect run: allow inverting meaning of exit code
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrvdehuddgudelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpeggfhgjhfffkffuvfgtsehttdertddttdejnecuhfhrohhmpefuthgvphhhvghnucfqsggvrhhhohhlthiivghruceoshhtvghvihgvsehqrhhpfhhfrdhnvghtqeenucfkphepvddtledrkeehrddvtdekrddujeeinecurfgrrhgrmhepmhhouggvpehsmhhtphdphhgvlhhopehmrghilhdqlhhjuddqfhdujeeirdhgohhoghhlvgdrtghomhdpihhnvghtpedvtdelrdekhedrvddtkedrudejiedprhgvthhurhhnqdhprghthhepufhtvghphhgvnhcuqfgsvghrhhholhhtiigvrhcuoehsthgvvhhivgesqhhrphhffhdrnhgvtheqpdhmrghilhhfrhhomhepshhtvghvihgvsehqrhhpfhhfrdhnvghtpdhnrhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="G3juXO9GfR42w+sw"
+Content-Disposition: inline
+In-Reply-To: <20200106213051.GD980197@coredump.intra.peff.net>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio,
 
-On Sun, Jan 5, 2020 at 8:16 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Yeah, I know.  I didn't mean to give you a perfect solution and that
-> was why I said "along the line of...".  I know I ignored the 128 and
-> above, as I usually trust that our contributors are competent enough
-> to be able to fill in the missing details given an outline.
->
-> The key takeaway I wanted you to notice was that a single case
-> statement that maps the exit code external command would give us
-> would look sufficient, without any of the {SUCCESS,FAIL}_TERM magic
-> you had in your version, which indicates that there is more than the
-> simple "using a run script to find where a bug was fixed can be done
-> by swapping exit code" going on.  And it is quite unclear why that
-> is needed either from the patch or the text that accompanied the
-> patch.
+--G3juXO9GfR42w+sw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2020-01-06 at 21:30:51, Jeff King wrote:
+> On Mon, Jan 06, 2020 at 10:15:53PM +0100, Miriam R. wrote:
+>=20
+> > in run-command.c file `exists_in_PATH()` function does this:
+> >=20
+> > static int exists_in_PATH(const char *file)
+> > {
+> > char *r =3D locate_in_PATH(file);
+> > free(r);
+> > return r !=3D NULL;
+> > }
+> >=20
+> > I wonder if it is correct to do return r !=3D NULL; after free(r);
+>=20
+> It is technically undefined behavior according to the C standard, but I
+> think it would be hard to find an implementation where it was not
+> perfectly fine in practice.
+>=20
+> Ref: http://c-faq.com/malloc/ptrafterfree.html
+>=20
+> I'd probably leave it alone unless it is causing a problem (e.g., a
+> static analyzer complaining).
 
-In this particular instance at least, I'm not competent enough to come
-up with a clean, portable way to create a single case statement that
-handles the final condition.
-The issue I'm having is that case-esac blocks do string matching, not
-integer value matching, so I don't know how to replicate the current
-behavior without a case pattern that looks like
-[12]|1[3-9]|1[01][0-9]|12[0-467]|1[3-9]|2[0-9]|[3-9].
+Unfortunately, compilers have gotten much more aggressive about assuming
+that undefined behavior never occurs and rewriting code based on that.
+clang is not as bad about doing that, but GCC is very aggressive about
+it.  There are multiple instances where NULL pointer checks have been
+optimized out because the compiler exploited undefined behavior to
+assume a pointer was never NULL.
 
+In this case, the only case in which we can safely assume that this
+behavior is acceptable is that r is NULL, in which case C11 tells us
+that "no action occurs" due to the free. So the compiler could just
+optimize this out to a "return 0".  Just because it doesn't now doesn't
+mean we can assume it won't in the future, so we do need to fix this.
 
+I'll send a patch.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
--- 
--- Stevie-O
-Real programmers use COPY CON PROGRAM.EXE
+--G3juXO9GfR42w+sw
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.17 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4T2fkACgkQv1NdgR9S
+9oupUQ/6AigY5ORFJ2W5O99LbKxOfKynkyUPQ6s/qHSf2jscUc3rUMd6ES4izxIa
+YSmHx8MrMuENNoBHT29diLoTL1Qfj8Et280QdUDm5gZPz0vsLw8y4jKPkFxwyZ0g
++pO3tTYKy83C4/MwtT9Tp47KPgmiLYDszAWAsCVjqxBytIGnTV7i5X7eZJEsaDGh
+MwYZxNbBydWOZBmSVIeAaKYtGI1AbZ7NHqeved0qQyWoppu5Ij98X/PxYSI6HLSn
+oSB+5b6l3loEml5qc/hwbW4vVmIcWjO+P8Hu8ok+OjwR75ovv0kHQytA1qotXkb+
+2fU7lQQNfJQMlLO8/eH5edCa4pSyDjQvXBLRLI4eNVQY2f71NKRGo2njlCUJVhSW
+iyVzvTw2aHOTcSW3eO0OO6d61Ow94I2vuUWk+alj1u4UTIZ0AjIvIVwYB3cMrUGv
+iwjFhnABwVWM7heYoSoIeXdCRlYY57QVEblUWrVjX+ostPFQhBTC94scukCextCS
+VTD15eTDkleL8aMQZdJHkKxjggZemsdGcdrVsMvN/tGcFpP98ltIrcYg5nWJssIc
+eQr8Lec9/CKfbsZ0SfdiNFSEaDECF+wpeCdnzGKkCIRSc/aRr1p7DCYV/Q2H7XFs
+Sz1u7irA2maJ6CvYRZEgU9+BphyCX4NkYRH2n7egzistSvV2UKc=
+=Sz2k
+-----END PGP SIGNATURE-----
+
+--G3juXO9GfR42w+sw--
