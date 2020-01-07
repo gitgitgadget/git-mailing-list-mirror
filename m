@@ -5,141 +5,95 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 668C5C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 090BDC33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:56:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 36CD02075A
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:55:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D189D2081E
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:56:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FO/y/Ldu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VjFMgPL2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727869AbgAGMzz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 07:55:55 -0500
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:33398 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727722AbgAGMzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 07:55:55 -0500
-Received: by mail-wr1-f54.google.com with SMTP id b6so53863684wrq.0
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 04:55:53 -0800 (PST)
+        id S1727894AbgAGM4E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 07:56:04 -0500
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:41230 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727722AbgAGM4D (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 07:56:03 -0500
+Received: by mail-qk1-f180.google.com with SMTP id x129so42493757qke.8
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 04:56:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:subject:from:reply-to:to:date:mime-version
-         :content-transfer-encoding;
-        bh=pur6WsgA99DM90h1AlbrkDS1eoz8ph+YwuDTNA87sKU=;
-        b=FO/y/LduqIeztsQGT1aMbkkDG1qHj0SFE501thdV4lz4aKrXly+FGZF4TSV5uOAIQo
-         ab5lLkB8CGj7Xz5J/yu/agQZsoiryHQy3ruvAIXEW72ZrEK3WhEZkz4zW7O0qeukzn5A
-         Zno9YtDx9q8PdmNTt1So2ZNrw/0P2bI+vGcjEemmS6uRxm4oRA3abC/FhrEYXZ19LWt+
-         hGtaf4BkEiQph/rsLnPzrU43TunuQFVqv5SnmY+Hlbdm6ZMNQ+9W4bQ1qXmGI4ZOoRKj
-         1HdIHoElAiYBOh/SOyauxlZHNam4EE6KuKqjHKpsbbPCJUoolxfZbAx/ld3P68b3f6FG
-         dFqQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=A9zsEBFmv0oV1ssg3oqwjc//flAXdFNibwqrNQ/EhWI=;
+        b=VjFMgPL2HSPhVAIi4MdtFLucOWYXTBqlXeHj3evA0qkV1RmrSHCYYvIvaDKi+035mg
+         H0YU+iKAKe0ebI2JoSeTp4AiiypfMqVjj81E5lO4Tcnp10uUORDXUUBpHsxf97bwrEwC
+         KFlsj336qR2Bn/pqsnWNhbrOrZBQ1pR+llIA1+F7HUHEKqOU04AMWux0f0BEaxqYsipH
+         PbB2D4witsnAlLDxrK8C9RuJ3UKGFSRVoIsakiTcqkRyS2tAZYMNlZmm1mx1AUiLY1qJ
+         Y5gKAe60YDD/XwEx+bGasBEkS7dXdszYPnhcZlNj18M0Mvizw2cxw2Mo4KkfcZuAn7Y2
+         KxMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:date
-         :mime-version:content-transfer-encoding;
-        bh=pur6WsgA99DM90h1AlbrkDS1eoz8ph+YwuDTNA87sKU=;
-        b=Tk/Y2t5TLvQDJdM1AFlrxO9mGY/X6r4DvRRxi7DTaSm1giJQU2qI7O90lf8vDz7IQE
-         MHfOGaGghCtDIQTCnUphWlttShpgS/7v8xIxPXiI0L5HlrGSREOWGqBMPAm65rh6AoAA
-         AcuCrBWwomAzoyRbZlGBqaQSbApTeqnN/VlIsnaxDfWufEUiVTXE4jOMlDywai8D8+mL
-         Clmf7jo2rxvkSTXBcZWULaz8oSm50FPPnENC+xvlZymyj/zWupZeMM1KS8YN4WqoEE1z
-         IRPx6jylGLmKBGEE05kNMXGAj84WPZ9Fp02rvkmaPET8ae47/nY2aSHjaG9yrZBe6A7p
-         DNhA==
-X-Gm-Message-State: APjAAAVXALrqt52wfeWM8VjoNkDpwEyvjHwqunlLvHy+Dj/Z/RlaPUl2
-        sjzGTqXnv7EfRiH/hzhe2xZeJZDY
-X-Google-Smtp-Source: APXvYqz5oLx4R0oUMbtBcnI/83LTQSUNO9uxRH2CQB1qfQkJOmQRUFEuWb23uqg8E9ZCDhxPgQaL5Q==
-X-Received: by 2002:adf:f803:: with SMTP id s3mr107967139wrp.7.1578401751652;
-        Tue, 07 Jan 2020 04:55:51 -0800 (PST)
-Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
-        by smtp.googlemail.com with ESMTPSA id s16sm76791237wrn.78.2020.01.07.04.55.50
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Jan 2020 04:55:51 -0800 (PST)
-Message-ID: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
-Subject: Broken branch after git commit - tracked files in staging area
- can't be removed with restore --staged, or commit or stash
-From:   Torsten Krah <krah.tm@gmail.com>
-Reply-To: krah.tm@gmail.com
-To:     git@vger.kernel.org
-Date:   Tue, 07 Jan 2020 13:55:50 +0100
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=A9zsEBFmv0oV1ssg3oqwjc//flAXdFNibwqrNQ/EhWI=;
+        b=YX93LZdswKl5SU5wkTlFbvSjsi++Frn0ZYNeyIz5XjD5dcZAsuw7WgCLze/GeQqsO9
+         ZOlTgg8Fxc2sSW+CmG60yQErnoXH68V3Rz438VrJPJzIxdgciNcIAaC4QOFasxPyW21p
+         BFDpCixG+idJGBt2ElHFp1KhT/5I7BQRcHTvaGpcWnjHv/H1NgsEfjlwt4zi/367UeV5
+         h+Ei5IHNVaIbzWvoM90wU6AmOkVqmIX38kQGtLhDXGXCfE8XwZDE3DSAaj2Hw/W6vrFS
+         QXX4FdsEXWtDntbDPRQ28xBH8XcZRduAxH9xeDUta/uN/WNVDzqyD4ELn82KuOLZZyE/
+         smPA==
+X-Gm-Message-State: APjAAAW8JYf7xmfPwVOOX0Xs2/1Xp9e7ClHEk80HWojIPoV2jO3JJQ2S
+        LVDAP6BJBgTT+sCQx6OaiIk1eRhm
+X-Google-Smtp-Source: APXvYqzdrS82GBolFIHrivYBYypiwNvncFpcuruK3VDiM3rsSSoa2O06jQgcpu2/0nEhNa8nxPFFlA==
+X-Received: by 2002:a05:620a:1467:: with SMTP id j7mr81267249qkl.76.1578401762488;
+        Tue, 07 Jan 2020 04:56:02 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:4018:daf7:6551:6995? ([2001:4898:a800:1010:f14d:daf7:6551:6995])
+        by smtp.gmail.com with ESMTPSA id m20sm22288365qkk.15.2020.01.07.04.56.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Jan 2020 04:56:02 -0800 (PST)
+Subject: Re: Assertion in git log graphing [regression in v2.25]
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>, Bradley Smith <brad@brad-smith.co.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <CAHt=fUXTHc4JPsapvHKnw5vHhp2cBOYRNfdaSDWBUnKt8fWfeA@mail.gmail.com>
+ <20200107114812.GE1073219@coredump.intra.peff.net>
+ <d694a5b5-9c88-0a34-b9fd-050e5e02c312@gmail.com>
+ <fe1cd838-d390-96ab-d3b4-72df5aa61947@gmail.com>
+ <CAPig+cRH-yeHmeikf=cbTTMDom+7SLtT2dmya=WP7fsy8tTY3g@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3fd8d52c-622e-29a6-442c-66797a3ae1f9@gmail.com>
+Date:   Tue, 7 Jan 2020 07:56:01 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
+MIME-Version: 1.0
+In-Reply-To: <CAPig+cRH-yeHmeikf=cbTTMDom+7SLtT2dmya=WP7fsy8tTY3g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On 1/7/2020 7:50 AM, Eric Sunshine wrote:
+> On Tue, Jan 7, 2020 at 7:42 AM Derrick Stolee <stolee@gmail.com> wrote:
+>> Here is a a patch that reproduces the test failure. It hits the
+>> assert, so it definitely fails.
+> 
+> What happens if someone builds the project with NDEBUG? Then the test
+> won't fail as expected. Perhaps this patch ought to also change those
+> asserts() to `if (...) BUG(...)` to ensure consistent behavior.
 
-as written here https://git-scm.com/community I should sent reports to
-this list - if I am mistaken please tell me where to direct this
-question / problem I've encountered.
+A final version of the patch would probably fix the bug and not use
+test_expect_failure. The other option would be to replace every
+assert() with a macro that did the "if (...) BUG(...);" conversion,
+but maybe that's not necessary in general.
 
-I've got a problem with a git branch and as this is the second time now
-(I never hit that problem before I've started using the "new" git
-restore --staged command - but since I am using it its the second time
-now - maybe by accident, maybe related - I don't know).
-
-Maybe someone can help me with this matter.
-
-I am using 2.24.1 git and my starting point was a local branch and I
-wanted to removed some files from the last commit I made.
-So I did this:
-
-1. git reset --soft HEAD~1
-
-Now I had all my files from the last commit in the staging area and to
-remove some of them I did:
-
-2. git restore --staged $my-files
-
-This worked too - now those files were moved to the working tree in git
-status and were untracked and the rest looked still fine in the staging
-area.
-
-3. git commit
-
-Now I made my commit - had a look on that with git show and it looks
-fine.
-
-But now I've hit the problem - looking with "git status" I was left now
-with 6 files in the staging area all marked as deleted - still they are
-in the working tree.
-But I did never deleted them and the most annoying part now - I can't
-fix that.
-
-I tried:
-
-1. git restore --staged
-
-Does not change anything, still deleted in the staging area.
-
-2. git stash
-
-Does create a stash entry (did not look at the content though yet) but
-staging area still unchanged.
-
-3. git commit
-
-Does create a commit but the whole commit is empty - nothing from the
-tracked staging area is there and "git status" is unchanged - still 6
-tracked deleted files.
-
-I don't know what went wrong and I am unable to fix it - help
-appreciated.
-I can't share the whole git repository but I can try whatever git
-command or other tool output may help here to shed some light on this -
-as written I don't have a clear reproducer, I just have my branch with
-a borked staging area.
-
-thx and kind regards
-
-Torsten
-
-PS: Of cause I can delete the whole repo and clone it again or remove
-the branch and start from a fresh new one ;) but I want to analyse
-this.
-
+-Stolee
 
