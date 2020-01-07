@@ -6,56 +6,61 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 488F1C32771
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D54C32771
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:34:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 15F812072C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:08:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F31BB20715
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:34:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="E7vDNeiz"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sZwn3oIS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727348AbgAGBIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 20:08:17 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60640 "EHLO
+        id S1727355AbgAGBeI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 20:34:08 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60662 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727295AbgAGBIR (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 20:08:17 -0500
+        by vger.kernel.org with ESMTP id S1727250AbgAGBeI (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 20:34:08 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 18CC260482;
-        Tue,  7 Jan 2020 01:08:16 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E487F60787;
+        Tue,  7 Jan 2020 01:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578359296;
-        bh=OoPHPsYeHWjkABSaFlK7I7idLWxwHn9PAlbuX5rr6kA=;
+        s=default; t=1578360846;
+        bh=gUuzfPksqvp5I67dGUt4m/MFInqh86lHYzBTvAnhuS0=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=E7vDNeiz+c/TyFReask77zzv+tXLl0JM0LGO3LNLokwFj4Ap7d+0GAXZ+tycbgTZl
-         N7fQfSb08wcmCinYSJ8MS7AnFcpUcKT2DUha474bOf8emNU4mnIY4siyrUej6cSPwe
-         ZKa5nL/SEVLVlWLGBWGkY5La8m9Wj4TuDZD4oNNmo5ZuMv2vYdWTBxZs51+pWqhIJv
-         HR1yyeUexA9CESMITFEGlh5hHQD+mSvA7+p3oeHj+8NjShTqy2KsUK4+6EJ+7IW6rm
-         uT5R0H5OTcTSeEDPnMyMzB0u/yqAdAludQYNars779Cry9AQHj13HORvjySxf7ZsOI
-         4zISnrI98UfkScArP6NtD/RFegSFOCWv+eSuD2plcwBYxi+zleef/Uv5CfjtILMdCP
-         n70y9Nc+aUbVnvnGTDqQneru5/JFlFjaHG0k7Y3MPJgI9GNSwzO1F5ZVJem0xnLkyy
-         xLK4fUpw1H7I9A5CjM8sQ6sSs8JaMrZURmM3NEbvrwPko1W9/i0
-Date:   Tue, 7 Jan 2020 01:08:09 +0000
+        b=sZwn3oISk/+ZONg+Ki+2qGv2G6j5DjDlFHMBEuFKkCvnm9UUdQctY7/vRgNqJTxnb
+         hGAiP8zq29dvf6hqB7RQLWg/grtTTYZrjJ5XwK4u72mtAb9rl6A5i4TJnZYScnFQj3
+         qKZKwx2K5C3F85KTaykLWQjN3iF6yx5q6wuW0/Y8zTSSxLRCe8PH740jF4eqTgOfzG
+         zmOP3YjJvvnR+r4JaIJLQdr7VrcePGxhfCD/YbhUqam+YMgVAhCQJBCTZ5QXHyvVyd
+         d9+EK/LL1HZdKX5SsgFt7zRYVWEr9RkuHk82S2nPHVxRcz2JFsGvCs/DPje2ZaujJn
+         wPsDodSlW6I2GGkgb2n17Yd4JQ/eZJp+wAiQ7wWsrXyegQCkVaCtc0+ALMWLJjoL/H
+         BaLwKokzYEbBL4LlhuqCzYbNot1xYZihWcw/IVv2P0UFvvj9Q4Wdq/LSkHZGDfmj1y
+         yQAhWsPbK1e45ln65G/IcPUlY2b8TMDyv3cELOmW+qQsz+pGY7g
+Date:   Tue, 7 Jan 2020 01:34:01 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     "Miriam R." <mirucam@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [Outreachy] Return value before or after free()?
-Message-ID: <20200107010809.GH6570@camp.crustytoothpaste.net>
+To:     Mike Rappazzo <rappazzo@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] sequencer: comment out the 'squash!' line
+Message-ID: <20200107013401.GI6570@camp.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, "Miriam R." <mirucam@gmail.com>,
-        git <git@vger.kernel.org>
-References: <CAN7CjDDBA0ZoCG9aaQf5rg3gxqny=EjR6v6jE1mnxvUJQSF_0Q@mail.gmail.com>
- <20200106213051.GD980197@coredump.intra.peff.net>
+        Mike Rappazzo <rappazzo@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <pull.511.git.1578326648.gitgitgadget@gmail.com>
+ <xmqq7e24a3t0.fsf@gitster-ct.c.googlers.com>
+ <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G3juXO9GfR42w+sw"
+        protocol="application/pgp-signature"; boundary="BOmey7/79ja+7F5w"
 Content-Disposition: inline
-In-Reply-To: <20200106213051.GD980197@coredump.intra.peff.net>
+In-Reply-To: <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
 X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
  5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
@@ -64,71 +69,78 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---G3juXO9GfR42w+sw
+--BOmey7/79ja+7F5w
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2020-01-06 at 21:30:51, Jeff King wrote:
-> On Mon, Jan 06, 2020 at 10:15:53PM +0100, Miriam R. wrote:
+On 2020-01-06 at 19:20:09, Mike Rappazzo wrote:
+> On Mon, Jan 6, 2020 at 12:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > "Michael Rappazzo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> > > Since this change what the expected post-rebase commit comment would =
+look
+> > > like, related test expectations are adjusted to reflect the the new
+> > > expectation. A new test is added for the new expectation.
+> >
+> > Doesn't that mean automated tools people may have written require
+> > similar adjustment to continue working correctly if this change is
+> > applied?
+> >
+> > Can you tell us more about your expected use case?  I am imagining
+> > that most people use the log messages from both/all commits being
+> > squashed when manually editing to perfect the final log message (as
+> > opposed to mechanically processing the concatenated message), so it
+> > shouldn't matter if the squash! title is untouched or commented out
+> > to them, and those (probably minority) who are mechanical processing
+> > will be hurt with this change, so I do not quite see the point of
+> > this patch.
 >=20
-> > in run-command.c file `exists_in_PATH()` function does this:
-> >=20
-> > static int exists_in_PATH(const char *file)
-> > {
-> > char *r =3D locate_in_PATH(file);
-> > free(r);
-> > return r !=3D NULL;
-> > }
-> >=20
-> > I wonder if it is correct to do return r !=3D NULL; after free(r);
+> This change isn't removing the subject line from the commit message
+> during the edit phase, it is only commenting it out.  With the subject be=
+ing
+> commented out, it can minimize the effort to edit during the squash.
 >=20
-> It is technically undefined behavior according to the C standard, but I
-> think it would be hard to find an implementation where it was not
-> perfectly fine in practice.
->=20
-> Ref: http://c-faq.com/malloc/ptrafterfree.html
->=20
-> I'd probably leave it alone unless it is causing a problem (e.g., a
-> static analyzer complaining).
+> Furthermore, it can help to eliminate accidental inclusion in the final
+> message.  Ultimately, the accidental inclusion is my motivation for
+> submitting this.
 
-Unfortunately, compilers have gotten much more aggressive about assuming
-that undefined behavior never occurs and rewriting code based on that.
-clang is not as bad about doing that, but GCC is very aggressive about
-it.  There are multiple instances where NULL pointer checks have been
-optimized out because the compiler exploited undefined behavior to
-assume a pointer was never NULL.
+I think this series would be useful.  I've occasionally included the
+"squash!" line in my commit even after I've edited the rest of the
+commit message.  It's not super frequent, but it is a hassle to have to
+delete it, and it does happen occasionally.  Usually I catch it before I
+send out the series for review.
 
-In this case, the only case in which we can safely assume that this
-behavior is acceptable is that r is NULL, in which case C11 tells us
-that "no action occurs" due to the free. So the compiler could just
-optimize this out to a "return 0".  Just because it doesn't now doesn't
-mean we can assume it won't in the future, so we do need to fix this.
-
-I'll send a patch.
+I can see the argument that this makes it a little harder for mechanical
+processing across versions, but I suspect most of that looks something
+like "sed -i -e '/^squash! /d' COMMIT_EDITMSG" and it probably won't be
+affected.  We do make occasional slightly incompatible changes across
+versions in order to improve user experience, and I think a lot of folks
+who use squash commits will find this a pleasant improvement.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---G3juXO9GfR42w+sw
+--BOmey7/79ja+7F5w
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.17 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4T2fkACgkQv1NdgR9S
-9oupUQ/6AigY5ORFJ2W5O99LbKxOfKynkyUPQ6s/qHSf2jscUc3rUMd6ES4izxIa
-YSmHx8MrMuENNoBHT29diLoTL1Qfj8Et280QdUDm5gZPz0vsLw8y4jKPkFxwyZ0g
-+pO3tTYKy83C4/MwtT9Tp47KPgmiLYDszAWAsCVjqxBytIGnTV7i5X7eZJEsaDGh
-MwYZxNbBydWOZBmSVIeAaKYtGI1AbZ7NHqeved0qQyWoppu5Ij98X/PxYSI6HLSn
-oSB+5b6l3loEml5qc/hwbW4vVmIcWjO+P8Hu8ok+OjwR75ovv0kHQytA1qotXkb+
-2fU7lQQNfJQMlLO8/eH5edCa4pSyDjQvXBLRLI4eNVQY2f71NKRGo2njlCUJVhSW
-iyVzvTw2aHOTcSW3eO0OO6d61Ow94I2vuUWk+alj1u4UTIZ0AjIvIVwYB3cMrUGv
-iwjFhnABwVWM7heYoSoIeXdCRlYY57QVEblUWrVjX+ostPFQhBTC94scukCextCS
-VTD15eTDkleL8aMQZdJHkKxjggZemsdGcdrVsMvN/tGcFpP98ltIrcYg5nWJssIc
-eQr8Lec9/CKfbsZ0SfdiNFSEaDECF+wpeCdnzGKkCIRSc/aRr1p7DCYV/Q2H7XFs
-Sz1u7irA2maJ6CvYRZEgU9+BphyCX4NkYRH2n7egzistSvV2UKc=
-=Sz2k
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4T4AkACgkQv1NdgR9S
+9otJzRAAvJc7xDKmrn4QVfjQIXS0+x4M7saz89AtS0BuBSvQzDXCEO7w22duljsn
+Q06ZHUn7XvBOv1rbccryAhi+zEyvUxQz+cCJROhVmnhaDETP7Sa859qvOkEsy0ju
+AG8qpDDqzXRJMtD9ATTVPDtR9SoDcJWUQ/BiAtGx6SEbEHqbyuCWj4PDsqKh86RD
+N0nw56sIZk1T7oFbmZiQO2BRujx6nERhYMKBeGcmjV0d0NKp/LGHX1NZVgsyNRKy
+bd+lY/G/LQtDdmLixSwgkJS9zfEZNzU861Ax0CYW5BwWO7WpxAswpEUgFzYF/SvD
+e2vb4mYuxsuvBItawslbqAS636qgT7zi7vzm7Ulq2eGuVWn3L0rcfsAnsJrj0Hiy
+Qv9DTB5K4cLKltoPXBUQUDBPGe4blmVWhOk1NfOVMNJKr1CrgtlEPB2bMPkdJCwi
+EZj+8EWYpct+50lm2GARt0vWMb7+CCFunxP3FYtaIEktWPAZ8/VH+8haJp13rs6f
+GqjgzA7K5yCWfCeo+PMMH/z4Jtkw/Xk9hvAn1ovc4UfkBPuA6LRN6CUfqxXSbnU9
+6ba0QBt8oshxyUApkFjagI8fBMam+2uzjZI9NFvUAQMwSGRuSY8OrBwXXklu9DlN
+Ds91HOvZ/9GpFmDjKdDQV1HB71cLxeBs/DhDgFQ1yzLKdROwZv8=
+=5Ebh
 -----END PGP SIGNATURE-----
 
---G3juXO9GfR42w+sw--
+--BOmey7/79ja+7F5w--
