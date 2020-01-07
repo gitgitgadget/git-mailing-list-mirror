@@ -2,93 +2,85 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8989C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A4A9C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:04:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A6DC220656
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:43:32 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DbpVEeUV"
+	by mail.kernel.org (Postfix) with ESMTP id E0ABE2073D
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728114AbgAGNnb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 08:43:31 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:46163 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727880AbgAGNnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 08:43:31 -0500
-Received: by mail-wr1-f52.google.com with SMTP id z7so53902255wrl.13
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 05:43:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:reply-to:to:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gWhljJ5uAY6BnF6rKKlWkndfXNHbWKFhJnBxPdE3Oso=;
-        b=DbpVEeUVAsdWX7NIvhDbaW1IZTAgGw2GImCR85IMBPCfaFYMnsPlgRB9kfkDYTPgnI
-         yAY88l3TjkGPcCwl1hLnwWBOjRN+i5vsN0K2E7Y11BWPqfatMFb46S0vmNNN7FOUVAWq
-         SA1b3t2TvqDdteX42V/CMzyPlwOgmsto0xF0t6WO3ygmgb9jMzkRp7x+8pcVxfoA1MB4
-         G6VHgsUURVYrWiicUUtIhFIw9HCr35HvuwKEwNsD3I8Xs1cPeCxQsMx+ECXaf68C87D7
-         SvzXkjHKYaJHv1WdW/8HCL0toUFxQ8oAiFihtvXIM5F1NLDha5ubiVlQtq8ctDn/e9Bj
-         C+3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:date
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=gWhljJ5uAY6BnF6rKKlWkndfXNHbWKFhJnBxPdE3Oso=;
-        b=SyDUT3grgTHDRR10laTvFRAdHUtUY/9VPodb7VxYB1ivbo9Sj25G2EsH2tHSYST32q
-         1Bf3BI0App9ER56uW2sVpVZ3DTRsd4D9qUoAcwu9JguXy8IONNuDt7ntc5Srv3JRDxhw
-         /bsFMSI5Rc8y3pfwBPvKhmBUIskjQb5rsl+BOpWmwIvHCnzsvZksrlRFHcPzRPLpdjnt
-         gYaSBJ/xAaydSSpd8X47BfG/jzqE2Sv8gr6AFoAwawwwfc054sxCYo68tjjvwaEEzEaU
-         OsvByWn6/vK4MpB0ZJ6c/keC/CA0CweAM79IxR/yY/w1wX8z81Ih54xWM22OBfMkDmV/
-         RyQA==
-X-Gm-Message-State: APjAAAW9D00Ab7cZlmf4zPmu7C5tDwdu6H0mG64QBnTY36nuDDVazyaL
-        HbE2TpZOSNtjyMDc+rLKy37ncdBm
-X-Google-Smtp-Source: APXvYqwW+QPs7/8SzT368GCHlfniexVIgJSnVKifOgovC0wjToiI0xOPz6yusVEUx1pCj4wVEH5kzg==
-X-Received: by 2002:adf:ef0b:: with SMTP id e11mr92650322wro.128.1578404609342;
-        Tue, 07 Jan 2020 05:43:29 -0800 (PST)
-Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
-        by smtp.googlemail.com with ESMTPSA id v83sm27171231wmg.16.2020.01.07.05.43.28
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Jan 2020 05:43:28 -0800 (PST)
-Message-ID: <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
-Subject: Re: Broken branch after git commit - tracked files in staging area
- can't be removed with restore --staged, or commit or stash
-From:   Torsten Krah <krah.tm@gmail.com>
-Reply-To: krah.tm@gmail.com
-To:     git@vger.kernel.org
-Date:   Tue, 07 Jan 2020 14:43:27 +0100
-In-Reply-To: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
-References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1728060AbgAGOET (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 09:04:19 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59070 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727658AbgAGOET (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 09:04:19 -0500
+Received: (qmail 12526 invoked by uid 109); 7 Jan 2020 14:04:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 Jan 2020 14:04:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31029 invoked by uid 111); 7 Jan 2020 14:09:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jan 2020 09:09:52 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 7 Jan 2020 09:04:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Bradley Smith <brad@brad-smith.co.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        James Coglan <jcoglan@gmail.com>, git@vger.kernel.org
+Subject: Re: Assertion in git log graphing [regression in v2.25]
+Message-ID: <20200107140417.GA12242@coredump.intra.peff.net>
+References: <CAHt=fUXTHc4JPsapvHKnw5vHhp2cBOYRNfdaSDWBUnKt8fWfeA@mail.gmail.com>
+ <20200107114812.GE1073219@coredump.intra.peff.net>
+ <5f956281-e861-f274-be43-95d99a625abb@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5f956281-e861-f274-be43-95d99a625abb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Dienstag, den 07.01.2020, 13:55 +0100 schrieb Torsten Krah:
-> 3. git commit
+On Tue, Jan 07, 2020 at 08:25:59AM -0500, Derrick Stolee wrote:
+
+> On 1/7/2020 6:48 AM, Jeff King wrote:
+> > The assertion itself is quite old, so I wondered if it was even still
+> > relevant. Removing it does produce a reasonable-looking graph:
 > 
-> Now I made my commit - had a look on that with git show and it looks
-> fine.
+> As I'm digging into this case, and finding when the assertion is hit,
+> I see that the issue is in the line further below your coloring issue:
 
-I had a second look on this step and the result it wrong.
+Oh, you're right. I totally missed that.
 
-Although restore --staged moved my unwanted files away from the staging
-area and "git status" told me that they are not "in" the commit the
-commit itself did still include them.
+So perhaps we have two bugs, or perhaps they have the same root cause.
 
-So they are listed as unversioned now but are in the commit although
-git status told me otherwise - weird.
+> >   | | | | * dd068b4 Merge commit '8f076d8' into HEAD
+> >   | |_|_|/| 
+> >   |/| | |/  
+> >   | | |/|   
+> >   | |/| |   
+> >   | * | | 8f076d8 5
+> 
+> What is output is actually this, above. But the logic that includes the
+> assert is checking where the underscores end, and the shown underscores
+> actually pass the check. The issue is that it seems like it really wants
+> to show this:
+> 
+> >   | | | | * dd068b4 Merge commit '8f076d8' into HEAD
+> >   | |_|_|/| 
+> >   |/| |_|/  
+> >   | |/| |   
+> >   | * | | 8f076d8 5
+> 
+> Note that I dropped a line and compressed a slash into an underscore. It's
+> on that line that this condition is being hit.
 
-kind regards
+Hrm. I could see either being acceptable, but I do think the second one
+is a bit easier to read. I'm not sure which was intended for this case.
 
-Torsten
-
+-Peff
