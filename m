@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25431C33C9B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5758C33CA5
 	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E9489207FF
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83DAE2075A
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjCxVfH8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzIdWLXV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727611AbgAGExi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 23:53:38 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:44266 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727550AbgAGExg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 23:53:36 -0500
-Received: by mail-qk1-f195.google.com with SMTP id w127so41589691qkb.11
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 20:53:35 -0800 (PST)
+        id S1727615AbgAGExj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 23:53:39 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:38569 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727601AbgAGExh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 23:53:37 -0500
+Received: by mail-qk1-f194.google.com with SMTP id k6so41621223qki.5
+        for <git@vger.kernel.org>; Mon, 06 Jan 2020 20:53:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PZRvR2Y+JQoX3lzFkTjwKScWJiTweTmkNbDFZYlPaFI=;
-        b=FjCxVfH8DrcoZJa521d3nhrdkJj41HODQaXKKsfIULV6JarzxJv+1Ch5xA4xIZP9x0
-         mH9mMjwF/0+zSOV0YCIeNkN2wFA4Fb0VJtD5hWO14x/EuYVeVPZHaGF7t69RnKbjnnhq
-         CzYzVfLWKU2VRHKoUocBJT8hp/jd3Fm63KgvHUDXkAL2p6xXkdHspSHqNciJ4P9vNJhZ
-         yJA++IYLLAaaDVZk4YPnUO1wD7UIMHSWDXC/XWjYp2pkdGyxmkqLz4JHbzxMiuahQpYV
-         T4UZmU/9eAdZOzJxBBJHDC4B6gvpv9KJzT1hlU9+SkkaPtQ+OrPt9pdxDY6lVtKhoj2p
-         eGAQ==
+        bh=58u2/7L7YkNqYjYqFJfE5sJpBL3Xh/U2MtboribzNkg=;
+        b=YzIdWLXV8bRW/vLfC9JKWKMclVA21oX1OPFw//A4VyAoIlI22GsyndKfi3c5Ac07MG
+         Ng02O7kYl2PC69hlZG7Wr1zEOsO06VvCRgrrUlT+Hh/NP7G7vo5bIhQ0Ns0XMHgX54SJ
+         WjmdxoNU8HbIaVK/X02VO/FC2y3YxQWKgll9vaLE9MAgacZ9zJsBarYGfs2Z6hsipf4e
+         4aQ+ZD/nHlDKxk1SAQE8E6EGts7dL7Beb8ppPE1qYLr2oZlkFAX8VT62xjbMT9NduRM8
+         Cqyt9iYKudufFfpz8nwv8su7RETQ4Cw5wWavLPjgPR+T4Q80jC/17nfNhRqKghZkFDVl
+         BwCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PZRvR2Y+JQoX3lzFkTjwKScWJiTweTmkNbDFZYlPaFI=;
-        b=WphnOqO5BiVPQK5F12sxGGmuHLeS/3Suanff0NTAw37RZQyhWHMhTiZWie6kVO/+nF
-         ob3yABuSKjHa6+mWa5HHLgF18391vuSPlYxt3MapxVn2JM9J7+4aV0BFrMnVc71CiUOV
-         Tt0YsQeqTZSx+cRMfxclpCGCqjVk10dw03wiqzeku4sXCunQ76AbnwoDAgulUb1lbHDE
-         F4dBrclCnP2Qkb8k2OMTR23P+EsKCLwPwSorJYRh4ijudDZb5Av8xtM0BURz4cm3U50W
-         KwIJdquAKi1QPNAnQD4+M66j+uD5qQCsVgpRGRss9w4PA+6b6qbqixf1rjYBvQoUyGkS
-         A1ow==
-X-Gm-Message-State: APjAAAUarkEPpeie8jTPzgQlevNi7COFf/VL8EJfmYI1U2YRJMtTrsjR
-        IcbDgbRIv1VZOBoR3TqEQDeL5KkX
-X-Google-Smtp-Source: APXvYqynTGoT3xs16gaMYTjeaHDom7bej6woiBV5WdWq+LBaqrzgweg7ACnW0I+7dsnXyQREFdUN5g==
-X-Received: by 2002:a05:620a:20c7:: with SMTP id f7mr86513904qka.440.1578372815095;
-        Mon, 06 Jan 2020 20:53:35 -0800 (PST)
+        bh=58u2/7L7YkNqYjYqFJfE5sJpBL3Xh/U2MtboribzNkg=;
+        b=bhqYC6RnfHUsfihW+7Q6VTihTCs1nqhzk4ScwJ5gY7MBDkCJW0yIc0dwDtsVVOvaK9
+         JGE2B2EXYXAg/UJvPPTrJEJrRFKAHOMFlPEk1ebMdD7ZERnkFYiOl1/648F7hccSZREm
+         xzd/yLZOE71skJoNSkP859pAX54ZDLhg4akJE0LKj0DyO0GWP1AM15LSXFVjdBDa1Og3
+         6tc/hu64Uce1s8BltqbTOSFqJzHCo6foeRCURlsrZbR/o006feQb7nDEYv0ga9Hg6NEP
+         W5BLuPABzNrKPBEkIg/wxlK58KKp3PMxvhAscLYrdV8SkjW046ThbvWMbcOfsHKmzrfl
+         Zzow==
+X-Gm-Message-State: APjAAAURzb/n9esSFmq7+Hi7MbUUJLNCTZZQujpCMS6FKRPrUzQZNtUh
+        TyipUA4CJ0jQomJgi9RtZKWY/6v4
+X-Google-Smtp-Source: APXvYqzRNxiDmgaWPpiqkS3A25rlktXPTIQTq4wCtvN+whr99YfBWuu8euVv4WaLjzuLN31NImvu1w==
+X-Received: by 2002:a05:620a:150e:: with SMTP id i14mr84299666qkk.273.1578372816020;
+        Mon, 06 Jan 2020 20:53:36 -0800 (PST)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id t2sm21663893qkc.31.2020.01.06.20.53.34
+        by smtp.gmail.com with ESMTPSA id t2sm21663893qkc.31.2020.01.06.20.53.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 20:53:34 -0800 (PST)
+        Mon, 06 Jan 2020 20:53:35 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 09/16] t3310: extract common notes_merge_files_gone()
-Date:   Mon,  6 Jan 2020 23:53:06 -0500
-Message-Id: <46fe82b856d217265b01bf2bcf1ff78fa9474fc3.1578372682.git.liu.denton@gmail.com>
+Subject: [PATCH v2 10/16] t3415: stop losing return codes of git commands
+Date:   Mon,  6 Jan 2020 23:53:07 -0500
+Message-Id: <32d2051b319449205b18048c800b906b675460f4.1578372682.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.rc1.180.g49a268d3eb
 In-Reply-To: <cover.1578372682.git.liu.denton@gmail.com>
 References: <cover.1577454401.git.liu.denton@gmail.com> <cover.1578372682.git.liu.denton@gmail.com>
@@ -74,83 +74,233 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We have many statements which are duplicated. Extract and replace these
-duplicate statements with notes_merge_files_gone().
-
-While we're at it, replace the test_might_fail(), which should only be
-used on git commands.
-
-Also, remove the redirection from stderr to /dev/null. This is because
-the test scripts automatically suppress output already. Otherwise, if a
-developer asks for verbose output via the `-v` flag, the stderr output
-may be useful for debugging.
+Fix invocations of git commands so their exit codes are not lost
+within non-assignment command substitutions.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t3310-notes-merge-manual-resolve.sh | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ t/t3415-rebase-autosquash.sh | 113 +++++++++++++++++++++++++----------
+ 1 file changed, 82 insertions(+), 31 deletions(-)
 
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index 2dea846e25..d746f4ba55 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -32,6 +32,12 @@ verify_notes () {
- 	test_cmp "expect_log_$notes_ref" "output_log_$notes_ref"
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index 22d218698e..b0add36f82 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -37,8 +37,12 @@ test_auto_fixup () {
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code $1 &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep first commit >actual &&
++	test_line_count = 1 actual
  }
  
-+notes_merge_files_gone () {
-+	# No .git/NOTES_MERGE_* files left
-+	{ ls .git/NOTES_MERGE_* >output || :; } &&
-+	test_must_be_empty output
-+}
-+
- cat <<EOF | sort >expect_notes_x
- 6e8e3febca3c2bb896704335cc4d0c34cb2f8715 $commit_sha4
- e5388c10860456ee60673025345fe2e153eb8cf8 $commit_sha3
-@@ -335,9 +341,7 @@ EOF
- y and z notes on 4th commit
- EOF
- 	git notes merge --commit &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	notes_merge_files_gone &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
- 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
- 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-@@ -397,9 +401,7 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
+ test_expect_success 'auto fixup (option)' '
+@@ -66,8 +70,12 @@ test_auto_squash () {
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code $1 &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep first commit >actual &&
++	test_line_count = 2 actual
+ }
  
- test_expect_success 'abort notes merge' '
- 	git notes merge --abort &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	notes_merge_files_gone &&
- 	# m has not moved (still == y)
- 	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
-@@ -464,9 +466,7 @@ EOF
- 	echo "new note on 5th commit" > .git/NOTES_MERGE_WORKTREE/$commit_sha5 &&
- 	# Finalize merge
- 	git notes merge --commit &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	notes_merge_files_gone &&
- 	# Merge commit has pre-merge y and pre-merge z as parents
- 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
- 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
-@@ -553,9 +553,7 @@ EOF
+ test_expect_success 'auto squash (option)' '
+@@ -94,7 +102,8 @@ test_expect_success 'misspelled auto squash' '
+ 	git log --oneline >actual &&
+ 	test_line_count = 4 actual &&
+ 	git diff --exit-code final-missquash &&
+-	test 0 = $(git rev-list final-missquash...HEAD | wc -l)
++	git rev-list final-missquash...HEAD >list &&
++	test_must_be_empty list
+ '
  
- test_expect_success 'resolve situation by aborting the notes merge' '
- 	git notes merge --abort &&
--	# No .git/NOTES_MERGE_* files left
--	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
--	test_must_be_empty output &&
-+	notes_merge_files_gone &&
- 	# m has not moved (still == w)
- 	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
- 	# Verify that other notes refs has not changed (w, x, y and z)
+ test_expect_success 'auto squash that matches 2 commits' '
+@@ -113,9 +122,15 @@ test_expect_success 'auto squash that matches 2 commits' '
+ 	git log --oneline >actual &&
+ 	test_line_count = 4 actual &&
+ 	git diff --exit-code final-multisquash &&
+-	test 1 = "$(git cat-file blob HEAD^^:file1)" &&
+-	test 2 = $(git cat-file commit HEAD^^ | grep first | wc -l) &&
+-	test 1 = $(git cat-file commit HEAD | grep first | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^^ >commit &&
++	grep first commit >actual &&
++	test_line_count = 2 actual &&
++	git cat-file commit HEAD >commit &&
++	grep first commit >actual &&
++	test_line_count = 1 actual
+ '
+ 
+ test_expect_success 'auto squash that matches a commit after the squash' '
+@@ -134,25 +149,38 @@ test_expect_success 'auto squash that matches a commit after the squash' '
+ 	git log --oneline >actual &&
+ 	test_line_count = 5 actual &&
+ 	git diff --exit-code final-presquash &&
+-	test 0 = "$(git cat-file blob HEAD^^:file1)" &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 1 = $(git cat-file commit HEAD | grep third | wc -l) &&
+-	test 1 = $(git cat-file commit HEAD^ | grep third | wc -l)
++	echo 0 >expect &&
++	git cat-file blob HEAD^^:file1 >actual &&
++	test_cmp expect actual &&
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD >commit &&
++	grep third commit >actual &&
++	test_line_count = 1 actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep third commit >actual &&
++	test_line_count = 1 actual
+ '
+ test_expect_success 'auto squash that matches a sha1' '
+ 	git reset --hard base &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! $(git rev-parse --short HEAD^)" &&
++	oid=$(git rev-parse --short HEAD^) &&
++	git commit -m "squash! $oid" &&
+ 	git tag final-shasquash &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code final-shasquash &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 1 = $(git cat-file commit HEAD^ | grep squash | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep squash commit >actual &&
++	test_line_count = 1 actual
+ '
+ 
+ test_expect_success 'auto squash that matches longer sha1' '
+@@ -160,15 +188,20 @@ test_expect_success 'auto squash that matches longer sha1' '
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! $(git rev-parse --short=11 HEAD^)" &&
++	oid=$(git rev-parse --short=11 HEAD^) &&
++	git commit -m "squash! $oid" &&
+ 	git tag final-longshasquash &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code final-longshasquash &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 1 = $(git cat-file commit HEAD^ | grep squash | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep squash commit >actual &&
++	test_line_count = 1 actual
+ '
+ 
+ test_auto_commit_flags () {
+@@ -183,8 +216,12 @@ test_auto_commit_flags () {
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code final-commit-$1 &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test $2 = $(git cat-file commit HEAD^ | grep first | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep first commit >actual &&
++	test_line_count = $2 actual
+ }
+ 
+ test_expect_success 'use commit --fixup' '
+@@ -210,11 +247,15 @@ test_auto_fixup_fixup () {
+ 	(
+ 		set_cat_todo_editor &&
+ 		test_must_fail git rebase --autosquash -i HEAD^^^^ >actual &&
++		head=$(git rev-parse --short HEAD) &&
++		parent1=$(git rev-parse --short HEAD^) &&
++		parent2=$(git rev-parse --short HEAD^^) &&
++		parent3=$(git rev-parse --short HEAD^^^) &&
+ 		cat >expected <<-EOF &&
+-		pick $(git rev-parse --short HEAD^^^) first commit
+-		$1 $(git rev-parse --short HEAD^) $1! first
+-		$1 $(git rev-parse --short HEAD) $1! $2! first
+-		pick $(git rev-parse --short HEAD^^) second commit
++		pick $parent3 first commit
++		$1 $parent1 $1! first
++		$1 $head $1! $2! first
++		pick $parent2 second commit
+ 		EOF
+ 		test_cmp expected actual
+ 	) &&
+@@ -222,13 +263,17 @@ test_auto_fixup_fixup () {
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual
+ 	git diff --exit-code "final-$1-$2" &&
+-	test 2 = "$(git cat-file blob HEAD^:file1)" &&
++	echo 2 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep first commit >actual &&
+ 	if test "$1" = "fixup"
+ 	then
+-		test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
++		test_line_count = 1 actual
+ 	elif test "$1" = "squash"
+ 	then
+-		test 3 = $(git cat-file commit HEAD^ | grep first | wc -l)
++		test_line_count = 3 actual
+ 	else
+ 		false
+ 	fi
+@@ -256,19 +301,25 @@ test_expect_success C_LOCALE_OUTPUT 'autosquash with custom inst format' '
+ 	echo 2 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! $(git rev-parse --short HEAD^)" &&
++	oid=$(git rev-parse --short HEAD^) &&
++	git commit -m "squash! $oid" &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+-	git commit -m "squash! $(git log -n 1 --format=%s HEAD~2)" &&
++	subject=$(git log -n 1 --format=%s HEAD~2) &&
++	git commit -m "squash! $subject" &&
+ 	git tag final-squash-instFmt &&
+ 	test_tick &&
+ 	git rebase --autosquash -i HEAD~4 &&
+ 	git log --oneline >actual &&
+ 	test_line_count = 3 actual &&
+ 	git diff --exit-code final-squash-instFmt &&
+-	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+-	test 2 = $(git cat-file commit HEAD^ | grep squash | wc -l)
++	echo 1 >expect &&
++	git cat-file blob HEAD^:file1 >actual &&
++	test_cmp expect actual &&
++	git cat-file commit HEAD^ >commit &&
++	grep squash commit >actual &&
++	test_line_count = 2 actual
+ '
+ 
+ test_expect_success 'autosquash with empty custom instructionFormat' '
 -- 
 2.25.0.rc1.180.g49a268d3eb
 
