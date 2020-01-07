@@ -5,108 +5,90 @@ X-Spam-Level:
 X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 570A7C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D8989C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:43:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 252532081E
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:33:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6DC220656
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 13:43:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IlCJASiR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DbpVEeUV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728087AbgAGNdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 08:33:00 -0500
-Received: from mail-pl1-f177.google.com ([209.85.214.177]:43546 "EHLO
-        mail-pl1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727658AbgAGNdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 08:33:00 -0500
-Received: by mail-pl1-f177.google.com with SMTP id p27so23206657pli.10
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 05:32:59 -0800 (PST)
+        id S1728114AbgAGNnb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 08:43:31 -0500
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:46163 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727880AbgAGNnb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 08:43:31 -0500
+Received: by mail-wr1-f52.google.com with SMTP id z7so53902255wrl.13
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 05:43:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=JTtM3ZDXjBSJDOqUVCSzCBY+v3nxgSHm+TinqkXIVQQ=;
-        b=IlCJASiR2HV0hrPuLy8tcNVY1mq6Uh7s7UtRGXZfcPpvLIrSWIIsiW30uV6goLPDfN
-         y7eMq4A6H8lbTgSYttLqIuTzFZV5O52DW3tgvRzMYRGtrvBSJq1mbAcDoE8wC1VcYSdj
-         5WaNSVFbWcL/b8YW+YP9WaBsdpRCbi2Pefz6aa3e8LQzxikgA7GvEyd0X4rPxNdyMkJZ
-         rGySDVPwIVhUxC8Vuz9+JnsFsiLJHr6/FVIGe5UHL/lk4L/sgDRMrCxU5hTUszYX+6+L
-         NApVgIdIrOLjVa7bf1+UqIcRkNLtM9cOWA2m2Ym6RyjmBHsOKkYWl2kTXwkdTwFXqFTV
-         Mfng==
+        h=message-id:subject:from:reply-to:to:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=gWhljJ5uAY6BnF6rKKlWkndfXNHbWKFhJnBxPdE3Oso=;
+        b=DbpVEeUVAsdWX7NIvhDbaW1IZTAgGw2GImCR85IMBPCfaFYMnsPlgRB9kfkDYTPgnI
+         yAY88l3TjkGPcCwl1hLnwWBOjRN+i5vsN0K2E7Y11BWPqfatMFb46S0vmNNN7FOUVAWq
+         SA1b3t2TvqDdteX42V/CMzyPlwOgmsto0xF0t6WO3ygmgb9jMzkRp7x+8pcVxfoA1MB4
+         G6VHgsUURVYrWiicUUtIhFIw9HCr35HvuwKEwNsD3I8Xs1cPeCxQsMx+ECXaf68C87D7
+         SvzXkjHKYaJHv1WdW/8HCL0toUFxQ8oAiFihtvXIM5F1NLDha5ubiVlQtq8ctDn/e9Bj
+         C+3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=JTtM3ZDXjBSJDOqUVCSzCBY+v3nxgSHm+TinqkXIVQQ=;
-        b=pKC9s/P3VWPYP+AyYO3G00JwDa4un6wsonVApciIShRmOtc0MsC8a3J3bjELBUZ9L/
-         +Wz3hCMc3TAWn4/iVI4s+5vu+bu7TD8ASagYZme69ngkslDl8hgnmLkflbWlcfD8DnwT
-         AQx3e7Kxi3f6xiR2deVSg8KUr+7nR1114zUrSuMYjjMn1o+q6oB/bnurMxNaaoms7gMu
-         yrLXbsopmgbDKBK2v74SQjgx7ueamir1pmmyL5Iamy4KFX4aR8ViZcbjlHjBXJAvON8v
-         6aifpnd5PVk4XloSPBgGrWkxqV1KzVrTtf6+JacfpFSJdOVNZdbMWj9Rny8am1jAHTZG
-         SXOw==
-X-Gm-Message-State: APjAAAXeb1aQxWYnSx3rANYIEI+ayrX2jpAX62OsqDsiDlDwVl4ZWZCo
-        zBcR9RqFSbiCT7VztaI2KyIN0jMR
-X-Google-Smtp-Source: APXvYqzknLtptDEELoYqN28ZbgHfPqZEzSQ43UYD6Kl79jcWuJAKBXkn6xF9/cDtBbqYzRSnbjbJwg==
-X-Received: by 2002:ad4:59c2:: with SMTP id el2mr80174585qvb.152.1578403561366;
-        Tue, 07 Jan 2020 05:26:01 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:4018:daf7:6551:6995? ([2001:4898:a800:1012:f14b:daf7:6551:6995])
-        by smtp.gmail.com with ESMTPSA id s33sm25561543qtb.52.2020.01.07.05.26.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2020 05:26:00 -0800 (PST)
-Subject: Re: Assertion in git log graphing [regression in v2.25]
-To:     Jeff King <peff@peff.net>, Bradley Smith <brad@brad-smith.co.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        James Coglan <jcoglan@gmail.com>, git@vger.kernel.org
-References: <CAHt=fUXTHc4JPsapvHKnw5vHhp2cBOYRNfdaSDWBUnKt8fWfeA@mail.gmail.com>
- <20200107114812.GE1073219@coredump.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5f956281-e861-f274-be43-95d99a625abb@gmail.com>
-Date:   Tue, 7 Jan 2020 08:25:59 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
-MIME-Version: 1.0
-In-Reply-To: <20200107114812.GE1073219@coredump.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:date
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=gWhljJ5uAY6BnF6rKKlWkndfXNHbWKFhJnBxPdE3Oso=;
+        b=SyDUT3grgTHDRR10laTvFRAdHUtUY/9VPodb7VxYB1ivbo9Sj25G2EsH2tHSYST32q
+         1Bf3BI0App9ER56uW2sVpVZ3DTRsd4D9qUoAcwu9JguXy8IONNuDt7ntc5Srv3JRDxhw
+         /bsFMSI5Rc8y3pfwBPvKhmBUIskjQb5rsl+BOpWmwIvHCnzsvZksrlRFHcPzRPLpdjnt
+         gYaSBJ/xAaydSSpd8X47BfG/jzqE2Sv8gr6AFoAwawwwfc054sxCYo68tjjvwaEEzEaU
+         OsvByWn6/vK4MpB0ZJ6c/keC/CA0CweAM79IxR/yY/w1wX8z81Ih54xWM22OBfMkDmV/
+         RyQA==
+X-Gm-Message-State: APjAAAW9D00Ab7cZlmf4zPmu7C5tDwdu6H0mG64QBnTY36nuDDVazyaL
+        HbE2TpZOSNtjyMDc+rLKy37ncdBm
+X-Google-Smtp-Source: APXvYqwW+QPs7/8SzT368GCHlfniexVIgJSnVKifOgovC0wjToiI0xOPz6yusVEUx1pCj4wVEH5kzg==
+X-Received: by 2002:adf:ef0b:: with SMTP id e11mr92650322wro.128.1578404609342;
+        Tue, 07 Jan 2020 05:43:29 -0800 (PST)
+Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
+        by smtp.googlemail.com with ESMTPSA id v83sm27171231wmg.16.2020.01.07.05.43.28
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Jan 2020 05:43:28 -0800 (PST)
+Message-ID: <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+Subject: Re: Broken branch after git commit - tracked files in staging area
+ can't be removed with restore --staged, or commit or stash
+From:   Torsten Krah <krah.tm@gmail.com>
+Reply-To: krah.tm@gmail.com
+To:     git@vger.kernel.org
+Date:   Tue, 07 Jan 2020 14:43:27 +0100
+In-Reply-To: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/7/2020 6:48 AM, Jeff King wrote:
-> The assertion itself is quite old, so I wondered if it was even still
-> relevant. Removing it does produce a reasonable-looking graph:
+Am Dienstag, den 07.01.2020, 13:55 +0100 schrieb Torsten Krah:
+> 3. git commit
+> 
+> Now I made my commit - had a look on that with git show and it looks
+> fine.
 
-As I'm digging into this case, and finding when the assertion is hit,
-I see that the issue is in the line further below your coloring issue:
+I had a second look on this step and the result it wrong.
 
->   | | | | * dd068b4 Merge commit '8f076d8' into HEAD
->   | |_|_|/| 
->   |/| | |/  
->   | | |/|   
->   | |/| |   
->   | * | | 8f076d8 5
+Although restore --staged moved my unwanted files away from the staging
+area and "git status" told me that they are not "in" the commit the
+commit itself did still include them.
 
-What is output is actually this, above. But the logic that includes the
-assert is checking where the underscores end, and the shown underscores
-actually pass the check. The issue is that it seems like it really wants
-to show this:
+So they are listed as unversioned now but are in the commit although
+git status told me otherwise - weird.
 
->   | | | | * dd068b4 Merge commit '8f076d8' into HEAD
->   | |_|_|/| 
->   |/| |_|/  
->   | |/| |   
->   | * | | 8f076d8 5
+kind regards
 
-Note that I dropped a line and compressed a slash into an underscore. It's
-on that line that this condition is being hit.
+Torsten
 
-Now, is this really the intended behavior? Maybe. Looking at the previous
-tests in 54125-log-skewed-merges.sh, I don't see any where we have two
-skewed merges in the same merge.
-
-Thanks,
--Stolee
