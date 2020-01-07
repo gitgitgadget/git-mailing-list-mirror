@@ -2,110 +2,95 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E396C32771
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:35:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D96D3C3F68F
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:36:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 001E92075A
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:35:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A6A622073D
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:36:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ravtleTs"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rngiClKk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727377AbgAGBfB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 20:35:01 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:65247 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727250AbgAGBfA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 20:35:00 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD62690A2A;
-        Mon,  6 Jan 2020 20:34:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=bpHCVwUYLGH3IUyavzuGrbu0IOE=; b=ravtle
-        TsVmtdXeA0KFf/KknTqmTYu3Kb7zEQnGS/t9uUWU9McSBDyyxL3KZ/M/E95fsRuh
-        sAT5U3UdRmW0zoDNmRFsrnB7qAk+8gXHxBGJio0mOVK5vBwB9RCR+OyngBFp3Xx/
-        lAOq5/5QkyALyk8b6CYeWqKd00gqR3FO09KSA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rdMQeZGPPGu0DnGpDLVlv9AlGTMYj1Qn
-        mCwu6PDjKyijTLDcFou3Kmkt1O95Haw+cAVvtCOsxhhr7C6YKDOriDsOWcK78Ty0
-        st83cyZexfF+2sBPRimX508oE5Twa9/cTvLo0e9NDkcqretPeI8r3SknqNjTN0fA
-        U1yhDVUL0Uo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C526E90A29;
-        Mon,  6 Jan 2020 20:34:58 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1727454AbgAGBg4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 20:36:56 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:60672 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727326AbgAGBgz (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 20:36:55 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ECB1F90A26;
-        Mon,  6 Jan 2020 20:34:55 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen Oberholtzer <stevie@qrpff.net>
-Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] bisect run: allow '--' as an options terminator
-References: <20200104034551.23658-1-stevie@qrpff.net>
-        <xmqq1rsfddkq.fsf@gitster-ct.c.googlers.com>
-        <CAD_xR9faremhsGP4G65vHj=cvskUbK1rpPrQisa2_4AD2AGNYw@mail.gmail.com>
-Date:   Mon, 06 Jan 2020 17:34:53 -0800
-In-Reply-To: <CAD_xR9faremhsGP4G65vHj=cvskUbK1rpPrQisa2_4AD2AGNYw@mail.gmail.com>
-        (Stephen Oberholtzer's message of "Mon, 6 Jan 2020 18:29:35 -0500")
-Message-ID: <xmqqtv586oci.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9EFC660787;
+        Tue,  7 Jan 2020 01:36:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1578361015;
+        bh=oyb23SC/BMNDhDj3uAZnTAmobFiVaBfDs/FQ/J2bwZc=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=rngiClKka/mp5VOlFRPSULAnRcReScAyoOKGUFPgFV1JmtFyegINDPLnIf0eJTqDU
+         ZxbP085ZtIEhrAR3FeISYmMy78z1Q1DM7Rq6x3sf41SjFaZiU6CSmKKrCqUuW3equm
+         EXha3+LaUfa2upp2q9AQOL9Dt45gASvcWzHC8a6ev+bABWkI6mXaPoOnFebH1tEgPV
+         cKOEAkA/W9MGgicrKV+/aUYFxrykOOD/XexrpHPQMoEGDtjzKD38hHb9k4eNN4kZag
+         j65jPhFem6zhuuaX1t8kjDM9x9rMzU4WzutgUeIFwzJc5FWTOChGkakFJfb5l6N8Xz
+         rYwltNLs7l0tgMRbgW6VZL44P77hbQ9Wx+vGGp3MjkNvNO25rbWKSJMc/Mf7xGt9tz
+         LfR5DWG3prGJbgXAu0eC+nHTWZPRzmSmR2BdHKoSY9SiyDnPc30sNlvYo5wXk8D0Ow
+         F1u9aBFMt0I7R34mIK24OUi7kCtdXFLts/NGY3a9pCDxBecF+fQ
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "Miriam R." <mirucam@gmail.com>
+Subject: [PATCH] run-command: avoid undefined behavior in exists_in_PATH
+Date:   Tue,  7 Jan 2020 01:36:40 +0000
+Message-Id: <20200107013640.1821227-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E8D4AA74-30ED-11EA-97BC-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen Oberholtzer <stevie@qrpff.net> writes:
+In this function, we free the pointer we get from locate_in_PATH and
+then check whether it's NULL.  However, this is undefined behavior if
+the pointer is non-NULL, since the C standard no longer permits us to
+use a valid pointer after freeing it.
 
->> I do not think I have seen enough to justify addition of "--",
->
-> That's fine; I was just trying to be thorough (also, it was easy to
-> test.) I was taught: if you accept any -options, honor -- as well. If
-> you're not concerned about that, that's fine with me.
+The only case in which the C standard would permit this to be defined
+behavior is if r were NULL, since it states that in such a case "no
+action occurs" as a result of calling free.
 
-Ahh, that indeed is the crucial piece of information that was
-missing.  My review was about "Do we really *need* it?", but if you
-are doing so from following a rule/dogma/principle, that changes the
-equation quite a bit.
+It's easy to suggest that this is not likely to be a problem, but we
+know that GCC does aggressively exploit the fact that undefined
+behavior can never occur to optimize and rewrite code, even when that's
+contrary to the expectations of the programmer.  It is, in fact, very
+common for it to omit NULL pointer checks, just as we have here.
 
-I do not think this project officially subscribes to the "anywhere
--option is taken should accept '--' as the end of options marker"
-school, but because most modern command line processors use
-parse_options() API which gets "--" for free, we can consider
-ourselves practically accepting it already.  
+Since it's easy to fix, let's do so, and avoid a potential headache in
+the future.
 
-And adopting such a rule/dogma/principle frees us from having to
-think about each individual case and helps us being consistent, so
-it is not necessarily a bad thing as long as the cost of following
-the rule/dogma/principle is not too onerous.  At that point, what
-needs to be reviewed instead becomes to "does this new code follow
-the rule, and is it not bending backwards to do so?"
+Noticed-by: Miriam R. <mirucam@gmail.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ run-command.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-So, I do not have strong objection against "bisect run -- <cmd>".
-It was, as I said in the original review, that it was so unclear
-why double-dash is a logical consequence of accepting options,
-because it was left unsaid.  It would have been an easy sell if
-this were a part of a patch that actually adds new option(s) and
-explained perhaps like so:
-
-	Teach 'bisect run' to take --foo and --bar options, that
-	tell the command to do Foo and Bar.  While at it, teach it
-	the common convention that "--" is used to terminate the
-	list of options.  Nobody sane may try to use <cmd> that
-	begins with a dash, but supporting "--" everywhere we accept
-	a dashed option is good for consistency.
-
-Thanks.
-
+diff --git a/run-command.c b/run-command.c
+index 9942f120a9..f5e1149f9b 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -213,8 +213,9 @@ static char *locate_in_PATH(const char *file)
+ static int exists_in_PATH(const char *file)
+ {
+ 	char *r = locate_in_PATH(file);
++	int found = r != NULL;
+ 	free(r);
+-	return r != NULL;
++	return found;
+ }
+ 
+ int sane_execvp(const char *file, char * const argv[])
