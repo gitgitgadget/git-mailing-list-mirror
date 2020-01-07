@@ -6,141 +6,106 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37D54C32771
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E396C32771
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:35:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F31BB20715
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:34:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 001E92075A
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 01:35:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sZwn3oIS"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ravtleTs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727355AbgAGBeI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 20:34:08 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:60662 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727250AbgAGBeI (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 20:34:08 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1727377AbgAGBfB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 20:35:01 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65247 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727250AbgAGBfA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 20:35:00 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CD62690A2A;
+        Mon,  6 Jan 2020 20:34:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bpHCVwUYLGH3IUyavzuGrbu0IOE=; b=ravtle
+        TsVmtdXeA0KFf/KknTqmTYu3Kb7zEQnGS/t9uUWU9McSBDyyxL3KZ/M/E95fsRuh
+        sAT5U3UdRmW0zoDNmRFsrnB7qAk+8gXHxBGJio0mOVK5vBwB9RCR+OyngBFp3Xx/
+        lAOq5/5QkyALyk8b6CYeWqKd00gqR3FO09KSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=rdMQeZGPPGu0DnGpDLVlv9AlGTMYj1Qn
+        mCwu6PDjKyijTLDcFou3Kmkt1O95Haw+cAVvtCOsxhhr7C6YKDOriDsOWcK78Ty0
+        st83cyZexfF+2sBPRimX508oE5Twa9/cTvLo0e9NDkcqretPeI8r3SknqNjTN0fA
+        U1yhDVUL0Uo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C526E90A29;
+        Mon,  6 Jan 2020 20:34:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E487F60787;
-        Tue,  7 Jan 2020 01:34:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578360846;
-        bh=gUuzfPksqvp5I67dGUt4m/MFInqh86lHYzBTvAnhuS0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sZwn3oISk/+ZONg+Ki+2qGv2G6j5DjDlFHMBEuFKkCvnm9UUdQctY7/vRgNqJTxnb
-         hGAiP8zq29dvf6hqB7RQLWg/grtTTYZrjJ5XwK4u72mtAb9rl6A5i4TJnZYScnFQj3
-         qKZKwx2K5C3F85KTaykLWQjN3iF6yx5q6wuW0/Y8zTSSxLRCe8PH740jF4eqTgOfzG
-         zmOP3YjJvvnR+r4JaIJLQdr7VrcePGxhfCD/YbhUqam+YMgVAhCQJBCTZ5QXHyvVyd
-         d9+EK/LL1HZdKX5SsgFt7zRYVWEr9RkuHk82S2nPHVxRcz2JFsGvCs/DPje2ZaujJn
-         wPsDodSlW6I2GGkgb2n17Yd4JQ/eZJp+wAiQ7wWsrXyegQCkVaCtc0+ALMWLJjoL/H
-         BaLwKokzYEbBL4LlhuqCzYbNot1xYZihWcw/IVv2P0UFvvj9Q4Wdq/LSkHZGDfmj1y
-         yQAhWsPbK1e45ln65G/IcPUlY2b8TMDyv3cELOmW+qQsz+pGY7g
-Date:   Tue, 7 Jan 2020 01:34:01 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Mike Rappazzo <rappazzo@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] sequencer: comment out the 'squash!' line
-Message-ID: <20200107013401.GI6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Mike Rappazzo <rappazzo@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-References: <pull.511.git.1578326648.gitgitgadget@gmail.com>
- <xmqq7e24a3t0.fsf@gitster-ct.c.googlers.com>
- <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ECB1F90A26;
+        Mon,  6 Jan 2020 20:34:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stephen Oberholtzer <stevie@qrpff.net>
+Cc:     git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] bisect run: allow '--' as an options terminator
+References: <20200104034551.23658-1-stevie@qrpff.net>
+        <xmqq1rsfddkq.fsf@gitster-ct.c.googlers.com>
+        <CAD_xR9faremhsGP4G65vHj=cvskUbK1rpPrQisa2_4AD2AGNYw@mail.gmail.com>
+Date:   Mon, 06 Jan 2020 17:34:53 -0800
+In-Reply-To: <CAD_xR9faremhsGP4G65vHj=cvskUbK1rpPrQisa2_4AD2AGNYw@mail.gmail.com>
+        (Stephen Oberholtzer's message of "Mon, 6 Jan 2020 18:29:35 -0500")
+Message-ID: <xmqqtv586oci.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="BOmey7/79ja+7F5w"
-Content-Disposition: inline
-In-Reply-To: <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+Content-Type: text/plain
+X-Pobox-Relay-ID: E8D4AA74-30ED-11EA-97BC-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stephen Oberholtzer <stevie@qrpff.net> writes:
 
---BOmey7/79ja+7F5w
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> I do not think I have seen enough to justify addition of "--",
+>
+> That's fine; I was just trying to be thorough (also, it was easy to
+> test.) I was taught: if you accept any -options, honor -- as well. If
+> you're not concerned about that, that's fine with me.
 
-On 2020-01-06 at 19:20:09, Mike Rappazzo wrote:
-> On Mon, Jan 6, 2020 at 12:34 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > "Michael Rappazzo via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> > > Since this change what the expected post-rebase commit comment would =
-look
-> > > like, related test expectations are adjusted to reflect the the new
-> > > expectation. A new test is added for the new expectation.
-> >
-> > Doesn't that mean automated tools people may have written require
-> > similar adjustment to continue working correctly if this change is
-> > applied?
-> >
-> > Can you tell us more about your expected use case?  I am imagining
-> > that most people use the log messages from both/all commits being
-> > squashed when manually editing to perfect the final log message (as
-> > opposed to mechanically processing the concatenated message), so it
-> > shouldn't matter if the squash! title is untouched or commented out
-> > to them, and those (probably minority) who are mechanical processing
-> > will be hurt with this change, so I do not quite see the point of
-> > this patch.
->=20
-> This change isn't removing the subject line from the commit message
-> during the edit phase, it is only commenting it out.  With the subject be=
-ing
-> commented out, it can minimize the effort to edit during the squash.
->=20
-> Furthermore, it can help to eliminate accidental inclusion in the final
-> message.  Ultimately, the accidental inclusion is my motivation for
-> submitting this.
+Ahh, that indeed is the crucial piece of information that was
+missing.  My review was about "Do we really *need* it?", but if you
+are doing so from following a rule/dogma/principle, that changes the
+equation quite a bit.
 
-I think this series would be useful.  I've occasionally included the
-"squash!" line in my commit even after I've edited the rest of the
-commit message.  It's not super frequent, but it is a hassle to have to
-delete it, and it does happen occasionally.  Usually I catch it before I
-send out the series for review.
+I do not think this project officially subscribes to the "anywhere
+-option is taken should accept '--' as the end of options marker"
+school, but because most modern command line processors use
+parse_options() API which gets "--" for free, we can consider
+ourselves practically accepting it already.  
 
-I can see the argument that this makes it a little harder for mechanical
-processing across versions, but I suspect most of that looks something
-like "sed -i -e '/^squash! /d' COMMIT_EDITMSG" and it probably won't be
-affected.  We do make occasional slightly incompatible changes across
-versions in order to improve user experience, and I think a lot of folks
-who use squash commits will find this a pleasant improvement.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+And adopting such a rule/dogma/principle frees us from having to
+think about each individual case and helps us being consistent, so
+it is not necessarily a bad thing as long as the cost of following
+the rule/dogma/principle is not too onerous.  At that point, what
+needs to be reviewed instead becomes to "does this new code follow
+the rule, and is it not bending backwards to do so?"
 
---BOmey7/79ja+7F5w
-Content-Type: application/pgp-signature; name="signature.asc"
+So, I do not have strong objection against "bisect run -- <cmd>".
+It was, as I said in the original review, that it was so unclear
+why double-dash is a logical consequence of accepting options,
+because it was left unsaid.  It would have been an easy sell if
+this were a part of a patch that actually adds new option(s) and
+explained perhaps like so:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+	Teach 'bisect run' to take --foo and --bar options, that
+	tell the command to do Foo and Bar.  While at it, teach it
+	the common convention that "--" is used to terminate the
+	list of options.  Nobody sane may try to use <cmd> that
+	begins with a dash, but supporting "--" everywhere we accept
+	a dashed option is good for consistency.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4T4AkACgkQv1NdgR9S
-9otJzRAAvJc7xDKmrn4QVfjQIXS0+x4M7saz89AtS0BuBSvQzDXCEO7w22duljsn
-Q06ZHUn7XvBOv1rbccryAhi+zEyvUxQz+cCJROhVmnhaDETP7Sa859qvOkEsy0ju
-AG8qpDDqzXRJMtD9ATTVPDtR9SoDcJWUQ/BiAtGx6SEbEHqbyuCWj4PDsqKh86RD
-N0nw56sIZk1T7oFbmZiQO2BRujx6nERhYMKBeGcmjV0d0NKp/LGHX1NZVgsyNRKy
-bd+lY/G/LQtDdmLixSwgkJS9zfEZNzU861Ax0CYW5BwWO7WpxAswpEUgFzYF/SvD
-e2vb4mYuxsuvBItawslbqAS636qgT7zi7vzm7Ulq2eGuVWn3L0rcfsAnsJrj0Hiy
-Qv9DTB5K4cLKltoPXBUQUDBPGe4blmVWhOk1NfOVMNJKr1CrgtlEPB2bMPkdJCwi
-EZj+8EWYpct+50lm2GARt0vWMb7+CCFunxP3FYtaIEktWPAZ8/VH+8haJp13rs6f
-GqjgzA7K5yCWfCeo+PMMH/z4Jtkw/Xk9hvAn1ovc4UfkBPuA6LRN6CUfqxXSbnU9
-6ba0QBt8oshxyUApkFjagI8fBMam+2uzjZI9NFvUAQMwSGRuSY8OrBwXXklu9DlN
-Ds91HOvZ/9GpFmDjKdDQV1HB71cLxeBs/DhDgFQ1yzLKdROwZv8=
-=5Ebh
------END PGP SIGNATURE-----
+Thanks.
 
---BOmey7/79ja+7F5w--
