@@ -2,118 +2,141 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52F39C3F68F
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89ABBC33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:28:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2820E222D9
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:07:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4876320715
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:28:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bs00Nk6m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bwEfVji4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728229AbgAGPHf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 10:07:35 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45837 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727880AbgAGPHe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 10:07:34 -0500
-Received: by mail-wr1-f65.google.com with SMTP id j42so54287098wrj.12
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 07:07:33 -0800 (PST)
+        id S1728335AbgAGP22 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 10:28:28 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:37806 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728103AbgAGP21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 10:28:27 -0500
+Received: by mail-wm1-f51.google.com with SMTP id f129so19870026wmf.2
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 07:28:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=JPwX4jfmIM3FzBfAtYiHdY73brYHR2F1JAWGP4FXRO0=;
-        b=bs00Nk6mBqoQZQFu1UhT/xtE2+IZqazacc78Uv1FiGLMCBsyJM8NwWC4EFX9WKpm+z
-         SzBnptauaD96OQ8Z9TvGKX6c586aXIaagPFF52Su+9DLX93fTQI7awwlh5+Tya048WbR
-         5IU3wJwVVvB99tJrSfZLlTYyvtIN1WGe22/AxCPJx5hBuu/pygCH2BrtVhCz03+rUrLt
-         exawA4HrgD9DYMmq8c1psvyWRFDtzMZJCkK4AZBQ861Py9EfFXtt0BMdqHpdD50IiUPj
-         SBt8ngzjkIJVomMEW97P6XA42upNHQs19zJjMDmUzi+FYLyYaQY5H7LwJxtsi4Z0KfyS
-         Ls1A==
+        h=message-id:subject:from:reply-to:to:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lP7C6v8Bcb6nRW98Q7nW7jCuK3SrInsOKNHidB6D2n0=;
+        b=bwEfVji4NxrEynAQG+8wE+OOJ3R9i7M1UIbUyUNcfkR8En4R06OxFY9AxVAsd/k+BF
+         bFp1b8IR4tkB0/2qHurnGFcy26+DG09HbRCiEzMP4oH4dbaUq0CODEspXfruw+wXLESO
+         yiRldnG1W4+jGqzUDm/GTt77ou0m3endaYdhfwgPB5EPYN2Cw90sj9qABilj9kVMTFCP
+         tGJuV4SXlvqzIa3XH6Zx8HTgKzyBBoxdS7jr1O8gj3jfxjIj0OLWuKiZNkb+GPdHO2uA
+         ZJn21gW31bQpNh8knLw77nrPI3NhfUZxhssW3HlCjNqcMlIX7kV4oWy0/kEpZEbVldC8
+         wIDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=JPwX4jfmIM3FzBfAtYiHdY73brYHR2F1JAWGP4FXRO0=;
-        b=Onib70r96egbW8UwNG7BF+uFvDDADtO+wgBpwzABEpJohV/OWvjzsOCJyHhwwwSkAr
-         vbFBr14adKOPfGFbuWlHWyj2DU40hWafowji2Evm3bNUhEU62G+07Qpni/Oeodfz5yV2
-         peyl5labC5y/qRiu6W8sSjJmxwsZlBBvBm+OS7bNCLo0VFz7FSWApEsO6lR/b9GDBmPy
-         K1Kk0LjMMCc49qANqaBCUBmOEfC4zAaq1XyMI4vBi3877BbuCJMBVuZUM/MzBhvBN6je
-         VUpdNfqkrg9lO2SfrYNQdJBlrlHdl9MBIZ6jFhdGNcCQoadvo0aOVV+A7dMfkwCQrOQB
-         AudQ==
-X-Gm-Message-State: APjAAAU0fLc/i/Nfkd1/P+FkxwsdxiITzYhleZwXX0AxCy6/IJj6hexM
-        CcaJ+LqXF6VJ3PfIkzyNUOgCll0x
-X-Google-Smtp-Source: APXvYqxJBGOwXVFYMUGYXBozEqWC1WTQSuPWVLA/l8Wrc1AFyjtYFqmoWZjwbPhMpa/VKDrdkuufVw==
-X-Received: by 2002:adf:eb89:: with SMTP id t9mr111518367wrn.5.1578409653009;
-        Tue, 07 Jan 2020 07:07:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g2sm91525wrw.76.2020.01.07.07.07.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 07:07:32 -0800 (PST)
-Message-Id: <2e003cfc0a6512861c5826a79e54ebc2ebf3eafb.1578409650.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.689.git.git.1578409650.gitgitgadget@gmail.com>
-References: <pull.689.git.git.1578409650.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jan 2020 15:07:30 +0000
-Subject: [PATCH 1/1] string-list: note in docs that callers can specify
- sorting function
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:date
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=lP7C6v8Bcb6nRW98Q7nW7jCuK3SrInsOKNHidB6D2n0=;
+        b=hamwXRicBHX7z6r9ODN8AwPIzM3nb4k+Shue34MPxSQMNPXQkV+cNssoSlnbSxKt5N
+         RjtqNy5vXgYEPJgua8VGMS7HPCJ4bcBmUwbjAYpwcZd+miqdADekuOga/4/3DOfVP+og
+         4q9e/WEzrxpK7Gv1ZXPGq7hFkdpVU3HE6oFY7RsIxUFDnOAOdcxQOmUT+nBwMDoWWryJ
+         l+CB2/NR7/IkDjjTDVZ00DeTMB+nrukiNdBvqNny9mVKTUo3lMO9wtuFPBPFrr4M//fS
+         Lo9sVKaBmH2EIGvzNMLL+hEZVPs1p0URKiBCB48nkmfiBL+2zHYAzqAyX80WkF9CciA9
+         wwQg==
+X-Gm-Message-State: APjAAAVGQszAiMl3OisjsU4EHTOMmFrmuXTQmDHgByfHTXjTjzFeNwRF
+        XXe+DKHk9h7Awj7qcNRS4Ea5pDfU
+X-Google-Smtp-Source: APXvYqxRkjXbKc+JekOtKNCQDpffBwirCoV+9xTlrsjEgqL7ZIRds53TwzU7d3ISNIuhSZEHLMOOlA==
+X-Received: by 2002:a1c:4454:: with SMTP id r81mr40047915wma.117.1578410905749;
+        Tue, 07 Jan 2020 07:28:25 -0800 (PST)
+Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
+        by smtp.googlemail.com with ESMTPSA id y6sm212298wrl.17.2020.01.07.07.28.24
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Jan 2020 07:28:24 -0800 (PST)
+Message-ID: <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
+Subject: Re: Broken branch after git commit - tracked files in staging area
+ can't be removed with restore --staged, or commit or stash
+From:   Torsten Krah <krah.tm@gmail.com>
+Reply-To: krah.tm@gmail.com
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
+Date:   Tue, 07 Jan 2020 16:28:24 +0100
+In-Reply-To: <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+         <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Am Dienstag, den 07.01.2020, 14:43 +0100 schrieb Torsten Krah:
+> Although restore --staged moved my unwanted files away from the
+> staging
+> area and "git status" told me that they are not "in" the commit the
+> commit itself did still include them.
 
-In commit 1959bf6430 (string_list API: document what "sorted" means,
-2012-09-17), Documentation/technical/api-string-list.txt was updated to
-specify that strcmp() was used for sorting.  In commit 8dd5afc926
-(string-list: allow case-insensitive string list, 2013-01-07), a cmp
-member was added to struct string_list to allow callers to specify an
-alternative comparison function, but api-string-list.txt was not
-updated.  In commit 4f665f2cf3 (string-list.h: move documentation from
-Documentation/api/ into header, 2017-09-26), the now out-dated
-api-string-list.txt documentation was moved into string-list.h.  Update
-the docs to reflect the configurability of sorting.
+I can reproduce that (locally) at least:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- string-list.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+What does *not* work for me:
 
-diff --git a/string-list.h b/string-list.h
-index 7bb0ad07e6..6c5d274126 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -4,7 +4,8 @@
- /**
-  * The string_list API offers a data structure and functions to handle
-  * sorted and unsorted arrays of strings.  A "sorted" list is one whose
-- * entries are sorted by string value in `strcmp()` order.
-+ * entries are sorted by string value in the order specified by the `cmp`
-+ * member (`strcmp()` by default).
-  *
-  * The caller:
-  *
-@@ -209,7 +210,8 @@ struct string_list_item *string_list_append(struct string_list *list, const char
- struct string_list_item *string_list_append_nodup(struct string_list *list, char *string);
- 
- /**
-- * Sort the list's entries by string value in `strcmp()` order.
-+ * Sort the list's entries by string value in order specified by list->cmp
-+ * (strcmp() if list->cmp is NULL).
-  */
- void string_list_sort(struct string_list *list);
- 
--- 
-gitgitgadget
+   git clone XX main
+   cd main
+   git fetch XX && git checkout FETCH_HEAD
+   git checkout -b TEST
+   git reset --soft HEAD~1
+   git restore --staged $FILES
+
+git status now lists $FILES as unstaged and they are not included in
+the staging area.
+
+   git commit
+
+-> now $FILES are included in the commit (I would expect them not to be
+included - right?) and git status does list those still in the working
+area.
+
+What does work:
+
+   git clone XX main
+   cd main
+   git fetch XX && git checkout FETCH_HEAD
+   git checkout -b TEST
+   git reset --soft HEAD~1
+   git reset HEAD $FILES
+
+git status now lists $FILES as unstaged and they are not included in
+the staging area.
+
+   git commit
+
+produces a commit where $FILES are not included and they are still in
+the working area, unstaged - like expected.
+
+
+
+git status tells me this in the staging area part:
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+
+I did that and its not working (for me) - looks at least like a bug or
+I am doing something wrong and I am just too dumb at the moment to see
+my failure.
+
+Cheers
+
+Torsten
+
+PS: $FILES are files which are all "new" and first time added in the
+commit I want to modify with restore.
+
+PPS: The second problem with those staged deleted, unstageable,
+uncomittable files still persists in my copy of those branch (I can't
+reproduce that - still I have the repository in that state).
+
+
