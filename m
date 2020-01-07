@@ -2,247 +2,168 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86A70C282DD
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 22:57:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A8C0C282DD
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 23:12:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 460F62072A
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 22:57:56 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27A9A20715
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 23:12:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gIUnYJPV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOHogLdS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727185AbgAGW5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 17:57:55 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:32970 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727046AbgAGW5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 17:57:55 -0500
-Received: by mail-wr1-f66.google.com with SMTP id b6so1439904wrq.0
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 14:57:53 -0800 (PST)
+        id S1727552AbgAGXMf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 18:12:35 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39578 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727279AbgAGXMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 18:12:35 -0500
+Received: by mail-wr1-f67.google.com with SMTP id y11so1422498wrt.6
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 15:12:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Bps20zJ31ejzVUHqEsMExUanbwsjU/ejkjUWTCSts3I=;
-        b=gIUnYJPVjD9qc9qpMPHPnFv+V5Cu+5PdtfpY2P1ydkn6BJNn+bk/TVJkjFhuBTyYgo
-         Gl5y+UmpEz0h8yuUOmWs2SThCQMjt32SlF2xUi8XOeCMTJsf0wLrAjtobvHezHMwcXi1
-         3FSUOQ0hTeyjBvbcFlKnF8LlyFi9n3YUYiWhM2FcDuEj5RgcEOdngzkkAG+yR6kxD1Zc
-         xO5WEz3kNWcGexvQ/IGe5fVtrvDyzkgwgKQ/l+YSpE/MP4yA1eSaGVAo5B6Re/AtB4Xj
-         6ReoLyKRXHOJ3Y3zekXQtIyqttZbBs5UaxIgBa6SASWN+5nYJyiCDCprTxI61XOmrVLK
-         6bjw==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2MrGbrsiSnabOrwXe8jhNznUIg9k6FtEp0kxRDbTmcI=;
+        b=SOHogLdSLfeFKNJ4edaj84D8T3D1q4J81OghCZuAONpbtWLLxaiPv/PdklAdsiWvB/
+         PNPMQwCAhE3BX6y8JL5MpuzfKIbMC/ZnB1Ki5pbq5JrHYxc0PLqtbhBbgqWEFh5yGWvR
+         JBGp7jirsGkzd9AzLNVOwJrJgRDIquGcHsguaBaEurE+kAxwUGegmDT3U9uJr8R51X7i
+         noYGhcAjg6KcOC9Ej2DoacEyYJtaXQ3QHPfYXhS5K/oA0468gVxh1ojvyk2ff48cCkc3
+         1T2hhi7LeZDRDrtjZXdhQ22znpQ3PA+jPVgmFfKHY87NfI7HHaoUeanN797xvCz4sR5r
+         wisg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Bps20zJ31ejzVUHqEsMExUanbwsjU/ejkjUWTCSts3I=;
-        b=Hu/IaEDgg9I8zEaCB6vHn/UpUrSBUKNwjEvhJSNaQR/xl5BHJO+JsBJ/aN7NnKXWBC
-         0ZUeZ7GKX1lkJMjmbn6PS5+T/7QtZTZAcauzs+UqyU4wfyvtGwQJB0l7EQbpHwvBtd2g
-         FTRBKBc4D/Quta6Hu/ZEAfLtgRPY4QoiUNKVbeg+RvKQv+pFPWAoofkeXH0faxH18i/Z
-         eAxVLt52Mlw+U2h3uWrb+4zL8aZMDrWTNK7rFTHNTgF2hZxQ4bt/u/tGkGe5fcH6RW6x
-         rGTU9D7OZI7ys7iI81tJee2XeKCe/YuTZZ34V8A7/j7mo08RtlV3wVUWpyH0KcSZZeHI
-         +z8g==
-X-Gm-Message-State: APjAAAXF5RhNY/la30s6hcHutqdd88fwC1wkrS6OxcGQ0fcz+h+45fuF
-        HzSVsc931Ln72CqznMRRnik=
-X-Google-Smtp-Source: APXvYqwlLSIOk80t5RWG5icsMGNMdBcbhwVqFkVOcyhpmEnIdm9dSyatAam59VCSn+p/ciu8voBDYg==
-X-Received: by 2002:a05:6000:1044:: with SMTP id c4mr1374021wrx.204.1578437872714;
-        Tue, 07 Jan 2020 14:57:52 -0800 (PST)
-Received: from szeder.dev (x4db602e4.dyn.telefonica.de. [77.182.2.228])
-        by smtp.gmail.com with ESMTPSA id g21sm1311075wmh.17.2020.01.07.14.57.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 07 Jan 2020 14:57:52 -0800 (PST)
-Date:   Tue, 7 Jan 2020 23:57:49 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/9] built-in add -p: support interactive.diffFilter
-Message-ID: <20200107225749.GD32750@szeder.dev>
-References: <pull.175.git.1576968120.gitgitgadget@gmail.com>
- <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
- <f45ff08bd0a0a2e2aba9ae929b6e5ecb3bdd4e07.1577275020.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2MrGbrsiSnabOrwXe8jhNznUIg9k6FtEp0kxRDbTmcI=;
+        b=nwPNesvRnAxcWHXLPCoxBwKFMA6KsbS33fLS0qEdSXV+cZU5voTOosEhcyj9q2YsOf
+         s1JJJ0QytU9yE5LtMRUHFpnO9fpvG3WjxU1n+UiF9e1Kzl2cfNeto1fRAkRsY7mu8zZL
+         b4y3nev5/58psK7C4j/TD0kXaqLQ6PbHpMbO2/cgfSsACAGoVTVdPQgOKHBaSPWvSX09
+         dLhW1ek8KPSy0GVItgdONv1Hhh/HOW9RlJgMuGVMgiHiC7C1sxsaF88mIq/lMt19vryT
+         /as79lI8Sav6wgBdHUlnrR+hvGh8JsbuDYW7He123MUHdOsxmZIEvNJfYlr+M8eTFdER
+         OLqQ==
+X-Gm-Message-State: APjAAAXmpJaq/QQoDuVpgP0AwvqyTIZOBkC8jBqIs0jsb3fjX0AUqWgj
+        88kpwb0+Du/kw5IkHViqXxHtd/04
+X-Google-Smtp-Source: APXvYqwRIlBaq7tJshhdq5pLihNI0+AVpDQXKHFaIS86q0gQmMjmavNzK/eu8tFNIDAm5DiM59C0lQ==
+X-Received: by 2002:adf:9c8a:: with SMTP id d10mr1361574wre.156.1578438753322;
+        Tue, 07 Jan 2020 15:12:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id f16sm1711099wrm.65.2020.01.07.15.12.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2020 15:12:32 -0800 (PST)
+Message-Id: <pull.508.v2.git.1578438752.gitgitgadget@gmail.com>
+In-Reply-To: <pull.508.git.1577934241.gitgitgadget@gmail.com>
+References: <pull.508.git.1577934241.gitgitgadget@gmail.com>
+From:   "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 07 Jan 2020 23:12:31 +0000
+Subject: [PATCH v2 0/1] [Outreachy] add: use advise function to display hints
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f45ff08bd0a0a2e2aba9ae929b6e5ecb3bdd4e07.1577275020.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+To:     git@vger.kernel.org
+Cc:     Heba Waly <heba.waly@gmail.com>, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 25, 2019 at 11:56:52AM +0000, Johannes Schindelin via GitGitGadget wrote:
-> The Perl version supports post-processing the colored diff (that is
-> generated in addition to the uncolored diff, intended to offer a
-> prettier user experience) by a command configured via that config
-> setting, and now the built-in version does that, too.
+The advise function in advice.c provides a neat and a standard format for
+hint messages, i.e: the text is colored in yellow and the line starts by the
+word "hint:". Also this will allow us to control the hint messages based on
+advice.* configuration variables.
 
-So this patch makes the test 'detect bogus diffFilter output' in
-'t3701-add-interactive.sh' succeed with the builtin interactive add,
-but I stumbled upon a test failure caused by SIGPIPE in an
-experimental Travis CI s390x build:
+This patch suggests using this advise function whenever displaying hints to
+improve the user experience, as the user's eyes will get used to the format
+and will scan the screen for the yellow hints whenever confused instead of
+reading all the output lines looking for advice.
 
-  expecting success of 3701.49 'detect bogus diffFilter output': 
-          git reset --hard &&
-  
-          echo content >test &&
-          test_config interactive.diffFilter "echo too-short" &&
-          printf y >y &&
-          test_must_fail force_color git add -p <y
-  
-  + git reset --hard
-  HEAD is now at 6ee5ee5 test
-  + echo content
-  + test_config interactive.diffFilter echo too-short
-  + printf y
-  + test_must_fail force_color git add -p
-  test_must_fail: died by signal 13: force_color git add -p
-  error: last command exited with $?=1
+Heba Waly (1):
+  add: use advise function to display hints
 
-Turns out it's a general issue, and
+ advice.c       | 2 ++
+ advice.h       | 1 +
+ builtin/add.c  | 6 ++++--
+ t/t3700-add.sh | 2 +-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
-  GIT_TEST_ADD_I_USE_BUILTIN=1 ./t3701-add-interactive.sh -r 39,49 --stress
 
-fails within 10 seconds on my Linux box, whereas the scripted 'add -p'
-managed to survive a couple hundred repetitions.
+base-commit: 0a76bd7381ec0dbb7c43776eb6d1ac906bca29e6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-508%2FHebaWaly%2Fformatting_hints-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-508/HebaWaly/formatting_hints-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/508
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  add-interactive.c | 12 ++++++++++++
->  add-interactive.h |  3 +++
->  add-patch.c       | 33 +++++++++++++++++++++++++++++++++
->  3 files changed, 48 insertions(+)
-> 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index a5bb14f2f4..1786ea29c4 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -52,6 +52,17 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
->  		diff_get_color(s->use_color, DIFF_FILE_OLD));
->  	init_color(r, s, "new", s->file_new_color,
->  		diff_get_color(s->use_color, DIFF_FILE_NEW));
-> +
-> +	FREE_AND_NULL(s->interactive_diff_filter);
-> +	git_config_get_string("interactive.difffilter",
-> +			      &s->interactive_diff_filter);
-> +}
-> +
-> +void clear_add_i_state(struct add_i_state *s)
-> +{
-> +	FREE_AND_NULL(s->interactive_diff_filter);
-> +	memset(s, 0, sizeof(*s));
-> +	s->use_color = -1;
->  }
->  
->  /*
-> @@ -1149,6 +1160,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
->  	strbuf_release(&print_file_item_data.worktree);
->  	strbuf_release(&header);
->  	prefix_item_list_clear(&commands);
-> +	clear_add_i_state(&s);
->  
->  	return res;
->  }
-> diff --git a/add-interactive.h b/add-interactive.h
-> index b2f23479c5..46c73867ad 100644
-> --- a/add-interactive.h
-> +++ b/add-interactive.h
-> @@ -15,9 +15,12 @@ struct add_i_state {
->  	char context_color[COLOR_MAXLEN];
->  	char file_old_color[COLOR_MAXLEN];
->  	char file_new_color[COLOR_MAXLEN];
-> +
-> +	char *interactive_diff_filter;
->  };
->  
->  void init_add_i_state(struct add_i_state *s, struct repository *r);
-> +void clear_add_i_state(struct add_i_state *s);
->  
->  struct repository;
->  struct pathspec;
-> diff --git a/add-patch.c b/add-patch.c
-> index 46c6c183d5..78bde41df0 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -398,6 +398,7 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  
->  	if (want_color_fd(1, -1)) {
->  		struct child_process colored_cp = CHILD_PROCESS_INIT;
-> +		const char *diff_filter = s->s.interactive_diff_filter;
->  
->  		setup_child_process(s, &colored_cp, NULL);
->  		xsnprintf((char *)args.argv[color_arg_index], 8, "--color");
-> @@ -407,6 +408,24 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  		argv_array_clear(&args);
->  		if (res)
->  			return error(_("could not parse colored diff"));
-> +
-> +		if (diff_filter) {
-> +			struct child_process filter_cp = CHILD_PROCESS_INIT;
-> +
-> +			setup_child_process(s, &filter_cp,
-> +					    diff_filter, NULL);
-> +			filter_cp.git_cmd = 0;
-> +			filter_cp.use_shell = 1;
-> +			strbuf_reset(&s->buf);
-> +			if (pipe_command(&filter_cp,
-> +					 colored->buf, colored->len,
-> +					 &s->buf, colored->len,
-> +					 NULL, 0) < 0)
-> +				return error(_("failed to run '%s'"),
-> +					     diff_filter);
-> +			strbuf_swap(colored, &s->buf);
-> +		}
-> +
->  		strbuf_complete_line(colored);
->  		colored_p = colored->buf;
->  		colored_pend = colored_p + colored->len;
-> @@ -531,6 +550,9 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  						   colored_pend - colored_p);
->  			if (colored_eol)
->  				colored_p = colored_eol + 1;
-> +			else if (p != pend)
-> +				/* colored shorter than non-colored? */
-> +				goto mismatched_output;
->  			else
->  				colored_p = colored_pend;
->  
-> @@ -555,6 +577,15 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->  		 */
->  		hunk->splittable_into++;
->  
-> +	/* non-colored shorter than colored? */
-> +	if (colored_p != colored_pend) {
-> +mismatched_output:
-> +		error(_("mismatched output from interactive.diffFilter"));
-> +		advise(_("Your filter must maintain a one-to-one correspondence\n"
-> +			 "between its input and output lines."));
-> +		return -1;
-> +	}
-> +
->  	return 0;
->  }
->  
-> @@ -1612,6 +1643,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
->  	    parse_diff(&s, ps) < 0) {
->  		strbuf_release(&s.plain);
->  		strbuf_release(&s.colored);
-> +		clear_add_i_state(&s.s);
->  		return -1;
->  	}
->  
-> @@ -1630,5 +1662,6 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
->  	strbuf_release(&s.buf);
->  	strbuf_release(&s.plain);
->  	strbuf_release(&s.colored);
-> +	clear_add_i_state(&s.s);
->  	return 0;
->  }
-> -- 
-> gitgitgadget
-> 
+Range-diff vs v1:
+
+ 1:  90608636bf ! 1:  9f9febd3f4 add: use advise function to display hints
+     @@ -6,8 +6,43 @@
+          it provides a neat and a standard format for hint messages, i.e: the
+          text is colored in yellow and the line starts by the word "hint:".
+      
+     +    Also this will enable us to control the messages using advice.*
+     +    configuration variables.
+     +
+          Signed-off-by: Heba Waly <heba.waly@gmail.com>
+      
+     + diff --git a/advice.c b/advice.c
+     + --- a/advice.c
+     + +++ b/advice.c
+     +@@
+     + int advice_checkout_ambiguous_remote_branch_name = 1;
+     + int advice_nested_tag = 1;
+     + int advice_submodule_alternate_error_strategy_die = 1;
+     ++int advice_add_nothing = 1;
+     + 
+     + static int advice_use_color = -1;
+     + static char advice_colors[][COLOR_MAXLEN] = {
+     +@@
+     + 	{ "checkoutAmbiguousRemoteBranchName", &advice_checkout_ambiguous_remote_branch_name },
+     + 	{ "nestedTag", &advice_nested_tag },
+     + 	{ "submoduleAlternateErrorStrategyDie", &advice_submodule_alternate_error_strategy_die },
+     ++	{ "addNothing", &advice_add_nothing },
+     + 
+     + 	/* make this an alias for backward compatibility */
+     + 	{ "pushNonFastForward", &advice_push_update_rejected }
+     +
+     + diff --git a/advice.h b/advice.h
+     + --- a/advice.h
+     + +++ b/advice.h
+     +@@
+     + extern int advice_checkout_ambiguous_remote_branch_name;
+     + extern int advice_nested_tag;
+     + extern int advice_submodule_alternate_error_strategy_die;
+     ++extern int advice_add_nothing;
+     + 
+     + int git_default_advice_config(const char *var, const char *value);
+     + __attribute__((format (printf, 1, 2)))
+     +
+       diff --git a/builtin/add.c b/builtin/add.c
+       --- a/builtin/add.c
+       +++ b/builtin/add.c
+     @@ -16,7 +51,8 @@
+       		for (i = 0; i < dir->ignored_nr; i++)
+       			fprintf(stderr, "%s\n", dir->ignored[i]->name);
+      -		fprintf(stderr, _("Use -f if you really want to add them.\n"));
+     -+		advise(_("Use -f if you really want to add them.\n"));
+     ++		if (advice_add_nothing)
+     ++			advise(_("Use -f if you really want to add them.\n"));
+       		exit_status = 1;
+       	}
+       
+     @@ -25,7 +61,8 @@
+       	if (require_pathspec && pathspec.nr == 0) {
+       		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+      -		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+     -+		advise( _("Maybe you wanted to say 'git add .'?\n"));
+     ++		if (advice_add_nothing)
+     ++			advise( _("Maybe you wanted to say 'git add .'?\n"));
+       		return 0;
+       	}
+       
+
+-- 
+gitgitgadget
