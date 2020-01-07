@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 49963C33CA3
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 25431C33C9B
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 21369207E0
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E9489207FF
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 04:53:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HnDOwVVq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FjCxVfH8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727604AbgAGExh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 23:53:37 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:39703 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727582AbgAGExd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 23:53:33 -0500
-Received: by mail-qk1-f196.google.com with SMTP id c16so41601475qko.6
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 20:53:32 -0800 (PST)
+        id S1727611AbgAGExi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 23:53:38 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:44266 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727550AbgAGExg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Jan 2020 23:53:36 -0500
+Received: by mail-qk1-f195.google.com with SMTP id w127so41589691qkb.11
+        for <git@vger.kernel.org>; Mon, 06 Jan 2020 20:53:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G1PpaJmx0aLNyY962YW2ZoEbKD5ybsIavN1/eoSLdJU=;
-        b=HnDOwVVqYjpi4RdZSou5bI+uvFWtnbo2CplmkXKlaKNLvpSrMyjfFZM9JNmw8bbxMj
-         e0uRWtZwH58yS9WP5L746pT02X9jkaVEz89a7Q5eigaddKgRbYvEDJm/rVFWiWYwRgjQ
-         Tfo56lqAgpDvY9iGFFkXYaEm8PguXMwwif78j9M9eYsjZJXJ3dP1pgu0h/q8Zkrr0hsI
-         pn83uLNg3bddqGs+OnRBKAVkOxqCOJ+nG7/SCQd0jKRl+IMXy3pD7a5k+MDk/8Zv7IcO
-         Ksf7sCAEt3MEAPtUr5mITODMB/0bTjvAAUBnIEIYcDZz3842CJzi1w3rmkbmOAHQzITf
-         /W+A==
+        bh=PZRvR2Y+JQoX3lzFkTjwKScWJiTweTmkNbDFZYlPaFI=;
+        b=FjCxVfH8DrcoZJa521d3nhrdkJj41HODQaXKKsfIULV6JarzxJv+1Ch5xA4xIZP9x0
+         mH9mMjwF/0+zSOV0YCIeNkN2wFA4Fb0VJtD5hWO14x/EuYVeVPZHaGF7t69RnKbjnnhq
+         CzYzVfLWKU2VRHKoUocBJT8hp/jd3Fm63KgvHUDXkAL2p6xXkdHspSHqNciJ4P9vNJhZ
+         yJA++IYLLAaaDVZk4YPnUO1wD7UIMHSWDXC/XWjYp2pkdGyxmkqLz4JHbzxMiuahQpYV
+         T4UZmU/9eAdZOzJxBBJHDC4B6gvpv9KJzT1hlU9+SkkaPtQ+OrPt9pdxDY6lVtKhoj2p
+         eGAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G1PpaJmx0aLNyY962YW2ZoEbKD5ybsIavN1/eoSLdJU=;
-        b=PgDKIX7gP2aQ4jvAd1mIJhULmHxIBbXrhC+g7W/0rIXL6gVAiYitTjG54ReOSPFFxx
-         YVIsYLLw5Bs9U6pR15tiYITZHlL1t/jPzoSqVOrAGVaJ5Rp2zEltc5rR0YuNRKsE/BT6
-         I/S0UAZfckQYA+E9QW4ifRCSXoLYxTu2i8PiZW2cCvKSFUO8jlmTtNmwDZ60qPoPtLMC
-         Y1zBS/6b+MoB+Bi7EBXwfCa9lZKy/UMZivuDaaet7/kA/1m/nPBNGJu0KQbt7bT1RqLJ
-         ue5aKLN7hYSUf3g8xE7AC/v0vISo91a8t5XmcLX8iwLyKPmYPp2Vk6GYiJCJNiRRRFgs
-         U2Yg==
-X-Gm-Message-State: APjAAAX3wagixrtVjfhndcuXRvMgAKyJGpvwAYD2Fl/k+RGBBUJ5xbUL
-        r3TE23vn/HpNVssr8Awx4G/3o7v2
-X-Google-Smtp-Source: APXvYqzTGAiFPyBprVGne3G7XOk6oTEO9flvZUQ9QFqKJj7SGL62ldMu7lwHLBBuwRrT0wTsGsoefw==
-X-Received: by 2002:a05:620a:9c9:: with SMTP id y9mr52220064qky.397.1578372812392;
-        Mon, 06 Jan 2020 20:53:32 -0800 (PST)
+        bh=PZRvR2Y+JQoX3lzFkTjwKScWJiTweTmkNbDFZYlPaFI=;
+        b=WphnOqO5BiVPQK5F12sxGGmuHLeS/3Suanff0NTAw37RZQyhWHMhTiZWie6kVO/+nF
+         ob3yABuSKjHa6+mWa5HHLgF18391vuSPlYxt3MapxVn2JM9J7+4aV0BFrMnVc71CiUOV
+         Tt0YsQeqTZSx+cRMfxclpCGCqjVk10dw03wiqzeku4sXCunQ76AbnwoDAgulUb1lbHDE
+         F4dBrclCnP2Qkb8k2OMTR23P+EsKCLwPwSorJYRh4ijudDZb5Av8xtM0BURz4cm3U50W
+         KwIJdquAKi1QPNAnQD4+M66j+uD5qQCsVgpRGRss9w4PA+6b6qbqixf1rjYBvQoUyGkS
+         A1ow==
+X-Gm-Message-State: APjAAAUarkEPpeie8jTPzgQlevNi7COFf/VL8EJfmYI1U2YRJMtTrsjR
+        IcbDgbRIv1VZOBoR3TqEQDeL5KkX
+X-Google-Smtp-Source: APXvYqynTGoT3xs16gaMYTjeaHDom7bej6woiBV5WdWq+LBaqrzgweg7ACnW0I+7dsnXyQREFdUN5g==
+X-Received: by 2002:a05:620a:20c7:: with SMTP id f7mr86513904qka.440.1578372815095;
+        Mon, 06 Jan 2020 20:53:35 -0800 (PST)
 Received: from archbookpro.lan ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id t2sm21663893qkc.31.2020.01.06.20.53.31
+        by smtp.gmail.com with ESMTPSA id t2sm21663893qkc.31.2020.01.06.20.53.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 20:53:31 -0800 (PST)
+        Mon, 06 Jan 2020 20:53:34 -0800 (PST)
 From:   Denton Liu <liu.denton@gmail.com>
 To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Johannes Sixt <j6t@kdbg.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 06/16] t2018: don't lose return code of git commands
-Date:   Mon,  6 Jan 2020 23:53:03 -0500
-Message-Id: <e09a70f6ca9ec922f6da47f1e978de622f81698e.1578372682.git.liu.denton@gmail.com>
+Subject: [PATCH v2 09/16] t3310: extract common notes_merge_files_gone()
+Date:   Mon,  6 Jan 2020 23:53:06 -0500
+Message-Id: <46fe82b856d217265b01bf2bcf1ff78fa9474fc3.1578372682.git.liu.denton@gmail.com>
 X-Mailer: git-send-email 2.25.0.rc1.180.g49a268d3eb
 In-Reply-To: <cover.1578372682.git.liu.denton@gmail.com>
 References: <cover.1577454401.git.liu.denton@gmail.com> <cover.1578372682.git.liu.denton@gmail.com>
@@ -74,43 +74,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix invocations of git commands so their exit codes are not lost
-within non-assignment command substitutions.
+We have many statements which are duplicated. Extract and replace these
+duplicate statements with notes_merge_files_gone().
+
+While we're at it, replace the test_might_fail(), which should only be
+used on git commands.
+
+Also, remove the redirection from stderr to /dev/null. This is because
+the test scripts automatically suppress output already. Otherwise, if a
+developer asks for verbose output via the `-v` flag, the stderr output
+may be useful for debugging.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- t/t2018-checkout-branch.sh | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ t/t3310-notes-merge-manual-resolve.sh | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 687ab6713c..caf43571b1 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -41,8 +41,12 @@ do_checkout () {
- 		test_must_fail git checkout $opts $exp_branch $exp_sha
- 	else
- 		git checkout $opts $exp_branch $exp_sha &&
--		test $exp_ref = $(git rev-parse --symbolic-full-name HEAD) &&
--		test $exp_sha = $(git rev-parse --verify HEAD)
-+		echo "$exp_ref" >ref.expect &&
-+		git rev-parse --symbolic-full-name HEAD >ref.actual &&
-+		test_cmp ref.expect ref.actual &&
-+		echo "$exp_sha" >sha.expect &&
-+		git rev-parse --verify HEAD >sha.actual &&
-+		test_cmp sha.expect sha.actual
- 	fi
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 2dea846e25..d746f4ba55 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -32,6 +32,12 @@ verify_notes () {
+ 	test_cmp "expect_log_$notes_ref" "output_log_$notes_ref"
  }
  
-@@ -162,7 +166,8 @@ test_expect_success 'checkout -B to a merge base' '
- '
++notes_merge_files_gone () {
++	# No .git/NOTES_MERGE_* files left
++	{ ls .git/NOTES_MERGE_* >output || :; } &&
++	test_must_be_empty output
++}
++
+ cat <<EOF | sort >expect_notes_x
+ 6e8e3febca3c2bb896704335cc4d0c34cb2f8715 $commit_sha4
+ e5388c10860456ee60673025345fe2e153eb8cf8 $commit_sha3
+@@ -335,9 +341,7 @@ EOF
+ y and z notes on 4th commit
+ EOF
+ 	git notes merge --commit &&
+-	# No .git/NOTES_MERGE_* files left
+-	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+-	test_must_be_empty output &&
++	notes_merge_files_gone &&
+ 	# Merge commit has pre-merge y and pre-merge z as parents
+ 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
+ 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
+@@ -397,9 +401,7 @@ test_expect_success 'redo merge of z into m (== y) with default ("manual") resol
  
- test_expect_success 'checkout -B to an existing branch from detached HEAD resets branch to HEAD' '
--	git checkout $(git rev-parse --verify HEAD) &&
-+	head=$(git rev-parse --verify HEAD) &&
-+	git checkout "$head" &&
+ test_expect_success 'abort notes merge' '
+ 	git notes merge --abort &&
+-	# No .git/NOTES_MERGE_* files left
+-	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+-	test_must_be_empty output &&
++	notes_merge_files_gone &&
+ 	# m has not moved (still == y)
+ 	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)" &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
+@@ -464,9 +466,7 @@ EOF
+ 	echo "new note on 5th commit" > .git/NOTES_MERGE_WORKTREE/$commit_sha5 &&
+ 	# Finalize merge
+ 	git notes merge --commit &&
+-	# No .git/NOTES_MERGE_* files left
+-	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+-	test_must_be_empty output &&
++	notes_merge_files_gone &&
+ 	# Merge commit has pre-merge y and pre-merge z as parents
+ 	test "$(git rev-parse refs/notes/m^1)" = "$(cat pre_merge_y)" &&
+ 	test "$(git rev-parse refs/notes/m^2)" = "$(cat pre_merge_z)" &&
+@@ -553,9 +553,7 @@ EOF
  
- 	do_checkout branch2 "" -B
- '
+ test_expect_success 'resolve situation by aborting the notes merge' '
+ 	git notes merge --abort &&
+-	# No .git/NOTES_MERGE_* files left
+-	test_might_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
+-	test_must_be_empty output &&
++	notes_merge_files_gone &&
+ 	# m has not moved (still == w)
+ 	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)" &&
+ 	# Verify that other notes refs has not changed (w, x, y and z)
 -- 
 2.25.0.rc1.180.g49a268d3eb
 
