@@ -2,200 +2,91 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9DBBC33C99
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 06:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83F96C33C99
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 10:03:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A45BC207E0
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 06:58:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 56FF12087F
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 10:03:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RozMGtHL"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YDVVh7Td"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727549AbgAGG6G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 01:58:06 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:56215 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727341AbgAGG6C (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 01:58:02 -0500
-Received: by mail-wm1-f41.google.com with SMTP id q9so17699068wmj.5
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 22:58:01 -0800 (PST)
+        id S1727707AbgAGKDA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 05:03:00 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:53957 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726565AbgAGKDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 05:03:00 -0500
+Received: by mail-wm1-f67.google.com with SMTP id m24so18237775wmc.3
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 02:02:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=bScppmrGyxp0EXJMUAcnFyJ+pbW1kR00xpFocgi6OJQ=;
-        b=RozMGtHLIdKH9HtA9TRurXbL9ZzdUMOcZi/5VBADbygI4b4gSzCOptGJFRz4ScMPhB
-         R+yFfIQOLmZNfMkupdMyiuQWmZqkQUbiufW2CPeWxVUYwW1fUo9v+hRFvou36cEmemd0
-         rwkT5fuaXPJXyKXvArkgA3y6OIkYB8EgLQngda/42kWTXUfysXcZnvf2cp2e5i4/3mEj
-         E1vUNxFISdW6MGN6MwMOZj9tKoeFx6vsCaht/rh2d2ZWUDdNShuQR01r7gJPm+enh5Oh
-         RVMNBQdJMG3EIv+mvkLrO4nr1aJHDGHnkNKVWo+5qpVWa9Q5veiUYSfW2ooW8WvFVTDQ
-         roXA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=yHe/+uKsb02w+OeC8q679iGUYV8ISn0ov13WCb5ZOew=;
+        b=YDVVh7TdvBVBBrsvLYnrXxjsllhwA5Y2YqLL4FoKIg8nnYcwY06FFFDH3J8yT00Axr
+         HkqJCYVn3LAMUdEHkDNyPZzAhrV/xjIIfXdN587q6kgmNJSCJywtMnDKsfdW4e4YisA7
+         moGz6NBkGfxLzU7a0XfFU1MA6ZXoRz42/c5PjzM0qripqClGQ+kBeKoIRO547WUZsba5
+         ikYJaJM6BzFG+pkC4apFl/fStvA745Woitp/VKng0QHMWasEOUekiN++q08H+oiULEnR
+         4QU5TIrTmo04ll+1Id277QA4eF/GEl6zm23JOBZ6+C9dblZsw9sh+gE2nInI/IoYDKr8
+         CEOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bScppmrGyxp0EXJMUAcnFyJ+pbW1kR00xpFocgi6OJQ=;
-        b=EVnxR7FOM32GUygei8MYPL+/jBQMOHvMsmOITSZMwwJJCzn2px7WcxpruSekseCH7r
-         jLGXXwDh+eVFZwjhSVMHDAAlwXki1Dnf9jtqB2RF5EswHI4LZbmemJ66/3oV2ks//b0v
-         c9WySuKmu+kRpVan85da4sPE58E/QjIFowbpM3JL9OX59zudZZqvJB59FW8ILBwnVtEs
-         KQh9HNrDwsP+7ixIyeyUCOUiCx1EGekC0tv4CQpNGjP+E929XVI6g3iiFtiIX9AVdYt5
-         WoD7tIlAXPSwd3XrM8861kfDgERwioIwgzz41p/+CW07alv+aHo3EiHEgCy9iJvS8zZn
-         tTdQ==
-X-Gm-Message-State: APjAAAX7js8PmnBMdTcbCyv06kiI31dniTkg+DFiyxToDUh/exx4s4KV
-        /WZ+hNJaSwb45GVDTqps0LZ3BHyF
-X-Google-Smtp-Source: APXvYqwrJNaKJpIMz7vHz0hgN5bCmZWQbBI35pS5aUT3csOYMBIr9c6LjP/KJ0VGPMSrBc/tJS+sdA==
-X-Received: by 2002:a05:600c:210b:: with SMTP id u11mr38545170wml.43.1578380280575;
-        Mon, 06 Jan 2020 22:58:00 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=yHe/+uKsb02w+OeC8q679iGUYV8ISn0ov13WCb5ZOew=;
+        b=ROxtekEG3Zfgukotj7eCr0HO7A9oXROJh1Uu06nNJpLnTGixLT8JIfa3zVRCfGT6z3
+         XihBLI23wPRe/KZI3ULWx+sSjy2JgOkP7s+lxoF24R6Ej9yBfoypLQ1ciEZcXSyLQMY4
+         k6CmQWvdblqeQ6QqSOjnmH6Qa/TyXUbSXkBSzTwYXJEarf36VpQWcZusNjaQbeG4YyHc
+         O3z4sdmH0zfWGgkX53y1SxbEIQF8ZckIsKDPQuBIO6Hhiv6jUvAaoFSsRWrb1qq8V3db
+         PivKBa5JXmB2g1S85LH8VdfUimBGEn6X7C8bQtuYDsumV4Ghu6C3/ECvqTXF0fqzLDiM
+         iXiA==
+X-Gm-Message-State: APjAAAXuhh2ZFTCQ4uqg2bh8F90LsPHi/yjUTXA4cVFt+dCwtcEVpXFA
+        8N0Lgy03+IvVGNBJLyfURLMknf1W
+X-Google-Smtp-Source: APXvYqyiQYFCXKaNR0zVZZc3M3PDjz++4C5jmJopGWkiyrCunoidsLyPM4K3FR7pagni2ODyUdPmhg==
+X-Received: by 2002:a7b:ce98:: with SMTP id q24mr37146644wmj.41.1578391377991;
+        Tue, 07 Jan 2020 02:02:57 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b18sm6075516wru.50.2020.01.06.22.57.59
+        by smtp.gmail.com with ESMTPSA id q68sm27799328wme.14.2020.01.07.02.02.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 22:57:59 -0800 (PST)
-Message-Id: <dd277273324eaba5e1f4a368bf2e4d046033c776.1578380277.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.686.v2.git.git.1578380277.gitgitgadget@gmail.com>
-References: <pull.686.git.git.1578087730.gitgitgadget@gmail.com>
-        <pull.686.v2.git.git.1578380277.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jan 2020 06:57:57 +0000
-Subject: [PATCH v2 1/1] unpack-trees: exit check_updates() early if updates
- are not wanted
+        Tue, 07 Jan 2020 02:02:57 -0800 (PST)
+Message-Id: <pull.516.git.1578391376.gitgitgadget@gmail.com>
+From:   "Liam Huang via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 07 Jan 2020 10:02:55 +0000
+Subject: [PATCH 0/1] Update imap-send.c, fix incompatibilities with OpenSSL 1.1.x
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+Some APIs have been changed since OpenSSL 1.1.0, so fix incompatibilities
+with OpenSSL 1.1.x.
 
-check_updates() has a lot of code that repeatedly checks whether
-o->update or o->dry_run are set.  (Note that o->dry_run is a
-near-synonym for !o->update, but not quite as per commit 2c9078d05bf2
-("unpack-trees: add the dry_run flag to unpack_trees_options",
-2011-05-25).)  In fact, this function almost turns into a no-op whenever
-the condition
-   !o->update || o->dry_run
-is met.  Simplify the code by checking this condition at the beginning
-of the function, and when it is true, do the few things that are
-relevant and return early.
+See:
 
-There are a few things that make the conversion not quite obvious:
-  * The fact that check_updates() does not actually turn into a no-op
-    when updates are not wanted may be slightly surprising.  However,
-    commit 33ecf7eb61 (Discard "deleted" cache entries after using them
-    to update the working tree, 2008-02-07) put the discarding of
-    unused cache entries in check_updates() so we still need to keep
-    the call to remove_marked_cache_entries().  It's possible this
-    call belongs in another function, but it is certainly needed as
-    tests will fail if it is removed.
-  * The original called remove_scheduled_dirs() unconditionally.
-    Technically, commit 7847892716 (unlink_entry(): introduce
-    schedule_dir_for_removal(), 2009-02-09) should have made that call
-    conditional, but it didn't matter in practice because
-    remove_scheduled_dirs() becomes a no-op when all the calls to
-    unlink_entry() are skipped.  As such, we do not need to call it.
-  * When (o->dry_run && o->update), the original would have two calls
-    to git_attr_set_direction() surrounding a bunch of skipped updates.
-    These two calls to git_attr_set_direction() cancel each other out
-    and thus can be omitted when o->dry_run is true just as they
-    already are when !o->update.
-  * The code would previously call setup_collided_checkout_detection()
-    and report_collided_checkout() even when o->dry_run.  However, this
-    was just an expensive no-op because
-    setup_collided_checkout_detection() merely cleared the CE_MATCHED
-    flag for each cache entry, and report_collided_checkout() reported
-    which ones had it set.  Since a dry-run would skip all the
-    checkout_entry() calls, CE_MATCHED would never get set and thus
-    no collisions would be reported.  Since we can't detect the
-    collisions anyway without doing updates, skipping the collisions
-    detection setup and reporting is an optimization.
-  * The code previously would call get_progress() and
-    display_progress() even when (!o->update || o->dry_run).  This
-    served to show how long it took to skip all the updates, which is
-    somewhat useless.  Since we are skipping the updates, we can skip
-    showing how long it takes to skip them.
+ * https://www.openssl.org/docs/man1.1.0/man3/SSLv23_method.html
+ * https://wiki.openssl.org/index.php/Library_Initialization
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- unpack-trees.c | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+Liam Huang (1):
+  Update imap-send.c, fix incompatibilities with OpenSSL 1.1.x
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 2399b6818b..4c68dbdb43 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -372,15 +372,20 @@ static int check_updates(struct unpack_trees_options *o)
- 	state.refresh_cache = 1;
- 	state.istate = index;
- 
-+	if (!o->update || o->dry_run) {
-+		remove_marked_cache_entries(index, 0);
-+		trace_performance_leave("check_updates");
-+		return 0;
-+	}
-+
- 	if (o->clone)
- 		setup_collided_checkout_detection(&state, index);
- 
- 	progress = get_progress(o);
- 
--	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKOUT);
-+	git_attr_set_direction(GIT_ATTR_CHECKOUT);
- 
--	if (should_update_submodules() && o->update && !o->dry_run)
-+	if (should_update_submodules())
- 		load_gitmodules_file(index, NULL);
- 
- 	for (i = 0; i < index->cache_nr; i++) {
-@@ -388,18 +393,18 @@ static int check_updates(struct unpack_trees_options *o)
- 
- 		if (ce->ce_flags & CE_WT_REMOVE) {
- 			display_progress(progress, ++cnt);
--			if (o->update && !o->dry_run)
--				unlink_entry(ce);
-+			unlink_entry(ce);
- 		}
- 	}
-+
- 	remove_marked_cache_entries(index, 0);
- 	remove_scheduled_dirs();
- 
--	if (should_update_submodules() && o->update && !o->dry_run)
-+	if (should_update_submodules())
- 		load_gitmodules_file(index, &state);
- 
- 	enable_delayed_checkout(&state);
--	if (has_promisor_remote() && o->update && !o->dry_run) {
-+	if (has_promisor_remote()) {
- 		/*
- 		 * Prefetch the objects that are to be checked out in the loop
- 		 * below.
-@@ -431,15 +436,12 @@ static int check_updates(struct unpack_trees_options *o)
- 				    ce->name);
- 			display_progress(progress, ++cnt);
- 			ce->ce_flags &= ~CE_UPDATE;
--			if (o->update && !o->dry_run) {
--				errs |= checkout_entry(ce, &state, NULL, NULL);
--			}
-+			errs |= checkout_entry(ce, &state, NULL, NULL);
- 		}
- 	}
- 	stop_progress(&progress);
- 	errs |= finish_delayed_checkout(&state, NULL);
--	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKIN);
-+	git_attr_set_direction(GIT_ATTR_CHECKIN);
- 
- 	if (o->clone)
- 		report_collided_checkout(index);
+ imap-send.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+
+base-commit: 042ed3e048af08014487d19196984347e3be7d1c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-516%2FLiam0205%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-516/Liam0205/patch-1-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/516
 -- 
 gitgitgadget
