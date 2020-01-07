@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 283F6C33C9B
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:55:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63749C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:55:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F31152187F
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:55:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 335D3208C4
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 14:55:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LIH+gUwC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jos1E3t/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728020AbgAGOzw (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1727974AbgAGOzw (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 7 Jan 2020 09:55:52 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:40209 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727880AbgAGOzv (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52465 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727814AbgAGOzv (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 7 Jan 2020 09:55:51 -0500
-Received: by mail-wr1-f67.google.com with SMTP id c14so54268625wrn.7
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 06:55:50 -0800 (PST)
+Received: by mail-wm1-f65.google.com with SMTP id p9so19280612wmc.2
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 06:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TX2WULO/FthESnbKKi18uQqpxW5DI+unYHoQPoi9E3I=;
-        b=LIH+gUwC11nRXxgM6R7c1owUHGz9b1u+jMXxkT1U/8cF7rwfUFn3gyWYywYtzRAcKU
-         fkvwmq7af6mnyQ3XOVEkjiNhsZFww1tNaECtYMO+blQjCSX2u1LsSmOPnPiOaBYII8rR
-         Wy9xoaqFAp5rCrhYAu7et92rATBZbJIMByg81p79ludjvf96OWCEp6SupSnBBuO7+ALR
-         QBQjIqEACmVYyWs8VAkVWwBmQSLzcClprTQ5SQ8frQ36HMntM6EuxhkuRXzQDSH0bSNB
-         QXCAGcpmWB/i7P4TuhoKzdhGEfUVZKh02vFPzqnqNjVQwMNHzh7tksiDLh11BIyWnnvo
-         P6HQ==
+        bh=JpQHJTs7L1OB1+SbbJoySS+E0kSU/Js9OqF20iUIlbk=;
+        b=jos1E3t/xPMWGJ7i/mQK1pERZaCUIPn3DO0CSLBcp8JUp/YtroFyLhPUsjX9s9094I
+         kUa47rHTOdOuCGv4D2QwqUMEcjI2eCUtKMXUPJ83OtEi7ctNrihGj2unzGB2yk8ZEh87
+         gScvSEjeENz+U3DHpoRs6LyJqxiYIL9WNhAJABnaAx+GWB/6gqUZoOuhYvi0Z7OAKpk0
+         LqeU4JvbYsk9Wsmm4hfl9UWvhMGJLYK268KSG8FnKmt7vDd4kyOLJUfzC9HNlxzHMyrI
+         eNGgBPt6Lm6ehz4/dWMY6n+SDk4SyxlBtzw1kPFaEP8sc/KdSO+Q5X1BBHDczI/ftknl
+         Vj3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TX2WULO/FthESnbKKi18uQqpxW5DI+unYHoQPoi9E3I=;
-        b=lshq20di0Pt2P6tBWCPA4F8FGcyYOptl8cm5BFwr/AXKCJSiDFycDJ33IIelZsvLlJ
-         bq58F4nx5WKY4oC3kIXTm1/pDwwx0w/NCkmTb4Q6UuZMWIpvlynGiC8362uvUzgdWnr/
-         rHQIyfvkrO1F2Rkj1ZwTbk88v5obhD/frEzuQ8bE8wNNRH+M4uuqeYlxBRTBH76jr/1J
-         oGJXt0GAH7UVIL1nhYf9mElytm6UYrQNBqjgPPFTttTSNJFmrE4s7LavEjRJ4ozVcw7N
-         KzEpxHucOjpU/g+HG+cacELFzp3thjCH73OtOEbLSb7H9hi8/JsJiZnjH+D3o9GXTZKe
-         EdHQ==
-X-Gm-Message-State: APjAAAU1H+uFF5hv4abCGy9C/uKLMw/vl5bVZzbaQYaTeH6ghMXDTTwF
-        51DfmDcW+twSM7G8LPhnnm0c00ac
-X-Google-Smtp-Source: APXvYqx1Ce07Rqksi3vJTqyzENenkPUHNvV+sfPJni+AOXJ673Ck8boaYBrfPxW+sRGQG4FJ4mJfUw==
-X-Received: by 2002:a5d:6ac5:: with SMTP id u5mr109204625wrw.271.1578408949635;
-        Tue, 07 Jan 2020 06:55:49 -0800 (PST)
+        bh=JpQHJTs7L1OB1+SbbJoySS+E0kSU/Js9OqF20iUIlbk=;
+        b=SS8A3XUqx/HLyo/jImgvTGvfWpWGILJgPF0cWsDojynhP9SBM/SPvptuB2fGZnbR7e
+         jDqlGOjUWBbt3EV2AbzkYvUcljCuJTdB7gNYdMf1uneR2frfDCjxsEoNhwv2kzKplxfk
+         pdBxAQ6ZPeB3EzGBghzsqVFuBCOhlVDCG08pKaL15y/WR3agE+WFHW6SnLqy2eOTJLVo
+         vMtvzNLHlQuJfpIzd/oLGqNpYdLSwcf13ws2JcYXvOk49ZXUy8wp34MtvTMbqcccuiVd
+         BDxaX9ooYaz2NaIZAGDlirvJz5IZ51zqRjzyZLtC/TLSVoXHQvwYFFX+TRJsTC055XYn
+         2cxg==
+X-Gm-Message-State: APjAAAXycHrUnNZQtAvR8zjav6zRHAYigzoYZ8A6WFicclCtjTpMwaAg
+        d3aGOxa8TfawG2TC2re0DOgzggCs
+X-Google-Smtp-Source: APXvYqzJmdwjWiXAOAy3hzxT4WHvibN7cqrHrDP4hBrYxcrNZtGh0CSwVS48ARR7z7MTQsy2D7AVjQ==
+X-Received: by 2002:a7b:c74c:: with SMTP id w12mr40449266wmk.1.1578408948848;
+        Tue, 07 Jan 2020 06:55:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11sm26837894wmg.46.2020.01.07.06.55.48
+        by smtp.gmail.com with ESMTPSA id x18sm62464wrr.75.2020.01.07.06.55.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Jan 2020 06:55:49 -0800 (PST)
-Message-Id: <5dd305d2f0de43a70b46336c8f1a62437e0511e1.1578408947.git.gitgitgadget@gmail.com>
+        Tue, 07 Jan 2020 06:55:48 -0800 (PST)
+Message-Id: <65186f3ded251e0bcf1fcb18160163a3efd97c37.1578408947.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.517.git.1578408947.gitgitgadget@gmail.com>
 References: <pull.517.git.1578408947.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 07 Jan 2020 14:55:46 +0000
-Subject: [PATCH 2/3] graph: replace assert() with graph_assert() macro
+Date:   Tue, 07 Jan 2020 14:55:45 +0000
+Subject: [PATCH 1/3] graph: fix case that hit assert()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,106 +76,154 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The assert() macro is sometimes compiled out. Instead, switch these into
-BUG() statements using our own custom macro.
+A failure was reported in "git log --graph --all" with the new
+graph-rendering logic. Create a test case that matches the
+topology of that example and uses an explicit ref ordering instead
+of the "--all" option. The test would fail with the following error:
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+	graph.c:1228: graph_output_collapsing_line: Assertion
+		      `graph->mapping[i - 3] == target' failed.
+
+The situation is a little complicated, so let's break it down.
+
+The assert was introduced by eaf158f8 ("graph API: Use horizontal
+lines for more compact graphs", 2009-04-21), which is quite old.
+This assert is trying to say that when we complete a horizontal
+line with a single slash, it is because we have reached our target.
+
+This assertion is hit when we have two collapsing lines from the
+same merge commit, as follows:
+
+    | | | | *
+    | |_|_|/|
+    |/| | |/
+    | | |/|
+    | |/| |
+    | * | |
+    * | | |
+
+It is actually the _second_ collapsing line that hits this assert.
+The reason we are in this code path is because we are collapsing
+the first line, and it in that case we are hitting our target now
+that the horizontal line is complete. However, the second line
+cannot be a horizontal line, so it will collapse without horizontal
+lines. In this case, it is inappropriate to assert that we have
+reached our target, as we need to continue for another column
+before reaching the target. Dropping the assert is safe here.
+
+Second, the horizontal lines in that first line drop their coloring.
+This is due to a use of graph_line_addch() instead of
+graph_line_write_column(). Using a ternary operator to pick the
+character is nice for compact code, but we actually need a column
+to provide the color.
+
+Helped-by: Jeff King <peff@peff.net>
+Reported-by: Bradley Smith <brad@brad-smith.co.uk>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- graph.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ graph.c                      | 17 ++++++++-------
+ t/t4215-log-skewed-merges.sh | 42 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+), 8 deletions(-)
 
 diff --git a/graph.c b/graph.c
-index aaf97069bd..ac78bdf96c 100644
+index 66ae18add8..aaf97069bd 100644
 --- a/graph.c
 +++ b/graph.c
-@@ -6,6 +6,8 @@
- #include "revision.h"
- #include "argv-array.h"
+@@ -1063,7 +1063,7 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 	int i, j;
  
-+#define graph_assert(exp) if (!(exp)) { BUG("assert failed: "#exp""); }
-+
- /* Internal API */
- 
- /*
-@@ -316,7 +318,7 @@ static struct strbuf *diff_output_prefix_callback(struct diff_options *opt, void
- 	struct git_graph *graph = data;
- 	static struct strbuf msgbuf = STRBUF_INIT;
- 
--	assert(opt);
-+	graph_assert(opt);
- 
- 	strbuf_reset(&msgbuf);
- 	if (opt->line_prefix)
-@@ -865,13 +867,13 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
- 	 *
- 	 * We need 2 extra rows for every parent over 2.
- 	 */
--	assert(graph->num_parents >= 3);
-+	graph_assert(graph->num_parents >= 3);
+ 	struct commit_list *first_parent = first_interesting_parent(graph);
+-	int seen_parent = 0;
++	struct column *parent_col = NULL;
  
  	/*
- 	 * graph->expansion_row tracks the current expansion row we are on.
- 	 * It should be in the range [0, num_expansion_rows - 1]
- 	 */
--	assert(0 <= graph->expansion_row &&
-+	graph_assert(0 <= graph->expansion_row &&
- 	       graph->expansion_row < graph_num_expansion_rows(graph));
+ 	 * Output the post-merge row
+@@ -1117,12 +1117,17 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
+ 			graph_line_addch(line, ' ');
+ 		} else {
+ 			graph_line_write_column(line, col, '|');
+-			if (graph->merge_layout != 0 || i != graph->commit_index - 1)
+-				graph_line_addch(line, seen_parent ? '_' : ' ');
++			if (graph->merge_layout != 0 || i != graph->commit_index - 1) {
++				if (parent_col)
++					graph_line_write_column(
++						line, parent_col, '_');
++				else
++					graph_line_addch(line, ' ');
++			}
+ 		}
  
- 	/*
-@@ -923,13 +925,13 @@ static void graph_output_commit_char(struct git_graph *graph, struct graph_line
- 	 * (We should only see boundary commits when revs->boundary is set.)
- 	 */
- 	if (graph->commit->object.flags & BOUNDARY) {
--		assert(graph->revs->boundary);
-+		graph_assert(graph->revs->boundary);
- 		graph_line_addch(line, 'o');
- 		return;
+ 		if (col_commit == first_parent->item)
+-			seen_parent = 1;
++			parent_col = col;
  	}
  
  	/*
--	 * get_revision_mark() handles all other cases without assert()
-+	 * get_revision_mark() handles all other cases without graph_assert()
- 	 */
- 	graph_line_addstr(line, get_revision_mark(graph->revs, graph->commit));
- }
-@@ -1094,7 +1096,7 @@ static void graph_output_post_merge_line(struct git_graph *graph, struct graph_l
- 
- 			for (j = 0; j < graph->num_parents; j++) {
- 				par_column = graph_find_new_column_by_commit(graph, parents->item);
--				assert(par_column >= 0);
-+				graph_assert(par_column >= 0);
- 
- 				c = merge_chars[idx];
- 				graph_line_write_column(line, &graph->new_columns[par_column], c);
-@@ -1172,14 +1174,14 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
- 		 * the graph much more legible, since whenever branches
- 		 * cross, only one is moving directions.
- 		 */
--		assert(target * 2 <= i);
-+		graph_assert(target * 2 <= i);
- 
- 		if (target * 2 == i) {
- 			/*
- 			 * This column is already in the
- 			 * correct place
- 			 */
--			assert(graph->mapping[i] == -1);
-+			graph_assert(graph->mapping[i] == -1);
- 			graph->mapping[i] = target;
- 		} else if (graph->mapping[i - 1] < 0) {
- 			/*
-@@ -1225,8 +1227,8 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+@@ -1219,13 +1224,9 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct graph_l
+ 			 *
  			 * The space just to the left of this
  			 * branch should always be empty.
+-			 *
+-			 * The branch to the left of that space
+-			 * should be our eventual target.
  			 */
--			assert(graph->mapping[i - 1] > target);
--			assert(graph->mapping[i - 2] < 0);
-+			graph_assert(graph->mapping[i - 1] > target);
-+			graph_assert(graph->mapping[i - 2] < 0);
+ 			assert(graph->mapping[i - 1] > target);
+ 			assert(graph->mapping[i - 2] < 0);
+-			assert(graph->mapping[i - 3] == target);
  			graph->mapping[i - 2] = target;
  			/*
  			 * Mark this branch as the horizontal edge to
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index 18709a723e..ddf6f6f5d3 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -240,4 +240,46 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
+ 	EOF
+ '
+ 
++test_expect_success 'log --graph with multiple tips' '
++	git checkout --orphan 6_1 &&
++	test_commit 6_A &&
++	git branch 6_2 &&
++	git branch 6_4 &&
++	test_commit 6_B &&
++	git branch 6_3 &&
++	test_commit 6_C &&
++	git checkout 6_2 && test_commit 6_D &&
++	git checkout 6_3 && test_commit 6_E &&
++	git checkout -b 6_5 6_1 &&
++	git merge --no-ff 6_2 -m 6_F &&
++	git checkout 6_4 && test_commit 6_G &&
++	git checkout 6_3 &&
++	git merge --no-ff 6_4 -m 6_H &&
++	git checkout 6_1 &&
++	git merge --no-ff 6_2 -m 6_I &&
++
++	check_graph 6_1 6_3 6_5 <<-\EOF
++	*   6_I
++	|\
++	| | *   6_H
++	| | |\
++	| | | * 6_G
++	| | * | 6_E
++	| | | | * 6_F
++	| |_|_|/|
++	|/| | |/
++	| | |/|
++	| |/| |
++	| * | | 6_D
++	| | |/
++	| |/|
++	* | | 6_C
++	| |/
++	|/|
++	* | 6_B
++	|/
++	* 6_A
++	EOF
++'
++
+ test_done
 -- 
 gitgitgadget
 
