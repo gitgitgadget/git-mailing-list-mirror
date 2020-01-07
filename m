@@ -6,65 +6,69 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C74B1C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98C02C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:51:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 99DF02081E
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:39:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 762E4208C4
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 15:51:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728236AbgAGPjX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 10:39:23 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59276 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727559AbgAGPjX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 10:39:23 -0500
-Received: (qmail 13355 invoked by uid 109); 7 Jan 2020 15:39:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 07 Jan 2020 15:39:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31960 invoked by uid 111); 7 Jan 2020 15:44:57 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jan 2020 10:44:57 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 7 Jan 2020 10:39:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, brad@brad-smith.co.uk,
-        sunshine@sunshineco.com, Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] t4215: add bigger graph collapse test
-Message-ID: <20200107153922.GC20591@coredump.intra.peff.net>
-References: <pull.517.git.1578408947.gitgitgadget@gmail.com>
- <f74e82bea68701beb734537cafd147162d1bb2c6.1578408947.git.gitgitgadget@gmail.com>
+        id S1728355AbgAGPvw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 10:51:52 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44028 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727994AbgAGPvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 10:51:52 -0500
+Received: by mail-wr1-f68.google.com with SMTP id d16so54496223wre.10
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 07:51:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oDXJQr/9PJKKpQ8WDaL8c+jQe2CUzhqpL+y5Zjosp0Y=;
+        b=Ix8+H4w0qGbuIy3F8FCKkFrtgBxIyTF5m315VrPS/Dbhx6L6XOxXf9nKzWWe9sbf9C
+         bOmuwG4ongsaNfGbO5QElp8Cqo/QucRS5irpHAqhI5lgZZJLonpSu0bQzQpgmkavhT4F
+         6fbaRXiSKgCnuaAaDKoh58WV0icBCjLi0QRiGbjDBdippX5kezcrf7PzEwmcrLJp1cbZ
+         KperNCcFUaPQtk/KekHetehT6+vEexh7J8q5Wo88Un58l2X6nu4aEbZn3MkY3nwtwo7z
+         dJyhdRdMa9eUiyLfYAOUZ64/oWXWyggSquUsNTRsg7XOMeVbI1kbMvRkiijxJNrIBr8i
+         XkKw==
+X-Gm-Message-State: APjAAAWIbkPWo1PfWYAt9f6mo1SJhD8/4xrEK+nEHNGJjueXxfudPqqL
+        +TTppFF6bonxutawzS0otLciWMhITnbowsskeGc=
+X-Google-Smtp-Source: APXvYqy1PGkUg2TrNxBdjt8KiRZcbwkXAUx/uzlXifzUnxmNGV5/AAOiSDRbv3RV+ouQ5xv6Vx3J1ZUCXdyONqJ1GxQ=
+X-Received: by 2002:adf:f382:: with SMTP id m2mr110204105wro.163.1578412310540;
+ Tue, 07 Jan 2020 07:51:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <f74e82bea68701beb734537cafd147162d1bb2c6.1578408947.git.gitgitgadget@gmail.com>
+References: <pull.517.git.1578408947.gitgitgadget@gmail.com>
+ <5dd305d2f0de43a70b46336c8f1a62437e0511e1.1578408947.git.gitgitgadget@gmail.com>
+ <20200107153651.GB20591@coredump.intra.peff.net>
+In-Reply-To: <20200107153651.GB20591@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 7 Jan 2020 10:51:39 -0500
+Message-ID: <CAPig+cTu=iAeQNm8z53cyG8C1dgokpZBvRVgev091nBFg8tCXQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] graph: replace assert() with graph_assert() macro
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Bradley Smith <brad@brad-smith.co.uk>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 07, 2020 at 02:55:47PM +0000, Derrick Stolee via GitGitGadget wrote:
+On Tue, Jan 7, 2020 at 10:36 AM Jeff King <peff@peff.net> wrote:
+> On Tue, Jan 07, 2020 at 02:55:46PM +0000, Derrick Stolee via GitGitGadget wrote:
+> > The assert() macro is sometimes compiled out. Instead, switch these into
+> > BUG() statements using our own custom macro.
+>
+> I can buy the argument that compiling with and without NDEBUG can lead
+> to confusion. But if that is the case, wouldn't it be so for all of the
+> assert() calls, not just ones in the graph code?
 
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> A previous test in t4215-log-skewed-merges.sh was added to demonstrate
-> exactly the topology of a reported failure in "git log --graph". While
-> investigating the fix, we realized that multiple edges that could
-> collapse with horizontal lines were not doing so.
-
-Thanks for constructing this larger case.
-
-As for including this patch, I could take or leave it for now. I like
-the idea of documenting things further, but unless it's marked
-expect_failure, I don't think it's going to call anybody's attention
-more than this thread already has.
-
-So I'd love to hear what James thinks should happen here, given that
-it's an extension of his other work. But I'd just as soon punt on the
-patch until we decide whether it _should_ change (and then either mark
-it with expect_failure, or include the test along with a patch changing
-the behavior).
-
--Peff
+This wasn't just a matter of potential confusion. It's one thing to
+have assert()s in the code in general, but another thing when a
+scripted test specifically depends upon the asserted condition, as was
+the case with the test as originally proposed. Since the final patch
+series removes that particular assert() altogether, it's perhaps not
+that important anymore.
