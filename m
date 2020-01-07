@@ -6,82 +6,112 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD9E8C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 16:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA2C0C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 16:34:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5CF0A2073D
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 16:15:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 976D42081E
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 16:34:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GIm009PW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OLKMY1k7"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728259AbgAGQPZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 11:15:25 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57696 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728020AbgAGQPZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 11:15:25 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 41504ADB5B;
-        Tue,  7 Jan 2020 11:15:23 -0500 (EST)
+        id S1728202AbgAGQeL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 11:34:11 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59552 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728156AbgAGQeL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 11:34:11 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 35232964C5;
+        Tue,  7 Jan 2020 11:34:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=CyhXgSifRQPHdR2TPbJXJ8ZPUsY=; b=GIm009
-        PWQ2UiDSJehNDBMzbpDHwU+MBXdA71YXL39jmM9NGtJDnullErTboOEXHbGGCPzq
-        7OUftxQjgLih+WXYjRafske6iOdipGpoiU1mdr9Jf8Xe0vyvT/XMQ0K+FLaFsWtz
-        VTcDxjN2i/Blp2GjKBMkjBYragSwUR3PNpJpM=
+        :content-type; s=sasl; bh=tUoW6XAAuQ7nUrogyDCPez2sBPw=; b=OLKMY1
+        k7h+PP8K6pAkpypepQG2twhZ4xc0+GpUcHl/nIvAWvG/EWKykcG7jXDfRDs+f0DQ
+        Ssw+znV4jid/JcotKheVmnDqJ2iEdONvoN9AOy7ikMHG9Fx/YgVdvgDI04tsZqn7
+        1taGhcZKc6JOEYOrsIm5OqIDwpNIBG/LGFuBo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=UflGuJsM+bWVaOd874lo6tWouMs0F0H7
-        R8yYYyr+lxwXVvidtf9kuw71MrXMzVamlmE4+9vm3DpfSd608MuNR/4QmtanPnyw
-        DkhX/h/pzr8OJ0SZ/xQ+AntVcjJT3CUmwJ4WBcmOTRX4LOwzfuWbWJjW5sNwya2r
-        1atldTojJCM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 39A45ADB59;
-        Tue,  7 Jan 2020 11:15:23 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=kMp8mkr+uwoeLkDp4RLzDMyodpCysXv6
+        vPdv3LQ9unkrv71NGEfjMWIRu87qkJtWOOBRvrn128/reWgLRWHaeY8rygXOg6GA
+        4AVKtwhvcf3WANYNJ+lWkwc5C3ScLB6YcV6Bj06LkjeYpbWFIbL2jwzDHc5wJQv/
+        EL2gBnsKLnA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2D290964C4;
+        Tue,  7 Jan 2020 11:34:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E80B6ADB48;
-        Tue,  7 Jan 2020 11:15:19 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 52674964C2;
+        Tue,  7 Jan 2020 11:34:06 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Mike Rappazzo <rappazzo@gmail.com>,
-        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 0/1] sequencer: comment out the 'squash!' line
-References: <pull.511.git.1578326648.gitgitgadget@gmail.com>
-        <xmqq7e24a3t0.fsf@gitster-ct.c.googlers.com>
-        <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
-        <20200107013401.GI6570@camp.crustytoothpaste.net>
-Date:   Tue, 07 Jan 2020 08:15:16 -0800
-In-Reply-To: <20200107013401.GI6570@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 7 Jan 2020 01:34:01 +0000")
-Message-ID: <xmqqlfqj6y5n.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH v2 1/1] branch: advise the user to checkout a different branch before deleting
+References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
+        <pull.507.v2.git.1578370226.gitgitgadget@gmail.com>
+        <19a7cc1889d6094e4f8a94c19c43ad554662e8d8.1578370226.git.gitgitgadget@gmail.com>
+        <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com>
+Date:   Tue, 07 Jan 2020 08:34:04 -0800
+In-Reply-To: <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 7 Jan 2020 06:16:17 -0500")
+Message-ID: <xmqqh8176xab.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E6607324-3168-11EA-990D-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 85C162F0-316B-11EA-B716-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> I can see the argument that this makes it a little harder for mechanical
-> processing across versions, but I suspect most of that looks something
-> like "sed -i -e '/^squash! /d' COMMIT_EDITMSG" and it probably won't be
-> affected.
+[jc: skipped all the good suggestions I agree with]
 
-With the left-anchoring, the search pattern will no longer find that
-line if "squash!" is commented out, but people tend to be sloppy and
-do not anchor the pattern would not notice the difference.  Perhaps
-the downside may not be too severe?  I dunno.
+>> +                                       }
+>> +                                       else {
+>> +                                               advise(_("The branch you are trying to delete is checked "
+>> +                                                       "out on another worktree, run the following command "
+>> +                                                       "to checkout a different branch then try again:\n"
+>> +                                                       "git -C %s switch <branch>"), wt->path);
+>
+> I like the use of -C here because it makes the command self-contained,
+> however, I also worry because wt->path is an absolute path, thus
+> likely to be quite lengthy, which means that the important part of the
+> example command (the "switch <branch>") can get pushed quite far away,
+> thus is more easily overlooked by the reader. I wonder if it would
+> make more sense to show the 'cd' command explicitly, although doing so
+> ties the example to a particular shell, which may be a downside.
+>
+>     cd %s
+>     git switch <different-branch>
+>     cd -
+>     git branch -%c <this-branch>
 
-> We do make occasional slightly incompatible changes across
-> versions in order to improve user experience, and I think a lot of folks
-> who use squash commits will find this a pleasant improvement.
+Note that wt->path may have special characters that would need to be
+protected from the user's shell (worse, the quoting convention may
+be different depending on which shell is in use).  That is one of
+the reasons why I would suggest to stay away from giving an advice
+that pretends to be cut-and-paste-able without being so.  In this
+case, <different-branch> and <this-branch> must be filled by the
+user anyway, and the only thing worth cutting-and-pasting is the
+path to the other worktree, not the "git -C" or "cd" that users
+should be able to come up with.
+
+	"The branch is checked out on another worktree at\n"
+	"path '%s'\n"
+	"and cannot be deleted.  Go there, check out some other\n"
+	"branch and try again."
+
+or something like that, perhaps?  
+
+> (It is rather verbose and ugly, though.)
+
+I tend to agree.  It also feels to me that it is giving too much
+hand-holding, but after all advise() may turning out to be about
+giving that.
 
