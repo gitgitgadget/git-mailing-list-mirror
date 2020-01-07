@@ -2,88 +2,97 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90FC2C33C8C
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 17:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F04CEC33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 18:02:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1F3C3208C4
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 17:53:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C49DF21744
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 18:02:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="OoNzqKcd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JXWmb2T8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728464AbgAGRxI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 12:53:08 -0500
-Received: from mail4.protonmail.ch ([185.70.40.27]:39646 "EHLO
-        mail4.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728358AbgAGRxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 12:53:07 -0500
-X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Jan 2020 12:53:06 EST
-Date:   Tue, 07 Jan 2020 17:44:47 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=default; t=1578419091;
-        bh=28wYTs3gSEyDKbI3cPX8mnJDJ7tbccB2n26D2Aw7hd4=;
-        h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
-        b=OoNzqKcdmbnnQhYDsJLrrHRJYfcg4AAeXUCL4fz85zMojs1FB4AzkkXA2OGyVowPl
-         bae7OioEGjAdUetSTT68TA7ByLj36ADdBb4y8YnjffRyjPsPh7HaB8XOdibPQzAZir
-         gnoXrVYdD/+Upqhy5zsT8VFLoMvdnd2wcRi2cHms=
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-From:   Andre Loconte <andre.loconte@protonmail.com>
-Reply-To: Andre Loconte <andre.loconte@protonmail.com>
-Subject: Git bundle create produces inconsistent bundle
-Message-ID: <QBxpUR_NauPk0G8X2KKsqzlrfyxNuA4OoNR3Dm1KpHMNEELiSUxKr_IDM_qghObDt4aVv-bjg1ZQtCYRgxArdGsK52wCuO1LbsqzlHBto-k=@protonmail.com>
-Feedback-ID: ZsGzMiUXru0GkiKDCvY1IgcSYEKmivChv-eqew0uRa_PeoNRSpe0OxK1bEBvV3oiRtt2JivVVESHjNfXNDr1Qg==:Ext:ProtonMail
+        id S1728409AbgAGSCw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 13:02:52 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50712 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728365AbgAGSCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 13:02:51 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5ED522C7B1;
+        Tue,  7 Jan 2020 13:02:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=KqSYLYrLDdHoD6obdekzRfeY/wA=; b=JXWmb2
+        T8vqr9GXasOaG6MoEyqXrNPPeXOzwpqVPW1QSTSbtfeZ0zcstgdjj3iVJD9pY7jQ
+        hs7iPEpFm9NGYHFATrSrug8M6htVXrLngvuquyw3ToNBtIR+Q2S0hPAdTrGOQePj
+        duN9IgbH0MV8ZPk5ReWChRcsNd7v6q9cSB6WI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=XyFN8WkmLIg34YFxOx9lYZBrCF9Edl//
+        pWCHihubKSOO/npfJZnbVEO/Jg1DE2xjeWLTAgWuwlUDzI0FgdLwRdju7kF1czte
+        0Y5OuiXbWH/muuTfEuc6arlKzwXGWMzsGjZbYU2aLMbNvUbWUq2y6nYXUUg0lusw
+        Rvon67SVa98=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5482B2C7B0;
+        Tue,  7 Jan 2020 13:02:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B60082C7AF;
+        Tue,  7 Jan 2020 13:02:49 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>, James Coglan <jcoglan@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, brad@brad-smith.co.uk,
+        sunshine@sunshineco.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 3/3] t4215: add bigger graph collapse test
+References: <pull.517.git.1578408947.gitgitgadget@gmail.com>
+        <f74e82bea68701beb734537cafd147162d1bb2c6.1578408947.git.gitgitgadget@gmail.com>
+        <20200107153922.GC20591@coredump.intra.peff.net>
+Date:   Tue, 07 Jan 2020 10:02:48 -0800
+In-Reply-To: <20200107153922.GC20591@coredump.intra.peff.net> (Jeff King's
+        message of "Tue, 7 Jan 2020 10:39:22 -0500")
+Message-ID: <xmqqftgr5elz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: EAC235E2-3177-11EA-AB1A-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-I am running into an issue where "git bundle create" doesn't always produce=
- the same bundle, provided the exact same arguments and the exact same repo=
-.
+> On Tue, Jan 07, 2020 at 02:55:47PM +0000, Derrick Stolee via GitGitGadget wrote:
+>
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>> 
+>> A previous test in t4215-log-skewed-merges.sh was added to demonstrate
+>> exactly the topology of a reported failure in "git log --graph". While
+>> investigating the fix, we realized that multiple edges that could
+>> collapse with horizontal lines were not doing so.
+>
+> Thanks for constructing this larger case.
+>
+> As for including this patch, I could take or leave it for now. I like
+> the idea of documenting things further, but unless it's marked
+> expect_failure, I don't think it's going to call anybody's attention
+> more than this thread already has.
+>
+> So I'd love to hear what James thinks should happen here, given that
+> it's an extension of his other work. But I'd just as soon punt on the
+> patch until we decide whether it _should_ change (and then either mark
+> it with expect_failure, or include the test along with a patch changing
+> the behavior).
 
-Where it gets tricky is that:
+... and nobody CC'ed the person from whom they want to hear opinion?
 
-- I cannot reproduce the issue with random repos from Github (tried with ~1=
-0 repos and 30 bundles per repo);
-- I cannot reproduce the issue with the same OS and git version on differen=
-t hardware ;
-- I can reproduce the issue on colleagues' workstation (environment is iden=
-tical down to the hardware, see below).
-
-Environment:
-
-- GNU/Linux 5.3.0-24-generic Ubuntu 19.10 x86_64 ;
-- git version 2.20.1 ;
-- Intel Xeon Silver 4114 CPU @ 2.20GHz =C3=97 20 ;
-- 4 =C3=97 Hynix HMA81GR7CJR8N-VK 8GB DDR4-2666 ECC.
-
-I have put together a bash PoC [1]. And there are some example output in th=
-e comments (consistent [2], inconsistent [3]).
-
-[1] https://gist.github.com/alct/05cc9a2b4657d51669c96cb22cd5c4a6
-[2] https://gist.github.com/alct/05cc9a2b4657d51669c96cb22cd5c4a6#gistcomme=
-nt-3130206
-[3] https://gist.github.com/alct/05cc9a2b4657d51669c96cb22cd5c4a6#gistcomme=
-nt-3130213
-
-I cannot share the affected repos but I can run any diagnostic tool against=
- them.
-
-Would you have any clue on what could produce such behavior?
-
-Best,
-
-A.L.
-
-
-
+;-)
 
