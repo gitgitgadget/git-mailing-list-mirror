@@ -2,101 +2,116 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AEAFC32771
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0213C32771
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:10:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE356206F0
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:05:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8FE5B2072E
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 00:10:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMLAuba5"
+	dkim=pass (1024-bit key) header.d=qrpff.net header.i=@qrpff.net header.b="a1l3LiCo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727190AbgAGAFy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 6 Jan 2020 19:05:54 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36622 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726858AbgAGAFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Jan 2020 19:05:54 -0500
-Received: by mail-pl1-f195.google.com with SMTP id a6so21719810plm.3
-        for <git@vger.kernel.org>; Mon, 06 Jan 2020 16:05:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ygL2oEguUCIjoXs/ndTrPW+ZlhVF8DkdVGHNC7cO4GI=;
-        b=GMLAuba534IbWmgbMwLFBZk9f6C1SbEgtCZi8u4VBJGJ2R/DnV8YceMXRNansBQHNb
-         bd+Xw5b7dvBENCBeLQmiFMWa+dnDlVgrsoqXHSuNlSx6/sX5QeufP5mNKxvLQaIJdfpb
-         10OTpIpuowriVLl0fkrQTOw8WWC6cFhv0VdzJ6ON3zRWs4pzLw71AZ/z4WdHliXpOSHU
-         j1ALA+S7QtFxvxkd5T/MHkjxQX9GtDbm/bJXqfrVWCBDnXdhHrRrThtXQqwBRNWuHsJf
-         ybWWdP7DwqCEFYjpbU1mxr1mqGeXZt9k/Z22jdGRxmuiFO3ZEw1bEF5uHstBkgK21QSb
-         aRtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ygL2oEguUCIjoXs/ndTrPW+ZlhVF8DkdVGHNC7cO4GI=;
-        b=Z4cOAt4U+IwN4zfsIGyokVBhuv5i3IDI49h7rPmaJTaZ9mHKtsLzVkah+qOu+yHR4X
-         kUJZA+wbzbT8IyX0kvWyfMT3jo0ORLqiLJJZnIk4W/dpUQ6iFGO2+Lga1CSNQKat9Nc2
-         PZEHgShvkx6Jd8UWUi0rUt2w0OunhqRxb8xRvx5ArlZOkTcdO5qOF1ZPhZUNQlB2iOWw
-         RiL3B3Uj/+zBRUPdI0U2umbc5C4wSnwQ86FO2LedsBtQsm/84g22ULZ5VmGHJGOn0vR+
-         wA68QFq6V2ZEjEF0PHzbk+z5ABFLWUP/kzGnr3B7Mj0vi3GD6Ic9luHVaa6qaVqGnoiM
-         nCww==
-X-Gm-Message-State: APjAAAVrXMgGfe05EQe8CqflngC1hYfI1RddBOFVmRzXVE+a+xxepqVu
-        jMqJfZ0+a7LAmvlkP9Vy44+UTRyM
-X-Google-Smtp-Source: APXvYqx28vVdZCSLjAiwJzZTXMel4Tt/HkRgr8cVXOkh9zYRyQjX/QMyF0e+c8dEd+5CYl+6bzp6LQ==
-X-Received: by 2002:a17:902:fe17:: with SMTP id g23mr108861777plj.42.1578355553672;
-        Mon, 06 Jan 2020 16:05:53 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
-        by smtp.gmail.com with ESMTPSA id c1sm46049173pfo.44.2020.01.06.16.05.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2020 16:05:53 -0800 (PST)
-Date:   Mon, 6 Jan 2020 16:05:51 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] RFC: commit: add a commit.all-ignore-submodules config
- option
-Message-ID: <20200107000551.GE92456@google.com>
-References: <20200103120613.1063828-1-marcandre.lureau@redhat.com>
- <20200104004516.GB130883@google.com>
- <CAMxuvayT8FtovVnWU4bjQCP26drN37yuPG2+G2jAUsm0Ns_AYA@mail.gmail.com>
+        id S1727217AbgAGAKW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 6 Jan 2020 19:10:22 -0500
+Received: from bonobo.elm.relay.mailchannels.net ([23.83.212.22]:21285 "EHLO
+        bonobo.elm.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726858AbgAGAKW (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 6 Jan 2020 19:10:22 -0500
+X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id EEBD2E1163
+        for <git@vger.kernel.org>; Tue,  7 Jan 2020 00:10:20 +0000 (UTC)
+Received: from pdx1-sub0-mail-a42.g.dreamhost.com (100-96-85-12.trex.outbound.svc.cluster.local [100.96.85.12])
+        (Authenticated sender: dreamhost)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 59FA7E1378
+        for <git@vger.kernel.org>; Tue,  7 Jan 2020 00:10:20 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
+Received: from pdx1-sub0-mail-a42.g.dreamhost.com ([TEMPUNAVAIL].
+ [64.90.62.162])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+        by 0.0.0.0:2500 (trex/5.18.5);
+        Tue, 07 Jan 2020 00:10:20 +0000
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|stevie@qrpff.net
+X-MailChannels-Auth-Id: dreamhost
+X-Daffy-Army: 2710e43d52aa8a2b_1578355820811_2081901665
+X-MC-Loop-Signature: 1578355820811:1867239328
+X-MC-Ingress-Time: 1578355820810
+Received: from pdx1-sub0-mail-a42.g.dreamhost.com (localhost [127.0.0.1])
+        by pdx1-sub0-mail-a42.g.dreamhost.com (Postfix) with ESMTP id 4263181DE3
+        for <git@vger.kernel.org>; Mon,  6 Jan 2020 16:10:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=qrpff.net; h=mime-version
+        :references:in-reply-to:from:date:message-id:subject:to:cc
+        :content-type; s=qrpff.net; bh=k2yJKaUVui49jE+8AaPv2v/ZdG4=; b=a
+        1l3LiCohMaPeKR4cXYqfcTK4LZlCnPdqfNqk8PB/lhgYb4logRfCLg516au1EGi4
+        S4M5hZ9txiWQ5BxHWHU9JTu8VfxEYrIm790lK+k+c5GbfYA9NWH7Nxihhu66/NKk
+        ofro1QjnTd5EjYEtog2e4wsw9eUoFsoUQmq30ANJ0o=
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: stevie@qrpff.net)
+        by pdx1-sub0-mail-a42.g.dreamhost.com (Postfix) with ESMTPSA id D663D81D55
+        for <git@vger.kernel.org>; Mon,  6 Jan 2020 16:10:14 -0800 (PST)
+Received: by mail-lj1-f176.google.com with SMTP id l2so52785994lja.6
+        for <git@vger.kernel.org>; Mon, 06 Jan 2020 16:10:14 -0800 (PST)
+X-Gm-Message-State: APjAAAVNU7dCq1pCo64ggX0Irl0cuj6mfgBY0EkatdTqZczGlvSi8dNT
+        0PGczB1JdS7vfnKPXpZR9Y/kzmjcpKy3eXKXPRE=
+X-Google-Smtp-Source: APXvYqyhV1VGOGexi/PPZfD9+np81EM8PvtARzu+Pf3d7PUNyMT9pZ6rjlAoe5kde3A/7Abr5FBGYsAppzTUqWUh7f0=
+X-Received: by 2002:a2e:868c:: with SMTP id l12mr17291055lji.194.1578355813074;
+ Mon, 06 Jan 2020 16:10:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvayT8FtovVnWU4bjQCP26drN37yuPG2+G2jAUsm0Ns_AYA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20200103043027.4537-1-stevie@qrpff.net> <xmqqftgvdhpz.fsf@gitster-ct.c.googlers.com>
+ <CAD_xR9fUxDTvwmAsfH-6=buRP+UmwBHhQJSV+T3paUOy-S1CGw@mail.gmail.com> <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy2ul9yg0.fsf@gitster-ct.c.googlers.com>
+X-DH-BACKEND: pdx1-sub0-mail-a42
+From:   Stephen Oberholtzer <stevie@qrpff.net>
+Date:   Mon, 6 Jan 2020 19:10:00 -0500
+X-Gmail-Original-Message-ID: <CAD_xR9dGNKdVNzFgFUaZCgJetpW5tXxb8wERovdjbc=1jS-KxA@mail.gmail.com>
+Message-ID: <CAD_xR9dGNKdVNzFgFUaZCgJetpW5tXxb8wERovdjbc=1jS-KxA@mail.gmail.com>
+Subject: Re: [RFC PATCH] bisect run: allow inverting meaning of exit code
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-VR-OUT-STATUS: OK
+X-VR-OUT-SCORE: 0
+X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrvdehuddgudelucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpeggfhgjhfffkffuvfgtsehttdertddttdejnecuhfhrohhmpefuthgvphhhvghnucfqsggvrhhhohhlthiivghruceoshhtvghvihgvsehqrhhpfhhfrdhnvghtqeenucfkphepvddtledrkeehrddvtdekrddujeeinecurfgrrhgrmhepmhhouggvpehsmhhtphdphhgvlhhopehmrghilhdqlhhjuddqfhdujeeirdhgohhoghhlvgdrtghomhdpihhnvghtpedvtdelrdekhedrvddtkedrudejiedprhgvthhurhhnqdhprghthhepufhtvghphhgvnhcuqfgsvghrhhholhhtiigvrhcuoehsthgvvhhivgesqhhrphhffhdrnhgvtheqpdhmrghilhhfrhhomhepshhtvghvihgvsehqrhhpfhhfrdhnvghtpdhnrhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Marc-André Lureau wrote:
-> On Sat, Jan 4, 2020 at 4:45 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Marc-André Lureau wrote:
+Junio,
 
->>> One of my most frequent mistake is to commit undesired submodules
->>> changes when doing "commit -a", and I have seen a number of people doing
->>> the same mistake in various projects. I wish there would be a config to
->>> change this default behaviour.
->>
->> Can you say more about the overall workflow this is part of?  What
->> causes the submodules to change state in the first place here?
+On Sun, Jan 5, 2020 at 8:16 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> The most common case is, I guess, when you work on different branches
-> that have different (compatible) versions of the submodules.
+> Yeah, I know.  I didn't mean to give you a perfect solution and that
+> was why I said "along the line of...".  I know I ignored the 128 and
+> above, as I usually trust that our contributors are competent enough
+> to be able to fill in the missing details given an outline.
+>
+> The key takeaway I wanted you to notice was that a single case
+> statement that maps the exit code external command would give us
+> would look sufficient, without any of the {SUCCESS,FAIL}_TERM magic
+> you had in your version, which indicates that there is more than the
+> simple "using a run script to find where a bug was fixed can be done
+> by swapping exit code" going on.  And it is quite unclear why that
+> is needed either from the patch or the text that accompanied the
+> patch.
 
-Ah!  This is because "git checkout" defaults to --no-recurse-submodules,
-which is a terrible default.
 
-Does "git config submodule.recurse true" help?  If so, we can look
-into which it would take to flip that default.
+In this particular instance at least, I'm not competent enough to come
+up with a clean, portable way to create a single case statement that
+handles the final condition.
+The issue I'm having is that case-esac blocks do string matching, not
+integer value matching, so I don't know how to replicate the current
+behavior without a case pattern that looks like
+[12]|1[3-9]|1[01][0-9]|12[0-467]|1[3-9]|2[0-9]|[3-9].
 
-Thanks,
-Jonathan
+
+
+-- 
+-- Stevie-O
+Real programmers use COPY CON PROGRAM.EXE
