@@ -2,185 +2,133 @@ Return-Path: <SRS0=IlH6=24=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B258C33C9B
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDAF1C33C8C
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:19:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0F67C206F0
-	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:14:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ACE69206F0
+	for <git@archiver.kernel.org>; Tue,  7 Jan 2020 12:19:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aP8W00op"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gH3CwoGa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727975AbgAGMOd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 07:14:33 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45901 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727658AbgAGMOc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Jan 2020 07:14:32 -0500
-Received: by mail-qk1-f193.google.com with SMTP id x1so42358367qkl.12
-        for <git@vger.kernel.org>; Tue, 07 Jan 2020 04:14:31 -0800 (PST)
+        id S1727658AbgAGMTN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 07:19:13 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:37462 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727177AbgAGMTN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 07:19:13 -0500
+Received: by mail-lj1-f195.google.com with SMTP id o13so43066448ljg.4
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 04:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FdV4L8VljVS586SpbWTKI8uhiTi3DvA/eMPXSctBrxw=;
-        b=aP8W00oprr1BVFG8+qB5vhiaHDBr52W4SWC/yuZ0ejbTF7/qJrIDBKKdexsu8qIiCa
-         IZIJ41nO+1V62nPvQcPr/1EBOlk3vKV96996mGN+7yV9U4ATquaf1ItWpk3etEx6fKO7
-         ICNtKOeLHgmrjeMcE2jwilYrZUxpXvCLdym24Kw6eeXY3i4IMQRuUyPsei/1VkinSlas
-         IV6C99ZjX5rko6BH45z15d6+/MoR6Z2waa74obl9siUbs1YbVzhswYSJy0S+h88MzWP6
-         cbh8UyWlTNyGkEjOEJLWbdRxvEhJkqJVi12IgB6gy7y/rnsvdogyFK6EbIo3zoVEcbWG
-         Xibg==
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=J+H977QxQxcLCkMsB8naaZ7+lgdj21pVouIlSGiC0aQ=;
+        b=gH3CwoGaredrRDWAW9L9lvUQKo4V5A39LXmvA7R/ehMpom+8eJZZfuS00dZd1Zc7t4
+         QFDyeH3nCLmh62h2Yktnau0n6ptJ2LbT5xz1EtaFYk8CAEWEv9/90E1s3vGH88cnijAR
+         2ejvF1DMXCnv45BX2XpINLsGIBai7soV7bdCoH4RbIwFc4e8aZYqEC76dAaAQ81/SV6+
+         3l/adXhWNHH7vsKyPhMqzCwij0F/v0YaKxYZJ9Rb5rvcmh7AeACuJfk+Ey4bs0gpSNZq
+         rAd0DDXgE4WGF2hI668ek7N46JEoXbZhdmf3VgJmXSxzcyjsmsepPzo1w6Ja8gBquiEu
+         gqvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FdV4L8VljVS586SpbWTKI8uhiTi3DvA/eMPXSctBrxw=;
-        b=ggZYeGrBU1uecp1b1YOzR9n19LDP0ZA8MGBnGvkphE0NX1xH6JQ6A3xcwMNO7pW4fA
-         uFlK/7EZrYUYkm7Q7K2uZX+KE8i8KzqgfP3j2EtmRgECOj7TWfdhDX6SCb9uwyqP8GsB
-         M6uJ+F0mQcVEOQrjMji0ihLtWHIcinK0jwW1KDcvP/KT/ZkOsMSmMmE+hxQ7utiZgK3v
-         ZrfC8mb0febfZPuKcuZw2QoN4hUXwip3J+JVOruGvBl1DKHTV0FawlJ2CqX9PY2nmJWE
-         rpu5DZj2ZYLkppRzC4zK4fK4HnL5RjaSJa0BATPO4p3NaDEubi3hR5iHaG3G0muTmJ2S
-         /3EA==
-X-Gm-Message-State: APjAAAUSsqc8WAlOzZUT3sgfurchpYVShpKdYt+IctIT635vqf67f8Gy
-        d+orOKBKXRssLcf8RjBlZaPGmfg9
-X-Google-Smtp-Source: APXvYqzoTc0MeSCQ/3U4gJ533Rpee7dYKwz/2Qe5rK8zxmdDHC7GQ30yL6unoLqGbmo5bay2jlEq1g==
-X-Received: by 2002:a37:684a:: with SMTP id d71mr79758084qkc.201.1578399270979;
-        Tue, 07 Jan 2020 04:14:30 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:4018:daf7:6551:6995? ([2001:4898:a800:1010:f14d:daf7:6551:6995])
-        by smtp.gmail.com with ESMTPSA id u16sm22183382qku.19.2020.01.07.04.14.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Jan 2020 04:14:29 -0800 (PST)
-Subject: Re: [PATCH 1/1] Preserve topological ordering after merges This
- modifies the algorithm of topopological ordering. The problem with the
- current algoritm is that it displays the graph below as follows
-To:     Sergey Rudyshin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Sergey Rudyshin <540555@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.514.git.1578393057.gitgitgadget@gmail.com>
- <542a02020c8578d0e004cb9c929bced8719b902a.1578393057.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6c86f1e9-b70b-10b1-f2c5-589312f73a4c@gmail.com>
-Date:   Tue, 7 Jan 2020 07:14:29 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=J+H977QxQxcLCkMsB8naaZ7+lgdj21pVouIlSGiC0aQ=;
+        b=OyR7ZiwMBtKk/zXX7WMIbwcTm1pz+qXgahbvqyTH6M90GzEt2vM+nd+0TJcofuy1lK
+         5Jg9IOEpY215KuUlLUQFsd269/duSTrfAAe4tlNz/6qcR9rS3xYt6R7eMxqPh/9SQP/b
+         oos97d24aZy01a/EkQ8O8C1cdYZRa7rhIx572/rzb9BzBWDSRHKqRaEsHKlPeOxTauPm
+         ZfnWWC+L72Tf18qpC0mO6Xx09F+AwYYu6ZpQQNbZj/O/focr0k0/ss6jcy51n3kUEFkZ
+         oxqaZswkhVGvo2co87BzllnIc3f63hjgq8cNO1w+T0wGzXn/BLXA67rItmUCN8bX2dT7
+         +iqg==
+X-Gm-Message-State: APjAAAWbzCKhIdb56b5aZ82s4Q2mKy6p2vPDUBHxDeAHnszAdvbEbNwc
+        csu2GBOxKu+WzByrIOWr72c=
+X-Google-Smtp-Source: APXvYqzBlJE/87ss8SsYpT5ZoE88VIJouL4OKARO15LU7yTNnIGE2Zvx7hr+7Opi9hLvpzt0JQNGLA==
+X-Received: by 2002:a2e:916:: with SMTP id 22mr60399063ljj.60.1578399551779;
+        Tue, 07 Jan 2020 04:19:11 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 ([158.75.2.130])
+        by smtp.gmail.com with ESMTPSA id e21sm36047579lfc.63.2020.01.07.04.19.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Jan 2020 04:19:11 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, szeder.dev@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
+        peff@peff.net, Junio C Hamano <gitster@pobox.com>,
+        Garima Singh <garima.singh@microsoft.com>
+Subject: Re: [PATCH 3/9] commit-graph: use MAX_NUM_CHUNKS
+References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
+        <a15f87fdcbea1a37a20a05135832b42f36f682f1.1576879520.git.gitgitgadget@gmail.com>
+Date:   Tue, 07 Jan 2020 13:19:06 +0100
+In-Reply-To: <a15f87fdcbea1a37a20a05135832b42f36f682f1.1576879520.git.gitgitgadget@gmail.com>
+        (Garima Singh via GitGitGadget's message of "Fri, 20 Dec 2019 22:05:14
+        +0000")
+Message-ID: <865zhnzcg5.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-In-Reply-To: <542a02020c8578d0e004cb9c929bced8719b902a.1578393057.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/7/2020 5:30 AM, Sergey Rudyshin via GitGitGadget wrote:
-> From: Sergey Rudyshin <540555@gmail.com>
-> 
-> * E
-> |\
-> | * D
-> | |\
-> | |/
-> |/|
-> * | C
-> | * B
-> |/
-> * A
-> 
-> commit B is placed between A and C, which is wrong
-> because E stays that D and B comes after C
-> 
-> the only correct solution here is
-> 
-> * E
-> |\
-> | * D
-> | |\
-> | |/
-> |/|
-> | * B
-> * | C
-> |/
-> * A
-> 
-> while it seems that it contradicts to
-> D stating that C should be between D and B
-> The new algorithm solves this issue
+"Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This ordering concern makes sense _somewhat_, because D is the
-second parent of D and that wants to say "Show everything in C..D
-before showing C". The issues is that since C is the second parent
-of D, the topo-ordering says "Show everything in B..C before showing
-things reachable from B". It is unfortunate that these constraints
-collide.
+> From: Garima Singh <garima.singh@microsoft.com>
+>
+> This is a minor cleanup to make it easier to change the
+> number of chunks being written to the commit-graph in the future.
 
-Perhaps your description could do a better job clarifying this
-issue and how your algorithm change fixes the problem.
+Very minor nit: in the whole commit message it is not stated explicitly
+what MAX_NUM_CHUNKS is for, though it is very easy to guess (from the
+name itself).
 
-However, I'm not sure we even want to make the change, as this
-is still a valid topological order (parents appear after children).
-When we have an ambiguous pair (like B and C) the order can differ.
-The --topo-order option tries to group commits by when they were
-introduced, and that's the reason for presenting the commits reachable
-from the later parents before presenting the commits from earlier
-parents.
+>
+> Signed-off-by: Garima Singh <garima.singh@microsoft.com>
+> ---
+>  commit-graph.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 61e60ff98a..8c4941eeaa 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -24,6 +24,7 @@
+>  #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+>  #define GRAPH_CHUNKID_EXTRAEDGES 0x45444745 /* "EDGE" */
+>  #define GRAPH_CHUNKID_BASE 0x42415345 /* "BASE" */
+> +#define MAX_NUM_CHUNKS 5
 
-The only documentation we have is from [1]:
+Minor nit: MAX_NUM_CHUNKS or MAX_CHUNKS?
 
-"Show no parents before all of its children are shown, and avoid
-showing commits on multiple lines of history intermixed."
+>=20=20
+>  #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+>=20=20
+> @@ -1381,8 +1382,8 @@ static int write_commit_graph_file(struct write_com=
+mit_graph_context *ctx)
+>  	int fd;
+>  	struct hashfile *f;
+>  	struct lock_file lk =3D LOCK_INIT;
+> -	uint32_t chunk_ids[6];
+> -	uint64_t chunk_offsets[6];
+> +	uint32_t chunk_ids[MAX_NUM_CHUNKS + 1];
+> +	uint64_t chunk_offsets[MAX_NUM_CHUNKS + 1];
 
-The first part of the sentence is still true, and the second part
-is ambiguous of how to do that.
+Looks good.  I guess we won't ever have more chunks than 5:
+OIDF, OIDL, CDAT, EDGE, BASE (and they cannot repeat, and last two are
+optional).
 
-[1] https://git-scm.com/docs/git-log#Documentation/git-log.txt---topo-order
+>  	const unsigned hashsz =3D the_hash_algo->rawsz;
+>  	struct strbuf progress_title =3D STRBUF_INIT;
+>  	int num_chunks =3D 3;
 
-> This change makes option "--topo-order" obsolete, because
-> there is only one way to order parents of a single commit.
-> "--date-order" and "--author-date-order" are preserved and make sense
-> only for the case when multiple commits are given
-> to be able to sort those commits.
+Good.
 
-This part of the change needs to be removed. The default sort does
-not preserve topological orderings (like --date-order does), and
-so is much faster to output, especially without a commit-graph file.
-
->  void sort_in_topological_order(struct commit_list **list, enum rev_sort_order sort_order)
-
-Since you are only editing this code, and not the incremental topo-order code, your
-test changes will likely break when run with GIT_TEST_COMMIT_GRAPH=1. When the commit-graph
-exists and generation numbers are calculated, we use a different algorithm for topo-order.
-
-I've been meaning to clean up this "duplicated" logic by deleting this method in favor of
-the incremental algorithm in all cases. It needs some perf testing to make sure that
-refactor doesn't have too large of a perf hit in the case of no commit-graph.
-
->  	/* update the indegree */
-> @@ -832,51 +886,56 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
->  	for (next = orig; next; next = next->next) {
->  		struct commit *commit = next->item;
->  
-> -		if (*(indegree_slab_at(&indegree, commit)) == 1)
-> -			prio_queue_put(&queue, commit);
-> +		if (*(indegree_slab_at(&indegree, commit)) == 1) {
-> +			/* also record the author dates, if needed */
-> +			if (sort_order == REV_SORT_BY_AUTHOR_DATE)
-> +				record_author_date(&author_date, commit);
-> +			prio_queue_put(&queue_tips, commit);
-> +		}
-
-Your code change looks rather large for what I expected to be a much simpler change.
-Likely the only thing we need is to avoid adding to the priority queue if we already
-have the commit in the queue (maybe using a hashset storing the commits that we've
-added to the queue). I believe the reason C appears before B in your example is that
-it was added to the queue a second time, and the queue behaves like a stack in the
-topo-order case.
-
-Thanks,
--Stolee
+Looks good to me.
+--=20
+Jakub Nar=C4=99bski
