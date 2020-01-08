@@ -2,226 +2,117 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EA8AC33C9B
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:40:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A803C00523
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:59:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 556742073A
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:40:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4264320692
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:59:52 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KKY4wufV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727551AbgAHKkK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 05:40:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60144 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727145AbgAHKkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 05:40:10 -0500
-Received: (qmail 21284 invoked by uid 109); 8 Jan 2020 10:40:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 10:40:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8695 invoked by uid 111); 8 Jan 2020 10:45:48 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 05:45:48 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Jan 2020 05:40:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Torsten Krah <krah.tm@gmail.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Broken branch after git commit - tracked files in staging area
- can't be removed with restore --staged, or commit or stash
-Message-ID: <20200108104008.GA2207365@coredump.intra.peff.net>
-References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
- <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
- <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
- <20200108091119.GB87523@coredump.intra.peff.net>
- <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+        id S1727356AbgAHK7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 05:59:51 -0500
+Received: from mout.gmx.net ([212.227.15.19]:41487 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726290AbgAHK7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 05:59:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578481184;
+        bh=WvrUWehSigUYcE3SplALISJt/U8r21gxvfVyqf5TAOI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=KKY4wufVnVxdVrNrKR/JKgE13XRb22t5htgin+MBYzYWHyhYO5U7nnJquhPPDwINJ
+         QY5DpMj+2Nwr3AHEdKMrpSUaKKINapNdBHua2b+xvhs+LMLZOeoRsgsONP77SdutCZ
+         zkF7tJD5NtHorlNZ2Cy1kVmVi45SuXBeKfEymkac=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MPGW7-1j3E6v2avF-00Pc1E; Wed, 08
+ Jan 2020 11:59:44 +0100
+Date:   Wed, 8 Jan 2020 11:59:46 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Liam Huang via GitGitGadget <gitgitgadget@gmail.com>,
+        Liam Huang <liamhuang0205@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Update imap-send.c, fix incompatibilities with
+ OpenSSL 1.1.x
+In-Reply-To: <xmqqtv573twq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001081148300.46@tvgsbejvaqbjf.bet>
+References: <pull.516.git.1578391376.gitgitgadget@gmail.com>        <nycvar.QRO.7.76.6.2001071313580.46@tvgsbejvaqbjf.bet>        <xmqqv9pn5hgl.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.2001071944250.46@tvgsbejvaqbjf.bet>       
+ <xmqq7e2359an.fsf@gitster-ct.c.googlers.com> <xmqqtv573twq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:6NSjVZZAMEQL/9yaAbxw8nO1NkP6tVQ9gOsgyw0mrWQuiv/0nC3
+ LZbJK7Ax9ZBYIoxueprilqAekVjdVMYtbtOc0+sMGCA4+MUJ1tVMFFNTpmFM5MoSWFollrn
+ b6LObmI3IALb2w/kjvDWHD86A4gN+2HRIFeT4vKN/noTE018d3ujsHqU697rh8/9khVDoH5
+ i+xYDV+ZCN1F6iqdpV4bg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:R8boveG16Ec=:sip8cyguJ9GBdDGTMxeucJ
+ oQfXhLQb78WHFo4TzsohppHA6UE0+lEN24y6X6Cr7TdQvprYwoB//Y3dsnF0fjw6nLyXemgOo
+ ID6OHJHoIZJp1ZT8WNd6GH335zy3wahYXjsI6VYNvIp9EK1FdHxkWKzwF2JU1ZjcJP9ixaFFc
+ xOCtKu5FrvZuT573DADYrPhw3mVxvhnoH4XBdWNXw6lWeIDfqe5YJFGkRuOYr/aj7qXxQS8oZ
+ dSkwrWiqC3b2bn6FQ9wj5DebhcYPdXPzoAqfoDBLgZ5lnUpm33aA0NTtZedUv0Edfazujii+r
+ o36q4Qbf5zddOXGAKjhtAklFhQCODIVlW8u3CfXCFA18OyvBhh43zd1+Q0Grc7dOMqeYWoBSV
+ UIuOO5waGLxtuUaLeQzOUZpzMncb+X7H9BpkmQLp6FFJm51WtACT569kqH7QXf9vLuUKHE86G
+ icoDKurGMD5t+P0l/ZidTL1/f4gwWJl9T1NWRphI7Veds1raudoUXXSuWmKKUAUaCZ4yOf7jQ
+ WGWDM5bncL4wkuvqyoRNtUauNI2MYnINFJt/LCjW1NbHxYUq+eG5dzL/UoDHXp8hRH/0hEWxr
+ QIi+Y5MmPkQgtNCg/l+NZSwoMEGR4KOZ/O8dm9rTZcveGFAPBxn4/NH1ebfeDsDpPaZsNmrgJ
+ fl0rT8acEjGfWG0+KwGQsqmGA5xtnWRSGjWGlmw/Ixx3lpHrfJkS1Sb4UGmp4PTLatEgqEWqq
+ 9QrkG6kBmniXMAf6Y5LIGMDY36pPND3pya3YpADa8d4ICBB1YrdT4FhqQBARoAkDuCijQzHmd
+ e6LpIjSud4CH/ivzEY2a8DlmQSW0vG4ZQDBrjE2yygudtWJw5/TcHUKMCUWJvUD6HAaBo8muE
+ 0i+1D6i8hxf84kRlJ9vsocoGfgUkbHcBkfrbbW+SnP/YvBeVuFkUZGx8MYtKmeGx4oqqX9+e/
+ bed1KDKnRRXQCCu3iN6oDxMZul1TKMzG23aZG3iIG/K/1NqAHaNcBmQ/lpzjGX9/eyM7IKCBo
+ SWscZrtGY5Nuer7vOHrBy+eQourVfuHFQiB9lNpe+5b5A7eDjJdX0NDtTyO94hfCft1w7M5+u
+ 6Hstjsh7JPEGGzWq4q58PzexxRyCamem+D/0Gc/qLSVzsNwwJRsVmkpenZcxrwS91uZPYkC7O
+ 6CnTgLWH8YQs7PTGkO0AwgUs41BFEhnsrEHnyUbZZjVxp7GQz8hblBZ0jdh/4RE9vaZ7ZySmM
+ pUk3hVzTE42OFytB6PURp+1tuBz6q45bUJCZ5kmQ35C5Ft1H5F1BPUckEadc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 11:02:41AM +0100, Torsten Krah wrote:
+Hi Junio,
 
-> Hi Jeff, I have a poc you can try:
+I will change GitGitGadget to no longer Cc: you automatically.
 
-Thanks, I can see the problem now.
+Please register my suspicion that this will make GitGitGadget a lot less
+useful: the stated mission of GitGitGadget is to make contributing patches
+to the Git project _easier_ so that the contributor can focus on the
+changes they want to make, rather than on the rather involved process.
 
-> cd /tmp
-> mkdir testrepo
-> cd testrepo
-> touch TEST1 TEST2
-> git add -A
-> git commit -m First
-> touch TEST3 TEST4
-> git add -A
-> git commit -m Second
-> git reset --soft HEAD~1
+I know, you do not find any fault with the current process; it works for
+you. It just does not work all that well for many other people, myself
+included. The sheer amount of mostly unwritten, and not exactly static
+rules contributors are expected to follow are starting to remind me of
+Kafka's "The Trial".
 
-OK, so we'd expect to still see TEST3 and TEST4 in the index. And we do:
+On Tue, 7 Jan 2020, Junio C Hamano wrote:
 
-> git status
-> 
->    Auf Branch master
->    Zum Commit vorgemerkte Änderungen:
->      (benutzen Sie "git restore --staged <Datei>..." zum Entfernen aus
->    der Staging-Area)
->    	neue Datei:     TEST3
->    	neue Datei:     TEST4
+> Besides, when they send out patches they would also add area experts and
+> those who participated in the review of the earlier round to Cc: so GGG
+> needs to have a mechanism to allow the end user to do so.
 
-And then if we try to unstage one of them, we should see that:
+So GitGitGadget should now also learn to determine who the current area
+experts are???
 
-> git restore --staged TEST3
-> 
->    [10:57:26][tkrah@torstenknbl:/tmp/testrepo]  (master) $ LC_ALL=C git
->    status
->    On branch master
->    Changes to be committed:
->      (use "git restore --staged <file>..." to unstage)
->    	new file:   TEST4
-> 
->    Untracked files:
->      (use "git add <file>..." to include in what will be committed)
->    	TEST3
+I must have misread your request.
 
-So far so good. But I think there is a lurking problem in the index,
-because...
+> And by treating the maintainer merely just one of the reviewer, that
+> mechanism can naturally be reused.
 
-> git commit -m Second
-> 
->    [master 5b62331] Second
->     2 files changed, 0 insertions(+), 0
->    deletions(-)
->     create mode 100644 TEST3
->     create mode 100644 TEST4
+Well, I certainly do not treat you as just one of the reviewers, as your
+complaints definitely keep me on my tip toes with regards to GitGitGadget.
 
-This is very wrong (and is a bug, not a problem with what you're doing).
-We wrote a commit with TEST3 in it, even though it wasn't in the index.
-Why would we do that? Almost certainly it's because of a cache-tree
-extension in the index. Presumably "git restore --staged" is not
-properly invalidating the cache-tree entry. And that would explain what
-you see next:
+I do have to remind myself frequently that only two people ever complained
+about GitGitGadget, literally everybody else who is using GitGitGadget is
+quite happy. So maybe I should listen more to those positive voices.
+Actually, now that I wrote it, I think that is the only sane course of
+action here: listen more to positive voices.
 
-> And now TEST3 is in the commit and what is even more "interesting" is
-> the next one:
-> 
->    [10:59:16][tkrah@torstenknbl:/tmp/testrepo]  (master) $ LC_ALL=C git
-> status
->    On branch master
->    Changes to be committed:
->      (use "git restore --staged <file>..." to unstage)
->    	deleted:    TEST3
-> 
->    Untracked files:
->      (use "git add <file>..." to include in what will be committed)
->    	TEST3
-> 
-> TEST3 is unstaged and deleted now.
+Ciao,
+Dscho
 
-That happens because we wrote out a commit with TEST3, but it's still
-not in the index! So it appears as if a deletion was staged (remember
-that what is "staged" is really just the diff between the index and
-HEAD).
-
-We can repeat the same process, substituting "git reset -- TEST3" for
-git-restore, and it works fine. So the problem is in git-restore itself.
-
-Here's another observation. If we do:
-
-  git restore --staged TEST3 TEST4
-
-then running "git commit" won't do anything, since there's nothing
-staged (and this is why I had trouble reproducing the problem earlier).
-If we add a new file, like:
-
-  echo whatever >new
-  git add new
-
-then the problem won't exhibit, because that will also invalidate the
-cache-tree (because it has to account for "new"). But we could put those
-files in their own subdirectory and do:
-
-  $ git restore --staged subdir/TEST3
-  $ git status
-  On branch master
-  Changes to be committed:
-  	new file:   subdir/TEST4
-  
-  Untracked files:
-  	subdir/TEST3
-
-and if I commit that, I see the bug again:
-
-  $ git commit -m second
-  [master 5c3b8c1] second
-   2 files changed, 0 insertions(+), 0 deletions(-)
-   create mode 100644 subdir/TEST3
-   create mode 100644 subdir/TEST4
-
-Now here's even more fun. I wanted to do another test, so I tried to
-reset back to the original "second" commit, but it segfaults! Yikes.
-
-  $ git reset --hard HEAD@{2}
-  Segmentation fault
-
-Running it under valgrind shows we're indeed seeing a bogus cache-tree:
-
-  ==2214443== Invalid read of size 4
-  ==2214443==    at 0x362DFF: traverse_by_cache_tree (unpack-trees.c:734)
-  ==2214443==    by 0x3630A3: traverse_trees_recursive (unpack-trees.c:799)
-  ==2214443==    by 0x364209: unpack_callback (unpack-trees.c:1258)
-  ==2214443==    by 0x35F925: traverse_trees (tree-walk.c:497)
-  ==2214443==    by 0x364DDD: unpack_trees (unpack-trees.c:1589)
-  ==2214443==    by 0x1BE6CF: reset_index (reset.c:95)
-  ==2214443==    by 0x1BF894: cmd_reset (reset.c:421)
-  ==2214443==    by 0x124868: run_builtin (git.c:444)
-  ==2214443==    by 0x124BAE: handle_builtin (git.c:674)
-  ==2214443==    by 0x124E24: run_argv (git.c:741)
-  ==2214443==    by 0x1252AB: cmd_main (git.c:872)
-  ==2214443==    by 0x1E811A: main (common-main.c:52)
-  ==2214443==  Address 0x40 is not stack'd, malloc'd or (recently) free'd
-  ==2214443== 
-  ==2214443== Process terminating with default action of signal 11 (SIGSEGV)
-
-This isn't the same spot that Emily fixed earlier today in [1], but it
-seems like a very similar problem. Weird.
-
-So instead I blew away the index and then did hard reset:
-
-  $ rm .git/index
-  $ git reset --hard
-  HEAD is now at 5c3b8c1 second
-
-And now we can see what happens if both files are unstaged, and then we
-add a new file, and then commit:
-
-  $ git reset --soft HEAD^
-  $ git restore --staged subdir/TEST3 subdir/TEST4
-  $ echo whatever >new
-  $ git add new
-  $ git commit -m again
-  [master 119d9e4] again
-   1 file changed, 1 insertion(+)
-   create mode 100644 new
-
-So that _doesn't_ exhibit the problem. I guess because adding the new
-file causes git-add to reexamine the whole cache-tree and clean it up.
-
-So there seem to be at least two bugs:
-
- - git-restore doesn't properly invalidate the cache-tree
-
- - the index-reading code is not careful enough about bogus cache-trees,
-   and may segfault
-
--Peff
-
-[1] https://lore.kernel.org/git/20200108023127.219429-1-emilyshaffer@google.com/
