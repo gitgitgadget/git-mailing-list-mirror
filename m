@@ -6,133 +6,95 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E824C282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 16:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1C8AC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 16:53:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 112572070E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 16:09:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4F5A620678
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 16:53:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UNDKH8tE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TSo7G0W0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728463AbgAHQJi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 11:09:38 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:50665 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbgAHQJi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 11:09:38 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A655797498;
-        Wed,  8 Jan 2020 11:09:36 -0500 (EST)
+        id S1729524AbgAHQxK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 11:53:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61261 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727308AbgAHQxK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 11:53:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 04C4E3BEC2;
+        Wed,  8 Jan 2020 11:53:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=S8qfdVbrInuspafGpBNcd+6xcKA=; b=UNDKH8
-        tEmz58zvEi2t2Do4F7FQOMdhhcN0pdteC6qb5z0c1PL2LTsWgwuYmVvXAQ7EyrCe
-        J4WJe7i+rUTO4aDuPwjuIBqiS7O0cFW7KZeNsjbiywQu6vC0owwpuAs3lpA90C9P
-        6y6bO3cNocMtKQDjNApbSnnoCxpEHKj4gXbJI=
+        :content-type; s=sasl; bh=a9TZmn3f/q/UlCm4YTQ64AnGkmY=; b=TSo7G0
+        W0FAlvkigMossENjNBeyY4vugXtdxWbi3Q53dxHPXWg9KljouVO6pTNHctSo0NHO
+        aLR6aHs4c3j4LKpwM9b0r/P+zNGszkEKXt5x76cKuntq4KAZ5FmDFTJIADANdORv
+        XUw1toMMss5FMf1qVIs3sOrpVmMsy95Tby6mw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=c5YhmLvhKnbpMpi9DYi9eIuoFU/+gs/+
-        mYN8SoYDGY8buN3GLndtz4MOMcopHGVDYUq9bADR0WqIg0i6AWueSwRvZCz/QM37
-        2YtVqqsIR7ecq9Db3N/qqO5CWZpF/4rGB64MSYIf/oNtGYfid/geiwTX6pbS/Enx
-        vK2oYryzgj8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CE4897497;
-        Wed,  8 Jan 2020 11:09:36 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=hjr2SbLZKk6X+grT6f+bfHhvP8yoWh4o
+        ZftcY5XhsnZdI8RfD39ivaYcbKcy2HHbKSKDq/t0njG9RLcpLusIXjizG5OffPNa
+        B+xdUTyhmKk+X173kJ4X4qOQuS0UEKZaqUUEOY0uXSyQrVTJFGoDrBPOauRN+gui
+        Ra6Awt/lezc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F01293BEC1;
+        Wed,  8 Jan 2020 11:53:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2BED697496;
-        Wed,  8 Jan 2020 11:09:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5E4563BEC0;
+        Wed,  8 Jan 2020 11:53:07 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Liam Huang via GitGitGadget <gitgitgadget@gmail.com>,
-        Liam Huang <liamhuang0205@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Update imap-send.c, fix incompatibilities with OpenSSL 1.1.x
-References: <pull.516.git.1578391376.gitgitgadget@gmail.com>
-        <nycvar.QRO.7.76.6.2001071313580.46@tvgsbejvaqbjf.bet>
-        <xmqqv9pn5hgl.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2001071944250.46@tvgsbejvaqbjf.bet>
-        <xmqq7e2359an.fsf@gitster-ct.c.googlers.com>
-        <xmqqtv573twq.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.2001081148300.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 08 Jan 2020 08:09:28 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2001081148300.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 8 Jan 2020 11:59:46 +0100 (CET)")
-Message-ID: <xmqqzhey2amf.fsf@gitster-ct.c.googlers.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     Mike Rappazzo <rappazzo@gmail.com>,
+        Michael Rappazzo via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] sequencer: comment out the 'squash!' line
+References: <pull.511.git.1578326648.gitgitgadget@gmail.com>
+        <xmqq7e24a3t0.fsf@gitster-ct.c.googlers.com>
+        <CANoM8SV=pT3sFrfnEqWc2xBn_c2rES0qSMsdptF0DgcxgYL94w@mail.gmail.com>
+        <20200107013401.GI6570@camp.crustytoothpaste.net>
+        <xmqqlfqj6y5n.fsf@gitster-ct.c.googlers.com>
+        <20200108025509.GM6570@camp.crustytoothpaste.net>
+Date:   Wed, 08 Jan 2020 08:53:06 -0800
+In-Reply-To: <20200108025509.GM6570@camp.crustytoothpaste.net> (brian
+        m. carlson's message of "Wed, 8 Jan 2020 02:55:09 +0000")
+Message-ID: <xmqqv9pl3n65.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 40E7CFC2-3231-11EA-998B-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 58499D20-3237-11EA-8904-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> I will change GitGitGadget to no longer Cc: you automatically.
-
-Thanks.
-
-> Please register my suspicion that this will make GitGitGadget a lot less
-> useful: the stated mission of GitGitGadget is to make contributing patches
-> to the Git project _easier_ so that the contributor can focus on the
-> changes they want to make, rather than on the rather involved process.
-
-I am not sure where that "a lot" comes from.  FWIW I do not expect
-my response rate to change at all [*1*], but perhaps you have
-something else, perhaps effect on reviewers other than me, in mind?
-
-In any case, a large part of focusing on changes they want to make
-is to ask for help from the right people who know the part of the
-system they want to touch, and that is ...
-
->> Besides, when they send out patches they would also add area experts and
->> those who participated in the review of the earlier round to Cc: so GGG
->> needs to have a mechanism to allow the end user to do so.
+> On 2020-01-07 at 16:15:16, Junio C Hamano wrote:
+>> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>> 
+>> > I can see the argument that this makes it a little harder for mechanical
+>> > processing across versions, but I suspect most of that looks something
+>> > like "sed -i -e '/^squash! /d' COMMIT_EDITMSG" and it probably won't be
+>> > affected.
+>> 
+>> With the left-anchoring, the search pattern will no longer find that
+>> line if "squash!" is commented out, but people tend to be sloppy and
+>> do not anchor the pattern would not notice the difference.  Perhaps
+>> the downside may not be too severe?  I dunno.
 >
-> So GitGitGadget should now also learn to determine who the current area
-> experts are???
+> Sorry, I was perhaps bad at explaining this.  In my example, it would no
+> longer remove that line, but the user wouldn't care, because it would be
+> commented out and removed automatically.  So while the code wouldn't
+> work, what the user wanted would be done by Git automatically.
 
-... done by CC'ing the right folks, right?
+I didn't realize that you only care about 'd' there; you're right of
+course if you limit the scope of the discussion that way.
 
-Whether they run "shortlog --since=18.months $pathspec" locally to
-find them, or GGG does so for them before turning the patch into a
-piece of e-mail and offers "perhaps some of these people can help
-you?", after the contributor decides from whom to ask help, there
-would be some way for the contributor to tell GGG "ok I'll ask this
-person to help by placing the addresss on the CC", no?  That is what
-I meant by the mention of CC: in the part of my response you quoted.
+I was talking in a more general terms where "^squash!" is used as a
+marker that signals the boundary between two original commits and
+the processing is done possibly differently on each part.
 
-> I must have misread your request.
-
-No, it wasn't even a request (unless GGG does not offer any way to
-say "I want this to be CC'ed to these folks", that is).  It was
-merely "the contributor must have a way to choose to (or not to) cc
-me (or anybody), I presume".
-
-The request part was "let them do so themselves, instead of always
-cc'ing me, because the latter does not add any bit of useful
-information."
-
-After all, software development is a human interaction process.  I
-wouldn't mind if the automated CC is done to address some 'bot
-(e.g. patch tracker) at all, but it simply is rude to treat other
-people as a convenient review bot and it is even more so to do so
-blindly and automatically, which is what automated CC added by GGG
-is.  At least, when the contributor chooses to ask a reviewer X,
-even if the choice were wreong and the patch were in an area the
-reviewer X were not familiar with at all, it means something that
-the contributor decided to ask for help from X by CC'ing.
-
-
-[Footnote]
-
-*1* I do not read patch e-mails out of my mbox and instead read via
-the nntp interface to lore or public-inbox archive.  The list of
-messages presented to me to choose which ones to read and respond to
-would only show me who the author is and what the title is, so "is
-it CC'ed to me?" does not affect my response rate at all.
