@@ -2,97 +2,80 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DDFD9C00523
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74154C00523
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:28:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AE4FD20643
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:15:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZEVIpOPN"
+	by mail.kernel.org (Postfix) with ESMTP id 51E80206F0
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:28:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727400AbgAHJPt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 04:15:49 -0500
-Received: from mail-il1-f196.google.com ([209.85.166.196]:40019 "EHLO
-        mail-il1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727205AbgAHJPs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 04:15:48 -0500
-Received: by mail-il1-f196.google.com with SMTP id c4so2069500ilo.7
-        for <git@vger.kernel.org>; Wed, 08 Jan 2020 01:15:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=zJkUck5OBtyYzp8BDOY5FYHg0XXMnahU2+vhiJCCzbw=;
-        b=ZEVIpOPNCNrU+miOqyxc2Kjf1hMkNhe+fRYUGLbknZNKdKrry/vDz8oAZk70K+mrIC
-         rvBMmpNasFbxkrQyT3FrYJL3VSf1XenpxW3ORc5/nq8b3Ld71Cpy72XgTeiYPr4yeyqN
-         0nFpDeM1lC1mg0yNEnWpwpcUZQ0ENG7DwpRGm7WZREx1hh/YqWGkS77nfepeeWYKPlwG
-         8o4nDH19pQh1FrT/m/AFbB3adp2bZDVcb/fY6h06jjTORlGydT0r394DbDh4vB8TduIO
-         kRi2NLfllodJyVKSD601zIBfKjvuXh4YScspcdwVgVXqJhdi9r/BXFUK7CQ45VqmGBlR
-         vp1Q==
+        id S1727490AbgAHJ2F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 04:28:05 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:53261 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727205AbgAHJ2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 04:28:05 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m24so1675484wmc.3
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 01:28:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=zJkUck5OBtyYzp8BDOY5FYHg0XXMnahU2+vhiJCCzbw=;
-        b=DihFFz8ztAGVIQzRcv5IZUBRQtKuQhZalM1oYy5h7XibOUDaVpkDx3+8ajhgxY/IUL
-         Ny30RYDRJtEjyF+mhILyHB0D0lbiYUMyPG5Im89jOEV2XoDopwK5GsZO4bdoXEWptgrj
-         d8TfsGWQ+RBaWgVhagOPGeyEIC7UwnVh01NIcg84K1R75Xt7YtqOEzBlnm7YpiD972h9
-         1/3Yzv+vYxKK1nDqs3U5RpQWVnQaB00JMPjmgf1RehNC1Mna8AfX6SCiviHfYpR2JWbq
-         6jYIq62TNnVyejiORGLjZ7ggC9eHTvpdxXfOtnjm6D4W+SNEisOfsoETrie4+uT+ibZR
-         xWTQ==
-X-Gm-Message-State: APjAAAVv0mFuVzCXS3hG0SkQ3CPaQ7lYZFr17t6aXqgGCwhZFSq514Ra
-        /7Gn1DiCgPUFCeZpCnh6RFVHn2fSSVGE51jiuoA=
-X-Google-Smtp-Source: APXvYqyvV2hdVxY+JT12jiCEIfs9+Y/Rwg/LvL3ugB6+MdI+4r/TujZaYUW+j6QQY1DrLwOZUCQfKoLu4MiOaan7gkM=
-X-Received: by 2002:a92:9885:: with SMTP id a5mr3056541ill.107.1578474947935;
- Wed, 08 Jan 2020 01:15:47 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=GKF+ru3ovzPyWuCZVz52T4+HmCjjZVKoPIsYwrnNNrQ=;
+        b=p78toU6/XI//2YW13ce47T09KXm/3A4kUYZI2JpEovUYDLqwbWpNijqNdnHdnzH8OE
+         6SChEropjOtmdSTbZAWS7RKvtnvy/e35JzRrZP7Sl5cGox8AHVrnr/AgmomOjL3J5QZG
+         02c5UHudfVTGcJVw9zUlU/hsQS6DLPSA+eMo6ojl0ElefXkAnnlIPBaxeWc0TucFdQFf
+         FYjsojxgwYf/xXMz7CrKV/bn/foGG5ocMq2Uh5gDGUQPY77RluvONLu4HG7EU7Xe08F0
+         Bw3qanJt2mUJYlk+SRGMdnnqws/R2qN/oqx0S9ooQoYO/1cCbQPjriyltSRjys3/BPgV
+         zyjA==
+X-Gm-Message-State: APjAAAV9/3ewuD19p+agnRRi40nTuw298siiwnt+F2UIeb8x0vWZgSI6
+        pcfoKRYKae+SfDcT8ImFHA75FhZPz/odefBO7Q0=
+X-Google-Smtp-Source: APXvYqyQcb95jU4j0WOhUrpJ0/26rocAmahRy2XravTBXyXgVh6RK+TFGsM/Zm76YnqCLv3JyjihqLqYzYF3kg5QoOI=
+X-Received: by 2002:a05:600c:2503:: with SMTP id d3mr2577705wma.84.1578475683135;
+ Wed, 08 Jan 2020 01:28:03 -0800 (PST)
 MIME-Version: 1.0
-References: <20200107013640.1821227-1-sandals@crustytoothpaste.net>
- <20200107110145.GA1073219@coredump.intra.peff.net> <20200108024732.GL6570@camp.crustytoothpaste.net>
-In-Reply-To: <20200108024732.GL6570@camp.crustytoothpaste.net>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Wed, 8 Jan 2020 10:15:37 +0100
-Message-ID: <CAN7CjDCv2uYNaHEtQv6Zco33-Cba1Fn2by87NU_3vwytZHy_WA@mail.gmail.com>
-Subject: Re: [PATCH] run-command: avoid undefined behavior in exists_in_PATH
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        "Miriam R." <mirucam@gmail.com>
+References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
+ <pull.507.v2.git.1578370226.gitgitgadget@gmail.com> <19a7cc1889d6094e4f8a94c19c43ad554662e8d8.1578370226.git.gitgitgadget@gmail.com>
+ <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com> <CACg5j26jyWnAtM+mZ-FuN7OQWHpKk5nADG+7J-=metJMdO6+2Q@mail.gmail.com>
+In-Reply-To: <CACg5j26jyWnAtM+mZ-FuN7OQWHpKk5nADG+7J-=metJMdO6+2Q@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 8 Jan 2020 04:27:52 -0500
+Message-ID: <CAPig+cTDayF0hHn7wSPGNS8h2qPUYhhg9Z8fY_rLQnWmAg-NKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] branch: advise the user to checkout a different
+ branch before deleting
+To:     Heba Waly <heba.waly@gmail.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El mi=C3=A9., 8 ene. 2020 a las 3:47, brian m. carlson
-(<sandals@crustytoothpaste.net>) escribi=C3=B3:
+On Tue, Jan 7, 2020 at 8:15 PM Heba Waly <heba.waly@gmail.com> wrote:
+> On Wed, Jan 8, 2020 at 12:16 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > By the way, did you actually run across a real-world case in which
+> > someone was confused about how to resolve this situation? I ask
+> > because this almost seems like too much hand-holding, and it would be
+> > nice to avoid polluting Git with unnecessary advice.
 >
-> On 2020-01-07 at 11:01:45, Jeff King wrote:
-> > > Noticed-by: Miriam R. <mirucam@gmail.com>
-> > > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> >
-> > I think Miriam actually posted the same patch in her initial email:
-> >
-> >   https://lore.kernel.org/git/CAN7CjDDBA0ZoCG9aaQf5rg3gxqny=3DEjR6v6jE1=
-mnxvUJQSF_0Q@mail.gmail.com/
-> >
-> > I don't know how we want to handle authorship.
->
-> I don't feel strongly about holding authorship; I'm happy to have her
-> name on it instead of mine since she did propose a solution.  I just
-> care that we fix it.
-> --
-Hi,
-my mentor (Christian Couder <chriscool@tuxfamily.org>) was who
-detected the problem and sent me the solution, I only asked the
-community. I think his name should be in the patch instead of mine.
+> No I didn't. I was trying to find scenarios where git can give more
+> user-friendly messages to its users.
+> I see your point though, so I don't mind not proceeding with this
+> patch if the community doesn't think it's adding any value.
 
-Best,
-Miriam
-> brian m. carlson: Houston, Texas, US
-> OpenPGP: https://keybase.io/bk2204
+My own feeling is that this level of hand-holding is unnecessary, at
+least until we a discover a good number of real-world cases in which
+people are baffled by how to deal with this situation. Adding the
+advice seems simple on the surface, but every new piece of advice
+means having to add yet another configuration variable, writing more
+code, more tests, and more documentation, and it needs to be
+maintained for the life of the project. So what seems simple at first
+glance, can end up being costly in terms of developer resources. For a
+bit of advice which doesn't seem to be needed by anyone (yet), all
+that effort seem unwarranted. Thus, my preference is to see the patch
+dropped.
