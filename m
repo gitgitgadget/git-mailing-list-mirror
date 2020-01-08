@@ -2,105 +2,201 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AA67C00523
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 03:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 723B6C00523
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 04:28:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2FC292070E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 03:35:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 40DC620705
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 04:28:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kj5Cdp4W"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C3Ca7+GW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726210AbgAHDe6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 7 Jan 2020 22:34:58 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:33328 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726142AbgAHDe5 (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 7 Jan 2020 22:34:57 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3E0E3607F5;
-        Wed,  8 Jan 2020 03:34:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578454496;
-        bh=HVSkTH2uACelZpM+DSErVc3licZ7ej6XztalSSFrlmM=;
-        h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
-         Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-         Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kj5Cdp4WIP9A52s3uZtXvtkKzJgXyH2t3gXgiWq+hKsuA2TduEpKcs6iAwOueLkMj
-         wx3Cw30U1ubwC8evZdqxYeIrTPBwTQxo8ulYsby/vgOKcrSBzFvZ7yntpIGwi4sOVJ
-         HFiWdjjBbPEfKp3BEaaJPYUDpOiWIwnmGN/NqSAT+/oP6Eaqk0o0ug7DeX9AeoYkOx
-         4kOCRTsfR6zUNONCVymz+NHK9JJ9aimUBFuDHlJQdVxVQSPkyQBeAMf+VOrgO9y6KF
-         x0mKrRl/W3lT33WKddnFb0jF1FEL/IqYASjGBWK9wea/0yZ9TlZ6FGWONB5KbnlmMn
-         zoOPDtSYCZoToV7vb3kRoGUzJI+Wqq0g/8jNdlCSTo9qdrllsiFH0eXPtNL90B+Vjw
-         cLSKG55OU9mnyu0gpcf8nzVaJlO4NBNESp8wxQUkrwYPsV1TggZVtaoNza1G1pXlFT
-         kVIzVSqPFGo3LUZbOMcBY1SHmGfC02o3TEFK6yrEywytv86l0rA
-Date:   Wed, 8 Jan 2020 03:34:51 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Subject: Extra request with protocol v2 and git ls-remote
-Message-ID: <20200108033451.GN6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
+        id S1726333AbgAHE17 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 7 Jan 2020 23:27:59 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39635 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbgAHE17 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Jan 2020 23:27:59 -0500
+Received: by mail-wr1-f65.google.com with SMTP id y11so1895254wrt.6
+        for <git@vger.kernel.org>; Tue, 07 Jan 2020 20:27:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=2ygyq47roKzG+XXGTquJj8wOXE9edWS1J294jagnwXA=;
+        b=C3Ca7+GWyRypuQTsRhxbrZTptI+7bEdMnOPvWWi/liEuRg4KUBtwOCyx71gXjP81VM
+         mczPDQEOGNlCP8q9LBntPRuuEQtfb9N/QFn7rnIJL2Zf7QlZIU39RTSHm+0cr1X7RtZ8
+         c6A8q91IVqBSLVP3Plbj7juCqQM+mcYYswjFDOxMxwloVXj668GX/8VnrNbDJ3IQJibS
+         bMvIXGq45pVJbmNFg+xBUTUmRB/W0fsqkAfwsDYWoKLYJxiB/C5eQojeJVreqDjTvFTI
+         DY32i8iVsrF6hxsbtgumeuxc5H5udv5C0C5k1UQJGyjDinaVkD6X6Fr/hNkEhFKUxmXY
+         ch8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=2ygyq47roKzG+XXGTquJj8wOXE9edWS1J294jagnwXA=;
+        b=KW9oo14xUTreG4usAOnxs0fle3djTAFJJyf2nYFKZXM0OCdIz3iA4kXDXl65c4EJB8
+         CNGyPZbcoRUU0HPfH6gXAgCMKHe1k43TaklmA08iZ/idszPXTUQNjrwyJeFgEuc5lX+p
+         JGRhJaTFcUuKiAKi8qQJG4QKFtVI58sfiBaKHcv92oYBslKTphU3wEgZJd1ubmTElzuX
+         ZbH7TSTeApLlSapfgtuxv3nx3LpCet8o/mkvK4ujF1Kpa6Okqqn3Jf8D8xBW2umPheq6
+         LxsF3RFf68LEjOg8j/oz8SzyqJORRGhCy5bv3wp3UNqxAAHELPyowIVZr8rEV9HcMZdP
+         /AFg==
+X-Gm-Message-State: APjAAAUrpInnT7N1h1Gnx7vDGaLVwaKLOr5jK9zQF532E95pwMvHFeHv
+        VRicJpnonMrKTdh2mL15i4CzwIih
+X-Google-Smtp-Source: APXvYqxuyVK1wO1uLyj4MOz9u7B5kq4PGy39RB+27S/w7M0QqqpiADHuWSFdmBptpHnvoQM5lww+1g==
+X-Received: by 2002:a5d:4392:: with SMTP id i18mr2257914wrq.199.1578457677066;
+        Tue, 07 Jan 2020 20:27:57 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w8sm32820584wmd.2.2020.01.07.20.27.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2020 20:27:56 -0800 (PST)
+Message-Id: <0977ead712e5b77fdfac703d8b2e8dc495bc393b.1578457675.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.518.git.1578457675.gitgitgadget@gmail.com>
+References: <pull.518.git.1578457675.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 08 Jan 2020 04:27:54 +0000
+Subject: [PATCH 1/2] graph: add test to demonstrate horizontal line bug
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MmQIYbZiCoQ2kDro"
-Content-Disposition: inline
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, jcoglan@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
 
---MmQIYbZiCoQ2kDro
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+A previous test in t4215-log-skewed-merges.sh was added to demonstrate
+exactly the topology of a reported failure in "git log --graph". While
+investigating the fix, we realized that multiple edges that could
+collapse with horizontal lines were not doing so.
 
-A colleague (Jon Simons) today pointed out an interesting behavior of
-git ls-remote with protocol v2: it makes a second POST request and sends
-only a flush packet.  This can be demonstrated with the following:
+Specifically, examine this section of the graph:
 
-  GIT_CURL_VERBOSE=3D1 git -c protocol.version=3D2 ls-remote origin
+	| | | | | | *
+	| |_|_|_|_|/|\
+	|/| | | | |/ /
+	| | | | |/| /
+	| | | |/| |/
+	| | |/| |/|
+	| |/| |/| |
+	| | |/| | |
+	| | * | | |
 
-The Content-Length header on the second request will be exactly 4 bytes.
+Document this behavior with a test. This behavior is new, as the
+behavior in v2.24.1 has the following output:
 
-I'm not sure exactly how to fix this by looking at remote-curl.c, but I
-suspect that we can avoid sending a request if all we're going to do is
-send a flush packet.  If I were a bit more familiar with the code, I'd
-send a patch, but I'm not.
+	| | | | | | *-.
+	| | | | | | |\ \
+	| |_|_|_|_|/ / /
+	|/| | | | | / /
+	| | |_|_|_|/ /
+	| |/| | | | /
+	| | | |_|_|/
+	| | |/| | |
+	| | * | | |
 
-I just thought I'd point this out since it was surprising to me.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+The behavior changed logically in 479db18b ("graph: smooth appearance
+of collapsing edges on commit lines", 2019-10-15), but was actually
+broken due to an assert() bug in 458152cc ("graph: example of graph
+output that can be simplified", 2019-10-15). A future change could
+modify this behavior to do the following instead:
 
---MmQIYbZiCoQ2kDro
-Content-Type: application/pgp-signature; name="signature.asc"
+	| | | | | | *
+	| |_|_|_|_|/|\
+	|/| | | | |/ /
+	| | |_|_|/| /
+	| |/| | | |/
+	| | | |_|/|
+	| | |/| | |
+	| | * | | |
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.17 (GNU/Linux)
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t4215-log-skewed-merges.sh | 62 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4VTdoACgkQv1NdgR9S
-9ovh0RAAzp6o2IbhAGzKmCSpT8rkpw/RLkz/FG2Yt14eyeoLX55E6kEN4v7SprLn
-vrvrnAy04147xOfvwNh0XNgJfGdt6xn7Y8pJO2UkcTaSYcu6pYMF2nRiwyjLKHMe
-5dd/pE5++ed7flBbv7MQ2/Friy5ZClcZB9pMpQvZNg5V0dPmj3IsJ/9VVrMYWk3r
-awMr0101cdJscTSiNsFEZpjVtpEGiMhmCmfpZv3Cg57kmmNS8n9lLiK2ZZytsyJW
-WhjsH46r8fJ230QlSw+J0XoXObqTvvWjUVDF2fSJNLKrKj7U+FmWrAa0fssU+MqG
-XqFksLAs85cmzN3288mqIdCSqfkgrGalyLn5YGj7m4RV4VpgGB3niy5q2PB5ldm8
-LV04PAtro3fGRDstqDeVqrdBOMQntNm4ACXYl6FQSaw9WyC/weRZMcBhQVAQRDZu
-FK71B3QC9xTkn4v7NKj8Y7fLtOKQZKMtazUIO4Jm+yVDvKah8/w+a4B9med1SeMW
-hHAyBP4MgCbnMZuo8wT6fNffGsjokMQEAM6/ZTYFaPDEMPTrOR1z3OeVC5QuDov8
-2aF/7Rk1OESgrMXn+OUqxS/V/zY9azw0V+oYC6GWk8oEvPNDcH9Y2Amf2I2IKwRq
-flvHTLcRg3FApQQHFuy+HN5LE8gsuoHfZHQ/cDzlXhfnwq+InZA=
-=vUnn
------END PGP SIGNATURE-----
+diff --git a/t/t4215-log-skewed-merges.sh b/t/t4215-log-skewed-merges.sh
+index 5661ed5881..099e4b89b4 100755
+--- a/t/t4215-log-skewed-merges.sh
++++ b/t/t4215-log-skewed-merges.sh
+@@ -311,4 +311,66 @@ test_expect_success 'log --graph with multiple tips and colors' '
+ 	test_cmp expect.colors actual.colors
+ '
+ 
++test_expect_failure 'log --graph with multiple tips' '
++	git checkout --orphan 7_1 &&
++	test_commit 7_A &&
++	test_commit 7_B &&
++	test_commit 7_C &&
++	git checkout -b 7_2 7_1~2 &&
++	test_commit 7_D &&
++	test_commit 7_E &&
++	git checkout -b 7_3 7_1~1 &&
++	test_commit 7_F &&
++	test_commit 7_G &&
++	git checkout -b 7_4 7_2~1 &&
++	test_commit 7_H &&
++	git checkout -b 7_5 7_1~2 &&
++	test_commit 7_I &&
++	git checkout -b 7_6 7_3~1 &&
++	test_commit 7_J &&
++	git checkout -b M_1 7_1 &&
++	git merge --no-ff 7_2 -m 7_M1 &&
++	git checkout -b M_3 7_3 &&
++	git merge --no-ff 7_4 -m 7_M2 &&
++	git checkout -b M_5 7_5 &&
++	git merge --no-ff 7_6 -m 7_M3 &&
++	git checkout -b M_7 7_1 &&
++	git merge --no-ff 7_2 7_3 -m 7_M4 &&
++
++	check_graph M_1 M_3 M_5 M_7 <<-\EOF
++	*   7_M1
++	|\
++	| | *   7_M2
++	| | |\
++	| | | * 7_H
++	| | | | *   7_M3
++	| | | | |\
++	| | | | | * 7_J
++	| | | | * | 7_I
++	| | | | | | *   7_M4
++	| |_|_|_|_|/|\
++	|/| | | | |/ /
++	| | |_|_|/| /
++	| |/| | | |/
++	| | | |_|/|
++	| | |/| | |
++	| | * | | | 7_G
++	| | | |_|/
++	| | |/| |
++	| | * | | 7_F
++	| * | | | 7_E
++	| | |/ /
++	| |/| |
++	| * | | 7_D
++	| | |/
++	| |/|
++	* | | 7_C
++	| |/
++	|/|
++	* | 7_B
++	|/
++	* 7_A
++	EOF
++'
++
+ test_done
+-- 
+gitgitgadget
 
---MmQIYbZiCoQ2kDro--
