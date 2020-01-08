@@ -6,86 +6,75 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A56F7C33CA2
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 20:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CBFB1C282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 21:06:21 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5D2EE20692
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 20:35:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6312120692
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 21:06:21 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CqSc9PT7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iFSLY6R4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726620AbgAHUfe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 15:35:34 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:50146 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726179AbgAHUfe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 15:35:34 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 95A8237FB2;
-        Wed,  8 Jan 2020 15:35:32 -0500 (EST)
+        id S1726583AbgAHVGU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 16:06:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55691 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725446AbgAHVGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 16:06:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AC8973DC8B;
+        Wed,  8 Jan 2020 16:06:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=froPqR+jd6jwLiZx2yM7L+qxXs8=; b=CqSc9P
-        T7CbGk9+naPrgCsh+M3my/ZhguI2urfzVbnJwtPxayap1P6HCkVhwHiUH4+DuakB
-        CrjwTwX5ZNyT7tvZpwCdT5v//BuIs0zV6zGTFlx13axnYojETFNlei5O1cOR9ycZ
-        klDUUZCDV+T2fSECKVulwtBmqxdiR8hLqQa+Q=
+        :content-type; s=sasl; bh=oce1lDeLdGPygslgqDFYmhPh1BE=; b=iFSLY6
+        R49dcYyCOtw7Osq4iwCqAVCu4AdRDT3NNFKTqvEcIiCXzBT0E5eKb1uaf49ymKPk
+        YRRbdCv1tCDmoYiMtpwpWcINwG+pZqQO54Dtwzs8y9qiA+Y5Nns5CXVVWizwzB1Q
+        yDFGZnst4IYxB0QN+LNAOiVhGdCN8esLPWeLA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=CwPsgFnQidiYzrc3aNQEpCPetrMnHouV
-        DVGWq9qHw3hOwYzfilmCT0keh0iXS3khZFttZhEhdfDKkr8jjbvQ20/tdTcncxZQ
-        Ndp+8pFiTL7ZCsMI149ljDWUdXRl1lTr9AE3mHPfYvqaFbjm3fjYm8pvzjrXPKGo
-        /NDOrkRGyN4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8D03437FB0;
-        Wed,  8 Jan 2020 15:35:32 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=YU1+jZecmdpNxNkYHaCnfUzEdw5ejgEP
+        Zol0wr7gezuhTA37s/sm1T4Q74XPxtOfeJR2jDuDtSMe6gfFx0niM6P66QpdY5b/
+        6pjl44Z8KCs+PraHOY1QTrS0uMphm1xFFnmC9EnkkCZfn9iA67VIk391aFS/vGBg
+        JL9d+U9DBAA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id A3E7B3DC8A;
+        Wed,  8 Jan 2020 16:06:17 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E79A437FAF;
-        Wed,  8 Jan 2020 15:35:31 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0AD993DC89;
+        Wed,  8 Jan 2020 16:06:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
-References: <20200108023127.219429-1-emilyshaffer@google.com>
-        <20200108071525.GB1675456@coredump.intra.peff.net>
-        <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
-        <20200108193833.GD181522@google.com>
-Date:   Wed, 08 Jan 2020 12:35:29 -0800
-In-Reply-To: <20200108193833.GD181522@google.com> (Emily Shaffer's message of
-        "Wed, 8 Jan 2020 11:38:33 -0800")
-Message-ID: <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, jcoglan@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 0/2] Graph horizontal fix
+References: <pull.518.git.1578457675.gitgitgadget@gmail.com>
+        <xmqq5zhl3jrm.fsf@gitster-ct.c.googlers.com>
+        <c69afbe7-3a9c-0619-594f-f5ba980ae7b8@gmail.com>
+Date:   Wed, 08 Jan 2020 13:06:15 -0800
+In-Reply-To: <c69afbe7-3a9c-0619-594f-f5ba980ae7b8@gmail.com> (Derrick
+        Stolee's message of "Wed, 8 Jan 2020 15:05:50 -0500")
+Message-ID: <xmqqk1611wvs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6A44E1C8-3256-11EA-A7FF-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: B6077266-325A-11EA-9A86-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
->> > The new condition you added looks correct to me. I suspect this BUG()
->> > should not be a BUG() at all, though. It's not necessarily a logic error
->> > inside Git, but as you showed it could indicate corrupt data we read
->> > from disk. The true is probably same of the "pos >= 0" condition checked
->> > above.
->> 
->> It does not sound like a BUG to me, either, but the new condition
->> does look correct to me, too.  We can turn it into die() later if
->> somebody truly cares ;-)
->> 
->> Thanks, both.  Will queue.
->
-> Thanks much for the quick turnaround. If I hear more noise I'll give it
-> a try with die() or error code instead, but for now I'll move on to the
-> next bug on my list. :)
+> I guess I was incomplete in my first example. The full horizontal behavior
+> before 0f0f389f was
+> ...
+> This change brings the horizontal lines back.
 
-By the way, it is somewhat sad that we proceeded that far in the
-first place---such a corrupt on-disk index would have caused an
-early die() if we did not get rid of the trailing-hash integrity
-check.
+Ah, I see.  That was what you meant by regression-and-fix.
+
+Thanks.
