@@ -2,152 +2,174 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82268C00523
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE051C00523
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:02:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 60A662070E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 09:52:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7ED1620705
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:02:47 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gyswhDss"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbgAHJwb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 04:52:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60104 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726087AbgAHJwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 04:52:31 -0500
-Received: (qmail 21034 invoked by uid 109); 8 Jan 2020 09:52:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 09:52:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8428 invoked by uid 111); 8 Jan 2020 09:58:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 04:58:09 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Jan 2020 04:52:29 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eyal Soha <shawarmakarma@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: Add support for axiterm colors in parse_color
-Message-ID: <20200108095229.GC87523@coredump.intra.peff.net>
-References: <CANsz78+ugmd62F4Qk+VT7Pi=ZPtMSkZjXOwLNRCFhoS9jrOkeQ@mail.gmail.com>
- <CANsz78K-BiswWPdhd_N25NuApcv7zSb2cw2Y9DSinkpNpuogYw@mail.gmail.com>
- <CANsz78LEZiocv_E-Hvj3iBahFFgomPb3BFNdmas2iqxqRLfRiw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CANsz78LEZiocv_E-Hvj3iBahFFgomPb3BFNdmas2iqxqRLfRiw@mail.gmail.com>
+        id S1727124AbgAHKCq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 05:02:46 -0500
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:41067 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726567AbgAHKCq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 05:02:46 -0500
+Received: by mail-wr1-f43.google.com with SMTP id c9so2659696wrw.8
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 02:02:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:reply-to:to:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kc/QbJbEp6upSV49mj0a1s9WsfA2JX0BaMbPZhHWv60=;
+        b=gyswhDsscvAmJim346VkN+2KHrb26PGpVzcpX8XDOhAg1UUZnEyk6yXk4MHKit6tAy
+         zyzrUr7CM97b/2X330ChDoWL+yz/cydSG9F4a6JhcJzjMEUG7VXo6L22Ebug9Y75iXje
+         nsnlNdvnl3g8vMx/0sXS0S+HtgfSX9GdS9+qB7FbfKOHBIblhJuUEjY65qWKSwAcVdn3
+         +JDLWNk11yeXqsir3gt0bdpexDqzFLfVBJdGCdqZw0H2QOMmuK8RPWAZOlxMRX0pxYos
+         RzMuJN1AewIiNwrhtRqZr0WFbWSvZ9IGuheedEYZhqf1V6OQgRsa6DtwhmXcshvMaTdT
+         t2uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:date
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=kc/QbJbEp6upSV49mj0a1s9WsfA2JX0BaMbPZhHWv60=;
+        b=CAbxYdqpWKJiBuyXjOLUHQOmXG+AH50NDuMlYi2vn0N6Gb1bKhL3ler0cHPoIvjH0a
+         6vy+NzSFfI6BrI8ULMDPpUrAs265MRg6CTG05f1oAM7otdDbl1wOBu/UJplwZ3bhD2CX
+         a99oFTUuOAgHuQdlh+0W/7GqVjy3Z5OUh39vF9/CFDcOYlYcIjAuB5/qiMqjH/ZkLeL5
+         0kjiYGVAOBmIns5zW/nDTJeU+YCJyNIcvlSv/zEDXsiJvsqPs2JJH4N7NJw4fkV/VjmU
+         vkxufHn9mvB7Q5qGnnhgQhgEHHNxA126LLaRmJ9KT/Qo/CFAIC0/18w9kImj2BHZD07U
+         YQLQ==
+X-Gm-Message-State: APjAAAUGAIwwMMRjkAvLcpLwRXRk5C0q19YLMCtEzYYSB+Bv9ncMLfuU
+        s2cnITub4JEh7mWE06RE7e8GoiZZ0Hw=
+X-Google-Smtp-Source: APXvYqxEYeIiLKHks/BPc7rKDkEcO8ahrbbgRuHVc8YdvKPQzz5a221uIjoPwcJrlr8guGtx3708Dg==
+X-Received: by 2002:a5d:6652:: with SMTP id f18mr3701423wrw.246.1578477762389;
+        Wed, 08 Jan 2020 02:02:42 -0800 (PST)
+Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
+        by smtp.googlemail.com with ESMTPSA id n3sm3245169wmc.27.2020.01.08.02.02.41
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Jan 2020 02:02:41 -0800 (PST)
+Message-ID: <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+Subject: Re: Broken branch after git commit - tracked files in staging area
+ can't be removed with restore --staged, or commit or stash
+From:   Torsten Krah <krah.tm@gmail.com>
+Reply-To: krah.tm@gmail.com
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Wed, 08 Jan 2020 11:02:41 +0100
+In-Reply-To: <20200108091119.GB87523@coredump.intra.peff.net>
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+         <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+         <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
+         <20200108091119.GB87523@coredump.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 07, 2020 at 10:36:53AM -0500, Eyal Soha wrote:
-
-> https://en.wikipedia.org/wiki/ANSI_escape_code
+Am Mittwoch, den 08.01.2020, 04:11 -0500 schrieb Jeff King:
+> That step seems wrong, and I can't reproduce it here. If "git status"
+> lists the files as unstaged, then "git commit" should not be
+> committing
+> them. Can you show us a more complete example that we can run
+> ourselves
+> (i.e., that does not rely on whatever is in "main", and what is in
+> $FILES)? Barring that, can you show us the output of the commands, as
+> well as "git show FETCH_HEAD FETCH_HEAD~1"?
 > 
-> ANSI color codes 90-97 and 100-107 are brighter versions of the 30-37
-> and 40-47 colors.  To view them, run `colortest-16`.  In that
-> colortest, they are named with a leading "+".  Maybe git config could
-> support those colors, too, with a leading plus in the name?  They are
-> nice for having a different shade of a color in a diff.
+> -Peff
 
-Depending on your terminal, you can already access these colors via
-256-color mode. Generally 0-7 are the standard colors there, then 8-15
-are the "bright" variants, and then an rgb cube.
+Hi Jeff, I have a poc you can try:
 
-You can see how your terminal displays all of them with something like
-this:
+cd /tmp
+mkdir testrepo
+cd testrepo
+touch TEST1 TEST2
+git add -A
+git commit -m First
+touch TEST3 TEST4
+git add -A
+git commit -m Second
+git reset --soft HEAD~1
 
-  reset=$(git config --type=color --default=reset foo.bar)
-  for i in $(seq 0 255); do
-    color=$(git config --type=color --default="$i" foo.bar)
-    echo "$color$i$reset"
-  done
+git status
 
-Some terminals also show "bold red" as bright red, but many modern ones
-seem to actually provide a bold font.
+   Auf Branch master
+   Zum Commit vorgemerkte Änderungen:
+     (benutzen Sie "git restore --staged <Datei>..." zum Entfernen aus
+   der Staging-Area)
+   	neue Datei:     TEST3
+   	neue Datei:     TEST4
 
-That said, I'm not entirely opposed to having more human-readable
-aliases. I'm not sure if it's worth using the 16-color version (e.g.,
-"ESC[91m" versus the 256-color version "ESC[38;5;9m"). It's possible it
-would be compatible with more terminals, and it is slightly fewer bytes.
+git restore --staged TEST3
 
-> diff --git a/color.c b/color.c
-> index ebb222ec33..a39fe7d133 100644
-> --- a/color.c
-> +++ b/color.c
-> @@ -33,6 +33,7 @@ struct color {
->                 COLOR_UNSPECIFIED = 0,
->                 COLOR_NORMAL,
->                 COLOR_ANSI, /* basic 0-7 ANSI colors */
-> +               COLOR_AXITERM, /* brighter than 0-7 ANSI colors */
+   [10:57:26][tkrah@torstenknbl:/tmp/testrepo]  (master) $ LC_ALL=C git
+   status
+   On branch master
+   Changes to be committed:
+     (use "git restore --staged <file>..." to unstage)
+   	new file:   TEST4
 
-What's AXITERM? I couldn't find it mentioned anywhere around ANSI codes.
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+   	TEST3
 
-I kind of wonder if we could just call these ANSI as well, and have
-color_output() just decide whether to add an offset of 60 when we see a
-color number between 8 and 15. Or possibly c->value should just have the
-60-offset value in the first place.
+git commit -m Second
 
->   * already have the ANSI escape code in it. "out" should have enough
->   * space in it to fit any color.
->   */
-> -static char *color_output(char *out, int len, const struct color *c, char type)
-> +static char *color_output(char *out, int len, const struct color *c,
-> +                          const char *type)
+   [master 5b62331] Second
+    2 files changed, 0 insertions(+), 0
+   deletions(-)
+    create mode 100644 TEST3
+    create mode 100644 TEST4
 
-This "type" field was already pretty ugly, and I think your patch makes
-it even worse. It would probably be less bad if we just passed in the
-integer 30 instead of '3', and then do:
+And now TEST3 is in the commit and what is even more "interesting" is
+the next one:
 
-  /* handles ANSI; your bright colors would want to add 60 */
-  out += xsnprintf(out, len, "%d", type + c->value);
+   [10:59:16][tkrah@torstenknbl:/tmp/testrepo]  (master) $ LC_ALL=C git
+status
+   On branch master
+   Changes to be committed:
+     (use "git restore --staged <file>..." to unstage)
+   	deleted:    TEST3
 
-And then likewise the 256-color and rgb paths would do:
+   Untracked files:
+     (use "git add <file>..." to include in what will be committed)
+   	TEST3
 
-  out += xsnprintf(out, len, "%d;5;%d", type + 8, c->value);
+TEST3 is unstaged and deleted now.
 
-Bonus points for declaring:
+This seems wrong - or did I something wrong?
 
-  enum {
-    COLOR_FOREGROUND = 30,
-    COLOR_BACKGROUND = 40,
-  } color_ground;
+Cheers
 
-to make the caller more readable.
+Torsten
 
->         case COLOR_ANSI:
-> -               if (len < 2)
-> +       case COLOR_AXITERM:
-> +               if (len < strlen(type) + 1)
->                         BUG("color parsing ran out of space");
-> -               *out++ = type;
-> -               *out++ = '0' + c->value;
-> +               out += xsnprintf(out, len, "%s%c", type, '0' + c->value);
 
-This BUG() can go away. The point was to make sure we don't overflow
-"out", but xsnprintf() will check that for us (that's why there isn't
-one in the COLOR_256 and COLOR_RGB case arms).
+-- 
+Mit freundlichen Grüßen / Best regards
 
-> @@ -279,14 +287,24 @@ int color_parse_mem(const char *value, int
-> value_len, char *dst)
->                 if (!color_empty(&fg)) {
->                         if (sep++)
->                                 OUT(';');
-> -                       /* foreground colors are all in the 3x range */
-> -                       dst = color_output(dst, end - dst, &fg, '3');
-> +                       /* foreground colors are in the 3x range */
-> +                       char *range = "3";
-> +                       if (fg.type == COLOR_AXITERM) {
-> +                               /* axiterm fg colors are in the 9x range */
-> +                               range = "9";
-> +                       }
-> +                       dst = color_output(dst, end - dst, &fg, range);
+Torsten Krah
 
-And if we can handle the regular/bright stuff instead of color_output(),
-we don't need to have this extra fg.type check.
+mgm technology partners GmbH
+Neumarkt 2
+04109 Leipzig
 
--Peff
+Tel. +49 (341) 339 893-539
+E-Mail Torsten.Krah@mgm-tp.com
+
+Innovation Implemented.
+
+Geschäftsführer / CEO: Hamarz Mehmanesh
+Sitz der Gesellschaft / Registered office: München
+Handelsregister/ Commercial register: AG München HRB 161298
+USt-IdNr. / VAT ID: DE815309575
+
