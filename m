@@ -2,103 +2,111 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AB6C33C9E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3537FC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 12:42:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 27998206ED
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:57:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 017022067D
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 12:42:19 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JVpEZCqc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbgAHL5Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 06:57:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60182 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726098AbgAHL5Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 06:57:24 -0500
-Received: (qmail 21670 invoked by uid 109); 8 Jan 2020 11:57:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 11:57:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9402 invoked by uid 111); 8 Jan 2020 12:03:03 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 07:03:03 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Jan 2020 06:57:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: bogus config file vs. 'git config --edit'
-Message-ID: <20200108115723.GA3381405@coredump.intra.peff.net>
-References: <20191227110431.GC32750@szeder.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20191227110431.GC32750@szeder.dev>
+        id S1727213AbgAHMmS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 07:42:18 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:45965 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726199AbgAHMmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 07:42:17 -0500
+Received: by mail-wr1-f44.google.com with SMTP id j42so3154649wrj.12
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 04:42:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=f2guXfbkyVIq34MSJnqz4cAtDwYGmqn0MyEoLlORh1A=;
+        b=JVpEZCqcqFYtZlm60+9uce3Sw4pFp/avrGgKa+7VYyHhTrGS2fW7v9Vd/W3IH8oqKu
+         kM8fw9Lu/ana9IShpmlOUoG8oY2xjWaBt3zaTbltRNYg/H/+MNNIX0jzmCEB5wRohUUl
+         bTb7hCoPO6VhixRcgu466Ggh1lWHVi/fSHy3Zipuz0FR7A0XnQnfGUU3fD/SpA9C2PZx
+         WtjNBc82N7LRsqd64ysSjjhz38JnFJGmTuvOOt8Gg3XylpRnvSooIAR18obA3ukuKH5N
+         X4IBQqxxo1x7zxd6FDvbLDzZkcyGkG93XuD6NdQK9jgLoPQnsrGH8vio2JeUOJiHHBR3
+         uLuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc:date
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=f2guXfbkyVIq34MSJnqz4cAtDwYGmqn0MyEoLlORh1A=;
+        b=RVOcBBOccRY0UVFVpLD3cbkzRT+qrPaPLaZNYeBv28i+P4P781W14sI8j5rvHH7BcG
+         XPKjyAFFUUQ+RO/j2z2DJYf6//yGXp3k8uMdNxceEqf0vh7wCzdWxxbgiOGM6W0wWS4u
+         k14GMupgH0XvA4gOzvPQHeFcA6MYUF9EbZTwHuG2ylII63+WnbgGMZNFFIXynp2LB0nX
+         xAvY0IYASgCgSNzaAdWAXCk9hhTSefXybUbBPvG3/reJ9IGC3evAnHry1qr08JDFhPNT
+         n9JL1Z6JrS7rhEr1dC+JI9ZPZeArATk5d6ytaTSCFl+tH/p2NwQvduM2N/0Cr0Jdn/6n
+         tWLA==
+X-Gm-Message-State: APjAAAXRpT+FWJN5HIOHr4zKp4+22yw+Rtrt/TLcjvVnOFOld5VHjeZD
+        keup73dNFI/pmwyCUuBYRu0TNdtlTc8=
+X-Google-Smtp-Source: APXvYqwqJzARTB29uyqX5BLOe3AhFz/F/nBoqNtLUmSaH17XiuO5eRTAyZNbZfZhdwC0F1Ywgd8LyQ==
+X-Received: by 2002:a5d:410e:: with SMTP id l14mr4218664wrp.238.1578487335943;
+        Wed, 08 Jan 2020 04:42:15 -0800 (PST)
+Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
+        by smtp.googlemail.com with ESMTPSA id f207sm4098581wme.9.2020.01.08.04.42.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Jan 2020 04:42:15 -0800 (PST)
+Message-ID: <654cc7a58cf6947f91478411dd6a3f7f3473bc67.camel@gmail.com>
+Subject: Re: Broken branch after git commit - tracked files in staging area
+ can't be removed with restore --staged, or commit or stash
+From:   Torsten Krah <krah.tm@gmail.com>
+Reply-To: krah.tm@gmail.com
+To:     Jeff King <peff@peff.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Date:   Wed, 08 Jan 2020 13:42:14 +0100
+In-Reply-To: <20200108104008.GA2207365@coredump.intra.peff.net>
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+         <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+         <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
+         <20200108091119.GB87523@coredump.intra.peff.net>
+         <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+         <20200108104008.GA2207365@coredump.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 27, 2019 at 12:04:31PM +0100, SZEDER Gábor wrote:
+Am Mittwoch, den 08.01.2020, 05:40 -0500 schrieb Jeff King:
+> So there seem to be at least two bugs:
+> 
+>  - git-restore doesn't properly invalidate the cache-tree
+> 
+>  - the index-reading code is not careful enough about bogus cache-
+> trees,
+>    and may segfault
+> 
+> -Peff
+-- 
 
-> I think bith 'git config --edit' and 'git help ...' should just work,
-> no matter what nonsense might be in the config file, even if they then
-> launch a different editor or pager than what are set in the
-> configuration.
+Hi Peff,
 
-Agreed. This has come up before (e.g., [1]) but I think doing it right
-would need several changes:
+thanks for confirming those bugs and taking a look at my report itself
+even before I've put the small reproducer recipe.
+I don't need to take any other actions or create tickets somewhere else
+now to get those fixed, you're driving this from here, right?
 
-  - the config code is too eager to die on a syntax error; it should
-    return an error up the stack
+Another question - how can I fix my broken original branch where this
+bug did hit me which is in that "bogus" state now to get back to the
+"original" commit made so I can remove my unwanted files with "git
+reset HEAD <files>" instead of git-restore in the meantime (tried your
+rm .git/index variant but after that I had files which were already in
+the branch shown as unversioned after that, so that did not work very
+well for me)?
 
-  - the stack looks like this when we first die():
+kind regards
 
-      #0  die (err=0x55555582436f "%s") at usage.c:165
-      #1  0x0000555555678ab6 in git_parse_source (fn=0x5555557719c4 <check_repo_format>, data=0x7fffffffe1e0, opts=0x0)
-          at config.c:849
-      #2  0x000055555567a9c5 in do_config_from (top=0x7fffffffdfc0, fn=0x5555557719c4 <check_repo_format>, 
-          data=0x7fffffffe1e0, opts=0x0) at config.c:1546
-      #3  0x000055555567aab4 in do_config_from_file (fn=0x5555557719c4 <check_repo_format>, origin_type=CONFIG_ORIGIN_FILE, 
-          name=0x555555913220 ".git/config", path=0x555555913220 ".git/config", f=0x5555559117c0, data=0x7fffffffe1e0, 
-          opts=0x0) at config.c:1574
-      #4  0x000055555567ab80 in git_config_from_file_with_options (fn=0x5555557719c4 <check_repo_format>, 
-          filename=0x555555913220 ".git/config", data=0x7fffffffe1e0, opts=0x0) at config.c:1594
-      #5  0x000055555567abc5 in git_config_from_file (fn=0x5555557719c4 <check_repo_format>, 
-          filename=0x555555913220 ".git/config", data=0x7fffffffe1e0) at config.c:1603
-      #6  0x0000555555771e0b in read_repository_format (format=0x7fffffffe1e0, path=0x555555913220 ".git/config")
-          at setup.c:523
-      #7  0x0000555555771bb5 in check_repository_format_gently (gitdir=0x555555911750 ".git", candidate=0x7fffffffe1e0, 
-          nongit_ok=0x7fffffffe2cc) at setup.c:460
-      #8  0x000055555577272f in setup_discovered_git_dir (gitdir=0x555555911750 ".git", cwd=0x5555558c90b0 <cwd>, 
-          offset=19, repo_fmt=0x7fffffffe1e0, nongit_ok=0x7fffffffe2cc) at setup.c:770
-      #9  0x0000555555773490 in setup_git_directory_gently (nongit_ok=0x7fffffffe2cc) at setup.c:1100
-      #10 0x00005555555706c8 in run_builtin (p=0x5555558bb980 <commands+576>, argc=2, argv=0x7fffffffe538) at git.c:416
-      #11 0x0000555555570baf in handle_builtin (argc=2, argv=0x7fffffffe538) at git.c:674
-      #12 0x00005555555711b2 in cmd_main (argc=2, argv=0x7fffffffe538) at git.c:842
-      #13 0x000055555563412e in main (argc=2, argv=0x7fffffffe538) at common-main.c:52
+Torsten
 
-     So we'd need to teach read_repository_format() to handle the error
-     and just assume we're not in a Git repo. But then how would "git
-     config --edit" realize it needs to edit the repo config file?
 
-  - assuming we get around the above problem, I suspect we'd run into
-    other things that want to read the config (e.g., loading default
-    config like the editor). We could be more lenient everywhere, but I
-    suspect that most of the other commands _do_ want to die on bogus
-    config (rather than do something unexpected). I wouldn't want to
-    change every git_config() call to handle errors, but maybe we could
-    have a lenient form and use it in just enough call-sites. Or maybe
-    we could detect early in git-config that we are in "--edit" mode,
-    and set a global for "be lenient when reading the config". I dunno.
-
-So I think it's definitely do-able and would be much better, but it's
-probably not entirely trivial.
-
--Peff
-
-[1] https://lore.kernel.org/git/A5CDBB91-E889-4849-953A-2C1DB4A04513@gmail.com/
