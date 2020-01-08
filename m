@@ -2,85 +2,115 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CB4CC282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2008AC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:38:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DD38B2070E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:15:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E6C6420678
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:38:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKwLxowJ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nwCrYv9r"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728666AbgAHTPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 14:15:38 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54499 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726411AbgAHTPh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 14:15:37 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9D353A1ADD;
-        Wed,  8 Jan 2020 14:15:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hVMlNA2Asg9fdbXOtQOuHoShBeE=; b=KKwLxo
-        wJE6owLeKVjFTS5PUyh2zaXGJREDczQ7mWXTThrQm9lJvIHS0HaBqlYfOBDhMw8x
-        M+KdXp+7Zkq/GDXXP6tNZM+dPz7Hd2OEm1eYrR6+Axg/ShF2PRVH7/mT9xh8zOMX
-        DSpKJFxaffdDBGfrgBJSZaOqF0O8r8wDGRAkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qWs8dMu4gEts+OZh5TCvj1c68szTL2Vz
-        7K/aPq3wUnraPszpHxeePVpqvfFzhWLWSBeDN95u7/46XVHZ92P52eqpSFbNnLZD
-        YMXN8O4SOcz0aFoa1KnNUBDZbVV/VH4oqqlYuSHdClcC7LRpxENlHR7V8hM59g5a
-        ZbWbC/1mQo0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 948C5A1ADB;
-        Wed,  8 Jan 2020 14:15:35 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BA5F9A1AD7;
-        Wed,  8 Jan 2020 14:15:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Heba Waly <heba.waly@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 1/1] branch: advise the user to checkout a different branch before deleting
-References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
-        <pull.507.v2.git.1578370226.gitgitgadget@gmail.com>
-        <19a7cc1889d6094e4f8a94c19c43ad554662e8d8.1578370226.git.gitgitgadget@gmail.com>
-        <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com>
-        <CACg5j26jyWnAtM+mZ-FuN7OQWHpKk5nADG+7J-=metJMdO6+2Q@mail.gmail.com>
-        <CAPig+cTDayF0hHn7wSPGNS8h2qPUYhhg9Z8fY_rLQnWmAg-NKQ@mail.gmail.com>
-        <CACg5j260h88bd=W_4EzAn7B0TiU02Y8BzKDQ7w3UJiHkhL60NQ@mail.gmail.com>
-        <nycvar.QRO.7.76.6.2001081945490.46@tvgsbejvaqbjf.bet>
-Date:   Wed, 08 Jan 2020 11:15:30 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.2001081945490.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 8 Jan 2020 20:01:12 +0100 (CET)")
-Message-ID: <xmqqsgkp220d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1730028AbgAHTij (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 14:38:39 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:37863 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727247AbgAHTii (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 14:38:38 -0500
+Received: by mail-pl1-f194.google.com with SMTP id c23so1532712plz.4
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 11:38:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=kf7JGgPvMIXJZZ5Mr6KL/Nlu1bBM6ICD7LG4HsOZUlE=;
+        b=nwCrYv9rDhDbjBwtDpJLQbpkEMWnF8IbXCwA60GQ33dJmMZnaEjNgMalgKS4U9MWSw
+         QX5nxfT1nUL+8pZNdT4hVQjQmFCKh8R6RkPH2E23XnGEsGePzmCIQSzZbC4YpEN++Ftq
+         /rWqpCHNHXO4V48S10gnYe2DUOw8ugAQh2h4j9Kh5IcvLb6nNMU0/3FhcWd5YYXKfgaO
+         MURlihOHqshOUnbW8gisCDBDcLwFLFGLQD2EXcOk4Pl+j7N6FZjvc8aQiyZAdeh9N4m4
+         MQP3oCEHN6XCiDKeKnGdBgZfpMsd9r0SpnMSt9wx9ip3Y+5F62dYfnbn5ELgdPFUGFNw
+         MRlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=kf7JGgPvMIXJZZ5Mr6KL/Nlu1bBM6ICD7LG4HsOZUlE=;
+        b=nkQ95RgkVdsBcjnT0mz2F0N8cPNNm1GkRWhqBIIkSPqtlrCjAfHMRZYvBQzdFHBY9u
+         yE30TsdklhwCVGDwDHEWSx0FC+IwdaxXNSRwf4JajvgcPakDDH1iz9JQUK/r4DeEqQLb
+         y9/8NRHuT7foAtd8LQ75AI/c+t4BjZJGQHCCe/dfifJa5rWlojpD/juQqG29ioGVoJXM
+         7GKbtDM5dg+VZTsSc/PEv4480TrF80+FHYOY226NQdudfwGe+gq94VVI0sEKHvRFBBpM
+         djldZVEGoJvw47iXPGHyq6keRVWXf99d1O8Z6/erBXvbMVvCnn9iCDWoCdvotlHX6AEG
+         g6Tw==
+X-Gm-Message-State: APjAAAXDEZeFM9g0S5VZBrihWzZQEBbdNWWZCKmk2mkOKu5ZdmM+8TZA
+        FuXAdFRM4SYg8CDyQ/I7EYqy1YS+ERA=
+X-Google-Smtp-Source: APXvYqz0RUCMtjGGlAbTaHOBRnZ+/4Z0D3OPlfPp6W1UcukT0jGLhTofZqs4N4OjM8iLAviveRhKfQ==
+X-Received: by 2002:a17:90a:9d8a:: with SMTP id k10mr237390pjp.91.1578512317977;
+        Wed, 08 Jan 2020 11:38:37 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id c19sm4816739pfc.144.2020.01.08.11.38.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2020 11:38:37 -0800 (PST)
+Date:   Wed, 8 Jan 2020 11:38:33 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
+Message-ID: <20200108193833.GD181522@google.com>
+References: <20200108023127.219429-1-emilyshaffer@google.com>
+ <20200108071525.GB1675456@coredump.intra.peff.net>
+ <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3DBA685E-324B-11EA-B94E-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Jan 08, 2020 at 09:30:36AM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Jan 07, 2020 at 06:31:27PM -0800, Emily Shaffer wrote:
+> >
+> >> This issue came in via a bugreport from a user who had done some nasty
+> >> things like deleting various files in .git/ (and then couldn't remember
+> >> how they had done it). The concern was primarily that a segfault is ugly
+> >> and scary, and possibly dangerous; I didn't see much problem with
+> >> checking for index-out-of-range if the result is a fatal error
+> >> regardless.
+> >>
+> >> [...]
+> >>  	if (pos >= 0)
+> >>  		BUG("This is a directory and should not exist in index");
+> >>  	pos = -pos - 1;
+> >> -	if (!starts_with(o->src_index->cache[pos]->name, name.buf) ||
+> >> +	if (pos >= o->src_index->cache_nr ||
+> >> +	    !starts_with(o->src_index->cache[pos]->name, name.buf) ||
+> >>  	    (pos > 0 && starts_with(o->src_index->cache[pos-1]->name, name.buf)))
+> >> -		BUG("pos must point at the first entry in this directory");
+> >> +		BUG("pos %d doesn't point to the first entry of %s in index",
+> >> +		    pos, name.buf);
+> >
+> > The new condition you added looks correct to me. I suspect this BUG()
+> > should not be a BUG() at all, though. It's not necessarily a logic error
+> > inside Git, but as you showed it could indicate corrupt data we read
+> > from disk. The true is probably same of the "pos >= 0" condition checked
+> > above.
+> 
+> It does not sound like a BUG to me, either, but the new condition
+> does look correct to me, too.  We can turn it into die() later if
+> somebody truly cares ;-)
+> 
+> Thanks, both.  Will queue.
 
-> This is the first time I hear about anybody wanting to disable any advice
-> ...
-> I don't really think that this is desired, though.
+Thanks much for the quick turnaround. If I hear more noise I'll give it
+a try with die() or error code instead, but for now I'll move on to the
+next bug on my list. :)
 
-Me neither.  We seem to have come up with more-or-less the same
-illustration, but such a global "turn all off" needs to be explained
-very well before we let users blindly use it, I think.
+ - Emily
