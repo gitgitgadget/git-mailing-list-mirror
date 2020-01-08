@@ -2,159 +2,324 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-10.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 336D2C282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 22:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD9CBC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 23:19:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0098420692
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 22:36:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A7CA20705
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 23:19:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JdLVMCPB"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="swZ70NzK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727124AbgAHWgD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 17:36:03 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39152 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726390AbgAHWgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 17:36:03 -0500
-Received: by mail-wm1-f68.google.com with SMTP id 20so649128wmj.4
-        for <git@vger.kernel.org>; Wed, 08 Jan 2020 14:36:01 -0800 (PST)
+        id S1727695AbgAHXTF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 18:19:05 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:36178 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726758AbgAHXTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 18:19:05 -0500
+Received: by mail-pf1-f201.google.com with SMTP id 6so2812955pfv.3
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 15:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VYIY9gX9HqupqljaUKl+IKIWTZQ5w9AFwoABodhBxrE=;
-        b=JdLVMCPBJ7K9SOXTQSGnXvtwrNxb72zKgZq+VnskXEB79Z6k9EDgqUtV/nIYibE6vP
-         CNsgkSV7V0VejTOHCM3wmh3gLs8/g0xavO8MMgheF3x0iDsm+BwUjvZsVH57ibV4Gbvm
-         oTWXDVmlsWhBAAsQnMuc6HBBCy6iQrTU8kfWerOTnWm10npPS/vaO/dDVpSZz0m2uCfE
-         03i+nlpAZJrCo3EMwgClXUGtXYtjemBkYSXrsLAxuD/vJgVmlouQsFBA6v9+z02UpPTT
-         nq/I9TUVxCzh2uKX3dWbqlHA7MVuln5v1ErFKyfWwnRl/fidmE9nubWWHUnTF38arzG9
-         P6Hg==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=5TjSjTgwzDtl/SzVxReA0Mubl2l7aTXrMbkDVRbJ1kA=;
+        b=swZ70NzKk3seeQ4e780an9cJeJXj1eNH9IAyaA3YqbAe+uhhtDIBRXFsYssQd++TO7
+         HYQHahd990YM6qe4SMNZYPytQ8adHwN3r+v8DazIB1m9cJsEcO/5jj71nGJYfHvVI3s/
+         lGEgIb+EzxjZgEBeOidBQNUOPUZB5h+gjvSE+AsVwH1yaS2aAjl71DdJZ+/JrPb8H9wO
+         KoakA236qqdEH77cwKwtPYXqbQTaEw0rrNlZgT1xXySGoIDWylYbYVKzt+l80al2ElFo
+         HxWHGAzCLIwLAU/u+Tz1fCWvCeo68oAn6OkJtBhO8QjQK6DwzNj8BoL49z/dyn1ILn2i
+         mbAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VYIY9gX9HqupqljaUKl+IKIWTZQ5w9AFwoABodhBxrE=;
-        b=TWsbG1U0Tf4Ejae9GxR8CR0m4wsolxW+LPEKs3hBaPadfn3Yc3JRoiTbSsmCpSr6rl
-         e93PvAGH81A8tJ8jkcacOT+ePP4olxX/k2WMX29fYcrgCbimtfeBEVnojdRqOHxGeNDn
-         HBZVJ3YrHfqvaTudgB6Dk4uK6IuPTwmYxaaEukYeriNZSKil44zfN4OfQFvbxEXFsI4D
-         DIcl4+MFDJ8bXwgPfVtnaZWllCa3pkNV5TPwE1JJJpdx2fh/7lf8YO0GxdEWnwSLW62/
-         t0k8zChSntlyJcpvGtWWsgZOJJhZIAQ8y9fg80kfvKi0FjglGWLR6m3USoQdMMfmT3t3
-         dvlg==
-X-Gm-Message-State: APjAAAUe6Su1S/FKlG+M5Fo40Yft75NBgfCcLQBNAdz47Cr6bWq5jD2f
-        0K9xWtgG0GCihmJm9qw6k3w=
-X-Google-Smtp-Source: APXvYqyh4ryetPh9nepOkx3gVOQI55MJmSC4wBmLDHWRSbXq6hLX6/kU22CU5VybZkn+9bh+NEuYvA==
-X-Received: by 2002:a1c:2504:: with SMTP id l4mr944757wml.134.1578522960769;
-        Wed, 08 Jan 2020 14:36:00 -0800 (PST)
-Received: from szeder.dev (x4db69c09.dyn.telefonica.de. [77.182.156.9])
-        by smtp.gmail.com with ESMTPSA id c5sm683688wmb.9.2020.01.08.14.35.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Jan 2020 14:35:59 -0800 (PST)
-Date:   Wed, 8 Jan 2020 23:35:57 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Elijah Newren <newren@gmail.com>
-Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
-        git@vger.kernel.org, Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: Unreliable 'git rebase --onto'
-Message-ID: <20200108223557.GE32750@szeder.dev>
-References: <20200108214349.GA17624@lxhi-065.adit-jv.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200108214349.GA17624@lxhi-065.adit-jv.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=5TjSjTgwzDtl/SzVxReA0Mubl2l7aTXrMbkDVRbJ1kA=;
+        b=Lw/LMZ3MnrRe3UktbIg2c5vUYOwKhIDaH5LNpSWHH+KfFJARH4sWf8/m7EsiW/2ehc
+         OciaNkpZKFSGjw2vD6zS33++dgyWEzr2MryyBlTYs4JWHEHAbSw/ywmV+pfyKa31SVYc
+         i8XMFEbzZ3D681c+KVsXijreoJ1P1s2lVfAFxo+Qghp7IEahy1HhYKYLmvofXKxU8Ioj
+         74+NLdZP15OGtb5LnhWNnKz0QbjHYsEVlUF47A3OBuVtw414ACsHnvDlUt8MzRT6eAqu
+         f5JAAolvYd3xjOzGcptgDCI3S4nZURqL6Cs3ZG4LXZXnKeC0njy1Ruwnp4d2XsHo0eNb
+         Ai+A==
+X-Gm-Message-State: APjAAAWFLC3aTr5P1mic5y4d+uH8BANyw2xTNmgY4BkT0dmu7acsaV1w
+        tFMvpeo6fbQPo1Xll5yxYUbd1pHQi7s49fM0hzBgBTQ7XhQd7fNEEMIH0QMhdu98G3CJ297K0H/
+        yGNU2sXYlTGlGvUpdg2oylO09e8tRY7Ig+rzF69gC0nhTd5Heum2TkZTOZf58//tRZFkI9uGmvg
+        ==
+X-Google-Smtp-Source: APXvYqwewSMm2ix0pV4XPrQTQr7DQUb/5IR+ZJNTPPoVF1zuM5ZrJ03vLM2nVn6WrY/1hOiG1DeLJENHuEFXXEpAwqU=
+X-Received: by 2002:a63:5b0a:: with SMTP id p10mr7806763pgb.228.1578525544156;
+ Wed, 08 Jan 2020 15:19:04 -0800 (PST)
+Date:   Wed,  8 Jan 2020 15:19:00 -0800
+Message-Id: <20200108231900.192476-1-emilyshaffer@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
+Subject: [PATCH] clone: teach --single-branch and --branch during --recurse
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     git@vger.kernel.org
+Cc:     Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 10:43:49PM +0100, Eugeniu Rosca wrote:
-> Hello Git community,
-> 
-> Below is a simple reproduction scenario for what looks to be a bug (?)
-> in 'git rebase --onto' (v2.25.0-rc1-19-g042ed3e048af).
-> 
-> I would appreciate your confirmation of the misbehavior.
-> If the behavior is correct/expected, I would appreciate some feedback
-> how to avoid it in future, since it occurs with the default parameters.
-> 
-> 1. git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
-> 
-> 2. ### Cherry pick an upstream commit, to contrast the results with
->    'git rebase --onto':
->    $ git checkout -b v4.18-cherry-pick v4.18
->    $ git cherry-pick 463fa44eec2fef50
->    Auto-merging drivers/input/touchscreen/atmel_mxt_ts.c
->    warning: inexact rename detection was skipped due to too many files.
->    warning: you may want to set your merge.renamelimit variable to at least 7216 and retry the command.
->    [v4.18-cherry-pick bd142b45bf3a] Input: atmel_mxt_ts - disable IRQ across suspend
->     Author: Evan Green <evgreen@chromium.org>
->     Date: Wed Oct 2 14:00:21 2019 -0700
->     1 file changed, 4 insertions(+)
-> 
-> 3. ### In spite of the warning, the result matches the original commit:
->    $ vimdiff <(git show 463fa44eec2fef50) <(git show v4.18-cherry-pick)
-> 
-> 4. ### Now, backport the same commit via 'git rebase --onto'
->    $ git rebase --onto v4.18 463fa44eec2fef50~ 463fa44eec2fef50
->    First, rewinding head to replay your work on top of it...
->    Applying: Input: atmel_mxt_ts - disable IRQ across suspend
-> 
-> 5. ### The result is different:
->    $ git branch v4.18-rebase-onto
->    $ git diff v4.18-cherry-pick v4.18-rebase-onto
-> 
-> diff --git a/drivers/input/touchscreen/atmel_mxt_ts.c b/drivers/input/touchscreen/atmel_mxt_ts.c
-> index b45958e89cc5..2345b587662b 100644
-> --- a/drivers/input/touchscreen/atmel_mxt_ts.c
-> +++ b/drivers/input/touchscreen/atmel_mxt_ts.c
-> @@ -3139,8 +3139,6 @@ static int __maybe_unused mxt_suspend(struct device *dev)
->  
->  	mutex_unlock(&input_dev->mutex);
->  
-> -	disable_irq(data->irq);
-> -
->  	return 0;
->  }
->  
-> @@ -3162,6 +3160,8 @@ static int __maybe_unused mxt_resume(struct device *dev)
->  
->  	mutex_unlock(&input_dev->mutex);
->  
-> +	disable_irq(data->irq);
-> +
->  	return 0;
->  }
-> 
-> 
-> In a nutshell, purely from user's perspective:
->  - I get a warning from 'git cherry pick', with perfect results
->  - I get no warning from 'git rebase --onto', with wrong results
-> 
-> Does git still behave expectedly? TIA!
+Previously, performing "git clone --recurse-submodules --single-branch"
+resulted in submodules cloning all branches even though the superproject
+cloned only one branch. Pipe --single-branch and its friend, --branch,
+through the submodule helper framework to make it to 'clone' later on.
 
-This is a known issue with the 'am' backend of 'git rebase'.
+Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
+---
+Note that 'branch' was already in use in git-submodules.sh, so
+"submodule branch" aka 'sm_branch' was used to disambiguate the two.
 
-The good news is that work is already well under way to change the
-default backend from 'am' to 'merge', which will solve this issue.
-From the log message of aa523de170 (rebase: change the default backend
-from "am" to "merge", 2019-12-24):
+ Documentation/git-submodule.txt    |  6 +++++-
+ builtin/clone.c                    |  6 ++++++
+ builtin/submodule--helper.c        | 28 +++++++++++++++++++++++++---
+ git-submodule.sh                   | 17 ++++++++++++++++-
+ t/t5617-clone-submodules-remote.sh | 26 ++++++++++++++++++++++++--
+ 5 files changed, 76 insertions(+), 7 deletions(-)
 
-  The am-backend drops information and thus limits what we can do:
-  [...]
-    * reduction in context from only having a few lines beyond those
-      changed means that when context lines are non-unique we can apply
-      patches incorrectly.[2]
-  [...]
-  [2] https://lore.kernel.org/git/CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+>
-
-Alas, there is unexpected bad news: with that commit the runtime of
-your 'git rebase --onto' command goes from <1sec to over 50secs.
-Cc-ing Elijah, author of that patch...
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 22425cbc76..8c516a9670 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -133,7 +133,7 @@ If you really want to remove a submodule from the repository and commit
+ that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for removal
+ options.
+ 
+-update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]::
++update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--single-branch] [-b|--branch <name>] [--] [<path>...]::
+ +
+ --
+ Update the registered submodules to match what the superproject
+@@ -430,6 +430,10 @@ options carefully.
+ 	Clone new submodules in parallel with as many jobs.
+ 	Defaults to the `submodule.fetchJobs` option.
+ 
++--single-branch::
++	This option is only valid for the update command.
++	Clone only one branch during update, HEAD or --branch.
++
+ <path>...::
+ 	Paths to submodule(s). When specified this will restrict the command
+ 	to only operate on the submodules found at the specified paths.
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 6dee265cc9..293cef8b30 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -808,6 +808,12 @@ static int checkout(int submodule_progress)
+ 			argv_array_push(&args, "--no-fetch");
+ 		}
+ 
++		if (option_single_branch)
++			argv_array_push(&args, "--single-branch");
++
++		if (option_branch)
++			argv_array_pushf(&args, "--branch=%s", option_branch);
++
+ 		err = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 		argv_array_clear(&args);
+ 	}
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c72931ecd7..92bd823d38 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1225,7 +1225,8 @@ static int module_deinit(int argc, const char **argv, const char *prefix)
+ 
+ static int clone_submodule(const char *path, const char *gitdir, const char *url,
+ 			   const char *depth, struct string_list *reference, int dissociate,
+-			   int quiet, int progress)
++			   int quiet, int progress, int single_branch,
++			   const char *branch)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 
+@@ -1247,6 +1248,10 @@ static int clone_submodule(const char *path, const char *gitdir, const char *url
+ 		argv_array_push(&cp.args, "--dissociate");
+ 	if (gitdir && *gitdir)
+ 		argv_array_pushl(&cp.args, "--separate-git-dir", gitdir, NULL);
++	if (single_branch)
++		argv_array_push(&cp.args, "--single-branch");
++	if (branch)
++		argv_array_pushl(&cp.args, "--branch", branch, NULL);
+ 
+ 	argv_array_push(&cp.args, "--");
+ 	argv_array_push(&cp.args, url);
+@@ -1373,6 +1378,8 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 	struct string_list reference = STRING_LIST_INIT_NODUP;
+ 	int dissociate = 0, require_init = 0;
+ 	char *sm_alternate = NULL, *error_strategy = NULL;
++	int single_branch = 0;
++	char *branch = NULL;
+ 
+ 	struct option module_clone_options[] = {
+ 		OPT_STRING(0, "prefix", &prefix,
+@@ -1400,12 +1407,17 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 			   N_("force cloning progress")),
+ 		OPT_BOOL(0, "require-init", &require_init,
+ 			   N_("disallow cloning into non-empty directory")),
++		OPT_BOOL(0, "single-branch", &single_branch,
++			 N_("clone only one branch, HEAD or --branch")),
++		OPT_STRING('b', "branch", &branch, "<branch>",
++			   N_("checkout <branch> instead of the remote's HEAD")),
+ 		OPT_END()
+ 	};
+ 
+ 	const char *const git_submodule_helper_usage[] = {
+ 		N_("git submodule--helper clone [--prefix=<path>] [--quiet] "
+ 		   "[--reference <repository>] [--name <name>] [--depth <depth>] "
++		   "[--single-branch] [-b | --branch <name>] "
+ 		   "--url <url> --path <path>"),
+ 		NULL
+ 	};
+@@ -1438,7 +1450,7 @@ static int module_clone(int argc, const char **argv, const char *prefix)
+ 		prepare_possible_alternates(name, &reference);
+ 
+ 		if (clone_submodule(path, sm_gitdir, url, depth, &reference, dissociate,
+-				    quiet, progress))
++				    quiet, progress, single_branch, branch))
+ 			die(_("clone of '%s' into submodule path '%s' failed"),
+ 			    url, path);
+ 	} else {
+@@ -1562,6 +1574,8 @@ struct submodule_update_clone {
+ 	const char *depth;
+ 	const char *recursive_prefix;
+ 	const char *prefix;
++	int single_branch;
++	const char *branch;
+ 
+ 	/* to be consumed by git-submodule.sh */
+ 	struct update_clone_data *update_clone;
+@@ -1578,7 +1592,7 @@ struct submodule_update_clone {
+ };
+ #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+ 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, 0, \
+-	NULL, NULL, NULL, \
++	NULL, NULL, NULL, 0, NULL,\
+ 	NULL, 0, 0, 0, NULL, 0, 0, 1}
+ 
+ 
+@@ -1718,6 +1732,10 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 		argv_array_push(&child->args, "--dissociate");
+ 	if (suc->depth)
+ 		argv_array_push(&child->args, suc->depth);
++	if (suc->single_branch)
++		argv_array_push(&child->args, "--single-branch");
++	if (suc->branch)
++		argv_array_pushl(&child->args, "--branch", suc->branch, NULL);
+ 
+ cleanup:
+ 	strbuf_reset(&displaypath_sb);
+@@ -1897,6 +1915,10 @@ static int update_clone(int argc, const char **argv, const char *prefix)
+ 			    N_("force cloning progress")),
+ 		OPT_BOOL(0, "require-init", &suc.require_init,
+ 			   N_("disallow cloning into non-empty directory")),
++		OPT_BOOL(0, "single-branch", &suc.single_branch,
++			 N_("clone only one branch, HEAD or --branch")),
++		OPT_STRING('b', "branch", &suc.branch, "<branch>",
++			   N_("checkout <branch> instead of the remote's HEAD")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index aaa1809d24..c2eadbb930 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -10,7 +10,7 @@ USAGE="[--quiet] [--cached]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+-   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
++   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--single-branch] [-b|--branch <name>] [--] [<path>...]
+    or: $dashless [--quiet] set-branch (--default|--branch <branch>) [--] <path>
+    or: $dashless [--quiet] set-url [--] <path> <newurl>
+    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+@@ -47,6 +47,8 @@ custom_name=
+ depth=
+ progress=
+ dissociate=
++single_branch=
++sm_branch=
+ 
+ die_if_unmatched ()
+ {
+@@ -526,6 +528,17 @@ cmd_update()
+ 		--jobs=*)
+ 			jobs=$1
+ 			;;
++		--single-branch)
++			single_branch=1
++			;;
++		-b|--branch)
++			case "$2" in '') usage ;; esac
++			sm_branch="--branch=$2"
++			shift
++			;;
++		-b=*|--branch=*)
++			sm_branch=$1
++			;;
+ 		--)
+ 			shift
+ 			break
+@@ -555,6 +568,8 @@ cmd_update()
+ 		${dissociate:+"--dissociate"} \
+ 		${depth:+--depth "$depth"} \
+ 		${require_init:+--require-init} \
++		${single_branch:+--single-branch} \
++		${sm_branch:+"$sm_branch"} \
+ 		$recommend_shallow \
+ 		$jobs \
+ 		-- \
+diff --git a/t/t5617-clone-submodules-remote.sh b/t/t5617-clone-submodules-remote.sh
+index 37fcce9c40..390645897d 100755
+--- a/t/t5617-clone-submodules-remote.sh
++++ b/t/t5617-clone-submodules-remote.sh
+@@ -14,14 +14,16 @@ test_expect_success 'setup' '
+ 		cd sub &&
+ 		git init &&
+ 		test_commit subcommit1 &&
+-		git tag sub_when_added_to_super
++		git tag sub_when_added_to_super &&
++		git branch other
+ 	) &&
+ 	git submodule add "file://$pwd/sub" sub &&
+ 	git commit -m "add submodule" &&
+ 	(
+ 		cd sub &&
+ 		test_commit subcommit2
+-	)
++	) &&
++	git branch other
+ '
+ 
+ test_expect_success 'clone with --no-remote-submodules' '
+@@ -51,4 +53,24 @@ test_expect_success 'check the default is --no-remote-submodules' '
+ 	)
+ '
+ 
++test_expect_success 'clone with --single-branch' '
++	test_when_finished "rm -rf super_clone" &&
++	git clone --recurse-submodules --single-branch "file://$pwd/." super_clone &&
++	(
++		cd super_clone/sub &&
++		git branch -a >branches &&
++		test_must_fail grep other branches
++	)
++'
++
++test_expect_success 'clone with --single-branch and --branch' '
++	test_when_finished "rm -rf super_clone" &&
++	git clone --recurse-submodules --single-branch --branch other "file://$pwd/." super_clone &&
++	(
++		cd super_clone/sub &&
++		git branch -a >branches &&
++		test_must_fail grep master branches
++	)
++'
++
+ test_done
+-- 
+2.25.0.rc1.283.g88dfdc4193-goog
 
