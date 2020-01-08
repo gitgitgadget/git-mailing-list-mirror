@@ -2,165 +2,103 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91ED8C33C9E
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:43:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 50AB6C33C9E
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:57:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FD182077B
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:43:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 27998206ED
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728191AbgAHLnr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 06:43:47 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60162 "HELO cloud.peff.net"
+        id S1727132AbgAHL5Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 06:57:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60182 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728167AbgAHLnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 06:43:46 -0500
-Received: (qmail 21614 invoked by uid 109); 8 Jan 2020 11:43:45 -0000
+        id S1726098AbgAHL5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 06:57:24 -0500
+Received: (qmail 21670 invoked by uid 109); 8 Jan 2020 11:57:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 11:43:45 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 11:57:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9213 invoked by uid 111); 8 Jan 2020 11:49:24 -0000
+Received: (qmail 9402 invoked by uid 111); 8 Jan 2020 12:03:03 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 06:49:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 07:03:03 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 8 Jan 2020 06:43:44 -0500
+Date:   Wed, 8 Jan 2020 06:57:23 -0500
 From:   Jeff King <peff@peff.net>
-To:     Torsten Krah <krah.tm@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: [PATCH] restore: invalidate cache-tree when removing entries with
- --staged
-Message-ID: <20200108114344.GA3380580@coredump.intra.peff.net>
-References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
- <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
- <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
- <20200108091119.GB87523@coredump.intra.peff.net>
- <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
- <20200108104008.GA2207365@coredump.intra.peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: bogus config file vs. 'git config --edit'
+Message-ID: <20200108115723.GA3381405@coredump.intra.peff.net>
+References: <20191227110431.GC32750@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200108104008.GA2207365@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20191227110431.GC32750@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 05:40:08AM -0500, Jeff King wrote:
+On Fri, Dec 27, 2019 at 12:04:31PM +0100, SZEDER Gábor wrote:
 
-> So there seem to be at least two bugs:
-> 
->  - git-restore doesn't properly invalidate the cache-tree
-> 
->  - the index-reading code is not careful enough about bogus cache-trees,
->    and may segfault
+> I think bith 'git config --edit' and 'git help ...' should just work,
+> no matter what nonsense might be in the config file, even if they then
+> launch a different editor or pager than what are set in the
+> configuration.
 
-Here's a fix for the first one. I'm adding Junio to the cc as an expert
-in index and cache-tree issues. I'm pretty sure this is the correct fix,
-but I have some lingering questions below.
+Agreed. This has come up before (e.g., [1]) but I think doing it right
+would need several changes:
 
-I'm not planning on working on the second one immediately. Between this
-and Emily's patch from yesterday, I have a feeling that the index code
-could use an audit to be a bit more careful about handling bogus on-disk
-data.
+  - the config code is too eager to die on a syntax error; it should
+    return an error up the stack
 
--- >8 --
-Subject: restore: invalidate cache-tree when removing entries with --staged
+  - the stack looks like this when we first die():
 
-When "git restore --staged <path>" removes a path that's in the index,
-it marks the entry with CE_REMOVE, but we don't do anything to
-invalidate the cache-tree. In the non-staged case, we end up in
-checkout_worktree(), which calls remove_marked_cache_entries(). That
-actually drops the entries from the index, as well as invalidating the
-cache-tree and untracked-cache.
+      #0  die (err=0x55555582436f "%s") at usage.c:165
+      #1  0x0000555555678ab6 in git_parse_source (fn=0x5555557719c4 <check_repo_format>, data=0x7fffffffe1e0, opts=0x0)
+          at config.c:849
+      #2  0x000055555567a9c5 in do_config_from (top=0x7fffffffdfc0, fn=0x5555557719c4 <check_repo_format>, 
+          data=0x7fffffffe1e0, opts=0x0) at config.c:1546
+      #3  0x000055555567aab4 in do_config_from_file (fn=0x5555557719c4 <check_repo_format>, origin_type=CONFIG_ORIGIN_FILE, 
+          name=0x555555913220 ".git/config", path=0x555555913220 ".git/config", f=0x5555559117c0, data=0x7fffffffe1e0, 
+          opts=0x0) at config.c:1574
+      #4  0x000055555567ab80 in git_config_from_file_with_options (fn=0x5555557719c4 <check_repo_format>, 
+          filename=0x555555913220 ".git/config", data=0x7fffffffe1e0, opts=0x0) at config.c:1594
+      #5  0x000055555567abc5 in git_config_from_file (fn=0x5555557719c4 <check_repo_format>, 
+          filename=0x555555913220 ".git/config", data=0x7fffffffe1e0) at config.c:1603
+      #6  0x0000555555771e0b in read_repository_format (format=0x7fffffffe1e0, path=0x555555913220 ".git/config")
+          at setup.c:523
+      #7  0x0000555555771bb5 in check_repository_format_gently (gitdir=0x555555911750 ".git", candidate=0x7fffffffe1e0, 
+          nongit_ok=0x7fffffffe2cc) at setup.c:460
+      #8  0x000055555577272f in setup_discovered_git_dir (gitdir=0x555555911750 ".git", cwd=0x5555558c90b0 <cwd>, 
+          offset=19, repo_fmt=0x7fffffffe1e0, nongit_ok=0x7fffffffe2cc) at setup.c:770
+      #9  0x0000555555773490 in setup_git_directory_gently (nongit_ok=0x7fffffffe2cc) at setup.c:1100
+      #10 0x00005555555706c8 in run_builtin (p=0x5555558bb980 <commands+576>, argc=2, argv=0x7fffffffe538) at git.c:416
+      #11 0x0000555555570baf in handle_builtin (argc=2, argv=0x7fffffffe538) at git.c:674
+      #12 0x00005555555711b2 in cmd_main (argc=2, argv=0x7fffffffe538) at git.c:842
+      #13 0x000055555563412e in main (argc=2, argv=0x7fffffffe538) at common-main.c:52
 
-But with --staged, we never call checkout_worktree(), and the CE_REMOVE
-entries remain. Interestingly, they are dropped when we write out the
-index, but that means the resulting index is inconsistent: its
-cache-tree will not match the actual entries, and running "git commit"
-immediately after will create the wrong tree.
+     So we'd need to teach read_repository_format() to handle the error
+     and just assume we're not in a Git repo. But then how would "git
+     config --edit" realize it needs to edit the repo config file?
 
-We can solve this by calling remove_marked_cache_entries() ourselves
-before writing out the index. Note that we can't just hoist it out of
-checkout_worktree(); that function needs to iterate over the CE_REMOVE
-entries (to drop their matching worktree files) before removing them.
+  - assuming we get around the above problem, I suspect we'd run into
+    other things that want to read the config (e.g., loading default
+    config like the editor). We could be more lenient everywhere, but I
+    suspect that most of the other commands _do_ want to die on bogus
+    config (rather than do something unexpected). I wouldn't want to
+    change every git_config() call to handle errors, but maybe we could
+    have a lenient form and use it in just enough call-sites. Or maybe
+    we could detect early in git-config that we are in "--edit" mode,
+    and set a global for "be lenient when reading the config". I dunno.
 
-One curiosity about the test: without this patch, it actually triggers a
-BUG() when running git-restore:
+So I think it's definitely do-able and would be much better, but it's
+probably not entirely trivial.
 
-  BUG: cache-tree.c:810: new1 with flags 0x4420000 should not be in cache-tree
+-Peff
 
-But in the original problem report, which used a similar recipe,
-git-restore actually creates the bogus index (and the commit is created
-with the wrong tree). I'm not sure why the test here behaves differently
-than my out-of-suite reproduction, but what's here should catch either
-symptom (and the fix corrects both cases).
-
-Reported-by: Torsten Krah <krah.tm@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-So I'm mildly puzzled about the BUG thing above. But also: it seems
-really weird that do_write_index() will drop CE_REMOVE entries as it
-writes, but not invalidate the cache-tree (or the untracked-cache, which
-AFAICT is probably similarly affected). Should it be doing that
-invalidation? Or should it be a BUG() to write out an index without
-having done remove_marked_cache_entries()?
-
- builtin/checkout.c |  2 ++
- t/t2070-restore.sh | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index b52c490c8f..18ef5fb975 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -524,6 +524,8 @@ static int checkout_paths(const struct checkout_opts *opts,
- 	/* Now we are committed to check them out */
- 	if (opts->checkout_worktree)
- 		errs |= checkout_worktree(opts);
-+	else
-+		remove_marked_cache_entries(&the_index, 1);
- 
- 	/*
- 	 * Allow updating the index when checking out from the index.
-diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
-index 21c3f84459..06a5976143 100755
---- a/t/t2070-restore.sh
-+++ b/t/t2070-restore.sh
-@@ -96,6 +96,7 @@ test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
- '
- 
- test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
-+	test_when_finished git reset --hard &&
- 	echo "nonempty" >nonempty &&
- 	>empty &&
- 	git add nonempty empty &&
-@@ -106,4 +107,21 @@ test_expect_success 'restore --staged adds deleted intent-to-add file back to in
- 	git diff --cached --exit-code
- '
- 
-+test_expect_success 'restore --staged invalidates cache tree for deletions' '
-+	test_when_finished git reset --hard &&
-+	>new1 &&
-+	>new2 &&
-+	git add new1 new2 &&
-+
-+	# It is important to commit and then reset here, so that the index
-+	# contains a valid cache-tree for the "both" tree.
-+	git commit -m both &&
-+	git reset --soft HEAD^ &&
-+
-+	git restore --staged new1 &&
-+	git commit -m "just new2" &&
-+	git rev-parse HEAD:new2 &&
-+	test_must_fail git rev-parse HEAD:new1
-+'
-+
- test_done
--- 
-2.25.0.rc1.622.g8cfac75bdd
-
+[1] https://lore.kernel.org/git/A5CDBB91-E889-4849-953A-2C1DB4A04513@gmail.com/
