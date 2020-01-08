@@ -2,117 +2,165 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A803C00523
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 91ED8C33C9E
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:43:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4264320692
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 10:59:52 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="KKY4wufV"
+	by mail.kernel.org (Postfix) with ESMTP id 6FD182077B
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 11:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727356AbgAHK7v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 05:59:51 -0500
-Received: from mout.gmx.net ([212.227.15.19]:41487 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726290AbgAHK7u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 05:59:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1578481184;
-        bh=WvrUWehSigUYcE3SplALISJt/U8r21gxvfVyqf5TAOI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=KKY4wufVnVxdVrNrKR/JKgE13XRb22t5htgin+MBYzYWHyhYO5U7nnJquhPPDwINJ
-         QY5DpMj+2Nwr3AHEdKMrpSUaKKINapNdBHua2b+xvhs+LMLZOeoRsgsONP77SdutCZ
-         zkF7tJD5NtHorlNZ2Cy1kVmVi45SuXBeKfEymkac=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MPGW7-1j3E6v2avF-00Pc1E; Wed, 08
- Jan 2020 11:59:44 +0100
-Date:   Wed, 8 Jan 2020 11:59:46 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Liam Huang via GitGitGadget <gitgitgadget@gmail.com>,
-        Liam Huang <liamhuang0205@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Update imap-send.c, fix incompatibilities with
- OpenSSL 1.1.x
-In-Reply-To: <xmqqtv573twq.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2001081148300.46@tvgsbejvaqbjf.bet>
-References: <pull.516.git.1578391376.gitgitgadget@gmail.com>        <nycvar.QRO.7.76.6.2001071313580.46@tvgsbejvaqbjf.bet>        <xmqqv9pn5hgl.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.2001071944250.46@tvgsbejvaqbjf.bet>       
- <xmqq7e2359an.fsf@gitster-ct.c.googlers.com> <xmqqtv573twq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728191AbgAHLnr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 06:43:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60162 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728167AbgAHLnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 06:43:46 -0500
+Received: (qmail 21614 invoked by uid 109); 8 Jan 2020 11:43:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Jan 2020 11:43:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9213 invoked by uid 111); 8 Jan 2020 11:49:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 08 Jan 2020 06:49:24 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 8 Jan 2020 06:43:44 -0500
+From:   Jeff King <peff@peff.net>
+To:     Torsten Krah <krah.tm@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: [PATCH] restore: invalidate cache-tree when removing entries with
+ --staged
+Message-ID: <20200108114344.GA3380580@coredump.intra.peff.net>
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+ <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+ <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
+ <20200108091119.GB87523@coredump.intra.peff.net>
+ <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+ <20200108104008.GA2207365@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:6NSjVZZAMEQL/9yaAbxw8nO1NkP6tVQ9gOsgyw0mrWQuiv/0nC3
- LZbJK7Ax9ZBYIoxueprilqAekVjdVMYtbtOc0+sMGCA4+MUJ1tVMFFNTpmFM5MoSWFollrn
- b6LObmI3IALb2w/kjvDWHD86A4gN+2HRIFeT4vKN/noTE018d3ujsHqU697rh8/9khVDoH5
- i+xYDV+ZCN1F6iqdpV4bg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:R8boveG16Ec=:sip8cyguJ9GBdDGTMxeucJ
- oQfXhLQb78WHFo4TzsohppHA6UE0+lEN24y6X6Cr7TdQvprYwoB//Y3dsnF0fjw6nLyXemgOo
- ID6OHJHoIZJp1ZT8WNd6GH335zy3wahYXjsI6VYNvIp9EK1FdHxkWKzwF2JU1ZjcJP9ixaFFc
- xOCtKu5FrvZuT573DADYrPhw3mVxvhnoH4XBdWNXw6lWeIDfqe5YJFGkRuOYr/aj7qXxQS8oZ
- dSkwrWiqC3b2bn6FQ9wj5DebhcYPdXPzoAqfoDBLgZ5lnUpm33aA0NTtZedUv0Edfazujii+r
- o36q4Qbf5zddOXGAKjhtAklFhQCODIVlW8u3CfXCFA18OyvBhh43zd1+Q0Grc7dOMqeYWoBSV
- UIuOO5waGLxtuUaLeQzOUZpzMncb+X7H9BpkmQLp6FFJm51WtACT569kqH7QXf9vLuUKHE86G
- icoDKurGMD5t+P0l/ZidTL1/f4gwWJl9T1NWRphI7Veds1raudoUXXSuWmKKUAUaCZ4yOf7jQ
- WGWDM5bncL4wkuvqyoRNtUauNI2MYnINFJt/LCjW1NbHxYUq+eG5dzL/UoDHXp8hRH/0hEWxr
- QIi+Y5MmPkQgtNCg/l+NZSwoMEGR4KOZ/O8dm9rTZcveGFAPBxn4/NH1ebfeDsDpPaZsNmrgJ
- fl0rT8acEjGfWG0+KwGQsqmGA5xtnWRSGjWGlmw/Ixx3lpHrfJkS1Sb4UGmp4PTLatEgqEWqq
- 9QrkG6kBmniXMAf6Y5LIGMDY36pPND3pya3YpADa8d4ICBB1YrdT4FhqQBARoAkDuCijQzHmd
- e6LpIjSud4CH/ivzEY2a8DlmQSW0vG4ZQDBrjE2yygudtWJw5/TcHUKMCUWJvUD6HAaBo8muE
- 0i+1D6i8hxf84kRlJ9vsocoGfgUkbHcBkfrbbW+SnP/YvBeVuFkUZGx8MYtKmeGx4oqqX9+e/
- bed1KDKnRRXQCCu3iN6oDxMZul1TKMzG23aZG3iIG/K/1NqAHaNcBmQ/lpzjGX9/eyM7IKCBo
- SWscZrtGY5Nuer7vOHrBy+eQourVfuHFQiB9lNpe+5b5A7eDjJdX0NDtTyO94hfCft1w7M5+u
- 6Hstjsh7JPEGGzWq4q58PzexxRyCamem+D/0Gc/qLSVzsNwwJRsVmkpenZcxrwS91uZPYkC7O
- 6CnTgLWH8YQs7PTGkO0AwgUs41BFEhnsrEHnyUbZZjVxp7GQz8hblBZ0jdh/4RE9vaZ7ZySmM
- pUk3hVzTE42OFytB6PURp+1tuBz6q45bUJCZ5kmQ35C5Ft1H5F1BPUckEadc=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200108104008.GA2207365@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Wed, Jan 08, 2020 at 05:40:08AM -0500, Jeff King wrote:
 
-I will change GitGitGadget to no longer Cc: you automatically.
+> So there seem to be at least two bugs:
+> 
+>  - git-restore doesn't properly invalidate the cache-tree
+> 
+>  - the index-reading code is not careful enough about bogus cache-trees,
+>    and may segfault
 
-Please register my suspicion that this will make GitGitGadget a lot less
-useful: the stated mission of GitGitGadget is to make contributing patches
-to the Git project _easier_ so that the contributor can focus on the
-changes they want to make, rather than on the rather involved process.
+Here's a fix for the first one. I'm adding Junio to the cc as an expert
+in index and cache-tree issues. I'm pretty sure this is the correct fix,
+but I have some lingering questions below.
 
-I know, you do not find any fault with the current process; it works for
-you. It just does not work all that well for many other people, myself
-included. The sheer amount of mostly unwritten, and not exactly static
-rules contributors are expected to follow are starting to remind me of
-Kafka's "The Trial".
+I'm not planning on working on the second one immediately. Between this
+and Emily's patch from yesterday, I have a feeling that the index code
+could use an audit to be a bit more careful about handling bogus on-disk
+data.
 
-On Tue, 7 Jan 2020, Junio C Hamano wrote:
+-- >8 --
+Subject: restore: invalidate cache-tree when removing entries with --staged
 
-> Besides, when they send out patches they would also add area experts and
-> those who participated in the review of the earlier round to Cc: so GGG
-> needs to have a mechanism to allow the end user to do so.
+When "git restore --staged <path>" removes a path that's in the index,
+it marks the entry with CE_REMOVE, but we don't do anything to
+invalidate the cache-tree. In the non-staged case, we end up in
+checkout_worktree(), which calls remove_marked_cache_entries(). That
+actually drops the entries from the index, as well as invalidating the
+cache-tree and untracked-cache.
 
-So GitGitGadget should now also learn to determine who the current area
-experts are???
+But with --staged, we never call checkout_worktree(), and the CE_REMOVE
+entries remain. Interestingly, they are dropped when we write out the
+index, but that means the resulting index is inconsistent: its
+cache-tree will not match the actual entries, and running "git commit"
+immediately after will create the wrong tree.
 
-I must have misread your request.
+We can solve this by calling remove_marked_cache_entries() ourselves
+before writing out the index. Note that we can't just hoist it out of
+checkout_worktree(); that function needs to iterate over the CE_REMOVE
+entries (to drop their matching worktree files) before removing them.
 
-> And by treating the maintainer merely just one of the reviewer, that
-> mechanism can naturally be reused.
+One curiosity about the test: without this patch, it actually triggers a
+BUG() when running git-restore:
 
-Well, I certainly do not treat you as just one of the reviewers, as your
-complaints definitely keep me on my tip toes with regards to GitGitGadget.
+  BUG: cache-tree.c:810: new1 with flags 0x4420000 should not be in cache-tree
 
-I do have to remind myself frequently that only two people ever complained
-about GitGitGadget, literally everybody else who is using GitGitGadget is
-quite happy. So maybe I should listen more to those positive voices.
-Actually, now that I wrote it, I think that is the only sane course of
-action here: listen more to positive voices.
+But in the original problem report, which used a similar recipe,
+git-restore actually creates the bogus index (and the commit is created
+with the wrong tree). I'm not sure why the test here behaves differently
+than my out-of-suite reproduction, but what's here should catch either
+symptom (and the fix corrects both cases).
 
-Ciao,
-Dscho
+Reported-by: Torsten Krah <krah.tm@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+So I'm mildly puzzled about the BUG thing above. But also: it seems
+really weird that do_write_index() will drop CE_REMOVE entries as it
+writes, but not invalidate the cache-tree (or the untracked-cache, which
+AFAICT is probably similarly affected). Should it be doing that
+invalidation? Or should it be a BUG() to write out an index without
+having done remove_marked_cache_entries()?
+
+ builtin/checkout.c |  2 ++
+ t/t2070-restore.sh | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b52c490c8f..18ef5fb975 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -524,6 +524,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	/* Now we are committed to check them out */
+ 	if (opts->checkout_worktree)
+ 		errs |= checkout_worktree(opts);
++	else
++		remove_marked_cache_entries(&the_index, 1);
+ 
+ 	/*
+ 	 * Allow updating the index when checking out from the index.
+diff --git a/t/t2070-restore.sh b/t/t2070-restore.sh
+index 21c3f84459..06a5976143 100755
+--- a/t/t2070-restore.sh
++++ b/t/t2070-restore.sh
+@@ -96,6 +96,7 @@ test_expect_success 'restore --ignore-unmerged ignores unmerged entries' '
+ '
+ 
+ test_expect_success 'restore --staged adds deleted intent-to-add file back to index' '
++	test_when_finished git reset --hard &&
+ 	echo "nonempty" >nonempty &&
+ 	>empty &&
+ 	git add nonempty empty &&
+@@ -106,4 +107,21 @@ test_expect_success 'restore --staged adds deleted intent-to-add file back to in
+ 	git diff --cached --exit-code
+ '
+ 
++test_expect_success 'restore --staged invalidates cache tree for deletions' '
++	test_when_finished git reset --hard &&
++	>new1 &&
++	>new2 &&
++	git add new1 new2 &&
++
++	# It is important to commit and then reset here, so that the index
++	# contains a valid cache-tree for the "both" tree.
++	git commit -m both &&
++	git reset --soft HEAD^ &&
++
++	git restore --staged new1 &&
++	git commit -m "just new2" &&
++	git rev-parse HEAD:new2 &&
++	test_must_fail git rev-parse HEAD:new1
++'
++
+ test_done
+-- 
+2.25.0.rc1.622.g8cfac75bdd
 
