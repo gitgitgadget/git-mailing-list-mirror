@@ -6,87 +6,92 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C392EC282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 17:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 575E1C282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 17:26:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 970982067D
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 17:18:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E10E206F0
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 17:26:28 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="h/vhunUx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bgRdOSWP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729697AbgAHRSf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 12:18:35 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60967 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728234AbgAHRSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 12:18:35 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9B66A97D6B;
-        Wed,  8 Jan 2020 12:18:33 -0500 (EST)
+        id S1729690AbgAHR01 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 12:26:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53373 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729544AbgAHR01 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 12:26:27 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6FC4536596;
+        Wed,  8 Jan 2020 12:26:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+K8DVOSyAetZyV0YBit3XYDdbkY=; b=h/vhun
-        UxY5Q8jt6Rh8YNj8KH2s5nlhxsJTtI9IIFpfp+llPnuXFXX4ttELvG3pXMhNiVhl
-        huuEt7Kj87I/A4fDwKuM4kdgR0qHY6deju4hwWWCg0Ixb4wkzyeJPg2jSCUErZg5
-        5WuMS5j27JNTiDExZBgf2XB61GSEmEltnPOsY=
+        :content-type; s=sasl; bh=QhlKRVx89DawIFocNB3MTZxpJ0c=; b=bgRdOS
+        WPPNCnS46noFDzMUu+gVFs/AWyilrCfQwK/0K+fT2GDr7j9TaVhO+VIH0EmfCCvp
+        j+dll9WijmeFXhU9H4p/Os5kX3NrmZeUAucJZKXl+XMJndxOZWjNOCqNMFIvp+CT
+        YBjHUk3Lu+aJkGQ6sHm51IIOeZjR1hC/47L7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=DYY4WCRMkwSgWYS9BRqhB09M1osF3dmC
-        I8CuUSS3vAJ940df9RQ1ucuDRQGWYqicCD1u4psmJuThTQC05rtB8fKYEDqXOpUD
-        6/u2Kaqnh8qB1v+nZo1b4qHHt7HZbmoe38XDGkk/deEkJoRanETynXpuFKwWmdX0
-        ASl2P/BE+KY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 91E3097D6A;
-        Wed,  8 Jan 2020 12:18:33 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=ExBbSC5+nxKYeKxzLzbxAaXy9oY5pZH2
+        lgGrcRfzwVH0KjakMd3YgSV5cENJDbIfPVjjaJTf7qH8Zqgxwe2ob/YXKvmCahIg
+        LsWyFAjd4sbGISRIwh3RTVXj4O4meV/9QThnx8uolERYbQRRcfNw8iReaiAnar+b
+        haRsdfTeAK4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 664EF36595;
+        Wed,  8 Jan 2020 12:26:26 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B042C97D69;
-        Wed,  8 Jan 2020 12:18:30 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8F48636593;
+        Wed,  8 Jan 2020 12:26:25 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 10/15] rebase: add an --am option
-References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
-        <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
-        <1df11f0b5105b1f602fdd723e0f74565e436faba.1577217299.git.gitgitgadget@gmail.com>
-        <8f2fa083-114a-011f-1480-ae0ebd67d814@gmail.com>
-        <CABPp-BEoTb6LVXThEM4zoKxVOnzBNs7y-Mk+oFbb6BUzCo3RHg@mail.gmail.com>
-        <xmqqy2uj3u3q.fsf@gitster-ct.c.googlers.com>
-        <9ac52ef1-c1cb-45aa-178a-ec5a282bd761@gmail.com>
-Date:   Wed, 08 Jan 2020 09:18:28 -0800
-In-Reply-To: <9ac52ef1-c1cb-45aa-178a-ec5a282bd761@gmail.com> (Phillip Wood's
-        message of "Wed, 8 Jan 2020 14:32:56 +0000")
-Message-ID: <xmqqmuax3lzv.fsf@gitster-ct.c.googlers.com>
+To:     Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Cc:     Alexandr Miloslavskiy via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v4 0/3] t: rework tests for --pathspec-from-file
+References: <pull.503.v3.git.1577786032.gitgitgadget@gmail.com>
+        <pull.503.v4.git.1577787313.gitgitgadget@gmail.com>
+        <xmqqh8173r8e.fsf@gitster-ct.c.googlers.com>
+        <12861b02-386c-3ae8-cd2f-ffe07c6aabc7@syntevo.com>
+Date:   Wed, 08 Jan 2020 09:26:24 -0800
+In-Reply-To: <12861b02-386c-3ae8-cd2f-ffe07c6aabc7@syntevo.com> (Alexandr
+        Miloslavskiy's message of "Wed, 8 Jan 2020 16:32:43 +0100")
+Message-ID: <xmqqimll3lmn.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: E443CD98-323A-11EA-A09F-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: FF4F2B2C-323B-11EA-BA92-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com> writes:
 
-> I view this change in the default backend as similar to the rewrite in
-> C in that it is an implementation detail we're changing that should be
-> transparent (and beneficial in terms of performance) to the
-> user. There we provided a configuration variable but not a command
-> line option to control if it was used or not.
+> On 07.01.2020 22:13, Junio C Hamano wrote:
+>> With the third step the series won't merge cleanly with other topic
+>> you have in 'next' (t7107 gets somewhat heavy merge conflicts).
+>>
+>> I'll queue the first two for now but let's clean them up post 2.25
+>> release.
+>
+> OK, I will re-submit the remaining patch after 2.25.
+>
+> I will implement the next --pathspec-from-file patches as if this
+> third patch was accepted (that is, without copy&pasted tests).
 
-Do you mean things like GIT_TEST_ADD_I_USE_BUILTIN?  I think it is
-OK to have such an escape mechanism to allow people to opt out of
-a new reimplementation until it matures, but I do not offhand recall
-doing so with config.
+I am not sure if that is a good idea.  I'd rather see the planned
+new changes not to be taken hostage of the third step.
+
+Besides, with the third step, your preference is not to test the
+behaviour of end-user facing commands that would learn the option at
+all and only test the underlying machinery with test-tool tests, no?
+If you are not adding tests for the higher-level end-user facing
+commands as part of these new series, would it make a difference if
+the codebase has the third step applied (i.e. missing tests for the
+end-user facing commands that have already learned the option) or
+not (i.e. the commands that have already learned the option are
+still tested end-to-end)?
