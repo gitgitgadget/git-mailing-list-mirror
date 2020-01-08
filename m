@@ -2,115 +2,141 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2008AC282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26B7AC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 20:05:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E6C6420678
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:38:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F18312073A
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 20:05:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nwCrYv9r"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c3tE+wEL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730028AbgAHTij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 14:38:39 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:37863 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727247AbgAHTii (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 14:38:38 -0500
-Received: by mail-pl1-f194.google.com with SMTP id c23so1532712plz.4
-        for <git@vger.kernel.org>; Wed, 08 Jan 2020 11:38:38 -0800 (PST)
+        id S1726525AbgAHUFx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 15:05:53 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38181 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725835AbgAHUFx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 15:05:53 -0500
+Received: by mail-qt1-f195.google.com with SMTP id n15so3863517qtp.5
+        for <git@vger.kernel.org>; Wed, 08 Jan 2020 12:05:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kf7JGgPvMIXJZZ5Mr6KL/Nlu1bBM6ICD7LG4HsOZUlE=;
-        b=nwCrYv9rDhDbjBwtDpJLQbpkEMWnF8IbXCwA60GQ33dJmMZnaEjNgMalgKS4U9MWSw
-         QX5nxfT1nUL+8pZNdT4hVQjQmFCKh8R6RkPH2E23XnGEsGePzmCIQSzZbC4YpEN++Ftq
-         /rWqpCHNHXO4V48S10gnYe2DUOw8ugAQh2h4j9Kh5IcvLb6nNMU0/3FhcWd5YYXKfgaO
-         MURlihOHqshOUnbW8gisCDBDcLwFLFGLQD2EXcOk4Pl+j7N6FZjvc8aQiyZAdeh9N4m4
-         MQP3oCEHN6XCiDKeKnGdBgZfpMsd9r0SpnMSt9wx9ip3Y+5F62dYfnbn5ELgdPFUGFNw
-         MRlw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=o1pRgoh5wGPmUV1PNXsMhBLNbhDmFZ8YEY37BdPrSN4=;
+        b=c3tE+wELhWy69b33S07egqgEQwOrMKwCvrFX8GmAD5oGhJjA9j7+kK0SkrVv5/hCJR
+         WEVb7eSiPf+u8y+7IHl7RyezUozlAamzlsPIscxeLT2VuoBOpL3AE2ZyYq6l4sKGW+UH
+         MJ+xXRq1ymUekk/HX54dP+S/dMXnS8dEYvTTxviJa5Au2s0ubdF60DC0qZloM+AY9AgE
+         oLJPGjTH7M3z57GkFrJtIg07dOQZDA2VmostUVgLTQaPBOVb5wWqtMuuHJJzXYvQogOK
+         Wqmku3CknFOtwOKWXn8ik1qcwTU9xv9Hx2WLZpQUeJX+i5RF8mji+bXRDzJiTtmArNL4
+         AYZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kf7JGgPvMIXJZZ5Mr6KL/Nlu1bBM6ICD7LG4HsOZUlE=;
-        b=nkQ95RgkVdsBcjnT0mz2F0N8cPNNm1GkRWhqBIIkSPqtlrCjAfHMRZYvBQzdFHBY9u
-         yE30TsdklhwCVGDwDHEWSx0FC+IwdaxXNSRwf4JajvgcPakDDH1iz9JQUK/r4DeEqQLb
-         y9/8NRHuT7foAtd8LQ75AI/c+t4BjZJGQHCCe/dfifJa5rWlojpD/juQqG29ioGVoJXM
-         7GKbtDM5dg+VZTsSc/PEv4480TrF80+FHYOY226NQdudfwGe+gq94VVI0sEKHvRFBBpM
-         djldZVEGoJvw47iXPGHyq6keRVWXf99d1O8Z6/erBXvbMVvCnn9iCDWoCdvotlHX6AEG
-         g6Tw==
-X-Gm-Message-State: APjAAAXDEZeFM9g0S5VZBrihWzZQEBbdNWWZCKmk2mkOKu5ZdmM+8TZA
-        FuXAdFRM4SYg8CDyQ/I7EYqy1YS+ERA=
-X-Google-Smtp-Source: APXvYqz0RUCMtjGGlAbTaHOBRnZ+/4Z0D3OPlfPp6W1UcukT0jGLhTofZqs4N4OjM8iLAviveRhKfQ==
-X-Received: by 2002:a17:90a:9d8a:: with SMTP id k10mr237390pjp.91.1578512317977;
-        Wed, 08 Jan 2020 11:38:37 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id c19sm4816739pfc.144.2020.01.08.11.38.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2020 11:38:37 -0800 (PST)
-Date:   Wed, 8 Jan 2020 11:38:33 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
-Message-ID: <20200108193833.GD181522@google.com>
-References: <20200108023127.219429-1-emilyshaffer@google.com>
- <20200108071525.GB1675456@coredump.intra.peff.net>
- <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=o1pRgoh5wGPmUV1PNXsMhBLNbhDmFZ8YEY37BdPrSN4=;
+        b=E5jJe8yGhV3WD2RTBOdcIJq3YI0zdNC6m47g5fcwLHouxYJxgm8JGblSlMgZQ3znOD
+         cWW799XSiGfC84mbxub0CL7bcUIOYuhuwVayelrgvdyovrIxXdrQIBHd33XPSajth3X8
+         nF1258qDQxV1TOgGlFwRWJRYD/0+wsCEHGsjYmJAyRm7pnVifGXjpMCfdZ/qMKqresO6
+         nmSNV3dEu97KTQcYajigJoJe7ofzrhrR7vW+RgpnFMfsL0wtM3lkSzkXRfXi1RojwjzX
+         2A9Uu7XHVBgXSld1hAJ/5TaaMX1yEuE6aXkZ/InolcHY4WAOgPPJN3EqlVtyeethhN67
+         sRjw==
+X-Gm-Message-State: APjAAAVcUJzaJkmPMTUVOJPtEjkogyILtuGUiwrhXrRyPMKBTOwr3tGc
+        lML/lpslRJkzTaxxlsXXk0g=
+X-Google-Smtp-Source: APXvYqyDl6xS+GUeqiVVjuUbxmPkN0FVCHDg3jrhoR3d0rZqwuwazZf5SEpDqutpPKHd4B0rWbUhnw==
+X-Received: by 2002:ac8:3234:: with SMTP id x49mr5107889qta.209.1578513951783;
+        Wed, 08 Jan 2020 12:05:51 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:3d10:d3f7:2db7:a1e2? ([2001:4898:a800:1010:ee45:d3f7:2db7:a1e2])
+        by smtp.gmail.com with ESMTPSA id x6sm1882451qkh.20.2020.01.08.12.05.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2020 12:05:51 -0800 (PST)
+Subject: Re: [PATCH 0/2] Graph horizontal fix
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jcoglan@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.518.git.1578457675.gitgitgadget@gmail.com>
+ <xmqq5zhl3jrm.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <c69afbe7-3a9c-0619-594f-f5ba980ae7b8@gmail.com>
+Date:   Wed, 8 Jan 2020 15:05:50 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqq5zhl3jrm.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 09:30:36AM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On 1/8/2020 1:06 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> > On Tue, Jan 07, 2020 at 06:31:27PM -0800, Emily Shaffer wrote:
-> >
-> >> This issue came in via a bugreport from a user who had done some nasty
-> >> things like deleting various files in .git/ (and then couldn't remember
-> >> how they had done it). The concern was primarily that a segfault is ugly
-> >> and scary, and possibly dangerous; I didn't see much problem with
-> >> checking for index-out-of-range if the result is a fatal error
-> >> regardless.
-> >>
-> >> [...]
-> >>  	if (pos >= 0)
-> >>  		BUG("This is a directory and should not exist in index");
-> >>  	pos = -pos - 1;
-> >> -	if (!starts_with(o->src_index->cache[pos]->name, name.buf) ||
-> >> +	if (pos >= o->src_index->cache_nr ||
-> >> +	    !starts_with(o->src_index->cache[pos]->name, name.buf) ||
-> >>  	    (pos > 0 && starts_with(o->src_index->cache[pos-1]->name, name.buf)))
-> >> -		BUG("pos must point at the first entry in this directory");
-> >> +		BUG("pos %d doesn't point to the first entry of %s in index",
-> >> +		    pos, name.buf);
-> >
-> > The new condition you added looks correct to me. I suspect this BUG()
-> > should not be a BUG() at all, though. It's not necessarily a logic error
-> > inside Git, but as you showed it could indicate corrupt data we read
-> > from disk. The true is probably same of the "pos >= 0" condition checked
-> > above.
+>> This depends on ds/graph-assert-fix.
+>>
+>> This is a non-critical (not needed for v2.25.0) response to the previous
+>> discussions [1] [2].
+>>
+>> While working to resolve the fix for the assert() bug, I noticed this
+>> regression when multiple edges wanted to collapse with horizontal lines. It
+>> takes a reasonably large graph, but real projects are likely to demonstrate
+>> this behavior.
+>>
+>> I arranged the series into two patches: 1. the (failing) test, and 2. the
+>> fix.
+>>
+>> The fix commit includes some details about why the change to compress merge
+>> commits caused this regression, and why I feel relatively confident that
+>> this is a correct resolution.
 > 
-> It does not sound like a BUG to me, either, but the new condition
-> does look correct to me, too.  We can turn it into die() later if
-> somebody truly cares ;-)
-> 
-> Thanks, both.  Will queue.
+> I am not sure if this is "fix" of "bug" in that what is shown
+> without 2/2 (iow, "before this change" in the description of 2/2) is
+> "wrong" per-se---it is just that it leaves room to be made even more
+> compact.  It still is an improvement, of course, though.
 
-Thanks much for the quick turnaround. If I hear more noise I'll give it
-a try with die() or error code instead, but for now I'll move on to the
-next bug on my list. :)
+I guess I was incomplete in my first example. The full horizontal behavior
+before 0f0f389f was
 
- - Emily
+	| | | | | | *-.
+	| | | | | | |\ \
+	| |_|_|_|_|/ | |
+	|/| | | | | / /
+	| | |_|_|_|/ /
+	| |/| | | | /
+	| | | |_|_|/
+	| | |/| | | 
+
+and 0f0f389f added a compact merge commit, but lost two horizontal lines.
+
+	| | | | | | *
+	| |_|_|_|_|/|\
+	|/| | | | |/ /
+	| | | | |/| /
+	| | | |/| |/
+	| | |/| |/|
+	| |/| |/| |
+	| | |/| | |
+
+This change brings the horizontal lines back.
+
+	| | | | | | *
+	| |_|_|_|_|/|\
+	|/| | | | |/ /
+	| | |_|_|/| /
+	| |/| | | |/
+	| | | |_|/|
+	| | |/| | |
+
+Whether this qualifies as a "bug" is debatable, for sure. That's why I
+believe this change is below the bar for the release candidate.
+
+Thanks,
+-Stolee
