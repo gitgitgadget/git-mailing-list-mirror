@@ -2,63 +2,95 @@ Return-Path: <SRS0=ZiOn=25=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89B56C33CA2
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 15:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D2204C282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 15:41:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6ABFE20720
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 15:32:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A4A492072A
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 15:41:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SjwjdlGR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728633AbgAHPct (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 10:32:49 -0500
-Received: from smtprelay08.ispgateway.de ([134.119.228.107]:47441 "EHLO
-        smtprelay08.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726556AbgAHPcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 10:32:48 -0500
-Received: from [24.134.116.61] (helo=[192.168.92.208])
-        by smtprelay08.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.92.3)
-        (envelope-from <alexandr.miloslavskiy@syntevo.com>)
-        id 1ipDK8-0004Xb-OS; Wed, 08 Jan 2020 16:32:44 +0100
-Subject: Re: [PATCH v4 0/3] t: rework tests for --pathspec-from-file
-To:     Junio C Hamano <gitster@pobox.com>,
-        Alexandr Miloslavskiy via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <pull.503.v3.git.1577786032.gitgitgadget@gmail.com>
- <pull.503.v4.git.1577787313.gitgitgadget@gmail.com>
- <xmqqh8173r8e.fsf@gitster-ct.c.googlers.com>
-From:   Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Message-ID: <12861b02-386c-3ae8-cd2f-ffe07c6aabc7@syntevo.com>
-Date:   Wed, 8 Jan 2020 16:32:43 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1727091AbgAHPlr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 10:41:47 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:56020 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726363AbgAHPlr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 10:41:47 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2AF1BA0127;
+        Wed,  8 Jan 2020 10:41:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=1Xm5clkJwoK+ak8Bb/lMzE9BdnU=; b=Sjwjdl
+        GR/tlGQAiZ/UHPqwboxvQYm7tX0H4dVwqhOLWXXutFYRA5vjjcAv22QJpCu/RAEq
+        UThplS+DJ+lBGCz2Kubn1oJ7NrIUWsOC+4oWIBCoK1uzZ5jPazySd7ISDjy7VmWO
+        34WsWs985Lqy4m1+o1kqYAGiGZ6GO57BPin34=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=kZNIauqdr2LW6OZ8v9FvWcuUlxgW12+O
+        dyJdi2dI9hwYWnfyy7s/0WIn0bX9KXPxMzXpW611pW3bCh7uihnkh8ktZNK5QsFm
+        awQa+C9VtQh9jhcZIeJTXsUyZDrWYHY1TMNU+feJ7bjiJ5h6FvbsT9+mQFE8oj3c
+        G2LRdajMbtk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 23E3FA0126;
+        Wed,  8 Jan 2020 10:41:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 05F96A0124;
+        Wed,  8 Jan 2020 10:41:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Torsten Krah <krah.tm@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [PATCH] restore: invalidate cache-tree when removing entries with --staged
+References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
+        <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
+        <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
+        <20200108091119.GB87523@coredump.intra.peff.net>
+        <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
+        <20200108104008.GA2207365@coredump.intra.peff.net>
+        <20200108114344.GA3380580@coredump.intra.peff.net>
+Date:   Wed, 08 Jan 2020 07:41:39 -0800
+In-Reply-To: <20200108114344.GA3380580@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 8 Jan 2020 06:43:44 -0500")
+Message-ID: <xmqq4kx63qh8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh8173r8e.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-Df-Sender: YWxleGFuZHIubWlsb3NsYXZza2l5QHN5bnRldm8uY29t
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E02DFF6-322D-11EA-9AE9-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07.01.2020 22:13, Junio C Hamano wrote:
-> With the third step the series won't merge cleanly with other topic
-> you have in 'next' (t7107 gets somewhat heavy merge conflicts).
-> 
-> I'll queue the first two for now but let's clean them up post 2.25
-> release.
+Jeff King <peff@peff.net> writes:
 
-OK, I will re-submit the remaining patch after 2.25.
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index b52c490c8f..18ef5fb975 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -524,6 +524,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+>  	/* Now we are committed to check them out */
+>  	if (opts->checkout_worktree)
+>  		errs |= checkout_worktree(opts);
+> +	else
+> +		remove_marked_cache_entries(&the_index, 1);
 
-I will implement the next --pathspec-from-file patches as if this third 
-patch was accepted (that is, without copy&pasted tests).
+Ah, I was wondering why we were seeing breakages on cache-tree,
+which is fairly old and stable part of the system---even though it
+had caused us quite a lot of pain while it was growing---all of a
+sudden.  No wonder---this codepath is a fairly new one, introduced
+when "restore" was added X-<.
 
-Thanks for accepting this and other polishing branches, I was already 
-quite pessimistic about them.
+And the fix looks right, of course.  Thanks for extracting a
+reproducible recipe out of the original reporter and quickly
+diagnosing it.  Very much appreciated.
