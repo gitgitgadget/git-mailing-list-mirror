@@ -3,145 +3,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 745E2C282DD
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD93BC282DD
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:05:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4215F20678
-	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:01:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A56F720678
+	for <git@archiver.kernel.org>; Wed,  8 Jan 2020 19:05:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="SY7/KPw2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VoD+xV2O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729583AbgAHTB1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 14:01:27 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52107 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727585AbgAHTB1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 14:01:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1578510075;
-        bh=aSU6sCLoK8bOlOk/40W6c94bZiygbZbKJn4+vFR3mSI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SY7/KPw2P4dQvyxBEm1xsnVWve2Vi/BwpiBUAQlLblA5FMI4l40W3EgisBzCGMGpC
-         XZU2EXC1Li27QTBo7fTMlv7xMiJWKcX4n91Li7gAJphLyKt5C+mcBIZUmOk3sqksAL
-         ZTpCeGbV1h5fDM6fl+Sl8nWG5p2AA/a+BVYaqGus=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MLR1V-1j6eq135oh-00ITmi; Wed, 08
- Jan 2020 20:01:14 +0100
-Date:   Wed, 8 Jan 2020 20:01:12 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
+        id S1728846AbgAHTFi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 14:05:38 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:63654 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728590AbgAHTFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 14:05:38 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4023998BA7;
+        Wed,  8 Jan 2020 14:05:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=W09LXSnBNt8L4iI7//NxSP8NhVA=; b=VoD+xV
+        2OOFPP/I+kIYBs0Qiv5UciXWzXlxZRhgq3/I6eOLyrb9K4Rm8NfUo9XRR9q1rLJD
+        InXmCbe/j7CYKCvCFRXy32BeJn4GJJptvf5RxW8otW0oySlx5sd31cmDm+e8NM9q
+        6YYXwwGz9OGyo1s9wnYSJ6ydJq/0lKVFvse5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=H2q3cRA1B7AGPVFHQPz8k4Svlgsq174p
+        5ePEZBvY6RVUW8DrLs9qTQQJ6fkxxBBkbm6r/oMoe/TBf+M5h7iPeFEu4jkQ5w+O
+        qmZ/57wkxF48tBbMa6BnHYPPH3FpH7pU5sgR/oUxirhbuCwMq1jGsWK7A9ImBkmD
+        RiRYu2Ah6II=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 24AB398BA6;
+        Wed,  8 Jan 2020 14:05:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2D33398BA3;
+        Wed,  8 Jan 2020 14:05:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Heba Waly <heba.waly@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>,
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
         Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v2 1/1] branch: advise the user to checkout a different
- branch before deleting
+Subject: Re: [PATCH v2 1/1] branch: advise the user to checkout a different branch before deleting
+References: <pull.507.git.1577933387.gitgitgadget@gmail.com>
+        <pull.507.v2.git.1578370226.gitgitgadget@gmail.com>
+        <19a7cc1889d6094e4f8a94c19c43ad554662e8d8.1578370226.git.gitgitgadget@gmail.com>
+        <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com>
+        <CACg5j26jyWnAtM+mZ-FuN7OQWHpKk5nADG+7J-=metJMdO6+2Q@mail.gmail.com>
+        <CAPig+cTDayF0hHn7wSPGNS8h2qPUYhhg9Z8fY_rLQnWmAg-NKQ@mail.gmail.com>
+        <CACg5j260h88bd=W_4EzAn7B0TiU02Y8BzKDQ7w3UJiHkhL60NQ@mail.gmail.com>
+Date:   Wed, 08 Jan 2020 11:05:30 -0800
 In-Reply-To: <CACg5j260h88bd=W_4EzAn7B0TiU02Y8BzKDQ7w3UJiHkhL60NQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001081945490.46@tvgsbejvaqbjf.bet>
-References: <pull.507.git.1577933387.gitgitgadget@gmail.com> <pull.507.v2.git.1578370226.gitgitgadget@gmail.com> <19a7cc1889d6094e4f8a94c19c43ad554662e8d8.1578370226.git.gitgitgadget@gmail.com> <CAPig+cQ0qY8KDZrQ8khuz34DqPimorN7JHHn0Ms=KpvJYtxJoA@mail.gmail.com>
- <CACg5j26jyWnAtM+mZ-FuN7OQWHpKk5nADG+7J-=metJMdO6+2Q@mail.gmail.com> <CAPig+cTDayF0hHn7wSPGNS8h2qPUYhhg9Z8fY_rLQnWmAg-NKQ@mail.gmail.com> <CACg5j260h88bd=W_4EzAn7B0TiU02Y8BzKDQ7w3UJiHkhL60NQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        (Heba Waly's message of "Thu, 9 Jan 2020 07:06:26 +1300")
+Message-ID: <xmqqwoa122h1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:l1zNhDcJBSUx6gym2BlRMT6r/QlFAWmnjZvCJT0IZWTOCMpmeCz
- /RE7aA7fIzTzdtzna/eNp1w9wF+poJ/wD1vk+1k0/arnfdtC9ova4nbTAT/nAGdPspdaYyi
- 4jFiJ1LHSe4/1m+sTGsH9IW957aUAUoCQclb0BZ6fKwjTSwQk1HbWUFpxHqfF9vMZZo/Ku/
- d9uSkzGDL4y3d1GZtwJ2A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:a4zU/mfkqSM=:rCfn9uzmesKaBW8R+bX11j
- vZ4Hp+Bq3Dv7oVmbHMP7CLse7lfQKpDT2Hx+/sdf+b3i7PDd6P2SdhOY9vz+caLy6OBggE/mB
- v3raAc+dGHPhtFMgqS5SnKnososmWRsQcdLRgnnRsY0CD4giG/V552DFICNAkfaEu7ecDk2ZQ
- VBiRMOICllJ73S3W0l5ouT1HmUx0Zsha3fDJ35vdTeOjcPY7iWlCUV/Zw+msavAS245loTaSb
- nCQ9SEsGranJMilGSEHXRFMHkeu2DOAvjUf+hY07PKfSknozA/BlxbFbX7yh07RvKTAfxCfHs
- ORlKOPKd5DFYwh8PMR6HPXcxTrUfYDITxQKtIo+Ir4CgIJxZzZs3Cz00KYwCFe8PJ1fw+5lgL
- /jWoiQX8GDeGgCrvQOOzOoQrXy824KjtixPSvM2rL1H/yDtNUTdYUSUjZR2RDncrWq7SFqVyq
- JeG9C1SUMJfaVX/hDAsrxd97scCu1ojQh+lepY7XIS/HwL1Et6ZTJ1M8RRgfirrLRLA70FRvZ
- JuEjm2StPRFt+CDYUZ7EB4HjI8LGchzc44bzHeOEO4sfenlRkRgmG+BkQN/MCsMfn+73vyEKP
- k4kJvd+cs9Dpp/u2oNvIlIhnAFStCW/FNwWbElgkcpEw4Qj6vI1zk9KAU9fV0CjbAznNSURTW
- n0ka9U7tvo/3us2psmoHa6qb96CaJjH4vFpg7y2G6rChR8xX4kcBqaIzZJORFmS8CSgKPHTYs
- MuY1NPLoXwLoZQxzDwB4+LUGOYWt8PR4P+s3mhZjO3L73j/Wjg9mdWnHImqDNPNpK9SRbpg2M
- Q4RZRaJOiFs2V4PVM94i6ef44hD8f3uoQR0PZjoVrRYzIbqhj9YNgIMleU+Co7eULWxGndVDW
- B/nmAVYKUuM5NgVRhAOVxdQ3XcjUMb1GjgffsOZ2magHIMdK4pSfO4LMqXyRHh/OdOiI851Ou
- 1tKZTTwtsoOQggcxx6cOA2ruhSpOPeA3EdO76vFgyZkGV4PqqQA3qI+DpI7it9n4sp4uuBxSL
- linViFxOx3EdU1eXn1IcvCCDoS9Ni8sIeZFnX0Z1uynmgfQN5p/bdZTpP8Y044OoU3zZD3yP4
- +s9wVuSbd25DGRviWK+nc1eP36TiRE9SwK6iUO08zzs3lpvjijLLBGBZzWPu48Kg9jOmvMuDg
- yw+O9HtF1MnTDrq+NBF7KKRS8yoA2VPl6gw5t7RXdxK3JeTXG9i3GgpHyhkb1+3UTcq5N7wmf
- OqweqT+R1qjlRhcq3OqFdgSifVEKo8ZSWOMwIphox+saA+Ih2LPae3fMK6hc=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D859EC88-3249-11EA-AFA9-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Heba Waly <heba.waly@gmail.com> writes:
 
-On Thu, 9 Jan 2020, Heba Waly wrote:
-
-> On Wed, Jan 8, 2020 at 10:28 PM Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
+> On Wed, Jan 8, 2020 at 10:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>
+>> advice seems simple on the surface, but every new piece of advice
+>> means having to add yet another configuration variable, writing more
+>> code, more tests, and more documentation
 >
-> > advice seems simple on the surface, but every new piece of advice
-> > means having to add yet another configuration variable, writing more
-> > code, more tests, and more documentation
-
-FWIW I disagree that we need to reduce the number of config settings.
-Pretty much all of them have a good reason to exist.
-
-I _could_ however see some sort of categorisation as a valuable goal,
-which would potentially make it easier to have chapters in the `git
-config` documentation where earlier chapters describe common settings
-and the later chapters describe subsequently more obscure settings.
-
-> This raises a question though, do we really need a new configuration for
-> every new advice?
-
-I would keep it this way, if only for consistency (a department in which
-Git still has a lot of room for improvement).
-
+> This raises a question though, do we really need a new configuration
+> for every new advice?
 > So a user who's not interested in receiving advice will have to
 > disable every single advice config? It doesn't seem scalable to me.
 > I imagine a user will either want to enable or disable the advice
 > feature all together. Why don't we have only one `enable_advice`
 > configuration that controls all the advice messages?
 
-This is the first time I hear about anybody wanting to disable any advice
-;-)
+The advice mechanism was a way to help new people learn the system
+by giving a bit of extra help messages that would become annoying
+once they learned that part of the system, so by default they are
+on, and can be turned off once they learn enough about the specific
+situation that gives one kind of advise.  Hence, "[advice] !all" to
+decline any and all advice message, including anything that would be
+introduced in the future, is somewhat a foreign concept in that
+picture.
 
-If this is desired, it should be easy enough:
+Having said that, I am not opposed to add support for such an
+overall "turn all off" (or on for that matter).  Totally untested,
+but something along this line, perhaps?  The idea is that
 
-=2D- snip --
+ - the config keys may come in any order;
+
+ - once advice.all is set to either true or false, we set all the
+   advice.* variables to the given value,
+
+ - for any other advice.* config, we interpret it only if we haven't
+   seen advice.all
+
+
+
+ advice.c | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
+
 diff --git a/advice.c b/advice.c
-index 3ee0ee2d8fb..28e48d5410b 100644
-=2D-- a/advice.c
+index 098ac0abea..b9a8fe1360 100644
+--- a/advice.c
 +++ b/advice.c
-@@ -138,6 +138,13 @@ int git_default_advice_config(const char *var, const =
-char *value)
+@@ -3,6 +3,8 @@
+ #include "color.h"
+ #include "help.h"
+ 
++static int advice_all_seen = -1; /* not seen yet */
++
+ int advice_fetch_show_forced_updates = 1;
+ int advice_push_update_rejected = 1;
+ int advice_push_non_ff_current = 1;
+@@ -142,13 +144,22 @@ int git_default_advice_config(const char *var, const char *value)
  	if (!skip_prefix(var, "advice.", &k))
  		return 0;
-
-+	if (!strcmp(k, "suppressall")) {
-+		if (git_config_bool(var, value))
-+			for (i =3D 0; i < ARRAY_SIZE(advice_config); i++)
-+				*advice_config[i].preference =3D 0;
-+		return 0;
+ 
+-	for (i = 0; i < ARRAY_SIZE(advice_config); i++) {
+-		if (strcasecmp(k, advice_config[i].name))
+-			continue;
+-		*advice_config[i].preference = git_config_bool(var, value);
++	if (!strcmp(var, "advise.all")) {
++		advice_all_seen = git_config_bool(var, value);
++		for (i = 0; i < ARRAY_SIZE(advice_config); i++)
++			*advice_config[i].preference = advice_all_seen;
+ 		return 0;
+ 	}
+ 
++	if (advice_all_seen < 0) {
++		for (i = 0; i < ARRAY_SIZE(advice_config); i++) {
++			if (strcasecmp(k, advice_config[i].name))
++				continue;
++			*advice_config[i].preference = git_config_bool(var, value);
++			return 0;
++		}
 +	}
 +
- 	for (i =3D 0; i < ARRAY_SIZE(advice_config); i++) {
- 		if (strcasecmp(k, advice_config[i].name))
- 			continue;
-=2D- snap --
-
-I don't really think that this is desired, though. Git has earned a
-reputation for being hard to use, so I was personally delighted when we
-started introducing the advise feature, and I have actually heard a couple
-users say good things whenever Git learns to help them without having to
-ask another human being (and feeling dumb as a consequence).
-
-Ciao,
-Dscho
+ 	return 0;
+ }
+ 
