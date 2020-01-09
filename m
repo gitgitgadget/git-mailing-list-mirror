@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CEE3C32771
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BA08C33CA2
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:16:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4CE82206ED
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:16:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4FD052072E
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:16:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U+YTdLZl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JiJAsL0z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729003AbgAIKQq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 05:16:46 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:36774 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728707AbgAIKQq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 05:16:46 -0500
-Received: by mail-wm1-f53.google.com with SMTP id p17so2173932wma.1
+        id S1729182AbgAIKQr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 05:16:47 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52630 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728916AbgAIKQr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 05:16:47 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p9so2253979wmc.2
         for <git@vger.kernel.org>; Thu, 09 Jan 2020 02:16:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=saMlTNkKEqcBRL5aUOy1TDYQZGXm7gjU9li+Opxvdcs=;
-        b=U+YTdLZll/44S6WAZI5h2HsJQRXXwUkIkeb6hBBLF3VygAM1gm6tUXxSiTZk5gQ4kU
-         8pc5VGoa4U0shEzh0/zb8bDzh9uhDkI8gYKvnnvnzaRHlRwEqqjy/f+o0n6jHrLAr56H
-         PmOgVGwbx2HQJU6id9iCmj+7t5wNDiDnmj9qoZv50YtNteoadK747meyFaS5TMzQQ+AZ
-         355Ib7EUnxacbAgOMIIDZlHumMYh1nGKfLU++mqwRt+UzLz2xE9UtrtGgwbkN6v5Kk+B
-         ATKLsgDnhZWxnNXwTqmih+SjI0arwCCw7AF5CFgWrcHdYCPNVhKbOB+VwUcsqNV0M52X
-         h7jg==
+        bh=8oBhDWlWyOzHbbpQeAdkFN0i+3jb3DNMT4uyPUWAjZk=;
+        b=JiJAsL0z++GOBhzWffnRWna0JXNFy4ynX0c9CqWa3j2yQsCBjt9UdL//BJcyRMLHzo
+         mWkHQBjefd9xp+BR9mxpyp6hV7IK3/hLOKy9+g0i9ljiBQ5gSw/fv8/yJpG+bMC5HkhZ
+         ZCaT+dh1tQ/nbjpoJspDVv88tDUUiQ7MEjX8dTFNzaGQ6FtJmvy2Bv3JcRUGAmiOX14I
+         2C3AyI5YS49wnnNB2reDWt6Yed1r1zX9IkePBLF7b4FA2hRTnc7+F0t+fGsCinu2hzXJ
+         xHptG5JgCY1RVzI7C5jMhC/BvpxBQ0+55kl4IPMCegMAC+7a1mgxMO/g2RdJ3RhAosVo
+         bBxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=saMlTNkKEqcBRL5aUOy1TDYQZGXm7gjU9li+Opxvdcs=;
-        b=GDxAe3Uj0Aqv7wY9pHbcr609IqYNs+dxsCZz2PjSNRL8uEmEbwtN4BuCXTjHjTMOEy
-         K7SaZdxMuMQMHYJwp9w05F+obGF9QqbddbRRbilfU+02rinBpN7eTrfhgZRVQUCWWd8l
-         pmIP5CgEsmQbRHhLiPv4QUqYgpTPElwm0JXCtAu8+TBo5RLFewoj8A5kQLM5/3pVXdLq
-         1bqGh0ajBKLOm7ltBvsHA86WhLyVE3gOI9ZrbxJIYDhvVX2GBAWx8/DYMz3ArVRggVYn
-         vd+jdCZTwFk9M+3jA6dpfTZgHXrFj1/Er0psBbzZ2pNM8QycPQ5Poe6N0n9WklYSCODi
-         A1zg==
-X-Gm-Message-State: APjAAAUb9LSSMD32MhgTlo+4W5kr5Mas+rMjRKXqxFyYDpPA4cvxQNIi
-        Js2Q1leqAL/SgMlSd+LxERBfOyae
-X-Google-Smtp-Source: APXvYqzSIXpj5tk7U7yPUJQFh9Dd3UVQKc2zUhJv0WQ2rwNOweUdS0ehkNDZNuWivQh+Bm1+UKAnXg==
-X-Received: by 2002:a05:600c:24ca:: with SMTP id 10mr3767935wmu.4.1578565004376;
-        Thu, 09 Jan 2020 02:16:44 -0800 (PST)
+        bh=8oBhDWlWyOzHbbpQeAdkFN0i+3jb3DNMT4uyPUWAjZk=;
+        b=YEoJVCqN/Hs9ru/pqCSRFCPfOQuYTIfpw3O6YjvU3Wq/ZgfAuvy5edjn7u0KoUjwob
+         3S4oFTePHnm41qZQD/6oLgwYgL2kTi0pPjr0dim4Kd7r0NIBENrpuiEIJ1AWtkuExCcd
+         oRg0655Iq/pDBLRXmmmPAM8fQ25Of86w8rd4O4L+h0rMvTnHUsuNgivI8QC6TvTfnvh3
+         Gj6PaHSbuG8cJXowFhea12ffHtBjwWEQLRBsFoC04AvGr01RoWVaKzEfoGaXl8HLgI/t
+         ukBtsRB7k8pEb9YIp8jWOrVUxXUl4bDYCwLJFjfI1JUUMXXfcMrrfX7jdQ6HA/NueExr
+         jRCQ==
+X-Gm-Message-State: APjAAAUkOKq33tOMaVeRYF8z0gW050pGqYeoiU7Nd3jexUg3FjK598rF
+        SVMXQl5VEAsQsTuOEpOhReEnJhBC
+X-Google-Smtp-Source: APXvYqy0hsNLss6ef917DFdllcpQfiJt1raQuv+WoLSHdcf/xzDvSyG/yGD8vefojp0mYsu9WvthZA==
+X-Received: by 2002:a7b:c934:: with SMTP id h20mr3792716wml.103.1578565005091;
+        Thu, 09 Jan 2020 02:16:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y20sm2281239wmi.25.2020.01.09.02.16.43
+        by smtp.gmail.com with ESMTPSA id c9sm2237028wmc.47.2020.01.09.02.16.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2020 02:16:43 -0800 (PST)
-Message-Id: <b40480f03a5643761bd06d4b9c495a99b98a1ac8.1578565001.git.gitgitgadget@gmail.com>
+        Thu, 09 Jan 2020 02:16:44 -0800 (PST)
+Message-Id: <e8e05f39407365a1bf5008820267d362e0cbffd6.1578565001.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
 References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
         <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 09 Jan 2020 10:16:38 +0000
-Subject: [PATCH v2 1/4] config: fix typo in variable name
+Date:   Thu, 09 Jan 2020 10:16:39 +0000
+Subject: [PATCH v2 2/4] config: fix config scope enum
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,61 +75,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew Rogers <mattr94@gmail.com>
 
-In git config use of the end_null variable to determine if we should be
-null terminating our output.  While it is correct to say a string is
-"null terminated" the character is actually the "nul" character, so this
-malapropism is being fixed.
+Previously when iterating through git config variables, worktree config
+and local config were both considered "CONFIG_SCOPE_REPO".  This was
+never a problem before as no one had needed to differentiate between the
+two cases.
+
+Additionally we rename what was CONFIG_SCOPE_REPO to CONFIG_SCOPE_LOCAL
+to reflect its new, more specific meaning.
+
+The clients of 'current_config_scope()' who cared about
+CONFIG_SCOPE_REPO are also modified to similarly care about
+CONFIG_SCOPE_WORKTREE and CONFIG_SCOPE_LOCAL to preserve previous behavior.
 
 Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 ---
- builtin/config.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ config.c               | 7 ++-----
+ config.h               | 3 ++-
+ remote.c               | 3 ++-
+ t/helper/test-config.c | 4 +++-
+ upload-pack.c          | 3 ++-
+ 5 files changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 98d65bc0ad..52a904cfb1 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -29,7 +29,7 @@ static int use_worktree_config;
- static struct git_config_source given_config_source;
- static int actions, type;
- static char *default_value;
--static int end_null;
-+static int end_nul;
- static int respect_includes_opt = -1;
- static struct config_options config_options;
- static int show_origin;
-@@ -151,7 +151,7 @@ static struct option builtin_config_options[] = {
- 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
- 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
--	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
-+	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
-@@ -178,11 +178,11 @@ static void check_argc(int argc, int min, int max)
+diff --git a/config.c b/config.c
+index d75f88ca0c..447a013a15 100644
+--- a/config.c
++++ b/config.c
+@@ -1724,15 +1724,12 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
+ 		ret += git_config_from_file(fn, user_config, data);
  
- static void show_config_origin(struct strbuf *buf)
- {
--	const char term = end_null ? '\0' : '\t';
-+	const char term = end_nul ? '\0' : '\t';
+-	current_parsing_scope = CONFIG_SCOPE_REPO;
++	current_parsing_scope = CONFIG_SCOPE_LOCAL;
+ 	if (!opts->ignore_repo && repo_config &&
+ 	    !access_or_die(repo_config, R_OK, 0))
+ 		ret += git_config_from_file(fn, repo_config, data);
  
- 	strbuf_addstr(buf, current_config_origin_type());
- 	strbuf_addch(buf, ':');
--	if (end_null)
-+	if (end_nul)
- 		strbuf_addstr(buf, current_config_name());
- 	else
- 		quote_c_style(current_config_name(), buf, NULL, 0);
-@@ -678,7 +678,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		config_options.git_dir = get_git_dir();
+-	/*
+-	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
+-	 * But let's not complicate things before it's actually needed.
+-	 */
++	current_parsing_scope = CONFIG_SCOPE_WORKTREE;
+ 	if (!opts->ignore_worktree && repository_format_worktree_config) {
+ 		char *path = git_pathdup("config.worktree");
+ 		if (!access_or_die(path, R_OK, 0))
+diff --git a/config.h b/config.h
+index 91fd4c5e96..284d92fb0e 100644
+--- a/config.h
++++ b/config.h
+@@ -298,7 +298,8 @@ enum config_scope {
+ 	CONFIG_SCOPE_UNKNOWN = 0,
+ 	CONFIG_SCOPE_SYSTEM,
+ 	CONFIG_SCOPE_GLOBAL,
+-	CONFIG_SCOPE_REPO,
++	CONFIG_SCOPE_LOCAL,
++	CONFIG_SCOPE_WORKTREE,
+ 	CONFIG_SCOPE_CMDLINE,
+ };
+ 
+diff --git a/remote.c b/remote.c
+index 5c4666b53a..593ce297ed 100644
+--- a/remote.c
++++ b/remote.c
+@@ -369,7 +369,8 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 	}
+ 	remote = make_remote(name, namelen);
+ 	remote->origin = REMOTE_CONFIG;
+-	if (current_config_scope() == CONFIG_SCOPE_REPO)
++	if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
++	current_config_scope() == CONFIG_SCOPE_WORKTREE)
+ 		remote->configured_in_repo = 1;
+ 	if (!strcmp(subkey, "mirror"))
+ 		remote->mirror = git_config_bool(key, value);
+diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+index 214003d5b2..6695e463eb 100644
+--- a/t/helper/test-config.c
++++ b/t/helper/test-config.c
+@@ -44,8 +44,10 @@ static const char *scope_name(enum config_scope scope)
+ 		return "system";
+ 	case CONFIG_SCOPE_GLOBAL:
+ 		return "global";
+-	case CONFIG_SCOPE_REPO:
++	case CONFIG_SCOPE_LOCAL:
+ 		return "repo";
++	case CONFIG_SCOPE_WORKTREE:
++		return "worktree";
+ 	case CONFIG_SCOPE_CMDLINE:
+ 		return "cmdline";
+ 	default:
+diff --git a/upload-pack.c b/upload-pack.c
+index a00d7ece6b..c53249cac1 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1073,7 +1073,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
+ 		precomposed_unicode = git_config_bool(var, value);
  	}
  
--	if (end_null) {
-+	if (end_nul) {
- 		term = '\0';
- 		delim = '\n';
- 		key_delim = '\n';
+-	if (current_config_scope() != CONFIG_SCOPE_REPO) {
++	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
++	current_config_scope() != CONFIG_SCOPE_WORKTREE) {
+ 		if (!strcmp("uploadpack.packobjectshook", var))
+ 			return git_config_string(&pack_objects_hook, var, value);
+ 	}
 -- 
 gitgitgadget
 
