@@ -2,117 +2,75 @@ Return-Path: <SRS0=y4cH=26=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77BE9C33C9E
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 01:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E6CDC33C9E
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 02:06:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 548532067D
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 01:05:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E8C26206F0
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 02:06:51 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="NJ0rJVsq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbgAIBFv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 8 Jan 2020 20:05:51 -0500
-Received: from smtp.bonedaddy.net ([45.33.94.42]:53944 "EHLO
-        smtp.bonedaddy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726654AbgAIBFv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Jan 2020 20:05:51 -0500
-X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Jan 2020 20:05:51 EST
-Received: from chianamo (n175-38-4-223.per2.wa.optusnet.com.au [175.38.4.223])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: pabs3@bonedaddy.net)
-        by smtp.bonedaddy.net (Postfix) with ESMTPSA id A71AA180045
-        for <git@vger.kernel.org>; Wed,  8 Jan 2020 19:59:56 -0500 (EST)
-Message-ID: <929fe6f7f41a2abca353df4fd7f602a3e22ceb5f.camel@bonedaddy.net>
-Subject: interoperability between git and other VCS and data
- storage/transfer tools?
-From:   Paul Wise <pabs3@bonedaddy.net>
-To:     git@vger.kernel.org
-Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="=-K6jlGKbK059SSsoXUydv"
-Date:   Thu, 09 Jan 2020 08:59:51 +0800
+        id S1727831AbgAICGu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 8 Jan 2020 21:06:50 -0500
+Received: from mail-40131.protonmail.ch ([185.70.40.131]:64371 "EHLO
+        mail-40131.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727770AbgAICGu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Jan 2020 21:06:50 -0500
+Date:   Thu, 09 Jan 2020 02:06:41 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me; s=proton;
+        t=1578535608; bh=9RTi+/TwcpyfR+zJu2L2zptihqqYnpQ+t9lSHP5a5jU=;
+        h=Date:To:From:Reply-To:Subject:Feedback-ID:From;
+        b=NJ0rJVsqx9B73Xu2zGaIvUla2AIf/rmulbso2mbgGQCm1R25q/LLUgpysyXkFv54w
+         3zYl8J/X2j4WR5HqYhp10geJMHm7CsrfVgi4HmZwK6Qxv8Fxxq7itYnhnTnEXXvIoa
+         5g3Z7wpWaZ7pwUOqc5RKMPyWzxa5l6EipZcDxlaLD2SpgBU/bauPXBz0LYxv/rYpck
+         Ny0oIGVznHwJjkjgjc/HH1g6SQWCG9/uVUwH/GxGJXI4AH6oKTqmyg0VgraiotDMFT
+         vVTAX74eMcmPRtKLNFEVMkAwMhiU/2NVi6G0cCDMsnLl9NsTurYuuM0A/ugsVN3h7y
+         LP4hvcTw37kQA==
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Tymek Majewski <tmaj@pm.me>
+Reply-To: Tymek Majewski <tmaj@pm.me>
+Subject: How log log a feaure request
+Message-ID: <l0W9VY7TaoqT51RecilbNNTaX35RiCNlJtZKcz04cyKexuG06-bZMlwfor5kCvnIHRRWE7s8TSJLwvA-w4-1poMV_gle8iOzd3-wzFVDUh0=@pm.me>
+Feedback-ID: cDgLEjRlB9iev_kPU1dIij15-W8uLl_dnplGiO_s8chZSuXPY1p2lWmI9dJdw90cgur8s4da-X7nNf2ScREvxQ==:Ext:ProtonMail
 MIME-Version: 1.0
-User-Agent: Evolution 3.34.1-2+b1 
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello gurus!
 
---=-K6jlGKbK059SSsoXUydv
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I looked at https://git-scm.com/community but I failed to find a place to s=
+end feature requests to.
 
-Hi all,
+Q: How to submit a feature request (rather than a bug)?
 
-[Please CC me in reply, I am not subscribed]
+----
 
-I would like to be only using git on my local systems but there are
-other folks out there who prefer to use different VCS systems.
+What is the feature request?
 
-In addition there are VCS-like data storage systems (such as Mediawiki)
-and general data storage/transfer systems where one might want to track
-changes using git (such as LDAP and rsync).
+Change git checkout's
+"Your branch is up to date with 'origin/branch_name_here'"
+(and similar messages)
+to
+"Your branch is up to date with the *local* branch 'origin/branch_name_here=
+'"
 
-I still need mostly bi-directional interoperability between git and
-CVS, Subversion, Mercurial, Breezy/Bazaar, Darcs, Mediawiki and rsync.
-On the horizon are Fossil and Pijul but I probably won't need those any
-time soon. Recently I had a situation where GNU Arch support would have
-been helpful for viewing historical commit information but I assumed
-that support for it didn't exist so I didn't bother.
+Reasoning:
 
-Is there a location in the git documentation for pointers to software
-(such as git-remote-* helpers) that can help with VCS interoperability?
+I believe that if the git checkout message
+"Your branch is up to date with 'origin/branch_name_here'"
+was
+"Your branch is up to date with the *local* branch 'origin/branch_name_here=
+'"
+it would make it clearer to new users what is happening.
 
-Is there a place for people interested in VCS interoperability software
-to collaboratively maintain them?
 
-Should the VCS interop software in the git git repo move there?
-
-I'm currently using the following tools:
-
-CVS: https://github.com/osamuaoki/git-cvs (slightly better than git-cvsimpo=
-rt)
-Subversion: git-svn (not using a git-remote-* workflow)
-Mercurial: git-remote-hg (there are lots of forks/implementations)
-Breezy/Bazaar: git-remote-bzr (there are lots of forks)
-Darcs: nothing as only fast-export/fast-import seems possible
-Mediawiki: https://github.com/Git-Mediawiki/Git-Mediawiki
-rsync: manually rsyncing and importing commits
-
-What other tools are folks using?
-
-Any other thoughts on this?
-
---=20
-bye,
-pabs
-
-https://bonedaddy.net/pabs3/
-
---=-K6jlGKbK059SSsoXUydv
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEYQsotVz8/kXqG1Y7MRa6Xp/6aaMFAl4WewcACgkQMRa6Xp/6
-aaN2eQ/9FstZVB+nt4iZgIqBIlqViymFPRJ1Xygy3Hr4n8xbpfeMYQ0tXvIyZYcH
-/Dik6rFBbINfJWSkVUTBc3vVyurr0JwqFWqcs+bTYUAFiWplJqC4K+hhsp4BLVyq
-OxWH4TrzDcCu39uyFK1rY5kN30JpgRnYK8qwdGdmVaf23LAF+2xuk1enLKrzCGFt
-N/EgaTJf74dfOk4XinMUEvFLFefZN+zuUQIJo8d8aBGYaR1zdnW6C8Ok4d02UyHU
-6fXPO5XIhrKjotRSptCcf41rrJ6cxNVqXkRwadPdPQDzI0z4HlonsdaMgsEK4BP0
-rvstfA+Fj10UcyyyrkySB7wGFytK4kTAYJYeb8QqmG5MlxwX8nM46vCAKVFw7kAz
-7NGuE63rF05QQxqWlFtwobzS6Zn1bzDXs9n5nrFSHyD7rQyX1n2IGlS7JEKIJVl+
-5xtj7iRHkZ4dKyHstu4LCRJxAek80eN18rJSVOqPSJ+4DiG1hKUaD+kVkzLgLWMW
-JoHFhPQTfL02Aqv3wL0vaADKvD5AMRS9jSnMQXZ+rDRiG7c65umo65fJMLaichIe
-NwHSSvvnJoO+12EuI7QyeUTaqxXlxpUbuFpWtiQaJbE3e3iU9XrPAqubspXHxVW5
-9SrXn+lnnE2kmbVccmbmRbagahR9Gfg/68vaiST2yrYpXaEhoGM=
-=pUzn
------END PGP SIGNATURE-----
-
---=-K6jlGKbK059SSsoXUydv--
-
+Cheers
+Tymek
