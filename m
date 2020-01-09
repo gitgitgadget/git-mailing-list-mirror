@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33EADC282DD
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 19:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EB01C282DD
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 19:07:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 079C52077B
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 19:06:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E05C92067D
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 19:07:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uE0rRa1/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RS+RP4RP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388713AbgAITGj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 14:06:39 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53763 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388667AbgAITGj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 14:06:39 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id BD89140BD8;
-        Thu,  9 Jan 2020 14:06:31 -0500 (EST)
+        id S1732254AbgAITHl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 14:07:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65107 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730193AbgAITHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 14:07:40 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id C476AA2EB2;
+        Thu,  9 Jan 2020 14:07:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=I1fztNKFh7ira9lZiaNqcM3tCfQ=; b=uE0rRa
-        1/nH8gkUJfnWAKLY5wg8MaN9JAPBwonCd+W/bmYmYqC9B4OBLVcnEew9jB/3onlD
-        A873LYMezQdiAaYA5s5dpNS60t4wr2BrojKaeRaIJctJrMGijYr47oaTKXQy6Zx9
-        jPu5tD95l98RScNTRvT8QRge92503ezzbme94=
+        :content-type; s=sasl; bh=iQ52Bq60Y/DX3BJbiWBVWkCzA+U=; b=RS+RP4
+        RPvPFQIxZkY+EJJthKnRZSKCwo+KoRK7xshoJqZPSdRtPIh103BK67Fm08K67220
+        iZBSoNKHW3X8tHOeaA+EoQ/lQCXWYYUVQmt9ASVbb/3bVkGzPCXCHD2YthpSsLXe
+        zLwy/xxOYDfqsZC4IJW40SCj1VHXs82tbGC9s=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=K/Cs6rdDO8lBAIV4imDzpFIYNEHKVf8G
-        uZZrUY6wT1Px5xXjuQUMwMewjq40JxmpuNab9o1+UDXMBeyoJVY5apM64UYBE5Lf
-        R5CgI5mdyzUEJhYJ8J4yCkl+GJ4xZ+1oEP4ybwylIFDY00tZWKP+dvA2Zwa/15/B
-        udihKpcdpZo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5EC140BD7;
-        Thu,  9 Jan 2020 14:06:31 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=MzBQ9lQIzchfG8bbnBleteI1RYCj+eiJ
+        nJTFpHZxYP9eBrEj9Vn1AG6roVNz0QYEKJLBPoq0Xrb1hakKERNAahcHqghKxUGv
+        H5rL5IhAqWOHr77YkbLUbn01dmPVDxB959lzx8KojdQS1des+H+KznsWZ+8DsMlY
+        qDNrxblG01g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id BAFB7A2EB1;
+        Thu,  9 Jan 2020 14:07:39 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 24CF240BD4;
-        Thu,  9 Jan 2020 14:06:31 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DE3B6A2EA3;
+        Thu,  9 Jan 2020 14:07:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Matthew Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH v2 2/4] config: fix config scope enum
+Subject: Re: [PATCH v2 1/4] config: fix typo in variable name
 References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
         <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
-        <e8e05f39407365a1bf5008820267d362e0cbffd6.1578565001.git.gitgitgadget@gmail.com>
-Date:   Thu, 09 Jan 2020 11:06:30 -0800
-In-Reply-To: <e8e05f39407365a1bf5008820267d362e0cbffd6.1578565001.git.gitgitgadget@gmail.com>
+        <b40480f03a5643761bd06d4b9c495a99b98a1ac8.1578565001.git.gitgitgadget@gmail.com>
+Date:   Thu, 09 Jan 2020 11:07:34 -0800
+In-Reply-To: <b40480f03a5643761bd06d4b9c495a99b98a1ac8.1578565001.git.gitgitgadget@gmail.com>
         (Matthew Rogers via GitGitGadget's message of "Thu, 09 Jan 2020
-        10:16:39 +0000")
-Message-ID: <xmqqpnfszbyh.fsf@gitster-ct.c.googlers.com>
+        10:16:38 +0000")
+Message-ID: <xmqqlfqgzbwp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 25508834-3313-11EA-9E76-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 4C82AA04-3313-11EA-92D9-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,119 +72,62 @@ X-Mailing-List: git@vger.kernel.org
 
 > From: Matthew Rogers <mattr94@gmail.com>
 >
-> Previously when iterating through git config variables, worktree config
-> and local config were both considered "CONFIG_SCOPE_REPO".  This was
-> never a problem before as no one had needed to differentiate between the
-> two cases.
-
-Hmph, then "fix" on the title is a bit misleading, no?  
-
-The enum may not have been as fine grained as you would have liked,
-but if there was nothing broken, then we are doing this not to "fix"
-anything.  
-
-A more important thing to explain would probably be why we
-(i.e. those who propose this change, those who give favoriable
-reviews to it, and those who accept it change to the system) would
-want to see finer-grained classification.  What do we expect to be
-able to do with the resulting finer-grained set that we wouldn't be
-able to with the original, and why is it a good thing?  That is what
-readers of the proposed log message of this change would want to
-see, I would think.
-
-> Additionally we rename what was CONFIG_SCOPE_REPO to CONFIG_SCOPE_LOCAL
-> to reflect its new, more specific meaning.
->
-> The clients of 'current_config_scope()' who cared about
-> CONFIG_SCOPE_REPO are also modified to similarly care about
-> CONFIG_SCOPE_WORKTREE and CONFIG_SCOPE_LOCAL to preserve previous behavior.
+> In git config use of the end_null variable to determine if we should be
+> null terminating our output.  While it is correct to say a string is
+> "null terminated" the character is actually the "nul" character, so this
+> malapropism is being fixed.
 >
 > Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 > ---
->  config.c               | 7 ++-----
->  config.h               | 3 ++-
->  remote.c               | 3 ++-
->  t/helper/test-config.c | 4 +++-
->  upload-pack.c          | 3 ++-
->  5 files changed, 11 insertions(+), 9 deletions(-)
->
-> diff --git a/config.c b/config.c
-> index d75f88ca0c..447a013a15 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1724,15 +1724,12 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
->  		ret += git_config_from_file(fn, user_config, data);
+>  builtin/config.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+
+Obviously correct.
+
+Malapropism is a new word in "git log" output in our history ;-)
+
+> diff --git a/builtin/config.c b/builtin/config.c
+> index 98d65bc0ad..52a904cfb1 100644
+> --- a/builtin/config.c
+> +++ b/builtin/config.c
+> @@ -29,7 +29,7 @@ static int use_worktree_config;
+>  static struct git_config_source given_config_source;
+>  static int actions, type;
+>  static char *default_value;
+> -static int end_null;
+> +static int end_nul;
+>  static int respect_includes_opt = -1;
+>  static struct config_options config_options;
+>  static int show_origin;
+> @@ -151,7 +151,7 @@ static struct option builtin_config_options[] = {
+>  	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
+>  	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
+>  	OPT_GROUP(N_("Other")),
+> -	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
+> +	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
+>  	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
+>  	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
+>  	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
+> @@ -178,11 +178,11 @@ static void check_argc(int argc, int min, int max)
 >  
-> -	current_parsing_scope = CONFIG_SCOPE_REPO;
-> +	current_parsing_scope = CONFIG_SCOPE_LOCAL;
->  	if (!opts->ignore_repo && repo_config &&
->  	    !access_or_die(repo_config, R_OK, 0))
->  		ret += git_config_from_file(fn, repo_config, data);
+>  static void show_config_origin(struct strbuf *buf)
+>  {
+> -	const char term = end_null ? '\0' : '\t';
+> +	const char term = end_nul ? '\0' : '\t';
 >  
-> -	/*
-> -	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
-> -	 * But let's not complicate things before it's actually needed.
-> -	 */
-> +	current_parsing_scope = CONFIG_SCOPE_WORKTREE;
->  	if (!opts->ignore_worktree && repository_format_worktree_config) {
->  		char *path = git_pathdup("config.worktree");
->  		if (!access_or_die(path, R_OK, 0))
-> diff --git a/config.h b/config.h
-> index 91fd4c5e96..284d92fb0e 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -298,7 +298,8 @@ enum config_scope {
->  	CONFIG_SCOPE_UNKNOWN = 0,
->  	CONFIG_SCOPE_SYSTEM,
->  	CONFIG_SCOPE_GLOBAL,
-> -	CONFIG_SCOPE_REPO,
-> +	CONFIG_SCOPE_LOCAL,
-> +	CONFIG_SCOPE_WORKTREE,
->  	CONFIG_SCOPE_CMDLINE,
->  };
->  
-> diff --git a/remote.c b/remote.c
-> index 5c4666b53a..593ce297ed 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -369,7 +369,8 @@ static int handle_config(const char *key, const char *value, void *cb)
->  	}
->  	remote = make_remote(name, namelen);
->  	remote->origin = REMOTE_CONFIG;
-> -	if (current_config_scope() == CONFIG_SCOPE_REPO)
-> +	if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
-> +	current_config_scope() == CONFIG_SCOPE_WORKTREE)
->  		remote->configured_in_repo = 1;
->  	if (!strcmp(subkey, "mirror"))
->  		remote->mirror = git_config_bool(key, value);
-> diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-> index 214003d5b2..6695e463eb 100644
-> --- a/t/helper/test-config.c
-> +++ b/t/helper/test-config.c
-> @@ -44,8 +44,10 @@ static const char *scope_name(enum config_scope scope)
->  		return "system";
->  	case CONFIG_SCOPE_GLOBAL:
->  		return "global";
-> -	case CONFIG_SCOPE_REPO:
-> +	case CONFIG_SCOPE_LOCAL:
->  		return "repo";
-> +	case CONFIG_SCOPE_WORKTREE:
-> +		return "worktree";
->  	case CONFIG_SCOPE_CMDLINE:
->  		return "cmdline";
->  	default:
-> diff --git a/upload-pack.c b/upload-pack.c
-> index a00d7ece6b..c53249cac1 100644
-> --- a/upload-pack.c
-> +++ b/upload-pack.c
-> @@ -1073,7 +1073,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
->  		precomposed_unicode = git_config_bool(var, value);
+>  	strbuf_addstr(buf, current_config_origin_type());
+>  	strbuf_addch(buf, ':');
+> -	if (end_null)
+> +	if (end_nul)
+>  		strbuf_addstr(buf, current_config_name());
+>  	else
+>  		quote_c_style(current_config_name(), buf, NULL, 0);
+> @@ -678,7 +678,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  		config_options.git_dir = get_git_dir();
 >  	}
 >  
-> -	if (current_config_scope() != CONFIG_SCOPE_REPO) {
-> +	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
-> +	current_config_scope() != CONFIG_SCOPE_WORKTREE) {
->  		if (!strcmp("uploadpack.packobjectshook", var))
->  			return git_config_string(&pack_objects_hook, var, value);
->  	}
+> -	if (end_null) {
+> +	if (end_nul) {
+>  		term = '\0';
+>  		delim = '\n';
+>  		key_delim = '\n';
