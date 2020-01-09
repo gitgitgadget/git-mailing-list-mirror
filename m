@@ -2,75 +2,76 @@ Return-Path: <SRS0=y4cH=26=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 819FFC32771
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 07:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4214C32771
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 07:57:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 62D7E2072E
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 07:52:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C4472072A
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 07:57:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728341AbgAIHww (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 02:52:52 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60842 "HELO cloud.peff.net"
+        id S1728306AbgAIH5t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 02:57:49 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60856 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728184AbgAIHwv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 02:52:51 -0500
-Received: (qmail 27240 invoked by uid 109); 9 Jan 2020 07:52:50 -0000
+        id S1728277AbgAIH5t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 02:57:49 -0500
+Received: (qmail 27274 invoked by uid 109); 9 Jan 2020 07:57:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Jan 2020 07:52:50 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Jan 2020 07:57:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16155 invoked by uid 111); 9 Jan 2020 07:58:34 -0000
+Received: (qmail 16182 invoked by uid 111); 9 Jan 2020 08:03:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2020 02:58:34 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2020 03:03:32 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 9 Jan 2020 02:52:50 -0500
+Date:   Thu, 9 Jan 2020 02:57:48 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
-Message-ID: <20200109075250.GA3978837@coredump.intra.peff.net>
-References: <20200108023127.219429-1-emilyshaffer@google.com>
- <20200108071525.GB1675456@coredump.intra.peff.net>
- <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
- <20200108193833.GD181522@google.com>
- <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
+To:     Paul Wise <pabs3@bonedaddy.net>
+Cc:     git@vger.kernel.org
+Subject: Re: interoperability between git and other VCS and data
+ storage/transfer tools?
+Message-ID: <20200109075748.GB3978837@coredump.intra.peff.net>
+References: <929fe6f7f41a2abca353df4fd7f602a3e22ceb5f.camel@bonedaddy.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <929fe6f7f41a2abca353df4fd7f602a3e22ceb5f.camel@bonedaddy.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 08, 2020 at 12:35:29PM -0800, Junio C Hamano wrote:
+On Thu, Jan 09, 2020 at 08:59:51AM +0800, Paul Wise wrote:
 
-> >> It does not sound like a BUG to me, either, but the new condition
-> >> does look correct to me, too.  We can turn it into die() later if
-> >> somebody truly cares ;-)
-> >> 
-> >> Thanks, both.  Will queue.
-> >
-> > Thanks much for the quick turnaround. If I hear more noise I'll give it
-> > a try with die() or error code instead, but for now I'll move on to the
-> > next bug on my list. :)
-> 
-> By the way, it is somewhat sad that we proceeded that far in the
-> first place---such a corrupt on-disk index would have caused an
-> early die() if we did not get rid of the trailing-hash integrity
-> check.
+> I still need mostly bi-directional interoperability between git and
+> CVS, Subversion, Mercurial, Breezy/Bazaar, Darcs, Mediawiki and rsync.
+> On the horizon are Fossil and Pijul but I probably won't need those any
+> time soon. Recently I had a situation where GNU Arch support would have
+> been helpful for viewing historical commit information but I assumed
+> that support for it didn't exist so I didn't bother.
 
-Perhaps. The integrity check only protects against an index that was
-modified after the fact, not one that was generated by a buggy Git. I'm
-not sure we know how the index that led to this patch got into this
-state (though it sounds like Emily has a copy and could check the hash
-on it), but other cache-tree segfault I found recently was with an index
-with an intact integrity hash.
+I don't know if you need it to be bidirectional, but there is
+git-archimport. I'll warn you that it's pretty unmaintained, though so
+best of luck. :)
 
-So I think regardless of the trailing-hash check, we'd always want to be
-defensive when reading on-disk data.
+> Is there a location in the git documentation for pointers to software
+> (such as git-remote-* helpers) that can help with VCS interoperability?
+
+There's:
+
+  https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#Interaction_with_other_Revision_Control_Systems
+
+I have no idea how up-to-date it is (I admit that I converted all of my
+repos to Git in 2006 and haven't really looked back).
+
+> Mercurial: git-remote-hg (there are lots of forks/implementations)
+
+I haven't used it, but there's also:
+
+  https://github.com/glandium/git-cinnabar
+
+which seems to be actively used and maintained.
 
 -Peff
