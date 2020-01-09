@@ -2,130 +2,101 @@ Return-Path: <SRS0=y4cH=26=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_2 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36533C33CA1
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A44CC32771
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:53:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0381B2067D
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:49:07 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQ+JaqpC"
+	by mail.kernel.org (Postfix) with ESMTP id 66FE7206ED
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 10:53:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729442AbgAIKtG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 05:49:06 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:39711 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729287AbgAIKtG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 05:49:06 -0500
-Received: by mail-wm1-f45.google.com with SMTP id 20so2272903wmj.4
-        for <git@vger.kernel.org>; Thu, 09 Jan 2020 02:49:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:subject:from:reply-to:to:cc:date:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yei++r+XR8nqTsaAcmx5X5FokVf41pGiC2ZJTBCbr1Y=;
-        b=RQ+JaqpCSO/QK6Bxnf9HCGjeqx7stosLRPlRX9OUZobJpR0tz58XNskJ5r/u4HVAxP
-         +WP91JMUKtf9CXXn1TSnPtaaO4nAOMbzgMxRrCmocxbB+SxhfgrGFKv+NBpngzTQJwlQ
-         +MmaUv+Rv4znfJVeqtkUYTzb80TomM/8TXYxtquQm4Mq6h55gNc+5hgyymThR8WTEdKL
-         WSJMuKHm2eVJq8CTc62T4f/izl0eD1CChEopkfAG6MvwFKyIEqyqdQBaGAdTKZUP2nMP
-         NlXp9lse03HrAgsuOR/0Z6xLIZJc1Eird51pkB5jPHskWo+X4ebx+/OncCAXeJQatpgA
-         yXRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:subject:from:reply-to:to:cc:date
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=yei++r+XR8nqTsaAcmx5X5FokVf41pGiC2ZJTBCbr1Y=;
-        b=ealHokuxMCA36ufCfc6nIXoHcKaxgDvVIDazh+srEWtEJzbjGpPWYZ0F5TOEnfwWUt
-         jI1YAKLXxY8B9lVzxMc2Vf9a+nA0PksXIpu4XNVZ6TgUaBrRki2KyKukYJBh5gkbxWCl
-         KkOtfzWtVYAhXg3UWREmKsFLXHboTLa8N6ajAtKOrpCayItk+CeWEJPz7BfXmGuTwBLv
-         9RfKcHC3Ram1tizG4mSl0Phe9sYFK8FfBCzv0WeFDfblqHq7VUUj7b8y5IC2S8M0t5XV
-         7cR67rpLfgCna5oTnOHyUsM9Y0lalmJou6/UyFy3Un1nQLvqmoWlzezCeUu6fgFYW7Xj
-         WXkQ==
-X-Gm-Message-State: APjAAAWhlvlgWloLfQfd0XN2tVQPUUchg8Ru7Jm5t+hL14eiCtWqMO1F
-        7BUdA2WXS7HBH6WnPmWOlNqHI+ee
-X-Google-Smtp-Source: APXvYqxxZlPItlyeBdrPLl1SV3Td+r2vcc3GbUxkmNRSln8SOlKKQt+YF8lozqjAmAgdKcHdxOBZYw==
-X-Received: by 2002:a1c:6707:: with SMTP id b7mr4242918wmc.54.1578566944166;
-        Thu, 09 Jan 2020 02:49:04 -0800 (PST)
-Received: from torstenknbl.mgm-edv.de ([185.40.248.10])
-        by smtp.googlemail.com with ESMTPSA id y7sm3444915wmd.1.2020.01.09.02.49.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Jan 2020 02:49:03 -0800 (PST)
-Message-ID: <df169ee421429f8f0aa18a897a67677a2adf2b6b.camel@gmail.com>
-Subject: Re: Broken branch after git commit - tracked files in staging area
- can't be removed with restore --staged, or commit or stash
-From:   Torsten Krah <krah.tm@gmail.com>
-Reply-To: krah.tm@gmail.com
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Thu, 09 Jan 2020 11:49:02 +0100
-In-Reply-To: <20200109093931.GA299671@coredump.intra.peff.net>
-References: <07c84224bb0b093ab3770be9b5ab2ec23ce2d31a.camel@gmail.com>
-         <234df85965f8a685be5e563fe795ed477f359d7c.camel@gmail.com>
-         <f0638fc0d09c213b661d2b244d3457f362daebe0.camel@gmail.com>
-         <20200108091119.GB87523@coredump.intra.peff.net>
-         <2423f8c0b91578c0faf7527b7d97b0e1e9666261.camel@gmail.com>
-         <20200108104008.GA2207365@coredump.intra.peff.net>
-         <654cc7a58cf6947f91478411dd6a3f7f3473bc67.camel@gmail.com>
-         <20200109093931.GA299671@coredump.intra.peff.net>
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1729673AbgAIKxS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 05:53:18 -0500
+Received: from smtp1.de.adit-jv.com ([93.241.18.167]:54964 "EHLO
+        smtp1.de.adit-jv.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729609AbgAIKxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 05:53:17 -0500
+Received: from localhost (smtp1.de.adit-jv.com [127.0.0.1])
+        by smtp1.de.adit-jv.com (Postfix) with ESMTP id 9C4A53C04C0;
+        Thu,  9 Jan 2020 11:53:15 +0100 (CET)
+Received: from smtp1.de.adit-jv.com ([127.0.0.1])
+        by localhost (smtp1.de.adit-jv.com [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id Zrijl_e0EQq7; Thu,  9 Jan 2020 11:53:10 +0100 (CET)
+Received: from HI2EXCH01.adit-jv.com (hi2exch01.adit-jv.com [10.72.92.24])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by smtp1.de.adit-jv.com (Postfix) with ESMTPS id 6BA673C00B7;
+        Thu,  9 Jan 2020 11:53:10 +0100 (CET)
+Received: from lxhi-065.adit-jv.com (10.72.93.66) by HI2EXCH01.adit-jv.com
+ (10.72.92.24) with Microsoft SMTP Server (TLS) id 14.3.468.0; Thu, 9 Jan 2020
+ 11:53:09 +0100
+Date:   Thu, 9 Jan 2020 11:53:07 +0100
+From:   Eugeniu Rosca <erosca@de.adit-jv.com>
+To:     Elijah Newren <newren@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+CC:     Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Re: Unreliable 'git rebase --onto'
+Message-ID: <20200109105307.GA1349@lxhi-065.adit-jv.com>
+References: <20200108214349.GA17624@lxhi-065.adit-jv.com>
+ <CABPp-BHsyMOz+hi7EYoAnAWfzms7FRfwqCoarnu8H+vyDoN6SQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CABPp-BHsyMOz+hi7EYoAnAWfzms7FRfwqCoarnu8H+vyDoN6SQ@mail.gmail.com>
+X-Originating-IP: [10.72.93.66]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am Donnerstag, den 09.01.2020, 04:39 -0500 schrieb Jeff King:
-> You should be able to do:
-> 
->   git checkout your-branch
->   git reset --hard <original>
-> 
-> to go back to the state you were at (this is assuming you haven't
-> built
-> more commits on top, of course), and then repeat your steps. That
-> should
-> also clear out any breakage in the index, since "reset --hard" will
-> invalidate the cache-tree as necessary.
-> 
-> If you need to find the commit id of that original commit, try
-> looking
-> in the reflog for your branch: git log -g your-branch
+Hi Elijah, hi Szeder,
 
-Hi Peff,
+On Wed, Jan 08, 2020 at 02:06:22PM -0800, Elijah Newren wrote:
+> This looks like a known bug in rebase, in particular in the am-backend that
+> rebase uses by default.  If I'm correct that it's just a context region
+> issue, then this is the same bug that was recently discussed at
+> https://lore.kernel.org/git/CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com/.
+> The current plan is to switch the default over to the merge backend (the
+> same machinery that cherry-pick uses), which doesn't suffer from the same
+> shortcomings (you can see the current work being done in this area at
+> https://lore.kernel.org/git/pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com/
+> ).
 
-thanks that did work - but I had to "rm .git/index" before the hard
-reset to get those "deleted" ones removed from the staging area, after
-that I was able to use "git reset -- $files" and that was working like
-expected.
-Without deleting that index file I could run the hard reset but running
-"git status" afterwards insisted every time on this:
+Thank you for your feedback and references, here and in [*].
 
-On branch feature-2182
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	deleted:    docker-compose.gerrit.yml
-	deleted:    docker-compose.reverseproxy.yml
-	deleted:    docker-compose.yml
-	deleted:    docker-seccomp.json
-	deleted:    gradle.properties
-	deleted:    settings.gradle
+Once hit by this or similar issues, I think there is high chance for
+people to go through the same feelings as described by Pavel in [**]:
 
-Those only vanished after deleting the index file.
+  ---
+  That's so scary that I'm going to stop using "git rebase" for now.
+  ---
 
-The "settings.gradle" is part of my changeset and listed in the
-"commit".
-But those other 5 files listed I had never touched in my commit - I
-don't know why they are in the staging area here - maybe some other
-edge case of the git restore bug - but just a "git hard --reset $hash"
-did not clear those.
+Some years ago I was hit by 'git merge' producing slightly different
+results compared to 'git rebase --onto' and 'git cherry-pick A..B'
+(maybe I can come up with a reproduction scenario for that too).
 
-Torsten
+Since then, I usually contrast the outcomes of merging, cherry-picking
+and rebasing, to make sure they match, but that's painful and
+time-consuming.
+
+> In the mean time, you can pass the -m flag to rebase to avoid these types
+> of problems.  In fact, if you could retry with -m you may be able to
+> confirm whether it's the same issue.
+
+Indeed, neither `git rebase -m` nor `git rebase -i` exhibit the problem.
+
+[*] https://lore.kernel.org/git/CABPp-BHsy75UGm4wTOP2_AYik_dZi-_BxtAn-hyi-ZrNRRWGuw@mail.gmail.com/T/#m1cbf80ef56c260a626146d61291d7fbabd108f1b
+[**] https://lore.kernel.org/git/CAN_72e2h2avv-U9BVBYqXVKiC+5kHy-pjejyMSD3X22uRXE39g@mail.gmail.com/
+
+Thanks again.
+
 -- 
-
-
+Best Regards,
+Eugeniu
