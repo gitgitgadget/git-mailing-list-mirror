@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D53EC282DD
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD061C282DD
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:41:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0C4AD205F4
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 894992072E
+	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:41:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/HY0EJt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wqr2vUpz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728525AbgAIX3i (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 18:29:38 -0500
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:46530 "EHLO
+        id S1727876AbgAIXlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 18:41:21 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:38056 "EHLO
         mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725840AbgAIX3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 18:29:38 -0500
-Received: by mail-vs1-f67.google.com with SMTP id t12so123452vso.13
-        for <git@vger.kernel.org>; Thu, 09 Jan 2020 15:29:37 -0800 (PST)
+        with ESMTP id S1725840AbgAIXlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 18:41:21 -0500
+Received: by mail-vs1-f67.google.com with SMTP id v12so167679vsv.5
+        for <git@vger.kernel.org>; Thu, 09 Jan 2020 15:41:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=84sYD9o0q9qYjTNbNKN2OsKOcB9FNQA3H4I0TmOrs+E=;
-        b=E/HY0EJtN7spV2hn+1kdirWk7cOKzvqMjGw4trxKM1gZyPaahOyDQyB2yGAWqkAt4a
-         CmOH3wW8Zgr3YFuUq7LELdQiCE6ToVBSGTrSqjX1iLVF9T+/uQUJlX+BxG/bQxYeHBBe
-         ZM89vrHWRoEsPWG8Ez2x0k57RqOIxRrixW4dmdhKF65EYGi9bQt+NNcVL15uiDACHxJG
-         38GB0vD9IS9Afzlq9SfqOHYqUuEa9ztQcmRzlDgERLG8YH/gHlcb2dwcP4PdX6crKmnv
-         tBoc1vWgP9BpghcyoTIGgfW5ZCQhNMlpGrW+A3NsCzV6qJWUo1fINivHx3uww90JYPyI
-         7oow==
+        bh=N3fuUl2zEao5FQlZk8WoiawtDaUhC1ncC+AcT1llK9M=;
+        b=Wqr2vUpzczS1vtKdze0p7rhqARkH5Gg4Zab20JGgHrTMi6Gt7BMWgaPkthl3Ym/Em5
+         tE8kN2rOgYAJfGqaGZ+Q8qXxAL2Y6Yb3Y4FE2KmIXgBOhyka//sMBuAn0yWe3mpuua57
+         ZKKxIykzTDNWZToaJGkviFxhQfQWy3/79/+FvYoLfLW6OHMR9HEPKot+4zCG7bPBK2w5
+         DtOIScbtDJ3TeH2fu+grKbHXeOBhgm/rf0VvEO75P6kQfc8vYdZiau78dEzovAhjf2L9
+         IN8BKdOPQNhitW7kvwialDO6SvSujrHhGgicKOUlEQvFEiPKKTTdTgGo7lPO+SEK8w/Q
+         Fv6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=84sYD9o0q9qYjTNbNKN2OsKOcB9FNQA3H4I0TmOrs+E=;
-        b=eFN+o0Robn+DEs+6GVt9IJT94bP91LSkhMkcR4NIjjswnoh+7eoEC3QHD8tJzIXO6Y
-         zWmoDrThso6onBQKv2kuV34B80VjFu3Jp70YJyMNII9dov8ggIN45c8z2yXYdFMfwivy
-         nNU7hf+b3LnafKlimNxYD9dH/ioDUORuxiaQ6YfNnyOnXMY5MDac9fkS1S7W3EV8Nw3t
-         0pzv2Oyd0Tk2rvHmiiSHf/KBIPXRw4sTfYSHXEYnTxew5rfiqoNktwAnxLrJjDAVZkWN
-         4FPHnB+WSU0S0mWjw7r6rfsPvCytYyyF9IxZ80pD6l/cyxtCWv+e9Fe/AeYixTrfZnJq
-         tv6Q==
-X-Gm-Message-State: APjAAAVXDaG8A7Wkx/rlN14N0+3SNG8VM8hdA9XB2A98Ov7rPMugHyFj
-        sJtHJOY/S9labXCQRwTyJ3gk/+nxyG+IfxJUt2Q=
-X-Google-Smtp-Source: APXvYqwQ62E1OEcDdvEmdDCXAOMSq4bO3UTopRAUPrGA2uaOoE89S91hhzhQQSwkjgNlqXKwLnP0uUi44DLg5HZdOUw=
-X-Received: by 2002:a67:f847:: with SMTP id b7mr141589vsp.40.1578612576995;
- Thu, 09 Jan 2020 15:29:36 -0800 (PST)
+        bh=N3fuUl2zEao5FQlZk8WoiawtDaUhC1ncC+AcT1llK9M=;
+        b=L5gD4IhDotdT0kK9WpQRyplZ2iJM5YlZDTT8iPVLk/eeFTjvioiW55X2GNPW8uRowG
+         Xtb0eL98IoZf5Hpuysl0o3xLAIDtgRJD0dVpFcuc1P3fLqI6iqPWY1/TVoPzYqO5ZFtk
+         acHQKgAMYhu74Kb1LrOnlo+OpUHeexKm8bZspWjecMX411MBT+s/AxQnQjq//MNojeS7
+         ZVBMD49anddPvGgK8CH2PmpodL3OsROJ4jabqm4zc++by9wUpgvIE5UhvCVlKuUhRiK3
+         MlIc6hgSe7r9ERZjb68v/+/gqQMxrgNBI6h4OG55AYZvzt1sb28fY2CFl+fgImopwCjr
+         v1Sg==
+X-Gm-Message-State: APjAAAVt2UNrZ90byu7uDT890lhbrptq25KIxdvf1NZLwZQeHTYHQexE
+        p4lJHgbwEzidpXj2F1egM3OfsMSIHCMJ79yHAMr9KCMoKng=
+X-Google-Smtp-Source: APXvYqzutFVPS6/MWhDwXSf9TKu2YbIhQxU5GQpwETg/olHxA3utTvjedb+uxTJKqte0h6VZ1JobOzMs91KmcSnSDrw=
+X-Received: by 2002:a67:e3b1:: with SMTP id j17mr120503vsm.209.1578613280733;
+ Thu, 09 Jan 2020 15:41:20 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
- <pull.478.v2.git.1578565001.gitgitgadget@gmail.com> <e8e05f39407365a1bf5008820267d362e0cbffd6.1578565001.git.gitgitgadget@gmail.com>
- <xmqqpnfszbyh.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnfszbyh.fsf@gitster-ct.c.googlers.com>
+ <pull.478.v2.git.1578565001.gitgitgadget@gmail.com> <82252735467d876b4726f512a02cc44d271696ca.1578565001.git.gitgitgadget@gmail.com>
+ <xmqqh814zbm0.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh814zbm0.fsf@gitster-ct.c.googlers.com>
 From:   Matt Rogers <mattr94@gmail.com>
-Date:   Thu, 9 Jan 2020 18:29:25 -0500
-Message-ID: <CAOjrSZu4PRR17fjqJNK6r61OKJHchR7nkgcX3VBzLEZHb+BUBA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] config: fix config scope enum
+Date:   Thu, 9 Jan 2020 18:41:08 -0500
+Message-ID: <CAOjrSZu_fobU9bwDogt3YhR7C6amx=FgzYCDo_sU2_tR=Koj0g@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] config: clarify meaning of command line scoping
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
@@ -68,43 +68,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 9, 2020 at 2:06 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jan 9, 2020 at 2:14 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
 > "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
 > > From: Matthew Rogers <mattr94@gmail.com>
 > >
-> > Previously when iterating through git config variables, worktree config
-> > and local config were both considered "CONFIG_SCOPE_REPO".  This was
-> > never a problem before as no one had needed to differentiate between the
-> > two cases.
+> > CONFIG_SCOPE_CMDLINE is generally used in the code to refer to config
+> > values passed in via the -c option.  This is a little bit too specific
+> > as there are other methods to pass config values so that the last for a
+> > single command (namely --file and --blob).
 >
-> Hmph, then "fix" on the title is a bit misleading, no?
->
-> The enum may not have been as fine grained as you would have liked,
-> but if there was nothing broken, then we are doing this not to "fix"
-> anything.
+> Sorry, but I cannot parse this, especially around "so that the last
+> for ..." part.
 >
 
-I see where you're coming from, but I would definitely consider this a "fix"
-in that it's something that (as explained in the deleted comment) should
-have been this way from the start but was unnecessary as no one had a
-need for it yet.  But I definitely wouldn't be against changing the phrasing
-to something like "clean up" or whatever your preferred wording would be.
+My bad, I guess I must have not read as carefully as I thought I did.
+It should read:
+"... there are other methods to pass config values so that _they_ last
+for a single command ..."
 
-> A more important thing to explain would probably be why we
-> (i.e. those who propose this change, those who give favoriable
-> reviews to it, and those who accept it change to the system) would
-> want to see finer-grained classification.  What do we expect to be
-> able to do with the resulting finer-grained set that we wouldn't be
-> able to with the original, and why is it a good thing?  That is what
-> readers of the proposed log message of this change would want to
-> see, I would think.
+> > As the "visibility" of config
+> > values passed by these situations is common, we unify them as having a
+> > scope of "command" rather than "command line".
 >
+> Is the "unification" something done by this patch?  It does not
+> appear to be so.  The existing code already was using CMDLINE to
+> call "git -c VAR=VAL" and also something else (which is not clear to
+> me, unfortunately, probably because I failed to parse the above
+> X-<), and this step renames CMDLINE to COMMAND perhaps because
+> CMDLINE has too strong connotation with the "-c" thing and much less
+> with the other thing (which is not clear to me, unfortunately) and
+> you found that renaming it to COMMAND would cover both cases better?
 
-This is really more prep for patch 4 later on in this series, as a user who
-ran the proposed '--show-scope' later on in the series would care what
-was "worktree" vs "local".
+Essentially, the "unification" was referring to more the unification of all the
+things that affect configuration only for the duration of a specific command.
 
-Regardless, I think the two options I have would be to amend the commit
-message with that extra information or roll it together with patch 4
+The gist of this patch was to say "There are a few ways besides -c to pass
+a configuration option that lasts for a single command, so it makes sense
+to broaden that scope.".  The change is definitely justified in that COMMAND
+communicates that much clearer than CMDLINE as REPO, GLOBAL, SYSTEM
+all describe the thing that can see the configuration options, and
+it's specifically the
+command the can see the -c options and not the command line as a whole.
+
+>
+> I also do not get what you meant by "visibility", but it probably is
+> primarily because it is not clear what "the other thing" is.
+
+I was using visibility as another way to conceptualize scoping.  A
+scope more or less determines who can "see" a thing, so maybe that
+language was a little bit too much in my head.
+
+The issue is that currently the code doesn't care about any of that (as only -c
+options actually have COMMAND scoping), so maybe I should roll it into the
+next patch of the series?  As that introduces code that actually cares about the
+difference?
