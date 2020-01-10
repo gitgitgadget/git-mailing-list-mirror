@@ -2,276 +2,177 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5439C282DD
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 00:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D612EC32771
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 01:59:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A4DDC20661
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 00:20:25 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A9C5C2075D
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 01:59:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AOMS870i"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CyqDrFks"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730087AbgAJAUY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 19:20:24 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:41196 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730072AbgAJAUY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 19:20:24 -0500
-Received: by mail-wr1-f51.google.com with SMTP id c9so102379wrw.8
-        for <git@vger.kernel.org>; Thu, 09 Jan 2020 16:20:22 -0800 (PST)
+        id S1730629AbgAJB7e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 20:59:34 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36827 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730359AbgAJB7e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 20:59:34 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so336500wma.1
+        for <git@vger.kernel.org>; Thu, 09 Jan 2020 17:59:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=P+utRVnWYBjwvTYJaI4/g20jtojdwUI98tmdvcNjKB8=;
-        b=AOMS870ims77ifBKriVn8xxouW+kEns6a3iJdiZEYBeEM/RAbixZENugXpZEU4OtpI
-         kTzDCp7bYcOpbublxAJ/ph5TRlfUtt2hq3mezVWOBCHr6QvnilJb7Uy3mAUpLHOOLwzh
-         uqxwO3XVp+/U67jDIb84Cy2LxYv4dzeL/6usiD7KK0rcoL+GoZODkgQJASyYQydST+uF
-         4kz+riqcrqAcUGBeoaBuwwC0M9cVTgkz0wk9o+nb0gjKxTzswUdZ4RtBORJ9QQ7Emi7S
-         9C3xnn+LhSmZGziXQDH8FYW0cLuF3G4DES6044g5eSkiyigcgjd2rdnkELN8p3e4Y3Tk
-         5ndg==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=pe9NR1mtlH/jNtiPtoHP9WDAAa3plOvWttDBqc42WdA=;
+        b=CyqDrFksIgXf6blrhbP7RLy5hZObqIBdN5iSsJ/JMEPlSsETbyP7WvsEd37oWUt+SD
+         P0B+lZ4lKW2Jxatviw1DG6ndxYWYW16pk2GzQoDOJ/Zor+SgGEaU3BIj1AAJRt++e+5c
+         G+Ei6snyVbOOZ2S7vyVuyNR9BGsvc/xQom6JNCf3d/Rh15tCHQkgP5485vLUcM8Uq9KX
+         Ec0ao3F7NncG8OjdQWS0eilT7AhlTB/kPly6tEZWrRZn8n4A69ZYkoVKPCNxRx5Umxg3
+         QQMT/NXUYo2JHECb3wtmNvyh+YGjYSlAPGvF6bu6dqlDbPvxUl49WhMjDcFRd687tSyD
+         8a2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=P+utRVnWYBjwvTYJaI4/g20jtojdwUI98tmdvcNjKB8=;
-        b=H3tQuSSTVTo4r1KXBn7CWVkqH6bi9qbTCVPHqv4CTtYhTRRVseWw8mYUaImFZDvpgj
-         XVk+wBO44ZEHr/pwVX0I5plIx6KMc4bRc95KszTJRJOo8uf6qmTEr1UtkgHTJKp0cZgX
-         iIUhDeZkX2sXyFTkV4KmAOvyiJImC8/yR2tHdFkKapCHxUTiW28kSIW9epxhQKmqLQ7w
-         IvzMcB4FUKiMgDpJY8Q/LPAiC8l4bW39XRATq+QUKxc9DakMZ+PMO3TI2NAPyInZ55KP
-         9oYwvo3e08RPhv31yuZpPkR7SMXVli1604bG7oOo2SJ1ojezXmP1SuuXYU3d6UqrJXeZ
-         v7Dw==
-X-Gm-Message-State: APjAAAXYfURa4SGlrJQB1SOzuuMMI24uX4j5HCe5dOa1GHC1vfLMqw3U
-        GkDCtggMEh7+fS8sIcfW9Hz/4X6d5k2cD/tYpCU=
-X-Google-Smtp-Source: APXvYqzADi1fbsVi2J61OPN7izDfnzOjblW8IZ70I2uJI14bA6zJ+Yh4/XGEWNtpFQHQu0xMiDz8h21RYzD7bgfQC5A=
-X-Received: by 2002:a5d:5704:: with SMTP id a4mr144576wrv.198.1578615621188;
- Thu, 09 Jan 2020 16:20:21 -0800 (PST)
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=pe9NR1mtlH/jNtiPtoHP9WDAAa3plOvWttDBqc42WdA=;
+        b=nIs9v+RqXkRKHmJ2ImqZ8fu9xGq/Lv6zMlY69XvAZeYQzURPCV07q/Jye6/wRhnV8v
+         zFysnBAsOXl2eYpMuwJ7FBUxtoejGfI9DHLRLiz7DHJ7BICNN0N3sxIvoF8hpfYSM+jV
+         v5JH1ifRFoJhlCj3I9Re/lyTozC5sdwVBeNPfsJvjVNBhKMTt0uZ1jaRlc/rZ6m5EcP0
+         MDOqa0g7M3bHXVrP1bQQ0vIJ1XrJ3UGy9WUdEiIohSOHtYFssGyj1ouUfeSHE+HJmIRd
+         WLB73M/ki8Yc5J7GN4G1ggc4FqgVtdHN8Bxl8ZLwJ+zM1Gdlf4knZ42OXYNHrsxCqVZX
+         wStA==
+X-Gm-Message-State: APjAAAXB28cGsGCTp85dvQH+zlY0/BERI9aYyDkIEF9NDfYpLig+DTVC
+        VW/xSdu8nIGzqborcGYyFsBHpZYm
+X-Google-Smtp-Source: APXvYqxjuW/K2RM40K50h4dTGahW2pZCv/Q2fi30wjgkbxtzvYzwONVJuDdBa4m9ItBTcUKKi8ThXQ==
+X-Received: by 2002:a1c:f719:: with SMTP id v25mr980280wmh.116.1578621571434;
+        Thu, 09 Jan 2020 17:59:31 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o1sm417229wrn.84.2020.01.09.17.59.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jan 2020 17:59:30 -0800 (PST)
+Message-Id: <pull.520.git.1578621570180.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 10 Jan 2020 01:59:30 +0000
+Subject: [PATCH] unpack-trees: correctly compute result count
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CANsz78+ugmd62F4Qk+VT7Pi=ZPtMSkZjXOwLNRCFhoS9jrOkeQ@mail.gmail.com>
- <CANsz78K-BiswWPdhd_N25NuApcv7zSb2cw2Y9DSinkpNpuogYw@mail.gmail.com>
- <CANsz78LEZiocv_E-Hvj3iBahFFgomPb3BFNdmas2iqxqRLfRiw@mail.gmail.com> <20200108095229.GC87523@coredump.intra.peff.net>
-In-Reply-To: <20200108095229.GC87523@coredump.intra.peff.net>
-From:   Eyal Soha <shawarmakarma@gmail.com>
-Date:   Thu, 9 Jan 2020 19:20:09 -0500
-Message-ID: <CANsz78Lm3ggVZLrSxM5tc0MozFMdAmVBOix_3sjJT4+s3VHLPQ@mail.gmail.com>
-Subject: Re: Fwd: Add support for axiterm colors in parse_color
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, johannes.schindelin@gmx.net,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Depending on your terminal, you can already access these colors via
-> 256-color mode. Generally 0-7 are the standard colors there, then 8-15
-> are the "bright" variants, and then an rgb cube.
+The clear_ce_flags_dir() method processes the cache entries within
+a common directory. The returned int is the number of cache entries
+processed by that directory. When using the sparse-checkout feature
+in cone mode, we can skip the pattern matching for entries in the
+directories that are entirely included or entirely excluded.
 
-Yes.  According to the wikipedia page
-https://en.wikipedia.org/wiki/ANSI_escape_code#Colors :
+eb42feca (unpack-trees: hash less in cone mode, 2019-11-21)
+introduced this performance feature. The old mechanism relied on
+the counts returned by calling clear_ce_flags_1(), but the new
+mechanism calculated the number of rows by subtracting "cache_end"
+from "cache" to find the size of the range. However, the equation
+is wrong because it divides by sizeof(struct cache_entry *). This
+is not how pointer arithmetic works!
 
-     0-  7:  standard colors (as in ESC [ 30=E2=80=9337 m)
-     8- 15:  high intensity colors (as in ESC [ 90=E2=80=9397 m)
-    16-231:  6 =C3=97 6 =C3=97 6 cube (216 colors): 16 + 36 =C3=97 r + 6 =
-=C3=97 g + b (0 =E2=89=A4
-r, g, b =E2=89=A4 5)
-   232-255:  grayscale from black to white in 24 steps
+A coverity build of Git for Windows in preparation for the 2.25.0
+release found this issue with the warning, "Pointer differences,
+such as cache_end - cache, are automatically scaled down by the
+size (8 bytes) of the pointed-to type (struct cache_entry *).
+Most likely, the division by sizeof(struct cache_entry *) is
+extraneous and should be eliminated." This warning is correct.
 
-So 8bit 0-7 and 8bit 8-15 match the ANSI colors 30-37 and 90-97.  The
-background color versions match 40-47 and 100-107.
+This leaves us with the question "how did this even work?" The
+problem that occurs with this incorrect pointer arithmetic is
+a performance-only bug, and a very slight one at that. Since
+the entry count returned by clear_ce_flags_dir() is reduced by
+a factor of 8, the loop in clear_ce_flags_1() will re-process
+entries from those directories.
 
-On my desktop, the RGB and ANSI colors match in color as described above.
+By inserting global counters into unpack-tree.c and tracing
+them with trace2_data_intmax() (in a private change, for
+testing), I was able to see count how many times the loop inside
+clear_ce_flags_1() processed an entry and how many times
+clear_ce_flags_dir() was called. Each of these are reduced by at
+least a factor of 8 with the current change. A factor larger
+than 8 happens when multiple levels of directories are repeated.
 
-> That said, I'm not entirely opposed to having more human-readable
-> aliases. I'm not sure if it's worth using the 16-color version (e.g.,
-> "ESC[91m" versus the 256-color version "ESC[38;5;9m"). It's possible it
-> would be compatible with more terminals, and it is slightly fewer bytes.
+Specifically, in the Linux kernel repo, the command
 
-My motivation for this patch was to fix the github workflow log output
-that doesn't support 8bit colors properly.  Only the "ANSI" colors
-0-15 worked.  None of the 8-bit colors worked except for 30-37, 40-47,
-90-97, and 100-107, which matched the ANSI colors.  That is a very
-broken color scheme!  But that's how it displayed.
+	git sparse-checkout set LICENSES
 
-> What's AXITERM? I couldn't find it mentioned anywhere around ANSI codes.
+restricts the working directory to only the files at root and
+in the LICENSES directory. Here are the measured counts:
 
-Oops, I misread it.  The wikipedia page mentions it, it's "aixterm".
+clear_ce_flags_1 loop blocks:
+	Before: 11,520
+	After:   1,621
 
-> I kind of wonder if we could just call these ANSI as well, and have
-> color_output() just decide whether to add an offset of 60 when we see a
-> color number between 8 and 15. Or possibly c->value should just have the
-> 60-offset value in the first place.
+clear_ce_flags_dir calls:
+	Before: 7,048
+	After:    606
 
-Done.
+While these are dramatic counts, the time spent in
+clear_ce_flags_1() is under one millisecond in each case, so
+the improvement is not measurable as an end-to-end time.
 
-> This "type" field was already pretty ugly, and I think your patch makes
-> it even worse. It would probably be less bad if we just passed in the
-> integer 30 instead of '3', and then do:
+Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    unpack-trees: correctly compute result count
+    
+    Here is a very small fix to the cone-mode pattern-matching in
+    unpack-trees.c. Johannes found this while running a Coverity scan for
+    other issues. He alerted me to the problem and I could immediately see 
+    my error here. In creating this patch, most of my time was spent asking
+    "how did this work before?" and "why didn't this hurt performance?"
+    Hopefully my commit message explains this thoroughly enough.
+    
+    As for making it into the release, I don't know. The change is small, it
+    has a very limited scope, but this flaw is also not really hurting
+    anything in a major way.
+    
+    Thanks, -Stolee
 
-Done.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-520%2Fderrickstolee%2Funpack-trees-division-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-520/derrickstolee/unpack-trees-division-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/520
 
-> Bonus points for declaring:
->
->   enum {
->     COLOR_FOREGROUND =3D 30,
->     COLOR_BACKGROUND =3D 40,
->   } color_ground;
+ unpack-trees.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Done in a slightly different way.
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 2399b6818b..3dba7f9f09 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1305,14 +1305,14 @@ static int clear_ce_flags_dir(struct index_state *istate,
+ 
+ 	if (pl->use_cone_patterns && orig_ret == MATCHED_RECURSIVE) {
+ 		struct cache_entry **ce = cache;
+-		rc = (cache_end - cache) / sizeof(struct cache_entry *);
++		rc = cache_end - cache;
+ 
+ 		while (ce < cache_end) {
+ 			(*ce)->ce_flags &= ~clear_mask;
+ 			ce++;
+ 		}
+ 	} else if (pl->use_cone_patterns && orig_ret == NOT_MATCHED) {
+-		rc = (cache_end - cache) / sizeof(struct cache_entry *);
++		rc = cache_end - cache;
+ 	} else {
+ 		rc = clear_ce_flags_1(istate, cache, cache_end - cache,
+ 				      prefix,
 
-> This BUG() can go away. The point was to make sure we don't overflow
-> "out", but xsnprintf() will check that for us (that's why there isn't
-> one in the COLOR_256 and COLOR_RGB case arms).
-
-Removed.
-
-> And if we can handle the regular/bright stuff instead of color_output(),
-> we don't need to have this extra fg.type check.
-
-Done.  Here's a new patch!
-
-diff --git a/color.c b/color.c
-index ebb222ec33..efbe9a1858 100644
---- a/color.c
-+++ b/color.c
-@@ -24,6 +24,14 @@ const char *column_colors_ansi[] =3D {
-        GIT_COLOR_RESET,
- };
-
-+enum {
-+       COLOR_BACKGROUND_OFFSET =3D 10,
-+       COLOR_FOREGROUND_ANSI =3D 30,
-+       COLOR_FOREGROUND_RGB =3D 38,
-+       COLOR_FOREGROUND_256 =3D 38,
-+       COLOR_FOREGROUND_BRIGHT_ANSI =3D 90,
-+};
-+
- /* Ignore the RESET at the end when giving the size */
- const int column_colors_ansi_max =3D ARRAY_SIZE(column_colors_ansi) - 1;
-
-@@ -92,7 +100,13 @@ static int parse_color(struct color *out, const
-char *name, int len)
-        for (i =3D 0; i < ARRAY_SIZE(color_names); i++) {
-                if (match_word(name, len, color_names[i])) {
-                        out->type =3D COLOR_ANSI;
--                       out->value =3D i;
-+                       out->value =3D i + COLOR_FOREGROUND_ANSI;
-+                       return 0;
-+               }
-+               if (*name =3D=3D '+' &&
-+                   match_word(name+1, len-1, color_names[i])) {
-+                       out->type =3D COLOR_ANSI;
-+                       out->value =3D i + COLOR_FOREGROUND_BRIGHT_ANSI;
-                        return 0;
-                }
-        }
-@@ -109,10 +123,15 @@ static int parse_color(struct color *out, const
-char *name, int len)
-                else if (val < 0) {
-                        out->type =3D COLOR_NORMAL;
-                        return 0;
--               /* Rewrite low numbers as more-portable standard colors. */
-+               /* Rewrite 0-7 as more-portable standard colors. */
-                } else if (val < 8) {
-                        out->type =3D COLOR_ANSI;
--                       out->value =3D val;
-+                       out->value =3D val + COLOR_FOREGROUND_ANSI;
-+                       return 0;
-+               /* Rewrite 8-15 as more-portable aixterm colors. */
-+               } else if (val < 16) {
-+                       out->type =3D COLOR_ANSI;
-+                       out->value =3D val - 8 + COLOR_FOREGROUND_BRIGHT_AN=
-SI;
-                        return 0;
-                } else if (val < 256) {
-                        out->type =3D COLOR_256;
-@@ -166,24 +185,24 @@ int color_parse(const char *value, char *dst)
-  * already have the ANSI escape code in it. "out" should have enough
-  * space in it to fit any color.
-  */
--static char *color_output(char *out, int len, const struct color *c, char =
-type)
-+static char *color_output(char *out, int len, const struct color *c,
-+                         int offset)
- {
-        switch (c->type) {
-        case COLOR_UNSPECIFIED:
-        case COLOR_NORMAL:
-                break;
-        case COLOR_ANSI:
--               if (len < 2)
--                       BUG("color parsing ran out of space");
--               *out++ =3D type;
--               *out++ =3D '0' + c->value;
-+               out +=3D xsnprintf(out, len, "%d", c->value + offset);
-                break;
-        case COLOR_256:
--               out +=3D xsnprintf(out, len, "%c8;5;%d", type, c->value);
-+         out +=3D xsnprintf(out, len, "%d;5;%d", COLOR_FOREGROUND_256 + of=
-fset,
-+                          c->value);
-                break;
-        case COLOR_RGB:
--               out +=3D xsnprintf(out, len, "%c8;2;%d;%d;%d", type,
--                                c->red, c->green, c->blue);
-+         out +=3D xsnprintf(out, len, "%d;2;%d;%d;%d",
-+                          COLOR_FOREGROUND_RGB + offset,
-+                          c->red, c->green, c->blue);
-                break;
-        }
-        return out;
-@@ -279,14 +298,12 @@ int color_parse_mem(const char *value, int
-value_len, char *dst)
-                if (!color_empty(&fg)) {
-                        if (sep++)
-                                OUT(';');
--                       /* foreground colors are all in the 3x range */
--                       dst =3D color_output(dst, end - dst, &fg, '3');
-+                       dst =3D color_output(dst, end - dst, &fg, 0);
-                }
-                if (!color_empty(&bg)) {
-                        if (sep++)
-                                OUT(';');
--                       /* background colors are all in the 4x range */
--                       dst =3D color_output(dst, end - dst, &bg, '4');
-+                       dst =3D color_output(dst, end - dst, &bg,
-COLOR_BACKGROUND_OFFSET);
-                }
-                OUT('m');
-        }
-diff --git a/t/t4026-color.sh b/t/t4026-color.sh
-index 671e951ee5..e3f11a94f9 100755
---- a/t/t4026-color.sh
-+++ b/t/t4026-color.sh
-@@ -30,6 +30,14 @@ test_expect_success 'attribute before color name' '
-        color "bold red" "[1;31m"
- '
-
-+test_expect_success 'axiterm bright fg color' '
-+       color "+red" "[91m"
-+'
-+
-+test_expect_success 'axiterm bright bg color' '
-+       color "green +blue" "[32;104m"
-+'
-+
- test_expect_success 'color name before attribute' '
-        color "red bold" "[1;31m"
- '
-@@ -74,6 +82,10 @@ test_expect_success '0-7 are aliases for basic ANSI
-color names' '
-        color "0 7" "[30;47m"
- '
-
-+test_expect_success '8-15 are aliases for aixterm color names' '
-+       color "12 13" "[94;105m"
-+'
-+
- test_expect_success '256 colors' '
-        color "254 bold 255" "[1;38;5;254;48;5;255m"
- '
+base-commit: 7a6a90c6ec48fc78c83d7090d6c1b95d8f3739c0
+-- 
+gitgitgadget
