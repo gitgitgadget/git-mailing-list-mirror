@@ -6,72 +6,82 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C481C282DD
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 19:36:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89BA2C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 19:41:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0769720842
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 19:36:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 46B1820842
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 19:41:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lS7UinaI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iP7P+aG8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728492AbgAJTg5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 14:36:57 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:56134 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727709AbgAJTg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 14:36:57 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 425744292F;
-        Fri, 10 Jan 2020 14:36:56 -0500 (EST)
+        id S1728660AbgAJTlM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 14:41:12 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59671 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727812AbgAJTlM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 14:41:12 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id E72D21DF9F;
+        Fri, 10 Jan 2020 14:41:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=nGfPZSbJ5QDulnmuR3/BKL/gxGM=; b=lS7Uin
-        aItoSqDCHBwKV51u8RbO5mXgFt+EYNhGtQULo/3aqZ/5efwYsLXi52+7HZb+Vn/h
-        6tl+StJ4DG0j/E2jvQfExu71LbwcrR+4s9CmreUrISA0FVbp5r5DVa8D7MgRJer4
-        cDokTDNGyBHR1Idna4GuVYVlJmN/m7Qc4exwU=
+        :content-type; s=sasl; bh=FCQKSpftzLDXKnXtPQjz1Mv9xu0=; b=iP7P+a
+        G8508bKBm/MGF0xAHCH/qmBWo4lfzsIV39guk5ZqOIWsNrrToXZxmDNd/PcEK+k0
+        q5WTa3W3kNQeX6ycreZPysN566oOO/2PYM+0G0nU/gHiQc+iA5qFvRroFojD1NrR
+        aiNOnufQu//jDnJEjtwvPaR2MUsXNt9wLTHXQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RB9d+2PaHTpJ0fFW6hm7FWOlzOt/H1sP
-        QcmZ2ci1wRLkNbIFNK9hK+51OC802dWECxLUt09q+U3upeA2M5LkE1pdNQKYDavu
-        EqUBO89h5LlmD6Tj1rIa9NlKQtTFgCippX6njjVw2jG826i0FpABXo1FWc78ZGrI
-        o262oegGd90=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 38E034292E;
-        Fri, 10 Jan 2020 14:36:56 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=NBHQRE5f2O3j1iMVqdv3NjjBTLNMGyNF
+        jcVFJdURCB9+gviaO55CFwg9wmhQVh//L80COaZ/JN/+Mqjq0ObIfb13yB1LljaA
+        Ks90M2BfOufGyAPL+LwNA3jI7Q6wpNxGRGrm860r9Ijp4eYYZFextIRoGRQkMdgs
+        +Lph1AuGnYc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id DF4321DF9E;
+        Fri, 10 Jan 2020 14:41:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2D44D4292D;
-        Fri, 10 Jan 2020 14:36:55 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 527A71DF9D;
+        Fri, 10 Jan 2020 14:41:09 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Wood <carlo@alinoe.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git submodule update  strange output behavior.
-References: <20200109192040.46aaa01e@hikaru>
-        <xmqqtv54zcik.fsf@gitster-ct.c.googlers.com>
-        <xmqq8smgz9as.fsf@gitster-ct.c.googlers.com>
-        <20200110101251.3b9f9332@hikaru>
-Date:   Fri, 10 Jan 2020 11:36:54 -0800
-In-Reply-To: <20200110101251.3b9f9332@hikaru> (Carlo Wood's message of "Fri,
-        10 Jan 2020 10:12:51 +0100")
-Message-ID: <xmqqblrbm7c9.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Erik Fastermann <erik@fastermann.de>, git@vger.kernel.org
+Subject: Re: Question about the pack OBJ_OFS_DELTA format
+References: <1032627506.120165.1578644787174@email.ionos.de>
+        <20200110095707.GA459765@coredump.intra.peff.net>
+Date:   Fri, 10 Jan 2020 11:41:08 -0800
+In-Reply-To: <20200110095707.GA459765@coredump.intra.peff.net> (Jeff King's
+        message of "Fri, 10 Jan 2020 04:57:07 -0500")
+Message-ID: <xmqq1rs7m757.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8EEFA720-33E0-11EA-8544-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 266CAC9C-33E1-11EA-A860-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Wood <carlo@alinoe.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> It seems to me that the other part of the problem is printing
-> this output for submodules when nothing (needed to be) is fetched.
+> The pack-format.txt file says:
+>
+>        offset encoding:
+>             n bytes with MSB set in all but the last one.
+>             The offset is then the number constructed by
+>             concatenating the lower 7 bit of each byte, and
+>             for n >= 2 adding 2^7 + 2^14 + ... + 2^(7*(n-1))
+>             to the result.
+>
+> but I think is missing two bits of information:
+>
+>   - the bytes are in most-significant to least-significant order, which
+>     IIRC is the opposite of the size varint
+>
+>   - each 7-bit byte sneaks in some extra data by implicitly adding "1"
+>     to all but the last byte
 
-Hmm, I am not sure if that is a reasonable expectation.  Would it be
-possible to tell if there is something that needs to be fetched
-without attempting to contact the other side?
+Isn't the latter mentioned in the paragraph you quoted?
