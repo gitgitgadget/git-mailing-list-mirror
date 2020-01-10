@@ -2,250 +2,272 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-12.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FED3C33CA2
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 13:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDD9C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 13:51:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CBEBC2077C
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 13:18:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ABA6D2077C
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 13:51:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cplbroBB"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="H6pplT/9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727581AbgAJNSp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 08:18:45 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34973 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727347AbgAJNSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 08:18:45 -0500
-Received: by mail-wm1-f68.google.com with SMTP id p17so1962939wmb.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 05:18:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=0c1CYTuL+8MSUZjdHmA8h5/X/Pd9/Vck71yroM5m3g4=;
-        b=cplbroBBCoGkV/Vkh3k8bI2PA/IAqlmzoHsH63XJCqMGD1geeZfQiu31HIews0beuA
-         sb6O78XySzLx6bn0blCx011X5JQE91ybthy/bezxJhENAeBd5hVGwBVWo4a9FHny7ADs
-         kiuy/ygOfMpAmOxhxHkjdbwDMo9RBg1NYn1wKZ3M1njlRUrkLx4LhfviBNDADgf47EY1
-         MhHGjdboP3WEkKP3LM31+dVccD1rM9PNHX9fWetpFfyUrOH+BH5x76DQWTAbj77sSDgd
-         9zwzPmDmUagFhh3Uez7XYcxrVYVvwbuCaUKfoyFPxboHtkVA7zcRUf1Uorbp3e8PMYc/
-         AxtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=0c1CYTuL+8MSUZjdHmA8h5/X/Pd9/Vck71yroM5m3g4=;
-        b=SOXHng5JwfXPS7SGMqpmFBzlkkkn7KNYqvToazTHzABjilBXVwMRIrsD/zZZ3unkEm
-         V/0EE69ryt6TRrXQd4OUe00z07FuwPBhypPwNpNPD4tk30putICLQUF9wRwe6tPv6Apm
-         om+kfLDwOTqEPFSPxFAOAgEJPogVrMsGpLIpsZU2tToZFIxic3fp6OnAxrFeZ+j2XOka
-         Mvd5maBFyQ2OVh+jPatrYuOT6aYG3e5JMCvks1KlKOicwwb8HXTHkXXG1BrNYrbHTYCl
-         O+tbnHJY5PwXPJRt1ymuK0IkjIsH4ZiME0ep14lpE3fxL7z0pZHnEX0hj+UqixsBaL4Z
-         GMEw==
-X-Gm-Message-State: APjAAAVnHE+Z64UMG40yoO9YUhEGgw4OluGtzn+gl2SAkCpcggf2JccX
-        //x6dxDZp/v+dSX2G46eoqs=
-X-Google-Smtp-Source: APXvYqwOm721OcqWIqn1iCx6Vsieb7RgeBlPhlp2vUWgWim3EgvemYbWj5qTPaPbNi4C/hMTYsQvyw==
-X-Received: by 2002:a05:600c:244:: with SMTP id 4mr4202775wmj.40.1578662323996;
-        Fri, 10 Jan 2020 05:18:43 -0800 (PST)
-Received: from szeder.dev (x4d0c4ac7.dyn.telefonica.de. [77.12.74.199])
-        by smtp.gmail.com with ESMTPSA id o15sm2173761wra.83.2020.01.10.05.18.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Jan 2020 05:18:43 -0800 (PST)
-Date:   Fri, 10 Jan 2020 14:18:40 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     marcandre.lureau@redhat.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] RFC: allow branch --edit-description during rebase
-Message-ID: <20200110131840.GG32750@szeder.dev>
-References: <20200110071929.119000-1-marcandre.lureau@redhat.com>
+        id S1727753AbgAJNvc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 08:51:32 -0500
+Received: from mout.gmx.net ([212.227.15.18]:57577 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727458AbgAJNvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 08:51:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1578664289;
+        bh=HF/7L592zPnPUE/Nrudo4rWDX6TcJfzFCBYwrxnMcJw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=H6pplT/93uJmGuszaB0SdNIo/Kia00OGmvM7NwNWCtHVqwWlVgYo2GjzlvdGM8b+z
+         1SahLD+iMk/lFUXHu8bZ8YXsx68VeYAiDUNdZmwFpiZcSEJV5H3VkiiEZ3p7pGw+6V
+         iiqwRT4Q+rJJ8U1hXwan3z0kIjuhMVEjcZHFfF9E=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MVNAr-1jILR93GTv-00SRQ6; Fri, 10
+ Jan 2020 14:51:28 +0100
+Date:   Fri, 10 Jan 2020 14:51:28 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ryan Zoeller via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Ryan Zoeller <rtzoeller@rtzoeller.com>
+Subject: Re: [PATCH] userdiff: add Julia to supported userdiff languages
+In-Reply-To: <pull.521.git.1578625810098.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001101449410.46@tvgsbejvaqbjf.bet>
+References: <pull.521.git.1578625810098.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200110071929.119000-1-marcandre.lureau@redhat.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Xtn++JShM1en5o4+DE441MsyFI/q7bZtHRQyI5RFVX/pzRSS525
+ 0VjFjEze/mcGglnaYd6zv3q/atK4GZuahTP3d9Ik+ZNpqKCpBz9pnK804CxL7Jxz53zYLHQ
+ 1VkrSXjHd9gCpHXyKVhOl8tyQgEWVD4YhV9StsyEz1ERa1eonZIVTD8QRM3IG+j9s7x3Js5
+ OmVDiCjgj0bx/bC0St3aA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Er+cme0DCDw=:K2O/NhlHTop9qzUTQYSLGd
+ XcotKKv2zzSpJEBwQT+wDJiphE9F+84oKSXPkFnMjQR8xhvXGPoRKUfE2sQLyVqNd805QxyAg
+ ogfMHDH7FAUOIIG2SYpPi6O1uiMiZBudLfv+GDZ1MuEWahOB0semI4LuqYsc4C1KWgZTOZvIS
+ MhhwLynOxGXL0j+fU9pBopBi7DigSji/HMpPba+iurAARjB0h2/thUhmExvVjdd11QPqAUKZm
+ QtVXm0E+9lfwXrmLdOqyZ0gE0L0y7hLr+9QWBs8Iqy1SWPLlqX0StjXaPJcJ1FV96pbfz0lA1
+ tF8oob60YEyZsh7tet8DqSfcsVXgLi66+S5h5ZCrOwTC2oevm0A033LOTjUyG2Ds2zzydpDkj
+ buBR8rVIhnfmP5V5yEUl9MG32JsRRmuc+BLPmns5GGSEycyUikH0j8q6GEEF9MewDPfZI8Xiy
+ Q9L2rBx0YnSj6j7ph4DhgzpmkKH5HyI9lwKe2vK+eG+s2gcZwvmputVU+RpdxhP5lDGCWsf92
+ KrRxA2AWjqCNngY35iiLCmS7aAefH1XG+1NDIlsrPEZwIZL7s5f6/tpCHZzrEGgskMJqfenIP
+ Gw8bC/f8TaKHAfEO3nDPXkOyfkRgPj4HT4oOBOnRlMwWmcxhWIZ/TpFbtbx9nkGbWwXRu/Q5I
+ q9XzdDwqO08uA7AV1WkrGM95JgkPFsEPFMcfzpNFcDWrHxnbg9QEMzTYHSBKQnF4+j+QfNMDf
+ 2+kjV4FSsR/eFOhV77PUw3OOaav4y2loHh5WQVsVPJACmis9ugj/5i9Jr8an333yy0HekLUle
+ Zi5ctpxyH1YHoC4LxFKztVmmF3ZflzYCYOfL6hlIRQWFeDbTpwh7REQXollS0aiaOb0j6KVWJ
+ 4sS4FOBUvqxsnoTrAgRqinvRjPwvBUcZntrEyUDIulDxiUa6ojIQaatnYu580A147OqkKXaQr
+ 1Bin98e25nDBLinrFofj7KbLge4TwrfZyKaTHs0LPaWlmZlL6vO+CefRWBo1RnfMPQPjQYsuN
+ 3ulHon6w7IZEkRDDmVq+Mjq7OEtBy4vAyp1QDKG6J6bNrwZQEMg/5o/hdaY3OFN/tWuKHwaMv
+ AxmR2gBv+BHcA4IKKLfWLbpZvWeYg/CWAahc/m2lAR5p8RB4hELSdGgZPvrVoOCkcbgDh8DC6
+ MBpEI9rWly4uNgTfr0MBz+kfr4k4bulpmQu0ca1jPFTFickSOakQtQGle2hWml7y1kizYo7sY
+ +Phn2I/snPolIeuiUvK1wuKlMVA6AYBnpdRnFvUNnQVWhuW23dxQ7okXTo7Y=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 11:19:29AM +0400, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> This patch aims to allow editing of branch description during a rebase.
-> 
-> A common use case of rebasing is to iterate over a series of patches
-> after receiving reviews. During the rebase, various patches will be
-> modified, and it is often requested to put a summary of the changes for
-> the next version in the cover letter ("v2: - fixed this, - changed
-> that.."). This helps the reviewer to focus on the difference with the
-> previous version.  Unfortunately, git branch --edit-description doesn't
-> allow yet to modify the content during a rebase, and forces the author
-> to use memory muscles to update the description after finishing the
-> rebase.
+Hi,
 
-That's not true, 'git branch --edit-description mybranch' already
-allows you to edit the branch description of the currently rebased
-branch (well, basically of any branch, really).
+On Fri, 10 Jan 2020, Ryan Zoeller via GitGitGadget wrote:
 
-So it's not really about allowing '--edit-description' during rebase,
-but choosing the default branch during rebase sensibly, and the
-subject line could be something like "branch: let '--edit-description'
-default to rebased branch during rebase", and the rest of the commit
-message should be updated accordingly.
-
-Having said that, I agree that defaulting to editing the description
-of the rebased branch without an explicit branchname argument makes
-sense.  Even the git bash prompt shows the name of the rebased branch,
-and then
-
-  ~/src/git (mybranch|REBASE-i 1/2)$ git branch --edit-description 
-  fatal: Cannot give description to detached HEAD
-
-looks quite unhelpful.
-
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Add xfuncname and word_regex patterns for Julia[1],
+> which is a language used in numerical analysis and
+> computational science.
+>
+> The default behavior for xfuncname did not allow
+> functions to be indented, nor functions to have a
+> macro applied, such as @inline or @generated.
+>
+> [1]: https://julialang.org
+>
+> Signed-off-by: Ryan Zoeller <rtzoeller@rtzoeller.com>
 > ---
->  builtin/branch.c | 19 ++++++++++++++++---
->  worktree.c       | 19 +++++++++++++++++++
->  worktree.h       |  7 +++++++
+>     userdiff: add Julia to supported userdiff languages
+>
+>     Add xfuncname and word_regex patterns for Julia1 [https://julialang.=
+org]
+>     , which is a language used in numerical analysis and computational
+>     science.
+>
+>     The default behavior for xfuncname did not allow functions to be
+>     indented, nor functions to have a macro applied, such as @inline or
+>     @generated.
+>
+>     Signed-off-by: Ryan Zoeller rtzoeller@rtzoeller.com
+>     [rtzoeller@rtzoeller.com]
 
-Tests? :)
+Sorry about that. In my recent work to fold in the cover letter into
+single-patch contributions, it was mentioned that this could come back to
+bite us: By default, GitHub uses the commit message of single-commit PRs
+as PR description, and if contributors do not change that, it essentially
+repeats the commit message.
 
-I think it's worth checking '--edit-description' while rebasing a
-branch, while rebasing a detached HEAD, and while rebasing in a
-different worktree.
+Sadly, I won't be able to justify working even more on GitGitGadget this
+week (it took a sizable chunk out of my time budget and I have to make up
+for that first).
 
->  3 files changed, 42 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index d8297f80ff..f7122d31d6 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -613,6 +613,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  	int icase = 0;
->  	static struct ref_sorting *sorting = NULL, **sorting_tail = &sorting;
->  	struct ref_format format = REF_FORMAT_INIT;
-> +	struct wt_status_state state;
+Ciao,
+Johannes
 
-This variable is only used for '--edit-description', and even then only
-when on a detached head; please limit its scope.
-
->  	struct option options[] = {
->  		OPT_GROUP(N_("Generic options")),
-> @@ -664,6 +665,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  
->  	setup_ref_filter_porcelain_msg();
->  
-> +	memset(&state, 0, sizeof(state));
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-521%2F=
+rtzoeller%2Fjulia_userdiff-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-521/rtzoe=
+ller/julia_userdiff-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/521
+>
+>  Documentation/gitattributes.txt |  2 ++
+>  t/t4018-diff-funcname.sh        |  1 +
+>  t/t4018/julia-function          |  5 +++++
+>  t/t4018/julia-indented-function |  8 ++++++++
+>  t/t4018/julia-inline-function   |  5 +++++
+>  t/t4018/julia-macro             |  5 +++++
+>  t/t4018/julia-mutable-struct    |  5 +++++
+>  t/t4018/julia-struct            |  5 +++++
+>  userdiff.c                      | 15 +++++++++++++++
+>  9 files changed, 51 insertions(+)
+>  create mode 100644 t/t4018/julia-function
+>  create mode 100644 t/t4018/julia-indented-function
+>  create mode 100644 t/t4018/julia-inline-function
+>  create mode 100644 t/t4018/julia-macro
+>  create mode 100644 t/t4018/julia-mutable-struct
+>  create mode 100644 t/t4018/julia-struct
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribut=
+es.txt
+> index 508fe713c4..d39dc727e3 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -824,6 +824,8 @@ patterns are available:
+>
+>  - `java` suitable for source code in the Java language.
+>
+> +- `julia` suitable for source code in the Julia language.
 > +
->  	memset(&filter, 0, sizeof(filter));
->  	filter.kind = FILTER_REFS_BRANCHES;
->  	filter.abbrev = -1;
-> @@ -745,13 +748,21 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  		string_list_clear(&output, 0);
->  		return 0;
->  	} else if (edit_description) {
-> -		const char *branch_name;
-> +		const char *branch_name = NULL;
->  		struct strbuf branch_ref = STRBUF_INIT;
->  
->  		if (!argc) {
-> -			if (filter.detached)
-> +		    if (filter.detached) {
-
-Please use tabs for indentation.
-
-> +			const struct worktree *wt = worktree_get_current();
-> +
-> +			if (wt_status_check_rebase(wt, &state)) {
-
-I think passing NULL as the 'wt' argument means "check the current
-worktree".  If that's indeed the case then you don't have to add that
-worktree_get_current() function at all.
-
-> +				branch_name = state.branch;
-> +			}
-> +
-> +			if (!branch_name)
->  				die(_("Cannot give description to detached HEAD"));
-> -			branch_name = head;
-> +		    } else
-> +			    branch_name = head;
->  		} else if (argc == 1)
->  			branch_name = argv[0];
->  		else
-> @@ -851,5 +862,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
->  	} else
->  		usage_with_options(builtin_branch_usage, options);
->  
-> +	free(state.branch);
-> +	free(state.onto);
->  	return 0;
->  }
-> diff --git a/worktree.c b/worktree.c
-> index 5b4793caa3..0318c6f6a6 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -396,6 +396,25 @@ int is_worktree_being_bisected(const struct worktree *wt,
->  	return found_rebase;
->  }
->  
-> +const struct worktree *worktree_get_current(void)
-> +{
-> +	static struct worktree **worktrees;
-> +	int i = 0;
-> +
-> +	if (worktrees)
-> +		free_worktrees(worktrees);
-> +	worktrees = get_worktrees(0);
-
-I'm not sure about this static worktrees array and how it is handled
-here.  I mean, can the current worktree change mid-process?
-
-(Though this is moot if this function turns out to be unnecessary, as
-mentioned above.)
-
-> +	for (i = 0; worktrees[i]; i++) {
-> +		struct worktree *wt = worktrees[i];
-> +
-> +		if (wt->is_current)
-> +			return wt;
-> +	}
-> +
-> +	return NULL;
-> +}
-> +
->  /*
->   * note: this function should be able to detect shared symref even if
->   * HEAD is temporarily detached (e.g. in the middle of rebase or
-> diff --git a/worktree.h b/worktree.h
-> index caecc7a281..4fe2b78d24 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -91,6 +91,13 @@ void free_worktrees(struct worktree **);
->  const struct worktree *find_shared_symref(const char *symref,
->  					  const char *target);
->  
-> +
-> +/*
-> + * Return the current worktree. The result may be destroyed by the
-> + * next call.
-> + */
-> +const struct worktree *worktree_get_current(void);
-> +
->  /*
->   * Similar to head_ref() for all HEADs _except_ one from the current
->   * worktree, which is covered by head_ref().
-> 
+>  - `matlab` suitable for source code in the MATLAB and Octave languages.
+>
+>  - `objc` suitable for source code in the Objective-C language.
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index c0f4839543..d4613eb7d2 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -38,6 +38,7 @@ diffpatterns=3D"
+>  	golang
+>  	html
+>  	java
+> +	julia
+>  	matlab
+>  	objc
+>  	pascal
+> diff --git a/t/t4018/julia-function b/t/t4018/julia-function
+> new file mode 100644
+> index 0000000000..a2eab83c27
+> --- /dev/null
+> +++ b/t/t4018/julia-function
+> @@ -0,0 +1,5 @@
+> +function RIGHT()
+> +    # A comment
+> +    # Another comment
+> +    return ChangeMe
+> +end
+> diff --git a/t/t4018/julia-indented-function b/t/t4018/julia-indented-fu=
+nction
+> new file mode 100644
+> index 0000000000..2d48aabcdb
+> --- /dev/null
+> +++ b/t/t4018/julia-indented-function
+> @@ -0,0 +1,8 @@
+> +function outer_function()
+> +    function RIGHT()
+> +        for i =3D 1:10
+> +            print(i)
+> +        end
+> +        # ChangeMe
+> +    end
+> +end
+> diff --git a/t/t4018/julia-inline-function b/t/t4018/julia-inline-functi=
+on
+> new file mode 100644
+> index 0000000000..5806f224fb
+> --- /dev/null
+> +++ b/t/t4018/julia-inline-function
+> @@ -0,0 +1,5 @@
+> +@inline function RIGHT()
+> +    # Prints Hello, then something else.
+> +    println("Hello")
+> +    println("ChangeMe")
+> +end
+> diff --git a/t/t4018/julia-macro b/t/t4018/julia-macro
+> new file mode 100644
+> index 0000000000..1d18bc2750
+> --- /dev/null
+> +++ b/t/t4018/julia-macro
+> @@ -0,0 +1,5 @@
+> +macro RIGHT()
+> +    # First comment
+> +    # Second comment
+> +    return :( println("ChangeMe") )
+> +end
+> diff --git a/t/t4018/julia-mutable-struct b/t/t4018/julia-mutable-struct
+> new file mode 100644
+> index 0000000000..db82017ba0
+> --- /dev/null
+> +++ b/t/t4018/julia-mutable-struct
+> @@ -0,0 +1,5 @@
+> +mutable struct RIGHT
+> +    x
+> +    y::Int
+> +    ChangeMe
+> +end
+> diff --git a/t/t4018/julia-struct b/t/t4018/julia-struct
+> new file mode 100644
+> index 0000000000..d3d2bda8cb
+> --- /dev/null
+> +++ b/t/t4018/julia-struct
+> @@ -0,0 +1,5 @@
+> +struct RIGHT
+> +    x
+> +    y::Int
+> +    ChangeMe
+> +end
+> diff --git a/userdiff.c b/userdiff.c
+> index efbe05e5a5..b5e938b1c2 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -79,6 +79,21 @@ PATTERNS("java",
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=3D!]=3D"
+>  	 "|--|\\+\\+|<<=3D?|>>>?=3D?|&&|\\|\\|"),
+> +PATTERNS("julia",
+> +	 "^[ \t]*(((mutable[ \t]+)?struct|(@.+[ \t])?function|macro)[ \t].*)$"=
+,
+> +	 /* -- */
+> +	 /* Binary literals */
+> +	 "[-+]?0b[01]+"
+> +	 /* Hexadecimal literals */
+> +	 "|[-+]?0x[0-9a-fA-F]+"
+> +	 /* Real and complex literals */
+> +	 "|[-+0-9.e_(im)]+"
+> +	 /* Should theoretically allow Unicode characters as part of
+> +	  * a word, such as U+2211. However, Julia reserves most of the
+> +	  * U+2200-U+22FF range (as well as others) as user-defined operators,
+> +	  * therefore they are not handled in this regex. */
+> +	 "|[a-zA-Z_][a-zA-Z0-9_!]*"
+> +	 "|--|\\+\\+|<<=3D?|>>>=3D?|>>=3D?|\\\\\\\\=3D?|//=3D?|&&|\\|\\||::|->=
+|[-+*/<>%^&|=3D!$]=3D?"),
+>  PATTERNS("matlab",
+>  	 /*
+>  	  * Octave pattern is mostly the same as matlab, except that '%%%' and
+>
 > base-commit: 042ed3e048af08014487d19196984347e3be7d1c
-> prerequisite-patch-id: 9b3cf75545ec4a1e702c8c2b2aae8edf241b87f2
-> -- 
-> 2.25.0.rc1.20.g2443f3f80d.dirty
-> 
+> --
+> gitgitgadget
+>
