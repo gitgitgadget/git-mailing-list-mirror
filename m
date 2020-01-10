@@ -1,160 +1,138 @@
-Return-Path: <SRS0=y4cH=26=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32F93C282DD
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BDE66C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 00:08:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 02D4F2073A
-	for <git@archiver.kernel.org>; Thu,  9 Jan 2020 23:47:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 894A22077C
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 00:08:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jvFhcg0j"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mI1Owmpw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729464AbgAIXrv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 9 Jan 2020 18:47:51 -0500
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:40985 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgAIXru (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Jan 2020 18:47:50 -0500
-Received: by mail-vk1-f194.google.com with SMTP id p191so92178vkf.8
-        for <git@vger.kernel.org>; Thu, 09 Jan 2020 15:47:50 -0800 (PST)
+        id S1730004AbgAJAGY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 9 Jan 2020 19:06:24 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41438 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729983AbgAJAGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Jan 2020 19:06:23 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so76403wrw.8
+        for <git@vger.kernel.org>; Thu, 09 Jan 2020 16:06:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3T3yrMDWd/f3NkGOQMZAtDGq8Igin5jHRC4KnPZmy00=;
-        b=jvFhcg0jyf4nQJPJzJHd4OZ/uUvgV8PPcwkY63jjGlPbIXPch1cDDArlI5+jHdQkHM
-         5DNB2wJdkRlcDYAN0ziA1Xnp8ODou83f5W1e5gyh4to1i0mzn1Yqt5624AlviQjciOY0
-         sjQQoybQYV46N6BUE+9MIu6+wtuqGLxRciX2uP1mmck9Tgmll+M+Ja2lIMA22zlUdNGO
-         J78mnBEkA+9RKGOBhvKsuPVv8H5r8ab9ycV8XH/PRW7/kdUleQrP919loX6309RXkVC6
-         IMcO9WxCEH1ENneyxGGc8ROaqBIkb0y8wVQPZpOSVtF1NHtkEsLUm+B1Gr91CMcjebL0
-         5Shg==
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AVDdHS+gwoOtZzx5UUGOp5edCR8+HzN4ChIUUVkIuBs=;
+        b=mI1OwmpwsomuUhOHJpjMergU2UwN2xl/2ev5WPy6KHm3qBokNa6jsfy0bg9GATI1I2
+         F7sW3ZUiedVliMK5XWRCKtRgoP9zuyOWwRgwwdtxN/T4sKeK8KJAqeZ5GNjCAKfD9hWw
+         dZRI4mDfTQJClputXMs+k4kxwl0DBD/X1kEBtwzKnb4KMF8wqQ6ZG9sei0y7b/nEMD7/
+         m3c8w+pqjGl6jnZPXPPBmDubcEDrps4cEABGD8HnsVwiSicoA6OIWV7x2bJfw3I/XtE5
+         jE280uHWrxqov/tveO3slmhcledNIeerHeS7tJ1ihSDlI3hikJQ1uqT2XSKJ2cNECNBP
+         2XhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3T3yrMDWd/f3NkGOQMZAtDGq8Igin5jHRC4KnPZmy00=;
-        b=Sa10TfnMg2fvwLYLp1jvn5no4xCqrrOA2TdYwnYIO5MxRx0v4B5LO6L8jVAsDgKG03
-         IaqPN7rp6wJMnvZTWh/ceGjfeom+fSXL7GkvGG0KkYNbAXD+aYnQJDgQB+QDuwfMBeZu
-         zP5Tvuu6M/0KStDcPCS/0ToxI0fPhlBPFKnEygcF01uP4E5Bk7n2356FjNQRDkSlmZa2
-         0/ODu87OVZI+tOJsz1FOqFGFnQHobzufgseIzu5XV4jEYP+G+RkD8ovET7E1zEciVQf2
-         mH18RVux1MmcZXlUfDSZuO9uz9wgMAuwbkCLGfFjH8nGpewmfjNiEr8AJQoqb6YoBEYI
-         i6fA==
-X-Gm-Message-State: APjAAAUxLjsWTLkm0eYlFQ9pl1CqA75wqyuN2nghXt39VRnsUjbezRcL
-        qlBl1jtmZTU84UR4cDJZGSoohogmmdS7JxG8z5Q=
-X-Google-Smtp-Source: APXvYqyH6BNdx0d3ZGzVIdHV29hPt5i8Tga6C0efkI+aO8bDV4MXKcj6MoA1XhkaYRi805HqZnDRBnh0JiDhxP8NSTY=
-X-Received: by 2002:a1f:94c1:: with SMTP id w184mr136303vkd.40.1578613669686;
- Thu, 09 Jan 2020 15:47:49 -0800 (PST)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AVDdHS+gwoOtZzx5UUGOp5edCR8+HzN4ChIUUVkIuBs=;
+        b=Kg09XhzGfXUysLBHaGkjX7rjm+p2q4wDeEG2GIUqwRJwcA/mJhcfGxMIs9/P3bLmWJ
+         dwt2JONuNzSj8UVVXK5NeY0ZzNby+1hrY0ILfFm6BF6LTxE2Fdvpg6HeuncWwxlDLZne
+         4O9iF8cp2iGFkL0ztN0vZK+jCBA3u3i6fwBOXVg152mvC2r+rh/FQ5YA1WGyiQb7rC+z
+         qprqnXhxAyxp+UyHtPC4GN3kmD/uqg7grRLJKR9+BrdzSjWA4nz3rFoIiRuq1qHIPdhV
+         vsBsVg/RYxrMSah4DX780WJpgFzUyckZa1ByEjr2X87Lf34YVfMEYWg2patLham7X3FR
+         M7mQ==
+X-Gm-Message-State: APjAAAUAW0GZ9yVvFFHl++OKIelhgrDjzqrF8qvrcp2GtavfiTdg88kS
+        oR+1gDplSwds2QepH1rS36s=
+X-Google-Smtp-Source: APXvYqxO/Hnqz9n8+MJDGgPmmTgOS5RVJS7lrINEroP2kkxghITw4FMBYeu+nrpaCMy5ipdqeVCpng==
+X-Received: by 2002:a5d:4acb:: with SMTP id y11mr99808wrs.106.1578614781849;
+        Thu, 09 Jan 2020 16:06:21 -0800 (PST)
+Received: from erosca (ipb218f5ef.dynamic.kabel-deutschland.de. [178.24.245.239])
+        by smtp.gmail.com with ESMTPSA id p18sm247541wmg.4.2020.01.09.16.06.20
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 09 Jan 2020 16:06:20 -0800 (PST)
+From:   Eugeniu Rosca <roscaeugeniu@gmail.com>
+X-Google-Original-From: Eugeniu Rosca <rosca.eugeniu@gmail.com>
+Date:   Fri, 10 Jan 2020 01:06:03 +0100
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Eugeniu Rosca <erosca@de.adit-jv.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+Subject: Re: Unreliable 'git rebase --onto'
+Message-ID: <20200110000603.GA19040@erosca>
+References: <20200108214349.GA17624@lxhi-065.adit-jv.com>
+ <CABPp-BHsyMOz+hi7EYoAnAWfzms7FRfwqCoarnu8H+vyDoN6SQ@mail.gmail.com>
+ <20200109105307.GA1349@lxhi-065.adit-jv.com>
+ <CABPp-BFiDNb18m8geTCxKLXg0fOd0DS1dWRVWCfnTG0suwGRHg@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.478.git.1576631464.gitgitgadget@gmail.com>
- <pull.478.v2.git.1578565001.gitgitgadget@gmail.com> <92ce9b782429248197bb87cfa11c89082304218f.1578565002.git.gitgitgadget@gmail.com>
- <xmqqd0bsz9xm.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0bsz9xm.fsf@gitster-ct.c.googlers.com>
-From:   Matt Rogers <mattr94@gmail.com>
-Date:   Thu, 9 Jan 2020 18:47:36 -0500
-Message-ID: <CAOjrSZviSf+b6-MMavyAntcp0MfK91N-cZEyJYiwJ8OqEbgXYQ@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] config: add '--show-scope' to print the scope of a
- config value
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABPp-BFiDNb18m8geTCxKLXg0fOd0DS1dWRVWCfnTG0suwGRHg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > +     switch (scope) {
-> > +     case CONFIG_SCOPE_LOCAL:
-> > +             return "local";
-> > +     case CONFIG_SCOPE_GLOBAL:
-> > +             return "global";
-> > +     case CONFIG_SCOPE_SYSTEM:
-> > +             return "system";
-> > +     case CONFIG_SCOPE_WORKTREE:
-> > +             return "worktree";
-> > +     case CONFIG_SCOPE_COMMAND:
-> > +             return "command";
-> > +     case CONFIG_SCOPE_SUBMODULE:
-> > +             return "submodule";
-> > +     default:
-> > +             return "unknown";
->
-> Makes me wonder if this wants to be done via a table, which would
-> later allow a parser to map in the other direction, taking a string
-> and returning the corresponding enum, more easily (imagine a yet to
-> be invented feature to "list config settings for only this scope").
+Hi Elijah,
 
-I was thinking the same but then I realized such an option already exists,
---local and company.
+On Thu, Jan 09, 2020 at 10:05:52AM -0800, Elijah Newren wrote:
+> On Thu, Jan 9, 2020 at 2:53 AM Eugeniu Rosca <erosca@de.adit-jv.com> wrote:
+> > Some years ago I was hit by 'git merge' producing slightly different
+> > results compared to 'git rebase --onto' and 'git cherry-pick A..B'
+> > (maybe I can come up with a reproduction scenario for that too).
+> 
+> If you can, I'd be interested to see it and take a look.  I'd normally
+> assume it was just some case where A..B included "evil" merge commits
+> (merge commits that made additional changes not part of the actual
+> merging) since rebasing or cherry-picking such a range would exclude
+> the merge commits and thus drop those changes -- but you identified a
+> real bug with the default rebase backend so I'm interested to see if
+> you happen to have more bugs I should know about.
 
->
-> > +     }
-> > +}
-> > +
-> > +static void show_config_scope(struct strbuf *buf) {
-> > +     const char term = end_nul ? '\0' : '\t';
-> > +     const char *scope = scope_to_string(current_config_scope());
-> > +
-> > +     strbuf_addstr(buf, N_(scope));
-> > +     strbuf_addch(buf, term);
-> > +}
-> > +
-> >  static int show_all_config(const char *key_, const char *value_, void *cb)
-> >  {
-> > -     if (show_origin) {
-> > +     if (show_origin || show_scope) {
-> >               struct strbuf buf = STRBUF_INIT;
-> > -             show_config_origin(&buf);
-> > +             if (show_scope)
-> > +                     show_config_scope(&buf);
-> > +             if (show_origin)
-> > +                     show_config_origin(&buf);
-> >               /* Use fwrite as "buf" can contain \0's if "end_null" is set. */
-> >               fwrite(buf.buf, 1, buf.len, stdout);
-> >               strbuf_release(&buf);
-> > @@ -213,6 +245,8 @@ struct strbuf_list {
-> >
-> >  static int format_config(struct strbuf *buf, const char *key_, const char *value_)
-> >  {
-> > +     if (show_scope)
-> > +             show_config_origin(buf);
-> >       if (show_origin)
-> >               show_config_origin(buf);
->
-> Shouldn't one of these show scope instead of origin?  I wonder how
-> the tests I see later in the patch could have passed with this.
->
+Here is a _simplified_ scenario to get a totally unexpected result from
+'git merge' (initially reproduced years ago, but still happening on
+2.25.0.rc2):
 
-Oof, that was a blunder... I think this passes the tests because none of them
-actually hits `format_config()` only `show_all_config()` so I'll definitely add
-a test case for this. (and fix it while I'm at it)
+   ## Preparation
+0. git --version
+   git version 2.25.0.rc2
+1. git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+2. git remote add linux-stable https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+3. git fetch linux-stable
 
-> > diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-> > index 78bbb9eb98..aae2c6fc9e 100644
-> > --- a/t/helper/test-config.c
-> > +++ b/t/helper/test-config.c
-> > @@ -48,8 +48,10 @@ static const char *scope_name(enum config_scope scope)
-> >               return "repo";
-> >       case CONFIG_SCOPE_WORKTREE:
-> >               return "worktree";
-> > +     case CONFIG_SCOPE_SUBMODULE:
-> > +             return "submodule";
-> >       case CONFIG_SCOPE_COMMAND:
-> > -             return "command";
-> > +             return "cmdline";
->
-> Oh???
->
+   # Reproduction
+4. git checkout f7a8e38f07a1
+5. git merge --no-edit e18da11fc0f959
+   ## Merge v4.4.3 commit
+   https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=e18da11fc0f959
+   which is a linux-stable backport of vanilla v4.5-rc1 commit
+   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=f7a8e38f07a1
+   the latter being checked out at step 4.
 
-I definitely got a little too excited to get this patch in, so I
-definitely apologize for that,
-but thanks for the review.
+6. git show HEAD
+   ## Inspect the _automatic_ conflict resolution performed by git in
+   drivers/mtd/nand/nand_base.c. Git decided to integrate e18da11fc0f959
+   alongside f7a8e38f07a1, while essentially they are the same commit.
+   We end up with two times commit f7a8e38f07a1.
+
+What do you think about that?
+
+> Unfortunately, you should note that git-2.25 is going to have the same
+> bug you reported; there are still some loose ends with my series to
+> make -m the default, and the 2.25 release is expected within a few
+> days, so my change of default won't happen until 2.26.  (That series
+> would have needed to be completed several weeks ago for it to go into
+> 2.25).
+
+Thanks for this piece of information and for the time/effort spent!
 
 -- 
-Matthew Rogers
+Best Regards,
+Eugeniu
