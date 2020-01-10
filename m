@@ -1,71 +1,114 @@
 Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-X-Spam-Level: **
-X-Spam-Status: No, score=2.6 required=3.0 tests=CHARSET_FARAWAY_HEADER,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A277DC33C99
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CEEC33CA2
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:37:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 679222072E
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:29:10 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="tHKR8yvI"
+	by mail.kernel.org (Postfix) with ESMTP id 9675C20721
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:37:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731536AbgAJG3J (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 01:29:09 -0500
-Received: from pv50p00im-ztbu10021601.me.com ([17.58.6.57]:39751 "EHLO
-        pv50p00im-ztbu10021601.me.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1731520AbgAJG3J (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Jan 2020 01:29:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-        s=1a1hai; t=1578637748;
-        bh=YUEodzewJvJfP3loZ52EKOhGYB5FDSCkNcJ4d4jLuwU=;
-        h=From:To:Subject:Date:Message-ID:Content-Type;
-        b=tHKR8yvISS8ueAMHycjN8bi9c9wI4ii/GrVHf77d6ZFV3ZDn5TTV73dod/7vDdjO2
-         JW1KvDM9mrFUyGnOKq58FlmrLw3oDN13IYvf9BGaCdaW1zI/mEsPQRMdrI1r+IIO5C
-         zo3UPhSsAEm+KPi5pDmwFq0eYSbf/0K946F95aNVz/8Y5DfEDo/BrxCqBSqf9ELyMm
-         +vL8C9JGb7Z5AC3NaBPK4X24Vp17QLZS6Kd1TePJrnYUzHsQjyNl5hyPTlLwFXyWz7
-         1dm88npA/jLc3NTx+EEAKH3Yomkuh9YPSXleVyBsI08HXWVp150389owHUJvdPXSL+
-         9Hf1aMUQyAL9g==
-Received: from DESKTOPII84LO5 (unknown [114.216.84.200])
-        by pv50p00im-ztbu10021601.me.com (Postfix) with ESMTPSA id E29576E0B21
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 06:29:07 +0000 (UTC)
-From:   =?gb2312?B?s8LN+8rm?= <object_oriented@icloud.com>
-To:     <git@vger.kernel.org>
-Subject: How to use git to add the modification of each commit to the existing folder in a patch way, because the project is large, using clone or pull is very time-consuming and network dependent?
-Date:   Fri, 10 Jan 2020 14:29:03 +0800
-Message-ID: <002201d5c77f$437f06f0$ca7d14d0$@icloud.com>
+        id S1731596AbgAJGhm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 01:37:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33324 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731455AbgAJGhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 01:37:42 -0500
+Received: (qmail 2077 invoked by uid 109); 10 Jan 2020 06:37:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Jan 2020 06:37:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22951 invoked by uid 111); 10 Jan 2020 06:43:31 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Jan 2020 01:43:31 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 10 Jan 2020 01:37:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
+Message-ID: <20200110063741.GA409153@coredump.intra.peff.net>
+References: <20200108023127.219429-1-emilyshaffer@google.com>
+ <20200108071525.GB1675456@coredump.intra.peff.net>
+ <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
+ <20200108193833.GD181522@google.com>
+ <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
+ <20200109075250.GA3978837@coredump.intra.peff.net>
+ <20200109224641.GF181522@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="gb2312"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 15.0
-Thread-Index: AdXHfxpx2IsbG7ERSp+h//YeJptyrw==
-Content-Language: zh-cn
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2020-01-10_01:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=13 malwarescore=0
- phishscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxscore=0
- mlxlogscore=558 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1908290000 definitions=main-2001100054
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200109224641.GF181522@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for your attention.
+On Thu, Jan 09, 2020 at 02:46:41PM -0800, Emily Shaffer wrote:
 
-How to use git to add the modification of each commit to the existing folder
-in a patch way, because the project is large, using clone or pull is very
-time-consuming and network dependent?
+> > Perhaps. The integrity check only protects against an index that was
+> > modified after the fact, not one that was generated by a buggy Git. I'm
+> > not sure we know how the index that led to this patch got into this
+> > state (though it sounds like Emily has a copy and could check the hash
+> > on it), but other cache-tree segfault I found recently was with an index
+> > with an intact integrity hash.
+> 
+> Yeah, I can do that, although I'm not sure how. The index itself is very
+> small - it only contains one file and one tree extension - so I'll go
+> ahead and paste some poking and prodding, and if it's not what you
+> wanted then please let me know what else to run.
 
-Now,there is a linux kernel in my pc, and a branch of linux kernel in
-github, I want to synchronize changes from remote repositories to my local
-linux kernel.
-And the local linux kernel is downloaded in zip format not in git mode. So,
-Is there exists some method to do that.
+I was thinking you would run something like:
 
+  size=$(stat --format=%s "$file")
+  actual=$(head -c $(($size-20)) "$file" | sha1sum | awk '{print $1}')
+  expect=$(xxd -s -20 -g 20 -c 20 "$file" | awk '{print $2}')
+  if test "$actual" = "$expect"; then
+          echo "OK ($actual)"
+  else
+          echo "FAIL ($actual != $expect)"
+  fi
+
+to manually check the sha1. But...
+
+>   $ g fsck --cache
+>   Checking object directories: 100% (256/256), done.
+>   Checking objects: 100% (20/20), done.
+>   broken link from  commit 153a9a100eae7fdba5989ce39a5dd1782075517f
+>                 to  commit cca7ecaa5d8c398f41bfec7938cc6a526803579b
+>   broken link from  commit 7d6bb91e31d18eadfaf855a9fb7ad6ba81b8b6d9
+>                 to  commit 03087a617bfe55f862cb1ef43273a2bd08e8b6d6
+>   missing commit 03087a617bfe55f862cb1ef43273a2bd08e8b6d6
+>   missing commit cca7ecaa5d8c398f41bfec7938cc6a526803579b
+>   dangling commit 5e2c635433bc46b13061b276e481f63b1f6642c8
+
+...fsck would have reported a problem there, since we explicitly kept
+the check there in a33fc72fe9 (read-cache: force_verify_index_checksum,
+2017-04-14).
+
+And just to be double-sure, I used this:
+
+>   $ hexdump -C .git/index
+>   00000000  44 49 52 43 00 00 00 02  00 00 00 01 5d 89 5e 22  |DIRC........].^"|
+>   00000010  23 bf a3 c4 5d 89 5e 22  23 bf a3 c4 00 00 fe 02  |#...].^"#.......|
+>   00000020  02 c8 f5 83 00 00 81 a4  00 06 c1 dc 00 01 5f 53  |.............._S|
+>   00000030  00 00 06 b3 78 88 a4 f4  22 34 7d ad b0 c4 73 0f  |....x..."4}...s.|
+>   00000040  c5 bc f6 ea 1d 2d f0 3a  00 09 52 45 41 44 4d 45  |.....-.:..README|
+>   00000050  2e 6d 64 00 54 52 45 45  00 00 00 3a 00 31 37 20  |.md.TREE...:.17 |
+>   00000060  31 0a da 7f 67 25 40 7d  4e ce 9f d3 72 ce 4c e8  |1...g%@}N...r.L.|
+>   00000070  40 6d 5d ad e9 79 67 69  74 6c 69 6e 74 00 34 20  |@m]..ygitlint.4 |
+>   00000080  30 0a 93 63 25 17 69 e6  d6 92 78 97 55 4b 0f 8b  |0..c%.i...x.UK..|
+>   00000090  ff a0 e8 2d 6d 71 32 d1  69 fc f2 38 42 f8 5a 6e  |...-mq2.i..8B.Zn|
+>   000000a0  05 35 d6 94 41 c0 9f c7  ba 43                    |.5..A....C|
+>   000000aa
+
+to reconstruct the file and check its sha1, and indeed it is fine.
+
+So this bogus index was probably actually created by Git, not an
+after-the-fact byte corruption.
+
+-Peff
