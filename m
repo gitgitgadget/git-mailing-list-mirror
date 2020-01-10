@@ -2,181 +2,202 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5C79C282DD
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 14:44:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BBA8C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 15:02:59 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9022F2072E
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 14:44:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C70382072E
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 15:02:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nv0qXq8/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHw7ZNFr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727965AbgAJOoe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 09:44:34 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:32841 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727951AbgAJOoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 09:44:34 -0500
-Received: by mail-wr1-f68.google.com with SMTP id b6so2079968wrq.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 06:44:32 -0800 (PST)
+        id S1728239AbgAJPC6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 10:02:58 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51728 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727892AbgAJPC5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 10:02:57 -0500
+Received: by mail-wm1-f68.google.com with SMTP id d73so2345732wmd.1
+        for <git@vger.kernel.org>; Fri, 10 Jan 2020 07:02:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=njX4dr0QdwANDsGEzACB+3YeQ06jm4KGYHQOb3fsNLc=;
-        b=Nv0qXq8/6KFadybAmcAjcvKojBJiqwjNsazHpqpypHKpCPWExbrsWHrvjz25BG+Vk1
-         ECHesxdKQdELyoB8ETj1FQoG0Uuu6bvds3vnN9XAgQctNyW7nUhgh89idHnyUhhlSScp
-         bRREUjgNPYKOKdaIooBcaLZIXIbSJcpQD5JxpslozbTiwC7/nYyfqFbcXGfbr5/MGsWk
-         tO/FQgWkL0n0oMJhRGU4cqP3ZPf8P13Z0fYPGQm3qnf+3C6ToMvH2e6Cp9CdXQuEd+Po
-         0YOi1t0jpAsA8IP+0xCc6pUkng9L2AtiqfUqg+GF/4GaRSoxwzHUymxjYeMWko7bEp9Y
-         isCg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uszohy38i+KvRLgodXF6V3wE6ioCd1hyPpoa/yQrqHA=;
+        b=VHw7ZNFrvo4gbfGSl7j/OtyI/pbwyyhwrRBUnG3mb3PnS3voj/UDTPfdNhtxxM3AEn
+         BkDa4joyandS5OESUEktONIAmB9+dz2mX0SnOMyEEzcglG9EeWv2cOulPPT+4zXvNWCw
+         +yr4zKS8H8IBfDMCZL6I+MDWgi4Y6q2hdAdToRQle5jqWMsUuHvf5qESbvumJ7hEkpiY
+         HF/XdyU1cXZo1fE5ytjz64ioJRkczTZj9eXTr2m+wSG8WWKnE8ZDsu/QdgbCT05Tx0be
+         UYu7UM4Pnt6mUyon452WTPn1450Js3qH976LXch1OSJRQNSatRe3pDcZ0K1cboziR/rB
+         2LIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=njX4dr0QdwANDsGEzACB+3YeQ06jm4KGYHQOb3fsNLc=;
-        b=Q7xmC8aocDL1FsltK9Oh4I5VMOnwzmRQquEfBS6d0Q2bOt9HtIvFX+NreEy2jq8eB7
-         ZBdGMj/k+o1qAo1VTIEbNu61oaLYifqmxKRJmYt0OyDPEld1slL10gXsExNyfy1VKxZU
-         A6vf5SXNO/kZp8kepLo4EPoWyP1suMtqV+VkSfWpPBkCg7cSw2XM9bJEbrUA7/YraLAt
-         6asmP/7bj2S0cdhth36zkdIiy6u5ao5YGLhnBuz6GUtsCQKx4xuhjk7Jyz+GLUi1UZRX
-         G8RlPpWyzIBwqYH834u0zeflP0MK1/OHW1dyA27kEBMs3+nhR4gUVZiSlWbUi/jUGAS9
-         kwCA==
-X-Gm-Message-State: APjAAAV/61G9fiHxBP1cuh+h7LwzP8vZ871MKfVBf8JQcpt+7rEBC/1m
-        kcfo2wnI0xULCX5yAFmktAA=
-X-Google-Smtp-Source: APXvYqyJASiuuSHzDwpqI5Fv1wfnU4RdTs5S+koeC17AbI3v9pjUHcS/cY5yxNvny+vMKmRtC4yKDQ==
-X-Received: by 2002:a5d:5091:: with SMTP id a17mr3996006wrt.362.1578667471808;
-        Fri, 10 Jan 2020 06:44:31 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-12-92.as13285.net. [92.22.12.92])
-        by smtp.gmail.com with ESMTPSA id x6sm2379063wmi.44.2020.01.10.06.44.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 10 Jan 2020 06:44:31 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 00/17] merge: learn --autostash
-To:     Denton Liu <liu.denton@gmail.com>, phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <cover.1571246693.git.liu.denton@gmail.com>
- <cover.1577185374.git.liu.denton@gmail.com>
- <xmqqo8vpfpri.fsf@gitster-ct.c.googlers.com>
- <4032e4bd-fa3d-54eb-fe95-38549dff3aaa@gmail.com>
- <20200108060842.GA51465@generichostname>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <f545a13f-4b3c-9603-7511-ff80ad950ee9@gmail.com>
-Date:   Fri, 10 Jan 2020 14:44:30 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uszohy38i+KvRLgodXF6V3wE6ioCd1hyPpoa/yQrqHA=;
+        b=C1PUoupuAaPf1NLKaRmRyHbh8ad/tuNsFkrPrOVllPPDu8fBbeYnvubDrhY28q7bK0
+         YYQ+2PafonAbNbZVtDLI7XniBbqrrMBhBpW3Cp1HlElAYC9zzDlQKh/YyyVTWfoBsBGY
+         +sBSHwTw+/Q2A5P6iDIz4o4PeUX36aEoXtVYbE8JeyhjKSWRtm2MGpDEJ6pCPGcVJUjK
+         g3LVIt6kCVJ/JZfnms2AisBIYl12xIV57botVQDl2hBwT7aE53a3HpdPVVo+dC2DKS+l
+         Uv/9V4gh/lBZIqTsq25R10ZjQHgUjbYDy7iWI93BmRsnJnhUnTHhpc6Aefuk81r+B+1Y
+         Pq4w==
+X-Gm-Message-State: APjAAAUMXpcYkqf02Y5Pa5cIKW+zIrpwBW89MHZJNpGsInDY33QSc0Kj
+        xOSagX7qNGXShtOQ1mth8GizEJj4hVGwcfTYLk4=
+X-Google-Smtp-Source: APXvYqxIBLxF/zyQioeDFKNRPgPpfCELgW79jBHRv/NacXRNd3E+wlSQBtB0tCsThvXaTQeqpjLihSwXYOm5+kLP2eY=
+X-Received: by 2002:a7b:c08d:: with SMTP id r13mr5156994wmh.104.1578668575262;
+ Fri, 10 Jan 2020 07:02:55 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20200108060842.GA51465@generichostname>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <CANsz78+ugmd62F4Qk+VT7Pi=ZPtMSkZjXOwLNRCFhoS9jrOkeQ@mail.gmail.com>
+ <CANsz78K-BiswWPdhd_N25NuApcv7zSb2cw2Y9DSinkpNpuogYw@mail.gmail.com>
+ <CANsz78LEZiocv_E-Hvj3iBahFFgomPb3BFNdmas2iqxqRLfRiw@mail.gmail.com>
+ <20200108095229.GC87523@coredump.intra.peff.net> <CANsz78Lm3ggVZLrSxM5tc0MozFMdAmVBOix_3sjJT4+s3VHLPQ@mail.gmail.com>
+ <20200110111516.GA474613@coredump.intra.peff.net>
+In-Reply-To: <20200110111516.GA474613@coredump.intra.peff.net>
+From:   Eyal Soha <shawarmakarma@gmail.com>
+Date:   Fri, 10 Jan 2020 10:02:43 -0500
+Message-ID: <CANsz78Knt4RKGzNj4W3j7G9rh8N8jtCsOgOa_jTU-NetpgvVGA@mail.gmail.com>
+Subject: Re: Fwd: Add support for axiterm colors in parse_color
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Denton
+Thanks.  I think that 3 patches are in order.  The first will refactor
+and add the enums.  The second will add the aixterm colors.  The last
+will alias RGB 8-15 to aixterm colors.
 
-On 08/01/2020 06:08, Denton Liu wrote:
-> Hi Phillip,
-> 
-> Sorry for the late reply. I'm back in school so I've been pretty busy
-> lately.
-> 
-> On Tue, Dec 31, 2019 at 10:34:30AM +0000, Phillip Wood wrote:
->> For `merge --autostash` I think we need to consider the interaction of
->> `--no-commit` with `--autostash` as `stash pop` will refuse to run if the
->> merge modified any of the stashed paths.
-> 
-> The only time when we run the `stash pop` is when we either commit the
-> merge or abort it. With this in mind, what do you think of the following
-> test cases? If they look good, I can squash them into the appropriate
-> patch and send in a reroll.
+What's the correct way to email those patches?  I will try with
+git-send-email.  BTW, is "git help send-email" supposed to work?
 
-Ah I misunderstood what happened with --autostash and --no-commit, the 
-tests basically look fine (I've got one comment below).
-
-One other thing - if the user runs `git reset` or `git checkout 
-<branch>` then cleanup_branch_state() removes MERGE_HEAD, MERGE_MSG etc. 
-If we're not already doing so then I think we should remove 
-MERGE_AUTOSTASH as well or you can get into a situation where the user 
-does something like
-
-   git merge --autostash <something> # results in conflicts
-   git reset --hard <somewhere else>
-   git merge <something> # succeeds and confusingly pops previous stash
-
-Running `git reset` doesn't make sense unless they want to discard the 
-stashed changes as well. This is a difference with rebase where you 
-cannot lose the stashed changes by running `git reset`, the only way 
-they can get lost is by running `rebase --quit`.  We could always add a 
-warning about it throwing away the stashed changes in the future.
-
-I still not keen on the name `--autostash` as it's not automatic. 
-`--stash` would make more sense to me. We'd have to deprecate `rebase 
---autostash` in favor of `rebase --stash` to change it but it if we want 
-to change the name it would be better now before adding `--autostash` to 
-merge and pull - what do you think?
-
-> 	diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-> 	index e0c8a0bad4..af5db58e16 100755
-> 	--- a/t/t7600-merge.sh
-> 	+++ b/t/t7600-merge.sh
-> 	@@ -727,6 +727,33 @@ test_expect_success 'conflicted merge with --autostash, --abort restores stash'
-> 		test_cmp file.1 file
-> 	 '
-> 	
-> 	+test_expect_success 'completed merge with --no-commit and --autostash' '
-> 	+	git reset --hard c1 &&
-> 	+	git merge-file file file.orig file.9 &&
-
-Is this a complicated way of getting some unstaged changes so we can 
-stash them or have I missed something?
-
-Best Wishes
-
-Phillip
-
-> 	+	git diff >expect &&
-> 	+	git merge --no-commit --autostash c2 &&
-> 	+	git stash show -p MERGE_AUTOSTASH >actual &&
-> 	+	test_cmp expect actual &&
-> 	+	git commit 2>err &&
-> 	+	test_i18ngrep "Applied autostash." err &&
-> 	+	git show HEAD:file >merge-result &&
-> 	+	test_cmp result.1-5 merge-result &&
-> 	+	test_cmp result.1-5-9 file
-> 	+'
-> 	+
-> 	+test_expect_success 'aborted merge with --no-commit and --autostash' '
-> 	+	git reset --hard c1 &&
-> 	+	git merge-file file file.orig file.9 &&
-> 	+	git diff >expect &&
-> 	+	git merge --no-commit --autostash c2 &&
-> 	+	git stash show -p MERGE_AUTOSTASH >actual &&
-> 	+	test_cmp expect actual &&
-> 	+	git merge --abort 2>err &&
-> 	+	test_i18ngrep "Applied autostash." err &&
-> 	+	git diff >actual &&
-> 	+	test_cmp expect actual
-> 	+'
-> 	+
-> 	 test_expect_success 'merge with conflicted --autostash changes' '
-> 		git reset --hard c1 &&
-> 		git merge-file file file.orig file.9y &&
-> 
-> Thanks,
-> 
-> Denton
-> 
->>
->> Best Wishes
->>
->> Phillip
+Eyal
+On Fri, Jan 10, 2020 at 6:15 AM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jan 09, 2020 at 07:20:09PM -0500, Eyal Soha wrote:
+>
+> > > That said, I'm not entirely opposed to having more human-readable
+> > > aliases. I'm not sure if it's worth using the 16-color version (e.g.,
+> > > "ESC[91m" versus the 256-color version "ESC[38;5;9m"). It's possible it
+> > > would be compatible with more terminals, and it is slightly fewer bytes.
+> >
+> > My motivation for this patch was to fix the github workflow log output
+> > that doesn't support 8bit colors properly.  Only the "ANSI" colors
+> > 0-15 worked.  None of the 8-bit colors worked except for 30-37, 40-47,
+> > 90-97, and 100-107, which matched the ANSI colors.  That is a very
+> > broken color scheme!  But that's how it displayed.
+>
+> That makes sense. I'm not too surprised to see a terminal that supports
+> one but not the other.
+>
+> But I wonder if there are ones that go the other way around: supporting
+> 256-color mode but not ANSI 90-97, etc. I doubt it, but I think it would
+> be nice to split that change out into a separate commit in case we do
+> run into problems.
+>
+> > Done.  Here's a new patch!
+>
+> Thanks. The content here is looking pretty good (though I have a few
+> comments below).
+>
+> Can you also format it as described in Documentation/SubmittingPatches
+> and re-send? In particular, it needs a regular commit message and your
+> signoff.
+>
+> > +enum {
+> > +       COLOR_BACKGROUND_OFFSET = 10,
+> > +       COLOR_FOREGROUND_ANSI = 30,
+> > +       COLOR_FOREGROUND_RGB = 38,
+> > +       COLOR_FOREGROUND_256 = 38,
+> > +       COLOR_FOREGROUND_BRIGHT_ANSI = 90,
+> > +};
+>
+> The split in this enum mostly makes sense to me. It changes the meaning
+> of "value" for COLOR_ANSI, but this is all local to color.c, so your
+> changes to output_color() are all that's needed.
+>
+> It might be easier to follow the patch if switching to this enum came in
+> a separate preparatory patch.
+>
+> > @@ -92,7 +100,13 @@ static int parse_color(struct color *out, const
+> > char *name, int len)
+> >         for (i = 0; i < ARRAY_SIZE(color_names); i++) {
+> >                 if (match_word(name, len, color_names[i])) {
+> >                         out->type = COLOR_ANSI;
+> > -                       out->value = i;
+> > +                       out->value = i + COLOR_FOREGROUND_ANSI;
+> > +                       return 0;
+> > +               }
+> > +               if (*name == '+' &&
+> > +                   match_word(name+1, len-1, color_names[i])) {
+> > +                       out->type = COLOR_ANSI;
+> > +                       out->value = i + COLOR_FOREGROUND_BRIGHT_ANSI;
+> >                         return 0;
+> >                 }
+>
+> It would be slightly simpler and more efficient handle the "+" outside
+> the loop, like:
+>
+>   int offset = COLOR_FOREGROUND_ANSI;
+>   if (*name == '+') {
+>           offset = COLOR_FOREGROUND_BRIGHT_ANSI;
+>           name++;
+>           len--;
+>   }
+>
+> and then in the loop just set "out->value = i + offset".
+>
+> You'd probably want to hoist this out to a separate function since
+> "name" needs to be unchanged in the later part of the function.
+>
+> I dunno. It's almost certainly an unmeasurable micro-optimization, but
+> somehow the flow of it seems simpler to me.
+>
+> I also wondered if we'd want English aliases like "brightred" that some
+> other systems use. It would be easy to add that to the check I showed
+> above without having to repeat as much.
+>
+> > @@ -109,10 +123,15 @@ static int parse_color(struct color *out, const
+> > char *name, int len)
+> >                 else if (val < 0) {
+> >                         out->type = COLOR_NORMAL;
+> >                         return 0;
+> > -               /* Rewrite low numbers as more-portable standard colors. */
+> > +               /* Rewrite 0-7 as more-portable standard colors. */
+> >                 } else if (val < 8) {
+> >                         out->type = COLOR_ANSI;
+> > -                       out->value = val;
+> > +                       out->value = val + COLOR_FOREGROUND_ANSI;
+> > +                       return 0;
+> > +               /* Rewrite 8-15 as more-portable aixterm colors. */
+> > +               } else if (val < 16) {
+> > +                       out->type = COLOR_ANSI;
+> > +                       out->value = val - 8 + COLOR_FOREGROUND_BRIGHT_ANSI;
+>
+> And I think this 8-15 handling might want to be a separate commit on
+> top, just because it's possible it might regress some cases (though
+> again, I do doubt it).
+>
+> >         case COLOR_256:
+> > -               out += xsnprintf(out, len, "%c8;5;%d", type, c->value);
+> > +         out += xsnprintf(out, len, "%d;5;%d", COLOR_FOREGROUND_256 + offset,
+> > +                          c->value);
+>
+> Looks like some unwanted tab/space conversion (here and elsewhere).
+>
+> > +test_expect_success 'axiterm bright fg color' '
+> > +       color "+red" "[91m"
+>
+> s/axi/aix/ (here and below).
+>
+> > +test_expect_success '8-15 are aliases for aixterm color names' '
+> > +       color "12 13" "[94;105m"
+>
+> Makes sense.
+>
+> -Peff
