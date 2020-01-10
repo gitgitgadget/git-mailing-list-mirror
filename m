@@ -2,119 +2,151 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-4.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 560F4C282DD
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 23:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 649A2C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 23:14:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 25E1F20721
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 23:07:14 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 29FED2072E
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 23:14:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nzmaeFoY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vc3Nn/Kt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727454AbgAJXHM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 18:07:12 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:39058 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727442AbgAJXHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 18:07:12 -0500
-Received: by mail-pg1-f196.google.com with SMTP id b137so1676450pga.6
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 15:07:12 -0800 (PST)
+        id S1727376AbgAJXOj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 18:14:39 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:32907 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727324AbgAJXOj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 18:14:39 -0500
+Received: by mail-pl1-f196.google.com with SMTP id ay11so1418125plb.0
+        for <git@vger.kernel.org>; Fri, 10 Jan 2020 15:14:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=1gKGAapxGk5LUB9krsgEUnBzw6jSJ1MbKVQX9HM/JLI=;
-        b=nzmaeFoY9NnyE/gtRkQt4paP8w1NORUCEHFXLGwoWUTQok1TsOEq0C4GOV6+062Zge
-         80/qZToTAgXG2v6rA431c4aQwwsvxxYWNXqGWw60zdz4iTl9H5gJj7wexe2/hjTZnv12
-         n36nSZGEnmn/kWuqq82HWaWUij7QQ2+CBInWQfabs6wivCvdrKYfIE1QMlLZ5XNIyVr+
-         F60iLP3maSn0WbrpO1905SK8yaipYN6QRR5y1m3eB1t+a1WO1YKhnEQ/htGCCqjMyw4I
-         ZfNPmwOQA3o/rehkb/FxXAIkYy8pAgl9rY8O755IGhOQFu6hDP3Vb9nI3TmLs+x3vrg7
-         pVng==
+        bh=akyyWmPBquZ/n5ky3zqck/8RzT+3ZbvP81HPhqdTTbc=;
+        b=Vc3Nn/KtBDPldSm/BklWWLR7SwUOe1ujVXXRDMhd4E4tBVtGoVuW30Zj5j7UVTmzY0
+         rXb1feGAKaPahimfYT261Xyea2qNATMKFGBJPvEPjBVmX9F81ZFMZA1VpYhOzcwdzwWI
+         4m5dxIzdriMmwzZGTWTdZPGOlKCUzyL5QgP1uTb5ohEgABo8osSNB7LfFSrBBMi6XGIV
+         aXX8XP4x/+cGcIgB0hRJpv+bvB4/iopwLcFAnsJvLZW9/AT5Kpu24uaSQNKmFBeLItX4
+         Z8p0R8+XRVTl+NRLt4hrhq3T+6QA+VCVlb/FZv+4XPHQJy+pYdwBwJsxJ6TBQqeih5xF
+         Rz4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1gKGAapxGk5LUB9krsgEUnBzw6jSJ1MbKVQX9HM/JLI=;
-        b=JAEWvxspgox7TULAbafnckXikCHXjFFKyi0KG+EfuSjdm0xbIkgI2PPc/ojOQOHiVw
-         Q09t2p0fP3XFdBK6n9yQbxBVmjHwr3kNDeYpZA3JMgpUjvVW3jHIJqlY+A4+Erj0JPSH
-         XcIE2UZXAA3GNFXO4uzf6Tr+Rm4IWviWkjFPt2YEjhh6eX3zrlKvXosNkhXMvG8g0Pel
-         Zcgrwh3LwuwK+4FjN2Pj/cOPor7TGIismOViqZ/mJn7X+rvOYanptUDXxh1Ncp2lbJEW
-         EiyWJwzozVghcDBg3Uum/gvLVlF3wiiIZiotxfBPngtt0cNujbXpEC8K8Tzjl0tUCZo3
-         KqEA==
-X-Gm-Message-State: APjAAAV7E49bm698BZDJwlrcuSKn8Ks5kCeQ62lKVSxnV691gRL8RDrq
-        T1ackIShnPd27z+8AGgDX54BKg==
-X-Google-Smtp-Source: APXvYqxD0vyqkW4YhYmvg2WpNmZiZUe/SlYyV7u2BnA4EouBFY4dROihEJA8NmAOB7oTm8cXcEfj4Q==
-X-Received: by 2002:a63:584:: with SMTP id 126mr7242339pgf.100.1578697631437;
-        Fri, 10 Jan 2020 15:07:11 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id d22sm3884941pgg.52.2020.01.10.15.07.10
+        bh=akyyWmPBquZ/n5ky3zqck/8RzT+3ZbvP81HPhqdTTbc=;
+        b=JV9vdyhuyBSF+1elLg9Itn2JJNeCaj5zvoFPi9nnKbk2Do1K5eUXfbpBqwnMbeD1kU
+         YH/WpibqaRs3fbOSnTczUplx5FK2w38gUqqUyoZM6VsNolQNOSuXtcqq1RnNkB1Jehy0
+         3C+s20KTgJiCOYApmXBdOohIQmQrBKeJgVuYmC1kR0dAnavZm7Uv4f4JbQUgSvjreSQC
+         K1I/KjZU5Kzgp1V9Yw1SQKIFuSzsb1E5v9AKXjm0SkmzlBIGlDf/ZNBSm76hNnz71EEq
+         8R0hZZ3uia1f2X+4ekiILBwoZcytyTaTxVx0sKQhAZHspru6hYnpwPTEjTbV/DgDRfAt
+         WC9w==
+X-Gm-Message-State: APjAAAUikAKXHpX7Mpvd/gM4HLjXeisbtGcSahpVQoLliPxtV9qsu4zv
+        vqR6bm3GISaBPuBEOLH5u0I=
+X-Google-Smtp-Source: APXvYqwrvYOVme1j2eXeF/v5OgWh088erTJ7FzEzQeNoFq7H5hWhX7Lopp65nqs/deX2wxTG/cL+rg==
+X-Received: by 2002:a17:90a:cf11:: with SMTP id h17mr7939914pju.103.1578698078745;
+        Fri, 10 Jan 2020 15:14:38 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id u2sm3898765pgc.19.2020.01.10.15.14.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2020 15:07:10 -0800 (PST)
-Date:   Fri, 10 Jan 2020 15:07:06 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
-Message-ID: <20200110230706.GH181522@google.com>
-References: <20200108023127.219429-1-emilyshaffer@google.com>
- <20200108071525.GB1675456@coredump.intra.peff.net>
- <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
- <20200108193833.GD181522@google.com>
- <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
- <20200109075250.GA3978837@coredump.intra.peff.net>
- <20200109224641.GF181522@google.com>
- <20200110063741.GA409153@coredump.intra.peff.net>
+        Fri, 10 Jan 2020 15:14:37 -0800 (PST)
+Date:   Fri, 10 Jan 2020 15:14:36 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        phillip.wood@dunelm.org.uk, liu.denton@gmail.com,
+        gitster@pobox.com, plroskin@gmail.com, alban.gruin@gmail.com,
+        szeder.dev@gmail.com, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v3 15/15] rebase: change the default backend from "am" to
+ "merge"
+Message-ID: <20200110231436.GA24315@google.com>
+References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
+ <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
+ <044853fd612ee8cf6928bb7c4ebb1eacaa172aa3.1577217299.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20200110063741.GA409153@coredump.intra.peff.net>
+In-Reply-To: <044853fd612ee8cf6928bb7c4ebb1eacaa172aa3.1577217299.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 01:37:41AM -0500, Jeff King wrote:
-> On Thu, Jan 09, 2020 at 02:46:41PM -0800, Emily Shaffer wrote:
-> 
-> > > Perhaps. The integrity check only protects against an index that was
-> > > modified after the fact, not one that was generated by a buggy Git. I'm
-> > > not sure we know how the index that led to this patch got into this
-> > > state (though it sounds like Emily has a copy and could check the hash
-> > > on it), but other cache-tree segfault I found recently was with an index
-> > > with an intact integrity hash.
-> > 
-> > Yeah, I can do that, although I'm not sure how. The index itself is very
-> > small - it only contains one file and one tree extension - so I'll go
-> > ahead and paste some poking and prodding, and if it's not what you
-> > wanted then please let me know what else to run.
-> 
-> I was thinking you would run something like:
-> 
->   size=$(stat --format=%s "$file")
->   actual=$(head -c $(($size-20)) "$file" | sha1sum | awk '{print $1}')
->   expect=$(xxd -s -20 -g 20 -c 20 "$file" | awk '{print $2}')
->   if test "$actual" = "$expect"; then
->           echo "OK ($actual)"
->   else
->           echo "FAIL ($actual != $expect)"
->   fi
-> 
-> to manually check the sha1.
+Hi,
 
-Unsurprising given your mail, yeah, this looks OK when I run it against
-the repo in question.
+Elijah Newren via GitGitGadget wrote:
 
-> So this bogus index was probably actually created by Git, not an
-> after-the-fact byte corruption.
+> The am-backend drops information and thus limits what we can do:
+>
+>   * lack of full tree information from the original commits means we
+>     cannot do directory rename detection and warn users that they might
+>     want to move some of their new files that they placed in old
+>     directories to prevent their becoming orphaned.[1]
+>   * reduction in context from only having a few lines beyond those
+>     changed means that when context lines are non-unique we can apply
+>     patches incorrectly.[2]
+>   * lack of access to original commits means that conflict marker
+>     annotation has less information available.
+>
+> Also, the merge/interactive backend have far more abilities, appear to
+> currently have a slight performance advantage[3] and have room for more
+> optimizations than the am backend[4] (and work is underway to take
+> advantage of some of those possibilities).
+>
+> [1] https://lore.kernel.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/
+> [2] https://lore.kernel.org/git/CABPp-BGiu2nVMQY_t-rnFR5GQUz_ipyEE8oDocKeO+h+t4Mn4A@mail.gmail.com/
+> [3] https://public-inbox.org/git/CABPp-BF=ev03WgODk6TMQmuNoatg2kiEe5DR__gJ0OTVqHSnfQ@mail.gmail.com/
+> [4] https://lore.kernel.org/git/CABPp-BGh7yW69QwxQb13K0HM38NKmQif3A6C6UULEKYnkEJ5vA@mail.gmail.com/
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  Documentation/git-rebase.txt           |  2 +-
+>  builtin/rebase.c                       |  4 ++--
+>  t/t5520-pull.sh                        | 10 ++++++----
+>  t/t9106-git-svn-commit-diff-clobber.sh |  3 ++-
+>  4 files changed, 11 insertions(+), 8 deletions(-)
 
-Disappointingly, the repro repo we got was aggressively redacted - I
-don't have any reflogs to look through and try and get a hint of what
-happened, and I imagine the reporter has moved on with their life enough
-that we can't get something useful from there now.
+Thanks for writing this.  We finally rolled this out to our internal
+population at $DAYJOB and ran into a couple of issues:
 
- - Emily
+ 1. "git rebase --am" does not invoke the post-commit hook, but "git
+    rebase --merge" does.  Is this behavior change intended?
+
+    Noticed because jiri[1] installs a post-commit hook that warns
+    about commits on detached HEAD, so this change makes rebases more
+    noisy in repositories that were set up using jiri.
+
+ 2. GIT_REFLOG_ACTION contains "rebase -i" even though the rebase is
+    not interactive.
+
+ 3. In circumstances I haven't pinned down yet, we get the error
+    message "invalid date format: @@2592000 +0000":
+
+	$ git rebase --committer-date-is-author-date --onto branch_K branch_L~1 branch_L
+	$ git checkout --theirs file
+	$ git add file
+	$ git rebase --continue
+	fatal: invalid date format: @@2592000 +0000
+	error: could not commit staged changes.
+
+    This isn't reproducible without --committer-date-is-author-date.
+    More context (the test where it happens) is in [2].
+
+ 4. I suspect the exit status in the "you need to resolve conflicts"
+    case has changed.  With rebase --am, [3] would automatically
+    invoke rebase --abort when conflicts are present, but with rebase
+    --merge it does not.
+
+Known?
+
+Thanks,
+Jonathan
+
+[1] https://fuchsia.googlesource.com/jiri/+/60436c301224231cb99be41ce937dfc223bee272/project/manifest.go#1347
+[2] https://source.chromium.org/chromium/chromium/tools/depot_tools/+/master:tests/git_common_test.py;l=721;drc=6b52dc21e166c46707b4c8eb26c74c70d4f9977e;bpv=1;bpt=0
+[3] https://fuchsia.googlesource.com/jiri/+/60436c301224231cb99be41ce937dfc223bee272/project/project.go#1664
