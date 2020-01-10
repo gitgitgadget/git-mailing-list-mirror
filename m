@@ -2,113 +2,193 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5CEEC33CA2
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48431C33C99
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 07:19:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9675C20721
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 06:37:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 19FC02073A
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 07:19:43 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZNG2nf1s"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731596AbgAJGhm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 01:37:42 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33324 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731455AbgAJGhm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 01:37:42 -0500
-Received: (qmail 2077 invoked by uid 109); 10 Jan 2020 06:37:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Jan 2020 06:37:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22951 invoked by uid 111); 10 Jan 2020 06:43:31 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Jan 2020 01:43:31 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 10 Jan 2020 01:37:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] unpack-trees: watch for out-of-range index position
-Message-ID: <20200110063741.GA409153@coredump.intra.peff.net>
-References: <20200108023127.219429-1-emilyshaffer@google.com>
- <20200108071525.GB1675456@coredump.intra.peff.net>
- <xmqqeew93lfn.fsf@gitster-ct.c.googlers.com>
- <20200108193833.GD181522@google.com>
- <xmqqo8vd1yb2.fsf@gitster-ct.c.googlers.com>
- <20200109075250.GA3978837@coredump.intra.peff.net>
- <20200109224641.GF181522@google.com>
+        id S1726307AbgAJHTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 02:19:42 -0500
+Received: from us-smtp-1.mimecast.com ([207.211.31.81]:23426 "EHLO
+        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1726002AbgAJHTm (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Jan 2020 02:19:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1578640781;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=7phnacVaKQr4FvlIz0uwA4M/u85Tz3nida7bD8529Y4=;
+        b=ZNG2nf1sk+X5U9N+Wr0NlgWhdwNzwohxxBDHVSEwR/Iy/drW6VUivcDBvyINZjI7pQ/fIs
+        VgFnxE+3HpvMaMAJ5GmJbEBilN3Hwu3rXrNzVXROFFVhsIPoPLBs2XXfjjoGRYEPpZOmI8
+        SaowQlieKlD/84SHKZjAnO8W1Z6hS/4=
+Received: from mimecast-mx01.redhat.com (mimecast-mx01.redhat.com
+ [209.132.183.4]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-237-hwRBTR4tNGe_1oaQ692J3w-1; Fri, 10 Jan 2020 02:19:40 -0500
+X-MC-Unique: hwRBTR4tNGe_1oaQ692J3w-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx01.redhat.com (Postfix) with ESMTPS id 8495D10054E3
+        for <git@vger.kernel.org>; Fri, 10 Jan 2020 07:19:39 +0000 (UTC)
+Received: from localhost (ovpn-112-24.ams2.redhat.com [10.36.112.24])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 4B04F272B4;
+        Fri, 10 Jan 2020 07:19:34 +0000 (UTC)
+From:   marcandre.lureau@redhat.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH] RFC: allow branch --edit-description during rebase
+Date:   Fri, 10 Jan 2020 11:19:29 +0400
+Message-Id: <20200110071929.119000-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200109224641.GF181522@google.com>
+Content-Type: text/plain; charset=UTF-8
+X-Scanned-By: MIMEDefang 2.84 on 10.5.11.23
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 09, 2020 at 02:46:41PM -0800, Emily Shaffer wrote:
+From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> > Perhaps. The integrity check only protects against an index that was
-> > modified after the fact, not one that was generated by a buggy Git. I'm
-> > not sure we know how the index that led to this patch got into this
-> > state (though it sounds like Emily has a copy and could check the hash
-> > on it), but other cache-tree segfault I found recently was with an index
-> > with an intact integrity hash.
-> 
-> Yeah, I can do that, although I'm not sure how. The index itself is very
-> small - it only contains one file and one tree extension - so I'll go
-> ahead and paste some poking and prodding, and if it's not what you
-> wanted then please let me know what else to run.
+This patch aims to allow editing of branch description during a rebase.
 
-I was thinking you would run something like:
+A common use case of rebasing is to iterate over a series of patches
+after receiving reviews. During the rebase, various patches will be
+modified, and it is often requested to put a summary of the changes for
+the next version in the cover letter ("v2: - fixed this, - changed
+that.."). This helps the reviewer to focus on the difference with the
+previous version.  Unfortunately, git branch --edit-description doesn't
+allow yet to modify the content during a rebase, and forces the author
+to use memory muscles to update the description after finishing the
+rebase.
 
-  size=$(stat --format=%s "$file")
-  actual=$(head -c $(($size-20)) "$file" | sha1sum | awk '{print $1}')
-  expect=$(xxd -s -20 -g 20 -c 20 "$file" | awk '{print $2}')
-  if test "$actual" = "$expect"; then
-          echo "OK ($actual)"
-  else
-          echo "FAIL ($actual != $expect)"
-  fi
+Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+---
+ builtin/branch.c | 19 ++++++++++++++++---
+ worktree.c       | 19 +++++++++++++++++++
+ worktree.h       |  7 +++++++
+ 3 files changed, 42 insertions(+), 3 deletions(-)
 
-to manually check the sha1. But...
+diff --git a/builtin/branch.c b/builtin/branch.c
+index d8297f80ff..f7122d31d6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -613,6 +613,7 @@ int cmd_branch(int argc, const char **argv, const cha=
+r *prefix)
+ 	int icase =3D 0;
+ 	static struct ref_sorting *sorting =3D NULL, **sorting_tail =3D &sortin=
+g;
+ 	struct ref_format format =3D REF_FORMAT_INIT;
++	struct wt_status_state state;
+=20
+ 	struct option options[] =3D {
+ 		OPT_GROUP(N_("Generic options")),
+@@ -664,6 +665,8 @@ int cmd_branch(int argc, const char **argv, const cha=
+r *prefix)
+=20
+ 	setup_ref_filter_porcelain_msg();
+=20
++	memset(&state, 0, sizeof(state));
++
+ 	memset(&filter, 0, sizeof(filter));
+ 	filter.kind =3D FILTER_REFS_BRANCHES;
+ 	filter.abbrev =3D -1;
+@@ -745,13 +748,21 @@ int cmd_branch(int argc, const char **argv, const c=
+har *prefix)
+ 		string_list_clear(&output, 0);
+ 		return 0;
+ 	} else if (edit_description) {
+-		const char *branch_name;
++		const char *branch_name =3D NULL;
+ 		struct strbuf branch_ref =3D STRBUF_INIT;
+=20
+ 		if (!argc) {
+-			if (filter.detached)
++		    if (filter.detached) {
++			const struct worktree *wt =3D worktree_get_current();
++
++			if (wt_status_check_rebase(wt, &state)) {
++				branch_name =3D state.branch;
++			}
++
++			if (!branch_name)
+ 				die(_("Cannot give description to detached HEAD"));
+-			branch_name =3D head;
++		    } else
++			    branch_name =3D head;
+ 		} else if (argc =3D=3D 1)
+ 			branch_name =3D argv[0];
+ 		else
+@@ -851,5 +862,7 @@ int cmd_branch(int argc, const char **argv, const cha=
+r *prefix)
+ 	} else
+ 		usage_with_options(builtin_branch_usage, options);
+=20
++	free(state.branch);
++	free(state.onto);
+ 	return 0;
+ }
+diff --git a/worktree.c b/worktree.c
+index 5b4793caa3..0318c6f6a6 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -396,6 +396,25 @@ int is_worktree_being_bisected(const struct worktree=
+ *wt,
+ 	return found_rebase;
+ }
+=20
++const struct worktree *worktree_get_current(void)
++{
++	static struct worktree **worktrees;
++	int i =3D 0;
++
++	if (worktrees)
++		free_worktrees(worktrees);
++	worktrees =3D get_worktrees(0);
++
++	for (i =3D 0; worktrees[i]; i++) {
++		struct worktree *wt =3D worktrees[i];
++
++		if (wt->is_current)
++			return wt;
++	}
++
++	return NULL;
++}
++
+ /*
+  * note: this function should be able to detect shared symref even if
+  * HEAD is temporarily detached (e.g. in the middle of rebase or
+diff --git a/worktree.h b/worktree.h
+index caecc7a281..4fe2b78d24 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -91,6 +91,13 @@ void free_worktrees(struct worktree **);
+ const struct worktree *find_shared_symref(const char *symref,
+ 					  const char *target);
+=20
++
++/*
++ * Return the current worktree. The result may be destroyed by the
++ * next call.
++ */
++const struct worktree *worktree_get_current(void);
++
+ /*
+  * Similar to head_ref() for all HEADs _except_ one from the current
+  * worktree, which is covered by head_ref().
 
->   $ g fsck --cache
->   Checking object directories: 100% (256/256), done.
->   Checking objects: 100% (20/20), done.
->   broken link from  commit 153a9a100eae7fdba5989ce39a5dd1782075517f
->                 to  commit cca7ecaa5d8c398f41bfec7938cc6a526803579b
->   broken link from  commit 7d6bb91e31d18eadfaf855a9fb7ad6ba81b8b6d9
->                 to  commit 03087a617bfe55f862cb1ef43273a2bd08e8b6d6
->   missing commit 03087a617bfe55f862cb1ef43273a2bd08e8b6d6
->   missing commit cca7ecaa5d8c398f41bfec7938cc6a526803579b
->   dangling commit 5e2c635433bc46b13061b276e481f63b1f6642c8
+base-commit: 042ed3e048af08014487d19196984347e3be7d1c
+prerequisite-patch-id: 9b3cf75545ec4a1e702c8c2b2aae8edf241b87f2
+--=20
+2.25.0.rc1.20.g2443f3f80d.dirty
 
-...fsck would have reported a problem there, since we explicitly kept
-the check there in a33fc72fe9 (read-cache: force_verify_index_checksum,
-2017-04-14).
-
-And just to be double-sure, I used this:
-
->   $ hexdump -C .git/index
->   00000000  44 49 52 43 00 00 00 02  00 00 00 01 5d 89 5e 22  |DIRC........].^"|
->   00000010  23 bf a3 c4 5d 89 5e 22  23 bf a3 c4 00 00 fe 02  |#...].^"#.......|
->   00000020  02 c8 f5 83 00 00 81 a4  00 06 c1 dc 00 01 5f 53  |.............._S|
->   00000030  00 00 06 b3 78 88 a4 f4  22 34 7d ad b0 c4 73 0f  |....x..."4}...s.|
->   00000040  c5 bc f6 ea 1d 2d f0 3a  00 09 52 45 41 44 4d 45  |.....-.:..README|
->   00000050  2e 6d 64 00 54 52 45 45  00 00 00 3a 00 31 37 20  |.md.TREE...:.17 |
->   00000060  31 0a da 7f 67 25 40 7d  4e ce 9f d3 72 ce 4c e8  |1...g%@}N...r.L.|
->   00000070  40 6d 5d ad e9 79 67 69  74 6c 69 6e 74 00 34 20  |@m]..ygitlint.4 |
->   00000080  30 0a 93 63 25 17 69 e6  d6 92 78 97 55 4b 0f 8b  |0..c%.i...x.UK..|
->   00000090  ff a0 e8 2d 6d 71 32 d1  69 fc f2 38 42 f8 5a 6e  |...-mq2.i..8B.Zn|
->   000000a0  05 35 d6 94 41 c0 9f c7  ba 43                    |.5..A....C|
->   000000aa
-
-to reconstruct the file and check its sha1, and indeed it is fine.
-
-So this bogus index was probably actually created by Git, not an
-after-the-fact byte corruption.
-
--Peff
