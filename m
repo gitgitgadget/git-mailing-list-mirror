@@ -2,154 +2,189 @@ Return-Path: <SRS0=BdMw=27=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DEE8C282DD
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 20:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D314C282DD
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 21:31:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3B1322072E
-	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 20:18:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 459C62082E
+	for <git@archiver.kernel.org>; Fri, 10 Jan 2020 21:31:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xGvfXhiQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vLCQJWSJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726212AbgAJUSi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 15:18:38 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64937 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725901AbgAJUSi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Jan 2020 15:18:38 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 15C99B0A93;
-        Fri, 10 Jan 2020 15:18:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=a+1L4HKje9qp0KIBet3qnT9Pf90=; b=xGvfXh
-        iQt0VY9auOljyTkcQtAB2sZIpHlTbDzw23tDSEb0Fdb/wgBVl2qOLWKUP/WHeN30
-        Dy1tVbvYcm6Ky7bV8h1XjOS73tUDhmeBjauFzmEcsT2dkwGCizpfDBJG6cd8QZBg
-        Y1qsETV1c0s2PsyclKjsjKxX+7P19Gg8REUMY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=etJq2S0jyoCDanyxsiZ9kyKoqVdEUuH8
-        8gboDFGG2xIZdYW4ydIjcff02VGKHYyJa/wLctRfG4I81RbggvAHlk36lEUH/jKD
-        PrIZtEBl34i6a7QJjki5eA27/pCH8sr6d3/IAnZA+MtND2RuFWD9d+FR3J8IhFne
-        pXykWJXqruA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0DF7AB0A92;
-        Fri, 10 Jan 2020 15:18:36 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2856AB0A91;
-        Fri, 10 Jan 2020 15:18:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] fetch: emphasize failure during submodule fetch
-References: <20200110195533.6416-1-emilyshaffer@google.com>
-Date:   Fri, 10 Jan 2020 12:18:30 -0800
-In-Reply-To: <20200110195533.6416-1-emilyshaffer@google.com> (Emily Shaffer's
-        message of "Fri, 10 Jan 2020 11:55:33 -0800")
-Message-ID: <xmqqtv53kquh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726996AbgAJVbV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 10 Jan 2020 16:31:21 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51011 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726836AbgAJVbU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Jan 2020 16:31:20 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a5so3513061wmb.0
+        for <git@vger.kernel.org>; Fri, 10 Jan 2020 13:31:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=0x31xRhi/+Y776TuoazC3kD9xR7VyYdYd3Q/N6VCipo=;
+        b=vLCQJWSJ93hK6UbQ4F+VERPjN0/gXU6ssejT+/c6DSKDKRaNwU+ojWxpfFd2w9A9wT
+         EEkCO1tqwOjinxiWQxS9J0mLYgwJIRoe799LJE2O41aKLacXtki7+PhB8x75CleWGpau
+         vM8b7k3UcqaF2evDcvpYFa23mmWxYFbTaiY0N9mwLbye0qJYCi3IpLNdsphRsU9OyzLD
+         bWfZ19zKOwPiu6CGjO17hHlNLRv/NkfqaxuP/0/rOb9LyCuP9C+lZsnSXSOpFDfzslEF
+         QjfssvdgwDS75oTyT7dBr18JOmvvBSxQBZW0VDGoz0GZGK7PB/E4g3yM6/Ai1ExXNNyK
+         KNuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=0x31xRhi/+Y776TuoazC3kD9xR7VyYdYd3Q/N6VCipo=;
+        b=X9YShBZxNFJlqn5Rguqh8cLk2mUgbv7P6kgomVQRDtta5uWBNFkdyd2tVId7M1FKRR
+         sfEDSjfBQmc+GTlZt/38JslgQ/pz2JwAJMoE0oEqEiqEPqHtW0a0QM/TXZJ4bf1zwO7u
+         SkFTEi6IN9hyDHITvplawKjxV2kxOEy+E80a9bcQYvkFSs+e6WykGOhhhGdR2vUCHxO6
+         VJbg/uZAHt1DtTJHPbPoaVr0JQx6hgjSOJi+Qpm2vLQIkOv3ZjNZBIjtuNCZX8tPCorA
+         +aWcVEtEr4tzMGcGTQlV+/T1maxfs6btMvW+25uZ6oJalfX5lR6qoVop0s5cCNor10uM
+         N0wg==
+X-Gm-Message-State: APjAAAWxfVa6IiFKPVd2Ye5N9oRtci15S2pQhw+QEpR7b/xLjoIPhIo9
+        gaQboFrF+0Nf5FqugIJtcmQ=
+X-Google-Smtp-Source: APXvYqxR77ggevoNN+bho7HYGjMPeKAUEuWdFXkpN5rL1VM/TXA4Cwe23e/TWZgBqacKl1dTUGuO+A==
+X-Received: by 2002:a05:600c:2150:: with SMTP id v16mr5843301wml.156.1578691878611;
+        Fri, 10 Jan 2020 13:31:18 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-658-1-29-116.w86-222.abo.wanadoo.fr. [86.222.28.116])
+        by smtp.gmail.com with ESMTPSA id t8sm3708870wrp.69.2020.01.10.13.31.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Jan 2020 13:31:17 -0800 (PST)
+Subject: Re: [PATCH v3 2/2] rebase-interactive: warn if commit is dropped with
+ `rebase --edit-todo'
+To:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20191104095449.9964-1-alban.gruin@gmail.com>
+ <20191202234759.26201-1-alban.gruin@gmail.com>
+ <20191202234759.26201-3-alban.gruin@gmail.com>
+ <xmqqk17b5263.fsf@gitster-ct.c.googlers.com>
+ <64aa4049-ee35-df4c-1e6c-80707f4f9070@gmail.com>
+ <0bf602bb-eff0-12f1-fa6c-c670a12f2cee@gmail.com>
+ <79ad2e01-2fc3-cd52-7879-5a81370628ef@gmail.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <85e3d40a-9829-0f50-8d91-7e8e8fa319f1@gmail.com>
+Date:   Fri, 10 Jan 2020 22:31:03 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 5FD98658-33E6-11EA-9EC5-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <79ad2e01-2fc3-cd52-7879-5a81370628ef@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Hi Phillip,
 
-> In cases when a submodule fetch fails when there are many submodules, the error
-> from the lone failing submodule fetch is buried under activity on the other
-> submodules if more than one fetch fell back on fetch-by-oid. Call out a failure
-> late so the user is aware that something went wrong.
->
-> Example without this change:
+Le 10/01/2020 à 18:13, Phillip Wood a écrit :
+> Hi Alban
+> 
+> On 09/01/2020 21:13, Alban Gruin wrote:
+>> Hi Phillip,
+>>
+>> Le 09/12/2019 à 17:00, Phillip Wood a écrit :
+>>>>> diff --git a/rebase-interactive.c b/rebase-interactive.c
+>>>>> index ad5dd49c31..80b6a2e7a6 100644
+>>>>> --- a/rebase-interactive.c
+>>>>> +++ b/rebase-interactive.c
+>>>>> @@ -97,7 +97,8 @@ int edit_todo_list(struct repository *r, struct
+>>>>> todo_list *todo_list,
+>>>>>               struct todo_list *new_todo, const char *shortrevisions,
+>>>>>               const char *shortonto, unsigned flags)
+>>>>>    {
+>>>>> -    const char *todo_file = rebase_path_todo();
+>>>>> +    const char *todo_file = rebase_path_todo(),
+>>>>> +        *todo_backup = rebase_path_todo_backup();
+>>>>>        /* If the user is editing the todo list, we first try to parse
+>>>>> @@ -110,9 +111,9 @@ int edit_todo_list(struct repository *r, struct
+>>>>> todo_list *todo_list,
+>>>>>                        -1, flags | TODO_LIST_SHORTEN_IDS |
+>>>>> TODO_LIST_APPEND_TODO_HELP))
+>>>>>            return error_errno(_("could not write '%s'"), todo_file);
+>>>>>    -    if (initial && copy_file(rebase_path_todo_backup(), todo_file,
+>>>>> 0666))
+>>>>> -        return error(_("could not copy '%s' to '%s'."), todo_file,
+>>>>> -                 rebase_path_todo_backup());
+>>>>> +    unlink(todo_backup);
+>>>>> +    if (copy_file(todo_backup, todo_file, 0666))
+>>>>> +        return error(_("could not copy '%s' to '%s'."), todo_file,
+>>>>> todo_backup);
+>>>>
+>>>> We used to copy ONLY when initial is set and we left old todo_backup
+>>>> intact when !initial.  That is no longer true after this change, but
+>>>> it is intended---we create an exact copy of what we would hand out
+>>>> to the end-user, so that we can compare it with the edited result
+>>>> to figure out what got changed.
+>>>
+>>> I think it would be better to only create a new copy if the last edit
+>>> was successful. As it stands if I edit the todo list and accidentally
+>>> delete some lines and then edit the todo list again to try and fix it
+>>> the second edit will succeed whether or not I reinserted the deleted
+>>> lines.
+>>>
+>>> We could add this to the tests to check that a subsequent edit that does
+>>> not fix the problem fails
+>>>
+>>> diff --git a/t/t3404-rebase-interactive.sh
+>>> b/t/t3404-rebase-interactive.sh
+>>> index 969e12d281..8544d8ab2c 100755
+>>> --- a/t/t3404-rebase-interactive.sh
+>>> +++ b/t/t3404-rebase-interactive.sh
+>>>
+>>> @@ -1416,6 +1416,7 @@ test_expect_success 'rebase --edit-todo respects
+>>> rebase.missingCommitsCheck = er
+>>>                  test_i18ncmp expect actual &&
+>>>                  test_must_fail git rebase --continue 2>actual &&
+>>>                  test_i18ncmp expect actual &&
+>>> +               test_must_fail git rebase --edit-todo &&
+>>>                  cp orig .git/rebase-merge/git-rebase-todo &&
+>>>                  test_must_fail env FAKE_LINES="1 2 3 4" \
+>>>                          git rebase --edit-todo 2>actual &&
+>>>
+>>>
+>>
+>> In which case, if the check did not pass at the previous edit, the new
+>> todo list should be compared to the backup.  As sequencer_continue()
+>> already does this, extract this to its own function in
+>> rebase-interactive.c.  To keep track of this, a file is created on the
+>> disk (as you suggested in your other email.)  At the next edit, if this
+>> file exists and no errors were found, it is deleted.  The backup is only
+>> created if there is no errors in `todo_list' and in `new_todo'.
+>>
+>> This would guarantee that there is no errors in the backup, and that the
+>> edited list is always compared to a list exempt of errors.
+>>
+>> This approach also has the benefit to detect if a commit part of a
+>> badcmd was dropped.
+>>
+>> After some tweaks (ie. `expect' now lists 2 commits instead of one),
+>> this passes the test with the change you suggested, and the one you sent
+>> in your other email.
+> 
+> That sounds good. I'm not sure how it passes the test in my other email
+> though, if sequencer_continue() compares the todo list to the backup
+> wont it still fail when continuing after conflicts as the backup is out
+> of date?
+> 
 
->   $ git pull --rebase
->   remote: Counting objects: 1591, done
->   remote: Finding sources: 100% (4317/4317)
->   remote: Total 4317 (delta 1923), reused 4252 (delta 1923)
->   Receiving objects: 100% (4317/4317), 2.09 MiB | 8.15 MiB/s, done.
->   Resolving deltas: 100% (1923/1923), completed with 101 local objects.
->   From https://android.googlesource.com/platform/superproject
->   [snip ~100 lines]
->   From https://android.googlesource.com/platform/prebuilts/fullsdk/platforms/android-29
->    * branch            a97149980b7d8acf48392af591b35689f7205d9e -> FETCH_HEAD
->   From https://android.googlesource.com/platform/prebuilts/fullsdk-darwin/platform-tools
->    * branch            98f9454af8ca210818eff4f502097c471d7327b5 -> FETCH_HEAD
->   From https://android.googlesource.com/platform/prebuilts/checkstyle
->    * branch            6fb3e23f05ed186908ea9f48d6692220891363b0 -> FETCH_HEAD
->    * branch            f21d92f6339f0993a946b25fa2172c2ceb5e332b -> FETCH_HEAD
->   From https://android.googlesource.com/platform/prebuilts/androidx/studio
->    * branch            bed5e7b5866b8698bbcd1879134b03ac312a2ba8 -> FETCH_HEAD
->   From https://android.googlesource.com/platform/prebuilts/androidx/internal
->    * branch                179375220f834de5dfbee169f4c2f948d850a203 -> FETCH_HEAD
->    * branch                1dcf3ceef9a86001c693fa34b3513f0c4af26178 -> FETCH_HEAD
->    * branch                2ea3ccef4c98f5de1b74affd1dda33f5b2834a45 -> FETCH_HEAD
->    * branch                a09de09c3814c3d31cc770d5351b92d29ea624ae -> FETCH_HEAD
->    * branch                d2ae6add8b2c0e28899e4faeb2d6889ceefb0b62 -> FETCH_HEAD
->    * branch                e244e2a5f7d98f47f75d06ef57ef1c6c5701a38d -> FETCH_HEAD
->   Auto packing the repository in background for optimum performance.
->   See "git help gc" for manual housekeeping.
->   From https://android.googlesource.com/platform/prebuilts/androidx/external
->    * branch              c3df2fa7f3e63b8714ac8d24f86a26cc50ee4af5 -> FETCH_HEAD
->   fatal: remote error: want c5bd7796550b3742772c8fb8c73a1311013b5159 not valid
->   From https://android.googlesource.com/platform/external/noto-fonts
->    * branch            02969d3046f6944a5a211d2331d1c82736487f01 -> FETCH_HEAD
->    * branch            9ee45fcd0b8bb8621c1cdbc6de5fe7502eff7393 -> FETCH_HEAD
->   From https://android.googlesource.com/platform/external/dokka
->    * branch            03a8ed966a7b847931a0ee20327f989837aaff13 -> FETCH_HEAD
->    * branch            cb1684602b5b4e18385d890c972764c55d177704 -> FETCH_HEAD
->    * branch            fd4521e89ab0e01447dda9b42be2b9bbc000f02f -> FETCH_HEAD
->   From https://android.googlesource.com/platform/external/doclava
->    * branch            04ddf3962f0cd40c81a2e144f27f497223782457 -> FETCH_HEAD
->    * branch            44bf22680e939b21a21a365f6038d5883d5163c8 -> FETCH_HEAD
->    * branch            66f673f4a3865f3b4ab645655a6484101dbd051f -> FETCH_HEAD
->
-> Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
-> ---
-> As hinted by the snippet in the commit-message (should I remove it? I
-> think it's a poignant example, I couldn't see the fatal without grepping
-> even after being told it was there) this manifested to an end user via
-> 'git pull'.
+I changed sequencer_continue() to check the todo list only if the file
+indicating an error exists.
 
-It indeed is too noisy, especially without showing what happens with
-this patch.
+I still have to rewrite the commit message, then I’ll re-send this series.
 
-Is it clear to the users that a block of lines starting "From $URL"
-and ending before the next "From $AnotherURL" is about the same
-repository, including error messages?
+Cheers,
+Alban
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index b4c6d921d0..0c19781cb9 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1857,6 +1857,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->  						    verbosity < 0,
->  						    max_children);
->  		argv_array_clear(&options);
-> +		if (result)
-> +			fprintf(stderr, _("Failure during submodule fetch.\n"));
-
-How does a user find out which submodule had trouble with after
-seeing this message?  Or is it something you still need to find by
-scrolling back?
-
-If the latter, I am not sure if there is much point to add a
-half-way solution like this.  It is a different story if "fetch"
-exits with success status when this happens, but I do not think the
-"result" that is non-zero is being lost before the function returns,
-so...
-
->  	}
->  
->  	string_list_clear(&list, 0);
+> Best Wishes
+> 
+> Phillip
+> 
