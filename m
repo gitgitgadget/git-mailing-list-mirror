@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-14.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30764C3F68F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B540C33CA9
 	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 22:35:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0519A20866
+	by mail.kernel.org (Postfix) with ESMTP id 2FACF2082E
 	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 22:35:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="nuv5Xnbd"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="v11B6/3H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731592AbgAKWfF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jan 2020 17:35:05 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:50149 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731579AbgAKWfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jan 2020 17:35:04 -0500
-Received: by mail-pg1-f201.google.com with SMTP id u14so3820854pgq.16
-        for <git@vger.kernel.org>; Sat, 11 Jan 2020 14:35:04 -0800 (PST)
+        id S1730708AbgAKWfH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jan 2020 17:35:07 -0500
+Received: from mail-pj1-f74.google.com ([209.85.216.74]:35812 "EHLO
+        mail-pj1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730505AbgAKWfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Jan 2020 17:35:07 -0500
+Received: by mail-pj1-f74.google.com with SMTP id l8so4035403pje.0
+        for <git@vger.kernel.org>; Sat, 11 Jan 2020 14:35:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=R2CPxES3jKHCKRiHMq5mwg70LsAKEUGcXGoOB8zRyWI=;
-        b=nuv5XnbdcL/Tmk44vgARoxM5tqZT33sniTEv14C6LfL8JkdBoPxcTT4W6Ij5r0ehMh
-         nMZh0ymEX3vuwd+bclULCOmt1ndJzsPKEF3BUSarFhCOyAlRK7PKwfZ4yEhTgp6JEFAI
-         u/dY5R+ijGd5Jxfecos6tM6tfLvaJ+fgUlzchGBKebGSRupK1FguxOcrqvv9EVK9W4yd
-         CEJ4KBDdKhMvEFHxgoHMuFvK8epSFcWVmKDYUxxTWiXI76LWTUoTakGzlbvr+bzI6WCX
-         hn6XMoiHCBiRcZYM5ALU59tqLN+RHSsiZm7075qiPunF5W1nHVIDpq1mOnvOHQmHEG9j
-         DA2Q==
+        bh=4qq8sdn9CGxJlxck5P+2mqiHETCZS7//xSgAUVFaXUU=;
+        b=v11B6/3HMxyU6s1OkwYQ04HjtK2gSkBCTlvYUUuENFxKZhy87zRPc1tXFWnGFY7LN7
+         bV68rQLbU1AVPdwu9JF9ebz2S0ekjyQ8KTHevrnAvMNaSmx4C348ncItlyrYk0PiAU9d
+         pVpctqXwTS4rqWod7YCHjkhGlWuz39zmHxSkXs5cxy1fbN4OvsKsj1neGiakKfkE4FQa
+         HFr1P567BbelfshwI/jTTR3SGhbs3hwTEJ537kAa0L67deKv3vU+3jsPPjtaZ+QSCcaC
+         2Yz+Rgh7Q7dXbYc5QESE8DIkMbimFToBBzGxxbKI1EvwSfNGL7ENL3kmP137EcZHunI7
+         GlSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=R2CPxES3jKHCKRiHMq5mwg70LsAKEUGcXGoOB8zRyWI=;
-        b=eiiy/CL5+No/zJyNqDnvNvhvDlYUa383CsHL1xv/8cSc8JaJ+bd607PrDFCzyq1u/n
-         otT6LYdgtB3HQ9obnl0V97+qaSinpbDAqWQLuabri8JSJkaOVnocnEzh3BYlIkM45s/C
-         qB7dgmCpZi9JQoQbS1MUX6zMHVXtP5+nWxF8M0APDN4EUj0oWdoa4YXwXPXH05ULpYAF
-         /ayVRINa4/ZnU0+BQv2agcHB6vZL9uhJSIm+s8BNwHvliPYOTlCuBd5GGR8T0sqZhy/I
-         Bb9K5uE02qhz2Yr4wlh4lXZUx2rudjgkhvuZjZRUfEJK2qhwVfdkxg1Hks6S1cvll3UJ
-         TOfA==
-X-Gm-Message-State: APjAAAV/VUk4qB5QPYBrq0gUF7kBiUghWrkzdpI+h4ZKPpdxs2bPRde2
-        CmrrYeMBhMU0dArxGgZnvnRvARq7pc0tnxCRWOK86s1914Byjd07Uja404g46eJ4JBrs+bZIB/R
-        5FTHC/EgNR7UZa61axJKSpDb3RF+Bb8kRTCC+KohN465wOAaUGFzQE314HPSnzVQFiR6kzktYxM
-        DO
-X-Google-Smtp-Source: APXvYqyeb/kh7OzsZcac/JHct0mRxgk9ste8ZK+a41IYV9Dp/x2WMRw7CIRCvPCtTjF8sWYzgKY0grJUgk6ZZPMJ8q/F
-X-Received: by 2002:a65:5788:: with SMTP id b8mr13208967pgr.324.1578782103683;
- Sat, 11 Jan 2020 14:35:03 -0800 (PST)
-Date:   Sat, 11 Jan 2020 14:34:55 -0800
+        bh=4qq8sdn9CGxJlxck5P+2mqiHETCZS7//xSgAUVFaXUU=;
+        b=lXJmyd9e+YzI09TTx+ZyzHpl/JDc9NI9v+KdQM33QkEc8LeEKlAZ3G7ogm8rgYmADx
+         Y00jnThEmk+NHxoKkAXJvKNpqwJ1XaGRMAWjjOWivncU9JbtKd5KU54t5MTsuK0n3RH2
+         YPULsKg+kV99EzuRKm20JDWQz2UqQ1IvjF9ULP383Qtp7saoG8L6NSHtd3eNcNTSkEy+
+         nWXYdVzpxoINEzWXdDkpxQZVn4zgm/e/HZuYd7QXc84aMDX5uQqDT+50pk3TfQL7Nadm
+         p+blX3uvb+sISrSImGoeI6eDwLejmt/Jo/tm4/TiFnBp+0XcnXiOEW6njOqRbUUvTyf/
+         rlfA==
+X-Gm-Message-State: APjAAAWD9f7aQ1+pDjbqUha+rf61rTIYe4uwObnQW3T5sIykrIeXAw3j
+        YtH+Kv1cuFi9BjFQyMpHw9yPc3vG0vps0oAGqH8v/tSI35O/7Paf0pjehdqxujH7ABTE3lJ6+K0
+        tv3YvV3PLY1wzWMSil/Z/ByoOQiQOs/5lHgGZSBvdxuDR+f8tvtXUDV1RevM9tcsUfumPFPAPnF
+        aU
+X-Google-Smtp-Source: APXvYqyCjUrZ5dNtg29j4AmXp84aglLw2YlooXA9M4EBK01nNjDatLLx1rc0vE4J9eHCz1N51XjCNsPzRYpwifM90kfn
+X-Received: by 2002:a63:a34b:: with SMTP id v11mr12836036pgn.229.1578782106078;
+ Sat, 11 Jan 2020 14:35:06 -0800 (PST)
+Date:   Sat, 11 Jan 2020 14:34:56 -0800
 In-Reply-To: <cover.1578781770.git.jonathantanmy@google.com>
-Message-Id: <6dce9c79be3b9264f832852e9068347f42cf3ee0.1578781770.git.jonathantanmy@google.com>
+Message-Id: <af19f5486f87f23e2a0c390de2d8710cdbad2d49.1578781770.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <20191228003430.241283-1-jonathantanmy@google.com> <cover.1578781770.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
-Subject: [PATCH v3 1/2] revision: document get_reference()
+Subject: [PATCH v3 2/2] revision: un-regress --exclude-promisor-objects
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
@@ -69,37 +69,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In particular, document the behavior when the object is corrupt. The
-existing behavior when parse_object() encounters a hash mismatch has
-been there since cc243c3ceb ("show: --ignore-missing", 2011-05-19), and
-the existing behavior when the code disagrees on whether an object is a
-commit has been there since ec0c5798ee ("revision: use commit graph in
-get_reference()", 2018-12-28).
+Before commit 4cf67869b2 ("list-objects.c: don't segfault for missing
+cmdline objects", 2018-12-06),
+
+  git rev-list --exclude-promisor-objects $A_MISSING_PROMISOR_OBJECT
+
+succeeds. But after that commit, this invocation produces a non-zero
+result.
+
+Restore this functionality: since get_reference() already does what we
+need, we can just use its return value; skip the arg if the return value
+is NULL, and use it otherwise (if the arg is invalid, get_reference()
+already dies). With this commit, --exclude-promisor-objects treats both
+promisor objects passed through the CLI and promisor objects found
+through traversal in the same say: it excludes them, so it does not
+matter whether they're missing or not.
 ---
- revision.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ revision.c               |  2 +-
+ t/t0410-partial-clone.sh | 12 +++---------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/revision.c b/revision.c
-index 8136929e23..91ca194388 100644
+index 91ca194388..0659a09b02 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -355,6 +355,16 @@ void add_head_to_pending(struct rev_info *revs)
- 	add_pending_object(revs, obj, "HEAD");
- }
+@@ -1917,7 +1917,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 		verify_non_filename(revs->prefix, arg);
+ 	object = get_reference(revs, arg, &oid, flags ^ local_flags);
+ 	if (!object)
+-		return revs->ignore_missing ? 0 : -1;
++		return 0;
+ 	add_rev_cmdline(revs, object, arg_, REV_CMD_REV, flags ^ local_flags);
+ 	add_pending_object_with_path(revs, object, arg, oc.mode, oc.path);
+ 	free(oc.path);
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index a3988bd4b8..b251985e82 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -397,7 +397,7 @@ test_expect_success 'rev-list stops traversal at promisor commit, tree, and blob
+ 	grep $(git -C repo rev-parse bar) out  # sanity check that some walking was done
+ '
  
-+/*
-+ * Returns the object corresponding to "oid" and sets the given flags on
-+ * it.
-+ *
-+ * If that object is missing or corrupt, this function returns NULL if
-+ * "revs" permits it (that is, if revs->ignore_missing is true or if
-+ * revs->exclude_promisor_objects is true and the object is a promisor
-+ * object), and dies otherwise. Note that corrupt objects are treated
-+ * like missing objects, to preserve existing behavior.
-+ */
- static struct object *get_reference(struct rev_info *revs, const char *name,
- 				    const struct object_id *oid,
- 				    unsigned int flags)
+-test_expect_success 'rev-list dies for missing objects on cmd line' '
++test_expect_success 'rev-list accepts missing and promised objects on command line ' '
+ 	rm -rf repo &&
+ 	test_create_repo repo &&
+ 	test_commit -C repo foo &&
+@@ -416,15 +416,9 @@ test_expect_success 'rev-list dies for missing objects on cmd line' '
+ 	git -C repo config extensions.partialclone "arbitrary string" &&
+ 
+ 	for OBJ in "$COMMIT" "$TREE" "$BLOB"; do
+-		test_must_fail git -C repo rev-list --objects \
++		git -C repo rev-list --objects \
+ 			--exclude-promisor-objects "$OBJ" &&
+-		test_must_fail git -C repo rev-list --objects-edge-aggressive \
+-			--exclude-promisor-objects "$OBJ" &&
+-
+-		# Do not die or crash when --ignore-missing is passed.
+-		git -C repo rev-list --ignore-missing --objects \
+-			--exclude-promisor-objects "$OBJ" &&
+-		git -C repo rev-list --ignore-missing --objects-edge-aggressive \
++		git -C repo rev-list --objects-edge-aggressive \
+ 			--exclude-promisor-objects "$OBJ"
+ 	done
+ '
 -- 
 2.25.0.rc1.283.g88dfdc4193-goog
 
