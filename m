@@ -2,78 +2,87 @@ Return-Path: <SRS0=hslh=3A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_2 autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7621C33C9E
-	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 09:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98CF7C33C9E
+	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 11:00:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 877242064C
-	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 09:56:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6635620842
+	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 11:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728835AbgAKJ4F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jan 2020 04:56:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:34172 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728828AbgAKJ4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jan 2020 04:56:05 -0500
-Received: (qmail 11803 invoked by uid 109); 11 Jan 2020 09:56:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 11 Jan 2020 09:56:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32314 invoked by uid 111); 11 Jan 2020 10:02:00 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 11 Jan 2020 05:02:00 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Sat, 11 Jan 2020 04:56:04 -0500
-From:   Jeff King <peff@peff.net>
+        id S1729136AbgAKLAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jan 2020 06:00:33 -0500
+Received: from smtpq2.tb.mail.iss.as9143.net ([212.54.42.165]:41162 "EHLO
+        smtpq2.tb.mail.iss.as9143.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728881AbgAKLAc (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 11 Jan 2020 06:00:32 -0500
+Received: from [212.54.42.116] (helo=lsmtp2.tb.mail.iss.as9143.net)
+        by smtpq2.tb.mail.iss.as9143.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <carlo@alinoe.com>)
+        id 1iqEVK-0002Hg-7d; Sat, 11 Jan 2020 12:00:30 +0100
+Received: from 92-109-146-195.cable.dynamic.v4.ziggo.nl ([92.109.146.195] helo=mail9.alinoe.com)
+        by lsmtp2.tb.mail.iss.as9143.net with esmtp (Exim 4.90_1)
+        (envelope-from <carlo@alinoe.com>)
+        id 1iqEVK-00023a-3e; Sat, 11 Jan 2020 12:00:30 +0100
+Received: from carlo by mail9.alinoe.com with local (Exim 4.90_1)
+        (envelope-from <carlo@alinoe.com>)
+        id 1iqEVJ-0007Bi-N5; Sat, 11 Jan 2020 12:00:29 +0100
+Date:   Sat, 11 Jan 2020 12:00:29 +0100
+From:   Carlo Wood <carlo@alinoe.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Erik Fastermann <erik@fastermann.de>, git@vger.kernel.org
-Subject: Re: Question about the pack OBJ_OFS_DELTA format
-Message-ID: <20200111095604.GA1605786@coredump.intra.peff.net>
-References: <1032627506.120165.1578644787174@email.ionos.de>
- <20200110095707.GA459765@coredump.intra.peff.net>
- <xmqq1rs7m757.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git submodule update  strange output behavior.
+Message-ID: <20200111120029.2baaa090@hikaru>
+In-Reply-To: <xmqqblrbm7c9.fsf@gitster-ct.c.googlers.com>
+References: <20200109192040.46aaa01e@hikaru>
+        <xmqqtv54zcik.fsf@gitster-ct.c.googlers.com>
+        <xmqq8smgz9as.fsf@gitster-ct.c.googlers.com>
+        <20200110101251.3b9f9332@hikaru>
+        <xmqqblrbm7c9.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq1rs7m757.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: carlo@alinoe.com
+X-SA-Exim-Scanned: No (on mail9.alinoe.com); SAEximRunCond expanded to false
+X-SourceIP: 92.109.146.195
+X-Ziggo-spambar: /
+X-Ziggo-spamscore: 0.0
+X-Ziggo-spamreport: CMAE Analysis: v=2.3 cv=OIuTIhSB c=1 sm=1 tr=0 a=at3gEZHPcpTZPMkiLtqVSg==:17 a=jpOVt7BSZ2e4Z31A5e1TngXxSK0=:19 a=kj9zAlcOel0A:10 a=Jdjhy38mL1oA:10 a=ybZZDoGAAAAA:8 a=BjFOTwK7AAAA:8 a=hrmhdJoBOhqMKG-2TzEA:9 a=CjuIK1q_8ugA:10 a=0RhZnL1DYvcuLYC8JZ5M:22 a=N3Up1mgHhB-0MyeZKEz1:22
+X-Ziggo-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 10, 2020 at 11:41:08AM -0800, Junio C Hamano wrote:
+On Fri, 10 Jan 2020 11:36:54 -0800
+Junio C Hamano <gitster@pobox.com> wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Carlo Wood <carlo@alinoe.com> writes:
 > 
-> > The pack-format.txt file says:
-> >
-> >        offset encoding:
-> >             n bytes with MSB set in all but the last one.
-> >             The offset is then the number constructed by
-> >             concatenating the lower 7 bit of each byte, and
-> >             for n >= 2 adding 2^7 + 2^14 + ... + 2^(7*(n-1))
-> >             to the result.
-> >
-> > but I think is missing two bits of information:
-> >
-> >   - the bytes are in most-significant to least-significant order, which
-> >     IIRC is the opposite of the size varint
-> >
-> >   - each 7-bit byte sneaks in some extra data by implicitly adding "1"
-> >     to all but the last byte
+> > It seems to me that the other part of the problem is printing
+> > this output for submodules when nothing (needed to be) is fetched.  
 > 
-> Isn't the latter mentioned in the paragraph you quoted?
+> Hmm, I am not sure if that is a reasonable expectation.  Would it be
+> possible to tell if there is something that needs to be fetched
+> without attempting to contact the other side?
 
-Hmm, yeah. I admit I had trouble parsing exactly what that part was
-trying to say, and thought it was trying to talk about how you'd shift
-the individual bytes. But reading more carefully, it does say "adding",
-so yeah, it accounts for the extra.
+That wasn't even my point though: assume that we can't know, so we
+have to attempt a fetch anyway (seems indeed likely), then I'd
+expect to see this message for *every* submodule, and not just
+for submodules inside other submodule.
 
-It's a little confusing, I think, because in code you'd add just
-continually add one before shifting, rather than trying to add in the
-extra values at the end.
+There is an asymmetry (in the output of this command) between
+submodules in the top level project and submodules inside other
+submodules.
 
--Peff
+This then makes me wonder after all, if the message is suppressed for
+top-level submodules then can't it also be suppressed for the others
+(those that are currently being printed)?
+
+-- 
+Carlo Wood <carlo@alinoe.com>
