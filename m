@@ -2,286 +2,98 @@ Return-Path: <SRS0=hslh=3A=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CC6DC282DD
-	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 01:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C2274C33C9E
+	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 09:46:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CD67020721
-	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 01:51:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 84B8D2082E
+	for <git@archiver.kernel.org>; Sat, 11 Jan 2020 09:46:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=qrpff.net header.i=@qrpff.net header.b="OQvR2Arp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/5lmMzD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728005AbgAKBvm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 10 Jan 2020 20:51:42 -0500
-Received: from bonobo.elm.relay.mailchannels.net ([23.83.212.22]:61324 "EHLO
-        bonobo.elm.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727980AbgAKBvm (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 10 Jan 2020 20:51:42 -0500
-X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 6DFE15001C4
-        for <git@vger.kernel.org>; Sat, 11 Jan 2020 01:42:54 +0000 (UTC)
-Received: from pdx1-sub0-mail-a30.g.dreamhost.com (100-96-4-61.trex.outbound.svc.cluster.local [100.96.4.61])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id D4C26500772
-        for <git@vger.kernel.org>; Sat, 11 Jan 2020 01:42:53 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|stevie@qrpff.net
-Received: from pdx1-sub0-mail-a30.g.dreamhost.com ([TEMPUNAVAIL].
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.18.5);
-        Sat, 11 Jan 2020 01:42:54 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|stevie@qrpff.net
-X-MailChannels-Auth-Id: dreamhost
-X-Ski-Share: 4ff9a5d679e09fdc_1578706974126_113747664
-X-MC-Loop-Signature: 1578706974126:2021237824
-X-MC-Ingress-Time: 1578706974126
-Received: from pdx1-sub0-mail-a30.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a30.g.dreamhost.com (Postfix) with ESMTP id 9B885B1CA4
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 17:42:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=qrpff.net; h=mime-version
-        :from:date:message-id:subject:to:cc:content-type; s=qrpff.net;
-         bh=vEHBQyX9PHKz+UMPBd70LxAXWmg=; b=OQvR2ArpyC1EMHxudznkFjn93yrH
-        165KegGZS2h7GFXAPrAz2oVEmgTuCkh0XoCBounRe4kcYrdDrg8LGIs+H0BANctg
-        vwf/2PtjOOeOdWds81qik5mBrHDS3QjuLL1zi4BGjgfKARPaDoRzvReu7+bM4Sks
-        e5dCRMHgg6eBHPU=
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: stevie@qrpff.net)
-        by pdx1-sub0-mail-a30.g.dreamhost.com (Postfix) with ESMTPSA id 3745AB1C9C
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 17:42:48 -0800 (PST)
-Received: by mail-lf1-f48.google.com with SMTP id n25so2895136lfl.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2020 17:42:48 -0800 (PST)
-X-Gm-Message-State: APjAAAUibaZFRRBOjJi/g7dTrsLPhR+CqCr2fmphtXxi7gTkOtVa7vS4
-        tAb5Lna9wr7Jdz3BjSZ10oaZGPys/KX54I5azDQ=
-X-Google-Smtp-Source: APXvYqwQttSkRTQEHos6wQ2RfQl0mBYog7lvPYeD1MTDxdgT11EDbAinfgKITenI5ZM1tOSR5dBIKBNJMVyP4yaIzSI=
-X-Received: by 2002:a05:6512:488:: with SMTP id v8mr4217555lfq.173.1578706966226;
- Fri, 10 Jan 2020 17:42:46 -0800 (PST)
-MIME-Version: 1.0
-X-DH-BACKEND: pdx1-sub0-mail-a30
-From:   Stephen Oberholtzer <stevie@qrpff.net>
-Date:   Fri, 10 Jan 2020 20:42:35 -0500
-X-Gmail-Original-Message-ID: <CAD_xR9f7jHnCByOaOVJvxdW2c5dPHM8OUDwZhcPL1iTVR3NzmQ@mail.gmail.com>
-Message-ID: <CAD_xR9f7jHnCByOaOVJvxdW2c5dPHM8OUDwZhcPL1iTVR3NzmQ@mail.gmail.com>
-Subject: [RFC] Proposal: New options for git bisect run to control the
- interpretation of exit codes
+        id S1728749AbgAKJqg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jan 2020 04:46:36 -0500
+Received: from mail-qk1-f173.google.com ([209.85.222.173]:35162 "EHLO
+        mail-qk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728743AbgAKJqg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Jan 2020 04:46:36 -0500
+Received: by mail-qk1-f173.google.com with SMTP id z76so4319071qka.2
+        for <git@vger.kernel.org>; Sat, 11 Jan 2020 01:46:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=WrFcuDUSNJbCZrR2BFFHUVKIlyhDby7GxRrxdtAy8wk=;
+        b=P/5lmMzDlxZWVvhHZbNa0Z3Ob5ftkrMcWLLPuEkAFqT2MopAfN1QgMYjosvuUfkZlH
+         JWF+TEMBqoyZXoULQBJ6BWkO8rPFkZpqDaXHfKp+eUAsdegNccMyJwwKOOc9c9WvZwbj
+         S7FZfnmx0at6JIE8UfNFP5kw/1WLUu5WRUyoWRs19v9GuY/FReM5FLvJGOJBLV21MPnI
+         tLml7UFv1w0lbqDIret5jtUhL4I3Jp9/8EVgvAyN14nVh1Vb7iYDHfVmL/gFv2iaU0FJ
+         xUFrb3FfE48dGBY65aGMISmdTddYGxsoxzhbjeXyoYJolMhJHqTX7xS6GL50hVfdQLex
+         jUmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=WrFcuDUSNJbCZrR2BFFHUVKIlyhDby7GxRrxdtAy8wk=;
+        b=s7SfTzrlUBxiWQIeFqBNCgDLcIngOfBwgrX+TLJ2Qrcxk+VpMm3ZIFNMesIYXTpJM0
+         cmt54rbvOde/UTWCh7oFvS1LfY5wqZpblEDKGlfTkLXTl565VWeGkoWEAQ6VYxxWmrM6
+         SQ0+HXsFR7/8ix+31H9SofYmJQEqr5Ofs2/Dx+D6KNmceT5d8fAdOiQZirWoCcnOobb1
+         dprkK6eAsW6zoNIgEAtT1x7SdZIXm3XbDLXNYiWYGYqTguU5MpCA/YXEu9rPXeZAt2El
+         /oEKXJ75m0fpOiO53QCI09ELMMxNQr1SujK1Ssw3NTOObZxTD14KDQBS863Y5Sxf6LQW
+         90tg==
+X-Gm-Message-State: APjAAAWwwjtXy3Uymsr57M90sJk3pYOHdwG9nUz20SEmtAUGI1u+7Wxa
+        N95AXxpF27GAb+WIWbgas2SooGy3edE=
+X-Google-Smtp-Source: APXvYqypzKzPiRHIjZYDvkVvFcema5RIt91G3fiRmL5zIFq0110I3RcQRn6TuJNfTUkEDcT14l3M6w==
+X-Received: by 2002:a37:a1c1:: with SMTP id k184mr7446672qke.66.1578735994811;
+        Sat, 11 Jan 2020 01:46:34 -0800 (PST)
+Received: from [192.168.1.157] ([152.208.5.91])
+        by smtp.gmail.com with ESMTPSA id l184sm2119755qkc.107.2020.01.11.01.46.34
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 11 Jan 2020 01:46:34 -0800 (PST)
 To:     git@vger.kernel.org
-Cc:     Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedufedrvdeigedgfeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpegghfffkffuvfgtsehttdertddttdejnecuhfhrohhmpefuthgvphhhvghnucfqsggvrhhhohhlthiivghruceoshhtvghvihgvsehqrhhpfhhfrdhnvghtqeenucfkphepvddtledrkeehrdduieejrdegkeenucfrrghrrghmpehmohguvgepshhmthhppdhhvghlohepmhgrihhlqdhlfhduqdhfgeekrdhgohhoghhlvgdrtghomhdpihhnvghtpedvtdelrdekhedrudeijedrgeekpdhrvghtuhhrnhdqphgrthhhpefuthgvphhhvghnucfqsggvrhhhohhlthiivghruceoshhtvghvihgvsehqrhhpfhhfrdhnvghtqedpmhgrihhlfhhrohhmpehsthgvvhhivgesqhhrphhffhdrnhgvthdpnhhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
+From:   Kevin Bowersox <kevin.m.bowersox@gmail.com>
+Subject: Potential Issue with ls-tree documentation
+Message-ID: <18b8b8fd-ee38-e1bf-8fae-b719b7b78a75@gmail.com>
+Date:   Sat, 11 Jan 2020 04:46:33 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.6.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After considering the responses I got for my --invert-status proposal, I
-went back to the drawing board and considered how it might interact with
-another feature I was going to propose.  This is the result.
+Within the ls-tree documentation for Git found here: 
+https://git-scm.com/docs/git-ls-tree <https://git-scm.com/docs/git-ls-tree>
 
-To avoid repeating myself, I'm going to start with an example of what I
-imagine putting into Documentation/git-bisect.txt, to document this
-feature.  After the second snip line, you can find my justification for
-this feature, as well as some preemptive answers to questions I expect
-people to have.
+It mentions the following:
 
->8----------------------------------------------------------------------8<
+the behaviour is slightly different from that of "/bin/ls" in that the 
+<path> denotes just a list of patterns to match, e.g. so specifying 
+directory name (without |-r|) will behave differently, and order of the 
+arguments does not matter.
 
-{at top}
+I'm wondering if this statement is accurate.  Here is my reasoning:
 
-git bisect run [--(old|good|<term-old>)-status=<list>]
-[--(new|bad|<term-new>)-status=<list>]
-[--skip-status=<list>] [--] <cmd>...
+When using this form of the command:
 
-{below the paragraph beginning with "The special exit code 125")
+git ls-tree <tree-ish> [<path>]
 
-Custom exit status mappings
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+the <tree-ish> (assuming this is typically a branch name) must be 
+specified prior to the path, making the order of the arguments matter 
+when issuing the command.
 
-The previous paragraphs describe how the exit status of <cmd> is mapped
-to one of four actions:
+If my reasoning is correct I would be glad to submit the changes for 
+review/merge.
 
- * `old`/`good`, which defaults to exit status 0.
+Appreciate any insights.
 
- * `new`/`bad`, which defaults to exit status 1-127 except 125.
-
- * `skip`, which defaults to exit status 125.
-
- * Any status not mapped to one of the first three is treated as a fatal
-   error, causing `git bisect run` to immediately terminate with a
-   nonzero exit status.
-
-For more precise control over bisect run's interpretation of the command's
-exit status, you can use one or more `--<term>-status=<list>` options:
-
-<term>::
-  One of the following:
-  * `skip` (`--skip-status`)
-  * `old` or the corresponding term specified in the bisect start call
-     (`--old-status` or `--good-status`)
-  * `new` or the corresponding term specified in the bisect start call
-     (`--new-status` or `--bad-status`)
-<list>::
-A comma-separated list of values (e.g. 1) or ranges (e.g. 1-10).
-
-(It should be noted that specifying --old-status is unlikely to be useful
-without a corresponding --new-status option.)
-
-This feature can make a few things much easier:
-
- * If you want to bisect a "fix", you can use (as an example)
-
----------------
-$ git bisect run --old-status=1-127 --new-status=0 my_script arguments
----------------
-
- * If the test involves some fundamentally-unreliable aspects such as I/O
-  (for example, a network connection could be disrupted, or a file write
-   could fail due to disk space issues), you can specify something like
-   --new-status=99, and then any exit status other than 0 or 99 will be
-   treated as a fatal error:
-
-   -----------------
-   $ git bisect run --new-status=99 sh -c 'setup-test && (run-test || exit 99)'
-   -----------------
-
-   If setup-test exits with a nonzero status code (except 99), then the
-   run will abort with an error, rather than assume that the current commit
-   contains the issue being bisected.
-
-
-The default status code lists are as follows:
-  --skip-status=125
-  --old-status=0
-  --new-status=1-127
-
-The priority of each classification is as follows:
-
- * If the status code is on the --skip-status list, the action is "skip".
-   Note that this takes precedence over the --old-status and --new-status
-   lists; doing so simplifies the specification of --new-status.
-
- * If the status is on the --old-status list, *and* not on the --new-status
-   list, the action is "old" (or "good").
-
- * If the status is on the --new-status list, *and* not on the --old-status
-   list, the action is "new" (or "bad").
-
- * Otherwise, the command is treated as having experienced a fatal error,
-   and run will terminate with a nonzero exit status.
-
-In the last case, the bisection will be left where it was; you may correct
-the error and perform another bisect run, or you may finish the bisection
-with manual good/bad commands.
-
->8----------------------------------------------------------------------8<
-
-The motivation
-==============
-
-First, an excerpt from the current documentation for 'git bisect':
-
-> 126 and 127 are used by POSIX shells to signal specific error status
-> (127 is for command not found, 126 is for command found but not executable
-> - these details do not matter, as they are normal errors in the script,
-> as far as bisect run is concerned
-
-This shows a fundamental disconnect between bisect run's view of the
-world and reality.  I submit that, in reality, status codes 126 and 127 are
-overwhelmingly likely indicators that the script did not work correctly,
-in which case the run should be halted so the user may correct the issue.
-However, 126 and 127 are mapped to "git bisect bad" -- as in, "this commit
-definitely contains the bug that I am searching for".
-
-
-Let's consider the consequences of an inappropriate status code:
-
-- 'good':  The bisect will incorrectly select the wrong commit (specifically,
-  a later commit than the one that actually introduced the issue.)
-
-  This will also indirectly result in more trials than would otherwise be
-  necessary to determine the result, because the bisection will have to be
-  restarted at the point where the mistake occurred.  (In the worst possible
-  case, where a mistake occurs on the first step, the bisection will take
-  at least twice as long.)
-
-- 'bad': The bisect will incorrectly select the wrong commit (specifically,
-  an earlier commit than the one that actually introduced the issue.)
-
-  Like 'good', this will also indirectly result in extra trials.
-
-- 'skip': The bisect will unnecessarily test at least one extra commit for
-  each false 'skip' result.  In the worst case, it may not be able to narrow
-  down the issue to a single commit.
-
-- Abort: The bisection stops until the user restarts it.  No extra commits
-  are tested, though if the user isn't paying attention, the wallclock
-  time will take longer than usual.
-
-In particular, the behavior of a false match on 'good' or 'bad' is *at best*
-extra time needed to do the bisection.  At worst -- if the user is not
-familiar with the code in question -- a great deal of confusion and time-
-wasting can result as the user investigates the wrong commit.  As such, it
-is critical that you have no false 'good' or 'bad' results.
-
-
-If you're using a shell script to run your test, a false 'good' result can
-easily be prevented by putting 'set -e' at the top of the script.
-
-Avoiding a false 'bad' result is far more difficult, especially if the test
-is complex and you're not familiar with shell scripting in general.  (The
-man page for bash, on my machine, is 3725 lines long, and does not lend
-itself well to searching.)  For the task that set me down this path, it
-took me about six iterations to create a robust script that would return
-the exit code that git wanted,  and _it still didn't work right in all
-cases_.
-
-
-What would have been a great deal simpler is if I could have just picked
-an exit code that none of the other commands in my script would ever
-return (such as 99), and told git to treat any code other than 0 or 99 as
-a fatal error.  Which is essentially what I ended up doing (or trying to),
-but unfamiliar with shell scripting as I was, I had several issues.
-
-If I can make it easy for someone to use bisect run without them having
-to learn any otherwise-unnecessary shell scripting constructs, I would
-consider that a win.
-
-
-Pre-emptive Q&A
-===============
-
-Q: Why allow ranges?  Why not restrict it to single status codes?
-A: It allows for a simpler implementation, because the default 'bad' status
-   list is a already a range (1-124,126-127).  By supporting ranges,
-   we need only one single code path:
-
-   exit_bad=1-124,126-127
-   # override exit_bad if --bad-status is specified
-   # check exit code against exit_bad
-
-Q: Why treat any exit code that's on both the 'old' and 'new' lists as a
-   fatal error?
-A: Because it's obviously a mistake, and we don't know the correct way
-   to interpret it.  By halting the run and returning an error, we can
-   return control to the user, who can fix it by fixing the overlapping
-   lists and re-running the command.
-
-Q: Why not an error when a code is on both 'old' and 'skip', or 'new' and
-   'skip'?
-A: Two reasons:
-   1. As I detailed earlier, a false 'skip' is less problematic than a
-      false 'new'/'bad'.
-   2. By prioritizing 'skip' over 'new', the default behavior for 'new'
-      can be written as '1-127' instead of '1-124,126-127'.
-
-
--- 
--- Stevie-O
-Real programmers use COPY CON PROGRAM.EXE
+Kevin Bowersox
