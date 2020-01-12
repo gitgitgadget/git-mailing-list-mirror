@@ -2,206 +2,136 @@ Return-Path: <SRS0=w3fS=3B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,UNPARSEABLE_RELAY,
-	URI_HEX,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB067C33CA2
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 19:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D95AC33CA2
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 19:56:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 996CB21744
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 19:45:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2FA962053B
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 19:56:55 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fOa23r7p"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733217AbgALTpJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jan 2020 14:45:09 -0500
-Received: from belmont79srvr.owm.bell.net ([184.150.200.79]:35251 "EHLO
-        mtlfep01.bell.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1732957AbgALTpJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jan 2020 14:45:09 -0500
-X-Greylist: delayed 981 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Jan 2020 14:45:08 EST
-Received: from bell.net mtlfep02 184.150.200.30 by mtlfep02.bell.net
-          with ESMTP
-          id <20200112192846.XDFC115221.mtlfep02.bell.net@mtlspm01.bell.net>
-          for <git@vger.kernel.org>; Sun, 12 Jan 2020 14:28:46 -0500
-Received: from [192.168.2.49] (really [70.53.53.104]) by mtlspm01.bell.net
-          with ESMTP
-          id <20200112192846.KBBR130487.mtlspm01.bell.net@[192.168.2.49]>;
-          Sun, 12 Jan 2020 14:28:46 -0500
-To:     git@vger.kernel.org
-From:   John David Anglin <dave.anglin@bell.net>
-Subject: Porting git version 2.25.0.rc2 to hppa2.0w-hp-hpux11.11 using
- gcc-8.3.1
-Openpgp: preference=signencrypt
-Message-ID: <c9aa5047-7438-8f2f-985c-1c8771354211@bell.net>
-Date:   Sun, 12 Jan 2020 14:28:47 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        id S1733294AbgALT4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jan 2020 14:56:54 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37048 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728659AbgALT4x (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 12 Jan 2020 14:56:53 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DF55260787;
+        Sun, 12 Jan 2020 19:56:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1578859013;
+        bh=S8CyrHyXdypJJM4/tGZK0kPK7kQIHYML52iTeJQ6VBE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=fOa23r7phiyPNHVFTrIdXdXtBvDtQuIySbtWWHx3jgRGwqkzBdkrZdIXyzBNfnyyS
+         Fp2mVBfCEKu9zjWbgkmDA3L8iCTiZjJSRSX3OgfEKJphbehoOkND5KgXSb/HfQdVLc
+         b29ajIs1hKY/66Ks0mssGBmQ8dMziaUdXbnRkx1vTlpIMPxmV6L5g1UclSoNMVGaDl
+         7nDS9t9S3w328Z7wIto6w4WtdL3FhYRy4+2KgkiTySf2ql9kN1TiKgRf2Watp9VkOz
+         oPU5HENqcyV88tj8i2QsceMeRu5I6ddhZaAhfYsOz1uLV76xRtCjQbWwqOW6Br+29a
+         nXi+o4Eg0LtVfzbf++5SYjRYXXVVWhjHPMmgYirbta5QeSQ4hsKK58b6KNZxxgqFBD
+         Ow3LlDAd+wgZWrBL4me+Vpg032u0L/tO1ljiWSqx+1KDSGNK49xBdLPuG7tX3JLQf4
+         Yyx6lBtHYcJ2vO/NS7t9O8YGd9iDMOgPepXVsd4on757V+LPa/q
+Date:   Sun, 12 Jan 2020 19:56:46 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     1234dev <1234dev@protonmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [Feature request] An easier way of rebasing if you just want to
+ "force send" a file back to a previous commit
+Message-ID: <20200112195646.GQ6570@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        1234dev <1234dev@protonmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <jvRjyPq1IXAbIqfIOfEu2KxNKCMq9ktnAlVF9jGrccIvlPt22V62Ic8j0dHvLDOS31YrHZ2_t8ldgUTgJQHGdsMiYhnpYJJmOlJQFwiif_8=@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CM-Analysis: v=2.3 cv=I5Mbu+og c=1 sm=1 tr=0 a=htCe9XT+XAlGhzqgweArVg==:117 a=htCe9XT+XAlGhzqgweArVg==:17 a=IkcTkHD0fZMA:10 a=Jdjhy38mL1oA:10 a=9I5xiGouAAAA:8 a=FBHGMhGWAAAA:8 a=jWkETUwYWubrse574Y8A:9 a=QEXdDO2ut3YA:10 a=JLDirTIzZPoA:10 a=ARFN2YZ7Uv8kHtb7LS-q:22 a=9gvnlMMaQFpL9xblJ6ne:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=UDnyf2zBuKT2w-IlGP_r:22
-X-CM-Envelope: MS4wfCA4pba58+EFc4+frsVPo6IDv4M+Ww5bVlrATyk/ev+naeYO8vyJTo0XshmVuWkHXdetktpp4ARQOqQ+S/f9UDIb9FAtRwpBo9J1+24Trs3ZjfCkg9+j 7XyJjSi7rZFIekcGHEeJs1cSB113Q0KnYRJWPzng5BWxDqcI267ra7iT
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Ep5m4srWGXPl6O+g"
+Content-Disposition: inline
+In-Reply-To: <jvRjyPq1IXAbIqfIOfEu2KxNKCMq9ktnAlVF9jGrccIvlPt22V62Ic8j0dHvLDOS31YrHZ2_t8ldgUTgJQHGdsMiYhnpYJJmOlJQFwiif_8=@protonmail.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since the GCC project is switching to a git archive, there was a need to port git to hpux11.11.
-In particular, we need git to continue support for the hppa64 target as linux doesn't yet have a 64-bit
-runtime.  This mail documents the changes that I needed to build git on hppa2.0w-hp-hpux11.11.
 
-1) SCNuMAX is missing from inttypes.h
+--Ep5m4srWGXPl6O+g
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I needed to add back a define in git-compat-util.h.  I will probably fix this in gcc in the near future.
+On 2020-01-12 at 19:42:46, 1234dev wrote:
+> Hello!
+>=20
+> I'm pretty new to all of this, but I was wondering. Is there an easier wa=
+y of rebasing if you just want to force send a file back to a previous comm=
+it? Rebasing can get quite tiresome in the long run. It's like 7 steps, and=
+ that's without the merge conflicts someone with my luck is guaranteed to r=
+un into.
+>=20
+> For instance, say I've made changes to a file. Those changes are too tiny=
+ and insignificant to make a new commit out of - they actually ought to be =
+part of a commit I made last night.
+>=20
+> If there just was a way to cheat :) I'm aware it would rewrite my entire =
+history but that's okay, I haven't shared my repo with anybody yet. Maybe s=
+omething along the lines of "git rebase --off-she-goes <file> <hash>"?
+>=20
+> As opposed to "git stash && git rebase --interactive '<hash>^' && <change=
+ pick =3D> edit> && <apply changes manually> && git add <file> && git commi=
+t --amend && git rebase --continue && git stash pop && <merge conflict that=
+ requires manual intervention> && git rebase --continue && git stash pop &&=
+ <still a conflict> && rm <file> && git checkout <file> && <repeat the whol=
+e process> && <still a conflict> && <go to IRC and ask for help>
 
-2) strtoll() and strtoull() are not supported
+The way I usually handle this is something like the following, although
+I have some helper aliases that wrap this:
 
-This causes a problem in t/helper/test-progress.c.  Regardless of what configure thinks, the target
-supports strtoimax() and strtoumax().  So, I changed t/helper/test-progress.c to use uintmax_t and
-strtoumax().  strtoimax() and strtoumax() are used in other places, so this makes test-progress.c
-consistent with the other usage.
+  git add <file>
+  git commit --fixup <hash>
+  git stash # if necessary
+  GIT_SEQUENCE_EDITOR=3Dtrue git rebase -i --autosquash
 
-Internally, strtoumax() is implemented is __strtoull().  So, the strtoumax() version has the same range
-as the strtoull() version. It would be possible to implement strtoull() and strtoll() with an include hack
-in gcc but most packages use the versions in libiberty and gnulib.
+That does use the interactive machinery to apply the fixup commit, but
+it also avoids prompting you to edit the interactive TODO list.  It
+doesn't avoid the merge conflicts which can occur, but it is (IMO) the
+easiest way to go about it.
 
-3) Bus error in recv_sideband
+If I'd like to edit the message, I use "git commit --squash" to add the
+comments I'd like to add and I'm only prompted to squash together those
+messages.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-See:
-http://git.661346.n2.nabble.com/git-failure-on-HP-UX-td6335104.html
+--Ep5m4srWGXPl6O+g
+Content-Type: application/pgp-signature; name="signature.asc"
 
-This error occurs when one tries to clone an archive:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
 
-Dump of assembler code for function recv_sideband:
-   0x0017fe30 <+0>:     stw rp,-14(sp)
-   0x0017fe34 <+4>:     addil L%10000,sp,r1
-   0x0017fe38 <+8>:     ldo 80(r1),sp
-=> 0x0017fe3c <+12>:    stw r14,-70(sp)
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4bef0ACgkQv1NdgR9S
+9ouWOw//cazfzuNEFxIOY4Pzx0F1Ndx7r4R/+U5dgdUrmvARXdw1DBgucQHRFACg
+fGZ2ZG3KZ+B/gQamf4exat/HaXDbmBFgNCn+4XLJ4VYFmTASNfpaXnH/O2r7T/tx
+BgZG8kziHgmVPRWwGu4KTJzYnrdDeqrR/ZqxdyW+xG83332wDBRbrn3DNL/PN9vF
+Ku4kjdUS9Re2szFOd3LGOAKPPQu0MNXx7yE3geggU0S6WE+1Xua8UozJ08qnyIdn
+wq7nX4D+mFdKkXGyJYOurzqY5CDesOaM68/LhCZk4oUlHqJKvtEXT7ejCBNKIBF6
+v/U8mMZBJgk8X8VmFhGmFRokl2smwlXhpixUG6/AamtUcTByTwvxnpsXEnDyCITr
+nvLT16d/0LTbq/OA+E+UPNol8gUFOCIJ91rnIzWoR9lwJqkRNTRPnzUt4u0As9Bm
+eYB8NKlHerMh3/uSbYin7xGulo447MFPO9s2C5bRlu2uO3HmUE1Y58GUpc0AMkYT
+LtoYzczhuWMwYzstIQLc3H9hLacDMMXMtDHJyPPWYL9mk3lY5a3tLGqQKJtf43jC
+yAuGz0bB65xpmYAsx4canVLHgE03EjvvANmx4uxmWXNVXvxfTLPPN4FI93Xyp0y+
+Tk2dIbrWjtPHZFISMWS2cEbxz9U8hDgQ2u8GuBsccDScAQuoMYw=
+=5o1W
+-----END PGP SIGNATURE-----
 
-(gdb) bt
-#0  0x0017fe3c in recv_sideband () from /opt/gnu/libexec/git-core/git
-#1  0x0012e874 in sideband_demux () from /opt/gnu/libexec/git-core/git
-#2  0x001b5e80 in run_thread () from /opt/gnu/libexec/git-core/git
-#3  0xc005b290 in __pthread_body () from /opt/langtools/lib/libpthread.1
-
-int recv_sideband(const char *me, int in_stream, int out)
-{
-        char buf[LARGE_PACKET_MAX + 1];
-        ...
-
-The bus error occurs because the frame size needed for buf and the other locals exceeds the
-default thread stack size.  This can be changed using the PTHREAD_DEFAULT_STACK_SIZE environment
-variable.  For example,
-
-export PTHREAD_DEFAULT_STACK_SIZE=131072
-
-It also could be adjusted using pthread_default_stacksize_np().  However, it seemed better to me to
-allocate buf using malloc and avoid the issue entirely.
-
-4) NO_PREAD is required
-
-Without NO_PREAD, we get the following error:
-
-fatal: premature end of pack file, 106 bytes missing
-fatal: index-pack failed
-
-This occurs on the first pread() call.  There is some kind of sequencing issue as doing a fprintf
-to stderr changes the behavior.  However, it doesn't fix the error.
-
-5) -pthread is required
-
-The libc library contains pthread stub routines.  -pthread is needed to cause gcc to correctly link
-with thread support.
-
-The following summarizes the code changes:
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index aed0b5d4f9..bcc0d925bf 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1335,4 +1335,8 @@ static inline void *container_of_or_null_offset(void *ptr, size_t offset)
- 	((uintptr_t)&(ptr)->member - (uintptr_t)(ptr))
- #endif /* !__GNUC__ */
-
-+#ifndef SCNuMAX
-+#define SCNuMAX PRIuMAX
-+#endif
-+
- #endif
-diff --git a/pkt-line.c b/pkt-line.c
-index a0e87b1e81..5024325c81 100644
---- a/pkt-line.c
-+++ b/pkt-line.c
-@@ -444,7 +444,7 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
-
- int recv_sideband(const char *me, int in_stream, int out)
- {
--	char buf[LARGE_PACKET_MAX + 1];
-+	char *buf = xmalloc(LARGE_PACKET_MAX + 1);
- 	int len;
- 	struct strbuf scratch = STRBUF_INIT;
- 	enum sideband_type sideband_type;
-@@ -460,6 +460,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 			write_or_die(out, buf + 1, len - 1);
- 			break;
- 		default: /* errors: message already written */
-+			free(buf);
- 			return sideband_type;
- 		}
- 	}
-diff --git a/t/helper/test-progress.c b/t/helper/test-progress.c
-index 42b96cb103..b96a20237a 100644
---- a/t/helper/test-progress.c
-+++ b/t/helper/test-progress.c
-@@ -54,18 +54,18 @@ int cmd__progress(int argc, const char **argv)
- 		char *end;
-
- 		if (skip_prefix(line.buf, "progress ", (const char **) &end)) {
--			uint64_t item_count = strtoull(end, &end, 10);
-+			uintmax_t item_count = strtoumax(end, &end, 10);
- 			if (*end != '\0')
- 				die("invalid input: '%s'\n", line.buf);
- 			display_progress(progress, item_count);
- 		} else if (skip_prefix(line.buf, "throughput ",
- 				       (const char **) &end)) {
--			uint64_t byte_count, test_ms;
-+			uintmax_t byte_count, test_ms;
-
--			byte_count = strtoull(end, &end, 10);
-+			byte_count = strtoumax(end, &end, 10);
- 			if (*end != ' ')
- 				die("invalid input: '%s'\n", line.buf);
--			test_ms = strtoull(end + 1, &end, 10);
-+			test_ms = strtoumax(end + 1, &end, 10);
- 			if (*end != '\0')
- 				die("invalid input: '%s'\n", line.buf);
- 			progress_test_ns = test_ms * 1000 * 1000;
-
-The following summarizes the changes to config.mak.autogen after running configure:
-
---- config.mak.autogen.save	2020-01-12 13:17:09 +0000
-+++ config.mak.autogen	2020-01-12 13:14:54 +0000
-@@ -75,13 +75,15 @@
- NO_MEMMEM=YesPlease
- NO_STRLCPY=YesPlease
- NO_UINTMAX_T=
--NO_STRTOUMAX=YesPlease
-+NO_STRTOULL=YesPlease
-+NO_STRTOUMAX=
- NO_SETENV=YesPlease
- NO_UNSETENV=YesPlease
- NO_MKDTEMP=YesPlease
- NO_INITGROUPS=
- HAVE_GETDELIM=
- HAVE_BSD_SYSCTL=
--PTHREAD_CFLAGS=
-+PTHREAD_CFLAGS=-pthread
- PTHREAD_LIBS=
- NO_PTHREADS=
-+NO_PREAD=YesPlease
-
-Regards,
-Dave
--- 
-John David Anglin  dave.anglin@bell.net
+--Ep5m4srWGXPl6O+g--
