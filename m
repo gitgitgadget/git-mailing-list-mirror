@@ -2,114 +2,115 @@ Return-Path: <SRS0=w3fS=3B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D0E1C3F68F
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 04:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD513C32771
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 06:44:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E74B3214D8
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 04:15:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8C4F22082E
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 06:44:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qSMYzYrX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbEN+RCj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732138AbgALEPg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 11 Jan 2020 23:15:36 -0500
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:53955 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732129AbgALEPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jan 2020 23:15:36 -0500
-Received: by mail-qk1-f202.google.com with SMTP id 12so3950068qkf.20
-        for <git@vger.kernel.org>; Sat, 11 Jan 2020 20:15:36 -0800 (PST)
+        id S1732307AbgALGoP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jan 2020 01:44:15 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39095 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732302AbgALGoP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jan 2020 01:44:15 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y11so5493883wrt.6
+        for <git@vger.kernel.org>; Sat, 11 Jan 2020 22:44:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=VnQaPM0Mad1A+V1BPIrdiY9f3LDHQ45Vq0GKp0+1A3o=;
-        b=qSMYzYrXD1Ow6LyyQ9ZKHQ6XpKaHAiau5JBvIJSJpxIhVwhPr3vLepoDo+Pg7hHJxG
-         NrsizbjGzn77tqOQgzUpuCNILQW0+3g4KwtC11pXiJVRhHFlyyuJzzcdzzGJtP0M0s/5
-         4wYDMOuMhb+PSAoiZsftBfjfD3+5ZD0a0j1VUS67viX1RQcRZtZ/1WYn2LPoKvbYP7QR
-         dz5B59Buv8pb9hg0azqnuyPMB3+ZOMEcpoK8NvD4Yu77/1bMI1Oo4xUGsriiJlcVAX+8
-         fEmEsayth86Dy1uOIl48wMC2Kie2fLp9567yzPVPnmXKHmbN6IQVR2y6/WPjk+kd7fzQ
-         Qa9w==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yBKeY+etNxLSH9hTk6wwVbc3xhqEcIN4cirYzm1YNPI=;
+        b=TbEN+RCjGMwfjT3KQ50hp7HHXRDnRYeHq3z6FAp6CKXNyOSMvcUupDq88ZIW+pSs86
+         IkXGLQ0nCGMgZo026SaNZnHW1v/vevUSG8GmnGtRRZRVXaO72ag0Eu+kO7dohq5f59Os
+         uLG1w7UXkjSLxvKhTnpKCggiWIW+bDcBVJsuLGUMLQOYEpeukzYiXjaavNQTB5WnKUch
+         OJeRGm68ftHAaNRdSAH0vnbnn0n3HSwKzKqievy1CdeBCCFOYD3jf3hWc0KCqgJDU3XE
+         jfN90gsiVMZPVuLtrc/M85D4KdR07FbWU6NXfu3QjIofYT/l6sd3sfbYB7F9sOOWmg1G
+         iRbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VnQaPM0Mad1A+V1BPIrdiY9f3LDHQ45Vq0GKp0+1A3o=;
-        b=BXZzBrgK756RucgTxKsAxwvEzC5Sd4DklwaOARSLuUsUb3T5XC9ZuWqyljPqqwC0tg
-         P5ZkGk41kL/EZT0JpgOMwS6D7dYtfpbR17PFgLyjykl5xa8QgeWFtdL1geKggHG3IdIx
-         0CqEX28ZIAG0IDOFbmhYnXY+4nj3qTmidQg4KsHoa5v8eVDf8bxAtIG0a0hobb+sfDCr
-         UMoHhFczaaIxohWJinnsAYwLwaCaQ9JhvwAIi277msXZFGwWbFcLwtMGUP2vrnBMDcRJ
-         DukhOEiE04jaRyEVg5InbD8afqvyKjSA7OEVZGj53p16Dw0WXG0MMdyvGvPPXW+9xSDo
-         9tkg==
-X-Gm-Message-State: APjAAAXA/i9gwU06VnKace+fWDEPft27fl9JADQs5cXIAS3//LlAr5oH
-        lXTuf+u+QHDCnou8z5G/kYZKufvPpPT3hAxLqwntFGwYjJ1tR1bCko/xTYqlsWhD1fVpt0P+wXf
-        MDpHFjfMVeAkrZ4RTheC6fsoSDph9MLgKJKf+myamxvsLhNeV0j6zh7G+jvr1BuHX2wGs2BNbMo
-        ht
-X-Google-Smtp-Source: APXvYqzU2C1ohNrvnKmsNRL1mUf2LSpXZ8XSju4MV3rERLJ6t/ZGA8FOrzBqNvVSuu0OBbkgFIIFylYVKDIUyR0V0T1o
-X-Received: by 2002:a0c:f8ce:: with SMTP id h14mr6048190qvo.91.1578802535279;
- Sat, 11 Jan 2020 20:15:35 -0800 (PST)
-Date:   Sat, 11 Jan 2020 20:15:25 -0800
-In-Reply-To: <cover.1578802317.git.jonathantanmy@google.com>
-Message-Id: <be1d6aa4c4fd8868f3682b73c01a92d3830534ad.1578802317.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1578802317.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
-Subject: [PATCH 2/2] fetch: forgo full connectivity check if --filter
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yBKeY+etNxLSH9hTk6wwVbc3xhqEcIN4cirYzm1YNPI=;
+        b=p7ZURiAQ2IUTD3RUWhUtjFSfFe+HAbwo7rsCT1g6d/KTF4xb+5WA/Zq64tD0UF+sXx
+         dR5cgiUKxI7Vt7NZsuFfuKCzxE8tRfnDNfb9EHH1dkw7X9uG60IBtw+70CZG6zORsnjz
+         zZCIB/97gDnkDfW9d51txREUlhkzVkYRvw0eMRVKSdmcUZPHx/IhgbCUpmEB7Z//HSOC
+         e+5n1AZQ05xfRf4BdqCItF0myK+A5AJR8T5/sLQE3o/PU7TXUNQqcGLUqIrG/HneZoM8
+         PSiU9oFW1Ou3KB6rHYfqbfqWm+4tGcGyV8ZliGKTUv3H+zamHk1IRJS1K6KV1dbuyvfV
+         FbRg==
+X-Gm-Message-State: APjAAAVnm4HOFYNS9Z03vyxHq5aHCM6ImekaUb4FMai3/xHtR4PXMGqm
+        R2ddwyQcJPPDPhiUFgSiWzuA1AwPeuBLejFkE44=
+X-Google-Smtp-Source: APXvYqzX6Pt64AlBBeSpzDow7LBuZ5pSAvOaPOi54ay1Yo7zuSG3dsLpM3vn+9LSp62u0SJUcKM06dmh87ibWuuaBDM=
+X-Received: by 2002:a5d:66c3:: with SMTP id k3mr11265924wrw.370.1578811453346;
+ Sat, 11 Jan 2020 22:44:13 -0800 (PST)
+MIME-Version: 1.0
+References: <20200111123533.1613844-1-marcandre.lureau@redhat.com>
+ <CAPig+cQXkiFOz5HczPEgXuSOH_3KsCwXwVwe0qvQzLDtFgnAXw@mail.gmail.com>
+ <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com> <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
+In-Reply-To: <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
+From:   =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date:   Sun, 12 Jan 2020 10:44:01 +0400
+Message-ID: <CAJ+F1CJP88PXP0vLtXQd82Z3RmX0uGic2NxBy3iSh0nBnRG0Vg@mail.gmail.com>
+Subject: Re: [PATCH] branch: let '--edit-description' default to rebased
+ branch during rebase
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a filter is specified, we do not need a full connectivity check on
-the contents of the packfile we just fetched; we only need to check that
-the objects referenced are promisor objects.
+Hi Eric
 
-This significantly speeds up fetches into repositories that have many
-promisor objects, because during the connectivity check, all promisor
-objects are enumerated (to mark them UNINTERESTING), and that takes a
-significant amount of time.
+On Sun, Jan 12, 2020 at 5:27 AM Eric Sunshine <sunshine@sunshineco.com> wro=
+te:
+>
+> On Sat, Jan 11, 2020 at 9:55 AM Marc-Andr=C3=A9 Lureau
+> <marcandre.lureau@gmail.com> wrote:
+> > On Sat, Jan 11, 2020 at 5:28 PM Eric Sunshine <sunshine@sunshineco.com>=
+ wrote:
+> > > On Sat, Jan 11, 2020 at 7:36 AM <marcandre.lureau@redhat.com> wrote:
+> > > > +                               if (wt_status_check_rebase(NULL, &s=
+tate)) {
+> > > > +                                       branch_name =3D state.branc=
+h;
+> > > > +                               }
+>
+> Taking a deeper look at the code, I'm wondering it would make more
+> sense to call wt_status_get_state(), which handles 'rebase' and
+> 'bisect'. Is there a reason that you limited this check to only
+> 'rebase'?
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-For example, a local fetch was sped up from 6.63s to 3.39s. The bulk of
-the remaining time is spent in yet another connectivity check
-(fetch_refs -> check_exist_and_connected) prior to the fetch - that will
-hopefully be done in a subsequent patch.
----
- builtin/fetch.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+No reason, I just didn't try it yet. Done, thanks
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b4c6d921d0..6fb50320eb 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -906,8 +906,17 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 		url = xstrdup("foreign");
- 
- 	if (!connectivity_checked) {
-+		struct check_connected_options opt = CHECK_CONNECTED_INIT;
-+
-+		if (filter_options.choice)
-+			/*
-+			 * Since a filter is specified, objects indirectly
-+			 * referenced by refs are allowed to be absent.
-+			 */
-+			opt.check_refs_are_promisor_objects_only = 1;
-+
- 		rm = ref_map;
--		if (check_connected(iterate_ref_map, &rm, NULL)) {
-+		if (check_connected(iterate_ref_map, &rm, &opt)) {
- 			rc = error(_("%s did not send all necessary objects\n"), url);
- 			goto abort;
- 		}
--- 
-2.25.0.rc1.283.g88dfdc4193-goog
+>
+> > > >                 if (edit_branch_description(branch_name))
+> > > >                         return 1;
+> > > > +
+> > > > +               free(branch_name);
+> > >
+> > > That `return 1` just above this free() is leaking 'branch_name', isn'=
+t it?
+> >
+> > right, let's fix that too
+>
+> Looking at the code itself (rather than consulting only the patch), I
+> see that there are a couple more early returns leaking 'branch_name',
+> so they need to be handled, as well.
 
+I think I covered them now, sending v4.
+
+thanks
+
+--=20
+Marc-Andr=C3=A9 Lureau
