@@ -2,173 +2,135 @@ Return-Path: <SRS0=w3fS=3B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PULL_REQUEST,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D117C32771
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 12:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4954C32771
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 12:14:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5999021744
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 12:09:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 74ED121744
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 12:14:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fw/IrAmi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZiwtrzY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732711AbgALMJl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 12 Jan 2020 07:09:41 -0500
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:41224 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732688AbgALMJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Jan 2020 07:09:41 -0500
-Received: by mail-pf1-f180.google.com with SMTP id w62so3503118pfw.8
-        for <git@vger.kernel.org>; Sun, 12 Jan 2020 04:09:40 -0800 (PST)
+        id S1732760AbgALMOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 12 Jan 2020 07:14:08 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39434 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732726AbgALMOI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Jan 2020 07:14:08 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y11so5854076wrt.6
+        for <git@vger.kernel.org>; Sun, 12 Jan 2020 04:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fHu7vx7/89feAXGMSFC6w4Wx1O87eNdzSi1Q1hkefVY=;
-        b=fw/IrAmihQ7A592cC4ItvxcbBUXw+lRd9Eb5lVGGD0ttK7blqHkbAWK0Yii5thE2jb
-         pFGLbCnlZTzEaAoTppJOMMEc36gC6EhRtIK6YXQyQwLRPoeepySTRqLaGq2TYp+h+DQ2
-         8Pkr5k1tB4Np9It17HkypysShCbQSwtaV+5g1oxcd7yDCCehaKGEtviBVK5SCF72moGR
-         PMRUxFeQeU9QyjEV7EfiEcDgLotMr+S37fhb0JeIHiQcZSyt/UZvUcs8rZ2bmeiZCzdy
-         v8qc1BZqVAzGmBn4NgBeR+QWryXxyzyhHsTpDHQdpKefODWSM3bSVfyS7GyO1oXKjvGv
-         +85g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=HuAfVlM9+/knOrt1lf1rAilNurcggdYdYEtoMtbs4i4=;
+        b=XZiwtrzYk/h2rv052P8NJRAcMYOnwaOfuDZq8L9Dc8dNempnR3gcMHFC6p0qPjXQLF
+         SC5+BEocgAfRjEB/hdsfrTkIbFU12XW77phpj8bFKQmyGNf/YLKqZIPiHBuE0FBI/FOh
+         1S2gvp3nQWq1zCVlEAI9hTcC5yxmS1XgcmmXz0racFa0UtkWT4ii2RToVgLk/B1yYUPE
+         lbGMJsSpdsqEdHNVNGm6YVz6GYIRGP4yM+sUnHcv1ox2QXnd7krpPf74EXCLcYewAS9P
+         ElFsR/KjmR1tCEqXy7I2mMVJ/ktSnyoPYwlNIy+v0Qr1hbL5n92mfsYSNN1XWeEPu3Dn
+         7iLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=fHu7vx7/89feAXGMSFC6w4Wx1O87eNdzSi1Q1hkefVY=;
-        b=SfXJfhEXqtOPJozldr11jHQrNkQxD4HMKn7GJ026pXS2meYhZaKLzvnvSL+WE4Ytsi
-         mmuNf6tC+LGxsmaVrdu9mSDoSM2m/SG0iDc227UtxaG0oqH0ergsIYhcDkt4eoKKA8QP
-         OFM8i3SusF1FCRsbDv2pDqSCqJp78zHNqcI9nT+DtaLgcgv7TKpixIFWtpPE160rgB8J
-         GaurB9yCCH6lvKm7Ek8fpO8TFS/iPcHT/v9WE6mBP49VqAxrfJLl2LXfd7ITSr39niBM
-         s44EHqpdaackwLXQre6BKz2ZQJRVpSseCnxbOeCrGO4qg//6jNNM0w1aG7wucA0f1e8R
-         Q/tQ==
-X-Gm-Message-State: APjAAAUO1ENAE72kI8pR/Np0qGZjgLbs2F4Y5ek67mmjhjwK4E+j1uJF
-        uBgMLRmhAv3fzWGd8mQAWlI=
-X-Google-Smtp-Source: APXvYqxtfsLgpnu3I04k6ofWaJVJiGa1ekJE2SEkI62EuUXAyo4rBf+l4T+r2yJnVvb5/r5lvS72Bw==
-X-Received: by 2002:a63:4b50:: with SMTP id k16mr15840945pgl.386.1578830980299;
-        Sun, 12 Jan 2020 04:09:40 -0800 (PST)
-Received: from localhost.localdomain ([221.222.158.57])
-        by smtp.gmail.com with ESMTPSA id v9sm10132588pfi.37.2020.01.12.04.09.35
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=HuAfVlM9+/knOrt1lf1rAilNurcggdYdYEtoMtbs4i4=;
+        b=eoQigFNdUx+5iMfmdqhN4thbMGqckQtREKyZTzQG2T669zruuNckXCWrk89plBvxFR
+         UCQkOd+5FJQAfeFw6qLwrxvYZ4D70yqXuczRM/9X2r0PJO96jlGezWV2646DZniKtWvU
+         HVhCEkNoXOhUz8eAM7r2bEXstBKgUnV6Ko482OKxOEMfAau0CrU/BeFWFYF6WvDozUs1
+         iEq94qwqQBPgkZJOVjdrsAH2aURvUvg6WKfLjd1L4JiViYmFNnTXxSzlZh6/wuS9SSmg
+         C4/UPc8ctWAp2pxP7qJDWi9WwmMucLLV26Al//zX8qcUxiVfXa0/FUsqOWsS2KbQeWGm
+         AlLg==
+X-Gm-Message-State: APjAAAWT/AAi18bnJ7M9gnyTNGllMqTr/udEYKUZPVRHqRDMaLlogWl3
+        fQx3wtE/mwBgLKvcC6+XppY=
+X-Google-Smtp-Source: APXvYqxMABiWpeF1zO77KcG6Z7+lDIga7qASbseq51T5txeXcDdia08x74U8MCNAEPq+AdLebB+mKg==
+X-Received: by 2002:a5d:56ca:: with SMTP id m10mr12935227wrw.313.1578831246471;
+        Sun, 12 Jan 2020 04:14:06 -0800 (PST)
+Received: from szeder.dev (x4dbd0e19.dyn.telefonica.de. [77.189.14.25])
+        by smtp.gmail.com with ESMTPSA id t81sm9773842wmg.6.2020.01.12.04.14.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Jan 2020 04:09:39 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-X-Google-Original-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alexander Shopov <ash@kambanaria.org>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Jordi Mas <jmas@softcatala.org>,
-        =?UTF-8?q?Matthias=20R=C3=BCster?= <matthias.ruester@gmail.com>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Vasco Almeida <vascomalmeida@sapo.pt>,
-        Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.25.0 round 1
-Date:   Sun, 12 Jan 2020 20:09:27 +0800
-Message-Id: <20200112120927.4067-1-zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.24.1.12.g4651f25838.agit.4.1
+        Sun, 12 Jan 2020 04:14:05 -0800 (PST)
+Date:   Sun, 12 Jan 2020 13:14:03 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] branch: let '--edit-description' default to rebased
+ branch during rebase
+Message-ID: <20200112121402.GH32750@szeder.dev>
+References: <20200111123533.1613844-1-marcandre.lureau@redhat.com>
+ <CAPig+cQXkiFOz5HczPEgXuSOH_3KsCwXwVwe0qvQzLDtFgnAXw@mail.gmail.com>
+ <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com>
+ <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <worldhello.net@gmail.com>
+On Sat, Jan 11, 2020 at 08:27:11PM -0500, Eric Sunshine wrote:
+> On Sat, Jan 11, 2020 at 9:55 AM Marc-André Lureau
+> <marcandre.lureau@gmail.com> wrote:
+> > On Sat, Jan 11, 2020 at 5:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > On Sat, Jan 11, 2020 at 7:36 AM <marcandre.lureau@redhat.com> wrote:
+> > > > +                               if (wt_status_check_rebase(NULL, &state)) {
+> > > > +                                       branch_name = state.branch;
+> > > > +                               }
+> 
+> Taking a deeper look at the code, I'm wondering it would make more
+> sense to call wt_status_get_state(), which handles 'rebase' and
+> 'bisect'. Is there a reason that you limited this check to only
+> 'rebase'?
 
-Hi Junio,
+While I do think that defaulting to edit the description of the
+rebased branch makes sense, I'm not sure how that would work with
+bisect.
 
-This is pull request for git 2.25.0. In this round, ten l10n teams made
-theire contributions, and Yi-Jyun Pan contributed Traditional Chinese
-translations, which is a new l10n language support for Git.
+What branch name does wt_status_get_state() return while bisecting?
+The branch where I started from?  Because that's what 'git status'
+shows:
 
-Please pull the following l10n updates for Git 2.25.0.
+  ~/src/git (mybranch)$ git bisect start v2.21.0 v2.20.0
+  Bisecting: 334 revisions left to test after this (roughly 8 steps)
+  [b99a579f8e434a7757f90895945b5711b3f159d5] Merge branch 'sb/more-repo-in-api'
+  ~/src/git ((b99a579f8e...)|BISECTING)$ git status 
+  HEAD detached at b99a579f8e
+  You are currently bisecting, started from branch 'mybranch'.
+    (use "git bisect reset" to get back to the original branch)
+  
+  nothing to commit, working tree clean
 
-The following changes since commit 99c33bed562b41de6ce9bd3fd561303d39645048:
+But am I really on that branch?  Does it really makes sense to edit
+the description of 'mybranch' by default while bisecting through an
+old revision range?  I do not think so.
 
-  Git 2.25-rc0 (2019-12-25 11:22:02 -0800)
+> > > >                 if (edit_branch_description(branch_name))
+> > > >                         return 1;
+> > > > +
+> > > > +               free(branch_name);
+> > >
+> > > That `return 1` just above this free() is leaking 'branch_name', isn't it?
+> >
+> > right, let's fix that too
+> 
+> Looking at the code itself (rather than consulting only the patch), I
+> see that there are a couple more early returns leaking 'branch_name',
+> so they need to be handled, as well.
 
-are available in the Git repository at:
-
-  git@github.com:git-l10n/git-po.git tags/l10n-2.25.0-rnd1
-
-for you to fetch changes up to ddc12c429b63912032cbabfaac689093de43c2b9:
-
-  l10n: zh_CN: for git v2.25.0 l10n round 1 (2020-01-12 19:22:02 +0800)
-
-----------------------------------------------------------------
-l10n-2.25.0-rnd1
-
-----------------------------------------------------------------
-Alessandro Menti (1):
-      l10n: it.po: update the Italian translation for Git 2.25.0
-
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (4800t)
-
-Christopher Diaz Riveros (1):
-      l10n: es: 2.25.0 round #1
-
-Jean-Noël Avila (1):
-      l10n: fr.po v2.25.0 rnd 1
-
-Jiang Xin (6):
-      Merge tag 'v2.25.0-rc0' into git-po-master
-      l10n: git.pot: v2.25.0 round 1 (119 new, 13 removed)
-      Merge branch 'translation_191231' of github.com:l10n-tw/git-po into git-po-master
-      Merge branch 'fr_v2.25.0_rnd1' of github.com:jnavila/git into master
-      Merge branch 'master' of github.com:Softcatala/git-po into git-po-master
-      l10n: zh_CN: for git v2.25.0 l10n round 1
-
-Jordi Mas (2):
-      l10n: Update Catalan translation
-      l10n: Update Catalan translation
-
-Matthias Rüster (1):
-      l10n: de.po: Update German translation v2.25.0 round 1
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (4800t0f0u)
-
-Thomas Braun (1):
-      l10n: de.po: Reword generation numbers
-
-Trần Ngọc Quân (1):
-      l10n: vi(4800t): Updated Vietnamese translation v2.25.0
-
-Yi-Jyun Pan (1):
-      l10n: zh_TW: add translation for v2.24.0
-
-pan93412 (1):
-      l10n: zh_TW.po: update translation for v2.25.0 round 1
-
- po/TEAMS    |     5 +
- po/bg.po    |  5258 +++++++------
- po/ca.po    |  8047 +++++++++++---------
- po/de.po    |  5128 +++++++------
- po/es.po    |  5120 +++++++------
- po/fr.po    |  5085 +++++++------
- po/git.pot  |  5007 ++++++------
- po/it.po    |  5131 +++++++------
- po/sv.po    |  5107 +++++++------
- po/vi.po    |  5112 +++++++------
- po/zh_CN.po |  5094 +++++++------
- po/zh_TW.po | 24000 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 12 files changed, 53761 insertions(+), 24333 deletions(-)
- create mode 100644 po/zh_TW.po
-
---
-Jiang Xin
+'git branch --edit-description' is a one-shot operation: it allows to
+edit only one branch description per invocation, and then the process
+exits right away, whether the operation was successful or some error
+occurred.  I'm not sure free()ing 'branch_name' is worth the effort
+(and even if it does, I think it should be a separate preparatory
+patch).
