@@ -2,81 +2,86 @@ Return-Path: <SRS0=w3fS=3B=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A33A0C33CA7
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 01:27:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96ABAC32771
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 04:15:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7DD922082E
-	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 01:27:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D00D2084D
+	for <git@archiver.kernel.org>; Sun, 12 Jan 2020 04:15:34 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="StxnYxmV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731888AbgALB1Y convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 11 Jan 2020 20:27:24 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36699 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731885AbgALB1Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Jan 2020 20:27:24 -0500
-Received: by mail-wm1-f65.google.com with SMTP id p17so5936863wma.1
-        for <git@vger.kernel.org>; Sat, 11 Jan 2020 17:27:23 -0800 (PST)
+        id S1732132AbgALEPb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 11 Jan 2020 23:15:31 -0500
+Received: from mail-pj1-f73.google.com ([209.85.216.73]:35008 "EHLO
+        mail-pj1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732129AbgALEPb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Jan 2020 23:15:31 -0500
+Received: by mail-pj1-f73.google.com with SMTP id l8so4430183pje.0
+        for <git@vger.kernel.org>; Sat, 11 Jan 2020 20:15:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=51zD1dS0xPInbrXbE6ah9Dn/Z9PNzYYlTEC549vqe6Q=;
+        b=StxnYxmVQq/9caD2BYvS+kla+cT70oH18hHW3+sj6zzwxF27njcRA/+o1qpDc1Im5q
+         A6Oh3uOwjTu3MEx8Sez8pUL1eBbhxu4RuFhbKyZvv/GXHOv2pX6vsrthyrzN1lHJl/x2
+         2a3VhDDvQonm9OE2Rqn5KLdyJzJAhMIojg8CHEUaEzbKkwiE6be+tFjunDI+GIVqi/Zq
+         twDsGKwp18b6FzBBmCuEgtlBH89TNSGdYitLFFLBRKceN6qogLIJG1FMNveXObRINega
+         ynzMvjI0DUbwioZo9ZObMDGButhTWdXkZghqjmGUkShRlB5pPhnZ7ApT7TaX9liAaoUc
+         wBXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=iLSuxTr+DZ2jWvi9Itzg7uouh2uqV4xlK2YFFWl41cs=;
-        b=R2fkp2/hS3PnB49IzoGYGPWQGvdehT8ydZ/RN9xoUp+Zj7xfNJTY3gqIkBm+kXd20d
-         h2fny9gHG/YFjoxusi+8/VlUZbA6qm7JiFFGe8k9lcki8eixu1Fot6Q17ubX5s944d0U
-         LU9JIDd7d8lXEZbwPKXkA7oQQc3DniwuPaku1jAjyVpauF+WxQgkxixRe6lNzsj3cY4J
-         sNin/FDLBBAzGhjm07EYcMoEh3RFAdkBTyUNuuYSFilD7xyzzzQWatVHxLBQJI9TeFK1
-         PYFxHd8rH/ovK898CLqZfOM/Y8mG62ffqFOHp6kyOlyauM39OnDczh10BLDMIjxTtjok
-         T5KA==
-X-Gm-Message-State: APjAAAUGUIdPjwGcM6XPABXvNi7TODl0iRg5BBuMajIYw6HJO5zLvu/n
-        cKorHT0IwMzfYi6EyhtpRPknHX9PfBmfnZcK4SA2SmaC
-X-Google-Smtp-Source: APXvYqw78icu1vc/g7xbUeWXkliuSyQJxGfHMAgM4Y6iRBPRpQ7Atj5+f35BAsAm9oRaMj/Dqwfic0RU5Sfvfpiz0tE=
-X-Received: by 2002:a7b:c246:: with SMTP id b6mr12089427wmj.75.1578792442881;
- Sat, 11 Jan 2020 17:27:22 -0800 (PST)
-MIME-Version: 1.0
-References: <20200111123533.1613844-1-marcandre.lureau@redhat.com>
- <CAPig+cQXkiFOz5HczPEgXuSOH_3KsCwXwVwe0qvQzLDtFgnAXw@mail.gmail.com> <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com>
-In-Reply-To: <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 11 Jan 2020 20:27:11 -0500
-Message-ID: <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
-Subject: Re: [PATCH] branch: let '--edit-description' default to rebased
- branch during rebase
-To:     =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=51zD1dS0xPInbrXbE6ah9Dn/Z9PNzYYlTEC549vqe6Q=;
+        b=NebiMEBohXG7cTdlZJGAkWUqvO3XqIrXIw1w+twCMflCszYZaS8jqc/DUP1mJ6ShJH
+         lbvLWUpsXp15CBeAPxlXUfw9pIjifeaW1qFvUF1y5UCnjCu6e6fnamb372IJBSr9KjQq
+         D+TchzkdXlaTCfEwtZyL2dd0rEsy0T7tHzc/8ID64vMVVXVSSvAIKrP7r013LVKgK/z7
+         BYIWo+sJrwHdsF1HOwNCLd67TvgB08+/cu/bNXOlwmPVlxlh0MR+0KRPjsIyXEdhWUmf
+         uhlSKTFqGG6owbdyrHyJ0sD18gV8wKtidEjMI99CCoK792u3QgZcUfeBwQN3kpxvZ7G1
+         3kWg==
+X-Gm-Message-State: APjAAAWXR4EVkXeg2xCfczl+I0cGiC9+970p7Drlo6RmYK1po7MAnHOe
+        WlVkewkg+XNae/z8BV2uZEvAtxS4W+8p7ZLZm8gQa8tl3YsAIGt9HNH1bgQpaIbroBbiYQ/+c4x
+        HWHJqchBvxN1p0bb9LcTQy7xaM1voLiNezlo6uchQZGNAK8gsAEqripxMEXBOD2GhaOYh/lQlcW
+        NV
+X-Google-Smtp-Source: APXvYqw70Y0IofMg6abC4N/a3/8k8z1Ofb+9n9yL9r3kmNYp/qHaozpbkUd32t/jc6JEp4VlvLckacGjVulCtxaVYndZ
+X-Received: by 2002:a63:1119:: with SMTP id g25mr14344527pgl.359.1578802530434;
+ Sat, 11 Jan 2020 20:15:30 -0800 (PST)
+Date:   Sat, 11 Jan 2020 20:15:23 -0800
+Message-Id: <cover.1578802317.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
+Subject: [PATCH 0/2] Skip a connectivity check during fetch --filter
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 11, 2020 at 9:55 AM Marc-André Lureau
-<marcandre.lureau@gmail.com> wrote:
-> On Sat, Jan 11, 2020 at 5:28 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > On Sat, Jan 11, 2020 at 7:36 AM <marcandre.lureau@redhat.com> wrote:
-> > > +                               if (wt_status_check_rebase(NULL, &state)) {
-> > > +                                       branch_name = state.branch;
-> > > +                               }
+The same optimization in dfa33a298d ("clone: do faster object check for
+partial clones", 2019-04-21) can be applied to fetch as well, so this
+patch set does so. Patch 1 makes the check more robust, and patch 2
+applies it to one of two connectivity checks performed during the fetch.
 
-Taking a deeper look at the code, I'm wondering it would make more
-sense to call wt_status_get_state(), which handles 'rebase' and
-'bisect'. Is there a reason that you limited this check to only
-'rebase'?
+As mentioned in patch 2, when fetching from a local repo, I got a
+speedup of 6.63s to 3.39s. 
 
-> > >                 if (edit_branch_description(branch_name))
-> > >                         return 1;
-> > > +
-> > > +               free(branch_name);
-> >
-> > That `return 1` just above this free() is leaking 'branch_name', isn't it?
->
-> right, let's fix that too
+Jonathan Tan (2):
+  connected: verify promisor-ness of partial clone
+  fetch: forgo full connectivity check if --filter
 
-Looking at the code itself (rather than consulting only the patch), I
-see that there are a couple more early returns leaking 'branch_name',
-so they need to be handled, as well.
+ builtin/clone.c |  5 +++--
+ builtin/fetch.c | 11 ++++++++++-
+ connected.c     | 19 ++++++++++++++-----
+ connected.h     | 11 ++++++-----
+ 4 files changed, 33 insertions(+), 13 deletions(-)
+
+-- 
+2.25.0.rc1.283.g88dfdc4193-goog
+
