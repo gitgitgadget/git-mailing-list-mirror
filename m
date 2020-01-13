@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A402C33CAB
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 066AEC33CAE
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5CAE421569
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBFED21569
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QO3WaX7a"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TaptTYop"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728859AbgAMI3m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 03:29:42 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39634 "EHLO
+        id S1728864AbgAMI3n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 03:29:43 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38343 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728842AbgAMI3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 03:29:38 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y11so7552587wrt.6
-        for <git@vger.kernel.org>; Mon, 13 Jan 2020 00:29:37 -0800 (PST)
+        with ESMTP id S1728844AbgAMI3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 03:29:39 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y17so7559652wrh.5
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 00:29:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=piNb8ps1Uqk/dtptwShlXphncXbdxXOUBitj8rIWJ6o=;
-        b=QO3WaX7a5rlYVMGLpeXG3gNzb1cmGRsNTNTWMNk7Ri/Dx+yRxR4tIMDeh9La36hPdP
-         /K+ny9eMHsh/QOCA1yY0s2DJ5E6UXVEft7nz+RC+d9NssJzpaGrYFlisFVajrmH01lhw
-         NU0bSu+rzrfrWA6p6V3aCsgObSJX36D51A0XG7mGIiGvK+XEj5ipvrXwVYcI9fZVyMxf
-         MwAjNh/C0/jMP+CSQofZWK3xAA/zXGFj21Igz42hgr0Y2RWjrZHJ4vnLA/1fkkmxHKi9
-         7WqaEyZimKIJUidf3PKIPEK1jsbmCcLfxyaq6KE3eO+TRTp0uXOHiwD+0z0ZmEi3tkCG
-         2R1A==
+        bh=aND/3GJvNSHXZ8taybupake9AqWWRmBT3O7QXIsD5Og=;
+        b=TaptTYoprF5o7GiZwOy1Y+iEWoru5ydii2mVUMb0ehZdUKmbJEUgfpwh8Z52szWp22
+         XH2NSnJwMWz60mGnuUQs85AsXRXf27wSI8Vd/9Av2bxNgerBEbju9JCVCfA1J5LXf1ro
+         YzVIim9PSq1Rkaa0eo1K4EaUdcqVXC2ZluFMvi1fGvzKlI0qseKRkblhn1xaX1IiqX3C
+         0X/ZXdxx2NxqhPlxLJwYdKM/AWMP6JuIvIfI7wBGSmyqllHFKnpnzXl6sLcIZaphc9Va
+         wC8tO517jOj3YL97sJG0cOlIo0Z+z6wWM/er86uWZQOq7KR+TkgMwDwbVJzptOqCPCKF
+         mtMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=piNb8ps1Uqk/dtptwShlXphncXbdxXOUBitj8rIWJ6o=;
-        b=aeR4lbQMrN7SUOKU0bwLMJBAuSJ6yS9m4+P5n0Q2Q5CwJnZSWyx1F5nFhyqW/9x0fI
-         jANC3gju9qQ1J8LK4G4purdV9tSCV7eDQx4kzLuKKHujs674P7lrAiRLGxjcruhhFGG5
-         bw0uUQ0+4RaZRUJwElbakT2OIlLnP3JASgLC1xYUCVOpbnqlmW37WIywxtIP9bHD0yZ7
-         u3zYh9N7b+PBW/hTJXnF5ZsOv5pfOK//D2lK7LT3PaPWTp6n+tYa6R6X8jD+dc0zSjhE
-         NJ0+MFi/HhoMNlm/TgFrOP0uw+qj+WjDrpDySxpFV7qQdVZyn4kvXAn1tqyZ4Tnn+Hyk
-         qQig==
-X-Gm-Message-State: APjAAAUJLvyelPXEje3cQ6HfCZM7F1Zl+f18J8lDF0r58KOqZqSHIILO
-        SSpMeqY/hPt0Hbovdzemhd5tyNll
-X-Google-Smtp-Source: APXvYqzQHgfz2E5/sq5olRmE1Alx8krVia9nMjYD/kJ/7Kwd3cTFb4NjF4S3UXRmrMcShiYDLoQKww==
-X-Received: by 2002:adf:f311:: with SMTP id i17mr17036319wro.81.1578904177021;
+        bh=aND/3GJvNSHXZ8taybupake9AqWWRmBT3O7QXIsD5Og=;
+        b=HSpsyQWj2HNtKIJgQrVvTgjhgIlH0YZWyvux2TEDdb2WqJroIFDci2d4O0UVVRxtVC
+         mYzFRZNAEEEn/JqpFsQ3UFWZunATy7+xr/R5mszx01ax49f2posxpRiU+1RapYO3lPqd
+         9ygjXtaga1cCfjIQgtawHP7+hsGGotBZwdPUg1bxEkWWCW+Iw49/7HjaVF66ObUmdbc6
+         eNbZTWZpSv62Rcv/jiqm+zfPnP4GXj7yYqFGo1AuhD6QNt1oqMciMHe4PCLFTC/o2OEE
+         wYclB9FuMg11UnpJJrKROlx5SZ5lBmAU5dfriANgefCiL/9TxKZq/6Vvl2JBAuWriBnU
+         pdSg==
+X-Gm-Message-State: APjAAAW109jKcZ7en3o6FFP4M32BPuDFvmqWLJUp8Z6LH+aqOZcm4PJ5
+        R3FDRMkeAk39OiZkTqqauFme/MAA
+X-Google-Smtp-Source: APXvYqxXtZqNrhYdHlLkkjhEWpCJ1g6XGoXZ1DGmPgLVZHIlOskcWZJQZHwf+xj4ihXzzEhuafZIRA==
+X-Received: by 2002:adf:d846:: with SMTP id k6mr16318724wrl.337.1578904177832;
         Mon, 13 Jan 2020 00:29:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u8sm13350631wmm.15.2020.01.13.00.29.36
+        by smtp.gmail.com with ESMTPSA id b137sm14015096wme.26.2020.01.13.00.29.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 00:29:36 -0800 (PST)
-Message-Id: <74593b51157c49f1785e217446f3af0889b0fdf2.1578904171.git.gitgitgadget@gmail.com>
+        Mon, 13 Jan 2020 00:29:37 -0800 (PST)
+Message-Id: <197fe1e14adfd8142fa9f4f6c93937d9349d0bdc.1578904171.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
 References: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
         <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Jan 2020 08:29:27 +0000
-Subject: [PATCH v3 06/10] terminal: add a new function to read a single
- keystroke
+Date:   Mon, 13 Jan 2020 08:29:28 +0000
+Subject: [PATCH v3 07/10] built-in add -p: respect the `interactive.singlekey`
+ config setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,131 +76,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Typically, input on the command-line is line-based. It is actually not
-really easy to get single characters (or better put: keystrokes).
+The Perl version of `git add -p` supports this config setting to allow
+users to input commands via single characters (as opposed to having to
+press the <Enter> key afterwards).
 
-We provide two implementations here:
+This is an opt-in feature because it requires Perl packages
+(Term::ReadKey and Term::Cap, where it tries to handle an absence of the
+latter package gracefully) to work. Note that at least on Ubuntu, that
+Perl package is not installed by default (it needs to be installed via
+`sudo apt-get install libterm-readkey-perl`), so this feature is
+probably not used a whole lot.
 
-- One that handles `/dev/tty` based systems as well as native Windows.
-  The former uses the `tcsetattr()` function to put the terminal into
-  "raw mode", which allows us to read individual keystrokes, one by one.
-  The latter uses `stty.exe` to do the same, falling back to direct
-  Win32 Console access.
-
-  Thanks to the refactoring leading up to this commit, this is a single
-  function, with the platform-specific details hidden away in
-  conditionally-compiled code blocks.
-
-- A fall-back which simply punts and reads back an entire line.
-
-Note that the function writes the keystroke into an `strbuf` rather than
-a `char`, in preparation for reading Escape sequences (e.g. when the
-user hit an arrow key). This is also required for UTF-8 sequences in
-case the keystroke corresponds to a non-ASCII letter.
+In C, we obviously do not have these packages available, but we just
+introduced `read_single_keystroke()` that is similar to what
+Term::ReadKey provides, and we use that here.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/terminal.c | 55 +++++++++++++++++++++++++++++++++++++++++++++++
- compat/terminal.h |  3 +++
- 2 files changed, 58 insertions(+)
+ add-interactive.c |  2 ++
+ add-interactive.h |  1 +
+ add-patch.c       | 21 +++++++++++++++++----
+ 3 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/compat/terminal.c b/compat/terminal.c
-index 16e9949da1..1b2564042a 100644
---- a/compat/terminal.c
-+++ b/compat/terminal.c
-@@ -60,6 +60,11 @@ static int disable_echo(void)
- 	return disable_bits(ECHO);
+diff --git a/add-interactive.c b/add-interactive.c
+index e3cc30ad24..bb6acf5ef6 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -61,6 +61,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	FREE_AND_NULL(s->interactive_diff_algorithm);
+ 	git_config_get_string("diff.algorithm",
+ 			      &s->interactive_diff_algorithm);
++
++	git_config_get_bool("interactive.singlekey", &s->use_single_key);
  }
  
-+static int enable_non_canonical(void)
-+{
-+	return disable_bits(ICANON | ECHO);
-+}
-+
- #elif defined(GIT_WINDOWS_NATIVE)
+ void clear_add_i_state(struct add_i_state *s)
+diff --git a/add-interactive.h b/add-interactive.h
+index 923efaf527..693f125e8e 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -16,6 +16,7 @@ struct add_i_state {
+ 	char file_old_color[COLOR_MAXLEN];
+ 	char file_new_color[COLOR_MAXLEN];
  
- #define INPUT_PATH "CONIN$"
-@@ -151,6 +156,10 @@ static int disable_echo(void)
- 	return disable_bits(ENABLE_ECHO_INPUT);
++	int use_single_key;
+ 	char *interactive_diff_filter, *interactive_diff_algorithm;
+ };
+ 
+diff --git a/add-patch.c b/add-patch.c
+index 736bcb4aa7..67741128a8 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -7,6 +7,7 @@
+ #include "color.h"
+ #include "diff.h"
+ #include "sigchain.h"
++#include "compat/terminal.h"
+ 
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
+@@ -1150,14 +1151,27 @@ static int run_apply_check(struct add_p_state *s,
+ 	return 0;
  }
  
-+static int enable_non_canonical(void)
++static int read_single_character(struct add_p_state *s)
 +{
-+	return disable_bits(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT | ENABLE_PROCESSED_INPUT);
-+}
- 
- #endif
- 
-@@ -198,6 +207,33 @@ char *git_terminal_prompt(const char *prompt, int echo)
- 	return buf.buf;
- }
- 
-+int read_key_without_echo(struct strbuf *buf)
-+{
-+	static int warning_displayed;
-+	int ch;
-+
-+	if (warning_displayed || enable_non_canonical() < 0) {
-+		if (!warning_displayed) {
-+			warning("reading single keystrokes not supported on "
-+				"this platform; reading line instead");
-+			warning_displayed = 1;
-+		}
-+
-+		return strbuf_getline(buf, stdin);
++	if (s->s.use_single_key) {
++		int res = read_key_without_echo(&s->answer);
++		printf("%s\n", res == EOF ? "" : s->answer.buf);
++		return res;
 +	}
 +
-+	strbuf_reset(buf);
-+	ch = getchar();
-+	if (ch == EOF) {
-+		restore_term();
++	if (strbuf_getline(&s->answer, stdin) == EOF)
 +		return EOF;
-+	}
-+
-+	strbuf_addch(buf, ch);
-+	restore_term();
++	strbuf_trim_trailing_newline(&s->answer);
 +	return 0;
 +}
 +
- #else
+ static int prompt_yesno(struct add_p_state *s, const char *prompt)
+ {
+ 	for (;;) {
+ 		color_fprintf(stdout, s->s.prompt_color, "%s", _(prompt));
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			return -1;
+-		strbuf_trim_trailing_newline(&s->answer);
+ 		switch (tolower(s->answer.buf[0])) {
+ 		case 'n': return 0;
+ 		case 'y': return 1;
+@@ -1397,9 +1411,8 @@ static int patch_update_file(struct add_p_state *s,
+ 			      _(s->mode->prompt_mode[prompt_mode_type]),
+ 			      s->buf.buf);
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			break;
+-		strbuf_trim_trailing_newline(&s->answer);
  
- char *git_terminal_prompt(const char *prompt, int echo)
-@@ -205,4 +241,23 @@ char *git_terminal_prompt(const char *prompt, int echo)
- 	return getpass(prompt);
- }
- 
-+int read_key_without_echo(struct strbuf *buf)
-+{
-+	static int warning_displayed;
-+	const char *res;
-+
-+	if (!warning_displayed) {
-+		warning("reading single keystrokes not supported on this "
-+			"platform; reading line instead");
-+		warning_displayed = 1;
-+	}
-+
-+	res = getpass("");
-+	strbuf_reset(buf);
-+	if (!res)
-+		return EOF;
-+	strbuf_addstr(buf, res);
-+	return 0;
-+}
-+
- #endif
-diff --git a/compat/terminal.h b/compat/terminal.h
-index 97db7cd69d..a9d52b8464 100644
---- a/compat/terminal.h
-+++ b/compat/terminal.h
-@@ -3,4 +3,7 @@
- 
- char *git_terminal_prompt(const char *prompt, int echo);
- 
-+/* Read a single keystroke, without echoing it to the terminal */
-+int read_key_without_echo(struct strbuf *buf);
-+
- #endif /* COMPAT_TERMINAL_H */
+ 		if (!s->answer.len)
+ 			continue;
 -- 
 gitgitgadget
 
