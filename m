@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D17FC33CB1
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDC87C33CAE
 	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 49155207FF
+	by mail.kernel.org (Postfix) with ESMTP id B4794207FF
 	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dGaRH6pG"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KGrUjzOb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728923AbgAMMsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 07:48:07 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37784 "EHLO
+        id S1728921AbgAMMsN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 07:48:13 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37794 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728905AbgAMMsE (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:48:04 -0500
+        by vger.kernel.org with ESMTP id S1728918AbgAMMsH (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:48:07 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5BE5760426
-        for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:48:03 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 448AD607FE
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578919683;
-        bh=Oq3aRB9AjsE654GHUxUsdYUaY+d2t1sXq47L83UvR4E=;
+        s=default; t=1578919685;
+        bh=W0hC+8lkUKKicHJ2a2IySVoikYCqELub9d4mc8qVku4=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=dGaRH6pGTQphmyaU5BsHwMEp6aRJKlsFUWblC81aLpsscUYqW6HB9UHrC684nxMPX
-         mzgy9a/SP7nU87BZv7fYy4o+6s8ZKfQTXnOgXH2q/tOTHxafHND7ischtm2zsyg6IQ
-         Okmq1kcxO13NulWG3qXKVDWjzuiwuN2ljTHAVZ/heQ+Lq8CfVLwufhGnMmpc62HdRF
-         0VhQ8JoI8vpF9h5OyXFrzKY5lNCaZU/IuF2CF34Ov+KrRcXbF9D3+2jT4e+zu1W5gB
-         y8kKop+FjKa7/7iBMd5lgzXcFnzgR6SMOcgwuPEgcw8+x8LhSVRfLKNQUJEVVXIP+O
-         0e0HfDakwfctsYb+IHZxm51UNAO4IAHGeKplt8I9Oese6UETkSz+VCDZiBxOlHPgRC
-         ATKlO5TsRUUhkscFqlNKfQQSr6dsbF0uAW0AdpeDNRVUFr/3HLhu0L5yjk9oUWHoK8
-         jutm1RFnbIwfqgEqRNCZ9YnAZtMlvB0jf6PbJ0uJsX8XK3hdrMo
+        b=KGrUjzOb07MnXwvdsFApYaQpo4P9C/Q3ddMQextWIMuqUyFR41C//jYUPUYmQ0Jit
+         6Bm5f6PiGifq6p33DJWwRqL+kzr+PM7ZMC6/PrtpxFNp4S8+roDjZZ80YSKgD7pp1m
+         5Y+z8u+LUuTiO7RapOi44Xw8Jb7I+jSbvWQrtUzSKn5foJVXR01eqKMPXZUprC9KP6
+         MTT26MB9j1Dx8Ehh2efEi0nGKdPi9KzP/plQLAM/jHSdYGQypv4dcPcERCYeYduvcE
+         iSI6YAjj0erz0g98RWHXmkAHz73HMrh1L1YXj87LBdH03mYPdR6I5ceV94IUOGQWpf
+         TEun2vxjX1ET2AEtZs2PlJSD0/NCY9tAIECwOatxOi9sSfYFbYPRVoli45K8+CoCUX
+         8uAz8dVaklqUrK7tV3635fYH3RI0ahH4TBMjsYzoSeV1LkjX0Yf7nzQK8fZquhTvg/
+         vtakoxrK+Iq7+clpVskXZJUcURpXdaHfmIVbs+2Whlz/FpZhBTR
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [RFC PATCH 15/22] commit: use expected signature header for SHA-256
-Date:   Mon, 13 Jan 2020 12:47:22 +0000
-Message-Id: <20200113124729.3684846-16-sandals@crustytoothpaste.net>
+Subject: [RFC PATCH 20/22] fast-import: make find_marks work on any mark set
+Date:   Mon, 13 Jan 2020 12:47:27 +0000
+Message-Id: <20200113124729.3684846-21-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.rc2.338.g21a285fb81
 In-Reply-To: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
 References: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
@@ -55,195 +55,109 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The transition plan anticipates that we will allow signatures using
-multiple algorithms in a single commit. In order to do so, we need to
-use a different header per algorithm so that it will be obvious over
-which data to compute the signature.
-
-The transition plan specifies that we should use "gpgsig-sha256", so
-wire up the commit code such that it can write and parse the current
-algorithm, and it can remove the headers for any algorithm when creating
-a new commit. Add tests to ensure that we write using the right header
-and that git fsck doesn't reject these commits.
+In the future, we'll use multiple different mark sets with this
+function, so make it take an argument that points to the mark set to
+operate on.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/commit.c         |  2 +-
- commit.c                 | 30 +++++++++++++++++++++++-------
- sequencer.c              |  2 +-
- t/t1450-fsck.sh          | 24 ++++++++++++++++++++++++
- t/t7510-signed-commit.sh | 16 +++++++++++++---
- 5 files changed, 62 insertions(+), 12 deletions(-)
+ fast-import.c | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index aa1332308a..22b75492bb 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1654,7 +1654,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (amend) {
--		const char *exclude_gpgsig[2] = { "gpgsig", NULL };
-+		const char *exclude_gpgsig[3] = { "gpgsig", "gpgsig-sha256", NULL };
- 		extra = read_commit_extra_headers(current_head, exclude_gpgsig);
- 	} else {
- 		struct commit_extra_header **tail = &extra;
-diff --git a/commit.c b/commit.c
-index 434ec030d6..e903ba3c79 100644
---- a/commit.c
-+++ b/commit.c
-@@ -961,14 +961,22 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
- 	return ret;
+diff --git a/fast-import.c b/fast-import.c
+index 3ce4a04473..8aaa7f6289 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -517,10 +517,9 @@ static void insert_mark(struct mark_set *s, uintmax_t idnum, struct object_entry
+ 	s->data.marked[idnum] = oe;
  }
  
--static const char gpg_sig_header[] = "gpgsig";
--static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
-+/*
-+ * Indexed by hash algorithm identifier.
-+ */
-+static const char *gpg_sig_headers[] = {
-+	NULL,
-+	"gpgsig",
-+	"gpgsig-sha256",
-+};
- 
- static int do_sign_commit(struct strbuf *buf, const char *keyid)
+-static struct object_entry *find_mark(uintmax_t idnum)
++static void *find_mark(struct mark_set *s, uintmax_t idnum)
  {
- 	struct strbuf sig = STRBUF_INIT;
- 	int inspos, copypos;
- 	const char *eoh;
-+	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(the_hash_algo)];
-+	int gpg_sig_header_len = strlen(gpg_sig_header);
+ 	uintmax_t orig_idnum = idnum;
+-	struct mark_set *s = marks;
+ 	struct object_entry *oe = NULL;
+ 	if ((idnum >> s->shift) < 1024) {
+ 		while (s && s->shift) {
+@@ -2225,7 +2224,7 @@ static void file_change_m(const char *p, struct branch *b)
+ 	}
  
- 	/* find the end of the header */
- 	eoh = strstr(buf->buf, "\n\n");
-@@ -1010,6 +1018,8 @@ int parse_signed_commit(const struct commit *commit,
- 	const char *buffer = get_commit_buffer(commit, &size);
- 	int in_signature, saw_signature = -1;
- 	const char *line, *tail;
-+	const char *gpg_sig_header = gpg_sig_headers[hash_algo_by_ptr(the_hash_algo)];
-+	int gpg_sig_header_len = strlen(gpg_sig_header);
+ 	if (*p == ':') {
+-		oe = find_mark(parse_mark_ref_space(&p));
++		oe = find_mark(marks, parse_mark_ref_space(&p));
+ 		oidcpy(&oid, &oe->idx.oid);
+ 	} else if (skip_prefix(p, "inline ", &p)) {
+ 		inline_data = 1;
+@@ -2399,7 +2398,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 	/* Now parse the notemodify command. */
+ 	/* <dataref> or 'inline' */
+ 	if (*p == ':') {
+-		oe = find_mark(parse_mark_ref_space(&p));
++		oe = find_mark(marks, parse_mark_ref_space(&p));
+ 		oidcpy(&oid, &oe->idx.oid);
+ 	} else if (skip_prefix(p, "inline ", &p)) {
+ 		inline_data = 1;
+@@ -2420,7 +2419,7 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
+ 		oidcpy(&commit_oid, &s->oid);
+ 	} else if (*p == ':') {
+ 		uintmax_t commit_mark = parse_mark_ref_eol(p);
+-		struct object_entry *commit_oe = find_mark(commit_mark);
++		struct object_entry *commit_oe = find_mark(marks, commit_mark);
+ 		if (commit_oe->type != OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", commit_mark);
+ 		oidcpy(&commit_oid, &commit_oe->idx.oid);
+@@ -2524,7 +2523,7 @@ static int parse_objectish(struct branch *b, const char *objectish)
+ 		oidcpy(&b->branch_tree.versions[1].oid, t);
+ 	} else if (*objectish == ':') {
+ 		uintmax_t idnum = parse_mark_ref_eol(objectish);
+-		struct object_entry *oe = find_mark(idnum);
++		struct object_entry *oe = find_mark(marks, idnum);
+ 		if (oe->type != OBJ_COMMIT)
+ 			die("Mark :%" PRIuMAX " not a commit", idnum);
+ 		if (!oideq(&b->oid, &oe->idx.oid)) {
+@@ -2588,7 +2587,7 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 			oidcpy(&n->oid, &s->oid);
+ 		else if (*from == ':') {
+ 			uintmax_t idnum = parse_mark_ref_eol(from);
+-			struct object_entry *oe = find_mark(idnum);
++			struct object_entry *oe = find_mark(marks, idnum);
+ 			if (oe->type != OBJ_COMMIT)
+ 				die("Mark :%" PRIuMAX " not a commit", idnum);
+ 			oidcpy(&n->oid, &oe->idx.oid);
+@@ -2762,7 +2761,7 @@ static void parse_new_tag(const char *arg)
+ 	} else if (*from == ':') {
+ 		struct object_entry *oe;
+ 		from_mark = parse_mark_ref_eol(from);
+-		oe = find_mark(from_mark);
++		oe = find_mark(marks, from_mark);
+ 		type = oe->type;
+ 		oidcpy(&oid, &oe->idx.oid);
+ 	} else if (!get_oid(from, &oid)) {
+@@ -2920,7 +2919,7 @@ static void parse_get_mark(const char *p)
+ 	if (*p != ':')
+ 		die("Not a mark: %s", p);
  
- 	line = buffer;
- 	tail = buffer + size;
-@@ -1056,11 +1066,17 @@ int remove_signature(struct strbuf *buf)
+-	oe = find_mark(parse_mark_ref_eol(p));
++	oe = find_mark(marks, parse_mark_ref_eol(p));
+ 	if (!oe)
+ 		die("Unknown mark: %s", command_buf.buf);
  
- 		if (in_signature && line[0] == ' ')
- 			sig_end = next;
--		else if (starts_with(line, gpg_sig_header) &&
--			 line[gpg_sig_header_len] == ' ') {
--			sig_start = line;
--			sig_end = next;
--			in_signature = 1;
-+		else if (starts_with(line, "gpgsig")) {
-+			int i;
-+			for (i = 1; i < GIT_HASH_NALGOS; i++) {
-+				const char *p;
-+				if (skip_prefix(line, gpg_sig_headers[i], &p) &&
-+				    *p == ' ') {
-+					sig_start = line;
-+					sig_end = next;
-+					in_signature = 1;
-+				}
-+			}
- 		} else {
- 			if (*line == '\n')
- 				/* dump the whole remainder of the buffer */
-diff --git a/sequencer.c b/sequencer.c
-index 763ccbbc45..6603cf5c54 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -1392,7 +1392,7 @@ static int try_to_commit(struct repository *r,
- 	if (parse_head(r, &current_head))
- 		return -1;
- 	if (flags & AMEND_MSG) {
--		const char *exclude_gpgsig[] = { "gpgsig", NULL };
-+		const char *exclude_gpgsig[] = { "gpgsig", "gpgsig-sha256", NULL };
- 		const char *out_enc = get_commit_output_encoding();
- 		const char *message = logmsg_reencode(current_head, NULL,
- 						      out_enc);
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 02478bc4ec..70a8307154 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -133,6 +133,30 @@ test_expect_success 'other worktree HEAD link pointing at a funny place' '
- 	test_i18ngrep "worktrees/other/HEAD points to something strange" out
- '
+@@ -2935,7 +2934,7 @@ static void parse_cat_blob(const char *p)
  
-+test_expect_success 'commit with multiple signatures is okay' '
-+	git cat-file commit HEAD >basis &&
-+	cat >sigs <<-EOF &&
-+	gpgsig -----BEGIN PGP SIGNATURE-----
-+	  VGhpcyBpcyBub3QgcmVhbGx5IGEgc2lnbmF0dXJlLg==
-+	  -----END PGP SIGNATURE-----
-+	gpgsig-sha256 -----BEGIN PGP SIGNATURE-----
-+	  VGhpcyBpcyBub3QgcmVhbGx5IGEgc2lnbmF0dXJlLg==
-+	  -----END PGP SIGNATURE-----
-+	EOF
-+	sed -e "/^committer/q" basis >okay &&
-+	cat sigs >>okay &&
-+	echo >>okay &&
-+	sed -e "1,/^$/d" basis >>okay &&
-+	cat okay &&
-+	new=$(git hash-object -t commit -w --stdin <okay) &&
-+	test_when_finished "remove_object $new" &&
-+	git update-ref refs/heads/bogus "$new" &&
-+	test_when_finished "git update-ref -d refs/heads/bogus" &&
-+	git fsck 2>out &&
-+	cat out &&
-+	! grep "commit $new" out
-+'
-+
- test_expect_success 'email without @ is okay' '
- 	git cat-file commit HEAD >basis &&
- 	sed "s/@/AT/" basis >okay &&
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 682b23a068..c4b07240f2 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -6,6 +6,11 @@ GNUPGHOME_NOT_USED=$GNUPGHOME
- . "$TEST_DIRECTORY/lib-gpg.sh"
+ 	/* cat-blob SP <object> LF */
+ 	if (*p == ':') {
+-		oe = find_mark(parse_mark_ref_eol(p));
++		oe = find_mark(marks, parse_mark_ref_eol(p));
+ 		if (!oe)
+ 			die("Unknown mark: %s", command_buf.buf);
+ 		oidcpy(&oid, &oe->idx.oid);
+@@ -3010,7 +3009,7 @@ static struct object_entry *parse_treeish_dataref(const char **p)
+ 	struct object_entry *e;
  
- test_expect_success GPG 'create signed commits' '
-+	test_oid_cache <<-\EOF &&
-+	header sha1:gpgsig
-+	header sha256:gpgsig-sha256
-+	EOF
-+
- 	test_when_finished "test_unconfig commit.gpgsign" &&
- 
- 	echo 1 >file && git add file &&
-@@ -140,6 +145,11 @@ test_expect_success GPG 'verify signatures with --raw' '
- 	)
- '
- 
-+test_expect_success GPG 'proper header is used for hash algorithm' '
-+	git cat-file commit fourth-signed >output &&
-+	grep "^$(test_oid header) -----BEGIN PGP SIGNATURE-----" output
-+'
-+
- test_expect_success GPG 'show signed commit with signature' '
- 	git show -s initial >commit &&
- 	git show -s --show-signature initial >show &&
-@@ -147,7 +157,7 @@ test_expect_success GPG 'show signed commit with signature' '
- 	git cat-file commit initial >cat &&
- 	grep -v -e "gpg: " -e "Warning: " show >show.commit &&
- 	grep -e "gpg: " -e "Warning: " show >show.gpg &&
--	grep -v "^ " cat | grep -v "^gpgsig " >cat.commit &&
-+	grep -v "^ " cat | grep -v "^$(test_oid header) " >cat.commit &&
- 	test_cmp show.commit commit &&
- 	test_cmp show.gpg verify.2 &&
- 	test_cmp cat.commit verify.1
-@@ -260,10 +270,10 @@ test_expect_success GPG 'check config gpg.format values' '
- test_expect_success GPG 'detect fudged commit with double signature' '
- 	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
- 	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
--		sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.sig &&
-+		sed -e "s/^$(test_oid header)//;s/^ //" | gpg --dearmor >double-sig1.sig &&
- 	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
- 	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
--	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^/ /" \
-+	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/$(test_oid header) /;2,\$s/^/ /" \
- 		double-combined.asc > double-gpgsig &&
- 	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
- 	git hash-object -w -t commit double-commit >double-commit.commit &&
+ 	if (**p == ':') {	/* <mark> */
+-		e = find_mark(parse_mark_ref_space(p));
++		e = find_mark(marks, parse_mark_ref_space(p));
+ 		if (!e)
+ 			die("Unknown mark: %s", command_buf.buf);
+ 		oidcpy(&oid, &e->idx.oid);
