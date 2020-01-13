@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DAABC33CAD
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA118C33CAE
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3E4E4207FF
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0184214AF
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rmIh7vok"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aUkOPVRw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbgAMMsC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 07:48:02 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37776 "EHLO
+        id S1728904AbgAMMsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 07:48:03 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37778 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727331AbgAMMsA (ORCPT
+        by vger.kernel.org with ESMTP id S1728885AbgAMMsA (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:48:00 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 112C8607FA
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6AB4A607F8
         for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1578919679;
-        bh=oE8ECf4eMv7Kn1RhbFqfb9JlsuAAy6d9Axw5iRCZWGw=;
+        bh=B7jZ7OcAT1p+IaD8zAaRDzP9f1o69d30rknV3o2Vajo=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=rmIh7vokVJy4V2qQGRCLGnvPpDrQEzYJI+rjMp1ynSVQGuKtztE3OTU4x8zYYAkbo
-         fPAlmvLUpTD5pwIDzJv1otTr3A6j4u2ZMcfI0LDS98Sr1jV6W+DHlEIwput1xdGD1A
-         OcALIvBicuZuPlsiz3UuVkBpJ8QBE1/9nJN4qOnxjINxsc/Fxier//ez45lCth7BZl
-         YXAqXxXbkdfvr88faoYzz7cUdlv8zAsV729F1NQts6J3ExD9gzGlmFLs6cYfTvxdXX
-         5Bby+kxMQQYt6KKUXTeVla8kZfiVeeeY7KnmQW0lsij7+mjUosKcWe1DKhQkRk0qW6
-         LkGJyaA9JXLPMQtaHrTOI8nXGIncSl02BrN/teQOL6JUFjNkQwlQxpVU0s+pyOyy4T
-         hy131/ZpsyXbumeROM5hLmTNHWE7DbEQw4aD/bgJt5kNxKbShkTQSSSwjxlpFllOQB
-         oaKvnFO+H17GdgZVtPo9RfjhCultCa+J5x2jGEN3qqA6h9uu8+0
+        b=aUkOPVRw7IwzcBIgIIji2GSWhtv8NF5/AZuRhfJjU3LnlePPvbKq6D8anrk+8cO11
+         8a2vvEalPUqAlFV2hzV9tDfv/p35RsP1S9h8sXTi3hZXqyJiJ2lcUeaWBEAGQ+7pGh
+         OYwtwjqYbyC15/ZIbIJgLnhHQ5CV+iuQtrbBaVnYhhZEKKidW/MIj1VTxNigfCBkgj
+         ZOMl6NZJia/zZz72gFZj5RdmwblEa5SXkvk3eb2r3zS+HtFmp0TDmWl2GBidf/1LMn
+         nmCBZzhpldEqEFWFXr/7SlYBQycnAqKAt6Q6ceXb6pnH4hyFkdVCbxvXnT/OgyBIBd
+         /qMItBwHjBdc5S+lqZfyr1lqU+6FK+i0oB/vYks9ejGhquvgnLryY8umcTFHJqVnJz
+         L+vSmkqD1AyyFSRBIfHPPER9owcqoNksxTKIwrm75zv8w2F7jdf1UEEwMyb0Zuwitx
+         1OoJP/AHyg4xWOS4iK3vW1hyjY2AN18PfvSZchGEr6JvXZ8eWdI
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [RFC PATCH 04/22] t: use hash-specific lookup tables to define test constants
-Date:   Mon, 13 Jan 2020 12:47:11 +0000
-Message-Id: <20200113124729.3684846-5-sandals@crustytoothpaste.net>
+Subject: [RFC PATCH 05/22] t6300: abstract away SHA-1-specific constants
+Date:   Mon, 13 Jan 2020 12:47:12 +0000
+Message-Id: <20200113124729.3684846-6-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.rc2.338.g21a285fb81
 In-Reply-To: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
 References: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
@@ -55,66 +55,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the future, we'll allow developers to run the testsuite with a hash
-algorithm of their choice.  To make this easier, compute the fixed
-constants using test_oid. Move the constant initialization down below
-the point where test-lib-functions.sh is loaded so the functions are
-defined.
-
-Note that we don't provide a value for the OID_REGEX value directly
-because writing a large number of instances of "[0-9a-f]" in the
-oid-info files is unwieldy and there isn't a way to compute it based on
-those values. Instead, compute it based on ZERO_OID.
+Adjust the test so that it computes variables for object IDs instead of
+using hard-coded hashes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib.sh | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ t/t6300-for-each-ref.sh | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 44df51be8f..0b2566ad98 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -494,21 +494,6 @@ case $(echo $GIT_TRACE |tr "[A-Z]" "[a-z]") in
- 	;;
- esac
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 9c910ce746..2406b93d35 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -20,6 +20,10 @@ setdate_and_increment () {
+ }
  
--# Convenience
--#
--# A regexp to match 5, 35 and 40 hexdigits
--_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
--_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
--_x40="$_x35$_x05"
--
--# Zero SHA-1
--_z40=0000000000000000000000000000000000000000
--
--OID_REGEX="$_x40"
--ZERO_OID=$_z40
--EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
--EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
--
- # Line feed
- LF='
- '
-@@ -1382,6 +1367,20 @@ then
- 	fi
- fi
+ test_expect_success setup '
++	test_oid_cache <<-EOF &&
++	disklen sha1:138
++	disklen sha256:154
++	EOF
+ 	setdate_and_increment &&
+ 	echo "Using $datestamp" > one &&
+ 	git add one &&
+@@ -50,6 +54,9 @@ test_atom() {
+ 	"
+ }
  
-+# Convenience
-+# A regexp to match 5, 35 and 40 hexdigits
-+_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
-+_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
-+_x40="$_x35$_x05"
++hexlen=$(test_oid hexsz)
++disklen=$(test_oid disklen)
 +
-+test_oid_init
-+
-+ZERO_OID=$(test_oid zero)
-+OID_REGEX=$(echo $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
-+EMPTY_TREE=$(test_oid empty_tree)
-+EMPTY_BLOB=$(test_oid empty_blob)
-+_z40=$ZERO_OID
-+
- # Provide an implementation of the 'yes' utility; the upper bound
- # limit is there to help Windows that cannot stop this loop from
- # wasting cycles when the downstream stops reading, so do not be
+ test_atom head refname refs/heads/master
+ test_atom head refname: refs/heads/master
+ test_atom head refname:short master
+@@ -82,9 +89,9 @@ test_atom head push:rstrip=-1 refs
+ test_atom head push:strip=1 remotes/myfork/master
+ test_atom head push:strip=-1 master
+ test_atom head objecttype commit
+-test_atom head objectsize 171
+-test_atom head objectsize:disk 138
+-test_atom head deltabase 0000000000000000000000000000000000000000
++test_atom head objectsize $((131 + hexlen))
++test_atom head objectsize:disk $disklen
++test_atom head deltabase $ZERO_OID
+ test_atom head objectname $(git rev-parse refs/heads/master)
+ test_atom head objectname:short $(git rev-parse --short refs/heads/master)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
+@@ -125,11 +132,11 @@ test_atom tag refname:short testtag
+ test_atom tag upstream ''
+ test_atom tag push ''
+ test_atom tag objecttype tag
+-test_atom tag objectsize 154
+-test_atom tag objectsize:disk 138
+-test_atom tag '*objectsize:disk' 138
+-test_atom tag deltabase 0000000000000000000000000000000000000000
+-test_atom tag '*deltabase' 0000000000000000000000000000000000000000
++test_atom tag objectsize $((114 + hexlen))
++test_atom tag objectsize:disk $disklen
++test_atom tag '*objectsize:disk' $disklen
++test_atom tag deltabase $ZERO_OID
++test_atom tag '*deltabase' $ZERO_OID
+ test_atom tag objectname $(git rev-parse refs/tags/testtag)
+ test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
+@@ -139,7 +146,7 @@ test_atom tag parent ''
+ test_atom tag numparent ''
+ test_atom tag object $(git rev-parse refs/tags/testtag^0)
+ test_atom tag type 'commit'
+-test_atom tag '*objectname' 'ea122842f48be4afb2d1fc6a4b96c05885ab7463'
++test_atom tag '*objectname' $(git rev-parse refs/tags/testtag^{})
+ test_atom tag '*objecttype' 'commit'
+ test_atom tag author ''
+ test_atom tag authorname ''
