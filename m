@@ -7,44 +7,44 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0000C33CAD
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DAABC33CAD
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B19842081E
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3E4E4207FF
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:48:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="If9L+tlX"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="rmIh7vok"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728884AbgAMMr7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 07:47:59 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37772 "EHLO
+        id S1726505AbgAMMsC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 07:48:02 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37776 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727331AbgAMMr7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:47:59 -0500
+        by vger.kernel.org with ESMTP id S1727331AbgAMMsA (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:48:00 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 54CD9607F8
-        for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:47:58 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 112C8607FA
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578919678;
-        bh=cE5GdLcrDcM06Afus0NxdHX7CbdUI870YkIBxBqrlGk=;
+        s=default; t=1578919679;
+        bh=oE8ECf4eMv7Kn1RhbFqfb9JlsuAAy6d9Axw5iRCZWGw=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=If9L+tlXRBgb8vluc0W1dpWXa5SF1nkhoZ/G0g3eySwuzynENrnT+ed3qCMXf5yv1
-         0+S8DtLE4Bht2216lOCZaDd4P1xOPOwm4T9l+LSPldcgjslOyEwC1X8gAAEe9rM4Ew
-         JDTYRc/+3ZoaFSveXqn75WpesqV59/aDGLDoP0i9kTiKGOXrDryu1CWQMGXlJKqbV8
-         y0NOWihe5FTdo4WjAIsuVvRax+4oLSgiPBOquggiOFolUgKFKwJz+xrbzDDOQYSgmY
-         ksPhqUA0X5WRT+mMm/p4ZGgFb7YlIXRF6Edn5B9cUkQ4Ke64DSDn2OudrLTJnUoaHX
-         Lvku1u+WsX0LR7lhQwrkZObWnl9RdqBPY3IOcRm7Vzuc95Hhvk07clT9xbKoMDLgnj
-         yGBV22o6SP+jfU9AositRbu+9rEQ+g32fcWEVJUjg4ONnL1JBWq5ihvisQByFw8lb2
-         os1S4wcrWHnAfJrQEWbyNsAbJ4Ph2ZgZG4fbOj0S4ISET2a0F96
+        b=rmIh7vokVJy4V2qQGRCLGnvPpDrQEzYJI+rjMp1ynSVQGuKtztE3OTU4x8zYYAkbo
+         fPAlmvLUpTD5pwIDzJv1otTr3A6j4u2ZMcfI0LDS98Sr1jV6W+DHlEIwput1xdGD1A
+         OcALIvBicuZuPlsiz3UuVkBpJ8QBE1/9nJN4qOnxjINxsc/Fxier//ez45lCth7BZl
+         YXAqXxXbkdfvr88faoYzz7cUdlv8zAsV729F1NQts6J3ExD9gzGlmFLs6cYfTvxdXX
+         5Bby+kxMQQYt6KKUXTeVla8kZfiVeeeY7KnmQW0lsij7+mjUosKcWe1DKhQkRk0qW6
+         LkGJyaA9JXLPMQtaHrTOI8nXGIncSl02BrN/teQOL6JUFjNkQwlQxpVU0s+pyOyy4T
+         hy131/ZpsyXbumeROM5hLmTNHWE7DbEQw4aD/bgJt5kNxKbShkTQSSSwjxlpFllOQB
+         oaKvnFO+H17GdgZVtPo9RfjhCultCa+J5x2jGEN3qqA6h9uu8+0
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
-Subject: [RFC PATCH 02/22] hex: add functions to parse hex object IDs in any algorithm
-Date:   Mon, 13 Jan 2020 12:47:09 +0000
-Message-Id: <20200113124729.3684846-3-sandals@crustytoothpaste.net>
+Subject: [RFC PATCH 04/22] t: use hash-specific lookup tables to define test constants
+Date:   Mon, 13 Jan 2020 12:47:11 +0000
+Message-Id: <20200113124729.3684846-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.rc2.338.g21a285fb81
 In-Reply-To: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
 References: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
@@ -55,79 +55,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are some places where we need to parse a hex object ID in any
-algorithm without knowing beforehand which algorithm is in use. An
-example is when parsing fast-import marks.
+In the future, we'll allow developers to run the testsuite with a hash
+algorithm of their choice.  To make this easier, compute the fixed
+constants using test_oid. Move the constant initialization down below
+the point where test-lib-functions.sh is loaded so the functions are
+defined.
 
-Add a get_oid_hex_any to parse an object ID and return the algorithm it
-belongs to, and additionally add parse_oid_hex_any which is the
-equivalent change for parse_oid_hex. If the object is not parseable, we
-return GIT_HASH_UNKNOWN.
+Note that we don't provide a value for the OID_REGEX value directly
+because writing a large number of instances of "[0-9a-f]" in the
+oid-info files is unwieldy and there isn't a way to compute it based on
+those values. Instead, compute it based on ZERO_OID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 10 ++++++++++
- hex.c   | 22 ++++++++++++++++++++++
- 2 files changed, 32 insertions(+)
+ t/test-lib.sh | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 493d57febe..6c094c3210 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1522,6 +1522,16 @@ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end);
- int parse_oid_hex_algop(const char *hex, struct object_id *oid, const char **end,
- 			const struct git_hash_algo *algo);
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 44df51be8f..0b2566ad98 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -494,21 +494,6 @@ case $(echo $GIT_TRACE |tr "[A-Z]" "[a-z]") in
+ 	;;
+ esac
  
-+
-+/*
-+ * These functions work like get_oid_hex and parse_oid_hex, but they will parse
-+ * a hex value for any algorithm. The algorithm is detected based on the length
-+ * and the algorithm in use is returned. If this is not a hex object ID in any
-+ * algorithm, returns GIT_HASH_UNKNOWN.
-+ */
-+int get_oid_hex_any(const char *hex, struct object_id *oid);
-+int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end);
-+
- /*
-  * This reads short-hand syntax that not only evaluates to a commit
-  * object name, but also can act as if the end user spelled the name
-diff --git a/hex.c b/hex.c
-index 10e24dc2e4..da51e64929 100644
---- a/hex.c
-+++ b/hex.c
-@@ -72,6 +72,20 @@ int get_oid_hex_algop(const char *hex, struct object_id *oid,
- 	return get_hash_hex_algop(hex, oid->hash, algop);
- }
+-# Convenience
+-#
+-# A regexp to match 5, 35 and 40 hexdigits
+-_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
+-_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
+-_x40="$_x35$_x05"
+-
+-# Zero SHA-1
+-_z40=0000000000000000000000000000000000000000
+-
+-OID_REGEX="$_x40"
+-ZERO_OID=$_z40
+-EMPTY_TREE=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+-EMPTY_BLOB=e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+-
+ # Line feed
+ LF='
+ '
+@@ -1382,6 +1367,20 @@ then
+ 	fi
+ fi
  
-+/*
-+ * NOTE: This function relies on hash algorithms being in order from shortest
-+ * length to longest length.
-+ */
-+int get_oid_hex_any(const char *hex, struct object_id *oid)
-+{
-+	int i;
-+	for (i = GIT_HASH_NALGOS - 1; i > 0; i--) {
-+		if (!get_hash_hex_algop(hex, oid->hash, &hash_algos[i]))
-+			return i;
-+	}
-+	return GIT_HASH_UNKNOWN;
-+}
++# Convenience
++# A regexp to match 5, 35 and 40 hexdigits
++_x05='[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f]'
++_x35="$_x05$_x05$_x05$_x05$_x05$_x05$_x05"
++_x40="$_x35$_x05"
 +
- int get_oid_hex(const char *hex, struct object_id *oid)
- {
- 	return get_oid_hex_algop(hex, oid, the_hash_algo);
-@@ -87,6 +101,14 @@ int parse_oid_hex_algop(const char *hex, struct object_id *oid,
- 	return ret;
- }
- 
-+int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end)
-+{
-+	int ret = get_oid_hex_any(hex, oid);
-+	if (ret)
-+		*end = hex + hash_algos[ret].hexsz;
-+	return ret;
-+}
++test_oid_init
 +
- int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
- {
- 	return parse_oid_hex_algop(hex, oid, end, the_hash_algo);
++ZERO_OID=$(test_oid zero)
++OID_REGEX=$(echo $ZERO_OID | sed -e 's/0/[0-9a-f]/g')
++EMPTY_TREE=$(test_oid empty_tree)
++EMPTY_BLOB=$(test_oid empty_blob)
++_z40=$ZERO_OID
++
+ # Provide an implementation of the 'yes' utility; the upper bound
+ # limit is there to help Windows that cannot stop this loop from
+ # wasting cycles when the downstream stops reading, so do not be
