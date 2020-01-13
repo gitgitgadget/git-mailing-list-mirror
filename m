@@ -2,166 +2,121 @@ Return-Path: <SRS0=G+/Y=3C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,LOCALPART_IN_SUBJECT,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9FB2C33CA8
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 09:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DBE8C33CAD
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 11:26:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 44CBA2075B
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 09:41:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A26020678
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 11:26:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=atos.net header.i=@atos.net header.b="uPWqJfN7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pt7S/w98"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726450AbgAMJlm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 04:41:42 -0500
-Received: from smtppost.atos.net ([193.56.114.176]:9915 "EHLO
-        smarthost1.atos.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1725978AbgAMJll (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 04:41:41 -0500
+        id S1726480AbgAML00 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 06:26:26 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:46935 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725992AbgAML00 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 06:26:26 -0500
+Received: by mail-wr1-f46.google.com with SMTP id z7so8117614wrl.13
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 03:26:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=atos.net; i=@atos.net; q=dns/txt; s=mail;
-  t=1578908500; x=1610444500;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=IpxS0YnOYjAiX8Rj2rKZcOtQk5+X4pgPe4KdCLxu1cs=;
-  b=uPWqJfN7ea9anxbBqsaEJHBew/wD97/t4t7lGgK+T7uMDUK2505z2wRm
-   TnB84SMcu2qljRRVb+UONLOpVS0Gg5xN06ateoWocFxrgQK+hXUsqI6KT
-   jG+A3k4ZFCAr114A9FbG8PInPMms3+8iPkwbUba7OhGTWk/m968bOPAj7
-   U=;
-IronPort-SDR: e5M5D8ag4H5L7gNCWRT497XxwthTB32+eNu9nKzUA1JF+lh/2QZplq7rhO7WMzBeHpFpvnLqyg
- C0ubsEtSnKTSPXHmlMRnNNnml+y3QAljvMKi5gd1VWjy/4upBoRaMW8GtUMyrFeeTXRgucfozA
- V/cnEmPIPWXFWFNskf6Kh5N4K3aJcoRzwa71O5ANR0cTIU5BUrlqLmF/CD2Jh2S8ekmnZ7ac5j
- v6dCMjiuYiVq58+LfM60ZX3G4H4/lfBpWXeKgCepc7dzBlMredBCUnyMDMsLdAhKM2Fj3WVOlw
- WIlEvStgFvviXmSWJWyQkqKj
-X-IronPort-AV: E=Sophos;i="5.69,428,1571695200"; 
-   d="scan'208";a="10075507"
-X-MGA-submission: =?us-ascii?q?MDFGA7HEh7zHM0eSZXILB2YFcIki2l26h28/yz?=
- =?us-ascii?q?brb0s+/e7aXoA6r6QBnxnoXOwY3Mfqz8wLRL0jxYU1bmIlCDznNS+ClI?=
- =?us-ascii?q?qwnBXKzuwtmORCPTQlPdGv2pLzNYVBV10cLBrwiE10ZGirc1Nfc+YoHv?=
- =?us-ascii?q?zH?=
-Received: from unknown (HELO DEERLM99ETYMSX.ww931.my-it-solutions.net) ([10.86.142.47])
-  by smarthost1.atos.net with ESMTP/TLS/ECDHE-RSA-AES256-SHA384; 13 Jan 2020 10:41:39 +0100
-Received: from DEERLM99ETTMSX.ww931.my-it-solutions.net (10.86.142.105) by
- DEERLM99ETYMSX.ww931.my-it-solutions.net (10.86.142.47) with Microsoft SMTP
- Server (TLS) id 14.3.468.0; Mon, 13 Jan 2020 10:41:38 +0100
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (10.86.142.137)
- by hybridsmtp.it-solutions.atos.net (10.86.142.105) with Microsoft SMTP
- Server (TLS) id 14.3.468.0; Mon, 13 Jan 2020 10:41:36 +0100
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=C0WsyYTwLHeBkpx8DnSJVNneZfZZbcge6XppogJJg7fb5wrVTetNrS0t+9OXA+A94edh8RMsUdom2LabR8UOjzqGkDKwiuLzrUBUzHDuv3OSXl/S4YMk5Xgnq5+KoiHdhUHo9VAszmRLa0bJa740MD5P0oV7KTUli8QPrl4IFHEaC0H69XrlPyhAwS2GsNwKp79BvJcCSR6evaAzcAwojBW585dS2H7Q12XSSWSfZGzKLKI5E3jNjY0KkWll3Td52HreMNgkGmmtRJTLLre7ZKUMsBHDfeSTXvbnjruflnpvFhNoWtP0Tj0QM6Hjnfv64L7S0R2ID4qHbiiSTY+eOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IpxS0YnOYjAiX8Rj2rKZcOtQk5+X4pgPe4KdCLxu1cs=;
- b=L061YzvvM2vGz2BW+69yh9hKTDa9fIkdWkOY+pjlChDBEnCHy9RNS+jNUly1O0d2Rq/adzI5e06pCdP3VUmAEiz1hUixnBHd0MaWg842TgKaI5HWG6i0cdIeERrRvhIVcaBzclVMp+ZuGlb3tK8Khy57qR2L1zpnBF0ZKv3VyNuySgr1tZj3DDzvj1VCBdJSr+/YYJjN1ZYV1F9Jf77KSLPxW41kWCn8TwH8aJrLA6e9gzoJ9RgmMN6xzjxT7dNmQ4QmqJFF+88QcwVaZGg/PA3mE6LYrOl/wovbEE6PdqV9wTRVUgZd4CgIM6wet3CaFR0o/aFsiTIg30lbUCIkYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=atos.net; dmarc=pass action=none header.from=atos.net;
- dkim=pass header.d=atos.net; arc=none
-Received: from HE1PR0202MB2634.eurprd02.prod.outlook.com (10.168.184.21) by
- HE1PR0202MB2619.eurprd02.prod.outlook.com (10.168.184.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2623.13; Mon, 13 Jan 2020 09:41:35 +0000
-Received: from HE1PR0202MB2634.eurprd02.prod.outlook.com
- ([fe80::41cf:741a:e8d:291f]) by HE1PR0202MB2634.eurprd02.prod.outlook.com
- ([fe80::41cf:741a:e8d:291f%3]) with mapi id 15.20.2623.015; Mon, 13 Jan 2020
- 09:41:34 +0000
-From:   "FIGADERE, LAURENT" <laurent.figadere@atos.net>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: git , submodules and remove from historic question
-Thread-Topic: git , submodules and remove from historic question
-Thread-Index: AdXJ82zAAJYwyFs6SpyYHLz4aCj5MQAAhXug
-Date:   Mon, 13 Jan 2020 09:41:34 +0000
-Message-ID: <HE1PR0202MB263439EFAE785201C61495ABE6350@HE1PR0202MB2634.eurprd02.prod.outlook.com>
-References: <HE1PR0202MB2634CD91D2750E199098FACAE6350@HE1PR0202MB2634.eurprd02.prod.outlook.com>
-In-Reply-To: <HE1PR0202MB2634CD91D2750E199098FACAE6350@HE1PR0202MB2634.eurprd02.prod.outlook.com>
-Accept-Language: fr-FR, en-US
-Content-Language: fr-FR
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Enabled=True;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Owner=laurent.figadere@atos.net;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_SetDate=2020-01-13T09:30:53.4341647Z;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Name=Atos For Internal Use;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_ActionId=8793476a-0535-4525-b547-4240de124463;
- MSIP_Label_112e00b9-34e2-4b26-a577-af1fd0f9f7ee_Extended_MSFT_Method=Automatic;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Enabled=True;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SiteId=33440fc6-b7c7-412c-bb73-0e70b0198d5a;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Owner=laurent.figadere@atos.net;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_SetDate=2020-01-13T09:30:53.4341647Z;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Name=Atos For Internal Use -
- All Employees;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_ActionId=8793476a-0535-4525-b547-4240de124463;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Parent=112e00b9-34e2-4b26-a577-af1fd0f9f7ee;
- MSIP_Label_e463cba9-5f6c-478d-9329-7b2295e4e8ed_Extended_MSFT_Method=Automatic
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=laurent.figadere@atos.net; 
-x-originating-ip: [80.78.5.104]
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: ed120eb3-fbd4-4b14-17b3-08d7980cc71b
-x-ms-traffictypediagnostic: HE1PR0202MB2619:
-x-microsoft-antispam-prvs: <HE1PR0202MB2619D02C28A35AF777727F29E6350@HE1PR0202MB2619.eurprd02.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-forefront-prvs: 028166BF91
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(4636009)(376002)(396003)(39860400002)(346002)(136003)(366004)(199004)(189003)(33656002)(9686003)(2940100002)(26005)(76116006)(186003)(55016002)(4744005)(6506007)(52536014)(478600001)(2906002)(5660300002)(8676002)(81166006)(81156014)(71200400001)(316002)(8936002)(7696005)(86362001)(6916009)(66556008)(66476007)(66946007)(66446008)(64756008);DIR:OUT;SFP:1102;SCL:1;SRVR:HE1PR0202MB2619;H:HE1PR0202MB2634.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: atos.net does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: f9EvnxIpcjj40NmcH/enrQU3IIUe5wil/AgnAQHlaflJUbpA2YNpgFEtnXOZSx91KresYxvfzwxLVKLUJgXdoC5XXHGYRNoZmhDVKNjuujUY32VgcE4SjgIWuQ8Izkc3G1DgnoV+1oOzwKBjMZOeYjftPvBmFp5YRAcuCOFnUWcdzW9PnWHLOM3fqae1YfzW/klpJ/ELg35s0Kx7h+aps0vpxwDL4W5aDDaTOVVIrPAyxCWRK/aoB4RmVH3ANfkJeIZP1zLsfbDGlB8R8RRi9nQyhcktcAJvRrGas4sSF6HZSs43QXx2WOxtz3Y+xsJWVhDDlE6+kPw/XPwy7m6LDPAD2yzN/JAs0+ZZKEBZggoQkazaQxv68/Eef9Pz0NfnexYfwYgve3QEolcwukJ4lH683Ouk+KTw+h5xjU3qpq0+5ZrpAIW57tyKd4+YX9gI
-x-ms-exchange-transport-forked: True
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=EyDq6KW2wsHdhAtq9HKs0/YZ/SnmzL3ACbc8/g9a94Y=;
+        b=Pt7S/w98oBqxbJUneZ/1bJ39EXUSRlSRXZWYHoOekuUpipMKaxb5YLHRRZWiOH9hBG
+         Ilx9KWhTtHRlHPNJnkUZIuu0a+f2Em+xZF2NX5tMrS8ue2JEkguXsTJD6aVvqZpjjssS
+         SEyYU78PMv7f5gtkEADru0b43uqF2ezbeCawC8MsOJuVoW8FLi1slgnSZ6ffD7JgNuR7
+         WC6tq7KWaN02Hkeg/Hg6L3u2bU12vd3/HXXUf/kmgsrrzK+lkmeG6q9BDhMTh1NXdXLT
+         aehJO6ZT5353NGYXtBY084/kGRJiP5+ORwztcVJQ4Hw+D+yMjexdu0V2tOqdbpLxesDP
+         U1nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=EyDq6KW2wsHdhAtq9HKs0/YZ/SnmzL3ACbc8/g9a94Y=;
+        b=mkmuLM1fI4jrrFReA+i5aWrnXkihxAZIIuuilfVCvcMm1FN94b+LAolsj+9elECHQ9
+         d+zioE4fJEtjmAOnComXyVcfEyLV7jndJgPKMbotm4546mkPG/YLt/GMQuJ/z12Ujmfl
+         PnBcR9Cw2EpRHRYIYE5uv0vab6wC8Nyh31LP5emT01k0GycTRztSyykEgth092/uJFJG
+         ESbVVK+IcsICH0dXDyKIX3Dk/iq89Yh405Qi2zF+PNfWxSrQx4NseR91CEpCKf9InsjB
+         VEXJt1/l8O3pKPK4i/xOc7F6x4KXDboOhSTXLdNZCeuSJTcZtc3rC9C3lTEr4g4Fnszf
+         tKbw==
+X-Gm-Message-State: APjAAAVFo2VcXdi53ylWacZ0WK2tCIJYvNc77w75Yp9bUphxoyp/ks/f
+        fBIMdCua2wARknFsYQz50iP/SGdi
+X-Google-Smtp-Source: APXvYqyNjB8vU+c9yE080bxM8sdgRIq85WjBXBNAR+kp4sec5UTs70UjuhN5Ly/gOdR9BIN5H3ecxg==
+X-Received: by 2002:adf:ea4f:: with SMTP id j15mr18229486wrn.356.1578914784413;
+        Mon, 13 Jan 2020 03:26:24 -0800 (PST)
+Received: from szeder.dev (x4d0c05b5.dyn.telefonica.de. [77.12.5.181])
+        by smtp.gmail.com with ESMTPSA id q14sm14364397wmj.14.2020.01.13.03.26.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 13 Jan 2020 03:26:23 -0800 (PST)
+Date:   Mon, 13 Jan 2020 12:26:21 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jude Guan Wang <guan@clicktherapeutics.com>, git@vger.kernel.org
+Subject: Re: Fwd: Issue with Git Branch
+Message-ID: <20200113112621.GJ32750@szeder.dev>
+References: <56F9DC91-740F-47C7-9C2A-B6B1EC3A12B6@clicktherapeutics.com>
+ <29742805-4992-47E6-9889-F55F5EFBBFF1@clicktherapeutics.com>
+ <20200113001143.GA13099@syl.local>
+ <20200113004235.GI32750@szeder.dev>
+ <20200113004814.GA15236@syl.local>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed120eb3-fbd4-4b14-17b3-08d7980cc71b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jan 2020 09:41:34.2546
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 33440fc6-b7c7-412c-bb73-0e70b0198d5a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: DuRw6nyXZZ0YrUHUjLaheowcUWXth109bnLwL3xD8eWilZFHt8tM+qZeM2F3mw+WZLWddrknpaoE6dXk6ZKchmIVuugEIdTi9nmArIOhNUQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: HE1PR0202MB2619
-X-OriginatorOrg: atos.net
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20200113004814.GA15236@syl.local>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear git community=A0,
+On Sun, Jan 12, 2020 at 04:48:14PM -0800, Taylor Blau wrote:
+> On Mon, Jan 13, 2020 at 01:42:35AM +0100, SZEDER Gábor wrote:
+> > On Sun, Jan 12, 2020 at 04:11:43PM -0800, Taylor Blau wrote:
+> > > On Sun, Jan 12, 2020 at 07:01:04PM -0500, Jude Guan Wang wrote:
+> > > > 	I noticed something weird with my git command. In my local
+> > > > 	environment I seem to have a branch named `-D`:
+> > > >
+> > > > 	And I don’t remember how I was able to create a branch like that.
+> >
+> > > If you do find a reproducible way to create branches named '-D' or
+> > > similar, please do let us know, as these are not intended to be valid
+> > > branch names in general.
+> >
+> >   $ git update-ref refs/heads/-D master
+> >   $ git branch |head -n1
+> >     -D
+> 
+> I was assuming that Jude had gotten the ref to appear by using 'git
+> branch' alone, i.e., without the help of 'git update-ref' or 'cp
+> .git/refs/heads/{master,-D}'.
 
-I am using git submodule features.
+On a somewhat related note, while trying whether I could
+"inadvertently" create such a branch with gitk I stumbled upon this
+bit of weirdness:
 
-So, by example, I have a repository top which include a sub repository sub-=
-repo.
+  $ git rev-parse v2.24.0^{commit}
+  da72936f544fec5a335e66432610e4cef4430991
+  $ git branch da72936f544fec5a335e66432610e4cef4430991 v2.24.0
+  $ gitk -1 v2.24.0
 
-I would like to re-write the whole historic on the top repository without t=
-he sub-repo.
+(While starting up gitk might show a popup warning about the branch
+with 40 hexdigit name, close it.)
 
-I tried to use git-filter command but I have an issue on sub-repo.
-
-Here the commands and outputs:
-[10:27:42] $ git submodule
-d3fc420ee38babe74d6e3838b5b2a946ee551fa7 sub-repo (v1.0)
-
-[9:55:48] $ git filter-branch --index-filter 'git rm -rf --cached --ignore-=
-unmatch sub-repo' --prune-empty --tag-name-filter cat -- --all
-Rewrite 471a2c664466a364bfe5fdf774c7c0d7efe50396 (32/54) (3 seconds passed,=
- remaining 2 predicted)=A0=A0=A0 fatal: exec '--super-prefix=3D sub-repo/':=
- cd to sub-repo' failed: No such file or directory
-error: Submodule sub-repo' could not be updated.
-error: Submodule ' sub-repo' cannot checkout new HEAD.
-Could not initialize the index
-
-Was somebody able to remove such historic from a top repository?
-Thanks by advance for your help.
-
-Kind Regards,
-Laurent FIGADERE
+So now gitk displays a commit with the v2.24.0 tag and the da7293...
+branch pointing to it.  Right click on the commit's subject line,
+select "Create new branch" from the context menu.  Enter "-D" as the
+name of the new branch, and click Create.  Now gitk displays a "-D"
+branch pointing to the same commit as well, but it's only a display
+thing, as it did not actually create that branch, because it
+carelessly run the 'git branch -D da7293...' command...  After
+refreshing with F5 it won't display the da7293... and "-D" branches.
 
