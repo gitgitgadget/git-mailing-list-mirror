@@ -7,46 +7,46 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E8F5C33CAE
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60C8CC33CAD
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:40:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 06B54206D7
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:40:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3223C20678
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 12:40:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xDXdwlJu"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yGI08Cod"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728709AbgAMMkl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 07:40:41 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37642 "EHLO
+        id S1728733AbgAMMkn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 07:40:43 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37654 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728656AbgAMMkj (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:40:39 -0500
+        by vger.kernel.org with ESMTP id S1726878AbgAMMki (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 13 Jan 2020 07:40:38 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC4FC607F9;
-        Mon, 13 Jan 2020 12:40:37 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 48815607FD;
+        Mon, 13 Jan 2020 12:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1578919238;
-        bh=fMUxjGVjhUrESSW40/sCXR/0wiwqI71DHozpjAit15o=;
+        s=default; t=1578919236;
+        bh=sEkMDkqpK1OBWfbnfF1hxcDEn7IDQWSLwlTLd+96VQk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=xDXdwlJuqfGdM8Hp8BOSnUr2VhhOzDG395NIX+ISeqD+dx3c+3aWTRXYiF0pfCtA8
-         IXSYWuuoo0nwFXreg5rZaW5z1Fh7PPNSfKY6Se6OcbsBpgvidSsoZ+J+JJ/YPSqoeU
-         PTLg0xHOjMiqpzxjGPOhAGeeDk8hh3u9PE4KXQmox4pZCsVzajPd8FNTUn8ZPtsBDe
-         eJwEM97jkA5dKmcgerwQ1fK3htySEHO+oyQqNsOg8iqfsXsLDG2Wm2VxORAk1GGeW3
-         xNagrh07+OA26LNKQYqjbk3mGXQJL3w2gxt6Em2C/3LpFJ+VYmIDLeM7T6oHhYczym
-         496vzpgqGD1yQjzs/q3zEtwC1jwwsTClg4H4I+BXyv79YboBgZZ5BBzTVSTAUeUKwq
-         llrXLBTOeFZ50E+BD2mkF61Hbws8CB2qNZq/oTZmvnotPMbKp/PNXLWRR4wtyqXOvF
-         OHr9hI2x7B5sYe9sLPLvx/LVkbdNo5yhG/0rY2woxRFNFFJuU5a
+        b=yGI08CodL8jNztbzTfa4PeSeG5U4jDaMDMnabLIJPvfhhdYu1rUC6SoGcCV5HdpXi
+         dMDKm+kgIm+lRvvjgXoPN2WjhPsSzU7R/QKocxkznDYu/QTU0w3E/HQHf3fvxbM8kb
+         kS3yx+17skv4lRbZM6d+YWhkDchH8MMy2MffdM5oY0o4IMbgps5XEgBJTvUCp5+aAu
+         NDsghlRXMO6HMtiG9dRAqRA7J+fEbrkkhDZrNgTXWMJeL3J1HtqgeGuS68KlESXCFh
+         5o+GlcXMds/TVzbm//tOIvw0vjTAwUc495f9gy6X4+rZ2z818D9zHrdF6MO5RAG9vL
+         G2aggVlM/JBmNnX9t+uYW5OGAUfUMiD+etnyxA9d/+t6W1sudyXwRDm2iIyMUTnL33
+         C0lVjLuJeXR9OIPHxma6bcA6yTxTJ+daOdLHkcoaBqoWDe4ap3HCs0BXm1DHn7Q/J+
+         DOhErYjtCfPRsTlxQFFKDMXSexlZJwlvC3VvYwRZvKjv/zZfaX1
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jonathan Tan <jonathantanmy@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 12/24] t5302: make hash size independent
-Date:   Mon, 13 Jan 2020 12:38:45 +0000
-Message-Id: <20200113123857.3684632-13-sandals@crustytoothpaste.net>
+Subject: [PATCH 09/24] t4013: make test hash independent
+Date:   Mon, 13 Jan 2020 12:38:42 +0000
+Message-Id: <20200113123857.3684632-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.rc2.338.g21a285fb81
 In-Reply-To: <20200113123857.3684632-1-sandals@crustytoothpaste.net>
 References: <20200113123857.3684632-1-sandals@crustytoothpaste.net>
@@ -57,75 +57,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compute the length of object IDs and pack offsets instead of hard-coding
-constants.
+This test produces a large number of diff formats and compares the
+output with test files that have content specific to SHA-1. Since we are
+more interested in the format of the diffs, and not their specific
+values, which are tested elsewhere, add a function which uses sed to
+transform these specific object IDs into generic ones of the right size,
+which we can then compare.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t5302-pack-index.sh | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ t/t4013-diff-various.sh | 44 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 38 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index 91d51b35f9..93ac003639 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -8,7 +8,8 @@ test_description='pack index with 64-bit offsets and object CRC'
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 5ac94b390d..6f5f05c3a8 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -120,6 +120,30 @@ test_expect_success setup '
+ +*++ [initial] Initial
+ EOF
  
- test_expect_success \
-     'setup' \
--    'rm -rf .git &&
-+    'test_oid_init &&
-+     rm -rf .git &&
-      git init &&
-      git config pack.threads 1 &&
-      i=1 &&
-@@ -32,7 +33,9 @@ test_expect_success \
- 	 echo $tree &&
- 	 git ls-tree $tree | sed -e "s/.* \\([0-9a-f]*\\)	.*/\\1/"
-      } >obj-list &&
--     git update-ref HEAD $commit'
-+     git update-ref HEAD $commit &&
-+     rawsz=$(test_oid rawsz)
-+'
++process_diffs () {
++	x04="[0-9a-f][0-9a-f][0-9a-f][0-9a-f]" &&
++	x07="$_x05[0-9a-f][0-9a-f]" &&
++	sed -e "s/$OID_REGEX/$ZERO_OID/g" \
++	    -e "s/From $_x40 /From $ZERO_OID /" \
++	    -e "s/from $_x40)/from $ZERO_OID)/" \
++	    -e "s/commit $_x40\$/commit $ZERO_OID/" \
++	    -e "s/commit $_x40 (/commit $ZERO_OID (/" \
++	    -e "s/$_x40 $_x40 $_x40/$ZERO_OID $ZERO_OID $ZERO_OID/" \
++	    -e "s/$_x40 $_x40 /$ZERO_OID $ZERO_OID /" \
++	    -e "s/^$_x40 $_x40$/$ZERO_OID $ZERO_OID/" \
++	    -e "s/^$_x40 /$ZERO_OID /" \
++	    -e "s/^$_x40$/$ZERO_OID/" \
++	    -e "s/$x07\.\.$x07/fffffff..fffffff/g" \
++	    -e "s/$x07,$x07\.\.$x07/fffffff,fffffff..fffffff/g" \
++	    -e "s/$x07 $x07 $x07/fffffff fffffff fffffff/g" \
++	    -e "s/$x07 $x07 /fffffff fffffff /g" \
++	    -e "s/Merge: $x07 $x07/Merge: fffffff fffffff/g" \
++	    -e "s/$x07\.\.\./fffffff.../g" \
++	    -e "s/ $x04\.\.\./ ffff.../g" \
++	    -e "s/ $x04/ ffff/g" \
++	    "$1"
++}
++
+ V=$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
+ while read magic cmd
+ do
+@@ -158,13 +182,15 @@ do
+ 		} >"$actual" &&
+ 		if test -f "$expect"
+ 		then
++			process_diffs "$actual" >actual &&
++			process_diffs "$expect" >expect &&
+ 			case $cmd in
+ 			*format-patch* | *-stat*)
+-				test_i18ncmp "$expect" "$actual";;
++				test_i18ncmp expect actual;;
+ 			*)
+-				test_cmp "$expect" "$actual";;
++				test_cmp expect actual;;
+ 			esac &&
+-			rm -f "$actual"
++			rm -f "$actual" actual expect
+ 		else
+ 			# this is to help developing new tests.
+ 			cp "$actual" "$expect"
+@@ -383,16 +409,22 @@ test_expect_success 'log -S requires an argument' '
+ test_expect_success 'diff --cached on unborn branch' '
+ 	echo ref: refs/heads/unborn >.git/HEAD &&
+ 	git diff --cached >result &&
+-	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--cached" result
++	process_diffs result >actual &&
++	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--cached" >expected &&
++	test_cmp expected actual
+ '
  
- test_expect_success \
-     'pack-objects with index version 1' \
-@@ -152,6 +155,7 @@ test_expect_success \
-     '[index v1] 2) create a stealth corruption in a delta base reference' \
-     '# This test assumes file_101 is a delta smaller than 16 bytes.
-      # It should be against file_100 but we substitute its base for file_099
-+     offset=$((rawsz + 4)) &&
-      sha1_101=$(git hash-object file_101) &&
-      sha1_099=$(git hash-object file_099) &&
-      offs_101=$(index_obj_offset 1.idx $sha1_101) &&
-@@ -159,8 +163,8 @@ test_expect_success \
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=".git/objects/pack/pack-${pack1}.pack" seek=$(($offs_101 + 1)) \
-         if=".git/objects/pack/pack-${pack1}.idx" \
--        skip=$((4 + 256 * 4 + $nr_099 * 24)) \
--        bs=1 count=20 conv=notrunc &&
-+        skip=$((4 + 256 * 4 + $nr_099 * offset)) \
-+        bs=1 count=$rawsz conv=notrunc &&
-      git cat-file blob $sha1_101 > file_101_foo1'
+ test_expect_success 'diff --cached -- file on unborn branch' '
+ 	git diff --cached -- file0 >result &&
+-	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--cached_--_file0" result
++	process_diffs result >actual &&
++	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--cached_--_file0" >expected &&
++	test_cmp expected actual
+ '
+ test_expect_success 'diff --line-prefix with spaces' '
+ 	git diff --line-prefix="| | | " --cached -- file0 >result &&
+-	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--line-prefix_--cached_--_file0" result
++	process_diffs result >actual &&
++	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--line-prefix_--cached_--_file0" >expected &&
++	test_cmp expected actual
+ '
  
- test_expect_success \
-@@ -200,8 +204,8 @@ test_expect_success \
-      chmod +w ".git/objects/pack/pack-${pack1}.pack" &&
-      dd of=".git/objects/pack/pack-${pack1}.pack" seek=$(($offs_101 + 1)) \
-         if=".git/objects/pack/pack-${pack1}.idx" \
--        skip=$((8 + 256 * 4 + $nr_099 * 20)) \
--        bs=1 count=20 conv=notrunc &&
-+        skip=$((8 + 256 * 4 + $nr_099 * rawsz)) \
-+        bs=1 count=$rawsz conv=notrunc &&
-      git cat-file blob $sha1_101 > file_101_foo2'
- 
- test_expect_success \
-@@ -226,7 +230,7 @@ test_expect_success \
-      nr=$(index_obj_nr ".git/objects/pack/pack-${pack1}.idx" $obj) &&
-      chmod +w ".git/objects/pack/pack-${pack1}.idx" &&
-      printf xxxx | dd of=".git/objects/pack/pack-${pack1}.idx" conv=notrunc \
--        bs=1 count=4 seek=$((8 + 256 * 4 + $(wc -l <obj-list) * 20 + $nr * 4)) &&
-+        bs=1 count=4 seek=$((8 + 256 * 4 + $(wc -l <obj-list) * rawsz + $nr * 4)) &&
-      ( while read obj
-        do git cat-file -p $obj >/dev/null || exit 1
-        done <obj-list ) &&
+ test_expect_success 'diff-tree --stdin with log formatting' '
