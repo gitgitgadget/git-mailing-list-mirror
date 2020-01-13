@@ -2,112 +2,196 @@ Return-Path: <SRS0=G+/Y=3C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E046C33CA9
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 19:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 51186C33CA9
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:14:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5D38821556
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 19:48:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1BEBA21569
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:14:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ff0Hq0gi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FFU7Wblx"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728679AbgAMTsH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 14:48:07 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:40966 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728516AbgAMTsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 14:48:07 -0500
-Received: by mail-qk1-f194.google.com with SMTP id x129so9688833qke.8
-        for <git@vger.kernel.org>; Mon, 13 Jan 2020 11:48:06 -0800 (PST)
+        id S1728668AbgAMUOG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 15:14:06 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:41441 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727331AbgAMUOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 15:14:06 -0500
+Received: by mail-oi1-f193.google.com with SMTP id i1so9536718oie.8;
+        Mon, 13 Jan 2020 12:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=htiKS2THDhj5dELb2JSNNyhZeap/LYUE7YPtFO4b80I=;
-        b=Ff0Hq0givxWwEWNAv0cPrG3y/YWxi+weJavjsjEGNC1M9lzxstETwoYGqYqmeuvPLD
-         gjyfw9y0mxI3PL+L8w9/27PTt/d3f8zVKin7Q+cQxFpN9gSh3gAbN+cZL+hx2TAny9K5
-         58XLZKi3nl3h4M9gE4OQ7mjurPdcus7VlUi9kxcuKoQAV5ofdedpes82xgNwjBuWDcT3
-         g6NJgrLXjzv9f3c6lv0tggJxwh3DyxpShGE+nIu1r7z1x7cQwQzbs1K30w03pytu0qRk
-         KC6NSVhg9u52nslkvqbs0Ym3pjiee2M45lxyFKLR1tr6oC9Y7knm2Q87pirRWYf360oB
-         IqbA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ddauMHJ4wziSDim2RMTdZVRWhwRM9nMspEY+7QpNCXA=;
+        b=FFU7WblxM4VvJQ+MPQyNJdmGR39bPUvW8WVuZv8fFvd6Q/ejvinr+6stvIum014Hzk
+         /BUQS3ft7VgkW5Nh6bzFPGLCKGOT8Nh4stKQwEVF55a+Z+ZzERNPshxz84ZkZmZ9T0g5
+         woJUBJdQvPQoV5enLOv0lOVONKH8xPOtwygzDX9Aaf/5Z/YaWypSsZSxJnvgd4UF+EaY
+         fui8G04QA7Itxw9C24hFU2NTLKuDLc9hLRwmpuLf9a46SDPQYlh4jHLyqlPsbI18iBRR
+         z0UxplDucNIBANuQRRYrLShqrD0NkR0lrFVVbOxIyYh7AuVEoj0x8zF5wyfUyjyaW+jg
+         IG/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=htiKS2THDhj5dELb2JSNNyhZeap/LYUE7YPtFO4b80I=;
-        b=Jttp1icbaLB/scqyROLkoAa37NZx4xXBituk/PH8svn3cmlWa2hESPiHlNKd7PuJ9a
-         r6k+O/+YO3BN2dzIwgFmRKhbeq4VA2h9qGHZYEUY2TSZ4BcMSsqWF9UZCld9NlN2F/Zk
-         23MHmKXHFI98uMdCgGGybh2anGta3Iwn1s09IGAySEB+14PePmOruKI1BrJ7CwRk5JKL
-         GjYgUwvepYIHYURrEMFI081eKee6CcWJ405OTgg8Mi8NPSpiFb8QhDNASJkJibMR6jsq
-         wvy+E0C60m16FY5fiVVgO22vSVMpfiqWXXXxtmjT2VPBIRQiF7mKRcMlz/8/pEHklvu0
-         Vsdw==
-X-Gm-Message-State: APjAAAW40XsQoKKgOMrat7Rg8Szkii74KEPXMn7Qaw76eGbSGEf0sx8y
-        tbT4FhiiR7lTExgT0dLetbI=
-X-Google-Smtp-Source: APXvYqwL0XB9dzpokwqC82LRo4Ap/Ettu3WHG3i8fHJK6VzwnJP3lCXjcFF0lnr8x4OjkeYDAJe+hQ==
-X-Received: by 2002:ae9:f714:: with SMTP id s20mr17689732qkg.236.1578944886468;
-        Mon, 13 Jan 2020 11:48:06 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13f:69fe:2d70:2369:9bfd? ([2001:4898:a800:1010:1b35:2d70:2369:9bfd])
-        by smtp.gmail.com with ESMTPSA id o9sm5511245qko.16.2020.01.13.11.48.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jan 2020 11:48:06 -0800 (PST)
-Subject: Re: [PATCH 2/9] commit-graph: write changed paths bloom filters
-To:     Jakub Narebski <jnareb@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
- <e52c7ad37a306891487bd79a09b040bfb657d723.1576879520.git.gitgitgadget@gmail.com>
- <86eewczapt.fsf@gmail.com>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <6cefadde-7171-e081-ba5b-ba2543d9f22f@gmail.com>
-Date:   Mon, 13 Jan 2020 14:48:04 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ddauMHJ4wziSDim2RMTdZVRWhwRM9nMspEY+7QpNCXA=;
+        b=IQDrBMyQkYEPPf0V6jISylUESwsUGUnY402/yH3adQSitPgKWaQjEMZmHf5EB9rqlS
+         5huO9DV1qVZTHGoYj3G1jU6SqYj4w+OrWnh2E0LQKjqjIxP19JxhwaGHxnJfZ+mbkkrn
+         Mq1OWIelFD1g/hsO7doQDzuFR4H9D2DNfnGNyDWJFaW/k7kEujYpCGNFND7DSutz7X8N
+         Zaw+m1a4HchgIuX0OjH2oHImNKD80Gi9lEZdoEMpPEUiC8la2tiJrDfZv0jbCqWWcFjL
+         Z32C1td0B8nuelBDmoO7FsCc4rUBWLnUPUIvVxDqNIldeZr3dHhqRSNN2OhGe637z9gf
+         7kqw==
+X-Gm-Message-State: APjAAAWiGmY1AiHnA8QUXZvxNJg2y4EVT7KTZyPRENFuguwGIX8bSkIH
+        kv13hrCAFNBLYeVmf47/8NnmGZQNVX4Yo7uFH+M=
+X-Google-Smtp-Source: APXvYqym2NUm20BGgXe8buAx6fSCDojiidpkqY9jFkknU/kEAd06doGTq1KSroQ13IPbLwQnnIkFcO2pWrWGxgl0Vbw=
+X-Received: by 2002:aca:1b01:: with SMTP id b1mr13276159oib.6.1578946445536;
+ Mon, 13 Jan 2020 12:14:05 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <86eewczapt.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <xmqqtv4zjgv5.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtv4zjgv5.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 13 Jan 2020 12:13:54 -0800
+Message-ID: <CABPp-BFP38okGPTmyUJ-vVqq4=T0CypuyD05e6ArEfwhq2mdpg@mail.gmail.com>
+Subject: [ANNOUNCE] git-filter-repo v2.25.0 (Was Re: [ANNOUNCE] Git v2.25.0)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On 1/6/2020 1:44 PM, Jakub Narebski wrote:
-
-> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes: 
->> 3. The filters are sized according to the number of changes in the each commit,
->>    with minimum size of one 64 bit word.
-> 
-> Do I understand it correctly that the size of filter is 10*(number of
-> changed files) bits, rounded up to nearest multiple of 64?
+On Mon, Jan 13, 2020 at 11:32 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
+> The latest feature release Git v2.25.0 is now available at the
+> usual places.  It is comprised of 583 non-merge commits since
+> v2.24.0, contributed by 84 people, 32 of which are new faces.
 
-Yes.
-  
->> +
->> +struct pathmap_hash_entry {
->> +    struct hashmap_entry entry;
->> +    const char path[FLEX_ARRAY];
->> +};
-> 
-> Hmmm... I wonder why use hashmap and not string_list.  This is for
-> adding path with leading directories to the Bloom filter, isn't it?
-> 
+The latest release of git-filter-repo, v2.25.0, is also now available.  It
+is comprised of 29 non-merge commits since v2.24.0, contributed by 6
+people, 5 of whom are new.
 
-Yes. We do not want to repeat directories in the filter.
+The public repo is at
 
-Thanks!
-Garima Singh
+    https://github.com/newren/git-filter-repo
 
+The tarballs can be found at:
+
+    https://github.com/newren/git-filter-repo/releases
+
+git-filter-repo can now also be installed via pip[1] or a variety of
+package managers across Windows, Mac OS, or Linux (and maybe
+others)[2].
+
+New contributors whose contributions weren't in v2.24.0 are as follows.
+Welcome to the git-filter-repo development community!
+
+  Karl Lenz, Benoit Fouletier, Andreas Schneider, Julian Berman,
+  Matthisk Heimensen
+
+[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md#installation-via-pip
+[2] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md#installation-via-package-manager
+
+----------------------------------------------------------------
+
+git-filter-repo 2.25 Release Notes
+==================================
+
+(Note: Additional information is available for many release notes at
+    https://github.com/newren/git-filter-repo/issues/<NUMBER>)
+
+Fixes:
+ * A bug in empty/degenerate commit pruning could result in path
+   filters being ignored for commits not in the first parent history
+   of a commit when the first parent history is pruned away.  This has
+   been corrected, with the unwanted files now being pruned. (#3, #35)
+ * blob-callbacks and --replace-text could result in commits becoming
+   empty, but such commits were overlooked for empty pruning.  This
+   has been corrected. (#42)
+ * On case-insensitive file systems, fast-import will have files whose
+   names differ in case only overwrite each other.  Avoid such
+   clobbering of history while rewriting when a repo is cloned onto
+   such a filesystem (#24).
+ * Prevent --analyze from choking on typechanges in conjunction with
+   renames.
+ * Workaround python subprocess bug on Windows in the bfg-ish and
+   filter-lamely (a.k.a. filter-branch-ish) scripts, so that these
+   scripts can also be run on Windows (#27)
+
+Enhancements:
+ * Due to pruning of commits which become empty, a merge commit can
+   become degenerate in a variety of ways.  One of these is that one
+   parent can become the ancestor of the other, making the merge
+   commit unnecessary (unless it introduces some file changes).  Add a
+   new --no-ff option to avoid pruning such a merge commit when the
+   first parent is the one that is an ancestor of the other parent.
+ * Warn users who try to use invalid path components (#32)
+ * Parse mailmap entries with no email address (#29)
+ * Allow --dry-run and --debug to be used together (#29)
+
+Installation improvements:
+ * Fix some path and documentation installation issues (#12, #10)
+ * Update GPL license file (#34)
+ * Add packaging scripts for uploading to PyPI (#11, #16, #43)
+
+Documentation improvements:
+ * Ficks sum tiepos in reeport fiuhls genereighted bye --analyze (#18, #40)
+ * Include several documentation updates, including fixing an error (#41);
+   most of these updates were in response to common questions.
+
+Miscellaneous:
+ * Prefer 'coverage3' to 'python3-coverage' in testing, to match name
+   of upstream package.
+ * Add a basic .gitignore
+
+
+Changes since v2.24.0 are as follows:
+
+Andreas Schneider (1):
+      Update GPL license file
+
+Benoit Fouletier (2):
+      Makefile: fix documentation installation
+      Makefile: fix path installation issues
+
+Elijah Newren (21):
+      filter-repo (README): add sections on prerequisites and installation
+      Explain how to use a python3 executable not named "python3"
+      filter-repo (README): add code of conduct and contributing guidelines
+      run_coverage: prefer coverage3 to python3-coverage
+      Contributing.md: mention testsuite line coverage
+      contrib: clarify a few points of usage
+      Reference package managers in installation instructions
+      Contributing.md: clarify notes about PEP-8
+      filter-repo: don't have analyze choke on typechange types
+      filter-repo: move file filtering out of _tweak_commit() for re-use
+      filter-repo: actually fix issue with pruning of empty commits
+      release: tweak packaging scripts for uploading to PyPI
+      filter-repo: avoid clobbering files whose names differ in case only
+      contrib: update bfg-ish and filter-lamely with windows workaround
+      Contributing.md: clarify reasons for using git.git submission guidelines
+      filter-repo: warn users who try to use invalid path components
+      filter-repo: add new --no-ff option
+      filter-repo: fix bad column label in path-all-sizes.txt report
+      git-filter-repo.txt: fix example of editing blob contents
+      filter-repo: fix pruning of empty commits with blob callbacks
+      INSTALL: a few small tweaks and clarifications
+
+Julian Berman (1):
+      release: add packaging scripts for uploading to PyPI
+
+Karl Lenz (3):
+      .gitignore: ignore the test result directories
+      filter-repo: parse mailmap entries with no email address
+      filter-repo: allow --dry-run and --debug to be used together
+
+Matthisk Heimensen (1):
+      filter-repo: fix typo in generated analysis README
