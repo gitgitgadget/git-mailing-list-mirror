@@ -2,196 +2,175 @@ Return-Path: <SRS0=G+/Y=3C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
+	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
+	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51186C33CA9
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19972C33CA9
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:28:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1BEBA21569
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:14:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D927121556
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 20:28:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FFU7Wblx"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uv6ZJ4tS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728668AbgAMUOG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 15:14:06 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:41441 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727331AbgAMUOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 15:14:06 -0500
-Received: by mail-oi1-f193.google.com with SMTP id i1so9536718oie.8;
-        Mon, 13 Jan 2020 12:14:06 -0800 (PST)
+        id S1728643AbgAMU2b (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 15:28:31 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:39813 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726488AbgAMU2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 15:28:31 -0500
+Received: by mail-pf1-f202.google.com with SMTP id i196so7314436pfe.6
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 12:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ddauMHJ4wziSDim2RMTdZVRWhwRM9nMspEY+7QpNCXA=;
-        b=FFU7WblxM4VvJQ+MPQyNJdmGR39bPUvW8WVuZv8fFvd6Q/ejvinr+6stvIum014Hzk
-         /BUQS3ft7VgkW5Nh6bzFPGLCKGOT8Nh4stKQwEVF55a+Z+ZzERNPshxz84ZkZmZ9T0g5
-         woJUBJdQvPQoV5enLOv0lOVONKH8xPOtwygzDX9Aaf/5Z/YaWypSsZSxJnvgd4UF+EaY
-         fui8G04QA7Itxw9C24hFU2NTLKuDLc9hLRwmpuLf9a46SDPQYlh4jHLyqlPsbI18iBRR
-         z0UxplDucNIBANuQRRYrLShqrD0NkR0lrFVVbOxIyYh7AuVEoj0x8zF5wyfUyjyaW+jg
-         IG/A==
+        bh=Bgj+O2oTQ1O6C2tBUkXz15AE4y9m7DfysRr8jCioSCo=;
+        b=uv6ZJ4tS8gfD+GcTefPaXi1Ub6iGksxOXalr4/+1Im66N6RpICWL5E90gzfC5zk+iZ
+         LzmgnH0kvArTmhRdPBptejbQUttw9t6vzg3IyYF+dZibxR9yBnRG7LRIML5EmWVUZd/z
+         GeV/IqQ4c778ThfbJ5y3tLB9rsbxS25Umqcn3Y7Pj60TvIfB167t69qo0GcvmNUNulp3
+         R+l4XjNnJM8l061VVq/t+hP90Y0t5ZacLZ1JhoMk5cti7G5+az8WjTOY4tNtVHlH3EHo
+         xRKQ2r2bXUwW4H040gkKCKYRojA665WiD42y23K64cuZVNSo4WeQIni7xy7xt95Hs42z
+         DpYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ddauMHJ4wziSDim2RMTdZVRWhwRM9nMspEY+7QpNCXA=;
-        b=IQDrBMyQkYEPPf0V6jISylUESwsUGUnY402/yH3adQSitPgKWaQjEMZmHf5EB9rqlS
-         5huO9DV1qVZTHGoYj3G1jU6SqYj4w+OrWnh2E0LQKjqjIxP19JxhwaGHxnJfZ+mbkkrn
-         Mq1OWIelFD1g/hsO7doQDzuFR4H9D2DNfnGNyDWJFaW/k7kEujYpCGNFND7DSutz7X8N
-         Zaw+m1a4HchgIuX0OjH2oHImNKD80Gi9lEZdoEMpPEUiC8la2tiJrDfZv0jbCqWWcFjL
-         Z32C1td0B8nuelBDmoO7FsCc4rUBWLnUPUIvVxDqNIldeZr3dHhqRSNN2OhGe637z9gf
-         7kqw==
-X-Gm-Message-State: APjAAAWiGmY1AiHnA8QUXZvxNJg2y4EVT7KTZyPRENFuguwGIX8bSkIH
-        kv13hrCAFNBLYeVmf47/8NnmGZQNVX4Yo7uFH+M=
-X-Google-Smtp-Source: APXvYqym2NUm20BGgXe8buAx6fSCDojiidpkqY9jFkknU/kEAd06doGTq1KSroQ13IPbLwQnnIkFcO2pWrWGxgl0Vbw=
-X-Received: by 2002:aca:1b01:: with SMTP id b1mr13276159oib.6.1578946445536;
- Mon, 13 Jan 2020 12:14:05 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqqtv4zjgv5.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtv4zjgv5.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Jan 2020 12:13:54 -0800
-Message-ID: <CABPp-BFP38okGPTmyUJ-vVqq4=T0CypuyD05e6ArEfwhq2mdpg@mail.gmail.com>
-Subject: [ANNOUNCE] git-filter-repo v2.25.0 (Was Re: [ANNOUNCE] Git v2.25.0)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Bgj+O2oTQ1O6C2tBUkXz15AE4y9m7DfysRr8jCioSCo=;
+        b=CQsn5yzr+l+chwD6lz/QfOkyym5SaJC0A+Wsz31x36KqjzkdNC+6GoHAAT7PFqKI+5
+         ucfSwPbLsq1BSOL75XVb3gFdtu4sSo1NBpqhHuuzshbQM1dsvnh5mdcOIdjtwBi4frx4
+         +vC0K5+4umTRwNAxbS5WzwddnlsSme7GJXqQaDBRm34bOQC79TMrct62/eOhrnP6IYBO
+         5P5oU6Nnd+5Ub6DTuu8JaGoqhvt9lx5ktLyHeLe1dnOZQHXuGXcbTI2ywd8EMqkP40lR
+         qiV9e2jzhxNMk2m7/GYyiS+1byM9bPggo98AAV16L/cxLjSOqMp/diAvHG8w+hHHrPlK
+         EbiA==
+X-Gm-Message-State: APjAAAVVVG/bxaUib5vO/0OCl+dQ/5uWOCyYTEqUKWR/Ma4l2oBO5vmd
+        3N751J9G6uxeiNMuVk7YKV8xS/jinr+2t6UfNFdX6qe9/rLam+OaFWkZWccjS2xqfzNFyjUXCkB
+        Xpkcw9tP6whzQ2viw8MpQjytzrKPG44+X4vNagsKUupdMNkGTJAFzi4Yl+nT3roWXE22JKEO/JD
+        dc
+X-Google-Smtp-Source: APXvYqw1zt2SjOdaYpU+a4jZP/uCBHoCd804RHFGSxyXXgixxlD2m9tzRKAS7ZkbezKOsRcGaCZ1cUy2TOUuzGwzowAS
+X-Received: by 2002:a63:9d4e:: with SMTP id i75mr22285631pgd.231.1578947310252;
+ Mon, 13 Jan 2020 12:28:30 -0800 (PST)
+Date:   Mon, 13 Jan 2020 12:28:23 -0800
+In-Reply-To: <20200113123857.3684632-19-sandals@crustytoothpaste.net>
+Message-Id: <20200113202823.228062-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200113123857.3684632-19-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
+Subject: [PATCH] t5616: make robust to delta base change
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        sandals@crustytoothpaste.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Commit 6462d5eb9a ("fetch: remove fetch_if_missing=0", 2019-11-08)
+contains a test that relies on having to lazily fetch the delta base of
+a blob, but assumes that the tree being fetched (as part of the test) is
+sent as a non-delta object. This assumption may not hold in the future;
+for example, a change in the length of the object hash might result in
+the tree being sent as a delta instead.
 
-On Mon, Jan 13, 2020 at 11:32 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> The latest feature release Git v2.25.0 is now available at the
-> usual places.  It is comprised of 583 non-merge commits since
-> v2.24.0, contributed by 84 people, 32 of which are new faces.
+Make the test more robust by relying on having to lazily fetch the delta
+base of the tree instead, and by making no assumptions on whether the
+blobs are sent as delta or non-delta.
 
-The latest release of git-filter-repo, v2.25.0, is also now available.  It
-is comprised of 29 non-merge commits since v2.24.0, contributed by 6
-people, 5 of whom are new.
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Thanks, brian, for bringing this to my attention. I think that the
+change in the length of the object hash made the tree a delta and thus
+require a lazy-fetch of its delta base. Can you see if this patch
+eliminates the need for your t5616 patch?
 
-The public repo is at
+In any case, this change passes at master and I think should go in
+independent of brian's changes - if the delta base algorithm changes for
+whatever reason, this is still needed to make the test more robust.
+---
+ t/t5616-partial-clone.sh | 36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
-    https://github.com/newren/git-filter-repo
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index fea56cda6d..9a9178fd28 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -309,26 +309,36 @@ setup_triangle () {
+ 
+ 	printf "line %d\n" $(test_seq 1 100) >big-blob.txt &&
+ 
+-	# Create a server with 2 commits: a commit with a big blob and a child
++	# Create a server with 2 commits: a commit with a big tree and a child
+ 	# commit with an incremental change. Also, create a partial clone
+ 	# client that only contains the first commit.
+ 	git init server &&
+ 	git -C server config --local uploadpack.allowfilter 1 &&
+-	cp big-blob.txt server &&
+-	git -C server add big-blob.txt &&
++	for i in $(test_seq 1 100)
++	do
++		echo "make the tree big" >server/file$i &&
++		git -C server add file$i
++	done &&
+ 	git -C server commit -m "initial" &&
+ 	git clone --bare --filter=tree:0 "file://$(pwd)/server" client &&
+-	echo another line >>server/big-blob.txt &&
+-	git -C server commit -am "append line to big blob" &&
++	echo another line >>server/file1 &&
++	git -C server commit -am "incremental change" &&
+ 
+-	# Create a promisor remote that only contains the blob from the first
+-	# commit, and set it as the promisor remote of client. Thus, whenever
+-	# the client lazy fetches, the lazy fetch will succeed only if it is
+-	# for this blob.
++	# Create a promisor remote that only contains the tree and blob from
++	# the first commit.
+ 	git init promisor-remote &&
++	git -C server config --local uploadpack.allowanysha1inwant 1 &&
++	TREE_HASH=$(git -C server rev-parse HEAD~1^{tree}) &&
++	git -C promisor-remote fetch --keep "file://$(pwd)/server" "$TREE_HASH" &&
++	git -C promisor-remote count-objects -v >object-count &&
++	test_i18ngrep "count: 0" object-count &&
++	test_i18ngrep "in-pack: 2" object-count &&
++
++	# Set it as the promisor remote of client. Thus, whenever
++	# the client lazy fetches, the lazy fetch will succeed only if it is
++	# for this tree or blob.
+ 	test_commit -C promisor-remote one && # so that ref advertisement is not empty
+ 	git -C promisor-remote config --local uploadpack.allowanysha1inwant 1 &&
+-	git -C promisor-remote hash-object -w --stdin <big-blob.txt &&
+ 	git -C client remote set-url origin "file://$(pwd)/promisor-remote"
+ }
+ 
+@@ -341,14 +351,14 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas' '
+ 	setup_triangle &&
+ 
+ 	# Exercise to make sure it works. Git will not fetch anything from the
+-	# promisor remote other than for the big blob (because it needs to
++	# promisor remote other than for the big tree (because it needs to
+ 	# resolve the delta).
+ 	GIT_TRACE_PACKET="$(pwd)/trace" git -C client \
+ 		fetch "file://$(pwd)/server" master &&
+ 
+ 	# Verify the assumption that the client needed to fetch the delta base
+ 	# to resolve the delta.
+-	git hash-object big-blob.txt >hash &&
++	git -C server rev-parse HEAD~1^{tree} >hash &&
+ 	grep "want $(cat hash)" trace
+ '
+ 
+@@ -370,7 +380,7 @@ test_expect_success 'fetch lazy-fetches only to resolve deltas, protocol v2' '
+ 
+ 	# Verify the assumption that the client needed to fetch the delta base
+ 	# to resolve the delta.
+-	git hash-object big-blob.txt >hash &&
++	git -C server rev-parse HEAD~1^{tree} >hash &&
+ 	grep "want $(cat hash)" trace
+ '
+ 
+-- 
+2.25.0.rc1.283.g88dfdc4193-goog
 
-The tarballs can be found at:
-
-    https://github.com/newren/git-filter-repo/releases
-
-git-filter-repo can now also be installed via pip[1] or a variety of
-package managers across Windows, Mac OS, or Linux (and maybe
-others)[2].
-
-New contributors whose contributions weren't in v2.24.0 are as follows.
-Welcome to the git-filter-repo development community!
-
-  Karl Lenz, Benoit Fouletier, Andreas Schneider, Julian Berman,
-  Matthisk Heimensen
-
-[1] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md#installation-via-pip
-[2] https://github.com/newren/git-filter-repo/blob/master/INSTALL.md#installation-via-package-manager
-
-----------------------------------------------------------------
-
-git-filter-repo 2.25 Release Notes
-==================================
-
-(Note: Additional information is available for many release notes at
-    https://github.com/newren/git-filter-repo/issues/<NUMBER>)
-
-Fixes:
- * A bug in empty/degenerate commit pruning could result in path
-   filters being ignored for commits not in the first parent history
-   of a commit when the first parent history is pruned away.  This has
-   been corrected, with the unwanted files now being pruned. (#3, #35)
- * blob-callbacks and --replace-text could result in commits becoming
-   empty, but such commits were overlooked for empty pruning.  This
-   has been corrected. (#42)
- * On case-insensitive file systems, fast-import will have files whose
-   names differ in case only overwrite each other.  Avoid such
-   clobbering of history while rewriting when a repo is cloned onto
-   such a filesystem (#24).
- * Prevent --analyze from choking on typechanges in conjunction with
-   renames.
- * Workaround python subprocess bug on Windows in the bfg-ish and
-   filter-lamely (a.k.a. filter-branch-ish) scripts, so that these
-   scripts can also be run on Windows (#27)
-
-Enhancements:
- * Due to pruning of commits which become empty, a merge commit can
-   become degenerate in a variety of ways.  One of these is that one
-   parent can become the ancestor of the other, making the merge
-   commit unnecessary (unless it introduces some file changes).  Add a
-   new --no-ff option to avoid pruning such a merge commit when the
-   first parent is the one that is an ancestor of the other parent.
- * Warn users who try to use invalid path components (#32)
- * Parse mailmap entries with no email address (#29)
- * Allow --dry-run and --debug to be used together (#29)
-
-Installation improvements:
- * Fix some path and documentation installation issues (#12, #10)
- * Update GPL license file (#34)
- * Add packaging scripts for uploading to PyPI (#11, #16, #43)
-
-Documentation improvements:
- * Ficks sum tiepos in reeport fiuhls genereighted bye --analyze (#18, #40)
- * Include several documentation updates, including fixing an error (#41);
-   most of these updates were in response to common questions.
-
-Miscellaneous:
- * Prefer 'coverage3' to 'python3-coverage' in testing, to match name
-   of upstream package.
- * Add a basic .gitignore
-
-
-Changes since v2.24.0 are as follows:
-
-Andreas Schneider (1):
-      Update GPL license file
-
-Benoit Fouletier (2):
-      Makefile: fix documentation installation
-      Makefile: fix path installation issues
-
-Elijah Newren (21):
-      filter-repo (README): add sections on prerequisites and installation
-      Explain how to use a python3 executable not named "python3"
-      filter-repo (README): add code of conduct and contributing guidelines
-      run_coverage: prefer coverage3 to python3-coverage
-      Contributing.md: mention testsuite line coverage
-      contrib: clarify a few points of usage
-      Reference package managers in installation instructions
-      Contributing.md: clarify notes about PEP-8
-      filter-repo: don't have analyze choke on typechange types
-      filter-repo: move file filtering out of _tweak_commit() for re-use
-      filter-repo: actually fix issue with pruning of empty commits
-      release: tweak packaging scripts for uploading to PyPI
-      filter-repo: avoid clobbering files whose names differ in case only
-      contrib: update bfg-ish and filter-lamely with windows workaround
-      Contributing.md: clarify reasons for using git.git submission guidelines
-      filter-repo: warn users who try to use invalid path components
-      filter-repo: add new --no-ff option
-      filter-repo: fix bad column label in path-all-sizes.txt report
-      git-filter-repo.txt: fix example of editing blob contents
-      filter-repo: fix pruning of empty commits with blob callbacks
-      INSTALL: a few small tweaks and clarifications
-
-Julian Berman (1):
-      release: add packaging scripts for uploading to PyPI
-
-Karl Lenz (3):
-      .gitignore: ignore the test result directories
-      filter-repo: parse mailmap entries with no email address
-      filter-repo: allow --dry-run and --debug to be used together
-
-Matthisk Heimensen (1):
-      filter-repo: fix typo in generated analysis README
