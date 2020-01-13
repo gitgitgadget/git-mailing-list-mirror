@@ -2,178 +2,184 @@ Return-Path: <SRS0=G+/Y=3C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47083C33CAB
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79E18C33CAE
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 18C1A21569
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B1282187F
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HE/45DfY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ohiil9Ro"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728829AbgAMI3f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 03:29:35 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38339 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728699AbgAMI3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 03:29:35 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y17so7559435wrh.5
-        for <git@vger.kernel.org>; Mon, 13 Jan 2020 00:29:33 -0800 (PST)
+        id S1728847AbgAMI3j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 03:29:39 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46193 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728774AbgAMI3h (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 03:29:37 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z7so7517942wrl.13
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 00:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:mime-version
-         :content-transfer-encoding:fcc:to:cc;
-        bh=5a2G3SfvnIj4RD9P1vG6UCR8aJq4+46AsRFFIB/Cfec=;
-        b=HE/45DfY8kYrvfw3q9b8ewuZgET9KX5qVoHN1pJ/j3cl8PIy+MYkKHNLxAwGRl9THP
-         POYsK7gA/BvEPnWOi4OTeaRuIYznWhpsIqR2tst0lqktg0dyiiuh2/xyPylqhRr6edeJ
-         QsqRgVsRPfPpYQngUd3L+eT5vFCswmp5LZ5U5lfMS6iPq6Zw++5Mi1hCWp8TALO6KWxN
-         o7L75kqrsrROpckDz5aXpEIf5BZulcPQfImtUFKLgcXOp/WgmMqbfTV4QlNkLJLoRnT4
-         PgDIaIlF5op31zTNizhfBKLslBX2lEQGGS79W4mA24z9yIxqVIuKj1rU8+QhViaT/rG8
-         7jxA==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
+        b=Ohiil9RojRbraFNSJlv4OBUHQLV7lTdYs+qiHaEjlxBavzwpMWNCd67y7qjd9KDt05
+         cRGhhg9Jb5U8JZLGJ7P6gXw3/oIngn1ZBoqrUy1mZhFnzP0iwLSVrhRFScjex2PlL53i
+         4iQnkMl1Bfeqw+vk/6bYvK6YIm9F+VGt7k4ojq4EeEjj30LlNh9j3wLqQt9sKy7xkH3T
+         3iiAvwzAGcwMnfiYDU5u0mQI21KG+3AgK941U4eiwQSrRgx+lVXHvnuqv8hkMP+qAtYc
+         7yxqyBOJ5nxlaQCa61aMJ/O+bpuclmpOM0im5XvnQYEjRuUgaO3xtsNcR7gD0y/cyNrY
+         IuuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
-        bh=5a2G3SfvnIj4RD9P1vG6UCR8aJq4+46AsRFFIB/Cfec=;
-        b=e6rsl3HOHuR+Drj3Pt4XK7dpiBKXc3osb5Ortd4Z7fQsm6G+YzIveAxS4pKbBHe+il
-         MXMfdqzlUb0BteUTNF1T6vJ4TmH48lK270s6I/kd0isAmOG2bFIHb71jNBtvmdVk3L4Y
-         5RGU7+RMuwNGSruIa77gTGWWxlm5sXOiwUSjhKCkxZw4O0bLJnoboyVtdTgDMqnTQh7y
-         W6C2NLLur5V6p2bvL4tK2SY9NkvTRbbI0yT5jcGYW4l4VzxPQZjU8X4xgwRPkeYfpJzO
-         RMDW3sHQXTAj4X8BRJZ9PJJhoAPz7cG/ItxB7QKADZl6ux/0LEWOoGkkD8vj8n+4qNz9
-         f0LA==
-X-Gm-Message-State: APjAAAU+H1vZ56TO4mIYoeSQAujvQ3uf5yv929K2TA9jLCaGxJOz9tIg
-        nHXlN5TJTTZsPeEmEHZLlkhMCZrI
-X-Google-Smtp-Source: APXvYqwyRSAbi0elGahohJ7ql91uTx8P1VxbqdOFE4mXqyDpFZULcdCYpT9C/ArHlkluSt+vFkNwcg==
-X-Received: by 2002:adf:f8c4:: with SMTP id f4mr16696797wrq.243.1578904172694;
-        Mon, 13 Jan 2020 00:29:32 -0800 (PST)
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
+        b=MFWtt2v4bzkVo5g9clYwsUeubyHDSsDocKTLbeO7i1VZKc+vST1VBMCUCOfIdm8aR+
+         hkyOLoZf7gNrxZLCZEoflKuz499VFSyRMCUrCr0OMge1euW5M/yR+a/vTLs77xwBv04k
+         eA5XoJ+qYzx4MhnlaOJGXhyT+2WP+hlQiZRE7mAgK7g1WOYoi2doL51milFPb8Iy38Ep
+         fZkPWZCwRgdqB946YmbjnoHR/ZbzYXs681+inSi7K7xZHIJcHWkKclZHfdb/+/09WIjD
+         T/KWrobWKI4eYCK5Snw9DhKqchB/2xzeHNOCVF3cLFRAGu7k4bhqqmDQ/O0O/MD4ncDx
+         gIcw==
+X-Gm-Message-State: APjAAAWXyhlYW6NfMYSzApo4fh+FqzrtjRaoCo59M1g3xOE9udfK6MIP
+        iqt+cEvQcz202geVR/Ct332cI7SZ
+X-Google-Smtp-Source: APXvYqzveV+Ek+FganPupfUmZxuYkIJ7P7Z0saX/s39CcHb/XqlY58LU1hjOPm4zImgBx+pR3qM9aQ==
+X-Received: by 2002:adf:f1cb:: with SMTP id z11mr16523783wro.375.1578904176272;
+        Mon, 13 Jan 2020 00:29:36 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a1sm13249958wmj.40.2020.01.13.00.29.31
+        by smtp.gmail.com with ESMTPSA id l18sm13494753wme.30.2020.01.13.00.29.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2020 00:29:32 -0800 (PST)
-Message-Id: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
-In-Reply-To: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
+        Mon, 13 Jan 2020 00:29:35 -0800 (PST)
+Message-Id: <233f23791caaca5dee6b227520560f53977c8ea7.1578904171.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
 References: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
+        <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 13 Jan 2020 08:29:21 +0000
-Subject: [PATCH v3 00/10] built-in add -p: add support for the same config settings as the Perl
- version
-MIME-Version: 1.0
+Date:   Mon, 13 Jan 2020 08:29:26 +0000
+Subject: [PATCH v3 05/10] terminal: accommodate Git for Windows' default
+ terminal
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the final leg of the journey to a fully built-in git add: the git
-add -i and git add -p modes were re-implemented in C, but they lacked
-support for a couple of config settings.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The one that sticks out most is the interactive.singleKey setting: it was
-particularly hard to get to work, especially on Windows.
+Git for Windows' Git Bash runs in MinTTY by default, which does not have
+a Win32 Console instance, but uses MSYS2 pseudo terminals instead.
 
-It also seems to be the setting that is incomplete already in the Perl
-version of the interactive add command: while the name of the config setting
-suggests that it applies to all of the interactive add, including the main
-loop of git add --interactive and to the file selections in that command, it
-does not. Only the git add --patch mode respects that setting.
+This is a problem, as Git for Windows does not want to use the MSYS2
+emulation layer for Git itself, and therefore has no direct way to
+interact with that pseudo terminal.
 
-As it is outside the purpose of the conversion of git-add--interactive.perl 
-to C, we will leave that loose end for some future date.
+As a workaround, use the `stty` utility (which is included in Git for
+Windows, and which *is* an MSYS2 program, so it knows how to deal with
+the pseudo terminal).
 
-Changes since v2:
+Note: If Git runs in a regular CMD or PowerShell window, there *is* a
+regular Win32 Console to work with. This is not a problem for the MSYS2
+`stty`: it copes with this scenario just fine.
 
- * Fixed the SIGPIPE issue pointed out by Gábor Szeder.
+Also note that we introduce support for more bits than would be
+necessary for a mere `disable_echo()` here, in preparation for the
+upcoming `enable_non_canonical()` function.
 
-Changes since v1:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ compat/terminal.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
- * Fixed the commit message where a copy/paste fail made it talk about
-   another GIT_TEST_* variable than the GIT_TEST_ADD_I_USE_BUILTIN one.
-
-Johannes Schindelin (10):
-  built-in add -i/-p: treat SIGPIPE as EOF
-  built-in add -p: support interactive.diffFilter
-  built-in add -p: handle diff.algorithm
-  terminal: make the code of disable_echo() reusable
-  terminal: accommodate Git for Windows' default terminal
-  terminal: add a new function to read a single keystroke
-  built-in add -p: respect the `interactive.singlekey` config setting
-  built-in add -p: handle Escape sequences in interactive.singlekey mode
-  built-in add -p: handle Escape sequences more efficiently
-  ci: include the built-in `git add -i` in the `linux-gcc` job
-
- add-interactive.c         |  22 ++++
- add-interactive.h         |   4 +
- add-patch.c               |  61 +++++++++-
- ci/run-build-and-tests.sh |   1 +
- compat/terminal.c         | 249 +++++++++++++++++++++++++++++++++++++-
- compat/terminal.h         |   3 +
- 6 files changed, 332 insertions(+), 8 deletions(-)
-
-
-base-commit: c480eeb574e649a19f27dc09a994e45f9b2c2622
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-175%2Fdscho%2Fadd-p-in-c-config-settings-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-175/dscho/add-p-in-c-config-settings-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/175
-
-Range-diff vs v2:
-
-  -:  ---------- >  1:  5e258a8d2b built-in add -i/-p: treat SIGPIPE as EOF
-  1:  f45ff08bd0 !  2:  2a5951ecfe built-in add -p: support interactive.diffFilter
-     @@ -35,9 +35,9 @@
-       	strbuf_release(&header);
-       	prefix_item_list_clear(&commands);
-      +	clear_add_i_state(&s);
-     + 	sigchain_pop(SIGPIPE);
-       
-       	return res;
-     - }
-      
-       diff --git a/add-interactive.h b/add-interactive.h
-       --- a/add-interactive.h
-     @@ -123,13 +123,14 @@
-       		strbuf_release(&s.plain);
-       		strbuf_release(&s.colored);
-      +		clear_add_i_state(&s.s);
-     + 		sigchain_pop(SIGPIPE);
-       		return -1;
-       	}
-     - 
-      @@
-       	strbuf_release(&s.buf);
-       	strbuf_release(&s.plain);
-       	strbuf_release(&s.colored);
-      +	clear_add_i_state(&s.s);
-     + 	sigchain_pop(SIGPIPE);
-       	return 0;
-       }
-  2:  e9c4a13cbf =  3:  a2bce01818 built-in add -p: handle diff.algorithm
-  3:  e643554dba =  4:  be40a37c0c terminal: make the code of disable_echo() reusable
-  4:  bd2306c5d5 =  5:  233f23791c terminal: accommodate Git for Windows' default terminal
-  5:  190fb4f5e9 =  6:  74593b5115 terminal: add a new function to read a single keystroke
-  6:  167dfa37dd !  7:  197fe1e14a built-in add -p: respect the `interactive.singlekey` config setting
-     @@ -48,9 +48,9 @@
-       --- a/add-patch.c
-       +++ b/add-patch.c
-      @@
-     - #include "pathspec.h"
-       #include "color.h"
-       #include "diff.h"
-     + #include "sigchain.h"
-      +#include "compat/terminal.h"
-       
-       enum prompt_mode_type {
-  7:  32067bebe8 =  8:  9ab381d539 built-in add -p: handle Escape sequences in interactive.singlekey mode
-  8:  703719ffce =  9:  bdb6268b8b built-in add -p: handle Escape sequences more efficiently
-  9:  23a3a47b01 = 10:  c4195969a6 ci: include the built-in `git add -i` in the `linux-gcc` job
-
+diff --git a/compat/terminal.c b/compat/terminal.c
+index 1fb40b3a0a..16e9949da1 100644
+--- a/compat/terminal.c
++++ b/compat/terminal.c
+@@ -2,6 +2,8 @@
+ #include "compat/terminal.h"
+ #include "sigchain.h"
+ #include "strbuf.h"
++#include "run-command.h"
++#include "string-list.h"
+ 
+ #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
+ 
+@@ -64,11 +66,28 @@ static int disable_echo(void)
+ #define OUTPUT_PATH "CONOUT$"
+ #define FORCE_TEXT "t"
+ 
++static int use_stty = 1;
++static struct string_list stty_restore = STRING_LIST_INIT_DUP;
+ static HANDLE hconin = INVALID_HANDLE_VALUE;
+ static DWORD cmode;
+ 
+ static void restore_term(void)
+ {
++	if (use_stty) {
++		int i;
++		struct child_process cp = CHILD_PROCESS_INIT;
++
++		if (stty_restore.nr == 0)
++			return;
++
++		argv_array_push(&cp.args, "stty");
++		for (i = 0; i < stty_restore.nr; i++)
++			argv_array_push(&cp.args, stty_restore.items[i].string);
++		run_command(&cp);
++		string_list_clear(&stty_restore, 0);
++		return;
++	}
++
+ 	if (hconin == INVALID_HANDLE_VALUE)
+ 		return;
+ 
+@@ -79,6 +98,37 @@ static void restore_term(void)
+ 
+ static int disable_bits(DWORD bits)
+ {
++	if (use_stty) {
++		struct child_process cp = CHILD_PROCESS_INIT;
++
++		argv_array_push(&cp.args, "stty");
++
++		if (bits & ENABLE_LINE_INPUT) {
++			string_list_append(&stty_restore, "icanon");
++			argv_array_push(&cp.args, "-icanon");
++		}
++
++		if (bits & ENABLE_ECHO_INPUT) {
++			string_list_append(&stty_restore, "echo");
++			argv_array_push(&cp.args, "-echo");
++		}
++
++		if (bits & ENABLE_PROCESSED_INPUT) {
++			string_list_append(&stty_restore, "-ignbrk");
++			string_list_append(&stty_restore, "intr");
++			string_list_append(&stty_restore, "^c");
++			argv_array_push(&cp.args, "ignbrk");
++			argv_array_push(&cp.args, "intr");
++			argv_array_push(&cp.args, "");
++		}
++
++		if (run_command(&cp) == 0)
++			return 0;
++
++		/* `stty` could not be executed; access the Console directly */
++		use_stty = 0;
++	}
++
+ 	hconin = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
+ 	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
+ 	    FILE_ATTRIBUTE_NORMAL, NULL);
 -- 
 gitgitgadget
+
