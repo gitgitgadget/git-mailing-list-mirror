@@ -2,135 +2,161 @@ Return-Path: <SRS0=G+/Y=3C=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5215DC33CAE
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 06:47:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE5DBC33CAB
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 23E2A21569
-	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 06:47:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9F51B21744
+	for <git@archiver.kernel.org>; Mon, 13 Jan 2020 08:29:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="CD0AgohY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vVq8tvJw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727222AbgAMGra (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 13 Jan 2020 01:47:30 -0500
-Received: from mout.gmx.net ([212.227.15.19]:55963 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726435AbgAMGr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Jan 2020 01:47:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1578898044;
-        bh=pCHCuDrwk88j+s7fmn47MvROdAkID6xPM9fdga5mdyI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CD0AgohYTxWK7wdML9SLGY4Jy2YvSDO5b+6+Yf9Qcr5ekRdcKl6oX+IYWuHjz/D0H
-         9pda+aKXtUwrQfchoGbb1UJiX79MW9L47yXMbC/gjJAYMUmHNNPutvi3w9vpW9/kuV
-         cWDFdBXUPdVp6JHDhYE7Q9HSBXBR0BU4daG7KG64=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mi2Jn-1jM5aX1VwH-00e8wo; Mon, 13
- Jan 2020 07:47:24 +0100
-Date:   Mon, 13 Jan 2020 07:47:23 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/9] built-in add -p: support interactive.diffFilter
-In-Reply-To: <20200107225749.GD32750@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.2001130740240.46@tvgsbejvaqbjf.bet>
-References: <pull.175.git.1576968120.gitgitgadget@gmail.com> <pull.175.v2.git.1577275020.gitgitgadget@gmail.com> <f45ff08bd0a0a2e2aba9ae929b6e5ecb3bdd4e07.1577275020.git.gitgitgadget@gmail.com> <20200107225749.GD32750@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728824AbgAMI3f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 13 Jan 2020 03:29:35 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36938 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728774AbgAMI3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Jan 2020 03:29:34 -0500
+Received: by mail-wr1-f67.google.com with SMTP id w15so7573904wru.4
+        for <git@vger.kernel.org>; Mon, 13 Jan 2020 00:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:mime-version
+         :content-transfer-encoding:fcc:to:cc;
+        bh=8EVhwcqn3ez5CrWfRdXQz68SdCU2A2kepky5wS7jgNg=;
+        b=vVq8tvJwxPvc4NXI09QqScSrrJ+KGcfD9NuJgVRx8x1ntkS+O5QQmLOG/wH8WQ6BGf
+         gAYixQoWYc+Vk4NUd/Av8oah5h9dbCd/WevMkyx8PP6JJupo9h1b+jpHQNiqkrqPg2y2
+         utwuYQZw/2I8CBao159aXHbYxAmra98etMmpOnbgdSCnXmMFu1WDhIasGdrGhDLVXeqa
+         jUYJ2mYZMop/qckZHmQ6tVba7UDHJsNwMU29IqM9A3vubq4Y7TinvcuBCaX5W5e0AIbP
+         u/Xey8vjXqilUqWg3i5b7CroVdenduBnEWQRx+M1wfwT9jg/GcYz0MS+XlVid8dJCzZ+
+         zfvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:mime-version:content-transfer-encoding:fcc:to:cc;
+        bh=8EVhwcqn3ez5CrWfRdXQz68SdCU2A2kepky5wS7jgNg=;
+        b=WPYrYWUaMASO7pHFdfIljeuTR5jxYH+p243/1HtvARcivqlUZygL/XPDe+7gaTRcXt
+         0TT7LfJEA36veQ5Z5UvoQL6UksNa5nSZKXY2O8YUIXT0fJtnOC7EHXbFpeAPKXYpm6fp
+         wNtPzTbPkNBEw7nuEto1KNcUUqXW1Ww8hxDs0WhTyrhEpMjdR1QGGk9NveytLy6nQvbH
+         uCSBCCKTG68Pt2WAi8qWI8BW3eH1RAQoVRE/uJoRAJBV5zy7l1shBEyfsQwWJGIXoU0a
+         zrY3yEgcpo7z8UNnsqkatvgnL5VWhoVF45bsP7HwZ6DZxQKe4E+kRxLAabDqLvi0A3Up
+         dv0A==
+X-Gm-Message-State: APjAAAXTd3X9rKjjmicy9vg8PPLDB9XJkVSTvVJiaPYX5PMtKxlTMwsN
+        0pJ7X3/srmokijsYkMb+Re9/1QI9
+X-Google-Smtp-Source: APXvYqwXmVn7sNovwvZwWHhaO4Rkjoi3EBekqGvblAfs6VguEqLSIqXT0+dhEO2w4qjHSHmi/nHuXg==
+X-Received: by 2002:a5d:5452:: with SMTP id w18mr16471357wrv.333.1578904173322;
+        Mon, 13 Jan 2020 00:29:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n3sm13445172wrs.8.2020.01.13.00.29.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Jan 2020 00:29:33 -0800 (PST)
+Message-Id: <5e258a8d2bb271433902b2e44c3a30a988bbf512.1578904171.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
+References: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
+        <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 13 Jan 2020 08:29:22 +0000
+Subject: [PATCH v3 01/10] built-in add -i/-p: treat SIGPIPE as EOF
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-618752088-1578898044=:46"
-X-Provags-ID: V03:K1:LJ1rOb2fKwSAuKgx58YcZGWbiCUo17l/7dK6jLBML3cMhMO6k70
- V6g92cdpJGFHITAlwVOurFR8t+oVVyjmklHsd1ofK0EVdK9jDX3TBUp/MaQ4KIyzhsRwop0
- z2Mc0rU0Y+/84Qwl7rjvO/wiSVdTt1GrdwvcANXcw0AzzD+Af82c9SW1flK6b3xkNmD+EdD
- lMe/qMjnmIYjY+ms7Fj+A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zdjJFxm09Bw=:VO28QAtKphL74fuqU4bxpa
- uQ3nku0WLtSfwDpCo9mxmMXyIKXLNGdDbOIX/4wdnlCTLVCpKmszfyaTQKsMQYi+PuyVlJCOn
- oVw0FDTf5zsxW8OqGrlSlFoqm01g2FoLO4JwXvxl54hAqUJPx5fwjrUg3LOWyGQTtKMF2U/Mg
- 1jhnpZYBRfepFOK8txGQG3NHDclIXTCpA47WhL4gb6eRKDyh6YTo6nLmNTYb0KGjSQqwi4Gqf
- x+3fBqn39b4yVYWta9fVaRdDDdp1gJodxRplvWPtN/q0gpnmBTPpULTIOUZgH4VapOuKYG4qX
- V/KdTOtiyvCH7AWgOueB2icM57GC05gd2/tAPRapAoMmcRfEZs+9q6OFR6kaLjWJ0KJaNthky
- i5+G45UHU6Hlgbn+DFdZYlwu6epybWUygxS46TZEl7pxeLSa8LyuHBn7nI/rEnp9HRoDWVtpm
- srMa51kEiSlR2Kg+Ez3fuK7N8Un2uxkBqGZqBgvyikdlcHrgSER6uZSeHZy4KnpzrTu7rrxMy
- s93nFVzMiloRbwRjPmXcqg7+HOatUfPpWSOeg1uALe3dnhUXMbB+bTl94VDNDeVJyVvenD6Fi
- Ksy10XuRCNwvFPvabE3gpt/j+hfrwiQby921D9utU1UHHYixgUkN72/zV1zQW7DGdLGS1dNjg
- oIaOy849DstxkUVnhJJmzZu2TedtDar1/SPjTctZIMxD10jWdDmHVWpJLTCwFx74rM7ssAMLv
- 6NwoxutwkV7U2vNmzTuxuseUkQtxu/XWHdzUZ32HombGvxYnkRDGw5EpSwL17FDi9oFww90sc
- Dbf73PRgf+axD8/w7bzloiLG81RL0M4mejKUvuotOMQHTi2GB5yboDzvqGq3rVov/H9tKc2zl
- SPRFYd25GnCiokE17hHbkUCdm8a5AIlIw3021qfR+arDcvNt0tVNGkcbfurgofFsPoDQa2lDe
- 1fRJKQ3QL70++p1uBfl2qLIZe944gqNAFLqA/Xrl/3U8v8m39DCg0Fv+ThuMvDXafNgBp9JeL
- Ts4Gan6n7KExPpKQ/pnFBk2CSfSAE1S53DEIkzBt41oCU5PfdBAR+DSl/NqETv3OFyPR3A2zD
- dBuN+wApmn1lE1S/V8MS3Tl6cam6JaUDI+g/wKXpFJSOnRzyQn9oVhl+leg+5RGhhC+xogoVt
- tfnFl2OAnvxkAqvEFnKUnWmUhC0qRN8dwGTFS/TXKWIWxI6y/ZpfVxRpcWstDUNTYw0k0WB/T
- RaVGeNEy8UCxA/4ew4NFanK+c5za12K+283fpHfvN9+jPVSive0RZObv8rn0=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---8323328-618752088-1578898044=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+As noticed by Gábor Szeder, if we want to run `git add -p` with
+redirected input through `test_must_fail` in the test suite, we must
+expect that a SIGPIPE can happen due to `stdin` coming to its end.
 
-Hi G=C3=A1bor,
+The appropriate action here is to ignore that signal and treat it as a
+regular end-of-file, otherwise the test will fail. In preparation for
+such a test, introduce precisely this handling of SIGPIPE into the
+built-in version of `git add -p`.
 
-On Tue, 7 Jan 2020, SZEDER G=C3=A1bor wrote:
+For good measure, teach the built-in `git add -i` the same trick: it
+_also_ runs a loop waiting for input, and can receive a SIGPIPE just the
+same (and wants to treat it as end-of-file, too).
 
-> On Wed, Dec 25, 2019 at 11:56:52AM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > The Perl version supports post-processing the colored diff (that is
-> > generated in addition to the uncolored diff, intended to offer a
-> > prettier user experience) by a command configured via that config
-> > setting, and now the built-in version does that, too.
->
-> So this patch makes the test 'detect bogus diffFilter output' in
-> 't3701-add-interactive.sh' succeed with the builtin interactive add,
-> but I stumbled upon a test failure caused by SIGPIPE in an
-> experimental Travis CI s390x build:
->
->   expecting success of 3701.49 'detect bogus diffFilter output':
->           git reset --hard &&
->
->           echo content >test &&
->           test_config interactive.diffFilter "echo too-short" &&
->           printf y >y &&
->           test_must_fail force_color git add -p <y
->
->   + git reset --hard
->   HEAD is now at 6ee5ee5 test
->   + echo content
->   + test_config interactive.diffFilter echo too-short
->   + printf y
->   + test_must_fail force_color git add -p
->   test_must_fail: died by signal 13: force_color git add -p
->   error: last command exited with $?=3D1
->
-> Turns out it's a general issue, and
->
->   GIT_TEST_ADD_I_USE_BUILTIN=3D1 ./t3701-add-interactive.sh -r 39,49 --s=
-tress
->
-> fails within 10 seconds on my Linux box, whereas the scripted 'add -p'
-> managed to survive a couple hundred repetitions.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ add-interactive.c | 3 +++
+ add-patch.c       | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-You're right, of course. And I had let that slip for too long, as I saw it
-sporadically happen in the Azure Pipeline, too.
+diff --git a/add-interactive.c b/add-interactive.c
+index a5bb14f2f4..3ff8400ea4 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -9,6 +9,7 @@
+ #include "lockfile.h"
+ #include "dir.h"
+ #include "run-command.h"
++#include "sigchain.h"
+ 
+ static void init_color(struct repository *r, struct add_i_state *s,
+ 		       const char *slot_name, char *dst,
+@@ -1097,6 +1098,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 			->util = util;
+ 	}
+ 
++	sigchain_push(SIGPIPE, SIG_IGN);
+ 	init_add_i_state(&s, r);
+ 
+ 	/*
+@@ -1149,6 +1151,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
+ 	strbuf_release(&print_file_item_data.worktree);
+ 	strbuf_release(&header);
+ 	prefix_item_list_clear(&commands);
++	sigchain_pop(SIGPIPE);
+ 
+ 	return res;
+ }
+diff --git a/add-patch.c b/add-patch.c
+index 46c6c183d5..9a3beed72e 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -6,6 +6,7 @@
+ #include "pathspec.h"
+ #include "color.h"
+ #include "diff.h"
++#include "sigchain.h"
+ 
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
+@@ -1578,6 +1579,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	};
+ 	size_t i, binary_count = 0;
+ 
++	sigchain_push(SIGPIPE, SIG_IGN);
+ 	init_add_i_state(&s.s, r);
+ 
+ 	if (mode == ADD_P_STASH)
+@@ -1612,6 +1614,7 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	    parse_diff(&s, ps) < 0) {
+ 		strbuf_release(&s.plain);
+ 		strbuf_release(&s.colored);
++		sigchain_pop(SIGPIPE);
+ 		return -1;
+ 	}
+ 
+@@ -1630,5 +1633,6 @@ int run_add_p(struct repository *r, enum add_p_mode mode,
+ 	strbuf_release(&s.buf);
+ 	strbuf_release(&s.plain);
+ 	strbuf_release(&s.colored);
++	sigchain_pop(SIGPIPE);
+ 	return 0;
+ }
+-- 
+gitgitgadget
 
-This took quite a while to figure out, and I won't claim that I understand
-_all_ the details: I _think_ that `stdin` being so short "breaks the pipe"
-and interferes with `add -p`'s normal operation, so I needed to explicitly
-use the `sigchain` feature to ignore `SIGPIPE` during `add -p`'s main
-loop.
-
-Thanks,
-Dscho
-
---8323328-618752088-1578898044=:46--
