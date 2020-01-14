@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A46A2C33CB2
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58C5AC33C9E
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8416724658
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3775324658
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:09 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZD15EvVk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bLIwtCJt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728767AbgANSoG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jan 2020 13:44:06 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:53437 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728800AbgANSoE (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728811AbgANSoE (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 14 Jan 2020 13:44:04 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m24so15040953wmc.3
-        for <git@vger.kernel.org>; Tue, 14 Jan 2020 10:44:03 -0800 (PST)
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40524 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728739AbgANSoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jan 2020 13:44:02 -0500
+Received: by mail-wm1-f68.google.com with SMTP id t14so14962729wmi.5
+        for <git@vger.kernel.org>; Tue, 14 Jan 2020 10:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=prnawxM73KG9YEc4YMrhTFoFBf5A8wYjttJZSeSVNhc=;
-        b=ZD15EvVkwAdd6BlfHe8AI/KRnmzWGQnJNbkXg5/2XH1hWykgE1kjLt4kIIxOXnU7tg
-         dvCuuYyr0jUZYQo1M6fxjRBjfUjHoZIi3J3i9v4HgPqqpFfQuIiEskI9qb3T4GJltGf/
-         HLRsnazSoJ/A4Xa5UHDgQEk9tneeW2tzodlKbeHYGACzMe/pAuzKsRfMapa/vhgUfb1L
-         UUHlusmHSQf4coA9XbVPjmxSWKoRBHSbxXATyCpM6drgJhEEqxIzTmcjD/DFWo3ID/Sk
-         FknB9IgD7cFhrnDcyDYmqJEsdwn2lFumYuJBlL8D/CYwVNsucubKwrxDVFiRoKT+gj0E
-         eyxQ==
+        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
+        b=bLIwtCJtryDoEOpGYa5F+rLnmmroh9/bMKwY7G0kM8f2jFziMEjCCjgdrbPEWikrwc
+         azfAJzfsXkKx9h/PuigMRnh2TzoARVgTXYoQa84Ci7kSOjKI+Fx3f4j3b367Si3mC3wQ
+         LDxgzLvT4p7aXCODngA4eQhcrt1UKfaLW8jXx6g6Ft4xsvMHVUKqmEnirticNOQIhM2/
+         szPbb9KFUAvSZjo34VRxS/0UjOL3NhLqFgvcvuM4eL2YHEEjXRSmBZHtBHkvAuOV7wsT
+         pYgMfUsv8p1mxhZXc0jS8CWZrQQu2fOfPmVmmNMnowO2vr9dvKR/iu8FxUiGe/Bt174R
+         HW7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=prnawxM73KG9YEc4YMrhTFoFBf5A8wYjttJZSeSVNhc=;
-        b=DfITWNH6LRu3oMgVu+RYgh5dbP4nIBgrwOR48gNsuasZO7yHpTjvst2BBsAeMFEnRA
-         +9UMeZ5Gq0ipYs8xbO6BmJPV+ZjStE4TtD5BtaJooFXVDUC6q49oQ0JYCKPfJtkP+RYm
-         radbN15sGli5gBoxocKyQBakypYd4mQuPcnmpR2Yl7Ey5c0bBcFYJ+URPwS0iDLNlC3x
-         9YH+4//s5YmmnwGMzlIepblevtCs5LNyLffU3BhkJKIfQKxUliDep9fvBkYZOfQOKHmx
-         nV73/hGf2y1MWrliozkb/OVsGIk60CHjH9Sh7UNY5PTIGf5EtpqQGtnfid37pY0dz5x0
-         06Ag==
-X-Gm-Message-State: APjAAAVWdPy5ADjn7scCjOMqHX7eGEkCE/+hA/UbbvmX336KVBMJ4zoL
-        fxrsJl3uGLi45+wx0NljcxjyNWyY
-X-Google-Smtp-Source: APXvYqwYwvKYXqSVqqUD7FVWYzacuf6ITTz03xg5mCm4n+gojanZCgsIcJXNOoNaVJXZGFIxMmwVrQ==
-X-Received: by 2002:a1c:1f51:: with SMTP id f78mr27651277wmf.60.1579027442875;
-        Tue, 14 Jan 2020 10:44:02 -0800 (PST)
+        bh=0phmocog8B6q0Tw8zeYRgiTpc3ndWE2xf19kROVrxLg=;
+        b=B3KxHaVtUNc4/wpIMW3qAehGtCKdVeGzzDeAD1BJUFavdPTz/1f04ntcN2heECKcal
+         HFqFQftnJlywsw+QSSCdn36HBg/RcVGKU01Zy/uhSW6OQYY+vJzPMTRG5qJfV7SbB6QK
+         uM9VvLo8IzpF7pOp8ir4QqiwoKLCTL3Yoe0zwMBUuPwpzsVKZNu3NZEN1v97mtv7KyxO
+         DEiTS8pEt2QSJaYhNMEK2dWYb8JU+tVuPrWphFvvJ3ZW75CG+AA1hzTLaioUPpjS4HlY
+         ronHhICSP3hlc0KA+HVEgZGWxAJ4KG3w3RRpygiUwVlR3A3ibySLdd0oXsEOY0OctdVF
+         mCnQ==
+X-Gm-Message-State: APjAAAWrp80/89vf2yXe2Wc4mmOtqK8wq1MekrG6baqw/GehIaLcqRHO
+        0/MWU22LzkDlZ2lDroRijSriHvhk
+X-Google-Smtp-Source: APXvYqxYoAi0dyBBdsHbQg+w3GAomPShh3Qv32OWvfbhODW3aakRgL5MpEcRT7fXpdtYIaGxNst4Fg==
+X-Received: by 2002:a7b:cbc8:: with SMTP id n8mr28943902wmi.35.1579027440692;
+        Tue, 14 Jan 2020 10:44:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t8sm21015337wrp.69.2020.01.14.10.44.02
+        by smtp.gmail.com with ESMTPSA id 4sm18824491wmg.22.2020.01.14.10.44.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2020 10:44:02 -0800 (PST)
-Message-Id: <7ab7ec62d0d67c0adbef54d2a363c77a12d689bc.1579027433.git.gitgitgadget@gmail.com>
+        Tue, 14 Jan 2020 10:44:00 -0800 (PST)
+Message-Id: <8ed4487ae49f5ff416d0dbcfdb7292056c7e3b85.1579027433.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.v4.git.1579027433.gitgitgadget@gmail.com>
 References: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
         <pull.175.v4.git.1579027433.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Jan 2020 18:43:53 +0000
-Subject: [PATCH v4 10/10] ci: include the built-in `git add -i` in the
- `linux-gcc` job
+Date:   Tue, 14 Jan 2020 18:43:50 +0000
+Subject: [PATCH v4 07/10] built-in add -p: respect the `interactive.singlekey`
+ config setting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,29 +76,106 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This job runs the test suite twice, once in regular mode, and once with
-a whole slew of `GIT_TEST_*` variables set.
+The Perl version of `git add -p` supports this config setting to allow
+users to input commands via single characters (as opposed to having to
+press the <Enter> key afterwards).
 
-Now that the built-in version of `git add --interactive` is
-feature-complete, let's also throw `GIT_TEST_ADD_I_USE_BUILTIN` into
-that fray.
+This is an opt-in feature because it requires Perl packages
+(Term::ReadKey and Term::Cap, where it tries to handle an absence of the
+latter package gracefully) to work. Note that at least on Ubuntu, that
+Perl package is not installed by default (it needs to be installed via
+`sudo apt-get install libterm-readkey-perl`), so this feature is
+probably not used a whole lot.
+
+In C, we obviously do not have these packages available, but we just
+introduced `read_single_keystroke()` that is similar to what
+Term::ReadKey provides, and we use that here.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/run-build-and-tests.sh | 1 +
- 1 file changed, 1 insertion(+)
+ add-interactive.c |  2 ++
+ add-interactive.h |  1 +
+ add-patch.c       | 21 +++++++++++++++++----
+ 3 files changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index ff0ef7f08e..4df54c4efe 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -20,6 +20,7 @@ linux-gcc)
- 	export GIT_TEST_OE_DELTA_SIZE=5
- 	export GIT_TEST_COMMIT_GRAPH=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
-+	export GIT_TEST_ADD_I_USE_BUILTIN=1
- 	make test
- 	;;
- linux-gcc-4.8)
+diff --git a/add-interactive.c b/add-interactive.c
+index 9e4bcb382c..39c3896494 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -60,6 +60,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	FREE_AND_NULL(s->interactive_diff_algorithm);
+ 	git_config_get_string("diff.algorithm",
+ 			      &s->interactive_diff_algorithm);
++
++	git_config_get_bool("interactive.singlekey", &s->use_single_key);
+ }
+ 
+ void clear_add_i_state(struct add_i_state *s)
+diff --git a/add-interactive.h b/add-interactive.h
+index 923efaf527..693f125e8e 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -16,6 +16,7 @@ struct add_i_state {
+ 	char file_old_color[COLOR_MAXLEN];
+ 	char file_new_color[COLOR_MAXLEN];
+ 
++	int use_single_key;
+ 	char *interactive_diff_filter, *interactive_diff_algorithm;
+ };
+ 
+diff --git a/add-patch.c b/add-patch.c
+index 8f2ee8688b..d8dafa8168 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -6,6 +6,7 @@
+ #include "pathspec.h"
+ #include "color.h"
+ #include "diff.h"
++#include "compat/terminal.h"
+ 
+ enum prompt_mode_type {
+ 	PROMPT_MODE_CHANGE = 0, PROMPT_DELETION, PROMPT_HUNK,
+@@ -1149,14 +1150,27 @@ static int run_apply_check(struct add_p_state *s,
+ 	return 0;
+ }
+ 
++static int read_single_character(struct add_p_state *s)
++{
++	if (s->s.use_single_key) {
++		int res = read_key_without_echo(&s->answer);
++		printf("%s\n", res == EOF ? "" : s->answer.buf);
++		return res;
++	}
++
++	if (strbuf_getline(&s->answer, stdin) == EOF)
++		return EOF;
++	strbuf_trim_trailing_newline(&s->answer);
++	return 0;
++}
++
+ static int prompt_yesno(struct add_p_state *s, const char *prompt)
+ {
+ 	for (;;) {
+ 		color_fprintf(stdout, s->s.prompt_color, "%s", _(prompt));
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			return -1;
+-		strbuf_trim_trailing_newline(&s->answer);
+ 		switch (tolower(s->answer.buf[0])) {
+ 		case 'n': return 0;
+ 		case 'y': return 1;
+@@ -1396,9 +1410,8 @@ static int patch_update_file(struct add_p_state *s,
+ 			      _(s->mode->prompt_mode[prompt_mode_type]),
+ 			      s->buf.buf);
+ 		fflush(stdout);
+-		if (strbuf_getline(&s->answer, stdin) == EOF)
++		if (read_single_character(s) == EOF)
+ 			break;
+-		strbuf_trim_trailing_newline(&s->answer);
+ 
+ 		if (!s->answer.len)
+ 			continue;
 -- 
 gitgitgadget
+
