@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B53EC33C9E
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 199A1C33C9E
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EAF4A24658
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ED08C24658
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 18:44:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aiFQaWOl"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EcePuJkD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728809AbgANSoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jan 2020 13:44:04 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:32814 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727102AbgANSoA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jan 2020 13:44:00 -0500
-Received: by mail-wr1-f67.google.com with SMTP id b6so13285183wrq.0
-        for <git@vger.kernel.org>; Tue, 14 Jan 2020 10:43:59 -0800 (PST)
+        id S1728819AbgANSoG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jan 2020 13:44:06 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:38770 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727083AbgANSoD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jan 2020 13:44:03 -0500
+Received: by mail-wr1-f47.google.com with SMTP id y17so13273166wrh.5
+        for <git@vger.kernel.org>; Tue, 14 Jan 2020 10:44:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=aiFQaWOlI0osu2RNLcQFNdRRG89HK1dxr9uKI6/ofE7QzcpRqWHs2o5FSVSvG10KuM
-         v+D8A7v3GkMQy0QaYtrDJJEWhF3Moge1Km42TAtLFYO4OyYoe/SEYd9QwHWiNHM5ntwb
-         5nPf1J6LABCie1jjvMGQ8ouCSa7ArjkUtSBUeb5vc2qJmPFPxyUVxbeBSDnUoj9XHX3n
-         RgWQgNr6ZAwIS8Is+l9BCJ1kQotXC6YVHbSuOBKMxS8FJchTAaOvHTbD8T+KnX3puEeE
-         iKAFrCes3KxgYpJljhaKeNzJxEWy9SfZydiE6Z2Z3WjC5TyuL6lP4pi8qLuXpiDdt7VF
-         zoQw==
+        bh=ocI02bHKxI6bqqVjgkc/ET4PWDrishuZmL3FurmFRns=;
+        b=EcePuJkDO3pTnQgIWlEOZw9xYx8Fyfiofo0GYeCzl5SdrkzyC5BpmTAHKFPP6XOOW2
+         Ivo8q3fBrs+VE9poX9WWw+BzTMo0FxR3KufA36op+vr+CbFLNGXKD7n43PanrPNoV93s
+         u5bPbyCjO0LlFm8s44PATwsRKCiPdisg59jQA9wUK+7LXnhxwlFmM3GUnBhzXbeaDw07
+         8FYVpVqd2G74HLtdDDJOUGn8OCwCtA1amvcdq6DuykF07yBdyfjv+HIq6vE27ZluRhqs
+         /i2H3gC0cWr0cTK0XdXgWqVmIWFPsAfd+zqXneoRYM82oyq98fNJGtF5jUwRY2VRog2k
+         i9Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Pd7gm9sA8KWwnCXzcqZeBD0/pHyKhrgKove5Fa6H3tg=;
-        b=FNRwBGE/WCE6t81SuYi5/cb4H10Bxz5agQowpsBgWt0H5+ntX3Rcuaa1MW5PPJ+jF+
-         BL4DCxFFMe5dWxwLKNI/Xa1Kqrs5XgezyHkAmtmOx7Z0jgFGndP7WKb2OKxEHZkQF0NP
-         AI6T3ekLxL82cZ0sqs7EZc5eeyIIinG/D+NVzGWCcxB97rh+8AOAu+Gha8aFwwnvxNb3
-         iaOmqKSsRK/WIZF/SjdUmJGPcswHJ8sD2Xb5H89Jy4xRih1j80808FG74ix8OBfZdeda
-         LWAGWDPrGJ7OLTFN0dFtXyYNQlbZPBLJ3Ar7n3BWRWC4iQ3bmybIBmooIU7OrhZn3fu2
-         ndMA==
-X-Gm-Message-State: APjAAAWHGFO8tT7tmi0Okimzwt7iaGpHJyiHkLtf0yE6jvOXkPn60OI+
-        vG2wxi+5oniOw9vSchBe0ZFu8gNQ
-X-Google-Smtp-Source: APXvYqzkOL4KEu4g4uEtOAe7YhABiSZ+5vAGnp8kN4+AiRpTHmPvAzDFsIzqHcpYayCHiPmHN/zI3g==
-X-Received: by 2002:adf:ec41:: with SMTP id w1mr25421419wrn.212.1579027439115;
-        Tue, 14 Jan 2020 10:43:59 -0800 (PST)
+        bh=ocI02bHKxI6bqqVjgkc/ET4PWDrishuZmL3FurmFRns=;
+        b=mltjC0E/uG97O55DQaG5vXqhLebKd+TJBPVwEDqekdDzfGk5dUxKM3mz3sgY+pU5XA
+         jpp48tkkYUP3nmZo2CxoLUYR52k6VHoDkuD0V2leJ5t2QG5AElP2YOpih2CgeddMtOfQ
+         k/w+8vfRxxCmu4WRcEPsHeMxavSD7ibh/xrYmhG44499CPKNKWeA1YuDrDCU4/ju1Qx/
+         Fxe0GUuNeAlQwbHU6CWwr+U72hjmhaGM/4n3rvHKoh6SuDwGsiv/h4UlTsNj6vcJFaiz
+         2JzH8fPd5LuDttAVq94KFXPy4rvztLDu7wOQjcBSthzX4B2YJIhI4AiaAAQnwmLZan+o
+         Xb0w==
+X-Gm-Message-State: APjAAAXUSAuhDJdR+fACSh88j1+O4VOuNUlajEn28mfn4kI6HK4tgDWs
+        kNSa/81jLRQZ11EUQauAODpAZkPU
+X-Google-Smtp-Source: APXvYqyV0mBqhgXiWoSRXLP2iYHEWbFv8GYIFPPaIX/kyCdWmd8mbtMRd3VmwIBm7sQupD2JhYNAyg==
+X-Received: by 2002:adf:ffc5:: with SMTP id x5mr26873959wrs.92.1579027441419;
+        Tue, 14 Jan 2020 10:44:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d8sm20281663wrx.71.2020.01.14.10.43.58
+        by smtp.gmail.com with ESMTPSA id a9sm18971769wmm.15.2020.01.14.10.44.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Jan 2020 10:43:58 -0800 (PST)
-Message-Id: <a81304cb76e127c78c0d6e69520477e6862df7f5.1579027433.git.gitgitgadget@gmail.com>
+        Tue, 14 Jan 2020 10:44:01 -0800 (PST)
+Message-Id: <cdc609f8fa349b9ffada68dfd6fd183365222ba7.1579027433.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.175.v4.git.1579027433.gitgitgadget@gmail.com>
 References: <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
         <pull.175.v4.git.1579027433.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 14 Jan 2020 18:43:48 +0000
-Subject: [PATCH v4 05/10] terminal: accommodate Git for Windows' default
- terminal
+Date:   Tue, 14 Jan 2020 18:43:51 +0000
+Subject: [PATCH v4 08/10] built-in add -p: handle Escape sequences in
+ interactive.singlekey mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,110 +76,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows' Git Bash runs in MinTTY by default, which does not have
-a Win32 Console instance, but uses MSYS2 pseudo terminals instead.
+This recapitulates part of b5cc003253c8 (add -i: ignore terminal escape
+sequences, 2011-05-17):
 
-This is a problem, as Git for Windows does not want to use the MSYS2
-emulation layer for Git itself, and therefore has no direct way to
-interact with that pseudo terminal.
+    add -i: ignore terminal escape sequences
 
-As a workaround, use the `stty` utility (which is included in Git for
-Windows, and which *is* an MSYS2 program, so it knows how to deal with
-the pseudo terminal).
+    On the author's terminal, the up-arrow input sequence is ^[[A, and
+    thus fat-fingering an up-arrow into 'git checkout -p' is quite
+    dangerous: git-add--interactive.perl will ignore the ^[ and [
+    characters and happily treat A as "discard everything".
 
-Note: If Git runs in a regular CMD or PowerShell window, there *is* a
-regular Win32 Console to work with. This is not a problem for the MSYS2
-`stty`: it copes with this scenario just fine.
+    As a band-aid fix, use Term::Cap to get all terminal capabilities.
+    Then use the heuristic that any capability value that starts with ^[
+    (i.e., \e in perl) must be a key input sequence.  Finally, given an
+    input that starts with ^[, read more characters until we have read a
+    full escape sequence, then return that to the caller.  We use a
+    timeout of 0.5 seconds on the subsequent reads to avoid getting stuck
+    if the user actually input a lone ^[.
 
-Also note that we introduce support for more bits than would be
-necessary for a mere `disable_echo()` here, in preparation for the
-upcoming `enable_non_canonical()` function.
+    Since none of the currently recognized keys start with ^[, the net
+    result is that the sequence as a whole will be ignored and the help
+    displayed.
+
+Note that we leave part for later which uses "Term::Cap to get all
+terminal capabilities", for several reasons:
+
+1. it is actually not really necessary, as the timeout of 0.5 seconds
+   should be plenty sufficient to catch Escape sequences,
+
+2. it is cleaner to keep the change to special-case Escape sequences
+   separate from the change that reads all terminal capabilities to
+   speed things up, and
+
+3. in practice, relying on the terminal capabilities is a bit overrated,
+   as the information could be incomplete, or plain wrong. For example,
+   in this developer's tmux sessions, the terminal capabilities claim
+   that the "cursor up" sequence is ^[M, but the actual sequence
+   produced by the "cursor up" key is ^[[A.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- compat/terminal.c | 50 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ compat/terminal.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/compat/terminal.c b/compat/terminal.c
-index 1fb40b3a0a..16e9949da1 100644
+index 1b2564042a..b7f58d1781 100644
 --- a/compat/terminal.c
 +++ b/compat/terminal.c
-@@ -2,6 +2,8 @@
- #include "compat/terminal.h"
- #include "sigchain.h"
- #include "strbuf.h"
-+#include "run-command.h"
-+#include "string-list.h"
+@@ -161,6 +161,37 @@ static int enable_non_canonical(void)
+ 	return disable_bits(ENABLE_ECHO_INPUT | ENABLE_LINE_INPUT | ENABLE_PROCESSED_INPUT);
+ }
  
- #if defined(HAVE_DEV_TTY) || defined(GIT_WINDOWS_NATIVE)
- 
-@@ -64,11 +66,28 @@ static int disable_echo(void)
- #define OUTPUT_PATH "CONOUT$"
- #define FORCE_TEXT "t"
- 
-+static int use_stty = 1;
-+static struct string_list stty_restore = STRING_LIST_INIT_DUP;
- static HANDLE hconin = INVALID_HANDLE_VALUE;
- static DWORD cmode;
- 
- static void restore_term(void)
- {
-+	if (use_stty) {
-+		int i;
-+		struct child_process cp = CHILD_PROCESS_INIT;
++/*
++ * Override `getchar()`, as the default implementation does not use
++ * `ReadFile()`.
++ *
++ * This poses a problem when we want to see whether the standard
++ * input has more characters, as the default of Git for Windows is to start the
++ * Bash in a MinTTY, which uses a named pipe to emulate a pty, in which case
++ * our `poll()` emulation calls `PeekNamedPipe()`, which seems to require
++ * `ReadFile()` to be called first to work properly (it only reports 0
++ * available bytes, otherwise).
++ *
++ * So let's just override `getchar()` with a version backed by `ReadFile()` and
++ * go our merry ways from here.
++ */
++static int mingw_getchar(void)
++{
++	DWORD read = 0;
++	unsigned char ch;
 +
-+		if (stty_restore.nr == 0)
-+			return;
++	if (!ReadFile(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &read, NULL))
++		return EOF;
 +
-+		argv_array_push(&cp.args, "stty");
-+		for (i = 0; i < stty_restore.nr; i++)
-+			argv_array_push(&cp.args, stty_restore.items[i].string);
-+		run_command(&cp);
-+		string_list_clear(&stty_restore, 0);
-+		return;
++	if (!read) {
++		error("Unexpected 0 read");
++		return EOF;
 +	}
 +
- 	if (hconin == INVALID_HANDLE_VALUE)
- 		return;
++	return ch;
++}
++#define getchar mingw_getchar
++
+ #endif
  
-@@ -79,6 +98,37 @@ static void restore_term(void)
- 
- static int disable_bits(DWORD bits)
- {
-+	if (use_stty) {
-+		struct child_process cp = CHILD_PROCESS_INIT;
+ #ifndef FORCE_TEXT
+@@ -228,8 +259,31 @@ int read_key_without_echo(struct strbuf *buf)
+ 		restore_term();
+ 		return EOF;
+ 	}
+-
+ 	strbuf_addch(buf, ch);
 +
-+		argv_array_push(&cp.args, "stty");
++	if (ch == '\033' /* ESC */) {
++		/*
++		 * We are most likely looking at an Escape sequence. Let's try
++		 * to read more bytes, waiting at most half a second, assuming
++		 * that the sequence is complete if we did not receive any byte
++		 * within that time.
++		 *
++		 * Start by replacing the Escape byte with ^[ */
++		strbuf_splice(buf, buf->len - 1, 1, "^[", 2);
 +
-+		if (bits & ENABLE_LINE_INPUT) {
-+			string_list_append(&stty_restore, "icanon");
-+			argv_array_push(&cp.args, "-icanon");
++		for (;;) {
++			struct pollfd pfd = { .fd = 0, .events = POLLIN };
++
++			if (poll(&pfd, 1, 500) < 1)
++				break;
++
++			ch = getchar();
++			if (ch == EOF)
++				return 0;
++			strbuf_addch(buf, ch);
 +		}
-+
-+		if (bits & ENABLE_ECHO_INPUT) {
-+			string_list_append(&stty_restore, "echo");
-+			argv_array_push(&cp.args, "-echo");
-+		}
-+
-+		if (bits & ENABLE_PROCESSED_INPUT) {
-+			string_list_append(&stty_restore, "-ignbrk");
-+			string_list_append(&stty_restore, "intr");
-+			string_list_append(&stty_restore, "^c");
-+			argv_array_push(&cp.args, "ignbrk");
-+			argv_array_push(&cp.args, "intr");
-+			argv_array_push(&cp.args, "");
-+		}
-+
-+		if (run_command(&cp) == 0)
-+			return 0;
-+
-+		/* `stty` could not be executed; access the Console directly */
-+		use_stty = 0;
 +	}
 +
- 	hconin = CreateFile("CONIN$", GENERIC_READ | GENERIC_WRITE,
- 	    FILE_SHARE_READ, NULL, OPEN_EXISTING,
- 	    FILE_ATTRIBUTE_NORMAL, NULL);
+ 	restore_term();
+ 	return 0;
+ }
 -- 
 gitgitgadget
 
