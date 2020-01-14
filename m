@@ -2,102 +2,162 @@ Return-Path: <SRS0=o1/V=3D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77308C33C9E
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 22:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6589C33C9E
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 23:13:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 525C824673
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 22:48:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 86C4B222C3
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 23:13:56 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DaMvWaiY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728682AbgANWsT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jan 2020 17:48:19 -0500
-Received: from cloud.peff.net ([104.130.231.41]:36716 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727331AbgANWsT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jan 2020 17:48:19 -0500
-Received: (qmail 10842 invoked by uid 109); 14 Jan 2020 22:48:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Jan 2020 22:48:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26019 invoked by uid 111); 14 Jan 2020 22:54:34 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jan 2020 17:54:34 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 14 Jan 2020 17:48:18 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 8/8] sparse-checkout: write escaped patterns in cone mode
-Message-ID: <20200114224818.GD3957260@coredump.intra.peff.net>
-References: <pull.513.git.1579029962.gitgitgadget@gmail.com>
- <79b6e9a565fde766954d7cda84a835b9015af6cb.1579029963.git.gitgitgadget@gmail.com>
- <20200114212548.GD3949560@coredump.intra.peff.net>
- <e325daa4-5a26-3652-5f46-06203403e51d@gmail.com>
+        id S1728760AbgANXNz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jan 2020 18:13:55 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:40590 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728650AbgANXNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jan 2020 18:13:55 -0500
+Received: by mail-ot1-f68.google.com with SMTP id w21so14369566otj.7
+        for <git@vger.kernel.org>; Tue, 14 Jan 2020 15:13:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wANP7B9gh5q9kiCx22x5dIiwTPufOrnXxBQmO11wpos=;
+        b=DaMvWaiYAMIlncw8khbMy8B/KG3e4HAeyVb617VEK1RrAr50dpbPqzA3Ddnc+hvGjW
+         AaNUAn9aHgrERU31p3e0Va2RCnANVjAW+fzilz82o7lxIUI7xU/3N3aHzJx0c1QX4eLq
+         a+gn31wXHDTDBHQ5QhSh8exaJMkoNrwPXxbrUmf1eK9eLfYOllmaX22/Vr9zL7HRjyuv
+         iCF5o8KkGNkaZ/IjhO1so+GSzvkC85LqVzA1FtWXuGIj62Jc3JV6iFpoX/1Y1YMPYCQH
+         1yXKkFXOpfCROdv/VScoYns+vGRYKs+zL3yw6tkic2Kd0/lbO6t47VXwbl220OAZJ8k4
+         zRqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wANP7B9gh5q9kiCx22x5dIiwTPufOrnXxBQmO11wpos=;
+        b=cxIc3Uncht+U5YT5Y198LLgsgx6H9HbxL+tmP+7wfzZwZRPiXmE2Ero8mKSIVRFXBL
+         Bx1IsXlEvTc8O6UoLPY9JCypR51OHjC3F59uEzGI6EWWznVyvB8B6DpBpKp3VojHRl0u
+         SKyrU/Uc9BwoQm9e+82hgdq+IeJ5kFi46pc7SLFkRzwQ3TLvkdj3Kvrsfx+c/APVuKhM
+         6BeOUM+nR3ZQqlKJim8FEiQMIg6OzA44pUZQx55kxEqTlGik96atJ48S8v5YWFHmnGkD
+         8mW1N1Bq76wCWzbPRWZFhRmwtgEt7ndQvLOZJqYM06s2NhJcxVZDuL2/uWTGbRyfSNFy
+         nfAw==
+X-Gm-Message-State: APjAAAW15hvtXjijxqybYHdT9aeY+RGc3ZHwC5wLf+ftHhF70zzXzfFo
+        yPsvGn28vl1zC/eB4MqOImCRqHC8JLZ1RF0Mu18=
+X-Google-Smtp-Source: APXvYqzHA9YvJExCgbsZwp5ZJR8tGGNiCe1QcLN5B1ieQfFSo6Xw+Mk5Z7qY8x2rPtOvLfLYY0Ih8I2rCkoti3q7W4s=
+X-Received: by 2002:a05:6830:16d1:: with SMTP id l17mr607793otr.21.1579043634496;
+ Tue, 14 Jan 2020 15:13:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e325daa4-5a26-3652-5f46-06203403e51d@gmail.com>
+References: <CAHMHMxWpLAnj3w8DGLMFbfy-A-pBjDxNdMeiM-fyuu-gnZyg+Q@mail.gmail.com>
+ <20200114222802.GC3957260@coredump.intra.peff.net>
+In-Reply-To: <20200114222802.GC3957260@coredump.intra.peff.net>
+From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
+        <stdedos@gmail.com>
+Date:   Wed, 15 Jan 2020 01:13:17 +0200
+Message-ID: <CAHMHMxVajKxjBweG=mps0gLwE1o8M69DvPb1iUQYgLXx0VO5AA@mail.gmail.com>
+Subject: Re: Git alias syntax help
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 14, 2020 at 05:11:03PM -0500, Derrick Stolee wrote:
+On Wed, 15 Jan 2020 at 00:28, Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Jan 14, 2020 at 05:21:20PM +0200, =CE=A3=CF=84=CE=B1=CF=8D=CF=81=
+=CE=BF=CF=82 =CE=9D=CF=84=CE=AD=CE=BD=CF=84=CE=BF=CF=82 wrote:
+>
+> > I am having an issue with git-aliases - specifically, the intricacies
+> > involved in their syntax.
+> >
+> > In general, the syntax is confusing to me, especially when it is
+> > _wise_ to use quotes inside a `!sh` alias.
+> > e.g. which one would be the correct one
+> > new =3D "!f() { : git log ; git log \"${1}@{1}..${1}@{0}\" \"$@\" ; } ;=
+ f"
+> > new =3D !f() { : git log ; git log "${1}@{1}..${1}@{0}" "$@" ; } ; f
+>
+> Only the first one is correct. In addition to the quotes in the second
+> one being eaten by the config parser, the unquoted semicolon starts a
+> comment.
 
-> > Do we need to document these rules somewhere? Naively I'd expect
-> > "--stdin" to take in literal pathnames. But of course it can't represent
-> > a path with a newline. So perhaps it makes sense to take quoted names by
-> > default, and allow literal NUL-separated input with "-z" if anybody
-> > wants it.
-> 
-> This is worth thinking about the right way to describe the rules:
-> 
-> 1. You don't _need_ quotes. They happen to come along for the ride in
->   'git ls-tree' so it doesn't mess up shell scripts that iterate on
->   those entries. At least, that's why I think they are quoted.
+Could somehow the latter "become" the correct option?
+Especially in the case of `!sh`:
+1) You need to quote everything after `=3D` sign ("forced" double quotes), =
+then
+2) `sh -c` needs another set (singles are most safe here, I think), and
+3) If, for some reason, you need to quote further ("$@" would be a
+common suspect usually)
 
-It's not just shell scripts. Without quoting, the syntax becomes
-ambiguous (e.g., imagine a file with a newline in it). So most Git
-output that shows a filename will quote it if necessary, unless
-NUL separators are being used.
+Apart from the [1] feeling unneeded (the equivalent of Python's
+`alias_cmd =3D cfg_line.split()[1]` could be enough), this brings a
+quoting mess on [3]
 
-> 2. If you use quotes, the first layer of quotes will be removed.
+> > The alias confusing me is more specifically this:
+> > https://git.wiki.kernel.org/index.php/Aliases#simple_diff_ignoring_line=
+_number_changes
+> >
+> > diffsort =3D !sh -c 'git diff "$@" | grep "^[+-]" | sort --key=3D1.2 | =
+uniq -u -s1'
+> >
+> > The output of:
+> > $  colordiff -su <(git diffsort HEAD^..HEAD) <(git diffsort HEAD^^..HEA=
+D^)
+> > Files /dev/fd/63 and /dev/fd/62 are identical
+> > is a little unexpected, since I know for a fact that one of the
+> > referced commits is not a code block moved.
+>
+> The issue here isn't with Git's alias mechanism, but a quirk of how "sh
+> -c" works.  You can run with GIT_TRACE to see what we're passing to the
+> shell (though note that your double-quotes don't make it through):
+>
+>   $ GIT_TRACE=3D1 git diffsort HEAD^..HEAD
+>   17:22:47.644542 [pid=3D3959333] git.c:708           trace: exec: git-di=
+ffsort HEAD^..HEAD
+>   17:22:47.644648 [pid=3D3959333] run-command.c:663   trace: run_command:=
+ git-diffsort HEAD^..HEAD
+>   17:22:47.645038 [pid=3D3959333] run-command.c:663   trace: run_command:=
+ 'sh -c '\''git diff $@ | grep ^[+-] | sort --key=3D1.2 | uniq -u -s1'\''' =
+HEAD^..HEAD
+>   17:22:47.650319 [pid=3D3959336] git.c:439           trace: built-in: gi=
+t diff
+>
+> The problem is that "sh -c" takes the first non-option argument as $0,
+> not $1. For example:
+>
+>   $ sh -c 'echo 0=3D$0, @=3D$@' foo bar baz
+>   0=3Dfoo, @=3Dbar baz
+>
+> You can add any extra string there to become $0, like:
+>
+>   diffsort =3D "!sh -c 'git diff \"$@\" | grep \"^[+-]\" | sort --key=3D1=
+.2 | uniq -u -s1' --"
+>
+> which will do what you want. You can use whatever string you like, since
+> you know that your "-c" snippet does not ever look at $0.
+>
+> -Peff
 
-I take this to mean that anything starting with a double-quote will have
-the outer layer removed, and backslash escapes inside expanded. And
-anything without a starting double quote (even if it has internal
-backslash escapes!) will be taken literally.
+Thank you very much for a complete explaination of all of this .
 
-That would match how things like "update-index --index-info" work.
+Can some of this be documented somewhere?
+Are they somewhere and I missed them?
 
-As far as implementation, I know you're trying to keep some of the
-escaping, but I think it might make more sense to do use
-unquote_c_style() to parse the input (see update-index's use for some
-prior art), and then re-quote as necessary to put things into the
-sparse-checkout file (I guess quoting more than just quote_c_style()
-would do, since you need to quote glob metacharacters like '*' and
-probably "!"). But as much as possible, I think you'd want literal
-strings inside the program, and just quoting/unquoting at the edges.
+If nothing more, a link to this e-mail chain either on the wiki (if
+https://git.wiki.kernel.org/index.php/Aliases is an official page) or
+on git-alias help (here
+https://git-scm.com/book/en/v2/Git-Basics-Git-Aliases or in some
+"advanced" section, which I cannot find)
 
-> How much of this needs to be documented explicitly, or how much should
-> we say "The input format matches what we would expect from 'git ls-tree
-> --name-only'"?
+If https://git.wiki.kernel.org/index.php/Aliases is an official page,
+then: was this written for an earlier version?
+Could it also be updated?
 
-I think it's fine to say that, and maybe call attention to the quoting.
-Like:
-
-  The input format matches the output of `git ls-tree --name-only`. This
-  includes interpreting pathnames that begin with a double quote (") as
-  C-style quoted strings.
-
-Disappointingly, update-index does not seem to explain the rules
-anywhere. fast-import does cover it. Maybe it's something that ought to
-be hoisted out into gitcli(7) or similar (or maybe it has been and I
-just can't find it).
-
--Peff
+--
+Ntentos Stavros
