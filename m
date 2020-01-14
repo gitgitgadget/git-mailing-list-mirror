@@ -2,118 +2,126 @@ Return-Path: <SRS0=o1/V=3D=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B10C33CB2
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 21:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 467BAC33CB3
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 21:57:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5857A24670
-	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 21:50:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 16F0624658
+	for <git@archiver.kernel.org>; Tue, 14 Jan 2020 21:57:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Phl/mIHm"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uwA774Ri"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728863AbgANVuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jan 2020 16:50:40 -0500
-Received: from mout.gmx.net ([212.227.15.19]:47601 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727102AbgANVuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jan 2020 16:50:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579038633;
-        bh=ZB+di3cllSIk5kuTFUOJ2QNWo3/6KpdCZgopH20/zik=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Phl/mIHmGgW0jsks7zWS0KCXX9DpM18a98aQN0u5gpVTSxMLfyJHs/eJ642VSCz6o
-         c5St/9plbz3EQcFiQXQW09oYZrLk20UJl1oUq1XoaYbYEDMjcp024Uvy8mj0EJ52h8
-         TN6qOFxVdIvgVZeXPninC5bk4adJDSjtYVlsLnLI=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MHXFr-1iw6e00YJF-00DX04; Tue, 14
- Jan 2020 22:50:33 +0100
-Date:   Tue, 14 Jan 2020 22:50:27 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Denton Liu <liu.denton@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.25.0
-In-Reply-To: <20200114024938.GA17003@generichostname>
-Message-ID: <nycvar.QRO.7.76.6.2001142249020.46@tvgsbejvaqbjf.bet>
-References: <xmqqtv4zjgv5.fsf@gitster-ct.c.googlers.com> <20200114024938.GA17003@generichostname>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-926607568-1579038633=:46"
-X-Provags-ID: V03:K1:QALsYtO98dZhdd9SiufgtBCu/2EpPXnwNGMmbRqxS0/Hf4TktHU
- OzR3MQFgt7sTF5j6bmz5x8rozn/xXBz+hG8RYTXYpFC8Gn5qDUHq/PD98M8WQBGIUiQ9RJa
- Y23o+AX3h/IWvSm/i6j5uj0n9Wma4eQSHdxeFJj1yVcxVLQyewVlRMepjTtTQ2GYXx8Jbwq
- iRyJaIOkaHTUOPDVHQ5jw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EyJGbVMYohM=:MJyQXLY+xU6MRhrLbDUOZb
- 2paO9z8wNgwk9Bo/LYoYMS6p4YT8heTyzFCtRpXIl/LHj/lq8M68WnayXw/9xHn8FBaT45xIL
- Qyx4sKYi+heyXhSAhgbWr58JbJ24hECrVr8AjTQYN3Z/9SwR4R+2VqzaAkLmpDItNqFkNgr/4
- iy+Zzsp63wZWN6gUMWk4pic7nK0J+HGHxeQ2Tjwg4vYgiPZdnd9fiEmdvPki9yvELT/V04sxE
- MnhFr00B0h9Pb3gd1VnXgXCsFcuBSI3Q60HbYIiwy7TggSeXh7J1LvQmxQpUFb0ym4Cc2Pqf6
- o9HEV2cK7sQ9mIE7j664WJ8s7t31Ojcy7P9Qxyi6cJw73Zsp3GNRKOecbSEXTYa0Jm2Al8OLn
- qDhNW4NEGiutT1YrLIObC5dWBJSfcvTlQPk5lLunAH/09ErRFqnfwayTMuvA4ElY6HHEw+A9I
- A6ZNBRojuKRQvwyiA8hUIt0Lag7oPCno98s98A7lCypzQAXwG26henwTae4L4waOXcd4cWP7g
- SZ9Qqlfwrnb2PTZ0zHzZxmps1zco/IiVeUSSymPglusryC/zI8vQRmAroUuEejaWq0E0musHZ
- 3M4q/zBgqi77B2urY5PJHapHKHamot7NBDXupmR1DnlF4mkOrrIw5tqDGimobf6mYknWQbGzF
- p6UXhUUd664VPu37ua72+qpLTk0VxelT8P9TZ0OjSGATy+izReliFIXT+CB6n/evebz8IsLgh
- UAUqC4ZqO/FpKWuGCEBgBuMjgt10pmbXKhdJICC4az9+eWDUWACTTirT8NGP3T9BotOZjHzQn
- 3nC02ywku5uaMx5U1eAvom2Nry+1ZRlrJuJZMDNSVnoYWk8KeWOVeDuNyewtLwJC4mYqbH1xR
- HwmGpFOXDR5i0QPz6tEae1WfX3dptkdIcgq9Pamak5K1pPPNij8YDVq5E9GcDBEGX8FcUWLqW
- KdNKbhECDUNaUSgOLTxjWp8QQ0shz7sPF+re8Kn483/ODSu6Z9w8LTCCRBd6AD4hTlExfeIpp
- ZcgGtjNgG0Ur+9Tu64usdxXfyLTP7FJVdYH5t/WRjrD9lKZT/UfwlcOX2qHCnmOf9e73Ssqv9
- EmegC1a9J2D6AwO7Inrfxucp6ZDNBcP3xjajngzcyZDthk7t5IfSiZuoXiePPZ+V9WHfJ0yJn
- A90fckNMBbW1ZODiQR14eiE8eIvL0fPGEHBljV858cKdR4A3Yo+86Xml47CuIfZQQ16IXXpXD
- +w3H2RZ+R/+N3wA2mkVPQDAyI7p5R9lV0NDpopXyFTyAapwhxaqUVTFh6gb4=
+        id S1729050AbgANV5e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jan 2020 16:57:34 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:35386 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728759AbgANV5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jan 2020 16:57:34 -0500
+Received: by mail-pf1-f201.google.com with SMTP id r17so9614317pfl.2
+        for <git@vger.kernel.org>; Tue, 14 Jan 2020 13:57:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=s6aHBlbwYMxoHYRAcEbIeDROx6OLWvqJbp/mYWutw08=;
+        b=uwA774RiUtuRCN9AbHk8NRWfjTRQFJczKaDSuDFpwCj4tO/UrLyoKJWRZG1yg9zQ5m
+         uRmo/4C/2RuNqYOHow4GF2B+JKUrpTSCSftRPlAUot9QxlJhoLmD/S3MXWfg8fuZ49lI
+         ss8nvx0GU6WIsTbsvDbu9Vr7PO1i6CxQLJZH48LtamMsJ6topIV4+r7OegtV5gMJJOO5
+         D41TK47Ri+Q6AN1ADv7fX76RdpKGPaueaJ2/Ou4dWzB1+LX6YIQAirK+h2TGMVyA4Fb+
+         8PbhAIy0ThSDIJ7SnHvzckoGCafKPf0vXIBDJ9pTpfodZY/n1kvfSy7kffgkab9gDenK
+         Uw8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=s6aHBlbwYMxoHYRAcEbIeDROx6OLWvqJbp/mYWutw08=;
+        b=TMK8CSX5JPqti6P7WC0C8ufGJ9prXEsUlG3L8xVO0tp9qaQhDejC4h+eV4ZPn0WnCP
+         HBk2srmXwt3zcuGzd0hdYJEnPPi3LD+nzClqPuaFLTqBcqL2kXKTwd+MdC1HgFAB20Ve
+         anY1N1U+UdX81rkKGkV7yFeYuxZNMxBP6UAIIIWV28em/2TcQy0U4+gnEvd4toMvMmAA
+         mABS4uziGuQfKwr2jlMfWGVrwi2f+bnO7lbDH743xeOiRBvs4oNRifSEGHbV3DL7OqLN
+         d+nC1sMXrG5TDIz07oGR6Rv9j3a6qIWUjYujNz2nQ4GRImjpKcymhk+0uKr9V5DljLVV
+         9JyA==
+X-Gm-Message-State: APjAAAVvzt4b/Mv9Czm8Gtt2aXDac024GwXaerzCdZ2EwpNL3c2YopL7
+        knF7RJCnogMe40XxqGba8RSw4OcsLSOV+hLrITaF
+X-Google-Smtp-Source: APXvYqwlzF4Yi6qi2juAyQpquHzRQwBYxB1e/ES/FEBiW1q2neb0BOYuVreq2yFC6uxwTs7YoByrwvMMhABaZ/uvB9dp
+X-Received: by 2002:a63:e0f:: with SMTP id d15mr29129253pgl.255.1579039052970;
+ Tue, 14 Jan 2020 13:57:32 -0800 (PST)
+Date:   Tue, 14 Jan 2020 13:57:30 -0800
+In-Reply-To: <CABPp-BF8OHoHo73doekKzf0CmO09_PyAfe4q__DvoftQ+BeY2w@mail.gmail.com>
+Message-Id: <20200114215730.154601-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <CABPp-BF8OHoHo73doekKzf0CmO09_PyAfe4q__DvoftQ+BeY2w@mail.gmail.com>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
+Subject: Re: [RFC] Extending git-replace
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     newren@gmail.com
+Cc:     jonathantanmy@google.com, novalis@novalis.org, kaushik@twitter.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> > Missing promisor objects do not prevent fsck from passing - this is part
+> > of the original design (any packfiles we download from the specifically
+> > designated promisor remote are marked as such, and any objects that the
+> > objects in the packfile refer to are considered OK to be missing).
+> 
+> Is there ever a risk that objects in the downloaded packfile come
+> across as deltas against other objects that are missing/excluded, or
+> does the partial clone machinery ensure that doesn't happen?  (Because
+> this was certainly the biggest pain-point with my "fake cheap clone"
+> hacks.)
 
---8323328-926607568-1579038633=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The server may send thin packs during a fetch or clone, but because the
+client runs index-pack (which calculates the hash of every object
+downloaded, necessitating having the full object, which in turn triggers
+fetches of any delta bases), this should not happen.
 
-Hi Denton,
+But if you create the packfile in some other way and then manually set a
+fake promisor remote (as I perhaps too naively suggested) then the
+mechanism will attempt to fetch missing delta bases, which (I think) is
+not what you want.
 
-On Mon, 13 Jan 2020, Denton Liu wrote:
+> > Currently, when a missing object is read, it is first fetched (there are
+> > some more details that I can go over if you have any specific
+> > questions). What you're suggesting here is to return a fake blob with
+> > wrong hash - I haven't looked at all the callers of read-object
+> > functions in detail, but I don't think all of them are ready for such a
+> > behavioral change.
+> 
+> git-replace already took care of that for you and provides that
+> guarantee, modulo the --no-replace-objects & fsck & prune & fetch &
+> whatnot cases that ignore replace objects as Kaushik mentioned.  I
+> took advantage of this to great effect with my "fake cheap clone"
+> hacks.  Based in part on your other email where you made a suggestion
+> about promisors, I'm starting to think a pretty good first cut
+> solution might look like the following:
+> 
+>   * user manually adds a bunch of replace refs to map the unwanted big
+> blobs to something else (e.g. a README about how the files were
+> stripped, or something similar to this)
+>   * a partial clone specification that says "exclude objects that are
+> referenced by replace refs"
+>   * add a fake promisor to the downloaded promisor pack so that if
+> anyone runs with --no-replace-objects or similar then they get an
+> error saying the specified objects don't exist and can't be
+> downloaded.
+> 
+> Anyone see any obvious problems with this?
 
-> On Mon, Jan 13, 2020 at 11:28:30AM -0800, Junio C Hamano wrote:
-> > New contributors whose contributions weren't in v2.24.0 are as follows=
-.
-> > Welcome to the Git development community!
-> >
-> >   Ben Keene, Colin Stolley, Dominic J=C3=A4ger, Erik Chen, Hariom
-> >   Verma, Heba Waly, James Coglan, James Shubin, Johannes Schindelin
->
-> I was quite surprised to see Dscho's name in here until I realised that
-> this was just erroneous authorship information. Below is a mailmap patch
-> to fix this.
+Looking at the list of commands given in the original email (fsck,
+upload-pack, pack/unpack-objects, prune and index-pack), if we use a
+filter by blob size (instead of the partial clone specification
+suggested), this would satisfy the purposes of fsck and prune only.
 
-Thank you. This is the PR that fixes GitGitGadget:
-https://github.com/gitgitgadget/gitgitgadget/pull/188
+If we had a partial clone specification that excludes object referenced
+by replace refs, then upload-pack from this partial repository (and
+pack-objects) would work too.
 
-(This was one fall-out from the change that lets GitGitGadget avoid
-sending a cover letter when sending a single patch; Let's hope that it is
-the only one.)
-
-Ciao,
-Dscho
-
->
-> >   via GitGitGadget, Jonathan Gilbert, Josh Holland, Kazuhiro
-> >   Kato, =C5=81ukasz Niemier, Manish Goregaokar, Matthew Rogers,
-> >   Mihail Atanassov, Miriam Rubio, Nathan Stocks, Naveen Nathan,
-> >   Nika Layzell, pan93412, Paul Menzel, Philippe Blain, Prarit
-> >   Bhargava, r.burenkov, Ruud van Asseldonk, ryenus, Slavica
-> >   =C4=90uki=C4=87, Thomas Menzel, Utsav Shah, Yi-Jyun Pan, and Zoli Sz=
-ab=C3=B3.
->
-> [...]
-
---8323328-926607568-1579038633=:46--
+But there might be non-obvious problems that I haven't thought of.
