@@ -6,61 +6,60 @@ X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09EF7C32771
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40C75C32771
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:09:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D28852465A
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:07:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 188212081E
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:09:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="RYadPxFG"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="HiTHsoiD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729824AbgAOUHI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 15:07:08 -0500
-Received: from mail-pj1-f52.google.com ([209.85.216.52]:51876 "EHLO
-        mail-pj1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729794AbgAOUHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 15:07:07 -0500
-Received: by mail-pj1-f52.google.com with SMTP id d15so411484pjw.1
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 12:07:07 -0800 (PST)
+        id S1729719AbgAOUJs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 15:09:48 -0500
+Received: from mail-pj1-f53.google.com ([209.85.216.53]:53471 "EHLO
+        mail-pj1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729449AbgAOUJs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 15:09:48 -0500
+Received: by mail-pj1-f53.google.com with SMTP id n96so410521pjc.3
+        for <git@vger.kernel.org>; Wed, 15 Jan 2020 12:09:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:subject:message-id:mime-version:content-disposition
+        h=date:from:to:subject:message-id:mime-version:content-disposition
          :user-agent;
         bh=YZdE7FQz9gIzcP0gRJoFyg2pjX1hS11LSgKx5rVc3OU=;
-        b=RYadPxFGxJ4VQIeIS/XKHYFfAS1V7wjVLDq6CE9XhwZ7w6ugA8Cwc38xdDN1iVCG2T
-         UZDAPlt8UpQAvhKEKjJ0Y3oC3GxzzlvE/dWaLSMFsBNM2esX6SGGWyf+c6cT2m+zEHav
-         E+fWWXtYw1U85FX2+eRgk1OAmojN/HFJpOTUkaYgz6i70jG4RSlEIo4iTwSO8vJAKzgT
-         OPOXwFMTzNIwFA+vGnnRKZKbGLz1TvCzglQPpf6tLthSqDFc1gw+QLN0hgMWnQ70qxvj
-         vuXYfDSTstvSqX/AAgzJazQkxJqy6i6JP9cV01eCzwfczLn8WxXPV2NcH2GOBJh401gF
-         g0Wg==
+        b=HiTHsoiD6kLxl/H1pBi47ghbtjXMchbZwRQUdc12VEdb9+YDm+z4TlkbI7MWxOX38i
+         q05vucTfmn3bhwdlOIv+tiH1NTtzO7u+Nr5y4JjjLbH2Jh0uBWOWhva5RUah0JCQbEJt
+         ocr9JbhCfj0yy2jgxpLrl229yEZJGTiuYVBdtP//ojz9sraYu0W+bh2QqhPKorxyqQ/K
+         BCNeJTi/Yy4YAg80v0nhayOvZPKImd9cYid1X8+WTwPPEQSBo7Epxhrm3OOSUuA7zP13
+         IyFlm8xLfEDXmyAAic904eZxBR8h6oSOrJ1AIBonICpkwNt3aHwJ1RqUt/fMn1LU4rBw
+         p1aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:subject:message-id:mime-version
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
          :content-disposition:user-agent;
         bh=YZdE7FQz9gIzcP0gRJoFyg2pjX1hS11LSgKx5rVc3OU=;
-        b=amJF+GlXzLOvbSCjJzLBJiy6mLlbCqPRJxirmbuxqcbl4/VeOPP6RIyqD+bH2f7JUz
-         lM51dK2GiL2vcJuvpryvMYeZknJkKjkqoMRMW5aMgWKT4r5OWtn98NvPfU4ii8XPXmhM
-         dhCkUeK8tJw6pvtjaqjP7F/T0Hnji0dCC3/pCdVh4uA3yrTelTOBpsstjGNcrI4a6QXZ
-         rdxNglqWzDogczV6OgjfZGBpRMGZtDXU5rn0nQSW5UUk4JiWVYt3ZwXgDxqZryAw1gUR
-         iEcR6JoFE1n3/G8J7BEyBEGQRLY8GpPgF/pCLG4frgk8kVnLfpDyU7pmfKlMhaJeXWuP
-         NG4g==
-X-Gm-Message-State: APjAAAXp9shpuxt7v2BdHgyPJGmT70FVikCB664/+m82ie//C1WoD7SA
-        JTGrwC0GMF+T8F181KhE3aZ9msP9Y4oOUw==
-X-Google-Smtp-Source: APXvYqxdJWKVowEiRDDV1WMCMI2txsjwyTTOS21TfP2tvdP3Av0r3qm89+zcMgjxFDukTShxkgxREA==
-X-Received: by 2002:a17:90b:11c4:: with SMTP id gv4mr1936069pjb.126.1579118826586;
-        Wed, 15 Jan 2020 12:07:06 -0800 (PST)
+        b=SpNWbOwj074J9uDxA2D4tcfadMDYu+FrtcmP37eE6+3IyXJ4BnVG/prLQR8vwqSEf6
+         B+DREGrbVG93Cl/jyJmQ0P9znvGWRhqkW0rvygw13ciVdLx8ZmgcVGcEeb5mCGp9rvE2
+         IzyPY8c575Vg0/WznXIjcazxKeFDCfttfvkgtzQltgRig7/ktONR39BGT/VvJZz081hj
+         qEu1uEZDtc9rHEE6j9gzmuPolN1EHC9CwakZWtHS+UrCQd5R2Z63onLyb+flVe4yAC2V
+         kAUChe/59HarxSITeBBasn6wo9+B/MkMYS6kCsF6CxEJluaKvwQAJOQuGp3tTM4yHjal
+         peTw==
+X-Gm-Message-State: APjAAAX4IW/uv5nUDuSWD4g42eMODTWMfUp6LjTTX/mSknDjCR2nI37d
+        gTA3MG6ynq6RjNqSS1IeyB8C2RIpJAprnA==
+X-Google-Smtp-Source: APXvYqzlLMhcaxhnjx5WCJXat0XuI3+qX6JdbySxMAbDDQWZFH3CtWLKsD03BJRwmolATFcZfDffxw==
+X-Received: by 2002:a17:902:34a:: with SMTP id 68mr26905242pld.250.1579118987138;
+        Wed, 15 Jan 2020 12:09:47 -0800 (PST)
 Received: from localhost ([205.175.106.239])
-        by smtp.gmail.com with ESMTPSA id v10sm21766728pgk.24.2020.01.15.12.07.05
+        by smtp.gmail.com with ESMTPSA id q10sm23536099pfn.5.2020.01.15.12.09.46
         for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 12:07:06 -0800 (PST)
+        Wed, 15 Jan 2020 12:09:46 -0800 (PST)
+Date:   Wed, 15 Jan 2020 12:09:46 -0800
 From:   Jeff King <me@ttaylorr.com>
-X-Google-Original-From: Jeff King <peff@peff.net>
-Date:   Wed, 15 Jan 2020 12:07:05 -0800
 To:     git@vger.kernel.org
 Subject: [ANNOUNCE] Git Contributor Summit Registration, Mar 5, 2020, Los
  Angeles
-Message-ID: <20200115200532.GA4101552@coredump.intra.peff.net>
+Message-ID: <20200115200705.pxFH9lItfcW1_G4jQHgU46bfNXBeU_e90Ar0IfFjdZ0@z>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
@@ -69,7 +68,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Message-ID: <20200115200705.pxFH9lItfcW1_G4jQHgU46bfNXBeU_e90Ar0IfFjdZ0@z>
+Message-ID: <20200115200946.-yeFGSj2zoo2hOuu9u-9uiXrD_sqTZ-g6C3X7DO2gCw@z>
 
 Following up on my earlier announcement, I have some more details for
 the Contributor Summit at Git Merge this year:
