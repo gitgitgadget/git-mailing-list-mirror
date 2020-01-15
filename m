@@ -2,98 +2,85 @@ Return-Path: <SRS0=RXbn=3E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 982BDC33C9E
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 00:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B90DAC33C9E
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 03:18:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 55B5024671
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 00:56:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5ECF624671
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 03:18:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uu7JCRsl"
+	dkim=pass (1024-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="q6GQHrOg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728827AbgAOAzw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 14 Jan 2020 19:55:52 -0500
-Received: from mail-qv1-f47.google.com ([209.85.219.47]:36822 "EHLO
-        mail-qv1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728795AbgAOAzv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Jan 2020 19:55:51 -0500
-Received: by mail-qv1-f47.google.com with SMTP id m14so6639387qvl.3
-        for <git@vger.kernel.org>; Tue, 14 Jan 2020 16:55:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=U/Eh+d0mAP3PnOAcOyoArQ+QNgB2Ofg8woYYFxjP6wA=;
-        b=uu7JCRsl4zejM1FuMQcikjjT4uvZe0n5VUTQb9rwPfu6ZM9XrcpVbuEtl32tRU5Rmg
-         3HU6xaq/8o7KpbrjwHMfbWK1Y4DQToXa7T6Im1XKMSJ8ODSUuJYYPOLbqixLMj9LIE5L
-         5d+u25pyz+tu5wfA6BBDvoHFW6Q+Jg0sDcfUqUy3rjqxS8ziFCNOlESRf5YcBDKob8Oj
-         hHyTEU4K8EWdMd1BlCBHZM9N66+/hkmrMM86GwFdAVMMyseZHRrHGsHFU8y32e8wbH/k
-         C82nZHf5HHxgEg0YOMtTQ5vcRysPBepzjYerSmaCK+R3l+EwefBUcwkANa60mqMUx0sP
-         YhOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=U/Eh+d0mAP3PnOAcOyoArQ+QNgB2Ofg8woYYFxjP6wA=;
-        b=R6/i6GFrFZjxGcR0sqm9I2eytdVDq3s8/jPXBrSS4CFVReOxKRgP9pzxLTuIiECKci
-         ZAq+CliAe0bKKq0xYBnUs+AsvoTRgb2BzgcaMQfYGMq8rc1fXXSyMFPSUNVTFN87msnV
-         mfODn3j9DtakpfKjwpe4vYTDBJeWgQ/XglaS4w4+KrCxWhOFDFdD3HUkXFfAj0x8pZ9L
-         1967HwysycBj3mZ1oLCXA0EN9qAjrspM0XE+C1jbl8DDaKlX8XfIDbZ1SuY8p080+BV1
-         kTFW7NVucni2MEz7D8PEh2F2TNMQ5HnT0f6fyXiV0NpQDEnYJE/g/IDvsZTnsXoPqyCQ
-         PfDw==
-X-Gm-Message-State: APjAAAV0suSCNtkVO64CWyYBp6gUJy/iOjBuaWVscAV/Rd/+C7Hjx+9J
-        1iynFVdPfzIYb3QdqCKwY5M=
-X-Google-Smtp-Source: APXvYqzOjLePjx9FjKiKfp7z/V2TMfM4Y09X3qS4uc8a8r3XaVZFekxq5PMNh9p1eEi7INojjETA2A==
-X-Received: by 2002:a0c:f404:: with SMTP id h4mr19989956qvl.251.1579049750911;
-        Tue, 14 Jan 2020 16:55:50 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13f:14fc:be65:9350:cf67? ([2001:4898:a800:1012:c630:be65:9350:cf67])
-        by smtp.gmail.com with ESMTPSA id d9sm8288077qth.34.2020.01.14.16.55.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Jan 2020 16:55:50 -0800 (PST)
-Subject: Re: [PATCH 9/9] commit-graph: add GIT_TEST_COMMIT_GRAPH_BLOOM_FILTERS
- test flag
-To:     Jakub Narebski <jnareb@gmail.com>,
-        Garima Singh via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, szeder.dev@gmail.com,
-        jonathantanmy@google.com, jeffhost@microsoft.com, me@ttaylorr.com,
-        peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        Garima Singh <garima.singh@microsoft.com>
-References: <pull.497.git.1576879520.gitgitgadget@gmail.com>
- <e1c315d0a766af147eb4ead41a172f724e90cc34.1576879520.git.gitgitgadget@gmail.com>
- <86v9phrcml.fsf@gmail.com>
-From:   Garima Singh <garimasigit@gmail.com>
-Message-ID: <f8e9c4c7-b448-4014-5647-87c833a21dcc@gmail.com>
-Date:   Tue, 14 Jan 2020 19:55:49 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        id S1728892AbgAODSk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 14 Jan 2020 22:18:40 -0500
+Received: from mail-40130.protonmail.ch ([185.70.40.130]:33151 "EHLO
+        mail-40130.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728879AbgAODSk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Jan 2020 22:18:40 -0500
+Date:   Wed, 15 Jan 2020 03:18:34 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=default; t=1579058317;
+        bh=4iM4v7ZBKi1Klm5BdLfvceFOfkAY0XSZbxBaTLsQVzY=;
+        h=Date:To:From:Reply-To:Subject:In-Reply-To:References:Feedback-ID:
+         From;
+        b=q6GQHrOgBQ5VLHE+Ve5KXzpHni64mqM3f08c+nA3neEugm2nEiRoueFwmhTrS4k+j
+         jrUf1QbJwDQYTsmDb3WGgXR1JTO9Y7fBH3PKpZ4yszilPdK3OkYf8YFUnC7Z0XF3Fc
+         7tStwot1TDe+R0w0gsBpwuRTnBH/duOpXwJkBdao=
+To:     Jeff King <peff@peff.net>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+From:   1234dev <1234dev@protonmail.com>
+Reply-To: 1234dev <1234dev@protonmail.com>
+Subject: Re: Can Git repos be hacked or otherwise manipulated?
+Message-ID: <bvMqhQOr4uENl8j2zcFOY0ogJmUqTRofCGyPlPc_xaXQXSP5ds9lgdglXkjTZng9U5WSpo-Uc2_SzCTdpAvLTeruT-tW3GTDkWj9dfLznuM=@protonmail.com>
+In-Reply-To: <20200114220826.GB3957260@coredump.intra.peff.net>
+References: <fOv65WlolaWZ638trkwZ6nnWIaRu14wx8bYkLdqzidlHPvhYpg1f6TSa_Z7w7iFEsXSLkMzQ6EYTwo3ggF3oXrDh5U4LM_i2Rzx0BkMh7zI=@protonmail.com>
+ <20200114220826.GB3957260@coredump.intra.peff.net>
+Feedback-ID: jm_lYfXrrNlRjeoYk2ubMr1Ofg3d6jxZVz74GfYfMumLfq3Q9_Z5n8vqkvDBYWSlKkQ9TIGL2Vvi-4DSzBFTyQ==:Ext:ProtonMail
 MIME-Version: 1.0
-In-Reply-To: <86v9phrcml.fsf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello Jeff and thank you for your response!
 
-On 1/11/2020 2:56 PM, Jakub Narebski wrote:
-> "Garima Singh via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> The test suite passes when GIT_TEST_COMMIT_GRAPH and
->> GIT_COMMIT_GRAPH_BLOOM_FILTERS are enabled.
-> 
-> Good.  Very good.
-> 
-> No errors found by Continuous Integration setup either?
-> 
+To work around this problem, should we instead host this repo on a public s=
+ervice? If so which one would you recommend?
 
-Yes, the CI test pipelines all passed.
+--Jonathan
 
-Cheers! 
-Garima Singh
+Sent with ProtonMail Secure Email.
+
+=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90 Original Me=
+ssage =E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90=E2=80=90
+On Tuesday, January 14, 2020 10:08 PM, Jeff King <peff@peff.net> wrote:
+
+> On Tue, Jan 14, 2020 at 02:48:05PM +0000, 1234dev wrote:
+>
+> > Let's say you're working with a team of elite hackers, passing a
+> > tarball of a Git repo back and forth as you complete your mission. Now
+> > let's say one of them has malicious intent. What are the possibilities
+> > that he or she can, for instance, hide changes made to a script or
+> > binary that does something malicious if executed? Or perhaps maybe
+> > there are other such scenarios one should be made aware of?
+>
+> It is absolutely not safe to run Git commands from a tarball of an
+> untrusted repo. There are many ways to execute arbitrary code specified
+> by a config option, and you'd be getting recipients .git/config.
+> Likewise for hooks.
+>
+> And while we would consider it a bug if you can trigger a memory error
+> by reading a corrupted or malicious on-disk file, that's gotten way
+> less auditing than the code paths which take in objects from a remote.
+> So e.g., I would not be surprised if there are vulnerabilities that
+> could cause out-of-bounds reads of a corrupted .git/index.
+>
+> -Peff
+
+
