@@ -2,122 +2,117 @@ Return-Path: <SRS0=RXbn=3E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED305C32771
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 21:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2AB62C32771
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 21:41:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B882F2081E
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 21:23:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E2FD2222C3
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 21:40:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHApYf/W"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KjgeCrVk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729222AbgAOVXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 16:23:38 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44205 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726501AbgAOVXi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 16:23:38 -0500
-Received: by mail-wr1-f65.google.com with SMTP id q10so17147724wrm.11
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 13:23:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=by6e+KVQVENv4RrZeULt8QjoQMDvi9Eu1FV7+jaqzCs=;
-        b=GHApYf/WzbRpdbPuWWKLAezFHfjVNnUMS3slGR9xl/eGGBh05DmI6N4qVkv/ug1BDl
-         RlBLqq3ztwcXVZr2GfBCd32RNSG2Phb4EiTTlJrGXK/tj9cZAg5kqALlDbwtNhC0DKdV
-         I4z2CQCjRK6TXrUHc+xmlnHVjcDlulVU3bUcxxUtfe9buUCsKyOW/y4tsUQ59LG00uGc
-         CTaMcbxPt7hXs2CQheDsrAkvlWSF1Hr7nrwWs1afWc3eNeA+8PPHDJQPzx40Fbn6pcUH
-         vXIWmXCV77KnuQc6wT3XmcO04VuINvM/nLJ0OJOg2V8scdc2FyusSoSVhZ2IrgCIMrh9
-         Z1iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=by6e+KVQVENv4RrZeULt8QjoQMDvi9Eu1FV7+jaqzCs=;
-        b=EGRrUe6gymZmB0allO2qXdhvYurL1jrPkBJWFXYi6L0ooS4yCoi5AB3YRqEAypjTc2
-         Tq30aMoRGCV8rVawmp4oWSucbx2fsQmUbWxx0kofuPJcZBizyog7DiWJHCJCbarr4Uyz
-         g3eLnktshouaDi68op5BgJhcvt0YUF/LK36LQJWvDSQWVLoN8vTIMtPbp7F+PiT0L4w6
-         RjJGg3ceg+1P872BLVGIArhe9ff9FReBFJ69mHs3dkhDsn0ol1Ib4E1gYrZoWDsbS3ex
-         08Yn2PTNXY7orVIhryA/7oXgO77eHk5MEOB9CmSQuaG8ikyFve7BceIwlCVE4zFP7Y0C
-         90GQ==
-X-Gm-Message-State: APjAAAUaOvQJrZDsJXnkVk5zviRoRE6GQUeAQODl+QoT/vh12ETpI0V9
-        e/X6CCOIXkpmpVDMzXAFCNF1iG7mvrc=
-X-Google-Smtp-Source: APXvYqw9YNKm7Tc3TBQa9plnenMCkLndWvtsOQCvyXsZj1sqqcFWL6iFVouw75GweO4XtolVOANlaA==
-X-Received: by 2002:a5d:6692:: with SMTP id l18mr35317070wru.382.1579123416159;
-        Wed, 15 Jan 2020 13:23:36 -0800 (PST)
-Received: from [10.1.31.85] (dw872367114.amsterdam-tc.dataweb.net. [87.236.7.114])
-        by smtp.gmail.com with ESMTPSA id c15sm26043928wrt.1.2020.01.15.13.23.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Jan 2020 13:23:35 -0800 (PST)
-Subject: Rebasing evil merges with --rebase-merges
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Sergey Organov <sorganov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <f2fe7437-8a48-3315-4d3f-8d51fe4bb8f1@gmail.com>
- <089637d7-b4b6-f6ba-cce1-29e22ce47521@gmail.com>
- <xmqqeew4l6qf.fsf@gitster-ct.c.googlers.com>
- <xmqq5zhgkwxx.fsf@gitster-ct.c.googlers.com>
- <xmqqy2ubjkeo.fsf@gitster-ct.c.googlers.com>
- <xmqqpnfnj9p3.fsf_-_@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.2001151458100.46@tvgsbejvaqbjf.bet>
- <xmqqftggk2oi.fsf@gitster-ct.c.googlers.com>
-From:   Igor Djordjevic <igor.d.djordjevic@gmail.com>
-Message-ID: <9355c545-08a5-ef63-f7bf-65201d50acc8@gmail.com>
-Date:   Wed, 15 Jan 2020 22:23:34 +0100
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.1
+        id S1729073AbgAOVk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 16:40:59 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62962 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726552AbgAOVk6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 16:40:58 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9DC8A2DFE1;
+        Wed, 15 Jan 2020 16:40:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=fqSoX2EQ/YuITl+kGAYRAhJPg+I=; b=KjgeCr
+        Vk5e9XJ6fOMYd5Q/oIMADcgitDiJMgAjFUKQFJFXW2Oj4lwKN0M8m695vlemFBaH
+        byt0AI9nDm28KKlZMHf4hz5hIrzqefXQHoTxcDfhS9+ajfiTL085dMDauTxQcpTu
+        sZOlc1RNxugZPXofOwlqiKxSxGv3n3SoUEnDo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=N24/SAwA/3bd06vpB8yEqC89Ls5ipc/l
+        GV3Xt0eQbFg8E57HUHAW2XiKlwfs/8EU+Tu+SuNkWj6wqk743jo9SCjDSATstBew
+        vGFl/q3lZgWbJ9rHNWcNBmIucMTOBPi6Tt7scGyng272tPDBf2FfXRAGngD+F0ln
+        P3/BydrJRPM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F5B82DFDF;
+        Wed, 15 Jan 2020 16:40:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA3032DFDD;
+        Wed, 15 Jan 2020 16:40:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 02/22] hex: add functions to parse hex object IDs in any algorithm
+References: <20200113124729.3684846-1-sandals@crustytoothpaste.net>
+        <20200113124729.3684846-3-sandals@crustytoothpaste.net>
+Date:   Wed, 15 Jan 2020 13:40:54 -0800
+In-Reply-To: <20200113124729.3684846-3-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Mon, 13 Jan 2020 12:47:09 +0000")
+Message-ID: <xmqqv9pciejd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqftggk2oi.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B602D03C-37DF-11EA-93A7-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 15/01/2020 19:14, Junio C Hamano wrote:
-> 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >
-> > Having said that, if you ever find yourself wanting Just One Feature 
-> > in `--rebase-merges` that would make it worthwhile for you to think 
-> > about switching your patch-based workflow to a `rebase -ir`-based 
-> > one, please let me know, and I will try my best to accommodate.
-> 
-> Another thing I noticed was that we may want to attempt to recreate
-> an evil merge and then stop to ask confirmation.  The "rebase -ri" I
-> did to sanity-check my revert for example failed to bring in the
-> change made in the existing evil merge when trying to recreate the
-> merge of the dl/merge-autostash topic into master..pu chain and
-> silently created a fails-to-build-from-the-source tree instead.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-FYI (and anyone interested), it`s something we actually brought up 
-some two years ago, at the time of introducing `--rebase-merges` 
-(known as `--recreate-merges` back at the time), see[1].
+> +/*
+> + * NOTE: This function relies on hash algorithms being in order from shortest
+> + * length to longest length.
+> + */
+> +int get_oid_hex_any(const char *hex, struct object_id *oid)
+> +{
+> +	int i;
+> +	for (i = GIT_HASH_NALGOS - 1; i > 0; i--) {
+> +		if (!get_hash_hex_algop(hex, oid->hash, &hash_algos[i]))
+> +			return i;
+> +	}
+> +	return GIT_HASH_UNKNOWN;
+> +}
 
-It ended being a lengthy and heated discussion (inside a few 
-different topics as well, like original RFC[2] and it`s v2 update[3]), 
-myself being guilty for dropping out eventually and not following it 
-through, though, life taking me in another direction at the moment... 
-but I still find this functionality to be very useful, not to say 
-essential, even, for reliable complex merge _rebasing_ (meaning 
-keeping "evil merge" changes, too), and not just merge _recreating_ 
-(loosing "evil merge" changes, and worse - doing it silently, as you 
-experienced yourself now as well).
+Two rather obvious questions are
 
-p.s. Bringing that one up again, it can`t go without saying a huge 
-thanks to Dscho for taking it this far in the meantime anyway <3
+ - what if we have more than one algos that produce hashes of the
+   same length?
 
-Regards, Buga
+ - it feels that GIT_HASH_UNKNOWN being 0 wastes the first/zeroth
+   element in the hash_algos[] array.
 
-[1]: https://lore.kernel.org/git/bc9f82fb-fd18-ee45-36a4-921a1381b32e@gmail.com/
-[2]: https://lore.kernel.org/git/87y3jtqdyg.fsf@javad.com/
-[3]: https://lore.kernel.org/git/87r2oxe3o1.fsf@javad.com/
+In the future, I would imagine that we would want to be able to say
+"here I have a dozen hexdigits that is an abbreviated SHA2 hash",
+and we would use some syntax (e.g. "sha2:123456123456") for that.
+Would this function be at the layer that would be extended later to
+support such a syntax, or would we have a layer higher than this to
+do so?
+
+
+
+>  int get_oid_hex(const char *hex, struct object_id *oid)
+>  {
+>  	return get_oid_hex_algop(hex, oid, the_hash_algo);
+> @@ -87,6 +101,14 @@ int parse_oid_hex_algop(const char *hex, struct object_id *oid,
+>  	return ret;
+>  }
+>  
+> +int parse_oid_hex_any(const char *hex, struct object_id *oid, const char **end)
+> +{
+> +	int ret = get_oid_hex_any(hex, oid);
+> +	if (ret)
+> +		*end = hex + hash_algos[ret].hexsz;
+> +	return ret;
+> +}
+> +
+>  int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
+>  {
+>  	return parse_oid_hex_algop(hex, oid, end, the_hash_algo);
