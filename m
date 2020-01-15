@@ -2,134 +2,116 @@ Return-Path: <SRS0=RXbn=3E=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 581EBC32771
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ACD96C32771
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:21:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 20F212081E
-	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:10:15 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="gMBy89zv"
+	by mail.kernel.org (Postfix) with ESMTP id 82BD22084D
+	for <git@archiver.kernel.org>; Wed, 15 Jan 2020 20:21:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729828AbgAOUKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 15:10:15 -0500
-Received: from mail-pl1-f172.google.com ([209.85.214.172]:46300 "EHLO
-        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729449AbgAOUKO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 15:10:14 -0500
-Received: by mail-pl1-f172.google.com with SMTP id y8so7272915pll.13
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 12:10:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=pQ0FK5TEAiheH4fj5024ajsp51LRFDP6NS8Pe8iqjZ4=;
-        b=gMBy89zv0PkEU5UvXkp3+fiypgd69KHeE06ujN7j8ZnxYrDb6bcBiI21SbYVhlPQqz
-         +rj8ZiEP54/XUMpUORM8if5lemyMjl9cQHriKuk1H3i+f043XRp4216roLxc14DUo6Z7
-         kUJLCHj0iibMR/Ohw2+Mw2cioCnhHUfEK8n1dBfDdIpYSwHH4FsXyR9OYdHdNX0ADJSa
-         BUS+/WSF3/gszjl4Z8rkEYNFhdRiYeG0+2q8HrBeQHBJUIpq/CWWj8cFEzEor4i8tYbs
-         JtsCGSromXV7wekMe3rikgnPBq6MvfR8dDgLhBKtrGD2TnNrEdqZxvmUkr5onHp6dzOa
-         eCfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=pQ0FK5TEAiheH4fj5024ajsp51LRFDP6NS8Pe8iqjZ4=;
-        b=RjUp3eFyTqXk3s+XBfYCIdrSwbOXVyxkO3ldnc8Is2aGQxmnqER0j1IJoOrzKegQT2
-         yFOD/4dCQHMea8lz9yv9gH70q8M3uJhRWdTjMNz9YOjOxxdOGmXWJZDynDnn0zmNSMcm
-         8YijSFTL/WmGvFdtApC6j5F8/Np5omjtik5PMICpnr7aNzsZBLALNCKXx5rTv8aHUeVJ
-         i/oOjaajqxyYh6ilHN5LlTSvf/vQwCcOd4TndfN/CTgiBXzmxXtO4bEXtFOL7imMAza3
-         RcYuYjvAUnd0fpKffD/b1AxoSIxg+pE0RbQaVKsbGXj50SUyLMYUZnaopIz0NgSp+mv6
-         14AA==
-X-Gm-Message-State: APjAAAX2H/ZR3py2//iXNVUax40PO0CRPi9t8/7gsYCHT5Emg4fZ92BI
-        li8EvUNuq4UlFXyrEVZIPw2KhQWuZbI5Mg==
-X-Google-Smtp-Source: APXvYqz2zXwDMOczDCjTODP/yBenFBGG2jirXTZJ3VjZaoPMnNgV0/SikMRf/DHY4btFdkLT6FhG4A==
-X-Received: by 2002:a17:90a:8d81:: with SMTP id d1mr1935762pjo.63.1579119013631;
-        Wed, 15 Jan 2020 12:10:13 -0800 (PST)
-Received: from localhost ([205.175.106.239])
-        by smtp.gmail.com with ESMTPSA id b21sm24375123pfp.0.2020.01.15.12.10.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 12:10:13 -0800 (PST)
-Date:   Wed, 15 Jan 2020 12:10:12 -0800
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git Contributor Summit Registration, Mar 5, 2020, Los
- Angeles
-Message-ID: <20200115201012.GA62038@syl.local>
-References: <20200115200705.pxFH9lItfcW1_G4jQHgU46bfNXBeU_e90Ar0IfFjdZ0@z>
+        id S1729092AbgAOUVr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 15:21:47 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37284 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726018AbgAOUVr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 15:21:47 -0500
+Received: (qmail 19089 invoked by uid 109); 15 Jan 2020 20:21:47 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Jan 2020 20:21:47 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32722 invoked by uid 111); 15 Jan 2020 20:28:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jan 2020 15:28:07 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 15 Jan 2020 15:21:46 -0500
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH] dir: point treat_leading_path() warning to the right place
+Message-ID: <20200115202146.GA4091171@coredump.intra.peff.net>
+References: <pull.692.git.git.1579019532809.gitgitgadget@gmail.com>
+ <pull.692.v2.git.git.1579098078501.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200115200705.pxFH9lItfcW1_G4jQHgU46bfNXBeU_e90Ar0IfFjdZ0@z>
-User-Agent: Mutt/1.11.4 (2019-03-13)
+In-Reply-To: <pull.692.v2.git.git.1579098078501.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ugh, how embarrassing -- I fat-fingered the wrong key and re-sent this email
-(twice) to the list. Sorry about that.
+On Wed, Jan 15, 2020 at 02:21:18PM +0000, Elijah Newren via GitGitGadget wrote:
 
-On Wed, Jan 15, 2020 at 12:07:05PM -0800, Jeff King wrote:
-> Following up on my earlier announcement, I have some more details for
-> the Contributor Summit at Git Merge this year:
->
->   When: Thursday, March 5th. 10am-5pm.
->   Where: Downtown Loft, 1054 S Olive St, Los Angeles, CA 90015
->   What: Round-table discussion about Git
->   Who: All contributors to Git or related projects in the Git ecosystem
->        are invited; if you're not sure if you qualify, please ask!
->
-> Note that this is the day _after_ the main Git Merge conference, unlike
-> previous years. The main conference schedule and agenda is up at:
->
->   https://git-merge.com
->
-> To attend, you'll need to register online; please email me off-list for
-> instructions and a special code. It's bundled with your main conference
-> registration, so please DO NOT register for the main conference until
-> you get the code. As with previous years, you'll have the option of
-> attending for free, or paying the $125 conference fee (all of which goes
-> to Software Freedom Conservancy).
->
-> If you'd like to come but need financial assistance with travel costs,
-> please reach out as soon as possible to the Git PLC at git@sfconservancy.org.
-> We'd like to make any funding decisions soon so that people have time to
-> make travel arrangements. So let's try to have all requests in by next
-> Monday, January 21st.
->
-> When picking a hotel, note that the contributor summit is not at the
-> same venue as the main conference (but it's nearby). There are some
-> hotels with special pricing listed on the conference page at
-> https://git-merge.com/#experience.
->
-> We're still working out details of the A/V setup, but the plan is to
-> have a way for people to join remotely. I'll send details when I have
-> them.
->
-> The afternoon schedule for the main conference is a bit different this
-> year: we'll have some round-table "Birds of Feather" discussions to get
-> attendees talking to each other. Think about topics you'd like to
-> discuss, and also whether you'd like to facilitate a discussion. The
-> online registration will ask about both. If you're interested, we'll
-> provide more information and some documentation in advance about how it
-> will work.
->
-> There's also a tentative "Stump the Experts" panel as one of the
-> sessions. There are still logistics to be worked out (e.g., how far in
-> advance questions will come), but the general idea is to take attendee
-> questions about some of the more confusing parts of Git. If you're
-> interested in being on the panel, let me know.
->
-> Sooner is better to make our planning easier, so please let me know if
-> you're interested by January 31st.
->
-> I hope to see everybody there!
->
-> -Peff
-Thanks,
-Taylor
+> From: Jeff King <peff@peff.net>
+> 
+> Restructure the code slightly to avoid passing around a struct dirent
+> anywhere, which also enables us to avoid trying to manufacture one.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+
+Thanks, this looks good.
+
+I wondered briefly whether this:
+
+> @@ -2374,12 +2362,13 @@ static int treat_leading_path(struct dir_struct *dir,
+>  			break;
+>  		strbuf_reset(&sb);
+>  		strbuf_add(&sb, path, prevlen);
+> -		memcpy(de->d_name, path+prevlen, baselen-prevlen);
+> -		de->d_name[baselen-prevlen] = '\0';
+> +		strbuf_reset(&subdir);
+> +		strbuf_add(&subdir, path+prevlen, baselen-prevlen);
+> +		cdir.d_name = subdir.buf;
+
+...could avoid the extra strbuf by pointing into an existing string
+(since d_name is now a pointer, and not part of a dirent). But I think
+the answer is "no", because in a path like "a/b/c", the loop may see
+just "b" (so offsetting into path isn't sufficient, because we also have
+to cut off the trailing part).
+
+I did notice one other small thing while looking at this code:
+
+-- >8 --
+Subject: [PATCH] dir: point treat_leading_path() warning to the right place
+
+Commit 777b420347 (dir: synchronize treat_leading_path() and
+read_directory_recursive(), 2019-12-19) tried to add two warning
+comments in those functions, pointing at each other. But the one in
+treat_leading_path() just points at itself.
+
+Let's fix that. Since the comment also redirects the reader for more
+details to "the commit that added this warning", and since we're now
+modifying the warning (creating a new commit without those details),
+let's mention the actual commit id.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ dir.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index 7d255227b1..31e83d982a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -2308,9 +2308,9 @@ static int treat_leading_path(struct dir_struct *dir,
+ 	 * WARNING WARNING WARNING:
+ 	 *
+ 	 * Any updates to the traversal logic here may need corresponding
+-	 * updates in treat_leading_path().  See the commit message for the
+-	 * commit adding this warning as well as the commit preceding it
+-	 * for details.
++	 * updates in read_directory_recursive().  See 777b420347 (dir:
++	 * synchronize treat_leading_path() and read_directory_recursive(),
++	 * 2019-12-19) and its parent commit for details.
+ 	 */
+ 
+ 	struct strbuf sb = STRBUF_INIT;
+-- 
+2.25.0.639.gb9b1511416
+
