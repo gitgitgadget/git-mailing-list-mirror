@@ -7,64 +7,66 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCEEDC32771
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71E03C32771
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B68B522522
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 469892084D
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="fBOkuqWS"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="ZM5cNPdu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729727AbgAPCkk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 21:40:40 -0500
-Received: from mail-qv1-f65.google.com ([209.85.219.65]:41452 "EHLO
-        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729662AbgAPCkk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 21:40:40 -0500
-Received: by mail-qv1-f65.google.com with SMTP id x1so8422200qvr.8
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 18:40:40 -0800 (PST)
+        id S1729742AbgAPCkp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 21:40:45 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:45759 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729662AbgAPCkp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 21:40:45 -0500
+Received: by mail-qv1-f66.google.com with SMTP id l14so8403592qvu.12
+        for <git@vger.kernel.org>; Wed, 15 Jan 2020 18:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+GlZ7FFCEwf0sdYljc0DF3MuiCMrB5W3NgUVRH2fkzg=;
-        b=fBOkuqWS/tldWqAVehtyS3b7fB+xlxeYFuzamBdGroM2oZ+EJrwJLJAwOMJOAlBVSJ
-         EHPIhagjjswdODbTISWd0ctFlYNz+BjyLLUMUHW/PBE4cDTIM2Zygf0IFFDeRpFHGo5R
-         UF3FFANL9yHe1coOVmQ0uA9jE0knKdSD+9hmRJBbaMO+EBO7p/Aiyml464j4Nr/qDGQP
-         r+dqtlUsNke7yksu5LZ7aCFaaiMvwXGbGl4WL0KcSy15xrfLEebMyJtDrlihv/fd46DL
-         1nBFuyG+LnSAh2t3sSQByDcYvAc0XofJHEMehxnSFM1Se0TGlTXC7nQWSxtnh2HCBCdZ
-         AYag==
+        bh=jF5qhXuIQ8F3Plu3rFjobAzR/ZV2A97vsIsWZCzQ7kM=;
+        b=ZM5cNPdu9rO0suGL8GK1T0qROv/LtFk1c4Q3S7pyjtkU1hjyHg19ndzrUQK9ElXnX0
+         ApGkhFOiVFc12hxOzyQW2FSBPWJNQgRrEdVYK0S+LZ1zvYXg8WuQFddfwrBoNsRnSf1h
+         1E2PjZP1AMeCXyzSlLs/lHZiyfYwZLJ3+rtoJwLHuhK1J9Qp6Ech8GeOfp7y71/HZOti
+         Wx5F2OMiu9I5wLvkB8R+6DWUvtckQr3oo21c1bese0hMY2BNqmXfeik13viJeTyYM8m4
+         uf2vlWslduXaNG4lu7zBwQEPR6yGAR7BYoGwmycq8pGDHePzIK+VzVgCc3Xrj0QG1y5G
+         7NMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+GlZ7FFCEwf0sdYljc0DF3MuiCMrB5W3NgUVRH2fkzg=;
-        b=QedYV8if+ewm9KMkao/PTzB5hHdxDWeiOASlGx4q9LluGSy8EeJkkdbw3oDVXyG7oA
-         JKMDyx16MqftrkiNapJwCq2mxBdEKrDxfYZIjgh+lTfTbY1/Qqu/YjP5jTgck1G/FHZM
-         3FICLXr7Un1mCkKarkBTvHK7Z/rynV4RScLlaoz+RTghicPIaDT1R1dDZBtbhHbMKFFp
-         gQK4OSx8xM3CeAr+wR0025kCtPqxy2bKBA0sTugDUbImbSF98Zyx3KMjQsuJs0Pn1rIm
-         vAZQ6Ot5jjOZOZFSDhvfSkWwVH1kaIMU+JELYa+nMXuCgbsG+ff3CWgn35Ia5a0cJizI
-         MwvQ==
-X-Gm-Message-State: APjAAAXXpMcSLVAnCawOcSnB4h53lUcgthtzrptF+NB1RxxdfpQr9vGN
-        p7sIux0DMqIxrnklr/kqlPnx/byCg4Y=
-X-Google-Smtp-Source: APXvYqx6G/Qoo9KJfM/bgQMjndXckENBpWHQNv/vGt57aWp0fRB9ot1CXqLZdV6TbknUJ4wyYRx5WQ==
-X-Received: by 2002:ad4:4182:: with SMTP id e2mr453918qvp.187.1579142439277;
-        Wed, 15 Jan 2020 18:40:39 -0800 (PST)
+        bh=jF5qhXuIQ8F3Plu3rFjobAzR/ZV2A97vsIsWZCzQ7kM=;
+        b=DpkN/zI2DIx0H0IlYDyh/CZjaKAyj3IGPzZaL+yOx7ZZsaouIFJJxTZV421CRYiRsJ
+         wlUtCvujWeLJJL+uGV5UKSJoTMcB5NbbIEEZ4Mdfttk2oFf799Zhim0qxswXT/yTGSNQ
+         PXINlYuf2AVE/rutu/WRueoXQSRoWp5lD+29nS9HdYA5fUhgbezX8OomRbBZVddDA43V
+         HfNPBij0n95wR8qv0WEvBab6sCWO5ITRIbhT4gFtBw6N4niwYU3K07XRsWrU3x3cDWnZ
+         LHQlES5F4m63bJmJpj21VVcxVx4LumdwWodF1keod/446HcvdVJ5HTS2jeWNIDQJFZwd
+         uYYg==
+X-Gm-Message-State: APjAAAVBBi5cghwP87WIgFTocYERxDEcYiNLDkaDyknglUibOfed8S0P
+        iDYunaCX0PvxvcGCpj4XD9Sgog8G6FM=
+X-Google-Smtp-Source: APXvYqz3bOF1gOVYBcURVhADgFQfTgoKehDTtFjqvyPD128BD1BMryVL8wjOu4aARBr9cyuyJ8AjQg==
+X-Received: by 2002:a05:6214:154b:: with SMTP id t11mr447936qvw.175.1579142443999;
+        Wed, 15 Jan 2020 18:40:43 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id u24sm9381289qkm.40.2020.01.15.18.40.35
+        by smtp.gmail.com with ESMTPSA id u24sm9381289qkm.40.2020.01.15.18.40.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 18:40:38 -0800 (PST)
+        Wed, 15 Jan 2020 18:40:43 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
         olyatelezhnaya@gmail.com, pclouds@gmail.com,
         jonathantanmy@google.com, peff@peff.net,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alex Henrie <alexhenrie24@gmail.com>,
         Brandon Williams <bwilliams.eng@gmail.com>,
-        Antonio Ospite <ao2@ao2.it>,
         Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH v3 02/12] grep: fix race conditions at grep_submodule()
-Date:   Wed, 15 Jan 2020 23:39:50 -0300
-Message-Id: <6f0899701b88e255bae68e16e11a978488c0b1cd.1579141989.git.matheus.bernardino@usp.br>
+Subject: [PATCH v3 03/12] grep: fix racy calls in grep_objects()
+Date:   Wed, 15 Jan 2020 23:39:51 -0300
+Message-Id: <5295c892ee12eb4f8a2fab2cd7e419dc04b18203.1579141989.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <cover.1579141989.git.matheus.bernardino@usp.br>
 References: <cover.1579141989.git.matheus.bernardino@usp.br>
@@ -75,64 +77,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There're currently two function calls in builtin/grep.c:grep_submodule()
-which might result in race conditions:
-
-- submodule_from_path(): it has config_with_options() in its call stack
-  which, in turn, may have read_object_file() in its own. Therefore,
-  calling the first function without acquiring grep_read_mutex may end
-  up causing a race condition with other object read operations
-  performed by worker threads (for example, at the fill_textconv()
-  call in grep.c:fill_textconv_grep()).
-- parse_object_or_die(): it falls into the same problem, having
-  repo_has_object_file(the_repository, ...) in its call stack. Besides
-  that, parse_object(), which is also called by parse_object_or_die(),
-  is thread-unsafe and also called by object reading functions.
-
-It's unlikely to really fall into a data race with these operations as
-the volume of calls to them is usually very low. But we better protect
-ourselves against this possibility, anyway. So, to solve these issues,
-move both of these function calls into the critical section of
-grep_read_mutex.
+deref_tag() calls is_promisor_object() and parse_object(), both of which
+perform lazy initializations and other thread-unsafe operations. If it
+was only called by grep_objects() this wouldn't be a problem as the
+latter is only executed by the main thread. However, deref_tag() is also
+present in read_object_file()'s call stack. So calling deref_tag() in
+grep_objects() without acquiring the grep_read_mutex may incur in a race
+condition with object reading operations (such as the ones internally
+performed by fill_textconv(), called at fill_textconv_grep()). The same
+problem happens with the call to gitmodules_config_oid() which also has
+parse_object() in its call stack. Fix that protecting both calls with
+the said grep_read_mutex.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- builtin/grep.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ builtin/grep.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 50ce8d9461..896e7effce 100644
+index 896e7effce..91fc032a32 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -407,8 +407,7 @@ static int grep_submodule(struct grep_opt *opt,
- {
- 	struct repository subrepo;
- 	struct repository *superproject = opt->repo;
--	const struct submodule *sub = submodule_from_path(superproject,
--							  &null_oid, path);
-+	const struct submodule *sub;
- 	struct grep_opt subopt;
- 	int hit;
+@@ -658,13 +658,18 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
  
-@@ -419,6 +418,7 @@ static int grep_submodule(struct grep_opt *opt,
- 	 * object.
- 	 */
- 	grep_read_lock();
-+	sub = submodule_from_path(superproject, &null_oid, path);
+ 	for (i = 0; i < nr; i++) {
+ 		struct object *real_obj;
++
++		grep_read_lock();
+ 		real_obj = deref_tag(opt->repo, list->objects[i].item,
+ 				     NULL, 0);
++		grep_read_unlock();
  
- 	if (!is_submodule_active(superproject, path)) {
- 		grep_read_unlock();
-@@ -455,9 +455,8 @@ static int grep_submodule(struct grep_opt *opt,
- 		unsigned long size;
- 		struct strbuf base = STRBUF_INIT;
- 
--		object = parse_object_or_die(oid, oid_to_hex(oid));
--
- 		grep_read_lock();
-+		object = parse_object_or_die(oid, oid_to_hex(oid));
- 		data = read_object_with_reference(&subrepo,
- 						  &object->oid, tree_type,
- 						  &size, NULL);
+ 		/* load the gitmodules file for this rev */
+ 		if (recurse_submodules) {
+ 			submodule_free(opt->repo);
++			grep_read_lock();
+ 			gitmodules_config_oid(&real_obj->oid);
++			grep_read_unlock();
+ 		}
+ 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
+ 				list->objects[i].path)) {
 -- 
 2.24.1
 
