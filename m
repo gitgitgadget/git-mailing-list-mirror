@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26162C33CBA
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7111C33CB3
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E656920728
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BC3F620728
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+wu5dsm"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YS+/M6YW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727007AbgAPQJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 11:09:37 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35789 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726653AbgAPQJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 11:09:37 -0500
-Received: by mail-wr1-f65.google.com with SMTP id g17so19712445wro.2
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 08:09:35 -0800 (PST)
+        id S1726970AbgAPQJe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 11:09:34 -0500
+Received: from mail-wm1-f43.google.com ([209.85.128.43]:51574 "EHLO
+        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbgAPQJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 11:09:34 -0500
+Received: by mail-wm1-f43.google.com with SMTP id d73so4350975wmd.1
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 08:09:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=o54LTk41F7GdjdM41hLXdu642jqyPrhLkXFEoFT0caQ=;
-        b=e+wu5dsmBOTYRdcGyiNtMh0ey9VdjgjNF0sMT2eLPlcrxwLbH/pnx+cvYAAZnuRBDL
-         +CSTFYoqRMsospjIm4pEIT+MLr/KBxUkljdPAhPVrh8WWjFb7BLRwAROTgya9wLcGmFa
-         6/rPiLes4taQdzFSU17iaveKXpp75OWF3RsrZS7BqLohQVhlNbslL6q76Jq6rnqTjeaD
-         14jNn3e32LRzvbYeqExtnYx8Np+lVdVGiTNJP4nb/MTqmOerkAXymvAyva5x3MgE2TkE
-         1/FaXKvgi94+mn9kJYs7rQu5ELhXtoPC7g8utbCqKtH2CUcRl6+ZxcwPd4seqwd3de6F
-         GXcg==
+        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
+        b=YS+/M6YWzfe01ocQxZpPdjuGuclrZNmqGEDIpr8Q5t9kKDBCOv/byNpT5aqus89N5E
+         wZPzinFPmTp/8IH0DW7QLGcVRwmpWNpEIp6rcv93Bhq6Z6xX1sE4LfgvYbyObffifk9K
+         KrwqShvJmFYqQxznP40HejMFLCtaC03PL8KcG3BGaIg5I4ylnrZt2nbpM6Arcqm5Qtr3
+         zRDP2vjB3n9DIIYnHeJkQa/PRkNYFC35Y3UQ3pgDxS5CCIKjrg2I/EKtJJUn8NCHYSVv
+         teg/jatR/ep8PwV5AgaufxxZ7xzNmzZuMA8YRYZnScBlCSIX1J1s5gGlBj/mE8hnKdiR
+         VdvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=o54LTk41F7GdjdM41hLXdu642jqyPrhLkXFEoFT0caQ=;
-        b=SjWMvt6JhecDEp7Wl6jUQMNLfhM20Juh73BAIYQ1C8ThtfApCngV102PbxHfsE55VH
-         045DYUWr9V1eMHpLOCdS06htl2hisnnn0tN+TVZAZq+JpYu/t7d1+I0hUNK+cHITL/V5
-         kiNrhbuCVqgpWVWJJMvq47SDSTRW3oQ5VucTDevDPgePfIgledBCPCG9imQv9a59efWr
-         Afo8rXRd6vYMfohMvq+I1SGBPLPUPm4/MN/Cv6nGWSmV9Gcx1No3Ji5xco2ov/BXTXSN
-         2gPaq8wOsa58gUCCjSBdEj5EcQwg7AdDNuNfAn/Fok+XttjwiHUv7aB0LVLYxiyXg2PA
-         e0qA==
-X-Gm-Message-State: APjAAAWusNSGta0cVMDhRsQ5+jsE/6JRmP4hY3Tp1Xx+i9bXge5CpgF1
-        56SKzA9kPJbTDZeZh9pxGUpSFqtC
-X-Google-Smtp-Source: APXvYqxFFWVskDelYu/2bTVbefYLtcv4tRaamzzGrdnHwIywDUBbf2ulrvABLHFSdlrzum0BE2cVUQ==
-X-Received: by 2002:adf:97d6:: with SMTP id t22mr312868wrb.407.1579190974616;
-        Thu, 16 Jan 2020 08:09:34 -0800 (PST)
+        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
+        b=qJSE6kcovpQGPLJmhw1oOlxN+rcDnHfLyglDBNqjEW+5SixraKIo9c3pnjpWtXqHuA
+         bkCfHmNK7KH1/Z0z5A7DW/HtsYV/iTbHv15By+gUpon83zMrYBFN//m8mGVOHTCWXWfQ
+         99pF282DxuIk2ZwhuDeYtSMD/aHidgMyY8VMpwFkNr1NjjGeb8Q8/8sJjVYO/1Z7t8mi
+         pewMi6aVtlpo6chz5whsT4sdnid2OP+/jusjkpd9KklbOskvuZKSy6TegLCYfpRjM8vh
+         rKoGUTjg2Mdafvv2rsL2bv64s3ihAWDdO38iCp1CgUuxzyDzYVUk/7oGqolZ16pm+N9r
+         3pxw==
+X-Gm-Message-State: APjAAAV23+3xgi5UnT056LKuDC3gbCngAqUwvBUsRoEFOmy0gxSxCH+S
+        5doG7rZYW0I0MtqbASudsntZTRNx
+X-Google-Smtp-Source: APXvYqwfFtz5wWNk8oyo1kVKVLX4AU61jxFHDmbXY7yeCLgFssIQ0BhgxjysW8C7fzbqoV46rNRl4w==
+X-Received: by 2002:a1c:a9c6:: with SMTP id s189mr68894wme.151.1579190971054;
+        Thu, 16 Jan 2020 08:09:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n189sm1481067wme.33.2020.01.16.08.09.33
+        by smtp.gmail.com with ESMTPSA id q3sm4915156wmc.47.2020.01.16.08.09.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2020 08:09:34 -0800 (PST)
-Message-Id: <7a8d36d49f85940d95f989741e68ba480abaa4eb.1579190965.git.gitgitgadget@gmail.com>
+        Thu, 16 Jan 2020 08:09:30 -0800 (PST)
+Message-Id: <0824bba2101bb034bafb124d2b810721923233f3.1579190965.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.git.1579190965.gitgitgadget@gmail.com>
 References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 16:09:24 +0000
-Subject: [PATCH 7/8] stash: eliminate crude option parsing
+Date:   Thu, 16 Jan 2020 16:09:20 +0000
+Subject: [PATCH 3/8] doc: stash: split options from description (1)
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,167 +75,107 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-Eliminate crude option parsing and rely on real parsing instead, because
-1) Crude parsing is crude, for example it's not capable of
-   handling things like `git stash -m Message`
-2) Adding options in two places is inconvenient and prone to bugs
-
-As a side result, the case of `git stash -m Message` gets fixed.
-Also give a good error message instead of just throwing usage at user.
-
-----
-
-Some review of what's been happening to this code:
-
-Before [1], `git-stash.sh` only verified that all args begin with `-` :
-
-	# The default command is "push" if nothing but options are given
-	seen_non_option=
-	for opt
-	do
-		case "$opt" in
-		--) break ;;
-		-*) ;;
-		*) seen_non_option=t; break ;;
-		esac
-	done
-
-Later, [1] introduced the duplicate code I'm now removing, also making
-the previous test more strict by white-listing options.
-
-----
-
-[1] Commit 40af1468 ("stash: convert `stash--helper.c` into `stash.c`" 2019-02-26)
+This patch moves blocks of text as-is to make it easier to review the
+next patch.
 
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- builtin/stash.c  | 59 +++++++++++++++++-------------------------------
- t/t3903-stash.sh |  5 ++++
- 2 files changed, 26 insertions(+), 38 deletions(-)
+ Documentation/git-stash.txt | 68 +++++++++++++++++++------------------
+ 1 file changed, 35 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 4ad3adf4ba..7bc4c5d696 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1448,8 +1448,10 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 	return ret;
- }
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 53e1a1205d..2dedc21997 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -58,31 +58,6 @@ non-option arguments are not allowed to prevent a misspelled
+ subcommand from making an unwanted stash entry.  The two exceptions to this
+ are `stash -p` which acts as alias for `stash push -p` and pathspecs,
+ which are allowed after a double hyphen `--` for disambiguation.
+-+
+-When pathspec is given to 'git stash push', the new stash entry records the
+-modified states only for the files that match the pathspec.  The index
+-entries and working tree files are then rolled back to the state in
+-HEAD only for these files, too, leaving files that do not match the
+-pathspec intact.
+-+
+-If the `--keep-index` option is used, all changes already added to the
+-index are left intact.
+-+
+-If the `--include-untracked` option is used, all untracked files are also
+-stashed and then cleaned up with `git clean`, leaving the working directory
+-in a very clean state. If the `--all` option is used instead then the
+-ignored files are stashed and cleaned in addition to the untracked files.
+-+
+-With `--patch`, you can interactively select hunks from the diff
+-between HEAD and the working tree to be stashed.  The stash entry is
+-constructed such that its index state is the same as the index state
+-of your repository, and its worktree contains only the changes you
+-selected interactively.  The selected changes are then rolled back
+-from your worktree. See the ``Interactive Mode'' section of
+-linkgit:git-add[1] to learn how to operate the `--patch` mode.
+-+
+-The `--patch` option implies `--keep-index`.  You can use
+-`--no-keep-index` to override this.
  
--static int push_stash(int argc, const char **argv, const char *prefix)
-+static int push_stash(int argc, const char **argv, const char *prefix,
-+		      int push_assumed)
- {
-+	int force_assume = 0;
- 	int keep_index = -1;
- 	int patch_mode = 0;
- 	int include_untracked = 0;
-@@ -1471,10 +1473,22 @@ static int push_stash(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
  
--	if (argc)
-+	if (argc) {
-+		force_assume = !strcmp(argv[0], "-p");
- 		argc = parse_options(argc, argv, prefix, options,
- 				     git_stash_push_usage,
--				     0);
-+				     PARSE_OPT_KEEP_DASHDASH);
-+	}
+@@ -128,14 +103,6 @@ pop [--index] [-q|--quiet] [<stash>]::
+ Applying the state can fail with conflicts; in this case, it is not
+ removed from the stash list. You need to resolve the conflicts by hand
+ and call `git stash drop` manually afterwards.
+-+
+-If the `--index` option is used, then tries to reinstate not only the working
+-tree's changes, but also the index's ones. However, this can fail, when you
+-have conflicts (which are stored in the index, where you therefore can no
+-longer apply the changes as they were originally).
+-+
+-When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
+-be a reference of the form `stash@{<revision>}`.
+ 
+ apply [--index] [-q|--quiet] [<stash>]::
+ 
+@@ -185,6 +152,41 @@ store::
+ 	reflog.  This is intended to be useful for scripts.  It is
+ 	probably not the command you want to use; see "push" above.
+ 
++If the `--all` option is used instead then the
++ignored files are stashed and cleaned in addition to the untracked files.
 +
-+	if (argc) {
-+		if (!strcmp(argv[0], "--")) {
-+			argc--;
-+			argv++;
-+		} else if (push_assumed && !force_assume) {
-+			die("subcommand wasn't specified; 'push' can't be assumed due to unexpected token '%s'",
-+			    argv[0]);
-+		}
-+	}
- 
- 	parse_pathspec(&ps, 0, PATHSPEC_PREFER_FULL | PATHSPEC_PREFIX_ORIGIN,
- 		       prefix, argv);
-@@ -1547,7 +1561,6 @@ static int use_builtin_stash(void)
- 
- int cmd_stash(int argc, const char **argv, const char *prefix)
- {
--	int i = -1;
- 	pid_t pid = getpid();
- 	const char *index_file;
- 	struct argv_array args = ARGV_ARRAY_INIT;
-@@ -1580,7 +1593,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 		    (uintmax_t)pid);
- 
- 	if (!argc)
--		return !!push_stash(0, NULL, prefix);
-+		return !!push_stash(0, NULL, prefix, 0);
- 	else if (!strcmp(argv[0], "apply"))
- 		return !!apply_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "clear"))
-@@ -1600,45 +1613,15 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(argv[0], "create"))
- 		return !!create_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "push"))
--		return !!push_stash(argc, argv, prefix);
-+		return !!push_stash(argc, argv, prefix, 0);
- 	else if (!strcmp(argv[0], "save"))
- 		return !!save_stash(argc, argv, prefix);
- 	else if (*argv[0] != '-')
- 		usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 			      git_stash_usage, options);
- 
--	if (strcmp(argv[0], "-p")) {
--		while (++i < argc && strcmp(argv[i], "--")) {
--			/*
--			 * `akpqu` is a string which contains all short options,
--			 * except `-m` which is verified separately.
--			 */
--			if ((strlen(argv[i]) == 2) && *argv[i] == '-' &&
--			    strchr("akpqu", argv[i][1]))
--				continue;
--
--			if (!strcmp(argv[i], "--all") ||
--			    !strcmp(argv[i], "--keep-index") ||
--			    !strcmp(argv[i], "--no-keep-index") ||
--			    !strcmp(argv[i], "--patch") ||
--			    !strcmp(argv[i], "--quiet") ||
--			    !strcmp(argv[i], "--include-untracked"))
--				continue;
--
--			/*
--			 * `-m` and `--message=` are verified separately because
--			 * they need to be immediately followed by a string
--			 * (i.e.`-m"foobar"` or `--message="foobar"`).
--			 */
--			if (starts_with(argv[i], "-m") ||
--			    starts_with(argv[i], "--message="))
--				continue;
--
--			usage_with_options(git_stash_usage, options);
--		}
--	}
--
-+	/* Assume 'stash push' */
- 	argv_array_push(&args, "push");
- 	argv_array_pushv(&args, argv);
--	return !!push_stash(args.argc, args.argv, prefix);
-+	return !!push_stash(args.argc, args.argv, prefix, 1);
- }
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index ea56e85e70..3ad23e2502 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -285,6 +285,11 @@ test_expect_success 'stash --no-keep-index' '
- 	test bar,bar2 = $(cat file),$(cat file2)
- '
- 
-+test_expect_success 'dont assume push with non-option args' '
-+	test_must_fail git stash -q drop 2>err &&
-+	test_i18ngrep -e "subcommand wasn'\''t specified; '\''push'\'' can'\''t be assumed due to unexpected token '\''drop'\''" err
-+'
++If the `--include-untracked` option is used, all untracked files are also
++stashed and then cleaned up with `git clean`, leaving the working directory
++in a very clean state.
 +
- test_expect_success 'stash --invalid-option' '
- 	echo bar5 >file &&
- 	echo bar6 >file2 &&
++If the `--index` option is used, then tries to reinstate not only the working
++tree's changes, but also the index's ones. However, this can fail, when you
++have conflicts (which are stored in the index, where you therefore can no
++longer apply the changes as they were originally).
++
++If the `--keep-index` option is used, all changes already added to the
++index are left intact.
++
++With `--patch`, you can interactively select hunks from the diff
++between HEAD and the working tree to be stashed.  The stash entry is
++constructed such that its index state is the same as the index state
++of your repository, and its worktree contains only the changes you
++selected interactively.  The selected changes are then rolled back
++from your worktree. See the ``Interactive Mode'' section of
++linkgit:git-add[1] to learn how to operate the `--patch` mode.
+++
++The `--patch` option implies `--keep-index`.  You can use 
++`--no-keep-index` to override this.
++
++When pathspec is given to 'git stash push', the new stash entry records the
++modified states only for the files that match the pathspec.  The index
++entries and working tree files are then rolled back to the state in
++HEAD only for these files, too, leaving files that do not match the
++pathspec intact.
++
++When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
++be a reference of the form `stash@{<revision>}`.
++
+ DISCUSSION
+ ----------
+ 
 -- 
 gitgitgadget
 
