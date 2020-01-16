@@ -7,69 +7,68 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F99DC32771
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 01:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 334F1C32771
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 01:33:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4FD252084D
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 01:23:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 011312081E
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 01:33:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uMJ4pXko"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="n0rTSZMh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729352AbgAPBXj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 20:23:39 -0500
-Received: from mail-ot1-f66.google.com ([209.85.210.66]:37095 "EHLO
-        mail-ot1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729019AbgAPBXj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 20:23:39 -0500
-Received: by mail-ot1-f66.google.com with SMTP id k14so17929231otn.4
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 17:23:38 -0800 (PST)
+        id S1729851AbgAPBd2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 20:33:28 -0500
+Received: from mail-oi1-f195.google.com ([209.85.167.195]:43662 "EHLO
+        mail-oi1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729195AbgAPBd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 20:33:28 -0500
+Received: by mail-oi1-f195.google.com with SMTP id p125so17458382oif.10
+        for <git@vger.kernel.org>; Wed, 15 Jan 2020 17:33:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=6V6t1IWNMfZFqjjf18u1DaxEQN4NaPKiMuo7+jVA3nI=;
-        b=uMJ4pXkoVxmh7TObmRBwSVX6H1vGICl2RyRc5kyzE33npcxml+72hCVsxE0Sg/pyeQ
-         iZH+LssnD4s9u87BxojGGo9j6p0ZJtHTlvzcVSf0MlyK+3l7Jck1oTw3k2dFTKAPHvjI
-         742FPkTmL+SG6pqw82fxB85GqwWDUhM7Lfg/KTtIgdGuI4Ey0Yo6yF0CJLFFfyNe+kBQ
-         uaAkNN+c0LD+nx/pVO/tkXELaAwXzuDHQWu+iXYlrz+olHy+6B0uqvBHgRBI6fXx3E93
-         LJ+b8aiUL986BU2zTmyJTXMbzhVzyhmeT+QaRednWc2nAojR5Bk7HyLMoPDAsYt/iqBb
-         d4Cw==
+        bh=p13GGxdwiLzYefV2htlpCkxTC/qdtoFZfto2mfFAq5M=;
+        b=n0rTSZMhgvFP989M0Aci2nHC6EPTMLP2eoKXuk599647jqO2WnecU2HICX5H46rjMa
+         C1d6V9L63RDwcUOJyt7jeeU9XzEvfihIG1WA9D8Iq0Wsg547xU2D9YSdOI7r/d6h4P7t
+         cUinCSzAWZ/0m14o5SAizlmVfViVExrKiFl0e5Pw9ga1lMM9XqkHhyuhGjm3JeWUblM1
+         bZcGRDFUAozSnpKznug5n8oTVRudA0t2Dc5yPm49Z8hCrf6Mxi9qO0TUdS0EOhyHi+cu
+         Q0t7+hOKB4Qh/BxA9eqSKmMPRA5pPKRk1YtnPm8C+bjbQK6gA5zPyRFhC97H1zIv2FPW
+         y6eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=6V6t1IWNMfZFqjjf18u1DaxEQN4NaPKiMuo7+jVA3nI=;
-        b=GFPgRvd6K46i9gAqObSFfxYAGdGicH+Q4/3DtYepge/cSsY7vrcyAtGDipEgfwubxS
-         lwpd9mUZTgqcVtLVYMIlB7ckhum51H9qmR0t/VrIikw/mBEQA2zq/Ezgm0usB/+0LG4c
-         e+E+73+59hKbgwKIVo+IddKAIVRQ8m49h46U6G4I/9uLZiQ9a5FU5VJIBioDNr3iMiur
-         4Tuda6Cn7x2UX2aiQGojZn4lbs0X9wkzttgSjLqsACcbGj3vUTTUl/CYQHD+7vXQGibs
-         Otv3Kiv436hRj1nw9MK9iYrcM1NJVPevJpdkOfBGaSZGATcrcebZ924ZC2OxXTqBuRnj
-         DyYg==
-X-Gm-Message-State: APjAAAVTe3L6FSs8NcCdqmCp6QyalAmS4adELVAMGSaONIrx70lneyS9
-        1G8q5YpSyNHzxSBkXc5aA20=
-X-Google-Smtp-Source: APXvYqwAB4fA3Wik6KadwWG4qMus59M+8Tw4OQ/BfZ8fyxuoO5JpdPb5o8RIj7OFyNwpM1xu2SmQVA==
-X-Received: by 2002:a05:6830:1503:: with SMTP id k3mr114378otp.213.1579137818377;
-        Wed, 15 Jan 2020 17:23:38 -0800 (PST)
+        bh=p13GGxdwiLzYefV2htlpCkxTC/qdtoFZfto2mfFAq5M=;
+        b=sSvSLrDt2ZlBthLRet9vJDPUbs6IThQExG2ufJBp6A1EQFZXWApHJx8Pk3k+VqDQU7
+         q6uJpR10iDZY7ROza5w01H46tF8ApmFm7qWKRP/4ig83VpyHpybXwMhOAZ0CQrZVXdUR
+         WHJBaTfPUhrRVG4Vc/jMszTE6tNScf/Hq7zrgeH6VbNVpTT//NqxhbW60YWGYlfqRXUl
+         9uadKeieftN2gYzv+/ryJpkjVCA8qOO7GmpnCrtbd4kd1M0jTnomraPlOQ/ekNa4cfTJ
+         wT9/gH2IGow6RHI+6B5oglHSvk8xtewHG8ZXpU87WKjnjxjXRDKJQiLpQ2z2BZzAngvl
+         S7Mw==
+X-Gm-Message-State: APjAAAXf3anRwu1woFvtG+rpIuzi8KjX1xWyt5Mweb7nA6f6zEt22TUH
+        LvqDXkaoF4P82uWtYzCueRk98leES70=
+X-Google-Smtp-Source: APXvYqwusWV3i6mBQdRSFM4zyEodrZBAfFULDl49UMfaJb+BNG4Ch+cYEUrylAnjxh/TqnW6/wYOSg==
+X-Received: by 2002:aca:4ad5:: with SMTP id x204mr2260678oia.162.1579138407350;
+        Wed, 15 Jan 2020 17:33:27 -0800 (PST)
 Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id q5sm6262311oia.21.2020.01.15.17.23.37
+        by smtp.gmail.com with ESMTPSA id x15sm7165889otq.30.2020.01.15.17.33.26
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 15 Jan 2020 17:23:37 -0800 (PST)
+        Wed, 15 Jan 2020 17:33:26 -0800 (PST)
 Subject: Re: [PATCH] clean: demonstrate a bug with pathspecs
-To:     Elijah Newren <newren@gmail.com>,
+To:     Kyle Meyer <kyle@kyleam.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Kevin.Willford@microsoft.com,
-        Derrick Stolee <dstolee@microsoft.com>
+Cc:     git@vger.kernel.org, Kevin.Willford@microsoft.com,
+        newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>
 References: <pull.526.git.1579119946211.gitgitgadget@gmail.com>
- <CABPp-BHywo5Js0YGwDykV8G+=Y6-M_Wh3sE5BvC-7zArJd1rLw@mail.gmail.com>
+ <87zheo2t7b.fsf@kyleam.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e008da66-defe-d2b0-410b-64b7754b9c6e@gmail.com>
-Date:   Wed, 15 Jan 2020 20:23:35 -0500
+Message-ID: <6ae84c45-d207-74a7-fbef-ddf78d30d3a1@gmail.com>
+Date:   Wed, 15 Jan 2020 20:33:24 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
  Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BHywo5Js0YGwDykV8G+=Y6-M_Wh3sE5BvC-7zArJd1rLw@mail.gmail.com>
+In-Reply-To: <87zheo2t7b.fsf@kyleam.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -78,21 +77,17 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/15/2020 7:38 PM, Elijah Newren wrote:
-> Is there an inverted phrase corresponding to "the gift that keeps on
-> giving", something like "the punishment that keeps on punishing"?  If
-> so, it would be a very appropriate description of dir.c.
+On 1/15/2020 6:30 PM, Kyle Meyer wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> b9660c1 (dir: fix checks on common prefix directory, 2019-12-19)
+>> modified the way pathspecs are handled when handling a directory
+>> during "git clean -f <path>".
+> 
+> I can't find b9660c1.  I think this and other references below should
+> point to b9670c1f5e (dir: fix checks on common prefix directory,
+> 2019-12-19), which matches the base-commit value for this patch.
 
-At least we will continue adding tests until we converge towards
-correctness, and the behavior issues are even more contrived and
-special case (like this one).
-
-> Yeah, I still have context.  I even think I've got an idea about what
-> the fix might be, though with dir.c my ideas about fixes usually just
-> serve as starting points for debugging before I find the real fix.
-> I'll try to dig in.
-
-Thanks! I'll try to review it carefully when it arrives. Good luck.
-
--Stolee
-
+Sorry for the digit swap. Thanks for pointing that out!
