@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E80A9C33CB3
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9128BC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:18:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB65D20728
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:18:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5916D20728
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:18:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZwyqGM+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lgXTLa6L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388738AbgAPVSb (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S2388741AbgAPVSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 16:18:32 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36230 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387601AbgAPVSb (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 16 Jan 2020 16:18:31 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41303 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729147AbgAPVSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 16:18:31 -0500
-Received: by mail-wr1-f67.google.com with SMTP id c9so20631847wrw.8
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 13:18:29 -0800 (PST)
+Received: by mail-wr1-f68.google.com with SMTP id z3so20646701wru.3
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 13:18:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=YDuSkblCJphL+oSqg/pCp/OZntGmMPmOFoDEYJ1ONYw=;
-        b=GZwyqGM+YadjBkz7t7yk7IR3XGbDawn3SZ3/Yj/LvMtoZQmaGEtuguY/IfPwSumSNc
-         nobnE7DDFrlg/xTssL9xuIIFnkz5DGul3mCsekX1cf8GoQjKvGoDnLKK+XbsousEyoch
-         XL0EyLRdwPF4wNWuUegVpc12fdQBk89qL2XelE+Hjs6DLvA/PD3EF6abSLpi6rLsUYDj
-         Um9wKYVnz3Lm1iLoC12okqD7FLRSo2mrO/9xVHeLY0o/RTioe04lNeNNTCXX+TByiMWG
-         1zdUCsOAn2DakOkGLexS6A8ykqZl+dKegCFgxY5B1YnP+n/uRKLPrsLTnPh6LoKcVbcy
-         mxOw==
+        bh=tGWW5GWGQ5n+OONFuzts+bLIu5RMUOprhZXg39c3pDE=;
+        b=lgXTLa6LJM5Y3Gpogm35LfBuTGk/G8e7J1E0BF2cJ6tlntNN/nqdF77WLl8rl69OYt
+         GT6Vho7luw6KTGKw6lBsaQmODA9XJ/jMzlUWG3WfjH0CrCvj3ifgnFGGIbgeUphRm9O1
+         Ixa5WnpNhYN4ELizsb6FAa+8xgh5OVI7h+li+uV6fHxNbKZCh/ghV/eWTgt018HOUzKK
+         L6YgxO39xqzzwTGeStzKtXl29PrRz216mKvPQcwQuK5t+5NOVT5Cul0y5PJBqM+8tS1M
+         vhoqAqvFiESLWeWsJxI5mAuz7xadDE9b2nQeOMTjonrKfr6zyPlVz8Ix9Wb8Nomfjnv1
+         if4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=YDuSkblCJphL+oSqg/pCp/OZntGmMPmOFoDEYJ1ONYw=;
-        b=EktKmRfJPrgt7bKvOBe16nO8wYyUCTt+elMCADBImx481/NFu6HfE39CQ3ee1sNDnh
-         oOtaawOpI/9yIuxss+6SYetRN2pLmVY6OAavM3B9v7J0Bp0MxhnLgUpaYVJzwXau+YOA
-         oT2AePvD8kthF+i7ttutrJn6ovgMUpW5Y4SHZGG+SK3PdvGy2o0U7hFC2bTAeC8FYsKZ
-         sT+BzFEvkc8H7EyvyV2XHr8C9a8MKYJzMgmItFxOAGw/3v6YAO3bjnBZ1AAYORn683e4
-         M7wBobIw1ss+EKsvn+p0KM0AW9HTfgarecZBDokk3+0ijTQ7op6BebLpjcZwfp7+mChE
-         /RmA==
-X-Gm-Message-State: APjAAAWwELjtVNuSR96Bk1IVOy2gUQ1IqvGcdk2v07wKL9ZoH6QMru63
-        E/Z57bUbdCnsFl54wU5f7cyUTzk6
-X-Google-Smtp-Source: APXvYqxFUDuTfxv2aOR8Wyq1DQ579KqnuTNS6D4fXPmwIChdpIZ3g7xwmmq+vJUSqcXx6kF0qzOGmw==
-X-Received: by 2002:a5d:620b:: with SMTP id y11mr5267228wru.230.1579209508574;
-        Thu, 16 Jan 2020 13:18:28 -0800 (PST)
+        bh=tGWW5GWGQ5n+OONFuzts+bLIu5RMUOprhZXg39c3pDE=;
+        b=l26hmzz00dQGQ1RZmNRbn/C7QoifIT2qbPgRn6p/SMbFGoF4GtArC9kgv6z8mfJZzI
+         TzU4AvjDJuuMVq7KWtfpXdHlEpJaeV/hjGeBLPNUwuJ6BFEvRwtORMy98hksuk5V4S4/
+         BjbrNb4akrDaAjxHBDIodcirltY6P18vK8UwSCXj32FuCLYzXwGmpYMhPZsvxS7oZ6UV
+         hbH054YxjG+IfsB+XUG/Me++Empme0pNgHRqNQ56XWkbpwIbc2OgFTToYXHpKn1b9Qac
+         9fCGhUM4EFPAcQgQokUNlqsWl03i0cSRQmRsPrgVGRl6mcqo21couOcYUmVfFkKViLol
+         Xz/g==
+X-Gm-Message-State: APjAAAU0heUJWMZYkwFJjEpGLPV2E4MCSAaaCpUy/NlMq22nPOcP5Syd
+        Y4jiyriHx9Sg+/1WOGgeqH50WvM1
+X-Google-Smtp-Source: APXvYqyKHUNkkeVvARk2JLsGVi1XxSlfVk99ZIyL6Tq+Q+T7/kMjVsZ32MEBigsWsurXEgSmZ0cvNw==
+X-Received: by 2002:adf:f98c:: with SMTP id f12mr5105479wrr.138.1579209509438;
+        Thu, 16 Jan 2020 13:18:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p15sm155072wma.40.2020.01.16.13.18.27
+        by smtp.gmail.com with ESMTPSA id q14sm6255751wmj.14.2020.01.16.13.18.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 16 Jan 2020 13:18:28 -0800 (PST)
-Message-Id: <2ae2e435b0ef6888e72defc7abee1909b29aa914.1579209506.git.gitgitgadget@gmail.com>
+Message-Id: <ad50cd1b92e3e52309536f3a84064571a224a0da.1579209506.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.529.git.1579209506.gitgitgadget@gmail.com>
 References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 21:18:24 +0000
-Subject: [PATCH 1/3] parse_insn_line(): improve error message when parsing
- failed
+Date:   Thu, 16 Jan 2020 21:18:25 +0000
+Subject: [PATCH 2/3] rebase -i: re-fix short SHA-1 collision
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,43 +78,116 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the case that a `get_oid()` call failed, we showed some rather bogus
-part of the line instead of the precise string we sent to said function.
-That makes it rather hard for users to understand what is going wrong,
-so let's fix that.
+In 66ae9a57b88 (t3404: rebase -i: demonstrate short SHA-1 collision,
+2013-08-23), we added a test case that demonstrated how it is possible
+that a previously unambiguous short commit ID could become ambiguous
+*during* a rebase.
+
+In 75c69766554 (rebase -i: fix short SHA-1 collision, 2013-08-23), we
+fixed that problem simply by writing out the todo list with expanded
+commit IDs (except *right* before letting the user edit the todo list,
+in which case we shorten them, but we expand them right after the file
+was edited).
+
+However, the bug resurfaced as a side effect of 393adf7a6f6 (sequencer:
+directly call pick_commits() from complete_action(), 2019-11-24): as of
+this commit, the sequencer no longer re-reads the todo list after
+writing it out with expanded commit IDs.
+
+The only redeeming factor is that the todo list is already parsed at
+that stage, including all the commits corresponding to the commands,
+therefore the sequencer can continue even if the internal todo list has
+short commit IDs.
+
+That does not prevent problems, though: the sequencer writes out the
+`done` and `git-rebase-todo` files incrementally (i.e. overwriting the
+todo list with a version that has _short_ commit IDs), and if a merge
+conflict happens, or if an `edit` or a `break` command is encountered, a
+subsequent `git rebase --continue` _will_ re-read the todo list, opening
+an opportunity for the "short SHA-1 collision" bug again.
+
+To avoid that, let's make sure that we do expand the commit IDs in the
+todo list as soon as we have parsed it after letting the user edit it.
+
+Additionally, we improve the 'short SHA-1 collide' test case in t3404 to
+test specifically for the case where the rebase is resumed. We also
+hard-code the expected colliding short SHA-1s, to document the
+expectation (and to make it easier on future readers).
+
+Note that we specifically test that the short commit ID is used in the
+`git-rebase-todo.tmp` file: this file is created by the fake editor in
+the test script and reflects the state that would have been presented to
+the user to edit.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ sequencer.c                   | 14 +++++++++++++-
+ t/t3404-rebase-interactive.sh | 15 +++++++++++++--
+ 2 files changed, 26 insertions(+), 3 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index b9dbf1adb0..7c30dad59c 100644
+index 7c30dad59c..c2945c699d 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2118,6 +2118,8 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
- 	saved = *end_of_object_name;
- 	*end_of_object_name = '\0';
- 	status = get_oid(bol, &commit_oid);
-+	if (status < 0)
-+		error(_("could not parse '%s'"), bol); /* return later */
- 	*end_of_object_name = saved;
+@@ -5076,7 +5076,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ {
+ 	const char *shortonto, *todo_file = rebase_path_todo();
+ 	struct todo_list new_todo = TODO_LIST_INIT;
+-	struct strbuf *buf = &todo_list->buf;
++	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
+ 	struct object_id oid = onto->object.oid;
+ 	int res;
  
- 	bol = end_of_object_name + strspn(end_of_object_name, " \t");
-@@ -2125,11 +2127,10 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
- 	item->arg_len = (int)(eol - bol);
+@@ -5128,6 +5128,18 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+ 		return -1;
+ 	}
  
- 	if (status < 0)
--		return error(_("could not parse '%.*s'"),
--			     (int)(end_of_object_name - bol), bol);
-+		return status;
++	/* Expand the commit IDs */
++	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
++	strbuf_swap(&new_todo.buf, &buf2);
++	strbuf_release(&buf2);
++	new_todo.total_nr -= new_todo.nr;
++	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0) {
++		fprintf(stderr, _(edit_todo_list_advice));
++		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
++		todo_list_release(&new_todo);
++		return error(_("invalid todo list after expanding IDs"));
++	}
++
+ 	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
+ 		todo_list_release(&new_todo);
+ 		return error(_("could not skip unnecessary pick commands"));
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ae6e55ce79..1cc9f36bc7 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1264,13 +1264,24 @@ test_expect_success SHA1 'short SHA-1 setup' '
+ test_expect_success SHA1 'short SHA-1 collide' '
+ 	test_when_finished "reset_rebase && git checkout master" &&
+ 	git checkout collide &&
++	colliding_sha1=6bcda37 &&
++	test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
+ 	(
+ 		unset test_tick &&
+ 		test_tick &&
+ 		set_fake_editor &&
+ 		FAKE_COMMIT_MESSAGE="collide2 ac4f2ee" \
+-		FAKE_LINES="reword 1 2" git rebase -i HEAD~2
+-	)
++		FAKE_LINES="reword 1 break 2" git rebase -i HEAD~2 &&
++		test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
++		grep "^pick $colliding_sha1 " \
++			.git/rebase-merge/git-rebase-todo.tmp &&
++		grep "^pick [0-9a-f]\{40\}" \
++			.git/rebase-merge/git-rebase-todo &&
++		git rebase --continue
++	) &&
++	collide2="$(git rev-parse HEAD~1 | cut -c 1-4)" &&
++	collide3="$(git rev-parse collide3 | cut -c 1-4)" &&
++	test "$collide2" = "$collide3"
+ '
  
- 	item->commit = lookup_commit_reference(r, &commit_oid);
--	return !item->commit;
-+	return item->commit ? 0 : -1;
- }
- 
- int sequencer_get_last_command(struct repository *r, enum replay_action *action)
+ test_expect_success 'respect core.abbrev' '
 -- 
 gitgitgadget
 
