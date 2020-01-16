@@ -2,102 +2,138 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89FAAC33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4D5AC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:24:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6551720684
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:19:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 818A920684
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:24:09 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iGsZBAyO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2395469AbgAPSTn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 13:19:43 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38080 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2395346AbgAPSTm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 13:19:42 -0500
-Received: (qmail 31638 invoked by uid 109); 16 Jan 2020 18:19:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Jan 2020 18:19:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8422 invoked by uid 111); 16 Jan 2020 18:26:06 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jan 2020 13:26:06 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 16 Jan 2020 13:19:40 -0500
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] t7800: don't rely on reuse_worktree_file()
-Message-ID: <20200116181940.GA2945961@coredump.intra.peff.net>
+        id S2406704AbgAPSYI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 13:24:08 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:54663 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406518AbgAPSYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 13:24:07 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F3C6094956;
+        Thu, 16 Jan 2020 13:24:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=UyofWcRckVXK8ufhjWCSOLkpnU0=; b=iGsZBA
+        yOrMfh7vVA81jiiWeuxdlXZVzbCMOsoVatoR+1Ae0VIDISum45H4NPzsScmWVtq8
+        kbcScmhqZECPDv55qKUD7zDtXU+3QUxLipFsTSExzfEMFhowZeL2+8ilsJEScDuh
+        sHAj5pISr57wl4Krc+9l1YSbJ5hA9aBF39/R4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ibLyq8MtxQqDiOXGgKab+W2/p3XWAJC4
+        EoKJdg6Y5jDr9xcoqsidJDDNEHkspBjIZlQOSzYH3wmsw2ifmsIlQdL4+9prKXRt
+        /uaiwlkFY6FRlj1Nspa0SDe0TD8ey8oO8mW2J9c/5Wm+uaWXm54xba3/plT56SM7
+        JtGfJj7deQk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id EC11D94955;
+        Thu, 16 Jan 2020 13:24:03 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 186AD94951;
+        Thu, 16 Jan 2020 13:24:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] fetch: emphasize failure during submodule fetch
+References: <20200116025948.136479-1-emilyshaffer@google.com>
+Date:   Thu, 16 Jan 2020 10:23:58 -0800
+In-Reply-To: <20200116025948.136479-1-emilyshaffer@google.com> (Emily
+        Shaffer's message of "Wed, 15 Jan 2020 18:59:48 -0800")
+Message-ID: <xmqq1rrzi7k1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5E41AFF4-388D-11EA-A2CC-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A test in t7800 tries to make sure that when git-difftool runs an
-external tool that fails, it stops looking at files. Our fake failing
-tool prints the file name it was asked to diff before exiting non-zero,
-and then we confirm the output contains only that file.
+Emily Shaffer <emilyshaffer@google.com> writes:
 
-However, this subtly relies on our internal reuse_worktree_file().
-Because we're diffing between branches, the command run by difftool
-might see:
+> @@ -1280,10 +1280,13 @@ struct submodule_parallel_fetch {
+>  	/* Pending fetches by OIDs */
+>  	struct fetch_task **oid_fetch_tasks;
+>  	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
+> +
+> +	struct strbuf submodules_with_errors;
+> +	pthread_mutex_t submodule_errors_mutex;
 
-  - the git-stored filename (e.g., "file"), if we decided that the
-    working tree contents were up-to-date with the object in the index
-    and HEAD, and we could reuse them
+Hmph, it is kind of surprising that we need a new mutex for this.
 
-  - a temporary filename (e.g. "/tmp/abc123_file") if we had to dump the
-    contents from the object database
+Isn't the task_finish handler, which is what accesses the
+with_errors field this patch adds, called by pp_collect_finished()
+one at a time, is it?
 
-If the latter case happens, then the test fails, because it's expecting
-the string "file". I discovered this when debugging something unrelated
-with reuse_worktree_file(). I _thought_ it should be able to be
-triggered by a racy-git situation, but running:
+It seems oid_fetch_tasks[] array is also a shared resource in this
+structure among the parallel fetch tasks, but there is no protection
+against simultaneous access to it.  Am I missing what makes the new
+field different?  Somewhat puzzled...
 
-  ./t7800-difftool.sh --stress --run=2,13
+Other than that, I think this is a vast improvement relative to the
+initial round.  I wonder if we want to _("i18n/l10n") the message,
+though.
 
-never seems to fail. However, by my reading of reuse_worktree_file(),
-this would probably always fail under Cygwin, because it sets
-NO_FAST_WORKING_DIRECTORY. At any rate, since reuse_worktree_file()
-is meant to be an optimization that may or may not trigger, our test
-should be robust either way.
+Thanks.
 
-Instead of checking the filename, let's just make sure we got a single
-line of output (which would not be true if we continued after the first
-failure).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t7800-difftool.sh | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 6bac9ed180..29b92907e2 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -125,15 +125,14 @@ test_expect_success 'difftool stops on error with --trust-exit-code' '
- 	test_when_finished "rm -f for-diff .git/fail-right-file" &&
- 	test_when_finished "git reset -- for-diff" &&
- 	write_script .git/fail-right-file <<-\EOF &&
--	echo "$2"
-+	echo failed
- 	exit 1
- 	EOF
- 	>for-diff &&
- 	git add for-diff &&
--	echo file >expect &&
- 	test_must_fail git difftool -y --trust-exit-code \
- 		--extcmd .git/fail-right-file branch >actual &&
--	test_cmp expect actual
-+	test_line_count = 1 actual
- '
- 
- test_expect_success 'difftool honors exit status if command not found' '
--- 
-2.25.0.318.gee4019ba55
+>  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, \
+>  		  STRING_LIST_INIT_DUP, \
+> -		  NULL, 0, 0}
+> +		  NULL, 0, 0, STRBUF_INIT, PTHREAD_MUTEX_INITIALIZER}
+>  
+>  static int get_fetch_recurse_config(const struct submodule *submodule,
+>  				    struct submodule_parallel_fetch *spf)
+> @@ -1547,7 +1550,10 @@ static int fetch_finish(int retvalue, struct strbuf *err,
+>  	struct string_list_item *it;
+>  	struct oid_array *commits;
+>  
+> -	if (retvalue)
+> +	if (!task || !task->sub)
+> +		BUG("callback cookie bogus");
+> +
+> +	if (retvalue) {
+>  		/*
+>  		 * NEEDSWORK: This indicates that the overall fetch
+>  		 * failed, even though there may be a subsequent fetch
+> @@ -1557,8 +1563,11 @@ static int fetch_finish(int retvalue, struct strbuf *err,
+>  		 */
+>  		spf->result = 1;
+>  
+> -	if (!task || !task->sub)
+> -		BUG("callback cookie bogus");
+> +		pthread_mutex_lock(&spf->submodule_errors_mutex);
+> +		strbuf_addf(&spf->submodules_with_errors, "\t%s\n",
+> +			    task->sub->name);
+> +		pthread_mutex_unlock(&spf->submodule_errors_mutex);
+> +	}
+>  
+>  	/* Is this the second time we process this submodule? */
+>  	if (task->commits)
+> @@ -1627,6 +1636,11 @@ int fetch_populated_submodules(struct repository *r,
+>  				   &spf,
+>  				   "submodule", "parallel/fetch");
+>  
+> +	if (spf.submodules_with_errors.len > 0)
+> +		fprintf(stderr, "Errors during submodule fetch:\n%s",
+> +			spf.submodules_with_errors.buf);
+> +
+> +
+>  	argv_array_clear(&spf.args);
+>  out:
+>  	free_submodules_oids(&spf.changed_submodule_names);
