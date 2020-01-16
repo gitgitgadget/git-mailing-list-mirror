@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7111C33CB3
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3128C33CB7
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BC3F620728
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 77F0D2077C
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 16:09:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YS+/M6YW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IHYUhel6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbgAPQJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 11:09:34 -0500
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:51574 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbgAPQJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 11:09:34 -0500
-Received: by mail-wm1-f43.google.com with SMTP id d73so4350975wmd.1
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 08:09:31 -0800 (PST)
+        id S1726988AbgAPQJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 11:09:35 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38842 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726653AbgAPQJf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 11:09:35 -0500
+Received: by mail-wr1-f65.google.com with SMTP id y17so19744173wrh.5
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 08:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
-        b=YS+/M6YWzfe01ocQxZpPdjuGuclrZNmqGEDIpr8Q5t9kKDBCOv/byNpT5aqus89N5E
-         wZPzinFPmTp/8IH0DW7QLGcVRwmpWNpEIp6rcv93Bhq6Z6xX1sE4LfgvYbyObffifk9K
-         KrwqShvJmFYqQxznP40HejMFLCtaC03PL8KcG3BGaIg5I4ylnrZt2nbpM6Arcqm5Qtr3
-         zRDP2vjB3n9DIIYnHeJkQa/PRkNYFC35Y3UQ3pgDxS5CCIKjrg2I/EKtJJUn8NCHYSVv
-         teg/jatR/ep8PwV5AgaufxxZ7xzNmzZuMA8YRYZnScBlCSIX1J1s5gGlBj/mE8hnKdiR
-         VdvQ==
+        bh=Rupxb/F+zMjSWq64R5cbUJIONY34r8lX6c//KyJp2PE=;
+        b=IHYUhel6349VtSjBabehVwkqRegJ29eltsK1BRVeSBc2GHjyprdaQJ6jjcf3HXtY4g
+         jHz7FdCPmlxrHTyMapRjJvz+pg77tCM0A6FAL7k0uHsf2gMJWbsor99f02ey/spNH4m0
+         7jTvXu4FYpl41wWzTaYK+p0Ip6k/0IhzXGmtlj9bnZHRsK0B+BsWdNwtt/UYtntBV1Qw
+         fS+NgY3ooMSxsIPYj6nN7hb74pImW9MgBq4uEPwOGHvePeeMx9i2s4P7AHypd8iNgsro
+         Uehpvsk0N4s/BdVIe1FjuMatGIeSm8GiHQCTBTUI933RzdWL/RQGtc8uGQlux7VndPOA
+         pgzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rmSJGPnCV5djEoGHTIwck4H4KwpzvNlqsbHiJGq/mnE=;
-        b=qJSE6kcovpQGPLJmhw1oOlxN+rcDnHfLyglDBNqjEW+5SixraKIo9c3pnjpWtXqHuA
-         bkCfHmNK7KH1/Z0z5A7DW/HtsYV/iTbHv15By+gUpon83zMrYBFN//m8mGVOHTCWXWfQ
-         99pF282DxuIk2ZwhuDeYtSMD/aHidgMyY8VMpwFkNr1NjjGeb8Q8/8sJjVYO/1Z7t8mi
-         pewMi6aVtlpo6chz5whsT4sdnid2OP+/jusjkpd9KklbOskvuZKSy6TegLCYfpRjM8vh
-         rKoGUTjg2Mdafvv2rsL2bv64s3ihAWDdO38iCp1CgUuxzyDzYVUk/7oGqolZ16pm+N9r
-         3pxw==
-X-Gm-Message-State: APjAAAV23+3xgi5UnT056LKuDC3gbCngAqUwvBUsRoEFOmy0gxSxCH+S
-        5doG7rZYW0I0MtqbASudsntZTRNx
-X-Google-Smtp-Source: APXvYqwfFtz5wWNk8oyo1kVKVLX4AU61jxFHDmbXY7yeCLgFssIQ0BhgxjysW8C7fzbqoV46rNRl4w==
-X-Received: by 2002:a1c:a9c6:: with SMTP id s189mr68894wme.151.1579190971054;
-        Thu, 16 Jan 2020 08:09:31 -0800 (PST)
+        bh=Rupxb/F+zMjSWq64R5cbUJIONY34r8lX6c//KyJp2PE=;
+        b=DbR2JJ8kp4ymPPquu28oOdcg9uMa5L46NvrWzGBOJ4bBNuc+0psLAi5mJRdHOS9de/
+         MJuNLeL3+BJPFQutz8h4RMqQFJ84n1P4cO8KXGPx+bbE5epXh34QULfaZellg3J4UFdY
+         MUq0im5Xo5/WRAKBrjlWHYrr3FcurwvYBWE/D/6dc+TDK4cLCg4Xy/GtxMIk/P7+EnPT
+         F8ob9Kobguli33Kq24Fk9H7HnLbxiVbdSQuauCrbL+qmz272hSNabHPSTED7X+9kgJI/
+         TG7zPIUWZY1abgSPOfJhwQwTJKGX1VTfsJ2vJ7z9O4sJNlrnCDEonumrzbklptKTu+rJ
+         3prA==
+X-Gm-Message-State: APjAAAXN1XoHX80srtpVKzpV3V7CirwZipR62XxjuuxJP8CRWij1BdwT
+        Taajj2ZyEoOfPPSZwwmzNnHMg7Cd
+X-Google-Smtp-Source: APXvYqzVdGIB0UlQEOAqle+4aa8YICVeosw/8HysATgENq9CtWi22lnRRN5lZ5ePwKmxwviBHn8ChA==
+X-Received: by 2002:a5d:66c3:: with SMTP id k3mr3903554wrw.370.1579190972797;
+        Thu, 16 Jan 2020 08:09:32 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q3sm4915156wmc.47.2020.01.16.08.09.30
+        by smtp.gmail.com with ESMTPSA id x11sm892090wmg.46.2020.01.16.08.09.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2020 08:09:30 -0800 (PST)
-Message-Id: <0824bba2101bb034bafb124d2b810721923233f3.1579190965.git.gitgitgadget@gmail.com>
+        Thu, 16 Jan 2020 08:09:32 -0800 (PST)
+Message-Id: <8a5f2dbe9eef0d6fe360a8ac1130b854e73245bf.1579190965.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.530.git.1579190965.gitgitgadget@gmail.com>
 References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
 From:   "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 16:09:20 +0000
-Subject: [PATCH 3/8] doc: stash: split options from description (1)
+Date:   Thu, 16 Jan 2020 16:09:22 +0000
+Subject: [PATCH 5/8] doc: stash: document more options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,107 +75,29 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 
-This patch moves blocks of text as-is to make it easier to review the
-next patch.
-
 Signed-off-by: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
 ---
- Documentation/git-stash.txt | 68 +++++++++++++++++++------------------
- 1 file changed, 35 insertions(+), 33 deletions(-)
+ Documentation/git-stash.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index 53e1a1205d..2dedc21997 100644
+index f75b80a720..f5fa62dc7c 100644
 --- a/Documentation/git-stash.txt
 +++ b/Documentation/git-stash.txt
-@@ -58,31 +58,6 @@ non-option arguments are not allowed to prevent a misspelled
- subcommand from making an unwanted stash entry.  The two exceptions to this
- are `stash -p` which acts as alias for `stash push -p` and pathspecs,
- which are allowed after a double hyphen `--` for disambiguation.
--+
--When pathspec is given to 'git stash push', the new stash entry records the
--modified states only for the files that match the pathspec.  The index
--entries and working tree files are then rolled back to the state in
--HEAD only for these files, too, leaving files that do not match the
--pathspec intact.
--+
--If the `--keep-index` option is used, all changes already added to the
--index are left intact.
--+
--If the `--include-untracked` option is used, all untracked files are also
--stashed and then cleaned up with `git clean`, leaving the working directory
--in a very clean state. If the `--all` option is used instead then the
--ignored files are stashed and cleaned in addition to the untracked files.
--+
--With `--patch`, you can interactively select hunks from the diff
--between HEAD and the working tree to be stashed.  The stash entry is
--constructed such that its index state is the same as the index state
--of your repository, and its worktree contains only the changes you
--selected interactively.  The selected changes are then rolled back
--from your worktree. See the ``Interactive Mode'' section of
--linkgit:git-add[1] to learn how to operate the `--patch` mode.
--+
--The `--patch` option implies `--keep-index`.  You can use
--`--no-keep-index` to override this.
+@@ -185,6 +185,13 @@ OPTIONS
+ The `--patch` option implies `--keep-index`.  You can use 
+ `--no-keep-index` to override this.
  
- save [-p|--patch] [-k|--[no-]keep-index] [-u|--include-untracked] [-a|--all] [-q|--quiet] [<message>]::
- 
-@@ -128,14 +103,6 @@ pop [--index] [-q|--quiet] [<stash>]::
- Applying the state can fail with conflicts; in this case, it is not
- removed from the stash list. You need to resolve the conflicts by hand
- and call `git stash drop` manually afterwards.
--+
--If the `--index` option is used, then tries to reinstate not only the working
--tree's changes, but also the index's ones. However, this can fail, when you
--have conflicts (which are stored in the index, where you therefore can no
--longer apply the changes as they were originally).
--+
--When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
--be a reference of the form `stash@{<revision>}`.
- 
- apply [--index] [-q|--quiet] [<stash>]::
- 
-@@ -185,6 +152,41 @@ store::
- 	reflog.  This is intended to be useful for scripts.  It is
- 	probably not the command you want to use; see "push" above.
- 
-+If the `--all` option is used instead then the
-+ignored files are stashed and cleaned in addition to the untracked files.
++-q::
++--quiet::
++	Quiet, suppress feedback messages.
 +
-+If the `--include-untracked` option is used, all untracked files are also
-+stashed and then cleaned up with `git clean`, leaving the working directory
-+in a very clean state.
++\--::
++	Separates pathspec from options for disambiguation purposes.
 +
-+If the `--index` option is used, then tries to reinstate not only the working
-+tree's changes, but also the index's ones. However, this can fail, when you
-+have conflicts (which are stored in the index, where you therefore can no
-+longer apply the changes as they were originally).
-+
-+If the `--keep-index` option is used, all changes already added to the
-+index are left intact.
-+
-+With `--patch`, you can interactively select hunks from the diff
-+between HEAD and the working tree to be stashed.  The stash entry is
-+constructed such that its index state is the same as the index state
-+of your repository, and its worktree contains only the changes you
-+selected interactively.  The selected changes are then rolled back
-+from your worktree. See the ``Interactive Mode'' section of
-+linkgit:git-add[1] to learn how to operate the `--patch` mode.
-++
-+The `--patch` option implies `--keep-index`.  You can use 
-+`--no-keep-index` to override this.
-+
-+When pathspec is given to 'git stash push', the new stash entry records the
-+modified states only for the files that match the pathspec.  The index
-+entries and working tree files are then rolled back to the state in
-+HEAD only for these files, too, leaving files that do not match the
-+pathspec intact.
-+
-+When no `<stash>` is given, `stash@{0}` is assumed, otherwise `<stash>` must
-+be a reference of the form `stash@{<revision>}`.
-+
- DISCUSSION
- ----------
- 
+ <pathspec>...::
+ 	The new stash entry records the modified states only for the files
+ 	that match the pathspec.  The index entries and working tree files
 -- 
 gitgitgadget
 
