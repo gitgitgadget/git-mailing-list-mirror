@@ -2,119 +2,90 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA09AC33CB6
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 08:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6860FC33CB1
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 08:33:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7FE802176D
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 08:06:28 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 38DC820748
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 08:33:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jLgrjwW2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccZrVrlO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726901AbgAPIG1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 03:06:27 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:36244 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726082AbgAPIG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 03:06:27 -0500
-Received: by mail-pg1-f196.google.com with SMTP id k3so9514229pgc.3
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 00:06:27 -0800 (PST)
+        id S1731155AbgAPIdL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 03:33:11 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51352 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726230AbgAPIdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 03:33:11 -0500
+Received: by mail-wm1-f65.google.com with SMTP id d73so2785624wmd.1
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 00:33:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=kbxrEbRSvAupZjoO1jni4Fqnvo/H7VfoW4juW0KTXZE=;
-        b=jLgrjwW2Gdhw6WIRX6XI0zpyNjsfZPcyTVh53SQdqvQcK44XiJfEycOTj14uGUwxcr
-         xstMfJREYTQArD8T9NzzSC8u+7sTaSpjpi5WJ/xU3GCSq/2DmMZmI4SD9qou0JBUdKnJ
-         i9ufocXghs+l1BEteyZxZgkk5hCceJ6yGLrZ67WHijoZXKwwJUxW9SduGYcsMuMAHVTo
-         KO7SU7whvP+wrRSg0m/DBmZe4MsLmQ0eJulM/3Xik5s27Zfej2xD1ZYxKD3wUbvVZn8P
-         kLT3x9enkZtLqEnS+64DU5Cp6Fmt3v/WHNM45EzCQbVbIZGVv1pBDYl8VT2TJOHGEbn2
-         oV0g==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=oiG1Z32jCj60cDEMxvp85q7hcwAtAlhFxyYsXyUPgwY=;
+        b=ccZrVrlOq+Y+JFLP04kkQa9zoHltpWvG8kIcEp3xxCymHAQ57pJrHMKfGFn8FijHIY
+         mcdOLWVjQsQ+A2iBhsESHQKuTyTct4iEq8sUajwfDiLCGrGqEX33pLzCrWzBCMJwcaUs
+         vFExBNle7gon5bKf+xVfpnE7ZOYTuIJ/OBhqAemCFbHPgpp+wqWuvgFyx8mTVD+6PCok
+         C+GPZQSK1Q6/KnPj/LBdcCpYIkFw1xbpyK9jMwUSpNUNfTx8MmLLN//3nrXYeKLW4cZB
+         A4JqWSOSxW4NBTCSlFa2YaiS+CkNHvHoYPzQsLb848TMM15SoyqXWob3Kf9yOpiju9Zs
+         K0ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=kbxrEbRSvAupZjoO1jni4Fqnvo/H7VfoW4juW0KTXZE=;
-        b=VTFuhHGuYjCTwH94n5cYN2Kh12wCkDRq0rJOPYhW1qsrdFY5Vl1cQ4rsDiOji/PTQe
-         YqFgQSCSnXU6V+GkEEUeX1OghtvREKaCFZ5Hq4ivrsZccz5KnWOJ+8K0N4WtQNhgIz1A
-         Sk6GOGIWZbkrKFSs475gns+5iXT6CvcaaMiY7KfKdyBjTEyU+2/xTVcRlYYScHsXr8BC
-         gz3thS82flSWYktLng4oKkIdcH8ktl4PoiM1r8zUGCjWzoJ5ewOx1VOV0iH8wXSOrl+n
-         Q7LnfNSnudn9qpAhV5IRMuY/EVJwdAyqyBj4BbXPAS1labo7+9wD/KGEh0X0nEr+vK3r
-         fE3g==
-X-Gm-Message-State: APjAAAUaHdmq6i9BTf6SSIAuOzbZaJMWrndBByCh+V6m5oKoH1Z7oTLX
-        MKhQTJoGP+ZEDoU4MYmvrdo=
-X-Google-Smtp-Source: APXvYqw1zbt02GjB1peLB7lBVtpiQk6veANZeDTO1WL4ELzQi+G15sW2W5lKfLpsDtV+l/IkaRAW6w==
-X-Received: by 2002:a63:26c4:: with SMTP id m187mr38379897pgm.410.1579161986648;
-        Thu, 16 Jan 2020 00:06:26 -0800 (PST)
-Received: from google.com (240.242.82.34.bc.googleusercontent.com. [34.82.242.240])
-        by smtp.gmail.com with ESMTPSA id j17sm24118194pfa.28.2020.01.16.00.06.26
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=oiG1Z32jCj60cDEMxvp85q7hcwAtAlhFxyYsXyUPgwY=;
+        b=IIuCBleyyqjMkfiqjTTCcXE25NZ6yTXSwYeg0k/tPRul2nfrwK6P7pBpm4zHvJuMlc
+         QpUj5lzR5L4Ir0SwdUZmkxyCUvvaKiV2pSDnZSJlDCPaIxfzEg3vpNEUinBiY4XJXhWq
+         pSWYyyWsY/h+XQWgtWMSO75eWXzRXXx8nSKp6gnZu3pCs/mKRoxKU9QF16g04ZQ66tHn
+         xSZr3uaMDGrf9ORVUiMBiSnNSIMWACQ9PE0aXvWqjtNIU5su+JSZ6XMvkuTmqbcRGvrO
+         l0Nbwfi7o2bry/nPdZnOEgVegheGvH0rMsfcSrMQgWJOFGguz/4HbHfkmdoDdsb/yqoU
+         HwYw==
+X-Gm-Message-State: APjAAAWMK6ATq5G+6cFiL80aDqDmGTyImXGC1tdcKjuvlA01oRn3Zbw+
+        wFjoddkhAzo8GmLu/0JqRWF8dNyj
+X-Google-Smtp-Source: APXvYqxZhl9zkgVlpaiBDDrGFr/YQ2vZ2YOdpMirkwld/OkeM2LlZLArxQwd/RYrQDaGT7YjGirXHA==
+X-Received: by 2002:a1c:67c3:: with SMTP id b186mr4759837wmc.36.1579163588614;
+        Thu, 16 Jan 2020 00:33:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t125sm3680280wmf.17.2020.01.16.00.33.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2020 00:06:26 -0800 (PST)
-Date:   Thu, 16 Jan 2020 08:06:24 +0000
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 15/15] rebase: change the default backend from "am" to
- "merge"
-Message-ID: <20200116080624.GA253496@google.com>
-References: <pull.679.v2.git.git.1577126999.gitgitgadget@gmail.com>
- <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
- <044853fd612ee8cf6928bb7c4ebb1eacaa172aa3.1577217299.git.gitgitgadget@gmail.com>
- <20200110231436.GA24315@google.com>
- <CABPp-BEGwJ=0+6TMYXvMzpds0h6bz4gZA8Pi95SH9M4CKBtfOw@mail.gmail.com>
- <052fdedc-2beb-91ab-c5c3-53fb99e64810@gmail.com>
- <nycvar.QRO.7.76.6.2001120942460.46@tvgsbejvaqbjf.bet>
- <CABPp-BGqWDo0vkY_zBZ6n+2T92W2iR90=41oJO_Ae1yZP8NO0A@mail.gmail.com>
- <20200116075810.GB242359@google.com>
+        Thu, 16 Jan 2020 00:33:08 -0800 (PST)
+Message-Id: <pull.528.git.1579163587.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 16 Jan 2020 08:33:05 +0000
+Subject: [PATCH 0/2] Two fixes for the built-in git add -i
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200116075810.GB242359@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
+These issues were noticed in 
+https://github.com/git-for-windows/git/issues/2466, fulfilling my hope that
+Git for Windows' exposure of the built-in git add -i/git add -p as an
+experimental option would attract testers.
 
-> 	#!/bin/bash
-> 	# Sync gh-pages branch with master
-> 	#########################################
-> 	git checkout gh-pages
-> 	git rm -rf -q .
-> 	git checkout master -- .
-> 	git add .
-> 	git commit -am "Syncing gh-pages with master"
-> 	git checkout master
+Johannes Schindelin (2):
+  built-in add -i: do not try to `patch`/`diff` an empty list of files
+  built-in add -i: accept open-ended ranges again
 
-Correction: I misread this one.  It was guarded with
+ add-interactive.c          | 9 ++++++---
+ t/t3701-add-interactive.sh | 9 +++++++++
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
-	if [ `git rev-parse --abbrev-ref HEAD` == "master" ]; then
-		...
-	fi
 
-which makes all the difference.  Another example is to compute ctags:
-
-	#!/bin/sh
-
-	~/bin/hook_ctags.sh >/dev/null 2>&1 &
-
-Here's a fun one that updates a timesheet:
-https://github.com/GokhanArik/git-hooks-timesheet
-
-Sorry for the noise,
-Jonathan
+base-commit: 2e697ced9d647d6998d70f010d582ba8019fe3af
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-528%2Fdscho%2Fbuiltin-add-i-fixes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-528/dscho/builtin-add-i-fixes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/528
+-- 
+gitgitgadget
