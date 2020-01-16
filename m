@@ -2,95 +2,153 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B69C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D549C33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:40:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5658520748
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:35:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 422492072B
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:40:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="SXEejZdU"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oYB/NBXD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729774AbgAPVf2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 16:35:28 -0500
-Received: from mout.gmx.net ([212.227.15.19]:54055 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729235AbgAPVf2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 16:35:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579210522;
-        bh=7SE1aj+aTSt/25J1DFSxTkJm60vYqQr+YgRjVxNVi/o=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=SXEejZdUgY7tsPWe1gjT9o8RXb0hrCbMFxCzMVKZ5d/IhroL1nwDOC+i8INXLXAMT
-         vILOAWbMrCPlR2lpwgJqqlWw+ZdHN0aGj5BOa+LUTUMWMswyq0tMU9ax69Fm4FkFEL
-         znDErLfjMQyI4zWBdiiKY4eqOYtycuTu4aDH8WT4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIdiZ-1ipBzr2QBp-00EcyZ; Thu, 16
- Jan 2020 22:35:22 +0100
-Date:   Thu, 16 Jan 2020 22:35:21 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] msvc: accommodate for vcpkg's upgrade to OpenSSL
- v1.1.x
-In-Reply-To: <xmqqo8v3gnpl.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2001162235080.46@tvgsbejvaqbjf.bet>
-References: <pull.527.git.1579129054234.gitgitgadget@gmail.com> <xmqqmuaoia15.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.2001161107050.46@tvgsbejvaqbjf.bet> <xmqqo8v3gnpl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730325AbgAPVkq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 16:40:46 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61059 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730059AbgAPVkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 16:40:46 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C2CF5386A5;
+        Thu, 16 Jan 2020 16:40:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/diPGqT773TlAVHZm0uxeEy38kc=; b=oYB/NB
+        XDBRwgiFSEH2wv78oCoEslYP76UXB0EnmSdGpOSDTe0bZC7tIXZpjU87DLjQqNKg
+        lH85JA0VXzjX7srdkPlLqQQ9IT870huS6qFXdGnEIKzfSneg1ZNp4XQvM1tCRkwo
+        ynlFQEfwdRMv0Yycq/LnexL6wvKXA2Hrm+dOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=Tz+ed7kPDehkDGJNPmGb0X52qn205h4h
+        m0kdmBk6Mqy+Gu3ZlSW1R4JKnFYeakANkSuejHLh9526P4XarigRc8Wif9IXMjN9
+        vlmVHUTQxBKtKs1DKuvXwY6OCRbdRD9f1+Qo/NEXKuygEJwCxXSPXYLFFeJaZ/wt
+        2KutUfzcTIQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BA23E386A4;
+        Thu, 16 Jan 2020 16:40:40 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0F1E6386A3;
+        Thu, 16 Jan 2020 16:40:39 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
+        newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/8] t1091: use check_files to reduce boilerplate
+References: <pull.513.git.1579029962.gitgitgadget@gmail.com>
+        <9f7791ae5ee8df9d84d25407a014fb2c63e09b38.1579029963.git.gitgitgadget@gmail.com>
+Date:   Thu, 16 Jan 2020 13:40:38 -0800
+In-Reply-To: <9f7791ae5ee8df9d84d25407a014fb2c63e09b38.1579029963.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 14 Jan 2020
+        19:25:55 +0000")
+Message-ID: <xmqq8sm7gjvt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dl81Mx2JP4lCTV/1dlZ3sfM0+JfdSlSXM+MsSHBgkyfdRNvY7Kr
- Bwj0pXGgn8U1mLluRgLhdQH9avffFdD95vWroHlREyW27WJzZn6iA6SBOgIIKPrZcoJYX0Y
- ot4NevqLaSKKq0JmpKLjgrw3XnyHO0dXEqOQ2gkB2h8oNmG50asq5KjugIYZsSxJN2T4myH
- JxjWtPprhFF8Hkyy2i+4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h6hUKuBS1aU=:GzwlTvMuBSjm+YJsretKpK
- 8pKgOKjrK3KcDvviTDN4UCBJ2F8a1ynvA77yEMXPPds8Vau6yleCl8JrPrpbXbWmugZGAHQEH
- LmWoiJBhMfGBtPI8Ey6HP4jmMBgcGf+Orq8ohTItlh0s/4efkIAOxX9jaUDGlEuOuT4m85twV
- +ICAE477ygSYP2rKbn1D8fUHH063bFAFnh0xyy9ScoLgHcwtqopS3dFk2XgCs+FuAznew7zzx
- WyAOkF8weFtUHjV3dnjX+rwTtpb8m3tTkevL4+evInAQfHo2DYS/KG2xaB/BfvxBHXe4cj7kW
- v8ZHE31lhRJHqMDRw7W39sy6QmKB1BARgRf2AcewoA6iA9EUwLBJ5rAGXtF166xBMMJfkx8Ci
- 84Vje6D05zLFgiga4/23m8+gdNF6gVtQ2TBT+01TdKvzYpIVx9tOdpFdhP/cjsjY3p8u1Dzi5
- q5ED++wrRgFV7WBUwTBNcblvBH/Dj5IW3mVcoTm/v9cDlZAh/Ax4iH6DoEU3bRo4mhyoIwk2h
- XijMf0ypiVBDyO2OhMDNt8BTeQi5iHryKtkt/YOgnStRJa5wKMil+Xs5zhdxAznts5qWUNANE
- MvBRRkTh8k38slAmFL4yS34KaU39oO5jjznblVx1eEKLD2ETMMEDtfTXEyS+xh1pP6T/8Vorg
- KgOMKEJoWprTG9Wx0Ufmg6XVmkNhX5uUt2daG2kMnHAvC09Cgdrw9+DPuHkduUCdRIEQg3tM+
- qE6YVgignv+ietXeP4f0hDDisgZeluKCR3hhl10XTlukuus3wGyfeXZHw/zAJ+TvQZZjanpdS
- jkrmBcsO5Bj2sPf26cHXz2lsXCWcuRiPEXl2h3GD1rAoD16BfzFWr7TGMIiVNjtfCZya/jvip
- s6pwUrS4Cv8nIlBApb6fnV97r629ta85znSCVNWceLNSZllAHTaMSzWA7yn+78AODeytp5TtP
- JulbE5erLSJlCcMr7a4ImgmZiwNX+Mj3pvfnziiSbrLnrTkMmUdujGo8eQ27T8k1YNGM0PJBt
- 3CfY8sbSe1XWLd2rCsq01PpRafKHSVROkbyMxpKZCPyUb13/d753DCloFM1Ulog5lWkEHrZAZ
- fztXU7Xf9fV5ARVC0GjKxPIgI/zX9UDuSWjuIsoeGhdHmkUblXZ15u1wWCX+n88qdpNrkTJlM
- aDI2KbuTFRSqoaQ0KnLopDu6rkEYffef3mKLhvWAKcVex58JVhNYtMFxWBS/7uvJT1zY+n+VC
- QfSdM9qFmMnzmpewPMLmb50Ev+ZN9VPs7zubuSqDgjjVOse7HZhOcfJFbx0U=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: D6FD9992-38A8-11EA-94A2-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Thu, 16 Jan 2020, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> >> Should this patch directly go to 'master' (or even 'maint' for v2.25
-> >> maintenance track)?  I do not see much point in cooking it in 'next'
-> >> for an extended period of time.
-> >
-> > That would be nice. As long as this patch is not merged, we will be st=
-uck
-> > with failing Azure Pipelines.
+> When testing the sparse-checkout feature, we need to compare the
+> contents of the working-directory against some expected output.
+> Using here-docs was useful in the beginning, but became repetetive
+> as the test script grew.
 >
-> OK, so let's take it to 'maint' directly and merge it down to
-> 'master' (and all the "more recent" integration branches).
+> Create a check_files helper to make the tests simpler and easier
+> to extend. It also reduces instances of bad here-doc whitespace.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t1091-sparse-checkout-builtin.sh | 215 ++++++++++-------------------
+>  1 file changed, 71 insertions(+), 144 deletions(-)
+>
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index ff7f8f7a1f..20caefe155 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -12,6 +12,13 @@ list_files() {
+>  	(cd "$1" && printf '%s\n' *)
+>  }
+>  
+> +check_files() {
+> +	DIR=$1
+> +	printf "%s\n" $2 >expect &&
+> +	list_files $DIR >actual  &&
 
-Thank you!
-Dscho
+It is unclear if the script is being deliberate or sloppy.
+
+It turns out that not quoting $2 is deliberate (i.e. it wants to
+pass more than one words in $2, have them split at $IFS and show
+each of them on a separate line), at the same time not quoting $DIR
+is simply sloppy.
+
+And it is totally unnecessary to confuse readers like this.
+
+Unless you plan to extend this helper further, I think this would be
+much less burdensome to the readers:
+
+        check_files () {
+                list_files "$1" >actual  &&
+                shift &&
+                printf "%s\n" "$@" >expect &&
+                test_cmp expect actual
+        }
+
+This ...
+
+>  	test_cmp expect repo/.git/info/sparse-checkout &&
+> -	list_files repo >dir  &&
+> -	cat >expect <<-EOF &&
+> -		a
+> -		folder1
+> -		folder2
+> -	EOF
+> -	test_cmp expect dir
+> +	check_files repo "a folder1 folder2"
+
+... is a kind of change that the log message advertises, which is a
+very nice rewrite.
+
+And ...
+
+>  test_expect_success 'clone --sparse' '
+>  	git clone --sparse repo clone &&
+>  	git -C clone sparse-checkout list >actual &&
+> -	cat >expect <<-EOF &&
+> -		/*
+> -		!/*/
+> +	cat >expect <<-\EOF &&
+> +	/*
+> +	!/*/
+>  	EOF
+
+... this is a style-fix that is another nice rewrite but in a
+different category.  I wonder if they should be done in separate
+commits.
+
+Other than that, makes sense.
+
+Thanks.
