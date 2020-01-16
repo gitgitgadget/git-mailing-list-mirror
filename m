@@ -7,83 +7,113 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEEF6C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 190FDC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:25:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AA41920661
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:21:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DE1A420661
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:25:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gWMmu+/A"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIxLoWWV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437723AbgAPTVU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 14:21:20 -0500
-Received: from mail-il1-f176.google.com ([209.85.166.176]:34337 "EHLO
-        mail-il1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437718AbgAPTVP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 14:21:15 -0500
-Received: by mail-il1-f176.google.com with SMTP id s15so19274813iln.1
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 11:21:14 -0800 (PST)
+        id S1730633AbgAPTZn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 14:25:43 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35021 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728898AbgAPTZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 14:25:42 -0500
+Received: by mail-wr1-f67.google.com with SMTP id g17so20336726wro.2
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 11:25:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=1fJnnhBCzlDXMJ+tNxG8tQ84X59K9VdfthHWO5p+3G0=;
-        b=gWMmu+/Av1LcPaybp7ubXI4y8/HlOMlvpKukyyu/jiiUX6vAxBBbQsIiyqHdgh3UFJ
-         02FMhcgWJjUaAtwy3Wcs2LRMkZEr2CJlP1TolBlE6su8sm+Mtnjfuuiz9FgSfnIUNAcJ
-         moWg5ubLF4W9SlBAeRvPFpRGLjLGorCPZKf8qpEnTfUzQIo6CTOKN1C1aXkErz1r6Swv
-         7U3Y50nCT3LPmk3bI+s+EFXjJPEknRB9qtCA+5827jU/a5HPa59NSsUXUC+zJPe9n5jR
-         baIAVOfHfoUiIqRevKqG4uXT9sAYh1x39MinL+MwHtNZ+Rdx/63gxSkCBkK2VeJNOipL
-         KICA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OCsPVMZeL7Ad8EL5Ued9U2qM1VurdY+/zEbF7MknVqE=;
+        b=JIxLoWWVicQ0RV4iXRHlG6yRyYfx4aKL0mPouPzIdjL3XWW8hfBlRrU60c+gFVXTf/
+         LikdjpCG/WK0sS0T/SWl63obmKNWP5k2XQytgVYnBdCFmyXP3GOuqTgUdmfuilvERu0g
+         lqxtzuFSbUy9xP6dPLZ7rHlJu0N40tAQURCreHnSstUBL0VjvYBQH93jIzklu84rFSPU
+         jbhtcHaB1frGS30pAQpWhAXKWeSXlzwrl8Wfgiv9Q7mMFZRsGIza5cpQdOoN9EbFRQgI
+         0GgWElWX3skpCeBfej2GPf2mVSLlLV54OFPosxZmTs1WQNjmmE4tyDqc+aCEWBdWKH44
+         q3Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=1fJnnhBCzlDXMJ+tNxG8tQ84X59K9VdfthHWO5p+3G0=;
-        b=GxFUJb6gYMB4MLuBUj9QUW8gjlynuMKbocE9NO7QAzD5CBzWMuDVqIVbTGWrR8wg1v
-         y1kM6wsvXmqgqF8b3/3cmJZgtmJFyVwN157QvRhjTEZDOECX1Q26LUMlBkA8GQXS7Vpl
-         nEyubxMmkainfpkhRYzZ9Io2KN37DAfb1BwKyDdRLdCZgfOtu6g8CYvMUEO3dwfAAAuP
-         ttfLDb1jU3/bgUOn5jPD0G7+X0zVWT4/5DP877IHJ+Aw1EohpaBnTvAabo7s4lN5M3gI
-         OUhkJBsgBeLV8FSXHtw/56zmasMxVGwP192aubHW281Toc/KnhUAi3D9iItyAZByJI6B
-         RptQ==
-X-Gm-Message-State: APjAAAVHSNiZ930TzsJidHshO2nvFtOURx2C2VUNejKcRuzgGAgv/umB
-        kgXCNwmVVF0BeaJnpTI0HkzmdHSn5SLU0mXLbeAzo6RwGV8=
-X-Google-Smtp-Source: APXvYqzNC/bsV+9ll+59vmRYfV6VczU16lJkVxXivyuy8iCCX5g8NEVTK4gZbv6HTwY5DSOacSvUfmlmI/GI9Er/cWA=
-X-Received: by 2002:a92:cd02:: with SMTP id z2mr5190595iln.286.1579202474019;
- Thu, 16 Jan 2020 11:21:14 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OCsPVMZeL7Ad8EL5Ued9U2qM1VurdY+/zEbF7MknVqE=;
+        b=UB6pNGCTVJ1yC7w7MzMKSL1v0pdXxEA4fVIoGiiNyuyoQSPQFgIdcEDJCQncnTJPs6
+         ha8OX/pMtbqqFl1OI6oqNs1+AKa/vetdN66gIDddIlVzEQQjqo6rPDVdQjexEHfMIINO
+         esM/kqglHnDvHMwabPsH74fIGHkqUTggW6Nm4bx9XZ9+zCsBOFC5LMN7m8EU3l5Ju3uK
+         HVLAqMi1kjorwanudo9d94ANTaXTxerJuxlk03nHGrq5BKQlFbnOkdOxgJC8or+Jj/b3
+         0xzqTBFp5o4e+Mhl1PqdsFt/qotkt4HykgnpbtoNxpvJ0jD1uKTXtS5tUQcK/8JgK5aP
+         2cnA==
+X-Gm-Message-State: APjAAAWDRd609hZvxi3XzuAZtyf9FSqlggD94AekGkKet5G1NLFCEggb
+        WiENMIcfSHkKaDxWnQjBiYlHj+tURcEUhsPlm+IAbbGbPhQ=
+X-Google-Smtp-Source: APXvYqzzBoNYj48WKpOcS9teahi5WLFx9/2fl+N90Uy9rdlnwpeJ68m48Hg5vhQA30UpO3UwgwgjN2r+B/p0i97cAug=
+X-Received: by 2002:a5d:5403:: with SMTP id g3mr5003176wrv.302.1579202740722;
+ Thu, 16 Jan 2020 11:25:40 -0800 (PST)
 MIME-Version: 1.0
-From:   Nirmal Khedkar <nirmalhk7@gmail.com>
-Date:   Fri, 17 Jan 2020 00:50:37 +0530
-Message-ID: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com>
-Subject: Facing error in git-imap-send while compiling Git
-To:     git@vger.kernel.org
+References: <20200110111516.GA474613@coredump.intra.peff.net>
+ <20200110150547.221314-1-shawarmakarma@gmail.com> <xmqq5zhbi8l3.fsf@gitster-ct.c.googlers.com>
+ <20200116182331.GA2946050@coredump.intra.peff.net>
+In-Reply-To: <20200116182331.GA2946050@coredump.intra.peff.net>
+From:   Eyal Soha <shawarmakarma@gmail.com>
+Date:   Thu, 16 Jan 2020 14:25:29 -0500
+Message-ID: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] color.c: Refactor color_output to use enums
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey!
-I've been facing this error everytime I run the Makefile:
------
-LINK git-imap-send
-imap-send.o: In function `verify_hostname':
-/git/imap-send.c:252: undefined reference to `sk_num'
-/git/imap-send.c:254: undefined reference to `sk_value'
-/git/imap-send.c:260: undefined reference to `sk_pop_free'
-/git/imap-send.c:260: undefined reference to `sk_pop_free'
-imap-send.o: In function `ssl_socket_connect':
-/git/imap-send.c:287: undefined reference to `SSL_library_init'
-/git/imap-send.c:288: undefined reference to `SSL_load_error_strings'
-/git/imap-send.c:290: undefined reference to `SSLv23_method'
-collect2: error: ld returned 1 exit status
+My original version of the change extended the enum to include both
+COLOR_ANSI and COLOR_AIXTERM.  That preserves the 0-7 value and
+instead adds more branching to figure out if you want to add 30 or 40
+or 90 or 100.  All that extra branching didn't look great so we
+instead used COLOR_ANSI for both.
 
-Makefile:2454: recipe for target 'git-imap-send' failed
-make: *** [git-imap-send] Error 1
------
+I think that adding a bright flag to the color struct would be a poor
+choice because it doesn't mean anything in the context of COLOR_256
+and COLOR_RGB, as you've pointed out.
 
-I'm unaware of git imap-send and what it does. I've not done any
-changes in the above-mentioned files. And now because of this error, I
-really cant test any changes I've made. It'd be helpful if I could get
-some guidance on this.
+Having an argument to the color_output function called "type" that is
+a char is really obtuse, especially considering that c->type exists,
+too!  Perhaps the best way would really be to have a boolean argument
+called "background" indicating if the color is meant to be foreground
+or background and then let color_output do the math to add or not add
+10.
 
-Thanks!
-Regards,
-Nirmal Khedkar
+Thoughts?
+
+Eyal
+
+
+Eyal
+
+On Thu, Jan 16, 2020 at 1:23 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jan 16, 2020 at 10:01:44AM -0800, Junio C Hamano wrote:
+>
+> > Not that I agree with the (untold) reasoning why we chose to use
+> > 30-37 instead of 0-7, though.  If this were up to me, I would have
+> > rather defined COLOR_BACKGROUND_ANSI = 40, kept .value to 0-7 and
+> > passed COLOR_{FORE,BACK}GROUPD_ANSI to callers of color_output().
+> >
+> > Since I haven't seen 2/3 and 3/3, perhaps there is a good reason why
+> > this step was done this way instead, though, I guess.
+>
+> Yeah, it becomes more clear in patch 2, where the value can be either
+> "31" or "91", for the bright or non-bright variant, and adding "30" is
+> wrong. (But certainly I agree this needs to be explained here).
+>
+> Another way to write it would be to store 0-7 in the value as before,
+> and then add a separate "bright" flag to "struct color". And then the
+> output becomes:
+>
+>   COLOR_FOREGROUND_OFFSET + c->value + (c->bright ? COLOR_BRIGHT_OFFSET : 0)
+>
+> or similar. One minor confusion there is that COLOR_256 and COLOR_RGB
+> would ignore the "bright" field.
+>
+> -Peff
