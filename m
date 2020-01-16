@@ -2,118 +2,71 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 190FDC33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15D3FC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:46:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DE1A420661
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:25:43 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JIxLoWWV"
+	by mail.kernel.org (Postfix) with ESMTP id E762B2077B
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 19:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730633AbgAPTZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 14:25:43 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35021 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728898AbgAPTZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 14:25:42 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g17so20336726wro.2
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 11:25:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=OCsPVMZeL7Ad8EL5Ued9U2qM1VurdY+/zEbF7MknVqE=;
-        b=JIxLoWWVicQ0RV4iXRHlG6yRyYfx4aKL0mPouPzIdjL3XWW8hfBlRrU60c+gFVXTf/
-         LikdjpCG/WK0sS0T/SWl63obmKNWP5k2XQytgVYnBdCFmyXP3GOuqTgUdmfuilvERu0g
-         lqxtzuFSbUy9xP6dPLZ7rHlJu0N40tAQURCreHnSstUBL0VjvYBQH93jIzklu84rFSPU
-         jbhtcHaB1frGS30pAQpWhAXKWeSXlzwrl8Wfgiv9Q7mMFZRsGIza5cpQdOoN9EbFRQgI
-         0GgWElWX3skpCeBfej2GPf2mVSLlLV54OFPosxZmTs1WQNjmmE4tyDqc+aCEWBdWKH44
-         q3Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OCsPVMZeL7Ad8EL5Ued9U2qM1VurdY+/zEbF7MknVqE=;
-        b=UB6pNGCTVJ1yC7w7MzMKSL1v0pdXxEA4fVIoGiiNyuyoQSPQFgIdcEDJCQncnTJPs6
-         ha8OX/pMtbqqFl1OI6oqNs1+AKa/vetdN66gIDddIlVzEQQjqo6rPDVdQjexEHfMIINO
-         esM/kqglHnDvHMwabPsH74fIGHkqUTggW6Nm4bx9XZ9+zCsBOFC5LMN7m8EU3l5Ju3uK
-         HVLAqMi1kjorwanudo9d94ANTaXTxerJuxlk03nHGrq5BKQlFbnOkdOxgJC8or+Jj/b3
-         0xzqTBFp5o4e+Mhl1PqdsFt/qotkt4HykgnpbtoNxpvJ0jD1uKTXtS5tUQcK/8JgK5aP
-         2cnA==
-X-Gm-Message-State: APjAAAWDRd609hZvxi3XzuAZtyf9FSqlggD94AekGkKet5G1NLFCEggb
-        WiENMIcfSHkKaDxWnQjBiYlHj+tURcEUhsPlm+IAbbGbPhQ=
-X-Google-Smtp-Source: APXvYqzzBoNYj48WKpOcS9teahi5WLFx9/2fl+N90Uy9rdlnwpeJ68m48Hg5vhQA30UpO3UwgwgjN2r+B/p0i97cAug=
-X-Received: by 2002:a5d:5403:: with SMTP id g3mr5003176wrv.302.1579202740722;
- Thu, 16 Jan 2020 11:25:40 -0800 (PST)
+        id S1729418AbgAPTqZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 14:46:25 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:33724 "EHLO
+        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729414AbgAPTqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 14:46:25 -0500
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+        by mail-out.m-online.net (Postfix) with ESMTP id 47zF7M04cQz1rY5L;
+        Thu, 16 Jan 2020 20:46:22 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
+        by mail.m-online.net (Postfix) with ESMTP id 47zF7L4v5wz1qr2D;
+        Thu, 16 Jan 2020 20:46:22 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
+        with ESMTP id qQROiy207-ET; Thu, 16 Jan 2020 20:46:21 +0100 (CET)
+X-Auth-Info: Ztj6fZCuowJTFDNkWOoGJeR80jLKhllCoC9082TUPfH66gsAxtKzDJudVxR3zgLI
+Received: from igel.home (ppp-46-244-172-243.dynamic.mnet-online.de [46.244.172.243])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.mnet-online.de (Postfix) with ESMTPSA;
+        Thu, 16 Jan 2020 20:46:21 +0100 (CET)
+Received: by igel.home (Postfix, from userid 1000)
+        id 04F472C2A0D; Thu, 16 Jan 2020 20:46:20 +0100 (CET)
+From:   Andreas Schwab <schwab@linux-m68k.org>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [RFE]: git submodule commit push
+References: <005801d5cc8e$7ae618e0$70b24aa0$@nexbridge.com>
+X-Yow:  FROZEN ENTREES may be flung by members of opposing SWANSON SECTS..
+Date:   Thu, 16 Jan 2020 20:46:20 +0100
+In-Reply-To: <005801d5cc8e$7ae618e0$70b24aa0$@nexbridge.com> (Randall
+        S. Becker's message of "Thu, 16 Jan 2020 12:00:34 -0500")
+Message-ID: <875zhbmbg3.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200110111516.GA474613@coredump.intra.peff.net>
- <20200110150547.221314-1-shawarmakarma@gmail.com> <xmqq5zhbi8l3.fsf@gitster-ct.c.googlers.com>
- <20200116182331.GA2946050@coredump.intra.peff.net>
-In-Reply-To: <20200116182331.GA2946050@coredump.intra.peff.net>
-From:   Eyal Soha <shawarmakarma@gmail.com>
-Date:   Thu, 16 Jan 2020 14:25:29 -0500
-Message-ID: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] color.c: Refactor color_output to use enums
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My original version of the change extended the enum to include both
-COLOR_ANSI and COLOR_AIXTERM.  That preserves the 0-7 value and
-instead adds more branching to figure out if you want to add 30 or 40
-or 90 or 100.  All that extra branching didn't look great so we
-instead used COLOR_ANSI for both.
+On Jan 16 2020, Randall S. Becker wrote:
 
-I think that adding a bright flag to the color struct would be a poor
-choice because it doesn't mean anything in the context of COLOR_256
-and COLOR_RGB, as you've pointed out.
+> I'm finding that I have a frequent need to commit and push submodule changes
+> because the submodule is currently subject to a whole bunch of changes. The
+> submodule is pretty deep down in the java path of a maven project - so 7
+> directories down from the git root. It's a bloody pain to constantly change
+> directories to get down there and back up to where I am working.
 
-Having an argument to the color_output function called "type" that is
-a char is really obtuse, especially considering that c->type exists,
-too!  Perhaps the best way would really be to have a boolean argument
-called "background" indicating if the color is meant to be foreground
-or background and then let color_output do the math to add or not add
-10.
+You can also use git -C <path> ...
 
-Thoughts?
+Andreas.
 
-Eyal
-
-
-Eyal
-
-On Thu, Jan 16, 2020 at 1:23 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Jan 16, 2020 at 10:01:44AM -0800, Junio C Hamano wrote:
->
-> > Not that I agree with the (untold) reasoning why we chose to use
-> > 30-37 instead of 0-7, though.  If this were up to me, I would have
-> > rather defined COLOR_BACKGROUND_ANSI = 40, kept .value to 0-7 and
-> > passed COLOR_{FORE,BACK}GROUPD_ANSI to callers of color_output().
-> >
-> > Since I haven't seen 2/3 and 3/3, perhaps there is a good reason why
-> > this step was done this way instead, though, I guess.
->
-> Yeah, it becomes more clear in patch 2, where the value can be either
-> "31" or "91", for the bright or non-bright variant, and adding "30" is
-> wrong. (But certainly I agree this needs to be explained here).
->
-> Another way to write it would be to store 0-7 in the value as before,
-> and then add a separate "bright" flag to "struct color". And then the
-> output becomes:
->
->   COLOR_FOREGROUND_OFFSET + c->value + (c->bright ? COLOR_BRIGHT_OFFSET : 0)
->
-> or similar. One minor confusion there is that COLOR_256 and COLOR_RGB
-> would ignore the "bright" field.
->
-> -Peff
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
