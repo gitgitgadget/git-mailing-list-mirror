@@ -2,184 +2,102 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1ED69C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89FAAC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:19:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BFC4C2192A
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:01:55 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jDwVYUqU"
+	by mail.kernel.org (Postfix) with ESMTP id 6551720684
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 18:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2394631AbgAPSBy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 13:01:54 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:52659 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393606AbgAPSBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 13:01:53 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id BAB1194637;
-        Thu, 16 Jan 2020 13:01:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JlTlqO/Uzd//y1FW5TqVZwGQDS4=; b=jDwVYU
-        qUGhxDnMLGAr5g+X4iSpsJzRb5hupLqznX/8IrBWMuJsa9vykdg/m2MQwhCXyx6U
-        y4Tx33qm/ePQcaf+KuD7sGdYu12ywg1LD+6kgyevyiOj5+ngbXgWkNM/6EOZmqE9
-        JIa9MF2CjqfoM1ZGfLpYL+tDo8Hyyo+6xRym0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ofjMRp3s5w855qAoCMkXRlpy1/8VXY28
-        cjtmNR+FzEIbit1oAzD7kTm3GiXUrOgpzOupWYXEaPhyG0hHvqR6/1Ez1mny11QU
-        Q2wny9T5lFS2AH7i+mAaLJdm57sU9wvBIFxstSIxZ57tnesI4XmQA2TYl3UukU0R
-        fDMtfuIISEc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id B342794636;
-        Thu, 16 Jan 2020 13:01:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D046A94635;
-        Thu, 16 Jan 2020 13:01:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eyal Soha <shawarmakarma@gmail.com>
-Cc:     peff@peff.net, git@vger.kernel.org
-Subject: Re: [PATCH 1/3] color.c: Refactor color_output to use enums
-References: <20200110111516.GA474613@coredump.intra.peff.net>
-        <20200110150547.221314-1-shawarmakarma@gmail.com>
-Date:   Thu, 16 Jan 2020 10:01:44 -0800
-In-Reply-To: <20200110150547.221314-1-shawarmakarma@gmail.com> (Eyal Soha's
-        message of "Fri, 10 Jan 2020 10:05:45 -0500")
-Message-ID: <xmqq5zhbi8l3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2395469AbgAPSTn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 13:19:43 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38080 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2395346AbgAPSTm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 13:19:42 -0500
+Received: (qmail 31638 invoked by uid 109); 16 Jan 2020 18:19:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Jan 2020 18:19:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8422 invoked by uid 111); 16 Jan 2020 18:26:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jan 2020 13:26:06 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 16 Jan 2020 13:19:40 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] t7800: don't rely on reuse_worktree_file()
+Message-ID: <20200116181940.GA2945961@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 42FC0B16-388A-11EA-AA1C-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eyal Soha <shawarmakarma@gmail.com> writes:
+A test in t7800 tries to make sure that when git-difftool runs an
+external tool that fails, it stops looking at files. Our fake failing
+tool prints the file name it was asked to diff before exiting non-zero,
+and then we confirm the output contains only that file.
 
-This space looks a bit underexplained.  I cannot tell, for example,
-if the changes to out->value this patch makes (i.e. in COLOR_ANSI
-mode, we used to use 0-7, but now it is offset to 30-37) is
-intended.
+However, this subtly relies on our internal reuse_worktree_file().
+Because we're diffing between branches, the command run by difftool
+might see:
 
-It is especially confusing that parse_color() stuffs 30-37 in
-the .value field for COLOR_ANSI mode, and then color_output() takes
-a struct color and then uses xsnprintf() on .value PLUS offset.  The
-offset used to be "type" that was either "3" or "4", and now it is
-either 0 or 10 (= COLOR_BACKGROUND_OFFSET), so it cancels out, but
-when this step is viewed alone, it is not clear why the updated code
-does not use 0-7 in .value and 30 or 40 in the offset, which is more
-in line with how the original code worked.
+  - the git-stored filename (e.g., "file"), if we decided that the
+    working tree contents were up-to-date with the object in the index
+    and HEAD, and we could reuse them
 
-In any case, "COLOR_BACKGROUND_OFFSET = 10" needs to be commented
-much better---something like "In 'struct color', we chose to
-represent the color value in the .value field with the ANSI
-foreground color number between 30 and 37, and adding this offset
-value makes the color to their background counterparts".
+  - a temporary filename (e.g. "/tmp/abc123_file") if we had to dump the
+    contents from the object database
 
-Not that I agree with the (untold) reasoning why we chose to use
-30-37 instead of 0-7, though.  If this were up to me, I would have
-rather defined COLOR_BACKGROUND_ANSI = 40, kept .value to 0-7 and
-passed COLOR_{FORE,BACK}GROUPD_ANSI to callers of color_output().
+If the latter case happens, then the test fails, because it's expecting
+the string "file". I discovered this when debugging something unrelated
+with reuse_worktree_file(). I _thought_ it should be able to be
+triggered by a racy-git situation, but running:
 
-Since I haven't seen 2/3 and 3/3, perhaps there is a good reason why
-this step was done this way instead, though, I guess.
+  ./t7800-difftool.sh --stress --run=2,13
 
-> +enum {
-> +	COLOR_BACKGROUND_OFFSET = 10,
-> +	COLOR_FOREGROUND_ANSI = 30,
-> +	COLOR_FOREGROUND_RGB = 38,
-> +	COLOR_FOREGROUND_256 = 38,
-> +};
-> +
->  /* Ignore the RESET at the end when giving the size */
->  const int column_colors_ansi_max = ARRAY_SIZE(column_colors_ansi) - 1;
->  
-> @@ -92,7 +99,7 @@ static int parse_color(struct color *out, const char *name, int len)
->  	for (i = 0; i < ARRAY_SIZE(color_names); i++) {
->  		if (match_word(name, len, color_names[i])) {
->  			out->type = COLOR_ANSI;
-> -			out->value = i;
-> +			out->value = i + COLOR_FOREGROUND_ANSI;
->  			return 0;
->  		}
->  	}
-> @@ -112,7 +119,7 @@ static int parse_color(struct color *out, const char *name, int len)
->  		/* Rewrite low numbers as more-portable standard colors. */
+never seems to fail. However, by my reading of reuse_worktree_file(),
+this would probably always fail under Cygwin, because it sets
+NO_FAST_WORKING_DIRECTORY. At any rate, since reuse_worktree_file()
+is meant to be an optimization that may or may not trigger, our test
+should be robust either way.
 
-This comment, being in the context, obviously is not a new problem
-introduced by this patch, but my reading hiccupped on the verb
-"rewrite"---what are we rewriting?---and had to read the logic twice
-to realize that this comment is about choosing COLOR_ANSI over
-COLOR_256 (i.e. we assume ANSI is more prevalent than 256, so any
-color expressible in both is better shown using ANSI).  Perhaps
+Instead of checking the filename, let's just make sure we got a single
+line of output (which would not be true if we continued after the first
+failure).
 
-		/* Express low numbers in basic ANSI rather than 256 */
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t7800-difftool.sh | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-or something may have been easier to understand at least to me.
-
-Thanks.
-
->  		} else if (val < 8) {
->  			out->type = COLOR_ANSI;
-> -			out->value = val;
-> +			out->value = val + COLOR_FOREGROUND_ANSI;
->  			return 0;
->  		} else if (val < 256) {
->  			out->type = COLOR_256;
-> @@ -166,23 +173,22 @@ int color_parse(const char *value, char *dst)
->   * already have the ANSI escape code in it. "out" should have enough
->   * space in it to fit any color.
->   */
-> -static char *color_output(char *out, int len, const struct color *c, char type)
-> +static char *color_output(char *out, int len, const struct color *c, int offset)
->  {
->  	switch (c->type) {
->  	case COLOR_UNSPECIFIED:
->  	case COLOR_NORMAL:
->  		break;
->  	case COLOR_ANSI:
-> -		if (len < 2)
-> -			BUG("color parsing ran out of space");
-> -		*out++ = type;
-> -		*out++ = '0' + c->value;
-> +		out += xsnprintf(out, len, "%d", c->value + offset);
->  		break;
->  	case COLOR_256:
-> -		out += xsnprintf(out, len, "%c8;5;%d", type, c->value);
-> +		out += xsnprintf(out, len, "%d;5;%d", COLOR_FOREGROUND_256 + offset,
-> +				 c->value);
->  		break;
->  	case COLOR_RGB:
-> -		out += xsnprintf(out, len, "%c8;2;%d;%d;%d", type,
-> +		out += xsnprintf(out, len, "%d;2;%d;%d;%d",
-> +				 COLOR_FOREGROUND_RGB + offset,
->  				 c->red, c->green, c->blue);
->  		break;
->  	}
-> @@ -280,13 +286,13 @@ int color_parse_mem(const char *value, int value_len, char *dst)
->  			if (sep++)
->  				OUT(';');
->  			/* foreground colors are all in the 3x range */
-> -			dst = color_output(dst, end - dst, &fg, '3');
-> +			dst = color_output(dst, end - dst, &fg, 0);
->  		}
->  		if (!color_empty(&bg)) {
->  			if (sep++)
->  				OUT(';');
->  			/* background colors are all in the 4x range */
-> -			dst = color_output(dst, end - dst, &bg, '4');
-> +			dst = color_output(dst, end - dst, &bg, COLOR_BACKGROUND_OFFSET);
->  		}
->  		OUT('m');
->  	}
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 6bac9ed180..29b92907e2 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -125,15 +125,14 @@ test_expect_success 'difftool stops on error with --trust-exit-code' '
+ 	test_when_finished "rm -f for-diff .git/fail-right-file" &&
+ 	test_when_finished "git reset -- for-diff" &&
+ 	write_script .git/fail-right-file <<-\EOF &&
+-	echo "$2"
++	echo failed
+ 	exit 1
+ 	EOF
+ 	>for-diff &&
+ 	git add for-diff &&
+-	echo file >expect &&
+ 	test_must_fail git difftool -y --trust-exit-code \
+ 		--extcmd .git/fail-right-file branch >actual &&
+-	test_cmp expect actual
++	test_line_count = 1 actual
+ '
+ 
+ test_expect_success 'difftool honors exit status if command not found' '
+-- 
+2.25.0.318.gee4019ba55
