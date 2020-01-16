@@ -7,63 +7,64 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B6CDC32771
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCEEDC32771
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3F8932084D
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B68B522522
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 02:40:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="f45/uLgv"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="fBOkuqWS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729697AbgAPCkg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 15 Jan 2020 21:40:36 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:44969 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729662AbgAPCkg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Jan 2020 21:40:36 -0500
-Received: by mail-qk1-f194.google.com with SMTP id w127so17775110qkb.11
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 18:40:35 -0800 (PST)
+        id S1729727AbgAPCkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 15 Jan 2020 21:40:40 -0500
+Received: from mail-qv1-f65.google.com ([209.85.219.65]:41452 "EHLO
+        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729662AbgAPCkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Jan 2020 21:40:40 -0500
+Received: by mail-qv1-f65.google.com with SMTP id x1so8422200qvr.8
+        for <git@vger.kernel.org>; Wed, 15 Jan 2020 18:40:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+fWAmaFn5K7Cpfz95nO1TxACvul7649Ek3I9CA229Oc=;
-        b=f45/uLgvV/PM47BycHqk2kwMNnP8gofeW+AcJ6JWyfMjZLVthnIkixPYpgp26td/PQ
-         PvlfPHvCWnhvxWtKvblzX8Ytobbp2+y3ZNdG4P3nmaZrL1CZFHCeNv/YTmJwcBQlD46v
-         IbvB9TWdG02d9eC/UKcQZy8iSRW/3qpOyd18M7eiwtwhxxLzFoEcZASl8A1AsRtmzEyC
-         7IcIIc2qOMXDLwvwim+1HmxSQC/N+YQ5NS8A1iw9JzdBg82RZ1SVncoHddVEb2Ol4YkF
-         4DDzlquWTNdE3ysFpcAdcFzzVV0KXa4Jxyefxwjh/CxpkPON+z/bxoOJpmAvx3ahyTmT
-         U/Ig==
+        bh=+GlZ7FFCEwf0sdYljc0DF3MuiCMrB5W3NgUVRH2fkzg=;
+        b=fBOkuqWS/tldWqAVehtyS3b7fB+xlxeYFuzamBdGroM2oZ+EJrwJLJAwOMJOAlBVSJ
+         EHPIhagjjswdODbTISWd0ctFlYNz+BjyLLUMUHW/PBE4cDTIM2Zygf0IFFDeRpFHGo5R
+         UF3FFANL9yHe1coOVmQ0uA9jE0knKdSD+9hmRJBbaMO+EBO7p/Aiyml464j4Nr/qDGQP
+         r+dqtlUsNke7yksu5LZ7aCFaaiMvwXGbGl4WL0KcSy15xrfLEebMyJtDrlihv/fd46DL
+         1nBFuyG+LnSAh2t3sSQByDcYvAc0XofJHEMehxnSFM1Se0TGlTXC7nQWSxtnh2HCBCdZ
+         AYag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+fWAmaFn5K7Cpfz95nO1TxACvul7649Ek3I9CA229Oc=;
-        b=G7aFQkUgvVfZOIWXwukRU0sp+Im1M0fDUeuqui9yyWAixlRqV1k/zFcBShxUr9FvPD
-         Cw8u9vner2cIiPjypjBl1ZBHBv9mWk8jzjApQT3+rum7lGf+QMVetaZNVJLB/AAt3qfw
-         YePg8vKFuyJWGcHBe2luwbiYfXYKEQm2avDnXPynjwdPQge9KFhqA3IprZcVSb5iya30
-         UxsV1BqslpJ87WosAgc/s+0HY645t+r56xjEdGjbWw2t6OSyjHjE2K0QFQzDLShJ4nH1
-         i3VNTrSfGAieMMvxhtFmxqEgnRU7kwNa5z5V5KYc0x0S3DAccDrB72F3TXVTvhRBbCyL
-         5z9w==
-X-Gm-Message-State: APjAAAUGyORzBYcteEfALZW4sXDUhzwXKxpWzAwsxZFCUSJGpDcnS1Za
-        uNLryG6YJIdezcRmNcrgnShdY+cBrLo=
-X-Google-Smtp-Source: APXvYqyGpvC/6zekmRW549IuRlkmcUEV60RdBUPC4eIiVWwRsD7JsGbjPjhqbSDNayMvJIt7VkkH1A==
-X-Received: by 2002:a37:9a46:: with SMTP id c67mr26141627qke.308.1579142434963;
-        Wed, 15 Jan 2020 18:40:34 -0800 (PST)
+        bh=+GlZ7FFCEwf0sdYljc0DF3MuiCMrB5W3NgUVRH2fkzg=;
+        b=QedYV8if+ewm9KMkao/PTzB5hHdxDWeiOASlGx4q9LluGSy8EeJkkdbw3oDVXyG7oA
+         JKMDyx16MqftrkiNapJwCq2mxBdEKrDxfYZIjgh+lTfTbY1/Qqu/YjP5jTgck1G/FHZM
+         3FICLXr7Un1mCkKarkBTvHK7Z/rynV4RScLlaoz+RTghicPIaDT1R1dDZBtbhHbMKFFp
+         gQK4OSx8xM3CeAr+wR0025kCtPqxy2bKBA0sTugDUbImbSF98Zyx3KMjQsuJs0Pn1rIm
+         vAZQ6Ot5jjOZOZFSDhvfSkWwVH1kaIMU+JELYa+nMXuCgbsG+ff3CWgn35Ia5a0cJizI
+         MwvQ==
+X-Gm-Message-State: APjAAAXXpMcSLVAnCawOcSnB4h53lUcgthtzrptF+NB1RxxdfpQr9vGN
+        p7sIux0DMqIxrnklr/kqlPnx/byCg4Y=
+X-Google-Smtp-Source: APXvYqx6G/Qoo9KJfM/bgQMjndXckENBpWHQNv/vGt57aWp0fRB9ot1CXqLZdV6TbknUJ4wyYRx5WQ==
+X-Received: by 2002:ad4:4182:: with SMTP id e2mr453918qvp.187.1579142439277;
+        Wed, 15 Jan 2020 18:40:39 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id u24sm9381289qkm.40.2020.01.15.18.40.31
+        by smtp.gmail.com with ESMTPSA id u24sm9381289qkm.40.2020.01.15.18.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 18:40:34 -0800 (PST)
+        Wed, 15 Jan 2020 18:40:38 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com, jrnieder@gmail.com,
         olyatelezhnaya@gmail.com, pclouds@gmail.com,
         jonathantanmy@google.com, peff@peff.net,
-        Ramkumar Ramachandra <artagnon@gmail.com>,
-        Eric Wong <e@80x24.org>
-Subject: [PATCH v3 01/12] grep: fix race conditions on userdiff calls
-Date:   Wed, 15 Jan 2020 23:39:49 -0300
-Message-Id: <e2f3d377f5408d3d9365b8ac1b785d6d3f0437a9.1579141989.git.matheus.bernardino@usp.br>
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Antonio Ospite <ao2@ao2.it>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH v3 02/12] grep: fix race conditions at grep_submodule()
+Date:   Wed, 15 Jan 2020 23:39:50 -0300
+Message-Id: <6f0899701b88e255bae68e16e11a978488c0b1cd.1579141989.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.24.1
 In-Reply-To: <cover.1579141989.git.matheus.bernardino@usp.br>
 References: <cover.1579141989.git.matheus.bernardino@usp.br>
@@ -74,62 +75,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-grep uses an internal grep_read_mutex to protect object reading
-operations. Similarly, there's a grep_attr_mutex to protect calls to the
-gitattributes machinery. However, two of the three functions protected
-by the last mutex may also perform object reading, as seen below:
+There're currently two function calls in builtin/grep.c:grep_submodule()
+which might result in race conditions:
 
-- userdiff_get_textconv() > notes_cache_init() >
-  notes_cache_match_validity() > lookup_commit_reference_gently() >
-  parse_object() > repo_has_object_file() >
-  repo_has_object_file_with_flags() > oid_object_info_extended()
+- submodule_from_path(): it has config_with_options() in its call stack
+  which, in turn, may have read_object_file() in its own. Therefore,
+  calling the first function without acquiring grep_read_mutex may end
+  up causing a race condition with other object read operations
+  performed by worker threads (for example, at the fill_textconv()
+  call in grep.c:fill_textconv_grep()).
+- parse_object_or_die(): it falls into the same problem, having
+  repo_has_object_file(the_repository, ...) in its call stack. Besides
+  that, parse_object(), which is also called by parse_object_or_die(),
+  is thread-unsafe and also called by object reading functions.
 
-- userdiff_find_by_path() > git_check_attr() > collect_some_attrs() >
-  prepare_attr_stack() > read_attr() > read_attr_from_index() >
-  read_blob_data_from_index() > read_object_file()
-
-As these calls are not protected by grep_read_mutex, there might be race
-conditions with other threads performing object reading (e.g. threads
-calling fill_textconv() at grep.c:fill_textconv_grep()). To prevent
-that, let's make sure to acquire the lock before both of these calls.
-
-Note: this patch might slow down the threaded grep in worktree, for the
-sake of thread-safeness. However, in the following patches, we should
-regain performance by replacing grep_read_mutex for an internal object
-reading lock and allowing parallel inflation during object reading.
+It's unlikely to really fall into a data race with these operations as
+the volume of calls to them is usually very low. But we better protect
+ourselves against this possibility, anyway. So, to solve these issues,
+move both of these function calls into the critical section of
+grep_read_mutex.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- grep.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ builtin/grep.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/grep.c b/grep.c
-index 0552b127c1..c028f70aba 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1816,7 +1816,9 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 		 * is not thread-safe.
- 		 */
- 		grep_attr_lock();
-+		grep_read_lock();
- 		textconv = userdiff_get_textconv(opt->repo, gs->driver);
-+		grep_read_unlock();
- 		grep_attr_unlock();
- 	}
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 50ce8d9461..896e7effce 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -407,8 +407,7 @@ static int grep_submodule(struct grep_opt *opt,
+ {
+ 	struct repository subrepo;
+ 	struct repository *superproject = opt->repo;
+-	const struct submodule *sub = submodule_from_path(superproject,
+-							  &null_oid, path);
++	const struct submodule *sub;
+ 	struct grep_opt subopt;
+ 	int hit;
  
-@@ -2184,8 +2186,11 @@ void grep_source_load_driver(struct grep_source *gs,
- 		return;
+@@ -419,6 +418,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 	 * object.
+ 	 */
+ 	grep_read_lock();
++	sub = submodule_from_path(superproject, &null_oid, path);
  
- 	grep_attr_lock();
--	if (gs->path)
-+	if (gs->path) {
-+		grep_read_lock();
- 		gs->driver = userdiff_find_by_path(istate, gs->path);
-+		grep_read_unlock();
-+	}
- 	if (!gs->driver)
- 		gs->driver = userdiff_find_by_name("default");
- 	grep_attr_unlock();
+ 	if (!is_submodule_active(superproject, path)) {
+ 		grep_read_unlock();
+@@ -455,9 +455,8 @@ static int grep_submodule(struct grep_opt *opt,
+ 		unsigned long size;
+ 		struct strbuf base = STRBUF_INIT;
+ 
+-		object = parse_object_or_die(oid, oid_to_hex(oid));
+-
+ 		grep_read_lock();
++		object = parse_object_or_die(oid, oid_to_hex(oid));
+ 		data = read_object_with_reference(&subrepo,
+ 						  &object->oid, tree_type,
+ 						  &size, NULL);
 -- 
 2.24.1
 
