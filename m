@@ -6,100 +6,105 @@ X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 342A7C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 23:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F9E7C33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 23:35:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 039A420748
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 23:26:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30D0C2072B
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 23:35:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ud92hya1"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HgmEXzIa"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389375AbgAPXZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 18:25:58 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57407 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730625AbgAPXZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 18:25:57 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 27A8045B08;
-        Thu, 16 Jan 2020 18:25:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=hJRxyjnLRczKsTpgmzukdBc99pQ=; b=Ud92hy
-        a1JE5UsUTXP1x68Sd66G8k84du0GpwGzmmPVVqFD0yK4ETQBeAsI5siw06yYi9Ji
-        drPCwJOv/n/Bdi39X8LZ5H4qW/Ps0/xCxmvPNSDnFEV2buZ1pREyPUgpUlDMRH8G
-        hdx5RjGP0w87s44dJmE7dtbuMQQ68UwzxFeYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=S4JyrpG1irhcgIhDiy1xo8juT1jXaDgD
-        eRwpjRwvKIsfjYnY3hpk5fjDF/MFmZSAd65Dkoy87MF7SExCX56BAlS6MBxAPEyJ
-        ddQ507NB/4Xt5WRGMs41ZEMC683C+OW+Ij/g694FrVQLX09pSQgR3VAdLwVMmnjn
-        AA99HKlGSG0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1D69B45B07;
-        Thu, 16 Jan 2020 18:25:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S2391678AbgAPXfP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 18:35:15 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:40384 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2391677AbgAPXfN (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Jan 2020 18:35:13 -0500
+Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8042545B06;
-        Thu, 16 Jan 2020 18:25:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Denton Liu <liu.denton@gmail.com>,
-        Pavel Roskin <plroskin@gmail.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v3 15/15] rebase: change the default backend from "am" to "merge"
-References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
-        <044853fd612ee8cf6928bb7c4ebb1eacaa172aa3.1577217299.git.gitgitgadget@gmail.com>
-        <20200110231436.GA24315@google.com>
-        <CABPp-BEGwJ=0+6TMYXvMzpds0h6bz4gZA8Pi95SH9M4CKBtfOw@mail.gmail.com>
-        <052fdedc-2beb-91ab-c5c3-53fb99e64810@gmail.com>
-        <nycvar.QRO.7.76.6.2001120942460.46@tvgsbejvaqbjf.bet>
-        <CABPp-BGqWDo0vkY_zBZ6n+2T92W2iR90=41oJO_Ae1yZP8NO0A@mail.gmail.com>
-        <20200116075810.GB242359@google.com>
-        <20200116080624.GA253496@google.com>
-        <CABPp-BHODjbN3-snoFt4LDHGnoxhpDCQHhGVZp14gP1RZFp=hQ@mail.gmail.com>
-        <20200116203521.GA71299@google.com>
-        <CABPp-BHiYDLRgPX4A1-8f-zgfsDqf6PkToStaV3ukC5Dsq=3-w@mail.gmail.com>
-Date:   Thu, 16 Jan 2020 15:25:52 -0800
-In-Reply-To: <CABPp-BHiYDLRgPX4A1-8f-zgfsDqf6PkToStaV3ukC5Dsq=3-w@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 16 Jan 2020 13:30:38 -0800")
-Message-ID: <xmqqzhendlvj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4AD5E607F5;
+        Thu, 16 Jan 2020 23:35:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1579217712;
+        bh=c//h4nqFUNHC0tZ9ugplBR2US3br0k68CgUd0OQm+8c=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=HgmEXzIaXKDeHZJzaen1nGk+9P2KMIcXstgiv6KEmU52xhNeuc+3APk2oqs+piw/C
+         oBIwGD1OA9JCokCp+FJ6FwDuh4JN0d1JjI/p8phNmE0QR7xhcO8rA3IHzGFgg7E4D1
+         GNr8HpROd3AF9anfCeKYqsvQ+GE/7Bzb4RcG0W7l8oYdGUrf4sawiMTBJNlARPfxSV
+         1VqNS71JkLyy1NnJK7WqLVcYZe1eSLVnOi/YIk6uD7MYLu2No2Mv3Qj1QeReJSqA0D
+         PNm7k3iYvRrK0TD0dWhLV1iwCYYd4fyQ9ktBbNa53axSSRItdXzpP/nmrs2VwJAmOJ
+         TP+qbVaaMR8oD2/LoUpn+emQ6jIFb/0+Z/F2TgiurWa/gqHGq6pxPZ/+mHcjJEuDaT
+         KR/Ccyi+ZebihMOznps+e6ygFLP8EwJsgm+y9tG9JFdwjhCaFLV2Q8qRF+y648cHCz
+         /w1hQ/Ivex+nBhPcY0iKGK/2h846laBypwIHRGMfrKbrEBQrgwy
+Date:   Thu, 16 Jan 2020 23:35:07 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/4] Documentation for common user misconceptions
+Message-ID: <20200116233507.GY6570@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Emily Shaffer <emilyshaffer@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20191102192615.10013-1-sandals@crustytoothpaste.net>
+ <20200116210857.GJ181522@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8A1B3BC0-38B7-11EA-8C01-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="azskX66S5GHWoEK7"
+Content-Disposition: inline
+In-Reply-To: <20200116210857.GJ181522@google.com>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
 
-> Why?  "Commands which create no more than one commit (git-commit,
-> git-merge, maybe single-commit git-revert or git-cherry-pick) call
-> post-commit, commands which create several commits derived from others
-> (git-am, git-rebase, git-cherry-pick, sometimes git-revert ) call
-> post-rewrite instead for performance reasons"
+--azskX66S5GHWoEK7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sounds totally wrong.  post-rewrite is about carrying forward data
-that used to be associated with commit X to new commit Y when Y was
-created by "rewriting" X (i.e. after Y gets created X no longer has
-any purpose other than as a historical curiosity).  There is nothing
-"for performance reasons" here.  There should be nothing for "git
-revert" to do with post-rewrite (because the resulting commit is not
-even a rewrite of the commit that was reverted), and "git
-cherry-pick" is not even a rewrite operation (it is to duplicate an
-existing commit into another unrelated context, without discarding
-the original commit).
+On 2020-01-16 at 21:08:57, Emily Shaffer wrote:
+> On Sat, Nov 02, 2019 at 07:26:11PM +0000, brian m. carlson wrote:
+> > This series includes four patches that update the documentation to
+> > address common user misconceptions.
+>=20
+> Hm, is this still waiting for a reroll? Someone just ran into the
+> user.name/username confusion in #git-devel today:
+> https://colabti.org/irclogger/irclogger_log/git-devel?date=3D2020-01-16#l=
+79
 
-I am a bit confused...
+Yeah, it is.  I have one, but haven't sent it out.  I'll plan to do so
+this weekend.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--azskX66S5GHWoEK7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4g8ysACgkQv1NdgR9S
+9oshthAAq9cZsaIUhhR6HunIwMnPO/L2KN7z9tFgxe/TSuxEDuY8gs2apO2X23RJ
+xV+AfJxqlnhvHH4AmVTpB6eGfNrsszaPzVfpspDvND/NcVLHFTqkwGn+1jgtuqWO
+okz6BtrYna7wxoLD1jSQoi6l5eVj7ExjL8ArLK+zwO1q+imKcCM4ibVZNMSVNEtt
+dpXNL00KaOxlR7JEAuI5YQGmWPZX+fbEQ0tdYwVY8gapeqSTYv0vmN4bf7umPkIw
+DTsk6RNVHOUVy+hAMH3k3LYhGqq7FUOZWm/qruPYhJyEWrFMTk5Hz98GD4maDQxp
+e8Me+eXWpFTEBVJrJPp0A9rc+RhrWLcdeJfkdt2m5gmB+gQFHCypJblU+ci26VIX
+05/nOgq3PqefUYY0ewRtdXmGoy2sEteImf5Dh9CTbiqBMCDAgwCxR5cOp32aFIj1
+BzdfWN5u5B/kaU2w/qe6abFjAEnTjf4cSCCuPJ9GJvslyprtbRNA5AQhXktt64ZP
+vZnMZwyH+XwMDN2sjuY1L57z716u3qAUoLqycP17Swh1tJZRh5Pw8GT8trs4pfb9
+jd+c9HtrMCaRD48hRqmy3LMP3CsreYARXeRu4vyq9/RphKe1v4BT0aD+QhpuckXL
+yjqGjH9b0ynoGnFeGzx9i+URDM4UwqFwBaEJIBOjVo8/EIrKIQ8=
+=DtEg
+-----END PGP SIGNATURE-----
+
+--azskX66S5GHWoEK7--
