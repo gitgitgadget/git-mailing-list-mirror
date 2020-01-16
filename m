@@ -2,145 +2,205 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.9 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 23E2BC33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF381C33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:38:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E25BA2073A
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:20:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B0B9F20728
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:38:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="lnCXb4tk"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wKL3iDvo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731801AbgAPWUR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 17:20:17 -0500
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:42957 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730287AbgAPWUR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 17:20:17 -0500
-Received: by mail-ua1-f74.google.com with SMTP id x9so3591944uaq.9
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 14:20:17 -0800 (PST)
+        id S1733041AbgAPWiG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 17:38:06 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:32993 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729519AbgAPWiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 17:38:06 -0500
+Received: by mail-pg1-f195.google.com with SMTP id 6so10657648pgk.0
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 14:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:subject:from:to:cc;
-        bh=zb9ZBa09cJYICm330pSK5bjX/Alwldsd7/VLEPkezxE=;
-        b=lnCXb4tk9/7haNCwCex8zZeXs24d8fRMuWtDQLeWxFIy0T7xGuVzZSsU1c8Rr2Lfz8
-         VJc/PMJHroDnJt+FnYov4e30fQWOQVbQWnMUgHxlc8Fjl5knj9TO1DMEIM1z02CozOLo
-         6FhcXRJdSkmua0Qh2Y3y+DqaW9iBoHw1IOVu0XV0NBZXOejGsmi4AlrB7Rk36TpQSNLi
-         fKkVZDevghSGRQmS2xTRIEXdy8kYrFGcmdAI/SHzvG7lVubanm00bKuWybf1GBKEsmIn
-         O5jFLK+1+35eF7RG6AmZxKvXvUAJ+SWOLK/7zFP65sDcu4G7Npb44cXDCwPws3jNz28n
-         7DNQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Mrn9SyqwPWSPLtzG5fVudNWUh+c1C8sQcFRg+Nv6oEc=;
+        b=wKL3iDvomyaqhNIy/Q1DCd6sEQrTXajNhcR5RI8qvkMV/y75rDM00Oeczk5BsjU4L5
+         rUkV8TlJNxap4ZxluW3HASroWf/ZK590dPzmMWPlYki40fta1pcW6zowajAy5msqijRM
+         wfWkOXPfcXNVJkMO88G8N46r7gupzFEAAWjLpxkHqUnS6WjhRFvhNemPjoZ11MOLq3XD
+         2TcHIHSHx2Jmid7G50NXVde/tlo7yuhNzJqSPNYQJrHcNgEa6a+XbmzwkU3IVLigI+e5
+         8bskFfZfdYwymkMTbOVrw/u3Szi0HQXY3o5jvWEBNj+1GmV5qI5ZTpAUTN4g1SIHNIm4
+         EDaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version:subject
-         :from:to:cc;
-        bh=zb9ZBa09cJYICm330pSK5bjX/Alwldsd7/VLEPkezxE=;
-        b=YWFwlDsZWEEK6oz9iAyTEUiCIdLgKJoyzxwkWMBa6nnbpnZtsdGItW48oPMmO6fbs6
-         fM1+swTdku+VpGXJUzQdE+sdnQqUG3ky+rWrm8HvOjdWhtNTsMQcjL4lN92jKjMUPuLl
-         p/sh5jpWPAl9cxIPyjjQLUzwjOnT3Qg1+0zgopesGswvUh9gY/CoOiK9Bj3WlZKaLWML
-         OyZ+9FTj95B448V8b3URb/2YBWqjPkvgL+nDUTXrtt6DaykSJJEkMqXzShr0g+WDkj1B
-         0PcdCHxyUQrhq/Msfe1qZQBXaoWLiLnPsnBd3MYin9N8GCbYPQhQ5UFRjNASHzZVa7yE
-         7eHw==
-X-Gm-Message-State: APjAAAXpCMzm6VeNUZdUWf/IrPiSNfUCu7nEg11bPQ2TyQyH78Af7JIL
-        sxGi9oWeMs/mXeC4GUyUatdFF6jgkQvMc/MMaa879SMPFUif8Tg1/0MbXwcXFfiBPJ+aLHNUoMe
-        pOydO9ShNgh3uRPUujdzlAGbBHuX4RBGntR053aAciTPMmDVeQH3dTPWMS9xlxr08VUZ9bJx08A
-        ==
-X-Google-Smtp-Source: APXvYqx+eFv8r9zDFwY/K4HBC+FYEl/Cs9Ah73T+OLRxq/n/WLrx9ojyqAkzp2EwdunqXuyiOjsWPu1yjUD15wrrIQ4=
-X-Received: by 2002:a1f:1b07:: with SMTP id b7mr19576694vkb.79.1579213216324;
- Thu, 16 Jan 2020 14:20:16 -0800 (PST)
-Date:   Thu, 16 Jan 2020 14:20:12 -0800
-In-Reply-To: <20200116025948.136479-1-emilyshaffer@google.com>
-Message-Id: <20200116222012.162642-1-emilyshaffer@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.25.0.rc1.283.g88dfdc4193-goog
-Subject: [PATCH v3] fetch: emphasize failure during submodule fetch
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Mrn9SyqwPWSPLtzG5fVudNWUh+c1C8sQcFRg+Nv6oEc=;
+        b=BX8zN6JO+Vw6bkh6aLmnN4bQMSKFoJvqNyM+1HZG8cua6gWr9+x36aAftngA7bOdcu
+         QZ74i3viTRuOVzSt7EvV5qV44ua6Hn6oEDF+0TApe65NOhkT1anVR7hlHc4AedRJgZDK
+         0a6/2eIDXwwOKPIVWssuhcEgUG7DKiUQVsKd9opMk0akKbRkzSI3cwcuXalKRweTTOPn
+         QktbeoOWDExbdzefgNzPLDtMUu2h0cDirM6jpySN04iqDpeUTTRb6a+mOJz1H6iqx2Ze
+         e5Do3q/IwrgPtMHg1GmpZ6JtERDHb1hvZbU4YU/KV5cX/dYjNwEz9Pj8KFCSjl8hnk/u
+         STDg==
+X-Gm-Message-State: APjAAAVT9koeWenYmQs8p7BhO3ymd31oU/RfEfUNvYnfmLKEq9NzkNyN
+        7bgqtYRdRG7VYOhgDi+gU0l5jmik3no=
+X-Google-Smtp-Source: APXvYqwT04AM3ejkAFb4yFGAv5wowkewEdf19tRib07b2lEsdMtucj+gKJs+/sMOGY2YSOvab05IlQ==
+X-Received: by 2002:a63:211f:: with SMTP id h31mr40132028pgh.299.1579214285310;
+        Thu, 16 Jan 2020 14:38:05 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id i8sm27398946pfa.109.2020.01.16.14.38.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2020 14:38:04 -0800 (PST)
+Date:   Thu, 16 Jan 2020 14:38:00 -0800
 From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clone: teach --single-branch and --branch during
+ --recurse
+Message-ID: <20200116223800.GM181522@google.com>
+References: <20200108231900.192476-1-emilyshaffer@google.com>
+ <20200109081150.GC3978837@coredump.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200109081150.GC3978837@coredump.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In cases when a submodule fetch fails when there are many submodules, the error
-from the lone failing submodule fetch is buried under activity on the other
-submodules if more than one fetch fell back on fetch-by-oid. Call out a failure
-late so the user is aware that something went wrong, and where.
+On Thu, Jan 09, 2020 at 03:11:50AM -0500, Jeff King wrote:
+> On Wed, Jan 08, 2020 at 03:19:00PM -0800, Emily Shaffer wrote:
+> 
+> > Subject: clone: teach --single-branch and --branch during --recurse
+> 
+> A minor nit, but this subject confused me for a moment. I think we'd
+> usually say "teach" for a new feature being implemented, and this is
+> really just about passing along the existing features. Something like:
+> 
+>   clone: pass --single-branch and --branch when recursing submodules
+> 
+> would have been a bit more obvious (to me anyway).
+> 
+> > Previously, performing "git clone --recurse-submodules --single-branch"
+> > resulted in submodules cloning all branches even though the superproject
+> > cloned only one branch. Pipe --single-branch and its friend, --branch,
+> > through the submodule helper framework to make it to 'clone' later on.
+> 
+> Since I don't really use submodules, I don't have much data or even
+> intuition to go on. But could this be a regression for some situations?
+> E.g., imagine I have a repo "parent" whose branch "foo" has a submodule
+> "child", but "child" only has a branch "bar". What happens now if I "git
+> clone --recurse-submodules --single-branch -b foo parent", and what will
+> happen after this patch?
+> 
+> I think it works before, but doesn't now.
+> 
+> Setting up like this:
+> 
+>   git init child
+>   (
+>   	cd child
+>   	git checkout -b bar
+>   	echo whatever >file
+>   	git add file
+>   	git commit -m 'child commit'
+>   )
+>   
+>   git init parent
+>   cd parent
+>   git checkout -b foo
+>   git submodule add $PWD/../child
+>   git commit -m 'add submodule'
+> 
+> if I use the current tip of master, I get:
+> 
+>   $ git clone --recurse-submodules --single-branch -b foo parent cur
+>   Cloning into 'cur'...
+>   done.
+>   Submodule 'child' (/home/peff/tmp/parent/../child) registered for path 'child'
+>   Cloning into '/home/peff/tmp/cur/child'...
+>   done.
+>   Submodule path 'child': checked out 'b5cbfcc9fec3b7d67e305468624fed2ba1aa4758'
+> 
+>   $ git -C cur/child log -1 --oneline | cat
+>   b5cbfcc child commit
+> 
+> with your patch, I get:
+> 
+>   $ git.compile clone --recurse-submodules --single-branch -b foo parent new
+>   Cloning into 'new'...
+>   done.
+>   Submodule 'child' (/home/peff/tmp/parent/../child) registered for path 'child'
+>   Cloning into '/home/peff/tmp/new/child'...
+>   warning: Could not find remote branch foo to clone.
+>   fatal: Remote branch foo not found in upstream origin
+>   fatal: clone of '/home/peff/tmp/parent/../child' into submodule path '/home/peff/tmp/new/child' failed
+>   Failed to clone 'child'. Retry scheduled
+>   Cloning into '/home/peff/tmp/new/child'...
+>   warning: Could not find remote branch foo to clone.
+>   fatal: Remote branch foo not found in upstream origin
+>   fatal: clone of '/home/peff/tmp/parent/../child' into submodule path '/home/peff/tmp/new/child' failed
+>   Failed to clone 'child' a second time, aborting
+> 
+>   $ git -C new/child log -1 --oneline | cat
+>   11acb3a add submodule
+> 
+> (there's nothing checked out in the submodule).
+> 
+> I have no idea how common this kind of thing would be, and I expect in
+> most cases your patch would do what people want. But we might need to be
+> better about retrying without those options when the first clone fails.
 
-Because fetch_finish() is only called synchronously by
-run_processes_parallel, mutexing is not required around
-submodules_with_errors.
+Yeah, that's interesting. A retry sounds like a pretty solid approach,
+although if someone's being cautious and using --single-branch I wonder
+if that's really something they want (since that's avoiding grabbing
+extraneous branches).
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
-Since v2, removed mutexing as run_processes_parallel() creates
-subprocesses, not threads, and is in fact synchronous. Also added
-translation marker for the error message.
+I suppose at the very least, --single-branch without --branch should
+become recursive. Whether --branch should become recursive, I'm not
+totally sure.
 
- - Emily
+The two scenarios I see in conflict are this:
+- Superproject branch "foo"
+  - submodule A branch "foo"
+  - submodule B branch "foo"
+and
+- Superproject branch "foo"
+  - submodule A branch "bar"
+  - submodule B branch "baz"
 
- submodule.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+If we propagate --branch, the first scenario Just Works, and the second
+scenario requires something like:
 
-diff --git a/submodule.c b/submodule.c
-index 9da7181321..ee74acee27 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1280,10 +1280,12 @@ struct submodule_parallel_fetch {
- 	/* Pending fetches by OIDs */
- 	struct fetch_task **oid_fetch_tasks;
- 	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
-+
-+	struct strbuf submodules_with_errors;
- };
- #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, \
- 		  STRING_LIST_INIT_DUP, \
--		  NULL, 0, 0}
-+		  NULL, 0, 0, STRBUF_INIT}
- 
- static int get_fetch_recurse_config(const struct submodule *submodule,
- 				    struct submodule_parallel_fetch *spf)
-@@ -1547,7 +1549,10 @@ static int fetch_finish(int retvalue, struct strbuf *err,
- 	struct string_list_item *it;
- 	struct oid_array *commits;
- 
--	if (retvalue)
-+	if (!task || !task->sub)
-+		BUG("callback cookie bogus");
-+
-+	if (retvalue) {
- 		/*
- 		 * NEEDSWORK: This indicates that the overall fetch
- 		 * failed, even though there may be a subsequent fetch
-@@ -1557,8 +1562,9 @@ static int fetch_finish(int retvalue, struct strbuf *err,
- 		 */
- 		spf->result = 1;
- 
--	if (!task || !task->sub)
--		BUG("callback cookie bogus");
-+		strbuf_addf(&spf->submodules_with_errors, "\t%s\n",
-+			    task->sub->name);
-+	}
- 
- 	/* Is this the second time we process this submodule? */
- 	if (task->commits)
-@@ -1627,6 +1633,11 @@ int fetch_populated_submodules(struct repository *r,
- 				   &spf,
- 				   "submodule", "parallel/fetch");
- 
-+	if (spf.submodules_with_errors.len > 0)
-+		fprintf(stderr, _("Errors during submodule fetch:\n%s"),
-+			spf.submodules_with_errors.buf);
-+
-+
- 	argv_array_clear(&spf.args);
- out:
- 	free_submodules_oids(&spf.changed_submodule_names);
--- 
-2.25.0.rc1.283.g88dfdc4193-goog
+ git clone --recurse-submodules=no --single-branch --branch foo https://superproject
+ git submodule update --init --single-branch --branch bar A/
+ git submodule update --init --single-branch --branch baz B/
 
+(I guess if the superproject knows what branch it wants for all the submodules,
+you could also just do "git submodule update --init --single-branch" and
+have it go and ask for all of them.)
+
+If we don't propagate --branch, the second scenario Just Works, and the
+first scenario requires something like:
+
+ git clone --recurse-submodules=no --single-branch --branch foo https://superproject
+ git submodule update --init --single-branch --branch foo
+
+(That is, I think as long as 'update' takes --branch, even if it's not
+passed along by 'clone', it should still work OK when delegating to
+everyone.)
+
+Let me know if I misunderstood what you were worried about.
+
+I don't use submodules heavily for myself either. I'll try and ask
+around a little to see what folks want, at least here. The ergonomics
+seem pretty similar, so I guess it comes down to having explicit
+documentation.
+
+> 
+> -Peff
