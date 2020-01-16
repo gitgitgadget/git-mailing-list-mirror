@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-11.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFCA9C33CB3
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:13:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CAC0C33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:17:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 80AF32077C
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:13:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 25EEA20748
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 22:17:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lZrsz0bO"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zt3XGekw"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389898AbgAPWNX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 17:13:23 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60837 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732190AbgAPWNV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 17:13:21 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 97F30967A4;
-        Thu, 16 Jan 2020 17:13:20 -0500 (EST)
+        id S2387676AbgAPWRE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 17:17:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63169 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730287AbgAPWRE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 17:17:04 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 044E538A9A;
+        Thu, 16 Jan 2020 17:16:59 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DGieSfqAYFnYsTh0gtDtfzXLffs=; b=lZrsz0
-        bOw6iUokdNaSIYL9dsFT/Azy62wVI0qvO6LrN9GvDa5e/FF7nglFQ6QiGy0IS90y
-        4r8MfbESsSghiniSKlJTugt2wnMrWke5c6ua7zGN4VKhBrkDbfRYsr6jid1wFhqw
-        Ih6TwIGnkRcSt0k00Yzc+P4btwEVjzzfkEQg8=
+        :content-type; s=sasl; bh=9wB4WltzZfeSKiL0zrHG02kx3is=; b=Zt3XGe
+        kwasqcz/4l+18RtfkmHHuJEAGDv9VQLZUh8AQuLRL0y6T9OivgdqldKlDLurycF7
+        xbOwTj5wRwjPy/yNZwBR1RHJP+feb0/zMwNt8lq++J2Ownr8p2bSG5vVpQQ5xxWk
+        Pa19tEc3u0md7jK3TV9t891Vrh+E15I9oa45Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=obmbhlhUlLmQX+zFsS9V9rUPJnRUPp9I
-        lQp875edb/SXsx/ThTUM7lXUpE5a2AbMRrAcL1RJwXUIVsztq9HoB8FXjdh+9+4n
-        Vj2DSZqz/mW4q6qdFAsl1ehg2IWwwJyJAIgHW2EPS4RWWn5bCeE2qVdgwHVY9DY5
-        PJnt1Bm0jSY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 90535967A3;
-        Thu, 16 Jan 2020 17:13:20 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=tsFvKmNLOJNuXjMk96EqZxNrCge1nUco
+        W04cBvM9q8jctQ/RVMvcEzpQ3S+A6HDcNRH6DorY8kpk52EUXUQ88+Fe+4Hufpdk
+        aT99EJhaPJKYDcb2UnPe1sw3Dt7BWADCokPRTVdICFLgaqMv0HDCZkU4v3RbZxPh
+        HFc0peepZMs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id EF29D38A99;
+        Thu, 16 Jan 2020 17:16:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BAD8E967A1;
-        Thu, 16 Jan 2020 17:13:17 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 607A638A98;
+        Thu, 16 Jan 2020 17:16:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] built-in add -i: do not try to `patch`/`diff` an empty list of files
+Subject: Re: [PATCH 2/2] built-in add -i: accept open-ended ranges again
 References: <pull.528.git.1579163587.gitgitgadget@gmail.com>
-        <353c748838d341bb325149234657c27215a9fab3.1579163587.git.gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 14:13:15 -0800
-In-Reply-To: <353c748838d341bb325149234657c27215a9fab3.1579163587.git.gitgitgadget@gmail.com>
+        <7e4bf4bbbcd8c81a19d690aee379042e47246947.1579163587.git.gitgitgadget@gmail.com>
+Date:   Thu, 16 Jan 2020 14:16:57 -0800
+In-Reply-To: <7e4bf4bbbcd8c81a19d690aee379042e47246947.1579163587.git.gitgitgadget@gmail.com>
         (Johannes Schindelin via GitGitGadget's message of "Thu, 16 Jan 2020
-        08:33:06 +0000")
-Message-ID: <xmqqzhenf3t0.fsf@gitster-ct.c.googlers.com>
+        08:33:07 +0000")
+Message-ID: <xmqqv9pbf3mu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 65DEA602-38AD-11EA-AA16-B0405B776F7B-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: E95FFBE8-38AD-11EA-917D-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -73,45 +73,57 @@ writes:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> When the user does not select any files to `patch` or `diff`, there is
-> no need to call `run_add_p()` on them.
+> The interactive `add` command allows selecting multiple files for some
+> of its sub-commands, via unique prefixes, indices or index ranges.
 >
-> Even worse: we _have_ to avoid calling `parse_pathspec()` with an empty
-> list because that would trigger this error:
+> When re-implementing `git add -i` in C, we even added a code comment
+> talking about ranges with a missing end index, such as `2-`, but the
+> code did not actually accept those, as pointed out in
+> https://github.com/git-for-windows/git/issues/2466#issuecomment-574142760.
 >
-> 	BUG: pathspec.c:557: PATHSPEC_PREFER_CWD requires arguments
->
-> So let's avoid doing any work on a list of files that is empty anyway.
->
-> This fixes https://github.com/git-for-windows/git/issues/2466.
+> Let's fix this, and add a test case to verify that this stays fixed
+> forever.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  add-interactive.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-
-Makes sense.  No tests?
-
+>  add-interactive.c          | 5 ++++-
+>  t/t3701-add-interactive.sh | 9 +++++++++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
 >
 > diff --git a/add-interactive.c b/add-interactive.c
-> index f395d54c08..14d4688c26 100644
+> index 14d4688c26..396066e724 100644
 > --- a/add-interactive.c
 > +++ b/add-interactive.c
-> @@ -915,7 +915,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
+> @@ -328,7 +328,10 @@ static ssize_t list_and_choose(struct add_i_state *s,
+>  				if (endp == p + sep)
+>  					to = from + 1;
+>  				else if (*endp == '-') {
+> -					to = strtoul(++endp, &endp, 10);
+> +					if (isdigit(*(++endp)))
+> +						to = strtoul(endp, &endp, 10);
+> +					else
+> +						to = items->items.nr;
+
+Good.  We do not allow "everything up to N" with "-N", so covering
+"N and everything after" with "N-" is sufficient.
+
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index d4f9386621..b02fe73631 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -57,6 +57,15 @@ test_expect_success 'revert works (initial)' '
+>  	! grep . output
+>  '
 >  
->  	opts->prompt = N_("Patch update");
->  	count = list_and_choose(s, files, opts);
-> -	if (count >= 0) {
-> +	if (count > 0) {
->  		struct argv_array args = ARGV_ARRAY_INIT;
->  
->  		argv_array_pushl(&args, "git", "add--interactive", "--patch",
-> @@ -953,7 +953,7 @@ static int run_diff(struct add_i_state *s, const struct pathspec *ps,
->  	opts->flags = IMMEDIATE;
->  	count = list_and_choose(s, files, opts);
->  	opts->flags = 0;
-> -	if (count >= 0) {
-> +	if (count > 0) {
->  		struct argv_array args = ARGV_ARRAY_INIT;
->  
->  		argv_array_pushl(&args, "git", "diff", "-p", "--cached",
+> +test_expect_success 'add untracked (multiple)' '
+> +	test_when_finished "git reset && rm [1-9]" &&
+> +	touch $(test_seq 9) &&
+> +	test_write_lines a "2-5 8-" | git add -i -- [1-9] &&
+> +	test_write_lines 2 3 4 5 8 9 >expected &&
+> +	git ls-files [1-9] >output &&
+> +	test_cmp expected output
+> +'
+> +
+>  test_expect_success 'setup (commit)' '
+>  	echo baseline >file &&
+>  	git add file &&
