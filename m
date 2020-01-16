@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D694C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 20:22:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C29DC33CB6
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 20:22:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 695012073A
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 20:22:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5CD252073A
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 20:22:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BZOeZPo8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jchBLFw1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387725AbgAPUWC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 15:22:02 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41761 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbgAPUWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 15:22:01 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c9so20500517wrw.8
-        for <git@vger.kernel.org>; Thu, 16 Jan 2020 12:22:00 -0800 (PST)
+        id S2387729AbgAPUWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 15:22:04 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:40552 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387660AbgAPUWA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 15:22:00 -0500
+Received: by mail-wm1-f68.google.com with SMTP id t14so5170482wmi.5
+        for <git@vger.kernel.org>; Thu, 16 Jan 2020 12:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TwbjQvu7IBEGTOpaw4N0EEswmTdli9u7uVELwz5WYU4=;
-        b=BZOeZPo8Egigw+ODB+FcenpzuNOLfpSZBz6Zi3tTU6ipGcyZPIeING7pZAXqeeaN+8
-         BHiNo4cL9Z0P2S3DN/KgqKDS+DYNSjwFtHTTvx1IokTSA9ZeHm2cOehuQa12dKK8KHlb
-         2Yax+el/fVyOVcuNcVhEVaizQegwa7rH3qHnPNS7waXxA7jFxkirwzBn3xNH5/h4iElZ
-         oRnVAD3cqKOYyQCCq4Hx1zwGGLfI/EKy4V1/X+GeM30BdlB+9YbwmKRXS8bViuL2xRAv
-         008T3NHmVCWmFf2PTzr1nXMDnC6hv6iQ3bbfrNmSdFuK6QsAN2Hjk77WDIudzQ/bE9lk
-         PTvw==
+        bh=x6ZYiMuLOJXS7EFdCKiKJtbl0bS34JMWuTxQw0T4W/k=;
+        b=jchBLFw18n9uTn+10tireQzvh6XSSqhoy7jmttYWmUt6xzzFFCea/z5FZVQcuS9hYk
+         8yYRFBVlZP8j4brEtxP6w7PmY5GRN9lrEa1m6UMYB/DGSiBoZZ0cGqjvTXD3I2XPlK/+
+         rvWaPoGKRIuuuKNs6T9ozo1KStGPq5/egDqZkO58WqUl5eKubtHHZhJ1WDWyxBNPu/zH
+         0hSUZmilvkbMeBumfjfVlsNWtfvjV3NYgm80C/wUVMjS9adX532hLvMJ1faxtkla/cNM
+         TiUgTEr1CTZtvy9mV8wQlsW+2jtqeP+4MTqLtgT4cjbhcHs2yXJnX4gLxVZSNVjs1yCJ
+         0p6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TwbjQvu7IBEGTOpaw4N0EEswmTdli9u7uVELwz5WYU4=;
-        b=fO15e0vargjRaOJIcvdfCoCnxAjUvTwL+MDWcG9SrOa9NVLzLu7iCBh+2k4d+mEw6l
-         YDDDves39CxwYFEW142SSrUjzTWIiKqDCyQPa3CzBoKGZ4I/EC6ZZ4CmnoQ+Y1rEtJVv
-         psTqmLQzsN+TXbSy/ZE7McdcSXPFo/Ie8a3fXE5dtgXdBGkw9JrEWFrk7C0OkfC64vSI
-         IWGGDg6sayVw2ryP/PtrSXWeMFV8T+8rFeS4j7vdBK9RC6pltz8sryZVyK8oYkvCgHqp
-         dXRfyX2wfyMhwvSXOjb+8Ou1hytsCnCwTgEAtai0TcWxoVPK9YWLhMFSQ1kz9cCv6wow
-         D90Q==
-X-Gm-Message-State: APjAAAWM1IfdVlk7cu/OMzkLyACp7WLPpwrVpofWJEbjV/zQcdehn296
-        8S0G9g7OCBPvkObdNm4+TYYl/qhF
-X-Google-Smtp-Source: APXvYqxt7wyIChqWzfeQM0O3dBWkcJ+DhMBvkp+8ZgftCS1yBwMVvc+mv09YRSSx8nGhleji9QjAwQ==
-X-Received: by 2002:a5d:43c7:: with SMTP id v7mr4921445wrr.32.1579206119149;
-        Thu, 16 Jan 2020 12:21:59 -0800 (PST)
+        bh=x6ZYiMuLOJXS7EFdCKiKJtbl0bS34JMWuTxQw0T4W/k=;
+        b=uOyC47uGdgbX765yOWNzhB+wJ43jlJSFsxuXi+jKqZ9x37znx6PivxCFGv2wrsL5BB
+         ByLNr26/nWuMqdPlG2iYc8rwqml2oTuNdz2TXsiO4C67D2n/rD4AdfXMjOAyEXPOzRHq
+         FfnT5+eGuACmuxd2vpPcwYNUnlVx00JGz+1KcKVMgX46pKeqfaJOSeu3OBPbMzoNYa+Q
+         DDOqmyjriJsgmgg+7KbHVdHDMQinzwjAGRz8Vrgc5gQIZvVygPuuWofF8qJ7gxme7doK
+         qN9gLHEYakb8LrRBn7F7F48X7FdNODh+zIGLCtG5HYcYcxFda5n/CM8UP6ny3QgwLp52
+         qxyA==
+X-Gm-Message-State: APjAAAWKZSbAubLlr+TFf1H9VkkoY8ZC/HqZoMefC5VAjPfFvSdKP7q5
+        Agircs8xOIrvOWoNRgRoUKmda6Lf
+X-Google-Smtp-Source: APXvYqxKH9ooJEMjQp6aX+JLADK6Dt28W8Ior3ZJW8S4qapT/gmp14pj1UO/cbuol+qjKX6ukkYVxQ==
+X-Received: by 2002:a7b:c00c:: with SMTP id c12mr822539wmb.174.1579206118466;
+        Thu, 16 Jan 2020 12:21:58 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s19sm6115993wmj.33.2020.01.16.12.21.58
+        by smtp.gmail.com with ESMTPSA id c9sm5854311wmc.47.2020.01.16.12.21.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 16 Jan 2020 12:21:58 -0800 (PST)
-Message-Id: <ea95186774762a5e1cf3cb882cff45fc904e3bf6.1579206117.git.gitgitgadget@gmail.com>
+Message-Id: <9efed585ef7a1c09ed62998882236e7dbb58383a.1579206117.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.692.v3.git.git.1579206117.gitgitgadget@gmail.com>
 References: <pull.692.v2.git.git.1579098078501.gitgitgadget@gmail.com>
         <pull.692.v3.git.git.1579206117.gitgitgadget@gmail.com>
-From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 20:21:54 +0000
-Subject: [PATCH v3 2/4] dir: treat_leading_path() and
- read_directory_recursive(), round 2
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 16 Jan 2020 20:21:53 +0000
+Subject: [PATCH v3 1/4] clean: demonstrate a bug with pathspecs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,128 +72,48 @@ Cc:     Jeff King <peff@peff.net>,
         Kevin.Willford@microsoft.com, Kyle Meyer <kyle@kyleam.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Elijah Newren <newren@gmail.com>,
-        Elijah Newren <newren@gmail.com>
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I was going to title this "dir: more synchronizing of
-treat_leading_path() and read_directory_recursive()", a nod to commit
-777b42034764 ("dir: synchronize treat_leading_path() and
-read_directory_recursive()", 2019-12-19), but the title was too long.
+b9670c1f5e (dir: fix checks on common prefix directory, 2019-12-19)
+modified the way pathspecs are handled when handling a directory
+during "git clean -f <path>". While this improved the behavior for
+known test breakages, it also regressed in how the clean command
+handles cleaning a specified file.
 
-Anyway, first the backstory...
+Add a test case that demonstrates this behavior. This test passes
+before b9670c1f5e then fails after.
 
-fill_directory() has always had a slightly error-prone interface: it
-returns a subset of paths which *might* match the specified pathspec; it
-was intended to prune away some paths which didn't match the specified
-pathspec and keep at least all the ones that did match it.  Given this
-interface, callers were responsible to post-process the results and
-check whether each actually matched the pathspec.
-
-builtin/clean.c did this.  It would first prune out duplicates (e.g. if
-"dir" was returned as well as all files under "dir/", then it would
-simplify this to just "dir"), and after pruning duplicates it would
-compare the remaining paths to the specified pathspec(s).  This
-post-processing itself could run into problems, though, as noted in
-commit 404ebceda01c ("dir: also check directories for matching
-pathspecs", 2019-09-17):
-
-    For the case of git-clean and a set of pathspecs of "dir/file" and
-    "more", this caused a problem because we'd end up with dir entries
-    for both of
-      "dir"
-      "dir/file"
-    Then correct_untracked_entries() would try to helpfully prune
-    duplicates for us by removing "dir/file" since it's under "dir",
-    leaving us with
-      "dir"
-    Since the original pathspec only had "dir/file", the only entry left
-    doesn't match and leaves nothing to be removed.  (Note that if only
-    one pathspec was specified, e.g. only "dir/file", then the
-    common_prefix_len optimizations in fill_directory would cause us to
-    bypass this problem, making it appear in simple tests that we could
-    correctly remove manually specified pathspecs.)
-
-That commit fixed the issue -- when multiple pathspecs were specified --
-by making sure fill_directory() wouldn't return both "dir" and
-"dir/file" outside the common_prefix_len optimization path.  This is
-where it starts to get fun.
-
-In commit b9670c1f5e6b ("dir: fix checks on common prefix directory",
-2019-12-19), we noticed that the common_prefix_len wasn't doing
-appropriate checks and letting all kinds of stuff through, resulting in
-recursing into .git/ directories and other craziness.  So it started
-locking down and doing checks on pathnames within that code path.  That
-continued with commit 777b42034764 ("dir: synchronize
-treat_leading_path() and read_directory_recursive()", 2019-12-19), which
-noted the following:
-
-    Our optimization to avoid calling into read_directory_recursive()
-    when all pathspecs have a common leading directory mean that we need
-    to match the logic that read_directory_recursive() would use if we
-    had just called it from the root.  Since it does more than call
-    treat_path() we need to copy that same logic.
-
-...and then it more forcefully addressed the issue with this wonderfully
-ironic statement:
-
-    Needing to duplicate logic like this means it is guaranteed someone
-    will eventually need to make further changes and forget to update
-    both locations.  It is tempting to just nuke the leading_directory
-    special casing to avoid such bugs and simplify the code, but
-    unpack_trees' verify_clean_subdirectory() also calls
-    read_directory() and does so with a non-empty leading path, so I'm
-    hesitant to try to restructure further.  Add obnoxious warnings to
-    treat_leading_path() and read_directory_recursive() to try to warn
-    people of such problems.
-
-You would think that with such a strongly worded description, that its
-author would have actually ensured that the logic in
-treat_leading_path() and read_directory_recursive() did actually match
-and that *everything* that was needed had at least been copied over at
-the time that this paragraph was written.  But you'd be wrong, I messed
-it up by missing part of the logic.
-
-Copy the missing bits to fix the new final test in t7300.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Helped-by: Kevin Willford <Kevin.Willford@microsoft.com>
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Reviewed-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c            | 4 ++++
- t/t7300-clean.sh | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ t/t7300-clean.sh | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/dir.c b/dir.c
-index 7d255227b1..5d4c92d3aa 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2383,6 +2383,10 @@ static int treat_leading_path(struct dir_struct *dir,
- 		    (dir->flags & DIR_SHOW_IGNORED_TOO ||
- 		     do_match_pathspec(istate, pathspec, sb.buf, sb.len,
- 				       baselen, NULL, DO_MATCH_LEADING_PATHSPEC) == MATCHED_RECURSIVELY_LEADING_PATHSPEC)) {
-+			if (!match_pathspec(istate, pathspec, sb.buf, sb.len,
-+					    0 /* prefix */, NULL,
-+					    0 /* do NOT special case dirs */))
-+				state = path_none;
- 			add_path_to_appropriate_result_list(dir, NULL, &cdir,
- 							    istate,
- 							    &sb, baselen,
 diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 782e125c89..cb5e34d94c 100755
+index 6e6d24c1c3..782e125c89 100755
 --- a/t/t7300-clean.sh
 +++ b/t/t7300-clean.sh
-@@ -737,7 +737,7 @@ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
+@@ -737,4 +737,13 @@ test_expect_success MINGW 'handle clean & core.longpaths = false nicely' '
  	test_i18ngrep "too long" .git/err
  '
  
--test_expect_failure 'clean untracked paths by pathspec' '
-+test_expect_success 'clean untracked paths by pathspec' '
- 	git init untracked &&
- 	mkdir untracked/dir &&
- 	echo >untracked/dir/file.txt &&
++test_expect_failure 'clean untracked paths by pathspec' '
++	git init untracked &&
++	mkdir untracked/dir &&
++	echo >untracked/dir/file.txt &&
++	git -C untracked clean -f dir/file.txt &&
++	ls untracked/dir >actual &&
++	test_must_be_empty actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
