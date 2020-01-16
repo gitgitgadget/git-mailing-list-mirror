@@ -2,219 +2,127 @@ Return-Path: <SRS0=75zt=3F=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EBD4C33CAF
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67A8AC33CAF
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:46:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 56EC52072B
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:42:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 384292073A
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 21:46:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WOp7jdHt"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ycBNW6vN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731178AbgAPVmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 16:42:14 -0500
-Received: from mout.gmx.net ([212.227.17.21]:56811 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729547AbgAPVmO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 16:42:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579210926;
-        bh=LEckoX+WCZOpYAgs4VeqMKUWATTVfoaTOKYHbyeY6+U=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WOp7jdHt1wOjWRw7ajPO2CsPXw1UYU9/jgDYUHWaW2RTnhh80V7ylksIE3IQDScJl
-         GbpwDosu5JWqipNpPMBxt+jm4pqtYpN+m05gm02asd4cZGbVXsupCxVQW0DeTlhnzr
-         B08aLfnrmKGDUUpU5BPqgOlxDcW+pNPOcrpOj4y4=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M26r3-1iufsF0FFh-002aTF; Thu, 16
- Jan 2020 22:42:06 +0100
-Date:   Thu, 16 Jan 2020 22:42:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH 1/3] t6025: modernize style
-In-Reply-To: <20200116203622.4694-2-shouryashukla.oo@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001162239400.46@tvgsbejvaqbjf.bet>
-References: <20200116203622.4694-1-shouryashukla.oo@gmail.com> <20200116203622.4694-2-shouryashukla.oo@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729640AbgAPVqQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 16:46:16 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62802 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729388AbgAPVqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 16:46:15 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B867A9F589;
+        Thu, 16 Jan 2020 16:46:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0RfmB9IgrNxFPO+1an0cVc8QfuE=; b=ycBNW6
+        vN05DqVWzSxdYUi+jyXFxHO4vNNGVLPj1LXD+fxmmp9O5+pQL0SNDprc1HtMdzzv
+        ErYhcc8Gbm8fqEggZWw6Q/sGxX8tYYMq58jkfEVyVi/pqWwNZUX9gjegZrE/vxgj
+        WvqWPLXL/3Qbm5XjcuVdmqSdPLxtW9yat+eaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=iXCB4qNavuldgpHEC3CBr301/MDzl8DR
+        mNam17SPlYlSVobzpNkX0+ZWozg+1FcWzV75LPdN8oq2vFjrcfjDKuST2/HaaSIg
+        nlvO6Y0+qyDdRI5B0ZKN2YiQlr5DSYt4zF9ong8dEm+gHJ5C4fV18CYR8aiXLDu5
+        ZYT5kGgSXc8=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFFED9F588;
+        Thu, 16 Jan 2020 16:46:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7829A9F587;
+        Thu, 16 Jan 2020 16:46:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, peff@peff.net,
+        newren@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 2/8] sparse-checkout: create leading directories
+References: <pull.513.git.1579029962.gitgitgadget@gmail.com>
+        <53a266f9aab5f4331c35b3ff15fb0628e2131c56.1579029963.git.gitgitgadget@gmail.com>
+Date:   Thu, 16 Jan 2020 13:46:08 -0800
+In-Reply-To: <53a266f9aab5f4331c35b3ff15fb0628e2131c56.1579029963.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 14 Jan 2020
+        19:25:56 +0000")
+Message-ID: <xmqq4kwvgjmn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jDDn47bzN6LL+y28l3i+xsM0jTgZKExUYLEUg1L6U2E7IvrGBGB
- DKdi3vwVIDQ668a+pR5SuqBBvJ/v1B/MUNLxh2O2Qzi3QS+PruMqcUMyftkxYoPdzj9SK/H
- 3DjI/2mIa7pc8/epWS2Pd2vCyHDYSLZQ1A6MYvZ6SENqu1PbJYVm7GYlQzsoORrI4nuvXSu
- dTHYgXZMd0drM6kBK62Ew==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rD+iE5cGZ9U=:8PvSE0KYugNiJUjiNISKXo
- xx9DLc+1AnY6uTzQj/0MLQqYfbwSBMP/VLjGZr0RGEmmzjIf9yZbuGu34v8WuUrUzWjzNBzlM
- /wtFS4i2/4QMZwPl+2nRb3a1XLre9EUgRlx5oYictdLf8L5zpwh0W+7lbPOVG/A1TMhGH0zZZ
- jC4vijSc2ieIfkA8q8UYFDYI+wCAnmRC85YqXYGqICpYGxZGDyLk/sid0VEmV8nYWz4HmNflJ
- R7bgZg1PUdeuJVde3N7RkhQQ2uE+/QHJRqdcp2kBJH3m0E4FskZZXrEbqmTH/d2ha94cb1TQ2
- IDh/4GERaFLZiFpJzI/MZgdaLqhnGMWl4/yEBplOFAKItX3tGxyytHV0rBkzeIoiKTTQGvBMt
- +NP3NB02UOT9hizI6Z3rDqZ+/amO+/Tl6uhS//1YeWdJJzwJSgngVOd7J4fbtB0tsGqvf2/cg
- zt4aJe/6zcKA6RPmJtmycaG5Zd9gW6Ta659sn1lvwvZ+EyWGSr5r0DyPSMWbmtC1x4pSkpzMk
- EWIEfrlGyHPA+JEThNPbUy5e7VoI1yGh+rk134+C0nksINNtkBLYK4B1Md35C2n5ZfL/Xaf2G
- tDgAURRk8UJW8jdMhAbLL9vetbIEut/whNQPlKIHrCi7qlg4sTSV+70fgmW85TM6CNXpZonSm
- suep11aFvwGfGEf4xyCacR3EPXXC2agQovYSOVcVtmH9zig3WK4PCAUwVfoUNSQ4E9Pd5yrr3
- b4O1c84FSbq7BnBHyiuw5TEaXWp0lmQaOFkZ4d4d0G5bYAoM5ZS0465/oqca+6+rcekh/BMii
- 38IOFZ37Bc96gotz/yU2HqaYEaRiOhnXXfam2nl80v/5ZbD56qKgf3+AVUhU7f8KyE77azSxg
- TwqDjRYNAE1rrk2BEnhcCqgnEy4tI2L+hUFcynpMRxhZU+Q3KWxfV9LZmce41KazZst6Ezpo3
- I3mwsSXx0lJOlrvgpAQZHmFfhicpcOkF+I056DL2313ZroMfsfVyz2Y1LYv6vrUkR8i6butEI
- Yn4mxMKKVlpi7zk/CI3rNMmsmXTi6dV6zZJ9eF5yY+2yQ8GGTc9Vyai7wzx2QUsMM62xlmBcL
- wbpg3cvZIAhZSWXZAtosJkJWb3F8cI5fJBz1HubsUaeXApVzOz3irpBhJASMqcl35Yd2Q2en6
- J8eF7GFsqq6RWJbvohHdtn0j2cJ3d8C3P2UXT7HmHFFrptuMfHOYsguY1QA4cIBudj0JK21X+
- 2S9KGPKMH0+A5yYBRpVh0e9TXpmne6GpXnscYUyjSInUF9g2HHO+R2RQf7PI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9BF0A7F8-38A9-11EA-9185-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, 17 Jan 2020, Shourya Shukla wrote:
-
-> The tests in `t6025-merge-symlinks.sh` were written a long time ago, and
-> has a lot of style violations, including the mixed-use of tabs and space=
-s,
-> missing indentations, and other shell script style violations. Update it=
- to
-> match the CodingGuidelines.
+> From: Derrick Stolee <dstolee@microsoft.com>
 >
-> Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+> The 'git init' command creates the ".git/info" directory and fills it
+> with some default files. However, 'git worktree add' does not create
+> the info directory for that worktree. This causes a problem when running
+> "git sparse-checkout init" inside a worktree. While care was taken to
+> allow the sparse-checkout config to be specific to a worktree, this
+> initialization was untested.
+>
+> Safely create the leading directories for the sparse-checkout file. This
+> is the safest thing to do even without worktrees, as a user could delete
+> their ".git/info" directory and expect Git to recover safely.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
-
-Sounds good. Just one nit:
-
->  t/t6025-merge-symlinks.sh | 97 ++++++++++++++++++++-------------------
->  1 file changed, 50 insertions(+), 47 deletions(-)
+>  builtin/sparse-checkout.c          |  4 ++++
+>  t/t1091-sparse-checkout-builtin.sh | 10 ++++++++++
+>  2 files changed, 14 insertions(+)
 >
-> diff --git a/t/t6025-merge-symlinks.sh b/t/t6025-merge-symlinks.sh
-> index 433c4de08f..b9219af659 100755
-> --- a/t/t6025-merge-symlinks.sh
-> +++ b/t/t6025-merge-symlinks.sh
-> @@ -10,52 +10,55 @@ if core.symlinks is false.'
->
->  . ./test-lib.sh
->
-> -test_expect_success \
-> -'setup' '
-> -git config core.symlinks false &&
-> -> file &&
+> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+> index b3bed891cb..3cee8ab46e 100644
+> --- a/builtin/sparse-checkout.c
+> +++ b/builtin/sparse-checkout.c
+> @@ -199,6 +199,10 @@ static int write_patterns_and_update(struct pattern_list *pl)
+>  	int result;
+>  
+>  	sparse_filename = get_sparse_checkout_filename();
+> +
+> +	if (safe_create_leading_directories(sparse_filename))
+> +		die(_("failed to create directory for sparse-checkout file"));
+> +
 
-Here, `file` is written as a 0-byte file, and...
+The use of safe_create_leading_directories() here, which uses
+adjust_shared_perm(), is the right thing to do.
 
-> -git add file &&
-> -git commit -m initial &&
-> -git branch b-symlink &&
-> -git branch b-file &&
-> -l=3D$(printf file | git hash-object -t blob -w --stdin) &&
-> -echo "120000 $l	symlink" | git update-index --index-info &&
-> -git commit -m master &&
-> -git checkout b-symlink &&
-> -l=3D$(printf file-different | git hash-object -t blob -w --stdin) &&
-> -echo "120000 $l	symlink" | git update-index --index-info &&
-> -git commit -m b-symlink &&
-> -git checkout b-file &&
-> -echo plain-file > symlink &&
-> -git add symlink &&
-> -git commit -m b-file'
-> -
-> -test_expect_success \
-> -'merge master into b-symlink, which has a different symbolic link' '
-> -git checkout b-symlink &&
-> -test_must_fail git merge master'
-> -
-> -test_expect_success \
-> -'the merge result must be a file' '
-> -test -f symlink'
-> -
-> -test_expect_success \
-> -'merge master into b-file, which has a file instead of a symbolic link'=
- '
-> -git reset --hard && git checkout b-file &&
-> -test_must_fail git merge master'
-> -
-> -test_expect_success \
-> -'the merge result must be a file' '
-> -test -f symlink'
-> -
-> -test_expect_success \
-> -'merge b-file, which has a file instead of a symbolic link, into master=
-' '
-> -git reset --hard &&
-> -git checkout master &&
-> -test_must_fail git merge b-file'
-> -
-> -test_expect_success \
-> -'the merge result must be a file' '
-> -test -f symlink'
-> +test_expect_success 'setup' '
-> +	git config core.symlinks false &&
-> +	touch file &&
+Looks good.
 
-... here we now use `touch` instead. We do prefer `>file` in this
-instance, though, I think. At least we do not prohibit it.
-
-Otherwise it looks very good!
-Johannes
-
-> +	git add file &&
-> +	git commit -m initial &&
-> +	git branch b-symlink &&
-> +	git branch b-file &&
-> +	l=3D$(printf file | git hash-object -t blob -w --stdin) &&
-> +	echo "120000 $l	symlink" |
-> +	git update-index --index-info &&
-> +	git commit -m master &&
-> +	git checkout b-symlink &&
-> +	l=3D$(printf file-different | git hash-object -t blob -w --stdin) &&
-> +	echo "120000 $l	symlink" |
-> +	git update-index --index-info &&
-> +	git commit -m b-symlink &&
-> +	git checkout b-file &&
-> +	echo plain-file >symlink &&
-> +	git add symlink &&
-> +	git commit -m b-file
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index 20caefe155..37365dc668 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -295,4 +295,14 @@ test_expect_success 'interaction with submodules' '
+>  	check_files super/modules/child "a deep folder1 folder2"
+>  '
+>  
+> +test_expect_success 'different sparse-checkouts with worktrees' '
+> +	git -C repo worktree add --detach ../worktree &&
+> +	check_files worktree "a deep folder1 folder2" &&
+> +	git -C worktree sparse-checkout init --cone &&
+> +	git -C repo sparse-checkout set folder1 &&
+> +	git -C worktree sparse-checkout set deep/deeper1 &&
+> +	check_files repo "a folder1" &&
+> +	check_files worktree "a deep"
 > +'
 > +
-> +test_expect_success 'merge master into b-symlink, which has a different=
- symbolic link' '
-> +	git checkout b-symlink &&
-> +	test_must_fail git merge master
-> +'
-> +
-> +test_expect_success 'the merge result must be a file' '
-> +	test -f symlink
-> +'
-> +
-> +test_expect_success 'merge master into b-file, which has a file instead=
- of a symbolic link' '
-> +	git reset --hard &&
-> +	git checkout b-file &&
-> +	test_must_fail git merge master
-> +'
-> +
-> +test_expect_success 'the merge result must be a file' '
-> +	test -f symlink
-> +'
-> +
-> +test_expect_success 'merge b-file, which has a file instead of a symbol=
-ic link, into master' '
-> +	git reset --hard &&
-> +	git checkout master &&
-> +	test_must_fail git merge b-file
-> +'
-> +
-> +test_expect_success 'the merge result must be a file' '
-> +	test -f symlink
-> +'
->
 >  test_done
-> --
-> 2.20.1
->
->
