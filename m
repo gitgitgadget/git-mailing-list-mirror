@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F4B1C33CB7
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 06:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 71285C33CB1
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 06:14:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 11A24207E0
-	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 06:15:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 47F5C207E0
+	for <git@archiver.kernel.org>; Thu, 16 Jan 2020 06:14:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gatxg3v0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aV+b/If/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730469AbgAPGPC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 16 Jan 2020 01:15:02 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38750 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730247AbgAPGOs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Jan 2020 01:14:48 -0500
-Received: by mail-wr1-f66.google.com with SMTP id y17so17894314wrh.5
-        for <git@vger.kernel.org>; Wed, 15 Jan 2020 22:14:46 -0800 (PST)
+        id S1730373AbgAPGOy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 16 Jan 2020 01:14:54 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34361 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730161AbgAPGOn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Jan 2020 01:14:43 -0500
+Received: by mail-wr1-f65.google.com with SMTP id t2so17900559wrr.1
+        for <git@vger.kernel.org>; Wed, 15 Jan 2020 22:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AQrJZiOtQpeYBVGvI+Fa9iDK0sg5zqap2ewkepptwbY=;
-        b=gatxg3v0ZBckrV8v7+cjEFcZsJHw6Nc4vc49ycIiMM5Bxo9IdDtCmoUUgxVibHSvJ+
-         tXEJLms85T58maN9ZY48lzka8cpmugvO5ho7+Gdf28x1qFSms7l1L3vm1HBS8GJBLnHX
-         CKsgZ4F0v/Abvz/5/HDnHoQapDB4zHjccJrVgczisb/eEYZp6grbONTA9ld6Zv4En+sq
-         5tqxNoH6/7ChLqp2DGmzeAxr4LzV4xjIvr5mtIh9Fz3OpDU39m9lZHZHU9ZL+iMYtFhf
-         IX/ykpFCKgfy2v+hY1pDq2+TIfHGirOFoMFJ8JviA43wy3gtDwi9r96mbUaZslliK7pe
-         VLVA==
+        bh=tiRfU/x6Tk+xmQS9vI+5zMy7btglgQelEfjNUbEmnWE=;
+        b=aV+b/If/fbdLfVoH+h3DjgRAYWok/Z6E3sy9o8UJouP4qfe+lr+mwuY3iYcyuLI3ZS
+         /7XZB1gFpq9Au6+Is0JTKFIWJs28O6XZbTd3jrtShTw/TR4yGVcIOmysVA/yqzxUkJ7s
+         yrGD6bGWR1nbbTWZMFvtz9E1Vfl5lSX7fo8yV9KA3w0UDXXZpGM6Ws8C4ONTP750ytg4
+         6eoaLnMnZcby3TpKMVJwiPHufqREi2YkfongHFHe6VNciXwTDv4/nZxiGRQljBK579Xa
+         RnETyLVvqw+id9+MOXHxkmKWIBxDaLRGZ05gT9W+xoSQsz/yve4mlLKwNjJl+mtAYDz6
+         6ZCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AQrJZiOtQpeYBVGvI+Fa9iDK0sg5zqap2ewkepptwbY=;
-        b=XeWHKOzshaHHK4iQVFOZf0p0BhD3QffVw36quQ6LeAsu5XGh6IRrDj7ROAPsa1PY8Y
-         6a67d1aWu4q1f0wWTYLnADah52LMkiwSlp+cctRE/Z5g0RIOx4lW3XmdxaeZhhGBeoA6
-         dJZK3EHkIkGbaIEh5SPrp8fCftXWch7FQEoz5Ndqe2ORN3zfNVNqaZN+mux2UeU8cchd
-         2CN7YnGsTO1dRlq1zLpB6u7mRUEKgqWbNoFXt82k0qq2rWHw3wDq22lyjFhP7xE/5yNH
-         p5LRwImzyVxDc+1vTjyfI9GAcxrlVSajyAxUVhis88CEZGMfHIyLWGu4wqzTwK0DDshW
-         FN8g==
-X-Gm-Message-State: APjAAAVkwuUgHXQ/ojoNgcaI2i+pFaNCjTNhvyDW9JFpi+8zHUlWadPB
-        fY92Ty5TG94dyltd55ZUbTjC6p0a
-X-Google-Smtp-Source: APXvYqzO/+3vBkwqFF6MwDoO7OOac99IrvKMnOh5EG9rnbdVWqC4dmxOBWCfWn9OHy+hxrqPU6I6TQ==
-X-Received: by 2002:adf:f8c8:: with SMTP id f8mr1240637wrq.331.1579155285349;
-        Wed, 15 Jan 2020 22:14:45 -0800 (PST)
+        bh=tiRfU/x6Tk+xmQS9vI+5zMy7btglgQelEfjNUbEmnWE=;
+        b=VhWTwFFesZC6V5KlmnHR4kESoiNPpTNWTcA5SYay8EnaRKJBLgwAXW7yaNbFalD8ew
+         CDSg8PGBSGQyyKi5Enrko6XQwUjx+nU7I/wCikH3bSt8DQAH7hr6XGiZZZqQypZm4tZx
+         MW4EqckMo6tYJbe1G0YBNN/y8+F2yWDt5F09pM14mEzr+r1ZzVsfY7kV3yWCfzFHh9E9
+         3mkmc/EHxukfJH7UVX1fEOApnwVCelqTWmxBhh4zzSoUqN5L5DocnWWdv6csTwWXIxR7
+         yl8nAVmX+a05CjMadLaUazeouyQeN2ULhZvJ/A7u0Qjlb0d6zjbhLkrNrFrLGr0FIC/a
+         WmFw==
+X-Gm-Message-State: APjAAAWaLrvBSj8Ywj5yOBzchCAA0t5z5WXXcZRfm81EmQbG/BZ11a1P
+        sMtY/g3POIY82hR9M4RGB9NpRR7z
+X-Google-Smtp-Source: APXvYqzWSSEhM31FvgoAfKbw10fc1KKwLY/7FQu+u/KQWa3cxkhXGAM4UAwJJ7DEC5yMZSnRkxI7Fg==
+X-Received: by 2002:adf:9c8a:: with SMTP id d10mr1328395wre.156.1579155281552;
+        Wed, 15 Jan 2020 22:14:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s1sm3017162wmc.23.2020.01.15.22.14.44
+        by smtp.gmail.com with ESMTPSA id c5sm3196734wmb.9.2020.01.15.22.14.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Jan 2020 22:14:44 -0800 (PST)
-Message-Id: <5478c730acad0423399de018f2099c07fefbb190.1579155273.git.gitgitgadget@gmail.com>
+        Wed, 15 Jan 2020 22:14:41 -0800 (PST)
+Message-Id: <0acefa988b14ca24966b31a4a7c0bb7bb31f10ba.1579155273.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
 References: <pull.679.v3.git.git.1577217299.gitgitgadget@gmail.com>
         <pull.679.v4.git.git.1579155273.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 16 Jan 2020 06:14:27 +0000
-Subject: [PATCH v4 13/19] rebase: add an --am option
+Date:   Thu, 16 Jan 2020 06:14:22 +0000
+Subject: [PATCH v4 08/19] rebase: fix handling of restrict_revision
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,103 +78,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Currently, this option doesn't do anything except error out if any
-options requiring the interactive-backend are also passed.  However,
-when we make the default backend configurable later in this series, this
-flag will provide a way to override the config setting.
+restrict_revision in the original shell script was an excluded revision
+range.  It is also treated that way by the am-backend.  In the
+conversion from shell to C (see commit 6ab54d17be3f ("rebase -i:
+implement the logic to initialize $revisions in C", 2018-08-28)), the
+interactive-backend accidentally treated it as a positive revision
+rather than a negated one.
+
+This was missed as there were no tests in the testsuite that tested an
+interactive rebase with fork-point behavior.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-rebase.txt | 11 ++++++++++-
- builtin/rebase.c             | 18 +++++++++++++++++-
- 2 files changed, 27 insertions(+), 2 deletions(-)
+ builtin/rebase.c  |  4 ++--
+ t/t3400-rebase.sh | 20 +++++++++++++++++++-
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index df02d76e2d..5230084be9 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -258,6 +258,13 @@ See also INCOMPATIBLE OPTIONS below.
- 	original branch. The index and working tree are also left
- 	unchanged as a result.
- 
-+--am:
-+	Use git-am internally to rebase.  This option may become a
-+	no-op in the future once the interactive backend handles
-+	everything the am one does.
-++
-+See also INCOMPATIBLE OPTIONS below.
-+
- --empty={drop,keep,ask}::
- 	How to handle commits that are not empty to start and are not
- 	clean cherry-picks of any upstream commit, but which become
-@@ -376,7 +383,7 @@ See also INCOMPATIBLE OPTIONS below.
- 	Ensure at least <n> lines of surrounding context match before
- 	and after each change.  When fewer lines of surrounding
- 	context exist they all must match.  By default no context is
--	ever ignored.
-+	ever ignored.  Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -416,6 +423,7 @@ with `--keep-base` in order to drop those commits from your branch.
- --whitespace=<option>::
- 	These flags are passed to the 'git apply' program
- 	(see linkgit:git-apply[1]) that applies the patch.
-+	Implies --am.
- +
- See also INCOMPATIBLE OPTIONS below.
- 
-@@ -559,6 +567,7 @@ INCOMPATIBLE OPTIONS
- 
- The following options:
- 
-+ * --am
-  * --committer-date-is-author-date
-  * --ignore-date
-  * --ignore-whitespace
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 55a0b2a288..6884590258 100644
+index e8d518ac8d..fe1175af32 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -1335,6 +1335,18 @@ static int can_fast_forward(struct commit *onto, struct commit *upstream,
- 	return res && is_linear_history(onto, head);
- }
+@@ -348,8 +348,8 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
  
-+static int parse_opt_am(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	BUG_ON_OPT_NEG(unset);
-+	BUG_ON_OPT_ARG(arg);
-+
-+	opts->type = REBASE_AM;
-+
-+	return 0;
-+}
-+
- /* -i followed by -m is still -i */
- static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
- {
-@@ -1519,6 +1531,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "show-current-patch", &action,
- 			    N_("show the patch file being applied or merged"),
- 			    ACTION_SHOW_CURRENT_PATCH),
-+		{ OPTION_CALLBACK, 0, "am", &options, NULL,
-+			N_("use apply-mail strategies to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_am },
- 		{ OPTION_CALLBACK, 'm', "merge", &options, NULL,
- 			N_("use merging strategies to rebase"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-@@ -1878,7 +1894,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
- 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
+ 	argv_array_pushl(&make_script_args, "", revisions, NULL);
+ 	if (opts->restrict_revision)
+-		argv_array_push(&make_script_args,
+-				oid_to_hex(&opts->restrict_revision->object.oid));
++		argv_array_pushf(&make_script_args, "^%s",
++				 oid_to_hex(&opts->restrict_revision->object.oid));
  
--	if (options.git_am_opts.argc) {
-+	if (options.git_am_opts.argc || options.type == REBASE_AM) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
- 			if (strcmp(options.git_am_opts.argv[i], "-q"))
+ 	ret = sequencer_make_script(the_repository, &todo_list.buf,
+ 				    make_script_args.argc, make_script_args.argv,
+diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+index 79762b989a..71fd6396cd 100755
+--- a/t/t3400-rebase.sh
++++ b/t/t3400-rebase.sh
+@@ -165,11 +165,29 @@ test_expect_success 'rebase works with format.useAutoBase' '
+ 	git rebase master
+ '
+ 
+-test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg (--merge)' '
+ 	git checkout -b default-base master &&
+ 	git checkout -b default topic &&
+ 	git config branch.default.remote . &&
+ 	git config branch.default.merge refs/heads/default-base &&
++	git rebase --merge &&
++	git rev-parse --verify default-base >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual &&
++	git checkout default-base &&
++	git reset --hard HEAD^ &&
++	git checkout default &&
++	git rebase --merge &&
++	git rev-parse --verify default-base >expect &&
++	git rev-parse default~1 >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'default to common base in @{upstream}s reflog if no upstream arg' '
++	git checkout -B default-base master &&
++	git checkout -B default topic &&
++	git config branch.default.remote . &&
++	git config branch.default.merge refs/heads/default-base &&
+ 	git rebase &&
+ 	git rev-parse --verify default-base >expect &&
+ 	git rev-parse default~1 >actual &&
 -- 
 gitgitgadget
 
