@@ -2,122 +2,139 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70476C33C9E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 22:37:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A1D0C33C9E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 23:38:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4594321D56
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 22:37:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2B58321D56
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 23:38:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="iksiKpiE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m1Zgl9ZB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729174AbgAQWhl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 17:37:41 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:41070 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728596AbgAQWhl (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 17 Jan 2020 17:37:41 -0500
-Received: from camp.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3C196607F5;
-        Fri, 17 Jan 2020 22:37:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579300659;
-        bh=BpIYUCms/WmgXE9qUzVvAZYB9E9uEyj30uH59KkzmOk=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=iksiKpiEphMSQe/tBiLp3/sv36shJYRaG9589QrZOhzCbC+KHinTZpKBYqqDW2+EN
-         E6xK0enwmyWMTlCJKy7MY77hWxtDpordrlOT0iAqohj6xtTol6GcExnLtSaT+U+hci
-         x1d6P22NDAG4zzQ0XX9iuYlC/19odpTwbj0G6mkE4JztfOWn1Eh6Cl87kiQGZZcGUB
-         ZTCqD4nA0Wrye+qbJ+D7TYXDrbXe7zreLVdSSJTSjQxfzlM2tX4AFaTpdmIMfzU4cb
-         dkHl5JZYHW6gCgkeizm98BOJhz5B6rbXuPCh/mrXL+NLNZTSb+DF63zLgnBUxXJ0o8
-         izUmG0N5xejiqYnwX9OhOcxWHpwitEshWEDBtSLBCz7aSCylV+NXtT6fprSXRVxZJu
-         WfRXCtxUyFcdVwLjY8WRiPb8lkMzN5QiHxefsMqGd9Ae4yoRrFt0feZcCJRRoTZKdO
-         UMNxOYDWScDWGd6ZhYyf/U5JtEcyAwuEPaWTt7ZrezlX2mkOVaR
-Date:   Fri, 17 Jan 2020 22:37:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Re-fix rebase -i with SHA-1 collisions
-Message-ID: <20200117223734.GA6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
+        id S1730261AbgAQXiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 18:38:07 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:36425 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729798AbgAQXiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 18:38:07 -0500
+Received: by mail-wm1-f68.google.com with SMTP id p17so9241696wma.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 15:38:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=KU7Ex1GOimJIGSMmjvV1rG/DpIi3fe/U6rd5WN4zxJg=;
+        b=m1Zgl9ZBom+Jd/Ps0KqqP2BVcjP78hMHG4Ca1LrDD+k19Ahogz4SAnZ7URL9+BNVoj
+         a2TN5rr4RwoQ24HkAw/7Z0OiXNkxHSlOC6bTJjMRSAKnjgKOVLLT/WO5eqH6VHVZfaSY
+         DSsIYtuYBewrh1LXe1DQ735SGRxdu7U1h8wF3QxiC0FWjLOyFAOvfW4eNCqNLQe1bpqe
+         jwwZMr3ryRTdbb9moy7ztveXDUDuby+PmNzfSS1/OEMDM4JZ064WLSajAxohveBSkAHG
+         djTVD+IK9hD+PsPul1xlMBXJZ1P+rg1HRSlyOdBD7xxbVgK8disNhTq1z86ubmEekOHe
+         owOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=KU7Ex1GOimJIGSMmjvV1rG/DpIi3fe/U6rd5WN4zxJg=;
+        b=BewcmgqEXR+4s4O8IwuOdI1psIyrL7VLNburf1xliqzPvci7T+Yc7IF/ZIficfzs5z
+         BJ3bOs3iNTyjTEf1M/NgPmRVGLt4htAcXl07nFycO0Nhpkxp6jtr7COvJX1J6MIhkLg5
+         lrdm8h9cSqEVgjPQvgRhE00mJi/ombC1z/ikofHY8VZ72e96odn6Ez4KJaLHC2P+hEhY
+         f3rM3LvIDB2kaizVdgqTSOnDLz2+jg02vJqiuAFcGs56OvoFCMoFgh7OzY//ZMCkeSoi
+         c3iCwdYIOhJ4SmS3YJEu3oiRJiRUD/wkLimdfHcJVK8IFxLqla8qyKchgowmp24LCWMd
+         ZFgQ==
+X-Gm-Message-State: APjAAAXya5bn5FxzOos0h9YhaJQe7VaO8QksWsTqBsblRvd5g3HJ6AGg
+        FDLprQW6zl6fLqhISAKAUlZEdB7R
+X-Google-Smtp-Source: APXvYqy7PAjKd2IcugsEqRuHB1ahPmLtN3CIYg4BRb/5XGek5TAb4ZBVEpDoWhMaSfHx12TnTiWvvA==
+X-Received: by 2002:a7b:cf01:: with SMTP id l1mr6909025wmg.86.1579304284968;
+        Fri, 17 Jan 2020 15:38:04 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c9sm11285081wmc.47.2020.01.17.15.38.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jan 2020 15:38:04 -0800 (PST)
+Message-Id: <pull.529.v2.git.1579304283.gitgitgadget@gmail.com>
+In-Reply-To: <pull.529.git.1579209506.gitgitgadget@gmail.com>
 References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
- <20200116235411.GZ6570@camp.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2001171050000.46@tvgsbejvaqbjf.bet>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 17 Jan 2020 23:38:00 +0000
+Subject: [PATCH v2 0/3] Re-fix rebase -i with SHA-1 collisions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Oh6wehMCKJhhoxlo"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2001171050000.46@tvgsbejvaqbjf.bet>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Triggered by one of brian's SHA-256 patch series, I looked at the reason why
+the SHA-1 collision test case passed when it shouldn't. Turns out that the
+regression test was not quite thorough enough, and the interactive rebase 
+did regress recently.
 
---Oh6wehMCKJhhoxlo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+While in the area, I realized that the same bug exists in the code backing
+the rebase.missingCommitsCheck feature: the backed-up todo list uses
+shortened commit IDs that may very well become ambiguous during the rebase.
+For good measure, this patch series fixes that, too.
 
-On 2020-01-17 at 09:51:42, Johannes Schindelin wrote:
-> > This series looks great to me, and thanks for fixing this.
-> >
-> > As mentioned in the PR, I'm happy for you to drop the SHA-256 patch into
-> > this series if you like, or I can carry it in a future series.  Either
-> > way is fine with me.
->=20
-> Excellent. Given that the re-fix to avoid short commit ID collisions has
-> little to do with supporting SHA-256, I would like to keep the patch
-> series separate, then.
->=20
-> The question whether to move the SHA-256 support patch into your series is
-> more a question to Junio, i.e. which patch series will be merged down
-> faster.
+Finally, I saw that git rebase --edit-todo reported the line in an awkward,
+maybe even incorrect, way when there was an ambiguous commit ID, and I also
+fixed that.
 
-I need to do a reroll of part 8, so I'll pick it into a future series
-(part 9) of test fixes and drop my patch.  That way it won't interfere
-with either series making progress, but it will still be included at the
-end.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+To make sure that the code can be easily adapted to SHA-256 after these
+patches, I actually already made those adjustments on top and offered them
+up at https://github.com/bk2204/git/pull/1.
 
---Oh6wehMCKJhhoxlo
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes since v1:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+ * Turned the error condition when parsing the todo list with just-expanded
+   commit IDs failed into a BUG().
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4iNy4ACgkQv1NdgR9S
-9ovwwBAAkBauEqjtA+CwuFRw1DVOyVxWJSvIf/42vQ2Djt+Q6wj9eRzMJXJ85QEY
-9Pdw47iZ1R43hPLy7vLngnh+Oxw98jSDielHR+L/4I8fGsJ6UcARKS/KMdqDPB7Z
-sNcU44VJ+oSN0ohRG+5iNhQfj2oR9ngJybUSlgQd6I372kqRt19yFyTK/p6eTrm6
-gpc5ym/Abf6FpUBFj4syXFyK/wu/LKqXNDS/ybcfkN4r/6StIl+sEAytO7ZuEcDF
-vNHgJbA8n0cX0YgWWn0d76vaZ4+Uf59QEL6WiST9wEFbo00NiWsgUj/wvfGlFd4Y
-yb2z6eFt8OXbpdXNRTexwi9dzXyJN6QCW1zDSAJV4jmZXrxwjZWcjyHDjmEjFM+G
-zvilEyasURhh8n/UcSUIMyMQe0b7PswcbyRKgU1AIAZnGY/d+dB0d6KZmIadNVu4
-hmy0X0t91uPBGfd3EwtM7/tnvXWD5cdmCItyRk0pY6PI7PBvUywBbynPioBJnosc
-6h3jhjdmjsMIeVASYXxHt9ZV4g8KUuvorTRnsU/Mt4/nL6/kikVQZK3nfxLYK/OV
-aQSdHB/nUNxXU+pOwv5tlHOdiv7Z05XXEQg++hfzejfbpiV5MKP5ebWyGeXJEeVT
-GQuckOeaTVEZy1NcqQhn9AJlvYFmaER4NYG1gN1jBPLlbR67VqA=
-=JzCz
------END PGP SIGNATURE-----
+Johannes Schindelin (3):
+  parse_insn_line(): improve error message when parsing failed
+  rebase -i: re-fix short SHA-1 collision
+  rebase -i: also avoid SHA-1 collisions with missingCommitsCheck
 
---Oh6wehMCKJhhoxlo--
+ rebase-interactive.c          |  8 +++++---
+ sequencer.c                   | 18 ++++++++++++++----
+ t/t3404-rebase-interactive.sh | 17 +++++++++++++++--
+ 3 files changed, 34 insertions(+), 9 deletions(-)
+
+
+base-commit: d0654dc308b0ba76dd8ed7bbb33c8d8f7aacd783
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-529%2Fdscho%2Fre-fix-rebase-i-with-sha-collisions-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-529/dscho/re-fix-rebase-i-with-sha-collisions-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/529
+
+Range-diff vs v1:
+
+ 1:  2ae2e435b0 = 1:  2ae2e435b0 parse_insn_line(): improve error message when parsing failed
+ 2:  ad50cd1b92 ! 2:  102fa568dc rebase -i: re-fix short SHA-1 collision
+     @@ -66,12 +66,9 @@
+      +	strbuf_swap(&new_todo.buf, &buf2);
+      +	strbuf_release(&buf2);
+      +	new_todo.total_nr -= new_todo.nr;
+     -+	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0) {
+     -+		fprintf(stderr, _(edit_todo_list_advice));
+     -+		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
+     -+		todo_list_release(&new_todo);
+     -+		return error(_("invalid todo list after expanding IDs"));
+     -+	}
+     ++	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0)
+     ++		BUG("invalid todo list after expanding IDs:\n%s",
+     ++		    new_todo.buf.buf);
+      +
+       	if (opts->allow_ff && skip_unnecessary_picks(r, &new_todo, &oid)) {
+       		todo_list_release(&new_todo);
+ 3:  e7d9ea8992 = 3:  486e9413a6 rebase -i: also avoid SHA-1 collisions with missingCommitsCheck
+
+-- 
+gitgitgadget
