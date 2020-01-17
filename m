@@ -7,178 +7,182 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B0EDC33CB6
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABF0C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:38:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 01EEE2087E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:23:40 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 57B6E20730
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:38:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IYjpu4q6"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IC0jQ79J"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727033AbgAQMXi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 07:23:38 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43919 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727003AbgAQMXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 07:23:36 -0500
-Received: by mail-wr1-f67.google.com with SMTP id d16so22529911wre.10
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 04:23:35 -0800 (PST)
+        id S1726974AbgAQMiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 07:38:01 -0500
+Received: from mail-vs1-f66.google.com ([209.85.217.66]:44187 "EHLO
+        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726917AbgAQMiA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 07:38:00 -0500
+Received: by mail-vs1-f66.google.com with SMTP id p6so14698528vsj.11
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 04:37:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=AOVxzxjO8+HG2Kmqe2P8/GHkob2Iga4tKdnge0V1UNY=;
-        b=IYjpu4q62aCSQFO3Hbjf9bEqhuRBc1zLzmEpouHD46GcfBhAUHoBA8f2S37iNP8FSh
-         TQb/ypO/UVZUBE0P2FauPKgCDdasv3ukc4mVb3Q2ChVPRx+lNMvWl0cBRoexXzDFmWyw
-         mpD8O+EPdoPmUmpXZw9CQjnnDjNDwxGcf0KHiku4wILnfNiOtdrn1TEz13s+jSB7Fi74
-         bg1y48ly+XPizr8BlduPp83hQkHOOTdVihZhiWxcaDOlvpFz805Y37euSUDiXelGF6Wv
-         QWTjXBfTylqpn5tFsWHgaHHohyrNuAzkVBLqhIP/mZ++9Mpone/Ym7i8A9aOUY9w2eql
-         Jt/g==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Nnr6N72ifMhNcCOp3J90kdNler5LrB6KDVwPr1x4gHA=;
+        b=IC0jQ79JYj3n4YO79FXQZPyQU66Cgq6y1tsu194VPAnKurNUrfZ9kkRidirAQo8W21
+         kyhBF4b7hjgjilnPjCD5+fkLb4Xcw3geDH4UlfMZ8SMfV6xvN3jmiiX069WgappvA7W1
+         2OzxO1UW7HXuGuVkuqGhAaPwwfoZhUvNu7Psg9ew+q258uemEcVblqRjEaZzb0otdI6Q
+         +C1ZjGlobPROG8dKCTBeORNv+eYUDIZCJO789q7Cln1TnLrs+QC79yz8/BrxoeVzj2bm
+         Mj9VKnXmNq2i3ZVAoT2S+Ey50obV5tozSTgJDjZHdUUWlI0oi86Lg2PNKX/9tEX6CUNH
+         TlKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AOVxzxjO8+HG2Kmqe2P8/GHkob2Iga4tKdnge0V1UNY=;
-        b=kKmHWT4VfODn/+VEfjSMk8Lyz30eERrsPbrHdTm9fxeGlYjn8ZFLLYP2mVUJASBRIm
-         ZNF2EXD1SWLX1rVLuRx+uuxoWIbjwwO3TzuNp5LrxREMWPVzMLKP68N7I47sioPYk66p
-         l67J7wJu1CImPUUNoEfCTCeSlePYkJYDZE1FJNjTyOhDZoZ8OiHrBMnz5mOc0g78dLin
-         1qQ5mQ1bw5kwDz/FYegAwN9EVeyG7YOiYTJi0NmkGMWLPiZdlE9M6WdZLJqvTWXavv35
-         PWohc1jFbndr3m+syrcEJKRKgDGPW/jGwSipSTBzWkk7iDcX+wNV8vdcBbQrPx3XJGpZ
-         zwDA==
-X-Gm-Message-State: APjAAAXo2uQTZOrMmUqcyGBspNPMAJo2OOUQ3VusZ5rlFPWfxV8PXTkI
-        jKdGI43ifyIAXPYGdwd2kVwkDp/N
-X-Google-Smtp-Source: APXvYqzOFP83OCIFFVh+OsO57h6g3sPTaW4bNzK1nO4BViWH6pFazbMpEtU4sfNfGGtPof/OV3JRyg==
-X-Received: by 2002:a5d:4dc9:: with SMTP id f9mr2772549wru.297.1579263814683;
-        Fri, 17 Jan 2020 04:23:34 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o4sm32584244wrx.25.2020.01.17.04.23.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2020 04:23:34 -0800 (PST)
-Message-Id: <72cdb2f95d8c03c7b0324e8132e04e3a10248432.1579263809.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.523.git.1579263809.gitgitgadget@gmail.com>
-References: <pull.523.git.1579263809.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 12:23:29 +0000
-Subject: [PATCH 4/4] submodule.c: use get_git_dir() instead of
- get_git_common_dir()
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Nnr6N72ifMhNcCOp3J90kdNler5LrB6KDVwPr1x4gHA=;
+        b=Cgb+9wvCYoSuWLeje0ZWHzXGAew8LVHV8sG2Z0uj3YWt/R2oRk+fTR6P0nuoEILrwT
+         xK3ozcZqYmdDkLlS2w6LVxpNl8s+1w9CwFD/SKwtngq/8SeBUNu7DmPUaToclFVR7u1X
+         8Yz23s0KnAcJVELZpiaCyMYIKjuihXt9E+V2ojQVU9oMa37pn+pCMDRrlxTDTQoum46+
+         X3l42MVGQpRfzyzspWvQ4zfAp8RudSUkm2Ge/cPpdunvXttt9xXj/D95sGfL3dXhzLjQ
+         m53Jg8vI+BduZaoDg3OOYZF89RbrBP+Al79LR3eas2V3d7h+3/emxjwohdI0K8ssQDtJ
+         J9OA==
+X-Gm-Message-State: APjAAAWBNoyjLlDSHdksrjzET9cU2m3m+6mnXrCU4imkC4jSOAJ4xgYd
+        thG+WZfl0+CKWIpdH3Ud3VGjRYot7P0syyYJbyk=
+X-Google-Smtp-Source: APXvYqwtc5oXHqIQOBkjC+x/J8PU1sVgi/lGL0Y8cJTKxhwH+Yb+a4gsEGzGw52sGwRUFbOqtljIO+QzJtIwe0QjNHw=
+X-Received: by 2002:a05:6102:7a4:: with SMTP id x4mr4429337vsg.85.1579264679323;
+ Fri, 17 Jan 2020 04:37:59 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
+ <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+ <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Fri, 17 Jan 2020 13:37:47 +0100
+Message-ID: <CAKPyHN0eTa9LC35oqsy0Dce0qpOJAx159HR+QyguDt_NZ2he_w@mail.gmail.com>
+Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
+ values too
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Hi,
 
-Ever since df56607dff (git-common-dir: make "modules/"
-per-working-directory directory, 2014-11-30), submodules in linked worktrees
-are cloned to $GIT_DIR/modules, i.e. $GIT_COMMON_DIR/worktrees/<name>/modules.
+On Fri, Jan 17, 2020 at 12:50 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Bert,
+>
+> On Fri, 17 Jan 2020, Bert Wesarg wrote:
+>
+> > When renaming a remote with
+> >
+> >     git remote rename X Y
+> >
+> > Git already renames any config values from
+> >
+> >     branch.<name>.remote = X
+> >
+> > to
+> >
+> >     branch.<name>.remote = Y
+> >
+> > As branch.<name>.pushRemote also names a remote, it now also renames
+> > these config values from
+> >
+> >     branch.<name>.pushRemote = X
+> >
+> > to
+> >
+> >     branch.<name>.pushRemote = Y
+>
+> Should we warn if remote.pushDefault = X?
 
-However, this convention was not followed when the worktree updater commands
-checkout, reset and read-tree learned to recurse into submodules. Specifically,
-submodule.c::submodule_move_head, introduced in 6e3c1595c6 (update submodules:
-add submodule_move_head, 2017-03-14) and submodule.c::submodule_unset_core_worktree,
-(re)introduced in 898c2e65b7 (submodule: unset core.worktree if no working tree
-is present, 2018-12-14) use get_git_common_dir() instead of get_git_dir()
-to get the path of the submodule repository.
+AFAIU, the value of remote.pushDefault wont be renamed yet. So you
+suggest to issue a warning in case remote.pushDefault is X. But as X
+does not exists anymore after the rename, the value of
+remote.pushDefault is invalid. So why not rename it too?
 
-This means that, for example, 'git checkout --recurse-submodules <branch>'
-in a linked worktree will correctly checkout <branch>, detach the submodule's HEAD
-at the commit recorded in <branch> and update the submodule working tree, but the
-submodule HEAD that will be moved is the one in $GIT_COMMON_DIR/modules/<name>/,
-i.e. the submodule repository of the main superproject working tree.
-It will also rewrite the gitfile in the submodule working tree of the linked worktree
-to point to $GIT_COMMON_DIR/modules/<name>/.
-This leads to an incorrect (and confusing!) state in the submodule working tree
-of the main superproject worktree.
+>
+> Other than that, I am still okay with the patch (even after the
+> re-ordering of the enum ;-)
+>
+> Just one more suggestion:
+>
+> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> >
+> > ---
+> > Cc: Junio C Hamano <gitster@pobox.com>
+> > Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/remote.c  | 17 +++++++++++++++--
+> >  t/t5505-remote.sh |  4 +++-
+> >  2 files changed, 18 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/builtin/remote.c b/builtin/remote.c
+> > index 96bbe828fe..a74aac344f 100644
+> > --- a/builtin/remote.c
+> > +++ b/builtin/remote.c
+> > @@ -251,6 +251,7 @@ struct branch_info {
+> >       enum {
+> >               NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE, REBASE_MERGES
+> >       } rebase;
+> > +     char *push_remote_name;
+> >  };
+> >
+> >  static struct string_list branch_list = STRING_LIST_INIT_NODUP;
+> > @@ -269,7 +270,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >               char *name;
+> >               struct string_list_item *item;
+> >               struct branch_info *info;
+> > -             enum { REMOTE, MERGE, REBASE } type;
+> > +             enum { REMOTE, MERGE, REBASE, PUSH_REMOTE } type;
+> >               size_t key_len;
+> >
+> >               key += 7;
+> > @@ -282,6 +283,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >               } else if (strip_suffix(key, ".rebase", &key_len)) {
+> >                       name = xmemdupz(key, key_len);
+> >                       type = REBASE;
+> > +             } else if (strip_suffix(key, ".pushremote", &key_len)) {
+> > +                     name = xmemdupz(key, key_len);
+> > +                     type = PUSH_REMOTE;
+> >               } else
+> >                       return 0;
+> >
+> > @@ -305,7 +309,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >                               space = strchr(value, ' ');
+> >                       }
+> >                       string_list_append(&info->merge, xstrdup(value));
+> > -             } else {
+> > +             } else if (type == REBASE) {
+> >                       int v = git_parse_maybe_bool(value);
+> >                       if (v >= 0)
+> >                               info->rebase = v;
+> > @@ -315,6 +319,10 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >                               info->rebase = REBASE_MERGES;
+> >                       else if (!strcmp(value, "interactive"))
+> >                               info->rebase = INTERACTIVE_REBASE;
+> > +             } else {
+> > +                     if (info->push_remote_name)
+> > +                             warning(_("more than one %s"), orig_key);
+> > +                     info->push_remote_name = xstrdup(value);
+>
+> It makes me a bit nervous that this is an `else` without an `if (type ==
+> PUSH_REMOTE)`... Maybe do that, just to be on the safe side, even if
+> another type is introduced in the future?
 
-Additionnally, if switching to a commit where the submodule is not present,
-submodule_unset_core_worktree will be called and will incorrectly remove
-'core.wortree' from the config file of the submodule in the main superproject worktree,
-$GIT_COMMON_DIR/modules/<name>/config.
+I'm not a friend of this last 'else' either, but it was so to begin
+with. I'm all for changing it to an 'else if'. Though while it is
+impossible that 'type' has a value different than one from the enum, I
+would be even more comfortable with having BUG at the end.
 
-Fix this by constructing the path to the submodule repository using get_git_dir()
-in both submodule_move_head and submodule_unset_core_worktree.
+Bert
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- submodule.c                   |  6 +++---
- t/t2405-worktree-submodule.sh | 22 ++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 3 deletions(-)
-
-diff --git a/submodule.c b/submodule.c
-index 9da7181321..5d19ec48a6 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1811,7 +1811,7 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
- void submodule_unset_core_worktree(const struct submodule *sub)
- {
- 	char *config_path = xstrfmt("%s/modules/%s/config",
--				    get_git_common_dir(), sub->name);
-+				    get_git_dir(), sub->name);
- 
- 	if (git_config_set_in_file_gently(config_path, "core.worktree", NULL))
- 		warning(_("Could not unset core.worktree setting in submodule '%s'"),
-@@ -1914,7 +1914,7 @@ int submodule_move_head(const char *path,
- 					ABSORB_GITDIR_RECURSE_SUBMODULES);
- 		} else {
- 			char *gitdir = xstrfmt("%s/modules/%s",
--				    get_git_common_dir(), sub->name);
-+				    get_git_dir(), sub->name);
- 			connect_work_tree_and_git_dir(path, gitdir, 0);
- 			free(gitdir);
- 
-@@ -1924,7 +1924,7 @@ int submodule_move_head(const char *path,
- 
- 		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
- 			char *gitdir = xstrfmt("%s/modules/%s",
--				    get_git_common_dir(), sub->name);
-+				    get_git_dir(), sub->name);
- 			connect_work_tree_and_git_dir(path, gitdir, 1);
- 			free(gitdir);
- 		}
-diff --git a/t/t2405-worktree-submodule.sh b/t/t2405-worktree-submodule.sh
-index f1952c70dd..eba17d9e35 100755
---- a/t/t2405-worktree-submodule.sh
-+++ b/t/t2405-worktree-submodule.sh
-@@ -10,6 +10,7 @@ test_expect_success 'setup: create origin repos'  '
- 	git init origin/sub &&
- 	test_commit -C origin/sub file1 &&
- 	git init origin/main &&
-+	test_commit -C origin/main first &&
- 	git -C origin/main submodule add ../sub &&
- 	git -C origin/main commit -m "add sub" &&
- 	test_commit -C origin/sub "file1-updated" file1 file1updated &&
-@@ -54,4 +55,25 @@ test_expect_success 'submodule is checked out after manually adding submodule wo
- 	grep "file1-updated" out
- '
- 
-+test_expect_success 'checkout --recurse-submodules uses $GIT_DIR for submodules in a linked worktree' '
-+	git -C main worktree add "$base_path/checkout-recurse" --detach  &&
-+	git -C checkout-recurse submodule update --init &&
-+	cat checkout-recurse/sub/.git > expect-gitfile &&
-+	git -C main/sub rev-parse HEAD > expect-head-main &&
-+	git -C checkout-recurse checkout --recurse-submodules HEAD~1 &&
-+	cat checkout-recurse/sub/.git > actual-gitfile &&
-+	git -C main/sub rev-parse HEAD > actual-head-main &&
-+	test_cmp expect-gitfile actual-gitfile &&
-+	test_cmp expect-head-main actual-head-main
-+'
-+
-+test_expect_success 'core.worktree is removed in $GIT_DIR/modules/<name>/config, not in $GIT_COMMON_DIR/modules/<name>/config' '
-+	git -C main/sub config --get core.worktree > expect &&
-+	git -C checkout-recurse checkout --recurse-submodules first &&
-+	test_might_fail git -C main/.git/worktrees/checkout-recurse/modules/sub config --get core.worktree > linked-config &&
-+	test_must_be_empty linked-config &&
-+	test_might_fail git -C main/sub config --get core.worktree > actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-gitgitgadget
+>
+> Thanks,
+> Dscho
+>
