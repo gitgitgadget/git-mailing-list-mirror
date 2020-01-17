@@ -2,187 +2,99 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ABF0C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5711CC33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:42:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 57B6E20730
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:38:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 230982083E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 12:42:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IC0jQ79J"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="thrgqFZN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726974AbgAQMiB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 07:38:01 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:44187 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726917AbgAQMiA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 07:38:00 -0500
-Received: by mail-vs1-f66.google.com with SMTP id p6so14698528vsj.11
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 04:37:59 -0800 (PST)
+        id S1726566AbgAQMmu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 07:42:50 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:44504 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726418AbgAQMmt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 07:42:49 -0500
+Received: by mail-io1-f67.google.com with SMTP id b10so25791870iof.11
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 04:42:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Nnr6N72ifMhNcCOp3J90kdNler5LrB6KDVwPr1x4gHA=;
-        b=IC0jQ79JYj3n4YO79FXQZPyQU66Cgq6y1tsu194VPAnKurNUrfZ9kkRidirAQo8W21
-         kyhBF4b7hjgjilnPjCD5+fkLb4Xcw3geDH4UlfMZ8SMfV6xvN3jmiiX069WgappvA7W1
-         2OzxO1UW7HXuGuVkuqGhAaPwwfoZhUvNu7Psg9ew+q258uemEcVblqRjEaZzb0otdI6Q
-         +C1ZjGlobPROG8dKCTBeORNv+eYUDIZCJO789q7Cln1TnLrs+QC79yz8/BrxoeVzj2bm
-         Mj9VKnXmNq2i3ZVAoT2S+Ey50obV5tozSTgJDjZHdUUWlI0oi86Lg2PNKX/9tEX6CUNH
-         TlKQ==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=Zanag3wQ4Ju+zJoThITXURNX+Bh9VXSi5lInw5KHVPY=;
+        b=thrgqFZNd6PD+NGXjJ60jstvXZOIk2ZzvckOOYMCyFIE+MwHl7IK6QwHSfmIOPrbMA
+         EnhCiH7xdIXTUWXuFmM/SOZztrlmNg1Ik3c27k33YR1WlBZ4TJj0ykWcSWBgjkcAzRza
+         mgxwC4ZQzxaZFQsA7txV4Yqpnk0doJy2CERPIdl8ndlBJ4PsjBuiZfndeXvM3T5LNCjC
+         V+LouvzdnAxJQ8de3sm9DFncmnbo3r5l4QhaviubI/kl2C/fLhYavfG1u4kQUpu/hS/2
+         xa7ln7PfR0vrhUYopqgG67yK5MkcbvWh7sDWyCqgcAmjXE2frI1ku3LX98G2BNDiw64V
+         Hj5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Nnr6N72ifMhNcCOp3J90kdNler5LrB6KDVwPr1x4gHA=;
-        b=Cgb+9wvCYoSuWLeje0ZWHzXGAew8LVHV8sG2Z0uj3YWt/R2oRk+fTR6P0nuoEILrwT
-         xK3ozcZqYmdDkLlS2w6LVxpNl8s+1w9CwFD/SKwtngq/8SeBUNu7DmPUaToclFVR7u1X
-         8Yz23s0KnAcJVELZpiaCyMYIKjuihXt9E+V2ojQVU9oMa37pn+pCMDRrlxTDTQoum46+
-         X3l42MVGQpRfzyzspWvQ4zfAp8RudSUkm2Ge/cPpdunvXttt9xXj/D95sGfL3dXhzLjQ
-         m53Jg8vI+BduZaoDg3OOYZF89RbrBP+Al79LR3eas2V3d7h+3/emxjwohdI0K8ssQDtJ
-         J9OA==
-X-Gm-Message-State: APjAAAWBNoyjLlDSHdksrjzET9cU2m3m+6mnXrCU4imkC4jSOAJ4xgYd
-        thG+WZfl0+CKWIpdH3Ud3VGjRYot7P0syyYJbyk=
-X-Google-Smtp-Source: APXvYqwtc5oXHqIQOBkjC+x/J8PU1sVgi/lGL0Y8cJTKxhwH+Yb+a4gsEGzGw52sGwRUFbOqtljIO+QzJtIwe0QjNHw=
-X-Received: by 2002:a05:6102:7a4:: with SMTP id x4mr4429337vsg.85.1579264679323;
- Fri, 17 Jan 2020 04:37:59 -0800 (PST)
+         :message-id:subject:to;
+        bh=Zanag3wQ4Ju+zJoThITXURNX+Bh9VXSi5lInw5KHVPY=;
+        b=rwr/eKRpIbX/JHL+8RGhbeO380B+JptvPVBP1CPuoFeqCs7YjAYdJrfFAgjJaBa+kO
+         5aIGK6ouxeJhXDwDmLuXadSlsLk21e00616V6lqCH2K85O8byxsoiXM8Bfwkv+KnOfJ0
+         99bxT23FDT0gGVTq0LQIUiX6kWgfTwhJ1smMlS0c6YPfKkTtgQOzJqwvbC+KWxjbIhjx
+         hEvIw0qfKBFsZQf3kmQhnCdOZ0xQ1lz35CI6HkGolUwclP2/ynDTx5jBaSbd8m6F6/Vk
+         ARcW/qta7eKBPOeW4wsLfYV3rfyJs4t4cO6yDjCFgyojZfS+AK1ztyf2ssN42rKeIdIA
+         /SLQ==
+X-Gm-Message-State: APjAAAUM7lZh3wuZOIYpX+38vAmty3V6UEOGNh6rYArhszMEeyri54Fk
+        3fqbbl8FLHsIKHfPRMJkxKJk4CEX8pPAyDmstEx2zQsbDFw=
+X-Google-Smtp-Source: APXvYqyaoZyq/w237qmIcDwnuQ1JHc+lNjONCtREHepDfFMK5sBe1rZ0EqB6CqVTGfw2LpyybXBa1Pi7Sx5ImE7GJkA=
+X-Received: by 2002:a5e:d616:: with SMTP id w22mr29603012iom.57.1579264968721;
+ Fri, 17 Jan 2020 04:42:48 -0800 (PST)
 MIME-Version: 1.0
-References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
- <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
- <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Fri, 17 Jan 2020 13:37:47 +0100
-Message-ID: <CAKPyHN0eTa9LC35oqsy0Dce0qpOJAx159HR+QyguDt_NZ2he_w@mail.gmail.com>
-Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
- values too
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+References: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com>
+ <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com>
+From:   Nirmal Khedkar <nirmalhk7@gmail.com>
+Date:   Fri, 17 Jan 2020 18:12:12 +0530
+Message-ID: <CAFFaXsz9LEdegzxL8MhS+VfTs-wmWu+CGDjxjB4Xgj8+7nSHNQ@mail.gmail.com>
+Subject: Re: Facing error in git-imap-send while compiling Git
+To:     git@vger.kernel.org, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Jan 17, 2020 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Nirmal Khedkar <nirmalhk7@gmail.com> writes:
+>
+> > Hey!
+> > I've been facing this error everytime I run the Makefile:
+> > -----
+> > LINK git-imap-send
+> > imap-send.o: In function `verify_hostname':
+> > /git/imap-send.c:252: undefined reference to `sk_num'
+>
+> Perhaps the thread
+>
+>   https://lore.kernel.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com
+>
+> may help?
 
-On Fri, Jan 17, 2020 at 12:50 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Bert,
->
-> On Fri, 17 Jan 2020, Bert Wesarg wrote:
->
-> > When renaming a remote with
-> >
-> >     git remote rename X Y
-> >
-> > Git already renames any config values from
-> >
-> >     branch.<name>.remote = X
-> >
-> > to
-> >
-> >     branch.<name>.remote = Y
-> >
-> > As branch.<name>.pushRemote also names a remote, it now also renames
-> > these config values from
-> >
-> >     branch.<name>.pushRemote = X
-> >
-> > to
-> >
-> >     branch.<name>.pushRemote = Y
->
-> Should we warn if remote.pushDefault = X?
+It did, to the extent that I now know why I'm facing these errors out
+of the blue.
 
-AFAIU, the value of remote.pushDefault wont be renamed yet. So you
-suggest to issue a warning in case remote.pushDefault is X. But as X
-does not exists anymore after the rename, the value of
-remote.pushDefault is invalid. So why not rename it too?
+I'm  not quite sure as to what am I supposed to do right now, should I
+wait for Liam's patch to be merged,  or should I implement his fixes
+locally or should I just downgrade my openssl?
 
->
-> Other than that, I am still okay with the patch (even after the
-> re-ordering of the enum ;-)
->
-> Just one more suggestion:
->
-> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> >
-> > ---
-> > Cc: Junio C Hamano <gitster@pobox.com>
-> > Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin/remote.c  | 17 +++++++++++++++--
-> >  t/t5505-remote.sh |  4 +++-
-> >  2 files changed, 18 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/builtin/remote.c b/builtin/remote.c
-> > index 96bbe828fe..a74aac344f 100644
-> > --- a/builtin/remote.c
-> > +++ b/builtin/remote.c
-> > @@ -251,6 +251,7 @@ struct branch_info {
-> >       enum {
-> >               NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE, REBASE_MERGES
-> >       } rebase;
-> > +     char *push_remote_name;
-> >  };
-> >
-> >  static struct string_list branch_list = STRING_LIST_INIT_NODUP;
-> > @@ -269,7 +270,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >               char *name;
-> >               struct string_list_item *item;
-> >               struct branch_info *info;
-> > -             enum { REMOTE, MERGE, REBASE } type;
-> > +             enum { REMOTE, MERGE, REBASE, PUSH_REMOTE } type;
-> >               size_t key_len;
-> >
-> >               key += 7;
-> > @@ -282,6 +283,9 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >               } else if (strip_suffix(key, ".rebase", &key_len)) {
-> >                       name = xmemdupz(key, key_len);
-> >                       type = REBASE;
-> > +             } else if (strip_suffix(key, ".pushremote", &key_len)) {
-> > +                     name = xmemdupz(key, key_len);
-> > +                     type = PUSH_REMOTE;
-> >               } else
-> >                       return 0;
-> >
-> > @@ -305,7 +309,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >                               space = strchr(value, ' ');
-> >                       }
-> >                       string_list_append(&info->merge, xstrdup(value));
-> > -             } else {
-> > +             } else if (type == REBASE) {
-> >                       int v = git_parse_maybe_bool(value);
-> >                       if (v >= 0)
-> >                               info->rebase = v;
-> > @@ -315,6 +319,10 @@ static int config_read_branches(const char *key, const char *value, void *cb)
-> >                               info->rebase = REBASE_MERGES;
-> >                       else if (!strcmp(value, "interactive"))
-> >                               info->rebase = INTERACTIVE_REBASE;
-> > +             } else {
-> > +                     if (info->push_remote_name)
-> > +                             warning(_("more than one %s"), orig_key);
-> > +                     info->push_remote_name = xstrdup(value);
->
-> It makes me a bit nervous that this is an `else` without an `if (type ==
-> PUSH_REMOTE)`... Maybe do that, just to be on the safe side, even if
-> another type is introduced in the future?
+Liam's PR (#516 on GitGitGadget [1]) haven't yet passed all build
+checks and I guess its still a work in progress. Nevertheless I've
+tried implementing his fixes to imap-send.c, and the make still fails.
+Am I missing something here?
 
-I'm not a friend of this last 'else' either, but it was so to begin
-with. I'm all for changing it to an 'else if'. Though while it is
-impossible that 'type' has a value different than one from the enum, I
-would be even more comfortable with having BUG at the end.
+Thanks!
+Regards,
+Nirmal Khedkar
 
-Bert
-
->
-> Thanks,
-> Dscho
->
+[1] https://github.com/gitgitgadget/git/pull/516
