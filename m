@@ -8,67 +8,68 @@ X-Spam-Status: No, score=-13.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8EFC33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAADCC33CB6
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:03:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A17782082F
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:01:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C20942082F
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:03:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cdPQ6c7i"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="dO1Pdks6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726957AbgAQKBJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 05:01:09 -0500
-Received: from mout.gmx.net ([212.227.17.20]:43671 "EHLO mout.gmx.net"
+        id S1726974AbgAQKDK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 05:03:10 -0500
+Received: from mout.gmx.net ([212.227.15.18]:46279 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726730AbgAQKBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 05:01:09 -0500
+        id S1726554AbgAQKDJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 05:03:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579255262;
-        bh=YZX6L3KRs1cEUEbTREhnPDwyO2aX67iihrk17T5qq6o=;
+        s=badeba3b8450; t=1579255384;
+        bh=0ylNcpXhtVr5XmN5PuU8F7KjlqyssB+4kpGT1Z8+OLY=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cdPQ6c7iFf7h4eQ0vbYU+jH2yF9uRhwfavp/8gtVqTpaL2CWWRN1e1VDRcKml3ORy
-         ZssnUCUtlsJEsJ7s3AVBOZydqR4lWfexyv5UIX9Qaj++CVk1NmTJUi/ikvpzJdHxrO
-         ArCdnsFptC/iY+A8sa6jVcDs4sXOEr+g0GGLbTGY=
+        b=dO1Pdks6ey3k/TowMDC7+4EF8R3LY7C5Rwu9exMlr1xHxqqUol8tOkcOxEBJHcOVA
+         /xGm4AX4SnPOGFqWp9ZwPOhXhTo9m1rTVWVqi6HIBtA08zJmqPKC6k08zz2rhQPYLP
+         IC7dhDBmnziZdm/z8hFAjbtRgut6niICTJwFxstw=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNsw4-1jGgZq2HCy-00OCyK; Fri, 17
- Jan 2020 11:01:02 +0100
-Date:   Fri, 17 Jan 2020 11:01:00 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MmlXA-1jKKhq142Y-00jn5a; Fri, 17
+ Jan 2020 11:03:04 +0100
+Date:   Fri, 17 Jan 2020 11:03:02 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 2/2] built-in add -i: accept open-ended ranges again
-In-Reply-To: <xmqqv9pbf3mu.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2001171100030.46@tvgsbejvaqbjf.bet>
-References: <pull.528.git.1579163587.gitgitgadget@gmail.com> <7e4bf4bbbcd8c81a19d690aee379042e47246947.1579163587.git.gitgitgadget@gmail.com> <xmqqv9pbf3mu.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 1/2] built-in add -i: do not try to `patch`/`diff` an
+ empty list of files
+In-Reply-To: <xmqqzhenf3t0.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001171101150.46@tvgsbejvaqbjf.bet>
+References: <pull.528.git.1579163587.gitgitgadget@gmail.com> <353c748838d341bb325149234657c27215a9fab3.1579163587.git.gitgitgadget@gmail.com> <xmqqzhenf3t0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wp1Z+xGaPW5j7wqaoeQewqekfcZ6sdS+4sZERScrY5qXIl4URjO
- aaAlKU0rcKaByNw0Cfa3BtEu2rE2EqFvDeOWspCNTWvZsolaa2MN70isJkbeYrsrhfoC9Bb
- P++ueKO3JbuHVq83CpTFlW/Ymuuyblkd5NJYqC62L85HtjEo49hxzqTfsJypvBN47/OC/sQ
- QrCSj4nk20khAuxQdvSFQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:imB0yfTQs4k=:A1WuMPBnZdaNin53iRkFRt
- Hdx1p/ERamT3CubNAlbGYajvv62QDIQ+GTOaz+o/peUZkdcOO0bJ3ZSrmAl2miiEY5yGSxmaU
- PjXwXnhdOvDfisBtT8s9FODWuaZRJxnLu92nYyfsBePxIfU19w79U4mMQFTmtmk5Rr32DX/r7
- mk37hOAie24ISQpkTZJ/XtwpOVwsr18r5RsdoxYdERcBpW1cqpTQUmuUTwDNTTDfo5fHGtNEK
- 20T3rsZ+Ju6XwNNWMMoASmsMzDFHyQGQuZMrxhc5w89EyYA3CsekJ3ZFK2T22Dm1Tz/B767c5
- En/+IxeidihzO9udWldeNxKypwF3txu8/9fi6cAeTvvhDhddUl7T6AoXFOJpbktqgMHUj7Fdt
- Sm2PxWso9pGnljgnyHJgX3OYq+1u1p0nXQhJ+18oYjSHbrG194Bi8H+D6VPNcaHPXHhJAwHpn
- lZr4c28ES6YI/mcYnMdqqKo09f1smoskw6XCzztMSh0FhKNeF+S0nwDxpvbIdQGLKRj4I90ta
- RP2xu7+eR09DfedHrEqFcU2okN2YflecprJXPQxx9VBXXac2g8leDTODRBxj8VzYbaInYlDkE
- NbAiVA6Drc+1LzU08bNrhMGXXarxGc63DgPjNRMymt2rznjC6aupvezmDLg3ukAXzfPtlJv6u
- b3J1J/ou0W3vKH3S4sDL/cVCDoKEZIQR+/9F0ki59SfPYXKje+MGpP6os5twCF/niXx/SvHg7
- fpykuAMaLehAuDl0UFfrk6pe/NG4MDAv3xyhr6EwiPOjVhYfeeALR0W97bMmHVTGYiAYqsDTt
- MKsBWXYkDTB7l3/kOBThN1fFBohWENF4t07+7287XVUjjw+0Jm89oNyiRzVHzXhhkRW0bBADX
- 5bGl/DsfVnS9QuCXrSRDoR3BYcFl0q6vAVM6u0KXeubOfGvHTxPlX+m66qsh8IzcP8wU8SpXs
- m80nMPULrEKMlyJh8mGgyQ54D9TsSIXps2CAIKYNdiNelLawaf8O8f2Dd+Dzzq8+bPb+xsidy
- YFK9BF/1pjDLMe/8L4WD1pGJft0QyMNnHkcfsXDYGrQ3Tfa34Hjl1DkLcc9J7QA3y+nFbjSlq
- m2gu7Cy5D62BMY1AXslWycZpvinKp1vRewBTaVz8W8Jxq0wyjLq47+Z5DtZtjonUe7eJII/lG
- 9I8nq/5Uwa14I2mb/wdiggPs5je0BzEbgxOfgDhLsdnfR87337F4tSvAfOLm/40gTtUYjovar
- VY+61/muPJS+FMJV4x0+bAMciC36DFmgreJHb6KHy0fID9ZXDcuBCerdCV1E=
+X-Provags-ID: V03:K1:5QIdUQc7qRtaiZw1J/VFAIldwsq/cVVnKc5vcGxAI4Dnqtt5PgY
+ zCtoadzV8jx+suJ4vbafoE0NpLbIZ+b6FVRXKWXlGIV5Wjd8FGXmqX8ABu1wfd8u6fnQ747
+ PVKqkPv7Y/gmLln06pBZD6Q6A3pOVzh7BLkCk1fUpa9Ebu2tBeI73toGnPyfM+thCjgvs4i
+ 6TvBnq3dO62mCyZThd6GA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:4bEzImJXsbs=:3yUX1/RlT+Uviz+A6B9YsD
+ j4qUi1kiL9P01sZ4KE1l/W/4eUgcqPtVGv9xjnUJGvNwG2n5aEhFZOGDZCONRmF66Ouf0yqdc
+ ZkfZSrsC0XbvKhgewId04xMWpCG9CjtFiVnc/0hKUTrU3UyVrrs9RGatuLsnazMalcE5OwX3J
+ w6yVzMhYsV+TD/jaGeK6ievfH7uxexNgPyDLUju3v20ApsvnxqpjvDBeaWkt9wdpAfLSM5Awh
+ QyAul3kUDYF8ReIQeicsJf0m4+iCefxUqZVKblx50xVoFh7BHU8dteMCWJVSzrlrlBCq5F2y0
+ S4CYuQzohTM9VmIF8A2Xy3kVZ36QV6Qv6XTTKHG6jDe+RKLNzCg5Inj2EoFXEkafS4qZQbfKN
+ UN1dqi56GeOZJ+dLZIGkFIa5pS8O20pC/0mSELw/g7eycSfDXK0d7ktQlaWpV4dnxKxM2CHSq
+ iL7sBdi3w32ax06gnT7Igp09zH9+EcXgQ4dWrR4qqdZXRhcRNzO/qPFMLXrpNNsezmxZAw4Md
+ DPuCWzNORO3SO0BS7VpqcSIOUufP/jIs/MWBMobdbcQiRGV+KnNmwALNSL5ayWnUHTgdgMpUW
+ Tbs9cTSnf3QUDFV438MuclM7RUQdKBeBZ9nRRpvk5n0EBhLerC7ZSXL6Rm4mD+lpz60mrqMAb
+ ojAVznxDkylnUGlD9uzKtOB8DzwLAn32nclnYchhlghcQyZX8xjM9jj+Yrg2b9TDv9IKVagj/
+ uwnbf+ukOdQ9quALl/SLGAQZ7VXcmq/aVBLnQtkqAQM6Xx0bxgqx/RougMgfW5Yl8+pA5hlkw
+ KvVQqEl1Zn70WfAGwr90K7mS0VWKChYg42aYYxso49jHfAhV9WUgO0/zqqqiQwABUduzUCA9I
+ +//5hVpMie7kQoCGRr+Qyzua9QvO3MOr4nBXgbcmCpk7xlwbz00cWvQD2CZK+ywhz+pZLHD7T
+ Hlja36UyrvBGZqyDsbzIZ9m933jzBSJ2oFgVsy9LLsz34KlaRxCxvbESrnedwQITllJqbhsXs
+ 2PK20gPETOJ38OSbkFuAOC0OEY2TOYPUVFdjvaRjjoR+rPXGl2NLVoS+o8twYpW/nkxmlS3X6
+ gqRBxvuTDTNhK3WNsAwTGZIOaS098xttwKGnXyIfMSFov9zrCmjk7IkMSXi7MIv2Ejlta36Jz
+ 9SNM4/pOnA8FfYVZveeCAqTXPQ5br6fh3wL/GdyeTI241G3E1wUk3I+iSUg2EBZVpxI/ipTMI
+ dZSvSRl+bmwmVNwV0dgalpL/FsUW96CiS3Ci/blS4g9X/OnOfwBAvDpaTKuE=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -84,67 +85,60 @@ On Thu, 16 Jan 2020, Junio C Hamano wrote:
 >
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > The interactive `add` command allows selecting multiple files for some
-> > of its sub-commands, via unique prefixes, indices or index ranges.
+> > When the user does not select any files to `patch` or `diff`, there is
+> > no need to call `run_add_p()` on them.
 > >
-> > When re-implementing `git add -i` in C, we even added a code comment
-> > talking about ranges with a missing end index, such as `2-`, but the
-> > code did not actually accept those, as pointed out in
-> > https://github.com/git-for-windows/git/issues/2466#issuecomment-574142=
-760.
+> > Even worse: we _have_ to avoid calling `parse_pathspec()` with an empt=
+y
+> > list because that would trigger this error:
 > >
-> > Let's fix this, and add a test case to verify that this stays fixed
-> > forever.
+> > 	BUG: pathspec.c:557: PATHSPEC_PREFER_CWD requires arguments
+> >
+> > So let's avoid doing any work on a list of files that is empty anyway.
+> >
+> > This fixes https://github.com/git-for-windows/git/issues/2466.
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  add-interactive.c          | 5 ++++-
-> >  t/t3701-add-interactive.sh | 9 +++++++++
-> >  2 files changed, 13 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/add-interactive.c b/add-interactive.c
-> > index 14d4688c26..396066e724 100644
-> > --- a/add-interactive.c
-> > +++ b/add-interactive.c
-> > @@ -328,7 +328,10 @@ static ssize_t list_and_choose(struct add_i_state=
- *s,
-> >  				if (endp =3D=3D p + sep)
-> >  					to =3D from + 1;
-> >  				else if (*endp =3D=3D '-') {
-> > -					to =3D strtoul(++endp, &endp, 10);
-> > +					if (isdigit(*(++endp)))
-> > +						to =3D strtoul(endp, &endp, 10);
-> > +					else
-> > +						to =3D items->items.nr;
+> >  add-interactive.c | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
 >
-> Good.  We do not allow "everything up to N" with "-N", so covering
-> "N and everything after" with "N-" is sufficient.
+> Makes sense.  No tests?
 
-Even worse, `-N` means "toggle N off". But that can't be fixed easily as
-it has been part of the UI for ages.
+Do we really need tests here? ;-)
 
-Thanks,
+Honestly, I would deem the likelihood of this to get broken again very
+low, and the effort for writing a regression test relatively high...
+
+If you insist, I will add some, of course, but not today.
+
+Ciao,
 Dscho
 
 >
-> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> > index d4f9386621..b02fe73631 100755
-> > --- a/t/t3701-add-interactive.sh
-> > +++ b/t/t3701-add-interactive.sh
-> > @@ -57,6 +57,15 @@ test_expect_success 'revert works (initial)' '
-> >  	! grep . output
-> >  '
 > >
-> > +test_expect_success 'add untracked (multiple)' '
-> > +	test_when_finished "git reset && rm [1-9]" &&
-> > +	touch $(test_seq 9) &&
-> > +	test_write_lines a "2-5 8-" | git add -i -- [1-9] &&
-> > +	test_write_lines 2 3 4 5 8 9 >expected &&
-> > +	git ls-files [1-9] >output &&
-> > +	test_cmp expected output
-> > +'
-> > +
-> >  test_expect_success 'setup (commit)' '
-> >  	echo baseline >file &&
-> >  	git add file &&
+> > diff --git a/add-interactive.c b/add-interactive.c
+> > index f395d54c08..14d4688c26 100644
+> > --- a/add-interactive.c
+> > +++ b/add-interactive.c
+> > @@ -915,7 +915,7 @@ static int run_patch(struct add_i_state *s, const =
+struct pathspec *ps,
+> >
+> >  	opts->prompt =3D N_("Patch update");
+> >  	count =3D list_and_choose(s, files, opts);
+> > -	if (count >=3D 0) {
+> > +	if (count > 0) {
+> >  		struct argv_array args =3D ARGV_ARRAY_INIT;
+> >
+> >  		argv_array_pushl(&args, "git", "add--interactive", "--patch",
+> > @@ -953,7 +953,7 @@ static int run_diff(struct add_i_state *s, const s=
+truct pathspec *ps,
+> >  	opts->flags =3D IMMEDIATE;
+> >  	count =3D list_and_choose(s, files, opts);
+> >  	opts->flags =3D 0;
+> > -	if (count >=3D 0) {
+> > +	if (count > 0) {
+> >  		struct argv_array args =3D ARGV_ARRAY_INIT;
+> >
+> >  		argv_array_pushl(&args, "git", "diff", "-p", "--cached",
 >
