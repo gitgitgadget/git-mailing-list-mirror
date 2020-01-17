@@ -8,216 +8,244 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4068C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45F86C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:31:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AC8E02083E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:29:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CCD42073A
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:31:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDaYrmTy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fUDuC1xZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728803AbgAQP3D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 10:29:03 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45187 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726942AbgAQP3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 10:29:03 -0500
-Received: by mail-wr1-f67.google.com with SMTP id j42so23077470wrj.12
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 07:29:01 -0800 (PST)
+        id S1729102AbgAQPbr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 10:31:47 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50333 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728816AbgAQPbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 10:31:47 -0500
+Received: by mail-wm1-f67.google.com with SMTP id a5so7872043wmb.0
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 07:31:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=VS9Z32ehNKu8/LZodzMatvtorWuQJns5GuDVT0jPnII=;
-        b=cDaYrmTyl4CraGRm6hRspitW0+fqyJ7WkUM3ZHyssJC3V6SNrHWATFm2WpPrA9cKyG
-         rkZDMsxLYokNO6QjLQ6WW5ZNG/XqicLbVW/iOiikne7DxMbL3rF3ipxEDnJ8q/D2hK2c
-         QwFB5oIUFIhLVUIVApxwSBPkj80nbXOV6TU5yWWM6rRGRIpEj+phUn00UHJh0PTz0TvW
-         +6K4IAbE4vMMfDz2pOo07CAwExIaXG+Gr6NL9jYfZp4LX9zaWbOkX7kuHAY1zwFdtXv8
-         TFMcvPTNcGnXAVXxv8OWGeB66fxgPs98xdgR/H9CnOkg8vGCF/ifvGzQxZJy5+FABIUd
-         WjSQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+4/0dIYZ7kCBco6IlkCI9kkI7auTuZXDgQMRPQv7stM=;
+        b=fUDuC1xZICJSDoBgKipiIBPM4nuC6R4oXIDmjXJ8VEQDGGUh+o6XOCGmKqztwxSOx5
+         a1lJeAtGYXEeVpidADA3LNyvDfH70tGQ6xcyHuY5ksypZ4wxOW01NB3F4YvJfhTaWP8l
+         RViHlW3grou9yktb4QbPBBp4frrx97q4+Lfay85NJNC3KaIr6zB8ARocfN/Vms2ZHObD
+         W9dQmcPxGh5D+GszBX67SXKz6b2I8kG6GLOrPdcHtEagZz3k1lb8Vdxo4pg7ctJRb8iD
+         F4R8cfab96CrDY6JpEyNGYdQh0NR9L2es1HILbnqYbSiTVMyIGrAW/W3mCfBdHrxg77S
+         Z1oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=VS9Z32ehNKu8/LZodzMatvtorWuQJns5GuDVT0jPnII=;
-        b=JGgkTVJjUEzNhOwkxsyNPTOAvYd/grGSCjXduV4iRI11vtrZmHThL/8zgWcJuNI1/W
-         vL3G44TjSQvcT/f/VRKbc9b25LINQAP4/GzZb78E1N2nEVC+LbEzdMHNqUeHQjkouXf1
-         6WL5wCXS0gNsfP/mRdNs0bNeEwEq+x4Dc7NfqiKdNFhvcMPpHwFcbDHxHS9oNYX5yZU9
-         JkR24yWGf9pIi5ZACVBO8DKBxxqr4M05L8UJn4DTxc0ECVkcG13ZjpkkqV3wscZwRJF+
-         xX/i+KoP7L5pnSQvhQpUHwWyEjj8cCfGpFAu3TKjs9JhMuPOw4JdAjHyShGeGQvJZPv0
-         SkHw==
-X-Gm-Message-State: APjAAAU8aTTs2c/bbDZRnSSnsco1ZOFHyL85QmrddKCXcl0qkdT6TW8K
-        Uh91VYe8kKryKS7PWo35ghWyWh8j
-X-Google-Smtp-Source: APXvYqySsDJX8PSqEfypdMIr04BG7c5DXQftbOGX5QKyFJSGEfU0npEcqhD2+qBkCiNLISmZI2kx2g==
-X-Received: by 2002:a5d:630c:: with SMTP id i12mr3766898wru.350.1579274940382;
-        Fri, 17 Jan 2020 07:29:00 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+4/0dIYZ7kCBco6IlkCI9kkI7auTuZXDgQMRPQv7stM=;
+        b=lWWW85mWTbVZiW93YxoVO5qNE0u889YNkj+Dxm1kJhfEOwBaBpj1/1uq88aExWivXF
+         FQsErB1lf8GZ3HlmSUy6FyHDpu2oSKCn1JKEIwFMFF76eQCcqau9zHw9cVD5aXiRbFzJ
+         3nkBXuvC5j8Ivvo2VH4mOprBIygRsCfhtyvCKgwbme9tNYZzLL0RybqpEyryUomyszib
+         ihYwAXaltvD3+mNwPIf5RQzeeIOV0/qPlvGRCO/xo/e19mgJn5uWZbONRcfA7NIYYAJJ
+         hDwjC701L/kM9bWnwb+znawqrZeUgpBx/2R/VQQZ50g4kFYct3eL1fVKuBUbiWJ+qfkf
+         QxBw==
+X-Gm-Message-State: APjAAAVWEe922VUtZZj2WknXw7+FLDfD5ZWalaVSCJtR9eZNJJErrIVX
+        6E7hTIcqQEE9jQMRZgylZPjQJHJk
+X-Google-Smtp-Source: APXvYqyK9go/J/zzztJMCuG7j1Xant0u3KAB3SiIu48e3XGJwoK0VfRO2kaCpDhyKtDfB23CqiOIZQ==
+X-Received: by 2002:a7b:c407:: with SMTP id k7mr5322689wmi.46.1579275103677;
+        Fri, 17 Jan 2020 07:31:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5sm34567731wrh.5.2020.01.17.07.28.59
+        by smtp.gmail.com with ESMTPSA id o15sm34922700wra.83.2020.01.17.07.31.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2020 07:28:59 -0800 (PST)
-Message-Id: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 15:28:59 +0000
-Subject: [PATCH] fetch: add --no-update-remote-refs
+        Fri, 17 Jan 2020 07:31:43 -0800 (PST)
+Message-Id: <pull.478.v3.git.1579275102.gitgitgadget@gmail.com>
+In-Reply-To: <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
+References: <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
+From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 17 Jan 2020 15:31:38 +0000
+Subject: [PATCH v3 0/4] config: allow user to know scope of config options
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     jrnieder@gmail.com, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Cc:     Matthew Rogers <mattr94@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+This was originally a pull request to the git-for-windows repository
+[https://github.com/git-for-windows/git/pull/2399]. It adds a new option
+--show-scope which would allow a user to see what scope a given
+configuration value has (sytem, local, global, etc.).
 
-To prevent long blocking time during a 'git fetch' call, a user
-may want to set up a schedule for background 'git fetch' processes.
-However, these runs will update the refs/remotes branches, and
-hence the user will not notice when remote refs are updated during
-their foreground fetches. In fact, they may _want_ those refs to
-stay put so they can work with the refs from their last foreground
-fetch call.
+changes since v2:
 
-Add a --[no-]update-remote-refs option to 'git fetch' which defaults
-to the existing behavior of updating the remote refs. This allows
-a user to run
+ * Redid commit messages for content/clarity
+ * Minor fixes around using --show-scope with a single value (format_config)
 
-  git fetch <remote> --no-update-remote-refs +refs/heads/*:refs/hidden/*
+Matthew Rogers (4):
+  config: fix typo in variable name
+  config: refine config scope enum
+  config: clarify meaning of command line scoping
+  config: add '--show-scope' to print the scope of a config value
 
-to populate a custom ref space and download a pack of the new
-reachable objects. This kind of call allows a few things to happen:
+ Documentation/git-config.txt | 15 +++++---
+ builtin/config.c             | 66 ++++++++++++++++++++++++++++++------
+ config.c                     | 15 ++++----
+ config.h                     | 19 ++++++-----
+ remote.c                     |  3 +-
+ submodule-config.c           |  4 ++-
+ t/helper/test-config.c       | 10 ++++--
+ t/t1300-config.sh            | 58 +++++++++++++++++++++++++++++++
+ t/t1308-config-set.sh        |  2 +-
+ upload-pack.c                |  3 +-
+ 10 files changed, 158 insertions(+), 37 deletions(-)
 
-1. We download a new pack if refs have updated.
-2. Since the refs/hidden branches exist, GC will not remove the
-   newly-downloaded data.
-3. With fetch.writeCommitGraph enabled, the refs/hidden refs are
-   used to update the commit-graph file.
 
-To avoid the refs/hidden directory from filling without bound, the
---prune option can be included. When providing a refspec like this,
-the --prune option does not delete remote refs and instead only
-deletes refs in the target refspace.
+base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-478%2FROGERSM94%2Fadd-config-flags-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-478/ROGERSM94/add-config-flags-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/478
 
-Note: with the default refpsec, the --prune option will override
-the --no-update-remote-refs option and will delete the refs that
-do not exist on the remote.
+Range-diff vs v2:
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
-    fetch: add --no-update-remote-refs
-    
-    Here is a new feature for git fetch that hopefully is useful to some
-    users. We've been using a patch like this in microsoft/git for about a
-    month now, and I've been testing it locally using the custom refspec
-    mentioned in the commit message. It's quite refreshing to run git fetch
-    --all in my Git repo and see all the branch updates but not actually
-    wait for any pack downloads.
-    
-    There is one question about how --prune and --no-update-remote-refs 
-    should interact. Since --prune is not the default, and it works the way
-    I'd like with a non-default refspec, I'm currently proposing allowing it
-    to delete remote refs even if --no-update-remote-refs is provided.
-    
-    Thanks, -Stolee
+ 1:  b40480f03a = 1:  f5a81a4d25 config: fix typo in variable name
+ 2:  e8e05f3940 ! 2:  f06f9291b7 config: fix config scope enum
+     @@ -1,14 +1,21 @@
+      Author: Matthew Rogers <mattr94@gmail.com>
+      
+     -    config: fix config scope enum
+     +    config: refine config scope enum
+      
+          Previously when iterating through git config variables, worktree config
+          and local config were both considered "CONFIG_SCOPE_REPO".  This was
+          never a problem before as no one had needed to differentiate between the
+     -    two cases.
+     +    two cases, but future functionality may care whether or not the config
+     +    options come from a worktree or from the repository's actual local
+     +    config file.  For example, the planned feature to add a '--show-scope'
+     +    to config to allow a user to see which scope listed config options come
+     +    from would confuse users if it just printed 'repo' rather than 'local'
+     +    or 'worktree' as the documentation would lead them to expect.  As well
+     +    as the additional benefit of making the implementation look more like
+     +    how the documentation describes the interface.
+      
+     -    Additionally we rename what was CONFIG_SCOPE_REPO to CONFIG_SCOPE_LOCAL
+     -    to reflect its new, more specific meaning.
+     +    To accomplish this we split out what was previously considered repo
+     +    scope to be local and worktree.
+      
+          The clients of 'current_config_scope()' who cared about
+          CONFIG_SCOPE_REPO are also modified to similarly care about
+     @@ -82,6 +89,19 @@
+       		return "cmdline";
+       	default:
+      
+     + diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+     + --- a/t/t1308-config-set.sh
+     + +++ b/t/t1308-config-set.sh
+     +@@
+     + 	value=from-cmdline
+     + 	origin=command line
+     + 	name=
+     +-	scope=cmdline
+     ++	scope=command
+     + 	EOF
+     + 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
+     + 	test_cmp expect actual
+     +
+       diff --git a/upload-pack.c b/upload-pack.c
+       --- a/upload-pack.c
+       +++ b/upload-pack.c
+ 3:  8225273546 ! 3:  97b8a7641d config: clarify meaning of command line scoping
+     @@ -3,11 +3,13 @@
+          config: clarify meaning of command line scoping
+      
+          CONFIG_SCOPE_CMDLINE is generally used in the code to refer to config
+     -    values passed in via the -c option.  This is a little bit too specific
+     -    as there are other methods to pass config values so that the last for a
+     -    single command (namely --file and --blob).  As the "visibility" of config
+     -    values passed by these situations is common, we unify them as having a
+     -    scope of "command" rather than "command line".
+     +    values passed in via the -c option.  Options passed in using this
+     +    mechanism share similar scoping characteristics with the --file and
+     +    --blob options of the 'config' command, namely that they are only in use
+     +    for that single invocation of git, and that they supersede the normal
+     +    system/global/local hierarchy.  This patch introduces
+     +    CONFIG_SCOPE_COMMAND to reflect this new idea, which also makes
+     +    CONFIG_SCOPE_CMDLINE redundant.
+      
+          Signed-off-by: Matthew Rogers <mattr94@gmail.com>
+      
+ 4:  92ce9b7824 ! 4:  61ff3c64b5 config: add '--show-scope' to print the scope of a config value
+     @@ -76,7 +76,8 @@
+       	strbuf_addch(buf, term);
+       }
+       
+     -+static const char *scope_to_string(enum config_scope scope) {
+     ++static const char *scope_to_string(enum config_scope scope)
+     ++{
+      +	switch (scope) {
+      +	case CONFIG_SCOPE_LOCAL:
+      +		return "local";
+     @@ -95,7 +96,8 @@
+      +	}
+      +}
+      +
+     -+static void show_config_scope(struct strbuf *buf) {
+     ++static void show_config_scope(struct strbuf *buf)
+     ++{
+      +	const char term = end_nul ? '\0' : '\t';
+      +	const char *scope = scope_to_string(current_config_scope());
+      +
+     @@ -121,19 +123,10 @@
+       static int format_config(struct strbuf *buf, const char *key_, const char *value_)
+       {
+      +	if (show_scope)
+     -+		show_config_origin(buf);
+     ++		show_config_scope(buf);
+       	if (show_origin)
+       		show_config_origin(buf);
+       	if (show_keys)
+     -@@
+     - 	int nongit = !startup_info->have_repository;
+     - 	char *value;
+     - 
+     -+
+     -+
+     - 	given_config_source.file = xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+     - 
+     - 	argc = parse_options(argc, argv, prefix, builtin_config_options,
+      @@
+       			!strcmp(given_config_source.file, "-")) {
+       		given_config_source.file = NULL;
+     @@ -286,11 +279,8 @@
+      +	case CONFIG_SCOPE_SUBMODULE:
+      +		return "submodule";
+       	case CONFIG_SCOPE_COMMAND:
+     --		return "command";
+     -+		return "cmdline";
+     + 		return "command";
+       	default:
+     - 		return "unknown";
+     - 	}
+      
+       diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+       --- a/t/t1300-config.sh
+     @@ -333,6 +323,14 @@
+      +	test_cmp expect output
+      +'
+      +
+     ++test_expect_success '--show-scope getting a single value' '
+     ++	cat >expect <<-\EOF &&
+     ++		local	true
+     ++	EOF
+     ++	git config --show-scope --get user.local >output &&
+     ++	test_cmp expect output
+     ++'
+     ++
+      +test_expect_success '--show-scope with --show-origin' '
+      +	cat >expect <<-EOF &&
+      +		global	file:$HOME/.gitconfig	user.global=true
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-532%2Fderrickstolee%2Ffetch-no-update-remote-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-532/derrickstolee/fetch-no-update-remote-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/532
-
- Documentation/fetch-options.txt |  7 +++++++
- builtin/fetch.c                 |  6 ++++++
- t/t5510-fetch.sh                | 24 ++++++++++++++++++++++++
- 3 files changed, 37 insertions(+)
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index a2f78624a2..0939642dce 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -254,6 +254,13 @@ endif::git-pull[]
- 	'git-pull' the --ff-only option will still check for forced updates
- 	before attempting a fast-forward update. See linkgit:git-config[1].
- 
-+--no-update-remote-refs::
-+	By default, git updates the `refs/remotes/` refspace with the refs
-+	advertised by the remotes during a `git fetch` command. With this
-+	option, those refs will be ignored. If the `--prune` option is
-+	specified and the default refpsec is used, then a ref that does not
-+	appear in the remote will still be deleted from refs/remotes.
-+
- -4::
- --ipv4::
- 	Use IPv4 addresses only, ignoring IPv6 addresses.
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b4c6d921d0..bf8000adaf 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -78,6 +78,7 @@ static struct list_objects_filter_options filter_options;
- static struct string_list server_options = STRING_LIST_INIT_DUP;
- static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
- static int fetch_write_commit_graph = -1;
-+static int update_remote_refs = 1;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
-@@ -201,6 +202,8 @@ static struct option builtin_fetch_options[] = {
- 		 N_("check for forced-updates on all updated branches")),
- 	OPT_BOOL(0, "write-commit-graph", &fetch_write_commit_graph,
- 		 N_("write the commit-graph after fetching")),
-+	OPT_BOOL(0, "update-remote-refs", &update_remote_refs,
-+		 N_("update the refs/remotes/ refspace")),
- 	OPT_END()
- };
- 
-@@ -746,6 +749,9 @@ static int update_local_ref(struct ref *ref,
- 	const char *pretty_ref = prettify_refname(ref->name);
- 	int fast_forward = 0;
- 
-+	if (!update_remote_refs && starts_with(ref->name, "refs/remotes/"))
-+		return 0;
-+
- 	type = oid_object_info(the_repository, &ref->new_oid, NULL);
- 	if (type < 0)
- 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 4b60282689..35b50b2047 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -174,6 +174,30 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
- 	git rev-parse sometag
- '
- 
-+test_expect_success 'fetch --no-update-remote-refs keeps existing refs' '
-+	cd "$TRASH_DIRECTORY" &&
-+	git clone "$D" remote-refs &&
-+	git -C remote-refs rev-parse remotes/origin/master >old &&
-+	git -C remote-refs update-ref refs/remotes/origin/master master~1 &&
-+	git -C remote-refs rev-parse remotes/origin/master >new &&
-+	git -C remote-refs fetch --no-update-remote-refs origin &&
-+	git -C remote-refs rev-parse remotes/origin/master >actual &&
-+	test_cmp new actual &&
-+	git -C remote-refs fetch origin &&
-+	git -C remote-refs rev-parse remotes/origin/master >actual &&
-+	test_cmp old actual
-+'
-+
-+test_expect_success 'fetch --no-update-remote-refs --prune with refspec' '
-+	git -C remote-refs update-ref refs/remotes/origin/foo/otherbranch master &&
-+	git -C remote-refs update-ref refs/hidden/foo/otherbranch master &&
-+	git -C remote-refs fetch --prune --no-update-remote-refs origin +refs/heads/*:refs/hidden/* &&
-+	git -C remote-refs rev-parse remotes/origin/foo/otherbranch &&
-+	test_must_fail git -C remote-refs rev-parse refs/hidden/foo/otherbranch &&
-+	git -C remote-refs fetch --prune --no-update-remote-refs origin &&
-+	test_must_fail git -C remote-refs rev-parse remotes/origin/foo/otherbranch
-+'
-+
- test_expect_success 'fetch tags when there is no tags' '
- 
-     cd "$D" &&
-
-base-commit: d0654dc308b0ba76dd8ed7bbb33c8d8f7aacd783
 -- 
 gitgitgadget
