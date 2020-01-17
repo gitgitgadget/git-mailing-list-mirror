@@ -2,201 +2,217 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06670C33CB3
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5177C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:55:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C31DB2073A
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:31:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7548A2083E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:55:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALMtrWkg"
+	dkim=pass (1024-bit key) header.d=nowsci.com header.i=@nowsci.com header.b="lNw+xhUJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729122AbgAQPbw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 10:31:52 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50339 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728816AbgAQPbt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 10:31:49 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a5so7872159wmb.0
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 07:31:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Wa5s60PZwKOXf4uWlN4yQ/v+5URvlNozSh5I1qcgdug=;
-        b=ALMtrWkgSzw4UEf4+Q0gIpB/dA1aWiaNZN6mQ0FIIQxmHql/Yb3r0Ttjkc3k//szGg
-         o8gS97x6NG5R4iWzpHYpcjwHP7ykcgPnzlrjDX8aIAWpC6ZsOeoKn9bBduI9aT9jdbMq
-         AF9O2KBwXwF8NNhNxTZ+Qw/iF4X2CzqUMcBWqO8w/sFg3kUXC4cF31tZNA6lJgE+DxVn
-         tDHJ3q9t3Uy4iEDtopGLk3NV73MDPTZdmGrylly/3lYzw5TNQqAIleS99LM8Q1oyNb9a
-         +43MQvbxto7EmpfE6vEXn3n6sg+70F86yZHH4gpvtbbJ1iLRPU8GcfT6RM2mFQ2+sSpW
-         S0Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Wa5s60PZwKOXf4uWlN4yQ/v+5URvlNozSh5I1qcgdug=;
-        b=QWgZLZyzbs2gMzlYwvW2d/3T4T8e29f8hpM6rmHb3NC0zCfJfykrqaLIFiZKO8pxgW
-         yTG0TWWjRZkMQIFjc3SJ9fVrexwB6vD9HrdWNNbcNIYWcCfi7EDtUMdQr43JQhRFBQGv
-         6A3MG0X25CVG7ffBl1UVX/qJWdCwFKCYxqHId+zprRzdxU22pNH/XJX1LlYk7WrEtSEq
-         oubpmRJ0jmNsUrHvGyQCULaFi2Qh25dKsl7Bv0nGPu+BthQ7CKm122ZKbuzTSXUXXmkA
-         mk9Ecg0DrCbLqBRxsaevoUbiV31w2/4fEaCNqNNkRmGr5KX8GnOsez9kWjnTRtsmbhLo
-         58EQ==
-X-Gm-Message-State: APjAAAViJEzggx7bAogf76wxmVmsdW8V61kR4lceT4W0IGuzRz1WufCE
-        H0J2jFNr/U6mP7sctSg5HmT982t2
-X-Google-Smtp-Source: APXvYqx2ZeeEbnlfePJCMZPFNYv4vNWgplVVbhW8ngNl6nKbB7NV5gB+GULtGLwINug691/OyrAwkw==
-X-Received: by 2002:a7b:cb91:: with SMTP id m17mr4899308wmi.146.1579275105543;
-        Fri, 17 Jan 2020 07:31:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q3sm35815525wrn.33.2020.01.17.07.31.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2020 07:31:45 -0800 (PST)
-Message-Id: <f06f9291b7c357422abad9f9cdd7425ef9e22509.1579275102.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.478.v3.git.1579275102.gitgitgadget@gmail.com>
-References: <pull.478.v2.git.1578565001.gitgitgadget@gmail.com>
-        <pull.478.v3.git.1579275102.gitgitgadget@gmail.com>
-From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 15:31:40 +0000
-Subject: [PATCH v3 2/4] config: refine config scope enum
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1729099AbgAQPzk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 10:55:40 -0500
+Received: from mail.nowsci.com ([172.104.14.39]:52136 "EHLO mail.nowsci.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727043AbgAQPzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 10:55:40 -0500
+X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jan 2020 10:55:39 EST
+X-Virus-Scanned: Yes
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nowsci.com; s=mail;
+        t=1579276013; bh=cnViU6/7YdeQ7VqXkLht7i9wYTtDrYhoGwSsCHtLcqQ=;
+        h=Subject:From:To:Cc:In-Reply-To:References;
+        b=lNw+xhUJWB736LW9GUiwksciiUxSC6CqmhonHbMNU85yE6e+wpQRX566eJNhcP9c7
+         ujPJnFjwZ2C19iJ3FUeqrpVm7SCzuFTymQ0h6M4uiX10Y8fqZyI4fwSmxcoF5TiTzf
+         ov+md/RXy516Qo8h1wNDNOTNm+G0i6GwylVpBd+I=
+X-Virus-Scanned: Yes
+Message-ID: <fe3b20a8251b033a2392ee7f7a1110d026a4357e.camel@nowsci.com>
+Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
+ pick_state enum
+From:   Ben Curtis <nospam@nowsci.com>
 To:     git@vger.kernel.org
-Cc:     Matthew Rogers <mattr94@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>
+Date:   Fri, 17 Jan 2020 10:46:45 -0500
+In-Reply-To: <551af3c3-4633-3dba-4999-1c1a63e5703a@gmail.com>
+References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
+         <551af3c3-4633-3dba-4999-1c1a63e5703a@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew Rogers <mattr94@gmail.com>
+On Fri, 2020-01-17 at 09:29 -0500, Derrick Stolee wrote:
+> On 1/17/2020 8:45 AM, Ben Curtis via GitGitGadget wrote:
+> > From: Ben Curtis <nospam@nowsci.com>
+> > 
+> > In 116a408, the boolean `rebase_in_progress` was introduced by
+> > dscho to
+> 
+> In 116a408 (commit: give correct advice for empty commit during a
+> rebase,
+> 2019-10-22), ...
+> 
+> > handle instances when cherry-pick and rebase were occuring at the
+> > same time.
+> 
+> s/occuring/occurring
+> 
+> > This created a situation where two independent booleans were being
+> > used
+> > to define the state of git at a point in time.
+> > 
+> > Under his recommendation to follow guidance from Junio,
+> > specifically
+> > `
+> > https://public-inbox.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/`
+> > ,
+> 
+> Use lore.kernel.org and use "[1]" like a citation.
+> 
+> [1] 
+> https://lore.kernel.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/
+> 
+> > it was decided that an `enum` that defines the state of git would
+> > be a
+> > more effective path forward.
+> > 
+> > Tasks completed:
+> 
+> Everything in the message is about what you did and why. It's good
+> that
+> you prefaced the "what" with so much "why", but now you can just
+> describe
+> the "what" using paragraphs. The "Tasks completed:" line is
+> superfluous.
+> 
+> >   - Remove multiple booleans `rebase_in_progress` and
+> > `sequencer_in_use` and
+> > replaced with a single `pick_state` enum that determines if, when
+> > cherry-picking, we are in a rebase, multi-pick, or single-pick
+> > state
+> >   - Converted double `if` statement to `if/else if` prioritizing
+> > `REBASE` to
+> > continue to disallow cherry pick in rebase.>
+> > 
+> > Signed-off-by: Ben Curtis <nospam@nowsci.com>
+> > ---
+> >     commit: replaced rebase/sequence booleans with single
+> > pick_state enum
+> >     
+> >     Addresses https://github.com/gitgitgadget/git/issues/426
+> >     
+> >     Previous discussions from @dscho and Junio led to the decision
+> > to merge
+> >     two independent booleans into a single enum to track the state
+> > of git 
+> >     during a cherry-pick leading to this PR/patch.
+> > 
 
-Previously when iterating through git config variables, worktree config
-and local config were both considered "CONFIG_SCOPE_REPO".  This was
-never a problem before as no one had needed to differentiate between the
-two cases, but future functionality may care whether or not the config
-options come from a worktree or from the repository's actual local
-config file.  For example, the planned feature to add a '--show-scope'
-to config to allow a user to see which scope listed config options come
-from would confuse users if it just printed 'repo' rather than 'local'
-or 'worktree' as the documentation would lead them to expect.  As well
-as the additional benefit of making the implementation look more like
-how the documentation describes the interface.
+Sure thing! I will revise the commit as described. And thanks for the
+feedback, just diving into `git` development so this is my first time
+through and this is very helpful.
 
-To accomplish this we split out what was previously considered repo
-scope to be local and worktree.
+> > Published-As: 
+> > https://github.com/gitgitgadget/git/releases/tag/pr-531%2FFmstrat%2Fjs%2Fadvise-rebase-skip-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-
+> > 531/Fmstrat/js/advise-rebase-skip-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/531
+> > 
+> >  builtin/commit.c | 24 +++++++++++++++---------
+> >  1 file changed, 15 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/builtin/commit.c b/builtin/commit.c
+> > index 2beae13620..84f7e69cb1 100644
+> > --- a/builtin/commit.c
+> > +++ b/builtin/commit.c
+> > @@ -125,7 +125,11 @@ static enum commit_msg_cleanup_mode
+> > cleanup_mode;
+> >  static const char *cleanup_arg;
+> >  
+> >  static enum commit_whence whence;
+> > -static int sequencer_in_use, rebase_in_progress;
+> > +static enum {
+> > +	SINGLE_PICK,
+> > +	MULTI_PICK,
+> > +	REBASE
+> > +} pick_state;
+> >  static int use_editor = 1, include_status = 1;
+> >  static int have_option_m;
+> >  static struct strbuf message = STRBUF_INIT;
+> > @@ -184,10 +188,12 @@ static void determine_whence(struct wt_status
+> > *s)
+> >  		whence = FROM_MERGE;
+> >  	else if
+> > (file_exists(git_path_cherry_pick_head(the_repository))) {
+> >  		whence = FROM_CHERRY_PICK;
+> > -		if (file_exists(git_path_seq_dir()))
+> > -			sequencer_in_use = 1;
+> >  		if (file_exists(git_path_rebase_merge_dir()))
+> > -			rebase_in_progress = 1;
+> > +			pick_state = REBASE;
+> > +		else if (file_exists(git_path_seq_dir()))
+> > +			pick_state = MULTI_PICK;
+> > +		else
+> > +			pick_state = SINGLE_PICK;
+> 
+> Since before the "if"s were not exclusive, would rebase_in_progress =
+> 1
+> also include sequencer_in_use = 1? That would explain why you needed
+> to
+> rearrange the cases here. (Based on later checks, it seems that these
+> cases are indeed independent.)
+> 
 
-The clients of 'current_config_scope()' who cared about
-CONFIG_SCOPE_REPO are also modified to similarly care about
-CONFIG_SCOPE_WORKTREE and CONFIG_SCOPE_LOCAL to preserve previous behavior.
+While the above two `if` statements were not exclusive, their use in
+the below `if` statements did appear to be (at first). The line right
+above the if statement just below this comment is:
 
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
----
- config.c               | 7 ++-----
- config.h               | 3 ++-
- remote.c               | 3 ++-
- t/helper/test-config.c | 4 +++-
- t/t1308-config-set.sh  | 2 +-
- upload-pack.c          | 3 ++-
- 6 files changed, 12 insertions(+), 10 deletions(-)
+else if (whence == FROM_CHERRY_PICK) {
 
-diff --git a/config.c b/config.c
-index d75f88ca0c..447a013a15 100644
---- a/config.c
-+++ b/config.c
-@@ -1724,15 +1724,12 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK))
- 		ret += git_config_from_file(fn, user_config, data);
- 
--	current_parsing_scope = CONFIG_SCOPE_REPO;
-+	current_parsing_scope = CONFIG_SCOPE_LOCAL;
- 	if (!opts->ignore_repo && repo_config &&
- 	    !access_or_die(repo_config, R_OK, 0))
- 		ret += git_config_from_file(fn, repo_config, data);
- 
--	/*
--	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
--	 * But let's not complicate things before it's actually needed.
--	 */
-+	current_parsing_scope = CONFIG_SCOPE_WORKTREE;
- 	if (!opts->ignore_worktree && repository_format_worktree_config) {
- 		char *path = git_pathdup("config.worktree");
- 		if (!access_or_die(path, R_OK, 0))
-diff --git a/config.h b/config.h
-index 91fd4c5e96..284d92fb0e 100644
---- a/config.h
-+++ b/config.h
-@@ -298,7 +298,8 @@ enum config_scope {
- 	CONFIG_SCOPE_UNKNOWN = 0,
- 	CONFIG_SCOPE_SYSTEM,
- 	CONFIG_SCOPE_GLOBAL,
--	CONFIG_SCOPE_REPO,
-+	CONFIG_SCOPE_LOCAL,
-+	CONFIG_SCOPE_WORKTREE,
- 	CONFIG_SCOPE_CMDLINE,
- };
- 
-diff --git a/remote.c b/remote.c
-index 5c4666b53a..593ce297ed 100644
---- a/remote.c
-+++ b/remote.c
-@@ -369,7 +369,8 @@ static int handle_config(const char *key, const char *value, void *cb)
- 	}
- 	remote = make_remote(name, namelen);
- 	remote->origin = REMOTE_CONFIG;
--	if (current_config_scope() == CONFIG_SCOPE_REPO)
-+	if (current_config_scope() == CONFIG_SCOPE_LOCAL ||
-+	current_config_scope() == CONFIG_SCOPE_WORKTREE)
- 		remote->configured_in_repo = 1;
- 	if (!strcmp(subkey, "mirror"))
- 		remote->mirror = git_config_bool(key, value);
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 214003d5b2..6695e463eb 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -44,8 +44,10 @@ static const char *scope_name(enum config_scope scope)
- 		return "system";
- 	case CONFIG_SCOPE_GLOBAL:
- 		return "global";
--	case CONFIG_SCOPE_REPO:
-+	case CONFIG_SCOPE_LOCAL:
- 		return "repo";
-+	case CONFIG_SCOPE_WORKTREE:
-+		return "worktree";
- 	case CONFIG_SCOPE_CMDLINE:
- 		return "cmdline";
- 	default:
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 7b4e1a63eb..535b2a73f7 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -265,7 +265,7 @@ test_expect_success 'iteration shows correct origins' '
- 	value=from-cmdline
- 	origin=command line
- 	name=
--	scope=cmdline
-+	scope=command
- 	EOF
- 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
- 	test_cmp expect actual
-diff --git a/upload-pack.c b/upload-pack.c
-index a00d7ece6b..c53249cac1 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1073,7 +1073,8 @@ static int upload_pack_config(const char *var, const char *value, void *unused)
- 		precomposed_unicode = git_config_bool(var, value);
- 	}
- 
--	if (current_config_scope() != CONFIG_SCOPE_REPO) {
-+	if (current_config_scope() != CONFIG_SCOPE_LOCAL &&
-+	current_config_scope() != CONFIG_SCOPE_WORKTREE) {
- 		if (!strcmp("uploadpack.packobjectshook", var))
- 			return git_config_string(&pack_objects_hook, var, value);
- 	}
--- 
-gitgitgadget
+Since we are always in a cherry pick state, and the new code
+prioritizes checking on a rebase first, I had thought this would work
+out. However given the below I can see how the single-pick state could
+still crop up. I will update the commit with REBASE_SINGLE and
+REBASE_MULTI states to eliminate that without adding redundancy.
+
+> > -			if (rebase_in_progress && !sequencer_in_use)
+> > +			if (pick_state == REBASE)
+> 
+> This old error condition makes it appear that you _could_ be in the
+> state
+> where rebase_in_progress = 1 and sequencer_in_use = 0, showing that
+> one
+> does not imply the other.
+> 
+> > -			if (sequencer_in_use)
+> > +			if (pick_state == MULTI_PICK)
+> >  				fputs(_(empty_cherry_pick_advice_multi)
+> > , stderr);
+> > -			else if (rebase_in_progress)
+> > +			else if (pick_state == REBASE)
+> >  				fputs(_(empty_rebase_advice), stderr);
+> >  			else
+> >  				fputs(_(empty_cherry_pick_advice_single
+> > ), stderr);
+> 
+> Since we are using an enum, should we rearrange these cases into a
+> switch (pick_state)?
+> 
+
+Yes, that would be cleaner, I will shift to a switch.
+
+> Thanks,
+> -Stolee
+> 
+
+Thanks!
+Ben
 
