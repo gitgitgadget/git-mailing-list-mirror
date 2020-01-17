@@ -2,50 +2,49 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3A02C33C9E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6199FC33C9E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:30:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7E70D2072B
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:00:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 332ED2082F
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:30:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jTSZLdae"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oooytjvs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727195AbgAQSAT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 13:00:19 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60506 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726603AbgAQSAT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 13:00:19 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5F39AA6EFA;
-        Fri, 17 Jan 2020 13:00:14 -0500 (EST)
+        id S1726970AbgAQSaJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 13:30:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57432 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726897AbgAQSaJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 13:30:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D86D738211;
+        Fri, 17 Jan 2020 13:30:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mrAYgMAj3DTsclc+4ENDJCHrO4E=; b=jTSZLd
-        aeFDa1uXn+J35uLi/G7aLPDlKF9RcLta9j/lx6zDnzufN0UD44pdgly8kZzjx6PZ
-        GRzxL+fgWVCpgJ+7gqcqP8b+nYAf1EH1fQkjndkmLD+iY+/Zkk2SrQsEHMcPmAxw
-        +DBx8/lurl/raGvgMeShuvGtSwnXXY/7vXAnU=
+        :content-type; s=sasl; bh=ZFOdDXQNitrv9vHANv9M1/Sg1Cs=; b=Oooytj
+        vsExmTiXTZq8qDciaBR1EYBW5KEL7vZWBBZAx7zgSd5arJ82nzCh96Tj9Io/3PqM
+        vNGsLpLGKHwVEGF+KUx2wnMgHQbOTWI9UGVysEz07wmd9/1o4LCblCUhlhCVTUfk
+        /qTHlWxsM843sqspkh0NRvv0dWWcC5lUZLQpI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=eg/d0tX3ANXcP0QtC962YKcH0TUwfVIJ
-        nNx68x9tAiDBnGm4AChBXLkPmR3sB8XroaNIGCyfXhY2mHtAs0mhf6Yt4ElhaO7r
-        PQKYRWY0ITS4CQnB6U837A8Stlrfuhj/XadnRi8rt1qiRRcqBNwtRW5MjRf1V03y
-        kps6mHD5k9M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 561EBA6EF9;
-        Fri, 17 Jan 2020 13:00:14 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=uMvFyn7ik6C3dzF+gVu4TuA3djJlDWGW
+        +qC9p7xcN3zPyKuycOfcUNqZ2OG/gT3kuXU6m5a6GDA/kziGWCdiM2ZvQanee26C
+        9aMdUs4r1gn3Mc06Dq59SmO5lyURRAN2X6I6jEJIllM6BFwiHBP6sLgEzGfgKouX
+        BCjQ+dgZrIQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C93D3820E;
+        Fri, 17 Jan 2020 13:30:05 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F03E0A6EF5;
-        Fri, 17 Jan 2020 13:00:10 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E987F38204;
+        Fri, 17 Jan 2020 13:30:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
@@ -54,18 +53,18 @@ Cc:     git@vger.kernel.org,
         Alban Gruin <alban.gruin@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] parse_insn_line(): improve error message when parsing failed
+Subject: Re: [PATCH 2/3] rebase -i: re-fix short SHA-1 collision
 References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
-        <2ae2e435b0ef6888e72defc7abee1909b29aa914.1579209506.git.gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 10:00:08 -0800
-In-Reply-To: <2ae2e435b0ef6888e72defc7abee1909b29aa914.1579209506.git.gitgitgadget@gmail.com>
+        <ad50cd1b92e3e52309536f3a84064571a224a0da.1579209506.git.gitgitgadget@gmail.com>
+Date:   Fri, 17 Jan 2020 10:30:00 -0800
+In-Reply-To: <ad50cd1b92e3e52309536f3a84064571a224a0da.1579209506.git.gitgitgadget@gmail.com>
         (Johannes Schindelin via GitGitGadget's message of "Thu, 16 Jan 2020
-        21:18:24 +0000")
-Message-ID: <xmqqmuamdkuv.fsf@gitster-ct.c.googlers.com>
+        21:18:25 +0000")
+Message-ID: <xmqqimladjh3.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3441B62E-3953-11EA-8099-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 5FC369EC-3957-11EA-89E3-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -74,73 +73,74 @@ X-Mailing-List: git@vger.kernel.org
 "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In the case that a `get_oid()` call failed, we showed some rather bogus
-> part of the line instead of the precise string we sent to said function.
-> That makes it rather hard for users to understand what is going wrong,
-> so let's fix that.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index b9dbf1adb0..7c30dad59c 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2118,6 +2118,8 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  	saved = *end_of_object_name;
->  	*end_of_object_name = '\0';
->  	status = get_oid(bol, &commit_oid);
-> +	if (status < 0)
-> +		error(_("could not parse '%s'"), bol); /* return later */
->  	*end_of_object_name = saved;
+> However, the bug resurfaced as a side effect of 393adf7a6f6 (sequencer:
+> directly call pick_commits() from complete_action(), 2019-11-24): as of
+> this commit, the sequencer no longer re-reads the todo list after
+> writing it out with expanded commit IDs.
 
-OK, so after making sure the line begins a command that takes an
-object name, we first NUL terminated the token after the command
-but it turns out the string is not a valid oid.  We show the part
-we thought was the object name before reverting the NUL termination.
+Ouch.  The analysis above is quite understandable.
 
-Makes sense.  And then later...
-
->  	bol = end_of_object_name + strspn(end_of_object_name, " \t");
-> @@ -2125,11 +2127,10 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  	item->arg_len = (int)(eol - bol);
+> @@ -5128,6 +5128,18 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
+>  		return -1;
+>  	}
 >  
->  	if (status < 0)
-> -		return error(_("could not parse '%.*s'"),
-> -			     (int)(end_of_object_name - bol), bol);
-> +		return status;
+> +	/* Expand the commit IDs */
+> +	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
+> +	strbuf_swap(&new_todo.buf, &buf2);
+> +	strbuf_release(&buf2);
+> +	new_todo.total_nr -= new_todo.nr;
+> +	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0) {
+> +		fprintf(stderr, _(edit_todo_list_advice));
+> +		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
+> +		todo_list_release(&new_todo);
+> +		return error(_("invalid todo list after expanding IDs"));
+> +	}
 
-...this is the *only* code that uses the status that was assigned to
-the return value of get_oid().  
+The above happens after edit_todo_list() returns and then the
+resulting data (i.e. new_todo) that came from the on-disk file has
+been parsed with an existing call to todo_lsit_parse_insn_buffer()?
 
-Because the implementation of this function (mis)uses "bol", which
-stands for "beginning of line", as a moving pointer of "beginning of
-the token we are looking at", the value of "bol" at this point of
-the control in the original code is not where the "bol" pointer used
-to be when end-of-object-name was computed (if it were, the '%.*s'
-argument would have been correct) and shows a token after where the
-object name would have been, which may help the user identify the
-line but does not directly show what token we had trouble with
-parsing.
+I am wondering when this if() statement would trigger, iow, under
+what condition the result of "Expand the commit IDs" operation fails
+to be parsed correctly, and what the user can do to remedy it.
+Especially given that incoming new_todo has passed the existing
+parse and check without hitting "return -1" we see above in the
+context, I am not sure if there is anything, other than any
+potential glitch in the added code above, that can cause this second
+parse_insn_buffer() to fail.  Shouldn't the body of if() be simply a
+BUG()?
 
-And the updated code will avoid the issue by using the "bol" pointer
-when it is still pointing at the right place.
+Or am I somehow missing a hunk that removes an existing call to
+parse&check?
 
-
->  	item->commit = lookup_commit_reference(r, &commit_oid);
-> -	return !item->commit;
-> +	return item->commit ? 0 : -1;
-
-This changes the polarity of the error exit from positive 1 to
-negative 1.  The only caller of this function takes anything
-non-zero as a failure so this would not cause behaviour change, but
-returning negative is more in line with the practice so it is an
-improvement (it is unrelated to the theme of this patch and is not
-explained, though).
-
-OK.
-
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index ae6e55ce79..1cc9f36bc7 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -1264,13 +1264,24 @@ test_expect_success SHA1 'short SHA-1 setup' '
+>  test_expect_success SHA1 'short SHA-1 collide' '
+>  	test_when_finished "reset_rebase && git checkout master" &&
+>  	git checkout collide &&
+> +	colliding_sha1=6bcda37 &&
+> +	test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
+>  	(
+>  		unset test_tick &&
+>  		test_tick &&
+>  		set_fake_editor &&
+>  		FAKE_COMMIT_MESSAGE="collide2 ac4f2ee" \
+> -		FAKE_LINES="reword 1 2" git rebase -i HEAD~2
+> -	)
+> +		FAKE_LINES="reword 1 break 2" git rebase -i HEAD~2 &&
+> +		test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
+> +		grep "^pick $colliding_sha1 " \
+> +			.git/rebase-merge/git-rebase-todo.tmp &&
+> +		grep "^pick [0-9a-f]\{40\}" \
+> +			.git/rebase-merge/git-rebase-todo &&
+> +		git rebase --continue
+> +	) &&
+> +	collide2="$(git rev-parse HEAD~1 | cut -c 1-4)" &&
+> +	collide3="$(git rev-parse collide3 | cut -c 1-4)" &&
+> +	test "$collide2" = "$collide3"
+>  '
+>  
+>  test_expect_success 'respect core.abbrev' '
