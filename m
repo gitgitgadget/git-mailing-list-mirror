@@ -2,217 +2,107 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5177C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67819C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 16:23:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7548A2083E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:55:41 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nowsci.com header.i=@nowsci.com header.b="lNw+xhUJ"
+	by mail.kernel.org (Postfix) with ESMTP id 451D220684
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 16:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729099AbgAQPzk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 10:55:40 -0500
-Received: from mail.nowsci.com ([172.104.14.39]:52136 "EHLO mail.nowsci.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727043AbgAQPzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 10:55:40 -0500
-X-Greylist: delayed 524 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Jan 2020 10:55:39 EST
-X-Virus-Scanned: Yes
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nowsci.com; s=mail;
-        t=1579276013; bh=cnViU6/7YdeQ7VqXkLht7i9wYTtDrYhoGwSsCHtLcqQ=;
-        h=Subject:From:To:Cc:In-Reply-To:References;
-        b=lNw+xhUJWB736LW9GUiwksciiUxSC6CqmhonHbMNU85yE6e+wpQRX566eJNhcP9c7
-         ujPJnFjwZ2C19iJ3FUeqrpVm7SCzuFTymQ0h6M4uiX10Y8fqZyI4fwSmxcoF5TiTzf
-         ov+md/RXy516Qo8h1wNDNOTNm+G0i6GwylVpBd+I=
-X-Virus-Scanned: Yes
-Message-ID: <fe3b20a8251b033a2392ee7f7a1110d026a4357e.camel@nowsci.com>
-Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
- pick_state enum
-From:   Ben Curtis <nospam@nowsci.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 10:46:45 -0500
-In-Reply-To: <551af3c3-4633-3dba-4999-1c1a63e5703a@gmail.com>
-References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
-         <551af3c3-4633-3dba-4999-1c1a63e5703a@gmail.com>
+        id S1729039AbgAQQXU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 11:23:20 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42427 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728982AbgAQQXT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 11:23:19 -0500
+Received: by mail-wr1-f68.google.com with SMTP id q6so23205493wro.9
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 08:23:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WYHamfmZjpyuN2+34pT0NNVPKaLbAi9hislN8uM0dpo=;
+        b=sl4fl0/1CaOWrNz6ayz3gDJBhbvndPu6EwVULL8UUVY/nEQvc+8d9xNsed5yt1UTAe
+         ysGJkliypDycn8HJATlxYRvcwVy3E55DfeWeVq+sSQElBGBiRAR5mvo5cBUiry5NEDmU
+         acnosgqkynq/e0EfCfWbkIj+VWALnndnWARvsHGx4XCUjIcw/BDThgNk6C1vBe2K2fpl
+         VqqaswZKLvDRO35mHl5CABNog/nuLsQ2Dh4Ji8coxnp7U2KgKir7Afppg/Ceiy+ljutF
+         VA5khnTPR3OGiI7YGPuhF5pz6bTLNRnUGc/RJhacVp17QXw2Mexnq09ggpmab8YDLz6M
+         EOQw==
+X-Gm-Message-State: APjAAAWIpw79SiK8QHIR48eB8x3d3UPmI96uzBikZ7kouyc2ONBzh51s
+        suUekReWwIgeOuIhJaJRAxkvOsOBVdV3/kMQ92E=
+X-Google-Smtp-Source: APXvYqyGi5vvL5rRDVhUDLYyj52Ha8WFG2ZihcSTiD4bpViRfdiuCF03SI8QeKby848tUISsFo+o/ilZHPIMExqp3SQ=
+X-Received: by 2002:adf:fd87:: with SMTP id d7mr4142889wrr.226.1579278197757;
+ Fri, 17 Jan 2020 08:23:17 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
+In-Reply-To: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 17 Jan 2020 11:23:06 -0500
+Message-ID: <CAPig+cTK86FPm1kk-P=dvegu+FTzV3k5Z12Etz_jpE=JdyztDQ@mail.gmail.com>
+Subject: Re: [PATCH] fetch: add --no-update-remote-refs
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2020-01-17 at 09:29 -0500, Derrick Stolee wrote:
-> On 1/17/2020 8:45 AM, Ben Curtis via GitGitGadget wrote:
-> > From: Ben Curtis <nospam@nowsci.com>
-> > 
-> > In 116a408, the boolean `rebase_in_progress` was introduced by
-> > dscho to
-> 
-> In 116a408 (commit: give correct advice for empty commit during a
-> rebase,
-> 2019-10-22), ...
-> 
-> > handle instances when cherry-pick and rebase were occuring at the
-> > same time.
-> 
-> s/occuring/occurring
-> 
-> > This created a situation where two independent booleans were being
-> > used
-> > to define the state of git at a point in time.
-> > 
-> > Under his recommendation to follow guidance from Junio,
-> > specifically
-> > `
-> > https://public-inbox.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/`
-> > ,
-> 
-> Use lore.kernel.org and use "[1]" like a citation.
-> 
-> [1] 
-> https://lore.kernel.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/
-> 
-> > it was decided that an `enum` that defines the state of git would
-> > be a
-> > more effective path forward.
-> > 
-> > Tasks completed:
-> 
-> Everything in the message is about what you did and why. It's good
-> that
-> you prefaced the "what" with so much "why", but now you can just
-> describe
-> the "what" using paragraphs. The "Tasks completed:" line is
-> superfluous.
-> 
-> >   - Remove multiple booleans `rebase_in_progress` and
-> > `sequencer_in_use` and
-> > replaced with a single `pick_state` enum that determines if, when
-> > cherry-picking, we are in a rebase, multi-pick, or single-pick
-> > state
-> >   - Converted double `if` statement to `if/else if` prioritizing
-> > `REBASE` to
-> > continue to disallow cherry pick in rebase.>
-> > 
-> > Signed-off-by: Ben Curtis <nospam@nowsci.com>
-> > ---
-> >     commit: replaced rebase/sequence booleans with single
-> > pick_state enum
-> >     
-> >     Addresses https://github.com/gitgitgadget/git/issues/426
-> >     
-> >     Previous discussions from @dscho and Junio led to the decision
-> > to merge
-> >     two independent booleans into a single enum to track the state
-> > of git 
-> >     during a cherry-pick leading to this PR/patch.
-> > 
+On Fri, Jan 17, 2020 at 10:29 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+> @@ -174,6 +174,30 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
+> +test_expect_success 'fetch --no-update-remote-refs keeps existing refs' '
+> +       cd "$TRASH_DIRECTORY" &&
 
-Sure thing! I will revise the commit as described. And thanks for the
-feedback, just diving into `git` development so this is my first time
-through and this is very helpful.
+Why does the prologue of this test use `cd "$TRASH_DIRECTORY"` when
+all the other tests use `cd "$D"`?
 
-> > Published-As: 
-> > https://github.com/gitgitgadget/git/releases/tag/pr-531%2FFmstrat%2Fjs%2Fadvise-rebase-skip-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-
-> > 531/Fmstrat/js/advise-rebase-skip-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/531
-> > 
-> >  builtin/commit.c | 24 +++++++++++++++---------
-> >  1 file changed, 15 insertions(+), 9 deletions(-)
-> > 
-> > diff --git a/builtin/commit.c b/builtin/commit.c
-> > index 2beae13620..84f7e69cb1 100644
-> > --- a/builtin/commit.c
-> > +++ b/builtin/commit.c
-> > @@ -125,7 +125,11 @@ static enum commit_msg_cleanup_mode
-> > cleanup_mode;
-> >  static const char *cleanup_arg;
-> >  
-> >  static enum commit_whence whence;
-> > -static int sequencer_in_use, rebase_in_progress;
-> > +static enum {
-> > +	SINGLE_PICK,
-> > +	MULTI_PICK,
-> > +	REBASE
-> > +} pick_state;
-> >  static int use_editor = 1, include_status = 1;
-> >  static int have_option_m;
-> >  static struct strbuf message = STRBUF_INIT;
-> > @@ -184,10 +188,12 @@ static void determine_whence(struct wt_status
-> > *s)
-> >  		whence = FROM_MERGE;
-> >  	else if
-> > (file_exists(git_path_cherry_pick_head(the_repository))) {
-> >  		whence = FROM_CHERRY_PICK;
-> > -		if (file_exists(git_path_seq_dir()))
-> > -			sequencer_in_use = 1;
-> >  		if (file_exists(git_path_rebase_merge_dir()))
-> > -			rebase_in_progress = 1;
-> > +			pick_state = REBASE;
-> > +		else if (file_exists(git_path_seq_dir()))
-> > +			pick_state = MULTI_PICK;
-> > +		else
-> > +			pick_state = SINGLE_PICK;
-> 
-> Since before the "if"s were not exclusive, would rebase_in_progress =
-> 1
-> also include sequencer_in_use = 1? That would explain why you needed
-> to
-> rearrange the cases here. (Based on later checks, it seems that these
-> cases are indeed independent.)
-> 
+> +       git clone "$D" remote-refs &&
+> +       git -C remote-refs rev-parse remotes/origin/master >old &&
+> +       git -C remote-refs update-ref refs/remotes/origin/master master~1 &&
+> +       git -C remote-refs rev-parse remotes/origin/master >new &&
+> +       git -C remote-refs fetch --no-update-remote-refs origin &&
+> +       git -C remote-refs rev-parse remotes/origin/master >actual &&
+> +       test_cmp new actual &&
+> +       git -C remote-refs fetch origin &&
+> +       git -C remote-refs rev-parse remotes/origin/master >actual &&
+> +       test_cmp old actual
+> +'
 
-While the above two `if` statements were not exclusive, their use in
-the below `if` statements did appear to be (at first). The line right
-above the if statement just below this comment is:
+I wouldn't expect a re-roll just for this (nor do I insist upon such a
+change), but this is one of those cases when -C hurts, rather than
+helps, readability, due to the amount of noise it adds to nearly every
+line of the test. Using a subshell makes for less noisy code:
 
-else if (whence == FROM_CHERRY_PICK) {
+    git clone "$D" remote-refs &&
+    (
+        cd remote-refs &&
+        git rev-parse remotes/origin/master >old &&
+        git update-ref refs/remotes/origin/master master~1 &&
+        git rev-parse remotes/origin/master >new &&
+        git fetch --no-update-remote-refs origin &&
+        git rev-parse remotes/origin/master >actual &&
+        test_cmp new actual &&
+        git fetch origin &&
+        git rev-parse remotes/origin/master >actual &&
+        test_cmp old actual
+    )
 
-Since we are always in a cherry pick state, and the new code
-prioritizes checking on a rebase first, I had thought this would work
-out. However given the below I can see how the single-pick state could
-still crop up. I will update the commit with REBASE_SINGLE and
-REBASE_MULTI states to eliminate that without adding redundancy.
+> +test_expect_success 'fetch --no-update-remote-refs --prune with refspec' '
+> +       git -C remote-refs update-ref refs/remotes/origin/foo/otherbranch master &&
+> +       git -C remote-refs update-ref refs/hidden/foo/otherbranch master &&
+> +       git -C remote-refs fetch --prune --no-update-remote-refs origin +refs/heads/*:refs/hidden/* &&
+> +       git -C remote-refs rev-parse remotes/origin/foo/otherbranch &&
+> +       test_must_fail git -C remote-refs rev-parse refs/hidden/foo/otherbranch &&
+> +       git -C remote-refs fetch --prune --no-update-remote-refs origin &&
+> +       test_must_fail git -C remote-refs rev-parse remotes/origin/foo/otherbranch
+> +'
 
-> > -			if (rebase_in_progress && !sequencer_in_use)
-> > +			if (pick_state == REBASE)
-> 
-> This old error condition makes it appear that you _could_ be in the
-> state
-> where rebase_in_progress = 1 and sequencer_in_use = 0, showing that
-> one
-> does not imply the other.
-> 
-> > -			if (sequencer_in_use)
-> > +			if (pick_state == MULTI_PICK)
-> >  				fputs(_(empty_cherry_pick_advice_multi)
-> > , stderr);
-> > -			else if (rebase_in_progress)
-> > +			else if (pick_state == REBASE)
-> >  				fputs(_(empty_rebase_advice), stderr);
-> >  			else
-> >  				fputs(_(empty_cherry_pick_advice_single
-> > ), stderr);
-> 
-> Since we are using an enum, should we rearrange these cases into a
-> switch (pick_state)?
-> 
-
-Yes, that would be cleaner, I will shift to a switch.
-
-> Thanks,
-> -Stolee
-> 
-
-Thanks!
-Ben
-
+Ditto.
