@@ -2,205 +2,189 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08914C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:11:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42DCC33CB6
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:29:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C64942083E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:11:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7320020842
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:29:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cvvmNM3S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FfIEdzqA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727043AbgAQOL0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 09:11:26 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35001 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726688AbgAQOL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 09:11:26 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g17so22831647wro.2
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 06:11:24 -0800 (PST)
+        id S1727011AbgAQO3k (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 09:29:40 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34657 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726903AbgAQO3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 09:29:40 -0500
+Received: by mail-qt1-f194.google.com with SMTP id 5so21902218qtz.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 06:29:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+        h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xMnaozahx4aNbU/BZx0+sQu7R7Sh6mWB3z//9FC4UOk=;
-        b=cvvmNM3S6jSj2Pkmrl3uABdseeGpv88Vy0q/tLG4sXo+p0zhn985DZxdU3mVf8V0z0
-         wcIxEyBr3Cp7q/Q1gnuBzT9SD9x66sJr6E10SpVAWPHiTMyGEyGTLrMNn4AJ7TLfOTrF
-         /vmLUNCwVTD5IMHMiyFHO9KnADj3IUxrvRmqVQPMQWZZcL5L59gR9sPSZyeO0keMi0jL
-         LC4MMTPwpa4t8ic6oeI8RdA8k0jW9B+4chbGruc/12V3aeEcTUz59TYNjFp3x1wgzRua
-         ovxZcy1gJ5NaRpm/R2jKXC4H5NQhQzOLtbGDUPLYXRKHi1/1dxkLYFH6oeyu1ltUh/6v
-         Yi2A==
+        bh=ExmHHU13rrgIXzSLceB2HuR0yXpg2QelNbBSxk1F/yY=;
+        b=FfIEdzqA+t7pEadB5O+fsfBjo6u1NKsgFLudrSrCyBVPO7cKDVBOw22jXqseLS2abB
+         CxtZbU17FCQDb6yc/LfTnLdaD7+UZwqa2NX0eJXGTBwWAj4vyu3yGslOypdD7OtT/KK3
+         fBIFPK5OWVCiEUOb/yoqtFu6AZE4u6t2DeMPa4vOILQu7R9bNzg8RshPQARBaBln8XHD
+         vdDoDkVoEXPcrkn3CrAgrLYQkmcdTxHWgdY/Y97ADW6zAv6Lxz+QuRZVmiFRg1p1vs4O
+         mF2T1ZUOrahX246rmQiyiIwCAehKBA2/uScQmtYK2aj7iZOIS12KaL7KkmqYrKkRa8QM
+         FnuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=xMnaozahx4aNbU/BZx0+sQu7R7Sh6mWB3z//9FC4UOk=;
-        b=TbTbqYWkxKpe3X+9gP6ZQ+m3s9FBsOeY7jNIs16FwNpndEh0Tm+8ilKgbXwYm8sQbf
-         plpIlDLaoyZNdHzfQdHZlXaN3qxiC/csktCfahj7DONPzcjxo83hPhh7TFeFpvvGawgT
-         wPK/Xn0ReUl5udy/CwxYBFZIVgw0cbHgTAG97Z/sIgaWV9cvLCGk3DyabKKzPjPYXaTm
-         NlhXqYqSgwUK1xxMi/Wges97+H+P9Qwmk9kyOEV8hKTmtTe/J0weXbGkupFGFJI8MTJ+
-         MPkgvZSYgkFwMvVfN2w5EDE8gHjeRM6XpZbR2JpSXNQfgFGus1oSinkKegSpcgYEEQEX
-         31GQ==
-X-Gm-Message-State: APjAAAUOYbszByS8MYPc5RDJkzdx9XrEffsBO4H2pFiF+xoAqoVbvHti
-        CKm35raD7cBv9ycL9HOqDeY=
-X-Google-Smtp-Source: APXvYqzi7COvaw0iLoSQa7jkVmjcdHn+YzjfcDAYxNBKZqJAl5Pi/eYNdQ5Wvs2Uh+LxcavgkdanTg==
-X-Received: by 2002:a5d:5403:: with SMTP id g3mr3412922wrv.302.1579270283629;
-        Fri, 17 Jan 2020 06:11:23 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-19-5.as13285.net. [92.22.19.5])
-        by smtp.gmail.com with ESMTPSA id 18sm2707150wmf.1.2020.01.17.06.11.22
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ExmHHU13rrgIXzSLceB2HuR0yXpg2QelNbBSxk1F/yY=;
+        b=Un5B/CIRkPXQoGo0fyInVGFkMkg3Hvu8Sr7BMjK8m6Su2K58YrjgrPrv5EdKgYDZid
+         9dzl8cdRQ2GdY0NFmWZ+05aKZ4YOZYe14el5MTmQLobUTYegrgCn/Pi8lK+eG6lkj6lk
+         WG3m0euDVoW3tjMgV9QaR3ePXp2s+tYuaWL0bBFyhvSt5ae0kPB3ihdsbYme4qYt5RVt
+         GCjm3ip7jZrspcYrntmPES7dgU4qBMRYP1jucICyvIo5LD2gsnI9yriIsrx7CFtIkvTp
+         rk6xTP9z+0Hz40tT4nvon1OtGwWlMd+Xc3LFMWZewS1OnfJ7vLbKZG+vuR4dZzfbht6T
+         oQhQ==
+X-Gm-Message-State: APjAAAURlwlxgbhQd4LJr0SH/eQY76yozV5/HtXaHWHXFrzeutPyDVTG
+        KGVjrheZ02vEf7AL+UGXQctb14IGm/0=
+X-Google-Smtp-Source: APXvYqwhfPKQmHTLpl1YPRTJ6Sv0BhwoXRsQkhBkFGnkTH4BO0sOtS0AwkcV2bwG8xVpHmRhNlqOwQ==
+X-Received: by 2002:ac8:6697:: with SMTP id d23mr8022385qtp.350.1579271378962;
+        Fri, 17 Jan 2020 06:29:38 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:64d0:3701:c4c7:2368? ([2001:4898:a800:1010:1606:3701:c4c7:2368])
+        by smtp.gmail.com with ESMTPSA id q20sm13063677qtl.82.2020.01.17.06.29.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2020 06:11:23 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Problems with ra/rebase-i-more-options - should we revert it?
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Rohit Ashiwal <rohit.ashiwal265@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-References: <f2fe7437-8a48-3315-4d3f-8d51fe4bb8f1@gmail.com>
- <089637d7-b4b6-f6ba-cce1-29e22ce47521@gmail.com>
- <nycvar.QRO.7.76.6.2001121936290.46@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <cdada301-b521-78b4-badc-192af2fa3d08@gmail.com>
-Date:   Fri, 17 Jan 2020 14:11:21 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        Fri, 17 Jan 2020 06:29:38 -0800 (PST)
+Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
+ pick_state enum
+To:     Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Ben Curtis <nospam@nowsci.com>
+References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <551af3c3-4633-3dba-4999-1c1a63e5703a@gmail.com>
+Date:   Fri, 17 Jan 2020 09:29:37 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2001121936290.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+In-Reply-To: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
-
-On 12/01/2020 18:41, Johannes Schindelin wrote:
-> Hi Phillip,
+On 1/17/2020 8:45 AM, Ben Curtis via GitGitGadget wrote:
+> From: Ben Curtis <nospam@nowsci.com>
 > 
-> On Sun, 12 Jan 2020, Phillip Wood wrote:
+> In 116a408, the boolean `rebase_in_progress` was introduced by dscho to
+
+In 116a408 (commit: give correct advice for empty commit during a rebase,
+2019-10-22), ...
+
+> handle instances when cherry-pick and rebase were occuring at the same time.
+
+s/occuring/occurring
+
+> This created a situation where two independent booleans were being used
+> to define the state of git at a point in time.
 > 
->> On 12/01/2020 16:12, Phillip Wood wrote:
->>> I'm concerned that there are some bugs in this series and think
->>> it may be best to revert it before releasing 2.25.0. Jonathan
->>> Nieder posted a bug report on Friday [1] which I think is caused
->>> by this series. While trying to reproduce Jonathan's bug I came
->>> up with the test below which fails, but not in the same way.
+> Under his recommendation to follow guidance from Junio, specifically
+> `https://public-inbox.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/`,
+
+Use lore.kernel.org and use "[1]" like a citation.
+
+[1] https://lore.kernel.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/
+
+> it was decided that an `enum` that defines the state of git would be a
+> more effective path forward.
 > 
-> Thank you so much for your thoughts and your work on this. For what it's
-> worth, I totally agree with your assessment and your suggestion to revert
-> those patches _before_ releasing v2.25.0. (I seem to remember vaguely that
-> there were repeated requests for better test coverage and that those
-> requests went unaddressed, so I would not be surprised if there were more
-> unfortunate surprises waiting for us.)
+> Tasks completed:
 
-Yes there were more surprises - when we fork `git merge` 
---committer-date-is-author-date is broken. That was tested but with a 
-commit where the author date was the current time so it did not detect 
-the failure.
+Everything in the message is about what you did and why. It's good that
+you prefaced the "what" with so much "why", but now you can just describe
+the "what" using paragraphs. The "Tasks completed:" line is superfluous.
 
-> [...]
->> --- >8 ---
->> diff --git a/sequencer.c b/sequencer.c
->> index 763ccbbc45..22a38de47b 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -988,7 +988,7 @@ static int run_git_commit(struct repository *r,
->>                  if (!date)
->>                          return -1;
->>
->> -               strbuf_addf(&datebuf, "@%s", date);
->> +               strbuf_addf(&datebuf, "%s", date);
+>   - Remove multiple booleans `rebase_in_progress` and `sequencer_in_use` and
+> replaced with a single `pick_state` enum that determines if, when
+> cherry-picking, we are in a rebase, multi-pick, or single-pick state
+>   - Converted double `if` statement to `if/else if` prioritizing `REBASE` to
+> continue to disallow cherry pick in rebase.>
 > 
-> I have to admit that I have not analyzed the code before this hunk (it
-> would be much easier to increase the context in a non-static reviewing
-> environment, e.g. on GitHub, but the mailing list does not allow for
-> that), so I do not know just _how_ likely our `date` here is going to
-> change or remain prefixed by a `@`. Therefore, this suggestion might be
-> totally stupid: `"@%s", date + (*date == '@')`
-
-The date was read from the author-script so I think we should leave it 
-as is in case the user has edited it and is using a different date 
-format. Having said that I'm keen to make a bigger change to Rohit's 
-implementation and just get the author date out of the argv_array 
-holding the child's environment as this avoids re-reading the 
-author-script file. It has taken a bit longer than I planned so it'll be 
-next week before I post the fixes.
-
-Best Wishes
-
-Phillip
-
-> Thanks again,
-> Dscho
+> Signed-off-by: Ben Curtis <nospam@nowsci.com>
+> ---
+>     commit: replaced rebase/sequence booleans with single pick_state enum
+>     
+>     Addresses https://github.com/gitgitgadget/git/issues/426
+>     
+>     Previous discussions from @dscho and Junio led to the decision to merge
+>     two independent booleans into a single enum to track the state of git 
+>     during a cherry-pick leading to this PR/patch.
 > 
->>                  res = setenv("GIT_COMMITTER_DATE",
->>                               opts->ignore_date ? "" : datebuf.buf, 1);
->>
->>> The
->>> test coverage of this series has always been pretty poor and I
->>> think it needs improving for us to have confidence in it. I'm
->>> also concerned that at least one of the
->>> tests ('--committer-date-is-author-date works with rebase -r')
->>> does not detect failures properly in the code below
->>>
->>> 	while read HASH
->>> 	do
->>> 		git show $HASH --pretty="format:%ai" >authortime
->>> 		git show $HASH --pretty="format:%ci" >committertime
->>> 		test_cmp authortime committertime
->>> 	done <rev_list
->>>
->>>
->>> Best Wishes
->>>
->>> Phillip
->>>
->>> [1] https://lore.kernel.org/git/20200110231436.GA24315@google.com/
->>>
->>> --- >8 ---
->>> diff --git a/t/t3433-rebase-options-compatibility.sh b/t/t3433-rebase-options-compatibility.sh
->>> index 5166f158dd..c81e1d7167 100755
->>> --- a/t/t3433-rebase-options-compatibility.sh
->>> +++ b/t/t3433-rebase-options-compatibility.sh
->>> @@ -6,6 +6,7 @@
->>>    test_description='tests to ensure compatibility between am and interactive backends'
->>>
->>>    . ./test-lib.sh
->>> +. "$TEST_DIRECTORY"/lib-rebase.sh
->>>
->>>    GIT_AUTHOR_DATE="1999-04-02T08:03:20+05:30"
->>>    export GIT_AUTHOR_DATE
->>> @@ -99,6 +100,22 @@ test_expect_success '--committer-date-is-author-date works with rebase -r' '
->>>           done <rev_list
->>>    '
->>>
->>> +test_expect_success '--committer-date-is-author-date works when committing conflict resolution' '
->>> +       git checkout commit2 &&
->>> +       (
->>> +               set_fake_editor &&
->>> +               FAKE_LINES=2 &&
->>> +               export FAKE_LINES &&
->>> +               test_must_fail git rebase -i HEAD^^
->>> +       ) &&
->>> +       echo resolved > foo &&
->>> +       git add foo &&
->>> +       git rebase --continue &&
->>> +       git log -1 --format=%at commit2 >expect &&
->>> +       git log -1 --format=%ct HEAD >actual &&
->>> +       test_cmp expect actual
->>> +'
->>> +
->>>    # Checking for +0000 in author time is enough since default
->>>    # timezone is UTC, but the timezone used while committing
->>>    # sets to +0530.
->>>
->>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-531%2FFmstrat%2Fjs%2Fadvise-rebase-skip-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-531/Fmstrat/js/advise-rebase-skip-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/531
+> 
+>  builtin/commit.c | 24 +++++++++++++++---------
+>  1 file changed, 15 insertions(+), 9 deletions(-)
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 2beae13620..84f7e69cb1 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -125,7 +125,11 @@ static enum commit_msg_cleanup_mode cleanup_mode;
+>  static const char *cleanup_arg;
+>  
+>  static enum commit_whence whence;
+> -static int sequencer_in_use, rebase_in_progress;
+> +static enum {
+> +	SINGLE_PICK,
+> +	MULTI_PICK,
+> +	REBASE
+> +} pick_state;
+>  static int use_editor = 1, include_status = 1;
+>  static int have_option_m;
+>  static struct strbuf message = STRBUF_INIT;
+> @@ -184,10 +188,12 @@ static void determine_whence(struct wt_status *s)
+>  		whence = FROM_MERGE;
+>  	else if (file_exists(git_path_cherry_pick_head(the_repository))) {
+>  		whence = FROM_CHERRY_PICK;
+> -		if (file_exists(git_path_seq_dir()))
+> -			sequencer_in_use = 1;
+>  		if (file_exists(git_path_rebase_merge_dir()))
+> -			rebase_in_progress = 1;
+> +			pick_state = REBASE;
+> +		else if (file_exists(git_path_seq_dir()))
+> +			pick_state = MULTI_PICK;
+> +		else
+> +			pick_state = SINGLE_PICK;
+
+Since before the "if"s were not exclusive, would rebase_in_progress = 1
+also include sequencer_in_use = 1? That would explain why you needed to
+rearrange the cases here. (Based on later checks, it seems that these
+cases are indeed independent.)
+
+> -			if (rebase_in_progress && !sequencer_in_use)
+> +			if (pick_state == REBASE)
+
+This old error condition makes it appear that you _could_ be in the state
+where rebase_in_progress = 1 and sequencer_in_use = 0, showing that one
+does not imply the other.
+
+> -			if (sequencer_in_use)
+> +			if (pick_state == MULTI_PICK)
+>  				fputs(_(empty_cherry_pick_advice_multi), stderr);
+> -			else if (rebase_in_progress)
+> +			else if (pick_state == REBASE)
+>  				fputs(_(empty_rebase_advice), stderr);
+>  			else
+>  				fputs(_(empty_cherry_pick_advice_single), stderr);
+
+Since we are using an enum, should we rearrange these cases into a switch (pick_state)?
+
+Thanks,
+-Stolee
+
