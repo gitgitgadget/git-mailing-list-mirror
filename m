@@ -2,98 +2,207 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AD90C33C9E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 19:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83882C33C9E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:01:17 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 420472072B
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 19:26:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4C5C02072E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:01:17 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbBOlRL9"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbgAQT0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 14:26:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39090 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726897AbgAQT0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 14:26:11 -0500
-Received: (qmail 13006 invoked by uid 109); 17 Jan 2020 19:26:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Jan 2020 19:26:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18988 invoked by uid 111); 17 Jan 2020 19:32:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Jan 2020 14:32:42 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 17 Jan 2020 14:26:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH] fetch: add --no-update-remote-refs
-Message-ID: <20200117192610.GC11358@coredump.intra.peff.net>
-References: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
- <xmqqa76lew1l.fsf@gitster-ct.c.googlers.com>
+        id S1729504AbgAQUBQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 15:01:16 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35187 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726897AbgAQUBP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 15:01:15 -0500
+Received: by mail-wr1-f65.google.com with SMTP id g17so23854925wro.2
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 12:01:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=tWxE/F2c/tATyvVZ6VPOlVjLKJcpuSgencuxZtQ6WQc=;
+        b=hbBOlRL9en6El7onYA4/XXRfnz4uyPUcMHZwsaHX448tVYOc8y2ctdWLdQqa5sPwS5
+         /OIGrvYFKVVdISeTlQOiwqiBSC/4ctUv4bs+wzxB26LUYuRq1ufbifI98pjV5yti7Lnp
+         JGcRRSJzkplgdtNhPbu83bxBH3UYTx4AOZQ1BBpTG+hndeYmdQvEa1i7FrDqTQhgZt5G
+         MVgX0NShhUDfQIgRn4+GLDra3rIUkPY9YLbWjyMwq5acMOyudv9gZN6M5ltqa/iPQSTY
+         QKEuNlWjYT7HWEe9823sabut6ZcxBp4mmtz1mHPEfKuWnrnGMqZn4vJ49ZR2pJvDCdTL
+         kbzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:reply-to:subject:to:cc:references:from
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=tWxE/F2c/tATyvVZ6VPOlVjLKJcpuSgencuxZtQ6WQc=;
+        b=UavjlWaGB/Fk8PWUk4Ty4q3qLNgCYlm5ZqS+E8MC58f6F+cIyGpsVRenKhSS/BXFWv
+         bcsOzT/30Ng9ToF5ZfLgmLWTwqChUKwWObhaHXPPhmDn5Ipw6NUtMNyIhFA2XcGZBGdq
+         i21XjHgAyhANPT/XLUtYyVodi/+qnl4ux22BYWFgkvERFN9Xe6NszZLS3J+XQs7hSi0e
+         VkUN56WF0oGg1Pk9HDL9TVPzo/Ydqm3TwI7GlMM2F3TefKzokI5R/COSfZvF0BhlvDEx
+         NRR2y2pIAgU3gVV4zBQcu5UyVJ9M8Nei/5lQwVdNh27LnIqIH83zlEojYWC0YKxLdVXb
+         Nd2g==
+X-Gm-Message-State: APjAAAXfvYINktyQhCs0TD47X/3T+t0dZpWX5SzZm2FuUKM0LUufxi1O
+        UPLTHnp54dbbqy8kqmcRBN+aiDy3
+X-Google-Smtp-Source: APXvYqwOgfbhjKNtDiaK/vYnIpLrDfg3XW/BWAGUb4NJosnlSXtGzrWhlnmGETL3VK/Umr+w3yEZhw==
+X-Received: by 2002:adf:fd43:: with SMTP id h3mr4893474wrs.169.1579291273403;
+        Fri, 17 Jan 2020 12:01:13 -0800 (PST)
+Received: from [192.168.2.240] (host-92-22-19-5.as13285.net. [92.22.19.5])
+        by smtp.gmail.com with ESMTPSA id i11sm36291432wrs.10.2020.01.17.12.01.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Jan 2020 12:01:12 -0800 (PST)
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
+ pick_state enum
+To:     Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Ben Curtis <nospam@nowsci.com>, Derrick Stolee <stolee@gmail.com>
+References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood123@gmail.com>
+Message-ID: <17b57e7f-7f3c-abab-1da6-d2e5c9ff893d@gmail.com>
+Date:   Fri, 17 Jan 2020 20:01:10 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqa76lew1l.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 17, 2020 at 11:13:10AM -0800, Junio C Hamano wrote:
+Hi Ben
 
-> > Add a --[no-]update-remote-refs option to 'git fetch' which defaults
-> > to the existing behavior of updating the remote refs. This allows
-> > a user to run
-> >
-> >   git fetch <remote> --no-update-remote-refs +refs/heads/*:refs/hidden/*
-> >
-> > to populate a custom ref space and download a pack of the new
-> > reachable objects.
+On 17/01/2020 13:45, Ben Curtis via GitGitGadget wrote:
+> From: Ben Curtis <nospam@nowsci.com>
 > 
-> Hmph.  I have to wonder if this should have been the default.  That
-> is, when refs/heads/X on the remote is configured to be copied to
-> refs/remotes/origin/X on this side, and an explicit refspec says it
-> should go some other place (i.e. refs/hidden/X), shouldn't that
-> automatically bypass configured +refs/heads/*:refs/remotes/origin/*
-> refspec?  In any case, it is too late to change that now.
+> In 116a408,
 
-It used to be the default. You can blame 2013-me. ;)
+That commit is no longer in pu, it has been replaced by 430b75f720 
+("commit: give correct advice for empty commit during a rebase", 
+2019-12-06). There is now a preparatory commit 8d57f75749 ("commit: use 
+enum value for multiple cherry-picks", 2019-12-06) which replaces the 
+booleans with an enum. I need to reroll the series 
+(pw/advise-rebase-skip) that contains them, if you've got any comments 
+please let me know.
 
-Before that, though, we had people complaining the other way ("I just
-fetched from the remote, but my tracking ref is stale!").
+Best Wishes
 
-> > 3. With fetch.writeCommitGraph enabled, the refs/hidden refs are
-> >    used to update the commit-graph file.
+Phillip
+
+  the boolean `rebase_in_progress` was introduced by dscho to
+> handle instances when cherry-pick and rebase were occuring at the same time.
+> This created a situation where two independent booleans were being used
+> to define the state of git at a point in time.
 > 
-> I have a moderately strong suspicion that it would be better to make
-> this "--ignore-configured-refspecs" and implemented without special
-> casign the "refs/remotes/" hierarchy like the code does by
-> hardcoding.
-
-Yeah, I just independently wrote something similar. Your "--refmap"
-option can accomplish that already.
-
-> I also wonder if auto-following of tags should be disabled at the
-> same time.  I have no good argument either way (yet).
-
-I _didn't_ think of tag auto-following in my other response. That's a
-good point. I think he'd probably just want to use "--no-tags" for the
-background fetch. You'd end up having to fetch the tag objects
-themselves during the "real" fetch, but presumably they're very small
-compared to the rest of history.
-
-You could also do:
-
-  git fetch --refmap= <remote> +refs/heads/*:refs/hidden/heads/* +refs/tags/*:refs/hidden/tags/*
-
-to get everything in your pre-fetch (though you actually get more than
-the real fetch would need, since by default it won't grab tags which
-don't point to otherwise-reachable history).
-
--Peff
+> Under his recommendation to follow guidance from Junio, specifically
+> `https://public-inbox.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/`,
+> it was decided that an `enum` that defines the state of git would be a
+> more effective path forward.
+> 
+> Tasks completed:
+>    - Remove multiple booleans `rebase_in_progress` and `sequencer_in_use` and
+> replaced with a single `pick_state` enum that determines if, when
+> cherry-picking, we are in a rebase, multi-pick, or single-pick state
+>    - Converted double `if` statement to `if/else if` prioritizing `REBASE` to
+> continue to disallow cherry pick in rebase.
+> 
+> Signed-off-by: Ben Curtis <nospam@nowsci.com>
+> ---
+>      commit: replaced rebase/sequence booleans with single pick_state enum
+>      
+>      Addresses https://github.com/gitgitgadget/git/issues/426
+>      
+>      Previous discussions from @dscho and Junio led to the decision to merge
+>      two independent booleans into a single enum to track the state of git
+>      during a cherry-pick leading to this PR/patch.
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-531%2FFmstrat%2Fjs%2Fadvise-rebase-skip-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-531/Fmstrat/js/advise-rebase-skip-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/531
+> 
+>   builtin/commit.c | 24 +++++++++++++++---------
+>   1 file changed, 15 insertions(+), 9 deletions(-)
+> 
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 2beae13620..84f7e69cb1 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -125,7 +125,11 @@ static enum commit_msg_cleanup_mode cleanup_mode;
+>   static const char *cleanup_arg;
+>   
+>   static enum commit_whence whence;
+> -static int sequencer_in_use, rebase_in_progress;
+> +static enum {
+> +	SINGLE_PICK,
+> +	MULTI_PICK,
+> +	REBASE
+> +} pick_state;
+>   static int use_editor = 1, include_status = 1;
+>   static int have_option_m;
+>   static struct strbuf message = STRBUF_INIT;
+> @@ -184,10 +188,12 @@ static void determine_whence(struct wt_status *s)
+>   		whence = FROM_MERGE;
+>   	else if (file_exists(git_path_cherry_pick_head(the_repository))) {
+>   		whence = FROM_CHERRY_PICK;
+> -		if (file_exists(git_path_seq_dir()))
+> -			sequencer_in_use = 1;
+>   		if (file_exists(git_path_rebase_merge_dir()))
+> -			rebase_in_progress = 1;
+> +			pick_state = REBASE;
+> +		else if (file_exists(git_path_seq_dir()))
+> +			pick_state = MULTI_PICK;
+> +		else
+> +			pick_state = SINGLE_PICK;
+>   	}
+>   	else
+>   		whence = FROM_COMMIT;
+> @@ -459,7 +465,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+>   		if (whence == FROM_MERGE)
+>   			die(_("cannot do a partial commit during a merge."));
+>   		else if (whence == FROM_CHERRY_PICK) {
+> -			if (rebase_in_progress && !sequencer_in_use)
+> +			if (pick_state == REBASE)
+>   				die(_("cannot do a partial commit during a rebase."));
+>   			die(_("cannot do a partial commit during a cherry-pick."));
+>   		}
+> @@ -958,9 +964,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>   			fputs(_(empty_amend_advice), stderr);
+>   		else if (whence == FROM_CHERRY_PICK) {
+>   			fputs(_(empty_cherry_pick_advice), stderr);
+> -			if (sequencer_in_use)
+> +			if (pick_state == MULTI_PICK)
+>   				fputs(_(empty_cherry_pick_advice_multi), stderr);
+> -			else if (rebase_in_progress)
+> +			else if (pick_state == REBASE)
+>   				fputs(_(empty_rebase_advice), stderr);
+>   			else
+>   				fputs(_(empty_cherry_pick_advice_single), stderr);
+> @@ -1167,7 +1173,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
+>   		if (whence == FROM_MERGE)
+>   			die(_("You are in the middle of a merge -- cannot amend."));
+>   		else if (whence == FROM_CHERRY_PICK) {
+> -			if (rebase_in_progress && !sequencer_in_use)
+> +			if (pick_state == REBASE)
+>   				die(_("You are in the middle of a rebase -- cannot amend."));
+>   			die(_("You are in the middle of a cherry-pick -- cannot amend."));
+>   		}
+> @@ -1643,7 +1649,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+>   		if (!reflog_msg)
+>   			reflog_msg = (whence != FROM_CHERRY_PICK)
+>   					? "commit"
+> -					: rebase_in_progress && !sequencer_in_use
+> +					: pick_state == REBASE
+>   					? "commit (rebase)"
+>   					: "commit (cherry-pick)";
+>   		commit_list_insert(current_head, &parents);
+> 
+> base-commit: 116a408b6ffcb2496ebf10dfce1364a42e8f0b32
+> 
