@@ -3,144 +3,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6199FC33C9E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033F6C33C9E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:48:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 332ED2082F
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:30:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CC8D12083E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 18:48:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oooytjvs"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tGPhPt4d"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726970AbgAQSaJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 13:30:09 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57432 "EHLO
+        id S1729078AbgAQSsQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 13:48:16 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55832 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726897AbgAQSaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 13:30:09 -0500
+        with ESMTP id S1726897AbgAQSsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 13:48:16 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D86D738211;
-        Fri, 17 Jan 2020 13:30:05 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EB1F3832F;
+        Fri, 17 Jan 2020 13:48:11 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZFOdDXQNitrv9vHANv9M1/Sg1Cs=; b=Oooytj
-        vsExmTiXTZq8qDciaBR1EYBW5KEL7vZWBBZAx7zgSd5arJ82nzCh96Tj9Io/3PqM
-        vNGsLpLGKHwVEGF+KUx2wnMgHQbOTWI9UGVysEz07wmd9/1o4LCblCUhlhCVTUfk
-        /qTHlWxsM843sqspkh0NRvv0dWWcC5lUZLQpI=
+        :content-type; s=sasl; bh=r0rlSiBGzro9at7pjY271dsxAy8=; b=tGPhPt
+        4dne8H6PXLOcSWa+rQyGpvsuGONeB5RGLXdp4D3aEnc1Bke65QfWldVU9fGV9nok
+        jlk/KuvjJC+Dqn1z15TKHhimvr/r3aeOHk/iHh85OhBNdYmB52WH6/GHV6oHJxCE
+        656WMmcyYPuaLwmqMVzZqzpKpqQlFgHdzxc5Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=uMvFyn7ik6C3dzF+gVu4TuA3djJlDWGW
-        +qC9p7xcN3zPyKuycOfcUNqZ2OG/gT3kuXU6m5a6GDA/kziGWCdiM2ZvQanee26C
-        9aMdUs4r1gn3Mc06Dq59SmO5lyURRAN2X6I6jEJIllM6BFwiHBP6sLgEzGfgKouX
-        BCjQ+dgZrIQ=
+        :content-type; q=dns; s=sasl; b=HS+kkkMysjRSfVlO+3UZLDc/Lqs4UwFN
+        MY9/kFV78mqcGXuUPo6EOtQpwB0AMdnSNr9pqlexE/vg54ShbREC+8d0mrfKOONF
+        5f0YFBuc7Meq8v/Bld4EUWE2J0XbH+Jk/e3j9KCBOEryIx0piEKv6eZy2VT7wiJb
+        NWlUi2FTwhs=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C93D3820E;
-        Fri, 17 Jan 2020 13:30:05 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 94FE03832E;
+        Fri, 17 Jan 2020 13:48:11 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E987F38204;
-        Fri, 17 Jan 2020 13:30:01 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 010D83832B;
+        Fri, 17 Jan 2020 13:48:10 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
 Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] rebase -i: re-fix short SHA-1 collision
-References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
-        <ad50cd1b92e3e52309536f3a84064571a224a0da.1579209506.git.gitgitgadget@gmail.com>
-Date:   Fri, 17 Jan 2020 10:30:00 -0800
-In-Reply-To: <ad50cd1b92e3e52309536f3a84064571a224a0da.1579209506.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Thu, 16 Jan 2020
-        21:18:25 +0000")
-Message-ID: <xmqqimladjh3.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config values too
+References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
+        <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+Date:   Fri, 17 Jan 2020 10:48:09 -0800
+In-Reply-To: <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+        (Bert Wesarg's message of "Fri, 17 Jan 2020 10:33:07 +0100")
+Message-ID: <xmqqeevxex7a.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 5FC369EC-3957-11EA-89E3-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E8E2A506-3959-11EA-A360-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> However, the bug resurfaced as a side effect of 393adf7a6f6 (sequencer:
-> directly call pick_commits() from complete_action(), 2019-11-24): as of
-> this commit, the sequencer no longer re-reads the todo list after
-> writing it out with expanded commit IDs.
+> When renaming a remote with
+>
+>     git remote rename X Y
+>
+> Git already renames any config values from
+>
+>     branch.<name>.remote = X
+>
+> to
+>
+>     branch.<name>.remote = Y
+>
+> As branch.<name>.pushRemote also names a remote, it now also renames
+> these config values from
+>
+>     branch.<name>.pushRemote = X
+>
+> to
+>
+>     branch.<name>.pushRemote = Y
 
-Ouch.  The analysis above is quite understandable.
+This makes sense now.  Thanks for an updated description.
 
-> @@ -5128,6 +5128,18 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
->  		return -1;
->  	}
->  
-> +	/* Expand the commit IDs */
-> +	todo_list_to_strbuf(r, &new_todo, &buf2, -1, 0);
-> +	strbuf_swap(&new_todo.buf, &buf2);
-> +	strbuf_release(&buf2);
-> +	new_todo.total_nr -= new_todo.nr;
-> +	if (todo_list_parse_insn_buffer(r, new_todo.buf.buf, &new_todo) < 0) {
-> +		fprintf(stderr, _(edit_todo_list_advice));
-> +		checkout_onto(r, opts, onto_name, &onto->object.oid, orig_head);
-> +		todo_list_release(&new_todo);
-> +		return error(_("invalid todo list after expanding IDs"));
-> +	}
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-The above happens after edit_todo_list() returns and then the
-resulting data (i.e. new_todo) that came from the on-disk file has
-been parsed with an existing call to todo_lsit_parse_insn_buffer()?
+> @@ -305,7 +309,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+>  				space = strchr(value, ' ');
+>  			}
+>  			string_list_append(&info->merge, xstrdup(value));
+> -		} else {
+> +		} else if (type == REBASE) {
+>  			int v = git_parse_maybe_bool(value);
+>  			if (v >= 0)
+>  				info->rebase = v;
+> @@ -315,6 +319,10 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+>  				info->rebase = REBASE_MERGES;
+>  			else if (!strcmp(value, "interactive"))
+>  				info->rebase = INTERACTIVE_REBASE;
+> +		} else {
+> +			if (info->push_remote_name)
+> +				warning(_("more than one %s"), orig_key);
+> +			info->push_remote_name = xstrdup(value);
+>  		}
 
-I am wondering when this if() statement would trigger, iow, under
-what condition the result of "Expand the commit IDs" operation fails
-to be parsed correctly, and what the user can do to remedy it.
-Especially given that incoming new_todo has passed the existing
-parse and check without hitting "return -1" we see above in the
-context, I am not sure if there is anything, other than any
-potential glitch in the added code above, that can cause this second
-parse_insn_buffer() to fail.  Shouldn't the body of if() be simply a
-BUG()?
+This is perfectly fine for now, as it follows the existing "now we
+have handled X, and Y, so the remainder must be Z" mentality, but at
+some point we may want to make sure that we are protected against
+seeing an unexpected 'type', iow
 
-Or am I somehow missing a hunk that removes an existing call to
-parse&check?
+			...
+		} else if (type == PUSH_REMOTE) {
+			...
+		} else {
+			BUG("unexpected type=%d", type);
+		}
 
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index ae6e55ce79..1cc9f36bc7 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1264,13 +1264,24 @@ test_expect_success SHA1 'short SHA-1 setup' '
->  test_expect_success SHA1 'short SHA-1 collide' '
->  	test_when_finished "reset_rebase && git checkout master" &&
->  	git checkout collide &&
-> +	colliding_sha1=6bcda37 &&
-> +	test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
->  	(
->  		unset test_tick &&
->  		test_tick &&
->  		set_fake_editor &&
->  		FAKE_COMMIT_MESSAGE="collide2 ac4f2ee" \
-> -		FAKE_LINES="reword 1 2" git rebase -i HEAD~2
-> -	)
-> +		FAKE_LINES="reword 1 break 2" git rebase -i HEAD~2 &&
-> +		test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
-> +		grep "^pick $colliding_sha1 " \
-> +			.git/rebase-merge/git-rebase-todo.tmp &&
-> +		grep "^pick [0-9a-f]\{40\}" \
-> +			.git/rebase-merge/git-rebase-todo &&
-> +		git rebase --continue
-> +	) &&
-> +	collide2="$(git rev-parse HEAD~1 | cut -c 1-4)" &&
-> +	collide3="$(git rev-parse collide3 | cut -c 1-4)" &&
-> +	test "$collide2" = "$collide3"
->  '
->  
->  test_expect_success 'respect core.abbrev' '
+as we learn more "type"s.  Better yet, this if/elseif/ cascade may
+become clearer if it is rewritten to a switch statement.
+
+I was about to conclude this message with "but that is all outside
+the scope of this fix, so I'll queue it as-is " before noticing
+that you two seem to be leaning towards clean-up at the same time.
+If we are to clean up the code structure along these lines, I'd
+prefer to see it done as a preparatory patch before pushremote
+handling gets introduced.
+
+Taking some other clean-up ideas on this function, e.g.:
+
+ * key += 7 should better be done without hardcoded length of "branch."
+ * By leaving early, we can save one indentation level.
+ * name does not have to be computed for each branch.
+
+the resulting body of the function might look more like this:
+
+	if (!skip_prefix(key, "branch.", &key))
+		return 0;
+
+	if (strip_suffix(key, ".remote", &key_len))
+		type = REMOTE;
+	else if (strip_suffix(key, ".merge", &key_len))
+		type = MERGE;
+	...
+	else
+		return 0;
+	name = xmemdupz(key, key_len);
+	item = string_list_insert(&branch_list, name);
+	...
+
+	switch (type) {
+	case REMOTE:
+		...
+	default:
+		BUG("unhandled type %d", type);
+	}
+
+Thanks.
