@@ -2,102 +2,222 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FFA6C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4068C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:29:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0374C2083E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:25:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AC8E02083E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 15:29:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqtkgrUM"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cDaYrmTy"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729028AbgAQPZp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 10:25:45 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:45710 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728780AbgAQPZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 10:25:44 -0500
-Received: by mail-qk1-f194.google.com with SMTP id x1so22958590qkl.12
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 07:25:44 -0800 (PST)
+        id S1728803AbgAQP3D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 10:29:03 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45187 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726942AbgAQP3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 10:29:03 -0500
+Received: by mail-wr1-f67.google.com with SMTP id j42so23077470wrj.12
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 07:29:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hFN5VqcJsDJRb0EN1HAwBwZjs12HoH0tpOyVsfZiIHA=;
-        b=FqtkgrUMxdUpJQvb5yZ0o2IizKH4ubW503e0yRcoI9Bs080wwlmubPY7t66byCWOdh
-         nV26j7WyVzBwP5TlcuhEM6yUbMuhHBl7quZU+E0+uiP4ZSz8OLxmKqD6dqKDCW02py8S
-         35PwkeoSBbyu1RNhBvOr3OPA6LUh8qhkCP6xBE6s9K68ZUdZFuWCl8hfjlRORGtM0zaP
-         Qd+ae5Q3UeOoq0gxc1q8zxkA+jJ3/UCpCJwGaly7wOZmgi0oQEDXeldCQGY1xAXj/n6t
-         NSOIbA5hyfEnG/oQfl/eo6F00iIgE8QQCrTzalgBs+5JX6zj1aNz5gv/gNOQkJXOytjQ
-         QPgA==
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=VS9Z32ehNKu8/LZodzMatvtorWuQJns5GuDVT0jPnII=;
+        b=cDaYrmTyl4CraGRm6hRspitW0+fqyJ7WkUM3ZHyssJC3V6SNrHWATFm2WpPrA9cKyG
+         rkZDMsxLYokNO6QjLQ6WW5ZNG/XqicLbVW/iOiikne7DxMbL3rF3ipxEDnJ8q/D2hK2c
+         QwFB5oIUFIhLVUIVApxwSBPkj80nbXOV6TU5yWWM6rRGRIpEj+phUn00UHJh0PTz0TvW
+         +6K4IAbE4vMMfDz2pOo07CAwExIaXG+Gr6NL9jYfZp4LX9zaWbOkX7kuHAY1zwFdtXv8
+         TFMcvPTNcGnXAVXxv8OWGeB66fxgPs98xdgR/H9CnOkg8vGCF/ifvGzQxZJy5+FABIUd
+         WjSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=hFN5VqcJsDJRb0EN1HAwBwZjs12HoH0tpOyVsfZiIHA=;
-        b=VEKhfTSvNpVaj8bmmvFULdSb5/NhTCbjOVoBcQmLEOqTyqgVz676MqeOv5QH9zX5N2
-         JxJ2xmKgEFNnuZUmhAOwak1fcH8Eb/K5cfd0Tc2iLEcEIesT5PPOnpgot8whJpmcQYAb
-         t2nKJa0nD/0iczyD8wI3QoKdhkF+NCpkHS7XLu95LK+LG/Yi8XoQa/mq24kSMsvTm2CC
-         hiu7xaWM7Hz46o0HhI5q/17Q1um/qI9pG2NQF351yjcpV4lbcLc4xjsXdvBkWEqkGOyh
-         yLJwOvB0PYPb4GuBlCjw/fqfEDV+TsK03h14m3otHv3uOT4kvBX/XQEv7aFa/c3NiscL
-         eXuA==
-X-Gm-Message-State: APjAAAWERUCpzVuChadrO7snEf/wQ/tcPXEjLozmnr1gqDxuzPvqKWNa
-        4XRsehHRgv1W3Mp91iye9xizaJhlaFmFng==
-X-Google-Smtp-Source: APXvYqzQoGhw/9qf59xKHmVMb1tNRIkZO2qfNBZKIe81Z7egS7i6n4vic5FddeWiLG/P+eZ3u4tanA==
-X-Received: by 2002:ae9:f502:: with SMTP id o2mr32070939qkg.89.1579274743864;
-        Fri, 17 Jan 2020 07:25:43 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:64d0:3701:c4c7:2368? ([2001:4898:a800:1012:1604:3701:c4c7:2368])
-        by smtp.gmail.com with ESMTPSA id l17sm12028180qkk.22.2020.01.17.07.25.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2020 07:25:43 -0800 (PST)
-Subject: Re: [PATCH v3 2/4] dir: treat_leading_path() and
- read_directory_recursive(), round 2
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Kevin.Willford@microsoft.com, Kyle Meyer <kyle@kyleam.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-References: <pull.692.v2.git.git.1579098078501.gitgitgadget@gmail.com>
- <pull.692.v3.git.git.1579206117.gitgitgadget@gmail.com>
- <ea95186774762a5e1cf3cb882cff45fc904e3bf6.1579206117.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <bd3892c6-98fb-d0eb-2e0a-f7d6971dd4d3@gmail.com>
-Date:   Fri, 17 Jan 2020 10:25:42 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
- Thunderbird/72.0
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=VS9Z32ehNKu8/LZodzMatvtorWuQJns5GuDVT0jPnII=;
+        b=JGgkTVJjUEzNhOwkxsyNPTOAvYd/grGSCjXduV4iRI11vtrZmHThL/8zgWcJuNI1/W
+         vL3G44TjSQvcT/f/VRKbc9b25LINQAP4/GzZb78E1N2nEVC+LbEzdMHNqUeHQjkouXf1
+         6WL5wCXS0gNsfP/mRdNs0bNeEwEq+x4Dc7NfqiKdNFhvcMPpHwFcbDHxHS9oNYX5yZU9
+         JkR24yWGf9pIi5ZACVBO8DKBxxqr4M05L8UJn4DTxc0ECVkcG13ZjpkkqV3wscZwRJF+
+         xX/i+KoP7L5pnSQvhQpUHwWyEjj8cCfGpFAu3TKjs9JhMuPOw4JdAjHyShGeGQvJZPv0
+         SkHw==
+X-Gm-Message-State: APjAAAU8aTTs2c/bbDZRnSSnsco1ZOFHyL85QmrddKCXcl0qkdT6TW8K
+        Uh91VYe8kKryKS7PWo35ghWyWh8j
+X-Google-Smtp-Source: APXvYqySsDJX8PSqEfypdMIr04BG7c5DXQftbOGX5QKyFJSGEfU0npEcqhD2+qBkCiNLISmZI2kx2g==
+X-Received: by 2002:a5d:630c:: with SMTP id i12mr3766898wru.350.1579274940382;
+        Fri, 17 Jan 2020 07:29:00 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5sm34567731wrh.5.2020.01.17.07.28.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jan 2020 07:28:59 -0800 (PST)
+Message-Id: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 17 Jan 2020 15:28:59 +0000
+Subject: [PATCH] fetch: add --no-update-remote-refs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <ea95186774762a5e1cf3cb882cff45fc904e3bf6.1579206117.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/16/2020 3:21 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> I was going to title this "dir: more synchronizing of
-> treat_leading_path() and read_directory_recursive()", a nod to commit
-> 777b42034764 ("dir: synchronize treat_leading_path() and
-> read_directory_recursive()", 2019-12-19), but the title was too long.
-> 
-> Anyway, first the backstory...
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The backstory was helpful, thanks.
+To prevent long blocking time during a 'git fetch' call, a user
+may want to set up a schedule for background 'git fetch' processes.
+However, these runs will update the refs/remotes branches, and
+hence the user will not notice when remote refs are updated during
+their foreground fetches. In fact, they may _want_ those refs to
+stay put so they can work with the refs from their last foreground
+fetch call.
 
-> Copy the missing bits to fix the new final test in t7300.
+Add a --[no-]update-remote-refs option to 'git fetch' which defaults
+to the existing behavior of updating the remote refs. This allows
+a user to run
 
-Thanks for the quick turnaround!
+  git fetch <remote> --no-update-remote-refs +refs/heads/*:refs/hidden/*
 
--Stolee
+to populate a custom ref space and download a pack of the new
+reachable objects. This kind of call allows a few things to happen:
 
+1. We download a new pack if refs have updated.
+2. Since the refs/hidden branches exist, GC will not remove the
+   newly-downloaded data.
+3. With fetch.writeCommitGraph enabled, the refs/hidden refs are
+   used to update the commit-graph file.
+
+To avoid the refs/hidden directory from filling without bound, the
+--prune option can be included. When providing a refspec like this,
+the --prune option does not delete remote refs and instead only
+deletes refs in the target refspace.
+
+Note: with the default refpsec, the --prune option will override
+the --no-update-remote-refs option and will delete the refs that
+do not exist on the remote.
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+    fetch: add --no-update-remote-refs
+    
+    Here is a new feature for git fetch that hopefully is useful to some
+    users. We've been using a patch like this in microsoft/git for about a
+    month now, and I've been testing it locally using the custom refspec
+    mentioned in the commit message. It's quite refreshing to run git fetch
+    --all in my Git repo and see all the branch updates but not actually
+    wait for any pack downloads.
+    
+    There is one question about how --prune and --no-update-remote-refs 
+    should interact. Since --prune is not the default, and it works the way
+    I'd like with a non-default refspec, I'm currently proposing allowing it
+    to delete remote refs even if --no-update-remote-refs is provided.
+    
+    Thanks, -Stolee
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-532%2Fderrickstolee%2Ffetch-no-update-remote-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-532/derrickstolee/fetch-no-update-remote-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/532
+
+ Documentation/fetch-options.txt |  7 +++++++
+ builtin/fetch.c                 |  6 ++++++
+ t/t5510-fetch.sh                | 24 ++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index a2f78624a2..0939642dce 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -254,6 +254,13 @@ endif::git-pull[]
+ 	'git-pull' the --ff-only option will still check for forced updates
+ 	before attempting a fast-forward update. See linkgit:git-config[1].
+ 
++--no-update-remote-refs::
++	By default, git updates the `refs/remotes/` refspace with the refs
++	advertised by the remotes during a `git fetch` command. With this
++	option, those refs will be ignored. If the `--prune` option is
++	specified and the default refpsec is used, then a ref that does not
++	appear in the remote will still be deleted from refs/remotes.
++
+ -4::
+ --ipv4::
+ 	Use IPv4 addresses only, ignoring IPv6 addresses.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index b4c6d921d0..bf8000adaf 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -78,6 +78,7 @@ static struct list_objects_filter_options filter_options;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
+ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
+ static int fetch_write_commit_graph = -1;
++static int update_remote_refs = 1;
+ 
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+@@ -201,6 +202,8 @@ static struct option builtin_fetch_options[] = {
+ 		 N_("check for forced-updates on all updated branches")),
+ 	OPT_BOOL(0, "write-commit-graph", &fetch_write_commit_graph,
+ 		 N_("write the commit-graph after fetching")),
++	OPT_BOOL(0, "update-remote-refs", &update_remote_refs,
++		 N_("update the refs/remotes/ refspace")),
+ 	OPT_END()
+ };
+ 
+@@ -746,6 +749,9 @@ static int update_local_ref(struct ref *ref,
+ 	const char *pretty_ref = prettify_refname(ref->name);
+ 	int fast_forward = 0;
+ 
++	if (!update_remote_refs && starts_with(ref->name, "refs/remotes/"))
++		return 0;
++
+ 	type = oid_object_info(the_repository, &ref->new_oid, NULL);
+ 	if (type < 0)
+ 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 4b60282689..35b50b2047 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -174,6 +174,30 @@ test_expect_success 'fetch --prune --tags with refspec prunes based on refspec'
+ 	git rev-parse sometag
+ '
+ 
++test_expect_success 'fetch --no-update-remote-refs keeps existing refs' '
++	cd "$TRASH_DIRECTORY" &&
++	git clone "$D" remote-refs &&
++	git -C remote-refs rev-parse remotes/origin/master >old &&
++	git -C remote-refs update-ref refs/remotes/origin/master master~1 &&
++	git -C remote-refs rev-parse remotes/origin/master >new &&
++	git -C remote-refs fetch --no-update-remote-refs origin &&
++	git -C remote-refs rev-parse remotes/origin/master >actual &&
++	test_cmp new actual &&
++	git -C remote-refs fetch origin &&
++	git -C remote-refs rev-parse remotes/origin/master >actual &&
++	test_cmp old actual
++'
++
++test_expect_success 'fetch --no-update-remote-refs --prune with refspec' '
++	git -C remote-refs update-ref refs/remotes/origin/foo/otherbranch master &&
++	git -C remote-refs update-ref refs/hidden/foo/otherbranch master &&
++	git -C remote-refs fetch --prune --no-update-remote-refs origin +refs/heads/*:refs/hidden/* &&
++	git -C remote-refs rev-parse remotes/origin/foo/otherbranch &&
++	test_must_fail git -C remote-refs rev-parse refs/hidden/foo/otherbranch &&
++	git -C remote-refs fetch --prune --no-update-remote-refs origin &&
++	test_must_fail git -C remote-refs rev-parse remotes/origin/foo/otherbranch
++'
++
+ test_expect_success 'fetch tags when there is no tags' '
+ 
+     cd "$D" &&
+
+base-commit: d0654dc308b0ba76dd8ed7bbb33c8d8f7aacd783
+-- 
+gitgitgadget
