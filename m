@@ -2,127 +2,149 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-13.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82832C33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 09:51:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8EFC33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:01:10 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 529632073A
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 09:51:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A17782082F
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 10:01:10 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="CSrhSm8k"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cdPQ6c7i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726587AbgAQJv5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 04:51:57 -0500
-Received: from mout.gmx.net ([212.227.15.19]:47977 "EHLO mout.gmx.net"
+        id S1726957AbgAQKBJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 05:01:09 -0500
+Received: from mout.gmx.net ([212.227.17.20]:43671 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726196AbgAQJv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 04:51:56 -0500
+        id S1726730AbgAQKBJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 05:01:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579254704;
-        bh=iJ9lvWyOpZ1Ifl2fWDvi3pVglQkYW4A5VFkAEJg+AZ0=;
+        s=badeba3b8450; t=1579255262;
+        bh=YZX6L3KRs1cEUEbTREhnPDwyO2aX67iihrk17T5qq6o=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=CSrhSm8kK8w7aAE5cetiRo6IreOFOz9jca2wTgzthsmHorZo43ESBX92Xb/vV18qY
-         H9pJmU5g1NWb8hEFhRNFvLnyQbStyk/+mYB+kcnK9+Bujltop6lJxL3D5UzPXkeK3V
-         dEWxNxz1YIViL+Hx787JKvVS1U05Eei1NuDuZSnc=
+        b=cdPQ6c7iFf7h4eQ0vbYU+jH2yF9uRhwfavp/8gtVqTpaL2CWWRN1e1VDRcKml3ORy
+         ZssnUCUtlsJEsJ7s3AVBOZydqR4lWfexyv5UIX9Qaj++CVk1NmTJUi/ikvpzJdHxrO
+         ArCdnsFptC/iY+A8sa6jVcDs4sXOEr+g0GGLbTGY=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMXQ5-1jBR0p2kRL-00JdIC; Fri, 17
- Jan 2020 10:51:44 +0100
-Date:   Fri, 17 Jan 2020 10:51:42 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNsw4-1jGgZq2HCy-00OCyK; Fri, 17
+ Jan 2020 11:01:02 +0100
+Date:   Fri, 17 Jan 2020 11:01:00 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] Re-fix rebase -i with SHA-1 collisions
-In-Reply-To: <20200116235411.GZ6570@camp.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.2001171050000.46@tvgsbejvaqbjf.bet>
-References: <pull.529.git.1579209506.gitgitgadget@gmail.com> <20200116235411.GZ6570@camp.crustytoothpaste.net>
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] built-in add -i: accept open-ended ranges again
+In-Reply-To: <xmqqv9pbf3mu.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001171100030.46@tvgsbejvaqbjf.bet>
+References: <pull.528.git.1579163587.gitgitgadget@gmail.com> <7e4bf4bbbcd8c81a19d690aee379042e47246947.1579163587.git.gitgitgadget@gmail.com> <xmqqv9pbf3mu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:N6Odr22mh+enRF6E1Uk+vZ/1M99ItbSA0cNt3Q238ykmvBddaa2
- +7EGavMWC8N51PS0X1piAgcAs/2UYZ51mgttS0N2tTZSgSg4SkQS4f3nHPauNBae7XKDaWp
- K7vi2xdmGKSTOqsujhGieCFFUe86+g5qQ2sio7GPPTDbiqusthjM6d1RwUDw2ChZU2vmvZS
- /JUJJy+9et9hdcrFSwJWw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Q6hA5UG5HiY=:3UJP18FTJAe90bSXY0d+Jj
- pIzxMZ0TPAmjcoHDlWJ5nZTu7NvNCLB+oaF0XNgFSbLslunmDRX0ZzwmD928R0+JDWH8Et4va
- y7+zV9pzjk23Eqq3cRAQ7EuUjKsiO2M78rxQi7QcjEzXUcZGkCq0DxnsZG5vDSEvrEKHA/8y4
- YUhLaItxRKDBJHDabk8euiNpRYICCl1LUsu/h7+gl7ancTpi7ID+tGj/eTJspyZJIrUD3mltY
- datuh7Qjx4rCtEtj6iU7NRSPSbRu2m5k0yDO7oaYP6CGWSCI8Vzak42BMInHuBLZWSz1CJ3AK
- 6RqxYOO9BwzA8MzzCLXlRNf+SnZrh81wC7tCxu5eStMBMteYuymtVNxtuyayy/SjU8JfjkAEE
- yzbpfV1PYhP99yhB0JFtuu4KdaM49aiCvU3y4f5pWPJFBnuTYhEuhbkL1YJ90WqCGYEcJbyvr
- fI3Dbz5DFH5h9FkIB8bDKVihWCmG4y27GsfWympf5WQ13UOFRm/lwWDvNBI4zb/0cz7SZ2Djl
- Nt9mO1JuRcC0QyWdMNkuM0BzNzcklDSCBqH/nXJpskuFbztEpe7HrmSasA7yoCjExhdNf6w2j
- bg9s+qistABnQ2uJfakDQMajvFeT2Ez7c/vE6cZBgggeyaYjf3PlFBDgHWZ6d3jpxlYga1WbY
- qF3gJaivJ7B9HYG1AMlHjAWlpfwGMca2oe2koqf4OhCmeFFoMe/dqis12dYak0wjyTSLBVPHB
- EVJOd+49sUe9VRi7dwvQvGJi1N6prbzeJoEeARvqgvclg1JdaSQjAS9/a1ILYWsFae8X1C9zl
- UeFYu7bKl6fU/T6CUVmYDdWHYlOKtwCgmtRcL+i6n5pibup5T5XsxSejnuH7hEAal1vbkePqe
- EDwvyGTThBzJtq2mA09uYy2T5oxnT+ICILqhvliJvzoO+mi1kurWihfpWR0dgizWAmdhKbd3e
- ZtQLPB+8kzQI3xroDukiNdfn0Xa0R9nR2HzfetxL1SPYWidekhrvGtBvN1FvOBYB+MSmBTQB7
- YLJ7MHX32ZdqWdIkSHuJPpEyYWyGlZ4qs97B8zvrTNq1kPvApSlx7to+yhO9l+Q87wq/N4kXc
- P8zM9Gc2RVqA9Vs3Ij1An3fuEODNBJ+1KE/fPErnnsacW3HNF7OiJFcfX5LjBpFl9SJuZH1lG
- zrfmGRgw5BPMO8AmKyjfArXFhMAAm9BF8E7jkyGPx4JWopjpIjQys4ZKSK5Nx2Hg1FLIXBAyf
- GcCWbt1QvUhIXFFzdiIzkHtAqc0UWhg+JrljgtOVptEpQIhus/1t87aA5HeU=
+X-Provags-ID: V03:K1:wp1Z+xGaPW5j7wqaoeQewqekfcZ6sdS+4sZERScrY5qXIl4URjO
+ aaAlKU0rcKaByNw0Cfa3BtEu2rE2EqFvDeOWspCNTWvZsolaa2MN70isJkbeYrsrhfoC9Bb
+ P++ueKO3JbuHVq83CpTFlW/Ymuuyblkd5NJYqC62L85HtjEo49hxzqTfsJypvBN47/OC/sQ
+ QrCSj4nk20khAuxQdvSFQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:imB0yfTQs4k=:A1WuMPBnZdaNin53iRkFRt
+ Hdx1p/ERamT3CubNAlbGYajvv62QDIQ+GTOaz+o/peUZkdcOO0bJ3ZSrmAl2miiEY5yGSxmaU
+ PjXwXnhdOvDfisBtT8s9FODWuaZRJxnLu92nYyfsBePxIfU19w79U4mMQFTmtmk5Rr32DX/r7
+ mk37hOAie24ISQpkTZJ/XtwpOVwsr18r5RsdoxYdERcBpW1cqpTQUmuUTwDNTTDfo5fHGtNEK
+ 20T3rsZ+Ju6XwNNWMMoASmsMzDFHyQGQuZMrxhc5w89EyYA3CsekJ3ZFK2T22Dm1Tz/B767c5
+ En/+IxeidihzO9udWldeNxKypwF3txu8/9fi6cAeTvvhDhddUl7T6AoXFOJpbktqgMHUj7Fdt
+ Sm2PxWso9pGnljgnyHJgX3OYq+1u1p0nXQhJ+18oYjSHbrG194Bi8H+D6VPNcaHPXHhJAwHpn
+ lZr4c28ES6YI/mcYnMdqqKo09f1smoskw6XCzztMSh0FhKNeF+S0nwDxpvbIdQGLKRj4I90ta
+ RP2xu7+eR09DfedHrEqFcU2okN2YflecprJXPQxx9VBXXac2g8leDTODRBxj8VzYbaInYlDkE
+ NbAiVA6Drc+1LzU08bNrhMGXXarxGc63DgPjNRMymt2rznjC6aupvezmDLg3ukAXzfPtlJv6u
+ b3J1J/ou0W3vKH3S4sDL/cVCDoKEZIQR+/9F0ki59SfPYXKje+MGpP6os5twCF/niXx/SvHg7
+ fpykuAMaLehAuDl0UFfrk6pe/NG4MDAv3xyhr6EwiPOjVhYfeeALR0W97bMmHVTGYiAYqsDTt
+ MKsBWXYkDTB7l3/kOBThN1fFBohWENF4t07+7287XVUjjw+0Jm89oNyiRzVHzXhhkRW0bBADX
+ 5bGl/DsfVnS9QuCXrSRDoR3BYcFl0q6vAVM6u0KXeubOfGvHTxPlX+m66qsh8IzcP8wU8SpXs
+ m80nMPULrEKMlyJh8mGgyQ54D9TsSIXps2CAIKYNdiNelLawaf8O8f2Dd+Dzzq8+bPb+xsidy
+ YFK9BF/1pjDLMe/8L4WD1pGJft0QyMNnHkcfsXDYGrQ3Tfa34Hjl1DkLcc9J7QA3y+nFbjSlq
+ m2gu7Cy5D62BMY1AXslWycZpvinKp1vRewBTaVz8W8Jxq0wyjLq47+Z5DtZtjonUe7eJII/lG
+ 9I8nq/5Uwa14I2mb/wdiggPs5je0BzEbgxOfgDhLsdnfR87337F4tSvAfOLm/40gTtUYjovar
+ VY+61/muPJS+FMJV4x0+bAMciC36DFmgreJHb6KHy0fID9ZXDcuBCerdCV1E=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi brian,
+Hi Junio,
 
-On Thu, 16 Jan 2020, brian m. carlson wrote:
+On Thu, 16 Jan 2020, Junio C Hamano wrote:
 
-> On 2020-01-16 at 21:18:23, Johannes Schindelin via GitGitGadget wrote:
-> > Triggered by one of brian's SHA-256 patch series, I looked at the reas=
-on why
-> > the SHA-1 collision test case passed when it shouldn't. Turns out that=
- the
-> > regression test was not quite thorough enough, and the interactive reb=
-ase
-> > did regress recently.
-> >
-> > While in the area, I realized that the same bug exists in the code bac=
-king
-> > the rebase.missingCommitsCheck feature: the backed-up todo list uses
-> > shortened commit IDs that may very well become ambiguous during the re=
-base.
-> > For good measure, this patch series fixes that, too.
-> >
-> > Finally, I saw that git rebase --edit-todo reported the line in an awk=
-ward,
-> > maybe even incorrect, way when there was an ambiguous commit ID, and I=
- also
-> > fixed that.
-> >
-> > To make sure that the code can be easily adapted to SHA-256 after thes=
-e
-> > patches, I actually already made those adjustments on top and offered =
-them
-> > up at https://github.com/bk2204/git/pull/1.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> This series looks great to me, and thanks for fixing this.
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The interactive `add` command allows selecting multiple files for some
+> > of its sub-commands, via unique prefixes, indices or index ranges.
+> >
+> > When re-implementing `git add -i` in C, we even added a code comment
+> > talking about ranges with a missing end index, such as `2-`, but the
+> > code did not actually accept those, as pointed out in
+> > https://github.com/git-for-windows/git/issues/2466#issuecomment-574142=
+760.
+> >
+> > Let's fix this, and add a test case to verify that this stays fixed
+> > forever.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  add-interactive.c          | 5 ++++-
+> >  t/t3701-add-interactive.sh | 9 +++++++++
+> >  2 files changed, 13 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/add-interactive.c b/add-interactive.c
+> > index 14d4688c26..396066e724 100644
+> > --- a/add-interactive.c
+> > +++ b/add-interactive.c
+> > @@ -328,7 +328,10 @@ static ssize_t list_and_choose(struct add_i_state=
+ *s,
+> >  				if (endp =3D=3D p + sep)
+> >  					to =3D from + 1;
+> >  				else if (*endp =3D=3D '-') {
+> > -					to =3D strtoul(++endp, &endp, 10);
+> > +					if (isdigit(*(++endp)))
+> > +						to =3D strtoul(endp, &endp, 10);
+> > +					else
+> > +						to =3D items->items.nr;
 >
-> As mentioned in the PR, I'm happy for you to drop the SHA-256 patch into
-> this series if you like, or I can carry it in a future series.  Either
-> way is fine with me.
+> Good.  We do not allow "everything up to N" with "-N", so covering
+> "N and everything after" with "N-" is sufficient.
 
-Excellent. Given that the re-fix to avoid short commit ID collisions has
-little to do with supporting SHA-256, I would like to keep the patch
-series separate, then.
+Even worse, `-N` means "toggle N off". But that can't be fixed easily as
+it has been part of the UI for ages.
 
-The question whether to move the SHA-256 support patch into your series is
-more a question to Junio, i.e. which patch series will be merged down
-faster.
-
-Junio, what is your preference here?
-
-Ciao,
+Thanks,
 Dscho
+
+>
+> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> > index d4f9386621..b02fe73631 100755
+> > --- a/t/t3701-add-interactive.sh
+> > +++ b/t/t3701-add-interactive.sh
+> > @@ -57,6 +57,15 @@ test_expect_success 'revert works (initial)' '
+> >  	! grep . output
+> >  '
+> >
+> > +test_expect_success 'add untracked (multiple)' '
+> > +	test_when_finished "git reset && rm [1-9]" &&
+> > +	touch $(test_seq 9) &&
+> > +	test_write_lines a "2-5 8-" | git add -i -- [1-9] &&
+> > +	test_write_lines 2 3 4 5 8 9 >expected &&
+> > +	git ls-files [1-9] >output &&
+> > +	test_cmp expected output
+> > +'
+> > +
+> >  test_expect_success 'setup (commit)' '
+> >  	echo baseline >file &&
+> >  	git add file &&
+>
