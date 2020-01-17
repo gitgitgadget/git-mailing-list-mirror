@@ -2,103 +2,161 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFEEFC33CB1
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A9A65C33CB1
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:40:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C4C2E214AF
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:32:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 69F4C21D56
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 14:40:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IrTNjRJO"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ZGJWm/km"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728760AbgAQOco (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 09:32:44 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:53832 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726974AbgAQOco (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 09:32:44 -0500
-Received: by mail-wm1-f67.google.com with SMTP id m24so7646180wmc.3
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 06:32:42 -0800 (PST)
+        id S1728799AbgAQOkS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 09:40:18 -0500
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:33513 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727040AbgAQOkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 09:40:18 -0500
+Received: by mail-ua1-f68.google.com with SMTP id a12so9032143uan.0
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 06:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=skf5ZUqW8fMEy0YmrLXiTJQNYFmXrpRUupvxkXjI4Po=;
-        b=IrTNjRJOlltnF3T11faq5Zg+u6NdHjwJMSKbT4zT/hNr/SOy1Fa0bQGeeIYPeFR5HY
-         aprGypX0mIrvXj8zGkll4M7uFQ5g0GD231PMCFs690K83X5AX5FCd7X1C30GT7YlNr/s
-         4luOpMoeg1LW9nlZtAfKhtoTGZ9s/Orz9bjUUnsIQtKjxEG2wAla8osVNHXMBBC5BYNw
-         RjpDwacYfE4B4XkCX85T6Py0ud3usNSxsvSr8CId4764aXCfvDhGe79+AJ8HfKy56bgw
-         QznXYxJqlRaC6oi9S01VU40cSp+HSrgC6WEU/WZAlEjkpO3LiS2nztQVkf3B15WUehIh
-         mwvQ==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ok9QkapI2Kt37vAqpwks4JpnsOws5Y1SEow/35s8Sk0=;
+        b=ZGJWm/kmC+2eENUaHVsCvV2UCGZU1LUuFJhbPwhcYIBn7vgpheTHVLPvUP4TCxNgOR
+         t4j/TF9SLnzI1d+Rs7BrFP1BXFJnV0gt7tmEk3HfzHow/Y/M6nxBJXpj5PXYQcugCCrC
+         fGgtM4fLy8VSzZ0dFAND/OLQJDpiAtqJ+qldK/yLCSWY4FkKh2vT8r0kY8Df5CkJWEsh
+         yvgt6NaBGaWwncQd6szWySJF1jAHz3SgOlLxLL/UZrSZDok6fYHAuhFHOeljuUJj12cv
+         Adh0So+33aGmq4s2QNHbIbtOKjJlXy516PEZ3F61rl24tQlG5mptRfQdqaESGWgyBTL1
+         nd+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=skf5ZUqW8fMEy0YmrLXiTJQNYFmXrpRUupvxkXjI4Po=;
-        b=cco5nIYf69bdTWih+zEJvKC9XSZcl32k2vbm6S+mWPtJyWBGMMARbAtG8mBVxoaxrh
-         ya4jwYwSUB8U4B6pBFojWYHw5PueJD3PYL3KMFJiiEoDWgEUVFC96Tqxv5W7AKHBjOc0
-         xmbyLTmLb93Ar1lI1p6y06PdirVBjJfFAEiUKWx8/FBQWVnTAnP0/YziZkvasBIoN5Cw
-         5Jrxzm5ScqzRhAMB3DHVVdHXCZGSpubYGssk3er2dVrJZ1RZa1ZD6DAqGXTlHLJ8Yd8L
-         2ZWF7CddJIpB2qxKZspiLouRDzzONivcVj6ffcpQKCyqRVj9q13V1/xSeo36u6e0ioBu
-         HYxw==
-X-Gm-Message-State: APjAAAXFmLZvvdjk0RV81fR4fH6hUp7t2d6jYTUs5bpt+iR2adeuxLT5
-        ubjcAw+ZKZInvMrJkO9aUCM=
-X-Google-Smtp-Source: APXvYqyHyVnboF4fChzL6PpfUsJiq4pfqLHU/WFH3b3L6BkBr/VNg2BHmCt1j1pi5aq2zluLzlcW2g==
-X-Received: by 2002:a1c:770e:: with SMTP id t14mr4845531wmi.101.1579271562338;
-        Fri, 17 Jan 2020 06:32:42 -0800 (PST)
-Received: from szeder.dev (x4db97368.dyn.telefonica.de. [77.185.115.104])
-        by smtp.gmail.com with ESMTPSA id n8sm34244079wrx.42.2020.01.17.06.32.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Jan 2020 06:32:41 -0800 (PST)
-Date:   Fri, 17 Jan 2020 15:32:36 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 01/10] built-in add -i/-p: treat SIGPIPE as EOF
-Message-ID: <20200117143236.GA11737@szeder.dev>
-References: <pull.175.v2.git.1577275020.gitgitgadget@gmail.com>
- <pull.175.v3.git.1578904171.gitgitgadget@gmail.com>
- <5e258a8d2bb271433902b2e44c3a30a988bbf512.1578904171.git.gitgitgadget@gmail.com>
- <20200113170417.GK32750@szeder.dev>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ok9QkapI2Kt37vAqpwks4JpnsOws5Y1SEow/35s8Sk0=;
+        b=bQfyqDvOInrw+Ojc4S+pYaFpx75lFnheYeonNnjFJSKNrCQKCtjcK5Ko3wlv38eX1E
+         s7wRswTfFu7cEeUv7QKjSE+H3FbpqMd6AjbXT8fNUL6lpiroPvdJjCp8b1kfInF0WHr7
+         pjQfGN78TooLcyqGCcCjq9aqI/FVGEhBhx4EXY0SG6RWPQikjznSBoG5hXlxUhrRsktb
+         N4dSIRfpy8SGR6HiwtfbQBl+1y/X8PHU8G9meIvnZlhwGqIx951LA23yd1KTdbDyIhju
+         /J8E+iQMfoNgMUTWClHA0xIsHj3hppf3JalnNW9Y9U3t0b8PitDS3Jg3VylwE45AxzaU
+         kC3w==
+X-Gm-Message-State: APjAAAUjPN0AzgQgDiiv2gN+lVqdmtUa9PNqogpIi+Qkt2zpGZ1PS3dA
+        wPRMJqqZv9T4F0baFnrww0oVui3Wl1FyaApA/hE=
+X-Google-Smtp-Source: APXvYqy8SiTaGnSEU5l7zNOGOqUOpAhG8G4jMQzYfU4iSoQ2OmmenswZfAjvJwugP57UUfpHb70ufcTwBTFh/KSlXPk=
+X-Received: by 2002:ab0:60ba:: with SMTP id f26mr21499266uam.51.1579272016883;
+ Fri, 17 Jan 2020 06:40:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20200113170417.GK32750@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
+ <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+ <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet> <CAKPyHN0eTa9LC35oqsy0Dce0qpOJAx159HR+QyguDt_NZ2he_w@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001171428170.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001171428170.46@tvgsbejvaqbjf.bet>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Fri, 17 Jan 2020 15:40:04 +0100
+Message-ID: <CAKPyHN0qY5odXi2wAv20D4nsNM0r4qO_8JOx9DHiGchJmS8cbw@mail.gmail.com>
+Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
+ values too
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 13, 2020 at 06:04:17PM +0100, SZEDER Gábor wrote:
-> and 'GIT_TEST_ADD_I_USE_BUILTIN=1 ./t3701-add-interactive.sh -r 39,49'
-> fails with:
-> 
->   + test_must_fail force_color git add -p
->   about to run diffFilter
->   attempting to xwrite() 224 bytes to a fd with revents flags 0x4
->   test_must_fail: died by signal 13: force_color git add -p
-> 
-> I don't understand why we get SIGPIPE right away instead of some error
-> that we can act upon (ECONNRESET?).
+Hi,
 
-Doh', because it's a pipe, not a socket, that's why.  pipe(7):
+On Fri, Jan 17, 2020 at 2:30 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Bert,
+>
+> On Fri, 17 Jan 2020, Bert Wesarg wrote:
+>
+> > On Fri, Jan 17, 2020 at 12:50 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Hi Bert,
+> > >
+> > > On Fri, 17 Jan 2020, Bert Wesarg wrote:
+> > >
+> > > > When renaming a remote with
+> > > >
+> > > >     git remote rename X Y
+> > > >
+> > > > Git already renames any config values from
+> > > >
+> > > >     branch.<name>.remote = X
+> > > >
+> > > > to
+> > > >
+> > > >     branch.<name>.remote = Y
+> > > >
+> > > > As branch.<name>.pushRemote also names a remote, it now also renames
+> > > > these config values from
+> > > >
+> > > >     branch.<name>.pushRemote = X
+> > > >
+> > > > to
+> > > >
+> > > >     branch.<name>.pushRemote = Y
+> > >
+> > > Should we warn if remote.pushDefault = X?
+> >
+> > AFAIU, the value of remote.pushDefault wont be renamed yet. So you
+> > suggest to issue a warning in case remote.pushDefault is X. But as X
+> > does not exists anymore after the rename, the value of
+> > remote.pushDefault is invalid. So why not rename it too?
+>
+> If this setting was usually a repository-specific one, I would suggest to
+> change its value, too. But it is my understanding that this might be set
+> in `~/.gitconfig` more often than not, so I recommend a warning instead.
 
-  "If all file descriptors referring to the read end of a pipe have
-   been closed, then a write(2) will cause a SIGPIPE signal to be
-   generated for the calling process."
+than why not rename it, if its a repository-specific setting and warn
+if it is a global one? If this is detectable at all.
 
-So ECONNRESET is definitely not the right error to set on POLLERR,
-though I'm still not sure what the right one would be (perhaps
-EPIPE?).
+>
+> > > > @@ -305,7 +309,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> > > >                               space = strchr(value, ' ');
+> > > >                       }
+> > > >                       string_list_append(&info->merge, xstrdup(value));
+> > > > -             } else {
+> > > > +             } else if (type == REBASE) {
+> > > >                       int v = git_parse_maybe_bool(value);
+> > > >                       if (v >= 0)
+> > > >                               info->rebase = v;
+> > > > @@ -315,6 +319,10 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> > > >                               info->rebase = REBASE_MERGES;
+> > > >                       else if (!strcmp(value, "interactive"))
+> > > >                               info->rebase = INTERACTIVE_REBASE;
+> > > > +             } else {
+> > > > +                     if (info->push_remote_name)
+> > > > +                             warning(_("more than one %s"), orig_key);
+> > > > +                     info->push_remote_name = xstrdup(value);
+> > >
+> > > It makes me a bit nervous that this is an `else` without an `if (type ==
+> > > PUSH_REMOTE)`... Maybe do that, just to be on the safe side, even if
+> > > another type is introduced in the future?
+> >
+> > I'm not a friend of this last 'else' either, but it was so to begin
+> > with. I'm all for changing it to an 'else if'. Though while it is
+> > impossible that 'type' has a value different than one from the enum, I
+> > would be even more comfortable with having BUG at the end.
+>
+> My thinking was: even if this was a bare `else` before, why not fix that
+> issue while we're already in the area? I like the `BUG` idea.
 
+Glad I can squash this into this one, instead of making it a single
+patch out of it.
 
+Bert
+
+>
+> Ciao,
+> Dscho
