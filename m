@@ -2,207 +2,153 @@ Return-Path: <SRS0=B37d=3G=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
-	autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83882C33C9E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75D3CC33C9E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:20:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4C5C02072E
-	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:01:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4A3A62083E
+	for <git@archiver.kernel.org>; Fri, 17 Jan 2020 20:20:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbBOlRL9"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IUhyTE7e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729504AbgAQUBQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 17 Jan 2020 15:01:16 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35187 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726897AbgAQUBP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Jan 2020 15:01:15 -0500
-Received: by mail-wr1-f65.google.com with SMTP id g17so23854925wro.2
-        for <git@vger.kernel.org>; Fri, 17 Jan 2020 12:01:14 -0800 (PST)
+        id S1729678AbgAQUUs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 17 Jan 2020 15:20:48 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:35669 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727519AbgAQUUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Jan 2020 15:20:47 -0500
+Received: by mail-vs1-f67.google.com with SMTP id x123so15650339vsc.2
+        for <git@vger.kernel.org>; Fri, 17 Jan 2020 12:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=reply-to:subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=tWxE/F2c/tATyvVZ6VPOlVjLKJcpuSgencuxZtQ6WQc=;
-        b=hbBOlRL9en6El7onYA4/XXRfnz4uyPUcMHZwsaHX448tVYOc8y2ctdWLdQqa5sPwS5
-         /OIGrvYFKVVdISeTlQOiwqiBSC/4ctUv4bs+wzxB26LUYuRq1ufbifI98pjV5yti7Lnp
-         JGcRRSJzkplgdtNhPbu83bxBH3UYTx4AOZQ1BBpTG+hndeYmdQvEa1i7FrDqTQhgZt5G
-         MVgX0NShhUDfQIgRn4+GLDra3rIUkPY9YLbWjyMwq5acMOyudv9gZN6M5ltqa/iPQSTY
-         QKEuNlWjYT7HWEe9823sabut6ZcxBp4mmtz1mHPEfKuWnrnGMqZn4vJ49ZR2pJvDCdTL
-         kbzQ==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=lRktknmQtWZ8/7YOlrmaU+DfOUS+Cf0r5lTJvqS534U=;
+        b=IUhyTE7eiNcrmF4FPdtvbnetmJ1CVBRUJgyh2h4MMqwSmMVm1XRy+uRZgMgX48V7Pw
+         h6l+XcBnXSKo1sieaqwI196vJdzr394gPmfL+S+KFRhv+gk3XcnVDa1UyEs+1KU5Vfks
+         Ob8/ufFaxParlQc/315qtf7A0VcAKF+a3rssweHp1qn4vjEpkLC5LpB4FnYEvxujFuKV
+         KlCJrcnCW7VGZtrLh8MlsvMAt+mknSvOAV/2Cg5vpI4313B5iiqg5UtHpa2dvvdyJN0Y
+         79gzpYMB8EsLQ8lZ75320S5Ui/A++HE7R/qKr2tRmUXj8blz1uaZx6WLsifkYgUFxvKN
+         Kf9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:reply-to:subject:to:cc:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=tWxE/F2c/tATyvVZ6VPOlVjLKJcpuSgencuxZtQ6WQc=;
-        b=UavjlWaGB/Fk8PWUk4Ty4q3qLNgCYlm5ZqS+E8MC58f6F+cIyGpsVRenKhSS/BXFWv
-         bcsOzT/30Ng9ToF5ZfLgmLWTwqChUKwWObhaHXPPhmDn5Ipw6NUtMNyIhFA2XcGZBGdq
-         i21XjHgAyhANPT/XLUtYyVodi/+qnl4ux22BYWFgkvERFN9Xe6NszZLS3J+XQs7hSi0e
-         VkUN56WF0oGg1Pk9HDL9TVPzo/Ydqm3TwI7GlMM2F3TefKzokI5R/COSfZvF0BhlvDEx
-         NRR2y2pIAgU3gVV4zBQcu5UyVJ9M8Nei/5lQwVdNh27LnIqIH83zlEojYWC0YKxLdVXb
-         Nd2g==
-X-Gm-Message-State: APjAAAXfvYINktyQhCs0TD47X/3T+t0dZpWX5SzZm2FuUKM0LUufxi1O
-        UPLTHnp54dbbqy8kqmcRBN+aiDy3
-X-Google-Smtp-Source: APXvYqwOgfbhjKNtDiaK/vYnIpLrDfg3XW/BWAGUb4NJosnlSXtGzrWhlnmGETL3VK/Umr+w3yEZhw==
-X-Received: by 2002:adf:fd43:: with SMTP id h3mr4893474wrs.169.1579291273403;
-        Fri, 17 Jan 2020 12:01:13 -0800 (PST)
-Received: from [192.168.2.240] (host-92-22-19-5.as13285.net. [92.22.19.5])
-        by smtp.gmail.com with ESMTPSA id i11sm36291432wrs.10.2020.01.17.12.01.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Jan 2020 12:01:12 -0800 (PST)
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
- pick_state enum
-To:     Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Ben Curtis <nospam@nowsci.com>, Derrick Stolee <stolee@gmail.com>
-References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood123@gmail.com>
-Message-ID: <17b57e7f-7f3c-abab-1da6-d2e5c9ff893d@gmail.com>
-Date:   Fri, 17 Jan 2020 20:01:10 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.3.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=lRktknmQtWZ8/7YOlrmaU+DfOUS+Cf0r5lTJvqS534U=;
+        b=CkdeQVnXo+HcmbiMkBbXIMwR+YhAH2SmGn6QIGhhnjP4BuHrtxXp1sv3MOArG5zipI
+         rkC/covaJpOVK5Yddx3AGJAbPj40yxqzIdLKekpolk2BmknG94h7yZsit+55PM6dLOu+
+         32xFb/I9VVM+yZoGBRDx9VL4y6sqdIFhwGO+bwyCW6JFAtMrCTWyrPzkSFtRPQWDai6F
+         V0tHJ0GUODYpug3jxBScIaSudQ4jcF4iXm6huH3xh6mY+w1SnT00o7dQNHSEMq4NxX1L
+         chYfcrAahly0jL54Kp1YTR2RVybbWhYItHa1ZuXlkKhSnBDf7DHqlsD1jHryk/mWIvEw
+         C4aw==
+X-Gm-Message-State: APjAAAWClR4ib5XZ7vj5GbdwV7G//gahfec1n3cMrtpyMojX1vvbx9Ox
+        N/ZbZr8wmrY4SfJk6HEv7F6frqSlSHqeyzX91fU=
+X-Google-Smtp-Source: APXvYqz9FxkuttNz9n+m8ihXQ1k0KCJzUpDiV1UdDQQDoljM6qNWAlESkgNZ0F094sgmfQeHTmNNtfxH9js7Qqg+Ezk=
+X-Received: by 2002:a67:ec41:: with SMTP id z1mr5976269vso.197.1579292446760;
+ Fri, 17 Jan 2020 12:20:46 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
+References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
+ <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+ <xmqqeevxex7a.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqeevxex7a.fsf@gitster-ct.c.googlers.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Fri, 17 Jan 2020 21:20:35 +0100
+Message-ID: <CAKPyHN2RwpWhBkTUwERSns0B0Vg7r7CTmhe8p0mZRNeNw4Aagw@mail.gmail.com>
+Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
+ values too
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ben
+Junio,
 
-On 17/01/2020 13:45, Ben Curtis via GitGitGadget wrote:
-> From: Ben Curtis <nospam@nowsci.com>
-> 
-> In 116a408,
+On Fri, Jan 17, 2020 at 7:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > @@ -305,7 +309,7 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >                               space = strchr(value, ' ');
+> >                       }
+> >                       string_list_append(&info->merge, xstrdup(value));
+> > -             } else {
+> > +             } else if (type == REBASE) {
+> >                       int v = git_parse_maybe_bool(value);
+> >                       if (v >= 0)
+> >                               info->rebase = v;
+> > @@ -315,6 +319,10 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+> >                               info->rebase = REBASE_MERGES;
+> >                       else if (!strcmp(value, "interactive"))
+> >                               info->rebase = INTERACTIVE_REBASE;
+> > +             } else {
+> > +                     if (info->push_remote_name)
+> > +                             warning(_("more than one %s"), orig_key);
+> > +                     info->push_remote_name = xstrdup(value);
+> >               }
+>
+> This is perfectly fine for now, as it follows the existing "now we
+> have handled X, and Y, so the remainder must be Z" mentality, but at
+> some point we may want to make sure that we are protected against
+> seeing an unexpected 'type', iow
+>
+>                         ...
+>                 } else if (type == PUSH_REMOTE) {
+>                         ...
+>                 } else {
+>                         BUG("unexpected type=%d", type);
+>                 }
+>
+> as we learn more "type"s.  Better yet, this if/elseif/ cascade may
+> become clearer if it is rewritten to a switch statement.
+>
+> I was about to conclude this message with "but that is all outside
+> the scope of this fix, so I'll queue it as-is " before noticing
+> that you two seem to be leaning towards clean-up at the same time.
+> If we are to clean up the code structure along these lines, I'd
+> prefer to see it done as a preparatory patch before pushremote
+> handling gets introduced.
+>
+> Taking some other clean-up ideas on this function, e.g.:
+>
+>  * key += 7 should better be done without hardcoded length of "branch."
+>  * By leaving early, we can save one indentation level.
+>  * name does not have to be computed for each branch.
+>
+> the resulting body of the function might look more like this:
+>
+>         if (!skip_prefix(key, "branch.", &key))
+>                 return 0;
+>
+>         if (strip_suffix(key, ".remote", &key_len))
+>                 type = REMOTE;
+>         else if (strip_suffix(key, ".merge", &key_len))
+>                 type = MERGE;
+>         ...
+>         else
+>                 return 0;
+>         name = xmemdupz(key, key_len);
+>         item = string_list_insert(&branch_list, name);
+>         ...
+>
+>         switch (type) {
+>         case REMOTE:
+>                 ...
+>         default:
+>                 BUG("unhandled type %d", type);
+>         }
 
-That commit is no longer in pu, it has been replaced by 430b75f720 
-("commit: give correct advice for empty commit during a rebase", 
-2019-12-06). There is now a preparatory commit 8d57f75749 ("commit: use 
-enum value for multiple cherry-picks", 2019-12-06) which replaces the 
-booleans with an enum. I need to reroll the series 
-(pw/advise-rebase-skip) that contains them, if you've got any comments 
-please let me know.
+can you give me an heads up about your expected number of patches for
+this clean up. Rather detailed or just one?
 
-Best Wishes
+Thanks in advance.
 
-Phillip
+Best,
+Bert
 
-  the boolean `rebase_in_progress` was introduced by dscho to
-> handle instances when cherry-pick and rebase were occuring at the same time.
-> This created a situation where two independent booleans were being used
-> to define the state of git at a point in time.
-> 
-> Under his recommendation to follow guidance from Junio, specifically
-> `https://public-inbox.org/git/xmqqr234i2q0.fsf@gitster-ct.c.googlers.com/`,
-> it was decided that an `enum` that defines the state of git would be a
-> more effective path forward.
-> 
-> Tasks completed:
->    - Remove multiple booleans `rebase_in_progress` and `sequencer_in_use` and
-> replaced with a single `pick_state` enum that determines if, when
-> cherry-picking, we are in a rebase, multi-pick, or single-pick state
->    - Converted double `if` statement to `if/else if` prioritizing `REBASE` to
-> continue to disallow cherry pick in rebase.
-> 
-> Signed-off-by: Ben Curtis <nospam@nowsci.com>
-> ---
->      commit: replaced rebase/sequence booleans with single pick_state enum
->      
->      Addresses https://github.com/gitgitgadget/git/issues/426
->      
->      Previous discussions from @dscho and Junio led to the decision to merge
->      two independent booleans into a single enum to track the state of git
->      during a cherry-pick leading to this PR/patch.
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-531%2FFmstrat%2Fjs%2Fadvise-rebase-skip-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-531/Fmstrat/js/advise-rebase-skip-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/531
-> 
->   builtin/commit.c | 24 +++++++++++++++---------
->   1 file changed, 15 insertions(+), 9 deletions(-)
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 2beae13620..84f7e69cb1 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -125,7 +125,11 @@ static enum commit_msg_cleanup_mode cleanup_mode;
->   static const char *cleanup_arg;
->   
->   static enum commit_whence whence;
-> -static int sequencer_in_use, rebase_in_progress;
-> +static enum {
-> +	SINGLE_PICK,
-> +	MULTI_PICK,
-> +	REBASE
-> +} pick_state;
->   static int use_editor = 1, include_status = 1;
->   static int have_option_m;
->   static struct strbuf message = STRBUF_INIT;
-> @@ -184,10 +188,12 @@ static void determine_whence(struct wt_status *s)
->   		whence = FROM_MERGE;
->   	else if (file_exists(git_path_cherry_pick_head(the_repository))) {
->   		whence = FROM_CHERRY_PICK;
-> -		if (file_exists(git_path_seq_dir()))
-> -			sequencer_in_use = 1;
->   		if (file_exists(git_path_rebase_merge_dir()))
-> -			rebase_in_progress = 1;
-> +			pick_state = REBASE;
-> +		else if (file_exists(git_path_seq_dir()))
-> +			pick_state = MULTI_PICK;
-> +		else
-> +			pick_state = SINGLE_PICK;
->   	}
->   	else
->   		whence = FROM_COMMIT;
-> @@ -459,7 +465,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
->   		if (whence == FROM_MERGE)
->   			die(_("cannot do a partial commit during a merge."));
->   		else if (whence == FROM_CHERRY_PICK) {
-> -			if (rebase_in_progress && !sequencer_in_use)
-> +			if (pick_state == REBASE)
->   				die(_("cannot do a partial commit during a rebase."));
->   			die(_("cannot do a partial commit during a cherry-pick."));
->   		}
-> @@ -958,9 +964,9 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
->   			fputs(_(empty_amend_advice), stderr);
->   		else if (whence == FROM_CHERRY_PICK) {
->   			fputs(_(empty_cherry_pick_advice), stderr);
-> -			if (sequencer_in_use)
-> +			if (pick_state == MULTI_PICK)
->   				fputs(_(empty_cherry_pick_advice_multi), stderr);
-> -			else if (rebase_in_progress)
-> +			else if (pick_state == REBASE)
->   				fputs(_(empty_rebase_advice), stderr);
->   			else
->   				fputs(_(empty_cherry_pick_advice_single), stderr);
-> @@ -1167,7 +1173,7 @@ static int parse_and_validate_options(int argc, const char *argv[],
->   		if (whence == FROM_MERGE)
->   			die(_("You are in the middle of a merge -- cannot amend."));
->   		else if (whence == FROM_CHERRY_PICK) {
-> -			if (rebase_in_progress && !sequencer_in_use)
-> +			if (pick_state == REBASE)
->   				die(_("You are in the middle of a rebase -- cannot amend."));
->   			die(_("You are in the middle of a cherry-pick -- cannot amend."));
->   		}
-> @@ -1643,7 +1649,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->   		if (!reflog_msg)
->   			reflog_msg = (whence != FROM_CHERRY_PICK)
->   					? "commit"
-> -					: rebase_in_progress && !sequencer_in_use
-> +					: pick_state == REBASE
->   					? "commit (rebase)"
->   					: "commit (cherry-pick)";
->   		commit_list_insert(current_head, &parents);
-> 
-> base-commit: 116a408b6ffcb2496ebf10dfce1364a42e8f0b32
-> 
+>
+> Thanks.
