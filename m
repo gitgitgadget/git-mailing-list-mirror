@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DEC0C33CB1
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78797C33CB1
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 12A8E2468B
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 487252468B
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bgJxT6s7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oljft9+m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbgARIdu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jan 2020 03:33:50 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38334 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbgARIdu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jan 2020 03:33:50 -0500
-Received: by mail-pl1-f196.google.com with SMTP id f20so10873698plj.5
-        for <git@vger.kernel.org>; Sat, 18 Jan 2020 00:33:49 -0800 (PST)
+        id S1726897AbgARIdx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jan 2020 03:33:53 -0500
+Received: from mail-pj1-f66.google.com ([209.85.216.66]:54593 "EHLO
+        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726509AbgARIdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jan 2020 03:33:53 -0500
+Received: by mail-pj1-f66.google.com with SMTP id kx11so4262678pjb.4
+        for <git@vger.kernel.org>; Sat, 18 Jan 2020 00:33:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=j5g/zU+696PeVmCC3WI7qXsAe3l0QgzXurFGkS4msws=;
-        b=bgJxT6s7sanh36NRVrOUeKmFrCyZlgTsxMMM+KI9imOyk48EBUlmM18fkX+1YIpM3j
-         W3Bj3G4b3unjg3ptOUBrTY9doqG+1RJPzWRBGsEB14AYTlvnYdF2uS1/2bkS8iHd5X1S
-         6GXoKyySsTO6ayDzQwJjwrnI7UFTfS92vVwCjgdXQ+PG0l+j0ZB1edbqF4PcM8K2y459
-         4OHw+kbSn3G74SgvdET3s78HlVWrk++9j3X5dRC1sYjwPl5kJ1YflLVlBQKYiwS6bPjE
-         ookcvhhxiXiIznMNC6ZAE6lZjE4VnBSmPvfWmd1ILK4ggZj05OGhIeC9c+N5JrJZ+g43
-         bG8Q==
+        bh=MWoGM3Qa9X+AZ56NlPJQ9/XkIRHHhYCm+ixQ1gRl95o=;
+        b=oljft9+m/TWtYE/X1pm3sF9Sf/G0zvwZDCMM5zO78nGoAtZXDo0p6jZv+IE80m4Lfh
+         aoTlTziAx8s8PRwzKIBi0RYQi7UDnoWIgaRPAj2qFyX9PI+DcKToBDVMFRPKgqDri9vt
+         +KFAq38mS1gDgQfBEQlO3ACDfEqw7llYVM/dqOIY/WNws8RKKGv9+WLP8hHTGsVuTxbk
+         rpW7aLx9uf5ALcYHp7DCW1gKaMZtxj8I0pmpHuCQgkHRH/TjuIK//z8V/5WlF5ctbpSD
+         2G/ITVHoGel2Vx3Ai5uQg0XW6ypbRhR7L04QKk8xEF//hq9qpITtlvYPMv5J2+123Rni
+         WXrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=j5g/zU+696PeVmCC3WI7qXsAe3l0QgzXurFGkS4msws=;
-        b=pT6u1KqpQOi7vySbje9UuctBkqOBtbB6xCB9/PUKAy+ux7479JwdcEL6c09OpL0lWg
-         I1B8Ppcd537j34zl9hRW1sN9nFEZBezKKEHVyTrbYmA8HJXKA1L0IVwWwmXLEVvezU5i
-         efraUAL3KbMksqUVXecqpYdP8ccsAFGErGixXaYm/bSuvKSmnTd6dTa0cpnmPq/1Ewnz
-         LdqEst2pF4wHtL6jw3l4lsrge6RzIP+vF4e/Ea56vSD8q2JxYgH1j6kkoteHwOTBrbiA
-         IewDVMt9J2RH2lKbl3G5hGN+3mAVETJI+U3A4cWsO17iSXpmw48w4NNoPr92fouNF4Gj
-         EstQ==
-X-Gm-Message-State: APjAAAU5oAhytX/f4golJuB87yhCpN87Kp7g+/eV4xVEkXyctKwtLiu2
-        xGTikGY/XJtIKfdJZWEn+Y4=
-X-Google-Smtp-Source: APXvYqzp0djjaXy73JzjXlNihRxHSqMki4TMSinQomEMtVuyNAdE/bUcG1gvFGuUpLtexBLg3TWmUw==
-X-Received: by 2002:a17:902:820b:: with SMTP id x11mr3836133pln.196.1579336429393;
-        Sat, 18 Jan 2020 00:33:49 -0800 (PST)
+        bh=MWoGM3Qa9X+AZ56NlPJQ9/XkIRHHhYCm+ixQ1gRl95o=;
+        b=AuySHUKHI1eP60htrNOM3/wnj1K6mjt5yPIGxTB9vrZ2eu1knumhyvX5kqhwyjhqf8
+         7VD7jNl3zS1SddftZT90VxG6NVb4jpFgswbA8c1KID5aZP74YpSfeaEjN5hJ8Taqkdrb
+         A6XorIDvDdZcfX3MK1FumLGyDwHl6SCWnfWePYlA26oXzak+VVbNsohC+PON0k5sQl5/
+         fitSjz+tvL/h5N9iUjYdbtM3fMJLAWHxUSM9dmI+JY64h3gy+oozkXV2nNbRYQSNcXTM
+         wfQokUW/sRuapZx/54GfNWnHxOnoqts4Jv+xTo/ZrUIyK9xzkEK9MfAJ9Av/KLUVtbK5
+         96ag==
+X-Gm-Message-State: APjAAAVVyRS/o61/iMJYaD+7RnCM9OJHf24hzb7EvtytaAanY1Y95lDt
+        vEC1BxSVAMBf3qp/LrX66N4=
+X-Google-Smtp-Source: APXvYqxuaaEJmrfRrRJ1uFDFsq8pt1ceIEfIOY9rqLindfU4uQ2JtFFvSs5GKGr0CgQjd0Kehf+dzg==
+X-Received: by 2002:a17:90b:110d:: with SMTP id gi13mr11061198pjb.123.1579336432734;
+        Sat, 18 Jan 2020 00:33:52 -0800 (PST)
 Received: from konoha.iitr.ac.in ([103.37.201.169])
-        by smtp.gmail.com with ESMTPSA id c10sm605038pgj.49.2020.01.18.00.33.46
+        by smtp.gmail.com with ESMTPSA id c10sm605038pgj.49.2020.01.18.00.33.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jan 2020 00:33:48 -0800 (PST)
+        Sat, 18 Jan 2020 00:33:51 -0800 (PST)
 From:   Shourya Shukla <shouryashukla.oo@gmail.com>
 To:     sunshine@sunshineco.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
         shouryashukla.oo@gmail.com
-Subject: [PATCH v3 1/2] t6025: modernize style
-Date:   Sat, 18 Jan 2020 14:03:25 +0530
-Message-Id: <20200118083326.9643-6-shouryashukla.oo@gmail.com>
+Subject: [PATCH v3 2/2] t6025: use helpers to replace test -f <path>
+Date:   Sat, 18 Jan 2020 14:03:26 +0530
+Message-Id: <20200118083326.9643-7-shouryashukla.oo@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20200118083326.9643-1-shouryashukla.oo@gmail.com>
 References: <CAPig+cQX=jB1KTKcOMVE9u0jX-ZXt_vQBndkzqqQWORu5iFxeA@mail.gmail.com>
@@ -73,119 +73,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests in `t6025-merge-symlinks.sh` were written a long time ago, and
-has a lot of style violations, including the mixed-use of tabs and spaces,
-missing indentations, and other shell script style violations. Update it to
-match the CodingGuidelines.
+Take advantage of helper function 'test_path_is_file()' to
+replace 'test -f' since the function makes the code more
+readable and gives better error messages.
 
 Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
 ---
- t/t6025-merge-symlinks.sh | 95 ++++++++++++++++++++-------------------
- 1 file changed, 48 insertions(+), 47 deletions(-)
+ t/t6025-merge-symlinks.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/t/t6025-merge-symlinks.sh b/t/t6025-merge-symlinks.sh
-index 433c4de08f..d257dcf34d 100755
+index d257dcf34d..6c0a90d044 100755
 --- a/t/t6025-merge-symlinks.sh
 +++ b/t/t6025-merge-symlinks.sh
-@@ -10,52 +10,53 @@ if core.symlinks is false.'
+@@ -36,7 +36,7 @@ test_expect_success 'merge master into b-symlink, which has a different symbolic
+ '
  
- . ./test-lib.sh
+ test_expect_success 'the merge result must be a file' '
+-	test -f symlink
++	test_path_is_file symlink
+ '
  
--test_expect_success \
--'setup' '
--git config core.symlinks false &&
--> file &&
--git add file &&
--git commit -m initial &&
--git branch b-symlink &&
--git branch b-file &&
--l=$(printf file | git hash-object -t blob -w --stdin) &&
--echo "120000 $l	symlink" | git update-index --index-info &&
--git commit -m master &&
--git checkout b-symlink &&
--l=$(printf file-different | git hash-object -t blob -w --stdin) &&
--echo "120000 $l	symlink" | git update-index --index-info &&
--git commit -m b-symlink &&
--git checkout b-file &&
--echo plain-file > symlink &&
--git add symlink &&
--git commit -m b-file'
--
--test_expect_success \
--'merge master into b-symlink, which has a different symbolic link' '
--git checkout b-symlink &&
--test_must_fail git merge master'
--
--test_expect_success \
--'the merge result must be a file' '
--test -f symlink'
--
--test_expect_success \
--'merge master into b-file, which has a file instead of a symbolic link' '
--git reset --hard && git checkout b-file &&
--test_must_fail git merge master'
--
--test_expect_success \
--'the merge result must be a file' '
--test -f symlink'
--
--test_expect_success \
--'merge b-file, which has a file instead of a symbolic link, into master' '
--git reset --hard &&
--git checkout master &&
--test_must_fail git merge b-file'
--
--test_expect_success \
--'the merge result must be a file' '
--test -f symlink'
-+test_expect_success 'setup' '
-+	git config core.symlinks false &&
-+	>file &&
-+	git add file &&
-+	git commit -m initial &&
-+	git branch b-symlink &&
-+	git branch b-file &&
-+	l=$(printf file | git hash-object -t blob -w --stdin) &&
-+	echo "120000 $l	symlink" | git update-index --index-info &&
-+	git commit -m master &&
-+	git checkout b-symlink &&
-+	l=$(printf file-different | git hash-object -t blob -w --stdin) &&
-+	echo "120000 $l	symlink" | git update-index --index-info &&
-+	git commit -m b-symlink &&
-+	git checkout b-file &&
-+	echo plain-file >symlink &&
-+	git add symlink &&
-+	git commit -m b-file
-+'
-+
-+test_expect_success 'merge master into b-symlink, which has a different symbolic link' '
-+	git checkout b-symlink &&
-+	test_must_fail git merge master
-+'
-+
-+test_expect_success 'the merge result must be a file' '
-+	test -f symlink
-+'
-+
-+test_expect_success 'merge master into b-file, which has a file instead of a symbolic link' '
-+	git reset --hard &&
-+	git checkout b-file &&
-+	test_must_fail git merge master
-+'
-+
-+test_expect_success 'the merge result must be a file' '
-+	test -f symlink
-+'
-+
-+test_expect_success 'merge b-file, which has a file instead of a symbolic link, into master' '
-+	git reset --hard &&
-+	git checkout master &&
-+	test_must_fail git merge b-file
-+'
-+
-+test_expect_success 'the merge result must be a file' '
-+	test -f symlink
-+'
+ test_expect_success 'merge master into b-file, which has a file instead of a symbolic link' '
+@@ -46,7 +46,7 @@ test_expect_success 'merge master into b-file, which has a file instead of a sym
+ '
+ 
+ test_expect_success 'the merge result must be a file' '
+-	test -f symlink
++	test_path_is_file symlink
+ '
+ 
+ test_expect_success 'merge b-file, which has a file instead of a symbolic link, into master' '
+@@ -56,7 +56,7 @@ test_expect_success 'merge b-file, which has a file instead of a symbolic link,
+ '
+ 
+ test_expect_success 'the merge result must be a file' '
+-	test -f symlink
++	test_path_is_file symlink
+ '
  
  test_done
 -- 
