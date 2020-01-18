@@ -8,62 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57916C33CB1
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DE67C33CB1
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:55:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 24ECF2469D
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:55:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50BA52469D
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:55:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eh2PUqm6"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bmQcaCad"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726345AbgAROzG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jan 2020 09:55:06 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:33406 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbgAROzG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jan 2020 09:55:06 -0500
-Received: by mail-qk1-f193.google.com with SMTP id d71so25793210qkc.0
-        for <git@vger.kernel.org>; Sat, 18 Jan 2020 06:55:06 -0800 (PST)
+        id S1726388AbgAROzO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jan 2020 09:55:14 -0500
+Received: from mail-qv1-f65.google.com ([209.85.219.65]:35675 "EHLO
+        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbgAROzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jan 2020 09:55:14 -0500
+Received: by mail-qv1-f65.google.com with SMTP id u10so12072491qvi.2
+        for <git@vger.kernel.org>; Sat, 18 Jan 2020 06:55:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xyi3un8ozOCID92R1S6Q52/3t/3sFfnQwjXJhouk+Vc=;
-        b=eh2PUqm6bi3KLCUJrxYPmsPvMPj78g5DHGcSXlLx673KGQNij9oXf/zSeqhPE7brq9
-         /mtrK+grFkmbmt2ZftPgJ5y8Sr0J7Jmj0Vi7OWr+At/VEj5eBVEd+xlIo5qIU7zDgbJ1
-         5x1k/iHrSvgsICzAD7aKrplN9X/w5ObFmFoHfQMlrMMmreuBvHrivxragWBKjbPvSoVx
-         9yhUF2kYmPSae6YYjKSAKcyyPW9Dpokb1WPd+KRrI2q27cPKyvGDv+TgBi0aWjsYtCPJ
-         c54+8dn5UrXQYyuXK8DlB0y7y6tMGLdytuc6xMGxE+ws+mBTeDsPkNm85YVv9wQgaFbh
-         tX+w==
+        bh=dWxfZV27edfVdXXUFNiZBybhEktkPs+VCK1rOgtP4LQ=;
+        b=bmQcaCadtp/7pkFTQImo0H0vTY7SWWXA3/BPyNs/GB6qiKhC+T3FOsmQ/94P7Kda9c
+         QJV5xfwbqKiDkRqexqa4mHICnV4D0jJ8U+hP5+xlbZQmQQrPwl0SE0lQNe4vqtLUt4ok
+         BDpJfUqhEm/JdgNM3siW8B/778Ofck5myYoccqpck9ZHhoSQF+f3x4x+tbw4YgqrE7oY
+         p+P/e7mBKFT1LC0tfjQd2aZRzbgmg7tkrDJDRsrVLuswk5Dmxr9dHf4UyjGQbRbmRcYx
+         ES0br3sd9O6qywy3e1AWhFAhp9HcwKBWo+VG46+wc/1PgYutrwiackO2Qf95w9SyAbx0
+         ITrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xyi3un8ozOCID92R1S6Q52/3t/3sFfnQwjXJhouk+Vc=;
-        b=nrF793IVi8CvIaSrEtFT8SyCzQCkSgi6vgT2nkUDPMQdP1bhokovKYEZ8c8++JT807
-         KKk5os7vmVysqbPZIJ9T5cBxLD0//1GqJNSB31XIBWHSqM4NQxXrqW9E7SIcHLifWCva
-         wV5LHdhJ05oRqMMUwp2WOhmmmaXcjnqo8dHU+dS22sCYO2dbGuOvifaKMso9NKyi937N
-         6MoQbU5woCEFyyE/pSI/C3PW4HwME0iWgAzG9R12qzG/XlX2S5N36IZF8rrWCcIZ3kqW
-         iAujcPCVStrjFqTE1w+2DWNt70n+R9NofqNeMAU9dzEOd3luOE1ZwXlzNLZsvcDcDBiX
-         v3+A==
-X-Gm-Message-State: APjAAAVx+qZh2TopLTFB3GspfT1QfsD9s/QjFxmHTHfPRd4aVf/PEIX5
-        4N5hFTgSCq0uKyXaEQu3Iv4=
-X-Google-Smtp-Source: APXvYqyeP7FEVWH+qME3XSF/jwjlv+ulqCIW7qe4GRFTVBENusnNBnLjch6VE3gIFLQjJffFbX5GfA==
-X-Received: by 2002:a05:620a:143b:: with SMTP id k27mr41431145qkj.262.1579359305600;
-        Sat, 18 Jan 2020 06:55:05 -0800 (PST)
+        bh=dWxfZV27edfVdXXUFNiZBybhEktkPs+VCK1rOgtP4LQ=;
+        b=uesy6e9nU2HfI68JnLpcrq0RB40p6Z6qbK+qk7HaoGERDdobpzIrs4OQ3JfhGu8ozI
+         KqauINQ4oMDeuu6iNhR99WjaXWaqy3oatDTdxO2oWggTsKz9t9Z1zCwZhDbKdj2QfqNc
+         kn6GTCRlsupQnsfpRihSVFIu8qg2231auEDV4FhQNgKWjH4lBVCWcwUDJWepa8DAwk7E
+         e8JjytX9UMmB1dsZMmwzzYmhZxQdCltjUDQWnR6y2OH5rW/CaHSwKt5ENtcDEifNsQit
+         HzSKbv3sMbCWF8OZdQ7mASLsW4wF5uujeFjqVQ6DtdjJwPfhOE/Nu2+kTqSqU0cRfLyO
+         hmvw==
+X-Gm-Message-State: APjAAAUXlLiu5/B6ZIIX+9ssLwfVhbi6JPqvsik6giTPnarTw9ib6qkx
+        GZfQia1p3B9WxLlJKlV4Lu6koQ/nwQI=
+X-Google-Smtp-Source: APXvYqwGh69RA9RSDX5tYkXQzNYpHfKD4K3E8n3sNsEa518TW+X8OumWr0PHX8iIzG8T++ty8NslwA==
+X-Received: by 2002:a05:6214:287:: with SMTP id l7mr12901561qvv.142.1579359313005;
+        Sat, 18 Jan 2020 06:55:13 -0800 (PST)
 Received: from eyalsoha.fios-router.home (pool-173-54-220-250.nwrknj.fios.verizon.net. [173.54.220.250])
-        by smtp.gmail.com with ESMTPSA id i28sm15122250qtc.57.2020.01.18.06.55.04
+        by smtp.gmail.com with ESMTPSA id i28sm15122250qtc.57.2020.01.18.06.55.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jan 2020 06:55:04 -0800 (PST)
+        Sat, 18 Jan 2020 06:55:12 -0800 (PST)
 From:   Eyal Soha <shawarmakarma@gmail.com>
 To:     peff@peff.net, git@vger.kernel.org, gitster@pobox.com
 Cc:     Eyal Soha <shawarmakarma@gmail.com>
-Subject: [PATCH 1/3] color.c: Refactor color_output to use enums
-Date:   Sat, 18 Jan 2020 09:53:16 -0500
-Message-Id: <20200118145318.5177-1-shawarmakarma@gmail.com>
+Subject: [PATCH 2/3] color.c: Support bright aixterm colors
+Date:   Sat, 18 Jan 2020 09:53:17 -0500
+Message-Id: <20200118145318.5177-2-shawarmakarma@gmail.com>
 X-Mailer: git-send-email 2.25.0.rc2.3.g8712c6e7f0
-In-Reply-To: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
+In-Reply-To: <20200118145318.5177-1-shawarmakarma@gmail.com>
 References: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
+ <20200118145318.5177-1-shawarmakarma@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -71,98 +72,114 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+These colors are the bright variants of the 3-bit colors.
+
 Signed-off-by: Eyal Soha <shawarmakarma@gmail.com>
 ---
- color.c | 34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ Documentation/config.txt |  4 +++-
+ color.c                  | 34 +++++++++++++++++++++++++++-------
+ t/t4026-color.sh         |  8 ++++++++
+ 3 files changed, 38 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 83e7bba872..08b13ba72b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -263,7 +263,9 @@ color::
+ +
+ The basic colors accepted are `normal`, `black`, `red`, `green`, `yellow`,
+ `blue`, `magenta`, `cyan` and `white`.  The first color given is the
+-foreground; the second is the background.
++foreground; the second is the background.  All the basic colors except
++`normal` have a bright variant that can be speficied by prefixing the
++color with `bright`, like `brightred`.
+ +
+ Colors may also be given as numbers between 0 and 255; these use ANSI
+ 256-color mode (but note that not all terminals may support this).  If
 diff --git a/color.c b/color.c
-index ebb222ec33..3b734ccffd 100644
+index 3b734ccffd..66d32e1191 100644
 --- a/color.c
 +++ b/color.c
-@@ -24,6 +24,13 @@ const char *column_colors_ansi[] = {
- 	GIT_COLOR_RESET,
+@@ -29,6 +29,7 @@ enum {
+ 	COLOR_FOREGROUND_ANSI = 30,
+ 	COLOR_FOREGROUND_RGB = 38,
+ 	COLOR_FOREGROUND_256 = 38,
++	COLOR_FOREGROUND_BRIGHT_ANSI = 90,
  };
  
-+enum {
-+	COLOR_BACKGROUND_OFFSET = 10,
-+	COLOR_FOREGROUND_ANSI = 30,
-+	COLOR_FOREGROUND_RGB = 38,
-+	COLOR_FOREGROUND_256 = 38,
-+};
-+
  /* Ignore the RESET at the end when giving the size */
- const int column_colors_ansi_max = ARRAY_SIZE(column_colors_ansi) - 1;
+@@ -68,13 +69,36 @@ static int get_hex_color(const char *in, unsigned char *out)
+ 	return 0;
+ }
  
-@@ -92,7 +99,7 @@ static int parse_color(struct color *out, const char *name, int len)
- 	for (i = 0; i < ARRAY_SIZE(color_names); i++) {
- 		if (match_word(name, len, color_names[i])) {
- 			out->type = COLOR_ANSI;
--			out->value = i;
-+			out->value = i + COLOR_FOREGROUND_ANSI;
- 			return 0;
- 		}
- 	}
-@@ -112,7 +119,7 @@ static int parse_color(struct color *out, const char *name, int len)
- 		/* Rewrite low numbers as more-portable standard colors. */
- 		} else if (val < 8) {
- 			out->type = COLOR_ANSI;
--			out->value = val;
-+			out->value = val + COLOR_FOREGROUND_ANSI;
- 			return 0;
- 		} else if (val < 256) {
- 			out->type = COLOR_256;
-@@ -166,23 +173,26 @@ int color_parse(const char *value, char *dst)
-  * already have the ANSI escape code in it. "out" should have enough
-  * space in it to fit any color.
-  */
--static char *color_output(char *out, int len, const struct color *c, char type)
-+static char *color_output(char *out, int len, const struct color *c, int background)
+-static int parse_color(struct color *out, const char *name, int len)
++/*
++ * If an ANSI color is recognized in "name", fill "out" and return 0.
++ * Otherwise, leave out unchanged and return -1.
++ */
++static int parse_ansi_color(struct color *out, const char *name, int len)
  {
-+	int offset = 0;
-+	if (background) {
-+		offset = COLOR_BACKGROUND_OFFSET;
+ 	/* Positions in array must match ANSI color codes */
+ 	static const char * const color_names[] = {
+ 		"black", "red", "green", "yellow",
+ 		"blue", "magenta", "cyan", "white"
+ 	};
++
++	int color_offset = COLOR_FOREGROUND_ANSI;
++	if (strncasecmp(name, "bright", 6) == 0) {
++		color_offset = COLOR_FOREGROUND_BRIGHT_ANSI;
++		name += 6;
++		len -= 6;
 +	}
- 	switch (c->type) {
- 	case COLOR_UNSPECIFIED:
- 	case COLOR_NORMAL:
- 		break;
- 	case COLOR_ANSI:
--		if (len < 2)
--			BUG("color parsing ran out of space");
--		*out++ = type;
--		*out++ = '0' + c->value;
-+		out += xsnprintf(out, len, "%d", c->value + offset);
- 		break;
- 	case COLOR_256:
--		out += xsnprintf(out, len, "%c8;5;%d", type, c->value);
-+		out += xsnprintf(out, len, "%d;5;%d", COLOR_FOREGROUND_256 + offset,
-+				 c->value);
- 		break;
- 	case COLOR_RGB:
--		out += xsnprintf(out, len, "%c8;2;%d;%d;%d", type,
-+		out += xsnprintf(out, len, "%d;2;%d;%d;%d",
-+				 COLOR_FOREGROUND_RGB + offset,
- 				 c->red, c->green, c->blue);
- 		break;
++	for (int i = 0; i < ARRAY_SIZE(color_names); i++) {
++		if (match_word(name, len, color_names[i])) {
++			out->type = COLOR_ANSI;
++			out->value = i + color_offset;
++			return 0;
++		}
++	}
++	return -1;
++}
++
++static int parse_color(struct color *out, const char *name, int len)
++{
+ 	char *end;
+ 	int i;
+ 	long val;
+@@ -96,12 +120,8 @@ static int parse_color(struct color *out, const char *name, int len)
  	}
-@@ -279,14 +289,12 @@ int color_parse_mem(const char *value, int value_len, char *dst)
- 		if (!color_empty(&fg)) {
- 			if (sep++)
- 				OUT(';');
--			/* foreground colors are all in the 3x range */
--			dst = color_output(dst, end - dst, &fg, '3');
-+			dst = color_output(dst, end - dst, &fg, 0);
- 		}
- 		if (!color_empty(&bg)) {
- 			if (sep++)
- 				OUT(';');
--			/* background colors are all in the 4x range */
--			dst = color_output(dst, end - dst, &bg, '4');
-+			dst = color_output(dst, end - dst, &bg, 1);
- 		}
- 		OUT('m');
+ 
+ 	/* Then pick from our human-readable color names... */
+-	for (i = 0; i < ARRAY_SIZE(color_names); i++) {
+-		if (match_word(name, len, color_names[i])) {
+-			out->type = COLOR_ANSI;
+-			out->value = i + COLOR_FOREGROUND_ANSI;
+-			return 0;
+-		}
++	if (parse_ansi_color(out, name, len) == 0) {
++		return 0;
  	}
+ 
+ 	/* And finally try a literal 256-color-mode number */
+diff --git a/t/t4026-color.sh b/t/t4026-color.sh
+index 671e951ee5..78c69de90a 100755
+--- a/t/t4026-color.sh
++++ b/t/t4026-color.sh
+@@ -30,6 +30,14 @@ test_expect_success 'attribute before color name' '
+ 	color "bold red" "[1;31m"
+ '
+ 
++test_expect_success 'aixterm bright fg color' '
++	color "brightred" "[91m"
++'
++
++test_expect_success 'aixterm bright bg color' '
++	color "green brightblue" "[32;104m"
++'
++
+ test_expect_success 'color name before attribute' '
+ 	color "red bold" "[1;31m"
+ '
 -- 
 2.25.0.rc2.3.g8712c6e7f0
 
