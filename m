@@ -8,111 +8,101 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78797C33CB1
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 377FAC33CB1
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:05:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 487252468B
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 08:33:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 090802469A
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 14:05:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oljft9+m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lN3Lt0+X"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726897AbgARIdx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jan 2020 03:33:53 -0500
-Received: from mail-pj1-f66.google.com ([209.85.216.66]:54593 "EHLO
-        mail-pj1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726509AbgARIdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jan 2020 03:33:53 -0500
-Received: by mail-pj1-f66.google.com with SMTP id kx11so4262678pjb.4
-        for <git@vger.kernel.org>; Sat, 18 Jan 2020 00:33:53 -0800 (PST)
+        id S1726465AbgAROFQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 18 Jan 2020 09:05:16 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34888 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726208AbgAROFQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jan 2020 09:05:16 -0500
+Received: by mail-wr1-f68.google.com with SMTP id g17so25248533wro.2
+        for <git@vger.kernel.org>; Sat, 18 Jan 2020 06:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MWoGM3Qa9X+AZ56NlPJQ9/XkIRHHhYCm+ixQ1gRl95o=;
-        b=oljft9+m/TWtYE/X1pm3sF9Sf/G0zvwZDCMM5zO78nGoAtZXDo0p6jZv+IE80m4Lfh
-         aoTlTziAx8s8PRwzKIBi0RYQi7UDnoWIgaRPAj2qFyX9PI+DcKToBDVMFRPKgqDri9vt
-         +KFAq38mS1gDgQfBEQlO3ACDfEqw7llYVM/dqOIY/WNws8RKKGv9+WLP8hHTGsVuTxbk
-         rpW7aLx9uf5ALcYHp7DCW1gKaMZtxj8I0pmpHuCQgkHRH/TjuIK//z8V/5WlF5ctbpSD
-         2G/ITVHoGel2Vx3Ai5uQg0XW6ypbRhR7L04QKk8xEF//hq9qpITtlvYPMv5J2+123Rni
-         WXrQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oKuiaGbge3w89wwq6hiaDxTZqhaCMzDsxkfy/39CVRI=;
+        b=lN3Lt0+Xtp/pShbLSrIONNs7FaIouAKEA9JZVRJwfawW2fSSR/K+hYSgBuObvG/1mx
+         x5d5WIHdLCVvRf35JK2S3p9qxFVVYfdslFcQXGEptx8rVWA8JhD9VBP6mPivkqHtpYyW
+         xSucbBEsEH7fO/eWmXFBCNWjegNUVKoG6Y7PpppEV+O7c1ljyQ3K8SsQHwLxreNQH5QK
+         h+iCpuQ0RN4h3Tw6WVH7FLHsBPZCMMW6d7m1H/nVEZscwhm8EjlNnIzqi35N6AKf1w4C
+         2DEKIubyTyBHyoijvFOgOwFbsrV5yQlHXL1Gj/pLk86Pb28Ueh/RK98QQUN5ayJBIgBj
+         gaAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MWoGM3Qa9X+AZ56NlPJQ9/XkIRHHhYCm+ixQ1gRl95o=;
-        b=AuySHUKHI1eP60htrNOM3/wnj1K6mjt5yPIGxTB9vrZ2eu1knumhyvX5kqhwyjhqf8
-         7VD7jNl3zS1SddftZT90VxG6NVb4jpFgswbA8c1KID5aZP74YpSfeaEjN5hJ8Taqkdrb
-         A6XorIDvDdZcfX3MK1FumLGyDwHl6SCWnfWePYlA26oXzak+VVbNsohC+PON0k5sQl5/
-         fitSjz+tvL/h5N9iUjYdbtM3fMJLAWHxUSM9dmI+JY64h3gy+oozkXV2nNbRYQSNcXTM
-         wfQokUW/sRuapZx/54GfNWnHxOnoqts4Jv+xTo/ZrUIyK9xzkEK9MfAJ9Av/KLUVtbK5
-         96ag==
-X-Gm-Message-State: APjAAAVVyRS/o61/iMJYaD+7RnCM9OJHf24hzb7EvtytaAanY1Y95lDt
-        vEC1BxSVAMBf3qp/LrX66N4=
-X-Google-Smtp-Source: APXvYqxuaaEJmrfRrRJ1uFDFsq8pt1ceIEfIOY9rqLindfU4uQ2JtFFvSs5GKGr0CgQjd0Kehf+dzg==
-X-Received: by 2002:a17:90b:110d:: with SMTP id gi13mr11061198pjb.123.1579336432734;
-        Sat, 18 Jan 2020 00:33:52 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.169])
-        by smtp.gmail.com with ESMTPSA id c10sm605038pgj.49.2020.01.18.00.33.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Jan 2020 00:33:51 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     sunshine@sunshineco.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        shouryashukla.oo@gmail.com
-Subject: [PATCH v3 2/2] t6025: use helpers to replace test -f <path>
-Date:   Sat, 18 Jan 2020 14:03:26 +0530
-Message-Id: <20200118083326.9643-7-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20200118083326.9643-1-shouryashukla.oo@gmail.com>
-References: <CAPig+cQX=jB1KTKcOMVE9u0jX-ZXt_vQBndkzqqQWORu5iFxeA@mail.gmail.com>
- <20200118083326.9643-1-shouryashukla.oo@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=oKuiaGbge3w89wwq6hiaDxTZqhaCMzDsxkfy/39CVRI=;
+        b=hpQBYOVdgvmTmId6OWMPaESIeo370JxsD5KPqFRAxKZwoAeWiy5Sn5R4IjP/AAee79
+         6Tm4Ypx2IS1R0pxCn7+3ePAhMEkHAcRXZ7g3YhqvM7XvUur12W04px21pEdUNBtsXO+7
+         xr8xVF18L2VkAAdKSy1Qw0ZpC/kd8aEj7fpYnizuWfsuK+6Bciptx8VoqTaiBlTl2rix
+         /zoK8fiXfu/nPSBhkySZWxadpBBcDf5m2+zc/FMFyEPCNmewno9PgIJFNniEECzS9k7S
+         ck2F4yYhYMYBT7VL3xtImzCZcLSnBU6js6zGAg1/5jIgauYdp4IIohaDtpuiVO+pFDXW
+         odqw==
+X-Gm-Message-State: APjAAAU/mh/GKvUVSZHMrHH+7OwKoWZf9o3fGk07oYn7sLJmK/Cy4SOG
+        ZvcxXDvW2blSC5xsBE2bfcBdo34Y
+X-Google-Smtp-Source: APXvYqzU84MTSeUn1h4o44MtIogfmuyvAeOQs/ZmlReCNoFQSDEkYGGQoo5RnN8hLKnUGJsunhCQ+Q==
+X-Received: by 2002:a5d:4044:: with SMTP id w4mr8502717wrp.322.1579356314481;
+        Sat, 18 Jan 2020 06:05:14 -0800 (PST)
+Received: from localhost.localdomain (atoulouse-658-1-84-141.w90-5.abo.wanadoo.fr. [90.5.87.141])
+        by smtp.googlemail.com with ESMTPSA id u84sm3615892wmg.10.2020.01.18.06.05.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 18 Jan 2020 06:05:13 -0800 (PST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org,
+        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH] po/fr.po: various typofixes
+Date:   Sat, 18 Jan 2020 14:59:13 +0100
+Message-Id: <20200118135913.1845-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.24.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Take advantage of helper function 'test_path_is_file()' to
-replace 'test -f' since the function makes the code more
-readable and gives better error messages.
+"commande" and "récupération" are feminin nouns in French, but here
+their definite article is "le", which is the article of masculine nouns;
+the correct article is "la".
 
-Signed-off-by: Shourya Shukla <shouryashukla.oo@gmail.com>
+Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
- t/t6025-merge-symlinks.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ po/fr.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t6025-merge-symlinks.sh b/t/t6025-merge-symlinks.sh
-index d257dcf34d..6c0a90d044 100755
---- a/t/t6025-merge-symlinks.sh
-+++ b/t/t6025-merge-symlinks.sh
-@@ -36,7 +36,7 @@ test_expect_success 'merge master into b-symlink, which has a different symbolic
- '
+diff --git a/po/fr.po b/po/fr.po
+index 3ff44e57af..776c58e56d 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -3556,7 +3556,7 @@ msgstr ""
+ msgid ""
+ "you may want to set your %s variable to at least %d and retry the command."
+ msgstr ""
+-"vous souhaitez peut-être régler la variable %s à au moins %d et réessayer le "
++"vous souhaitez peut-être régler la variable %s à au moins %d et réessayer la "
+ "commande."
  
- test_expect_success 'the merge result must be a file' '
--	test -f symlink
-+	test_path_is_file symlink
- '
+ #: dir.c:554
+@@ -3794,7 +3794,7 @@ msgstr "pas de commit commun"
  
- test_expect_success 'merge master into b-file, which has a file instead of a symbolic link' '
-@@ -46,7 +46,7 @@ test_expect_success 'merge master into b-file, which has a file instead of a sym
- '
+ #: fetch-pack.c:1070 fetch-pack.c:1536
+ msgid "git fetch-pack: fetch failed."
+-msgstr "git fetch-pack : échec de le récupération."
++msgstr "git fetch-pack : échec de la récupération."
  
- test_expect_success 'the merge result must be a file' '
--	test -f symlink
-+	test_path_is_file symlink
- '
- 
- test_expect_success 'merge b-file, which has a file instead of a symbolic link, into master' '
-@@ -56,7 +56,7 @@ test_expect_success 'merge b-file, which has a file instead of a symbolic link,
- '
- 
- test_expect_success 'the merge result must be a file' '
--	test -f symlink
-+	test_path_is_file symlink
- '
- 
- test_done
+ #: fetch-pack.c:1209
+ msgid "Server does not support shallow requests"
 -- 
-2.20.1
+2.24.1
 
