@@ -2,85 +2,81 @@ Return-Path: <SRS0=dClv=3H=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.5 required=3.0 tests=FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1928C33CB1
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 16:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B5C6C33CB1
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 17:11:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9E2802469C
-	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 16:34:33 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nowsci.com header.i=@nowsci.com header.b="pxqRzHBN"
+	by mail.kernel.org (Postfix) with ESMTP id 68543246A6
+	for <git@archiver.kernel.org>; Sat, 18 Jan 2020 17:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbgARQec (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 18 Jan 2020 11:34:32 -0500
-Received: from mail.nowsci.com ([172.104.14.39]:52204 "EHLO mail.nowsci.com"
+        id S1726607AbgARRLv convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 18 Jan 2020 12:11:51 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:6390 "EHLO smtp2-g21.free.fr"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726413AbgARQec (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Jan 2020 11:34:32 -0500
-X-Virus-Scanned: Yes
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nowsci.com; s=mail;
-        t=1579365268; bh=lFb1Xila55k/26GrrLsVn7X4bZoCrZ5qusmKmZ0LqZQ=;
-        h=Subject:From:To:Cc:In-Reply-To:References;
-        b=pxqRzHBN1FC1QVivPk31ZVH/e0kWjRe57wrCA2VeE3HkwRjp+qSqJz3ok6o8dmEjZ
-         jYpRWNTVfH4g8gjtuJb5iVwSF6J2Cg+voF+vFKA6OFd2AIeSOyws970hK0yGE6stSZ
-         VGkWp/v+7E79ZtAalqNE6VREEfwNTZi131WrnG0o=
-X-Virus-Scanned: Yes
-Message-ID: <bb0e232924305697596743d3fa93d5bf3b0e8d4d.camel@nowsci.com>
-Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
- pick_state enum
-From:   Ben Curtis <nospam@nowsci.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>, phillip.wood@dunelm.org.uk,
-        Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>
-Date:   Sat, 18 Jan 2020 11:34:20 -0500
-In-Reply-To: <17b57e7f-7f3c-abab-1da6-d2e5c9ff893d@gmail.com>
-References: <pull.531.git.1579268705473.gitgitgadget@gmail.com>
-         <17b57e7f-7f3c-abab-1da6-d2e5c9ff893d@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+        id S1726413AbgARRLv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Jan 2020 12:11:51 -0500
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 633CE2003F2;
+        Sat, 18 Jan 2020 18:11:47 +0100 (CET)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] po/fr.po: various typofixes
+Date:   Sat, 18 Jan 2020 18:11:43 +0100
+Message-ID: <2398105.z8pcppHtcz@cayenne>
+In-Reply-To: <20200118135913.1845-1-alban.gruin@gmail.com>
+References: <20200118135913.1845-1-alban.gruin@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 2020-01-17 at 20:01 +0000, Phillip Wood wrote:
-> Hi Ben
+On Saturday, 18 January 2020 14:59:13 CET Alban Gruin wrote:
+> "commande" and "récupération" are feminin nouns in French, but here
+> their definite article is "le", which is the article of masculine nouns;
+> the correct article is "la".
 > 
-> On 17/01/2020 13:45, Ben Curtis via GitGitGadget wrote:
-> > From: Ben Curtis <nospam@nowsci.com>
-> > 
-> > In 116a408,
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>  po/fr.po | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> That commit is no longer in pu, it has been replaced by 430b75f720 
-> ("commit: give correct advice for empty commit during a rebase", 
-> 2019-12-06). There is now a preparatory commit 8d57f75749 ("commit:
-> use 
-> enum value for multiple cherry-picks", 2019-12-06) which replaces
-> the 
-> booleans with an enum. I need to reroll the series 
-> (pw/advise-rebase-skip) that contains them, if you've got any
-> comments 
-> please let me know.
-> 
-> Best Wishes
-> 
-> Phillip
+> diff --git a/po/fr.po b/po/fr.po
+> index 3ff44e57af..776c58e56d 100644
+> --- a/po/fr.po
+> +++ b/po/fr.po
+> @@ -3556,7 +3556,7 @@ msgstr ""
+>  msgid ""
+>  "you may want to set your %s variable to at least %d and retry the command."
+>  msgstr ""
+> -"vous souhaitez peut-être régler la variable %s à au moins %d et réessayer le "
+> +"vous souhaitez peut-être régler la variable %s à au moins %d et réessayer la "
+>  "commande."
+>  
+>  #: dir.c:554
+> @@ -3794,7 +3794,7 @@ msgstr "pas de commit commun"
+>  
+>  #: fetch-pack.c:1070 fetch-pack.c:1536
+>  msgid "git fetch-pack: fetch failed."
+> -msgstr "git fetch-pack : échec de le récupération."
+> +msgstr "git fetch-pack : échec de la récupération."
+>  
+>  #: fetch-pack.c:1209
+>  msgid "Server does not support shallow requests"
 > 
 
-Hi Phillip,
+Thank you.
 
-Thank you for the feedback, I assume that means my patch is no longer
-required?
+Will propose a PR to git-l10n.
 
-Also, is there a formal issue assignment method with `git`? I hopped on
-this particular issue on GitGitGadget to get my feet wet here but was
-not sure if there was a separate maintained list to track overlap like
-the above.
+Jean-Noël
 
-Thanks!
-Ben
+
 
