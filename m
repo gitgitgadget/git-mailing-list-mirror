@@ -2,109 +2,141 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D215C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D184BC32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:53:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 307662253D
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:24:23 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ion50C/8"
+	by mail.kernel.org (Postfix) with ESMTP id AB6F020700
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726894AbgATXYR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 18:24:17 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45197 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726816AbgATXYR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 18:24:17 -0500
-Received: by mail-ed1-f65.google.com with SMTP id v28so1101224edw.12
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 15:24:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4ktpyQ1hsfAbMUwtJUAGDFyOfQVigGqxV+a9/1kYsMQ=;
-        b=ion50C/8p4Bw6OftOqaE2M7M+Ivi8MFsvx+Dg6mlSHn99OgQJDaD4n6t60Dxp9sK6h
-         QcylxPsjxsZYAO8bWjUwe22T85unikB2FFCdV22xP+zC9ZcnNPq0w9Yv/ju8SGuvm9r6
-         hy5uK4GNcEV8PUKeBZiC+NbvK4k0hhcK5EvGNnPe38XkPoxRv3imv6Y1luuXaM8Agx91
-         uxVhdiOZzCeHVBTuS4KZO3b9cKsJs5lIaHXeurnVYef13O+oQESQ6xwdeCqTDpxcw5uM
-         4Zcc4n7Fx3alQdpwZb2k7uOsqxD+mG0nzJNWEGhLUdBSdReq93MZLM5+imJ3He+GCWir
-         6MLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4ktpyQ1hsfAbMUwtJUAGDFyOfQVigGqxV+a9/1kYsMQ=;
-        b=RbndOpQ96Wh1B2+1DCcyv7jhxFXjhaYoWvod+BlGZwHhsZCs/65RvKkMiVCeSulFr7
-         sQ0hoNcKAaNOfKUpVeZnplPcGFWs9qgF6wENOC0SWo5vtwYv8BqJkLyttq+bcmVabpHz
-         mOz9/f/YyMUZvxrU7+4Zd3Tc9DWyttxQp4BdpL71naAC5VFggfglae/O/Ibun5ToycRr
-         sW1g37+RaKjCgd0bODsMJx/+Ihp7w3N84K4/mmFoBRx927kzhXcfnVOONVj6/wNgb1aB
-         6+OeTg/i9tF4e6oY1sHswltGe0F9FQJY/hMKv3qOy9v7+CamFKvcVM02gJhYaI0smv78
-         hnAQ==
-X-Gm-Message-State: APjAAAX1ckvLTTXf45jPSi43xujEsPwKxSyTKspO9YY9iiI+a66ok9u8
-        hTjbDRifur8eq8A9Z18Y2r74dk0F6NU59+GAhpw=
-X-Google-Smtp-Source: APXvYqwREBLo/I34qqi7l+DP0s8z9mr/2+MJLNIF3dEJQ93fPnCsJql3z99x+joKw90zXIWnRaadlxas0APw1/eNySU=
-X-Received: by 2002:a17:906:3647:: with SMTP id r7mr1758274ejb.320.1579562655746;
- Mon, 20 Jan 2020 15:24:15 -0800 (PST)
-MIME-Version: 1.0
-References: <20200120143800.900-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2001202237140.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001202237140.46@tvgsbejvaqbjf.bet>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 21 Jan 2020 00:24:03 +0100
-Message-ID: <CAP8UFD0W=kBs1zne56OjPbFzeX7BtEazPh2MW1My3qAsByS=nA@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH 00/29] Finish converting git bisect to C part 1
+        id S1728139AbgATXxa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 18:53:30 -0500
+Received: from mail6.webfaction.com ([31.170.123.134]:50422 "EHLO
+        smtp.webfaction.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727045AbgATXxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 18:53:30 -0500
+Received: from localhost (82-64-139-178.subs.proxad.net [82.64.139.178])
+        by smtp.webfaction.com (Postfix) with ESMTPSA id 7F1BB60027D32;
+        Mon, 20 Jan 2020 23:53:21 +0000 (UTC)
+From:   Christoph Groth <christoph@grothesque.org>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org
+Subject: Re: Stat cache in .git/index hinders syncing of repositories
+References: <87v9p9skjz.fsf@drac> <xmqq7e1od41x.fsf@gitster-ct.c.googlers.com>
+        <87pnfgshxu.fsf@drac>
+        <20200118194204.GC6570@camp.crustytoothpaste.net>
+        <87d0bgs9o4.fsf@drac>
+        <nycvar.QRO.7.76.6.2001201248480.46@tvgsbejvaqbjf.bet>
+Date:   Tue, 21 Jan 2020 00:53:22 +0100
+In-Reply-To: <nycvar.QRO.7.76.6.2001201248480.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 20 Jan 2020 13:01:54 +0100 (CET)")
+Message-ID: <87ftg9n0r1.fsf@drac>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha512; protocol="application/pgp-signature"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 20, 2020 at 10:43 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Johannes Schindelin wrote:
 >
-> On Mon, 20 Jan 2020, Miriam Rubio wrote:
-
-> > [1/29] bisect--helper: convert `vocab_*` char pointers to char arrays
-> >
-> > * New patch to convert `vocab_bad` and `vocab_good` char pointers
-> > to char arrays
+> On Sat, 18 Jan 2020, Christoph Groth wrote:
 >
-> 29 patches is _a lot_ to review. I would have preferred a series of
-> smaller patch series.
+> > OK, I see.  But please consider (one day) to split up the index file
+> > to separate the local stat cache from the globally valid data.
+>
+> I am sure that this has been considered even before Git was publicly
+> announced,
 
-Yeah, it's possible to split it into smaller patch series. There are a
-many similar patches in the series so it was easier to work on
-everything together to make similar and consistent changes to all the
-patches at once.
+I would be very interested to hear the rationale for keeping the
+information about what is staged and the stat cache together in the same
+file.  I, or someone else, might actually work on a patch one day, but
+before starting, it would be good to understand the reasoning behind the
+current design.
 
-> For example, the first three patches would have made for a fine "some
-> cleanups" patch series, from my point of view.
+> and I would wager a guess that it was determined that it would be
+> better to keep all of Git's private data in one place.
 
-Yeah, but this might then be rejected by Junio as it would be only "code churn".
+My point is that it=E2=80=99s not just private data: When I excluded .git/i=
+ndex
+from synchronization, staging files for a commit was no longer
+synchronized.
 
-> Also, as the mail's subject says "part 1", it would be good to have an
-> overview how this part fits into the overall story of converting `git
-> bisect` into a built-in.
+> > (By the way, even after 12 years of using Git intensely I am
+> > confused about what actually is the index.  I believed that it is
+> > the "staging area", like in "git-add - Add file contents to the
+> > index".  But then the .git/index file reflects all the tracked
+> > files, and not just staged ones.  This usage is also reflected by
+> > the command "git update-index".)
+>
+> The concept of the Git index is slightly different from what is
+> actually stored inside `.git/index`. You should consider the latter to
+> be an implementation detail that is of concern only if you want to
+> work on internals. Otherwise the description of the index as a staging
+> area is a pretty good image.
 
-We don't know how the rest will be split yet. Hopefully there will be
-only one other smaller patch series after this one.
+To me, it does not seem to be a mere implementation detail.  For example
+the command =E2=80=99git update-index --refresh=E2=80=99 is part of the "pu=
+blic API" and
+its action is to update the stat cache.  It does not modify what is
+staged or not.
 
-> Finally, it would be nice to have a link to a public repository with the
-> branch from which these mails were generated.
+> > Still, this is a workaround, and the price is reduced robustness of
+> > file modification detection.
+>
+> You misunderstand how Git detects whether a file is modified or not.
+>
+> A file is re-hashed if its mtime is newer than, _or equal to_, the
+> mtime of `.git/index`.
 
-Yeah, I agree that would be nice.
+You must mean "the mtime in =E2=80=99.git/index=E2=80=99", but OK, I see.  =
+Makes sense
+of course.  So setting core.trustctime to false and core.checkstat to
+minimal only means that some avoidable rehashings may be made.  But this
+would require two modifications of a file in the same second, without
+a change to the file size.
 
-> I will try to review this patch series in its entirety, but it will take
-> me a while.
+> In general, I am not sure that you are using the right tool for
+> synchronizing. If you cannot guarantee that a snapshot of the
+> directory is copied, you will always run the risk of inconsistent
+> data, which is worse than not having a backup at all: at least without
+> a backup you do not have a false sense of security.
 
-Great, thanks!
+I do not understand what makes you think so.
 
-Christian.
+Unison is very robust software, I never had any problems with it and
+never heard of anyone having any.  Moreover, as I noted in the opening
+message of this thread, it recently gained an option to treat chosen
+directories as atomic.  I=E2=80=99m using this for ".git" subdirectories.
+
+Christoph
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEUimQV/rXmWU8TwiKw/FH9ZgPNTUFAl4mPXIACgkQw/FH9ZgP
+NTVXPA//Zxld9bSbRpWU9R6xrRmaRuYStWdlDBA1XJvuzPd79HoRO1ZBAR3tg3Tx
+xTAlAap77/WHPC22lHT0TVXTwJVel9R/lKy/VqM0uJzH/HZMvDRy3FDBbCfXqZUY
+j43PqNnI/oU/6IYYGnOK+8g1p57V9sUefUEft7HBnDjE7t3o6iXg3HSnUqNWatbu
+f+RQ+btiEfYxQzPcBfyJZi6IF2pSYay6Iqjnx1Q6Qauocw/4VqUgdThAwGg2rXDS
+HFZDTj2xERat7yzgLWqsCoI9gMEeGtAhgRqPH6xm2a8okHAZ4ag8FMyRmIT6LDmQ
+Ef5ydKNSm1ALiRy8zV4Z2CgsiNoey8+cE1WpqhqhZN7q8ytt+V/Gb4CAgy2YBo4/
+Gmo4NaM0SbX3kmSifW8rPP4D9mA+wB/GmA2SLlwfyeo+x/LnZ/Z6gS6CgfJx9kEo
+O4j43AxUMcX7NWML97e5DwR2GAKe4MuHPhuusrF6yrRdirqiD3oE4xFWCjfXae14
+4qI9khgDEQ2voBNJ9AwSixFdUCzye/x8I8wYeigKkw3GPwhfO7oZzMPpOd+XXAR8
+MaTBIDslGhyghHQGbpWwyjOtkg8iqAvL7dBSJt39sTQ/BfezZ8wg8abyLrECMVk7
+6zKBVDN3FUi2wqtXVOfgCWvo5YCLIVGXbNuuDpwMz8c7vnw+md4=
+=rvEk
+-----END PGP SIGNATURE-----
+--=-=-=--
