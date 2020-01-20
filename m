@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B4E6C2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4A59C33CB8
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F226C22314
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7C72C217F4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G69OrLl9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbOuBVwC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728655AbgATOij (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 09:38:39 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38522 "EHLO
+        id S1728765AbgATOik (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 09:38:40 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33209 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727683AbgATOii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 09:38:38 -0500
-Received: by mail-wr1-f68.google.com with SMTP id y17so29849578wrh.5
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:37 -0800 (PST)
+        with ESMTP id S1727688AbgATOik (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:38:40 -0500
+Received: by mail-wr1-f68.google.com with SMTP id b6so29871897wrq.0
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=oDX/Xy/xSLCaRjH5SbpbSxWGAIWXngsvdpc/dPrz69k=;
-        b=G69OrLl9rPs84RXMTtfiorOPQXVib/RGhfZeFiNCOU4QjHycifIJn9FVFcC1ZMfRF+
-         i1BzSvrB+T7D71ZAVVTLZg9Yhj+H/Z3JzMsoOD4LY5UtrXXBh2Vc5Yijjv5Hr0ouVY9Y
-         /thexeNo/SUnBP/YUx6wJ1mI1XYh1Nd+LDVCkC/eWyittWvQGcfLtooAg1/IUWGCwkqm
-         VUHmtFi4xfGA4in3FgssCl9pn/jMb7jcZaqUhKGrwdVpC2ugK7P2tzvZSkRBRnT4rn4b
-         Vc8ogJNjjilcSr9pWL85VLCPlqXuWKvSfdchT7bFDLyTMAGoJZtcwiyEAxYyLMUoJVuD
-         y31Q==
+        bh=tTB/m8VkZYS/JJf+6MC8iCuMTVLqOlueF2pee02iWyg=;
+        b=hbOuBVwCzZJVyQ6aSnKXgXjgke6XbGbkQB9gHHDao491hwc5L2w99blqipVZbb9NtB
+         8luSA+oOVjZBcfd5ARY20P/TA0HjMnKfgC3+nQCe1uJamenrTh4q49r6Qmu/+ss5d0D/
+         Py+bvfBC7YriWvmPzkvGsvEQrEMrtHvzpj+XinLWjFM+AHRURfl274kDiNKefyLKomZi
+         wRKIFnfwwKUEJI0x+sSHIgfW7EUY4zCIv8mkxr5iBfhVY7OCogNOxCpeORTKQj42hhkg
+         ChUn6BBZiVLATwWCrd8E9R3LQ+DNxOxbBQlW50YdVI0zwtOLsC7oPYY5AnigWnX3xdIL
+         FAdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=oDX/Xy/xSLCaRjH5SbpbSxWGAIWXngsvdpc/dPrz69k=;
-        b=I/PQOS5UeO4I1dxScDaci6sdOeGuRG6pbA1SE+PXWSVZ/BNJ8xepNDwBXtnDmrpNWR
-         m4RMobTOUB1pqfJl5UQP+vZ0W05n7KBwdkcJNHYevCbWJdoGEfSBA1RtpjFjx8yfeUI1
-         g5fPfoWDv5qq6TNnP3afTegV6YvsC1ZH+KemNdd2/gHIcLGvIWU6dS57YE66Gid5FJsj
-         1mqzKsW6I2z9+fA3hjlXSCtUm00HJAR+IUDI/j8clRJIUGhJw6POHupwhExICp2hOWxn
-         +DihPsq7IoSgwVH4s6vRVno7bQRnq+r7onY1W/U8xqi2hRVyQPjmYercoOUd6Sg1BU3y
-         cnNQ==
-X-Gm-Message-State: APjAAAV0JyPSvYnCqkiL3o00GiyIBT9U+Kc00gMuwTcbhZmdOWZCED/c
-        9Bed8Zkl+0rVzi6S2mF8xcjgGLQ+Ai0=
-X-Google-Smtp-Source: APXvYqx9o/Vw6kRoRBVhhbnhdk92+VM5F5b2eDy4M4KlP7GZYhkPbLUzdhLR5WK5CtJjHHqc3Snd0A==
-X-Received: by 2002:adf:d846:: with SMTP id k6mr17741011wrl.337.1579531116743;
-        Mon, 20 Jan 2020 06:38:36 -0800 (PST)
+        bh=tTB/m8VkZYS/JJf+6MC8iCuMTVLqOlueF2pee02iWyg=;
+        b=prTOQpy5pllj19N+I4HeRodwJHynGO6zqHvzAvFW1s7Mb+i89R5llYI5RjQYgCv/KN
+         uy956PzHtSUxJayDLVtg86auv0mgCuJtkcLbA6aK6bM0SCde5GFWMQSxLM7gmHRkN2Kt
+         f2X8gwQW1JxgV4Iz/U24mxrjf1HReeCgOiR2dUv9sRSB1eeJ+yM2JNqnS9dClSumgy0x
+         tvkhXSq8mmIYAYmDAbLg5xlnLgDxb/yX0kVOD9JHSK+jiOBwSvHhnalORJpt4l/jHOMA
+         w1SRxfTWegSaIjr5/wpqxvkYM1F2IdLI9/lB2RVdql1E862+IDetHyvlvbeVyAIk6w0m
+         lmhw==
+X-Gm-Message-State: APjAAAWLDVx9cZKiCUewDEeHcaweFu/gBYj7ggwSs2Gx4FyAmYaQPt+S
+        Ah+Ez0pbmLrGniQtyBhB14qYjdJY9Ks=
+X-Google-Smtp-Source: APXvYqwfoZKYuMBs1DTPVcpFlvYt3nsc1y9qGmes5+TFLEghlrwlN9q0a2QinGFEZ3qBznrroJYN+Q==
+X-Received: by 2002:a5d:44cd:: with SMTP id z13mr19076767wrr.104.1579531117915;
+        Mon, 20 Jan 2020 06:38:37 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.35
+        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jan 2020 06:38:36 -0800 (PST)
+        Mon, 20 Jan 2020 06:38:37 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH 07/29] bisect: libify `bisect_checkout`
-Date:   Mon, 20 Jan 2020 15:37:38 +0100
-Message-Id: <20200120143800.900-8-mirucam@gmail.com>
+Subject: [PATCH 08/29] bisect: libify `check_merge_bases` and its dependents
+Date:   Mon, 20 Jan 2020 15:37:39 +0100
+Message-Id: <20200120143800.900-9-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
 References: <20200120143800.900-1-mirucam@gmail.com>
@@ -85,49 +84,88 @@ Emulate try catch in C by converting `exit(<positive-value>)` to
 `return <negative-value>`. Follow POSIX conventions to return
 <negative-value> to indicate error.
 
-Turn `exit()` to `return` calls in `bisect_checkout()`.
-Changes related to return values have no bad side effects on the
-code that calls `bisect_checkout()`.
+Turn `exit()` to `return` calls in `check_merge_bases()`.
+
+In `check_merge_bases()` there is an early success special case,
+so we have introduced special error code `-11` which indicates early
+success. This `-11` is converted back to `0` in `check_good_are_ancestors_of_bad()`.
+
+Handle the return value in dependent function `check_good_are_ancestors_of_bad()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- bisect.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ bisect.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 2ac0463327..385afaf875 100644
+index 385afaf875..367258b0dd 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -713,6 +713,7 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+@@ -806,13 +806,16 @@ static void handle_skipped_merge_base(const struct object_id *mb)
+  * "check_merge_bases" checks that merge bases are not "bad" (or "new").
+  *
+  * - If one is "bad" (or "new"), it means the user assumed something wrong
+- * and we must exit with a non 0 error code.
++ * and we must return error with a non 0 error code.
+  * - If one is "good" (or "old"), that's good, we have nothing to do.
+  * - If one is "skipped", we can't know but we should warn.
+  * - If we don't know, we should check it out and ask the user to test.
++ * - If a merge base must be tested, on success return -11 a special condition
++ * for early success, this will be converted back to 0 in check_good_are_ancestors_of_bad().
+  */
+-static void check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
++static int check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
  {
- 	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
- 
 +	int res = 0;
- 	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1);
- 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
+ 	struct commit_list *result;
  
-@@ -721,14 +722,14 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
- 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
- 			   UPDATE_REFS_DIE_ON_ERR);
- 	} else {
--		int res;
- 		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
- 		if (res)
--			exit(res);
-+			return res > 0 ? -res : res;
+ 	result = get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
+@@ -827,11 +830,16 @@ static void check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
+ 			handle_skipped_merge_base(mb);
+ 		} else {
+ 			printf(_("Bisecting: a merge base must be tested\n"));
+-			exit(bisect_checkout(mb, no_checkout));
++			res = bisect_checkout(mb, no_checkout);
++			if (!res)
++				/* indicate early success */
++				res = -11;
++			break;
+ 		}
  	}
  
- 	argv_show_branch[1] = bisect_rev_hex;
--	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
-+	res = run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
-+	return res > 0 ? -res : res;
+ 	free_commit_list(result);
++	return res;
  }
  
- static struct commit *get_commit_reference(struct repository *r,
+ static int check_ancestors(struct repository *r, int rev_nr,
+@@ -865,7 +873,7 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ {
+ 	char *filename = git_pathdup("BISECT_ANCESTORS_OK");
+ 	struct stat st;
+-	int fd, rev_nr;
++	int fd, rev_nr, res = 0;
+ 	struct commit **rev;
+ 
+ 	if (!current_bad_oid)
+@@ -880,10 +888,13 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ 		goto done;
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
++
+ 	rev = get_bad_and_good_commits(r, &rev_nr);
+ 	if (check_ancestors(r, rev_nr, rev, prefix))
+-		check_merge_bases(rev_nr, rev, no_checkout);
++		res = check_merge_bases(rev_nr, rev, no_checkout);
+ 	free(rev);
++	if(res)
++		exit(res == -11 ? 0 : -res);
+ 
+ 	/* Create file BISECT_ANCESTORS_OK. */
+ 	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
 -- 
 2.21.1 (Apple Git-122.3)
 
