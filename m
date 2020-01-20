@@ -7,184 +7,300 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D685C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08E62C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:41:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DD969217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:35:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C28F922522
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:41:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jcQY0CHC"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kiLAe7ns"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727018AbgATVfb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 16:35:31 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53941 "EHLO mout.gmx.net"
+        id S1727254AbgATVl0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 16:41:26 -0500
+Received: from mout.gmx.net ([212.227.17.20]:54237 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726752AbgATVfb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 16:35:31 -0500
+        id S1726915AbgATVl0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 16:41:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579556126;
-        bh=JawFyOgNl8Zk/UxC6LUb4GEJ0qZWwGc2sap3CxDhZIY=;
+        s=badeba3b8450; t=1579556483;
+        bh=dvIJx27f6aDQ0a9KPEUd+okVYTlNmSbe0cagTLaOC10=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jcQY0CHCqWI+p07OVJY2RXhK+uw/Ml+rdMiSusemlrf5BQocxox02FpwIxHxZD4+a
-         0RSiHunIF06Bksg4zYTLmTMZ4GiR39K3O+fHEJx2MMVaLH4A/M/prT+A/5Yrw4zImq
-         bDEZ9Y48hxjodQyhz31Ss9uY/3TUJloknARrS804=
+        b=kiLAe7nsImOXoL4ZUQ6GQo9NKfQniOg+6/OJetUTBO3aiumK1zuk8aUXcEC2TCENP
+         dFmqNDeKmXTyRSIpKrpPaRHZysRG/qJGDxXs0rTavReQCzwcm/bRejexlkIOWypMM3
+         Nm2vD8mNXtUmyw/K4nEy54zLbzeSv5CaPR6K88KQ=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8ygO-1iwNzM1Xhm-00658J; Mon, 20
- Jan 2020 22:35:26 +0100
-Date:   Mon, 20 Jan 2020 22:35:25 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MF3DM-1irSx92BCq-00FVqA; Mon, 20
+ Jan 2020 22:41:23 +0100
+Date:   Mon, 20 Jan 2020 22:41:23 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Nirmal Khedkar <nirmalhk7@gmail.com>
-cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: Facing error in git-imap-send while compiling Git
-In-Reply-To: <CAFFaXsyiLeNPCZ+Kn1x-+0pZf0FiPQR-k8qtooFrdG+VNfLq+g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001202232460.46@tvgsbejvaqbjf.bet>
-References: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com> <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com> <CAFFaXsz9LEdegzxL8MhS+VfTs-wmWu+CGDjxjB4Xgj8+7nSHNQ@mail.gmail.com> <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet>
- <CAFFaXsyiLeNPCZ+Kn1x-+0pZf0FiPQR-k8qtooFrdG+VNfLq+g@mail.gmail.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [Outreachy][PATCH 00/29] Finish converting git bisect to C part
+ 1
+In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001202237140.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0Dc24PQ6BXqKnYJFlCVe9153CJ1OuY0N32Kz6fri1UgEl92ca9E
- 5hLkWl082gIhB2Jilum3DY1Ij/xlJE65gXT5l+3lYOuimF7975wjmcxieaA90A+Vau14HOi
- q+zUhccl+a1St87CynsHHYM9WRMNeCskHaEmHPai9cPeoAre8w0Iq9wnwbsJph3hHpu0lkr
- kno+99X9L1ElML9Y+zc6A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FBr1o3mtAos=:vn2ljhjNtEWAoGGYjNhF4l
- ZV6uCv4F1Vpyn4YHUcV5dr3DVtODNIw5uUTQU6vdPdxtEqKdrHH4sMmWcRiiePfhGM8DsjITR
- MOwzzJYJ1+SYVN1HrnoX2WOno7r58jS5C+PwYumA1i0JX3uJx32fTOq7YAXsV/P7qZbaohaY7
- 7bOhRB3daHNQeGh5i+yr9AV1+c7sMjuFZtqEBQO7jYiJCv0foCm46c1J1y62+blzccHq1EjK8
- 6SULxITuGxHwPnq4tRl3eFYAecJHdx5pxb6uMX7Klt+gv253KlJpRMEQ2pkYFN0Vpxy1yIQBu
- K9OBfrKBT/niueL8Rr1xumvMQlzoRJPxTNypCF2WpRKgSEpsS4FUqUAwnb8hJeVDB7L3L25H2
- e9Gbf8E3sOPu+O9Hk9sVs+QBwCCEruUixLDtYGrTQqFWITNiwr/vmhB9GcGQjtwcELtWzR12l
- +EqRnGcbGW3lXvh72GFMlgKOzlM+2ECSurJGm1HUycM6mi3eTjuK/1cHB2qdz48Uk6ee8tq/N
- wzwiLhAeq8eJmmWVI6N8CqFOGZqRA9gVYZz3uGx+xNxKZginCOwnrVaGmGT5t8i6I6bqNqCJq
- z5uJL4pZYzaDL3oosp2xpuF3UxT5kOTIql+mhFT3XLVVi1/9zVXTNBjr0VZ8QVPF2lvuJ0Bbb
- hJ82Sntk+4mQ3W/CSmpsnfpgER0yvHm0oPFGyEIt18+gTA/KUAlycQvomaxLugAaQB+bYO+io
- 2t0ZHXywdHDIrJsWeUwMb8N/8ClIPgBfrnC9turjGDF1gJe62BXEfUKxuxWju6gWPP+Abos2v
- 7jy9xHdgcCdnCq8i2JkacnVRi56asbUe4Rl0MnZtOyUdmYzb+JyI+HzzQzXiORDlQAODkVw7I
- NTEOYXHMnbdG7VsavJ4njwC9gDaXfpIfUoyjGgOB2Ip3MJzDzRZeP+Xz3Wqh2P1u1xXYT5Z5m
- R79b4pfrkWT8h7Zdcgml3Ag1GheqGNREUBeiaBqNwa+p9xQ8nMYrAa56kXrxW0+SvtkyGxhaN
- LH5im0UFLFo6G6uYrKRfGpW0fVNjWliWEaQLpb+zdMvb4+fzkyFFAz7tNrdwLm1/hqrqiMsSG
- /Ofn+dyd4NHSsG7TwSt4sVFpoEfH/KZn+s4WptwnwPWQEAjznmgD0G0XasJxvmNKycizRIrqW
- e/Oa+dwKVe8jFisFQ0ipuvGjEAtzaFXnLQ3mQ9Z0J3p3D/Su/gWlt+9CZXxYMswjBTsY5Bb9z
- ya5s0p0ZZopjLAMCOnZBJMcf+zhV2ty/lNseuFtW3FTZ5sUIL5CMb9mvVd/A=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1482613308-1579556483=:46"
+X-Provags-ID: V03:K1:Oqt78TK2OB1gAwXOq/9cpWVLT3V6E5jz4AhOEflIggO7iU5bfOV
+ sx9lyx4DVvlKLVKt5IGMLKByJVOftODe7OeYMsBkp4+kfcsC6Pw9UI5wKR5Ykm8TRD7zcfX
+ /wLJS+lB4scsLtm6pfbybK0Famp8ANLWDFIjRZnRGc4VoEDKTsZ4U8+G0GQ/FZ1OFddfBfz
+ 80nxvDJZow1oDMYfouPnA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:m6fXMHjYGkk=:MXmTzwS5Wvm1wqo4JcjD5P
+ KMnS+I+qWTEMpG3MoJbGY0tfrl3JYKXJDPwVigh2HTrIgs4tD9yWUK2ArkL/1zFpmVjFsToA4
+ 2pntpORsVj7YHLXI5O8mbjcupyBnaaKVr2SK6lUT2dT+8xWjLJckr0t2ATbVIrGcJbtZkPFo0
+ oj0fueZrNqHi3euDswt7kkS7eoai+hPYrHTadkRhQCNgoZ7RjnL55U6g+L1Sf4jDypYPvKwqQ
+ laZjc90IXTSGGooZeBE3E9AaB+OWottKko63s/vvsmfeEvrcjqJTlgTQ2WI0iVeKwLlpE/Rf+
+ b/61YsmXeuTaFbR1dSRw/jkHKqUjXShdjkEhabuAVy90r7KyWZU9F8Fth2/Ps8GNvRv7CxHdE
+ RANhe5A56aZA/csDl8EVktIPn3+3AxQV77ucqkvHR2pfYG1y02xJNOS7f0DTsfnciz85ToE17
+ QSAj1HJULK5Q7tU1sObh+pdCVa8715mygzaBdZyXzOBd76KG27xX/jk23yFadkoRT9zhXDLPM
+ 3R2EkthSIoj9bjwVE2YUzxYfpTYEnG7sl8f9UhpfttlFE6BxNd9yDCO/utvoCxsgYHIHJf9jw
+ fb3s0j197iGNjzmcpRGHDlY/KXi2wyo1HjbxKPGUAb8aZTPq/Om6xFGwkAlRWIuKnMOh0C979
+ LKn+DfCoJXsW2s0uGY6UxdUTwWfvEFU/khJR6WOM+yNPfejDYgwyvF1W8MP9DS8C6E6/QUTt4
+ 9tjs7jNyvucwQwjjtQjSwtjW5MfOpAylm0/5LFWOoRSMeN4HvqJ1XO0O8do8K8/seL2EsyiHm
+ U1zZr037PKUuDkw0w9pPtlnE3GApdO/mR37hkTFBUCLrz6mXh6W7kKRDKrWZzm9pSqxskNUb0
+ GaSsYo4OPNDp48k/jU/pZiza58ifbROx5r7bvcDQS2pcBCCJdz90NvQc0q3rPtO+AHk6wnzVF
+ shS+PNqZxdyfZTFP7sSw93XkZM6RhWQ2VVpxFiFDSm82l5dFFTRwjw52puu8MwpHuPWLlMcRx
+ CVKeGYqSDIeP8xhY41ZNAThOz74jBkGd4xr4vn8AK5NDoMalv3o5stYzMHSQBTUoVcVoD0Yjh
+ a0f8ZqHccG4Nj02ioPw0peMqXNeOwLsk99ivkwkykVexcI1O7FxVUpJpp7HfJmcpyTtuH0wQn
+ YoO9vVPUBmJN6Os7Zn16zv9ldXH8hDABYSrWsspi0QhVdR7CtcFnb7P7ymvM4rGSEFJnazrlb
+ 8+EI8C/9Mbi/nXIQW/TCMhf21kX//VPtauiOgIuvhcL2njJtnIOQdEYMdG9s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 21 Jan 2020, Nirmal Khedkar wrote:
+--8323328-1482613308-1579556483=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Jan 17, 2020 at 7:05 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > On Fri, 17 Jan 2020, Nirmal Khedkar wrote:
-> >
-> > > On Fri, Jan 17, 2020 at 4:21 AM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> > > >
-> > > > Nirmal Khedkar <nirmalhk7@gmail.com> writes:
-> > > >
-> > > > > Hey!
-> > > > > I've been facing this error everytime I run the Makefile:
-> > > > > -----
-> > > > > LINK git-imap-send
-> > > > > imap-send.o: In function `verify_hostname':
-> > > > > /git/imap-send.c:252: undefined reference to `sk_num'
-> > > >
-> > > > Perhaps the thread
-> > > >
-> > > >   https://lore.kernel.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.google=
-rs.com
-> > > >
-> > > > may help?
-> > >
-> > > It did, to the extent that I now know why I'm facing these errors ou=
-t
-> > > of the blue.
-> > >
-> > > I'm  not quite sure as to what am I supposed to do right now, should=
- I
-> > > wait for Liam's patch to be merged,  or should I implement his fixes
-> > > locally or should I just downgrade my openssl?
-> > >
-> > > Liam's PR (#516 on GitGitGadget [1]) haven't yet passed all build
-> > > checks and I guess its still a work in progress. Nevertheless I've
-> > > tried implementing his fixes to imap-send.c, and the make still fail=
-s.
-> > > Am I missing something here?
-> >
-> > Speaking for myself, I am still waiting for
-> > https://public-inbox.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.co=
-m/
-> > to be addressed adequately. I think this is the main blocker.
-> >
-> > You could be that person who addresses this, as already 10 days went p=
-ast
-> > without even so much as an acknowledgement of Junio's suggestion. Mayb=
-e
-> > you can make it work, and submit a fixed patch (You could take authors=
-hip
-> > and add a footer "Original-patch-by: Liam Huang <liamhuang0205@gmail.c=
-om>"
-> > because it is most likely a total rewrite of Liam's patch).
-> >
-> > Ciao,
-> > Johannes
+Hi Miriam,
+
+On Mon, 20 Jan 2020, Miriam Rubio wrote:
+
+> --- Changes since Tanushree=E2=80=99s pr117 sent patch series:
+> https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) ---
 >
-> The OpenSSL version on my system is 1.1.1. I've tried implementing
-> Junio's suggestions, and it just doesn't work.
-
-Does the code otherwise compile cleanly with `make DEVELOPER=3D1`?
-
-> It gives me the same
-> error as it gave me earlier. Here's the error:
-> -----
-> LINK git-imap-send
-> imap-send.o: In function `verify_hostname':
-> /git/imap-send.c:252: undefined reference to `sk_num'
-> /git/imap-send.c:254: undefined reference to `sk_value'
-> /git/imap-send.c:260: undefined reference to `sk_pop_free'
-> /git/imap-send.c:260: undefined reference to `sk_pop_free'
-> imap-send.o: In function `ssl_socket_connect':
-> /git/imap-send.c:287: undefined reference to `SSL_library_init'
-> /git/imap-send.c:288: undefined reference to `SSL_load_error_strings'
-> /git/imap-send.c:290: undefined reference to `SSLv23_method'
-> collect2: error: ld returned 1 exit status
+> General changes
+> ---------------
 >
-> Makefile:2454: recipe for target 'git-imap-send' failed
-> make: *** [git-imap-send] Error 1
-> -----
+> * Rebase on master branch.
+> * Improve commit messages.
+> * Amend patch series titles.
+> * Reorder commits: first clean-up/preparatory commits, squash or split
+> commits.
 
-Those are linker errors, meaning that the symbols were not found in the
-libraries.
+Great!
 
-If you build with `make V=3D1 DEVELOPER=3D1` you should see that
-`git-imap-send` links in OpenSSL via -lssl (and/or -lcrypto). Is this the
-case for you?
+> Specific changes
+> ----------------
+>
+> [1/29] bisect--helper: convert `vocab_*` char pointers to char arrays
+>
+> * New patch to convert `vocab_bad` and `vocab_good` char pointers
+> to char arrays
+
+29 patches is _a lot_ to review. I would have preferred a series of
+smaller patch series.
+
+For example, the first three patches would have made for a fine "some
+cleanups" patch series, from my point of view.
+
+Also, as the mail's subject says "part 1", it would be good to have an
+overview how this part fits into the overall story of converting `git
+bisect` into a built-in.
+
+Finally, it would be nice to have a link to a public repository with the
+branch from which these mails were generated.
+
+I will try to review this patch series in its entirety, but it will take
+me a while.
 
 Ciao,
 Johannes
 
 >
-> From my limited understanding of OpenSSL API's, I reckon all these
-> errors might be because of the errors around 'SSL_library_init' and
-> 'SSL_load_error_strings'. Both these functions are called before
-> 'verify_hostname' is ever called.
+> --
 >
-> StackOverflow suggested ([1]) to add tags during compilation, but I
-> dont think that'd work here.
-> What should I do? Would love it if you could guide me out.
+> [2/29] bisect--helper: change `retval` to `res`
+>
+> * Replace one last variable `retval` to `res`.
+>
+> --
+>
+> [3/29] bisect: use the standard 'if (!var)' way to check for 0
+>
+> * New patch to use '!var' and make 'bisect.c' more consistent with the
+> rest of the code
+>
+> --
+>
+> [4/29] run-command: make `exists_in_PATH()` non-static
+>
+> * Add comment before function declaration.
+> * Move function declaration in `run-command.h`.
+>
+> --
+>
+> [6/29] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*`
+> and its dependents
+>
+> * Fix `mark_edges_uninteresting()` and `show_diff_tree()` calls after
+> rebase on master.
+>
+> --
+>
+> [7/29] bisect: libify `bisect_checkout`
+>
+> * Fix `memcpy()` call after rebase on master.
+> * Introduce `res` variable to return `bisect_checkout()` output.
+> * Fix `get_commit_reference()` declaration after rebase on master.
+>
+> --
+>
+> [8/29] bisect: libify `check_merge_bases` and its dependents
+>
+> State: Previously sent
+>
+> * Fix `check_ancestors()` declaration after rebase on master.
+> * Fix `get_bad_and_good_commits()` call after rebase on master.
+>
+> --
+>
+> [9/29] bisect: libify `check_good_are_ancestors_of_bad` and its
+> dependents
+>
+> State: Previously sent
+>
+> * Fix `check_good_are_ancestors_of_bad()` declaration after rebase on
+> master.
+> * Fix `check_good_are_ancestors_of_bad()`, `bisect_next_all()`
+> and `bisect_rev_setup()` calls after rebase on master.
+>
+> --
+>
+> [11/29] bisect: libify `bisect_next_all`
+>
+> State: Previously sent
+>
+> * Fix `show_diff_tree()` call after rebase on master.
+>
+> --
+>
+> [12/29] bisect--helper: reimplement `bisect_next` and `bisect_auto_next`
+> shell functions in C
+>
+> * Fix `repo_init_revisions()` and `bisect_next_all()` calls after rebase
+> on master.
+> * Remove `goto` statement in `bisect_skipped_commits()`
+>
+> --
+>
+> [13/29] bisect--helper: finish porting `bisect_start()` to C
+>
+> * Change `return` statement instead of `die` in error handling.
+> * Remove `goto` statements in `bisect_skipped_commits()`.
+>
+> --
+>
+> [21/29] bisect--helper: reimplement `bisect_replay` shell function in C
+>
+> * Add blank line in `get_next_word()`.
+> * Remove `goto` statements in `bisect_replay()`.
+>
+> --
+>
+> [23/29] bisect--helper: use `res` instead of return in BISECT_RESET case
+> option
+>
+> * New patch to split previous commit in two.
+>
+> --
+>
+> [26/29] bisect--helper: reimplement `bisect_skip` shell function in C
+>
+> State: Previously sent
+>
+> * Add blank line.
+>
+> --
+>
+> [28/29] bisect--helper: reimplement `bisect_visualize()`shell function
+> in C
+>
+> New patch:
+>
+> * Reimplement the `bisect_visualize()` shell function in C.
+> * Add `--bisect-visualize` subcommand.
+> * Fix long code line.
+>
+> --
+>
+> [29/29] bisect--helper: reimplement `bisect_run` shell function in C
+>
+> New patch:
+>
+> * Reimplement the `bisect_run()` shell function in C.
+> * Add `--bisect-run` subcommand.
+> * Remove blank line.
+>
+> --
+>
+> Miriam Rubio (2):
+>   bisect--helper: convert `vocab_*` char pointers to char arrays
+>   bisect: use the standard 'if (!var)' way to check for 0
+>
+> Pranit Bauva (24):
+>   run-command: make `exists_in_PATH()` non-static
+>   bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and
+>     its dependents
+>   bisect: libify `bisect_checkout`
+>   bisect: libify `check_merge_bases` and its dependents
+>   bisect: libify `check_good_are_ancestors_of_bad` and its dependents
+>   bisect: libify `handle_bad_merge_base` and its dependents
+>   bisect: libify `bisect_next_all`
+>   bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell
+>     functions in C
+>   bisect--helper: finish porting `bisect_start()` to C
+>   bisect--helper: retire `--bisect-clean-state` subcommand
+>   bisect--helper: retire `--next-all` subcommand
+>   bisect--helper: reimplement `bisect_autostart` shell function in C
+>   bisect--helper: reimplement `bisect_state` & `bisect_head` shell
+>     functions in C
+>   bisect--helper: retire `--check-expected-revs` subcommand
+>   bisect--helper: retire `--write-terms` subcommand
+>   bisect--helper: reimplement `bisect_log` shell function in C
+>   bisect--helper: reimplement `bisect_replay` shell function in C
+>   bisect--helper: retire `--bisect-write` subcommand
+>   bisect--helper: use `res` instead of return in BISECT_RESET case
+>     option
+>   bisect--helper: retire `--bisect-autostart` subcommand
+>   bisect--helper: retire `--bisect-auto-next` subcommand
+>   bisect--helper: reimplement `bisect_skip` shell function in C
+>   bisect--helper: retire `--check-and-set-terms` subcommand
+>   bisect--helper: reimplement `bisect_visualize()`shell function in C
+>
+> Tanushree Tumane (3):
+>   bisect--helper: change `retval` to `res`
+>   bisect--helper: introduce new `decide_next()` function
+>   bisect--helper: reimplement `bisect_run` shell function in C
+>
+>  bisect.c                 | 146 +++++---
+>  builtin/bisect--helper.c | 776 +++++++++++++++++++++++++++++++++------
+>  git-bisect.sh            | 279 +-------------
+>  run-command.c            |   2 +-
+>  run-command.h            |  11 +
+>  5 files changed, 793 insertions(+), 421 deletions(-)
+>
+> --
+> 2.21.1 (Apple Git-122.3)
 >
 >
-> Thanks!
-> Regards,
-> Nirmal Khedkar
-> https://nirmalhk7.github.io
->
-> [1] https://stackoverflow.com/questions/5593284/undefined-reference-to-s=
-sl-library-init-and-ssl-load-error-strings
->
+
+--8323328-1482613308-1579556483=:46--
