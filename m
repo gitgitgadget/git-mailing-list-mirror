@@ -8,63 +8,62 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EB4BC2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBC45C33CAA
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F2CE8217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C228F22314
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u6Z5/yvB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uRyMrN82"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgATOin (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 09:38:43 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45747 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727688AbgATOim (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728778AbgATOim (ORCPT <rfc822;git@archiver.kernel.org>);
         Mon, 20 Jan 2020 09:38:42 -0500
-Received: by mail-wr1-f65.google.com with SMTP id j42so29782240wrj.12
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:41 -0800 (PST)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:46471 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728709AbgATOil (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:38:41 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z7so29771909wrl.13
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KgrNvyZ4hU4hCrIsAMfvAtcrnW/D/9n/Gv8WyOb52nQ=;
-        b=u6Z5/yvBGvPx1SGQbFCnHhKf9FM2GFzSSl5vPxcp5YkbaK0mLH8ycIQ2YAy1Buqhkc
-         dBBErlALdY/SeMDIrYwT3nH3SpG0hWcZHnMCNUMw7uhmwtSgFMn9wgpWDHX8TL/8AfXM
-         pdBNREbCkpOJxIpaHDF+Q0Xooitqphp0K2IyyH9fl1VJElYCJGwtIqssIn34qw2U5rMt
-         yuRTmUM1XVW08sPqk6wiHRFuLMup41OSicE5P1nXcv2ZCa1RkoD0E/F1ZUzVhoQsAx2Y
-         JRIUdhf+RMkFrTDv96vGWcffSzvMqxiqmFY4zs8+p5PANQ2NhwMc0Bn0HNTxtpUPW7Pm
-         rsFA==
+        bh=T0XwTj8wOlFkbFN5Ngh75qyxq8FkCrsUb3XwmE9iUZk=;
+        b=uRyMrN82iNP1KfCouH8Iq0Xh6sBfhk3caxEV9Jl+tpLDXc6GsqziKPy9NLYE9WSqIW
+         PLFqDNN+v+xKF8TLXsYSkZ0vCSGHCW6FPutV8Ijqk9aXen2T/1JJRfsz1dU1OSlQBc9w
+         6PAOFuQ1mTKJ7q9X+Vccue0UVBotiSiCCA94TLQe8n74m7/baqoYsXd6yTvyt/xf+/X3
+         F8lxOusz6QQFvFwrWCXaEoLDTesN2qPm1KXzJRbVZsCpmCbHm+5kpgsekKV7VzhE25/C
+         3xnJIjYRq0oI8Z+Lc+zZerR5p9UOx+zG/icMtY2ctiGssfe6kBvfDqnURH8jqt9uYP1a
+         NCLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KgrNvyZ4hU4hCrIsAMfvAtcrnW/D/9n/Gv8WyOb52nQ=;
-        b=CHpHXuAjK9e0kuM7YnM2k420VvIPTBhBa/zoDMj0BTkUF811G4U7AaZLOr4b9DcWZ+
-         5gYd8BdjAdH2dvvAadl1RFzuRCNmOFEcNikpAJbWobxkuCjNaxbr0SHp+b55MWTfxwAo
-         76apB/8KgIJa7raTjXeX5esGQklPgivg7rFmwnCXmJWkP5EYXl2cUS9EadN0E+pgUPcj
-         ntqqMlJzRQgRZYFptQGLuOdKpzLp0KIpRyBVa2LAEG34lwD/dzeM6keVNfQAY3uIDF0I
-         8mSrWnCtU1vPmiDi2ZtYpbIvWpk+VAOn4eO9e5TsYV+w04r77EHWkPjc+8lxWkoNCnnu
-         OvEw==
-X-Gm-Message-State: APjAAAWCvGknk4gYWIIUFAnugn++RcfpgpNcONKpKkRuOfaBUKbzBk/m
-        Tk8doIf8ecr7KFMPE7yv75W7I+I321k=
-X-Google-Smtp-Source: APXvYqyJM8lV0V2ec4jKfYObJEmcAH1sE8W8vtUU/GdJg//cxokzjBjBX+pndROaNsJXueyRO5exeg==
-X-Received: by 2002:adf:e70d:: with SMTP id c13mr18440111wrm.248.1579531120270;
-        Mon, 20 Jan 2020 06:38:40 -0800 (PST)
-Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=T0XwTj8wOlFkbFN5Ngh75qyxq8FkCrsUb3XwmE9iUZk=;
+        b=R9qBJxSt09QCKXqTr4RYu57ISumdRDpY8wzOs90fh46MY4hpCM+El3MoA8G+A0Tf92
+         7L8a2Zaant7/KMty2araU2n2Z3/G7Lk600RFn7hDR+RQZzcy3RGNttQfhWB42vCuuPM/
+         UG17TaMrwzIk6vH1A9oibpp+ALOs8nAwzmBIP1qPFlhL2MNNIJo69AVdbNHEHHyaoxmT
+         t5hW+4n7QGC9XDXTZZxyxJvfMek4EHk9PJ8TTbZz/tv1tx0pqgHkutiDkpNaV2z2oo5V
+         DsunylDotwx7bAZirknC/evrIzmxL7+GZvi0VeU07bWNoX8XEO5FTAr2oGX1mj2KDnel
+         jKsA==
+X-Gm-Message-State: APjAAAWvJ/kjLS4uREu80ITRbkM6n9sptMxEJlcl8kRmGWrSfFYlZUQG
+        6qwcER99PeiiTGg4A6JyHNgq0MdG64s=
+X-Google-Smtp-Source: APXvYqzjevKsv7ZWv4eWPuVqBsHnskndK2HsvPiBwW8VyqmCB0XMxP0yXU/wI5Ery190SV5wuf8mlQ==
+X-Received: by 2002:a5d:4281:: with SMTP id k1mr18363598wrq.72.1579531119079;
         Mon, 20 Jan 2020 06:38:39 -0800 (PST)
+Received: from localhost.localdomain ([139.47.115.4])
+        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Jan 2020 06:38:38 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH 10/29] bisect: libify `handle_bad_merge_base` and its dependents
-Date:   Mon, 20 Jan 2020 15:37:41 +0100
-Message-Id: <20200120143800.900-11-mirucam@gmail.com>
+Subject: [PATCH 09/29] bisect: libify `check_good_are_ancestors_of_bad` and its dependents
+Date:   Mon, 20 Jan 2020 15:37:40 +0100
+Message-Id: <20200120143800.900-10-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
 References: <20200120143800.900-1-mirucam@gmail.com>
@@ -85,59 +84,129 @@ Emulate try catch in C by converting `exit(<positive-value>)` to
 `return <negative-value>`. Follow POSIX conventions to return
 <negative-value> to indicate error.
 
-Turn `exit()` to `return` calls in `handle_bad_merge_base()`.
+Turn `exit()` to `return` calls in `check_good_are_ancestors_of_bad()`.
 
-Handle the return value in dependent function check_merge_bases().
+Code that turns -11(early success code) to 0 from
+`check_good_are_ancestors_of_bad()` has been moved to
+`cmd_bisect__helper()`.
+
+Handle the return value in dependent function `bisect_next_all()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- bisect.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ bisect.c                 | 42 ++++++++++++++++++++++++++--------------
+ builtin/bisect--helper.c | 12 ++++++++++--
+ 2 files changed, 37 insertions(+), 17 deletions(-)
 
 diff --git a/bisect.c b/bisect.c
-index 2b80597a1d..acb5a13911 100644
+index 367258b0dd..2b80597a1d 100644
 --- a/bisect.c
 +++ b/bisect.c
-@@ -756,7 +756,7 @@ static struct commit **get_bad_and_good_commits(struct repository *r,
- 	return rev;
- }
- 
--static void handle_bad_merge_base(void)
-+static int handle_bad_merge_base(void)
+@@ -865,9 +865,10 @@ static int check_ancestors(struct repository *r, int rev_nr,
+  *
+  * If that's not the case, we need to check the merge bases.
+  * If a merge base must be tested by the user, its source code will be
+- * checked out to be tested by the user and we will exit.
++ * checked out to be tested by the user and we will return.
+  */
+-static void check_good_are_ancestors_of_bad(struct repository *r,
++
++static int check_good_are_ancestors_of_bad(struct repository *r,
+ 					    const char *prefix,
+ 					    int no_checkout)
  {
- 	if (is_expected_rev(current_bad_oid)) {
- 		char *bad_hex = oid_to_hex(current_bad_oid);
-@@ -777,14 +777,14 @@ static void handle_bad_merge_base(void)
- 				"between %s and [%s].\n"),
- 				bad_hex, term_bad, term_good, bad_hex, good_hex);
- 		}
--		exit(3);
-+		return -3;
- 	}
+@@ -876,8 +877,15 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ 	int fd, rev_nr, res = 0;
+ 	struct commit **rev;
  
- 	fprintf(stderr, _("Some %s revs are not ancestors of the %s rev.\n"
- 		"git bisect cannot work properly in this case.\n"
- 		"Maybe you mistook %s and %s revs?\n"),
- 		term_good, term_bad, term_good, term_bad);
--	exit(1);
-+	return -1;
+-	if (!current_bad_oid)
+-		die(_("a %s revision is needed"), term_bad);
++	/*
++	 * We don't want to clean the bisection state
++	 * as we need to get back to where we started
++	 * by using `git bisect reset`.
++	 */
++	if (!current_bad_oid) {
++		res = error(_("a %s revision is needed"), term_bad);
++		goto done;
++	}
+ 
+ 	/* Check if file BISECT_ANCESTORS_OK exists. */
+ 	if (!stat(filename, &st) && S_ISREG(st.st_mode))
+@@ -893,18 +901,20 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ 	if (check_ancestors(r, rev_nr, rev, prefix))
+ 		res = check_merge_bases(rev_nr, rev, no_checkout);
+ 	free(rev);
+-	if(res)
+-		exit(res == -11 ? 0 : -res);
+-
+-	/* Create file BISECT_ANCESTORS_OK. */
+-	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+-	if (fd < 0)
+-		warning_errno(_("could not create file '%s'"),
+-			      filename);
+-	else
+-		close(fd);
++	
++	if (!res)
++	{
++		/* Create file BISECT_ANCESTORS_OK. */
++		fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
++		if (fd < 0)
++			warning_errno(_("could not create file '%s'"),
++				      filename);
++		else
++			close(fd);
++	}
+  done:
+ 	free(filename);
++	return res;
  }
  
- static void handle_skipped_merge_base(const struct object_id *mb)
-@@ -823,7 +823,8 @@ static int check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
- 	for (; result; result = result->next) {
- 		const struct object_id *mb = &result->item->object.oid;
- 		if (oideq(mb, current_bad_oid)) {
--			handle_bad_merge_base();
-+			res = handle_bad_merge_base();
-+			break;
- 		} else if (0 <= oid_array_lookup(&good_revs, mb)) {
- 			continue;
- 		} else if (0 <= oid_array_lookup(&skipped_revs, mb)) {
+ /*
+@@ -975,7 +985,9 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+ 	if (read_bisect_refs())
+ 		die(_("reading bisect refs failed"));
+ 
+-	check_good_are_ancestors_of_bad(r, prefix, no_checkout);
++	res = check_good_are_ancestors_of_bad(r, prefix, no_checkout);
++	if (res)
++		return res;
+ 
+ 	bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
+ 	revs.limited = 1;
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 826fcba2ed..5e0f759d50 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -666,7 +666,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 
+ 	switch (cmdmode) {
+ 	case NEXT_ALL:
+-		return bisect_next_all(the_repository, prefix, no_checkout);
++		res = bisect_next_all(the_repository, prefix, no_checkout);
++		break;
+ 	case WRITE_TERMS:
+ 		if (argc != 2)
+ 			return error(_("--write-terms requires two arguments"));
+@@ -713,5 +714,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		return error("BUG: unknown subcommand '%d'", cmdmode);
+ 	}
+ 	free_terms(&terms);
+-	return !!res;
++	/* 
++	 * Handle early success
++	 * From check_merge_bases > check_good_are_ancestors_of_bad > bisect_next_all
++	 */
++	if (res == -11)
++		res = 0;
++
++	return res < 0 ? -res : res;
+ }
 -- 
 2.21.1 (Apple Git-122.3)
 
