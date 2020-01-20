@@ -2,106 +2,113 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51C01C2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 12:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE0EC2D0DB
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 13:14:37 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1A5F0207FF
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 12:16:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BEA9922314
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 13:14:37 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="WiIPXmzS"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="LMzynUGg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727031AbgATMQE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 07:16:04 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49293 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726942AbgATMQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 07:16:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579522562;
-        bh=9jCJISvI4XqZ8AUrKYk+ovtJSj90zC3vZSJIXsoLYfY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=WiIPXmzSvz3PPHD3aGEQM+Dm8CKEXzT3CvjGFgVJA/0OSUfwg6HhvgF1IaT3AOfe3
-         2rSS6mzfSituMd7OZZ8n/P70xhDoVLdtjpcawu6dJKVguqicHcQ9JOPKTOFIPVz5/A
-         VTJ7sIkv/Lz+TFxjG8QqnV40yQG6d1vqRdYDe5uU=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSbx3-1j4Kpn0DTl-00Sspc; Mon, 20
- Jan 2020 13:16:02 +0100
-Date:   Mon, 20 Jan 2020 13:16:02 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-cc:     jrnieder@gmail.com, git@vger.kernel.org
-Subject: Re: Patchwork instance "Submitter" attribution and GitGitGadget
-In-Reply-To: <75987318-A9A7-4235-8B1D-315B29B644E8@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001201314580.46@tvgsbejvaqbjf.bet>
-References: <75987318-A9A7-4235-8B1D-315B29B644E8@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726819AbgATNOh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 08:14:37 -0500
+Received: from mail-vk1-f195.google.com ([209.85.221.195]:43871 "EHLO
+        mail-vk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726619AbgATNOg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 08:14:36 -0500
+Received: by mail-vk1-f195.google.com with SMTP id h13so8527504vkn.10
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 05:14:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a/PlEKVmJXCHxcB4dQPR7tpVClouxPV3wDPMW+Zm3Rw=;
+        b=LMzynUGgiNAYylijqg8m/R9hVt+hijqkDlp+d794iAXG6UnogY7KlaWU0YERf5SlrT
+         KmPJ9XlLzsJs/YFL2JS5jgOA+WxltRm8Z+AmzntXQNNmICABGj1V+LLSr4qznBj2JGLM
+         kj3JO1ZAfO2EHJTXf4aq+/kKVuWYcyEWDHPDIcprJ1L86LICkMxitaxvO6aLa5yTuGHj
+         trnPHVSPz5VfzMeKOPBgnGXIWvZMPEhz6qjTy9otff5gkRlIttyjCZ7vcgHTOYlUsurY
+         Pbu9KLy7Hdn4tn2evLCIfJ9K2WN+kloBV0T9Zy2ssj9jhh0UoVJ2zUGZ8dWLOw/fxnFc
+         cB3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a/PlEKVmJXCHxcB4dQPR7tpVClouxPV3wDPMW+Zm3Rw=;
+        b=qrbrl0slMImhwp2PwG51sdBSV20AhFHruH/wVQvZKxZuPuWPjNgk3KDOLNCF7MVTtK
+         KjMQbX2hTTRmR7Qgx/+z8QoAP5audtg0r0oGZoCsBuqyFxiZHaYnxqCJkBmHCAGcqns8
+         ogsTlIzRMgMtZXutMDGsinlMjb3T/zrtaZpgbXaqzvcRBoAr171Bpeb3atK0cx+iyI/q
+         S58ERuJr454mWiJEta5zOd2bvOVC4/AztnxNs1A+QZQVgPHaaPz8TodVlmuwomsA/en0
+         h5j6tqfXE5EDJPjAFrmWTn0GodpALv9XeJdBO4QTVBiodfxXfdmYQUhNJHrDr5hotM3E
+         s7KQ==
+X-Gm-Message-State: APjAAAU1KjzBI44nmKAp0HLgvTasJImNP/jcR68iUOuN8PcLQ3F4TgNX
+        PtCyu8YNkj9uhQPl1s4TdgZCEQn2J3dFoDAxRu4=
+X-Google-Smtp-Source: APXvYqx3lXZYP3baoaCVOSyq1Knjiq3WtrelR6ein00bED3rMtX/9Jbh0aJ3LJrVKfOC0cC35M7v9HVpbuvRy1Ll1/M=
+X-Received: by 2002:a1f:434b:: with SMTP id q72mr822368vka.53.1579526075454;
+ Mon, 20 Jan 2020 05:14:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1251200087-1579522563=:46"
-X-Provags-ID: V03:K1:YbSfvtSkFRBCfCtyM59sGHoU8+fvbT7Ees1ZOQe7/YUvPr87HYg
- HofAVdhp0Xy0z1q7vhB+CoxLvtHIq5dPhtUi5QF3JMK/KY8Mvn6xJ+zo9dhMMe7SnGnn5TK
- iFmWXcNobcvKuOEiqFuMehF4c+2Pu7typcWWoNCmuZuMc+4k2wskx+CyEN1fI1HEitMEeFp
- mE8qd6hA2gmZk1JJBzxhA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:aRrqNxwYrcU=:l0Z/ifRu1Ds+FmWvXo6QdC
- tDBRh+VxOf2MQWMIRc5zD2h0msVX/OE6pzGWou3KN/Zg9SHLHiGWcRdJsmVlGBlNBm3oMJ0zH
- BIHJQQqRffj0dPP+vmyT+wamKAaZADZIxeHNsU/ZU0uG0dyQ9sZrxHBlcUXxTh0Tu7yzPgcKE
- aoht0d93qhrRQvi1wAaspr4YFxJ1GyDxTS925tiEecIlHWKl0/h3+d7XjfZhqO4MrxZKXv6Jz
- UtnRRwDrDErrUuTgOu8LcseneiSGZyT5aM+z8aorLl3bdJ/esg+yCcA4/51zSTiVbDDQQXHFp
- nnduX/LVzi7o3PgTaDK1ME2Rw81XkIzoujI3b8CdLGU7kjm+k9gAKJN5s/afQcLPgR3HZAOXO
- H0uxnLNKvNXScF2E290UeHgrSWkoJijGgwLaq6a8jqgZWB8zBncNPWt6pVhn1f3OnVmkRhQ4R
- RBk2nN0JQPG/2b1qA9EjH+tcFetjG0m8HLNgfmnWGSU0Wt3jjsOnA7UqlhJfCVma3TUkkaUvA
- WXYOmHYnqlJqR19yjTs5mig2844Oxe+RSZU5NNuG3tHiGV3JDIST+JQ2KWISTCzfSkbt5zoO3
- JxEGj0O/GibTxZn101qdg+BxQkl1JXEGQmpsWCZrddvXMbRyy21KxLt6BbTup1eCRK+PFSEJR
- yctlLItza8YKLcTgHKL9ZW+AH+os9ua5iHXRLoeCLoHdApBiVPeVFc3nNTlJQ2Gdu3LLntdkA
- nAcwiQ3vK2yHGcI0kj4DvPqI928FvEjG/wNpllS2scLNRc2VKpJvzTdNMpHQVkfSlJC/XF69/
- eIYUgfUhc5Zfw/CPcOdMM9IStUsTGmx9IxYQnocci8WszjRb6sZN98RgnBNct0qZTQKd8+qHq
- p5zKzKTh6xL1ntn1Jh+edTEI39df+8/X9LPG9J9qGzk1sFF25NJLEpKz3gTS5g4NA9Ud0OjWh
- T9RvlG4Id6lGh0MDbytZW1MKMXNHCJwbT4TDUSMJ3Q98JrAPjbOXNxBAeOyZ0Kily4vNHYvMF
- r+PXyI5c3vcLIhUMFR8BbtrP8acg+owOoVnJDXHi0nrDXy2I0RbfeTR4/8F2dUcccpkhf5h0y
- WVj/239L9daEWJ8qJNFQtzkhS6Xfcz/ix4pd2MA2SRpxefk8+UxOcwQcxxZZ0eYk06tKilCLV
- Hl4TZScEPnlyfYTBSnNp+ojDx8ecllPZCC5o4pVZZTr7kMa8Aal6Gz/5S6AX/XAT9j7rsHb6m
- l45iBRNkKVWJKeUcdLtrhdOAxLWlrjC/7VHR7Ufubw8riid+MU8cFQRthw5g=
+References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com>
+ <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com>
+ <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet> <CAKPyHN0eTa9LC35oqsy0Dce0qpOJAx159HR+QyguDt_NZ2he_w@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001171428170.46@tvgsbejvaqbjf.bet> <CAKPyHN0qY5odXi2wAv20D4nsNM0r4qO_8JOx9DHiGchJmS8cbw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001201221350.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001201221350.46@tvgsbejvaqbjf.bet>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Mon, 20 Jan 2020 14:14:23 +0100
+Message-ID: <CAKPyHN0v9eJWXBCmBS6kdPXx5F8CGE_P3hSfb8+vMaPTF9FWug@mail.gmail.com>
+Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
+ values too
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Dscho,
 
---8323328-1251200087-1579522563=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jan 20, 2020 at 12:25 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Bert,
+>
+> On Fri, 17 Jan 2020, Bert Wesarg wrote:
+>
+> > On Fri, Jan 17, 2020 at 2:30 PM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > On Fri, 17 Jan 2020, Bert Wesarg wrote:
+> > >
+> > > > On Fri, Jan 17, 2020 at 12:50 PM Johannes Schindelin
+> > > > <Johannes.Schindelin@gmx.de> wrote:
+> > > > AFAIU, the value of remote.pushDefault wont be renamed yet. So you
+> > > > suggest to issue a warning in case remote.pushDefault is X. But as X
+> > > > does not exists anymore after the rename, the value of
+> > > > remote.pushDefault is invalid. So why not rename it too?
+> > >
+> > > If this setting was usually a repository-specific one, I would suggest to
+> > > change its value, too. But it is my understanding that this might be set
+> > > in `~/.gitconfig` more often than not, so I recommend a warning instead.
+> >
+> > than why not rename it, if its a repository-specific setting and warn
+> > if it is a global one? If this is detectable at all.
+>
+> Sure, but you might need to re-parse the config to detect that (and you
+> have to use `git_config_from_file()` to make sure that you know that you
+> are looking at the repository config and not at anything else).
 
-Hi Phillippe,
+I found current_config_scope() which serves the purpose for me.
+Anything wrong with this approach?
 
-On Sat, 18 Jan 2020, Philippe Blain wrote:
-
-> I=E2=80=99ve noticed that all (I think) patch series sent to the list us=
-ing
-> Gitgitgadget are attributed to Dscho (Submitter is "Johannes Schindelin
-> via GitGitGadget") on the patchwork instance [1]. I don=E2=80=99t know i=
-f you
-> are aware of that or if there=E2=80=99s a way to fix it in patchwork=E2=
-=80=A6
-
-Right now, it shows "Lucius Hu via GitGitGadget". Clearly, patchwork uses
-only the email address as identifier, being unprepared to accept that the
-same email address might be used by multiple contributors.
-
-Ciao,
-Dscho
+Best,
+Bert
 
 >
-> Cheers,
-> Philippe.
->
-> [1] https://patchwork.kernel.org/project/git/list/?submitter=3D182351
-
---8323328-1251200087-1579522563=:46--
+> Ciao,
+> Dscho
