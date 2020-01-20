@@ -8,53 +8,53 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 185E9C2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26990C35240
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E278E217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDD6C22314
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MqsSApb4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KInWb7g+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728913AbgATOiv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 09:38:51 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46484 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728853AbgATOis (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 09:38:48 -0500
-Received: by mail-wr1-f68.google.com with SMTP id z7so29772380wrl.13
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:47 -0800 (PST)
+        id S1728896AbgATOit (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 09:38:49 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36315 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728709AbgATOir (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:38:47 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z3so29847948wru.3
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=IhNlePj7c7w7f9rdB4Q9xDKd38rWgO5jV1D012eatZA=;
-        b=MqsSApb4KZkETzVCA42LFr2EYs0aCjsYocOIhHFVyvu3UXpnY/54D8xeAKne+foOUn
-         z6TLm6PfSt5plxsGVSjckJ9DRoky0hHUwglTNJNsiDPeGyesNFIQKc/d0iOQ/OXttcdL
-         vO57w1/PimFX0PI0d0TJrlkuMhaLoBlesOLQOpffNpdz0Z/UhMJaUW9CZwBQRKagKVRH
-         vQcK1hA/9AEcqmb1wwitrJXkiDUgfjthkjXzzr+RaTSBQr/5MY8Sm/zKVytfcIHMmzaV
-         oQUoMhGQfU0Xsr2bHWWKFbWTtAlRT4AsHFru+iWcotDK7e+gqAzu1AlZV2ZbBnNyjZ9I
-         1zVQ==
+        bh=Qo+K54LDNNvRakb2fu62WPC6I5xEcHpgOLSRcyDPBO0=;
+        b=KInWb7g+TLl22mN+uLyTbK2wYroC8Hav+Ay5GdBPF9sPaTRTyKpu78zNbLW/TPoyH0
+         +Y72WcIxh7MmvgzUTyZS7rp69tIz5es74rx9p7ieswpu5MyKhG0DZew7l+t9C5moUya9
+         6YTjCnv5yCuoqP65OQoXxVneclZze6wdocO5B8e5mpmvYkGGEDHu38az2fhSjjXGKdHT
+         z3vi9+lqDWjX7Ycay0/6RLE2VDuHDrDqs5OVlP6NRWEfGmbfjkjWwsPd34YFNyRmbAas
+         oB6Cv2GivQlOfnSY2XHrxBKrJPzf0HscXQkIUAuU8LMZfy79IzByVYnFvCYcxp1fkk9H
+         /sYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=IhNlePj7c7w7f9rdB4Q9xDKd38rWgO5jV1D012eatZA=;
-        b=TXNn1fEdBGouXYrl64YqffkiUFVUUmXAQwIiOwsP++VuCTFmbnP6p0aH0b87pF2EL9
-         nmfxb6tUIuw6zW1/AagP1F7TT/a0j8HOOthRupOyl2LSman+QjSy6I7PTAd7JCBj/nlf
-         XCihssnwroUVD0fh2LOeFwhFgBcCDcISgoKzmtAI14LTi9DP/SVQP6bV4eHzK0U0MfNm
-         bLaCIE3kiiTybmkdIMArAaHl8m1KoIgLtUquhFXJXF9UliDQK0GfVp/7UdBWKA5ae7qK
-         0tQM9uLjxcdNOHXIycYf1VL/jd+uEdpiHFWgFQCYJUa8IotBnE4hD5qjqIWrDULsFR5R
-         7Rsw==
-X-Gm-Message-State: APjAAAWKFKnlBNaN3OTAG60CAOSJrnUazkxfesQIITOS2H1yjnaLbZuY
-        8UDG+mn5X99LUZKViqW+BbX3o3bSB8I=
-X-Google-Smtp-Source: APXvYqy9Uz+arvprwEKQVfFpxO8mwPkdeZHWixjjuykSlFsufKPbyzkVcRQzKFZCMcRo0ezsx24rYQ==
-X-Received: by 2002:adf:ff84:: with SMTP id j4mr18826333wrr.27.1579531126602;
-        Mon, 20 Jan 2020 06:38:46 -0800 (PST)
+        bh=Qo+K54LDNNvRakb2fu62WPC6I5xEcHpgOLSRcyDPBO0=;
+        b=O93ogqYz81bftieUoCiH+eRyr353ko/MsuAgy9eGY1e8rEh6d3ynS3Zhlkj9xL0hLw
+         rIq0q2b29gINozNcM37fXEkI5fXmqF8H1xZcJ4fl25hbz1v9p86GcnYg+aUuTvewHmb1
+         NWal+VwTABJPgM4MeqqPVcJ7zN1HtEE+R7eeRY31DArZ30Wc38NtsvijJJTQ9gQcE5tN
+         fZSI/dWonQ3eucrzHuA53GgbhNUd+G/PqEbW6wY6KTgk0RsutIjYAU7kdrBuKP95zIip
+         uUWSYx602RNW9uAqkQbiwh8DukEe5yUFw1Th4Oh284UMfu7fiU3nE0arZWalHAQ5V3Cv
+         2dgA==
+X-Gm-Message-State: APjAAAVg8VUeXh9zLuKOYau97a4NYx/nCf5w4V82KthplRc03wO1wvr4
+        mmjKllxaBTN1vHmGSTYHqIvatTZuD9Q=
+X-Google-Smtp-Source: APXvYqw3ZjZQVOxLHFZzEahQ8zSahs7OFIvF1Yp6sb7MGDw68rYUUAXou/WTRWQqOLEQ4pDpROXGEw==
+X-Received: by 2002:a5d:6305:: with SMTP id i5mr18944474wru.399.1579531125437;
+        Mon, 20 Jan 2020 06:38:45 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.45
+        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jan 2020 06:38:46 -0800 (PST)
+        Mon, 20 Jan 2020 06:38:45 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
@@ -62,9 +62,9 @@ Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH 15/29] bisect--helper: retire `--next-all` subcommand
-Date:   Mon, 20 Jan 2020 15:37:46 +0100
-Message-Id: <20200120143800.900-16-mirucam@gmail.com>
+Subject: [PATCH 14/29] bisect--helper: retire `--bisect-clean-state` subcommand
+Date:   Mon, 20 Jan 2020 15:37:45 +0100
+Message-Id: <20200120143800.900-15-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
 References: <20200120143800.900-1-mirucam@gmail.com>
@@ -77,9 +77,10 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pranit Bauva <pranit.bauva@gmail.com>
 
-The `--next-all` subcommand is no longer used from the git-bisect.sh
-shell script. Instead the function `bisect_next_all()` is called from
-the C implementation of `bisect_next()`.
+The `--bisect-clean-state` subcommand is no longer used from the
+git-bisect.sh shell script. Instead the function
+`bisect_clean_state()` is directly called from the C
+implementation.
 
 Mentored-by: Lars Schneider <larsxschneider@gmail.com>
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -87,50 +88,49 @@ Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ builtin/bisect--helper.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 7190304a98..6953c68f93 100644
+index e604334c91..7190304a98 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -20,7 +20,6 @@ static GIT_PATH_FUNC(git_path_head_name, "head-name")
- static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- 
+@@ -22,7 +22,6 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
  static const char * const git_bisect_helper_usage[] = {
--	N_("git bisect--helper --next-all [--no-checkout]"),
+ 	N_("git bisect--helper --next-all [--no-checkout]"),
  	N_("git bisect--helper --write-terms <bad_term> <good_term>"),
+-	N_("git bisect--helper --bisect-clean-state"),
  	N_("git bisect--helper --bisect-reset [<commit>]"),
  	N_("git bisect--helper --bisect-write [--no-log] <state> <revision> <good_term> <bad_term>"),
-@@ -797,8 +796,7 @@ static int bisect_start(struct bisect_terms *terms, int no_checkout,
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
+ 	N_("git bisect--helper --bisect-check-and-set-terms <command> <good_term> <bad_term>"),
+@@ -800,7 +799,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  	enum {
--		NEXT_ALL = 1,
--		WRITE_TERMS,
-+		WRITE_TERMS = 1,
+ 		NEXT_ALL = 1,
+ 		WRITE_TERMS,
+-		BISECT_CLEAN_STATE,
  		CHECK_EXPECTED_REVS,
  		BISECT_RESET,
  		BISECT_WRITE,
-@@ -811,8 +809,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0, nolog = 0;
- 	struct option options[] = {
--		OPT_CMDMODE(0, "next-all", &cmdmode,
--			 N_("perform 'git bisect next'"), NEXT_ALL),
+@@ -817,8 +815,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("perform 'git bisect next'"), NEXT_ALL),
  		OPT_CMDMODE(0, "write-terms", &cmdmode,
  			 N_("write the terms to .git/BISECT_TERMS"), WRITE_TERMS),
+-		OPT_CMDMODE(0, "bisect-clean-state", &cmdmode,
+-			 N_("cleanup the bisection state"), BISECT_CLEAN_STATE),
  		OPT_CMDMODE(0, "check-expected-revs", &cmdmode,
-@@ -849,9 +845,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		usage_with_options(git_bisect_helper_usage, options);
- 
- 	switch (cmdmode) {
--	case NEXT_ALL:
--		res = bisect_next_all(the_repository, prefix, no_checkout);
--		break;
- 	case WRITE_TERMS:
+ 			 N_("check for expected revs"), CHECK_EXPECTED_REVS),
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+@@ -860,10 +856,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
  		if (argc != 2)
  			return error(_("--write-terms requires two arguments"));
+ 		return write_terms(argv[0], argv[1]);
+-	case BISECT_CLEAN_STATE:
+-		if (argc != 0)
+-			return error(_("--bisect-clean-state requires no arguments"));
+-		return bisect_clean_state();
+ 	case CHECK_EXPECTED_REVS:
+ 		check_expected_revs(argv, argc);
+ 		return 0;
 -- 
 2.21.1 (Apple Git-122.3)
 
