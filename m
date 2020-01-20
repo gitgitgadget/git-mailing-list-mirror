@@ -2,119 +2,202 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DD3CC32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23E91C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:57:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D2CBD22525
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:53:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DB7B222525
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:57:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0h89U/rV"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="JslQS3Ip"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726890AbgATVxb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 16:53:31 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43222 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726752AbgATVxb (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Jan 2020 16:53:31 -0500
-Received: from camp.crustytoothpaste.net (50-244-106-130-static.hfc.comcastbusiness.net [50.244.106.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 83C9C60735;
-        Mon, 20 Jan 2020 21:53:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579557210;
-        bh=kIC4uQgTYqT5U32dOBgoh0Wb+G0aqkrbPaviXQdv1IA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=0h89U/rVTc5A1nbYbK202lJifiSKshSZ9Y+qEd1gzF90yr2aVyvMhKuiehYeAO9O7
-         zJxWFmryPz99ZdXB9BVb/U5kk0daEeLEjTCXGh/rB+KPsBLgVG/55eg+qhXZu3qRbN
-         2b+oh0EhbFby/8h+6e7nOiO65Q0tt7rKt3mb3Tffs4ldmlzlYdAo2ryfAdFMiOHnF5
-         IJ51AWrqko2kqgG0ztsqorwBGpBN1Y+sP75hfL4gcP13xsd17YEjGxH7NyCq8Df/T/
-         30B+pBWPM+FvMEPLqX5kjSdLOOa4rtN/wRkLlcDUhKGhA/x5shwI9sVkvS5k4bg21D
-         yJBxAN4L7POLFVZ7Bktt0DSyqu6GmDMfszkvom8ugNBI3BA5JnQk3q4lnF9YLzJ5Y3
-         K2xBise5FGOEbYNRxCd/TbYLG6GVLQEArFWrNTkZreJlvRTxuGG+pDfDXpFlkBjIm7
-         sFQ2SyuojgEf/yb8MDuJ95jjF2d68KIt7/xXy7XjmIpH9ybS/TG
-Date:   Mon, 20 Jan 2020 21:53:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] docs: use "currently" for the present time
-Message-ID: <20200120215326.GE6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>, git@vger.kernel.org
-References: <20200120212156.4109999-1-sandals@crustytoothpaste.net>
- <alpine.LFD.2.21.2001201633240.8488@localhost.localdomain>
+        id S1726935AbgATV5o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 16:57:44 -0500
+Received: from mout.gmx.net ([212.227.15.15]:36055 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726843AbgATV5o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 16:57:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1579557461;
+        bh=0BdfG3SsyD5QOPDCTmNSniKabJE00GGAEQI8vF3RqWQ=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JslQS3IpatEiQHPO2v7bkXJDDah19hHN14x4z2uUJF3i9zXZp4e+6BfceRt1QjNhA
+         s1HPI3+mgpd9cghC9EEoGZKKyGAgblMvGyvQB65M/eQLyDPq/W0XKoNx5ISnegWNUN
+         Sw2oQlFQfOuus4pzdlO0eAl9HeRR5eUewaeU1hZQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MRmjw-1j49R03xRC-00TE19; Mon, 20
+ Jan 2020 22:57:41 +0100
+Date:   Mon, 20 Jan 2020 22:57:40 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Miriam Rubio <mirucam@gmail.com>
+cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH 06/29] bisect: libify `exit_if_skipped_commits` to
+ `error_if_skipped*` and its dependents
+In-Reply-To: <20200120143800.900-7-mirucam@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001202253450.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-7-mirucam@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="boT9Oj39GmgPxYhu"
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.21.2001201633240.8488@localhost.localdomain>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:8TK1TrY8tuoz4tfHzQA8Pf4GLg+Xfv/mpfev3g7nlPcSuA1cHwG
+ zHEqoLxdmCFrp9+DmlXCEg3nevr7d2PrPOyzGgfFwCHQ+BU6is12tQpdn2WKbQiCpzUUpcB
+ 3HVoL3BUlzzDIL5TWHo8CmFy5ODpHgmhI8QxsYElzbHWqEdX6eG6IblIb7FDY/ESuiQyBsO
+ IIJJXrzIdsJVy5PIAlUHw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:W/PBRE081a8=:W7Sn6Ym4uSQ81kc30Q/Sbv
+ RujsE3ELTBXKUIbKvDr6e44G8eqlCG4f2exZBRQ/JW6cl0BjZ+HWq5twvNrB81I0F2RWzQWMV
+ UCRkY6GIHY5MVExPB5DeBLe/gfuOjrbGV22Wt4t0HwuYgIVYxNCnE17ChW+5eOaPNV4l+Tc8s
+ ibU/ktQEg5ce4ddOdWDOEe2tPus2nGav5W+8D6zCsPldn4N9SmPiPS4vMxXQJLZwiX6OLs0JI
+ J4geZCf2h6ynY/DajtUuHbREkX/qavO+KzJnZIm94+JtH67x8cPH2owEXGHrAkdRK/MTL/wlB
+ Lk/Bwp0vUqGOquFnyiEKXcvp9ayVMesukH9z6Nyor25d/8IrNdk8V6lG6De0ukDYEga+Whk52
+ NAKBHwrAETWsR+2OifNvW/UXu8mQXKtgfGqkHoigSeP6XNkCKOyBlaqqaIxwAqCGkMhFNKksi
+ 2k3SifUwa0yPlv4ClUCckW9CaMoZzIVocv1ya4dGNe36mdxo1ms2/zZ0Y+kWVJceTxYSbMqTk
+ pq2ipvdq9yMCn/JRlxkmGpgUVFc9t4yvzJ3drd/sO2Nb+9ubH+55m+IgpZ3jpKgVDmg8B+dx3
+ Gbs2Tag/zfsttGyEJf52DHBTSQtstZj/ga0Lw2hTAtRo17wtIsix3eWDEhzPMWdNpGLV3oKGC
+ 01+176br1u+RfCk5bk7lNM9QeW/xiOtvuGkaA0oAXgBnB5Y9Y3A4l/hnJwtasopYeQJ9qLRqp
+ bHnmHhIPEPEokSvbpqcsRdAzCQ+o3I2rmI94VYyPdYlBtPysEB0s/cSumT75Lr2fALlJiy+wS
+ SMQlmhrA+e1Uk/BzZ3KH7z0P8j9GA+Q5J/R42i4GcM5Lk4XV/TNf9amuZW7NvYpfADOvMfXw9
+ H+bUhuBCi1afuWjDHw6l+V6BcgimOfjFgXw841rhpzXWOxk2NNT20oGj49jPs0TB6tw0xE99x
+ Uv57ZsrRx4AmohOrvYOG7ONaPfRNI/DRpONzMcQekllSKTOdfmW45qCJBoVLcRRS9CaMkVazS
+ zGodF1IaSw17xBMkSfGnkg6XUCBYO5U+M9rcfkKwDAJxcMoVIP27xATcKnQObUXbIL0O2DrSz
+ TGj0s6I7AV9802v3scXOkFogxxMKUID+C2aMHb72XR4LrFwaergZ9eTyN6QGtxI4DfNf9W7Md
+ iqLp7f4W9Rj7VjPyVdvmFwbDgU5rOy+354VUrbpjza9zUkMGGg4G4al4xlE10oqtkEy22fce7
+ aTrgacrPdvW8jrCyKv03NJT05jRp2DNvgxOJ9TPNGso/waDQS1k1B95Orkjk=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Miriam,
 
---boT9Oj39GmgPxYhu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 20 Jan 2020, Miriam Rubio wrote:
 
-On 2020-01-20 at 21:33:58, Robert P. J. Day wrote:
-> On Mon, 20 Jan 2020, brian m. carlson wrote:
->=20
-> > In many languages, the adverb with the root "actual" means "at the
-> > present time."  However, this usage is considered dated or even archaic
-> > in English, and for referring to events occurring at the present time,
-> > we usually prefer "currently" or "presently".  "Actually" is commonly
-> > used in modern English only for the meaning of "in fact" or to express a
-> > contrast with what is expected.
->=20
->  ... snip ...
->=20
-> as someone who is constantly being sheldon cooper-level pedantic, i
-> totally agree with this sentiment.
+> From: Pranit Bauva <pranit.bauva@gmail.com>
+>
+> Since we want to get rid of git-bisect.sh it would be necessary to
+> convert those exit() calls to return statements so that errors can be
+> reported.
+>
+> Emulate try catch in C by converting `exit(<positive-value>)` to
+> `return <negative-value>`. Follow POSIX conventions to return
+> <negative-value> to indicate error.
 
-As I mentioned, this is very minor and I can't imagine a native English
-speaker being confused by it, nor can I imagine a speaker of most
-European languages finding it confusing.  It just stood out to me since
-I know Spanish and French and I thought, "Oh, someone was thinking in
-another language here."
+Good.
 
-I've actually been sitting on this patch for a while because I thought
-it might be too minor to send, but I finally decided to do it as I was
-sending some other doc patches.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> Modify `cmd_bisect_helper()` to handle these negative returns.
+>
+> Turn `exit()` to `return` calls in `exit_if_skipped_commits()` and renam=
+e
+> the method to `error_if_skipped_commits()`.
 
---boT9Oj39GmgPxYhu
-Content-Type: application/pgp-signature; name="signature.asc"
+I would remove these two sentences, as I deem it obvious from the
+rationale above that this needs to be done, and the patch repeats it.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+>
+> Handle this return in dependant function `bisect_next_all()`.
+>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> ---
+>  bisect.c | 23 ++++++++++++++++-------
+>  1 file changed, 16 insertions(+), 7 deletions(-)
+>
+> diff --git a/bisect.c b/bisect.c
+> index 83cb5b3a98..2ac0463327 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -661,11 +661,11 @@ static void bisect_common(struct rev_info *revs)
+>  		mark_edges_uninteresting(revs, NULL, 0);
+>  }
+>
+> -static void exit_if_skipped_commits(struct commit_list *tried,
+> +static int error_if_skipped_commits(struct commit_list *tried,
+>  				    const struct object_id *bad)
+>  {
+>  	if (!tried)
+> -		return;
+> +		return 0;
+>
+>  	printf("There are only 'skip'ped commits left to test.\n"
+>  	       "The first %s commit could be any of:\n", term_bad);
+> @@ -676,7 +676,13 @@ static void exit_if_skipped_commits(struct commit_l=
+ist *tried,
+>  	if (bad)
+>  		printf("%s\n", oid_to_hex(bad));
+>  	printf(_("We cannot bisect more!\n"));
+> -	exit(2);
+> +
+> +	/*
+> +	 * We don't want to clean the bisection state
+> +	 * as we need to get back to where we started
+> +	 * by using `git bisect reset`.
+> +	 */
+> +	return -2;
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4mIVUACgkQv1NdgR9S
-9otTCg/+Lv0ougJRyH5aor6Jt51J+R2+MV8PPiwZWiFL9f0r9Jg5sE2QBVL4JH/6
-06YhbhBDHauAPGnnAuYZy7QHfvFMU9rqVUAJEavoZlMfCZRYNcoz5aKx6WcTsnSB
-XIYFIG6mtQuYmwCNGcfgl7Us7ErAMCTJUGzhotCyI+LV1ubgM5eXEnpwTt8Pux3E
-iiaV5BuaDY9DqDZm4EWMpRRrIswVHnAu5q+0qQR/2nhuOMmcl+4DPIymaCshn4IK
-hiJ75+tmoFpX5rHZmen4zfY9FpxFphQJ/S1JqlX5i+w7uYBxxd+9vSaEDX2DRcPb
-NT4FzRLbR0XuKln6swJl6UbZcvUhwJf9cj2lW/FTK+eqSMXjJ5ViB/F1S6jaa+GA
-Drxy6karbrV22Lr/yldLlXGZOye9rI8iqlEZrakj/giBaJSGljM4TUektY6puk7v
-Y5Xzw/QIjjtn989dvbWZnWu5oHfxBrxnDGLVetLjFniftYdxRVc6eFyg1wjms/wy
-1VMICX6VfsndC92yi74DoGhf0/V/4PSbp0uKu3KS9MJZqaX3kpPmUl9wH5euzK56
-RcAMzOtc4pjREbhyQi581VSSpUDjnUZkWr29sPlhifQjHLdoVFvUCoPXWeE90anr
-sYTKkZEOUuP6mSAW8QTm1DhvuWp5ih/Xh06qYSZRWzdXsOdTMsA=
-=3R5e
------END PGP SIGNATURE-----
+This comment is a good indicator that the constant `-2` here is a "magic"
+number and it would most likely make sense to turn the return type from an
+`int` into an `enum` instead.
 
---boT9Oj39GmgPxYhu--
+>  }
+>
+>  static int is_expected_rev(const struct object_id *oid)
+> @@ -949,7 +955,7 @@ int bisect_next_all(struct repository *r, const char=
+ *prefix, int no_checkout)
+>  {
+>  	struct rev_info revs;
+>  	struct commit_list *tried;
+> -	int reaches =3D 0, all =3D 0, nr, steps;
+> +	int reaches =3D 0, all =3D 0, nr, steps, res;
+>  	struct object_id *bisect_rev;
+>  	char *steps_msg;
+>
+> @@ -972,8 +978,9 @@ int bisect_next_all(struct repository *r, const char=
+ *prefix, int no_checkout)
+>  		 * We should exit here only if the "bad"
+>  		 * commit is also a "skip" commit.
+>  		 */
+> -		exit_if_skipped_commits(tried, NULL);
+> -
+> +		res =3D error_if_skipped_commits(tried, NULL);
+> +		if (res)
+> +			exit(-res);
+
+So we still `exit()` in `libgit.a`? I hoped for a more thorough
+libification.
+
+Besides, the `if (res)` probably wants to be an `if (res < 0)`, right?
+
+Ciao,
+Johannes
+
+>  		printf(_("%s was both %s and %s\n"),
+>  		       oid_to_hex(current_bad_oid),
+>  		       term_good,
+> @@ -990,7 +997,9 @@ int bisect_next_all(struct repository *r, const char=
+ *prefix, int no_checkout)
+>  	bisect_rev =3D &revs.commits->item->object.oid;
+>
+>  	if (oideq(bisect_rev, current_bad_oid)) {
+> -		exit_if_skipped_commits(tried, current_bad_oid);
+> +		res =3D error_if_skipped_commits(tried, current_bad_oid);
+> +		if (res)
+> +			exit(-res);
+>  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+>  			term_bad);
+>  		show_diff_tree(r, prefix, revs.commits->item);
+> --
+> 2.21.1 (Apple Git-122.3)
+>
+>
