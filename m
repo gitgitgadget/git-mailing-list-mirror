@@ -2,133 +2,120 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4644C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 96315C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:38:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B908422314
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:22:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FE96217F4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:38:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QHNpGNBR"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="H71ZMwIX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726874AbgATTWL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 14:22:11 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43142 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726345AbgATTWL (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Jan 2020 14:22:11 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 828EA6044F;
-        Mon, 20 Jan 2020 19:22:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579548129;
-        bh=pTpruoFbUOaljcsOvmcatTNYg3JcGF0+x1LtQAAmmIM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=QHNpGNBRlb6XpvVew0i4jANLS2gqSkaF5ulzAZax+WRLJsyPuuMqGrochvh2deUt4
-         3KFMYySlemjNW4/ZxP4IhRpanh6n7atI0tZVNy954Y6/wuRGyiAoT5tbw9wYEw7N04
-         0nEqv3EIECAmGNn+F75pdQmQNUWNDSxZKF/H79QpQSIjC+RbvRAS12zulmKme7EeVk
-         lWP82c4xlW4uSezFe6dDZz+GZg2882SiIOE3Oohf7LFn8xbjDZeBaVnN0ByUGslhcc
-         Oo++Lzt5npsJa90FnKNWmQjeCwC32RmOOEUfsHReKqNjktXPLJdDSydyPmWknURkAv
-         QKD37tOxp1VdmMbTC5CejDhwLp+dxL3UcBAR60AuIXhkTJEspVpl/Wn0JB5h3rvSqI
-         RlqnSVPXQJYk/5HxRYUuhY55m0A70JdyxkhLAAkG6XMkFZjZz5PdFopSDcokj9vNmq
-         Vk27PThoORK2MIMoX/C1qtjv71CcLaXVeOr4txo1L1J5/DwRyoC
-Date:   Mon, 20 Jan 2020 19:22:04 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v4 1/5] doc: move author and committer information to
- git-commit(1)
-Message-ID: <20200120192204.GD6570@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>
-References: <20200120173343.4102954-1-sandals@crustytoothpaste.net>
- <20200120173343.4102954-2-sandals@crustytoothpaste.net>
- <20200120175210.GA3989@coredump.intra.peff.net>
+        id S1726843AbgATTiy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 14:38:54 -0500
+Received: from mout.gmx.net ([212.227.15.19]:49531 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726586AbgATTiy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 14:38:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1579549133;
+        bh=a59AmPNvYiyfik1vvJe900sPdUylR/MR84uZB5nhdh8=;
+        h=X-UI-Sender-Class:Date:From:To:Subject;
+        b=H71ZMwIXKP0+mGpbf6WW/iLw8ZRMJkMyRkoRbAuAQMIA5wConIXUq66Fo6tn1tQcB
+         o8sy9cBMEkj4Er4XsHhIk2mSlHDVyOb5ItMTcuQ2twwxWu1IdTlx9NBglDudOU9bra
+         gEm6MBtJ0FnML5+DiepXSrWUuWZzJc6kQi5u51g8=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MOREi-1jGH8k3o6w-00Pz6Y for
+ <git@vger.kernel.org>; Mon, 20 Jan 2020 20:38:53 +0100
+Date:   Mon, 20 Jan 2020 20:38:51 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     git@vger.kernel.org
+Subject: Y2038 vs struct cache_time/time_t
+Message-ID: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="f6nK9RR+X1IX2pXa"
-Content-Disposition: inline
-In-Reply-To: <20200120175210.GA3989@coredump.intra.peff.net>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ESYTf0OV47xBla3rdGwcRmcpDjbecTmz29rajW376pYYeNmC1EJ
+ zNfVPqYhh1ZfGXSnaKyDXzFdcHAoI7SJRpnh3QuE92HpfIbmhsj2vlORPoVShVoOt87aPoW
+ UdavlRoD26E8bHZTds78t/q4qI77duHo7QrKVXn8LCAFoi3gwwlPGRqe0XmI4xCjddrmdSC
+ 8KGAW7MwhMvst6x98fuFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:h47R2k34F20=:6GleBG0jB8e2H77gxio7+A
+ G+2JtfuB1fUiNetJ7J1G6VrAgjnzL2HBHKTkhlX29nNELYIIblrKV8vefHHr0lIT6m0SNJJr4
+ Eaa1W3BILrRyYyuMv77DoU3Uv+mcktVb6rHafcd+i7/KKUEfh5KL3LspsP/d5pTSsfQv/iCDI
+ YUihqS4sGQS78rjJyXLYyd6oD1OMewOsTbqI8cxtZhF/e6+RDhGkJ61w9VYWkCPtGsoPI6LRB
+ NRae5YEgeP1F863m8QQ9h2NkyDacRnal/ViM5zfQ5aRZJcvo27a/421RaI/7wpdTmDG//JqxO
+ zVj8d+jWlbeGYZVMpjVgayXqfRWc1FD+srJSyNZzS/5nq8gNIZalel6uyM3xZB2SBHPCc22mD
+ KCYOQY+uClYIQiGc+/EIsN+O4tC1xdgU3nUExn9ZSKd6780N4iyuk29lAP4WMSdOv+CtMAQKA
+ mCGUay4s4kXGjy8+DC+/PXlHgI/Tobj3btytTFBCssN9BhKNeJfgOk6vkyqTEXLM95wFURXji
+ fYrVAYp1cKOIKB/BfmMsMJFwrVP3FylbRAhJv6qcLvAonlqmb2VmXXGn9yubAUxU+RsHunrTW
+ jeKgGTKXt/LOZWxju3CN3eK5/gKGIbFW09SdeQysUAYql9tPZGO+metQ6mbOtQdSZvW4Fhisp
+ S6M/MYqCPFvDtfAeN8Z1NN4uqHt3IpVoelEYBDThVUacKyURwPuP58JrfeVyuhI3GziDue98L
+ wfK/NZf6zLDz5ZWjkutQ4Rl78vVlFfLUEG59P34LPGOPpw7m88bjJWF835z8a1vEXM0M6iknF
+ rRUru6hiucAJ3I1K+BqBA+n6pk6VIEjzjfWcxz+vRcd+BJ5b1Bcv32MxvOjSBAfNHQv/Ss//u
+ Z8Gzgyocf5QYkLuIm7prlOlAzpoq4+JW+F1LqFM24gBUEsA9r9nqCpmFZQEMeUXgMvNAlwVBF
+ q1zyg/HGvDeN7YQpie2yYHWatx+BlqS14dWvuqVEWYLAyYmuWQ+GL945+LeTS+GmcQ+bR4Sd8
+ f15IzboMNsSKJqY2PcAVUVJnS9y39lNFlUWj4LVLcGttH5IWPwZs2jZpA59sSEI8Ds2n2ckk9
+ 5CtFIaSD0jwH0KqhzzA3xc4p/3qI91FKE85zhyrsii3a3z7fNIVr5c6TRtQXz6AvOmky31Wmn
+ DRUEHkOtZ79AYPyBjzk6HwiJBGwuQEV9F5QtNU15hmrjLisXSObRMY5wVNUg4bmMSh9os9rym
+ qMs3quvyJso6mHzTgATvibR2l0+HH2TS/EIj9DC0gGMjkIJqz4UxYna92NbM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Team,
 
---f6nK9RR+X1IX2pXa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+today, in quite an entertaining thread on Twitter
+(https://twitter.com/jxxf/status/1219009308438024200) I read about yet
+another account how the Year 2038 problem already bites people. And costs
+real amounts of money.
 
-On 2020-01-20 at 17:52:10, Jeff King wrote:
-> On Mon, Jan 20, 2020 at 05:33:39PM +0000, brian m. carlson wrote:
->=20
-> > diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-comm=
-it-tree.txt
-> > index 4b90b9c12a..adc2e0d4b7 100644
-> > --- a/Documentation/git-commit-tree.txt
-> > +++ b/Documentation/git-commit-tree.txt
-> > @@ -42,6 +42,10 @@ tend to just write the result to the file that is po=
-inted at by
-> >  `.git/HEAD`, so that we can always see what the last committed
-> >  state was.
-> > =20
-> > +A commit comment is read from stdin. If a changelog
-> > +entry is not provided via "<" redirection, 'git commit-tree' will just=
- wait
-> > +for one to be entered and terminated with ^D.
-> > +
-> >  OPTIONS
-> >  -------
-> >  <tree>::
->=20
-> This text got moved up, which kind of make sense to me, but...
->=20
-> it stayed here, so now it's duplicated. Should the old one be dropped?
-> Or is moving the new text a leftover mistake from rebasing (IIRC, in
-> your original you dropped this whole "here's how commits work" section).
->=20
-> Other than that, the patch looks good to me.
+And after I stopped shaking my head in disbelief, I had a quick look, and
+it seems that we're safe at least until February 7th, 2106. That's not
+great, but I plan on not being around at that date anymore, so there. That
+date is when the unsigned 32-bit Unix epoch will roll over and play
+dead^W^Wwreak havoc (iff the human species manages to actually turn around
+and reverse the climate catastrophe it caused, and that's a big iff):
+https://en.wikipedia.org/wiki/Time_formatting_and_storage_bugs#Year_2106
 
-Thanks for pointing this out.  I'll fix it and if nobody else has
-comments today, send out a v5 later this week, probably tomorrow.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Concretely, it looks as if we store our own timestamps on disk (in the
+index file) as uint32_t:
 
---f6nK9RR+X1IX2pXa
-Content-Type: application/pgp-signature; name="signature.asc"
+	/*
+	 * The "cache_time" is just the low 32 bits of the
+	 * time. It doesn't matter if it overflows - we only
+	 * check it for equality in the 32 bits we save.
+	 */
+	struct cache_time {
+		uint32_t sec;
+		uint32_t nsec;
+	};
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+The comment seems to indicate that we are still safe even if 2106 comes
+around, but I am not _quite_ that sure, as I expect us to have "greater
+than" checks, not only equality checks.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4l/dwACgkQv1NdgR9S
-9ovzMBAApuEVFmflJnoKhZFk5j/R/OqdDqRtOFHThh0mgWoYgoZMrWdufO4/paTJ
-vCn6aHEWMOLlnlrX8D0qJQShv4htMs0x9rg0qhXpsWQLos+TH0EibNN6pxdeYSSA
-baXm4q2kYHznGhtTIZVgDfIzNxqP1vke3BdFjThXx7wDnGyNJqCz7dOShylfO2dX
-1wG1bgzEPe6amlutsABk7j9HMSThLsJvhhIgu1g8GfrI6qprus84LHPLaPZy0m1g
-q7+xD9jFwHfieLiqxKnehvstnkA/RECutkrQqohWUK0vOMJ/GTJjMP65NOpl9vXK
-w2FY74SnArCTKyj1KklMUPF1Ipvkiv1XlGeMyeCslb4wrpQihbxOClV/03FmUWW7
-jBg6pJjPDyS6xudbk0Hy6+ZcVD8xdh/VO/RCSADFDi8C94o/jmsPWvNEbE6i0c5h
-uynXRJt6PzprFgMpyK1jffwXetTNPFBXTv4rOS8kH72CQd5TIt/fvf8LbROP6lpA
-1a1lao2o3ymgZa2n7/pPx9FVLQNbt20r9ezl73joHtbcYpTmczyKyu1j8NP3ASMx
-9BAbZhu4FClhCNnmHsGguA12qBe8Utbd9qG+plaKScQKlK4kM5WUvZCTXNNBudqr
-+8AxX4FOnKq1+TMKkEESQ5+wp1M3pOrRjbT3RZhcXnI9jt5elE4=
-=u1If
------END PGP SIGNATURE-----
+But wait, we're still not quite safe. If I remember correctly, 32-bit
+Linux still uses _signed_ 32-bit integers as `time_t`, so when we render
+dates, for example, and use system-provided functions, on 32-bit Linux we
+will at least show the wrong dates starting 2038.
 
---f6nK9RR+X1IX2pXa--
+This got me thinking, and I put on my QA hat. Kids, try this at home:
+
+	$ git log --until=1.january.1960
+
+	$ git log --since=1.january.2200
+
+Git does not really do what you expected, eh?
+
+Maybe we want to do something about that, and while at it also fix the
+overflow problems, probably requiring a new index format?
+
+Ciao,
+Johannes
