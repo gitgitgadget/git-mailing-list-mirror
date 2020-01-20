@@ -2,155 +2,133 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 130BEC32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4644C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:22:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DA77022525
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:12:38 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B908422314
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:22:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAWWn1gt"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="QHNpGNBR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726903AbgATTMh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 14:12:37 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:43512 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726136AbgATTMh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 14:12:37 -0500
-Received: by mail-io1-f68.google.com with SMTP id n21so150025ioo.10
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 11:12:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tqvtMVLey0PLdXT1woq/m9+aIFhucq9uS8hMiKnCMHs=;
-        b=RAWWn1gtHolS0+XK5BmoylQLSIwGSVRL/NKRtakkvgKAdVzPya81mZcfASXitwXLPa
-         udXPB22nbamHb0PXP7CbZwrfwZDqUgnshvpZo1uEwIsPnVtNMlOR8igGkDkEbacyA3XH
-         NVPf1NU229XtvzkeMhTnmsfb15znL5B74DC5FkRcjZRmtWEcj9HQypxP06i+pmy8xKl7
-         X9GvLGQeacj05eBIvFyLYOJz+qxtpnpN8Z+fBP6uNlt+giZYT/0elnoOep7LmDj7wau1
-         XGEHeQA8m3c/HqwlFDM/1im3C9zZIQbIG5OLDTZHIIqZmq024ihcuwV+yx1tR4dVaCtw
-         wvtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tqvtMVLey0PLdXT1woq/m9+aIFhucq9uS8hMiKnCMHs=;
-        b=r+HPKNoumZ+HoCGsZJFX7N1pfWIwTviE8oJpSqKaSthffTYEmADVjG9hlvSex0tSHg
-         0sBW2E2rMYQB+CYD5lMQ19IbdtjBk6MFKW9hCt5XwWC+EOWm49Eqes/jp4gZisxGe9Fr
-         VtWgTd9+dK/jQ9iSxvQ4IrOnBl+lpff1zE+mB3DuqY1pTLo003JPN4tzEAck9Aake1Pb
-         QywPuq/CdZKCWeUWWxdaoYcbMqtPQnwFXCe3CgcfrLjmzNhK7qNsiUIynihzpc7cEUv5
-         +/BUmfXM+wV5mSAY9Q3CM/r5hK5bEQvBJXMgvhFxjfWmgLrijdPseqcQB1s/aQ36nD8O
-         xk7g==
-X-Gm-Message-State: APjAAAWNPUDmhrMCQZsea1RWz0JQlXsbcQtXnStmqvlgfH4k+3ENv02/
-        EcFm3NqnbsgQBvbVTXe3WpdIheUZgJCB09HCixs=
-X-Google-Smtp-Source: APXvYqwtHX2gWKXbgWEd7cuIp2vy+LI20PpmRuuxVosO9AMYXKRoadDUnDs3SIK5K0Ru7D87h9I54SMkjYk+nV4fwyI=
-X-Received: by 2002:a5e:d616:: with SMTP id w22mr299466iom.57.1579547556634;
- Mon, 20 Jan 2020 11:12:36 -0800 (PST)
+        id S1726874AbgATTWL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 14:22:11 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43142 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726345AbgATTWL (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Jan 2020 14:22:11 -0500
+Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 828EA6044F;
+        Mon, 20 Jan 2020 19:22:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1579548129;
+        bh=pTpruoFbUOaljcsOvmcatTNYg3JcGF0+x1LtQAAmmIM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=QHNpGNBRlb6XpvVew0i4jANLS2gqSkaF5ulzAZax+WRLJsyPuuMqGrochvh2deUt4
+         3KFMYySlemjNW4/ZxP4IhRpanh6n7atI0tZVNy954Y6/wuRGyiAoT5tbw9wYEw7N04
+         0nEqv3EIECAmGNn+F75pdQmQNUWNDSxZKF/H79QpQSIjC+RbvRAS12zulmKme7EeVk
+         lWP82c4xlW4uSezFe6dDZz+GZg2882SiIOE3Oohf7LFn8xbjDZeBaVnN0ByUGslhcc
+         Oo++Lzt5npsJa90FnKNWmQjeCwC32RmOOEUfsHReKqNjktXPLJdDSydyPmWknURkAv
+         QKD37tOxp1VdmMbTC5CejDhwLp+dxL3UcBAR60AuIXhkTJEspVpl/Wn0JB5h3rvSqI
+         RlqnSVPXQJYk/5HxRYUuhY55m0A70JdyxkhLAAkG6XMkFZjZz5PdFopSDcokj9vNmq
+         Vk27PThoORK2MIMoX/C1qtjv71CcLaXVeOr4txo1L1J5/DwRyoC
+Date:   Mon, 20 Jan 2020 19:22:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH v4 1/5] doc: move author and committer information to
+ git-commit(1)
+Message-ID: <20200120192204.GD6570@camp.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+References: <20200120173343.4102954-1-sandals@crustytoothpaste.net>
+ <20200120173343.4102954-2-sandals@crustytoothpaste.net>
+ <20200120175210.GA3989@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com>
- <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com> <CAFFaXsz9LEdegzxL8MhS+VfTs-wmWu+CGDjxjB4Xgj8+7nSHNQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet>
-From:   Nirmal Khedkar <nirmalhk7@gmail.com>
-Date:   Tue, 21 Jan 2020 00:42:00 +0530
-Message-ID: <CAFFaXsyiLeNPCZ+Kn1x-+0pZf0FiPQR-k8qtooFrdG+VNfLq+g@mail.gmail.com>
-Subject: Re: Facing error in git-imap-send while compiling Git
-To:     Johannes.Schindelin@gmx.de
-Cc:     gitster@pobox.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="f6nK9RR+X1IX2pXa"
+Content-Disposition: inline
+In-Reply-To: <20200120175210.GA3989@coredump.intra.peff.net>
+X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
+ 5.3.0-3-amd64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Johannes!
 
-On Fri, Jan 17, 2020 at 7:05 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Nirmal,
->
-> On Fri, 17 Jan 2020, Nirmal Khedkar wrote:
->
-> > On Fri, Jan 17, 2020 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > >
-> > > Nirmal Khedkar <nirmalhk7@gmail.com> writes:
-> > >
-> > > > Hey!
-> > > > I've been facing this error everytime I run the Makefile:
-> > > > -----
-> > > > LINK git-imap-send
-> > > > imap-send.o: In function `verify_hostname':
-> > > > /git/imap-send.c:252: undefined reference to `sk_num'
-> > >
-> > > Perhaps the thread
-> > >
-> > >   https://lore.kernel.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com
-> > >
-> > > may help?
-> >
-> > It did, to the extent that I now know why I'm facing these errors out
-> > of the blue.
-> >
-> > I'm  not quite sure as to what am I supposed to do right now, should I
-> > wait for Liam's patch to be merged,  or should I implement his fixes
-> > locally or should I just downgrade my openssl?
-> >
-> > Liam's PR (#516 on GitGitGadget [1]) haven't yet passed all build
-> > checks and I guess its still a work in progress. Nevertheless I've
-> > tried implementing his fixes to imap-send.c, and the make still fails.
-> > Am I missing something here?
->
-> Speaking for myself, I am still waiting for
-> https://public-inbox.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com/
-> to be addressed adequately. I think this is the main blocker.
->
-> You could be that person who addresses this, as already 10 days went past
-> without even so much as an acknowledgement of Junio's suggestion. Maybe
-> you can make it work, and submit a fixed patch (You could take authorship
-> and add a footer "Original-patch-by: Liam Huang <liamhuang0205@gmail.com>"
-> because it is most likely a total rewrite of Liam's patch).
->
-> Ciao,
-> Johannes
+--f6nK9RR+X1IX2pXa
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The OpenSSL version on my system is 1.1.1. I've tried implementing
-Junio's suggestions, and it just doesn't work. It gives me the same
-error as it gave me earlier. Here's the error:
------
-LINK git-imap-send
-imap-send.o: In function `verify_hostname':
-/git/imap-send.c:252: undefined reference to `sk_num'
-/git/imap-send.c:254: undefined reference to `sk_value'
-/git/imap-send.c:260: undefined reference to `sk_pop_free'
-/git/imap-send.c:260: undefined reference to `sk_pop_free'
-imap-send.o: In function `ssl_socket_connect':
-/git/imap-send.c:287: undefined reference to `SSL_library_init'
-/git/imap-send.c:288: undefined reference to `SSL_load_error_strings'
-/git/imap-send.c:290: undefined reference to `SSLv23_method'
-collect2: error: ld returned 1 exit status
+On 2020-01-20 at 17:52:10, Jeff King wrote:
+> On Mon, Jan 20, 2020 at 05:33:39PM +0000, brian m. carlson wrote:
+>=20
+> > diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-comm=
+it-tree.txt
+> > index 4b90b9c12a..adc2e0d4b7 100644
+> > --- a/Documentation/git-commit-tree.txt
+> > +++ b/Documentation/git-commit-tree.txt
+> > @@ -42,6 +42,10 @@ tend to just write the result to the file that is po=
+inted at by
+> >  `.git/HEAD`, so that we can always see what the last committed
+> >  state was.
+> > =20
+> > +A commit comment is read from stdin. If a changelog
+> > +entry is not provided via "<" redirection, 'git commit-tree' will just=
+ wait
+> > +for one to be entered and terminated with ^D.
+> > +
+> >  OPTIONS
+> >  -------
+> >  <tree>::
+>=20
+> This text got moved up, which kind of make sense to me, but...
+>=20
+> it stayed here, so now it's duplicated. Should the old one be dropped?
+> Or is moving the new text a leftover mistake from rebasing (IIRC, in
+> your original you dropped this whole "here's how commits work" section).
+>=20
+> Other than that, the patch looks good to me.
 
-Makefile:2454: recipe for target 'git-imap-send' failed
-make: *** [git-imap-send] Error 1
------
+Thanks for pointing this out.  I'll fix it and if nobody else has
+comments today, send out a v5 later this week, probably tomorrow.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-From my limited understanding of OpenSSL API's, I reckon all these
-errors might be because of the errors around 'SSL_library_init' and
-'SSL_load_error_strings'. Both these functions are called before
-'verify_hostname' is ever called.
+--f6nK9RR+X1IX2pXa
+Content-Type: application/pgp-signature; name="signature.asc"
 
-StackOverflow suggested ([1]) to add tags during compilation, but I
-dont think that'd work here.
-What should I do? Would love it if you could guide me out.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.19 (GNU/Linux)
 
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4l/dwACgkQv1NdgR9S
+9ovzMBAApuEVFmflJnoKhZFk5j/R/OqdDqRtOFHThh0mgWoYgoZMrWdufO4/paTJ
+vCn6aHEWMOLlnlrX8D0qJQShv4htMs0x9rg0qhXpsWQLos+TH0EibNN6pxdeYSSA
+baXm4q2kYHznGhtTIZVgDfIzNxqP1vke3BdFjThXx7wDnGyNJqCz7dOShylfO2dX
+1wG1bgzEPe6amlutsABk7j9HMSThLsJvhhIgu1g8GfrI6qprus84LHPLaPZy0m1g
+q7+xD9jFwHfieLiqxKnehvstnkA/RECutkrQqohWUK0vOMJ/GTJjMP65NOpl9vXK
+w2FY74SnArCTKyj1KklMUPF1Ipvkiv1XlGeMyeCslb4wrpQihbxOClV/03FmUWW7
+jBg6pJjPDyS6xudbk0Hy6+ZcVD8xdh/VO/RCSADFDi8C94o/jmsPWvNEbE6i0c5h
+uynXRJt6PzprFgMpyK1jffwXetTNPFBXTv4rOS8kH72CQd5TIt/fvf8LbROP6lpA
+1a1lao2o3ymgZa2n7/pPx9FVLQNbt20r9ezl73joHtbcYpTmczyKyu1j8NP3ASMx
+9BAbZhu4FClhCNnmHsGguA12qBe8Utbd9qG+plaKScQKlK4kM5WUvZCTXNNBudqr
++8AxX4FOnKq1+TMKkEESQ5+wp1M3pOrRjbT3RZhcXnI9jt5elE4=
+=u1If
+-----END PGP SIGNATURE-----
 
-Thanks!
-Regards,
-Nirmal Khedkar
-https://nirmalhk7.github.io
-
-[1] https://stackoverflow.com/questions/5593284/undefined-reference-to-ssl-library-init-and-ssl-load-error-strings
+--f6nK9RR+X1IX2pXa--
