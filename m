@@ -2,127 +2,155 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-13.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46C54C3F68F
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 18:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 130BEC32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:12:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1E9B322527
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 18:23:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA77022525
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 19:12:38 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fkU7QEj5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAWWn1gt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727047AbgATSXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 13:23:09 -0500
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:33188 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726942AbgATSXJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 13:23:09 -0500
-Received: by mail-wr1-f54.google.com with SMTP id b6so528223wrq.0
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 10:23:07 -0800 (PST)
+        id S1726903AbgATTMh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 14:12:37 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:43512 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726136AbgATTMh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 14:12:37 -0500
+Received: by mail-io1-f68.google.com with SMTP id n21so150025ioo.10
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 11:12:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=PMdko31fjMtxsO4T4j7UDm5laPBzWHBAnfbQp1mbGJ8=;
-        b=fkU7QEj5aYNDm2WwQ7VGBBXFCiv2tVso4hMk/BupXnVFiB7GJ5uIADZ1A+aA2Z2rG1
-         Qt6BZOC97ENfh72rg/YjjbDJ7+empMEx4thdCiAFaxJWyubfkbqGs2rvVFdtOw32eEXY
-         Z+YfzQZctw5yeHBPw7bPlSqnPueaKpNVWzrF6tqeZcpBwvke4BlkQa+iXo/pp9u/98db
-         XilCb19nPnzaNEu05/0J0zC9X7TFdIYWz69nXTvf7hWwyQJytniQUCQMokIoeTDu65o2
-         iHF6+b2OR90+j71nBbjlUI3bba2PpqIPAhe5mT+nUeYO8E7u4+sR7czvzo5llmS2eLal
-         KOjA==
+         :cc;
+        bh=tqvtMVLey0PLdXT1woq/m9+aIFhucq9uS8hMiKnCMHs=;
+        b=RAWWn1gtHolS0+XK5BmoylQLSIwGSVRL/NKRtakkvgKAdVzPya81mZcfASXitwXLPa
+         udXPB22nbamHb0PXP7CbZwrfwZDqUgnshvpZo1uEwIsPnVtNMlOR8igGkDkEbacyA3XH
+         NVPf1NU229XtvzkeMhTnmsfb15znL5B74DC5FkRcjZRmtWEcj9HQypxP06i+pmy8xKl7
+         X9GvLGQeacj05eBIvFyLYOJz+qxtpnpN8Z+fBP6uNlt+giZYT/0elnoOep7LmDj7wau1
+         XGEHeQA8m3c/HqwlFDM/1im3C9zZIQbIG5OLDTZHIIqZmq024ihcuwV+yx1tR4dVaCtw
+         wvtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=PMdko31fjMtxsO4T4j7UDm5laPBzWHBAnfbQp1mbGJ8=;
-        b=PVPlwZ0Q+THG01h3Fcv7UyxnJWpo0wno/197VKyBgug+k3I3kQ5/BmFrJ8g/oSfoGF
-         p4AQ4fAovvfqguNkpQ/13OXWvzuvbi+2SJDDB08fWQJawo/TZ01wze4td31Gp0OlTXu/
-         yi3pmx+PA0t0u6DfWjdpkUmACJASSTwYGvPeMatnYmiXqSxfBN/5y9MlCmAApMZpTTkZ
-         jXjpc/1xJCd+6CvQ0hr40zrxq1bXZCMQi1LdFAZyy4hShCTvk6sRHKvdRFLmcSe8kMFe
-         dGGzACmmQE14CpY1ROWay4vjZd+DM7G1fMTWVqxt52RnLVmDb0e6l0kG83EPEkqOQdi4
-         hNrA==
-X-Gm-Message-State: APjAAAXbhIQAJ8RxK9FVng3J4lt4yL2o3BHpLvO897xzrOtr9VsIJnl0
-        HgrOOu2Es70pQgJlLvSZhZX4BnOiG4yo1VutcFlEHoTyt7g=
-X-Google-Smtp-Source: APXvYqzjvQYAbdM6iN1JuJIoM0t9N+kL5KHcS347zbOCRAoQIOIDgh23phlNuDQW0QPmxjMctkCnK52AZh9dnKCrvss=
-X-Received: by 2002:a5d:4d8d:: with SMTP id b13mr835178wru.6.1579544586308;
- Mon, 20 Jan 2020 10:23:06 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=tqvtMVLey0PLdXT1woq/m9+aIFhucq9uS8hMiKnCMHs=;
+        b=r+HPKNoumZ+HoCGsZJFX7N1pfWIwTviE8oJpSqKaSthffTYEmADVjG9hlvSex0tSHg
+         0sBW2E2rMYQB+CYD5lMQ19IbdtjBk6MFKW9hCt5XwWC+EOWm49Eqes/jp4gZisxGe9Fr
+         VtWgTd9+dK/jQ9iSxvQ4IrOnBl+lpff1zE+mB3DuqY1pTLo003JPN4tzEAck9Aake1Pb
+         QywPuq/CdZKCWeUWWxdaoYcbMqtPQnwFXCe3CgcfrLjmzNhK7qNsiUIynihzpc7cEUv5
+         +/BUmfXM+wV5mSAY9Q3CM/r5hK5bEQvBJXMgvhFxjfWmgLrijdPseqcQB1s/aQ36nD8O
+         xk7g==
+X-Gm-Message-State: APjAAAWNPUDmhrMCQZsea1RWz0JQlXsbcQtXnStmqvlgfH4k+3ENv02/
+        EcFm3NqnbsgQBvbVTXe3WpdIheUZgJCB09HCixs=
+X-Google-Smtp-Source: APXvYqwtHX2gWKXbgWEd7cuIp2vy+LI20PpmRuuxVosO9AMYXKRoadDUnDs3SIK5K0Ru7D87h9I54SMkjYk+nV4fwyI=
+X-Received: by 2002:a5e:d616:: with SMTP id w22mr299466iom.57.1579547556634;
+ Mon, 20 Jan 2020 11:12:36 -0800 (PST)
 MIME-Version: 1.0
-References: <CAFQ2z_OhNHauK_W1wL7WcOJnm2vCUGXLfYn_ZmLnt2rez+_TDw@mail.gmail.com>
- <xmqq4kx4z8n3.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq4kx4z8n3.fsf@gitster-ct.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Mon, 20 Jan 2020 19:22:54 +0100
-Message-ID: <CAFQ2z_PxumPGpgnTERcu3S+zdTj9PcVMKK9SjYxSDe3qW9q3jA@mail.gmail.com>
-Subject: Re: reftable progress
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Christian Couder <christian.couder@gmail.com>
+References: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com>
+ <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com> <CAFFaXsz9LEdegzxL8MhS+VfTs-wmWu+CGDjxjB4Xgj8+7nSHNQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet>
+From:   Nirmal Khedkar <nirmalhk7@gmail.com>
+Date:   Tue, 21 Jan 2020 00:42:00 +0530
+Message-ID: <CAFFaXsyiLeNPCZ+Kn1x-+0pZf0FiPQR-k8qtooFrdG+VNfLq+g@mail.gmail.com>
+Subject: Re: Facing error in git-imap-send while compiling Git
+To:     Johannes.Schindelin@gmx.de
+Cc:     gitster@pobox.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 9, 2020 at 9:18 PM Junio C Hamano <gitster@pobox.com> wrote:
+Hey Johannes!
+
+On Fri, Jan 17, 2020 at 7:05 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> Han-Wen Nienhuys <hanwen@google.com> writes:
+> Hi Nirmal,
 >
-> > Hi folks,
-> >
-> > I have some alpha-quality code for Reftable support in Git at
-> >
-> >  https://github.com/hanwen/git/tree/reftable
-> >
-> > I'd be curious for some feedback, both on the library
-> > (https://github.com/google/reftable) and the glue code in Git.
+> On Fri, 17 Jan 2020, Nirmal Khedkar wrote:
 >
-> If you are asking for feedback, sendign it over to this list with
-> [RFC PATCH n/3]  as the subject prefix would have better chance.
+> > On Fri, Jan 17, 2020 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > >
+> > > Nirmal Khedkar <nirmalhk7@gmail.com> writes:
+> > >
+> > > > Hey!
+> > > > I've been facing this error everytime I run the Makefile:
+> > > > -----
+> > > > LINK git-imap-send
+> > > > imap-send.o: In function `verify_hostname':
+> > > > /git/imap-send.c:252: undefined reference to `sk_num'
+> > >
+> > > Perhaps the thread
+> > >
+> > >   https://lore.kernel.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com
+> > >
+> > > may help?
+> >
+> > It did, to the extent that I now know why I'm facing these errors out
+> > of the blue.
+> >
+> > I'm  not quite sure as to what am I supposed to do right now, should I
+> > wait for Liam's patch to be merged,  or should I implement his fixes
+> > locally or should I just downgrade my openssl?
+> >
+> > Liam's PR (#516 on GitGitGadget [1]) haven't yet passed all build
+> > checks and I guess its still a work in progress. Nevertheless I've
+> > tried implementing his fixes to imap-send.c, and the make still fails.
+> > Am I missing something here?
+>
+> Speaking for myself, I am still waiting for
+> https://public-inbox.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com/
+> to be addressed adequately. I think this is the main blocker.
+>
+> You could be that person who addresses this, as already 10 days went past
+> without even so much as an acknowledgement of Junio's suggestion. Maybe
+> you can make it work, and submit a fixed patch (You could take authorship
+> and add a footer "Original-patch-by: Liam Huang <liamhuang0205@gmail.com>"
+> because it is most likely a total rewrite of Liam's patch).
+>
+> Ciao,
+> Johannes
 
-Thanks, I'll look into that when I am done with my current TODO list.
+The OpenSSL version on my system is 1.1.1. I've tried implementing
+Junio's suggestions, and it just doesn't work. It gives me the same
+error as it gave me earlier. Here's the error:
+-----
+LINK git-imap-send
+imap-send.o: In function `verify_hostname':
+/git/imap-send.c:252: undefined reference to `sk_num'
+/git/imap-send.c:254: undefined reference to `sk_value'
+/git/imap-send.c:260: undefined reference to `sk_pop_free'
+/git/imap-send.c:260: undefined reference to `sk_pop_free'
+imap-send.o: In function `ssl_socket_connect':
+/git/imap-send.c:287: undefined reference to `SSL_library_init'
+/git/imap-send.c:288: undefined reference to `SSL_load_error_strings'
+/git/imap-send.c:290: undefined reference to `SSLv23_method'
+collect2: error: ld returned 1 exit status
 
-In the meantime, I've updated the code at the above URL. The major
-missing item is currently reflogs; hopefully I'll get to that next
-week.
+Makefile:2454: recipe for target 'git-imap-send' failed
+make: *** [git-imap-send] Error 1
+-----
 
-I asked around, and it looks like we have slight preference for the
-BSD license (https://developers.google.com/open-source/licenses/bsd).
-According to the FSF, this is OK to combine with GPL software, so
-would you be OK with that license?
+From my limited understanding of OpenSSL API's, I reckon all these
+errors might be because of the errors around 'SSL_library_init' and
+'SSL_load_error_strings'. Both these functions are called before
+'verify_hostname' is ever called.
 
-thanks,
+StackOverflow suggested ([1]) to add tags during compilation, but I
+dont think that'd work here.
+What should I do? Would love it if you could guide me out.
 
-> I have a feeling that the patch to show-ref is done at the wrong
-> level.  The show_ref() function is given as the callback function
-> to head_ref() and for_each_ref(), and the way these functions call
-> the callback function is part of the ref API.  "In the reftable
-> format, ... are stored in the reference database too," is perfectly
-> fine (that is the implementation detail of the ref API backend) but
-> "and are produced when iterating over the refs" is not.  Hide that
-> inside the ref API backend you are writing for reftable and this
-> change will become unnecessary.
 
-The API is a little surprising here, because it means that an iterator
-should always dereference a symref, regardless of storage format.
-Since it is not specific to the ref backend, this behavior should not
-be in the ref backend code. But I've modified it now, and it seems to
-work.
+Thanks!
+Regards,
+Nirmal Khedkar
+https://nirmalhk7.github.io
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+[1] https://stackoverflow.com/questions/5593284/undefined-reference-to-ssl-library-init-and-ssl-load-error-strings
