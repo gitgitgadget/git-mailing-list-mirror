@@ -7,131 +7,161 @@ X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7F73C2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 11:25:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 31352C2D0DB
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 12:02:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7B8F2207E0
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 11:25:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04E94208E4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 12:02:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HWmtJJaH"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DKhFSuzQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbgATLZ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 06:25:29 -0500
-Received: from mout.gmx.net ([212.227.17.21]:60593 "EHLO mout.gmx.net"
+        id S1726650AbgATMCJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 07:02:09 -0500
+Received: from mout.gmx.net ([212.227.17.22]:47741 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726573AbgATLZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 06:25:29 -0500
+        id S1726573AbgATMCJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 07:02:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579519525;
-        bh=AGqdR4sH4/XrWHh+jgn07HvURVDcfMOeaDu3Mxe3jFY=;
+        s=badeba3b8450; t=1579521714;
+        bh=gmix3ps6on/3ccoEkWV9haOwH27QBWE4ot+QHiJmsiA=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HWmtJJaHAWCP8tKl+aqVNiWVh+ah1ruVwWaVzstHpNMJiXfIOD2o3lnYoTkyUCpUS
-         tXj40fSJM9c1lFMOEg4r+LhI+K2aUMEP/JTljqzGa7okiS/fx/7+5XZ+dVJsuhF2VS
-         4KA+LwyCgRR9ZrIKnyvA0lQ2WwFbZw8K9pqQ+1Rs=
+        b=DKhFSuzQwx6V5YPFyCo+VjyXzvP2NFUBBQYTFAVkEWvCocP+UyTFjwu3LxIBY8ZRR
+         V9VBnCKMZJsUaKs2OHA/fFFe0VZzNm4TsWvAvgcBfaCBVUw9nRVfb8uCstlrjtiPpV
+         HpYIULcPRuOv7WOB7iTsb8e4L1/L2OzwjA3jwru0=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MC30P-1ilY9h3Wmb-00CSVI; Mon, 20
- Jan 2020 12:25:24 +0100
-Date:   Mon, 20 Jan 2020 12:25:25 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M7sDq-1iyRQh3hAI-0051EN; Mon, 20
+ Jan 2020 13:01:53 +0100
+Date:   Mon, 20 Jan 2020 13:01:54 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] remote rename: rename branch.<name>.pushRemote config
- values too
-In-Reply-To: <CAKPyHN0qY5odXi2wAv20D4nsNM0r4qO_8JOx9DHiGchJmS8cbw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001201221350.46@tvgsbejvaqbjf.bet>
-References: <5a8791ef1e262d2078a4ca26b87bfbd777bd4432.1579209398.git.bert.wesarg@googlemail.com> <ffc8ffc6ede731b182d32a81d044428566acc625.1579253411.git.bert.wesarg@googlemail.com> <nycvar.QRO.7.76.6.2001171245300.46@tvgsbejvaqbjf.bet>
- <CAKPyHN0eTa9LC35oqsy0Dce0qpOJAx159HR+QyguDt_NZ2he_w@mail.gmail.com> <nycvar.QRO.7.76.6.2001171428170.46@tvgsbejvaqbjf.bet> <CAKPyHN0qY5odXi2wAv20D4nsNM0r4qO_8JOx9DHiGchJmS8cbw@mail.gmail.com>
+To:     Christoph Groth <christoph@grothesque.org>
+cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Stat cache in .git/index hinders syncing of repositories
+In-Reply-To: <87d0bgs9o4.fsf@drac>
+Message-ID: <nycvar.QRO.7.76.6.2001201248480.46@tvgsbejvaqbjf.bet>
+References: <87v9p9skjz.fsf@drac> <xmqq7e1od41x.fsf@gitster-ct.c.googlers.com>        <87pnfgshxu.fsf@drac>        <20200118194204.GC6570@camp.crustytoothpaste.net> <87d0bgs9o4.fsf@drac>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lnmAwxtQ/3vV4h7DS1ON3BGeoe6q5DAvs7WSk2JxKXmK49wqUqq
- w1l0lNbftIa33A0Q5n5lq4XNQUV15FXcRtfVRmavwWrJS+0FocG7+wJwB3r/P6Z7tDtARrZ
- kvvpwL/wN3Rhhv7u+Q/DwoEDkuxUtc+1GiKwS4fSLAERdtDbBUL/edrJCmhw2HvjecpdxxP
- zn3YRL/RIP4Bj5+PhrCLw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:vsEXVgwUgfc=:kZIy2U6zoHWRxnrPAw4oWu
- zrrGtAepXoqPKJkCpDLUBmXsho3GuU9NFJZ3J4K+uUaQ0SGJgZI86IGgThW3qGru5ocOwvUVo
- 8XhdP87YjnaDouzbrJcOo2vLMxbKk23nm//xV0hyiSAIfny5gsOwpiTvztGDWEQLy3UUUlzmG
- CJBY4VnJ6qFFtxH0BsqTbzh+L1GwhuK4nhWOUSBWxEQ5r1qNh2kJ6qgC6lYJcEvCHj6YPId2Z
- rSELVS8WOFA57U/SdLvsRYsZCrysGOJYto16rUrkLZTlo9wHr8bt2TJ7N/jXggOogvImYUykZ
- 7RblEa8FOw1A+OIW4HSF50iQ/UuNw3tgUn1tm38o7x+t511VuhdqHMLkguCrivVxTzhkZ8qTw
- aA6jSCsaZZhJtDuxIUGY4Pl8bPxLd/VbIGMERRYmoUOK98L/I0HZQSqFm6G9a6ZrbfRWnOEAf
- nYaekgNMfdM0AjkdNcHDr93fAcHxT/QTUwS0H45z5qgVIAx8+2OtUIRITsWGJjeP3KUmLVW1P
- 4XoApAB+IiKED+UlMcfEtN0RYhW5HKblat03wteBnzuJ6vHueHrS9Nd0zERbmvM2McPd4ZQd1
- WF34G0FQpZ1AFnsm3d5th5OWuR8rQANetLbnF4955mCSpeWS1n61kHGnjGUtRpxdl1nAS7FRv
- JsimtQPeYwvgLhv76mVF9mD9vCJvE5VVFJK5ykcaRZBc6i8El+bK9F8uo9MSXVQWwNO+ONzgE
- mtK6bsqK5tHRuMlcozaDH/6CqGxDiTGOlQDwceSlb1cj2tMmD+DJbiopDF2/Z39mH4E7sZVz5
- BMbJW7WtFYAQuSXPrMYo5tuRXt58C+6Xe1HiWo78biRJ8XL2hJhqSqmL6tZeb5Y06RmIpRoKV
- GKaBnh6Pr/0GJ6cIpz6mNZ0AaAj4SbQVHUFzI/fVW+AMKPrBlW9U0IAsBd2ZQB0Eaq+H0HBef
- eabMGtK0TlW4hSVNEM3Fjn6yixkQi286hdQkck5REhJnuKSWD/ut5eqfeHJckoH9JW45ihRtZ
- rP8kxSw29+z+gBHzYCafiztOxvWjMKtn3ZQpnPmM6wtwUBVehxAj6cfo1K4gm9Sz8ePSF2DGi
- YSYZe4Pq/ePxW7z0W0XMSaX8jLxo9XBO/y1xRVfdsR+Uc5r9wyxaxmbAgiMLHgAzXqHRD1SKT
- WVXhWZ7oF90BGxBGsGrZIEcEeKxa8LtzbKSVNYgXOZ+CaqGMqNfsSjZkdcYaL0WitevS2TkjF
- yAqtL++Gn1SU1/OJ60Z5EF6xr3OfvSyKc1bZ5hdOx6wcx5/x9oXvmqMYyI+w=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-170324354-1579521715=:46"
+X-Provags-ID: V03:K1:o/1a1uTMVz2UgJMgk2/0tsSXbCWSLl2N9gES4BP50tWqTNh/5h6
+ 1IfwYGlmSzYa0jmjPOhYUPX9Pa0YyctjYBFVCd0xWv/a3NwTvSO+NqEo357HqAMNdPM6BNm
+ VlKR9vEC5RyIvGFAC9ZOrHXSSrKE3eemLtZ+htKBOK9Hjt+Q6XUidkMvBDqootmuc3uYrqa
+ av+NEGjktSS2mEMWKie+Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2YCFZ3Kop3Y=:Gdy1rZzpcQIxuAeWkd0NYT
+ ZhRwsJxwrudbyjKDHrpQCCIEhXFo9qiDqQoH3vh3SW9Z4L6bC08qtqKkUlra4ioPJpEHskTZJ
+ AG0/mSsr4h/dpTfPFM6zbKxLiuR2egwP0a713PvE8GjvpiL9iFJCqL71K7TpsmJvJWewW97Me
+ iNf1qVstSPnhLA6aDEJFqUvHEaHPzqKjrH7JBsSyZoyONGs02p1d3Yr+xdwvIUY2Sqa6+OcGQ
+ CPe5wIYW5ILjW9LA+xFpF0bHjUpa/RLo7MJlt4hAp/88M4V3dJlHvIVJqxxkHmvlnFPKeM0rb
+ //jn+p2oYFTDxUl2a/st7ab6YrOtIRhEXxYzuUm/ytymJ6RoVY2tLZi5M6vbRhECTICJ3EbnQ
+ fjcPRyCSse/KXnyQ+PcU0FfaIdTK7MlA16kRVcHLLyWRkBfA3o/RD9nENsphTFbwwY4Vrr8kI
+ T1YNyX/7tKuDD5pvO03AL0fWkZmsKWVoRNZxcktlIwBlq0Vl3SE4ADCiWlaHvuwlB7CRo7BAG
+ e118r/xikf3fi/CE7Cs/pSCOE7fOX5lBAqmP05jkK6nHXS4jgnv1szT6YEOLU+J6KpgYWGkJ1
+ 2S1yG4WADTdxhP49QQx2nOw4/4U8lvq3acaJuYgAF2Cw4GvDO5uhDZWcsn/gLqD+0AfqlOP/Q
+ GqtDDb13NiXbmiTh5vOrC2VLUKHScgRUZwIKCjhiU6HDYO2YnTS+6TFH0VSCH2WpIkFrg5vLL
+ pDgfklgIBJV/xTazP7djFzSc2nlj3hRKZSx84luteiPcNSnOCLUGtNG7SdoXkS3TSeno05jVL
+ bcmVvU0fcrsh2066ffqtsGPCWsnM8n/9xV9HbqKEBymd2IDxWPzg4N/OuqNc/1IcytWSGU8UH
+ I1vp0lDzPbTnagJuT4cRWec2n/M7w/oG+EKozjDuKSCrFZilH3nHiEOdTeIamNXES92eEkVYf
+ 2tuoxvYw9madS0xM0wxF+AsqLW3Z7HxGS0v1fM6YcnGCb2sYz4IPJrRk+WuVwsFGe1Bwnm2iB
+ CHpYQQjR96MgQTO7A1XS0XAe3bzhThdY6bCnclhq6alG7QZ4efeFK+FeRYVHJRxWep/it8XwE
+ DDl9ZvKGPI2vq2Mum2oGPahYSgk4XzwAYqMMiqNVs3GEDqFIzsvhU928cOHFXQLHhafKx6pcc
+ 3+PJXXMTEOGpIS2Ij/h7YO8aq+mwpjYpYLm+totwhzTNGmk0BLCBJt7tYgCQ8VHY3qPHGp89w
+ zIPe5UnAsXtsvglBAV3uXc1iirr2ccaE0jh8ZuQXbm/PZvrTi4/imdXKtaR0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Bert,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 17 Jan 2020, Bert Wesarg wrote:
+--8323328-170324354-1579521715=:46
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> On Fri, Jan 17, 2020 at 2:30 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
+Hi Christoph,
+
+On Sat, 18 Jan 2020, Christoph Groth wrote:
+
+> brian m. carlson wrote:
+> > On 2020-01-18 at 19:06:21, Christoph Groth wrote:
+> > > But if the above is not feasible for some reason, would it be
+> > > possible to provide a switch for disabling stat caching
+> > > optimization?
 > >
-> > On Fri, 17 Jan 2020, Bert Wesarg wrote:
-> >
-> > > On Fri, Jan 17, 2020 at 12:50 PM Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> wrote:
-> > > >
-> > > > On Fri, 17 Jan 2020, Bert Wesarg wrote:
-> > > >
-> > > > > When renaming a remote with
-> > > > >
-> > > > >     git remote rename X Y
-> > > > >
-> > > > > Git already renames any config values from
-> > > > >
-> > > > >     branch.<name>.remote =3D X
-> > > > >
-> > > > > to
-> > > > >
-> > > > >     branch.<name>.remote =3D Y
-> > > > >
-> > > > > As branch.<name>.pushRemote also names a remote, it now also ren=
-ames
-> > > > > these config values from
-> > > > >
-> > > > >     branch.<name>.pushRemote =3D X
-> > > > >
-> > > > > to
-> > > > >
-> > > > >     branch.<name>.pushRemote =3D Y
-> > > >
-> > > > Should we warn if remote.pushDefault =3D X?
-> > >
-> > > AFAIU, the value of remote.pushDefault wont be renamed yet. So you
-> > > suggest to issue a warning in case remote.pushDefault is X. But as X
-> > > does not exists anymore after the rename, the value of
-> > > remote.pushDefault is invalid. So why not rename it too?
-> >
-> > If this setting was usually a repository-specific one, I would suggest=
- to
-> > change its value, too. But it is my understanding that this might be s=
-et
-> > in `~/.gitconfig` more often than not, so I recommend a warning instea=
-d.
+> > Git is going to perform really terribly on repositories of any size if
+> > you disable stat caching, so we're not very likely to implement such
+> > a feature.  Even if we did implement it, you probably wouldn't want to
+> > use it.
 >
-> than why not rename it, if its a repository-specific setting and warn
-> if it is a global one? If this is detectable at all.
+> OK, I see.  But please consider (one day) to split up the index file to
+> separate the local stat cache from the globally valid data.
 
-Sure, but you might need to re-parse the config to detect that (and you
-have to use `git_config_from_file()` to make sure that you know that you
-are looking at the repository config and not at anything else).
+I am sure that this has been considered even before Git was publicly
+announced, and I would wager a guess that it was determined that it would
+be better to keep all of Git's private data in one place.
+
+Now, you are totally free to disagree, and even to work on a patch series
+to separate the stat cache and offer a compelling argument why this change
+should be made. If I were you, I would not expect any other person to be
+interested in working on this.
+
+> (By the way, even after 12 years of using Git intensely I am confused
+> about what actually is the index.  I believed that it is the "staging
+> area", like in "git-add - Add file contents to the index".  But then the
+> .git/index file reflects all the tracked files, and not just staged
+> ones.  This usage is also reflected by the command "git update-index".)
+
+The concept of the Git index is slightly different from what is actually
+stored inside `.git/index`. You should consider the latter to be an
+implementation detail that is of concern only if you want to work on
+internals. Otherwise the description of the index as a staging area is a
+pretty good image.
+
+The staging area contains of course more than just the stages you changed.
+It contains the entire tree that is staged in order to become the next
+commit.
+
+If you asked a worker at a theater to make a minor change to the stage,
+you would not expect the staging area to be empty, either.
+
+> > However, there are the core.checkStat and core.trustctime options
+> > which can control which information is used in the stat caching.  You
+> > can restrict it to the whole second part of mtime and the file size if
+> > you want.  See git-config(1) for more details.
+>
+> Thanks a lot, that did the trick!  I=E2=80=99ve been already syncing mti=
+mes.
+> Setting both core.checkStat and core.trustctime to the "weak" values
+> made the spurious modifications go away.
+
+And of course now you have a less performant setup because files have a
+much better chance of being "racily clean", i.e. their mtime could be
+identical to the `.git/index` file, in which case Git has to assume that
+the file might have changed, and the index has to be refreshed.
+
+Just saying that what you think of as a silver bullet comes at a price.
+
+> Still, this is a workaround, and the price is reduced robustness of file
+> modification detection.
+
+You misunderstand how Git detects whether a file is modified or not.
+
+A file is re-hashed if its mtime is newer than, _or equal to_, the mtime
+of `.git/index`.
+
+So no, it is not the robustness that is the problem. It is no less robust.
+The problem is that you force re-hashing where it would not be necessary
+otherwise.
+
+In general, I am not sure that you are using the right tool for
+synchronizing. If you cannot guarantee that a snapshot of the directory is
+copied, you will always run the risk of inconsistent data, which is worse
+than not having a backup at all: at least without a backup you do not have
+a false sense of security.
 
 Ciao,
-Dscho
+Johannes
+
+--8323328-170324354-1579521715=:46--
