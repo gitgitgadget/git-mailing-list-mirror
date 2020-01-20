@@ -2,211 +2,109 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D92B8C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D215C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:24:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 913192253D
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:29:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 307662253D
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:24:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HplQHnUK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ion50C/8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726843AbgATW3T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 17:29:19 -0500
-Received: from mout.gmx.net ([212.227.17.22]:35099 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726607AbgATW3T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 17:29:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579559356;
-        bh=Wf9pJhS7MdFXpUdBxnWC8OawwqScdS5M1DX6yfieKBI=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=HplQHnUKsp42uF6nYLMJybzM+0Qs3HKTvu81VTe4ZksAkEfWmiRATTogb7GU1HvoB
-         XR4LucKu5LXuNNqyMTCqhFbe9XlC8GBJB73eVw5Q+AmGw1cCgwqG6FBiBXNq6X28Dd
-         o0Ea+xJ6UgwhiPBj3jhrlldtYzUDx6qX8RLdRqOo=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MqJmF-1jOJS43njX-00nTUe; Mon, 20
- Jan 2020 23:29:16 +0100
-Date:   Mon, 20 Jan 2020 23:29:14 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH 11/29] bisect: libify `bisect_next_all`
-In-Reply-To: <20200120143800.900-12-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001202325000.46@tvgsbejvaqbjf.bet>
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-12-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726894AbgATXYR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 18:24:17 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45197 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726816AbgATXYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 18:24:17 -0500
+Received: by mail-ed1-f65.google.com with SMTP id v28so1101224edw.12
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 15:24:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4ktpyQ1hsfAbMUwtJUAGDFyOfQVigGqxV+a9/1kYsMQ=;
+        b=ion50C/8p4Bw6OftOqaE2M7M+Ivi8MFsvx+Dg6mlSHn99OgQJDaD4n6t60Dxp9sK6h
+         QcylxPsjxsZYAO8bWjUwe22T85unikB2FFCdV22xP+zC9ZcnNPq0w9Yv/ju8SGuvm9r6
+         hy5uK4GNcEV8PUKeBZiC+NbvK4k0hhcK5EvGNnPe38XkPoxRv3imv6Y1luuXaM8Agx91
+         uxVhdiOZzCeHVBTuS4KZO3b9cKsJs5lIaHXeurnVYef13O+oQESQ6xwdeCqTDpxcw5uM
+         4Zcc4n7Fx3alQdpwZb2k7uOsqxD+mG0nzJNWEGhLUdBSdReq93MZLM5+imJ3He+GCWir
+         6MLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4ktpyQ1hsfAbMUwtJUAGDFyOfQVigGqxV+a9/1kYsMQ=;
+        b=RbndOpQ96Wh1B2+1DCcyv7jhxFXjhaYoWvod+BlGZwHhsZCs/65RvKkMiVCeSulFr7
+         sQ0hoNcKAaNOfKUpVeZnplPcGFWs9qgF6wENOC0SWo5vtwYv8BqJkLyttq+bcmVabpHz
+         mOz9/f/YyMUZvxrU7+4Zd3Tc9DWyttxQp4BdpL71naAC5VFggfglae/O/Ibun5ToycRr
+         sW1g37+RaKjCgd0bODsMJx/+Ihp7w3N84K4/mmFoBRx927kzhXcfnVOONVj6/wNgb1aB
+         6+OeTg/i9tF4e6oY1sHswltGe0F9FQJY/hMKv3qOy9v7+CamFKvcVM02gJhYaI0smv78
+         hnAQ==
+X-Gm-Message-State: APjAAAX1ckvLTTXf45jPSi43xujEsPwKxSyTKspO9YY9iiI+a66ok9u8
+        hTjbDRifur8eq8A9Z18Y2r74dk0F6NU59+GAhpw=
+X-Google-Smtp-Source: APXvYqwREBLo/I34qqi7l+DP0s8z9mr/2+MJLNIF3dEJQ93fPnCsJql3z99x+joKw90zXIWnRaadlxas0APw1/eNySU=
+X-Received: by 2002:a17:906:3647:: with SMTP id r7mr1758274ejb.320.1579562655746;
+ Mon, 20 Jan 2020 15:24:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:kiE0+qFufoZUlbP31xZGyVi+OxXk3HkfUDQ/i3LOOnhM5HuaEUp
- QUSC/MyE5q1GCFbgJllpwkNIPYf/YfLPD+SxOAiS+Du+aXqndoaO0EEVhIeWkuQAOThwhkA
- O2BASIZydciylAshhQ7d9WtbBAirS1hrkuoR+Y1CTMyjvC4IFbIROn2DpjKmSC+Wz/G0ZqB
- DFDWeN6cZ9dLDe+elVTyw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C9YJgYBi3Bw=:/j0HDtvSrFo1ykEZSplI7S
- 40dsTMpoQH0wQA6n3/eIfEzS+RGL93yLhQpzCkB7xZZkrNqIDLZYJdJljGCKJ99vVAdfjJlnE
- W5Avs6MH3+bIsSEhAqkYNxUB96EDvPDcsaZ3ws+NRBBE33BSpIzXn5IPIEgiXK5RF3R/VRQEk
- w0cex0W7RbKVzA/Im/k6fww19Hm4ogyNjz+zdUf2/aVuGyvAdzidPkyP9DrQiUluYZi+DbpNs
- fF/O5J0mdDvM1jdVHyve67HVAX1T4UfMT0qALqBwLJb8rVUSye3MBgijQZxk5WpZIhD+s23ok
- tOBvcXaa7IBerheIZ8jqvyRF5stQb/bcca2Yc4VHkh0qIJ3P2Rqc1Ng7IyxCS6S0MstSLReg1
- T5nIKEYrZW91V0vKk33uSf+Ih+cL98BuCqc1sn7PaNGPPnbBsC+QghkeJ2jUJpUmdghm0Om7G
- HYGkLMLzA/XGUU+YLpMZKSAE3nwpqZM2RyVtpoeSs8yZeDeCptLagMrI/bC4/CQv1DDWgcNxB
- xsAjEbr7TFx228Nu5y/cL1/ZPfPnXpi8hDHJ6RsvhLS91UDCcJICdnmeXIYktDRODXiBn2OCg
- EeUr/OLLXWbS/LXB37t8MI+KTcv17gcZ590aUzMBCtJ/hiOYfbO2Omd607RBHWLf6k06V2nCb
- wBHYB3sUEBG7iVsKd6Z6Jv+Qrfy/SSW8zMQyovG6hHGN64heevYwYzmB8rhvdqPUDD2VH9Fpf
- UzqJRkYmT58slZo+BNU0CojPeJSBLmpYTpbxnHSZFTfGAZ3TjpAZIlUkAJrjcBB2i6Rppby7r
- o88U0XEn9l/SbTEzoxFoez20s3c4uSpqAX309gEosuyRdiV9E0Pm9NH3I8mQJL/F012S6Mi01
- NJlGod27zlFmIBy1fvOd0ElxiJB5xDMzysUVTo13XEEdrHWvnL3HEIz2JE79LGP2gdYnhlcUq
- ntcWcR0wYJca8hjAVX397jBunkC4TCIJnvNkyEgp1SK6k6+eAbnMxnGpA0DEFucAzau6j3Hry
- FZvw47c6u1pXhhcG0NPl8v8MRZqOzYt+WAM1w/snLCam95aTsliYIlHQWxYCC4SC3/A73RfY1
- 6aTcuk4VfnMmmg07uBdTaM20pNnbns1Tftm9BpFxWiphNOv+8u6sNyUYz50ZVQJrCJV0CgEV+
- uXRcttBQ6NheYk2RM72w98AWQzG2MNI8LiYRUFGzt862JrRVSNJfC+7hhmzDbPaUdYl08wOoo
- SgzgdxvPD0hYthnGxNrpB4evXhv3m1QQtgU56JJJ85LIW5WBDzvY7Y3/qEG8=
-Content-Transfer-Encoding: quoted-printable
+References: <20200120143800.900-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2001202237140.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001202237140.46@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 21 Jan 2020 00:24:03 +0100
+Message-ID: <CAP8UFD0W=kBs1zne56OjPbFzeX7BtEazPh2MW1My3qAsByS=nA@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH 00/29] Finish converting git bisect to C part 1
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Miriam,
+Hi Dscho,
 
-On Mon, 20 Jan 2020, Miriam Rubio wrote:
+On Mon, Jan 20, 2020 at 10:43 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> On Mon, 20 Jan 2020, Miriam Rubio wrote:
 
-> From: Pranit Bauva <pranit.bauva@gmail.com>
+> > [1/29] bisect--helper: convert `vocab_*` char pointers to char arrays
+> >
+> > * New patch to convert `vocab_bad` and `vocab_good` char pointers
+> > to char arrays
 >
-> Since we want to get rid of git-bisect.sh it would be necessary to
-> convert those exit() calls to return statements so that errors can be
-> reported.
->
-> Emulate try catch in C by converting `exit(<positive-value>)` to
-> `return <negative-value>`. Follow POSIX conventions to return
-> <negative-value> to indicate error.
->
-> Turn `exit()` to `return` calls in `bisect_next_all()`.
->
-> All the functions calling `bisect_next_all()` are already able to
-> handle return values from it.
+> 29 patches is _a lot_ to review. I would have preferred a series of
+> smaller patch series.
 
-So this patch brings more magic values that really would like to become
-`enum` values. At this point, we're talking about `bisect_next_all()`
-which is _not_ a file-local (`static`) function. Therefore, we now really
-wade into API territory where an `enum` is no longer just a nice thing,
-but a necessary thing: `bisect_next_all()` is a function that can be
-called from other source files.
+Yeah, it's possible to split it into smaller patch series. There are a
+many similar patches in the series so it was easier to work on
+everything together to make similar and consistent changes to all the
+patches at once.
 
-As far as I can see, this patch concludes the "libify" part of the patch
-series (read: it would have been the second patch series I would have
-suggested to split out from an otherwise too-long-to-be-reviewed set of
-patches, if I had been your mentor), and I'll leave it at that for
-tonight; Hopefully I will find some time to review more of these patches
-tomorrow.
+> For example, the first three patches would have made for a fine "some
+> cleanups" patch series, from my point of view.
 
-Ciao,
-Johannes
+Yeah, but this might then be rejected by Junio as it would be only "code churn".
 
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> ---
->  bisect.c | 40 +++++++++++++++++++++++++++++-----------
->  1 file changed, 29 insertions(+), 11 deletions(-)
->
-> diff --git a/bisect.c b/bisect.c
-> index acb5a13911..33f2829c19 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -967,10 +967,10 @@ void read_bisect_terms(const char **read_bad, cons=
-t char **read_good)
->  }
->
->  /*
-> - * We use the convention that exiting with an exit code 10 means that
-> - * the bisection process finished successfully.
-> - * In this case the calling shell script should exit 0.
-> - *
-> + * We use the convention that return -10 means the bisection process
-> + * finished successfully.
-> + * In this case the calling function or command should not turn a -10
-> + * return code into an error or a non zero exit code.
->   * If no_checkout is non-zero, the bisection process does not
->   * checkout the trial commit but instead simply updates BISECT_HEAD.
->   */
-> @@ -1000,23 +1000,35 @@ int bisect_next_all(struct repository *r, const =
-char *prefix, int no_checkout)
->
->  	if (!revs.commits) {
->  		/*
-> -		 * We should exit here only if the "bad"
-> +		 * We should return error here only if the "bad"
->  		 * commit is also a "skip" commit.
->  		 */
->  		res =3D error_if_skipped_commits(tried, NULL);
->  		if (res)
-> -			exit(-res);
-> +			return res;
->  		printf(_("%s was both %s and %s\n"),
->  		       oid_to_hex(current_bad_oid),
->  		       term_good,
->  		       term_bad);
-> -		exit(1);
-> +
-> +		/*
-> +		 * We don't want to clean the bisection state
-> +		 * as we need to get back to where we started
-> +		 * by using `git bisect reset`.
-> +		 */
-> +		return -1;
->  	}
->
->  	if (!all) {
->  		fprintf(stderr, _("No testable commit found.\n"
->  			"Maybe you started with bad path parameters?\n"));
-> -		exit(4);
-> +
-> +		/*
-> +		 * We don't want to clean the bisection state
-> +		 * as we need to get back to where we started
-> +		 * by using `git bisect reset`.
-> +		 */
-> +		return -4;
->  	}
->
->  	bisect_rev =3D &revs.commits->item->object.oid;
-> @@ -1024,12 +1036,18 @@ int bisect_next_all(struct repository *r, const =
-char *prefix, int no_checkout)
->  	if (oideq(bisect_rev, current_bad_oid)) {
->  		res =3D error_if_skipped_commits(tried, current_bad_oid);
->  		if (res)
-> -			exit(-res);
-> +			return res;
->  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
->  			term_bad);
-> +
->  		show_diff_tree(r, prefix, revs.commits->item);
-> -		/* This means the bisection process succeeded. */
-> -		exit(10);
-> +		/*
-> +		 * This means the bisection process succeeded.
-> +		 * Using -10 so that the call chain can simply check
-> +		 * for negative return values for early returns up
-> +		 * until the cmd_bisect__helper() caller.
-> +		 */
-> +		return -10;
->  	}
->
->  	nr =3D all - reaches - 1;
-> --
-> 2.21.1 (Apple Git-122.3)
->
->
+> Also, as the mail's subject says "part 1", it would be good to have an
+> overview how this part fits into the overall story of converting `git
+> bisect` into a built-in.
+
+We don't know how the rest will be split yet. Hopefully there will be
+only one other smaller patch series after this one.
+
+> Finally, it would be nice to have a link to a public repository with the
+> branch from which these mails were generated.
+
+Yeah, I agree that would be nice.
+
+> I will try to review this patch series in its entirety, but it will take
+> me a while.
+
+Great, thanks!
+
+Christian.
