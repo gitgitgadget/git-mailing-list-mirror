@@ -2,141 +2,98 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 76614C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:17:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE516C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:22:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3BC5B22527
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:17:20 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BDCFA217F4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:22:04 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ovUc/2px"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="GEjrAsLF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726874AbgATVRT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 16:17:19 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40125 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbgATVRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 16:17:19 -0500
-Received: by mail-wm1-f66.google.com with SMTP id t14so804948wmi.5
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 13:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=hznTf6HV8XtiNQNC5Eh2EgVT6lJ2vCswf79N90ip/MQ=;
-        b=ovUc/2pxtH1qP7ekAooKPXhgMTw1XqJD/DmYdQAYIysuyU5TMoJH8aO9T6A5BQR3gW
-         R8DqBkUUgrALS24DCwmenp4QKOw6x7XlXp57Rn2SSJZdrAf5tw8VY3xNW8Eb/b7V+w0R
-         oiLlxt4uFalG9Yx8KSVOVsjHPo1Jyk6sN16o0iHMp9LBIKvycQmkaxrC/EwT3FTeuqC0
-         CZFr3erGRv+HTyoanjiSCQZW29Bgi156cF49Gs5BQ5uQIzqAZmMb9MClrAobWg0LL+sL
-         KqHbaAc3WJHz9UYqAXGRgjRlTq8b8p/P9P5iXN6D3elnBixI2uf2+MXm7AQdbOGlF7/V
-         dY2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=hznTf6HV8XtiNQNC5Eh2EgVT6lJ2vCswf79N90ip/MQ=;
-        b=XczzMYzXGyZhFpxRJYC4spXK1MpJCgMILUgihXjRRIfGgBkYqsi2Xc30N5TgMphu62
-         FwAxeirzePLB+xbgeCD21dXNR0RwyaX0w/WqzUkSRBxs58HJrqva7ZXdiDsCTbPbJsD3
-         GKQxO1trUY6hShiG7+A84QkAujHvwJNNGwXOFFHseM9nmzp4l26/wpzfElulJ3hqfkQl
-         nPGLXX+H620KV5OFKHRUjQdQWMgetvD4Yy/OcbkYZ9j+tq3I8FuP5CCbXRSuh9H4lzSo
-         vBtbV+XDPTaKtOlZLP9feOsKb8WFBFGreB6yTSI6T43awg+5nmXCQPM53XoyPxSrJvzj
-         DTxg==
-X-Gm-Message-State: APjAAAXtWRFGcH+6OfKUWkApYO+BuLmE6OF3HDq1fYK0LiyV/sgMlMzd
-        jrX95SurzYO3WllU3HMgBN72/0Bo
-X-Google-Smtp-Source: APXvYqy0KWKhVvkelZzATFOAMPj/tOBepzFj5cXLKP2EkHaKwqWRwPzmEM3nKXrhlNsuRTgVfFrk6Q==
-X-Received: by 2002:a7b:cc98:: with SMTP id p24mr713557wma.139.1579555037229;
-        Mon, 20 Jan 2020 13:17:17 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm755022wmm.15.2020.01.20.13.17.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jan 2020 13:17:16 -0800 (PST)
-Message-Id: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
-From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 20 Jan 2020 21:17:16 +0000
-Subject: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728760AbgATVWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 16:22:04 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43206 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726897AbgATVWD (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Jan 2020 16:22:03 -0500
+Received: from camp.crustytoothpaste.net (50-244-106-130-static.hfc.comcastbusiness.net [50.244.106.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 716736044F
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 21:22:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1579555322;
+        bh=p3j0902jhPDC5sNZBCecPK7JNFuo2CfVJbX6jC7/a2U=;
+        h=From:To:Subject:Date:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=GEjrAsLF7yzeAPxHq2NtHxXgYghDhpOen0mfBezAYreDAI2p+yfGVfuqIYP4ndRDA
+         cPBn4XwXPEM+ObSoa/lE5jOXiwGG4CfVbNh109rJdz5afqUULmWsgfGJsVyOEAQLwf
+         XDZDozHbgtH5nSPLXJfOTfKoa5Nsk5NQ2ROZKIFuVFd1g2guZKq3q6I0fSuSDMCuVE
+         VA4oQKIp/fLlgaazUWHR+fSAGNFedObyMouxF3y1RH4fON1oDVRZpKbc5fgBfoksIU
+         x7x2upPt9J8ilbv6e4VcWZezfFXaDRRrOWRxker7cIjZiSwltWTnM2Lrh3ViW8isTV
+         1PiIYopWAKLbeNfllU1OHxekpAsM8W32vu9ksmxguhAGYi3Ee+28B5AeZXPB4V7z1Z
+         MXlQssLX7zcDju6yf8MAtDvejWCk4kkDKwhBCWbAFHezEIlQbIDg4GITaiiPpYgnJN
+         iygj3ABNNiDcdMj6n3rqWIKMyTq5DJUa7Ln0JMyTLmBGsGZWHgx
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     <git@vger.kernel.org>
+Subject: [PATCH] docs: use "currently" for the present time
+Date:   Mon, 20 Jan 2020 21:21:56 +0000
+Message-Id: <20200120212156.4109999-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Ben Keene <seraphire@gmail.com>, Ben Keene <seraphire@gmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ben Keene <seraphire@gmail.com>
+In many languages, the adverb with the root "actual" means "at the
+present time."  However, this usage is considered dated or even archaic
+in English, and for referring to events occurring at the present time,
+we usually prefer "currently" or "presently".  "Actually" is commonly
+used in modern English only for the meaning of "in fact" or to express a
+contrast with what is expected.
 
-Add an additional hook to the git-p4 command to allow a hook to modify
-the text of the changelist prior to displaying the p4editor command.
+Since the documentation refers to the available options at the present
+time (that is, at the time of writing) instead of drawing a contrast,
+let's switch to "currently," which both is commonly used and sounds less
+formal than "presently."
 
-This hook will be called prior to checking for the flag
-"--prepare-p4-only".
-
-The hook is optional, if it does not exist, it will be skipped.
-
-The hook takes a single parameter, the filename of the temporary file
-that contains the P4 submit text.
-
-The hook should return a zero exit code on success or a non-zero exit
-code on failure.  If the hook returns a non-zero exit code, git-p4
-will revert the P4 edits by calling p4_revert(f) on each file that was
-flagged as edited and then it will return False so the calling method
-may continue as it does in existing failure cases.
-
-Signed-off-by: Ben Keene <seraphire@gmail.com>
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
-    git-p4: Add hook p4-pre-pedit-changelist
-    
-    Our company's workflow requires that our P4 check-in messages have a
-    specific format. A helpful feature in the GIT-P4 program would be a hook
-    that occurs after the P4 change list is created but before it is
-    displayed in the editor that would allow an external program to possibly
-    edit the changelist text.
-    
-    My suggestion for the hook name is p4-pre-edit-changelist.
-    
-    It would take a single parameter, the full path of the temporary file.
-    If the hook returns a non-zero exit code, it would cancel the current P4
-    submit.
-    
-    The hook should be optional.
+This is a minor issue I noticed one day and thought I'd send a patch
+for.  I should point out that English differs from virtually every other
+language I can find that uses something like "actual", so this is an
+easy mistake to make.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-698%2Fseraphire%2Fseraphire%2Fp4-hook-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-698/seraphire/seraphire/p4-hook-v1
-Pull-Request: https://github.com/git/git/pull/698
+ Documentation/config/http.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- git-p4.py | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/git-p4.py b/git-p4.py
-index 40d9e7c594..1f8c7383df 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -2026,6 +2026,17 @@ def applyCommit(self, id):
-         tmpFile.write(submitTemplate)
-         tmpFile.close()
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index 5a32f5b0a5..8471b39f0f 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -71,7 +71,7 @@ http.saveCookies::
+ http.version::
+ 	Use the specified HTTP protocol version when communicating with a server.
+ 	If you want to force the default. The available and default version depend
+-	on libcurl. Actually the possible values of
++	on libcurl. Currently the possible values of
+ 	this option are:
  
-+        # Run the pre-edit hook to allow programmatic update to the changelist
-+        hooks_path = gitConfig("core.hooksPath")
-+        if len(hooks_path) <= 0:
-+            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
-+
-+        hook_file = os.path.join(hooks_path, "p4-pre-edit-changelist")
-+        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file, fileName]) != 0:
-+            for f in editedFiles:
-+                p4_revert(f)
-+            return False
-+
-         if self.prepare_p4_only:
-             #
-             # Leave the p4 tree prepared, and the submit template around
-
-base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
--- 
-gitgitgadget
+ 	- HTTP/2
+@@ -84,7 +84,7 @@ http.sslVersion::
+ 	particular configuration of the crypto library in use. Internally
+ 	this sets the 'CURLOPT_SSL_VERSION' option; see the libcurl
+ 	documentation for more details on the format of this option and
+-	for the ssl version supported. Actually the possible values of
++	for the ssl version supported. Currently the possible values of
+ 	this option are:
+ 
+ 	- sslv2
