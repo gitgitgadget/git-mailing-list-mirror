@@ -1,138 +1,98 @@
-Return-Path: <SRS0=wBnH=3I=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A77FC33CAF
-	for <git@archiver.kernel.org>; Sun, 19 Jan 2020 22:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CB938C2D0DB
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 10:35:01 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CB73820678
-	for <git@archiver.kernel.org>; Sun, 19 Jan 2020 22:53:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 90ABF2073D
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 10:35:01 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqixE0Zh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u9O30RzX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728851AbgASWxg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 19 Jan 2020 17:53:36 -0500
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:35694 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728819AbgASWxg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Jan 2020 17:53:36 -0500
-Received: by mail-wr1-f53.google.com with SMTP id g17so27655636wro.2
-        for <git@vger.kernel.org>; Sun, 19 Jan 2020 14:53:34 -0800 (PST)
+        id S1726587AbgATKfA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 05:35:00 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:36227 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbgATKe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 05:34:59 -0500
+Received: by mail-ed1-f65.google.com with SMTP id j17so29003516edp.3
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 02:34:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:from:date:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=jR94/OWYPUCThNo3Ex9wlOGd2y/WQZQdNzrY1rIpR+U=;
-        b=dqixE0Zhga/jUfBV9+8RsAP2Zs7hLp34e/q+pHlwL95k825HxbZGmp0dcxm/QhiDri
-         u5s5MD1D8d4VJh2EhJwt6MkppTF8sSqbkON40UX6TjroKxKio3vDZo7fhZDBzBPoK2Jn
-         MRthM2E1pVjqm1p//t8MqUqN0u3VT1/hWbeO/6+geSkqLdWNQnxDmimlOxQlEcNUvA/B
-         zNqDsA6AoYRLLo4TZkjd52BU2sXRMGdtpEdultV5cKZTti9PmqPL7eXOzAj3ydH3hW9Z
-         c54K8V11gVjL+AXvOgtv6KTkDf71wS3vqTl3IHXEG0DoLtO3xirufSC4WyvJWD7YOZcm
-         J5kw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=9+rPmnrpWrDwxZs5+Y8G66TWRxv/0T61bEROmaG0Zsk=;
+        b=u9O30RzXpfD4gaMIfK2TisenN/3YoNSwtEqFIbA8samsULo/jrJvHI2Zu6jVsaDf6v
+         06JadbKcuFNLtU8LZImRSzMUQYHIZX8dg9wmlpvM04CUl2dvILz6xakztDI4rcpd4qRu
+         HyDQZBvyR81JduIay0Sp4Bb7FLjB1jhUTWzyNe0OUqLweQVq87rzuHBARFWAROnN/3cI
+         bjASot0OYNStGQ8MQQ1tjzT2lzEWWYV/fADyyxFEkaZY4nfz4UXX6WQlb6ei0JsbCn1t
+         LKuUTy6sfahBsIzACt7WdBHAwTdKepOHHXPwa2lnH8URQ56cN8avYvfmzZOOrUbkyp1N
+         pe7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=jR94/OWYPUCThNo3Ex9wlOGd2y/WQZQdNzrY1rIpR+U=;
-        b=cC22dCXVYbXXqn5oWRQO9trjmqYH9oB5gGx98kokkXd8qcoUKuu1mZVLlMASAqOajN
-         w+x0aJnf8rwUNyLNPB2RxJ8Ur1N1zfZzREDxYGgzvmZiuCEAvnGjYm8H3yWRcWbNsBtf
-         atx/FEI/8n1tQwkgwB6+SGdiTsekGAHYGjRt1/s9KAwNIQEPL89xBuB9Lx60r7nmq5cc
-         2R8GzlZxb3oLA3mcItNssQQ1FxzzuKbxgQj065bqizVvoBbsV6d10ODj+UHx86SIxe8e
-         dMPfKOTthpqPXNqNCCy2j7j32itPFR+sGn/s/Ht3sFb9NeE+X4JDTyc31xtEXsltrwj/
-         i0zA==
-X-Gm-Message-State: APjAAAWGYUFN5Vou38KH9uGOELBvqIU3lOvd1i9PehkmwEKSHPS3Ye3B
-        yiP+GoW5Z71dY2uW7xM1LejQ0bZN
-X-Google-Smtp-Source: APXvYqxyKs7iaOIYzulqNVNdkOmrgfkoONLrRggKu0VwUrfUMbAnsQhMqqe3wO6vTbTxhNHJ1dZh4A==
-X-Received: by 2002:a5d:4ec2:: with SMTP id s2mr14156413wrv.291.1579474414030;
-        Sun, 19 Jan 2020 14:53:34 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f12sm320759wmf.28.2020.01.19.14.53.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jan 2020 14:53:33 -0800 (PST)
-Message-Id: <pull.522.git.1579474412847.gitgitgadget@gmail.com>
-From:   "Lucius Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 19 Jan 2020 22:53:32 +0000
-Subject: [PATCH] templates: fix deprecated type option `--bool`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=9+rPmnrpWrDwxZs5+Y8G66TWRxv/0T61bEROmaG0Zsk=;
+        b=BJ2lpJ8QD5Pe/Qk1z+vMsNzlHDpNIycT89dPIs38ujX8aoRQ2tvuMDf8JvYHKLMmQg
+         CXuAg2d2tuTAEseDo+JItcGd1GtkQv5JPnHKJTWygIgAQ0U3Mu91AKnxndFIo+6IF55/
+         7A7AiGORBI7Vn2Aqx0aANNc+Muqrct+k3l4ZIIyGmYGbu0KDIFDWhi9jBabyVcvwSGIC
+         4MgqHuhfoEg1fj3d8pQpnMq9cbU5DQTCJcj/y63bNZYh0Sn3gSC0Iixul4OlHigTDOtt
+         K6GIURpAcp8Lxv5d5X7pe+qeMMXUbkKfWimNqPXF3b7g/LYypj6SEpaxVZkfl03GLk7g
+         gsow==
+X-Gm-Message-State: APjAAAWLwOJP6I/k2+fNCO6LkEixIKyBQ2Pkjaic+iCDytLgFTwcG21y
+        fj9bzYrVCZ+HFEUIwbBUKjgiSVn7FsaHOXh0CJW8SZbh1kg=
+X-Google-Smtp-Source: APXvYqwFQsWI+2vEsG0rWuqp+cwi/Uq6j3OvuYhqwtBrhsHPzugR/m49G1mJ+OLksKdChbSIuqTxX6ImrIq4uodMypY=
+X-Received: by 2002:aa7:c4d2:: with SMTP id p18mr16200912edr.237.1579516497624;
+ Mon, 20 Jan 2020 02:34:57 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Lucius Hu <orctarorga@gmail.com>, Lucius Hu <orctarorga@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 20 Jan 2020 11:34:46 +0100
+Message-ID: <CAP8UFD06BqK=KM1CgkC_RciSmJXJvAE1O7pjiagEZ8dOSCV85w@mail.gmail.com>
+Subject: Draft of Git Rev News edition 59
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        "Patrick Marlier (pamarlie)" <pamarlie@cisco.com>,
+        Mike Hommey <mh@glandium.org>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Lucius Hu <orctarorga@gmail.com>
+Hi everyone!
 
-The `--bool` option to `git-config` is marked as historical, and users are
-recommended to use `--type=bool` instead. This commit replaces all occurrences
-of `--bool` in the templates.
+A draft of a new Git Rev News edition is available here:
 
-Also note that, no other deprecated type options are found, including `--int`,
-`--bool-or-int`, `--path`, or `--expiry-date`.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-59.md
 
-Signed-off-by: Lucius Hu <orctarorga@gmail.com>
----
-    templates: Fix depracated type option --bool
-    
-    The --bool option to git-config is marked as historical, and users are
-    recommended to use --type=bool instead. This commit replaces all
-    occurrences of --bool in the templates.
-    
-    Also note that, no other depracated type options are found, including 
-    --int,--bool-or-int, --path, or --expiry-date.
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-522%2Flebensterben%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-522/lebensterben/master-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/522
+  https://github.com/git/git.github.io/issues/409
 
- templates/hooks--pre-commit.sample |  2 +-
- templates/hooks--update.sample     | 10 +++++-----
- 2 files changed, 6 insertions(+), 6 deletions(-)
+You can also reply to this email.
 
-diff --git a/templates/hooks--pre-commit.sample b/templates/hooks--pre-commit.sample
-index 6a75641638..e144712c85 100755
---- a/templates/hooks--pre-commit.sample
-+++ b/templates/hooks--pre-commit.sample
-@@ -16,7 +16,7 @@ else
- fi
- 
- # If you want to allow non-ASCII filenames set this variable to true.
--allownonascii=$(git config --bool hooks.allownonascii)
-+allownonascii=$(git config --type=bool hooks.allownonascii)
- 
- # Redirect output to stderr.
- exec 1>&2
-diff --git a/templates/hooks--update.sample b/templates/hooks--update.sample
-index 80ba94135c..5014c4b31c 100755
---- a/templates/hooks--update.sample
-+++ b/templates/hooks--update.sample
-@@ -43,11 +43,11 @@ if [ -z "$refname" -o -z "$oldrev" -o -z "$newrev" ]; then
- fi
- 
- # --- Config
--allowunannotated=$(git config --bool hooks.allowunannotated)
--allowdeletebranch=$(git config --bool hooks.allowdeletebranch)
--denycreatebranch=$(git config --bool hooks.denycreatebranch)
--allowdeletetag=$(git config --bool hooks.allowdeletetag)
--allowmodifytag=$(git config --bool hooks.allowmodifytag)
-+allowunannotated=$(git config --type=bool hooks.allowunannotated)
-+allowdeletebranch=$(git config --type=bool hooks.allowdeletebranch)
-+denycreatebranch=$(git config --type=bool hooks.denycreatebranch)
-+allowdeletetag=$(git config --type=bool hooks.allowdeletetag)
-+allowmodifytag=$(git config --type=bool hooks.allowmodifytag)
- 
- # check for no description
- projectdesc=$(sed -e '1q' "$GIT_DIR/description")
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-base-commit: 7a6a90c6ec48fc78c83d7090d6c1b95d8f3739c0
--- 
-gitgitgadget
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and me plan to publish this edition on Wednesday
+January 22nd in the afternoon.
+
+Thanks,
+Christian.
