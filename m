@@ -2,276 +2,167 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6A8BC33CA1
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:39:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11F6CC2D0DB
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:44:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BD966217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:39:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DA8E822314
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:44:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/GKXyNk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DTq6jCHC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729117AbgATOjH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 09:39:07 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:36985 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729096AbgATOjG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 09:39:06 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f129so14969979wmf.2
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:39:05 -0800 (PST)
+        id S1728900AbgATOoY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 09:44:24 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:34212 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726626AbgATOoY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:44:24 -0500
+Received: by mail-oi1-f196.google.com with SMTP id l136so28689900oig.1
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:44:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=H8Stw97eWMONr6a8QPsDT9LSGfQY63VJ1CvSPOp3kY8=;
-        b=i/GKXyNkbO+7FecUEka2DYqVshPnRged4MdXNY1qCmzw/lUmn9s0qxxhgTj9uG6dXJ
-         AKcCQQ8F7fUJ+eHPsfpy09922F1h4SZD+aCIqfKgUEoxi6xiZG1RzAdtqC/PdCfUNySV
-         ZF+4pGq5LLRzPgpd8tXXm65jBXTpjx3Injmq52g50SdQ6TlwuXV4IMMBJzSMPNfus9rK
-         h9RXd9bticLyoWTXl4ItiBygY7QjuXFwA4MW/CwFq2yMgpS3vpRkyZkA9GWtT6r0s32Y
-         /+bsRu4bbe4k2BmCYPh0Fo4WX80yYkQdQqsrwCNUrAehhMK5Nc4cXsjFbVI0hAVWvFLS
-         9P1Q==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=y9gf7HPwJ5wH1Bqdik3IAC/dWI2SwKR6GVgiruX0LpY=;
+        b=DTq6jCHCb7uY1Q7D19cEitv/Bbr07ePRmtdFR6WxuTxD+Xus8gRnTmSDqUNdbXHNJ4
+         mpTxYrk81oAR0/ezg8vcJz/KX3EGfeWhkXK0AveI+rPLhtYkfrtwg4iJPO/y4hVfD00J
+         58Wd0b42kVwkRr7UdmVmzmkXqKiz3sX/6BhOWvH3Jc2ZJPsDVIjFjKe04EA0VnTzcT9e
+         KO9EJiBs/pg9Xb7rc0ZnDzzNkHqNnoa7ZGBLUo8ACNgtYhZE6u87jMbyaOosIGPt6OV5
+         UB3Rm/j6O7JXllEcoHW7iddDa56MJQNKLZny9APHzRiP7l/QkUec+fdq8yfeqbBHnyne
+         KW0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=H8Stw97eWMONr6a8QPsDT9LSGfQY63VJ1CvSPOp3kY8=;
-        b=saIcecc3aMSZp4X2lgfqm/g52onSKjA9swobEIC6loWw+inRbKygF7/mA+dChrLXOF
-         vQNeb5LILdsiA/yiRUp9QMbsbRbWnJViEi8oMb4B5OxkxChb5u4Fnw3hWlZO7eznMSUl
-         HnyYfbGWxr1rxYoZfagI6PZc5cNaHFlqtaKEsMShGUM1BAc/J4aG1a7CJjdQuXv+TDAM
-         204bMljx+UtBpUfRghIihjm8qTEa+g5Gdu4RFPW4F3Og+fscwllEnkNStJAnciHhqI83
-         IdI1oc5bJDBkMoonAdgVZUcoV1HjOw7xcMeLrDGa5BhMd7yRxXrK0t96jacaC/ZFX6Ro
-         0JoA==
-X-Gm-Message-State: APjAAAVeygMqv51herUn5Ox1nUm34CwPvauypIxloSv+FaBX/uzpVANx
-        I1h2mw1xtJeTm2TBXbu9s9cruFhhSJI=
-X-Google-Smtp-Source: APXvYqw5LZOCllP0SV0ftGvu4ep3nlnUaUHi/SjeuewxtAXOeVBX0i3XhgWVfqgVTPu9D4QNbAyDNg==
-X-Received: by 2002:a1c:4c5:: with SMTP id 188mr19060896wme.82.1579531144329;
-        Mon, 20 Jan 2020 06:39:04 -0800 (PST)
-Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.39.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jan 2020 06:39:03 -0800 (PST)
-From:   Miriam Rubio <mirucam@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH 29/29] bisect--helper: reimplement `bisect_run` shell function in C
-Date:   Mon, 20 Jan 2020 15:38:00 +0100
-Message-Id: <20200120143800.900-30-mirucam@gmail.com>
-X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
-In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
-References: <20200120143800.900-1-mirucam@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=y9gf7HPwJ5wH1Bqdik3IAC/dWI2SwKR6GVgiruX0LpY=;
+        b=aHJNtq6pnfRck6glwQLsOOMXIwmw9uaT2s8GjHWPk8t5E9pgBO5gUV5iLyAjRo8ASU
+         eQrOW9XbCd08yZeigCmwsydzjIPdjCEt2/OsTmyPl2dF4qSZJ4HdEEHLwCULP+avVHv5
+         bcOaZU4qIdhG5UuRuJ6hALvzh/DMkfQUCtC81fXyYIb6LJJ2Zb2zG29s9D1F3WNEFzbo
+         8Q0riknUbjiawrRaJxDzzveZ5EoUseg3NRPHmOnQFkRjv8FrjUOl7mB4xth7PxlCrzI+
+         n6f++wOoHMUU+oEjaX6/3ikWlcyKs+9/xM5caZLKOcZs184rtUJthFyZjsUCxRMMNRPs
+         Sd0Q==
+X-Gm-Message-State: APjAAAUhgP556dgfmYtkaGEQtjOaDif2mzOj6QoFJdomNvnXUe9YW0hV
+        xEqy2rxjnn0fhPh6ZrR4Doo=
+X-Google-Smtp-Source: APXvYqwSdsI5M5J5yvji+nB/lFTCxrSpbJ8lJkUdHTBcAYdi7mpK4xFtcTl2x2HHM5nOTwEwvgUNpA==
+X-Received: by 2002:aca:d6c4:: with SMTP id n187mr13265764oig.29.1579531462780;
+        Mon, 20 Jan 2020 06:44:22 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id 15sm10930518oin.5.2020.01.20.06.44.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Jan 2020 06:44:22 -0800 (PST)
+Subject: Re: [PATCH] fetch: add --no-update-remote-refs
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
+ <xmqqa76lew1l.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <84ea103d-8bb0-6043-bc51-9a83866d4e87@gmail.com>
+Date:   Mon, 20 Jan 2020 09:44:19 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqa76lew1l.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanushree Tumane <tanushreetumane@gmail.com>
+On 1/17/2020 2:13 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> To prevent long blocking time during a 'git fetch' call, a user
+>> may want to set up a schedule for background 'git fetch' processes.
+>> However, these runs will update the refs/remotes branches, and
+>> hence the user will not notice when remote refs are updated during
+>> their foreground fetches. In fact, they may _want_ those refs to
+>> stay put so they can work with the refs from their last foreground
+>> fetch call.
+> 
+> I've always hated anything that makes the remote-tracking refs
+> "float" and surprise end users.  I even hated that 'git push' that
+> pretends as if we immediately turned around and fetched from the
+> remote we just pushed when it was introduced, even though I gave up
+> by now.
+> 
+> So I am OK in principle to make it more difficult to update
+> refs/remotes/* while the end-user is looking the other way, but I
+> had to wonder why "git fetch" is even being done if it is done to
+> silently update/catch-up remote-tracking branches automatically in
+> the first place.
+>
+> This is more like a "preload" option---without updating the end-user
+> visible set of remote-tracking branches, you can make the data
+> available earlier so that the actual "fetch" the end-user runs in
+> order to update the remote-tracking branches can complete faster and
+> become ready to be used more quickly.  
+> 
+> Which makes sense.
 
-Reimplement the `bisect_run()` shell function
-in C and also add `--bisect-run` subcommand to
-`git bisect--helper` to call it from git-bisect.sh.
+Yes, we get the pack data earlier, and that's the primary cost of
+the fetch command. We can also update the commit-graph using the
+hidden refs.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-Signed-off-by: Miriam Rubio <mirucam@gmail.com>
----
- builtin/bisect--helper.c | 66 +++++++++++++++++++++++++++++++++++++++-
- git-bisect.sh            | 62 +------------------------------------
- 2 files changed, 66 insertions(+), 62 deletions(-)
+>> Add a --[no-]update-remote-refs option to 'git fetch' which defaults
+>> to the existing behavior of updating the remote refs. This allows
+>> a user to run
+>>
+>>   git fetch <remote> --no-update-remote-refs +refs/heads/*:refs/hidden/*
+>>
+>> to populate a custom ref space and download a pack of the new
+>> reachable objects.
+> 
+> Hmph.  I have to wonder if this should have been the default.  That
+> is, when refs/heads/X on the remote is configured to be copied to
+> refs/remotes/origin/X on this side, and an explicit refspec says it
+> should go some other place (i.e. refs/hidden/X), shouldn't that
+> automatically bypass configured +refs/heads/*:refs/remotes/origin/*
+> refspec?  In any case, it is too late to change that now.
+> 
+>> This kind of call allows a few things to happen:
+>>
+>> 1. We download a new pack if refs have updated.
+>> 2. Since the refs/hidden branches exist, GC will not remove the
+>>    newly-downloaded data.
+> 
+> Caution.  Since you didn't make it "refs/hidden/<remote>/*", you
+> just made the data you fetched the same way with this shiny new
+> "--no-update-remote-tracking-branches" option from another remote
+> unanchored and susceptible to GCs.
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 4b41cc7749..1899cc8114 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -31,6 +31,7 @@ static const char * const git_bisect_helper_usage[] = {
- 	N_("git bisect--helper --bisect-replay <filename>"),
- 	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
- 	N_("git bisect--helper --bisect-visualize"),
-+	N_("git bisect--helper --bisect-run <cmd>..."),
- 	NULL
- };
- 
-@@ -1092,6 +1093,60 @@ static int bisect_visualize(struct bisect_terms *terms, const char **argv, int a
- 	return res;
- }
- 
-+static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
-+{
-+    	int i, res = 0;
-+	struct strbuf command = STRBUF_INIT;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+
-+	if (bisect_next_check(terms, NULL))
-+        	return -1;
-+
-+	for (i = 0; i < argc; i++) {
-+            	strbuf_addstr(&command, argv[i]);
-+		strbuf_addstr(&command, " ");
-+        }
-+
-+	while (1) {
-+		argv_array_clear(&args);
-+
-+		printf(_("running %s"), command.buf);
-+		res = run_command_v_opt(argv, RUN_USING_SHELL);
-+
-+		if (res < 0 && res >= 128) {
-+			error(_("bisect run failed: exit code %d from"
-+				" '%s' is < 0 or >= 128"), res, command.buf);
-+			strbuf_release(&command);
-+			return res;
-+		}
-+
-+		if (res == 125)
-+			argv_array_push(&args, "skip");
-+		else if (res > 0)
-+			argv_array_push(&args, terms->term_bad);
-+		else
-+			argv_array_push(&args, terms->term_good);
-+		
-+		res = bisect_state(terms, args.argv, args.argc);
-+		
-+		if (res == -11) {
-+            		printf(_("bisect run success"));
-+            		res = 0;
-+        	}
-+		else if (res == -2)
-+            		error(_("bisect run cannot continue any more"));
-+        	else if (res)
-+            		error(_("bisect run failed:'git bisect--helper --bisect-state"
-+               			" %s' exited with error code %d"), args.argv[0], res);
-+        	else
-+            		continue;
-+
-+		strbuf_release(&command);
-+		argv_array_clear(&args);
-+		return res;
-+	}
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
- 	enum {
-@@ -1104,7 +1159,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		BISECT_LOG,
- 		BISECT_REPLAY,
- 		BISECT_SKIP,
--		BISECT_VISUALIZE
-+		BISECT_VISUALIZE,
-+		BISECT_RUN,
- 	} cmdmode = 0;
- 	int no_checkout = 0, res = 0, nolog = 0;
- 	struct option options[] = {
-@@ -1128,6 +1184,8 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("skip some commits for checkout"), BISECT_SKIP),
- 		OPT_CMDMODE(0, "bisect-visualize", &cmdmode,
- 			 N_("visualize the bisection"), BISECT_VISUALIZE),
-+		OPT_CMDMODE(0, "bisect-run", &cmdmode,
-+			 N_("use <cmd>... to automatically bisect."), BISECT_RUN),
- 		OPT_BOOL(0, "no-checkout", &no_checkout,
- 			 N_("update BISECT_HEAD instead of checking out the current commit")),
- 		OPT_BOOL(0, "no-log", &nolog,
-@@ -1196,6 +1254,12 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		get_terms(&terms);
- 		res = bisect_visualize(&terms, argv, argc);
- 		break;
-+	case BISECT_RUN:
-+		if (!argc)
-+			return error(_("bisect run failed: no command provided."));
-+		get_terms(&terms);
-+		res = bisect_run(&terms, argv, argc);
-+		break;
- 	default:
- 		return error("BUG: unknown subcommand '%d'", cmdmode);
- 	}
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 084766636d..d4f64674fe 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -39,66 +39,6 @@ _x40="$_x40$_x40$_x40$_x40$_x40$_x40$_x40$_x40"
- TERM_BAD=bad
- TERM_GOOD=good
- 
--bisect_run () {
--	git bisect--helper --bisect-next-check $TERM_GOOD $TERM_BAD fail || exit
--
--	test -n "$*" || die "$(gettext "bisect run failed: no command provided.")"
--
--	while true
--	do
--		command="$@"
--		eval_gettextln "running \$command"
--		"$@"
--		res=$?
--
--		# Check for really bad run error.
--		if [ $res -lt 0 -o $res -ge 128 ]
--		then
--			eval_gettextln "bisect run failed:
--exit code \$res from '\$command' is < 0 or >= 128" >&2
--			exit $res
--		fi
--
--		# Find current state depending on run success or failure.
--		# A special exit code of 125 means cannot test.
--		if [ $res -eq 125 ]
--		then
--			state='skip'
--		elif [ $res -gt 0 ]
--		then
--			state="$TERM_BAD"
--		else
--			state="$TERM_GOOD"
--		fi
--
--		( git bisect--helper --bisect-state $state >"$GIT_DIR/BISECT_RUN" )
--		res=$?
--
--		cat "$GIT_DIR/BISECT_RUN"
--
--		if sane_grep "first $TERM_BAD commit could be any of" "$GIT_DIR/BISECT_RUN" \
--			>/dev/null
--		then
--			gettextln "bisect run cannot continue any more" >&2
--			exit $res
--		fi
--
--		if [ $res -ne 0 ]
--		then
--			eval_gettextln "bisect run failed:
--'git bisect--helper --bisect-state \$state' exited with error code \$res" >&2
--			exit $res
--		fi
--
--		if sane_grep "is the first $TERM_BAD commit" "$GIT_DIR/BISECT_RUN" >/dev/null
--		then
--			gettextln "bisect run success"
--			exit 0;
--		fi
--
--	done
--}
--
- get_terms () {
- 	if test -s "$GIT_DIR/BISECT_TERMS"
- 	then
-@@ -138,7 +78,7 @@ case "$#" in
- 	log)
- 		git bisect--helper --bisect-log ;;
- 	run)
--		bisect_run "$@" ;;
-+		git bisect--helper --bisect-run "$(git rev-parse --sq-quote "$@")" ;;
- 	terms)
- 		git bisect--helper --bisect-terms "$@" || exit;;
- 	*)
--- 
-2.21.1 (Apple Git-122.3)
+You're right. I neglected to say "refs/hidden/<remote>/*" in my
+message, but it _is_ something I've been doing in my background
+fetches.
 
+>> 3. With fetch.writeCommitGraph enabled, the refs/hidden refs are
+>>    used to update the commit-graph file.
+> 
+> I have a moderately strong suspicion that it would be better to make
+> this "--ignore-configured-refspecs" and implemented without special
+> casign the "refs/remotes/" hierarchy like the code does by
+> hardcoding.
+
+Based on this and Peff's response, I think you are pointing me in
+a better direction with this. It should make the change less of a
+hack and also make it more general to users with custom refspecs.
+
+> I also wonder if auto-following of tags should be disabled at the
+> same time.  I have no good argument either way (yet).
+
+Would ignoring the configured refspecs stop auto-following tags?
+I'll take a look and see. Otherwise, I'll add --no-tags to my
+background fetch command.
+
+Thanks!
+-Stolee
