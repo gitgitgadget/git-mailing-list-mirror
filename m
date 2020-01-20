@@ -2,118 +2,87 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D6CC32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05941C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:12:05 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 6FA02217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:23:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C860F24653
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 21:12:04 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="NzyeEWmr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726843AbgATUX4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 15:23:56 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:65175 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726586AbgATUX4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 15:23:56 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 00KKNpjn055037
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 20 Jan 2020 15:23:51 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
-        <git@vger.kernel.org>
-References: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet>
-Subject: RE: Y2038 vs struct cache_time/time_t
-Date:   Mon, 20 Jan 2020 15:23:46 -0500
-Message-ID: <017401d5cfcf$8791d900$96b58b00$@nexbridge.com>
+        id S1727254AbgATVMD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 16:12:03 -0500
+Received: from mout.gmx.net ([212.227.15.18]:41943 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726586AbgATVMD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 16:12:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1579554711;
+        bh=j3sZtWXD99ZhMiGN6zWSQ7vFGE99598Vitab87JCBzk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=NzyeEWmrl1NPJ5NGYC90MF+EwfrYrZ24GrYigx9Zrlm9bIY4P2LLeNqFW03pEHzx6
+         QXQ2UDIYga58+E89TUZrpxZ9tEYgTk+ozY0/aWIz84zR35ZcN6xO5/aMflBw7rz2+B
+         F9+KlDg5VyDGfY0NnRZpTir+dfjJ9ndm3QFmfFkg=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mplc7-1jPyos01iH-00qAfE; Mon, 20
+ Jan 2020 22:11:51 +0100
+Date:   Mon, 20 Jan 2020 22:11:49 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Ben Curtis <nospam@nowsci.com>, git@vger.kernel.org,
+        Derrick Stolee <stolee@gmail.com>,
+        Ben Curtis via GitGitGadget <gitgitgadget@gmail.com>
+Subject: Re: [PATCH] commit: replace rebase/sequence booleans with single
+ pick_state enum
+In-Reply-To: <bfe569ea-93c7-382f-18fe-d81d8f9cbf4f@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001202210520.46@tvgsbejvaqbjf.bet>
+References: <pull.531.git.1579268705473.gitgitgadget@gmail.com> <17b57e7f-7f3c-abab-1da6-d2e5c9ff893d@gmail.com> <bb0e232924305697596743d3fa93d5bf3b0e8d4d.camel@nowsci.com> <bfe569ea-93c7-382f-18fe-d81d8f9cbf4f@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE/8h2/Etm33bphKzxATo2qQV1OV6kftBHA
-Content-Language: en-ca
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LWAZ5F0eQWM2JMAqWFjKrXUuza2X3iSu5Td70NVHhUxrA10V/DU
+ 8grLyAooXXCkZEGpNaXOok0mLvOKbaY7XtrzFpSsAECAUOpxWbsFAZqn12pOPW2Ku6Feod5
+ CjcdWUAhAONSzeALuIGb2HGzBMCl9Z0Ek3IgNzfZgmTXh3j8AFn/V/AOpBQPiM/TlfhTBoo
+ keN/PuexRycJjqUdw5HGQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:/lbMBpc2xF8=:VJgYiVomAOVM9dL6m/oSjW
+ Ds2twx9GBgpnik19vH/Hx0OoAaLjI37xHR9fOfYUCNlk9UMOqT9LjEX0V1fyBzwnq56FPY6h9
+ 5VZm7QWUI5pqseDvurL1PkbdB42pmyRRmkYGrCZEbQn52mgeqWeEqa/MiirHlI0mScFf/fYNH
+ fJvEXcqvND60IzP2zojSj1rZwGaEtXzpdyiflTZ7FJMWeiOfBBjfwMfx3K5EjwMvuWHb8Sr2u
+ Pp56GZjsVFiLwErtFFE4h+GWxjvLoxNtqUwNp+a5BOmJQuhhjL4JuhSYv9IwDckExHW7D8yl5
+ IlWZQ/JE+1eI0DyX+ubOlg7qT96FkG5ouReeDFyOYJ+IBjibk5wNbMHDKf/rtbMxEN3rCNoth
+ I3ssLajmDW51SlpejCUEVp3dhRErzvCXpTRj1r+5hSM1UvqAROEEhDnOYpuXuXbpptXzxCoIS
+ on4wvbOjfoXZVqipJcDNEo6AgpioN7goJFlr+YYaebxuyylKw6p3R8nMJ3JF0JwkfJ+OtLUvW
+ giTzzV9EIIux4oqh+MtaD1yimy8ZFmuhgJEbGvP+oi1jwZROpxjlwTfZR5uAJNj68zN3ahBLp
+ 4k6dNnXHctE48RusQBxasYetMYW6f3Rmjno8zD6kx0PDXcBfMnn8SCbqcM5/4x0dBPnnPba2j
+ vKBaszSCcYjsaCrAlQ7v9R7kus6XdIrU7kY9U1sQxzTbXmYHjru0vHAWUtdQenKjSH8vDi+Zl
+ 26VXP5MF92geN/heBRkL3h0+nl4oAC1cXtRikFr45KUzIq7dUsBNyJ2rZDsnejcvOpDVYtr10
+ gEccSlk4lfhPdMCFf0uVKP2bO7h8B7Cd9DEPV3+ZpWY9AlgXukoeKZJ3pA5n0SBU/extDEgk8
+ yfPYHiNCjnVcS6iGO8TFiJDU1o98UCe1n4rM0CgUSPoXtKHCQ/DIoGCKCyXST5qkxJxCG9mQA
+ HFjAD6cy4CvkSgjZdWkipee2tHsyFZEU3r7n4O2F41NYtdbYvE5InLG56htaN3JxRrAmjFIHl
+ lOnUrtIbXcxT7uaKpBoQZFkW/U6tSeZ0SO31SVH4aK4Heckkrdo8lXnYirPf/zf9yhEXXQw5p
+ 0xTs1LPOLJ21+fzDbiq7FIwF9kIYU+uIrk0zVLIoVFs3WsarMGBdznCiAS7eHCGfXhZkAX8o1
+ 6qFI0Isr04FL3/3UINEzdbrbUKF25zgMoXdpNtf6PFe+zKnNfpguplpwZJQOs3bUErtAgSoZj
+ msfPwmwmPMT/NxtBKkaBHuBdarbvl6QjO0OxtXVWluOLXLQ2xDjUuHEjNcLs=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 19, 2038 (no really January 20, 2020 2:39 PM), Johannes
-Schindelin wrote:
-> today, in quite an entertaining thread on Twitter
-> (https://twitter.com/jxxf/status/1219009308438024200) I read about yet
-> another account how the Year 2038 problem already bites people. And costs
-> real amounts of money.
-> 
-> And after I stopped shaking my head in disbelief, I had a quick look, and
-it
-> seems that we're safe at least until February 7th, 2106. That's not great,
-but I
-> plan on not being around at that date anymore, so there. That date is when
-> the unsigned 32-bit Unix epoch will roll over and play dead^W^Wwreak
-> havoc (iff the human species manages to actually turn around and reverse
-> the climate catastrophe it caused, and that's a big iff):
-> https://en.wikipedia.org/wiki/Time_formatting_and_storage_bugs#Year_21
-> 06
-> 
-> Concretely, it looks as if we store our own timestamps on disk (in the
-index
-> file) as uint32_t:
-> 
-> 	/*
-> 	 * The "cache_time" is just the low 32 bits of the
-> 	 * time. It doesn't matter if it overflows - we only
-> 	 * check it for equality in the 32 bits we save.
-> 	 */
-> 	struct cache_time {
-> 		uint32_t sec;
-> 		uint32_t nsec;
-> 	};
-> 
-> The comment seems to indicate that we are still safe even if 2106 comes
-> around, but I am not _quite_ that sure, as I expect us to have "greater
-than"
-> checks, not only equality checks.
-> 
-> But wait, we're still not quite safe. If I remember correctly, 32-bit
-Linux still
-> uses _signed_ 32-bit integers as `time_t`, so when we render dates, for
-> example, and use system-provided functions, on 32-bit Linux we will at
-least
-> show the wrong dates starting 2038.
-> 
-> This got me thinking, and I put on my QA hat. Kids, try this at home:
-> 
-> 	$ git log --until=1.january.1960
-> 
-> 	$ git log --since=1.january.2200
-> 
-> Git does not really do what you expected, eh?
-> 
-> Maybe we want to do something about that, and while at it also fix the
-> overflow problems, probably requiring a new index format?
+Hi Phillip,
 
-The preferred way of fixing this is traditionally - for those of us who have
-been through it (4-ish times), to convert to time64_t where available (big
-legacy machines, like z/OS and NonStop), or in gcc, time_t is 64 bit on 64
-bit systems. It has been 64 bit on Windows since VS 2005. I have a
-relatively some relatively old Linux distros on 64 bit processors that also
-have time_t set as 64 bit in gcc. Those seem to be the standard approaches.
-To cover it, I suggest we move to a gittime_t which is always 64 bit (or 128
-bit if you don't want to be resurrected after the sun turns into a red giant
-or later when we are left with evaporating black holes), no matter what the
-platform, and build the selection of what gittime_t is (time_t or time64_t)
-into our config and/or compat.h. That way, hopefully, people will rebuild
-their git before 2038 or before someone decides to stick a fake date into a
-Github repo just to mess with us.
+On Mon, 20 Jan 2020, Phillip Wood wrote:
 
-Cheers,
-Randall
+> [Cc'ing dscho as it relates to issue management on gitgitgadget]
 
+Duplicating efforts is sadly a thing we cannot prevent, not even should we
+agree on a single issue tracker (we won't).
+
+Ciao,
+Dscho
