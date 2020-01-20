@@ -2,265 +2,107 @@ Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43BACC2D0DB
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB610C33CAA
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0AD5E22464
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1CA0217F4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 14:38:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kQ6bHq0p"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nuz/mJSt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726982AbgATOib (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 09:38:31 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:36076 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726860AbgATOib (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 09:38:31 -0500
-Received: by mail-wr1-f45.google.com with SMTP id z3so29847007wru.3
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:30 -0800 (PST)
+        id S1727289AbgATOie (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 09:38:34 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39332 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbgATOid (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 09:38:33 -0500
+Received: by mail-wm1-f66.google.com with SMTP id 20so14953418wmj.4
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 06:38:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qfwvOlUBhCH+YRiQ6Wy1cfLJ97fGb59Bi/ITgp/OJkg=;
-        b=kQ6bHq0pdzPlIAM8A/itZ/G8zKS0/M/dZsrx0P5Uer9NQbF+OR8bTolVtWoBbhxzwX
-         Rxwco9mIyIHwTiqwjgG99dsVxwcwcw0sQm+MVrHLutXPDfgImGbfISmCB29+5WKlHECw
-         ZCdT/Z4gYpVRIekMio+rSoN4FhPY5WU08lIjYL34UVYsonzi5yjbnZYe1dqOLs6Jc+4k
-         27AQqZwdI7tCXL6w9JwjJHvWRrScu40VQ/peP+8XdNzh3dHyba1BsTVTL+vJO1p8vqPR
-         pec1ON3W7QxvXmYP3gGdoHq+fOse2+GngwaVN+JUyMunuMQ0tinQ+whJRL1paqxe+BSD
-         HQyQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=o2IfjAS33MrmsZyy2B/KfIloY6ksKTkGV+CHSOBHGjw=;
+        b=Nuz/mJStIaff3iRsnQraUC4hdl+NMPBmLfEhIZtnX0bAlMdhol58lsHeBER3b1OV2r
+         QMW2WbFzzA32+reCyFDTzfzhMtJxzNwKICspkhScckQEKNmP3PjaYBjzE03DjG1pIkFN
+         E1Wukn9ixhLlQe/eIEYdBXqbidipJnnmqh/BvQNHw3xlz4gTaUkZ7/d/E5Sk5JALQmEg
+         7TFXQBKD5ngeX3WdStMWuxqjcbFC2KFTLljQDIRu7aLuSy2Qx28ILwWA56wu4OSkImQg
+         F2sEIANFMUnQ/k5LMR1ynD09EuRXbWgjt9k4tpbfVbt/7SS5LJZcsrFxqQBFBZ+rWNll
+         Gabg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=qfwvOlUBhCH+YRiQ6Wy1cfLJ97fGb59Bi/ITgp/OJkg=;
-        b=Ekltuq5BW22DCw8vgj17UBZuhx0JnRbwfXjcPlgXvh+tMlJf4q7ImWdC0bvhkyG4ee
-         HlrJ4+/7SrnXbDqf4hMusHNCqVzPb9Fy0eA7JHFmHXg3SH2UvH8Rqd8FHONsKewuQtZa
-         43I8OchJQ1hoWP2Jjl7dt3D3rboagxIRk4xl6iQ9lcASB4Zgkq5K92uK9UmX9BWkw5EG
-         8APLR5cxmb8RAAQgqjKQ3a395OWI8716SgWbGhyndS5bCdPL38KtCfLZ8oXy0wz0/4xt
-         4TaIaPmRUpqkq9I3XdPxYOy2rxWSXWW1Nf9HZQOnudB+jeiPWabnWz4QLdA4/BcJXfak
-         R2XQ==
-X-Gm-Message-State: APjAAAUnnIcWUVJb3oVUQMkW5J4tJS6cOwPTFaid8jMDMjXFX2ycVlnh
-        aLzGiz++nbkjx9qZyal+S5iYeDGD
-X-Google-Smtp-Source: APXvYqwkrfZ/nrVDQX9ZmfcfISLeAMxkHfAmkWGtfFp8Wf1l7ft8qW4av22ZTp8MkCAr4aRKID5AIQ==
-X-Received: by 2002:adf:a109:: with SMTP id o9mr18739133wro.189.1579531108935;
-        Mon, 20 Jan 2020 06:38:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=o2IfjAS33MrmsZyy2B/KfIloY6ksKTkGV+CHSOBHGjw=;
+        b=dZFGvggzk+Jvc5Gv3Ni457DuiZk15bYLiLOfQob4UJZ0HudRaADYJbwpPTlOOdzdKQ
+         GdR66XTrJWUMGzX1cKquBaK3yBM9n4R7PYtbGF3oX2X5jDInqNAEd2GNIxMJ1TcL0mH2
+         OIJPBcnyQ31u63T9pbDqWyX4DOM5LX+NbOO69TSMbP7EQHU2ZaqVhePvANB+4n9CwjUD
+         JuSTQ/6FCeo2pxP1lqE5Ow1QCF+aghBJnW28tiZRazJBvnP2g7iAaFdyXuyP/2aXPE15
+         k5dbMtDqYXqCF8r+KK7VK4yJdFyFsw6lQ0mp9wxx3CcTCTPPdlpu/4nyjmv2ct+TQb8m
+         +S8w==
+X-Gm-Message-State: APjAAAXVtCiw2R+ESZaWudBNFNuaGL8dTDxH89a09xH+aiaHUC61oDZ8
+        bCZCQbc2UU+w9Rm4fE7FJHPypbxB
+X-Google-Smtp-Source: APXvYqxdOlK0N19Yao1GLqKYXtuJw1HwhEX4ASML+CdFJtGKI2dGBQl97reu1X8LFL8xRMS9L7CReQ==
+X-Received: by 2002:a1c:f20c:: with SMTP id s12mr18978167wmc.173.1579531112178;
+        Mon, 20 Jan 2020 06:38:32 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.28
+        by smtp.gmail.com with ESMTPSA id u8sm23192588wmm.15.2020.01.20.06.38.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Jan 2020 06:38:28 -0800 (PST)
+        Mon, 20 Jan 2020 06:38:31 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Miriam Rubio <mirucam@gmail.com>
-Subject: [Outreachy][PATCH 00/29] Finish converting git bisect to C part 1
-Date:   Mon, 20 Jan 2020 15:37:31 +0100
-Message-Id: <20200120143800.900-1-mirucam@gmail.com>
+Cc:     Miriam Rubio <mirucam@gmail.com>,
+        Christian Couder <chriscool@tuxfamil.org>
+Subject: [PATCH 03/29] bisect: use the standard 'if (!var)' way to check for 0
+Date:   Mon, 20 Jan 2020 15:37:34 +0100
+Message-Id: <20200120143800.900-4-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
+In-Reply-To: <20200120143800.900-1-mirucam@gmail.com>
+References: <20200120143800.900-1-mirucam@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---- Changes since Tanushree’s pr117 sent patch series:
-https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) ---
+Instead of using 'var == 0' in an if condition, let's use '!var' and
+make 'bisect.c' more consistent with the rest of the code.
 
-General changes
----------------
+Mentored-by: Christian Couder <chriscool@tuxfamil.org>
+Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+---
+ bisect.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-* Rebase on master branch.
-* Improve commit messages.
-* Amend patch series titles.
-* Reorder commits: first clean-up/preparatory commits, squash or split 
-commits.
-
-Specific changes
-----------------
-
-[1/29] bisect--helper: convert `vocab_*` char pointers to char arrays
-
-* New patch to convert `vocab_bad` and `vocab_good` char pointers 
-to char arrays
+diff --git a/bisect.c b/bisect.c
+index e81c91d02c..83cb5b3a98 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -572,7 +572,7 @@ static int sqrti(int val)
+ {
+ 	float d, x = val;
  
---
-
-[2/29] bisect--helper: change `retval` to `res`
-
-* Replace one last variable `retval` to `res`.
-
---
-
-[3/29] bisect: use the standard 'if (!var)' way to check for 0
-
-* New patch to use '!var' and make 'bisect.c' more consistent with the
-rest of the code
-
---
-
-[4/29] run-command: make `exists_in_PATH()` non-static
-
-* Add comment before function declaration.
-* Move function declaration in `run-command.h`.
-
---
-
-[6/29] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` 
-and its dependents
-    
-* Fix `mark_edges_uninteresting()` and `show_diff_tree()` calls after 
-rebase on master.
-
---
-
-[7/29] bisect: libify `bisect_checkout`
-    
-* Fix `memcpy()` call after rebase on master.
-* Introduce `res` variable to return `bisect_checkout()` output. 
-* Fix `get_commit_reference()` declaration after rebase on master.
-
---
-
-[8/29] bisect: libify `check_merge_bases` and its dependents
-
-State: Previously sent
-
-* Fix `check_ancestors()` declaration after rebase on master.
-* Fix `get_bad_and_good_commits()` call after rebase on master.
-
---
-
-[9/29] bisect: libify `check_good_are_ancestors_of_bad` and its 
-dependents
-
-State: Previously sent
-
-* Fix `check_good_are_ancestors_of_bad()` declaration after rebase on 
-master.
-* Fix `check_good_are_ancestors_of_bad()`, `bisect_next_all()`
-and `bisect_rev_setup()` calls after rebase on master.
-
---
-
-[11/29] bisect: libify `bisect_next_all`
-
-State: Previously sent
-
-* Fix `show_diff_tree()` call after rebase on master.
-
---
-
-[12/29] bisect--helper: reimplement `bisect_next` and `bisect_auto_next`
-shell functions in C
-
-* Fix `repo_init_revisions()` and `bisect_next_all()` calls after rebase
-on master.
-* Remove `goto` statement in `bisect_skipped_commits()`
-
---
-
-[13/29] bisect--helper: finish porting `bisect_start()` to C
-
-* Change `return` statement instead of `die` in error handling.
-* Remove `goto` statements in `bisect_skipped_commits()`.
-
---
-
-[21/29] bisect--helper: reimplement `bisect_replay` shell function in C
-
-* Add blank line in `get_next_word()`.
-* Remove `goto` statements in `bisect_replay()`.
-
---
-
-[23/29] bisect--helper: use `res` instead of return in BISECT_RESET case
-option
-
-* New patch to split previous commit in two.
-
---
-
-[26/29] bisect--helper: reimplement `bisect_skip` shell function in C
-
-State: Previously sent
-
-* Add blank line.
-
---
-
-[28/29] bisect--helper: reimplement `bisect_visualize()`shell function 
-in C
-
-New patch:
-
-* Reimplement the `bisect_visualize()` shell function in C.
-* Add `--bisect-visualize` subcommand.
-* Fix long code line.
-
---
-
-[29/29] bisect--helper: reimplement `bisect_run` shell function in C
-
-New patch:
-
-* Reimplement the `bisect_run()` shell function in C.
-* Add `--bisect-run` subcommand.
-* Remove blank line.
-
---
-
-Miriam Rubio (2):
-  bisect--helper: convert `vocab_*` char pointers to char arrays
-  bisect: use the standard 'if (!var)' way to check for 0
-
-Pranit Bauva (24):
-  run-command: make `exists_in_PATH()` non-static
-  bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and
-    its dependents
-  bisect: libify `bisect_checkout`
-  bisect: libify `check_merge_bases` and its dependents
-  bisect: libify `check_good_are_ancestors_of_bad` and its dependents
-  bisect: libify `handle_bad_merge_base` and its dependents
-  bisect: libify `bisect_next_all`
-  bisect--helper: reimplement `bisect_next` and `bisect_auto_next` shell
-    functions in C
-  bisect--helper: finish porting `bisect_start()` to C
-  bisect--helper: retire `--bisect-clean-state` subcommand
-  bisect--helper: retire `--next-all` subcommand
-  bisect--helper: reimplement `bisect_autostart` shell function in C
-  bisect--helper: reimplement `bisect_state` & `bisect_head` shell
-    functions in C
-  bisect--helper: retire `--check-expected-revs` subcommand
-  bisect--helper: retire `--write-terms` subcommand
-  bisect--helper: reimplement `bisect_log` shell function in C
-  bisect--helper: reimplement `bisect_replay` shell function in C
-  bisect--helper: retire `--bisect-write` subcommand
-  bisect--helper: use `res` instead of return in BISECT_RESET case
-    option
-  bisect--helper: retire `--bisect-autostart` subcommand
-  bisect--helper: retire `--bisect-auto-next` subcommand
-  bisect--helper: reimplement `bisect_skip` shell function in C
-  bisect--helper: retire `--check-and-set-terms` subcommand
-  bisect--helper: reimplement `bisect_visualize()`shell function in C
-
-Tanushree Tumane (3):
-  bisect--helper: change `retval` to `res`
-  bisect--helper: introduce new `decide_next()` function
-  bisect--helper: reimplement `bisect_run` shell function in C
-
- bisect.c                 | 146 +++++---
- builtin/bisect--helper.c | 776 +++++++++++++++++++++++++++++++++------
- git-bisect.sh            | 279 +-------------
- run-command.c            |   2 +-
- run-command.h            |  11 +
- 5 files changed, 793 insertions(+), 421 deletions(-)
-
+-	if (val == 0)
++	if (!val)
+ 		return 0;
+ 
+ 	do {
+@@ -869,7 +869,7 @@ static void check_good_are_ancestors_of_bad(struct repository *r,
+ 		goto done;
+ 
+ 	/* Bisecting with no good rev is ok. */
+-	if (good_revs.nr == 0)
++	if (!good_revs.nr)
+ 		goto done;
+ 
+ 	/* Check if all good revs are ancestor of the bad rev. */
 -- 
 2.21.1 (Apple Git-122.3)
 
