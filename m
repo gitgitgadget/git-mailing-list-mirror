@@ -8,69 +8,68 @@ X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B115C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D92B8C32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:29:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5510A217F4
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:23:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 913192253D
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 22:29:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="W7qxFZq+"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="HplQHnUK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727045AbgATWXG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 17:23:06 -0500
-Received: from mout.gmx.net ([212.227.17.22]:38841 "EHLO mout.gmx.net"
+        id S1726843AbgATW3T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 17:29:19 -0500
+Received: from mout.gmx.net ([212.227.17.22]:35099 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726752AbgATWXG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 17:23:06 -0500
+        id S1726607AbgATW3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 17:29:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579558983;
-        bh=0bpLEqBirq+MJ6NDPJ7128moxOnGn9G1A104Zhq1Sto=;
+        s=badeba3b8450; t=1579559356;
+        bh=Wf9pJhS7MdFXpUdBxnWC8OawwqScdS5M1DX6yfieKBI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=W7qxFZq+9Oj4qMhT6gHNMNqs7qGTlRFm+5YkCumfZ6907bJOnXJtww/JHZmpRy39S
-         BP3c1+Z4QSHy804jkrpAHZJRpRQL5bMtutBytMfHQ526iLWXFnXZ1AFVjdmPEsn1JI
-         Ro1vTsy3NcuVOCUsOf8BgxohKdgFy+6q/Fh5/qOY=
+        b=HplQHnUKsp42uF6nYLMJybzM+0Qs3HKTvu81VTe4ZksAkEfWmiRATTogb7GU1HvoB
+         XR4LucKu5LXuNNqyMTCqhFbe9XlC8GBJB73eVw5Q+AmGw1cCgwqG6FBiBXNq6X28Dd
+         o0Ea+xJ6UgwhiPBj3jhrlldtYzUDx6qX8RLdRqOo=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M9Wuq-1iwzMx2wLc-005ZLV; Mon, 20
- Jan 2020 23:23:03 +0100
-Date:   Mon, 20 Jan 2020 23:23:03 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MqJmF-1jOJS43njX-00nTUe; Mon, 20
+ Jan 2020 23:29:16 +0100
+Date:   Mon, 20 Jan 2020 23:29:14 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Miriam Rubio <mirucam@gmail.com>
 cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH 10/29] bisect: libify `handle_bad_merge_base` and its
- dependents
-In-Reply-To: <20200120143800.900-11-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001202321210.46@tvgsbejvaqbjf.bet>
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-11-mirucam@gmail.com>
+Subject: Re: [PATCH 11/29] bisect: libify `bisect_next_all`
+In-Reply-To: <20200120143800.900-12-mirucam@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001202325000.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-12-mirucam@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Yp+fMHpvvjUb5tOswF8BaqjfOTRohxLUuOhQVRgBDkXzf/u6qP8
- W/Ky8Z4cugaZBv+bwP99ONtXXy4l576pzjKDzQtPnsHw0e2fZbOZkTFLVvzIIOasT6YnjRY
- b0KXLsBCpfsDInPsfZJDu0fXJoWytXuG/W8MKrOVurjVXYEhRX0fbrjf0F+Dmb5r4euLIev
- ffHWBwqd968rltPzruDJA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0P+65ayyWo4=:zn1FYhUueDCaLrVNzKyjLz
- OGonIMdCgdfkffLwG7WpkW/lAetxAZX3vhasFU5WIPqVnprbBxjp+jLJwkKIWCOJZiBDWSWiZ
- CFlxvq08wkhDwkHDMomEkTpPcbMkhbW+Mpxmo07/9ZOYlCngTAdqiZl1lScZcgWGAb+fM2Ndn
- BlF7H/wT9/eaEcBtY1vn3G8rCQ6vkn/Slj+Eqaw/Mq84iJFrq8sPNyqoIxTYtXWPxbnBgPgt3
- pYpS5aaXzsHMeRdTuSpnioL6UvcHQs5Y60B7pg6tUFbAKhSt64YEPSm3yvOUpvzPqAHbk5nAa
- wwJ/XMfkbg58xTkaqZf8SPyu9FqOr+fnm2bjz157xGLmIaeZz+H+/y8EJlhm5pEwB4CWTdk+r
- /+ah3U6PDTYXHf91IQRugIJWcDHsUgFBxh94SclDEaI4ngY/SEviClddDzDsyumrjJIrHNDlB
- agCWAdUj+zSgmMAeXKXP7ByfY5kCsGXEl9Ch0xUnsRFrg0EiAA3f28rnU/hGUF0vPaC1IuBnR
- WvYiwPxW4fyfidIg7Fw8tnDsouxDNjW5aRKfJQqEWxecfoRXkPGXOf9X77kStnngtfwI8ctIz
- BHh7RslOR3b6z5gAZge3Tx+3R5BzWnSSgvRKEjIyaauSYnSfuixa12H6IXnDtR8nTJf+xq8KI
- n+4SW6Rz7xOFQde1DPOGzRWBFFSvF+LC5ePiR3xDWiWRlIFIcwEdsL/i7UKoVil8HIzvkRqko
- BQ0c62QfN4QvQnNJOGMNkgbcyN8AOpdYltIVJhRplZ7zvpTjgy/RZ0zS5kYjW7xYv55x7cbHY
- X8SSlH5tLflMT7iZVoY3nvPfK+SeD7rHshFUtXIUDiWCmR6tPlC6R9S1VzTIt+IkW1RsCmG8Q
- hblkkR6T7ReL3rqlNlIG7qZ9aQZqXctaQa1GsPJIiq8h/XNeHoXIML6koDokRsfA/imL+Lno5
- kCeWH/o3ITCIwjDloCOzWP0N3TgzMxqt2UboI3CCn+yhdLek/RWxtPU3B8gp5BnDvd1rx1+11
- F1zNny+bUNKaRgK7lvRvdKS3CGfrTCRs+T49s0SlH2TkgIzP0TJzXqG/o09DRFNaRvQ+hoacK
- eBy+iCrgeX8HdiwApKr3D9hv3UCalaEZbCkLyjaGTlTFC4oDHDRYTvMOyvrVdyoV3xK+uheLW
- g9HPv4tsiXpl/6dXSahPqNNM+4nTtLYpn38RRS+kAl+iwsN7oMcFMV17PSTkibb+a0lr+Gkej
- LuAJuc2Nj8Zkqr5FNC+RRqvmnLGxP7h1mCcUeATVS1RAYGs62owl7M7cdIKs=
+X-Provags-ID: V03:K1:kiE0+qFufoZUlbP31xZGyVi+OxXk3HkfUDQ/i3LOOnhM5HuaEUp
+ QUSC/MyE5q1GCFbgJllpwkNIPYf/YfLPD+SxOAiS+Du+aXqndoaO0EEVhIeWkuQAOThwhkA
+ O2BASIZydciylAshhQ7d9WtbBAirS1hrkuoR+Y1CTMyjvC4IFbIROn2DpjKmSC+Wz/G0ZqB
+ DFDWeN6cZ9dLDe+elVTyw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:C9YJgYBi3Bw=:/j0HDtvSrFo1ykEZSplI7S
+ 40dsTMpoQH0wQA6n3/eIfEzS+RGL93yLhQpzCkB7xZZkrNqIDLZYJdJljGCKJ99vVAdfjJlnE
+ W5Avs6MH3+bIsSEhAqkYNxUB96EDvPDcsaZ3ws+NRBBE33BSpIzXn5IPIEgiXK5RF3R/VRQEk
+ w0cex0W7RbKVzA/Im/k6fww19Hm4ogyNjz+zdUf2/aVuGyvAdzidPkyP9DrQiUluYZi+DbpNs
+ fF/O5J0mdDvM1jdVHyve67HVAX1T4UfMT0qALqBwLJb8rVUSye3MBgijQZxk5WpZIhD+s23ok
+ tOBvcXaa7IBerheIZ8jqvyRF5stQb/bcca2Yc4VHkh0qIJ3P2Rqc1Ng7IyxCS6S0MstSLReg1
+ T5nIKEYrZW91V0vKk33uSf+Ih+cL98BuCqc1sn7PaNGPPnbBsC+QghkeJ2jUJpUmdghm0Om7G
+ HYGkLMLzA/XGUU+YLpMZKSAE3nwpqZM2RyVtpoeSs8yZeDeCptLagMrI/bC4/CQv1DDWgcNxB
+ xsAjEbr7TFx228Nu5y/cL1/ZPfPnXpi8hDHJ6RsvhLS91UDCcJICdnmeXIYktDRODXiBn2OCg
+ EeUr/OLLXWbS/LXB37t8MI+KTcv17gcZ590aUzMBCtJ/hiOYfbO2Omd607RBHWLf6k06V2nCb
+ wBHYB3sUEBG7iVsKd6Z6Jv+Qrfy/SSW8zMQyovG6hHGN64heevYwYzmB8rhvdqPUDD2VH9Fpf
+ UzqJRkYmT58slZo+BNU0CojPeJSBLmpYTpbxnHSZFTfGAZ3TjpAZIlUkAJrjcBB2i6Rppby7r
+ o88U0XEn9l/SbTEzoxFoez20s3c4uSpqAX309gEosuyRdiV9E0Pm9NH3I8mQJL/F012S6Mi01
+ NJlGod27zlFmIBy1fvOd0ElxiJB5xDMzysUVTo13XEEdrHWvnL3HEIz2JE79LGP2gdYnhlcUq
+ ntcWcR0wYJca8hjAVX397jBunkC4TCIJnvNkyEgp1SK6k6+eAbnMxnGpA0DEFucAzau6j3Hry
+ FZvw47c6u1pXhhcG0NPl8v8MRZqOzYt+WAM1w/snLCam95aTsliYIlHQWxYCC4SC3/A73RfY1
+ 6aTcuk4VfnMmmg07uBdTaM20pNnbns1Tftm9BpFxWiphNOv+8u6sNyUYz50ZVQJrCJV0CgEV+
+ uXRcttBQ6NheYk2RM72w98AWQzG2MNI8LiYRUFGzt862JrRVSNJfC+7hhmzDbPaUdYl08wOoo
+ SgzgdxvPD0hYthnGxNrpB4evXhv3m1QQtgU56JJJ85LIW5WBDzvY7Y3/qEG8=
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -91,12 +90,27 @@ On Mon, 20 Jan 2020, Miriam Rubio wrote:
 > `return <negative-value>`. Follow POSIX conventions to return
 > <negative-value> to indicate error.
 >
-> Turn `exit()` to `return` calls in `handle_bad_merge_base()`.
+> Turn `exit()` to `return` calls in `bisect_next_all()`.
 >
-> Handle the return value in dependent function check_merge_bases().
+> All the functions calling `bisect_next_all()` are already able to
+> handle return values from it.
 
-This is again a lot of essentially repeated text from earlier commit
-messages, but the most pressing question is not addressed...
+So this patch brings more magic values that really would like to become
+`enum` values. At this point, we're talking about `bisect_next_all()`
+which is _not_ a file-local (`static`) function. Therefore, we now really
+wade into API territory where an `enum` is no longer just a nice thing,
+but a necessary thing: `bisect_next_all()` is a function that can be
+called from other source files.
+
+As far as I can see, this patch concludes the "libify" part of the patch
+series (read: it would have been the second patch series I would have
+suggested to split out from an otherwise too-long-to-be-reviewed set of
+patches, if I had been your mentor), and I'll leave it at that for
+tonight; Hopefully I will find some time to review more of these patches
+tomorrow.
+
+Ciao,
+Johannes
 
 >
 > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
@@ -105,57 +119,93 @@ messages, but the most pressing question is not addressed...
 > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 > ---
->  bisect.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>  bisect.c | 40 +++++++++++++++++++++++++++++-----------
+>  1 file changed, 29 insertions(+), 11 deletions(-)
 >
 > diff --git a/bisect.c b/bisect.c
-> index 2b80597a1d..acb5a13911 100644
+> index acb5a13911..33f2829c19 100644
 > --- a/bisect.c
 > +++ b/bisect.c
-> @@ -756,7 +756,7 @@ static struct commit **get_bad_and_good_commits(stru=
-ct repository *r,
->  	return rev;
+> @@ -967,10 +967,10 @@ void read_bisect_terms(const char **read_bad, cons=
+t char **read_good)
 >  }
 >
-> -static void handle_bad_merge_base(void)
-> +static int handle_bad_merge_base(void)
->  {
->  	if (is_expected_rev(current_bad_oid)) {
->  		char *bad_hex =3D oid_to_hex(current_bad_oid);
-> @@ -777,14 +777,14 @@ static void handle_bad_merge_base(void)
->  				"between %s and [%s].\n"),
->  				bad_hex, term_bad, term_good, bad_hex, good_hex);
->  		}
-> -		exit(3);
-> +		return -3;
-
-... which is: what does `3` stand for?
-
-Thanks,
-Johannes
-
+>  /*
+> - * We use the convention that exiting with an exit code 10 means that
+> - * the bisection process finished successfully.
+> - * In this case the calling shell script should exit 0.
+> - *
+> + * We use the convention that return -10 means the bisection process
+> + * finished successfully.
+> + * In this case the calling function or command should not turn a -10
+> + * return code into an error or a non zero exit code.
+>   * If no_checkout is non-zero, the bisection process does not
+>   * checkout the trial commit but instead simply updates BISECT_HEAD.
+>   */
+> @@ -1000,23 +1000,35 @@ int bisect_next_all(struct repository *r, const =
+char *prefix, int no_checkout)
+>
+>  	if (!revs.commits) {
+>  		/*
+> -		 * We should exit here only if the "bad"
+> +		 * We should return error here only if the "bad"
+>  		 * commit is also a "skip" commit.
+>  		 */
+>  		res =3D error_if_skipped_commits(tried, NULL);
+>  		if (res)
+> -			exit(-res);
+> +			return res;
+>  		printf(_("%s was both %s and %s\n"),
+>  		       oid_to_hex(current_bad_oid),
+>  		       term_good,
+>  		       term_bad);
+> -		exit(1);
+> +
+> +		/*
+> +		 * We don't want to clean the bisection state
+> +		 * as we need to get back to where we started
+> +		 * by using `git bisect reset`.
+> +		 */
+> +		return -1;
 >  	}
 >
->  	fprintf(stderr, _("Some %s revs are not ancestors of the %s rev.\n"
->  		"git bisect cannot work properly in this case.\n"
->  		"Maybe you mistook %s and %s revs?\n"),
->  		term_good, term_bad, term_good, term_bad);
-> -	exit(1);
-> +	return -1;
->  }
+>  	if (!all) {
+>  		fprintf(stderr, _("No testable commit found.\n"
+>  			"Maybe you started with bad path parameters?\n"));
+> -		exit(4);
+> +
+> +		/*
+> +		 * We don't want to clean the bisection state
+> +		 * as we need to get back to where we started
+> +		 * by using `git bisect reset`.
+> +		 */
+> +		return -4;
+>  	}
 >
->  static void handle_skipped_merge_base(const struct object_id *mb)
-> @@ -823,7 +823,8 @@ static int check_merge_bases(int rev_nr, struct comm=
-it **rev, int no_checkout)
->  	for (; result; result =3D result->next) {
->  		const struct object_id *mb =3D &result->item->object.oid;
->  		if (oideq(mb, current_bad_oid)) {
-> -			handle_bad_merge_base();
-> +			res =3D handle_bad_merge_base();
-> +			break;
->  		} else if (0 <=3D oid_array_lookup(&good_revs, mb)) {
->  			continue;
->  		} else if (0 <=3D oid_array_lookup(&skipped_revs, mb)) {
+>  	bisect_rev =3D &revs.commits->item->object.oid;
+> @@ -1024,12 +1036,18 @@ int bisect_next_all(struct repository *r, const =
+char *prefix, int no_checkout)
+>  	if (oideq(bisect_rev, current_bad_oid)) {
+>  		res =3D error_if_skipped_commits(tried, current_bad_oid);
+>  		if (res)
+> -			exit(-res);
+> +			return res;
+>  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+>  			term_bad);
+> +
+>  		show_diff_tree(r, prefix, revs.commits->item);
+> -		/* This means the bisection process succeeded. */
+> -		exit(10);
+> +		/*
+> +		 * This means the bisection process succeeded.
+> +		 * Using -10 so that the call chain can simply check
+> +		 * for negative return values for early returns up
+> +		 * until the cmd_bisect__helper() caller.
+> +		 */
+> +		return -10;
+>  	}
+>
+>  	nr =3D all - reaches - 1;
 > --
 > 2.21.1 (Apple Git-122.3)
 >
