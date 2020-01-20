@@ -6,70 +6,114 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 710A7C32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:08:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D6CC32771
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:23:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 05C5622522
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:08:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FA02217F4
+	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 20:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbgATUI3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 15:08:29 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39777 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726843AbgATUI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 15:08:29 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y11so795457wrt.6
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 12:08:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7Tgi6woUaIufW+iBPVATkW9DEyGJARg6YikJGZTpTk8=;
-        b=sJpCt1iXjkdFvQJLYxpC/Z3b+SxAj+bwVRDU2ra9XZgOqECoPis93c1UaelnSDn3QI
-         u2m17HuVm6url3ECu7in/frUm1a57PfZWknBZganVjMBbrNpNEaVV7WfsuoLZ0JZNbml
-         HdVDL+6l8n+Xs9J0IxM+gU39OHwYNwM3XB2d397dFAKRhkTCK4Xay5DSGnyR4A/QpfK5
-         N4HTXvtGEMbJSzfTWRItG+eGM4fqv5mz85kV7vZ+8vnCTHYq15iwWo0DgYKvp9xyJyQG
-         1fZm+AhLmsJ7VsFz4xbI6jOVuNThB7XnFAZLMau4fiLyoZD9GT4IpLm5FQ/2eT7wQqWB
-         xbBQ==
-X-Gm-Message-State: APjAAAXavP9+qHKzhDKLmv0chcWwuIZdiDr7L+WE6EptchbPeQxvWdi9
-        FAkreQ1vVnwEVJJw8/812hYOchtlJ0tOFuNS90M=
-X-Google-Smtp-Source: APXvYqxpaEIf2O7ckY/gI1L/vXZ8SgI5aal9EhxSEymuR0CwKwYYLJ67G2REwUg8nB2iAqHzxj/eUbBgCYnnXtwwvYs=
-X-Received: by 2002:adf:ee52:: with SMTP id w18mr1137487wro.415.1579550906788;
- Mon, 20 Jan 2020 12:08:26 -0800 (PST)
+        id S1726843AbgATUX4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 15:23:56 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:65175 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726586AbgATUX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 15:23:56 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id 00KKNpjn055037
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 20 Jan 2020 15:23:51 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+        <git@vger.kernel.org>
+References: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet>
+Subject: RE: Y2038 vs struct cache_time/time_t
+Date:   Mon, 20 Jan 2020 15:23:46 -0500
+Message-ID: <017401d5cfcf$8791d900$96b58b00$@nexbridge.com>
 MIME-Version: 1.0
-References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
- <pull.529.v2.git.1579304283.gitgitgadget@gmail.com> <102fa568dc09c1faa2d36903ccb7e1b285dd50b2.1579304283.git.gitgitgadget@gmail.com>
- <CAPig+cT8t39UvnF2i6CDoHW4kfEGr-CRFxZKOCstCTU0YzrCgQ@mail.gmail.com> <nycvar.QRO.7.76.6.2001202103221.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001202103221.46@tvgsbejvaqbjf.bet>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 20 Jan 2020 15:08:15 -0500
-Message-ID: <CAPig+cR2T26nJ1G5n82r_Xi8Y84k211n6bhBxG4Ku27vaW1pWA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] rebase -i: re-fix short SHA-1 collision
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE/8h2/Etm33bphKzxATo2qQV1OV6kftBHA
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 20, 2020 at 3:04 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 20 Jan 2020, Eric Sunshine wrote:
-> > On Fri, Jan 17, 2020 at 6:38 PM Johannes Schindelin via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> > > +       test $colliding_sha1 = "$(git rev-parse HEAD | cut -c 1-7)" &&
-> >
-> > How much do we care that this is introducing new code with git
-> > upstream of a pipe (considering recent efforts to eradicate such
-> > usage)? Same question regarding several other new instances introduce
-> > by this patch.
->
-> I would argue that the test case will fail if the `git` call fails. So I
-> am not overly concerned if that `git` call is upstream of a pipe.
+On January 19, 2038 (no really January 20, 2020 2:39 PM), Johannes
+Schindelin wrote:
+> today, in quite an entertaining thread on Twitter
+> (https://twitter.com/jxxf/status/1219009308438024200) I read about yet
+> another account how the Year 2038 problem already bites people. And costs
+> real amounts of money.
+> 
+> And after I stopped shaking my head in disbelief, I had a quick look, and
+it
+> seems that we're safe at least until February 7th, 2106. That's not great,
+but I
+> plan on not being around at that date anymore, so there. That date is when
+> the unsigned 32-bit Unix epoch will roll over and play dead^W^Wwreak
+> havoc (iff the human species manages to actually turn around and reverse
+> the climate catastrophe it caused, and that's a big iff):
+> https://en.wikipedia.org/wiki/Time_formatting_and_storage_bugs#Year_21
+> 06
+> 
+> Concretely, it looks as if we store our own timestamps on disk (in the
+index
+> file) as uint32_t:
+> 
+> 	/*
+> 	 * The "cache_time" is just the low 32 bits of the
+> 	 * time. It doesn't matter if it overflows - we only
+> 	 * check it for equality in the 32 bits we save.
+> 	 */
+> 	struct cache_time {
+> 		uint32_t sec;
+> 		uint32_t nsec;
+> 	};
+> 
+> The comment seems to indicate that we are still safe even if 2106 comes
+> around, but I am not _quite_ that sure, as I expect us to have "greater
+than"
+> checks, not only equality checks.
+> 
+> But wait, we're still not quite safe. If I remember correctly, 32-bit
+Linux still
+> uses _signed_ 32-bit integers as `time_t`, so when we render dates, for
+> example, and use system-provided functions, on 32-bit Linux we will at
+least
+> show the wrong dates starting 2038.
+> 
+> This got me thinking, and I put on my QA hat. Kids, try this at home:
+> 
+> 	$ git log --until=1.january.1960
+> 
+> 	$ git log --since=1.january.2200
+> 
+> Git does not really do what you expected, eh?
+> 
+> Maybe we want to do something about that, and while at it also fix the
+> overflow problems, probably requiring a new index format?
 
-Unless the git command crashes _after_ it produces the correct output...
+The preferred way of fixing this is traditionally - for those of us who have
+been through it (4-ish times), to convert to time64_t where available (big
+legacy machines, like z/OS and NonStop), or in gcc, time_t is 64 bit on 64
+bit systems. It has been 64 bit on Windows since VS 2005. I have a
+relatively some relatively old Linux distros on 64 bit processors that also
+have time_t set as 64 bit in gcc. Those seem to be the standard approaches.
+To cover it, I suggest we move to a gittime_t which is always 64 bit (or 128
+bit if you don't want to be resurrected after the sun turns into a red giant
+or later when we are left with evaporating black holes), no matter what the
+platform, and build the selection of what gittime_t is (time_t or time64_t)
+into our config and/or compat.h. That way, hopefully, people will rebuild
+their git before 2038 or before someone decides to stick a fake date into a
+Github repo just to mess with us.
+
+Cheers,
+Randall
+
