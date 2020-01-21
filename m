@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D692C2D0DB
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 15:01:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 227C0C33CB8
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 15:01:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1E8A421569
+	by mail.kernel.org (Postfix) with ESMTP id DE5BC21569
 	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 15:01:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p+kfUDe9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a9FW+o1L"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729281AbgAUPBZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 10:01:25 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38811 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729238AbgAUPBY (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729293AbgAUPB0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 10:01:26 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:52429 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729127AbgAUPBY (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 21 Jan 2020 10:01:24 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y17so3569425wrh.5
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 07:01:22 -0800 (PST)
+Received: by mail-wm1-f67.google.com with SMTP id p9so3295848wmc.2
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 07:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=57T/B0gGtAvH23Pp+uSvPOJTmUnO1UCQprr0xSugBr0=;
-        b=p+kfUDe9jG1uPlmuR+Pe6oAPHG4VEQuuJ9l6SmDc3lLQMqPdILzRvBYwj3ljgY7b3M
-         6GXPd5XiJkqQRvIw4xIdlLmXJ4WXHDoQJvECnJ8tlWaH/1z6wGmlfZeTdJ5VnMLbr/Vy
-         MboCat/v3MyCAWUCS/xkqmz27miix7XbFWaVlKr/Xs7aFG5c8xX7zpvpExijYz2+H2Dk
-         Aw6iGt6n6m/W3P/IsQuHIW5MkwkPyETYrQXK1CzOnR1VmPDT2wAI2L5DB44XSELINnH6
-         ln4PJb6gWbUKUZ8RbIkZZB5RWz1C/VUAuaKodL99be+yGgGUZPJTZE0sCtSMO7ro7B6X
-         oFnQ==
+        bh=HRhh9nsI1RkER8ktNSUEKKsOyxqCQRUifyulxr+NX3c=;
+        b=a9FW+o1LzQekfAitFZBcSyx+PxKVxCkg2SMlqFtgeqyOYDF74sXj/lkAu+gGDz+J5s
+         wJ9WM4jF99I1V0zwLwdJq22C+zh9lSY560bnL2+ZzOdlkMGVnyNMY5/HgNSMXq5SXDya
+         kgJut2E6XnoA9LBfNaFl3uVoz2q2YRIO7OFONPWjOvv2CFgf4Ek8dwx9mdiLOxVUSERA
+         ElPA6jgiQZN1LI5cGKffygng0ctOQ/Xu6QFJys93OFcSw2D4ZS6hrW71unzODer5e8wD
+         81t4Nb88vBWpCjgxyWbcAQymP6lwiziTU+aBY1RN55kKPB/NVYFsN8aeeNbIQeX1j7AJ
+         UrWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=57T/B0gGtAvH23Pp+uSvPOJTmUnO1UCQprr0xSugBr0=;
-        b=CWrbrh8UIbHMezz0jgEwNRswqXrwpZg3tBgnCMX+bnD7GoFgklw6GH5GvSpaA/DQiH
-         OqDScELlHMRhkykeoXqdkBtex0JOAGJ/rJWzccVb+hkSAxIpkBUw2z8iF71jt90DJSnA
-         isytCTJNNmICzi057UzvytPD2pYyJReeIRzvLU9SphPj0d2FRW0zkfN4PV8yLVN5m7sj
-         HIQJAMTSGeN0mQpZKHwvDqUJMVLmsS2VYnDiIFXYaOhN0kxb0TeYu0QSGnUqJPl+BOS0
-         yeDim/cVjzhkYmJAa475QNMgdDfbKg5jGNz8+RQKEWf1UrjscU7n0sMiBYBIzFUCQr69
-         rxog==
-X-Gm-Message-State: APjAAAXtvGdav6y9vMNJQVF+txIauNpSuvUxzOAutaufJFOnm80JYMGf
-        ryx8xeQ9B6qL4cNELt0PdsDadWOY
-X-Google-Smtp-Source: APXvYqwCpOUZIt+VlLYMKwvvtmzJxGNfoLTl/4UDs+laanv8ljkgl84Tu1y810PNcijMW4vw3wquBg==
-X-Received: by 2002:a5d:6a0f:: with SMTP id m15mr5988805wru.40.1579618881360;
-        Tue, 21 Jan 2020 07:01:21 -0800 (PST)
+        bh=HRhh9nsI1RkER8ktNSUEKKsOyxqCQRUifyulxr+NX3c=;
+        b=G82H3CSOnQvgTy5L2CBcuJ4AxRB2gd3vmrEFTrKB3YSvNgEkaZiXPS8YbpjLx2qIzH
+         e/dmUDSYkvEakmfYrdul4uGbtVDLLt3N7JgQsvKs+QKNdZx6ME0G34wrOQ6y4FWmRCwt
+         qI1+WVkUaCUVLnEhlsC/A+LDvp03mTQtDt1QuIYSj1YkNIvNjT8bcPyQcL0zYwhmzKFp
+         2uot+jq/dKHXhL7YNJ32AjDWUZLUs9YC6tKwAo4I6VDw8/PNzVJNkaFmywRLgl393rdr
+         8hF9vnNpSwO+xY551nMXxOb2p1ohhPkuYKL5gaLpdyZbdWBaxPb+nlGS7Alg53De28P2
+         GdZw==
+X-Gm-Message-State: APjAAAXtTBBdUTpksfzU4AvRjQDHnl+XKf9ibzOOm9nzTyGG8PM7ER9+
+        e8vFlMII1egmF9KjJCU6kDS4rNC9
+X-Google-Smtp-Source: APXvYqxYQJNVSWDWgRb8UpXwkW1QiTXMEjIx1wigP8LY+GinrPTD1v/Lu1dNRB9IWsUyHmQaaMUxtw==
+X-Received: by 2002:a1c:988e:: with SMTP id a136mr4865493wme.181.1579618882819;
+        Tue, 21 Jan 2020 07:01:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11sm4249554wmg.46.2020.01.21.07.01.20
+        by smtp.gmail.com with ESMTPSA id o15sm53377303wra.83.2020.01.21.07.01.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2020 07:01:20 -0800 (PST)
-Message-Id: <10727275a2a7188eec374a82438eeda09f3b82b8.1579618877.git.gitgitgadget@gmail.com>
+        Tue, 21 Jan 2020 07:01:21 -0800 (PST)
+Message-Id: <614bccd31b8edb6cf7c0ae53b70680e0a18bdd7e.1579618877.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.523.v2.git.1579618877.gitgitgadget@gmail.com>
 References: <pull.523.git.1579263809.gitgitgadget@gmail.com>
         <pull.523.v2.git.1579618877.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 21 Jan 2020 15:01:16 +0000
-Subject: [PATCH v2 3/4] t2405: clarify test descriptions and simplify test
+Date:   Tue, 21 Jan 2020 15:01:17 +0000
+Subject: [PATCH v2 4/4] submodule.c: use get_git_dir() instead of
+ get_git_common_dir()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,93 +76,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-When 'checkout --to' functionality was moved to 'worktree add', tests were adapted
-in f194b1ef6e (tests: worktree: retrofit "checkout --to" tests for "worktree add",
-2015-07-06).
+Ever since df56607dff (git-common-dir: make "modules/"
+per-working-directory directory, 2014-11-30), submodules in linked worktrees
+are cloned to $GIT_DIR/modules, i.e. $GIT_COMMON_DIR/worktrees/<name>/modules.
 
-The calls were changed to 'worktree add' in this test (then t7410), but the test
-descriptions were not updated, keeping 'checkout' instead of using the new
-terminology (linked worktrees).
+However, this convention was not followed when the worktree updater commands
+checkout, reset and read-tree learned to recurse into submodules. Specifically,
+submodule.c::submodule_move_head, introduced in 6e3c1595c6 (update submodules:
+add submodule_move_head, 2017-03-14) and submodule.c::submodule_unset_core_worktree,
+(re)introduced in 898c2e65b7 (submodule: unset core.worktree if no working tree
+is present, 2018-12-14) use get_git_common_dir() instead of get_git_dir()
+to get the path of the submodule repository.
 
-Also, in the test each worktree is created in
-$TRASH_DIRECTORY/<leading-directory>/main, where the name of <leading-directory>
-carries some information about what behavior each test verifies. This directory
-structure is not mandatory for the tests; the worktrees can live next to one
-another in the trash directory.
+This means that, for example, 'git checkout --recurse-submodules <branch>'
+in a linked worktree will correctly checkout <branch>, detach the submodule's HEAD
+at the commit recorded in <branch> and update the submodule working tree, but the
+submodule HEAD that will be moved is the one in $GIT_COMMON_DIR/modules/<name>/,
+i.e. the submodule repository of the main superproject working tree.
+It will also rewrite the gitfile in the submodule working tree of the linked worktree
+to point to $GIT_COMMON_DIR/modules/<name>/.
+This leads to an incorrect (and confusing!) state in the submodule working tree
+of the main superproject worktree.
 
-Clarify the tests by using the right terminology, and remove the unnecessary
-leading directories such that all superproject worktrees are directly next to one
-another in the trash directory.
+Additionally, if switching to a commit where the submodule is not present,
+submodule_unset_core_worktree will be called and will incorrectly remove
+'core.wortree' from the config file of the submodule in the main superproject worktree,
+$GIT_COMMON_DIR/modules/<name>/config.
+
+Fix this by constructing the path to the submodule repository using get_git_dir()
+in both submodule_move_head and submodule_unset_core_worktree.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- t/t2405-worktree-submodule.sh | 36 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 20 deletions(-)
+ submodule.c                   |  6 +++---
+ t/t2405-worktree-submodule.sh | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 3 deletions(-)
 
+diff --git a/submodule.c b/submodule.c
+index 9da7181321..5d19ec48a6 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1811,7 +1811,7 @@ int bad_to_remove_submodule(const char *path, unsigned flags)
+ void submodule_unset_core_worktree(const struct submodule *sub)
+ {
+ 	char *config_path = xstrfmt("%s/modules/%s/config",
+-				    get_git_common_dir(), sub->name);
++				    get_git_dir(), sub->name);
+ 
+ 	if (git_config_set_in_file_gently(config_path, "core.worktree", NULL))
+ 		warning(_("Could not unset core.worktree setting in submodule '%s'"),
+@@ -1914,7 +1914,7 @@ int submodule_move_head(const char *path,
+ 					ABSORB_GITDIR_RECURSE_SUBMODULES);
+ 		} else {
+ 			char *gitdir = xstrfmt("%s/modules/%s",
+-				    get_git_common_dir(), sub->name);
++				    get_git_dir(), sub->name);
+ 			connect_work_tree_and_git_dir(path, gitdir, 0);
+ 			free(gitdir);
+ 
+@@ -1924,7 +1924,7 @@ int submodule_move_head(const char *path,
+ 
+ 		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
+ 			char *gitdir = xstrfmt("%s/modules/%s",
+-				    get_git_common_dir(), sub->name);
++				    get_git_dir(), sub->name);
+ 			connect_work_tree_and_git_dir(path, gitdir, 1);
+ 			free(gitdir);
+ 		}
 diff --git a/t/t2405-worktree-submodule.sh b/t/t2405-worktree-submodule.sh
-index c4e555776a..d0830058fd 100755
+index d0830058fd..e1b2bfd87e 100755
 --- a/t/t2405-worktree-submodule.sh
 +++ b/t/t2405-worktree-submodule.sh
-@@ -18,43 +18,39 @@ test_expect_success 'setup: create origin repos'  '
- 	git -C origin/main commit -m "sub updated"
- '
- 
--test_expect_success 'setup: clone' '
--	mkdir clone &&
--	git -C clone clone --recursive "$base_path/origin/main"
-+test_expect_success 'setup: clone superproject to create main worktree' '
-+	git clone --recursive "$base_path/origin/main" main
- '
- 
- rev1_hash_main=$(git --git-dir=origin/main/.git show --pretty=format:%h -q "HEAD~1")
- rev1_hash_sub=$(git --git-dir=origin/sub/.git show --pretty=format:%h -q "HEAD~1")
- 
--test_expect_success 'checkout main' '
--	mkdir default_checkout &&
--	git -C clone/main worktree add "$base_path/default_checkout/main" "$rev1_hash_main"
-+test_expect_success 'add superproject worktree' '
-+	git -C main worktree add "$base_path/worktree" "$rev1_hash_main"
- '
- 
--test_expect_failure 'can see submodule diffs just after checkout' '
--	git -C default_checkout/main diff --submodule master"^!" >out &&
-+test_expect_failure 'submodule is checked out just after worktree add' '
-+	git -C worktree diff --submodule master"^!" >out &&
+@@ -10,6 +10,7 @@ test_expect_success 'setup: create origin repos'  '
+ 	git init origin/sub &&
+ 	test_commit -C origin/sub file1 &&
+ 	git init origin/main &&
++	test_commit -C origin/main first &&
+ 	git -C origin/main submodule add ../sub &&
+ 	git -C origin/main commit -m "add sub" &&
+ 	test_commit -C origin/sub "file1 updated" file1 file1updated file1updated &&
+@@ -54,4 +55,36 @@ test_expect_success 'submodule is checked out after manually adding submodule wo
  	grep "file1 updated" out
  '
  
--test_expect_success 'checkout main and initialize independent clones' '
--	mkdir fully_cloned_submodule &&
--	git -C clone/main worktree add "$base_path/fully_cloned_submodule/main" "$rev1_hash_main" &&
--	git -C fully_cloned_submodule/main submodule update
-+test_expect_success 'add superproject worktree and initialize submodules' '
-+	git -C main worktree add "$base_path/worktree-submodule-update" "$rev1_hash_main" &&
-+	git -C worktree-submodule-update submodule update
- '
- 
--test_expect_success 'can see submodule diffs after independent cloning' '
--	git -C fully_cloned_submodule/main diff --submodule master"^!" >out &&
-+test_expect_success 'submodule is checked out just after submodule update in linked worktree' '
-+	git -C worktree-submodule-update diff --submodule master"^!" >out &&
- 	grep "file1 updated" out
- '
- 
--test_expect_success 'checkout sub manually' '
--	mkdir linked_submodule &&
--	git -C clone/main worktree add "$base_path/linked_submodule/main" "$rev1_hash_main" &&
--	git -C clone/main/sub worktree add "$base_path/linked_submodule/main/sub" "$rev1_hash_sub"
-+test_expect_success 'add superproject worktree and manually add submodule worktree' '
-+	git -C main worktree add "$base_path/linked_submodule" "$rev1_hash_main" &&
-+	git -C main/sub worktree add "$base_path/linked_submodule/sub" "$rev1_hash_sub"
- '
- 
--test_expect_success 'can see submodule diffs after manual checkout of linked submodule' '
--	git -C linked_submodule/main diff --submodule master"^!" >out &&
-+test_expect_success 'submodule is checked out after manually adding submodule worktree' '
-+	git -C linked_submodule diff --submodule master"^!" >out &&
- 	grep "file1 updated" out
- '
- 
++test_expect_success 'checkout --recurse-submodules uses $GIT_DIR for submodules in a linked worktree' '
++	git -C main worktree add "$base_path/checkout-recurse" --detach  &&
++	git -C checkout-recurse submodule update --init &&
++	echo "gitdir: ../../main/.git/worktrees/checkout-recurse/modules/sub" >expect-gitfile &&
++	cat checkout-recurse/sub/.git >actual-gitfile &&
++	test_cmp expect-gitfile actual-gitfile &&
++	git -C main/sub rev-parse HEAD >expect-head-main &&
++	git -C checkout-recurse checkout --recurse-submodules HEAD~1 &&
++	cat checkout-recurse/sub/.git >actual-gitfile &&
++	git -C main/sub rev-parse HEAD >actual-head-main &&
++	test_cmp expect-gitfile actual-gitfile &&
++	test_cmp expect-head-main actual-head-main
++'
++
++test_expect_success 'core.worktree is removed in $GIT_DIR/modules/<name>/config, not in $GIT_COMMON_DIR/modules/<name>/config' '
++	echo "../../../sub" >expect-main &&
++	git -C main/sub config --get core.worktree >actual-main &&
++	test_cmp expect-main actual-main &&
++	echo "../../../../../../checkout-recurse/sub" >expect-linked &&
++	git -C checkout-recurse/sub config --get core.worktree >actual-linked &&
++	test_cmp expect-linked actual-linked &&
++	git -C checkout-recurse checkout --recurse-submodules first &&
++	test_expect_code 1 git -C main/.git/worktrees/checkout-recurse/modules/sub config --get core.worktree >linked-config &&
++	test_must_be_empty linked-config &&
++	git -C main/sub config --get core.worktree >actual-main &&
++	test_cmp expect-main actual-main
++'
++
++test_expect_success 'unsetting core.worktree does not prevent running commands directly against the submodule repository' '
++	git -C main/.git/worktrees/checkout-recurse/modules/sub log
++'
++
+ test_done
 -- 
 gitgitgadget
-
