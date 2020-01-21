@@ -2,181 +2,208 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2E95C33CB6
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 09:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D563C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A93D724653
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 09:25:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0463024655
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="YzrBF/Ey"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwepRFE+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729238AbgAUJZJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 04:25:09 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43151 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729091AbgAUJZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 04:25:05 -0500
-Received: by mail-wr1-f66.google.com with SMTP id d16so2270625wre.10
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 01:25:03 -0800 (PST)
+        id S1728794AbgAUKAE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 05:00:04 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:45330 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbgAUKAE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 05:00:04 -0500
+Received: by mail-io1-f67.google.com with SMTP id i11so2173419ioi.12
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Wawsmq1he+hSgRdUpR4y74QZa+9pSBu3ypishV7dzzE=;
-        b=YzrBF/EyRpKeFO46PQjhv4EKRs82uD8pxGd+vAWoLKSI09z2wR4FAmQUgrYfC5q0O3
-         pAVZAgXYxv3bw0I1eNhGeGdlyxCAleHP+3035x9PGAqDX4q4I4YmmobrPb+88DkB+VlN
-         lpqtBpfLGr7Ri0WCKovwhCf+yzge91J1+Z2r97Mgwjpp5ePUnN+95vKADH65v8WOqF2j
-         B/1crZuRwP3rdAsR71IX0tyj09E3n5aPRtOSvFdsHehKH3KUZVBdQln/LJeLLQT2zDPM
-         5OEhuV6P9nYSUkouN2U+2jahfk3HpWw7+uWn2Ce9tcy6f682kZg3tw7DBhdt9JWnTUNa
-         vkSg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=cljS01yqbubG+LB3ql4BEOQmGJKkAlALo2NWLWp3ftQ=;
+        b=MwepRFE+LovIeXH0XCPxKlOCklePohkL3gSRVrBya3uTWPlAuLa4IOKrSCJ0ovJyzn
+         oacDRyP5ac3QnTvNDK7hsjKyscG/s9qHZnu8xtY0TKj+bf90IsratCv/OW16zsBTX8w1
+         zFGWIT0YoBRbCc+9enZvIidt1u2crQoWjeMVch7DlpA4hHLWMVdk0D4VLK4M82LESoeh
+         rThrVbW3ju2SBhIFDjEWKsCvX/zcrAQOoHkPlkYyQ/lTE+6rQUk7tNNOBAUzTI+/e/mo
+         xFprTLNPdg/qhSHrW7XkRlg3Pk1wYCVBGM1ZPGJImenvN6kjVUfrArR23mIC+U2tZGBp
+         cQ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Wawsmq1he+hSgRdUpR4y74QZa+9pSBu3ypishV7dzzE=;
-        b=iXoqihBqV79h/3H1U+bc6e6Q/aHXm59O+dt4c+AQMpYVDphhceRCttnx08RsaKRCMp
-         wwEmBCVVcehnChfmBVeyqPrzGRWhG0Px1qE3oiLZO4Fng0okR9Xh9P4ma7/mEroyImgJ
-         RPxyGixpoULuxLomlSi3MlqvecSkyQGu0i3WFtAPR1VpeNF/IBEYEXqxjn05whf3QE7X
-         4Qf3t/yC0P6zDQKHST1/LL48XE/OtLG2lAkqJ37bz8VxL5MGiy0UkpqrbohidcxowwwP
-         M2nN05VOn6b234dQtLkzWPkCfwJPxh07TGf5MMmYzLRPj7qgnmtM4KKdrjZQauTEhDkK
-         KB4A==
-X-Gm-Message-State: APjAAAX0vGGdbGM/JTjolsemH7JPeFxpeTBsxlq06sBKm+BKFLVoErZf
-        i9yHFM/Q5YL3lCPrrJc=
-X-Google-Smtp-Source: APXvYqxCv8xokagftdxWhcgs1qZopqLe2HR8zoJOJRzmNyDbYnri0zFFJQWqwTIgRJ9wKa0RnHS7Qg==
-X-Received: by 2002:adf:e984:: with SMTP id h4mr4196194wrm.275.1579598702978;
-        Tue, 21 Jan 2020 01:25:02 -0800 (PST)
-Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
-        by smtp.gmail.com with ESMTPSA id q14sm3036725wmj.14.2020.01.21.01.25.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 Jan 2020 01:25:02 -0800 (PST)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 6/7] config: provide access to the current line number
-Date:   Tue, 21 Jan 2020 10:24:54 +0100
-Message-Id: <92356342164523c7753eda52c8985cb4774d1434.1579598053.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.24.1.497.g9abd7b20b4.dirty
-In-Reply-To: <cover.1579598053.git.bert.wesarg@googlemail.com>
-References: <cover.1579598053.git.bert.wesarg@googlemail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=cljS01yqbubG+LB3ql4BEOQmGJKkAlALo2NWLWp3ftQ=;
+        b=Jx3ZmNPtf7eOBdXfOFRCtx4CSI5fUEz7UxuxsoUr2fyQcwyy14i/FvSnTabZUAVJM1
+         nJR1TjsoZaqOYkpDv4y126d/eFuuyciTiGBb+uE1tqUkmwKvKrrutmB3COVdapeaaWE0
+         VkM3rRzFm8d2fDXdbPMegrJv91hohLg76E5D6U3SbcToA1WishjNxnO4xPe3ytVJZX7u
+         KWDf+RMCPCLiFKc9015eMf/citsTOWwWtaEhnolWHNZyV6aXHxB19veAB+wKe9R8sFZz
+         XNmeAlysKpvjdUGwPEZU2kojVsRs3TCerr+IxApMi/Bv6lqD6FPJl+MzV4GvrfVvVSCX
+         Z9Zg==
+X-Gm-Message-State: APjAAAWe4fC6CyuZTvuBoEplXm1u4LaGRffjden5RR96e3EiLpfWsvqJ
+        YPIKWwLCUVVd4eDLK//7p0miRUQHyZfzmBHIYNA=
+X-Google-Smtp-Source: APXvYqyy2jate5weChPCggZhF7goyvzJoRoC9KRrsgQUAwtADAxQO8N5xc6t/AEesLGS7xT0VxxgJOmyBQmfqz4kh/U=
+X-Received: by 2002:a6b:510c:: with SMTP id f12mr2527064iob.227.1579600803584;
+ Tue, 21 Jan 2020 02:00:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-9-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001202308050.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001202308050.46@tvgsbejvaqbjf.bet>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Tue, 21 Jan 2020 10:59:53 +0100
+Message-ID: <CAN7CjDCmqvAkbeHnqLM6SUUyGWQu23hE=nbab6bYxZKZsXB1Qw@mail.gmail.com>
+Subject: Re: [PATCH 08/29] bisect: libify `check_merge_bases` and its dependents
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users are nowadays trained to see message from CLI tools in the form
+Hi,
 
-    <file>:<lno>: …
+El lun., 20 ene. 2020 a las 23:09, Johannes Schindelin
+(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+>
+> Hi,
+>
+> On Mon, 20 Jan 2020, Miriam Rubio wrote:
+>
+> > From: Pranit Bauva <pranit.bauva@gmail.com>
+> >
+> > Since we want to get rid of git-bisect.sh it would be necessary to
+> > convert those exit() calls to return statements so that errors can be
+> > reported.
+> >
+> > Emulate try catch in C by converting `exit(<positive-value>)` to
+> > `return <negative-value>`. Follow POSIX conventions to return
+> > <negative-value> to indicate error.
+> >
+> > Turn `exit()` to `return` calls in `check_merge_bases()`.
+> >
+> > In `check_merge_bases()` there is an early success special case,
+> > so we have introduced special error code `-11` which indicates early
+> > success. This `-11` is converted back to `0` in `check_good_are_ancesto=
+rs_of_bad()`.
+> >
+> > Handle the return value in dependent function `check_good_are_ancestors=
+_of_bad()`.
+>
+> This is a lot of repeated text from earlier commit messages. It might mak=
+e
+> sense to condense it a bit, and while at it, to remove sentences that
+> essentially repeat what the diff says.
+>
+Ok. Noted!
+> >
+> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> > Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> > ---
+> >  bisect.c | 21 ++++++++++++++++-----
+> >  1 file changed, 16 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/bisect.c b/bisect.c
+> > index 385afaf875..367258b0dd 100644
+> > --- a/bisect.c
+> > +++ b/bisect.c
+> > @@ -806,13 +806,16 @@ static void handle_skipped_merge_base(const struc=
+t object_id *mb)
+> >   * "check_merge_bases" checks that merge bases are not "bad" (or "new"=
+).
+> >   *
+> >   * - If one is "bad" (or "new"), it means the user assumed something w=
+rong
+> > - * and we must exit with a non 0 error code.
+> > + * and we must return error with a non 0 error code.
+> >   * - If one is "good" (or "old"), that's good, we have nothing to do.
+> >   * - If one is "skipped", we can't know but we should warn.
+> >   * - If we don't know, we should check it out and ask the user to test=
+.
+> > + * - If a merge base must be tested, on success return -11 a special c=
+ondition
+> > + * for early success, this will be converted back to 0 in check_good_a=
+re_ancestors_of_bad().
+> >   */
+> > -static void check_merge_bases(int rev_nr, struct commit **rev, int no_=
+checkout)
+> > +static int check_merge_bases(int rev_nr, struct commit **rev, int no_c=
+heckout)
+> >  {
+> > +     int res =3D 0;
+> >       struct commit_list *result;
+> >
+> >       result =3D get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
+> > @@ -827,11 +830,16 @@ static void check_merge_bases(int rev_nr, struct =
+commit **rev, int no_checkout)
+> >                       handle_skipped_merge_base(mb);
+> >               } else {
+> >                       printf(_("Bisecting: a merge base must be tested\=
+n"));
+> > -                     exit(bisect_checkout(mb, no_checkout));
+> > +                     res =3D bisect_checkout(mb, no_checkout);
+> > +                     if (!res)
+> > +                             /* indicate early success */
+> > +                             res =3D -11;
+>
+> This is yet another good candidate for an `enum`.
+>
+> > +                     break;
+> >               }
+> >       }
+> >
+> >       free_commit_list(result);
+> > +     return res;
+> >  }
+> >
+> >  static int check_ancestors(struct repository *r, int rev_nr,
+> > @@ -865,7 +873,7 @@ static void check_good_are_ancestors_of_bad(struct =
+repository *r,
+> >  {
+> >       char *filename =3D git_pathdup("BISECT_ANCESTORS_OK");
+> >       struct stat st;
+> > -     int fd, rev_nr;
+> > +     int fd, rev_nr, res =3D 0;
+> >       struct commit **rev;
+> >
+> >       if (!current_bad_oid)
+> > @@ -880,10 +888,13 @@ static void check_good_are_ancestors_of_bad(struc=
+t repository *r,
+> >               goto done;
+> >
+> >       /* Check if all good revs are ancestor of the bad rev. */
+> > +
+> >       rev =3D get_bad_and_good_commits(r, &rev_nr);
+> >       if (check_ancestors(r, rev_nr, rev, prefix))
+> > -             check_merge_bases(rev_nr, rev, no_checkout);
+> > +             res =3D check_merge_bases(rev_nr, rev, no_checkout);
+> >       free(rev);
+> > +     if(res)
+>
+> Please put a space between the `if` keyword and the `(` following it.
 
-To be able to give such messages when notifying the user about
-configurations in any config file, it is currently only possible to get
-the file name (if the value originates from a file to begin with) via
-`current_config_name()`. Now it is also possible to query the current line
-number for the configuration.
+Ok.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- config.c               |  8 ++++++++
- config.h               |  1 +
- t/helper/test-config.c |  1 +
- t/t1308-config-set.sh  | 14 ++++++++++++--
- 4 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/config.c b/config.c
-index 4c461bb7a3..5d1d6b5871 100644
---- a/config.c
-+++ b/config.c
-@@ -3333,6 +3333,14 @@ const char *config_scope_name(enum config_scope scope)
- 	}
- }
- 
-+int current_config_line(void)
-+{
-+	if (current_config_kvi)
-+		return current_config_kvi->linenr;
-+	else
-+		return cf->linenr;
-+}
-+
- int lookup_config(const char **mapping, int nr_mapping, const char *var)
- {
- 	int i;
-diff --git a/config.h b/config.h
-index c063f33ff6..371f7f2dd0 100644
---- a/config.h
-+++ b/config.h
-@@ -306,6 +306,7 @@ const char *config_scope_name(enum config_scope scope);
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
- const char *current_config_name(void);
-+int current_config_line(void);
- 
- /**
-  * Include Directives
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 1e3bc7c8f4..234c722b48 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -48,6 +48,7 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	printf("value=%s\n", value ? value : "(null)");
- 	printf("origin=%s\n", current_config_origin_type());
- 	printf("name=%s\n", current_config_name());
-+	printf("lno=%d\n", current_config_line());
- 	printf("scope=%s\n", config_scope_name(current_config_scope()));
- 
- 	return 0;
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 7b4e1a63eb..9e36e7a590 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -238,8 +238,8 @@ test_expect_success 'error on modifying repo config without repo' '
- 
- cmdline_config="'foo.bar=from-cmdline'"
- test_expect_success 'iteration shows correct origins' '
--	echo "[foo]bar = from-repo" >.git/config &&
--	echo "[foo]bar = from-home" >.gitconfig &&
-+	printf "[ignore]\n\tthis = please\n[foo]bar = from-repo\n" >.git/config &&
-+	printf "[foo]\n\tbar = from-home\n" >.gitconfig &&
- 	if test_have_prereq MINGW
- 	then
- 		# Use Windows path (i.e. *not* $HOME)
-@@ -253,18 +253,28 @@ test_expect_success 'iteration shows correct origins' '
- 	value=from-home
- 	origin=file
- 	name=$HOME_GITCONFIG
-+	lno=2
- 	scope=global
- 
-+	key=ignore.this
-+	value=please
-+	origin=file
-+	name=.git/config
-+	lno=2
-+	scope=repo
-+
- 	key=foo.bar
- 	value=from-repo
- 	origin=file
- 	name=.git/config
-+	lno=3
- 	scope=repo
- 
- 	key=foo.bar
- 	value=from-cmdline
- 	origin=command line
- 	name=
-+	lno=-1
- 	scope=cmdline
- 	EOF
- 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
--- 
-2.24.1.497.g9abd7b20b4.dirty
-
+>
+> Thanks,
+> Johannes
+>
+> > +             exit(res =3D=3D -11 ? 0 : -res);
+> >
+> >       /* Create file BISECT_ANCESTORS_OK. */
+> >       fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+> > --
+> > 2.21.1 (Apple Git-122.3)
+> >
+> >
