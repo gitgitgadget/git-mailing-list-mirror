@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E66EC2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1335EC2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 31F9320882
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5F4E20882
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dE/1sOTk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I0yalald"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729238AbgAUKAd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 05:00:33 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:34193 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728682AbgAUKAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 05:00:32 -0500
-Received: by mail-io1-f66.google.com with SMTP id z193so2247734iof.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:32 -0800 (PST)
+        id S1729308AbgAUKAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 05:00:41 -0500
+Received: from mail-il1-f193.google.com ([209.85.166.193]:40587 "EHLO
+        mail-il1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729287AbgAUKAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 05:00:40 -0500
+Received: by mail-il1-f193.google.com with SMTP id c4so1894691ilo.7
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :content-transfer-encoding;
-        bh=ZR3C2Rl6GJoljT0/JqkmZbsGzAqxSr4Sy034hSVL+WM=;
-        b=dE/1sOTkO3UOt4lOPHZovkTMVSnre2ptK1TPJbV/WeoHtW4sxb9ceBUFR01QAiFdT6
-         LRzR9UgAweCRpYhvZxBaie9EBJgcWCna+b9VcF9A26WwHE3YCU+T81IP7B5eToCb6U4+
-         q+U/G1+nyu8SmLIlaoqdfOcnb3a9zXawbo6Gb6uaR1qYcsCrAbhpzEgfGVfO7A/cQmqB
-         qyyOv3kl+zqvV9haOS9Mx/yguq5beYL3pgT07E8YMDoY/8rJ2LRyn+99AErS/CV/4Xmx
-         V9Ahlnv+FzfyARjx30RHVHTmKNl++0IhHGLp1YeUSsVKJSjBAMJhw8fyoCJVhjjlc+Bl
-         ud1A==
+        bh=Q14hg8Tfh5ESgRaNk1H3i7GYBKrpDZVQNAqVP91Pp4A=;
+        b=I0yalaldtZ8cSSTfm8jfxTiPdqCXCyrQp/I7Pr/H7NxM3LkvfbnAgY/8mEweBh5PiX
+         yT2mi/4NURRnjU6wFuz71ZrROeFazi9HGLh1fU/5sKNMztbVOQSb+Z3JoOmTMzIjUY0v
+         +geZvebiRO2pD8Q+MRJ+SNPEBqP8ASWCqgGcPyrm26rBvDM38u6XAgttPSfnvdf+JkbB
+         YhU1mg2jVz9eRn/bBgzYlPnowYjtUD8fu6lRyX/ZE8zAulq7bxQIzwzLQAt3RtebYHUb
+         uEmi/5qSJ2laWUYrZOUOrXSgqa9amVKUO9t7InPmHgUSiWPxr8veESybwK6lSJmstf/B
+         2jmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:content-transfer-encoding;
-        bh=ZR3C2Rl6GJoljT0/JqkmZbsGzAqxSr4Sy034hSVL+WM=;
-        b=BQQIDo5eaIuVD8ZfNO04AypKpWO4kFmOM2BKSryIm5cFiNAdi+z22CZtL4JKosJccL
-         prZRBoxlz54vmcH2V+XpbMHA971D7CN6ZKaL9p2Ss0ofkSl5Gi6L4IGErBUFX8fVDoog
-         mVBQ7B44QN4fftallFv4IS35H6cTPBIacbwJbNsBm/F6oN37FhvAmD3lOfxITYnG1gKY
-         Df6GA1DDTpxjnGeO2Zbw8DZrt+NOQs1TWSw1i+sr1LGmPRBKYnFE4HfEBrybMUxMnMkn
-         7ixNsxHgY130tlAy+uR4w7y8LghkkM5hOyQNCYTVr0LXfH6mh0dkqH7748gxONa7DqU7
-         QYiA==
-X-Gm-Message-State: APjAAAXx/ypUyMrWCXUh0PyEhgWKCB2JsVdS17jieFIihW7zVWeedZOI
-        hB/dN7UInVqBf3UqFafkWmGIJo0mYCR0bY868P8=
-X-Google-Smtp-Source: APXvYqyGjas0xyte+JnmRP973k3bG71fMXCcDTFLQBHIhNoWJ2bBbvmWxwsV2hcPrlWhbozqhb2ymuH7wrKDoo3TZGY=
-X-Received: by 2002:a6b:7310:: with SMTP id e16mr2467343ioh.107.1579600832319;
- Tue, 21 Jan 2020 02:00:32 -0800 (PST)
+        bh=Q14hg8Tfh5ESgRaNk1H3i7GYBKrpDZVQNAqVP91Pp4A=;
+        b=DrjxpRNJ8+sOQiC9tIOXQSq1zQWWKOZGtjB7SGtB2ViUJwc3mOinXZwg/XwBFV+v0r
+         0osBDypWN1Ve34wI1u7tfMIbHvhhut5yLu2zgNtMcShZN0g7LTpdnhcGqxKys29+uXFv
+         TfhW3joEjHxhKSvAZNcnAYDwG5bg7gNgw0Y/OO9NpKbulIbZEy8JzzCsDDJHhE3fsVPY
+         4SVKbNGN6fPV8Rydm8A7IScaSbc7Q66VuI//kR5P53VyydsONM8kjMGCMFK3oLtBlDHs
+         jELiJ9EV+Ie2FxrxFmnAmo8a2cTmwmSHxRYQnZTj/pFIyxGKQ+iDUrWH2PHHyR7H98WS
+         bJOw==
+X-Gm-Message-State: APjAAAWMVv8YQTAnOmnRUNniaf5p0UJ7sJlX7b+LiCY9EAdOMEIKjk5l
+        +wOuN863pqaoGxQpVZGjaXNEZQIVJCHO5wF7hG8=
+X-Google-Smtp-Source: APXvYqwnnVqlnqjidaaC1q1dYjEPb59ZZOqCuNmghQIAYZ42vyYPY8I3BM8Oi6VpAYpbW5DCDVPhTaiFBJuBNna4WyQ=
+X-Received: by 2002:a92:b06:: with SMTP id b6mr2787756ilf.127.1579600840285;
+ Tue, 21 Jan 2020 02:00:40 -0800 (PST)
 MIME-Version: 1.0
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-10-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001202313130.46@tvgsbejvaqbjf.bet> <CAP8UFD0MO9wEc=ErEAFm4kSabLKUTp1a5VTPxgDS2yqt+rxXag@mail.gmail.com>
-In-Reply-To: <CAP8UFD0MO9wEc=ErEAFm4kSabLKUTp1a5VTPxgDS2yqt+rxXag@mail.gmail.com>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-11-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001202321210.46@tvgsbejvaqbjf.bet> <CAP8UFD0TU9FQQfk6SgDtOi+_eDni0ZJf+Bw-uN_LzAdeVh3HvQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0TU9FQQfk6SgDtOi+_eDni0ZJf+Bw-uN_LzAdeVh3HvQ@mail.gmail.com>
 From:   "Miriam R." <mirucam@gmail.com>
-Date:   Tue, 21 Jan 2020 11:00:21 +0100
-Message-ID: <CAN7CjDAb4AxZQ-dU0GBibXhWCwxRDqbbkVaKuNfVJ+8LASr8fQ@mail.gmail.com>
-Subject: Re: [PATCH 09/29] bisect: libify `check_good_are_ancestors_of_bad`
- and its dependents
+Date:   Tue, 21 Jan 2020 11:00:29 +0100
+Message-ID: <CAN7CjDCXm9f9PV61uK_6aVrLSTGvxAiS_t607-JMLnDY5i9AxQ@mail.gmail.com>
+Subject: Re: [PATCH 10/29] bisect: libify `handle_bad_merge_base` and its dependents
 To:     Christian Couder <christian.couder@gmail.com>,
         git <git@vger.kernel.org>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
@@ -71,81 +70,35 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-El mar., 21 ene. 2020 a las 7:59, Christian Couder
+El mar., 21 ene. 2020 a las 8:05, Christian Couder
 (<christian.couder@gmail.com>) escribi=C3=B3:
 >
-> On Mon, Jan 20, 2020 at 11:20 PM Johannes Schindelin
+> On Mon, Jan 20, 2020 at 11:23 PM Johannes Schindelin
 > <Johannes.Schindelin@gmx.de> wrote:
-> >
+>
 > > On Mon, 20 Jan 2020, Miriam Rubio wrote:
 >
-> > > @@ -876,8 +877,15 @@ static void check_good_are_ancestors_of_bad(stru=
-ct repository *r,
-> > >       int fd, rev_nr, res =3D 0;
-> > >       struct commit **rev;
-> > >
-> > > -     if (!current_bad_oid)
-> > > -             die(_("a %s revision is needed"), term_bad);
-> > > +     /*
-> > > +      * We don't want to clean the bisection state
-> > > +      * as we need to get back to where we started
-> > > +      * by using `git bisect reset`.
-> > > +      */
-> > > +     if (!current_bad_oid) {
-> > > +             res =3D error(_("a %s revision is needed"), term_bad);
-> > > +             goto done;
-> > > +     }
+> > > @@ -777,14 +777,14 @@ static void handle_bad_merge_base(void)
+> > >                               "between %s and [%s].\n"),
+> > >                               bad_hex, term_bad, term_good, bad_hex, =
+good_hex);
+> > >               }
+> > > -             exit(3);
+> > > +             return -3;
 > >
-> > Why not just return here? Ah, there is a `filename` that was allocated.=
-..
-> > it is too bad that we have a mailing-list based review, as the hunk
-> > context simply cannot be extended in a mail.
-> >
-> > Personally, I think it would be nicer to split the definition of
-> > `filename` from its declaration and move it _after_ this conditional co=
-de,
-> > so that we can `return` right away.
+> > ... which is: what does `3` stand for?
 >
-> Yeah, I agree.
-Ok. Noted.
+> Maybe the question should have been answered by adding a comment to
+> the previous patch that added the `exit(3)` statement.
 >
-> > However, there is a more pressing issue than that: `die()` exits with e=
-xit
-> > code 128, so in keeping with the idea to hand down negative exit codes =
-as
-> > return values, should we not assign `res =3D -128` here?
+> So yeah we could here add a separate patch that just adds such a comment.
 >
-> I think it has been ok when converting git-bisect.sh to C to just
-> convert `die(...)` into `return error(...)`.
->
-> > >       /* Check if file BISECT_ANCESTORS_OK exists. */
-> > >       if (!stat(filename, &st) && S_ISREG(st.st_mode))
-> > > @@ -893,18 +901,20 @@ static void check_good_are_ancestors_of_bad(str=
-uct repository *r,
-> > >       if (check_ancestors(r, rev_nr, rev, prefix))
-> > >               res =3D check_merge_bases(rev_nr, rev, no_checkout);
-> > >       free(rev);
-> > > -     if(res)
-> > > -             exit(res =3D=3D -11 ? 0 : -res);
-> > > -
-> > > -     /* Create file BISECT_ANCESTORS_OK. */
-> > > -     fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-> > > -     if (fd < 0)
-> > > -             warning_errno(_("could not create file '%s'"),
-> > > -                           filename);
-> > > -     else
-> > > -             close(fd);
-> > > +
-> > > +     if (!res)
-> > > +     {
-> >
-> > We usually put the `{` on the same line as the `if` condition (like you
-> > did in the `if (!current_bad_oid)` line above.
-Ok. I will change that.
-> >
-> > The rest looks reasonable. Thank you,
-Great! Thank you for your review!
+> Or maybe we can add such a comment in this patch and say something
+> like "while at it let's explain a bit the '3' error code" in the
+> commit message.
 
->
-> Thank you for your review,
-> Christian.
+I like most your first option because we explain the code in the patch
+where it is added, but the second one is also ok for me :).
+Thanks.
+Best,
+Miriam
