@@ -2,172 +2,256 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4296DC2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 66592C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:07:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 090A221835
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:36:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 252BC2073A
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:07:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vJUCAJGt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KZBVAvWN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727383AbgAUTge (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 14:36:34 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58413 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726229AbgAUTgd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 14:36:33 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D893AA2871;
-        Tue, 21 Jan 2020 14:36:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NjjykgGEA2vRAiXyiQGYvrWYQkg=; b=vJUCAJ
-        GtDWAP5X6S41enJCSAxsSiVWFKAvl5BG7XO5m5y40GyjAJ7vmJdsPSUgCUkXHyun
-        MGhFNXZGtm763wkJxRw2GblzwPC7YYjNst9qB1uVTUAoJgD0EvkYA1D8/tz2XMqr
-        Zu5KkeqcC4PtkSN3uG3uuuEuzIRDtcBCipaSM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PZ2Qf2/hFgHD5mnqZJLuRzbUCICG9Zlp
-        rU2x4uEqn/ZuvXwMaKQwLvJbIxDsgfN0S4U4J398b8qxSh4KZsGttiJkR+tZzA2u
-        cFKNFAtj6ut4rE0HLpxQEYlq7cQTa82jU74D/7iGxIFJN1gRbhCx4esKvDH0FcgI
-        6COMn5E5dUw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D0815A2870;
-        Tue, 21 Jan 2020 14:36:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F3CB6A286F;
-        Tue, 21 Jan 2020 14:36:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Subject: Re: [PATCH 2/8] rm: support the --pathspec-from-file option
-References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
-        <5611e3ae326bb7f61abf870e3b2851226b6af1d8.1579190965.git.gitgitgadget@gmail.com>
-Date:   Tue, 21 Jan 2020 11:36:26 -0800
-In-Reply-To: <5611e3ae326bb7f61abf870e3b2851226b6af1d8.1579190965.git.gitgitgadget@gmail.com>
-        (Alexandr Miloslavskiy via GitGitGadget's message of "Thu, 16 Jan 2020
-        16:09:19 +0000")
-Message-ID: <xmqqftg8a9fp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727523AbgAUUHe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 15:07:34 -0500
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:35055 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726926AbgAUUHe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 15:07:34 -0500
+Received: by mail-ot1-f67.google.com with SMTP id i15so4164670oto.2
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 12:07:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0njAnNw2saITtkJ02uCNp675VMngnT5QANgfDJVAkEM=;
+        b=KZBVAvWNcO/l6d4EjPVNwt3/+WIsQIEwDyQCcX2u2zPpEflEa6rXZgABDSeCaPIStn
+         ufmqV+F1c69n+JVNXi+S3xaDKjLVkIAuaMRef7wjY/2mSZo2a8uCy/Q5WRN54p6CbxcE
+         IDoRhhCoMxFIMjiZKqUVZMlFlmK4Nr+7HoghqDUPm6h4CBHXOyJ4FSu2+GLuqsd3TVQP
+         o2Zw0oBM/VurI4iVrI6Nus6jK2xFuvrauBfcA0y+29dA98kAkDTcWr5HmLSfWAOdfOtl
+         lQp2u6nuaZyB42SZi8NMgeLjt8VTSWuw1lwIG7kJbP/CqL8E4vQ4oYGTsiRUo0JXl00u
+         c97A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0njAnNw2saITtkJ02uCNp675VMngnT5QANgfDJVAkEM=;
+        b=j59ainwW522TbhMamnU4YjOMdSNpFYP5iQ8uk5tiisbuLhBc6it+yErEgXFig9KNlC
+         SFAdfQFUyA+8zRSS02G3d1qdTZgxdBCXQub5TYRO6VDw9EmZL7WebaW9cxZprAy4eDng
+         hP3iLxY8Ulz+zcnDgPc6KICtvCDdrNVzt23q8OuC5x1Gt6pXuJ8RFNf/V2tr3ntl4UMA
+         x5FZ3RZWh6xrowHIfhwjCEl39F25GvnpCXFFvQVPMIEK0yqbGncGIhVNgjnDTHp64RsO
+         Qw+8hv5zqTPsM8PO/QSUg9zl2qYcKgnlhoXzIJSFhK5TVVPmFago4Hk7vd3e/0GgWDdb
+         vgxQ==
+X-Gm-Message-State: APjAAAV93hrWbcvhjpglrfPaRPuWcNyf72/xG12UqehUr20QINMyqXxs
+        ozYSRGpmysSVuk1TZHCDJJkoxfT9XjrHuL0MPkGzI30a
+X-Google-Smtp-Source: APXvYqxPoikAOGndeudq6t/pxjRL7I74ragFQL5W+79Z+hG9og6PVDyYCcGwGPIW6NBoRLBq8tBG+WYIC1UUqAaix8c=
+X-Received: by 2002:a9d:24ea:: with SMTP id z97mr4907557ota.345.1579637252547;
+ Tue, 21 Jan 2020 12:07:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 51DF7D80-3C85-11EA-A8B8-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20200109150332.GF32750@szeder.dev> <20200121191857.23047-1-alban.gruin@gmail.com>
+In-Reply-To: <20200121191857.23047-1-alban.gruin@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 21 Jan 2020 12:07:20 -0800
+Message-ID: <CABPp-BEMZS4b_iYqP8nw0Oegfdx4DQadSwp00mXKPiaV58Pbpw@mail.gmail.com>
+Subject: Re: [PATCH v1] rebase -i: stop checking out the tip of the branch to rebase
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Alban,
 
-> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+// Adding Phillip and Johannes since they know the sequencer internals
+very well.
+
+On Tue, Jan 21, 2020 at 11:21 AM Alban Gruin <alban.gruin@gmail.com> wrote:
 >
-> Decisions taken for simplicity:
-> 1) It is not allowed to pass pathspec in both args and file.
+> One of the first things done by the interactive rebase is to make a todo
+> list.  This requires knowledge of the commit range to rebase.  To get
+> the oid of the last commit of the range, the tip of the branch to rebase
+> is checked out with prepare_branch_to_be_rebased(), then the oid of the
+> HEAD is read.  On big repositories, it's a performance penalty: the user
+> may have to wait before editing the todo list while git is extracting the
+> branch silently (because git-checkout is silenced here).  After this,
+> the head of the branch is not even modified.
 >
-> `if (!argc)` block was adapted to work with --pathspec-from-file. For
-> that, I also had to parse pathspec earlier. Now it happens before
-> `read_cache()` / `hold_locked_index()` / `setup_work_tree()`, which
-> sounds fine to me.
+> Since we already have the oid of the tip of the branch in
+> `opts->orig_head', it's useless to switch to this commit.
+>
+> This removes the call to prepare_branch_to_be_rebased() in
+> do_interactive_rebase(), and adds a `orig_head' parameter to
+> get_revision_ranges().  prepare_branch_to_be_rebased() is removed as it
+> is no longer used.
+>
+> This introduces a visible change: as we do not switch on the tip of the
+> branch to rebase, no reflog entry is created at the beginning of the
+> rebase for it.
 
-That is not an explanation nor justification.
+Oh, sweet, thanks for digging in.  I had also dug in just after the
+report, but not quite far enough as I still had failing tests and I
+was feeling a bit stretched thin on other projects so I punted hoping
+that SZEDER would post something.  Looks like the orig_head thing was
+probably what I was missing.
 
-> In case of empty pathspec, there is now a clear error message instead
-> of showing usage.
+I was a little surprised that there wasn't any regression test that
+needed to be modified, as it reminded me of a previous conversation
+about excessive work in the interactive backend[1], but after looking
+it up that was apparently about too many calls to commit rather than
+too many calls to checkout.
 
-Hmph, "git rm --pathspec-from-file=/dev/null" would say "nothing
-specified, nothing removed" and it makes perfect sense, but I am not
-sure "git rm" that gives the same message is better than the output
-by usage_with_options(builtin_rm_usage, builtin_rm_options).
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.1811121614190.39@tvgsbejv=
+aqbjf.bet/
 
-> -'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <pathspec>...
-> +'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]
-> +	  [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]
-> +	  [--] [<pathspec>...]
+> Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+>
+> Notes:
+>     Improvements brought by this patch:
+>
+>     Before:
+>
+>     $ time git rebase -m --onto v4.18 463fa44eec2fef50~ 463fa44eec2fef50
+>
+>     real    0m8,940s
+>     user    0m6,830s
+>     sys     0m2,121s
+>
+>     After:
+>
+>     $ time git rebase -m --onto v4.18 463fa44eec2fef50~ 463fa44eec2fef50
+>
+>     real    0m1,834s
+>     user    0m0,916s
+>     sys     0m0,206s
 
-OK.
+Nice...do we want to mention this in the commit message proper too?
 
-> +--pathspec-from-file=<file>::
-> +	Pathspec is passed in `<file>` instead of commandline args. If
-> +	`<file>` is exactly `-` then standard input is used. Pathspec
-> +	elements are separated by LF or CR/LF. Pathspec elements can be
-> +	quoted as explained for the configuration variable `core.quotePath`
-> +	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
-> +	global `--literal-pathspecs`.
-> +
-> +--pathspec-file-nul::
-> +	Only meaningful with `--pathspec-from-file`. Pathspec elements are
-> +	separated with NUL character and all other characters are taken
-> +	literally (including newlines and quotes).
-> +
-
-OK.
-
-> diff --git a/builtin/rm.c b/builtin/rm.c
-> index 19ce95a901..8e40795751 100644
-> --- a/builtin/rm.c
-> +++ b/builtin/rm.c
-> @@ -235,7 +235,8 @@ static int check_local_mod(struct object_id *head, int index_only)
+>
+>     Both tests have been performed on a 5400 RPM SATA III hard drive.
+>
+>  builtin/rebase.c | 18 +++++-------------
+>  sequencer.c      | 14 --------------
+>  sequencer.h      |  3 ---
+>  3 files changed, 5 insertions(+), 30 deletions(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8081741f8a..6154ad8fa5 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -246,21 +246,17 @@ static int edit_todo_file(unsigned flags)
 >  }
->  
->  static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
-> -static int ignore_unmatch = 0;
-> +static int ignore_unmatch = 0, pathspec_file_nul = 0;
-> +static char *pathspec_from_file = NULL;
+>
+>  static int get_revision_ranges(struct commit *upstream, struct commit *o=
+nto,
+> -                              const char **head_hash,
+> +                              struct object_id *orig_head, const char **=
+head_hash,
+>                                char **revisions, char **shortrevisions)
+>  {
+>         struct commit *base_rev =3D upstream ? upstream : onto;
+>         const char *shorthead;
+> -       struct object_id orig_head;
+> -
+> -       if (get_oid("HEAD", &orig_head))
+> -               return error(_("no HEAD?"));
+>
+> -       *head_hash =3D find_unique_abbrev(&orig_head, GIT_MAX_HEXSZ);
+> +       *head_hash =3D find_unique_abbrev(orig_head, GIT_MAX_HEXSZ);
+>         *revisions =3D xstrfmt("%s...%s", oid_to_hex(&base_rev->object.oi=
+d),
+>                                                    *head_hash);
+>
+> -       shorthead =3D find_unique_abbrev(&orig_head, DEFAULT_ABBREV);
+> +       shorthead =3D find_unique_abbrev(orig_head, DEFAULT_ABBREV);
+>
+>         if (upstream) {
+>                 const char *shortrev;
+> @@ -314,12 +310,8 @@ static int do_interactive_rebase(struct rebase_optio=
+ns *opts, unsigned flags)
+>         struct replay_opts replay =3D get_replay_opts(opts);
+>         struct string_list commands =3D STRING_LIST_INIT_DUP;
+>
+> -       if (prepare_branch_to_be_rebased(the_repository, &replay,
+> -                                        opts->switch_to))
+> -               return -1;
+> -
+> -       if (get_revision_ranges(opts->upstream, opts->onto, &head_hash,
+> -                               &revisions, &shortrevisions))
+> +       if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_h=
+ead,
+> +                               &head_hash, &revisions, &shortrevisions))
+>                 return -1;
+>
+>         if (init_basic_state(&replay,
+> diff --git a/sequencer.c b/sequencer.c
+> index b9dbf1adb0..4dc245d7ec 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3715,20 +3715,6 @@ static int run_git_checkout(struct repository *r, =
+struct replay_opts *opts,
+>         return ret;
+>  }
+>
+> -int prepare_branch_to_be_rebased(struct repository *r, struct replay_opt=
+s *opts,
+> -                                const char *commit)
+> -{
+> -       const char *action;
+> -
+> -       if (commit && *commit) {
+> -               action =3D reflog_message(opts, "start", "checkout %s", c=
+ommit);
+> -               if (run_git_checkout(r, opts, commit, action))
+> -                       return error(_("could not checkout %s"), commit);
+> -       }
+> -
+> -       return 0;
+> -}
+> -
+>  static int checkout_onto(struct repository *r, struct replay_opts *opts,
+>                          const char *onto_name, const struct object_id *o=
+nto,
+>                          const char *orig_head)
+> diff --git a/sequencer.h b/sequencer.h
+> index 9f9ae291e3..74f1e2673e 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -190,9 +190,6 @@ void commit_post_rewrite(struct repository *r,
+>                          const struct commit *current_head,
+>                          const struct object_id *new_head);
+>
+> -int prepare_branch_to_be_rebased(struct repository *r, struct replay_opt=
+s *opts,
+> -                                const char *commit);
+> -
+>  #define SUMMARY_INITIAL_COMMIT   (1 << 0)
+>  #define SUMMARY_SHOW_AUTHOR_DATE (1 << 1)
+>  void print_commit_summary(struct repository *repo,
+> --
+> 2.24.1
 
-We may want to clean these "explicitly initialize to 0/NULL" up at
-some point.  The clean-up itself would not be in the scope of this
-patch, of course, but not making it worse is something this patch
-can do to help.
+The code looks reasonable to me, but I'm still not completely familiar
+with all the rebase and sequencer code so I'm hoping Phillip or
+Johannes can give a thumbs up.
 
-> @@ -259,8 +262,24 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
->  
->  	argc = parse_options(argc, argv, prefix, builtin_rm_options,
->  			     builtin_rm_usage, 0);
-> -	if (!argc)
-> -		usage_with_options(builtin_rm_usage, builtin_rm_options);
-> +
-> +	parse_pathspec(&pathspec, 0,
-> +		       PATHSPEC_PREFER_CWD,
-> +		       prefix, argv);
-> +
-> +	if (pathspec_from_file) {
-> +		if (pathspec.nr)
-> +			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
-> +
-> +		parse_pathspec_file(&pathspec, 0,
-> +				    PATHSPEC_PREFER_CWD,
-> +				    prefix, pathspec_from_file, pathspec_file_nul);
-> +	} else if (pathspec_file_nul) {
-> +		die(_("--pathspec-file-nul requires --pathspec-from-file"));
-> +	}
-> +
-> +	if (!pathspec.nr)
-> +		die(_("Nothing specified, nothing removed"));
+Thanks for digging into this and figuring out the bits that I missed
+when I tried.
 
-I wonder if doing these in this order instead would make more sense
-without making unnecessary behaviour change.
 
-    - parse the options (which would make pathspec_f_f available to
-      us)
-
-    - if pathspec_f_f is given, call parse_pathspec_file()
-
-    - otherwise complain if pathspec_file_nul is set
-
-    - otherwise check argc and give the usage_with_options()
-
-I dunno.
-
-Thanks.
+Elijah
