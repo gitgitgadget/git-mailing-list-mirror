@@ -2,83 +2,140 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDD7FC2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 18:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C859AC2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 18:01:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8835224125
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 18:00:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 941BB24125
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 18:01:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CSHyfaG5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKbGARm6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729106AbgAUSAQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 13:00:16 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:58508 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728829AbgAUSAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 13:00:16 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 57D9EA0BD1;
-        Tue, 21 Jan 2020 13:00:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=xLhsxGa06HZ+XWYksKgb6zCec+k=; b=CSHyfa
-        G5rkPvlA/i4xcy0s4rexvKYdnsnhuE5aGELnEnFnn5AkLnbP8l5bJr3VSSM/tkPR
-        UArd5q9zrvptZXI7MTxdPewkknDdUkcGbiLUo/cRfZ1DmiDeKswCfikrLqcjZYUY
-        sFAPvSgPx1LoxcXvbt1t9fvcV527m9MdDkcF0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ibSRm/5t/P/Y0hAOuSsrPdV8P+LBBYOj
-        n8AM9rtJPI51LdaIeQKi1TrZ3/nq8KyWTBkQTQgWR/V0jbDU7EKJoSdZP5Iyme7v
-        noNwWhp7Z9mTn7gyfXmKg416/mwCyfBQgDIXw8iNT9pxhSof1f/8+Tz+oymxamnl
-        dLj27r3fOp4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FCC5A0BCF;
-        Tue, 21 Jan 2020 13:00:14 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6BAAFA0BCE;
-        Tue, 21 Jan 2020 13:00:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/3] Re-fix rebase -i with SHA-1 collisions
-References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
-        <20200116235411.GZ6570@camp.crustytoothpaste.net>
-        <nycvar.QRO.7.76.6.2001171050000.46@tvgsbejvaqbjf.bet>
-        <20200117223734.GA6570@camp.crustytoothpaste.net>
-Date:   Tue, 21 Jan 2020 10:00:09 -0800
-In-Reply-To: <20200117223734.GA6570@camp.crustytoothpaste.net> (brian
-        m. carlson's message of "Fri, 17 Jan 2020 22:37:34 +0000")
-Message-ID: <xmqqeevsbsgm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729366AbgAUSBw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 13:01:52 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:39478 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729080AbgAUSBv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 13:01:51 -0500
+Received: by mail-ot1-f68.google.com with SMTP id 77so3759074oty.6
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 10:01:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=850fUBELQjNRjU3wVa8L6l3HcDx4Y2oGw6K4PW4DY1w=;
+        b=IKbGARm6H5gdskd/qFLHUVvQbqfYAZc0j/mY12aF5lFxIBr0BvGM4zc/IWM3BSSOxs
+         6bwp93B6+a/W1SqENaLbp6EyGYm/aV+Xeb0wWqZ5aUvxg2+WqP7Rzr97aSDb+at6HW55
+         2Va4B5Rc790k1QdkRogg1I72THvFXri6o4H1WL71ElGjbQ88ChwXjxJ82w6aKnBQ9zqr
+         hJmb6ZSJkzz0rBcy2hHCCSr3PrxBYa3ET887he8iU/eebG9+1CCcpMYdBussyQHD6Gy6
+         wyM6DYbqfStoxsqi8doj7vEvlQQ9/4JjxAdXDKdtclAW+4ijSTT8f+a5Pkn3i9yisUSB
+         Porg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=850fUBELQjNRjU3wVa8L6l3HcDx4Y2oGw6K4PW4DY1w=;
+        b=DC37JNh8TEt/AiYf2arKYwnO/dOeVtl6lx2XoOArhwrwlalI0xUvbPtu6Dl2BiC/J/
+         uRM6O91Bw/q8QX3OkkOOtG5Z/Ww2H4I26XbNPBwKvRCgvz9i+06gbpcUiwzg9bmUVZ2A
+         l6X1FhJlRq39LFeRmyKGdBBX0a4OH8dU8TbmVG9gQzZrboAy7rgraUcoRBg0yCsJEm5F
+         plj492RLxlKM6MX3SjEcKMvfyRGlDyrCEe+QfbwFsPxbdTH7bY/vVGXivppqJ22PC3Yb
+         YKHXRGjwkipunGayTJgxNc2LC6thHB7dZh0CLz2QIE+tHD2RgTbTmtCEyyl/7CZ78yXq
+         uG1w==
+X-Gm-Message-State: APjAAAWhfEtPshZ9LKinippYrxOIlq74WzZGltfZGHK91A60vLFz5NKs
+        tU41/b5PflDg2AkQRAjeDNk=
+X-Google-Smtp-Source: APXvYqwcjpm3Qg1Hn0OTRWcboL2Cjy+vUgoigOpU6gbM+Cjr0v5nyXQP+IpREBKpTDJ6k8YIaIwBpA==
+X-Received: by 2002:a9d:4902:: with SMTP id e2mr4571676otf.116.1579629711218;
+        Tue, 21 Jan 2020 10:01:51 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id x17sm12433494oix.18.2020.01.21.10.01.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Jan 2020 10:01:49 -0800 (PST)
+Subject: Re: [PATCH v2] fetch: document and test --refmap=""
+To:     Jeff King <peff@peff.net>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
+ <pull.532.v2.git.1579570692766.gitgitgadget@gmail.com>
+ <20200121162433.GA6215@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <a87b9fc2-dae4-7e39-5aab-243ba9679531@gmail.com>
+Date:   Tue, 21 Jan 2020 13:01:47 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DE2DDA06-3C77-11EA-ADE2-B0405B776F7B-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20200121162433.GA6215@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 1/21/2020 11:24 AM, Jeff King wrote:
+> On Tue, Jan 21, 2020 at 01:38:12AM +0000, Derrick Stolee via GitGitGadget wrote:
+> 
+>> Update the documentation to clarify how '--refmap=""' works and
+>> create tests to guarantee this behavior remains in the future.
+> 
+> Yeah, this looks like a good solution to me.
+> 
+>> This can be accomplished by overriding the configured refspec using
+>> '--refmap=' along with a custom refspec:
+>>
+>>   git fetch <remote> --refmap= +refs/heads/*:refs/hidden/<remote>/*
+> 
+> This isn't strictly related to your patch, but since the rationale here
+> describes the concept of a background job and people might end up using
+> it as a reference, do you want to add in --no-tags to help them out?
 
->> The question whether to move the SHA-256 support patch into your series is
->> more a question to Junio, i.e. which patch series will be merged down
->> faster.
->
-> I need to do a reroll of part 8, so I'll pick it into a future series
-> (part 9) of test fixes and drop my patch.  That way it won't interfere
-> with either series making progress, but it will still be included at the
-> end.
+That's a good idea. I keep forgetting about that. It's interesting that
+tags are fetched even though my refpsec does not include refs/tags.
 
-Alright.  Thanks for coordinating between you two.
+>>     Thanks for all the feedback leading to absolutely no code change. It's
+>>     good we already have the flexibility for this. I'm a bit embarrassed
+>>     that I did not discover this, so perhaps this doc change and new tests
+>>     will help clarify the behavior.
+
+> Anyway, I wasn't at all sure that a blank --refmap= would do what you
+> want until I tried it. But it was always intended to work that way. From
+> c5558f80c3 (fetch: allow explicit --refmap to override configuration,
+> 2014-05-29):
+> 
+>   +static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
+>   +{
+>   +       ALLOC_GROW(refmap_array, refmap_nr + 1, refmap_alloc);
+>   +
+>   +       /*
+>   +        * "git fetch --refmap='' origin foo"
+>   +        * can be used to tell the command not to store anywhere
+>   +        */
+>   +       if (*arg)
+>   +               refmap_array[refmap_nr++] = arg;
+>   +       return 0;
+>   +}
+> 
+> At first I thought the comment was wrong, since we don't actually
+> increment refmap_nr. But the ALLOC_GROW makes refmap_array non-NULL,
+> which is what triggers the "do not use configured refspecs" logic.
+
+This works due to a subtle arrangement of things, like a non-NULL
+but "empty" array. That justifies the test even more.
+ 
+> This code switched to refspec_append() in e4cffacc80 (fetch: convert
+> refmap to use struct refspec, 2018-05-16), and I think we actually do
+> push an empty string onto the list. Which then triggers the "do not use
+> configured refspecs" logic, but doesn't match anything itself. I'm not
+> sure whether that behavior was entirely planned, or just what the code
+> happens to do. So it's doubly useful to add a test here covering the
+> expected behavior.
+
+Excellent. Glad I'm not just adding test bloat for now reason.
+
+-Stolee
