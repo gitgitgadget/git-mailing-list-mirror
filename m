@@ -7,85 +7,78 @@ X-Spam-Status: No, score=-1.0 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA441C2D0DB
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9678DC33CAA
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:48:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A864524653
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:46:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6C63620882
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:48:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ui933EM7"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Ibdkug4C"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729367AbgAULqZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 06:46:25 -0500
-Received: from mout.gmx.net ([212.227.17.21]:55341 "EHLO mout.gmx.net"
+        id S1728826AbgAULsT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 06:48:19 -0500
+Received: from mout.gmx.net ([212.227.15.19]:46621 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726052AbgAULqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 06:46:24 -0500
+        id S1728655AbgAULsT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 06:48:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579607183;
-        bh=25kHSuzWS5RztvzXgs10QgmSgCUwUoM8lbRklNBXcsM=;
+        s=badeba3b8450; t=1579607284;
+        bh=HTouBxFLSjJOKaZMa4XN1xoBQcge2BIdHtIXIyGA2/I=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Ui933EM7PKNOdfKRIT8b1dmCPUtEPlhEHnv1dbDnI2VO7l1HeH/n7wCy2MiVHulhx
-         2IQjDjyRlmv4A+gKDlYcFua7olMNT74K0csYzc86Dm68lPS8DB08FWKMS6JWIh6UOf
-         9hfxbPbjH7fQStnXmkXuODZ79SiZCiDHLZmrR5Q8=
+        b=Ibdkug4CS/BXZu7F72zVBQAH24mtkGWkG7n9xtJW96vHJCgQ7KcsmcOaxmSVROj2w
+         2Z9xAzplmbveHxe/nv7r8VZSfqOoG+arex8MDtOcPZWsizwdU4GinP8ijsRNFSV7rk
+         secndl1euK7HW/D/Ykd10dGLa7+RTYHoHdQ90LLs=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MAfYm-1inFDi3cyW-00B4mh; Tue, 21
- Jan 2020 12:46:22 +0100
-Date:   Tue, 21 Jan 2020 12:46:07 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mwwdl-1jqoUJ2EVn-00ySMc; Tue, 21
+ Jan 2020 12:48:04 +0100
+Date:   Tue, 21 Jan 2020 12:47:49 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
 cc:     git@vger.kernel.org
-Subject: Re: Y2038 vs struct cache_time/time_t
-In-Reply-To: <20200120194515.GE4113@kitsune.suse.cz>
-Message-ID: <nycvar.QRO.7.76.6.2001211245380.46@tvgsbejvaqbjf.bet>
-References: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet> <20200120194515.GE4113@kitsune.suse.cz>
+Subject: RE: Y2038 vs struct cache_time/time_t
+In-Reply-To: <017401d5cfcf$8791d900$96b58b00$@nexbridge.com>
+Message-ID: <nycvar.QRO.7.76.6.2001211247180.46@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.2001201555220.46@tvgsbejvaqbjf.bet> <017401d5cfcf$8791d900$96b58b00$@nexbridge.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-189066351-1579607183=:46"
-X-Provags-ID: V03:K1:pgpN0Hz/QBIK/B2UjuphsXZBnHSKoaYlNZvz9sGpuc1TROKnmo3
- SSaBbnA+2myXmIa8H5hWHZdqw44/UEpy7B115DWcWhHpdqxOwclVsjbuQbxvR/V9Ys3VvEv
- +vYFRhYVXOo9RJQaBsnCF37bdTQ8F6r5roX3vtIrUWd919v1ymbzzrTK1U8INfbTkKs2NEv
- lyLP0oqwDdz9zmBR+jDvQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wEsaHbXSinU=:Jhg4D991dkNQp96aMdx3XN
- ao0w+ozvHbSMmUUMX7rhIvrt19K3jvgOdoYZSCM4JIcxAW0ynf9s79+i3HZxDGYGYU6rsmDuV
- 7QyQiPllydaE3um/zfdi1bUROMKAITYejsm6SBPG6m2fgilwwgEsSDuumZ+PmXchd2zhiho6R
- KXpvCJvoxOfmm88X48N3Blwqykhe8RqvGNBf/Eniyw4cReRFM7HAYThWpUeztV3eX6mAAKd7s
- SYOw4gUZ+OeYQ1LBaQokOO2mOZBGe4TLKcHLf8P/VOp1ACmH/jgG0BI5036XDp2tHqvBy8uXl
- D02AZm22JgPpRuvuLMLNNFI7GWtD4RQO4DrMP57VshsLLPegs6yOZAgzKgCyfYkNrh7QIUyzt
- TydsPfCwYnXvpo5FXkYiAnDjlBZHKeDnzr2Sqr1MxsCqEhGuKGuUUgOZtzFBgM8L5JMSM1REG
- gOUW6TSD9Z9DQqzwV3g7/lRpzk5QFfmwXiNxamuXR/MLE6+Dma67wtLmQkCd5ITrTP5Wkky6S
- RHo6dj0BjPyNy43v+ZfQ2cPxyUT6oR/ZDMEW73oCNz8Y7OQ9j6eTvdE3aJHlua2sDxcmCA0g+
- 7FqqsOpKBhwaF9A1AE3ICbsjKsfklG0o6XPY0hfbTCkyjdz0EG/3uCTDgFx3mZcZ42jd/0pNy
- tkLMjc0s4Gx9CFCOWji6R5fYly+bKfpVqFCYt+gDpLrM7TFfS/bL+foffv+gBQoKM2d9eMBkR
- 45IkBDjpz/J6fJFz6gPXSf3PUZLhwv3xJdAigUo3Wv95B842JZASInl30h1HypPmNPoCNO1CS
- SRuAdahpe/K3WUxqpUkYzRxacC7rb5/JIKCAyIsy3FwjOoFJY8B6d1bZIYV9aJcs8OkTpypFa
- 9JGTVJVsWYmXEyFylMSGCIJkLXynNB26f6B0qxVqQeks7hJnsPXCja2C0xomo316TRvu/iRPb
- +6D1EwC8WuitjnV/GGm2Bl3POy0RuezT92dGqFXsnxJ+HntlkbKZHANGcm4w0rqOrA4jc73U7
- Q9bF09obOBr3r5YdZqIQBCAOdeVY+NieSOg1cOxnyTEGQlxHkN3DBnMcBrdlqCjNr+AnjwDs+
- mf7TkSyMzSMp2hemeGLmh43bI2sarTp7xFXCrlzi3ojybJyGnsddV6W2mavzM50YdUN8aXyBv
- QRMGSwih1uWvVvOwha6i4CwPFgMyZH28rf92MJ8vDFaA831jhh1uD4kfjT+3WFO5wzFasH1st
- O3PTDIIsURDr2d7q77W7qvJYAOVLxZ8sOhyPl41esJwGVechvtg+qz01kEDo=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XRbuaaiLLYs1jJ4T7EbZaDUQ5r+OhkrJ0F3525XLbtOCike02yf
+ YNHQHPT/zv8HsjU1lZ5zr89ySpw3B+PlTX4OI3w3FeIkEy+AHnKNT1Q27fvajrRR8y3UVun
+ WVeQ0/Z+uiKJ8+rvf4lUBbs9Vriz0TkUMgDV6TTw38c630Rzcsso1mGN54LBDTkF4vLtn6b
+ rKo0iSUHpXHn+vVSy+bMQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:x+dGCCSxd9E=:7ojicken3TDfxALTv127mv
+ r5qnJPEOGVAL0b4j4817TuFqpVqcgPVErFqBfBV62XqOv/sBLz2Ptf2VdvTtSpTf0h8VcVjlp
+ oj/9JZyI5XZCWswx8uMzHF+ZaMkZD4woIiPDSO5R7wDx0yCEigv/G0XntxwjHqxQw3txQdMR4
+ YwM1CFv6Zy3pLJfasH7v0vGHwNmwn9nKMYdwa97S04QcFZ/JJ9nG6nAll2UOIv41FbV9GWy5U
+ +X3Inf7QlUAbyNOxfO5+V0UH0Cb/24Lb7mq4LsFVgQhbWsCoG/hwbPdAg33tQ+OiBhNTpFvAt
+ TAYQc6YUhoW+61RKO1PvTYi43ThU7/6Kbcn0hS6sp4Mpx/DcP99bj/ugIJ1tGFvyQ8D+K9Mnh
+ w0xL4cLHujwW1Ot6HQ7VIFhadm08uiVULU+Ze61Yuf5tKxKmUDLPX14Q7P0jXlJVf/Afoj6j6
+ KM1QUK6+HtpEF0UXLTyiKdDVWWi91E5IWyJXt7AZQZeeNyyQJAYoma29PrWS4LIWoCok3Gm+R
+ w7M0drqRU4vbEL6xlzEsJkY9vrOEzYmf8HVuIvhTW+u3uihkfQauuoKYD1FN0tBOXmEuOTyGg
+ ZOXRzGGBwRIGl9sidtv+IhlO7vEWHuF4m9/IGJdcUIAeVrcKGhYHjV1Vezq1teSx80GzDLqko
+ hAqEI6hd9+ruhpMxbuPlD/TS2Yd2joOEm1ik8EED98i0hfLjIdYT/iaVI/rPgkxd+yPtQM2HP
+ B9PjIREkbMYKtPvYq2Nr05Xtl5ZTmNveMt9sEao4KLAw0LaY+Yb4EfLQjoJTGpt3Wos1OZhzs
+ Wbss+o7n2HXXM3XsErq5iML83DHh2wKmVJ7iKfp5KgP/a3Bi3RDngzGFqnnRH/8v0Y4BWa2tV
+ CdsVLc5d/t7litXxXUI3FVEzk7Pi7APN0xcAiNAqinlNuqAAEHYWNLxu0OLgy+11cKpAFpIi4
+ hcyJiVQiY3KmoWSitrS6RviuoycJJxHm++Mhh109nLuB8/gciwzpKtQgfwcuUES+EG/oA4KZj
+ pQf+TCSkxa4oAg/EyyoCrNeSJYlC+Ft9cgyg8qIpFMZjMiFdXYhWXuyyFN7on+l/IJJbpEhQl
+ +17kR4QRXPFNDARatzdzr32zsLeinaEhZZts+/yrgsidL3ZUu/RX0f3RhFhxHbibkppqu33dE
+ MqHq0SHL3cKQaXmdGRIL7ddoMt45Rkw9aresyINIEQNKeRJWZmoEkrHA+MpPb6JB9x95zO7Qr
+ lpV56FxYWtDatzMvuPP2AAPmWZC7lsEPV1SUCvmKu9GKseR85F8PbndHnmyU=
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Randall,
 
---8323328-189066351-1579607183=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, 20 Jan 2020, Randall S. Becker wrote:
 
-Hi Michal,
-
-On Mon, 20 Jan 2020, Michal Such=C3=A1nek wrote:
-
-> On Mon, Jan 20, 2020 at 08:38:51PM +0100, Johannes Schindelin wrote:
-> > Team,
-> >
+> On January 19, 2038 (no really January 20, 2020 2:39 PM), Johannes
+> Schindelin wrote:
 > > today, in quite an entertaining thread on Twitter
 > > (https://twitter.com/jxxf/status/1219009308438024200) I read about yet
 > > another account how the Year 2038 problem already bites people. And co=
@@ -94,18 +87,22 @@ sts
 > >
 > > And after I stopped shaking my head in disbelief, I had a quick look, =
 and
-> > it seems that we're safe at least until February 7th, 2106. That's not
-> > great, but I plan on not being around at that date anymore, so there. =
-That
-> > date is when the unsigned 32-bit Unix epoch will roll over and play
-> > dead^W^Wwreak havoc (iff the human species manages to actually turn ar=
-ound
-> > and reverse the climate catastrophe it caused, and that's a big iff):
-> > https://en.wikipedia.org/wiki/Time_formatting_and_storage_bugs#Year_21=
-06
+> it
+> > seems that we're safe at least until February 7th, 2106. That's not gr=
+eat,
+> but I
+> > plan on not being around at that date anymore, so there. That date is =
+when
+> > the unsigned 32-bit Unix epoch will roll over and play dead^W^Wwreak
+> > havoc (iff the human species manages to actually turn around and rever=
+se
+> > the climate catastrophe it caused, and that's a big iff):
+> > https://en.wikipedia.org/wiki/Time_formatting_and_storage_bugs#Year_21
+> > 06
 > >
 > > Concretely, it looks as if we store our own timestamps on disk (in the
-> > index file) as uint32_t:
+> index
+> > file) as uint32_t:
 > >
 > > 	/*
 > > 	 * The "cache_time" is just the low 32 bits of the
@@ -121,14 +118,16 @@ ound
 s
 > > around, but I am not _quite_ that sure, as I expect us to have "greate=
 r
-> > than" checks, not only equality checks.
+> than"
+> > checks, not only equality checks.
 > >
 > > But wait, we're still not quite safe. If I remember correctly, 32-bit
-> > Linux still uses _signed_ 32-bit integers as `time_t`, so when we rend=
-er
-> > dates, for example, and use system-provided functions, on 32-bit Linux=
- we
-> > will at least show the wrong dates starting 2038.
+> Linux still
+> > uses _signed_ 32-bit integers as `time_t`, so when we render dates, fo=
+r
+> > example, and use system-provided functions, on 32-bit Linux we will at
+> least
+> > show the wrong dates starting 2038.
 > >
 > > This got me thinking, and I put on my QA hat. Kids, try this at home:
 > >
@@ -141,12 +140,33 @@ er
 > > Maybe we want to do something about that, and while at it also fix the
 > > overflow problems, probably requiring a new index format?
 >
-> Which means we can split off the timestamps to a separate file, too ;-)
+> The preferred way of fixing this is traditionally - for those of us who =
+have
+> been through it (4-ish times), to convert to time64_t where available (b=
+ig
+> legacy machines, like z/OS and NonStop), or in gcc, time_t is 64 bit on =
+64
+> bit systems. It has been 64 bit on Windows since VS 2005. I have a
+> relatively some relatively old Linux distros on 64 bit processors that a=
+lso
+> have time_t set as 64 bit in gcc. Those seem to be the standard approach=
+es.
+> To cover it, I suggest we move to a gittime_t which is always 64 bit (or=
+ 128
+> bit if you don't want to be resurrected after the sun turns into a red g=
+iant
+> or later when we are left with evaporating black holes), no matter what =
+the
+> platform, and build the selection of what gittime_t is (time_t or time64=
+_t)
+> into our config and/or compat.h. That way, hopefully, people will rebuil=
+d
+> their git before 2038 or before someone decides to stick a fake date int=
+o a
+> Github repo just to mess with us.
 
-Sure. We could also jump from a cliff at the same time. Just because you
-can do something does not mean that it is a good idea to actually do it.
+I like it. If I had time to tackle this, I would definitely go for
+`git_time64_t`.
 
 Ciao,
-Johannes
-
---8323328-189066351-1579607183=:46--
+Dscho
