@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7A99C33CAA
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 07:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 071FDC33CAA
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 07:16:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A0FEA24125
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 07:05:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C622E22522
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 07:16:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJUlyHAe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHlgsL0b"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728899AbgAUHFr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 02:05:47 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42449 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725789AbgAUHFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 02:05:47 -0500
-Received: by mail-ed1-f65.google.com with SMTP id e10so1924863edv.9
-        for <git@vger.kernel.org>; Mon, 20 Jan 2020 23:05:46 -0800 (PST)
+        id S1728186AbgAUHQM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 02:16:12 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46280 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725789AbgAUHQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 02:16:12 -0500
+Received: by mail-ed1-f66.google.com with SMTP id m8so1914742edi.13
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 23:16:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=E7KJeaTzz593Hfmt4Dn7P8uaXI8jGjQDDwXB8s9INjM=;
-        b=KJUlyHAeIzQVgve8tukWafj0LVaJoixPQ3fs+LDyR7VoMS50fDFaUd8693HKeeH9Nf
-         Zi9T/XH7IheLPMix7uj3NiEP1ibXb8srBNfO495dR4Y2xww/YWc5mSCe29KRSHEEP6zD
-         i9Ij9JaeryRxe9Nz9cP1IM606uaSyKHlfFphSTCMgV3rKgc1QAq/YxS5VcMtHteAjfKW
-         qJjaBMxAoNyWt/i5iz1+l2w5k4CeAcIYlxomTS7eG7tsVxsYqcFnvTcASRCcWAM9KbUN
-         Ua/CXMLvSBU+KI3TzhH4QCE9G9QsMkgRLVkHcz0AC7HzdA3YtZCVoTRVypIUXTM8wzNf
-         lWZQ==
+        bh=RYKjhCCJZ7VejbxHGRleZGHcVLvxc7mJjYI7YNC7y4Q=;
+        b=KHlgsL0bHlSGd8JSurqnfF8jQyBb2WhUldnw0kD5qBGETk7E9JN1m5UqB/dFbKCVZ2
+         YebDKwPLzafeERA9fGYLumv4btxdUb/v3sKZPK8lJ/VKcrj7r9y9GBuCq0S/rEwx3phe
+         7/ZV+mFsqaPmb1GjnfO2bcEmpndxrCollrLg1Zy7rHni/C+9mzlftoEPUfRglPezl4j8
+         HXNE14VO+oGACO0CJCWpTXKgP2BLkOnRkzHuscSqawqMaHvDyRFmE+2F3VY+/cqxQnPI
+         POxCXqy4N2/l8jN4U88HfQGofkSw+lJUw2UvMzRuBI7J1k4YqpvUy3fWLJUGuodZFmAu
+         eVzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=E7KJeaTzz593Hfmt4Dn7P8uaXI8jGjQDDwXB8s9INjM=;
-        b=ctLp1p3d6OSO7KwgIFBjT0gZTAjveRjDXkuF3LGAUh+Sr3zJyfDEQOKu0A0pzOUIzA
-         DqF5kthh0Sw19FdyndMNZBAWgQ8qgArdrPcm2TcXnMio/sqVrZb7nRQvYEruRPAhLENT
-         VX4Pjxig2ypfs/Z7uZe2sTcTDei5li5JogptTWj4Tzg3LXLqSoiRCIn+sNw7RS+02TxP
-         CogdsAW9aFbxO723DxvhJ3VWlRmPGRkUk8E8AfMaa4MdsW4dmOleyI8pTl6W5G+kUTeK
-         cEVpbwVWU6o1R759rFq13nWWp4VY1w77SP2CiB29kMMPDszC5jcnWBYtlaq1u+SL5crO
-         6Iqw==
-X-Gm-Message-State: APjAAAWFeAUbraxJuLw2GB0YzMRLDAc3vvCuFKE7OJXjZVjAhJwJRbqC
-        /uTbKy0GjvyixsY4rx/ebAKmIEJiYo5+9/YUuh4=
-X-Google-Smtp-Source: APXvYqwiSKUniq0gLrf/kxl0e3UZuvcxq5jQmFufKE3FTIH6R+KbnqNA56ehdxMSUDtDk7bk0DPJ8zdyHPlGHs2aWZk=
-X-Received: by 2002:a17:906:3647:: with SMTP id r7mr3030608ejb.320.1579590345762;
- Mon, 20 Jan 2020 23:05:45 -0800 (PST)
+        bh=RYKjhCCJZ7VejbxHGRleZGHcVLvxc7mJjYI7YNC7y4Q=;
+        b=PhEEe2SleT7gH9LbCMFBlRWaza2Er6Aa9uIQPHhyQZEwbJVYq4+rqh6G8C8wYJUUKW
+         kc+TvjMvEF9KKu8YLK5ndbG4A+2Bt5CGhYCednGPdRvOib+D5QuW7Kkse5l38Dh6VQPP
+         8ORFpgGGeC94leZOT/0u10/hcM98GKYDdD4S9lCqW0ZM+NRAS++QSxSMcllmtBcWlePZ
+         nQJOG0jy52LDeMF/VAlDyxoFI2CHxP6ew/tcEDTXHoCuJA2SHS1NALe98TJLzy27BVbC
+         0tRmHyS61luP17Y6W5wo0IUdt1YjU67MJAcIuTxBFGv4jWKnALVdURWBaQRvFS1xLYG5
+         kN+Q==
+X-Gm-Message-State: APjAAAValsx/8BR/QuOcw6sT4TnjIO+6iEhriYKiUqQPEHkmNK5l1TzO
+        AKXp+QO6mJ8Jp2bn1V+YDzfA8W7D0UurvMPylms=
+X-Google-Smtp-Source: APXvYqy7NLuy6qKK7nSB+jZHM7jaHXHC/8ow7DG/F+g+svocpbkehz75D95eXVfz9ubDUf3Q0xk5omT+ad/wl5slh6U=
+X-Received: by 2002:a17:906:f49:: with SMTP id h9mr3122469ejj.6.1579590970634;
+ Mon, 20 Jan 2020 23:16:10 -0800 (PST)
 MIME-Version: 1.0
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-11-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001202321210.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001202321210.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-12-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001202325000.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001202325000.46@tvgsbejvaqbjf.bet>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 21 Jan 2020 08:05:34 +0100
-Message-ID: <CAP8UFD0TU9FQQfk6SgDtOi+_eDni0ZJf+Bw-uN_LzAdeVh3HvQ@mail.gmail.com>
-Subject: Re: [PATCH 10/29] bisect: libify `handle_bad_merge_base` and its dependents
+Date:   Tue, 21 Jan 2020 08:15:59 +0100
+Message-ID: <CAP8UFD3QP3QXe32cdK+q=P+v3dK1Bfws5KgNnm-JfDnPkpBZfw@mail.gmail.com>
+Subject: Re: [PATCH 11/29] bisect: libify `bisect_next_all`
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
         Pranit Bauva <pranit.bauva@gmail.com>,
@@ -69,25 +69,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 20, 2020 at 11:23 PM Johannes Schindelin
+On Mon, Jan 20, 2020 at 11:29 PM Johannes Schindelin
 <Johannes.Schindelin@gmx.de> wrote:
 
 > On Mon, 20 Jan 2020, Miriam Rubio wrote:
 
-> > @@ -777,14 +777,14 @@ static void handle_bad_merge_base(void)
-> >                               "between %s and [%s].\n"),
-> >                               bad_hex, term_bad, term_good, bad_hex, good_hex);
-> >               }
-> > -             exit(3);
-> > +             return -3;
+> > Since we want to get rid of git-bisect.sh it would be necessary to
+> > convert those exit() calls to return statements so that errors can be
+> > reported.
+> >
+> > Emulate try catch in C by converting `exit(<positive-value>)` to
+> > `return <negative-value>`. Follow POSIX conventions to return
+> > <negative-value> to indicate error.
+> >
+> > Turn `exit()` to `return` calls in `bisect_next_all()`.
+> >
+> > All the functions calling `bisect_next_all()` are already able to
+> > handle return values from it.
 >
-> ... which is: what does `3` stand for?
+> So this patch brings more magic values that really would like to become
+> `enum` values. At this point, we're talking about `bisect_next_all()`
+> which is _not_ a file-local (`static`) function. Therefore, we now really
+> wade into API territory where an `enum` is no longer just a nice thing,
+> but a necessary thing: `bisect_next_all()` is a function that can be
+> called from other source files.
 
-Maybe the question should have been answered by adding a comment to
-the previous patch that added the `exit(3)` statement.
+I agree that return values could be better documented. About enum
+though, I am perhaps wrong but I don't think that we use them often
+for error codes. Do you have examples in the code base where they are
+used for such a purpose along with regular `error(...)` calls?
 
-So yeah we could here add a separate patch that just adds such a comment.
+> As far as I can see, this patch concludes the "libify" part of the patch
+> series (read: it would have been the second patch series I would have
+> suggested to split out from an otherwise too-long-to-be-reviewed set of
+> patches, if I had been your mentor),
 
-Or maybe we can add such a comment in this patch and say something
-like "while at it let's explain a bit the '3' error code" in the
-commit message.
+I am ok with saying that "part 1" stops after this patch and that the
+rest will be "part 2" and will not be resent in the version 2 of the
+"part 1" patch series, but will rather be resent later, when "part 1"
+will be in next for example.
+
+> and I'll leave it at that for
+> tonight; Hopefully I will find some time to review more of these patches
+> tomorrow.
+
+That would be great!
+
+Thanks,
+Christian.
