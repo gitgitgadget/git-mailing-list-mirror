@@ -1,142 +1,119 @@
-Return-Path: <SRS0=cmu9=3J=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D184BC32771
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54CAFC32771
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 00:37:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AB6F020700
-	for <git@archiver.kernel.org>; Mon, 20 Jan 2020 23:53:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23A2824125
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 00:37:44 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1k8tc/K"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728139AbgATXxa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 20 Jan 2020 18:53:30 -0500
-Received: from mail6.webfaction.com ([31.170.123.134]:50422 "EHLO
-        smtp.webfaction.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727045AbgATXxa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Jan 2020 18:53:30 -0500
-Received: from localhost (82-64-139-178.subs.proxad.net [82.64.139.178])
-        by smtp.webfaction.com (Postfix) with ESMTPSA id 7F1BB60027D32;
-        Mon, 20 Jan 2020 23:53:21 +0000 (UTC)
-From:   Christoph Groth <christoph@grothesque.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Stat cache in .git/index hinders syncing of repositories
-References: <87v9p9skjz.fsf@drac> <xmqq7e1od41x.fsf@gitster-ct.c.googlers.com>
-        <87pnfgshxu.fsf@drac>
-        <20200118194204.GC6570@camp.crustytoothpaste.net>
-        <87d0bgs9o4.fsf@drac>
-        <nycvar.QRO.7.76.6.2001201248480.46@tvgsbejvaqbjf.bet>
-Date:   Tue, 21 Jan 2020 00:53:22 +0100
-In-Reply-To: <nycvar.QRO.7.76.6.2001201248480.46@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Mon, 20 Jan 2020 13:01:54 +0100 (CET)")
-Message-ID: <87ftg9n0r1.fsf@drac>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728512AbgAUAho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 20 Jan 2020 19:37:44 -0500
+Received: from mail-yb1-f169.google.com ([209.85.219.169]:46509 "EHLO
+        mail-yb1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbgAUAhn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Jan 2020 19:37:43 -0500
+Received: by mail-yb1-f169.google.com with SMTP id p129so576761ybc.13
+        for <git@vger.kernel.org>; Mon, 20 Jan 2020 16:37:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=HCRuTma18AnnbRIrwL3LQB7Bc+8MKRdt+PFTDIOtoQg=;
+        b=X1k8tc/Kn9zc/9DCqKS/BJrtSRfSOzs9bDul66+WV8IhuYHWZ7+ro+6Se4BOS1+ltO
+         2KJMkuicZ2eevbmw1GYi/FzugV36tAljWnZa3ghGUg4LuAgnMD+pL3MQq9I4iiCWMyau
+         VnLS9s1vEwkdqgLtLLhMyT1NKwT2+ceOpVSlKsfVXlaH7E9GmwDBJulsH40INB+wj4Nt
+         VweiViKCuaX6ApESyV7iadCPOzZvPMKqQhM6r1lpbCcmqq4tcIvQAQpK3ki+YYVzGQ9k
+         9TK6yiXegVkfIFksgt9IvomB2E105qApnShOtYH8Fqlc5Plbn6/A8vdnbpnZxbz1cJCm
+         khxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HCRuTma18AnnbRIrwL3LQB7Bc+8MKRdt+PFTDIOtoQg=;
+        b=s2g/W1423OxcLhssgEPoy6ONEgtNMZh4Hyb0v8lKtdspz7DsZm8iqS5FH9NaORuUXW
+         o8FXG799GY7r4pw2wTS3vlCpdh5O1NWz//uqL9rsA7K6b3Eo+G7uZpPIiLhrAQBbERs7
+         I1ET9DLV+IGVgl7j/r8o7iYbFP/vPduvdtULz+rv6RoxTPFt1AZTqLnm3tgGbMArwrVb
+         9ggnrZCPqlu2/IPiR0uNnSGUhW0CBUuZCFFvZa6KiPjVDVBSDXZGodpvnAASsc/LNjad
+         +N6ig/fF3BlLgS2VgCLf1E/U70lrhEfodeE3xmYCpYCHvU7RByhYK+uMqZklIgnedlao
+         rRIQ==
+X-Gm-Message-State: APjAAAXGukN4Rse9zoCAsf2aTCuNmODYy0vx6OQwLCijkw1u/69wCdYm
+        32d2hBXHH+gZT7j1Heja67OImZZPR78=
+X-Google-Smtp-Source: APXvYqxOi0vS7Gu+W7cyZj8ETuNU5GuaHYaIdvd5291T6eGdPpvLbpbY43/n657+DxHOFSiJC6PWtA==
+X-Received: by 2002:a25:6d0a:: with SMTP id i10mr1909721ybc.118.1579567062359;
+        Mon, 20 Jan 2020 16:37:42 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id o126sm16181327ywb.24.2020.01.20.16.37.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Jan 2020 16:37:41 -0800 (PST)
+Subject: Re: Fwd: Possible git bug in commit-graph: "invalid commit position"
+To:     Gary Oberbrunner <garyo@oberbrunner.com>, git@vger.kernel.org
+References: <CAFChFygiaMsUJC5Kfpnk26DLWbY0gPdNJpZ_gLMf4utZ6_oZxA@mail.gmail.com>
+ <CAFChFyi5J-mb+rshtF7U2m=MtPzEPUa+V1_qbEXC=-LdQ218yA@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d4313777-ce8c-0b64-997e-17cb719c9ab8@gmail.com>
+Date:   Mon, 20 Jan 2020 19:37:40 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101
+ Thunderbird/72.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha512; protocol="application/pgp-signature"
+In-Reply-To: <CAFChFyi5J-mb+rshtF7U2m=MtPzEPUa+V1_qbEXC=-LdQ218yA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+On 1/20/2020 12:32 PM, Gary Oberbrunner wrote:
+> I'm running git 2.24.1 on Linux/WSL, and sometimes git fails with this error:
+> ```
+> % git diff --cached
+> fatal: invalid commit position. commit-graph is likely corrupt
+> ```
+> Usually that error goes away after I do a few more git operations, but
+> I haven't been able to discern a pattern yet. It's not always with
+> "diff", can be any git command as far as I can tell.
+> Perhaps it started after I enabled the commit-graph stuff:
+> ```
+> [core]
+>         editor = emacsclient -c -a \"\"
+>         preloadindex = true
+>         fscache = true
+>         autocrlf = false
+>         commitGraph = true
+>         writeCommitGraph = true
+> ```
+> In fact, when I turn off `commitGraph`, the error goes away. But as I
+> say, sometimes it goes away of its own accord.
 
-Johannes Schindelin wrote:
->
-> On Sat, 18 Jan 2020, Christoph Groth wrote:
->
-> > OK, I see.  But please consider (one day) to split up the index file
-> > to separate the local stat cache from the globally valid data.
->
-> I am sure that this has been considered even before Git was publicly
-> announced,
+Disabling the featuere will definitely remove the error. Some commands may
+also just not "visit" the corrupt commit.
 
-I would be very interested to hear the rationale for keeping the
-information about what is staged and the stat cache together in the same
-file.  I, or someone else, might actually work on a patch one day, but
-before starting, it would be good to understand the reasoning behind the
-current design.
+> Googling turns up almost nothing on this error. I have no idea if I've
+> done something wrong to corrupt the commit graph, or if it's a git
+> bug. If there's anything I can do to help debug it, I'd be happy to --
+> just let me know.
 
-> and I would wager a guess that it was determined that it would be
-> better to keep all of Git's private data in one place.
+Please run "git commit-graph verify" to see if that catches the
+corruption. If not, then the verify feature is broken.
 
-My point is that it=E2=80=99s not just private data: When I excluded .git/i=
-ndex
-from synchronization, staging files for a commit was no longer
-synchronized.
+Then, you can delete your .git/objects/info/commit-graph file
+and rebuild it with "git commit-graph write". (If you have
+fetch.writeCommitGraph enabled, then you may need to instead
+delete the .git/objects/info/commit-graphs directory.) If that
+process does not fix the problem, then there is definitely a bug
+in the feature. At the moment, it may just be a flipped bit in
+the file.
 
-> > (By the way, even after 12 years of using Git intensely I am
-> > confused about what actually is the index.  I believed that it is
-> > the "staging area", like in "git-add - Add file contents to the
-> > index".  But then the .git/index file reflects all the tracked
-> > files, and not just staged ones.  This usage is also reflected by
-> > the command "git update-index".)
->
-> The concept of the Git index is slightly different from what is
-> actually stored inside `.git/index`. You should consider the latter to
-> be an implementation detail that is of concern only if you want to
-> work on internals. Otherwise the description of the index as a staging
-> area is a pretty good image.
-
-To me, it does not seem to be a mere implementation detail.  For example
-the command =E2=80=99git update-index --refresh=E2=80=99 is part of the "pu=
-blic API" and
-its action is to update the stat cache.  It does not modify what is
-staged or not.
-
-> > Still, this is a workaround, and the price is reduced robustness of
-> > file modification detection.
->
-> You misunderstand how Git detects whether a file is modified or not.
->
-> A file is re-hashed if its mtime is newer than, _or equal to_, the
-> mtime of `.git/index`.
-
-You must mean "the mtime in =E2=80=99.git/index=E2=80=99", but OK, I see.  =
-Makes sense
-of course.  So setting core.trustctime to false and core.checkstat to
-minimal only means that some avoidable rehashings may be made.  But this
-would require two modifications of a file in the same second, without
-a change to the file size.
-
-> In general, I am not sure that you are using the right tool for
-> synchronizing. If you cannot guarantee that a snapshot of the
-> directory is copied, you will always run the risk of inconsistent
-> data, which is worse than not having a backup at all: at least without
-> a backup you do not have a false sense of security.
-
-I do not understand what makes you think so.
-
-Unison is very robust software, I never had any problems with it and
-never heard of anyone having any.  Moreover, as I noted in the opening
-message of this thread, it recently gained an option to treat chosen
-directories as atomic.  I=E2=80=99m using this for ".git" subdirectories.
-
-Christoph
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCgAdFiEEUimQV/rXmWU8TwiKw/FH9ZgPNTUFAl4mPXIACgkQw/FH9ZgP
-NTVXPA//Zxld9bSbRpWU9R6xrRmaRuYStWdlDBA1XJvuzPd79HoRO1ZBAR3tg3Tx
-xTAlAap77/WHPC22lHT0TVXTwJVel9R/lKy/VqM0uJzH/HZMvDRy3FDBbCfXqZUY
-j43PqNnI/oU/6IYYGnOK+8g1p57V9sUefUEft7HBnDjE7t3o6iXg3HSnUqNWatbu
-f+RQ+btiEfYxQzPcBfyJZi6IF2pSYay6Iqjnx1Q6Qauocw/4VqUgdThAwGg2rXDS
-HFZDTj2xERat7yzgLWqsCoI9gMEeGtAhgRqPH6xm2a8okHAZ4ag8FMyRmIT6LDmQ
-Ef5ydKNSm1ALiRy8zV4Z2CgsiNoey8+cE1WpqhqhZN7q8ytt+V/Gb4CAgy2YBo4/
-Gmo4NaM0SbX3kmSifW8rPP4D9mA+wB/GmA2SLlwfyeo+x/LnZ/Z6gS6CgfJx9kEo
-O4j43AxUMcX7NWML97e5DwR2GAKe4MuHPhuusrF6yrRdirqiD3oE4xFWCjfXae14
-4qI9khgDEQ2voBNJ9AwSixFdUCzye/x8I8wYeigKkw3GPwhfO7oZzMPpOd+XXAR8
-MaTBIDslGhyghHQGbpWwyjOtkg8iqAvL7dBSJt39sTQ/BfezZ8wg8abyLrECMVk7
-6zKBVDN3FUi2wqtXVOfgCWvo5YCLIVGXbNuuDpwMz8c7vnw+md4=
-=rvEk
------END PGP SIGNATURE-----
---=-=-=--
+Thanks,
+-Stolee
