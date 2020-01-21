@@ -2,110 +2,90 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E8D9C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:24:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 84508C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:37:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 79C6922525
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:24:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 53D6122525
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:37:48 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HjowEtw+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729273AbgAUQYf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 11:24:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41188 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727817AbgAUQYf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 11:24:35 -0500
-Received: (qmail 7466 invoked by uid 109); 21 Jan 2020 16:24:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Jan 2020 16:24:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11364 invoked by uid 111); 21 Jan 2020 16:31:27 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Jan 2020 11:31:27 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 21 Jan 2020 11:24:33 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2] fetch: document and test --refmap=""
-Message-ID: <20200121162433.GA6215@coredump.intra.peff.net>
-References: <pull.532.git.1579274939431.gitgitgadget@gmail.com>
- <pull.532.v2.git.1579570692766.gitgitgadget@gmail.com>
+        id S1729017AbgAUQhr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 11:37:47 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36580 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726714AbgAUQhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 11:37:47 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z3so4009246wru.3
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 08:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NLCBD1I8mz2WEC0Vpj1/TQCBpA5l0Ho5hG4h8YX0F6o=;
+        b=HjowEtw+VSX0YklH+Nw0lS4cMZNM66G4BbUCjpdT/nG3w0jyAQarcjry9QMTzt0MTg
+         O7dI1D0PtMHhLlNoIpQsAfbDIepe2NNQyUpFdaWmNkkGBTjrbKytB2LQKhgbSZ4O7abg
+         EXNkx+uPCpOhTRwA2mFlXTwAeJd6Y4aZ6EtHrjrNqiblacAJVWjjXJut+fFwfyDzy9Yw
+         fTMoPUAj5Rf0z2/wpGFbK8X3xD51F4BGNhv2sOdpWxPT3dTG40LJMWuPkLqWzqn2oPav
+         E3OboUlfapRsYFejinClAwK/6E0gBf9+r8+gJ8RkV5Y4ORSMBS7Vnrn4PLnPfJ1Em5dM
+         N6eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NLCBD1I8mz2WEC0Vpj1/TQCBpA5l0Ho5hG4h8YX0F6o=;
+        b=Px184lKL4lKMBcWJa6O+y1Z9GyiaQz2UKrXTlaUkWB5rdEj/QoJW8YpsVk46IzTiPT
+         EhejsNyJq9eEWt1aRwZKHv8w2VX8itS61lPnLi/38HLJ0tAp2Rk5f0Z2ueKo9vwd3VR7
+         MLVHT6PsoeeOnb9eEwivvgKMs+5m0U72Isn5fKaz9kySQE6n6MxPj2J/JHLR9Al6hG0i
+         JmBPlkgt7Q+L24GX9VThQZqRsae8j6tolItArXepf3yI+pxy1Bg7w8JqA8vEAKdB4nQW
+         tRFf69bR5oDZtabqMl57NM7PZjOUtT6xIYofzR/SwDocGyj47Qmf6N5o79Op4zrnggqM
+         73Ug==
+X-Gm-Message-State: APjAAAUaBIWQP8OXd0ItudNPwykiR718aZIfz3kQSZ/61Y0lyQcJFXRU
+        UE9r7UvioMhRrODkiKLd1997wJByFh6np9ZN1ZU=
+X-Google-Smtp-Source: APXvYqzjhMLUylS/Rbq7uV9QNPrzNzk2q/60gzvUkR1RDL4d9SeemgwCqNu3GXdP0dEk0l29FvXJix2NR496+s4LJsg=
+X-Received: by 2002:adf:f28c:: with SMTP id k12mr6309334wro.360.1579624664983;
+ Tue, 21 Jan 2020 08:37:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.532.v2.git.1579570692766.gitgitgadget@gmail.com>
+References: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
+ <20200118145318.5177-1-shawarmakarma@gmail.com> <xmqqftgcd55s.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftgcd55s.fsf@gitster-ct.c.googlers.com>
+From:   Eyal Soha <shawarmakarma@gmail.com>
+Date:   Tue, 21 Jan 2020 08:37:33 -0800
+Message-ID: <CANsz78J93XynUJkBvvdD=BfXPQ-Wq17uzqPi3opMAPPKbt2Rwg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] color.c: Refactor color_output to use enums
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 21, 2020 at 01:38:12AM +0000, Derrick Stolee via GitGitGadget wrote:
+On Sat, Jan 18, 2020 at 9:51 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Please downcase Refactor; that way this change would not
+> meaninglessly stand out in the "git shortlog --no-merges" output.
 
-> Update the documentation to clarify how '--refmap=""' works and
-> create tests to guarantee this behavior remains in the future.
+Sure, no problem.
 
-Yeah, this looks like a good solution to me.
+> The blank before your sign-off means all the times spent gets
+> discarded, which is not exactly encouraging to the reviewers.
 
-> This can be accomplished by overriding the configured refspec using
-> '--refmap=' along with a custom refspec:
-> 
->   git fetch <remote> --refmap= +refs/heads/*:refs/hidden/<remote>/*
+So I should make a better description for the patch?  Sure!  What
+should I put?  It's kind of hard to get a good description that
+describes the refactoring without digging into the reasoning behind
+it, which is in the follow-up patch.  What kind of description should
+I give?  How about like this:
 
-This isn't strictly related to your patch, but since the rationale here
-describes the concept of a background job and people might end up using
-it as a reference, do you want to add in --no-tags to help them out?
+    color.c: refactor color_output arguments
 
->     Thanks for all the feedback leading to absolutely no code change. It's
->     good we already have the flexibility for this. I'm a bit embarrassed
->     that I did not discover this, so perhaps this doc change and new tests
->     will help clarify the behavior.
+    color_output() now uses a more descriptive "background" argument
+    instead of "type".
 
-If it makes you feel better, I only found --refmap because I was the one
-who implemented the original "update based on refspecs" logic, and while
-looking for that commit with "git log --grep=opportunistic" I stumbled
-onto Junio's commit adding --refmap, which referenced mine. Maybe this
-also works as a good case study in why we should write good commit
-messages and refer to related work. :)
+    Signed-off-by: Eyal Soha <shawarmakarma@gmail.com>
 
-Anyway, I wasn't at all sure that a blank --refmap= would do what you
-want until I tried it. But it was always intended to work that way. From
-c5558f80c3 (fetch: allow explicit --refmap to override configuration,
-2014-05-29):
-
-  +static int parse_refmap_arg(const struct option *opt, const char *arg, int unset)
-  +{
-  +       ALLOC_GROW(refmap_array, refmap_nr + 1, refmap_alloc);
-  +
-  +       /*
-  +        * "git fetch --refmap='' origin foo"
-  +        * can be used to tell the command not to store anywhere
-  +        */
-  +       if (*arg)
-  +               refmap_array[refmap_nr++] = arg;
-  +       return 0;
-  +}
-
-At first I thought the comment was wrong, since we don't actually
-increment refmap_nr. But the ALLOC_GROW makes refmap_array non-NULL,
-which is what triggers the "do not use configured refspecs" logic.
-
-This code switched to refspec_append() in e4cffacc80 (fetch: convert
-refmap to use struct refspec, 2018-05-16), and I think we actually do
-push an empty string onto the list. Which then triggers the "do not use
-configured refspecs" logic, but doesn't match anything itself. I'm not
-sure whether that behavior was entirely planned, or just what the code
-happens to do. So it's doubly useful to add a test here covering the
-expected behavior.
-
->  Documentation/fetch-options.txt |  5 ++++-
->  t/t5510-fetch.sh                | 24 ++++++++++++++++++++++++
->  2 files changed, 28 insertions(+), 1 deletion(-)
-
-The patch looks good to me.
-
--Peff
+Suits?
