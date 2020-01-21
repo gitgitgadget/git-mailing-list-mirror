@@ -6,149 +6,176 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
 	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1277C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 23:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CE62C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 23:26:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AFADC217F4
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 23:05:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4538024125
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 23:26:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PzilG1pT"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nhlPtCBO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbgAUXFo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 18:05:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54069 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725933AbgAUXFo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 18:05:44 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 598A219448;
-        Tue, 21 Jan 2020 18:05:42 -0500 (EST)
+        id S1727141AbgAUX0V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 18:26:21 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54396 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726407AbgAUX0V (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 18:26:21 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D62F238446;
+        Tue, 21 Jan 2020 18:26:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=uqbRlrgsQpnhvkHypdtipOd2kbY=; b=PzilG1
-        pT2sxPq3iFAK8hsMBq3dEfxbS05GZ7ibusQwa3ngWYB/K9OoFFSMhSbuUJ48Wsnp
-        jCpNOnlFknfC2N/emG9yXE8v9PJkWWhxus1RXQQTNt2pxa7eeQHILVygnKk96VQG
-        G45lhEc87xtQzXq1so5sCUjqJmvhkGBIpFsso=
+        :content-type; s=sasl; bh=2BcAsFyYpOUndvsX6sGUOY8aFjE=; b=nhlPtC
+        BOm+WB7ppbYN90CJ2Z/c1JZj4EUl6hpNvZqRIhTGNUrNXQPUNEZPzZ+DTy1g5I79
+        yFKETf4gPLZUTTfunokkkg84aWPxHwLZTVKlKKFRKAzPW6UounKqvbdK7wu1bFuY
+        1xqZ+zLoJYEjdKzIkyKRu/mFBWn3XjnBXGE3M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=yG1+CHQcjSz7zrWTCvXYmiqlr8FbQxEN
-        IZZTt1GSHGMohHFLl6Eai5vHRVEJ6vX00uEwYOHVSlV+PECpkqep2qDL5pYLHK27
-        i9ybvpho2uYlRnHbiTmb/S0lq3fJIYfuGRUvaD8MGwPOqfTRgRuwe9K0UZEMGe+2
-        loE1zw2Hgnw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 50B8D19447;
-        Tue, 21 Jan 2020 18:05:42 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=GIB26wngoPPLXDyDEZRCfhtxE5XraC8H
+        9mXRVhqEGh8bk1o+N4a1p4B8ZKVbg01vxKpcfeAZs69NamfEONF2AOeJFlLqwaGK
+        JA58Qjhw+qXj1PxIGmf4+gTz8gnQzrGWB1fxjY6G8b1kDx7E4khWaiiI3kNGAlXt
+        tfJH8unDn5g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id CE79E38443;
+        Tue, 21 Jan 2020 18:26:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A12A219443;
-        Tue, 21 Jan 2020 18:05:41 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 40C5638442;
+        Tue, 21 Jan 2020 18:26:16 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>, Andrey Mazo <ahippo@yandex.com>
-Cc:     git@vger.kernel.org, Ben Keene <seraphire@gmail.com>,
-        "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
-References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
-Date:   Tue, 21 Jan 2020 15:05:40 -0800
-In-Reply-To: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com> (Ben
-        Keene via GitGitGadget's message of "Mon, 20 Jan 2020 21:17:16 +0000")
-Message-ID: <xmqqzheg76m3.fsf@gitster-ct.c.googlers.com>
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/7] pull --rebase/remote rename: document and honor single-letter abbreviations rebase types
+References: <cover.1579598053.git.bert.wesarg@googlemail.com>
+        <f9da9aac7edf6f682592592fe8f450a5801fb012.1579598053.git.bert.wesarg@googlemail.com>
+Date:   Tue, 21 Jan 2020 15:26:15 -0800
+In-Reply-To: <f9da9aac7edf6f682592592fe8f450a5801fb012.1579598053.git.bert.wesarg@googlemail.com>
+        (Bert Wesarg's message of "Tue, 21 Jan 2020 10:24:49 +0100")
+Message-ID: <xmqqv9p475ns.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 8BD7F496-3CA2-11EA-B917-C28CBED8090B-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 6BB975E2-3CA5-11EA-A155-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[jc] asking for help from those who made non-trivial changes to "git
-p4" in the past 18 months or so for reviewing.
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-"Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Ben Keene <seraphire@gmail.com>
-> Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
-
-"git shortlog --no-merges" would show that the convention is to
-downcase "Add".
-
-With two consecutive non-words (i.e. 'pre' and "pedit'), it really
-feels an unpronounceable mouthful to a non-perforce person like me.
-
-On the core Git side, "git commit", which is the primary command
-that is used to create a new commit, has two hooks that helps to
-enforce consistency to the commit log messages:
-
- - The "prepare-commit-msg" hook prepares the message to be further
-   edited by the end-user in the editor
-
- - The "commit-msg" hook takes what the end-user edited in the
-   editor, and can audit and/or tweaks it.
-
-Having a matching pair of hooks and making sure the new hooks have
-similar names to these existing ones may help experienced Git users
-adopt the new hooks "git p4" learns here.
-
-What makes "p4-pre-pedit-changelist" a good name for this hook?  "In
-pure Perforce without Git, there is 'pre-pedit-changelist' hook that
-Perforce users are already familiar with" would be a good answer but
-not being P4 user myself, I do not know if that is true.
-
-Also, "git commit" has a mechanism (i.e. "--no-verify") to suppress
-the "auditing" hook, and it serves as an escape hatch.  The new hook
-"git p4" learns may want to have a similar mechanism, to keep its
-users productive even when they have broken/stale/bogus hook rejects
-their legitimate log message, by allowing them to bypass the
-offending hook(s).
-
-
-> Add an additional hook to the git-p4 command to allow a hook to modify
-> the text of the changelist prior to displaying the p4editor command.
+> When 46af44b07d (pull --rebase=<type>: allow single-letter abbreviations
+> for the type, 2018-08-04) landed in Git, it had the side effect that
+> not only 'pull --rebase=<type>' accepted the single-letter abbreviations
+> but also the 'pull.rebase' and 'branch.<name>.rebase' configurations.
 >
-> This hook will be called prior to checking for the flag
-> "--prepare-p4-only".
->
-> The hook is optional, if it does not exist, it will be skipped.
->
-> The hook takes a single parameter, the filename of the temporary file
-> that contains the P4 submit text.
->
-> The hook should return a zero exit code on success or a non-zero exit
-> code on failure.  If the hook returns a non-zero exit code, git-p4
-> will revert the P4 edits by calling p4_revert(f) on each file that was
-> flagged as edited and then it will return False so the calling method
-> may continue as it does in existing failure cases.
+> Secondly, 'git remote rename' did not honor these single-letter
+> abbreviations when reading the 'branch.*.rebase' configurations.
 
-The githooks(5) page should talk about some of these, I would think.
+Hmph, do you mean s/Secondly/However/ instead?
 
->  git-p4.py | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/git-p4.py b/git-p4.py
-> index 40d9e7c594..1f8c7383df 100755
-> --- a/git-p4.py
-> +++ b/git-p4.py
-> @@ -2026,6 +2026,17 @@ def applyCommit(self, id):
->          tmpFile.write(submitTemplate)
->          tmpFile.close()
->  
-> +        # Run the pre-edit hook to allow programmatic update to the changelist
-> +        hooks_path = gitConfig("core.hooksPath")
-> +        if len(hooks_path) <= 0:
-> +            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
+> The only functional change is the handling of the `branch_info::rebase`
+> value. Before it was an unsigned enum, thus the truth value could be
+> checked with `branch_info::rebase != 0`. But `enum rebase_type` is
+> signed, thus the truth value must now be checked with
+> `branch_info::rebase >= REBASE_TRUE`.
+
+I think there is another hidden one, but I do not know offhand the
+implications of the change.  It could well be benign.
+
+>  /**
+>   * Parses the value of --rebase. If value is a false value, returns
+>   * REBASE_FALSE. If value is a true value, returns REBASE_TRUE. If value is
+> @@ -45,22 +37,9 @@ enum rebase_type {
+>  static enum rebase_type parse_config_rebase(const char *key, const char *value,
+>  		int fatal)
+>  {
+> -	int v = git_parse_maybe_bool(value);
+> -
+> -	if (!v)
+> -		return REBASE_FALSE;
+> -	else if (v > 0)
+> -		return REBASE_TRUE;
+> -	else if (!strcmp(value, "preserve") || !strcmp(value, "p"))
+> -		return REBASE_PRESERVE;
+> -	else if (!strcmp(value, "merges") || !strcmp(value, "m"))
+> -		return REBASE_MERGES;
+> -	else if (!strcmp(value, "interactive") || !strcmp(value, "i"))
+> -		return REBASE_INTERACTIVE;
+> -	/*
+> -	 * Please update _git_config() in git-completion.bash when you
+> -	 * add new rebase modes.
+> -	 */
+
+I see all of the above, including the "Please update" comment, has
+become rebase_parse_value(), which is very good.
+
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 96bbe828fe..2830c4ab33 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -6,6 +6,7 @@
+> ...
+> -	enum {
+> -		NO_REBASE, NORMAL_REBASE, INTERACTIVE_REBASE, REBASE_MERGES
+> -	} rebase;
+> +	enum rebase_type rebase;
+
+Good to see the duplicate go.
+
+> @@ -305,17 +304,8 @@ static int config_read_branches(const char *key, const char *value, void *cb)
+>  				space = strchr(value, ' ');
+>  			}
+>  			string_list_append(&info->merge, xstrdup(value));
+> -		} else {
+> -			int v = git_parse_maybe_bool(value);
+> -			if (v >= 0)
+> -				info->rebase = v;
+> -			else if (!strcmp(value, "preserve"))
+> -				info->rebase = NORMAL_REBASE;
+> -			else if (!strcmp(value, "merges"))
+> -				info->rebase = REBASE_MERGES;
+> -			else if (!strcmp(value, "interactive"))
+> -				info->rebase = INTERACTIVE_REBASE;
+> -		}
+> +		} else
+> +			info->rebase = rebase_parse_value(value);
+
+Here, we never had info->rebase == REBASE_INVALID.  The field was
+left intact when the configuration file had a rebase type that is
+not known to this version of git.  Now it has become possible that
+info->rebase to be REBASE_INVALID.  Would the code after this part
+returns be prepared to handle it, and if so how?  At least I think
+it deserves a comment here, or in rebase_parse_value(), to say (1)
+that unknown rebase value is treated as false for most of the code
+that do not need to differentiate between false and unknown, and (2)
+that assigning a negative value to REBASE_INVALID and always
+checking if the value is the same or greater than REBASE_TRUE helps
+to maintain the convention.
+
+
+> diff --git a/rebase.h b/rebase.h
+> new file mode 100644
+> index 0000000000..cc723d4748
+> --- /dev/null
+> +++ b/rebase.h
+> @@ -0,0 +1,15 @@
+> +#ifndef REBASE_H
+> +#define REBASE_H
 > +
-> +        hook_file = os.path.join(hooks_path, "p4-pre-edit-changelist")
-> +        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file, fileName]) != 0:
-> +            for f in editedFiles:
-> +                p4_revert(f)
-> +            return False
+> +enum rebase_type {
+> +	REBASE_INVALID = -1,
+> +	REBASE_FALSE = 0,
+> +	REBASE_TRUE,
+> +	REBASE_PRESERVE,
+> +	REBASE_MERGES,
+> +	REBASE_INTERACTIVE
+> +};
 > +
->          if self.prepare_p4_only:
->              #
->              # Leave the p4 tree prepared, and the submit template around
->
-> base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
+> +enum rebase_type rebase_parse_value(const char *value);
+> +
+> +#endif /* REBASE */
