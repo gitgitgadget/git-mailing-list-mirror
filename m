@@ -2,65 +2,66 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D563C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2467CC2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0463024655
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id E801220882
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:17 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwepRFE+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/Hsmmms"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728794AbgAUKAE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 05:00:04 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:45330 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728682AbgAUKAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 05:00:04 -0500
-Received: by mail-io1-f67.google.com with SMTP id i11so2173419ioi.12
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:04 -0800 (PST)
+        id S1729163AbgAUKAR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 05:00:17 -0500
+Received: from mail-il1-f194.google.com ([209.85.166.194]:33615 "EHLO
+        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbgAUKAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 05:00:16 -0500
+Received: by mail-il1-f194.google.com with SMTP id v15so1935852iln.0
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=cljS01yqbubG+LB3ql4BEOQmGJKkAlALo2NWLWp3ftQ=;
-        b=MwepRFE+LovIeXH0XCPxKlOCklePohkL3gSRVrBya3uTWPlAuLa4IOKrSCJ0ovJyzn
-         oacDRyP5ac3QnTvNDK7hsjKyscG/s9qHZnu8xtY0TKj+bf90IsratCv/OW16zsBTX8w1
-         zFGWIT0YoBRbCc+9enZvIidt1u2crQoWjeMVch7DlpA4hHLWMVdk0D4VLK4M82LESoeh
-         rThrVbW3ju2SBhIFDjEWKsCvX/zcrAQOoHkPlkYyQ/lTE+6rQUk7tNNOBAUzTI+/e/mo
-         xFprTLNPdg/qhSHrW7XkRlg3Pk1wYCVBGM1ZPGJImenvN6kjVUfrArR23mIC+U2tZGBp
-         cQ4w==
+         :cc:content-transfer-encoding;
+        bh=7FESItikDlO6GAmFxcC7XS9oJ2B160vo1+DvTGEbEmY=;
+        b=l/HsmmmsDwtSecaPRaMqlAcQWYQVa9DLhNzbKOmC83XGgjPWZXQzVOOhx64KwZXt1t
+         ozoMlnIdyjutzBMIcIzYqd/wkr1s/Mru8uSbnICa1p7IYhpzWm7vpq7XQBndIKLh2N1b
+         pojV+uzLTF4aqiuMciWmMJ4HaZ94gekfvw3ee0AsLJv6DxJ23FeK7GqaUDkPoZKOzbQq
+         VNOnQzCcP9qBy8Qx3ZkUYgImpq/SxFW8CXgBqHfx0mY2x2sYTft1oriGTfDm+s6v7xjx
+         GIGu0zPjCt81WQLay7YXxRQGe1YVjJaJRFcViUt8hnYlXR9zFCMDQxL8tNEGIijuwlzj
+         Vw2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=cljS01yqbubG+LB3ql4BEOQmGJKkAlALo2NWLWp3ftQ=;
-        b=Jx3ZmNPtf7eOBdXfOFRCtx4CSI5fUEz7UxuxsoUr2fyQcwyy14i/FvSnTabZUAVJM1
-         nJR1TjsoZaqOYkpDv4y126d/eFuuyciTiGBb+uE1tqUkmwKvKrrutmB3COVdapeaaWE0
-         VkM3rRzFm8d2fDXdbPMegrJv91hohLg76E5D6U3SbcToA1WishjNxnO4xPe3ytVJZX7u
-         KWDf+RMCPCLiFKc9015eMf/citsTOWwWtaEhnolWHNZyV6aXHxB19veAB+wKe9R8sFZz
-         XNmeAlysKpvjdUGwPEZU2kojVsRs3TCerr+IxApMi/Bv6lqD6FPJl+MzV4GvrfVvVSCX
-         Z9Zg==
-X-Gm-Message-State: APjAAAWe4fC6CyuZTvuBoEplXm1u4LaGRffjden5RR96e3EiLpfWsvqJ
-        YPIKWwLCUVVd4eDLK//7p0miRUQHyZfzmBHIYNA=
-X-Google-Smtp-Source: APXvYqyy2jate5weChPCggZhF7goyvzJoRoC9KRrsgQUAwtADAxQO8N5xc6t/AEesLGS7xT0VxxgJOmyBQmfqz4kh/U=
-X-Received: by 2002:a6b:510c:: with SMTP id f12mr2527064iob.227.1579600803584;
- Tue, 21 Jan 2020 02:00:03 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=7FESItikDlO6GAmFxcC7XS9oJ2B160vo1+DvTGEbEmY=;
+        b=VjGNJdi6dwELr12/FX/CAtyk9TIr9gHjRkbJeLqzF1pWbDRdeO7YvNGgibyFC4FNyD
+         7ej4sMjZwZ0L0LU4Uj4m5+NohWx9c2FgIVPv9UO7Wukwy5piCykVJgUzlTWgck/bfd19
+         V0qPmorQ0ukUfz1TbwGzqLtbUR/3G+st3/6aOdrMIlMn7qA0av4fn3/17Q42kMlVPcak
+         rPaEkoxIEmz+gvsOWMGGWPINknYK+paHNqBqs9+M/hvAGIQ9uFv7yn6TzCQeorfVL7df
+         zRbg8KHxZosvLM3RjjhWoU4avO7Ex1tCIOq313qsF87pRlPPDemizbdQNq/xvY94aFnB
+         rang==
+X-Gm-Message-State: APjAAAWO/Jfldf7Zkp6PY7icEMtZ5s7mpKC3Cc3h49M6rBKGzna2vyDK
+        6QhyYx2Pl7Z1t1BexWkE2EZpE0cySiaFaqpd/CDV5Xw9
+X-Google-Smtp-Source: APXvYqy5DP6cRT4k+GHKfAdFXlqfJDVwYB6+vFuevVTw1WBostr5nPl/PYP5I/OHWB8CsAdl6z3p8/0gNtqM7MHnu5E=
+X-Received: by 2002:a92:d801:: with SMTP id y1mr2836540ilm.188.1579600816260;
+ Tue, 21 Jan 2020 02:00:16 -0800 (PST)
 MIME-Version: 1.0
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-9-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001202308050.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001202308050.46@tvgsbejvaqbjf.bet>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-7-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001202253450.46@tvgsbejvaqbjf.bet> <CAP8UFD1T3_1t0Qf3jP1GttNHvaLEWoaeAVeZid6AMH_MAKPjSw@mail.gmail.com>
+In-Reply-To: <CAP8UFD1T3_1t0Qf3jP1GttNHvaLEWoaeAVeZid6AMH_MAKPjSw@mail.gmail.com>
 From:   "Miriam R." <mirucam@gmail.com>
-Date:   Tue, 21 Jan 2020 10:59:53 +0100
-Message-ID: <CAN7CjDCmqvAkbeHnqLM6SUUyGWQu23hE=nbab6bYxZKZsXB1Qw@mail.gmail.com>
-Subject: Re: [PATCH 08/29] bisect: libify `check_merge_bases` and its dependents
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 21 Jan 2020 11:00:05 +0100
+Message-ID: <CAN7CjDDZw4e13bJzH3gpitb__=H5VocrEZRY6cBTrCpAJ1q13Q@mail.gmail.com>
+Subject: Re: [PATCH 06/29] bisect: libify `exit_if_skipped_commits` to
+ `error_if_skipped*` and its dependents
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -70,140 +71,76 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-El lun., 20 ene. 2020 a las 23:09, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+El mar., 21 ene. 2020 a las 7:40, Christian Couder
+(<christian.couder@gmail.com>) escribi=C3=B3:
 >
-> Hi,
+> Hi Dscho,
 >
-> On Mon, 20 Jan 2020, Miriam Rubio wrote:
+> On Mon, Jan 20, 2020 at 10:57 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Mon, 20 Jan 2020, Miriam Rubio wrote:
 >
-> > From: Pranit Bauva <pranit.bauva@gmail.com>
+> > >       printf("There are only 'skip'ped commits left to test.\n"
+> > >              "The first %s commit could be any of:\n", term_bad);
+> > > @@ -676,7 +676,13 @@ static void exit_if_skipped_commits(struct commi=
+t_list *tried,
+> > >       if (bad)
+> > >               printf("%s\n", oid_to_hex(bad));
+> > >       printf(_("We cannot bisect more!\n"));
+> > > -     exit(2);
+> > > +
+> > > +     /*
+> > > +      * We don't want to clean the bisection state
+> > > +      * as we need to get back to where we started
+> > > +      * by using `git bisect reset`.
+> > > +      */
+> > > +     return -2;
 > >
-> > Since we want to get rid of git-bisect.sh it would be necessary to
-> > convert those exit() calls to return statements so that errors can be
-> > reported.
-> >
-> > Emulate try catch in C by converting `exit(<positive-value>)` to
-> > `return <negative-value>`. Follow POSIX conventions to return
-> > <negative-value> to indicate error.
-> >
-> > Turn `exit()` to `return` calls in `check_merge_bases()`.
-> >
-> > In `check_merge_bases()` there is an early success special case,
-> > so we have introduced special error code `-11` which indicates early
-> > success. This `-11` is converted back to `0` in `check_good_are_ancesto=
-rs_of_bad()`.
-> >
-> > Handle the return value in dependent function `check_good_are_ancestors=
-_of_bad()`.
+> > This comment is a good indicator that the constant `-2` here is a "magi=
+c"
+> > number and it would most likely make sense to turn the return type from=
+ an
+> > `int` into an `enum` instead.
 >
-> This is a lot of repeated text from earlier commit messages. It might mak=
-e
-> sense to condense it a bit, and while at it, to remove sentences that
-> essentially repeat what the diff says.
+> Many functions use `return error(...)` and error codes from these
+> functions and from exit_if_skipped_commits() are going to get mixed.
+> So I am not sure that using an enum for only some of the error codes
+> will make things clearer.
 >
-Ok. Noted!
+> > >  static int is_expected_rev(const struct object_id *oid)
+> > > @@ -949,7 +955,7 @@ int bisect_next_all(struct repository *r, const c=
+har *prefix, int no_checkout)
+> > >  {
+> > >       struct rev_info revs;
+> > >       struct commit_list *tried;
+> > > -     int reaches =3D 0, all =3D 0, nr, steps;
+> > > +     int reaches =3D 0, all =3D 0, nr, steps, res;
+> > >       struct object_id *bisect_rev;
+> > >       char *steps_msg;
+> > >
+> > > @@ -972,8 +978,9 @@ int bisect_next_all(struct repository *r, const c=
+har *prefix, int no_checkout)
+> > >                * We should exit here only if the "bad"
+> > >                * commit is also a "skip" commit.
+> > >                */
+> > > -             exit_if_skipped_commits(tried, NULL);
+> > > -
+> > > +             res =3D error_if_skipped_commits(tried, NULL);
+> > > +             if (res)
+> > > +                     exit(-res);
 > >
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
-> > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> > ---
-> >  bisect.c | 21 ++++++++++++++++-----
-> >  1 file changed, 16 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/bisect.c b/bisect.c
-> > index 385afaf875..367258b0dd 100644
-> > --- a/bisect.c
-> > +++ b/bisect.c
-> > @@ -806,13 +806,16 @@ static void handle_skipped_merge_base(const struc=
-t object_id *mb)
-> >   * "check_merge_bases" checks that merge bases are not "bad" (or "new"=
-).
-> >   *
-> >   * - If one is "bad" (or "new"), it means the user assumed something w=
-rong
-> > - * and we must exit with a non 0 error code.
-> > + * and we must return error with a non 0 error code.
-> >   * - If one is "good" (or "old"), that's good, we have nothing to do.
-> >   * - If one is "skipped", we can't know but we should warn.
-> >   * - If we don't know, we should check it out and ask the user to test=
-.
-> > + * - If a merge base must be tested, on success return -11 a special c=
-ondition
-> > + * for early success, this will be converted back to 0 in check_good_a=
-re_ancestors_of_bad().
-> >   */
-> > -static void check_merge_bases(int rev_nr, struct commit **rev, int no_=
-checkout)
-> > +static int check_merge_bases(int rev_nr, struct commit **rev, int no_c=
-heckout)
-> >  {
-> > +     int res =3D 0;
-> >       struct commit_list *result;
-> >
-> >       result =3D get_merge_bases_many(rev[0], rev_nr - 1, rev + 1);
-> > @@ -827,11 +830,16 @@ static void check_merge_bases(int rev_nr, struct =
-commit **rev, int no_checkout)
-> >                       handle_skipped_merge_base(mb);
-> >               } else {
-> >                       printf(_("Bisecting: a merge base must be tested\=
-n"));
-> > -                     exit(bisect_checkout(mb, no_checkout));
-> > +                     res =3D bisect_checkout(mb, no_checkout);
-> > +                     if (!res)
-> > +                             /* indicate early success */
-> > +                             res =3D -11;
+> > So we still `exit()` in `libgit.a`? I hoped for a more thorough
+> > libification.
 >
-> This is yet another good candidate for an `enum`.
+> The exit() calls are removed in later patches.
 >
-> > +                     break;
-> >               }
-> >       }
-> >
-> >       free_commit_list(result);
-> > +     return res;
-> >  }
-> >
-> >  static int check_ancestors(struct repository *r, int rev_nr,
-> > @@ -865,7 +873,7 @@ static void check_good_are_ancestors_of_bad(struct =
-repository *r,
-> >  {
-> >       char *filename =3D git_pathdup("BISECT_ANCESTORS_OK");
-> >       struct stat st;
-> > -     int fd, rev_nr;
-> > +     int fd, rev_nr, res =3D 0;
-> >       struct commit **rev;
-> >
-> >       if (!current_bad_oid)
-> > @@ -880,10 +888,13 @@ static void check_good_are_ancestors_of_bad(struc=
-t repository *r,
-> >               goto done;
-> >
-> >       /* Check if all good revs are ancestor of the bad rev. */
-> > +
-> >       rev =3D get_bad_and_good_commits(r, &rev_nr);
-> >       if (check_ancestors(r, rev_nr, rev, prefix))
-> > -             check_merge_bases(rev_nr, rev, no_checkout);
-> > +             res =3D check_merge_bases(rev_nr, rev, no_checkout);
-> >       free(rev);
-> > +     if(res)
+> > Besides, the `if (res)` probably wants to be an `if (res < 0)`, right?
 >
-> Please put a space between the `if` keyword and the `(` following it.
+> Yeah, I agree.
+>
+Noted!
+Thank you Johannes and Christian.
 
-Ok.
-
-
->
-> Thanks,
-> Johannes
->
-> > +             exit(res =3D=3D -11 ? 0 : -res);
-> >
-> >       /* Create file BISECT_ANCESTORS_OK. */
-> >       fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-> > --
-> > 2.21.1 (Apple Git-122.3)
-> >
-> >
+> Thanks for your review,
+> Christian.
