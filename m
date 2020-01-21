@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2467CC2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E66EC2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E801220882
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:17 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 31F9320882
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 10:00:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/Hsmmms"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dE/1sOTk"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729163AbgAUKAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 05:00:17 -0500
-Received: from mail-il1-f194.google.com ([209.85.166.194]:33615 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728682AbgAUKAQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 05:00:16 -0500
-Received: by mail-il1-f194.google.com with SMTP id v15so1935852iln.0
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:16 -0800 (PST)
+        id S1729238AbgAUKAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 05:00:33 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:34193 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728682AbgAUKAc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 05:00:32 -0500
+Received: by mail-io1-f66.google.com with SMTP id z193so2247734iof.1
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 02:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7FESItikDlO6GAmFxcC7XS9oJ2B160vo1+DvTGEbEmY=;
-        b=l/HsmmmsDwtSecaPRaMqlAcQWYQVa9DLhNzbKOmC83XGgjPWZXQzVOOhx64KwZXt1t
-         ozoMlnIdyjutzBMIcIzYqd/wkr1s/Mru8uSbnICa1p7IYhpzWm7vpq7XQBndIKLh2N1b
-         pojV+uzLTF4aqiuMciWmMJ4HaZ94gekfvw3ee0AsLJv6DxJ23FeK7GqaUDkPoZKOzbQq
-         VNOnQzCcP9qBy8Qx3ZkUYgImpq/SxFW8CXgBqHfx0mY2x2sYTft1oriGTfDm+s6v7xjx
-         GIGu0zPjCt81WQLay7YXxRQGe1YVjJaJRFcViUt8hnYlXR9zFCMDQxL8tNEGIijuwlzj
-         Vw2g==
+         :content-transfer-encoding;
+        bh=ZR3C2Rl6GJoljT0/JqkmZbsGzAqxSr4Sy034hSVL+WM=;
+        b=dE/1sOTkO3UOt4lOPHZovkTMVSnre2ptK1TPJbV/WeoHtW4sxb9ceBUFR01QAiFdT6
+         LRzR9UgAweCRpYhvZxBaie9EBJgcWCna+b9VcF9A26WwHE3YCU+T81IP7B5eToCb6U4+
+         q+U/G1+nyu8SmLIlaoqdfOcnb3a9zXawbo6Gb6uaR1qYcsCrAbhpzEgfGVfO7A/cQmqB
+         qyyOv3kl+zqvV9haOS9Mx/yguq5beYL3pgT07E8YMDoY/8rJ2LRyn+99AErS/CV/4Xmx
+         V9Ahlnv+FzfyARjx30RHVHTmKNl++0IhHGLp1YeUSsVKJSjBAMJhw8fyoCJVhjjlc+Bl
+         ud1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7FESItikDlO6GAmFxcC7XS9oJ2B160vo1+DvTGEbEmY=;
-        b=VjGNJdi6dwELr12/FX/CAtyk9TIr9gHjRkbJeLqzF1pWbDRdeO7YvNGgibyFC4FNyD
-         7ej4sMjZwZ0L0LU4Uj4m5+NohWx9c2FgIVPv9UO7Wukwy5piCykVJgUzlTWgck/bfd19
-         V0qPmorQ0ukUfz1TbwGzqLtbUR/3G+st3/6aOdrMIlMn7qA0av4fn3/17Q42kMlVPcak
-         rPaEkoxIEmz+gvsOWMGGWPINknYK+paHNqBqs9+M/hvAGIQ9uFv7yn6TzCQeorfVL7df
-         zRbg8KHxZosvLM3RjjhWoU4avO7Ex1tCIOq313qsF87pRlPPDemizbdQNq/xvY94aFnB
-         rang==
-X-Gm-Message-State: APjAAAWO/Jfldf7Zkp6PY7icEMtZ5s7mpKC3Cc3h49M6rBKGzna2vyDK
-        6QhyYx2Pl7Z1t1BexWkE2EZpE0cySiaFaqpd/CDV5Xw9
-X-Google-Smtp-Source: APXvYqy5DP6cRT4k+GHKfAdFXlqfJDVwYB6+vFuevVTw1WBostr5nPl/PYP5I/OHWB8CsAdl6z3p8/0gNtqM7MHnu5E=
-X-Received: by 2002:a92:d801:: with SMTP id y1mr2836540ilm.188.1579600816260;
- Tue, 21 Jan 2020 02:00:16 -0800 (PST)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=ZR3C2Rl6GJoljT0/JqkmZbsGzAqxSr4Sy034hSVL+WM=;
+        b=BQQIDo5eaIuVD8ZfNO04AypKpWO4kFmOM2BKSryIm5cFiNAdi+z22CZtL4JKosJccL
+         prZRBoxlz54vmcH2V+XpbMHA971D7CN6ZKaL9p2Ss0ofkSl5Gi6L4IGErBUFX8fVDoog
+         mVBQ7B44QN4fftallFv4IS35H6cTPBIacbwJbNsBm/F6oN37FhvAmD3lOfxITYnG1gKY
+         Df6GA1DDTpxjnGeO2Zbw8DZrt+NOQs1TWSw1i+sr1LGmPRBKYnFE4HfEBrybMUxMnMkn
+         7ixNsxHgY130tlAy+uR4w7y8LghkkM5hOyQNCYTVr0LXfH6mh0dkqH7748gxONa7DqU7
+         QYiA==
+X-Gm-Message-State: APjAAAXx/ypUyMrWCXUh0PyEhgWKCB2JsVdS17jieFIihW7zVWeedZOI
+        hB/dN7UInVqBf3UqFafkWmGIJo0mYCR0bY868P8=
+X-Google-Smtp-Source: APXvYqyGjas0xyte+JnmRP973k3bG71fMXCcDTFLQBHIhNoWJ2bBbvmWxwsV2hcPrlWhbozqhb2ymuH7wrKDoo3TZGY=
+X-Received: by 2002:a6b:7310:: with SMTP id e16mr2467343ioh.107.1579600832319;
+ Tue, 21 Jan 2020 02:00:32 -0800 (PST)
 MIME-Version: 1.0
-References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-7-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001202253450.46@tvgsbejvaqbjf.bet> <CAP8UFD1T3_1t0Qf3jP1GttNHvaLEWoaeAVeZid6AMH_MAKPjSw@mail.gmail.com>
-In-Reply-To: <CAP8UFD1T3_1t0Qf3jP1GttNHvaLEWoaeAVeZid6AMH_MAKPjSw@mail.gmail.com>
+References: <20200120143800.900-1-mirucam@gmail.com> <20200120143800.900-10-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001202313130.46@tvgsbejvaqbjf.bet> <CAP8UFD0MO9wEc=ErEAFm4kSabLKUTp1a5VTPxgDS2yqt+rxXag@mail.gmail.com>
+In-Reply-To: <CAP8UFD0MO9wEc=ErEAFm4kSabLKUTp1a5VTPxgDS2yqt+rxXag@mail.gmail.com>
 From:   "Miriam R." <mirucam@gmail.com>
-Date:   Tue, 21 Jan 2020 11:00:05 +0100
-Message-ID: <CAN7CjDDZw4e13bJzH3gpitb__=H5VocrEZRY6cBTrCpAJ1q13Q@mail.gmail.com>
-Subject: Re: [PATCH 06/29] bisect: libify `exit_if_skipped_commits` to
- `error_if_skipped*` and its dependents
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
+Date:   Tue, 21 Jan 2020 11:00:21 +0100
+Message-ID: <CAN7CjDAb4AxZQ-dU0GBibXhWCwxRDqbbkVaKuNfVJ+8LASr8fQ@mail.gmail.com>
+Subject: Re: [PATCH 09/29] bisect: libify `check_good_are_ancestors_of_bad`
+ and its dependents
+To:     Christian Couder <christian.couder@gmail.com>,
+        git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -71,76 +71,81 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-El mar., 21 ene. 2020 a las 7:40, Christian Couder
+El mar., 21 ene. 2020 a las 7:59, Christian Couder
 (<christian.couder@gmail.com>) escribi=C3=B3:
 >
-> Hi Dscho,
->
-> On Mon, Jan 20, 2020 at 10:57 PM Johannes Schindelin
+> On Mon, Jan 20, 2020 at 11:20 PM Johannes Schindelin
 > <Johannes.Schindelin@gmx.de> wrote:
 > >
 > > On Mon, 20 Jan 2020, Miriam Rubio wrote:
 >
-> > >       printf("There are only 'skip'ped commits left to test.\n"
-> > >              "The first %s commit could be any of:\n", term_bad);
-> > > @@ -676,7 +676,13 @@ static void exit_if_skipped_commits(struct commi=
-t_list *tried,
-> > >       if (bad)
-> > >               printf("%s\n", oid_to_hex(bad));
-> > >       printf(_("We cannot bisect more!\n"));
-> > > -     exit(2);
-> > > +
+> > > @@ -876,8 +877,15 @@ static void check_good_are_ancestors_of_bad(stru=
+ct repository *r,
+> > >       int fd, rev_nr, res =3D 0;
+> > >       struct commit **rev;
+> > >
+> > > -     if (!current_bad_oid)
+> > > -             die(_("a %s revision is needed"), term_bad);
 > > > +     /*
 > > > +      * We don't want to clean the bisection state
 > > > +      * as we need to get back to where we started
 > > > +      * by using `git bisect reset`.
 > > > +      */
-> > > +     return -2;
+> > > +     if (!current_bad_oid) {
+> > > +             res =3D error(_("a %s revision is needed"), term_bad);
+> > > +             goto done;
+> > > +     }
 > >
-> > This comment is a good indicator that the constant `-2` here is a "magi=
-c"
-> > number and it would most likely make sense to turn the return type from=
- an
-> > `int` into an `enum` instead.
->
-> Many functions use `return error(...)` and error codes from these
-> functions and from exit_if_skipped_commits() are going to get mixed.
-> So I am not sure that using an enum for only some of the error codes
-> will make things clearer.
->
-> > >  static int is_expected_rev(const struct object_id *oid)
-> > > @@ -949,7 +955,7 @@ int bisect_next_all(struct repository *r, const c=
-har *prefix, int no_checkout)
-> > >  {
-> > >       struct rev_info revs;
-> > >       struct commit_list *tried;
-> > > -     int reaches =3D 0, all =3D 0, nr, steps;
-> > > +     int reaches =3D 0, all =3D 0, nr, steps, res;
-> > >       struct object_id *bisect_rev;
-> > >       char *steps_msg;
-> > >
-> > > @@ -972,8 +978,9 @@ int bisect_next_all(struct repository *r, const c=
-har *prefix, int no_checkout)
-> > >                * We should exit here only if the "bad"
-> > >                * commit is also a "skip" commit.
-> > >                */
-> > > -             exit_if_skipped_commits(tried, NULL);
-> > > -
-> > > +             res =3D error_if_skipped_commits(tried, NULL);
-> > > +             if (res)
-> > > +                     exit(-res);
+> > Why not just return here? Ah, there is a `filename` that was allocated.=
+..
+> > it is too bad that we have a mailing-list based review, as the hunk
+> > context simply cannot be extended in a mail.
 > >
-> > So we still `exit()` in `libgit.a`? I hoped for a more thorough
-> > libification.
->
-> The exit() calls are removed in later patches.
->
-> > Besides, the `if (res)` probably wants to be an `if (res < 0)`, right?
+> > Personally, I think it would be nicer to split the definition of
+> > `filename` from its declaration and move it _after_ this conditional co=
+de,
+> > so that we can `return` right away.
 >
 > Yeah, I agree.
+Ok. Noted.
 >
-Noted!
-Thank you Johannes and Christian.
+> > However, there is a more pressing issue than that: `die()` exits with e=
+xit
+> > code 128, so in keeping with the idea to hand down negative exit codes =
+as
+> > return values, should we not assign `res =3D -128` here?
+>
+> I think it has been ok when converting git-bisect.sh to C to just
+> convert `die(...)` into `return error(...)`.
+>
+> > >       /* Check if file BISECT_ANCESTORS_OK exists. */
+> > >       if (!stat(filename, &st) && S_ISREG(st.st_mode))
+> > > @@ -893,18 +901,20 @@ static void check_good_are_ancestors_of_bad(str=
+uct repository *r,
+> > >       if (check_ancestors(r, rev_nr, rev, prefix))
+> > >               res =3D check_merge_bases(rev_nr, rev, no_checkout);
+> > >       free(rev);
+> > > -     if(res)
+> > > -             exit(res =3D=3D -11 ? 0 : -res);
+> > > -
+> > > -     /* Create file BISECT_ANCESTORS_OK. */
+> > > -     fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+> > > -     if (fd < 0)
+> > > -             warning_errno(_("could not create file '%s'"),
+> > > -                           filename);
+> > > -     else
+> > > -             close(fd);
+> > > +
+> > > +     if (!res)
+> > > +     {
+> >
+> > We usually put the `{` on the same line as the `if` condition (like you
+> > did in the `if (!current_bad_oid)` line above.
+Ok. I will change that.
+> >
+> > The rest looks reasonable. Thank you,
+Great! Thank you for your review!
 
-> Thanks for your review,
+>
+> Thank you for your review,
 > Christian.
