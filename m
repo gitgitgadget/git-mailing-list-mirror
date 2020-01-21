@@ -2,174 +2,108 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0224C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 903A6C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 15:01:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 825D320882
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 11:51:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6205A2253D
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 15:01:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N3ZGB8HT"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fPVb2z1e"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729182AbgAULvF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 06:51:05 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:43373 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726052AbgAULvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 06:51:05 -0500
-Received: by mail-io1-f67.google.com with SMTP id n21so2520314ioo.10
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 03:51:05 -0800 (PST)
+        id S1729253AbgAUPBW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 10:01:22 -0500
+Received: from mail-wm1-f52.google.com ([209.85.128.52]:50810 "EHLO
+        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729127AbgAUPBW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 10:01:22 -0500
+Received: by mail-wm1-f52.google.com with SMTP id a5so3303531wmb.0
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 07:01:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=142VlxXhnzpws3uQPy1b0oSpILzddAmS2yDmzcRyVyM=;
-        b=N3ZGB8HTItmY5dplPkb8/yvUXfo0rnuIiLstRZJh2Mzpw4sPquhX8hqsephVdR++PI
-         ZsSucgqiux2gDOlJZo452i8G5WezAlupcWqZw8W9BrO8sQ8EbMkRVV6SKenDsljfmDqu
-         rjen22jZ5wGEOMTRmYCAe/sEq+njClT813p2kYWufb6irg3v2ciLbJ5mrggHIAlou7u7
-         e4+bJJB06YGXqUoVmy5mMt3SQRKKMFsaY+pM8bZEZKkm6OMpvs3beO1drnHGRPmnvCtC
-         o3lGmydhx8BGvEN2KTnNAaHOwGmDdCa7PEjnK1erWuTB02EE1Z+mPyinNeXVtAiS8daY
-         2gbQ==
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6PtBOCH3++iVFMvTvJcZuKbnk4q4ZepImhEvYpP1iwU=;
+        b=fPVb2z1esU6Bn4cWJI3e4heMA+6CuutJ+IemFv3SnYFZfElY6McAHD9ss1281SrhHY
+         jRvNgFDl18yHfhZkATdsmThTpyyEc2CLzyUd2z7+o+E1Eg6u1VKwh/8BQHoPaxMPYgrF
+         fzcJBaGiA/SXJaL72fXCBzwmDlpDM4nzrtzJhQkvgZVpVWN0MOqhOeq3aqpkGeL7b9KI
+         9otBX4Lom9QBb+R/S9KXKFb8VFrj8xBjrVh+8IZP710NAobg62v0qXzbwkI+4bBFT+AN
+         i2q0l4QEjO6jS3XgXtGvpqw2dLa/JAIOYMqFTDFIQOaJiFAcbzqhh3hj6M82TG/rEaW9
+         LhBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=142VlxXhnzpws3uQPy1b0oSpILzddAmS2yDmzcRyVyM=;
-        b=A4E6vOU6H8nVGdgjdm6MevMog9Y/y64fKhstlEYn+8Hu/vcrN3nRkjV9EQwbtim+YJ
-         Js3Oo8ouJp1/tayopiTATwnKQ22bhQ4tvW9XCNBCpikbK5bN2+yYZT1tfCOY6iyQuj8b
-         VVZQ9pYOtmKDM7UCccPCHamGeSE2kJ649nplxypm6kfWd2bOYAIQLwX6NUasuBxriVsE
-         OsI0LwdNdXf+5YWKmTPFK9JrAF5XsNGjvaWx62hMTUSlDWAOuQAcmuCK+9UZ8w695SQf
-         cGbwiy/u2qywWSjZf+p2KeFUs9q5YTrJHhZ7SRxKSs6dcqC7KWMihysOtbczC8NJsfku
-         QtAQ==
-X-Gm-Message-State: APjAAAWHUtMfJu7JUzKML0z5RQaRc02uSB0bppL55ytbKAeaVXs2Zn/y
-        h7spQ60QaIFE+CSWV+cuHP1O+g9QBMe3t9lMUMw=
-X-Google-Smtp-Source: APXvYqymqLsxQQrauB+5gUB0f7hOJhum5KBERInRg5VFy5n7ZQPNL6n9MMrqH1viEI6y7ytFw20lgFC5M11dteCCfcA=
-X-Received: by 2002:a02:c906:: with SMTP id t6mr2959736jao.75.1579607464503;
- Tue, 21 Jan 2020 03:51:04 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=6PtBOCH3++iVFMvTvJcZuKbnk4q4ZepImhEvYpP1iwU=;
+        b=gAi2DTBUjDY9yOy1RM43iTaf3LiYPk4w0XaSO3tIFNvbdCA8k0nbQ1DutPD370u9Xf
+         PCrVgfa9LQEir1B4k3HB17oYt9QtVShWJqxgAREatMsFsctVmIHNLFo16Wt+iMd73hXr
+         hJSiOKlOiIl8BY7CWCZfjkfjKRjzfdM8eViSTBC08L1m5bj4IGfl0uaphylnPEKTJH2e
+         Uk/bvwmr8sGQXVy4AOlEMBzk6mxbHJPOjhcrkIMiUHOaBP3dDMakoifRFI6uL3hBj71L
+         zfQMk2854VHrzx6y0LFjbTBERF6gALkZ5YmhblFKEo78O5LUqt4DaSM/Njf4rCsAxtL/
+         nW0Q==
+X-Gm-Message-State: APjAAAVkl2QDFS33GyN1l6xz9FDohZqzwAhnzyE6jo5UuWyfPuy6LM2h
+        Vw8dg5OTRKE9Yz8oVn0qInMdZpiR
+X-Google-Smtp-Source: APXvYqwvoPVynwt2iOcet6HBHdgNyi7xTBla1W2oBsvDviWft8Xw3Y/bYeIVQMc2ExixWDiNaQpsDw==
+X-Received: by 2002:a1c:1d02:: with SMTP id d2mr4955527wmd.185.1579618879846;
+        Tue, 21 Jan 2020 07:01:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t190sm4282197wmt.44.2020.01.21.07.01.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Jan 2020 07:01:19 -0800 (PST)
+Message-Id: <1a4eae1ef5eb9749fe3e64c4c13e52c3269bc4be.1579618877.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.523.v2.git.1579618877.gitgitgadget@gmail.com>
+References: <pull.523.git.1579263809.gitgitgadget@gmail.com>
+        <pull.523.v2.git.1579618877.gitgitgadget@gmail.com>
+From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 21 Jan 2020 15:01:14 +0000
+Subject: [PATCH v2 1/4] t7410: rename to t2405-worktree-submodule.sh
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <CAFFaXsyVy-fU5c7teDbVCTdUXFTK0GQ=Fse5wSi2vMifyZxS9A@mail.gmail.com>
- <xmqqk15rf21d.fsf@gitster-ct.c.googlers.com> <CAFFaXsz9LEdegzxL8MhS+VfTs-wmWu+CGDjxjB4Xgj8+7nSHNQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.2001171433180.46@tvgsbejvaqbjf.bet> <CAFFaXsyiLeNPCZ+Kn1x-+0pZf0FiPQR-k8qtooFrdG+VNfLq+g@mail.gmail.com>
- <nycvar.QRO.7.76.6.2001202232460.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001202232460.46@tvgsbejvaqbjf.bet>
-From:   Nirmal Khedkar <nirmalhk7@gmail.com>
-Date:   Tue, 21 Jan 2020 17:20:28 +0530
-Message-ID: <CAFFaXsxLd8duDPTE1H-zJiYnTVSB3pHCfBV+08Y4jLvCWR9kNw@mail.gmail.com>
-Subject: Re: Facing error in git-imap-send while compiling Git
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Johannes!
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-On Tue, Jan 21, 2020 at 3:05 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
-> On Tue, 21 Jan 2020, Nirmal Khedkar wrote:
->
-> > On Fri, Jan 17, 2020 at 7:05 PM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > On Fri, 17 Jan 2020, Nirmal Khedkar wrote:
-> > >
-> > > > On Fri, Jan 17, 2020 at 4:21 AM Junio C Hamano <gitster@pobox.com> wrote:
-> > > > >
-> > > > > Perhaps the thread
-> > > > >
-> > > > >   https://lore.kernel.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com
-> > > > >
-> > > > > may help?
-> > > >
-> > > > It did, to the extent that I now know why I'm facing these errors out
-> > > > of the blue.
-> > > >
-> > > > I'm  not quite sure as to what am I supposed to do right now, should I
-> > > > wait for Liam's patch to be merged,  or should I implement his fixes
-> > > > locally or should I just downgrade my openssl?
-> > > >
-> > > > Liam's PR (#516 on GitGitGadget [1]) haven't yet passed all build
-> > > > checks and I guess its still a work in progress. Nevertheless I've
-> > > > tried implementing his fixes to imap-send.c, and the make still fails.
-> > > > Am I missing something here?
-> > >
-> > > Speaking for myself, I am still waiting for
-> > > https://public-inbox.org/git/xmqqpnfv3tq4.fsf@gitster-ct.c.googlers.com/
-> > > to be addressed adequately. I think this is the main blocker.
-> > >
-> > > You could be that person who addresses this, as already 10 days went past
-> > > without even so much as an acknowledgement of Junio's suggestion. Maybe
-> > > you can make it work, and submit a fixed patch (You could take authorship
-> > > and add a footer "Original-patch-by: Liam Huang <liamhuang0205@gmail.com>"
-> > > because it is most likely a total rewrite of Liam's patch).
-> > >
-> > > Ciao,
-> > > Johannes
-> >
-> > The OpenSSL version on my system is 1.1.1. I've tried implementing
-> > Junio's suggestions, and it just doesn't work.
->
-> Does the code otherwise compile cleanly with `make DEVELOPER=1`?
->
-> > It gives me the same
-> > error as it gave me earlier.
-> >
->
-> Those are linker errors, meaning that the symbols were not found in the
-> libraries.
->
-> If you build with `make V=1 DEVELOPER=1` you should see that
-> `git-imap-send` links in OpenSSL via -lssl (and/or -lcrypto). Is this the
-> case for you?
+This test was added in df56607dff (git-common-dir: make "modules/"
+per-working-directory directory, 2014-11-30), back when the 'git worktree' command
+did not exist and 'git checkout --to' was used to create supplementary worktrees.
 
-Doing "echo DEVELOPER=1 >config.mak" does not help in any way. I get
-the same errors. Here's my diff, in case I have been making mistakes
-all along.
+Since this file contains tests for the interaction of 'git worktree' with
+submodules, rename it to t2405-worktree-submodule.sh, following the naming scheme for
+tests checking the behavior of various commands with submodules.
 
-
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
-diff --git a/imap-send.c b/imap-send.c
-index 6c54d8c29d..73ed3bc287 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -42,6 +42,12 @@ typedef void *SSL;
- #define USE_CURL_DEFAULT 0
- #endif
+ ...410-submodule-checkout-to.sh => t2405-worktree-submodule.sh} | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ rename t/{t7410-submodule-checkout-to.sh => t2405-worktree-submodule.sh} (96%)
 
-+#if OPENSSL_VERSION_NUMBER < 0x10100000L
-+    #define OPENSSL_sk_num(x) sk_GENERAL_NAME_num(x)
-+    #define OPENSSL_sk_value(x,y) sk_GENERAL_NAME_value((x),(y))
-+    #define OPENSSL_sk_pop_free(x,y) sk_GENERAL_NAME_pop_free((x),(y))
-+#endif
-+
- static int verbosity;
- static int use_curl = USE_CURL_DEFAULT;
+diff --git a/t/t7410-submodule-checkout-to.sh b/t/t2405-worktree-submodule.sh
+similarity index 96%
+rename from t/t7410-submodule-checkout-to.sh
+rename to t/t2405-worktree-submodule.sh
+index f1b492ebc4..f2eee328cc 100755
+--- a/t/t7410-submodule-checkout-to.sh
++++ b/t/t2405-worktree-submodule.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='Combination of submodules and multiple workdirs'
++test_description='Combination of submodules and multiple worktrees'
+ 
+ . ./test-lib.sh
+ 
+-- 
+gitgitgadget
 
-@@ -59,6 +65,8 @@ static struct option imap_send_options[] = {
- #define DRV_BOX_BAD     -2
- #define DRV_STORE_BAD   -3
----
-
-From my limited knowledge of OpenSSL libraries, I think the error has
-more to do with 'SSL_library_init()' , which appears like a
-constructor to the OpenSSL library. I found these emails regarding
-"if" cases around this function. Please check out these patches:
-1. Rosen Penev:
-https://lore.kernel.org/git/20181227023548.396-1-rosenp@gmail.com/
-2. eroen: https://lore.kernel.org/git/20170112104219.563497-1-git-scm@occam.eroen.eu/
-
-Are the fixes made in these patches relevant here. Please let me know
-if I'm going wrong.
-
-Thanks!
-Nirmal Khedkar
-https://nirmalhk7.github.io
