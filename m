@@ -2,78 +2,102 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25C00C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BF62C2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:57:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ECEAE24125
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:30:01 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3242121734
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 20:57:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VW0NhV8R"
+	dkim=pass (1024-bit key) header.d=web.de header.i=@web.de header.b="L8zu0+a2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729080AbgAUUaA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 15:30:00 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:50765 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727829AbgAUUaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 15:30:00 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 247CEA2FF6;
-        Tue, 21 Jan 2020 15:30:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UpA1Yy5/gchO4ujcbwg15ErDUuA=; b=VW0NhV
-        8Rgvb8EZX6ZqBDsa6BR52BXH1BF92LWJM9YE4ovUtw91r2Tw8I7ghbWgDdZnBind
-        wda2oR5AoqjOY/ZmtV2U+u0UiLk0Be87HR7COl0g0FLBw2Pe1JGMQOhPlkEAVmkV
-        p9I0Gb/Oa2WL6VE5SXN7fRatuEeL1mIKX5hy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BvIcjd0xWKN8R5vgUzflPgUXtWUBFwta
-        2mIJFhe7Q4pgGzn0i5SAZA8/e1xooWpnLN6LKz05bBXYmjN25SAoOEHqlSNk0mck
-        Pd8qcLuOkuxEVFUGTAcJ0cO6i2Xdm8dmVYAHyvhylRKksjqciqxbt43zcMyLiLBS
-        vB4Y4EceM7s=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 1A6BCA2FF5;
-        Tue, 21 Jan 2020 15:30:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3EEE2A2FF3;
-        Tue, 21 Jan 2020 15:29:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
-Subject: Re: [PATCH 6/8] doc: stash: synchronize <pathspec> description
-References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
-        <5e17a0c470ec576d9dc4c24acecbad5ac2ddd9ed.1579190965.git.gitgitgadget@gmail.com>
-Date:   Tue, 21 Jan 2020 12:29:54 -0800
-In-Reply-To: <5e17a0c470ec576d9dc4c24acecbad5ac2ddd9ed.1579190965.git.gitgitgadget@gmail.com>
-        (Alexandr Miloslavskiy via GitGitGadget's message of "Thu, 16 Jan 2020
-        16:09:23 +0000")
-Message-ID: <xmqq36c8a6yl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1728799AbgAUU47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 15:56:59 -0500
+Received: from mout.web.de ([212.227.17.12]:33565 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728741AbgAUU46 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 15:56:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1579640216;
+        bh=3t0kPkKUevLabMeEGgrcz8si0vbcmrFLnWpNjB0DfTo=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=L8zu0+a2IhxqlWrmEW2mh/K5nC9FmXqmFewMgOEqjmaSDsTjQE2jF9x6OvWHoVH8N
+         nQrvCsb5tzKSnvvy/rbGs/kZTY25F9+NvAPS4Qw76nNWWNmR7Kxar5JaZI27BMFT99
+         oUNs6f88F+LqbQqmGlYupP5Tl+LyyY6xuj77n1m4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0Lpw2l-1jVpdP1umV-00fkrT; Tue, 21
+ Jan 2020 21:56:56 +0100
+Date:   Tue, 21 Jan 2020 21:56:54 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ravi Patel <r_patel445@mail.harpercollege.edu>
+Cc:     git@vger.kernel.org
+Subject: Re: Issue with installed Git OSX
+Message-ID: <20200121205654.tkifeb4vlu5uymcv@tb-raspi4>
+References: <2F620D91-F038-4512-A4CD-E706E6163A19@mail.harpercollege.edu>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CA252E50-3C8C-11EA-908F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2F620D91-F038-4512-A4CD-E706E6163A19@mail.harpercollege.edu>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:KRpAaZ0UcO4LGit+snF4BfZxuOILEX1irSA4xmBKOb8uQqQ4a2Y
+ 0h4CpJq7FbEFTwAm2rshDYnP4VqNDeNRzPcWowBCGZIDSqHVpGvL/5LAcmgOR6QNFxTufOj
+ /K0upT2bde0UNqwOTJZkZM9h+rx5TOBFrOgqOTuPB7JkO0cIEv9pJyfHjDUDeAHEXFxEONM
+ r5GEAXj602nktbyscnxLg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:K6ej8qAdLag=:bOyaBMrps9aSMnBApzhbcc
+ z7lFftyJDwY6qzQsuTnUTmvU05q0VCr/CTecPxNdq/dav9lmHgH+D2kL+/G9BCVu95NQCOR7N
+ 10UB2Z7DaT0eCVpobq5KF+ShVS3g0nl6HVy9p+3piNsnHbAN74A5LXTOlXFjK7NCWDnhX2RdE
+ SWRVx7GNEwHKsriDO4wpiaH//tmrUtBpJ2y42Bsyl61z65gXGblljSgQyyNUmufEXuDxfaCYJ
+ C+mcvmV8nY6dU1lHeAwf3lw24oEQ4ZrVR1TiX+oMyQoSv+1n07Y+USutoKrUjvXPlft9ysrVC
+ vwlAYwvohVmc+9HIQPkqgDQfGCfxUI2bVbB0pjx2EkvL6kpdSdrKgctyc7dRGJnDz4l8RXZox
+ wBstgO/BA1DZUJ/v/oNg3EklMEtr1lTXbFf20vq8+ImltkWp+3K/HC8rAn3yexjBCWEEb914w
+ 6Tle7T9zFwctTlRZl1P81xnbT5wrKyk4hFQlAkzsPKBNKnIEV4poSinSO927mOo4oCAY3Yfef
+ H3ilA0j3NZ8OFdHo37CJRSExjQE7ijI+k+Lao+wPMFzNDCUOr8LXnKZAeEnQ0Sv9hq5L9I7Ba
+ uvO6xA5fC+M752Qa+mjK5osmqzf0XOSgzgVKPPlcLqYx4PmkTw8ztlLqS9XTgSlHyCDoqq+vH
+ LzBoeqs2sBT9BjupjpTdR9ThvLtBskNIQyZpJmTFhSY4b0TT1wNJ1/ULgegamrehMypRowb4R
+ bnFFsUqfytELJEMPbbpLi/aGE5e3htVsqPyOKGvT0YYbB3fjtZu4UzQF+84VelDdwdas6SOIJ
+ YkfozQWnKP42DsErqD5Q932LFQrGLhsie0QPLznCgkQ0a5iTKe1p7CgKYZntNAVCf9PKnpu4r
+ Z9LHVpn3NwJJ+3LFdEcFWd4Y8m9JRoyc7y+At8PxLysZW/5f1Ea8kaweaqEjyz+5x+59HoCQl
+ t3s++IMBNL3nW4SxyyrInFjWpa/lhDJwokesCLUSjyjMo6mBzZSidpgXKckXeE6JS26lxdDHR
+ qHe4XRR/hHvIJbFyb2yMtrdEGyWRUxii0JtCT+J08wOpzcub5eoQGGz9WtLErfgIS0tN7FVm6
+ PhPHhKXauqDXG9Ec+tvmLTWSV+MJcUNoQgFI9Qgc50x/LgyL06k3QXIVSPI+O2ASH0uxo/T7J
+ KXnI6pTqo/Z2OqIgFwH96jBbu1i6Z7z8iUW3NdCaMQJfmMSrz+kZSkwlRvbjkOWI7wfCx/lPa
+ +d9S0XJRsM/IzCCchKn4PtI9QwphqP4C8bW2PEw==
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Tue, Jan 21, 2020 at 12:02:29PM -0600, Ravi Patel wrote:
+> Hey,
+>  I recently downloaded and installed Git on my Mac. I do not know but af=
+ter installing I am not able to get Git Bash.
 
-> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
->
-> This patch continues the effort that is already applied to
-> `git commit`, `git reset`, `git checkout` etc.
+Git Bash is under Windows only, right ?
+You have the same functionality under a terminal window - unless I miss so=
+mething.
 
-Makes sense.
+> I can see in terminal command line the version is downloaded as 2.23.0.
+Good.
+
+> But I am not able to connected it with any new projects or the existing =
+projects.
+I am unsure what "connect with new projects" mean.
+You can open a terminal window and use Git from command line.
+git init
+git clone
+
+and all other Git commands.
+
+> So can someone please direct me as to how to get this working properly.
+Which kind of project are you asking about ?
+Which language, IDE, tools are you using?
+
+
+> Thank You,
+> Ravi Patel
