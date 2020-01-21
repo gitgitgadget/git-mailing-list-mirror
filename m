@@ -2,108 +2,172 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4573EC2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4296DC2D0CE
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:36:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1511B2073A
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:35:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 090A221835
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 19:36:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3dUTc8+"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vJUCAJGt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728901AbgAUTfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 14:35:21 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33738 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726229AbgAUTfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 14:35:21 -0500
-Received: by mail-wr1-f68.google.com with SMTP id b6so4694914wrq.0
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 11:35:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/uAW6Tkc9XQvrpbbufvHqa0mrC5LgecDP27DlqZiEKA=;
-        b=Z3dUTc8+5Y78g12urH0UB2H3knQQq5A9l+H7yisOskWf16TPHmictHeBzU0z+bIU/0
-         yPi3ZJ0jf2UNL2w6NHMov6V7O6zjEVxkaGfP51zxhKH6LuBMrwtSr+coHcNWfvF0J6Y1
-         oEXDxdEWsgzTIwc0odAqpxIn/fG31u5GsOIdvvYysI1xkhV3+Qdoq7Io8eyEFVAQeG1S
-         Kax+xAeSqik5DbpdR3X0gLhIT1wPyjAcZxhocpJhQLJbVL6u6hXyHrkhMLcFBSVfg6Kb
-         A5SYhmANZOllNzmPQOuzF1x/edcAvZNdRSISr80wvC4jUXkREhGodQ4txqXT6SSLCX2T
-         i9sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/uAW6Tkc9XQvrpbbufvHqa0mrC5LgecDP27DlqZiEKA=;
-        b=XbU95prvn448U+qkHY2YmG9hK45OLyC2so3Rx4cOQAVpAqEvhZ3mynK28+YItWrviN
-         m2KwCmj/MFDGyhOEHGkTK4AfD1KSWlzXNx70d6Pswjxn14gS09Xoi26cAeU0eGohOC1X
-         1PTd5XgWSLdeTctqszqWsHpGWo33V4SfaFHfLVC3YqrJc/Xh+QuBpSJEZdouAxrqrmlE
-         Gqff9lxqdOKO9E/xcHJqv4ur17xlpP0AuseJgeBfhZyS0s8xkHd+RqWp9oEc9gKcM9/t
-         CcWGW92TIRoBwfQZRX6mXbWQua9bxODQEcYHyxziSPTCax+ar9rc8pQt++QGz4oDGqoz
-         oOrQ==
-X-Gm-Message-State: APjAAAWjRxVR9FwCR4AUJyXkFd7/fi2PBruAl7f39Ftf5+f9Ga8nJ9Ys
-        fnFHwBb0+jTifOpWDq2zGvvXmxPQ
-X-Google-Smtp-Source: APXvYqwk7uUHM93SWmLWrcAJl/0Qtx4/NGKJLohF+5nCTgqMNzQVoZyQkA+CM7m80H3bjp9QBL4T1g==
-X-Received: by 2002:a5d:6388:: with SMTP id p8mr6764382wru.299.1579635318998;
-        Tue, 21 Jan 2020 11:35:18 -0800 (PST)
-Received: from localhost.localdomain (atoulouse-658-1-3-145.w86-222.abo.wanadoo.fr. [86.222.146.145])
-        by smtp.googlemail.com with ESMTPSA id r62sm583515wma.32.2020.01.21.11.35.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Jan 2020 11:35:18 -0800 (PST)
-From:   Alban Gruin <alban.gruin@gmail.com>
-To:     git@vger.kernel.org, phillip.wood@dunelm.org.uk,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v1] builtin/rebase: remove a call to get_oid() on `options.switch_to'
-Date:   Tue, 21 Jan 2020 20:32:26 +0100
-Message-Id: <20200121193226.24297-1-alban.gruin@gmail.com>
-X-Mailer: git-send-email 2.24.1
+        id S1727383AbgAUTge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 14:36:34 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58413 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726229AbgAUTgd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 14:36:33 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D893AA2871;
+        Tue, 21 Jan 2020 14:36:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=NjjykgGEA2vRAiXyiQGYvrWYQkg=; b=vJUCAJ
+        GtDWAP5X6S41enJCSAxsSiVWFKAvl5BG7XO5m5y40GyjAJ7vmJdsPSUgCUkXHyun
+        MGhFNXZGtm763wkJxRw2GblzwPC7YYjNst9qB1uVTUAoJgD0EvkYA1D8/tz2XMqr
+        Zu5KkeqcC4PtkSN3uG3uuuEuzIRDtcBCipaSM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PZ2Qf2/hFgHD5mnqZJLuRzbUCICG9Zlp
+        rU2x4uEqn/ZuvXwMaKQwLvJbIxDsgfN0S4U4J398b8qxSh4KZsGttiJkR+tZzA2u
+        cFKNFAtj6ut4rE0HLpxQEYlq7cQTa82jU74D/7iGxIFJN1gRbhCx4esKvDH0FcgI
+        6COMn5E5dUw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D0815A2870;
+        Tue, 21 Jan 2020 14:36:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id F3CB6A286F;
+        Tue, 21 Jan 2020 14:36:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+Subject: Re: [PATCH 2/8] rm: support the --pathspec-from-file option
+References: <pull.530.git.1579190965.gitgitgadget@gmail.com>
+        <5611e3ae326bb7f61abf870e3b2851226b6af1d8.1579190965.git.gitgitgadget@gmail.com>
+Date:   Tue, 21 Jan 2020 11:36:26 -0800
+In-Reply-To: <5611e3ae326bb7f61abf870e3b2851226b6af1d8.1579190965.git.gitgitgadget@gmail.com>
+        (Alexandr Miloslavskiy via GitGitGadget's message of "Thu, 16 Jan 2020
+        16:09:19 +0000")
+Message-ID: <xmqqftg8a9fp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 51DF7D80-3C85-11EA-A8B8-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When `options.switch_to' is set, `options.orig_head' is populated right
-after.  Therefore, there is no need to parse `switch_to' again.
+"Alexandr Miloslavskiy via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
----
- builtin/rebase.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+> From: Alexandr Miloslavskiy <alexandr.miloslavskiy@syntevo.com>
+>
+> Decisions taken for simplicity:
+> 1) It is not allowed to pass pathspec in both args and file.
+>
+> `if (!argc)` block was adapted to work with --pathspec-from-file. For
+> that, I also had to parse pathspec earlier. Now it happens before
+> `read_cache()` / `hold_locked_index()` / `setup_work_tree()`, which
+> sounds fine to me.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 6154ad8fa5..16d2ec7ebc 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -2056,19 +2056,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		if (!(options.flags & REBASE_FORCE)) {
- 			/* Lazily switch to the target branch if needed... */
- 			if (options.switch_to) {
--				struct object_id oid;
--
--				if (get_oid(options.switch_to, &oid) < 0) {
--					ret = !!error(_("could not parse '%s'"),
--						      options.switch_to);
--					goto cleanup;
--				}
--
- 				strbuf_reset(&buf);
- 				strbuf_addf(&buf, "%s: checkout %s",
- 					    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 					    options.switch_to);
--				if (reset_head(&oid, "checkout",
-+				if (reset_head(&options.orig_head, "checkout",
- 					       options.head_name,
- 					       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
- 					       NULL, buf.buf) < 0) {
--- 
-2.24.1
+That is not an explanation nor justification.
 
+> In case of empty pathspec, there is now a clear error message instead
+> of showing usage.
+
+Hmph, "git rm --pathspec-from-file=/dev/null" would say "nothing
+specified, nothing removed" and it makes perfect sense, but I am not
+sure "git rm" that gives the same message is better than the output
+by usage_with_options(builtin_rm_usage, builtin_rm_options).
+
+> -'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch] [--quiet] [--] <pathspec>...
+> +'git rm' [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]
+> +	  [--quiet] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+> +	  [--] [<pathspec>...]
+
+OK.
+
+> +--pathspec-from-file=<file>::
+> +	Pathspec is passed in `<file>` instead of commandline args. If
+> +	`<file>` is exactly `-` then standard input is used. Pathspec
+> +	elements are separated by LF or CR/LF. Pathspec elements can be
+> +	quoted as explained for the configuration variable `core.quotePath`
+> +	(see linkgit:git-config[1]). See also `--pathspec-file-nul` and
+> +	global `--literal-pathspecs`.
+> +
+> +--pathspec-file-nul::
+> +	Only meaningful with `--pathspec-from-file`. Pathspec elements are
+> +	separated with NUL character and all other characters are taken
+> +	literally (including newlines and quotes).
+> +
+
+OK.
+
+> diff --git a/builtin/rm.c b/builtin/rm.c
+> index 19ce95a901..8e40795751 100644
+> --- a/builtin/rm.c
+> +++ b/builtin/rm.c
+> @@ -235,7 +235,8 @@ static int check_local_mod(struct object_id *head, int index_only)
+>  }
+>  
+>  static int show_only = 0, force = 0, index_only = 0, recursive = 0, quiet = 0;
+> -static int ignore_unmatch = 0;
+> +static int ignore_unmatch = 0, pathspec_file_nul = 0;
+> +static char *pathspec_from_file = NULL;
+
+We may want to clean these "explicitly initialize to 0/NULL" up at
+some point.  The clean-up itself would not be in the scope of this
+patch, of course, but not making it worse is something this patch
+can do to help.
+
+> @@ -259,8 +262,24 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
+>  
+>  	argc = parse_options(argc, argv, prefix, builtin_rm_options,
+>  			     builtin_rm_usage, 0);
+> -	if (!argc)
+> -		usage_with_options(builtin_rm_usage, builtin_rm_options);
+> +
+> +	parse_pathspec(&pathspec, 0,
+> +		       PATHSPEC_PREFER_CWD,
+> +		       prefix, argv);
+> +
+> +	if (pathspec_from_file) {
+> +		if (pathspec.nr)
+> +			die(_("--pathspec-from-file is incompatible with pathspec arguments"));
+> +
+> +		parse_pathspec_file(&pathspec, 0,
+> +				    PATHSPEC_PREFER_CWD,
+> +				    prefix, pathspec_from_file, pathspec_file_nul);
+> +	} else if (pathspec_file_nul) {
+> +		die(_("--pathspec-file-nul requires --pathspec-from-file"));
+> +	}
+> +
+> +	if (!pathspec.nr)
+> +		die(_("Nothing specified, nothing removed"));
+
+I wonder if doing these in this order instead would make more sense
+without making unnecessary behaviour change.
+
+    - parse the options (which would make pathspec_f_f available to
+      us)
+
+    - if pathspec_f_f is given, call parse_pathspec_file()
+
+    - otherwise complain if pathspec_file_nul is set
+
+    - otherwise check argc and give the usage_with_options()
+
+I dunno.
+
+Thanks.
