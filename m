@@ -2,62 +2,63 @@ Return-Path: <SRS0=4+BP=3K=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84508C2D0CE
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21A18C33CAA
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:53:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 53D6122525
-	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:37:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDBD121569
+	for <git@archiver.kernel.org>; Tue, 21 Jan 2020 16:53:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HjowEtw+"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z4mOmRRN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729017AbgAUQhr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 11:37:47 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36580 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726714AbgAUQhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 11:37:47 -0500
-Received: by mail-wr1-f65.google.com with SMTP id z3so4009246wru.3
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 08:37:45 -0800 (PST)
+        id S1729207AbgAUQxC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 11:53:02 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35762 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729121AbgAUQxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Jan 2020 11:53:01 -0500
+Received: by mail-wr1-f66.google.com with SMTP id g17so4066826wro.2
+        for <git@vger.kernel.org>; Tue, 21 Jan 2020 08:53:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=NLCBD1I8mz2WEC0Vpj1/TQCBpA5l0Ho5hG4h8YX0F6o=;
-        b=HjowEtw+VSX0YklH+Nw0lS4cMZNM66G4BbUCjpdT/nG3w0jyAQarcjry9QMTzt0MTg
-         O7dI1D0PtMHhLlNoIpQsAfbDIepe2NNQyUpFdaWmNkkGBTjrbKytB2LQKhgbSZ4O7abg
-         EXNkx+uPCpOhTRwA2mFlXTwAeJd6Y4aZ6EtHrjrNqiblacAJVWjjXJut+fFwfyDzy9Yw
-         fTMoPUAj5Rf0z2/wpGFbK8X3xD51F4BGNhv2sOdpWxPT3dTG40LJMWuPkLqWzqn2oPav
-         E3OboUlfapRsYFejinClAwK/6E0gBf9+r8+gJ8RkV5Y4ORSMBS7Vnrn4PLnPfJ1Em5dM
-         N6eg==
+        bh=xv8TRZLk1M4dBaaM4xqddnV2SfCrA/o0qCx5DT/ENK4=;
+        b=Z4mOmRRNmTqRcS+lX3ggbUI5TwxbfhtTKloHnC4p2kB3ERObbSbrIKFNesXeeHH1uu
+         BdH5LYdyAosPjPLEwpdozIqMlIUZWgfqAZiMbevWQW0Qj2Zy9ztyu1BYn/wSauZP3U0I
+         9Sik518YkN02kc4jpAkbFUbLf5ygwbRDNAl/fUoCstPBNjztyo3BtKvPR4fAA69RqajI
+         5LPYuQ883OuQmyq9hqLWQlQwFO/muY/TRwhutvBSEwbNtF0LvcqoL+X5WZV94Ug/BP1D
+         +N9LeTClFSOhQX9g9Fsktl0hCt7moGRM14vWJIOnIJvFas9JVOVYzaQmHpTCqtxqmPpD
+         IAFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=NLCBD1I8mz2WEC0Vpj1/TQCBpA5l0Ho5hG4h8YX0F6o=;
-        b=Px184lKL4lKMBcWJa6O+y1Z9GyiaQz2UKrXTlaUkWB5rdEj/QoJW8YpsVk46IzTiPT
-         EhejsNyJq9eEWt1aRwZKHv8w2VX8itS61lPnLi/38HLJ0tAp2Rk5f0Z2ueKo9vwd3VR7
-         MLVHT6PsoeeOnb9eEwivvgKMs+5m0U72Isn5fKaz9kySQE6n6MxPj2J/JHLR9Al6hG0i
-         JmBPlkgt7Q+L24GX9VThQZqRsae8j6tolItArXepf3yI+pxy1Bg7w8JqA8vEAKdB4nQW
-         tRFf69bR5oDZtabqMl57NM7PZjOUtT6xIYofzR/SwDocGyj47Qmf6N5o79Op4zrnggqM
-         73Ug==
-X-Gm-Message-State: APjAAAUaBIWQP8OXd0ItudNPwykiR718aZIfz3kQSZ/61Y0lyQcJFXRU
-        UE9r7UvioMhRrODkiKLd1997wJByFh6np9ZN1ZU=
-X-Google-Smtp-Source: APXvYqzjhMLUylS/Rbq7uV9QNPrzNzk2q/60gzvUkR1RDL4d9SeemgwCqNu3GXdP0dEk0l29FvXJix2NR496+s4LJsg=
-X-Received: by 2002:adf:f28c:: with SMTP id k12mr6309334wro.360.1579624664983;
- Tue, 21 Jan 2020 08:37:44 -0800 (PST)
+        bh=xv8TRZLk1M4dBaaM4xqddnV2SfCrA/o0qCx5DT/ENK4=;
+        b=jjEyK/Oea7i/tncKzmf5ND3SRkbUcLcO18RkNcjCA4jG05Mi+F86RRTpDn5mc+S2Si
+         10ZFFM9NozgMyevzCzTZN8xCgRYgkLFeGEbXZvR5we2nQRk23Kj3FU+pNYO/vvcWaVoy
+         3QuQACXVMtAPcfXmoCipwVGrJ6sOpxMVmNN9HIL5JcURN95CkML1d8Celmov/omgVMtx
+         uYtIfJ0gzEq/SZHbJzGBUdyHikVabe/CxZZsbewS4dxhSPFEOPI5VG8PyKwi0V8hZuol
+         ZQQFrHhKTZr/N/y3TxQAyKXGUpG76EzrPv2eFOEwfNqo4DmZ07BWpXmtMbOYJov0nUVj
+         CHgw==
+X-Gm-Message-State: APjAAAWjdftxsl3Gs2Kzwvi+pE+zyNoyNM6ZHNzIRs09vjI/XsugPDv8
+        K6VO1uUAq9weguv1LiRMHbPs13MUYQi2Nf5cCUs=
+X-Google-Smtp-Source: APXvYqwI8hghplY83YaYQHVwoU1nwXlVi/8Sxeo5CjM4klTABL2+c1OJM0r8fJw6Vj0ukqDNhy80auZeVHeGi87Fbso=
+X-Received: by 2002:a5d:6344:: with SMTP id b4mr6071149wrw.414.1579625580298;
+ Tue, 21 Jan 2020 08:53:00 -0800 (PST)
 MIME-Version: 1.0
 References: <CANsz78JyawDpp_SewRQp4_AbZVduSYiazhvCqUcqUV810az5MQ@mail.gmail.com>
- <20200118145318.5177-1-shawarmakarma@gmail.com> <xmqqftgcd55s.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftgcd55s.fsf@gitster-ct.c.googlers.com>
+ <20200118145318.5177-1-shawarmakarma@gmail.com> <20200118145318.5177-2-shawarmakarma@gmail.com>
+ <xmqqv9p8bo0o.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqv9p8bo0o.fsf@gitster-ct.c.googlers.com>
 From:   Eyal Soha <shawarmakarma@gmail.com>
-Date:   Tue, 21 Jan 2020 08:37:33 -0800
-Message-ID: <CANsz78J93XynUJkBvvdD=BfXPQ-Wq17uzqPi3opMAPPKbt2Rwg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] color.c: Refactor color_output to use enums
+Date:   Tue, 21 Jan 2020 08:52:49 -0800
+Message-ID: <CANsz78+-Z89d8E=n3cjfnXaGVFXpchdG7EjtdQuFjzo-=2aPeA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] color.c: Support bright aixterm colors
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
@@ -66,26 +67,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 18, 2020 at 9:51 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Please downcase Refactor; that way this change would not
-> meaninglessly stand out in the "git shortlog --no-merges" output.
+On Sat, Jan 18, 2020 at 10:47 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> OK, so this round the design is to reuse the ANSI mode instead of
+> introducing a new AIX mode that sits next to ANSI, 256 and RGB?
 
-Sure, no problem.
+Right.  Previously I had it with a new AIX enum parallel to ANSI, 256,
+etc, but it just made the code longer for no good reason.
 
-> The blank before your sign-off means all the times spent gets
-> discarded, which is not exactly encouraging to the reviewers.
+> For this to work, not just the 90-97 range for bright-ansi orders
+> the colors the same way as 30-37 range (only brighter), but also
+> the differences between corresponding fore- and background colors
+> must also be 10 just like the regular ANSI colors.
 
-So I should make a better description for the patch?  Sure!  What
-should I put?  It's kind of hard to get a good description that
-describes the refactoring without digging into the reasoning behind
-it, which is in the follow-up patch.  What kind of description should
-I give?  How about like this:
+Yes.  It's a happy coincidence that the background version is always
+10 greater than the foreground version, for ANSI, for AIX, and even
+for the 256-bit colors.   The code takes advantage of that.  If that
+later proves to be not true, color_output needs to be modified.
+However!, the modification would be just in color_output because the
+input is now a boolean "background" instead of the previous char
+"type".  I think that's a good improvement so that the caller of
+color_output doesn't need to know that, ie, '3' is foreground and '4'
+is background.
 
-    color.c: refactor color_output arguments
+>
+> So perhaps an additional sentence or two deserve to be there, e.g.
+>
+>         ... of the 3-bit colors.  Instead of 30-37 range for the
+>         foreground and 40-47 range for the background, they live in
+>         90-97 and 100-107 range, respectively.
 
-    color_output() now uses a more descriptive "background" argument
-    instead of "type".
+Will do.
 
-    Signed-off-by: Eyal Soha <shawarmakarma@gmail.com>
+>
+> or something like that, perhaps?
+>
+> >  The basic colors accepted are `normal`, `black`, `red`, `green`, `yellow`,
+> >  `blue`, `magenta`, `cyan` and `white`.  The first color given is the
+> > -foreground; the second is the background.
+> > +foreground; the second is the background.  All the basic colors except
+> > +`normal` have a bright variant that can be speficied by prefixing the
+> > +color with `bright`, like `brightred`.
+>
+> Nicely and readably written.
 
-Suits?
+Thanks.  I tried to keep the voice in line with the rest of the text.
+
+>
+> I have to wonder if spelling "bright<color>", i.e. two words smashed
+> together without anything in between words, is in widespread use (in
+> other words, are we following an established practice, or are we
+> inventing our own), or if we need to prepare for synonyms?  HTML/CSS
+> folks seem to use words-smashed-without-anything-in-betwen so they
+> should be fine with this design; I no longer recall what X did ;-)
+
+/usr/local/lib/X11/rgb.txt often uses smashed together:
+https://github.com/vim/vim/blob/master/runtime/rgb.txt  Wikipedia
+calls them "bright" consistently:
+https://en.wikipedia.org/wiki/ANSI_escape_code#Colors .  So we've got
+a vote for smashing them together and a vote for "bright".  Seems okay
+by me!
+
+Eyal
