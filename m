@@ -6,53 +6,45 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED2F0C32771
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E975DC32771
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 05:34:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C2DA02071E
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:52:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C15692253D
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 05:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727141AbgAVDws (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 22:52:48 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41780 "HELO cloud.peff.net"
+        id S1725805AbgAVFe4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jan 2020 00:34:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41820 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726605AbgAVDws (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Jan 2020 22:52:48 -0500
-Received: (qmail 12510 invoked by uid 109); 22 Jan 2020 03:52:48 -0000
+        id S1725730AbgAVFe4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jan 2020 00:34:56 -0500
+Received: (qmail 13206 invoked by uid 109); 22 Jan 2020 05:34:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Jan 2020 03:52:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Jan 2020 05:34:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19173 invoked by uid 111); 22 Jan 2020 03:59:43 -0000
+Received: (qmail 19748 invoked by uid 111); 22 Jan 2020 05:41:52 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Jan 2020 22:59:43 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Jan 2020 00:41:52 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 21 Jan 2020 22:52:47 -0500
+Date:   Wed, 22 Jan 2020 00:34:55 -0500
 From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/5] Documentation for common user misconceptions
-Message-ID: <20200122035247.GB18266@coredump.intra.peff.net>
-References: <20200122034543.18927-1-sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: GSoC and Outreachy Summer 2020?
+Message-ID: <20200122053455.GA51054@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200122034543.18927-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 03:45:38AM +0000, brian m. carlson wrote:
-
-> This is v5 of a series improving the documentation to cover common user
-> misconceptions.
-> 
-> Changes from v4:
-> * Add a reference to git(1) for environment variables.
-> * Remove duplicated text.
-> * Add Peff's sign-off.
-
-Thanks, just looking at the interdiff I think this addresses all of my
-comments.
+I notice deadlines are approaching for Git to apply for GSoC (Feb 5th)
+and for Outreachy (Feb 18th), though we still have some time. Do mentors
+have sufficient bandwidth for us to participate?
 
 -Peff
