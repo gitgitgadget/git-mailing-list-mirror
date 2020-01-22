@@ -7,96 +7,89 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36A8BC32771
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 22:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9065C32771
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 22:38:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 01B8824673
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 22:25:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 83EEE2253D
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 22:38:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DuK2Hnxp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XdntpyVY"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728139AbgAVWZZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jan 2020 17:25:25 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:39157 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726061AbgAVWZY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jan 2020 17:25:24 -0500
-Received: by mail-qt1-f194.google.com with SMTP id e5so935378qtm.6
-        for <git@vger.kernel.org>; Wed, 22 Jan 2020 14:25:24 -0800 (PST)
+        id S1726004AbgAVWiH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jan 2020 17:38:07 -0500
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:36956 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725884AbgAVWiH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jan 2020 17:38:07 -0500
+Received: by mail-ot1-f43.google.com with SMTP id k14so934740otn.4
+        for <git@vger.kernel.org>; Wed, 22 Jan 2020 14:38:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=t8aZeckWp1rlKkzCvNmniAClQ2coG42tzhovGEUasAM=;
-        b=DuK2Hnxp6XxvIZLeT9Ef7G7LFyjiQjC4iBwoZRQWRqLZp3mI73wtKDyB9S7tnPNLaC
-         LaNE3es2xyKF2n5sFEaa72aKvW0nw8X0APyZAiaPLI9P/DQneCGEkAWfJjpQBSjMjTs3
-         dM7eo5hc5drJvPlvF7HCmvGJC7y1KNEHGLmDFkhpvKk5TRm9NA//dWc3Xp+0GZKEMsbI
-         K8PX8tUAAYYvZ83ORR9cyl6w4PR66GBlBIEwhhk8zKsvK6j/YRPTEgzrwUEsX+C3VeZt
-         X6Eqilzx7fG0C1OmSqVoqfPe2IjXAtYKGTAsasMY4EMuFv81LljH89asuliUHxA75uAY
-         1g6Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iah2gdLJ2C0gYUcjOMa6Rq4QvKyG3YLE+C+y+lEtTXg=;
+        b=XdntpyVYA7mxNTPkYHf82ktmUE88+1JoFhkgAZeb21T6etxB58LM5N8vB4/cU2DDru
+         AWpFBA95lfhvt1IOALt2/ouXknbRnFBzKIbtSdJ3nHoWQ0Tek8zJgIg8Ii5C6+sPt+XP
+         odgX3/R6MokHBQI+QGkL6NlsJ+HLt54mTg2yd0bynSKfxjYtkU5CTh+JXzX0jwDd0TJF
+         LlwaDcT7/UF1b0W5rV24Oiij8Dq9rwVJrG+qIbD0xiNOToa3Ka1v5jwffUrPRxU1/4Ln
+         fTras+VcCQfW2FSlViDGzJIKE79FF9HjCSoYx6vtI+fKn1PHIihGrftruuw4VPLcTI7I
+         P7Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=t8aZeckWp1rlKkzCvNmniAClQ2coG42tzhovGEUasAM=;
-        b=ZYQvGW1afKZiwB5DVLmI7T6DdmILjC3gT43IxRMSNbKyex2505Gz0UaV8SM3OStycU
-         NjfwoS9nockm45CXKTtjKmMvx4J4cKxL11wKLzsA0y8ZLYDurPPLdLEs07XiTHDeAZST
-         e2TrCXDAMdxmTfRmDW2x31Br7bysSuvFD/B1O3t0Op1VFeU6qxvh/g35Gmuo8K8plqlf
-         /gh7pzmfxrUVOcw+4PjTGkk7TvIe7YEDTF1DLRY8FaGYnb5Kl1inih48av+wEKuQfsyl
-         UZUBDyb5ohbxwFgVZ3fKVKUfFikoW7Wc4GZ3ijvYwwsdLQj3aTOAZIACfk/iouzfiUi2
-         dkHQ==
-X-Gm-Message-State: APjAAAU97eBSS4g7pdThq1Sz7oRxmfQ3HtdyQy2+V15yiU2o6/JqXthA
-        JKf1CfYQYCc4ZNmnG6Nd9zY=
-X-Google-Smtp-Source: APXvYqxSvBArDWACd12sQx6/kazBl9riuHMZRizCjgp1vdYqrBPn45Sq95JhsuSzjOlrFKxKB1Yqng==
-X-Received: by 2002:aed:2284:: with SMTP id p4mr12769230qtc.329.1579731923947;
-        Wed, 22 Jan 2020 14:25:23 -0800 (PST)
-Received: from [100.81.200.96] ([204.48.76.96])
-        by smtp.gmail.com with ESMTPSA id i19sm19096536qki.124.2020.01.22.14.25.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Jan 2020 14:25:23 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2 0/4] checkout/reset/read-tree: fix --recurse-submodules in linked worktree
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: iPhone Mail (16B92)
-In-Reply-To: <xmqqwo9j5ei3.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 22 Jan 2020 17:25:21 -0500
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <69FFF66E-9273-488F-A747-2B4EBBDD7A7B@gmail.com>
-References: <pull.523.git.1579263809.gitgitgadget@gmail.com> <pull.523.v2.git.1579618877.gitgitgadget@gmail.com> <xmqqwo9j5ei3.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iah2gdLJ2C0gYUcjOMa6Rq4QvKyG3YLE+C+y+lEtTXg=;
+        b=Z2anlXwcdCr/EjkN0GjmxmjsT0QEZsUoWSzKA/5xv/U7BH7uaPKP/wXDuMBjjjpp4D
+         PBguZBPRDg62pmS8zkd77/5qBNBd95i+SHzb07rm+RcMcBWkjzDv/8NbEhzZ+c41GIDe
+         kJrupmvAfmZjC/Px2J44O//v1OynkWeMoOgnh5FJCYrGwtosrXUMXDsO/zsn0LI3gnaF
+         BNGS44sdjNMt6xfO9lpApcYHAQ1A9LGc6W/OYIZQ/tbFnMHpEWv5xH4WsRecen+6tLnP
+         tCQyGl861gIfZ5cCNmcYE4rQgXFid6FH1Tcq8hKL+z5VbxFy3yRcIcSCwNoqhFBw4X6v
+         eJ2Q==
+X-Gm-Message-State: APjAAAXhLdbv9kKVlmefHXDTheAHF60sCz7mt0OTu2EFqIVf9D6citSZ
+        XWWuqo9ZIVYB7hzak7NBUKbksNKAUB6BedafWPREUFCf
+X-Google-Smtp-Source: APXvYqz2Zz3BpQ6wPABpqpU6+kBKyRwugLJrOLdgV/UsocTH2VTd/I/zFy8P/8WSq5GC3qxKAzrppBa9TvZiTGQfNsQ=
+X-Received: by 2002:a9d:7d81:: with SMTP id j1mr9246529otn.267.1579732686268;
+ Wed, 22 Jan 2020 14:38:06 -0800 (PST)
+MIME-Version: 1.0
+References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 22 Jan 2020 14:37:55 -0800
+Message-ID: <CABPp-BHMwkP5r2tmVfmrjVM904EnhEAQ8hqCbxQ7QEg+vyRNZQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
 To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,=20
+On Wed, Jan 22, 2020 at 2:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+> --------------------------------------------------
+> [New Topics]
+>
+> * en/simplify-check-updates-in-unpack-trees (2020-01-07) 1 commit
+>   (merged to 'next' on 2020-01-15 at 586c055b69)
+>  + unpack-trees: exit check_updates() early if updates are not wanted
+>
+>  Originally merged to 'next' on 2020-01-09
+>
+>  Code simplification.
+>
+>  Will merge to 'master'.
 
-> Le 22 janv. 2020 =C3=A0 17:10, Junio C Hamano <gitster@pobox.com> a =C3=A9=
-crit :
->=20
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This is v2 of the series; and it looks good.  But...
 
->> Cc:Max Kirillov max@max630.net [max@max630.net] Brandon Williams=20
->> bwilliams.eng@gmail.com [bwilliams.eng@gmail.com] Jonathan Tan=20
->> jonathantanmy@google.com [jonathantanmy@google.com] Stefan Beller=20
->> stefanbeller@gmail.com [stefanbeller@gmail.com] Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy=20
->> pclouds@gmail.com [pclouds@gmail.com] Eric Sunshine sunshine@sunshineco.c=
-om
->> [sunshine@sunshineco.com] Derrick Stolee stolee@gmail.com [stolee@gmail.c=
-om]
->=20
-> This is somewhat unreadable wall of names X-< Is it a funny
-> rendering of what is originally in some mark-up format (perhaps
-> HTML???)
+> * en/unpack-trees-check-updates-simplify (2020-01-04) 1 commit
+>  - unpack-trees: exit check_updates() early if updates are not wanted
+>
+>  Code simplification.
+>
+>  Will merge to 'next'.
 
-Yes, Gitgitgadget unfortunately failed to convert this wall of text into a p=
-roper CC: list because there was no space between the "Cc:" and "Max".=20
-I=E2=80=99ll try to submit a PR for that in GGG.=20
-
-Cheers,
-Philippe.=20=
+...this is v1 of the same submission.  We don't need both v1 and v2 of
+the same patch to be merged (the only difference between the two is
+that v2 has a more detailed commit message); luckily, the one you
+already merged to next is v2.  Can you just drop the
+en/unpack-trees-check-updates-simplify topic?
