@@ -2,90 +2,88 @@ Return-Path: <SRS0=mjbR=3L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6967BC2D0DB
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 20:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BE2CC32771
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 20:42:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3B7922465A
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 20:24:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF61424655
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 20:42:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mOdGBNIr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bM4g7nXL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgAVUYO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jan 2020 15:24:14 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:58200 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725827AbgAVUYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jan 2020 15:24:13 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CBA4FAC5BE;
-        Wed, 22 Jan 2020 15:24:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=/mfQc/FFiltNDPYqrjkdtHF2Kb8=; b=mOdGBN
-        IrgNn4agMozRCVOdg9lhj40m1WYdm4roZx6FLLZjeZBLMaqLWCZkTLMSIsc/5QBl
-        Spe/nvrofqIC9BUuRqR47Gf+BIEKyEy3xi8Bw3t2CBJfZGYWrpw5qxNRffgkXy7z
-        vChgo4WU46YcwaQ3do1bAGen4BcsyU3E42GUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vWNBTq3b+LyEA0YyYaAprEiJ26BcBJVS
-        O/wLhyjcRh4IYlCd+7WFsqknV7pnmz7sNA6k/wyxyrjjg1Qz8BZ/lJs1wwoOi6up
-        UL91jrl3SvgEVASI2f3LGNTyvLk/2aAxkjV3A56q/PEATcvItncxkp7hFAbdT3y8
-        Mgs5Bul8rTE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C36ABAC5BD;
-        Wed, 22 Jan 2020 15:24:11 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E6EF2AC5BC;
-        Wed, 22 Jan 2020 15:24:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= 
-        <avarab@gmail.com>, Eugeniu Rosca <erosca@de.adit-jv.com>,
-        Jeff King <peff@peff.net>,
-        Eugeniu Rosca <roscaeugeniu@gmail.com>
-Subject: Re: [PATCH v1] rebase -i: stop checking out the tip of the branch to rebase
-References: <20200109150332.GF32750@szeder.dev>
-        <20200121191857.23047-1-alban.gruin@gmail.com>
-Date:   Wed, 22 Jan 2020 12:24:06 -0800
-In-Reply-To: <20200121191857.23047-1-alban.gruin@gmail.com> (Alban Gruin's
-        message of "Tue, 21 Jan 2020 20:18:57 +0100")
-Message-ID: <xmqqa76f6xzt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729092AbgAVUm2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jan 2020 15:42:28 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:39479 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725946AbgAVUm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jan 2020 15:42:28 -0500
+Received: by mail-pj1-f68.google.com with SMTP id e11so91167pjt.4
+        for <git@vger.kernel.org>; Wed, 22 Jan 2020 12:42:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MLVSpCoTlQ1F1JIt9yM5fshYNSdJrN5U+GeYHsSjPz8=;
+        b=bM4g7nXL1r1krgNrzF0l0dcneKT3N3uY5BIEKlviJ43XZdBbNHzIBTvXlRh+c/u2x/
+         X6vgfDD3AgafUbF5zgHexvNAP4ZekGv8v5RFsL4OfyYk0LqlHbFQFo3kvMBY4acKs2EV
+         chHA20v2AAO8Fm61f9hpuFjKUdLgwbV9mJIOZoHNEiGGkMxOIBlO3V11VikDyEIp49XY
+         kW9QrVZtIrnOwKtf7jkj+eMYPOOmZauxWU4/v0p8bPNKCP2qlUQ00j2gygF3IGKtMCg8
+         jKOgTZbJBPVINWXo21lqyQ8mZfwy1HblcqZEXKRtceztZmjj8mhfPot5biAhJ5lKzWL2
+         jjVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MLVSpCoTlQ1F1JIt9yM5fshYNSdJrN5U+GeYHsSjPz8=;
+        b=c+czy/hoaGlPOTcsJKTq7fGORxIyMNEhPV2kbM5wYZPUahy8wMLDjfpXy+dQ5s8YiC
+         a/BkgEwJosBnTgzehikTFXiaWD/6sANMcx3V0k1xXptjGBApkOqwTnyf1jCh2PTYHn3w
+         XddRB+mBlWZyvBI3+qp/PBxKwIuGLcn2kN/ber4Zv0WnIWnCDdGfpJbnZQw9dcOTeOM5
+         5YvzwIDWSTavvoO2aNfGmIzbx14seVic8dX3ZxmHxvOCDvmowGPHdvSkwGR/vbi1tfNr
+         MmnoJZMviy0erBRwA6XgdOUof3lS0rpmrxBGnZfczu6Z19cAm5xnVD4zk49qhxuIcknH
+         MnYg==
+X-Gm-Message-State: APjAAAXlbMS32mCC8jlm4vrp2PRHvUL3WtuOFFk7s2Zs51vSto3EdK6p
+        Wn0rKSJvLbIUyXybHZqVeTMLMDE9QSAqmg==
+X-Google-Smtp-Source: APXvYqyWn+C2yw7GeNdP5qZ0hdukjRqfvrSFd8J5x2PWi34WJMp3m7WaPl1vK4RiPH408dZzEJrhWQ==
+X-Received: by 2002:a17:90a:191a:: with SMTP id 26mr310994pjg.111.1579725747391;
+        Wed, 22 Jan 2020 12:42:27 -0800 (PST)
+Received: from konoha.iitr.ac.in ([103.37.201.170])
+        by smtp.gmail.com with ESMTPSA id y76sm49583508pfc.87.2020.01.22.12.42.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2020 12:42:26 -0800 (PST)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     git@vger.kernel.org
+Cc:     johannes.schindelin@gmx.de, gitster@pobox.com,
+        sunshine@sunshineco.com,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: [GSoC] Introduction
+Date:   Thu, 23 Jan 2020 02:12:12 +0530
+Message-Id: <20200122204212.13004-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 24F2A024-3D55-11EA-8CBC-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+Greetings everyone!
 
-> This introduces a visible change: as we do not switch on the tip of the
-> branch to rebase, no reflog entry is created at the beginning of the
-> rebase for it.
+I am Shourya Shukla, a Computer Science And Engineering student from IIT Roorkee.
+I am very keen on contributing to Git via Google Summer of Code 2020 (GSoC 2020).
 
-Fortunately, this does not mean "git log @{-1}.." during a rebase
-starts to behave differently.  If it were the case, that would have
-been a bad regression, but that is not the case.
+I have worked on a microproject(I saw it here[1] and thought I'd give it a shot)
+and submitted a patch regarding the same[2], which has been accpeted by Junio C Hamano[3][4]
+and will be queued shortly. I have become familiar with mailing lists as well now so it isn't
+an issue. I want to know in which direction should I proceed now.
 
-If you omit one reflog entry, you are creating TWO changes.  The
-detaching of the HEAD to the "onto" commit would record, just like
-any other reflog entry, would record from which commit we detached
-HEAD from.  That reflog entry will also be different, as you'd be
-switching from a different commit.  
+Thanks,
+Shourya Shukla
 
-I am not sure what the implication of this difference will be in
-practice, though, but it must be smaller than the effect of the
-missing reflog entry discussed earlier.
+[1]: https://git.github.io/SoC-2019-Microprojects/
+[2]: https://lore.kernel.org/git/20200116203622.4694-1-shouryashukla.oo@gmail.com/
+[3]: https://lore.kernel.org/git/xmqqy2u08obx.fsf@gitster-ct.c.googlers.com/
+[4]: https://lore.kernel.org/git/xmqqtv4o8ob0.fsf@gitster-ct.c.googlers.com/
