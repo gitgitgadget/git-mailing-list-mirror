@@ -2,84 +2,120 @@ Return-Path: <SRS0=mjbR=3L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	PDS_TONAME_EQ_TOLOCAL_SHORT,SPF_HELO_NONE,SPF_PASS autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3618C33CAF
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 16:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B98FEC2D0DB
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 18:15:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9FD262465B
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 16:02:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 76C422465A
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 18:15:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fi8IR4FI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BkWhsYUF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbgAVQCp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jan 2020 11:02:45 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34896 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725884AbgAVQCp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jan 2020 11:02:45 -0500
-Received: by mail-ed1-f67.google.com with SMTP id f8so93823edv.2
-        for <git@vger.kernel.org>; Wed, 22 Jan 2020 08:02:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=BcbfzCAE1RUoqeu7s8RgMQofRpngubcHUG2nebbfb9k=;
-        b=Fi8IR4FIXpTQ7v+k1Vr4Y4S/b2qG0BvMQ+pb4LBv4F+jSVDpXdqRnut61tdZkJrFAJ
-         l999rLY1Z7RBcWEXOpAg8xjcm8De2cnqHuJOJR6S9Jihy1yKuqkHbCskhtcMj6AxJYLx
-         CQa4V5chu30ZkAAi1Ai3F3zdxcWs+lVff1aLse8DGMWmq07bem8lldNQ5JUx+Q5BZfaw
-         XcQaO2gJaS+B4BRC8rdKz6VB9Th6aCmpnVFXRziFl87yCI6RP4YHv0NKta2aiuujinJC
-         bLACTxeV+nBbC+LVy4xOKLqXlFTpOQKD68miqlaKQtBahxJ0zcMHQtW1LgLTTan/gP5D
-         2QtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=BcbfzCAE1RUoqeu7s8RgMQofRpngubcHUG2nebbfb9k=;
-        b=Q8OutnbaPiN76ATMRZympKezfe2nay6zxldVoTUPxezmqJwOIEcjsbjMOHnndC3Rwb
-         6BaKn5K8mUuql3moEVktiTRoVozaI+hhaueu6sa792UPohfe97Ba14D3xSCNZ7QeoW+L
-         ACaFG127NsCbiGAH2SFnP9q61MUkD5vgxXKXz9pkLsNjx/ZubDCoYYZRTENQfHHc334D
-         U01fP/cq5Zz6xZZWzNE5Nf1i7wJPCTJtZgxPvUuUjVWA8EbxFH9GZVMBOe6MtmIYVaoD
-         /f/5R1mYcbwsjPaJnxTFd9hzEbeOT/YxN4eBiI+cvrp40vssFH/G5H06k08lpNnJ79Ts
-         WD0w==
-X-Gm-Message-State: APjAAAVZIfjAxtQE3kGTBLjbqNNn81bPDJSJ9p+fHHRTu9USloEtQgDL
-        vm0OZPrZFQHuQV6ABU8GL8aubmcweelOk9j1VGaDEt+p58I=
-X-Google-Smtp-Source: APXvYqzIzPInz5kIwFjRbN8tLS8bCkUrVsWTme+n1eFyusW5L2LAwi7mSiJaRND+b7QfBJD3hxf79YrXVoxC8eq4pec=
-X-Received: by 2002:aa7:c890:: with SMTP id p16mr3170293eds.127.1579708963042;
- Wed, 22 Jan 2020 08:02:43 -0800 (PST)
+        id S1728665AbgAVSP0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jan 2020 13:15:26 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52539 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725802AbgAVSP0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jan 2020 13:15:26 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B6C963971A;
+        Wed, 22 Jan 2020 13:15:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=5dZ1df3+r4GBSXYSMLiK61Mhr0c=; b=BkWhsY
+        UFCOFAepNKVqoZkAnY70C5flH9s/nrGRZr+rk5cdRaOcA2wpAvKf/fOD8zN9Jq5x
+        3y7Z2m1nXGp89pqrkhtpZ1rgzMo9zi3L7OXiXZnUz71olz4OxWWQXy8nQt2IhRyj
+        FRCj6VyP5TSnt0b8VA8ZV6QwZk7D/N9SDSebQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TZNHKCrVTm9vkjP2TGSr/17VjN6bb8Rj
+        vYKe3bRgBsU5KGW3BgygVqdSGAL17n/bAx06AlOB9F8Y6pbu/BpN2UGp/2qUqIhX
+        fMN1dMf6kSHxjjpjzvpxSvHxDcCLg7Bk+aVMY/sNITxjvme9eqzfeBahIAzdMWJ9
+        1S/+KyQadV0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id AA23A39719;
+        Wed, 22 Jan 2020 13:15:20 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 037DE39718;
+        Wed, 22 Jan 2020 13:15:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [PATCH v2 2/3] rebase -i: re-fix short SHA-1 collision
+References: <pull.529.git.1579209506.gitgitgadget@gmail.com>
+        <pull.529.v2.git.1579304283.gitgitgadget@gmail.com>
+        <102fa568dc09c1faa2d36903ccb7e1b285dd50b2.1579304283.git.gitgitgadget@gmail.com>
+        <CAPig+cT8t39UvnF2i6CDoHW4kfEGr-CRFxZKOCstCTU0YzrCgQ@mail.gmail.com>
+        <nycvar.QRO.7.76.6.2001202103221.46@tvgsbejvaqbjf.bet>
+        <CAPig+cR2T26nJ1G5n82r_Xi8Y84k211n6bhBxG4Ku27vaW1pWA@mail.gmail.com>
+        <xmqqpnfc8o39.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.2001221508180.46@tvgsbejvaqbjf.bet>
+Date:   Wed, 22 Jan 2020 10:15:18 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.2001221508180.46@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 22 Jan 2020 15:10:15 +0100 (CET)")
+Message-ID: <xmqqr1zr73yh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 22 Jan 2020 17:02:31 +0100
-Message-ID: <CAP8UFD2=cPthUAgxFhtuZArfuAU4H63kFD7xfGtPMxDAq9au8Q@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 59
-To:     git <git@vger.kernel.org>
-Cc:     lwn@lwn.net, Junio C Hamano <gitster@pobox.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Markus Jansen <mja@jansen-preisler.de>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "Patrick Marlier (pamarlie)" <pamarlie@cisco.com>,
-        Mike Hommey <mh@glandium.org>, Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 2625E346-3D43-11EA-965C-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-The 59th edition of Git Rev News is now published:
+>> True.  Doesn't rev-parse have an appropriate option for this kind of
+>> thing that gets rid of the need for "cut" in the first place?
+>
+> You mean `git rev-parse --short=4`? That does something _sligthly_
+> different: it tries to shorten the OID to 4 characters _unless that would
+> be ambiguous_. In our case, it _will_ be ambiguous. That's why I use
+> `cut`.
 
-  https://git.github.io/rev_news/2020/01/22/edition-59/
+Ah, yes of course; we want ambiguous prefix.  I think a more
+thorough test would be to see that the output with --short=$n (where
+n is the length of the abbreviated object name in $colliding_sha1)
+is longer than $colliding_sha1 and the output prefix-matches
+$colliding_sha1 iow, something like
 
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
+	abbreviated=$(git rev-parse --short=7 HEAD) &&
+	case "$abbreviated" in
+	"$colliding_sha1"?*) : happy ;;
+	*) false ;;
+	esac &&
+	...
 
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-https://github.com/git/git.github.io/issues/410
+which would make sure that we are testing colliding case.
+
+
+> As to the crash in `rev-parse` _after_ printing out the OID: yes, there is
+> a possibility for that. But that regression test is not about `rev-parse`,
+> so it is actually a good thing that it would not trigger on such a bug ;-)
+
+No, I do not think this test should be about rev-parse working
+correctly---just that if it is easy enough to make the test robust
+enough against such a breakage, it would be nice to do so, that's
+all.
+
+I'm not Eric but I suspect his primary point was not about worrying
+about rev-parse crashing but more about avoiding to add a pattern
+less experienced developers can copy&paste without thinking enough
+to realize why it would be OK here and not OK in the context of the
+tests they are adding.  That would be what I would worry about more
+than rev-parse crashing in the part of the test under discussion.
+
+Thanks.
+
