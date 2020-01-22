@@ -2,177 +2,112 @@ Return-Path: <SRS0=mjbR=3L=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA4A7C32771
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 07:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBEA5C2D0DB
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 10:59:57 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A77D72465B
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 07:37:35 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1C142467B
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 10:59:57 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="GKLxSwvQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I6QM9OMZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbgAVHhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jan 2020 02:37:34 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:43937 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbgAVHhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jan 2020 02:37:34 -0500
-Received: by mail-vs1-f65.google.com with SMTP id s16so3582685vsc.10
-        for <git@vger.kernel.org>; Tue, 21 Jan 2020 23:37:33 -0800 (PST)
+        id S1729351AbgAVK74 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 22 Jan 2020 05:59:56 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:37316 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726191AbgAVK7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Jan 2020 05:59:55 -0500
+Received: by mail-wm1-f51.google.com with SMTP id f129so6687821wmf.2
+        for <git@vger.kernel.org>; Wed, 22 Jan 2020 02:59:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tx5rB17/kQOsdtHNKHdirO2koe5Otpg+M5HC2Pll3l8=;
-        b=GKLxSwvQutbJEGJsEsGIXVwPXC0BuQ9jy3Fzxph/RIpjB5ZZeH3q0cZHbB6gttWdkA
-         t9gBJaJPhMmuHId8sfXdOlBLawQhEBNrxVOlPQyBuQoU6W6eSkGdBrz2BrDZJZHuFp9l
-         jRYehMnbrE/EvlCFzBabujLUxYHpK59f6LXOcZBUnR0x10Z/94XBV8SV4BKJMOKLhvxr
-         SEdf544iiveDJehAtdBOfeh6vOYHXy7OtD4jYa7bPgwbAuiTEltdhGbpiXD4CmZL6cXT
-         EK4ktrxTsvH1/jIz/GipaUjZoHRWUU8P2+8nglbIgZXjWTEdpyB2yixDX+1t0XQn/n9P
-         Vq5A==
+         :cc:content-transfer-encoding;
+        bh=5K3QB4W6qv3Gwg1gkcD0Mi+nH+jokKX6j7YrjhE3YE4=;
+        b=I6QM9OMZcHY2qpxtUfnwtQEpbbwAjOQlPwJhBtaGtIDkl6yWZiiPEym06ffH1fZz54
+         HC4nawm3F0xv4fB3a63P6OddpaseUtzmAaLnl0HtppHDoMq+DRNYwO2wVN+wZQc/7gVL
+         wgHis1ZVNnZRdN9QlbvV6CLp6tg/Ypxii3RdjonAf7vqwW0x+EUbuIGFyMZ/Qh81ir6V
+         XWqbhvd+Zo4jrpd8o76uc+iSUveh2kuTCjcCbki0fcbP4kTwZa+L7xsDKaIr0ritdLdu
+         mheRvl84CgJWqI3Bl3OPfJznOT6r+6NRQy/vCBonkPv+1XY8yB6T6KgwaaukKu4+9D/Y
+         I/fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tx5rB17/kQOsdtHNKHdirO2koe5Otpg+M5HC2Pll3l8=;
-        b=L3aVJaV2YyeumvhW1qDYPNDr6v3SeFQ6xxsv2kt3SFw1X+JsSXvInZ16kwSjYBCEH8
-         jqZzmB2qnSdVtKL32asc6irtUDYQV/AuNd1aY7L01Q3z4FkwLtYOZsV4c+6NwKK3GoSt
-         GOpV6aYemPQM2UnqV8xg0DDcVyqB7hf5774yAP7wEUL9YewglUKBOBWMfNtMnzTh3ck7
-         M8R76RH9T79cfr3MxBVoDb2Sb8Bs0XyauV7S8otU8HuuKEBD7Mah8JzZrIXVAIZPW1D9
-         IIrQ8d8hs1txc9p49PXJYyNLybm/bl1v3Ru73HaQB1arBT34vgB6oHnUWhNuz3mFb5OZ
-         08XA==
-X-Gm-Message-State: APjAAAVtp4/JWrExcMHTQDyeqxsa/WTA1UjsusEA1E5LN4CEAkfDJx4q
-        DqUJcDf653fUfBsEuVSPknEOdxsQkTxGduf7+sU=
-X-Google-Smtp-Source: APXvYqwUvEtdW5xrOdI0Eghgsv83D3uL4blvToxUYhV88eGTVWrf/QdWqzFRWHsUgnJDNiLgrigcRZSrtm785MJZ0U8=
-X-Received: by 2002:a67:ec41:: with SMTP id z1mr1779412vso.197.1579678653280;
- Tue, 21 Jan 2020 23:37:33 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=5K3QB4W6qv3Gwg1gkcD0Mi+nH+jokKX6j7YrjhE3YE4=;
+        b=omkOdIpycPb1ShHmdoGdtiK3dnEkSe3nc1RNzimHtUTyDe0173FSh79FKy7Ik4xbh2
+         hHqMJDBJTVNsnL9pTBcTURv3tbRaS5o1hGS+IgHxYZ2p3Yn3+lImQJDZLLlh7zUHA45H
+         mILYkDuabDuiVhAdDl8ary+1dsWmm8WUyhs4gF8oqYCX+NOJdi+6+rQg7RT0qgPdJA85
+         2pXcoZjaU+1GHnNjXcl4SNvgBuz/YtvNAo9HyHSl1hBNKpMvcwwR4G4Bp8/38UW8n3Jv
+         OibzAro1NwlkE27V71YWNYHL4lFjiSvrDcSzp07owTvLNsvFYU2JA2nxXQzC80X/ZcfV
+         M3fg==
+X-Gm-Message-State: APjAAAWhoZZRcMOnqbU9Ku+yOVSpJU9c706c0tXcUR2WhxmYJuyqCAkr
+        MDGqBYkYj+GmyRrdm+YovNDxGyTbzAe2ndaZkx3bpg==
+X-Google-Smtp-Source: APXvYqz/ORSpabtR7+KlkKjCkKbqz0ygygwxAegQy3yD5ktEGoZM4OYt2AG5vO1Qz0F7PeODKP4hCNqPpEqgz3rUwdo=
+X-Received: by 2002:a05:600c:145:: with SMTP id w5mr2258753wmm.157.1579690792765;
+ Wed, 22 Jan 2020 02:59:52 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1579598053.git.bert.wesarg@googlemail.com>
- <04eb98389880c96e1dc18131031e9d6ad5830a40.1579598053.git.bert.wesarg@googlemail.com>
- <CAOjrSZsuPUc7kDPh6wTDMq10b2QM0R2Uq7-0TQ=W76yjk-eoJA@mail.gmail.com>
-In-Reply-To: <CAOjrSZsuPUc7kDPh6wTDMq10b2QM0R2Uq7-0TQ=W76yjk-eoJA@mail.gmail.com>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Wed, 22 Jan 2020 08:37:21 +0100
-Message-ID: <CAKPyHN0=jBc1PYC2jSp0SV7EuMwmRb_RRifmK66KTqVtP5oFRQ@mail.gmail.com>
-Subject: Re: [PATCH 5/7] [RFC] config: make `scope_name` global as `config_scope_name`
-To:     Matt Rogers <mattr94@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAFQ2z_OhNHauK_W1wL7WcOJnm2vCUGXLfYn_ZmLnt2rez+_TDw@mail.gmail.com>
+ <xmqq4kx4z8n3.fsf@gitster-ct.c.googlers.com> <CAFQ2z_PxumPGpgnTERcu3S+zdTj9PcVMKK9SjYxSDe3qW9q3jA@mail.gmail.com>
+ <xmqqwo9kacac.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwo9kacac.fsf@gitster-ct.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 22 Jan 2020 11:59:40 +0100
+Message-ID: <CAFQ2z_OYF8ogmX-LMxL8LmbfK2C0bXUzGanSmStid9Rr4sf0nQ@mail.gmail.com>
+Subject: Re: reftable progress
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Christian Couder <christian.couder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 1:12 AM Matt Rogers <mattr94@gmail.com> wrote:
+On Tue, Jan 21, 2020 at 7:34 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > I asked around, and it looks like we have slight preference for the
+> > BSD license (https://developers.google.com/open-source/licenses/bsd).
+> > According to the FSF, this is OK to combine with GPL software, so
+> > would you be OK with that license?
 >
-> Logos good to me...
->
-> As I'm a bit new, what would be the best way for me to work this into
-> my workflow?
+> Sure, I think we are happy with adopting BSD code (and it would keep
+> it more avaiable for other reimplementation of Git, which is good).
 
-if you have done that change already locally, then you can ignore my
-patch. I will wait for your re-roll and put my changes on top of
-yours. If not, you could replace your patch with this one in your
-series. Your call.
+Yep. I'll go ahead with the license change then. Thanks!
 
-Bert
 
+> > The API is a little surprising here, because it means that an iterator
+> > should always dereference a symref, regardless of storage format.
 >
-> On Tue, Jan 21, 2020 at 4:25 AM Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> >
-> > Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> > ---
-> > Will be replaced by Matthew Rogers.
-> >
-> > Cc: Matthew Rogers <mattr94@gmail.com>
-> > ---
-> >  config.c               | 16 ++++++++++++++++
-> >  config.h               |  1 +
-> >  t/helper/test-config.c | 17 +----------------
-> >  3 files changed, 18 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/config.c b/config.c
-> > index d75f88ca0c..4c461bb7a3 100644
-> > --- a/config.c
-> > +++ b/config.c
-> > @@ -3317,6 +3317,22 @@ enum config_scope current_config_scope(void)
-> >                 return current_parsing_scope;
-> >  }
-> >
-> > +const char *config_scope_name(enum config_scope scope)
-> > +{
-> > +       switch (scope) {
-> > +       case CONFIG_SCOPE_SYSTEM:
-> > +               return "system";
-> > +       case CONFIG_SCOPE_GLOBAL:
-> > +               return "global";
-> > +       case CONFIG_SCOPE_REPO:
-> > +               return "repo";
-> > +       case CONFIG_SCOPE_CMDLINE:
-> > +               return "cmdline";
-> > +       default:
-> > +               return "unknown";
-> > +       }
-> > +}
-> > +
-> >  int lookup_config(const char **mapping, int nr_mapping, const char *var)
-> >  {
-> >         int i;
-> > diff --git a/config.h b/config.h
-> > index 91fd4c5e96..c063f33ff6 100644
-> > --- a/config.h
-> > +++ b/config.h
-> > @@ -301,6 +301,7 @@ enum config_scope {
-> >         CONFIG_SCOPE_REPO,
-> >         CONFIG_SCOPE_CMDLINE,
-> >  };
-> > +const char *config_scope_name(enum config_scope scope);
-> >
-> >  enum config_scope current_config_scope(void);
-> >  const char *current_config_origin_type(void);
-> > diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-> > index 214003d5b2..1e3bc7c8f4 100644
-> > --- a/t/helper/test-config.c
-> > +++ b/t/helper/test-config.c
-> > @@ -37,21 +37,6 @@
-> >   *
-> >   */
-> >
-> > -static const char *scope_name(enum config_scope scope)
-> > -{
-> > -       switch (scope) {
-> > -       case CONFIG_SCOPE_SYSTEM:
-> > -               return "system";
-> > -       case CONFIG_SCOPE_GLOBAL:
-> > -               return "global";
-> > -       case CONFIG_SCOPE_REPO:
-> > -               return "repo";
-> > -       case CONFIG_SCOPE_CMDLINE:
-> > -               return "cmdline";
-> > -       default:
-> > -               return "unknown";
-> > -       }
-> > -}
-> >  static int iterate_cb(const char *var, const char *value, void *data)
-> >  {
-> >         static int nr;
-> > @@ -63,7 +48,7 @@ static int iterate_cb(const char *var, const char *value, void *data)
-> >         printf("value=%s\n", value ? value : "(null)");
-> >         printf("origin=%s\n", current_config_origin_type());
-> >         printf("name=%s\n", current_config_name());
-> > -       printf("scope=%s\n", scope_name(current_config_scope()));
-> > +       printf("scope=%s\n", config_scope_name(current_config_scope()));
-> >
-> >         return 0;
-> >  }
-> > --
-> > 2.24.1.497.g9abd7b20b4.dirty
-> >
->
->
-> --
-> Matthew Rogers
+> I do not think forcing the callers to dereference is clearly better
+> (if so, we may want to consider changing the API to do so, but I do
+> not see such a strong reason).  Only when the vast majority of
+> callers would want just the name of the underlying ref without
+> learning the actual object value, such an optimization may make
+> sense, but it would make the callers more difficult to write
+> correctly (iow, somebody will forget to teach "this is a symref, so
+> we need to ignore the incoming oid parameter and call read_ref()
+> ourselves to learn the name of the object" to their each_ref_fn
+> callback functions, no?
+
+There is an intermediate layer that wraps the refs/*-backend.c
+functions where this could be done.
+
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
