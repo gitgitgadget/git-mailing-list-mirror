@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E875DC33CA1
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE373C32771
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:46:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B4FB321835
-	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:45:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B1DDE21835
+	for <git@archiver.kernel.org>; Wed, 22 Jan 2020 03:46:14 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kvUSxgmK"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sczA7ztZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729047AbgAVDpy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 21 Jan 2020 22:45:54 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:44110 "EHLO
+        id S1729083AbgAVDp4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 21 Jan 2020 22:45:56 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44126 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728900AbgAVDpy (ORCPT
+        by vger.kernel.org with ESMTP id S1729037AbgAVDpy (ORCPT
         <rfc822;git@vger.kernel.org>); Tue, 21 Jan 2020 22:45:54 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0C233607F3;
-        Wed, 22 Jan 2020 03:45:51 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4DDF8607F8;
+        Wed, 22 Jan 2020 03:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579664752;
-        bh=Mmicb52D3XrW2MgqxmXqyRWBqpdNwsHGiZhvlyuWc54=;
+        s=default; t=1579664753;
+        bh=eghyYuILrkW2+kz0lbRiNwAfBKOZMI1QTkdiFSdZh5g=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=kvUSxgmKc4KVriGNvZXdq8Ugz6vyUwW9XXWP+6FnRw8A4KOzL0qGvADP9T7ZG4AUH
-         +FKsQh9/I0LB+B1K0YP626JDUJbQphvCR1ZuZXZePLSJtowTQMouVzycVRZ88UIgT/
-         k5nbeU07EhiDpd/xlHOHnmsFc35hqSp1e+RyNazuk3pKZkcuSb1UsljmrSS1iBwArq
-         zwHWjlYpIcPqaIhTS68eQcz93B/DxKZAKL2HYabMPvPZHjbruMFZR7vhA+90f3Zx1R
-         1qQnXVerba8uX/u4ZsY4U7dAdH7sKJnQGbsyJEN1AJDSGoDYuiDLuyR8VqUPoW91Vb
-         WJHac6hIBeyViYU+kkksuV/vbxAaUTUsmmrRN0EcUOkmcZ6FoenMp4zlQxMSkJdHyz
-         i4+Paf816FX+3ZCqcyDChamsBgPTekYPP2vRJA7wbsVND4SItnvS3sSp9ITNaHpLib
-         +YR0I969xY2bOyWibRYoMFgh4MGYEi+sn8K5NDtY4ii6EY4yuvo
+        b=sczA7ztZ6qmLHClwuSotaolXQn1Ig0cVHreBnGnJOpHbUcxRNtj2fMMWV7Z7GOyOX
+         cvgLnuwgUFlat9QC75IaoMsAV91dhEgL7oHt1ZWaTrvpjeWEMsPr39LZjxR/owk3+U
+         DXRtymsculGlyq5gk3RxhaTTvzCeP0DcwKPQokQegCS7d7KDuW6+kIlAkNtb+6RgFg
+         2ap7gbbEdvmqN0T7DKsBJP/VBRtWnp4WS3rXMHMLzAeT5UTqaCbB+D5fUWXlRZxQw5
+         L2JG/yjgDW4npV5B+DreGwmWl3BEhVhyhcrisSA9M+HdIdEARi0Z9egZttskLGd/+M
+         V1ByDxSkFlLRD8teAxf5YEI5/Noc0sboeuPU/nuEZf3MUWm8C3HMVv/wt8nE8yMYtv
+         EH9MmaFQA3ITrrmYLqUlLS53pA4WLHIV4s6EStDDTMrOJgH/b112axCOx9Zl0ESrfu
+         oGoK+c8tjnMX+QHOEbu5GLlwVdci7IKp3OqrYGscT/RjZX+6LmG
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 1/5] doc: move author and committer information to git-commit(1)
-Date:   Wed, 22 Jan 2020 03:45:39 +0000
-Message-Id: <20200122034543.18927-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 3/5] doc: provide guidance on user.name format
+Date:   Wed, 22 Jan 2020 03:45:41 +0000
+Message-Id: <20200122034543.18927-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309
 In-Reply-To: <20200122034543.18927-1-sandals@crustytoothpaste.net>
 References: <20200122034543.18927-1-sandals@crustytoothpaste.net>
@@ -56,177 +56,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at one time it made perfect sense to store information about
-configuring author and committer information in the documentation for
-git commit-tree, in modern Git that operation is seldom used.  Most
-users will use git commit and expect to find comprehensive documentation
-about its use in the manual page for that command.
+It's a frequent misconception that the user.name variable controls
+authentication in some way, and as a result, beginning users frequently
+attempt to change it when they're having authentication troubles.
+Document that the convention is that this variable represents some form
+of a human's personal name, although that is not required.  In addition,
+address concerns about whether Unicode is supported.
 
-Considering that there is significant confusion about how one is to use
-the user.name and user.email variables, let's put as much documentation
-as possible into an obvious place where users will be more likely to
-find it.
+Use the term "personal name" as this is likely to draw the intended
+contrast, be applicable across cultures which may have different naming
+conventions, and be easily understandable to people who do not speak
+English as their first language.  Indicate that "some form" is
+conventionally used, as people may use a nickname or preferred name
+instead of a full legal name.
 
-In addition, expand the environment variables section to describe their
-use more fully.  Even though we now describe all of the options there
-and in the configuration settings documentation, preserve the existing
-text in git-commit.txt so that people can easily reason about the
-ordering of the various options they can use.  Explain the use of the
-author.* and committer.* options as well.
+Point users who may be confused about authentication to an appropriate
+configuration option instead.  Provide a shortened form of this
+information in the configuration option description.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/config/user.txt     |  2 +-
- Documentation/git-commit-tree.txt | 22 +---------------------
- Documentation/git-commit.txt      | 27 ++++++++++++++++++++++++---
- Documentation/git.txt             | 27 +++++++++++++++++++++++++--
- 4 files changed, 51 insertions(+), 27 deletions(-)
+ Documentation/config/user.txt | 7 ++++++-
+ Documentation/git-commit.txt  | 6 ++++++
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-index 0557cbbceb..a1f80e823c 100644
+index a1f80e823c..59aec7c3ae 100644
 --- a/Documentation/config/user.txt
 +++ b/Documentation/config/user.txt
-@@ -13,7 +13,7 @@ committer.email::
+@@ -13,7 +13,12 @@ committer.email::
  	Also, all of these can be overridden by the `GIT_AUTHOR_NAME`,
  	`GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`,
  	`GIT_COMMITTER_EMAIL` and `EMAIL` environment variables.
--	See linkgit:git-commit-tree[1] for more information.
-+	See linkgit:git-commit[1] for more information.
+-	See linkgit:git-commit[1] for more information.
+++
++Note that the `name` forms of these variables conventionally refer to
++some form of a personal name.  See linkgit:git-commit[1] and the
++environment variables section of linkgit:git[1] for more information on
++these settings and the `credential.username` option if you're looking
++for authentication credentials instead.
  
  user.useConfigOnly::
  	Instruct Git to avoid trying to guess defaults for `user.email`
-diff --git a/Documentation/git-commit-tree.txt b/Documentation/git-commit-tree.txt
-index 4b90b9c12a..ec15ee8d6f 100644
---- a/Documentation/git-commit-tree.txt
-+++ b/Documentation/git-commit-tree.txt
-@@ -69,7 +69,6 @@ OPTIONS
- 	Do not GPG-sign commit, to countermand a `--gpg-sign` option
- 	given earlier on the command line.
- 
--
- Commit Information
- ------------------
- 
-@@ -79,26 +78,6 @@ A commit encapsulates:
- - author name, email and date
- - committer name and email and the commit time.
- 
--While parent object ids are provided on the command line, author and
--committer information is taken from the following environment variables,
--if set:
--
--	GIT_AUTHOR_NAME
--	GIT_AUTHOR_EMAIL
--	GIT_AUTHOR_DATE
--	GIT_COMMITTER_NAME
--	GIT_COMMITTER_EMAIL
--	GIT_COMMITTER_DATE
--
--(nb "<", ">" and "\n"s are stripped)
--
--In case (some of) these environment variables are not set, the information
--is taken from the configuration items user.name and user.email, or, if not
--present, the environment variable EMAIL, or, if that is not set,
--system user name and the hostname used for outgoing mail (taken
--from `/etc/mailname` and falling back to the fully qualified hostname when
--that file does not exist).
--
- A commit comment is read from stdin. If a changelog
- entry is not provided via "<" redirection, 'git commit-tree' will just wait
- for one to be entered and terminated with ^D.
-@@ -117,6 +96,7 @@ FILES
- SEE ALSO
- --------
- linkgit:git-write-tree[1]
-+linkgit:git-commit[1]
- 
- GIT
- ---
 diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index ced5a9beab..30c30ccd80 100644
+index 7b61c9ba79..13f653989f 100644
 --- a/Documentation/git-commit.txt
 +++ b/Documentation/git-commit.txt
-@@ -367,9 +367,6 @@ changes to tracked files.
- +
- For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
+@@ -475,6 +475,12 @@ variables, if set:
  
--:git-commit: 1
--include::date-formats.txt[]
--
- EXAMPLES
- --------
- When recording your own work, the contents of modified files in
-@@ -463,6 +460,30 @@ alter the order the changes are committed, because the merge
- should be recorded as a single commit.  In fact, the command
- refuses to run when given pathnames (but see `-i` option).
+ (nb "<", ">" and "\n"s are stripped)
  
-+COMMIT INFORMATION
-+------------------
++The author and committer names are by convention some form of a personal name
++(that is, the name by which other humans refer to you), although Git does not
++enforce or require any particular form. Arbitrary Unicode may be used, subject
++to the constraints listed above. This name has no effect on authentication; for
++that, see the `credential.username` variable in linkgit:git-config[1].
 +
-+Author and committer information is taken from the following environment
-+variables, if set:
-+
-+	GIT_AUTHOR_NAME
-+	GIT_AUTHOR_EMAIL
-+	GIT_AUTHOR_DATE
-+	GIT_COMMITTER_NAME
-+	GIT_COMMITTER_EMAIL
-+	GIT_COMMITTER_DATE
-+
-+(nb "<", ">" and "\n"s are stripped)
-+
-+In case (some of) these environment variables are not set, the information
-+is taken from the configuration items `user.name` and `user.email`, or, if not
-+present, the environment variable EMAIL, or, if that is not set,
-+system user name and the hostname used for outgoing mail (taken
-+from `/etc/mailname` and falling back to the fully qualified hostname when
-+that file does not exist).
-+
-+:git-commit: 1
-+include::date-formats.txt[]
- 
- DISCUSSION
- ----------
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index b1597ac002..0093c647bf 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -482,13 +482,36 @@ double-quotes and respecting backslash escapes. E.g., the value
- Git Commits
- ~~~~~~~~~~~
- `GIT_AUTHOR_NAME`::
-+	The human-readable name used in the author identity when creating commit or
-+	tag objects, or when writing reflogs. Overrides the `user.name` and
-+	`author.name` configuration settings.
-+
- `GIT_AUTHOR_EMAIL`::
-+	The email address used in the author identity when creating commit or
-+	tag objects, or when writing reflogs. Overrides the `user.email` and
-+	`author.email` configuration settings.
-+
- `GIT_AUTHOR_DATE`::
-+	The date used for the author identity when creating commit or tag objects, or
-+	when writing reflogs. See linkgit:git-commit[1] for valid formats.
-+
- `GIT_COMMITTER_NAME`::
-+	The human-readable name used in the committer identity when creating commit or
-+	tag objects, or when writing reflogs. Overrides the `user.name` and
-+	`committer.name` configuration settings.
-+
- `GIT_COMMITTER_EMAIL`::
-+	The email address used in the author identity when creating commit or
-+	tag objects, or when writing reflogs. Overrides the `user.email` and
-+	`committer.email` configuration settings.
-+
- `GIT_COMMITTER_DATE`::
--'EMAIL'::
--	see linkgit:git-commit-tree[1]
-+	The date used for the committer identity when creating commit or tag objects, or
-+	when writing reflogs. See linkgit:git-commit[1] for valid formats.
-+
-+`EMAIL`::
-+	The email address used in the author and committer identities if no other
-+	relevant environment variable or configuration setting has been set.
- 
- Git Diffs
- ~~~~~~~~~
+ In case (some of) these environment variables are not set, the information
+ is taken from the configuration items `user.name` and `user.email`, or, if not
+ present, the environment variable EMAIL, or, if that is not set,
