@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17F78C33CAF
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E029AC2D0DB
 	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D366D2064C
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id AE13F2064C
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:55 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f+LcLoPq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fovkMj80"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729021AbgAWP0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1728988AbgAWP0x (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 23 Jan 2020 10:26:53 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41601 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726605AbgAWP0x (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38471 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726590AbgAWP0x (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 23 Jan 2020 10:26:53 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c9so3520001wrw.8
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 07:26:51 -0800 (PST)
+Received: by mail-wm1-f67.google.com with SMTP id u2so2974193wmc.3
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 07:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XUjnovCds1mo+XUD+WrTF3JItHEpyHC01R01O6GvRqk=;
-        b=f+LcLoPqToXDJh0J+/syLgYXcKj5aAvSa7C9EtTqaJ0hAnj99LQ7/tsiYbR1AMPI0U
-         1IqPeypPE1JcvHErqcgP1sdU89H/yQPhPAkKLa0BRZHYC37AsFW+B5eP8VXBYjy4665A
-         WUPWN2vcqkCxtq2Z+7+ZslWivCVCp6zqNghcAylCmDJ+VzcthKXlErQiAlhfHVZ0zo8B
-         8bFsUY/Y/L96/hd9jnRvogMeMmNgb/bdMxLxPPC+nW2dMPRBhH+SunvmNcToDxtF1xDZ
-         Ecm9a/pm3fw5KjmXURqv11EdWHlcihngfaQ1BsO2wnX0QI3DQH8D9rOy3KbRRTfH82wl
-         MjVw==
+        bh=FMcVC2aGNO6xYglNkZacBwfxPrXJvwvusseU0yakzBg=;
+        b=fovkMj80eVP0HgQFnwEV/Ex3d6ABnWO6p9HYD4qdA2p9MzcNMF/i51DUWLDGzfe4+R
+         f/807wT6zOxPl+6+CLa1/MgTyAwlpIwVFLkTZyH27UNi8J1p+qcF6YBIT6JeMvIZ+CTm
+         GOA24fkPZBhWPZra6nKx+x3l42tuNuSWjHeTiP9ntRRGtnbrZZhIoD2Xew11RopPeVVH
+         tTUFCWr8l3DqI/9CAPnoDMchd1jFtSJ+5bee55PebGgwegPLfwP7WbzAGpQrw4Y3JShW
+         CvXW4gUBB9uqxEXITjpFC5rXJuxmo6Pxf5BXqD7ZLs/zST9AciNJr8GFQzkk+KxQG5uZ
+         Rk9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XUjnovCds1mo+XUD+WrTF3JItHEpyHC01R01O6GvRqk=;
-        b=MPqswBMdes/Xs8QynChIGHvKIMoFd1kkX5j1fouAc3YEy6MbCiubDkvdnhH6A7rQhk
-         g3+T6oohURBfjJlqMxM5YEaijbbZgodJaA5Bb7V8y2jHmoTLCwOS9UhbBws5lTYP6b+M
-         V+3ikKLW6PhWHfvW01XudwFRVmiS53u/3z4LLCv7X5stWhznPKXIZ+5zalocEA0p3/Ja
-         YoSnbTrb/SPyTUSeid9H2l5AbMgTV2AnryLsxM+XMhYH1cYJDrPnNk0CXIvjDgtwwIen
-         w2jSF13Gw8rhUzKpdS6MeigGpn1vGA3ZtnR+KqkFGb1ncSe1J+1ZhvHKVZ9phmJvM+V+
-         WN1Q==
-X-Gm-Message-State: APjAAAVFQ3PUnBlmuZfJX2hWxWptdiDiep35HeQyqgR0nKjPJm5Ta+y9
-        hftT5q66H2t4yS2imUSglz0xHLNu
-X-Google-Smtp-Source: APXvYqwcpKyBn8+c/bC4u+dIf6Th990Y9O9xD/KOw+wY67QTzptcXxBowSXKdLA8VMAKFHJzz2R/zQ==
-X-Received: by 2002:a05:6000:1288:: with SMTP id f8mr18973395wrx.66.1579793210726;
-        Thu, 23 Jan 2020 07:26:50 -0800 (PST)
+        bh=FMcVC2aGNO6xYglNkZacBwfxPrXJvwvusseU0yakzBg=;
+        b=PskAS2m5NSMiz0zaNXlxi7CU4tRhVkQok9MDjctzmynNT9tI0uA9dy8LnEbxE2WAA7
+         SG3bHwmtDh4wppSOGHCx2/1SZhvC01pazdIsUJ0rz0gpj/IT6kIy9OJYwb1GF6GnP6ni
+         E46B4fANJLPcSx6qpF+1MMYUHoNpcxexcRBKRxFlBXO/AJn9mwKWC6xXGnjlJl0WRQnV
+         Oin0vtTOvBEm1bhUZnqtR+n/qWlF3KWgH9oB33mHv0WnpBRhGAA/AWi65YqZVdrvKHWW
+         iq2WjsWQ28o2KQwemsI+xEEoQOg+AeVDftgzSpvWhrNGDSzKSl/iu1vJ4m3AnedHBG20
+         ZcZQ==
+X-Gm-Message-State: APjAAAW/JQGjwdaVEKIHfb6JtJg21msjziaaR7MREkiAXWp+S4DBvm5u
+        rRQ/yzjAxB7PHtE8NmlMHOc7Lht/
+X-Google-Smtp-Source: APXvYqwEYv1sjPmFQbfhvYkOFe6FUOZVd8nxeaRSmZTGX8kJN41bA/Ez9scdaphO1sHvCi2zAbv44Q==
+X-Received: by 2002:a1c:7ed0:: with SMTP id z199mr4829741wmc.58.1579793209887;
+        Thu, 23 Jan 2020 07:26:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x18sm3442602wrr.75.2020.01.23.07.26.50
+        by smtp.gmail.com with ESMTPSA id n3sm3282927wmc.27.2020.01.23.07.26.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 07:26:50 -0800 (PST)
-Message-Id: <f969c4bc17b79f7c857987793cb0c23ad3f4e899.1579793207.git.gitgitgadget@gmail.com>
+        Thu, 23 Jan 2020 07:26:49 -0800 (PST)
+Message-Id: <679bf4e0dd16f7d6f4ba1f05af50cca24b5abee4.1579793207.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 References: <pull.510.git.1578423871.gitgitgadget@gmail.com>
         <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 From:   "Kevin Willford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jan 2020 15:26:45 +0000
-Subject: [PATCH v2 2/4] fsmonitor: handle version 2 of the hooks that will use
- opaque token
+Date:   Thu, 23 Jan 2020 15:26:44 +0000
+Subject: [PATCH v2 1/4] fsmonitor: change last update timestamp on the
+ index_state to opaque token
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,231 +76,190 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Kevin Willford <Kevin.Willford@microsoft.com>
 
-Some file monitors like watchman will use something other than a timestamp
-to keep better track of what changes happen in between calls to query
-the fsmonitor. The clockid in watchman is a string. Now that the index
-is storing an opaque token for the last update the code needs to be
-updated to pass that opaque token to a verion 2 of the fsmonitor hook.
+Some file system monitors might not use or take a timestamp for processing
+and in the case of watchman could have race conditions with using a
+timestamp. Watchman uses something called a clockid that is used for race
+free queries to it. The clockid for watchman is simply a string.
 
-Because there are repos that already have version 1 of the hook and we
-want them to continue to work when git is updated, we need to handle
-both version 1 and version 2 of the hook. In order to do that a
-config value is being added core.fsmonitorHookVersion to force what
-version of the hook should be used.  When this is not set it will default
-to -1 and then the code will attempt to call version 2 of the hook first.
-If that fails it will fallback to trying version 1.
+Change the fsmonitor_last_update from being a uint64_t to a char pointer
+so that any arbitrary data can be stored in it and passed back to the
+fsmonitor.
 
 Signed-off-by: Kevin Willford <Kevin.Willford@microsoft.com>
 ---
- fsmonitor.c                 | 75 +++++++++++++++++++++++++++++++------
- t/t7519-status-fsmonitor.sh |  7 +++-
- t/t7519/fsmonitor-all       |  1 -
- t/t7519/fsmonitor-watchman  |  3 +-
- 4 files changed, 71 insertions(+), 15 deletions(-)
+ cache.h                        |  2 +-
+ fsmonitor.c                    | 49 ++++++++++++++++++++++------------
+ t/helper/test-dump-fsmonitor.c |  2 +-
+ 3 files changed, 34 insertions(+), 19 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 1554488d66..170c125db3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -324,7 +324,7 @@ struct index_state {
+ 	struct hashmap dir_hash;
+ 	struct object_id oid;
+ 	struct untracked_cache *untracked;
+-	uint64_t fsmonitor_last_update;
++	char *fsmonitor_last_update;
+ 	struct ewah_bitmap *fsmonitor_dirty;
+ 	struct mem_pool *ce_mem_pool;
+ 	struct progress *progress;
 diff --git a/fsmonitor.c b/fsmonitor.c
-index 9860587225..932bd9012d 100644
+index 868cca01e2..9860587225 100644
 --- a/fsmonitor.c
 +++ b/fsmonitor.c
-@@ -8,7 +8,8 @@
+@@ -6,8 +6,9 @@
+ #include "run-command.h"
+ #include "strbuf.h"
  
- #define INDEX_EXTENSION_VERSION1	(1)
- #define INDEX_EXTENSION_VERSION2	(2)
--#define HOOK_INTERFACE_VERSION		(1)
-+#define HOOK_INTERFACE_VERSION1		(1)
-+#define HOOK_INTERFACE_VERSION2		(2)
+-#define INDEX_EXTENSION_VERSION	(1)
+-#define HOOK_INTERFACE_VERSION	(1)
++#define INDEX_EXTENSION_VERSION1	(1)
++#define INDEX_EXTENSION_VERSION2	(2)
++#define HOOK_INTERFACE_VERSION		(1)
  
  struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
  
-@@ -25,6 +26,22 @@ static void fsmonitor_ewah_callback(size_t pos, void *is)
- 	ce->ce_flags &= ~CE_FSMONITOR_VALID;
+@@ -32,17 +33,26 @@ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+ 	uint32_t ewah_size;
+ 	struct ewah_bitmap *fsmonitor_dirty;
+ 	int ret;
++	uint64_t timestamp;
++	struct strbuf last_update = STRBUF_INIT;
+ 
+-	if (sz < sizeof(uint32_t) + sizeof(uint64_t) + sizeof(uint32_t))
++	if (sz < sizeof(uint32_t) + 1 + sizeof(uint32_t))
+ 		return error("corrupt fsmonitor extension (too short)");
+ 
+ 	hdr_version = get_be32(index);
+ 	index += sizeof(uint32_t);
+-	if (hdr_version != INDEX_EXTENSION_VERSION)
++	if (hdr_version == INDEX_EXTENSION_VERSION1) {
++		timestamp = get_be64(index);
++		strbuf_addf(&last_update, "%"PRIu64"", timestamp);
++		index += sizeof(uint64_t);
++	} else if (hdr_version == INDEX_EXTENSION_VERSION2) {
++		strbuf_addstr(&last_update, index);
++		index += last_update.len + 1;
++	} else {
+ 		return error("bad fsmonitor version %d", hdr_version);
++	}
+ 
+-	istate->fsmonitor_last_update = get_be64(index);
+-	index += sizeof(uint64_t);
++	istate->fsmonitor_last_update = strbuf_detach(&last_update, NULL);
+ 
+ 	ewah_size = get_be32(index);
+ 	index += sizeof(uint32_t);
+@@ -79,7 +89,6 @@ void fill_fsmonitor_bitmap(struct index_state *istate)
+ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
+ {
+ 	uint32_t hdr_version;
+-	uint64_t tm;
+ 	uint32_t ewah_start;
+ 	uint32_t ewah_size = 0;
+ 	int fixup = 0;
+@@ -89,11 +98,12 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
+ 		BUG("fsmonitor_dirty has more entries than the index (%"PRIuMAX" > %u)",
+ 		    (uintmax_t)istate->fsmonitor_dirty->bit_size, istate->cache_nr);
+ 
+-	put_be32(&hdr_version, INDEX_EXTENSION_VERSION);
++	put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
+ 	strbuf_add(sb, &hdr_version, sizeof(uint32_t));
+ 
+-	put_be64(&tm, istate->fsmonitor_last_update);
+-	strbuf_add(sb, &tm, sizeof(uint64_t));
++	strbuf_addstr(sb, istate->fsmonitor_last_update);
++	strbuf_addch(sb, 0); /* Want to keep a NUL */
++
+ 	fixup = sb->len;
+ 	strbuf_add(sb, &ewah_size, sizeof(uint32_t)); /* we'll fix this up later */
+ 
+@@ -110,9 +120,9 @@ void write_fsmonitor_extension(struct strbuf *sb, struct index_state *istate)
  }
  
-+static int fsmonitor_hook_version(void)
-+{
-+	int hook_version;
-+
-+	if (git_config_get_int("core.fsmonitorhookversion", &hook_version))
-+		return -1;
-+
-+	if (hook_version == HOOK_INTERFACE_VERSION1 ||
-+	    hook_version == HOOK_INTERFACE_VERSION2)
-+		return hook_version;
-+
-+	warning("Invalid hook version '%i' in core.fsmonitorhookversion. "
-+		"Must be 1 or 2.", hook_version);
-+	return -1;
-+}
-+
- int read_fsmonitor_extension(struct index_state *istate, const void *data,
- 	unsigned long sz)
+ /*
+- * Call the query-fsmonitor hook passing the time of the last saved results.
++ * Call the query-fsmonitor hook passing the last update token of the saved results.
+  */
+-static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *query_result)
++static int query_fsmonitor(int version, const char *last_update, struct strbuf *query_result)
  {
-@@ -158,8 +175,8 @@ static void fsmonitor_refresh_callback(struct index_state *istate, const char *n
- void refresh_fsmonitor(struct index_state *istate)
- {
- 	struct strbuf query_result = STRBUF_INIT;
--	int query_success = 0;
--	size_t bol; /* beginning of line */
-+	int query_success = 0, hook_version = -1;
-+	size_t bol = 0; /* beginning of line */
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 
+@@ -121,7 +131,7 @@ static int query_fsmonitor(int version, uint64_t last_update, struct strbuf *que
+ 
+ 	argv_array_push(&cp.args, core_fsmonitor);
+ 	argv_array_pushf(&cp.args, "%d", version);
+-	argv_array_pushf(&cp.args, "%" PRIuMAX, (uintmax_t)last_update);
++	argv_array_pushf(&cp.args, "%s", last_update);
+ 	cp.use_shell = 1;
+ 	cp.dir = get_git_work_tree();
+ 
+@@ -151,6 +161,7 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	int query_success = 0;
+ 	size_t bol; /* beginning of line */
  	uint64_t last_update;
- 	struct strbuf last_update_token = STRBUF_INIT;
++	struct strbuf last_update_token = STRBUF_INIT;
  	char *buf;
-@@ -167,6 +184,9 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	unsigned int i;
  
- 	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
- 		return;
-+
-+	hook_version = fsmonitor_hook_version();
-+
- 	istate->fsmonitor_has_run_once = 1;
- 
- 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
-@@ -175,27 +195,60 @@ void refresh_fsmonitor(struct index_state *istate)
+@@ -164,6 +175,7 @@ void refresh_fsmonitor(struct index_state *istate)
  	 * should be inclusive to ensure we don't miss potential changes.
  	 */
  	last_update = getnanotime();
--	strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
-+	if (hook_version == HOOK_INTERFACE_VERSION1)
-+		strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
++	strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
  
  	/*
--	 * If we have a last update time, call query_fsmonitor for the set of
--	 * changes since that time, else assume everything is possibly dirty
-+	 * If we have a last update token, call query_fsmonitor for the set of
-+	 * changes since that token, else assume everything is possibly dirty
- 	 * and check it all.
- 	 */
- 	if (istate->fsmonitor_last_update) {
--		query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION,
--			istate->fsmonitor_last_update, &query_result);
-+		if (hook_version == -1 || hook_version == HOOK_INTERFACE_VERSION2) {
-+			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION2,
-+				istate->fsmonitor_last_update, &query_result);
-+
-+			if (query_success) {
-+				if (hook_version < 0)
-+					hook_version = HOOK_INTERFACE_VERSION2;
-+
-+				/*
-+				 * First entry will be the last update token
-+				 * Need to use a char * variable because static
-+				 * analysis was suggesting to use strbuf_addbuf
-+				 * but we don't want to copy the entire strbuf
-+				 * only the the chars up to the first NUL
-+				 */
-+				buf = query_result.buf;
-+				strbuf_addstr(&last_update_token, buf);
-+				if (!last_update_token.len) {
-+					warning("Empty last update token.");
-+					query_success = 0;
-+				} else {
-+					bol = last_update_token.len + 1;
-+				}
-+			} else if (hook_version < 0) {
-+				hook_version = HOOK_INTERFACE_VERSION1;
-+				if (!last_update_token.len)
-+					strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
-+			}
-+		}
-+
-+		if (hook_version == HOOK_INTERFACE_VERSION1) {
-+			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION1,
-+				istate->fsmonitor_last_update, &query_result);
-+		}
-+
- 		trace_performance_since(last_update, "fsmonitor process '%s'", core_fsmonitor);
- 		trace_printf_key(&trace_fsmonitor, "fsmonitor process '%s' returned %s",
- 			core_fsmonitor, query_success ? "success" : "failure");
+ 	 * If we have a last update time, call query_fsmonitor for the set of
+@@ -217,18 +229,21 @@ void refresh_fsmonitor(struct index_state *istate)
  	}
+ 	strbuf_release(&query_result);
  
- 	/* a fsmonitor process can return '/' to indicate all entries are invalid */
--	if (query_success && query_result.buf[0] != '/') {
-+	if (query_success && query_result.buf[bol] != '/') {
- 		/* Mark all entries returned by the monitor as dirty */
- 		buf = query_result.buf;
--		bol = 0;
--		for (i = 0; i < query_result.len; i++) {
-+		for (i = bol; i < query_result.len; i++) {
- 			if (buf[i] != '\0')
- 				continue;
- 			fsmonitor_refresh_callback(istate, buf + bol);
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index cf0fda2d5a..fbfdcca000 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -32,11 +32,12 @@ write_integration_script () {
- 		echo "$0: exactly 2 arguments expected"
- 		exit 2
- 	fi
--	if test "$1" != 1
-+	if test "$1" != 2
- 	then
- 		echo "Unsupported core.fsmonitor hook version." >&2
- 		exit 1
- 	fi
-+	printf "last_update_token\0"
- 	printf "untracked\0"
- 	printf "dir1/untracked\0"
- 	printf "dir2/untracked\0"
-@@ -107,6 +108,7 @@ EOF
- # test that "update-index --fsmonitor-valid" sets the fsmonitor valid bit
- test_expect_success 'update-index --fsmonitor-valid" sets the fsmonitor valid bit' '
- 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
- 	EOF
- 	git update-index --fsmonitor &&
- 	git update-index --fsmonitor-valid dir1/modified &&
-@@ -167,6 +169,7 @@ EOF
- # test that newly added files are marked valid
- test_expect_success 'newly added files are marked valid' '
- 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+		printf "last_update_token\0"
- 	EOF
- 	git add new &&
- 	git add dir1/new &&
-@@ -207,6 +210,7 @@ EOF
- # test that *only* files returned by the integration script get flagged as invalid
- test_expect_success '*only* files returned by the integration script get flagged as invalid' '
- 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+	printf "last_update_token\0"
- 	printf "dir1/modified\0"
- 	EOF
- 	clean_repo &&
-@@ -276,6 +280,7 @@ do
- 		# (if enabled) files unless it is told about them.
- 		test_expect_success "status doesn't detect unreported modifications" '
- 			write_script .git/hooks/fsmonitor-test<<-\EOF &&
-+			printf "last_update_token\0"
- 			:>marker
- 			EOF
- 			clean_repo &&
-diff --git a/t/t7519/fsmonitor-all b/t/t7519/fsmonitor-all
-index 691bc94dc2..94ab66bd3d 100755
---- a/t/t7519/fsmonitor-all
-+++ b/t/t7519/fsmonitor-all
-@@ -17,7 +17,6 @@ fi
- 
- if test "$1" != 1
- then
--	echo "Unsupported core.fsmonitor hook version." >&2
- 	exit 1
- fi
- 
-diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
-index d8e7a1e5ba..264b9daf83 100755
---- a/t/t7519/fsmonitor-watchman
-+++ b/t/t7519/fsmonitor-watchman
-@@ -26,8 +26,7 @@ if ($version == 1) {
- 	# subtract one second to make sure watchman will return all changes
- 	$time = int ($time / 1000000000) - 1;
- } else {
--	die "Unsupported query-fsmonitor hook version '$version'.\n" .
--	    "Falling back to scanning...\n";
-+	exit 1;
+-	/* Now that we've updated istate, save the last_update time */
+-	istate->fsmonitor_last_update = last_update;
++	/* Now that we've updated istate, save the last_update_token */
++	FREE_AND_NULL(istate->fsmonitor_last_update);
++	istate->fsmonitor_last_update = strbuf_detach(&last_update_token, NULL);
  }
  
- my $git_work_tree;
+ void add_fsmonitor(struct index_state *istate)
+ {
+ 	unsigned int i;
++	struct strbuf last_update = STRBUF_INIT;
+ 
+ 	if (!istate->fsmonitor_last_update) {
+ 		trace_printf_key(&trace_fsmonitor, "add fsmonitor");
+ 		istate->cache_changed |= FSMONITOR_CHANGED;
+-		istate->fsmonitor_last_update = getnanotime();
++		strbuf_addf(&last_update, "%"PRIu64"", getnanotime());
++		istate->fsmonitor_last_update = strbuf_detach(&last_update, NULL);
+ 
+ 		/* reset the fsmonitor state */
+ 		for (i = 0; i < istate->cache_nr; i++)
+@@ -250,7 +265,7 @@ void remove_fsmonitor(struct index_state *istate)
+ 	if (istate->fsmonitor_last_update) {
+ 		trace_printf_key(&trace_fsmonitor, "remove fsmonitor");
+ 		istate->cache_changed |= FSMONITOR_CHANGED;
+-		istate->fsmonitor_last_update = 0;
++		FREE_AND_NULL(istate->fsmonitor_last_update);
+ 	}
+ }
+ 
+diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
+index 2786f47088..975f0ac890 100644
+--- a/t/helper/test-dump-fsmonitor.c
++++ b/t/helper/test-dump-fsmonitor.c
+@@ -13,7 +13,7 @@ int cmd__dump_fsmonitor(int ac, const char **av)
+ 		printf("no fsmonitor\n");
+ 		return 0;
+ 	}
+-	printf("fsmonitor last update %"PRIuMAX"\n", (uintmax_t)istate->fsmonitor_last_update);
++	printf("fsmonitor last update %s\n", istate->fsmonitor_last_update);
+ 
+ 	for (i = 0; i < istate->cache_nr; i++)
+ 		printf((istate->cache[i]->ce_flags & CE_FSMONITOR_VALID) ? "+" : "-");
 -- 
 gitgitgadget
 
