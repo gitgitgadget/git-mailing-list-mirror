@@ -2,137 +2,123 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86459C2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 12:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E95CC2D0DB
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 12:27:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 55097206A2
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 12:12:00 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6EEFC24655
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 12:27:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="jlaPHb84"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="aIwW9H4o"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbgAWML7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 07:11:59 -0500
-Received: from mout.gmx.net ([212.227.17.22]:33415 "EHLO mout.gmx.net"
+        id S1726227AbgAWM1L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 07:27:11 -0500
+Received: from mout.gmx.net ([212.227.15.19]:55139 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726026AbgAWML6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 07:11:58 -0500
+        id S1726026AbgAWM1L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 07:27:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579781511;
-        bh=7QRculjYI8/8kBqLA8hWrnSc9ksiGUMH0313+mzXsfg=;
+        s=badeba3b8450; t=1579782419;
+        bh=9GL6xm6XLMRJr5QFQzFoFLJf7nqKqZbw+JHU+HjMDZI=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=jlaPHb84YCAeKa2qgUQCZPLLY03AMRLB8ZM8rMt4ysSZqHRsRSXHezvMG4QB1dnh0
-         /OqN8ziuHv1AG07qFfXBzGEsd0WTlstEltDamOdFoJ8GrW25RhwuRz6OEvH2gvnWO9
-         AHW6HH78xuO7iADjnl2Kj46OWikv5wHf/5MOfCLA=
+        b=aIwW9H4oUBEp7TK3J+vdviP7i2IG9xc/DflS7a5ZW/WmKNO7gyreX2BB9SF433ZuK
+         0sWNpYPQiNlZ27Fg7vmr5wW9a7evh949dzY14ZwFw+jiPyo5cIem5brTQ9lfmmONLy
+         CK1PKNoOaBO+rSnJSvUtQThvfEDynrOlUUL0nR2M=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mqs0X-1jP2Lm2C2L-00mtc2; Thu, 23
- Jan 2020 13:11:51 +0100
-Date:   Thu, 23 Jan 2020 13:11:52 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N95iH-1jiKcG2rDD-016C6o; Thu, 23
+ Jan 2020 13:26:59 +0100
+Date:   Thu, 23 Jan 2020 13:26:59 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>
-Subject: yz/p4-py3, was Re: What's cooking in git.git (Jan 2020, #04; Wed,
- 22)
-In-Reply-To: <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.2001231306351.46@tvgsbejvaqbjf.bet>
-References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com> <20200122235333.GA6837@szeder.dev> <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 1/3] parse_insn_line(): improve error message when
+ parsing failed
+In-Reply-To: <xmqqlfq08nzz.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.2001231326310.46@tvgsbejvaqbjf.bet>
+References: <pull.529.git.1579209506.gitgitgadget@gmail.com> <pull.529.v2.git.1579304283.gitgitgadget@gmail.com> <2ae2e435b0ef6888e72defc7abee1909b29aa914.1579304283.git.gitgitgadget@gmail.com> <xmqqlfq08nzz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1316106814-1579781513=:46"
-X-Provags-ID: V03:K1:DNyE2ZErqPVMql/iKfAN4OO+JpQJY3QiuLG2MkOQ6ZaKauumk2A
- WVU5nn31yy/Fvvt+cjIRo4Fa3S3uQw/MMe9E6X2gEAX9V5nMAE2btnAPgwoulMh8YuOsUUc
- uj/P8O8fN9hrqrrQMwChmSoSeYfMPrGBDvXmD6VXDyEbd3OseaVBfVRfsjdAi4GbkXjB5qQ
- zA2NAaQiptFnjozLyJhag==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ie7tMsBKkgU=:xvTp2xK9ILGnYbF+n/SZdU
- cdVelCFa2ZWVaxTgglWtCohHzfig8Pmw0aF1fsuqua62u8dAic3PUquVY/FMa0rphwFOLtGUE
- NymHvPVnCNmKSQj777e6+Osfe/WVMGsd1TDnxaioSMIzGNAi00Q7mwQGvlaR+Z0JvouQsXxMd
- Z4TucQK7yM9Au0UIzMeiFhYHTHjQ9evsZePh+r9BwB9FVwona4KEx9FG2rd2RE/tqEdH5pFlk
- Aa5JbxzKKySurlC8Au2wQ3OfDV8bzhPfXwd7OMNywrnCPf5BYuWiW+KfF1qHVz08d7nzuaSKS
- gvgL3DlgOoHAV85qH09jpsNnMel7jixDvxL6qChmcN0DBEpePeUn+1/XBTsj3Xd0FCBzUxWhE
- GD+E36R0kMvHsrG840mouQACry8qIWMC61taxrHkT9dBOjqmPhnywLsSMIm50QZo0R3MS/Y94
- 19QAthirSSQ6Meoxu0JnD8ebh+PAJbOHOnDk0NFMaMf0JFKvRHUnqpp7HxDuh/i0URiZQ1aiP
- 8TFRKCs2t3/7XPEeogKxsWVPcUkOXbb4mKLaYUDGqQoDFkwBRK96qRVVrEBNcMzl2ovjNRy+G
- yoymXCcJLRky02htRU9GEZDFMhm8vRCJXblOAvhPjbqY7U/M75/6/4O1j4BRhM919yvCay6k0
- T5iMlSxhU1/1L7CuN1mewI5LXcF5BvqzUiJ/L/4hw038Sylzux6RXF5STAad/5YaQldNb0P35
- +zdCxgyRBaXQUHcsJuZBYjvLMtvAwX/8P7K8Ns4UdGtOVGh5rpWnSxn31inGHB9uf8HFaA0Hz
- +t4pNhUiAoQsAEtk5ul3+2yton6H0nepJE0A7a2drCcwcm9ZCWc75f1/HlRvII0nWpZxibs9H
- f9IavgHhZmZO5YCQFftNtQxAoB5kVZ791xmrCvZwTRzmBdfrJP707IBNY5O87e/EyYBGQG0Ov
- ooOLMDt1nvsq41pkJlE/YKGMH7TLQcH8GosMufEkwfDoEkDscNdlcj0JQHxnViVxuUIJ5uoam
- 2l1qrzmVntory7sXiNZcz/SJg96LFZQ8XDkFMzl3SKEBDd+pnDjcDmnzdvk/w0VVMy5T8cNdw
- FPO/WIUlCoV9TNX86fUUdj5DkD1oauCeSNAGGx7kfcXDcLG2tv6yBs3UpiO/e/WPVDiDB3iSU
- oMBet5rbE0OayBSCHplJXA8t0aO6iZM6VXIRxz91eDOn316S6pn2zb3baeNc/2QwpQr7K43aw
- /5wxQviksfds4GijE
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:tqwpKYjrtok6VqHfasRTHYofAOkrtTP+ZdaH+Kv5PjLlup8PXPq
+ EVOL0BiwOxu8YFX/TqG7KJtfzGJp60IU8za1L6YXM8rhfRJIaH2tM51KhHa3Zyxqr+Azc19
+ QD9jT/agwOtsaeDS3VJOtivGlSbPRpaNn9Nq/tTe8i0kglEWIN4dDnpC15Pp6a/xcLcKKzV
+ YaXfqC7LprNiqZb2paqpw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tY508ssPqrc=:QNfSam/GVn/Mqe2p7H6oBv
+ eOzvlVyrIPisX1hYqOtav5ffu32LMomMKqrG2lKHVhCAZFzGiHAlt5oV98XfNQFJH4gcelr7g
+ smdBraHiJQy0FDJHH7VJi+j0aE9BfU5jJoSxTvMlPpm0IdBeFbfyz2DPGPeI3DsNAMcx2ZxXi
+ A7lyvaEEXHcFSuSBMm7FvDz1ZoUzf92dSG39Ir1ludawc/v/SvRbmrqu/fFijumx83tDZPygb
+ hvLAdw1OP1sLYc/HTqeMtBOw8ZuPgpRCYkOR5vsljS+lZVwMJqNxRL/Qwz4zgbyGq9N28efqs
+ 9w8HvUb9+42QgqC90eVIgZfJUPysUehZe5wFJzXPr/tIjC8DGoUj31kXQYkLJn/HENpUTmI9E
+ jXt8koyVQlDt4JgHk5nMyIAOHcVvzeuaSsVav/18DD5/Tf22RH0nUS0CQ8IyCjuN5nFQ8D0Vs
+ Uxhbz353OMG9hZlzZfUUSK9iYyu8gHhYGqwlUj9Eocv4gp2guA6J4jM+Tj3F+0HmgMFIIMEcm
+ N2hdrIIX9P8TIBtKExhzlfvuKfj6wDIesutHjX8KGijgurMnWIczPOV1Xy0ToURtZlrPaaHMB
+ bNdMaUhy9f9DUFna9fmgRUtpMagtpp0m9tpv27QX2uacLsAiSxlLvwO39rYHBnQhzravC7XyY
+ OjgNvSBedpmfTpi6yGMmy8PwH9pO0PunC32ePM00SO18S19FzCr1Oa4gP/Y/1wIAv0eyyoaer
+ rtkPmhr4yYWUGM/3VtztfvugknCpwhtc+Gm+XODZ32OnJR3bP/r5KAeHeFD9KfOhH8AMxCfMO
+ iDkDIr+A1AcPIXPDNy1hQ7/2eeBfyb19zGxXh9WIeSsOEtZjuMmY9pI2N50c5pWLy2TdDuqBT
+ HKeXc/L0gGruVNyfumDfpeqBuJqMt9M9B46G1S9xDVC3DzEWyCDR9iARD6nT/ZSNnPJPLJVdA
+ QhQozMCYsd8ZSXKlSC9y5a5J1EWXItXXO2a73+v0HXv0d9bxiBtxBi+n2sfUaW23tmAvOflb5
+ 14oweKIrRDBuM4iBeGZnsvu3Bq+xZcSVya8d8g064CZm5CDGLg97lw9agz+wPD65OMgf0Zl2B
+ KDntLun8XvGIAtwzrU9yGtEN/F4XiQFTxDITk8KOub/nUZhkGtlfnSHNKX0BKKBDT1MwrNe89
+ bW4ydPJRLqrdvtUp9SnQGAOr4owrmA8FpZ54gpYB2671Qjvm/rhAWlHD+MPd40elG1p2xxFx9
+ FZ9v1wy9/9sxfbaaC
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1316106814-1579781513=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
 Hi Junio,
 
-On Wed, 22 Jan 2020, Junio C Hamano wrote:
+On Tue, 21 Jan 2020, Junio C Hamano wrote:
 
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> > On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
-> >> * yz/p4-py3 (2020-01-15) 14 commits
-> >>  - ci: also run linux-gcc pipeline with python3.5 environment
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > I still think that this last patch needs to be reworked before this
-> > series is merged any further.
+> > In the case that a `get_oid()` call failed, we showed some rather bogu=
+s
+> > part of the line instead of the precise string we sent to said functio=
+n.
+> > That makes it rather hard for users to understand what is going wrong,
+> > so let's fix that.
 > >
-> > The only Python script we have is 'git p4', so the Python version is
-> > only relevant for 'git p4' tests ('t98*'), while the rest of Git and
-> > the test suite couldn't care less [1].  This patch, however, not only
-> > builds Git and runs the full test suite for each of the two Python
-> > versions, but, worse, runs the full test suite _twice_ for each, first
-> > as a "regular" test run and then again with all the GIT_TEST_* knobs
-> > enabled.  Consequently, it adds ~50mins to every build's runtime.
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ...
+> > @@ -2125,11 +2127,10 @@ static int parse_insn_line(struct repository *=
+r, struct todo_item *item,
+> >  	item->arg_len =3D (int)(eol - bol);
 > >
-> > That's just too wasteful.
+> >  	if (status < 0)
+> > -		return error(_("could not parse '%.*s'"),
+> > -			     (int)(end_of_object_name - bol), bol);
+> > +		return status;
+> >
+> >  	item->commit =3D lookup_commit_reference(r, &commit_oid);
+> > -	return !item->commit;
+> > +	return item->commit ? 0 : -1;
 >
-> Thanks for a reminder.  Yes, I do recall you raised the above point
-> and I agree with the assessment.
+> This changes the polarity of the error exit from positive 1 to
+> negative 1.  The only caller of this function takes anything
+> non-zero as a failure so this would not cause behaviour change, but
+> returning negative is more in line with the practice so it is an
+> improvement.
 >
-> What's the ideal endgame wrt the tests?  Build with Py$N and run
-> full test suite once, and run full test suite again with the unusual
-> knobs enabled, which is what is done without this series, plus build
-> with Py(5-$N) and run and run only t98?? tests?
+> It is unrelated to the theme of this patch, and the proposed log
+> message does not even mention it, though.
 
-Should we declare `t98xx` to be the namespace for the Python-based
-scripts, or alternatively declare that we won't ever include another
-Python script but `git-p4`?
+You're right. I amended the commit message. Will send out a v3 soon.
 
-But yes, I think that we should probably "tack on" the Python 3.x tests to
-the `linux-gcc` job.
-
-Or maybe finally split this job into three: one job that does what
-`linux-gcc` suggests, a `linux-gcc-knobs` one that sets all those `GIT_*`
-variables, and a python3x one that only runs t98*.sh.
-
-The reason to split it off is this: on rare occasion, I have to restart
-the `linux-gcc` job because _one_ of those `git-p4` tests failed due to
-some reason or other, probably timing-related, I did not have time to
-investigate this. Having to re-run the entire test suite, twice, just to
-work around those flaky tests is rather wasteful.
-
-That would actually be my prereference. If people agree, I will revive
-https://github.com/gitgitgadget/git/pull/266.
-
-Ciao,
+Thanks,
 Dscho
-
---8323328-1316106814-1579781513=:46--
