@@ -2,212 +2,117 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 826C6C33CAA
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 22:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 699E6C33CAA
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 22:51:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 28D48207FF
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 22:45:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 013E5207FF
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 22:51:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="j4D4aR+5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rotBpvAd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729384AbgAWWpd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 17:45:33 -0500
-Received: from mout.gmx.net ([212.227.15.19]:35345 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726191AbgAWWpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 17:45:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1579819527;
-        bh=2gUBS32E3IOVaJDiu93hkmtdG/QT8J6smVbxZV+SdrQ=;
-        h=X-UI-Sender-Class:To:References:From:Subject:Date:In-Reply-To;
-        b=j4D4aR+5KJP5Yn2e1yzTDDb2D9yh+72KDNwPa/0q0XWS/V/sWY+3RhWP6TNin6+GT
-         ssLnDD3N2lo+HMGeuMI7KMsrzm76QmDbTiceI84oTxiEkAsg2sFZgA4C+SMcQbyQYz
-         L1sK9C/XpVw9udTIEdyhRHleJIq1H4bVx2wU6ynA=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.178.22] ([88.70.153.126]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCsU6-1ilvXS47sG-008oBX; Thu, 23
- Jan 2020 23:45:27 +0100
-To:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@xs4all.nl>
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
-From:   Stephan Beyer <s-beyer@gmx.net>
-Openpgp: preference=signencrypt
-Autocrypt: addr=s-beyer@gmx.net; prefer-encrypt=mutual; keydata=
- LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUVFOQkZJN0NUOEJJQUNX
- RlhtNmdSM1BPMkJoaDZXZ1Bvd1FNZEZWcHc4cDlybjE3d0k0K3N3TWVxSmxrSklnClBETlFi
- UXRPcGRGeUJYVzY4cHVDMXI1NjlNZnNhSldXYkluZGh3NVpwdTJ2djdjVXlOajlrUXR1dG10
- Zk1TcWYKdXRSZVAxZDNINmhzOWJSSGJvWkVqeXZqc0VTV0xYM3FFak9uRTYyVmNHMUpnNS9t
- dlFkOFRIZ3pwdDFlS0tSSAp3Vm1oY3JDRTV6a1l1YzNoZzdXdk5xNm96Vm9DbUpsYU9Qb3Zz
- NWw4UThUaHc1elQzL2hnY2QyeEFlODRIUEtJCkFBajVsSjZRU0l3bWYxcWROSVRvZCtLUGdl
- YnYwL3pBZ21vYUFRSW1LamdmelFMZk56WHI1TDJoNHNsaElPU0sKR0EzWnl2SXFqRGRnNmM1
- bFVWeFRKNDRaQkRFLzMvZEtTVG0zVW5MZjJDOTI2SGZUZGQ2ZHQ1T08yLzd5b3YxdApjWWc3
- K0t2VzV2ZWJMS0drbHhjRjhqdFMvSE9zOWxjQkJZeEg4WC9YL1N5YWc3QzIxckhGWE13aFZF
- QTlycmZVCkNFaFYyOXgwUGU5THFwRTd4ZGpIK1FXVlMrY1RHKzhHaGtGN0FuWUtpSXo4L29K
- VjQ1S2hTTjRrTXhPTFdZRSsKazJYd2VEOWhUTjQxMVJOd0FUS3ZJemlieElyV2xYVEVRbWJ3
- elMvUldDRXhTWTdSdHlUTVBIc1BZdDhzRmNzKwozVUFNZHNmdlF0cmtBdXZQY3BTYS9VS0FC
- SEF2a1VOeStvSkZqRmRUdEtrYy9oajk0UEVBQlJvbFlYUTFWRXFECjh2b1dKQ1lQUXlCUVl6
- RTZ0RzMxZFBnWFhzK25xdVhuSnBIRzJKS0lJWktXamJXcmVBSTFaQ2hCSThCOTFXbjIKdWpV
- VjVzdXRBbnk4VmtZY3BNQklwNVdVUVg1VDdxdE8wSUhsYmJ2RzVOZHllQ2tqMkI4Ly9LemZQ
- K0pqc3hqRwpHMzc1Uk9PdS81eC92eXhKZlp2SmUxcDRQRnNnVWF1MFRZbHExR2JuODFHSVMw
- MjU5NWtUSTdrVzdMcERMVG1xCnY2MEdYSWpKQWN1RFJQbWZyZktXSDhZNXk2VHVDMnZFVVpH
- TzVsR0dwV2NLM21HRGRpd1dCNlpYRmhJVGF3YUEKQWxWaHhCVUppZ2JQLyttaG00M1ozUzRC
- N1VqYVpsZGp6QjZuS3QzNzVQL28zYjU2NkdLaG5aVmh4S3ZvQXNoagorU3c4Vml5ZTlZb0ZC
- c3VSeTNndk92VW9MSGtic0JrS0ZncmM0RElXN1BHWVBOdmZVbW5VSXNFbFZYdlVsMWxjCjJG
- SWxYSnJhZDNzNlFMNW0rK0pJblZrWU5Mc2o0OVZpb2JMaUxBdk9Wd2ovN0JHQS9ralJEUXp0
- OGQrZzgrWVIKQnYwNHQ3Vkp3ZWU5SFp1cGFwUGdyb3JzL3hsL2NwSFVFcXEzSFdDSm5ucXpt
- MVJqbnpMZ2JwZVRjQjVBazFndgpKTDZmN05LMXYva0RucVl2a3B4K2YvUDJtNGhKdTVhTTE4
- ODJzWmc2NlF3WDFrREw5WklRbFladFFUOElmN1gvCmV5eGZVZG9WQUpEQThIcFM0NlEyTHp3
- WkVqZXFYYzkzTjNMSmxIZFQxcm1OZERDanhtd1BSUWllUW5TRTRRcmwKU05qWHducXl1M00z
- Vk43ajNNQ1hJMUdWNVUwQ3VvZVd1RGdpUnMzQ0ZqZTgxS25mL0RuYy9jL2RuNmpoeVR2aQpR
- a0NMY1hxUDY3Q0l1T2xVd3gzMU1iNWJpQ3IwL0R5YjVmVXBBQkVCQUFHMEgxTjBaWEJvWVc0
- Z1FtVjVaWElnClBITXRZbVY1WlhKQVoyMTRMbTVsZEQ2SkJHQUVFd0VDQUVvb0dtaDBkSEE2
- THk5d2EzRnpMbTVsZEM5K2MySmwKZVdWeUwyOXdaVzV3WjNBdmNHOXNhV041THdJYkF3SWVB
- UUlYZ0FVQ1Vqc1pYQVVMQ1FnSEF3VVZDZ2tJQ3dVVwpBZ01CQUFBS0NSQStEK3phekFwOE80
- LzlILzkyREltWFBiUkdSVFBjV2dOR0tKNHRBUWxWQm00eUZPQUtoTVlOCi9zcDRIME5FZlp2
- L2ZXMXZtV3FnNlZpbjRLNngxVmhkT205MVFCOE00UThtdzVtbWVneFhNZXdMZjJteUVHamYK
- WEt1STh2OTE3TGhkOFdvT1MydUhyOFZxVldWRGZKRzZXR3VoR3NxcTJtcnVhWk41ZzZMaDNO
- U2QybW9heDUxRAprYTYvam4yOW45KzluNWpHQzV2eDNnTHRuSnE5dmlNbk9OVGdEZVpUcUVL
- NmVxU1ZkMWIrNnp4TStRc0hzVFI0CklzcHNDcWgzbWxsTTdZL2Ntc0o1dWdsZHZURXhsem43
- VkloV1FBanowc2xvbFZHTlFSN2krcmNRK3BjRFJGS2EKOWJHU0xxR3lhdEUrdVlLWVJtdldJ
- bi9zT1FOU21MN2RXZzRiTW5wS0Njb0FBeHd6RFlQay94Sm1PSlU4QjFPQwpPMXo5b2pKZDha
- a0YwRTlVRmswOW42ajYyVDZZWEZaemo1dFRJUU5iNW5IUVRiRFBSZWZESXMxYTBycDBNNHN4
- CjRLZzJzZVVQZVFZVXBEV29YR3pYTHZ5ajRkMHlyWU9wUmpEb0ZJdE1oMCtndmhJd1Q0NGNv
- aHpUUW1vZEQzVHcKSUZZbDRKOWlrTFI4SmdvRzBHeEo4ZkpnN2tyenlnNS9MOWlMMDBvZjdZ
- ZVJuZktWTytyK05BUGk5Zld1Nm1ZRwpGaXZGQnRXYTh2Qzk4WHlWT2NUYXhvTzVSaC9WTUxm
- OUdFTG52VWdjSEpQZVgyK0FVbkxIcjBnZ3NIdFgvK2cxCkxIRVEwMFBQdUVjTkZSODNmZWlr
- L3FoMXVIQlhDSjIzYWJIaHVVR1Z0RXljeEY4ZWFZQ1VIYUh2VS9ldnlDSGUKeElRZWhKc2du
- NkkzWHJURTFzMWVDSXEwRS9kdDAyQXd2cHhDUFkxRXk3UkljM0ppTE1oNVh0elp2dGtsTFRy
- UAppREp6ekRXTll2V0RoRUJnWGM2alJteDk3VjdJZGZGbUI0K2pGR28yL1QxdlhMdElURmlO
- SGFTT20xdWFMM1dtCkI0OWk3UVFqZVVtQVd6UE1WNE52UjJWbnNiQmdHQ2Z0cHh4REcxdmh5
- U01TT2M3QUdXa2NtQnVKamxqcE1zVnMKSkVBaTdGVnBQUnBGcE9VdDdkcmNLSnd2aHZsV1dE
- eDhCQlhXcHNDN0pybElvRzJNZHpNNFRDa0o4Tk5wZUNCRgo1RXJmdHZDZzNvcjFFYVBHeGFk
- NUJsVUlUS0ZXM01ZbXhXbHo5cURHQ1E1Vm9jY3IrUkt4aGwycS9HVnhKTVRECi9JWHZ0VGNt
- OTFQWXp2ZW44Sy9KaUs1SjhNdVFpQ29RLzc5Y2VCYTM4NjZhN1dlUkMvdGlEZEtWcDBnamlS
- M1YKenhua0hYNU9Ud1ZLMkR6amZiTG11NC9LVVowUzNTNzkxdGRlbENRNzFhZk9DYUVRUmQw
- TVo5L0MvS1RxTEtuYwpGdFhEUDFnd2pzbTViSTJoK1JBTVdjbDh1TFI5ZjJ6ZFo4NG5NT211
- TUsxU2wxeXl4Qlo4aG9xVlZNeEJTcnZlClZHeHB5cm9PT0xOTitIdDhiMjkzdVY2NWZ6eUJy
- U0dTcGN6TUx2cTBYOTcxYmU5cnZGNlZaUUtDaEp3N25lV1IKWk1vQ3BiSnE0R0NNakhEdzlp
- Ymw0OWxrOUVWNytUelRiV0thVktvYzFyUmZCMzVyVUtMUWhPNGR2UlA2aFFNTwpwNUlzVHBM
- bWFXOERVUTZJSThJTTg5VEtTaDRQWStCSzZDR0MwKzF6clhPdTZDSW51UVFOQkZJN0NUOEJJ
- QURiCmtnOS9lVnVOeXdMR2RxVmpiV1NmOXdOV0ovWFBiZDY1MFlaRE5nUlNhNVE0NW1YZHhp
- WFdEL2pRRnhRcy9iRVIKU2hCTWdYOEVGMkVVUHpmRW9jY3B2MGMvZks0cGJwT0xseGVDcE04
- K3dZT3lSOWszRHNyZWtVa1FJaHlRcEZZVApZR0V3Zjg0TVBpT1pBSmVRYUtIVGRWMldZWjdl
- eDFqQXVRN1ZxOWZldUdBV1ZwUFAwN2hEa0JTQkVhbHZHZ2RPCmg1S3NJQVBybVBmRU5XM1ZD
- azhSVlNWdWIrUmRhZTdMMHBvU0VzSFhGRzlGR0ZRQlAzSGFUaFlOdk14MlR4R24KYnVQVy83
- am9TY0I2Y0tvZVkzY0ptRjdUOEtzR2dvaUcveTVjZWpNL3R1dmVJZ2VPUXZnUUQ4U0FKcCtt
- THBDMApqYk5UZGxsN1NET2ZXSXkwbm5OQ3ZFMGQ5ejhMbTZORDZvVEo0UCtURFpPbkpjbG1O
- Nkl5alNxT0E2ZHM3M0VkCjV0dlpiVll0VUJzN2QwY0NjOU1aNnBzZlJ1N1VnWVZpdE54VWND
- b2l3ZS9UOTc1NFl6a0I1SzZzeWZqL21OQjgKMDdNaXBRMTJuS3hMUXN5YjJuVlhmWnpIS1RZ
- RjJ1Z0t1MTNMM3k3ajZPYzdkTlY2QlVnS0pSaXRrUkFRN202cgplYldCVWJ4Q1VZRS9UbmxR
- cDlsNlhDVFNMV3FPNVI0R0JjRzJ1c091TEhDRU81dzdiVHBoSitGODgzKzZpYWM1CldpYVQ4
- bldZL2xTWGdvTEhwN1NTbk0xRU5BMlJSUmZYeUFrYUJ0YThIVGw3dkpDK2ptS251aHI1NUpZ
- d25NZzIKWXltOHVQNGlVLzcvMGlRa2Z6TmNPQk1JOURSZXJ0VjdEdHhBOHRtY1h0L1J3d2xM
- SkdIQUozTGc5dFNEYU9Nbwo3eUEydnZaVlkzcWlXRkJHeE41dVRBT2hHZHVPT2YwQ3VRd1JG
- b2ZuY1NkYjh5Y1BUSWVHTkxLcUo0Vk0wUHlICmNNcGtxUHpnc2FMTzZOT3NiZ1REcXZGU0N3
- VWcxdThWTUNJWWJXazd3eUg5Qnd5WVNNMGU3NURPcmJYSVFtSksKSWNWZlpEdmRqSVVaVGU1
- eXFpNWFMMkNJZkN4M0JKWTRFN21PZlBmT0Q0bmhUS1VONG9ZaXRVVmRWVlQwcEhtOApXclZM
- QWltTFRtUXVTT3RrRUJlRkN0eTRtWlpPdTU1Zkh2ZG1ZWTFVQXVLUHlNeExDaGJ0SXIxdDZE
- RTEwcUVZCktWR1RmUEpJc2dub3JxRTRiWGwzK2UzSjArWEtoeTdzbkNZNlZCQ2pNZkFMRDNu
- RDNXNktoc0JVeForWVZjMFMKVGlkSzB2ekF3Y0lJWWQxMDNMNEVkdXp4dGxLeG52QjdsMndG
- VUt5cW5DZGxsMnZrRXZUNkpSS0VOK0dLZ3cwOAozelExRzBYOEJKL3hNVDZsZXV2WGs2ckpX
- RHpBRk9iRndUT2dMSlR6R1VvYnUwK01xeEZMRUJPdmhtU3pkNHljCjRpbjMxY0t3Nnd5ODBp
- OEd3U0JSb2VqSSt1OWJqZGxIWXBENG1mdzdGRSsrQ1IrWXFadnJac2Foek8zUkx3WUsKVE1m
- cnByNUlhaWlDLzNFcmE3ZG1icytrdHFWR3Y0NTN1c0tzRnFvVDJpaXo4RGx0eHF6WXNTKy9h
- V3Q2N2JQRwo3TG5wdDl5alRLOHRnNE42dTFUdnl3dGMvejIvNUR2TjJBdlM1UG5LNkZaMU40
- V2pmTmd5NHhUL1F2QzJkb3VZCkNwZDRkakx2NU43UUhBdHY4WlNkQUJFQkFBR0pCRWdFR0FF
- Q0FESUZBbEk3Q1Q4b0dtaDBkSEE2THk5d2EzRnoKTG01bGRDOStjMkpsZVdWeUwyOXdaVzV3
- WjNBdmNHOXNhV041THdJYkRBQUtDUkErRCt6YXpBcDhPNDcwSC80bwpPWlZPQU5ROUw5SmpO
- LzU1RFArYUdoL3BoU1JHbmpWUWR5TXVEZzdYaFlEYkd5SGJESExoSlVCUEVMNU9PUG90CmRK
- Z3lZZFZsRTFoRktZRC9Mb0tiYWZDeUJDcE10VnNKTjhtRkxONWE0TjVnR05RUzNXUklaSG1i
- Y0YxaFA4cm0KSDdPWEtkNUVUb1VCS1FxTm1uZWc5WHJlTm5DWTZKUXFtWVhtS0RLazdWVFhN
- QUhQWVRmcjZuZjJzdS80bzNYVwp4aktSWHFGWDdsT1lRZEhZT1FyUzhMQU5qT0QreDBPelh4
- Q3ZhemJXdFpyZEl2MVV2NmNKWW1mZ2VwWk5HbS9TCi8xemdtV20ybjltNjYrNk9qSU4xWDdo
- dFNYQTlmcGtKbUIxcDZHeENEaTJkL3dtaUJuMmVJNXdFL21MOEQ2UEcKVEZGTGlOcTRXMUgv
- WXB5VkVaNUhWZTNjQzV5MnY4L1VPZWlOYWNVN1MvK1h6dnZpMDVPZWJxdUNBQTZ1SzlQTgpt
- Q24zZFI1K2RYWjRHdzY3QitTVEcrdWxlWnFSZ1NnTWpkN2tiNzlGMy9NczFKakgrMkl0NVVt
- enlsR0VTanpGCmpBZExBRjhPSzdQTGhzeHU2TFZrelZPTTIvRklIdGRsNmxmcVMzL1Y1b0p6
- cEozR2lQTERXOCtXTkxhemJBRHQKaXpFV2RKcXlaOEsxWFVMSHRoem93enFMUXNWWXBIWFpR
- VU8xb2kzYTVGTEcvckdOUlVGZXQrN0VzUlFNOGFDRgpRQ1FRbDY5RnhNYk41bUpabldGSWgz
- TDVmK1FSM0hUajlFZXVCTGVLWnZMSFJhWThpSVBpdVYxc25LMmdqSHl1Ckp2RjYvempaSDNN
- YzE4cXJlYzdOWStmZEk1QncwMVhyeWZwZVkwT2p4K3VHck5qdCtNS2NIL3FSeEJlWEl3WWoK
- UWJxNjZhSXhJWTNBR0xkWDhFNHVwd2V2SnRYT0xrK2dBTmk1c0tqeTdzV2NMTEROdE9YVXNr
- Y0tPT0k0M2huVwp0d1FMNFVLTmVVTUZ4MTdUYWVWZDVQYWZTYlRXRVRWODkwejI2RXpxZmhm
- N29ZSGtRSGs4TmtKakZSYTF2MWRsCmh6eTI0U01ESVBZQi9iVVZPN3c3NFNUU0g1b3hIRE0r
- cEI4YmZlOEFaU3hMWkhCdEFockZHTFk1NEE0YnNiM3YKKzJkd3d0a2RRNlJ4WDZuNVFpY29B
- bVpFZGRJNTFSd2lRdzRneWRTVG1iL2hhUDdCOVZyWlVOdW9aSXdWSGpldgpRZkV4Sm5aVUVE
- NEJCb3lPaDI4NzdJUEFDRFRwNVIwZTNnTDB2cE5aaHorYm5jZmQ4MlhzbnQ3T0tnM3dLTEds
- ClVzYjBJcXNTRmZ1MHFzejNJV2JvRmlaZk5yNGROcVFCeXJYUFFodXphWXlhUGExelhqazJM
- L3BKTGNOZjBzaEEKMkZiNGoxTjJ6b2NjMHlIWmp5ZWNSTUZBbyswWGU5MDkrRGRadXdqbmZ1
- SFhmYTZDckZsaGlpTlBtUHNJWG14bgpmTHVqWjVHZ3JxWTRVYXIzejNmNnZiNTVJM0srNTFu
- b3ZsNTdxYktuTHdGQWRRaFpHVjM3dDBpRkRsY01EcnZqCldGWVd3NzFQUUtaZmFuWkN6eWNR
- NFF1bi9GckR5d3NCckJxY0M1NmkrTHBWek11YzNYZmhpU0tHb2UrWXhFY2YKTmNuMWZIZGRy
- enpxaUVUQlhCQlNwSVJBUG14K0NCVUJWeXBRaXdBSG1lUTA0cC9icXYyTVNFTkpqeHhvam85
- QQpwUTcwK1I4SUV2dVhoMnJKVExlTQo9LzRnMwotLS0tLUVORCBQR1AgUFVCTElDIEtFWSBC
- TE9DSy0tLS0tCg==
-Subject: Re: [PATCH 0/5] Reftable support git-core
-Message-ID: <cdf5fd5a-49ac-cc0c-8da4-68c82cdd883c@gmx.net>
-Date:   Thu, 23 Jan 2020 23:45:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.6.1
+        id S1729449AbgAWWu7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 17:50:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59822 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729259AbgAWWu7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 17:50:59 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1BF5BB58A6;
+        Thu, 23 Jan 2020 17:50:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=7sqJQ4pGdmgMNzPCHmTVg0KIc8g=; b=rotBpv
+        AdUEcC7irzA+o2DGnY5P5jO4OfjCQMfTdZ+l7R4J0ESJtWSy4GkIKqs4in06s3gM
+        9Ecbh9Vwgy1EBpCeJFbcp+70yTh/DDORpUI+MPCU06koWzIiXFLrqgLnPQXuaei4
+        pakyh+6UtO07TTsOghrKEN8WercW+EOxCfdss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PkuoIld2aq0TWz4JXPdt+8U6I5WUDjlg
+        n1IjIEwHtFQi1d2+o1xH80MY4ldTKwqkhJ56eR5gThDlqYJfapsfiZCmYCc+fkCd
+        ijK/ehlBAHRt3gDfCT6kKGv+oX/K40Lt3L7zluniXi5x9jQ1AActvZlJokwGTk2M
+        P/xJiyExyOI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 130EFB58A4;
+        Thu, 23 Jan 2020 17:50:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3CEBBB58A2;
+        Thu, 23 Jan 2020 17:50:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eyal Soha <shawarmakarma@gmail.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH 1/3] color.c: refactor color_output arguments
+References: <CANsz78+-Z89d8E=n3cjfnXaGVFXpchdG7EjtdQuFjzo-=2aPeA@mail.gmail.com>
+        <20200121165623.151880-1-shawarmakarma@gmail.com>
+Date:   Thu, 23 Jan 2020 14:50:52 -0800
+In-Reply-To: <20200121165623.151880-1-shawarmakarma@gmail.com> (Eyal Soha's
+        message of "Tue, 21 Jan 2020 08:56:21 -0800")
+Message-ID: <xmqqsgk53hyr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <pull.539.git.1579808479.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:H+QSFlB8YZblxwj5RqFCOHWGOgJQeWxhTYtuqUZxkp4fRy6aQ9n
- SW1Rx5yT//KWOgtkWMU50IulY07AczhI+7c7eA3O6QdZfBMRAhF3Degiw7FK5yZWa8R32mP
- GnNmBelO6FS9oOWqmeaXqT8rO64pOVmZlNZyDATj3qLpBhEpVGAKSuGzsGYJ0X4B3i45KUU
- gTqLNk6H6EyI+XyQxdUYA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rxwjOX1ks1g=:DCr+n2f2bruP609slQmK+8
- N/JJzMxVGuWxhJUQLW1R+uoPvgoBaqbNAYkzYAOEAjpGaJtRcBzE5E0PA1rwA/2ttGPFkfIdj
- t1NaqBAU6TVLlzEMZ2sYC8239YIrrHsqzoAcVTR0mnAXDx7HIxZzUfCdTCtG3eQKdVKIe+K0X
- BruUkqZIkh1QvGFfmbJrTcYcBkNEAhIgXIrjyDcWQp1yc0+18vm07P5YdX8BOzUKEl/GV8xse
- NFWPd0QNlmT2FNblATDoQ/uXN5MLOQXvT0RFWGxhskyNE1YzhbvsvyHvfhd4RxoUsf8bOlWyr
- xstEc9pimnswvdyijKZJLTg2SzQqj+6TsQTiDR+Jz9U91NCHn/0E1TtXTMOmy7y9k9dEgHtSk
- 98QZ10zme6OuVie99X76Tzln5edS3u6i5pROgT5Sx0NZaMnGjEiw2uwy9ELzQ0vy5KBELVdBb
- ZAAg/EjRfnwKfZHsjn8njmE588/fpNRQZ7R8DDo9iQuKAFqeDGLb0yncna70e4bvyLrFiM1Na
- 3kfWErD+/6toGhp9zRt4knpY0azuQi/VQiEKDO1NRkCTF8G7oWqxzCvidGbEynnJg8V60H3XG
- ydW4zHusaVVMw6jSU5NXmpnaDxOc+qrAEELWA5MJNsw5MYtg6H3Myp5aqy0ak+O570PjwoIsO
- Jn9KkmZCCXCzvGA5minoSwOqZ1HKnYRLU1WZa5ZiIjiBr7UXEY1hO5T2hNzpEU21LjcrsUJPr
- JlJ+E0Q5jZWBiM+lQj1v6tdmKNqrBBA+vx6lJvnCi9lDqEn5vtcP7NeMTXfnb8kjq6H+jfqTO
- nKhnLKyuP6UTssZmR4s7eeX2TkfJQ/XgRKuv7sXhg2aSiok3HSA2fkfWyQpgfMdwGDRuxXzWN
- KzJYdxQZS5XdnxSoeo6bZWiDfmuxAsXUUXz04XN19YHeXmI5FL9VDCpRA4vfNaii8TMNe1cDI
- 1/7TsJcJ6Te41XHLpvR/88WW6YJPH5iGD4F/BPf9kr/4l39g1mZTL5iKRNgeLACJtXExlybvv
- PWj3KnWWHEwXZusVMN2GjoNy78wVgHinUPIrq/joHN5XHbd2aOv8LtzDiZDWgypSMdTSOcEN/
- A9Z4znUyy9Flg+mJfeEC80S1Kr6+mN47Pfww+1Qu/CR0TrDHa090Xa8mQoWTD5yQZ/edwBR9K
- UDl/coP61Il951rm0A+afvd8pGOo7mikV1EDX6AhJTPEV7r2hF05WXX4EPhLEzWyV61WPxFvs
- KvKd5BYkVqrMQSRDV
+Content-Type: text/plain
+X-Pobox-Relay-ID: CFBAF94C-3E32-11EA-AE83-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Han-Wen,
+Eyal Soha <shawarmakarma@gmail.com> writes:
 
-On 1/23/20 8:41 PM, Han-Wen Nienhuys via GitGitGadget wrote:
-> This adds the reftable library, and hooks it up as a ref backend.
->
-> Han-Wen Nienhuys (5):
->   setup.c: enable repo detection for reftable
->   create .git/refs in files-backend.c
->   Document how ref iterators and symrefs interact
->   Add reftable library
->   Reftable support for git-core
+> @@ -166,23 +173,26 @@ int color_parse(const char *value, char *dst)
+>   * already have the ANSI escape code in it. "out" should have enough
+>   * space in it to fit any color.
+>   */
+> -static char *color_output(char *out, int len, const struct color *c, char type)
+> +static char *color_output(char *out, int len, const struct color *c, int background)
+>  {
+> +	int offset = 0;
 
-I am most of the time just a curious reader on this list but as someone
-who has no idea what the reftable library does (except that it can serve
-as a "ref backend"), I would expect much more elaborate commit messages.
-In particular, patch 4/5 (i.e. the commit message of the "add reftable
-library" commit) should describe the purpose of the reftable library at
-least briefly; and patch 5/5 should not contain shell commands and
-output without context but a short description why the patch is doing
-what it is doing. For example, if the use of the reftable library makes
-certain git commands a lot faster, it should state that.
+Have a blank line here, between the end of decl/defn and the first stmt.
 
-Thanks.
+> +	if (background) {
+> +		offset = COLOR_BACKGROUND_OFFSET;
+> +	}
 
-Stephan
+No {} around a single statement block.
+
+>  	switch (c->type) {
+>  	case COLOR_UNSPECIFIED:
+>  	case COLOR_NORMAL:
+>  		break;
+>  	case COLOR_ANSI:
+> -		if (len < 2)
+> -			BUG("color parsing ran out of space");
+> -		*out++ = type;
+> -		*out++ = '0' + c->value;
+> +		out += xsnprintf(out, len, "%d", c->value + offset);
+>  		break;
+>  	case COLOR_256:
+> -		out += xsnprintf(out, len, "%c8;5;%d", type, c->value);
+> +		out += xsnprintf(out, len, "%d;5;%d", COLOR_FOREGROUND_256 + offset,
+> +				 c->value);
+
+Break the line after the format string instead, i.e.
+
+> +		out += xsnprintf(out, len, "%d;5;%d",
+> +				 COLOR_FOREGROUND_256 + offset, c->value);
+
+that would make it easier to see which parameter corresponds to
+which placeholder and also saves line width at the same time.
+
+>  		break;
+>  	case COLOR_RGB:
+> -		out += xsnprintf(out, len, "%c8;2;%d;%d;%d", type,
+> +		out += xsnprintf(out, len, "%d;2;%d;%d;%d",
+> +				 COLOR_FOREGROUND_RGB + offset,
+>  				 c->red, c->green, c->blue);
+
+... like you did here.
