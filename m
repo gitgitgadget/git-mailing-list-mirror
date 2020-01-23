@@ -2,114 +2,104 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4263DC2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05686C2D0DB
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:02:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 187A221569
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CF59F2253D
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:02:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="j3KcLiMA"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hmL9Fc7z"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbgAWTAu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 14:00:50 -0500
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:41142 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbgAWTAu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 14:00:50 -0500
-Received: by mail-qk1-f180.google.com with SMTP id s187so2458855qke.8
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 11:00:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=6TQ1Ypx2wFRlQn1hNH8dG1a4Ug8i0NP9i/83tbSSM/E=;
-        b=j3KcLiMAaudB/YDnMp0DKjplfoktzWoOd8/ysHtfX1FojOq1tYf4yVX7ROHsCu+KIw
-         30480Xd6g632PhSV9T+mhmJ0+/WWAkmRxAYFI2eGSfJ4+oUXF70HWaPU4adl0dqbPykU
-         13wSw7k3ctIEmF1czloXVwfTmQz3QyT8L+N2/8ymeI6agUyGyycBawkuX0q/r5hoedB3
-         fhKDEuZQq3yagGINcPF4YHa9dsIQd78JSbo2E7JRaSX2dEt6ma3m2v20PrVdLQSnEK5t
-         BKB8k4y740MMsoZEXUptLG+sOBvmUtjgp/fQ9y21aerWwJ8BQYvCfKyrlPzOVe5dbAeU
-         Yo0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=6TQ1Ypx2wFRlQn1hNH8dG1a4Ug8i0NP9i/83tbSSM/E=;
-        b=Rp9PJkXFOyEde7zzlgJZyqo6K7E1kWeTtbX9ymw6Z1Pc0ZcFJOHxvavCuh0FQU8xAs
-         wvaYNZ5wSuGmXCqtNQQtab9OOB+yqnGOg6qeicYyjUS7D0dmY8gWfd6t9mwQMOs4+ftV
-         vSlX6AWbJpoXZGjmwlAeRtNRtnZFfXvdEIyTGsE6Rmwz9V+IKMMDZQnnCc1I1LKTrYiE
-         U21u2GdLnKndEnYbZj8DhFkzhOa6fg4+OSw9Qlnzm8PRO4hVWJrLNBnpu3VtrjDlMVYB
-         lOpjFBjnndKCUf+mLBzv0JuZ6KxnkDqEPObSJBOn4noHATl+uGAy1BX+6AFsFVdjJ7vx
-         3wCw==
-X-Gm-Message-State: APjAAAWiAo5f5KITxTk0X1grgZmkQbwkTEuC6cm7w27jURZKj1zdyB4Q
-        cMX4P4KT6MAARL1cinbPEfjc4XlQ8tY=
-X-Google-Smtp-Source: APXvYqwnkGhfm+m1vzG8Mz9ajMRbJSObbDHrsHyoD+hQkiwwca/qst83KQM4VOA5YNc9L7rCeYFWtg==
-X-Received: by 2002:a37:905:: with SMTP id 5mr8582164qkj.404.1579806048838;
-        Thu, 23 Jan 2020 11:00:48 -0800 (PST)
-Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id l6sm1363821qkc.65.2020.01.23.11.00.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 11:00:48 -0800 (PST)
-From:   Matheus Tavares <matheus.bernardino@usp.br>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Denton Liu <liu.denton@gmail.com>,
-        Paul Wagland <paul@kungfoocoder.org>
-Subject: [PATCH 2/2] completion: add support for sparse-checkout
-Date:   Thu, 23 Jan 2020 16:00:03 -0300
-Message-Id: <79f6aa1411c1bba3ee2c55a7532e78ffccb1edea.1579805218.git.matheus.bernardino@usp.br>
-X-Mailer: git-send-email 2.25.0
-In-Reply-To: <cover.1579805218.git.matheus.bernardino@usp.br>
-References: <cover.1579805218.git.matheus.bernardino@usp.br>
+        id S1728831AbgAWTCt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 14:02:49 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58150 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728709AbgAWTCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 14:02:49 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C3C9B3E09;
+        Thu, 23 Jan 2020 14:02:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=doP1YHM6mpxRUcjgaa5L8VGseMo=; b=hmL9Fc
+        7zy4/EaV67G1ozPljmQRWaF0tersJOvmLrjPbcvfi8drR6juCzC28qTypGI/6/ol
+        rd1XYhsCSj3SxHwC0a8HbOOltoPQEPTqI0amiT3F+f2DGn5xoaswyyEl2HCRJ7mv
+        9vfGNQV4conCmBhkmkgTCDGy4y4M+dpSGElBE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uyTSWJ0ubLBrQyphdgpB903qxEJAZWmj
+        WRmvCwZxG9ymmCxpfoDq23nqKpaFFsAXIJ8gM+p0p8y023Wc7EQOpZPpTdjP5lUq
+        3JUPf9F1CsQA4NmMAX7BnstCNBHIidG4RFAyjdL4Fvbi1qLyz8xGV2ZoQWxn7rbw
+        TI3Po943Vzs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 74389B3E08;
+        Thu, 23 Jan 2020 14:02:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 956F3B3DFD;
+        Thu, 23 Jan 2020 14:02:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        ch <cr@onlinehome.de>,
+        Martin von Zweigbergk <martinvonz@gmail.com>,
+        Paul Mackerras <paulus@ozlabs.org>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [REGRESSION] gitk can't be run from non-worktree folders
+References: <4e2e5829-b9a7-b9b4-5605-ac28e8dbc45a@onlinehome.de>
+        <20200123163151.GC6837@szeder.dev>
+        <CAPig+cTixT9JYDPn-umKdQLtTm5byA1wwmvVY1ryuh+hv2=6MQ@mail.gmail.com>
+Date:   Thu, 23 Jan 2020 11:02:42 -0800
+In-Reply-To: <CAPig+cTixT9JYDPn-umKdQLtTm5byA1wwmvVY1ryuh+hv2=6MQ@mail.gmail.com>
+        (Eric Sunshine's message of "Thu, 23 Jan 2020 11:36:49 -0500")
+Message-ID: <xmqqpnfa3sj1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: F012133A-3E12-11EA-BA2B-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
----
- contrib/completion/git-completion.bash | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e4d9ff4a95..cb1f1b5e20 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2718,6 +2718,27 @@ _git_show_branch ()
- 	__git_complete_revlist
- }
- 
-+_git_sparse_checkout ()
-+{
-+	local subcommands="list init set disable"
-+	local subcommand="$(__git_find_on_cmdline "$subcommands")"
-+	if [ -z "$subcommand" ]; then
-+		__gitcomp "$subcommands"
-+		return
-+	fi
-+
-+	case "$subcommand,$cur" in
-+	init,--*)
-+		__gitcomp "--cone"
-+		;;
-+	set,--*)
-+		__gitcomp "--stdin"
-+		;;
-+	*)
-+		;;
-+	esac
-+}
-+
- _git_stash ()
- {
- 	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
--- 
-2.25.0
+> It's a new regression introduced by 2d92ab32fd (rev-parse: make
+> --show-toplevel without a worktree an error, 2019-11-19), as far as I
+> can tell. I have many times used gitk on bare repositories as an
+> interactive replacement for git-log, so this is a unfortunate bit of
+> fallout from that change. That's not to say that 2d92ab32fd should be
+> reverted, though... perhaps gitk itself needs a bit of a fix.
 
+Curious.
+
+There is a "proc gitworktree" that does use --show-toplevel but it
+is fairly conservative and assumes these calls can fail.
+
+    ...
+    if {[catch {set _gitworktree [exec git rev-parse --show-toplevel]}]} {
+        if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
+	    catch {set _gitworktree [exec git config --get core.worktree]}
+	    if {$_gitworktree eq ""} {
+		set _gitworktree [file normalize ./[exec git rev-parse --show-cdup]]
+	    }
+
+However, there is this call
+
+    set worktree [exec git rev-parse --show-toplevel]
+
+at the top-level of the code.  I wonder if the obvious and minimum
+fix would be sufficient, i.e.
+
+    -set worktree [exec git rev-parse --show-toplevel]
+    +set worktree [gitworktree]
+
+around l.12546
