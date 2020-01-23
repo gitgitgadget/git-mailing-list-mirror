@@ -6,100 +6,74 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
 	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D2FEC33CAA
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1B78C33CAA
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:21:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B913524655
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:08:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 8A74824676
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:21:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lMDRN8ML"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gcK2Ax8i"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726103AbgAWGIR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 01:08:17 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:64203 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726004AbgAWGIR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 01:08:17 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0322DAFF7C;
-        Thu, 23 Jan 2020 01:08:17 -0500 (EST)
+        id S1726188AbgAWGVL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 01:21:11 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61773 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725535AbgAWGVK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 01:21:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8CE833E6DE;
+        Thu, 23 Jan 2020 01:21:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=4cWIFoYc9vNJQbT5rtKIwinfcuw=; b=lMDRN8
-        MLbVBq8/dm8zOzrUk1LMRTxep2iQdoZIsu2aKH292diubdRU6XbSGuzFMNdmTUQM
-        IVsW6534aXHnUcdRHVkra7QiEVUmB6D028cOhvw0RPUIPpt12aDSGSf4S2+D/P38
-        cgQpJC1XCJSv4h4dIWqRaujxNpBcYV6Yji6Ko=
+        :content-type; s=sasl; bh=FrtRntTu73WfsnxFDJqGGdZfjVQ=; b=gcK2Ax
+        8iRzPtKx29fYbZuOjF5430ygFvEtwKCtY6sbtQ+HgbBp5r17MWPw70+lA4m3JhBg
+        z30s82d91T1u4wYfiBplTkBXrmbQsfOuCO9jT6yslMmMBg2LYbGI4BTSWyCU2zJP
+        1bjKNk43qPeLdaWlVgoZewtgZi1LLJPa7jOSE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hpLdeCo0cQ7WLgXn92tyjKix6ZVs1bNt
-        ozuaP+vYxax2DWHwQMl6z+jTh1mEhd44gCyJfBeiI6s8cCHBeZ/Pv7Jqp1rg/QLf
-        D0WF3wh0S+mYbJAM7Khx+yXrbjyzWgLjosZFnDzz1TmupM9NmFWEcMKTPyj7qM2u
-        wDeON4XfWIE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id EF54DAFF7B;
-        Thu, 23 Jan 2020 01:08:16 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=yNE3QpTj5SDCA7Tygk941GMUYfChJYtZ
+        6a6v/PPIlBYrzncj/XISs945/L5W5UkhGYdZ31HVHySIL2/ejQo6UiMoAYLSZvti
+        LcyvRbyC0qOXnQWPj5Cl7dxIWoGyhbLndcHkNV+LS3gnNByokWugk5LnP2l/8kRj
+        dTKG4kUAulA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 85D383E6DD;
+        Thu, 23 Jan 2020 01:21:08 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.76.80.147])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 126CEAFF79;
-        Thu, 23 Jan 2020 01:08:13 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id ABBB73E6D8;
+        Thu, 23 Jan 2020 01:21:02 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
-References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
-        <20200123042906.GA29009@generichostname>
-Date:   Wed, 22 Jan 2020 22:08:11 -0800
-In-Reply-To: <20200123042906.GA29009@generichostname> (Denton Liu's message of
-        "Wed, 22 Jan 2020 23:29:06 -0500")
-Message-ID: <xmqqblqu66yc.fsf@gitster-ct.c.googlers.com>
+To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
+Subject: Re: [PATCH] git: update documentation for --git-dir
+References: <pull.537.git.1579745811615.gitgitgadget@gmail.com>
+Date:   Wed, 22 Jan 2020 22:21:01 -0800
+In-Reply-To: <pull.537.git.1579745811615.gitgitgadget@gmail.com> (Heba Waly
+        via GitGitGadget's message of "Thu, 23 Jan 2020 02:16:51 +0000")
+Message-ID: <xmqq7e1i66cy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: BD7918B8-3DA6-11EA-993E-8D86F504CC47-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 879CEFB0-3DA8-11EA-9B95-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+"Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Sorry, I'm back in school so I haven't had the time to keep up with my
-> contributions very much. Feel free to give my topics lower priority for
-> the next couple of months if they interfere with any other topics.
+> For example, if the user runs `git --git-dir=<path> status`, git
+> will not be able to figure out the work tree path on its own 
 
-Thanks for a quick status report.
-
-> On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
->> * dl/merge-autostash (2020-01-13) 17 commits
->> ..
->>  What's the status of this one?  Are people happy with the shape of
->>  the code?
->
-> I'm not quite happy with this yet. Phillip Wood pointed out that if we
-> do `git reset --hard` mid-merge with a stash, the stash will pop _after_
-> the reset, which is very surprising since it leaves a dirty tree.
->
-> I think I will have time to reroll this on the weekend.
-
-OK, no need for rush.
-
->> * dl/test-must-fail-fixes-2 (2020-01-07) 16 commits
->> ...
->>  - t2018: remove trailing space from test description
->> 
->>  Test updates.
->> 
->>  Will merge to 'next'.
->
-> Eric Sunshine sent out a reworded version of "t2018: use
-> test_expect_code for failing git commands"'s commit message. I'll send
-> out that replacement patch later this weekend as well.
-
-Thanks.
-
-Good luck with your studies and have fun at school.
+It is not "not be able to figure out".  Specifying GIT_DIR (either
+with environment or the --git-dir option) tells Git that the $cwd is
+the top of the working tree unless otherwise specified (e.g. with
+GIT_WORK_TREE environment).  If you have to say something, saying
+"When GIT_DIR is specified, the usual repository discovery is
+skipped and the current directory is taken as the top level of the
+working tree unless otherwise speciffied" is probably OK.
 
