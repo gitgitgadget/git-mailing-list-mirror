@@ -2,98 +2,110 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.4 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	PI_IMPORTANCE_HIGH,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BCCEBC2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 20:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 763EAC2D0DB
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 20:53:02 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8950221835
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 20:28:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30B6321D7D
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 20:53:02 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eUbu68TI"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BaW55xpz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgAWU2a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 15:28:30 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40636 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726167AbgAWU2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 15:28:30 -0500
-Received: by mail-pg1-f194.google.com with SMTP id k25so1939716pgt.7
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 12:28:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qiwLmTQ2ma9igSnKi0od7dKWWlM4H0MIK0ffS9B0oeI=;
-        b=eUbu68TIkKyrsyZC/wqkXi7glxCjrpueSU3kmYngm3DnSDAD4nf7sPxYxMCbKZ3NCF
-         sScYeqLM73hbkkAQNpTg5sgVLYBPDT6j4oUHhKR5jsmBIo/O6NRRvofXRVhKChKtABcY
-         caf5cwrnmKRuk1KC+NXLKE5DkZLywnb+CegdDMN8JSVPfMEEZYgG3IbZ26h5JnEX2sHy
-         05jfDUG3IhsYMooZv0sx94WHZ9orWWs26MVZAgjLRtriYYcypsZjbaKNdCrZ/9Y97Vcw
-         WI1REqOSVl90dBMVVyAYXAxVqp7JV5otX7rWyGDGgxmibjDekyutWZwYV/Dfs7CS8+j1
-         MLbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qiwLmTQ2ma9igSnKi0od7dKWWlM4H0MIK0ffS9B0oeI=;
-        b=ItpmndZ2R74eSthVmVyovChxk6rg+cv5C9pZKxhYNlPODbP61ThLZUYCmM3YKH6j/S
-         bF/3AQPLUH+H1ywX1/9AWwPAAbkzA7y3Yfm76x26isZXbdyjVtr2H1JY6C0FaLIghI5q
-         0G7rYFwaWbg9Mk8ymVgOZWc3s8KGsTGIoYTdxIS5HiciTpYolIiSyV5PtFYP2Nrvu7Ui
-         npFudX5UBXlPpbFWRBN8p2djTHG4RzvjDqXQIP1GdXy/QSkjH2INPnW5mCHP+hr9RzJm
-         p59gLy6uaxTWSxZB1jEBuM34oSeSMm/FQ8w1GBYJPVYUuNUzZzVITHQeQ38RPy9KCSR1
-         bP6w==
-X-Gm-Message-State: APjAAAXtNKPTG4oGSK5XIswFKoBwawvq0VfcpQCQC0qBENRKktW3h/EG
-        ZUoSyw15GQFmoEynViZ/MaUbAMz7Gipatd1O1sgICrmd
-X-Google-Smtp-Source: APXvYqwDzEAkTKR9YeaowoXIiz8f5CPihYh1/fC/SCEUCOSh3AWCJPLc3GON+h6X3bQPSTemzvaiU01DJRzK8rkOzdI=
-X-Received: by 2002:a63:4282:: with SMTP id p124mr140272pga.155.1579811309925;
- Thu, 23 Jan 2020 12:28:29 -0800 (PST)
+        id S1727453AbgAWUxB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 15:53:01 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:58172 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726191AbgAWUxA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 15:53:00 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BB28EB5299;
+        Thu, 23 Jan 2020 15:52:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=xLvNv8qWXH/e
+        iH7m13/1LjwcSxs=; b=BaW55xpzmHFbIYBJECoNXqtYDMBEEsUTZCzU5swSmkqj
+        OTlm9LLySKbS4Y6Fd3lgXxofG6sXDOSET4hvbiPOOxds9kCvI8EdGM3C2eq8AdhI
+        6DSR/SV5HBJbRpUpYSN00413aTvgRTgc+33d7Q0ua1357ktPQN5kkJ2qa8j6ckU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=eRkKRt
+        wwqyPC82TFDl6sakj1ilkkNKhSLAgSAuLw8pLtDxjn+jQjZYI0QpSF2IjF6QMpAr
+        14j5mno4732N1abtKtx+cnkBusdJanHBwRFpwDVMbYj8WHG/HV9MkTCspPpIsCGV
+        mzByJ38kAw0JDJtig2iBWDC3NQqwmFAS8v1pE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B3119B5298;
+        Thu, 23 Jan 2020 15:52:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D96C2B5297;
+        Thu, 23 Jan 2020 15:52:55 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
+In-Reply-To: <20200123175645.GF6837@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Thu, 23 Jan 2020 18:56:45 +0100")
+References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+        <20200122235333.GA6837@szeder.dev>
+        <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
+        <20200123141626.GB6837@szeder.dev> <20200123175645.GF6837@szeder.dev>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+Importance: high
+Date:   Thu, 23 Jan 2020 12:52:53 -0800
+Message-ID: <xmqq8slx51zu.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <cover.1579805218.git.matheus.bernardino@usp.br> <6ec39af930871496dd7694ea27eeca69d5d60c96.1579805218.git.matheus.bernardino@usp.br>
-In-Reply-To: <6ec39af930871496dd7694ea27eeca69d5d60c96.1579805218.git.matheus.bernardino@usp.br>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 23 Jan 2020 21:28:18 +0100
-Message-ID: <CAN0heSq3gvZeUXnqzbjFY-1axmFXEJDO4oRp9abRO8TuxJQuDw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] doc: sparse-checkout: mention --cone option
-To:     Matheus Tavares <matheus.bernardino@usp.br>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 54B2CB68-3E22-11EA-980A-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Matheus,
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-On Thu, 23 Jan 2020 at 20:02, Matheus Tavares <matheus.bernardino@usp.br> wrote:
-> In af09ce2 ("sparse-checkout: init and set in cone mode", 2019-11-21),
-> the '--cone' option was added to 'git sparse-checkout init'. Add this
-> option to the respective doc file.
+> Replacing that last patch of the series with the diff below works both
+> on Linux and macOS and both on Travis CI and Azure Pipelines.
+>...
 
-Nit: s/respective/corresponding/
+Yang, care to do the honors to wrap it up with summary of the
+decisions as a replacement patch for the last step?
 
-"Respective" sounds -- to me at least -- like you're tweaking two
-different files. Maybe that's just me.
+Thanks all for helping to tie loose ends.
 
->  To avoid interfering with other worktrees, it first enables the
->  `extensions.worktreeConfig` setting and makes sure to set the
->  `core.sparseCheckout` setting in the worktree-specific config file.
-> ++
-> +When `--cone` is provided the `core.sparseCheckoutCone` setting is also
-
-Nit: maybe add a comma after "provided". Without it, I could see someone
-false-starting the parsing as "provided with the" or even "provided to
-the". Those readings obviously don't work out in the end, but with an
-extra comma, I think it's easier to just naturally read this the way
-it's intended.
-
-> +set, allowing for better performance with a limited set of patterns
-> +(see 'CONE PATTERN SET' bellow).
-
-s/bellow/below/
-
-Martin
+>  --- >8 ---
+>
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index a90d0dc0fd..c3a8cd2104 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -162,6 +162,9 @@ linux-clang|linux-gcc)
+>  	if [ "$jobname" =3D linux-gcc ]
+>  	then
+>  		export CC=3Dgcc-8
+> +		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
+> +	else
+> +		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python2)"
+>  	fi
+> =20
+>  	export GIT_TEST_HTTPD=3Dtrue
+> @@ -182,6 +185,9 @@ osx-clang|osx-gcc)
+>  	if [ "$jobname" =3D osx-gcc ]
+>  	then
+>  		export CC=3Dgcc-9
+> +		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python3)"
+> +	else
+> +		MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D$(which python2)"
+>  	fi
+> =20
+>  	# t9810 occasionally fails on Travis CI OS X
