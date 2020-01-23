@@ -7,60 +7,62 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B403C2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4263DC2D0DB
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 543642253D
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 187A221569
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 19:00:51 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="na+Rs7Na"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="j3KcLiMA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729027AbgAWTAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 14:00:35 -0500
-Received: from mail-qv1-f68.google.com ([209.85.219.68]:37521 "EHLO
-        mail-qv1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727022AbgAWTAf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 14:00:35 -0500
-Received: by mail-qv1-f68.google.com with SMTP id f16so2012458qvi.4
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 11:00:34 -0800 (PST)
+        id S1728842AbgAWTAu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 14:00:50 -0500
+Received: from mail-qk1-f180.google.com ([209.85.222.180]:41142 "EHLO
+        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727022AbgAWTAu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 14:00:50 -0500
+Received: by mail-qk1-f180.google.com with SMTP id s187so2458855qke.8
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 11:00:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bLGPPynfLkDxzIHy/odRv4qCqUGwvmWbMIvWJkTDT6Q=;
-        b=na+Rs7NacC/037RTYdJ9G/nV76XkyWmq4odRVM8HO0NUn+FlY8HPZi87Q1fD50g98w
-         1Zyh+jvALEhdWC1CCK/3IKgkjYHFcemFehbRA2RM7wOpG6GE5RtU3xiNgu70+G5nEsgA
-         Y7NNh2GStGikCsVjGiISWA4j1keVfC3DQPijWvYxrbjLZJ8xMNxJqSzIP0Tb3J56TgjE
-         lw/IFMgC9BGmyFjyfUq9syuZUmfiIJNKb8iFAbxj6I9QprNXML2FP/lgbNN2al6Xu9rn
-         /g6KJYCa+2zseMranQJeJL+3/BW2yaZC5hn5sx/GKXyo03+8KXPYfR9TuP06mdHyiS10
-         dOHQ==
+        bh=6TQ1Ypx2wFRlQn1hNH8dG1a4Ug8i0NP9i/83tbSSM/E=;
+        b=j3KcLiMAaudB/YDnMp0DKjplfoktzWoOd8/ysHtfX1FojOq1tYf4yVX7ROHsCu+KIw
+         30480Xd6g632PhSV9T+mhmJ0+/WWAkmRxAYFI2eGSfJ4+oUXF70HWaPU4adl0dqbPykU
+         13wSw7k3ctIEmF1czloXVwfTmQz3QyT8L+N2/8ymeI6agUyGyycBawkuX0q/r5hoedB3
+         fhKDEuZQq3yagGINcPF4YHa9dsIQd78JSbo2E7JRaSX2dEt6ma3m2v20PrVdLQSnEK5t
+         BKB8k4y740MMsoZEXUptLG+sOBvmUtjgp/fQ9y21aerWwJ8BQYvCfKyrlPzOVe5dbAeU
+         Yo0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bLGPPynfLkDxzIHy/odRv4qCqUGwvmWbMIvWJkTDT6Q=;
-        b=mkE6NeBK2wqhqVZjcYYRMvn1ah284etP3fBbp8BVB8bj1MR7aSO5a39R3eKcVosUJm
-         XtWRFDCxhr3P/UD/iIE43F6GX2C3QKV0gNFO/BNGAvecVFhSJ2SZGXK6aj4lBwBa3vo+
-         56SQ0d0oVDLkilPvL29N4T0AJNWHC1p97UA4NvOBlF6ENW3or/ycTYQL+1IWuW/WgqMo
-         i3O93lIUDqYdL5qVGQI2UOpBmFfwgCRaX8i7GhlOqlj7+Z+LWccC75hRRJcusnC97/ME
-         yeR2KibUCvo4nhohzJN9mbL4zO3kGovST4HAnc+8eMfB/Ez6JF9EeQ6ZsxxnPicyBM69
-         rmQg==
-X-Gm-Message-State: APjAAAXYgRfGeVPLpR3A32ezVIv92uwv+VBguZ30xyfb9VE3iNXltoRw
-        Wjk0cyd6NQICweZyQSEy1m+i/SCRwR8=
-X-Google-Smtp-Source: APXvYqw8J0w/TnahpcmgOV4ULm7DQTtss6wTK7e5t8NYhhsiyjhVz4Rq9XGyN96q09/rvl/baMaX2w==
-X-Received: by 2002:a0c:c351:: with SMTP id j17mr17977973qvi.80.1579806033850;
-        Thu, 23 Jan 2020 11:00:33 -0800 (PST)
+        bh=6TQ1Ypx2wFRlQn1hNH8dG1a4Ug8i0NP9i/83tbSSM/E=;
+        b=Rp9PJkXFOyEde7zzlgJZyqo6K7E1kWeTtbX9ymw6Z1Pc0ZcFJOHxvavCuh0FQU8xAs
+         wvaYNZ5wSuGmXCqtNQQtab9OOB+yqnGOg6qeicYyjUS7D0dmY8gWfd6t9mwQMOs4+ftV
+         vSlX6AWbJpoXZGjmwlAeRtNRtnZFfXvdEIyTGsE6Rmwz9V+IKMMDZQnnCc1I1LKTrYiE
+         U21u2GdLnKndEnYbZj8DhFkzhOa6fg4+OSw9Qlnzm8PRO4hVWJrLNBnpu3VtrjDlMVYB
+         lOpjFBjnndKCUf+mLBzv0JuZ6KxnkDqEPObSJBOn4noHATl+uGAy1BX+6AFsFVdjJ7vx
+         3wCw==
+X-Gm-Message-State: APjAAAWiAo5f5KITxTk0X1grgZmkQbwkTEuC6cm7w27jURZKj1zdyB4Q
+        cMX4P4KT6MAARL1cinbPEfjc4XlQ8tY=
+X-Google-Smtp-Source: APXvYqwnkGhfm+m1vzG8Mz9ajMRbJSObbDHrsHyoD+hQkiwwca/qst83KQM4VOA5YNc9L7rCeYFWtg==
+X-Received: by 2002:a37:905:: with SMTP id 5mr8582164qkj.404.1579806048838;
+        Thu, 23 Jan 2020 11:00:48 -0800 (PST)
 Received: from mango.spo.virtua.com.br ([2804:14c:81:942d::1])
-        by smtp.gmail.com with ESMTPSA id l6sm1363821qkc.65.2020.01.23.11.00.30
+        by smtp.gmail.com with ESMTPSA id l6sm1363821qkc.65.2020.01.23.11.00.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 11:00:32 -0800 (PST)
+        Thu, 23 Jan 2020 11:00:48 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 1/2] doc: sparse-checkout: mention --cone option
-Date:   Thu, 23 Jan 2020 16:00:02 -0300
-Message-Id: <6ec39af930871496dd7694ea27eeca69d5d60c96.1579805218.git.matheus.bernardino@usp.br>
+        Derrick Stolee <dstolee@microsoft.com>,
+        Denton Liu <liu.denton@gmail.com>,
+        Paul Wagland <paul@kungfoocoder.org>
+Subject: [PATCH 2/2] completion: add support for sparse-checkout
+Date:   Thu, 23 Jan 2020 16:00:03 -0300
+Message-Id: <79f6aa1411c1bba3ee2c55a7532e78ffccb1edea.1579805218.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <cover.1579805218.git.matheus.bernardino@usp.br>
 References: <cover.1579805218.git.matheus.bernardino@usp.br>
@@ -71,30 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In af09ce2 ("sparse-checkout: init and set in cone mode", 2019-11-21),
-the '--cone' option was added to 'git sparse-checkout init'. Add this
-option to the respective doc file.
-
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- Documentation/git-sparse-checkout.txt | 4 ++++
- 1 file changed, 4 insertions(+)
+ contrib/completion/git-completion.bash | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 974ade2238..542af98520 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -41,6 +41,10 @@ COMMANDS
- To avoid interfering with other worktrees, it first enables the
- `extensions.worktreeConfig` setting and makes sure to set the
- `core.sparseCheckout` setting in the worktree-specific config file.
-++
-+When `--cone` is provided the `core.sparseCheckoutCone` setting is also
-+set, allowing for better performance with a limited set of patterns
-+(see 'CONE PATTERN SET' bellow).
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index e4d9ff4a95..cb1f1b5e20 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2718,6 +2718,27 @@ _git_show_branch ()
+ 	__git_complete_revlist
+ }
  
- 'set'::
- 	Write a set of patterns to the sparse-checkout file, as given as
++_git_sparse_checkout ()
++{
++	local subcommands="list init set disable"
++	local subcommand="$(__git_find_on_cmdline "$subcommands")"
++	if [ -z "$subcommand" ]; then
++		__gitcomp "$subcommands"
++		return
++	fi
++
++	case "$subcommand,$cur" in
++	init,--*)
++		__gitcomp "--cone"
++		;;
++	set,--*)
++		__gitcomp "--stdin"
++		;;
++	*)
++		;;
++	esac
++}
++
+ _git_stash ()
+ {
+ 	local save_opts='--all --keep-index --no-keep-index --quiet --patch --include-untracked'
 -- 
 2.25.0
 
