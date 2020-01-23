@@ -7,159 +7,360 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C051C2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 14:16:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6FC9C2D0DB
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 14:28:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C49AB214AF
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 14:16:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 91D232077C
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 14:28:23 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GDoW6amC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gjjVABYD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728792AbgAWOQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 09:16:32 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:36889 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726729AbgAWOQc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 09:16:32 -0500
-Received: by mail-wm1-f51.google.com with SMTP id f129so2711187wmf.2
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 06:16:30 -0800 (PST)
+        id S1727235AbgAWO2W (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 09:28:22 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:35683 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726231AbgAWO2W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 09:28:22 -0500
+Received: by mail-qk1-f195.google.com with SMTP id z76so3601405qka.2
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 06:28:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=vXRa/IrqCs48r6DvCfgydMrb98o/fX8izBIuDx72MHM=;
-        b=GDoW6amC1IbybmH3HHPWpAB2fT1x4PUae0+PkIE8EZg8uFVBuJL9PdOvmkkDJSOPFz
-         W9OIOmoXBcSjkItWTzGq33oDiCDBPL3ZVEtBZpI6fnJrhkAkUk8mNtZnTS8syM8qhIDM
-         F3I+lJxH59xlDT9xxAVZe08sQYA6R6qkzSR/cSm3o17o5/OquNiTCFizQG+yJgZqlRgL
-         xNWKiEIwtlBsMOm9SL/sFQ6oKN9oOefFjLFTuTmMiWHoDvKM9EMuugY15NtjpiUd9mwN
-         /r+GudrDQKk4L03h7OS4aqTWuus4iqXOiFB9pZOxanjSwGjcCm/s1WPJVHfNsqHz8UKs
-         7KVw==
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=1fRwdHgahmKOlBa1xurL3aU/E2Wf5B/yMskAdzm/L+o=;
+        b=gjjVABYDjqBnQ6GZ1qPzvPKWsbVnKYEP7lJIERjFMKI3cUiFfyMA1QSkt9/Ik+Db8B
+         +EsBceXAgkS1NSbCqiuMiuDbBOiAasRrhUSMCdJnbnmQ4/POO8n+BsSynIfQETggcOT3
+         n9lksD7KmL1lo+ZCT3nPaZAgtsc05FFsQ+rNVKBIJrPvrqx2TuUqYa8NX+hnw5hpE6A9
+         x7vb7EbgBD94MSsqCdLiCG6ryl0VaRKdM4Zd5Ddye3N4XXPshkpkIdfPk3T52Hoij9Jn
+         eiiETIAkr+jQ2CY5/RFkMkyOFxxwgg8r42PAbRZES/gKIbI1CzUFQ6MLYkq/Psiy0FT4
+         E4lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=vXRa/IrqCs48r6DvCfgydMrb98o/fX8izBIuDx72MHM=;
-        b=XbO2H9JOa++g37OeMf3Wk2UQZyLB6usx2qJQBYOtH8k43JORGOCsUm1FxeQH7/hGR4
-         b9m8qNQgaljZDn+28DbEGy5LAVFfEQjnc6V/oFTzRTli79k6vqSlymMor8YDIv2ClY8x
-         oBatnmv9z/rxdId5PfFsSX44R9hm3w999xPe55JaOky28pdNUQ3P+Z+6H2IF1FhiNLZT
-         QLhyf7PGqSfXjNXJpp1J0LVEQWrhrnbPCs1PinMb+ZUUfEx9EVZ2/ba/VuM7WdK7Has+
-         pld8mKRoBH1RdJvbAdGQXZpibuMau94CuPS19+Qy//tPjHIIw6Rw9L0ksAo2iS4mignX
-         A3DA==
-X-Gm-Message-State: APjAAAUppMAnsZj0jlVTWU4S08YXHYpGogfERPjI1MbLeveKKhX03f0/
-        caxTG9iJHV1BoE5n/6yGMIU=
-X-Google-Smtp-Source: APXvYqxc50+zBEhYCi1oEC9EHHfU0HCXiMjtBnAvAyviD8u3RjvUqKNdoe3Gm3GKY6LRaEqWrX5mBA==
-X-Received: by 2002:a1c:23cf:: with SMTP id j198mr4483417wmj.188.1579788989815;
-        Thu, 23 Jan 2020 06:16:29 -0800 (PST)
-Received: from szeder.dev (x4db607d2.dyn.telefonica.de. [77.182.7.210])
-        by smtp.gmail.com with ESMTPSA id p15sm2676588wma.40.2020.01.23.06.16.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Jan 2020 06:16:28 -0800 (PST)
-Date:   Thu, 23 Jan 2020 15:16:26 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
-Message-ID: <20200123141626.GB6837@szeder.dev>
-References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
- <20200122235333.GA6837@szeder.dev>
- <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=1fRwdHgahmKOlBa1xurL3aU/E2Wf5B/yMskAdzm/L+o=;
+        b=k5JEnlV+ep79klLheAyxNaxbQEpNlYBTY/+QvwFkCGI7HM7k1sDqoCVr2TOiNWcgIS
+         xXdLCMbEFuTm61WDKWSEivDpCye/ATpyJ002E1RdnezLv9h0U8OodPzCBjrMSAH9Ssca
+         OfFjwlTGC8NIy6Oe7W8cY6aITQ9GbhOQjbsQZeYRAh9Kxc5BNKsvfAwCcf5Bnd7LDwGG
+         PSFDRTlGKS/Am4Xuc2ZjIl8C3eQJ5642HFq94vfDMvXKeagytZyd0BFxroyMSrbURP58
+         5jQZr0IlwsRW/gV5bpkMeTQ1U9kH3M14rH/Xm8O6cxmSdwRsWT0usfkpiY/Lm+P0UJXv
+         VVMw==
+X-Gm-Message-State: APjAAAU8jfhSeZvfEwCowOXjSm3uoM8Lg5n66ghFpBwyhUuFl9MFSDwT
+        E0DJgfM1q9DcWEx8SRgV0EU3iEm1EDg=
+X-Google-Smtp-Source: APXvYqy6eZ8gIMAxG8Ofo30fod/bvQqoq/rdfnEHgRrkNPrmTq71dq0yN4r8ZSExvExBWyo8vFXVZA==
+X-Received: by 2002:a05:620a:9d9:: with SMTP id y25mr8034909qky.41.1579789700327;
+        Thu, 23 Jan 2020 06:28:20 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:fdb6:49de:4189:c4f0? ([2001:4898:a800:1010:aeec:49de:4189:c4f0])
+        by smtp.gmail.com with ESMTPSA id r13sm980334qtt.70.2020.01.23.06.28.19
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 23 Jan 2020 06:28:19 -0800 (PST)
+To:     Git List <git@vger.kernel.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: Git Test Coverage Report (Jan 22, 2020)
+Message-ID: <f4373bcf-e78e-aedf-d7d3-e6181164088b@gmail.com>
+Date:   Thu, 23 Jan 2020 09:28:19 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 22, 2020 at 10:06:19PM -0800, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> > On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
-> >> * yz/p4-py3 (2020-01-15) 14 commits
-> >>  - ci: also run linux-gcc pipeline with python3.5 environment
-> >
-> > I still think that this last patch needs to be reworked before this
-> > series is merged any further.
-> >
-> > The only Python script we have is 'git p4', so the Python version is
-> > only relevant for 'git p4' tests ('t98*'), while the rest of Git and
-> > the test suite couldn't care less [1].  This patch, however, not only
-> > builds Git and runs the full test suite for each of the two Python
-> > versions, but, worse, runs the full test suite _twice_ for each, first
-> > as a "regular" test run and then again with all the GIT_TEST_* knobs
-> > enabled.  Consequently, it adds ~50mins to every build's runtime.
-> >
-> > That's just too wasteful.
-> 
-> Thanks for a reminder.  Yes, I do recall you raised the above point
-> and I agree with the assessment.
-> 
-> What's the ideal endgame wrt the tests?  Build with Py$N and run
-> full test suite once, and run full test suite again with the unusual
-> knobs enabled, which is what is done without this series, plus build
-> with Py(5-$N) and run and run only t98?? tests?
+Here is the latest test coverage report.
 
-Running the 'linux-clang' job with Python 2 and the 'linux-gcc' job
-with Python 3 would be the simplest and cheapest, I'd think.  We'd
-only need to add the appropriate 'PYTHON_PATH=...' to out MAKEFLAGS.
-As far as Travis CI is concerned, their Xenial image (i.e. the Linux
-image we're using) comes with both 'python2' and 'python3' in PATH, at
-versions v2.7 and v3.5, with the former being the default.
+Thanks,
+-Stolee
 
-Perhaps we could do the same with the OSX Clang and GCC jobs as well,
-dunno.  Travis CI's OSX image, too, comes with both 'python2' and
-'python3' in PATH, though Python 3 is already at v3.7, but still v2.7
-is the default.
+[1] https://derrickstolee.github.io/git-test-coverage/reports/2020-01-22.htm
+[2] https://derrickstolee.github.io/git-test-coverage/reports/2020-01-22.txt
+[3] https://derrickstolee.github.io/git-test-coverage/reports/2020-01-22-commits.txt
 
-(Note that 'contrib/svn-fe/svnrdump_sim.py' is not added to
-SCRIPT_PYTHON in our Makefile, so it is not affected by the
-PYTHON_PATH we'd set in MAKEFLAGS, and it's shebang line remains
-'#!/usr/bin/env python'.)
+---
 
-I think the choice of compiler to build Git and the choice of Python
-version to run 'git p4' are completely independent, and it's not worth
-to check all their possible combinations.
+pu	93d4f0420cd84db6ba06dfde81314c8c5f328842
+jch	75b0f54c274253cd9cb3395f261a70f4238a3e9a
+next	3f081b084b0e55662871946d66dab3696a46a22a
+master	232378479ee6c66206d47a9be175e3a39682aea6
+master@{1}	8679ef24ed64018bb62170c43ce73e0261c0600a
 
-Furthermore, to re-run only a subset of the test suite with 'prove'
-we'd need to tweak our $GIT_PROVE_OPTS, because the '--state=' option
-that we have in there, will cause us troubles:
 
-  $ cd t/
-  # I have the prove state file from the last full test run:
-  $ ls -l .prove
-  -rw-r--r-- 1 szeder szeder 188758 Jan 23 14:02 .prove
-  # Let's try to run only a 'git p4' test script with the default
-  # '--state=' option from our $GIT_PROVE_OPTS:
-  $ make DEFAULT_TEST_TARGET=prove \
-    GIT_PROVE_OPTS=--state=failed,slow,save T=t9800-git-p4-basic.sh 
-  rm -f -r 'test-results'
-  *** prove ***
-  t9001-send-email.sh ................................ 23/?
-  <... snip ...>
-  # Uh-oh, it proceeds to run all the test scripts that are recorded
-  # in the prove state file, i.e. the whole test suite.
-  
-  # Now let's try that without the '--state=' option:
-  $ make DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS= T=t9800-git-p4-basic.sh 
-  rm -f -r 'test-results'
-  *** prove ***
-  t9800-git-p4-basic.sh .. ok    
-  All tests successful.
-  Files=1, Tests=21, 12 wallclock secs ( 0.02 usr  0.01 sys +  3.46 cusr
-  2.04 csys =  5.53 CPU)
-  Result: PASS
+Uncovered code in 'pu' not in 'jch'
+--------------------------------------------------------
 
-I couldn't find a set of 'prove' options that allow us to run slowest
-tests first, but run only the tests that are explicitly specified as
-cmdline arguments.
+Commits introducing uncovered code:
+Denton Liu	186dbeed rebase: use read_oneliner()
+builtin/rebase.c
+186dbeed 629) } else if (!read_oneliner(&buf, state_dir_path("head", opts), 0, 1))
 
-So we'd need to tweak how $GIT_PROVE_OPTS is used in our CI builds to
-drop the '--state=' option but still keep all other options
-('--jobs'!) when re-running only the 'git p4' tests.
+Denton Liu	06ebea5c rebase: generify reset_head()
+builtin/rebase.c
+06ebea5c 879) reset_head(the_repository, &opts->orig_head, "checkout",
+06ebea5c 880)    opts->head_name, 0,
+
+Denton Liu	e71223c6 rebase: use apply_autostash() from sequencer.c
+builtin/rebase.c
+e71223c6 1039) apply_autostash(state_dir_path("autostash", opts));
+
+Denton Liu	448bea61 sequencer: make apply_rebase() accept a path
+sequencer.c
+448bea61 5157) apply_autostash(rebase_path_autostash());
+
+Denton Liu	fa717471 sequencer: use file strbuf for read_oneliner()
+sequencer.c
+fa717471 436) goto done;
+fa717471 442) goto done;
+
+Denton Liu	b3137f2e reset: extract reset_head() from rebase
+reset.c
+b3137f2e 37) ret = -1;
+b3137f2e 38) goto leave_reset_head;
+b3137f2e 43) goto leave_reset_head;
+b3137f2e 65) goto leave_reset_head;
+b3137f2e 71) goto leave_reset_head;
+b3137f2e 76) goto leave_reset_head;
+b3137f2e 80) ret = -1;
+b3137f2e 81) goto leave_reset_head;
+b3137f2e 89) goto leave_reset_head;
+b3137f2e 108) } else if (old_orig)
+b3137f2e 109) delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
+
+Elijah Newren	81f5bc1c rebase, sequencer: remove the broken GIT_QUIET handling
+builtin/rebase.c
+81f5bc1c 698) write_file(state_dir_path("quiet", opts), "%s", "");
+
+Elijah Newren	91e0ed22 rebase (interactive-backend): fix handling of commits that become empty
+sequencer.c
+91e0ed22 2534) opts->keep_redundant_commits = 1;
+
+Elijah Newren	8ef6c12e rebase (interactive-backend): make --keep-empty the default
+sequencer.c
+8ef6c12e 1539) return originally_empty;
+
+Jonathan Nieder	ee70c128 index: offer advice for unknown index extensions
+read-cache.c
+ee70c128 1761) if (advice_unknown_index_extension) {
+
+Josh Steadmon	6da1f1a9 protocol: advertise multiple supported versions
+remote-curl.c
+6da1f1a9 354) return 0;
+
+Kevin Willford	56c69100 fsmonitor: change last update timestamp on the index_state to opaque token
+fsmonitor.c
+56c69100 62) timestamp = get_be64(index);
+56c69100 63) strbuf_addf(&last_update, "%"PRIu64"", timestamp);
+56c69100 64) index += sizeof(uint64_t);
+
+Kevin Willford	8da2c576 fsmonitor: handle version 2 of the hooks that will use opaque token
+fsmonitor.c
+8da2c576 36) if (hook_version == HOOK_INTERFACE_VERSION1 ||
+8da2c576 37)     hook_version == HOOK_INTERFACE_VERSION2)
+8da2c576 38) return hook_version;
+8da2c576 199) strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
+
+Matheus Tavares	31877c9a object-store: allow threaded access to object reading
+packfile.c
+31877c9a 1472) return;
+
+sha1-file.c
+31877c9a 1431) return;
+31877c9a 1440) return;
+
+Phillip Wood	430b75f7 commit: give correct advice for empty commit during a rebase
+sequencer.c
+430b75f7 1472)     return -1;
+
+
+
+Uncovered code in 'jch' not in 'next'
+--------------------------------------------------------
+
+Commits introducing uncovered code:
+Alban Gruin	0d50cf5e sequencer: move check_todo_list_from_file() to rebase-interactive.c
+rebase-interactive.c
+0d50cf5e 210) goto out;
+0d50cf5e 215) goto out;
+0d50cf5e 224) fprintf(stderr, _(edit_todo_list_advice));
+
+Alex Torok	fed842f0 rebase: fix --fork-point with short refname
+builtin/merge-base.c
+fed842f0 128) return 1;
+
+Hans Jerry Illikainen	54887b46 gpg-interface: add minTrustLevel as a configuration option
+builtin/pull.c
+54887b46 374) return status;
+
+gpg-interface.c
+54887b46 143) return 1;
+54887b46 207) free(trust);
+54887b46 208) goto error;
+54887b46 397) return config_error_nonbool(var);
+
+pretty.c
+54887b46 1355) strbuf_addstr(sb, "never");
+54887b46 1356) break;
+54887b46 1358) strbuf_addstr(sb, "marginal");
+54887b46 1359) break;
+54887b46 1361) strbuf_addstr(sb, "fully");
+54887b46 1362) break;
+
+Jeff King	7cb9754e pack-objects: introduce pack.allowPackReuse
+builtin/pack-objects.c
+7cb9754e 2834) allow_pack_reuse = git_config_bool(k, v);
+7cb9754e 2835) return 0;
+
+Jeff King	7b143c16 pack-bitmap: introduce bitmap_walk_contains()
+pack-bitmap.c
+7b143c16 903) return 0;
+
+Jeff King	4f0bd8b9 pack-objects: improve partial packfile reuse
+builtin/pack-objects.c
+4f0bd8b9 1124) return 1;
+4f0bd8b9 2681) (reuse_packfile_bitmap &&
+4f0bd8b9 2682)  bitmap_walk_contains(bitmap_git, reuse_packfile_bitmap, oid));
+
+pack-bitmap.c
+4f0bd8b9 808) return;
+4f0bd8b9 811) return;
+4f0bd8b9 823) return;
+4f0bd8b9 861) i = bitmap_git->pack->num_objects / BITS_IN_EWORD;
+
+Johannes Schindelin	e118f063 built-in add -p: handle Escape sequences in interactive.singlekey mode
+compat/terminal.c
+e118f063 330) if (ch == '\033' /* ESC */) {
+e118f063 338) strbuf_splice(buf, buf->len - 1, 1, "^[", 2);
+e118f063 346) struct pollfd pfd = { .fd = 0, .events = POLLIN };
+e118f063 348) if (poll(&pfd, 1, 500) < 1)
+e118f063 349) break;
+e118f063 351) ch = getchar();
+e118f063 352) if (ch == EOF)
+e118f063 353) return 0;
+e118f063 354) strbuf_addch(buf, ch);
+
+Johannes Schindelin	12acdf57 built-in add -p: handle Escape sequences more efficiently
+compat/terminal.c
+12acdf57 255) static int sequence_entry_cmp(const void *hashmap_cmp_fn_data,
+12acdf57 260) return strcmp(e1->sequence, keydata ? keydata : e2->sequence);
+12acdf57 263) static int is_known_escape_sequence(const char *sequence)
+12acdf57 268) if (!initialized) {
+12acdf57 269) struct child_process cp = CHILD_PROCESS_INIT;
+12acdf57 270) struct strbuf buf = STRBUF_INIT;
+12acdf57 273) hashmap_init(&sequences, (hashmap_cmp_fn)sequence_entry_cmp,
+12acdf57 276) argv_array_pushl(&cp.args, "infocmp", "-L", "-1", NULL);
+12acdf57 277) if (pipe_command(&cp, NULL, 0, &buf, 0, NULL, 0))
+12acdf57 278) strbuf_setlen(&buf, 0);
+12acdf57 280) for (eol = p = buf.buf; *p; p = eol + 1) {
+12acdf57 281) p = strchr(p, '=');
+12acdf57 282) if (!p)
+12acdf57 283) break;
+12acdf57 284) p++;
+12acdf57 285) eol = strchrnul(p, '\n');
+12acdf57 287) if (starts_with(p, "\\E")) {
+12acdf57 288) char *comma = memchr(p, ',', eol - p);
+12acdf57 291) p[0] = '^';
+12acdf57 292) p[1] = '[';
+12acdf57 293) FLEX_ALLOC_MEM(e, sequence, p, comma - p);
+12acdf57 294) hashmap_entry_init(&e->entry,
+12acdf57 295)    strhash(e->sequence));
+12acdf57 296) hashmap_add(&sequences, &e->entry);
+12acdf57 298) if (!*eol)
+12acdf57 299) break;
+12acdf57 301) initialized = 1;
+12acdf57 304) return !!hashmap_get_from_hash(&sequences, strhash(sequence), sequence);
+12acdf57 345) while (!is_known_escape_sequence(buf->buf)) {
+
+Johannes Schindelin	a5e46e6b terminal: add a new function to read a single keystroke
+compat/terminal.c
+a5e46e6b 64) static int enable_non_canonical(void)
+a5e46e6b 66) return disable_bits(ICANON | ECHO);
+a5e46e6b 307) int read_key_without_echo(struct strbuf *buf)
+a5e46e6b 312) if (warning_displayed || enable_non_canonical() < 0) {
+a5e46e6b 313) if (!warning_displayed) {
+a5e46e6b 316) warning_displayed = 1;
+a5e46e6b 319) return strbuf_getline(buf, stdin);
+a5e46e6b 322) strbuf_reset(buf);
+a5e46e6b 323) ch = getchar();
+a5e46e6b 324) if (ch == EOF) {
+a5e46e6b 325) restore_term();
+a5e46e6b 326) return EOF;
+a5e46e6b 328) strbuf_addch(buf, ch);
+a5e46e6b 358) restore_term();
+a5e46e6b 359) return 0;
+
+Johannes Schindelin	94ac3c31 terminal: make the code of disable_echo() reusable
+compat/terminal.c
+94ac3c31 38) static int disable_bits(tcflag_t bits)
+94ac3c31 49) t.c_lflag &= ~bits;
+94ac3c31 59) static int disable_echo(void)
+94ac3c31 61) return disable_bits(ECHO);
+
+Johannes Schindelin	180f48df built-in add -p: support interactive.diffFilter
+add-patch.c
+180f48df 557) else if (p != pend)
+180f48df 559) goto mismatched_output;
+180f48df 590) return -1;
+
+Johannes Schindelin	90a6bb98 legacy stash -p: respect the add.interactive.usebuiltin setting
+builtin/add.c
+90a6bb98 451) parse_pathspec(&pathspec, 0,
+90a6bb98 457) return run_add_interactive(NULL, "--patch=stash", &pathspec);
+
+Johannes Schindelin	d2a233cb built-in add -p: prepare for patch modes other than "stage"
+add-patch.c
+d2a233cb 1567)       _(s->mode->help_patch_text));
+
+Johannes Schindelin	52628f94 built-in add -p: implement the "checkout" patch modes
+add-patch.c
+52628f94 1272) fwrite(diff->buf, diff->len, 1, stderr);
+
+Johannes Schindelin	04f816b1 built-in add -p: respect the `interactive.singlekey` config setting
+add-patch.c
+04f816b1 1156) int res = read_key_without_echo(&s->answer);
+04f816b1 1157) printf("%s\n", res == EOF ? "" : s->answer.buf);
+04f816b1 1158) return res;
+
+Johannes Schindelin	6610e462 built-in stash: use the built-in `git add -p` if so configured
+builtin/stash.c
+6610e462 1026) setenv(INDEX_ENVIRONMENT, old_index_env, 1);
+
+Martin Ågren	3bcdd852 builtin/config: extract `handle_value_regex()` from `get_value()`
+builtin/config.c
+3bcdd852 330) return CONFIG_INVALID_PATTERN;
+3bcdd852 375) goto free_strings;
+
+Martin Ågren	3bf986d6 builtin/config: collect "value_regexp" data in a struct
+builtin/config.c
+3bf986d6 329) FREE_AND_NULL(cmd_line_value.regexp);
+
+Ralf Thielow	a4ffbbbb submodule.c: mark more strings for translation
+submodule.c
+a4ffbbbb 1161) fprintf(stderr, _("Unable to push submodule '%s'\n"), path);
+
+
+
+Uncovered code in 'next' not in 'master'
+--------------------------------------------------------
+
+Commits introducing uncovered code:
+brian m. carlson	63ab08fb run-command: avoid undefined behavior in exists_in_PATH
+run-command.c
+63ab08fb 216) int found = r != NULL;
+63ab08fb 218) return found;
+
+Jonathan Tan	9c8a294a sha1-file: remove OBJECT_INFO_SKIP_CACHED
+sha1-file.c
+9c8a294a 1442) *(oi->disk_sizep) = 0;
+9c8a294a 1444) hashclr(oi->delta_base_sha1);
+9c8a294a 1446) strbuf_addstr(oi->type_name, type_name(co->type));
+
+
+
+Uncovered code in 'master' not in 'master@{1}'
+--------------------------------------------------------
+
+Commits introducing uncovered code:
 
