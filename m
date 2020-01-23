@@ -2,228 +2,305 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00190C2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17F78C33CAF
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:55 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BA38722522
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D366D2064C
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pBYx0Xiw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f+LcLoPq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728803AbgAWP0v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 10:26:51 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46250 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726232AbgAWP0v (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 10:26:51 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z7so3482377wrl.13
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 07:26:50 -0800 (PST)
+        id S1729021AbgAWP0x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 10:26:53 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41601 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726605AbgAWP0x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 10:26:53 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c9so3520001wrw.8
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 07:26:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=fuiZP4jw+7Dhwq5jpQ8O41Q4YUv1SunyszY1eP0aZl8=;
-        b=pBYx0Xiwm3g33cjVrv8BacmYJKJ89NNSlwRvcfLkbYJRf20xqNPHC9FB5uS7FVhIUD
-         gWmpRP1o0VwV0JSjHtK3SC2i36AHxnUqd3OO8KZ8MD4QSto+fOAc7cyyWWd7fU4G+vSV
-         byJBpsXC/yglP72ZZMkD2fHGNsisvyjkVqf7U6RVZ9/z3tuX9JkB7vbV3/XEzOlXpBy2
-         +lGAqljle94Tac3RVO8iumohaqc10S5GqsYW8nJIg0VP/VSJ9jjFa0ajL8Mkv2WwYn+f
-         Xm6EaiFKXWtwSqINvGGRTsFrxxYxf4X5TPcXVwFsksULIlH1cE5JZ1uVNHQgP+YeHcga
-         vU8Q==
+        bh=XUjnovCds1mo+XUD+WrTF3JItHEpyHC01R01O6GvRqk=;
+        b=f+LcLoPqToXDJh0J+/syLgYXcKj5aAvSa7C9EtTqaJ0hAnj99LQ7/tsiYbR1AMPI0U
+         1IqPeypPE1JcvHErqcgP1sdU89H/yQPhPAkKLa0BRZHYC37AsFW+B5eP8VXBYjy4665A
+         WUPWN2vcqkCxtq2Z+7+ZslWivCVCp6zqNghcAylCmDJ+VzcthKXlErQiAlhfHVZ0zo8B
+         8bFsUY/Y/L96/hd9jnRvogMeMmNgb/bdMxLxPPC+nW2dMPRBhH+SunvmNcToDxtF1xDZ
+         Ecm9a/pm3fw5KjmXURqv11EdWHlcihngfaQ1BsO2wnX0QI3DQH8D9rOy3KbRRTfH82wl
+         MjVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=fuiZP4jw+7Dhwq5jpQ8O41Q4YUv1SunyszY1eP0aZl8=;
-        b=uSposTIBm3dzIJCZ4qlkiSvAwNqs+hG3ZSWcsbuud/92PLT6Z/N/g9yBqKRV2JKWV9
-         ulo3bOwgwyD7FZvXAUElGbxw/n5YaqASzM1TBTpG/AW7uC4i1uzf8YRhqFwVpLgfxSCR
-         s2B5tB7cFHUAHOgeeEIXP5R+L5mr2o6NhvUeg1b8BIIPnwuvoy02UmSkPclc61TqymWs
-         ajQbxtmj0f643iwsykrVIc0mXSynP+chdibZmPp1Y3b+l2QT1JPnwpiH/YnQV8s2FW8R
-         L5N3v6ffsxLXu/s9OgW9Tx61SlZ4K0sttV9eidfkGiJO/to5zliCEWz2Ptn3Bx2D8fZr
-         kN/w==
-X-Gm-Message-State: APjAAAXt77ZTAyqlqOgxmPpO1aErQeJHL1WnglQURXpmfeWMTARQXdAt
-        W2vfNbWR5EqDaMBSZAQ+MjYCETVd
-X-Google-Smtp-Source: APXvYqzPMa7Xv58uj7lSXt52O/vvpS05rKGCbqXPZK4Dvp+xW9naaH/iCqNc6aM/MyTizd//uViyDA==
-X-Received: by 2002:a5d:4044:: with SMTP id w4mr18025577wrp.322.1579793209204;
-        Thu, 23 Jan 2020 07:26:49 -0800 (PST)
+        bh=XUjnovCds1mo+XUD+WrTF3JItHEpyHC01R01O6GvRqk=;
+        b=MPqswBMdes/Xs8QynChIGHvKIMoFd1kkX5j1fouAc3YEy6MbCiubDkvdnhH6A7rQhk
+         g3+T6oohURBfjJlqMxM5YEaijbbZgodJaA5Bb7V8y2jHmoTLCwOS9UhbBws5lTYP6b+M
+         V+3ikKLW6PhWHfvW01XudwFRVmiS53u/3z4LLCv7X5stWhznPKXIZ+5zalocEA0p3/Ja
+         YoSnbTrb/SPyTUSeid9H2l5AbMgTV2AnryLsxM+XMhYH1cYJDrPnNk0CXIvjDgtwwIen
+         w2jSF13Gw8rhUzKpdS6MeigGpn1vGA3ZtnR+KqkFGb1ncSe1J+1ZhvHKVZ9phmJvM+V+
+         WN1Q==
+X-Gm-Message-State: APjAAAVFQ3PUnBlmuZfJX2hWxWptdiDiep35HeQyqgR0nKjPJm5Ta+y9
+        hftT5q66H2t4yS2imUSglz0xHLNu
+X-Google-Smtp-Source: APXvYqwcpKyBn8+c/bC4u+dIf6Th990Y9O9xD/KOw+wY67QTzptcXxBowSXKdLA8VMAKFHJzz2R/zQ==
+X-Received: by 2002:a05:6000:1288:: with SMTP id f8mr18973395wrx.66.1579793210726;
+        Thu, 23 Jan 2020 07:26:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i11sm3532649wrs.10.2020.01.23.07.26.48
+        by smtp.gmail.com with ESMTPSA id x18sm3442602wrr.75.2020.01.23.07.26.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 07:26:48 -0800 (PST)
-Message-Id: <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
-In-Reply-To: <pull.510.git.1578423871.gitgitgadget@gmail.com>
+        Thu, 23 Jan 2020 07:26:50 -0800 (PST)
+Message-Id: <f969c4bc17b79f7c857987793cb0c23ad3f4e899.1579793207.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 References: <pull.510.git.1578423871.gitgitgadget@gmail.com>
+        <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 From:   "Kevin Willford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jan 2020 15:26:43 +0000
-Subject: [PATCH v2 0/4] fsmonitor: start using an opaque token for last update
+Date:   Thu, 23 Jan 2020 15:26:45 +0000
+Subject: [PATCH v2 2/4] fsmonitor: handle version 2 of the hooks that will use
+ opaque token
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Kevin Willford <Kevin.Willford@microsoft.com>
+Cc:     Kevin Willford <Kevin.Willford@microsoft.com>,
+        Kevin Willford <Kevin.Willford@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Only change for this version is to sync the watchman script that is in
-templates with the one in t/t7519 since it had some commented out debug code
-that could be useful.
+From: Kevin Willford <Kevin.Willford@microsoft.com>
 
-Also haven't received any feedback on this patch series which would be good
-to make sure I'm not making any obvious mistakes.
+Some file monitors like watchman will use something other than a timestamp
+to keep better track of what changes happen in between calls to query
+the fsmonitor. The clockid in watchman is a string. Now that the index
+is storing an opaque token for the last update the code needs to be
+updated to pass that opaque token to a verion 2 of the fsmonitor hook.
 
-Thanks!
+Because there are repos that already have version 1 of the hook and we
+want them to continue to work when git is updated, we need to handle
+both version 1 and version 2 of the hook. In order to do that a
+config value is being added core.fsmonitorHookVersion to force what
+version of the hook should be used.  When this is not set it will default
+to -1 and then the code will attempt to call version 2 of the hook first.
+If that fails it will fallback to trying version 1.
 
-Kevin Willford (4):
-  fsmonitor: change last update timestamp on the index_state to opaque
-    token
-  fsmonitor: handle version 2 of the hooks that will use opaque token
-  fsmonitor: add fsmonitor hook scripts for version 2
-  fsmonitor: update documentation for hook version and watchman hooks
+Signed-off-by: Kevin Willford <Kevin.Willford@microsoft.com>
+---
+ fsmonitor.c                 | 75 +++++++++++++++++++++++++++++++------
+ t/t7519-status-fsmonitor.sh |  7 +++-
+ t/t7519/fsmonitor-all       |  1 -
+ t/t7519/fsmonitor-watchman  |  3 +-
+ 4 files changed, 71 insertions(+), 15 deletions(-)
 
- Documentation/config/core.txt              |  11 ++
- Documentation/githooks.txt                 |  13 +-
- cache.h                                    |   2 +-
- fsmonitor.c                                | 120 ++++++++++----
- t/helper/test-dump-fsmonitor.c             |   2 +-
- t/t7519-status-fsmonitor.sh                |   7 +-
- t/t7519/fsmonitor-all                      |   1 -
- t/t7519/fsmonitor-all-v2                   |  21 +++
- t/t7519/fsmonitor-watchman                 |   3 +-
- t/t7519/fsmonitor-watchman-v2              | 173 +++++++++++++++++++++
- templates/hooks--fsmonitor-watchman.sample | 168 +++++++++++++-------
- 11 files changed, 434 insertions(+), 87 deletions(-)
- create mode 100755 t/t7519/fsmonitor-all-v2
- create mode 100755 t/t7519/fsmonitor-watchman-v2
-
-
-base-commit: 0a76bd7381ec0dbb7c43776eb6d1ac906bca29e6
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-510%2Fkewillford%2Ffsmonitor_opaque_token-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-510/kewillford/fsmonitor_opaque_token-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/510
-
-Range-diff vs v1:
-
- 1:  679bf4e0dd = 1:  679bf4e0dd fsmonitor: change last update timestamp on the index_state to opaque token
- 2:  f969c4bc17 = 2:  f969c4bc17 fsmonitor: handle version 2 of the hooks that will use opaque token
- 3:  e1fd5924d0 ! 3:  ecc288c848 fsmonitor: add fsmonitor hook scripts for version 2
-     @@ -236,13 +236,16 @@ $^
-      -my ($version, $time) = @ARGV;
-      +my ($version, $last_update_token) = @ARGV;
-       
-     - # Check the hook interface version
-     --
-     +-# Check the hook interface version
-     ++# Uncomment for debugging
-     ++# print STDERR "$0 $version $last_update_token\n";
-     + 
-      -if ($version == 1) {
-      -	# convert nanoseconds to seconds
-      -	# subtract one second to make sure watchman will return all changes
-      -	$time = int ($time / 1000000000) - 1;
-      -} else {
-     ++# Check the hook interface version
-      +if ($version ne 2) {
-       	die "Unsupported query-fsmonitor hook version '$version'.\n" .
-       	    "Falling back to scanning...\n";
-     @@ -273,7 +276,7 @@ $^
-       launch_watchman();
-       
-       sub launch_watchman {
-     -+	$o = watchman_query();
-     ++	my $o = watchman_query();
-      +	if (is_work_tree_watched($o)) {
-      +		output_result($o->{clock}, @{$o->{files}});
-      +	}
-     @@ -281,6 +284,12 @@ $^
-      +
-      +sub output_result {
-      +	my ($clockid, @files) = @_;
-     + 
-     ++	# Uncomment for debugging watchman output
-     ++	# open (my $fh, ">", ".git/watchman-output.out");
-     ++	# binmode $fh, ":utf8";
-     ++	# print $fh "$clockid\n@files\n";
-     ++	# close $fh;
-      +
-      +	binmode STDOUT, ":utf8";
-      +	print $clockid;
-     @@ -293,7 +302,7 @@ $^
-      +	my $response = qx/watchman clock "$git_work_tree"/;
-      +	die "Failed to get clock id on '$git_work_tree'.\n" .
-      +		"Falling back to scanning...\n" if $? != 0;
-     - 
-     ++
-      +	return $json_pkg->new->utf8->decode($response);
-      +}
-      +
-     @@ -328,9 +337,20 @@ $^
-       		}]
-       	END
-       
-     -@@
-     ++	# Uncomment for debugging the watchman query
-     ++	# open (my $fh, ">", ".git/watchman-query.json");
-     ++	# print $fh $query;
-     ++	# close $fh;
-     ++
-     + 	print CHLD_IN $query;
-     + 	close CHLD_IN;
-       	my $response = do {local $/; <CHLD_OUT>};
-       
-     ++	# Uncomment for debugging the watch response
-     ++	# open ($fh, ">", ".git/watchman-response.json");
-     ++	# print $fh $response;
-     ++	# close $fh;
-     ++
-       	die "Watchman: command returned no output.\n" .
-      -	    "Falling back to scanning...\n" if $response eq "";
-      +	"Falling back to scanning...\n" if $response eq "";
-     @@ -358,11 +378,23 @@ $^
-      +
-      +sub is_work_tree_watched {
-      +	my ($output) = @_;
-     -+	if ($retry > 0 and $output->{error} and $output->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
-     ++	my $error = $output->{error};
-     ++	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
-       		$retry--;
-     - 		qx/watchman watch "$git_work_tree"/;
-     +-		qx/watchman watch "$git_work_tree"/;
-     ++		my $response = qx/watchman watch "$git_work_tree"/;
-       		die "Failed to make watchman watch '$git_work_tree'.\n" .
-     -@@
-     + 		    "Falling back to scanning...\n" if $? != 0;
-     ++		$output = $json_pkg->new->utf8->decode($response);
-     ++		$error = $output->{error};
-     ++		die "Watchman: $error.\n" .
-     ++		"Falling back to scanning...\n" if $error;
-     ++
-     ++		# Uncomment for debugging watchman output
-     ++		# open (my $fh, ">", ".git/watchman-output.out");
-     ++		# close $fh;
-     + 
-     + 		# Watchman will always return all files on the first query so
-       		# return the fast "everything is dirty" flag to git and do the
-       		# Watchman query just to get it over with now so we won't pay
-       		# the cost in git to look up each individual file.
-     @@ -383,8 +415,8 @@ $^
-       
-      -	die "Watchman: $o->{error}.\n" .
-      -	    "Falling back to scanning...\n" if $o->{error};
-     -+	die "Watchman: $output->{error}.\n" .
-     -+	"Falling back to scanning...\n" if $output->{error};
-     ++	die "Watchman: $error.\n" .
-     ++	"Falling back to scanning...\n" if $error;
-       
-      -	binmode STDOUT, ":utf8";
-      -	local $, = "\0";
- 4:  8d381b7d44 = 4:  1db2a699ba fsmonitor: update documentation for hook version and watchman hooks
-
+diff --git a/fsmonitor.c b/fsmonitor.c
+index 9860587225..932bd9012d 100644
+--- a/fsmonitor.c
++++ b/fsmonitor.c
+@@ -8,7 +8,8 @@
+ 
+ #define INDEX_EXTENSION_VERSION1	(1)
+ #define INDEX_EXTENSION_VERSION2	(2)
+-#define HOOK_INTERFACE_VERSION		(1)
++#define HOOK_INTERFACE_VERSION1		(1)
++#define HOOK_INTERFACE_VERSION2		(2)
+ 
+ struct trace_key trace_fsmonitor = TRACE_KEY_INIT(FSMONITOR);
+ 
+@@ -25,6 +26,22 @@ static void fsmonitor_ewah_callback(size_t pos, void *is)
+ 	ce->ce_flags &= ~CE_FSMONITOR_VALID;
+ }
+ 
++static int fsmonitor_hook_version(void)
++{
++	int hook_version;
++
++	if (git_config_get_int("core.fsmonitorhookversion", &hook_version))
++		return -1;
++
++	if (hook_version == HOOK_INTERFACE_VERSION1 ||
++	    hook_version == HOOK_INTERFACE_VERSION2)
++		return hook_version;
++
++	warning("Invalid hook version '%i' in core.fsmonitorhookversion. "
++		"Must be 1 or 2.", hook_version);
++	return -1;
++}
++
+ int read_fsmonitor_extension(struct index_state *istate, const void *data,
+ 	unsigned long sz)
+ {
+@@ -158,8 +175,8 @@ static void fsmonitor_refresh_callback(struct index_state *istate, const char *n
+ void refresh_fsmonitor(struct index_state *istate)
+ {
+ 	struct strbuf query_result = STRBUF_INIT;
+-	int query_success = 0;
+-	size_t bol; /* beginning of line */
++	int query_success = 0, hook_version = -1;
++	size_t bol = 0; /* beginning of line */
+ 	uint64_t last_update;
+ 	struct strbuf last_update_token = STRBUF_INIT;
+ 	char *buf;
+@@ -167,6 +184,9 @@ void refresh_fsmonitor(struct index_state *istate)
+ 
+ 	if (!core_fsmonitor || istate->fsmonitor_has_run_once)
+ 		return;
++
++	hook_version = fsmonitor_hook_version();
++
+ 	istate->fsmonitor_has_run_once = 1;
+ 
+ 	trace_printf_key(&trace_fsmonitor, "refresh fsmonitor");
+@@ -175,27 +195,60 @@ void refresh_fsmonitor(struct index_state *istate)
+ 	 * should be inclusive to ensure we don't miss potential changes.
+ 	 */
+ 	last_update = getnanotime();
+-	strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
++	if (hook_version == HOOK_INTERFACE_VERSION1)
++		strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
+ 
+ 	/*
+-	 * If we have a last update time, call query_fsmonitor for the set of
+-	 * changes since that time, else assume everything is possibly dirty
++	 * If we have a last update token, call query_fsmonitor for the set of
++	 * changes since that token, else assume everything is possibly dirty
+ 	 * and check it all.
+ 	 */
+ 	if (istate->fsmonitor_last_update) {
+-		query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION,
+-			istate->fsmonitor_last_update, &query_result);
++		if (hook_version == -1 || hook_version == HOOK_INTERFACE_VERSION2) {
++			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION2,
++				istate->fsmonitor_last_update, &query_result);
++
++			if (query_success) {
++				if (hook_version < 0)
++					hook_version = HOOK_INTERFACE_VERSION2;
++
++				/*
++				 * First entry will be the last update token
++				 * Need to use a char * variable because static
++				 * analysis was suggesting to use strbuf_addbuf
++				 * but we don't want to copy the entire strbuf
++				 * only the the chars up to the first NUL
++				 */
++				buf = query_result.buf;
++				strbuf_addstr(&last_update_token, buf);
++				if (!last_update_token.len) {
++					warning("Empty last update token.");
++					query_success = 0;
++				} else {
++					bol = last_update_token.len + 1;
++				}
++			} else if (hook_version < 0) {
++				hook_version = HOOK_INTERFACE_VERSION1;
++				if (!last_update_token.len)
++					strbuf_addf(&last_update_token, "%"PRIu64"", last_update);
++			}
++		}
++
++		if (hook_version == HOOK_INTERFACE_VERSION1) {
++			query_success = !query_fsmonitor(HOOK_INTERFACE_VERSION1,
++				istate->fsmonitor_last_update, &query_result);
++		}
++
+ 		trace_performance_since(last_update, "fsmonitor process '%s'", core_fsmonitor);
+ 		trace_printf_key(&trace_fsmonitor, "fsmonitor process '%s' returned %s",
+ 			core_fsmonitor, query_success ? "success" : "failure");
+ 	}
+ 
+ 	/* a fsmonitor process can return '/' to indicate all entries are invalid */
+-	if (query_success && query_result.buf[0] != '/') {
++	if (query_success && query_result.buf[bol] != '/') {
+ 		/* Mark all entries returned by the monitor as dirty */
+ 		buf = query_result.buf;
+-		bol = 0;
+-		for (i = 0; i < query_result.len; i++) {
++		for (i = bol; i < query_result.len; i++) {
+ 			if (buf[i] != '\0')
+ 				continue;
+ 			fsmonitor_refresh_callback(istate, buf + bol);
+diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+index cf0fda2d5a..fbfdcca000 100755
+--- a/t/t7519-status-fsmonitor.sh
++++ b/t/t7519-status-fsmonitor.sh
+@@ -32,11 +32,12 @@ write_integration_script () {
+ 		echo "$0: exactly 2 arguments expected"
+ 		exit 2
+ 	fi
+-	if test "$1" != 1
++	if test "$1" != 2
+ 	then
+ 		echo "Unsupported core.fsmonitor hook version." >&2
+ 		exit 1
+ 	fi
++	printf "last_update_token\0"
+ 	printf "untracked\0"
+ 	printf "dir1/untracked\0"
+ 	printf "dir2/untracked\0"
+@@ -107,6 +108,7 @@ EOF
+ # test that "update-index --fsmonitor-valid" sets the fsmonitor valid bit
+ test_expect_success 'update-index --fsmonitor-valid" sets the fsmonitor valid bit' '
+ 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
++		printf "last_update_token\0"
+ 	EOF
+ 	git update-index --fsmonitor &&
+ 	git update-index --fsmonitor-valid dir1/modified &&
+@@ -167,6 +169,7 @@ EOF
+ # test that newly added files are marked valid
+ test_expect_success 'newly added files are marked valid' '
+ 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
++		printf "last_update_token\0"
+ 	EOF
+ 	git add new &&
+ 	git add dir1/new &&
+@@ -207,6 +210,7 @@ EOF
+ # test that *only* files returned by the integration script get flagged as invalid
+ test_expect_success '*only* files returned by the integration script get flagged as invalid' '
+ 	write_script .git/hooks/fsmonitor-test<<-\EOF &&
++	printf "last_update_token\0"
+ 	printf "dir1/modified\0"
+ 	EOF
+ 	clean_repo &&
+@@ -276,6 +280,7 @@ do
+ 		# (if enabled) files unless it is told about them.
+ 		test_expect_success "status doesn't detect unreported modifications" '
+ 			write_script .git/hooks/fsmonitor-test<<-\EOF &&
++			printf "last_update_token\0"
+ 			:>marker
+ 			EOF
+ 			clean_repo &&
+diff --git a/t/t7519/fsmonitor-all b/t/t7519/fsmonitor-all
+index 691bc94dc2..94ab66bd3d 100755
+--- a/t/t7519/fsmonitor-all
++++ b/t/t7519/fsmonitor-all
+@@ -17,7 +17,6 @@ fi
+ 
+ if test "$1" != 1
+ then
+-	echo "Unsupported core.fsmonitor hook version." >&2
+ 	exit 1
+ fi
+ 
+diff --git a/t/t7519/fsmonitor-watchman b/t/t7519/fsmonitor-watchman
+index d8e7a1e5ba..264b9daf83 100755
+--- a/t/t7519/fsmonitor-watchman
++++ b/t/t7519/fsmonitor-watchman
+@@ -26,8 +26,7 @@ if ($version == 1) {
+ 	# subtract one second to make sure watchman will return all changes
+ 	$time = int ($time / 1000000000) - 1;
+ } else {
+-	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+-	    "Falling back to scanning...\n";
++	exit 1;
+ }
+ 
+ my $git_work_tree;
 -- 
 gitgitgadget
+
