@@ -2,88 +2,98 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_GIT autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D325EC2D0DB
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 18:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDECEC33CAF
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 18:27:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9B7DF22464
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 18:04:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B464021569
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 18:27:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cy9oM8xS"
+	dkim=pass (2048-bit key) header.d=skyboxlabs-com.20150623.gappssmtp.com header.i=@skyboxlabs-com.20150623.gappssmtp.com header.b="aaFmOKwA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729016AbgAWSE3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 13:04:29 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43207 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727278AbgAWSE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 13:04:29 -0500
-Received: by mail-pg1-f196.google.com with SMTP id u131so1742356pgc.10
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 10:04:29 -0800 (PST)
+        id S1728731AbgAWS1t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 13:27:49 -0500
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:39371 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727278AbgAWS1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 13:27:49 -0500
+Received: by mail-lj1-f173.google.com with SMTP id o11so4697249ljc.6
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 10:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LOvOicxt1KSwAhAL9V+Pyfbq/CCSBNAoo0dZRAS4/mE=;
-        b=Cy9oM8xSaoAbd9zx8ULi3y4ImhqmHKGQWDKQsB1BFNYQoDmOn+HGdAIFRlHVFAIcVK
-         8SYTWksjdL/APzmNAYQjAuJQjGQowNbnu8vJ7DNBYrziyf2Divn/uf4mPOyOIK9+/F0n
-         56gxG+55fnk8OmF4xpM4aFgI+Odl+dkg9ip+LTlfO1Ejaq2IV5/SHme/rbVDvZbz0IVC
-         iKbb5QJkpLswY41gyX/3Wufv7ewyjgDclYFykMZfeDQf8VShjgLB60A1eJj/b4UJmd1Y
-         Zpkke+jDcV7SmjV7Dbtd4HRxV1m42js7G3xoINVrY81OXl1LO3PQnX7L7nraVjitboYd
-         CsTQ==
+        d=skyboxlabs-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2Wfl4znRPjIdFYV2FKvM88HDBAKegeUW4Um1oVjwq9c=;
+        b=aaFmOKwAoNom7Nwe+WMXd6rMICYORxc/mx51C0qKDL3b/hu8CP2xqBJcqMzKERQDGS
+         B6/WucpD2c4+UwPcjf7NlLan2eLpHlpwqdViO1/dBhBnJaNJdeGGFwzT+7/hL2Pb1B4q
+         svV7J313FGP3esB0rb05iLNZfnjgf/4tEAvrasbO8qSvu3MtFW/ktdL/sh/w9ZEeWaDy
+         RcL4waCuhdg99FV3EyP3/+YK5oHcU6UYLJJZDLoKPzuaG2/4oHcHoRzCmiXIPvH/dwu2
+         9t8TRRF0DkqOOmLtTyztYgyZy4xK50oxmqR4HqgSMRl6l349luJ+W2iCTKm5PDAkw2bZ
+         ojJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LOvOicxt1KSwAhAL9V+Pyfbq/CCSBNAoo0dZRAS4/mE=;
-        b=Fndxid0IduYur4HAChxph1EsKMfe62k1AHCpIvnrYy6RBJ5Jkb3s4Rb5HBZfqjGajt
-         5GufZvwneY0WwpJ2Uu+nF9m0XOtbIJwqmqejH+Sdu5svy25K+hfBGEqIgEyIvBj/HYwF
-         n9qK9rMwn1AOypxEHxs9N6KSAolq7biVQIllie22TRqoN9pZxOxQ/ntqVeqF9FB0Bt4h
-         VXzTznXaQ6DE3Di3RiBi2M5uMwsF/ABON8zU61JNaS5mL1wIq0/vrbAevlsDAA7WZsC2
-         SCH9uXeX6DEvNRfXeOVFQ3L3Xjm3URGlqARvxVN0+PLP0CKr3tAaEqWDIlaSdPo1Vlai
-         2b7A==
-X-Gm-Message-State: APjAAAVpYTvXYxXNIHFbHzU5Ii2J05/k8tJsfoWnJeG8VeFSGjCZFUVa
-        V3EZxqcE0tJFCfNsnwV1Jl8=
-X-Google-Smtp-Source: APXvYqxv0Sx7LItZq9XAmmd+7pahcMYrNboQOQLWKPHPmrG9wPuYw96SLJnvsn8NP4BDC9kA45pGSg==
-X-Received: by 2002:a63:5056:: with SMTP id q22mr30044pgl.20.1579802668955;
-        Thu, 23 Jan 2020 10:04:28 -0800 (PST)
-Received: from konoha.iitr.ac.in ([103.37.201.169])
-        by smtp.gmail.com with ESMTPSA id i17sm3470303pfr.67.2020.01.23.10.04.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 10:04:28 -0800 (PST)
-From:   Shourya Shukla <shouryashukla.oo@gmail.com>
-To:     christian.couder@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-        Shourya Shukla <shouryashukla.oo@gmail.com>
-Subject: Re: [GSoC] Introduction
-Date:   Thu, 23 Jan 2020 23:34:21 +0530
-Message-Id: <20200123180421.16720-1-shouryashukla.oo@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <CAP8UFD2Fo=2suQDLwzLM-Wg3ZzXpqHw-x0brPtPV0d4dRsgs9A@mail.gmail.com>
-References: <CAP8UFD2Fo=2suQDLwzLM-Wg3ZzXpqHw-x0brPtPV0d4dRsgs9A@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2Wfl4znRPjIdFYV2FKvM88HDBAKegeUW4Um1oVjwq9c=;
+        b=g2uldi9Bojhkm4yh5w8crexhsdmU//02n/vqUMQjdxF88SLHR/BsHUMY5FJyD8F0h7
+         7GZNdrlrYzHnK2Lg5RkRW49XWhM2+d02lV8GdcN2QDxhBZyh36KlSFbYUcmb6s3QLbLx
+         T6B/BVidQs3vJPQTmJ2CV3ywI209AorzTMONjUYGxChXBiXwE2V63RUvBBj+vkKhvq1k
+         Kw6o2TNjxOYHf/LUoPnj1T/CpmJed25lx7k/XMaEZa0VueG+jK7OfbhzpxTvkIqdSeWN
+         D2LCLu6zGC2iouVyp60qkRAa6Q0cQGdJ1db9VUmyju+3IOCvDOQ2nscUTYGze+RopCj1
+         3cTw==
+X-Gm-Message-State: APjAAAUh7IXLy9ld9umo27IhPcwsblpTWGuZNFT0DbLQnmM709y3v/FZ
+        rUJXksxjJCI0IrqhRbYjp4htXWzrNxqbuILdDI/1/Q==
+X-Google-Smtp-Source: APXvYqxj89Mf2WAJcd7ubtVzJgYdqgQbjkxHVjB70mSMYSJ3YHnQn9aryxYxuFW2lZ3Zb0qBukEhFYP/MenMYJqlTH4=
+X-Received: by 2002:a2e:2a84:: with SMTP id q126mr1142835ljq.258.1579804067332;
+ Thu, 23 Jan 2020 10:27:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com> <20200122235333.GA6837@szeder.dev>
+ <xmqqftg6671g.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.2001231306351.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001231306351.46@tvgsbejvaqbjf.bet>
+From:   Yang Zhao <yang.zhao@skyboxlabs.com>
+Date:   Thu, 23 Jan 2020 10:27:36 -0800
+Message-ID: <CABvFv3KRAA9i75qBWDpnOro+CKRfqtPbh+LwpB1+EN+GwRGkkQ@mail.gmail.com>
+Subject: Re: yz/p4-py3, was Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Christian,
+On Thu, Jan 23, 2020 at 4:11 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> Should we declare `t98xx` to be the namespace for the Python-based
+> scripts, or alternatively declare that we won't ever include another
+> Python script but `git-p4`?
 
-Thank you for your advice! Apologies for not tagging my patch with [GSoC],
-I didn't realise it before. Is it okay if I try solving a couple of issues
-and then focus on the GSoC project(following from what you advised)? 
+Seeing how git-p4 has de facto taken over t98xx, declaring the former
+makes sense. I intend to introduce more features into git-p4 so it'll
+probably be practical to reserve more of the space for it, probably up
+to t9850.
 
-Also, I wanted to ask whether or not one can try attempting the projects mentioned
-last year[1] this year as well? I observed that only one idea[2] was picked out of
-the aforementioned project list.
+On declaring `git-p4` the sole approved use of python, I'm personally
+OK with it if there's no appetite to better integrate Python on
+Windows.
 
-Merci,
-Shourya
+> But yes, I think that we should probably "tack on" the Python 3.x tests to
+> the `linux-gcc` job.
+>
+> Or maybe finally split this job into three: ...
+>
+> The reason to split it off is this: on rare occasion, I have to restart
+> the `linux-gcc` job because _one_ of those `git-p4` tests failed due to
+> some reason or other, probably timing-related, I did not have time to
+> investigate this. Having to re-run the entire test suite, twice, just to
+> work around those flaky tests is rather wasteful.
 
-[1]: https://git.github.io/SoC-2019-Ideas/
-[2]: https://summerofcode.withgoogle.com/archive/2019/projects/5390155215536128/
+Agreed.
 
+-- 
+yang
