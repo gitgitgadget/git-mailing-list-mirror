@@ -7,61 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7C48C33CAF
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 422D3C33CB8
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7EEAC22464
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 00CF72064C
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 15:26:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nJFu8bSi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="vg6/vKxm"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728931AbgAWP04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 10:26:56 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38002 "EHLO
+        id S1729027AbgAWP05 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 10:26:57 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42221 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728827AbgAWP0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 10:26:53 -0500
-Received: by mail-wr1-f65.google.com with SMTP id y17so3539468wrh.5
+        with ESMTP id S1726232AbgAWP0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 10:26:55 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q6so3503459wro.9
         for <git@vger.kernel.org>; Thu, 23 Jan 2020 07:26:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AF4XPBohCJ/8kZxT4u1C5qNT8jN772TR4+8ICBYljhk=;
-        b=nJFu8bSiLOEkOdqcGIAqdCBlW3VquQt9jGP0cOc8+34smVg9+Q0/0VCgB6kkwxhybx
-         awAwcPuE80+4GUn8UZEW2gRk1d3OBNUTjV3E3xqQiQKOmnL1FQ22RRTUkFpVSuuqypqY
-         spIrPBjx0HflwhdVg2P32RY3cvAoy+g8Ib3lTlIKI5LPWIfZUDhiIPLNouag1070xQ3q
-         PcvA6x1uSz3oP8twcE7fjDUiXLV52flNYXnz2fQ/RHsSJPX+4zKZiB7WHO73bXdxaAjt
-         PVbCRSU8rfk6+nYSWLus6qyzvd2mpH3kYv1lFisxsu12d4kkBbgfZjHKydBrNXyNzIJ9
-         jQLw==
+        bh=l8v/f5v7sEhJZ6M34YyKcfgSKTAgXuZYV3Mf7+Cc6qw=;
+        b=vg6/vKxmvihPwPCrxtuINnLYGedZ/Gx/NVi3IYEMLM8Fk+RE0l82ZmwebQTWNS/d1f
+         7z9IU/Nm2Gp5Cgq00j8XBopBaKfRIXK0OBB2uephuAdrPI6JTl86GLoJhHqME7ctx8qC
+         GtQkKnlbJLszCteYA1Z6qIFrXK1KjKX1ojJbwcYSgimX8Wf0ZwQ6nTyYKCrka2BC8ASS
+         3UMvdlpoC6wkOUShElGF5LbDObtg13jJczDTsQ2Amhs8R+d0t+ECBjfsVvVjvnxaMS3K
+         fXAvtqoFdVWbMVBcukPlUHEN+6c3mHkpI1g66wFcvsRUupVMOH85GHu/oey9WBT/bMx+
+         yi3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AF4XPBohCJ/8kZxT4u1C5qNT8jN772TR4+8ICBYljhk=;
-        b=pH8QQ0Igkl0fSwortv3PBzwOSaloPNpTO99jE61POYkUWdKAyPkd8WTrbtfcKfsnfR
-         4n5AmS2dByCNkNxh6hyX6riQwV8ekyN4EheKoxLkFBVZxAB3LGZYlzm0qyBgJZIB8qYI
-         bwyyApUwWjpe2vOoCiYz7e08Hz7U6ipOheWoFFH71MQNKRzdYP11jpNnAUivHbG6V7M/
-         syTwrFMtRh6iW7WkDNv+QGMjQ7Ji4rO3NfPdOPDtovCtak6uvVbBYIo3EC352Bi3rydL
-         2u4f2+8Ca1OyVC9ygzBTsHBJIshzVKL5NCmHhE+gic62Q+p3M+dkybBO8eqmVe0trWbO
-         fEyw==
-X-Gm-Message-State: APjAAAVy98IszRqB55K4zxDhxrFPrVULoQ9oJuzy79cjylS1ek/4/S3b
-        ZNyFovouOgwBnVvKj/ACq2h3amHI
-X-Google-Smtp-Source: APXvYqyYlRfYpqCu5hiKgMh/e4/kNQ5lU5km6W88x2L4ZMj2fs6WaFaNCNsZEpK87oTqzReKRsem+w==
-X-Received: by 2002:adf:eb51:: with SMTP id u17mr19190971wrn.29.1579793212241;
-        Thu, 23 Jan 2020 07:26:52 -0800 (PST)
+        bh=l8v/f5v7sEhJZ6M34YyKcfgSKTAgXuZYV3Mf7+Cc6qw=;
+        b=ZAbUILbrY6KAS2cR8fC8fiRVhN/0CurgUq/IhbiqKQGrNX9owPI66qxs/JsDSZFW3Y
+         QuUqOK1SjfIDSwIxjiO93XXToH4so3dHgotcYzisFoHFfQQ1FGCrhQoQ/HR/Ph3NnZ9w
+         M+LXUXlaU3GgUIMC7v9hA2pPOqwTF84nou09nj/Q+fnKL/wunTAgqwAnxVkAEBvgJUUn
+         /n1/3rvvBwBbxNDTzc7besZPPMBaDvkTOt3noMvwx44LArQr2aM425E+DMkuokvrU5co
+         zc38tuC5+itLUn6Sl16tR29S5LZ7bIFEouHUu/CvrbbD5mdRr0CHbMBvrl+Jp464w25q
+         e4Rg==
+X-Gm-Message-State: APjAAAXfRC1hRCFpQAG4bRWoA17QXScJTQREtZoFqU18gJlaNP15jW0E
+        qFLgncfVvu+ltmEnBkAvRpjBvqBI
+X-Google-Smtp-Source: APXvYqyCVzdDBSvIYDdKAXIKDF+xG368kv01ZPeSWnfeKMcErGMX7YTUChoH+Ds6P+rM/6GfJaqQsA==
+X-Received: by 2002:a5d:40c9:: with SMTP id b9mr18846717wrq.419.1579793211613;
+        Thu, 23 Jan 2020 07:26:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g25sm10292907wmh.3.2020.01.23.07.26.51
+        by smtp.gmail.com with ESMTPSA id w8sm9606372wmd.2.2020.01.23.07.26.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 23 Jan 2020 07:26:51 -0800 (PST)
-Message-Id: <1db2a699ba3749bfb4ab1c048492f76f82830ee6.1579793208.git.gitgitgadget@gmail.com>
+Message-Id: <ecc288c84811efb537ef7d8b10068e3a633c9273.1579793207.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 References: <pull.510.git.1578423871.gitgitgadget@gmail.com>
         <pull.510.v2.git.1579793207.gitgitgadget@gmail.com>
 From:   "Kevin Willford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 23 Jan 2020 15:26:47 +0000
-Subject: [PATCH v2 4/4] fsmonitor: update documentation for hook version and
- watchman hooks
+Date:   Thu, 23 Jan 2020 15:26:46 +0000
+Subject: [PATCH v2 3/4] fsmonitor: add fsmonitor hook scripts for version 2
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,62 +75,448 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Kevin Willford <Kevin.Willford@microsoft.com>
 
-A new config value for core.fsmonitorHookVersion was added to be able
-to force the version of the fsmonitor hook.  Possible values are 1 or 2.
-When this is not set the code will use a value of -1 and attempt to use
-version 2 of the hook first and if that fails will attempt version 1.
+Version 2 of the fsmonitor hooks is passed the version and an update
+token and must pass back a last update token to use for subsequent calls
+to the hook.
 
 Signed-off-by: Kevin Willford <Kevin.Willford@microsoft.com>
 ---
- Documentation/config/core.txt | 11 +++++++++++
- Documentation/githooks.txt    | 13 ++++++++++---
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ t/t7519/fsmonitor-all-v2                   |  21 +++
+ t/t7519/fsmonitor-watchman-v2              | 173 +++++++++++++++++++++
+ templates/hooks--fsmonitor-watchman.sample | 168 +++++++++++++-------
+ 3 files changed, 310 insertions(+), 52 deletions(-)
+ create mode 100755 t/t7519/fsmonitor-all-v2
+ create mode 100755 t/t7519/fsmonitor-watchman-v2
 
-diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-index 9e440b160d..74619a9c03 100644
---- a/Documentation/config/core.txt
-+++ b/Documentation/config/core.txt
-@@ -68,6 +68,17 @@ core.fsmonitor::
- 	avoiding unnecessary processing of files that have not changed.
- 	See the "fsmonitor-watchman" section of linkgit:githooks[5].
- 
-+core.fsmonitorHookVersion::
-+	Sets the version of hook that is to be used when calling fsmonitor.
-+	There are currently versions 1 and 2. When this is not set,
-+	version 2 will be tried first and if it fails then version 1
-+	will be tried. Version 1 uses a timestamp as input to determine
-+	which files have changes since that time but some monitors
-+	like watchman have race conditions when used with a timestamp.
-+	Version 2 uses an opaque string so that the monitor can return
-+	something that can be used to determine what files have changed
-+	without race conditions.
+diff --git a/t/t7519/fsmonitor-all-v2 b/t/t7519/fsmonitor-all-v2
+new file mode 100755
+index 0000000000..061907e88b
+--- /dev/null
++++ b/t/t7519/fsmonitor-all-v2
+@@ -0,0 +1,21 @@
++#!/usr/bin/perl
 +
- core.trustctime::
- 	If false, the ctime differences between the index and the
- 	working tree are ignored; useful when the inode change time
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 50365f2914..3dccab5375 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -490,9 +490,16 @@ fsmonitor-watchman
- ~~~~~~~~~~~~~~~~~~
- 
- This hook is invoked when the configuration option `core.fsmonitor` is
--set to `.git/hooks/fsmonitor-watchman`.  It takes two arguments, a version
--(currently 1) and the time in elapsed nanoseconds since midnight,
--January 1, 1970.
-+set to `.git/hooks/fsmonitor-watchman` or `.git/hooks/fsmonitor-watchmanv2`
-+depending on the version of the hook to use.
++use strict;
++use warnings;
++#
++# An test hook script to integrate with git to test fsmonitor.
++#
++# The hook is passed a version (currently 2) and since token
++# formatted as a string and outputs to stdout all files that have been
++# modified since the given time. Paths must be relative to the root of
++# the working tree and separated by a single NUL.
++#
++#echo "$0 $*" >&2
++my ($version, $last_update_token) = @ARGV;
 +
-+Version 1 takes two arguments, a version (1) and the time in elapsed
-+nanoseconds since midnight, January 1, 1970.
++if ($version ne 2) {
++	print "Unsupported query-fsmonitor hook version '$version'.\n";
++	exit 1;
++}
 +
-+Version 2 takes two arguments, a version (2) and a token that is used
-+for identifying changes since the token. For watchman this would be
-+a clock id. This version must output to stdout the new token followed
-+by a NUL before the list of files.
++print "last_update_token\0/\0"
+diff --git a/t/t7519/fsmonitor-watchman-v2 b/t/t7519/fsmonitor-watchman-v2
+new file mode 100755
+index 0000000000..14ed0aa42d
+--- /dev/null
++++ b/t/t7519/fsmonitor-watchman-v2
+@@ -0,0 +1,173 @@
++#!/usr/bin/perl
++
++use strict;
++use warnings;
++use IPC::Open2;
++
++# An example hook script to integrate Watchman
++# (https://facebook.github.io/watchman/) with git to speed up detecting
++# new and modified files.
++#
++# The hook is passed a version (currently 2) and last update token
++# formatted as a string and outputs to stdout a new update token and
++# all files that have been modified since the update token. Paths must
++# be relative to the root of the working tree and separated by a single NUL.
++#
++# To enable this hook, rename this file to "query-watchman" and set
++# 'git config core.fsmonitor .git/hooks/query-watchman'
++#
++my ($version, $last_update_token) = @ARGV;
++
++# Uncomment for debugging
++# print STDERR "$0 $version $last_update_token\n";
++
++# Check the hook interface version
++if ($version ne 2) {
++	die "Unsupported query-fsmonitor hook version '$version'.\n" .
++	    "Falling back to scanning...\n";
++}
++
++my $git_work_tree = get_working_dir();
++
++my $retry = 1;
++
++my $json_pkg;
++eval {
++	require JSON::XS;
++	$json_pkg = "JSON::XS";
++	1;
++} or do {
++	require JSON::PP;
++	$json_pkg = "JSON::PP";
++};
++
++launch_watchman();
++
++sub launch_watchman {
++	my $o = watchman_query();
++	if (is_work_tree_watched($o)) {
++		output_result($o->{clock}, @{$o->{files}});
++	}
++}
++
++sub output_result {
++	my ($clockid, @files) = @_;
++
++	# Uncomment for debugging watchman output
++	# open (my $fh, ">", ".git/watchman-output.out");
++	# binmode $fh, ":utf8";
++	# print $fh "$clockid\n@files\n";
++	# close $fh;
++
++	binmode STDOUT, ":utf8";
++	print $clockid;
++	print "\0";
++	local $, = "\0";
++	print @files;
++}
++
++sub watchman_clock {
++	my $response = qx/watchman clock "$git_work_tree"/;
++	die "Failed to get clock id on '$git_work_tree'.\n" .
++		"Falling back to scanning...\n" if $? != 0;
++
++	return $json_pkg->new->utf8->decode($response);
++}
++
++sub watchman_query {
++	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
++	or die "open2() failed: $!\n" .
++	"Falling back to scanning...\n";
++
++	# In the query expression below we're asking for names of files that
++	# changed since $last_update_token but not from the .git folder.
++	#
++	# To accomplish this, we're using the "since" generator to use the
++	# recency index to select candidate nodes and "fields" to limit the
++	# output to file names only. Then we're using the "expression" term to
++	# further constrain the results.
++	if (substr($last_update_token, 0, 1) eq "c") {
++		$last_update_token = "\"$last_update_token\"";
++	}
++	my $query = <<"	END";
++		["query", "$git_work_tree", {
++			"since": $last_update_token,
++			"fields": ["name"],
++			"expression": ["not", ["dirname", ".git"]]
++		}]
++	END
++
++	# Uncomment for debugging the watchman query
++	# open (my $fh, ">", ".git/watchman-query.json");
++	# print $fh $query;
++	# close $fh;
++
++	print CHLD_IN $query;
++	close CHLD_IN;
++	my $response = do {local $/; <CHLD_OUT>};
++
++	# Uncomment for debugging the watch response
++	# open ($fh, ">", ".git/watchman-response.json");
++	# print $fh $response;
++	# close $fh;
++
++	die "Watchman: command returned no output.\n" .
++	"Falling back to scanning...\n" if $response eq "";
++	die "Watchman: command returned invalid output: $response\n" .
++	"Falling back to scanning...\n" unless $response =~ /^\{/;
++
++	return $json_pkg->new->utf8->decode($response);
++}
++
++sub is_work_tree_watched {
++	my ($output) = @_;
++	my $error = $output->{error};
++	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
++		$retry--;
++		my $response = qx/watchman watch "$git_work_tree"/;
++		die "Failed to make watchman watch '$git_work_tree'.\n" .
++		    "Falling back to scanning...\n" if $? != 0;
++		$output = $json_pkg->new->utf8->decode($response);
++		$error = $output->{error};
++		die "Watchman: $error.\n" .
++		"Falling back to scanning...\n" if $error;
++
++		# Uncomment for debugging watchman output
++		# open (my $fh, ">", ".git/watchman-output.out");
++		# close $fh;
++
++		# Watchman will always return all files on the first query so
++		# return the fast "everything is dirty" flag to git and do the
++		# Watchman query just to get it over with now so we won't pay
++		# the cost in git to look up each individual file.
++		my $o = watchman_clock();
++		$error = $output->{error};
++
++		die "Watchman: $error.\n" .
++		"Falling back to scanning...\n" if $error;
++
++		output_result($o->{clock}, ("/"));
++		$last_update_token = $o->{clock};
++
++		eval { launch_watchman() };
++		return 0;
++	}
++
++	die "Watchman: $error.\n" .
++	"Falling back to scanning...\n" if $error;
++
++	return 1;
++}
++
++sub get_working_dir {
++	my $working_dir;
++	if ($^O =~ 'msys' || $^O =~ 'cygwin') {
++		$working_dir = Win32::GetCwd();
++		$working_dir =~ tr/\\/\//;
++	} else {
++		require Cwd;
++		$working_dir = Cwd::cwd();
++	}
++
++	return $working_dir;
++}
+diff --git a/templates/hooks--fsmonitor-watchman.sample b/templates/hooks--fsmonitor-watchman.sample
+index ef94fa2938..14ed0aa42d 100755
+--- a/templates/hooks--fsmonitor-watchman.sample
++++ b/templates/hooks--fsmonitor-watchman.sample
+@@ -8,102 +8,166 @@ use IPC::Open2;
+ # (https://facebook.github.io/watchman/) with git to speed up detecting
+ # new and modified files.
+ #
+-# The hook is passed a version (currently 1) and a time in nanoseconds
+-# formatted as a string and outputs to stdout all files that have been
+-# modified since the given time. Paths must be relative to the root of
+-# the working tree and separated by a single NUL.
++# The hook is passed a version (currently 2) and last update token
++# formatted as a string and outputs to stdout a new update token and
++# all files that have been modified since the update token. Paths must
++# be relative to the root of the working tree and separated by a single NUL.
+ #
+ # To enable this hook, rename this file to "query-watchman" and set
+ # 'git config core.fsmonitor .git/hooks/query-watchman'
+ #
+-my ($version, $time) = @ARGV;
++my ($version, $last_update_token) = @ARGV;
  
- The hook should output to stdout the list of all files in the working
- directory that may have changed since the requested time.  The logic
+-# Check the hook interface version
++# Uncomment for debugging
++# print STDERR "$0 $version $last_update_token\n";
+ 
+-if ($version == 1) {
+-	# convert nanoseconds to seconds
+-	# subtract one second to make sure watchman will return all changes
+-	$time = int ($time / 1000000000) - 1;
+-} else {
++# Check the hook interface version
++if ($version ne 2) {
+ 	die "Unsupported query-fsmonitor hook version '$version'.\n" .
+ 	    "Falling back to scanning...\n";
+ }
+ 
+-my $git_work_tree;
+-if ($^O =~ 'msys' || $^O =~ 'cygwin') {
+-	$git_work_tree = Win32::GetCwd();
+-	$git_work_tree =~ tr/\\/\//;
+-} else {
+-	require Cwd;
+-	$git_work_tree = Cwd::cwd();
+-}
++my $git_work_tree = get_working_dir();
+ 
+ my $retry = 1;
+ 
++my $json_pkg;
++eval {
++	require JSON::XS;
++	$json_pkg = "JSON::XS";
++	1;
++} or do {
++	require JSON::PP;
++	$json_pkg = "JSON::PP";
++};
++
+ launch_watchman();
+ 
+ sub launch_watchman {
++	my $o = watchman_query();
++	if (is_work_tree_watched($o)) {
++		output_result($o->{clock}, @{$o->{files}});
++	}
++}
++
++sub output_result {
++	my ($clockid, @files) = @_;
+ 
++	# Uncomment for debugging watchman output
++	# open (my $fh, ">", ".git/watchman-output.out");
++	# binmode $fh, ":utf8";
++	# print $fh "$clockid\n@files\n";
++	# close $fh;
++
++	binmode STDOUT, ":utf8";
++	print $clockid;
++	print "\0";
++	local $, = "\0";
++	print @files;
++}
++
++sub watchman_clock {
++	my $response = qx/watchman clock "$git_work_tree"/;
++	die "Failed to get clock id on '$git_work_tree'.\n" .
++		"Falling back to scanning...\n" if $? != 0;
++
++	return $json_pkg->new->utf8->decode($response);
++}
++
++sub watchman_query {
+ 	my $pid = open2(\*CHLD_OUT, \*CHLD_IN, 'watchman -j --no-pretty')
+-	    or die "open2() failed: $!\n" .
+-	    "Falling back to scanning...\n";
++	or die "open2() failed: $!\n" .
++	"Falling back to scanning...\n";
+ 
+ 	# In the query expression below we're asking for names of files that
+-	# changed since $time but were not transient (ie created after
+-	# $time but no longer exist).
++	# changed since $last_update_token but not from the .git folder.
+ 	#
+ 	# To accomplish this, we're using the "since" generator to use the
+ 	# recency index to select candidate nodes and "fields" to limit the
+-	# output to file names only.
+-
++	# output to file names only. Then we're using the "expression" term to
++	# further constrain the results.
++	if (substr($last_update_token, 0, 1) eq "c") {
++		$last_update_token = "\"$last_update_token\"";
++	}
+ 	my $query = <<"	END";
+ 		["query", "$git_work_tree", {
+-			"since": $time,
+-			"fields": ["name"]
++			"since": $last_update_token,
++			"fields": ["name"],
++			"expression": ["not", ["dirname", ".git"]]
+ 		}]
+ 	END
+ 
++	# Uncomment for debugging the watchman query
++	# open (my $fh, ">", ".git/watchman-query.json");
++	# print $fh $query;
++	# close $fh;
++
+ 	print CHLD_IN $query;
+ 	close CHLD_IN;
+ 	my $response = do {local $/; <CHLD_OUT>};
+ 
++	# Uncomment for debugging the watch response
++	# open ($fh, ">", ".git/watchman-response.json");
++	# print $fh $response;
++	# close $fh;
++
+ 	die "Watchman: command returned no output.\n" .
+-	    "Falling back to scanning...\n" if $response eq "";
++	"Falling back to scanning...\n" if $response eq "";
+ 	die "Watchman: command returned invalid output: $response\n" .
+-	    "Falling back to scanning...\n" unless $response =~ /^\{/;
+-
+-	my $json_pkg;
+-	eval {
+-		require JSON::XS;
+-		$json_pkg = "JSON::XS";
+-		1;
+-	} or do {
+-		require JSON::PP;
+-		$json_pkg = "JSON::PP";
+-	};
+-
+-	my $o = $json_pkg->new->utf8->decode($response);
+-
+-	if ($retry > 0 and $o->{error} and $o->{error} =~ m/unable to resolve root .* directory (.*) is not watched/) {
+-		print STDERR "Adding '$git_work_tree' to watchman's watch list.\n";
++	"Falling back to scanning...\n" unless $response =~ /^\{/;
++
++	return $json_pkg->new->utf8->decode($response);
++}
++
++sub is_work_tree_watched {
++	my ($output) = @_;
++	my $error = $output->{error};
++	if ($retry > 0 and $error and $error =~ m/unable to resolve root .* directory (.*) is not watched/) {
+ 		$retry--;
+-		qx/watchman watch "$git_work_tree"/;
++		my $response = qx/watchman watch "$git_work_tree"/;
+ 		die "Failed to make watchman watch '$git_work_tree'.\n" .
+ 		    "Falling back to scanning...\n" if $? != 0;
++		$output = $json_pkg->new->utf8->decode($response);
++		$error = $output->{error};
++		die "Watchman: $error.\n" .
++		"Falling back to scanning...\n" if $error;
++
++		# Uncomment for debugging watchman output
++		# open (my $fh, ">", ".git/watchman-output.out");
++		# close $fh;
+ 
+ 		# Watchman will always return all files on the first query so
+ 		# return the fast "everything is dirty" flag to git and do the
+ 		# Watchman query just to get it over with now so we won't pay
+ 		# the cost in git to look up each individual file.
+-		print "/\0";
++		my $o = watchman_clock();
++		$error = $output->{error};
++
++		die "Watchman: $error.\n" .
++		"Falling back to scanning...\n" if $error;
++
++		output_result($o->{clock}, ("/"));
++		$last_update_token = $o->{clock};
++
+ 		eval { launch_watchman() };
+-		exit 0;
++		return 0;
+ 	}
+ 
+-	die "Watchman: $o->{error}.\n" .
+-	    "Falling back to scanning...\n" if $o->{error};
++	die "Watchman: $error.\n" .
++	"Falling back to scanning...\n" if $error;
+ 
+-	binmode STDOUT, ":utf8";
+-	local $, = "\0";
+-	print @{$o->{files}};
++	return 1;
++}
++
++sub get_working_dir {
++	my $working_dir;
++	if ($^O =~ 'msys' || $^O =~ 'cygwin') {
++		$working_dir = Win32::GetCwd();
++		$working_dir =~ tr/\\/\//;
++	} else {
++		require Cwd;
++		$working_dir = Cwd::cwd();
++	}
++
++	return $working_dir;
+ }
 -- 
 gitgitgadget
+
