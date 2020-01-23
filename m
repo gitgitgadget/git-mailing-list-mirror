@@ -2,137 +2,95 @@ Return-Path: <SRS0=ZAU+=3M=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33252C33CAA
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 04:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A6A2C33CAA
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:06:28 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E3CF324125
-	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 04:29:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B4760217F4
+	for <git@archiver.kernel.org>; Thu, 23 Jan 2020 06:06:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UzYFwiWH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NDM8b5VD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbgAWE3K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 22 Jan 2020 23:29:10 -0500
-Received: from mail-qk1-f172.google.com ([209.85.222.172]:34151 "EHLO
-        mail-qk1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726026AbgAWE3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Jan 2020 23:29:10 -0500
-Received: by mail-qk1-f172.google.com with SMTP id d10so2211623qke.1
-        for <git@vger.kernel.org>; Wed, 22 Jan 2020 20:29:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Yrskkcbh+hDMzSH+uTNrJEqu5Xl9rDjC5mQ2aKrEK94=;
-        b=UzYFwiWHmptKvfEmeVlNcKxqaUB3aobXPtm56rfCE8HQ/DbpaO4IQMDG1mpejhlXb5
-         fu8xGq6g8cE2x33SAJAnqFD4nxN54A4UIsKoh6PTgWhSmM3GnPTNDz4pDTa/P07Sovlb
-         xFz0BzzzbDnDvE+QaqzZmAqEVFjIDMtRrJSry/WyMH4TYNs6KhtvBMZpg4DOekzWeb96
-         1+F2uoJ7/ZCsX3oiO/ZDhHLKdJVFNMeUshdOx61rGCQunQ/oiWi8CZQ4T/EKPCHUNfyP
-         e1UIpAfFidfuvrFXqjuQ2uoozPKQS+Ik2gcdgjGo4u2mKQuZ5ORwJS7uUZ0M3E2NEgA9
-         F0vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Yrskkcbh+hDMzSH+uTNrJEqu5Xl9rDjC5mQ2aKrEK94=;
-        b=IyIc9zpA6DHDslJUt+5M37gCUbfkA6iX1zUt0tu1z22Bw3vzugwEHRhoyqEwFhIUsb
-         vyISKAvllScqFKnfbdn3rDP/NXCC4U+D4nfxhnVkOo/qIn9ejmIKBYt3Y82vrdO99+d1
-         KXFPga5lqJ4t6UFYLRRdF878uoBAYpLooRVP6b5CDmNk/+sn/+v4NBRp9M/By22rifTv
-         k309FH+LZOXJirlV/d2HmQCiINpEaonB5rdQF+cgE2WlTjq6uJuIm0/AXVFFFCIZUZz3
-         JamSFB9PXf1odtnyAF6vKjPKCxl88C6cljyhtqzHDuEdnavqf7LPlXqlFbjGQnYlqYrH
-         BIVw==
-X-Gm-Message-State: APjAAAWw3zCw9NQa9uZYcw47hiPO/uhh40H0R2BnfDfgdLdZ7QWcw30l
-        yweV62MxvoqOzSFH+epP/18=
-X-Google-Smtp-Source: APXvYqzRUeHjkpRYIWKkx1acWSHo8E3ZeRpUrY60FpmRr0xUra0YEz/9BTlmKxAkLBkij/7kSj8pcQ==
-X-Received: by 2002:a37:64d5:: with SMTP id y204mr12142036qkb.459.1579753749449;
-        Wed, 22 Jan 2020 20:29:09 -0800 (PST)
-Received: from generichostname ([199.249.110.29])
-        by smtp.gmail.com with ESMTPSA id j4sm390696qtv.53.2020.01.22.20.29.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2020 20:29:08 -0800 (PST)
-Date:   Wed, 22 Jan 2020 23:29:06 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+        id S1726092AbgAWGG0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 01:06:26 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60721 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgAWGG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 01:06:26 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3C1E9AF4D7;
+        Thu, 23 Jan 2020 01:06:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=59G5FmlLqkJy
+        gThBfprBbQiTXD0=; b=NDM8b5VD+b0h5hVLErUoS/BMDP7YPPszGCqIfNcfvfuX
+        3avTABhqEM+8mSazbLrzAK2pXlsYwyKsaOXE125nLW6K9ReKceELCJH4Du5FgKIP
+        aIbhExk7EsoiNwjs7G3BGbqLYbcZRVH1g5wX7KZXkegCs7pqNm9pSeAi90cpJuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JM/Dk9
+        p0BCVAy8flroq72F32iELRQxHB3z3bP1s9kUJVtgwhiFZUqMFNEyC8LwFp5MzirR
+        62jnF0KnjgNi4LMcs/RnBVcPAwu9xv0/eubVlzEMxSprkR2cxvmBdcNQdcj1jWnT
+        pWVI3E6TR6wophk9H5GcFB5lti2bHRrmJpBNc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 34565AF4D6;
+        Thu, 23 Jan 2020 01:06:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5FB28AF4D4;
+        Thu, 23 Jan 2020 01:06:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Yang Zhao <yang.zhao@skyboxlabs.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
-Message-ID: <20200123042906.GA29009@generichostname>
 References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+        <20200122235333.GA6837@szeder.dev>
+Date:   Wed, 22 Jan 2020 22:06:19 -0800
+In-Reply-To: <20200122235333.GA6837@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Thu, 23 Jan 2020 00:53:33 +0100")
+Message-ID: <xmqqftg6671g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 7A4ECDF8-3DA6-11EA-8421-B0405B776F7B-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
 
-Sorry, I'm back in school so I haven't had the time to keep up with my
-contributions very much. Feel free to give my topics lower priority for
-the next couple of months if they interfere with any other topics.
+> On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
+>> * yz/p4-py3 (2020-01-15) 14 commits
+>>  - ci: also run linux-gcc pipeline with python3.5 environment
+>
+> I still think that this last patch needs to be reworked before this
+> series is merged any further.
+>
+> The only Python script we have is 'git p4', so the Python version is
+> only relevant for 'git p4' tests ('t98*'), while the rest of Git and
+> the test suite couldn't care less [1].  This patch, however, not only
+> builds Git and runs the full test suite for each of the two Python
+> versions, but, worse, runs the full test suite _twice_ for each, first
+> as a "regular" test run and then again with all the GIT_TEST_* knobs
+> enabled.  Consequently, it adds ~50mins to every build's runtime.
+>
+> That's just too wasteful.
 
-On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
-> * dl/merge-autostash (2020-01-13) 17 commits
->  - pull: pass --autostash to merge
->  - t5520: make test_pull_autostash() accept expect_parent_num
->  - merge: teach --autostash option
->  - sequencer: unlink autostash in apply_autostash()
->  - sequencer: extract perform_autostash() from rebase
->  - rebase: generify create_autostash()
->  - rebase: extract create_autostash()
->  - reset: extract reset_head() from rebase
->  - rebase: generify reset_head()
->  - rebase: use apply_autostash() from sequencer.c
->  - sequencer: make apply_rebase() accept a path
->  - rebase: use read_oneliner()
->  - sequencer: make read_oneliner() extern
->  - sequencer: configurably warn on non-existent files
->  - sequencer: use file strbuf for read_oneliner()
->  - t7600: use test_write_lines()
->  - Makefile: alphabetically sort += lists
-> 
->  "git merge" learns the "--autostash" option.
-> 
->  What's the status of this one?  Are people happy with the shape of
->  the code?
+Thanks for a reminder.  Yes, I do recall you raised the above point
+and I agree with the assessment.
 
-I'm not quite happy with this yet. Phillip Wood pointed out that if we
-do `git reset --hard` mid-merge with a stash, the stash will pop _after_
-the reset, which is very surprising since it leaves a dirty tree.
-
-I think I will have time to reroll this on the weekend.
-
-> * dl/test-must-fail-fixes-2 (2020-01-07) 16 commits
->  - t4124: only mark git command with test_must_fail
->  - t3507: use test_path_is_missing()
->  - t3507: fix indentation
->  - t3504: do check for conflict marker after failed cherry-pick
->  - t3419: stop losing return code of git command
->  - t3415: increase granularity of test_auto_{fixup,squash}()
->  - t3415: stop losing return codes of git commands
->  - t3310: extract common notes_merge_files_gone()
->  - t3030: use test_path_is_missing()
->  - t2018: replace "sha" with "oid"
->  - t2018: don't lose return code of git commands
->  - t2018: teach do_checkout() to accept `!` arg
->  - t2018: use test_expect_code for failing git commands
->  - t2018: improve style of if-statement
->  - t2018: add space between function name and ()
->  - t2018: remove trailing space from test description
-> 
->  Test updates.
-> 
->  Will merge to 'next'.
-
-Eric Sunshine sent out a reworded version of "t2018: use
-test_expect_code for failing git commands"'s commit message. I'll send
-out that replacement patch later this weekend as well.
-
-Thanks,
-
-Denton
+What's the ideal endgame wrt the tests?  Build with Py$N and run
+full test suite once, and run full test suite again with the unusual
+knobs enabled, which is what is done without this series, plus build
+with Py(5-$N) and run and run only t98?? tests?
