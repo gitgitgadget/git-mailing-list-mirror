@@ -2,112 +2,140 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A463CC2D0DB
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:29:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C57EC35242
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:36:51 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 798362072C
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:29:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EE1F020702
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:36:50 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RA0VFghD"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FBru3ga/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392475AbgAXU35 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 15:29:57 -0500
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:34450 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387548AbgAXU35 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 15:29:57 -0500
-Received: by mail-wr1-f41.google.com with SMTP id t2so3573995wrr.1
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 12:29:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=MRsquq1uDuLP5KLaqGzm6EJX8wJUT2cT0ZiQ5k7ESvY=;
-        b=RA0VFghDeVkqUBcKWc5V/njJkAu4bi8z+LlzOyrCaYlLvdJOCPFRXleanh5thkhpdB
-         00HJr5B8lhVztp7MkaU0gY2OWHtN27I/4usUHwsJwI457GTZSh6S4iuCIJvw7UbSEm/p
-         4nJZMbpcxu/D/QhxuBfxIJ92vFmoh3Wj36QONEvED/tJ899SFEt/3sugPgeDZu2LGyJY
-         iLcwI8s7eMaXqgTYNlPRuUWzPvcVCfS8F7rGMzwX92B/IkZuMC0buy55tsBVGm+Rwi2Z
-         ENi3cQsgdAlKsIDR//tVKIHxgdi8RhZeC8GJJCYHrczq1G9Xd5THh/WITpZWZAbaCOuy
-         iWdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=MRsquq1uDuLP5KLaqGzm6EJX8wJUT2cT0ZiQ5k7ESvY=;
-        b=mnBXVf65oibp169dOa7FhFKf8SnXEp0Jt68CnbKeOzB8h6lJ9MOQhOJCxJVomEinFf
-         JK4uoRf1mWYZho67DFqRoyDNpwn/8e+T1DqcHFTwdAVXLdsLK0uWq02fOFWBngUITike
-         9pcfXuz9WTgIOkRe4PVoK3CqbSk8LrTFN8v/sweagY7dszZiAznw1tnmTrB7Bov6SS9Y
-         zYqWjKRZdNlTxlWaeqwq/HxYKWd7h8dqlLsuSbPAYZFEv0Uh1nFPZx6tWuhYWJ/tuFLZ
-         4AvzOpAKe1dWyU7ij/go0mGzLdECSFCdOT+86/OOq7HnVzCgQVLzq8UeWTp6le+mNIVA
-         XRVg==
-X-Gm-Message-State: APjAAAWSrFIvs5zieCYGDLMuWed5ypKBo3RFDUtrO2WuNfnBTW6Y6OWh
-        95WiB2cEk5pargrKltM=
-X-Google-Smtp-Source: APXvYqzBNoTRpjPZNL03o7eJgYezii60e4vuwP4YY8zm/gecuO63/FLPLdkeqQ4KV6ofMNCxmzTkhA==
-X-Received: by 2002:a5d:410e:: with SMTP id l14mr5920942wrp.238.1579897794609;
-        Fri, 24 Jan 2020 12:29:54 -0800 (PST)
-Received: from ?IPv6:2a02:810a:8c80:d2c:1d4:baf0:179f:5856? ([2a02:810a:8c80:d2c:1d4:baf0:179f:5856])
-        by smtp.gmail.com with ESMTPSA id y131sm8133471wmc.13.2020.01.24.12.29.53
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Jan 2020 12:29:54 -0800 (PST)
-To:     git@vger.kernel.org
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [Q] push refspec with wildcard pushes all matching branches
-Message-ID: <ed9a0485-1e6c-79ae-6a59-655105203728@googlemail.com>
-Date:   Fri, 24 Jan 2020 21:29:53 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.9.0
+        id S2404345AbgAXUgs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 15:36:48 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58153 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392499AbgAXUfg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 15:35:36 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1666EBC99C;
+        Fri, 24 Jan 2020 15:35:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=Oxi4NlOtkKGeeaou0kMlSaJwPT8=; b=FBru3g
+        a/xzZmzCZaJByj5QCK4NFgk9v0sT6hTYyJKAd2RE3u9jwWrsgeWE0fMoghGRqko9
+        mrEfngZxd89shFwAbJADQq7dGWKgSyNHjjhONjLC7gLgIgzPZmXhVb00oWxNauZ3
+        qJ5cNLNy0GyVJj8ycIyFTXBzdQ2Nfkgb6ps+4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=xWEym5OHPEowtG9NoBneICKSV2SA+b2k
+        xupii50vm4MS35yAJygXdNS2Zzxi7dpHQJIku6z1dCtyRahkgobBqZ+d/YO4DNU2
+        NyOxSKoEAAmW2FP92JtabI7qmJhfWlZHEyC5kLpHdECiJgfcljqOdUpx1uKSYv8U
+        /WdH3en7bto=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0C046BC99B;
+        Fri, 24 Jan 2020 15:35:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 24399BC99A;
+        Fri, 24 Jan 2020 15:35:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, Denton Liu <liu.denton@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Wong <e@80x24.org>,
+        Richard Kerry <richard.kerry@atos.net>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v5] MyFirstContribution: add avenues for getting help
+References: <20200124200915.249473-1-emilyshaffer@google.com>
+Date:   Fri, 24 Jan 2020 12:35:28 -0800
+In-Reply-To: <20200124200915.249473-1-emilyshaffer@google.com>
+        (emilyshaffer@google.com's message of "Fri, 24 Jan 2020 12:09:16
+        -0800")
+Message-ID: <xmqq7e1gzj73.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 10662686-3EE9-11EA-81EE-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear all,
+emilyshaffer@google.com writes:
 
-I'm a little confused, that a push refspec with a wildcard changes the number of branches pushed.
+> From: Emily Shaffer <emilyshaffer@google.com>
 
-Here is what I see with Git 2.25:
+Hmm, unlike folks who use GGG, your From: address seem almost usable
+without having to waste two extra lines (which matters when one has
+to review many patches a day).
 
-     $ git --version
-     git version 2.25.0
-     $ git config --list
-     user.email=bert.wesarg@googlemail.com
-     user.name=Bert Wesarg
-     $ git init --bare bare.git
-     $ git clone bare.git repo
-     Cloning into 'repo'...
-     warning: You appear to have cloned an empty repository.
-     done.
-     $ cd repo
-     $ git config push.default current
-     $ echo foo >foo
-     $ git add foo
-     $ git commit -m foo
-     [master (root-commit) 4d0b276] foo
-      1 file changed, 1 insertion(+)
-      create mode 100644 foo
-     $ git branch master-two
-     $ git push --dry-run
-     To ../bare.git
-      * [new branch]      master -> master
-     $ git config remote.origin.push 'refs/heads/master*:refs/remotes/origin/master*'
-     $ git push --dry-run
-     To ../bare.git
-      * [new branch]      master -> origin/master
-      * [new branch]      master-two -> origin/master-two
+> With https://lore.kernel.org/git/20191114194708.GD60198@google.com/ we
+> now have a mentoring mailing list, to which we should direct new
+> contributors who have questions.
 
-Is this expected behavior?
+Yay.
+
+> Mention #git-devel, which is targeted for Git contributors; asking for
+> help with getting a first contribution together is on-topic for that
+> channel. Also mention some of the conventions in case folks are
+> unfamiliar with IRC.
+>
+> Because the mentoring list and #git-devel are both a subset of Git
+> contributors, finally list the main Git list and mention some of the
+> posting conventions.
+
+> +[[getting-help]]
+> +=== Getting Help
+> +
+> +If you get stuck, you can seek help in the following places.
+> +
+> +==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+> +
+> +This mailing list is targeted to new contributors and is a great place to post
+> +questions and receive kind, detailed answers from volunteers on the Git
+> +project. You must join the group to view messages or post.
+
+OK.
+
+
+> +==== https://webchat.freenode.net/#git-devel[#git-devel] on Freenode
+> +
+> +This IRC channel is for conversations between Git contributors. If someone is
+> +currently online and knows the answer to your question, you can receive help
+> +in real time. Otherwise, you can read the
+> +https://colabti.org/irclogger/irclogger_logs/git-devel[scrollback] to see
+> +whether someone answered you. IRC does not allow offline private messaging, so
+> +if you try to private message someone and then log out of IRC, they cannot
+> +respond to you. It's better to ask your questions in the channel so that you
+> +can be answered if you disconnect and so that others can learn from the
+> +conversation.
+
+OK.
+
+> +==== https://lore.kernel.org/git[git@vger.kernel.org]
+
+Hmph.  I would have expected mailto:git@vger.kernel.org as the main
+URL here, as this enumeration is not for those who lurk to passibly
+receive information, but for those (new) contributors who want to
+ask help by actively transmitting.  Mentioning lore as an archive
+when talking about the list is necessary, but it shouldn't obscure
+the main e-mail address people need to know in order to send their
+requests.
+
+> +
+> +This is the main Git project mailing list where code reviews, version
+> +announcements, design discussions, and more take place. The Git list
+> +requires plain-text-only emails and prefers inline and bottom-posting when
+> +replying to mail; you will be CC'd in all replies to you. Optionally, you can
+> +subscribe to the list by sending an email to majordomo@vger.kernel.org with
+> +"subscribe git" in the body.
 
 Thanks.
-
-Best,
-Bert
