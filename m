@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C374EC2D0DB
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 21:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 908CBC35243
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 21:20:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8BCC62072C
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 21:19:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 5FBCE2072C
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 21:20:00 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+dKAaPa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sOu2iXTj"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387490AbgAXVT7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 16:19:59 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:47020 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729623AbgAXVTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 16:19:52 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z7so3680106wrl.13
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 13:19:51 -0800 (PST)
+        id S2387484AbgAXVT6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 16:19:58 -0500
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:55452 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726080AbgAXVTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 16:19:53 -0500
+Received: by mail-wm1-f50.google.com with SMTP id q9so807374wmj.5
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 13:19:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ZEZzbz6iLF3EEQHCPFq0S7F2RB0HRzMZVzfkhYJ1Yb8=;
-        b=K+dKAaPaOnCI5c0eXsWPLi9421vjRCRRo8GNVW/EvMia3rc8fPKE2IlF4w5YezRT8u
-         cIWoZ+nrMYllIKD3gzjeUQHbKX1/qxCTJgSf8qD0H4WmDVCmy7Qo1RDx16nWSasNxXwf
-         GM0rf2vhBAjyhxsPkbFPPcdc/zk79YG0ZPGdS7WFqWq6jTnhY1liM7b8YUb2yG93+smn
-         OJtTIdLLDulzYxWlzUsQN58rvLK7WMplL9s2GkvvttOY7/vEWcvdOfOf1lWtUwqc37os
-         x31HIOOO7TSOF6xNseN1ImC3B7uzad2Nzk6gYPsiXbadxN4XSuYBmDIa83UP2GFmwkDO
-         Bvtw==
+        bh=IGh+4pUYPBaIAjObkrwXXG7x2R0PcRUvoF6yo5N4Njc=;
+        b=sOu2iXTjcvv0enEjOXP85IIBfsOIF8HToS2QHfxDLDNgqgVXLiiVHeoJmqUZIkGNw0
+         i9C4Ppm9wDOPE7MwQj48bHCwZVOiGcU+HumyWnJNE6664JIMbterztsl/JnG50KSFSea
+         ZQr3xVEAHujyMOzmmHBjL8vF6Aa+O0Na3c0wTyDVfHOYaexTDRjzE/60Ujpz6RQLEczB
+         kRo/MjySmVrzCwMZ8VncYirA2xXZKHwwD/gvjBWALT2IqvwvKK7RlZ7kXB3Z2FU7Hhd5
+         CyTu6bzctzmUM2wdgvz+8kyP8HX9PLi2WFPll0hH2prR0yYDQSv9Mir2K4/4Q4b6CZsL
+         xQSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ZEZzbz6iLF3EEQHCPFq0S7F2RB0HRzMZVzfkhYJ1Yb8=;
-        b=V0zZGk2amNrjb8PLkgREq0yRIpBPzoKDHBoEZx+aVo275qAv521DoCX3SbmpQ54G7T
-         cQ5i4Ce0B/yUa+ws32PRS5tMlRhgJQY+TpCxAg2fm/P0UoyZttRSGsyPBV67erSQD/wW
-         a5SLtQB16mj9SeG0CCU6I1c03rNZODc5yepMsDIWTTUGzoX8fv8OgLZ3lskNitHxZFSv
-         iwin45n4ZTmnggVTwGKsgtQtOuTn8TU6tnvpIZovSiafTtKT39Nc5JYkjgG/dopzLoXG
-         01+1g0LXZR87aydbLjJ74uMgyNrBCEIT66iQxSOwwZWn9UBqVUyG8HxiqnU6+gMzHJcz
-         TaVg==
-X-Gm-Message-State: APjAAAVdVvLl0Bcmj1xnuMXGGyZ14qirvaEQquAM2Kj2L9XwPnu9GHOD
-        t8y8DcwvE6vF4DavlxSDQcVJqmQZ
-X-Google-Smtp-Source: APXvYqy4HhRCVFGLGMK7NyRjg4/Lfrod66gxfgfXkUwFM08903iuGzz4T6N9h5dCHtO7pvxATNQ00g==
-X-Received: by 2002:a5d:4044:: with SMTP id w4mr6331359wrp.322.1579900790886;
-        Fri, 24 Jan 2020 13:19:50 -0800 (PST)
+        bh=IGh+4pUYPBaIAjObkrwXXG7x2R0PcRUvoF6yo5N4Njc=;
+        b=UEe7kFCdMS4Lrn8JknQlOxmNuxXOmNK0q+mA2b1H7tfDz7pBjPwQ2QbIHIvY23VFnr
+         xnc7bFqt4oBLhm0eWUqU6SfGPuBTrQqTlFS3ZhZkUgBHJe8O0l6/9K41IzM1oHnPSGUP
+         XPe8cv6z/7jMa6yP1EFJ9JPVGvuls3UHWghVcYu2zQa6uSPGfNuPt21bzY/SG403V766
+         oBbH+6swK52d4tb8USm6Sh2+wn28wuVwk0rXpQybKEI2rt1njmIh64ioBgkriVqqXSm4
+         4uVZvWU3OiBOsWJMGPpxA5HnhynSj1GP5yWOQbfCiAbyAmUctniwO6VQ7V6ECwCCek4y
+         IWKw==
+X-Gm-Message-State: APjAAAUiJ4myBX5+XTRzJh8H7L0iqZMoLY1AL0KSuxbuiCMj59r6zeku
+        I3cRdT8yxOTVoBpjXpxGe2dm2tkI
+X-Google-Smtp-Source: APXvYqzXvmGVucyppDf8+wbfYw2kDBFHXiCqUIdeT6uo3Ljz/PAXV/OrjnwZVOem8MPH/NvhmcAQeg==
+X-Received: by 2002:a05:600c:149:: with SMTP id w9mr940491wmm.132.1579900791539;
+        Fri, 24 Jan 2020 13:19:51 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i11sm9205570wrs.10.2020.01.24.13.19.50
+        by smtp.gmail.com with ESMTPSA id i8sm9223553wro.47.2020.01.24.13.19.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 13:19:50 -0800 (PST)
-Message-Id: <c27a17a2fcebbc17253c7740dc7efd9bb1db91a3.1579900782.git.gitgitgadget@gmail.com>
+        Fri, 24 Jan 2020 13:19:51 -0800 (PST)
+Message-Id: <526d5becbc87591d7ad37a589a2e44e933bb3e87.1579900782.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
 References: <pull.513.git.1579029962.gitgitgadget@gmail.com>
         <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 24 Jan 2020 21:19:40 +0000
-Subject: [PATCH v2 10/12] sparse-checkout: write escaped patterns in cone mode
+Date:   Fri, 24 Jan 2020 21:19:41 +0000
+Subject: [PATCH v2 11/12] sparse-checkout: use C-style quotes in 'list'
+ subcommand
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,174 +77,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-If a user somehow creates a directory with an asterisk (*) or backslash
-(\), then the "git sparse-checkout set" command will struggle to provide
-the correct pattern in the sparse-checkout file. When not in cone mode,
-the provided pattern is written directly into the sparse-checkout file.
-However, in cone mode we expect a list of paths to directories and then
-we convert those into patterns.
-
-Even more specifically, the goal is to always allow the following from
-the root of a repo:
-
-  git ls-tree --name-only -d HEAD | git sparse-checkout set --stdin
-
-The ls-tree command provides directory names with an unescaped asterisk.
-It also quotes the directories that contain an escaped backslash. We
-must remove these quotes, then keep the escaped backslashes.
-
-However, there is some care needed for the timing of these escapes. The
-in-memory pattern list is used to update the working directory before
-writing the patterns to disk. Thus, we need the command to have the
-unescaped names in the hashsets for the cone comparisons, then escape
-the patterns later.
+When in cone mode, the 'git sparse-checkout list' subcommand lists
+the directories included in the sparse cone. When these directories
+contain odd characters, such as a backslash, then we need to use
+C-style quotes similar to 'git ls-tree'.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 48 ++++++++++++++++++++++++++++--
- t/t1091-sparse-checkout-builtin.sh | 21 +++++++++++--
- 2 files changed, 64 insertions(+), 5 deletions(-)
+ builtin/sparse-checkout.c          | 7 +++++--
+ t/t1091-sparse-checkout-builtin.sh | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 3cee8ab46e..61d2c30036 100644
+index 61d2c30036..83c8e9bb0c 100644
 --- a/builtin/sparse-checkout.c
 +++ b/builtin/sparse-checkout.c
-@@ -140,6 +140,22 @@ static int update_working_directory(struct pattern_list *pl)
- 	return result;
- }
+@@ -13,6 +13,7 @@
+ #include "resolve-undo.h"
+ #include "unpack-trees.h"
+ #include "wt-status.h"
++#include "quote.h"
  
-+static char *escaped_pattern(char *pattern)
-+{
-+	char *p = pattern;
-+	struct strbuf final = STRBUF_INIT;
-+
-+	while (*p) {
-+		if (*p == '*' || *p == '\\')
-+			strbuf_addch(&final, '\\');
-+
-+		strbuf_addch(&final, *p);
-+		p++;
-+	}
-+
-+	return strbuf_detach(&final, NULL);
-+}
-+
- static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- {
- 	int i;
-@@ -164,10 +180,11 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 	fprintf(fp, "/*\n!/*/\n");
+ static const char *empty_base = "";
  
- 	for (i = 0; i < sl.nr; i++) {
--		char *pattern = sl.items[i].string;
-+		char *pattern = escaped_pattern(sl.items[i].string);
+@@ -77,8 +78,10 @@ static int sparse_checkout_list(int argc, const char **argv)
  
- 		if (strlen(pattern))
- 			fprintf(fp, "%s/\n!%s/*/\n", pattern, pattern);
-+		free(pattern);
- 	}
+ 		string_list_sort(&sl);
  
- 	string_list_clear(&sl, 0);
-@@ -185,8 +202,9 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
- 	string_list_remove_duplicates(&sl, 0);
- 
- 	for (i = 0; i < sl.nr; i++) {
--		char *pattern = sl.items[i].string;
-+		char *pattern = escaped_pattern(sl.items[i].string);
- 		fprintf(fp, "%s/\n", pattern);
-+		free(pattern);
- 	}
- }
- 
-@@ -337,7 +355,9 @@ static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *pat
- {
- 	struct pattern_entry *e = xmalloc(sizeof(*e));
- 	e->patternlen = path->len;
--	e->pattern = strbuf_detach(path, NULL);
-+	e->pattern = dup_and_filter_pattern(path->buf);
-+	strbuf_release(path);
-+
- 	hashmap_entry_init(&e->ent,
- 			   ignore_case ?
- 			   strihash(e->pattern) :
-@@ -369,6 +389,7 @@ static void insert_recursive_pattern(struct pattern_list *pl, struct strbuf *pat
- 
- static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
- {
-+	int i;
- 	strbuf_trim(line);
- 
- 	strbuf_trim_trailing_dir_sep(line);
-@@ -376,6 +397,27 @@ static void strbuf_to_cone_pattern(struct strbuf *line, struct pattern_list *pl)
- 	if (!line->len)
- 		return;
- 
-+	for (i = 0; i < line->len; i++) {
-+		if (line->buf[i] == '*') {
-+			strbuf_insert(line, i, "\\", 1);
-+			i++;
+-		for (i = 0; i < sl.nr; i++)
+-			printf("%s\n", sl.items[i].string);
++		for (i = 0; i < sl.nr; i++) {
++			quote_c_style(sl.items[i].string, NULL, stdout, 0);
++			printf("\n");
 +		}
-+
-+		if (line->buf[i] == '\\') {
-+			if (i < line->len - 1 && line->buf[i + 1] == '\\')
-+				i++;
-+			else
-+				strbuf_insert(line, i, "\\", 1);
-+
-+			i++;
-+		}
-+	}
-+
-+	if (line->buf[0] == '"' && line->buf[line->len - 1] == '"') {
-+		strbuf_remove(line, 0, 1);
-+		strbuf_remove(line, line->len - 1, 1);
-+	}
-+
- 	if (line->buf[0] != '/')
- 		strbuf_insert(line, 0, "/", 1);
  
+ 		return 0;
+ 	}
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 0a21a5e15d..2bb30cbe29 100755
+index 2bb30cbe29..16dd924291 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -309,6 +309,9 @@ check_read_tree_errors () {
- 	REPO=$1
- 	FILES=$2
- 	ERRORS=$3
-+	git -C $REPO -c core.sparseCheckoutCone=false read-tree -mu HEAD 2>err &&
-+	test_must_be_empty err &&
-+	check_files $REPO "$FILES" &&
- 	git -C $REPO read-tree -mu HEAD 2>err &&
- 	if test -z "$ERRORS"
- 	then
-@@ -379,14 +382,28 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
- 	git -C escaped reset --hard $COMMIT &&
- 	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" &&
- 	git -C escaped sparse-checkout init --cone &&
--	cat >escaped/.git/info/sparse-checkout <<-\EOF &&
-+	git -C escaped sparse-checkout set zbad\\dir zdoes\*not\*exist zdoes\*exist &&
-+	cat >expect <<-\EOF &&
+@@ -392,7 +392,8 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
+ 	EOF
+ 	test_cmp expect escaped/.git/info/sparse-checkout &&
+ 	check_read_tree_errors escaped "a zbad\\dir zdoes*exist" &&
+-	git -C escaped ls-tree -d --name-only HEAD | git -C escaped sparse-checkout set --stdin &&
++	git -C escaped ls-tree -d --name-only HEAD >list-expect &&
++	git -C escaped sparse-checkout set --stdin <list-expect &&
+ 	cat >expect <<-\EOF &&
  	/*
  	!/*/
- 	/zbad\\dir/
-+	/zdoes\*exist/
- 	/zdoes\*not\*exist/
-+	EOF
-+	test_cmp expect escaped/.git/info/sparse-checkout &&
-+	check_read_tree_errors escaped "a zbad\\dir zdoes*exist" &&
-+	git -C escaped ls-tree -d --name-only HEAD | git -C escaped sparse-checkout set --stdin &&
-+	cat >expect <<-\EOF &&
-+	/*
-+	!/*/
-+	/deep/
-+	/folder1/
-+	/folder2/
-+	/zbad\\dir/
+@@ -403,7 +404,9 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
  	/zdoes\*exist/
  	EOF
--	check_read_tree_errors escaped "a zbad\\dir zdoes*exist"
-+	test_cmp expect escaped/.git/info/sparse-checkout &&
-+	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist"
+ 	test_cmp expect escaped/.git/info/sparse-checkout &&
+-	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist"
++	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" &&
++	git -C escaped sparse-checkout list >list-actual &&
++	test_cmp list-expect list-actual
  '
  
  test_done
