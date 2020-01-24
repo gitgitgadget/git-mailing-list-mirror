@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B029BC35241
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EAE0C35242
 	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 81E0524125
+	by mail.kernel.org (Postfix) with ESMTP id 516EB22522
 	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oHdOIjMd"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oIg33ogu"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729624AbgAXDfS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 22:35:18 -0500
-Received: from mail-vs1-f74.google.com ([209.85.217.74]:54682 "EHLO
-        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728655AbgAXDfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 22:35:18 -0500
-Received: by mail-vs1-f74.google.com with SMTP id l1so45966vsr.21
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:35:17 -0800 (PST)
+        id S1729464AbgAXDfQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 22:35:16 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:40151 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728655AbgAXDfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 22:35:15 -0500
+Received: by mail-pf1-f201.google.com with SMTP id d127so528033pfa.7
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=7hnJFTXG0VTuFPNr3IRwCWsuYdQmVj8ZgovBHCF4rWw=;
-        b=oHdOIjMdmJ1D70WV72FOLxsQ4NSyjxVrhyfLJC6iVA9UN5sZofYPf5eU2h7wm1U+8S
-         AuiDILosKMMP/y+GdA9+zrCg3i9LK40VBfhNPHVUH08tSuxz0ypWc8csZ335kAeT0Ggk
-         de0Cw+nbuGZ8zFXwzvlzx2QLNIKJdLqByZCAqXJ+v0duWHAoFyM8e/WxpvMNRLYmbvpW
-         w9c20HqIvsq4Wb1lkmiS9MmhlrHI8hS7btKf/RL6PXMCCSpxTnEvgfi7ysd16b+Snejk
-         CkRPgJNHz+IYgg+2oQG1Bf7895ymymLACgbJG0O7/KzzwEp1QRjAAbVRj3AsiR0uW+NR
-         dcEg==
+        bh=lNQXz1R+/WtdfSs9/w1SNQHyB67Mr0ApRGK0e7S5RlI=;
+        b=oIg33oguDTCMm3BEQTAZGJeRTObg5GxmMA7VDy1td6IYUkECGQ/ax4jPp4/12i8k4u
+         xX9ZpMrITg7gvh+694yoFs+kfDOcP7XCyo1xgCJX97dp2C9Mo1KwJ1wmjbo/hIoI37el
+         tS5n5y0vZ+X0tP/hTg8UNEGVVCFCcq3OZZMME/EE0pwBqX7SzHRRLiYpMh5M6bgCh/RS
+         SYNklqYUiY2Xxgu/6cCzj1EbkGKoyTAovZIPiHA6ah4gzd8xq7XAldpVCME+j4iLr93F
+         L6ICj3M5ZRux5yaTj3I28UgDGFviSfjZ8x+sqOHMIafPnuxdyRbKHEDKr0kza3A1tZoE
+         k+TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=7hnJFTXG0VTuFPNr3IRwCWsuYdQmVj8ZgovBHCF4rWw=;
-        b=fKI0YVUAGJb1C7AjsuP46azZIwwEP4c+ma7JrcND0epbc4tZkeAgFPCVx8CP/d3767
-         tj3MOBNYtMbXmH64VkIkCWf1Ky5bm2rcvHoVrfRypVRECQl6ft/k2OENP2VFWpAYPAiF
-         Mn6uOCFK73kLKcIZPh9OklToQL+arPMqoRIIKdhoK874hmVlZq5FCWjCNMb6EioCGe/r
-         MiIqNEh71DRoXguqTTRTxyDB4ER7mkq1peWJqyHwzT851FuKlB9JLvgk3/TNdyoqXmJr
-         +WnW5mat0RZon7nWD+/J2ncKzMZJokUMRMqcoSyVcoKNOSA3+QZYzkkAlL3/BCJv7A0G
-         kVlg==
-X-Gm-Message-State: APjAAAVz0ZqBO4EB4i/bzMrAOB8GJhj11/KzyKvEXCd6y6WnA7P/nesJ
-        Cy22aCXqYgtfs/9xAHYjh3LwFWDmq/7EJ2Mr9AZoUP0FCfEKy/kQ3rpYEZJYBroOPD0012mXmmg
-        j02RjbA+AP08vMYf49ufgdriZP567CEJKKRnBcM5u90N73DDLP00q8UDr7XkVwrcvBscJeF67vQ
+        bh=lNQXz1R+/WtdfSs9/w1SNQHyB67Mr0ApRGK0e7S5RlI=;
+        b=ReO5ov90oyLClU5MjUvHudjDu0B9scWeJ0YExDagTdvRQ9St8W9oW60dEi5g5rCXcP
+         T8coVcGiPQV5g7Jp3Q2sHTxjP65Exs7yd0ZL+BiYz/ISgHnKoR4bw8dSnZGQlqglUcAc
+         VibzHO+VTYSC9X+l9rtUzZIqbPDJqvfqihI5dH2jS1GMiKRrMjr3H2Ot32c2RfCNql/H
+         TPbxdxt4UAD1UjOBqoOC9o0Fhu3WwHErZaPD3WZ0v7pRUtJT2aG/eb+6pnqR9DF/SVRz
+         T11NTTDPsfQvIkniNs/9wwXa1FqG3jCXJf9278F6IMHraoXxLS2Dg6Bi0clLq0WJ+Q04
+         gbCA==
+X-Gm-Message-State: APjAAAVOpT1/CwieOXx4FXc2Za00XTwwpQMS4aTX281szn1TPHVd+Kf2
+        KCnk+6YY9pngzo9S+oUzhMKLd21B/n4kcP00InDcYpQpqplkrqlsfNriCZYttnq+azk43kylWER
+        T8C3WcuipA31isjKynG1KcjALwbbLpR9FWXhv9WjVZoOtkK5hVmnFKOAdglpVCXXwbCpWL8KGFA
         ==
-X-Google-Smtp-Source: APXvYqxPOH3S00jwL4w6c1BVRg1aH8i9UOrt1ftZUbiqApde8BakTbHKEfrfbG56+Vd8oG7lE01SS1u803nRvtvx+XA=
-X-Received: by 2002:a67:fa51:: with SMTP id j17mr982156vsq.59.1579836916944;
- Thu, 23 Jan 2020 19:35:16 -0800 (PST)
-Date:   Thu, 23 Jan 2020 19:34:24 -0800
+X-Google-Smtp-Source: APXvYqzQY4YnwjeVpP9ExhttkDtZtRtobJcKTgac18Tp25X7Lw4M3fUzYxMVzHCA3xNDIPih1qCH2M+8M/n8GL+y3QU=
+X-Received: by 2002:a63:3191:: with SMTP id x139mr1760277pgx.368.1579836914547;
+ Thu, 23 Jan 2020 19:35:14 -0800 (PST)
+Date:   Thu, 23 Jan 2020 19:34:23 -0800
 In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
-Message-Id: <20200124033436.81097-4-emilyshaffer@google.com>
+Message-Id: <20200124033436.81097-3-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200124033436.81097-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v5 03/15] bugreport: gather git version and build info
+Subject: [PATCH v5 02/15] help: move list_config_help to builtin/help
 From:   emilyshaffer@google.com
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,151 +70,372 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-Knowing which version of Git a user has and how it was built allows us
-to more precisely pin down the circumstances when a certain issue
-occurs, so teach bugreport how to tell us the same output as 'git
-version --build-options'.
+Starting in 3ac68a93fd2, help.o began to depend on builtin/branch.o,
+builtin/clean.o, and builtin/config.o. This meant that help.o was
+unusable outside of the context of the main Git executable.
 
-It's not ideal to directly call 'git version --build-options' because
-that output goes to stdout. Instead, wrap the version string in a helper
-within help.[ch] library, and call that helper from within the bugreport
-library.
+To make help.o usable by other commands again, move list_config_help()
+into builtin/help.c (where it makes sense to assume other builtin libraries
+are present).
+
+When command-list.h is included but a member is not used, we start to
+hear a compiler warning. Since the config list is generated in a fairly
+different way than the command list, and since commands and config
+options are semantically different, move the config list into its own
+header and move the generator into its own script and build rule.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c | 22 +++++++++++++++++++++-
- help.c      | 47 +++++++++++++++++++++++++++++------------------
- help.h      |  1 +
- 3 files changed, 51 insertions(+), 19 deletions(-)
+ .gitignore             |  1 +
+ Makefile               | 13 +++++--
+ builtin/help.c         | 86 ++++++++++++++++++++++++++++++++++++++++++
+ generate-cmdlist.sh    | 19 ----------
+ generate-configlist.sh | 24 ++++++++++++
+ help.c                 | 85 -----------------------------------------
+ help.h                 |  1 -
+ 7 files changed, 121 insertions(+), 108 deletions(-)
+ create mode 100755 generate-configlist.sh
 
-diff --git a/bugreport.c b/bugreport.c
-index 5495b31674..b1a5a279ac 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -1,8 +1,20 @@
--#include "builtin.h"
-+#include "cache.h"
- #include "parse-options.h"
- #include "stdio.h"
- #include "strbuf.h"
- #include "time.h"
-+#include "help.h"
-+
-+static void get_system_info(struct strbuf *sys_info)
-+{
-+	struct strbuf version_info = STRBUF_INIT;
-+
-+	/* get git version from native cmd */
-+	strbuf_addstr(sys_info, "git version:\n");
-+	get_version_info(&version_info, 1);
-+	strbuf_addbuf(sys_info, &version_info);
-+	strbuf_complete_line(sys_info);
-+}
+diff --git a/.gitignore b/.gitignore
+index ca301bc890..d89bf9e11e 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -190,6 +190,7 @@
+ /gitweb/gitweb.cgi
+ /gitweb/static/gitweb.js
+ /gitweb/static/gitweb.min.*
++/config-list.h
+ /command-list.h
+ *.tar.gz
+ *.dsc
+diff --git a/Makefile b/Makefile
+index f271619371..a01a050aa3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -815,6 +815,7 @@ LIB_FILE = libgit.a
+ XDIFF_LIB = xdiff/lib.a
+ VCSSVN_LIB = vcs-svn/lib.a
  
- static const char * const bugreport_usage[] = {
- 	N_("git bugreport [-o|--output <file>]"),
-@@ -32,6 +44,11 @@ static int get_bug_template(struct strbuf *template)
- 	return 0;
++GENERATED_H += config-list.h
+ GENERATED_H += command-list.h
+ 
+ LIB_H := $(sort $(patsubst ./%,%,$(shell git ls-files '*.h' ':!t/' ':!Documentation/' 2>/dev/null || \
+@@ -2129,7 +2130,7 @@ git$X: git.o GIT-LDFLAGS $(BUILTIN_OBJS) $(GITLIBS)
+ 
+ help.sp help.s help.o: command-list.h
+ 
+-builtin/help.sp builtin/help.s builtin/help.o: command-list.h GIT-PREFIX
++builtin/help.sp builtin/help.s builtin/help.o: config-list.h GIT-PREFIX
+ builtin/help.sp builtin/help.s builtin/help.o: EXTRA_CPPFLAGS = \
+ 	'-DGIT_HTML_PATH="$(htmldir_relative_SQ)"' \
+ 	'-DGIT_MAN_PATH="$(mandir_relative_SQ)"' \
+@@ -2149,6 +2150,12 @@ $(BUILT_INS): git$X
+ 	ln -s $< $@ 2>/dev/null || \
+ 	cp $< $@
+ 
++config-list.h: generate-configlist.sh
++
++config-list.h:
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-configlist.sh \
++		>$@+ && mv $@+ $@
++
+ command-list.h: generate-cmdlist.sh command-list.txt
+ 
+ command-list.h: $(wildcard Documentation/git*.txt) Documentation/*config.txt Documentation/config/*.txt
+@@ -2786,7 +2793,7 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+ .PHONY: sparse $(SP_OBJ)
+ sparse: $(SP_OBJ)
+ 
+-EXCEPT_HDRS := command-list.h unicode-width.h compat/% xdiff/%
++EXCEPT_HDRS := command-list.h config-list.h unicode-width.h compat/% xdiff/%
+ ifndef GCRYPT_SHA256
+ 	EXCEPT_HDRS += sha256/gcrypt.h
+ endif
+@@ -2808,7 +2815,7 @@ hdr-check: $(HCO)
+ style:
+ 	git clang-format --style file --diff --extensions c,h
+ 
+-check: command-list.h
++check: config-list.h command-list.h
+ 	@if sparse; \
+ 	then \
+ 		echo >&2 "Use 'make sparse' instead"; \
+diff --git a/builtin/help.c b/builtin/help.c
+index e5590d7787..1c5f2b9255 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -8,6 +8,7 @@
+ #include "parse-options.h"
+ #include "run-command.h"
+ #include "column.h"
++#include "config-list.h"
+ #include "help.h"
+ #include "alias.h"
+ 
+@@ -62,6 +63,91 @@ static const char * const builtin_help_usage[] = {
+ 	NULL
+ };
+ 
++struct slot_expansion {
++	const char *prefix;
++	const char *placeholder;
++	void (*fn)(struct string_list *list, const char *prefix);
++	int found;
++};
++
++static void list_config_help(int for_human)
++{
++	struct slot_expansion slot_expansions[] = {
++		{ "advice", "*", list_config_advices },
++		{ "color.branch", "<slot>", list_config_color_branch_slots },
++		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
++		{ "color.diff", "<slot>", list_config_color_diff_slots },
++		{ "color.grep", "<slot>", list_config_color_grep_slots },
++		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
++		{ "color.remote", "<slot>", list_config_color_sideband_slots },
++		{ "color.status", "<slot>", list_config_color_status_slots },
++		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
++		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
++		{ NULL, NULL, NULL }
++	};
++	const char **p;
++	struct slot_expansion *e;
++	struct string_list keys = STRING_LIST_INIT_DUP;
++	int i;
++
++	for (p = config_name_list; *p; p++) {
++		const char *var = *p;
++		struct strbuf sb = STRBUF_INIT;
++
++		for (e = slot_expansions; e->prefix; e++) {
++
++			strbuf_reset(&sb);
++			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
++			if (!strcasecmp(var, sb.buf)) {
++				e->fn(&keys, e->prefix);
++				e->found++;
++				break;
++			}
++		}
++		strbuf_release(&sb);
++		if (!e->prefix)
++			string_list_append(&keys, var);
++	}
++
++	for (e = slot_expansions; e->prefix; e++)
++		if (!e->found)
++			BUG("slot_expansion %s.%s is not used",
++			    e->prefix, e->placeholder);
++
++	string_list_sort(&keys);
++	for (i = 0; i < keys.nr; i++) {
++		const char *var = keys.items[i].string;
++		const char *wildcard, *tag, *cut;
++
++		if (for_human) {
++			puts(var);
++			continue;
++		}
++
++		wildcard = strchr(var, '*');
++		tag = strchr(var, '<');
++
++		if (!wildcard && !tag) {
++			puts(var);
++			continue;
++		}
++
++		if (wildcard && !tag)
++			cut = wildcard;
++		else if (!wildcard && tag)
++			cut = tag;
++		else
++			cut = wildcard < tag ? wildcard : tag;
++
++		/*
++		 * We may produce duplicates, but that's up to
++		 * git-completion.bash to handle
++		 */
++		printf("%.*s\n", (int)(cut - var), var);
++	}
++	string_list_clear(&keys, 0);
++}
++
+ static enum help_format parse_help_format(const char *format)
+ {
+ 	if (!strcmp(format, "man"))
+diff --git a/generate-cmdlist.sh b/generate-cmdlist.sh
+index 71158f7d8b..45fecf8bdf 100755
+--- a/generate-cmdlist.sh
++++ b/generate-cmdlist.sh
+@@ -76,23 +76,6 @@ print_command_list () {
+ 	echo "};"
  }
  
-+static void get_header(struct strbuf *buf, const char *title)
-+{
-+	strbuf_addf(buf, "\n\n[%s]\n", title);
+-print_config_list () {
+-	cat <<EOF
+-static const char *config_name_list[] = {
+-EOF
+-	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
+-	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
+-	sort |
+-	while read line
+-	do
+-		echo "	\"$line\","
+-	done
+-	cat <<EOF
+-	NULL,
+-};
+-EOF
+-}
+-
+ exclude_programs=
+ while test "--exclude-program" = "$1"
+ do
+@@ -113,5 +96,3 @@ echo
+ define_category_names "$1"
+ echo
+ print_command_list "$1"
+-echo
+-print_config_list
+diff --git a/generate-configlist.sh b/generate-configlist.sh
+new file mode 100755
+index 0000000000..eca6a00c30
+--- /dev/null
++++ b/generate-configlist.sh
+@@ -0,0 +1,24 @@
++#!/bin/sh
++
++echo "/* Automatically generated by generate-configlist.sh */"
++echo
++
++print_config_list () {
++	cat <<EOF
++static const char *config_name_list[] = {
++EOF
++	grep -h '^[a-zA-Z].*\..*::$' Documentation/*config.txt Documentation/config/*.txt |
++	sed '/deprecated/d; s/::$//; s/,  */\n/g' |
++	sort |
++	while read line
++	do
++		echo "	\"$line\","
++	done
++	cat <<EOF
++	NULL,
++};
++EOF
 +}
 +
- int cmd_main(int argc, const char **argv)
- {
- 	struct strbuf buffer = STRBUF_INIT;
-@@ -60,6 +77,9 @@ int cmd_main(int argc, const char **argv)
- 
- 	get_bug_template(&buffer);
- 
-+	get_header(&buffer, "System Info");
-+	get_system_info(&buffer);
-+
- 	report = fopen_for_writing(report_path.buf);
- 	strbuf_write(&buffer, report);
- 	fclose(report);
++echo
++print_config_list
 diff --git a/help.c b/help.c
-index a21487db77..156a6cdea3 100644
+index cf67624a94..a21487db77 100644
 --- a/help.c
 +++ b/help.c
-@@ -622,8 +622,33 @@ const char *help_unknown_cmd(const char *cmd)
- 	exit(1);
+@@ -407,91 +407,6 @@ void list_common_guides_help(void)
+ 	putchar('\n');
  }
  
-+void get_version_info(struct strbuf *buf, int show_build_options)
-+{
-+	strbuf_reset(buf);
-+	/*
-+	 * The format of this string should be kept stable for compatibility
-+	 * with external projects that rely on the output of "git version".
-+	 *
-+	 * Always show the version, even if other options are given.
-+	 */
-+	strbuf_addf(buf, "git version %s\n", git_version_string);
-+
-+	if (show_build_options) {
-+		strbuf_addf(buf, "cpu: %s\n", GIT_HOST_CPU);
-+		if (git_built_from_commit_string[0])
-+			strbuf_addf(buf, "built from commit: %s\n",
-+			       git_built_from_commit_string);
-+		else
-+			strbuf_addstr(buf, "no commit associated with this build\n");
-+		strbuf_addf(buf, "sizeof-long: %d\n", (int)sizeof(long));
-+		strbuf_addf(buf, "sizeof-size_t: %d\n", (int)sizeof(size_t));
-+		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
-+	}
-+}
-+
- int cmd_version(int argc, const char **argv, const char *prefix)
- {
-+	struct strbuf buf = STRBUF_INIT;
- 	int build_options = 0;
- 	const char * const usage[] = {
- 		N_("git version [<options>]"),
-@@ -637,25 +662,11 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 
--	/*
--	 * The format of this string should be kept stable for compatibility
--	 * with external projects that rely on the output of "git version".
--	 *
--	 * Always show the version, even if other options are given.
--	 */
--	printf("git version %s\n", git_version_string);
-+	get_version_info(&buf, build_options);
-+	printf("%s", buf.buf);
-+
-+	strbuf_release(&buf);
- 
--	if (build_options) {
--		printf("cpu: %s\n", GIT_HOST_CPU);
--		if (git_built_from_commit_string[0])
--			printf("built from commit: %s\n",
--			       git_built_from_commit_string);
--		else
--			printf("no commit associated with this build\n");
--		printf("sizeof-long: %d\n", (int)sizeof(long));
--		printf("sizeof-size_t: %d\n", (int)sizeof(size_t));
--		/* NEEDSWORK: also save and output GIT-BUILD_OPTIONS? */
+-struct slot_expansion {
+-	const char *prefix;
+-	const char *placeholder;
+-	void (*fn)(struct string_list *list, const char *prefix);
+-	int found;
+-};
+-
+-void list_config_help(int for_human)
+-{
+-	struct slot_expansion slot_expansions[] = {
+-		{ "advice", "*", list_config_advices },
+-		{ "color.branch", "<slot>", list_config_color_branch_slots },
+-		{ "color.decorate", "<slot>", list_config_color_decorate_slots },
+-		{ "color.diff", "<slot>", list_config_color_diff_slots },
+-		{ "color.grep", "<slot>", list_config_color_grep_slots },
+-		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
+-		{ "color.remote", "<slot>", list_config_color_sideband_slots },
+-		{ "color.status", "<slot>", list_config_color_status_slots },
+-		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
+-		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
+-		{ NULL, NULL, NULL }
+-	};
+-	const char **p;
+-	struct slot_expansion *e;
+-	struct string_list keys = STRING_LIST_INIT_DUP;
+-	int i;
+-
+-	for (p = config_name_list; *p; p++) {
+-		const char *var = *p;
+-		struct strbuf sb = STRBUF_INIT;
+-
+-		for (e = slot_expansions; e->prefix; e++) {
+-
+-			strbuf_reset(&sb);
+-			strbuf_addf(&sb, "%s.%s", e->prefix, e->placeholder);
+-			if (!strcasecmp(var, sb.buf)) {
+-				e->fn(&keys, e->prefix);
+-				e->found++;
+-				break;
+-			}
+-		}
+-		strbuf_release(&sb);
+-		if (!e->prefix)
+-			string_list_append(&keys, var);
 -	}
- 	return 0;
- }
- 
+-
+-	for (e = slot_expansions; e->prefix; e++)
+-		if (!e->found)
+-			BUG("slot_expansion %s.%s is not used",
+-			    e->prefix, e->placeholder);
+-
+-	string_list_sort(&keys);
+-	for (i = 0; i < keys.nr; i++) {
+-		const char *var = keys.items[i].string;
+-		const char *wildcard, *tag, *cut;
+-
+-		if (for_human) {
+-			puts(var);
+-			continue;
+-		}
+-
+-		wildcard = strchr(var, '*');
+-		tag = strchr(var, '<');
+-
+-		if (!wildcard && !tag) {
+-			puts(var);
+-			continue;
+-		}
+-
+-		if (wildcard && !tag)
+-			cut = wildcard;
+-		else if (!wildcard && tag)
+-			cut = tag;
+-		else
+-			cut = wildcard < tag ? wildcard : tag;
+-
+-		/*
+-		 * We may produce duplicates, but that's up to
+-		 * git-completion.bash to handle
+-		 */
+-		printf("%.*s\n", (int)(cut - var), var);
+-	}
+-	string_list_clear(&keys, 0);
+-}
+-
+ static int get_alias(const char *var, const char *value, void *data)
+ {
+ 	struct string_list *list = data;
 diff --git a/help.h b/help.h
-index 9071894e8c..500521b908 100644
+index 7a455beeb7..9071894e8c 100644
 --- a/help.h
 +++ b/help.h
-@@ -37,6 +37,7 @@ void add_cmdname(struct cmdnames *cmds, const char *name, int len);
- void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes);
- int is_in_cmdlist(struct cmdnames *cmds, const char *name);
- void list_commands(unsigned int colopts, struct cmdnames *main_cmds, struct cmdnames *other_cmds);
-+void get_version_info(struct strbuf *buf, int show_build_options);
+@@ -22,7 +22,6 @@ static inline void mput_char(char c, unsigned int num)
+ void list_common_cmds_help(void);
+ void list_all_cmds_help(void);
+ void list_common_guides_help(void);
+-void list_config_help(int for_human);
  
- /*
-  * call this to die(), when it is suspected that the user mistyped a
+ void list_all_main_cmds(struct string_list *list);
+ void list_all_other_cmds(struct string_list *list);
 -- 
 2.25.0.341.g760bfbb309-goog
 
