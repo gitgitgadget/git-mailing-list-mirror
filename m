@@ -7,92 +7,123 @@ X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 094D3C2D0DB
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 14:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D634FC2D0DB
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 14:45:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D0E982077C
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 14:06:59 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A32D320704
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 14:45:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RlcSheTe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FojJQTxn"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388625AbgAXOG6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 09:06:58 -0500
-Received: from mail-qk1-f178.google.com ([209.85.222.178]:33424 "EHLO
-        mail-qk1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387412AbgAXOG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 09:06:58 -0500
-Received: by mail-qk1-f178.google.com with SMTP id h23so2136013qkh.0
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 06:06:58 -0800 (PST)
+        id S2387729AbgAXOpY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 09:45:24 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38655 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726173AbgAXOpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 09:45:24 -0500
+Received: by mail-wr1-f65.google.com with SMTP id y17so2286398wrh.5
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 06:45:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=LffqrB/lm+WAKNeEMzuW1Ch2q18L2RDh8eGnvKUNQY0=;
-        b=RlcSheTenqDCzn4KMDMV9KdNdajBZKt46oL49V1MNruOf2HRvG07W4ItSmFcEODedc
-         fR80tF3LRKmdlJSiCvUAY3mubJemfqgSHf9AIbU5ZaCx1a4NrReE3onxZCyKOX+riKsv
-         Ny9wQkkG/Vvk3vh0+ylHq3gBxyBQjyYqCA6seeeZbouFkithY+uQjEv/5YoFYuo1YG0p
-         klXAlNCx9Qfm+GjINUocCYU84O/eomYm/VjRSAw872l8qqgzxd+bv6M1PfBbktzr17cj
-         UtghbVComALGyWhoHkS8gmuuYMd06MwiU9hZdWiCifzf0sf+B2x4N3qa1oXgjT1Ahez6
-         lRIQ==
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=iHLCQ6VITQ3SGNk7cLGsnvgINX2HeixvPq9O96e73Uw=;
+        b=FojJQTxnZL1I2nrIPvazg2750Y0rjtY1BOETmJ0ZMwE8l0gQksAA/Jdv2PlIM5W+nw
+         eOlXEJP3QMU+616EXE/n2OSWFfg0349liF9M8VqQH3yZ5s9sn/RoEqydKXTkzIl5No+4
+         zCx+QSYKL3gyhY8QjCqOaCp5bAEwg4I3dboFWMPnXK2lC0gZBpbnPCw5tleeC/8kPmRB
+         /hVPgOjhRdhD4gEJINq/4AWEey2yFYYWelsulGyzRJnI/10rhZENzse1aVoVg/mjlDLA
+         +RLDCkOqMFy5dLWxNsf9YCD6E74iPy3jC4QFCeDYuvZPzOOPyOSHTmqZFKfG/JM7cb/p
+         Vrkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=LffqrB/lm+WAKNeEMzuW1Ch2q18L2RDh8eGnvKUNQY0=;
-        b=lWuVpXnir9chubUh5o9np4mjzLS7tIx4DnbB5ElbMQkujnHEZQQxiAT/ZHFJ3csOT2
-         MiLvgD6ZpXDQYoFtcyMF0a9KBMiLzMQsh2JQ+LcHZsH+1f88VQMJKt/3jhFjLPl2wsIO
-         hzmY/j1GCEIR5mfeRQ6iIcsXJFT96mFqGlyO8Z2Sdsl1dXBZxQat6cwVpC8FgjNTQ2ck
-         IwGms+mVOjMjsEhy3eT27/vo+loufZ9UXQbkf05zGIQypMretMusfvybTH8L2aaaZA0o
-         PvrfZ78/9w6/OAWlRZfiNo+L13NXJ7qH2dhFsa50qOKJQbeaUEKhUFlLCbIeI3MiwI3p
-         cl1A==
-X-Gm-Message-State: APjAAAWleWk2INd5yAMqLqqNKQhGCv7ZvgNHf3aJbMGqRktmKY+M01Tr
-        cEi+YpPVBkB13BYmkQSbYQI=
-X-Google-Smtp-Source: APXvYqxriMF1mz27kOzLWBrruARb4bqh8hG55Id22C7kBud386xFBpsW+Qp2JsFW0Hxvu8JhuRlTsg==
-X-Received: by 2002:a37:a642:: with SMTP id p63mr2731029qke.85.1579874817549;
-        Fri, 24 Jan 2020 06:06:57 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:fdb6:49de:4189:c4f0? ([2001:4898:a800:1010:aeec:49de:4189:c4f0])
-        by smtp.gmail.com with ESMTPSA id 2sm3079309qkv.98.2020.01.24.06.06.56
+        bh=iHLCQ6VITQ3SGNk7cLGsnvgINX2HeixvPq9O96e73Uw=;
+        b=eXygz3DwozGrIK8OEZ1KUCRFRzjfb35649rnXsTR3QC0/AgwDN1yWI+4HGBEOJf4c7
+         EaMTxiPSo5ScLZ/YqvLwYcYZ/mNnIq5xCyIGOzoX8Sld145Ren+9S4EWFs4Ufqlr9Ulf
+         0E4al/na5eM9WS7DVrWIAcWJGPZ9j0ppVh3pSFKj5tm5WvpD7v07eoibq62tth0IEm6m
+         +y8l7QaLae8kAHGdF/HYG6logSpGdYV0rBUMgEu8aBGeHCmeWkVuf8TVe2zGkPRHZhJr
+         dkDekYe2gj2ODx9G23whVNGMbSH3tGU7486yveq+1J7T3jDLK2KIUowPG0w58eIwPoOc
+         lreA==
+X-Gm-Message-State: APjAAAUbiVDy+havsMzwKtYz6snTPfT2HqxnSMDaOmG4cUQpWr4oFm0P
+        8bMB4Ik7zKbKaEQCVG9dj8s=
+X-Google-Smtp-Source: APXvYqyb+nmfYDfynxTNcEkePDDxXiHZi/zXO0Dor7AgLHh0KSMWaaV+VF7MpoAk3f+Y1ImsacJduA==
+X-Received: by 2002:a5d:6ac5:: with SMTP id u5mr4970675wrw.271.1579877122993;
+        Fri, 24 Jan 2020 06:45:22 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-551-1-75-233.w92-146.abo.wanadoo.fr. [92.146.226.233])
+        by smtp.gmail.com with ESMTPSA id 2sm7675432wrq.31.2020.01.24.06.45.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jan 2020 06:06:57 -0800 (PST)
-Subject: Re: Misrendering of git 2.24 log --graph
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Jan Engelhardt <jengelh@inai.de>, git@vger.kernel.org,
-        James Coglan <jcoglan@gmail.com>
-References: <nycvar.YFH.7.76.2001232353220.26179@n3.vanv.qr>
- <b64e8fb7-1dd3-439f-6ab1-1b88c52879d1@gmail.com>
-Message-ID: <75f5c537-bb46-7f04-54fe-0bc62762a682@gmail.com>
-Date:   Fri, 24 Jan 2020 09:06:56 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        Fri, 24 Jan 2020 06:45:22 -0800 (PST)
+Subject: Re: [PATCH v1] rebase -i: stop checking out the tip of the branch to
+ rebase
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Eugeniu Rosca <erosca@de.adit-jv.com>,
+        Jeff King <peff@peff.net>,
+        Eugeniu Rosca <roscaeugeniu@gmail.com>
+References: <20200109150332.GF32750@szeder.dev>
+ <20200121191857.23047-1-alban.gruin@gmail.com>
+ <xmqq5zh36wx1.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <4142ab55-3311-4be2-2173-5cdacafb17f3@gmail.com>
+Date:   Fri, 24 Jan 2020 15:45:11 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <b64e8fb7-1dd3-439f-6ab1-1b88c52879d1@gmail.com>
+In-Reply-To: <xmqq5zh36wx1.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/24/2020 9:05 AM, Derrick Stolee wrote:
-> On 1/23/2020 6:12 PM, Jan Engelhardt wrote:
->> Greetings.
+Hi Junio,
+
+Le 22/01/2020 à 21:47, Junio C Hamano a écrit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
 > 
-> Hello, Jan. Thanks for sending this report.
+>> One of the first things done by the interactive rebase is to make a todo
+>> list.  This requires knowledge of the commit range to rebase.  To get
+>> the oid of the last commit of the range, the tip of the branch to rebase
+>> is checked out with prepare_branch_to_be_rebased(), then the oid of the
+>> HEAD is read.  On big repositories, it's a performance penalty: the user
+>> may have to wait before editing the todo list while git is extracting the
+>> branch silently (because git-checkout is silenced here).  After this,
+>> the head of the branch is not even modified.
 > 
->> I have observed git 2.24 outputting a garbage graph element for a 
->> particular history. The issue does not appear in 2.25, but the 
->> underlying bug may still be in there; it is just that _this particular 
->> history_ does not expose it anymore due to the new, more compact tree 
->> rendering that 2.25 seems to be shipping.
+> Hmph.  One curious thing in the above is why this is specific to
+> "rebase -i". The need to know the commit range to rebase is shared
+> across any rebase backend, and it would be the most natural to parse
+> the optional second argument (i.e. the branch or the commit to
+> rebase) before builtin/rebase.c dispatches to a specific rebase
+> backend, wouldn't it?  So, the question is why a normal "rebase"
+> does not need the same fix?
+> 
 
-I completely misread your ordering here. You are clear that this
-is an issue in 2.24 and NOT 2.25. Sorry.
+That's a problem shared by all rebases using the sequencer, so -m and -r
+are also affected by this.  `am' is not.
 
-I'm not sure that there is anything to do since the graph rendering
-has changed so much, and we intend to keep the new version instead.
+> If the answer is "rebase in general was fine without extra checkout,
+> but 'rebase -i' was doing an unnecessary checkout" (or any other
+> answer) that is something that would help future readers to record
+> in the commit log message.
+> 
 
-Thanks,
--Stolee
+So yes, the answer is that the am backend does not perform this
+checkout, unlike all others rebases.
+
+I will resend this patch very soon.
+
+> Thanks.
+> 
+> 
+
+Cheers,
+Alban
 
