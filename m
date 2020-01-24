@@ -2,149 +2,142 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08DE2C35240
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A692BC35240
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:38:49 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CA34C21D7E
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 732FB22522
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:38:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dHYR7+KH"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VYxcNdcB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730107AbgAXDfs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 22:35:48 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:56162 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730002AbgAXDfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 22:35:46 -0500
-Received: by mail-pl1-f202.google.com with SMTP id c12so426854pls.22
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:35:46 -0800 (PST)
+        id S1730145AbgAXDis (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 22:38:48 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:45235 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729690AbgAXDis (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 22:38:48 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 2so406412pfg.12
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:38:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=VzoZ4FKhaorUGWAXnLUFgwc7FU1UKXLmaUOcwxG/PjU=;
-        b=dHYR7+KHKv6w8p6ByZ34JG7/0gwW8AUtoJCa4djaRokQDgxJ6S9XyhDEU1QsbILuCe
-         XGzMhh9mE0a1F/zr3g/NTZ0fBLhW/L/7oBaNx8HLPMh++O759WDD3RKBCXgcJgwNw97p
-         dtSJePlYDMpEoWt5zccof9QYcrzLpSfJLQkXQpo7cIO6nwOZG3um+U63a08hfrLfTfYH
-         rAbJwtqK0ZqzNudAFWlaGXIXBJR4ZFWWHikqAN6MLBcXew3Qsf+wfZXrL4ju1lmxZHMn
-         ZlIMb04zc/KyJqmr1LvjwspRYJHVjXH5mvWaWYvHs93HRzTVBsG0em2Me0/wzomNhgm9
-         XPeg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WA52tRk0FG+gbXC5oU5P4Viee5uwsLc9f7MjHO/2K64=;
+        b=VYxcNdcB1U6J5vo93Hywtzap8ALa5Jq8NLcVIc0bQglERhT4b2AzC2WNUPpsBUhAb4
+         DyEkG/Gs3r/QCBzIKrgE45SV6Ne+FlyZ25JRrt29SAUZe05jwlLhNtxFc04YWMumFtkI
+         gWPdiqb9pXxDoA3wrxZ4TFCy9E6dwH7Q7jtW9D1Z9ZMFxaR545zaGukdCC0w30pAk+yl
+         rLmtX60IdC5bkA9jEagzwODeaPmdLZ/Lq3xZZwpJ+2r46Ulp9WXkEM/Y0tkEzDgE1EHF
+         iuNt3zK6Rz8lr7GoB1EW7urvm66iFe6Pza2trt0GwQUB6WMx9/oJZrxAJmVBCDwGn0Nz
+         lmMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VzoZ4FKhaorUGWAXnLUFgwc7FU1UKXLmaUOcwxG/PjU=;
-        b=KgG1rg+IQBctgKZR+qW5A3UKdxNSnP5khp7GCaOrYtprCFJLv3+fbRuvOPeEiHd4Ba
-         TMTfEx0piduh9uccHjOtLc4VSx6B9UeSSf8Lqp8Hpk25uno5GwIU4RcnR1LyLPK6vLzu
-         K5RkhabDRkwokngLi530eaoEmABjVaA8wCiUOVDZ5v5Qh0OfFS5vqzW8jbG/4rtbaRzX
-         HLn3IY4OaKqX1OM1e2coxswpN7U9bpDPj6TSRsE/EYJ8MqNKxH3feaDSbbwbMwGaY3TS
-         b1lqRWXdm7aQnO7ZMsp2a2Vp1bFmloxC17DMt1BsJovCGPTfyu1JTj+TgHAchOZTyGrT
-         oiqg==
-X-Gm-Message-State: APjAAAU358BBvGGqm8vtcgfaXdwQQ5nFwDhdj6fjPgI7jimQI7rxPdWv
-        8B9izBCfKmGMEMNPNYDOjw1pDYuPPnhO2RqweVmqZRPNy+ReC91t2tf0pCv6JtTD67FUPby5cFI
-        lAMN4GQugPP61c6QEeH6C9WflaA28S+R8Z5RkJ+gh4uKuyIXEsUO6sNNDcBYBYg4trOAcfXcNHg
-        ==
-X-Google-Smtp-Source: APXvYqwPUwcIb8F5W6r1tpOV6yEePdNkAvCQxdR4yBBvN4ZedFZldw55s3Hxu1yhYMW8ufjNXNTxOkUiGyjVP5YqTnw=
-X-Received: by 2002:a65:4c8b:: with SMTP id m11mr1868236pgt.208.1579836945908;
- Thu, 23 Jan 2020 19:35:45 -0800 (PST)
-Date:   Thu, 23 Jan 2020 19:34:36 -0800
-In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
-Message-Id: <20200124033436.81097-16-emilyshaffer@google.com>
-Mime-Version: 1.0
-References: <20200124033436.81097-1-emilyshaffer@google.com>
-X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v5 15/15] bugreport: summarize contents of alternates file
-From:   emilyshaffer@google.com
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WA52tRk0FG+gbXC5oU5P4Viee5uwsLc9f7MjHO/2K64=;
+        b=jnUpovaEvnIvsuYfPHzGIe86AD2zZe7uVZPkO8Nc4OwDFMEp8j6fsSj1aR0EAyCWEV
+         gw3LLDiq39ugy7vt9qLk67QHaguIahxD8eWVf1c3AGdeo0j4VmZGBSQzyvEsAXhFaWVc
+         ATAaqhDICTbvKNGAjx6FkszfVFEr7hZDsRDjdRJvHvWzw/lhwIqzH7aPDE/g0zpYltO/
+         eTf8ZpiF4eWGdAl164tSovtWuogd0v9xq1U52O0W9S1LsxqRXPAFL98iPMrxbAchWHgp
+         ioxw+wuOS/gZMFVJljFLt89y25XjacDx7NCRJzGCMWSIGO1QrVkzfX6p8VSlCFNkuUcF
+         b3JA==
+X-Gm-Message-State: APjAAAX84/hpTe/b55PRPvH5cNEz9t+AzQjsNFIRbT+UOU6v7ib6EfNu
+        279epPGMlkHv69lIlEFLvvCsK3sQ8tE=
+X-Google-Smtp-Source: APXvYqyjB+FTxqgPWeM7jLRKZpsqnwa8TZvUdO0+e4Ip8VpdtEKT/3vRq5koPX9xl+PbRXJNbQHJ4g==
+X-Received: by 2002:a65:645a:: with SMTP id s26mr1713009pgv.321.1579837126899;
+        Thu, 23 Jan 2020 19:38:46 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id 199sm3911496pfv.81.2020.01.23.19.38.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2020 19:38:46 -0800 (PST)
+Date:   Thu, 23 Jan 2020 19:38:41 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
 To:     git@vger.kernel.org
-Cc:     Emily Shaffer <emilyshaffer@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Aaron Schrab <aaron@schrab.com>
+Subject: Re: [PATCH v5 00/15] add git-bugreport tool
+Message-ID: <20200124033841.GB37541@google.com>
+References: <20191213004312.169753-1-emilyshaffer@google.com>
+ <20200124033436.81097-1-emilyshaffer@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Emily Shaffer <emilyshaffer@google.com>
+A sample bugreport generated from this patchset follows:
 
-In some cases, it could be that the user is having a problem with an
-object which isn't present in their normal object directory. We can get
-a hint that that might be the case by examining the list of alternates
-where their object may be stored instead. Since paths to alternates may
-be sensitive, we'll instead count how many alternates have been
-specified and note how many of them exist or are broken.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-While object-cache.h describes a function "foreach_alt_odb()", this
-function does not provide information on broken alternates, which are
-skipped over in "link_alt_odb_entry()". Since the goal is to identify
-missing alternates, we can gather the contents of
-.git/objects/info/alternates manually.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
----
- bugreport.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+What did you expect to happen? (Expected behavior)
 
-diff --git a/bugreport.c b/bugreport.c
-index 12463ffdc7..2c540182dd 100644
---- a/bugreport.c
-+++ b/bugreport.c
-@@ -294,6 +294,42 @@ static void get_object_info_summary(struct strbuf *obj_info)
- 	strbuf_release(&dirpath);
- }
- 
-+static void get_alternates_summary(struct strbuf *alternates_info)
-+{
-+	struct strbuf alternates_path = STRBUF_INIT;
-+	struct strbuf alternate = STRBUF_INIT;
-+	FILE *file;
-+	size_t exists = 0, broken = 0;
-+
-+	strbuf_addstr(&alternates_path, get_object_directory());
-+	strbuf_complete(&alternates_path, '/');
-+	strbuf_addstr(&alternates_path, "info/alternates");
-+
-+	file = fopen(alternates_path.buf, "r");
-+	if (!file) {
-+		strbuf_addstr(alternates_info, "No alternates file found.\n");
-+		strbuf_release(&alternates_path);
-+		return;
-+	}
-+
-+	while (strbuf_getline(&alternate, file) != EOF) {
-+		if (!access(alternate.buf, F_OK))
-+			exists++;
-+		else
-+			broken++;
-+	}
-+
-+	strbuf_addf(alternates_info,
-+		    "%zd alternates found (%zd working, %zd broken)\n",
-+		    exists + broken,
-+		    exists,
-+		    broken);
-+
-+	fclose(file);
-+	strbuf_release(&alternate);
-+	strbuf_release(&alternates_path);
-+}
-+
- static const char * const bugreport_usage[] = {
- 	N_("git bugreport [-o|--output <file>]"),
- 	NULL
-@@ -378,6 +414,9 @@ int cmd_main(int argc, const char **argv)
- 	get_header(&buffer, "Object Info Summary");
- 	get_object_info_summary(&buffer);
- 
-+	get_header(&buffer, "Alternates");
-+	get_alternates_summary(&buffer);
-+
- 	report = fopen_for_writing(report_path.buf);
- 	strbuf_write(&buffer, report);
- 	fclose(report);
--- 
-2.25.0.341.g760bfbb309-goog
+What happened instead? (Actual behavior)
 
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to send.
+
+
+[System Info]
+git version:
+git version 2.25.0.18.g682ab0d3eb
+cpu: x86_64
+built from commit: 682ab0d3eb8b84f8af4db1a161d24ca53d2f39fc
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname -a: Linux 5.2.17-1rodete3-amd64 #1 SMP Debian 5.2.17-1rodete3 (2019-10-21 > 2018) x86_64
+compiler info: glibc: 2.28
+$SHELL (typically, interactive shell): /bin/bash
+git-remote-https --build-info:
+git-http-fetch version: 2.25.0.18.g682ab0d3eb
+built from commit: 682ab0d3eb8b84f8af4db1a161d24ca53d2f39fc
+curl version: libcurl/7.66.0 GnuTLS/3.6.9 zlib/1.2.11 brotli/1.0.7 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh2/1.8.0 nghttp2/1.39.2 librtmp/2.3
+
+
+[Safelisted Config Info]
+sendemail.from (global) : emilyshaffer@google.com
+sendemail.from (repo) : emilyshaffer@google.com
+
+
+[Configured Hooks]
+pre-commit
+prepare-commit-msg
+
+
+[Loose Object Counts]
+2549 local loose objects
+2641 alternate loose objects
+5190 total loose objects
+
+
+[Packed Object Summary]
+60 total packs (591308 objects)
+
+
+[Object Info Summary]
+.git/objects/info/foo
+.git/objects/info/bar
+.git/objects/info/bar/baz
+.git/objects/info/alternates
+
+
+[Alternates]
+2 alternates found (1 working, 1 broken)
