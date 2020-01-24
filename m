@@ -2,140 +2,104 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EAE7C2D0CE
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:41:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39AEEC2D0CE
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 23:00:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 054FC2071E
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:41:19 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 083622071A
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 23:00:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h8TFJvqe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hOkHTjQc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729075AbgAXWlS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 17:41:18 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35670 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbgAXWlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 17:41:18 -0500
-Received: by mail-wr1-f67.google.com with SMTP id g17so3907369wro.2
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 14:41:16 -0800 (PST)
+        id S1729355AbgAXXAo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 18:00:44 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:34799 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729236AbgAXXAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 18:00:43 -0500
+Received: by mail-qk1-f194.google.com with SMTP id d10so3786930qke.1
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 15:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ef7KQOieJN6Xa/3kI92KngXev3jlaHg6Ray+PQfoecQ=;
-        b=h8TFJvqe7iSGp249ZhSpQPbVoYULaRFRiScN4KNv7i1QeQdVRQ5gioVa3epm0HX8hK
-         3DGiGGzNV8m/6p5BAu1mszEhJPdtB0Z48DSCUUN639FDgaslx2r6+Ma2wLTv+BwFKgCs
-         AXH7MPgMjmLFXZXMP8ytfVjySO0w5WRhYglSnOQMwKdEEkwrIr4UnG6yX5PM/eEC2zDV
-         hJt9/1jslidOQNgn+AkYumcPO7MD/EmG2iMm9vrBykrRDcXpIBSrNQ+bC3JKEHPStzvf
-         pq1vTvo0IrhquMZdEVu2VVKIKm9WyNXC129xDOrVPoR1sjq3gLq1wM/9u0pg/ByKdt2q
-         se8w==
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dOORBCMAiKeikiqgr4fKlQxzDU2xL0k/usmrZ5dth8A=;
+        b=hOkHTjQcR5y3SUV1t5ZQH+VeOiPEhDbf5cBt7biG9ZwFwEEqkJ1DqXY4xZEfwuDKdk
+         ij1XVvNdOxJJYfav135dnNixkF9tC+5hr6kNgz0/5OoowCwF+xUYvk4vo+nHRN/nvCbb
+         XBnOIjliRWQq+ijBgxL75Ivi6PwtC0e1EpoNbD7UuDbMisyIY/wLsaJ8Jqz4Sdm6to9z
+         GyHub64BpweXdzQ6FdnaBUrp3p5uq6l8/n+bUOpOu4MC/MedlduDf5AvAp1yYnGJF7B4
+         GbUXRmBeOgT5S6p6K0DWhOm07d85ftUvOM9QFuxjS5EFtWQXmKX+V9MJeqf9jrfd7udj
+         JyPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ef7KQOieJN6Xa/3kI92KngXev3jlaHg6Ray+PQfoecQ=;
-        b=gsFeK0qCeZRuZEcQQUiYtoGXJg5qeO75lJmqeBhsVZsWG6q8w5L/XAON10frmIP7/B
-         T0Yla2Z5AWDwyw8nocnyJY4FtD2qBGlp08bxcGKvbRyZlZTVrODeCWaaARpXuX5czUJH
-         W2qinwnmj5W6cVkdw32OSg5VGwY1aMIpe/gEm8Sl586tZJtB65Y+D6Cxf+c/JQjHUeIU
-         XKd4t74kZb1GFSE0+a+KwL8nt6fuuMK1Pf9+cJo8WaMFa+ZqoxjtvMX17DltMcqrP0zc
-         N1RFm86JZHgIsULFNIcUbsYgCVWRb7XUDL3X8q89GmJ3UJHh63auO0th1fXMd5XLexpf
-         QS1Q==
-X-Gm-Message-State: APjAAAW8VbiJLbOHrW2CM1CNUmnSLyzl4hs74HtubJoS+nFRlXLVz8uV
-        8SDKaqhWZi6MHQPabs5zlAoV1o1B
-X-Google-Smtp-Source: APXvYqwAOc83SKbd+4wdK4lmJMuDE96DFG+nUSuKmHvEA85dAG25DrOYINUqiVUdHdARs+GlkNaxbQ==
-X-Received: by 2002:adf:82e7:: with SMTP id 94mr7366461wrc.60.1579905676219;
-        Fri, 24 Jan 2020 14:41:16 -0800 (PST)
-Received: from szeder.dev (x4db61038.dyn.telefonica.de. [77.182.16.56])
-        by smtp.gmail.com with ESMTPSA id a1sm8623384wmj.40.2020.01.24.14.41.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Jan 2020 14:41:15 -0800 (PST)
-Date:   Fri, 24 Jan 2020 23:41:13 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] branch: let '--edit-description' default to rebased
- branch during rebase
-Message-ID: <20200124224113.GJ6837@szeder.dev>
-References: <20200111123533.1613844-1-marcandre.lureau@redhat.com>
- <CAPig+cQXkiFOz5HczPEgXuSOH_3KsCwXwVwe0qvQzLDtFgnAXw@mail.gmail.com>
- <CAJ+F1CKW3NACgPdPbmAzYGVwR4iO3r+LCNq+g5st0gcz4X+fzA@mail.gmail.com>
- <CAPig+cRCMXjjPHc2O8fLmaSm9m-ZO3qR2BoZwG3s5dLHNbiFFQ@mail.gmail.com>
- <20200112121402.GH32750@szeder.dev>
- <CAPig+cRvYzm8Cb-AWqOeANRziWyjhWXT32QJ6TsA1==8Joa4zQ@mail.gmail.com>
-MIME-Version: 1.0
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=dOORBCMAiKeikiqgr4fKlQxzDU2xL0k/usmrZ5dth8A=;
+        b=OYoR9aJlCTVPTES6nAb7DHoln1k2SMOdLyyTksGJpmqosJEjmly7pef7he6k70FdEZ
+         bjbpRkPkQKfw+Awb4FAtyS8ms3vOqC1CAUfESzv4G9jaF8HHw9FOp5wuOQfkUReXv+lb
+         hNuIgnY1hlVPC7AbGVl9qimbVyJJaE4LURyXW0N0BgBB4j07SbFosFZNVobgsuRcnOjS
+         vHKeL4LJ6VsTxK2Ir00ikWFLRfr3hfQdp6LmdhDVgUBFLX7zy55IN+oLCFAzMC/102Vj
+         aTaXU96lV1fs4qjMzE3EUd7GwMdMqIJ411f2SSPRO8404mXjEtBY1wU8ZFVnbflQUzwx
+         dWmQ==
+X-Gm-Message-State: APjAAAVYsntColzvrzLTf8DCke3Xqa/5nayAfAgSp48xhcjlIfWLS5Ou
+        oJMGmc5UjleRR/LgS5DqRRPfrhxh
+X-Google-Smtp-Source: APXvYqwxdlLwfCuZDSBGDtAdKCZ9uocjr59X1VmIXGqPg3GYY0DhcGRAIsd//GVBHHf/BvqjmY0iSg==
+X-Received: by 2002:a37:4891:: with SMTP id v139mr5031092qka.172.1579906842604;
+        Fri, 24 Jan 2020 15:00:42 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id m54sm4559230qtf.67.2020.01.24.15.00.41
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 24 Jan 2020 15:00:41 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRvYzm8Cb-AWqOeANRziWyjhWXT32QJ6TsA1==8Joa4zQ@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v2 0/4] checkout/reset/read-tree: fix --recurse-submodules in linked worktree
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <69FFF66E-9273-488F-A747-2B4EBBDD7A7B@gmail.com>
+Date:   Fri, 24 Jan 2020 18:00:39 -0500
+Cc:     Git List <git@vger.kernel.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <37804466-7DC9-4161-9B98-D2175233831D@gmail.com>
+References: <pull.523.git.1579263809.gitgitgadget@gmail.com> <pull.523.v2.git.1579618877.gitgitgadget@gmail.com> <xmqqwo9j5ei3.fsf@gitster-ct.c.googlers.com> <69FFF66E-9273-488F-A747-2B4EBBDD7A7B@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 12, 2020 at 08:59:04PM -0500, Eric Sunshine wrote:
-> On Sun, Jan 12, 2020 at 7:14 AM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> > On Sat, Jan 11, 2020 at 08:27:11PM -0500, Eric Sunshine wrote:
-> > > Taking a deeper look at the code, I'm wondering it would make more
-> > > sense to call wt_status_get_state(), which handles 'rebase' and
-> > > 'bisect'. Is there a reason that you limited this check to only
-> > > 'rebase'?
-> >
-> > What branch name does wt_status_get_state() return while bisecting?
-> > The branch where I started from?  Because that's what 'git status'
-> > shows:
-> > But am I really on that branch?  Does it really makes sense to edit
-> > the description of 'mybranch' by default while bisecting through an
-> > old revision range?  I do not think so.
-> 
-> It's not clear what downside you are pointing out; i.e. why would it
-> be a bad thing to be able to set the branch description even while
-> bisecting -- especially since `git status` affirms that it knows the
-> branch?
 
-No, during a bisect operation 'git status' knows the branch where I
-_was_ when I started bisecting, and where a 'git bisect reset' will
-eventually bring me back when I'm finished, and that has no relation
-whatsoever to the revision range that I'm bisecting.
-
-Consider this case:
-
-  $ git checkout --orphan unrelated-history
-  Switched to a new branch 'unrelated-history'
-  $ git commit -m "test"
-  [unrelated-history (root-commit) 639b9d1047] test
-  <...>
-  $ git bisect start v2.25.0 v2.24.0
-  Bisecting: 361 revisions left to test after this (roughly 9 steps)
-  [7034cd094bda4edbcdff7fad1a28fcaaf9b9a040] Sync with Git 2.24.1
-  $ git status 
-  HEAD detached at 7034cd094b
-  You are currently bisecting, started from branch 'unrelated-history'.
-    (use "git bisect reset" to get back to the original branch)
-  
-  nothing to commit, working tree clean
-
-I can't possible be on branch 'unrelated-history' during that
-bisection.
-
-
-OTOH, while during a rebase we are technically on a detached HEAD as
-well, that rebase operation is all about constructing the new history
-of the rebased branch, and once finished that branch will be updated
-to point to the tip of the new history, thus it will include all the
-commits created while on the detached HEAD.  Therefore, it makes sense
-conceptually to treat it as if we were on the rebased branch.  That's
-why it makes sense to display the name of the rebased branch in the
-Bash prompt, and that's why I think it makes sense to default to edit
-the description of the rebased branch without explicitly naming it.
-
-With bisect that just doesn't make sense.
+> Le 22 janv. 2020 =C3=A0 17:25, Philippe Blain =
+<levraiphilippeblain@gmail.com> a =C3=A9crit :
+>=20
+> Hi Junio,=20
+>=20
+>> Le 22 janv. 2020 =C3=A0 17:10, Junio C Hamano <gitster@pobox.com> a =
+=C3=A9crit :
+>>=20
+>> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>>> Cc:Max Kirillov max@max630.net [max@max630.net] Brandon Williams=20
+>>> bwilliams.eng@gmail.com [bwilliams.eng@gmail.com] Jonathan Tan=20
+>>> jonathantanmy@google.com [jonathantanmy@google.com] Stefan Beller=20
+>>> stefanbeller@gmail.com [stefanbeller@gmail.com] Nguy=E1=BB=85n Th=C3=A1=
+i Ng=E1=BB=8Dc Duy=20
+>>> pclouds@gmail.com [pclouds@gmail.com] Eric Sunshine =
+sunshine@sunshineco.com
+>>> [sunshine@sunshineco.com] Derrick Stolee stolee@gmail.com =
+[stolee@gmail.com]
+>>=20
+>> This is somewhat unreadable wall of names X-< Is it a funny
+>> rendering of what is originally in some mark-up format (perhaps
+>> HTML???)
+>=20
+> Yes, Gitgitgadget unfortunately failed to convert this wall of text =
+into a proper CC: list because there was no space between the "Cc:" and =
+"Max".=20
+> I=E2=80=99ll try to submit a PR for that in GGG.=20
+For the record, https://github.com/gitgitgadget/gitgitgadget/pull/198 =
+has been merged so this should not happen again.
 
