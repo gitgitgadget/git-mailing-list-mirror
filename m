@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
 	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35F33C3F68F
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D24D0C35240
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0881924125
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A1FC324125
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:35:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="psBGsHBR"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l84pa+qX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729856AbgAXDfZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 22:35:25 -0500
-Received: from mail-vk1-f201.google.com ([209.85.221.201]:51459 "EHLO
-        mail-vk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728655AbgAXDfZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 22:35:25 -0500
-Received: by mail-vk1-f201.google.com with SMTP id c127so249057vkh.18
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:35:24 -0800 (PST)
+        id S1729875AbgAXDf1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 23 Jan 2020 22:35:27 -0500
+Received: from mail-pj1-f73.google.com ([209.85.216.73]:34777 "EHLO
+        mail-pj1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728655AbgAXDf1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Jan 2020 22:35:27 -0500
+Received: by mail-pj1-f73.google.com with SMTP id c67so2121377pje.1
+        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:35:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4ePX9MdGkN/ZfSUGxE9QIoCX83dvdMKlkminVB6jc8s=;
-        b=psBGsHBRkmYcIaTwC1RaMDjqaUhiBN+7ueOGoLLpsSw/FsyulMlBNYLLfxrSMSvxaT
-         dKCOBmiA2qoaHs+3cqLF/OrvbgGKrGRAmENH2IPCNPq8bvOuELsNS4cfokqiv/RuIP3e
-         b7pix/lHiRkx1h98K8Kv+peTsctUcAxcRAAAueKPCb/G01FKyqXG7meFRL+MxcvkPCHi
-         8s1xvBO/mndIWg1YJExw0FOVCSt0a+rPigP0ZVjJdHuvRcnhZs/O+5aZhuR0XrV7ix/m
-         JrqgAHTzmPh0Y8UJmYIplu1yfcMag7vSV60JhR23Ul9ALic38G/Mc7aLPqdf9qmaUnbn
-         wI5g==
+        bh=8qKWsQsM+MgWbCv7TZB90oKew/yDE6OgybJU0YT4zA0=;
+        b=l84pa+qXrjZ3m+MCGKf1orAb2HYkWPYiE8NQKKPI2nBWKu7P5hXqb5nwRuDHdTZ8RD
+         w7bEjavPqN86H4jN6Vr4KqlFngCyyJ8pp64ezR0ijderM9iJZV37DhIuEGVfNFc7Zs7Y
+         /O/uqa7ZTSkiXDWKGe+H2m0wNzQstSprNqpwzAhgZX8f46EAMeL6a266OV6O3EEHknWv
+         Caa1P/kfCAjezKR4whepQLuClB5Pt2G1K3qQ6V026I9IwzsY4OwR+QlEnWfkfuWpHAbh
+         9XgHD/OutSnOybutWbJD2jroqLaOx3ueFVK+usAZU5/1w5a7IgtmgIruV9bteiQn9+AF
+         +Jmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=4ePX9MdGkN/ZfSUGxE9QIoCX83dvdMKlkminVB6jc8s=;
-        b=YiUy2+QjbCp0zWhJvsXIyBGxuZlWgNy8khLC2mxgmAmy6qM6Y6xVMzWFg4WL7Klqkb
-         iBsdUkE+2dzJuo3jAguJnuSm2Efl/2NkgefSwZ3eey5lNENcQELs9A86/k59XOOerJbo
-         IqGphQUHHnOgBR6o9wZCvsfN9APDev7pN9rEKqqlaX4h0OGLp2vYLDxiczKK3E7P/fdr
-         G6QyEle039tOvRHhMkor2eOQ10ba+gTcRkxAmA/n31rdgl/biHPrTBhdco7SUtQmRS6z
-         bEofkqLWpU/Offr5c21Xotf8QVNLCDyw4wud3d38eZrgPlx17zaF6M379lKRKnHfQgi5
-         c/ew==
-X-Gm-Message-State: APjAAAX5u1RPpG8h+9xptpcmkFvJ86WhsiHHThEAzLrzuXtan8iZW1Hf
-        3+1IoeMCnjcAa2clbDwnZBgghb8rm6klweoePeU6p2IiEnv1ks25NtBduAbym9BFW3lGfozp2bO
-        TV8fijvKtFc0dB853SYnZ71RazbcWDNFZUEOh5vgEAl8lzFSBCAOAABopLDiG3s5u5fm8MM1uzQ
+        bh=8qKWsQsM+MgWbCv7TZB90oKew/yDE6OgybJU0YT4zA0=;
+        b=Oo8EXQR/mPR9U8/vJ9CG89W+i1sKSaIxpfiJS7g+Gxykd+6RJEKemD7zI0y08hSRVm
+         VSLUthjmE6ujZmtgs+bv2Nxnq7HcSrOoEJWtzFbRlFrrOxvw6XAKfTnLOHUHgfWrmj57
+         2nZJxQYhn6yFxRerwWjSthYVIVUfkr7n+Dn5NGZobjDmuYfRNdoD4mxOnrc3SukwEnPt
+         dmoggrq8GcYtov5naskvDOjMkZMmZJwhtSR1g968/SFMsmGiqJyilb1F8u2z2zcMnrh0
+         Txkwajps5DWe2BK3UqkJ15Hba1odwUDhHFYdo8aQjIGODrpTZg+rRPRsY2/7IZSvJyGA
+         lZUA==
+X-Gm-Message-State: APjAAAWsMey1uTW65CS4KPcnG8ekiDLeSBpv0pTpghInUlQJ54seCxOo
+        3SeVZrjm3ZH1DRRgg6gWy1m5VKKG4fdXB0f4R1bV9tp9RAx3+/vVjiVz0kJrwfqmS/DupRJ6c7j
+        9ebHCL2C2C2jtuM3jHg36qRJLTzShccRvfYBmTAt9bnQevk7ekmfYmdvuTvu+3eYpIvVJ3ftYSg
         ==
-X-Google-Smtp-Source: APXvYqwqZiP+wzDCYE8sW7K4P2iyupGlweQ2vw/G1wrsuuUFPAZzLmdom5DIiziz5fmhQ67YgUcjYeWohdcQi2m8J+E=
-X-Received: by 2002:a67:f81a:: with SMTP id l26mr985744vso.194.1579836924089;
- Thu, 23 Jan 2020 19:35:24 -0800 (PST)
-Date:   Thu, 23 Jan 2020 19:34:27 -0800
+X-Google-Smtp-Source: APXvYqyCADK9jdLG+1FqU0S2ZokYXtbcO7T/J9Ak1lVCwcHftMQWeuhK1VtqutpAS76AxRBRI3PVl/t+IxFXqFhr7i4=
+X-Received: by 2002:a63:2808:: with SMTP id o8mr1788141pgo.39.1579836926505;
+ Thu, 23 Jan 2020 19:35:26 -0800 (PST)
+Date:   Thu, 23 Jan 2020 19:34:28 -0800
 In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
-Message-Id: <20200124033436.81097-7-emilyshaffer@google.com>
+Message-Id: <20200124033436.81097-8-emilyshaffer@google.com>
 Mime-Version: 1.0
 References: <20200124033436.81097-1-emilyshaffer@google.com>
 X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v5 06/15] bugreport: add compiler info
+Subject: [PATCH v5 07/15] bugreport: add curl version
 From:   emilyshaffer@google.com
 To:     git@vger.kernel.org
 Cc:     Emily Shaffer <emilyshaffer@google.com>
@@ -70,72 +70,84 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Emily Shaffer <emilyshaffer@google.com>
 
-To help pinpoint the source of a regression, it is useful to know some
-info about the compiler which the user's Git client was built with. By
-adding a generic get_compiler_info() in 'compat/' we can choose which
-relevant information to share per compiler; to get started, let's
-demonstrate the version of glibc if the user built with 'gcc'.
+It's possible for git-remote-curl to be built separately from git; in that
+case we want to know what version of cURL is used by git-remote-curl, not
+necessarily which version was present at git-bugreport's build time.
+So instead, ask git-remote-curl for the version information it knows
+about.
+
+For longevity purposes, invoke the alias "git-remote-https" instead of
+"git-remote-http".
+
+Since it could have been built at a different time, also report the
+version and built-from commit of git-remote-curl alongside the cURL info.
 
 Signed-off-by: Emily Shaffer <emilyshaffer@google.com>
 ---
- bugreport.c       |  5 +++++
- compat/compiler.h | 24 ++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
- create mode 100644 compat/compiler.h
+ bugreport.c   | 16 ++++++++++++++++
+ remote-curl.c |  8 ++++++++
+ 2 files changed, 24 insertions(+)
 
 diff --git a/bugreport.c b/bugreport.c
-index 720c91e1bd..818ccb385c 100644
+index 818ccb385c..73f6d39517 100644
 --- a/bugreport.c
 +++ b/bugreport.c
-@@ -4,6 +4,7 @@
- #include "strbuf.h"
+@@ -5,6 +5,18 @@
  #include "time.h"
  #include "help.h"
-+#include "compat/compiler.h"
+ #include "compat/compiler.h"
++#include "run-command.h"
++
++static void get_curl_version_info(struct strbuf *curl_info)
++{
++	struct child_process cp = CHILD_PROCESS_INIT;
++
++	argv_array_push(&cp.args, "git");
++	argv_array_push(&cp.args, "remote-https");
++	argv_array_push(&cp.args, "--build-info");
++	if (capture_command(&cp, curl_info, 0))
++	    strbuf_addstr(curl_info, "'git-remote-https --build-info' not supported\n");
++}
  
  static void get_system_info(struct strbuf *sys_info)
  {
-@@ -26,6 +27,10 @@ static void get_system_info(struct strbuf *sys_info)
- 			    uname_info.release,
- 			    uname_info.version,
- 			    uname_info.machine);
+@@ -31,6 +43,10 @@ static void get_system_info(struct strbuf *sys_info)
+ 	strbuf_addstr(sys_info, "compiler info: ");
+ 	get_compiler_info(sys_info);
+ 	strbuf_complete_line(sys_info);
 +
-+	strbuf_addstr(sys_info, "compiler info: ");
-+	get_compiler_info(sys_info);
++	strbuf_addstr(sys_info, "git-remote-https --build-info:\n");
++	get_curl_version_info(sys_info);
 +	strbuf_complete_line(sys_info);
  }
  
  static const char * const bugreport_usage[] = {
-diff --git a/compat/compiler.h b/compat/compiler.h
-new file mode 100644
-index 0000000000..bda5098e1b
---- /dev/null
-+++ b/compat/compiler.h
-@@ -0,0 +1,24 @@
-+#ifndef COMPILER_H
-+#define COMPILER_H
+diff --git a/remote-curl.c b/remote-curl.c
+index 350d92a074..c590fbfae3 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -17,6 +17,7 @@
+ #include "protocol.h"
+ #include "quote.h"
+ #include "transport.h"
++#include "version.h"
+ 
+ static struct remote *remote;
+ /* always ends with a trailing slash */
+@@ -1374,6 +1375,13 @@ int cmd_main(int argc, const char **argv)
+ 	string_list_init(&options.deepen_not, 1);
+ 	string_list_init(&options.push_options, 1);
+ 
++	if (!strcmp("--build-info", argv[1])) {
++		printf("git-http-fetch version: %s\n", git_version_string);
++		printf("built from commit: %s\n", git_built_from_commit_string);
++		printf("curl version: %s\n", curl_version());
++		return 0;
++	}
 +
-+#include "git-compat-util.h"
-+#include "strbuf.h"
-+
-+#ifdef __GLIBC__
-+#include <gnu/libc-version.h>
-+
-+static inline void get_compiler_info(struct strbuf *info)
-+{
-+	strbuf_addf(info, "glibc: %s", gnu_get_libc_version());
-+}
-+
-+#else
-+
-+static inline void get_compiler_info(struct strbuf *info)
-+{
-+	strbuf_addstr(info, "get_compiler_info() not implemented");
-+}
-+
-+#endif
-+
-+#endif /* COMPILER_H */
+ 	/*
+ 	 * Just report "remote-curl" here (folding all the various aliases
+ 	 * ("git-remote-http", "git-remote-https", and etc.) here since they
 -- 
 2.25.0.341.g760bfbb309-goog
 
