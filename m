@@ -2,142 +2,86 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A692BC35240
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19333C2D0CE
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 08:49:23 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 732FB22522
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 03:38:49 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CBDA92071A
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 08:49:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VYxcNdcB"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RD7uCUm/"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730145AbgAXDis (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 23 Jan 2020 22:38:48 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:45235 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729690AbgAXDis (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Jan 2020 22:38:48 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 2so406412pfg.12
-        for <git@vger.kernel.org>; Thu, 23 Jan 2020 19:38:47 -0800 (PST)
+        id S1729697AbgAXItV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 03:49:21 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:41501 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbgAXItV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 03:49:21 -0500
+Received: by mail-ua1-f67.google.com with SMTP id f7so515090uaa.8
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 00:49:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WA52tRk0FG+gbXC5oU5P4Viee5uwsLc9f7MjHO/2K64=;
-        b=VYxcNdcB1U6J5vo93Hywtzap8ALa5Jq8NLcVIc0bQglERhT4b2AzC2WNUPpsBUhAb4
-         DyEkG/Gs3r/QCBzIKrgE45SV6Ne+FlyZ25JRrt29SAUZe05jwlLhNtxFc04YWMumFtkI
-         gWPdiqb9pXxDoA3wrxZ4TFCy9E6dwH7Q7jtW9D1Z9ZMFxaR545zaGukdCC0w30pAk+yl
-         rLmtX60IdC5bkA9jEagzwODeaPmdLZ/Lq3xZZwpJ+2r46Ulp9WXkEM/Y0tkEzDgE1EHF
-         iuNt3zK6Rz8lr7GoB1EW7urvm66iFe6Pza2trt0GwQUB6WMx9/oJZrxAJmVBCDwGn0Nz
-         lmMQ==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vpBP04dFn4llf/u1szAudmrqfDNm7haRlJ//qHjqpUI=;
+        b=RD7uCUm/lSu4Drh1ewE/b6gMKtc/8GyJHY07CqGdzwS5g32cxlczdyCxgOOV3guhrI
+         tSEa61LiJGn40ankA8S1D0sQiO7bUIDQku+7hZnnTOUSplaISwqkwGkPjCH/AUHW90B7
+         fg0ltbPCjoaja/lVc3gzPB1iKzFkNUd8VSvUx2NoWRLztmWVEDntKyPDX7/KWsLiyNS6
+         qbztqo9blNWUlcge8SI1L3lCG30UYlrfmJTQGwiGOcEvMn1LVDFX+gvyfzZHEkoPEysb
+         dJYduVhBqZulUbBlBPymt6owkhLOi0S9UcXIWGUx2P9jbjJibwVyvNvob19KYQZnMixj
+         OR+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WA52tRk0FG+gbXC5oU5P4Viee5uwsLc9f7MjHO/2K64=;
-        b=jnUpovaEvnIvsuYfPHzGIe86AD2zZe7uVZPkO8Nc4OwDFMEp8j6fsSj1aR0EAyCWEV
-         gw3LLDiq39ugy7vt9qLk67QHaguIahxD8eWVf1c3AGdeo0j4VmZGBSQzyvEsAXhFaWVc
-         ATAaqhDICTbvKNGAjx6FkszfVFEr7hZDsRDjdRJvHvWzw/lhwIqzH7aPDE/g0zpYltO/
-         eTf8ZpiF4eWGdAl164tSovtWuogd0v9xq1U52O0W9S1LsxqRXPAFL98iPMrxbAchWHgp
-         ioxw+wuOS/gZMFVJljFLt89y25XjacDx7NCRJzGCMWSIGO1QrVkzfX6p8VSlCFNkuUcF
-         b3JA==
-X-Gm-Message-State: APjAAAX84/hpTe/b55PRPvH5cNEz9t+AzQjsNFIRbT+UOU6v7ib6EfNu
-        279epPGMlkHv69lIlEFLvvCsK3sQ8tE=
-X-Google-Smtp-Source: APXvYqyjB+FTxqgPWeM7jLRKZpsqnwa8TZvUdO0+e4Ip8VpdtEKT/3vRq5koPX9xl+PbRXJNbQHJ4g==
-X-Received: by 2002:a65:645a:: with SMTP id s26mr1713009pgv.321.1579837126899;
-        Thu, 23 Jan 2020 19:38:46 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 199sm3911496pfv.81.2020.01.23.19.38.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2020 19:38:46 -0800 (PST)
-Date:   Thu, 23 Jan 2020 19:38:41 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
-        Aaron Schrab <aaron@schrab.com>
-Subject: Re: [PATCH v5 00/15] add git-bugreport tool
-Message-ID: <20200124033841.GB37541@google.com>
-References: <20191213004312.169753-1-emilyshaffer@google.com>
- <20200124033436.81097-1-emilyshaffer@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vpBP04dFn4llf/u1szAudmrqfDNm7haRlJ//qHjqpUI=;
+        b=m22ZDM0GTcHVokS6LgEOLQmJA8b0Al4SCJ5wxeiGpE17ZbWBDSFnP8KovxtXf2JQYm
+         oGvN9IIpOrzquSjCjkHTDKh196mubWZFZJwMOwukCkG/62ZbLCE7dqoQX43GzkYj9p/w
+         kNKUdLrC88Y0SNWqkpz3kYnW7tVt9EaD6mXQw3icS4AgRNpf9YZxep8CwQoGChKthGTZ
+         lnwqmQE1wZo2MabLGLAwT6/xnyqHAnjEt+TCLlDpJTUmvZ1XhJrD8TAQ9/zYf9AkTlOm
+         MoPEn2PYYfs3jHtuIJ+Sd68DjH3VG/bJwf3ZgOm7s+nMg/q2Ts5h88MsYmHN5v/sH/LU
+         k71w==
+X-Gm-Message-State: APjAAAVUo367adKCCi96V/DsleaXS96l84ObMUCY8IACRlJphqYiYOiE
+        Htar3oBxI1TEg3S1UZyZvj3k49mPUw6erA55VRg=
+X-Google-Smtp-Source: APXvYqzyaEYMPCHP4K+bYkinaGggJa39NUX3kLd909CtJ76joGOpoHyEOb730WEXOrRstMYnYO5fvDSILgat6U/N+Og=
+X-Received: by 2002:ab0:7219:: with SMTP id u25mr1208105uao.10.1579855760247;
+ Fri, 24 Jan 2020 00:49:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <cover.1579598053.git.bert.wesarg@googlemail.com>
+ <d10d3049ce9824f6925dddeb12cc130627a8c478.1579598053.git.bert.wesarg@googlemail.com>
+ <xmqqftg53hdm.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftg53hdm.fsf@gitster-ct.c.googlers.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Fri, 24 Jan 2020 09:49:07 +0100
+Message-ID: <CAKPyHN3F-c6Uy18PMkZ0YpwngN5HMMZtM3pma_Vj-WXVtvFuxw@mail.gmail.com>
+Subject: Re: [PATCH 7/7] remote rename: gently handle remote.pushDefault config
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Matthew Rogers <mattr94@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A sample bugreport generated from this patchset follows:
+On Fri, Jan 24, 2020 at 12:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>
+> > @@ -746,6 +769,26 @@ static int mv(int argc, const char **argv)
+> >                       die(_("creating '%s' failed"), buf.buf);
+> >       }
+> >       string_list_clear(&remote_branches, 1);
+> > +
+> > +     struct push_default_info push_default;
+>
+> Likewise.  decl-after-stmt is not allowed.
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+thanks. Its time for a re-roll.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-What did you expect to happen? (Expected behavior)
-
-What happened instead? (Actual behavior)
-
-What's different between what you expected and what actually happened?
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to send.
-
-
-[System Info]
-git version:
-git version 2.25.0.18.g682ab0d3eb
-cpu: x86_64
-built from commit: 682ab0d3eb8b84f8af4db1a161d24ca53d2f39fc
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname -a: Linux 5.2.17-1rodete3-amd64 #1 SMP Debian 5.2.17-1rodete3 (2019-10-21 > 2018) x86_64
-compiler info: glibc: 2.28
-$SHELL (typically, interactive shell): /bin/bash
-git-remote-https --build-info:
-git-http-fetch version: 2.25.0.18.g682ab0d3eb
-built from commit: 682ab0d3eb8b84f8af4db1a161d24ca53d2f39fc
-curl version: libcurl/7.66.0 GnuTLS/3.6.9 zlib/1.2.11 brotli/1.0.7 libidn2/2.2.0 libpsl/0.20.2 (+libidn2/2.2.0) libssh2/1.8.0 nghttp2/1.39.2 librtmp/2.3
-
-
-[Safelisted Config Info]
-sendemail.from (global) : emilyshaffer@google.com
-sendemail.from (repo) : emilyshaffer@google.com
-
-
-[Configured Hooks]
-pre-commit
-prepare-commit-msg
-
-
-[Loose Object Counts]
-2549 local loose objects
-2641 alternate loose objects
-5190 total loose objects
-
-
-[Packed Object Summary]
-60 total packs (591308 objects)
-
-
-[Object Info Summary]
-.git/objects/info/foo
-.git/objects/info/bar
-.git/objects/info/bar/baz
-.git/objects/info/alternates
-
-
-[Alternates]
-2 alternates found (1 working, 1 broken)
+Bert
