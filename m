@@ -2,102 +2,112 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE0C4C2D0DB
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A463CC2D0DB
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:29:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BEF182072C
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:22:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 798362072C
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 20:29:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q0usUvlC"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RA0VFghD"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387614AbgAXUWy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 15:22:54 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60807 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387480AbgAXUWx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 15:22:53 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B77969E3BD;
-        Fri, 24 Jan 2020 15:22:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=OLKuNtqWA/2EpVsiij4N6q7HpP4=; b=Q0usUv
-        lCEBb4AnYXWvY8TLC6xZerrwQgzqMhgklCa0AhDOF1u0y5FhD+xxQifosDVU9loD
-        B7G94sqXy/pR3cTEPpF6e0KK8J1H34XJrrdiwYjwUdCybu7BCsFfe0EX59qAY3vW
-        b2ZBJspjYCbh8XsNeH+a5x3wUBDJ/onYamVuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qGDDh67zCZKl/63jqBLoPADWv5ztEM2Y
-        06Td/8pyRzQmHgw2gHLlxN96wNspgFUlbJJfxvsx2eeCVAF8sbMN+if0IwJRI05o
-        j9kuG8yL/OOkoQn6fEBTmGS1OrbEfZJhYGEjxyddUaS8k9H3t+xNSesikQm6PS9d
-        E+2az9R4NB8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AECEF9E3BC;
-        Fri, 24 Jan 2020 15:22:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D79E59E3B6;
-        Fri, 24 Jan 2020 15:22:48 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew Rogers <mattr94@gmail.com>
-Cc:     git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>,
-        "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: Re: [PATCH v4 6/6] config: add '--show-scope' to print the scope of a config value
-References: <pull.478.v3.git.1579275102.gitgitgadget@gmail.com>
-        <pull.478.v4.git.1579825267.gitgitgadget@gmail.com>
-        <5549db7e39bf38aa5cc42292421f4676e3073b7d.1579825267.git.gitgitgadget@gmail.com>
-Date:   Fri, 24 Jan 2020 12:22:46 -0800
-In-Reply-To: <5549db7e39bf38aa5cc42292421f4676e3073b7d.1579825267.git.gitgitgadget@gmail.com>
-        (Matthew Rogers via GitGitGadget's message of "Fri, 24 Jan 2020
-        00:21:06 +0000")
-Message-ID: <xmqqblqszjs9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S2392475AbgAXU35 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 15:29:57 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:34450 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387548AbgAXU35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 15:29:57 -0500
+Received: by mail-wr1-f41.google.com with SMTP id t2so3573995wrr.1
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 12:29:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-language:content-transfer-encoding;
+        bh=MRsquq1uDuLP5KLaqGzm6EJX8wJUT2cT0ZiQ5k7ESvY=;
+        b=RA0VFghDeVkqUBcKWc5V/njJkAu4bi8z+LlzOyrCaYlLvdJOCPFRXleanh5thkhpdB
+         00HJr5B8lhVztp7MkaU0gY2OWHtN27I/4usUHwsJwI457GTZSh6S4iuCIJvw7UbSEm/p
+         4nJZMbpcxu/D/QhxuBfxIJ92vFmoh3Wj36QONEvED/tJ899SFEt/3sugPgeDZu2LGyJY
+         iLcwI8s7eMaXqgTYNlPRuUWzPvcVCfS8F7rGMzwX92B/IkZuMC0buy55tsBVGm+Rwi2Z
+         ENi3cQsgdAlKsIDR//tVKIHxgdi8RhZeC8GJJCYHrczq1G9Xd5THh/WITpZWZAbaCOuy
+         iWdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-language:content-transfer-encoding;
+        bh=MRsquq1uDuLP5KLaqGzm6EJX8wJUT2cT0ZiQ5k7ESvY=;
+        b=mnBXVf65oibp169dOa7FhFKf8SnXEp0Jt68CnbKeOzB8h6lJ9MOQhOJCxJVomEinFf
+         JK4uoRf1mWYZho67DFqRoyDNpwn/8e+T1DqcHFTwdAVXLdsLK0uWq02fOFWBngUITike
+         9pcfXuz9WTgIOkRe4PVoK3CqbSk8LrTFN8v/sweagY7dszZiAznw1tnmTrB7Bov6SS9Y
+         zYqWjKRZdNlTxlWaeqwq/HxYKWd7h8dqlLsuSbPAYZFEv0Uh1nFPZx6tWuhYWJ/tuFLZ
+         4AvzOpAKe1dWyU7ij/go0mGzLdECSFCdOT+86/OOq7HnVzCgQVLzq8UeWTp6le+mNIVA
+         XRVg==
+X-Gm-Message-State: APjAAAWSrFIvs5zieCYGDLMuWed5ypKBo3RFDUtrO2WuNfnBTW6Y6OWh
+        95WiB2cEk5pargrKltM=
+X-Google-Smtp-Source: APXvYqzBNoTRpjPZNL03o7eJgYezii60e4vuwP4YY8zm/gecuO63/FLPLdkeqQ4KV6ofMNCxmzTkhA==
+X-Received: by 2002:a5d:410e:: with SMTP id l14mr5920942wrp.238.1579897794609;
+        Fri, 24 Jan 2020 12:29:54 -0800 (PST)
+Received: from ?IPv6:2a02:810a:8c80:d2c:1d4:baf0:179f:5856? ([2a02:810a:8c80:d2c:1d4:baf0:179f:5856])
+        by smtp.gmail.com with ESMTPSA id y131sm8133471wmc.13.2020.01.24.12.29.53
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Jan 2020 12:29:54 -0800 (PST)
+To:     git@vger.kernel.org
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [Q] push refspec with wildcard pushes all matching branches
+Message-ID: <ed9a0485-1e6c-79ae-6a59-655105203728@googlemail.com>
+Date:   Fri, 24 Jan 2020 21:29:53 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A0DE2A4-3EE7-11EA-B307-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dear all,
 
-> +const char *scope_to_string(enum config_scope scope)
-> +{
-> +	switch (scope) {
-> +	case CONFIG_SCOPE_SYSTEM:
-> +		return "system";
-> +	case CONFIG_SCOPE_GLOBAL:
-> +		return "global";
-> +	case CONFIG_SCOPE_LOCAL:
-> +		return "local";
-> +	case CONFIG_SCOPE_WORKTREE:
-> +		return "worktree";
-> +	case CONFIG_SCOPE_COMMAND:
-> +		return "command";
-> +	case CONFIG_SCOPE_SUBMODULE:
-> +		return "submodule";
-> +	default:
-> +		return "unknown";
-> +	}
-> +}
+I'm a little confused, that a push refspec with a wildcard changes the number of branches pushed.
 
-In earlier round(s), this was called config_scope_name(), wasn't it?
+Here is what I see with Git 2.25:
 
-"scope_to_string()" is a much worse than "config_scope_name()" as a
-name of a global function (e.g. we won't know what subsystems other
-than "config" may want to use "scope").  As you remember, Bert's
-"remote rename" series wants to use a public interface like this
-function, and the series expects this function to be called
-config_scope_name().  Let's not rename a public API function
-suddenly---it disrupts other topics in flight.
+     $ git --version
+     git version 2.25.0
+     $ git config --list
+     user.email=bert.wesarg@googlemail.com
+     user.name=Bert Wesarg
+     $ git init --bare bare.git
+     $ git clone bare.git repo
+     Cloning into 'repo'...
+     warning: You appear to have cloned an empty repository.
+     done.
+     $ cd repo
+     $ git config push.default current
+     $ echo foo >foo
+     $ git add foo
+     $ git commit -m foo
+     [master (root-commit) 4d0b276] foo
+      1 file changed, 1 insertion(+)
+      create mode 100644 foo
+     $ git branch master-two
+     $ git push --dry-run
+     To ../bare.git
+      * [new branch]      master -> master
+     $ git config remote.origin.push 'refs/heads/master*:refs/remotes/origin/master*'
+     $ git push --dry-run
+     To ../bare.git
+      * [new branch]      master -> origin/master
+      * [new branch]      master-two -> origin/master-two
+
+Is this expected behavior?
 
 Thanks.
+
+Best,
+Bert
