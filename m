@@ -2,181 +2,129 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14235C35242
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 09:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A8C9C3F68F
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 10:34:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DBA1420838
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 09:25:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 01C422075D
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 10:34:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="lYD/SrKz"
+	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="JMaCmRTI"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730487AbgAXJZi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 04:25:38 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35444 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730422AbgAXJZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 04:25:37 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so1012374wmb.0
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 01:25:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Wawsmq1he+hSgRdUpR4y74QZa+9pSBu3ypishV7dzzE=;
-        b=lYD/SrKz+aVOvB1pJ2K8/2WEwfqTT3ei17pminsPEv/zxh5OtwiYolGBkCSew1bu2g
-         yq/NEXjNEcv7iGBTn/JYo5xWHEG9c8zH3ayOCZAiD5s9NF+8H89be6ibzxXT8JVzYclL
-         HZMs8rVcWkmpI1v+0Ep/kQ6XSXRvimUoyT7JGmMwc3YQSNLFBCIk0r6nLNS4e5+MginV
-         MYicomJu8GETELZs80zlTWqQsrdHHrAZyUtq/Ll39POQAJHx2KgOpJpggErmcGe9y57N
-         EQBQtMkH2plzBwXwYm4ZgxR+d3I7nYS1w2gl3icV+LS3JwcwddOYgFm1ER5MheOfmeKL
-         g5GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Wawsmq1he+hSgRdUpR4y74QZa+9pSBu3ypishV7dzzE=;
-        b=W1ryxiM1QqYS2qBQdgxlYeRpOGcVUAKcP51WTJo0h48nj4CjH9aWexrRVFSXT2uFzA
-         l5AN33cpGvgaEmhmtpzb5jMgTve2AgEGNjEgWLIkoqIuSXHdfASqd6MuJ7yDW/br6M9Q
-         717hxLy0hxmvnbMDACImXtFW13s4/w0YgR5+y8wdr/Yur1PL+XEC9lRrTq+APYqpJ5V1
-         A1f/alLJjZOB31mXSecUSGq9Pzac1c5xSmq39Gxk7l3/hAS0B82XsL4FCUe3UkTFWbHl
-         6DrPItbTa9bD167PlyqZsujpTzUip57DMEP3BTG3sQEQUmlPIjvpzhHyUDJVzbfyGXFN
-         WtMQ==
-X-Gm-Message-State: APjAAAV2ZtRXda6bTaMqFRVnLdDedQv5psbzuj7izfJYxzV2e0qhkvuI
-        NFl9bn/w8d/9fvQKmwc=
-X-Google-Smtp-Source: APXvYqxaEl/PjpK6D58V7Zbzn/tWza+7ctVgEy7KSWAy9TbUZsj8OPYOvbbNwZ5ZnBJOirsyZQEYSw==
-X-Received: by 2002:a05:600c:218b:: with SMTP id e11mr2543936wme.121.1579857935546;
-        Fri, 24 Jan 2020 01:25:35 -0800 (PST)
-Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
-        by smtp.gmail.com with ESMTPSA id j12sm7258685wrw.54.2020.01.24.01.25.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 Jan 2020 01:25:35 -0800 (PST)
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-To:     git@vger.kernel.org
-Cc:     Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 6/7] config: provide access to the current line number
-Date:   Fri, 24 Jan 2020 10:25:26 +0100
-Message-Id: <2442c6d6b7d12d73f98ba1c11d3f62915fa124e6.1579857394.git.bert.wesarg@googlemail.com>
-X-Mailer: git-send-email 2.24.1.497.g9abd7b20b4.dirty
-In-Reply-To: <cover.1579857394.git.bert.wesarg@googlemail.com>
-References: <cover.1579857394.git.bert.wesarg@googlemail.com>
+        id S1730088AbgAXKek (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 05:34:40 -0500
+Received: from mail-db8eur05on2099.outbound.protection.outlook.com ([40.107.20.99]:40513
+        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726293AbgAXKek (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 05:34:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ERYikfw0PlgBCocc21iTIEIqD3xHz7w3/CB7nqNu6Q91lvGdgEOEoP/KOHCbCS0Ump1b708qIVrFEKiLFkR9t/vJ0OY/6LemMR1Vjj4X+fOy0N0PGOeIEmNkrk+0c4ZPddB/P9J/XVBZor28aoGVMIywHyHxfSPr4b79ZH950liACqKvmxdnHwfQYEWxLYBL8yESqe+SsmGxPgLWALh1pwExlPHwMp0V3/eVHRCUbKUsQ0bRnPGENgS9l3ESZxymGNjVx/H32kcEiiFiULSGcfP2hFJWzvRaPOfLBaQFrr6o6fEp7eMKERW/GD1fpYUt+DNKOnQr/fAJZFTUh4eenA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=An8yiUNRWMqdcjeqh+KN/P9uwOzMSDyzYjrf0/ppfys=;
+ b=efCZ0CLG49/Q5SNZDDBZCma2pyeJZHDqPamT20tkOkPstd5i3nIMHIurC3S29zqCskrUBSDNb7KtvQjuG//5va4G1d70i3RH03YmUyC2vCp9acw2DjIdr1kIfuxxKUjL5afKDjQO37Ye/KmQKD2myZnO5RwBhP4wU2pSJRu0NY05y1m7lPed9kCO3IX4rBt7+YAQfZ34wTP2QTsYIdTGOL6wUbxfshkG/Sef39TKLKHIDfaOyMx4Ke+hxLsPpsmDTWlmhb4PFHIAKCJ5l9z4jAy5nVIePYxwP7y0IErgSPZ9EnBmICIUb9j6+ETueIupTSEK5id2BeJzuaFBeEKFfg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 131.228.2.17) smtp.rcpttodomain=gmail.com smtp.mailfrom=nokia.com; dmarc=pass
+ (p=none sp=none pct=100) action=none header.from=nokia.com; dkim=none
+ (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
+ s=selector1-nokia-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=An8yiUNRWMqdcjeqh+KN/P9uwOzMSDyzYjrf0/ppfys=;
+ b=JMaCmRTIP6ThIbLcyxzN+9gxFAXt9PXx3wuCX7JhdCwM+pefWVh3+mYK8cP+B8mpTBDBas68aH4zxbjwPhArpISvygXmLGLWnZvlRkWlCetnVuBD26y49XciATAtGJI6wq1Djo13NuseIxVFSKiHDTIIp9sf9Rvi08TFsSwkF6g=
+Received: from VI1PR07CA0192.eurprd07.prod.outlook.com (2603:10a6:802:3f::16)
+ by AM6PR0702MB3702.eurprd07.prod.outlook.com (2603:10a6:209:11::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.15; Fri, 24 Jan
+ 2020 10:34:37 +0000
+Received: from DB5EUR03FT012.eop-EUR03.prod.protection.outlook.com
+ (2a01:111:f400:7e0a::202) by VI1PR07CA0192.outlook.office365.com
+ (2603:10a6:802:3f::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.14 via Frontend
+ Transport; Fri, 24 Jan 2020 10:34:37 +0000
+Authentication-Results: spf=pass (sender IP is 131.228.2.17)
+ smtp.mailfrom=nokia.com; gmail.com; dkim=none (message not signed)
+ header.d=none;gmail.com; dmarc=pass action=none header.from=nokia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nokia.com designates
+ 131.228.2.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=131.228.2.17; helo=fihe3nok0735.emea.nsn-net.net;
+Received: from fihe3nok0735.emea.nsn-net.net (131.228.2.17) by
+ DB5EUR03FT012.mail.protection.outlook.com (10.152.20.161) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.2665.18 via Frontend Transport; Fri, 24 Jan 2020 10:34:37 +0000
+Received: from ulegcpork.emea.nsn-net.net (ulegcpork.emea.nsn-net.net [10.151.74.148])
+        by fihe3nok0735.emea.nsn-net.net (GMO) with ESMTP id 00OAYXj3023167;
+        Fri, 24 Jan 2020 10:34:34 GMT
+From:   Peter Kaestle <peter.kaestle@nokia.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, pc44800@gmail.com
+Cc:     Peter Kaestle <peter.kaestle@nokia.com>
+Subject: [PATCH v3 1/2] Testcase for submodule status on empty dirs
+Date:   Fri, 24 Jan 2020 11:34:03 +0100
+Message-Id: <1579862044-29847-1-git-send-email-peter.kaestle@nokia.com>
+X-Mailer: git-send-email 2.6.2
+In-Reply-To: <xmqq4kwl512y.fsf@gitster-ct.c.googlers.com>
+References: <xmqq4kwl512y.fsf@gitster-ct.c.googlers.com>
+X-EOPAttributedMessage: 0
+X-MS-Office365-Filtering-HT: Tenant
+X-Forefront-Antispam-Report: CIP:131.228.2.17;IPV:CAL;SCL:-1;CTRY:FI;EFV:NLI;SFV:NSPM;SFS:(10019020)(4636009)(39860400002)(136003)(376002)(396003)(346002)(199004)(189003)(8936002)(6666004)(356004)(107886003)(86362001)(4326008)(26005)(186003)(5660300002)(4744005)(81166006)(81156014)(8676002)(36756003)(2906002)(26826003)(316002)(44832011)(478600001)(2616005)(70206006)(336012)(70586007);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR0702MB3702;H:fihe3nok0735.emea.nsn-net.net;FPR:;SPF:Pass;LANG:en;PTR:InfoDomainNonexistent;A:1;MX:1;
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: a952112f-501b-442b-1a25-08d7a0b902dd
+X-MS-TrafficTypeDiagnostic: AM6PR0702MB3702:
+X-Microsoft-Antispam-PRVS: <AM6PR0702MB3702C0097D1B0FCDD63E086DEE0E0@AM6PR0702MB3702.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:4714;
+X-Forefront-PRVS: 02929ECF07
+X-MS-Exchange-SenderADCheck: 1
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: lCBSc1SpEH2LSdqJ34lnyASWVEfwI3ooKjp9TkyehUMpCI84nILv/XZvPhBj/CQnkClc0Tz+W9+r29BTC/HrdL1H15+AhQbkzaJLtiPgeT7R5Z2IDqdfLTIABlaV5HNL9GXnujxuY+MH4vjTUOwxAk4nI5cQO73jU5//EFNS4IPfSRy7Dxar6NhzbkYUFvODy8TSJU9jsSUpRPk3dXJjDtbAZoWK86Et4dewJly8F0ytYIycIBBZ9IixPAFdlKkREj2dGY50SyGsHjwltpBYw5Gm8CV6LkyhHhGEE1Qvv6SALg43+edu/LyUxckEDPFsQVY8/Fzd/Fuj5K5ddl681WeVGfVQXHSnfmjlR6RTnRIBrLaFkirduGQScyENdVV3njP+zrFJHWNsvD4JfNfnBxx/2lXm0vgyuyVkDWnXSW8M2ag0nbf6oz3LFW+I7Z/5
+X-OriginatorOrg: nokia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2020 10:34:37.2792
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a952112f-501b-442b-1a25-08d7a0b902dd
+X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.2.17];Helo=[fihe3nok0735.emea.nsn-net.net]
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR0702MB3702
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Users are nowadays trained to see message from CLI tools in the form
+Test that submodule status reports initialized but not cloned
+submodules as missing.
 
-    <file>:<lno>: …
-
-To be able to give such messages when notifying the user about
-configurations in any config file, it is currently only possible to get
-the file name (if the value originates from a file to begin with) via
-`current_config_name()`. Now it is also possible to query the current line
-number for the configuration.
-
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
 ---
- config.c               |  8 ++++++++
- config.h               |  1 +
- t/helper/test-config.c |  1 +
- t/t1308-config-set.sh  | 14 ++++++++++++--
- 4 files changed, 22 insertions(+), 2 deletions(-)
+ t/t7400-submodule-basic.sh | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/config.c b/config.c
-index 4c461bb7a3..5d1d6b5871 100644
---- a/config.c
-+++ b/config.c
-@@ -3333,6 +3333,14 @@ const char *config_scope_name(enum config_scope scope)
- 	}
- }
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 7f75bb1..2e84914 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -399,6 +399,14 @@ test_expect_success 'init should register submodule url in .git/config' '
+ 	test_cmp expect url
+ '
  
-+int current_config_line(void)
-+{
-+	if (current_config_kvi)
-+		return current_config_kvi->linenr;
-+	else
-+		return cf->linenr;
-+}
++test_expect_success 'status should still be "missing" after initializing' '
++	rm -fr init &&
++	mkdir init &&
++	git submodule status >lines &&
++	rm -fr init &&
++	grep "^-$rev1" lines
++'
 +
- int lookup_config(const char **mapping, int nr_mapping, const char *var)
- {
- 	int i;
-diff --git a/config.h b/config.h
-index c063f33ff6..371f7f2dd0 100644
---- a/config.h
-+++ b/config.h
-@@ -306,6 +306,7 @@ const char *config_scope_name(enum config_scope scope);
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
- const char *current_config_name(void);
-+int current_config_line(void);
- 
- /**
-  * Include Directives
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 1e3bc7c8f4..234c722b48 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -48,6 +48,7 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	printf("value=%s\n", value ? value : "(null)");
- 	printf("origin=%s\n", current_config_origin_type());
- 	printf("name=%s\n", current_config_name());
-+	printf("lno=%d\n", current_config_line());
- 	printf("scope=%s\n", config_scope_name(current_config_scope()));
- 
- 	return 0;
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 7b4e1a63eb..9e36e7a590 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -238,8 +238,8 @@ test_expect_success 'error on modifying repo config without repo' '
- 
- cmdline_config="'foo.bar=from-cmdline'"
- test_expect_success 'iteration shows correct origins' '
--	echo "[foo]bar = from-repo" >.git/config &&
--	echo "[foo]bar = from-home" >.gitconfig &&
-+	printf "[ignore]\n\tthis = please\n[foo]bar = from-repo\n" >.git/config &&
-+	printf "[foo]\n\tbar = from-home\n" >.gitconfig &&
- 	if test_have_prereq MINGW
- 	then
- 		# Use Windows path (i.e. *not* $HOME)
-@@ -253,18 +253,28 @@ test_expect_success 'iteration shows correct origins' '
- 	value=from-home
- 	origin=file
- 	name=$HOME_GITCONFIG
-+	lno=2
- 	scope=global
- 
-+	key=ignore.this
-+	value=please
-+	origin=file
-+	name=.git/config
-+	lno=2
-+	scope=repo
-+
- 	key=foo.bar
- 	value=from-repo
- 	origin=file
- 	name=.git/config
-+	lno=3
- 	scope=repo
- 
- 	key=foo.bar
- 	value=from-cmdline
- 	origin=command line
- 	name=
-+	lno=-1
- 	scope=cmdline
- 	EOF
- 	GIT_CONFIG_PARAMETERS=$cmdline_config test-tool config iterate >actual &&
+ test_failure_with_unknown_submodule () {
+ 	test_must_fail git submodule $1 no-such-submodule 2>output.err &&
+ 	test_i18ngrep "^error: .*no-such-submodule" output.err
 -- 
-2.24.1.497.g9abd7b20b4.dirty
+2.6.2
 
