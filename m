@@ -2,73 +2,105 @@ Return-Path: <SRS0=Vx3J=3N=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 99FF3C2D0CE
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 676AAC2D0CE
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:33:43 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 36EE32071E
-	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:05:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3656D2075D
+	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 22:33:43 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YUK/lgKp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CNs1pVTJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727493AbgAXWFW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 17:05:22 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54869 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725821AbgAXWFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 17:05:22 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E130A9F2AC;
-        Fri, 24 Jan 2020 17:05:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3xGRvumSTU2NPrlC8HL+VlsXk70=; b=YUK/lg
-        KpCNWlcIA96BlBubd9DFnMyNQ2zTASO2zu171IxslT5zn2SdVqQ9rz6/h0aBp3jl
-        UMOXLvqm6G1+3vevOArbsZbtSgQuBE1DCwCsw3wIJ6etm7LnMkc/zQkKFB3N25JH
-        jHfb4tHVNdBYeAV5ZEHIIt0o2a4AwbLrgtOys=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pV0+8HgPZcKujz3c0BZqGYWAwPkhuNJ0
-        pOuCub4e8b1kYBkdB/XVXsWUsxnC94ROPvDHsOo64pqTRJQ05M2jb3dT+r71JgC3
-        8317tsSuT3qxVCjY1DfOa86f4PNXtl0/Tgxlus2pTeyk5reoSvcPm2YOzdCebLTQ
-        JAj+NgApaqg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D7C3D9F2AB;
-        Fri, 24 Jan 2020 17:05:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0FE299F2A4;
-        Fri, 24 Jan 2020 17:05:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v7] MyFirstContribution: add avenues for getting help
-References: <20200124212602.74194-1-emilyshaffer@google.com>
-Date:   Fri, 24 Jan 2020 14:05:14 -0800
-In-Reply-To: <20200124212602.74194-1-emilyshaffer@google.com> (Emily Shaffer's
-        message of "Fri, 24 Jan 2020 13:26:02 -0800")
-Message-ID: <xmqqlfpwy0h1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1729469AbgAXWdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 17:33:42 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53641 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729465AbgAXWdl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 17:33:41 -0500
+Received: by mail-wm1-f65.google.com with SMTP id m24so967568wmc.3
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 14:33:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:date:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=7PF0xtLeYk9BPsTBFhETBwzzx3z7ICBCvKFRH9GnX1Y=;
+        b=CNs1pVTJSxH7lFFgNZnBvo/K2vQ9oknUvo3hi+lIjYaU7ZCvFFkb6nUhCuVpf3Mjfs
+         a57GN1jh4Uair+qXKtBKFSkg/AnwIaU4hgFp5q0XwAlIshkhu8qQfJzPVtJkuL1/Mjqt
+         m9rdp/JJK4tQxPz8SbPQZZFnfAJ+Q4l98t+gqcto68n0DC1OcWLhBbRk8oVJL/zjduNF
+         mXlXspbUexIXMpoVBwOkX2m8OKrrWuHWxzb/NKpbNKHHonx6NwFmpGzNS1TOgigbEAb9
+         u/dPubFNPKHq113lwZ6ReAT8+Tc95wje+T4m59ayTUGyxGp1vgyEAOoXw8UhLWEV2U8h
+         H3MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=7PF0xtLeYk9BPsTBFhETBwzzx3z7ICBCvKFRH9GnX1Y=;
+        b=lLSZsLd7Ln9EhiibcIshodpaKLXzb6jss9wQ5xjgrpDjbBfBy/inxjev5YjjVKuDnl
+         kXmFD1N7atiq9bITGS2pYwm886z/LkFBpRddqNG9QPgZWC9EbkVKG8qz26IBTdnc9MpN
+         qJtACtLOv5HMNHUxlpoWH8bystLJBMYXRmcTvKailc0Tg7qdMyL26DM3Oe2nbhRy07Pm
+         t/qOV0MBeNHAWyOsrGZoBXi7TqLQKFXoodu6EAmKX/MD8eTfIfhIP1qEZEvhDY24bbZp
+         USVqZGW77sAkySfzz81/xFqZRa3a9FMj0ViQmHIaU61o30vV+H/4O498pBnUPWhIJ9m1
+         d9iA==
+X-Gm-Message-State: APjAAAVN6mFSFEfNNM2pZWuwS6Fa1c3x/xQa9soDJvIamUnu6BA+QWvd
+        wtojjcMV3+xE7RToPR2OGJ309Db5
+X-Google-Smtp-Source: APXvYqwAVMMokSV11/7toJ6g7Fhq7GZsO7n3Y5J/gQu8k2r1IqwuXAKjc+6psmXC3dSuni5HU5mIwQ==
+X-Received: by 2002:a1c:f31a:: with SMTP id q26mr1208950wmq.142.1579905219750;
+        Fri, 24 Jan 2020 14:33:39 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c5sm8750718wmb.9.2020.01.24.14.33.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jan 2020 14:33:39 -0800 (PST)
+Message-Id: <pull.525.git.1579905218.gitgitgadget@gmail.com>
+From:   "Christian Stimming via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 24 Jan 2020 22:33:35 +0000
+Subject: [PATCH 0/3] git gui: improve German translation
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9AA7BDE4-3EF5-11EA-956F-8D86F504CC47-77302942!pb-smtp21.pobox.com
+To:     git@vger.kernel.org
+Cc:     Christian Stimming <christian@cstimming.de>,
+        Pratyush Yadav <me@yadavpratyush.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <emilyshaffer@google.com> writes:
+Update German translation to recent code additions, but also switch several
+terms from uncommon translations back to English vocabulary.
 
-> Took a slightly modified version of Junio's suggestion for the archive
-> link so the final text reads "The archive of this mailing list is
-> available to view in a browser" instead of "The archive of this mailing
-> list is available at archive to view in a browser".
+This most prominently concerns "commit" (noun, verb), "repository" (both in
+the second commit), and "branch" (this and others in the third commit).
+These uncommon translations have been introduced long ago and never been
+changed since. In fact, the whole German translation here hasn't been
+touched for a long time. However, in German literature and magazines,
+git-gui is regularly noted for its uncommon choice of translated vocabulary.
+This somewhat distracts from the actual benefits of this tool. So it is
+probably better to abandon the uncommon translations and rather stick to the
+common English vocabulary in git version control.
 
-Looks good.  Thanks.
+The glossary is adapted to the git-core glossary at
+https://github.com/ruester/git-po-de/wiki/Translation-Guidelinesand the
+changed and updated terms are used in the actual translation accordingly.
+
+Christian Stimming (3):
+  git-gui: update german translation to most recently created pot
+    templates
+  git-gui: update german translation
+  git-gui: completed german translation
+
+ po/de.po          | 3617 ++++++++++++++++++++++++---------------------
+ po/glossary/de.po |  172 ++-
+ 2 files changed, 2068 insertions(+), 1721 deletions(-)
+
+
+base-commit: 0d2116c6441079a5a1091e4cf152fd9d5fa9811b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-525%2Fcstim%2Fcstim-gitgui-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-525/cstim/cstim-gitgui-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/525
+-- 
+gitgitgadget
