@@ -7,28 +7,28 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A8C9C3F68F
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5861EC35242
 	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 10:34:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 01C422075D
+	by mail.kernel.org (Postfix) with ESMTP id 2CB332077C
 	for <git@archiver.kernel.org>; Fri, 24 Jan 2020 10:34:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="JMaCmRTI"
+	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="evjt6QB2"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730088AbgAXKek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 05:34:40 -0500
-Received: from mail-db8eur05on2099.outbound.protection.outlook.com ([40.107.20.99]:40513
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
+        id S1730375AbgAXKem (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 05:34:42 -0500
+Received: from mail-eopbgr10122.outbound.protection.outlook.com ([40.107.1.122]:9703
+        "EHLO EUR02-HE1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726293AbgAXKek (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 05:34:40 -0500
+        id S1730051AbgAXKel (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 05:34:41 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ERYikfw0PlgBCocc21iTIEIqD3xHz7w3/CB7nqNu6Q91lvGdgEOEoP/KOHCbCS0Ump1b708qIVrFEKiLFkR9t/vJ0OY/6LemMR1Vjj4X+fOy0N0PGOeIEmNkrk+0c4ZPddB/P9J/XVBZor28aoGVMIywHyHxfSPr4b79ZH950liACqKvmxdnHwfQYEWxLYBL8yESqe+SsmGxPgLWALh1pwExlPHwMp0V3/eVHRCUbKUsQ0bRnPGENgS9l3ESZxymGNjVx/H32kcEiiFiULSGcfP2hFJWzvRaPOfLBaQFrr6o6fEp7eMKERW/GD1fpYUt+DNKOnQr/fAJZFTUh4eenA==
+ b=Zh/igMGRqHEQBxI4bziPa2Q/3O/kv2GFJn9NhOv6fuyg3mukrLZF3ZsFuSN2KRuYEOHXJZ6u3SipQnOYpFaEYXrIgvHNbaujLIbHjENkfBk5pYTZsYXaBzYK44b1XAdGll1ykIOO4MiHsXuBnm95iec/AGMxV1N46h8ZEpIvuK6zy5ZRrqBgBu4+2s9rx/XAv9j7jlA+qaqV7A5MzXyvfvxgSyVK0SBu/dbzHDQ9ZuZJe0D/Yyh9t5hCIobILLzStWhClxZxyiYKk8cDJmqHDsQ6BpGABfhvZ2jcjNSnfvAI8WN3RSBogxjjTkzcDJmyra2gHGs+dtwXWLaA3B1Vyg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=An8yiUNRWMqdcjeqh+KN/P9uwOzMSDyzYjrf0/ppfys=;
- b=efCZ0CLG49/Q5SNZDDBZCma2pyeJZHDqPamT20tkOkPstd5i3nIMHIurC3S29zqCskrUBSDNb7KtvQjuG//5va4G1d70i3RH03YmUyC2vCp9acw2DjIdr1kIfuxxKUjL5afKDjQO37Ye/KmQKD2myZnO5RwBhP4wU2pSJRu0NY05y1m7lPed9kCO3IX4rBt7+YAQfZ34wTP2QTsYIdTGOL6wUbxfshkG/Sef39TKLKHIDfaOyMx4Ke+hxLsPpsmDTWlmhb4PFHIAKCJ5l9z4jAy5nVIePYxwP7y0IErgSPZ9EnBmICIUb9j6+ETueIupTSEK5id2BeJzuaFBeEKFfg==
+ bh=Dh391SXeTDq004abKoVAAxNK2nhmMCo6qynVdZmLvMU=;
+ b=eTH/FkV5EnjtiuR6QvzTAM3hRQvZpCnJJS+V3UlqA7haGYzINqOX8XAgvh+5Fhd6ztt+t26KSxczYBq7FIXl7Ar2oVVRJxD2/qll45UfhmKp0j6J8zECmCe0dfghbFP5KeapPAsS9OLJqWD7qBE9BPV3ET//R2Ldpmr9GGoN+9m9J532Vf/ujs2j0+P8ITyJk6SydKOO0ap2aTCPjhVX0X6SFw7hx6IkaBjxujJ+5Dd6QfTPhSzbwD/nRjB4N7YztROsheq06qqE/3pnrvu4Oqt3G76iwvJ+BCoc1yqcHwm3LwONv3ay41Paf+/DD1Bnk/d00MIyuh+YFI1sgJoVQg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  131.228.2.17) smtp.rcpttodomain=gmail.com smtp.mailfrom=nokia.com; dmarc=pass
  (p=none sp=none pct=100) action=none header.from=nokia.com; dkim=none
@@ -36,16 +36,16 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
  s=selector1-nokia-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=An8yiUNRWMqdcjeqh+KN/P9uwOzMSDyzYjrf0/ppfys=;
- b=JMaCmRTIP6ThIbLcyxzN+9gxFAXt9PXx3wuCX7JhdCwM+pefWVh3+mYK8cP+B8mpTBDBas68aH4zxbjwPhArpISvygXmLGLWnZvlRkWlCetnVuBD26y49XciATAtGJI6wq1Djo13NuseIxVFSKiHDTIIp9sf9Rvi08TFsSwkF6g=
-Received: from VI1PR07CA0192.eurprd07.prod.outlook.com (2603:10a6:802:3f::16)
- by AM6PR0702MB3702.eurprd07.prod.outlook.com (2603:10a6:209:11::15) with
+ bh=Dh391SXeTDq004abKoVAAxNK2nhmMCo6qynVdZmLvMU=;
+ b=evjt6QB2kYziM93Nqi9pCy24NIniMI9xhsUA6hQU0g1BQ+3S1LFMk7aLAwUUHjv0KInukpwAIdkmMVmrlksROt3N9YOL5+6P0yx6RwYCAb300sJ+jJwgjDL2CX6HR5bJnkmarEzIKHXZtZWEXjd7k9UKXiaQ+HnZE21+wsXZoiE=
+Received: from AM5PR0701CA0072.eurprd07.prod.outlook.com (2603:10a6:203:2::34)
+ by VI1PR07MB3455.eurprd07.prod.outlook.com (2603:10a6:802:24::17) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.15; Fri, 24 Jan
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.14; Fri, 24 Jan
  2020 10:34:37 +0000
-Received: from DB5EUR03FT012.eop-EUR03.prod.protection.outlook.com
- (2a01:111:f400:7e0a::202) by VI1PR07CA0192.outlook.office365.com
- (2603:10a6:802:3f::16) with Microsoft SMTP Server (version=TLS1_2,
+Received: from DB5EUR03FT056.eop-EUR03.prod.protection.outlook.com
+ (2a01:111:f400:7e0a::209) by AM5PR0701CA0072.outlook.office365.com
+ (2603:10a6:203:2::34) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.14 via Frontend
  Transport; Fri, 24 Jan 2020 10:34:37 +0000
 Authentication-Results: spf=pass (sender IP is 131.228.2.17)
@@ -55,76 +55,96 @@ Received-SPF: Pass (protection.outlook.com: domain of nokia.com designates
  131.228.2.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=131.228.2.17; helo=fihe3nok0735.emea.nsn-net.net;
 Received: from fihe3nok0735.emea.nsn-net.net (131.228.2.17) by
- DB5EUR03FT012.mail.protection.outlook.com (10.152.20.161) with Microsoft SMTP
+ DB5EUR03FT056.mail.protection.outlook.com (10.152.21.124) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.20.2665.18 via Frontend Transport; Fri, 24 Jan 2020 10:34:37 +0000
 Received: from ulegcpork.emea.nsn-net.net (ulegcpork.emea.nsn-net.net [10.151.74.148])
-        by fihe3nok0735.emea.nsn-net.net (GMO) with ESMTP id 00OAYXj3023167;
-        Fri, 24 Jan 2020 10:34:34 GMT
+        by fihe3nok0735.emea.nsn-net.net (GMO) with ESMTP id 00OAYXj4023167;
+        Fri, 24 Jan 2020 10:34:35 GMT
 From:   Peter Kaestle <peter.kaestle@nokia.com>
 To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         christian.couder@gmail.com, pc44800@gmail.com
 Cc:     Peter Kaestle <peter.kaestle@nokia.com>
-Subject: [PATCH v3 1/2] Testcase for submodule status on empty dirs
-Date:   Fri, 24 Jan 2020 11:34:03 +0100
-Message-Id: <1579862044-29847-1-git-send-email-peter.kaestle@nokia.com>
+Subject: [PATCH v3 2/2] Fix status of initialized but not cloned submodules
+Date:   Fri, 24 Jan 2020 11:34:04 +0100
+Message-Id: <1579862044-29847-2-git-send-email-peter.kaestle@nokia.com>
 X-Mailer: git-send-email 2.6.2
-In-Reply-To: <xmqq4kwl512y.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <1579862044-29847-1-git-send-email-peter.kaestle@nokia.com>
 References: <xmqq4kwl512y.fsf@gitster-ct.c.googlers.com>
+ <1579862044-29847-1-git-send-email-peter.kaestle@nokia.com>
 X-EOPAttributedMessage: 0
 X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:131.228.2.17;IPV:CAL;SCL:-1;CTRY:FI;EFV:NLI;SFV:NSPM;SFS:(10019020)(4636009)(39860400002)(136003)(376002)(396003)(346002)(199004)(189003)(8936002)(6666004)(356004)(107886003)(86362001)(4326008)(26005)(186003)(5660300002)(4744005)(81166006)(81156014)(8676002)(36756003)(2906002)(26826003)(316002)(44832011)(478600001)(2616005)(70206006)(336012)(70586007);DIR:OUT;SFP:1102;SCL:1;SRVR:AM6PR0702MB3702;H:fihe3nok0735.emea.nsn-net.net;FPR:;SPF:Pass;LANG:en;PTR:InfoDomainNonexistent;A:1;MX:1;
+X-Forefront-Antispam-Report: CIP:131.228.2.17;IPV:CAL;SCL:-1;CTRY:FI;EFV:NLI;SFV:NSPM;SFS:(10019020)(4636009)(396003)(39860400002)(346002)(376002)(136003)(189003)(199004)(6666004)(26826003)(26005)(316002)(5660300002)(356004)(186003)(336012)(86362001)(70206006)(478600001)(70586007)(4326008)(107886003)(8936002)(44832011)(81156014)(2906002)(36756003)(81166006)(2616005)(8676002);DIR:OUT;SFP:1102;SCL:1;SRVR:VI1PR07MB3455;H:fihe3nok0735.emea.nsn-net.net;FPR:;SPF:Pass;LANG:en;PTR:InfoDomainNonexistent;MX:1;A:1;
 MIME-Version: 1.0
 Content-Type: text/plain
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: a952112f-501b-442b-1a25-08d7a0b902dd
-X-MS-TrafficTypeDiagnostic: AM6PR0702MB3702:
-X-Microsoft-Antispam-PRVS: <AM6PR0702MB3702C0097D1B0FCDD63E086DEE0E0@AM6PR0702MB3702.eurprd07.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:4714;
+X-MS-Office365-Filtering-Correlation-Id: d02605e4-2ab1-4c3a-3ee0-08d7a0b90308
+X-MS-TrafficTypeDiagnostic: VI1PR07MB3455:
+X-Microsoft-Antispam-PRVS: <VI1PR07MB3455C63938E744871B74C71AEE0E0@VI1PR07MB3455.eurprd07.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1850;
 X-Forefront-PRVS: 02929ECF07
 X-MS-Exchange-SenderADCheck: 1
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lCBSc1SpEH2LSdqJ34lnyASWVEfwI3ooKjp9TkyehUMpCI84nILv/XZvPhBj/CQnkClc0Tz+W9+r29BTC/HrdL1H15+AhQbkzaJLtiPgeT7R5Z2IDqdfLTIABlaV5HNL9GXnujxuY+MH4vjTUOwxAk4nI5cQO73jU5//EFNS4IPfSRy7Dxar6NhzbkYUFvODy8TSJU9jsSUpRPk3dXJjDtbAZoWK86Et4dewJly8F0ytYIycIBBZ9IixPAFdlKkREj2dGY50SyGsHjwltpBYw5Gm8CV6LkyhHhGEE1Qvv6SALg43+edu/LyUxckEDPFsQVY8/Fzd/Fuj5K5ddl681WeVGfVQXHSnfmjlR6RTnRIBrLaFkirduGQScyENdVV3njP+zrFJHWNsvD4JfNfnBxx/2lXm0vgyuyVkDWnXSW8M2ag0nbf6oz3LFW+I7Z/5
+X-Microsoft-Antispam-Message-Info: VY6H+T3ucXVnhAkmTXh+qG2rD+x/Zz28/UUhDpMu8lbXcDBGfl0160Z709PgVRdljgstjYuU12NT1imB8za7I4qZHDvfnvoYv3B6DX1TQzfjxYiCB8gja7ajHfzZugt9fEBqu8EUA5ImnVDIzWhtTnR9IeCWhlaWN8UcRHFk3j59epfdCnn5k250KK5WeQkcaic7t3wBFUnFUwjA+bbbhAUn5UpSzsl72BGjAUqBsAyGVeEbXTyTUXiHyZXOROhzkZTBXc3t+kJn4SYGmkOcJVzyL2/9ZdgQAtSdGkaDLeq49RMGxNbtdi14bVzw3c71IdDgd372jxLwR3WBiBgK0vd3vdFJS1pNJJcgo8Ie49XdlyffcPJvTI/0bfxJSSYF9xVs952sAc0JMsiiV8GxtKdd4OVHWgzbumrJAs2HdNdKb/UsKZzuwBKbKwXNTbI8
 X-OriginatorOrg: nokia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2020 10:34:37.2792
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jan 2020 10:34:37.5619
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a952112f-501b-442b-1a25-08d7a0b902dd
+X-MS-Exchange-CrossTenant-Network-Message-Id: d02605e4-2ab1-4c3a-3ee0-08d7a0b90308
 X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.2.17];Helo=[fihe3nok0735.emea.nsn-net.net]
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR0702MB3702
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR07MB3455
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test that submodule status reports initialized but not cloned
-submodules as missing.
+Original bash helper for "submodule status" was doing a check for
+initialized but not cloned submodules and prefixed the status with
+a minus sign in case no .git file or folder was found inside the
+submodule directory.
+This check was missed when the original port of the functionality
+from bash to C was done.
 
 Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
 ---
- t/t7400-submodule-basic.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ builtin/submodule--helper.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 7f75bb1..2e84914 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -399,6 +399,14 @@ test_expect_success 'init should register submodule url in .git/config' '
- 	test_cmp expect url
- '
- 
-+test_expect_success 'status should still be "missing" after initializing' '
-+	rm -fr init &&
-+	mkdir init &&
-+	git submodule status >lines &&
-+	rm -fr init &&
-+	grep "^-$rev1" lines
-+'
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c72931e..c04241b 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -782,6 +782,9 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 	struct argv_array diff_files_args = ARGV_ARRAY_INIT;
+ 	struct rev_info rev;
+ 	int diff_files_result;
++	struct strbuf buf = STRBUF_INIT;
++	const char *git_dir;
 +
- test_failure_with_unknown_submodule () {
- 	test_must_fail git submodule $1 no-such-submodule 2>output.err &&
- 	test_i18ngrep "^error: .*no-such-submodule" output.err
+ 
+ 	if (!submodule_from_path(the_repository, &null_oid, path))
+ 		die(_("no submodule mapping found in .gitmodules for path '%s'"),
+@@ -794,10 +797,18 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
+ 		goto cleanup;
+ 	}
+ 
+-	if (!is_submodule_active(the_repository, path)) {
++	strbuf_addf(&buf, "%s/.git", path);
++	git_dir = read_gitfile(buf.buf);
++	if (!git_dir)
++		git_dir = buf.buf;
++
++	if (!is_submodule_active(the_repository, path) ||
++			!is_git_directory(git_dir)) {
+ 		print_status(flags, '-', path, ce_oid, displaypath);
++		strbuf_release(&buf);
+ 		goto cleanup;
+ 	}
++	strbuf_release(&buf);
+ 
+ 	argv_array_pushl(&diff_files_args, "diff-files",
+ 			 "--ignore-submodules=dirty", "--quiet", "--",
 -- 
 2.6.2
 
