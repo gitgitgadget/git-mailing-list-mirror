@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 84EF1C35242
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BC39C3F68F
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 547B52071A
+	by mail.kernel.org (Postfix) with ESMTP id F30A62071A
 	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UXxRYx46"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="VsiOT1ZS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728026AbgAYXAp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 18:00:45 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46800 "EHLO
+        id S1729100AbgAYXBG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 18:01:06 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46848 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727440AbgAYXAm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:42 -0500
+        by vger.kernel.org with ESMTP id S1729027AbgAYXAz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:55 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6CA6460E50;
-        Sat, 25 Jan 2020 23:00:41 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 72A4A6160E;
+        Sat, 25 Jan 2020 23:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579993241;
-        bh=NwYHtyx0uOjbzh6Yi98k3PN7tzgVmJ6Q23SkInWH7Xs=;
+        s=default; t=1579993253;
+        bh=3jHcppxLGE4Za6iMdX4YGpER+IYmmrm5+fCZnYM9gqY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=UXxRYx46ennZUaCiMkPpdoz9Yf6nnSWoWa8gXvMAlYl4mkSiBG3K2+S3FPLiTgPv6
-         d9h4ugGBC5w/09O2/udLc1gXxr9yqo2HSyiAmKU2OF5YLMLRW2yl4R6bwpr7qJpGcy
-         lseCZ5P2kAYk5uiNfnsI3ig+Hewp6YqDjDQNUPxTi7aMn/HSO2UMkO2jqhbfoLj4FT
-         FMSmtzwjRPMYgd3UWZ7jXAYzyLFratV3JULJAI9L9glWh0VmKY1Oh8AbstBlPemQj0
-         V5KJE1ReZ7pgk6Z+BCQkCNuJILp4h5gktvvkOcsDdPmcgrrJwyPtGdv1LGmSLJNqU7
-         4gtOl8A37QfOc2i1fWVvE16O9+khXBIZ5YF7vv3jJ2Jk/6XWfWyQjBy1abmKr5x1bc
-         LrGKyfrwvkH2aT7KMrmK8BmskxK2+maWoqwMT18VVM082HgbajqK0qavhcmEXPcGYT
-         ZTsKrg/Jz35gfr+eNTKATVRAkeSzxKMQ9zdZmbr/AVeG/RRC8aI
+        b=VsiOT1ZSzNf0fSKXWeeBE0y9sEyuy/AcsZ1BIkifoEZC+dNOyUPkMSHsh/6VO0RTu
+         ZJBSHqCNjFGD9QMtYMZPaKnw2bFHeJjHEDWa9GiqBO9/pf1IFpp7tkiBIy4ZIc6pHZ
+         cS8SkVuH/RqGNwIQR76sXzaGasAL68yx/Zk1FLkoF4Zi9/8JMuEXUBQ92RevDbu9Lt
+         /15dksw8FSXvBD8ZrXTG6TmJuy4yNOQnFdMRGhm4onlVQo43aYb4ST8lWMYMZsLMPS
+         WQnMXzyVzscaE3yj/HkJssjC5Soc86shpOv8RYk2NXOUe5MuFSURLzwLE4aF5nLkLC
+         rNpHNn0o0X8SuPl5OWX+OOHzUy4smKmcZGDvidRGFAScG3s5HZQ3rx9WW34Fe6SvJY
+         ADP/Kx3UXMM6jhumyps0oLrgRvqMHa8G5SDt1TDRMBk9MxfXSnOAmmYUj9ue4zctVv
+         cEZb5fCZ05/elXxR5Pi/Y5ji0SPJ9GSUewQ3AN0oWGAwlF0bL6c
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 02/22] t3206: make hash size independent
-Date:   Sat, 25 Jan 2020 23:00:08 +0000
-Message-Id: <20200125230035.136348-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 22/22] t6024: update for SHA-256
+Date:   Sat, 25 Jan 2020 23:00:34 +0000
+Message-Id: <20200125230035.136348-29-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.24.g3f081b084b0
 In-Reply-To: <20200125230035.136348-1-sandals@crustytoothpaste.net>
 References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
@@ -56,57 +56,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix the one assertion in this test that still uses SHA-1 to use test_oid
-to be independent of the hash.
+To make this test work with SHA-256, compute two of the items in the
+conflicted index entry.  The other entry is a conflict within a conflict
+and computing it is difficult, so use test_oid_cache to specify the
+proper values for both hash algorithms.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t3206-range-diff.sh | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ t/t6024-recursive-merge.sh | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 0575dd72b1..bd808f87ed 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -102,6 +102,14 @@ test_expect_success 'setup' '
- 	n3 sha256:3b0a644
- 	n4 sha256:e461653
- 
-+	# mode change
-+	o1 sha1:4d39cb3
-+	o2 sha1:26c107f
-+	o3 sha1:4c1e0f5
-+	o1 sha256:d0dd598
-+	o2 sha256:c4a279e
-+	o3 sha256:78459d7
+diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+index 0c9e3c20e8..332cfc53fd 100755
+--- a/t/t6024-recursive-merge.sh
++++ b/t/t6024-recursive-merge.sh
+@@ -57,7 +57,12 @@ test_expect_success 'setup tests' '
+ 	git rev-parse C >.git/MERGE_HEAD &&
+ 	echo F >a1 &&
+ 	git update-index a1 &&
+-	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
++	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F &&
 +
- 	# added and removed
- 	s1 sha1:096b1ba
- 	s2 sha1:d92e698
-@@ -336,7 +344,7 @@ test_expect_success 'renamed file' '
- test_expect_success 'file with mode only change' '
- 	git range-diff --no-color --submodule=log topic...mode-only-change >actual &&
- 	sed s/Z/\ /g >expect <<-EOF &&
--	1:  fccce22 ! 1:  4d39cb3 s/4/A/
-+	1:  $(test_oid t2) ! 1:  $(test_oid o1) s/4/A/
- 	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-@@ -352,7 +360,7 @@ test_expect_success 'file with mode only change' '
- 	    Z 7
- 	    +
- 	    + ## other-file (new) ##
--	2:  147e64e ! 2:  26c107f s/11/B/
-+	2:  $(test_oid t3) ! 2:  $(test_oid o2) s/11/B/
- 	    @@ Metadata
- 	    ZAuthor: Thomas Rast <trast@inf.ethz.ch>
- 	    Z
-@@ -368,7 +376,7 @@ test_expect_success 'file with mode only change' '
- 	    Z 14
- 	    +
- 	    + ## other-file (mode change 100644 => 100755) ##
--	3:  a63e992 = 3:  4c1e0f5 s/12/B/
-+	3:  $(test_oid t4) = 3:  $(test_oid o3) s/12/B/
- 	EOF
- 	test_cmp expect actual
++	test_oid_cache <<-EOF
++	idxstage1 sha1:ec3fe2a791706733f2d8fa7ad45d9a9672031f5e
++	idxstage1 sha256:b3c8488929903aaebdeb22270cb6d36e5b8724b01ae0d4da24632f158c99676f
++	EOF
  '
+ 
+ test_expect_success 'combined merge conflicts' '
+@@ -79,10 +84,10 @@ test_expect_success 'result contains a conflict' '
+ test_expect_success 'virtual trees were processed' '
+ 	git ls-files --stage >out &&
+ 
+-	cat >expect <<-\EOF &&
+-	100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
+-	100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
+-	100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
++	cat >expect <<-EOF &&
++	100644 $(test_oid idxstage1) 1	a1
++	100644 $(git rev-parse F:a1) 2	a1
++	100644 $(git rev-parse G:a1) 3	a1
+ 	EOF
+ 
+ 	test_cmp expect out
