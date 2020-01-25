@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89FFBC35247
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23322C35242
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 559702071A
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ECDB72071A
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q2KhcavU"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="cPKPL7n+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729093AbgAYXBE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 18:01:04 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46844 "EHLO
+        id S1729098AbgAYXBF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 18:01:05 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46866 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728901AbgAYXAy (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:54 -0500
+        by vger.kernel.org with ESMTP id S1729037AbgAYXAz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:55 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0727261488;
-        Sat, 25 Jan 2020 23:00:52 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DE1E16160F;
+        Sat, 25 Jan 2020 23:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579993253;
-        bh=UDDWDfHq6vQ4mafDgi/0WqfOho8EmhNcpUk8RRIhlEI=;
+        s=default; t=1579993254;
+        bh=3jHcppxLGE4Za6iMdX4YGpER+IYmmrm5+fCZnYM9gqY=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Q2KhcavUnG4pHSsNK1UdUZvzDeCmKj6GiLwCpwMmI1Hwzh2F0asnXa5vbKvLWLOGi
-         eHJgwlYEN1PhTP7cAFzJCaxEX8HpCDXUhAtG6wohTLK0/bxIDTRC/eLdSYyYQ3+NCP
-         8CqAw3XSIkTV5Q67ckT3h8S5gEfgzeYFLbwVOxTz/S9HwTY0ZL+DH4mvX7FUJ3PDjK
-         NmU14oKb4zt2huZ7JnbXC0WkUfLERk04Echm0CzW2nqVWiXIf4w66pYivQFoX4D/7Q
-         C1PrCzn8cmf/gp3fkionah8ogNCkUtRWOfmvan0Swv2DDeitIHImG8/Nq7/9G48Zi/
-         GbQg0XUhNPjambuOcxToi7ZSfvJqCpZPqNOdWSoL7OzKjvOx9bZQXW4Zr2G7ecbN4r
-         z1tEc68GkrCMYix+b6VZsQhTImi4R20mDq8rAOLY+0XYlu4uChKkHq/ve+CxCR1sCW
-         4ScIAAUUKOui5HplPzP62ZM1ta30RrOMmJpRCXRkXsftDbLg7DS
+        b=cPKPL7n+sBSKC3aV98wRgngoWDkBQ57r2ckPp5K+xuR1b/+cQb1MGq/jbGZ7V3k9z
+         wUwRC5s/N+6f4W2Vh0dZIkxYVZbzrfPjMilH81SXREzQa6OosTP4Zdsz84Ce89aisc
+         LA0gcpG587HXRrlbmEj7q0YYATzzgNSlpqiKBAOjDETnuG2mapg85Vqu5DP9w+b1Ei
+         1tk1l1y2sxgCRDCrufIepr0a4ztAYbAizmeCbSmDKlJCLjonVXxm7+RR7Tq0T/EvKR
+         +SlfbGCA0hJ45mPjSHrAITNr8JAu8XovpTKmCUN+Pz8oNr0hyYjmODoSnJKa4K4RZX
+         TqRZ7GPVi2ES0qtS2GBZHL4zGavrDeEAbtwxXkz2v/EPmvcWWS8hdYzdwILyuV4Ih9
+         dtV0UFmjtaay2IKJwWu3cclESZelMZ8liDPCtmOjzoaCdDhIp414Z2F+RRBp1XZsCk
+         MUB084VlUvTJ3X+0DQOinYf6m70TfUIS8GvbB68othfYFBfRfJ4
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 22/23] t6006: make hash size independent
-Date:   Sat, 25 Jan 2020 23:00:33 +0000
-Message-Id: <20200125230035.136348-28-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 23/23] t6024: update for SHA-256
+Date:   Sat, 25 Jan 2020 23:00:35 +0000
+Message-Id: <20200125230035.136348-30-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.24.g3f081b084b0
 In-Reply-To: <20200125230035.136348-1-sandals@crustytoothpaste.net>
 References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
@@ -56,35 +56,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of hard-coding the length of an object ID when creating a tree,
-compute it for the hash in use using the translation tables.
+To make this test work with SHA-256, compute two of the items in the
+conflicted index entry.  The other entry is a conflict within a conflict
+and computing it is difficult, so use test_oid_cache to specify the
+proper values for both hash algorithms.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t6006-rev-list-format.sh | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ t/t6024-recursive-merge.sh | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index ebdc49c496..7e82e43a63 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -32,6 +32,7 @@ changed_iso88591=$(echo "$changed" | iconv -f utf-8 -t $test_encoding)
- truncate_count=20
- 
- test_expect_success 'setup' '
-+	test_oid_init &&
- 	: >foo &&
- 	git add foo &&
- 	git config i18n.commitEncoding $test_encoding &&
-@@ -463,9 +464,10 @@ test_expect_success '--abbrev' '
+diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+index 0c9e3c20e8..332cfc53fd 100755
+--- a/t/t6024-recursive-merge.sh
++++ b/t/t6024-recursive-merge.sh
+@@ -57,7 +57,12 @@ test_expect_success 'setup tests' '
+ 	git rev-parse C >.git/MERGE_HEAD &&
+ 	echo F >a1 &&
+ 	git update-index a1 &&
+-	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
++	GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F &&
++
++	test_oid_cache <<-EOF
++	idxstage1 sha1:ec3fe2a791706733f2d8fa7ad45d9a9672031f5e
++	idxstage1 sha256:b3c8488929903aaebdeb22270cb6d36e5b8724b01ae0d4da24632f158c99676f
++	EOF
  '
  
- test_expect_success '%H is not affected by --abbrev-commit' '
-+	expected=$(($(test_oid hexsz) + 1)) &&
- 	git log -1 --format=%H --abbrev-commit --abbrev=20 HEAD >actual &&
- 	len=$(wc -c <actual) &&
--	test $len = 41
-+	test $len = $expected
- '
+ test_expect_success 'combined merge conflicts' '
+@@ -79,10 +84,10 @@ test_expect_success 'result contains a conflict' '
+ test_expect_success 'virtual trees were processed' '
+ 	git ls-files --stage >out &&
  
- test_expect_success '%h is not affected by --abbrev-commit' '
+-	cat >expect <<-\EOF &&
+-	100644 ec3fe2a791706733f2d8fa7ad45d9a9672031f5e 1	a1
+-	100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
+-	100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
++	cat >expect <<-EOF &&
++	100644 $(test_oid idxstage1) 1	a1
++	100644 $(git rev-parse F:a1) 2	a1
++	100644 $(git rev-parse G:a1) 3	a1
+ 	EOF
+ 
+ 	test_cmp expect out
