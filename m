@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A186DC35246
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 042F0C35242
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 77D482071A
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id CE2382071E
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:01:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Z+9dkCmQ"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="X94u0wK0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729117AbgAYXBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 18:01:11 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46818 "EHLO
+        id S1729122AbgAYXBM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 18:01:12 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46820 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728827AbgAYXAs (ORCPT
+        by vger.kernel.org with ESMTP id S1728842AbgAYXAs (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:48 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8768D60FCC;
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0015460FCD;
         Sat, 25 Jan 2020 23:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1579993247;
-        bh=KMlbQUXnLJwuatxpaf7NN8zHuMWYuxvhu8lVfi5kLeE=;
+        s=default; t=1579993248;
+        bh=mXQc93j+2SH/6N2HARZnAnerIvvUrujqI/qP3IHZwoM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=Z+9dkCmQXyB4Ds76BzbvfHKDzAmLApMi0M5fyGHPkO+x3QFCXxW9C7ORo3ERL+xfO
-         z5OjB7GaV+1FFo/+jiS5kf741MbmjlIqWH3poPsVp95FVY70h3qeS1tGbqjUoJfG2y
-         5fpesqs7Nplb6CjX2u5GbNJyCK1mVwPY1PpHX1wF9aDTDsYNLrtmmlXEO2uc3pPNe0
-         B5Z9wFUGcz1XqeT0wT8MjVQ3MG+z860HkutODA4lhmFbmIIIJhii/xWd1JZAWLTjxE
-         sye1WXZdc+3q4i4MN3BdmDKEcFEixezIOReLo+ZPv+cPl5ODUve59pql5YMahOu5LY
-         oJEn5wJwTx5Wp3Y17tq6ttHFrnK86sBLn/uGPn2OIzrxLbvgEfCd5FBMtl2+JPgDBk
-         HkjiB0bHdnrnBV+EkzjMu4D4y9QzsQ7TCEm8mjagjPu84gvNvEiPCyGiDcqxp40bUb
-         7HhL4fh7LRwJ5gxiCJuujENzaoEq946A3siyH2OmYKAUToyJuAb
+        b=X94u0wK0DiZHRu6QzNeajnrZiy8aPC/EMSXcXUf6UKTQd92IVDYryYvzFW8rXW6OX
+         E089eC0QfZ7iD2gCyUaJGKN2bD3UtWvTgWhcQDa9JiLE7bn3YHN1MDLcN77c2o8KrQ
+         phSCyaqTLUd9FLXPJlFqGRiiAVqOPMR8zTvPJIvti7DzhAXvl7naxE/9yX4Fzg0cQK
+         Ks2AqH69+c/2kVH2BXjGFMKi3wka+PgWXUGYvM4NPrUUNS2KsK4AO0oUatzpn6j5aq
+         R0x4pzEYDkn9qBLS+mDaMCVmXTsQw5+ttwQ47NroMMtRhVjV6MgSJCs2KPLDlJZRRU
+         +6mo3BYApG1LTCHzesRc1L/OwHziopsRjAvSBZd+3K0mQLxImHuIfx3ts+OJN7eZvb
+         PycRex0VEiVmndN2fYokTV0QqEF/Cr+7zoy+P+ztWq94n9XlEykjUV69+DkSL72CSJ
+         c+1k249OUGwmiCuPQ0fxHHpFYxwJXqzPa9nNshmXn//kB/NqMga
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 15/22] t5515: make test hash independent
-Date:   Sat, 25 Jan 2020 23:00:21 +0000
-Message-Id: <20200125230035.136348-16-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 16/22] t5318: update for SHA-256
+Date:   Sat, 25 Jan 2020 23:00:22 +0000
+Message-Id: <20200125230035.136348-17-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.24.g3f081b084b0
 In-Reply-To: <20200125230035.136348-1-sandals@crustytoothpaste.net>
 References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
@@ -56,103 +56,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This test contains a large number of data files, mostly using the same
-object ID values for refs. Instead of producing two separate sets of
-test files, keep the test files using SHA-1 and translate them on the
-fly by replacing the SHA-1 values with the values for the current hash
-algorithm in use.
+Switch two tests to use $ZERO_OID to represent the all-zeros object ID.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t5515-fetch-merge-logic.sh | 51 +++++++++++++++++++++++++++++++++---
- 1 file changed, 47 insertions(+), 4 deletions(-)
+ t/t5318-commit-graph.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
-index 961eb35c99..ed49df582d 100755
---- a/t/t5515-fetch-merge-logic.sh
-+++ b/t/t5515-fetch-merge-logic.sh
-@@ -12,11 +12,50 @@ GIT_TEST_PROTOCOL_VERSION=
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 3f03de6018..55a94072b1 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -629,7 +629,7 @@ test_expect_success 'corrupt commit-graph write (broken parent)' '
+ 		empty="$(git mktree </dev/null)" &&
+ 		cat >broken <<-EOF &&
+ 		tree $empty
+-		parent 0000000000000000000000000000000000000000
++		parent $ZERO_OID
+ 		author whatever <whatever@example.com> 1234 -0000
+ 		committer whatever <whatever@example.com> 1234 -0000
  
- . ./test-lib.sh
+@@ -650,7 +650,7 @@ test_expect_success 'corrupt commit-graph write (missing tree)' '
+ 		cd repo &&
+ 		tree="$(git mktree </dev/null)" &&
+ 		cat >broken <<-EOF &&
+-		parent 0000000000000000000000000000000000000000
++		parent $ZERO_OID
+ 		author whatever <whatever@example.com> 1234 -0000
+ 		committer whatever <whatever@example.com> 1234 -0000
  
-+convert_expected () {
-+	file="$1" &&
-+	for i in one three_file master master2 one_tree three two two2 three2
-+	do
-+		sed -e "s/$(test_oid --hash=sha1 "$i")/$(test_oid "$i")/g" \
-+			"$file" >"$file.tmp" &&
-+		mv "$file.tmp" "$file"
-+	done
-+}
-+
- test_expect_success setup '
- 	GIT_AUTHOR_DATE="2006-06-26 00:00:00 +0000" &&
- 	GIT_COMMITTER_DATE="2006-06-26 00:00:00 +0000" &&
- 	export GIT_AUTHOR_DATE GIT_COMMITTER_DATE &&
- 
-+	test_oid_cache <<-EOF &&
-+	one sha1:8e32a6d901327a23ef831511badce7bf3bf46689
-+	one sha256:8739546433ab1ac72ee93088dce611210effee072b2b586ceac6dde43ebec9ce
-+
-+	three_file sha1:0e3b14047d3ee365f4f2a1b673db059c3972589c
-+	three_file sha256:bc4447d50c07497a8bfe6eef817f2364ecca9d471452e43b52756cc1a908bd32
-+
-+	master sha1:6c9dec2b923228c9ff994c6cfe4ae16c12408dc5
-+	master sha256:8521c3072461fcfe8f32d67f95cc6e6b832a2db2fa29769ffc788bce85ebcd75
-+
-+	one_tree sha1:22feea448b023a2d864ef94b013735af34d238ba
-+	one_tree sha256:6e4743f4ef2356b881dda5e91f5c7cdffe870faf350bf7b312f80a20935f5d83
-+
-+	three sha1:c61a82b60967180544e3c19f819ddbd0c9f89899
-+	three sha256:0cc6d1eda617ded715170786e31ba4e2d0185404ec5a3508dd0d73b324860c6a
-+
-+	two sha1:525b7fb068d59950d185a8779dc957c77eed73ba
-+	two sha256:3b21de3440cd38c2a9e9b464adb923f7054949ed4c918e1a0ac4c95cd52774db
-+
-+	master2 sha1:754b754407bf032e9a2f9d5a9ad05ca79a6b228f
-+	master2 sha256:6c7abaea8a6d8ef4d89877e68462758dc6774690fbbbb0e6d7dd57415c9abde0
-+
-+	two2 sha1:6134ee8f857693b96ff1cc98d3e2fd62b199e5a8
-+	two2 sha256:87a2d3ee29c83a3dc7afd41c0606b11f67603120b910a7be7840accdc18344d4
-+
-+	three2 sha1:0567da4d5edd2ff4bb292a465ba9e64dcad9536b
-+	three2 sha256:cceb3e8eca364fa9a0a39a1efbebecacc664af86cbbd8070571f5faeb5f0e8c3
-+	EOF
-+
- 	echo >file original &&
- 	git add file &&
- 	git commit -a -m One &&
-@@ -137,6 +176,10 @@ do
- 	actual_r="$pfx-refs.$test"
- 
- 	test_expect_success "$cmd" '
-+		cp "$expect_f" expect_f &&
-+		convert_expected expect_f &&
-+		cp "$expect_r" expect_r &&
-+		convert_expected expect_r &&
- 		{
- 			echo "# $cmd"
- 			set x $cmd; shift
-@@ -152,18 +195,18 @@ do
- 			cat .git/FETCH_HEAD
- 		} >"$actual_f" &&
- 		git show-ref >"$actual_r" &&
--		if test -f "$expect_f"
-+		if test -f "expect_f"
- 		then
--			test_cmp "$expect_f" "$actual_f" &&
-+			test_cmp "expect_f" "$actual_f" &&
- 			rm -f "$actual_f"
- 		else
- 			# this is to help developing new tests.
- 			cp "$actual_f" "$expect_f"
- 			false
- 		fi &&
--		if test -f "$expect_r"
-+		if test -f "expect_r"
- 		then
--			test_cmp "$expect_r" "$actual_r" &&
-+			test_cmp "expect_r" "$actual_r" &&
- 			rm -f "$actual_r"
- 		else
- 			# this is to help developing new tests.
