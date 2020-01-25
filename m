@@ -6,65 +6,65 @@ X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A928EC2D0DB
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 19:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DC61AC2D0DB
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 19:55:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 77DCE2071E
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 19:53:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A7B552071A
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 19:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbgAYTxV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 14:53:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44698 "HELO cloud.peff.net"
+        id S1729260AbgAYTzS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 14:55:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44712 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726448AbgAYTxV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Jan 2020 14:53:21 -0500
-Received: (qmail 19272 invoked by uid 109); 25 Jan 2020 19:53:21 -0000
+        id S1729246AbgAYTzQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Jan 2020 14:55:16 -0500
+Received: (qmail 19304 invoked by uid 109); 25 Jan 2020 19:55:16 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 19:53:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 19:55:16 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20154 invoked by uid 111); 25 Jan 2020 20:00:36 -0000
+Received: (qmail 20177 invoked by uid 111); 25 Jan 2020 20:02:32 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 15:00:36 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 15:02:32 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 25 Jan 2020 14:53:19 -0500
+Date:   Sat, 25 Jan 2020 14:55:15 -0500
 From:   Jeff King <peff@peff.net>
-To:     "Crabtree, Andrew" <andrew.crabtree@hpe.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Inconsistent results from git rev-parse --show-toplevel
-Message-ID: <20200125195319.GA5519@coredump.intra.peff.net>
-References: <TU4PR8401MB111758B9513DD7D8B96CBFAAF90E0@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
- <xmqqftg4zkvo.fsf@gitster-ct.c.googlers.com>
- <TU4PR8401MB1117B81EB9240905AA36B1E9F9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 1/4] merge-recursive: silence -Wxor-used-as-pow warning
+Message-ID: <20200125195515.GB5519@coredump.intra.peff.net>
+References: <20200125053542.GA744596@coredump.intra.peff.net>
+ <20200125053723.GA744673@coredump.intra.peff.net>
+ <xmqq4kwjcupj.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <TU4PR8401MB1117B81EB9240905AA36B1E9F9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+In-Reply-To: <xmqq4kwjcupj.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 25, 2020 at 07:31:20PM +0000, Crabtree, Andrew wrote:
+On Sat, Jan 25, 2020 at 09:27:36AM -0800, Junio C Hamano wrote:
 
-> > From: Junio C Hamano [mailto:gitster@pobox.com] 
-> > Because you do not know where the top level is (otherwise you would not be asking "rev-parse --show-toplevel" about it), either is an option for you, 
-> > but you can "unset GIT_DIR" to stop telling Git that it should not
-> > perform the repository discovery.
+> > So let's keep the bit-flipping, but let's also put it behind a named
+> > function, which will make its purpose a bit clearer. This also has the
+> > side effect of suppressing the warning (and an optimizing compiler
+> > should be able to easily turn it into a constant as before).
 > 
-> Gotcha, thanks.  Would it make sense to have 'git rev-parse
-> --show-toplevel' error out if GIT_DIR is set?  Or update the rev-parse
-> documentation with a warning about GIT_DIR? 
+> OK.  Now I see you named it flip_stage(), which is even better than
+> "the-other-side" above.  Makes sense.
+> 
+> I still think ((2 + 3) - two_or_three_to_be_flipped) easier to
+> reason about than the bit flipping, as the implementation detail,
+> though.
 
-No, it shouldn't be an error; setting GIT_DIR means that your current
-directory is the worktree. That _is_ confusing in some situations, but
-at this point it's a historical thing that I don't think we want to
-change. Discussing it in the documentation might be good (it's probably
-in there somewhere already, but a pointer from --show-toplevel doesn't
-seem unreasonable).
+Yeah, the existing one relies on the coincidence that the two stages
+differ by a single bit (in another universe, they could well be stages
+"3" and "4").
 
-But the bigger thing, I think, is: who is setting GIT_DIR but not
-setting GIT_WORK_TREE to match? Because IMHO that's the situation that
-is causing the confusion.
+I don't overly care on the implementation either way, since it's now
+hidden in the helper. I mostly chose the bit-flip to match the existing
+code, but I'd be happy to change it. Other people who actually work on
+merge-recursive may have other opinions, though.
 
 -Peff
