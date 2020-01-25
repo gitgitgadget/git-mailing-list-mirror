@@ -6,32 +6,31 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A413C35241
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F604C35241
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:38:38 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 334E02075E
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:37:26 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id F0AB22075E
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727747AbgAYFhY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 00:37:24 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44390 "HELO cloud.peff.net"
+        id S1728173AbgAYFif (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 00:38:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44398 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725781AbgAYFhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Jan 2020 00:37:24 -0500
-Received: (qmail 10929 invoked by uid 109); 25 Jan 2020 05:37:24 -0000
+        id S1725601AbgAYFif (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Jan 2020 00:38:35 -0500
+Received: (qmail 10939 invoked by uid 109); 25 Jan 2020 05:38:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 05:37:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 05:38:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13808 invoked by uid 111); 25 Jan 2020 05:44:37 -0000
+Received: (qmail 13833 invoked by uid 111); 25 Jan 2020 05:45:48 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 00:44:37 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 00:45:48 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 25 Jan 2020 00:37:23 -0500
+Date:   Sat, 25 Jan 2020 00:38:34 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/4] merge-recursive: silence -Wxor-used-as-pow warning
-Message-ID: <20200125053723.GA744673@coredump.intra.peff.net>
+Subject: [PATCH 2/4] avoid computing zero offsets from NULL pointer
+Message-ID: <20200125053834.GB744673@coredump.intra.peff.net>
 References: <20200125053542.GA744596@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -42,115 +41,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The merge-recursive code uses stage number constants like this:
+The Undefined Behavior Sanitizer in clang-11 seems to have learned a new
+trick: it complains about computing offsets from a NULL pointer, even if
+that offset is 0. This causes numerous test failures. For example, from
+t1090:
 
-  add = &ci->ren1->dst_entry->stages[2 ^ 1];
+  unpack-trees.c:1355:41: runtime error: applying zero offset to null pointer
   ...
-  add = &ci->ren2->dst_entry->stages[3 ^ 1];
+  not ok 6 - in partial clone, sparse checkout only fetches needed blobs
 
-The xor has the effect of flipping the "1" bit, so that "2 ^ 1" becomes
-"3" and "3 ^ 1" becomes "2", which correspond to the "ours" and "theirs"
-stages respectively.
+The code in question looks like this:
 
-Unfortunately, clang-10 and up issue a warning for this code:
+  struct cache_entry **cache_end = cache + nr;
+  ...
+  while (cache != cache_end)
 
-  merge-recursive.c:1759:40: error: result of '2 ^ 1' is 3; did you mean '1 << 1' (2)? [-Werror,-Wxor-used-as-pow]
-                  add = &ci->ren1->dst_entry->stages[2 ^ 1];
-                                                     ~~^~~
-                                                     1 << 1
-  merge-recursive.c:1759:40: note: replace expression with '0x2 ^ 1' to silence this warning
+and we sometimes pass in a NULL and 0 for "cache" and "nr". This is
+conceptually fine, as "cache_end" would be equal to "cache" in this
+case, and we wouldn't enter the loop at all. But computing even a zero
+offset violates the C standard. And given the fact that UBSan is
+noticing this behavior, this might be a potential problem spot if the
+compiler starts making unexpected assumptions based on undefined
+behavior.
 
-We could silence it by using 0x2, as the compiler mentions. Or by just
-using the constants "2" and "3" directly. But after digging into it, I
-do think this bit-flip is telling us something. If we just wrote:
-
-  add = &ci->ren2->dst_entry->stages[2];
-
-for the second one, you might think that "ren2" and "2" correspond. But
-they don't. The logic is: ren2 is theirs, which is stage 3, but we
-are interested in the opposite side's stage, so flip it to 2.
-
-So let's keep the bit-flipping, but let's also put it behind a named
-function, which will make its purpose a bit clearer. This also has the
-side effect of suppressing the warning (and an optimizing compiler
-should be able to easily turn it into a constant as before).
+So let's just avoid it, which is pretty easy. In some cases we can just
+switch to iterating with a numeric index (as we do in sequencer.c here).
+In other cases (like the cache_end one) the use of an end pointer is
+more natural; we can keep that by just explicitly checking for NULL when
+assigning the end pointer.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-It might be more readable still to #define STAGE_OURS and STAGE_THEIRS,
-but the use of bare 2/3 is pervasive throughout the file. We'd probably
-want to change it consistently, and perhaps call "ren1" "ren_ours" or
-something like that. I'm not overly familiar with this code, so I tried
-to keep it to what I found an obvious improvement. But I'm also happy to
-go the "0x2 ^ 1" route if merge-recursive experts prefer that.
+ sequencer.c       | 6 +++---
+ unpack-trees.c    | 2 +-
+ xdiff-interface.c | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
- merge-recursive.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 10dca5644b..e6aedd3cab 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1712,6 +1712,15 @@ static char *find_path_for_conflict(struct merge_options *opt,
- 	return new_path;
- }
+diff --git a/sequencer.c b/sequencer.c
+index b9dbf1adb0..4d31ec3296 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -588,7 +588,7 @@ static int do_recursive_merge(struct repository *r,
+ 	struct merge_options o;
+ 	struct tree *next_tree, *base_tree, *head_tree;
+ 	int clean;
+-	char **xopt;
++	int i;
+ 	struct lock_file index_lock = LOCK_INIT;
  
-+/*
-+ * Toggle the stage number between "ours" and "theirs" (2 and 3) by flipping
-+ * the 1-bit.
-+ */
-+static inline int flip_stage(int stage)
-+{
-+	return stage ^ 1;
-+}
-+
- static int handle_rename_rename_1to2(struct merge_options *opt,
- 				     struct rename_conflict_info *ci)
+ 	if (repo_hold_locked_index(r, &index_lock, LOCK_REPORT_ON_ERROR) < 0)
+@@ -608,8 +608,8 @@ static int do_recursive_merge(struct repository *r,
+ 	next_tree = next ? get_commit_tree(next) : empty_tree(r);
+ 	base_tree = base ? get_commit_tree(base) : empty_tree(r);
+ 
+-	for (xopt = opts->xopts; xopt != opts->xopts + opts->xopts_nr; xopt++)
+-		parse_merge_opt(&o, *xopt);
++	for (i = 0; i < opts->xopts_nr; i++)
++		parse_merge_opt(&o, opts->xopts[i]);
+ 
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+diff --git a/unpack-trees.c b/unpack-trees.c
+index d5f4d997da..b4292d2be8 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1352,7 +1352,7 @@ static int clear_ce_flags_1(struct index_state *istate,
+ 			    enum pattern_match_result default_match,
+ 			    int progress_nr)
  {
-@@ -1756,14 +1765,14 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
- 		 * such cases, we should keep the added file around,
- 		 * resolving the conflict at that path in its favor.
- 		 */
--		add = &ci->ren1->dst_entry->stages[2 ^ 1];
-+		add = &ci->ren1->dst_entry->stages[flip_stage(2)];
- 		if (is_valid(add)) {
- 			if (update_file(opt, 0, add, a->path))
- 				return -1;
- 		}
- 		else
- 			remove_file_from_index(opt->repo->index, a->path);
--		add = &ci->ren2->dst_entry->stages[3 ^ 1];
-+		add = &ci->ren2->dst_entry->stages[flip_stage(3)];
- 		if (is_valid(add)) {
- 			if (update_file(opt, 0, add, b->path))
- 				return -1;
-@@ -1776,7 +1785,7 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
- 		 * rename/add collision.  If not, we can write the file out
- 		 * to the specified location.
- 		 */
--		add = &ci->ren1->dst_entry->stages[2 ^ 1];
-+		add = &ci->ren1->dst_entry->stages[flip_stage(2)];
- 		if (is_valid(add)) {
- 			add->path = mfi.blob.path = a->path;
- 			if (handle_file_collision(opt, a->path,
-@@ -1797,7 +1806,7 @@ static int handle_rename_rename_1to2(struct merge_options *opt,
- 				return -1;
- 		}
+-	struct cache_entry **cache_end = cache + nr;
++	struct cache_entry **cache_end = cache ? cache + nr : cache;
  
--		add = &ci->ren2->dst_entry->stages[3 ^ 1];
-+		add = &ci->ren2->dst_entry->stages[flip_stage(3)];
- 		if (is_valid(add)) {
- 			add->path = mfi.blob.path = b->path;
- 			if (handle_file_collision(opt, b->path,
-@@ -1846,7 +1855,7 @@ static int handle_rename_rename_2to1(struct merge_options *opt,
- 	path_side_1_desc = xstrfmt("version of %s from %s", path, a->path);
- 	path_side_2_desc = xstrfmt("version of %s from %s", path, b->path);
- 	ostage1 = ci->ren1->branch == opt->branch1 ? 3 : 2;
--	ostage2 = ostage1 ^ 1;
-+	ostage2 = flip_stage(ostage1);
- 	ci->ren1->src_entry->stages[ostage1].path = a->path;
- 	ci->ren2->src_entry->stages[ostage2].path = b->path;
- 	if (merge_mode_and_contents(opt, a, c1,
+ 	/*
+ 	 * Process all entries that have the given prefix and meet
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 8509f9ea22..2f1fe48512 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -84,8 +84,8 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b)
+ {
+ 	const int blk = 1024;
+ 	long trimmed = 0, recovered = 0;
+-	char *ap = a->ptr + a->size;
+-	char *bp = b->ptr + b->size;
++	char *ap = a->ptr ? a->ptr + a->size : a->ptr;
++	char *bp = b->ptr ? b->ptr + b->size : b->ptr;
+ 	long smaller = (a->size < b->size) ? a->size : b->size;
+ 
+ 	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
 -- 
 2.25.0.421.gb74d19af79
 
