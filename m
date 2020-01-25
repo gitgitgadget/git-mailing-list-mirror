@@ -6,31 +6,31 @@ X-Spam-Status: No, score=-6.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
 	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F604C35241
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5811EC35241
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:39:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id F0AB22075E
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:38:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 35C782075E
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 05:39:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728173AbgAYFif (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 00:38:35 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44398 "HELO cloud.peff.net"
+        id S1728266AbgAYFjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 00:39:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44400 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725601AbgAYFif (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Jan 2020 00:38:35 -0500
-Received: (qmail 10939 invoked by uid 109); 25 Jan 2020 05:38:35 -0000
+        id S1725601AbgAYFja (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Jan 2020 00:39:30 -0500
+Received: (qmail 10957 invoked by uid 109); 25 Jan 2020 05:39:31 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 05:38:35 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Jan 2020 05:39:31 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13833 invoked by uid 111); 25 Jan 2020 05:45:48 -0000
+Received: (qmail 13837 invoked by uid 111); 25 Jan 2020 05:46:43 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 00:45:48 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 25 Jan 2020 00:46:43 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 25 Jan 2020 00:38:34 -0500
+Date:   Sat, 25 Jan 2020 00:39:29 -0500
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 2/4] avoid computing zero offsets from NULL pointer
-Message-ID: <20200125053834.GB744673@coredump.intra.peff.net>
+Subject: [PATCH 3/4] xdiff: avoid computing non-zero offset from NULL pointer
+Message-ID: <20200125053929.GC744673@coredump.intra.peff.net>
 References: <20200125053542.GA744596@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,94 +41,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Undefined Behavior Sanitizer in clang-11 seems to have learned a new
-trick: it complains about computing offsets from a NULL pointer, even if
-that offset is 0. This causes numerous test failures. For example, from
-t1090:
+As with the previous commit, clang-11's UBSan complains about computing
+offsets from a NULL pointer, causing some tests to fail. In this case,
+though, we're actually computing a non-zero offset, which is even more
+dubious. From t7810:
 
-  unpack-trees.c:1355:41: runtime error: applying zero offset to null pointer
+  xdiff-interface.c:268:14: runtime error: applying non-zero offset 1 to null pointer
   ...
-  not ok 6 - in partial clone, sparse checkout only fetches needed blobs
+  not ok 131 - grep -p with userdiff
 
-The code in question looks like this:
+The problem is our parsing of the funcname config. We count the number
+of lines in the string, allocate an array, and then loop over our
+allocated entries, parsing each line and moving our cursor to one past
+the trailing newline for the next iteration.
 
-  struct cache_entry **cache_end = cache + nr;
-  ...
-  while (cache != cache_end)
+But the final line will not generally have a trailing newline (since
+it's a config value), and hence we go to one past NULL. In practice this
+is OK, since our loop should terminate before we look at the value. But
+even computing such an invalid pointer technically violates the
+standard.
 
-and we sometimes pass in a NULL and 0 for "cache" and "nr". This is
-conceptually fine, as "cache_end" would be equal to "cache" in this
-case, and we wouldn't enter the loop at all. But computing even a zero
-offset violates the C standard. And given the fact that UBSan is
-noticing this behavior, this might be a potential problem spot if the
-compiler starts making unexpected assumptions based on undefined
-behavior.
-
-So let's just avoid it, which is pretty easy. In some cases we can just
-switch to iterating with a numeric index (as we do in sequencer.c here).
-In other cases (like the cache_end one) the use of an end pointer is
-more natural; we can keep that by just explicitly checking for NULL when
-assigning the end pointer.
+We can fix it by leaving the pointer at NULL if we're at the end, rather
+than one-past. And while we're thinking about it, we can also document
+the variant by asserting that our initial line-count matches the
+second-pass of parsing.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sequencer.c       | 6 +++---
- unpack-trees.c    | 2 +-
- xdiff-interface.c | 4 ++--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ xdiff-interface.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index b9dbf1adb0..4d31ec3296 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -588,7 +588,7 @@ static int do_recursive_merge(struct repository *r,
- 	struct merge_options o;
- 	struct tree *next_tree, *base_tree, *head_tree;
- 	int clean;
--	char **xopt;
-+	int i;
- 	struct lock_file index_lock = LOCK_INIT;
- 
- 	if (repo_hold_locked_index(r, &index_lock, LOCK_REPORT_ON_ERROR) < 0)
-@@ -608,8 +608,8 @@ static int do_recursive_merge(struct repository *r,
- 	next_tree = next ? get_commit_tree(next) : empty_tree(r);
- 	base_tree = base ? get_commit_tree(base) : empty_tree(r);
- 
--	for (xopt = opts->xopts; xopt != opts->xopts + opts->xopts_nr; xopt++)
--		parse_merge_opt(&o, *xopt);
-+	for (i = 0; i < opts->xopts_nr; i++)
-+		parse_merge_opt(&o, opts->xopts[i]);
- 
- 	clean = merge_trees(&o,
- 			    head_tree,
-diff --git a/unpack-trees.c b/unpack-trees.c
-index d5f4d997da..b4292d2be8 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1352,7 +1352,7 @@ static int clear_ce_flags_1(struct index_state *istate,
- 			    enum pattern_match_result default_match,
- 			    int progress_nr)
- {
--	struct cache_entry **cache_end = cache + nr;
-+	struct cache_entry **cache_end = cache ? cache + nr : cache;
- 
- 	/*
- 	 * Process all entries that have the given prefix and meet
 diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 8509f9ea22..2f1fe48512 100644
+index 2f1fe48512..3cd2ac2855 100644
 --- a/xdiff-interface.c
 +++ b/xdiff-interface.c
-@@ -84,8 +84,8 @@ static void trim_common_tail(mmfile_t *a, mmfile_t *b)
- {
- 	const int blk = 1024;
- 	long trimmed = 0, recovered = 0;
--	char *ap = a->ptr + a->size;
--	char *bp = b->ptr + b->size;
-+	char *ap = a->ptr ? a->ptr + a->size : a->ptr;
-+	char *bp = b->ptr ? b->ptr + b->size : b->ptr;
- 	long smaller = (a->size < b->size) ? a->size : b->size;
+@@ -250,9 +250,13 @@ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *value, int cflags)
+ 	ALLOC_ARRAY(regs->array, regs->nr);
+ 	for (i = 0; i < regs->nr; i++) {
+ 		struct ff_reg *reg = regs->array + i;
+-		const char *ep = strchr(value, '\n'), *expression;
++		const char *ep, *expression;
+ 		char *buffer = NULL;
  
- 	while (blk + trimmed <= smaller && !memcmp(ap - blk, bp - blk, blk)) {
++		if (!value)
++			BUG("mismatch between line count and parsing");
++		ep = strchr(value, '\n');
++
+ 		reg->negate = (*value == '!');
+ 		if (reg->negate && i == regs->nr - 1)
+ 			die("Last expression must not be negated: %s", value);
+@@ -265,7 +269,7 @@ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *value, int cflags)
+ 		if (regcomp(&reg->re, expression, cflags))
+ 			die("Invalid regexp to look for hunk header: %s", expression);
+ 		free(buffer);
+-		value = ep + 1;
++		value = ep ? ep + 1 : NULL;
+ 	}
+ }
+ 
 -- 
 2.25.0.421.gb74d19af79
 
