@@ -2,471 +2,418 @@ Return-Path: <SRS0=JG/V=3O=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 391F5C35242
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CFCC2D0CE
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:46:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0455F2072C
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:37 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 715D82072C
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:46:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jJOt7Fp1"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="eAoqtVFK"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387593AbgAYAjg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 19:39:36 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46017 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387458AbgAYAjc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 19:39:32 -0500
-Received: by mail-wr1-f66.google.com with SMTP id j42so4155977wrj.12
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 16:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=LFp4mK6etq2pl4vtqJtV6izsCj/YQsTWJa7JfMKFvKY=;
-        b=jJOt7Fp1R+NLCO03H1rc3piA/77I9ydEbIIEwFVZ1Dw0MRe1S0RXdzH7dXv/7OI3Zi
-         Myo/MkucaI/XuhBavsjFng/6s4lJA/n4lix6B0a+Kfwxcr8Qm/8thn0LbIrktdGoHJ8D
-         V7Cpl9VodJKI93e8Tg8lid8DZKm2Rz2QcpOcuNRF/1I3S3unktvRQs4iZYkZ/d/oyENs
-         HmSrqOFIwG2MDbwJQUg7cFLRMnDprqocnPkmJoyDnU9UVK7aBtpOOLl3xO9VnO16KbXy
-         o4+uW2krCc4TFzklLv3xuwSfasC5CtwL5/1pZ9myDbk5yN/vVFzM8MPvB4GpzVufNKWT
-         +rrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LFp4mK6etq2pl4vtqJtV6izsCj/YQsTWJa7JfMKFvKY=;
-        b=BAOc1I5BCa/oYdUYVhqDCR2fHGtivkHPvRxBIvCwiqd8cUchlNZLt1QolqvKgHwnv/
-         TZ+TFN6cXr88LXmFAY13OC5lC82oC4XOdaF2mi8R9GNJzPPl9VF1z+v1HXFE8BPKyy1u
-         TS8pgTqrybnF5OE+nb9RMWhrEGyXP+2CMoBC0Hi8HmItWGOYzFkjx2Y/2JZjw0WEoJQ7
-         kq+sSGbOkcv+m/RNL5t0ktUNeul9kBuxup8ZNHOqqvDwM51UCOG1zzGO5FSLwvVaISz0
-         E0Oqj5aYG9C6kibcuz4FkyP4AlvsabYRxsuaQhGipqffgeWXsPZ+DP+jk7pK1ypG2JCM
-         X+1A==
-X-Gm-Message-State: APjAAAVXXhnYOf/ymPhL7YHULeHjY8qTgM378ca9FCl1dXX4XTAj5emp
-        UakPWKBj7pIT9mJtUQFjzjc2/3vR
-X-Google-Smtp-Source: APXvYqy+zizG++I+c3VL3YmY58AoKoNBL0F22oO0m4SUTM2sjuR7Y/oWJu41cKYcObPX5kF5V5ZF4Q==
-X-Received: by 2002:a05:6000:149:: with SMTP id r9mr6698750wrx.147.1579912770954;
-        Fri, 24 Jan 2020 16:39:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m10sm9740578wrx.19.2020.01.24.16.39.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 16:39:30 -0800 (PST)
-Message-Id: <2e979d9fa5066f61eb89e3c1a1a34ac813d71700.1579912764.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
-References: <pull.478.v4.git.1579825267.gitgitgadget@gmail.com>
-        <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
-From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 25 Jan 2020 00:39:24 +0000
-Subject: [PATCH v5 6/6] config: add '--show-scope' to print the scope of a
- config value
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S2387519AbgAYAq2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 19:46:28 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60491 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387405AbgAYAq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 19:46:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1579913181;
+        bh=nFPTg1XJuZjQGLgFStIz03P3kIQymL5/oGww4wKmOrI=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=eAoqtVFKNIturT2+2xJl3Q/C4Qu93IRZ9m87xaB+hR9W8iKqfqBFFcpmnxb5aCYxe
+         /56zb4cYVF8UZPsZzrH3yrati0//0wMGw7Thz9mNhKDuy6xhExSjdUHvxAYjqedZMM
+         MCZOzFhObRwN6LWR6OQS3mNGSerz4j4o+dn8khM0=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.152]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJmGP-1jAKvN3t6H-00K7Sh; Sat, 25
+ Jan 2020 01:46:21 +0100
+Date:   Sat, 25 Jan 2020 01:46:05 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Bert Wesarg <bert.wesarg@googlemail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 4/7] remote rename/remove: handle branch.<name>.pushRemote
+ config values
+In-Reply-To: <9c2110eda64ab7bf0cb780dafe1f13b28fee5ca0.1579857394.git.bert.wesarg@googlemail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001250142560.46@tvgsbejvaqbjf.bet>
+References: <cover.1579857394.git.bert.wesarg@googlemail.com> <9c2110eda64ab7bf0cb780dafe1f13b28fee5ca0.1579857394.git.bert.wesarg@googlemail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Matthew Rogers <mattr94@gmail.com>,
-        Matthew Rogers <mattr94@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:kVozraB1bSXEgufsXQ13AC64luYgUo0b8RWexHXUi5Y1xH8Yx/8
+ x2SiErdF9Ahg9kg79qo94LXO7om/BW0Iu2BrVwubhxvGIrWfKQ2kVtL8uju2t9ZMGpgyM6q
+ DQBJhS07ChCdryqii490k0/NpPVuDz/ehauAx0EN+vUfg0UkD9F3pVOioqo4VtgtNgl+PZI
+ j1hwTA/or8yBB4bES6InQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Fhid8hcYm5c=:HB0C/F8Y+vVUfJ4Lb68Bju
+ +s5mDnifs71T8jCc58Cd+C415YBpa24lqedki+31o79c/haW/ounNnKf4EofQf8yzYmmE5THF
+ 4gBTHz/CpPrFG8XQfymJKwJ0QLlE17ElKFITtYAzB5UGIxAXncgwxceMjIPK7uzagoIG6f2RO
+ /Sb9wkCct/ef3OKw+1heBLNRkB86tdKKsuZStqJ3W6+AGVhXKr+VjPBkp7xUrPqcibr3TkDVK
+ KtTbxUOMZqgi5F9PzzKW3gdk484uNe28sKyQipg1bjgLcy9dPGFn8q7LEVT8uAB/6FrKpg1rt
+ jsIGnZzUZBmdLdkExNgjiR18Z5ZQheWS9YRqbETr9Z9AfzF2PquB66LB3M/dN/775t0DT4D5M
+ TosGoQ5HgzxMoxN8cd/7fIByIFdE6b8EcoBUjJCMwxJKglHs28r7enxzxkzmCB8CgJ0kGgRR5
+ rl8wyPq7z8pWuqbTDWUcwG8snWjwbc7sHN2AheyvsNzpVUnvuiwZ5ryxw15H20znbtWDCdCei
+ gFbqlCMRQgrfjfnuRQBf+K9PCEKJu9XPaCx1Wkoyt+6NhwxDNy8qHckj8/gcL8MsJypm4EV62
+ T7q+h7braupm373/O6QX4RcndlcAJq9d0t+J/jPjpxBLXxaNZlRQQPnRZ5IkDf1G5Ly8vRNt4
+ BKLHdV2FjxG+q2Ay+D5cy1KFuGK+pZQ43zzqigiHYavwFUOoxKoImZZina6eFPp9Nmo6p8ocw
+ CMF1ZneBJ6YHL4/QWdpc/x/K0HkBrD/+I6XVm0xjjo2k8Pr4CRlQAVRk03cCPn9dDejz02hnf
+ Ko48JtZ5jAD7c21RoQeiihZKdRWTxM8rR5UGM6YTqC1TGdP0fM53itR09AZe4oG7bTrTo9rLk
+ lIOyrK4XuCUweLW+ssQ9oesilKl4f8W4GfxBGVtrjA89xk0tv479dD/dVLh/C2+shUnMa9vTx
+ yJG61gNad3j9IWIhsS4HOeUi8qOhyXk8FBbMlVGLU4TNUNxImzKI+cco3tDykfGRP/kT7jpRb
+ PVybUUDarTIOfIFAizbbMiN0/MAfmV8PENnfaeNCdag0Ei8sMRWYbvFoeIG/FwFYSLRCgwrxM
+ mYMn/1qfxniVOjyuu0uc/kzIlTnXVbKK3ltni4GbSp412/Hm6B7oV/dHvpVLmisxiMDsw7Pgj
+ BGCr021eaGQJz+uvsguYPARur7ntXGBaf7NboioNKTG3P16cypwML8PgoQZQ+gT47efxzk+mZ
+ dFw1ImQlHoCUfGitk
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Matthew Rogers <mattr94@gmail.com>
+Hi Bert,
 
-When a user queries config values with --show-origin, often it's
-difficult to determine what the actual "scope" (local, global, etc.) of
-a given value is based on just the origin file.
+On Fri, 24 Jan 2020, Bert Wesarg wrote:
 
-Teach 'git config' the '--show-scope' option to print the scope of all
-displayed config values.  Note that we should never see anything of
-"submodule" scope as that is only ever used by submodule-config.c when
-parsing the '.gitmodules' file.
+> When renaming or removing a remote with
+>
+>     git remote rename X Y
+>     git remote remove X
+>
+> Git already renames/removes any config values from
+>
+>     branch.<name>.remote =3D X
+>
+> to
+>
+>     branch.<name>.remote =3D Y
+>
+> As branch.<name>.pushRemote also names a remote, it now also renames
+> or removes these config values from
+>
+>     branch.<name>.pushRemote =3D X
+>
+> to
+>
+>     branch.<name>.pushRemote =3D Y
+>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+> ---
 
-Signed-off-by: Matthew Rogers <mattr94@gmail.com>
----
- Documentation/git-config.txt | 15 ++++++---
- builtin/config.c             | 36 +++++++++++++++++++---
- config.c                     | 26 +++++++++++++++-
- config.h                     | 21 +++++++------
- submodule-config.c           |  4 ++-
- t/helper/test-config.c       | 19 +-----------
- t/t1300-config.sh            | 59 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 141 insertions(+), 39 deletions(-)
+This commit seems to cause a failure in t5505:
+https://dev.azure.com/gitgitgadget/git/_build/results?buildId=3D27833&view=
+=3Dms.vss-test-web.build-test-results-tab
 
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 899e92a1c9..2e47765aab 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -9,18 +9,18 @@ git-config - Get and set repository or global options
- SYNOPSIS
- --------
- [verse]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] name [value [value_regex]]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] name [value [value_regex]]
- 'git config' [<file-option>] [--type=<type>] --add name value
- 'git config' [<file-option>] [--type=<type>] --replace-all name value [value_regex]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get name [value_regex]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] --get-all name [value_regex]
--'git config' [<file-option>] [--type=<type>] [--show-origin] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get name [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] --get-all name [value_regex]
-+'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--name-only] --get-regexp name_regex [value_regex]
- 'git config' [<file-option>] [--type=<type>] [-z|--null] --get-urlmatch name URL
- 'git config' [<file-option>] --unset name [value_regex]
- 'git config' [<file-option>] --unset-all name [value_regex]
- 'git config' [<file-option>] --rename-section old_name new_name
- 'git config' [<file-option>] --remove-section name
--'git config' [<file-option>] [--show-origin] [-z|--null] [--name-only] -l | --list
-+'git config' [<file-option>] [--show-origin] [--show-scope] [-z|--null] [--name-only] -l | --list
- 'git config' [<file-option>] --get-color name [default]
- 'git config' [<file-option>] --get-colorbool name [stdout-is-tty]
- 'git config' [<file-option>] -e | --edit
-@@ -222,6 +222,11 @@ Valid `<type>`'s include:
- 	the actual origin (config file path, ref, or blob id if
- 	applicable).
- 
-+--show-scope::
-+	Similar to `--show-origin` in that it augments the output of
-+	all queried config options with the scope of that value 
-+	(local, global, system, command).
-+
- --get-colorbool name [stdout-is-tty]::
- 
- 	Find the color setting for `name` (e.g. `color.diff`) and output
-diff --git a/builtin/config.c b/builtin/config.c
-index 52a904cfb1..66d2b0d2df 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -33,6 +33,7 @@ static int end_nul;
- static int respect_includes_opt = -1;
- static struct config_options config_options;
- static int show_origin;
-+static int show_scope;
- 
- #define ACTION_GET (1<<0)
- #define ACTION_GET_ALL (1<<1)
-@@ -155,6 +156,7 @@ static struct option builtin_config_options[] = {
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
-+	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree, local, global, system, command)")),
- 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
- 	OPT_END(),
- };
-@@ -189,11 +191,23 @@ static void show_config_origin(struct strbuf *buf)
- 	strbuf_addch(buf, term);
- }
- 
-+static void show_config_scope(struct strbuf *buf)
-+{
-+	const char term = end_nul ? '\0' : '\t';
-+	const char *scope = scope_to_string(current_config_scope());
-+
-+	strbuf_addstr(buf, N_(scope));
-+	strbuf_addch(buf, term);
-+}
-+
- static int show_all_config(const char *key_, const char *value_, void *cb)
- {
--	if (show_origin) {
-+	if (show_origin || show_scope) {
- 		struct strbuf buf = STRBUF_INIT;
--		show_config_origin(&buf);
-+		if (show_scope)
-+			show_config_scope(&buf);
-+		if (show_origin)
-+			show_config_origin(&buf);
- 		/* Use fwrite as "buf" can contain \0's if "end_null" is set. */
- 		fwrite(buf.buf, 1, buf.len, stdout);
- 		strbuf_release(&buf);
-@@ -213,6 +227,8 @@ struct strbuf_list {
- 
- static int format_config(struct strbuf *buf, const char *key_, const char *value_)
- {
-+	if (show_scope)
-+		show_config_scope(buf);
- 	if (show_origin)
- 		show_config_origin(buf);
- 	if (show_keys)
-@@ -622,6 +638,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			!strcmp(given_config_source.file, "-")) {
- 		given_config_source.file = NULL;
- 		given_config_source.use_stdin = 1;
-+		given_config_source.scope = CONFIG_SCOPE_COMMAND;
- 	}
- 
- 	if (use_global_config) {
-@@ -637,6 +654,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			 */
- 			die(_("$HOME not set"));
- 
-+		given_config_source.scope = CONFIG_SCOPE_GLOBAL;
-+
- 		if (access_or_warn(user_config, R_OK, 0) &&
- 		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
- 			given_config_source.file = xdg_config;
-@@ -646,11 +665,13 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			free(xdg_config);
- 		}
- 	}
--	else if (use_system_config)
-+	else if (use_system_config) {
- 		given_config_source.file = git_etc_gitconfig();
--	else if (use_local_config)
-+		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
-+	} else if (use_local_config) {
- 		given_config_source.file = git_pathdup("config");
--	else if (use_worktree_config) {
-+		given_config_source.scope = CONFIG_SCOPE_LOCAL;
-+	} else if (use_worktree_config) {
- 		struct worktree **worktrees = get_worktrees(0);
- 		if (repository_format_worktree_config)
- 			given_config_source.file = git_pathdup("config.worktree");
-@@ -662,13 +683,18 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 			      "section in \"git help worktree\" for details"));
- 		else
- 			given_config_source.file = git_pathdup("config");
-+		given_config_source.scope = CONFIG_SCOPE_LOCAL;
- 		free_worktrees(worktrees);
- 	} else if (given_config_source.file) {
- 		if (!is_absolute_path(given_config_source.file) && prefix)
- 			given_config_source.file =
- 				prefix_filename(prefix, given_config_source.file);
-+		given_config_source.scope = CONFIG_SCOPE_COMMAND;
-+	} else if (given_config_source.blob) {
-+		given_config_source.scope = CONFIG_SCOPE_COMMAND;
- 	}
- 
-+
- 	if (respect_includes_opt == -1)
- 		config_options.respect_includes = !given_config_source.file;
- 	else
-diff --git a/config.c b/config.c
-index f319a3d6a0..469dff57b4 100644
---- a/config.c
-+++ b/config.c
-@@ -1702,6 +1702,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	char *xdg_config = xdg_config_home("config");
- 	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *repo_config;
-+	enum config_scope prev_parsing_scope = current_parsing_scope;
- 
- 	if (opts->commondir)
- 		repo_config = mkpathdup("%s/config", opts->commondir);
-@@ -1741,7 +1742,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	if (!opts->ignore_cmdline && git_config_from_parameters(fn, data) < 0)
- 		die(_("unable to parse command-line config"));
- 
--	current_parsing_scope = CONFIG_SCOPE_UNKNOWN;
-+	current_parsing_scope = prev_parsing_scope;
- 	free(xdg_config);
- 	free(user_config);
- 	free(repo_config);
-@@ -1762,6 +1763,9 @@ int config_with_options(config_fn_t fn, void *data,
- 		data = &inc;
- 	}
- 
-+	if (config_source)
-+		current_parsing_scope = config_source->scope;
-+
- 	/*
- 	 * If we have a specific filename, use it. Otherwise, follow the
- 	 * regular lookup sequence.
-@@ -3294,6 +3298,26 @@ const char *current_config_origin_type(void)
- 	}
- }
- 
-+const char *scope_to_string(enum config_scope scope)
-+{
-+	switch (scope) {
-+	case CONFIG_SCOPE_SYSTEM:
-+		return "system";
-+	case CONFIG_SCOPE_GLOBAL:
-+		return "global";
-+	case CONFIG_SCOPE_LOCAL:
-+		return "local";
-+	case CONFIG_SCOPE_WORKTREE:
-+		return "worktree";
-+	case CONFIG_SCOPE_COMMAND:
-+		return "command";
-+	case CONFIG_SCOPE_SUBMODULE:
-+		return "submodule";
-+	default:
-+		return "unknown";
-+	}
-+}
-+
- const char *current_config_name(void)
- {
- 	const char *name;
-diff --git a/config.h b/config.h
-index f383a71404..7b3aec0092 100644
---- a/config.h
-+++ b/config.h
-@@ -35,10 +35,22 @@ struct object_id;
- 
- #define CONFIG_REGEX_NONE ((void *)1)
- 
-+enum config_scope {
-+	CONFIG_SCOPE_UNKNOWN = 0,
-+	CONFIG_SCOPE_SYSTEM,
-+	CONFIG_SCOPE_GLOBAL,
-+	CONFIG_SCOPE_LOCAL,
-+	CONFIG_SCOPE_WORKTREE,
-+	CONFIG_SCOPE_COMMAND,
-+	CONFIG_SCOPE_SUBMODULE,
-+};
-+const char *scope_to_string(enum config_scope scope);
-+
- struct git_config_source {
- 	unsigned int use_stdin:1;
- 	const char *file;
- 	const char *blob;
-+	enum config_scope scope;
- };
- 
- enum config_origin_type {
-@@ -294,15 +306,6 @@ int config_error_nonbool(const char *);
- 
- int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
- 
--enum config_scope {
--	CONFIG_SCOPE_UNKNOWN = 0,
--	CONFIG_SCOPE_SYSTEM,
--	CONFIG_SCOPE_GLOBAL,
--	CONFIG_SCOPE_LOCAL,
--	CONFIG_SCOPE_WORKTREE,
--	CONFIG_SCOPE_COMMAND,
--};
--
- enum config_scope current_config_scope(void);
- const char *current_config_origin_type(void);
- const char *current_config_name(void);
-diff --git a/submodule-config.c b/submodule-config.c
-index 85064810b2..b8e97d8ae8 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -635,7 +635,9 @@ static void submodule_cache_check_init(struct repository *repo)
- static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
- {
- 	if (repo->worktree) {
--		struct git_config_source config_source = { 0 };
-+		struct git_config_source config_source = {
-+			0, .scope = CONFIG_SCOPE_SUBMODULE
-+		};
- 		const struct config_options opts = { 0 };
- 		struct object_id oid;
- 		char *file;
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index 78bbb9eb98..2e91879b2a 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -37,23 +37,6 @@
-  *
-  */
- 
--static const char *scope_name(enum config_scope scope)
--{
--	switch (scope) {
--	case CONFIG_SCOPE_SYSTEM:
--		return "system";
--	case CONFIG_SCOPE_GLOBAL:
--		return "global";
--	case CONFIG_SCOPE_LOCAL:
--		return "repo";
--	case CONFIG_SCOPE_WORKTREE:
--		return "worktree";
--	case CONFIG_SCOPE_COMMAND:
--		return "command";
--	default:
--		return "unknown";
--	}
--}
- static int iterate_cb(const char *var, const char *value, void *data)
- {
- 	static int nr;
-@@ -65,7 +48,7 @@ static int iterate_cb(const char *var, const char *value, void *data)
- 	printf("value=%s\n", value ? value : "(null)");
- 	printf("origin=%s\n", current_config_origin_type());
- 	printf("name=%s\n", current_config_name());
--	printf("scope=%s\n", scope_name(current_config_scope()));
-+	printf("scope=%s\n", scope_to_string(current_config_scope()));
- 
- 	return 0;
- }
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index e5fb9114f6..79dbea9bd1 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1771,6 +1771,65 @@ test_expect_success '--show-origin blob ref' '
- 	test_cmp expect output
- '
- 
-+test_expect_success '--show-scope with --list' '
-+	cat >expect <<-EOF &&
-+		global	user.global=true
-+		global	user.override=global
-+		global	include.path=$INCLUDE_DIR/absolute.include
-+		global	user.absolute=include
-+		local	user.local=true
-+		local	user.override=local
-+		local	include.path=../include/relative.include
-+		local	user.relative=include
-+		command	user.cmdline=true
-+	EOF
-+	git -c user.cmdline=true config --list --show-scope >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success !MINGW '--show-scope with --blob' '
-+	blob=$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
-+	cat >expect <<-EOF &&
-+		command	user.custom=true
-+	EOF
-+	git config --blob=$blob --show-scope --list >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success '--show-scope with --local' '
-+	cat >expect <<-\EOF &&
-+		local	user.local=true
-+		local	user.override=local
-+		local	include.path=../include/relative.include
-+	EOF
-+	git config --local --list --show-scope >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success '--show-scope getting a single value' '
-+	cat >expect <<-\EOF &&
-+		local	true
-+	EOF
-+	git config --show-scope --get user.local >output &&
-+	test_cmp expect output
-+'
-+
-+test_expect_success '--show-scope with --show-origin' '
-+	cat >expect <<-EOF &&
-+		global	file:$HOME/.gitconfig	user.global=true
-+		global	file:$HOME/.gitconfig	user.override=global
-+		global	file:$HOME/.gitconfig	include.path=$INCLUDE_DIR/absolute.include
-+		global	file:$INCLUDE_DIR/absolute.include	user.absolute=include
-+		local	file:.git/config	user.local=true
-+		local	file:.git/config	user.override=local
-+		local	file:.git/config	include.path=../include/relative.include
-+		local	file:.git/../include/relative.include	user.relative=include
-+		command	command line:	user.cmdline=true
-+	EOF
-+	git -c user.cmdline=true config --list --show-origin --show-scope >output &&
-+	test_cmp expect output
-+'
-+
- test_expect_success '--local requires a repo' '
- 	# we expect 128 to ensure that we do not simply
- 	# fail to find anything and return code "1"
--- 
-gitgitgadget
+Here is the excerpt of the log:
+
+=2D- snip --
+[...]
+expecting success of 5505.15 'show':
+	(
+		cd test &&
+		git config --add remote.origin.fetch refs/heads/master:refs/heads/upstre=
+am &&
+		git fetch &&
+		git checkout -b ahead origin/master &&
+		echo 1 >>file &&
+		test_tick &&
+		git commit -m update file &&
+		git checkout master &&
+		git branch --track octopus origin/master &&
+		git branch --track rebase origin/master &&
+		git branch -d -r origin/master &&
+		git config --add remote.two.url ../two &&
+		git config --add remote.two.pushurl ../three &&
+		git config branch.rebase.rebase true &&
+		git config branch.octopus.merge "topic-a topic-b topic-c" &&
+		(
+			cd ../one &&
+			echo 1 >file &&
+			test_tick &&
+			git commit -m update file
+		) &&
+		git config --add remote.origin.push : &&
+		git config --add remote.origin.push refs/heads/master:refs/heads/upstrea=
+m &&
+		git config --add remote.origin.push +refs/tags/lastbackup &&
+		git config --add remote.two.push +refs/heads/ahead:refs/heads/master &&
+		git config --add remote.two.push refs/heads/master:refs/heads/another &&
+		git remote show origin two >output &&
+		git branch -d rebase octopus &&
+		test_i18ncmp expect output
+	)
+
++ cd test
++ git config --add remote.origin.fetch refs/heads/master:refs/heads/upstre=
+am
++ git fetch
+=46rom /home/virtualbox/git/t/trash directory.t5505-remote/one
+ * [new branch]      master     -> upstream
++ git checkout -b ahead origin/master
+Switched to a new branch 'ahead'
+Branch 'ahead' set up to track remote branch 'master' from 'origin'.
++ echo 1
++ test_tick
++ test -z
++ test_tick=3D1112911993
++ GIT_COMMITTER_DATE=3D1112911993 -0700
++ GIT_AUTHOR_DATE=3D1112911993 -0700
++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
++ git commit -m update file
+[ahead 847549e] update
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
++ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
++ git branch --track octopus origin/master
+Branch 'octopus' set up to track remote branch 'master' from 'origin'.
++ git branch --track rebase origin/master
+Branch 'rebase' set up to track remote branch 'master' from 'origin'.
++ git branch -d -r origin/master
+Deleted remote-tracking branch origin/master (was 9d34b14).
++ git config --add remote.two.url ../two
++ git config --add remote.two.pushurl ../three
++ git config branch.rebase.rebase true
++ git config branch.octopus.merge topic-a topic-b topic-c
++ cd ../one
++ echo 1
++ test_tick
++ test -z set
++ test_tick=3D1112912053
++ GIT_COMMITTER_DATE=3D1112912053 -0700
++ GIT_AUTHOR_DATE=3D1112912053 -0700
++ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
++ git commit -m update file
+[master 6329a3c] update
+ Author: A U Thor <author@example.com>
+ 1 file changed, 1 insertion(+)
++ git config --add remote.origin.push :
++ git config --add remote.origin.push refs/heads/master:refs/heads/upstrea=
+m
++ git config --add remote.origin.push +refs/tags/lastbackup
++ git config --add remote.two.push +refs/heads/ahead:refs/heads/master
++ git config --add remote.two.push refs/heads/master:refs/heads/another
++ git remote show origin two
+error: src refspec refs/tags/lastbackup does not match any
++ git branch -d rebase octopus
+Deleted branch rebase (was 9d34b14).
+Deleted branch octopus (was 9d34b14).
++ test_i18ncmp expect output
++ test_have_prereq C_LOCALE_OUTPUT
++ save_IFS=3D
+
++ IFS=3D,
++ set -- C_LOCALE_OUTPUT
++ IFS=3D
+
++ total_prereq=3D0
++ ok_prereq=3D0
++ missing_prereq=3D
++ negative_prereq=3D
++ total_prereq=3D1
++ satisfied_this_prereq=3Dt
++ ok_prereq=3D1
++ test 1 =3D 1
++ test_cmp expect output
++ diff -u expect output
+=2D-- expect	2020-01-25 00:44:41.496720000 +0000
++++ output	2020-01-25 00:44:43.513861900 +0000
+@@ -5,13 +5,6 @@
+   Remote branches:
+     master new (next fetch will store in remotes/origin)
+     side   tracked
+-  Local branches configured for 'git pull':
+-    ahead    merges with remote master
+-    master   merges with remote master
+-    octopus  merges with remote topic-a
+-                and with remote topic-b
+-                and with remote topic-c
+-    rebase  rebases onto remote master
+   Local refs configured for 'git push':
+     master pushes to master   (local out of date)
+     master pushes to upstream (create)
+error: last command exited with $?=3D1
+not ok 15 - show
+#
+#		(
+#			cd test &&
+#			git config --add remote.origin.fetch refs/heads/master:refs/heads/upst=
+ream &&
+#			git fetch &&
+#			git checkout -b ahead origin/master &&
+#			echo 1 >>file &&
+#			test_tick &&
+#			git commit -m update file &&
+#			git checkout master &&
+#			git branch --track octopus origin/master &&
+#			git branch --track rebase origin/master &&
+#			git branch -d -r origin/master &&
+#			git config --add remote.two.url ../two &&
+#			git config --add remote.two.pushurl ../three &&
+#			git config branch.rebase.rebase true &&
+#			git config branch.octopus.merge "topic-a topic-b topic-c" &&
+#			(
+#				cd ../one &&
+#				echo 1 >file &&
+#				test_tick &&
+#				git commit -m update file
+#			) &&
+#			git config --add remote.origin.push : &&
+#			git config --add remote.origin.push refs/heads/master:refs/heads/upstr=
+eam &&
+#			git config --add remote.origin.push +refs/tags/lastbackup &&
+#			git config --add remote.two.push +refs/heads/ahead:refs/heads/master &=
+&
+#			git config --add remote.two.push refs/heads/master:refs/heads/another =
+&&
+#			git remote show origin two >output &&
+#			git branch -d rebase octopus &&
+#			test_i18ncmp expect output
+#		)
+#
+=2D- snap --
+
+Could you have a look to see whether the code or the test need to be
+adjusted?
+
+Thanks,
+Dscho
+
+>
+> Changes since v3:
+>
+>  * handle also 'git remote remove'
+>
+> Cc: Junio C Hamano <gitster@pobox.com>
+> Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/remote.c  | 22 +++++++++++++++++++++-
+>  t/t5505-remote.sh | 16 +++++++++++++++-
+>  2 files changed, 36 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 9ee44c9f6c..a2379a14bf 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -250,6 +250,7 @@ struct branch_info {
+>  	char *remote_name;
+>  	struct string_list merge;
+>  	enum rebase_type rebase;
+> +	char *push_remote_name;
+>  };
+>
+>  static struct string_list branch_list =3D STRING_LIST_INIT_NODUP;
+> @@ -267,7 +268,7 @@ static int config_read_branches(const char *key, con=
+st char *value, void *cb)
+>  	char *name;
+>  	struct string_list_item *item;
+>  	struct branch_info *info;
+> -	enum { REMOTE, MERGE, REBASE } type;
+> +	enum { REMOTE, MERGE, REBASE, PUSH_REMOTE } type;
+>  	size_t key_len;
+>
+>  	if (!starts_with(key, "branch."))
+> @@ -280,6 +281,8 @@ static int config_read_branches(const char *key, con=
+st char *value, void *cb)
+>  		type =3D MERGE;
+>  	else if (strip_suffix(key, ".rebase", &key_len))
+>  		type =3D REBASE;
+> +	else if (strip_suffix(key, ".pushremote", &key_len))
+> +		type =3D PUSH_REMOTE;
+>  	else
+>  		return 0;
+>  	name =3D xmemdupz(key, key_len);
+> @@ -315,6 +318,11 @@ static int config_read_branches(const char *key, co=
+nst char *value, void *cb)
+>  		 */
+>  		info->rebase =3D rebase_parse_value(value);
+>  		break;
+> +	case PUSH_REMOTE:
+> +		if (info->push_remote_name)
+> +			warning(_("more than one %s"), orig_key);
+> +		info->push_remote_name =3D xstrdup(value);
+> +		break;
+>  	default:
+>  		BUG("unexpected type=3D%d", type);
+>  	}
+> @@ -682,6 +690,11 @@ static int mv(int argc, const char **argv)
+>  			strbuf_addf(&buf, "branch.%s.remote", item->string);
+>  			git_config_set(buf.buf, rename.new_name);
+>  		}
+> +		if (info->push_remote_name && !strcmp(info->push_remote_name, rename.=
+old_name)) {
+> +			strbuf_reset(&buf);
+> +			strbuf_addf(&buf, "branch.%s.pushremote", item->string);
+> +			git_config_set(buf.buf, rename.new_name);
+> +		}
+>  	}
+>
+>  	if (!refspec_updated)
+> @@ -783,6 +796,13 @@ static int rm(int argc, const char **argv)
+>  					die(_("could not unset '%s'"), buf.buf);
+>  			}
+>  		}
+> +		if (info->push_remote_name && !strcmp(info->push_remote_name, remote-=
+>name)) {
+> +			strbuf_reset(&buf);
+> +			strbuf_addf(&buf, "branch.%s.pushremote", item->string);
+> +			result =3D git_config_set_gently(buf.buf, NULL);
+> +			if (result && result !=3D CONFIG_NOTHING_SET)
+> +				die(_("could not unset '%s'"), buf.buf);
+> +		}
+>  	}
+>
+>  	/*
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index 883b32efa0..082042b05a 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -737,12 +737,14 @@ test_expect_success 'rename a remote' '
+>  	git clone one four &&
+>  	(
+>  		cd four &&
+> +		git config branch.master.pushRemote origin &&
+>  		git remote rename origin upstream &&
+>  		test -z "$(git for-each-ref refs/remotes/origin)" &&
+>  		test "$(git symbolic-ref refs/remotes/upstream/HEAD)" =3D "refs/remot=
+es/upstream/master" &&
+>  		test "$(git rev-parse upstream/master)" =3D "$(git rev-parse master)"=
+ &&
+>  		test "$(git config remote.upstream.fetch)" =3D "+refs/heads/*:refs/re=
+motes/upstream/*" &&
+> -		test "$(git config branch.master.remote)" =3D "upstream"
+> +		test "$(git config branch.master.remote)" =3D "upstream" &&
+> +		test "$(git config branch.master.pushRemote)" =3D "upstream"
+>  	)
+>  '
+>
+> @@ -784,6 +786,18 @@ test_expect_success 'rename succeeds with existing =
+remote.<target>.prune' '
+>  	git -C four.four remote rename origin upstream
+>  '
+>
+> +test_expect_success 'remove a remote' '
+> +	git clone one four.five &&
+> +	(
+> +		cd four.five &&
+> +		git config branch.master.pushRemote origin &&
+> +		git remote remove origin &&
+> +		test -z "$(git for-each-ref refs/remotes/origin)" &&
+> +		test_must_fail git config branch.master.remote &&
+> +		test_must_fail git config branch.master.pushRemote
+> +	)
+> +'
+> +
+>  cat >remotes_origin <<EOF
+>  URL: $(pwd)/one
+>  Push: refs/heads/master:refs/heads/upstream
+> --
+> 2.24.1.497.g9abd7b20b4.dirty
+>
+>
