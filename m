@@ -5,62 +5,64 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0F2DC35242
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E5CC35242
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C77012075D
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 336DD2075D
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 00:39:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="uE0jeeOH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LOpjNELE"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387562AbgAYAj3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 24 Jan 2020 19:39:29 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41062 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387537AbgAYAj2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Jan 2020 19:39:28 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c9so4178571wrw.8
-        for <git@vger.kernel.org>; Fri, 24 Jan 2020 16:39:27 -0800 (PST)
+        id S2387576AbgAYAjb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 24 Jan 2020 19:39:31 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33558 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387537AbgAYAja (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Jan 2020 19:39:30 -0500
+Received: by mail-wr1-f67.google.com with SMTP id b6so4214153wrq.0
+        for <git@vger.kernel.org>; Fri, 24 Jan 2020 16:39:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=saMlTNkKEqcBRL5aUOy1TDYQZGXm7gjU9li+Opxvdcs=;
-        b=uE0jeeOHg7nNefR3v53KXJA2tkA0a9VtmA3GyjsV21gW9ItyyZYzr4oh32T1y96bTu
-         bRIITVP6Xr+xK3vOGXTqn9Y7IZ0iKmcP9sEMprbUxIWHT0nFQaIJP+yS/WZeRlBTVDhQ
-         f4s9ucRFVTlUu83B2XBZd7eufEIjZf/tRVxfpc+aqUEsoz8eyexnqDNwcOANPMoS5vLE
-         MtIWV02F2EUmbO4iZMZSG4QMecAsTIaWyIOV7pJGVdIkDkjRtQr/e+uOnx150zwqoVr+
-         TcppZ0Gs7GekI8R4v12Y6w8siBmGSxuSaxdspZbK2FnzgWb7kfrQvyPpLWGsDAVB7HJH
-         9D/A==
+        bh=Vzbm2jbZgmjXl+MHBE3DtIUgRyeqxuVjjO8cWWLto1M=;
+        b=LOpjNELEv6hc6m63kTWnulj41S3evdpBy0+Yqj429U8wKJkhqWNBMECz9MckQEnZnW
+         XqxVxw9kkLdzt+c37u6GRophzcOeG2qXiUUxZzVmyNHYcV6u6Xes7/L5aSRmlEt5e/6F
+         nYytj526Xpw1VZgLVhg+cc/UUIJSaP4mveSKotPiiaKxHaOzPu73788gxAl0+QUldvGC
+         WkRmp0RFLJkTjq2YG5t2h0vll6ZUoiqgUohIU00tLZcvxGrJ/fRfYbkuuzZ7F6d3zrsW
+         wEBTG6zFATerG2WwMkoIER3cmKKpJptkW9ij1CZ4n2v2M8//wmfmPnhfMPbwKdXN0XMy
+         0KNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=saMlTNkKEqcBRL5aUOy1TDYQZGXm7gjU9li+Opxvdcs=;
-        b=DOsvnbTeXQ3dkHGXPqm2zWdTuE+dGhSdfBnex5iSoAeUr9tQ/2qihsI9dlmcAm5OPV
-         X8/RA+EFnBwWsGWoifK5Np2eOWOLBMcXXCltUhoyAaCdAKo5/KC1Rndv/SPyrFJ11HD5
-         V0N+N7R4WoKjcXKGZMj1ezG4Na5PX4zGZHuxMPkasX6GRaXd48iBCYwHqLnlL9a/lOT+
-         V7fveHOtYfWoCRgOtGYWBeoFLMBdkREhu0VIaqpAoltBEpoePC7MwnJSD2ZzLVVEdvG9
-         Aw2ajdHKW/pUVXRBnVmpY3B3oiWchuofUtY9TaX2sxVKoT2updXB8ZOLYTDjH2r3skdb
-         kdkQ==
-X-Gm-Message-State: APjAAAUQltT+DzfutMEeY2Rei3XS0W8vhoNo2gfrPFXvOF4cMpQC3n10
-        oMpOn+YQm8NSMsKUhvw1use6uwDi
-X-Google-Smtp-Source: APXvYqz0kKS9nBhM4KUGDfmqjGduB+f1Whrtm6hU/9WaoTZJ3+zNdqGO/ZYrcS1egBEy3JBcBYUo5w==
-X-Received: by 2002:adf:e58b:: with SMTP id l11mr7029657wrm.402.1579912766936;
-        Fri, 24 Jan 2020 16:39:26 -0800 (PST)
+        bh=Vzbm2jbZgmjXl+MHBE3DtIUgRyeqxuVjjO8cWWLto1M=;
+        b=oeNCl2RE70zSEm9YX0s29lH3BmrYqDEdL+MNgT3Y+guUnPmHyP8y+emltc/Ovgu5Ty
+         ILKtFPvd8W9CB7vQ4N4VDnfrWhmtjiA/dlc//yMuxYesCXWWQDiH52VQfxERJJo4MHXa
+         NDUdXHKm0vt1NpPOdR+FNre0doJxP7Q1Tk4lk7sFe/wAsvREkqRVd9jB/kCFYX/f86x5
+         LXy3G0Cccx0ApJ0Rm2UgTHhH2vNafnaYhJfa9ZduxQwzVCDXQtQAc7lOy/G5MRLxFsIY
+         dkbErYc+9NsPIyVkBIiMSSJyUS0XQhC4DTG+7k2xnXb2xw7ab/3JOZG+T45MzbbcBJDR
+         ZQiQ==
+X-Gm-Message-State: APjAAAUQpoS8vA31Ton7GWWKIRs8MDQMYgv1t/iMSdOPMGbq5SYKh9+L
+        t1pPZUpoIevBVD1dZektWX2YLjkA
+X-Google-Smtp-Source: APXvYqx+2zJ7N8y+NbkGzzQCocaMVrigFT4btrHwiv8eA/aDsWqpK5m7HY7fgPMBK8WGrnqxwjZMBw==
+X-Received: by 2002:adf:f3d0:: with SMTP id g16mr7447240wrp.2.1579912768659;
+        Fri, 24 Jan 2020 16:39:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z25sm9290601wmf.14.2020.01.24.16.39.26
+        by smtp.gmail.com with ESMTPSA id s16sm9772379wrn.78.2020.01.24.16.39.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2020 16:39:26 -0800 (PST)
-Message-Id: <f5a81a4d25e112a2785d081a609eddf514e91d95.1579912764.git.gitgitgadget@gmail.com>
+        Fri, 24 Jan 2020 16:39:28 -0800 (PST)
+Message-Id: <9d19794dfd667b3f9752f0e8118dc9eb0c8f59f1.1579912764.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
 References: <pull.478.v4.git.1579825267.gitgitgadget@gmail.com>
         <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
 From:   "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 25 Jan 2020 00:39:19 +0000
-Subject: [PATCH v5 1/6] config: fix typo in variable name
+Date:   Sat, 25 Jan 2020 00:39:21 +0000
+Subject: [PATCH v5 3/6] t1300: create custom config file without special
+ characters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,61 +77,71 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew Rogers <mattr94@gmail.com>
 
-In git config use of the end_null variable to determine if we should be
-null terminating our output.  While it is correct to say a string is
-"null terminated" the character is actually the "nul" character, so this
-malapropism is being fixed.
+Tests that required a custom configuration file to be created previously
+used a file with non-alphanumeric characters including escaped double
+quotes.  This is not really necessary for the majority of tests
+involving custom config files, and decreases test coverage on systems
+that dissallow such filenames (Windows, etc.).
+
+Create two files, one appropriate for testing quoting and one
+appropriate for general use.
 
 Signed-off-by: Matthew Rogers <mattr94@gmail.com>
 ---
- builtin/config.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ t/t1300-config.sh | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 98d65bc0ad..52a904cfb1 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -29,7 +29,7 @@ static int use_worktree_config;
- static struct git_config_source given_config_source;
- static int actions, type;
- static char *default_value;
--static int end_null;
-+static int end_nul;
- static int respect_includes_opt = -1;
- static struct config_options config_options;
- static int show_origin;
-@@ -151,7 +151,7 @@ static struct option builtin_config_options[] = {
- 	OPT_CALLBACK_VALUE(0, "path", &type, N_("value is a path (file or directory name)"), TYPE_PATH),
- 	OPT_CALLBACK_VALUE(0, "expiry-date", &type, N_("value is an expiry date"), TYPE_EXPIRY_DATE),
- 	OPT_GROUP(N_("Other")),
--	OPT_BOOL('z', "null", &end_null, N_("terminate values with NUL byte")),
-+	OPT_BOOL('z', "null", &end_nul, N_("terminate values with NUL byte")),
- 	OPT_BOOL(0, "name-only", &omit_values, N_("show variable names only")),
- 	OPT_BOOL(0, "includes", &respect_includes_opt, N_("respect include directives on lookup")),
- 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
-@@ -178,11 +178,11 @@ static void check_argc(int argc, int min, int max)
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e8b4575758..e5fb9114f6 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1710,18 +1710,23 @@ test_expect_success '--show-origin getting a single key' '
+ '
  
- static void show_config_origin(struct strbuf *buf)
- {
--	const char term = end_null ? '\0' : '\t';
-+	const char term = end_nul ? '\0' : '\t';
+ test_expect_success 'set up custom config file' '
+-	CUSTOM_CONFIG_FILE="file\" (dq) and spaces.conf" &&
++	CUSTOM_CONFIG_FILE="custom.conf" &&
+ 	cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
+ 	[user]
+ 		custom = true
+ 	EOF
+ '
  
- 	strbuf_addstr(buf, current_config_origin_type());
- 	strbuf_addch(buf, ':');
--	if (end_null)
-+	if (end_nul)
- 		strbuf_addstr(buf, current_config_name());
- 	else
- 		quote_c_style(current_config_name(), buf, NULL, 0);
-@@ -678,7 +678,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 		config_options.git_dir = get_git_dir();
- 	}
++test_expect_success !MINGW 'set up custom config file with special name characters' '
++	WEIRDLY_NAMED_FILE="file\" (dq) and spaces.conf" &&
++	cp "$CUSTOM_CONFIG_FILE" "$WEIRDLY_NAMED_FILE"
++'
++
+ test_expect_success !MINGW '--show-origin escape special file name characters' '
+ 	cat >expect <<-\EOF &&
+ 	file:"file\" (dq) and spaces.conf"	user.custom=true
+ 	EOF
+-	git config --file "$CUSTOM_CONFIG_FILE" --show-origin --list >output &&
++	git config --file "$WEIRDLY_NAMED_FILE" --show-origin --list >output &&
+ 	test_cmp expect output
+ '
  
--	if (end_null) {
-+	if (end_nul) {
- 		term = '\0';
- 		delim = '\n';
- 		key_delim = '\n';
+@@ -1747,7 +1752,7 @@ test_expect_success '--show-origin stdin with file include' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success !MINGW '--show-origin blob' '
++test_expect_success '--show-origin blob' '
+ 	blob=$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
+ 	cat >expect <<-EOF &&
+ 	blob:$blob	user.custom=true
+@@ -1756,9 +1761,9 @@ test_expect_success !MINGW '--show-origin blob' '
+ 	test_cmp expect output
+ '
+ 
+-test_expect_success !MINGW '--show-origin blob ref' '
++test_expect_success '--show-origin blob ref' '
+ 	cat >expect <<-\EOF &&
+-	blob:"master:file\" (dq) and spaces.conf"	user.custom=true
++	blob:master:custom.conf	user.custom=true
+ 	EOF
+ 	git add "$CUSTOM_CONFIG_FILE" &&
+ 	git commit -m "new config file" &&
 -- 
 gitgitgadget
 
