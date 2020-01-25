@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B082C35246
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68E82C35243
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:00:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id E24072075E
-	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:00:50 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3C5752071A
+	for <git@archiver.kernel.org>; Sat, 25 Jan 2020 23:00:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="B2erRAkI"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JcTn8+/g"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728884AbgAYXAs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 25 Jan 2020 18:00:48 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:46800 "EHLO
+        id S1728904AbgAYXAu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 25 Jan 2020 18:00:50 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46812 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728173AbgAYXAp (ORCPT
+        by vger.kernel.org with ESMTP id S1727817AbgAYXAp (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 25 Jan 2020 18:00:45 -0500
 Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A6C6E60FC5;
-        Sat, 25 Jan 2020 23:00:44 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2FF6C60FC6;
+        Sat, 25 Jan 2020 23:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
         s=default; t=1579993245;
-        bh=P7Eb1uTkSRBA1VkCADh0qnpHNCwZGD8+akROJz/FO6A=;
+        bh=gbLmKUXxtyA158kwNXH2y6D9PAn8TpijdENNDxul7F8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=B2erRAkIiGRSUE4q9rHPSFdI+s2CEd4P7mxrPr4qx0xKUjT04TF2c9shUcZIW08Q8
-         SJXG1snoUFCinOZ/uMXmVNA3c6pCZ++B2D2qcizo4yvIcNl1Suq01ot6FO/kw9ph/3
-         JtNvsvM0lvkfm57zjyzilF1+11L+zKDb3px603dkBqIUtJ+QActX+f162bxSkoOVgB
-         LiBxzCGHFFozsFcYn2ntjdqjZSB7nhsAqx6zN6m3F/Xe6+Op4jyNGlgJeCBTSgBZUd
-         nbzCrHbbboka4qwKgqayZnSSB9H/7tFSxGBJsnZYU5rP4xMaPVG+rmXTFR08E9ji/0
-         bLU5z2j046Vqeh703vN9ypKNN4S5CpTxdk2myhGvC+Y1eiBfP23I1zFgyrp9XyMDgR
-         wYGsOD8JEI26/O8Q4y4YGQKNVnVyq9vEySSmet1b8WQxzWNvnLcORu6d38L4L5GlZP
-         oiLP5/dZ7ruueFu8pWhw+NGBdEmSSmMjLpUj/A34lL/UKlZ2GiG
+        b=JcTn8+/gOqlNhnzlJpXLIf4g5e4zlSw4GVxoIwYG8MkMnviLfwoihJrGDNLuzuAg0
+         CXVaeZBedvJPwMFOvbuXX7ITquPZ2XaSO0XCsxBlR/nmwDcPdvMDqeH03A8RMyaecG
+         1xm5dR8whAKIxkfZV6m/oia0cnUlE/D7KfNKq1g7X/LJLpFKnH3lsWFs3oWOWKn9Jj
+         sizpP7r+aY7Qch/8uqGmQdpmXg5cjRf2c9ITJrqvlTQZQ7QNROInHI4VIgS7LluXD4
+         +LRzwMmupxIJjH0+2zWlhw+RlcyNzPmZFRa+rp556D9D3PGn1YjJb4OqJWDiklrb4R
+         Fb7LuueInYxgSUeAcP7Q4lXo3KPOg8bnuUUqpC3bTPQNT3w5zw2meoYq9WA3jw7FFn
+         kkQtqI7KWYxX08qKvyULLc6LgIdNB2teq5misZ3xfn1pVoGBh44usxmRaOwBgLe9Ci
+         oXLlyUEhwZ9/w19b9fp+atUqFzJ+Fm414U2mEl0cJudp1PD7yqg
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     <git@vger.kernel.org>
 Cc:     Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 09/22] t4060: make test work with SHA-256
-Date:   Sat, 25 Jan 2020 23:00:15 +0000
-Message-Id: <20200125230035.136348-10-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 10/22] t4211: make test hash independent
+Date:   Sat, 25 Jan 2020 23:00:16 +0000
+Message-Id: <20200125230035.136348-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.25.0.24.g3f081b084b0
 In-Reply-To: <20200125230035.136348-1-sandals@crustytoothpaste.net>
 References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
@@ -56,501 +56,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this test, there are two main types of object IDs we see in the
-diffs: the ones for the submodules, which we care about, and the ones
-for the individual files, which are unrelated to what we're testing.
-Much of the test already computes the former, so extend the rest of the
-test to do so as well.  Add a diff comparison function that normalizes
-the differences in the latter, since they're not explicitly what we're
-testing.
+This test uses several test files that contain hard-coded SHA-1 object
+IDs. Replace these values with generic ones of the correct size so that
+the test works with either SHA-1 or SHA-256.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t4060-diff-submodule-option-diff-format.sh | 126 ++++++++++---------
- 1 file changed, 70 insertions(+), 56 deletions(-)
+ t/t4211-line-log.sh | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
-index 9dcb69df5c..fc8229c726 100755
---- a/t/t4060-diff-submodule-option-diff-format.sh
-+++ b/t/t4060-diff-submodule-option-diff-format.sh
-@@ -42,6 +42,17 @@ commit_file () {
- 	git commit "$@" -m "Commit $*" >/dev/null
- }
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 8319163744..2cbfd8dd9e 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -8,10 +8,20 @@ test_expect_success 'setup (import history)' '
+ 	git reset --hard
+ '
  
-+diff_cmp () {
-+       for i in "$1" "$2"
-+       do
-+		sed -e 's/^index 0000000\.\.[0-9a-f]*/index 0000000..1234567/' \
-+		-e 's/^index [0-9a-f]*\.\.[0-9a-f]*/index 1234567..89abcde/' \
-+		"$i" >"$i.compare" || return 1
-+       done &&
-+       test_cmp "$1.compare" "$2.compare" &&
-+       rm -f "$1.compare" "$2.compare"
++process_output () {
++	x07="$_x05[0-9a-f][0-9a-f]"
++	sed -e "s/commit $OID_REGEX/commit $ZERO_OID/" \
++	    -e "s/commit $_x40$/commit $ZERO_OID/" \
++	    -e "s/Merge: $x07 $x07$/Merge: 0000000 0000000/" \
++	    "$1"
 +}
 +
- test_expect_success 'setup repository' '
- 	test_create_repo sm1 &&
- 	add_file . foo &&
-@@ -69,7 +80,7 @@ test_expect_success 'added submodule' '
- 	@@ -0,0 +1 @@
- 	+foo2
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
+ canned_test_1 () {
+ 	test_expect_$1 "$2" "
+-		git log $2 >actual &&
+-		test_cmp \"\$TEST_DIRECTORY\"/t4211/expect.$3 actual
++		git log $2 >result &&
++		process_output result >actual &&
++		process_output \"\$TEST_DIRECTORY\"/t4211/expect.$3 >expected &&
++		test_cmp expected actual
+ 	"
+ }
  
- test_expect_success 'added submodule, set diff.submodule' '
-@@ -93,7 +104,7 @@ test_expect_success 'added submodule, set diff.submodule' '
- 	@@ -0,0 +1 @@
- 	+foo2
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success '--submodule=short overrides diff.submodule' '
-@@ -109,7 +120,7 @@ test_expect_success '--submodule=short overrides diff.submodule' '
- 	@@ -0,0 +1 @@
- 	+Subproject commit $fullhead1
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'diff.submodule does not affect plumbing' '
-@@ -124,7 +135,7 @@ test_expect_success 'diff.submodule does not affect plumbing' '
- 	@@ -0,0 +1 @@
- 	+Subproject commit $fullhead1
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file sm1 &&
-@@ -142,7 +153,7 @@ test_expect_success 'modified submodule(forward)' '
- 	@@ -0,0 +1 @@
- 	+foo3
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule(forward)' '
-@@ -157,7 +168,7 @@ test_expect_success 'modified submodule(forward)' '
- 	@@ -0,0 +1 @@
- 	+foo3
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule(forward) --submodule' '
-@@ -166,7 +177,7 @@ test_expect_success 'modified submodule(forward) --submodule' '
- 	Submodule sm1 $head1..$head2:
- 	  > Add foo3 ($added foo3)
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- fullhead2=$(cd sm1; git rev-parse --verify HEAD)
-@@ -181,7 +192,7 @@ test_expect_success 'modified submodule(forward) --submodule=short' '
- 	-Subproject commit $fullhead1
- 	+Subproject commit $fullhead2
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file sm1 &&
-@@ -210,7 +221,7 @@ test_expect_success 'modified submodule(backward)' '
- 	@@ -1 +0,0 @@
- 	-foo3
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- head4=$(add_file sm1 foo4 foo5)
-@@ -247,7 +258,7 @@ test_expect_success 'modified submodule(backward and forward)' '
- 	@@ -0,0 +1 @@
- 	+foo5
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file sm1 &&
-@@ -291,7 +302,7 @@ test_expect_success 'typechanged submodule(submodule->blob), --cached' '
- 	@@ -0,0 +1 @@
- 	+sm1
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'typechanged submodule(submodule->blob)' '
-@@ -327,7 +338,7 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
- 	@@ -0,0 +1 @@
- 	+foo5
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- rm -rf sm1 &&
-@@ -344,7 +355,7 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
- 	@@ -0,0 +1 @@
- 	+sm1
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- rm -f sm1 &&
-@@ -356,7 +367,7 @@ test_expect_success 'nonexistent commit' '
- 	cat >expected <<-EOF &&
- 	Submodule sm1 $head4...$head6 (commits not present)
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file
-@@ -386,11 +397,12 @@ test_expect_success 'typechanged submodule(blob->submodule)' '
- 	@@ -0,0 +1 @@
- 	+foo7
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file sm1 &&
- test_expect_success 'submodule is up to date' '
-+	head7=$(git -C sm1 rev-parse --short --verify HEAD) &&
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	test_must_be_empty actual
- '
-@@ -401,7 +413,7 @@ test_expect_success 'submodule contains untracked content' '
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'submodule contains untracked content (untracked ignored)' '
-@@ -433,7 +445,7 @@ test_expect_success 'submodule contains untracked and modified content' '
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- # NOT OK
-@@ -450,7 +462,7 @@ test_expect_success 'submodule contains untracked and modified content (untracke
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'submodule contains untracked and modified content (dirty ignored)' '
-@@ -478,7 +490,7 @@ test_expect_success 'submodule contains modified content' '
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- (cd sm1; git commit -mchange foo6 >/dev/null) &&
-@@ -486,7 +498,7 @@ head8=$(cd sm1; git rev-parse --short --verify HEAD) &&
- test_expect_success 'submodule is modified' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9..$head8:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..3e75765 100644
- 	--- a/sm1/foo6
-@@ -495,7 +507,7 @@ test_expect_success 'submodule is modified' '
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked content' '
-@@ -503,7 +515,7 @@ test_expect_success 'modified submodule contains untracked content' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
--	Submodule sm1 17243c9..$head8:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..3e75765 100644
- 	--- a/sm1/foo6
-@@ -512,13 +524,13 @@ test_expect_success 'modified submodule contains untracked content' '
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked content (untracked ignored)' '
- 	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9..$head8:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..3e75765 100644
- 	--- a/sm1/foo6
-@@ -527,13 +539,13 @@ test_expect_success 'modified submodule contains untracked content (untracked ig
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked content (dirty ignored)' '
- 	git diff-index -p --ignore-submodules=dirty --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9..cfce562:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..3e75765 100644
- 	--- a/sm1/foo6
-@@ -542,7 +554,7 @@ test_expect_success 'modified submodule contains untracked content (dirty ignore
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked content (all ignored)' '
-@@ -556,7 +568,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains untracked content
- 	Submodule sm1 contains modified content
--	Submodule sm1 17243c9..cfce562:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..dfda541 100644
- 	--- a/sm1/foo6
-@@ -566,7 +578,7 @@ test_expect_success 'modified submodule contains untracked and modified content'
- 	+new
- 	+modification
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked and modified content (untracked ignored)' '
-@@ -574,7 +586,7 @@ test_expect_success 'modified submodule contains untracked and modified content
- 	git diff-index -p --ignore-submodules=untracked --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
--	Submodule sm1 17243c9..cfce562:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..e20e2d9 100644
- 	--- a/sm1/foo6
-@@ -585,14 +597,14 @@ test_expect_success 'modified submodule contains untracked and modified content
- 	+modification
- 	+modification
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked and modified content (dirty ignored)' '
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=dirty --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9..cfce562:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..3e75765 100644
- 	--- a/sm1/foo6
-@@ -601,7 +613,7 @@ test_expect_success 'modified submodule contains untracked and modified content
- 	-foo6
- 	+new
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'modified submodule contains untracked and modified content (all ignored)' '
-@@ -616,7 +628,7 @@ test_expect_success 'modified submodule contains modified content' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
- 	Submodule sm1 contains modified content
--	Submodule sm1 17243c9..cfce562:
-+	Submodule sm1 $head7..$head8:
- 	diff --git a/sm1/foo6 b/sm1/foo6
- 	index 462398b..ac466ca 100644
- 	--- a/sm1/foo6
-@@ -629,29 +641,29 @@ test_expect_success 'modified submodule contains modified content' '
- 	+modification
- 	+modification
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- rm -rf sm1
- test_expect_success 'deleted submodule' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9...0000000 (submodule deleted)
-+	Submodule sm1 $head7...0000000 (submodule deleted)
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'create second submodule' '
- 	test_create_repo sm2 &&
--	head7=$(add_file sm2 foo8 foo9) &&
-+	head9=$(add_file sm2 foo8 foo9) &&
- 	git add sm2
- '
- 
- test_expect_success 'multiple submodules' '
- 	git diff-index -p --submodule=diff HEAD >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9...0000000 (submodule deleted)
--	Submodule sm2 0000000...a5a65c9 (new submodule)
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
- 	new file mode 100644
- 	index 0000000..db9916b
-@@ -667,13 +679,13 @@ test_expect_success 'multiple submodules' '
- 	@@ -0,0 +1 @@
- 	+foo9
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'path filter' '
- 	git diff-index -p --submodule=diff HEAD sm2 >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm2 0000000...a5a65c9 (new submodule)
-+	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
- 	new file mode 100644
- 	index 0000000..db9916b
-@@ -689,15 +701,15 @@ test_expect_success 'path filter' '
- 	@@ -0,0 +1 @@
- 	+foo9
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- commit_file sm2
- test_expect_success 'given commit' '
- 	git diff-index -p --submodule=diff HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9...0000000 (submodule deleted)
--	Submodule sm2 0000000...a5a65c9 (new submodule)
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
- 	new file mode 100644
- 	index 0000000..db9916b
-@@ -713,7 +725,7 @@ test_expect_success 'given commit' '
- 	@@ -0,0 +1 @@
- 	+foo9
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'setup .git file for sm2' '
-@@ -726,8 +738,8 @@ test_expect_success 'setup .git file for sm2' '
- test_expect_success 'diff --submodule=diff with .git file' '
- 	git diff --submodule=diff HEAD^ >actual &&
- 	cat >expected <<-EOF &&
--	Submodule sm1 17243c9...0000000 (submodule deleted)
--	Submodule sm2 0000000...a5a65c9 (new submodule)
-+	Submodule sm1 $head7...0000000 (submodule deleted)
-+	Submodule sm2 0000000...$head9 (new submodule)
- 	diff --git a/sm2/foo8 b/sm2/foo8
- 	new file mode 100644
- 	index 0000000..db9916b
-@@ -743,25 +755,27 @@ test_expect_success 'diff --submodule=diff with .git file' '
- 	@@ -0,0 +1 @@
- 	+foo9
- 	EOF
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'setup nested submodule' '
- 	git submodule add -f ./sm2 &&
- 	git commit -a -m "add sm2" &&
- 	git -C sm2 submodule add ../sm2 nested &&
--	git -C sm2 commit -a -m "nested sub"
-+	git -C sm2 commit -a -m "nested sub" &&
-+	head10=$(git -C sm2 rev-parse --short --verify HEAD)
- '
- 
- test_expect_success 'move nested submodule HEAD' '
- 	echo "nested content" >sm2/nested/file &&
- 	git -C sm2/nested add file &&
--	git -C sm2/nested commit --allow-empty -m "new HEAD"
-+	git -C sm2/nested commit --allow-empty -m "new HEAD" &&
-+	head11=$(git -C sm2/nested rev-parse --short --verify HEAD)
- '
- 
- test_expect_success 'diff --submodule=diff with moved nested submodule HEAD' '
- 	cat >expected <<-EOF &&
--	Submodule nested a5a65c9..b55928c:
-+	Submodule nested $head9..$head11:
- 	diff --git a/nested/file b/nested/file
- 	new file mode 100644
- 	index 0000000..ca281f5
-@@ -772,13 +786,13 @@ test_expect_success 'diff --submodule=diff with moved nested submodule HEAD' '
- 	EOF
- 	git -C sm2 diff --submodule=diff >actual 2>err &&
- 	test_must_be_empty err &&
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_expect_success 'diff --submodule=diff recurses into nested submodules' '
- 	cat >expected <<-EOF &&
- 	Submodule sm2 contains modified content
--	Submodule sm2 a5a65c9..280969a:
-+	Submodule sm2 $head9..$head10:
- 	diff --git a/sm2/.gitmodules b/sm2/.gitmodules
- 	new file mode 100644
- 	index 0000000..3a816b8
-@@ -788,7 +802,7 @@ test_expect_success 'diff --submodule=diff recurses into nested submodules' '
- 	+[submodule "nested"]
- 	+	path = nested
- 	+	url = ../sm2
--	Submodule nested 0000000...b55928c (new submodule)
-+	Submodule nested 0000000...$head11 (new submodule)
- 	diff --git a/sm2/nested/file b/sm2/nested/file
- 	new file mode 100644
- 	index 0000000..ca281f5
-@@ -813,7 +827,7 @@ test_expect_success 'diff --submodule=diff recurses into nested submodules' '
- 	EOF
- 	git diff --submodule=diff >actual 2>err &&
- 	test_must_be_empty err &&
--	test_cmp expected actual
-+	diff_cmp expected actual
- '
- 
- test_done
