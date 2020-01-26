@@ -2,213 +2,272 @@ Return-Path: <SRS0=UUNX=3P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9BF8C35240
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 09:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E9CC9C35240
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 10:04:25 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id AB3C92071A
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 09:39:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 951342071E
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 10:04:25 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="cDjGMCUm"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="DDR7DiVr"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727295AbgAZJj1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jan 2020 04:39:27 -0500
-Received: from mout.gmx.net ([212.227.15.15]:47143 "EHLO mout.gmx.net"
+        id S1729260AbgAZKEY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jan 2020 05:04:24 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44133 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726240AbgAZJj0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Jan 2020 04:39:26 -0500
+        id S1726571AbgAZKEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jan 2020 05:04:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580031561;
-        bh=cHhd6uX04Y59iy7gvUwvm8c9MiCZrFPnMz70OhxmNZQ=;
+        s=badeba3b8450; t=1580033054;
+        bh=Fxpf5BgOoIx8+YxDXLHO87Io1Buo52vvaCbWzWw/PPU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=cDjGMCUmRWNORdxVpnqrdmsZvGmovjgMjXxkEAPGwXCnadmKRnPSofK8W4iZm9aqm
-         K6/2mt69h4neCynph+jZmctWjytKMi1NtBCYThzEl+K6qYmJ1Qcv7kz/X6i8SHgKug
-         2dLeSJnS4Hf8JlkTCRE8zpwa7NeTYT/3FQlbDt2Y=
+        b=DDR7DiVr4RiYC7U0juDM/wsIeykft7q+CQ/eWuR7bER8LP1ubZWRHeQNbHSaznams
+         5jb1KBjKNtp650BfBk8VYoFVNjgc3qa9tDDExZdQrGN/iJMEvJKrZKcum+QHYUXBTg
+         ktHpMdnL2bYVUmDZS9zrOh0PaNclOALUNiquzu2Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5fIW-1iyN991t5G-007BFl; Sun, 26
- Jan 2020 10:39:21 +0100
-Date:   Sun, 26 Jan 2020 10:39:20 +0100 (CET)
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mel3n-1jTc9A1vF7-00akgU; Sun, 26
+ Jan 2020 11:04:14 +0100
+Date:   Sun, 26 Jan 2020 11:04:11 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] grep: ignore --recurse-submodules if --no-index is
- given
-In-Reply-To: <pull.540.git.1580000298097.gitgitgadget@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001261036570.46@tvgsbejvaqbjf.bet>
-References: <pull.540.git.1580000298097.gitgitgadget@gmail.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 0/2] rebase -i: extend rebase.missingCommitsCheck
+In-Reply-To: <20200125175436.29786-1-alban.gruin@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.2001261043540.46@tvgsbejvaqbjf.bet>
+References: <20200111173917.15690-1-alban.gruin@gmail.com> <20200125175436.29786-1-alban.gruin@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HqG6AqsxzrS/y72Xv/mWSBpR3ldMA1jxiCSAFxZ+Ig+Cw76KYbh
- o//nDijRsLEyX0fyc404hLh3xL6O1yZpuS7jXhMlIR3U+ep4Y8KLjsrLCsHBkuXOW41a/tv
- 2DO2SJugXaKIWWRdrxjHiHxTdRL+PfwnSrj3pKwkziimwZqk+EFkBgZ96ax0AArrgBXTRQ3
- owmjc4uFkrd1cZxHk9Pig==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:J769mfsavhA=:W0YaBrgGc3b/YarKpz1kii
- rzN82An8kE2J7SGQFY7WzAnSORXdHbgKOVG+EdshaI/YJ4BHwsnfyNQ0j9Z7lkUNvC6qZgxag
- MnTwGmrfnn0HGv0eHIwreoJHTaaRcqazHWIpQsW8JV5eLf/cNvKrvuEFqLHLMGVv9CzE33dzS
- szcwOISBq8tjyEzWCYJVC8OJcqilARNmzxWZZiwcRl4Ab+YNMtptxKpCVm7xkzzzTcY463eLN
- JjEgTZ4Hq0tRkVyOGy7mDAyzFU6bU+yTVNbB+3lnUceFEp7mgE99TTqqX6+KDE1IYuuefTR0n
- XlDG55Q6Z1QdGjlELFYa7NXmNl/HurXEtE4O5hZtTxEN/+HC64rcz/tGJ8zbGW0mBk6T6lVWu
- Ag0LaDb398xrtQtwRiUFerJFXNDFZR/1Q0sc1SPJoBvwvpNFTLXZCeJD3bU7VTkkb9CF5zZiA
- ZcKAyc/NOnt/q5iTadkasKqUUIO4yVOiavEEEyJMc0JTlcJvReTTLSREQ7QHq+Yp7AZ25dghS
- HhaNOu5EjRsyOfDXC2y0xUaNR9XlmMVmYArQX8Us2Xm2d3MknRDT4s+udG/Lq/aYX1qYVfTd2
- dlpCvi5oERlT0FiHV4CSxQuwN1LUpCNLSwYM2K8RmbhYU68deoHG+vVFZAehe6YivtQLbFxxI
- P+yXvcmGUqpNU6ZGLso22L9ojr5y9X0zkly9+4p7ucc3B5pT7hLr1BsC8OmoSw3Ft7wTdgmnu
- oFVKPNOUSp09+yEeFHvcreMEdc5RERovUP64J1F7Px4IM4Lc/+Rcsbx801zGveHgSmkAqwgbC
- pVJTWxXw71Tr7P3m/Yv8bd4qg7r4tBuifSjVtCD0gQyvhFbgXpCGsdfmKnVWUoetceZ2xOnS1
- x5MNCS5QOckh3xtUx3pMkp4qjgGnmB4Ui0S1LF8QH+aHd6Vf9YtzmBePKvgEzkiWz0BqOE6Oe
- HNncG5fhnKIYQ69I38BknJNVZWH4NeU+gveLEoHTtvYZ4V76X0W788EFGDJD/dWZA0GGOf3Gb
- sAK+HEKA07bc2G4yTCqnQ0YPqKC/3bwiMfOJm2vsKp/rFoWbpyOOI6KiwfsEGpRjHZrJLrw1O
- DaOv8pKXAUV+CHuL1zsnM+hJR4ZNvShcyIYRfjv+QOmenlSrNUlghPQJ3dmXXESvB3gnpATMF
- vL+NVWVbyGd7oTnZ5cC3XlgcxD1cEqPFY0NZ4v62MnNiRQdqg4A+hqyd89HozMyF10MID1O5E
- q15q36qqrjFgOcgHK
+X-Provags-ID: V03:K1:TtZh6VxybtKn7l9g2G2A4bXfhN/5FdA/z2WucIkheBkc8y8dJEu
+ I5nZ1z+00e/DEp9qJojzTWHxIWlLWCYttl7hveehwWCpBYNBBIePuJXK08LnzX+SP3MJdCp
+ 0aVYGbNZbIZXqbZlmxcT491jFfIA/kHZOvucKQIaOU7uZ/3g8yFGr2gXggWsGOagsJ/XgI5
+ p2Mks+MdrY+oZ8e0RuFcw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Pf2yTcc2bWc=:lUd1NTcpj8we26t2cb3cmC
+ jeaxaA6wuqsVkKoYnKebITJEhMb7Y6Mi5h3iI5KDfkdSVbR3gAtNs5+6H2ELSHsJw+EKYyPR6
+ 6AzXloRYYajK4P8pHJ2XfFLH92TWBsR7asMa6PFlMpSYcs+8l2yIrLHAehFYd0cE0sA4sGKKP
+ 3+y1wwNzOBzKqAuz93O6kHnybW7Mnk7TTn9WxJaxdlKY3JM5hQw655aIF5iAu3LAK88egkBO3
+ 4UAWbXyl500Rl17dGae8dQs0js1dJV9/6DKeZPix2S+GIBZsi2cLxK2NTG5rZabBay/XZpcPB
+ g3Vc21iggsgOb16ZjqVGPcr84F9jF0MHtpypCZGTrkvC5Fe952+bW6I/1hzCO5Ab+spjplJET
+ OABHRwnP7eSlTO7eGLdsv2NqhR3sqRPYk6KwHR73jac1vvU4JaOnvCAajUVeCcC4frdxPwPeZ
+ RqZpGc2w8XT7FeECTDGI0boAkbqDJrh6ExcRNrPfnxof0CBtd1PLPLfpfAsNaGQGp34mC3cai
+ JBnYvlJDpd71LiTHuEtWXQmpPSWvCgLSt76dJNSPx8JBDh0ieoFH11IqfDqKpxBDkKnO6z/Us
+ tWZIu0auLN7RML3B1lMeIYJUwXNKxx9WXbnfUar338iA0YFGmdEadqPlCCdTmJcpmmwmAvy4u
+ 560M5ZywJvrVV1Zifl+cCDV5cR+xNBAQ57X57iWgRLg4W68K5dtx4Bdmg6cMDO4TyrNIcCSOj
+ B5mVKZJgRijrZnp/apoAV1cU8aNh6t/HXyerFeQ9V3Z/wMhz7lihMcaBnyq8wKJztcxLKv8UR
+ UX8qm6I0cJsbFsRDSpXLimsWqzAYfw2S1N30fCHFuzoqY91ZXB4FyZJ76lcqvpZq/O7n64OL8
+ zWmZl9pYrT8qEIFdpxQP0FXnrAafXoytumqEn7pom+Gp8FtnwUftDFAqgdQOsRuMQyoZWU3zB
+ SjcwPMeF2hXokPjc1wyIZRrFovklaugxpJzcForeFt6jGfl0Ag/3Ax9pYTkp8bhkfXJrbOoXP
+ AolsW0A9wDGi8J4qPZxhlXD0Jqvi6+QbItRkZXWrmGm03pZe6ri2GE+iFBQP2PVcLuyspV/zZ
+ 6drhQ3VteBaS+EIogvNIbbNSozFYfoMiH/8JdVuYwNDA6AyNHC2O+pKNQxfNI+WQm4qNtODf3
+ dS3uzGXU4QC3/ba02d058BnIB1t3n2pzAUkRAfMMLQywrA80KSbT3ueuNfrRb4ZHDe1OMS9Gl
+ SLvEX3g/9Qpd2WT/E
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Philippe,
+Hi Alban,
 
-On Sun, 26 Jan 2020, Philippe Blain via GitGitGadget wrote:
+On Sat, 25 Jan 2020, Alban Gruin wrote:
 
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> Changes since v4:
 >
-> Since grep learned to recurse into submodules in 0281e487fd
-> (grep: optionally recurse into submodules, 2016-12-16),
-> using --recurse-submodules along with --no-index makes Git
-> die().
+>  - Added a test to check that no errors are raised when editing the todo
+>    list after pausing the rebase; it was provided by Phillip Wood.
 >
-> This is unfortunate because if submodule.recurse is set in a user's
-> ~/.gitconfig, invoking `git grep --no-index` either inside or outside
-> a Git repository results in
->
->     fatal: option not supported with --recurse-submodules
->
-> Let's allow using these options together, so that setting submodule.recu=
-rse
-> globally does not prevent using `git grep --no-index`.
->
-> Using `--recurse-submodules` should not have any effect if `--no-index`
-> is used inside a repository, as Git will recurse into the checked out
-> submodule directories just like into regular directories.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>  - Fixed the issue pointed out by this test by creating a backup of the
+>    todo list even if the edited list is incorrect.  This step was moved
+>    before the user edits the list, so the backup can be created with
+>    copy_file() instead of todo_list_write_to_file().
 
-My initial reaction to this patch was: "but why would you try to combine
-`--recurse-submodules` with `--no-index`?". The `submodule.recurse`
-reference made me think again, though.
+Please note that I changed this to always use `todo_list_write_to_file()`
+in `js/rebase-i-with-colliding-hash` (see e.g.
+https://github.com/gitgitgadget/git/commit/26027625).
 
-And then it hit me: by `--no-index`, what we _really_ mean to say is:
-ignore that this _might_ be tracked in Git. And that obviously means that
-there cannot be any submodules to recurse into, as far as `git diff
-=2D-no-index` is concerned.
+The reason is that the copy would be made with _abbreviated_ commit IDs.
+And during the rebase, those abbreviated IDs could become non-unique.
 
-So I think your patch makes a ton of sense.
+I have to admit that I did not follow the evolution of your patch series
+terribly closely, but from your description I gather that we want to be
+careful to ensure that the `.backup` file is written with non-abbreviated
+commit IDs always.
+
+The way I read your patches, they will conflict with
+`js/rebase-i-with-colliding-hash`, so maybe it would be a good idea to
+base your patches on that branch?
 
 Thanks,
 Dscho
 
-> ---
->     grep: ignore --recurse-submodules if --no-index is given
 >
->     Since grep learned to recurse into submodules in 0281e487fd (grep:
->     optionally recurse into submodules, 2016-12-16), using
->     --recurse-submodules along with --no-index makes Git die().
+>  - In edit_todo_list(), `incorrect' is set to 0 by default.  This only
+>    concerns the initial edit case; instead of opening and parsing the
+>    backup, we use directly `old_todo' as a reference.
 >
->     This is unfortunate because if submodule.recurse is set in a user's
->     ~/.gitconfig, invoking git grep --no-index either inside or outside =
-a
->     Git repository results in
+>  - Don't check if the "dropped" file flag exists at the initial edit.
 >
->     fatal: option not supported with --recurse-submodules
+> Alban Gruin (2):
+>   sequencer: move check_todo_list_from_file() to rebase-interactive.c
+>   rebase-interactive: warn if commit is dropped with `rebase
+>     --edit-todo'
 >
->     Let's allow using these options together, so that setting
->     submodule.recurse globally does not prevent using git grep --no-inde=
-x.
+>  rebase-interactive.c          |  90 ++++++++++++++++++++++---
+>  rebase-interactive.h          |   5 ++
+>  sequencer.c                   |  51 ++++----------
+>  sequencer.h                   |   2 +-
+>  t/t3404-rebase-interactive.sh | 121 ++++++++++++++++++++++++++++++++++
+>  5 files changed, 219 insertions(+), 50 deletions(-)
 >
->     Using --recurse-submodules should not have any effect if --no-indexi=
-s
->     used inside a repository, as Git will recurse into the checked out
->     submodule directories just like into regular directories.
+> Range-diff against v4:
+> 1:  996045a300 =3D 1:  996045a300 sequencer: move check_todo_list_from_f=
+ile() to rebase-interactive.c
+> 2:  11b0e1e78c ! 2:  6dbaa8cbe6 rebase-interactive: warn if commit is dr=
+opped with `rebase --edit-todo'
+>     @@ Commit message
+>          `edit_todo_list_advice' is removed from sequencer.c as it is no=
+ longer
+>          used there.
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-540%2F=
-phil-blain%2Fgrep-no-index-ignore-recurse-submodule-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-540/phil-=
-blain/grep-no-index-ignore-recurse-submodule-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/540
+>     -    This changes when a backup of the todo list is made.  Until now=
+, it
+>     -    was saved only once, before the initial edit.  Now, it is also =
+made if
+>     -    after the user edited the list, if it has no errors or if no co=
+mmits
+>     -    were dropped and `rebase.missingCommitsCheck' is set.  Thus, th=
+e
+>     +    This changes when a backup of the todo list is made.  Until now=
+, it was
+>     +    saved only once, before the initial edit.  Now, it is also made=
+ if the
+>     +    original todo list has no errors or no dropped commits.  Thus, =
+the
+>          backup should be error-free.  Without this, sequencer_continue(=
+)
+>          (`rebase --continue') could only compare the current todo list =
+against
+>          the original, unedited list.  Before this change, this file was=
+ only
+>     @@ Commit message
+>          no errors were found at the last edition, so any missing commit=
+s here
+>          have already been picked.
 >
->  Documentation/git-grep.txt         |  3 ++-
->  builtin/grep.c                     |  4 ++--
->  t/t7814-grep-recurse-submodules.sh | 11 ++++++++++-
->  3 files changed, 14 insertions(+), 4 deletions(-)
+>     -    Four tests are added to t3404.  The tests for
+>     +    Five tests are added to t3404.  The tests for
+>          `rebase.missingCommitsCheck =3D warn' and `rebase.missingCommit=
+sCheck =3D
+>          error' have a similar structure.  First, we start a rebase with=
+ an
+>          incorrect command on the first line.  Then, we edit the todo li=
+st,
+>     @@ Commit message
+>          has been dropped.  Then, the actual rebase takes place.  In the=
+ third
+>          test, it is also checked that `--continue' will refuse to resum=
+e the
+>          rebase if commits were dropped.  The fourth test checks that no=
+ errors
+>     -    are raised when resuming a rebase after resolving a conflict.
+>     +    are raised when resuming a rebase after resolving a conflict, t=
+he fifth
+>     +    checks that no errors are raised when editing the todo list aft=
+er
+>     +    pausing the rebase.
 >
-> diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-> index c89fb569e3..ffc3a6efdc 100644
-> --- a/Documentation/git-grep.txt
-> +++ b/Documentation/git-grep.txt
-> @@ -96,7 +96,8 @@ OPTIONS
->  	Recursively search in each submodule that has been initialized and
->  	checked out in the repository.  When used in combination with the
->  	<tree> option the prefix of all submodule output will be the name of
-> -	the parent project's <tree> object.
-> +	the parent project's <tree> object. This option has no effect
-> +	if `--no-index` is given.
+>          Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>          I don't think the way I create `expect.3' files in "rebase --ed=
+it-todo
+>     @@ rebase-interactive.c: int edit_todo_list(struct repository *r, st=
+ruct todo_list
+>      +	const char *todo_file =3D rebase_path_todo(),
+>      +		*todo_backup =3D rebase_path_todo_backup();
+>       	unsigned initial =3D shortrevisions && shortonto;
+>     -+	int incorrect =3D 1;
+>     ++	int incorrect =3D 0;
 >
->  -a::
->  --text::
-> diff --git a/builtin/grep.c b/builtin/grep.c
-> index 50ce8d9461..d5f089dd41 100644
-> --- a/builtin/grep.c
-> +++ b/builtin/grep.c
-> @@ -1115,8 +1115,8 @@ int cmd_grep(int argc, const char **argv, const ch=
-ar *prefix)
->  		}
->  	}
+>       	/* If the user is editing the todo list, we first try to parse
+>       	 * it.  If there is an error, we do not return, because the user
+>       	 * might want to fix it in the first place. */
+>       	if (!initial)
+>      -		todo_list_parse_insn_buffer(r, todo_list->buf.buf, todo_list);
+>     -+		incorrect =3D todo_list_parse_insn_buffer(r, todo_list->buf.buf,=
+ todo_list);
+>     -+
+>     -+	incorrect |=3D file_exists(rebase_path_dropped());
+>     ++		incorrect =3D todo_list_parse_insn_buffer(r, todo_list->buf.buf,=
+ todo_list) |
+>     ++			file_exists(rebase_path_dropped());
 >
-> -	if (recurse_submodules && (!use_index || untracked))
-> -		die(_("option not supported with --recurse-submodules"));
-> +	if (recurse_submodules && untracked)
-> +		die(_("--untracked not supported with --recurse-submodules"));
+>       	if (todo_list_write_to_file(r, todo_list, todo_file, shortrevisio=
+ns, shortonto,
+>       				    -1, flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_=
+HELP))
+>     @@ rebase-interactive.c: int edit_todo_list(struct repository *r, st=
+ruct todo_list
+>      -	if (initial && copy_file(rebase_path_todo_backup(), todo_file, 06=
+66))
+>      -		return error(_("could not copy '%s' to '%s'."), todo_file,
+>      -			     rebase_path_todo_backup());
+>     -+	if (initial && copy_file(todo_backup, todo_file, 0666))
+>     -+		return error(_("could not copy '%s' to '%s'."), todo_file, todo_=
+backup);
+>     ++	if (initial || !incorrect) {
+>     ++		if (!initial)
+>     ++			unlink(todo_backup);
+>     ++
+>     ++		if (copy_file(todo_backup, todo_file, 0666))
+>     ++		    return error(_("could not copy '%s' to '%s'."), todo_file, t=
+odo_backup);
+>     ++	}
 >
->  	if (!show_in_pager && !opt.status_only)
->  		setup_pager();
-> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-s=
-ubmodules.sh
-> index 946f91fa57..828cb3ba58 100755
-> --- a/t/t7814-grep-recurse-submodules.sh
-> +++ b/t/t7814-grep-recurse-submodules.sh
-> @@ -345,7 +345,16 @@ test_incompatible_with_recurse_submodules ()
->  }
+>       	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL))
+>       		return -2;
+>     @@ rebase-interactive.c: int edit_todo_list(struct repository *r, st=
+ruct todo_list
+>      +	} else if (todo_list_check(todo_list, new_todo)) {
+>      +		write_file(rebase_path_dropped(), "");
+>      +		return -4;
+>     -+	} else {
+>     -+		todo_list_write_to_file(r, todo_list, todo_backup, shortrevision=
+s, shortonto,
+>     -+					-1, flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_HEL=
+P);
+>      +	}
 >
->  test_incompatible_with_recurse_submodules --untracked
-> -test_incompatible_with_recurse_submodules --no-index
-> +
-> +test_expect_success 'grep --recurse-submodules --no-index ignores --rec=
-urse-submodules' '
-> +	git grep --recurse-submodules --no-index -e "^(.|.)[\d]" >actual &&
-> +	cat >expect <<-\EOF &&
-> +	a:(1|2)d(3|4)
-> +	submodule/a:(1|2)d(3|4)
-> +	submodule/sub/a:(1|2)d(3|4)
-> +	EOF
-> +	test_cmp expect actual
-> +'
->
->  test_expect_success 'grep --recurse-submodules should pass the pattern =
-type along' '
->  	# Fixed
->
-> base-commit: bc7a3d4dc04dd719e7c8c35ebd7a6e6651c5c5b6
+>       	return 0;
+>     @@ t/t3404-rebase-interactive.sh: test_expect_success 'rebase -i res=
+pects rebase.mi
+>      +	git add file1 &&
+>      +	git rebase --continue
+>      +'
+>     ++
+>     ++test_expect_success 'rebase.missingCommitsCheck =3D error when edi=
+ting for a second time' '
+>     ++	test_config rebase.missingCommitsCheck error &&
+>     ++	(
+>     ++		set_fake_editor &&
+>     ++		FAKE_LINES=3D"1 break 2 3" git rebase -i A D &&
+>     ++		cp .git/rebase-merge/git-rebase-todo todo &&
+>     ++		test_must_fail env FAKE_LINES=3D2 git rebase --edit-todo &&
+>     ++		GIT_SEQUENCE_EDITOR=3D"cp todo" git rebase --edit-todo &&
+>     ++		git rebase --continue
+>     ++	)
+>     ++'
+>      +
+>       test_expect_success 'respects rebase.abbreviateCommands with fixup=
+, squash and exec' '
+>       	rebase_setup_and_clean abbrevcmd &&
 > --
-> gitgitgadget
+> 2.24.1
+>
 >
