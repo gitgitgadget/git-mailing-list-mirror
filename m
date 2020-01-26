@@ -2,114 +2,191 @@ Return-Path: <SRS0=UUNX=3P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 601CBC2D0DB
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 21:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6F0C8C2D0DB
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 22:08:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 27CA020702
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 21:50:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 361CF206F0
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 22:08:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="l9Ne1kiW"
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="BNl2O+R1"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726703AbgAZVuW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jan 2020 16:50:22 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47602 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726252AbgAZVuW (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jan 2020 16:50:22 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CCD886044F;
-        Sun, 26 Jan 2020 21:50:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1580075421;
-        bh=9AZYF4XkfD83x7d8o9NUPgWHPXGPNsbkJqW10Jjddb8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=l9Ne1kiWoGgm+eP9l6tcTOZrp+qYCBhxCucIJ8yZ86lA2CCNrTBHBpqIPEuiai96D
-         xcygpqWsj3iUqJzCUSOa5kGw+DwM7JhLWw/JOtv+C+LGatK7C4ZvVOL4BvthRsb1N7
-         3vh8L3Cla+qN2LI9GmVL3qeGQyUIWe2COE3VkoY2IOMZYC12Pp+c5o6x676IOGs6I/
-         oBHvJuzJob/vCo73MpnhTiaveuceCp2xWhoZLieLRi/7WKay+5sQSuYTCR2LLadUKw
-         mNpnZh23geWkJmg3WeOLM/Q/feAMuGN+q4zAn6kMqJXBgwCf7witwfinFzvFaHRXnc
-         1eQ5kLeUfiYhWivTI5dnIx0B5F/VusGY8hZb8eo5oYCVMDwGSHTg1v9IVVHMWzwd/N
-         487fnPCbeMA8VJds6b+hmOMgnjZIQq0qias58w1WW1txZRVUCl5nNX6sS8LP7LbdYn
-         kT/iAAaOs6iskIGCbWVD7J323u+VAqRoKg19QvtxvrrBsVwm2uW
-Date:   Sun, 26 Jan 2020 21:50:15 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johan Herland <johan@herland.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 03/22] t3305: annotate with SHA1 prerequisite
-Message-ID: <20200126215015.GF4113372@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johan Herland <johan@herland.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
- <20200125230035.136348-4-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2001261209590.46@tvgsbejvaqbjf.bet>
- <CALKQrgcF0KK1gEvyKe3th2w0YJBbmv+grgbCeN4fOzHKo=H1UA@mail.gmail.com>
- <nycvar.QRO.7.76.6.2001261957060.46@tvgsbejvaqbjf.bet>
+        id S1727235AbgAZWI2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jan 2020 17:08:28 -0500
+Received: from mout.gmx.net ([212.227.17.22]:39683 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726252AbgAZWI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jan 2020 17:08:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1580076499;
+        bh=Fu+D1NVROL+hETHMobmAd+peE9yvDJjEvW+UTu4yDjs=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=BNl2O+R1qINjiYjDpZ/cztfODc10+vc/vRu4IpG0wdohI7WW9WEI2YKXfgOWQ8rTs
+         4iwUZpCjxYBHYqUOgjhO9H27a4BOvopKogQtfwx7y4CwqI4VftzrTXeIAMsLv5clPK
+         byzBCSXP8pt0z++pFaqfTUxuWJ0Ct8TWExvHzQMI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mlf4c-1jLrRB0uFW-00ikr6; Sun, 26
+ Jan 2020 23:08:19 +0100
+Date:   Sun, 26 Jan 2020 23:08:18 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 08/22] t4013: make test hash independent
+In-Reply-To: <20200125230035.136348-9-sandals@crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.2001262303530.46@tvgsbejvaqbjf.bet>
+References: <20200125230035.136348-1-sandals@crustytoothpaste.net> <20200125230035.136348-9-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="VuQYccsttdhdIfIP"
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2001261957060.46@tvgsbejvaqbjf.bet>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:248YGCSYDZOEzRXAp+RbTprNbdgQ0POylLgsf31DIxtYwPt2l/q
+ lKM75joX/igKv6ukbcjbF786DExybE4mQKuHB8aIvSet4TMELlaEx3B9fOIlySWAfxsAdRs
+ ham3XIzjRaik7Nc2e2LRB/Ed4+kfbqhgurSfmiI9p4B7PqUEKPBOaYoHg84CHzkZoJ0jzvm
+ jydgCBTG2m+Oq4T2He0CA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9qdP6eqHE5E=:r2WWx1hW6FA64QAXb808Ms
+ 3I1yiBVSIveiy8Pf1b97MY5bT7wSYcJjqfSYEQS7MsQg6sJYvL/xwouJxcKPO6qrWn3d/vwbj
+ ER3g2MX8sxkvd1KbSqgGan7nwrEQe4CQXZE44WDKB+mOeA+9peDEtM8bj4D0vrf7N5+lWar6V
+ gvGQEXwEZZLSnSJtNozz/XDj4jYBF5vwryuyDxz/WedZoGaY70N3BQiNZQFXrQckmfabTkyzR
+ uCit5nyToVNvO1WXB77pjrN5ej2NtFZMzMTEXFNK1zUir29BvR6jaNcgLCjqIRyj1eBJqlUPa
+ qSgLEXz2Lnk0GZjSnDMRhcknNBmf0bSQD+KBDx2ciCzdxUjqXcEfhB9HZN6Qe4CUYP+mb+5ow
+ w4/+dXgGDtLiYvxQl9z9XnIhsjrP08ndjll+RK7RgM8FsLEyB5vk6slqb2B7/+xGEmqIsRmxd
+ 0vMHaQOTqg4b5fBiUOwAz52gRYx1OcRNrfsS4xTc/Jpi9BFDKcY37g1vSSxZVF4BBcsmmsIxJ
+ g/r1Zv9aO1eLzqwNLShRTejTpFmnayHO+JgRq6LQcONeaI+NZ83pcRinJ7rFaMc1+kntjyYim
+ ZV1LsUKVuCEubncgYAbZQL3MIikfwrIv3UZxgLS4D9pfGqb0JcrAvSTZb66YbPwKUm/NdHMU5
+ mhLTuom8lQ5B9yDQoKKMxC5LA+wiv4utiRWCzcv7T711RUhpfauIek+LYc1x+FGMescdhnLMh
+ rpQvRZg+zMqxiagWl4lZOwxlj/FHvtlDVN5W4xCz1JLegmjvpEDyh7VeeGLv7h10kFW8ftOIs
+ Z/bEYJGDxmKeK5v/6rgnmKUIWnZE9IfEt0m1excgzSEXgw5sNezEr2qoG0Ro+ETC7asd2dypi
+ OMgK9hMG1sjCDVMkI6tTqSrDpDwQemgpwHsKFA7mQi8b/tR+v7AFXTMpm/F9AWPX5/wJjxD4l
+ PxUJN/FkryDcvTmTc4X9/c6V6RuoY9fFaPDHyEGSZO3MVNxiHqsvankq8/E+z8QKT1E6Mo/Z2
+ RH5HEYJXrGU1Z1DMhQfjtqaSkhFTA3XzcE8TwWf7Lxjew07fbqcrPYvg5G7wZK2Z93WvhciYt
+ cRJU0RGgH9VWdWbYJbcNsuCdGaKdRw1QlFDfu65QW0WCb8cWWyKWySjLEXWBEcldDFy682x8e
+ AJLNjKBxuoHPcnTnddoYLCM5Fpev2Dkoi6i1ivaZRr6fBwiL2nbObB0vWfyiAqr23loFEiSaZ
+ yhfXhi6FkEqb4O5NN
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi brian,
 
---VuQYccsttdhdIfIP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, 25 Jan 2020, brian m. carlson wrote:
 
-On 2020-01-26 at 21:28:58, Johannes Schindelin wrote:
-> brian, would you mind adopting this patch into your patch series? For your
-> convenience, I pushed it up as `t3305-sha256-fanout` (based on your
-> `transition-stage-4`) to https://github.com/dscho/git.
+> This test produces a large number of diff formats and compares the
+> output with test files that have content specific to SHA-1. Since we are
+> more interested in the format of the diffs, and not their specific
+> values, which are tested elsewhere, add a function which uses sed to
+> transform these specific object IDs into generic ones of the right size,
+> which we can then compare.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/t4013-diff-various.sh | 44 +++++++++++++++++++++++++++++++++++------
+>  1 file changed, 38 insertions(+), 6 deletions(-)
+>
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 5ac94b390d..6f5f05c3a8 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -120,6 +120,30 @@ test_expect_success setup '
+>  +*++ [initial] Initial
+>  EOF
+>
+> +process_diffs () {
+> +	x04=3D"[0-9a-f][0-9a-f][0-9a-f][0-9a-f]" &&
+> +	x07=3D"$_x05[0-9a-f][0-9a-f]" &&
 
-Absolutely.  Thanks so much for both of your work on this, and for
-confirming that it's just a heuristic difference and not a bug in the
-code.
+Any reason not to stay with the convention, i.e. using `_x04` and `_x07`
+here (with leading underscores)?
 
-I'll send out a v3 soon.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> +	sed -e "s/$OID_REGEX/$ZERO_OID/g" \
+> +	    -e "s/From $_x40 /From $ZERO_OID /" \
+> +	    -e "s/from $_x40)/from $ZERO_OID)/" \
+> +	    -e "s/commit $_x40\$/commit $ZERO_OID/" \
+> +	    -e "s/commit $_x40 (/commit $ZERO_OID (/" \
+> +	    -e "s/$_x40 $_x40 $_x40/$ZERO_OID $ZERO_OID $ZERO_OID/" \
+> +	    -e "s/$_x40 $_x40 /$ZERO_OID $ZERO_OID /" \
+> +	    -e "s/^$_x40 $_x40$/$ZERO_OID $ZERO_OID/" \
+> +	    -e "s/^$_x40 /$ZERO_OID /" \
+> +	    -e "s/^$_x40$/$ZERO_OID/" \
+> +	    -e "s/$x07\.\.$x07/fffffff..fffffff/g" \
+> +	    -e "s/$x07,$x07\.\.$x07/fffffff,fffffff..fffffff/g" \
+> +	    -e "s/$x07 $x07 $x07/fffffff fffffff fffffff/g" \
+> +	    -e "s/$x07 $x07 /fffffff fffffff /g" \
+> +	    -e "s/Merge: $x07 $x07/Merge: fffffff fffffff/g" \
+> +	    -e "s/$x07\.\.\./fffffff.../g" \
+> +	    -e "s/ $x04\.\.\./ ffff.../g" \
+> +	    -e "s/ $x04/ ffff/g" \
+> +	    "$1"
+> +}
+> +
+>  V=3D$(git version | sed -e 's/^git version //' -e 's/\./\\./g')
+>  while read magic cmd
+>  do
+> @@ -158,13 +182,15 @@ do
+>  		} >"$actual" &&
+>  		if test -f "$expect"
+>  		then
+> +			process_diffs "$actual" >actual &&
+> +			process_diffs "$expect" >expect &&
+>  			case $cmd in
+>  			*format-patch* | *-stat*)
+> -				test_i18ncmp "$expect" "$actual";;
+> +				test_i18ncmp expect actual;;
+>  			*)
+> -				test_cmp "$expect" "$actual";;
+> +				test_cmp expect actual;;
+>  			esac &&
+> -			rm -f "$actual"
+> +			rm -f "$actual" actual expect
+>  		else
+>  			# this is to help developing new tests.
+>  			cp "$actual" "$expect"
+> @@ -383,16 +409,22 @@ test_expect_success 'log -S requires an argument' =
+'
+>  test_expect_success 'diff --cached on unborn branch' '
+>  	echo ref: refs/heads/unborn >.git/HEAD &&
+>  	git diff --cached >result &&
+> -	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--cached" result
+> +	process_diffs result >actual &&
+> +	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--cached" >expected &&
 
---VuQYccsttdhdIfIP
-Content-Type: application/pgp-signature; name="signature.asc"
+I was about to suggest letting `process_diffs` work in-place, but this
+line makes that idea moot.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+Another idea I had was to implement a `test_cmp_diff` that processes the
+diffs and then compares them, but I guess that would be _less_ concise
+than this patch.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4uCZYACgkQv1NdgR9S
-9ouJ6g//UoXIEFFKIg3FOmIuUCWMUzzlgfqRGrTmkveoRShHYBuasgRIWR2XgQsF
-jMOA09aOZoJHh1j5PBBGxV5DO39NTs4EQkcvs7I/1mSIIHPgRYZsCBW73WOzeoks
-ZwFQVgEPEDVmibgu+HABotCZHjTVHiqgtXgf3ohacXOGYcDL70GYihR6z+Wtd9SJ
-oB0znXlR6/6Qd8uvd3iXMnV3/wR0DZjH7jtPpENZsMRt6qf/St32RJbXXGnRHX2s
-5Cm1Hko8mp+A5m60weoif+iLZHcYOhDK67BVN3aoIar9Xz853NOP5SmwOl92Jzte
-QteJK3rmtjDDWATdglbG/uTThG9ylcvw85RQ1XVPgL3AMbqFWjv5USyeKMwvndlN
-Wg8oyJ/JXQaMVWNrOm73feMnuId68hC5YtupnI3A7IfXQ0gNh7Br0EuOXaFDNWll
-jh3p3yR9a8QzVrftnXRyj2ZGEiROnCNSNLg8h7kPDjz1+TyIwQSfrjSEfEevQyTB
-v45ACyYYLLD7pQbn7W7pV8mJq8QKhA/KhPpoAAXUT+THUrUcIldnNBwl6TV/KTlI
-UOY2Qckx8YZE6hyHvgxp77OxrL0cYxigyTj4gsuFPLW7bLacRyPI/R2FwzyQKkLi
-jDfkrmy0pTPBOD0g9km0wnNWDyvq3zpBaeUTGmQuOZJmZ+kjTF4=
-=qfHm
------END PGP SIGNATURE-----
+Looks good,
+Dscho
 
---VuQYccsttdhdIfIP--
+> +	test_cmp expected actual
+>  '
+>
+>  test_expect_success 'diff --cached -- file on unborn branch' '
+>  	git diff --cached -- file0 >result &&
+> -	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--cached_--_file0" result
+> +	process_diffs result >actual &&
+> +	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--cached_--_file0" >exp=
+ected &&
+> +	test_cmp expected actual
+>  '
+>  test_expect_success 'diff --line-prefix with spaces' '
+>  	git diff --line-prefix=3D"| | | " --cached -- file0 >result &&
+> -	test_cmp "$TEST_DIRECTORY/t4013/diff.diff_--line-prefix_--cached_--_fi=
+le0" result
+> +	process_diffs result >actual &&
+> +	process_diffs "$TEST_DIRECTORY/t4013/diff.diff_--line-prefix_--cached_=
+--_file0" >expected &&
+> +	test_cmp expected actual
+>  '
+>
+>  test_expect_success 'diff-tree --stdin with log formatting' '
+>
