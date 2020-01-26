@@ -2,147 +2,98 @@ Return-Path: <SRS0=UUNX=3P=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 924EAC2D0DB
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 19:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D96AC2D0DB
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 20:07:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5BF192070A
-	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 19:45:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6D47720702
+	for <git@archiver.kernel.org>; Sun, 26 Jan 2020 20:07:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tTHYHnR0"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eImjoNer"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727233AbgAZTpB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 26 Jan 2020 14:45:01 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:47536 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726657AbgAZTpB (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 26 Jan 2020 14:45:01 -0500
-Received: from camp.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b610:a2f0:36c1:12e3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 1D8D960734;
-        Sun, 26 Jan 2020 19:45:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1580067900;
-        bh=yYYQ3Aw2Ch27hgbyjNYqyFDgdQLq/Xr+NSpTItkJjrc=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tTHYHnR0lfdJaSVAHs0WmglOiy9SD050JngAbbzFjdHzOI7ZuwKMmU4nphXSn/oiJ
-         vZwZz66K8TKhe7kPEBbiXyRaG220/Dv6hYT2idieBQehdn3Q63PRLiB3jnLwsjTAEe
-         LcwDLojwafUhIOws3VE26TgdwKprCRKhHRVXtUCjRUqoN1MMZqeVvJTlQJR2t+zEPR
-         MHHvaN/5MYzbgBgPHKNVub8K9gEjLfHvF8ct7gEAmzIB7co+dVxcQmSfL4wZ17/Sh1
-         4HXizpPiGR22UuIJjLYFyN33uODOVZxXUm6ufZ4I1HqWOb5fhE6Hf3eur+OatTEf6X
-         A74pk4ZRtrBj4C+ok9/PHm/S4Hrn68uoOxSEba5Wmny3Urwld8QjxQFoRrOP12mnCu
-         yRV7YLIQuT6Cb9LNfVFE7DQosphWGnzf39DImJUCrDTGu4S4CKhv9Yu/06Ym0fO7iK
-         RLyv/haQbh2Y5d43n8OMZo4m9QkSBZo3Ux6erKBCT5xsw8WLSqQ
-Date:   Sun, 26 Jan 2020 19:44:56 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v2 03/22] t3305: annotate with SHA1 prerequisite
-Message-ID: <20200126194456.GE4113372@camp.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Johan Herland <johan@herland.net>
-References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
- <20200125230035.136348-4-sandals@crustytoothpaste.net>
- <nycvar.QRO.7.76.6.2001261209590.46@tvgsbejvaqbjf.bet>
+        id S1726871AbgAZUHc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 26 Jan 2020 15:07:32 -0500
+Received: from mail-qv1-f53.google.com ([209.85.219.53]:42923 "EHLO
+        mail-qv1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726087AbgAZUHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Jan 2020 15:07:32 -0500
+Received: by mail-qv1-f53.google.com with SMTP id dc14so3546205qvb.9
+        for <git@vger.kernel.org>; Sun, 26 Jan 2020 12:07:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=xO4mnRvqdgVxWTwXPd0HlDEo/Ux29NES1yuzLMbsuGI=;
+        b=eImjoNer2oUjp2f+iOnwDXS1FmDzYs6+WydVZUUh0Ld+MJ94RivdGhYuFBNkW7ztV9
+         KbI0qJ0+Ri+AKmy0u5suGxfEeFedeKD8Yp15uwgPpnInXq23mPWP5/wYMR8fB2klRGhp
+         CK4Q9BYINexaBLseYggKRh1o4KHF+unZJGy4dQ4HJ1eltsjSnzbODQmrtmLcgqD3EtTE
+         w2F59/cOhRWvzBSRK40x8MRY3dCfv4FDsgTBfHO706xBlrFhwayNjyB3beFnX9XfP4qr
+         V2OfXh79twKXBCMFE3y7Li6U0PsE4vRvfXTtXLSJNvLEgiBhwI6fQZ2q8YDAm4S8qvMK
+         rbpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xO4mnRvqdgVxWTwXPd0HlDEo/Ux29NES1yuzLMbsuGI=;
+        b=U7Zzwcuj8aZuTgg4q16EGQDVzrvOtTsehMxVZ4Tw1LlnCuXLLHAU4ug0LD4D1vSVdx
+         uGzIFZVlgasZNZLUVsY/I/YeV6fZQnfTZO21fF8kgJAzuSNque8AdgHLJo2fT6EvbqIo
+         yxf3h+IdEUyS5PpVt+b6IuTAssURX6ASVu1SMsW6U1VL82S4ZpzrCj3AQxRCetmqMR50
+         a0uubAeW3KgiahNgURMkGZaZiFdongb0c2sEXLGPzB+K68MOgVAVJ6YJ4qqJ7DekxAUx
+         D28cySHCUuxYGbQHECd3cZW9pALvR6T/pXmdJPG/m+QS5bbJNPTIuoqD+WcCN4Ppncay
+         SKTg==
+X-Gm-Message-State: APjAAAUBDYZ9DGb6nzoJ3pxtIzBHb09jiqKfJznZZszxnzu9kUVCw88+
+        m3iVWse+iUojAouUagS8YyM=
+X-Google-Smtp-Source: APXvYqzOWdLWbu7yhYpD66psRh4Mn2TBdtW/06B/Oy+3Q9CP3q9z6/LIeII2MkOfGYC9+m1d/ci1BA==
+X-Received: by 2002:a05:6214:80c:: with SMTP id df12mr13260219qvb.113.1580069251622;
+        Sun, 26 Jan 2020 12:07:31 -0800 (PST)
+Received: from generichostname ([199.249.110.29])
+        by smtp.gmail.com with ESMTPSA id m18sm7774222qtm.60.2020.01.26.12.07.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 26 Jan 2020 12:07:30 -0800 (PST)
+Date:   Sun, 26 Jan 2020 15:07:28 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
+Message-ID: <20200126200728.GA233163@generichostname>
+References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="SWTRyWv/ijrBap1m"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.2001261209590.46@tvgsbejvaqbjf.bet>
-X-Machine: Running on camp using GNU/Linux on x86_64 (Linux kernel
- 5.3.0-3-amd64)
+In-Reply-To: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---SWTRyWv/ijrBap1m
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Jan 22, 2020 at 02:18:05PM -0800, Junio C Hamano wrote:
+> * ds/sparse-cone (2020-01-10) 1 commit
+>  - unpack-trees: correctly compute result count
+> 
+>  The code recently added in this release to move to the entry beyond
+>  the ones in the same directory in the index in the sparse-cone mode
+>  did not count the number of entries to skip over incorrectly, which
+>  has been corrected.
+> 
+>  Will merge to 'next'.
 
-On 2020-01-26 at 11:15:52, Johannes Schindelin wrote:
-> I would rather see this tested, still, and reducing the number of notes
-> that are retained from 50 to 20 before testing that the fanout has been
-> reduced to 0 seems to do the trick. Therefore, I would love to submit this
-> for squashing:
->=20
-> -- snip --
-> diff --git a/t/t3305-notes-fanout.sh b/t/t3305-notes-fanout.sh
-> index 3520402bb81..39b12c9902c 100755
-> --- a/t/t3305-notes-fanout.sh
-> +++ b/t/t3305-notes-fanout.sh
-> @@ -43,7 +43,7 @@ test_expect_success 'many notes created with git-notes =
-triggers fanout' '
->  '
->=20
->  test_expect_success 'deleting most notes with git-notes' '
-> -	num_notes=3D250 &&
-> +	num_notes=3D280 &&
->  	i=3D0 &&
->  	git rev-list HEAD |
->  	while test $i -lt $num_notes && read sha1
-> @@ -56,8 +56,8 @@ test_expect_success 'deleting most notes with git-notes=
-' '
->  '
->=20
->  test_expect_success 'most notes deleted correctly with git-notes' '
-> -	git log HEAD~250 | grep "^    " > output &&
-> -	i=3D50 &&
-> +	git log HEAD~280 | grep "^    " > output &&
-> +	i=3D20 &&
->  	while test $i -gt 0
->  	do
->  		echo "    commit #$i" &&
-> @@ -67,7 +67,7 @@ test_expect_success 'most notes deleted correctly with =
-git-notes' '
->  	test_cmp expect output
->  '
->=20
-> -test_expect_success SHA1 'deleting most notes triggers fanout consolidat=
-ion' '
-> +test_expect_success 'deleting most notes triggers fanout consolidation' '
->  	# Expect entire notes tree to have a fanout =3D=3D 0
->  	git ls-tree -r --name-only refs/notes/commits |
->  	while read path
-> -- snap --
+This commit has incorrect authorship information for Stolee. The author
+is listed as "Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>"
+due to a bug (which has been fixed) in GGG. We should fix the authorship
+information before merging to 'next'.
 
-Sure, that's a fine solution instead.  I'll squash that in and update
-the commit message.  I'll CC you for your sign-off once I've done that.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+On the topic of faulty authorship information, I sent along two mailmap
+changes that were dropped[1][2]. Could you please pick these up?
 
---SWTRyWv/ijrBap1m
-Content-Type: application/pgp-signature; name="signature.asc"
+Thanks,
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.19 (GNU/Linux)
+Denton
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAl4t7DgACgkQv1NdgR9S
-9os9JRAAqGqo6LCq9SjH5zUTBCM0YkBklMwbq929DuCMZUOF4bUzwSqBpqujI3ww
-82DEw4MkrPXMARF89k7yhl65sjAYrGYgkpDewkgcBLH2m+yWZ9mzqLjXbT6xrqsh
-t4hRvCkLJBLuIf13ORyP8mP7nBF5NGj5qHfjtTVRitIhrB9yOlQ5UdGqnDarhfg7
-MUlRivlmT9GRHhwRPWBi001ZIKnBN5AfIZGeGpeK40bc0yR8FALUgXbd+477hTza
-YnNWJUbHEQPeW2QUvIUqIs8ySr8x18uSL2MICXpp1f1AJPvvbfZKqducQBIpbBpl
-iNWEalMOzpEt8py3SPf/qbg80f6FQhPghsX+MZQ02q2Rq0ukCS/KFH24Ru5hD0bK
-FLqaGQ15qjoKBvSQ4kwERj2PU5qYQOFJ8QulOqpxFcG+ZInm/m4uYJ2i1X0UWqRN
-0h7jFPG9bkyoaKOaMoC0b5i4H1sbtxCNqIj6+DY/XGUjLwDFCNAjpUzgkDXKXU6c
-vJuH8N8lfbBjupII7cFTh1QHWMP0YMMUpyx3B7XDrto/1o5txAyS/wUKbZiVIDZQ
-1BWtqo3yB50ROCE74YwecyFmwfQjU/a4iECBSpWVNvR6WAS6Z+zfdYMJgQIbzqn4
-hCcdrUtiOLbolhl6rElSzBMUAAGMgZI6E0vGDTvaeqnB5ejpP+U=
-=Z7hh
------END PGP SIGNATURE-----
-
---SWTRyWv/ijrBap1m--
+[1]: https://public-inbox.org/git/20200114024938.GA17003@generichostname/
+[2]: https://public-inbox.org/git/21b8a0d08764c31de12ef7661667eb1117d41ac4.1578972215.git.liu.denton@gmail.com/
