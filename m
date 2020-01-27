@@ -2,102 +2,94 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	MENTIONS_GIT_HOSTING,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F797C2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 13:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9624BC33CB1
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 13:57:22 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B2DE3207FD
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 13:53:09 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6DAA3214D8
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 13:57:22 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b="k/MkL9tZ"
+	dkim=pass (2048-bit key) header.d=xs4all.nl header.i=@xs4all.nl header.b="MqAZR1eL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728899AbgA0NxI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 08:53:08 -0500
-Received: from lb3-smtp-cloud9.xs4all.net ([194.109.24.30]:39485 "EHLO
-        lb3-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726303AbgA0NxI (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Jan 2020 08:53:08 -0500
-Received: from mail-oi1-f170.google.com ([209.85.167.170])
+        id S1727430AbgA0N5V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 08:57:21 -0500
+Received: from lb2-smtp-cloud9.xs4all.net ([194.109.24.26]:48385 "EHLO
+        lb2-smtp-cloud9.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726303AbgA0N5V (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Jan 2020 08:57:21 -0500
+Received: from mail-oi1-f179.google.com ([209.85.167.179])
         by smtp-cloud9.xs4all.net with ESMTPSA
-        id w4p4iLYf3T6sRw4p8i8EKX; Mon, 27 Jan 2020 14:53:06 +0100
+        id w4t9iLaCGT6sRw4tDi8FIv; Mon, 27 Jan 2020 14:57:19 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=s1;
-        t=1580133186; bh=dJhfqijYXOL+5rygYcgBZrfTarKr8h+kZ6l22ZVbpf8=;
+        t=1580133439; bh=Y6Y8sL5/0DOSYGz4vJAZeR+jS8wZ9RJccbyXqFgLccE=;
         h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type:From:
          Subject;
-        b=k/MkL9tZMfpLMnZba+MOdyr4SUxh/NwKpPRa6WfP0cqgHqWFoxQ0EGnyh1VPzKnSV
-         mNG9Fjwlh/1g0eHdZTwyFZ9svdidJalJo33Clrfxk9Cx5ms8N4hIS2xd7ut4MDYe/L
-         bjaKBgKl5PUxd/zsji49p1okyy+Hrt6N9FssFFmex1tyXVswYo5lCmjpca8lR1G3Mf
-         SzN21Cyw1HEnaASv9888eWcfOeNxrlywgKih3mwQ4KtI9RlAQ/IVep3wvtrwbhJ9Qs
-         C+b2opojHKe31p8HZTcF1W9S2KsK3EnP0RU+jAcrJXIrmom/YT0QPowLALrWKyu8LQ
-         0ti4H2TBRYpRA==
-Received: by mail-oi1-f170.google.com with SMTP id p125so6657560oif.10
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 05:53:06 -0800 (PST)
-X-Gm-Message-State: APjAAAXY4asY4ikKWUeNZuAd0han/87KPWY0mpFUBlombkLVVGW2LwzK
-        LsEiYJ8a28oEarhhGHlsG0lpKbf4YYD5RMePsbg=
-X-Google-Smtp-Source: APXvYqwI4BgmfiOwFz0W5WJna+kUVy2Ov6yLqqk9WrBknd7J/2CxinFP/K8T4TwjPGkiVxHlAK4j1mBhXt+DiFx+lPM=
-X-Received: by 2002:aca:5795:: with SMTP id l143mr4731078oib.27.1580133182612;
- Mon, 27 Jan 2020 05:53:02 -0800 (PST)
+        b=MqAZR1eLaMGnkyh7zg872Aax8pzbzDTkh7HfpSf60Yg2Vpnwf8Csx5i4rNUBPU64C
+         J91cPH1JyEdWIFbhfnotGtybo0Jx0TF2/kl3KFibY8m2e3gXKSxLEBZGCNt/yZtj+j
+         U6rKQDPQEiOQS4jkbsw4kNl5O3VyBI5+2EZKtVmENBrZZHPVRwr1E5JtSP+9hPajSl
+         ft/MsdaF59C1BL054vCVP3ErFBrd3dsegedNr8O5a0hrTPo3CnGD7wDSkBsKut7VsY
+         +OX1MUQvg9d8bW9FpozoVqxL+OXpm6EtRGZgXmj1nHzaMFB6tXzpI0I8Fx6EChEhq6
+         9usbTLyt7dBoA==
+Received: by mail-oi1-f179.google.com with SMTP id c16so6706958oic.3
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 05:57:19 -0800 (PST)
+X-Gm-Message-State: APjAAAVro8iWj+yxyUl7FnJZR91hkQLSNVXpRET9UgIRbZrnc3JMhpGx
+        MpE04158MQaFHcP6WRF/LliguvkJeN7R7XJalOI=
+X-Google-Smtp-Source: APXvYqxMLuCPpimJ0DCG/+8lKFV1cwAqiWRV5Fya2WCprU74hfoWNtPWxABmhMTcgoro0//XkV4XDE8/8oUi3YA+VfA=
+X-Received: by 2002:aca:503:: with SMTP id 3mr7585780oif.106.1580133435571;
+ Mon, 27 Jan 2020 05:57:15 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com> <xmqqy2tx3l1y.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy2tx3l1y.fsf@gitster-ct.c.googlers.com>
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com> <cdf5fd5a-49ac-cc0c-8da4-68c82cdd883c@gmx.net>
+In-Reply-To: <cdf5fd5a-49ac-cc0c-8da4-68c82cdd883c@gmx.net>
 Reply-To: hanwenn@gmail.com
 From:   Han-Wen Nienhuys <hanwen@xs4all.nl>
-Date:   Mon, 27 Jan 2020 14:52:51 +0100
-X-Gmail-Original-Message-ID: <CAOw_e7Y7w2Az65iuzWT5SHLv+iHwFZ=ZE11TFS=m0Vh59M2a=A@mail.gmail.com>
-Message-ID: <CAOw_e7Y7w2Az65iuzWT5SHLv+iHwFZ=ZE11TFS=m0Vh59M2a=A@mail.gmail.com>
+Date:   Mon, 27 Jan 2020 14:57:04 +0100
+X-Gmail-Original-Message-ID: <CAOw_e7askCpVH-7Bsnsp+t_u8VZz2Y=ZtfB9m-O1-Jva2hj8cQ@mail.gmail.com>
+Message-ID: <CAOw_e7askCpVH-7Bsnsp+t_u8VZz2Y=ZtfB9m-O1-Jva2hj8cQ@mail.gmail.com>
 Subject: Re: [PATCH 0/5] Reftable support git-core
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
+To:     Stephan Beyer <s-beyer@gmx.net>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-X-CMAE-Envelope: MS4wfNApmtif4p+qFNZz/49Me0CF4F2g6ahxiCW7UC/0rKUsxSH/6CQG0myvMbGhbQhm13SNRSMyee1jvN05qZ5nKDGkDkeM2z1M9m5q5pBDJW/P2jzc402I
- 5hhEbr5duGqNJ0aC8VbXqe8GUkEFwyIllPsAuXLroKDilB2bU80KjuxTQDvTwRiuLqBpB6F3VW7PQw==
+X-CMAE-Envelope: MS4wfJ1pmOXcaNenKGh9rwWARchu7Ya0AtXvtb0Ldi6h5f/STcvnH7plGls+bUwGbO0DmzX6trc7tDpRMFfANzDRiVPXuX3LFj8LWNcbzxsF4djz6/nvDXpd
+ 5p9nHxGSHJKBsLwC2nrS77heIEOsI0hnQJOa3qYzlo51V3uVFT45+XFyJjd/Yf4WiV6acO3FmoQWFw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 23, 2020 at 10:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+I added some more background in one of the commit messages. You can
+find extensive discussion here:
+
+  https://github.com/google/reftable#background-reading
+
+
+On Thu, Jan 23, 2020 at 11:45 PM Stephan Beyer <s-beyer@gmx.net> wrote:
+>
+> Hi Han-Wen,
+>
+> On 1/23/20 8:41 PM, Han-Wen Nienhuys via GitGitGadget wrote:
 > > This adds the reftable library, and hooks it up as a ref backend.
+> >
+> > Han-Wen Nienhuys (5):
+> >   setup.c: enable repo detection for reftable
+> >   create .git/refs in files-backend.c
+> >   Document how ref iterators and symrefs interact
+> >   Add reftable library
+> >   Reftable support for git-core
 >
-> Just a quick impression before getting into details of individual
-> steps.
+> I am most of the time just a curious reader on this list but as someone
+> who has no idea what the reftable library does (except that it can serve
+> as a "ref backend"), I would expect much more elaborate commit messages.
+> In particular, patch 4/5 (i.e. the commit message of the "add reftable
+> library" commit) should describe the purpose of the reftable library at
+> least briefly; and patch 5/5 should not contain shell commands and
+> output without context but a short description why the patch is doing
+> what it is doing. For example, if the use of the reftable library makes
+> certain git commands a lot faster, it should state that.
 >
->  * With this series, the reftable backend seems to take over as the
->    default and only backend.  We would need to design and decide how
->    repositories would specify which backend it uses (I personally do
->    not think we need to allow more than one backend to be active at
->    the same time) before we take this series out of RFC status.
-
-Yes, obviously. Would you have concrete ideas on how this should work?
-
->  * What's reftable/VERSION file?  Does it really have what you
->    intended to add?
-
-Fixed, and explained in reftable/VERSION.
-
->  * Mixed indentation and many whitespace breakages make the code
->    distracting to review.
-
-Do you mean in the changes to refs/reftable-backend.c? Or the imported code?
-
-The imported code is uniformly formatted with clang-format.
-
-Is there a clang-format setting for uniformly formatting to Linux/Git
-style? I really love automated formatting, so we don't have to spend
-time debating irrelevant details.
-
-
+> Thanks.
 >
->  * Comparison with 0 is written as "if (!strcmp(a, b))" in this
->    codebase, and never "if (0 != strcmp(a, b))".
->
->  * We unfortunately do not use var defn "for (int i = 0; ..." yet.
->
->  * We do not use // comments.
->
-
-fixed.
+> Stephan
