@@ -5,68 +5,68 @@ X-Spam-Level:
 X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E4EDC35242
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 07:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B932C32771
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 08:16:00 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 64E2C21569
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 07:04:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DC2B921927
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 08:15:59 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="DkwCu2sm"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="XALJbRFN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727738AbgA0HEo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 02:04:44 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35772 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727349AbgA0HEn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 02:04:43 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p17so5804311wmb.0
-        for <git@vger.kernel.org>; Sun, 26 Jan 2020 23:04:41 -0800 (PST)
+        id S1728658AbgA0IP6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 03:15:58 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44059 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728420AbgA0IP6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 03:15:58 -0500
+Received: by mail-wr1-f68.google.com with SMTP id q10so9969833wrm.11
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 00:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PXqzKYCM93B+OFfZqNOaYnQpMhd6zfOAEEX76utp1is=;
-        b=DkwCu2smse048nA4ABeLCiwGIaVRekuQCH0B1vzWT/R6+0+L9whSqgpC7TfEUP5sp7
-         tz9Cj3ilpF/vH2nBn5O8GWoh0dMmpjea6B3Uq/XN07iB+KiwqMRgU9JHhWSltMYxDzAl
-         ImQPpPTruIMYBRNEZFI2sBhJkZLTkgUmBKOU/bN3IY4bYGP8S9AUDcfECSsk7ZnpGg3u
-         a3PWFMpzrTBVauK/aRUSgCrjy2KNgvTrV4NRgpLwLy9JUWCCv3tKCkbqooUs+hjtuXI7
-         De2fGmB/y20luXNzXhDS/pqD7jDvvQfe7saM0Y4wKUoh14dCoiHepaqZQgKkSmEEaN/z
-         m6iA==
+        bh=dZPdlKVIVkEtvvYxVMmwM8dE/3MaJownzbyDTz5A4rg=;
+        b=XALJbRFNPisnjdyM7bCA4a/uw+nPK2GhbfLuJcbpljxdEPnJwLx1v8DMzWLEzTdyOV
+         UP97f7jyHcxQrpQwyMR1XS26oZN1IZKQHSM5Md7oktpUF6QAIfoCrPBTxuEmO//kXqBs
+         gnDeWP0xtAwFJozrpIDT3TXJ7cS+lByLVYsrIv/OoAFFbO4oLIDJtbNOa+5+xa3q86rc
+         W188WVpXH7xR2cqyuNtHSywU9EIZdmJVARMwMp+AZR89fG+SgD8Vyvi/D/8J254OJtnn
+         SVpJuFL3ZkrPWgAo0ap9vpKf6EZqxItJ5oOY2GuN2SAeIRHg08kHWThBlFbPyak8oICS
+         ZROQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=PXqzKYCM93B+OFfZqNOaYnQpMhd6zfOAEEX76utp1is=;
-        b=E2NoLrsTtaViHlc9mocUOYdfnEi8MQV6MzvLgT4NZhvuHTD7S34Z/yzyE6tATgm446
-         NJtutubF43kP1R8jP/l214Pc+fTfO1+ZiSIoVR+fRVOuxAyAR20cZBX5OmWDQxB54gZL
-         XbnKHFEThpHKlxmPjZ9BkCckUTXakVl6dZd0xr+ynfDfP3EL4/j07889nZMKb+URPWLv
-         Ih2auUvUUwhMX0u7Gx+vyW/s/rvlgbzxARceUR8IMVkMGbT9NCi6Lfkx/UPG9E1jUDmo
-         d4gY2vlNvzPqU9fTqabjhTHBvAlDuqPX9/eKHSLoa9hRS1hScErTtgcvVfnjzz1ycd/d
-         a9nQ==
-X-Gm-Message-State: APjAAAXU5ncKvRPzxy8H7rDNK0N5uwbqGIYrJXYXBxuKSqa44duNpyMW
-        7IUkzXgfTqa8G/BKny0=
-X-Google-Smtp-Source: APXvYqzhirEOGHkacuTCp/UBX5T1D7Q56XDp712TxGKZryLeOu5QPLWx4PBhuZppzCM/Y8cplsZMsA==
-X-Received: by 2002:a7b:cc98:: with SMTP id p24mr12334749wma.139.1580108680472;
-        Sun, 26 Jan 2020 23:04:40 -0800 (PST)
-Received: from localhost ([2a02:810a:8c80:d2c:1d4:baf0:179f:5856])
-        by smtp.gmail.com with ESMTPSA id t1sm18282701wma.43.2020.01.26.23.04.39
+        bh=dZPdlKVIVkEtvvYxVMmwM8dE/3MaJownzbyDTz5A4rg=;
+        b=ke0A4hrTYdIvplaAVY188ybR8JpBzFxKe3Vu60oy0ISKtuz9xzAt4Wx3UzO1JhOkbD
+         zAPDYZ24dQhDTqVbhyx3ivoEzYZAi6YcRCTLbaUoOk4J4zE7+3fi3yfMN0TSZ1C4P5jn
+         wc3iPIYkbpaur8OSZVZbt457xVUx8SBej3tgBIFSP0uHOcoEQgdAdXuSHoVEu9975Hz3
+         +xp9uBsA8KLAoap66vIZhvzU6xoozH1Qw35L4bCO3cZCDWX15s6r+dMGyd/8jZNeFa6q
+         A1LQuBIkCf6a+hpeyD6/tq+mra6DySzQt+aChrxj2vAgBurakGI50NAqB2L9gW2SBxNU
+         0B0g==
+X-Gm-Message-State: APjAAAWyh1vjky4jd17UfpjPvqOXWPZtK6mLalpk+H1yQkKjUQt/Ky9O
+        j1qT9OisT6T0AVKavec=
+X-Google-Smtp-Source: APXvYqxXeyHCVd57QH+3Drm4jUB7hNe2JsMSbOoSnQt0jd7zlXdp0j4Wl8V1p7qsfb+RcPW4dx/AUw==
+X-Received: by 2002:a05:6000:50:: with SMTP id k16mr19057748wrx.145.1580112955851;
+        Mon, 27 Jan 2020 00:15:55 -0800 (PST)
+Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
+        by smtp.gmail.com with ESMTPSA id y20sm9287846wmj.23.2020.01.27.00.15.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 26 Jan 2020 23:04:40 -0800 (PST)
+        Mon, 27 Jan 2020 00:15:55 -0800 (PST)
 From:   Bert Wesarg <bert.wesarg@googlemail.com>
 To:     git@vger.kernel.org
 Cc:     Bert Wesarg <bert.wesarg@googlemail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Matthew Rogers <mattr94@gmail.com>
-Subject: [PATCH v2 6/6] remote rename/remove: gently handle remote.pushDefault config
-Date:   Mon, 27 Jan 2020 08:04:32 +0100
-Message-Id: <029dd071038db1daf590d5224076c089cfd060bc.1580108477.git.bert.wesarg@googlemail.com>
+Subject: [PATCH v3 6/6] remote rename/remove: gently handle remote.pushDefault config
+Date:   Mon, 27 Jan 2020 09:15:54 +0100
+Message-Id: <965b587f5834c88532476b56da95ead605d16000.1580110970.git.bert.wesarg@googlemail.com>
 X-Mailer: git-send-email 2.24.1.497.g9abd7b20b4.dirty
-In-Reply-To: <cover.1580108477.git.bert.wesarg@googlemail.com>
-References: <cover.1580108477.git.bert.wesarg@googlemail.com>
+In-Reply-To: <029dd071038db1daf590d5224076c089cfd060bc.1580108477.git.bert.wesarg@googlemail.com>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -96,9 +96,9 @@ configuration though.
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
 
-Matthew, you are in Cc because of your current work 'config: allow user to
-know scope of config options'. I think I'm correct to assuming an ordering
-of the enum config_scope.
+Sorry, <029dd071038db1daf590d5224076c089cfd060bc.1580108477.git.bert.wesarg@googlemail.com>
+missed the ammend to let it work with mr/show-config-scope. Please drop that in
+favor of this one.
 
 Changes since v1:
  * handle also 'git remote remove'
@@ -112,7 +112,7 @@ Cc: Matthew Rogers <mattr94@gmail.com>
  2 files changed, 128 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/remote.c b/builtin/remote.c
-index a2379a14bf..7404e50c13 100644
+index a2379a14bf..5af06b74a7 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
 @@ -615,6 +615,55 @@ static int migrate_file(struct remote *remote)
@@ -147,9 +147,9 @@ index a2379a14bf..7404e50c13 100644
 +	struct push_default_info push_default = {
 +		old_name, CONFIG_SCOPE_UNKNOWN, STRBUF_INIT, -1 };
 +	git_config(config_read_push_default, &push_default);
-+	if (push_default.scope >= CONFIG_SCOPE_CMDLINE)
++	if (push_default.scope >= CONFIG_SCOPE_COMMAND)
 +		; /* pass */
-+	else if (push_default.scope >= CONFIG_SCOPE_REPO) {
++	else if (push_default.scope >= CONFIG_SCOPE_LOCAL) {
 +		int result = git_config_set_gently("remote.pushDefault",
 +						   new_name);
 +		if (new_name && result && result != CONFIG_NOTHING_SET)
