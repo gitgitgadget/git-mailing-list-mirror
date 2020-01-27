@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B908FC33CB7
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 14:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B05DEC2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 14:22:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8DA1821739
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 14:22:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 85DC920716
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 14:22:33 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nx3Y3aDB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX0BWIdC"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729012AbgA0OWa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 09:22:30 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38469 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727177AbgA0OWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 09:22:30 -0500
-Received: by mail-wr1-f68.google.com with SMTP id y17so11526492wrh.5
+        id S1729028AbgA0OWc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 09:22:32 -0500
+Received: from mail-wm1-f45.google.com ([209.85.128.45]:53695 "EHLO
+        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgA0OWb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 09:22:31 -0500
+Received: by mail-wm1-f45.google.com with SMTP id s10so3427081wmh.3
         for <git@vger.kernel.org>; Mon, 27 Jan 2020 06:22:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=rqLNVKHHq/bE/3ZWd1Y+DNOVqrq+R1A15fI8ANwYqeQ=;
-        b=nx3Y3aDBsAQEGkWw7psj0gbEYxAQbOTRclxnmoIRAuPX+1zIc8FQ6ezUElJ6olqRXQ
-         U+uu8nU8+Ctf/QdbcbzXXJmdFHlLLsbRhT1UrviGLtiSqr+w6oJQlyPTTIEVVDJ70m6r
-         OMKwrET5kZD0ECymEfTi8XSKsz5gttCfRnHqHloTkOsPYkc17yHGRu0xJLbRxtOQRLYG
-         DMY1Mt+n75/JeJRDPd7edo6I6gyP5XPDSNrW8JZHKYqSgBn9dN+lAfqs3HUT/lF8AMdw
-         M2XMDLmJGPM4R/X4/163fD8WUO4OSDTCSx+52fj7uZBjLmFuoIpMr7uWjfLRnsyaL2p+
-         BZJQ==
+        bh=YFhfrmiz1MnC+KIqE9EAXW0EFA0b04wlw/SNyc4qGWA=;
+        b=WX0BWIdCT0u9LxDmJEnFO4Er6mCD0VOWNsf+rswUZhb6jJMs6fU8U1aOGD+RjWfDK9
+         ZUIEa5L6xifbTuuYE6aMN2jB4JEGvyH+IAaumHzYU9uoH4J4q8B1y3VvmrI7/Eb5bSI9
+         bB1ItkVSIyTlzvY4SvI3DC38pW5+ASCOquPBUDlMovt9MEuv4p0RE6otFXlh9Oc6fI2p
+         JMR5YqcHcjrQbt1SNdKcKfp3v7r0ahW1C9Prl5MgNTP7/bJQk1duXu0j3m+0P7Xsn22Q
+         Fem4D0uHaqGvP4H3GZy9gocu+UsIt68nqAmKnwruYio/nFJ3Ve6hCWSYAEFu1FA+IU0r
+         N5WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=rqLNVKHHq/bE/3ZWd1Y+DNOVqrq+R1A15fI8ANwYqeQ=;
-        b=VZhJZFwtHM2SG+fWAcLYw0zVwOyamAmRZZluVtrNjwc4j8FUMHwSllpXzg8wNZQoIE
-         eUy0P4rYAnlMLv8qZlVCGYfaL/ZKVCB8J9o7gLHedCBX/ixlpkO7CtXOj9Hdu0u4j91f
-         C6qqLHEaRVQPl6dif4tOzFE/lzyctFhEFKeCxFSROtRGQMrWHmeam5SGHbC9xuJwZv2h
-         MJVwTKUt6enL1FLG4xFVAQdbK4tyd1f7T7L2I0Z9t/3nMFJXjXXdq2OZPoPbeWeDGOLS
-         07zVXaUEc0HoRhZsLubYQrUBCqb/UBCIdpTfr/qLzbp8pE3Gt8jkkVTJBFPqA/Vv5M4I
-         C8dw==
-X-Gm-Message-State: APjAAAXPTpbbqUab39TcTPb/cUUyTzGcOl6gF7Iy7Z/8Ze1O64ih4Rjz
-        R0qrwKyeT/S4uq9Dql4jPkWabMA9
-X-Google-Smtp-Source: APXvYqxzgbwe+B35VKLd+TF7GJkU/FOii+1RKcO7FWAwPpFHfvx+LndPlJIIwACvu5KHg42HGqC3HA==
-X-Received: by 2002:a5d:46d0:: with SMTP id g16mr21277317wrs.287.1580134948323;
-        Mon, 27 Jan 2020 06:22:28 -0800 (PST)
+        bh=YFhfrmiz1MnC+KIqE9EAXW0EFA0b04wlw/SNyc4qGWA=;
+        b=IzhsZ3zICLDBuMvRxzIXyMwbiIAZeBwQFSl35siJ6f1hA91lQXj1isAS9IpKIBh4Zn
+         TFNYrw1Z8Ww87laTNZqz4i6xwiblzOqdWJVy1iDc5aAOjkJdlU1twIIHDn7UaiCb64uc
+         T/kldB/FfwVXYUMcRpa7H0pULyfgOYRGEKBVRZRSPdzxZg2fJVapw/mp9e232cTfcemw
+         2vm86n3hdt6utrOew+DlXl2Aiy+aXS9JadLAZkP2zf9svEIvZ5SO5ymzP/Jd8PhByPzS
+         +woiYXqJ2vvBPWsKQvODKIsrKRE5JTKn1MrVf0fBWpKWSCA3ZO+JWWJ2ETqy1gHxE4eX
+         eFLw==
+X-Gm-Message-State: APjAAAUiVlzpeX27xjwL1mlSQBpR1cqIJpWLLp7wt+uetGj01yg2kXyk
+        d0bxZXRq0ska1Jhn5kNQ7k0eMsfQ
+X-Google-Smtp-Source: APXvYqw2f445YSV5dlodJ1pK2ouT4IGXhd8kHfMMs5axauJaCZZx3G7Je/VslSoHcxiY6JVGAGuVaQ==
+X-Received: by 2002:a05:600c:54b:: with SMTP id k11mr14095879wmc.63.1580134949085;
+        Mon, 27 Jan 2020 06:22:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u188sm19327503wme.10.2020.01.27.06.22.27
+        by smtp.gmail.com with ESMTPSA id z21sm19952561wml.5.2020.01.27.06.22.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 06:22:27 -0800 (PST)
-Message-Id: <d7d642dcf6f3c661c51302d02c69e781e201cc6e.1580134944.git.gitgitgadget@gmail.com>
+        Mon, 27 Jan 2020 06:22:28 -0800 (PST)
+Message-Id: <9cf185b51f45f2df0016d7b69351ec2a7656dac2.1580134944.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
 References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
         <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
 From:   "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 27 Jan 2020 14:22:21 +0000
-Subject: [PATCH v2 2/5] create .git/refs in files-backend.c
+Date:   Mon, 27 Jan 2020 14:22:22 +0000
+Subject: [PATCH v2 3/5] Document how ref iterators and symrefs interact
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,44 +75,26 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Han-Wen Nienhuys <hanwen@google.com>
 
-This prepares for supporting the reftable format, which creates a file
-in that place.
-
+Change-Id: Ie3ee63c52254c000ef712986246ca28f312b4301
 Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
-Change-Id: I2fc47c89f5ec605734007ceff90321c02474aa92
 ---
- builtin/init-db.c    | 2 --
- refs/files-backend.c | 4 ++++
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ refs/refs-internal.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index 944ec77fe1..45bdea0589 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -226,8 +226,6 @@ static int create_default_files(const char *template_path,
- 	 * We need to create a "refs" dir in any case so that older
- 	 * versions of git can tell that this is a repository.
- 	 */
--	safe_create_dir(git_path("refs"), 1);
--	adjust_shared_perm(git_path("refs"));
- 
- 	if (refs_init_db(&err))
- 		die("failed to set up refs db: %s", err.buf);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 0ea66a28b6..f49b6f2ab6 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3158,6 +3158,10 @@ static int files_init_db(struct ref_store *ref_store, struct strbuf *err)
- 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
- 	struct strbuf sb = STRBUF_INIT;
- 
-+	files_ref_path(refs, &sb, "refs");
-+	safe_create_dir(sb.buf, 1);
-+ 	// XXX adjust_shared_perm ?
-+
- 	/*
- 	 * Create .git/refs/{heads,tags}
- 	 */
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index ff2436c0fb..fc18b12340 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -269,6 +269,9 @@ int refs_rename_ref_available(struct ref_store *refs,
+  * to the next entry, ref_iterator_advance() aborts the iteration,
+  * frees the ref_iterator, and returns ITER_ERROR.
+  *
++ * Ref iterators cannot return symref targets, so symbolic refs must be
++ * dereferenced during the iteration.
++ *
+  * The reference currently being looked at can be peeled by calling
+  * ref_iterator_peel(). This function is often faster than peel_ref(),
+  * so it should be preferred when iterating over references.
 -- 
 gitgitgadget
 
