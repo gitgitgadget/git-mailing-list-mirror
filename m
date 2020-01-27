@@ -2,391 +2,176 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-4.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 767E3C2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 12:22:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A487C2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 12:26:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 388B72067C
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 12:22:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2E690214AF
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 12:26:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="Mibzg+Ad"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OSSReVAt"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729165AbgA0MW2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 07:22:28 -0500
-Received: from mout.gmx.net ([212.227.17.21]:36079 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726179AbgA0MW1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 07:22:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580127730;
-        bh=owl3Vj0+/YgQq2AcGSkUMWMo+XnVvcHZFE/cBgC594c=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Mibzg+AdDRFihEJ6jsqPvmzyMY1OAJBBpZ+7AMefyuzwqr470O0cIe96SxVucczrn
-         q98VB3nGjascbqVw7bet7mvw3FyqDfuIspykebeN31iP0dLauXU5CcEzq7D3P4G/UM
-         vS5YZdibGBuqbZ80OQM3ATh4qt6ao0FhdzvBS4zw=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MfHEJ-1jX1yr2PkZ-00gq3G; Mon, 27
- Jan 2020 13:22:10 +0100
-Date:   Mon, 27 Jan 2020 13:22:10 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Johan Herland <johan@herland.net>
-cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 03/22] t3305: annotate with SHA1 prerequisite
-In-Reply-To: <CALKQrgc9EwjJL=u8eWbSbXOL9Hu8G0LD6cxTfaa50Nfx2iYDrg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001271321290.46@tvgsbejvaqbjf.bet>
-References: <20200125230035.136348-1-sandals@crustytoothpaste.net> <20200125230035.136348-4-sandals@crustytoothpaste.net> <nycvar.QRO.7.76.6.2001261209590.46@tvgsbejvaqbjf.bet> <CALKQrgcF0KK1gEvyKe3th2w0YJBbmv+grgbCeN4fOzHKo=H1UA@mail.gmail.com>
- <nycvar.QRO.7.76.6.2001261957060.46@tvgsbejvaqbjf.bet> <CALKQrgc9EwjJL=u8eWbSbXOL9Hu8G0LD6cxTfaa50Nfx2iYDrg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1730039AbgA0M0R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 07:26:17 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:47022 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729465AbgA0M0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 07:26:15 -0500
+Received: by mail-wr1-f65.google.com with SMTP id z7so11003292wrl.13
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 04:26:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JJYRmiSFRDOyZ+fEjRD9A9Q/tTgN66BWUf8OjA/hPX4=;
+        b=OSSReVAtSw6ezbfDrvlOvY40oxqON9SCVuvZ42whmpeksHbjD0+3W2llLtJQ+V+CEq
+         OUOOWfOECGK4Ggw2kAkoaE/MVn5+uF3keZrTXxnBwzlG7QLKsJj9ZThUKX1bNZbOmfON
+         urlt8RIQ/mqjvZdxLSG0MowTB++XB1//IS34Iw1cHbPfFDQX3uVtv+Wnp38HBrgorXkD
+         deOaIBre7v26pgcGErKeKZkuj2f+jAKx6DVNCTJnsTHffWd0/eJZ9KDi5ID0m9k5MMd2
+         cDMro8hoec9BvuUA24/9dTEbw7DR9MxFa+w5UcJ1wn7q4eqOdInVWYT4GYuyrZ9Dg2j/
+         XSqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JJYRmiSFRDOyZ+fEjRD9A9Q/tTgN66BWUf8OjA/hPX4=;
+        b=UQtnq0rHZHfIadiPIFwgVG5XA4CjFuZm9VsVjNj7dynjkEAaY/6bqY8BRl1XBD1pju
+         Snv/JYbJH/59XDpkepuuKX2wQ82SAeIcmblbQPWSYJ7nQ1RWt1yhQ4eDyNSLyg6zdpDH
+         y1MDG3uaHNOTSHzmnVkTbEUO7gHp2UQl9JPrWYJBNyutLfklAqdSmeG72o9THqBOYfO/
+         M3ysau59yp5iB0DQC+zB4cwxxLL3xcB3SLqOS/dwPxW4Qx0lfr2IF731UeUry2Dz2sE/
+         O8BS5/vxb/bGPsVVjJAhdwE/b9GZ1lik6sUcZEIDtCnzLMV6JSuxkGCjBubLywcpXQZ4
+         D6Cw==
+X-Gm-Message-State: APjAAAVBW+eN4OwA1PcSwcbRvnFpNaemtNjjPcYDURgQEGcX1++FlWLD
+        zqAWTcATYcJAt+MkpC5/zdXXguCv
+X-Google-Smtp-Source: APXvYqw5XBJZKw0GomsqoPyQeFnfhPUtA15yHJQ2b1qb0DwNWmeYumPEVQRrdGPY25pvPkvCWrTThg==
+X-Received: by 2002:adf:ff8a:: with SMTP id j10mr21096386wrr.312.1580127973490;
+        Mon, 27 Jan 2020 04:26:13 -0800 (PST)
+Received: from szeder.dev (x4db36537.dyn.telefonica.de. [77.179.101.55])
+        by smtp.gmail.com with ESMTPSA id y6sm20257847wrl.17.2020.01.27.04.26.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Jan 2020 04:26:12 -0800 (PST)
+Date:   Mon, 27 Jan 2020 13:26:10 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Pratyush Yadav <me@yadavpratyush.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] worktree: add shorthand '-d' for detach
+Message-ID: <20200127122610.GB10482@szeder.dev>
+References: <20200125173744.4334-1-me@yadavpratyush.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4v+Wst2xyJz/sBBv4bQcecod5BJapoMAT8wry5ctYB+8qCWV165
- UE2vKcQJ4NPpWDbzANwzzjHneaK50hI7AiONlnUJjeh5NYkwCS0CqNOT9c9/l/+Zkoi8loo
- RLTUQf9WdNOd6IkKAGVkFo7slhuH18Pyt86DGfJfe7mUO16xUtJ1MvMEu6S4gWz92I9EVph
- mYuTUBqtKovYkmwt2U58A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:0vS8nKOFELA=:NuVE9+mTmkshHkEYZ/EoK7
- MdajiMNTCxnuaQQySbYsbRvF5zhfnusv1yn7Xe93TnTXjQrV55WmQBBor4tkGS6k3Zo2gx71S
- 6B261TNuNSiHa8AAaEK/y3nD2W7norYJGYe3jmiQ4QHoc+zOevUgJPz556GLtI8rpaK18gJXi
- iWOES3fIj9lu69EVNgnZCtCnHjkQhyUBtJL8RbPrS285N9VImUxZ/YR5AhfNhP6egQ7GhcngU
- U33sduQEQT09fKvRPiO1NGJc9dAL8mejSjMviNmX2S/wGRPsbRSefidKe60509q2dOyNjDyHC
- tDNwKPsvRiE+8usRi8a5LtEQrJTaPvxFOH+j43ZXpMfI/NPbSeyqTtJOH1ATlI5hNSTNaB/Nw
- I/Oxb6ASak8sEdjxaD2DxmuNxVfl1iuSqzXqNKRUIwSWwcdU23nxAis7SToXhRCfEV5dlSJpy
- Fp49so3/KeZrDH8ThbnEIYThOzwwVhIJnwvk8KqMraOD2f40h3e2zFuWQG2toU2ZqIDU8W8Mx
- XRgL7YivvuaKD+e8I8HUT6lJa0DzKyXOyLolDnmknCL/cterb7U1zDV2qWFyjMB3+8e6ALO/K
- n173QDjFjn5c/c3goZflYSb7eLPc+hQNG1o+obxcJF/pynjUizh//afXtxzFQZHJeQwf5BRbQ
- c3yj17kz0WE+fqw5ljfpHWK1Dw2pAvGC+ywgKwH6E1YPCrH4db/DBbJpZuKZny1Q/teyzwY2x
- GoTFcULGJW379Q+CGRO8I+AK909E5hcEjTv6TLB5VdIj31f8aQYbBab8FnhELB/lO3taADnOW
- q4gjmXo8CrcVz1Epr9bSfGFpnjK48nVsZb/+Ht46uKhHfJr1ft2aN1eo7GfSYoPoC9tTCSTY9
- c5BU6d5R+hH8Cm8yBk2RxczOPY6TI/+ap6M2+rwi6W86fPKGY6d1NZtu4kwLei3qplq497d0w
- ytKwWsjmDq26V/y3QsV+d/uSDMV0/OQDguzvtpU5EnRRji8b8nI4AjI3ZqWN1HUNXwxJoYKN+
- ej74+JX7G4CQj/N/AtEH7bJ8UgTEd0qbg9el6bNWKjIReye297dOZV34DFXoFr7+P6heurSPL
- 5sVvxtmRxgReGIz/gJtcHN3Pk36cCRZsDhBbiCUjxv0EC52Qt80zAIefJ6lWEkqN2ew44BbKX
- I1mGlAvLjc03Ah4I4Xn6bwVcnvM/cIY17fIbhS9mbp0bRJeOdUnI+sv+c7f46qhkvP2q9jRwx
- pGH1mxxL1l9dJU3yH
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200125173744.4334-1-me@yadavpratyush.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johan,
+On Sat, Jan 25, 2020 at 11:07:44PM +0530, Pratyush Yadav wrote:
+> Often someone might want to checkout an older commit in a separate
+> worktree to test it out without having any intention of making any
+> changes. Simply using 'git worktree add' means that a branch will be
+> created based on the name of the worktree folder. This branch will then
+> have to be deleted by the user once they are done with the worktree.
+> 
+> An alternative to this is to create a detached worktree which doesn't
+> lead to a branch being created. This can be done by the '--detach'
+> option. Add the shorthand to make it more convenient to use it.
 
-On Mon, 27 Jan 2020, Johan Herland wrote:
+I don't really understand what this commit message is trying to say,
+especially the first paragraph, or how it relates to adding short
+options.
 
-> On Sun, Jan 26, 2020 at 10:29 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Sun, 26 Jan 2020, Johan Herland wrote:
-> > > On Sun, Jan 26, 2020 at 12:16 PM Johannes Schindelin <Johannes.Schin=
-delin@gmx.de> wrote:
-> > > > On Sat, 25 Jan 2020, brian m. carlson wrote:
-> > > > > This test relies on a roughly equal distribution of hashes for n=
-otes in
-> > > > > order to ensure that fanouts are compressed.  If there are subtr=
-ees with
-> > > > > only one item left after removing notes, they'll end up still wi=
-th one
-> > > > > level of fanout, causing the test to fail.
-> > > >
-> > > > That is _almost_ correct: The heuristic wants to see one bucket th=
-at has
-> > > > a note in it. Or something like that.
-> > > >
-> > > > See 73f77b909f8 (Notes API: for_each_note(): Traverse the entire n=
-otes
-> > > > tree with a callback, 2010-02-13) for details. (Cc:ing Johan.)
-> > >
-> > > Something like that, yeah... Re-reading this code, I believe we stop
-> > > the fanout at the current level when we can find one or more notes
-> > > that do not share the high-nibble of their path with another note.
-> > >
-> > > Here we're at the top level, so this corresponds to looking at the
-> > > very first hex character (0-9a-f) of the path (oid of annotated
-> > > object), and if there are at least two such objects for each hex
-> > > character, we will use a fanout of 1, otherwise, we collapse the
-> > > fanout to 0.
-> >
-> > That makes sense, but when I looked at the failed test, there seems
-> > something else at play, at least in addition to what you said: for
-> > _adding_ notes, your description is 100% accurate, but when deleting
-> > notes, we are apparently not collapsing `PTR_TYPE_SUBTREE` nodes "quic=
-kly"
-> > enough. Let me show you the part of `git ls-tree -r refs/notes/commits=
-`
-> > that starts with the hex digits 7, 8 and 9:
-> >
-> > -- snip --
-> > 100644 blob 22939636f79a53181ea58f04f2136bd745976edd0018465e60a8df8981=
-6a9c2b 72/67b1c94ab5ddf005fd4b0e50b6a7816a62e7ed0459cec6aa1a00577b2111ba
-> > 100644 blob 2e3f3dad7043b2d02d09ca12b299acbe05d781357d3a56a2d012fdf787=
-409459 76/62d4b264094ca479be86ef7aa66daae63e45afa633a3892dc787b13ecff495
-> > 100644 blob 22e7f0c5af7315d692f8a107a43ba0784e1ab00a20ea803fab1acad131=
-9e5f79 7b/8c0a9c86815a94da7ef90b356b1f98d6a4099af3fdc3d8625a8fa793b63821
-> > 100644 blob b3ce67c9d5507dc00d95d8fb2000c1d5b70908ad1d2c034e5833f57b7b=
-b85511 7f/0af9cf9259cd6e67c0af3324ca443dd3d56694fbdc94d28e300a768d3d0e6e
-> > 100644 blob fafb40e32e87a2c481df6ceb37804d80c995faec3d7772c071b129fd47=
-c2ba8a 8a/f1ad99a5e559f5835007f2bcb1b07de0e8c7434e7fbaa676a2edbd796a7f60
-> > 100644 blob b811e8da7c7acc83ef025753504ff6ed2d1eb8d2bb832d6b7487a7786d=
-67aa53 93/f364fafaee6a178d8e8939f15d5b260f71940f663c3731396ee43082fd6551
-> > 100644 blob 0b1915ccb6f64cac64f2297893bce1ba7408660f79182302faaada71ee=
-8c3c1c 96/b562b168f94e5c6e6a1e40ec4b817aa168c99769b1d9a46f7e048e93897fb4
-> > -- snap --
-> >
-> > This command was run in the worktree after running an unmodified t3305
-> > with `GIT_TEST_DEFAULT_HASH=3Dsha256` in brian's `transition-stage-4` =
-branch
-> > (well, I removed the `SHA1` prereq again, that's the modification I ma=
-de).
-> >
-> > As you can see, there _is_ a fanout of 1, but there is only a single n=
-ote
-> > for a commit whose ID starts with `8`.
->
-> Ah, yes, I glossed over the subtrees in my analysis, blindly assuming
-> that they would collapse more "quickly" than they do...
->
-> It seems the code values not unpacking subtrees "unnecessarily", and
-> this causes them to remain for longer than perhaps ideal.
->
-> > Debugging a little, it seems that the `PTR_TYPE_SUBTREE` node for `8` =
-was
-> > not collapsed, even if there was only one item left.
-> >
-> > So I formed a hypothesis that the subtrees are only removed when the
-> > _last_ item is removed for any given leading nybble, but that turned o=
-ut
-> > to also be incorrect. It is a bit more tricky than that. This is the
-> > smallest set to which I was able to reduce the notes without reducing =
-the
-> > fanout to 0:
-> >
-> > -- snip --
-> > 100644 blob cc2ee5e00d8bc3805d704b67439dc8175bcf9497603288e6de2d4d8b3f=
-c7be9f    05/b6e3d1394d020129f71fd8e41cf7ea8cbc58ae0f1332abd5da0c74ea194b7=
-1
-> > 100644 blob 1c6afe76a1bcd0103c36ab9707a2ca9e68974b6a6bbaae564c0509c43b=
-4392bd    1e/311d64dc3ad5491964bcded60fee15b19d5b9c916a7e62a4f0746fa4e81fa=
-6
-> > 100644 blob cf97d105e3970ef1cf9b12ac092be80abcd496c593bc8ca5550d059c39=
-67630a    28/79e092d524b7ae9a42026ab2886094cce8ffc63175f8b3fd5de84faef10df=
-3
-> > 100644 blob 78ef788b804dd0e5415c386b4a29668f61033483c35438f0471dfd7c4b=
-fa093b    36/fe8fe67a2e9d0203c665d6e08ca454833ec32a97369769a7138d3938c0000=
-b
-> > 100644 blob f46845c2d7e3272319aa5c18e359fdbc37731c88a945bb9632b8c43219=
-83c75a    4a/a271a09d848f99d3fb978e5c156baa812a0fa1c30a88c885831641630be01=
-a
-> > 100644 blob ecf5a4a178ca4b51cea457abe7c935761ca15a1d817f83c2da6816ede8=
-4db779    51/eaee3ca1a8698cb0aaa4de2d3f339985570da68b28e84af752e1cfd25f519=
-7
-> > 100644 blob 2f4e9d6a4a1d050f8cb932ba545e53b48d9b669f6e00dc4a962d88ee9d=
-92482b    62/dd63d43070c3ca7e3a6cdfa4ed970256a00a06e88d10fcb0532acd51419e0=
-f
-> > 100644 blob 22939636f79a53181ea58f04f2136bd745976edd0018465e60a8df8981=
-6a9c2b    72/67b1c94ab5ddf005fd4b0e50b6a7816a62e7ed0459cec6aa1a00577b2111b=
-a
-> > 100644 blob fafb40e32e87a2c481df6ceb37804d80c995faec3d7772c071b129fd47=
-c2ba8a    8a/f1ad99a5e559f5835007f2bcb1b07de0e8c7434e7fbaa676a2edbd796a7f6=
-0
-> > 100644 blob b811e8da7c7acc83ef025753504ff6ed2d1eb8d2bb832d6b7487a7786d=
-67aa53    93/f364fafaee6a178d8e8939f15d5b260f71940f663c3731396ee43082fd655=
-1
-> > 100644 blob 589656c26944c471b5ac65739f8c7b96663a9f827a3d27beb49e39e370=
-7b7294    a2/0e8f30856061125d479779755ef3238a7b561f9336e0143c437daac7d93f4=
-c
-> > 100644 blob 7eaa9350d5c6bd6fd0fc4071c5d6a266949046c67987a9e1f665ba34d9=
-5f419d    a2/80d13a05aa68cc5ef948a8b69067807457fd37c00ce4a234fa4a0c0753ef4=
-e
-> > 100644 blob 7a8378dd60d6024db645757eac7271a80b101a2df230ebd1a57ff52ff2=
-d32e36    b9/2a3a7dc6db290d93f79150bfb31447f3e550cfe4a63c5ddbeac18fec755e8=
-6
-> > 100644 blob 86fff6007d9911249bee803a6630e182677355a5574e637d1a8301e219=
-c5da86    c1/52ffd73d1c5e7c121c7c247682f1ee971f6f09101c96a84486d18be41d0dd=
-0
-> > 100644 blob cd887698e1da81a76ae1caf0eaec19d60830a13ead152ec4700be511ce=
-b8ee33    d0/3f742b8b95f68478946d7fe7495da9462801fadeaaa06c11bf54dbc46610f=
-5
-> > 100644 blob 19f7bdfee9687311dbe1195e0a64954b677ae68e6d734fd5fb76ea4ad4=
-f93782    ea/356ae2d38123b46639db98df14953f4c7cdd91738779174ec67876ce9487e=
-3
-> > 100644 blob 948c0cba23ec0405c622c9dea8ed8dd7b3fa043c86b5e5a8b4de0d1c6a=
-0e67b9    f7/802d4c716fed3c76fe58c86ac7c3ae3e19b8c0d3ea97c9f90f5939fe5a78d=
-8
-> > 100644 blob 28690ad489e29e3607c82e1f626ec24d7f831555c802108bfe9b993fbd=
-794a7e    f7/da03e811b7d9071ee19dabdc721e0f863e28c92dfa3257474282396a73bb4=
-4
-> > -- snap --
-> >
-> > You will note that there are two entries that start with `a2`, and two
-> > entries that start with `f7`. If I remove any of those, the correspond=
-ing
-> > subtree will be collapsed, and the fanout will be reduced to 0.
->
-> I'm looking at note_tree_remove() and note_tree_consolidate() to
-> explain this behavior. AFAICS, at the point where you remove, say, the
-> a20e8f entry, the note tree structure should consist of a single
-> int_node containing 16 subtree entries. note_tree_remove() will search
-> for the a20e8f entry which will cause the a2 subtree to be unpacked
-> and replaced with an int_node (representing 'a') referencing another
-> int_node (representing '2') containing two leaf_nodes. One of the leaf
-> nodes will be removed, and note_tree_consolidate() will then replace
-> the 2 int_nodes with the last remaining leaf_node. At this point the
-> root int_node should now contain 15 subtrees (not yet unpacked) and 1
-> "regular" leaf_node.
->
-> We then move on to write_notes_tree() to write out the resulting tree.
-> This ends up calling determine_fanout() (via for_each_note_helper()),
-> which will look at the root int_node, find the one "regular" leaf_node
-> there, and use that to return fanout =3D 0. (At which point the other
-> subtrees will be unpacked and the entire tree is "flattened".)
->
-> I now wonder why this did not happen before we got down to 17 notes.
-> Let's assume (as is most probable) that the previous notes removed
-> only shared _one_ leading nibble (not two). The root int_node would
-> have an int_node for the first-nibble which would contain two
-> subtrees, one for each second-nibble. One of these would be unpacked
-> and promptly removed, and then note_tree_consolidate() would be left
-> with the int_node for the first-nibble containing a single subtree
-> entry. AFAICS note_tree_consolidate() does _not_ collapse this
-> int_node (and move the subtree into the root node), although I can't
-> immediately see why it could/should not do this. Even if it did,
-> though, that would not be enough to trigger a lower fanout, as
-> determine_fanout() does not distinguish between int_nodes and subtree
-> nodes.
->
-> However, I suspect there may be room for further improvement here: If
-> we find ourselves consolidating an int_node whose _only_ non-NULL
-> entry is a subtree, it is a fairly safe assumption that the subtree
-> itself is probably close to empty as well, and we can probably bear
-> the cost of more eagerly unpacking it, as we are then more likely to
-> trigger a lower fanout when writing out the notes tree. At that point
-> going from fanout 1 to fanout 0 should certainly happen at a less
-> ridiculous total note count than 17...
+It could just say something along the lines of "'git worktree add' has
+a couple of long --options without corresponding -o short options, you
+wanted to type less, so let's add those missing short options."
 
-Thank you for digging in even further!
+But then why only '--detach', and not the other long --options as
+well?
 
-> > But it is only happenstance with SHA-256 that there are these entries =
-that
-> > agree not only in the first, but also in the second leading nybble.
->
-> True.
->
-> > Therefore...
-> >
-> > > Hence we need an absolute minimum of 32 notes (and some rotten luck)
-> > > to get a fanout of 1. As the number of notes increase, the probably =
-of
-> > > fanning out increases, passing 50% at ~79 notes, and reaching ~100%
-> > > somewhere north of 150 notes.
-> >
-> > ... I would register that we need an absolute minimum of 16 notes (and
-> > some rather crafty craft) to get a fanout of 1.
-> >
-> > In that light, I think that I would prefer to retract my patch that
-> > "only" reduces the remaining number of notes to 20: it should reduce t=
-hem
-> > to 15 or less. So why not reduce it to 10 (because it is only one chan=
-ged
-> > digit).
->
-> Agreed. The thing we're looking for in the test (and what is certainly
-> more important) is that we _do_ consolidate the fanout when the note
-> count decreases. The details around exactly when that happens is more
-> of a performance tuning issue, and not something that should break the
-> test.
->
-> > > > > The test happens to pass with SHA-1, but doesn't necessarily wit=
-h other
-> > > > > hash algorithms, so annotate it with the SHA1 prerequisite.
-> > > >
-> > > > I would rather see this tested, still, and reducing the number of =
-notes
-> > > > that are retained from 50 to 20 before testing that the fanout has=
- been
-> > > > reduced to 0 seems to do the trick. Therefore, I would love to sub=
-mit this
-> > > > for squashing:
-> > >
-> > > Yes, it seems that for SHA1 and the (deterministic) objects used in
-> > > the test, we got away with 50 notes, but that is not the case for
-> > > other hash algorithms. Lowering the number to 20 definitely results =
-a
-> > > fanout of 0, as should any other number below 32.
-> > >
-> > > +1 to Dscho's squash.
-> > >
-> > > ...Johan
-> >
-> > Thank you so much for the analysis. To be honest, I did not quite
-> > understand all the details of the comment added in 73f77b989f8 when I
-> > wrote the patch I suggested, so I basically just picked that number "2=
-0"
-> > out of thin air.
-> >
-> > Together with your insights, I would like to propose this commit messa=
-ge
-> > for the squashed commits (I left in the hunk that removes the `SHA1`
-> > prerequisite, but of course that won't be part of the final commit):
-> >
-> > -- snip --
-> > t3305: make fanout test more robust (needed for SHA-256)
-> >
-> > To make things more performant, notes are stored in a "fanout": when
-> > there are enough commit notes, they are no longer stored as verbatim
-> > commit IDs at the top-level tree of the notes ref, but instead the tre=
-e
-> > is deepened much like the loose object cache: subtrees are introduced
-> > whose names are the two hex digits they "chomp off" the commit IDs.
-> >
-> > The test case 'deleting most notes triggers fanout consolidation' want=
-s
-> > to verify that the fanout level is reduced automatically when enough
-> > notes have been deleted.
-> >
-> > However, that test case expected that reduction to level 0 (i.e. _no_
-> > fanout subtrees) to happen after reducing the originally-added 300 not=
-es
-> > to 50, which _happened_ to work with SHA-1-based commit IDs, but it is
-> > no longer works with SHA-256-based ones.
-> >
-> > The reason: The heuristic for the fanout looks at the number of entrie=
-s
-> > for leading nybbles (read: hex digits) of the commit IDs. If there are
-> > more than a single annotated commit for all of the 16 hex digits, the
-> > fanout is incremented. It is a bit more tricky when reducing the numbe=
-r
-> > of notes: the fanout is reduced reliably only if there are less notes
-> > than hex digits (i.e. less than 15 notes) for a given prefix.
-> >
-> > For good measure, let's reduce the number of notes to 10 in the test
-> > case 'deleting most notes with git-notes' so that the test case
-> > 'deleting most notes triggers fanout consolidation' is guaranteed to
-> > succeed with _any_ hash algorithm.
->
-> Great commit message.
->
-> > Original-patch-by: brian m. carlson <sandals@crustytoothpaste.net>
-> > Helped-by: Johan Herland <johan@herland.net>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Signed-off-by: Johan Herland <johan@herland.net>
 
-Excellent!
+> Signed-off-by: Pratyush Yadav <me@yadavpratyush.com>
+> ---
+> For more context:
+> https://lore.kernel.org/git/CAPig+cQmqKiYWDWFH5eK2S6XPOi2t2+8Oas8yZa8R=bKLym3wQ@mail.gmail.com/
+> 
+> I'll send a patch to add the config option as a follow up some time
+> later.
+> 
+>  Documentation/git-worktree.txt | 7 ++++---
+>  builtin/worktree.c             | 2 +-
+>  2 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 85d92c9761..cc227dd382 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -9,7 +9,7 @@ git-worktree - Manage multiple working trees
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git worktree add' [-f] [--detach] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
+> +'git worktree add' [-f] [-d] [--checkout] [--lock] [-b <new-branch>] <path> [<commit-ish>]
 
-> Have fun!
-> ...Johan
+'--detach' is still an accepted options, so please write it as
+'[-d|--detach]' instead.
 
-You, too. Thank you!
-Dscho
+While at it, you might want to break this line, as it got too long.
 
->
+>  'git worktree list' [--porcelain]
+>  'git worktree lock' [--reason <string>] <worktree>
+>  'git worktree move' <worktree> <new-path>
+> @@ -52,7 +52,7 @@ directory specific files such as HEAD, index, etc. `-` may also be
+>  specified as `<commit-ish>`; it is synonymous with `@{-1}`.
+>  +
+>  If <commit-ish> is a branch name (call it `<branch>`) and is not found,
+> -and neither `-b` nor `-B` nor `--detach` are used, but there does
+> +and neither `-b` nor `-B` nor `-d` are used, but there does
+
+Here I would prefer to keep '--detach', because "detach" is a real
+word with proper meaning, while 'd' is just an abbreviation.
+
+>  exist a tracking branch in exactly one remote (call it `<remote>`)
+>  with a matching name, treat as equivalent to:
+>  +
+> @@ -69,7 +69,7 @@ branches from there if `<branch>` is ambiguous but exists on the
+>  'origin' remote. See also `checkout.defaultRemote` in
+>  linkgit:git-config[1].
+>  +
+> -If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `--detach` used,
+> +If `<commit-ish>` is omitted and neither `-b` nor `-B` nor `-d` used,
+
+Likewise.
+
+>  then, as a convenience, the new worktree is associated with a branch
+>  (call it `<branch>`) named after `$(basename <path>)`.  If `<branch>`
+>  doesn't exist, a new branch based on HEAD is automatically created as
+> @@ -140,6 +140,7 @@ To remove a locked working tree, specify `--force` twice.
+>  	exists. `-B` overrides this safeguard, resetting `<new-branch>` to
+>  	`<commit-ish>`.
+> 
+> +-d::
+>  --detach::
+>  	With `add`, detach HEAD in the new working tree. See "DETACHED HEAD"
+>  	in linkgit:git-checkout[1].
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index d6bc5263f1..dab5f76788 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -500,7 +500,7 @@ static int add(int ac, const char **av, const char *prefix)
+>  			   N_("create a new branch")),
+>  		OPT_STRING('B', NULL, &new_branch_force, N_("branch"),
+>  			   N_("create or reset a branch")),
+> -		OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
+> +		OPT_BOOL('d', "detach", &opts.detach, N_("detach HEAD at named commit")),
+>  		OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+>  		OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
+>  		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
 > --
-> Johan Herland, <johan@herland.net>
-> www.herland.net
->
+> 2.24.1
+> 
