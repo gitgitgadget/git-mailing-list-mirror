@@ -2,147 +2,84 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA796C2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 16:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CC8C3524A
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 18:15:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 87477214AF
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 16:59:18 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9AC3B24658
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 18:15:50 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aAnmdI6m"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725955AbgA0Q7R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 11:59:17 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37393 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbgA0Q7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 11:59:17 -0500
-Received: by mail-wr1-f66.google.com with SMTP id w15so12279564wru.4
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 08:59:15 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4V+180VurbbOjZCq6OH85b+alrQrue604R2IdWfooKo=;
-        b=KfZXukLKTZJYmqOGa3bJULLNGfdUP/DR6pPmy6Q2wEn06/n+GfiV6q3L4NwMILJ/1p
-         WwPlKOssBRWzIz4NUcVkfM/Z3d6DEIVzpykb2IbMOBUWt6kzZhjcvZKkbFspNaFBFhMh
-         2ybYzGLPT5zFpfzo55DPO4bVGCUmObVURnpD7I7ud4TlV73S0F7JuQB8tfH5I55y3pP/
-         Pj14u3Nx0L5q1XFWniUXaOTxjvOXVnXSs+xWWV2OSZxCNFTqsMijIp31hwoBdr/6NxJQ
-         rAHIMjNpuSQoQ8SE2dqOZNhVF9bjRPBDzPyvv/9zdhOqPnbqg8PqfBDZRKVHUYQpzaTo
-         yf5w==
-X-Gm-Message-State: APjAAAUZhkMPdH7aPxUB7mDBhvLAfPcYlUl0doCj8OtmJ7qkc5cvkLna
-        RqqOJXRz8fqDAtoPKckvwyZi7DKR3KQsYW0QNbmIGH3X
-X-Google-Smtp-Source: APXvYqyghuZb4LPF+9uKBzeV3EQfT2MxOkBCFSPzh+nNanIxiSOEGe8PxVDRnF2NCurggm2Mwnfy+xvLCuP4vmIUQB0=
-X-Received: by 2002:a5d:5752:: with SMTP id q18mr9700943wrw.277.1580144354858;
- Mon, 27 Jan 2020 08:59:14 -0800 (PST)
+        id S1725990AbgA0SPr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 13:15:47 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62035 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725828AbgA0SPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 13:15:47 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 45646A628A;
+        Mon, 27 Jan 2020 13:15:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=CPg8kkL33LVo2RrGsjDcu4PaexU=; b=aAnmdI
+        6mk34r5dmRUdDaqqhSZNZf5Zmz2J5QkHFiqw/yHv6TXmSoS7U2no5+ToXF0ompxF
+        WkRETNXOjjrOCNv/Aq26Qc4i+f2SVs0Ti0A59YpZZVsqlS63I6bnZsfPd4Qexfqp
+        dhsG2BWl1FNb61Vdey/71PTlJSMeQwVGam5GI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ohlvjJMpIMkDFbkb+CRuOzGBM9ZHzCU5
+        uRHSWYJQnSVJaHDD6qQFAun6TB1z5f1PNgCWlQl55ulKIsTzoh5VYPUvPI5zSz2O
+        DYLrS87+QeqnIsqqTSyFAWaWLDstHAr30hk5QycSjDufNK5cFWraGQb7aBWJVuBD
+        6csSU7aMqPc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E782A6289;
+        Mon, 27 Jan 2020 13:15:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6780BA6287;
+        Mon, 27 Jan 2020 13:15:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Peter Kaestle <peter.kaestle@nokia.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, pc44800@gmail.com
+Subject: Re: [PATCH v4 1/2] t7400: add a testcase for submodule status on empty dirs
+References: <xmqq7e1g3ggd.fsf@gitster-ct.c.googlers.com>
+        <1580115989-32649-1-git-send-email-peter.kaestle@nokia.com>
+Date:   Mon, 27 Jan 2020 10:15:40 -0800
+In-Reply-To: <1580115989-32649-1-git-send-email-peter.kaestle@nokia.com>
+        (Peter Kaestle's message of "Mon, 27 Jan 2020 10:06:28 +0100")
+Message-ID: <xmqqzhe8bwab.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200127100933.10765-1-git@zjvandeweg.nl> <20200127100933.10765-2-git@zjvandeweg.nl>
-In-Reply-To: <20200127100933.10765-2-git@zjvandeweg.nl>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 27 Jan 2020 11:59:03 -0500
-Message-ID: <CAPig+cS03oS9PhN_cusjpzoCzwNmgc5rXiVAmG3ceUCFw71PVg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] config: learn the --stdin option for instructions
-To:     Zeger-Jan van de Weg <git@zjvandeweg.nl>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0790F9B0-4131-11EA-9EDD-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 5:17 AM Zeger-Jan van de Weg <git@zjvandeweg.nl> wrote:
-> When setting values in the git config, the value is part of the
-> arguments for execution. This potentially leaks the value through
-> logging, or other programs like `ps`.
+Peter Kaestle <peter.kaestle@nokia.com> writes:
+
+> We have test coverage for "git submodule status" output in
+> various cases, i.e.
 >
-> Add the `--stdin` option that reads from stdin for instructions to set
-> and unset values to hide them from prying eyes. The instructions are based
-> on the `update-ref` DSL, and accept the set and unset commands.
+>   1) not-init, not-cloned: status should initially be "missing"
+>   2) init, not-cloned: status should be "missing"
+>   3) not-init, cloned:
+>   4) init, cloned:'status should be "up-to-date" after update
+>   4.1) + modified: status should be "modified" after submodule commit
+>   4.2) + modified, committed: status should be "up-to-date" after update
 >
-> Signed-off-by: Zeger-Jan van de Weg <git@zjvandeweg.nl>
-> ---
-> diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-> @@ -259,6 +264,30 @@ Valid `<type>`'s include:
-> +STDIN
-> +-----
-> +
-> +With `--stdin`, config reads instructions from standard input and performs
-> +all modifications in sequence.
-> +
-> +Specify commands of the form:
-> +
-> +    set SP <key> SP <newvalue>
-> +    unset SP <key>
+> Case 2) will be covered by this patch.  Case 3) remains uncovered.
+>
+> Test that submodule status reports initialized but not cloned
+> submodules as missing to fill the gap in test coverage.
 
-If you follow the precedent of the git-update-ref documentation, these
-should be:
-
-    set SP <key> SP <newvalue> LF
-    unset SP <key> LF
-
-I'm not sure we really need to be calling the value "newvalue" (I
-guess you picked that up from git-update-ref.txt). "value" should be
-fine, thus:
-
-    set SP <key> SP <value> LF
-    unset SP <key> LF
-
-> +Alternatively, use `-z` or `--null` to specify in NUL-terminated format, without
-> +quoting:
-> +
-> +    set SP <key> NULL <newvalue>
-> +    unset SP <key>
-
-A few comments:
-
-First, this is talking about the NUL character, not a NULL pointer,
-so: s/NULL/NUL/
-
-Second, this doesn't give any indication about how the lines should be
-terminated. It should instead be written as:
-
-    set SP <key> NUL <value> NUL
-    unset SP <key> NUL
-
-Third, importantly, unlike git-update-ref from which this DSL takes
-inspiration and in which "refs" might have oddball names for which
-NUL-termination makes sense, it's hard to imagine a case in which a
-configuration key would be so strange as to warrant NUL-termination.
-This observation suggests a simpler DSL in which only <value> is
-NUL-terminated:
-
-    set SP <key> SP <value> NUL
-    unset SP <key> LF
-
-(The proposed code changes in config.c would need adjustment, as well,
-to implement this revised DSL.)
-
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> @@ -380,6 +380,66 @@ test_expect_success '--add' '
-> +test_expect_success '--stdin works on no input' '
-> +    echo -n "" | git config --stdin
-> +'
-
-`echo -n` is not portable. If you want no input at all, either grab it
-from /dev/null:
-
-    git config --stdin </dev/null
-
-or use `printf` to suppress printing of the line-terminator:
-
-    printf "" | git config --stdin
-
-> +test_expect_success '--stdin with --null flag' '
-> +    echo -ne "set bar.baz\0false" | git config --stdin --null &&
-> +    Git config --get bar.baz >output &&
-> +    echo false >expect &&
-> +    test_cmp expect output
-> +'
-
-Likewise, non-portable use of `echo -n` and `echo "...\0...". Use
-`printf` instead:
-
-    printf "set bar.baz\0false" | git config --stdin --null &&
-
-(But note that this isn't even testing NUL-termination of <value>.)
+Thanks for an update.
