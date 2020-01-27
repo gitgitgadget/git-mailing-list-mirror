@@ -2,148 +2,107 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT
-	autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFA7BC32771
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 09:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52EA5C32771
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 09:25:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 86BF2214AF
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 09:06:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 23AD22071E
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 09:25:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=nokia.onmicrosoft.com header.i=@nokia.onmicrosoft.com header.b="XKyttWAy"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="VnlF15N6"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729309AbgA0JG5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 04:06:57 -0500
-Received: from mail-db8eur05on2127.outbound.protection.outlook.com ([40.107.20.127]:8225
-        "EHLO EUR05-DB8-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1728253AbgA0JG5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 04:06:57 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AOGWEZC3nJHuzQvqDW2ISOqHk3oe8J1iZBlGyY5U1xajCjP7TbYdVcSPoRGgVfXbnixST0Nr46FBVyphawyMQAt7lvNhb7wu7W2EpwCWW4TzhP6YmzwnMmgGBw+U0SxXgOPR0FdlJ9luBaU8TmcR9kGnGbxMrm9ekFhbEWi3cbrhtJokTmopHg3BcoBhM79eAG7CZLCm945cgjVQoY7N7flBibP9OwDNuzyVAgLbz5117bT5K3QDNeYeX5Sta4G9Qt4MblAJUKtsrvXWhY/YB5giW/bRjx/7RFOQmMRY5/DxhSCe4iXp74hRVHR1RyS/OkMpaDFj1bca8RGhYQlOXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CPVyHwwjxojEqzezs8xO/0lWghIvtS8BWesvzCOnmCw=;
- b=JygbYV4vRLz6VRTWSxXjkiLgId8/e71/TXQWuv8dKPBO2vPy9/olFVQgfTrrQlcG14oNlVubNHWteDe1x0RJuHUf+e7MiwxXdA4kD8lWS4dK/sA8LKgupxmbsrEUL/PtBWnbBsFpJOGqwA5/27fyBCBLdPaW4V14N2VD0Vxshmdxxwct/Brt0ugECZ6j7m+/cUwCtd2nC4n+gJlLvPaINO2PSZm/pHKj/KAjV01ySNAkSZaTWrpNu4Ca2ww+iwOyR1jKHBk7dufMRPkE5rRtPwFBldAgO2p284Hh8fgvNITqkQSioKdL0q4Bv+dnddlC4hyHH/JpS5Fanbko+91Yig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 131.228.2.17) smtp.rcpttodomain=gmail.com smtp.mailfrom=nokia.com; dmarc=pass
- (p=none sp=none pct=100) action=none header.from=nokia.com; dkim=none
- (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nokia.onmicrosoft.com;
- s=selector1-nokia-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CPVyHwwjxojEqzezs8xO/0lWghIvtS8BWesvzCOnmCw=;
- b=XKyttWAyCPKr5UjND+sTfq0+6lmUui1YDPwWmnhHgWq3Bc0m83kxLPenYRQbAQZzJnCpyTrwg4+P6xIlcUkCJxU4wXgqV7XSeGAdU4DkxvNF5ThQl47qoTPkdUrIqXArh1a5SK/QZJC383Sp/6nRHQMjZY04jzMaOzvEb+ZkLbY=
-Received: from AM3PR07CA0121.eurprd07.prod.outlook.com (2603:10a6:207:7::31)
- by AM7PR07MB6246.eurprd07.prod.outlook.com (2603:10a6:20b:139::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2686.18; Mon, 27 Jan
- 2020 09:06:54 +0000
-Received: from AM5EUR03FT041.eop-EUR03.prod.protection.outlook.com
- (2a01:111:f400:7e08::206) by AM3PR07CA0121.outlook.office365.com
- (2603:10a6:207:7::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.2665.15 via Frontend
- Transport; Mon, 27 Jan 2020 09:06:54 +0000
-Authentication-Results: spf=pass (sender IP is 131.228.2.17)
- smtp.mailfrom=nokia.com; gmail.com; dkim=none (message not signed)
- header.d=none;gmail.com; dmarc=pass action=none header.from=nokia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nokia.com designates
- 131.228.2.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=131.228.2.17; helo=fihe3nok0735.emea.nsn-net.net;
-Received: from fihe3nok0735.emea.nsn-net.net (131.228.2.17) by
- AM5EUR03FT041.mail.protection.outlook.com (10.152.17.186) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.2665.18 via Frontend Transport; Mon, 27 Jan 2020 09:06:53 +0000
-Received: from ulegcpork.emea.nsn-net.net (ulegcpork.emea.nsn-net.net [10.151.74.148])
-        by fihe3nok0735.emea.nsn-net.net (GMO) with ESMTP id 00R96eFp025313;
-        Mon, 27 Jan 2020 09:06:40 GMT
-From:   Peter Kaestle <peter.kaestle@nokia.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, pc44800@gmail.com
-Cc:     Peter Kaestle <peter.kaestle@nokia.com>
-Subject: [PATCH v4 2/2] Fix status of initialized but not cloned submodules
-Date:   Mon, 27 Jan 2020 10:06:29 +0100
-Message-Id: <1580115989-32649-2-git-send-email-peter.kaestle@nokia.com>
-X-Mailer: git-send-email 2.6.2
-In-Reply-To: <1580115989-32649-1-git-send-email-peter.kaestle@nokia.com>
-References: <xmqq7e1g3ggd.fsf@gitster-ct.c.googlers.com>
- <1580115989-32649-1-git-send-email-peter.kaestle@nokia.com>
-X-EOPAttributedMessage: 0
-X-MS-Office365-Filtering-HT: Tenant
-X-Forefront-Antispam-Report: CIP:131.228.2.17;IPV:CAL;SCL:-1;CTRY:FI;EFV:NLI;SFV:NSPM;SFS:(10019020)(4636009)(396003)(376002)(39860400002)(136003)(346002)(199004)(189003)(70586007)(70206006)(316002)(86362001)(26005)(5660300002)(186003)(36756003)(81156014)(81166006)(8676002)(4326008)(336012)(2616005)(107886003)(8936002)(6666004)(44832011)(356004)(478600001)(26826003)(2906002);DIR:OUT;SFP:1102;SCL:1;SRVR:AM7PR07MB6246;H:fihe3nok0735.emea.nsn-net.net;FPR:;SPF:Pass;LANG:en;PTR:InfoDomainNonexistent;A:1;MX:1;
+        id S1729210AbgA0JZH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 04:25:07 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:37483 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727409AbgA0JZH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 04:25:07 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f129so6213058wmf.2
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 01:25:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GKAYAZWT/ztneHfOI3gpKfHYnPhkTG3yuT2u/7PoPJw=;
+        b=VnlF15N6uDB7EzEx4ArCEqhfv7nEXUF79zpZPh98X/MY7VcMTi8OFd+BchVJTsEUOg
+         RPqGh3RyJJ5DXsoF9ajuAQhX4rTS19gaNWsl4sOkZaxil7Mrlyqln8Mh6mTLMmUtT7BY
+         fc21GRYOcHNo9KslwoA5zrHnoRv/7zXEvisFVNsI8q8BBz1FhJaLWDcwnhTjuAtiBJVf
+         Ha/COWP7u79s9NNwQkJ+ld8a16xh3z3lhvaDT5u1sa4fauQbDgjCLmdBWLODta2Z13UY
+         +fHW6SvHI6zjlJEMGmA+qWhJn+kGm4oygzlpdXs9p8iw107ngMAaTMZuWGZIUI2RRBWN
+         zhtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GKAYAZWT/ztneHfOI3gpKfHYnPhkTG3yuT2u/7PoPJw=;
+        b=jpjcTfBHCwm+hr9ZO1PqUZNL7zvdR8QXCEgVMyA26S33xtRM99os5lc/nGcX3Af0W3
+         yTkI3O2by0/mmWyhI5mfKq8gCQ44Mep/oJrT6h6+20ikresIJ/lJlxeAQVSsWax2jdSm
+         Li6h8WgL8yq9z31jWomBxez3Pp8jeMTuj5ws7thG2lR3oKnlhDzIqUWa152O1uMOq4lX
+         JVbB6RhnDtk0PUSDkuUrgrBpVDfaR2pwYTyYsEe2Rr6SYZ0wszCRbdKmIbJFvbTXL6F4
+         2nF5H51jC0X0s6yJ0Xnq+fYP2Fr984+4PdlvRh9TdUuJzETYiM/ELFp1oQy4/dE/NqlC
+         WE3Q==
+X-Gm-Message-State: APjAAAWb27tWpQ9DAIqY1X6QZfIPhcQLkk6RlzYg4plKJx8kEdtKXyPH
+        z/tipO0v+rcqWff5y0A=
+X-Google-Smtp-Source: APXvYqyLF0Am9kma/itAmySVsJHMHwAVJnn63xDkl3seEwvT3LmeANACYzAJRn2E/mhon6dKXAQ/Kw==
+X-Received: by 2002:a1c:7718:: with SMTP id t24mr12710869wmi.119.1580117104418;
+        Mon, 27 Jan 2020 01:25:04 -0800 (PST)
+Received: from localhost (m221.zih.tu-dresden.de. [141.30.68.221])
+        by smtp.gmail.com with ESMTPSA id y20sm9496896wmj.23.2020.01.27.01.25.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Jan 2020 01:25:03 -0800 (PST)
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+To:     git@vger.kernel.org
+Cc:     Bert Wesarg <bert.wesarg@googlemail.com>, Jeff King <peff@peff.net>
+Subject: [PATCH] doc: clarify "explicitly given" in push.default
+Date:   Mon, 27 Jan 2020 10:25:03 +0100
+Message-Id: <1113893dd36a1e8cf72331dd01f36206b44f45ad.1580116685.git.bert.wesarg@googlemail.com>
+X-Mailer: git-send-email 2.24.1.497.g9abd7b20b4.dirty
+In-Reply-To: <20200127070238.GA32427@coredump.intra.peff.net>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: a68c2505-5531-4e97-1b7a-08d7a30840e7
-X-MS-TrafficTypeDiagnostic: AM7PR07MB6246:
-X-Microsoft-Antispam-PRVS: <AM7PR07MB62468E2096D2D18B5B69179AEE0B0@AM7PR07MB6246.eurprd07.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:1850;
-X-Forefront-PRVS: 02951C14DC
-X-MS-Exchange-SenderADCheck: 1
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 2S7r55/Bp9sdBeczadHyy3h02uXIp3oB9v8GnwsGJy5RJuEQsh9gDv4jLmH0aaFerI99OOpppZdzvQ8ovLaPKUFlsquoY3SO1pdWHgm36Ygr54wvVjlYA2MEak50KEFT0H6PhNH5K5f+HrIEyAepZCKjVcba5rPlNXYmVdx8WUk80jnvppNCeReFkEzqK/OYqYHTiO5KJh5TkEDHv+RipDwrL4iS04/BB4MpKlcwt7Pmw38Cdi7CtjH7CMRmAsCjDvLQnwc0HJjSCAk5KAN21ST4hlPt73BhCAq3wkI/fEMgW/0kc3tR736oT++0tOJUWULF+NvWxbwSuQK9/bu8BfRWRiiZfSOFGZZC6IHBnCQqg2uO4HtWdWRJm1xiB4PJnXOgNxVbT6oQp76vW4uhkWJDsuRJkL1rLDUjtwFQxwSwkcmP38geZaQeESCgV8so
-X-OriginatorOrg: nokia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2020 09:06:53.9587
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a68c2505-5531-4e97-1b7a-08d7a30840e7
-X-MS-Exchange-CrossTenant-Id: 5d471751-9675-428d-917b-70f44f9630b0
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5d471751-9675-428d-917b-70f44f9630b0;Ip=[131.228.2.17];Helo=[fihe3nok0735.emea.nsn-net.net]
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR07MB6246
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Original bash helper for "submodule status" was doing a check for
-initialized but not cloned submodules and prefixed the status with
-a minus sign in case no .git file or folder was found inside the
-submodule directory.
-This check was missed when the original port of the functionality
-from bash to C was done.
+The documentation for push.default mentions that it is used if no
+refspec is "explicitly given". Let's clarify that giving a refspec on
+the command-line _or_ in the config will override it.
 
-Signed-off-by: Peter Kaestle <peter.kaestle@nokia.com>
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- builtin/submodule--helper.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ Documentation/config/push.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c72931e..4031cf4 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -782,6 +782,8 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 	struct argv_array diff_files_args = ARGV_ARRAY_INIT;
- 	struct rev_info rev;
- 	int diff_files_result;
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *git_dir;
+Cc: peff@peff.net
+
+diff --git a/Documentation/config/push.txt b/Documentation/config/push.txt
+index 0a0e000569..d560362c9a 100644
+--- a/Documentation/config/push.txt
++++ b/Documentation/config/push.txt
+@@ -1,9 +1,11 @@
+ push.default::
+ 	Defines the action `git push` should take if no refspec is
+-	explicitly given.  Different values are well-suited for
+-	specific workflows; for instance, in a purely central workflow
+-	(i.e. the fetch source is equal to the push destination),
+-	`upstream` is probably what you want.  Possible values are:
++	neither explicitly (on the command-line) nor implicitly (via a
++	`remote.*.push` config option) given.  Different values are
++	well-suited for specific workflows; for instance, in a purely
++	central workflow (i.e. the fetch source is equal to the push
++	destination), `upstream` is probably what you want.  Possible
++	values are:
+ +
+ --
  
- 	if (!submodule_from_path(the_repository, &null_oid, path))
- 		die(_("no submodule mapping found in .gitmodules for path '%s'"),
-@@ -794,10 +796,18 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 		goto cleanup;
- 	}
- 
--	if (!is_submodule_active(the_repository, path)) {
-+	strbuf_addf(&buf, "%s/.git", path);
-+	git_dir = read_gitfile(buf.buf);
-+	if (!git_dir)
-+		git_dir = buf.buf;
-+
-+	if (!is_submodule_active(the_repository, path) ||
-+			!is_git_directory(git_dir)) {
- 		print_status(flags, '-', path, ce_oid, displaypath);
-+		strbuf_release(&buf);
- 		goto cleanup;
- 	}
-+	strbuf_release(&buf);
- 
- 	argv_array_pushl(&diff_files_args, "diff-files",
- 			 "--ignore-submodules=dirty", "--quiet", "--",
 -- 
-2.6.2
+2.24.1.497.g9abd7b20b4.dirty
 
