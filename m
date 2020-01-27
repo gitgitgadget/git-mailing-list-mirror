@@ -2,141 +2,118 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A2DC2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 764E7C2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:53:13 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BB7C124656
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:49:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 20B542465B
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:53:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gi5wL9+m"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xU5448xp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726205AbgA0WtU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 17:49:20 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37600 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbgA0WtU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 17:49:20 -0500
-Received: by mail-pl1-f195.google.com with SMTP id c23so4303836plz.4
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 14:49:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=uEEaCD/QiTR1WYB7PdgIbTChCoC6dalaokgsOC5TwDU=;
-        b=gi5wL9+ml4DhnAnN/+aMA/WGPjTnMzxi4olLPRcxOS2FbAnLOM4OycQI2mwTbkKm38
-         xAHygfQSIYTWJIRpWelM2QKqutUS8PtjyF9RijtMuVU8pt0AzYZCY3p778LoPbtsOpwE
-         q+vyAZuk4URVVbGchgkuO2jtr3mKr+z7IYCS+e2juofXa+lSrpgZXJKz+NDgbZzkN81l
-         kzwy8iWlDnJC0txOPzFwpBaQN4T2TQyIRKMucT6ci+2OHU/NM5vrNL+5FbJSgFudQyLD
-         +4G7vEuP0zSHgnyS4ZeT0JZGH05L7ZdQx/aVSp43ERcJtqGJOBHP8jtO/r6IAnjPBt+n
-         znQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uEEaCD/QiTR1WYB7PdgIbTChCoC6dalaokgsOC5TwDU=;
-        b=caySuFF2qxbA8HpB91KyAgnNKXyL3zHttKaXh3hA5fLWBz4QlX3V3lXmNkqmOaLKvy
-         4yKZv7L/7wsEqapSHQhQBFPxTYJN8JHEDa3Fd88J5ilwCaeIVmmR3jzU0OqjSQPp52O1
-         bkxDnZnSfjjmkAexipqiGZI+A/3nJqynUaPnMYQ1Q9WVPBQN70CdvgHL9jPklBJ/ndiP
-         5/LBYp4zutyF3hxyvTV/62Kt+WqJNHDk7VJm4Ck3g4DA1opL5EL2bpoWohQvnrItpz2z
-         3JvaFpYir2fhm2JYIkTouVD0EORO7t7UkCyrI0VT8V1BgqQoftZWDGyloKT3Rx5YqlR5
-         kywA==
-X-Gm-Message-State: APjAAAW/laWGdKd6LxokEXbp3WyWL9qj6KIVAUtHzvoy4XuRtswslPpZ
-        KIqJ2KZLanyl7FwTZjOr5dJGEQ==
-X-Google-Smtp-Source: APXvYqxNd3thkmirctyzORKcNkfOBFc4LhLQ1oixMyzROKJLor1Bj+kVh+fTaU+FdKBQ8TgRuO5IWQ==
-X-Received: by 2002:a17:90b:110d:: with SMTP id gi13mr1069245pjb.123.1580165359167;
-        Mon, 27 Jan 2020 14:49:19 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id 132sm17667808pgd.76.2020.01.27.14.49.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 14:49:18 -0800 (PST)
-Date:   Mon, 27 Jan 2020 14:49:14 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clone: teach --single-branch and --branch during
- --recurse
-Message-ID: <20200127224914.GB233139@google.com>
-References: <20200108231900.192476-1-emilyshaffer@google.com>
- <20200109081150.GC3978837@coredump.intra.peff.net>
- <20200116223800.GM181522@google.com>
- <20200117210319.GA15460@coredump.intra.peff.net>
- <20200127222019.GA233139@google.com>
+        id S1726296AbgA0WxM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 17:53:12 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58665 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726205AbgA0WxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 17:53:11 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 9B61D3C3F2;
+        Mon, 27 Jan 2020 17:53:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=WpHEf+bbdlzBLGePDfQxZqN1v5M=; b=xU5448
+        xpU0hO66yVBBSISifJQCd0Do1BWe9xstUfRmZ3rwWosyq383thCw28sKYWjr6XMa
+        wUaBwawObD9GWX5sytZh9a2CTIimSISg/d0VkyD9nvaiEf/q/qHNgexqLXS0IGTZ
+        2iw/fRt3eRw1dVEBcJkSzsbej5eWlify+wcPs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=CIWMUGMur5P10QpUKdlnwSWOYJ1v7I1a
+        2wG8QpUfcVh3r/5AcBp2uCWxPYh92mL0ddJXUWUFIw+FzixjiI/1Y5gBXRGe8vWt
+        I/Y9aK2z5qf9NcHaBSYc2kuEjKXOkkm+YpPMHUiiYCxLL2PuRE9tUkAR9iCrNBGs
+        FgwwYLQgpnA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 902703C3F1;
+        Mon, 27 Jan 2020 17:53:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C4CD83C3F0;
+        Mon, 27 Jan 2020 17:53:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 3/5] Document how ref iterators and symrefs interact
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
+        <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
+        <9cf185b51f45f2df0016d7b69351ec2a7656dac2.1580134944.git.gitgitgadget@gmail.com>
+Date:   Mon, 27 Jan 2020 14:53:07 -0800
+In-Reply-To: <9cf185b51f45f2df0016d7b69351ec2a7656dac2.1580134944.git.gitgitgadget@gmail.com>
+        (Han-Wen Nienhuys via GitGitGadget's message of "Mon, 27 Jan 2020
+        14:22:22 +0000")
+Message-ID: <xmqqmua8a4vg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200127222019.GA233139@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: C99A0382-4157-11EA-A103-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 02:20:19PM -0800, Emily Shaffer wrote:
-> On Fri, Jan 17, 2020 at 04:03:19PM -0500, Jeff King wrote:
-> 
-> > (like trying to replace the use of "repo" in Android)
-> 
-> Oops, you saw right through us ;)
-> 
-> > It would make more sense to me to either (or both):
-> > 
-> >   - make sure that .gitmodules has enough information about which branch
-> >     to use for each submodule
-> 
-> Hum. I don't work with them day to day, but aren't we already in that
-> state? Is that not what the 'branch' option for each submodule means?
+"Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I've been corrected off-list that the 'branch' in .gitmodules is used
-during 'git submodule update --remote', but not during 'git submodule
-init' or 'git clone --recurse-submodules'. Then, for the problem in
-discussion for this thread, it seems like a better choice is something
-like 'git clone --recurse-submdoules --use-gitmodules' or whatever we
-want to call it - e.g., rather than fetching the branch where the server
-knows HEAD, ask the .gitmodules to figure out which branch?
+> From: Han-Wen Nienhuys <hanwen@google.com>
+> Subject: Re: [PATCH v2 3/5] Document how ref iterators and symrefs interact
 
-It seems like that ought to live separately from --single-branch. In the
-case where you very strictly only want to fetch one branch (not two
-branches) I suppose you'd want something like 'git clone
---recurse-submodules --single-branch --branch=mysuperprojectbranch
---use-gitmodules' to make sure that only one branch per repo comes down.
+"Subject: refs: document how ...", perhaps?
 
-With n submodules of various naming schemas, provenance, etc., I don't
-think there's a good case for recursing --branch one way or another; it
-seems like filling out some config is the way to go.
+Also isn't it more like iterators and symrefs do not interact in any
+unexpected way, is it?  iterators while enumerating refs when they
+see a symref, they do not dereference and give the underlying ref
+the symref is pointing at---the underlying ref will be listed when
+it comes its turn to be shown as an ordinary ref.  I am not sure
+what is there to single out and document...
 
-I guess we could also teach it to take some input like
---submodule-branch-spec=foo.txt, and/or a multiply provided
---submodule-branch foo=foobranch --submodule-branch bar/baz=bazbranch.
+> Change-Id: Ie3ee63c52254c000ef712986246ca28f312b4301
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+> ---
+>  refs/refs-internal.h | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index ff2436c0fb..fc18b12340 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -269,6 +269,9 @@ int refs_rename_ref_available(struct ref_store *refs,
+>   * to the next entry, ref_iterator_advance() aborts the iteration,
+>   * frees the ref_iterator, and returns ITER_ERROR.
+>   *
+> + * Ref iterators cannot return symref targets, so symbolic refs must be
+> + * dereferenced during the iteration.
 
-  [foo.txt]
-  foo=foobranch
-  bar/baz=bazbranch
+What this says is not techincally incorrect.  Iterators do not give
+each_ref_fn what underlying ref a symref is pointing at.  But it
+also is misleading.  If your callback wants to know what object each
+ref is pointing at do not need to do anything extra when it sees a
+symref, as name of the object pointed at by the underlying ref is
+given to it.  Only callbacks that wants to know the other ref, not
+the value of the other ref, needs to dereference when called with a
+symref.
 
-With that approach, then someone gets a little more flexibility than
-relying on what the .gitmodules has set up.
+But I wonder if we need to even say this.  Isn't it obvious from the
+each_ref_fn API that nothing other than the refname, object id, and
+what kind of ref it is, will be given to the user of the API, so it
+would be natural for a caller that wants to do extra things it needs
+to do for symrefs must act when it learns a ref is a symref?  After
+all, that is why the flags word is one of the parameters given to an
+each_ref_fn.
 
-> >   - offer an extra option for the default branch to use for any
-> >     submodules. This is still not general enough to cover all situations
-> >     (e.g., the bar/baz you showed above), but it at least makes it
-> >     relatively easy to cover the simple cases, without breaking any
-> >     existing ones.
-> 
-> Yeah, this is sort of the direction my mind went too - "not
-> --branch recursively, but --submodule-branch". But that breaks down when you've
-> got a nontrivial number of submodules, at which point you're gonna have
-> a hard time unless you've got the .gitmodules configured correctly.
-> 
-> 
-> Well, as for this patch, let me try it with just --single-branch and see
-> whether that works for the case the user reported. I can head back to
-> the drawing board if not.
-
-With only half the rework of my patch done, I'm starting to convince
-myself it's not actually going to work :) Well, I'll still try and see.
-
- - Emily
