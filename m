@@ -2,124 +2,108 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-7.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
+	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0922DC2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 21:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F36EC2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:20:27 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CC6A122527
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 21:39:58 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 59AE42465B
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 22:20:27 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hz9ZOPUS"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="rHxSEVYL"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726205AbgA0Vj5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 16:39:57 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40762 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725946AbgA0Vj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 16:39:57 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c14so13479940wrn.7
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 13:39:56 -0800 (PST)
+        id S1726338AbgA0WU0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 17:20:26 -0500
+Received: from mail-pj1-f68.google.com ([209.85.216.68]:40514 "EHLO
+        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbgA0WU0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 17:20:26 -0500
+Received: by mail-pj1-f68.google.com with SMTP id 12so91968pjb.5
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 14:20:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5ltdm75/XuDMr+ZIWRyCkzSPVFbc14DFXStSz7lu4Gs=;
-        b=hz9ZOPUSV4AQqZmgStKtVQD6vqFWZi5zfnYByK84oOMC7SJoShJYZbtJ56Xpkym1fW
-         Es7GIOFP5powGa8WnLfgHZOqe+ksvpqNI5sJ38VJkuP86FAYuisueEP0AAqZ73Flt8l2
-         QhtlaBZZ1TkS26jn4wNHhHRu/e7VFG6o1wX4LSCnoPl3CL45n+ZJgClUxNt8qr7U+OYJ
-         F76u5q6gkv4hI/GxOoaLr5uy6PhN3u2rJiOmg6hqkJKZXThkp2J0MBQtZYg8OUF/OmpY
-         O1l2lh4g1BoqnMtSyolnhThj/d9RySARgFUa4Z5P2H3UA1Uoac9YVo3e74RcIGbdKKfv
-         oFHw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lywxJUrCXIYFTOkhbgN0seF2fa5MH/yFZ15Iffnh4yg=;
+        b=rHxSEVYLeGr3bs6r21qC7vXJ1Ga6vCiYVylaxy76K7wtau7Hy8lLKbxY5XwoIrelwR
+         jUtzGx4a/bxy9Da4Z2udkdy4LXhEssOyEbX4S2DPr/PYThY8qY3DKox8Nu+878U/8UpA
+         kNoc7ZfBFmqZLY+8YNIZnJqXtoZw+dvD7Acn1O6FlnlBXmVd0g19RJyB8iml5AlhoO0V
+         iU2QVWuRLD7b5d4wlSVKKX5mll4MauuyOAIOPmbfQCuqpbsMF5R0fvKi8+D0pd8PGmVH
+         q4iJiZsD1cTbcFVG8b9bibysoQxyX2DLBhhBr4EBiL2kIemL/sGH9XPbUAuq1rumFBzz
+         DlHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=5ltdm75/XuDMr+ZIWRyCkzSPVFbc14DFXStSz7lu4Gs=;
-        b=NDaKPbiRPg2qOQSXlucM3ztXSHzbmCmqWSDMnFwE/Z4WMHaFy4oBSoOk9GtgNI6pk+
-         Ul9EsYCOQrXw0GfOeNM7t5z70GYDXpjQFyIiSx+hcG/T0pKRY5RC1c0zDe3/mv8MjcCk
-         EQK/heflwtyPwLJEWXCiufOg7S7TwcFaeWN+9FEExc9rh4i0xg9tv56c1uGs5KGUcAF+
-         nrr8Ecfkglg6f7x84vKtNz0Gxay4V7uJjUJwEV08Mv/kxIE1Ds/fP4HNyfMOEkqTzwSy
-         4VYiTqwB8uOW6QnPqWgAZYGYOMeVLGk1wwdf/6mC7ZDA9FzA92UCpoqp21bWTiIUlnOG
-         DXfQ==
-X-Gm-Message-State: APjAAAX2axnjBbAVkGQIUMwHAJkMQXiWESBx9JdrOu0a0QmfaVzTPDrP
-        zmjNmSUmLmGFdsg0AP7vkI4=
-X-Google-Smtp-Source: APXvYqz0b2est/1YFgZ0g4WRdl8KztxZvreX5lrnXa9fxHojE+uZr6Y/A5t/GIlTyP4PSyHUsF7WXw==
-X-Received: by 2002:adf:f98c:: with SMTP id f12mr22607064wrr.138.1580161195480;
-        Mon, 27 Jan 2020 13:39:55 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-551-1-75-233.w92-146.abo.wanadoo.fr. [92.146.226.233])
-        by smtp.gmail.com with ESMTPSA id m7sm22584136wrr.40.2020.01.27.13.39.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Jan 2020 13:39:54 -0800 (PST)
-Subject: Re: [PATCH v5 0/2] rebase -i: extend rebase.missingCommitsCheck
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20200111173917.15690-1-alban.gruin@gmail.com>
- <20200125175436.29786-1-alban.gruin@gmail.com>
- <nycvar.QRO.7.76.6.2001261043540.46@tvgsbejvaqbjf.bet>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <5f9b02f2-6b77-91da-2af1-d36cb6b137a3@gmail.com>
-Date:   Mon, 27 Jan 2020 22:39:45 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lywxJUrCXIYFTOkhbgN0seF2fa5MH/yFZ15Iffnh4yg=;
+        b=JBB2fGZdV+e+SMRLJDr8eXx6IWOsV6WsmG7r5gdy7i8tG9xmuWdG15Ku9OcWOZ4Kmw
+         38ijJMbCpgmE6wsfLPWguTpWOllvnFttmWSMy3ToRIqaP3czUYZGVUhJamL7wsx2XRPz
+         asdc3qv0FGhLQTFIabiOfbezQZwxAMeRjCATXAP9UAPgDeWoHclpPYWUoHocAogtvYE1
+         tqJ5Djl/zYnE/M8N2g3AFccXGL+mW1U2e7zA7R+CxA30KxpA7oyy7ZQGASQB/yXBwjZJ
+         /0jedM2bEWfQCF0JaC8wgX8udaqrR0MBRm9pA266byc92DxjBPBdh57MHBzCXwh6qb3X
+         EhOQ==
+X-Gm-Message-State: APjAAAUnplJLhoGwzyVc0SUSxRAXdCf8KqaUGAstlnUK3I/VJmQ5OVsT
+        r1N9zc/FftZVC38Y14hWnfQZPfmPp9k=
+X-Google-Smtp-Source: APXvYqwhC+3zWA8cV4AjvdRaY+IqaFWNki4BOylsoucohvWVB955rDq4A1U2lsrq2uiS/8XSeA7EQA==
+X-Received: by 2002:a17:90b:4004:: with SMTP id ie4mr955723pjb.49.1580163625048;
+        Mon, 27 Jan 2020 14:20:25 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
+        by smtp.gmail.com with ESMTPSA id 73sm17431133pgc.13.2020.01.27.14.20.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2020 14:20:24 -0800 (PST)
+Date:   Mon, 27 Jan 2020 14:20:19 -0800
+From:   Emily Shaffer <emilyshaffer@google.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clone: teach --single-branch and --branch during
+ --recurse
+Message-ID: <20200127222019.GA233139@google.com>
+References: <20200108231900.192476-1-emilyshaffer@google.com>
+ <20200109081150.GC3978837@coredump.intra.peff.net>
+ <20200116223800.GM181522@google.com>
+ <20200117210319.GA15460@coredump.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.2001261043540.46@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20200117210319.GA15460@coredump.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Fri, Jan 17, 2020 at 04:03:19PM -0500, Jeff King wrote:
 
-Le 26/01/2020 à 11:04, Johannes Schindelin a écrit :
-> Hi Alban,
-> 
-> On Sat, 25 Jan 2020, Alban Gruin wrote:
-> 
->> Changes since v4:
->>
->>  - Added a test to check that no errors are raised when editing the todo
->>    list after pausing the rebase; it was provided by Phillip Wood.
->>
->>  - Fixed the issue pointed out by this test by creating a backup of the
->>    todo list even if the edited list is incorrect.  This step was moved
->>    before the user edits the list, so the backup can be created with
->>    copy_file() instead of todo_list_write_to_file().
-> 
-> Please note that I changed this to always use `todo_list_write_to_file()`
-> in `js/rebase-i-with-colliding-hash` (see e.g.
-> https://github.com/gitgitgadget/git/commit/26027625).
-> 
-> The reason is that the copy would be made with _abbreviated_ commit IDs.
-> And during the rebase, those abbreviated IDs could become non-unique.
-> 
-> I have to admit that I did not follow the evolution of your patch series
-> terribly closely, but from your description I gather that we want to be
-> careful to ensure that the `.backup` file is written with non-abbreviated
-> commit IDs always.
-> 
-> The way I read your patches, they will conflict with
-> `js/rebase-i-with-colliding-hash`, so maybe it would be a good idea to
-> base your patches on that branch?
-> 
+> (like trying to replace the use of "repo" in Android)
 
-Let's do this.  This will also solve the conflict this series already
-has with master.
+Oops, you saw right through us ;)
 
-> Thanks,
-> Dscho
+> It would make more sense to me to either (or both):
 > 
+>   - make sure that .gitmodules has enough information about which branch
+>     to use for each submodule
 
-Cheers,
-Alban
+Hum. I don't work with them day to day, but aren't we already in that
+state? Is that not what the 'branch' option for each submodule means?
 
+> 
+>   - offer an extra option for the default branch to use for any
+>     submodules. This is still not general enough to cover all situations
+>     (e.g., the bar/baz you showed above), but it at least makes it
+>     relatively easy to cover the simple cases, without breaking any
+>     existing ones.
+
+Yeah, this is sort of the direction my mind went too - "not
+--branch recursively, but --submodule-branch". But that breaks down when you've
+got a nontrivial number of submodules, at which point you're gonna have
+a hard time unless you've got the .gitmodules configured correctly.
+
+
+Well, as for this patch, let me try it with just --single-branch and see
+whether that works for the case the user reported. I can head back to
+the drawing board if not.
+
+ - Emily
