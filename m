@@ -7,104 +7,98 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FEEFC32771
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 729B0C32771
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:50:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0BE99214DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:46:22 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 353072071E
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:50:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IOIOxM7G"
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IBjoJYkc"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727166AbgA0GqU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 01:46:20 -0500
-Received: from mail-qt1-f173.google.com ([209.85.160.173]:46923 "EHLO
-        mail-qt1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbgA0GqU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 01:46:20 -0500
-Received: by mail-qt1-f173.google.com with SMTP id e25so6570233qtr.13
-        for <git@vger.kernel.org>; Sun, 26 Jan 2020 22:46:19 -0800 (PST)
+        id S1725840AbgA0Gu3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 01:50:29 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:46720 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725763AbgA0Gu3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 01:50:29 -0500
+Received: by mail-ua1-f67.google.com with SMTP id l6so3031444uap.13
+        for <git@vger.kernel.org>; Sun, 26 Jan 2020 22:50:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=Kzr03U4ihuKzzKBh/y4uc3eFbyefE9LZri29b67G9zU=;
-        b=IOIOxM7G330+gFQj9Yplr1guWUVjxMECPBTJF4UwNzYq3NczyoQorUvtYcW5mwxSo7
-         rfHCfMqscwxfi1fuoJ8eP++2T/UpD2F2+EzCCzweHJxBSsR5nPTJWxeN1+3FIll1a47Q
-         +bIgQqRzgYGV9t3H48k7j1EVB+0d+51PaWrO3hjtZOn7hB1xRtNQQbpirupbzoGhXflq
-         4VyiAPiwi4d/SiIerKzJcTf+yyjV5j3Wq/cICfLk4FT8xUd04UvTZUwn3xE6ECkrk7eU
-         AzXcDGkbdJ3twHzZuB6Y7sghLmBR4vV9Ab+4JD0vmathxmwUzYhTUZdonnvptyRbcQk9
-         jnJg==
+        d=googlemail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2KmLfgjOiPqTj/XQFxzIO5uyX+DpvrdK8V6PkK/ZUa4=;
+        b=IBjoJYkcVX9hwlmN2KBIpkmJuJhJv3GL5fx6xoUmYxzMo8+3tw1U+OXR5fgbZZpq/Q
+         7t8UtfPfX/tZ9cziW1T1frzTso3K7+uSIKampxEtIghFiKVWRvN/jXQm2uzW6WxA3Qjj
+         C4NpoAl8e4zfFfXdlDqipZuToHHlKw0LAk3L0oCJYb46M90prVOvau4k6Ci1xHn1xdgz
+         hu8nc8I6/ZQdPhHgBdQZU0qVBOwexJ9E41L9HgBocYff7nfCiEw/+eK+jGDxlkQeri+W
+         +Sajl7PeY0lnVyZOI3FpLB/ZlHfUAkmAP78eY12I+guN7pJUFX9PpaWW+e5ql0Nk3Vb1
+         OqCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=Kzr03U4ihuKzzKBh/y4uc3eFbyefE9LZri29b67G9zU=;
-        b=EC9VL6TA4z3FxRN74XgyQoCuPo30m4xRE9YpJleoVB+Z8X1ev5xDyNXbEK8b0C+xDf
-         wdSmar4IJ6v5VekrY//nKWpIoY+mn/UiGLFDjzLyzzsZtAkBDyW1ABfAT1c6Qv+kyv7i
-         AD+boe1Bw8beTBuuRYvYvSqCsnjVdZ5/l+KoKRibewXWUfkCz0yNpW9nYrF0CCVDRZIw
-         74MuK+VLitvcBcuWPizhYsaTNNw4RS0CzG6wQMfydJO0mHAAPAAYwskOd3pJtScO65yj
-         pgvzIEUAgk3lLoXkisXx5V8ifnkGJh0Q/ys11Z/oo74F1Pk1YFi5TZVsa3caTuEcMxrZ
-         cQUA==
-X-Gm-Message-State: APjAAAUbeHYOLmPIZtRtAB9Iku8eV0nwY5LLoAC89xBkTYkXBeE4npt4
-        UJHyxgYl8TbPTP2qvWQh/bCsMOK2cxLnor/Ta9k=
-X-Google-Smtp-Source: APXvYqzSoZM99WEKYnrg+OXV5uJ9EsH45idk69chCjOtEOfll5+ECms12nuEyhjDfKMvi6Yh9GjghQts7CfYEtZM4GI=
-X-Received: by 2002:ac8:410f:: with SMTP id q15mr14307239qtl.192.1580107579210;
- Sun, 26 Jan 2020 22:46:19 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=2KmLfgjOiPqTj/XQFxzIO5uyX+DpvrdK8V6PkK/ZUa4=;
+        b=rmpVguIDRpEyP8pjvra0BWCVUS1UBJ0DgKYiSwLOP0IcQTHcrUZRzKXGFQ5kWMw0J0
+         kMazHzRTtvSii0Ai3r+Yt8vevW7WpPZ5Z2DOQxCivQptDyL4xCVN6S7m7pKScPfYy00Q
+         hwoxqbgu4/e2Dk2NNg+t3JvfCYXQFB6Uqfjw/hx4jxVT+dZGIni9XV010pmthPXBYOmG
+         YZ/LywIzIittbZR/JP0egxIFvwM07B86c7+5T9yTVmiZaHlbExy2SIsp+zJxNS39VIrr
+         ufflceu34bbsw0l5eBsx8l9+8r2dTvoxSFahlecVRBK3pypfN3Wr0WRFlcBTWklqkqlb
+         Hnuw==
+X-Gm-Message-State: APjAAAUlNcSMCelYUL6NuPtjzNuX1e2MNGjOl5b8zPHH4xUMbWN235lr
+        6x/tFIdmhYRu7qKvrH32RMSnMq5oiyTfxzQ3x5k=
+X-Google-Smtp-Source: APXvYqz1dvtRbCitHxUGepYLxSViBRhnr2ji0SaJyT8pUBRRbH0oBJp6bnknl3wEc4/1w/lN4x5ACy1ddPJhisJ5Oz8=
+X-Received: by 2002:ab0:60ba:: with SMTP id f26mr9009867uam.51.1580107828093;
+ Sun, 26 Jan 2020 22:50:28 -0800 (PST)
 MIME-Version: 1.0
-References: <CAOTb1wfoMf338VPRYcjAv+EaMYQxKJ=kP6-qMykG-LfxPrWuag@mail.gmail.com>
- <20200127055509.GA12108@coredump.intra.peff.net>
-In-Reply-To: <20200127055509.GA12108@coredump.intra.peff.net>
-From:   Chris Jerdonek <chris.jerdonek@gmail.com>
-Date:   Sun, 26 Jan 2020 22:46:07 -0800
-Message-ID: <CAOTb1wd9D3YytevTt0cGnw1o-9cN1-yxCqbuH4oLH1KB6mzEeA@mail.gmail.com>
-Subject: Re: git-clone --single-branch clones objects outside of branch
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <cover.1579857394.git.bert.wesarg@googlemail.com>
+ <xmqq36c4zi0x.fsf@gitster-ct.c.googlers.com> <CAOjrSZtT0bX=hhH=OZdA80T_Thgn9drG66xcVMYjo7Q=5Cw_Bw@mail.gmail.com>
+In-Reply-To: <CAOjrSZtT0bX=hhH=OZdA80T_Thgn9drG66xcVMYjo7Q=5Cw_Bw@mail.gmail.com>
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+Date:   Mon, 27 Jan 2020 07:50:16 +0100
+Message-ID: <CAKPyHN0giHdGeeTRe6ZQL14d=1GkkC24Zu142gTuDAZhqtittQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] remote rename/remove: improve handling of
+ configuration values
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Matt Rogers <mattr94@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 26, 2020 at 9:55 PM Jeff King <peff@peff.net> wrote:
-> On Sun, Jan 26, 2020 at 04:39:52AM -0800, Chris Jerdonek wrote:
-> > However, when I attempted this with a local repo, I found that objects
-> > located only in branches other than the branch I specified are also
-> > cloned. Also, this is true even if the remote repo has only loose
-> > objects (i.e. no pack files). So it doesn't appear to be doing this
-> > only to avoid creating new files.
+Junio,
+
+On Sat, Jan 25, 2020 at 1:39 AM Matt Rogers <mattr94@gmail.com> wrote:
 >
-> This is the expected outcome, because in your example you're cloning on
-> the local filesystem. By default that enables some optimizations, one of
-> which is to hard-link the object files into the destination repository.
-> That avoids the cost of copying and re-hashing them (which a normal
-> cross-system clone would do). And it even avoids traversing the objects
-> to find which are necessary, instead just hard-linking everything.
+> Yeah, I just resubmitted so you should be good to go
 
-Thanks for the reply. It's okay for that to be the expected behavior.
-My suggestion would just be that the documentation for --single-branch
-be updated to clarify that objects unreachable from the specified
-branch can still be in the cloned repo when run using the --local
-optimizations. For example, it can matter for security if one is
-trying to create a clone of a repo that doesn't include data from
-branches with sensitive info (e.g. in following Git's advice to create
-a separate repo if security of private data is desired:
-https://git-scm.com/docs/gitnamespaces#_security ).
+I can resend the rebased topic at any time. And as I don't see that
+you picked up by latest re-roll (cover in
+cover.1579857394.git.bert.wesarg@googlemail.com) in into
+bw/remote-rename-update-config yet, I think it makes sense to do this
+now.
 
-I'm guessing other flags also don't apply when --local is being used.
-For example, I'm guessing --reference is also ignored when using
---local, but I haven't checked yet to confirm. It would be nice if the
-documentation gave a heads up in cases like these. Even if hard links
-are being used, it's not clear from the docs whether the objects are
-filtered first, prior to hard linking, when flags like --single-branch
-and --reference are passed.
+Best,
+Bert
 
-> This one behaves as you expected because git-fetch does not perform the
-> same optimizations (it wouldn't make as much sense there, as generally
-> in a fetch we already have most of the objects from the other side
-> anyway, so hard-linking would just give us duplicates).
-
-Incidentally, here's a thread from 2010 requesting that this
-optimization be available in the git-fetch case:
-https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=573909
-(I don't know how reports on that Debian list relate to this list.)
-
---Chris
+>
+> On Fri, Jan 24, 2020 at 4:10 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > All steps looked quite sensibly done.
+> >
+> > >  - patch 5 will be replaced by/rebased on Matthew's work in 'config: allow user to
+> > >    know scope of config options', once 'config_scope_name' is available
+> >
+> > I expect that Matthew's topic would become solid enough after one
+> > more reroll to name the function back to config_scope_name(); after
+> > that, let's drop the step and instead fork this topic off of Matthew's
+> > topic to queue the remaining patches on top.
+> >
+> > Thanks.
+>
+>
+>
+> --
+> Matthew Rogers
