@@ -2,89 +2,82 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-5.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88801C32771
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 05:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6568FC32771
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:29:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5432920716
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 05:55:12 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 43075214AF
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 06:29:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725893AbgA0FzL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 00:55:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45220 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725763AbgA0FzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 00:55:11 -0500
-Received: (qmail 31230 invoked by uid 109); 27 Jan 2020 05:55:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Jan 2020 05:55:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28390 invoked by uid 111); 27 Jan 2020 06:02:34 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Jan 2020 01:02:34 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 27 Jan 2020 00:55:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     Chris Jerdonek <chris.jerdonek@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-clone --single-branch clones objects outside of branch
-Message-ID: <20200127055509.GA12108@coredump.intra.peff.net>
-References: <CAOTb1wfoMf338VPRYcjAv+EaMYQxKJ=kP6-qMykG-LfxPrWuag@mail.gmail.com>
+        id S1726380AbgA0G3D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 01:29:03 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:45100 "EHLO bsmtp2.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725763AbgA0G3D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 01:29:03 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp2.bon.at (Postfix) with ESMTPSA id 485fwD3197z5tl9;
+        Mon, 27 Jan 2020 07:29:00 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 266D64184;
+        Mon, 27 Jan 2020 07:28:59 +0100 (CET)
+Subject: Re: [PATCH v2] git: update documentation for --git-dir
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+References: <pull.537.git.1579745811615.gitgitgadget@gmail.com>
+ <pull.537.v2.git.1580091855792.gitgitgadget@gmail.com>
+To:     Heba Waly <heba.waly@gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <b494114d-02ef-599f-4fa0-d7614974a130@kdbg.org>
+Date:   Mon, 27 Jan 2020 07:28:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
+In-Reply-To: <pull.537.v2.git.1580091855792.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAOTb1wfoMf338VPRYcjAv+EaMYQxKJ=kP6-qMykG-LfxPrWuag@mail.gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 26, 2020 at 04:39:52AM -0800, Chris Jerdonek wrote:
+Am 27.01.20 um 03:24 schrieb Heba Waly via GitGitGadget:
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index b1597ac002..cf73f501b6 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -110,9 +110,23 @@ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
+>  	Do not pipe Git output into a pager.
+>  
+>  --git-dir=<path>::
+> -	Set the path to the repository. This can also be controlled by
+> -	setting the `GIT_DIR` environment variable. It can be an absolute
+> -	path or relative path to current working directory.
+> +	Set the path to the repository (".git" directory). This can also be
+> +	controlled by setting the `GIT_DIR` environment variable. It can be
+> +	an absolute path or relative path to current working directory.
+> +
+> +	Specifying the location of the ".git" directory using this
+> +	option (or GIT_DIR environment variable) turns off the
+> +	repository discovery that tries to find a directory with
+> +	".git" subdirectory (which is how the repository and the
+> +	top-level of the working tree are discovered), and tells Git
+> +	that you are at the top level of the working tree.  If you
+> +	are not at the top-level directory of the working tree, you
+> +	should tell Git where the top-level of the working tree is,
+> +	with the --work-tree=<path> option (or GIT_WORK_TREE
+> +	environment variable)
+> +
+> +	If you just want to run git as if it was started in <path> then use
+> +	git -C.
 
-> However, when I attempted this with a local repo, I found that objects
-> located only in branches other than the branch I specified are also
-> cloned. Also, this is true even if the remote repo has only loose
-> objects (i.e. no pack files). So it doesn't appear to be doing this
-> only to avoid creating new files.
-> 
-> In contrast, git-fetch behaves as expected (including locally).
-> git-fetch appears to fetch only objects in the given branch, when a
-> branch is specified.
+Does this render well? Judging by the precedent set by the descriptions
+of -C and -c options earlier in this file, continuation paragraphs
+should not be indented and separated by a line with just a plus sign
+instead of an empty line.
 
-This is the expected outcome, because in your example you're cloning on
-the local filesystem. By default that enables some optimizations, one of
-which is to hard-link the object files into the destination repository.
-That avoids the cost of copying and re-hashing them (which a normal
-cross-system clone would do). And it even avoids traversing the objects
-to find which are necessary, instead just hard-linking everything.
-
-So with:
-
-> git clone --branch master --single-branch repo1 repo3
-
-You should be able to see with "git for-each-ref" in repo3 that you only
-got the "master" branch, but not "dev". But those extra objects are
-available to you, because of the hard-links.
-
-If you do:
-
-  git clone --branch master --single-branch --no-local repo1 repo4
-
-then repo4 will not have the objects (we really will send a packfile
-across a pipe, just as we would across the network for a cross-system
-clone).
-
-> cd repo2
-> git init
-> git remote add other file:///<path-to-repo1>
-> git fetch other master
-
-This one behaves as you expected because git-fetch does not perform the
-same optimizations (it wouldn't make as much sense there, as generally
-in a fetch we already have most of the objects from the other side
-anyway, so hard-linking would just give us duplicates).
-
--Peff
+-- Hannes
