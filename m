@@ -2,108 +2,140 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIMWL_WL_HIGH,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3301FC2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 19:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62B93C2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 19:48:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 046F024679
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 19:40:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=default; t=1580154043;
-	bh=PEJybVy/knIp/6jSD6UmLxTKcFhWvbSqNettMDq1gRk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:List-ID:From;
-	b=E5aO5BC1a8XemXAHYZ1H81cuuV4PZu55MBX0bq3NXGydvtx0Ro5swR0Nq+Yu3G+UF
-	 Kp3fIZaIQ8um8ue9mKI63FRJKDoDsrqf9cT8UWutHASLyYVzHFpwlIy80KSIhWEw/n
-	 m9K70cSQsTeO+kDdCwm45fwMvyPALD88bqKl0+rs=
+	by mail.kernel.org (Postfix) with ESMTP id 32DD824681
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 19:48:06 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="jClsovn5"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725990AbgA0Tkm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 14:40:42 -0500
-Received: from mail-qt1-f179.google.com ([209.85.160.179]:38528 "EHLO
-        mail-qt1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725845AbgA0Tkm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 14:40:42 -0500
-Received: by mail-qt1-f179.google.com with SMTP id c24so8351355qtp.5
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 11:40:41 -0800 (PST)
+        id S1726210AbgA0TsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 14:48:05 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42585 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725893AbgA0TsE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 14:48:04 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q6so12925647wro.9
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 11:48:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=PBcM3t2+MfJHUzuPoaQkrkzczRkgCYGJl9QIAiKFRLg=;
-        b=b8mF9dWXRquU92BkGjTRfwh6O9PvYWlseiahN3FE/VuRbhgausV7ypLBVGCtCEIVq+
-         lQ7buXzpmjqmctkoaCcMNNHLSgGVRrjhkor+NA6GlVPqjc8YXUf7XWDFSD3GYfPNPZyW
-         K8Ylx72CW5baSDXXstNsObYdD3YdRsCw6N4QM=
+        d=googlemail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pNrYwADSyWVNcIgxwnN9xplGHzGdmJnZb272hdmB7qg=;
+        b=jClsovn5Q6qGRLpY7ujHbYVc52adRUY1m/Ibts4pj20w/EYZlW5JqPjWeZR5Sxtvry
+         JJBKWxlBb8KlOVaYA9USsLFPzMs6gfl6sAUrUxjlLGp9fj2F4eUtq6DukBFr31b166it
+         +FPaKsrmoThtm9TvI3fEgS0Hsdr03xgmsdmjrs3rrMLKOAnHQyU8h3HFNkOCRT+HkCda
+         KCEAPES9+owUEk85ZqbNIcsSE2EQQJMP8GnsSabaoc1WEPR91PsxYXARzGQWfI14VRxE
+         bXcBm2VHUD92OYo4YemSFDGy60KGt2E08FKTfERyoeo1sNH5465psdMVRsS04XIgl06P
+         2BzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=PBcM3t2+MfJHUzuPoaQkrkzczRkgCYGJl9QIAiKFRLg=;
-        b=Gk5ZKqWu+kE9ncOOq7Jz29tivNc45IPxwBOftYzZF2ytlZx8S++mLCKtLSGQQKuP1a
-         DeFRwCaiNixFUWTRP69C8rKjbIqeXuHMfvU5LmBwmCxTwlbJD/0wXjIospHFVhz0y8jm
-         HjbkJ4Wm8q8Q4H3qsHzmRvTCisWTmCRBbXHOvqLspElDDGmIgofbkGPd/XrWd71gk5qH
-         gP6DsWrov27bQZZ3YAOyvl5yz/6NNWp7U5hPa9Rr1MtRGXsIbBmaABLCp/KXUXZbghpi
-         Jj9nu5LGw2jKtdqdP3NmkpXY0PjS9SMh1BklBBdkgs+yeOmLOscJ8Rh0Nis8phG4xDtH
-         GJtg==
-X-Gm-Message-State: APjAAAU3NgXxvBkz5naY9f9tn/e7hxK9LgllHqFyqo/NP4P1OJWSACKa
-        EDe9W9wKARvZCseE/WffoFPGSTOxe2T4OA==
-X-Google-Smtp-Source: APXvYqyHhIbuJ/pBEniMFMFAtS1ByUt45FyDCmO/WRWJlPtB4qkeejDBqDeFOKSHOv90sWefLNW5og==
-X-Received: by 2002:ac8:5205:: with SMTP id r5mr17622915qtn.230.1580154039993;
-        Mon, 27 Jan 2020 11:40:39 -0800 (PST)
-Received: from chatter.i7.local (107-179-243-71.cpe.teksavvy.com. [107.179.243.71])
-        by smtp.gmail.com with ESMTPSA id v55sm8559762qtc.1.2020.01.27.11.40.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2020 11:40:39 -0800 (PST)
-Date:   Mon, 27 Jan 2020 14:40:37 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     "Jones, Amy E CTR USARMY ATEC (USA)" <amy.e.jones49.ctr@mail.mil>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cyber Security questions (UNCLASSIFIED)
-Message-ID: <20200127194037.asum4555fjop5i2n@chatter.i7.local>
-Mail-Followup-To: "Jones, Amy E CTR USARMY ATEC (USA)" <amy.e.jones49.ctr@mail.mil>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <3DDB5EB393DC7E4A810C3651CC0B08101780A52F@ugunhu4m.easf.csd.disa.mil>
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pNrYwADSyWVNcIgxwnN9xplGHzGdmJnZb272hdmB7qg=;
+        b=qLaDzmgs73ehZw76FK171sWuLTldWjhvNedmFuiDGHjX5FrGjflmDwpE/OWsRICKHj
+         zkw61vYs51/NxAzDKCgy+vI93fsW1mznBVG+arNOqk0czyMgQZb42DyAlSfrW2P7TtCg
+         yVjuryr/bITl8FyaIf9LG9bYH714RoRIq21Nm2qJwARDXQrveTf4Y+i/VFuEILIFSGAA
+         rfrsLXP4SAJ0xU1qDTZl8aADmwBzRnvR8jyjssbdgZU9UQd0PjN5JgGRs6Buyf3zfFP9
+         XktCnp9mIY6NmtkuHUDrq3J17FCAtbazzd0v03FNtrk3tsDGRtgFH6amguT3UlInC0jT
+         5/pw==
+X-Gm-Message-State: APjAAAVoQ5HBfNEV0NGd3LvU57/BF11BCdJjYUG3YCkxIdyA2hig2Jgz
+        nh3ePErJZUL8vp2m/OA=
+X-Google-Smtp-Source: APXvYqyeqVDU51a+FaSoc8tAJ77kFDuOblpvqnHpYD9VFZ4aYMhoWluJhhapN2qz1Vch3gDY2wmQtw==
+X-Received: by 2002:adf:fc03:: with SMTP id i3mr23997924wrr.306.1580154482938;
+        Mon, 27 Jan 2020 11:48:02 -0800 (PST)
+Received: from ?IPv6:2a02:810a:8c80:d2c:1d4:baf0:179f:5856? ([2a02:810a:8c80:d2c:1d4:baf0:179f:5856])
+        by smtp.gmail.com with ESMTPSA id o1sm22154240wrn.84.2020.01.27.11.48.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 27 Jan 2020 11:48:02 -0800 (PST)
+Subject: Re: [PATCH] doc: clarify "explicitly given" in push.default
+From:   Bert Wesarg <bert.wesarg@googlemail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <ed9a0485-1e6c-79ae-6a59-655105203728@googlemail.com>
+ <20200125003836.GA568952@coredump.intra.peff.net>
+ <b4c31e50-6da5-7699-1069-d94091f768bd@googlemail.com>
+ <20200125200554.GC5519@coredump.intra.peff.net>
+ <d8007df9-002b-6db1-4769-d6bf8c338cdf@googlemail.com>
+Message-ID: <dfcf0201-b634-2274-f041-a6ec4491825a@googlemail.com>
+Date:   Mon, 27 Jan 2020 20:48:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3DDB5EB393DC7E4A810C3651CC0B08101780A52F@ugunhu4m.easf.csd.disa.mil>
+In-Reply-To: <d8007df9-002b-6db1-4769-d6bf8c338cdf@googlemail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amy:
+Dear Jeff,
 
-If you haven't received any responses, this is because git is 
-open-source software without any single company or entity behind it -- 
-so there is nobody in a position to provide authoritative answers that 
-you are probably looking for.
+On 27.01.20 08:00, Bert Wesarg wrote:
+> On 25.01.20 21:05, Jeff King wrote:
+>> On Sat, Jan 25, 2020 at 08:38:04AM +0100, Bert Wesarg wrote:
+>>
+>>> thanks for this pointer. My initial pointer was the help for push.default:
+>>>
+>>>   From git-config(1):
+>>>
+>>>         push.default
+>>>             Defines the action git push should take if no refspec is explicitly
+>>>             given. Different values are well-suited for specific workflows; for
+>>>
+>>> Thus I expected, that this takes effect, when just calling 'git push'.
+>>
+>> Yeah, I agree "explicitly given" is vague there. Perhaps the patch below
+>> is worth doing?
+>>
+>>> What I actually want to achieve, is to track a remote branch with a
+>>> different name locally, but 'git push' should nevertheless push to
+>>> tracked remote branch.
+>>>
+>>> In my example above, befor adding the 'push.origin.push' refspec, rename the branch:
+>>>
+>>>      $ git branch -m local
+>>>      $ git push --dry-run
+>>>        To ../bare.git
+>>>         * [new branch]      local -> local
+>>>
+>>> Is it possible that this pushes to the tracked branch automatically,
+>>> and because I have multiple such branches, without the use of a push
+>>> refspec.
+>>
+>> I think if push.default is set to "upstream" then it would do what you
+>> want as long as you set the upstream of "local" (e.g., by doing "git
+>> branch --set-upstream-to=origin/master local).
+> 
+> Thanks. This pushes only the current branch and honors the 'rename'.
 
-There are vendors who repackage git as part of their commercial offering 
-(e.g. Red Hat), so a better course of action for you may be to approach 
-the companies who supply commercial support for git as part of the 
-overall OS contract.
+while this works …
 
-Best regards,
--- 
-Konstantin Ryabitsev
-Director, Core Projects IT
-The Linux Foundation
+> 
+>>
+>> There's another way of doing this, which is when you have a "triangular"
+>> flow: you might pull changes from origin/master into your local branch
+>> X, but then push them elsewhere. Usually this would be pushing to a
+>> branch named X on a different remote than origin (e.g., your public fork
+>> of upstream on a server). And for that you can set branch.X.pushRemote.
 
+… it does not play well if you have have both flows in one repository. And I do have both flows. I track the upstream 'master' in the local branch 'Y' and I have also a branch 'X' which is based on 'Y' but should be pushed to a different remote as branch 'Y'. I have configured 'branch.X.pushRemote = triangular' but with 'push.default' set to 'upstream' I get this when:
 
-On Wed, Jan 08, 2020 at 11:58:57PM +0000, Jones, Amy E CTR USARMY ATEC (USA) wrote:
-> CLASSIFICATION: UNCLASSIFIED
-> 
-> We've had a request at this company to acquire GIT software, but all new software has to be approved by our cyber security team. I have a list of questions that need to be answered before we can start the approval process, and some of those questions are very technical, is there someone who could fill out the question form?
-> 
-> Amy Jones
-> Team SURVICE
-> 435-831-7168
-> amy.e.jones49.ctr@mail.mil
-> 
-> 
-> 
-> CLASSIFICATION: UNCLASSIFIED
+     $ git push triangular
+     fatal: You are pushing to remote 'triangular', which is not the upstream of
+     your current branch 'X', without telling me what to push
+     to update which remote branch.
+
+In this simple case, without a renaming, I would expect that 'git push' just works. May be just fallback to 'simple' if 'upstream' does not resolve to a fully qualified push?
+
+Best,
+Bert
