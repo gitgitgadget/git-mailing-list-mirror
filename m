@@ -2,105 +2,122 @@ Return-Path: <SRS0=ksp+=3Q=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0FE44C2D0DB
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 23:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA657C2D0DB
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 23:10:09 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D5BCC24679
-	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 23:09:49 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xr1uJWoN"
+	by mail.kernel.org (Postfix) with ESMTP id C5FA224679
+	for <git@archiver.kernel.org>; Mon, 27 Jan 2020 23:10:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbgA0XJs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 18:09:48 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53236 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726164AbgA0XJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 18:09:48 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 80BD0B80A8;
-        Mon, 27 Jan 2020 18:09:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=O0zrt6mv9DMXI9+ir22vTgi4S+E=; b=xr1uJW
-        oNhGSZiaVwp282t7CZf/TSdXO4cRnupdZhOVuGL+EggdOT97WS9vZ5haWQSuWjnr
-        6mKqKTD1Pjd+mRovZD1svSpRF1Ywv63rq/UcepvwJ35nFXdbXtXeRT/f7vNlKWmM
-        SkvHmojmMqkF0eEw5I49UBz57nsZP+8ZYNQRA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cHlAUbzPxOPk+2uMaamijyK9e9rwU7Wy
-        wpM3Z/u7eRbu8NF16jGzS4DUoQDDQmv/U1GbhWk2Spb/5U7PUmQ0HLKUUWXTA7Xn
-        FiYyNwHokkuKRGtkC3TrqY1ZIZNp6Agk43UCcwknZ2TOPum1VyfGpw7Cnzr7Swgs
-        7/X8Q9pPmSE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 78F56B80A7;
-        Mon, 27 Jan 2020 18:09:46 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A8858B80A5;
-        Mon, 27 Jan 2020 18:09:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Matthew Rogers <mattr94@gmail.com>
-Subject: Re: [PATCH v5 4/6] config: split repo scope to local and worktree
-References: <pull.478.v4.git.1579825267.gitgitgadget@gmail.com>
-        <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
-        <9f160e281a984ea7578f8fbe244adc77c6585e44.1579912764.git.gitgitgadget@gmail.com>
-Date:   Mon, 27 Jan 2020 15:09:41 -0800
-In-Reply-To: <9f160e281a984ea7578f8fbe244adc77c6585e44.1579912764.git.gitgitgadget@gmail.com>
-        (Matthew Rogers via GitGitGadget's message of "Sat, 25 Jan 2020
-        00:39:22 +0000")
-Message-ID: <xmqqblqoa43u.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726323AbgA0XKJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 18:10:09 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45790 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726164AbgA0XKI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 18:10:08 -0500
+Received: (qmail 4671 invoked by uid 109); 27 Jan 2020 23:10:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Jan 2020 23:10:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2018 invoked by uid 111); 27 Jan 2020 23:17:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Jan 2020 18:17:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 27 Jan 2020 18:10:07 -0500
+From:   Jeff King <peff@peff.net>
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] clone: teach --single-branch and --branch during
+ --recurse
+Message-ID: <20200127231007.GB19360@coredump.intra.peff.net>
+References: <20200108231900.192476-1-emilyshaffer@google.com>
+ <20200109081150.GC3978837@coredump.intra.peff.net>
+ <20200116223800.GM181522@google.com>
+ <20200117210319.GA15460@coredump.intra.peff.net>
+ <20200127222019.GA233139@google.com>
+ <20200127224914.GB233139@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1A953B60-415A-11EA-B357-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20200127224914.GB233139@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew Rogers via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jan 27, 2020 at 02:49:14PM -0800, Emily Shaffer wrote:
 
-> diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-> index 214003d5b2..6695e463eb 100644
-> --- a/t/helper/test-config.c
-> +++ b/t/helper/test-config.c
-> @@ -44,8 +44,10 @@ static const char *scope_name(enum config_scope scope)
->  		return "system";
->  	case CONFIG_SCOPE_GLOBAL:
->  		return "global";
-> -	case CONFIG_SCOPE_REPO:
-> +	case CONFIG_SCOPE_LOCAL:
->  		return "repo";
-> +	case CONFIG_SCOPE_WORKTREE:
-> +		return "worktree";
+> > >   - make sure that .gitmodules has enough information about which branch
+> > >     to use for each submodule
+> > 
+> > Hum. I don't work with them day to day, but aren't we already in that
+> > state? Is that not what the 'branch' option for each submodule means?
+> 
+> I've been corrected off-list that the 'branch' in .gitmodules is used
+> during 'git submodule update --remote', but not during 'git submodule
+> init' or 'git clone --recurse-submodules'. Then, for the problem in
+> discussion for this thread, it seems like a better choice is something
+> like 'git clone --recurse-submdoules --use-gitmodules' or whatever we
+> want to call it - e.g., rather than fetching the branch where the server
+> knows HEAD, ask the .gitmodules to figure out which branch?
 
-It used to be only "repo"; now we give either "repo" or "worktree".
+Oof, I should have read this message before responding to the other one. ;)
 
->  	case CONFIG_SCOPE_CMDLINE:
->  		return "cmdline";
->  	default:
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> index 7b4e1a63eb..90196e2862 100755
-> --- a/t/t1308-config-set.sh
-> +++ b/t/t1308-config-set.sh
-> @@ -259,7 +259,7 @@ test_expect_success 'iteration shows correct origins' '
->  	value=from-repo
->  	origin=file
->  	name=.git/config
-> -	scope=repo
-> +	scope=local
+> It seems like that ought to live separately from --single-branch. In the
+> case where you very strictly only want to fetch one branch (not two
+> branches) I suppose you'd want something like 'git clone
+> --recurse-submodules --single-branch --branch=mysuperprojectbranch
+> --use-gitmodules' to make sure that only one branch per repo comes down.
+> 
+> With n submodules of various naming schemas, provenance, etc., I don't
+> think there's a good case for recursing --branch one way or another; it
+> seems like filling out some config is the way to go.
 
-But the test expects "local".
+Yeah, I do still think that it makes sense for clone to pass along
+--single-branch, regardless, and then deal with branch selection problem
+separately on top.
 
-This patch cannot be correct.  I recall fixing this manually when I
-queued the previous round to 'pu'.  Please double check.
+> I guess we could also teach it to take some input like
+> --submodule-branch-spec=foo.txt, and/or a multiply provided
+> --submodule-branch foo=foobranch --submodule-branch bar/baz=bazbranch.
+> 
+>   [foo.txt]
+>   foo=foobranch
+>   bar/baz=bazbranch
+> 
+> With that approach, then someone gets a little more flexibility than
+> relying on what the .gitmodules has set up.
+
+Yeah, I agree that the most general form is being able to specify the
+mapping for each individually. At first I wondered why you'd ever _not_
+want to just use the branches specified in .gitmodules. But I suppose
+that gets embedded in the superproject history, which gets awkward as
+those commits move between branches. E.g., for an android-like project,
+you don't want to make a commit that says "use branch devel for all
+submodules" on the devel branch of your superproject. Eventually that
+will get merged to master, and you'd have to remember to switch it back
+to "master".
+
+So for the simple case, you probably do want to be able to say "use this
+branch for cloning all submodules".
+
+For the complex cases, you'd need that full mapping. But I think it may
+be worth it to punt on that for now. Even if we eventually added such a
+feature, I think we'd still want the simpler version anyway (because
+when you _can_ use it, it's going to be much easier). So there's nothing
+lost by doing the minimal thing now and waiting to see if more complex
+use cases even show up.
+
+Another thing occurs to me, though: should the binding of this submodule
+default branch be written to disk (e.g., a config option)? I'm thinking
+specifically that if you do:
+
+  git clone --submodule-branch=devel -b devel superproject
+
+and then later, you "git fetch" and find that somebody has added a new
+submodule, you'd presumably want the devel branch of that, too?
+
+-Peff
