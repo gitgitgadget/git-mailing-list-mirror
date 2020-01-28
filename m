@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81744C2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E8E0C33CB2
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5854B20716
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:57 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 64F562467E
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:58 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a8JSonop"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D4o7JmGB"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726996AbgA1S04 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 13:26:56 -0500
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:41519 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726952AbgA1S0y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 13:26:54 -0500
-Received: by mail-wr1-f47.google.com with SMTP id c9so17219961wrw.8
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 10:26:53 -0800 (PST)
+        id S1727027AbgA1S05 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 13:26:57 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38554 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726962AbgA1S0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 13:26:55 -0500
+Received: by mail-wr1-f66.google.com with SMTP id y17so17220369wrh.5
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 10:26:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sEiFWOSlQ42jvfb1L5PRzdSfTmJ8VuICjLeI6WuAohQ=;
-        b=a8JSonopEM+fHml86JpD3yKByrfXijEHUbv/Dii+nZnXjeHdg/gYh+jOBNo65l+MaT
-         uzdAN4T8jac8b8jXm9PpZJvngKOBAMRJn4YyhJwytA1ehodTUl/CSK8DWkzksKIeLTad
-         TY5Q316tSXNrcXLhtamyhzo8srhfyggJOY9nUSAHF9XwgOwE1og70TmavK952EKB1R3G
-         1SqA6Af0jEasEbJFMxFQJYeCtX8DcAlYNUAUof1GhgnW9sEg4peSKg/uzFehGvXX/vXN
-         LMrXbcSg3KaXTw44+sp2g/mDZJsLTeTWUtyccwmVHpJLmSvCQdP5S67No96qZwL1PHx4
-         b+lw==
+        bh=7OIxkWhiTuACvbhbr0mgY5mdi0HMxPaJU+8Iq5N0peE=;
+        b=D4o7JmGBs/N4W9aftDNt8RxPNjkdXwV3DAd7hAsHjyfeiIWKAtl3PEb1Tk2+05+dQR
+         ASfu72IIUk5usp0jlv0cPFB3cQFQMKqBC2ZJ6aXHBx8qcAALvd0vQWM+7iSrFUUd/cN2
+         sI1V2P7e+KwVi9hoyS/f8kk3sWICVpHKUVPc2HZvmhuNTVNhvexfjDpcNK3sQrhOPIOg
+         U1GHr83BiR9d+x9aT+KdfSlkbRr03QisGBPPUQuj6/oxOb/Xz7xXh/EiEhGu2ChjLr0K
+         erMkMK6yJKwIBWOXQjuo/EokrMll06V8Peom+kpsireR4x2kcCWZyhQ677CCI0K1qaU2
+         hrSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sEiFWOSlQ42jvfb1L5PRzdSfTmJ8VuICjLeI6WuAohQ=;
-        b=cNRzdrRpOKVV90h0cMAGGgXnJhVweARZOjE38BUQ81nG3TVHFJDmigqbU9flRc+YRN
-         fXv+PxvzLBIbWu6hq8lpw/73tKmgVK3Ng+EQkwlfTsEke0v5MusXs8/U4w5RL0T8g9bC
-         0PQILjj7h8E1WrTPkYe4RjrXKuuQgtexNJ6caev3MI4YW9jCgI9lnBkXx+sDoCSvB30Y
-         nybquN9NjOU+tDBOISHiz6Vq1unF+53CLeKH8pbCM9CtHnu4vp35NKAOG06h/Ql6r+MA
-         igZtg1/cLJjdBu5eZwHNj2z+Oi4ycH52LeR0/xL2VI8avcMekvEXHEy6/d3mH8Q3zaYZ
-         F5Mw==
-X-Gm-Message-State: APjAAAV1XSGvItFI2+pHHhNhJwvxz09q0skjU9+FHXCjL/VlkcuyAg42
-        DnBMk93qbdhIWTEDyF12N4NYx8Xv
-X-Google-Smtp-Source: APXvYqxnaggKpQhrw1c85lpWWJdAkKoV3+PXu1rmqj2KofjUfBypRnO0kzZAfnc2Wx1kDNf0CXKxGA==
-X-Received: by 2002:adf:eb8e:: with SMTP id t14mr29588803wrn.384.1580236012802;
-        Tue, 28 Jan 2020 10:26:52 -0800 (PST)
+        bh=7OIxkWhiTuACvbhbr0mgY5mdi0HMxPaJU+8Iq5N0peE=;
+        b=osg1m7Rl4C5QgRfkdHsdnXAljMuvJkUSWazJih795l8cXNgVe+kzMJtUJ2woouBEGL
+         fnEkMRIJBla8tcQzIjjtaLb268sDjQUucvukH7Al+bQ5LiTQ5lcEPxDTzq/qv9gJG4nn
+         ET8p5OreDN3h/M0sFwLtupDNT8Pn+K0g2KwLBdPeiYtplo19dIw+nkTge7yTFkHtyNCD
+         RmpRXzJJ70LyKZAJJNfDCw8OnlU0nBO5Ma6TkcvATHIIGLFgDoPAhSxa5sXB3NlP4kyt
+         BeIDvIe5GZFviX/4KFz9P6rgUXDz4fDLzj74a7Ts58svvFl2l0xPMwxXjawZ4CRWBI4y
+         VScQ==
+X-Gm-Message-State: APjAAAUi3cY3b33a+uKwkldrp1OppMpHES+sEkR6u8tP1yIlVow1dbd0
+        6cucPoIWGY2pK5WtapOCv+ZO5E9F
+X-Google-Smtp-Source: APXvYqwxYEjV3NWa6dYwscMzzkpCLealXTi1YqRVOEcfsRUtR9tuy5su7T3bn8ZqY3wc187gdQ829Q==
+X-Received: by 2002:a05:6000:f:: with SMTP id h15mr30769982wrx.90.1580236013504;
+        Tue, 28 Jan 2020 10:26:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z6sm27924281wrw.36.2020.01.28.10.26.52
+        by smtp.gmail.com with ESMTPSA id o129sm4236185wmb.1.2020.01.28.10.26.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2020 10:26:52 -0800 (PST)
-Message-Id: <ec714a4cf04e86f55057e17109a29e74021b73bf.1580236003.git.gitgitgadget@gmail.com>
+        Tue, 28 Jan 2020 10:26:53 -0800 (PST)
+Message-Id: <1867746d97c5e3d5d738f12aeb0e1ab739a6b8c1.1580236003.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
 References: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
         <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jan 2020 18:26:42 +0000
-Subject: [PATCH v3 11/12] sparse-checkout: use C-style quotes in 'list'
- subcommand
+Date:   Tue, 28 Jan 2020 18:26:43 +0000
+Subject: [PATCH v3 12/12] sparse-checkout: improve docs around 'set' in cone
+ mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,59 +77,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When in cone mode, the 'git sparse-checkout list' subcommand lists
-the directories included in the sparse cone. When these directories
-contain odd characters, such as a backslash, then we need to use
-C-style quotes similar to 'git ls-tree'.
+The existing documentation does not clarify how the 'set' subcommand
+changes when core.sparseCheckoutCone is enabled. Correct this by
+changing some language around the "A/B/C" example. Also include a
+description of the input format matching the output of 'git ls-tree
+--name-only'.
 
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          | 6 ++++--
- t/t1091-sparse-checkout-builtin.sh | 7 +++++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ Documentation/git-sparse-checkout.txt | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 61414fef18..b3c1e97dba 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -78,8 +78,10 @@ static int sparse_checkout_list(int argc, const char **argv)
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 4834fb434d..0914619881 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -50,6 +50,14 @@ To avoid interfering with other worktrees, it first enables the
+ +
+ When the `--stdin` option is provided, the patterns are read from
+ standard in as a newline-delimited list instead of from the arguments.
+++
++When `core.sparseCheckoutCone` is enabled, the input list is considered a
++list of directories instead of sparse-checkout patterns. The command writes
++patterns to the sparse-checkout file to include all files contained in those
++directories (recursively) as well as files that are siblings of ancestor
++directories. The input format matches the output of `git ls-tree --name-only`.
++This includes interpreting pathnames that begin with a double quote (") as
++C-style quoted strings.
  
- 		string_list_sort(&sl);
+ 'disable'::
+ 	Disable the `core.sparseCheckout` config setting, and restore the
+@@ -128,9 +136,12 @@ the following patterns:
+ ----------------
  
--		for (i = 0; i < sl.nr; i++)
--			printf("%s\n", sl.items[i].string);
-+		for (i = 0; i < sl.nr; i++) {
-+			quote_c_style(sl.items[i].string, NULL, stdout, 0);
-+			printf("\n");
-+		}
+ This says "include everything in root, but nothing two levels below root."
+-If we then add the folder `A/B/C` as a recursive pattern, the folders `A` and
+-`A/B` are added as parent patterns. The resulting sparse-checkout file is
+-now
++
++When in cone mode, the `git sparse-checkout set` subcommand takes a list of
++directories instead of a list of sparse-checkout patterns. In this mode,
++the command `git sparse-checkout set A/B/C` sets the directory `A/B/C` as
++a recursive pattern, the directories `A` and `A/B` are added as parent
++patterns. The resulting sparse-checkout file is now
  
- 		return 0;
- 	}
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 459715d541..7617fb027a 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -392,7 +392,8 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
- 	EOF
- 	test_cmp expect escaped/.git/info/sparse-checkout &&
- 	check_read_tree_errors escaped "a zbad\\dir zdoes*exist" &&
--	git -C escaped ls-tree -d --name-only HEAD | git -C escaped sparse-checkout set --stdin &&
-+	git -C escaped ls-tree -d --name-only HEAD >list-expect &&
-+	git -C escaped sparse-checkout set --stdin <list-expect &&
- 	cat >expect <<-\EOF &&
- 	/*
- 	!/*/
-@@ -403,7 +404,9 @@ test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
- 	/zdoes\*exist/
- 	EOF
- 	test_cmp expect escaped/.git/info/sparse-checkout &&
--	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist"
-+	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" &&
-+	git -C escaped sparse-checkout list >list-actual &&
-+	test_cmp list-expect list-actual
- '
- 
- test_done
+ ----------------
+ /*
 -- 
 gitgitgadget
-
