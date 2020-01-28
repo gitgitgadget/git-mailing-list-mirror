@@ -2,117 +2,113 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DEC7BC32771
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 00:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 02E28C32771
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 00:45:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A98A92173E
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 00:00:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A00982467C
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 00:45:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vSCZa9Iu"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xeSD3XT4"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbgA1AAw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 19:00:52 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:40768 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725955AbgA1AAw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 19:00:52 -0500
-Received: by mail-pl1-f202.google.com with SMTP id y2so4636566plt.7
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 16:00:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Q2g0GtM6xlRB9xGrA36vr2KNST5BcbK0I3jYp75WkkQ=;
-        b=vSCZa9Iu0C8Q76dlNZyuY61LU089EovuGrfOHPA5IU6YaBFmYKBjXEPbHVna7IToZv
-         nN2gII+9kXeoU8CDoSIht7KdzCQmKfJtDF8yRIT+MMlNQczRNEOzY15huEzwFBIJxwsR
-         nfDpmmUiU2s5kbvOx1EnSwFYPqPQixRNxP5P7ek1TZJkYKSQkhC27vh5z2IMMKYK4jc9
-         ykyEEyqxFf1f6OrvufLAGLLPV3SsHf9fqAZZE+BYTEuuZp7hw2/iTznX9Pue20gFBNkQ
-         BL1YkfSCrM8bcpKGfVeBCKvWAkD0RYQyN16jNzog596zfuFb3wJfOIV9NEbcuFByxq1g
-         GLqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Q2g0GtM6xlRB9xGrA36vr2KNST5BcbK0I3jYp75WkkQ=;
-        b=FIUnvZ+P95SOj8MZuvQ2Wpji/3yDxmYIPaW0coEeghe+O+RCC0hWRnKxGrQfe04GoQ
-         4xqfvembr/bgT6ayhLNJZ22XZ5wwGjAojPO4CACT5v77lP/lMKCoEWDn7jXzodscOAN7
-         ummBnFiOtgsEG6SvH6CLFMvxmNyZa6tPZCzEfGr8A1F/U+oMO3dcezlGL4JgknA3zV86
-         t6zjAJBvqWjvyAv7OVkvCl98VBnOqpx4CoKrardh3VRvJ9xwdcmM86VuNaoQVFN9bYMe
-         9onz+vmqdEszbUDiSuaiJFDe4OW5mK+Trbzv5XJGjeztYgjajzMOZByg8C26kIeuZBdN
-         S6IQ==
-X-Gm-Message-State: APjAAAWZ0Uz28/c3ypwqpw2INo1lR6m1g3+se5YgJsQa2FN4cX58oRpC
-        zzkprgjP1Y5ZKeHA94GVkbrsPC4B3xWHUBNZINGU
-X-Google-Smtp-Source: APXvYqwlMzzO4v3UiPg8g/sQG2j3Vj02JH2WEnLdsEqIv9/ikKKRNhUr+ddXj3VdNrwYrv6wmfe239Sj7klL5k5hvuhg
-X-Received: by 2002:a63:5525:: with SMTP id j37mr21469058pgb.180.1580169651483;
- Mon, 27 Jan 2020 16:00:51 -0800 (PST)
-Date:   Mon, 27 Jan 2020 16:00:47 -0800
-In-Reply-To: <9f9febd3f4f7f82178fceac98fcc91cb28a1b3b9.1578438752.git.gitgitgadget@gmail.com>
-Message-Id: <20200128000047.176372-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <9f9febd3f4f7f82178fceac98fcc91cb28a1b3b9.1578438752.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: Re: [PATCH v2 1/1] add: use advise function to display hints
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, heba.waly@gmail.com, gitster@pobox.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726099AbgA1Api (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 19:45:38 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55472 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725955AbgA1Api (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 19:45:38 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9163628CAC;
+        Mon, 27 Jan 2020 19:45:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=vgikffoRB4OXB3Gkg/fLZkYrwDg=; b=xeSD3X
+        T4jUtsPBIKwcWD+0uZzvPe+LFk6q87CbADfKUoYYmkcv6yDGnFgpj3BtOOr9mGaX
+        jAjuDR6u/bEjpiR31jn2SoNjhY2W+KMqnWPx34wvNK7WAbhJ0UA6SQs0Ic8R9Y1E
+        1Jfqa+xFZ8Q/CzqtsVsHZw6vroCkEP6nyIQ2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GRQuvnKG1TJAc4lhAWQ8t2wqxUagoSi2
+        hZU1QbElN50yh4cWWjhINLo9Chbm9+xaqqQ2csiu2dtjcWPn9wne2AcOR+hRPmfU
+        lT4vDsTl3GCsNmIPApePr7WU41yFAo22aOslfUL1FX0JwNTyz7zDmstNOtruhxTi
+        L+3HGRNfRNU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 79B9A28CA9;
+        Mon, 27 Jan 2020 19:45:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CB9C828CA8;
+        Mon, 27 Jan 2020 19:45:36 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] C: use skip-prefix to avoid hardcoded string length
+References: <xmqqv9owa6cw.fsf@gitster-ct.c.googlers.com>
+        <20200127232004.GE19360@coredump.intra.peff.net>
+Date:   Mon, 27 Jan 2020 16:45:35 -0800
+In-Reply-To: <20200127232004.GE19360@coredump.intra.peff.net> (Jeff King's
+        message of "Mon, 27 Jan 2020 18:20:04 -0500")
+Message-ID: <xmqq36c09zo0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7FB8DD96-4167-11EA-83A7-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Heba Waly <heba.waly@gmail.com>
-> 
-> Use the advise function in advice.c to display hints to the users, as
-> it provides a neat and a standard format for hint messages, i.e: the
-> text is colored in yellow and the line starts by the word "hint:".
-> 
-> Also this will enable us to control the messages using advice.*
-> configuration variables.
+Jeff King <peff@peff.net> writes:
 
-Firstly, sorry for getting back to this so late.
+>> +		else if (skip_prefix(arg, "--expire=", &valptr)) {
+>> +			if (parse_expiry_date(valptr, &cb.cmd.expire_total))
+>>  				die(_("'%s' is not a valid timestamp"), arg);
+>>  			explicit_expiry |= EXPIRE_TOTAL;
+>>  		}
+>
+> In this case, I think the die message in the context could be improved
+> to show "valptr". At which point you might as well do:
+>
+>   else if (skip_prefix(arg, "--expire=", &arg)) {
 
-As written, this gives me the impression that advise() is what enables
-us to control the messages using configuration variables, but that's not
-true - that's done by a separate mechanism in advise.c and .h.
-Paraphrasing what Junio wrote [1], the commit message might be better
-written as:
+The version that loses "to which parameter did I give malformed
+timestamp?" information was what I originally have written, and then
+I added a new valptr variable to avoid the information loss and
+message change.
 
-  In the "add" command, use the advice API instead of fprintf() for the
-  hint shown when nothing was added. Thus, this hint message follows the
-  standard hint message format, and its visibility is made configurable.
+But thinking about it again,
 
-(Note that I mentioned the "add" command and called it the advice API
-instead of the advise() function.)
+	git frotz --expire=tea --expire-unreachable=tee
 
-(Feel free to use this or write your own.)
+would say "I don't know 'tee'" and then the user can go back and see
+to which one the misspelt version went, and if the user did
 
-[1] https://lore.kernel.org/git/xmqqpng1eisc.fsf@gitster-ct.c.googlers.com/
+	git frotz --expire=tee --expire-unreachable=tee
 
-> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> index c325167b90..a649805369 100755
-> --- a/t/t3700-add.sh
-> +++ b/t/t3700-add.sh
-> @@ -326,7 +326,7 @@ test_expect_success 'git add --dry-run of an existing file output' "
->  cat >expect.err <<\EOF
->  The following paths are ignored by one of your .gitignore files:
->  ignored-file
-> -Use -f if you really want to add them.
-> +hint: Use -f if you really want to add them.
->  EOF
->  cat >expect.out <<\EOF
->  add 'track-this'
+and got "I don't know 'tee'", then it also is OK to give that
+without saying it is about --expire or --expire-unreachable; they
+are both wrong ;-)
 
-Also add a test that checks what happens if advice.addNothing is set.
-(It seems that we generally don't test what happens when advice is
-suppressed. If we consider solely this patch, I'm on the fence of the
-usefulness of this test, but if we plan to refactor the advise()
-function to take care of checking the config variable itself, for
-example, then we will need such a test anyway, so I think we might as
-well include at least one such advice test now.)
+So, I guess it probably is a good idea to skip the option name in
+the error message (we might have to adjust some tests, though).
+
+Thanks.
+
+>> -		else if (starts_with(arg, "--expire-unreachable=")) {
+>> -			if (parse_expiry_date(arg + 21, &cb.cmd.expire_unreachable))
+>> +		else if (skip_prefix(arg, "--expire-unreachable=", &valptr)) {
+>> +			if (parse_expiry_date(valptr, &cb.cmd.expire_unreachable))
+>>  				die(_("'%s' is not a valid timestamp"), arg);
+>>  			explicit_expiry |= EXPIRE_UNREACH;
+>>  		}
+>
+> Ditto here.
+>
+> -Peff
