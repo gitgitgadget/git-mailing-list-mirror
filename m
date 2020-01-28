@@ -2,99 +2,98 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-1.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-11.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B0B0C2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 22:47:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39C83C3524D
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 23:04:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 52F7B21739
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 22:47:03 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0DD6E2087F
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 23:04:54 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="a6o9qZ1u"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="m8LuViPZ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbgA1WrC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 17:47:02 -0500
-Received: from mout.gmx.net ([212.227.15.19]:34205 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbgA1WrC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 17:47:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580251614;
-        bh=m6ZQb2SGJrZGZf0YKF0Qby7G9ihX9OomEhKhSNznOtg=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=a6o9qZ1u0gNvsKeu5bPPAhfTLo0qjVcbmIN5rao5GJ7TVU+aT1/EUAQHdqc9tsDM7
-         Qw0kCHS5hX5Utza6Ok8DCsIodQAVfUB+JIt1PD4PYmaz5yNbGu6/ePb+w+AnHLzMnc
-         MV0wC35X/y46G4ezqpALojQRlMRgCypEEXrfF0P0=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N2mBa-1jhlL80b9g-0138uF; Tue, 28
- Jan 2020 23:46:54 +0100
-Date:   Tue, 28 Jan 2020 23:46:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Alban Gruin <alban.gruin@gmail.com>
-cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/2] rebase -i: extend rebase.missingCommitsCheck
-In-Reply-To: <5f9b02f2-6b77-91da-2af1-d36cb6b137a3@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001282346180.46@tvgsbejvaqbjf.bet>
-References: <20200111173917.15690-1-alban.gruin@gmail.com> <20200125175436.29786-1-alban.gruin@gmail.com> <nycvar.QRO.7.76.6.2001261043540.46@tvgsbejvaqbjf.bet> <5f9b02f2-6b77-91da-2af1-d36cb6b137a3@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-196653532-1580251614=:46"
-X-Provags-ID: V03:K1:naAMAQD2ZLO8xVUpD9/pOjEdHsMDg1iFdIj6NURQtCLwYFQc0k8
- o7bE7nDPc8UVkv447jbUNBNZ7kPbJBrvSc0JcPOGYhNRaxlkH9WUTPPwj6sD4Z169sd0uji
- RVgSlR554qDQ12UolT//0Tot9hDFw6YZTE+Js/2srPFP0KpE/viekEsgPjlnx3LUm3rhwvG
- GlFuDouigwuWfpvBk6HCQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9slFYaqUtZ0=:Yak++J/Hm+gTRsrP0JJuCj
- kOjecEWP1KSarhdXHJbMk9YqFs4OEsH6zgMwqSLAnDdYgcrT2SmytaWYKTG+K/xvSTom2nZ+a
- Wagl1qB+gwPlmaopDXbkkq1bVCVaOZl4Z+/BXRQml5oSlTikIP4I60b6dzg0bd6Ya6+og8mZZ
- DqRlXCreLX44XVcYl3Ygd/mdjV5UMyTJZsefng/CzdDOXrJYtQWQ1wDu5YyuByekOTRhN6the
- wUat5g1pBi+7h5uWYdQsYk8eGetWpstmXELQWP0xxDasGpmTWtxs9+ZrO5HRiCU0YPKnbeavM
- uqR7C3H9e8yjXKyqSrMuOpAkTzFZXbmCIWspzxae338bNNR8bCkuTAANU/SwK2BPyACrNljma
- ywAeKTH3Y+5aV/oBbIr1/Y43/r/+uMR1H7HilvsKYFt7bYk06uxzEz0Elfhd+tJqYRAsz2VLj
- uX2guGQztaGSThTn3om4RlQGx1r2UcIppY3TSTvcJmG4Vr14DenqnGv5bqL9F9TFbVBzjp7/D
- uUI7aY7wUraZ3kFBjsSA/MC4vlYjjlU0Wi5dxLzyM3TsmZ4lWbxPIZTi+iZlPDbR8qGQph0m9
- sJdx8uEejxBNngbSfAETD60VHkXbkdDTKw0EGER1ZEYrA1+YWp8JmaJPTHFD9vab6RATrmSnm
- 5J1zfpuuQggVKYxqalKVhuoTZbk0ot2ZBLfNSq6TfuIV8lgQYwzY8Nm4nHs4uH+CsYTBWhpFv
- MAAbPUSdNwDiCHsYWwyO1pbATLZlMg1VGEBbs8wfRYYnZlhjZMzeifwPD61VPEy8cYkv9ck6R
- EDzgemOgmYjblgCmy70Lflmc2IUniqmWEyY9R77FbR8mYgSkzcbFa28Mt56K+7bp3YfRFcTD3
- w9Cw9q+tfbEWeMv6uQfxSaNXh62eAuEsGAAu1uiT5/Tjm6Yb9+IOTBvJNHmZVtV6Sx3k9Xv13
- tF8ReJkePbVYO+UlWD5Xm8nZ3szseVRkx177aiYqiEldBLiDlftEapBvyDmp6UlduniPp4nz8
- TudRLt5TgsJ7/ZdQnrnXvnevswL0bFugQB9CAu6AYZ8bdUPUzmR4k2ivs4+9bUNiCwtY2EO0U
- lpO+2yBR7NDpDxa+C7mO5DIcCjCI/g3H3WRSyuzfLxEbYHYTD4UFExKfMSazWott+LTpjH758
- Gl+whI7XKyddAlFGwTuBjo5BFoQ+vRNpVAuqpYPaSokbAFPOd63ln+7KQuZZuNAHZNAC1xSXJ
- dnHcEIxoSY0INwbUd
+        id S1726594AbgA1XE1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 18:04:27 -0500
+Received: from mail-yb1-f201.google.com ([209.85.219.201]:45676 "EHLO
+        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726565AbgA1XE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 18:04:26 -0500
+Received: by mail-yb1-f201.google.com with SMTP id b144so11458746ybg.12
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 15:04:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=WTaqTQCNpgd7j2DHr2C1yMS5kMrXClnOVLTxvvaG3zc=;
+        b=m8LuViPZgag0h1DXCcxjW2eEkKdYHIgpGTMQAdRvl0+ZNmNv6XerrNEioz1UNQVHAz
+         KdxxzOjtMMoDFTzvDtDk0mI1sR0xPVdBnOluN7aI6kv/IdFqbeUy6XzVFNQxFsg3Dyxn
+         DfHcM0UbclkvduPgMq1JYrTYPBwE8+2fuJXGxcQ0fnjM22t89bM5p0CfsqnXYRpmc/L0
+         xDqiDx5HT0YoSDM8YGMWqcCpKi/avA/fQtdtsjx193UZyUBIT5plMNF8A0iK+k32k9k9
+         Ke8FZz5x7klxsABcbHWRjNRdSCbIEH0XYnQ2O4QsQkAM1H5sWT8W7gKYcNcng1xfo6u2
+         SD2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=WTaqTQCNpgd7j2DHr2C1yMS5kMrXClnOVLTxvvaG3zc=;
+        b=TMMHkO1TBemjOhQFHpb9Nwr0AwhU/K9dqbKPJHJTpOqRO4yTj4DFdAtZFCKItgz78O
+         +jjhC79VK2ZdWBmOVG2Jj4l/a2ukzl1OxfNREfKPg5iy3lb3LqIEQ3wT1DV4mYRj5577
+         FqsbfA6SNowL5ZQgfMiIphX2KIDKKFLCpW7kKW7jtcS89+NN14f8WVRsGwnALrpnv171
+         uDo20Zd33cIPdhpqfTv+7DIkqs9J+jVLFpy50oGsFPGeLA8Y7ERJvGZlr62eG3I+3vCu
+         lR+bZnyEmrxJjZEQk+fL2l7clRUBKbN691iL7YUWniMFpiudjeCjrQZV92Cz++yhlxVD
+         YmBw==
+X-Gm-Message-State: APjAAAX3Pgbu5mwrHVPf5GIy0J4MXxCcTa7MP0zw7IjLfE5d+xMCNDag
+        2L+gPvg4K72JUf92tX3VY8gtLv/b0S1oc0e3nnJ6
+X-Google-Smtp-Source: APXvYqyV5mGcn+VK9iuH49J1PNgahIq2JcBpRWtie76m9ND3ahBj/ekfopfFB7TTYRgFvluRDJt4vcKVDpWBQABoLxWw
+X-Received: by 2002:a81:33d0:: with SMTP id z199mr18833953ywz.53.1580252665185;
+ Tue, 28 Jan 2020 15:04:25 -0800 (PST)
+Date:   Tue, 28 Jan 2020 15:04:21 -0800
+In-Reply-To: <20200124033436.81097-1-emilyshaffer@google.com>
+Message-Id: <20200128230421.49994-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20200124033436.81097-1-emilyshaffer@google.com>
+X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
+Subject: Re: [PATCH v5 00/15] add git-bugreport tool
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     emilyshaffer@google.com
+Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
+        gitster@pobox.com, martin.agren@gmail.com, aaron@schrab.com,
+        Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> From: Emily Shaffer <emilyshaffer@google.com>
+> 
+> This topic branch depends on the patch mailed in
+> lore.kernel.org/git/20191211233820.185153-1-emilyshaffer@google.com in order to
+> display scopes for configs gathered during "bugreport: add config values from
+> safelist".
+> 
+> I'll summarize v4-v5. Since v4 has languished for some time, I don't
+> think an interdiff is too helpful, so I won't include one. Bonus, the
+> code is much simplified from some suggestions from Junio on how to
+> inspect objects, so I hope it's easy to review anyways.
 
---8323328-196653532-1580251614=:46
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+To everyone in the developer community interested in this set: what is
+the status of this?
 
-Hi Alban,
+If this needs further review, then maybe it would be best if only
+patches 1-4 were put up for submission first, with a note in the
+bugreport documentation that more information may be added in future Git
+versions. For me, patches 1-4 look good and I don't have enough
+experience with uname (especially across libcs and OSes) to determine
+what should or should not be included - if this is typical of reviewers
+in the Git project, it might be better to submit patches 1-4 first, and
+then send each additional diagnostic separately, so that people who know
+what's going on in one area but not another can just comment on the area
+they know about.
 
-On Mon, 27 Jan 2020, Alban Gruin wrote:
-
-> Le 26/01/2020 =C3=A0 11:04, Johannes Schindelin a =C3=A9crit=C2=A0:
->
-> > The way I read your patches, they will conflict with
-> > `js/rebase-i-with-colliding-hash`, so maybe it would be a good idea to
-> > base your patches on that branch?
-> >
->
-> Let's do this.  This will also solve the conflict this series already
-> has with master.
-
-Thank you!
-Dscho
-
---8323328-196653532-1580251614=:46--
+Having said that, I see that a few people have already looked at the
+entire patchset and made comments, so if they are OK with it, we don't
+need to split it up.
