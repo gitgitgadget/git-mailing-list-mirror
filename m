@@ -7,66 +7,52 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0707C35240
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77099C35240
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:03:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 95B1E2173E
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:45 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 456A022522
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:03:20 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEn0O9xV"
+	dkim=pass (2048-bit key) header.d=me.com header.i=@me.com header.b="wQzgU2KX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726922AbgA1EBo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 23:01:44 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:34114 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgA1EBo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 23:01:44 -0500
-Received: by mail-qk1-f193.google.com with SMTP id d10so12084793qke.1
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 20:01:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RyJelee/DT68jmWfx8iJXoSpzxQjZY2c9AxzUj2Ww/E=;
-        b=kEn0O9xV7OJqEbdDJy9Xhkm9HnCcPcvW3mwX4Z1AGIY9ZCZkf0mR+RDoIOmhlnHmGd
-         ngKdJTKVu5RZ0KjAcfYk8FSmJf7Smch/UOfpaRF03QrH7LMx1L4y6XZEzKHrf7qulN7E
-         xncA/Y/KR/CsULwJs7jTf7Imr3CYP4cXdcpuCYLi9xAzAzSR+CMoIz5Yk1/q2uUXuCtr
-         1SHBop2V0jkhhLj022rVaEtn4zP4QwoWcCFfy67eAIQa0lIO4Pd2fTFhaIAhfW5pmP3p
-         OTs82Psp+pQ4mU5HlTiKRs3riAqlQSyChSv6t6w4REc07W+rFvgyZxWwWOdvNA+aMBIz
-         o6hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=RyJelee/DT68jmWfx8iJXoSpzxQjZY2c9AxzUj2Ww/E=;
-        b=QnWZBJTgnDNJ7BXP24hiTLgqro8lwabl15glKZe/tO1H+GgK0FEdnRKGl8ROLOzZG3
-         UHaabAXa/G3U0BPiqNZ5Pz92dU4JKS4yVnJ8vlOKkwb3KmjCrNWP2HRxOvSK1E+UWEUN
-         ZXDsV0NNih5UXbTtOwjIsYHpNqj6r8HYrbIQ1tuc0Bau7NH88OCjjn8/hJs9DBb7KRyN
-         bdbctQm9pHrkDDxEvX6ZXHeXaV8tmlwugdZIvNrpdrVhnbuYwhuKp+wxexxbrXDxNvsD
-         SenrIM87Rt8mu3rByeelBfI8zBInem/a6NFB3Rw9zFqlcJZMuVo+oQUzzCefzWokEBab
-         7wHA==
-X-Gm-Message-State: APjAAAVVsJrV50ZZ3aSv7MyMQ2xLqPcIKINjls3pL5/LPRk3FIpnpdd6
-        n7AXClr3i2qie7wXxbnHV6k=
-X-Google-Smtp-Source: APXvYqzWr/a0O+7mEdlwNhtTLV9dTcyKTiLbi7MBHZtSdxw+2JYEgxNhqwI5W/XzJ+L3oygmByHaNg==
-X-Received: by 2002:a37:8e03:: with SMTP id q3mr19800908qkd.395.1580184102909;
-        Mon, 27 Jan 2020 20:01:42 -0800 (PST)
-Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id g205sm11539637qke.16.2020.01.27.20.01.41
-        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jan 2020 20:01:42 -0800 (PST)
+        id S1726293AbgA1EDT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 23:03:19 -0500
+Received: from st43p00im-ztfb10071701.me.com ([17.58.63.173]:43006 "EHLO
+        st43p00im-ztfb10071701.me.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726191AbgA1EDT (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Jan 2020 23:03:19 -0500
+X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Jan 2020 23:03:17 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+        t=1580183810; bh=RyJelee/DT68jmWfx8iJXoSpzxQjZY2c9AxzUj2Ww/E=;
+        h=Content-Type:Subject:From:Date:Message-Id:To;
+        b=wQzgU2KXvbvv8563A0xCd4WR/atcna58hLK8SlMj3RAbzDfUss0zBLOK4NQ8aXLBN
+         Ue2g2s+Qm1UV+XYkshSasK1u4dlherHh75R4aLnF4vM32S7NmOcqpWZkMKBK/y5eym
+         eCCFg9NasX8TMCThjWnFbix9DRshdcO2M24dISbyWkwH1rv6F8cXbkT4yHAW+e4kYi
+         enVr1zeVYKIeccS3dfIwxEeo7CD9uAvALw2HKNWs1MCzTjfFbzZK2UokZK0RbJzMP3
+         hCimRpj4EdjVwurp/llo1mc6eN9SQ2SiQ22mfWpIfjuZczOiaqqVTpNjsy8omAi8rT
+         9wjr5wgXjvXoA==
+Received: from [192.168.1.127] (unknown [192.222.216.4])
+        by st43p00im-ztfb10071701.me.com (Postfix) with ESMTPSA id 3ABDDAC0E3E;
+        Tue, 28 Jan 2020 03:56:50 +0000 (UTC)
 Content-Type: text/plain; charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: Submodules & worktree
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
+From:   Philippe Blain <philippe.blain@me.com>
 In-Reply-To: <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
-Date:   Mon, 27 Jan 2020 23:01:37 -0500
+Date:   Mon, 27 Jan 2020 22:56:48 -0500
 Cc:     Git List <git@vger.kernel.org>, mateusz@loskot.net,
         Peter Kaestle <peter.kaestle@nokia.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <2C0C3A4A-B185-4690-B76C-42E113A89687@gmail.com>
+Message-Id: <746427B4-5B64-492F-A69E-908D6A1F5308@me.com>
 References: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com> <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
 To:     Ole Pinto <olepinto@gmail.com>
 X-Mailer: Apple Mail (2.3124)
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2020-01-27_08:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 spamscore=0 clxscore=1011 mlxscore=0
+ mlxlogscore=726 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1908290000 definitions=main-2001280030
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -80,8 +66,8 @@ Hi Ole,
 > Adding a worktree from a working copy with submodules doesn't work.
 >=20
 > In the config file I have
->   [submodule]
->       recurse =3D true
+>    [submodule]
+>        recurse =3D true
 >=20
 > It that's not present, I don't find the problem.
 
