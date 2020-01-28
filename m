@@ -7,63 +7,63 @@ X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87C26C35240
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0707C35240
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 513102173E
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:43 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 95B1E2173E
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 04:01:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="tPmMwC5K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEn0O9xV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726885AbgA1EBm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 23:01:42 -0500
-Received: from mail-qv1-f65.google.com ([209.85.219.65]:43289 "EHLO
-        mail-qv1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbgA1EBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 23:01:41 -0500
-Received: by mail-qv1-f65.google.com with SMTP id p2so5623832qvo.10
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 20:01:41 -0800 (PST)
+        id S1726922AbgA1EBo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 23:01:44 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:34114 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbgA1EBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 23:01:44 -0500
+Received: by mail-qk1-f193.google.com with SMTP id d10so12084793qke.1
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 20:01:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
         bh=RyJelee/DT68jmWfx8iJXoSpzxQjZY2c9AxzUj2Ww/E=;
-        b=tPmMwC5Kp/aAUe1NtCm9lAYTGqz8Qtn0VifU0tBc6HMza4yIC8Jlwd7Npjoz3eQT34
-         EFbolo/Z2wl6MayEQomc3+wOfa/mAKLLTplEuymokZdgcZkoQ+tfJM6U4kWlDuph+aFW
-         AIs6tqd5FtyU8L1d587u4bk+MBfMScF/tImu9jsI1Bp5nm267w5IS+aC7zCouqBtG09Z
-         0E8MLO3WkNxXLXbFDP7p7qpmBcf6UUj3/M7PG483odJqQLViZ6lLDD8YY+xmukP42UGe
-         uASf0aI1KtSMX+Gc7pXcy9RtaWaN4l/6XaHUVxaBQCXP1XnJs9vFcvQ6z/k/lDzTgmp+
-         V4GA==
+        b=kEn0O9xV7OJqEbdDJy9Xhkm9HnCcPcvW3mwX4Z1AGIY9ZCZkf0mR+RDoIOmhlnHmGd
+         ngKdJTKVu5RZ0KjAcfYk8FSmJf7Smch/UOfpaRF03QrH7LMx1L4y6XZEzKHrf7qulN7E
+         xncA/Y/KR/CsULwJs7jTf7Imr3CYP4cXdcpuCYLi9xAzAzSR+CMoIz5Yk1/q2uUXuCtr
+         1SHBop2V0jkhhLj022rVaEtn4zP4QwoWcCFfy67eAIQa0lIO4Pd2fTFhaIAhfW5pmP3p
+         OTs82Psp+pQ4mU5HlTiKRs3riAqlQSyChSv6t6w4REc07W+rFvgyZxWwWOdvNA+aMBIz
+         o6hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
          :content-transfer-encoding:message-id:references:to;
         bh=RyJelee/DT68jmWfx8iJXoSpzxQjZY2c9AxzUj2Ww/E=;
-        b=ov/5sHMRTc0/651jlFMC2XfP96IdKs+JtLh69COaAGXoY/yDyeyjwLYjTHj4T5qtCP
-         wQpSvWTxBDSVTm023Yyi4AtGFB3fwhCJQEx1uf7o2VPngtd2GCLJUtHJ8UbWoealWOjg
-         jkkJZ1N4lzdZhwMfXARG/JQHl2+8A4uo2Z5a64WkgBmT1Oxf/y/t8pI26INBNi37r8Fh
-         ZFkZuNfSxEmUdTpRtqk2Jaw7bOd9U43D7WGJq77SRuOV48vMnjkcuBa+xh1c1gF8eE/g
-         bFtp8NbPjWdVVsPqSAiAoCdDfeZIi6rZsel/ckd9F+zq6Vhs4qDClt2Ihy3IIz6KSXdG
-         a7lQ==
-X-Gm-Message-State: APjAAAWt7dMNDcOmy2hPvp+V0K6s9dQAKYMhG2cmjvn9tG3yxP0x/lOx
-        xGgkDKTiFNXr3FQeplT09oM=
-X-Google-Smtp-Source: APXvYqy/92B2bktwIgrxwDxmviKnRuW+4AxJtLJStpPAllLqaQ2Zwb7kX9TpdpOCSkEN3Fw88BDFjg==
-X-Received: by 2002:a05:6214:190e:: with SMTP id er14mr20664922qvb.28.1580184100690;
-        Mon, 27 Jan 2020 20:01:40 -0800 (PST)
+        b=QnWZBJTgnDNJ7BXP24hiTLgqro8lwabl15glKZe/tO1H+GgK0FEdnRKGl8ROLOzZG3
+         UHaabAXa/G3U0BPiqNZ5Pz92dU4JKS4yVnJ8vlOKkwb3KmjCrNWP2HRxOvSK1E+UWEUN
+         ZXDsV0NNih5UXbTtOwjIsYHpNqj6r8HYrbIQ1tuc0Bau7NH88OCjjn8/hJs9DBb7KRyN
+         bdbctQm9pHrkDDxEvX6ZXHeXaV8tmlwugdZIvNrpdrVhnbuYwhuKp+wxexxbrXDxNvsD
+         SenrIM87Rt8mu3rByeelBfI8zBInem/a6NFB3Rw9zFqlcJZMuVo+oQUzzCefzWokEBab
+         7wHA==
+X-Gm-Message-State: APjAAAVVsJrV50ZZ3aSv7MyMQ2xLqPcIKINjls3pL5/LPRk3FIpnpdd6
+        n7AXClr3i2qie7wXxbnHV6k=
+X-Google-Smtp-Source: APXvYqzWr/a0O+7mEdlwNhtTLV9dTcyKTiLbi7MBHZtSdxw+2JYEgxNhqwI5W/XzJ+L3oygmByHaNg==
+X-Received: by 2002:a37:8e03:: with SMTP id q3mr19800908qkd.395.1580184102909;
+        Mon, 27 Jan 2020 20:01:42 -0800 (PST)
 Received: from [192.168.1.127] ([192.222.216.4])
-        by smtp.gmail.com with ESMTPSA id g205sm11539637qke.16.2020.01.27.20.01.39
+        by smtp.gmail.com with ESMTPSA id g205sm11539637qke.16.2020.01.27.20.01.41
         (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 27 Jan 2020 20:01:39 -0800 (PST)
+        Mon, 27 Jan 2020 20:01:42 -0800 (PST)
 Content-Type: text/plain; charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
 Subject: Re: Submodules & worktree
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
 In-Reply-To: <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
-Date:   Mon, 27 Jan 2020 23:01:36 -0500
+Date:   Mon, 27 Jan 2020 23:01:37 -0500
 Cc:     Git List <git@vger.kernel.org>, mateusz@loskot.net,
         Peter Kaestle <peter.kaestle@nokia.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <EE184A05-60BD-4939-93E6-C156A0DB3DF8@gmail.com>
+Message-Id: <2C0C3A4A-B185-4690-B76C-42E113A89687@gmail.com>
 References: <CAKQS2drF+CQTiKtXD6Kx1ZbH9ZTekWmbfiiHTCJV_BrT5-gAFQ@mail.gmail.com> <CAKQS2dqx9Nux11ot7a-Wxd2qpcdAAWw-e7Li+X3bw7TxJS=Kyw@mail.gmail.com>
 To:     Ole Pinto <olepinto@gmail.com>
 X-Mailer: Apple Mail (2.3124)
