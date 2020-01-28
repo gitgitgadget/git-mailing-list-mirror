@@ -2,116 +2,159 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E694BC2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 20:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D842DC2D0DB
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 21:17:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B3F1621739
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 20:48:15 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A69DF207FD
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 21:17:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="pt56kESX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrxvD7mO"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726296AbgA1UsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 15:48:14 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:40926 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726240AbgA1UsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 15:48:14 -0500
-Received: by mail-vs1-f66.google.com with SMTP id g23so9027199vsr.7
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 12:48:14 -0800 (PST)
+        id S1726340AbgA1VRn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 16:17:43 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36391 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726266AbgA1VRn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 16:17:43 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p17so4177200wma.1
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 13:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=ewVybyfM3FGeaXC8Qd+Dd/tdOHD3ay7Ut1wahS9l8Xs=;
-        b=pt56kESXSd6N6ubW+KWvdVV8m6eni78gkjQkUsBvpJKSGQVGT1bNh+a+2xQjaYTB2W
-         QZg6n1pQE4zCtDsKI8KWFBYq3W88suEBFytpbLXKk8xv14Ixb0/3dmRHqUn4RkiKVnYn
-         Uj/wvMJt+SIwj80VTrb5bkFPavuPrVpfNXNnZhEODMumD9/QZUmixf/9fkdsyGlez+mO
-         RmKgLk/SzlO8LZnUdBr/agRG86VZT7nZKaPmDR9rvVeBL8Gst80h/IpT1sZE1t8W34Gk
-         Z5gie9eRNQ03KHTEW4/Ys5E/ObEJqxebcq9X6uxlqUvP+vChg+KPhf4IcVYrpfm/sDQa
-         z3RA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lMHAN2IpHC6m4tVRtjqASh1AfjGfdDB98fzgqfx0FCI=;
+        b=TrxvD7mOFtktxsyw/R2d1mxe+ZAmXpfj8/OWIqQ5kNuGxmU7vHShXLH5HBJPX71QiB
+         An24pdDMvjHzqT90URijzSF480g1ww9iWwo1lYRM7Xsy724o7paj/Ms8zUvmZPfTKAEL
+         7Ul8wnLArXVaH8O/NOq029KvMem0JvvsVDs7TaRhbKdYmOlkTOakBkammk5Qi1hFaHrz
+         ZE7Vx3FT1sSpTahP0f4zgvsBJ0ZlnhGwWFDb1eDqjoD4XyI4mdvgZGsupAsPJltgAJQ2
+         RcaZzYxYZ03tFq/mse0/Uv2+q1h65BvVR7+n2cebYGO6NmsuZ3+agppAIogchu2nnE17
+         6Swg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ewVybyfM3FGeaXC8Qd+Dd/tdOHD3ay7Ut1wahS9l8Xs=;
-        b=Bw/0bckjJ3iMfn+BmDedU/QI1kJmZc9E5Kz1q4SrOhYPz0g8nolcchHjiNLBMa4/6P
-         k/XqxzHi+M1MNpXzvDIagTuB/dNZP2qqULvO+ONvOn2uQ0Wa4D9CtFjYgmRgl4ZX9i8h
-         FrGdWd91vONL/za3E0pQe6J6x6MStrzuPkZrkuthDEFstbrUJXvsNx1xT0TTG7LeKDH3
-         3lmDQ+Di8Igv3yhnUebYEqvBo9hZyrgF7GGdaKQHOalKJE6hXm+OmEoYdegwNPAv/By8
-         NAqDgzgkIgKnWAZ/ivszRSZjbA4c+VrdgaE2EfScq7NtYRWCuUxlV9rQNudbIMahnT+d
-         N/vw==
-X-Gm-Message-State: APjAAAWV12rwgNIWtBnttPRLlnbbh0aITaZsHiXpmafQDR3UkfLgZgF4
-        nGhJdtSY/p3/FKjB0I9+qOO2NJQI+q8dMIMLg6NSoQ==
-X-Google-Smtp-Source: APXvYqyPFpivbELN1kYiNiHr5HThogaVfaJyqSkNUBAp/EGEYNtdtX37C61A6f4IFvqLrCW20LImKFRiJXkkHU6W/eA=
-X-Received: by 2002:a67:1983:: with SMTP id 125mr14355122vsz.63.1580244493685;
- Tue, 28 Jan 2020 12:48:13 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lMHAN2IpHC6m4tVRtjqASh1AfjGfdDB98fzgqfx0FCI=;
+        b=IFtNYfy849x/g6WThjEl7/0cGS3LzRD9PTT6EB7LcEKpC2I+0qVFyhtUbC1jLXabpe
+         FwMMrv0L4eMHao9Xd08obm4UrFZerRTPHvpz35TGV9aipO2kjFwb6Xsd+i2T6b39dNRd
+         8XKOQYGwfqi6jETlfdKPhsAqdZtJ0A6Dod7p/AYnKnToqRSgzr+DsvjIhBoFdhc/7wiI
+         kEcqdrwJ0gqb+MapYPQcZeEyChEFupU8kEysJwI7EuoYmLQg6QrbZ8siP/9h5zQkNLBs
+         Vm7AQtqlmEpTknOuZ4u5EoNI+/mTAwEJy5EI4FyiU113GmFEpMnJyJHsuMO+pkOrabqv
+         q0Lg==
+X-Gm-Message-State: APjAAAW6aIjmBPmZIrVRtsZGZcnqQ8yx5zPPtR0Qt64Gnvsw/gfoHHz1
+        b4u0+UmFbHh8ZUpkRZ20CrrdjnR4
+X-Google-Smtp-Source: APXvYqwqap/fCaKBq9AE50A6aHeh1Jo7WprQOCvdAWCcT5LEa9gEUxCqO6Si6DAZiixud7hUWpmDAw==
+X-Received: by 2002:a7b:cb8e:: with SMTP id m14mr7232007wmi.66.1580246261040;
+        Tue, 28 Jan 2020 13:17:41 -0800 (PST)
+Received: from localhost.localdomain (atoulouse-551-1-75-233.w92-146.abo.wanadoo.fr. [92.146.226.233])
+        by smtp.googlemail.com with ESMTPSA id y6sm27056035wrl.17.2020.01.28.13.17.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Jan 2020 13:17:40 -0800 (PST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH v6 0/2] rebase -i: extend rebase.missingCommitsCheck
+Date:   Tue, 28 Jan 2020 22:12:44 +0100
+Message-Id: <20200128211246.10855-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.24.1
+In-Reply-To: <20200125175436.29786-1-alban.gruin@gmail.com>
+References: <20200125175436.29786-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-References: <ed9a0485-1e6c-79ae-6a59-655105203728@googlemail.com>
- <20200125003836.GA568952@coredump.intra.peff.net> <b4c31e50-6da5-7699-1069-d94091f768bd@googlemail.com>
- <20200125200554.GC5519@coredump.intra.peff.net> <d8007df9-002b-6db1-4769-d6bf8c338cdf@googlemail.com>
- <dfcf0201-b634-2274-f041-a6ec4491825a@googlemail.com> <20200127231459.GD19360@coredump.intra.peff.net>
-In-Reply-To: <20200127231459.GD19360@coredump.intra.peff.net>
-From:   Bert Wesarg <bert.wesarg@googlemail.com>
-Date:   Tue, 28 Jan 2020 21:48:02 +0100
-Message-ID: <CAKPyHN3g9egige5Sac9nogu7JA2n5wov_mDabsj80Ti+kVH6Cw@mail.gmail.com>
-Subject: Re: [PATCH] doc: clarify "explicitly given" in push.default
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 12:15 AM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jan 27, 2020 at 08:48:01PM +0100, Bert Wesarg wrote:
->
-> > > > There's another way of doing this, which is when you have a "triang=
-ular"
-> > > > flow: you might pull changes from origin/master into your local bra=
-nch
-> > > > X, but then push them elsewhere. Usually this would be pushing to a
-> > > > branch named X on a different remote than origin (e.g., your public=
- fork
-> > > > of upstream on a server). And for that you can set branch.X.pushRem=
-ote.
-> >
-> > =E2=80=A6 it does not play well if you have have both flows in one repo=
-sitory.
-> > And I do have both flows. I track the upstream 'master' in the local
-> > branch 'Y' and I have also a branch 'X' which is based on 'Y' but
-> > should be pushed to a different remote as branch 'Y'. I have
-> > configured 'branch.X.pushRemote =3D triangular' but with 'push.default'
-> > set to 'upstream' I get this when:
-> >
-> >     $ git push triangular
-> >     fatal: You are pushing to remote 'triangular', which is not the ups=
-tream of
-> >     your current branch 'X', without telling me what to push
-> >     to update which remote branch.
-> >
-> > In this simple case, without a renaming, I would expect that 'git
-> > push' just works. May be just fallback to 'simple' if 'upstream' does
-> > not resolve to a fully qualified push?
->
-> I thought the point of "simple" was to be even more restrictive than
-> "upstream".
->
-> At any rate, your setup is sufficiently complicated that I think you'd
-> be better off adding a branch.X.pushRef feature (essentially a refspec
-> to be used just on branch X, though since the source side is implied,
-> it's really just a destination ref).
+To prevent mistakes when editing a branch, rebase features a knob,
+rebase.missingCommitsCheck, to warn the user if a commit was dropped.
+Unfortunately, this check is only effective for the initial edit, which
+means that if you edit the todo list at a later point of the rebase and
+drop a commit, no warnings or errors would be issued.
 
-thanks. I will try to come up with a patch.
+This adds the ability to check if commits were dropped when editing the
+todo list with `--edit-todo', and when resuming a rebase.
 
-Bert
+The first patch moves moves check_todo_list_from_file() and
+`edit_todo_list_advice' from sequencer.c to rebase-interactive.c so the
+latter can be used by edit_todo_list() and todo_list_check().  The
+second patch adds the check to `--edit-todo' and `--continue' and tests.
 
->
-> -Peff
+This is based on 26027625dd ("rebase -i: also avoid SHA-1 collisions
+with missingCommitsCheck", 2020-01-23).
+
+The tip of this series is tagged as "edit-todo-drop-v6" at
+https://github.com/agrn/git.
+
+Changes since v5:
+
+ - Rebased onto js/rebase-i-with-colliding-hash.  This means the backup
+   is once again created with todo_list_write_to_file(), but without the
+   flag `TODO_LIST_SHORTEN_IDS' this time.
+
+Alban Gruin (2):
+  sequencer: move check_todo_list_from_file() to rebase-interactive.c
+  rebase-interactive: warn if commit is dropped with `rebase
+    --edit-todo'
+
+ rebase-interactive.c          |  84 ++++++++++++++++++++---
+ rebase-interactive.h          |   5 ++
+ sequencer.c                   |  51 ++++----------
+ sequencer.h                   |   2 +-
+ t/t3404-rebase-interactive.sh | 121 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 214 insertions(+), 49 deletions(-)
+
+Range-diff against v5:
+1:  996045a300 = 1:  4f07ce94a8 sequencer: move check_todo_list_from_file() to rebase-interactive.c
+2:  6dbaa8cbe6 ! 2:  68481d89b0 rebase-interactive: warn if commit is dropped with `rebase --edit-todo'
+    @@ rebase-interactive.c: int edit_todo_list(struct repository *r, struct todo_list
+      				    -1, flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_HELP))
+      		return error_errno(_("could not write '%s'"), todo_file);
+      
+    --	if (initial && copy_file(rebase_path_todo_backup(), todo_file, 0666))
+    --		return error(_("could not copy '%s' to '%s'."), todo_file,
+    --			     rebase_path_todo_backup());
+    -+	if (initial || !incorrect) {
+    -+		if (!initial)
+    -+			unlink(todo_backup);
+    -+
+    -+		if (copy_file(todo_backup, todo_file, 0666))
+    -+		    return error(_("could not copy '%s' to '%s'."), todo_file, todo_backup);
+    -+	}
+    - 
+    - 	if (launch_sequence_editor(todo_file, &new_todo->buf, NULL))
+    - 		return -2;
+    +-	if (initial &&
+    +-	    todo_list_write_to_file(r, todo_list, rebase_path_todo_backup(),
+    ++	if (!incorrect &&
+    ++	    todo_list_write_to_file(r, todo_list, todo_backup,
+    + 				    shortrevisions, shortonto, -1,
+    + 				    (flags | TODO_LIST_APPEND_TODO_HELP) & ~TODO_LIST_SHORTEN_IDS) < 0)
+    + 		return error(_("could not write '%s'."), rebase_path_todo_backup());
+     @@ rebase-interactive.c: int edit_todo_list(struct repository *r, struct todo_list *todo_list,
+      	if (initial && new_todo->buf.len == 0)
+      		return -3;
+    @@ sequencer.c: int sequencer_continue(struct repository *r, struct replay_opts *op
+     +			unlink(rebase_path_dropped());
+     +		}
+     +
+    - 		if (commit_staged_changes(r, opts, &todo_list))
+    - 			return -1;
+    - 	} else if (!file_exists(get_todo_path(opts)))
+    + 		if (commit_staged_changes(r, opts, &todo_list)) {
+    + 			res = -1;
+    + 			goto release_todo_list;
+     @@ sequencer.c: int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
+      	return res;
+      }
+-- 
+2.24.1
+
