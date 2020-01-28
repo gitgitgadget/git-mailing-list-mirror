@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-14.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
 	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_IN_DEF_DKIM_WL
 	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31811C2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 15:58:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76D15C2D0DB
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 16:07:41 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0180924681
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 15:58:21 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4346C24681
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 16:07:41 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ay0AUrs1"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="OCQFCYDQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726595AbgA1P6T (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 10:58:19 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34278 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725959AbgA1P6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 10:58:19 -0500
-Received: by mail-wm1-f65.google.com with SMTP id s144so2103834wme.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 07:58:18 -0800 (PST)
+        id S1726387AbgA1QHk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 11:07:40 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37606 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726107AbgA1QHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 11:07:40 -0500
+Received: by mail-wr1-f65.google.com with SMTP id w15so16694451wru.4
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 08:07:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=N6yqPjUCgxRb5j7hknxMp+FUuMP9YsXPfqqnOAxciAM=;
-        b=Ay0AUrs1Kl1fnf5amOciq9rXJg8nkQzKQMxs+nAIZZAwJPci2+oFDmw91KYlOWIDCr
-         V0YAnk4R23Fxuw0c/Ytqbc8aXzOsPgC6j9U/CjVKpK+xUnlTmJTNXFfavtQFm2yG9gYo
-         SINwTEcGZ3+4it4bZLyywwEam3rRykavG4CiTNr2wmTmDr5yMvB5fW4SXGJvOnf94J8E
-         OZMW8d3RjhWW9dlWD2844wX2lcXIsCQN2xgKdS70Q+Y2DHzkbZghW5SzZSTFWDwajkep
-         ylQffl1zPwMOyP45quvIFoiH/2FgvNqPugVxvN7L00ncVk7aIKoNA6QcXu6EX1LsNrPM
-         HvHw==
+        bh=abBvY/mgjoxb/8n25zOaiDP5qT50RmI/Bla7NHsIqJA=;
+        b=OCQFCYDQHMlScO+HHXEl9R1iz5HhXp7cGU5uWaK0og8Xw0TD90m8p9imp74cNXm6F8
+         J2+kIooYhr++TuYxqgBgYhxjT3m4YzwhpvdHd2hUvoJqigUQjslSbph8E7TZqaSGtmvW
+         B4NtqwG1ZGVc5yLvpvh97jgA7Yy5kXEP1nkwu1cesB7IM91b0ZL0SC4qnTJqQzoKBESO
+         wdSEwqTivJ4u3utHQlvpSvE0C9JRTwlvWRUT89WEwo2yWBHfFATE9Ai2zZQaXwfF4wlK
+         ozud44Bhuz5ZIh8Ku+h3QgcxQYbWbQZaxLy2gW8f3uTWeXf5v0KkETpx5UehFKxRDGzI
+         7r1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=N6yqPjUCgxRb5j7hknxMp+FUuMP9YsXPfqqnOAxciAM=;
-        b=RpB5NKHdZA9y8XDKSpNuqd8dauKX//CE8nse4fvWerAo0PKSoUztlQMRMHev6Mje9s
-         9SV/Rz5uQQg2YV+HBmCDLY0uHZgVIy35qbjJ9qAXWN1Nr9AlPL8vLT96scOEABdBZ6Sk
-         zfRZhCcyPJg3Xl3LYvgilE5CGbUO61HrLWVjSwVqSs0Yea1jiOKHne6r1nf4SpV+cyyq
-         q6PB5E3jPNoB3jgP8mwcQ5ztu46xQU2CZwn/LMLMPa1VEUx5AdYPDtOI948NWqDxd1wc
-         YazXLUBIW3Nbyz/koROffM3xJH2sodEP1IKTiSdVvYdqIT0l0/HZJOBElLjeUwChrOcY
-         LRhg==
-X-Gm-Message-State: APjAAAWJJGEeimEWEVOv+r0wY+ikXusUYU7EJ9ctN68AeN4DUHZnVmvD
-        hoN656Toxc0Ott8IeTDS7j27B/IHJViO63cMCKJbQw==
-X-Google-Smtp-Source: APXvYqxhHBk4etxboUBsWtW7iilwe8DLFzPDGx/ApMScWb8V7R+cQTme3m12udHYjy+kQbYmyqs4rReuzy+Rvge0vqk=
-X-Received: by 2002:a05:600c:145:: with SMTP id w5mr5581452wmm.157.1580227096854;
- Tue, 28 Jan 2020 07:58:16 -0800 (PST)
+        bh=abBvY/mgjoxb/8n25zOaiDP5qT50RmI/Bla7NHsIqJA=;
+        b=RbTg6MISPeN0kpXDfRRWAj/f8ou7Fn8jpToMZE84mz1MrUBiljMFFMK0U2wIuwS3NV
+         t5guUP3L83yJO0c6xjPNpItBY3U5vfrt0isFXRUwCdeDN0bYGlno5ipVhw8e9YPmX5+i
+         CC6ZcM5WS5VIf+e/d7bEk27ITmdmqZcXLCFKybynSy/u9s10Xne8OaVZgPe6t7sMF0+o
+         ATWZfFO0+k7uGAQ21mavBnpZVAFU6AbsnXYk1glmCc7iQpAXAyBW1SdKNTRp0HOHJhbL
+         RtmcSQxc88ACgzrQPjcmu233ebrt6prNP4R9ofe96ZyYmp29CfgpYrD3kNNlcKRb8n76
+         kMqQ==
+X-Gm-Message-State: APjAAAVHfGZoL5TlRJ9XLr01X5y8R5+30Z/+RmjUkR0FQn/C+JfQ1mBY
+        NRaPEIbZmbxusJk2lkPYz7wBFtALoHfrRCCANLmG8SvR
+X-Google-Smtp-Source: APXvYqyHt/SR4kVbZE0MehBcxdTLRskXoB0bFrnoJGO9XQa4Z/T8y2Cakwwiuu5coNM1ChzaFT8bN9oq14QS5KF0N7A=
+X-Received: by 2002:adf:edd0:: with SMTP id v16mr28856432wro.310.1580227657659;
+ Tue, 28 Jan 2020 08:07:37 -0800 (PST)
 MIME-Version: 1.0
 References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
- <pull.539.v2.git.1580134944.gitgitgadget@gmail.com> <d7d642dcf6f3c661c51302d02c69e781e201cc6e.1580134944.git.gitgitgadget@gmail.com>
- <xmqqr1zka616.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr1zka616.fsf@gitster-ct.c.googlers.com>
+ <pull.539.v2.git.1580134944.gitgitgadget@gmail.com> <9cf185b51f45f2df0016d7b69351ec2a7656dac2.1580134944.git.gitgitgadget@gmail.com>
+ <xmqqmua8a4vg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqmua8a4vg.fsf@gitster-ct.c.googlers.com>
 From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 28 Jan 2020 16:58:05 +0100
-Message-ID: <CAFQ2z_PY3y4sL=W6Q3EKkB5Vc4PjfeaL0HyybfPUVA0AKxm1=A@mail.gmail.com>
-Subject: Re: [PATCH v2 2/5] create .git/refs in files-backend.c
+Date:   Tue, 28 Jan 2020 17:07:25 +0100
+Message-ID: <CAFQ2z_Oht5yCKXCP4rb+yA+u1gnK++Uy-jmyFdN5+Q6eBi5_8A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] Document how ref iterators and symrefs interact
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
@@ -69,40 +69,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 11:28 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Jan 27, 2020 at 11:53 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Han-Wen Nienhuys via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Han-Wen Nienhuys <hanwen@google.com>
+> > Subject: Re: [PATCH v2 3/5] Document how ref iterators and symrefs inte=
+ract
+>
+> "Subject: refs: document how ...", perhaps?
+>
+> Also isn't it more like iterators and symrefs do not interact in any
+> unexpected way, is it?  iterators while enumerating refs when they
+> see a symref, they do not dereference and give the underlying ref
+> the symref is pointing at---the underlying ref will be listed when
+> it comes its turn to be shown as an ordinary ref.  I am not sure
+> what is there to single out and document...
 
+I mean, you can't return a zero OID and set REF_ISSYMLINK. Instead,
+the ref backend has to follow the symlink recursively until it finds a
+ref pointing to a OID.
+
+> > Change-Id: Ie3ee63c52254c000ef712986246ca28f312b4301
 > > Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
->
->
-> > Change-Id: I2fc47c89f5ec605734007ceff90321c02474aa92
->
-> Do we need to keep this, which is pretty much private name for the
-> patch that is not valid for most of the people on the list?
-
-No, I can make do with like gitgitgadget.
-
-> > -     safe_create_dir(git_path("refs"), 1);
-> > -     adjust_shared_perm(git_path("refs"));
+> > ---
+> >  refs/refs-internal.h | 3 +++
+> >  1 file changed, 3 insertions(+)
 > >
-> >       if (refs_init_db(&err))
-> >               die("failed to set up refs db: %s", err.buf);
-> > diff --git a/refs/files-backend.c b/refs/files-backend.c
-> > index 0ea66a28b6..f49b6f2ab6 100644
-> > --- a/refs/files-backend.c
-> > +++ b/refs/files-backend.c
-> > @@ -3158,6 +3158,10 @@ static int files_init_db(struct ref_store *ref_s=
-tore, struct strbuf *err)
-> >               files_downcast(ref_store, REF_STORE_WRITE, "init_db");
-> >       struct strbuf sb =3D STRBUF_INIT;
-> >
-> > +     files_ref_path(refs, &sb, "refs");
-> > +     safe_create_dir(sb.buf, 1);
-> > +     // XXX adjust_shared_perm ?
+> > diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> > index ff2436c0fb..fc18b12340 100644
+> > --- a/refs/refs-internal.h
+> > +++ b/refs/refs-internal.h
+> > @@ -269,6 +269,9 @@ int refs_rename_ref_available(struct ref_store *ref=
+s,
+> >   * to the next entry, ref_iterator_advance() aborts the iteration,
+> >   * frees the ref_iterator, and returns ITER_ERROR.
+> >   *
+> > + * Ref iterators cannot return symref targets, so symbolic refs must b=
+e
+> > + * dereferenced during the iteration.
 >
-> I am not sure what's there to wonder about with the question mark.
+> What this says is not techincally incorrect.  Iterators do not give
+> each_ref_fn what underlying ref a symref is pointing at.  But it
+> also is misleading.  If your callback wants to know what object each
+> ref is pointing at do not need to do anything extra when it sees a
+> symref, as name of the object pointed at by the underlying ref is
+> given to it.  Only callbacks that wants to know the other ref, not
+> the value of the other ref, needs to dereference when called with a
+> symref.
+>
+> But I wonder if we need to even say this.  Isn't it obvious from the
+> each_ref_fn API that nothing other than the refname, object id, and
+> what kind of ref it is, will be given to the user of the API, so it
+> would be natural for a caller that wants to do extra things it needs
+> to do for symrefs must act when it learns a ref is a symref?  After
+> all, that is why the flags word is one of the parameters given to an
+> each_ref_fn.
 
-I forgot why I put the XXX, but note that safe_create_dirs runs
-adjust_shared_perms implicitly.
+Maybe it is obvious to you, but it was not obvious to me, coming from
+JGit working on the RefDatabase. One could imagine that the caller
+needs to do something special to handle a symref, and returning a zero
+object ID is OK, and this is a natural assumption if you implement a
+ref backend, as dereferencing the symref to find out the final OID may
+do more work than the caller needs.
 
 --=20
 Han-Wen Nienhuys - Google Munich
