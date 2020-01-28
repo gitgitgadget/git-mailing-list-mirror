@@ -2,133 +2,92 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55EE0C32771
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 01:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B04CDC32771
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 02:09:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 329D2214AF
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 01:31:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6B82D2173E
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 02:09:15 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajMm8+QH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728583AbgA1Bbl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 27 Jan 2020 20:31:41 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45904 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728277AbgA1Bbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Jan 2020 20:31:41 -0500
-Received: (qmail 5392 invoked by uid 109); 28 Jan 2020 01:31:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 Jan 2020 01:31:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2932 invoked by uid 111); 28 Jan 2020 01:39:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 27 Jan 2020 20:39:09 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 27 Jan 2020 20:31:39 -0500
-From:   Jeff King <peff@peff.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] clone: teach --single-branch and --branch during
- --recurse
-Message-ID: <20200128013139.GA38223@coredump.intra.peff.net>
-References: <20200108231900.192476-1-emilyshaffer@google.com>
- <20200109081150.GC3978837@coredump.intra.peff.net>
- <20200116223800.GM181522@google.com>
- <20200117210319.GA15460@coredump.intra.peff.net>
- <20200127222019.GA233139@google.com>
- <20200127224914.GB233139@google.com>
- <20200127231007.GB19360@coredump.intra.peff.net>
- <20200128010841.GD233139@google.com>
+        id S1726205AbgA1CJO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 27 Jan 2020 21:09:14 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37211 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbgA1CJO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Jan 2020 21:09:14 -0500
+Received: by mail-pg1-f194.google.com with SMTP id q127so6144627pga.4
+        for <git@vger.kernel.org>; Mon, 27 Jan 2020 18:09:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TijNlN80iB1WW2ANh0blPD3Dwgda2gyNjuWs1AWw1fY=;
+        b=ajMm8+QHEf4+vKaK8lHGb9zsk1zl5T2taVm+XATb1okzgbsvzF87vaCleUSnobUYYs
+         kyXOPbGIgjctlUPJlWAlca1O5UnfT/TDUQem7qXyausDynoSad21N49w/eZ0QB4NO9M/
+         rHxXtXEdYeEQsilNfwDr/9PkkKRQ+oMJKTgtIA1Qdrep8jByOxoloLOETEBRk0raefg5
+         UL/TpZYGKi46ZRXN14Tdxjp7rpkRpbD4AHmturTY6iqY0LZ1PLAx4jOv6g5VsjaAmfEF
+         bYpHokxlZV79IlIqSSQpgsW+jZc1pwIXDWz4RbTBpZGRvurrrom7Tb2vDJQ1xnDVZ5nY
+         +QOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=TijNlN80iB1WW2ANh0blPD3Dwgda2gyNjuWs1AWw1fY=;
+        b=D0eWs0j+oYblF6+kc25VZz512iXNnDLIgEOwkoyZdVvLMYk1Wo9yeh3TgCs4AB9kkN
+         h+m4nR3ymVON3uk7cGQQY+h8N49Zq3c/pT3IY91NR9AvMFSYhr9l4H/fRjB+kwG7CFjk
+         o6JyGs8UchbGLAecIPRX0hshGPcqyux1T35WXM07LLMMomuHdGMSJTujyn/SHon2f7uw
+         ND3Rs4UDDKaT1ssMxrrWU5QxBzm+pO7xDZo2Mb84jOkqJMaaFc7XAhxAll0HdfnJ95iv
+         CuKRMPuH4Cz8Pf4H64GYc0Qq6AdJKuNcRSvRlBPZXhHktUZHoTzCp+05Mm1C4WSB5KIQ
+         NS3A==
+X-Gm-Message-State: APjAAAUYNmoGBCT3wTWeuY9ruRu+ZqrDRUGkobOKMTijvt4PQjFu7ioC
+        DV9HXwWJzZK6pXjpZdBjwnc=
+X-Google-Smtp-Source: APXvYqxAlPKKksTkQy31wQ5ex04XvQgYoOYpQE02lWGUZGGCYIC0KxaxwiHXuBSqHVoZIWNja2tjvg==
+X-Received: by 2002:a63:7b4f:: with SMTP id k15mr22119570pgn.58.1580177353689;
+        Mon, 27 Jan 2020 18:09:13 -0800 (PST)
+Received: from konoha.iitr.ac.in ([103.37.201.172])
+        by smtp.gmail.com with ESMTPSA id b4sm17474775pfd.18.2020.01.27.18.09.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2020 18:09:12 -0800 (PST)
+From:   Shourya Shukla <shouryashukla.oo@gmail.com>
+To:     johannes.schindelin@gmx.de
+Cc:     gitster@pobox.com, git@vger.kernel.org,
+        Shourya Shukla <shouryashukla.oo@gmail.com>
+Subject: [GSoC] Doubts in an issue
+Date:   Tue, 28 Jan 2020 07:38:20 +0530
+Message-Id: <20200128020820.6895-1-shouryashukla.oo@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200128010841.GD233139@google.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 05:08:41PM -0800, Emily Shaffer wrote:
+Greetings Johannes!
 
-> > Yeah, I do still think that it makes sense for clone to pass along
-> > --single-branch, regardless, and then deal with branch selection problem
-> > separately on top.
-> 
-> Sure; I've got that ready to send shortly. It seems to grab HEAD of the
-> remote for each submodule, and then checkout the specific commit ID the
-> superproject wants - in my test case, that commit ID was a direct
-> ancestor of 'master', so the single branch only got 'master'. I'm not
-> sure how it would work with a commit ID which doesn't exist in the
-> single branch that was fetched; I'll write a test and have a look.
+I was trying to solve isse #406[1]. I have understood what we are trying to achieve for
+the most part, but I still need some confirmation. As far as my understanding goes, here
+is what I have inferred(forgive me if I am wrong anywhere):
 
-Yeah, it's definitely worth exploring how that works. I thought we had
-some kind of fallback for when we didn't manage to fetch the object. But
-maybe I am confusing it with the fallback for "we tried to fetch this
-specific object, but the other side doesn't allow that, so we grabbed a
-branch instead".
+We had "dashed" versions of present day commands such as <<git add>> in the old times.
+Now, whenever we call scripts whose "dashed" version exists, it will sort of link the "dashed"
+version as well for I guess historical reasons? ;)
 
-> > So for the simple case, you probably do want to be able to say "use this
-> > branch for cloning all submodules".
-> 
-> I think it still makes sense to call this out explicitly, yes? Or do you
-> think that should just be the default?
+And hence this takes up quite some time to link those built-ins especially in Windows. Therefore,
+our aim is to remove that option of linking the "dashed" forms by default.
 
-Yes, I think it should be a separate option from "--branch".
+One thing I don't understand is, where is the <<libexec/git-core/>> directory? And what exactly
+do we mean by "built-ins" here(does it refer to the "dashed" commands)?
 
-> This made me think - I wonder if it makes sense to take
-> --submodule-branch as a wildcarded spec instead. So in your case, I
-> could say,
-> 
->   git clone --submodule-branch *=devel -b devel superproject
-> 
-> And then I don't need to do anything differently for 'git fetch' later.
-> This also opens the door for some repos getting special treatment:
-> 
->   git clone --submodule-branch-file=foo.txt -b dev example
-> 
->   foo.txt:
->   curl=stable-1.2.3
->   nlohmann=v2.28
->   example-*=dev
->   *=master
+Thanks, 
+Shourya Shukla
 
-If we write it all as config, I think things may get simpler. IIRC,
-there is already submodule.*.foo config in .git/config (that can mirror
-and override what's in .gitmodules).
+[1]: https://github.com/gitgitgadget/git/issues/406
 
-So if we had some config option for "clone this branch for the submodule
-instead of HEAD", then that means you can do:
-
-  git clone -c submodule.foo.clonehead=devel ...
-
-and the result would be used by the submodule code, but also saved for
-future invocations. Likewise, if there's no "clonehead" config for a
-particular submodule, if we fall back to submodule.defaultclonehead,
-then you could do:
-
-  git clone -c submodule.defaultclonehead=devel ...
-
-and it would also be saved as the default for future submodules.  And
-all without having to invent a new submodule-branch-file format.
-
-The name "clonehead" isn't great. I'm not sure if this ought to be
-submodule.*.branch (since I don't quite know what that's used for). I
-think you'll have to explore that a bit.
-
-> I think that also tends to match the glob-expansion configs we use for
-> other things. One thing sticking out to me about the idea of providing
-> --submodule-branch is that you need to know what's in the repo before
-> you clone it the first time, which being able to use globbing like this
-> kind of helps with. But then, I suppose if you don't know what you're
-> looking for, you're not also looking for a very precise filter on your
-> clone ;)
-
-Yeah; the scheme I outlined above only allow specifying the value for
-one submodule, or the fallback default. It wouldn't allow arbitrary
-globbing. But I also suspect nobody wants that. If you know what the
-submodules are, then you can set up config for each. If you don't, then
-"everything" is the only glob that makes sense.
-
--Peff
