@@ -8,61 +8,63 @@ X-Spam-Status: No, score=-9.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E212C2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E89DC2D0DB
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:26 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1DC8E20716
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 30ED824683
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:26 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOMLqCNK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M3ZQ80Mv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729359AbgA1OlW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 09:41:22 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45502 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729121AbgA1OlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 09:41:19 -0500
-Received: by mail-wr1-f68.google.com with SMTP id a6so1693887wrx.12
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 06:41:19 -0800 (PST)
+        id S1730361AbgA1OlZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 09:41:25 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44172 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730428AbgA1OlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 09:41:21 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q10so16294116wrm.11
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 06:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=z+0sLYrP58eeovRExl7dsWUvPzeYQuBQyVbe8IQ/XvY=;
-        b=gOMLqCNK+SCd1RXm7VOlOA40j9CuTJdbpaDIDbJA8xS1/w4+49uYwRP9lTwlbraSpF
-         eNwD3JlI9Fl2r7fblIht6+6xRM/aVEELZoI4OUbYhyjUgruBmACXaZ5R92hKsNLaBRNp
-         s777+fmUNFzZvPLqc62nxXInbtm+xzA8g72GyjB61PejmOAHyHCqQgfEffzqcQGQAIOd
-         mcKN88x53rRMYJ/3BlFFcNRlnUFnRXdZAN/R5qbz0VfcXYbzK3OB884sEv+1+pawbWx9
-         EF3Bkg4mZY1/p194kIuwrSlqONW63TNfZV83XPlkas4Xp9wS/FWVOnjvn4MS1i8//LLc
-         jfwg==
+        bh=ydJB0pf8KIMaV+lmWCZ/JJIyrrUlm8Wy40gNencbC4w=;
+        b=M3ZQ80MvByx+lkqLVzgNIbRCXsHL7JQcZuXC5D1zb7mzXUz6ZVw4332leI5ePTnvDv
+         yDS0Si4Iek7Tv2Tz74vRUm9HxCICrnLjy4dKh45xtSaH6fYhdYmjPftsFSU0PgreWcVb
+         cSgxfYgkRrm6MBdIbvPrIR3Aua9sgH/sC6PQWTwlBKkowdW+mbGfXcoSC20NV8zWSM3g
+         6kefLyNyVFcGPPzuopMxUL4ag3n7LycwuiOoVxBFImiSXXFDlpqLHMZrpn2jUstr8hS4
+         FNdpqgzV2PWj9C94EAwOqhmFQU5AtBvEIZUdnqGFlsPW2jMuq8uCXUaYsliTFxOqDZnA
+         y5Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=z+0sLYrP58eeovRExl7dsWUvPzeYQuBQyVbe8IQ/XvY=;
-        b=imMduORqAaOr/bRBm63s89yi8pQKYcaUtbrBvfPqH0bo8dD+WgOgYYbDYc4u9LLeZ5
-         NMOmWNNtWXoC1ZJ804C5THxKF3zOCq0wWY5X9LMzn5Y2Hcvn7HioSbhBwb0eD/ZVcE07
-         jIr6W7f4GKLetcrh3zcTnLSNERLsqtkM684Pb9tUhEoopKUJ8BTeHR0bL4dQyMMt8eCa
-         IMp3qTRNu842c5JOqwzetuWJGTXDP7DaIUatd0YoLnmjj915v3kEZKnd+vfO0AqI7oXw
-         bfg0aXtyAr+LNd10y89I9gNosToTXeybhRQC8uzPmEzhtQxMai6VAP827caMOIENqSk+
-         fTPg==
-X-Gm-Message-State: APjAAAV6J0VEjPzqWKBfLOfbXdWS1yJmV7CaDDPmMHZDoBckX0ygGjWq
-        o8krcTSeFoqVE3pDLvXKf1pS6r2Q
-X-Google-Smtp-Source: APXvYqzveMRsjJD27jXM2Wcph/mIxQX0PozvxlJ/9VhOR48Zi1FF/xbUkKmO6UzhDNpvxknmx6loSA==
-X-Received: by 2002:adf:ef49:: with SMTP id c9mr30624585wrp.292.1580222478094;
-        Tue, 28 Jan 2020 06:41:18 -0800 (PST)
+        bh=ydJB0pf8KIMaV+lmWCZ/JJIyrrUlm8Wy40gNencbC4w=;
+        b=Lj9u2k/c+mH12fZttBXf9/QgCZoCDJtMXECvPAc6ZFuZdpLJN7W/ne3XWQWJ7Cb4G3
+         Fekf0KExInIkzxTY8mrJ2VN4CFJOuVop20ibQ0OttW52I2ljiXtVr1ki50qLvJKsWoPj
+         3s5G9TeKtd0sDjgmTB6/KC/SQ4migp9mAImp7MYmQ8lZpwb2XgflZZylFDYZ9Z7LtFsQ
+         vCXMFRcoyz5GNr0kHUQ4FgHHAERR3ndbDajkAcNquhT+CLd8agBVPpInHODfgW1anJoi
+         fcx6bSf2XR9Nbsw3OwzWZ56yqXu2oBrW6jiuSaITu+45nhN6jyfwjSpWjtozthq7lBtz
+         k5iA==
+X-Gm-Message-State: APjAAAVxd/FAB75W9VEiqCD+xs8NJ6mjp+VqgNY8vsrGTD92zFHzqWax
+        Z3uQspThF2GsO36A1FkZYDVzu8lwVAY=
+X-Google-Smtp-Source: APXvYqy7r32zslNMP69JpjJzjWMANgebzdfZMkbNt97UQHBCygFKiRof55K8aFpld6U2/6PYilVj8g==
+X-Received: by 2002:adf:d183:: with SMTP id v3mr30384978wrc.180.1580222479642;
+        Tue, 28 Jan 2020 06:41:19 -0800 (PST)
 Received: from localhost.localdomain ([139.47.115.4])
-        by smtp.gmail.com with ESMTPSA id g7sm25732439wrq.21.2020.01.28.06.41.17
+        by smtp.gmail.com with ESMTPSA id g7sm25732439wrq.21.2020.01.28.06.41.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Jan 2020 06:41:17 -0800 (PST)
+        Tue, 28 Jan 2020 06:41:19 -0800 (PST)
 From:   Miriam Rubio <mirucam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Tanushree Tumane <tanushreetumane@gmail.com>,
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
         Miriam Rubio <mirucam@gmail.com>
-Subject: [PATCH v2 05/11] bisect--helper: introduce new `decide_next()` function
-Date:   Tue, 28 Jan 2020 15:40:20 +0100
-Message-Id: <20200128144026.53128-6-mirucam@gmail.com>
+Subject: [PATCH v2 06/11] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and its dependents
+Date:   Tue, 28 Jan 2020 15:40:21 +0100
+Message-Id: <20200128144026.53128-7-mirucam@gmail.com>
 X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 In-Reply-To: <20200128144026.53128-1-mirucam@gmail.com>
 References: <20200128144026.53128-1-mirucam@gmail.com>
@@ -73,114 +75,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Tanushree Tumane <tanushreetumane@gmail.com>
+From: Pranit Bauva <pranit.bauva@gmail.com>
 
-Let's refactor code from bisect_next_check() into a new
-decide_next() helper function.
+Since we want to get rid of git-bisect.sh it would be necessary to
+convert those exit() calls to return statements so that errors can be
+reported.
 
-This removes some goto statements and makes the code simpler,
-clearer and easier to understand.
+Emulate try catch in C by converting `exit(<positive-value>)` to
+`return <negative-value>`. Follow POSIX conventions to return
+<negative-value> to indicate error.
+
+Handle this return in dependent function `bisect_next_all()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
 Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
 Signed-off-by: Miriam Rubio <mirucam@gmail.com>
 ---
- builtin/bisect--helper.c | 62 +++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 30 deletions(-)
+ bisect.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 21de5c096c..826fcba2ed 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -291,26 +291,14 @@ static const char need_bisect_start_warning[] =
- 	   "You then need to give me at least one %s and %s revision.\n"
- 	   "You can use \"git bisect %s\" and \"git bisect %s\" for that.");
- 
--static int bisect_next_check(const struct bisect_terms *terms,
--			     const char *current_term)
-+static int decide_next(const struct bisect_terms *terms,
-+		       const char *current_term, int missing_good,
-+		       int missing_bad)
- {
--	int missing_good = 1, missing_bad = 1, res = 0;
--	const char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
--	const char *good_glob = xstrfmt("%s-*", terms->term_good);
--
--	if (ref_exists(bad_ref))
--		missing_bad = 0;
--
--	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
--			     (void *) &missing_good);
--
- 	if (!missing_good && !missing_bad)
--		goto finish;
--
--	if (!current_term) {
--		res = -1;
--		goto finish;
--	}
-+		return 0;
-+	if (!current_term)
-+		return -1;
- 
- 	if (missing_good && !missing_bad &&
- 	    !strcmp(current_term, terms->term_good)) {
-@@ -321,7 +309,7 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 		 */
- 		warning(_("bisecting only with a %s commit"), terms->term_bad);
- 		if (!isatty(0))
--			goto finish;
-+			return 0;
- 		/*
- 		 * TRANSLATORS: Make sure to include [Y] and [n] in your
- 		 * translation. The program will only accept English input
-@@ -329,21 +317,35 @@ static int bisect_next_check(const struct bisect_terms *terms,
- 		 */
- 		yesno = git_prompt(_("Are you sure [Y/n]? "), PROMPT_ECHO);
- 		if (starts_with(yesno, "N") || starts_with(yesno, "n"))
--			res = -1;
--		goto finish;
--	}
--	if (!is_empty_or_missing_file(git_path_bisect_start())) {
--		res = error(_(need_bad_and_good_revision_warning),
--			       vocab_bad, vocab_good, vocab_bad, vocab_good);
--	} else {
--		res = error(_(need_bisect_start_warning),
--			       vocab_good, vocab_bad, vocab_good, vocab_bad);
-+			return -1;
-+		return 0;
- 	}
- 
--finish:
-+	if (!is_empty_or_missing_file(git_path_bisect_start()))
-+		return error(_(need_bad_and_good_revision_warning),
-+			     vocab_bad, vocab_good, vocab_bad, vocab_good);
-+	else
-+		return error(_(need_bisect_start_warning),
-+			     vocab_good, vocab_bad, vocab_good, vocab_bad);
-+}
-+
-+static int bisect_next_check(const struct bisect_terms *terms,
-+			     const char *current_term)
-+{
-+	int missing_good = 1, missing_bad = 1;
-+	const char *bad_ref = xstrfmt("refs/bisect/%s", terms->term_bad);
-+	const char *good_glob = xstrfmt("%s-*", terms->term_good);
-+
-+	if (ref_exists(bad_ref))
-+		missing_bad = 0;
-+
-+	for_each_glob_ref_in(mark_good, good_glob, "refs/bisect/",
-+			     (void *) &missing_good);
-+
- 	free((void *) good_glob);
- 	free((void *) bad_ref);
--	return res;
-+
-+	return decide_next(terms, current_term, missing_good, missing_bad);
+diff --git a/bisect.c b/bisect.c
+index 83cb5b3a98..a7a5d158e6 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -661,11 +661,11 @@ static void bisect_common(struct rev_info *revs)
+ 		mark_edges_uninteresting(revs, NULL, 0);
  }
  
- static int get_terms(struct bisect_terms *terms)
+-static void exit_if_skipped_commits(struct commit_list *tried,
++static int error_if_skipped_commits(struct commit_list *tried,
+ 				    const struct object_id *bad)
+ {
+ 	if (!tried)
+-		return;
++		return 0;
+ 
+ 	printf("There are only 'skip'ped commits left to test.\n"
+ 	       "The first %s commit could be any of:\n", term_bad);
+@@ -676,7 +676,13 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+ 	if (bad)
+ 		printf("%s\n", oid_to_hex(bad));
+ 	printf(_("We cannot bisect more!\n"));
+-	exit(2);
++
++	/*
++	 * We don't want to clean the bisection state
++	 * as we need to get back to where we started
++	 * by using `git bisect reset`.
++	 */
++	return -2;
+ }
+ 
+ static int is_expected_rev(const struct object_id *oid)
+@@ -949,7 +955,7 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+ {
+ 	struct rev_info revs;
+ 	struct commit_list *tried;
+-	int reaches = 0, all = 0, nr, steps;
++	int reaches = 0, all = 0, nr, steps, res;
+ 	struct object_id *bisect_rev;
+ 	char *steps_msg;
+ 
+@@ -972,8 +978,9 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+ 		 * We should exit here only if the "bad"
+ 		 * commit is also a "skip" commit.
+ 		 */
+-		exit_if_skipped_commits(tried, NULL);
+-
++		res = error_if_skipped_commits(tried, NULL);
++		if (res < 0)
++			exit(-res);
+ 		printf(_("%s was both %s and %s\n"),
+ 		       oid_to_hex(current_bad_oid),
+ 		       term_good,
+@@ -990,7 +997,9 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+ 	bisect_rev = &revs.commits->item->object.oid;
+ 
+ 	if (oideq(bisect_rev, current_bad_oid)) {
+-		exit_if_skipped_commits(tried, current_bad_oid);
++		res = error_if_skipped_commits(tried, current_bad_oid);
++		if (res)
++			exit(-res);
+ 		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+ 			term_bad);
+ 		show_diff_tree(r, prefix, revs.commits->item);
 -- 
 2.21.1 (Apple Git-122.3)
 
