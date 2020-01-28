@@ -2,174 +2,160 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-8.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE2EC2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 13:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF70EC2D0DB
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D2BFF2173E
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 13:57:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C2825207FD
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 14:41:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A16K77jX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Knc7GxOW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726182AbgA1N5N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 08:57:13 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41665 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726107AbgA1N5M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 08:57:12 -0500
-Received: by mail-wr1-f68.google.com with SMTP id c9so16118344wrw.8
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 05:57:11 -0800 (PST)
+        id S1730262AbgA1OlL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 09:41:11 -0500
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:52192 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726446AbgA1OlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 09:41:06 -0500
+Received: by mail-wm1-f50.google.com with SMTP id t23so2810098wmi.1
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 06:41:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=23NDgQTFjvALxcAdidkDF0rozwQCkKkcj+NdnPoRCvw=;
-        b=A16K77jXZXgkM3CD4u8SRSxKeOYee4CinaID7P1CjhAVp8PLh9MMcN4hHXvFj4fHz2
-         YQZ8Mz7MtURgELWOhYBAmjvpAJSBp2RDYFbAfjtMngp7tqf1llHUzHVEY221cMasj9/A
-         tNRHVQJyrAl1kX1+IHxzVexUgG+7BRXTgn4mS3qvacPl6rLe/+tVPKFPKh5DVf3tcofu
-         PikJIEzyTL+RWnJ+C5kCK4dsYIR7KE3urUMiVDNb5q2ppnjmLvpQ+8M6VvBGQjDLXt05
-         hrNS9xcQJ1s0izo7t0qzMzn9bgJyb0rZR0S+KxgULmzNzaDssKcvcdf0pZ53z8nXva/D
-         gz1w==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ushP40t+c+M0lMsID0Pu1bbzzcO5aspSvxPQEVOnbNI=;
+        b=Knc7GxOWkEhibrozQgmS/bGAB7WBubo3aT4IBfEjQiqJwhBbMgQ721MeH4FQTaDSvc
+         qrS7L7+N8L3SRH91Vv1UQzANqOzZMEtDYLppikI+y2Wu77KxWDQSMeekBqLDuMrwoOr2
+         D+siYVMKZXU+D67lT29b5P6M1QOlEhyZiZT7w4nhx06nThCisC99DX97wtcHae3dswl3
+         aS5YVF/QYBv7AkPW5JIktQA/nWUJ+uHzK3U6xoRUgXLxd5O6V/8/aQSHZ6EY59nXq+Mj
+         xeVttImZzIMceq7LEqfS4irdmGvOhxdDAV46bGzli1fi/4mbwbxvT2Pwy9daLgGCKQEy
+         OClA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=23NDgQTFjvALxcAdidkDF0rozwQCkKkcj+NdnPoRCvw=;
-        b=Tlml/4giDxg9uerFgTwXGo9xUYqBzbF/ABz7pTrW8gF+CaqylaYCJBK6Q4LCgRqJ9v
-         05MY7kQrDdIPDRzqxV689VpS3TtqLFhJZ+QI7ToGMo5ApPrIQQ21sSJzi2JPmWHjeBMa
-         5scTn3WKlx898Mr1a60CO67Hh8F3iDKTSmzlTtdzqkstW+jSzU2eHzqu/tbQtzQ796oD
-         nFU+vU2GHVpxMaTav7FUlnuld3qBNa9KdwD5nJ3YxzMHJC80RPPq2PGDdz5kV+q2f5De
-         dHnDJVdi8WIBL2L4DU9x1rp8O82PKgjMmYcMB5nbZY0+ZagEVXuigsmL8u47M5koi0ME
-         iX9Q==
-X-Gm-Message-State: APjAAAUgW3TxGh9Kzh3MNAX0xc5zb4bXoGEfRcZe9oYZQsooSDT3Jby2
-        uJv01rEj73bOWq6Vf9UaFi0InJyv
-X-Google-Smtp-Source: APXvYqx98bDfLVS5kgdhqigPdSRXV1xoZMqmo+5sNywogZzrJQ0LtPM+GIoZ63KGhgslE5kDlFvYIw==
-X-Received: by 2002:a5d:4651:: with SMTP id j17mr29294741wrs.237.1580219830658;
-        Tue, 28 Jan 2020 05:57:10 -0800 (PST)
-Received: from szeder.dev (x4dbe41cb.dyn.telefonica.de. [77.190.65.203])
-        by smtp.gmail.com with ESMTPSA id d8sm24765450wrx.71.2020.01.28.05.57.08
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ushP40t+c+M0lMsID0Pu1bbzzcO5aspSvxPQEVOnbNI=;
+        b=KN1s3GEkgZ+UhceaMa85dBEdoUoyEls1feP+mlUrMoJNnCSBoVb5yktpORWiIAxIiW
+         G/6B5e91jYsMSgB4auK0J8Po64g7Cu64UiEaJe6RMo719FfjCKbroUwuoDla715QDmzK
+         Gnt19/I7N4i8Jy/wi1oWqyxHQaPfUafDyBlOZA60TrIMxFiwPEtFO2LaYb6h3XaZqmAx
+         SA7kznUH9HTS/ntY4l1wKWaczhhCgrPub35U3W6xF1VNrNRTtW97Sl/CyPy4DLr6X9fV
+         ZjZ03B8RkCjNNhrocBqCTg0o2tdTxToSBfcouemGVdIoub/oN1poL/qDGXrVuK6/kUbg
+         WCjA==
+X-Gm-Message-State: APjAAAUkTWDqaVYLRvFe3JA5qGMIT3CSfBAxwcQ/C3IOfDje63bD6Ng6
+        lTsyWaMNnW48Qmd+kXfK6fadQahr
+X-Google-Smtp-Source: APXvYqweDsqgzPobzdIRkESQXt1qsDL/yJKZgspQqXSTkYmeULsbOZB4lCKjXNYjxXYP+HedgpCEYw==
+X-Received: by 2002:a1c:1b4d:: with SMTP id b74mr5604133wmb.33.1580222464322;
+        Tue, 28 Jan 2020 06:41:04 -0800 (PST)
+Received: from localhost.localdomain ([139.47.115.4])
+        by smtp.gmail.com with ESMTPSA id g7sm25732439wrq.21.2020.01.28.06.41.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Jan 2020 05:57:09 -0800 (PST)
-Date:   Tue, 28 Jan 2020 14:57:07 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Martin Melka <martin.melka@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Samuel Lijin <sxlijin@gmail.com>
-Subject: Re: git status --ignored hangs when a deep directory structure
- present in working tree
-Message-ID: <20200128135707.GD10482@szeder.dev>
-References: <CANt4O2L_DZnMqVxZzTBMvr=BTWqB6L0uyORkoN_yMHLmUX7yHw@mail.gmail.com>
- <20200127120837.GA10482@szeder.dev>
- <CABPp-BGvU_DHQu66bqPZ+WXg5mL8bCP5Uxp4g5393WnWyO1Dhg@mail.gmail.com>
+        Tue, 28 Jan 2020 06:41:03 -0800 (PST)
+From:   Miriam Rubio <mirucam@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Miriam Rubio <mirucam@gmail.com>
+Subject: [Outreachy][PATCH v2 00/11] Finish converting git bisect to C part 1
+Date:   Tue, 28 Jan 2020 15:40:15 +0100
+Message-Id: <20200128144026.53128-1-mirucam@gmail.com>
+X-Mailer: git-send-email 2.21.1 (Apple Git-122.3)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BGvU_DHQu66bqPZ+WXg5mL8bCP5Uxp4g5393WnWyO1Dhg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 27, 2020 at 09:06:01PM -0800, Elijah Newren wrote:
-> > the runtime of 'git status
-> > --ignored' grows quickly with the depth of the untracked directory.
-> > Running this shell loop produces the numbers below:
-> >
-> > for depth in $(seq 10 30)
-> > do
-> >         dirs=$(for i in $(seq 1 $depth) ; do printf 'dir/' ; done)
-> >         rm -rf dir
-> >         mkdir -p $dirs
-> >         >$dirs/untracked-file
-> >         /usr/bin/time --format="$depth: %e" git status --ignored >/dev/null
-> > done
-> >
-> > 10: 0.01
-> > 11: 0.03
-> > 12: 0.05
-> > 13: 0.11
-> > 14: 0.23
-> > 15: 0.47
-> > 16: 0.97
-> > 17: 1.97
-> > 18: 3.88
-> > 19: 7.85
-> > 20: 16.29
-> > 21: 32.92
-> > 22: 76.24
-> 
-> Wow.
-> 
-> Really nice testcase, though, thanks.
-> 
-> > Beautifully quadratic, isn't it? :)
-> 
-> I think you mean exponential (in particular 2^n rather than n^2).
+These patches correspond to a first part of patch series 
+of Outreachy project "Finish converting `git bisect` from shell to C" 
+started by the interns Pranit Bauva and Tanushree Tumane
+(https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
+continued by Miriam Rubio.
 
-Ouch, yeah, indeed.
+This first part are formed of preparatory/clean-up patches and all 
+`bisect.c` libification work. 
 
-> > Unless I messed up my numbers, with a depth of 120 directories it
-> > would take over 6*10^23 years to complete... so yeah, it does qualify
-> > as indefinitely.
-> 
-> No comment about how people today are spoiled and addicted to instant
-> gratification?  I mean, can't folks just be a little patient?  ;-)
+These patch series emails were generated from:
+https://gitlab.com/mirucam/git/commits/git-bisect-work-part1
 
-Nope.  Notice how my shell loop above goes to 30, but the results only
-to 22 :)
+It has to be noted that in this version 2 nothing has been done about a 
+reviewer suggestion of using enums for error codes, because there was no
+consensus about using them by the reviewers.
 
-> > This slowdown was caused by commit df5bcdf83a (dir: recurse into
-> > untracked dirs for ignored files, 2017-05-18), which was part of a
-> > patch series to fix 'git clean -d' deleting untracked directories even
-> > if they contained ignored files.
-> >
-> > Cc'ing Samuel, author of that commit, and Elijah, who had quite some
-> > fun with 'dir.c' recently.
-> 
-> Heh, yes, what "fun" it was.
-> 
-> Anyway, after digging around for quite a bit today... that commit
-> added calling read_directory_recursive() directly from itself for
-> certain untracked paths.  This means that read_directory_recursive()
-> (which I'll abbreviate to r_d_r()), when we're dealing with certain
-> untracked paths:
-> 
->   * Calls treat_path() -> treat_one_path() -> treat_directory() -> r_d_r()
->   * Calls r_d_r() directly as well
-> 
-> So, from the toplevel directory, r_d_r() will call itself twice on the
-> next directory down.  For each of those, it'll call r_d_r() twice on
-> the second directory down.  From each of those, it'll call r_d_r()
-> twice on the third directory in the hierarchy and so on until we have
-> 2^n calls to r_d_r() for the nth level deep directory.
+--- Changes since v1 Finish converting git bisect to C part 1 patch series ---
 
-Got it, thanks.
+General changes
+---------------
 
-> Trying to back out the underlying problem, I _think_ the cause behind
-> all this is that r_d_r() and friends all use the path_treatment enum,
-> which says that the treatment of any path has to be one of those four
-> types. The dichotomy between path_untracked and path_recurse in
-> particular means the system has no way to mark that something should
-> be both marked as untracked and recursed into, yet we definitely need
-> to have some directories marked as untracked and we also need to
-> recurse into them.  This, I think led to Samuel's attempt to
-> workaround that dichotomy by having the code in r_d_r() check for
-> certain path_untracked cases which should also be recursed into.  I
-> think adding another type to the enum and shifting the logic elsewhere
-> might enable us to both simplify the logic and avoid this expensive
-> exponential behavior, but I haven't gotten it working yet.  We'll see
-> if my patch goes anywhere, or if it's just another dead-end among
-> many.
+* Previous patch series version has been split in smaller groups 
+in order to facilitate revision and integration.
+* Rebase on master branch: c7a6207591 (Sync with maint, 2020-01-27).
+* Improve commit messages.
 
-I was wondering whether it would make sense to give the enum contants
-power-of-two values, so we could say 'path_recurse | path_untracked'.
-But while this particular combination makes sense, others, at least to
-my superficial understanding, not at all (e.g. 'path_recurse |
-path_exclude').
+Specific changes
+----------------
+
+[6/11] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` 
+and its dependents
+    
+* Remove redundant sentences in commit message.
+* Use `if (res < 0)` instead of `if (res)`.
+
+[8/11] bisect: libify `check_merge_bases` and its dependents
+
+* Remove redundant sentence in commit message.
+
+--
+
+[9/11] bisect: libify `check_good_are_ancestors_of_bad` and its 
+dependents
+
+* Remove redundant sentences in commit message.
+* Return in `if (!current_bad_oid)` condition.
+
+--
+
+[10/11] bisect: libify `handle_bad_merge_base` and its dependents
+
+* Remove redundant sentence in commit message.
+
+--
+
+[11/11] bisect: libify `bisect_next_all`
+
+* Remove redundant sentence in commit message.
+* Add return codes explanations in `bisect.h`.
+
+--
+
+Miriam Rubio (2):
+  bisect--helper: convert `vocab_*` char pointers to char arrays
+  bisect: use the standard 'if (!var)' way to check for 0
+
+Pranit Bauva (7):
+  run-command: make `exists_in_PATH()` non-static
+  bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and
+    its dependents
+  bisect: libify `bisect_checkout`
+  bisect: libify `check_merge_bases` and its dependents
+  bisect: libify `check_good_are_ancestors_of_bad` and its dependents
+  bisect: libify `handle_bad_merge_base` and its dependents
+  bisect: libify `bisect_next_all`
+
+Tanushree Tumane (2):
+  bisect--helper: change `retval` to `res`
+  bisect--helper: introduce new `decide_next()` function
+
+ bisect.c                 | 136 +++++++++++++++++++++++++++------------
+ bisect.h                 |  23 +++++++
+ builtin/bisect--helper.c | 118 +++++++++++++++++----------------
+ run-command.c            |   2 +-
+ run-command.h            |  11 ++++
+ 5 files changed, 193 insertions(+), 97 deletions(-)
+
+-- 
+2.21.1 (Apple Git-122.3)
 
