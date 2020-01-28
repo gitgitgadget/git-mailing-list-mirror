@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB3D8C2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA713C33CB3
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B6E2020716
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 832D220716
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:26:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FyLqBmQa"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bsNuP9zd"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbgA1S0v (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S1726940AbgA1S0v (ORCPT <rfc822;git@archiver.kernel.org>);
         Tue, 28 Jan 2020 13:26:51 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46437 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbgA1S0t (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 13:26:49 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z7so17177351wrl.13
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 10:26:48 -0800 (PST)
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35986 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbgA1S0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 13:26:50 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p17so3673600wma.1
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 10:26:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KDhiP/nTsJtYltovU0qLNJhnLe1wUUQjqGoJo1gXOog=;
-        b=FyLqBmQaP8DukXvPt0x5os6o/PdYnQ4LLeJVjOvrg0NtfzFlZmWGQEnJNEjHOXELG7
-         kfLFy1ndsSjOtnQJwCmIH9zCLO3CVBn564Mqi8XZqeSGBqYu9yszfaM0zG9oAeHbCJKh
-         l5iaW+/OxEeqBJIayiX6HIc7Cjm1xGt5J01qLX3yJO/s8gi8QEdq6FLScZIYg57e5QtS
-         zvE2Jzvhgc+L4Ygte4H2rfFNFz+MA3HRLOBjsUsh5LwFyl3xxbL3iytY96feVUTYjHiM
-         BCEClHfNOaixIHgQiVLBVmuRaU25gL6A1qTCapWo4e8c7Qypl+RDCxMWBVqZAAySRx7+
-         dDGQ==
+        bh=pl9kK0IVJdtZMHXu52/f8Sm0g3stqkcV9VxPh4NkuJo=;
+        b=bsNuP9zd9zk4+cpClSH9mpG6UrmlxBUaMdLDXourUztDzE+XtAUO5hWq4Kq2qaG4Rf
+         pj5d8DzIq5ZLHK/ZnrdwdrdWDZobj6C3FKq6ZPKQjhEKwt9hKPm1hhGOqCihKj/yS1HH
+         4xRvtoRUZiKUdpBcbAnz9J8hM7CYomXVRqvke5oqxA3MfED0swda57viG1/9ZU+fxyvt
+         5iGZNdUkCFDeq/rP0k/FCkRRyDrBXE+lna6Ft9xVGmTgKKcQjxjRTzkPzwQV6xeXEnEX
+         vxH8w48effC1DysGhCDTY1BhYyUH1VgSJI3XW1F1JV1i7xTvOCtCbqcns4qfGrZmbfQk
+         /GMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KDhiP/nTsJtYltovU0qLNJhnLe1wUUQjqGoJo1gXOog=;
-        b=nm3YugBrjN9vLxO5quL6UM0+KqgPPHdd3o3ejnq1rrSEbhFJ+/lraEwPRpbgZAlFR9
-         a6KnrLvzDMFxr7FFRzzh2hcaT3uW+WM93eiqDLtgePthyYgLSLwBdvmS1al+NwYtD/WQ
-         gyD9Lr6h7kZHl2/FNwi3XH9Ah0MKgFiCglFCJh9Z6oYXtx/ye5pz06D3p2Mts/YWzVTa
-         xiLRObtc4EIepJifoCa8hJy40CdV1Sn33UUa38xs+nVwW6t97KqppIT8eTSQM4Nwi+r2
-         yqdUpbYdcxHDUkQtjxrqxIA7mEXPe769L/40uLkUudOzSXZrEwwf6j/9mJ9EJSNPml1R
-         pekg==
-X-Gm-Message-State: APjAAAXxDAAdHT7qtU/OwmxwUrVdurF2aCH4kza5G9YV9XHr4BFf0+Ye
-        J1nscveA5a3pDgHGfypmalnIfpRQ
-X-Google-Smtp-Source: APXvYqzrV8gr+E0y+emmzs0oKtTaGs7R8eZleQyFAn3D1TgUZpoi6cTTtH3FlIdKjpMeeAf8aybj0g==
-X-Received: by 2002:a5d:56ca:: with SMTP id m10mr31258993wrw.313.1580236007908;
-        Tue, 28 Jan 2020 10:26:47 -0800 (PST)
+        bh=pl9kK0IVJdtZMHXu52/f8Sm0g3stqkcV9VxPh4NkuJo=;
+        b=AHivT9yYPT6AUOnVZUs44OcOzx9lupd8E/wgSkYVbVo5/ObwxGWIlIaP4g06g9hXr8
+         XwI8RViwui3GoiS3G+Bjsd2fFUHmkPW+FYDeomww8UuvDaiKR+4v9MSgLBsOBp0uoqD1
+         pLbYBHRX+dFllAdM8B/z7S4gH0pY8y5fKn2Fs8MoGvwYlaUs8vrr7cgLWC8PMvfcvZTe
+         BaJ8vamJZrD18NHh42GLxWYrhLtqTMByhWqv5Dm7U55bV+8K4g6JY5kxcdnFqTSvDEMJ
+         eN+48ZswQy6Gj9j2xG6tCIp1QOM8n7j1JYUNR7NSUEanoQXgYrGpaVqGFjqxKjXjXVl+
+         Cv1Q==
+X-Gm-Message-State: APjAAAWRIJ9yzoIIUCmAjDTpZPwpQcWM4Wk8OdfiHz/ith5uEjiWx3+G
+        IIdpd9m21yIk2/7poeepFLiko22F
+X-Google-Smtp-Source: APXvYqz8Zc1zsNqSLJ3Ichp+C5an9L1CxMoTXH3TlDXqldkqFSv/41DfuXm4fI7GF07Qsk8INyY3lQ==
+X-Received: by 2002:a05:600c:2409:: with SMTP id 9mr6388758wmp.109.1580236008582;
+        Tue, 28 Jan 2020 10:26:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d10sm27127510wrw.64.2020.01.28.10.26.47
+        by smtp.gmail.com with ESMTPSA id n14sm4075092wmi.26.2020.01.28.10.26.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2020 10:26:47 -0800 (PST)
-Message-Id: <4991a51f6d5d840eaa3bb830e68f1530c2ee08e4.1580236003.git.gitgitgadget@gmail.com>
+        Tue, 28 Jan 2020 10:26:48 -0800 (PST)
+Message-Id: <ae78c3069b08557e3acc544601c71ee932ace19d.1580236003.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
 References: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
         <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jan 2020 18:26:35 +0000
-Subject: [PATCH v3 04/12] clone: fix --sparse option with URLs
+From:   "Jeff King via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 28 Jan 2020 18:26:36 +0000
+Subject: [PATCH v3 05/12] sparse-checkout: fix documentation typo for
+ core.sparseCheckoutCone
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,67 +69,33 @@ MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     me@ttaylorr.com, peff@peff.net, newren@gmail.com,
         Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Jeff King <peff@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Jeff King <peff@peff.net>
 
-The --sparse option was added to the clone builtin in d89f09c (clone:
-add --sparse mode, 2019-11-21) and was tested with a local path clone
-in t1091-sparse-checkout-builtin.sh. However, due to a difference in
-how local paths are handled versus URLs, this mechanism does not work
-with URLs.
-
-Modify the test to use a "file://" URL, which would output this error
-before the code change:
-
-  Cloning into 'clone'...
-  fatal: cannot change to 'file://.../repo': No such file or directory
-  error: failed to initialize sparse-checkout
-
-These errors are due to using a "-C <path>" option to call 'git -C
-<path> sparse-checkout init' but the URL is being given instead of
-the target directory.
-
-Update that target directory to evaluate this correctly. I have also
-manually tested that https:// URLs are handled correctly as well.
-
-Acked-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/clone.c                    | 2 +-
- t/t1091-sparse-checkout-builtin.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-sparse-checkout.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 4348d962c9..2caefc44fb 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1130,7 +1130,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	if (option_required_reference.nr || option_optional_reference.nr)
- 		setup_reference();
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 3b341cf0fc..4834fb434d 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -106,7 +106,7 @@ The full pattern set allows for arbitrary pattern matches and complicated
+ inclusion/exclusion rules. These can result in O(N*M) pattern matches when
+ updating the index, where N is the number of patterns and M is the number
+ of paths in the index. To combat this performance issue, a more restricted
+-pattern set is allowed when `core.spareCheckoutCone` is enabled.
++pattern set is allowed when `core.sparseCheckoutCone` is enabled.
  
--	if (option_sparse_checkout && git_sparse_checkout_init(repo))
-+	if (option_sparse_checkout && git_sparse_checkout_init(dir))
- 		return 1;
+ The accepted patterns in the cone pattern set are:
  
- 	remote = remote_get(option_origin);
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 43d1f7520c..cf4a595c86 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -90,7 +90,7 @@ test_expect_success 'init with existing sparse-checkout' '
- '
- 
- test_expect_success 'clone --sparse' '
--	git clone --sparse repo clone &&
-+	git clone --sparse "file://$(pwd)/repo" clone &&
- 	git -C clone sparse-checkout list >actual &&
- 	cat >expect <<-\EOF &&
- 	/*
 -- 
 gitgitgadget
 
