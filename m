@@ -2,188 +2,102 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85C7EC33CB2
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECE91C33CB3
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:29:03 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5DF0524683
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:27:04 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C766120716
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 18:29:03 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="goKYHhmq"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rJ1myVzW"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727074AbgA1S1B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 13:27:01 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37693 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726276AbgA1S0x (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 13:26:53 -0500
-Received: by mail-wr1-f68.google.com with SMTP id w15so17254551wru.4
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 10:26:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=DxrJYJpH3S8elWu+k2UNvr3+ZBuJrRhBZVScRnz59WY=;
-        b=goKYHhmqBZAEg4PzClUy3ENBUUlz24oEvpiq8a4WX7AMTvMFame5lVnWUjgz3P1YeS
-         JRpCQpmtcXsxVTFmzVQyOKX+ivQ/kIIUC9AuGYhjIFb7IisEoXUP3oxjw1g3F1x3Qgk2
-         lKoW61vS/IEjXFz7JIaAdn89hsVpS5oWyyLsLWawC8npdsar9BM8nrDyQbZRoxvWAk4Y
-         6aa6vBodtloXfiyTmmmFYExZjCA9F7r9PJC0jfty/+3zXGoNsKGsjFSmAzpC3KPLMlcw
-         BB0cmmzx1BL972YIPEnobcQybc7jcfO403fjcvm1hYbUfSkRVC6EZl0VgUwIGDNEuzXl
-         nENQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=DxrJYJpH3S8elWu+k2UNvr3+ZBuJrRhBZVScRnz59WY=;
-        b=f5RnrXnxcG6OKMQthSxvwCFi3VQ/Olwlsh8uxj46CG5m5FLVXo5Nzn/DiEoZTvTJb5
-         6SOGajDVneWNHbdM4KhAFSeLM66M8aOZQfqxLs26ySgJwoTVYYfuBy6zRvaYgNC3Zkh7
-         iLgOawLO5Z18M94Oelfz/2rh6/q/cdkrV80LHi5KYLA5/NzuUY7pFsQLmAs/sE6xWZ//
-         3sVm99obWxa+DHnPiSmHTGyUnh2fEA571EOzvfPHr17wUE+XOjwpuX237caOw3lWBsxY
-         DaPCOrrbch48v3nTGeCaZPBfbiJDmXaRGtTInplsa0E6MwvO1LmwsWnapq2Jk7D1UWId
-         mj4w==
-X-Gm-Message-State: APjAAAWmTQV120O9WDe87DCrgzuXh1Q1ClmOZJQk7Rw+LDD8Wn7JMG6K
-        RppRS4OR/wividfn/QSCC1zBqHee
-X-Google-Smtp-Source: APXvYqykIngmJj6szF93O9RhyZsviXSzu0M/YJxYPRpNGokwJcPtLdTi59/k7oGrwOTvCG2OP16lmQ==
-X-Received: by 2002:adf:ce87:: with SMTP id r7mr29812661wrn.245.1580236011390;
-        Tue, 28 Jan 2020 10:26:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c9sm4288635wme.41.2020.01.28.10.26.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2020 10:26:51 -0800 (PST)
-Message-Id: <9ea69e90694e53842acd68d3ac85c9a00c4bd343.1580236003.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
-References: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
-        <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 28 Jan 2020 18:26:40 +0000
-Subject: [PATCH v3 09/12] sparse-checkout: properly match escaped characters
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726682AbgA1S3D (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 13:29:03 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:51966 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbgA1S3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 13:29:02 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8719BE8FD;
+        Tue, 28 Jan 2020 13:29:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=pG3ru6EXTYDrRoLmOqNN8HvaMZ4=; b=rJ1myV
+        zWqdlqlnFW7rW1M/Zu8NMmP7ohyhjjErFSGjLHUc5fZSOk0ozpfsB6ynumTeiWyE
+        QtfMPeP+MJ8Z/v2MEztR6QOjuj52GWXB6tItqM2WTvS6amotngndzdiySz2hr4G/
+        R4GRfjMKIdpgGHyuvxAvBQO9k1eKhyEf8VlJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=W4laipNOqD3byze79pnlCca6/dtsR+Yb
+        jhXB4vCpyZDpkYFqkuM4ARjbV706xtZ+rYEPzJbMwtA0HiB6aY+8fPsA881tn2wU
+        BUld+ElUD+IADEE+1BXmqTKdT5YBY/oaDLpSZUFMuQVAeXCWhLx6PzyLEQp5boTV
+        NCQQsQq+jHw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B1C4ABE8FC;
+        Tue, 28 Jan 2020 13:29:00 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DAF45BE8F8;
+        Tue, 28 Jan 2020 13:28:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     <git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 15/22] t5515: make test hash independent
+References: <20200125230035.136348-1-sandals@crustytoothpaste.net>
+        <20200125230035.136348-16-sandals@crustytoothpaste.net>
+Date:   Tue, 28 Jan 2020 10:28:55 -0800
+In-Reply-To: <20200125230035.136348-16-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Sat, 25 Jan 2020 23:00:21 +0000")
+Message-ID: <xmqqk15b8mfs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     me@ttaylorr.com, peff@peff.net, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0C1E6D66-41FC-11EA-A617-8D86F504CC47-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-In cone mode, the sparse-checkout feature uses hashset containment
-queries to match paths. Make this algorithm respect escaped asterisk
-(*) and backslash (\) characters.
+> +convert_expected () {
+> +	file="$1" &&
+> +	for i in one three_file master master2 one_tree three two two2 three2
+> +	do
+> +		sed -e "s/$(test_oid --hash=sha1 "$i")/$(test_oid "$i")/g" \
+> +			"$file" >"$file.tmp" &&
+> +		mv "$file.tmp" "$file"
+> +	done
+> +}
 
-Create dup_and_filter_pattern() method to convert a pattern by
-removing escape characters and dropping an optional "/*" at the end.
-This method is available in dir.h as we will use it in
-builtin/sparse-checkout.c in a later change.
+Perhaps we can avoid rewriting the same file that many times, by
+feeding the mapping to a single invocation of sed?  E.g.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- dir.c                              | 31 +++++++++++++++++++++++++++---
- t/t1091-sparse-checkout-builtin.sh | 22 +++++++++++++++++----
- 2 files changed, 46 insertions(+), 7 deletions(-)
+	sedScript=
+	for i in one three_file master master2 one_tree three two two2 three2
+	do
+		i="s/$(test_oid --hash=sha1 $i/$(test_oid $i)/g"
+		sedScript=$sedScript${sedScript:+;}$i"
+	done &&
+	sed -e "$sedScript" "$file" >"$file.new" &&
+	mv "$file.new" "$file"
 
-diff --git a/dir.c b/dir.c
-index 7cb78c8b87..579f274d13 100644
---- a/dir.c
-+++ b/dir.c
-@@ -630,6 +630,32 @@ int pl_hashmap_cmp(const void *unused_cmp_data,
- 	return strncmp(ee1->pattern, ee2->pattern, min_len);
- }
- 
-+static char *dup_and_filter_pattern(const char *pattern)
-+{
-+	char *set, *read;
-+	char *result = xstrdup(pattern);
-+
-+	set = result;
-+	read = result;
-+
-+	while (*read) {
-+		/* skip escape characters (once) */
-+		if (*read == '\\')
-+			read++;
-+
-+		*set = *read;
-+
-+		set++;
-+		read++;
-+	}
-+	*set = 0;
-+
-+	if (*(read - 2) == '/' && *(read - 1) == '*')
-+		*(read - 2) = 0;
-+
-+	return result;
-+}
-+
- static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern *given)
- {
- 	struct pattern_entry *translated;
-@@ -695,8 +721,7 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
- 			goto clear_hashmaps;
- 		}
- 
--		truncated = xstrdup(given->pattern);
--		truncated[given->patternlen - 2] = 0;
-+		truncated = dup_and_filter_pattern(given->pattern);
- 
- 		translated = xmalloc(sizeof(struct pattern_entry));
- 		translated->pattern = truncated;
-@@ -730,7 +755,7 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
- 
- 	translated = xmalloc(sizeof(struct pattern_entry));
- 
--	translated->pattern = xstrdup(given->pattern);
-+	translated->pattern = dup_and_filter_pattern(given->pattern);
- 	translated->patternlen = given->patternlen;
- 	hashmap_entry_init(&translated->ent,
- 			   ignore_case ?
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 470900f6f4..0a21a5e15d 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -366,13 +366,27 @@ test_expect_success 'pattern-checks: starting "*"' '
- 	check_read_tree_errors repo "a deep" "disabling cone pattern matching"
- '
- 
--test_expect_success 'pattern-checks: escaped "*"' '
--	cat >repo/.git/info/sparse-checkout <<-\EOF &&
-+test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
-+	git clone repo escaped &&
-+	TREEOID=$(git -C escaped rev-parse HEAD:folder1) &&
-+	NEWTREE=$(git -C escaped mktree <<-EOF
-+	$(git -C escaped ls-tree HEAD)
-+	040000 tree $TREEOID	zbad\\dir
-+	040000 tree $TREEOID	zdoes*exist
-+	EOF
-+	) &&
-+	COMMIT=$(git -C escaped commit-tree $NEWTREE -p HEAD) &&
-+	git -C escaped reset --hard $COMMIT &&
-+	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" &&
-+	git -C escaped sparse-checkout init --cone &&
-+	cat >escaped/.git/info/sparse-checkout <<-\EOF &&
- 	/*
- 	!/*/
--	/does\*not\*exist/
-+	/zbad\\dir/
-+	/zdoes\*not\*exist/
-+	/zdoes\*exist/
- 	EOF
--	check_read_tree_errors repo "a" ""
-+	check_read_tree_errors escaped "a zbad\\dir zdoes*exist"
- '
- 
- test_done
--- 
-gitgitgadget
+If somebody's "sed" does not like multiple command concatenated with
+";", we can take advantage of the fact that we are just replacing
+hexadecimal string without anything funny and go eval, e.g.
+
+	sedCmd="sed"
+	for i in one three_file master master2 one_tree three two two2 three2
+	do
+		sedCmd="$sedCmd -e s/$(test_oid --hash=sha1 $i/$(test_oid $i)/g"
+	done &&
+	eval "$sedCmd" "$file" >"$file.new" &&
+	mv "$file.new" "$file"
 
