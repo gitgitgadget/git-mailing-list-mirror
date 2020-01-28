@@ -2,107 +2,252 @@ Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BFD47C33CB3
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 05:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6120DC33CB3
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 07:31:04 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8AA022173E
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 05:21:56 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnY/nkRn"
+	by mail.kernel.org (Postfix) with ESMTP id 3899420661
+	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 07:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725797AbgA1FVz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 00:21:55 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:40732 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725283AbgA1FVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 00:21:55 -0500
-Received: by mail-oi1-f174.google.com with SMTP id a142so7577119oii.7
-        for <git@vger.kernel.org>; Mon, 27 Jan 2020 21:21:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Nv0YUUrW+r8TLGCmCVkQW0w8ZX8fF4PNrEawxoWwx4A=;
-        b=hnY/nkRnZSXPblnqorwixzsnL3PpWQMvQAR1ypgJujnmemMOHj+/ZNt2lbAYSvSMNT
-         Hm+DZUKw8TdrRZTG72NcT/4qmC+afDDqeZiXveGCoaaqq7VzZ6uV33LyAkGTxcZBGcuS
-         AqWf+Vc+pJcSyRmRftDyhq9drJp8pnCJnIKFGnzALGIxKkiRGLMvQZ7eGYJZey7dZtMt
-         /iPhkLWU7zEcipGikoUWmFb2NIVymQnC80Vwv8qjOO0i7iCnk75dngkwqLGkBNX69pjc
-         fHCaCdJG0o1n8f33PP3FjveiuKGBhBXSiwq3fFeGwNox+4rcUWkk0WPswvRRDhYtTa3j
-         FbCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Nv0YUUrW+r8TLGCmCVkQW0w8ZX8fF4PNrEawxoWwx4A=;
-        b=W9gpe8j0OZb1lRZeP4Nk4gN873sUvjIkXJIfbZ4zXrBOkP0F5JJl/ZYgfvCFWn2krG
-         On1TfvVhFSUQKMuKNfFyQ5WBfvVsBpghATPQ/PuDUMuzHXwUP80osNoPT1L0N45wXqU8
-         3BKOYkfDY2K3DbHxcE9KnqB7z+CWnzp5o+UtwRXDtlE4hpTC4RsRMPUEkMUtG0Wxdb2F
-         uFeQlSowYa/3KFrkzwgew37uF3Xi3UpTYlU6d6YT+PrzoK41WHslk3KE3ZZC0czAYRT/
-         sCrJF0SOs3dRGUcbeMME85Ya344bOr6OcamtRShC6On2w6f/g7X+SHCKBV/1m03RA6ts
-         oLLg==
-X-Gm-Message-State: APjAAAWKTtrYxa1ZvvWI75hJJvK/br/79CEMAp6ml/hPjRCk/kE3SmXI
-        174IX4bzMTi8l2Z+xrn7+Wb2cqP9ZYylp9ReLpBQ4Q==
-X-Google-Smtp-Source: APXvYqwaU0sTGwQSAI4I7coBj+mpGPikvPqqlaOM2+H1OMisobBCJhltYFmnRCi3oMnM5gGu0abWHMzWUignYOr1FWc=
-X-Received: by 2002:aca:1b01:: with SMTP id b1mr1693343oib.6.1580188914081;
- Mon, 27 Jan 2020 21:21:54 -0800 (PST)
+        id S1725844AbgA1HbD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 02:31:03 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46044 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725776AbgA1HbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 02:31:03 -0500
+Received: (qmail 7422 invoked by uid 109); 28 Jan 2020 07:31:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 Jan 2020 07:31:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5062 invoked by uid 111); 28 Jan 2020 07:38:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 28 Jan 2020 02:38:32 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 28 Jan 2020 02:31:00 -0500
+From:   Jeff King <peff@peff.net>
+To:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+Message-ID: <20200128073100.GA563058@coredump.intra.peff.net>
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
+ <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
+ <721201269df47dc2e406e4091ab6b18a4a59b65f.1580134944.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <062301d5d0bc$c3e17760$4ba46620$@Frontier.com> <d4056731-c13b-c89d-dfd2-e6235e29fed6@gmail.com>
- <405d83bd-cd50-49c5-a068-6d3ce102f669@gmail.com> <CABPp-BFB3pN1arWb9Acj7La1aX7j=axANnSWV8f7SmW_KuqD0g@mail.gmail.com>
- <de300697-baba-62a6-ea4c-c5bd472954c2@gmail.com>
-In-Reply-To: <de300697-baba-62a6-ea4c-c5bd472954c2@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 27 Jan 2020 21:21:41 -0800
-Message-ID: <CABPp-BHRAA71LmfYb61N+qAgwhtii7TSEVJksiAGnnO-4bk2dQ@mail.gmail.com>
-Subject: Re: Sparse Checkout Trouble (2.5.0)
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     JunkYardMail1 <JunkYardMail1@frontier.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <721201269df47dc2e406e4091ab6b18a4a59b65f.1580134944.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 26, 2020 at 6:09 AM Derrick Stolee <stolee@gmail.com> wrote:
->
-> On 1/25/2020 3:59 PM, Elijah Newren wrote:
-> > On Fri, Jan 24, 2020 at 7:41 AM Derrick Stolee <stolee@gmail.com> wrote:
-> >> I'm CC'ing Elijah because he also made changes to dir.c, and
-> >> perhaps he has some idea of what's going on.
-> >
-> > If you think it might be related to the dir.c changes, I can take a
-> > look.  I don't have any immediate ideas off the top of my head.
->
-> The only thing I can think of is that these paths are already
-> marked as sparse, but something is requiring us to test if the
-> path can be created with the filesystem. I'll try to debug
-> more into exactly where that is. It's telling that this happens
-> both in cone mode and without.
+On Mon, Jan 27, 2020 at 02:22:24PM +0000, Han-Wen Nienhuys via GitGitGadget wrote:
 
-Yeah, I'll take a look.  The exponentially slow 'status --ignored'
-report is forcing me to look at dir.c again anyway, though it's also
-delaying me from getting a chance to look at this particular report.
+> [...]
 
-> > However, since I'm really suffering with "git read-tree -mu HEAD"
-> > being the mechanism for updating sparsity (for reasons independent of
-> > the issue being discussed here), I've been tempted to dig into that
-> > anyway to write a replacement without the nasty side-effects.  I'll
-> > take a look early next week and see if I can spot anything.
->
-> If by "nasty side-effects" you mean "overwrites staged changes, even
-> if in the sparse set before and after" then I would welcome such a
-> change. Otherwise, it will fall to me, and this is far outside of
-> my expertise. Of course, it is something I should learn, but I can
-> learn that during code review, too. ;)
+I'll try to add my 2 cents to all of the XXX spots you flagged.
 
-Yep, that's exactly what I mean.  It'd be nice if Duy were still
-around to bug, but I've touched unpack-trees a few times so I might be
-able to find my way around.  I'll try to take a stab at it.
+> @@ -1839,10 +1839,22 @@ static struct ref_store *lookup_ref_store_map(struct hashmap *map,
+>  static struct ref_store *ref_store_init(const char *gitdir,
+>  					unsigned int flags)
+>  {
+> -	const char *be_name = "files";
+> -	struct ref_storage_be *be = find_ref_storage_backend(be_name);
+> +	struct strbuf refs_path = STRBUF_INIT;
+> +
+> +        /* XXX this should probably come from a git config setting and not
+> +           default to reftable. */
+> +	const char *be_name = "reftable";
 
-> Thanks,
-> -Stolee
+I think the scheme here needs to be something like:
+
+  - "struct repository" gets a new "ref_format" field
+
+  - setup.c:check_repo_format() learns about an extensions.refFormat
+    config key, which we use to set repo->ref_format
+
+  - init/clone should take a command-line option for the ref format of
+    the new repository. Anybody choosing reftables would want to set
+    core.repositoryformatversion to "1" and set the extensions.refFormat
+    key.
+
+  - likewise, there should be a config setting to choose the default ref
+    format. It would obviously stay at "files" for now, but we'd
+    eventually perhaps flip the default to "reftable".
+
+Some thoughts on compatibility:
+
+The idea of the config changes is that older versions of Git will either
+complain about repositoryformatversion (if very old), or will complain
+that they don't know about extensions.refFormat. But the changes you
+made in patch 1 indicate that existing versions of Git won't consider it
+to be a Git repository at all!
+
+I think this is slightly non-ideal, in that we'd continue walking up the
+tree looking for a Git repo. And either:
+
+  - we'd find one, which would be confusing and possibly wrong
+
+  - we wouldn't, in which case the error would be something like "no git
+    repository", and not "your git repository is too new"
+
+So it would be really nice if we continued to have a HEAD file (just
+with some sentinel value in it) and a refs/ directory, so that existing
+versions of Git realize "there's a repository here, but it's too new for
+me".
+
+There's a slight downside in that tools which _aren't_ careful about
+repositoryformatversion might try to operate on the repository, writing
+into refs/ or whatever. But such tools are broken, and I'm not sure we
+should be catering to them (besides which, the packed-refs ship sailed
+long ago, so they're already potentially dangerous).
+
+> +/* XXX which ordering are these? Newest or oldest first? */
+>  int for_each_reflog_ent(const char *refname, each_reflog_ent_fn fn, void *cb_data);
+>  int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn, void *cb_data);
+
+The top one is chronological order (i.e., reading the file from start to
+finish), and the latter is reverse-chronological (seeking backwards in
+the file).
+
+> +static struct ref_iterator *
+> +reftable_ref_iterator_begin(struct ref_store *ref_store, const char *prefix,
+> +			    unsigned int flags)
+> +{
+> +	struct reftable_ref_store *refs =
+> +		(struct reftable_ref_store *)ref_store;
+> +	struct reftable_iterator *ri = xcalloc(1, sizeof(*ri));
+> +	struct merged_table *mt = NULL;
+> +	int err = 0;
+> +	if (refs->err) {
+> +		/* how to propagate errors? */
+> +		return NULL;
+> +	}
+> +
+> +	mt = stack_merged_table(refs->stack);
+> +
+> +	/* XXX something with flags? */
+
+I think the flags here are DO_FOR_EACH_*. You might need to consider
+INCLUDE_BROKEN here (or it might be dealt with at a layer above).
+
+There's also PER_WORKTREE_ONLY; I think you'd need to check ref_type()
+there, like the files backend does.
+
+> +	err = merged_table_seek_ref(mt, &ri->iter, prefix);
+> +	/* XXX what to do with err? */
+
+Hmm, I don't think you can return an error from iterator_begin(). It
+would probably be OK to record the error in your local struct, and then
+later return ITER_ERROR from iterator_advance().
+
+I notice that the more-recent dir_iterator_begin() returns NULL in case
+of an error, but looking at the callers of the ref iterators, they don't
+seem to be ready to handle NULL.
+
+> +static int write_transaction_table(struct writer *writer, void *arg)
+> +{
+> +	struct ref_transaction *transaction = (struct ref_transaction *)arg;
+> +	struct reftable_ref_store *refs =
+> +		(struct reftable_ref_store *)transaction->ref_store;
+> +	uint64_t ts = stack_next_update_index(refs->stack);
+> +	int err = 0;
+> +	/* XXX - are we allowed to mutate the input data? */
+> +	qsort(transaction->updates, transaction->nr,
+> +	      sizeof(struct ref_update *), ref_update_cmp);
+
+I don't offhand know of anything that would break, but it's probably a
+bad idea to do so. If you need a sorted view, can you make an auxiliary
+array-of-pointers? Also, the QSORT() macro is a little shorter and has
+some extra checks.
+
+> +	for (int i = 0; i < transaction->nr; i++) {
+> +		struct ref_update *u = transaction->updates[i];
+> +		if (u->flags & REF_HAVE_NEW) {
+> +			struct object_id out_oid = {};
+> +			int out_flags = 0;
+> +			/* XXX who owns the memory here? */
+> +			const char *resolved = refs_resolve_ref_unsafe(
+> +				transaction->ref_store, u->refname, 0, &out_oid,
+> +				&out_flags);
+
+In the "unsafe" version, the memory belongs to a static buffer inside
+the function. You shouldn't need to free it.
+
+> +static int
+> +reftable_reflog_ref_iterator_advance(struct ref_iterator *ref_iterator)
+> [...]
+> +		/* XXX const? */
+> +		memcpy(&ri->oid.hash, ri->log.new_hash, GIT_SHA1_RAWSZ);
+
+You'd want probably want to use hashcpy() here (or better yet, use
+"struct object_id" in ri->log, too, and then use oidcpy()).
+
+But that raises a question: how ready are reftables to handle non-sha1
+object ids? I see a lot of GIT_SHA1_RAWSZ, and I think the on-disk
+format actually has binary sha1s, right? In theory if those all become
+the_hash_algo->rawsz, then it might "Just Work" to read and write
+slightly larger entries.
+
+> +reftable_for_each_reflog_ent_newest_first(struct ref_store *ref_store,
+> +					  const char *refname,
+> +					  each_reflog_ent_fn fn, void *cb_data)
+> [...]
+> +			/* XXX committer = email? name? */
+> +			if (fn(&old_oid, &new_oid, log.name, log.time,
+> +			       log.tz_offset, log.message, cb_data)) {
+> +				err = -1;
+> +				break;
+> +			}
+
+The committer entry we pass back to each_reflog_ent_fn should be the
+full "Human Name <email@host>".
+
+> +static int reftable_reflog_expire(struct ref_store *ref_store,
+> +				  const char *refname,
+> +				  const struct object_id *oid,
+> +				  unsigned int flags,
+> +				  reflog_expiry_prepare_fn prepare_fn,
+> +				  reflog_expiry_should_prune_fn should_prune_fn,
+> +				  reflog_expiry_cleanup_fn cleanup_fn,
+> +				  void *policy_cb_data)
+> +{
+> +	/*
+> +	  XXX
+> +
+> +	  This doesn't fit with the reftable API. If we are expiring for space
+> +	  reasons, the expiry should be combined with a compaction, and there
+> +	  should be a policy that can be called for all refnames, not for a
+> +	  single ref name.
+> +
+> +	  If this is for cleaning up individual entries, we'll have to write
+> +	  extra data to create tombstones.
+> +	 */
+> +	return 0;
+> +}
+
+I agree that we'd generally want to expire and compact all entries at
+once. Unfortunately I think this per-ref interface is exposed by
+git-reflog. I.e., you can do "git reflog expire refs/heads/foo".
+
+Could we add an extra API call for "expire everything", and then:
+
+  - have refs/files-backend.c implement that by just iterating over all
+    of the refs and pruning them one by one
+
+  - have builtin/reflog.c trigger the "expire everything" API when it
+    sees "--all"
+
+  - teach refs/reftables-backend.c a crappy version of the per-ref
+    expiration, where it just inserts tombstones but doesn't do any
+    compaction. It doesn't have to be fast or produce a good output;
+    it's just for compatibility.
+
+    Alternatively, I'd be OK with die("sorry, reftables doesn't support
+    per-ref reflog expiration") as a first step.
+
+-Peff
