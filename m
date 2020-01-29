@@ -2,108 +2,131 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59B74C2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EC87BC2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:41:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2C8BB206D4
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:50:30 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B377020702
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:41:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Xv9WS2Qz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AzgDcsq8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727589AbgA2Tu2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 14:50:28 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:34852 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727563AbgA2Tu2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 14:50:28 -0500
-Received: by mail-wr1-f65.google.com with SMTP id g17so984232wro.2
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 11:50:26 -0800 (PST)
+        id S1726751AbgA2Ulz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 15:41:55 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33812 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbgA2Ulz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 15:41:55 -0500
+Received: by mail-pl1-f193.google.com with SMTP id j7so420023plt.1
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 12:41:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=aASxexP9Q0JZcTW/xsrzolqpUOp0m++GtVC1uS/MH9Y=;
-        b=Xv9WS2QzgwCorzo0dJais3PWnlFeheuubftgaKIj1sJD227YFXDp20TTGpUMC//6uV
-         R7nvAVZdtQUAASpNK60G2LDLp5iqwTLTWEQvP7IXMlC/H2VA3J/UAlWYc4mEDjQqDFuu
-         knJI04kiFtcnLx0fbG0uhtYGvdWAvsmRsqp71b1bGrBpXXnCJUmlgv1iqo0NwPKQypX8
-         Rc82Vk8IerIO/dWnkRUJOYQDAj5EqlhkdhsgbJhTeNZX6BpvHZ+7UvyFobl5a//cBdOa
-         PlLY6Q+9vfoEomeVR3/zvfh2xfsldFjcvkXyLJW16F8TbYixQp1OcoKYwtID0JVpv7yH
-         n4lw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ggCP2PCbM7g7HXZwwW9Yk1HPFP0sL2aCO0Js9kl1+M8=;
+        b=AzgDcsq8spPcFD6PNIDuuU+V3jpyi6P8UxqRgZbCXe/XSuIV8u5oWANykdobGrF7Wi
+         nYwm7dkQle29ydx47Ao6GiCyEnfN8ZzVGhwu8ZV1XVA0OfjnihoFBcvgVBEoeJd9bNDW
+         B3qukCeGdUKab66oJBtGWDqR2T9PzjYdut71uCVgdrpZmTjRHLABOOvhBxVc2FCsIIy4
+         I7pfiV+8iBbVJmw+loxhb2iua6ikN4KVHR0C5WseTSzpxBPnqSehKR00rp5RbR0ImQoE
+         DT4RyodAN5vTIXD8d+4Xyce0t4z+f6BMmD2Xh85OuQBnhfZVjUban1oujEAzDXlgOrvO
+         VZZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=aASxexP9Q0JZcTW/xsrzolqpUOp0m++GtVC1uS/MH9Y=;
-        b=GsuyO0/uJ6nblGHdWjmq6vkrOq58BMfEcR4ozMveoSTMBViNntL+Eq6rxwVQeFUS/v
-         zmlEXFpU99lbvJLJcv+b0O2sT3U09XfduciBB0r+ZIzE7ubXN8+0q7+bSg345JBHIwKt
-         D+nlFJkABh64q6xm2lDxH+0hwvPgTW3a/9Jv6jWQNoJTyMN1raIZX03Y8v1djrWsHO/5
-         qgNsVKhXhmIi7iilbUjMzQHDIXmUA5EFQeddcaIPW/M2xN0daK60puK+rX48vRiOr3ma
-         pD4hH8eqIzF34XeVeseZT9bQ6vJudwlmv3zqujLWez55ROTahkGFwGjbESxlyhOdmm6h
-         mOrw==
-X-Gm-Message-State: APjAAAWdx0OAei66CONPciPyuBh7a8LnK1IbEiPikXibSBMD8RAQRBc7
-        03on8mDabRodFY1Mzxr+/MBythZpF5nJTzxiBdqvxA==
-X-Google-Smtp-Source: APXvYqy8fuvcQ2fixtcjtMCxhK4IcznpHDgWW6NP1oHx4CbK9LOnDFPkvQcekne4dZfIiiy23dkYiHZbNxbpW91RfPI=
-X-Received: by 2002:a5d:4d8d:: with SMTP id b13mr526202wru.6.1580327425751;
- Wed, 29 Jan 2020 11:50:25 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ggCP2PCbM7g7HXZwwW9Yk1HPFP0sL2aCO0Js9kl1+M8=;
+        b=mcEZyMDyjuRc5TfHvDtjAXImaNqG0QNNzHFfgqzRQkWZynu/z6fdd/90zMH/QbUVth
+         gHSMsBoS73tKYCjwIID+G3XKPsfgfYKPpu0G1BjWAjpDayWlKX/L+89hlkP5gug1mkVd
+         gAZ4hnMNda4BaQ8X0VMX1qUVJEelWm4nwOuEa9jEgPe85nPOZwLcbjY405Q3KkBJwk8j
+         QpzaUBnGAuFIEUH3aOh24df+aYGo0NHFnzabW/dxpgamkVrwurzMxBVS9KpJ7sdgDINb
+         IP5c8uusJjbLQz6hchhJexNlPEb/Sn0baNbyMw1Z3pXRqv9SHpgwZbxRxJvJYeo0h/0U
+         KgBA==
+X-Gm-Message-State: APjAAAWwf8ixy3FWw+ZZaLGtCn6fRFqamJvFX4G8IVQ0lVYcFh96vtlZ
+        Jx4J3wN/wq6N5M4QWZLhP3U=
+X-Google-Smtp-Source: APXvYqwjyNXT4j6KmrfGv7uzMxwlOudZxfompEWWAKTc9H2bvPMiN+vjRcoc+ui2akB0jwUTEX3DAw==
+X-Received: by 2002:a17:90a:30a4:: with SMTP id h33mr1684650pjb.50.1580330514909;
+        Wed, 29 Jan 2020 12:41:54 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id s22sm3494334pji.30.2020.01.29.12.41.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2020 12:41:54 -0800 (PST)
+Date:   Wed, 29 Jan 2020 12:41:52 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] connected: verify promisor-ness of partial clone
+Message-ID: <20200129204152.GA17350@google.com>
+References: <cover.1578802317.git.jonathantanmy@google.com>
+ <6a4f704e475fe1669e63731333fce9ed09d17d0c.1578802317.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
- <9138554.c73hJVQVja@mfick-lnx> <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
- <2165647.H0RpPiDeFZ@mfick-lnx>
-In-Reply-To: <2165647.H0RpPiDeFZ@mfick-lnx>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 29 Jan 2020 20:50:13 +0100
-Message-ID: <CAFQ2z_OgGvX3mFLeWSvEqdfxupRuHN_eFgqENaCRHHpO364_xA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] Reftable support for git-core
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Jeff King <peff@peff.net>,
-        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6a4f704e475fe1669e63731333fce9ed09d17d0c.1578802317.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 8:47 PM Martin Fick <mfick@codeaurora.org> wrote:
+Jonathan Tan wrote:
+
+> Commit dfa33a298d ("clone: do faster object check for partial clones",
+> 2019-04-21) optimized the connectivity check done when cloning with
+> --filter to check only the existence of objects directly pointed to by
+> refs. But this is not sufficient: they also need to be promisor objects.
+> Make this check more robust by instead checking that these objects are
+> promisor objects, that is, they appear in a promisor pack.
 >
-> On Wednesday, January 29, 2020 7:40:50 PM MST Han-Wen Nienhuys wrote:
-> > > Today, some of these sound like shortcuts that are very likely taken =
-quite
-> > > a bit by cleanup and other maintenance scripts (not necessarily forma=
-l
-> > > git tools), and the impact of these shortcuts is likely low with the
-> > > current model. However, I suspect these tools/scripts could be seriou=
-sly
-> > > disruptive if we leave the refs dir around when using reftable,
-> >
-> > Maybe we can leave the refs dir, but have no heads/ directory inside,
-> > and make the whole thing read-only?
->
-> That might be a good enough safety. I guess the next question would be,  =
-would
-> it be OK for reftable to ignore and entries under the refs/ dir if they h=
-appen
-> to appear there somehow?
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  builtin/clone.c |  5 +++--
+>  connected.c     | 19 ++++++++++++++-----
+>  connected.h     | 11 ++++++-----
+>  3 files changed, 23 insertions(+), 12 deletions(-)
 
-I propose to ignore refs/ if it is read-only, and fail if it is r/w.
-We're not going to look over the files under refs/ . If people
-actively try to shoot themselves in the foot, why would we stop them?
+Good call.  Sorry for the slow review.
 
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
+[...]
+> --- a/connected.c
+> +++ b/connected.c
+> @@ -52,19 +52,28 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+>  		strbuf_release(&idx_file);
+>  	}
+>  
+> -	if (opt->check_refs_only) {
+> +	if (opt->check_refs_are_promisor_objects_only) {
+>  		/*
+>  		 * For partial clones, we don't want to have to do a regular
+>  		 * connectivity check because we have to enumerate and exclude
+>  		 * all promisor objects (slow), and then the connectivity check
+>  		 * itself becomes a no-op because in a partial clone every
+>  		 * object is a promisor object. Instead, just make sure we
+> -		 * received the objects pointed to by each wanted ref.
+> +		 * received, in a promisor packfile, the objects pointed to by
+> +		 * each wanted ref.
+>  		 */
+>  		do {
+> -			if (!repo_has_object_file_with_flags(the_repository, &oid,
+> -							     OBJECT_INFO_SKIP_FETCH_OBJECT))
+> -				return 1;
+> +			struct packed_git *p;
+> +
+> +			for (p = get_all_packs(the_repository); p; p = p->next) {
+> +				if (!p->pack_promisor)
+> +					continue;
+> +				if (find_pack_entry_one(oid.hash, p))
+> +					goto promisor_pack_found;
+> +			}
+> +			return 1;
+> +promisor_pack_found:
+> +			;
+>  		} while (!fn(cb_data, &oid));
+>  		return 0;
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+Yep, does what it says on the tin.
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
