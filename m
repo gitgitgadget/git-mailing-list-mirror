@@ -1,118 +1,148 @@
-Return-Path: <SRS0=aR3Y=3R=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1,
-	USER_IN_DEF_DKIM_WL autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5442BC2D0DB
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 23:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5A7C33C9E
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 01:09:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1BE6922522
-	for <git@archiver.kernel.org>; Tue, 28 Jan 2020 23:26:16 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1051420CC7
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 01:09:36 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="VjaMEENY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J4wmn/vR"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726320AbgA1X0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 18:26:15 -0500
-Received: from mail-pj1-f68.google.com ([209.85.216.68]:36701 "EHLO
-        mail-pj1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726293AbgA1X0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 18:26:14 -0500
-Received: by mail-pj1-f68.google.com with SMTP id gv17so1801788pjb.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 15:26:14 -0800 (PST)
+        id S1726803AbgA2BJf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 20:09:35 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33295 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726422AbgA2BJe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 20:09:34 -0500
+Received: by mail-ed1-f65.google.com with SMTP id r21so16860784edq.0
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 17:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=FQjH5nLTCdNQHjdqbE69WXWbqoYOOEwtEE1x/nTEHK0=;
-        b=VjaMEENYPAlVrHEKxIRSrZkdaTCDpPNITBTmygsM5FcUBsMs7G0VCKAVcTPdxAGOLi
-         SJ2ta5B68fL2ffDAcapRGlIGrqTs8nkx7UgtY/z4Cg2tl0eDXD/ZDUBLcGCUEOyBhNP5
-         XehNuIVprX1knID7/IVmsRmUBfHrzW0paziabIpRG9iBd8xpvq1ErmjirYIlzUhqNUuS
-         VNJ+jBeFp237MKW8jTROJxpT9kizu/Gdq50hn1zWqcrLFZQ5adIOmS6j4whzd5jjB4ec
-         UFB4SMKstzVixejdI4cnVZ0d3mQSYOkgvGlDzR3H3EkhBOw23ynzHlcPsg5t+bTxGePw
-         hHcg==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fwX5tHMWM1Elsm4Oike2dVoURlYIx86Xk30JDH+5kT0=;
+        b=J4wmn/vRgcNqcPIcXf6gn4Ld2ZrP9hQUj8dgAjhF33oXdiZWRYiJ+AHKxsB7vXQIud
+         nR/PARB1uUm8ZluMX2XBexJErqSmQpHOQMqvdlEUJ6TGD4sWwpshGowKjySuO4DpPT/2
+         7+A482bgxt8rq+tjgGZimqjBgNgjfJ73VHhYw3CAMn8B+0S4gimU+iuRelwdHXbNWYSb
+         N2+4MDfgrmT/Kdtk3Z1AgYuGtjDm3LILJb+iox6NNW76iP0h+DMHYV19mxF1YJXqskB8
+         P3FT2DwH7qTkVxNXeyxZjbypPwDZMcV14eeih0deX72swLEjMvnI+3u1SPU8g8vdcqZG
+         9a7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=FQjH5nLTCdNQHjdqbE69WXWbqoYOOEwtEE1x/nTEHK0=;
-        b=hOd9qP8nz7Yom1hRFxz/vAUBQPTpWm5+vBETzRUI1ccYO5zoEUFdbfjH6S3dHpu8Hc
-         HFjGSTq724mLHISA6chKkrbf2BRXmtna575QrkHmNGvh0OTAJI1ExwOZpcyRG4rAbZNk
-         4yRErlMpbRVQbl61fSDdWCow8CHww5AwVG4byK5lRenWJeqgDZYI3xgnCnfL/KX2ROqk
-         LiORkb+VDl6YmerYJ+vDJrBgFlXtf8i03LtUuHBBysk0f0KxFRMMO2LsrKYcIOutXKHW
-         M0Ed85t8K5HGNn3Zb4mP9ck8enWhvZfQffuPGIkTE6f/PAfLsX4AsyaGxHl40btIAcV+
-         sCNw==
-X-Gm-Message-State: APjAAAX5V7+c0GrN9kd8IKYTNCDyxVEhMeXaCwe6SaVuHPglWI54p/Uo
-        v+bX+WVv9JjB3Fmv6fIrtCzddg==
-X-Google-Smtp-Source: APXvYqyofabNl9gqJzcob6nsz5j0XQSKdOcNGBN6Q3r0E0pXB7N5YGWdUBWIQgHUf5XXEHUizPDBYA==
-X-Received: by 2002:a17:902:bb88:: with SMTP id m8mr25158107pls.63.1580253973896;
-        Tue, 28 Jan 2020 15:26:13 -0800 (PST)
-Received: from google.com ([2620:15c:2ce:0:231c:11cc:aa0a:6dc5])
-        by smtp.gmail.com with ESMTPSA id z30sm122100pff.131.2020.01.28.15.26.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2020 15:26:13 -0800 (PST)
-Date:   Tue, 28 Jan 2020 15:26:08 -0800
-From:   Emily Shaffer <emilyshaffer@google.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-        gitster@pobox.com, martin.agren@gmail.com, aaron@schrab.com
-Subject: Re: [PATCH v5 00/15] add git-bugreport tool
-Message-ID: <20200128232608.GA182648@google.com>
-References: <20200124033436.81097-1-emilyshaffer@google.com>
- <20200128230421.49994-1-jonathantanmy@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fwX5tHMWM1Elsm4Oike2dVoURlYIx86Xk30JDH+5kT0=;
+        b=eYjRR4b7gEb9bEkSUAHU7WXnMYoc1OKFB9KS11pL7keiV2s9JjRyE09wRbkVRGTJ7h
+         mba7aYBq2FmPl84NsCGY9ewDr2pg2gx9/x/1KXq+sHqN6IQbi6RvWl0HhYgM2gnha4W9
+         XMnUFgCk/FXET9CZ1WYwCpbREAxTlvxV8P98rDr22QQGwblFGd1CIfJjJFKFWNKvsxS+
+         o73of65j14jJEqsRgor5IQx3qoBgqWk6UjT6XT1+XP5xTwnD/NKiMovbChXvpITWFJHS
+         dA5yPwP+p0jBsEx7R+EopwMENHVRjcYRQWuqNtBlvblpWwvvip9ywzMLxxquizTVaArZ
+         SByA==
+X-Gm-Message-State: APjAAAVIdhEFn/C985rpdhLD2EG35dSzkQH7bHrP7tQWoY+U8NyDG1ZE
+        snzGUC0w9WpzfJCpoNo8mVRklQt8aV2Eu+EqlA0=
+X-Google-Smtp-Source: APXvYqzY6GlxLDWhvjZWd7soUiYyxXkqGpz5nFdhSl95hPQYg3iix8k2a/iZB8FGk3xXOZkZNmFb+lRDAkYfvGpouP8=
+X-Received: by 2002:a17:906:22cf:: with SMTP id q15mr5332134eja.77.1580260173291;
+ Tue, 28 Jan 2020 17:09:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20200128230421.49994-1-jonathantanmy@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.508.git.1577934241.gitgitgadget@gmail.com>
+ <pull.508.v2.git.1578438752.gitgitgadget@gmail.com> <9f9febd3f4f7f82178fceac98fcc91cb28a1b3b9.1578438752.git.gitgitgadget@gmail.com>
+ <20200127235210.GC233139@google.com>
+In-Reply-To: <20200127235210.GC233139@google.com>
+From:   Heba Waly <heba.waly@gmail.com>
+Date:   Wed, 29 Jan 2020 14:09:21 +1300
+Message-ID: <CACg5j26DEXuxwqRYHi5UOBUpRwsu_2A9LwgyKq4qB9wxqasD7g@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] add: use advise function to display hints
+To:     Emily Shaffer <emilyshaffer@google.com>
+Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 03:04:21PM -0800, Jonathan Tan wrote:
-> > From: Emily Shaffer <emilyshaffer@google.com>
-> > 
-> > This topic branch depends on the patch mailed in
-> > lore.kernel.org/git/20191211233820.185153-1-emilyshaffer@google.com in order to
-> > display scopes for configs gathered during "bugreport: add config values from
-> > safelist".
-> > 
-> > I'll summarize v4-v5. Since v4 has languished for some time, I don't
-> > think an interdiff is too helpful, so I won't include one. Bonus, the
-> > code is much simplified from some suggestions from Junio on how to
-> > inspect objects, so I hope it's easy to review anyways.
-> 
-> To everyone in the developer community interested in this set: what is
-> the status of this?
-> 
-> If this needs further review, then maybe it would be best if only
-> patches 1-4 were put up for submission first, with a note in the
-> bugreport documentation that more information may be added in future Git
-> versions. For me, patches 1-4 look good and I don't have enough
-> experience with uname (especially across libcs and OSes) to determine
-> what should or should not be included - if this is typical of reviewers
-> in the Git project, it might be better to submit patches 1-4 first, and
-> then send each additional diagnostic separately, so that people who know
-> what's going on in one area but not another can just comment on the area
-> they know about.
-> 
-> Having said that, I see that a few people have already looked at the
-> entire patchset and made comments, so if they are OK with it, we don't
-> need to split it up.
+On Tue, Jan 28, 2020 at 12:52 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+>
+> Hmm, I wonder if addNothing really makes sense/is understandable when
+> I'm configuring? I see two cases you're addressing; first, adding an
+> ignored file ("Use -f if you really want to add") - which "addNothing"
+> doesn't really make sense for - and second, "add" with nothing
+> specified ("did you mean 'git add .'"), where "addNothing" makes sense
+> in context. Out of context though, perhaps "hint.addIgnoredFile" and
+> "hint.addEmptyPathspec" make more sense? Of course naming is one of the
+> two hardest problems in computer science (next to race conditions and
+> off-by-one errors) so probably someone else can suggest a better name :)
+>
 
-I'd be fine with either; from now, my gut says the only ones I'm not
-comfortable merging today are maybe 10, as Junio had some concerns about
-whether to allow glob expansion, and 11, as it's prone to rot and I'm
-doing other work in that area which would cause 11 to be
-dropped/refactored anyways once it goes in. Otherwise I think they're
-all pretty OK to go in and let the other work continue later in a
-different thread.
+I agree, as this patch was my first interaction with the advice
+library, but now after many discussions on different threads it makes
+more sense to add two config variables for the two messages.
 
-Of course, as an author my opinion that they're good to go doesn't mean
-much ;)
+>
+> As mentioned earlier, I'm not sure that tying this advice to the same
+> config as the next one you change really makes sense.
+>
+> Nitwise, it's somewhat common for advice hints to also tell you how to
+> disable them; see sha1-name.c:get_oid_basic's 'object_name_msg' for an
+> example.
+>
 
- - Emily
+I can see that this was followed in only three locations around the
+code base, which means that not telling the user how to disable the
+hint is more common.
+Initially I tended to think of it as noise as I suspect the user will
+ignore this extra line about disabling the message more often. But
+after taking a second look at Documentation/config/advice.txt I
+realized how hard it will be for the user to find the corresponding
+configuration variable to the message that he/she would like to turn
+off,
+specially when the list is getting longer. So seems like displaying
+the extra note will make the user's life easier *when* s/he wants to
+turn it off.
+
+> >               exit_status = 1;
+> >       }
+> >
+> > @@ -480,7 +481,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+> >
+> >       if (require_pathspec && pathspec.nr == 0) {
+> >               fprintf(stderr, _("Nothing specified, nothing added.\n"));
+> > -             fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+> > +             if (advice_add_nothing)
+> > +                     advise( _("Maybe you wanted to say 'git add .'?\n"));
+>
+> Same nit as above.
+>
+> >               return 0;
+> >       }
+> >
+> > diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> > index c325167b90..a649805369 100755
+> > --- a/t/t3700-add.sh
+> > +++ b/t/t3700-add.sh
+> > @@ -326,7 +326,7 @@ test_expect_success 'git add --dry-run of an existing file output' "
+> >  cat >expect.err <<\EOF
+> >  The following paths are ignored by one of your .gitignore files:
+> >  ignored-file
+> > -Use -f if you really want to add them.
+> > +hint: Use -f if you really want to add them.
+> >  EOF
+> >  cat >expect.out <<\EOF
+> >  add 'track-this'
+> > --
+> > gitgitgadget
+>
+> Finally, you'd better update Documentation/config/advice.txt too.
+
+Yeah, got that on my todo list :)
+
+Thanks,
+Heba
