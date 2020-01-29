@@ -2,82 +2,96 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EABBFC33CB2
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 08:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C725C33CB2
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 08:59:58 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BEA6F20732
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 08:13:02 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id DF3062070E
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 08:59:57 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGXcL+zs"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726124AbgA2INB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 03:13:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47264 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726068AbgA2INB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 03:13:01 -0500
-Received: (qmail 15444 invoked by uid 109); 29 Jan 2020 08:13:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Jan 2020 08:13:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14741 invoked by uid 111); 29 Jan 2020 08:20:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Jan 2020 03:20:36 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 29 Jan 2020 03:12:59 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH v2 5/5] Reftable support for git-core
-Message-ID: <20200129081259.GB601903@coredump.intra.peff.net>
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
- <721201269df47dc2e406e4091ab6b18a4a59b65f.1580134944.git.gitgitgadget@gmail.com>
- <20200128073100.GA563058@coredump.intra.peff.net>
- <2215899.n3y15ba4yI@mfick-lnx>
+        id S1726216AbgA2I75 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 03:59:57 -0500
+Received: from mail-qt1-f170.google.com ([209.85.160.170]:38156 "EHLO
+        mail-qt1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726124AbgA2I74 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 03:59:56 -0500
+Received: by mail-qt1-f170.google.com with SMTP id c24so12653086qtp.5
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 00:59:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LI6kGYXIDEM/uIbfGcHKSpnvaGgdqL6C2gZ3NGvXmGo=;
+        b=DGXcL+zs1jrecC427LE3bisF+jA/VHwzNfuqv50jn+2ARymdq5mKEUeZu4brpqhZxX
+         lCy/Pngw7FCFPbN38NY8PK/fgPoxtt7/35peLWNP2WkgMK/5BfzYI+ZWO/2vvfQmUgA2
+         0eSbDmhJkL9ejKgfXBRWVqXhuCNqOYZWesP51TxZMH0HQFl91OOrFMdpVC//wEbcAlWw
+         5DwLdKCZUKf5Xz8pr/j4jwZBtTQ7czNbewzxgZHQruoe7IInpPfEIS0u8K2Vzaq0xjpr
+         wF706IGcvigWDzG7ifMIx0L0e7N71lO9WMp5+C9HzsDDcYWfVjTZZ/twKbEgg9DQALvz
+         f+kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LI6kGYXIDEM/uIbfGcHKSpnvaGgdqL6C2gZ3NGvXmGo=;
+        b=G/tXloGB5cTvArdKt+CZMqi6hl3MJiKwGrOwOkyFZpO6lWWcgd4aeEXLZdCS1nhihr
+         EW/zpq+O5jFC+ZIMqbF3Vm/1IP/Be3ohKqCTLl5zV37HhOFVbtNZ92JH3L1H+jA+9trc
+         6ngK63WjM6uG5+lD9lS8KX2vqkd4QqD76gzRNw73ZoPvgCv4otB8xd575ZKYERPzX5PY
+         vTk1cwTRZQjmROAHv4LcFXuPm2uKvi7m9H4WX7zjq9nKE8hQ1iyCxsY47uIY+woRYtmA
+         kFFk5SCaBoM9PCByUbOBdP504ks1qn/kEjTVd+VkzNocLyMkc45VdBqs15zSnCVE61VV
+         1fEQ==
+X-Gm-Message-State: APjAAAVnZxLqLuOfq8yuyAPkY6eIh8JIRmbgfQKI7dgZmKp6fQeWs19h
+        IkhI21EYoWywLkXlyrfnkqOzsEfu
+X-Google-Smtp-Source: APXvYqxahCa22auMReiEcgfQ/lo+Ou16LklToVC9J5/7wo62xSTQo57UMYdQC/WwvMPkg2KRpvAtNA==
+X-Received: by 2002:ac8:4d0b:: with SMTP id w11mr22804604qtv.385.1580288395847;
+        Wed, 29 Jan 2020 00:59:55 -0800 (PST)
+Received: from generichostname ([199.249.110.29])
+        by smtp.gmail.com with ESMTPSA id f28sm639010qkk.130.2020.01.29.00.59.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2020 00:59:54 -0800 (PST)
+Date:   Wed, 29 Jan 2020 03:59:51 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2020, #04; Wed, 22)
+Message-ID: <20200129085951.GA124241@generichostname>
+References: <xmqqr1zr5e5e.fsf@gitster-ct.c.googlers.com>
+ <20200126200728.GA233163@generichostname>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2215899.n3y15ba4yI@mfick-lnx>
+In-Reply-To: <20200126200728.GA233163@generichostname>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 08:36:53AM -0700, Martin Fick wrote:
+Hi Junio,
 
-> > There's a slight downside in that tools which _aren't_ careful about
-> > repositoryformatversion might try to operate on the repository, writing
-> > into refs/ or whatever. But such tools are broken, and I'm not sure we
-> > should be catering to them (besides which, the packed-refs ship sailed
-> > long ago, so they're already potentially dangerous).
+On Sun, Jan 26, 2020 at 03:07:28PM -0500, Denton Liu wrote:
+> This commit has incorrect authorship information for Stolee. The author
+> is listed as "Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>"
+> due to a bug (which has been fixed) in GGG. We should fix the authorship
+> information before merging to 'next'.
 > 
-> Could you elaborate on this a bit because it seems on the surface that these 
-> tools aren't very dangerous, and therefore likely many of them exist?
+> On the topic of faulty authorship information, I sent along two mailmap
+> changes that were dropped[1][2]. Could you please pick these up?
+
+I see that you picked up the patch for Dscho[1] but not the patch for
+Yi-Jyun Pan[2]. Was this a mistake or was there some other reason? The
+patch got a "sort of ack" from the original author[3].
+
 > 
-> What are the dangers today of tools that understand/operate on loose and 
-> packed refs without reading repositoryformatversion?
-
-I was mostly thinking of hacky scripts that tried to touch .git/refs
-directly. And there are a few levels of dangerous there:
-
-  - if you're doing "echo $sha1 >.git/refs/heads/master", then you're
-    not locking properly. But it would probably work most of the time.
-
-  - if you're properly taking a lock on ".git/refs/heads/master.lock"
-    and renaming into place but not looking at packed-refs, then you
-    might overwrite somebody else's update which is in the packed file
-
-  - if you're trying to read refs and not reading packed-refs, obviously
-    you might miss some values
-
-If you're actually doing the correct locking and packed-refs read (which
-"real" implementations like libgit2 do) then no, I don't think that's
-dangerous. And I think libgit2 properly complains when it sees a
-repositoryformatversion above 0. I don't know offhand about JGit, or any
-of the lesser-used ones like dulwich or go-git.
-
--Peff
+> Thanks,
+> 
+> Denton
+> 
+> [1]: https://public-inbox.org/git/20200114024938.GA17003@generichostname/
+> [2]: https://public-inbox.org/git/21b8a0d08764c31de12ef7661667eb1117d41ac4.1578972215.git.liu.denton@gmail.com/
+[3]: https://github.com/git-l10n/git-po/pull/408#issuecomment-573991430
