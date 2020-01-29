@@ -2,139 +2,122 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.7 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.3 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1F78C2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 485A1C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:43:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B04E820702
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:43:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 1E10820702
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 20:43:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="BMyf9sbF"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6SASIzb"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726683AbgA2UnK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 15:43:10 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:34184 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726317AbgA2UnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 15:43:10 -0500
-Received: by mail-lj1-f193.google.com with SMTP id x7so900347ljc.1
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 12:43:09 -0800 (PST)
+        id S1726830AbgA2Un3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 15:43:29 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36805 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726317AbgA2Un2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 15:43:28 -0500
+Received: by mail-pl1-f195.google.com with SMTP id a6so417371plm.3
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 12:43:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp-br.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kg2O4NEG5TSK+ezP1YUyeJ5l5IY/DIGIbvDkIeYdbz0=;
-        b=BMyf9sbFT/MP+5PQOETnregS7yjbBZkjtQt6Ueq2CHfbk+LIONBbsfN8MWhwqJRAF8
-         4t9wA94LdoEWGl4WNoULcb0oZ6Mdyv2PXegyp8AzPMgSapbGQX3TL7R7DzkJlH6GiU4y
-         rcDf2DynZQtTvH7q1m8iHKBe3k0zCwFgjZnGVio+kBao4BkBn55exGFIVkc+SOsQhwiw
-         jMZsx9it4Dcwiz+86CTVOT9URVImNFrx8ITu8NtazsQtQrM/G04qUMt2ZBVCvqj5L8uO
-         va8o84iNnE2UMAuaTnmhH7+cdziddT3AWoEA7HXjVteSuWnxy5ujad3PVvgJELD0OkOy
-         PAgw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+pI/DMi4zn+ffn2CZHpv8pWS9oLdkGjruldoJWYFBQ4=;
+        b=h6SASIzbA8Cb7jOXGHPcIjZFSA3imMi6iOQAaU2Jl3bEvJhMvhfmbRfCi1AXr8cMVR
+         ps1NGnOjbtUab0SQUtBJeJ0y8UwtAjVpxQrD5k4Ljv/rpgtsl23yj42fa/yUSAdVYbZc
+         RoNqku7OQXK8vvPhhf2r8RB9paN+IqugJAuYETBVXd7Ta0tamuBwvuAXex6VW849WzR/
+         kFAMwM+0WE2K8GiZSExbFvApsnR6HLMXGhC75xDPsdkr+JbzWKh5DPLokLjiJRXp9IOQ
+         1KOw1CGHhAJQl2CD05A55d8U+r4RXGhOWXyN0U8g1v1HqI/ZD6GmNJy+7TT2RZ1CQc4e
+         xOFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kg2O4NEG5TSK+ezP1YUyeJ5l5IY/DIGIbvDkIeYdbz0=;
-        b=NJmSceuYIvM6IJEn6ZGgK/euoPG+AhIV3lF8bvtzR+dzyjxg0nVRgklnxlpgOszNOU
-         +mQogLKRzgBHCtixcPmqix/61xijv3NRfdMnEx7mWmZT0HCrkwvHUSLc35FTOE1FDjs7
-         tqw0KQF06A6kSgVXqZqUHihH7we9IF8QBC4BCzEwJxUjkn+HyZ0fyvVOs2WXNphnJ1Rg
-         OIX6fFnVZ6J+POtpm6KaOxJ0Qdk25gyBhn1YC+TyOtNUimbxBUCVfjx0+ex0GqMoUweE
-         kSqH6ZE9NX/peDoMvaJ4VF7Kys5hwIxUWhTG/3pEGnajBDWVCuhNoJMjWuZcMD0zA3ct
-         DGmA==
-X-Gm-Message-State: APjAAAU6lpGU8vEaZidAL35dJMt3S3A2ppTxCWoRUeVIaz2Ge8RkV+vb
-        XxuR3vnjocUAkSCrIAhGtxeBAvSKQgChy+D7GCtONA==
-X-Google-Smtp-Source: APXvYqx3qtwyg1LoAK/uLT1+FD8Q99CkEHY/FN+6/iaU/xWITWHT9SqbmcByniD/gJh9+nRkmoQmTJnKXtvZ1G2MQwU=
-X-Received: by 2002:a2e:8646:: with SMTP id i6mr626080ljj.122.1580330588431;
- Wed, 29 Jan 2020 12:43:08 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+pI/DMi4zn+ffn2CZHpv8pWS9oLdkGjruldoJWYFBQ4=;
+        b=f+YsrcadDo/e6HgfjmP31tG8PvbMSIbF+v0p7K5xafVOdEF7LvQbofCDhILoBRME0S
+         Kt4CX8CH/CsbN7UWLL2TvJ/H6zV8QQloe4aWEs6Kk0xNBJCpy3mswJPEtoGDgzcKSMyy
+         UBcGKnxWKmHGaCOSTAkwmah6nmqvXiOYzj+XS+vWC5mDeDigyC51NU4ECbFGmpDYEj7D
+         QI+wiJvoxjRQ6WhmoPYZtAxIZ540yEeNiUHUj1g52+cimKhrAKw+fcx1hh/9KYNF3D2/
+         jIfwmn7yMKhm4QJEn85L5TUZ/U13gHU6eMa99I/XyyMXTNLJZhzhqq/Z2rVXG9hT+6sR
+         +t7A==
+X-Gm-Message-State: APjAAAVvod3tYvxpH6MF/G5S3Ha0P3Zonv0YnINEvFmdnBs5sQLTtMms
+        7KSeCOE1oRta0F52LgcOW68=
+X-Google-Smtp-Source: APXvYqwTzqb+MknDj2m3WaGPXbQiFqc4DVzUUl/2zEKUpqZ6NmXhW6mC99Bmzfv/R4V+fjSnLTRzQg==
+X-Received: by 2002:a17:902:8a91:: with SMTP id p17mr1126624plo.75.1580330608141;
+        Wed, 29 Jan 2020 12:43:28 -0800 (PST)
+Received: from google.com ([2620:15c:2ce:200:cf67:1de0:170f:be65])
+        by smtp.gmail.com with ESMTPSA id x8sm3770188pfr.104.2020.01.29.12.43.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Jan 2020 12:43:27 -0800 (PST)
+Date:   Wed, 29 Jan 2020 12:43:26 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] fetch: forgo full connectivity check if --filter
+Message-ID: <20200129204326.GB17350@google.com>
+References: <cover.1578802317.git.jonathantanmy@google.com>
+ <be1d6aa4c4fd8868f3682b73c01a92d3830534ad.1578802317.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <cover.1579141989.git.matheus.bernardino@usp.br>
- <af8ad95d413aa3d763769eb3ae9544e25ccbe2d1.1579141989.git.matheus.bernardino@usp.br>
- <20200129112613.GE10482@szeder.dev> <xmqqy2tqdr9t.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy2tqdr9t.fsf@gitster-ct.c.googlers.com>
-From:   Matheus Tavares Bernardino <matheus.bernardino@usp.br>
-Date:   Wed, 29 Jan 2020 17:42:57 -0300
-Message-ID: <CAHd-oW590ZnNnCdD5LLiBQB73LRUVEf41wv7FLJvGMwd2kLYww@mail.gmail.com>
-Subject: Re: [PATCH v3 08/12] grep: allow submodule functions to run in parallel
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        git <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
-        Jeff King <peff@peff.net>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Stefan Beller <stefanbeller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <be1d6aa4c4fd8868f3682b73c01a92d3830534ad.1578802317.git.jonathantanmy@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 3:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+Jonathan Tan wrote:
+
+> If a filter is specified, we do not need a full connectivity check on
+> the contents of the packfile we just fetched; we only need to check that
+> the objects referenced are promisor objects.
 >
-> SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-> >
-[...]
-> > @@ -1071,6 +1072,14 @@ int cmd_grep(int argc, const char **argv, const =
-char *prefix)
-> >                   && (opt.pre_context || opt.post_context ||
-> >                       opt.file_break || opt.funcbody))
-> >                       skip_first_line =3D 1;
-> > +
-> > +             /*
-> > +              * Pre-read gitmodules (if not read already) to prevent r=
-acy
-> > +              * lazy reading in worker threads.
-> > +              */
-> > +             if (recurse_submodules)
-> > +                     repo_read_gitmodules(the_repository, 1);
-> >
-> > ... and eventually reach this condition, which then reads the
-> > submodules even with '--no-index', which is just what a7f3240877 tried
-> > to avoid, thus triggering the test failure.
-> >
-> > It might be that all we need is changing this condition to:
-> >
-> >  if (recurse_submodules && use_index)
-
-Yes, I think that would work. I was only worried that, in case of
-!use_index, the path taken could somehow lead to an unprotected call
-to repo_read_gitmodules() (with threads spawned).Then, since the file
-would not have been pre-loaded by the sequential code, we could
-encounter a race condition. But by what I've inspected, when use_index
-is false, grep_directory() will be called to traverse the files, and
-it does not have repo_read_gitmodules() in its call graph[1]. So the
-solution should be fine in the point of view of thread-safeness.
-
-> Hmph, I wonder if "ignore --recurse-submodules if --no-index" should
-> have been done as a single liner patch, something along the lines of
-> "after parse_options() returns, drop recurse_submodules if no-index
-> was given", i.e.
+> This significantly speeds up fetches into repositories that have many
+> promisor objects, because during the connectivity check, all promisor
+> objects are enumerated (to mark them UNINTERESTING), and that takes a
+> significant amount of time.
 >
-> @@ -958,6 +946,8 @@ int cmd_grep(int argc, const char **argv, const char =
-*prefix)
->                         /* die the same way as if we did it at the beginn=
-ing */
->                         setup_git_directory();
->         }
-> +       if (!use_index)
-> +               recurse_submodules =3D 0; /* ignore */
->
->         /*
->          * skip a -- separator; we know it cannot be
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> For example, a local fetch was sped up from 6.63s to 3.39s. The bulk of
+> the remaining time is spent in yet another connectivity check
+> (fetch_refs -> check_exist_and_connected) prior to the fetch - that will
+> hopefully be done in a subsequent patch.
 
-Yeah, this seems more meaningful, IMHO, as we can easily see that the
-recurse_submodules option was dropped in favor of using --no-index.
+Can this information (at least the speedup) be included in the comment
+message?
 
-[1]: Well, in fact repo_read_gitmodules() *is* in grep_directory()'s
-call graph, but the only path to it is through the
-fill_textconv_grep() > fill_textconv() call, which is already guarded
-by the obj_read_mutex. So there is no problem here.
+Or even better, can we demonstrate the impact using a perf test?
+
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -906,8 +906,17 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  		url = xstrdup("foreign");
+>  
+>  	if (!connectivity_checked) {
+> +		struct check_connected_options opt = CHECK_CONNECTED_INIT;
+> +
+> +		if (filter_options.choice)
+> +			/*
+> +			 * Since a filter is specified, objects indirectly
+> +			 * referenced by refs are allowed to be absent.
+> +			 */
+> +			opt.check_refs_are_promisor_objects_only = 1;
+> +
+>  		rm = ref_map;
+> -		if (check_connected(iterate_ref_map, &rm, NULL)) {
+> +		if (check_connected(iterate_ref_map, &rm, &opt)) {
+>  			rc = error(_("%s did not send all necessary objects\n"), url);
+>  			goto abort;
+>  		}
+
+Simple and sensible.  With or without a change like described above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
