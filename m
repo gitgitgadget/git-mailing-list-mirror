@@ -2,99 +2,104 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
 	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA4CC2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA5B2C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:41:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CC6E120720
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:36:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A528A20661
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:41:05 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="E87kg2qq"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bntg9mtQ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727213AbgA2Sgv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 13:36:51 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42112 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726332AbgA2Sgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 13:36:51 -0500
-Received: by mail-wr1-f67.google.com with SMTP id k11so636585wrd.9
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 10:36:50 -0800 (PST)
+        id S1727526AbgA2SlE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 13:41:04 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35963 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727522AbgA2SlE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 13:41:04 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so1123437wma.1
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 10:41:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ga6hjYkr2PfMyaKPWGzZkP3wv9I7AmPazoQbkSBK9TI=;
-        b=E87kg2qq6pyUjDiG03YblvbMFMWJOoW86G8Ga8D/2v0JD4PLU0vIXtdj42uQAmq+kp
-         dBHl0z0Q2DEeNDX5fjL37XLG2g9fjnUmGwlQF02506Sn+L9IBiE9+5S5EoQXvq6Jz1qt
-         JGMgYWyE90cy5kUSmFyU5zIdu27NSMvVraKcw=
+         :cc:content-transfer-encoding;
+        bh=mK/uxdgn6o7UY1f/sHimGKbk9LyOZOPs5M51f4PsdWw=;
+        b=bntg9mtQq8O26dCCvBiybgLEC5vYbVlgLDbpV8tFlFVfwJe8MDNwofhcCBhTjJu3zT
+         WppmAQTOrRCbHSHPwRxNPo0Bk6aNJvc+eKm1KYi/Nrv9uv7kPuolm+l6dic6qdEAdIPK
+         /BDxH53UyybeKKedclFP4tUDv8k+cwDOt4Dad7RSQ3h/BhMD63DO7HRDr8QA+cNcAeeV
+         Pal4AufkckGYaABR5zTnIdUCZqIZ4xIja+6IYYuOlDVIkP41FXFoMJS2KWme5csIBddN
+         kIBjlHyIayEMsGphxnkx7qriQrjT9gsivTakWKJ7+arV/fgX9yg1SmZTd6+TVV633lan
+         3ZZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ga6hjYkr2PfMyaKPWGzZkP3wv9I7AmPazoQbkSBK9TI=;
-        b=ajOK09DNdkBp4GFAQEXem4XmMJ/ZEFmsyh/Xkbsvx24AId55Fe3+70ViaaUF0T1+Dg
-         /AqVY0j0gGzvYaMuY+foZggSvvj+3PVcJtQe55JVvZLG/MFc0WDndAvMkRLa+olUBFog
-         YdE7xM9HL8zGl4LYrHy1l1pWGl0wAs9Nfb6RzKIVRQhYGhPoOwy8EdA4qF0WurqKSxmH
-         3o4arleCNkLG+w0iASEwMR8HQCUPg6jJHbdknrkhZ/XEB2Sf9WxVve1qLV3z7dN1+5tp
-         MRkA/TkUvfJX6JNuMaVswp8qlZwHzzc5KibJ2D3xd7OReTTe18krW+OrgwpTOk5KRxJK
-         TM3g==
-X-Gm-Message-State: APjAAAXybOFq7AMFPP2fn3luvtu9gy80wVE81sWXhW+yuyxteg+QG35J
-        ZHkekhZUgQhQOMScMKjH4//BAc4dIUVxdktTIXyfWA==
-X-Google-Smtp-Source: APXvYqyNIARXfNEXa6NigK2giQb8XaslGBs2b3NEYOIVGKWLj3hRKVeSJLxd7Zmc0Fn9ql+dMBtBH3NcE/BzCcp/feE=
-X-Received: by 2002:a5d:5044:: with SMTP id h4mr196320wrt.4.1580323009351;
- Wed, 29 Jan 2020 10:36:49 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=mK/uxdgn6o7UY1f/sHimGKbk9LyOZOPs5M51f4PsdWw=;
+        b=hD58l5sx/9hzxhfgew2CyYqy//vXWuaODDisikGR37t+N+haWzyYi1eeDjb6N+IEOO
+         CEXVaZQO6vUkJoDXsES0SpPhlmSsejZPQJB2ZDsxJdpcZmHxiGBtbh6Y0DTURhy72Vcj
+         3LCYhizyLlPMWmk3gxOVU4UmBa0PsnYbw59B3uNBG5hfthYmxnMwOmTkZr5umty1pyR2
+         fNQRCaqBA5K7TAodbB2ar0+nzIJWMuVw9Egx3RuC4jdkymdtt0G5njOp3z50WMtkF1r6
+         2kQORLEWoxH8GWO/owxo92K/8rmYu01njlk5PClkfrGDmGxMdAYLmW0aK3gWOlWuBYs/
+         Yb/w==
+X-Gm-Message-State: APjAAAXPCHqUrEduGnUM5+3SCMlev3VTZpV5evKaj2H+eU3vBAp49kjf
+        sICdAEibNpn6LkxKNF7Ml/z5cPEqElLwn9RZ+IPEzg==
+X-Google-Smtp-Source: APXvYqy8hTRsnIC8XntCMUpmmygxQi5ScsHvUt9xA5Z6ykyUg/UhEsUW2qAif1ayP2PgZv5szBHFzktCq2azXuuq6dE=
+X-Received: by 2002:a1c:660a:: with SMTP id a10mr610089wmc.122.1580323262429;
+ Wed, 29 Jan 2020 10:41:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20200129111246.12196-1-luke@diamand.org> <20200129111246.12196-2-luke@diamand.org>
- <20200129111246.12196-3-luke@diamand.org> <20200129111246.12196-4-luke@diamand.org>
- <20200129111246.12196-5-luke@diamand.org> <CAPig+cRx3hG64nuDie69o_gdX39F=sR6D8LyA7J1rCErgu0aMA@mail.gmail.com>
-In-Reply-To: <CAPig+cRx3hG64nuDie69o_gdX39F=sR6D8LyA7J1rCErgu0aMA@mail.gmail.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 29 Jan 2020 18:36:38 +0000
-Message-ID: <CAE5ih785Nv584RU-xEQSqrcuGiUU2zmjRrJ=ghtFX7_7EuiDnw@mail.gmail.com>
-Subject: Re: [PATCHv1 4/6] git-p4: create helper function importRevisions()
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Yang Zhao <yang.zhao@skyboxlabs.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
+ <2215899.n3y15ba4yI@mfick-lnx> <20200129081259.GB601903@coredump.intra.peff.net>
+ <9138554.c73hJVQVja@mfick-lnx>
+In-Reply-To: <9138554.c73hJVQVja@mfick-lnx>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 29 Jan 2020 19:40:50 +0100
+Message-ID: <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+To:     Martin Fick <mfick@codeaurora.org>
+Cc:     Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 29 Jan 2020 at 15:00, Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Wed, Jan 29, 2020 at 5:49 PM Martin Fick <mfick@codeaurora.org> wrote:
+> > If you're actually doing the correct locking and packed-refs read (whic=
+h
+> > "real" implementations like libgit2 do) then no, I don't think that's
+> > dangerous. And I think libgit2 properly complains when it sees a
+> > repositoryformatversion above 0. I don't know offhand about JGit, or an=
+y
+> > of the lesser-used ones like dulwich or go-git.
 >
-> On Wed, Jan 29, 2020 at 6:13 AM Luke Diamand <luke@diamand.org> wrote:
-> > This makes it easier to try/catch around this block of code to ensure
-> > cleanup following p4 failures is handled properly.
-> >
-> > Signed-off-by: Luke Diamand <luke@diamand.org>
-> > ---
-> > diff --git a/git-p4.py b/git-p4.py
-> > @@ -3555,6 +3555,73 @@ def importHeadRevision(self, revision):
-> > +    def importRevisions(self, args, branch_arg_given):
-> > +        if len(self.changesFile) > 0:
-> > +            output = open(self.changesFile).readlines()
->
-> Not a new problem (since this code is merely being relocated), but is
-> this leaking the open file? Should there be an accompanying close()
-> somewhere?
->
->     f = open(self.changesFile)
->     output = f.readlines()
->     close(f)
+> Today, some of these sound like shortcuts that are very likely taken quit=
+e a
+> bit by cleanup and other maintenance scripts (not necessarily formal git
+> tools), and the impact of these shortcuts is likely low with the current
+> model. However, I suspect these tools/scripts could be seriously disrupti=
+ve if
+> we leave the refs dir around when using reftable,
 
-with open(self.changesFile) as f:
-    output = f.readlines()
-
-I can put something like that in either as a followup, or the next re-roll.
+Maybe we can leave the refs dir, but have no heads/ directory inside,
+and make the whole thing read-only?
 
 
->
-> or something.
+--=20
+Han-Wen Nienhuys - Google Munich
+I work 80%. Don't expect answers from me on Fridays.
+--
+
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
