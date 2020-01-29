@@ -7,59 +7,59 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 460A9C33CB7
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FB11C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 11F80206D5
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:52 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4588C206D5
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="oXAP1AX4"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jGs5d9Xi"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726723AbgA2WDu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 17:03:50 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54906 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726283AbgA2WDs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 17:03:48 -0500
-Received: by mail-wm1-f65.google.com with SMTP id g1so1464784wmh.4
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 14:03:47 -0800 (PST)
+        id S1726757AbgA2WDw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 17:03:52 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35045 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbgA2WDv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 17:03:51 -0500
+Received: by mail-wr1-f67.google.com with SMTP id g17so1441997wro.2
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 14:03:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kZr6bRchdKE3uJo7GDfpg3MFt0eukyWBsmuwQflY8MA=;
-        b=oXAP1AX4voI3CZourcspkSA5C881Lh3Ju86eS7SG44GDaUtmQVoicmSO2Qfq24cWDY
-         2uD4BCm/suO36FTQ0SuyGXEdi0BnKqh+yx7KivISEjZp65gB3H1nLrpMrpinynUTJiU2
-         +S6h2+Oqh4ao6D8dFlUcqVZfPBdBvyh37I+cbPczA5W5gJs7L+40Bj31gezETFO+MnQD
-         AwQqIQV5DT6OKi4a5qfHWA5kqGvemZpdNZNMgkm6iKk9gPVtvsrDTFx0rWAEg2M0k5Ri
-         Qn1LvzisB6QUzNpeIy4eLAVAmbJMPOjsbIipqDR7LDh/zRz/Vcqv990Wt0aUNy9nqvJr
-         F1jQ==
+        bh=+EEP5cvZz+JJ7/eTYAgYq85d/6J7CRuOEJVck0LRXxw=;
+        b=jGs5d9Xi6uGbIRnvXJjTAWDotS5W9x+C7Uy7alF3o5IAoLZTgNtB22mGjgkcruMDiY
+         uxdMaycFjwrMR9XQOxKKyF4ZH78/BgissRzlnvaEaRQbbaufDT3OwiL41eOojyj2WW4C
+         xwSxKLiaCYhHmSMGbjuq/sDB13EidlyCUWO7CXAjpwIgTbU4+oN8lFuiydp3j4cSThaA
+         qTS9ybnw0fSa2KYhkKSm15MTSOox5ZDE6iHGj9sUQ/oPwqArggAmhet8lS45NyrWY+Zv
+         3z0ctQCbRnev1ygvQbu8xmeaeHrK6lHB2tLWo7QzbNo99Wp1b2GB4TXbR1hZed+GqDne
+         xbvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kZr6bRchdKE3uJo7GDfpg3MFt0eukyWBsmuwQflY8MA=;
-        b=KLfW50+5uxBTCM1L0PU6/dV9V8rQt5dRf3vtX+R6prKY5yRli9NAhKSQkpaGDWWv7S
-         vqryCwxMNIC9VM+iH8B5zEjLqwXWGY40D5sqV4zNbU2v2+UQhWOQDP40BaRW7XzjtDNQ
-         iOpBh+nZxnCVrj+WZYM9176fGc/krV5X3K9dkxGF0+tf7yL5vmFIy8ciz8UtZInCLqAe
-         yUV4VFMnJGpwSC4yIr2VPKeAnaiL0dRtpSrhhzbjF1lV3O0tHWcoxr3NE9rV8ARjHFQI
-         E7X5LJCfajX0DXjyz/vXcDAh05ZnOwp+y+8SA+EBsw+2Xx54HyB07QFRqNbRHO+wJIw5
-         hE/g==
-X-Gm-Message-State: APjAAAUQJ78gP3yWsYDxFIWCv/auk361xugqkWUL5zP2Vy2b/SYyz5ns
-        WxQuk7ojiz5THiOzAZ89JQolHeP/
-X-Google-Smtp-Source: APXvYqxbH+jDLnvW/q0q3DLIaN5pla3uFLTX5jXDRLq3y2lA9qccgu8LIHNGeTD0Bj88lYyYWkv1tg==
-X-Received: by 2002:a7b:c450:: with SMTP id l16mr1367221wmi.31.1580335426335;
-        Wed, 29 Jan 2020 14:03:46 -0800 (PST)
+        bh=+EEP5cvZz+JJ7/eTYAgYq85d/6J7CRuOEJVck0LRXxw=;
+        b=FDm8oQZnHkanQ79l4W7F3TNCjlo7va+UOrolc5BV8FFLE4c9CryJzzoxjq/IP6xy+y
+         q2mqXdfZxRmKLwpL2MFfYah7waPWnnfK+sHn48mU00gdF+WD+fmWCIMqnCVp7xCqNuCS
+         otlZ4M24V0SNjmXkpQHp8dyfZXZ8edMOGt8pY2H/aolFBl8SxuOBsWBWdSVLmCES8f82
+         kg52uz39hb5adsvpScOwpM5YOYvIOcZoTStk81qe6UAo2IMHwIeymlUVv1Vh7aELl5QX
+         FeDNm4/XI2j2gteePZZpsngJZiGiPTPcM5NAs6bHgYB6eUdLUjkK2Z4APBSbu0QU6drZ
+         uGtA==
+X-Gm-Message-State: APjAAAW993UF8FiHLTTVnqlpEVUO8Paaktw85zz6tFI0X/5WhhS3IrCb
+        Kr5AZXO152z71NDWnT2piBT7qOjx
+X-Google-Smtp-Source: APXvYqzdgPaH5PtF5xhg3x223vBiNh5Y4Y+nRJNVAxjASSnd4F7o9egN+xMrcIb+XvF5G6ffLZAMRw==
+X-Received: by 2002:adf:f581:: with SMTP id f1mr1048018wro.264.1580335428864;
+        Wed, 29 Jan 2020 14:03:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c9sm3869590wme.41.2020.01.29.14.03.45
+        by smtp.gmail.com with ESMTPSA id s22sm3711705wmh.4.2020.01.29.14.03.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2020 14:03:45 -0800 (PST)
-Message-Id: <27bc1357964662faeeb1f4cadd31772ed6caf109.1580335424.git.gitgitgadget@gmail.com>
+        Wed, 29 Jan 2020 14:03:48 -0800 (PST)
+Message-Id: <3b2ec5eaf65c9fe44c4337a4cc2fc3dae6203d54.1580335424.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
 References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 29 Jan 2020 22:03:38 +0000
-Subject: [PATCH 1/6] dir: consolidate treat_path() and treat_one_path()
+Date:   Wed, 29 Jan 2020 22:03:41 +0000
+Subject: [PATCH 4/6] dir: move setting of nested_repo next to its actual usage
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,169 +78,32 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Commit 16e2cfa90993 ("read_directory(): further split treat_path()",
-2010-01-08) split treat_one_path() out of treat_path(), because
-treat_leading_path() would not have access to a dirent but wanted to
-re-use as much of treat_path() as possible.  Not re-using all of
-treat_path() caused other bugs, as noted in commit b9670c1f5e6b ("dir:
-fix checks on common prefix directory", 2019-12-19).  Finally, in commit
-ad6f2157f951 ("dir: restructure in a way to avoid passing around a
-struct dirent", 2020-01-16), dirents were removed from treat_path() and
-other functions entirely.
-
-Since the only reason for splitting these functions was the lack of a
-dirent -- which no longer applies to either function -- and since the
-split caused problems in the past resulting in us not using
-treat_one_path() separately anymore, just undo the split.
-
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c | 121 ++++++++++++++++++++++++++--------------------------------
- 1 file changed, 55 insertions(+), 66 deletions(-)
+ dir.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/dir.c b/dir.c
-index b460211e61..68c56aeddb 100644
+index 225f0bc082..ef3307718a 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -1863,21 +1863,65 @@ static int resolve_dtype(int dtype, struct index_state *istate,
- 	return dtype;
- }
+@@ -1659,7 +1659,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+ 	const char *dirname, int len, int baselen, int excluded,
+ 	const struct pathspec *pathspec)
+ {
+-	int nested_repo = 0;
++	int nested_repo;
  
--static enum path_treatment treat_one_path(struct dir_struct *dir,
--					  struct untracked_cache_dir *untracked,
--					  struct index_state *istate,
--					  struct strbuf *path,
--					  int baselen,
--					  const struct pathspec *pathspec,
--					  int dtype)
--{
--	int exclude;
--	int has_path_in_index = !!index_file_exists(istate, path->buf, path->len, ignore_case);
-+static enum path_treatment treat_path_fast(struct dir_struct *dir,
-+					   struct untracked_cache_dir *untracked,
-+					   struct cached_dir *cdir,
-+					   struct index_state *istate,
-+					   struct strbuf *path,
-+					   int baselen,
-+					   const struct pathspec *pathspec)
-+{
-+	strbuf_setlen(path, baselen);
-+	if (!cdir->ucd) {
-+		strbuf_addstr(path, cdir->file);
-+		return path_untracked;
-+	}
-+	strbuf_addstr(path, cdir->ucd->name);
-+	/* treat_one_path() does this before it calls treat_directory() */
-+	strbuf_complete(path, '/');
-+	if (cdir->ucd->check_only)
-+		/*
-+		 * check_only is set as a result of treat_directory() getting
-+		 * to its bottom. Verify again the same set of directories
-+		 * with check_only set.
-+		 */
-+		return read_directory_recursive(dir, istate, path->buf, path->len,
-+						cdir->ucd, 1, 0, pathspec);
-+	/*
-+	 * We get path_recurse in the first run when
-+	 * directory_exists_in_index() returns index_nonexistent. We
-+	 * are sure that new changes in the index does not impact the
-+	 * outcome. Return now.
-+	 */
-+	return path_recurse;
-+}
-+
-+static enum path_treatment treat_path(struct dir_struct *dir,
-+				      struct untracked_cache_dir *untracked,
-+				      struct cached_dir *cdir,
-+				      struct index_state *istate,
-+				      struct strbuf *path,
-+				      int baselen,
-+				      const struct pathspec *pathspec)
-+{
-+	int has_path_in_index, dtype, exclude;
- 	enum path_treatment path_treatment;
- 
--	dtype = resolve_dtype(dtype, istate, path->buf, path->len);
-+	if (!cdir->d_name)
-+		return treat_path_fast(dir, untracked, cdir, istate, path,
-+				       baselen, pathspec);
-+	if (is_dot_or_dotdot(cdir->d_name) || !fspathcmp(cdir->d_name, ".git"))
-+		return path_none;
-+	strbuf_setlen(path, baselen);
-+	strbuf_addstr(path, cdir->d_name);
-+	if (simplify_away(path->buf, path->len, pathspec))
-+		return path_none;
-+
-+	dtype = resolve_dtype(cdir->d_type, istate, path->buf, path->len);
- 
- 	/* Always exclude indexed files */
-+	has_path_in_index = !!index_file_exists(istate, path->buf, path->len,
-+						ignore_case);
- 	if (dtype != DT_DIR && has_path_in_index)
+ 	/* The "len-1" is to strip the final '/' */
+ 	switch (directory_exists_in_index(istate, dirname, len-1)) {
+@@ -1670,6 +1670,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
  		return path_none;
  
-@@ -1942,61 +1986,6 @@ static enum path_treatment treat_one_path(struct dir_struct *dir,
- 	}
- }
- 
--static enum path_treatment treat_path_fast(struct dir_struct *dir,
--					   struct untracked_cache_dir *untracked,
--					   struct cached_dir *cdir,
--					   struct index_state *istate,
--					   struct strbuf *path,
--					   int baselen,
--					   const struct pathspec *pathspec)
--{
--	strbuf_setlen(path, baselen);
--	if (!cdir->ucd) {
--		strbuf_addstr(path, cdir->file);
--		return path_untracked;
--	}
--	strbuf_addstr(path, cdir->ucd->name);
--	/* treat_one_path() does this before it calls treat_directory() */
--	strbuf_complete(path, '/');
--	if (cdir->ucd->check_only)
--		/*
--		 * check_only is set as a result of treat_directory() getting
--		 * to its bottom. Verify again the same set of directories
--		 * with check_only set.
--		 */
--		return read_directory_recursive(dir, istate, path->buf, path->len,
--						cdir->ucd, 1, 0, pathspec);
--	/*
--	 * We get path_recurse in the first run when
--	 * directory_exists_in_index() returns index_nonexistent. We
--	 * are sure that new changes in the index does not impact the
--	 * outcome. Return now.
--	 */
--	return path_recurse;
--}
--
--static enum path_treatment treat_path(struct dir_struct *dir,
--				      struct untracked_cache_dir *untracked,
--				      struct cached_dir *cdir,
--				      struct index_state *istate,
--				      struct strbuf *path,
--				      int baselen,
--				      const struct pathspec *pathspec)
--{
--	if (!cdir->d_name)
--		return treat_path_fast(dir, untracked, cdir, istate, path,
--				       baselen, pathspec);
--	if (is_dot_or_dotdot(cdir->d_name) || !fspathcmp(cdir->d_name, ".git"))
--		return path_none;
--	strbuf_setlen(path, baselen);
--	strbuf_addstr(path, cdir->d_name);
--	if (simplify_away(path->buf, path->len, pathspec))
--		return path_none;
--
--	return treat_one_path(dir, untracked, istate, path, baselen, pathspec,
--			      cdir->d_type);
--}
--
- static void add_untracked(struct untracked_cache_dir *dir, const char *name)
- {
- 	if (!dir)
+ 	case index_nonexistent:
++		nested_repo = 0;
+ 		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
+ 		    !(dir->flags & DIR_NO_GITLINKS)) {
+ 			struct strbuf sb = STRBUF_INIT;
 -- 
 gitgitgadget
 
