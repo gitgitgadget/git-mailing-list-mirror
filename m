@@ -2,162 +2,148 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B73CC35240
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7E3AC33CB2
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:17:15 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id EA16320720
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:13:42 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="MdOkInwb"
+	by mail.kernel.org (Postfix) with ESMTP id A00342064C
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726358AbgA2KNm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 05:13:42 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37033 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726010AbgA2KNl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 05:13:41 -0500
-Received: by mail-wr1-f65.google.com with SMTP id w15so19512528wru.4
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 02:13:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rg79JxiRKoD6Bh7korOv94x790Dc9eZvXXnWDGU6ACY=;
-        b=MdOkInwbeYZeZ/NybLCzzhBk6SOfKNdTagBSMmXV9BAsVVT4EvOeblAVykAWJpBgXX
-         g4oJ+Ozgz1853MhmFhBE81krwgD9E3pdFRIYlY6UXGkyJyQelDOMATehrVlMT8tJBaGS
-         cu6Hw5oAa6MEeffZI1aPHItULJFINHsolKhvc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rg79JxiRKoD6Bh7korOv94x790Dc9eZvXXnWDGU6ACY=;
-        b=uDTjBTKY7nIvkc4ybNabDZ/WJi3qIgfP5zaXdx1fGzpsxOovArEuDQrm7iwq5CrCE4
-         pY0Rc8tYme6xfyEiXXRN8nOWRs0tE4kBLdICixSyuTT8faNibkSqQZ9j3yx/Gs0Xp2Ky
-         U1IR2KEACTJdak3oU5HbOappKUKoVchBMtYxZ/KiuBZKkdH7AxijxAXmOnZIGEUzeXZ7
-         DJjn+b93yxy+gUPxm7sytSfWeC7hMpjBsaeC2bH0vGf9u3n9da8CXzhfOnK//aH0/uHP
-         27H36HFQ1oLV7ax/ChfheNb/cWtATuiu0cVj8nR8JzCUDkd+q9zsfJ2FkXXyHgpszd/N
-         MZBw==
-X-Gm-Message-State: APjAAAUb4qr50pkuUSiINldG1ZPjPahMHqbJEW7hhtNWASqc7uIgZrCb
-        0nsIo5pWjv5bMhFTBnW8mnPjaUjkXq7fxM5wsmDy0Q==
-X-Google-Smtp-Source: APXvYqx0wRJsbZpv1Y67JOaz9KsvipFyNEdqBhtRu/bmiagER9eImGsDH/dHqQjS3NK+stD78fdnTIzAz8kF+BBhvMY=
-X-Received: by 2002:a5d:5044:: with SMTP id h4mr32769339wrt.4.1580292818526;
- Wed, 29 Jan 2020 02:13:38 -0800 (PST)
+        id S1726128AbgA2KRO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 05:17:14 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47346 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726068AbgA2KRO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 05:17:14 -0500
+Received: (qmail 16136 invoked by uid 109); 29 Jan 2020 10:17:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Jan 2020 10:17:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15460 invoked by uid 111); 29 Jan 2020 10:24:50 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Jan 2020 05:24:50 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 29 Jan 2020 05:17:13 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 10/12] sparse-checkout: write escaped patterns in cone
+ mode
+Message-ID: <20200129101713.GB4218@coredump.intra.peff.net>
+References: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
+ <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
+ <e2f9afc70c92c606a9d93660bce0599b7b7ddf6e.1580236003.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com> <xmqqzheg76m3.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzheg76m3.fsf@gitster-ct.c.googlers.com>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 29 Jan 2020 10:13:27 +0000
-Message-ID: <CAE5ih79a4SeiAnC_c+XHXAiibeNBg-h1ZjMsv2pHMNtHGmqX1w@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Andrey Mazo <ahippo@yandex.com>, Git Users <git@vger.kernel.org>,
-        Ben Keene <seraphire@gmail.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e2f9afc70c92c606a9d93660bce0599b7b7ddf6e.1580236003.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 21 Jan 2020 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
->
-> [jc] asking for help from those who made non-trivial changes to "git
-> p4" in the past 18 months or so for reviewing.
+On Tue, Jan 28, 2020 at 06:26:41PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-This looks fine to me. I've not actually tested it.
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> If a user somehow creates a directory with an asterisk (*) or backslash
+> (\), then the "git sparse-checkout set" command will struggle to provide
+> the correct pattern in the sparse-checkout file. When not in cone mode,
+> the provided pattern is written directly into the sparse-checkout file.
+> However, in cone mode we expect a list of paths to directories and then
+> we convert those into patterns.
 
-Ack.
+Is this really about cone mode? It seems more like it is about --stdin.
+I.e., what are the rules for when the input is a filename and when it is
+a pattern? In our earlier discussion, I had assumed that command-line
+arguments to "sparse-checkout set" were actual filenames, and "--stdin"
+just read them from stdin.
 
-Luke
+But looking at the documentation, they are always called "patterns" on
+the command-line. Should the "--stdin" documentation make it clear that
+we are no longer taking patterns, but instead actual filenames?
 
+Or am I confused, and in non-cone-mode the "ls-tree | sparse-checkout"
+pipeline is not supposed to work at all? (I.e., they really are always
+patterns)?
 
->
-> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Ben Keene <seraphire@gmail.com>
-> > Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
->
-> "git shortlog --no-merges" would show that the convention is to
-> downcase "Add".
->
-> With two consecutive non-words (i.e. 'pre' and "pedit'), it really
-> feels an unpronounceable mouthful to a non-perforce person like me.
->
-> On the core Git side, "git commit", which is the primary command
-> that is used to create a new commit, has two hooks that helps to
-> enforce consistency to the commit log messages:
->
->  - The "prepare-commit-msg" hook prepares the message to be further
->    edited by the end-user in the editor
->
->  - The "commit-msg" hook takes what the end-user edited in the
->    editor, and can audit and/or tweaks it.
->
-> Having a matching pair of hooks and making sure the new hooks have
-> similar names to these existing ones may help experienced Git users
-> adopt the new hooks "git p4" learns here.
->
-> What makes "p4-pre-pedit-changelist" a good name for this hook?  "In
-> pure Perforce without Git, there is 'pre-pedit-changelist' hook that
-> Perforce users are already familiar with" would be a good answer but
-> not being P4 user myself, I do not know if that is true.
->
-> Also, "git commit" has a mechanism (i.e. "--no-verify") to suppress
-> the "auditing" hook, and it serves as an escape hatch.  The new hook
-> "git p4" learns may want to have a similar mechanism, to keep its
-> users productive even when they have broken/stale/bogus hook rejects
-> their legitimate log message, by allowing them to bypass the
-> offending hook(s).
->
->
-> > Add an additional hook to the git-p4 command to allow a hook to modify
-> > the text of the changelist prior to displaying the p4editor command.
-> >
-> > This hook will be called prior to checking for the flag
-> > "--prepare-p4-only".
-> >
-> > The hook is optional, if it does not exist, it will be skipped.
-> >
-> > The hook takes a single parameter, the filename of the temporary file
-> > that contains the P4 submit text.
-> >
-> > The hook should return a zero exit code on success or a non-zero exit
-> > code on failure.  If the hook returns a non-zero exit code, git-p4
-> > will revert the P4 edits by calling p4_revert(f) on each file that was
-> > flagged as edited and then it will return False so the calling method
-> > may continue as it does in existing failure cases.
->
-> The githooks(5) page should talk about some of these, I would think.
->
-> >  git-p4.py | 11 +++++++++++
-> >  1 file changed, 11 insertions(+)
-> >
-> > diff --git a/git-p4.py b/git-p4.py
-> > index 40d9e7c594..1f8c7383df 100755
-> > --- a/git-p4.py
-> > +++ b/git-p4.py
-> > @@ -2026,6 +2026,17 @@ def applyCommit(self, id):
-> >          tmpFile.write(submitTemplate)
-> >          tmpFile.close()
-> >
-> > +        # Run the pre-edit hook to allow programmatic update to the changelist
-> > +        hooks_path = gitConfig("core.hooksPath")
-> > +        if len(hooks_path) <= 0:
-> > +            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
-> > +
-> > +        hook_file = os.path.join(hooks_path, "p4-pre-edit-changelist")
-> > +        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file, fileName]) != 0:
-> > +            for f in editedFiles:
-> > +                p4_revert(f)
-> > +            return False
-> > +
-> >          if self.prepare_p4_only:
-> >              #
-> >              # Leave the p4 tree prepared, and the submit template around
-> >
-> > base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
+> Even more specifically, the goal is to always allow the following from
+> the root of a repo:
+> 
+>   git ls-tree --name-only -d HEAD | git sparse-checkout set --stdin
+> 
+> The ls-tree command provides directory names with an unescaped asterisk.
+> It also quotes the directories that contain an escaped backslash. We
+> must remove these quotes, then keep the escaped backslashes.
+> 
+> However, there is some care needed for the timing of these escapes. The
+> in-memory pattern list is used to update the working directory before
+> writing the patterns to disk. Thus, we need the command to have the
+> unescaped names in the hashsets for the cone comparisons, then escape
+> the patterns later.
+
+OK, this part make sense.
+
+> Use unquote_c_style() when parsing lines from stdin. Command-line
+> arguments will be parsed as-is, assuming the user can do the correct
+> level of escaping from their environment to match the exact directory
+> names.
+
+I think there's two issues here: escaping characters from the shell so
+that they make it intact to Git, and the question of whether Git is
+expecting patterns or raw filenames. I agree the user is responsible for
+the shell half, but I think we need to clarify what we're expecting.
+I.e., if I say:
+
+ git sparse-checkout set 'f*'
+
+am I trying to match "foo", or the literal file "f*"?
+
+> +static char *escaped_pattern(char *pattern)
+> +{
+> +	char *p = pattern;
+> +	struct strbuf final = STRBUF_INIT;
+> +
+> +	while (*p) {
+> +		if (*p == '*' || *p == '\\')
+> +			strbuf_addch(&final, '\\');
+> +
+> +		strbuf_addch(&final, *p);
+> +		p++;
+> +	}
+> +
+> +	return strbuf_detach(&final, NULL);
+> +}
+
+Do we need to catch other metacharacters here (using is_glob_special()
+perhaps)?
+
+> @@ -423,8 +442,21 @@ static int sparse_checkout_set(int argc, const char **argv, const char *prefix)
+>  		pl.use_cone_patterns = 1;
+>  
+>  		if (set_opts.use_stdin) {
+> -			while (!strbuf_getline(&line, stdin))
+> +			struct strbuf unquoted = STRBUF_INIT;
+> +			while (!strbuf_getline(&line, stdin)) {
+> +				if (line.buf[0] == '"') {
+> +					strbuf_setlen(&unquoted, 0);
+
+A minor nit, but strbuf_reset(&unquoted) would be more idiomatic here.
+
+> +					if (unquote_c_style(&unquoted, line.buf, NULL))
+> +						die(_("unable to unquote C-style string '%s'"),
+> +						line.buf);
+> +
+> +					strbuf_swap(&unquoted, &line);
+> +				}
+> +
+>  				strbuf_to_cone_pattern(&line, &pl);
+> +			}
+
+OK, overall this input procedure makes sense to me.
+
+-Peff
