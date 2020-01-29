@@ -2,104 +2,94 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA5B2C2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1F1BC2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:43:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A528A20661
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:41:05 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9367C20661
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 18:43:16 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="bntg9mtQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mlq+tEoX"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbgA2SlE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 13:41:04 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35963 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727522AbgA2SlE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 13:41:04 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p17so1123437wma.1
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 10:41:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mK/uxdgn6o7UY1f/sHimGKbk9LyOZOPs5M51f4PsdWw=;
-        b=bntg9mtQq8O26dCCvBiybgLEC5vYbVlgLDbpV8tFlFVfwJe8MDNwofhcCBhTjJu3zT
-         WppmAQTOrRCbHSHPwRxNPo0Bk6aNJvc+eKm1KYi/Nrv9uv7kPuolm+l6dic6qdEAdIPK
-         /BDxH53UyybeKKedclFP4tUDv8k+cwDOt4Dad7RSQ3h/BhMD63DO7HRDr8QA+cNcAeeV
-         Pal4AufkckGYaABR5zTnIdUCZqIZ4xIja+6IYYuOlDVIkP41FXFoMJS2KWme5csIBddN
-         kIBjlHyIayEMsGphxnkx7qriQrjT9gsivTakWKJ7+arV/fgX9yg1SmZTd6+TVV633lan
-         3ZZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mK/uxdgn6o7UY1f/sHimGKbk9LyOZOPs5M51f4PsdWw=;
-        b=hD58l5sx/9hzxhfgew2CyYqy//vXWuaODDisikGR37t+N+haWzyYi1eeDjb6N+IEOO
-         CEXVaZQO6vUkJoDXsES0SpPhlmSsejZPQJB2ZDsxJdpcZmHxiGBtbh6Y0DTURhy72Vcj
-         3LCYhizyLlPMWmk3gxOVU4UmBa0PsnYbw59B3uNBG5hfthYmxnMwOmTkZr5umty1pyR2
-         fNQRCaqBA5K7TAodbB2ar0+nzIJWMuVw9Egx3RuC4jdkymdtt0G5njOp3z50WMtkF1r6
-         2kQORLEWoxH8GWO/owxo92K/8rmYu01njlk5PClkfrGDmGxMdAYLmW0aK3gWOlWuBYs/
-         Yb/w==
-X-Gm-Message-State: APjAAAXPCHqUrEduGnUM5+3SCMlev3VTZpV5evKaj2H+eU3vBAp49kjf
-        sICdAEibNpn6LkxKNF7Ml/z5cPEqElLwn9RZ+IPEzg==
-X-Google-Smtp-Source: APXvYqy8hTRsnIC8XntCMUpmmygxQi5ScsHvUt9xA5Z6ykyUg/UhEsUW2qAif1ayP2PgZv5szBHFzktCq2azXuuq6dE=
-X-Received: by 2002:a1c:660a:: with SMTP id a10mr610089wmc.122.1580323262429;
- Wed, 29 Jan 2020 10:41:02 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
- <2215899.n3y15ba4yI@mfick-lnx> <20200129081259.GB601903@coredump.intra.peff.net>
- <9138554.c73hJVQVja@mfick-lnx>
-In-Reply-To: <9138554.c73hJVQVja@mfick-lnx>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Wed, 29 Jan 2020 19:40:50 +0100
-Message-ID: <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] Reftable support for git-core
-To:     Martin Fick <mfick@codeaurora.org>
-Cc:     Jeff King <peff@peff.net>,
+        id S1727532AbgA2SnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 13:43:15 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:50361 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727413AbgA2SnP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 13:43:15 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A5324B16D;
+        Wed, 29 Jan 2020 13:43:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=bkamMSfwq/+7HWX35YZzaV/8CtA=; b=mlq+tE
+        oXw8dGdJwTDqB5xBFiXub69KQDiv+7OnTrjOJKU+DpG2bqrSlB3A1IfYceJRALr2
+        4+dbQ6x/Ou1lA1UXlopikNlZTU7HUcM7wT+qruoH/3ILVg1LHYS3IP1sxd4Q7fsD
+        p0p07DZv3bFqhr0ucnfObWGQH8zmJxJbjDBlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=uZ1CY1jVLavt1LdM64vb/lRb35wNKe7d
+        yZp9zKiWfSL58iDxK3jd9OrLoJkODXmJKQvQsTFBi1Zv0eFJiKgvdcwNzFEp5rfO
+        LU7OT/+Sg6IRoyShaIxaoEwG9vTdIyAh85GNGGhrkmJUVdJqrmSwJGYJYQzeU1BW
+        +wJS5jDkjPo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 118EE4B16C;
+        Wed, 29 Jan 2020 13:43:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 655394B16B;
+        Wed, 29 Jan 2020 13:43:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
         Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
         git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com>
+        <pull.539.v2.git.1580134944.gitgitgadget@gmail.com>
+        <721201269df47dc2e406e4091ab6b18a4a59b65f.1580134944.git.gitgitgadget@gmail.com>
+        <20200128073100.GA563058@coredump.intra.peff.net>
+        <CAFQ2z_MXDODBmsCVPdvNQzhFSYchq77mJCxw9P0kPSmSnsTZqQ@mail.gmail.com>
+        <20200129104754.GE4218@coredump.intra.peff.net>
+Date:   Wed, 29 Jan 2020 10:43:11 -0800
+In-Reply-To: <20200129104754.GE4218@coredump.intra.peff.net> (Jeff King's
+        message of "Wed, 29 Jan 2020 05:47:54 -0500")
+Message-ID: <xmqqh80e5cjk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 33DDB4DA-42C7-11EA-9609-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 5:49 PM Martin Fick <mfick@codeaurora.org> wrote:
-> > If you're actually doing the correct locking and packed-refs read (whic=
-h
-> > "real" implementations like libgit2 do) then no, I don't think that's
-> > dangerous. And I think libgit2 properly complains when it sees a
-> > repositoryformatversion above 0. I don't know offhand about JGit, or an=
-y
-> > of the lesser-used ones like dulwich or go-git.
+Jeff King <peff@peff.net> writes:
+
+> Making "refs" a file instead of a directory does work nicely, as any
+> attempts to read or write would get ENOTDIR. And we can fool
+> is_git_directory() as long as it's marked executable. That's OK on POSIX
+> systems, but I'm not sure how it would work on Windows (or maybe it
+> would work just fine, since we presumably just say "yep, everything is
+> executable").
 >
-> Today, some of these sound like shortcuts that are very likely taken quit=
-e a
-> bit by cleanup and other maintenance scripts (not necessarily formal git
-> tools), and the impact of these shortcuts is likely low with the current
-> model. However, I suspect these tools/scripts could be seriously disrupti=
-ve if
-> we leave the refs dir around when using reftable,
+> So perhaps that's enough, and what we put in HEAD won't matter (since
+> nobody will be able to write into refs/ anyway).
 
-Maybe we can leave the refs dir, but have no heads/ directory inside,
-and make the whole thing read-only?
+I wonder if it would help to take the "looser repository detection"
+code alone and have it in a release, way before the rest of the
+reftable topic is ready.  Then by the time a repository created by a
+reftable-enabled Git appears on people's disks, all the older
+versions of Git that are still in people's hands would at least know
+that it is a repository supported by future Git that they themselves
+do not know how to handle, stop repository discovery correctly and
+refrain from damaging the repository with an extension unknown to
+them?
 
-
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
