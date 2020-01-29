@@ -2,111 +2,88 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.5 required=3.0 tests=DKIM_INVALID,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
 	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4464C2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75241C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:47:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9DD7320716
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:15:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 50B36206D4
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:47:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p2Ww2aT+"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=mg.codeaurora.org header.i=@mg.codeaurora.org header.b="fr4tkPF+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727474AbgA2TPX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 14:15:23 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:40999 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726171AbgA2TPX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 14:15:23 -0500
-Received: by mail-lj1-f196.google.com with SMTP id h23so566525ljc.8
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 11:15:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=30RN8W3bcZ5LMXNeHvizGJQ07uEPiQoE0wM31IF3dZA=;
-        b=p2Ww2aT+RW86Xxy0X0SpPtpWQUV5SL86sL3+Ku0cbBbKvN15yLPWtPcmek3WwO+Yv4
-         dG9EKaG9yEk+YIEqtx8Cqz3SnszaNjP7iapxp0mHqsMhoSNTIcoip5H1e44xyvW9cW+b
-         ljxvtyx8Oq9efiKeykx0sfvEvrZ17b7eFEbHEAL/zRTvJt2qYRR7bzTTdbF0n7p9UJMH
-         2iTMg2l51jZy5thED8k4vunS22SKfTht3KBK4gaDwJPs66NWdkaO/2EhofYJpWft9+np
-         7LuQTkrnRmfO2oK18PeYCIEq6qA5+0XJgOPudKKGhBX8OV+2mxyBTQbep8WSebWvwQov
-         Xt9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=30RN8W3bcZ5LMXNeHvizGJQ07uEPiQoE0wM31IF3dZA=;
-        b=S3fbrLi9yi1WY8rBnCJiD7PkNrwDZy+f34up0LiI2wx72NvFXu1h0KvybE8WsIyLLJ
-         PNkQc9qemAvKY2u3S2FbfGoN/NZT0r4gI6m8yfwvJSraxyx2PPro0BjUU2uqWlTeIIRn
-         thCHk2JfuSbAw6NMOGGZXefvhtJKAVchUzZrOvYbqZy4w7U1BKN2UP5XWvfY29Raxn1d
-         LCCkJgQHj8IotQl6N1WuwrrLEzZs7XC78EgIKAgQsz7NsVpLSaUw3heWliifqVpMSTPJ
-         KP0RJy49orAd5jx3JCCWuAVDs4qgXoF0L3w1PlWujhCue0vCAXc4jXT/PMHPhPgRO5If
-         HSZw==
-X-Gm-Message-State: APjAAAUEEsA5JuwqZcTsbODfAvfK7kE9tTfSRs3xNzjN3w3/UmVgjlRA
-        BLp5HU7oQqJsoWiCGKEA2hI=
-X-Google-Smtp-Source: APXvYqw/t2etuwERTRz2LHRgG2kVPVONPARVE0hWgQxZz/X1uqEdwQIG5ioWOHP1X1CUi+cLhmNhiA==
-X-Received: by 2002:a2e:3504:: with SMTP id z4mr367267ljz.273.1580325321309;
-        Wed, 29 Jan 2020 11:15:21 -0800 (PST)
-Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
-        by smtp.gmail.com with ESMTPSA id k12sm1529983lfc.33.2020.01.29.11.15.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Jan 2020 11:15:20 -0800 (PST)
-From:   Jakub Narebski <jnareb@gmail.com>
-To:     Shourya Shukla <shouryashukla.oo@gmail.com>
-Cc:     christian.couder@gmail.com, t.gummerer@gmail.com,
-        git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
-Subject: Re: [GSoC] Exploring Previous year Projects
-References: <20200129171248.6217-1-shouryashukla.oo@gmail.com>
-Date:   Wed, 29 Jan 2020 20:15:18 +0100
-In-Reply-To: <20200129171248.6217-1-shouryashukla.oo@gmail.com> (Shourya
-        Shukla's message of "Wed, 29 Jan 2020 22:42:48 +0530")
-Message-ID: <86k15ars55.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
+        id S1726830AbgA2Tro (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 14:47:44 -0500
+Received: from mail25.static.mailgun.info ([104.130.122.25]:44463 "EHLO
+        mail25.static.mailgun.info" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726251AbgA2Tro (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Jan 2020 14:47:44 -0500
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1580327263; h=Content-Type: Content-Transfer-Encoding:
+ MIME-Version: References: In-Reply-To: Message-ID: Date: Subject: Cc:
+ To: From: Sender; bh=BK8AMAKSg47crc+jyzavBBGMikcaN228Q2/dTH2wAIg=; b=fr4tkPF+IQfZ+BdrcHAKBQDySbjw2W/N+RsQFyZVE+EQV+Ffjr5q4i5C+b/g4Ol+PiNwLDnE
+ 6lpm8ZYlAFxqZyiqEZN3foJbo1bFD3ZI4jXb76/nkIGnglM995p6eI/xfW8hqiHghs2JTtNP
+ E1khqR+uZr2YIR0Yonz3+3RLVYg=
+X-Mailgun-Sending-Ip: 104.130.122.25
+X-Mailgun-Sid: WyJjNzk3NCIsICJnaXRAdmdlci5rZXJuZWwub3JnIiwgImJlOWU0YSJd
+Received: from smtp.codeaurora.org (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171])
+ by mxa.mailgun.org with ESMTP id 5e31e15d.7f2f7ae32ae8-smtp-out-n02;
+ Wed, 29 Jan 2020 19:47:41 -0000 (UTC)
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E5C63C433CB; Wed, 29 Jan 2020 19:47:40 +0000 (UTC)
+Received: from mfick-lnx.localnet (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mfick)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50A6EC43383;
+        Wed, 29 Jan 2020 19:47:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 50A6EC43383
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=none smtp.mailfrom=mfick@codeaurora.org
+From:   Martin Fick <mfick@codeaurora.org>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        Han-Wen Nienhuys via GitGitGadget <gitgitgadget@gmail.com>,
+        git <git@vger.kernel.org>, Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH v2 5/5] Reftable support for git-core
+Date:   Wed, 29 Jan 2020 12:47:38 -0700
+Message-ID: <2165647.H0RpPiDeFZ@mfick-lnx>
+User-Agent: KMail/5.1.3 (Linux/4.4.0-154-generic; KDE/5.18.0; x86_64; ; )
+In-Reply-To: <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
+References: <pull.539.git.1579808479.gitgitgadget@gmail.com> <9138554.c73hJVQVja@mfick-lnx> <CAFQ2z_NkU6ekZkMqZpcFSEr8M3kfw0tiVCB2doHp3QTZtQ8UNg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Shourya Shukla <shouryashukla.oo@gmail.com> writes:
+On Wednesday, January 29, 2020 7:40:50 PM MST Han-Wen Nienhuys wrote:
+> On Wed, Jan 29, 2020 at 5:49 PM Martin Fick <mfick@codeaurora.org> wrote:
+> > > If you're actually doing the correct locking and packed-refs read (which
+> > > "real" implementations like libgit2 do) then no, I don't think that's
+> > > dangerous. And I think libgit2 properly complains when it sees a
+> > > repositoryformatversion above 0. I don't know offhand about JGit, or any
+> > > of the lesser-used ones like dulwich or go-git.
+> > 
+> > Today, some of these sound like shortcuts that are very likely taken quite
+> > a bit by cleanup and other maintenance scripts (not necessarily formal
+> > git tools), and the impact of these shortcuts is likely low with the
+> > current model. However, I suspect these tools/scripts could be seriously
+> > disruptive if we leave the refs dir around when using reftable,
+> 
+> Maybe we can leave the refs dir, but have no heads/ directory inside,
+> and make the whole thing read-only?
 
-> Hello,
->
-> I was looking at the previous year projects[1] and a project intrigued me=
-, namely:
-> "Convert scripts to builtins".
->
-> Following from Christian's advice[2], I have decided to focus on my proje=
-ct proposal.
-> I noticed that various commands such as "git bisect", "git web--browse"(i=
-t particularly
-> interests me) are still in their "shell" form and will be needed to be co=
-nverted into
-> their "C" form as per the project description.
-[...]
-> [1]: https://git.github.io/SoC-2019-Ideas/
-> [2]: https://lore.kernel.org/git/CAP8UFD2Fo=3D2suQDLwzLM-Wg3ZzXpqHw-x0brP=
-tPV0d4dRsgs9A@mail.gmail.com/
+That might be a good enough safety. I guess the next question would be,  would 
+it be OK for reftable to ignore and entries under the refs/ dir if they happen 
+to appear there somehow?
 
-As far as I know, "git bisect" is currently being converted from shell
-to C by Miriam Rubio for Outreachy project [3], so I am not sure if it
-would be feasible as GSoC 2020 project.
+-Martin
 
-I'm not sure if it would be possible and if it would make sense to
-convert "git instaweb" and/or it's helper script "git web--browse" from
-shell to C.
-
-I think trying to convert either "git stash" or "git submodule" to C
-would make more sense.
-
-[3]: https://public-inbox.org/git/20200128144026.53128-1-mirucam@gmail.com/=
-t/#u
-
-Best,
---=20
-Jakub Nar=C4=99bski
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code 
+Aurora Forum, hosted by The Linux Foundation
