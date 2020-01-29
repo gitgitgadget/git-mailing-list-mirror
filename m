@@ -2,121 +2,109 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A331EC33CB2
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA76C33CB2
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:35:20 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7D42B2070E
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:33:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F79420720
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 10:35:20 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="MxSeoDl8"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726145AbgA2Kdx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 05:33:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47376 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726069AbgA2Kdx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 05:33:53 -0500
-Received: (qmail 16289 invoked by uid 109); 29 Jan 2020 10:33:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Jan 2020 10:33:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15523 invoked by uid 111); 29 Jan 2020 10:41:29 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Jan 2020 05:41:29 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 29 Jan 2020 05:33:52 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v3 10/12] sparse-checkout: write escaped patterns in cone
- mode
-Message-ID: <20200129103352.GD4218@coredump.intra.peff.net>
-References: <pull.513.v2.git.1579900782.gitgitgadget@gmail.com>
- <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
- <e2f9afc70c92c606a9d93660bce0599b7b7ddf6e.1580236003.git.gitgitgadget@gmail.com>
- <20200129101713.GB4218@coredump.intra.peff.net>
+        id S1726178AbgA2KfT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 05:35:19 -0500
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:37307 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726116AbgA2KfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 05:35:19 -0500
+Received: by mail-wr1-f43.google.com with SMTP id w15so19590598wru.4
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 02:35:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=105+rO+X1toKA+Xuu7VFQuw67BUdOkNnV9MqFm3i0ck=;
+        b=MxSeoDl8vVF7b+wrd/aoLGpOl1V3OT0HPobvrFMKfwh+kETIMPP/04zG5ggOrHVFMs
+         WOBkaZAms0wZXFNl+/DyLh5BsZjcItp096+Z4wp0cCWjiakeGPos+hpIfr7dOGa+Qv/b
+         16T7nIB2ZbhgFGtEo62Cw2PO74ytdUHU4I7ss=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=105+rO+X1toKA+Xuu7VFQuw67BUdOkNnV9MqFm3i0ck=;
+        b=WjA0RBnuaiyD02rIo+a2dNGQuQ6WMwzlwjM6H8E+9+tuKfM4csP5Gwy4rMY9Z3A/TI
+         9rUH+YbMghi6dtRjYyufY4+kuUnFxw1ue1JhBqIEsneJwxQykCTW/RxkYw8LjJosIapG
+         NCfkA1eQiiIpq6lOKNVN4ZzRz72cFdfG5QcvplX0oMjHKnUiQgL2+f7pGMGX/8FNI85u
+         oIjsLDXR5XPWGn1rYor7og59SiklmU4NudT5ftllSlpyy9OJiQpTVQqAuXlUwsrMSVW6
+         7Z+Ee/VN8gxBGzKUYRkUzZPEsXfQjNr7Ez+XHcfCAVGBYCLRQ7qY7D1bh76oh1g7GcZa
+         v+sQ==
+X-Gm-Message-State: APjAAAWvlOduRhYhrFM4z6LmNAZ8L3rnMZfs3Rl02D4FhYYre1QrGQWZ
+        rXDmopeUBcLnm0ZFUghqKi5JfOEtYVLmFB/LVlw0Ry+gMyA=
+X-Google-Smtp-Source: APXvYqx74yJ8HwGQIyTK24RolQvXig1jV63oqz9nMZxHuUfdK6v9h0BXC0N87tz1Cx/Kip3Q5VzPjZk1cTsA9MDRYCI=
+X-Received: by 2002:a5d:5044:: with SMTP id h4mr32885846wrt.4.1580294117196;
+ Wed, 29 Jan 2020 02:35:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200129101713.GB4218@coredump.intra.peff.net>
+References: <CAPgZwKbZ0g+VXjnD03hGkRXfwU2DpygLhLBFG3xv1W9c8oQ1fQ@mail.gmail.com>
+In-Reply-To: <CAPgZwKbZ0g+VXjnD03hGkRXfwU2DpygLhLBFG3xv1W9c8oQ1fQ@mail.gmail.com>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Wed, 29 Jan 2020 10:35:06 +0000
+Message-ID: <CAE5ih79j+o87yEPbj+nFR6b4rx_NU2eLJite69=+qMdpXdEidw@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_git=2Dp4_cannot_use_perforce_client_created_by_p4j?=
+        =?UTF-8?Q?ava_=E2=80=94_=22Expected_view_key_View1_missing=22?=
+To:     Ivan Selin <ivan.selin@toptal.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 29, 2020 at 05:17:13AM -0500, Jeff King wrote:
+On Tue, 7 Jan 2020 at 15:53, Ivan Selin <ivan.selin@toptal.com> wrote:
+>
+> Hello!
+>
+> If I create a perforce client from java using p4java, it gets created
+> with an extra key "ViewDepotType" in client definition. When I try to
+> do `git p4 sync --use-client-spec`, git-p4 dies with message like
+> "Expected view key View1 missing" =E2=80=94 because it assumes that all k=
+eys
+> starting with "View" are "View0", "View1" and so on.
+>
+> How to reproduce:
+> 1) Create perforce repository;
+> 2) Create a perforce client (let's name it "my-client") in said
+> perforce repository using p4java; add one view mapping to the client
+> on creation;
+> 3) Run `P4CLIENT=3Dmy-client git p4 sync --use-client-spec`;
+> 4) git p4 finishes with error "Expected view key View1 missing".
+>
+> Attaching hexdumped/unmarshalled examples of "regular" client
+> definition and client created with p4java. Note that p4java's version
+> has "ViewDepotType" key and regular client does not. Also,
+> "ViewDepotType" key is not showing up in text output of `p4 client
+> -o`, only in binary format (`p4 -G client -o`). And I'm attaching a
+> patch that solved the issue for me.
+>
+> Is that information enough or should I add anything else? I'm new to
+> git community, but willing to help.
 
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> > 
-> > If a user somehow creates a directory with an asterisk (*) or backslash
-> > (\), then the "git sparse-checkout set" command will struggle to provide
-> > the correct pattern in the sparse-checkout file. When not in cone mode,
-> > the provided pattern is written directly into the sparse-checkout file.
-> > However, in cone mode we expect a list of paths to directories and then
-> > we convert those into patterns.
-> 
-> Is this really about cone mode? It seems more like it is about --stdin.
-> I.e., what are the rules for when the input is a filename and when it is
-> a pattern? In our earlier discussion, I had assumed that command-line
-> arguments to "sparse-checkout set" were actual filenames, and "--stdin"
-> just read them from stdin.
-> 
-> But looking at the documentation, they are always called "patterns" on
-> the command-line. Should the "--stdin" documentation make it clear that
-> we are no longer taking patterns, but instead actual filenames?
-> 
-> Or am I confused, and in non-cone-mode the "ls-tree | sparse-checkout"
-> pipeline is not supposed to work at all? (I.e., they really are always
-> patterns)?
+I suspect the problem lies at around line 4220 of git-p4, where it does thi=
+s:
 
-Hmph, sorry, I _was_ just confused. I was reading a copy of the manpage
-without your final patch, which made things much clearer.
+     view_keys =3D [ k for k in entry.keys() if k.startswith("View") ]
 
-So OK, I think the resulting documentation does make things clear. And
-this is just about cone mode, not --stdin. Please ignore my ramblings in
-the rest of the replied-to message. But...
+I think changing that startswith to a regex match would fix this,
+although I have not tried it.
+Something like:
 
-> > Even more specifically, the goal is to always allow the following from
-> > the root of a repo:
-> > 
-> >   git ls-tree --name-only -d HEAD | git sparse-checkout set --stdin
-> > 
-> > The ls-tree command provides directory names with an unescaped asterisk.
-> > It also quotes the directories that contain an escaped backslash. We
-> > must remove these quotes, then keep the escaped backslashes.
-> > 
-> > However, there is some care needed for the timing of these escapes. The
-> > in-memory pattern list is used to update the working directory before
-> > writing the patterns to disk. Thus, we need the command to have the
-> > unescaped names in the hashsets for the cone comparisons, then escape
-> > the patterns later.
-> 
-> OK, this part make sense.
+is_view =3D re.compile(r'^View\d+$')
+view_keys =3D [ k for k in entry.keys() if is_view.match(k) ]
 
-You could also demonstrate this even without --stdin with something
-like:
 
-  git config core.sparsecheckoutcone true
-  git sparse-checkout set 'foo*bar'
-
-which should take that as a literal filename and put the pattern
-'foo\*bar' in the sparse-checkout file. And your tests do cover that.
-
-So really there are two separate bugs here, and it might be a little
-easier to explain the "timing of these escapes" thing by doing them
-separately. I.e., the case above needs escaping and we could demonstrate
-the bug with a command-line "set".  And then follow up by fixing the
-problem with correctly de-quoting --stdin.
-
-> > +static char *escaped_pattern(char *pattern)
-> [...]
-> Do we need to catch other metacharacters here (using is_glob_special()
-> perhaps)?
-
-After de-confusing myself, I think the individual code comments I wrote
-still apply though (especially this one).
-
--Peff
+>
+> Regards,
+> Ivan.
