@@ -2,169 +2,111 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 850EEC2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4464C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:15:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5C59720716
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:05:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9DD7320716
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 19:15:24 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lhj6BmbR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p2Ww2aT+"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728476AbgA2TFb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 14:05:31 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64626 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727515AbgA2TFb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 14:05:31 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2DFE41AD4;
-        Wed, 29 Jan 2020 14:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=svTqsZtAPzZFluNXjIFs9zl+bEE=; b=Lhj6Bm
-        bROPOvd+C9mlmZeJjI+Jgg+YGRPv08uymbI+A1B/B/A3qF1Cebb/M0Hz27oIXoNh
-        Y/DEgBSeHxK8/gx1rZRU0284DEoORt/FW7Tys+Lqa8vXj9sI6INzzkwXdI0bFHDl
-        OChf2YFNU9xzYoEzHVqKj3kly08leqZCg9iMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=A+M1eLriiXawG1vWXtMv0KCjuotv/TSb
-        3UOx5k/p9cKAs5KMP7nQBBolv7D/cqTlCo8e7tjmdwwN8TlFdTYv17jLFbDfwCZm
-        hER3KE31/dD7uPENnMFJSbu9jDoVjk8gSjrD60MzU0Urnus2sLeGOxfg8YH5Ny4W
-        WMQtrcD7eBo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id CAE5541AD3;
-        Wed, 29 Jan 2020 14:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3284041AD2;
-        Wed, 29 Jan 2020 14:05:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Andrey Mazo <ahippo@yandex.com>, Git Users <git@vger.kernel.org>,
-        Ben Keene <seraphire@gmail.com>,
-        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
-References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
-        <xmqqzheg76m3.fsf@gitster-ct.c.googlers.com>
-        <CAE5ih79a4SeiAnC_c+XHXAiibeNBg-h1ZjMsv2pHMNtHGmqX1w@mail.gmail.com>
-Date:   Wed, 29 Jan 2020 11:05:22 -0800
-In-Reply-To: <CAE5ih79a4SeiAnC_c+XHXAiibeNBg-h1ZjMsv2pHMNtHGmqX1w@mail.gmail.com>
-        (Luke Diamand's message of "Wed, 29 Jan 2020 10:13:27 +0000")
-Message-ID: <xmqqtv4edqx9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1727474AbgA2TPX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 14:15:23 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:40999 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726171AbgA2TPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 14:15:23 -0500
+Received: by mail-lj1-f196.google.com with SMTP id h23so566525ljc.8
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 11:15:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=30RN8W3bcZ5LMXNeHvizGJQ07uEPiQoE0wM31IF3dZA=;
+        b=p2Ww2aT+RW86Xxy0X0SpPtpWQUV5SL86sL3+Ku0cbBbKvN15yLPWtPcmek3WwO+Yv4
+         dG9EKaG9yEk+YIEqtx8Cqz3SnszaNjP7iapxp0mHqsMhoSNTIcoip5H1e44xyvW9cW+b
+         ljxvtyx8Oq9efiKeykx0sfvEvrZ17b7eFEbHEAL/zRTvJt2qYRR7bzTTdbF0n7p9UJMH
+         2iTMg2l51jZy5thED8k4vunS22SKfTht3KBK4gaDwJPs66NWdkaO/2EhofYJpWft9+np
+         7LuQTkrnRmfO2oK18PeYCIEq6qA5+0XJgOPudKKGhBX8OV+2mxyBTQbep8WSebWvwQov
+         Xt9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=30RN8W3bcZ5LMXNeHvizGJQ07uEPiQoE0wM31IF3dZA=;
+        b=S3fbrLi9yi1WY8rBnCJiD7PkNrwDZy+f34up0LiI2wx72NvFXu1h0KvybE8WsIyLLJ
+         PNkQc9qemAvKY2u3S2FbfGoN/NZT0r4gI6m8yfwvJSraxyx2PPro0BjUU2uqWlTeIIRn
+         thCHk2JfuSbAw6NMOGGZXefvhtJKAVchUzZrOvYbqZy4w7U1BKN2UP5XWvfY29Raxn1d
+         LCCkJgQHj8IotQl6N1WuwrrLEzZs7XC78EgIKAgQsz7NsVpLSaUw3heWliifqVpMSTPJ
+         KP0RJy49orAd5jx3JCCWuAVDs4qgXoF0L3w1PlWujhCue0vCAXc4jXT/PMHPhPgRO5If
+         HSZw==
+X-Gm-Message-State: APjAAAUEEsA5JuwqZcTsbODfAvfK7kE9tTfSRs3xNzjN3w3/UmVgjlRA
+        BLp5HU7oQqJsoWiCGKEA2hI=
+X-Google-Smtp-Source: APXvYqw/t2etuwERTRz2LHRgG2kVPVONPARVE0hWgQxZz/X1uqEdwQIG5ioWOHP1X1CUi+cLhmNhiA==
+X-Received: by 2002:a2e:3504:: with SMTP id z4mr367267ljz.273.1580325321309;
+        Wed, 29 Jan 2020 11:15:21 -0800 (PST)
+Received: from Laptop-Acer-Aspire-F15 (host-89-229-7-83.dynamic.mm.pl. [89.229.7.83])
+        by smtp.gmail.com with ESMTPSA id k12sm1529983lfc.33.2020.01.29.11.15.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Jan 2020 11:15:20 -0800 (PST)
+From:   Jakub Narebski <jnareb@gmail.com>
+To:     Shourya Shukla <shouryashukla.oo@gmail.com>
+Cc:     christian.couder@gmail.com, t.gummerer@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de
+Subject: Re: [GSoC] Exploring Previous year Projects
+References: <20200129171248.6217-1-shouryashukla.oo@gmail.com>
+Date:   Wed, 29 Jan 2020 20:15:18 +0100
+In-Reply-To: <20200129171248.6217-1-shouryashukla.oo@gmail.com> (Shourya
+        Shukla's message of "Wed, 29 Jan 2020 22:42:48 +0530")
+Message-ID: <86k15ars55.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/25.2 (windows-nt)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4DAD1704-42CA-11EA-B7CB-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
+Shourya Shukla <shouryashukla.oo@gmail.com> writes:
 
-> On Tue, 21 Jan 2020 at 23:05, Junio C Hamano <gitster@pobox.com> wrote:
->>
->> [jc] asking for help from those who made non-trivial changes to "git
->> p4" in the past 18 months or so for reviewing.
+> Hello,
 >
-> This looks fine to me. I've not actually tested it.
+> I was looking at the previous year projects[1] and a project intrigued me=
+, namely:
+> "Convert scripts to builtins".
 >
-> Ack.
+> Following from Christian's advice[2], I have decided to focus on my proje=
+ct proposal.
+> I noticed that various commands such as "git bisect", "git web--browse"(i=
+t particularly
+> interests me) are still in their "shell" form and will be needed to be co=
+nverted into
+> their "C" form as per the project description.
+[...]
+> [1]: https://git.github.io/SoC-2019-Ideas/
+> [2]: https://lore.kernel.org/git/CAP8UFD2Fo=3D2suQDLwzLM-Wg3ZzXpqHw-x0brP=
+tPV0d4dRsgs9A@mail.gmail.com/
 
-Thanks, but it wasn't very helpful to see an Ack (i.e. "an expert
-says this is good") without seeing any of my "why is this good?"
-answered by either the original author or the expert X-<.
+As far as I know, "git bisect" is currently being converted from shell
+to C by Miriam Rubio for Outreachy project [3], so I am not sure if it
+would be feasible as GSoC 2020 project.
 
->> "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > From: Ben Keene <seraphire@gmail.com>
->> > Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
->>
->> "git shortlog --no-merges" would show that the convention is to
->> downcase "Add".
->>
->> With two consecutive non-words (i.e. 'pre' and "pedit'), it really
->> feels an unpronounceable mouthful to a non-perforce person like me.
->>
->> On the core Git side, "git commit", which is the primary command
->> that is used to create a new commit, has two hooks that helps to
->> enforce consistency to the commit log messages:
->>
->>  - The "prepare-commit-msg" hook prepares the message to be further
->>    edited by the end-user in the editor
->>
->>  - The "commit-msg" hook takes what the end-user edited in the
->>    editor, and can audit and/or tweaks it.
->>
->> Having a matching pair of hooks and making sure the new hooks have
->> similar names to these existing ones may help experienced Git users
->> adopt the new hooks "git p4" learns here.
->>
->> What makes "p4-pre-pedit-changelist" a good name for this hook?  "In
->> pure Perforce without Git, there is 'pre-pedit-changelist' hook that
->> Perforce users are already familiar with" would be a good answer but
->> not being P4 user myself, I do not know if that is true.
->>
->> Also, "git commit" has a mechanism (i.e. "--no-verify") to suppress
->> the "auditing" hook, and it serves as an escape hatch.  The new hook
->> "git p4" learns may want to have a similar mechanism, to keep its
->> users productive even when they have broken/stale/bogus hook rejects
->> their legitimate log message, by allowing them to bypass the
->> offending hook(s).
->>
->>
->> > Add an additional hook to the git-p4 command to allow a hook to modify
->> > the text of the changelist prior to displaying the p4editor command.
->> >
->> > This hook will be called prior to checking for the flag
->> > "--prepare-p4-only".
->> >
->> > The hook is optional, if it does not exist, it will be skipped.
->> >
->> > The hook takes a single parameter, the filename of the temporary file
->> > that contains the P4 submit text.
->> >
->> > The hook should return a zero exit code on success or a non-zero exit
->> > code on failure.  If the hook returns a non-zero exit code, git-p4
->> > will revert the P4 edits by calling p4_revert(f) on each file that was
->> > flagged as edited and then it will return False so the calling method
->> > may continue as it does in existing failure cases.
->>
->> The githooks(5) page should talk about some of these, I would think.
->>
->> >  git-p4.py | 11 +++++++++++
->> >  1 file changed, 11 insertions(+)
->> >
->> > diff --git a/git-p4.py b/git-p4.py
->> > index 40d9e7c594..1f8c7383df 100755
->> > --- a/git-p4.py
->> > +++ b/git-p4.py
->> > @@ -2026,6 +2026,17 @@ def applyCommit(self, id):
->> >          tmpFile.write(submitTemplate)
->> >          tmpFile.close()
->> >
->> > +        # Run the pre-edit hook to allow programmatic update to the changelist
->> > +        hooks_path = gitConfig("core.hooksPath")
->> > +        if len(hooks_path) <= 0:
->> > +            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
->> > +
->> > +        hook_file = os.path.join(hooks_path, "p4-pre-edit-changelist")
->> > +        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file, fileName]) != 0:
->> > +            for f in editedFiles:
->> > +                p4_revert(f)
->> > +            return False
->> > +
->> >          if self.prepare_p4_only:
->> >              #
->> >              # Leave the p4 tree prepared, and the submit template around
->> >
->> > base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
+I'm not sure if it would be possible and if it would make sense to
+convert "git instaweb" and/or it's helper script "git web--browse" from
+shell to C.
+
+I think trying to convert either "git stash" or "git submodule" to C
+would make more sense.
+
+[3]: https://public-inbox.org/git/20200128144026.53128-1-mirucam@gmail.com/=
+t/#u
+
+Best,
+--=20
+Jakub Nar=C4=99bski
