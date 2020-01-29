@@ -5,61 +5,62 @@ X-Spam-Level:
 X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D9FCC33CB7
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A75B9C2D0DB
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id CB5ED206D5
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:54 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 6FE0D206D5
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 22:03:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CPxU3cX1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awPYU07t"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726762AbgA2WDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 17:03:53 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39873 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726222AbgA2WDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 17:03:51 -0500
-Received: by mail-wr1-f67.google.com with SMTP id y11so1392669wrt.6
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 14:03:48 -0800 (PST)
+        id S1726770AbgA2WDz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 17:03:55 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:36161 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726736AbgA2WDw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 17:03:52 -0500
+Received: by mail-wm1-f67.google.com with SMTP id p17so1764941wma.1
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 14:03:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=eOW7ZR7XOpzw/b1ufbziIWWepfolUPPVh6H8feOJQDQ=;
-        b=CPxU3cX1jmCGf1Z0Gchka/UuMGBoaziIhhWbjPfqiXzDBdIvJOnaCisj1EN23zMrkN
-         FNvBsLti64KfnvD0Cw6d+opyDMdYNITCOlaAHNf11Ake+B79XMBa0zoSht9V8qfOZ/R9
-         dwh3N9mVlhKYqtTyvmaW27hGzrVI3RasJfgCmHiz9YNK68Shky3TUMJ/DeTslF5Ji2xZ
-         duByQjnsUZjNALjGAHER0UrvWoQwqbNrdoOxf8y2HXZGDXgJKtq0ZPR15IRWNMWwlfFy
-         8V+5rRsbK+MKnok+pMStrXmgYLge2QBBX0qmS/3bWZE96pDeijvSOfEqnf2638xPM3qM
-         ju5Q==
+        bh=7Vq73R40espVKmFSR4Gemv2ZRIhs5+Vas2Or/9uunBY=;
+        b=awPYU07tTgyfjesUMxnzVlZeQuuKrZXiYgWFlsZOy36AtdHRcHOAfSV2kQndE4eL1x
+         tGxj7Ftjsp1NpRJDaeKgZe/BhEC/Bq3wNTskUZxJnRsEwEm2iLh0W6/1aAzarkFhCglE
+         13VTKOYxoyMHjsSVOExRfREOKODRdOhIn4eeO7E7qanpE3h+DDUB/n2kNa6j/bQSWGkF
+         tiR6zwLmWe/COkMpDvtooPfk4YLKHvVl0x7rpKuugxTnQK1+HWWM9mgiG7CVQ2nVHEdV
+         9uouw+kBe3jbBUwcSBcOnohV3B3/N0dVfi3cCkI/Okuy7KQHx4FHJzzQvir7NWPPgr+O
+         naNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=eOW7ZR7XOpzw/b1ufbziIWWepfolUPPVh6H8feOJQDQ=;
-        b=AN6xiLelOWPkGY4o8PyQMHmy5d0ONY0ImaBG16s08xpt6My4qzDOixtWPkkPJazfW+
-         Ub8anitjNPUFBNr9UV3nPs0B/qdZEIj53OZlxngeGV6k4YwOPPyd+dLjVSnLmxC6r6up
-         zxAmyzQc4wv4Rbtcu1YuVAr87bxknrxYgAAssyzvH7ikP5wjAbCTB+Pr39uzsk8P+2if
-         HucA7p08x8PXYQO/Rcd+KTg9lvzMKWD9mR/NoT6mhI9vE/P+oQWXIcpgEGgIG4UO6eGI
-         WSexSkvmjSVIsIxRQqh5Ur4kkxHdmotDrfFsF1KnUQAc/e4mTs9m4z1GsdZODZR7+npH
-         ybGg==
-X-Gm-Message-State: APjAAAX96/Uvh6qjADXJAWo8IJMk8rzNtMrfZj9j+Ch942vWmISzoXNT
-        WSOByDM6y5gooFYfi4ndyiLMySTq
-X-Google-Smtp-Source: APXvYqy99gdkyuUmZ4Q1sRnE7n94pFZhYLGAEcPwuL1tCp72d4iN8HEf8dNG+5cUDm/pZHkn6LphVA==
-X-Received: by 2002:a5d:6ac5:: with SMTP id u5mr1058650wrw.271.1580335427936;
-        Wed, 29 Jan 2020 14:03:47 -0800 (PST)
+        bh=7Vq73R40espVKmFSR4Gemv2ZRIhs5+Vas2Or/9uunBY=;
+        b=dBZ0K2QAatiXR0uftluqlbagOZGzoRTzpvrSbghxT3lzxSuRcb4Tb9I5+Ib8GYWy5+
+         Ow2gCuX/A+9vnywJJ5hMPMUPOXuyxRmy72lHT02Oady43B/zBLuQGAq92N65xx4+S/ae
+         S5j2VIjYFNJLfG8vhKxcJtiuW/UaqwBYMvj6dvB8/qThMggv5svhnu5g4EW9y+CFCNGL
+         CKjmJDdUP+linMBRXjt4spih/DK77m+9WCjtADV+Qd5oJyYil0qtE1RFTSq8WaQf0XK4
+         VAZ91yQWEz8SjoZmMvEL9l34gq+Be9D/WF8O0rDPUGDZE+5qnkhVUAMN8d1jqB33+nuc
+         P5/w==
+X-Gm-Message-State: APjAAAUkgWhTX6XoEIBbnvyLa8Q6FL7WOs0ffdIqQTNIkMCtU3edDjvp
+        qNUjpkdklQkUUia8CfvhUfoYPlPz
+X-Google-Smtp-Source: APXvYqxp/KwF5pMeNa0FyOPD4P1dZXgrlmaMkuv5wIn1zp08ekVqQY9ZD3k7cVJ6eZvOlVvZQrn+WQ==
+X-Received: by 2002:a7b:c8d3:: with SMTP id f19mr1308162wml.26.1580335430333;
+        Wed, 29 Jan 2020 14:03:50 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x132sm9251436wmg.0.2020.01.29.14.03.47
+        by smtp.gmail.com with ESMTPSA id o187sm3814880wme.36.2020.01.29.14.03.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2020 14:03:47 -0800 (PST)
-Message-Id: <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
+        Wed, 29 Jan 2020 14:03:49 -0800 (PST)
+Message-Id: <7fb8063541248b7b91d9559dbca1445c634a87f1.1580335424.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
 References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 29 Jan 2020 22:03:40 +0000
-Subject: [PATCH 3/6] dir: fix confusion based on variable tense
+Date:   Wed, 29 Jan 2020 22:03:43 +0000
+Subject: [PATCH 6/6] t7063: blindly accept diffs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,127 +79,247 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Elijah Newren <newren@gmail.com>
 
-Despite having contributed several fixes in this area, I have for months
-(years?) assumed that the "exclude" variable was a directive; this
-caused me to think of it as a different mode we operate in and left me
-confused as I tried to build up a mental model around why we'd need such
-a directive.  I mostly tried to ignore it while focusing on the pieces I
-was trying to understand.
+Assuming that the changes I made in the last commit to drastically
+modify how and when and especially how frequently untracked paths are
+visited should result in changes to the untracked-cache, this commit
+simply updates the t7063 testcases to match what the code now reports.
 
-Then I finally traced this variable all back to a call to is_excluded(),
-meaning it was actually functioning as an adjective.  In particular, it
-was a checked property ("Does this path match a rule in .gitignore?"),
-rather than a mode passed in from the caller.  Change the variable name
-to match the part of speech used by the function called to define it,
-which will hopefully make these bits of code slightly clearer to the
-next reader.
+If this is correct, this commit should be squashed into the previous
+one.
+
+It'd be nice if I could get an untracked-cache expert to comment on
+this...
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- dir.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ t/t7063-status-untracked-cache.sh | 50 ++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 31 deletions(-)
 
-diff --git a/dir.c b/dir.c
-index c358158f55..225f0bc082 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1656,7 +1656,7 @@ static enum exist_status directory_exists_in_index(struct index_state *istate,
- static enum path_treatment treat_directory(struct dir_struct *dir,
- 	struct index_state *istate,
- 	struct untracked_cache_dir *untracked,
--	const char *dirname, int len, int baselen, int exclude,
-+	const char *dirname, int len, int baselen, int excluded,
- 	const struct pathspec *pathspec)
- {
- 	int nested_repo = 0;
-@@ -1679,13 +1679,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 		}
- 		if (nested_repo)
- 			return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
--				(exclude ? path_excluded : path_untracked));
-+				(excluded ? path_excluded : path_untracked));
+diff --git a/t/t7063-status-untracked-cache.sh b/t/t7063-status-untracked-cache.sh
+index 190ae149cf..c1b0fd0540 100755
+--- a/t/t7063-status-untracked-cache.sh
++++ b/t/t7063-status-untracked-cache.sh
+@@ -85,9 +85,7 @@ dtwo/
+ three
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-three
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
  
- 		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
- 			break;
--		if (exclude &&
--			(dir->flags & DIR_SHOW_IGNORED_TOO) &&
--			(dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
-+		if (excluded &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO) &&
-+		    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
- 
- 			/*
- 			 * This is an excluded directory and we are
-@@ -1713,7 +1713,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	/* This is the "show_other_directories" case */
- 
- 	if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
--		return exclude ? path_excluded : path_untracked;
-+		return excluded ? path_excluded : path_untracked;
- 
- 	untracked = lookup_untracked(dir->untracked, untracked,
- 				     dirname + baselen, len - baselen);
-@@ -1723,7 +1723,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	 * the directory contains any files.
- 	 */
- 	return read_directory_recursive(dir, istate, dirname, len,
--					untracked, 1, exclude, pathspec);
-+					untracked, 1, excluded, pathspec);
- }
- 
- /*
-@@ -1904,7 +1904,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 				      int baselen,
- 				      const struct pathspec *pathspec)
- {
--	int has_path_in_index, dtype, exclude;
-+	int has_path_in_index, dtype, excluded;
- 	enum path_treatment path_treatment;
- 
- 	if (!cdir->d_name)
-@@ -1949,13 +1949,13 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 	    (directory_exists_in_index(istate, path->buf, path->len) == index_nonexistent))
- 		return path_none;
- 
--	exclude = is_excluded(dir, istate, path->buf, &dtype);
-+	excluded = is_excluded(dir, istate, path->buf, &dtype);
- 
- 	/*
- 	 * Excluded? If we don't explicitly want to show
- 	 * ignored files, ignore it
- 	 */
--	if (exclude && !(dir->flags & (DIR_SHOW_IGNORED|DIR_SHOW_IGNORED_TOO)))
-+	if (excluded && !(dir->flags & (DIR_SHOW_IGNORED|DIR_SHOW_IGNORED_TOO)))
- 		return path_excluded;
- 
- 	switch (dtype) {
-@@ -1965,7 +1965,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 		strbuf_addch(path, '/');
- 		path_treatment = treat_directory(dir, istate, untracked,
- 						 path->buf, path->len,
--						 baselen, exclude, pathspec);
-+						 baselen, excluded, pathspec);
- 		/*
- 		 * If 1) we only want to return directories that
- 		 * match an exclude pattern and 2) this directory does
-@@ -1974,7 +1974,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 		 * recurse into this directory (instead of marking the
- 		 * directory itself as an ignored path).
- 		 */
--		if (!exclude &&
-+		if (!excluded &&
- 		    path_treatment == path_excluded &&
- 		    (dir->flags & DIR_SHOW_IGNORED_TOO) &&
- 		    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING))
-@@ -1982,7 +1982,7 @@ static enum path_treatment treat_path(struct dir_struct *dir,
- 		return path_treatment;
- 	case DT_REG:
- 	case DT_LNK:
--		return exclude ? path_excluded : path_untracked;
-+		return excluded ? path_excluded : path_untracked;
- 	}
- }
+ test_expect_success 'status first time (empty cache)' '
+@@ -140,8 +138,6 @@ test_expect_success 'modify in root directory, one dir invalidation' '
+ A  done/one
+ A  one
+ A  two
+-?? dthree/
+-?? dtwo/
+ ?? four
+ ?? three
+ EOF
+@@ -164,15 +160,11 @@ core.excludesfile 0000000000000000000000000000000000000000
+ exclude_per_dir .gitignore
+ flags 00000006
+ / 0000000000000000000000000000000000000000 recurse valid
+-dthree/
+-dtwo/
+ four
+ three
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-three
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -217,9 +209,7 @@ dtwo/
+ three
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+-three
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -235,6 +225,7 @@ A  done/one
+ A  one
+ A  two
+ ?? .gitignore
++?? dthree/
+ ?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../actual &&
+@@ -256,11 +247,11 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
++dthree/
+ dtwo/
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -277,7 +268,6 @@ flags 00000006
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -290,7 +280,6 @@ test_expect_success 'status after the move' '
+ A  done/one
+ A  one
+ ?? .gitignore
+-?? dtwo/
+ ?? two
+ EOF
+ 	test_cmp ../status.expect ../actual &&
+@@ -312,12 +301,10 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
+-dtwo/
+ two
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -334,7 +321,6 @@ flags 00000006
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -348,7 +334,6 @@ A  done/one
+ A  one
+ A  two
+ ?? .gitignore
+-?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../actual &&
+ 	cat >../trace.expect <<EOF &&
+@@ -369,11 +354,9 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
+-dtwo/
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -392,7 +375,6 @@ test_expect_success 'status after commit' '
+ 	git status --porcelain >../actual &&
+ 	cat >../status.expect <<EOF &&
+ ?? .gitignore
+-?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../actual &&
+ 	cat >../trace.expect <<EOF &&
+@@ -413,11 +395,9 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
+-dtwo/
+ /done/ 0000000000000000000000000000000000000000 recurse valid
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -451,7 +431,6 @@ test_expect_success 'test sparse status with untracked cache' '
+  M done/two
+ ?? .gitignore
+ ?? done/five
+-?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../status.actual &&
+ 	cat >../trace.expect <<EOF &&
+@@ -472,12 +451,10 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
+-dtwo/
+ /done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
+ five
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect ../actual
+ '
+@@ -491,7 +468,6 @@ test_expect_success 'test sparse status again with untracked cache' '
+  M done/two
+ ?? .gitignore
+ ?? done/five
+-?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../status.actual &&
+ 	cat >../trace.expect <<EOF &&
+@@ -519,7 +495,6 @@ test_expect_success 'test sparse status with untracked cache and subdir' '
+ ?? .gitignore
+ ?? done/five
+ ?? done/sub/
+-?? dtwo/
+ EOF
+ 	test_cmp ../status.expect ../status.actual &&
+ 	cat >../trace.expect <<EOF &&
+@@ -540,17 +515,13 @@ exclude_per_dir .gitignore
+ flags 00000006
+ / e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
+ .gitignore
+-dtwo/
+ /done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
+ five
+ sub/
+ /done/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
+-sub/
+ /done/sub/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
+-file
+ /dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
+ /dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
+-two
+ EOF
+ 	test_cmp ../expect-from-test-dump ../actual
+ '
+@@ -615,6 +586,23 @@ test_expect_success 'setting core.untrackedCache to true and using git status cr
+ 	test_cmp ../expect-no-uc ../actual &&
+ 	git status &&
+ 	test-tool dump-untracked-cache >../actual &&
++	cat >../expect-from-test-dump <<EOF &&
++info/exclude 13263c0978fb9fad16b2d580fb800b6d811c3ff0
++core.excludesfile 0000000000000000000000000000000000000000
++exclude_per_dir .gitignore
++flags 00000006
++/ e6fcc8f2ee31bae321d66afd183fcb7237afae6e recurse valid
++.gitignore
++dthree/
++dtwo/
++/done/ 1946f0437f90c5005533cbe1736a6451ca301714 recurse valid
++five
++sub/
++/done/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
++/done/sub/sub/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dthree/ 0000000000000000000000000000000000000000 recurse check_only valid
++/dtwo/ 0000000000000000000000000000000000000000 recurse check_only valid
++EOF
+ 	test_cmp ../expect-from-test-dump ../actual
+ '
  
 -- 
 gitgitgadget
-
