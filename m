@@ -2,147 +2,104 @@ Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F5A7C33C9E
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 01:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E399FC33C9E
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 02:03:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1051420CC7
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 01:09:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id ADC502051A
+	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 02:03:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J4wmn/vR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SU6vuIjF"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726803AbgA2BJf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 28 Jan 2020 20:09:35 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:33295 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbgA2BJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Jan 2020 20:09:34 -0500
-Received: by mail-ed1-f65.google.com with SMTP id r21so16860784edq.0
-        for <git@vger.kernel.org>; Tue, 28 Jan 2020 17:09:34 -0800 (PST)
+        id S1726401AbgA2CAH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 28 Jan 2020 21:00:07 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:36169 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726363AbgA2CAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Jan 2020 21:00:06 -0500
+Received: by mail-qk1-f195.google.com with SMTP id w25so9827292qki.3
+        for <git@vger.kernel.org>; Tue, 28 Jan 2020 18:00:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=fwX5tHMWM1Elsm4Oike2dVoURlYIx86Xk30JDH+5kT0=;
-        b=J4wmn/vRgcNqcPIcXf6gn4Ld2ZrP9hQUj8dgAjhF33oXdiZWRYiJ+AHKxsB7vXQIud
-         nR/PARB1uUm8ZluMX2XBexJErqSmQpHOQMqvdlEUJ6TGD4sWwpshGowKjySuO4DpPT/2
-         7+A482bgxt8rq+tjgGZimqjBgNgjfJ73VHhYw3CAMn8B+0S4gimU+iuRelwdHXbNWYSb
-         N2+4MDfgrmT/Kdtk3Z1AgYuGtjDm3LILJb+iox6NNW76iP0h+DMHYV19mxF1YJXqskB8
-         P3FT2DwH7qTkVxNXeyxZjbypPwDZMcV14eeih0deX72swLEjMvnI+3u1SPU8g8vdcqZG
-         9a7Q==
+        bh=r00pz4Uh/T78gV3gHtd0miAssx6GSbKOyoKf+x3ZUvI=;
+        b=SU6vuIjFYkpQzeQCUzcTJmc254tDcANKO5rUGpciXJ25SAMHYsKu9AQX6EEsDf/g+C
+         waOR2fpNGQqLwb11sUVGP4P/r4ExyypF5wCZB7SPbjJbaPiiGEoYcHCcdPMqcOgSyali
+         xWeN6kLloMlR0BZLRHAaKMwOo7/6v92FnGF++YH3QNayyPmGJQxSH6YSlXV91iGcnZhT
+         LktgUptORTy4G37bNBzuw49hLN63HqVDJZGPR+3AMX3LoG8iubHPPIPe2rEnaRs384wh
+         rdX2F/gL59OQMMFVc6exJlotPYK5e+dWfMKK0a2NPD0aRKSplcZ0M3Rjs4L0V2gRnwnf
+         YuNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=fwX5tHMWM1Elsm4Oike2dVoURlYIx86Xk30JDH+5kT0=;
-        b=eYjRR4b7gEb9bEkSUAHU7WXnMYoc1OKFB9KS11pL7keiV2s9JjRyE09wRbkVRGTJ7h
-         mba7aYBq2FmPl84NsCGY9ewDr2pg2gx9/x/1KXq+sHqN6IQbi6RvWl0HhYgM2gnha4W9
-         XMnUFgCk/FXET9CZ1WYwCpbREAxTlvxV8P98rDr22QQGwblFGd1CIfJjJFKFWNKvsxS+
-         o73of65j14jJEqsRgor5IQx3qoBgqWk6UjT6XT1+XP5xTwnD/NKiMovbChXvpITWFJHS
-         dA5yPwP+p0jBsEx7R+EopwMENHVRjcYRQWuqNtBlvblpWwvvip9ywzMLxxquizTVaArZ
-         SByA==
-X-Gm-Message-State: APjAAAVIdhEFn/C985rpdhLD2EG35dSzkQH7bHrP7tQWoY+U8NyDG1ZE
-        snzGUC0w9WpzfJCpoNo8mVRklQt8aV2Eu+EqlA0=
-X-Google-Smtp-Source: APXvYqzY6GlxLDWhvjZWd7soUiYyxXkqGpz5nFdhSl95hPQYg3iix8k2a/iZB8FGk3xXOZkZNmFb+lRDAkYfvGpouP8=
-X-Received: by 2002:a17:906:22cf:: with SMTP id q15mr5332134eja.77.1580260173291;
- Tue, 28 Jan 2020 17:09:33 -0800 (PST)
+        bh=r00pz4Uh/T78gV3gHtd0miAssx6GSbKOyoKf+x3ZUvI=;
+        b=U7hZLcuO684+tEi2Ay15aRBfYxDTv2/4xQ0JGibsfRy8/Ivd1IT+tUvy9ZhagywZml
+         PmuP1pOPqUNCR1WgPmQAHRSSWJsp/DO3KRtkWBLiPOYv+15ARzF5ULbMrho1tGI50r73
+         zsEhAwjrxCobcuqnCNJ8ZTDQZw4AfxGgUVC9gilgMxP7TebOmeYr6fsuEo7QcfPPq/lT
+         /SBHhe0IyxLpq+7WRo0ktePTuUA8i9A7clK0Fd491Q3ygMiyYPz7h5jbyAzW6r36J+vp
+         E6uYn9FFrUwpo26xUMLCZKeMerZ4uC9J9Y2H9oH783xq+WBTC6bLl3UX1gQ3rTc1rrNb
+         vpeg==
+X-Gm-Message-State: APjAAAXgoldsdaNqfw7zi+tKRIZv5iURnt26t3SV0N14dX3RGi81jYUp
+        1d8dJhh4MJvhh2VTNpCBjYLqW4xrFUrZWMHuDANOkUN+
+X-Google-Smtp-Source: APXvYqyw7dZ/oeQWK40+EYn/EwG4WlNDVt9wxMMNjGy/07gdcLfeheGLhQH6do5Nej6E2tUuOWgvEevIOv+bgJYjUBg=
+X-Received: by 2002:a37:d0c:: with SMTP id 12mr25854715qkn.464.1580263205630;
+ Tue, 28 Jan 2020 18:00:05 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.508.git.1577934241.gitgitgadget@gmail.com>
- <pull.508.v2.git.1578438752.gitgitgadget@gmail.com> <9f9febd3f4f7f82178fceac98fcc91cb28a1b3b9.1578438752.git.gitgitgadget@gmail.com>
- <20200127235210.GC233139@google.com>
-In-Reply-To: <20200127235210.GC233139@google.com>
-From:   Heba Waly <heba.waly@gmail.com>
-Date:   Wed, 29 Jan 2020 14:09:21 +1300
-Message-ID: <CACg5j26DEXuxwqRYHi5UOBUpRwsu_2A9LwgyKq4qB9wxqasD7g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] add: use advise function to display hints
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     Heba Waly via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+References: <CAOTb1wfoMf338VPRYcjAv+EaMYQxKJ=kP6-qMykG-LfxPrWuag@mail.gmail.com>
+ <20200127055509.GA12108@coredump.intra.peff.net> <CAOTb1wd9D3YytevTt0cGnw1o-9cN1-yxCqbuH4oLH1KB6mzEeA@mail.gmail.com>
+ <20200128094801.GC574544@coredump.intra.peff.net>
+In-Reply-To: <20200128094801.GC574544@coredump.intra.peff.net>
+From:   Chris Jerdonek <chris.jerdonek@gmail.com>
+Date:   Tue, 28 Jan 2020 17:59:54 -0800
+Message-ID: <CAOTb1wecnwXrOqJa-dq1zyS1ydgQ-c_b_GX7FkWzJPtGk6xL3g@mail.gmail.com>
+Subject: Re: git-clone --single-branch clones objects outside of branch
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 12:52 PM Emily Shaffer <emilyshaffer@google.com> wrote:
+On Tue, Jan 28, 2020 at 1:48 AM Jeff King <peff@peff.net> wrote:
+> On Sun, Jan 26, 2020 at 10:46:07PM -0800, Chris Jerdonek wrote:
+> > I'm guessing other flags also don't apply when --local is being used.
+> > For example, I'm guessing --reference is also ignored when using
+> > --local, but I haven't checked yet to confirm. It would be nice if the
+> > documentation gave a heads up in cases like these. Even if hard links
+> > are being used, it's not clear from the docs whether the objects are
+> > filtered first, prior to hard linking, when flags like --single-branch
+> > and --reference are passed.
 >
-> Hmm, I wonder if addNothing really makes sense/is understandable when
-> I'm configuring? I see two cases you're addressing; first, adding an
-> ignored file ("Use -f if you really want to add") - which "addNothing"
-> doesn't really make sense for - and second, "add" with nothing
-> specified ("did you mean 'git add .'"), where "addNothing" makes sense
-> in context. Out of context though, perhaps "hint.addIgnoredFile" and
-> "hint.addEmptyPathspec" make more sense? Of course naming is one of the
-> two hardest problems in computer science (next to race conditions and
-> off-by-one errors) so probably someone else can suggest a better name :)
->
+> No, "--reference" behaves as usual.
 
-I agree, as this patch was my first interaction with the advice
-library, but now after many discussions on different threads it makes
-more sense to add two config variables for the two messages.
+On this, I found that --reference does behave differently in the way
+that I suspected. For example, when run with the default --local, I
+found that git-clone will create hard links in the new repo to loose
+objects, even if those objects already exist in the reference
+repository. When run with --non-local, the objects in the reference
+repository weren't copied (I didn't find them in the cloned repo's
+pack file).
 
->
-> As mentioned earlier, I'm not sure that tying this advice to the same
-> config as the next one you change really makes sense.
->
-> Nitwise, it's somewhat common for advice hints to also tell you how to
-> disable them; see sha1-name.c:get_oid_basic's 'object_name_msg' for an
-> example.
->
+So in addition to --single-branch, this seems to be another case where
+`git-clone --local` will ignore the provided options when deciding
+what files inside .git/objects/ to hard-link. It just hard-links
+everything. This is another example of something that I think would be
+worth mentioning in the docs in some form. Currently, the
+documentation for --reference suggests that objects won't be created
+in the new repo if they already exist in the reference repository.
 
-I can see that this was followed in only three locations around the
-code base, which means that not telling the user how to disable the
-hint is more common.
-Initially I tended to think of it as noise as I suspect the user will
-ignore this extra line about disabling the message more often. But
-after taking a second look at Documentation/config/advice.txt I
-realized how hard it will be for the user to find the corresponding
-configuration variable to the message that he/she would like to turn
-off,
-specially when the list is getting longer. So seems like displaying
-the extra note will make the user's life easier *when* s/he wants to
-turn it off.
+--Chris
 
-> >               exit_status = 1;
-> >       }
-> >
-> > @@ -480,7 +481,8 @@ int cmd_add(int argc, const char **argv, const char *prefix)
-> >
-> >       if (require_pathspec && pathspec.nr == 0) {
-> >               fprintf(stderr, _("Nothing specified, nothing added.\n"));
-> > -             fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
-> > +             if (advice_add_nothing)
-> > +                     advise( _("Maybe you wanted to say 'git add .'?\n"));
->
-> Same nit as above.
->
-> >               return 0;
-> >       }
-> >
-> > diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-> > index c325167b90..a649805369 100755
-> > --- a/t/t3700-add.sh
-> > +++ b/t/t3700-add.sh
-> > @@ -326,7 +326,7 @@ test_expect_success 'git add --dry-run of an existing file output' "
-> >  cat >expect.err <<\EOF
-> >  The following paths are ignored by one of your .gitignore files:
-> >  ignored-file
-> > -Use -f if you really want to add them.
-> > +hint: Use -f if you really want to add them.
-> >  EOF
-> >  cat >expect.out <<\EOF
-> >  add 'track-this'
-> > --
-> > gitgitgadget
->
-> Finally, you'd better update Documentation/config/advice.txt too.
-
-Yeah, got that on my todo list :)
-
-Thanks,
-Heba
+> However, "--depth" is ignored (and
+> issues a warning). I don't think it would be wrong to issue a warning
+> when --single-branch is used locally (though it would not be "single
+> branch is ignored, since it does impact which refs are copied). But I
+> kind of wonder if it would be annoying for people who don't care about
+> having the extra objects reachable.
