@@ -2,150 +2,104 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7010CC33C9E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 12:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0FDCC2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:28:07 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3CF2F206F0
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 12:36:10 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 7160820CC7
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:28:07 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="L5h0AtNp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4nFbapN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727241AbgA3MgJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 07:36:09 -0500
-Received: from mout.gmx.net ([212.227.17.21]:41685 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727158AbgA3MgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 07:36:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580387766;
-        bh=/uuljFP2I1wtU0grgdvBxSrqxMMz46twsuRGErEsuwo=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=L5h0AtNp2pVCXwbXBCi8CrRF8fkjsIjvvR3zhvTyvnO//d0xnA1/ny5Kp6zWNA15a
-         iKDiOJh1IHy6NY4PSMOHaEXH3//qfpncpo5a7SK8CtTIOfoVc30Q5GDoEmfHYexc/L
-         D4OPto3/HDum3nKEog1vEaGX8kzSYhoWDq2N9iNs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MirjY-1jSuxe1Ikm-00euX3; Thu, 30
- Jan 2020 13:36:06 +0100
-Date:   Thu, 30 Jan 2020 13:36:05 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Miriam Rubio <mirucam@gmail.com>
-cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 04/11] run-command: make `exists_in_PATH()`
- non-static
-In-Reply-To: <20200128144026.53128-5-mirucam@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001301332450.46@tvgsbejvaqbjf.bet>
-References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-5-mirucam@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VnHWHtWwSqNbwEgsQawV/f0Dlq2pLsarCxRV/qpYOTK8bH4K5iI
- nIx4VlPigpeR7iPgOHTjBfKSRf4U8kNa4USIMJd0QQw9h34W4+oa6Sdg455GEtf9AnvnQN+
- o6w1kbI4YxJ6m2+d4GS1db/KnYsvYCl7IgFxQhrh1+uNZP0hIWRVauUrX3JZeE8MYrVq8td
- AMuKmn/XmFSctDHc1ioiQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:4YJbiSBOUgc=:x7ODEL/uQSuYomFZZmMN4+
- Clyx5sNe6HOjSY1ymXGOHVvVApXg6QOpNPSrdXgZanxL6eo/MU/ztqczx96UwUr42ughjiEIN
- TVqczIEQlF8n9ck+j9Zkf0kHRFqHP9yna+2vtXQCTaWn01xpOeoG5veHS/fQosQct7WLgH+lQ
- YAofPcDYmlRm/JxG/pyEj8FMu9S5Hu6/Y8Npjd0kUTEWUbF+sxcNYZLfJTqAdmewOxOrz4FDJ
- 7qDKmVMBBtR8XmfeIDogYvWJ6e5C8xd8LY8dsCCDUR4/Gx1g8Sdrzl+vZuh2e+SFk+Bj/uRy6
- H5qlCttk6mTijDUP3nGTP81V4+1ik+E4TOkK/IRAi4RgLeOhA8nRjod650k/3jGk9XLlnU6cN
- xtsWQD1Go20ruHBUmbmNtEgUuHd/y6++Tjm33teQdUvHgVY0hhKczhQRLTi5ZKE313edrbjH7
- R+zYA5nQ8kOW1zPbRkBge9lNVnnElqeVU/5C4PgHYbBgc/9PNCJgX1LT9zIyoVSLqyXkwka9L
- jsXxOheEwjLdWb4HamV2QD/CafFwM61ELiC5Jp+26g82GUof8Gpwgl8MUgA9PJ2pa2RdimHQX
- 28hvLUovv6ypI+p9hgDsJV618zW+McHEw1EqYESBj2o8cYNweNenLXn1ajoXbV1edjyVwsSHE
- Lsyr7Agw8lUop2HJdygb9WX9VL16XktxCE88WGRhJ1HOiJftzlB+65Hfnc2TmHqefItTMPoAg
- DN0iIXNpwVRFnsOHv9JKnd5jKiu18193w3S1fp8rGFIV5tOjPRBRk4tCCjINJX4WLtYgadKjr
- b1rWlJhw3ERdHYVXMvUS5gAJZWDmBOAUiDXCxRs/xFvaqPOMPfQsTikZlUqnE80EZaER3qiuW
- ILaPlqewoD9o/BoQdYhbiHFTLc3np0WFWsbW5i8iRtb/yc46GXBopyzFhWudSq2EetAkNiZKE
- X08U/UiB2mA35s9E/VKA1DwVDZ3643fBBa4apzKJB1q/1csEZ6vKMRtm+9fCSkvS0EIaRrE18
- OjqHTTUp6eMNGzjVNgHlRsi+tBT0uW4VkPAUafSDo8VkvL+SQIGTjPchlCz8Nykg6uPULvC6B
- tf+SCWFfu8wVOS/Gx6pE3//48lldDnLbNJu6uqK1RUq3JLD8XyQgFB+exMNTd/2KQVfGOj+qV
- 5ICezFuxEIZOB52stUmskbvkEpQ+0C+GUEQuNnqxEeo8VZSJCDmp+G3uLK250RN5UtNOEx939
- 5IPA/JZ2X+BJ1aSeQ
+        id S1727348AbgA3N2G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 08:28:06 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:38506 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727265AbgA3N2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 08:28:06 -0500
+Received: by mail-qt1-f193.google.com with SMTP id c24so2418171qtp.5
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 05:28:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gnv0T1ayu5QjUCfjcg1DN2uA6IqE80bILOlYyKwob3E=;
+        b=R4nFbapNyz0mh0mgeX4WlWgnqmeog7rjLZyIPD7jZdAV0XloKp/TqKgGjD7PB6hImF
+         att8B/lcnJmJ4SF+PJnpTvCMhTae7qthGTSToSXWqOdo+DuCG0/+Obwdfe3ORYNJtdoR
+         TDpZeZZT7pJKQGiJLnSe845HjIDOBs4l9fC4k5mkwPLJJt/eSKKronBh5mZOefAmaLaH
+         hI2Q08YWsANbl63Gi+FE0ky7S8JK/bCCs9ZCcCvQA0kxa9xa0WhqoLKpe8I2WXQHHtp0
+         03aTLznWuoYNb1sFtmy/89FOsa7GoaVRB43lWoqEad1ZXry279qK/WulW3E3G3kE61xO
+         d4hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=gnv0T1ayu5QjUCfjcg1DN2uA6IqE80bILOlYyKwob3E=;
+        b=pdJcheHxG8y9IYpQtOXlFuPCU+9B2DHs7Gcq3fGkKyBdXL/lXOyJlLApewKLDMOJlh
+         UqcqykIGJhOHAPi+J0VAogNzDOQ0fSQ+f5aFYttswe6HUa5EjWR+dyyqVAlbUkvQ8oQn
+         MYAw5SH4fOlZXy8bjjHu6lcwNLfxcqFLGH43Ad66LU6fYo2fih52Rnuwl45k9BLo9W3W
+         WWiBJxi+5rAfPmHASJLrg7LoLUYnlKony8qjze4tzII5rk9DJ2EuNzu19Ln2Eu01G/cj
+         TNqQ8+5sLTx1sHvc5ZkwYoEZTg5HTUE5DBWScIrorftLQ6hbLn9N61oCewA9VmA5d4li
+         Vn5g==
+X-Gm-Message-State: APjAAAWRg8DTsBeS04E0m0Y0LXwhlT6lL9+KfKzxYBAdqzrEZBKampk6
+        BlIA8b6wqVGn26KTLvrTihk=
+X-Google-Smtp-Source: APXvYqzUiB3tDZyYSzOK0F+gn/2raU0K2yQ/LNwJhII3pljWvb8pc1h6GAETIVotGu+6Zovxnx5f4A==
+X-Received: by 2002:ac8:740c:: with SMTP id p12mr4640520qtq.286.1580390885302;
+        Thu, 30 Jan 2020 05:28:05 -0800 (PST)
+Received: from [192.168.1.127] ([192.222.216.4])
+        by smtp.gmail.com with ESMTPSA id f7sm2977702qtp.86.2020.01.30.05.28.03
+        (version=TLS1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 30 Jan 2020 05:28:04 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 9.3 \(3124\))
+Subject: Re: [PATCH v3 08/12] grep: allow submodule functions to run in parallel
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <CAHd-oW590ZnNnCdD5LLiBQB73LRUVEf41wv7FLJvGMwd2kLYww@mail.gmail.com>
+Date:   Thu, 30 Jan 2020 08:28:01 -0500
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>,
+        =?utf-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Jonathan Tan <jonathantanmy@google.com>,
+        Jeff King <peff@peff.net>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Stefan Beller <stefanbeller@gmail.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <7DA86BCF-8A20-4B06-BDC0-82EEDFCC0AE5@gmail.com>
+References: <cover.1579141989.git.matheus.bernardino@usp.br> <af8ad95d413aa3d763769eb3ae9544e25ccbe2d1.1579141989.git.matheus.bernardino@usp.br> <20200129112613.GE10482@szeder.dev> <xmqqy2tqdr9t.fsf@gitster-ct.c.googlers.com> <CAHd-oW590ZnNnCdD5LLiBQB73LRUVEf41wv7FLJvGMwd2kLYww@mail.gmail.com>
+To:     Matheus Tavares Bernardino <matheus.bernardino@usp.br>
+X-Mailer: Apple Mail (2.3124)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Miriam,
+Hi everyone,
+>>=20
+>> @@ -958,6 +946,8 @@ int cmd_grep(int argc, const char **argv, const =
+char *prefix)
+>>                        /* die the same way as if we did it at the =
+beginning */
+>>                        setup_git_directory();
+>>        }
+>> +       if (!use_index)
+>> +               recurse_submodules =3D 0; /* ignore */
+>>=20
+>>        /*
+>>         * skip a -- separator; we know it cannot be
+>=20
+> Yeah, this seems more meaningful, IMHO, as we can easily see that the
+> recurse_submodules option was dropped in favor of using --no-index.
+>=20
+I agree. I=E2=80=99ll send a v2 of my patch with this added.
 
-On Tue, 28 Jan 2020, Miriam Rubio wrote:
+Philippe.
 
-> From: Pranit Bauva <pranit.bauva@gmail.com>
->
-> Removes the `static` keyword from `exists_in_PATH()` function
-> and declares the function in `run-command.h` file.
-> The function will be used in bisect_visualize() in a later
-> commit.
-
-I inspected the code in `exists_in_PATH()` and in `locate_in_PATH()` and
-it looks as if neither of them depended on file-local variables (which
-would otherwise need to be addressed when exporting the function).
-
-If you contribute another iteration of this patch series, it might make
-sense to mention this in the commit message explicitly.
-
-Thanks,
-Dscho
-
->
-> Mentored by: Christian Couder <chriscool@tuxfamily.org>
-> Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> ---
->  run-command.c |  2 +-
->  run-command.h | 11 +++++++++++
->  2 files changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index f5e1149f9b..4df975178d 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -210,7 +210,7 @@ static char *locate_in_PATH(const char *file)
->  	return NULL;
->  }
->
-> -static int exists_in_PATH(const char *file)
-> +int exists_in_PATH(const char *file)
->  {
->  	char *r =3D locate_in_PATH(file);
->  	int found =3D r !=3D NULL;
-> diff --git a/run-command.h b/run-command.h
-> index 592d9dc035..7c8e206d97 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -172,6 +172,17 @@ void child_process_clear(struct child_process *);
->
->  int is_executable(const char *name);
->
-> +/**
-> + * Returns if a $PATH given by parameter is found or not (it is NULL). =
-This
-> + * function uses locate_in_PATH() function that emulates the path searc=
-h that
-> + * execvp would perform. Memory used to store the resultant path is fre=
-ed by
-> + * the function.
-> + *
-> + * The caller should ensure that $PATH contains no directory
-> + * separators.
-> + */
-> +int exists_in_PATH(const char *);
-> +
->  /**
->   * Start a sub-process. Takes a pointer to a `struct child_process`
->   * that specifies the details and returns pipe FDs (if requested).
-> --
-> 2.21.1 (Apple Git-122.3)
->
->
