@@ -8,72 +8,75 @@ X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8C0CC2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 83313C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 16:00:52 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 7AF8B2082E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:55:55 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4E12E206D5
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 16:00:52 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VhGhyslt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X3ydklTH"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727313AbgA3Pzy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 10:55:54 -0500
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:42965 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726948AbgA3Pzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 10:55:54 -0500
-Received: by mail-yw1-f66.google.com with SMTP id b81so2190484ywe.9
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:55:53 -0800 (PST)
+        id S1727278AbgA3QAv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 11:00:51 -0500
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:38383 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726948AbgA3QAv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 11:00:51 -0500
+Received: by mail-yw1-f68.google.com with SMTP id 10so2212584ywv.5
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 08:00:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mtReyBi9WUUgBMjc31sGmzUYDxKi4/ETBWw03WsAvqE=;
-        b=VhGhysltMzaix+K+rCc2idZzM/DBWRys4WVC0BUap/P4fn3+UPGsL894/HxtHBiLyn
-         51QFZIbW/sQfq5MaPRlzPcCf8Rmr7lH97Zz7iBsxPS9brmt/C2T8jh2fDEEdSPQXLBcR
-         t/JArPMWqTZYTe2H8wMz4ALexL6gOkv2FtkO8Wm3DuTz/HRvj9yjfLPPccvWiURZ9FOB
-         FU41IpU32orbH4hffvS1BiFIpluzEf9DoQS0/BBWmEQNKMiXb+F4gWdOGXI8yi9A0KJu
-         pOzT+25Ac5B9vJzT5RjE4nEgQi5CE5/ZHj+toJVHiLewMg6VauiiBfzH+uVxccRkakDE
-         ZD0A==
+        bh=isMq2XbaznjGUvhxZwsrOLGhxyyvNhAGzPoOQb0B6XA=;
+        b=X3ydklTHt7jgprinOMV2M4RCCFHRAv+Rn+dXW07Wks+a5OPVN0NnXwi4Y1SwqQMMmk
+         OqVi+z0t44uBkMTf88pfk26RIav+LfA4Oj+1lh4NHpmMksuoyKu6H926vF/LV11jMXh/
+         W1KX4o18CqkAyOFdjIhGFIhSaw8HYyavH9pcmdgquwMLvb4x6UYUMAi+V09pTiCXRdzn
+         jiUtmUSMXSbTkxtD1e6fJRifP4R6i+MZ+V+afQHCxS1dVv3k3tTnGQNhpoAq39LHytLi
+         rqukDMPn75iF2U6KIN9QSI4BAzVDdy84Kk4Lpc6dIf9ZF2YNU/n2s9reg7JMqnf3VAkT
+         fw/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=mtReyBi9WUUgBMjc31sGmzUYDxKi4/ETBWw03WsAvqE=;
-        b=kvwReenGnCq8Iw4Zn2nskF0LFTY9zvtJW1dEq4SNqmnlvclZjUCE9JRop3oILPz5Nv
-         3Nmec4ez1hmKUpmNqTXSivrWHzC5Oml8qtdAZMlpvG+tFfyha5bRrQubOewPn5QLBEjL
-         HteqobQDxWofDmPzMUA0QWnnauo57Abfx/00r5xrJTJvtianPe7HKgnslWrAIvJAF2fR
-         DG4PBgEwZPDdvmSnpY1dUnEt9l4mcDc0No4TfE6hdJ9ak3ods0oFZ4yUE+tsS7Q+EsVx
-         sTqPpdffibyH96s98bRzb5U3HgegF/zyZpFz6V+qiY/t5qR5uXpwJYbTfpTJJ1Qnn0C1
-         riUg==
-X-Gm-Message-State: APjAAAXCl6zPnCOEFcANL6MdUe763Z86O16Pn4BEHwojqcghTd501YiH
-        wgrHQ4L6pL+h17dcAqcaTk1vkqrzk4LfUg==
-X-Google-Smtp-Source: APXvYqyKOG6tC3Jdf+Ubkgo2+bdkKjILjyqFmFYlsStfZzfROOSgJKKIWsJ4EH/Pd7vmbZuAeggJ4g==
-X-Received: by 2002:a81:2781:: with SMTP id n123mr4265939ywn.70.1580399752694;
-        Thu, 30 Jan 2020 07:55:52 -0800 (PST)
+        bh=isMq2XbaznjGUvhxZwsrOLGhxyyvNhAGzPoOQb0B6XA=;
+        b=uUPFcXVAZsivxbwUwzT+4xuvx5aM8/2ebfzPTAlb/Ch++kNxy1EZb8C2CpXJnPivqC
+         DgxqHRZlAELR5A1PNdkOCCsn+H/c6AFxj9D+P3sj64xWApGDby/gttEqlTWXoof8t0vj
+         PAF9ox9JzbPlJxOi1yHCNY4sUClJgQCpP/qJ+WPtFs2ON83Ovo22BCW9FiRY7gsGMyI/
+         UHVbFcsburkh85SQAtQpKj+cjPgFINVsgdPfJfqS/C/xkT8KyDZQ8ju2eyVfAQ4KwBmC
+         pUfSYi7GACx4Y8ytkThGonv/SPN7nRfEHV7CC2XRiiUZSERr+Xht51i9gZr9ox4UXROT
+         wXJg==
+X-Gm-Message-State: APjAAAU8pRjy+6eZT1Pqo/BPnN03IznTLblfQhDIl/RwOVi+azqH4asB
+        31lDDj8EZB/PKrI/Z0J6CUM=
+X-Google-Smtp-Source: APXvYqwsc7JePYY60N7LXqj910Et2wRksGo+73qkP9l9SOC+yH43/CwoErHQD2BOeCuA0tEWTR+cfQ==
+X-Received: by 2002:a81:2b0b:: with SMTP id r11mr3515348ywr.282.1580400049709;
+        Thu, 30 Jan 2020 08:00:49 -0800 (PST)
 Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id g190sm2636419ywf.41.2020.01.30.07.55.51
+        by smtp.gmail.com with ESMTPSA id d66sm2606263ywc.16.2020.01.30.08.00.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2020 07:55:51 -0800 (PST)
-Subject: Re: [PATCH 5/6] dir: replace exponential algorithm with a linear one
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Martin Melka <martin.melka@gmail.com>,
+        Thu, 30 Jan 2020 08:00:49 -0800 (PST)
+Subject: Re: [PATCH 4/6] dir: move setting of nested_repo next to its actual
+ usage
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Martin Melka <martin.melka@gmail.com>,
         =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
         Samuel Lijin <sxlijin@gmail.com>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Kevin.Willford@microsoft.com
+        <pclouds@gmail.com>
 References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
- <40b378e7adbbff5ecfd95fd888465fd0f99791c8.1580335424.git.gitgitgadget@gmail.com>
+ <3b2ec5eaf65c9fe44c4337a4cc2fc3dae6203d54.1580335424.git.gitgitgadget@gmail.com>
+ <8d9a6047-26be-ff78-cf1a-9f2b35f927e0@gmail.com>
+ <CABPp-BFbXJRW38CeGy78b22MfZ8cNizexCM-+n-ODqy+fOo2uw@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <59b5b766-29e2-a709-b407-56bf6ea60b47@gmail.com>
-Date:   Thu, 30 Jan 2020 10:55:50 -0500
+Message-ID: <1bc41d94-5d4d-4157-fc00-08b97fb20738@gmail.com>
+Date:   Thu, 30 Jan 2020 11:00:48 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
  Thunderbird/73.0
 MIME-Version: 1.0
-In-Reply-To: <40b378e7adbbff5ecfd95fd888465fd0f99791c8.1580335424.git.gitgitgadget@gmail.com>
+In-Reply-To: <CABPp-BFbXJRW38CeGy78b22MfZ8cNizexCM-+n-ODqy+fOo2uw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -82,278 +85,158 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am very enticed by the subject!
-
-On 1/29/2020 5:03 PM, Elijah Newren via GitGitGadget wrote:
-> Unfortunately, commit df5bcdf83aeb ("dir: recurse into untracked dirs
-> for ignored files", 2017-05-18), added exactly such a case to the code,
-
-I was disappointed that the commit you mention did not add a test for
-the new behavior, but then found a test change in the following commit
-fb89888849 (dir: hide untracked contents of untracked dirs, 2017-05-18).
-This makes me feel better that your changes are less likely to un-do
-the intention of df5bcdf83aeb.
-
-> meaning we'd have two calls to read_directory_recursive() for an
-> untracked directory.  So, if we had a file named
->    one/two/three/four/five/somefile.txt
-> and nothing in one/ was tracked, then 'git status --ignored' would
-> call read_directory_recursive() twice on the directory 'one/', and
-> each of those would call read_directory_recursive() twice on the
-> directory 'one/two/', and so on until read_directory_recursive() was
-> called 2^5 times for 'one/two/three/four/five/'.
-
-Wow! Good find. "Accidentally exponential" is a lot worse than
-"accidentally quadratic". At least the N here _usually_ does not
-grow too quickly, but the constant here (lstat-ing directories and
-files) is significant enough that 2^3 or 2^4 is enough to notice
-the difference.
-
-> Avoid calling read_directory_recursive() twice per level by moving a
-> lot of the special logic into treat_directory().
+On 1/30/2020 10:45 AM, Elijah Newren wrote:
+> On Thu, Jan 30, 2020 at 7:33 AM Derrick Stolee <stolee@gmail.com> wrote:
+>>
+>> On 1/29/2020 5:03 PM, Elijah Newren via GitGitGadget wrote:
+>>> From: Elijah Newren <newren@gmail.com>
+>>>
+>>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>>> ---
+>>>  dir.c | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/dir.c b/dir.c
+>>> index 225f0bc082..ef3307718a 100644
+>>> --- a/dir.c
+>>> +++ b/dir.c
+>>> @@ -1659,7 +1659,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>>>       const char *dirname, int len, int baselen, int excluded,
+>>>       const struct pathspec *pathspec)
+>>>  {
+>>> -     int nested_repo = 0;
+>>> +     int nested_repo;
+>>>
+>>>       /* The "len-1" is to strip the final '/' */
+>>>       switch (directory_exists_in_index(istate, dirname, len-1)) {
+>>> @@ -1670,6 +1670,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>>>               return path_none;
+>>>
+>>>       case index_nonexistent:
+>>> +             nested_repo = 0;
+>>
+>> I had to look at this code in-full from en/fill-directory-fixes-more to
+>> be sure that this case was the only use of nested_repo. However, I found
+>> that this switch statement is unnecessarily complicated. By converting
+>> the switch to multiple "if" statements, I noticed that the third case
+>> actually has a "break" statement that can lead to the final "fourth case"
+>> outside the switch statement.
+>>
+>> Hopefully the patch below is a worthy replacement for this one:
+>>
+>> -->8--
+>>
+>> From b5c04e6e028cb6c7f9e78fbdd2182383d928fe6d Mon Sep 17 00:00:00 2001
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>> Date: Thu, 30 Jan 2020 15:28:39 +0000
+>> Subject: [PATCH] dir: refactor treat_directory to clarify variable scope
+>>
+>> The nested_repo variable in treat_directory() is created and
+>> initialized before a multi-case switch statement, but is only
+>> used by one case. In fact, this switch is very asymmetrical,
+>> as the first two cases are simple but the third is more
+>> complicated than the rest of the method.
+>>
+>> Extract the switch statement into a series of "if" statements.
+>> This simplifies the trivial cases, while highlighting the fact
+>> that a "break" statement in a condition of the third case
+>> actually leads to jumping to the fourth case (after the switch).
+>> This assists a reader who provides an initial scan to notice
+>> there is a second way to approach the "show_other_directories"
+>> case than simply the response from directory_exists_in_index().
 > 
-> Since dir.c is somewhat complex, extra cruft built up around this over
-> time.  While trying to unravel it, I noticed several instances where the
-> first call to read_directory_recursive() would return e.g.
-> path_untracked for a some directory and a later one would return e.g.
-> path_none, and the code relied on the side-effect of the first adding
-> untracked entries to dir->entries in order to get the correct output
-> despite the supposed override in return value by the later call.
->
-> I am somewhat concerned that there are still bugs and maybe even
-> testcases with the wrong expectation.  I have tried to carefully
-> document treat_directory() since it becomes more complex after this
-> change (though much of this complexity came from elsewhere that probably
-> deserved better comments to begin with).  However, much of my work felt
-> more like a game of whackamole while attempting to make the code match
-> the existing regression tests than an attempt to create an
-> implementation that matched some clear design.  That seems wrong to me,
-> but the rules of existing behavior had so many special cases that I had
-> a hard time coming up with some overarching rules about what correct
-> behavior is for all cases, forcing me to hope that the regression tests
-> are correct and sufficient.  (I'll note that this turmoil makes working
-> with dir.c extremely unpleasant for me; I keep hoping it'll get better,
-> but it never seems to.)
+> Wait, I'm lost.  Wasn't that break statement the only way to get to
+> the "show_other_directories" block of code after the switch statement?
+>  I can't see where the second way is; am I missing something?
 
-Keep fighting the good fight! It appears that some of our most-important
-code has these complicated cases and side-effects because it has grown
-so organically over time. It's unlikely that someone _could_ rewrite it
-to avoid that pain, as dir.c contains a lot of accumulated knowledge from
-the many special-cases Git handles. I suppose the only thing we can do
-is try to write as many detailed tests as possible.
+Ah, I guess I didn't realize that exist_status didn't have a fourth
+mode. I was assuming that normally the switch would not hit any of
+the case statements was the way you would _assume_ to hit the block
+after the switch.
 
-> However, on the positive side, it does make the code much faster.  For
-> the following simple shell loop in an empty repository:
+So yes, my statement is incorrect, but the intention is correct:
+the flow of this method is very confusing.
+
+> That is, unless directory_exists_in_index() suddenly starts returning
+> some value other than the three current possibilities.  Perhaps we
+> should throw a BUG() if we get anything other than index_directory,
+> index_gitdir, or index_nonexistent.
 > 
->   for depth in $(seq 10 25)
->   do
->     dirs=$(for i in $(seq 1 $depth) ; do printf 'dir/' ; done)
->     rm -rf dir
->     mkdir -p $dirs
->     >$dirs/untracked-file
->     /usr/bin/time --format="$depth: %e" git status --ignored >/dev/null
->   done
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>  dir.c | 17 ++++++++---------
+>>  1 file changed, 8 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/dir.c b/dir.c
+>> index b460211e61..e48812efe6 100644
+>> --- a/dir.c
+>> +++ b/dir.c
+>> @@ -1659,17 +1659,16 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>>         const char *dirname, int len, int baselen, int exclude,
+>>         const struct pathspec *pathspec)
+>>  {
+>> -       int nested_repo = 0;
+>> -
+>>         /* The "len-1" is to strip the final '/' */
+>> -       switch (directory_exists_in_index(istate, dirname, len-1)) {
+>> -       case index_directory:
+>> -               return path_recurse;
+>> +       enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
+>>
+>> -       case index_gitdir:
+>> +       if (status == index_directory)
+>> +               return path_recurse;
+>> +       if (status == index_gitdir)
+>>                 return path_none;
+>>
+>> -       case index_nonexistent:
+>> +       if (status == index_nonexistent) {
+
+Since exist_status only has three options, this "if" is redundant.
+
+>> +               int nested_repo = 0;
+>>                 if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
+>>                     !(dir->flags & DIR_NO_GITLINKS)) {
+>>                         struct strbuf sb = STRBUF_INIT;
+>> @@ -1682,7 +1681,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>>                                 (exclude ? path_excluded : path_untracked));
+>>
+>>                 if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
+>> -                       break;
+>> +                       goto show_other_directories;
+
+It would be better to nest the rest of this block in an 
+if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES))
+
+>>                 if (exclude &&
+>>                         (dir->flags & DIR_SHOW_IGNORED_TOO) &&
+>>                         (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
+>> @@ -1711,7 +1710,7 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
+>>         }
 > 
-> I saw the following timings, in seconds (note that the numbers are a
-> little noisy from run-to-run, but the trend is very clear with every
-> run):
+> I'd say we'd want to add a BUG("Unhandled value for
+> directory_exists_in_index: %d\n", status); right here.
 > 
->     10: 0.03
->     11: 0.05
->     12: 0.08
->     13: 0.19
->     14: 0.29
->     15: 0.50
->     16: 1.05
->     17: 2.11
->     18: 4.11
->     19: 8.60
->     20: 17.55
->     21: 33.87
->     22: 68.71
->     23: 140.05
->     24: 274.45
->     25: 551.15
+>>
+>>         /* This is the "show_other_directories" case */
+>> -
+>> +show_other_directories:
 
-Are these timings on Linux? I imagine that the timings will increase
-much more quickly on Windows.
+...allowing us to drop this.
 
-> After this fix, those drop to:
+>>         if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
+>>                 return exclude ? path_excluded : path_untracked;
+>>
+>> --
+>> 2.25.0.vfs.1.1
 > 
->     10: 0.00
-...
->     25: 0.00
-
-Nice. I wonder if presenting these 0.00 values as a table is worth
-the space? At least the effect is dramatic.
-
-> In fact, it isn't until a depth of 190 nested directories that it
-> sometimes starts reporting a time of 0.01 seconds and doesn't
-> consistently report 0.01 seconds until there are 240 nested directories.
-> The previous code would have taken
->   17.55 * 2^220 / (60*60*24*365) = 9.4 * 10^59 YEARS
-> to have completed the 240 nested directories case.  It's not often
-> that you get to speed something up by a factor of 3*10^69.
-
-Awesome.
-
-> WARNING: This change breaks t7063.  I don't know whether that is to be expected
-> (I now intentionally visit untracked directories differently so naturally the
-> untracked cache should change), or if I've broken something.  I'm hoping to get
-> an untracked cache expert to chime in...
-
-I suppose that when the untracked cache is enabled, your expectation that we
-do not need to recurse into an untracked directory is incorrect: we actually
-want to explore that directory. Is there a mode we can check to see if we
-are REALLY REALLY collecting _all_ untracked paths? Perhaps we need to create
-one?
-
-I'm CC'ing Kevin Willford because he is more familiar with the Git index
-than me, and perhaps the untracked cache in particular.
-
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  dir.c | 151 ++++++++++++++++++++++++++++++++++++++++------------------
->  1 file changed, 105 insertions(+), 46 deletions(-)
-> 
-> diff --git a/dir.c b/dir.c
-> index ef3307718a..aaf038a9c4 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1659,7 +1659,13 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  	const char *dirname, int len, int baselen, int excluded,
->  	const struct pathspec *pathspec)
->  {
-> -	int nested_repo;
-> +	/*
-> +	 * WARNING: From this function, you can return path_recurse or you
-> +	 *          can call read_directory_recursive() (or neither), but
-> +	 *          you CAN'T DO BOTH.
-> +	 */
-> +	enum path_treatment state;
-> +	int nested_repo, old_ignored_nr, stop_early;
->  
->  	/* The "len-1" is to strip the final '/' */
->  	switch (directory_exists_in_index(istate, dirname, len-1)) {
-> @@ -1713,18 +1719,101 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->  
->  	/* This is the "show_other_directories" case */
->  
-> -	if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-> +	/*
-> +	 * We only need to recurse into untracked/ignored directories if
-> +	 * either of the following bits is set:
-> +	 *   - DIR_SHOW_IGNORED_TOO (because then we need to determine if
-> +	 *                           there are ignored directories below)
-> +	 *   - DIR_HIDE_EMPTY_DIRECTORIES (because we have to determine if
-> +	 *                                 the directory is empty)
-
-Perhaps here is where you could also have a DIR_LIST_ALL_UNTRACKED
-flag to ensure the untracked cache loads all untracked paths?
-
-> +	 */
-> +	if (!(dir->flags & (DIR_SHOW_IGNORED_TOO | DIR_HIDE_EMPTY_DIRECTORIES)))
->  		return excluded ? path_excluded : path_untracked;
->  
-> +	/*
-> +	 * If we only want to determine if dirname is empty, then we can
-> +	 * stop at the first file we find underneath that directory rather
-> +	 * than continuing to recurse beyond it.  If DIR_SHOW_IGNORED_TOO
-> +	 * is set, then we want MORE than just determining if dirname is
-> +	 * empty.
-> +	 */
-> +	stop_early = ((dir->flags & DIR_HIDE_EMPTY_DIRECTORIES) &&
-> +		      !(dir->flags & DIR_SHOW_IGNORED_TOO));
-> +
-> +	/*
-> +	 * If /every/ file within an untracked directory is ignored, then
-> +	 * we want to treat the directory as ignored (for e.g. status
-> +	 * --porcelain), without listing the individual ignored files
-> +	 * underneath.  To do so, we'll save the current ignored_nr, and
-> +	 * pop all the ones added after it if it turns out the entire
-> +	 * directory is ignored.
-
-Here is a question for an untracked cache expert: Do we store ignored
-paths in the untracked cache?
-
-> +	 */
-> +	old_ignored_nr = dir->ignored_nr;
-> +
-> +	/* Actually recurse into dirname now, we'll fixup the state later. */
->  	untracked = lookup_untracked(dir->untracked, untracked,
->  				     dirname + baselen, len - baselen);
-> +	state = read_directory_recursive(dir, istate, dirname, len, untracked,
-> +					 stop_early, stop_early, pathspec);
-> +
-> +	/* There are a variety of reasons we may need to fixup the state... */
-> +	if (state == path_excluded) {
-> +		int i;
-> +
-> +		/*
-> +		 * When stop_early is set, read_directory_recursive() will
-> +		 * never return path_untracked regardless of whether
-> +		 * underlying paths were untracked or ignored (because
-> +		 * returning early means it excluded some paths, or
-> +		 * something like that -- see commit 5aaa7fd39aaf ("Improve
-> +		 * performance of git status --ignored", 2017-09-18)).
-> +		 * However, we're not really concerned with the status of
-> +		 * files under the directory, we just wanted to know
-> +		 * whether the directory was empty (state == path_none) or
-> +		 * not (state == path_excluded), and if not, we'd return
-> +		 * our original status based on whether the untracked
-> +		 * directory matched an exclusion pattern.
-> +		 */
-> +		if (stop_early)
-> +			state = excluded ? path_excluded : path_untracked;
-> +
-> +		else {
-> +			/*
-> +			 * When
-> +			 *     !stop_early && state == path_excluded
-> +			 * then all paths under dirname were ignored.  For
-> +			 * this case, git status --porcelain wants to just
-> +			 * list the directory itself as ignored and not
-> +			 * list the individual paths underneath.  Remove
-> +			 * the individual paths underneath.
-> +			 */
-> +			for (i = old_ignored_nr + 1; i<dir->ignored_nr; ++i)
-> +				free(dir->ignored[i]);
-> +			dir->ignored_nr = old_ignored_nr;
-> +		}
-> +	}
->  
->  	/*
-> -	 * If this is an excluded directory, then we only need to check if
-> -	 * the directory contains any files.
-> +	 * If there is nothing under the current directory and we are not
-> +	 * hiding empty directories, then we need to report on the
-> +	 * untracked or ignored status of the directory itself.
->  	 */
-> -	return read_directory_recursive(dir, istate, dirname, len,
-> -					untracked, 1, excluded, pathspec);
-> +	if (state == path_none && !(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-> +		state = excluded ? path_excluded : path_untracked;
-> +
-> +	/*
-> +	 * We can recurse into untracked directories that don't match any
-> +	 * of the given pathspecs when some file underneath the directory
-> +	 * might match one of the pathspecs.  If so, we should make sure
-> +	 * to note that the directory itself did not match.
-> +	 */
-> +	if (pathspec &&
-> +	    !match_pathspec(istate, pathspec, dirname, len,
-> +			    0 /* prefix */, NULL,
-> +			    0 /* do NOT special case dirs */))
-> +		state = path_none;
-> +
-> +	return state;
->  }
-
-This is certainly a substantial change, and I'm not able to read it
-carefully right now. I hope to return to it soon, but hopefully I've
-pointed out some places that may lead you to resolve your untracked
-cache issues.
+> Otherwise, the patch looks good to me and I'll be happy to replace my
+> patch with this one.
+ 
+Let me send a v2 of this patch now that you've pointed out my error. It
+is worth making this method clearer before you expand substantially on
+this final case.
 
 Thanks,
 -Stolee
-
