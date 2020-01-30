@@ -2,174 +2,251 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EF11C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 19:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64005C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 19:35:53 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D0AB6206D3
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 19:22:53 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2DC492082E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 19:35:53 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H7uk3fEW"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oDcAdaWJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727678AbgA3TWw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 14:22:52 -0500
-Received: from mail-yb1-f193.google.com ([209.85.219.193]:35520 "EHLO
-        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727402AbgA3TWw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 14:22:52 -0500
-Received: by mail-yb1-f193.google.com with SMTP id q190so1948302ybq.2
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 11:22:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=NZh1j/9DWXS0Up60DonuvtYRfn8R3HqvT3y5YSdO8fg=;
-        b=H7uk3fEWqsCGvhKAHnzsrHb18fAqoFp4H7RWVrjAC6jPMkRF7EiZJYs8/NsuCN9BDu
-         6Z2BRfVMhufhUGbrFGz4e+F5JT969DJKOl9DbsaNAekR/e44hAlD7quq16VRoPoLBuvn
-         aZbQ4cjYQsa8jwxkuJ/tS8rcZJamMjzSGxvvJDWM3KpsIVtRJll7vZF7AInnP6L6KXne
-         Z1KiQQjjsqt6YSh2GRTDq3ytRqZj+ONDru5xhnBgrVZbm5cYxvEPTS9/Hxg5P9nTD1+X
-         bs3ciz+k5XHN27drz7lI3cqLZ4mUL1ZTo3QBV7iGd2yciDaAbKb5CKxBO6HOUsC66vBi
-         X1OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=NZh1j/9DWXS0Up60DonuvtYRfn8R3HqvT3y5YSdO8fg=;
-        b=AGN0CNX3gBzbPFWVJ3R/Lml9zA1+yAiouD9Db8ivvLuwItIS5Tzf6VZGZQlDOOpTCw
-         yT3TZtXaWA2wVxIPvl7+GbKmG0nSR4RQH6WJgIrnxMzpg1STi9Wn9IZYpJTpn1kQbLn2
-         nVXRytRUnoxlLSjfaOJTg8A8nWOK20Q2BaqSUx4abADa0j9IGj9qmXRzxmpESMrrJ6he
-         nbKQmNVO/cam4DLyjR3DDgXZv7ANHqooR1XVeoIR/aW4ihrS+0aSM1KHrZXlphPnvkkq
-         LvCMRGzmdY6Z/7RPyk4woCPZPD8qXU04hj4TCDF0zNLOXR/ocpD+pHJ3qLeM4MM52Q3d
-         uufw==
-X-Gm-Message-State: APjAAAUnp7aksBZqOujsMeh5De9wRDHBAW1YKDxhRUGokRuTBfyDeqKe
-        AqUtB2s1Uuryp2a7JrJBPx1aSHKakUg=
-X-Google-Smtp-Source: APXvYqzSlGzeHTHZ+UTBWb722WAQ+rCpXquPr+MsIPczyeTL89lYhs3vG5SoIyCgxp0r4gNJwi+gMw==
-X-Received: by 2002:a25:bf91:: with SMTP id l17mr5498977ybk.417.1580412171234;
-        Thu, 30 Jan 2020 11:22:51 -0800 (PST)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id k135sm2959893ywe.2.2020.01.30.11.22.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2020 11:22:50 -0800 (PST)
-Subject: Re: Sparse checkout inconsistency with non-folder paths between cone
- mode and full matching (2.5.0)
-From:   Derrick Stolee <stolee@gmail.com>
-To:     finnbryant@gmail.com, git@vger.kernel.org,
-        Elijah Newren <newren@gmail.com>
-References: <CADSBhNbbO=aq-Oo2MpzDMN2VAX4m6f9Jb-eCtVVX1NfWKE9zJw@mail.gmail.com>
- <ef39f8c5-ce0b-a48b-940d-821df563b292@gmail.com>
-Message-ID: <967f96e0-d26b-1ec0-f39f-617d95615d6f@gmail.com>
-Date:   Thu, 30 Jan 2020 14:22:49 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1727161AbgA3Tfw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 14:35:52 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55113 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727125AbgA3Tfw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 14:35:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6408553766;
+        Thu, 30 Jan 2020 14:35:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=hNtLt4s4T0QqoVDIp4Brr5pLQjk=; b=oDcAda
+        WJZz7+NaSpMcXF7oFCbnU8WQoI3pVJhOOUUtI6dqsqUiKsWQPmfmmelD9waEPn7L
+        i7Avg1lTdPRyzfkHEkU6ggte5wmBdzCTIvsoJhmUC5B3N/Slbo9trURXESE4K84Y
+        8flsj+8FsMfUrWvLPYLZCPVUUSanqKH3SZn00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZUm/0nPCJzP7pUzhhUpOtlYLij1Vyv5Z
+        8l9YQo3eafy+KVFmxkWMaXBdvsRrIz1tGsBm43RM82jbgyF/OTvrpfVbGiecbOkp
+        pOUlG+qrboKEIEXUQLZkgJxU6Z2sYw5aqjJBCJ7aF/ohZbVMHhqZCpzrHJXe+qA2
+        +QHBDWwfEy8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D57253765;
+        Thu, 30 Jan 2020 14:35:48 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C35C853764;
+        Thu, 30 Jan 2020 14:35:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH v2] C: use skip-prefix to avoid hardcoded string length
+References: <xmqqv9owa6cw.fsf@gitster-ct.c.googlers.com>
+        <20200127232004.GE19360@coredump.intra.peff.net>
+        <xmqq36c09zo0.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 30 Jan 2020 11:35:46 -0800
+In-Reply-To: <xmqq36c09zo0.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Mon, 27 Jan 2020 16:45:35 -0800")
+Message-ID: <xmqqa764d9f1.fsf_-_@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <ef39f8c5-ce0b-a48b-940d-821df563b292@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: B708BF14-4397-11EA-B73C-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/30/2020 1:52 PM, Derrick Stolee wrote:
-> On 1/30/2020 10:25 AM, Finn Bryant wrote:
->> $ git sparse-checkout init --cone
->> $ git read-tree -mu HEAD
->> $ ls -1
->> a_file_or_folder
->> some_file
->> $ git sparse-checkout set a_file_or_folder
->> $ git read-tree -mu HEAD
->> $ ls -1
->> some_file
->> $ cat .git/info/sparse-checkout
->> /*
->> !/*/
->> /a_file_or_folder/
-> 
-> This is an interesting test, because I would expect the /a_file_or_folder/
-> pattern to not cause the _file_ to not match. It does match the first two
-> patterns, and just because it doesn't match the third pattern shouldn't
-> remove it.
-> 
-> This is actually a bug in the hashset-based pattern-matching algorithm,
-> since setting core.sparseCheckoutCone=false does not have this behavior.
-> I'll make a patch to fix this.
+We often skip an optional prefix in a string with a hardcoded
+constant, e.g.
 
-And here is a patch. I'll add this on top of my "Harden the sparse-checkout
-builtin" series in its v4.
+	if (starts_with(string, "prefix"))
+		string += 6;
 
--->8--
+which is less error prone when written
 
-From bf2115670e8ef79844ec7e87f3ba99d1f776a44d Mon Sep 17 00:00:00 2001
-From: Derrick Stolee <dstolee@microsoft.com>
-Date: Thu, 30 Jan 2020 19:11:26 +0000
-Subject: [PATCH] sparse-checkout: fix cone mode behavior mismatch
+	skip_prefix(string, "prefix", &string);
 
-The intention of the special "cone mode" in the sparse-checkout feature
-is to always match the same patterns that are matched by the same
-sparse-checkout file as when cone mode is disabled.
+Note that this changes a few error messages from "git reflog expire
+--expire=nonsense.timestamp", which used to complain by saying
 
-When a file path is given to "git sparse-checkout set" in cone mode,
-then the cone mode improperly matches the file as a recursive path.
-When setting the skip-worktree bits, files were not expecting the
-MATCHED_RECURSIVE response, and hence these were left out of the
-matched cone.
+    '--expire=nonsense.timestamp' is not a valid timestamp
 
-Fix this bug by checking for MATCHED_RECURSIVE in addition to MATCHED
-and add a test that prevents regression.
+but with this change, we say
 
-Reported-by: Finn Bryant <finnbryant@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+    'nonsense.timestamp' is not a valid timestamp
+
+which is more technically correct (the string with --expire= as
+a prefix obviously cannot be a valid timestamp, but the error is
+about the part of the input without that prefix).
+
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t1091-sparse-checkout-builtin.sh | 12 ++++++++++++
- unpack-trees.c                     |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 37e9304ef3..7d982096fb 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -305,6 +305,18 @@ test_expect_success 'different sparse-checkouts with worktrees' '
- 	check_files worktree a deep
- '
+ * v2 uses a simpler conversion that has a side effect of changing
+   the error message from "git reflog expire" in a better way.
+
+ builtin/fast-export.c | 3 +--
+ builtin/reflog.c      | 9 +++++----
+ notes.c               | 6 ++----
+ parse-options.c       | 3 +--
+ refs/files-backend.c  | 3 +--
+ remote-curl.c         | 5 +++--
+ sha1-name.c           | 9 ++-------
+ transport-helper.c    | 5 +++--
+ 8 files changed, 18 insertions(+), 25 deletions(-)
+
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index dbec4df92b..164406fdd4 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -870,8 +870,7 @@ static void handle_tag(const char *name, struct tag *tag)
+ 		printf("reset %s\nfrom %s\n\n",
+ 		       name, oid_to_hex(&null_oid));
+ 	}
+-	if (starts_with(name, "refs/tags/"))
+-		name += 10;
++	skip_prefix(name, "refs/tags/", &name);
+ 	printf("tag %s\n", name);
+ 	if (mark_tags) {
+ 		mark_next_object(&tag->object);
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 4d3430900d..81dfd563c0 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -560,15 +560,16 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
  
-+test_expect_success 'set using filename keeps file on-disk' '
-+	git -C repo sparse-checkout set a deep &&
-+	cat >expect <<-\EOF &&
-+	/*
-+	!/*/
-+	/a/
-+	/deep/
-+	EOF
-+	test_cmp expect repo/.git/info/sparse-checkout &&
-+	check_files repo a deep
-+'
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
 +
- check_read_tree_errors () {
- 	REPO=$1
- 	FILES=$2
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3789a22cf0..78425ce74b 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1416,7 +1416,7 @@ static int clear_ce_flags_1(struct index_state *istate,
- 						name, &dtype, pl, istate);
- 		if (ret == UNDECIDED)
- 			ret = default_match;
--		if (ret == MATCHED)
-+		if (ret == MATCHED || ret == MATCHED_RECURSIVE)
- 			ce->ce_flags &= ~clear_mask;
- 		cache++;
- 		progress_nr++;
+ 		if (!strcmp(arg, "--dry-run") || !strcmp(arg, "-n"))
+ 			flags |= EXPIRE_REFLOGS_DRY_RUN;
+-		else if (starts_with(arg, "--expire=")) {
+-			if (parse_expiry_date(arg + 9, &cb.cmd.expire_total))
++		else if (skip_prefix(arg, "--expire=", &arg)) {
++			if (parse_expiry_date(arg, &cb.cmd.expire_total))
+ 				die(_("'%s' is not a valid timestamp"), arg);
+ 			explicit_expiry |= EXPIRE_TOTAL;
+ 		}
+-		else if (starts_with(arg, "--expire-unreachable=")) {
+-			if (parse_expiry_date(arg + 21, &cb.cmd.expire_unreachable))
++		else if (skip_prefix(arg, "--expire-unreachable=", &arg)) {
++			if (parse_expiry_date(arg, &cb.cmd.expire_unreachable))
+ 				die(_("'%s' is not a valid timestamp"), arg);
+ 			explicit_expiry |= EXPIRE_UNREACH;
+ 		}
+diff --git a/notes.c b/notes.c
+index 0c79964c26..a0349fa778 100644
+--- a/notes.c
++++ b/notes.c
+@@ -1279,10 +1279,8 @@ static void format_note(struct notes_tree *t, const struct object_id *object_oid
+ 		if (!ref || !strcmp(ref, GIT_NOTES_DEFAULT_REF)) {
+ 			strbuf_addstr(sb, "\nNotes:\n");
+ 		} else {
+-			if (starts_with(ref, "refs/"))
+-				ref += 5;
+-			if (starts_with(ref, "notes/"))
+-				ref += 6;
++			skip_prefix(ref, "refs/", &ref);
++			skip_prefix(ref, "notes/", &ref);
+ 			strbuf_addf(sb, "\nNotes (%s):\n", ref);
+ 		}
+ 	}
+diff --git a/parse-options.c b/parse-options.c
+index 60fae3ad21..e8c04109ba 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -357,8 +357,7 @@ static enum parse_opt_result parse_long_opt(
+ 			}
+ 			/* negated? */
+ 			if (!starts_with(arg, "no-")) {
+-				if (starts_with(long_name, "no-")) {
+-					long_name += 3;
++				if (skip_prefix(long_name, "no-", &long_name)) {
+ 					opt_flags |= OPT_UNSET;
+ 					goto again;
+ 				}
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 0ea66a28b6..561c33ac8a 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -465,8 +465,7 @@ static int files_read_raw_ref(struct ref_store *ref_store,
+ 	close(fd);
+ 	strbuf_rtrim(&sb_contents);
+ 	buf = sb_contents.buf;
+-	if (starts_with(buf, "ref:")) {
+-		buf += 4;
++	if (skip_prefix(buf, "ref:", &buf)) {
+ 		while (isspace(*buf))
+ 			buf++;
+ 
+diff --git a/remote-curl.c b/remote-curl.c
+index 350d92a074..8eb96152f5 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -1255,8 +1255,9 @@ static void parse_push(struct strbuf *buf)
+ 	int ret;
+ 
+ 	do {
+-		if (starts_with(buf->buf, "push "))
+-			argv_array_push(&specs, buf->buf + 5);
++		const char *arg;
++		if (skip_prefix(buf->buf, "push ", &arg))
++			argv_array_push(&specs, arg);
+ 		else
+ 			die(_("http transport does not support %s"), buf->buf);
+ 
+diff --git a/sha1-name.c b/sha1-name.c
+index 200eb373ad..75d1c32606 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -908,14 +908,9 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 				real_ref, flags, at_time, nth, oid, NULL,
+ 				&co_time, &co_tz, &co_cnt)) {
+ 			if (!len) {
+-				if (starts_with(real_ref, "refs/heads/")) {
+-					str = real_ref + 11;
+-					len = strlen(real_ref + 11);
+-				} else {
+-					/* detached HEAD */
++				if (!skip_prefix(real_ref, "refs/heads/", &str))
+ 					str = "HEAD";
+-					len = 4;
+-				}
++				len = strlen(str);
+ 			}
+ 			if (at_time) {
+ 				if (!(flags & GET_OID_QUIETLY)) {
+diff --git a/transport-helper.c b/transport-helper.c
+index 413d9d873e..20a7185ec4 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -404,11 +404,12 @@ static int fetch_with_fetch(struct transport *transport,
+ 	sendline(data, &buf);
+ 
+ 	while (1) {
++		const char *name;
++
+ 		if (recvline(data, &buf))
+ 			exit(128);
+ 
+-		if (starts_with(buf.buf, "lock ")) {
+-			const char *name = buf.buf + 5;
++		if (skip_prefix(buf.buf, "lock ", &name)) {
+ 			if (transport->pack_lockfile)
+ 				warning(_("%s also locked %s"), data->name, name);
+ 			else
 -- 
-2.25.0.vfs.1.1
-
-
+2.25.0-299-g5579215f86
 
