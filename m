@@ -2,86 +2,115 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B68EC2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 21:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8037C33CB3
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 21:59:56 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 189CC20708
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 21:59:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 892B120CC7
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 21:59:56 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CIkcvQtK"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWTJNgFg"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725972AbgA3V7f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 16:59:35 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60259 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbgA3V7f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 16:59:35 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3392AAB93D;
-        Thu, 30 Jan 2020 16:59:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=WR+4MHlrsFmc5obAS6BAC4QeNKA=; b=CIkcvQ
-        tKbU9HKNbIQaZhoxxWt0dwgl5GijCdmegcDXeFnz/pVfwmLcoBosX+FEo4vuXSuu
-        FRI9dx9UIDzZGG6zXWGegSVj0Nx0+85inGBICZbF3DWxaqIIMqo0fQEiJiwJ5WG8
-        Hqm2F1dVCqwEdemQfieNvUcQhcFk9UIWPoB2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=VEshmhHlK0EoWL+FRozQENmWndK/LK8o
-        dI3xvGg/mjriIi5GI1B1Wzl9U2KW3MDUMRRJAuwYHhwDP269pkm9Q0FIR7cKO4nb
-        suTzOUS5CIRM//X/atp9ukzvuO8/IHHxmk09b84Lz+G/a1VK1aRUuBoWr9ZepLL9
-        1ecUZ2tb17o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2BA23AB93B;
-        Thu, 30 Jan 2020 16:59:33 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 558FBAB93A;
-        Thu, 30 Jan 2020 16:59:30 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Heba Waly via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Heba Waly <heba.waly@gmail.com>
-Subject: Re: [PATCH v3] add: use advice API to display hints
-References: <pull.508.v2.git.1578438752.gitgitgadget@gmail.com>
-        <pull.508.v3.git.1580346702203.gitgitgadget@gmail.com>
-Date:   Thu, 30 Jan 2020 13:59:28 -0800
-In-Reply-To: <pull.508.v3.git.1580346702203.gitgitgadget@gmail.com> (Heba Waly
-        via GitGitGadget's message of "Thu, 30 Jan 2020 01:11:41 +0000")
-Message-ID: <xmqqimksbo73.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725985AbgA3V7z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 16:59:55 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37100 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbgA3V7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 16:59:55 -0500
+Received: by mail-ed1-f67.google.com with SMTP id cy15so5542675edb.4
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 13:59:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LTBu5yRnNYaKsG/n1KFHHUziqnkX+dOEV2DsVRMi7Nw=;
+        b=OWTJNgFgWtz4MTzZW5Hey9bXJMjt5SYfKrJTwDIXhdpPdFf7grZWyNSH9uV7MNLBu4
+         ZXZQRemGTruJ71lgjq7o2BMP4K/D7b0j+L0fnJTqhVfLP6w2p+WLy9lHKHkIimN1+Ky3
+         tIUBQymhRN1tHpLXQCaFeIdQdCWE0VRCIfVp5Sk0iHAeh/YLHGf6VRrGo3LTH8BcZn0h
+         L8OPUBe8fOA5eaz/X/Ki+1x5Vme3CqA9vgDTRBtj2xoy5hZcDROs2QYvwjva5j5fvNUV
+         b8JOqINdTJByZcPbAzpdxnoIsGa4/esaTn5SU1mB4/QwP3w9Y70rl/MpkvLw7kdWE6ny
+         Cr9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LTBu5yRnNYaKsG/n1KFHHUziqnkX+dOEV2DsVRMi7Nw=;
+        b=aY43rvB2Xu3QKBrNCws+dQp4UI9boq8O9+3tCPtxq/uddk/3oTtDVWHwp4ak7+UgCp
+         t0LHL6f41A1L6NypEnE7FgZh4ymuuB0Jco11JI/8c63r3tXxKv4vYtxnjw4yEjW8Vwis
+         tF3v1AYzqzrK/PK2Q5RCArNUapdLqlxSIPMkqqsR2Yw51TgNe+8LAu2wRY33z9VCyzzj
+         sJ17D439djlgZUlnILbZQPgAJXxw1Q11zlVDcnEF4VMHA3vS0KpmpZr0QyFQbPhhlvJ+
+         FRoN4/GhM3BwFE/fUaoYQq2NXpbReJO5z5UQxBCYDK0diGvKEsHDXSsNl5GbWH3zY2Yy
+         yvVw==
+X-Gm-Message-State: APjAAAWUyycttu/6/8PTqdAKJnoxyMi4DGMgGzqUAUu+QxN5vU+5L2am
+        jz9eAP820V9fzvebVGReaznqnNzeAmZ5yvSu548=
+X-Google-Smtp-Source: APXvYqyLlygXU47Fa4oXZPLDYiDa5aGP/fhwbwizSVwrsGsKyM40BviNqPhuOsFno5oOxftOtQS5kL+uCbO4ZIK4DuA=
+X-Received: by 2002:a05:6402:513:: with SMTP id m19mr5788220edv.387.1580421592167;
+ Thu, 30 Jan 2020 13:59:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: CA79A392-43AB-11EA-9AFF-8D86F504CC47-77302942!pb-smtp21.pobox.com
+References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-10-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 30 Jan 2020 22:59:41 +0100
+Message-ID: <CAP8UFD3mhirdjHnT+XRq1mPzii3O+mtAMrYCy7mf4HKQZo8Acw@mail.gmail.com>
+Subject: Re: [PATCH v2 09/11] bisect: libify `check_good_are_ancestors_of_bad`
+ and its dependents
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Miriam Rubio <mirucam@gmail.com>, git <git@vger.kernel.org>,
+        Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Heba Waly via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Dscho,
 
-> From: Heba Waly <heba.waly@gmail.com>
+On Thu, Jan 30, 2020 at 2:46 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> In the "add" command, use the advice API to display hints to users,
-> as it provides a neat and a standard format for hint messages, and
-> the message visibility will be configurable.
+> On Tue, 28 Jan 2020, Miriam Rubio wrote:
+
+> > +             /* Create file BISECT_ANCESTORS_OK. */
+> > +             fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+> > +             if (fd < 0)
+> > +                     warning_errno(_("could not create file '%s'"),
+> > +                                   filename);
+> > +             else
+> > +                     close(fd);
+> > +     }
 >
-> Signed-off-by: Heba Waly <heba.waly@gmail.com>
-> ---
->     [Outreachy] add: use advise API to display hints
->     
->     In the "add" command, use the advice API to display hints to users, as
->     it provides a neat and a standard format for hint messages, and the
->     message visibility will be configurable.
+> I wonder whether this would be easier to read:
+>
+>         if (res == -11)
+>                 res = 0;
+>         else if (res)
+>                 ; /* error out */
+>         else if ((fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600)) < 0)
+>                 res = warning_errno(_("could not create file '%s'"), filename);
+>         else
+>                 close(fd);
+>
+> Note: my code explicitly assigns `res = -1` if the file could not be
+> created, which is technically a change in behavior, but I think it is
+> actually a bug fix.
 
-The topic has been in 'next' for the past week or so already.  If we
-need to make further changes, please do so incrementally.
+I don't think so. I think creating the BISECT_ANCESTORS_OK file is not
+absolutely necessary. If it doesn't exist we will just check if
+ancestors are ok again at the next bisection step, which will take a
+bit of time, but which will not make us give any false result, or
+prevent us from continuing the bisection process.
 
-Thanks.
+I think that it's also the reason why warning_errno(...) is used in
+case we could not create the file instead of error_errno(...). We just
+want to signal with a warning that something might be wrong because we
+could not create the file, but not stop everything because of that.
+
+Best,
+Christian.
