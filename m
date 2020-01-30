@@ -2,130 +2,113 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFD67C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97245C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:47 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BCAF42063A
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:44 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 673B3214AF
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:47 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="o5ccp4U3"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="BGgal6Kh"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727581AbgA3XAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 18:00:43 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40299 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727566AbgA3XAn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 18:00:43 -0500
-Received: by mail-pf1-f195.google.com with SMTP id q8so2254094pfh.7
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 15:00:43 -0800 (PST)
+        id S1727653AbgA3XAq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 18:00:46 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39027 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727566AbgA3XAq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 18:00:46 -0500
+Received: by mail-pl1-f195.google.com with SMTP id g6so1922746plp.6
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 15:00:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=Y3BrCzWxh4tJ0Z1/lrjOSlgejiCpmwQiWu9FjcujZEE=;
-        b=o5ccp4U3GS/ugahqvIxfWdsxnBzMCscUrystk7MwCJon4Ilc54Mk5VSmLHHaxfS523
-         lQmXQd7qszqpterMpAnHm3I1qSVDF4rq72tp/DWZxWj95NMv5JWYUQNuTfA99vYUtf9n
-         2Li2I5O8xZHHHsq8Okz3q065JgMmXZOs+x901RXWLJvrOs6P1K2xVo9asJWZrMG6Og/R
-         kCHG8btqIQ+oKW8Ev9cYFC9VuwVzqB+QJcQJu9vB89pK+pbBE+4SPB2dlWQ8/ORHq7lr
-         WHcc/zKCZhbGIPIwT0SryXHJb5Gi3nIpEWfTos8fUI4CX0mxJsw84uqeLsXThHZImyGs
-         nBpw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=38zLZ7aCxl5GX/ZK9TIOtwDt7VD9dWxDyz/bNM5GiRo=;
+        b=BGgal6Kh7j0Bp8+qpzUs7Yxjx/HnvMWV+rMgCQX86s+Oz0Pg2DD46BnTPf3raSkTAw
+         Nu6aSfij9N9+Po4g2EHhAe5wwTeU/DG2QiwpkRVpNhiPq8MMw+xCfnWU72h2Qc9fYR6E
+         EDyQ00PdFY+3MC9uQhbijAsAAq3VjZKHgZ9CHMT6Eq0huxHSn4OrAulcC5m9WIOoLLw/
+         oSvw9QSb7Oe0KoU2koiePaS5cQerEN+JC0XDb6vKdBKevdnhC7MDBPeEBnMzQgEaucbP
+         asN1zBogSQICDpzk2fgTgAPxq+1Lo8nuU7TOUE86U28IdacW4Lmexk/TThTT6m7dI/05
+         8p1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=Y3BrCzWxh4tJ0Z1/lrjOSlgejiCpmwQiWu9FjcujZEE=;
-        b=kXrJZuZgwj67I/p5F83mP1Zi+TCtqb7LfqGqBmSvSsGB6PQjuV6jTeuEBNZ9Ax33Aj
-         D4R4q1RMf9M43A2HLCNa6Fr3HaLF6dtfXQKNpIRgCTpWtKfGbFNPRqNdh7xiJepdJCx5
-         689qbkUzzMJbFq6a7tYDXqQ3f9AWP75ChGxtRGQTnA3q+mJeqB6bRHP6dCkcp2fZZjtr
-         x2S4byIPaX++bieBtkZ9pmIsj4bVG3XteI6hsCcVrqBbkeviL+tM//QE7EqFkuuFu9eB
-         pSRBm4vWSFtFwLhvPW52TPhm7A0D5WrkZc3scH6Mmn5Pf4APWEc/ppRo739sHjt2NcWC
-         H8fQ==
-X-Gm-Message-State: APjAAAX5asrrXfUMAsf2bmfSnGE9VIkTIxfL9kO1kdiD5wvmZf/Q8P0N
-        rrpYGX43t9s9c2xUxbJUortOOW7WyW6WHA==
-X-Google-Smtp-Source: APXvYqzfQLobvYvE8+8cgZ/q21JgPTE1m/aYGYoaTpecQVSgbyyJhItH5ThUQSjzX6zUIXKiPJpJ8Q==
-X-Received: by 2002:aa7:84cd:: with SMTP id x13mr7643212pfn.130.1580425242697;
-        Thu, 30 Jan 2020 15:00:42 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=38zLZ7aCxl5GX/ZK9TIOtwDt7VD9dWxDyz/bNM5GiRo=;
+        b=hkxAPwLictuRYF6bo2xhLEyzoo8KNKU5GgREdWXhVwTPM4jfm912/aOhwFKdcmxB2b
+         vYVbmFPmioryWvYkQpc//fnmL8vTXFptVilL9GDhSFuWg5fuH4fo4v5ScJBwUQ0jJw2S
+         cs3mK/3q+us6M0iYqsu3vAtQJlAkP1TOhFO9tMQlPx2gSdGErH4SDPcM7mZ6RG9kdfIF
+         e2vo0gs3IhcDhvy94OYGuroiQZSEZnu+04ZW1hj9MH50fYI29crOyEhpxy4Qkp/LDJFd
+         lFYjKw3f/KOB6X31wosCcQDyUHcoZ7NAvgc9V/JWMKae+tOWm6sxtf9uUCkcnBdvpm7N
+         jbzA==
+X-Gm-Message-State: APjAAAWpSdH/mHbkBrkdFcv4aZuGGaGEl55abVVP92Gx1QRf8ISj7sjX
+        dhPtZJSbauxqyOReDgWCwjJE3pnnQ0QQDw==
+X-Google-Smtp-Source: APXvYqx7rKyk53leZ74Qqm9TeMORA1gP6DOFBfRgeg0cXAPy0a4cJ9N28mf9PAdn2O6BI5LWBDy79g==
+X-Received: by 2002:a17:90a:b009:: with SMTP id x9mr8669320pjq.124.1580425245051;
+        Thu, 30 Jan 2020 15:00:45 -0800 (PST)
 Received: from localhost ([2601:602:9200:32b0:5c8f:7dac:47b8:95ff])
-        by smtp.gmail.com with ESMTPSA id s22sm7410130pji.30.2020.01.30.15.00.41
+        by smtp.gmail.com with ESMTPSA id y2sm7847992pff.139.2020.01.30.15.00.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2020 15:00:42 -0800 (PST)
-Date:   Thu, 30 Jan 2020 15:00:40 -0800
+        Thu, 30 Jan 2020 15:00:44 -0800 (PST)
+Date:   Thu, 30 Jan 2020 15:00:43 -0800
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
-Subject: [PATCH 0/6] commit-graph: use 'struct object_directory *' everywhere
-Message-ID: <cover.1580424766.git.me@ttaylorr.com>
+Subject: [PATCH 1/6] t5318: don't pass non-object directory to '--object-dir'
+Message-ID: <7b22efb0c61046a5864afeb052332a3a53331533.1580424766.git.me@ttaylorr.com>
+References: <cover.1580424766.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <cover.1580424766.git.me@ttaylorr.com>
 User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+In f237c8b6fe (commit-graph: implement git-commit-graph write,
+2018-04-02) the test t5318.3 was introduced to ensure that calling 'git
+commit-graph write' in a repository with no packfiles does not write any
+commit-graph file(s).
 
-While working on deploying layered commit-graphs at GitHub, I noticed
-that I was able to trigger the mechanism to prevent merging
-cross-alternate commit-graph layers in funny ways, like claiming that
-"./objects" and "objects" were in different directories.
+To exercise more paths in 'builtin/commit-graph.c', this test passes
+'--object-dir' to 'git commit-graph write', but the given argument
+refers to the working copy, not the object directory.
 
-This resulted in removing all of the places in the commit-graph.c code
-that use 'char *object_dir's with 'struct object_directory *'s instead.
-This allows us to replace brittle string-based path comparisons with raw
-pointer comparisons to check whether two commit-graphs belong to the
-same object store or not.
+Since the commit-graph sub-commands currently swallow these errors, this
+does not result in a test failure. But, it is only lucky that the test
+ends with no commit-graphs, since there were none to begin with.
 
-This has a pleasant side effect in PATCH 5/6 of fixing an uninitialized
-read as described in [1].
+In preparation for a future commit where an '--object-dir' argument that
+does not match a known object directory will print out a failure, let's
+fix the test to still use '--object-dir', but pass the correct location
+to the object store instead of '.'.
 
-This series became a little bit longer than I was expecting it to be, so
-here is the high-level structure:
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5318-commit-graph.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-  - 1/6 fixes a bug in a test that would cause a subsequent failure if
-    unaddressed.
-
-  - 2/6 does the first half of the removal by using 'struct
-    object_directory *'s within the 'commit_graph' structure.
-
-  - 4/6 does the second half by removing 'char *object_dir' usage in the
-    'write_commit_graph_context' structure.
-
-  - 5/6 ties 2/6 and 4/6 together by removing all path normalization
-    completely, fixing the uninitialized read bug.
-
-  - And 6/6 cleans up.
-
-We've been running a version of this series based on our fork (which is
-in turn based on 2.24) for a few hours without issue.
-
-Thanks in advance for your review.
-
-[1]: https://lore.kernel.org/git/20191027042116.GA5801@sigill.intra.peff.net/
-
-Taylor Blau (6):
-  t5318: don't pass non-object directory to '--object-dir'
-  commit-graph.h: store object directory in 'struct commit_graph'
-  builtin/commit-graph.c: die() with unknown '--object-dir'
-  commit-graph.h: store an odb in 'struct write_commit_graph_context'
-  commit-graph.c: remove path normalization, comparison
-  commit-graph.h: use odb in 'load_commit_graph_one_fd_st'
-
- Documentation/git-commit-graph.txt |   5 +-
- builtin/commit-graph.c             |  25 ++++--
- builtin/commit.c                   |   3 +-
- builtin/fetch.c                    |   2 +-
- builtin/gc.c                       |   2 +-
- commit-graph.c                     | 135 +++++++++++++++--------------
- commit-graph.h                     |  17 ++--
- t/helper/test-read-graph.c         |   8 +-
- t/t5318-commit-graph.sh            |   4 +-
- 9 files changed, 114 insertions(+), 87 deletions(-)
-
---
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 3f03de6018..0bf98b56ec 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -19,8 +19,8 @@ test_expect_success 'verify graph with no graph file' '
+ 
+ test_expect_success 'write graph with no packs' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+-	git commit-graph write --object-dir . &&
+-	test_path_is_missing info/commit-graph
++	git commit-graph write --object-dir $objdir &&
++	test_path_is_missing $objdir/info/commit-graph
+ '
+ 
+ test_expect_success 'exit with correct error on bad input to --stdin-packs' '
+-- 
 2.25.0.dirty
+
