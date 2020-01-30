@@ -7,57 +7,63 @@ X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D217C35240
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78638C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 4D5DB2082E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:11 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4B36720707
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="meBXFbLG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QqUzuF/O"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727346AbgA3P0K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 10:26:10 -0500
-Received: from mail-wr1-f46.google.com ([209.85.221.46]:42063 "EHLO
-        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727158AbgA3P0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 10:26:09 -0500
-Received: by mail-wr1-f46.google.com with SMTP id k11so4526680wrd.9
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:26:09 -0800 (PST)
+        id S1727370AbgA3P0o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 10:26:44 -0500
+Received: from mail-io1-f48.google.com ([209.85.166.48]:38688 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727186AbgA3P0n (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 10:26:43 -0500
+Received: by mail-io1-f48.google.com with SMTP id s24so4448675iog.5
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:26:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=zvo6GoE+SISQk+EgNXEY/4ZTkvlsZIi4Jj5ehddhE0g=;
-        b=meBXFbLGlsNaUPrUZSrDXtHVj7x5+fVY8sLyrhuAR9SutAzmgPDx32AsmNJikGIoys
-         c6T4qp4n1VqU5vnMv1S97QS7SIqTpBcvf9m0rZ8+lncaArk4flr9zxa+qa8W7LTXjD0d
-         inot1q1+q9AtA9ceQzpX4O8Yd5gpajVPMaFeEpFhaetXzUdQn9us2IS0BKaPom21Y8Y6
-         H5NB26BnMuGl7ZXxJjYV4f2tvDfNp/87MDY9SAW5QDg8XQJt/8nvbLfSRohqqi25p6z8
-         eFWzwto0z0IeL02DhhCSC2T6JfvOol+0skw3MJm6hJ4b5oxFUNRaWO+ZerbT5HVc+8kV
-         g1Jg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=hoPc0AIsLRiQBJ4+9F0u7OZxAg1G+QYq3fporFT1/38=;
+        b=QqUzuF/Osj/J+pOCSUWuBLL8lO+u0CjxJjcAr8zzlc4OaxVmQbRn64ObepUq6/Dy++
+         fB+o32riNiteclArsHU0VGAaA2CkXEJlCWR1TVUg2VRmGBj2UAgfdeLybwZNlTkDVhiV
+         qHpy3WLNQ79aaoDasRs9j89pJGBNWQEfwmKyNeHbrbboS6WwPqnhKl3+fOE0gVG55DX4
+         jPkA3eUvPT78jj3T4HK6MFVAzJatf46PjC8lh9D6UULpl2/i35GsKl8M6p7G7adttqPC
+         YaAnl1sVYEph267OSnlsySFkpE1K6/8d9OEQZOu2XDWwA526kRBRenRKT83yw3dbz1CY
+         I7cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=zvo6GoE+SISQk+EgNXEY/4ZTkvlsZIi4Jj5ehddhE0g=;
-        b=Xwt/QK62XJoyufbgGDdztOf+9Jp/dE6W764by1vQ9/eKhbZJZXg78LCYPpmb6U96I9
-         g3Be1ai1YVnnw9iFrOt9pP5l3dWRM9I03Ef4BFebbDKlo5XySqf60h0WGpWqBW7G1Wf4
-         fxP6dc5IdaEhq3SWOVISdKqtwcRDwobYeISV0+I5GQWsnHa5vwWe8s5i7BEYpx9PhJUa
-         ZkdVIOK48ZPok4AheuGhU6pmIj6XD5sjQYRDWbeBRyOZecBeuhKQ/RqrSg8FUz6KhkI0
-         Y+3o/jyXriPGErJIffXfPB1GhlOzcVq8baW4e/wR184AZ8ri18PArpLdYrwQtklwkDkp
-         nB/A==
-X-Gm-Message-State: APjAAAWaF4BR/k17F/IKmjnlUayYCyUUBmDFmKzz/I/m+c3kekxEEXsS
-        zeyGeQCP4M+nTt6jjmNIHjJyWW8iL/Fg4ARHZOvjkFsF
-X-Google-Smtp-Source: APXvYqzSXWOZhfrprBaTvOjAgA8qR1hI+TtvNolG8laxxgdeUVTpLDbESkx3EwZ7rPj6kWr/uWUyMvfuvBbNgVixUI4=
-X-Received: by 2002:a5d:6802:: with SMTP id w2mr6082988wru.353.1580397968020;
- Thu, 30 Jan 2020 07:26:08 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=hoPc0AIsLRiQBJ4+9F0u7OZxAg1G+QYq3fporFT1/38=;
+        b=FiXBS5t46RrI3xhd5rqtQUEhYl6zxVDCdfJDeEkZKBVCYwqD5lpPEIRvN+nsn6M2JJ
+         HuHLKjSXz3A4nJJ1dvR4JycQTDvxQeJpLysDpP4l30CjG/5B0cO5XFvMl+vBlHSs4/8C
+         7V1iXuNdCSwNxS1JzbvcGEMxDRmlvHxZ4Ry5O0H4k4YM/xzpYAmhzEX/5Tq7NndK57X2
+         /3NUrcY2YyW6fi12c535OZeg5P9OINEuwNKwB8Q1cCtyQ3hTiwQ4ykq8EemaM+Xaxb7K
+         T5zDnFWqpL8CIUSXVVAeHekhys8yalR8CQVY6A7GIdcKHYDcwl+ZKG+ntoJBBjJET6rq
+         F1Ig==
+X-Gm-Message-State: APjAAAVkTvR8QTAVNBUbZTgcRgN8fnG/uLFdnnEy+s1ZwXBq03AHFX5D
+        K+3V6Fe3egN8U71UXXed4OblJbkEHHnbvQDxW7A=
+X-Google-Smtp-Source: APXvYqxlyVyB5PJlf5vPJ6/iQa8YV28ND2SCDhwBEbSeCdWfYCO5Ns4LtYbNg5RCBOhVshpr8AgRvhW919KVwYgRdE8=
+X-Received: by 2002:a6b:6311:: with SMTP id p17mr4283939iog.127.1580398003122;
+ Thu, 30 Jan 2020 07:26:43 -0800 (PST)
 MIME-Version: 1.0
-Reply-To: finnbryant@gmail.com
-From:   Finn Bryant <finnbryant@gmail.com>
-Date:   Thu, 30 Jan 2020 15:25:56 +0000
-Message-ID: <CADSBhNbbO=aq-Oo2MpzDMN2VAX4m6f9Jb-eCtVVX1NfWKE9zJw@mail.gmail.com>
-Subject: Sparse checkout inconsistency with non-folder paths between cone mode
- and full matching (2.5.0)
-To:     git@vger.kernel.org
+References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-10-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet> <CAN7CjDCiP_KVC5Ey6cMuPN17vRNp_s4vy94qsaAKRPG=k3Rj3g@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001301557300.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001301557300.46@tvgsbejvaqbjf.bet>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Thu, 30 Jan 2020 16:26:32 +0100
+Message-ID: <CAN7CjDBrWUFiY+mh3n0xBMQMsJ1YejRb1+N5caG+Of==uxQR8w@mail.gmail.com>
+Subject: Re: [PATCH v2 09/11] bisect: libify `check_good_are_ancestors_of_bad`
+ and its dependents
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,77 +71,59 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-With cone mode enabled for a sparse checkout, a pattern like the
-following is accepted:
+El jue., 30 ene. 2020 a las 16:01, Johannes Schindelin
+(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+>
+> Hi Miriam,
+>
+> On Thu, 30 Jan 2020, Miriam R. wrote:
+>
+> > El jue., 30 ene. 2020 a las 14:46, Johannes Schindelin
+> > (<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
+> > >
+> > > On Tue, 28 Jan 2020, Miriam Rubio wrote:
+> > >
+> > > > +
+> > > > +     return res < 0 ? -res : res;
+> > >
+> > > This is a change in behavior, though: previously we guaranteed that t=
+he
+> > > exit code is either 0 on success or 1 upon failure. I am not quite su=
+re
+> > > that we want to change that behavior.
+> >
+> > I think this is because different error codes might enable a bisecting
+> > script calling the bisect command that uses this function to do
+> > different things depending on the exit status of the bisect command.
+>
+> Oops. I am _totally_ wrong on this.
+>
+> As you are changing a lot of `exit(<n>)` to `return -<n>` with the
+> intention to turn the value into an exit code only at the
+> `cmd_bisect__helper()` level, this is actually required a change.
+>
+> I am a bit uneasy about this, but I could not see any return values in
+> `bisect.c` other than 0 and -1, prior to this patch series.
+>
+> However, I would love to see this refactored into its own commit, more
+> toward the beginning of the patch series, with a very clean commit messag=
+e
+> that describes that intention of being _the_ exit point from `bisect.c`.
 
-/*
-!/*/
-/a_file_or_folder/
+Ok. Noted
+>
+> Without this change, you simply cannot change the `exit(<n>);` calls in
+> `bisect.c` for any `<n>` other than 0 or 1.
+>
+> Sorry that it took me so long to wrap my head around this rather trivial
+> idea.
 
-As the name suggests, a_file_or_folder might be a file, or might be a
-directory. If it's a directory, then this is a "valid" recursive match
-for the directory and everything works as expected.
-But if the path leads to an ordinary file, it appears that cone mode
-will *exclude* the file from the worktree (ie, it'll have the
-skip-worktree flag set).
-This seems bizarre and unexpected behaviour.
+Please, don't worry :)
+Thank you again!
 
-My suspicion is that cone mode is supposed to be a pure subset of full
-pattern matching, such that if cone mode is ever disabled, the
-sparseness of the worktree will be unchanged. Clearly, this scenario
-is breaking that pattern.
+Best,
+Miriam.
 
-I think the correct behaviour is that recursive matches for a
-potential directory do not have any effect on a non-directory file
-with the same name. Alternatively, you could forbid any patterns which
-match non-directory files instead (and downgrade to full pattern
-matching), though I'd not be a fan of this, since it'd mean the
-validity of a cone-mode sparse configuration file is dependent on the
-contents of the repo, and is thus much harder to ascertain (scripts
-can't simply prove if it's a valid cone mode file by parsing it,
-they'd need to have access to any repo it may be applied to, and
-inspect the type of any matching file/folder paths, and its validity
-could be changed simply by replacing a folder with a file in the
-repo).
-
-If matching behaviour with full pattern mode is a non-goal for cone
-mode, I'd still question the logic of this behaviour, though I suppose
-it does have the benefit of (accidentally?) adding support for
-excluding individual files from a sparse checkout, which I imagine
-some could find useful. Personally I'd prefer that was instead added
-with a more sane syntax, if needed.
-
-Full test case:
-
-$ git init test_repo
-Initialized empty Git repository in [path]/test_repo/.git/
-$ cd test_repo/
-$ touch some_file a_file_or_folder
-$ git add some_file a_file_or_folder
-$ git commit -m "some files"
-[master (root-commit) 80d5918] some files
- 2 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 a_file_or_folder
- create mode 100644 some_file
-$ git sparse-checkout init --cone
-$ git read-tree -mu HEAD
-$ ls -1
-a_file_or_folder
-some_file
-$ git sparse-checkout set a_file_or_folder
-$ git read-tree -mu HEAD
-$ ls -1
-some_file
-$ cat .git/info/sparse-checkout
-/*
-!/*/
-/a_file_or_folder/
-$
-
-
-Right now I'm trying to integrate cone mode with my company's existing
-manifest infrastructure, which doesn't differentiate between files and
-folders, so this is forcing me to perform a lot of repo checks to
-confirm we aren't accidentally excluding files we were supposed to
-include. Just in case you needed another example of why this behaviour
-is unhelpful.
+>
+> Ciao,
+> Dscho
