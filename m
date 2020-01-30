@@ -2,65 +2,63 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
+	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF976C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5372C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:41:42 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 96C4620707
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:40:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 962BB206D3
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:41:42 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6boq+yA"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lU3BHDKP"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727219AbgA3Okk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 09:40:40 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:43994 "EHLO
+        id S1727404AbgA3Oll (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 09:41:41 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:46867 "EHLO
         mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbgA3Okk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 09:40:40 -0500
-Received: by mail-io1-f66.google.com with SMTP id n21so4214025ioo.10
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 06:40:39 -0800 (PST)
+        with ESMTP id S1726902AbgA3Oll (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 09:41:41 -0500
+Received: by mail-io1-f66.google.com with SMTP id t26so4200778ioi.13
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 06:41:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :content-transfer-encoding;
-        bh=eVZYlwD74mN/iYN50X7odgEms9D9xZ+fgYqHavFBxAI=;
-        b=P6boq+yAUVr41jB/2WNGG/32xtDiH1PxRGmswBw7dKYy0sBrRNBIuVB03xCxAYD4Mj
-         dTWejylH3RWXoBM5OUX6Gc1jEp9KHo0uTOMqBwhMRIMZcorR/ZHl5njASNiaAp7kFcte
-         tKoASMaM3Gjd65l1DW9cOikKDMZqy7KB7JN2qJ66Tu7PxLXiIgvnWSQenmG13QJqY+ED
-         k45C/Y9S2ISFMS2QoZenyoS+RYk7QPC74wY/YfCPMWOZR64lvp21U4dIF5kw4pcznYNE
-         ZnneuoK/i711Ax60T8NsgyNJ+sLLrXThOMYVAKXGAK7t6V3ZF4ciXHK4v198yWkXpO+d
-         0ixw==
+        bh=U6Uu1uYJwf05jTCWZG1rKbthtWxMuMO6VXPSSNR/CTw=;
+        b=lU3BHDKPUTPtwn5ZRs5E/jZf+llIo1FxMuY9sHEdJYp+xFdYBWu61hLuZoS5KyMUUf
+         3EZam/q77FQarGyBMz1KuG1JZI6n4k2xwCJeWmCNMz+P5YUKwJDtyWR664ih+bRq97Tf
+         th5pNnAQL/KtxzM2xgNiEMrmg6UoaS6zvMnYK1Wn1FPYs2UKOR29G+jCTCqS/6yDjXSh
+         oBPk3rgSFSqsiXN4Yzn0EM3CfYd8vGUE4XKzwjJpjzkNtIjyLFnfV5A1/iKXEC/3BQ6z
+         1gNHXf19NiCdQE7HFgyiis7fCyNt6VQED1bgn+sybtvVhk+NSLAbFJoMF7LheKzD4yfC
+         nEHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:content-transfer-encoding;
-        bh=eVZYlwD74mN/iYN50X7odgEms9D9xZ+fgYqHavFBxAI=;
-        b=JZWR9P8NOLlBEV47YFg/Tuhyvjnd/kwW6nUOIIST2YsPd0EU9WF1EbT4VU+Pha6gLx
-         BIXCp8XrYxFxmkdTKlh5Ea0CEJ65BNLtZwgUTlL5X7bmoKDWlycSKvabU5GnvImYcT9n
-         KivPQhK+3j0jdV1QfzG6/eGckTUjR5/Xvke5ZLVHNbLqDJuVeDGTUV0OYZoYH2xD2QkI
-         VgLWZuJTieiuI+afWTsCP6cKt9bi+nq2o9kbZzOwLQHbZ1EMQT/hnegU5tm4ZPD0quRE
-         zYXqcs5yQ7MHQAxdzEJI6Rem5BpTzGwJA3HTpJs0bL09jOASfmzagF6dFde920RvDIJS
-         iUZg==
-X-Gm-Message-State: APjAAAWOSobiRDIHrxlREmaiCGGccTlu2hbEWIWU+o+HRmkR530R+eeW
-        feIvwpLZkdU9KYLye+kn29l1pRbR+YrZCOypooiRBQwo
-X-Google-Smtp-Source: APXvYqy26ZpOFxxyuxsBEvY7NLm58PcvYrUhmn7Hh380tRPIh8idtJbIPW4iZ0sWZWeExmbHFdLhK/qnoDaKpNP0MCU=
-X-Received: by 2002:a5e:9417:: with SMTP id q23mr4202576ioj.188.1580395239115;
- Thu, 30 Jan 2020 06:40:39 -0800 (PST)
+        bh=U6Uu1uYJwf05jTCWZG1rKbthtWxMuMO6VXPSSNR/CTw=;
+        b=Y2S6lzFjgCapGk7aKPIWHzISF+0DmIt4TD566n4vYbcu92lfYrdxQ2UXu+2uI9iU5I
+         HjjpozfcP0cnIvOaL8051J2DyMTQIWjaPyHhHHR9tIhyYbxadPVctaPOMnAQodkgGMp6
+         B9nr1lNURMKFDhdgheeut1pSeAugUSOZpcowWwFtHHvSK2Nc/Kl7qfnSqMGFEc0Z3Qpi
+         9gGHXYQv4nRtd5IddUA2umGrL70BTNfXbaGxKi+LktIujPNIy+R5XXMJMATrn2dod+2+
+         LAKd06xZ2zX+n92vacLz07OIHf25Y1FkKjyX+Qcf3jxW4REl3PyUGXJxecpyS5HmIudh
+         pzJw==
+X-Gm-Message-State: APjAAAWh7hK18ZeMM4Ef4En56ovN/nYXrdWkYanWJLjM4CEK+sb5st4S
+        04ptrVPueIBP8LTcJEfUhPQKs+aW0gD3C70gwK25Xg==
+X-Google-Smtp-Source: APXvYqwtJJFSZ6MBv14Cdj1viwKfAC4qpZMafHKrzKoAwGUq5IlA+HZzSkhBFJTbcvIDKwgs9mq7hY7PZeEKwLQ8gTI=
+X-Received: by 2002:a02:cc7a:: with SMTP id j26mr4168559jaq.79.1580395298985;
+ Thu, 30 Jan 2020 06:41:38 -0800 (PST)
 MIME-Version: 1.0
-References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-10-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet>
+References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-5-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001301332450.46@tvgsbejvaqbjf.bet> <CAN7CjDCiG6KZU+yHGxQ26TESb1yfvc7aWh0EKhE=owSV7D-C0Q@mail.gmail.com>
+In-Reply-To: <CAN7CjDCiG6KZU+yHGxQ26TESb1yfvc7aWh0EKhE=owSV7D-C0Q@mail.gmail.com>
 From:   "Miriam R." <mirucam@gmail.com>
-Date:   Thu, 30 Jan 2020 15:40:27 +0100
-Message-ID: <CAN7CjDCiP_KVC5Ey6cMuPN17vRNp_s4vy94qsaAKRPG=k3Rj3g@mail.gmail.com>
-Subject: Re: [PATCH v2 09/11] bisect: libify `check_good_are_ancestors_of_bad`
- and its dependents
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
+Date:   Thu, 30 Jan 2020 15:41:27 +0100
+Message-ID: <CAN7CjDC+LaZmNUoW=MKHy=08KnCgVtxA3_CXUpNQvqo3_cPcWQ@mail.gmail.com>
+Subject: Fwd: [PATCH v2 04/11] run-command: make `exists_in_PATH()` non-static
+To:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -70,172 +68,85 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-El jue., 30 ene. 2020 a las 14:46, Johannes Schindelin
+El jue., 30 ene. 2020 a las 13:36, Johannes Schindelin
 (<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
 >
 > Hi Miriam,
 >
 > On Tue, 28 Jan 2020, Miriam Rubio wrote:
 >
-> > @@ -893,18 +901,20 @@ static void check_good_are_ancestors_of_bad(struc=
-t repository *r,
-> >       if (check_ancestors(r, rev_nr, rev, prefix))
-> >               res =3D check_merge_bases(rev_nr, rev, no_checkout);
-> >       free(rev);
-> > -     if (res)
-> > -             exit(res =3D=3D -11 ? 0 : -res);
+> > From: Pranit Bauva <pranit.bauva@gmail.com>
 > >
-> > -     /* Create file BISECT_ANCESTORS_OK. */
-> > -     fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-> > -     if (fd < 0)
-> > -             warning_errno(_("could not create file '%s'"),
-> > -                           filename);
-> > -     else
-> > -             close(fd);
-> > +     if (!res)
-> > +     {
+> > Removes the `static` keyword from `exists_in_PATH()` function
+> > and declares the function in `run-command.h` file.
+> > The function will be used in bisect_visualize() in a later
+> > commit.
 >
-> Please move the opening `{` to the same line as the `if (!res)`.
-Noted.
+> I inspected the code in `exists_in_PATH()` and in `locate_in_PATH()` and
+> it looks as if neither of them depended on file-local variables (which
+> would otherwise need to be addressed when exporting the function).
 >
-> > +             /* Create file BISECT_ANCESTORS_OK. */
-> > +             fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0600)=
-;
-> > +             if (fd < 0)
-> > +                     warning_errno(_("could not create file '%s'"),
-> > +                                   filename);
-> > +             else
-> > +                     close(fd);
-> > +     }
->
-> I wonder whether this would be easier to read:
->
->         if (res =3D=3D -11)
->                 res =3D 0;
->         else if (res)
->                 ; /* error out */
->         else if ((fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY, 060=
-0)) < 0)
->                 res =3D warning_errno(_("could not create file '%s'"), fi=
-lename);
->         else
->                 close(fd);
->
-Yes, I think it is a good improvement.
+> If you contribute another iteration of this patch series, it might make
+> sense to mention this in the commit message explicitly.
 
-> Note: my code explicitly assigns `res =3D -1` if the file could not be
-> created, which is technically a change in behavior, but I think it is
-> actually a bug fix.
+Ok, I will add the comment in the commit message.
+Thank you.
 
-Aha.
-
-If my mentor is ok with this change, I will apply the improvement you
-suggested :).
-
->
-> >   done:
-> >       free(filename);
-> > +     return res;
-> >  }
-> >
-> >  /*
-> > @@ -975,7 +985,9 @@ int bisect_next_all(struct repository *r, const cha=
-r *prefix, int no_checkout)
-> >       if (read_bisect_refs())
-> >               die(_("reading bisect refs failed"));
->
-> I see that there is still a `die()` here, and you left it alone in this
-> patch because at this point, only the callers of
-> `check_good_are_ancestors_of_bad()` need to be addressed. Good.
->
-> At a later point, this will have to be dealt with, of course.
->
-> Another thing will need to be handled, too: while I was looking at the
-> code whether any resources need to be released (returning a negative
-> integer does not release memory or close file handles, unlike `die()`), I
-> stumbled across the fact that `term_bad` and `term_good` are file-local
-> variables. They will need to be made attributes of a `struct` and will
-> need to be released properly, i.e. the ownership will have to be clarifie=
-d
-> (is a failed `bisect_next_all()` responsible for releasing the memory it
-> allocated via `read_bisect_terms()`, or its caller?).
->
-> Just something to keep in mind. Or better: to jot down in a TODO list.
-
-Ok. I will write this down for future improvements. Thank you!
->
-> >
-> > -     check_good_are_ancestors_of_bad(r, prefix, no_checkout);
-> > +     res =3D check_good_are_ancestors_of_bad(r, prefix, no_checkout);
-> > +     if (res)
-> > +             return res;
-> >
-> >       bisect_rev_setup(r, &revs, prefix, "%s", "^%s", 1);
-> >       revs.limited =3D 1;
-> > diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-> > index 826fcba2ed..3442bfe2cb 100644
-> > --- a/builtin/bisect--helper.c
-> > +++ b/builtin/bisect--helper.c
-> > @@ -666,7 +666,8 @@ int cmd_bisect__helper(int argc, const char **argv,=
- const char *prefix)
-> >
-> >       switch (cmdmode) {
-> >       case NEXT_ALL:
-> > -             return bisect_next_all(the_repository, prefix, no_checkou=
-t);
-> > +             res =3D bisect_next_all(the_repository, prefix, no_checko=
-ut);
-> > +             break;
-> >       case WRITE_TERMS:
-> >               if (argc !=3D 2)
-> >                       return error(_("--write-terms requires two argume=
-nts"));
-> > @@ -713,5 +714,12 @@ int cmd_bisect__helper(int argc, const char **argv=
-, const char *prefix)
-> >               return error("BUG: unknown subcommand '%d'", cmdmode);
-> >       }
-> >       free_terms(&terms);
-> > -     return !!res;
-> > +     /*
-> > +      * Handle early success
-> > +      * From check_merge_bases > check_good_are_ancestors_of_bad > bis=
-ect_next_all
-> > +      */
-> > +     if (res =3D=3D -11)
-> > +             res =3D 0;
->
-> Hmm. Is this the correct place, though? Should `bisect_next_all()` not be
-> the function that already turns `-11` into `0`? In other words, _which_
-> code are we supposed to skip over when `check_good_are_ancestors_of_bad()=
-`
-> returns `-11`? In other words, where would the `catch` of the
-> `try`/`catch` be, if we had portable exceptions in C?
-
-I think there must be a reason to do it there (but I don't know
-exactly), because there are some comments in code that say explicitly
-that this -11 to 0 is done in cmd_bisect_helper(), when the bisecting
-command exits.
-
->
-> > +
-> > +     return res < 0 ? -res : res;
->
-> This is a change in behavior, though: previously we guaranteed that the
-> exit code is either 0 on success or 1 upon failure. I am not quite sure
-> that we want to change that behavior.
-
-I think this is because different error codes might enable a bisecting
-script calling the bisect command that uses this function to do
-different things depending on the exit status of the bisect command.
-
-Thank you for reviewing.
 Best,
-Miriam.
+Miriam
+
 >
-> Ciao,
+> Thanks,
 > Dscho
 >
+> >
+> > Mentored by: Christian Couder <chriscool@tuxfamily.org>
+> > Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> > ---
+> >  run-command.c |  2 +-
+> >  run-command.h | 11 +++++++++++
+> >  2 files changed, 12 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/run-command.c b/run-command.c
+> > index f5e1149f9b..4df975178d 100644
+> > --- a/run-command.c
+> > +++ b/run-command.c
+> > @@ -210,7 +210,7 @@ static char *locate_in_PATH(const char *file)
+> >       return NULL;
 > >  }
+> >
+> > -static int exists_in_PATH(const char *file)
+> > +int exists_in_PATH(const char *file)
+> >  {
+> >       char *r =3D locate_in_PATH(file);
+> >       int found =3D r !=3D NULL;
+> > diff --git a/run-command.h b/run-command.h
+> > index 592d9dc035..7c8e206d97 100644
+> > --- a/run-command.h
+> > +++ b/run-command.h
+> > @@ -172,6 +172,17 @@ void child_process_clear(struct child_process *);
+> >
+> >  int is_executable(const char *name);
+> >
+> > +/**
+> > + * Returns if a $PATH given by parameter is found or not (it is NULL).=
+ This
+> > + * function uses locate_in_PATH() function that emulates the path sear=
+ch that
+> > + * execvp would perform. Memory used to store the resultant path is fr=
+eed by
+> > + * the function.
+> > + *
+> > + * The caller should ensure that $PATH contains no directory
+> > + * separators.
+> > + */
+> > +int exists_in_PATH(const char *);
+> > +
+> >  /**
+> >   * Start a sub-process. Takes a pointer to a `struct child_process`
+> >   * that specifies the details and returns pipe FDs (if requested).
 > > --
 > > 2.21.1 (Apple Git-122.3)
 > >
