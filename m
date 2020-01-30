@@ -2,122 +2,108 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5667C33C9E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 10:23:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 388A9C33C9E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 10:29:36 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id C618C206D5
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 10:23:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0EF86206D5
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 10:29:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727125AbgA3KXF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 05:23:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48354 "HELO cloud.peff.net"
+        id S1726922AbgA3K3f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 05:29:35 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48362 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726893AbgA3KXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 05:23:05 -0500
-Received: (qmail 30048 invoked by uid 109); 30 Jan 2020 10:23:04 -0000
+        id S1726873AbgA3K3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 05:29:34 -0500
+Received: (qmail 30974 invoked by uid 109); 30 Jan 2020 10:29:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Jan 2020 10:23:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Jan 2020 10:29:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22772 invoked by uid 111); 30 Jan 2020 10:30:47 -0000
+Received: (qmail 22811 invoked by uid 111); 30 Jan 2020 10:37:16 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Jan 2020 05:30:47 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 30 Jan 2020 05:37:16 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 30 Jan 2020 05:23:03 -0500
+Date:   Thu, 30 Jan 2020 05:29:33 -0500
 From:   Jeff King <peff@peff.net>
-To:     Emily Shaffer <emilyshaffer@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] clone: pass --single-branch during
- --recurse-submodules
-Message-ID: <20200130102303.GD840531@coredump.intra.peff.net>
-References: <20200108231900.192476-1-emilyshaffer@google.com>
- <20200128221736.9217-1-emilyshaffer@google.com>
+To:     "Crabtree, Andrew" <andrew.crabtree@hpe.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Inconsistent results from git rev-parse --show-toplevel
+Message-ID: <20200130102933.GE840531@coredump.intra.peff.net>
+References: <TU4PR8401MB111758B9513DD7D8B96CBFAAF90E0@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+ <xmqqftg4zkvo.fsf@gitster-ct.c.googlers.com>
+ <TU4PR8401MB1117B81EB9240905AA36B1E9F9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
+ <20200125195319.GA5519@coredump.intra.peff.net>
+ <TU4PR8401MB1117E8EEB853728B0392D83CF9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20200128221736.9217-1-emilyshaffer@google.com>
+In-Reply-To: <TU4PR8401MB1117E8EEB853728B0392D83CF9090@TU4PR8401MB1117.NAMPRD84.PROD.OUTLOOK.COM>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 28, 2020 at 02:17:36PM -0800, Emily Shaffer wrote:
+On Sat, Jan 25, 2020 at 10:22:45PM +0000, Crabtree, Andrew wrote:
 
-> Previously, performing "git clone --recurse-submodules --single-branch"
-> resulted in submodules cloning all branches even though the superproject
-> cloned only one branch. Pipe --single-branch through the submodule
-> helper framework to make it to 'clone' later on.
+> > But the bigger thing, I think, is: who is setting GIT_DIR but not setting GIT_WORK_TREE to match? Because IMHO that's the situation that is causing the confusion.
+> Pre-commit hook when worktrees are used? 
+> 
+> pre-commit
+> #!/bin/bash
+> env | grep GIT
+> 
+> /tmp/pre_commit_test_worktree  (new_branch)$ git add frob
+> /tmp/pre_commit_test_worktree  (new_branch)$ git commit -m "frob"
+> GIT_DIR=/tmp/pre_commit_test/.git/worktrees/pre_commit_test_worktree
+> GIT_EDITOR=:
+> GIT_INDEX_FILE=/tmp/pre_commit_test/.git/worktrees/pre_commit_test_worktree/index
+> GIT_PREFIX=
+> GIT_AUTHOR_DATE=@1579990789 -0800
+> GIT_AUTHOR_NAME=Andrew Crabtree
+> GIT_EXEC_PATH=/usr/local/libexec/git-core
+> GIT_AUTHOR_EMAIL=andrew.crabtree@hpe.com
+> [new_branch 7b1b747] frob
+>  1 file changed, 0 insertions(+), 0 deletions(-)
+>  create mode 100644 frob
 
-This makes sense to me, bearing in mind that I'm not at all a good
-person to point out subtleties with submodules that could bite us.
+I dug into this a little bit. I think the culprit is actually that our
+internal set_git_dir() puts GIT_DIR into the environment, but the
+matching setup_work_tree() doesn't touch GIT_WORK_TREE unless it's
+already set.
 
-> As discussed in the thread for v1 of this patch, in cases when the
-> submodule commit referenced by the specified superproject branch isn't
-> the same as the HEAD of the submodule repo known by the server side,
-> this still works in kind of a non-obvious way. In these cases, first we
-> fetch the single branch that is the ancestor of the server's HEAD; then
-> we fetch the commit needed by the superproject (and its ancestry). So
-> while this change prevents us from fetching *all* branches on clone, it
-> doesn't necessarily limit us to a single branch as described.
+This is mostly fine because we chdir() to the top-level of the working
+tree, meaning that any sub-processes would see the correct environment.
+But if we execute some arbitrary script (like a hook) that does a chdir,
+the results are surprising.
 
-Is it worth adding a test that we do the right thing here? Not so much
-to prove that it works now, but to protect us against future changes. It
-seems like the sort of thing that could get subtly broken.
+Something like this seems like it would be an improvement:
 
-The patch looks mostly good to me (my, that was a lot of plumbing
-through that option); here are a few minor comments:
+diff --git a/setup.c b/setup.c
+index e2a479a64f..75e2d1393c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -394,12 +394,7 @@ void setup_work_tree(void)
+ 	if (!work_tree || chdir_notify(work_tree))
+ 		die(_("this operation must be run in a work tree"));
+ 
+-	/*
+-	 * Make sure subsequent git processes find correct worktree
+-	 * if $GIT_WORK_TREE is set relative
+-	 */
+-	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
+-		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
++	setenv(GIT_WORK_TREE_ENVIRONMENT, work_tree, 1);
+ 
+ 	initialized = 1;
+ }
 
-> -update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]::
-> +update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|--force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth <depth>] [--recursive] [--jobs <n>] [--single-branch] [--] [<path>...]::
-
-This line is horrendously long. Not new in your patch, but I wonder if
-the time might have come to break it up.
-
-> +--single-branch::
-> +	This option is only valid for the update command.
-> +	Clone only one branch during update, HEAD or --branch.
-
-For some reason my brain insists on parsing this second sentence as a
-3-item list without an Oxford comma. I wonder if it would be more clear
-as:
-
-  Clone only one branch during update: HEAD or one specified by
-  --branch.
-
-or similar.
-
->  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
->  	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, 0, \
-> -	NULL, NULL, NULL, \
-> +	NULL, NULL, NULL, 0,\
->  	NULL, 0, 0, 0, NULL, 0, 0, 1}
-
-Wow. Also not new in your patch, but I think we're moving towards the
-use of C99 named initializers, which would make this a bit less
-daunting (all of the NULL/0 items could be omitted!).
-
-> +test_expect_success 'clone with --single-branch' '
-> +	test_when_finished "rm -rf super_clone" &&
-> +	git clone --recurse-submodules --single-branch "file://$pwd/." super_clone &&
-> +	(
-> +		cd super_clone/sub &&
-> +		git branch -a >branches &&
-> +		test_must_fail grep other branches
-> +	)
-> +'
-
-Don't use test_must_fail with non-Git commands; you can just say "!  grep".
-
-We usually try to avoid scripting around git-branch output (although I
-find it pretty unlikely that future changes would break this particular
-case). git-for-each-ref would be a better pick, but I wonder if:
-
-  git rev-parse --verify origin/master &&
-  test_must_fail git rev-parse --verify origin/other
-
-might express the expectation more clearly.
+but it fails a test in t5601 around git-clone. So there may be some
+weird subtle interaction here (or possibly just a bug in git-clone, if
+it isn't careful enough to clean its environment when moving into the
+newly created repo).
 
 -Peff
