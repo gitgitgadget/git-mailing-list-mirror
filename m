@@ -2,176 +2,240 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6CB2C33C9E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 11:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75424C33C9E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 11:34:12 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B94ED206D3
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 11:30:23 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 13F5F2083E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 11:34:12 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="kRvP6ZRD"
+	dkim=pass (1024-bit key) header.d=diamand.org header.i=@diamand.org header.b="C9m4AO5H"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727139AbgA3LaW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 06:30:22 -0500
-Received: from mout.gmx.net ([212.227.15.18]:35273 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727107AbgA3LaW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 06:30:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580383817;
-        bh=J43wk+W++9ZM3lTNKLASEnpAG1wWn21U8kBx4VYpJZc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=kRvP6ZRDcety0Br/c8B+YJeD8us7NSFK7mi1b5H2ZTFxjHhDNvz5oYJ+zm61xzW5M
-         l9QwFrvJ2nh0dNv1s4ubBZkPeRhkVNi1uKBybi/76ZXGPz4XdzlgEcxlDGGdFb74vc
-         wWCBQhc6kTUxs1/Ll5cC0VwIHHVGhSB+K/WmwkWQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWASe-1j3BUh1yEk-00Xdyr; Thu, 30
- Jan 2020 12:30:17 +0100
-Date:   Thu, 30 Jan 2020 12:30:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     abhishek kumar <abhishekkumar8222@gmail.com>
-cc:     shouryashukla.oo@gmail.com, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [GSoC] Doubts in an issue
-In-Reply-To: <CAHk66fs+FX_W+MwOCOF1_zw_vPz73D+0HbTrb7sXTHzgnWhzQQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001301210410.46@tvgsbejvaqbjf.bet>
-References: <CAHk66fs+FX_W+MwOCOF1_zw_vPz73D+0HbTrb7sXTHzgnWhzQQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727158AbgA3LeL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 06:34:11 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33147 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbgA3LeL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 06:34:11 -0500
+Received: by mail-wr1-f67.google.com with SMTP id b6so3671779wrq.0
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 03:34:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Vx9wC3kuIG+Q9asTHuP0cis5eWATsvyyRB+4y8BrI90=;
+        b=C9m4AO5H73ee4EwsdT0KXVcjGgh+jmDFZPto7AO+P4eERbfSUe97/hXdy86Quwhpv9
+         5IpTCyAVnTyjRtj1cK5Ed2aLwDL/suzBHo7ShI+QE3BIjK3xm3BkIEjEJz6ZCvXxDFas
+         EXk+P/HDDc/I59a332QVK1SDjEvAZx5NGL3/A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Vx9wC3kuIG+Q9asTHuP0cis5eWATsvyyRB+4y8BrI90=;
+        b=J4PXGsuQ78zLrCTXpxnRCpEDbSoJJsn5B/HNVfhzZLgVoo21QPoyXFN2ywXLluV1lP
+         d4KYtqfEiRz1U3iqdUF6x1U04sMeAZ7tsGSxi7laRR2mMhch33hYfz+la6Br4bWmPiTQ
+         WP5/mtdxm0OcihLfDjwt+Q+Qzhwx9GRJl04IlTY3zgtmsShlFqDIz+8d7+FjOl0V1DXp
+         7FepuucHj17r3hG3XYu6zD1VJKQjj4Rco/IHLDjg5QFEiS8QkgLfis7s1JpF9WI109X1
+         MqBFd/2MHdxZFcu24b3QvMhD+3n3vS2kbDFKIlFUNBIGz84kmt/hsH7LGbRJGK8iE/Zk
+         9fZw==
+X-Gm-Message-State: APjAAAUKvR9Mw2TJxfGjsC38+/B259LC7TzMDiXpKwcbJL30nTlUvUzN
+        xm0kWKns2rkTYiwIhBa5TVqBfh04pvdVcwlESpk/DVkT7mk=
+X-Google-Smtp-Source: APXvYqwXLYbxE5KjnJcAbq19w6tvMsfrpuloMIGbEDwMPLyRFT+j295o5GiCq5tfiq4/xaqFhhex94KW4IjLzrvqcBA=
+X-Received: by 2002:a5d:6852:: with SMTP id o18mr5115075wrw.426.1580384047128;
+ Thu, 30 Jan 2020 03:34:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:9ygQ7W/KXnHCel31pLESsMlE4yPCNlw7W6ZPOWFuMr6x93yFLG4
- RTYYdnYjQJWNM6Qk8q7hllOCL/8EVfMqNFp0wpcY3C8VQv0IZiZdjijmyyofh5oJ8RLOM36
- DMwDd0TH5RQBramRa97IbfDm8viqA1Ko2m19GdTLxLxL6ONC71LX3tIvpVxSHPN3jJwQZda
- 3svzIeh5BCGvhzJ4pIjmg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:FBIFrXdU5hc=:3eAJ9BzmYyWZtXyQ+AJcG0
- 7/dgQk2aeExppjDrOFgJ7CTQr86pCyloFSPqPP3JMqpo/Oz+Hpj/50VfGyMfFHG/dOpEtF65w
- sTX2yIyHQzpXf9LeoB+T96gi3r+RmFc9GPP4ogXOdFocy6JlrfT1ekkFhv2X3vMaHtSPJGIrO
- XHeI4rLDC6qJrPvWOsbeu2N76uyIGG/Q/pKzNy42vJsIuwznGC5p3u+oT+EqiJIYhMKNpM4IE
- XuCobQOucUeVFMngwB1K5GPGN4kG4BUow2nqBqtfiJu1ZMJfp4d23IMYzs0yMhdxzxvdiI2Xs
- h48mKfayv0xF3RJV2eq0DOgSO9T/uF1PhtFbeZ2615JHRXngkD59h0eTVGZyzUrs+LvmJ/DLx
- j2r73oga+0OLWECH5DcEBsLQvHfMkOrqdueYcSnqQ5Wr4CMtrDFadg6id4WlUx7bOc9/vQYx+
- B97g0e4IvuMt5i3T50wfayvUGFOoRSxLXxwNOxYk/idpBqBMgzvba7tnDvegTTdY1oDSSwgOM
- RdY7wN68SokKtqdRcw5j4/7yE6M998uyaBT5g9TZzSQ+Ndx2sSHOqniH9q9MuV0f3PyA5SRwY
- 8NXyeZybofg4GaECX0ok7tvVrVzV08W813L9T5p2P+a+Xk+k8p2koKXsNj74t/7CLVE4zoBhW
- c/L87RnXRGKotHIOcDPupKRWYEkUjSTSWvzkwnVjz080XnfuRhEWa/IqAedPV82jjUgAcMVo/
- baHXWSYeA0lK0+KNFa6yy/oNpyq4LLTJfgfPx/WA+4PLKab57n9KmKOQs4OOjNt/mcxST1QvH
- XXWYM++W152F96Bu/cjiZ/a0g9yxOk3JLBZfoxLjVVC3ABUPCikqf0i8rCyW8T64P7NTAZJtv
- MT3YUmqAC6KMOiS/c5yW0VYtZBh0U75viN7tO+uBdguDA7a3V7TB7aosIBpfwYjyHaJP4SWi6
- 45t3rOq645aCI0imnIJSnfZ7xDdcNSNnIyIpb7TNrsFe6a17Cc7H8gYte/RDAiyh3xD/DHByS
- mAr1cMrhKMph2xD72ywFjkXcWXSXOAewEgJEW+hpIcZCKxP5xYUcmqAULWKcikMZpG5ot9039
- T4rYnwWL2yLneoylILXijef/4TCmLGNpyh6X+X++7X9eIO2A7nfmqEvl3l35LnhZCiHkiVs9F
- nKrYRLrLnvQ7jIm0X4rq1sqOFUYOq6ll1oEyGWIistq7ilovMQik7JFfUp1rtKAQXo88TKmHc
- qcU8ZHHMbQ+GzMq9X
+References: <20200129111246.12196-1-luke@diamand.org> <nycvar.QRO.7.76.6.2001301131280.46@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.2001301131280.46@tvgsbejvaqbjf.bet>
+From:   Luke Diamand <luke@diamand.org>
+Date:   Thu, 30 Jan 2020 11:33:57 +0000
+Message-ID: <CAE5ih7_Rh7L=nOfWEY9FhFYX4swHqS0LqTLG=7L_K363__gJkA@mail.gmail.com>
+Subject: Re: [PATCHv1 0/6] git-p4: wait() for child processes better
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Users <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Yang Zhao <yang.zhao@skyboxlabs.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Tue, 28 Jan 2020, abhishek kumar wrote:
-
-> Greetings Shourya
-
-Thanks for jumping in!
-
-> I am not exactly Johannes (just another GSoC applicant) but here's what
-> I understood from the issue and your thread:
+On Thu, 30 Jan 2020 at 10:52, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> > And what exactly do we mean by "built-ins" here(does it refer to the
-> > "dashed" commands)?
+> Hi Luke,
 >
-> "Built-in" refers to commands implemented in C [1][2]. The more common
-> use of "built-in" which is a command that the shell (bash, sh, ksh)
-> carries out itself [3]. The name draws out the similarity between shell
-> builtins and git builtins, both written in C and executable through the
-> shell.
-
-It is _slightly_ more complicated than that. There are Git commands that
-are implemented in C and that are _not_ built-ins, for example `git
-fast-import` or `git remote-https`. The reasons are sometimes historical,
-sometimes not so (for example, we keep `remote-https` separate to avoid
-the startup cost of linking libcurl for _every_ `git` invocation).
-
-But yes, the built-in commands are the ones covered by the `git`
-executable, i.e. `git` does not have to spawn another executable or script
-to perform the command.
-
-> Therefore, "hardlink built-in to the corresponding dashed forms" is to
-> create a hard link with the dashed form name to the C program.
-
-Right. For historical context, the "dashed form" was originally the only
-form: commands like `git show` were implemented in scripts/executables
-whose name was `git-show`. Eventually the number of such
-scripts/executables got too ridiculous to leave in the `PATH`, so they
-were squirreled away into the `<prefix>/libexec/git-core/` directory. So
-if your `git` executable lives in `/usr/local/bin/git`, those
-scripts/executables would live in `/usr/local/libexec/git-core/`.
-
-At some point, we started to consolidate most of the commands that were
-_already_ implemented in C into the set of built-ins. Meaning that the
-`git` executable would first figure out under which name it was called,
-and then perform the appropriate function.
-
-This allowed us to hard-link `git` to, say, `git-show` and not waste disk
-space.
-
-At some point we had so many built-ins that the "dashed form" was
-deprecated. It _already_ only worked in scripted sub-commands (you can
-implement your own Git subcommand by implemeting a script whose name
-starts with `git-` and then putting it into the `PATH`, for example
-`git-cinnabar` would be picked up by `git cinnabar` and would
-automatically append the `libexec/git-core/` directory to the `PATH`
-before running that script) unless you added the libexec directory to your
-`PATH` explicitly.
-
-=46rom that point on, we encouraged power users who automate their workflo=
-w
-via shell scripts to use `git rev-list` instead of `git-rev-list` in their
-scripts.
-
-This has been going on for _quite_ a while, so at this point it should be
-safe to stop hard-linking those built-ins. It should be enough that the
-`git` executable knows how to run the program, there does not really need
-to be a hardlink in `libexec/git-core/`.
-
-> > where is the <<libexec/git-core/>> directory?
+> On Wed, 29 Jan 2020, Luke Diamand wrote:
 >
-> As the makefile suggests, the programs and scripts are installed at
-> `gitexecdir`. I couldn't find it but instead found `GIT_EXEC_PATH`
-> which point to pretty much the same thing. You can find it by `git
-> --exec_path` [4].
+> > git-p4 handles most errors by calling die(). This can leave child
+> > processes still running, orphaned.
+> >
+> >     https://public-inbox.org/git/20190227094926.GE19739@szeder.dev/
+> >
+> > This is not a problem for humans, but for CI, it is.
 >
-> > Now, whenever we call scripts whose "dashed" version exists, it will
-> > sort of link the "dashed" version as well for I guess historical
-> > reasons? ;)
+> Just to make sure that we're talking about the same thing. Looking at
 >
-> No. Creating hard links is done during the build process. But calling
-> `git-<script-name>` through `git <script-name>` makes `git` prepend
-> `libexec/gitcore` which is necessary to find the hard link. So, you
-> are half-right :).
-
-To add to this, I already had provided a head-start in
-https://github.com/gitgitgadget/git/pull/411...
-
-Shourya, if you want to complete it, be my guest. I left a comment what
-still needs to be done. If in doubt, just ping me in the ticket (or if I
-am slow, ask for help on this here mailing list).
-
-Ciao,
-Johannes
-
-> Regards
-> Abhishek
+> https://dev.azure.com/git/git/_test/analytics?definitionId=3D11&contextTy=
+pe=3Dbuild
 >
-> [1]: https://github.com/msysgit/msysgit/wiki/Why-Is--libexec--so-huge%3F
-> [2]: https://github.com/git/git/blob/master/builtin.h
-> [3]: https://unix.stackexchange.com/a/11465
-> [4]: https://git-scm.com/book/en/v2/Git-Internals-Environment-Variables
+> I am not even sure that `git-p4` is our biggest problem there. In that
+> list, the only flaky `git-p4` test I see is t9806.5. And it failed only
+> once recently:
+> https://dev.azure.com/git/git/_build/results?buildId=3D1640&view=3Dms.vss=
+-test-web.build-test-results-tab
 >
+> The log looks like this:
+>
+> -- snip --
+> [...]
+> expecting success of 9806.5 'sync when no master branch prints a nice err=
+or':
+>         test_when_finished cleanup_git &&
+>         git p4 clone --branch=3Drefs/remotes/p4/sb --dest=3D"$git" //depo=
+t@2 &&
+>         (
+>                 cd "$git" &&
+>                 test_must_fail git p4 sync 2>err &&
+>                 grep "Error: no branch refs/remotes/p4/master" err
+>         )
+>
+> + test_when_finished cleanup_git
+> + test 0 =3D 0
+> + test_cleanup=3D{ cleanup_git
+>                 } && (exit "$eval_ret"); eval_ret=3D$?; :
+> + git p4 clone --branch=3Drefs/remotes/p4/sb --dest=3D/home/vsts/work/1/s=
+/t/trash directory.t9806-git-p4-options/git //depot@2
+> Initialized empty Git repository in /home/vsts/work/1/s/t/trash
+> directory.t9806-git-p4-options/git/.git/
+> Perforce db files in '.' will be created if missing...
+> Perforce db files in '.' will be created if missing...
+> Perforce db files in '.' will be created if missing...
+> Perforce db files in '.' will be created if missing...
+> Perforce db files in '.' will be created if missing...
+> Importing from //depot@2 into /home/vsts/work/1/s/t/trash directory.t9806=
+-git-p4-options/git
+> Doing initial import of //depot/ from revision @2 into refs/remotes/p4/sb
+> + cd /home/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git
+> + test_must_fail git p4 sync
+> + _test_ok=3D
+> + git p4 sync
+> Performing incremental import into refs/remotes/p4/master git branch
+> Depot paths: //depot/
+> + exit_code=3D1
+> + test 1 -eq 0
+> + test_match_signal 13 1
+> + test 1 =3D 141
+> + test 1 =3D 269
+> + return 1
+> + test 1 -gt 129
+> + test 1 -eq 127
+> + test 1 -eq 126
+> + return 0
+> + grep Error: no branch refs/remotes/p4/master err
+> Error: no branch refs/remotes/p4/master; perhaps specify one with --branc=
+h.
+> + cleanup_git
+> + retry_until_success rm -r /home/vsts/work/1/s/t/trash directory.t9806-g=
+it-p4-options/git
+> + nr_tries_left=3D60
+> + rm -r /home/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git
+> + test_path_is_missing /home/vsts/work/1/s/t/trash directory.t9806-git-p4=
+-options/git
+> + test -e /home/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git
+> + echo Path exists:
+> Path exists:
+> + ls -ld /home/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git
+> drwxr-xr-x 3 vsts docker 4096 Jan 24 22:20 /home/vsts/work/1/s/t/trash di=
+rectory.t9806-git-p4-options/git
+> + test 1 -ge 1
+> + echo /home/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git /ho=
+me/vsts/work/1/s/t/trash directory.t9806-git-p4-options/git
+> + false
+> + eval_ret=3D1
+> + :
+> -- snap --
+
+This should be fixed by my change. When that error occurs, the current
+version calls die(), with my change it raises an exception, and then
+cleans up further up the stack.
+
+-                            die("Error: no branch %s; perhaps specify
+one with --branch." %
++                            raise P4CommandException("Error: no
+branch %s; perhaps specify one with --branch." %
+
+
+>
+> FWIW I see the same test being flaky in Git for Windows (but it _also_
+> only happened once in the past 14 days):
+> https://dev.azure.com/git-for-windows/git/_test/analytics?definitionId=3D=
+17&contextType=3Dbuild
+> and
+> https://dev.azure.com/git-for-windows/git/_build/results?buildId=3D49174&=
+view=3Dms.vss-test-web.build-test-results-tab
+>
+> The log suggests to me that there is a path that has not been cleaned up,
+> and _maybe_ it is timing-related, but it is also possible that a child
+> process is still running that should have cleaned it up.
+>
+> Are your patches about this failure?
+
+I was actually looking at G=C3=A1bor's report. He has a nifty hack which
+makes the errors crop up very rapidly, so I just fixed all of the
+failures that arose from that.
+
+It's easy to see from inspecting the code that there are plenty of
+other places where this is not handled properly. Probably those should
+wait until the python3 fixes have been merged and/or there is some
+demand for them.
+
+>
+> I see that PATCH 5/6 talks about G=C3=A1bor's analysis of t9800.6 in
+> https://public-inbox.org/git/20190227094926.GE19739@szeder.dev/ which
+> _looks_ similar.
+>
+> FWIW I looked over your patches and they seem relatively obvious, even fo=
+r
+> somebody like me who barely gets to code in Python anymore.
+
+Thanks!
+Luke
+
+>
+> Thanks,
+> Dscho
+>
+> >
+> > This change improves things by raising an exception and cleaning up
+> > further up the stack, rather than simply calling die().
+> >
+> > This is only done in a few places, such that the tests pass with the ch=
+anges
+> > suggested in the link (adding sleep strategically) but there are still
+> > plenty of places where git-p4 calls die().
+> >
+> > This also adds some pylint disables, so that we can start to run pylint
+> > on git-p4.
+> >
+> > Luke Diamand (6):
+> >   git-p4: make closeStreams() idempotent
+> >   git-p4: add P4CommandException to report errors talking to Perforce
+> >   git-p4: disable some pylint warnings, to get pylint output to
+> >     something manageable
+> >   git-p4: create helper function importRevisions()
+> >   git-p4: cleanup better on error exit
+> >   git-p4: check for access to remote host earlier
+> >
+> >  git-p4.py | 180 +++++++++++++++++++++++++++++++++---------------------
+> >  1 file changed, 109 insertions(+), 71 deletions(-)
+> >
+> > --
+> > 2.20.1.390.gb5101f9297
+> >
+> >
