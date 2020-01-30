@@ -2,136 +2,140 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15A47C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 17:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E07CC2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:14:48 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id DDD5E20663
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 17:45:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 0CE902082E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:14:48 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GJ6y3NDr"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QuowMnaV"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727490AbgA3Rps (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 12:45:48 -0500
-Received: from mail-oi1-f196.google.com ([209.85.167.196]:41408 "EHLO
-        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727338AbgA3Rpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 12:45:47 -0500
-Received: by mail-oi1-f196.google.com with SMTP id i1so4329189oie.8
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 09:45:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nHsbAmxInfypNEFlCkKLP2KqL6FOcR3rhRfgf7MbDWI=;
-        b=GJ6y3NDrYEeZPTX63gytgI4ogLKO8GXpnLBTH6yOachqC3nxtCAwVN8ouzqIUKnpHc
-         E72mLEHn5CUl8cT3S2VjN95Q0hPTcA0I6yetCyzqbyKia1SHTa2110RCaZ2KDUcY2uOM
-         rjzdgD82EFF+H5hR/AyNMjYojlG1xRXehQnScbjjeEVATT435fPRYIGzdrm++H/gU9Qu
-         OlYEL0Wpij6iBFJdJJYBrb+XCmfztgL0h2y1++Lgx06s6IBpUQm4Tam2Fu97JpWEHYWd
-         Ol/rs0TBU4pUZmhxTqp3cBAN6tSyvENInupPfEbWZpJAw/63LbH2Wd5Qj1vs6FKoOiT3
-         tseQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nHsbAmxInfypNEFlCkKLP2KqL6FOcR3rhRfgf7MbDWI=;
-        b=jWUUnK7npDpKmyRvafRNLFfiY+d7DgY5pVZNpEuTUYYYVq/7FHIKM8agIBS12xnGBv
-         WPuy/EayffnTJgREsGn2/rLu/Gp56unXtXRWNoTg4PvfE9j+HsB7mtW3eQ8RbobM2hfM
-         zXkSIHS8mDbO+ZeTMcwqCoJ/P8PHP6jJBNmhC8ahePFyU1gNvzRHuwUublDZf1e8bfUe
-         YNg6Cl6kQSbW6YInoScRuf3b62XbyJN3aAbQKWV8NeGNyg46ygMhqICNgNnFtc+57mrn
-         3Kvp6DdEcZDLPm7517NTjnvp/vos5x6PCsLTFqAF88uepgwSwQB5m1BWycTnkAULAM4l
-         E9nw==
-X-Gm-Message-State: APjAAAV/i0jy9JXnKfPLPLUl2E3bAKhko82cAHprFV8lLQ3PgO8btjHA
-        Qo7mRFCK42Y7P7vThxpbdjz5KanC1kpht1i/Vtc=
-X-Google-Smtp-Source: APXvYqzZyPXsYoeF4/W6VbE1pGabvN9l2e2XIstZeybirYiKQGtAHx3/C0fx8bM4rKMneOQDgnMcNsWp7B9QU8xl6Mk=
-X-Received: by 2002:aca:5588:: with SMTP id j130mr3541644oib.122.1580406346558;
- Thu, 30 Jan 2020 09:45:46 -0800 (PST)
+        id S1728582AbgA3SOr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 13:14:47 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:58545 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728573AbgA3SOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 13:14:47 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D069752E9F;
+        Thu, 30 Jan 2020 13:14:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=zjRHSl1U3ZGstUAeHg4ehI/p3o0=; b=QuowMn
+        aVrVlTzqInOHA6MRsuaKSUs0kDG21taWpaWEihKUMapzA84lyAEoYgsy6hSBFo1f
+        SGaZtabMaXcduPTvkCS8qEVFWbQc57b+g++XQdlmDnO6nXfi14c3U1bWL5RqRdhS
+        DWdV6ToAFnQMI/g73lmDa9EA4OkAxtffurqHU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=OWO8GZ1F3+HO3E2LcSk4K7DhdU7nQRiE
+        Z/+Sbqs8nRTxCV+Ds8hT/4zaCqg1NMtNkPjIKrTQDCa6MLCjzXDz9+T4wptRzlBc
+        EJCuHu8TRfzer0/olP9Dxrv9HkhEutEMDHiXKph6P7zWXXV9xrLVaDNJmGhrNxSu
+        xnqrrFscedI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C853C52E9E;
+        Thu, 30 Jan 2020 13:14:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2AFBF52E9D;
+        Thu, 30 Jan 2020 13:14:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2] grep: ignore --recurse-submodules if --no-index is given
+References: <pull.540.git.1580000298097.gitgitgadget@gmail.com>
+        <pull.540.v2.git.1580391448318.gitgitgadget@gmail.com>
+Date:   Thu, 30 Jan 2020 10:14:39 -0800
+In-Reply-To: <pull.540.v2.git.1580391448318.gitgitgadget@gmail.com> (Philippe
+        Blain via GitGitGadget's message of "Thu, 30 Jan 2020 13:37:28 +0000")
+Message-ID: <xmqq36bwerqo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
- <40b378e7adbbff5ecfd95fd888465fd0f99791c8.1580335424.git.gitgitgadget@gmail.com>
- <59b5b766-29e2-a709-b407-56bf6ea60b47@gmail.com> <CABPp-BEQ5s=+6Rnb-A+pdEaoPXxfo-hMSegSe1eai=RE74A3Og@mail.gmail.com>
-In-Reply-To: <CABPp-BEQ5s=+6Rnb-A+pdEaoPXxfo-hMSegSe1eai=RE74A3Og@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Jan 2020 09:45:35 -0800
-Message-ID: <CABPp-BHR7mFP1rKJ6UBETHbv+R6GbDKO8wA31RJ7f4VqpJ77DQ@mail.gmail.com>
-Subject: Re: [PATCH 5/6] dir: replace exponential algorithm with a linear one
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Kevin.Willford@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 624D4F9A-438C-11EA-98A7-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 30, 2020 at 9:13 AM Elijah Newren <newren@gmail.com> wrote:
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> Using `--recurse-submodules` should not have any effect if `--no-index`
+> is used inside a repository, as Git will recurse into the checked out
+> submodule directories just like into regular directories.
+> ...
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 50ce8d9461..ae2d5bbafc 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -958,6 +958,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  			/* die the same way as if we did it at the beginning */
+>  			setup_git_directory();
+>  	}
+> +	/* Ignore --recurse-submodules if --no-index is given or implied */
+> +	if (!use_index)
+> +		recurse_submodules = 0;
+
+This is done quite early in the execution flow.  That makes any and
+all existing checks that says "if recurse-submodules is set and we
+are in no-index mode, do this" unneeded.
+
+>  
+>  	/*
+>  	 * skip a -- separator; we know it cannot be
+
+> @@ -1115,8 +1118,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>  		}
+>  	}
+>  
+> -	if (recurse_submodules && (!use_index || untracked))
+> -		die(_("option not supported with --recurse-submodules"));
+> +	if (recurse_submodules && untracked)
+> +		die(_("--untracked not supported with --recurse-submodules"));
+
+And this is an example of a change to remove a check for such a
+redundant condition.  If recurse_submodules is true (which is the
+only time the RHS of &&- is evaluated), we know use_index cannot be
+false, so the final outcome solely depends on the value of untracked.
+
+Looks good.  And my quick reading of the current builtin/grep.c code
+suggests that this is the only such combination that can be simplified.
+
+Thanks.
+
+>  	if (!show_in_pager && !opt.status_only)
+>  		setup_pager();
+> diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
+> index 946f91fa57..828cb3ba58 100755
+> --- a/t/t7814-grep-recurse-submodules.sh
+> +++ b/t/t7814-grep-recurse-submodules.sh
+> @@ -345,7 +345,16 @@ test_incompatible_with_recurse_submodules ()
+>  }
+>  
+>  test_incompatible_with_recurse_submodules --untracked
+> -test_incompatible_with_recurse_submodules --no-index
+> +
+> +test_expect_success 'grep --recurse-submodules --no-index ignores --recurse-submodules' '
+> +	git grep --recurse-submodules --no-index -e "^(.|.)[\d]" >actual &&
+> +	cat >expect <<-\EOF &&
+> +	a:(1|2)d(3|4)
+> +	submodule/a:(1|2)d(3|4)
+> +	submodule/sub/a:(1|2)d(3|4)
+> +	EOF
+> +	test_cmp expect actual
+> +'
+>  
+>  test_expect_success 'grep --recurse-submodules should pass the pattern type along' '
+>  	# Fixed
 >
-> On Thu, Jan 30, 2020 at 7:55 AM Derrick Stolee <stolee@gmail.com> wrote:
-[...]
-> > > @@ -1713,18 +1719,101 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
-> > >
-> > >       /* This is the "show_other_directories" case */
-> > >
-> > > -     if (!(dir->flags & DIR_HIDE_EMPTY_DIRECTORIES))
-> > > +     /*
-> > > +      * We only need to recurse into untracked/ignored directories if
-> > > +      * either of the following bits is set:
-> > > +      *   - DIR_SHOW_IGNORED_TOO (because then we need to determine if
-> > > +      *                           there are ignored directories below)
-> > > +      *   - DIR_HIDE_EMPTY_DIRECTORIES (because we have to determine if
-> > > +      *                                 the directory is empty)
-> >
-> > Perhaps here is where you could also have a DIR_LIST_ALL_UNTRACKED
-> > flag to ensure the untracked cache loads all untracked paths?
->
-> Do you mean DIR_KEEP_UNTRACKED_CONTENTS (which is documented in dir.h
-> as only having meaning when DIR_SHOW_IGNORED_TOO is also set, and thus
-> caused me to not list it separately)?
->
-> Speaking of DIR_KEEP_UNTRACKED_CONTENTS, though, its handling as a
-> post-processing step in read_directory() is now inconsistent with how
-> we handle squashing a directory full of ignores into just marking the
-> containing directory as ignored.  I think I should move the
-> read_directory() logic for DIR_KEEP_UNTRACKED_CONTENTS to
-> treat_directory() and use another counter similar to old_ignored_nr.
-> It should be more efficient that way, too.
-
-Oh, actually, I think I understand what you're getting at so let me
-clear it up.  With DIR_SHOW_IGNORED_TOO, we always recurse to the
-bottom, because it's needed to find any files that might be ignored.
-(Maybe we could do something clever with checking .gitignore entries
-and seeing if it's impossible for them to match anything below the
-current directory, but the code doesn't do anything that clever.)  As
-a side effect, we'll get all untracked files whenever that flag is
-set.  As such, the only question is whether we want to keep all those
-extra untracked files that we found or not, which is the purpose of
-DIR_KEEP_UNTRACKED_CONTENTS.  Without DIR_SHOW_IGNORED_TOO, there's no
-need or want to visit all untracked files without also learning of all
-ignored files (and, in fact, git-clean is currently the only one that
-wants to know about all untracked files).
-
-As far as a simple test goes, in a simple repository with a file named
-   one/two/three/four/five/untracked-file
-and with nothing else under one/:
-
-Before my changes:
-    $ strace -e trace=file git status --ignored 2>&1 | grep
-'open("one/' | grep -v gitignore.*ENOENT | wc -l
-    62
-Note that 62 == 2^5 + 2^4 + 2^3 + 2^2 + 2^1, showing how many
-directories we open and read.
-
-After my changes:
-    $ strace -e trace=file git status --ignored 2>&1 | grep
-'open("one/' | grep -v gitignore.*ENOENT | wc -l
-    5
-showing that it does open and read each directory, but does so only once.
+> base-commit: bc7a3d4dc04dd719e7c8c35ebd7a6e6651c5c5b6
