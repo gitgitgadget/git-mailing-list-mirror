@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-9.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE5B2C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 20:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1130DC2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 20:33:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8E69F20708
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 20:33:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D602F20708
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 20:33:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="gMcw6zdo"
+	dkim=pass (2048-bit key) header.d=usp-br.20150623.gappssmtp.com header.i=@usp-br.20150623.gappssmtp.com header.b="t+ZggL5B"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727775AbgA3Udd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 15:33:33 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:46471 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726514AbgA3Udd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 15:33:33 -0500
-Received: by mail-qk1-f195.google.com with SMTP id g195so4267118qke.13
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 12:33:32 -0800 (PST)
+        id S1727779AbgA3Udj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 15:33:39 -0500
+Received: from mail-qv1-f66.google.com ([209.85.219.66]:38627 "EHLO
+        mail-qv1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726514AbgA3Udi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 15:33:38 -0500
+Received: by mail-qv1-f66.google.com with SMTP id g6so2175806qvy.5
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 12:33:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=usp-br.20150623.gappssmtp.com; s=20150623;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bCiHX3i0ze8uxpSTqlorZAcd0L4sog7vYgQY125mN2E=;
-        b=gMcw6zdoRM9REVQm+g97TKH+6qKXP82ec1axuvctO7xJcugko6Jlgqgo5cWwizjf1E
-         32smiUM4o2gStUqqNBG7iqzwjFiJpTWZm/B32tp0wTRuFkpXDgS1ZAf+buq8Z+5XR6Rj
-         ktR3Lq/kQF7qOe5xNF9Jye1Ac+K/jgDtP6uBJdOWr0zh4pZ/4HHz5IWUG86yX3oGBvga
-         mjqkn6d00vMM5WmqaBP32idUqHhgDxDAuYFbWs8mpIoVI9LOe2eJfYIozjVQHmNAUi3K
-         B1rtaXgzYviY3Q4X56/Of2x99nIM3LugSC3lWusf6sS2W4hxXdKWfdXXuD5sr4zxR14F
-         jYuA==
+        bh=7mXc0JGAnpaTT7WkDztXaipWGC+d+Uw0pUQB9NwsZaM=;
+        b=t+ZggL5BiqEJROnMzl7XGA12J0JHzibLA7+G2hPhD5jBWOnYIdr7WOTTGxVxa3glQj
+         9pWjEtXI8W87scp6cGnAmPBv9OCt3O/hBHv6VlzCkZkU/FQSqKYZED1NmOXgg2+T0X2h
+         Hcf0xfxu643v5uHqwk/vE0sZZV4SxLfCVV1kowMFEDNLQdtmJ2rPC2oSLcj22AI/CNQs
+         a4g8oVkczMatGXv01Py9Pc5buduRRYlIheIu2qfzERHCnyiWNt9NpiODiwM6UokVXzrN
+         S/zf4AaC1uireQwM8jSiFB3Bl7e+Wq/pMzc57VX0M62QsItEq0u+t8bolltkuouwrlZj
+         G+9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bCiHX3i0ze8uxpSTqlorZAcd0L4sog7vYgQY125mN2E=;
-        b=lJVGx1EAywsDLK5aGy0wMfuOoE/2GAezMePb5pWrZRx4lNXoZue7FzuNUgj9qULYFN
-         Nafk6nkCVzuUc0ITI+1s+Pr2zvX+HKLlRv3dRXl6ViNJEXXfjXX3ztaMacHcVcZ9vmnb
-         PpzTcBp3msfm0x4ksUkorUMsYEnYmO4QfChvjlJvIYTFC9ofEZwQ2KPCRoh8brp1XETv
-         i/PhswB09dqrcxKk9LFwqliZ+lV+k6u7BT+DsDydZZ8s0M5PpFQaf2iVFb6EwuHSCTVG
-         kFNcr4/SKh+QOGoEyTSIZwWF6P/RbSpTdtwmS56w7VMlDSICSQULW3bM+1EAiKyv68Q1
-         xBoA==
-X-Gm-Message-State: APjAAAUinbSnxbDxpj+fTHx8tKx7T05gVWo7tZsV/w71wmathRe5aSSg
-        W+mxF4NpJGdb/T7pIaRcyRVvQbcAdCw=
-X-Google-Smtp-Source: APXvYqzpLx7iOef7cgd0uOUhcXojDDWIDat/YlvUxQKvoWGUo77FoI4aumWzpXGfEUiQk7kU4utiHQ==
-X-Received: by 2002:a05:620a:1108:: with SMTP id o8mr6884459qkk.118.1580416410278;
-        Thu, 30 Jan 2020 12:33:30 -0800 (PST)
+        bh=7mXc0JGAnpaTT7WkDztXaipWGC+d+Uw0pUQB9NwsZaM=;
+        b=f0XhBgh1f+gzHPA6Ouo9xYOg3WTaZZzIue0AYfENgyZYhvJbbLHXLHklr7FAuiH3K2
+         ATD0H33K+rTx0omjOZ2VjNCw0REuzsOuIyKb/contDHDVb0jFnHY9CU9jsPfLprH6CnT
+         upkbIBc01nNlKNZHZ49zdXb77moYjOKZDVzLUOdpPnSiMDGzmF6DaxWPatTrAME7Z+FA
+         RryUlQfcR/F+PM9BssUig3TWbCd6nVIEFglpBnYC9CUrnQuGNFf6NwhiO/4XyMWF5rov
+         /JYtS/wjMp92w7nV845PQxnILBKQBf1eCW+VrmCs7sarBisUhPSn/R6HS1UAHml1SNzL
+         6Ymg==
+X-Gm-Message-State: APjAAAUpBuwBcOGZWsMqPwH9NTeMUnFf2SqfrBluyDVLcepwxbxJkOKD
+        N2YXCfx1VGB+LvXuAdL+9LlZk+ms+HQ=
+X-Google-Smtp-Source: APXvYqzLM/3g2qJO2RTuSHhwMonhUQKnaW3ozT8Nlq7EVXf9yV1tjKnm8LBpHXqxNE82Jr6egvkQ4Q==
+X-Received: by 2002:ad4:46af:: with SMTP id br15mr6714995qvb.216.1580416417366;
+        Thu, 30 Jan 2020 12:33:37 -0800 (PST)
 Received: from mango.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id o12sm3436514qke.79.2020.01.30.12.33.28
+        by smtp.gmail.com with ESMTPSA id o12sm3436514qke.79.2020.01.30.12.33.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2020 12:33:29 -0800 (PST)
+        Thu, 30 Jan 2020 12:33:36 -0800 (PST)
 From:   Matheus Tavares <matheus.bernardino@usp.br>
 To:     git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Jeff King <peff@peff.net>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/7] diff: make diff_populate_filespec() honor its repo argument
-Date:   Thu, 30 Jan 2020 17:32:17 -0300
-Message-Id: <5a31c7b9e3239f2b7e4841dcc85cbf9cddf545ed.1580413221.git.matheus.bernardino@usp.br>
+Subject: [PATCH 2/7] cache-tree: use given repo's hash_algo at verify_one()
+Date:   Thu, 30 Jan 2020 17:32:18 -0300
+Message-Id: <8bab40cb3357d64b8d365b8848ded99122056689.1580413221.git.matheus.bernardino@usp.br>
 X-Mailer: git-send-email 2.25.0
 In-Reply-To: <cover.1580413221.git.matheus.bernardino@usp.br>
 References: <cover.1580413221.git.matheus.bernardino@usp.br>
@@ -71,27 +72,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff_populate_filespec() takes a struct repository argument but it
-doesn't get passed down to read_object_file().
+verify_one() takes a struct repository argument but uses the_hash_algo
+internally. Replace it with the provided repo's git_hash_algo, for
+consistency. For now, this is mainly a cosmetic change, as all callers
+of this function currently only pass the_repository to it.
 
 Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
 ---
- diff.c | 2 +-
+ cache-tree.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/diff.c b/diff.c
-index 8e2914c031..0f333c27d6 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4024,7 +4024,7 @@ int diff_populate_filespec(struct repository *r,
- 				return 0;
- 			}
+diff --git a/cache-tree.c b/cache-tree.c
+index 1bd1b23d38..8c51a15751 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -826,7 +826,7 @@ static void verify_one(struct repository *r,
+ 			i++;
  		}
--		s->data = read_object_file(&s->oid, &type, &s->size);
-+		s->data = repo_read_object_file(r, &s->oid, &type, &s->size);
- 		if (!s->data)
- 			die("unable to read %s", oid_to_hex(&s->oid));
- 		s->should_free = 1;
+ 		strbuf_addf(&tree_buf, "%o %.*s%c", mode, entlen, name, '\0');
+-		strbuf_add(&tree_buf, oid->hash, the_hash_algo->rawsz);
++		strbuf_add(&tree_buf, oid->hash, r->hash_algo->rawsz);
+ 	}
+ 	hash_object_file(tree_buf.buf, tree_buf.len, tree_type, &new_oid);
+ 	if (!oideq(&new_oid, &it->oid))
 -- 
 2.25.0
 
