@@ -7,147 +7,143 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5372C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 56B24C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:57:40 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 962BB206D3
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:41:42 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2787720707
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 14:57:40 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lU3BHDKP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="p94KWuMN"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727404AbgA3Oll (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 09:41:41 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:46867 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbgA3Oll (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 09:41:41 -0500
-Received: by mail-io1-f66.google.com with SMTP id t26so4200778ioi.13
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 06:41:39 -0800 (PST)
+        id S1727247AbgA3O5i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 09:57:38 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:41878 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727224AbgA3O5i (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 09:57:38 -0500
+Received: by mail-oi1-f196.google.com with SMTP id i1so3736052oie.8
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 06:57:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=U6Uu1uYJwf05jTCWZG1rKbthtWxMuMO6VXPSSNR/CTw=;
-        b=lU3BHDKPUTPtwn5ZRs5E/jZf+llIo1FxMuY9sHEdJYp+xFdYBWu61hLuZoS5KyMUUf
-         3EZam/q77FQarGyBMz1KuG1JZI6n4k2xwCJeWmCNMz+P5YUKwJDtyWR664ih+bRq97Tf
-         th5pNnAQL/KtxzM2xgNiEMrmg6UoaS6zvMnYK1Wn1FPYs2UKOR29G+jCTCqS/6yDjXSh
-         oBPk3rgSFSqsiXN4Yzn0EM3CfYd8vGUE4XKzwjJpjzkNtIjyLFnfV5A1/iKXEC/3BQ6z
-         1gNHXf19NiCdQE7HFgyiis7fCyNt6VQED1bgn+sybtvVhk+NSLAbFJoMF7LheKzD4yfC
-         nEHA==
+         :cc;
+        bh=zFodYFGrlzoyzPHOP/Ff7qtDCaD5J6tdc9Avx8TyXLw=;
+        b=p94KWuMNGnod3VNCtmhbVy8y4816w0DHYKeL/bH2bf+AGHHiKGRqJdBI9SCiQm2tbL
+         8MH0hwNf0hIy1QC+1OrLSzA8IpzeGBbDjvBnqnkyoWU56dj0xj3akHFi1jE8sZUxKK2O
+         ATADPVPe8rqBwML5ZGDYUdUHDPvzClScCU++8MDuwZTC7MzbLe9GkP4F530ygmZrpBeH
+         MJyFFwKLjxjpeOOPShNVfqEJ3xjhUyvlPkwGqrU8nuNeMqaUPsmFFdEyEir0+duALTRt
+         8MZp3q8MOWq7dUjhxY+vRqyiUTwYljfD+RpxqG+qzeI9HlxGiVgg0UkTZuTfdpOo8v7b
+         /V6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=U6Uu1uYJwf05jTCWZG1rKbthtWxMuMO6VXPSSNR/CTw=;
-        b=Y2S6lzFjgCapGk7aKPIWHzISF+0DmIt4TD566n4vYbcu92lfYrdxQ2UXu+2uI9iU5I
-         HjjpozfcP0cnIvOaL8051J2DyMTQIWjaPyHhHHR9tIhyYbxadPVctaPOMnAQodkgGMp6
-         B9nr1lNURMKFDhdgheeut1pSeAugUSOZpcowWwFtHHvSK2Nc/Kl7qfnSqMGFEc0Z3Qpi
-         9gGHXYQv4nRtd5IddUA2umGrL70BTNfXbaGxKi+LktIujPNIy+R5XXMJMATrn2dod+2+
-         LAKd06xZ2zX+n92vacLz07OIHf25Y1FkKjyX+Qcf3jxW4REl3PyUGXJxecpyS5HmIudh
-         pzJw==
-X-Gm-Message-State: APjAAAWh7hK18ZeMM4Ef4En56ovN/nYXrdWkYanWJLjM4CEK+sb5st4S
-        04ptrVPueIBP8LTcJEfUhPQKs+aW0gD3C70gwK25Xg==
-X-Google-Smtp-Source: APXvYqwtJJFSZ6MBv14Cdj1viwKfAC4qpZMafHKrzKoAwGUq5IlA+HZzSkhBFJTbcvIDKwgs9mq7hY7PZeEKwLQ8gTI=
-X-Received: by 2002:a02:cc7a:: with SMTP id j26mr4168559jaq.79.1580395298985;
- Thu, 30 Jan 2020 06:41:38 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=zFodYFGrlzoyzPHOP/Ff7qtDCaD5J6tdc9Avx8TyXLw=;
+        b=QW9Y2+VVuCrvD0Bf7ZgmVGgFJagMUrg5lgTnH2A62BgUZC6yEnS5rcM2b2UsEoquQU
+         z+lTFCf5UVa72StDJRmIMbbsgWd+LjqRr1HZjWw2BMR9ShPyRBSTbe4smeFL8XYi1aUm
+         k5XfJgesSZGBx1G9tv2/erEH1d1e+sDsOclb++6Y3PIjn3/dFzBSc4X8d1KwysI/NPCv
+         IGPGba+n6KGuf8FbNGZcQwHNuwGYe3djQ8UlNG+UpUMdjb6sjzT5P1nmtX1uEhAdsHDU
+         b3ONvUpxniKLHTZUHKl1MMZUhGNp2lUcKZvR5NLxavqefAIjc46yi6yGiAtnNEdgc/v6
+         Rfhg==
+X-Gm-Message-State: APjAAAVBC0RnLmoBT5lSQtm6y2avOhp1XaZ8up9hKDpa8y8Rq/x3SFBt
+        /+gbCliagcTOPo9YJt7Xcif2CF1dBP8sWZuTGxmFsg==
+X-Google-Smtp-Source: APXvYqyJAhqpYrnI3NvbbWYtDt8PPdsF8Ykbh0d/pJIEPlsSToKT8rDduVFtVnhnA1JRcXS67870Vy/b1OwU0UdAotI=
+X-Received: by 2002:a05:6808:b18:: with SMTP id s24mr3022002oij.31.1580396257076;
+ Thu, 30 Jan 2020 06:57:37 -0800 (PST)
 MIME-Version: 1.0
-References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-5-mirucam@gmail.com>
- <nycvar.QRO.7.76.6.2001301332450.46@tvgsbejvaqbjf.bet> <CAN7CjDCiG6KZU+yHGxQ26TESb1yfvc7aWh0EKhE=owSV7D-C0Q@mail.gmail.com>
-In-Reply-To: <CAN7CjDCiG6KZU+yHGxQ26TESb1yfvc7aWh0EKhE=owSV7D-C0Q@mail.gmail.com>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Thu, 30 Jan 2020 15:41:27 +0100
-Message-ID: <CAN7CjDC+LaZmNUoW=MKHy=08KnCgVtxA3_CXUpNQvqo3_cPcWQ@mail.gmail.com>
-Subject: Fwd: [PATCH v2 04/11] run-command: make `exists_in_PATH()` non-static
-To:     git <git@vger.kernel.org>
+References: <20200130095155.GA839988@coredump.intra.peff.net> <20200130095338.GC840531@coredump.intra.peff.net>
+In-Reply-To: <20200130095338.GC840531@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 30 Jan 2020 06:57:26 -0800
+Message-ID: <CABPp-BE7E--8Yz3PAcjPQX2RCsbq0Q0gURi3RJuE64KM0eo6mA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] traverse_trees(): use stack array for name entries
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Jan 30, 2020 at 1:54 AM Jeff King <peff@peff.net> wrote:
+>
+> We heap-allocate our arrays of name_entry structs, etc, with one entry
+> per tree we're asked to traverse. The code does a raw multiplication in
+> the xmalloc() call, which I find when auditing for integer overflows
+> during allocation.
+>
+> We could "fix" this by using ALLOC_ARRAY() instead. But as it turns out,
+> the maximum size of these arrays is limited at compile time:
+>
+>   - merge_trees() always passes in 3 trees
+>
+>   - unpack_trees() and its brethren never pass in more than
+>     MAX_UNPACK_TREES
+>
+> So we can simplify even further by just using a stack array and bounding
+> it with MAX_UNPACK_TREES. There should be no concern with overflowing
+> the stack, since MAX_UNPACK_TREES is only 8 and the structs themselves
+> are small.
+>
+> Note that since we're replacing xcalloc(), we have to move one of the
+> NULL initializations into a loop.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>
+> This does increase the coupling between tree-walk and unpack-trees a
+> bit. I'd be OK just switching to ALLOC_ARRAY(), too. I doubt the
+> performance improvement is measurable, and the cleanup free() calls are
+> already there.
 
-El jue., 30 ene. 2020 a las 13:36, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
->
-> Hi Miriam,
->
-> On Tue, 28 Jan 2020, Miriam Rubio wrote:
->
-> > From: Pranit Bauva <pranit.bauva@gmail.com>
-> >
-> > Removes the `static` keyword from `exists_in_PATH()` function
-> > and declares the function in `run-command.h` file.
-> > The function will be used in bisect_visualize() in a later
-> > commit.
->
-> I inspected the code in `exists_in_PATH()` and in `locate_in_PATH()` and
-> it looks as if neither of them depended on file-local variables (which
-> would otherwise need to be addressed when exporting the function).
->
-> If you contribute another iteration of this patch series, it might make
-> sense to mention this in the commit message explicitly.
+Could we undo this cyclic dependency between tree-walk and
+unpack-trees by defining MAX_TRAVERSE_TREES in tree-walk.h, making
+MAX_UNPACK_TREES in unpack-trees.h be defined to MAX_TRAVERSE_TREES,
+and remove the include of unpack-trees.h in tree-walk.c?
 
-Ok, I will add the comment in the commit message.
-Thank you.
-
-Best,
-Miriam
-
+>  tree-walk.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 >
-> Thanks,
-> Dscho
+> diff --git a/tree-walk.c b/tree-walk.c
+> index d5a8e096a6..3093cf7098 100644
+> --- a/tree-walk.c
+> +++ b/tree-walk.c
+> @@ -410,15 +410,20 @@ int traverse_trees(struct index_state *istate,
+>                    struct traverse_info *info)
+>  {
+>         int error = 0;
+> -       struct name_entry *entry = xmalloc(n*sizeof(*entry));
+> +       struct name_entry entry[MAX_UNPACK_TREES];
+>         int i;
+> -       struct tree_desc_x *tx = xcalloc(n, sizeof(*tx));
+> +       struct tree_desc_x tx[ARRAY_SIZE(entry)];
+>         struct strbuf base = STRBUF_INIT;
+>         int interesting = 1;
+>         char *traverse_path;
 >
-> >
-> > Mentored by: Christian Couder <chriscool@tuxfamily.org>
-> > Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
-> > Signed-off-by: Miriam Rubio <mirucam@gmail.com>
-> > ---
-> >  run-command.c |  2 +-
-> >  run-command.h | 11 +++++++++++
-> >  2 files changed, 12 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/run-command.c b/run-command.c
-> > index f5e1149f9b..4df975178d 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -210,7 +210,7 @@ static char *locate_in_PATH(const char *file)
-> >       return NULL;
-> >  }
-> >
-> > -static int exists_in_PATH(const char *file)
-> > +int exists_in_PATH(const char *file)
-> >  {
-> >       char *r =3D locate_in_PATH(file);
-> >       int found =3D r !=3D NULL;
-> > diff --git a/run-command.h b/run-command.h
-> > index 592d9dc035..7c8e206d97 100644
-> > --- a/run-command.h
-> > +++ b/run-command.h
-> > @@ -172,6 +172,17 @@ void child_process_clear(struct child_process *);
-> >
-> >  int is_executable(const char *name);
-> >
-> > +/**
-> > + * Returns if a $PATH given by parameter is found or not (it is NULL).=
- This
-> > + * function uses locate_in_PATH() function that emulates the path sear=
-ch that
-> > + * execvp would perform. Memory used to store the resultant path is fr=
-eed by
-> > + * the function.
-> > + *
-> > + * The caller should ensure that $PATH contains no directory
-> > + * separators.
-> > + */
-> > +int exists_in_PATH(const char *);
-> > +
-> >  /**
-> >   * Start a sub-process. Takes a pointer to a `struct child_process`
-> >   * that specifies the details and returns pipe FDs (if requested).
-> > --
-> > 2.21.1 (Apple Git-122.3)
-> >
-> >
+> -       for (i = 0; i < n; i++)
+> +       if (n >= ARRAY_SIZE(entry))
+> +               BUG("traverse_trees() called with too many trees (%d)", n);
+> +
+> +       for (i = 0; i < n; i++) {
+>                 tx[i].d = t[i];
+> +               tx[i].skip = NULL;
+> +       }
+>
+>         if (info->prev) {
+>                 strbuf_make_traverse_path(&base, info->prev,
+> @@ -506,10 +511,8 @@ int traverse_trees(struct index_state *istate,
+>                         if (mask & (1ul << i))
+>                                 update_extended_entry(tx + i, entry + i);
+>         }
+> -       free(entry);
+>         for (i = 0; i < n; i++)
+>                 free_extended_entry(tx + i);
+> -       free(tx);
+>         free(traverse_path);
+>         info->traverse_path = NULL;
+>         strbuf_release(&base);
+> --
+> 2.25.0.515.gaba5347bc6
+
+Looks good to me otherwise.
