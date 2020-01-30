@@ -1,102 +1,75 @@
-Return-Path: <SRS0=89pV=3S=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
 	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7CB4C2D0DB
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 23:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 39280C33CB2
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 01:00:32 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 8DB2120702
-	for <git@archiver.kernel.org>; Wed, 29 Jan 2020 23:03:48 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 04A532070E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 01:00:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PDRL2R4v"
+	dkim=pass (2048-bit key) header.d=atlassian-com.20150623.gappssmtp.com header.i=@atlassian-com.20150623.gappssmtp.com header.b="ieJp/Fv0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbgA2XDr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 29 Jan 2020 18:03:47 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:33404 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbgA2XDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Jan 2020 18:03:47 -0500
-Received: by mail-vs1-f66.google.com with SMTP id n27so964224vsa.0
-        for <git@vger.kernel.org>; Wed, 29 Jan 2020 15:03:47 -0800 (PST)
+        id S1727078AbgA3BAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 29 Jan 2020 20:00:30 -0500
+Received: from mail-io1-f45.google.com ([209.85.166.45]:44317 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726671AbgA3BAa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Jan 2020 20:00:30 -0500
+Received: by mail-io1-f45.google.com with SMTP id e7so1992280iof.11
+        for <git@vger.kernel.org>; Wed, 29 Jan 2020 17:00:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a1zrKGTxplRcj9NRo4nfdwGOrIcr9Ra/ROH/VIOPaoE=;
-        b=PDRL2R4vRAJqxVeKdORPpAp+bj84kVFNE9wppVqMeAPUhZosZuGD3xznEo3/BjTeov
-         hY5cynVSjwRfXNBIi/uZVoY+nkOouMdtseP+Q//jmmvcH4P3tfXQMw7QY2rqrTrzLrT+
-         bHWuJCR0Q5BGHBAZXGXOcg4GslealHLir4jcvO7pYcczc+ukDnKMfIofX26sEd7HPVN2
-         Uxv0vL43t14FD95Fnh9T961eu4i0/h9wgpO+UEC0hibSQZjGmCRp+6Ow7yEDPxvlTfV2
-         8ItDZt6M1oerCzotgPcJH6hks8XJ23MEdq59/7XiizNsJazPGBySawIpSCvlijwGJwOe
-         i37w==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4R/Vj912bDahBRgl7wiDkmj7qReUFFiXv/8hsLrZhSw=;
+        b=ieJp/Fv0wd6RKcv0+RCahriLky0I5Mypou9PbG9zs5Mjl2gZ3xAjkxY0NwggeMCeci
+         QMMZCsRKVH/+f99xW6XjOqx2BO2CcMxd9OEIJxwaRb4oZkm1wQXvot2sEprs03DJWg08
+         du3xrr/oLi+FDPyyNlpRsU2DuCMCc8lYflfDsZSFj5TgZF4d7UoapjvSlspUdjzkfWDY
+         IsKACul2zLD1Uzh21z95/nChWne5wiGs6QqyTB7ZAm1luOlFGSn/L2WPh6RkYIGaMQjR
+         GyUFtZ7Ye8jqxkQ2NR1jAS7dELCuihGUSdnYaXXrNhsd6GZdlA5KK23ucOVOedAxhF2A
+         xahQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a1zrKGTxplRcj9NRo4nfdwGOrIcr9Ra/ROH/VIOPaoE=;
-        b=SQlK+++Fdb9mup3OysZ+lsSfTqjVTAFoLl9X94016flH/i3ghB0Djqv4jrWIxMK/0C
-         FnyPnw2hDNQYThsGEeAM7Al34nBvCHKSuzF8BdCIXGdwpmdHzBOp6evze8YNCGjKT2tQ
-         T0gmNf4S9m6jeyq82R7uAcR674+Kk8RA0NC9Q/Y37MYnUqSXRWjkdSYhIjPyN4zMj3x6
-         zyMIOIZ8i3H4EpPj8cgUIeiXClkd4+f5NmwLtZmW5JDgHxgwexWoJvemYdQG/zSDy2nI
-         GUUpm3cZ9zAlV6B+ZzM6vS+AeH5rqzYZ09QiKcW3peb0P/C50sEsZC+cqQSYVoQFVPku
-         aVHw==
-X-Gm-Message-State: APjAAAVqFDYcFO8Fy+R3cnkWXbji7k0Mu3F5wni/LnIx4dd5qhcE3q4M
-        W9atcLlP+auX8MQRL+hp9rIuN9tAOdemoaCvmPo=
-X-Google-Smtp-Source: APXvYqzKeLpQnJtqbiFIX05otZllZfLxpw0D4lEz1BYCE/KKYH7+4OcK5beouhxSZ6CKTH013pLD4P3YJ7RNNlvXOyw=
-X-Received: by 2002:a67:7943:: with SMTP id u64mr1393595vsc.91.1580339026585;
- Wed, 29 Jan 2020 15:03:46 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4R/Vj912bDahBRgl7wiDkmj7qReUFFiXv/8hsLrZhSw=;
+        b=Z/6ZESep3m3zCObumr+9OlqvorD2O6ek5Azz9lD9euVQ1JJWzHLwfs9xOA/1CFi654
+         1l+oZG6RRYLlkU6f3iRoOfvDSk5hQUJed2J//yklVAbC+RPumDffxRe2znWH81eEZHv3
+         +7/L/lxZOPgIP5IM9KSHigvuJF1OuxXjskbFGV7xmF/giwZGa0jW7PXw7eCgKHjoNZjK
+         4GyulRHoModlpAy9vt95B/rCjRztDddDSeHBchp4Risj7IHWH2Z3mkkWNkPGWk5hJVVc
+         Q5u8ssuYlzRRE7ho2aBcwrRktSbMmF3sZiENXv1Bc4XBjWI30MWNszjWSQy2oskvYgdV
+         rudQ==
+X-Gm-Message-State: APjAAAXuR56C+zYfkwADtlfyPB1RaOU/vDieQ+HHueyNXEQJvYU123I0
+        im/MFF5HE6IfMvU42Hs4JGvuRzssXpOOOsmZRGrZVLtz
+X-Google-Smtp-Source: APXvYqyzBBmnJYeMz7YdADk0xKFaBowz+CcD/o8WNHcDcVHYmCprVhPH78h273P3GuAVsS5rz/0u2Ng+8vBEKhhqMYE=
+X-Received: by 2002:a02:b602:: with SMTP id h2mr1755425jam.20.1580346029551;
+ Wed, 29 Jan 2020 17:00:29 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.478.v5.git.1579912764.gitgitgadget@gmail.com>
- <pull.478.v6.git.1580268865.gitgitgadget@gmail.com> <fc141e86896edb4241e84cc300e191889a3fa4ea.1580268865.git.gitgitgadget@gmail.com>
- <8ede2f21-46a8-b95f-6425-c0ee54abdad6@googlemail.com>
-In-Reply-To: <8ede2f21-46a8-b95f-6425-c0ee54abdad6@googlemail.com>
-From:   Matt Rogers <mattr94@gmail.com>
-Date:   Wed, 29 Jan 2020 18:03:34 -0500
-Message-ID: <CAOjrSZtx+Qr4HsaptaxseTa_8oCwRyVE+Jf95_z51fGmXBjsTQ@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] config: add '--show-scope' to print the scope of a
- config value
-To:     Bert Wesarg <bert.wesarg@googlemail.com>
-Cc:     Matthew Rogers via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Wed, 29 Jan 2020 17:00:18 -0800
+Message-ID: <CAGyf7-E==gzsvP-ckK0kwHD+f9pMmLBVpL4y2rC9tqk7ZiuW1g@mail.gmail.com>
+Subject: packObjectsHook and the git executable
+To:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> for clarity, I think this patch should be split up further.
->
-> For example:
->
->   - moving an enum and adding a new entry should be avoided
+In upload-pack.c, when Git invokes the packObjectsHook, it's
+hard-coded to pass "git". Unless it modifies the PATH environment
+variable, though, if the script were to invoke the provided command
+line as-is, it may end up running a different version of Git than the
+version being used to run upload-pack (or http-backend).
 
-As far as adding a new entry, that could probably be done in a separate patch.
-The submodule scoping is correct (mostly so config options that come from
-submodule blobs have a sane value to set the new scope field of
-git_config_source), but moving it is unavoidable as I'd either have to move
-config_scope or git_config_source for this patch to work, and moving
-git_config_source seemed like a ton more work
+Is there any way the packObjectsHook could be passed the "right" git
+executable? Or am I missing some surrounding context that means
+executing "git" is somehow guaranteed to invoke the "right" binary?
+(Perhaps this same PATH-related caveat applies to other places where
+Git invokes itself recursively?)
 
->   - does the changes to '/config.c' fix something?
-
-Another thing, that in hindsight could probably be split out. The other changes
-do fix the fact that previously recursive calls to do_git_config_sequence()
-would blow awway the current_parsing_scope information for higher level callers.
-This is not super common, but does occur when --show-scope is used with the
---blob option.
-
->   - exposing config_scope_name should have been done before PATCH 4/6 already
-
-If that's better/more convenient, I don't have a problem breaking that
-out and moving
-it there.
-
-
--- 
-Matthew Rogers
+Grateful for any insight!
+Bryan
