@@ -2,114 +2,140 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D748DC2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D217C35240
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id A169E206D5
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:20:06 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4D5DB2082E
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:26:11 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u8Shwrpv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="meBXFbLG"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727217AbgA3PUF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 10:20:05 -0500
-Received: from mail-oi1-f193.google.com ([209.85.167.193]:36764 "EHLO
-        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727186AbgA3PUF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 10:20:05 -0500
-Received: by mail-oi1-f193.google.com with SMTP id c16so3853359oic.3
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:20:05 -0800 (PST)
+        id S1727346AbgA3P0K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 10:26:10 -0500
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:42063 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727158AbgA3P0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 10:26:09 -0500
+Received: by mail-wr1-f46.google.com with SMTP id k11so4526680wrd.9
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:26:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DLfhEz6k9r8p2VvZOxcGzxHz/5Zzenhe9G9LmrEq4RM=;
-        b=u8ShwrpvsOhAGGG2FTLvOd/sWbkXt5SMuOM1XL0RGkPZuo2zIMXTUJ/vuqsAZMqR3I
-         GkemecN2WVujq6QvNl6lVc5rr83inn/w2h18cm379fpdwmIm0qVc4CMi/Qbg3z+PvxOZ
-         cYWQf/wiC8ct1yF/aPhLJONMEMt8NjI2ZCuc9Kga05yFA1nQFSzYCtdm4dnIQM1G6oCY
-         PaeyeeboWUqIGcbTrRb2n4Vu4fkJTMzSG0UNEsbtql8e8C5eYAyA3VyW8RyafALcnIxB
-         5LMn6JgMNZpC64mmUV4zIiSSZVKYDKfDBoLDZqIBdxMyveyhY2cj4B3f/PZlcal9lELu
-         mDXg==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=zvo6GoE+SISQk+EgNXEY/4ZTkvlsZIi4Jj5ehddhE0g=;
+        b=meBXFbLGlsNaUPrUZSrDXtHVj7x5+fVY8sLyrhuAR9SutAzmgPDx32AsmNJikGIoys
+         c6T4qp4n1VqU5vnMv1S97QS7SIqTpBcvf9m0rZ8+lncaArk4flr9zxa+qa8W7LTXjD0d
+         inot1q1+q9AtA9ceQzpX4O8Yd5gpajVPMaFeEpFhaetXzUdQn9us2IS0BKaPom21Y8Y6
+         H5NB26BnMuGl7ZXxJjYV4f2tvDfNp/87MDY9SAW5QDg8XQJt/8nvbLfSRohqqi25p6z8
+         eFWzwto0z0IeL02DhhCSC2T6JfvOol+0skw3MJm6hJ4b5oxFUNRaWO+ZerbT5HVc+8kV
+         g1Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=DLfhEz6k9r8p2VvZOxcGzxHz/5Zzenhe9G9LmrEq4RM=;
-        b=nW06IbYlQkHAGjpWJyCXzYTkji+dZ83ZcfE1YXnFXoNN3z3wTH87PmPWX4JD16cQbu
-         K7p9okUGTijXrnKwWqNcHRiw7FMGVulhgxuhadEDl3qJ+nd7RiCW2b1ZZUkQ+F9fcqFn
-         +ZYRCRmX5TLGfxhgXCAqKFbI24rEi46+YDdIHOZjevVJGmymdutNnCqlLjn18fZ174uf
-         SUOk0GwM19qFTbXAmQG/jywc2jDSgFzykfYOS2hlhN+8TJnbW52lKX6PTjPm331DbbD0
-         EjmK89xvBaHetN3BGxINFOgjvnqrULNevOOxkHYifhmELCA0zFCfIi5BlbBupKLrTfKw
-         wV9A==
-X-Gm-Message-State: APjAAAVmKwOyXBSrd3taGx8txeEW8xttCF8tXItz9GRuUW1I6A0EszMe
-        9HDeVTZkCTFAJFd9hNjJwe78J3MmiFU9xA==
-X-Google-Smtp-Source: APXvYqwAeVPJTybCxAhBlHZm7fH1+kQFwQzOy1mMVsPue38X5el0VVKc74tMj1Czb541AdeNfDYXBQ==
-X-Received: by 2002:a05:6808:3ba:: with SMTP id n26mr3290702oie.62.1580397604685;
-        Thu, 30 Jan 2020 07:20:04 -0800 (PST)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id i7sm1719753oib.42.2020.01.30.07.20.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2020 07:20:03 -0800 (PST)
-Subject: Re: [PATCH 3/6] dir: fix confusion based on variable tense
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>
-References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
- <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <183dfd55-7693-3a96-dbe3-418580a706ea@gmail.com>
-Date:   Thu, 30 Jan 2020 10:20:02 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=zvo6GoE+SISQk+EgNXEY/4ZTkvlsZIi4Jj5ehddhE0g=;
+        b=Xwt/QK62XJoyufbgGDdztOf+9Jp/dE6W764by1vQ9/eKhbZJZXg78LCYPpmb6U96I9
+         g3Be1ai1YVnnw9iFrOt9pP5l3dWRM9I03Ef4BFebbDKlo5XySqf60h0WGpWqBW7G1Wf4
+         fxP6dc5IdaEhq3SWOVISdKqtwcRDwobYeISV0+I5GQWsnHa5vwWe8s5i7BEYpx9PhJUa
+         ZkdVIOK48ZPok4AheuGhU6pmIj6XD5sjQYRDWbeBRyOZecBeuhKQ/RqrSg8FUz6KhkI0
+         Y+3o/jyXriPGErJIffXfPB1GhlOzcVq8baW4e/wR184AZ8ri18PArpLdYrwQtklwkDkp
+         nB/A==
+X-Gm-Message-State: APjAAAWaF4BR/k17F/IKmjnlUayYCyUUBmDFmKzz/I/m+c3kekxEEXsS
+        zeyGeQCP4M+nTt6jjmNIHjJyWW8iL/Fg4ARHZOvjkFsF
+X-Google-Smtp-Source: APXvYqzSXWOZhfrprBaTvOjAgA8qR1hI+TtvNolG8laxxgdeUVTpLDbESkx3EwZ7rPj6kWr/uWUyMvfuvBbNgVixUI4=
+X-Received: by 2002:a5d:6802:: with SMTP id w2mr6082988wru.353.1580397968020;
+ Thu, 30 Jan 2020 07:26:08 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Reply-To: finnbryant@gmail.com
+From:   Finn Bryant <finnbryant@gmail.com>
+Date:   Thu, 30 Jan 2020 15:25:56 +0000
+Message-ID: <CADSBhNbbO=aq-Oo2MpzDMN2VAX4m6f9Jb-eCtVVX1NfWKE9zJw@mail.gmail.com>
+Subject: Sparse checkout inconsistency with non-folder paths between cone mode
+ and full matching (2.5.0)
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/29/2020 5:03 PM, Elijah Newren via GitGitGadget wrote:
-> From: Elijah Newren <newren@gmail.com>
-> 
-> Despite having contributed several fixes in this area, I have for months
-> (years?) assumed that the "exclude" variable was a directive; this
-> caused me to think of it as a different mode we operate in and left me
-> confused as I tried to build up a mental model around why we'd need such
-> a directive.  I mostly tried to ignore it while focusing on the pieces I
-> was trying to understand.
-> 
-> Then I finally traced this variable all back to a call to is_excluded(),
-> meaning it was actually functioning as an adjective.  In particular, it
-> was a checked property ("Does this path match a rule in .gitignore?"),
-> rather than a mode passed in from the caller.  Change the variable name
-> to match the part of speech used by the function called to define it,
-> which will hopefully make these bits of code slightly clearer to the
-> next reader.
+Hi,
 
-I agree that some of the terminology in the .gitignore is confusing,
-especially when the terminology was used in the opposite sense for
-the sparse-checkout feature. I think this rename is worth the noise.
+With cone mode enabled for a sparse checkout, a pattern like the
+following is accepted:
 
-For reference, here are some commits from ds/include-exclude that
-performed similar refactors:
+/*
+!/*/
+/a_file_or_folder/
 
-468ce99b77 unpack-trees: rename 'is_excluded_from_list()'
-65edd96aec treewide: rename 'exclude' methods to 'pattern'
-4ff89ee52c treewide: rename 'EXCL_FLAG_' to 'PATTERN_FLAG_'
-caa3d55444 treewide: rename 'struct exclude_list' to 'struct pattern_list'
-ab8db61390 treewide: rename 'struct exclude' to 'struct path_pattern'
+As the name suggests, a_file_or_folder might be a file, or might be a
+directory. If it's a directory, then this is a "valid" recursive match
+for the directory and everything works as expected.
+But if the path leads to an ordinary file, it appears that cone mode
+will *exclude* the file from the worktree (ie, it'll have the
+skip-worktree flag set).
+This seems bizarre and unexpected behaviour.
 
-Thanks,
--Stolee
+My suspicion is that cone mode is supposed to be a pure subset of full
+pattern matching, such that if cone mode is ever disabled, the
+sparseness of the worktree will be unchanged. Clearly, this scenario
+is breaking that pattern.
+
+I think the correct behaviour is that recursive matches for a
+potential directory do not have any effect on a non-directory file
+with the same name. Alternatively, you could forbid any patterns which
+match non-directory files instead (and downgrade to full pattern
+matching), though I'd not be a fan of this, since it'd mean the
+validity of a cone-mode sparse configuration file is dependent on the
+contents of the repo, and is thus much harder to ascertain (scripts
+can't simply prove if it's a valid cone mode file by parsing it,
+they'd need to have access to any repo it may be applied to, and
+inspect the type of any matching file/folder paths, and its validity
+could be changed simply by replacing a folder with a file in the
+repo).
+
+If matching behaviour with full pattern mode is a non-goal for cone
+mode, I'd still question the logic of this behaviour, though I suppose
+it does have the benefit of (accidentally?) adding support for
+excluding individual files from a sparse checkout, which I imagine
+some could find useful. Personally I'd prefer that was instead added
+with a more sane syntax, if needed.
+
+Full test case:
+
+$ git init test_repo
+Initialized empty Git repository in [path]/test_repo/.git/
+$ cd test_repo/
+$ touch some_file a_file_or_folder
+$ git add some_file a_file_or_folder
+$ git commit -m "some files"
+[master (root-commit) 80d5918] some files
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 a_file_or_folder
+ create mode 100644 some_file
+$ git sparse-checkout init --cone
+$ git read-tree -mu HEAD
+$ ls -1
+a_file_or_folder
+some_file
+$ git sparse-checkout set a_file_or_folder
+$ git read-tree -mu HEAD
+$ ls -1
+some_file
+$ cat .git/info/sparse-checkout
+/*
+!/*/
+/a_file_or_folder/
+$
+
+
+Right now I'm trying to integrate cone mode with my company's existing
+manifest infrastructure, which doesn't differentiate between files and
+folders, so this is forcing me to perform a lot of repo checks to
+confirm we aren't accidentally excluding files we were supposed to
+include. Just in case you needed another example of why this behaviour
+is unhelpful.
