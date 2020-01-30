@@ -2,123 +2,130 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.2 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A438C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 22:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EFD67C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:44 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 0A4902063A
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 22:58:32 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id BCAF42063A
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 23:00:44 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dUz7wzhz"
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20150623.gappssmtp.com header.i=@ttaylorr-com.20150623.gappssmtp.com header.b="o5ccp4U3"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727261AbgA3W6b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 17:58:31 -0500
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:55066 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726294AbgA3W6a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 17:58:30 -0500
-Received: by mail-pf1-f201.google.com with SMTP id v14so2729787pfm.21
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 14:58:30 -0800 (PST)
+        id S1727581AbgA3XAn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 18:00:43 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40299 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727566AbgA3XAn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 18:00:43 -0500
+Received: by mail-pf1-f195.google.com with SMTP id q8so2254094pfh.7
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 15:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=YL+s1uBT/tGKtTuLK4XTiEME1o1pjfD/mVvItrtHb6s=;
-        b=dUz7wzhzsfnTSsMdaaST7AeiUPC8OlUK2asUPeRSPAZqFGG10FtNcUNDhYuyh2JmdC
-         W4yrVbNro2NAZYlT+QdhkRt+qiAJiU97msh0pyiRYHvM2DsCxPDzSmu0xl4K2RRRXC4h
-         QatNzaVDMaUsyJP0tf/ISsvNkYwEuuddWNgIWa7JBGGyyM3s+VCgWJEkx+IQmyhfEtEs
-         OUBQGRvcCMrECy9c27pppp0CFdzRtvlY0ZG+wo30QnwZki5D0IViTmp0LilgbPVnymK6
-         MtS6E2wCcdPKcWJHjh1NKqkCuhUo3BsiQGd8blyMkQK5zDIHG7RMSIYiVWaInd2dPPuy
-         GxiA==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=Y3BrCzWxh4tJ0Z1/lrjOSlgejiCpmwQiWu9FjcujZEE=;
+        b=o5ccp4U3GS/ugahqvIxfWdsxnBzMCscUrystk7MwCJon4Ilc54Mk5VSmLHHaxfS523
+         lQmXQd7qszqpterMpAnHm3I1qSVDF4rq72tp/DWZxWj95NMv5JWYUQNuTfA99vYUtf9n
+         2Li2I5O8xZHHHsq8Okz3q065JgMmXZOs+x901RXWLJvrOs6P1K2xVo9asJWZrMG6Og/R
+         kCHG8btqIQ+oKW8Ev9cYFC9VuwVzqB+QJcQJu9vB89pK+pbBE+4SPB2dlWQ8/ORHq7lr
+         WHcc/zKCZhbGIPIwT0SryXHJb5Gi3nIpEWfTos8fUI4CX0mxJsw84uqeLsXThHZImyGs
+         nBpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=YL+s1uBT/tGKtTuLK4XTiEME1o1pjfD/mVvItrtHb6s=;
-        b=MbpE/nY4YDKNqaY5xDBwlALrJ2EpL8ahvz0Q2Jpao+FBkDSbif/6lgkuiFPmZwSI+p
-         1h+N815wGK7kXeb+2Qao2+KUkV+eQ71wYnMwJrokpwE3t187i2Wu01qEpahbAqust51P
-         EiQNEcj0oKkyCnyFX066IpkDjwthlDifWCwTQXPc7Ljb0zFSjs9ZsbZBiYhmyeJzX1Zp
-         oafwlDO35uJUZ90ZtzyhtG/ciIkoSEAIkl96lW8v7W4IcYRCbeM+LrHhblXPEcH9/gF3
-         u/EEEDnlbHyKdYp7ax9ZI7aVwO2H4pdlqxsi1cRRyfvErKQcEGmf+lJwNN8Qhscp2b7G
-         oiMA==
-X-Gm-Message-State: APjAAAXIFRexxJkclfKXn/bBFAcms6rHkpRseAcwTz0D7QUyCy8DCaKN
-        sp71wYxcbGClEFhCRH8r2h9HZD++ict8rYwuq75kgae8XV/AuPti2/45IH/WQpbxFJjNAAT2Xj1
-        vr+drILdat701/oiNrnSkAH0sm4P/oBe75G5rM2UDcG75YKAbGc72/OywMXD74OrsOambeYbRWA
-        ==
-X-Google-Smtp-Source: APXvYqyo46fjiQ2VlA5ac+kAuBX1LM4xwM8fMxyrgDUNpMJDyy2lYwJgg2s8oWhkSZqyDu4ICgs5BqeXSntuL7EpIWo=
-X-Received: by 2002:a63:de03:: with SMTP id f3mr7225005pgg.141.1580425109898;
- Thu, 30 Jan 2020 14:58:29 -0800 (PST)
-Date:   Thu, 30 Jan 2020 14:58:18 -0800
-Message-Id: <20200130225818.193825-1-masayasuzuki@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH] doc: describe Git bundle format
-From:   Masaya Suzuki <masayasuzuki@google.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=Y3BrCzWxh4tJ0Z1/lrjOSlgejiCpmwQiWu9FjcujZEE=;
+        b=kXrJZuZgwj67I/p5F83mP1Zi+TCtqb7LfqGqBmSvSsGB6PQjuV6jTeuEBNZ9Ax33Aj
+         D4R4q1RMf9M43A2HLCNa6Fr3HaLF6dtfXQKNpIRgCTpWtKfGbFNPRqNdh7xiJepdJCx5
+         689qbkUzzMJbFq6a7tYDXqQ3f9AWP75ChGxtRGQTnA3q+mJeqB6bRHP6dCkcp2fZZjtr
+         x2S4byIPaX++bieBtkZ9pmIsj4bVG3XteI6hsCcVrqBbkeviL+tM//QE7EqFkuuFu9eB
+         pSRBm4vWSFtFwLhvPW52TPhm7A0D5WrkZc3scH6Mmn5Pf4APWEc/ppRo739sHjt2NcWC
+         H8fQ==
+X-Gm-Message-State: APjAAAX5asrrXfUMAsf2bmfSnGE9VIkTIxfL9kO1kdiD5wvmZf/Q8P0N
+        rrpYGX43t9s9c2xUxbJUortOOW7WyW6WHA==
+X-Google-Smtp-Source: APXvYqzfQLobvYvE8+8cgZ/q21JgPTE1m/aYGYoaTpecQVSgbyyJhItH5ThUQSjzX6zUIXKiPJpJ8Q==
+X-Received: by 2002:aa7:84cd:: with SMTP id x13mr7643212pfn.130.1580425242697;
+        Thu, 30 Jan 2020 15:00:42 -0800 (PST)
+Received: from localhost ([2601:602:9200:32b0:5c8f:7dac:47b8:95ff])
+        by smtp.gmail.com with ESMTPSA id s22sm7410130pji.30.2020.01.30.15.00.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Jan 2020 15:00:42 -0800 (PST)
+Date:   Thu, 30 Jan 2020 15:00:40 -0800
+From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org
-Cc:     Masaya Suzuki <masayasuzuki@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     peff@peff.net, dstolee@microsoft.com, gitster@pobox.com
+Subject: [PATCH 0/6] commit-graph: use 'struct object_directory *' everywhere
+Message-ID: <cover.1580424766.git.me@ttaylorr.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.11.4 (2019-03-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bundle format was not documented. Describe the format with ABNF and
-explain the meaning of each part.
+Hi,
 
-Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
----
- Documentation/technical/bundle-format.txt | 40 +++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
- create mode 100644 Documentation/technical/bundle-format.txt
+While working on deploying layered commit-graphs at GitHub, I noticed
+that I was able to trigger the mechanism to prevent merging
+cross-alternate commit-graph layers in funny ways, like claiming that
+"./objects" and "objects" were in different directories.
 
-diff --git a/Documentation/technical/bundle-format.txt b/Documentation/technical/bundle-format.txt
-new file mode 100644
-index 0000000000..dbb80225b5
---- /dev/null
-+++ b/Documentation/technical/bundle-format.txt
-@@ -0,0 +1,40 @@
-+= Git bundle v2 format
-+
-+The Git bundle format is a format that represents both refs and Git objects.
-+
-+== Format
-+
-+We will use ABNF notation to define the Git bundle format. See
-+protocol-common.txt for the details.
-+
-+----
-+bundle    = signature references pack
-+signature = "# v2 git bundle" LF
-+
-+references   = *(prerequisite / ref) LF
-+prerequisite = "-" obj-id SP comment LF
-+comment      = *CHAR
-+ref          = obj-id SP refname LF
-+
-+pack         = ... ; packfile
-+----
-+
-+== Semantics
-+
-+A Git bundle consists of three parts.
-+
-+*   Prerequisites: Optional list of objects that are not included in the bundle
-+    file. A bundle can reference these prerequisite objects (or it can reference
-+    the objects reachable from the prerequisite objects). The bundle itself
-+    might not contain those objects.
-+*   References: Mapping of ref names to objects.
-+*   Git objects: Commit, tree, blob, and tags. These are included in the pack
-+    format.
-+
-+If a bundle contains prerequisites, it means the bundle has a thin pack and the
-+bundle alone is not enough for resolving all objects. When you read such
-+bundles, you should have those missing objects beforehand.
-+
-+In the bundle format, there can be a comment following a prerequisite obj-id.
-+This is a comment and it has no specific meaning. When you write a bundle, you
-+can put any string here. When you read a bundle, you can ignore this part.
--- 
-2.25.0.341.g760bfbb309-goog
+This resulted in removing all of the places in the commit-graph.c code
+that use 'char *object_dir's with 'struct object_directory *'s instead.
+This allows us to replace brittle string-based path comparisons with raw
+pointer comparisons to check whether two commit-graphs belong to the
+same object store or not.
 
+This has a pleasant side effect in PATCH 5/6 of fixing an uninitialized
+read as described in [1].
+
+This series became a little bit longer than I was expecting it to be, so
+here is the high-level structure:
+
+  - 1/6 fixes a bug in a test that would cause a subsequent failure if
+    unaddressed.
+
+  - 2/6 does the first half of the removal by using 'struct
+    object_directory *'s within the 'commit_graph' structure.
+
+  - 4/6 does the second half by removing 'char *object_dir' usage in the
+    'write_commit_graph_context' structure.
+
+  - 5/6 ties 2/6 and 4/6 together by removing all path normalization
+    completely, fixing the uninitialized read bug.
+
+  - And 6/6 cleans up.
+
+We've been running a version of this series based on our fork (which is
+in turn based on 2.24) for a few hours without issue.
+
+Thanks in advance for your review.
+
+[1]: https://lore.kernel.org/git/20191027042116.GA5801@sigill.intra.peff.net/
+
+Taylor Blau (6):
+  t5318: don't pass non-object directory to '--object-dir'
+  commit-graph.h: store object directory in 'struct commit_graph'
+  builtin/commit-graph.c: die() with unknown '--object-dir'
+  commit-graph.h: store an odb in 'struct write_commit_graph_context'
+  commit-graph.c: remove path normalization, comparison
+  commit-graph.h: use odb in 'load_commit_graph_one_fd_st'
+
+ Documentation/git-commit-graph.txt |   5 +-
+ builtin/commit-graph.c             |  25 ++++--
+ builtin/commit.c                   |   3 +-
+ builtin/fetch.c                    |   2 +-
+ builtin/gc.c                       |   2 +-
+ commit-graph.c                     | 135 +++++++++++++++--------------
+ commit-graph.h                     |  17 ++--
+ t/helper/test-read-graph.c         |   8 +-
+ t/t5318-commit-graph.sh            |   4 +-
+ 9 files changed, 114 insertions(+), 87 deletions(-)
+
+--
+2.25.0.dirty
