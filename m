@@ -2,230 +2,161 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-11.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-13.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
-	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS autolearn=ham
-	autolearn_force=no version=3.4.0
+	MENTIONS_GIT_HOSTING,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_SANE_1
+	autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C1887C2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BAC30C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:45:39 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9250120707
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:37:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 864F620707
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 13:45:39 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qpnci/UO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gX9SK4jp"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727276AbgA3Nhe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 08:37:34 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52710 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbgA3Nhd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 08:37:33 -0500
-Received: by mail-wm1-f65.google.com with SMTP id p9so3812075wmc.2
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 05:37:31 -0800 (PST)
+        id S1727352AbgA3Npi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 08:45:38 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:45413 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726996AbgA3Nph (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 08:45:37 -0500
+Received: by mail-qk1-f196.google.com with SMTP id x1so2887172qkl.12
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 05:45:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=8sCYPJG4X6+iL9ufe2kmJ40eE/ErqiQrJ2sBLyXzngE=;
-        b=Qpnci/UOHRGhpb2S5LLRZNqzKk17nDvby+P13doJGNDlchJ5X7d89tbQukU1+tKwKT
-         6pRaKQ5EU3jPGXFdwUkVJyQbSPUD0juj7Ja1ZQh6GhRmSbV/Pl+5XnXHdslu0yUzEDx0
-         7Z0E2ylV43M9rYX9fZSHMsarE0RvLXBgWbS5wKkH9iYI7ODdy05g+uREszWIHUbKGz4y
-         hoOCsbLWvIM8RAC2trHFk1atxRytE7zhHl3VZgP2HLPbF/acZJ6SvUznzqC5uejKLwRT
-         t9rwICfPIXYykgrBOgfIoShkcxKHmXLfWmNWeobSiyHA6vhzXySpU7XhY9Xitn8TjrZB
-         DAuQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=UbndqxjVpjUkPXPR6V3YuVl5dOL7kd9y3upv+ZLURRM=;
+        b=gX9SK4jpMDVaYBMAWVQExmb7K1bR37wmN5/fsjF2Ym9bSj/UdScOqQAhqMZyaWp9RQ
+         4yf1xH1fGhZcoGNNNiJTaNZbpkgg2xI9TrK8BGA5y41XAht+U090WsdwLjdaPsaczyNb
+         x7EWoerk3DCvy/s0aqJO+/5b0XR5kpvcupyvWwo/np0LF/Z/7S5zT11pVEYWabnk2Lka
+         dlXV+jC/YIq2XJ89PKHdZVp0p6MyrQkbrk/YKgG7ERZ4v7pUNXNaGeHXpyCexy3Rxsad
+         HX7xEOAuy06ApfdYHCGqEy3o4U7FX6+CIyQlxnFktOLkYVeqcsl+4C1BsXaVjcwG16jS
+         XPGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8sCYPJG4X6+iL9ufe2kmJ40eE/ErqiQrJ2sBLyXzngE=;
-        b=CYErBR1s7srT1gMiwGWRTWeKfwk4P1bocHXcfytrl4+HXCvCg/oyLsIZ86Y1dzcscJ
-         G+taWdd8oRIstkqRul3BIKZ0/kZHvnRCadab2hXgE221711xlhCRgi1PP9S540ZTnoHj
-         ziUiAeabNXEsaWVUql/b7BEu+YjyPciyRbF9r9kZxq6MyKoDdD/gcxy4AYvoJH427NOr
-         M5GJrtEHu2QAH6ttaav/RQamSjujOxPPYmQ/dIYzrXIyKoGGM+3q9keB+ZVuef/Gl3E/
-         gRvzwzr+a6ncWKsG1TBjI0iCMAQvC+t/t64oS5oAt+03nLOUzNKHAuZmALe39262Dlbt
-         pdVA==
-X-Gm-Message-State: APjAAAVChyP7j4ZhmloBzHxUbkuROEPeWKlrymJQOrdon+YB+Or/H6KC
-        +8iBm1KbqOf5Do06MlAx3omz/0U4
-X-Google-Smtp-Source: APXvYqzjXW5PNI7c3PxEm3BSEsExtba6yJTYZdwmqQVIThocPhpKyC0C2zG7/SjqN+Xos+1yz4yqdA==
-X-Received: by 2002:a1c:80d4:: with SMTP id b203mr5930252wmd.102.1580391449913;
-        Thu, 30 Jan 2020 05:37:29 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o15sm7315133wra.83.2020.01.30.05.37.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2020 05:37:29 -0800 (PST)
-Message-Id: <pull.540.v2.git.1580391448318.gitgitgadget@gmail.com>
-In-Reply-To: <pull.540.git.1580000298097.gitgitgadget@gmail.com>
-References: <pull.540.git.1580000298097.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 30 Jan 2020 13:37:28 +0000
-Subject: [PATCH v2] grep: ignore --recurse-submodules if --no-index is given
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=UbndqxjVpjUkPXPR6V3YuVl5dOL7kd9y3upv+ZLURRM=;
+        b=PRqm/W6JBDYU+QMVXH+vwP7Xnn7ZQZEl0ad/3ST88C4mkW8uyPjse9+ruI7OKDbpw2
+         0zOkv8eX0HCx6mkq6TljRM7Y6P2D7abzm40THcikhJIuySyIfNkDEX1aQjviezLgm9QN
+         rSYzwXBG3vD22Yz/xDP01YXb8LkUjuD0r5wsVvdyyinbBYPOUo7oB6Kv75ThUSJLduRO
+         08OP7rLWecJ1HaAAdEsxxIjXqgsctyfgv+WmxbNlebxk0M2SMkUa3OubnIHtgWbwEY5r
+         j9U12FS8ght85u4R/AWwuCgHZO47yq4cbBf++Z5kKhyORrX6NqWYvTca/v51gbyR4R4v
+         xAww==
+X-Gm-Message-State: APjAAAVCybFYvKEci8hAH+xCfJXq0kos1JWXLB1JgFHxbDKeydOGRhh8
+        wypncziGADbxGwXAMgWJPmoAiGOCSLE=
+X-Google-Smtp-Source: APXvYqyj8r5LFp/fgaukutKsRlkNYTym8ebOy7N4+F0RVbRhLD+vqqkJ3zbWx7sxyZ5d04To1TD/Zg==
+X-Received: by 2002:a05:620a:8ca:: with SMTP id z10mr4724553qkz.345.1580391936564;
+        Thu, 30 Jan 2020 05:45:36 -0800 (PST)
+Received: from [10.10.31.126] ([24.229.121.34])
+        by smtp.gmail.com with ESMTPSA id o33sm3085115qta.27.2020.01.30.05.45.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jan 2020 05:45:35 -0800 (PST)
+Subject: Re: [PATCH] git-p4: Add hook p4-pre-pedit-changelist
+To:     Bryan Turner <bturner@atlassian.com>,
+        Ben Keene via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
+ <CAGyf7-FS8k4gXM-C+qhW8YNGKC57Gh-NY0hM0A08YoFDSETQzg@mail.gmail.com>
+From:   Ben Keene <seraphire@gmail.com>
+Message-ID: <d5dc5887-7cf3-258c-f778-66b2b504a729@gmail.com>
+Date:   Thu, 30 Jan 2020 08:45:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.2
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Brandon Williams <bmwill@google.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+In-Reply-To: <CAGyf7-FS8k4gXM-C+qhW8YNGKC57Gh-NY0hM0A08YoFDSETQzg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-Since grep learned to recurse into submodules in 0281e487fd
-(grep: optionally recurse into submodules, 2016-12-16),
-using --recurse-submodules along with --no-index makes Git
-die().
-
-This is unfortunate because if submodule.recurse is set in a user's
-~/.gitconfig, invoking `git grep --no-index` either inside or outside
-a Git repository results in
-
-    fatal: option not supported with --recurse-submodules
-
-Let's allow using these options together, so that setting submodule.recurse
-globally does not prevent using `git grep --no-index`.
-
-Using `--recurse-submodules` should not have any effect if `--no-index`
-is used inside a repository, as Git will recurse into the checked out
-submodule directories just like into regular directories.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    grep: ignore --recurse-submodules if --no-index is given
-    
-    Changes since v1:
-    
-     * set recurse_submodules to 0 early in cmd_grep if !use_index. This
-       makes more sense, and eliminates an incompatibility with topic
-       mt/threaded-grep-in-object-store.
-    
-    v1: Since grep learned to recurse into submodules in 0281e487fd (grep:
-    optionally recurse into submodules, 2016-12-16), using
-    --recurse-submodules along with --no-index makes Git die().
-    
-    This is unfortunate because if submodule.recurse is set in a user's
-    ~/.gitconfig, invoking git grep --no-index either inside or outside a
-    Git repository results in
-    
-    fatal: option not supported with --recurse-submodules
-    
-    Let's allow using these options together, so that setting
-    submodule.recurse globally does not prevent using git grep --no-index.
-    
-    Using --recurse-submodules should not have any effect if --no-indexis
-    used inside a repository, as Git will recurse into the checked out
-    submodule directories just like into regular directories.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-540%2Fphil-blain%2Fgrep-no-index-ignore-recurse-submodule-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-540/phil-blain/grep-no-index-ignore-recurse-submodule-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/540
-
-Range-diff vs v1:
-
- 1:  6634266b01 ! 1:  6fc8bf788a grep: ignore --recurse-submodules if --no-index is given
-     @@ -20,6 +20,7 @@
-          is used inside a repository, as Git will recurse into the checked out
-          submodule directories just like into regular directories.
-      
-     +    Helped-by: Junio C Hamano <gitster@pobox.com>
-          Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-      
-       diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-     @@ -39,6 +40,16 @@
-       diff --git a/builtin/grep.c b/builtin/grep.c
-       --- a/builtin/grep.c
-       +++ b/builtin/grep.c
-     +@@
-     + 			/* die the same way as if we did it at the beginning */
-     + 			setup_git_directory();
-     + 	}
-     ++	/* Ignore --recurse-submodules if --no-index is given or implied */
-     ++	if (!use_index)
-     ++		recurse_submodules = 0;
-     + 
-     + 	/*
-     + 	 * skip a -- separator; we know it cannot be
-      @@
-       		}
-       	}
+On 1/29/2020 8:51 PM, Bryan Turner wrote:
+> On Mon, Jan 20, 2020 at 1:17 PM Ben Keene via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: Ben Keene <seraphire@gmail.com>
+>>
+>> Add an additional hook to the git-p4 command to allow a hook to modify
+>> the text of the changelist prior to displaying the p4editor command.
+>>
+>> This hook will be called prior to checking for the flag
+>> "--prepare-p4-only".
+>>
+>> The hook is optional, if it does not exist, it will be skipped.
+>>
+>> The hook takes a single parameter, the filename of the temporary file
+>> that contains the P4 submit text.
+>>
+>> The hook should return a zero exit code on success or a non-zero exit
+>> code on failure.  If the hook returns a non-zero exit code, git-p4
+>> will revert the P4 edits by calling p4_revert(f) on each file that was
+>> flagged as edited and then it will return False so the calling method
+>> may continue as it does in existing failure cases.
+>>
+>> Signed-off-by: Ben Keene <seraphire@gmail.com>
+>> ---
+>>      git-p4: Add hook p4-pre-pedit-changelist
+>>
+>>      Our company's workflow requires that our P4 check-in messages have a
+>>      specific format. A helpful feature in the GIT-P4 program would be a hook
+>>      that occurs after the P4 change list is created but before it is
+>>      displayed in the editor that would allow an external program to possibly
+>>      edit the changelist text.
+>>
+>>      My suggestion for the hook name is p4-pre-edit-changelist.
+>>
+>>      It would take a single parameter, the full path of the temporary file.
+>>      If the hook returns a non-zero exit code, it would cancel the current P4
+>>      submit.
+>>
+>>      The hook should be optional.
+>>
+>> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-698%2Fseraphire%2Fseraphire%2Fp4-hook-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-698/seraphire/seraphire/p4-hook-v1
+>> Pull-Request: https://github.com/git/git/pull/698
+>>
+>>   git-p4.py | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/git-p4.py b/git-p4.py
+>> index 40d9e7c594..1f8c7383df 100755
+>> --- a/git-p4.py
+>> +++ b/git-p4.py
+>> @@ -2026,6 +2026,17 @@ def applyCommit(self, id):
+>>           tmpFile.write(submitTemplate)
+>>           tmpFile.close()
+>>
+>> +        # Run the pre-edit hook to allow programmatic update to the changelist
+>> +        hooks_path = gitConfig("core.hooksPath")
+>> +        if len(hooks_path) <= 0:
+>> +            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
+>> +
+>> +        hook_file = os.path.join(hooks_path, "p4-pre-edit-changelist")
+> The commit subject and the resulting email say "p4-pre-pedit", and I
+> see Junio is asking about "p4-pre-pedit", but the actual code, and the
+> scissors message, both say "p4-pre-edit". So which is it intended to
+> be? "edit", or "pedit"?
 
 
- Documentation/git-grep.txt         |  3 ++-
- builtin/grep.c                     |  7 +++++--
- t/t7814-grep-recurse-submodules.sh | 11 ++++++++++-
- 3 files changed, 17 insertions(+), 4 deletions(-)
+"pedit" was a typo in the gitgitgadget submission.  I have since
+changed the submission title to the corrected text "edit".
 
-diff --git a/Documentation/git-grep.txt b/Documentation/git-grep.txt
-index c89fb569e3..ffc3a6efdc 100644
---- a/Documentation/git-grep.txt
-+++ b/Documentation/git-grep.txt
-@@ -96,7 +96,8 @@ OPTIONS
- 	Recursively search in each submodule that has been initialized and
- 	checked out in the repository.  When used in combination with the
- 	<tree> option the prefix of all submodule output will be the name of
--	the parent project's <tree> object.
-+	the parent project's <tree> object. This option has no effect
-+	if `--no-index` is given.
- 
- -a::
- --text::
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 50ce8d9461..ae2d5bbafc 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -958,6 +958,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			/* die the same way as if we did it at the beginning */
- 			setup_git_directory();
- 	}
-+	/* Ignore --recurse-submodules if --no-index is given or implied */
-+	if (!use_index)
-+		recurse_submodules = 0;
- 
- 	/*
- 	 * skip a -- separator; we know it cannot be
-@@ -1115,8 +1118,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (recurse_submodules && (!use_index || untracked))
--		die(_("option not supported with --recurse-submodules"));
-+	if (recurse_submodules && untracked)
-+		die(_("--untracked not supported with --recurse-submodules"));
- 
- 	if (!show_in_pager && !opt.status_only)
- 		setup_pager();
-diff --git a/t/t7814-grep-recurse-submodules.sh b/t/t7814-grep-recurse-submodules.sh
-index 946f91fa57..828cb3ba58 100755
---- a/t/t7814-grep-recurse-submodules.sh
-+++ b/t/t7814-grep-recurse-submodules.sh
-@@ -345,7 +345,16 @@ test_incompatible_with_recurse_submodules ()
- }
- 
- test_incompatible_with_recurse_submodules --untracked
--test_incompatible_with_recurse_submodules --no-index
-+
-+test_expect_success 'grep --recurse-submodules --no-index ignores --recurse-submodules' '
-+	git grep --recurse-submodules --no-index -e "^(.|.)[\d]" >actual &&
-+	cat >expect <<-\EOF &&
-+	a:(1|2)d(3|4)
-+	submodule/a:(1|2)d(3|4)
-+	submodule/sub/a:(1|2)d(3|4)
-+	EOF
-+	test_cmp expect actual
-+'
- 
- test_expect_success 'grep --recurse-submodules should pass the pattern type along' '
- 	# Fixed
-
-base-commit: bc7a3d4dc04dd719e7c8c35ebd7a6e6651c5c5b6
--- 
-gitgitgadget
+>> +        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file, fileName]) != 0:
+>> +            for f in editedFiles:
+>> +                p4_revert(f)
+>> +            return False
+>> +
+>>           if self.prepare_p4_only:
+>>               #
+>>               # Leave the p4 tree prepared, and the submit template around
+>>
+>> base-commit: 232378479ee6c66206d47a9be175e3a39682aea6
+>> --
+>> gitgitgadget
