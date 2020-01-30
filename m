@@ -2,130 +2,76 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F2BCC2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C1C2C2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:24:33 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 79AAE2082E
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:17:31 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id EDA0B20661
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 18:24:32 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="svtdYqxH"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="G+e72SIJ"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728797AbgA3SRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 13:17:30 -0500
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:36269 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727469AbgA3SRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 13:17:30 -0500
-Received: by mail-yb1-f196.google.com with SMTP id w9so1840051ybs.3
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 10:17:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CpL4nSogNgGsRvENyNOFq+k3fZiSNaTUzMbBKjiETrM=;
-        b=svtdYqxHcSIENFY8asdkK0h5Ypp3V/xXRQ2U/WXIoIXwxp6e0JOHcz5LSdesl7ToVI
-         Yk4Thag6WBCnZg91eu7WP4Du/Sx8cx1hJiOViBg9qvLzeAJ22iCA+PDEgZqe2+DsLz/P
-         L9hQS9zYzEmPFnyh9bpcm/SRppL3dvI0AgXF0N1biP2PBSaqbl82NwD5g14zOC0/r/vY
-         svVWfVxeNOAFAh37vJD7TauSFnxIdTwp0kLFN69IuKLWx4SPZYQw+DiDE3T07SWdXr2A
-         gpt1Z84jvzDi23sD5oyyqnNQjG7P6oZ8AF5N/DOKWihwXxEvMZY4Wg8I2GlxIo4QBB8Q
-         V2zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=CpL4nSogNgGsRvENyNOFq+k3fZiSNaTUzMbBKjiETrM=;
-        b=Quv9as8OD1DQqdlOkKIKQltC7JQTqrUa1iogkgWNYJC93bKgIrmA6TitSuy84Bp3qu
-         9ZyWFVsKbXHYWgoOEVy3XhZhPAgR2cW7Gtt7ymiMS5CFEsJOhBvsWjDcW2Yns7YEm2Mn
-         ULvDMsCLltIGA5FIeNMvd+Vev2Fc81UbKEJnL7x0LL+ZE7bTb3in6xMGAKWOF3WYUON8
-         mSXH33Z/E5ubkHabLctqScEeMbxmewqOuk7kk49knpYQ1WTws7dK+blPAJy33RgXe7TV
-         0IKj/7mpICObYCDCNcYbmI0Fa3rhpSPnxqEK4ccetSxHvEMtFxcKDYPUMSfDgjq6+0jH
-         O5Nw==
-X-Gm-Message-State: APjAAAVJajgws+vXX7YrxocCc6DktT/xKxmqn5LEORz7PaBkpC39C+Gn
-        QQi2rktYi80L0RTpNsC84UY=
-X-Google-Smtp-Source: APXvYqwh1RwXMnJZrRB8Qaoya5Ha0MNLca3ssqIuvvX43jhKHcJTFB6Fv2ipizSnkhBPnSzmRM0Mlw==
-X-Received: by 2002:a25:d656:: with SMTP id n83mr5344907ybg.224.1580408249302;
-        Thu, 30 Jan 2020 10:17:29 -0800 (PST)
-Received: from [192.168.1.83] ([99.85.27.166])
-        by smtp.gmail.com with ESMTPSA id d9sm2882097ywh.55.2020.01.30.10.17.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2020 10:17:26 -0800 (PST)
-Subject: Re: [PATCH 4/6] dir: move setting of nested_repo next to its actual
- usage
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin Melka <martin.melka@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
- <3b2ec5eaf65c9fe44c4337a4cc2fc3dae6203d54.1580335424.git.gitgitgadget@gmail.com>
- <8d9a6047-26be-ff78-cf1a-9f2b35f927e0@gmail.com>
- <CABPp-BFbXJRW38CeGy78b22MfZ8cNizexCM-+n-ODqy+fOo2uw@mail.gmail.com>
- <1bc41d94-5d4d-4157-fc00-08b97fb20738@gmail.com>
- <d67eb395-3b6d-9558-0288-cd3878290c9e@gmail.com>
- <CABPp-BGe7ae+pf+HUdLE-xDoXEPDJ=5vWH4cnU9N6pZM2o1Q-g@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <21d3d07a-d83d-a46c-ba5f-56c90326cb48@gmail.com>
-Date:   Thu, 30 Jan 2020 13:17:25 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
- Thunderbird/73.0
+        id S1729468AbgA3SYc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 13:24:32 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59057 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727887AbgA3SYb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 13:24:31 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 621D1498D7;
+        Thu, 30 Jan 2020 13:24:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=d/7j4OfYxuQaFQB9unzgH6ZTSL0=; b=G+e72S
+        IJ43OiT0sfcZbjFSvrGdysioy3hABnwJVfOm8vHH2vdLYgeNaA07eeW5rQq2tZiR
+        xHcjXONvFf5cvnSQpR0Xrt3wgkM9B49fdAq5q4g8lcAPWqr0GWDAApQtZR9fXjg1
+        gk9i84FzHm6cOzUqh2d2kg0TILDmMVCgp6uZA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=scEm4cdtGtEjGFKxOlfTBz1LwZLtfnia
+        RGnknPM9Maw1I7DDCvE97OQYC+SkZ1hgTO7NEFGeakGDmlkQ8vUlMRLI+VO0yCWU
+        pNZloYJCLZV/CYqOkqt+B8z/xuh9bm+w/s5RNYGPtO2ZrwXVD2DyksrY7boZgMEG
+        9SA2OGL5Q7g=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A712498D6;
+        Thu, 30 Jan 2020 13:24:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C0D3B498D5;
+        Thu, 30 Jan 2020 13:24:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Yi-Jyun Pan <pan93412@gmail.com>
+Subject: Re: [PATCH] .mailmap: map Yi-Jyun Pan's email
+References: <20200114024938.GA17003@generichostname>
+        <21b8a0d08764c31de12ef7661667eb1117d41ac4.1578972215.git.liu.denton@gmail.com>
+Date:   Thu, 30 Jan 2020 10:24:29 -0800
+In-Reply-To: <21b8a0d08764c31de12ef7661667eb1117d41ac4.1578972215.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Mon, 13 Jan 2020 22:23:58 -0500")
+Message-ID: <xmqqv9osdcpu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CABPp-BGe7ae+pf+HUdLE-xDoXEPDJ=5vWH4cnU9N6pZM2o1Q-g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: C1BD2E9A-438D-11EA-BFC4-D1361DBA3BAF-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/30/2020 11:20 AM, Elijah Newren wrote:
-> On Thu, Jan 30, 2020 at 8:10 AM Derrick Stolee <stolee@gmail.com> wrote:
->> diff --git a/dir.c b/dir.c
->> index b460211e61..0989558ae6 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -1660,29 +1660,26 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
->>         const struct pathspec *pathspec)
->>  {
->>         int nested_repo = 0;
->> -
->>         /* The "len-1" is to strip the final '/' */
->> -       switch (directory_exists_in_index(istate, dirname, len-1)) {
->> -       case index_directory:
->> -               return path_recurse;
->> +       enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
->>
->> -       case index_gitdir:
->> +       if (status == index_directory)
->> +               return path_recurse;
->> +       if (status == index_gitdir)
->>                 return path_none;
-> 
-> I think right here we should add:
-> 
->         if (status != index_nonexistent):
->                 BUG("Unhandled value for directory_exists_in_index:
-> %d\n", status);
-> 
-> for future-proofing, since both you and I had to look up what
-> possibilities existed as a return status from
-> directory_exists_in_index(), and I'd rather a large warning was thrown
-> if someone ever adds a fourth option to that function rather than
-> assume treat_directory() is fine and only needs to special case two
-> choices.
-> 
-> Or we could add an assert or a code comment, just so long as we
-> document to future readers that the remainder of the code is assuming
-> status==index_nonexistent.
+Denton Liu <liu.denton@gmail.com> writes:
 
-I'm happy if you squash this into the commit. Thanks!
+> In 13185fd241 (l10n: zh_TW.po: update translation for v2.25.0 round 1,
+> 2019-12-31), the author mistakenly used their GitHub username for
+> authorship information instead of their real name. However, a commit
+> with their real name exists prior to this: 9917eca794 (l10n: zh_TW: add
+> translation for v2.24.0, 2019-11-20).
 
+Just fell thru the cracks.  Applied.  Thanks.
