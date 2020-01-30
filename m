@@ -2,189 +2,114 @@ Return-Path: <SRS0=gonI=3T=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC96BC2D0DB
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D748DC2D0DB
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:20:06 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 9063520707
-	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:18:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A169E206D5
+	for <git@archiver.kernel.org>; Thu, 30 Jan 2020 15:20:06 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hhw+7ttD"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="u8Shwrpv"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727369AbgA3PSk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 30 Jan 2020 10:18:40 -0500
-Received: from mail-il1-f194.google.com ([209.85.166.194]:41208 "EHLO
-        mail-il1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727238AbgA3PSk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Jan 2020 10:18:40 -0500
-Received: by mail-il1-f194.google.com with SMTP id f10so3342558ils.8
-        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:18:40 -0800 (PST)
+        id S1727217AbgA3PUF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 30 Jan 2020 10:20:05 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:36764 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727186AbgA3PUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Jan 2020 10:20:05 -0500
+Received: by mail-oi1-f193.google.com with SMTP id c16so3853359oic.3
+        for <git@vger.kernel.org>; Thu, 30 Jan 2020 07:20:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=O89xcwN3E7l9dgINBnYvGBfDiQsAFJL5KdGJlnfx7RQ=;
-        b=hhw+7ttDQIdDM6ZSpLLjcW5ruE8XiQZNkUA2n+Kbpxy42+gL/L8N0lzrMGRwJhVeHv
-         p5f3pzvrK5bbuMvg9ZObjasdg80mVpcdzA6UZKL8MscI3PXhYWLzgbaiMiaMd05i8/EH
-         7dNHxclLftZw/eERcclGrdw+ouIAtz7+XYCckGRFS+/Js4PWOpzp6+uE21OWDQf60bnq
-         736yUzaVu9xBr36L5T2FZz7BUSlKhOdVFj4wAhHLO/Qhvc7ONoZxqmLZvX7MY6Ma9Otv
-         x9AWMgbZOrz/POv7r5tYEGpk3WGj+qPqDG2cS4BzOxJerrS1iHD+1V3aFrG2NR5Koenx
-         V/yA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=DLfhEz6k9r8p2VvZOxcGzxHz/5Zzenhe9G9LmrEq4RM=;
+        b=u8ShwrpvsOhAGGG2FTLvOd/sWbkXt5SMuOM1XL0RGkPZuo2zIMXTUJ/vuqsAZMqR3I
+         GkemecN2WVujq6QvNl6lVc5rr83inn/w2h18cm379fpdwmIm0qVc4CMi/Qbg3z+PvxOZ
+         cYWQf/wiC8ct1yF/aPhLJONMEMt8NjI2ZCuc9Kga05yFA1nQFSzYCtdm4dnIQM1G6oCY
+         PaeyeeboWUqIGcbTrRb2n4Vu4fkJTMzSG0UNEsbtql8e8C5eYAyA3VyW8RyafALcnIxB
+         5LMn6JgMNZpC64mmUV4zIiSSZVKYDKfDBoLDZqIBdxMyveyhY2cj4B3f/PZlcal9lELu
+         mDXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=O89xcwN3E7l9dgINBnYvGBfDiQsAFJL5KdGJlnfx7RQ=;
-        b=SD6GZbikOD8n2KyUyxCGXVmDFu/JgbAelCLM0V+YYFgJxkTDfvoSO1TAshOy11jTaq
-         aJccTI+BkWrhBpHAwSQ2+U3/0soy/vOi8rWZd+4FXFvN1DHb08CapwR99CgwRzCJS6uo
-         87E3ZkXmkuV+Rj3vXjEYKShI8SO++0zA75kkg6ksJSajt04q8bXusb9LPcNpEuaJ4IlH
-         3HIKhw/ByH5u1lDRHDzeOi2tjIjG6pOWOJA6TxZi6SfiLL/1U5AO2I6Bpnopu7Pi95EX
-         XT3IwgbmsS2nu7mqdSLSOexvgpyeTzzXzWe5Yqy6xAnBv4Kt8NTXC55//NRqS418luIj
-         2oHg==
-X-Gm-Message-State: APjAAAUls3i6JCFqQK01W9cT2XaaLVAaIZkTXYR/JGrgDe7Ntu+pBacZ
-        xrczVR+X3tPhtQVby4zjZdLwMd+425VpAmimPEa6Eg==
-X-Google-Smtp-Source: APXvYqzS17tpe7Y+qkviDx6aCszvh8vXe8ZIR9ZQCTW06/GTkFtuNqluO0tNGdq6phSfbpaYZUpEZEsE05/cFjqzW3s=
-X-Received: by 2002:a92:ca8b:: with SMTP id t11mr5136359ilo.227.1580397519872;
- Thu, 30 Jan 2020 07:18:39 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=DLfhEz6k9r8p2VvZOxcGzxHz/5Zzenhe9G9LmrEq4RM=;
+        b=nW06IbYlQkHAGjpWJyCXzYTkji+dZ83ZcfE1YXnFXoNN3z3wTH87PmPWX4JD16cQbu
+         K7p9okUGTijXrnKwWqNcHRiw7FMGVulhgxuhadEDl3qJ+nd7RiCW2b1ZZUkQ+F9fcqFn
+         +ZYRCRmX5TLGfxhgXCAqKFbI24rEi46+YDdIHOZjevVJGmymdutNnCqlLjn18fZ174uf
+         SUOk0GwM19qFTbXAmQG/jywc2jDSgFzykfYOS2hlhN+8TJnbW52lKX6PTjPm331DbbD0
+         EjmK89xvBaHetN3BGxINFOgjvnqrULNevOOxkHYifhmELCA0zFCfIi5BlbBupKLrTfKw
+         wV9A==
+X-Gm-Message-State: APjAAAVmKwOyXBSrd3taGx8txeEW8xttCF8tXItz9GRuUW1I6A0EszMe
+        9HDeVTZkCTFAJFd9hNjJwe78J3MmiFU9xA==
+X-Google-Smtp-Source: APXvYqwAeVPJTybCxAhBlHZm7fH1+kQFwQzOy1mMVsPue38X5el0VVKc74tMj1Czb541AdeNfDYXBQ==
+X-Received: by 2002:a05:6808:3ba:: with SMTP id n26mr3290702oie.62.1580397604685;
+        Thu, 30 Jan 2020 07:20:04 -0800 (PST)
+Received: from [192.168.1.83] ([99.85.27.166])
+        by smtp.gmail.com with ESMTPSA id i7sm1719753oib.42.2020.01.30.07.20.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jan 2020 07:20:03 -0800 (PST)
+Subject: Re: [PATCH 3/6] dir: fix confusion based on variable tense
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Martin Melka <martin.melka@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>
+References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
+ <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <183dfd55-7693-3a96-dbe3-418580a706ea@gmail.com>
+Date:   Thu, 30 Jan 2020 10:20:02 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
-References: <20200128144026.53128-1-mirucam@gmail.com> <nycvar.QRO.7.76.6.2001301601580.46@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.2001301601580.46@tvgsbejvaqbjf.bet>
-From:   "Miriam R." <mirucam@gmail.com>
-Date:   Thu, 30 Jan 2020 16:18:28 +0100
-Message-ID: <CAN7CjDCrrk9gdd-6LMHTYB-A+cCndb-xdbGF4sjz7gZz-_prDw@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v2 00/11] Finish converting git bisect to C
- part 1
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-El jue., 30 ene. 2020 a las 16:04, Johannes Schindelin
-(<Johannes.Schindelin@gmx.de>) escribi=C3=B3:
->
-> Hi Miriam,
->
-> On Tue, 28 Jan 2020, Miriam Rubio wrote:
->
-> > These patches correspond to a first part of patch series
-> > of Outreachy project "Finish converting `git bisect` from shell to C"
-> > started by the interns Pranit Bauva and Tanushree Tumane
-> > (https://public-inbox.org/git/pull.117.git.gitgitgadget@gmail.com) and
-> > continued by Miriam Rubio.
-> >
-> > This first part are formed of preparatory/clean-up patches and all
-> > `bisect.c` libification work.
-> >
-> > These patch series emails were generated from:
-> > https://gitlab.com/mirucam/git/commits/git-bisect-work-part1
-> >
-> > It has to be noted that in this version 2 nothing has been done about a
-> > reviewer suggestion of using enums for error codes, because there was n=
-o
-> > consensus about using them by the reviewers.
->
-> It is a pity, as "magic" constants tend to remain "magic" (and eventually
-> "tragic" when they have not been addressed properly).
->
-> However, this does not need to hold up your patch series.
->
-> I noted a couple of rather minor things; It looks pretty good to me
-> already, though, and I thank you very much for splitting this patch serie=
-s
-> off, so that only the libification remains. It made for a pleasant read.
->
-Thank you very much for the review.
-I hope to send another patch series version soon with the new changes
-and suggestions :)
+On 1/29/2020 5:03 PM, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> Despite having contributed several fixes in this area, I have for months
+> (years?) assumed that the "exclude" variable was a directive; this
+> caused me to think of it as a different mode we operate in and left me
+> confused as I tried to build up a mental model around why we'd need such
+> a directive.  I mostly tried to ignore it while focusing on the pieces I
+> was trying to understand.
+> 
+> Then I finally traced this variable all back to a call to is_excluded(),
+> meaning it was actually functioning as an adjective.  In particular, it
+> was a checked property ("Does this path match a rule in .gitignore?"),
+> rather than a mode passed in from the caller.  Change the variable name
+> to match the part of speech used by the function called to define it,
+> which will hopefully make these bits of code slightly clearer to the
+> next reader.
 
-Best,
-Miriam
+I agree that some of the terminology in the .gitignore is confusing,
+especially when the terminology was used in the opposite sense for
+the sparse-checkout feature. I think this rename is worth the noise.
 
-> Thanks,
-> Dscho
->
-> >
-> > --- Changes since v1 Finish converting git bisect to C part 1 patch ser=
-ies ---
-> >
-> > General changes
-> > ---------------
-> >
-> > * Previous patch series version has been split in smaller groups
-> > in order to facilitate revision and integration.
-> > * Rebase on master branch: c7a6207591 (Sync with maint, 2020-01-27).
-> > * Improve commit messages.
-> >
-> > Specific changes
-> > ----------------
-> >
-> > [6/11] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*`
-> > and its dependents
-> >
-> > * Remove redundant sentences in commit message.
-> > * Use `if (res < 0)` instead of `if (res)`.
-> >
-> > [8/11] bisect: libify `check_merge_bases` and its dependents
-> >
-> > * Remove redundant sentence in commit message.
-> >
-> > --
-> >
-> > [9/11] bisect: libify `check_good_are_ancestors_of_bad` and its
-> > dependents
-> >
-> > * Remove redundant sentences in commit message.
-> > * Return in `if (!current_bad_oid)` condition.
-> >
-> > --
-> >
-> > [10/11] bisect: libify `handle_bad_merge_base` and its dependents
-> >
-> > * Remove redundant sentence in commit message.
-> >
-> > --
-> >
-> > [11/11] bisect: libify `bisect_next_all`
-> >
-> > * Remove redundant sentence in commit message.
-> > * Add return codes explanations in `bisect.h`.
-> >
-> > --
-> >
-> > Miriam Rubio (2):
-> >   bisect--helper: convert `vocab_*` char pointers to char arrays
-> >   bisect: use the standard 'if (!var)' way to check for 0
-> >
-> > Pranit Bauva (7):
-> >   run-command: make `exists_in_PATH()` non-static
-> >   bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and
-> >     its dependents
-> >   bisect: libify `bisect_checkout`
-> >   bisect: libify `check_merge_bases` and its dependents
-> >   bisect: libify `check_good_are_ancestors_of_bad` and its dependents
-> >   bisect: libify `handle_bad_merge_base` and its dependents
-> >   bisect: libify `bisect_next_all`
-> >
-> > Tanushree Tumane (2):
-> >   bisect--helper: change `retval` to `res`
-> >   bisect--helper: introduce new `decide_next()` function
-> >
-> >  bisect.c                 | 136 +++++++++++++++++++++++++++------------
-> >  bisect.h                 |  23 +++++++
-> >  builtin/bisect--helper.c | 118 +++++++++++++++++----------------
-> >  run-command.c            |   2 +-
-> >  run-command.h            |  11 ++++
-> >  5 files changed, 193 insertions(+), 97 deletions(-)
-> >
-> > --
-> > 2.21.1 (Apple Git-122.3)
-> >
-> >
+For reference, here are some commits from ds/include-exclude that
+performed similar refactors:
+
+468ce99b77 unpack-trees: rename 'is_excluded_from_list()'
+65edd96aec treewide: rename 'exclude' methods to 'pattern'
+4ff89ee52c treewide: rename 'EXCL_FLAG_' to 'PATTERN_FLAG_'
+caa3d55444 treewide: rename 'struct exclude_list' to 'struct pattern_list'
+ab8db61390 treewide: rename 'struct exclude' to 'struct path_pattern'
+
+Thanks,
+-Stolee
