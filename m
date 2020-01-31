@@ -2,79 +2,137 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01E17C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D205C2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:52:46 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id BEDCE2082E
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:40:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3ECDB20707
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:52:46 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XnFvWUoI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRE6Kgu0"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726163AbgAaSkH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 13:40:07 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56795 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725909AbgAaSkH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 13:40:07 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 80417ABE1A;
-        Fri, 31 Jan 2020 13:40:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=lYvsooNyR3nIH22LkpH6y+10sLM=; b=XnFvWU
-        oI8ExtFAMt7k+iYy62Cdup89BBXmuDQVNSP3msyNU2JdEOHiOm1P9DSaC5YcUmXc
-        fmr8vBmPu5zp+t5MJy8KmNRrlgDrpIJfUjXxbtI4FdEVqEINsyAIcYS6/Wl9+Nx2
-        Tq6lMMZ/N4amAmtM6ibnfWXaQwqmmH4DioJnU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=fs1vO09MzOpkCcAudOtSojf4VvmmMbVm
-        1QhWi0zt2bwvT/udyw+nRXUawKp7rHVZB+XfwTpjZjZA6guNV/hZfj3GN7s4FMXZ
-        iHjIeqSAQCRULszerGKmRdZuGZGQ1uCBGUalX7GpdoHBVfFv+nxeKklae9EgT05s
-        TbK+0FsI3B4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 77FFBABE19;
-        Fri, 31 Jan 2020 13:40:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C39EABE16;
-        Fri, 31 Jan 2020 13:40:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Miriam Rubio <mirucam@gmail.com>
-Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Tanushree Tumane <tanushreetumane@gmail.com>
-Subject: Re: [PATCH v2 08/11] bisect: libify `check_merge_bases` and its dependents
-References: <20200128144026.53128-1-mirucam@gmail.com>
-        <20200128144026.53128-9-mirucam@gmail.com>
-Date:   Fri, 31 Jan 2020 10:40:00 -0800
-In-Reply-To: <20200128144026.53128-9-mirucam@gmail.com> (Miriam Rubio's
-        message of "Tue, 28 Jan 2020 15:40:23 +0100")
-Message-ID: <xmqqwo97a2rj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726065AbgAaSwp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 13:52:45 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:37700 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbgAaSwo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 13:52:44 -0500
+Received: by mail-ot1-f65.google.com with SMTP id d3so7559808otp.4
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 10:52:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g3a2DzlihIpYcKqzqAjkF0uZ/auYHImt9bIk7kNLCbw=;
+        b=YRE6Kgu03+kEm5V0pxpmAmIwL1dtqH08VQGixVP9xrZt2E6Eb/5L6CiKTx1g6Deai1
+         kxCCAyzfwLc4iNqYDoNntPUb45ERTIdZ8uOh/a34qouQwdYvWUa8lidIW6MP0JBfjhln
+         pS/cX9VROyhQpzUTSbA3Hsu1ytifDv4E0V92BcI3oethje39Axt1XQT8OUHfWdhYFyGr
+         M4wA0pS6qCh9EwmZKaFX0nkP+VBm5w4wJQHzYu3839TvVq/Nt32y9fapxpRHmaUXO2AX
+         1p4LxfTTCJuwZNlULac7Mom5nYIeJLhC7dAnJfSmtBcsUuSWqxW/OcPsveYye+Cfx2LQ
+         lBYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g3a2DzlihIpYcKqzqAjkF0uZ/auYHImt9bIk7kNLCbw=;
+        b=gkYyM8MC+XQ3UNOTcprfoT8xERfgiDdDe9+cuRtj6NYs+YPck4HFrz++3klLk0zin+
+         WM1meWxzuoNuEoMeYdGG6nqfUyxxyXKAN69gJvqNl5oJYRWfa4rj4BWC114y8Cln4LqF
+         B4oD7J1TKjNTwc8HKCuTaho63Kd38HYZEQAj95/gciR3uCjHWnoWUl7uw78KjolZ4e4X
+         SKemsx3xYzQJZo72KMB7zyyZScyq6+ye1U4aD1EpdR0BW7+KJjIGiDoY2tD6itYzd5t4
+         zsdqGJQoKZjs/BCJC3QdCEwe2kXbQQB6MvSwSYsXE/be1ISiYmmzwN+CqqxMEtGTI8nw
+         nbyw==
+X-Gm-Message-State: APjAAAVEUMcHd9rx/nAFoZQOnq2eY2q+kzJ6fFbSfOcfj6MNPmpxyfeR
+        CoI9JSY0OtLTi+ATfbJ9kPbqbj27ukxo7pK1PvGvWw==
+X-Google-Smtp-Source: APXvYqyTfl+VAoNKkmaOBJPgPbcz7oCfI+V+v9muq8KTm3lrc+nu3/ADe8Sw88s+Gq2hzzqkv6tpQK//Uo1EA6A4zu0=
+X-Received: by 2002:a9d:7487:: with SMTP id t7mr8751976otk.267.1580496763788;
+ Fri, 31 Jan 2020 10:52:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1789C772-4459-11EA-8D76-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <20200130095155.GA839988@coredump.intra.peff.net>
+ <20200130095338.GC840531@coredump.intra.peff.net> <CABPp-BE7E--8Yz3PAcjPQX2RCsbq0Q0gURi3RJuE64KM0eo6mA@mail.gmail.com>
+ <20200131092936.GA2916051@coredump.intra.peff.net>
+In-Reply-To: <20200131092936.GA2916051@coredump.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 31 Jan 2020 10:52:30 -0800
+Message-ID: <CABPp-BFXwin5mR7z7Ocx9bq5LadFF4CxZR03HzZxh5f=1+F6NQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] traverse_trees(): use stack array for name entries
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Miriam Rubio <mirucam@gmail.com> writes:
+On Fri, Jan 31, 2020 at 1:29 AM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jan 30, 2020 at 06:57:26AM -0800, Elijah Newren wrote:
+>
+> > > This does increase the coupling between tree-walk and unpack-trees a
+> > > bit. I'd be OK just switching to ALLOC_ARRAY(), too. I doubt the
+> > > performance improvement is measurable, and the cleanup free() calls are
+> > > already there.
+> >
+> > Could we undo this cyclic dependency between tree-walk and
+> > unpack-trees by defining MAX_TRAVERSE_TREES in tree-walk.h, making
+> > MAX_UNPACK_TREES in unpack-trees.h be defined to MAX_TRAVERSE_TREES,
+> > and remove the include of unpack-trees.h in tree-walk.c?
+>
+> I don't mind doing that, but I had a hard time trying to write a commit
+> message. I.e., I can explain the current use of MAX_UNPACK_TREES here,
+> or defining MAX_TRAVERSE_TREES as MAX_UNPACK_TREES by saying "this is an
+> arbitrary limit, but it's the highest value any caller would use with
+> us".
+>
+> But to define MAX_UNPACK_TREES in terms of MAX_TRAVERSE_TREES, I feel
+> we've created a circular reasoning in the justification.
 
-> + * - If a merge base must be tested, on success return -11 a special condition
+It may be circular in how it came about, but I don't see how it's
+circular from first principles: unpack_trees() uses traverse_trees()
+to do its work (whereas tree-walk.c shouldn't call any functions from
+unpack-trees).  For simplicity and lacking any justification for huge
+numbers of trees, we want to impose a small limit on both for how many
+trees they can simultaneously operate on -- though we want to leave a
+little wiggle room by generously setting the limit much higher than we
+expect any caller to ever want.  unpack-trees certainly can't have a
+higher limit than tree-walk, and we don't know of callers outside
+unpack_trees that would want to traverse more trees than
+unpack_trees() does, so we just set them both to the same value, 8.
 
-Is this eleven something the original (scripted version) used, or
-what this series invented?  If the latter, what was the reason the
-value was chosen, and what were the constraints when choosing the
-value (e.g. it cannot be used an exit code by something)?
+> I'm not even sure whether the current value of 8 is meaningful. It comes
+> from this commit:
+>
+>   commit ca885a4fe6444bed840295378848904106c87c85
+>   Author: Junio C Hamano <gitster@pobox.com>
+>   Date:   Thu Mar 13 22:07:18 2008 -0700
+>
+>       read-tree() and unpack_trees(): use consistent limit
+>
+>       read-tree -m can read up to MAX_TREES, which was arbitrarily set to 8 since
+>       August 2007 (4 is needed to deal with 2 merge-base case).
+>
+>       However, the updated unpack_trees() code had an advertised limit of 4
+>       (which it enforced).  In reality the code was prepared to take only 3
+>       trees and giving 4 caused it to stomp on its stack.  Rename the MAX_TREES
+>       constant to MAX_UNPACK_TREES, move it to the unpack-trees.h common header
+>       file, and use it from both places to avoid future confusion.
+>
+> which kind of makes me wonder if we should just go back to calling it
+> MAX_TREES. I guess that's too vague, though.
+>
+> So I dunno. It would be easy to do as you asked, but I'm not convinced
+> it actually untangles anything meaningful.
 
-In any case, these values (if there other special codes defined)
-should be given symbolic names (either #define or enum).
+As far as I can tell, before your change, we can remove the
+   #include "unpack-trees.h"
+from tree-walk.c; nothing uses it.  I do like snipping includes and
+dependencies where they aren't necessary, and this one seems like one
+that could be removed.
+
+But, it's not a big deal; if you want to leave that for future work
+for someone else (perhaps even asking me to turn my paragraph above
+into a commit message that rips it out and defines one #define in
+terms of the other), that's fine.
