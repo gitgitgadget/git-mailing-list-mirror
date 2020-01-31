@@ -2,102 +2,145 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADF32C33CB2
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 10:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C04FC33CB2
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 10:21:24 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 85ED2215A4
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 10:20:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D044A20CC7
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 10:21:23 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3xH3J69"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728317AbgAaKUu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 05:20:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49400 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728289AbgAaKUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 05:20:50 -0500
-Received: (qmail 13497 invoked by uid 109); 31 Jan 2020 10:20:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 31 Jan 2020 10:20:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30699 invoked by uid 111); 31 Jan 2020 10:28:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 Jan 2020 05:28:37 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 31 Jan 2020 05:20:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/6] commit-graph.h: store object directory in 'struct
- commit_graph'
-Message-ID: <20200131102049.GC2916051@coredump.intra.peff.net>
-References: <cover.1580424766.git.me@ttaylorr.com>
- <890e0e7136204f5ca47f0703f32b4adb99ad8d7e.1580424766.git.me@ttaylorr.com>
- <CAN0heSrrrWjBKnzjMfzEkTMVTge2AfVdwsp6D5Mx==5S8-ZLJQ@mail.gmail.com>
+        id S1728348AbgAaKVW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 05:21:22 -0500
+Received: from mail-io1-f47.google.com ([209.85.166.47]:38845 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728284AbgAaKVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 05:21:22 -0500
+Received: by mail-io1-f47.google.com with SMTP id s24so7573849iog.5
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 02:21:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:cc
+         :content-transfer-encoding;
+        bh=48bwmy4t075DR59YdEYl6vtUq8qgP2toeD75Bn2e2l8=;
+        b=K3xH3J69QF1Gt1MFXZ0oend4kb3BFRSfxxwnJ2Es/sP2JQaant9QyEtmg9Bx42iA+j
+         ymiZkZ7iVl4ERYT5gxDdBYMh0MyH9ovCt8jGWE1+KN1Z86lHOPeltywc/H/yoDFTNo5c
+         ppRVDR0rfh/SESSEbCAhPoUmre49IonaXBLc329nsEsH5PHPjKMtgGuQwZaYcTaiBrpC
+         ROKvTzBQSlWxOGTE9LzO5S9ZCZ82yInZipkE1JI63QmKPkt8zvivgHvihV2Y0+W9hNvU
+         G68uLcPKisu5/NCJbYdW96aZcoNQ86PFrVAURUDddmeOFRbuzE8JR6dz0B679lDYoh7e
+         zmiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:cc:content-transfer-encoding;
+        bh=48bwmy4t075DR59YdEYl6vtUq8qgP2toeD75Bn2e2l8=;
+        b=FOHOrrSTbQ4Qvcov7AP8fo5XBMIrzoIziZa2hThniWjCa3J6sLXjZXfitV3ML0PFMf
+         LJP6Aj88j0pN0zKxk/1biGNGEXDIhQQw5j0+UNEz+Ap4/xA0KXURpMKqYij5jfCa/3H5
+         KyMkqVlZczfN61bko/v+FKMnwFHwtbmfHVO2M8yqEAh5QFs3TMeVwxg6J6aD1h895YbN
+         D9CmzQmztMappgqnnEH05WVU4riitOz6jLdS3QzVOyMumh1sbSKYnsh8zMlWW8XLq5lz
+         F8LfXD+sk9OkjjQSJzw2f99xrHfo/nfbj9iTiWppGoLvVNu52j0j5LqJlebktAQn0Uq1
+         OaRQ==
+X-Gm-Message-State: APjAAAWfg4wamzmkGetf+gTDMJHjCriExuKfgX4QlQmVE8BHPUvVrjDh
+        5AEj8nlCv6r0lP5jwU24guEFX0j+mvYeejZtJvrICA==
+X-Received: by 2002:a5e:9417:: with SMTP id q23mt7405301ioj.188.1580466081636;
+ Fri, 31 Jan 2020 02:21:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSrrrWjBKnzjMfzEkTMVTge2AfVdwsp6D5Mx==5S8-ZLJQ@mail.gmail.com>
+References: <20200128144026.53128-1-mirucam@gmail.com> <20200128144026.53128-10-mirucam@gmail.com>
+ <nycvar.QRO.7.76.6.2001301341100.46@tvgsbejvaqbjf.bet> <CAP8UFD3mhirdjHnT+XRq1mPzii3O+mtAMrYCy7mf4HKQZo8Acw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.2001311006360.46@tvgsbejvaqbjf.bet> <CAP8UFD2Crc2k7vdqxAaAvyLUqz5VdSfL6cfY110LHE2RpPRBKQ@mail.gmail.com>
+ <CAN7CjDC7ijMDtJdShRB+P0d0GRYYrQXktdH2Og9XGDqJ-OZxzw@mail.gmail.com>
+In-Reply-To: <CAN7CjDC7ijMDtJdShRB+P0d0GRYYrQXktdH2Og9XGDqJ-OZxzw@mail.gmail.com>
+From:   "Miriam R." <mirucam@gmail.com>
+Date:   Fri, 31 Jan 2020 11:21:10 +0100
+Message-ID: <CAN7CjDD2rDKT6Ngg7Mfo4oDB5vxCGqhx-w5aGfC-f_thNMBKmQ@mail.gmail.com>
+Subject: Fwd: [PATCH v2 09/11] bisect: libify `check_good_are_ancestors_of_bad`
+ and its dependents
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+To:     unlisted-recipients:; (no To-header on input)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 07:52:02AM +0100, Martin Ågren wrote:
+Hi,
 
-> > --- a/commit-graph.c
-> > +++ b/commit-graph.c
-> 
-> > +struct object_directory *find_odb(struct repository *r, const char *obj_dir)
-> 
-> This doesn't look commit-graph related -- could/should it go somewhere
-> else?
+El vie., 31 ene. 2020 a las 10:15, Christian Couder
+(<christian.couder@gmail.com>) escribi=C3=B3:
+>
+> Hi Dscho,
+>
+> On Fri, Jan 31, 2020 at 10:07 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > On Thu, 30 Jan 2020, Christian Couder wrote:
+> >
+> > > On Thu, Jan 30, 2020 at 2:46 PM Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> wrote:
+> > > >
+> > > > On Tue, 28 Jan 2020, Miriam Rubio wrote:
+> > >
+> > > > > +             /* Create file BISECT_ANCESTORS_OK. */
+> > > > > +             fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONLY,=
+ 0600);
+> > > > > +             if (fd < 0)
+> > > > > +                     warning_errno(_("could not create file '%s'=
+"),
+> > > > > +                                   filename);
+> > > > > +             else
+> > > > > +                     close(fd);
+> > > > > +     }
+> > > >
+> > > > I wonder whether this would be easier to read:
+> > > >
+> > > >         if (res =3D=3D -11)
+> > > >                 res =3D 0;
+> > > >         else if (res)
+> > > >                 ; /* error out */
+> > > >         else if ((fd =3D open(filename, O_CREAT | O_TRUNC | O_WRONL=
+Y, 0600)) < 0)
+> > > >                 res =3D warning_errno(_("could not create file '%s'=
+"), filename);
+> > > >         else
+> > > >                 close(fd);
+> > > >
+> > > > Note: my code explicitly assigns `res =3D -1` if the file could not=
+ be
+> > > > created, which is technically a change in behavior, but I think it =
+is
+> > > > actually a bug fix.
+> > >
+> > > I don't think so. I think creating the BISECT_ANCESTORS_OK file is no=
+t
+> > > absolutely necessary. If it doesn't exist we will just check if
+> > > ancestors are ok again at the next bisection step, which will take a
+> > > bit of time, but which will not make us give any false result, or
+> > > prevent us from continuing the bisection process.
+> > >
+> > > I think that it's also the reason why warning_errno(...) is used in
+> > > case we could not create the file instead of error_errno(...). We jus=
+t
+> > > want to signal with a warning that something might be wrong because w=
+e
+> > > could not create the file, but not stop everything because of that.
+> >
+> > Thank you for this explanation, it makes sense to me.
+> >
+> > Maybe a code comment would be in order?
+>
+> Yeah, I agree it would help.
+>
+Noted.
+Thank you both for the review!
 
-I think the right place is actually as a static inside
-builtin/commit-graph.c, as this is really about handling its weird
---object-dir options.
-
-But it can't go there in this patch, because there's a caller in
-commit-graph.c. In patch 4, we convert write_commit_graph() to take an
-odb, too, and that call goes away. At that point, we could move it into
-the builtin as a static.
-
-Ideally we could flip the order of this patch and patch 4, but that
-doesn't work either: by switching to an odb we lose our path
-normalization, but if the other side hasn't switched either, then we
-can't just compare odb pointers. It would be a temporary regression.
-
-So there's a circular dependency between the two patches. I think we
-ought to do done of:
-
-  - move find_odb() to a static as a cleanup on top
-
-  - squash those two patches together into a single
-
-  - swap the patch order, but have write_commit_graph_ctx store both the
-    "odb" _and_ the normalized copy of the path we do now. That leaves
-    it correct, and then it can be cleaned up in favor of an odb pointer
-    comparison in patch 5, along with the rest of the normalized bits.
-
-I'm OK with any of those. The second two have the added bonus that we
-could introduce the die() behavior into find_odb() immediately, and
-explain it (there's another temporary weirdness in this patch where
-specifying an --object-dir outside of the repository becomes a silent
-noop, and then the next patch turns it into an error, but that could all
-be done in a single step when we introduce find_odb()).
-
-> I think you could drop `cmp` and that final check, and write the loop
-> body as "if (!strcmp(...)) break". You could also have an empty loop
-> body, but I wouldn't go there -- I'd find that less readable. (Maybe
-> that's just me.)
-
-Yeah, I believe you are correct (and this is a nice simplification worth
-doing).
-
--Peff
+Best,
+Miriam
+> Thanks for your review,
+> Christian.
