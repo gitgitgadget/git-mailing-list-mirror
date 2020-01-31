@@ -2,180 +2,123 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-8.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham
-	autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
+	USER_AGENT_SANE_1 autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 752C4C33CB2
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 12:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCB6EC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 13:22:45 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3F75820707
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 12:38:36 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 9E51D20707
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 13:22:45 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="QNVHv2JG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZ8ff+pS"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728514AbgAaMhs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 07:37:48 -0500
-Received: from mout.gmx.net ([212.227.17.20]:35969 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728479AbgAaMhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 07:37:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1580474266;
-        bh=U35yCkoxPMWBbdKEhFw9s+BhXm6hhl+q0+4kaBCu71w=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=QNVHv2JG8sGFnu1sU5T2IsmVJ2A+lgh/V9sZwttmU7/co8EgTq/VdvQjzOfC5fBmJ
-         nr1tHyxjO7x29ZhsWdP+1FtmFuODSeyeiz36MdnGAj6zppjjxAWWiJlh+4OJq0/Nov
-         G+QLoNfhfirPjNKVnxi6G0vFussKq034sgEbua5E=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MnakX-1jNFOx0UTd-00ja8b; Fri, 31
- Jan 2020 13:37:46 +0100
-Date:   Fri, 31 Jan 2020 13:37:44 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Mike McGranahan <mike@mcgwiz.com>
-cc:     git@vger.kernel.org
-Subject: Re: Patch text in git-add patch mode lacks whitespace highlighting
-In-Reply-To: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.2001311304140.46@tvgsbejvaqbjf.bet>
-References: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728603AbgAaNWo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 08:22:44 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:38226 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728566AbgAaNWo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 08:22:44 -0500
+Received: by mail-qt1-f196.google.com with SMTP id c24so5354902qtp.5
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 05:22:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Nje7vHSa1T7zZDr5ofveUaDWB0EoZrhVi7/3CQLMqEU=;
+        b=UZ8ff+pSenVeIwxoMOBK8zMM31LutzP78jZoSXhK9EUyJZZt1nv9TrKv4V/lOgHkiS
+         peagYVAFxQ/ASs1u8rIBLdo6lCV5m9Oa/KoLjD4jiBFWO/RJtEGHD6rLxSdeIU0TRqcq
+         YSUJ3g8eb4G6JcsD/zvtv1sezk4WtShkxd9uj0Wm/NerUZUh6nvFCVpekV9Ybh5RaVVz
+         gOU7DoJEX1foi3nDYY7oMrMikXnd3K2vqF32nJhuJ5pNvJe6GdrWAmvVH761Y+z43OE+
+         CDYPNirss5peed1LcicqrSEsqjk01ytPa99IdMRBag0Gao8agcXXYT16gdXRxPNovTKY
+         Qg4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Nje7vHSa1T7zZDr5ofveUaDWB0EoZrhVi7/3CQLMqEU=;
+        b=Ot0XLmE67StPKo6gj3Yjj2dGxGJrTBNayAI/VMmLykezxWz+VumwG9M8bqdyw/sAon
+         +aFR1BrzuNPqFFaxJ8GjuPJHULc5d/IthgJ/M34MJY9VdPwKvCKLhVIUkHZN0+e4hSsJ
+         1wrvmsMy4F2BohF2pUoFmYXPbOQ502rLR1f8Z9tKQMIgDqbHjV6OKTYBZNvjSealxzNK
+         g7vAKIJF8H8VkwhT5BqWdIx76hbv/1z9tUA49LDBE8pcJ7yfZfbRKxAXufUGhOV8lkW+
+         HdcW/BMmupxZdbu4SBHI3qOwRHnzoECX6LHCCLPX4H9Sa1HADGhYcNGtufB0GrEDiAvX
+         ooEw==
+X-Gm-Message-State: APjAAAXMlyQhnm7qCjzmydN98T2Kc4SPp2ZPR6V0YjJ0zyvqrBaOfSpC
+        jhBc4tY2P/PxomwDzLl9CCU=
+X-Google-Smtp-Source: APXvYqzKNRlwHHMWZFDidcu7vE8sYAJTFDt53gHjoyT2ijtfgEK/P0NHMOSqvtXNMDYZByqHMCF2QA==
+X-Received: by 2002:ac8:38c7:: with SMTP id g7mr10422537qtc.229.1580476963438;
+        Fri, 31 Jan 2020 05:22:43 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:e1f4:827:3448:54f3? ([2001:4898:a800:1012:9328:827:3448:54f3])
+        by smtp.gmail.com with ESMTPSA id k62sm4405382qkc.95.2020.01.31.05.22.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 31 Jan 2020 05:22:42 -0800 (PST)
+Subject: Re: [PATCH 0/6] commit-graph: use 'struct object_directory *'
+ everywhere
+To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, dstolee@microsoft.com, gitster@pobox.com
+References: <cover.1580424766.git.me@ttaylorr.com>
+ <20200131103008.GD2916051@coredump.intra.peff.net>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <60a4d129-c6a9-1e5f-a467-7db0babbcffa@gmail.com>
+Date:   Fri, 31 Jan 2020 08:22:42 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101
+ Thunderbird/73.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TuXfHYAzbDHpvw7roiDZiWw6UPkZQrVpwUtOxN+7CPfvhtRVw8b
- Qd9UqS9DPynKko5rYwD4SK87OduchwpO5D2O4Ps2TP3sUBKubX+OMfQsN8MprRgJSfnCZMx
- vIloUyuPzA88Rp8WDS6GkBxJXciI2VfdymfFgviijGtwW2IM1d9mTg1sXW5fKLyxGpejT+M
- 64LF8GnhIITIYboJgH3WQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JzY9aQt9Rcs=:+zW7ZT83JVC9MbVowTjHgR
- bL6mGOSfPaI84EIby82EMWMQfYmKAyz6DoYFQjG/w06i4DXa0WV/YwJET+2ECd4FIM1cAxHhm
- I3e7CRoD9ATZFmhGCQGaGMvg69WqjzzIOTQwd4GdICa3tJKJZ6cP8yXDVhtw8LHNcIFQc223b
- wgTqulgDIs11TDAWoWAVk+178SS4kfioUGoueWMIx6HOi7bX1kKB0XWhrVVFZT2PX9dEEDgY9
- 7swGlXvldARU4Gt6sHJC4rku/N46yOy/iCcOXtGLem7lkDogecIVHX++IUw+5xilDIa7EpYYH
- jrCBDE1mEo2O7MTpHA9UmeKxNLsKefnRh1vwqXFMOeCJzx6/r8OGsAvJHgxKKLtIqpBgjeuBL
- 4LSW3xF5kNw8OC8Qe0HlVIPVTDpg9II/bGy5h8pUL8UKvAkpihXvdSV4vWHr06C1aupYx46JD
- ZHJmr1J6vrBZNYxiGhax33MLUPChSVBVxxsHDZHa3oOFRsJqPcON/UqUOMqjDKjX4XW8pchxl
- MRBMxoXOw0FJxjGU6YHisOflGJIJ/gOsP2+oywQP8cTsSWO2KThtiCOHQPRWteuj/JRllv25c
- yHfmqviz71OmPTKeJZsFea1neSKLeyS+OyhuNOohj61ZBdsXlRNqQ7ZOwcYDqM3tF7g3poyG8
- vY/034YSO2+oLqmHgH9heDeA3gqbcYwdFFKxv5d4ZuxP3tWNVSY/sfEfM3wPDmi2odbGcm35A
- dH4BgMtX/tNb3QHcU6tt6PIpn/rjQ0QZLu1jqUYIgCFj7zXcL4dBKjFMY9SGVH9N1cz6SAzQa
- FC+yoPpVTxyUOyYcFqLPTD+k/4pBJAUp3LVbTa8CO+nzx8EkuaKmhh37M7XHRphVlaXQDdv9L
- ExcxHMGnvY77WO6PNRuSrpvfinNyCXX4MV1OKljyT9p34PPjPCJADjSlCQ2zhBuVioH9VbkZU
- bsaWcfbN5OcQ6EwYgHyuhHnZSUCaElQuMDUZORR37Thm140+VLbxa4dUqm98uz12zIOWJnObl
- 5Dn6XjCyJ3MiGUnrPX1W0SabWvZLu7Luo3KGbbvB05YGZ1HM4gu71dqKn1m9ilTIiv83w5cY2
- XcmuYF0bBDRU8r6YIywqWLs1XWR44PlpPzpZcAvfJwa6wa1toWhkij80ZVC0vK4g2yqZYRb6F
- v39NWPLSLJ/tYcUWBL8VAq0DJTwPgtyhmBDediIr5FQ2kdM2SR1VmerdrB1iGYDn30+60geJE
- 2BKTlHNSjiEscfKkV
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20200131103008.GD2916051@coredump.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mike,
+On 1/31/2020 5:30 AM, Jeff King wrote:
+> On Thu, Jan 30, 2020 at 03:00:40PM -0800, Taylor Blau wrote:
+> 
+>> This series became a little bit longer than I was expecting it to be, so
+>> here is the high-level structure:
+>>
+>>   - 1/6 fixes a bug in a test that would cause a subsequent failure if
+>>     unaddressed.
+>>
+>>   - 2/6 does the first half of the removal by using 'struct
+>>     object_directory *'s within the 'commit_graph' structure.
+>>
+>>   - 4/6 does the second half by removing 'char *object_dir' usage in the
+>>     'write_commit_graph_context' structure.
+>>
+>>   - 5/6 ties 2/6 and 4/6 together by removing all path normalization
+>>     completely, fixing the uninitialized read bug.
+>>
+>>   - And 6/6 cleans up.
+> 
+> With the exception of the patch-ordering discussion in the sub-thread
+> with Martin, this looks good to me.
 
-On Thu, 30 Jan 2020, Mike McGranahan wrote:
+I agree. Martin's comment is a good one. I can't find anything else
+to improve the series.
 
-> I'm using version 2.25.0.windows.1. If I set config "wsErrorHighlight"
-> to "old", and run `git diff -p`, the resulting patch text highlights
-> whitespace differences in the old text.
->
-> If I then run git-add in interactive patch mode, I expect the diff to
-> include the whitespace highlights. But actually, it does not.
->
-> Is this a bug? Thanks for your help.
+> Patch 3 is a change in user-visible behavior, as it restricts how
+> --object-dir can be used (it must be the main object-dir or an alternate
+> within the repository). I don't _think_ anybody would care, as the
+> semantics of those options seemed kind of ill-defined to me in the first
+> place. But it's worth calling out as a potential risk. I suppose the
+> alternative is to make a one-off fake "struct object_directory" within
+> the process that isn't connected to the repository. But if nobody cares,
+> I'd just as soon avoid that.
 
-Well, let's first try to get a preciser report, to make sure that we're on
-the same page. These are the commands I ran:
+I think that this change of behavior is fine, especially because if
+someone writes a commit-graph to an --object-dir that is not an
+alternate, then that repo will not discover the new commit-graph
+anyway.
 
-	mkdir add-p-ws-error
-	cd add-p-ws-error
-	git init
-	git config diff.wsErrorHighlight old
-	echo "hello " >README
-	git add README
-	echo hello >README
-	git -c add.interactive.usebuiltin=3Dtrue add -p
-	git -c add.interactive.usebuiltin=3Dfalse add -p
+I do like that you state a possible work-around in case someone shows
+up with a legitimate use case for a non-alternate object-dir.
 
-In both `git add -p` invocations, I see the diff colored, and neither of
-them shows the red square after the removed "hello" that `git diff shows.
+Thanks,
+-Stolee
 
-So this is not a change of behavior in the conversion from a Perl script
-to a built-in.
-
-Investigating further, running with `GIT_TRACE=3D1` reveals that `add -p`
-internally calls `git diff-files --color -p --`. If you run that command
-manually, you will see that it indeed seems to ignore the
-`diff.wsErrorHighlight` setting.
-
-The actual code running `git diff-files` is here:
-https://github.com/git-for-windows/git/blob/v2.25.0.windows.1/add-patch.c#=
-L373-L436
-
-I think it is correct to call the low-level `diff-files` here rather than
-the high-level `diff` that is intended for human consumption.
-
-Looking at the code in
-https://github.com/git/git/blob/v2.25.0/builtin/diff-files.c#L28, I
-believe that we found the reason why `git diff-files --color` ignores the
-`wsErrorHighlight` setting.
-
-Now, the documentation at
-https://git-scm.com/docs/git-config#Documentation/git-config.txt-diffwsErr=
-orHighlight
-and even at
-https://git-scm.com/docs/git-diff-files#Documentation/git-diff-files.txt--=
--ws-error-highlightltkindgt
-make it appear as if the code is not following the original intention.
-
-If my reading is correct, and we want `git diff-files --color` to respect
-the `diff.wsErrorHighlight` setting, then this patch fixes that:
-
-=2D- snip --
-diff --git a/diff.c b/diff.c
-index 8e2914c0312..63afb8638c8 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -414,14 +414,6 @@ int git_diff_ui_config(const char *var, const char *v=
-alue, void *cb)
- 		return 0;
- 	}
-
--	if (!strcmp(var, "diff.wserrorhighlight")) {
--		int val =3D parse_ws_error_highlight(value);
--		if (val < 0)
--			return -1;
--		ws_error_highlight_default =3D val;
--		return 0;
--	}
--
- 	if (git_color_config(var, value, cb) < 0)
- 		return -1;
-
-@@ -469,6 +461,14 @@ int git_diff_basic_config(const char *var, const char=
- *value, void *cb)
- 		return 0;
- 	}
-
-+	if (!strcmp(var, "diff.wserrorhighlight")) {
-+		int val =3D parse_ws_error_highlight(value);
-+		if (val < 0)
-+			return -1;
-+		ws_error_highlight_default =3D val;
-+		return 0;
-+	}
-+
- 	if (git_diff_heuristic_config(var, value, cb) < 0)
- 		return -1;
-
-=2D- snap --
-
-The bigger question is whether other core developers agree with this? And
-what other `diff.*` settings should be respected by `git diff-files` (and
-of course, `git diff-index`)?
-
-Ciao,
-Johannes
