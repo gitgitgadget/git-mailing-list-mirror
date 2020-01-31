@@ -8,60 +8,60 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
 	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C80FC33CB7
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C3FCC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:29 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id D7311215A4
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:27 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 61D8B21734
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:29 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JUTwIiqn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dHfmlrzo"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726530AbgAaUQ1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 15:16:27 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37754 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726065AbgAaUQY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 15:16:24 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f129so10173262wmf.2
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 12:16:23 -0800 (PST)
+        id S1726322AbgAaUQV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 15:16:21 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40961 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbgAaUQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 15:16:21 -0500
+Received: by mail-wr1-f68.google.com with SMTP id c9so10130035wrw.8
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 12:16:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=AtBqI6CCf+VMZOgmlvqj7UaYj+NRy62oNWe9942dw00=;
-        b=JUTwIiqnLl4aDt+tACumX8r1RkY5P6lvJ1HdTWKVwsaOAs6X2kGW5q8LT3i9Mx/WVb
-         sZOwvqYkvfEgRsTDxZPMzsjin1j/Y9Ml1RT8+1v7kyWcMtaN42KK+ysmlSPwBlRgMpNv
-         mxR8Qotz8nqurtnm1wS/f8ev+ObGUQkdgTWiWfpsSOH5PrWV7s7xGK3cxvbw5mxjtPx/
-         pV7api1W2XDfTZ8p4uEypczbSPtsSJwFffvnOWMuN3OuI8qWKsY5yoXi4BIt31JmNauc
-         A7vHtDZ4I0BYj3KdoBi9nVX7suzsUJGFGcIHk/OfsGdXSoNpgtnqHl1NgbFaf1swr+GJ
-         9DCw==
+        bh=LHv3OUouiSWEjPl69LIDx7kK+8FoKtUJpN5eFvZqOEw=;
+        b=dHfmlrzog6K/8nMiu3Q5J5gWThZhOB2T8hLXhgKlhLKRt5LRUVzQAft4wt77rU7mO/
+         JjweFVmqLe064tfEHyDPlR7MKN7hRGg2v9bWPLbc+zp4VI3vmFjH+FddRzey68ZLO9Q6
+         WeelVR22kGs5Gzq54JQYvr4imoyEbdq4eLFqnOYZ8S9CvG8rp/rMY3ghzCuXlhyUJvtq
+         Hr9pie337jBiP4bh2vjZp3NfB2cSBdo+f4krDhZpEhsOYQzQmnrDHgsTfCOO5w9OakLS
+         FGib6NqBBqeWnzJNhOTQHb3zfmxkz8MGH79O5GMBmVwJPJaxcb3o7fuRo547Vbt4yv4X
+         4vmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=AtBqI6CCf+VMZOgmlvqj7UaYj+NRy62oNWe9942dw00=;
-        b=Ogns9SZmGAI//6p0u9vZpdpU6mNYtWZ3k5QYN7CNUrLa9dcVrOhhULw6OG2L3Hl+8l
-         8KqadzBnoiJnfCU12xy55DFayR7NZynVM2Kf/qs9pLA3/QF0Zhz9VGz4EwfQ220mrIi7
-         fcvc7lRAYvWEalGONCFaInDBBvoD4N0rSCm/YuZcfRhFx2eJ+cSgjiaIrltBjKgf4bIl
-         fqr5hxlVRsJwKhLfiwJ4M+xY0JLFMXCwGA7k//A8XBD0owNc1MPb3yGKRyJO2ADyzPOy
-         7TIEeY6peKbRm2YI5eS0uQLn0MjvvtN/dIB/CdTzoIfQIodzycHw++Hk/00iDZW39fZV
-         pANw==
-X-Gm-Message-State: APjAAAUkSwIUhzwD4+t5haRT90w8c9jVbKTuskX1daeyRMM7f93zDhVQ
-        E13L+AP554/UWd5b9xVH6G8x91bB
-X-Google-Smtp-Source: APXvYqySh1JGX7FCsXOzRY7l6RtQXIpzj1bNh7VkwUTjOaGIphYPw0JLUOKWn2stGc06nUE6tjr14Q==
-X-Received: by 2002:a05:600c:218b:: with SMTP id e11mr14016974wme.56.1580501782234;
-        Fri, 31 Jan 2020 12:16:22 -0800 (PST)
+        bh=LHv3OUouiSWEjPl69LIDx7kK+8FoKtUJpN5eFvZqOEw=;
+        b=geuAODISbnmfnIWryVpkatsJFu4+8rP4dLGsOmcX/R9611tY8NW7Zm7Dvao6jumReI
+         4Y7xFE4buE03A9V9W6ozFVaFhGhB4hU4xnAVnCS4bvvNmVyVm1qh4VDfG4mJIBjSD2D0
+         KsrFjOBVMRA8lBpbHHoNfpiPQzwtLxKALETsPefcupMl8Wbfo4Dm4iCqpa0RHqq7CFDC
+         6AAzl1dzcH09xxzZAlQemrX/fexIQJYkE1AixvNY6ANr2SGUBCDAPbo7xAJG21o/Ed2E
+         q5lqZJBE9vWFDnapnI10OnXDxHAbccVJcGQC/docaXQ3wu3B7UO7C4RSo8FnEnXhY4RS
+         Ncgg==
+X-Gm-Message-State: APjAAAVeyVtb1GZeFod8vkm52CfIe9ReltJ+qC+X2miCoJyq7aHpV3ZS
+        b49NFbm1m8VztKW4mU5r/Ur5pP6S
+X-Google-Smtp-Source: APXvYqzV0AAduUDXy1XZwqVFA4avXolDhbOgMe+//daYaWdmraIdxmO6lHbt76ZJSU2ZlngDckX8gA==
+X-Received: by 2002:a05:6000:1252:: with SMTP id j18mr136105wrx.103.1580501778700;
+        Fri, 31 Jan 2020 12:16:18 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8sm12846934wmc.20.2020.01.31.12.16.21
+        by smtp.gmail.com with ESMTPSA id e17sm324798wrn.62.2020.01.31.12.16.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2020 12:16:21 -0800 (PST)
-Message-Id: <66caabef5f998e15cc564e91231590280892191b.1580501775.git.gitgitgadget@gmail.com>
+        Fri, 31 Jan 2020 12:16:18 -0800 (PST)
+Message-Id: <5497ad8778c29ca936206d2ded6773758c236c12.1580501775.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
         <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 31 Jan 2020 20:16:08 +0000
-Subject: [PATCH v4 08/15] sparse-checkout: warn on globs in cone patterns
+Date:   Fri, 31 Jan 2020 20:16:03 +0000
+Subject: [PATCH v4 03/15] sparse-checkout: create leading directories
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,129 +77,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In cone mode, the sparse-checkout commmand will write patterns that
-allow faster pattern matching. This matching only works if the patterns
-in the sparse-checkout file are those written by that command. Users
-can edit the sparse-checkout file and create patterns that cause the
-cone mode matching to fail.
+The 'git init' command creates the ".git/info" directory and fills it
+with some default files. However, 'git worktree add' does not create
+the info directory for that worktree. This causes a problem when running
+"git sparse-checkout init" inside a worktree. While care was taken to
+allow the sparse-checkout config to be specific to a worktree, this
+initialization was untested.
 
-The cone mode patterns may end in "/*" but otherwise an un-escaped
-asterisk or other glob character is invalid. Add checks to disable
-cone mode when seeing these values.
-
-A later change will properly handle escaped globs.
+Safely create the leading directories for the sparse-checkout file. This
+is the safest thing to do even without worktrees, as a user could delete
+their ".git/info" directory and expect Git to recover safely.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- dir.c                              | 36 +++++++++++++++++++++++++++
- t/t1091-sparse-checkout-builtin.sh | 39 ++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+)
+ builtin/sparse-checkout.c          |  4 ++++
+ t/t1091-sparse-checkout-builtin.sh | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/dir.c b/dir.c
-index c2e585607e..71d28331f3 100644
---- a/dir.c
-+++ b/dir.c
-@@ -635,6 +635,7 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
- 	struct pattern_entry *translated;
- 	char *truncated;
- 	char *data = NULL;
-+	const char *prev, *cur, *next;
+diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
+index b3bed891cb..3cee8ab46e 100644
+--- a/builtin/sparse-checkout.c
++++ b/builtin/sparse-checkout.c
+@@ -199,6 +199,10 @@ static int write_patterns_and_update(struct pattern_list *pl)
+ 	int result;
  
- 	if (!pl->use_cone_patterns)
- 		return;
-@@ -652,12 +653,47 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
- 	}
+ 	sparse_filename = get_sparse_checkout_filename();
++
++	if (safe_create_leading_directories(sparse_filename))
++		die(_("failed to create directory for sparse-checkout file"));
++
+ 	fd = hold_lock_file_for_update(&lk, sparse_filename,
+ 				      LOCK_DIE_ON_ERROR);
  
- 	if (given->patternlen <= 2 ||
-+	    *given->pattern == '*' ||
- 	    strstr(given->pattern, "**")) {
- 		/* Not a cone pattern. */
- 		warning(_("unrecognized pattern: '%s'"), given->pattern);
- 		goto clear_hashmaps;
- 	}
- 
-+	prev = given->pattern;
-+	cur = given->pattern + 1;
-+	next = given->pattern + 2;
-+
-+	while (*cur) {
-+		/* Watch for glob characters '*', '\', '[', '?' */
-+		if (!is_glob_special(*cur))
-+			goto increment;
-+
-+		/* But only if *prev != '\\' */
-+		if (*prev == '\\')
-+			goto increment;
-+
-+		/* But allow the initial '\' */
-+		if (*cur == '\\' &&
-+		    is_glob_special(*next))
-+			goto increment;
-+
-+		/* But a trailing '/' then '*' is fine */
-+		if (*prev == '/' &&
-+		    *cur == '*' &&
-+		    *next == 0)
-+			goto increment;
-+
-+		/* Not a cone pattern. */
-+		warning(_("unrecognized pattern: '%s'"), given->pattern);
-+		goto clear_hashmaps;
-+
-+	increment:
-+		prev++;
-+		cur++;
-+		next++;
-+	}
-+
- 	if (given->patternlen > 2 &&
- 	    !strcmp(given->pattern + given->patternlen - 2, "/*")) {
- 		if (!(given->flags & PATTERN_FLAG_NEGATIVE)) {
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 2e57534799..c732abeacd 100755
+index e28e1c797f..43d1f7520c 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -348,4 +348,43 @@ test_expect_success 'pattern-checks: too short' '
- 	check_read_tree_errors repo "a" "disabling cone pattern matching"
+@@ -295,4 +295,14 @@ test_expect_success 'interaction with submodules' '
+ 	check_files super/modules/child a deep folder1 folder2
  '
  
-+test_expect_success 'pattern-checks: trailing "*"' '
-+	cat >repo/.git/info/sparse-checkout <<-\EOF &&
-+	/*
-+	!/*/
-+	/a*
-+	EOF
-+	check_read_tree_errors repo "a" "disabling cone pattern matching"
-+'
-+
-+test_expect_success 'pattern-checks: starting "*"' '
-+	cat >repo/.git/info/sparse-checkout <<-\EOF &&
-+	/*
-+	!/*/
-+	*eep/
-+	EOF
-+	check_read_tree_errors repo "a deep" "disabling cone pattern matching"
-+'
-+
-+test_expect_success 'pattern-checks: contained glob characters' '
-+	for c in "[a]" "\\" "?" "*"
-+	do
-+		cat >repo/.git/info/sparse-checkout <<-EOF &&
-+		/*
-+		!/*/
-+		something$c-else/
-+		EOF
-+		check_read_tree_errors repo "a" "disabling cone pattern matching"
-+	done
-+'
-+
-+test_expect_success 'pattern-checks: escaped "*"' '
-+	cat >repo/.git/info/sparse-checkout <<-\EOF &&
-+	/*
-+	!/*/
-+	/does\*not\*exist/
-+	EOF
-+	check_read_tree_errors repo "a" ""
++test_expect_success 'different sparse-checkouts with worktrees' '
++	git -C repo worktree add --detach ../worktree &&
++	check_files worktree "a deep folder1 folder2" &&
++	git -C worktree sparse-checkout init --cone &&
++	git -C repo sparse-checkout set folder1 &&
++	git -C worktree sparse-checkout set deep/deeper1 &&
++	check_files repo a folder1 &&
++	check_files worktree a deep
 +'
 +
  test_done
