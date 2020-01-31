@@ -2,117 +2,161 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
-	autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4741DC2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01EEBC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:22:31 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 143F420CC7
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:18:08 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id C59E0206F0
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:22:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cn9XC+Ci"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vjOeTzPM"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725978AbgAaSSH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 13:18:07 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:43150 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbgAaSSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 13:18:07 -0500
-Received: by mail-ot1-f65.google.com with SMTP id p8so7424077oth.10
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 10:18:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=9AYZIyJjNtizNzrTAGPG2v3XbQQMvXhJXtmkpIoErn0=;
-        b=cn9XC+Ci2q1QfWldAYIMCZgztcY9jadoICh+DaDM+P3TVXXshfzAePCAG68+n+uFVc
-         Zh1TUWBuX6qX2/Aqbqm7FQJRaYDCmOhUkzI/6yLqRaqZJ1HAPSxKroUgMtsL7oYmK50C
-         Bf2zrl/rCFVZQbw/y1s4f7Pk5APUnh7M0wjSrz9iWY0wYoYfMrBU1uOnhUS9RClO5bPw
-         /40NOptMwRxBB/O/qvR37vHWnBvH57cCFukQTnSYy8/+1g6CYiU6pG7g9p+S5nK2jKOE
-         ScIEYk6Ya8yYAr1RXfcfrc20E2FnAcfbTrpHE/0ysNpGjJe6ei/sWZO4ZQTzexEcOLkO
-         EivA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=9AYZIyJjNtizNzrTAGPG2v3XbQQMvXhJXtmkpIoErn0=;
-        b=OfqX9MaULtNAtM/ajWp9Kh1SOuumBJbs1WOKJTcnT+8bhQFtb4goh5a5qKGUjcxbhR
-         qcQjfR7GnYdEWQQNXnQrTnm2vbdRq7+ryjaNSbwJg4Pv0t21BPtXgVWERTfrVr0Pb5VA
-         url5m00odMg6x6psByDwcQ/08krzvkEfO/bOKlHGIAd7q+owz9tAk8YXZE6oG1UZAlV8
-         VggsMZ6FcfKv4gZIy4tWpS9B+sJyPzgDAbyhy23wWK29AhF7cEoRKrmFI45iYBwxm8Nv
-         xDpRMRpxp+qbHy+K/T35LqRqlgOTD/798R/pbYc23GaFYP13Pm5en1ytVH8td3/VutP0
-         OUhg==
-X-Gm-Message-State: APjAAAXqV9BcQMGkLgzR9qRWh1aLJR8cdx6Hp2cR8fUfz5YXWbcR2OlB
-        2EuaGxtElG7IABk2s+wX065iYuMQLbYFvKjZmla29Q==
-X-Google-Smtp-Source: APXvYqy0IRKuGzxIQGQxt/9PpFkJ2ahh1lEEZk/t3eq15iB8fnhNSWgNgMmv5tlyMTYfEsSfyN3bfDQ5mA612ecHgy8=
-X-Received: by 2002:a9d:634e:: with SMTP id y14mr8888768otk.162.1580494685563;
- Fri, 31 Jan 2020 10:18:05 -0800 (PST)
+        id S1726001AbgAaSW3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 13:22:29 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:58639 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbgAaSW3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 13:22:29 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9BF6CABBA8;
+        Fri, 31 Jan 2020 13:22:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=FOK4u58lMi6s1UdAUYnisM73Hso=; b=vjOeTz
+        PM+mEFOzLa9zfbdd1aNn0TT40ZS0nGKy2Jxo121E9JLjCYpFnAPyF77eEUhOhlnW
+        5fstKy5Lqd6/VOlHjQ1Agm1g8IDsJdZrWgSq7wdVfC2U9GbWpW8utPoZvFbActiv
+        4M5ygPgkRf0Je/VWLFeZmAEvQsVi7tfTDlePw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=mgj+FQ5M1dbNwqO0cMy/5WqNbEPvlucb
+        7P9WjmlOVtmYd1ABHTstJI/yV185Y+jbbqZ8pq8XkOKZ7kjV5wX400ApZiZqi7pE
+        1Xh+cXARzYLq6hm3oJ3CONyVPH9Q+p+edU3ms2Rhslv+/6AQqEm9bARt2I8h+Fai
+        FSO/F5gXZWo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 934B0ABBA6;
+        Fri, 31 Jan 2020 13:22:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 710CCABBA3;
+        Fri, 31 Jan 2020 13:22:23 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v2 06/11] bisect: libify `exit_if_skipped_commits` to `error_if_skipped*` and its dependents
+References: <20200128144026.53128-1-mirucam@gmail.com>
+        <20200128144026.53128-7-mirucam@gmail.com>
+Date:   Fri, 31 Jan 2020 10:22:21 -0800
+In-Reply-To: <20200128144026.53128-7-mirucam@gmail.com> (Miriam Rubio's
+        message of "Tue, 28 Jan 2020 15:40:21 +0100")
+Message-ID: <xmqq5zgrbi5e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
- <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
- <20200131180409.GI10482@szeder.dev>
-In-Reply-To: <20200131180409.GI10482@szeder.dev>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 31 Jan 2020 10:17:54 -0800
-Message-ID: <CABPp-BHy1Yi7RzRcRGCCFfzOnDbgBeHEQz5wjypM=V1hbGjw6g@mail.gmail.com>
-Subject: Re: [PATCH 3/6] dir: fix confusion based on variable tense
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Martin Melka <martin.melka@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: A0DA7B64-4456-11EA-A26F-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 10:04 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
-rote:
->
-> On Wed, Jan 29, 2020 at 10:03:40PM +0000, Elijah Newren via GitGitGadget =
-wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > Despite having contributed several fixes in this area, I have for month=
-s
-> > (years?) assumed that the "exclude" variable was a directive; this
-> > caused me to think of it as a different mode we operate in and left me
-> > confused as I tried to build up a mental model around why we'd need suc=
-h
-> > a directive.  I mostly tried to ignore it while focusing on the pieces =
-I
-> > was trying to understand.
-> >
-> > Then I finally traced this variable all back to a call to is_excluded()=
-,
-> > meaning it was actually functioning as an adjective.  In particular, it
-> > was a checked property ("Does this path match a rule in .gitignore?"),
-> > rather than a mode passed in from the caller.  Change the variable name
-> > to match the part of speech used by the function called to define it,
-> > which will hopefully make these bits of code slightly clearer to the
-> > next reader.
->
-> Slightly related questions: Does 'excluded' always mean ignored?  Or
-> is it possible for a file to be excluded but for some other reason
-> than being ignored?
->
-> I'm never really sure, and of course it doesn't help that we have both
-> '.gitignore' and '.git/info/exclude' files and conditions like:
->
-> > +             if (excluded &&
-> > +                 (dir->flags & DIR_SHOW_IGNORED_TOO) &&
-> > +                 (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
->
+Miriam Rubio <mirucam@gmail.com> writes:
 
-Good question; no idea.  You can start digging into is_excluded() and
-the pattern list stored in the dir struct and try to trace it back to
-see if it's just the combination of ignore rules in .gitignore and
-.git/info/exclude and core.excludesFile, or if there is something else
-meant here.
+> From: Pranit Bauva <pranit.bauva@gmail.com>
+>
+> Since we want to get rid of git-bisect.sh it would be necessary to
+
+Please add back the missing comma after ".sh" for readability.
+
+> convert those exit() calls to return statements so that errors can be
+> reported.
+>
+> Emulate try catch in C by converting `exit(<positive-value>)` to
+> `return <negative-value>`. Follow POSIX conventions to return
+> <negative-value> to indicate error.
+>
+> Handle this return in dependent function `bisect_next_all()`.
+
+It makes it sound as if there were multiple callers and this change
+converted only one of them---"Update all callers to handle the error
+returns" would avoid such a misunderstanding.
+
+> diff --git a/bisect.c b/bisect.c
+> index 83cb5b3a98..a7a5d158e6 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -661,11 +661,11 @@ static void bisect_common(struct rev_info *revs)
+>  		mark_edges_uninteresting(revs, NULL, 0);
+>  }
+>  
+> -static void exit_if_skipped_commits(struct commit_list *tried,
+> +static int error_if_skipped_commits(struct commit_list *tried,
+>  				    const struct object_id *bad)
+>  {
+>  	if (!tried)
+> -		return;
+> +		return 0;
+>  
+>  	printf("There are only 'skip'ped commits left to test.\n"
+>  	       "The first %s commit could be any of:\n", term_bad);
+> @@ -676,7 +676,13 @@ static void exit_if_skipped_commits(struct commit_list *tried,
+>  	if (bad)
+>  		printf("%s\n", oid_to_hex(bad));
+>  	printf(_("We cannot bisect more!\n"));
+> -	exit(2);
+> +
+> +	/*
+> +	 * We don't want to clean the bisection state
+> +	 * as we need to get back to where we started
+> +	 * by using `git bisect reset`.
+> +	 */
+
+What this comment says may be true, but does it belong here?  After
+returning, the caller will exit(2) without cleaning anyway with or
+without this patch, so I am a bit puzzled about the comment.
+
+> +	return -2;
+>  }
+>  
+>  static int is_expected_rev(const struct object_id *oid)
+> @@ -949,7 +955,7 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+>  {
+>  	struct rev_info revs;
+>  	struct commit_list *tried;
+> -	int reaches = 0, all = 0, nr, steps;
+> +	int reaches = 0, all = 0, nr, steps, res;
+>  	struct object_id *bisect_rev;
+>  	char *steps_msg;
+>  
+> @@ -972,8 +978,9 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+>  		 * We should exit here only if the "bad"
+>  		 * commit is also a "skip" commit.
+>  		 */
+> -		exit_if_skipped_commits(tried, NULL);
+> -
+> +		res = error_if_skipped_commits(tried, NULL);
+> +		if (res < 0)
+> +			exit(-res);
+>  		printf(_("%s was both %s and %s\n"),
+>  		       oid_to_hex(current_bad_oid),
+>  		       term_good,
+> @@ -990,7 +997,9 @@ int bisect_next_all(struct repository *r, const char *prefix, int no_checkout)
+>  	bisect_rev = &revs.commits->item->object.oid;
+>  
+>  	if (oideq(bisect_rev, current_bad_oid)) {
+> -		exit_if_skipped_commits(tried, current_bad_oid);
+> +		res = error_if_skipped_commits(tried, current_bad_oid);
+> +		if (res)
+> +			exit(-res);
+>  		printf("%s is the first %s commit\n", oid_to_hex(bisect_rev),
+>  			term_bad);
+>  		show_diff_tree(r, prefix, revs.commits->item);
