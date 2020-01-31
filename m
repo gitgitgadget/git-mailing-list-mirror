@@ -2,244 +2,134 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-14.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,MENTIONS_GIT_HOSTING,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
+	version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4D30C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 21:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76233C2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 21:58:19 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 942B7215A4
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 21:50:07 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3F27E20705
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 21:58:19 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="R3WZE8Dn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E4KgNy9Y"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726199AbgAaVuG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 16:50:06 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:37548 "EHLO
-        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726109AbgAaVuG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 16:50:06 -0500
-Received: by mail-qk1-f194.google.com with SMTP id 21so8131698qky.4
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 13:50:05 -0800 (PST)
+        id S1726206AbgAaV6S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 16:58:18 -0500
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:46797 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726180AbgAaV6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 16:58:18 -0500
+Received: by mail-wr1-f42.google.com with SMTP id z7so10317618wrl.13
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 13:58:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=aA10Na9PYyFnca0Wk0vKv+fCADysznQQf76NjDh2pEg=;
-        b=R3WZE8Dn0k4ud0TW2PZEYyqKVWPVuYGANOmIenxpK6HleV1EoW66AQ9SBBM5B65cLa
-         P/HLKx+cFZaByK1EthLKkH9HkzBB6TL5iUJuVsSNxhZCzEVAy6JhF2ksWABwpdJf1wpM
-         7rFmNUKzFZdNCnJXgg/+9UqNRSrE2i3WkX7j483PP+RYt8f7p3tXZsaRRmkvAeZ5WEtt
-         ZFFQyL9cPiMfwW4qDQQda4HRGF4WlWHClzqm1Ky3mkuO63iTOYxsNniZzEaFnokopimq
-         fSe5+PnuQZxNh36OMYRk62eXfWYC4xeSBOu5JxMwjwPSvDifnfIm7Y4hdruKLHKYB1GR
-         Pizw==
+        d=gmail.com; s=20161025;
+        h=message-id:in-reply-to:references:from:date:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=RfXP50NHqKCmf0cyaK+6RolecwevXU3jLjQQizGW2RM=;
+        b=E4KgNy9Y6UhZ4tkX2578k+4SfFbO5g54i2xI1v+/lXZlAF5HkWlxKW6G6aW0J7qc61
+         18Ckms7Z0Hd7D2d8lT0KHu9oZN6MTUf91ryr2pLXMaziqLCfXDtNIobzIpBDPF6l1VMn
+         +asWQfDdVzozo/ETPwYQo9kyRfSzEQ6oH9K131pSCnM3ZvfDTC6ihYWP37IZRwLGuhde
+         MbQVY9L7F/BcXW97DLeisLT3rJ+FGxprrUbybTO9tW1FWQ1fyC0bktxRs4AsNpkuHEZ2
+         QVxrllz7WpJDuRLnJZmyVVx611gN5kiLmFHALaoaKmqn1poUaMxIRz/w8ybW4J7o8ScP
+         1AlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=aA10Na9PYyFnca0Wk0vKv+fCADysznQQf76NjDh2pEg=;
-        b=Z9yoVZipZyBlkvBkJB61MUS9iY+WN2LjsG7Lm2rEIPa3N0qaj4p+NEWbNEpPb+oHUI
-         2nlA9jMkzACgSgP0KeMLpUyd36KZtbVxaiGpxAHVgS0/3lHDRjtz4esQYubMY+N7Kh8l
-         LfccICdTJKK+7eg8Hyav3/EA6nteSZzP5O2dVdmOoGLB1xpJAG5Bsn4WKt3M2iWLlg1w
-         9kGb+rtbs9ziwqRMev/yFgDMFSi4jLcJJ1Av+Rf9sfSy4CgLKe7PRvSVDNrugs3GxqVK
-         W9QKZKx7dA3jtEf9klMDNMoYO/8VPUoX4LZWOZwvVyiSM4JTC/sSaWneQKUUVs+0wScH
-         Fs4g==
-X-Gm-Message-State: APjAAAWCNiAriV/W4SpcHKmi4u7FaHQDFqHUfN7zKhXeDQseeSMC/NCr
-        W5Fr3nXxhHgQtTATto+P0E1TgARb0MqBWOgQBLHgCQ==
-X-Google-Smtp-Source: APXvYqyuzX7CNeL6YFm72oVV+n4/UGH1m7fZ8PkBmWbLDrfglpvDzovQ3wFXCwhEYf3rCLIwlKNZyy1I7x8Suy9EMJM=
-X-Received: by 2002:a37:6346:: with SMTP id x67mr13152555qkb.476.1580507404526;
- Fri, 31 Jan 2020 13:50:04 -0800 (PST)
+        h=x-gm-message-state:message-id:in-reply-to:references:from:date
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=RfXP50NHqKCmf0cyaK+6RolecwevXU3jLjQQizGW2RM=;
+        b=tptN546hnLz7v1v9P8U+YG7ClFDdPRggrW7BmASRgYdhrxGnxFAVJRPZxHpxHmC0xl
+         K4R5Yb4BA1qhS/OQeUkteGaRmpqU1qK9aULQLzFV6Nv/vVnLaA1RtgYQyevayvd/06WV
+         l3qq1f0zwIv7urlCgqELuKyiFHQGDubx9jHMevMyNyyM0IHI8gJzXdDMzv5g61otPOi9
+         ClC+YXjFysKEFTHgfEB8Lc1Sn85n6kneIh1mSnXqyKX3lkeluKxBkx3A2kzoYIMSFdtp
+         qtwBbZHj4ceZN54K5AxkJVx57BYHczx0BW3nCdcyB9jV2AmA7SUfysPWlgk/7oqS5g9B
+         QNOA==
+X-Gm-Message-State: APjAAAWAQE7m8miLAA5vlyh1bPI6bJ8uX6xJWGDR1/0a+eL9zjMS9xUv
+        BcjQG9I78AjQoKTN334B/fom0Mug
+X-Google-Smtp-Source: APXvYqzw7ABNOqkeobMmrB9Ei+4coGkEnyJjMYIOk4rDrbv5qQPjRbS6SvJfXPjNFhfEW822qULq8A==
+X-Received: by 2002:adf:eb8e:: with SMTP id t14mr437573wrn.384.1580507896547;
+        Fri, 31 Jan 2020 13:58:16 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p17sm13455098wrx.20.2020.01.31.13.58.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2020 13:58:16 -0800 (PST)
+Message-Id: <pull.698.v2.git.git.1580507895.gitgitgadget@gmail.com>
+In-Reply-To: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
+References: <pull.698.git.git.1579555036314.gitgitgadget@gmail.com>
+From:   "Ben Keene via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 31 Jan 2020 21:58:11 +0000
+Subject: [PATCH v2 0/4] git-p4: add hook p4-pre-edit-changelist
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20200130225818.193825-1-masayasuzuki@google.com> <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Fri, 31 Jan 2020 13:49:53 -0800
-Message-ID: <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
-Subject: Re: [PATCH] doc: describe Git bundle format
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Ben Keene <seraphire@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 12:38 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Masaya Suzuki <masayasuzuki@google.com> writes:
->
-> > The bundle format was not documented. Describe the format with ABNF and
-> > explain the meaning of each part.
->
-> Thanks.
->
-> >
-> > Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
-> > ---
-> >  Documentation/technical/bundle-format.txt | 40 +++++++++++++++++++++++
-> >  1 file changed, 40 insertions(+)
-> >  create mode 100644 Documentation/technical/bundle-format.txt
-> >
-> > diff --git a/Documentation/technical/bundle-format.txt b/Documentation/technical/bundle-format.txt
-> > new file mode 100644
-> > index 0000000000..dbb80225b5
-> > --- /dev/null
-> > +++ b/Documentation/technical/bundle-format.txt
-> > @@ -0,0 +1,40 @@
-> > += Git bundle v2 format
-> > +
-> > +The Git bundle format is a format that represents both refs and Git objects.
-> > +
-> > +== Format
-> > +
-> > +We will use ABNF notation to define the Git bundle format. See
-> > +protocol-common.txt for the details.
-> > +
-> > +----
-> > +bundle    = signature references pack
-> > +signature = "# v2 git bundle" LF
->
-> Good.  "signature" is the name used by bundle.c::create_bundle() to
-> call this part.
->
-> > +references   = *(prerequisite / ref) LF
->
-> This allows prereq and ref can come inter-mixed, but I think we show
-> all prerequisites first before refs.
+Our company's workflow requires that our P4 check-in messages have a
+specific format. A helpful feature in the GIT-P4 program would be a hook
+that occurs after the P4 change list is created but before it is displayed
+in the editor that would allow an external program to possibly edit the
+changelist text.
 
-Based on bundle.c::parse_bundle_header(), I infer that this can be
-mixed. If that's not intended, this can be changed to have
-prerequisites first.
+v1:My suggestion for the hook name is p4-pre-edit-changelist.
 
->
-> > +prerequisite = "-" obj-id SP comment LF
-> > +comment      = *CHAR
->
-> Do readers know what CHAR consists of?  Anything other than NUL and
-> LF?
+It would take a single parameter, the full path of the temporary file. If
+the hook returns a non-zero exit code, it would cancel the current P4
+submit.
 
-RFC 5234 defines core rules
-(https://tools.ietf.org/html/rfc5234#appendix-B.1), and these CHAR etc
-are defined there. It should be OK to use these rules.
+The hook should be optional.
 
->
-> > +ref          = obj-id SP refname LF
->
-> OK.
->
-> "prerequisite" and "ref" are both used in bundle.c::create_bundle(),
-> so calling these parts with these names is consistent with the code.
-> "head" is also a good name for the latter as "git bundle list-heads"
-> is the way the end-users access them from outside.
->
-> > +
-> > +pack         = ... ; packfile
-> > +----
-> > +
-> > +== Semantics
-> > +
-> > +A Git bundle consists of three parts.
-> > +
-> > +*   Prerequisites: Optional list of objects that are not included in the bundle
-> > +    file. A bundle can reference these prerequisite objects (or it can reference
-> > +    the objects reachable from the prerequisite objects). The bundle itself
-> > +    might not contain those objects.
->
-> While not incorrect per-se, the above misses the more important
-> points (and defers the description to a later paragraph).  It is
-> better to describe what it means to have prereqs upfront.
->
-> > +*   References: Mapping of ref names to objects.
-> > +*   Git objects: Commit, tree, blob, and tags. These are included in the pack
-> > +    format.
-> > +
->
-> Match the name you used to descibe the parts in the earlier ABNF
-> description, so that the correspondence is clear to the readers.
-> You somehow used "references" to mean both prereqs and heads, but in
-> the above you are describing only "heads" under the label of
-> "references".
+v2:Instead of a single hook, p4-pre-edit-changelist, follow the git
+convention for hook names and add the trio of hooks that work together,
+similar to git commit.
 
-Yes. It should match with the ABNF definition above.
+The hook names are: 
 
-I usually use "heads" to mean "references under refs/heads/*" (not
-sure if this is true for other people). Since a bundle can contain
-tags etc., using "heads" here seems confusing. With prerequisites and
-references split you mentioned above, I think I can make ABNF and this
-semantics section consistent in terms of wording.
+ * p4-prepare-changelist
+ * p4-changelist
+ * p4-post-changelist
 
-bundle = signature *prerequisite *ref LF pack
-prerequisite = "-" obj-id SP comment LF
-comment = *CHAR
-reference = obj-id SP refname LF
-pack = ... ; packfile
+The hooks should follow the same convention as git commit, so a new command
+line option for the git-p4 submit function --no-verify should also be added.
 
-The terms ("prerequisite" and "reference") are consistent with
-bundle.h::ref_list.
+Ben Keene (4):
+  git-p4: rewrite prompt to be Windows compatible
+  git-p4: create new method gitRunHook
+  git-p4: add hook p4-pre-edit-changelist
+  git-p4: add p4 submit hooks
 
->
-> Perhaps something like this?
->
->     * "Prerequisites" lists the objects that are NOT included in the
->       bundle and the receiver of the bundle MUST already have, in
->       order to use the data in the bundle.  The objects stored in
->       the bundle may refer to prerequiste objects and anything
->       reachable from them and/or expressed as a delta against
->       prerequisite objects.
+ Documentation/git-p4.txt   |  44 ++++++++-
+ Documentation/githooks.txt |  46 +++++++++
+ git-p4.py                  | 191 ++++++++++++++++++++++++++-----------
+ 3 files changed, 225 insertions(+), 56 deletions(-)
 
-I want to make sure the meaning of prerequisites.
 
-1. Are they meant for a delta base? Or are they meant to represent a
-partial/shallow state?
+base-commit: 5b0ca878e008e82f91300091e793427205ce3544
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-698%2Fseraphire%2Fseraphire%2Fp4-hook-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-698/seraphire/seraphire/p4-hook-v2
+Pull-Request: https://github.com/git/git/pull/698
 
-If these prerequisites are used as a delta base, the receiver of the
-bundle MUST have them. If these prerequisites are the indicators of
-the shallowness or the partialness of the repository, the pack data
-would have complete data in terms of deltification (e.g. all objects
-in the pack file can be undeltified with just the pack file), and the
-bundle can be treated as a shallow-cloned/partially-cloned repository
-snapshot.
+Range-diff vs v1:
 
-From what I can see from bundle.c, I think it's an indicator of a
-delta base, not an indicator of a shallow/partial state, but I want to
-make sure.
+ -:  ---------- > 1:  585bdd51b2 git-p4: rewrite prompt to be Windows compatible
+ -:  ---------- > 2:  f1f9fdc542 git-p4: create new method gitRunHook
+ 1:  bb3ce3a795 ! 3:  1bdcdc4c18 git-p4: Add hook p4-pre-pedit-changelist
+     @@ -1,6 +1,6 @@
+      Author: Ben Keene <seraphire@gmail.com>
+      
+     -    git-p4: Add hook p4-pre-pedit-changelist
+     +    git-p4: add hook p4-pre-edit-changelist
+      
+          Add an additional hook to the git-p4 command to allow a hook to modify
+          the text of the changelist prior to displaying the p4editor command.
+ -:  ---------- > 4:  3d34dd042e git-p4: add p4 submit hooks
 
-2. Do they need to be commits? Or can they be any object type?
-
-From what I can see, it seems that they should always be commits.
-
-3. Does the receiver have to have all reachable objects from prerequisites?
-
-My understanding is "Yes, the receiver must have all reachable objects
-from prerequisites." This means that if a receiver has a
-shallow-cloned repository, they might not be able to proceess a bundle
-with prerequisites. The bundle's pack part can deltify against the
-objects that exist beyond the shallow depth.
-
->
->     * "Heads" record the tips of the history graph, iow, what the
->       receiver of the bundle CAN "git fetch" from it.
->
->     * "Pack" is the pack data stream "git fetch" would send, if you
->       fetch from a repository that has the references recorded in
->       the "Heads" above into a repository that has references
->       pointing at the objects listed in "Prerequisites" above.
-
-I'll adopt this in the next patch.
-
->
-> > +If a bundle contains prerequisites, it means the bundle has a thin pack and the
-> > +bundle alone is not enough for resolving all objects. When you read such
-> > +bundles, you should have those missing objects beforehand.
->
-> With the above rewrite, this paragraph is unneeded.
->
-> > +In the bundle format, there can be a comment following a prerequisite obj-id.
-> > +This is a comment and it has no specific meaning. When you write a bundle, you
-> > +can put any string here. When you read a bundle, you can ignore this part.
->
-> Is it "you can"?  At least the last one should be "readers of a
-> bundle MUST ignore the comment", I think.
-
-I'll change this to MUST.
+-- 
+gitgitgadget
