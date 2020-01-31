@@ -2,157 +2,143 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 59734C33CB7
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 308F2C2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:31:50 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 2E68C206F0
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:31:39 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id D5EF7206F0
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:31:49 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DXbtRgKj"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D3DJWD5F"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726488AbgAaSbh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 13:31:37 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53674 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725978AbgAaSbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 13:31:33 -0500
-Received: by mail-wm1-f65.google.com with SMTP id s10so9028668wmh.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 10:31:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:in-reply-to:references:from:date:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=CD2nWjyINby06PiyB0ujdlMyGH5W3E4THLyyGQ1G8Do=;
-        b=DXbtRgKj3azjv7d1gnMRLGo9ezO6TID+Sl06bm10+vdHDCl2DOt2jCDHq2Tfy3wG2Y
-         dOKdwIdQ+3APWNGMlAHkoAgdAGRDH/tiPYC6FbxQiW6VIBlAT4kRu5YmJ56KbZ1GIqA4
-         SZlgQGr0JskaR6vhzr8kMfQD5yiiFmkD0Q8y/bkfuohRR8pk2oyuGE70q/ZgByvw1aQ7
-         i+P1+pjd+0jig8aS0vZwOX4qEwWO3RNul+dY1sCLluwcN6VsNeXlFiSMmQs2WvOKK4mr
-         5Ju7gQpAJO/41mrPmx45MsaA5+ne6l0mauukD4U9Jc59XGKlZb869iKsAImoL7Cx52JF
-         dZxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:in-reply-to:references:from:date
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=CD2nWjyINby06PiyB0ujdlMyGH5W3E4THLyyGQ1G8Do=;
-        b=CJbCWSWcHolJQ/1obA1L8bkzETcM/igK320z4JC9t8TkqFlpb6qK5IgdWTsOwkDXhu
-         QxBco31O26Wgobu511KlVo6wUaiCJ6M5H0zzHCxkUQIbjK0Egh1I/YZGzLrrRkVpWSCd
-         qCmVADVILmlSb4i4CqGQ/CK1lSewBalsGwUWtdJqgzrgO2xtgApRf2HhytmSgoIO+/5e
-         QpGAEbBkZp9ItFfwkEieK6wiTERecVXHaeVRWZQL8UAmcoo0KGT202kArO8FEIdGBCFL
-         Sqnmkeq7RtjQ/2G5pprVTy1Z0jsiybNgywAD4DG/7Hi4iIXXqi3x8J+D0iiv8/krE8iS
-         QRqw==
-X-Gm-Message-State: APjAAAUDdsCh9Fx8eBaUem/we9mf3HRvoMIOz4KZRyzBnj5YZmlKoWol
-        S0izyHqbbfb8N3Pfe+rRU/J6jiBG
-X-Google-Smtp-Source: APXvYqyDhI+mpTzK8bTP8hLDQ/ZxgqOUkui26/F7ENeLb1z+eCMEA8hFS/Q22dqIgtjUa8C+XWEZ2w==
-X-Received: by 2002:a1c:e2c3:: with SMTP id z186mr13475885wmg.70.1580495490786;
-        Fri, 31 Jan 2020 10:31:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a9sm11676662wmm.15.2020.01.31.10.31.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2020 10:31:30 -0800 (PST)
-Message-Id: <f73f0d66d14f50bbe7a9b14f0932fa4045644e2e.1580495486.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.700.v2.git.git.1580495486.gitgitgadget@gmail.com>
-References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
-        <pull.700.v2.git.git.1580495486.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 31 Jan 2020 18:31:24 +0000
-Subject: [PATCH v2 4/6] dir: refactor treat_directory to clarify control flow
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726336AbgAaSbt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 13:31:49 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61500 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725978AbgAaSbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 13:31:48 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8461D3B6DA;
+        Fri, 31 Jan 2020 13:31:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=4VTo/DDUi1DpgtADhpgFVilA3Zc=; b=D3DJWD
+        5Fx7QfoOGBUEnQMMxBTWDScHDGA+FGsGqxffpOSme0Ncte4y8eY5qQG/cnh50PxF
+        pED1L34+LlecibfZqFFRzu4NyGiPWkArF7uaxCSpLOzyzSi7F62Rk0VGPDff4yrE
+        0vYE9JPaqTrDXoI0SzgmRSkFUFkzlaGXBaXxo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ALSPKDTfhOYmDnUfw4gz7dxfVGZO11A8
+        PATsl7jlYz8Vlf0QVa0e+wkXDoaVBktY5TFC7gKpV/tVdBD6RmfbopZeE11ub0Fk
+        aFwl194YZ3+5Jy4AB+2nVQpQDoUN9od3S0+A4oFMVVrAZr0jTUl5xfSvc00K2etl
+        mXz4DAZwv0Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7B8E83B6D9;
+        Fri, 31 Jan 2020 13:31:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D0D243B6D8;
+        Fri, 31 Jan 2020 13:31:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Miriam Rubio <mirucam@gmail.com>
+Cc:     git@vger.kernel.org, Pranit Bauva <pranit.bauva@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Tanushree Tumane <tanushreetumane@gmail.com>
+Subject: Re: [PATCH v2 07/11] bisect: libify `bisect_checkout`
+References: <20200128144026.53128-1-mirucam@gmail.com>
+        <20200128144026.53128-8-mirucam@gmail.com>
+Date:   Fri, 31 Jan 2020 10:31:41 -0800
+In-Reply-To: <20200128144026.53128-8-mirucam@gmail.com> (Miriam Rubio's
+        message of "Tue, 28 Jan 2020 15:40:22 +0100")
+Message-ID: <xmqq1rrfbhpu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Martin Melka <martin.melka@gmail.com>,
-        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Samuel Lijin <sxlijin@gmail.com>,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-        <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: EDAF072E-4457-11EA-8F0C-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Miriam Rubio <mirucam@gmail.com> writes:
 
-The logic in treat_directory() is handled by a multi-case
-switch statement, but this switch is very asymmetrical, as
-the first two cases are simple but the third is more
-complicated than the rest of the method. In fact, the third
-case includes a "break" statement that leads to the block
-of code outside the switch statement. That is the only way
-to reach that block, as the switch handles all possible
-values from directory_exists_in_index();
+> From: Pranit Bauva <pranit.bauva@gmail.com>
+>
+> Since we want to get rid of git-bisect.sh it would be necessary to
+> convert those exit() calls to return statements so that errors can be
+> reported.
+>
+> Emulate try catch in C by converting `exit(<positive-value>)` to
+> `return <negative-value>`. Follow POSIX conventions to return
+> <negative-value> to indicate error.
+>
+> Turn `exit()` to `return` calls in `bisect_checkout()`.
+> Changes related to return values have no bad side effects on the
+> code that calls `bisect_checkout()`.
+>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Mentored-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
+> Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+> Signed-off-by: Miriam Rubio <mirucam@gmail.com>
+> ---
+>  bisect.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/bisect.c b/bisect.c
+> index a7a5d158e6..dee8318d9b 100644
+> --- a/bisect.c
+> +++ b/bisect.c
+> @@ -713,6 +713,7 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+>  {
+>  	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
+>  
+> +	int res = 0;
+>  	memcpy(bisect_rev_hex, oid_to_hex(bisect_rev), the_hash_algo->hexsz + 1);
 
-Extract the switch statement into a series of "if" statements.
-This simplifies the trivial cases, while clarifying how to
-reach the "show_other_directories" case. This is particularly
-important as the "show_other_directories" case will expand
-in a later change.
+Wrong placement of a new decl.  Have a block of decls and then have
+a blank line before the first statement, i.e.
 
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- dir.c | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
+		char bisect_rev_hex[...];
+	+	int res = 0;
 
-diff --git a/dir.c b/dir.c
-index 225f0bc082..6867356a31 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1660,29 +1660,28 @@ static enum path_treatment treat_directory(struct dir_struct *dir,
- 	const struct pathspec *pathspec)
- {
- 	int nested_repo = 0;
--
- 	/* The "len-1" is to strip the final '/' */
--	switch (directory_exists_in_index(istate, dirname, len-1)) {
--	case index_directory:
--		return path_recurse;
-+	enum exist_status status = directory_exists_in_index(istate, dirname, len-1);
- 
--	case index_gitdir:
-+	if (status == index_directory)
-+		return path_recurse;
-+	if (status == index_gitdir)
- 		return path_none;
-+	if (status != index_nonexistent)
-+		BUG("Unhandled value for directory_exists_in_index: %d\n", status);
- 
--	case index_nonexistent:
--		if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
--		    !(dir->flags & DIR_NO_GITLINKS)) {
--			struct strbuf sb = STRBUF_INIT;
--			strbuf_addstr(&sb, dirname);
--			nested_repo = is_nonbare_repository_dir(&sb);
--			strbuf_release(&sb);
--		}
--		if (nested_repo)
--			return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
--				(excluded ? path_excluded : path_untracked));
-+	if ((dir->flags & DIR_SKIP_NESTED_GIT) ||
-+		!(dir->flags & DIR_NO_GITLINKS)) {
-+		struct strbuf sb = STRBUF_INIT;
-+		strbuf_addstr(&sb, dirname);
-+		nested_repo = is_nonbare_repository_dir(&sb);
-+		strbuf_release(&sb);
-+	}
-+	if (nested_repo)
-+		return ((dir->flags & DIR_SKIP_NESTED_GIT) ? path_none :
-+			(excluded ? path_excluded : path_untracked));
- 
--		if (dir->flags & DIR_SHOW_OTHER_DIRECTORIES)
--			break;
-+	if (!(dir->flags & DIR_SHOW_OTHER_DIRECTORIES)) {
- 		if (excluded &&
- 		    (dir->flags & DIR_SHOW_IGNORED_TOO) &&
- 		    (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
--- 
-gitgitgadget
+		memcpy(...);
+
+This comment probably applies to other hunks in the entire series.
+
+> @@ -721,14 +722,14 @@ static int bisect_checkout(const struct object_id *bisect_rev, int no_checkout)
+>  		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+>  			   UPDATE_REFS_DIE_ON_ERR);
+>  	} else {
+> -		int res;
+>  		res = run_command_v_opt(argv_checkout, RUN_GIT_CMD);
+>  		if (res)
+> -			exit(res);
+> +			return res > 0 ? -res : res;
+
+Hmph.  
+
+This means that res == -1 and res == 1 from run_command_v_opt()
+cannot be distinguished by our callers.  Is that what we want here?
+
+If that is really what we want, it probably is easier to read if
+this were written like so:
+
+		return -abs(res);
+
+>  	argv_show_branch[1] = bisect_rev_hex;
+> -	return run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+> +	res = run_command_v_opt(argv_show_branch, RUN_GIT_CMD);
+> +	return res > 0 ? -res : res;
+
+Likewise.
 
