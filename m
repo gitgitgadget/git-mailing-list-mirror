@@ -2,114 +2,117 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no
-	version=3.4.0
+X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB2ECC2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4741DC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:18:08 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B0A8C20661
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:15:47 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 143F420CC7
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:18:08 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ii5DBLM9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cn9XC+Ci"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726213AbgAaSPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 13:15:46 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62094 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725268AbgAaSPq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 13:15:46 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D3081ABB44;
-        Fri, 31 Jan 2020 13:15:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=UbrWUGQv/CmoWR2eROj/W7UAJvQ=; b=Ii5DBL
-        M9R0KM8tHXQz6bw1gxJ/coe39LFhmMgBD4wUvLO1nEtIPWQ4rLCGS1RIhlfIToeS
-        LJezlSVgo/BZaVhCT4N8bBgWtl0BZ+iqJ4lW86mBp/MTY2IwfSKrWQW1P3cZxryt
-        N4qFhSE3tc4Owehk3O4Bu2d8PH0CrQ2ss9bxc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=p6/oajw0afACTmd75F5mU9iW63/KaNtn
-        LA07m4yx9bi+pu0IJ0gHJhCNvxh/y9M8RWOVqFFH651fvxayZieFoIbh5D7wGgXM
-        IdYRqfWSqOtU0xhtzT4ktaHTpuY4onMc04OsDQKkb0WxV7mqhcrBMmZ8LFQAz+qP
-        sCuTGl8kIJE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id CBCE1ABB43;
-        Fri, 31 Jan 2020 13:15:45 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 063BAABB42;
-        Fri, 31 Jan 2020 13:15:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ivan Selin <ivan.selin@toptal.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git Users <git@vger.kernel.org>
-Subject: Re: git-p4 cannot use perforce client created by p4java
- =?utf-8?Q?=E2=80=94?= "Expected view key View1 missing"
-References: <CAPgZwKbZ0g+VXjnD03hGkRXfwU2DpygLhLBFG3xv1W9c8oQ1fQ@mail.gmail.com>
-        <CAE5ih79j+o87yEPbj+nFR6b4rx_NU2eLJite69=+qMdpXdEidw@mail.gmail.com>
-        <CAPgZwKbYKPbZeEY2O22DJBvDpjHRR2XVW9hQ7-tML-UE2bkXYA@mail.gmail.com>
-        <CAE5ih79xWfjLC48y=mSLhdG2zVR5d-XeAbJJFV2SPTew5FGf+Q@mail.gmail.com>
-Date:   Fri, 31 Jan 2020 10:15:40 -0800
-In-Reply-To: <CAE5ih79xWfjLC48y=mSLhdG2zVR5d-XeAbJJFV2SPTew5FGf+Q@mail.gmail.com>
-        (Luke Diamand's message of "Fri, 31 Jan 2020 15:52:08 +0000")
-Message-ID: <xmqqa763bigj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1725978AbgAaSSH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 13:18:07 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:43150 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725878AbgAaSSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 13:18:07 -0500
+Received: by mail-ot1-f65.google.com with SMTP id p8so7424077oth.10
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 10:18:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=9AYZIyJjNtizNzrTAGPG2v3XbQQMvXhJXtmkpIoErn0=;
+        b=cn9XC+Ci2q1QfWldAYIMCZgztcY9jadoICh+DaDM+P3TVXXshfzAePCAG68+n+uFVc
+         Zh1TUWBuX6qX2/Aqbqm7FQJRaYDCmOhUkzI/6yLqRaqZJ1HAPSxKroUgMtsL7oYmK50C
+         Bf2zrl/rCFVZQbw/y1s4f7Pk5APUnh7M0wjSrz9iWY0wYoYfMrBU1uOnhUS9RClO5bPw
+         /40NOptMwRxBB/O/qvR37vHWnBvH57cCFukQTnSYy8/+1g6CYiU6pG7g9p+S5nK2jKOE
+         ScIEYk6Ya8yYAr1RXfcfrc20E2FnAcfbTrpHE/0ysNpGjJe6ei/sWZO4ZQTzexEcOLkO
+         EivA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=9AYZIyJjNtizNzrTAGPG2v3XbQQMvXhJXtmkpIoErn0=;
+        b=OfqX9MaULtNAtM/ajWp9Kh1SOuumBJbs1WOKJTcnT+8bhQFtb4goh5a5qKGUjcxbhR
+         qcQjfR7GnYdEWQQNXnQrTnm2vbdRq7+ryjaNSbwJg4Pv0t21BPtXgVWERTfrVr0Pb5VA
+         url5m00odMg6x6psByDwcQ/08krzvkEfO/bOKlHGIAd7q+owz9tAk8YXZE6oG1UZAlV8
+         VggsMZ6FcfKv4gZIy4tWpS9B+sJyPzgDAbyhy23wWK29AhF7cEoRKrmFI45iYBwxm8Nv
+         xDpRMRpxp+qbHy+K/T35LqRqlgOTD/798R/pbYc23GaFYP13Pm5en1ytVH8td3/VutP0
+         OUhg==
+X-Gm-Message-State: APjAAAXqV9BcQMGkLgzR9qRWh1aLJR8cdx6Hp2cR8fUfz5YXWbcR2OlB
+        2EuaGxtElG7IABk2s+wX065iYuMQLbYFvKjZmla29Q==
+X-Google-Smtp-Source: APXvYqy0IRKuGzxIQGQxt/9PpFkJ2ahh1lEEZk/t3eq15iB8fnhNSWgNgMmv5tlyMTYfEsSfyN3bfDQ5mA612ecHgy8=
+X-Received: by 2002:a9d:634e:: with SMTP id y14mr8888768otk.162.1580494685563;
+ Fri, 31 Jan 2020 10:18:05 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B1943E14-4455-11EA-A2DF-B0405B776F7B-77302942!pb-smtp20.pobox.com
+References: <pull.700.git.git.1580335424.gitgitgadget@gmail.com>
+ <e6d21228d126d62fafdde185c180f9f5ba64c458.1580335424.git.gitgitgadget@gmail.com>
+ <20200131180409.GI10482@szeder.dev>
+In-Reply-To: <20200131180409.GI10482@szeder.dev>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 31 Jan 2020 10:17:54 -0800
+Message-ID: <CABPp-BHy1Yi7RzRcRGCCFfzOnDbgBeHEQz5wjypM=V1hbGjw6g@mail.gmail.com>
+Subject: Re: [PATCH 3/6] dir: fix confusion based on variable tense
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Martin Melka <martin.melka@gmail.com>,
+        Samuel Lijin <sxlijin@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
-
-> On Fri, 31 Jan 2020 at 13:43, Ivan Selin <ivan.selin@toptal.com> wrote:
->>
->> Yes, that's exactly the way that I've tried it and it worked for me.
->> Can we have that integrated into git-p4? What can I do to make it
->> happen?
+On Fri, Jan 31, 2020 at 10:04 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
 >
-> A patch would be very welcome!
+> On Wed, Jan 29, 2020 at 10:03:40PM +0000, Elijah Newren via GitGitGadget =
+wrote:
+> > From: Elijah Newren <newren@gmail.com>
+> >
+> > Despite having contributed several fixes in this area, I have for month=
+s
+> > (years?) assumed that the "exclude" variable was a directive; this
+> > caused me to think of it as a different mode we operate in and left me
+> > confused as I tried to build up a mental model around why we'd need suc=
+h
+> > a directive.  I mostly tried to ignore it while focusing on the pieces =
+I
+> > was trying to understand.
+> >
+> > Then I finally traced this variable all back to a call to is_excluded()=
+,
+> > meaning it was actually functioning as an adjective.  In particular, it
+> > was a checked property ("Does this path match a rule in .gitignore?"),
+> > rather than a mode passed in from the caller.  Change the variable name
+> > to match the part of speech used by the function called to define it,
+> > which will hopefully make these bits of code slightly clearer to the
+> > next reader.
 >
-> See Documentation/SubmittingPatches for details, but it's likely
-> enough to just make the change, and then use git format-patch and git
-> send-email.
+> Slightly related questions: Does 'excluded' always mean ignored?  Or
+> is it possible for a file to be excluded but for some other reason
+> than being ignored?
 >
-> Please ensure you add a "Signed-off-by" (git commit -s).
+> I'm never really sure, and of course it doesn't help that we have both
+> '.gitignore' and '.git/info/exclude' files and conditions like:
+>
+> > +             if (excluded &&
+> > +                 (dir->flags & DIR_SHOW_IGNORED_TOO) &&
+> > +                 (dir->flags & DIR_SHOW_IGNORED_TOO_MODE_MATCHING)) {
+>
 
-Thanks for helping.  Another area a new person struggles is to
-propose a good commit log message.  I'd expect this change to be
-explained something like this:
-
-    Subject: git-p4: tighten detection of view names
-
-    The current "git p4" code expects that all keys starting with
-    "View" are view names (i.e. "View0", "View1", etc.), but a
-    Perforce client created using p4java gets an extra key
-    "ViewDepotType", which is not something we want to be treated as
-    a view key.
-
-    Tighten the filter of keys to accept only string "View" followed
-    by nothing but digits.
-
-    Helped-by: Luke Diamand <luke@diamand.org>
-    Signed-off-by: ...
-
-Note that I am not a Perforce person, so the phrase "view names" I
-used in the above may totally be wrong as P4-lingo, in which case
-please replace them with what is acceptable by our Perforce friends
-;-)
-
-Thanks.
-
->> ...
->> > is_view = re.compile(r'^View\d+$')
->> > view_keys = [ k for k in entry.keys() if is_view.match(k) ]
+Good question; no idea.  You can start digging into is_excluded() and
+the pattern list stored in the dir struct and try to trace it back to
+see if it's just the combination of ignore rules in .gitignore and
+.git/info/exclude and core.excludesFile, or if there is something else
+meant here.
