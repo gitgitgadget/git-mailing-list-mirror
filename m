@@ -2,76 +2,83 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.2 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
+	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
+	URIBL_BLOCKED,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61EF3C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:06:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87B9DC35246
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:32:11 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 1ABF120705
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:06:44 +0000 (UTC)
-Authentication-Results: mail.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hDRi/cwl"
+	by mail.kernel.org (Postfix) with ESMTP id 5CEE420705
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:32:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726262AbgAaXGn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 18:06:43 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52866 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbgAaXGm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 18:06:42 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8F86B4A56;
-        Fri, 31 Jan 2020 18:06:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=oPOaSn9rJ1Z9DpZDOuWyOhFxUyY=; b=hDRi/c
-        wlMtiM/Xc56htKHsuptf+YArj9L15sIE0zZnm3sKmB0QsR7v/JQNAyLQ7qx0I2O7
-        XwVowv+b8+5aJtEKn6iskHv+bCOZ4FAzK+LGS0PUOWQwc+MgTklxCbxzsjTtEdHq
-        iZtUe9dEjF0AfgHt8iZ7DazgVqa8o/kcTF3co=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=w+kBAHCOchuXgkLcM2MMs7ZiQyDPa+TW
-        i0HCmgJA+1MLB8ZT3eCnhLNi2g6IWPjRtzy4vJZM6JUoAxW9GBIZ9rST6j0TmTOa
-        vGnQObuHiwEAq9cAFobqaQL66RGhCxKCtnfssIkGd1JPp2q2b4l870Lw6MbjIvzx
-        rLsbbTKVKcA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B0189B4A55;
-        Fri, 31 Jan 2020 18:06:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.76.80.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DDEDEB4A52;
-        Fri, 31 Jan 2020 18:06:37 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] doc: describe Git bundle format
-References: <20200130225818.193825-1-masayasuzuki@google.com>
-        <20200131221800.240352-1-masayasuzuki@google.com>
-Date:   Fri, 31 Jan 2020 15:06:35 -0800
-In-Reply-To: <20200131221800.240352-1-masayasuzuki@google.com> (Masaya
-        Suzuki's message of "Fri, 31 Jan 2020 14:18:00 -0800")
-Message-ID: <xmqqtv4b8bus.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+        id S1726322AbgAaXcK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 18:32:10 -0500
+Received: from mx.sdas.de ([88.198.162.67]:42102 "EHLO mx.sdas.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726239AbgAaXcK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 18:32:10 -0500
+X-Greylist: delayed 456 seconds by postgrey-1.27 at vger.kernel.org; Fri, 31 Jan 2020 18:32:09 EST
+Received: from [192.168.1.58] (unknown [31.36.247.254])
+        (Authenticated sender: etienne.servais@voucoux.fr)
+        by mx.sdas.de (Postfix) with ESMTPSA id 9ED4811C19F
+        for <git@vger.kernel.org>; Sat,  1 Feb 2020 00:24:31 +0100 (CET)
+From:   =?UTF-8?Q?=c3=89tienne_Servais?= <etienne.servais@voucoux.fr>
+Subject: [PATCH] doc: add documentation for git log --no-follow
+To:     git@vger.kernel.org
+Message-ID: <85e71c97-9e0a-863e-179f-a6e1f14365ce@voucoux.fr>
+Date:   Sat, 1 Feb 2020 00:24:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.4.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 557FF5FE-447E-11EA-8170-8D86F504CC47-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masaya Suzuki <masayasuzuki@google.com> writes:
+This feature was added by commit
+076c98372e (log: add "log.follow" configuration variable, 2015-07-07)
+but remained undocumented.
 
-> * Change "you" to "the receiver" and "the sender" (I wonder if this should be
->   "writer" and "reader").
+Signed-off-by: Étienne Servais <etienne.servais@voucoux.fr>
+---
+This is my first patch to git \o/
+Sent with thunderbird with help of format-patch'doc (So, it works!).
+I've tested the patch and git am works well on maint and next.
+I couldn't figure if I shall merge the --no-follow doc with the follow
+as is done for --no-decorate and --decorate just after. 
+I couldn't think of a proper phrasing so I'll be glad to get suggestion on this.
 
-I come from "a bundle is a frozen snapshot of 'git fetch' transfer"
-school, and consider the act of reading a "fetch" too much, but I
-think "writer" and "reader" is more understandable for new readers.
+ Documentation/git-log.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Thanks.
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index bed09bb09e..cc2ad98167 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -28,6 +28,9 @@ OPTIONS
+ 	Continue listing the history of a file beyond renames
+ 	(works only for a single file).
+ 
++--no-follow::
++	Override the log.follow configuration.
++
+ --no-decorate::
+ --decorate[=short|full|auto|no]::
+ 	Print out the ref names of any commits that are shown. If 'short' is
+@@ -205,7 +208,8 @@ log.follow::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+ 	a single <path> is given.  This has the same limitations as `--follow`,
+ 	i.e. it cannot be used to follow multiple files and does not work well
+-	on non-linear history.
++	on non-linear history. This setting can be disabled by the `--no-follow`
++	option.
+ 
+ log.showRoot::
+ 	If `false`, `git log` and related commands will not treat the
+-- 
+2.17.1
+
