@@ -4,159 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 X-Spam-Level: 
 X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS
+	autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E85A3C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 19:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6330FC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 19:59:34 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id B0FCC20707
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 19:46:13 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 2F486206F0
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 19:59:34 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hAVzWu0o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i3lCuuem"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbgAaTqM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 14:46:12 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:38799 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725954AbgAaTqM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 14:46:12 -0500
-Received: by mail-pg1-f193.google.com with SMTP id a33so4002221pgm.5
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 11:46:12 -0800 (PST)
+        id S1726102AbgAaT7d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 14:59:33 -0500
+Received: from mail-oi1-f175.google.com ([209.85.167.175]:33008 "EHLO
+        mail-oi1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbgAaT7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 14:59:33 -0500
+Received: by mail-oi1-f175.google.com with SMTP id q81so8525580oig.0
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 11:59:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=kUuPD38bU+4mA1Fo00cNUXeqYsr4ah4UGTY9UWfrKD0=;
-        b=hAVzWu0oSSTEA4X2st5O8MzROHf+w2DB886WPlGZRopab/B0SrC18fbJB85AXzK3si
-         V6SE+hQFcDVqPRjRrXCxmTdxNYj4bGMFcpEeiBKUZ31Q7OuZLnOT4QGjm2Gxhgjbj0M7
-         Y7wrM3uJx9h9H1j6hgcOIO+nrIDsH/HJ82kkdRElF5Gy2grHw30KCA5fOvrNVgFu6xJs
-         vaOobPwVb7aIwy+QwkbisaecsXTsQJC8prnyQ9a1i+A8NZx48ShgmxsdIDchGclfQELZ
-         pZe5shCz4GrcFD1OkEmE12EM2jPgkhI1QWJ4Diij/4n3H4MC3qtcUnQDw4peOvX2bfIE
-         j5fQ==
+        bh=AXAMXfaV1y6pQcfZFOcW+sjiBlIs3ne+jyr3rwETHTs=;
+        b=i3lCuuem2Pf+G3I8OFx615HZTDltHDYjrzUo8uqMXaGWxW9O0KErxNNd9tTPmqlSvC
+         SdBgIvA54Kj2vXPxxHRiUPOWLVfoeZ5YcSNQM4Q0ohqv05NwhuMujWUevsGSHEYwUaim
+         cvBXIlo1OE5oGnl4mBlTnP1ssDoHFypeDBgmgVxzFeDax4ZNuSCNffpBaqk2o3vxfCOD
+         IhW7G5ThyygHFsWahIsW8HUaU/3YLaj6IM60CfR5vqbHx472TxDgC++8n5RZ4nMkSVV0
+         IsX4uQg1S03eRo03xBoggV2uuBovlREIr61/aVucEZTXczcZMZuQ2gWty36BGKOkT/q/
+         HLYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=kUuPD38bU+4mA1Fo00cNUXeqYsr4ah4UGTY9UWfrKD0=;
-        b=QFlxrnn31hv2BDXLgvQOEgPdh1iKyRoZcoUKAhpJFNj5HxVP3kYhlsw368CDzUHpgK
-         B68qeDJ2X17tucwm7jOjwQxkKHoAYKWiSvsc8obVgdibrAyLmW5qSGujI1v9pqA4i9I1
-         CQf2NFXktgYwMQHQC4Ppa0BDo3M6/a1qOVJkVH8SW0QNvWjHsRTIyMDU9cA9UsTx3T4g
-         Wn+3rmn3ZOMEho2ogwzhMLeLkjR8ZGqGJmzRs+qDUCYKU2SDZ+94ZcdUg7TqCkFWC7J7
-         IPjvJHTsWAgvJxMuqdd/VOvswTXb24Dg5r3vLWuMdIvdNzAfyHQe73bYlht8VVf3Um6S
-         ln2w==
-X-Gm-Message-State: APjAAAWoTUf8YgSHzYUkfwuZfM53jem4+oTrJosJ+j0LlT3mBLaIT6iJ
-        nQkupZeG16bCMQLm0jq6chwQQkfd9g571QKK1jdV1g==
-X-Google-Smtp-Source: APXvYqze7OzyvWbtEWjMHu6fxpWUF8tuut7zaSaxlI/YsX0vhQ3XDFTNma+QqyaoTHbScwLadcSW4uO8ZMWxubAC7qM=
-X-Received: by 2002:aa7:8654:: with SMTP id a20mr12002785pfo.88.1580499971739;
- Fri, 31 Jan 2020 11:46:11 -0800 (PST)
+        bh=AXAMXfaV1y6pQcfZFOcW+sjiBlIs3ne+jyr3rwETHTs=;
+        b=VhDsvFz41E6PFDaMEt+ekz8yZSHWkOm2qg3onqwCqzH+MHETNB2B4ohT/Cg8oRaw8e
+         2QhM0vKNHJuZY1iO3NOXZcjcCJSuOQk8IFy5Dhv9Kdje1EhMrtwEwR0+kcUnTIVBkO0A
+         J4FNSebL7D4w/wun2YmVqOhmmYt0H+XLs0Lvh0To2fYsaw1PswKQd2OFar3IwSEB31R8
+         /UcFyIyErO52HU0+nNGEgLZbDYqVRyEVMfkEtpPfsXBNyPKvncpZBYxkmmumLDSGSTOc
+         rsi11oAIqOa2+XR8TYtDMqo4YePYYAvfnmzdcBzhvIEeA6q2jPEgR/wbujuPTVJHO9BA
+         C1kQ==
+X-Gm-Message-State: APjAAAXUggL8PWleMZgkS8T8sHhgOtd/oMMEyLGLa1qmGZOsW+H6N0Bf
+        qC4R6TCzfXXtdJEQpwLmCRWIJquy0l0Rgjv8LucLOFci
+X-Google-Smtp-Source: APXvYqyS6XsT2DCBf6yDRjJ5CVBSndQts6f+WW9QHQnUTVXu+rdCThYr+vqlzz+I4OroVHidx4RoFQxbqKe1sCXViU8=
+X-Received: by 2002:aca:4e10:: with SMTP id c16mr7147446oib.6.1580500770884;
+ Fri, 31 Jan 2020 11:59:30 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1580430057.git.me@ttaylorr.com> <c329a8ddc087c9b74f673005f8b1e8769816ab9a.1580430057.git.me@ttaylorr.com>
-In-Reply-To: <c329a8ddc087c9b74f673005f8b1e8769816ab9a.1580430057.git.me@ttaylorr.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 31 Jan 2020 20:45:59 +0100
-Message-ID: <CAN0heSpfqMChHO=iNuUExrBsMPcpZ6K2zH68GkHO2ttEiSinSA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] builtin/commit-graph.c: support '--input=none'
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+References: <CADSBhNbbO=aq-Oo2MpzDMN2VAX4m6f9Jb-eCtVVX1NfWKE9zJw@mail.gmail.com>
+ <ef39f8c5-ce0b-a48b-940d-821df563b292@gmail.com>
+In-Reply-To: <ef39f8c5-ce0b-a48b-940d-821df563b292@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 31 Jan 2020 11:59:20 -0800
+Message-ID: <CABPp-BHNxGFFgMMABto0y0LA6xxqqDEcVGw4FSN=1JdH53+V9Q@mail.gmail.com>
+Subject: Re: Sparse checkout inconsistency with non-folder paths between cone
+ mode and full matching (2.5.0)
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     finnbryant@gmail.com, Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 31 Jan 2020 at 01:30, Taylor Blau <me@ttaylorr.com> wrote:
-> In the previous commit, we introduced '--[no-]merge', and alluded to the
-> fact that '--merge' would be useful for callers who wish to always
-> trigger a merge of an incremental chain.
-
-Hmmm. So it looks like you've already had similar thoughts as I did
-about patch 1/3. At some point, you had a separate `--merge=...` option,
-then later made that `--split=...`. :-) Could you say something about why
-you changed your mind?
-
-> There is a problem with the above approach, which is that there is no
-> way to specify to the commit-graph builtin that a caller only wants to
-> include commits already in the graph. One can specify '--input=append'
-> to include all commits in the existing graphs, but the absence of
-> '--input=stdin-{commits,packs}' causes the builtin to call
-> 'fill_oids_from_all_packs()'.
-
-(Use one of those options with an empty stdin? Anyway, let's read on.)
-
-> Passing '--input=reachable' (as in 'git commit-graph write
-> --split=merge-all --input=reachable --input=append') works around this
-> issue by making '--input=reachable' effectively a no-op, but this can be
-> prohibitively expensive in large repositories, making it an undesirable
-> choice for some users.
+On Thu, Jan 30, 2020 at 10:52 AM Derrick Stolee <stolee@gmail.com> wrote:
+> Practical: How do we specify if an input is a directory or a file?
 >
-> Teach '--input=none' as an option to behave as if '--input=append' were
-> given, but to consider no other sources in addition.
-
-`--input=none` almost makes me wonder if it should produce an empty
-commit-graph. But there wouldn't be much point in that... I guess
-another way of defining this would be that it "uses no input, and
-implies `--append`".
-
-> This, in conjunction with the option introduced in the previous patch
-> offers the convenient way to force the commit-graph machinery to
-> condense a chain of incrementals without requiring any new commits:
+> As you mentioned, if you run "git sparse-checkout set X" then you get
+> a sparse-checkout file containing:
 >
->   $ git commit-graph write --split=merge-all --input=none
-
-Right.
-
-> --- a/Documentation/git-commit-graph.txt
-> +++ b/Documentation/git-commit-graph.txt
-> @@ -39,24 +39,29 @@ COMMANDS
->  --------
->  'write'::
+>         /*
+>         !/*/
+>         /X/
 >
-> -Write a commit-graph file based on the commits found in packfiles.
-> +Write a commit-graph file based on the commits specified:
-> +* With the `--input=stdin-packs` option, generate the new commit graph
-> +by walking objects only in the specified pack-indexes. (Cannot be
-> +combined with `--input=stdin-commits` or `--input=reachable`.)
->  +
-> -With the `--input=stdin-packs` option, generate the new commit graph by
-> -walking objects only in the specified pack-indexes. (Cannot be combined
-> -with `--input=stdin-commits` or `--input=reachable`.)
-> -+
-> -With the `--input=stdin-commits` option, generate the new commit graph
-> +* With the `--input=stdin-commits` option, generate the new commit graph
->  by walking commits starting at the commits specified in stdin as a list
->  of OIDs in hex, one OID per line. (Cannot be combined with
->  `--input=stdin-packs` or `--input=reachable`.)
->  +
-> -With the `--input=reachable` option, generate the new commit graph by
-> +* With the `--input=reachable` option, generate the new commit graph by
->  walking commits starting at all refs. (Cannot be combined with
->  `--input=stdin-commits` or `--input=stdin-packs`.)
->  +
-> -With the `--input=append` option, include all commits that are present
-> +* With the `--input=append` option, include all commits that are present
->  in the existing commit-graph file.
+> But if X is actually a _file_, then we should write this pattern:
+>
+>         /*
+>         !/*/
+>         /X
+>
+> So the input does not provide enough information to say which pattern
+> should be written.
+>
+> The other concern about this second set of patterns is that "/X" is
+> only a _prefix_ match, not an exact path name match. That means we
+> cannot use the existing hashset matching to result in the same
+> pattern matching as non-cone-mode.
+>
+> Now, there is perhaps a way to decide between the two: inspect the
+> current index or tree for whether the input corresponds to a directory
+> or a file. This adds a layer of complexity that is not currently in
+> the sparse-checkout builtin, but it is not insurmountable. The only
+> thing to consider is what happens when the input path is not in the
+> index/tree at all! It may be that we want to specify the patterns
+> before moving HEAD to a commit that _does_ contain the path, and then
+> we would do the wrong thing at this point.
 
-Do these changes above really belong in this commit?
+And once people ran into the difference because their repo was weird,
+they'd be bewildered.  I don't want to deal with those support
+questions; let's just disallow the latter form and require the
+trailing slash.  There are three alternate universes we could have
+supported such an ability under:
 
-> +* With the `--input=none` option, behave as if `input=append` were
-> +given, but do not walk other packs to find additional commits.
-> +
-> +If none of the above options are given, then commits found in
-> +packfiles are specified.
+   * If we had decided to use regexes instead of fnmatch for
+sparse-checkout/gitignore then we could have a /<path>$ pattern to
+match just files
+  * If fnmatch had an end-of-input marker like regex's '$', then we
+could use it to mark exact files and be able to translate that into
+hashes.
+  * If we had decided that cone mode uses an input file other than
+.git/info/sparse-checkout with a different format, we wouldn't have to
+worry about strict compatibility of the format with non-cone mode and
+support different types of abilities.
 
-"specified"? Plus, that also happens for `--input=append` right? (It
-really seems like "append" is an odd one among all the inputs.)
+But I think it's too late now.  Let's just leave the trailing slash
+there and say we only support directory-based matching in cone mode.
 
->         N_("git commit-graph write [--object-dir <objdir>] [--append] "
-> -          "[--split[=<strategy>]] [--input=<reachable|stdin-packs|stdin-commits>] "
-> +          "[--split[=<strategy>]] "
-> +          "[--input=<reachable|stdin-packs|stdin-commits|none>] "
->            "[--[no-]progress] <split options>"),
-
-Hmm, you've left "--append" the old way.
-
-
-Martin
+> So I'll put out a question to the community: is this practical issue
+> something worth overcoming? Is my concern about a non-existent path
+> a true problem, or something more?
+>
+> Thanks,
+> -Stolee
