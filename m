@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
 	SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 878DBC2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2920C35240
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:35 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 57FCC214D8
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:34 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 724A9214D8
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:35 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gySGl6JQ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ki0flzkU"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726637AbgAaUQc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 15:16:32 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36200 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726561AbgAaUQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 15:16:29 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z3so10171417wru.3
+        id S1726664AbgAaUQe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 15:16:34 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:34435 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726065AbgAaUQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 15:16:28 -0500
+Received: by mail-wm1-f67.google.com with SMTP id s144so9564389wme.1
         for <git@vger.kernel.org>; Fri, 31 Jan 2020 12:16:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NOixNBC7fdzNZ0Vh4Z4S7u1S7FIf/h5PVqWmfQdvx7U=;
-        b=gySGl6JQBRlNp5DbysyOGCjgazaVqH2Gv6tCZlyoykgtJFDUIcdJnQECJyH06/60Lf
-         BG4x82PjfrUCC46ocCFZxR0Fgoyz76kZYCR26mz5RMcWCwIZbN/ZeU2Wet6xrhDidHLM
-         9NGb+KyO5rBVyRt72iemGgnfhRUv4iN1aLqg5zvw0AFZbVKDs22/lNvRrTC47B5zoxZA
-         0l+pGc0NpGGA6T/WbAWNdmaO8QXIer1Lmna49JHXaWwUpfPbY5nwX9r9KoE1OtVxajJf
-         gndqzlxncM9ewL8Ss0tF7FS7z7XBFqsG2k79cuNkELAiYTweT0hadj9dha3olDGSNAx5
-         CCqQ==
+        bh=7OIxkWhiTuACvbhbr0mgY5mdi0HMxPaJU+8Iq5N0peE=;
+        b=ki0flzkU0FHshsd5Hc0BAAIaYWrt11A0TCwWtUtrsoenmgT+GdKh1V5Jw6vvVlJ/G8
+         qjwkRCY2wOMf977beom977iCu9SvgKMIw9EnhfTgrjluRlJcSA7i5gFCWSC6x0hwz2Yd
+         tH0J8v7RfR3aJ4Rt+hp9+D0R7hyHwcYWO59G/zj+85vf7QQ6xfp5is3ojjh2XtRCLAgN
+         LZ8512YoUhYH1TvHjvAKu3D4teRAQYr2CejQZzP6tjY/2ZVvTpqnKHq1FclU9Vb4fbdS
+         3x5XMRTe+u1zb91nIHrZ38BnwzC89MMQZzrxK0EO8/CtOEvhQZRU+YlLvQ8PgcEUFak8
+         k5UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NOixNBC7fdzNZ0Vh4Z4S7u1S7FIf/h5PVqWmfQdvx7U=;
-        b=FbYD9+UqWOLIc6I9IJLS1XhLDk2qNnThQtcVIiykQILZBJzUqyuAacHqmjnxRLxLY/
-         cHswgMwHwhXSJTv83bJsTg4+FxiWVjEt6xh64xnx2ze159ndIEDUWrlhvvca/lMDCthB
-         xEEraOpUNsAEB4iE1ILEuVOYVjmyVHnl7V4XB/uORK1ojchZJiuLyzJHi8GiG2Wanb6Z
-         tUwvrya6WWaEPU2omwlEpnCnCNkSbnedZasmGuqM0JU9aLsbes8CzHNwBZUQC5Ud24aP
-         dWeMEdAYUXLx4UlNYQmsuYoJgReOY9SxZxo0A8WD13HJujnW+9+pQ4GvhMiEV6WV9ZDh
-         amSw==
-X-Gm-Message-State: APjAAAUrH7Q33QY6gpNb6F/oGJtkiZ/HOkY/SvMP1SrO8EXXGHB3J8C+
-        7MMkLUVYYoTdw1QeJGRrnekcveH/
-X-Google-Smtp-Source: APXvYqyFKjWGRMniKg+FJbV/3wwZUyshM+O9zwgIktsxgj/Oa1n4UbyX2M2No+HFSEkKMw6ZsJeDnA==
-X-Received: by 2002:adf:978a:: with SMTP id s10mr124365wrb.69.1580501787251;
-        Fri, 31 Jan 2020 12:16:27 -0800 (PST)
+        bh=7OIxkWhiTuACvbhbr0mgY5mdi0HMxPaJU+8Iq5N0peE=;
+        b=pFPkNRND2jAFlP3KQWGr/lNpRMtIBNIVHBCFWb4F71X7yrc5jej8RsnuclBGb3D7yE
+         WHThxGLsYrEsmCCA+GLuoSPSbdD3VED4WWccQOv+C0n0D8a58bVwRk89K4S3PYrfTrm1
+         Nxh/a2bVJf44tLTUKRSRH+1rfYulGP4K/33R4qit4PUMlOv5jDRpgfu8VSwp6BVvJ+LC
+         tb0uXDLZ1Kx3dHnIjPLBTwvozUPD8ER7CgIGcc/uN3sAMmHl9itu6Oa3+jKLAjK1LorE
+         JcZsYYbrnVWNVkelVOSfXpSLFdRTj9PghDz1vnkoiTBeDjPlGYYBvr4sApmwww8ViBhv
+         ezmQ==
+X-Gm-Message-State: APjAAAUylH0Tp5aQO59EpYdk+TbRR9d+zyzXAbsssrjfUK9+kRX/ZA9g
+        471G5rX2CE0aifTpOHxxc+RnIbRk
+X-Google-Smtp-Source: APXvYqyvxNFnIgU6Ua63V5Y4x9zcf6fEHcfTUaEZtPMP5O8WByw8wRCfaA+vZT+D0MHAP7sulpmwfA==
+X-Received: by 2002:a7b:cf12:: with SMTP id l18mr14404297wmg.66.1580501786527;
+        Fri, 31 Jan 2020 12:16:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c141sm12319215wme.41.2020.01.31.12.16.26
+        by smtp.gmail.com with ESMTPSA id b67sm12622022wmc.38.2020.01.31.12.16.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 31 Jan 2020 12:16:26 -0800 (PST)
-Message-Id: <5e9fcce75f37676613f6cb919249ce8afd51c825.1580501775.git.gitgitgadget@gmail.com>
+Message-Id: <3dd8f97b3a7c301955aba7dd5778549d1b49b0fd.1580501775.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
         <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 31 Jan 2020 20:16:15 +0000
-Subject: [PATCH v4 15/15] sparse-checkout: fix cone mode behavior mismatch
+Date:   Fri, 31 Jan 2020 20:16:14 +0000
+Subject: [PATCH v4 14/15] sparse-checkout: improve docs around 'set' in cone
+ mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,61 +77,53 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The intention of the special "cone mode" in the sparse-checkout
-feature is to always match the same patterns that are matched by the
-same sparse-checkout file as when cone mode is disabled.
+The existing documentation does not clarify how the 'set' subcommand
+changes when core.sparseCheckoutCone is enabled. Correct this by
+changing some language around the "A/B/C" example. Also include a
+description of the input format matching the output of 'git ls-tree
+--name-only'.
 
-When a file path is given to "git sparse-checkout set" in cone mode,
-then the cone mode improperly matches the file as a recursive path.
-When setting the skip-worktree bits, files were not expecting the
-MATCHED_RECURSIVE response, and hence these were left out of the
-matched cone.
-
-Fix this bug by checking for MATCHED_RECURSIVE in addition to MATCHED
-and add a test that prevents regression.
-
-Reported-by: Finn Bryant <finnbryant@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t1091-sparse-checkout-builtin.sh | 12 ++++++++++++
- unpack-trees.c                     |  2 +-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ Documentation/git-sparse-checkout.txt | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 37e9304ef3..7d982096fb 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -305,6 +305,18 @@ test_expect_success 'different sparse-checkouts with worktrees' '
- 	check_files worktree a deep
- '
+diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
+index 4834fb434d..0914619881 100644
+--- a/Documentation/git-sparse-checkout.txt
++++ b/Documentation/git-sparse-checkout.txt
+@@ -50,6 +50,14 @@ To avoid interfering with other worktrees, it first enables the
+ +
+ When the `--stdin` option is provided, the patterns are read from
+ standard in as a newline-delimited list instead of from the arguments.
+++
++When `core.sparseCheckoutCone` is enabled, the input list is considered a
++list of directories instead of sparse-checkout patterns. The command writes
++patterns to the sparse-checkout file to include all files contained in those
++directories (recursively) as well as files that are siblings of ancestor
++directories. The input format matches the output of `git ls-tree --name-only`.
++This includes interpreting pathnames that begin with a double quote (") as
++C-style quoted strings.
  
-+test_expect_success 'set using filename keeps file on-disk' '
-+	git -C repo sparse-checkout set a deep &&
-+	cat >expect <<-\EOF &&
-+	/*
-+	!/*/
-+	/a/
-+	/deep/
-+	EOF
-+	test_cmp expect repo/.git/info/sparse-checkout &&
-+	check_files repo a deep
-+'
+ 'disable'::
+ 	Disable the `core.sparseCheckout` config setting, and restore the
+@@ -128,9 +136,12 @@ the following patterns:
+ ----------------
+ 
+ This says "include everything in root, but nothing two levels below root."
+-If we then add the folder `A/B/C` as a recursive pattern, the folders `A` and
+-`A/B` are added as parent patterns. The resulting sparse-checkout file is
+-now
 +
- check_read_tree_errors () {
- 	REPO=$1
- 	FILES=$2
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3789a22cf0..78425ce74b 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1416,7 +1416,7 @@ static int clear_ce_flags_1(struct index_state *istate,
- 						name, &dtype, pl, istate);
- 		if (ret == UNDECIDED)
- 			ret = default_match;
--		if (ret == MATCHED)
-+		if (ret == MATCHED || ret == MATCHED_RECURSIVE)
- 			ce->ce_flags &= ~clear_mask;
- 		cache++;
- 		progress_nr++;
++When in cone mode, the `git sparse-checkout set` subcommand takes a list of
++directories instead of a list of sparse-checkout patterns. In this mode,
++the command `git sparse-checkout set A/B/C` sets the directory `A/B/C` as
++a recursive pattern, the directories `A` and `A/B` are added as parent
++patterns. The resulting sparse-checkout file is now
+ 
+ ----------------
+ /*
 -- 
 gitgitgadget
+
