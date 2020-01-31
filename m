@@ -1,155 +1,183 @@
-Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
+Return-Path: <SRS0=aK8K=3V=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SPF_HELO_NONE,
-	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-8.3 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED,USER_IN_DEF_DKIM_WL autolearn=no
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A000C33CB7
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0576EC33CB7
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:01:16 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 5F8FF20663
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:34:41 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id B198720722
+	for <git@archiver.kernel.org>; Sat,  1 Feb 2020 00:01:15 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1/oGCv4"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SdpOCCkz"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbgAaXek (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 18:34:40 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38398 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726239AbgAaXek (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 18:34:40 -0500
-Received: by mail-wm1-f66.google.com with SMTP id a9so10651592wmj.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 15:34:38 -0800 (PST)
+        id S1726322AbgAaX6J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 18:58:09 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:33724 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726264AbgAaX6J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 18:58:09 -0500
+Received: by mail-qt1-f195.google.com with SMTP id d5so6868799qto.0
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 15:58:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=X3+X7o1awCEhtqIIGub/BDHG8AUlkVKoF9IL9mLGobY=;
-        b=T1/oGCv4Q5mzh9V+sR8YpCHbH4WtrtYyvKCSpviyQgXndQQ9pTCwjoPPHFVgLLB/dp
-         +LfTDfvZuzLC1RqnvQLqjc7Isi/aPhnuUlFU8WxJX0+113I/5eAW0EwjRTjKTdRFeui4
-         hVbEVRD3yVMbumClHqguGiAOSV6qu21AaLI7/f1dcmkGSdMGW4g3qPytOnFXOXJxDmIJ
-         bJ9+i1Ja6Br28dnwngbkz4eFta0x8l1MrVvU/upVBMHLWzRQF28YFNSqEks9k2yxuIFN
-         Cg/9vhRcCQjNafSDs0uA+wXuDO9JuYe89zMa3ozRwy0KJzs22pUnR2RVaXQ/3o/5U9Ak
-         SKoQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=n2TPvNujwEoj7IihHT9IQ1V7kHB4rDc3zzc+at9RjXA=;
+        b=SdpOCCkzdbOkwia57EA4ZID4zqbwUs8+lRMKqz6SSn87FK3E839T8ucb88EmXPN21z
+         btzCfHERNPjIsvISK0mI6Oj+EdarclIQSbFWJt5wGjXWpn6j2sRkl7IY7gmP8vdMkz4/
+         IsiwrmgQ4wfKVp+KRlc3eWV2nr9xnCZhHh5dNio8vTPV3T33d7ljJ3YhmMGIKDdmsmgl
+         +1DC56ipSBmyX5hzg7zZr5gMiptENIhj9FFxxOfVOizc6z5I2fjG3sPFYMw+PZyDRI09
+         UOb/oXlD9IHGWezjSf7ynHMVY6sFmJ6y4j0wL5w2S6beNGkg+IEPXQpHhOEZV0m17FvK
+         MSpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=X3+X7o1awCEhtqIIGub/BDHG8AUlkVKoF9IL9mLGobY=;
-        b=WlPWlwAfoE5cFIfVdZD6LJyok3RzmXSwghQshalSawzs1cGitQXaxmkTrNj4QcNoL2
-         qXOqqQy84CckvlVoNJkUVmaUGIefv6eZhAxSJk76MofgCFYPnRTkt0Jk4E9m+4FwvEr4
-         gc/6xSVU++62AxFFQgNQ9i2JtGDlsq1i+ge7ZHI3OqdLa/QXmE+I8vB/MjPntkkb49Kx
-         7LWH8JQvC4XzY+sHSRFCA6LNo+ahW1F8uLUdQBjOIFF9dHI2LaeKMC7xA54mcu6RMuhV
-         E5/MOeEKZejzxnpm6YQ14zxnilZXzlFY8Mqfq2pACHArrOlAbqa0a/R7bOhPLrqNv1R5
-         BB5A==
-X-Gm-Message-State: APjAAAXHwoDvufZULWerituCPF4Gwm7OeBMLWoPhpi42YGAOxp3baUAx
-        iYTmB1mubfZUercdsjB03S8uuZt3
-X-Google-Smtp-Source: APXvYqySn/w9mryn0jVuZIYLywMQF+CJxGa+WrcPtfagyTmb7pjDWdQhec2wUKIuNUUtq2dF6w2Wzg==
-X-Received: by 2002:a7b:c3d1:: with SMTP id t17mr14266323wmj.27.1580513678105;
-        Fri, 31 Jan 2020 15:34:38 -0800 (PST)
-Received: from szeder.dev (x4db61755.dyn.telefonica.de. [77.182.23.85])
-        by smtp.gmail.com with ESMTPSA id u8sm12887531wmm.15.2020.01.31.15.34.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Jan 2020 15:34:37 -0800 (PST)
-Date:   Sat, 1 Feb 2020 00:34:34 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, peff@peff.net, dstolee@microsoft.com,
-        gitster@pobox.com
-Subject: Re: [PATCH 1/3] builtin/commit-graph.c: support
- '--split[=<strategy>]'
-Message-ID: <20200131233434.GJ10482@szeder.dev>
-References: <cover.1580430057.git.me@ttaylorr.com>
- <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=n2TPvNujwEoj7IihHT9IQ1V7kHB4rDc3zzc+at9RjXA=;
+        b=ePrK5UVFZryZOvs/2T64o324XTpiRHEqQHmhveZh9a+CKNoZMpDtQyWVC3NKOiag63
+         X1HZ6jkGzr6H0c2eghkLpZplPjyjfVOUsRdN86BEqKSnX7qCwAo1QI6VJCsgcyZcpKQV
+         s+umPpTQB0ZgBw+CLpym3C/m8aoeGOFjg21c5eDDkCXuWCIHh2MBQaqoHJj0bmrKlV7X
+         py8PhXTWkehwMLmF+dpNmMoMN3FzwXw25Z0cERMVwYm37EKlqkbZ8qfIYnpAnoWEkYH1
+         7+DqRC4ypv5rgqAngpTg0Fwn8oMJ5Z1NfwIUoR6FcOx3XPSzT5KSTKUxx3xfL/wDyRKp
+         UYhQ==
+X-Gm-Message-State: APjAAAWqJfwxRLd9U2q4HVQD7i7nHU1W4xxOC6EKkzbkcgW8OYXosgN9
+        NC77X6VIZgau0pKy43OzYsDZUo/YC/19Qn10vkT2Tw==
+X-Google-Smtp-Source: APXvYqw57oeJlELe3v2AIv9txmygdWH0iuKGaIy9305E51lSXqSXJAfoO/ba5jaIpQnhTwCSYFYhMQ85SB0Hv3w3Qko=
+X-Received: by 2002:aed:2344:: with SMTP id i4mr13352888qtc.136.1580515087283;
+ Fri, 31 Jan 2020 15:58:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <4f5bc19903f8a1f5b153b5665de378e743e12744.1580430057.git.me@ttaylorr.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20200130225818.193825-1-masayasuzuki@google.com>
+ <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com> <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
+ <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Fri, 31 Jan 2020 15:57:55 -0800
+Message-ID: <CAJB1erXqK-a2uDPPQDLpdLYnPC8Mcxjo2ER0qSAsD9DOVHSmGQ@mail.gmail.com>
+Subject: Re: [PATCH] doc: describe Git bundle format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 30, 2020 at 04:28:17PM -0800, Taylor Blau wrote:
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 6d34829f57..02e6ad9d1f 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -1565,15 +1565,18 @@ static void split_graph_merge_strategy(struct write_commit_graph_context *ctx)
->  	num_commits = ctx->commits.nr;
->  	ctx->num_commit_graphs_after = ctx->num_commit_graphs_before + 1;
->  
-> -	while (g && (g->num_commits <= size_mult * num_commits ||
-> -		    (max_commits && num_commits > max_commits))) {
-> -		if (g->odb != ctx->odb)
-> -			break;
-> +	if (ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
+On Fri, Jan 31, 2020 at 3:01 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Masaya Suzuki <masayasuzuki@google.com> writes:
+>
+> >> > +prerequisite = "-" obj-id SP comment LF
+> >> > +comment      = *CHAR
+> >>
+> >> Do readers know what CHAR consists of?  Anything other than NUL and
+> >> LF?
+> >
+> > RFC 5234 defines core rules
+> > (https://tools.ietf.org/html/rfc5234#appendix-B.1), and these CHAR etc
+> > are defined there. It should be OK to use these rules.
+>
+> That's not what I asked.  Do readers know that?  Did you tell them
+> that we expect they are familiar with the RFC convention?
 
-This line segfaults in the tests 'fetch.writeCommitGraph' and
-'fetch.writeCommitGraph with submodules' in 't5510-fetch.sh', because
-'git fetch' doesn't pass a 'split_opts' to the commit-graph functions.
+The patch says "We will use ABNF notation to define the Git bundle
+format. See protocol-common.txt for the details.", and
+protocol-common.txt says "ABNF notation as described by RFC 5234 is
+used within the protocol documents, except the following replacement
+core rules are used:". In order to interpret this ABNF definition,
+it's not enough to read RFC 5234, but the reader has to read
+protocol-common.txt. Otherwise, they cannot understand what `obj-id`
+is and what `refname` is. Those are not defined in RFC 5234. They're
+defined in protocol-common.txt.
 
-Thread 1 "git" received signal SIGSEGV, Segmentation fault.
-0x00000000005113dd in split_graph_merge_strategy (ctx=0x9ca930)
-    at commit-graph.c:1568
-1568            if (ctx->split_opts->flags != COMMIT_GRAPH_SPLIT_MERGE_PROHIBITED) {
-(gdb) p *ctx
-$1 = {r = 0x9ae2a0 <the_repo>, odb = 0x9c0df0, graph_name = 0x0, oids = {
-    list = 0xa02660, nr = 12, alloc = 1024}, commits = {list = 0x9caa00, 
-    nr = 6, alloc = 6}, num_extra_edges = 0, approx_nr_objects = 0, 
-  progress = 0x0, progress_done = 0, progress_cnt = 0, base_graph_name = 0x0, 
-  num_commit_graphs_before = 0, num_commit_graphs_after = 1, 
-  commit_graph_filenames_before = 0x0, commit_graph_filenames_after = 0x0, 
-  commit_graph_hash_after = 0x0, new_num_commits_in_base = 0, 
-  new_base_graph = 0x0, append = 0, report_progress = 1, split = 1, 
-  check_oids = 0, split_opts = 0x0}
-                  ^^^^^^^^^^^^^^^^
-(gdb) bt
-#0  0x00000000005113dd in split_graph_merge_strategy (ctx=0x9ca930)
-    at commit-graph.c:1568
-#1  0x0000000000512446 in write_commit_graph (odb=0x9c0df0, pack_indexes=0x0, 
-    commit_hex=0x7fffffffd550, 
-    flags=(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT), 
-    split_opts=0x0) at commit-graph.c:1891
-#2  0x000000000050fd86 in write_commit_graph_reachable (odb=0x9c0df0, 
-    flags=(COMMIT_GRAPH_WRITE_PROGRESS | COMMIT_GRAPH_WRITE_SPLIT), 
-    split_opts=0x0) at commit-graph.c:1174
-    ^^^^^^^^^^^^^^
-#3  0x0000000000444ea4 in cmd_fetch (argc=0, argv=0x7fffffffd9b8, prefix=0x0)
-    at builtin/fetch.c:1873
-#4  0x0000000000406154 in run_builtin (p=0x969a88 <commands+840>, argc=2, 
-    argv=0x7fffffffd9b0) at git.c:444
-#5  0x00000000004064a4 in handle_builtin (argc=2, argv=0x7fffffffd9b0)
-    at git.c:674
-#6  0x000000000040674c in run_argv (argcp=0x7fffffffd84c, argv=0x7fffffffd840)
-    at git.c:741
-#7  0x0000000000406bbd in cmd_main (argc=2, argv=0x7fffffffd9b0) at git.c:872
-#8  0x00000000004cfd4e in main (argc=5, argv=0x7fffffffd998)
-    at common-main.c:52
+Based on the fact that (1) this document instructs the reader to see
+protocol-common.txt in the beginning and (2) protocol-common.txt is
+needed to interpret this definition and protocol-common.txt says RFC
+5234 describes ABNF format, the readers should know ABNF is defined in
+RFC 5234 and ABNF includes those LF, CHAR, and SP as a part of the
+definition after reading the first sentence and referenced documents.
 
-Note that this function split_graph_merge_strategy() does look at
-various fields in 'ctx->split_opts' a bit earlier, but those accesses
-are protected by a 'if (ctx->split_opts)' condition.
-expire_commit_graphs() does the same.
+>
+> It might be easier to make the above simple ABNF understandable to
+> those without knowledge of RFC 5234 by spelling out what CHAR in the
+> context of the above description means.  Or to tell them "go over
+> there and learn CHAR then come back".  We need to do one of them.
 
+As I said above, the first sentence says "See protocol-common.txt"
+which includes the reference to the RFC and other non-terminals. Note
+that, not only CHAR, but obj-id and refname are not defined here as
+well. The readers need to reference protocol-common.txt to get the
+definition of them.
 
-> +		while (g && (g->num_commits <= size_mult * num_commits ||
-> +			    (max_commits && num_commits > max_commits) ||
-> +			    (ctx->split_opts->flags == COMMIT_GRAPH_SPLIT_MERGE_REQUIRED))) {
-> +			if (g->odb != ctx->odb)
-> +				break;
->  
-> -		num_commits += g->num_commits;
-> -		g = g->base_graph;
-> +			num_commits += g->num_commits;
-> +			g = g->base_graph;
->  
-> -		ctx->num_commit_graphs_after--;
-> +			ctx->num_commit_graphs_after--;
-> +		}
->  	}
->  
+>
+> > I want to make sure the meaning of prerequisites.
+> >
+> > 1. Are they meant for a delta base? Or are they meant to represent a
+> > partial/shallow state?
+>
+> They are meant as the "bottom boundary" of the range of the pack
+> data stored in the bundle.
+>
+> Think of "git rev-list --objects $heads --not $prerequisites".  If
+> we limit ourselves to commits, in the simplest case, "git log
+> maint..master".  Imagine your repository has everything up to
+> 'maint' (and nothing else) and then you are "git fetch"-ing from
+> another repository that advanced the tip that now points at
+> 'master'.  Imagine the data transferred over the network.  Imagine
+> that data is frozen on disk somehow.  That is what a bundle is.
+>
+> So, 'maint' is the prerequisite---for the person who builds the
+> bundle, it can safely be assumed that the bundle will be used only
+> by those who already has 'maint'.
+>
+> There is nothing about 'partial' or 'shallow'.  And even though a
+> bundle typically has deltified objects in the packfile, it does not
+> have to.  Some objects are delitifed against prerequisite, and the
+> logic to generate thin packs may even prefer to use the
+> prerequisites as the delta base, but it is merely a side effect that
+> the prerequisites are at the "bottom boundary" of the range.
+
+OK. Then, it's better to make this clear. If you follow the analogy of
+saved git-fetch response, it's possible that these prerequisites are
+interpreted same as "shallow" lines of the shallow clone response.
+It's more like "have" lines of git-fetch request.
+
+> > 2. Do they need to be commits? Or can they be any object type?
+> >
+> > From what I can see, it seems that they should always be commits.
+> >
+> > 3. Does the receiver have to have all reachable objects from prerequisites?
+>
+> I would say that the receiver needs to have everything that is
+> needed to "complete" prereqs.
+>
+> Bundle transfer predates shallow or incomplete repositories, but I
+> think that we can (and we should if needed) update it to adjust to
+> these situations by using the appropriate definition of what it
+> means to "complete".  In a lazy clone, it may be sufficient to have
+> promisor remote that has everything reachable from them.  In a
+> shallow clone, the repository may have to be deep enough to have
+> them and objects immediately reachable from them (e.g. trees and
+> blobs for a commit at the "bottom boundary").
+
+I think there are two completeness of a packfile:
+
+* Delta complete: If an object in a packfile is deltified, the delta
+base exists in the same packfile.
+* Object complete: If an object in a packfile contains a reference to
+another object, that object exists in the same packfile.
+
+For example, initial shallow clone response should contain a
+delta-complete object-incomplete packfile. Incremental fetch response
+and bundles with prereqs would have a delta-incomplete
+object-incomplete packfile. Creating delta-incomplete object-complete
+packfile is possible (e.g. create a parallel history with all blobs
+slightly modified and deltify against the original branch. I can
+create a packfile with all objects in one history with all objects
+deltified with the other history), but it's a rare case.
+
+The reader of a bundle SHOULD have all objects reachable from prereqs.
