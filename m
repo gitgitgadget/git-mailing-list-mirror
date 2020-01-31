@@ -2,153 +2,113 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.7 required=3.0 tests=HEADER_FROM_DIFFERENT_DOMAINS,
-	INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-5.9 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,MENTIONS_GIT_HOSTING,SPF_HELO_NONE,
+	SPF_PASS,USER_AGENT_SANE_1 autolearn=ham autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D127BC33CB2
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 09:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7044CC33CB2
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 09:57:54 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id ADBDE206F0
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 09:57:51 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 3FE37206F0
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 09:57:54 +0000 (UTC)
+Authentication-Results: mail.kernel.org;
+	dkim=pass (1024-bit key) header.d=gmx.net header.i=@gmx.net header.b="H/cf+hme"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728250AbgAaJ5u (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 04:57:50 -0500
-Received: from cloud.peff.net ([104.130.231.41]:49386 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728224AbgAaJ5u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 04:57:50 -0500
-Received: (qmail 13390 invoked by uid 109); 31 Jan 2020 09:57:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 31 Jan 2020 09:57:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30624 invoked by uid 111); 31 Jan 2020 10:05:37 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 31 Jan 2020 05:05:37 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 31 Jan 2020 04:57:49 -0500
-From:   Jeff King <peff@peff.net>
-To:     Mike McGranahan <mike@mcgwiz.com>
-Cc:     git@vger.kernel.org
-Subject: [PATCH] diff: move diff.wsErrorHighlight to "basic" config
-Message-ID: <20200131095749.GB2916051@coredump.intra.peff.net>
-References: <CAK7jxYgJNvCp=m6rH31HNzN9Mqgaav7_YPvUMZmRb7mdYDZ_1g@mail.gmail.com>
- <20200131091917.GC2857810@coredump.intra.peff.net>
+        id S1728268AbgAaJ5x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 04:57:53 -0500
+Received: from mout.gmx.net ([212.227.17.20]:39127 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728224AbgAaJ5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 04:57:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1580464665;
+        bh=TLEOPp/f7qHUnkZ1m185gBVA+1X6x4iKSao9brbJtWA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=H/cf+hmecOdXbZywisfzN09pBQ0x5pPsFvi64GbBE08jn48azBxjGSsOihtyyTQ3o
+         I29y1nM207PkF2ZBgRPy/8cLTW6cKqSjKnJgmD4Gryb39uQkUa9hR0+ynwR8oIGiaP
+         NCx4OxoMGxIbJ/ccP9NuO+1VmSusz1dDyAdLXOhY=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from [192.168.0.213] ([37.201.195.86]) by mail.gmx.com (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3DNt-1j0UOS2DOP-003fzH; Fri, 31
+ Jan 2020 10:57:45 +0100
+Date:   Fri, 31 Jan 2020 10:57:43 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Derrick Stolee <stolee@gmail.com>
+cc:     Jakub Narebski <jnareb@gmail.com>,
+        Shourya Shukla <shouryashukla.oo@gmail.com>,
+        christian.couder@gmail.com, t.gummerer@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com
+Subject: Re: Converting scripted commands to built-ins, was Re: [GSoC]
+ Exploring Previous year Projects
+In-Reply-To: <nycvar.QRO.7.76.6.2001311007590.46@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.2001311055280.46@tvgsbejvaqbjf.bet>
+References: <20200129171248.6217-1-shouryashukla.oo@gmail.com> <86k15ars55.fsf@gmail.com> <nycvar.QRO.7.76.6.2001301154170.46@tvgsbejvaqbjf.bet> <39a8c249-f0bc-fb0f-2ed5-5ecceb6d4789@gmail.com> <nycvar.QRO.7.76.6.2001311007590.46@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20200131091917.GC2857810@coredump.intra.peff.net>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:lKEpFt3HVlMy5/IlAtdvgEULokasTEmgNaEsi9iQ0fPed7sfSs5
+ 1G5Sj18xFtOBF9yOP2ePwzcVrcMChUUcWofOuVaMtAGFIdWThw/cH/I8dz1e+/yPUpT7iIp
+ v4XUXv/zoVGv8k8Eh64TbmgQB9UMBzjHa2DADohGMGf0ZGC6utqsjlviSsKMjT60zZR3R/C
+ 6hNN70FdIIb4NpMTPKT/w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tnaYRlIxygY=:ftbA1H5ZwPZkbvjd7yUxyO
+ AmtFIxgmIHyu/lFjUYrThb9ojLcl0gkEDV1UoMtSaabX88oqbsXmZGj1fHVY7HeytlnzPKMzb
+ D5CXVJClEQ9A0VxBTZZnqc00ZSDzBAOztcpxUMnbVhzumVywLjsznRLJmDGWlhGgW+ZwKN68u
+ 0mwWEY1fxEpQDPyf3Eo/kD8mLlh2rlYuMm9rZVrDB1URQoDMSInsO05MC2o4KHRCQH9FHyjtC
+ ToznGF1v8uNGFAXHnPgdoYC7qJMSsLLcJf8FUTfQqUYfGxL7/Uocec7vr7MYnRKHBC00y83y5
+ YNFRJm5ehIsWMBcwzqapHI3xmWRgQe+CR9+4krm5/GO3kVqtgipFQ8qixgBYLI8MmXqn4W2VH
+ awuXcdKM3cK5Ge/cXx7LZ/kVMs6Lgx2iMu2qTK84wgJ/3nXEqgWMZLhhKI0fSi8W3THOrmERB
+ 3OzRh2nCwnD+sxoazWqebZqWLMZI02inq7Ift2/buFAvVROMWmtXm9SecstGU7qeytv2vlXED
+ uADJTYc4ssnG3jq9pazshTI4xZajD8rbHve4ThYFFXcklaP2FBTRx5QgecQSL+JwTiPe3XhLK
+ S+jWO2XiMkkhiW3UAN+thqlavqCLaa1C1/lRwzifJxUvx88b/nn+7GmBvDvgTMzAND5rfObKD
+ Bh77tZ4ZKBgU2gQbStIl8ME7VOBwx/zDc4CQn7k7laPSDR176ukZJmZdmkSfjVwPxJKXLd8pk
+ +goKCeYSFhX8j6QpmL58hXdv9xjznSwlra463ljr7cS0HCFNJBWnZ+wWJ7tlrbxhIGNvPKUuj
+ gJJcjPtKwF75zli6RGipFOK+nFk4+rVBwEDXJQqKj3Alx38PC0EDZ5Z6gwEFl9nlNJqXobmwp
+ JHLFUPBWhaO/SLe2Z1/FEX6RccNbfqTbGCEnG25MSAWdfuxFOO2jFa9CuvWASs63MvVF4tEg7
+ WFVaxymdOagiQccjK9T3iykipDXGa61p3fHcOZXnNwQu4zXouorYpA32W5beLPXHMdkKF1QOX
+ vGtsPfyvbfsUNX9ZXkjhbvCfxPwPncmyS0cL+7Rt+UmiBtQ82NHBZWsMpQNOkkWCv5Juq6Oww
+ BTsbPhNdEoXM8Whc72XOI03k9et1WDEDfaFMS/Hw1PyPGt5FOjKodtYhkTy88kKYxHRIRdsoV
+ 6hmTixnksCnWqiM2PH17pjWyDKAo2H5AwUxuSWNhpQfcBqOLWeN2XL4LJGQPL5K4/MRI3mZUh
+ uiiTa7KvSmG2+jDrP
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 04:19:17AM -0500, Jeff King wrote:
+Hi again,
 
-> All that said, I kind of wonder if diff.wsErrorHighlight ought to be
-> respected by even plumbing commands. After all, it does nothing unless
-> color is enabled anyway, so I don't think it runs the risk of confusing
-> a user of the plumbing. It's no different than color.diff.*, which we
-> respect even in the plumbing commands (if the caller has manually asked
-> for color, of course).
+On Fri, 31 Jan 2020, Johannes Schindelin wrote:
 
-The more I pondered this, the more it seems like the right thing. So
-here's a patch to do it.
+> On Thu, 30 Jan 2020, Derrick Stolee wrote:
+>
+> > On 1/30/2020 6:10 AM, Johannes Schindelin wrote:
+> > > Large parts of `git submodule` are already implemented in `git
+> > > submodule--helper`, so that's a head start (thanks Stephan Beller!).
+> > >
+> > > [...]
+> > >
+> > > Realistically, I think that it would be possible for a GSoC student
+> > > who is already very familiar with the code base and with submodules =
+to
+> > > finish the conversion of `git submodule` in one season.
+> >
+> > Even assuming the most generous definition of "very familiar" I'm not =
+sure
+> > this is the case. But I also don't meet the bar of "very familiar" whe=
+n it
+> > comes to the submodule code.
+>
+> Hmm. I guess you're right, and it actually matches my earlier assessment=
+:
+> https://lore.kernel.org/git/nycvar.QRO.7.76.6.1904031957480.41@tvgsbejva=
+qbjf.bet/
 
-I also suspect that some of the color-moved config would benefit from
-the same treatment, but I haven't yet convinced myself. Unlike this
-option, which impacts a single line, the move detection covers multiple
-hunks, which you'd be picking out independently. Would that be weird, or
-would it make sense as it's just annotating the existing diff?
+I vaguely remembered that I had described this project in a lot more
+detail in a Git for Windows ticket, and I just spent a couple of minutes
+to coagulate it into a more concrete proposal here:
+https://github.com/gitgitgadget/git/issues/541
 
--- >8 --
-Subject: [PATCH] diff: move diff.wsErrorHighlight to "basic" config
-
-We parse diff.wsErrorHighlight in git_diff_ui_config(), meaning that it
-doesn't take effect for plumbing commands, only for porcelains like
-git-diff itself. This is mildly annoying as it means scripts like
-add--interactive, which produce a user-visible diff with color, don't
-respect the option.
-
-We could teach that script to parse the config and pass it along as
---ws-error-highlight to the diff plumbing. But there's a simpler
-solution.
-
-It should be reasonably safe for plumbing to respect this option, as it
-only kicks in when color is otherwise enabled. And anybody parsing
-colorized output must already deal with the fact that color.diff.* may
-change the exact output they see; those options have been part of
-git_diff_basic_config() since its inception in 9a1805a872 (add a "basic"
-diff config callback, 2008-01-04).
-
-So we can just move it to the "basic" config, which fixes
-add--interactive, along with any other script in the same boat, with a
-very low risk of hurting any plumbing users.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c                     | 16 ++++++++--------
- t/t3701-add-interactive.sh | 13 +++++++++++++
- 2 files changed, 21 insertions(+), 8 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 8e2914c031..5e4471f15f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -414,14 +414,6 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
--	if (!strcmp(var, "diff.wserrorhighlight")) {
--		int val = parse_ws_error_highlight(value);
--		if (val < 0)
--			return -1;
--		ws_error_highlight_default = val;
--		return 0;
--	}
--
- 	if (git_color_config(var, value, cb) < 0)
- 		return -1;
- 
-@@ -450,6 +442,14 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 		return color_parse(value, diff_colors[slot]);
- 	}
- 
-+	if (!strcmp(var, "diff.wserrorhighlight")) {
-+		int val = parse_ws_error_highlight(value);
-+		if (val < 0)
-+			return -1;
-+		ws_error_highlight_default = val;
-+		return 0;
-+	}
-+
- 	/* like GNU diff's --suppress-blank-empty option  */
- 	if (!strcmp(var, "diff.suppressblankempty") ||
- 			/* for backwards compatibility */
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 2182b1c030..a28182c526 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -553,6 +553,19 @@ test_expect_success 'diffs can be colorized' '
- 	grep "$(printf "\\033")" output
- '
- 
-+test_expect_success 'colorized diffs respect diff.wsErrorHighlight' '
-+	git reset --hard &&
-+
-+	echo "old " >test &&
-+	git add test &&
-+	echo "new " >test &&
-+
-+	printf y >y &&
-+	force_color git -c diff.wsErrorHighlight=all add -p >output.raw 2>&1 <y &&
-+	test_decode_color <output.raw >output &&
-+	grep "old<" output
-+'
-+
- test_expect_success 'diffFilter filters diff' '
- 	git reset --hard &&
- 
--- 
-2.25.0.538.g1d5d7023b0
-
+Ciao,
+Dscho
