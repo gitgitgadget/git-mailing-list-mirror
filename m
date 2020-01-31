@@ -2,66 +2,66 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-6.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
 	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,SIGNED_OFF_BY,
-	SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham autolearn_force=no
-	version=3.4.0
+	SPF_HELO_NONE,SPF_PASS,UNWANTED_LANGUAGE_BODY,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C3FCC2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B17BC33CB7
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:30 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 61D8B21734
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:29 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id 4BBBB215A4
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 20:16:30 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dHfmlrzo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uw3RsHqq"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbgAaUQV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 15:16:21 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40961 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726206AbgAaUQV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 15:16:21 -0500
-Received: by mail-wr1-f68.google.com with SMTP id c9so10130035wrw.8
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 12:16:19 -0800 (PST)
+        id S1726593AbgAaUQ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 15:16:29 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36788 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726387AbgAaUQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 15:16:25 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p17so10172254wma.1
+        for <git@vger.kernel.org>; Fri, 31 Jan 2020 12:16:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=message-id:in-reply-to:references:from:date:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=LHv3OUouiSWEjPl69LIDx7kK+8FoKtUJpN5eFvZqOEw=;
-        b=dHfmlrzog6K/8nMiu3Q5J5gWThZhOB2T8hLXhgKlhLKRt5LRUVzQAft4wt77rU7mO/
-         JjweFVmqLe064tfEHyDPlR7MKN7hRGg2v9bWPLbc+zp4VI3vmFjH+FddRzey68ZLO9Q6
-         WeelVR22kGs5Gzq54JQYvr4imoyEbdq4eLFqnOYZ8S9CvG8rp/rMY3ghzCuXlhyUJvtq
-         Hr9pie337jBiP4bh2vjZp3NfB2cSBdo+f4krDhZpEhsOYQzQmnrDHgsTfCOO5w9OakLS
-         FGib6NqBBqeWnzJNhOTQHb3zfmxkz8MGH79O5GMBmVwJPJaxcb3o7fuRo547Vbt4yv4X
-         4vmw==
+        bh=eZA3Y8V0DI7Y6OfhZpE3M38qZIRLUorKn3RyVp8rUpU=;
+        b=Uw3RsHqqLceO7W6RxE8VwUSrV4QO1wljrlBouEb7g3FjZb9pYUezJdn0XBtE6zZxfh
+         3zn5+olsLV6FPCzM1PZgC0wpJHAr94IAbCC81QYtxJFje6y28skvQfG0q7JRIEGZS7do
+         hoc28UTZVUmChosrQcrqAez6Z8h61NhA72rVmp7oBbF3RTzKHEnfKOOfrT9aH43JllFG
+         dog3VCGUoCPXAP9DrCNzLe+Em4NLj6z/xFCfEprLdmcDrhDheC1UwkOe6FfOLaJNsFCQ
+         /xpw4YvEELUTXZ/IjZ2wlyyzft+ZhiWQLumi4+91LSrTAyO1HrKaGL4kH3LAoqyVirt3
+         xarg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:message-id:in-reply-to:references:from:date
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=LHv3OUouiSWEjPl69LIDx7kK+8FoKtUJpN5eFvZqOEw=;
-        b=geuAODISbnmfnIWryVpkatsJFu4+8rP4dLGsOmcX/R9611tY8NW7Zm7Dvao6jumReI
-         4Y7xFE4buE03A9V9W6ozFVaFhGhB4hU4xnAVnCS4bvvNmVyVm1qh4VDfG4mJIBjSD2D0
-         KsrFjOBVMRA8lBpbHHoNfpiPQzwtLxKALETsPefcupMl8Wbfo4Dm4iCqpa0RHqq7CFDC
-         6AAzl1dzcH09xxzZAlQemrX/fexIQJYkE1AixvNY6ANr2SGUBCDAPbo7xAJG21o/Ed2E
-         q5lqZJBE9vWFDnapnI10OnXDxHAbccVJcGQC/docaXQ3wu3B7UO7C4RSo8FnEnXhY4RS
-         Ncgg==
-X-Gm-Message-State: APjAAAVeyVtb1GZeFod8vkm52CfIe9ReltJ+qC+X2miCoJyq7aHpV3ZS
-        b49NFbm1m8VztKW4mU5r/Ur5pP6S
-X-Google-Smtp-Source: APXvYqzV0AAduUDXy1XZwqVFA4avXolDhbOgMe+//daYaWdmraIdxmO6lHbt76ZJSU2ZlngDckX8gA==
-X-Received: by 2002:a05:6000:1252:: with SMTP id j18mr136105wrx.103.1580501778700;
-        Fri, 31 Jan 2020 12:16:18 -0800 (PST)
+        bh=eZA3Y8V0DI7Y6OfhZpE3M38qZIRLUorKn3RyVp8rUpU=;
+        b=U6tbOcHdXvPazi4+Awxv2b6K8qBF4h4kjiubNiGqJUNmTvDyDLXuEN2SpJCbWaXZkc
+         vtm3rrcYJbTyfsnLuFE+BvDWr84rVWIkcUenSL1EahjV95YMY8Cc2wdfx1imw/kL45Kk
+         ewkhojJQPqFFjY00SuuMcsE3E3SK4HkWS0xDfCZodZGZKI0gKDONTNMrzyJsge2Zq2QC
+         AAxAcfBOTGNpvyRAtjH04uZV+aMM7cJlPopzNBe2brzvQCq5iYZWjFyajdchFasNauXT
+         AuL+saTz1HuTklmHiFaKNQQD28kaSUDYdHh+2sYzIiem/6D0LXmFgjMA5CIY0Ufr4oKH
+         KSYw==
+X-Gm-Message-State: APjAAAXySxGyFDAndeUjS24w+pxl2zGiwU9ng7aXeTGxQAmpbyki65iG
+        dYKNIeaySrYOTfoVVVY6lzs8XFAi
+X-Google-Smtp-Source: APXvYqwWOwZc4pUtzP4H7OVGL0qeklucrM+VKHyP/WnqPDQZUYeLdo73mITE40o+n6tousiCf78zeg==
+X-Received: by 2002:a7b:cc81:: with SMTP id p1mr13309501wma.62.1580501782977;
+        Fri, 31 Jan 2020 12:16:22 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e17sm324798wrn.62.2020.01.31.12.16.18
+        by smtp.gmail.com with ESMTPSA id c141sm12318954wme.41.2020.01.31.12.16.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2020 12:16:18 -0800 (PST)
-Message-Id: <5497ad8778c29ca936206d2ded6773758c236c12.1580501775.git.gitgitgadget@gmail.com>
+        Fri, 31 Jan 2020 12:16:22 -0800 (PST)
+Message-Id: <4c86d01f0e965db0285336a88f2dc34cbcd0c073.1580501775.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 References: <pull.513.v3.git.1580236003.gitgitgadget@gmail.com>
         <pull.513.v4.git.1580501775.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 31 Jan 2020 20:16:03 +0000
-Subject: [PATCH v4 03/15] sparse-checkout: create leading directories
+Date:   Fri, 31 Jan 2020 20:16:09 +0000
+Subject: [PATCH v4 09/15] sparse-checkout: properly match escaped characters
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,56 +77,117 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git init' command creates the ".git/info" directory and fills it
-with some default files. However, 'git worktree add' does not create
-the info directory for that worktree. This causes a problem when running
-"git sparse-checkout init" inside a worktree. While care was taken to
-allow the sparse-checkout config to be specific to a worktree, this
-initialization was untested.
+In cone mode, the sparse-checkout feature uses hashset containment
+queries to match paths. Make this algorithm respect escaped asterisk
+(*) and backslash (\) characters.
 
-Safely create the leading directories for the sparse-checkout file. This
-is the safest thing to do even without worktrees, as a user could delete
-their ".git/info" directory and expect Git to recover safely.
+Create dup_and_filter_pattern() method to convert a pattern by
+removing escape characters and dropping an optional "/*" at the end.
+This method is available in dir.h as we will use it in
+builtin/sparse-checkout.c in a later change.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/sparse-checkout.c          |  4 ++++
- t/t1091-sparse-checkout-builtin.sh | 10 ++++++++++
- 2 files changed, 14 insertions(+)
+ dir.c                              | 35 +++++++++++++++++++++++++++---
+ t/t1091-sparse-checkout-builtin.sh | 23 ++++++++++++++++----
+ 2 files changed, 51 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index b3bed891cb..3cee8ab46e 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -199,6 +199,10 @@ static int write_patterns_and_update(struct pattern_list *pl)
- 	int result;
+diff --git a/dir.c b/dir.c
+index 71d28331f3..7ac0920b71 100644
+--- a/dir.c
++++ b/dir.c
+@@ -630,6 +630,36 @@ int pl_hashmap_cmp(const void *unused_cmp_data,
+ 	return strncmp(ee1->pattern, ee2->pattern, min_len);
+ }
  
- 	sparse_filename = get_sparse_checkout_filename();
++static char *dup_and_filter_pattern(const char *pattern)
++{
++	char *set, *read;
++	size_t count  = 0;
++	char *result = xstrdup(pattern);
 +
-+	if (safe_create_leading_directories(sparse_filename))
-+		die(_("failed to create directory for sparse-checkout file"));
++	set = result;
++	read = result;
 +
- 	fd = hold_lock_file_for_update(&lk, sparse_filename,
- 				      LOCK_DIE_ON_ERROR);
++	while (*read) {
++		/* skip escape characters (once) */
++		if (*read == '\\')
++			read++;
++
++		*set = *read;
++
++		set++;
++		read++;
++		count++;
++	}
++	*set = 0;
++
++	if (count > 2 &&
++	    *(set - 1) == '*' &&
++	    *(set - 2) == '/')
++		*(set - 2) = 0;
++
++	return result;
++}
++
+ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern *given)
+ {
+ 	struct pattern_entry *translated;
+@@ -702,8 +732,7 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
+ 			goto clear_hashmaps;
+ 		}
  
+-		truncated = xstrdup(given->pattern);
+-		truncated[given->patternlen - 2] = 0;
++		truncated = dup_and_filter_pattern(given->pattern);
+ 
+ 		translated = xmalloc(sizeof(struct pattern_entry));
+ 		translated->pattern = truncated;
+@@ -737,7 +766,7 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
+ 
+ 	translated = xmalloc(sizeof(struct pattern_entry));
+ 
+-	translated->pattern = xstrdup(given->pattern);
++	translated->pattern = dup_and_filter_pattern(given->pattern);
+ 	translated->patternlen = given->patternlen;
+ 	hashmap_entry_init(&translated->ent,
+ 			   ignore_case ?
 diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index e28e1c797f..43d1f7520c 100755
+index c732abeacd..9ea700896d 100755
 --- a/t/t1091-sparse-checkout-builtin.sh
 +++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -295,4 +295,14 @@ test_expect_success 'interaction with submodules' '
- 	check_files super/modules/child a deep folder1 folder2
+@@ -378,13 +378,28 @@ test_expect_success 'pattern-checks: contained glob characters' '
+ 	done
  '
  
-+test_expect_success 'different sparse-checkouts with worktrees' '
-+	git -C repo worktree add --detach ../worktree &&
-+	check_files worktree "a deep folder1 folder2" &&
-+	git -C worktree sparse-checkout init --cone &&
-+	git -C repo sparse-checkout set folder1 &&
-+	git -C worktree sparse-checkout set deep/deeper1 &&
-+	check_files repo a folder1 &&
-+	check_files worktree a deep
-+'
-+
+-test_expect_success 'pattern-checks: escaped "*"' '
+-	cat >repo/.git/info/sparse-checkout <<-\EOF &&
++test_expect_success BSLASHPSPEC 'pattern-checks: escaped "*"' '
++	git clone repo escaped &&
++	TREEOID=$(git -C escaped rev-parse HEAD:folder1) &&
++	NEWTREE=$(git -C escaped mktree <<-EOF
++	$(git -C escaped ls-tree HEAD)
++	040000 tree $TREEOID	zbad\\dir
++	040000 tree $TREEOID	zdoes*exist
++	EOF
++	) &&
++	COMMIT=$(git -C escaped commit-tree $NEWTREE -p HEAD) &&
++	git -C escaped reset --hard $COMMIT &&
++	check_files escaped "a deep folder1 folder2 zbad\\dir zdoes*exist" &&
++	git -C escaped sparse-checkout init --cone &&
++	cat >escaped/.git/info/sparse-checkout <<-\EOF &&
+ 	/*
+ 	!/*/
+-	/does\*not\*exist/
++	/zbad\\dir/
++	!/zbad\\dir/*/
++	/zdoes\*not\*exist/
++	/zdoes\*exist/
+ 	EOF
+-	check_read_tree_errors repo "a" ""
++	check_read_tree_errors escaped "a zbad\\dir zdoes*exist"
+ '
+ 
  test_done
 -- 
 gitgitgadget
