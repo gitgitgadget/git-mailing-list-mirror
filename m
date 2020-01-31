@@ -2,136 +2,133 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-17.4 required=3.0 tests=DKIMWL_WL_MED,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,
-	MAILING_LIST_MULTI,SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,USER_AGENT_GIT,
-	USER_IN_DEF_DKIM_WL autolearn=ham autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-0.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,
+	SPF_PASS,URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 461FDC2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 22:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05472C2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:01:14 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 17A0120CC7
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 22:18:24 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A359C2082E
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 23:01:13 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="U+Ihpl+T"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cJxWr7PA"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726593AbgAaWSX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 17:18:23 -0500
-Received: from mail-pj1-f73.google.com ([209.85.216.73]:56016 "EHLO
-        mail-pj1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726202AbgAaWSX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 17:18:23 -0500
-Received: by mail-pj1-f73.google.com with SMTP id s6so5038441pjr.5
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 14:18:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=rqTlNeKSIVcc/wijbGHnrvlXmpLJX2aep02ZogehKKU=;
-        b=U+Ihpl+TcLg1i1ljRBjz2yVwR5Cuph3ID35wRbQjfnLjMF7nVXUEYyW335xx6wnQ8F
-         6NInpQ0XAhrusMzJW4yV60OGa3FWcT8elhzaXI+litfJEwulxaXzbtcp+WOU0hySJNma
-         T1zK8hMqy66SZFvQM//yGkuQQPz6lk2TTvOWBMGUBZ1hHxlhIswymktpYMbl93DtkzTL
-         SNNpLTJWvBpQqTu2v4PdHeqoBY+1M/MfaW3UDyGhXd8U9+21w1zpPOB8+RhyZrmiu1N0
-         vDNjHSX0/CZSTmffB218uR5JLupcZgfnmnsvNHfn7eME/zbhhtR+7cAN+BaMzoW7SSrI
-         5hUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=rqTlNeKSIVcc/wijbGHnrvlXmpLJX2aep02ZogehKKU=;
-        b=RpaLIULx08PGtvxONX5QIWSKn3u7Sm3MQZhNALfx/wSd+2Jbg19udE91vtnMtnEjK1
-         qKCkI5VSUFr0VbmVk8yfPto2I5KcF46MLXqnBYMbnPAWzidbpA9zq0Gg6GKt+M5q9nq5
-         d8As6LPPFHxPdG17zhZEiwWt/27a/kuE6tz9pxi6Eyjm/AHGi8hXEBU9BPoxq8ENf56n
-         mSwMdQhSjtSpqN0gfdJ1RuGwY4/oudqka1p6bFDoNH+4nsB3AunVkGQZjlt//pAVfxHy
-         oTKzJa72PTNbVBxDhgDYk0XoPbX8QGCkXL8W3b7/x4jf0O9MKoWSrWgXh7DbcoqMyhCN
-         b/TA==
-X-Gm-Message-State: APjAAAX/XYSFTNqo76RKACHxjx0AzD6SL7gky7gTfVS9J9tK/iQANLRy
-        xymGfiVed1B+v/UCK4vRbzqC4o8FFYyZLHC3x+3LN/dUXCdCytphQ2ZtuSMs2UMiluvImddxiGs
-        NIBf90jHVYQxNp6j6EOScpt8hDbO2R9FjdRvadmzEptZti9wUBF7atWY57eukAbYmi0xB7QJeuQ
-        ==
-X-Google-Smtp-Source: APXvYqyDCSkrB8ghm/zLTMdNG8znizXYHBCgBp5oY5Kv8J9uWpQPTJDBlXwaeU5u9CThHbE96TiL/geUhvcElazSiL0=
-X-Received: by 2002:a63:e809:: with SMTP id s9mr1523200pgh.108.1580509100712;
- Fri, 31 Jan 2020 14:18:20 -0800 (PST)
-Date:   Fri, 31 Jan 2020 14:18:00 -0800
-In-Reply-To: <20200130225818.193825-1-masayasuzuki@google.com>
-Message-Id: <20200131221800.240352-1-masayasuzuki@google.com>
-Mime-Version: 1.0
+        id S1727053AbgAaXBM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 18:01:12 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:51252 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726206AbgAaXBM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 18:01:12 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0CF7A3D641;
+        Fri, 31 Jan 2020 18:01:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8CcleuHJ8+2E2eoOp+xhIGbMpp4=; b=cJxWr7
+        PAmjTAXJUr54T2M9tJQmoVv/WN8PCxlnPDi9r1E8jVlCIgOubkDVp1yxAEV8OMqa
+        GE4k+14F15lStr4/ZQZQK3nnYqiC38EHpZ1UmK8zlt4Aw8NhXEVcWNlu4Ym1AUv0
+        ZS9TO8RvNdxFuxiWQbcnNhy7UnEP30f2Vxx8E=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=J2BED6NMblqWMShDMg+9mjep25Gz8CaW
+        A6diaiKrAIzeq5zxn+CA7QrarWZPYTTYScgoKf3+h98V3P/N8H6NJBaen/iw5kgD
+        FEtn9v8/FmzqwhWaKUK33s9miwKCOx6Y/LShGxpW/O9JFH208QYGQc1oPlz9DJtg
+        bvPyKXadUus=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 061D23D63F;
+        Fri, 31 Jan 2020 18:01:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6F4BA3D63E;
+        Fri, 31 Jan 2020 18:01:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Masaya Suzuki <masayasuzuki@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] doc: describe Git bundle format
 References: <20200130225818.193825-1-masayasuzuki@google.com>
-X-Mailer: git-send-email 2.25.0.341.g760bfbb309-goog
-Subject: [PATCH v2] doc: describe Git bundle format
-From:   Masaya Suzuki <masayasuzuki@google.com>
-To:     git@vger.kernel.org
-Cc:     Masaya Suzuki <masayasuzuki@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        <xmqqk1579xa4.fsf@gitster-ct.c.googlers.com>
+        <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
+Date:   Fri, 31 Jan 2020 15:01:07 -0800
+In-Reply-To: <CAJB1erXnNe0yGvL+wgU9RXAA6Vyx7T2dwM9NgCmUChOtL102NQ@mail.gmail.com>
+        (Masaya Suzuki's message of "Fri, 31 Jan 2020 13:49:53 -0800")
+Message-ID: <xmqqy2tn8c3w.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 91BA8788-447D-11EA-A8E3-C28CBED8090B-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The bundle format was not documented. Describe the format with ABNF and
-explain the meaning of each part.
+Masaya Suzuki <masayasuzuki@google.com> writes:
 
-Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
----
-Changes from v1:
+>> > +prerequisite = "-" obj-id SP comment LF
+>> > +comment      = *CHAR
+>>
+>> Do readers know what CHAR consists of?  Anything other than NUL and
+>> LF?
+>
+> RFC 5234 defines core rules
+> (https://tools.ietf.org/html/rfc5234#appendix-B.1), and these CHAR etc
+> are defined there. It should be OK to use these rules.
 
-* Update the ABNF definition so that prerequisites come before references.
-* Adopt Junio's suggestion on the semantics section.
-* State that the receiver MUST ignore the comments in the prereqs.
-* Change "you" to "the receiver" and "the sender" (I wonder if this should be
-  "writer" and "reader").
+That's not what I asked.  Do readers know that?  Did you tell them
+that we expect they are familiar with the RFC convention?
 
- Documentation/technical/bundle-format.txt | 41 +++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
- create mode 100644 Documentation/technical/bundle-format.txt
+It might be easier to make the above simple ABNF understandable to
+those without knowledge of RFC 5234 by spelling out what CHAR in the
+context of the above description means.  Or to tell them "go over
+there and learn CHAR then come back".  We need to do one of them.
 
-diff --git a/Documentation/technical/bundle-format.txt b/Documentation/technical/bundle-format.txt
-new file mode 100644
-index 0000000000..f568fcd7d1
---- /dev/null
-+++ b/Documentation/technical/bundle-format.txt
-@@ -0,0 +1,41 @@
-+= Git bundle v2 format
-+
-+The Git bundle format is a format that represents both refs and Git objects.
-+
-+== Format
-+
-+We will use ABNF notation to define the Git bundle format. See
-+protocol-common.txt for the details.
-+
-+----
-+bundle    = signature *prerequisite *reference LF pack
-+signature = "# v2 git bundle" LF
-+
-+prerequisite = "-" obj-id SP comment LF
-+comment      = *CHAR
-+reference    = obj-id SP refname LF
-+
-+pack         = ... ; packfile
-+----
-+
-+== Semantics
-+
-+A Git bundle consists of three parts.
-+
-+* "Prerequisites" lists the objects that are NOT included in the bundle and the
-+  receiver of the bundle MUST already have, in order to use the data in the
-+  bundle. The objects stored in the bundle may refer to prerequisite objects and
-+  anything reachable from them and/or expressed as a delta against prerequisite
-+  objects.
-+
-+* "References" record the tips of the history graph, iow, what the receiver of
-+  the bundle CAN "git fetch" from it.
-+
-+* "Pack" is the pack data stream "git fetch" would send, if you fetch from a
-+  repository that has the references recorded in the "References" above into a
-+  repository that has references pointing at the objects listed in
-+  "Prerequisites" above.
-+
-+In the bundle format, there can be a comment following a prerequisite obj-id.
-+This is a comment and it has no specific meaning. The sender of the bundle MAY
-+put any string here. The receiver of the bundle MUST ignore the comment.
--- 
-2.25.0.341.g760bfbb309-goog
+> I want to make sure the meaning of prerequisites.
+>
+> 1. Are they meant for a delta base? Or are they meant to represent a
+> partial/shallow state?
 
+They are meant as the "bottom boundary" of the range of the pack
+data stored in the bundle.
+
+Think of "git rev-list --objects $heads --not $prerequisites".  If
+we limit ourselves to commits, in the simplest case, "git log
+maint..master".  Imagine your repository has everything up to
+'maint' (and nothing else) and then you are "git fetch"-ing from
+another repository that advanced the tip that now points at
+'master'.  Imagine the data transferred over the network.  Imagine
+that data is frozen on disk somehow.  That is what a bundle is.
+
+So, 'maint' is the prerequisite---for the person who builds the
+bundle, it can safely be assumed that the bundle will be used only
+by those who already has 'maint'.
+
+There is nothing about 'partial' or 'shallow'.  And even though a
+bundle typically has deltified objects in the packfile, it does not
+have to.  Some objects are delitifed against prerequisite, and the
+logic to generate thin packs may even prefer to use the
+prerequisites as the delta base, but it is merely a side effect that
+the prerequisites are at the "bottom boundary" of the range.
+
+> 2. Do they need to be commits? Or can they be any object type?
+>
+> From what I can see, it seems that they should always be commits.
+>
+> 3. Does the receiver have to have all reachable objects from prerequisites?
+
+I would say that the receiver needs to have everything that is
+needed to "complete" prereqs.
+
+Bundle transfer predates shallow or incomplete repositories, but I
+think that we can (and we should if needed) update it to adjust to
+these situations by using the appropriate definition of what it
+means to "complete".  In a lazy clone, it may be sufficient to have
+promisor remote that has everything reachable from them.  In a
+shallow clone, the repository may have to be deep enough to have
+them and objects immediately reachable from them (e.g. trees and
+blobs for a commit at the "bottom boundary").
+
+Thanks.
