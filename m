@@ -2,137 +2,296 @@ Return-Path: <SRS0=EOdt=3U=vger.kernel.org=git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-0.6 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
-	DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,SPF_HELO_NONE,SPF_PASS,
-	URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-6.8 required=3.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,INCLUDES_PATCH,MAILING_LIST_MULTI,
+	SIGNED_OFF_BY,SPF_HELO_NONE,SPF_PASS,URIBL_BLOCKED autolearn=ham
+	autolearn_force=no version=3.4.0
 Received: from mail.kernel.org (mail.kernel.org [198.145.29.99])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D205C2D0DB
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1EECC2D0DB
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:55:18 +0000 (UTC)
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by mail.kernel.org (Postfix) with ESMTP id 3ECDB20707
-	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:52:46 +0000 (UTC)
+	by mail.kernel.org (Postfix) with ESMTP id A536420707
+	for <git@archiver.kernel.org>; Fri, 31 Jan 2020 18:55:18 +0000 (UTC)
 Authentication-Results: mail.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YRE6Kgu0"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wxG8rb7q"
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726065AbgAaSwp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 31 Jan 2020 13:52:45 -0500
-Received: from mail-ot1-f65.google.com ([209.85.210.65]:37700 "EHLO
-        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725939AbgAaSwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Jan 2020 13:52:44 -0500
-Received: by mail-ot1-f65.google.com with SMTP id d3so7559808otp.4
-        for <git@vger.kernel.org>; Fri, 31 Jan 2020 10:52:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=g3a2DzlihIpYcKqzqAjkF0uZ/auYHImt9bIk7kNLCbw=;
-        b=YRE6Kgu03+kEm5V0pxpmAmIwL1dtqH08VQGixVP9xrZt2E6Eb/5L6CiKTx1g6Deai1
-         kxCCAyzfwLc4iNqYDoNntPUb45ERTIdZ8uOh/a34qouQwdYvWUa8lidIW6MP0JBfjhln
-         pS/cX9VROyhQpzUTSbA3Hsu1ytifDv4E0V92BcI3oethje39Axt1XQT8OUHfWdhYFyGr
-         M4wA0pS6qCh9EwmZKaFX0nkP+VBm5w4wJQHzYu3839TvVq/Nt32y9fapxpRHmaUXO2AX
-         1p4LxfTTCJuwZNlULac7Mom5nYIeJLhC7dAnJfSmtBcsUuSWqxW/OcPsveYye+Cfx2LQ
-         lBYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=g3a2DzlihIpYcKqzqAjkF0uZ/auYHImt9bIk7kNLCbw=;
-        b=gkYyM8MC+XQ3UNOTcprfoT8xERfgiDdDe9+cuRtj6NYs+YPck4HFrz++3klLk0zin+
-         WM1meWxzuoNuEoMeYdGG6nqfUyxxyXKAN69gJvqNl5oJYRWfa4rj4BWC114y8Cln4LqF
-         B4oD7J1TKjNTwc8HKCuTaho63Kd38HYZEQAj95/gciR3uCjHWnoWUl7uw78KjolZ4e4X
-         SKemsx3xYzQJZo72KMB7zyyZScyq6+ye1U4aD1EpdR0BW7+KJjIGiDoY2tD6itYzd5t4
-         zsdqGJQoKZjs/BCJC3QdCEwe2kXbQQB6MvSwSYsXE/be1ISiYmmzwN+CqqxMEtGTI8nw
-         nbyw==
-X-Gm-Message-State: APjAAAVEUMcHd9rx/nAFoZQOnq2eY2q+kzJ6fFbSfOcfj6MNPmpxyfeR
-        CoI9JSY0OtLTi+ATfbJ9kPbqbj27ukxo7pK1PvGvWw==
-X-Google-Smtp-Source: APXvYqyTfl+VAoNKkmaOBJPgPbcz7oCfI+V+v9muq8KTm3lrc+nu3/ADe8Sw88s+Gq2hzzqkv6tpQK//Uo1EA6A4zu0=
-X-Received: by 2002:a9d:7487:: with SMTP id t7mr8751976otk.267.1580496763788;
- Fri, 31 Jan 2020 10:52:43 -0800 (PST)
+        id S1726199AbgAaSzR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 31 Jan 2020 13:55:17 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62777 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725939AbgAaSzR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Jan 2020 13:55:17 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A1545ABEF9;
+        Fri, 31 Jan 2020 13:55:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=drKNZW+ztv3M3gU3lsXf7kYIGCw=; b=wxG8rb
+        7q6hfojIzTz9stVnbInzdjD2B5VVH5iEl1gEU34APzNT2McUYS5lN/TfBra3UlFn
+        i7egrvq/b7784l84JZ+Od1VGgg4jA2Xuwmu7D7L4qXxEohWDmxCFJRsTyJEW/4Ii
+        y3cvu3OimtQXPx5s+m43UCC9ISOZcyWdgBgeo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=YlNXxpGopUOe1LOHr5DzaRsGww9WIDY+
+        Afm/pUAgbAax3lVOV4cAlCxLNVwrWEnrsCCt1B5t6vHLFRfiVl065DwRbEsO2N6b
+        FxkGmlkxw8XifnaQfyzoNCvtdNvG4bASPJioxeNl4yA8hyG+vdqZKrI875dBd9EE
+        MPg6BBQ5L2g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 988EFABEF8;
+        Fri, 31 Jan 2020 13:55:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.76.80.147])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 727ABABEF4;
+        Fri, 31 Jan 2020 13:55:06 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 4/7] streaming: allow open_istream() to handle any repo
+References: <cover.1580413221.git.matheus.bernardino@usp.br>
+        <b76b189efb6d3b6e4d345fd1876a676ed27d1653.1580413221.git.matheus.bernardino@usp.br>
+Date:   Fri, 31 Jan 2020 10:55:03 -0800
+In-Reply-To: <b76b189efb6d3b6e4d345fd1876a676ed27d1653.1580413221.git.matheus.bernardino@usp.br>
+        (Matheus Tavares's message of "Thu, 30 Jan 2020 17:32:20 -0300")
+Message-ID: <xmqqsgjva22g.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.3 (gnu/linux)
 MIME-Version: 1.0
-References: <20200130095155.GA839988@coredump.intra.peff.net>
- <20200130095338.GC840531@coredump.intra.peff.net> <CABPp-BE7E--8Yz3PAcjPQX2RCsbq0Q0gURi3RJuE64KM0eo6mA@mail.gmail.com>
- <20200131092936.GA2916051@coredump.intra.peff.net>
-In-Reply-To: <20200131092936.GA2916051@coredump.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 31 Jan 2020 10:52:30 -0800
-Message-ID: <CABPp-BFXwin5mR7z7Ocx9bq5LadFF4CxZR03HzZxh5f=1+F6NQ@mail.gmail.com>
-Subject: Re: [PATCH 3/3] traverse_trees(): use stack array for name entries
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 324CFBEA-445B-11EA-8F06-B0405B776F7B-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 31, 2020 at 1:29 AM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Jan 30, 2020 at 06:57:26AM -0800, Elijah Newren wrote:
->
-> > > This does increase the coupling between tree-walk and unpack-trees a
-> > > bit. I'd be OK just switching to ALLOC_ARRAY(), too. I doubt the
-> > > performance improvement is measurable, and the cleanup free() calls are
-> > > already there.
-> >
-> > Could we undo this cyclic dependency between tree-walk and
-> > unpack-trees by defining MAX_TRAVERSE_TREES in tree-walk.h, making
-> > MAX_UNPACK_TREES in unpack-trees.h be defined to MAX_TRAVERSE_TREES,
-> > and remove the include of unpack-trees.h in tree-walk.c?
->
-> I don't mind doing that, but I had a hard time trying to write a commit
-> message. I.e., I can explain the current use of MAX_UNPACK_TREES here,
-> or defining MAX_TRAVERSE_TREES as MAX_UNPACK_TREES by saying "this is an
-> arbitrary limit, but it's the highest value any caller would use with
-> us".
->
-> But to define MAX_UNPACK_TREES in terms of MAX_TRAVERSE_TREES, I feel
-> we've created a circular reasoning in the justification.
+Matheus Tavares <matheus.bernardino@usp.br> writes:
 
-It may be circular in how it came about, but I don't see how it's
-circular from first principles: unpack_trees() uses traverse_trees()
-to do its work (whereas tree-walk.c shouldn't call any functions from
-unpack-trees).  For simplicity and lacking any justification for huge
-numbers of trees, we want to impose a small limit on both for how many
-trees they can simultaneously operate on -- though we want to leave a
-little wiggle room by generously setting the limit much higher than we
-expect any caller to ever want.  unpack-trees certainly can't have a
-higher limit than tree-walk, and we don't know of callers outside
-unpack_trees that would want to traverse more trees than
-unpack_trees() does, so we just set them both to the same value, 8.
+> Some callers of open_istream() at archive-tar.c and archive-zip.c are
+> capable of working on arbitrary repositories but the repo struct is not
+> passed down to open_istream(), which uses the_repository internally. For
+> now, that's not a problem since the said callers are only being called
+> with the_repository. But to be consistent and avoid future problems,
+> let's allow open_istream() to receive a struct repository and use that
+> instead of the_repository. This parameter addition will also be used in
+> a future patch to make sha1-file.c:check_object_signature() be able to
+> work on arbitrary repos.
+>
+> Signed-off-by: Matheus Tavares <matheus.bernardino@usp.br>
+> ---
 
-> I'm not even sure whether the current value of 8 is meaningful. It comes
-> from this commit:
->
->   commit ca885a4fe6444bed840295378848904106c87c85
->   Author: Junio C Hamano <gitster@pobox.com>
->   Date:   Thu Mar 13 22:07:18 2008 -0700
->
->       read-tree() and unpack_trees(): use consistent limit
->
->       read-tree -m can read up to MAX_TREES, which was arbitrarily set to 8 since
->       August 2007 (4 is needed to deal with 2 merge-base case).
->
->       However, the updated unpack_trees() code had an advertised limit of 4
->       (which it enforced).  In reality the code was prepared to take only 3
->       trees and giving 4 caused it to stomp on its stack.  Rename the MAX_TREES
->       constant to MAX_UNPACK_TREES, move it to the unpack-trees.h common header
->       file, and use it from both places to avoid future confusion.
->
-> which kind of makes me wonder if we should just go back to calling it
-> MAX_TREES. I guess that's too vague, though.
->
-> So I dunno. It would be easy to do as you asked, but I'm not convinced
-> it actually untangles anything meaningful.
+Nicely done.  I am happy to see this change as the inventor of the
+streaming interface ;-)
 
-As far as I can tell, before your change, we can remove the
-   #include "unpack-trees.h"
-from tree-walk.c; nothing uses it.  I do like snipping includes and
-dependencies where they aren't necessary, and this one seems like one
-that could be removed.
-
-But, it's not a big deal; if you want to leave that for future work
-for someone else (perhaps even asking me to turn my paragraph above
-into a commit message that rips it out and defines one #define in
-terms of the other), that's fine.
+>  archive-tar.c          |  6 +++---
+>  archive-zip.c          |  3 ++-
+>  builtin/index-pack.c   |  3 ++-
+>  builtin/pack-objects.c |  3 ++-
+>  sha1-file.c            |  2 +-
+>  streaming.c            | 28 +++++++++++++++-------------
+>  streaming.h            |  4 +++-
+>  7 files changed, 28 insertions(+), 21 deletions(-)
+>
+> diff --git a/archive-tar.c b/archive-tar.c
+> index e16d3f756d..5a77701a15 100644
+> --- a/archive-tar.c
+> +++ b/archive-tar.c
+> @@ -112,7 +112,7 @@ static void write_trailer(void)
+>   * queues up writes, so that all our write(2) calls write exactly one
+>   * full block; pads writes to RECORDSIZE
+>   */
+> -static int stream_blocked(const struct object_id *oid)
+> +static int stream_blocked(struct repository *r, const struct object_id *oid)
+>  {
+>  	struct git_istream *st;
+>  	enum object_type type;
+> @@ -120,7 +120,7 @@ static int stream_blocked(const struct object_id *oid)
+>  	char buf[BLOCKSIZE];
+>  	ssize_t readlen;
+>  
+> -	st = open_istream(oid, &type, &sz, NULL);
+> +	st = open_istream(r, oid, &type, &sz, NULL);
+>  	if (!st)
+>  		return error(_("cannot stream blob %s"), oid_to_hex(oid));
+>  	for (;;) {
+> @@ -324,7 +324,7 @@ static int write_tar_entry(struct archiver_args *args,
+>  		if (buffer)
+>  			write_blocked(buffer, size);
+>  		else
+> -			err = stream_blocked(oid);
+> +			err = stream_blocked(args->repo, oid);
+>  	}
+>  	free(buffer);
+>  	return err;
+> diff --git a/archive-zip.c b/archive-zip.c
+> index 11f5b1974b..e9f426298b 100644
+> --- a/archive-zip.c
+> +++ b/archive-zip.c
+> @@ -345,7 +345,8 @@ static int write_zip_entry(struct archiver_args *args,
+>  
+>  		if (S_ISREG(mode) && type == OBJ_BLOB && !args->convert &&
+>  		    size > big_file_threshold) {
+> -			stream = open_istream(oid, &type, &size, NULL);
+> +			stream = open_istream(args->repo, oid, &type, &size,
+> +					      NULL);
+>  			if (!stream)
+>  				return error(_("cannot stream blob %s"),
+>  					     oid_to_hex(oid));
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 60a5591039..7a08da8401 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -757,7 +757,8 @@ static int check_collison(struct object_entry *entry)
+>  
+>  	memset(&data, 0, sizeof(data));
+>  	data.entry = entry;
+> -	data.st = open_istream(&entry->idx.oid, &type, &size, NULL);
+> +	data.st = open_istream(the_repository, &entry->idx.oid, &type, &size,
+> +			       NULL);
+>  	if (!data.st)
+>  		return -1;
+>  	if (size != entry->size || type != entry->type)
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 393c20a2d7..ef17efd94e 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -303,7 +303,8 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
+>  	if (!usable_delta) {
+>  		if (oe_type(entry) == OBJ_BLOB &&
+>  		    oe_size_greater_than(&to_pack, entry, big_file_threshold) &&
+> -		    (st = open_istream(&entry->idx.oid, &type, &size, NULL)) != NULL)
+> +		    (st = open_istream(the_repository, &entry->idx.oid, &type,
+> +				       &size, NULL)) != NULL)
+>  			buf = NULL;
+>  		else {
+>  			buf = read_object_file(&entry->idx.oid, &type, &size);
+> diff --git a/sha1-file.c b/sha1-file.c
+> index 03ae9ae93a..13b90b1cb1 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -986,7 +986,7 @@ int check_object_signature(const struct object_id *oid, void *map,
+>  		return !oideq(oid, &real_oid) ? -1 : 0;
+>  	}
+>  
+> -	st = open_istream(oid, &obj_type, &size, NULL);
+> +	st = open_istream(the_repository, oid, &obj_type, &size, NULL);
+>  	if (!st)
+>  		return -1;
+>  
+> diff --git a/streaming.c b/streaming.c
+> index fcd6303219..800f07a52c 100644
+> --- a/streaming.c
+> +++ b/streaming.c
+> @@ -16,6 +16,7 @@ enum input_source {
+>  };
+>  
+>  typedef int (*open_istream_fn)(struct git_istream *,
+> +			       struct repository *,
+>  			       struct object_info *,
+>  			       const struct object_id *,
+>  			       enum object_type *);
+> @@ -29,8 +30,8 @@ struct stream_vtbl {
+>  
+>  #define open_method_decl(name) \
+>  	int open_istream_ ##name \
+> -	(struct git_istream *st, struct object_info *oi, \
+> -	 const struct object_id *oid, \
+> +	(struct git_istream *st, struct repository *r, \
+> +	 struct object_info *oi, const struct object_id *oid, \
+>  	 enum object_type *type)
+>  
+>  #define close_method_decl(name) \
+> @@ -108,7 +109,8 @@ ssize_t read_istream(struct git_istream *st, void *buf, size_t sz)
+>  	return st->vtbl->read(st, buf, sz);
+>  }
+>  
+> -static enum input_source istream_source(const struct object_id *oid,
+> +static enum input_source istream_source(struct repository *r,
+> +					const struct object_id *oid,
+>  					enum object_type *type,
+>  					struct object_info *oi)
+>  {
+> @@ -117,7 +119,7 @@ static enum input_source istream_source(const struct object_id *oid,
+>  
+>  	oi->typep = type;
+>  	oi->sizep = &size;
+> -	status = oid_object_info_extended(the_repository, oid, oi, 0);
+> +	status = oid_object_info_extended(r, oid, oi, 0);
+>  	if (status < 0)
+>  		return stream_error;
+>  
+> @@ -133,22 +135,23 @@ static enum input_source istream_source(const struct object_id *oid,
+>  	}
+>  }
+>  
+> -struct git_istream *open_istream(const struct object_id *oid,
+> +struct git_istream *open_istream(struct repository *r,
+> +				 const struct object_id *oid,
+>  				 enum object_type *type,
+>  				 unsigned long *size,
+>  				 struct stream_filter *filter)
+>  {
+>  	struct git_istream *st;
+>  	struct object_info oi = OBJECT_INFO_INIT;
+> -	const struct object_id *real = lookup_replace_object(the_repository, oid);
+> -	enum input_source src = istream_source(real, type, &oi);
+> +	const struct object_id *real = lookup_replace_object(r, oid);
+> +	enum input_source src = istream_source(r, real, type, &oi);
+>  
+>  	if (src < 0)
+>  		return NULL;
+>  
+>  	st = xmalloc(sizeof(*st));
+> -	if (open_istream_tbl[src](st, &oi, real, type)) {
+> -		if (open_istream_incore(st, &oi, real, type)) {
+> +	if (open_istream_tbl[src](st, r, &oi, real, type)) {
+> +		if (open_istream_incore(st, r, &oi, real, type)) {
+>  			free(st);
+>  			return NULL;
+>  		}
+> @@ -338,8 +341,7 @@ static struct stream_vtbl loose_vtbl = {
+>  
+>  static open_method_decl(loose)
+>  {
+> -	st->u.loose.mapped = map_loose_object(the_repository,
+> -					      oid, &st->u.loose.mapsize);
+> +	st->u.loose.mapped = map_loose_object(r, oid, &st->u.loose.mapsize);
+>  	if (!st->u.loose.mapped)
+>  		return -1;
+>  	if ((unpack_loose_header(&st->z,
+> @@ -499,7 +501,7 @@ static struct stream_vtbl incore_vtbl = {
+>  
+>  static open_method_decl(incore)
+>  {
+> -	st->u.incore.buf = read_object_file_extended(the_repository, oid, type, &st->size, 0);
+> +	st->u.incore.buf = read_object_file_extended(r, oid, type, &st->size, 0);
+>  	st->u.incore.read_ptr = 0;
+>  	st->vtbl = &incore_vtbl;
+>  
+> @@ -520,7 +522,7 @@ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter
+>  	ssize_t kept = 0;
+>  	int result = -1;
+>  
+> -	st = open_istream(oid, &type, &sz, filter);
+> +	st = open_istream(the_repository, oid, &type, &sz, filter);
+>  	if (!st) {
+>  		if (filter)
+>  			free_stream_filter(filter);
+> diff --git a/streaming.h b/streaming.h
+> index f465a3cd31..5e4e6acfd0 100644
+> --- a/streaming.h
+> +++ b/streaming.h
+> @@ -8,7 +8,9 @@
+>  /* opaque */
+>  struct git_istream;
+>  
+> -struct git_istream *open_istream(const struct object_id *, enum object_type *, unsigned long *, struct stream_filter *);
+> +struct git_istream *open_istream(struct repository *, const struct object_id *,
+> +				 enum object_type *, unsigned long *,
+> +				 struct stream_filter *);
+>  int close_istream(struct git_istream *);
+>  ssize_t read_istream(struct git_istream *, void *, size_t);
